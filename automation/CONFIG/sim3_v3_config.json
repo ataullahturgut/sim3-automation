@@ -1,0 +1,9 @@
+{
+    "repo":  "C:/PATH/TO/YOUR/PROJECT",
+    "reasoning_effort":  "medium",
+    "model_verbosity":  "low",
+    "approval_policy":  "never",
+    "ignore_execpolicy_rules":  false,
+    "timeout_seconds":  900,
+    "default_mode":  "CODEX_READ_ONLY"
+}

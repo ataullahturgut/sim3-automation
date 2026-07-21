@@ -1,0 +1,2 @@
+@echo off
+call "%~dp0DASHBOARD_COMPACT_V4\START_DASHBOARD.cmd"

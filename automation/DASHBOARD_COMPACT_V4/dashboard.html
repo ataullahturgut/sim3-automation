@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GPT-Codex Otomasyonu</title>
+<style>
+:root{
+  --text:#0f172a;--sub:#64748b;--border:#dfe7f1;--line:#b8c4d6;
+  --green:#16a34a;--green-soft:#ecfdf3;--purple:#7c3aed;
+  --red:#dc2626;--red-soft:#fff1f2;--red-strong:#ef1111;--blue:#2563eb
+}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{font-family:"Segoe UI",Arial,sans-serif;color:var(--text);background:#f8fafc}
+.shell{height:100%;background:#fff;display:flex;flex-direction:column}
+
+.header{
+  height:56px;flex:0 0 56px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 10px;border-bottom:1px solid var(--border);gap:8px
+}
+.brand{display:flex;align-items:center;gap:7px;min-width:0}
+.brand h1{margin:0;font-size:18px;line-height:1;letter-spacing:-.3px;white-space:nowrap}
+.version{
+  font-size:11px;font-weight:700;color:var(--sub);padding:4px 7px;
+  border:1px solid var(--border);border-radius:8px;background:#f8fafc
+}
+.header-actions{display:flex;align-items:center;gap:6px}
+.stop-button{
+  height:32px;min-width:62px;padding:0 10px;border:1px solid #fecaca;
+  border-radius:9px;background:#fff;color:var(--red);font:800 11px "Segoe UI";cursor:pointer
+}
+.stop-button:disabled{opacity:.55;cursor:default}
+.status-pill{
+  height:32px;display:flex;align-items:center;padding:0 10px;
+  border:1px solid #bbf7d0;border-radius:9px;background:var(--green-soft);
+  color:var(--green);font-size:11px;font-weight:800;white-space:nowrap
+}
+.status-pill:before{
+  content:"";width:7px;height:7px;border-radius:50%;background:currentColor;margin-right:6px
+}
+
+.alert{
+  display:none;height:38px;flex:0 0 38px;padding:0 11px;align-items:center;
+  justify-content:space-between;background:var(--red-strong);color:#fff;
+  font-size:13px;font-weight:800
+}
+.alert-tag{padding:5px 9px;border-radius:8px;background:#fff;color:var(--red);font-size:11px}
+
+.content{flex:1;min-height:0;padding:8px;display:flex;flex-direction:column;gap:7px}
+.card{border:1px solid var(--border);border-radius:11px;background:#fff}
+
+.task{height:86px;flex:0 0 86px;padding:11px 12px;position:relative}
+.eyebrow{font-size:11px;color:var(--sub);margin-bottom:5px}
+.task-id{margin:0 52px 4px 0;font-size:21px;line-height:1.05}
+.task-title{
+  margin:0 52px 0 0;font-size:12px;color:var(--sub);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.task-icon{
+  position:absolute;right:10px;top:18px;width:44px;height:44px;
+  border:1px solid var(--border);border-radius:10px;display:grid;place-items:center;color:var(--blue)
+}
+.doc-icon{width:17px;height:22px;border:2px solid currentColor;border-radius:2px;position:relative}
+.doc-icon:before,.doc-icon:after{
+  content:"";position:absolute;left:3px;right:3px;height:2px;background:currentColor
+}
+.doc-icon:before{top:6px}.doc-icon:after{top:12px}
+.warn-icon{
+  display:none;width:0;height:0;border-left:12px solid transparent;
+  border-right:12px solid transparent;border-bottom:22px solid currentColor;position:relative
+}
+.warn-icon:after{
+  content:"!";position:absolute;left:-2.5px;top:5px;color:#fff;font-size:13px;font-weight:900
+}
+
+.cycle-card{flex:1;min-height:0;padding:9px 9px 6px;position:relative}
+.section-title{margin:0;font-size:15px;display:flex;align-items:center;gap:6px}
+.cycle-wrap{position:absolute;left:7px;right:7px;top:34px;bottom:5px}
+.cycle-svg{width:100%;height:100%;display:block}
+.flow{
+  fill:none;stroke:var(--line);stroke-width:2.3;
+  stroke-linecap:round;stroke-linejoin:round
+}
+.node-circle{fill:#fff;stroke:var(--border);stroke-width:2}
+.node-number{
+  font-size:18px;font-weight:800;fill:var(--text);
+  text-anchor:middle;dominant-baseline:middle
+}
+.node-label{
+  font-size:11.5px;font-weight:800;fill:var(--text);text-anchor:middle
+}
+.label-bg{fill:#fff;opacity:.98}
+.badge,.badge-mark,.badge-clock,.badge-x{display:none}
+.node.completed .node-circle{stroke:var(--green)}
+.node.completed .badge{display:block;fill:var(--green)}
+.node.completed .badge-mark{display:block}
+.node.active .node-circle{stroke:var(--purple)}
+.node.active .node-number,.node.active .node-label{fill:var(--purple)}
+.node.active .badge{display:block;fill:var(--purple)}
+.node.active .badge-clock{display:block}
+.node.failed .node-circle{stroke:var(--red)}
+.node.failed .node-number,.node.failed .node-label{fill:var(--red)}
+.node.failed .badge{display:block;fill:var(--red)}
+.node.failed .badge-x{display:block}
+.badge-mark,.badge-clock,.badge-x{
+  fill:#fff;font-size:11px;font-weight:900;
+  text-anchor:middle;dominant-baseline:middle
+}
+
+.error-card{
+  display:none;height:70px;flex:0 0 70px;padding:8px 9px;
+  border-color:#fda4af;background:var(--red-soft);
+  grid-template-columns:29px 1fr 106px;gap:8px;align-items:center
+}
+.error-symbol{width:26px;height:23px;position:relative;color:var(--red)}
+.error-symbol:before{
+  content:"";position:absolute;left:1px;top:0;width:0;height:0;
+  border-left:12px solid transparent;border-right:12px solid transparent;
+  border-bottom:22px solid currentColor
+}
+.error-symbol:after{
+  content:"!";position:absolute;left:11px;top:6px;color:#fff;font-size:12px;font-weight:900
+}
+.error-copy h3{margin:0 0 2px;color:var(--red);font-size:12px}
+.error-copy p{margin:0;font-size:10.7px;line-height:1.16}
+.error-actions{display:grid;gap:4px}
+.error-actions button{
+  height:25px;border:1px solid var(--border);border-radius:7px;
+  background:#fff;color:var(--sub);font:600 9.8px "Segoe UI"
+}
+.error-actions .primary{border-color:var(--red);color:var(--red)}
+
+.metrics{height:64px;flex:0 0 64px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.metric{min-width:0;padding:8px;border:1px solid var(--border);border-radius:10px;background:#fff}
+.metric-name{font-size:10px;color:var(--sub);margin-bottom:6px}
+.metric-value{font-size:14px;line-height:1.08;font-weight:800;overflow-wrap:anywhere}
+.status-value{color:var(--green)}
+.stage-value{font-size:11.5px;color:var(--purple)}
+
+body.stopped .alert{display:flex;animation:pulse 1.5s ease-in-out infinite}
+body.stopped .status-pill{
+  border-color:#fda4af;background:var(--red-soft);color:var(--red)
+}
+body.stopped .task{
+  height:76px;flex-basis:76px;padding-top:8px;border-color:#fda4af
+}
+body.stopped .task-icon{top:13px;color:var(--red)}
+body.stopped .doc-icon{display:none}
+body.stopped .warn-icon{display:block}
+body.stopped .cycle-card{flex:1;min-height:0}
+body.stopped .error-card{display:grid}
+body.stopped .metrics{height:58px;flex-basis:58px}
+body.stopped .metric{padding:7px}
+body.stopped .metric-name{margin-bottom:4px}
+body.stopped .status-value,body.stopped .stage-value{color:var(--red)}
+@keyframes pulse{0%,100%{filter:brightness(1)}50%{filter:brightness(.9)}}
+
+/* SIM3_RUNNING_LAYOUT_ONLY_V1_BEGIN */
+
+/*
+  RUNNING gÃ¶rÃ¼nÃ¼mÃ¼:
+  - DURDU gÃ¶rÃ¼nÃ¼mÃ¼ne dokunmaz.
+  - DÃ¶ngÃ¼yÃ¼ kartÄ±n kullanÄ±labilir yÃ¼ksekliÄŸine bÃ¼yÃ¼tÃ¼r.
+  - Ãœst/alt gereksiz boÅŸluÄŸu azaltÄ±r.
+  - Alt metrikleri kompakt ve dengeli tutar.
+*/
+body:not(.stopped) .task {
+  height: 82px;
+  flex-basis: 82px;
+  padding-top: 10px;
+}
+
+body:not(.stopped) .task-icon {
+  top: 16px;
+}
+
+body:not(.stopped) .cycle-card {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+body:not(.stopped) .cycle-wrap {
+  top: 25px;
+  bottom: -7px;
+  overflow: visible;
+}
+
+body:not(.stopped) .cycle-svg {
+  transform: scale(1.15);
+  transform-origin: 50% 50%;
+}
+
+body:not(.stopped) .metrics {
+  height: 68px;
+  flex-basis: 68px;
+}
+
+body:not(.stopped) .metric {
+  padding: 8px;
+}
+
+body:not(.stopped) .metric-name {
+  margin-bottom: 5px;
+}
+
+/* SIM3_RUNNING_LAYOUT_ONLY_V1_END */
+
+
+/* SIM3_TASK_WRAP_AND_STAGE6_LABEL_FIX_V1_BEGIN */
+
+/* Aktif gÃ¶rev baÅŸlÄ±ÄŸÄ± 2 satÄ±ra dÃ¼ÅŸsÃ¼n, tam ad daha iyi sÄ±ÄŸsÄ±n */
+.task{
+  min-height: 114px !important;
+}
+
+.task-id{
+  margin-right: 78px !important;
+  max-width: calc(100% - 86px) !important;
+  font-size: 17px !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.2px !important;
+  white-space: normal !important;
+  overflow: hidden !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+}
+
+.task-title{
+  margin-right: 78px !important;
+  max-width: calc(100% - 86px) !important;
+}
+
+/* “Rapor GPT'ye yükleniyor” etiketi sola çok yaklaşıyor.
+   Hem başlangıç hem bitişte daireyi kesmemesi için biraz sağa kaydır. */
+g.node[data-stage="6"] .label-bg,
+g.node[data-stage="6"] .node-label{
+  transform: translateX(16px);
+  transform-box: fill-box;
+}
+
+/* Eski HTML varyantÄ± iÃ§in fallback */
+.n6 .label{
+  position: relative;
+  left: 16px;
+}
+
+@supports not (-webkit-line-clamp: 2){
+  .task-id{
+    display: block !important;
+    max-height: 36px !important;
+  }
+}
+
+/* SIM3_TASK_WRAP_AND_STAGE6_LABEL_FIX_V1_END */
+
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="header">
+  <div class="brand">
+    <h1>GPT-Codex Otomasyonu</h1>
+    <span class="version">v4.7</span>
+  </div>
+  <div class="header-actions">
+    <button id="stopButton" class="stop-button" onclick="requestStop()">DURDUR</button>
+    <div id="statusPill" class="status-pill">RUNNING</div>
+  </div>
+</header>
+
+<div class="alert">
+  <div>&#9888;&nbsp; DURDU &bull; M&uuml;dahale Gerekli</div>
+  <div class="alert-tag">&#9679;&nbsp; DURDU</div>
+</div>
+
+<main class="content">
+<section class="card task">
+  <div class="eyebrow">Aktif G&ouml;rev</div>
+  <h2 id="taskId" class="task-id">YEN&#304; G&Ouml;REV</h2>
+  <p id="taskTitle" class="task-title">ChatGPT komutu bekleniyor</p>
+  <div class="task-icon">
+    <span class="doc-icon"></span>
+    <span class="warn-icon"></span>
+  </div>
+</section>
+
+<section class="card cycle-card">
+  <h2 class="section-title"><span>&#8635;</span> &#304;lerleme D&ouml;ng&uuml;s&uuml;</h2>
+  <div class="cycle-wrap">
+    <svg class="cycle-svg" viewBox="0 0 420 335" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4"
+                orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#b8c4d6"/>
+        </marker>
+      </defs>
+
+      <path class="flow" marker-end="url(#arrow)" d="M228 42 C278 43 320 64 343 91"/>
+      <path class="flow" marker-end="url(#arrow)" d="M365 113 C378 151 378 184 365 222"/>
+      <path class="flow" marker-end="url(#arrow)" d="M343 244 C318 273 278 292 228 294"/>
+      <path class="flow" marker-end="url(#arrow)" d="M192 294 C142 292 102 273 77 244"/>
+      <path class="flow" marker-end="url(#arrow)" d="M55 222 C42 184 42 151 55 113"/>
+      <path class="flow" marker-end="url(#arrow)" d="M77 91 C100 64 142 43 192 42"/>
+
+      <g class="node" data-stage="1">
+        <circle class="node-circle" cx="210" cy="42" r="26"/>
+        <text class="node-number" x="210" y="42">1</text>
+        <rect class="label-bg" x="147" y="73" width="126" height="35" rx="5"/>
+        <text class="node-label" x="210" y="87">
+          <tspan x="210">GPT g&#246;revi/cevab&#305;</tspan>
+          <tspan x="210" dy="14">bekleniyor</tspan>
+        </text>
+        <circle class="badge" cx="229" cy="60" r="10"/>
+        <text class="badge-clock" x="229" y="60">&#9687;</text>
+        <text class="badge-x" x="229" y="60">&#215;</text>
+      </g>
+
+      <g class="node" data-stage="2">
+        <circle class="node-circle" cx="350" cy="104" r="26"/>
+        <text class="node-number" x="350" y="104">2</text>
+        <rect class="label-bg" x="225" y="112" width="108" height="40" rx="5"/>
+        <text class="node-label" x="279" y="128">
+          <tspan x="295">G&#246;rev</tspan>
+          <tspan x="295" dy="14">yakalan&#305;yor</tspan>
+        </text>
+        <circle class="badge" cx="369" cy="122" r="10"/>
+        <text class="badge-mark" x="369" y="122">&#10003;</text>
+      </g>
+
+      <g class="node" data-stage="3">
+        <circle class="node-circle" cx="350" cy="230" r="26"/>
+        <text class="node-number" x="350" y="230">3</text>
+        <rect class="label-bg" x="225" y="187" width="108" height="40" rx="5"/>
+        <text class="node-label" x="279" y="203">
+          <tspan x="295">Codex'e</tspan>
+          <tspan x="295" dy="14">g&#246;nderiliyor</tspan>
+        </text>
+        <circle class="badge" cx="369" cy="248" r="10"/>
+        <text class="badge-mark" x="369" y="248">&#10003;</text>
+      </g>
+
+      <g class="node" data-stage="4">
+        <circle class="node-circle" cx="210" cy="294" r="26"/>
+        <text class="node-number" x="210" y="294">4</text>
+        <rect class="label-bg" x="155" y="226" width="110" height="40" rx="5"/>
+        <text class="node-label" x="210" y="241">
+          <tspan x="210">Codex</tspan>
+          <tspan x="210" dy="14">&#231;al&#305;&#351;&#305;yor</tspan>
+        </text>
+        <circle class="badge" cx="229" cy="312" r="10"/>
+        <text class="badge-mark" x="229" y="312">&#10003;</text>
+      </g>
+
+      <g class="node" data-stage="5">
+        <circle class="node-circle" cx="70" cy="230" r="26"/>
+        <text class="node-number" x="70" y="230">5</text>
+        <rect class="label-bg" x="92" y="187" width="108" height="40" rx="5"/>
+        <text class="node-label" x="146" y="203">
+          <tspan x="125">Rapor</tspan>
+          <tspan x="125" dy="14">&#252;retiliyor</tspan>
+        </text>
+        <circle class="badge" cx="89" cy="248" r="10"/>
+        <text class="badge-mark" x="89" y="248">&#10003;</text>
+      </g>
+
+      <g class="node" data-stage="6">
+        <circle class="node-circle" cx="70" cy="104" r="26"/>
+        <text class="node-number" x="70" y="104">6</text>
+        <rect class="label-bg" x="92" y="112" width="108" height="40" rx="5"/>
+        <text class="node-label" x="146" y="128">
+          <tspan x="125">Rapor GPT'ye</tspan>
+          <tspan x="125" dy="14">y&#252;kleniyor</tspan>
+        </text>
+        <circle class="badge" cx="89" cy="122" r="10"/>
+        <text class="badge-mark" x="89" y="122">&#10003;</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<section class="card error-card">
+  <div class="error-symbol"></div>
+  <div class="error-copy">
+    <h3>Duraklama Nedeni</h3>
+    <p id="stopReason">Hata nedeni belirtilmedi.</p>
+  </div>
+  <div class="error-actions">
+    <button class="primary" onclick="openPath('diagnostic')">Te&#351;his Dosyas&#305;</button>
+    <button onclick="openPath('report')">Rapor Konumu</button>
+  </div>
+</section>
+
+<section class="metrics">
+  <div class="metric">
+    <div class="metric-name">Durum</div>
+    <div id="metricStatus" class="metric-value status-value">RUNNING</div>
+  </div>
+  <div class="metric">
+    <div class="metric-name">Ge&#231;en S&#252;re</div>
+    <div id="metricTime" class="metric-value">00 dk 00 sn</div>
+  </div>
+  <div class="metric">
+    <div class="metric-name">Aktif A&#351;ama</div>
+    <div id="metricStage" class="metric-value stage-value">GPT g&#246;revi/cevab&#305; bekleniyor</div>
+  </div>
+</section>
+</main>
+</div>
+
+<script>
+let state={};
+const nodes=[...document.querySelectorAll(".node")];
+const stageLabels=[
+  "GPT g\u00f6revi/cevab\u0131 bekleniyor",
+  "G\u00f6rev yakalan\u0131yor",
+  "Codex'e g\u00f6nderiliyor",
+  "Codex \u00e7al\u0131\u015f\u0131yor",
+  "Rapor \u00fcretiliyor",
+  "Rapor GPT'ye y\u00fckleniyor"
+];
+
+function repairText(value){
+  return String(value??"")
+    .replace(/g\u00c3\u00b6rev/gi,"g\u00f6rev")
+    .replace(/G\u00c3\u00b6rev/g,"G\u00f6rev")
+    .replace(/yakaland\u00c4\u00b1/gi,"yakalan\u0131yor")
+    .replace(/g\u00c3\u00b6nderildi/gi,"g\u00f6nderiliyor")
+    .replace(/\u00c3\u00a7al\u00c4\u00b1\u00c5\u0178\u00c4\u00b1yor/gi,"\u00e7al\u0131\u015f\u0131yor")
+    .replace(/\u00c3\u00bcretildi/gi,"\u00fcretiliyor")
+    .replace(/y\u00c3\u00bcklendi/gi,"y\u00fckleniyor")
+    .replace(/Kullanici/g,"Kullan\u0131c\u0131")
+    .replace(/uzerinden/g,"\u00fczerinden")
+    .replace(/guvenli/g,"g\u00fcvenli");
+}
+
+function applyState(s){
+  state=s||{};
+  const raw=String(state.overall_status||"running").toLowerCase();
+  const stopped=["stopped","error","failed","paused","stopping"].includes(raw);
+  const stage=Math.min(6,Math.max(1,Number(state.cycle_stage||1)));
+
+  document.body.classList.toggle("stopped",stopped);
+  document.getElementById("statusPill").textContent=stopped?"DURDU":"RUNNING";
+  document.getElementById("taskId").textContent=repairText(state.active_task_id||"YEN\u0130 G\u00d6REV");
+  document.getElementById("taskTitle").textContent=repairText(state.active_task_title||"ChatGPT komutu bekleniyor");
+  document.getElementById("stopReason").textContent=repairText(state.stop_reason||"Hata nedeni belirtilmedi.");
+  document.getElementById("metricStatus").textContent=stopped?"DURDU":"RUNNING";
+  document.getElementById("metricTime").textContent=repairText(state.elapsed_text||"00 dk 00 sn");
+  document.getElementById("metricStage").textContent=stageLabels[stage-1];
+
+  const button=document.getElementById("stopButton");
+  button.disabled=stopped;
+  button.textContent=stopped?"DURDU":"DURDUR";
+
+  nodes.forEach((node,index)=>{
+    node.classList.remove("completed","active","failed");
+    const number=index+1;
+    if(number<stage)node.classList.add("completed");
+    if(number===stage)node.classList.add(stopped?"failed":"active");
+  });
+}
+
+async function poll(){
+  try{
+    const response=await fetch("state.json?ts="+Date.now(),{cache:"no-store"});
+    if(response.ok)applyState(await response.json());
+  }catch(_){}
+  setTimeout(poll,600);
+}
+
+async function requestStop(){
+  if(!confirm("SIM3 otomasyonunu g\u00fcvenli \u015fekilde durdurmak istedi\u011finize emin misiniz?"))return;
+  const button=document.getElementById("stopButton");
+  button.disabled=true;
+  button.textContent="DURUYOR";
+  try{
+    const response=await fetch("/action?kind=stop",{method:"POST",cache:"no-store"});
+    if(!response.ok)throw new Error("stop failed");
+  }catch(_){
+    button.disabled=false;
+    button.textContent="DURDUR";
+    alert("Durdurma iste\u011fi g\u00f6nderilemedi.");
+  }
+}
+
+function openPath(kind){
+  fetch("/action?kind="+encodeURIComponent(kind),{cache:"no-store"}).catch(()=>{});
+}
+
+poll();
+</script>
+</body>
+</html>
