@@ -107,3 +107,35 @@ jobs:
             gold_axis_2026/results_2024.csv
             gold_axis_2026/summary_2023_2024.json
           if-no-files-found: error
+
+  run-august-2026:
+    if: startsWith(github.event.issue.title, '[TEMP-GOLD-AUG-2026-RUN]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Checkout isolated model branch
+        uses: actions/checkout@v4
+        with:
+          ref: tmp-gold-2026-model-test
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas scikit-learn requests
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Run August 2026 one-month forecast
+        run: |
+          sed -i 's|lbruton/StakTrakr/master|lbruton/StakTrakr/main|g' gold_axis_2026/run_models.py
+          cd gold_axis_2026
+          python run_august_2026.py
+      - name: Upload August forecast
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-axis-august-2026-forecast
+          path: |
+            gold_axis_2026/forecast_august_2026.csv
+            gold_axis_2026/forecast_august_2026.json
+          if-no-files-found: error
