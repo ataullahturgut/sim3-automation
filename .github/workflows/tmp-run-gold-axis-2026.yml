@@ -1,4 +1,4 @@
-name: temporary gold axis 2026 runner
+name: temporary gold axis replay runner
 
 on:
   issues:
@@ -12,7 +12,7 @@ env:
   PYTHONUNBUFFERED: '1'
 
 jobs:
-  run-models:
+  run-2026:
     if: github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, '[TEMP-GOLD-2026-RUN]')
     runs-on: ubuntu-latest
     timeout-minutes: 50
@@ -21,23 +21,19 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: tmp-gold-2026-model-test
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install numpy pandas scikit-learn requests
           pip install torch --index-url https://download.pytorch.org/whl/cpu
-
       - name: Run Jan-Jul 2026 leakage-safe replay
         run: |
           sed -i 's|lbruton/StakTrakr/master|lbruton/StakTrakr/main|g' gold_axis_2026/run_models.py
           python gold_axis_2026/run_models.py
-
       - name: Upload numerical results
         uses: actions/upload-artifact@v4
         with:
@@ -45,4 +41,36 @@ jobs:
           path: |
             gold_axis_2026/results_2026.csv
             gold_axis_2026/summary_2026.json
+          if-no-files-found: error
+
+  run-2025:
+    if: startsWith(github.event.issue.title, '[TEMP-GOLD-2025-RUN]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Checkout isolated model branch
+        uses: actions/checkout@v4
+        with:
+          ref: tmp-gold-2026-model-test
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas scikit-learn requests
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Run Jan-Dec 2025 leakage-safe replay
+        run: |
+          sed -i 's|lbruton/StakTrakr/master|lbruton/StakTrakr/main|g' gold_axis_2026/run_models.py
+          cd gold_axis_2026
+          python run_models_2025.py
+      - name: Upload numerical results
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-axis-2025-results
+          path: |
+            gold_axis_2026/results_2025.csv
+            gold_axis_2026/summary_2025.json
           if-no-files-found: error
