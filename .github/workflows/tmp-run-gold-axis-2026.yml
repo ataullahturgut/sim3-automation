@@ -74,3 +74,36 @@ jobs:
             gold_axis_2026/results_2025.csv
             gold_axis_2026/summary_2025.json
           if-no-files-found: error
+
+  run-2023-2024:
+    if: startsWith(github.event.issue.title, '[TEMP-GOLD-2023-2024-RUN]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout isolated model branch
+        uses: actions/checkout@v4
+        with:
+          ref: tmp-gold-2026-model-test
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas scikit-learn requests
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Run Jan-Dec 2023 and 2024 leakage-safe replay
+        run: |
+          sed -i 's|lbruton/StakTrakr/master|lbruton/StakTrakr/main|g' gold_axis_2026/run_models.py
+          cd gold_axis_2026
+          python run_models_2023_2024.py
+      - name: Upload numerical results
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-axis-2023-2024-results
+          path: |
+            gold_axis_2026/results_2023.csv
+            gold_axis_2026/results_2024.csv
+            gold_axis_2026/summary_2023_2024.json
+          if-no-files-found: error
