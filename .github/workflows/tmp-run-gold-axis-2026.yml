@@ -162,7 +162,7 @@ jobs:
         run: |
           sed -i 's|lbruton/StakTrakr/master|lbruton/StakTrakr/main|g' gold_axis_2026/run_models.py
           cd gold_axis_2026
-          python run_autopsy_monthly.py
+          python run_autopsy_monthly_compat.py
       - name: Upload autopsy results
         uses: actions/upload-artifact@v4
         with:
