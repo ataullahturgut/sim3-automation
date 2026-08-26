@@ -1,0 +1,51 @@
+name: tmp gold 2026 model test
+
+on:
+  push:
+    branches:
+      - tmp-gold-2026-model-test
+    paths:
+      - 'gold_axis_2026/**'
+      - '.github/workflows/tmp-gold-2026-model-test.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  run-models:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout isolated test branch
+        uses: actions/checkout@v4
+        with:
+          ref: tmp-gold-2026-model-test
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas scikit-learn requests
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Run leakage-safe 2026 replay
+        run: |
+          sed -i 's|lbruton/StakTrakr/master|lbruton/StakTrakr/main|g' gold_axis_2026/run_models.py
+          python gold_axis_2026/run_models.py
+
+      - name: Commit result artifacts to isolated branch
+        run: |
+          git config user.name 'chatgpt-model-run'
+          git config user.email 'chatgpt-model-run@users.noreply.github.com'
+          git add gold_axis_2026/results_2026.csv gold_axis_2026/summary_2026.json
+          if git diff --cached --quiet; then
+            echo 'No result changes to commit.'
+          else
+            git commit -m 'Gold 2026 model results [skip ci]'
+            git push origin HEAD:tmp-gold-2026-model-test
+          fi
