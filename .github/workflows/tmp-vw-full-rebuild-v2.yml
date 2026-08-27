@@ -1,0 +1,44 @@
+name: temporary vw full rebuild v2
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+
+env:
+  PYTHONUNBUFFERED: '1'
+
+jobs:
+  run-v2:
+    if: startsWith(github.event.issue.title, '[TEMP-GOLD-VW-FULL-V2]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout model branch
+        uses: actions/checkout@v4
+        with:
+          ref: tmp-gold-2026-model-test
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas scikit-learn requests yfinance xlrd
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Run audited publication-safe VW rebuild v2
+        run: |
+          sed -i 's|lbruton/StakTrakr/master|lbruton/StakTrakr/main|g' gold_axis_2026/run_models.py
+          cd gold_axis_2026
+          python run_vw_full_rebuild_v2.py
+      - name: Upload v2 results
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-vw-full-rebuild-v2
+          path: |
+            gold_axis_2026/v2_*.csv
+            gold_axis_2026/v2_meta.json
+          if-no-files-found: error
