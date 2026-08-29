@@ -1,0 +1,23 @@
+name: Gold Emergency Shock Override Audit
+on:
+  push:
+    paths:
+      - 'projects/gold_h1_r1/run_emergency_shock_override.py'
+      - '.github/workflows/gold_emergency_shock_override.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: pip install pandas numpy
+      - run: python projects/gold_h1_r1/run_emergency_shock_override.py
+      - run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add projects/gold_h1_r1/emergency_shock_*.csv projects/gold_h1_r1/EMERGENCY_SHOCK_OVERRIDE_R1.md
+          git diff --cached --quiet || (git commit -m 'Add emergency shock override audit results' && git push)
