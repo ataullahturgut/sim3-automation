@@ -1,0 +1,25 @@
+name: Gold Bidirectional Emergency Audit
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'projects/gold_h1_r1/run_bidirectional_emergency_audit.py'
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pandas numpy
+      - run: python projects/gold_h1_r1/run_bidirectional_emergency_audit.py
+      - name: Commit results
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add projects/gold_h1_r1/bidirectional_emergency_rule_audit.csv projects/gold_h1_r1/bidirectional_emergency_2023_replay.csv projects/gold_h1_r1/BIDIRECTIONAL_EMERGENCY_AUDIT_R1.md
+          git diff --cached --quiet || git commit -m 'Run bidirectional emergency audit'
+          git push
