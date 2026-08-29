@@ -1,0 +1,25 @@
+name: Gold 2023 Intramonth Trading Replay
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'projects/gold_h1_r1/run_2023_intramonth_trading_replay.py'
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pandas numpy
+      - run: python projects/gold_h1_r1/run_2023_intramonth_trading_replay.py
+      - name: Commit results
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add projects/gold_h1_r1/INTRAMONTH_2023_*.csv projects/gold_h1_r1/INTRAMONTH_2023_REPORT.md
+          git diff --cached --quiet || git commit -m 'Run 2023 intramonth trading replay'
+          git push
