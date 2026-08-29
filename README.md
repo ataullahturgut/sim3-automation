@@ -2,6 +2,10 @@
 
 SIM3 Automation is a Windows desktop automation workflow that captures a task from ChatGPT, runs the configured Codex workflow, tracks execution, delivers the generated report, and waits for the next response.
 
+## Persistent research projects
+
+- **Gold H1 R1:** [`projects/gold_h1_r1/README.md`](projects/gold_h1_r1/README.md) — persistent source of truth for the gold 1-month-ahead forecasting/direction project, including frozen methodology, source lineage, audit exports, component decisions, and cross-chat recovery checklist.
+
 ## Quick start
 
 1. Install the prerequisites listed in [`docs/INSTALLATION.md`](docs/INSTALLATION.md).
@@ -22,6 +26,8 @@ SIM3_AUTOMATION_PUBLIC_RELEASE/
 ├─ SECURITY.md                 Security guidance
 ├─ PRIVACY.md                  Local-data handling notes
 ├─ docs/                       Installation, coordinate calibration, and troubleshooting
+├─ projects/                   Persistent research/project state
+│  └─ gold_h1_r1/              Gold forecasting source of truth
 └─ automation/                 Application runtime and source files
 ```
 
