@@ -1,0 +1,18 @@
+section,component,status_or_model,period,net_return,annualized_return,mdd,calmar,turnover,upside_capture,downside_capture,use
+FINAL_DECISION,CUSUM-return,REJECT — development improvement failed 2021–2023 validation and reacted later in 2022/2026.,,,,,,,,,
+FINAL_DECISION,BOCPD-volatility,REJECT — validation worse; false-risk behavior during bullish volatility (e.g. Mar-2024).,,,,,,,,,
+FINAL_DECISION,Dual BOCPD,REJECT — volatility branch contaminates return signal; validation inferior despite strong locked replay.,,,,,,,,,
+FINAL_DECISION,BOCPD-return detector,KEEP — structural/regime-break alert.,,,,,,,,,
+FINAL_DECISION,BOCPD as direction vote,REJECT — Stage 2 worsened Brier and log-loss vs Tactical alone.,,,,,,,,,
+FINAL_DECISION,BOCPD as 1-month loss predictor,NOT_PROVEN — Stage 3 validation did not show adverse next-month separation.,,,,,,,,,
+FINAL_DECISION,BOCPD as 2–3M risk context,PROVISIONAL KEEP — suggestive validation and strong 2026 locked behavior but small alarm N.,,,,,,,,,
+FINAL_DECISION,BOCPD + Tactical CONFLICT,PROVISIONAL RESEARCH LABEL ONLY — DEV N=1; VAL N=2; LOCK N=0.,,,,,,,,,
+FINAL_DECISION,Automatic BOCPD position reduction/exit,NOT_APPROVED.,,,,,,,,,
+FINAL_DECISION,Tactical R1,KEEP as CONFIRM/CONFLICT confidence layer; continuous hard gate remains REJECTED.,,,,,,,,,
+FINAL_DECISION,Final architecture,CORE monthly direction/level + Tactical CONFIRM/CONFLICT + BOCPD-return regime-risk alert; signals remain separate.,,,,,,,,,
+ECONOMIC,,3M baseline,DEV,0.4501326585,0.0343640795,-0.2974350666,0.1155347278,34,0.6105709865,0.5425717079,Reference
+ECONOMIC,,BOCPD diagnostic overlay,DEV,0.4935769667,0.0371435562,-0.2992000192,0.1241428938,34,0.5893796349,0.4950203438,Diagnostic only
+ECONOMIC,,3M baseline,VAL,0.077455628,0.025179228,-0.054946729,0.4582479878,7,0.504093319,0.4077706581,Reference
+ECONOMIC,,BOCPD diagnostic overlay,VAL,0.0862558174,0.0279627364,-0.0517705339,0.5401284141,7,0.504093319,0.3865001392,Positive diagnostic evidence
+ECONOMIC,,3M baseline,LOCK,1.3255583765,0.3863775416,-0.0605021912,6.3861743463,2,1.0,0.401202136,Reference
+ECONOMIC,,BOCPD diagnostic overlay,LOCK,1.3920591985,0.4015912891,-0.0336366534,11.9390976402,2,1.0,0.2850405963,Strong locked diagnostic; NOT production mapping
