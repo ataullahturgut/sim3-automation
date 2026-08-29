@@ -1,0 +1,20 @@
+name: Gold Macro Reversal Audit
+on:
+  push:
+    paths: ['projects/gold_h1_r1/run_macro_reversal_audit.py','.github/workflows/gold_macro_reversal_audit.yml']
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: pip install pandas numpy
+      - run: python projects/gold_h1_r1/run_macro_reversal_audit.py
+      - run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add projects/gold_h1_r1/macro_*.csv projects/gold_h1_r1/MACRO_REVERSAL_AUDIT_R1.md
+          git diff --cached --quiet || (git commit -m 'Add macro reversal audit results' && git push)
