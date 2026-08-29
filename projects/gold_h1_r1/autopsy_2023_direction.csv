@@ -1,0 +1,13 @@
+month,origin_gold,actual_gold,actual_move_pct,actual_dir,mom3_forecast,mom3_dir,mom3_hit,mom1_dir,tactical_dir,tactical_relation,weekly_close,weekly_sma4,vw_forecast,vw_dir,patch_forecast,patch_dir,idma_forecast,idma_dir,gpr,fedfunds,classification
+2023-01,1798,1898,5.5617,1,1839.3504,1,1,1,0,NEUTRAL,1823.51,1802.96,1823.0737,1,1799.3105,1,1805.9855,1,111.20,4.10,correct trend continuation
+2023-02,1898,1855,-2.2655,-1,1983.1537,1,0,1,1,CONFIRM,1926.73,1909.65,1905.6621,1,1913.3991,1,1910.6701,1,104.27,4.33,collective surprise reversal; no pre-month technical disagreement
+2023-03,1855,1913,3.1267,1,1901.5486,1,1,-1,-1,CONFLICT,1810.83,1845.9025,1828.8870,-1,1862.1369,1,1863.5524,1,120.99,4.57,3M correct despite Tactical/VW conflict
+2023-04,1913,2000,4.5478,1,1953.9565,1,1,1,1,CONFIRM,1968.35,1950.675,1965.2284,1,1917.9706,1,1922.2393,1,105.38,4.65,broad confirmation and correct
+2023-05,2000,1992,-0.4000,-1,2036.0598,1,0,1,-1,CONFLICT,1989.74,1995.77,2016.4009,1,1995.8756,-1,2010.3655,1,106.81,4.83,weak downside reversal; Tactical and Patch warned; move small
+2023-06,1992,1943,-2.4598,-1,2040.3028,1,0,-1,-1,CONFLICT,1946.23,1987.79,1972.7583,-1,1993.2763,1,2002.1591,1,108.47,5.06,clear trend-lag error; 1M Tactical and VW had turned DOWN
+2023-07,1943,1951,0.4117,1,1953.9326,1,1,-1,-1,CONFLICT,1919.42,1939.61,1928.3248,-1,1952.6693,1,1952.3905,1,110.53,5.08,3M correct despite 1M Tactical and VW bearish conflict
+2023-08,1951,1919,-1.6402,-1,1935.0792,-1,1,1,1,CONFLICT,1959.14,1950.365,1975.3538,1,1952.6419,1,1960.4192,1,107.45,5.12,3M correct despite Tactical VW Patch and IDMA bullish conflict
+2023-09,1919,1916,-0.1563,-1,1895.4072,-1,1,-1,-1,CONFIRM,1914.45,1914.9775,1925.2360,1,1923.3604,1,1927.9201,1,101.14,5.33,3M correct; other level models mostly bullish
+2023-10,1916,1916,0.0000,0,1907.1559,-1,0,-1,-1,CONFIRM,1848.37,1904.01,1886.9077,-1,1923.5450,1,1924.8099,1,98.63,5.33,flat target; direction-score artifact rather than economic miss
+2023-11,1916,1984,3.5491,1,1904.5263,-1,0,0,1,CONFLICT,2005.76,1938.1275,1955.5484,1,1914.7089,-1,1924.7395,1,197.89,5.33,clear upside reversal; Tactical VW and IDMA UP while 3M and Patch DOWN; GPR shock
+2023-12,1984,2026,2.1169,1,2006.4372,1,1,1,1,CONFIRM,2002.12,1978.08,2017.5153,1,1994.8622,1,1993.5408,1,156.70,5.33,broadly correct upward recovery
