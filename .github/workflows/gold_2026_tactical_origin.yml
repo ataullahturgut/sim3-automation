@@ -1,0 +1,24 @@
+name: Gold 2026 Tactical Origin
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'projects/gold_h1_r1/run_2026_tactical_origin.py'
+      - '.github/workflows/gold_2026_tactical_origin.yml'
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: pip install pandas numpy
+      - run: python projects/gold_h1_r1/run_2026_tactical_origin.py
+      - run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add projects/gold_h1_r1/tactical_origin_2026_jan_jul.csv
+          git diff --cached --quiet || git commit -m 'Rebuild 2026 tactical origins'
+          git push
