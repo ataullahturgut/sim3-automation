@@ -1,0 +1,32 @@
+name: Gold Weekly Reversal Audit
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'projects/gold_h1_r1/run_weekly_reversal.py'
+      - 'projects/gold_h1_r1/monthly_direction_min_2010_2023.csv'
+      - '.github/workflows/gold_weekly_reversal_audit.yml'
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pandas numpy
+      - name: Run data gate and reversal audit
+        run: python projects/gold_h1_r1/run_weekly_reversal.py
+      - name: Commit audited outputs
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add projects/gold_h1_r1/d1_w1_reconciliation_2010_2022.csv \
+                  projects/gold_h1_r1/weekly_event_panel_2010_2023.csv \
+                  projects/gold_h1_r1/weekly_reversal_rule_audit.csv \
+                  projects/gold_h1_r1/weekly_reversal_frozen_2023_test.csv \
+                  projects/gold_h1_r1/WEEKLY_REVERSAL_DISCRIMINATOR_R1.md || true
+          git diff --cached --quiet || git commit -m 'Run gold weekly reversal audit'
+          git push
