@@ -41,7 +41,7 @@ for f in F:
 for i,f1 in enumerate(F):
  for f2 in F[i+1:]:
   for q1,q2 in ((.5,.5),(.25,.5),(.5,.25)):
-   t1=float(dc[f1].dropna().quantile(q1));t2=float(dc[f2].dropna().quantile(q2));md=met(D,(D[f1]>=t1)&(D[f2]>=t2));mv=met(V,(V[f1]>=t1)&(V[f2]>=t2); C.append(['and',f1,f2,q1,q2,t1,t2,*md.values(),*mv.values()])
+   t1=float(dc[f1].dropna().quantile(q1));t2=float(dc[f2].dropna().quantile(q2));md=met(D,(D[f1]>=t1)&(D[f2]>=t2));mv=met(V,(V[f1]>=t1)&(V[f2]>=t2)); C.append(['and',f1,f2,q1,q2,t1,t2,*md.values(),*mv.values()])
 cols=['kind','f1','f2','q1','q2','t1','t2']+[f'dev_{k}' for k in bd]+[f'val_{k}' for k in bv]; A=pd.DataFrame(C,columns=cols); A['dev_net']=A.dev_corrected-A.dev_damaged;A['val_net']=A.val_corrected-A.val_damaged;A['qualified']=(A.dev_acc>=bd['acc'])&(A.dev_net>0)&(A.val_acc>bv['acc'])&(A.val_ba>bv['ba'])&(A.val_net>0)&(A.val_flips>=2)
 Q=A[A.qualified].copy(); best=None; status='NOT_PROVEN_PRE2023'
 if len(Q):
