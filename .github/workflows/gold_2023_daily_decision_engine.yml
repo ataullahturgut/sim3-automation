@@ -1,0 +1,26 @@
+name: Gold 2023 Full Daily Decision Engine
+on:
+  push:
+    paths:
+      - 'projects/gold_h1_r1/run_2023_daily_decision_engine.py'
+      - '.github/workflows/gold_2023_daily_decision_engine.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pandas numpy
+      - run: python projects/gold_h1_r1/run_2023_daily_decision_engine.py
+      - name: Commit results
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add projects/gold_h1_r1/DAILY_DECISION_2023_*.csv projects/gold_h1_r1/DAILY_DECISION_2023_REPORT.md
+          git diff --cached --quiet || git commit -m 'Run full daily 2023 decision engine'
+          git push
