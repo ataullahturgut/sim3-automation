@@ -1,0 +1,37 @@
+{
+  "project": "GOLD_H1_R1",
+  "repository": "ataullahturgut/sim3-automation",
+  "state_date": "2026-08-29",
+  "target": "next calendar month's CORE5 GOLD_USD_OZ monthly average",
+  "forecast_origin": "previous completed month end",
+  "methodology": {
+    "random_split": false,
+    "future_target_in_tuning": false,
+    "rolling_or_expanding_origin": true,
+    "2026_tuning": false
+  },
+  "architecture": {
+    "level_model": "VW-MIDAS-SVR Adapt V2 audited shadow/reference; exact archived rerun remains BLOCKED_NOT_PROVEN",
+    "monthly_direction": "VW direction + exact 3M Momentum disagreement/context; 3M is challenger, not universal direction engine",
+    "tactical": "NEW TACTICAL R1 CONFIRM/CONFLICT layer",
+    "regime_risk": "BOCPD-return alert only",
+    "gvz": "planned risk context; not yet frozen in current chain"
+  },
+  "critical_corrections": [
+    "autopsy_regime_gate.csv is a price-model selector among VW/Patch/Momentum/RW, not the canonical direction engine.",
+    "Old TACTICAL V2 exact M20/M40 definition is missing and must remain BLOCKED_MISSING_EXACT_RULE.",
+    "2024-2026 is procedurally locked historical replay, not untouched prospective holdout.",
+    "Do not tune new rules on 2025-2026 success or 2026 downturn."
+  ],
+  "final_component_status": {
+    "MOM3": "KEEP as bull/trend-continuation challenger",
+    "VW_direction": "KEEP as secondary disagreement signal",
+    "TACTICAL_R1": "KEEP as CONFIRM/CONFLICT; automatic flip CHALLENGER only",
+    "CUSUM_return": "REJECT",
+    "BOCPD_volatility": "REJECT",
+    "DUAL_BOCPD": "REJECT",
+    "BOCPD_return": "KEEP as structural/regime-break risk alert",
+    "BOCPD_auto_exposure": "NOT_APPROVED"
+  },
+  "next_research_focus": "2023-2024 reproducible direction-error autopsy and minimal reversal correction, with 2025-2026 preservation tests; do not confuse model-selector with direction engine."
+}
