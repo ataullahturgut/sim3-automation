@@ -44,14 +44,12 @@ up_rule=max(choices)[-1] if choices else (0.04,0.05,50)
 rows=[]
 for _,r in A.iterrows():
     m=r.month; actual=int(r.actual_dir); prior=int(r.mom3_dir); start_hit=int(prior==actual)
-    # origin evidence only
     disagree=[]
     if int(r.mom1_dir)!=0 and int(r.mom1_dir)!=prior: disagree.append('MOM1')
     if int(r.vw_dir)!=prior: disagree.append('VW')
     if int(r.patch_dir)!=prior: disagree.append('PATCH')
     if int(r.idma_dir)!=prior: disagree.append('IDMA')
     if str(r.tactical_relation)=='CONFLICT': disagree.append('TACTICAL')
-    # Emergency is intramonth and cannot rewrite start-of-month forecast.
     if prior==1: eh,ed=hit_down(m); etype='DOWN_FRACTURE' if eh else ''
     elif prior==-1: eh,ed=hit_up(m,up_rule); etype='UP_SHOCK' if eh else ''
     else: eh,ed=False,pd.NaT; etype=''
@@ -69,3 +67,4 @@ for _,r in R.iterrows(): lines.append(f"|{r.month}|{r.actual_dir:+d}|{r.mom3_dir
 lines+=['','## Contract','- Each month is evaluated separately at its own origin.','- 2023 outcomes do not select the upside emergency rule; selection uses only 2010-2022.','- Tactical disagreement does not automatically flip direction.','- Emergency signals are intramonth; they are reported separately from start-of-month forecast.','- Exact-flat October is shown separately rather than treated as an economic reversal.']
 (OUT/'FULL_SYSTEM_2023_MONTHLY_REPORT.md').write_text('\n'.join(lines)+'\n')
 print('\n'.join(lines))
+# trigger: 2026-08-30 monthly replay
