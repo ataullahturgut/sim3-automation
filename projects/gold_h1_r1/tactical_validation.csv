@@ -1,0 +1,16 @@
+Period,State,N,3M Direction Hit,Interpretation,Unnamed: 5
+DEV 2010-2020,CONFIRM,53,0.8302,Persistent weekly state agrees with 3M.,
+DEV 2010-2020,CONFLICT,36,0.25,Persistent weekly state opposes 3M.,
+DEV 2010-2020,NEUTRAL,40,0.375,No 2-week persistent weekly state.,
+VAL 2021-2023,CONFIRM,14,0.7143,Validation confirmation retains useful discrimination.,
+VAL 2021-2023,CONFLICT,14,0.2143,Validation conflict is strongly associated with 3M error.,
+VAL 2021-2023,NEUTRAL,7,0.5714,Small sample; no production inference.,
+LOCKED 2024→Apr-2026,CONFIRM,15,0.8667,Safe W1 window before detected 2026 weekly-file corruption.,
+LOCKED 2024→Apr-2026,CONFLICT,4,0.25,Very small N; directional flip remains challenger only.,
+LOCKED 2024→Apr-2026,NEUTRAL,9,0.7778,Small N; do not tune from this period.,
+,,,,,
+,,,,,
+Period,Base 3M Acc.,Flip Challenger Acc.,Base Balanced Acc.,Flip Balanced Acc.,Decision
+DEV 2010-2020,0.527,0.6667,0.524,0.6641,CHALLENGER ONLY
+VAL 2021-2023,0.4857,0.7143,0.4853,0.7141,CHALLENGER ONLY
+LOCKED 2024→Apr-2026,0.75,0.8214,0.5,0.6905,CHALLENGER ONLY
