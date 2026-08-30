@@ -1,0 +1,7 @@
+side,score_thr,ret_thr,period,eligible_months,needs,triggers,corrected,damaged,precision,utility
+DOWN,1,0.005,DEV,77,36,11,8,3,0.7272727272727273,5
+DOWN,1,0.005,VAL,9,6,3,3,0,1.0,3
+DOWN,1,0.005,TEST2023,8,3,1,1,0,1.0,1
+UP,1,0.0,DEV,53,26,23,16,7,0.6956521739130435,9
+UP,1,0.0,VAL,15,8,6,5,1,0.8333333333333334,4
+UP,1,0.0,TEST2023,3,1,2,1,1,0.5,0

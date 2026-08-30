@@ -1,0 +1,12 @@
+target,actual_dir,prior_dir,eligible_side,trigger,trigger_date,close,macro_gold_score,macro_series,GVZCLS,gvz_stress
+2023-01,1,1,DOWN,False,,,,,,False
+2023-02,-1,1,DOWN,True,2023-02-03,1864.97,-2.0,UNRATE;PAYEMS;CES0500000003,15.06,False
+2023-03,1,1,DOWN,False,,,,,,False
+2023-04,1,1,DOWN,False,,,,,,False
+2023-05,-1,1,DOWN,False,,,,,,False
+2023-06,-1,1,DOWN,False,,,,,,False
+2023-07,1,1,DOWN,False,,,,,,False
+2023-08,-1,-1,UP,False,,,,,,False
+2023-09,-1,-1,UP,True,2023-09-01,1940.11,1.0,UNRATE;PAYEMS;CES0500000003,11.28,False
+2023-11,1,-1,UP,True,2023-11-03,1992.15,3.0,UNRATE;PAYEMS;CES0500000003,14.04,False
+2023-12,1,1,DOWN,False,,,,,,False
