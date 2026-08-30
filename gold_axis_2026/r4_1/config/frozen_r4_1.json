@@ -1,0 +1,50 @@
+{
+  "version": "R4.1-challenger",
+  "freeze_date": "2026-08-30",
+  "core": {
+    "price_model": "VW-MIDAS-SVR Adapt V2",
+    "direction_model": "3M Momentum",
+    "monthly_forecast_refit_inside_target_month": false
+  },
+  "tactical": {
+    "fast_sma_days": 20,
+    "fast_persistence_days": 2,
+    "slow_sma_weeks": 4,
+    "slow_persistence_weeks": 2,
+    "role": "CONFIRM_CONFLICT"
+  },
+  "emergency": {
+    "level_threshold_abs": 0.04,
+    "reversal_threshold_abs": 0.04,
+    "reversal_role": "ALERT_ONLY",
+    "auto_full_direction_flip": false,
+    "intraday_rule": "NOT_RECOVERED"
+  },
+  "gvz": {
+    "full_cap_max": 25.9795,
+    "half_cap_max": 30.5238,
+    "panic_above": 30.5238,
+    "caps": {"normal": 1.0, "elevated": 0.5, "panic": 0.25},
+    "role": "RISK_ONLY"
+  },
+  "bocpd": {
+    "variant": "return",
+    "role": "REGIME_CONTEXT_ONLY",
+    "direction_vote": false,
+    "automatic_position_modifier": false
+  },
+  "macro_event_down": {
+    "status": "BLOCKED_NOT_FULLY_RECOVERED",
+    "known_partial_contract": {
+      "requires_fast_down": true,
+      "same_day_gold_return_lte": -0.005,
+      "macro_score_lte": -1
+    }
+  },
+  "anti_leakage": {
+    "random_split": false,
+    "target_month_data_in_monthly_refit": false,
+    "threshold_tuning_on_2026": false,
+    "execution_default": "NEXT_SESSION_AFTER_EOD_SIGNAL"
+  }
+}
