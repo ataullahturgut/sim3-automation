@@ -19,7 +19,10 @@
 - August 3M monthly-average forecast: 3878.43 (DOWN from July 4073)
 
 ## August main price experts
-- AUGUST_FULL_EXPERT_FORECAST=BLOCKED_NOT_GENERATED
+- rw: 4073.0
+- 3m_momentum: 3878.434368295046
+- vw_midas_msvr: 4090.462171912403
+- causal_patch_transformer: 4081.814211214794
 
 ## Trades
 |Date|Close|Action|Reason|Prior|Fast|Slow|GVZ|Evidence|
