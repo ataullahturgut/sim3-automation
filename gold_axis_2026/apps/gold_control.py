@@ -9,24 +9,22 @@ import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[1]
 R41 = ROOT / "r4_1"
-PREDICTIONS = ROOT / "monthly_predictions_2023_2026.csv"
-RESULTS_2026 = ROOT / "results_2026.csv"
+PROD = ROOT / "production_closure"
+HISTORY = PROD / "production_history_43.csv"
+SCORECARD = PROD / "common_scorecard.csv"
+PROVENANCE = PROD / "PROVENANCE.json"
 LATEST_SIGNAL = R41 / "output" / "latest_signal.json"
 CONFIG = R41 / "config" / "frozen_r4_1.json"
 BLOCKERS = R41 / "KNOWN_BLOCKERS.md"
 
 st.set_page_config(page_title="Gold Control", page_icon="🟡", layout="wide")
-
 st.markdown(
     """
     <style>
     .block-container {padding-top: 1rem; padding-bottom: 4rem; max-width: 1100px;}
     div[data-testid="stMetric"] {border: 1px solid rgba(128,128,128,.25); border-radius: 14px; padding: 10px;}
     .statebox {padding: 18px; border-radius: 16px; border: 1px solid rgba(128,128,128,.30); margin: 8px 0 18px 0;}
-    @media (max-width: 640px) {
-      .block-container {padding-left: .75rem; padding-right: .75rem;}
-      h1 {font-size: 1.7rem !important;}
-    }
+    @media (max-width: 640px) {.block-container {padding-left: .75rem; padding-right: .75rem;} h1 {font-size: 1.7rem !important;}}
     </style>
     """,
     unsafe_allow_html=True,
@@ -34,64 +32,60 @@ st.markdown(
 
 
 def load_json(path: Path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+
+
+@st.cache_data
+def load_csv(path: Path) -> pd.DataFrame:
     if not path.exists():
-        return {}
-    return json.loads(path.read_text(encoding="utf-8"))
-
-
-@st.cache_data
-def load_predictions() -> pd.DataFrame:
-    if not PREDICTIONS.exists():
         return pd.DataFrame()
-    df = pd.read_csv(PREDICTIONS)
-    df["month"] = pd.to_datetime(df["month"], errors="coerce")
-    return df.sort_values("month")
-
-
-@st.cache_data
-def load_2026() -> pd.DataFrame:
-    if not RESULTS_2026.exists():
-        return pd.DataFrame()
-    df = pd.read_csv(RESULTS_2026)
-    df["month"] = pd.to_datetime(df["month"], errors="coerce")
-    return df.sort_values("month")
+    df = pd.read_csv(path)
+    if "month" in df.columns:
+        df["month"] = pd.to_datetime(df["month"], errors="coerce")
+        df = df.sort_values("month")
+    return df
 
 
 config = load_json(CONFIG)
+prov = load_json(PROVENANCE)
 latest = load_json(LATEST_SIGNAL)
-pred = load_predictions()
-r2026 = load_2026()
+history = load_csv(HISTORY)
+scorecard = load_csv(SCORECARD)
 
 st.title("🟡 Gold Control")
-st.caption("XAU/USD • forecast • direction • tactical • emergency • risk • audit")
+st.caption("Production-closure lineage • XAU/USD monthly forecast • R4.1 signals • audit")
 
-# Mobile-friendly navigation: Streamlit tabs render horizontally and can be swiped/scrolled on iPhone.
 today_tab, signals_tab, data_tab, forecast_tab, history_tab, audit_tab = st.tabs(
     ["Today", "Signals", "Data", "Forecast", "History", "Audit"]
 )
 
 with today_tab:
     if not latest:
-        st.warning("CANLI SİNYAL HENÜZ BAĞLANMADI. Bu ekran sahte/güncel olmayan değer üretmez.")
-        st.write(
-            "Uygulama kodu çalışıyor; otomatik günlük XAU/USD + GVZ + monthly-contract pipeline'ı "
-            "bağlandıktan sonra bu ekran en son R4.1 durumunu gösterecek."
-        )
-        if not r2026.empty:
-            last = r2026.iloc[-1]
-            st.subheader("Son doğrulanmış aylık kayıt")
-            c1, c2, c3 = st.columns(3)
-            c1.metric("Ay", last["month"].strftime("%Y-%m"))
-            c2.metric("Gerçekleşen", f"{last['actual']:,.2f}")
-            c3.metric("VW H=1", f"{last['vw_midas_msvr']:,.2f}")
+        st.warning("CANLI SİNYAL HENÜZ BAĞLANMADI. Eski veriyi bugünkü sinyal gibi göstermiyoruz.")
+        st.caption("Aşağıdaki değerler canlı spot/kapanış değil; final production-closure değerlendirme serisindeki son tamamlanmış aylık kayıttır.")
+        if not history.empty:
+            last = history.iloc[-1]
+            st.subheader("Son production-closure aylık kayıt")
+            c1, c2 = st.columns(2)
+            c1.metric("Değerlendirme ayı", last["month"].strftime("%Y-%m"))
+            c2.metric("Aylık gerçekleşen (evaluation actual)", f"{last['actual']:,.2f}")
+            c1, c2 = st.columns(2)
+            c1.metric("VW audited shadow/reference", f"{last['vw']:,.2f}")
+            c2.metric("Patch R1 executable fallback", f"{last['patch_r1']:,.2f}")
+            if prov.get("august_2026_patch_operational_forecast") is not None:
+                st.info(
+                    "Ağustos 2026 executable Patch forecast: "
+                    f"{prov['august_2026_patch_operational_forecast']:,.2f} "
+                    f"(origin {prov.get('august_2026_patch_origin_date', 'N/A')})."
+                )
     else:
         final_state = latest.get("classification", "UNRESOLVED")
         st.markdown(f"<div class='statebox'><h3>FINAL STATE</h3><h2>{final_state}</h2></div>", unsafe_allow_html=True)
         c1, c2 = st.columns(2)
-        c1.metric("XAU/USD", latest.get("close", "N/A"))
+        c1.metric("XAU/USD EOD", latest.get("close", "N/A"))
         c2.metric("As-of", latest.get("date", "N/A"))
         c1, c2, c3 = st.columns(3)
-        c1.metric("VW Forecast", latest.get("vw_forecast_frozen", "N/A"))
+        c1.metric("VW frozen monthly", latest.get("vw_forecast_frozen", "N/A"))
         c2.metric("3M Direction", latest.get("monthly_direction_3m", "N/A"))
         c3.metric("GVZ Cap", latest.get("gvz_cap", "N/A"))
         c1, c2 = st.columns(2)
@@ -107,10 +101,11 @@ with signals_tab:
     emergency = config.get("emergency", {})
     gvz = config.get("gvz", {})
     rows = [
-        ("Core price", config.get("core", {}).get("price_model", "N/A")),
+        ("Price reference", prov.get("audited_shadow_reference", "N/A") + " — audited shadow/reference"),
+        ("Executable point forecast", prov.get("temporary_executable_point_forecast", "N/A")),
         ("Core direction", config.get("core", {}).get("direction_model", "N/A")),
-        ("Fast", f"SMA{tactical.get('fast_sma_days','?')} / persistence {tactical.get('fast_persistence_days','?')} days"),
-        ("Slow", f"SMA{tactical.get('slow_sma_weeks','?')} completed weeks / persistence {tactical.get('slow_persistence_weeks','?')} weeks"),
+        ("Fast", f"SMA{tactical.get('fast_sma_days','?')} / {tactical.get('fast_persistence_days','?')} day persistence"),
+        ("Slow", f"SMA{tactical.get('slow_sma_weeks','?')} completed weeks / {tactical.get('slow_persistence_weeks','?')} week persistence"),
         ("Level Emergency", f"±{100*emergency.get('level_threshold_abs',0):.1f}% vs frozen monthly VW"),
         ("Reversal Emergency", f"±{100*emergency.get('reversal_threshold_abs',0):.1f}% from running extreme • {emergency.get('reversal_role','N/A')}"),
         ("GVZ normal cap max", gvz.get("full_cap_max", "N/A")),
@@ -121,61 +116,58 @@ with signals_tab:
     st.dataframe(pd.DataFrame(rows, columns=["Layer", "Frozen rule/status"]), use_container_width=True, hide_index=True)
 
 with data_tab:
-    st.subheader("Verified repository data")
-    st.caption("Bu sekme yalnız GitHub branch'inde bulunan veri dosyalarını gösterir.")
-    if pred.empty:
-        st.info("monthly_predictions_2023_2026.csv bulunamadı.")
+    st.subheader("Authoritative production-closure data")
+    st.caption("Kaynak: GOLD_H1_R1_STAGE9B_11_PRODUCTION_CLOSURE_V1. Legacy SIM3 experimental CSV'leri bu ekranda kullanılmaz.")
+    if history.empty:
+        st.error("production_history_43.csv bulunamadı.")
     else:
-        view = pred[[c for c in ["month", "actual", "rw", "ma3", "vw_midas_msvr", "causal_patch_transformer"] if c in pred.columns]].copy()
-        view = view.set_index("month")
+        view = history.set_index("month")[["actual", "vw", "patch_r1", "mom", "rw"]]
         st.line_chart(view)
-        with st.expander("Ham aylık tablo"):
-            st.dataframe(pred.sort_values("month", ascending=False), use_container_width=True, hide_index=True)
+        with st.expander("Ham production-history tablosu"):
+            st.dataframe(history.sort_values("month", ascending=False), use_container_width=True, hide_index=True)
 
 with forecast_tab:
-    st.subheader("H=1 monthly forecast audit")
-    if pred.empty:
-        st.info("Forecast dosyası bulunamadı.")
+    st.subheader("H=1 production scorecard • 2023-01 → 2026-07")
+    if scorecard.empty:
+        st.error("common_scorecard.csv bulunamadı.")
     else:
-        models = {
-            "Random Walk": "rw_ape",
-            "3M Momentum/MA3": "ma3_ape",
-            "VW-MIDAS-MSVR": "vw_midas_msvr_ape",
-            "Causal Patch": "causal_patch_transformer_ape",
+        labels = {
+            "vw": "VW audited shadow/reference",
+            "patch_r1": "Causal PatchTST R1",
+            "repro_svr": "Repro SVR diagnostic",
+            "mom": "3M Momentum",
+            "rw": "Random Walk",
         }
-        summary = []
-        for name, col in models.items():
-            if col in pred.columns:
-                x = pd.to_numeric(pred[col], errors="coerce").dropna()
-                if not x.empty:
-                    summary.append({"Model": name, "MAPE %": x.mean(), "Median APE %": x.median(), "N": len(x)})
-        st.dataframe(pd.DataFrame(summary).sort_values("MAPE %"), use_container_width=True, hide_index=True)
-        if not pred.empty:
-            show = pred[[c for c in ["month", "actual", "vw_midas_msvr", "causal_patch_transformer", "rw", "ma3"] if c in pred.columns]].tail(18)
-            st.line_chart(show.set_index("month"))
+        show = scorecard.copy()
+        show["model"] = show["model"].map(labels).fillna(show["model"])
+        st.dataframe(show, use_container_width=True, hide_index=True)
+        if not history.empty:
+            st.line_chart(history.tail(18).set_index("month")[["actual", "vw", "patch_r1", "mom", "rw"]])
 
 with history_tab:
-    st.subheader("2026 verified monthly replay history")
-    if r2026.empty:
-        st.info("results_2026.csv bulunamadı.")
+    st.subheader("2026 production-closure monthly replay")
+    if history.empty:
+        st.error("Production history unavailable.")
     else:
+        r2026 = history[history["month"].dt.year == 2026].copy()
         st.dataframe(r2026.sort_values("month", ascending=False), use_container_width=True, hide_index=True)
-        mape_cols = [c for c in ["rw_ape", "ma3_ape", "vw_midas_msvr_ape", "axis3_patch_transformer_ape"] if c in r2026.columns]
-        if mape_cols:
-            st.bar_chart(r2026.set_index("month")[mape_cols])
+        st.bar_chart(r2026.set_index("month")[["vw_ape", "patch_r1_ape", "mom_ape", "rw_ape"]])
 
 with audit_tab:
     st.subheader("Model / data audit")
     c1, c2 = st.columns(2)
     c1.metric("Branch", "gold-r4-direction-engine")
-    c2.metric("Freeze date", config.get("freeze_date", "N/A"))
+    c2.metric("R4.1 freeze date", config.get("freeze_date", "N/A"))
     st.write("**Repository:** `ataullahturgut/sim3-automation`")
-    st.write("**Path:** `gold_axis_2026/r4_1/`")
+    st.write("**Production package:**", prov.get("source_package", "N/A"))
+    st.write("**Production package SHA256:**", prov.get("source_package_sha256", "N/A"))
+    st.write("**VW executable reproduction:**", prov.get("vw_executable_reproduction_status", "N/A"))
     st.write("**Runtime SHA:**", os.environ.get("GITHUB_SHA", "Platform runtime SHA not exposed"))
+    st.json(prov)
     st.json(config)
     if BLOCKERS.exists():
         st.subheader("Known blockers")
         st.markdown(BLOCKERS.read_text(encoding="utf-8"))
 
 st.divider()
-st.caption("Gold Control • GitHub is source of truth • 2026-derived threshold tuning is prohibited")
+st.caption("Gold Control • production-closure lineage pinned • no silent legacy-data substitution")
