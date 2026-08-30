@@ -117,13 +117,13 @@ def fetch_gvz_history() -> pd.DataFrame:
     df.columns = [str(c).strip().lower() for c in df.columns]
 
     date_col = next((c for c in ["date", "trade_date"] if c in df.columns), None)
-    close_col = next((c for c in ["close", "closeprice", "close_price"] if c in df.columns), None)
-    if date_col is None or close_col is None:
+    value_col = next((c for c in ["gvz", "close", "closeprice", "close_price"] if c in df.columns), None)
+    if date_col is None or value_col is None:
         raise ValueError(f"Unexpected Cboe GVZ columns: {original}")
 
     out = pd.DataFrame({
         "date": pd.to_datetime(df[date_col], errors="coerce"),
-        "close": pd.to_numeric(df[close_col], errors="coerce"),
+        "close": pd.to_numeric(df[value_col], errors="coerce"),
     })
     for col in ["open", "high", "low"]:
         if col in df.columns:
