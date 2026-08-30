@@ -1,0 +1,14 @@
+{
+  "forecast_origin": "2026-07-31",
+  "target_month": "2026-08",
+  "target_definition": "CORE5 monthly average gold USD/oz",
+  "rw": 4073.0,
+  "3m_momentum": 3878.434368295046,
+  "vw_midas_msvr": 4090.462171912403,
+  "causal_patch_transformer": 4081.814211214794,
+  "vw_selected": [0.024426567235925536, 1.0, 0.05, 0.5],
+  "patch_selected": [0.026189010536104996, 126, 7, 24],
+  "patch_seed_returns": [0.012036588843481244, 0.0021617205294753444, -0.000045953102627921405],
+  "source_lock": "StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+  "notes": "All August forecasts use only information available through 2026-07-31. No August observation is used. Rebuilt in Gold 2026 Full Engine R4 workflow run 33309607871."
+}
