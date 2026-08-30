@@ -1,0 +1,26 @@
+name: Gold 2023 GVZ Macro Event Audit
+on:
+  push:
+    paths:
+      - 'projects/gold_h1_r1/run_2023_gvz_macro_event_audit.py'
+      - '.github/workflows/gold_2023_gvz_macro_event_audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pandas numpy
+      - run: python projects/gold_h1_r1/run_2023_gvz_macro_event_audit.py
+      - name: Commit results
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add projects/gold_h1_r1/MACRO_EVENT_REVERSAL_AUDIT_R1.csv projects/gold_h1_r1/MACRO_EVENT_REVERSAL_2023_REPLAY_R1.csv projects/gold_h1_r1/JAN_FEB_2023_GVZ_MACRO_SIGNAL_DAYS_R1.csv projects/gold_h1_r1/GVZ_MACRO_EVENT_AUDIT_R1.md
+          git diff --cached --quiet || git commit -m 'Run GVZ macro event reversal audit'
+          git push
