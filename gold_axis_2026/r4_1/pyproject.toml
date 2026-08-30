@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gold-r4-direction-engine"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = ["pandas>=2.0,<3", "numpy>=1.24,<3"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<9"]
+legacy = ["scikit-learn>=1.3", "scipy>=1.10", "torch>=2.0", "openpyxl>=3.1"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
