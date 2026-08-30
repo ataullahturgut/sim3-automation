@@ -23,3 +23,4 @@ jobs:
           git add projects/gold_h1_r1/FULL_ENGINE_2026_R4_* projects/gold_h1_r1/GVZ_2026_R4_SNAPSHOT.csv projects/gold_h1_r1/MACRO_EVENT_2026_R4_SNAPSHOT.csv
           git diff --cached --quiet || git commit -m 'Run fast daily verification for 2026 R4'
           git push
+# rerun-marker: august-experts-persisted
