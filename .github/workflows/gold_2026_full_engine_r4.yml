@@ -1,0 +1,44 @@
+name: Gold 2026 Full Engine R4
+on:
+  push:
+    paths:
+      - 'projects/gold_h1_r1/run_2026_full_engine_r4.py'
+      - '.github/workflows/gold_2026_full_engine_r4.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install numpy pandas requests scikit-learn torch
+      - name: Rebuild leakage-safe August monthly experts
+        run: |
+          mkdir -p /tmp/gold_axis_2026
+          base='https://raw.githubusercontent.com/ataullahturgut/sim3-automation/tmp-gold-2026-model-test/gold_axis_2026'
+          curl -fsSL "$base/run_models.py" -o /tmp/gold_axis_2026/run_models.py
+          curl -fsSL "$base/run_august_2026.py" -o /tmp/gold_axis_2026/run_august_2026.py
+          curl -fsSL "$base/core5_monthly.csv.gz.b64" -o /tmp/gold_axis_2026/core5_monthly.csv.gz.b64
+          # Reproducibility correction: replace moving StakTrakr master with the project's canonical pinned commit.
+          sed -i 's#lbruton/StakTrakr/master#lbruton/StakTrakr/ed2e549f82ba0d1cd3ca32842b82d3888d301e01#g' /tmp/gold_axis_2026/run_models.py
+          cd /tmp/gold_axis_2026
+          python run_august_2026.py
+          cp forecast_august_2026.json "$GITHUB_WORKSPACE/projects/gold_h1_r1/AUGUST_2026_FORECAST_R4.json"
+          cp forecast_august_2026.csv "$GITHUB_WORKSPACE/projects/gold_h1_r1/AUGUST_2026_FORECAST_R4.csv"
+      - run: python projects/gold_h1_r1/run_2026_full_engine_r4.py
+      - name: Commit results
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add projects/gold_h1_r1/AUGUST_2026_FORECAST_R4.* \
+            projects/gold_h1_r1/FULL_ENGINE_2026_R4_* \
+            projects/gold_h1_r1/GVZ_2026_R4_SNAPSHOT.csv \
+            projects/gold_h1_r1/MACRO_EVENT_2026_R4_SNAPSHOT.csv
+          git diff --cached --quiet || git commit -m 'Run full 2026 gold investment engine R4'
+          git push
