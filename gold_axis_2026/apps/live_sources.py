@@ -23,41 +23,66 @@ def _get(url: str, *, params: dict[str, Any] | None = None, timeout: int = 15) -
     return r
 
 
-def fetch_xau_spot() -> dict[str, Any]:
+def _age_seconds(value: Any) -> float | None:
+    if not value:
+        return None
+    ts = pd.to_datetime(value, utc=True, errors="coerce")
+    if pd.isna(ts):
+        return None
+    now = pd.Timestamp.now(tz="UTC")
+    return max(0.0, float((now - ts).total_seconds()))
+
+
+def fetch_xau_spot(max_response_age_seconds: int = 300) -> dict[str, Any]:
     """Indicative XAU/USD spot with explicit freshness metadata.
 
-    This is a display/monitoring feed. It must not be silently treated as the
-    frozen R4.1 EOD execution close.
+    The endpoint's own data_state is preserved, but we also independently check
+    the response generation timestamp, per XAUS's documented stale-proof rule.
+    This is display/monitoring data and is not silently promoted to the frozen
+    R4.1 EOD execution close.
     """
     r = _get(XAUS_SPOT_URL, params={"compact": 1, "fresh": int(time())})
     payload = r.json()
     state = payload.get("data_state") or {}
+
     price = payload.get("spot_usd_oz")
     if price is None:
-        xau = payload.get("xau") or {}
-        price = xau.get("price")
+        price = (payload.get("xau") or {}).get("price")
     if price is None:
         raise ValueError("XAUS response has no XAU/USD price")
 
     status = str(state.get("status") or ("stale" if payload.get("stale") else "unknown"))
-    as_of = state.get("as_of") or payload.get("price_as_of") or payload.get("updated_at")
-    age_seconds = state.get("age_seconds")
-    source = state.get("source") or payload.get("price_source") or "XAUS"
+    price_as_of = state.get("as_of") or payload.get("price_as_of")
+    updated_at = payload.get("updated_at")
+    provider_age = state.get("age_seconds")
+    response_age = _age_seconds(updated_at)
+    price_age = _age_seconds(price_as_of)
+
+    provider_stale = bool(payload.get("stale", status.lower() == "stale"))
+    cache_stale = response_age is not None and response_age > max_response_age_seconds
+    stale = provider_stale or cache_stale
+
+    source = payload.get("price_source") or state.get("source") or payload.get("source") or "XAUS"
 
     return {
         "price": float(price),
-        "status": status,
-        "as_of": as_of,
-        "age_seconds": None if age_seconds is None else float(age_seconds),
+        "status": "stale" if stale else status,
+        "as_of": price_as_of or updated_at,
+        "updated_at": updated_at,
+        "provider_age_seconds": None if provider_age is None else float(provider_age),
+        "response_age_seconds": response_age,
+        "price_age_seconds": price_age,
         "source": str(source),
-        "stale": bool(payload.get("stale", status.lower() == "stale")),
+        "stale": stale,
+        "provider_stale": provider_stale,
+        "cache_stale": cache_stale,
         "endpoint": XAUS_SPOT_URL,
     }
 
 
 def fetch_xau_history() -> tuple[pd.DataFrame, dict[str, Any]]:
     """Daily XAU/USD history from XAUS history endpoint."""
-    payload = _get(XAUS_HISTORY_URL).json()
+    payload = _get(XAUS_HISTORY_URL, params={"range": "1y"}).json()
     points = payload.get("points") or []
     if not points:
         raise ValueError("XAUS history response has no points")
@@ -67,6 +92,7 @@ def fetch_xau_history() -> tuple[pd.DataFrame, dict[str, Any]]:
     df = df.rename(columns={k: v for k, v in rename.items() if k in df.columns})
     if "date" not in df.columns or "close" not in df.columns:
         raise ValueError(f"Unexpected XAUS history columns: {list(df.columns)}")
+
     df["date"] = pd.to_datetime(df["date"], errors="raise", utc=True).dt.tz_convert(None)
     for col in ["open", "high", "low", "close"]:
         if col in df.columns:
@@ -77,14 +103,14 @@ def fetch_xau_history() -> tuple[pd.DataFrame, dict[str, Any]]:
     meta = {
         "status": state.get("status", "unknown"),
         "as_of": state.get("as_of") or payload.get("updated_at"),
-        "source": state.get("source") or "XAUS history",
+        "source": payload.get("price_source") or state.get("source") or "XAUS history",
         "endpoint": XAUS_HISTORY_URL,
     }
     return df.reset_index(drop=True), meta
 
 
 def fetch_gvz_history() -> pd.DataFrame:
-    """Official Cboe GVZ daily history (updated by Cboe)."""
+    """Official Cboe GVZ daily history (updated daily by Cboe)."""
     r = _get(CBOE_GVZ_URL)
     df = pd.read_csv(StringIO(r.text))
     original = list(df.columns)
