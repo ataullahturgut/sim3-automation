@@ -1,0 +1,2 @@
+forecast_origin,target_month,target_definition,rw,3m_momentum,vw_midas_msvr,causal_patch_transformer,source_lock
+2026-07-31,2026-08,CORE5 monthly average gold USD/oz,4073.0,3878.434368295046,4090.462171912403,4081.814211214794,StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01
