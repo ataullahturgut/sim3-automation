@@ -1,0 +1,37 @@
+name: Gold Control App Smoke
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/apps/**'
+      - 'gold_axis_2026/r4_1/config/**'
+      - 'gold_axis_2026/monthly_predictions_2023_2026.csv'
+      - 'gold_axis_2026/results_2026.csv'
+      - '.github/workflows/gold-control-app-smoke.yml'
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install app dependencies
+        run: pip install -r gold_axis_2026/apps/requirements.txt
+      - name: Compile app
+        run: python -m py_compile gold_axis_2026/apps/gold_control.py
+      - name: Validate repository data
+        run: |
+          python - <<'PY'
+          import json
+          import pandas as pd
+          from pathlib import Path
+          root = Path('gold_axis_2026')
+          pd.read_csv(root / 'monthly_predictions_2023_2026.csv')
+          pd.read_csv(root / 'results_2026.csv')
+          json.loads((root / 'r4_1/config/frozen_r4_1.json').read_text())
+          print('Gold Control smoke inputs: PASS')
+          PY
