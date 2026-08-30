@@ -6,8 +6,7 @@ on:
     paths:
       - 'gold_axis_2026/apps/**'
       - 'gold_axis_2026/r4_1/config/**'
-      - 'gold_axis_2026/monthly_predictions_2023_2026.csv'
-      - 'gold_axis_2026/results_2026.csv'
+      - 'gold_axis_2026/production_closure/**'
       - '.github/workflows/gold-control-app-smoke.yml'
   workflow_dispatch:
 
@@ -21,17 +20,33 @@ jobs:
           python-version: '3.11'
       - name: Install app dependencies
         run: pip install -r gold_axis_2026/apps/requirements.txt
-      - name: Compile app
-        run: python -m py_compile gold_axis_2026/apps/gold_control.py
-      - name: Validate repository data
+      - name: Compile app and data adapters
+        run: |
+          python -m py_compile gold_axis_2026/apps/gold_control.py
+          python -m py_compile gold_axis_2026/apps/live_sources.py
+      - name: Validate production repository inputs
         run: |
           python - <<'PY'
           import json
           import pandas as pd
           from pathlib import Path
           root = Path('gold_axis_2026')
-          pd.read_csv(root / 'monthly_predictions_2023_2026.csv')
-          pd.read_csv(root / 'results_2026.csv')
-          json.loads((root / 'r4_1/config/frozen_r4_1.json').read_text())
-          print('Gold Control smoke inputs: PASS')
+          hist = pd.read_csv(root / 'production_closure/production_history_43.csv')
+          score = pd.read_csv(root / 'production_closure/common_scorecard.csv')
+          prov = json.loads((root / 'production_closure/PROVENANCE.json').read_text())
+          cfg = json.loads((root / 'r4_1/config/frozen_r4_1.json').read_text())
+          assert len(hist) == 43, len(hist)
+          assert {'actual','vw','patch_r1','mom','rw'}.issubset(hist.columns)
+          assert not score.empty
+          assert prov.get('source_package')
+          assert cfg.get('emergency', {}).get('level_threshold_abs') == 0.04
+          print('Gold Control production-lineage inputs: PASS')
+          PY
+      - name: Live source connectivity diagnostic
+        continue-on-error: true
+        run: |
+          PYTHONPATH=gold_axis_2026/apps python - <<'PY'
+          from live_sources import fetch_gvz_latest, fetch_xau_spot
+          print('XAU:', fetch_xau_spot())
+          print('GVZ:', fetch_gvz_latest())
           PY
