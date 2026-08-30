@@ -1,0 +1,14 @@
+{
+  "source_package": "GOLD_H1_R1_STAGE9B_11_PRODUCTION_CLOSURE_V1.zip",
+  "source_package_sha256": "943d9b79e19deb4ff56e9e51bba0d5c9ee50725c7a40f51b19187825497c5a0c",
+  "evaluation_window": "2023-01 through 2026-07",
+  "N": 43,
+  "audited_shadow_reference": "VW-MIDAS-SVR Adapt V2",
+  "audited_vw_mape_pct": 2.6721495777680135,
+  "vw_executable_reproduction_status": "BLOCKED_NOT_PROVEN",
+  "temporary_executable_point_forecast": "Causal PatchTST Gold R1",
+  "august_2026_patch_operational_forecast": 4115.6394040298055,
+  "august_2026_patch_origin_price": 4073.0,
+  "august_2026_patch_origin_date": "2026-07-31",
+  "policy": "Do not substitute legacy SIM3 experimental output files for production-closure values."
+}
