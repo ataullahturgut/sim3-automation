@@ -1,0 +1,28 @@
+{
+  "forecast_origin": "2026-07-31",
+  "target_month": "2026-08",
+  "gate_pick": "momentum",
+  "gate_forecast": 3878.434368295046,
+  "gate_probabilities": {
+    "momentum": 0.4996831298353668,
+    "patch": 0.029934076788524416,
+    "rw": 0.3530652115137507,
+    "vw": 0.1173175818623581
+  },
+  "past_mape_pick": "vw",
+  "past_mape_forecast": 4090.462171912403,
+  "expanding_mape_through_2026_07": {
+    "rw": 3.302322023433082,
+    "momentum": 3.297296875619361,
+    "vw": 2.7169637658137233,
+    "patch": 3.0291878381928203
+  },
+  "forecast_returns_vs_july": {
+    "rw": 0.0,
+    "momentum": -0.04776961249814726,
+    "vw": 0.004287299757525842,
+    "patch": 0.002164058731842333
+  },
+  "forecast_dispersion": 0.025021327163344716,
+  "notes": "All selector inputs use information available through 2026-07-31. August actual is not used."
+}
