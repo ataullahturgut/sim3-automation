@@ -1,0 +1,57 @@
+name: Gold Data FRED Indices
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'daily or backfill'
+        required: true
+        default: 'daily'
+        type: choice
+        options:
+          - daily
+          - backfill
+  schedule:
+    - cron: '15 1 * * 2-6'     # after US session, Tue-Sat UTC for prior business day
+    - cron: '30 12 * * 2-6'    # independent retry pass
+
+concurrency:
+  group: gold-data-fred-indices
+  cancel-in-progress: true
+
+jobs:
+  ingest-fred-indices:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+      INGEST_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'daily' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Check required secrets
+        id: secrets
+        shell: bash
+        run: |
+          test -n "$NEON_DATABASE_URL" || { echo "NEON_DATABASE_URL missing"; exit 1; }
+          if [ -z "$FRED_API_KEY" ]; then
+            echo "FRED_API_KEY is not configured; index ingestion is READY_AWAITING_KEY"
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Compile FRED index collector
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/fred_indices_api.py
+          python -m py_compile gold_axis_2026/data_pipeline/source_job.py
+          python -m py_compile gold_axis_2026/data_pipeline/persist_neon.py
+      - name: Collect and persist private index series
+        if: steps.secrets.outputs.present == 'true'
+        run: python gold_axis_2026/data_pipeline/source_job.py --source fred_indices --mode "$INGEST_MODE" --persist
