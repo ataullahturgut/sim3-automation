@@ -1,4 +1,4 @@
 pandas>=2.0,<3
 requests>=2.31,<3
-yfinance>=0.2.65,<1
 xlrd>=2.0.1,<3
+psycopg[binary]>=3.2,<4
