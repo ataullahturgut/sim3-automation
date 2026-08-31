@@ -10,10 +10,11 @@ import requests
 
 import collector_r2 as base
 from fed_direct import collect_fed_direct
+from fred_indices_api import collect_fred_indices
 from persist_neon import persist_bundle
 
 ROOT = Path(__file__).resolve().parent
-PIPELINE_VERSION = "GOLD_DATA_R2.5_2026-08-31"
+PIPELINE_VERSION = "GOLD_DATA_R2.6_2026-08-31"
 
 
 def bounded_get(session: requests.Session, url: str, **kwargs):
@@ -72,6 +73,8 @@ def collect_xau_history_points(session: requests.Session, run_id: str, retrieved
                 "endpoint": base.XAUS_HISTORY_URL,
                 "provider_status": state.get("status"),
                 "history_contract": "points[d,c]",
+                "availability_policy": "first_retrieval_floor",
+                "historical_publication_timestamp_reconstruction": "NOT_PROVEN",
             },
         ))
     return out
@@ -106,6 +109,9 @@ def collect_source(source: str, mode: str) -> dict:
         elif source == "fed":
             observations.extend(collect_fed_direct(run_id, retrieved_at, mode))
 
+        elif source == "fred_indices":
+            observations.extend(collect_fred_indices(run_id, retrieved_at, mode))
+
         elif source == "gpr":
             tail = None if mode == "backfill" else 36
             gpr_obs, vintage = base.collect_gpr(session, run_id, retrieved_at, tail)
@@ -138,7 +144,7 @@ def collect_source(source: str, mode: str) -> dict:
 
 def main() -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("--source", choices=["xau", "cboe", "fed", "gpr"], required=True)
+    p.add_argument("--source", choices=["xau", "cboe", "fed", "fred_indices", "gpr"], required=True)
     p.add_argument("--mode", choices=["hourly", "daily", "backfill"], default="daily")
     p.add_argument("--persist", action="store_true")
     args = p.parse_args()
