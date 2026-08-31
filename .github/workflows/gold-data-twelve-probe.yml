@@ -1,0 +1,31 @@
+name: Gold Data Twelve Probe
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - '.github/workflows/gold-data-twelve-probe.yml'
+      - 'gold_axis_2026/data_pipeline/twelve_data_probe.py'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install requests
+        run: pip install 'requests>=2.31,<3'
+      - name: Require Twelve Data secret
+        run: test -n "$TWELVE_DATA_API_KEY"
+      - name: Compile probe
+        run: python -m py_compile gold_axis_2026/data_pipeline/twelve_data_probe.py
+      - name: Probe symbols and plan access
+        run: python gold_axis_2026/data_pipeline/twelve_data_probe.py
