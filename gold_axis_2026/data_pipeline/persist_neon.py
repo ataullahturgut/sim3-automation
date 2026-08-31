@@ -9,6 +9,7 @@ from psycopg.rows import dict_row
 
 ROOT = Path(__file__).resolve().parent
 CONTRACTS_PATH = ROOT / "source_contracts.json"
+DIRECT_CONTRACTS_PATH = ROOT / "source_contracts_direct.json"
 
 
 def _db_url() -> str:
@@ -19,7 +20,23 @@ def _db_url() -> str:
 
 
 def _load_contracts() -> dict:
-    return json.loads(CONTRACTS_PATH.read_text(encoding="utf-8"))
+    """Merge frozen base contracts with separately versioned direct-authority contracts.
+
+    Provider lineage is never collapsed: each series_id remains independent even when
+    two records share the same economic semantic_id.
+    """
+    base = json.loads(CONTRACTS_PATH.read_text(encoding="utf-8"))
+    merged = dict(base)
+    series = dict(base.get("series", {}))
+    if DIRECT_CONTRACTS_PATH.exists():
+        direct = json.loads(DIRECT_CONTRACTS_PATH.read_text(encoding="utf-8"))
+        overlap = sorted(set(series).intersection(direct.get("series", {})))
+        if overlap:
+            raise RuntimeError(f"DIRECT_CONTRACT_SERIES_ID_COLLISION:{overlap}")
+        series.update(direct.get("series", {}))
+        merged["direct_contract_version"] = direct.get("version")
+    merged["series"] = series
+    return merged
 
 
 def _source_row(series_id: str, spec: dict) -> tuple:
