@@ -8,6 +8,7 @@ on:
       - 'gold_axis_2026/data_pipeline/source_job.py'
       - 'gold_axis_2026/data_pipeline/fed_direct.py'
       - 'gold_axis_2026/data_pipeline/persist_neon.py'
+      - 'gold_axis_2026/data_pipeline/verify_neon.py'
       - 'gold_axis_2026/data_pipeline/source_contracts.json'
       - 'gold_axis_2026/data_pipeline/source_contracts_direct.json'
   schedule:
@@ -86,3 +87,26 @@ jobs:
           python -m py_compile gold_axis_2026/data_pipeline/source_job.py
       - name: Collect and persist ${{ matrix.source }}
         run: python gold_axis_2026/data_pipeline/source_job.py --source "${{ matrix.source }}" --mode "$INGEST_MODE" --persist
+
+  verify-neon:
+    needs: daily-sources
+    if: needs.daily-sources.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Require Neon secret
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Verify persisted data plane
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/verify_neon.py
+          python gold_axis_2026/data_pipeline/verify_neon.py
