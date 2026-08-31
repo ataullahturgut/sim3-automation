@@ -6,8 +6,10 @@ on:
     paths:
       - '.github/workflows/gold-data-neon-ingest.yml'
       - 'gold_axis_2026/data_pipeline/source_job.py'
-      - 'gold_axis_2026/data_pipeline/collector_r2_bounded.py'
+      - 'gold_axis_2026/data_pipeline/fed_direct.py'
       - 'gold_axis_2026/data_pipeline/persist_neon.py'
+      - 'gold_axis_2026/data_pipeline/source_contracts.json'
+      - 'gold_axis_2026/data_pipeline/source_contracts_direct.json'
   schedule:
     - cron: '17 * * * *'       # hourly XAU snapshot; deliberately away from top of hour
     - cron: '45 23 * * *'      # daily authority ingest after US session
@@ -59,7 +61,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        source: [xau, cboe, fred, gpr]
+        source: [xau, cboe, fed, gpr]
     runs-on: ubuntu-latest
     timeout-minutes: 3
     permissions:
@@ -79,7 +81,7 @@ jobs:
       - name: Compile source job
         run: |
           python -m py_compile gold_axis_2026/data_pipeline/collector_r2.py
-          python -m py_compile gold_axis_2026/data_pipeline/collector_r2_bounded.py
+          python -m py_compile gold_axis_2026/data_pipeline/fed_direct.py
           python -m py_compile gold_axis_2026/data_pipeline/persist_neon.py
           python -m py_compile gold_axis_2026/data_pipeline/source_job.py
       - name: Collect and persist ${{ matrix.source }}
