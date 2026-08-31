@@ -1,0 +1,43 @@
+name: Gold Data Pipeline Smoke
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/data_pipeline/**'
+      - '.github/workflows/gold-data-pipeline-smoke.yml'
+  workflow_dispatch:
+
+jobs:
+  collector-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install collector dependencies
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Compile pipeline
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/collector.py
+          python -m py_compile gold_axis_2026/data_pipeline/persist_supabase.py
+      - name: Run live collector
+        run: python gold_axis_2026/data_pipeline/collector.py
+      - name: Validate bundle
+        run: |
+          python - <<'PY'
+          import json
+          import pandas as pd
+          from pathlib import Path
+          p=Path('gold_axis_2026/data_pipeline/_out')
+          o=pd.read_csv(p/'observations.csv')
+          m=json.loads((p/'manifest.json').read_text())
+          q=json.loads((p/'quality_events.json').read_text())
+          required={'XAU_SPOT','GVZ','VIX','DGS10','FEDFUNDS_DAILY','USDCNY','NDX','SP500','DJI','GPR','GPRT','GPRA'}
+          missing=sorted(required-set(o.series_id.unique()))
+          assert not missing, f'missing required series: {missing}'
+          assert len(o)>1000, len(o)
+          assert not any(x.get('severity')=='ERROR' for x in q), q
+          print('Gold Data R1 collector: PASS', m['n_observations'], 'rows', len(m['series']), 'series')
+          PY
