@@ -156,6 +156,13 @@ def make_obs(
 
 
 def collect_cboe(s: requests.Session, run_id: str, retrieved_at: datetime, tail: int | None) -> list[Observation]:
+    """Collect official Cboe daily histories with a conservative availability floor.
+
+    Cboe history files expose observation dates, not a proven historical publication
+    timestamp for every row. Therefore observation date MUST NOT be treated as
+    available_as_of. Historical rows become usable only from the first time our own
+    data plane retrieved them. This prevents look-ahead in backtests.
+    """
     out: list[Observation] = []
     for sid, url in CBOE.items():
         r = get(s, url)
@@ -173,8 +180,16 @@ def collect_cboe(s: requests.Session, run_id: str, retrieved_at: datetime, tail:
             if pd.notna(dt) and pd.notna(val):
                 out.append(make_obs(
                     run_id, sid, dt, val, "Cboe", sid.split("_")[0], "daily_close", "index", retrieved_at,
-                    provider_as_of=dt, available_as_of=dt, payload_hash=ph,
-                    metadata={"endpoint": url, "authority": "Cboe"},
+                    provider_as_of=dt,
+                    available_as_of=retrieved_at,
+                    status="APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+                    payload_hash=ph,
+                    metadata={
+                        "endpoint": url,
+                        "authority": "Cboe",
+                        "availability_policy": "first_retrieval_floor",
+                        "historical_publication_timestamp_reconstruction": "NOT_PROVEN",
+                    },
                 ))
     return out
 
@@ -198,7 +213,6 @@ def collect_fred_one(s: requests.Session, run_id: str, sid: str, fred_id: str,
             out.append(make_obs(
                 run_id, sid, dt, val, "FRED", fred_id, "daily", FRED_UNITS[sid], retrieved_at,
                 provider_as_of=dt,
-                # Conservative point-in-time policy: a value is never considered available before we retrieved it.
                 available_as_of=retrieved_at,
                 payload_hash=ph,
                 metadata={"endpoint": url, "fred_series": fred_id, "availability_policy": "retrieval_time_floor"},
@@ -239,7 +253,13 @@ def collect_gpr(s: requests.Session, run_id: str, retrieved_at: datetime, tail: 
                     available_as_of=retrieved_at,
                     status="AUTHORITATIVE_REVISION_PRONE",
                     payload_hash=ph,
-                    metadata={"endpoint": GPR_URL, "sheet": best_sheet, "vintage_hash": ph},
+                    metadata={
+                        "endpoint": GPR_URL,
+                        "sheet": best_sheet,
+                        "vintage_hash": ph,
+                        "availability_policy": "first_retrieval_floor",
+                        "historical_publication_timestamp_reconstruction": "NOT_PROVEN",
+                    },
                 ))
     vintage = {
         "source_id": "GPR_OFFICIAL_WORKBOOK",
@@ -269,14 +289,14 @@ def collect_xaus_spot(s: requests.Session, run_id: str, retrieved_at: datetime) 
         provider_as_of=as_of, available_as_of=retrieved_at,
         status="STALE" if provider_stale else "APPROVED_INDICATIVE_NOT_SETTLEMENT",
         payload_hash=ph,
-        metadata={"endpoint": XAUS_SPOT_URL, "provider_status": state.get("status")},
+        metadata={"endpoint": XAUS_SPOT_URL, "provider_status": state.get("status"), "availability_policy": "retrieval_time_floor"},
     )]
 
 
 def _history_rows(payload):
     if isinstance(payload, list):
         return payload
-    for key in ("data", "history", "prices", "rows"):
+    for key in ("points", "data", "history", "prices", "rows"):
         if isinstance(payload.get(key), list):
             return payload[key]
     return []
@@ -306,7 +326,12 @@ def collect_xaus_history(s: requests.Session, run_id: str, retrieved_at: datetim
             run_id, "XAU_DAILY_XAUS", dt, val, "XAUS history", "XAUUSD", "daily", "USD/oz", retrieved_at,
             provider_as_of=dt, available_as_of=retrieved_at,
             status="CANDIDATE_NOT_BENCHMARK", payload_hash=ph,
-            metadata={"endpoint": XAUS_HISTORY_URL, "raw_keys": sorted(z.keys())},
+            metadata={
+                "endpoint": XAUS_HISTORY_URL,
+                "raw_keys": sorted(z.keys()),
+                "availability_policy": "first_retrieval_floor",
+                "historical_publication_timestamp_reconstruction": "NOT_PROVEN",
+            },
         ))
     return out
 
@@ -366,7 +391,6 @@ def collect(mode: str) -> dict:
                 "metadata": {"collector": "GPR"},
             })
 
-    # Duplicate and non-finite checks happen before persistence.
     df = pd.DataFrame([asdict(o) for o in observations])
     if not df.empty:
         dup = df.duplicated(["series_id", "observation_ts", "lineage_id"], keep=False)
@@ -421,11 +445,8 @@ def main() -> int:
 
     if args.persist:
         from persist_neon import persist_bundle
-        result = persist_bundle(bundle)
-        print(json.dumps(result, indent=2))
+        print(json.dumps(persist_bundle(bundle), indent=2))
 
-    # Smoke CI should fail on source errors. Scheduled persistence records partial runs,
-    # but exits nonzero so GitHub Actions surfaces the outage.
     return 1 if any(x.get("severity") == "ERROR" for x in bundle["quality_events"]) else 0
 
 
