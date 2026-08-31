@@ -1,0 +1,32 @@
+{
+  "version": "GOLD_DATA_R2.7_TWELVE_VALIDATED_2026-08-31",
+  "validated_at": "2026-08-31",
+  "policy": "same-series contract field override only after live vendor metadata validation; no semantic/provider substitution",
+  "series": {
+    "NEM_TWELVEDATA": {
+      "symbol": "NEM",
+      "status": "APPROVED_VENDOR_IDENTITY_VALIDATED_INTERNAL_NON_DISPLAY",
+      "validation": {"exchange":"NYSE","mic_code":"XNYS","currency":"USD","type":"Common Stock"}
+    },
+    "BARRICK_B_TWELVEDATA": {
+      "symbol": "B",
+      "status": "APPROVED_VENDOR_IDENTITY_VALIDATED_INTERNAL_NON_DISPLAY",
+      "validation": {"exchange":"NYSE","mic_code":"XNYS","currency":"USD","type":"Common Stock"}
+    },
+    "GLL_TWELVEDATA": {
+      "symbol": "GLL",
+      "status": "APPROVED_VENDOR_IDENTITY_VALIDATED_INTERNAL_NON_DISPLAY",
+      "validation": {"exchange":"NYSE","mic_code":"ARCX","currency":"USD","type":"ETF"}
+    },
+    "DZZ_TWELVEDATA": {
+      "symbol": "DZZ",
+      "status": "APPROVED_VENDOR_IDENTITY_VALIDATED_INTERNAL_NON_DISPLAY",
+      "validation": {"exchange":"NYSE","mic_code":"ARCX","currency":"USD","type":"ETF"}
+    },
+    "HL_PB_TWELVEDATA": {
+      "symbol": "HL.PR.B",
+      "status": "APPROVED_VENDOR_IDENTITY_VALIDATED_INTERNAL_NON_DISPLAY",
+      "validation": {"exchange":"NYSE","mic_code":"XNYS","currency":"USD","type":"Preferred Stock"}
+    }
+  }
+}
