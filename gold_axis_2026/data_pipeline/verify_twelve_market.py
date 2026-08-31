@@ -36,13 +36,13 @@ def main() -> int:
                     select count(*) as n, min(first_seen_at) as first_seen_at,
                            max(observation_ts) as latest_observation_ts,
                            max(retrieved_at) as latest_retrieved_at
-                    from canonical_latest where series_id=%s
+                    from usable_observations where series_id=%s
                     """,
                     (sid,),
                 )
                 row = cur.fetchone()
                 if not row or row["n"] == 0:
-                    failures.append(f"NO_CANONICAL_ROWS:{sid}")
+                    failures.append(f"NO_USABLE_ROWS:{sid}")
                     continue
 
                 first_seen = row["first_seen_at"]
@@ -55,12 +55,26 @@ def main() -> int:
                 if pre_seen != 0:
                     failures.append(f"POINT_IN_TIME_LEAK:{sid}:{pre_seen}")
 
+                cur.execute(
+                    """
+                    select count(*) as n
+                    from usable_observations
+                    where series_id=%s
+                      and observation_ts::date >= (now() at time zone 'America/New_York')::date
+                    """,
+                    (sid,),
+                )
+                same_day_eligible = cur.fetchone()["n"]
+                if same_day_eligible != 0:
+                    failures.append(f"INCOMPLETE_SESSION_EXPOSED:{sid}:{same_day_eligible}")
+
                 report["series"][sid] = {
-                    "canonical_rows": row["n"],
+                    "usable_rows": row["n"],
                     "first_seen_at": first_seen.isoformat(),
-                    "latest_observation_ts": row["latest_observation_ts"].isoformat(),
+                    "latest_eligible_observation_ts": row["latest_observation_ts"].isoformat(),
                     "latest_retrieved_at": row["latest_retrieved_at"].isoformat(),
                     "point_in_time_pre_first_seen_rows": pre_seen,
+                    "same_exchange_day_eligible_rows": same_day_eligible,
                 }
 
             cur.execute(
@@ -92,19 +106,17 @@ def main() -> int:
                 select trigger_type, status, observations_read, observations_written,
                        finished_at, pipeline_version, git_sha
                 from retrieval_runs
-                where trigger_type in ('daily:twelve_market','backfill:twelve_market')
+                where trigger_type like '%%twelve_market:dedupe_replay'
                 order by finished_at desc nulls last limit 1
                 """
             )
             latest = cur.fetchone()
             if not latest:
-                failures.append("NO_TWELVE_INGESTION_RUN")
+                failures.append("NO_TWELVE_DEDUPE_REPLAY_RUN")
             else:
                 report["latest_ingestion_run"] = dict(latest)
                 if latest["status"] != "SUCCESS":
                     failures.append(f"LATEST_RUN_NOT_SUCCESS:{latest['status']}")
-                # Workflow intentionally runs the same collection twice; the latest
-                # pass must prove idempotency by writing zero unchanged rows.
                 if latest["observations_written"] != 0:
                     failures.append(f"DEDUPE_FAILED:{latest['observations_written']}")
 
