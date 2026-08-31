@@ -4,7 +4,6 @@ on:
   push:
     branches: [gold-r4-direction-engine]
     paths:
-      - '.github/workflows/gold-data-twelve-market.yml'
       - 'gold_axis_2026/data_pipeline/twelve_data_market.py'
       - 'gold_axis_2026/data_pipeline/twelve_ingest_verified.py'
       - 'gold_axis_2026/data_pipeline/correct_twelve_incomplete_daily.py'
@@ -24,13 +23,13 @@ concurrency:
 jobs:
   ingest-twelve-market:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 4
     permissions:
       contents: read
     env:
       NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
       TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
-      INGEST_MODE: backfill
+      INGEST_MODE: daily
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
