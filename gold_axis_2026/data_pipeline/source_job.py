@@ -9,11 +9,12 @@ import pandas as pd
 import requests
 
 import collector_r2 as base
-from collector_r2_bounded import collect_fred_bounded, qevent
+from collector_r2_bounded import qevent
+from fed_direct import collect_fed_direct
 from persist_neon import persist_bundle
 
 ROOT = Path(__file__).resolve().parent
-PIPELINE_VERSION = "GOLD_DATA_R2.3_2026-08-31"
+PIPELINE_VERSION = "GOLD_DATA_R2.5_2026-08-31"
 
 
 def bounded_get(session: requests.Session, url: str, **kwargs):
@@ -91,19 +92,8 @@ def collect_source(source: str, mode: str) -> dict:
             if not required.issubset(found):
                 raise ValueError(f"CBOE_REQUIRED_SERIES_MISSING:{sorted(required-found)}")
 
-        elif source == "fred":
-            fred_obs, fred_errors = collect_fred_bounded(run_id, retrieved_at, mode)
-            observations.extend(fred_obs)
-            recovered = {o.series_id for o in fred_obs}
-            for e in fred_errors:
-                if e["collector"] == "FRED_BATCH" and recovered >= set(base.FRED):
-                    continue
-                series_id = e["collector"].split(":", 1)[1] if e["collector"].startswith("FRED:") else None
-                quality_events.append(qevent(
-                    run_id, series_id, "COLLECTOR_FAILURE", e["error"], {"collector": e["collector"]}
-                ))
-            if not recovered:
-                raise ValueError("FRED_NO_SERIES_RECOVERED")
+        elif source == "fed":
+            observations.extend(collect_fed_direct(run_id, retrieved_at, mode))
 
         elif source == "gpr":
             tail = None if mode == "backfill" else 36
@@ -137,7 +127,7 @@ def collect_source(source: str, mode: str) -> dict:
 
 def main() -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("--source", choices=["xau", "cboe", "fred", "gpr"], required=True)
+    p.add_argument("--source", choices=["xau", "cboe", "fed", "gpr"], required=True)
     p.add_argument("--mode", choices=["hourly", "daily", "backfill"], default="daily")
     p.add_argument("--persist", action="store_true")
     args = p.parse_args()
