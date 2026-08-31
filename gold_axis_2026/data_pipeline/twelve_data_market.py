@@ -18,6 +18,7 @@ SERIES = {
         "type": "Common Stock",
         "currency": "USD",
         "unit": "USD",
+        "exchange_timezone": "America/New_York",
     },
     "BARRICK_B_TWELVEDATA": {
         "symbol": "B",
@@ -26,6 +27,7 @@ SERIES = {
         "type": "Common Stock",
         "currency": "USD",
         "unit": "USD",
+        "exchange_timezone": "America/New_York",
     },
     "GLL_TWELVEDATA": {
         "symbol": "GLL",
@@ -34,6 +36,7 @@ SERIES = {
         "type": "ETF",
         "currency": "USD",
         "unit": "USD",
+        "exchange_timezone": "America/New_York",
     },
     "DZZ_TWELVEDATA": {
         "symbol": "DZZ",
@@ -42,6 +45,7 @@ SERIES = {
         "type": "ETF",
         "currency": "USD",
         "unit": "USD",
+        "exchange_timezone": "America/New_York",
     },
     "HL_PB_TWELVEDATA": {
         "symbol": "HL.PR.B",
@@ -50,6 +54,7 @@ SERIES = {
         "type": "Preferred Stock",
         "currency": "USD",
         "unit": "USD",
+        "exchange_timezone": "America/New_York",
     },
 }
 
@@ -74,6 +79,7 @@ def _validate_meta(series_id: str, meta: dict, spec: dict) -> None:
         "mic_code": spec["mic_code"],
         "currency": spec["currency"],
         "type": spec["type"],
+        "exchange_timezone": spec["exchange_timezone"],
     }
     mismatches = {}
     for key, expected in checks.items():
@@ -116,15 +122,25 @@ def _collect_one(
     if not values:
         raise RuntimeError(f"TWELVE_NO_VALUES:{series_id}")
 
+    # Twelve Data may expose an in-progress current-day 1day bar while the U.S.
+    # session is still open. For this EOD lineage we accept only dates strictly
+    # earlier than the retrieval date in the exchange timezone. This is deliberately
+    # conservative: a completed same-day bar is picked up on the next scheduled run.
+    retrieved_local_date = pd.Timestamp(retrieved_at).tz_convert(spec["exchange_timezone"]).date()
+
     rows = []
+    dropped_current_session = 0
     for item in values:
         dt = pd.to_datetime(item.get("datetime"), errors="coerce")
         close = pd.to_numeric(item.get("close"), errors="coerce")
         if pd.isna(dt) or pd.isna(close):
             continue
+        if dt.date() >= retrieved_local_date:
+            dropped_current_session += 1
+            continue
         rows.append((dt, float(close)))
     if not rows:
-        raise RuntimeError(f"TWELVE_EMPTY_AFTER_PARSE:{series_id}")
+        raise RuntimeError(f"TWELVE_EMPTY_AFTER_COMPLETED_SESSION_FILTER:{series_id}")
     rows.sort(key=lambda x: x[0])
 
     payload_hash = base.sha256_bytes(response.content)
@@ -158,6 +174,8 @@ def _collect_one(
                 "historical_release_timestamp_reconstruction": "NOT_PROVEN",
                 "rights_policy": "PRIVATE_INTERNAL_NON_DISPLAY_NO_PUBLIC_RAW_REDISTRIBUTION",
                 "provider_identity_validation": "PASS_2026-08-31",
+                "completed_session_policy": "observation_date_strictly_before_retrieval_exchange_local_date",
+                "current_session_rows_dropped_from_payload": dropped_current_session,
             },
         ))
     return observations
