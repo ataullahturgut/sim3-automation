@@ -1,0 +1,49 @@
+{
+  "version": "GOLD_DATA_R1_2026-08-31",
+  "principles": {
+    "no_silent_provider_substitution": true,
+    "store_retrieval_timestamp": true,
+    "store_provider_timestamp_when_available": true,
+    "append_revision_log": true,
+    "preserve_gpr_vintages": true,
+    "live_spot_is_not_eod_close": true,
+    "model_proxy_and_authoritative_reference_may_coexist": true
+  },
+  "variables": {
+    "XAU_SPOT": {"group":"metals","source":"gold-api.com","source_symbol":"XAU","frequency":"live_snapshot","unit":"USD/oz","role":"display_monitoring","status":"OPERATIONAL"},
+    "XAG_SPOT": {"group":"metals","source":"gold-api.com","source_symbol":"XAG","frequency":"live_snapshot","unit":"USD/oz","role":"future_spot_archive","status":"OPERATIONAL"},
+    "XPT_SPOT": {"group":"metals","source":"gold-api.com","source_symbol":"XPT","frequency":"live_snapshot","unit":"USD/oz","role":"future_spot_archive","status":"OPERATIONAL"},
+    "XPD_SPOT": {"group":"metals","source":"gold-api.com","source_symbol":"XPD","frequency":"live_snapshot","unit":"USD/oz","role":"future_spot_archive","status":"OPERATIONAL"},
+
+    "GOLD_DAILY_ARCHIVE": {"group":"metals","source":"lbruton/StakTrakr third-party archive","source_symbol":"Gold","frequency":"daily","unit":"USD/oz","role":"legacy_model_continuity","status":"OPERATIONAL_ARCHIVE_NOT_PRIMARY_AUTHORITY"},
+    "SILVER_DAILY_ARCHIVE": {"group":"metals","source":"lbruton/StakTrakr third-party archive","source_symbol":"Silver","frequency":"daily","unit":"USD/oz","role":"VW_MSVR_and_Patch_input","status":"OPERATIONAL_ARCHIVE_NOT_PRIMARY_AUTHORITY"},
+    "PLATINUM_DAILY_ARCHIVE": {"group":"metals","source":"lbruton/StakTrakr third-party archive","source_symbol":"Platinum","frequency":"daily","unit":"USD/oz","role":"VW_MSVR_and_Patch_input","status":"OPERATIONAL_ARCHIVE_NOT_PRIMARY_AUTHORITY"},
+    "PALLADIUM_DAILY_ARCHIVE": {"group":"metals","source":"lbruton/StakTrakr third-party archive","source_symbol":"Palladium","frequency":"daily","unit":"USD/oz","role":"VW_MSVR_and_Patch_input","status":"OPERATIONAL_ARCHIVE_NOT_PRIMARY_AUTHORITY"},
+
+    "GVZ": {"group":"volatility","source":"Cboe","source_symbol":"GVZ","frequency":"daily","unit":"index","role":"risk_and_proxy_feature","status":"AUTHORITATIVE"},
+    "VIX": {"group":"volatility","source":"Cboe","source_symbol":"VIX","frequency":"daily","unit":"index","role":"forecast_feature","status":"AUTHORITATIVE"},
+
+    "DGS10": {"group":"rates","source":"FRED / Federal Reserve Board H.15","source_symbol":"DGS10","frequency":"daily","unit":"percent","role":"authoritative_10y_reference","status":"AUTHORITATIVE"},
+    "US10YT_MODEL_PROXY": {"group":"rates","source":"Yahoo Finance operational feed","source_symbol":"^TNX","frequency":"daily","unit":"index_yield_quote","role":"legacy_VW_rebuild_feature","status":"MODEL_PROXY"},
+    "FEDFUNDS_DAILY": {"group":"rates","source":"FRED","source_symbol":"DFF","frequency":"daily","unit":"percent","role":"Patch_macro_feature","status":"AUTHORITATIVE"},
+    "USDCNY": {"group":"fx","source":"FRED","source_symbol":"DEXCHUS","frequency":"daily","unit":"CNY_per_USD","role":"Patch_macro_feature","status":"AUTHORITATIVE"},
+
+    "DXY": {"group":"market","source":"Yahoo Finance operational feed","source_symbol":"DX-Y.NYB","frequency":"daily","unit":"index","role":"VW_rebuild_feature","status":"OPERATIONAL_THIRD_PARTY"},
+    "DJI": {"group":"market","source":"Yahoo Finance operational feed","source_symbol":"^DJI","frequency":"daily","unit":"index","role":"VW_rebuild_feature","status":"OPERATIONAL_THIRD_PARTY"},
+    "NDX": {"group":"market","source":"Yahoo Finance operational feed","source_symbol":"^NDX","frequency":"daily","unit":"index","role":"VW_rebuild_feature","status":"OPERATIONAL_THIRD_PARTY"},
+    "SP500": {"group":"market","source":"Yahoo Finance operational feed","source_symbol":"^GSPC","frequency":"daily","unit":"index","role":"VW_rebuild_feature","status":"OPERATIONAL_THIRD_PARTY"},
+    "NEM": {"group":"miners","source":"Yahoo Finance operational feed","source_symbol":"NEM","frequency":"daily","unit":"USD","role":"VW_rebuild_feature","status":"OPERATIONAL_THIRD_PARTY"},
+    "HL": {"group":"miners","source":"Yahoo Finance operational feed","source_symbol":"HL-PB","frequency":"daily","unit":"USD","role":"legacy_code_identity","status":"OPERATIONAL_THIRD_PARTY"},
+    "BARRICK_TSX_PROXY": {"group":"miners","source":"Yahoo Finance operational feed","source_symbol":"ABX.TO","frequency":"daily","unit":"CAD","role":"explicit_Barrick_proxy","status":"PROXY_EXCHANGE_NOT_EXPLICIT_IN_PAPER"},
+    "DZZ": {"group":"gold_products","source":"Yahoo Finance operational feed","source_symbol":"DZZ","frequency":"daily","unit":"USD","role":"VW_rebuild_feature","status":"OPERATIONAL_THIRD_PARTY"},
+    "GLL": {"group":"gold_products","source":"Yahoo Finance operational feed","source_symbol":"GLL","frequency":"daily","unit":"USD","role":"VW_rebuild_feature","status":"OPERATIONAL_THIRD_PARTY"},
+
+    "GPR": {"group":"geopolitical","source":"Caldara-Iacoviello official GPR workbook","source_symbol":"GPR","frequency":"monthly","unit":"index","role":"forecast_feature","status":"AUTHORITATIVE_REVISION_PRONE"},
+    "GPRT": {"group":"geopolitical","source":"Caldara-Iacoviello official GPR workbook","source_symbol":"GPRT","frequency":"monthly","unit":"index","role":"forecast_feature","status":"AUTHORITATIVE_REVISION_PRONE"},
+    "GPRA": {"group":"geopolitical","source":"Caldara-Iacoviello official GPR workbook","source_symbol":"GPRA","frequency":"monthly","unit":"index","role":"forecast_feature","status":"AUTHORITATIVE_REVISION_PRONE"},
+
+    "GPY": {"group":"unresolved","source":null,"source_symbol":null,"frequency":null,"unit":null,"role":"paper_feature","status":"BLOCKED_AMBIGUOUS_IDENTIFIER"},
+    "LONG_TERM_TREND_EXACT": {"group":"unresolved","source":null,"source_symbol":null,"frequency":null,"unit":null,"role":"paper_feature","status":"BLOCKED_DEFINITION_NOT_RECOVERED"},
+    "VOLATILITY_EXACT": {"group":"unresolved","source":null,"source_symbol":null,"frequency":null,"unit":null,"role":"paper_feature","status":"BLOCKED_DEFINITION_NOT_RECOVERED"}
+  }
+}
