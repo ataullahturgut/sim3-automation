@@ -1,0 +1,5 @@
+_out/
+*.sqlite
+*.db
+.env
+.env.*
