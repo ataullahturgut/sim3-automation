@@ -99,9 +99,14 @@ def _latest_map(conn, series_ids: list[str]) -> dict:
     return out
 
 
-def _insert_observation(cur, o: dict) -> None:
-    cur.execute(
-        """
+def _prepare_observation(o: dict) -> dict:
+    return {**o, "metadata": json.dumps(o.get("metadata") or {})}
+
+
+def _insert_observations(cur, rows: list[dict]) -> None:
+    if not rows:
+        return
+    sql = """
         insert into observations
         (run_id, series_id, observation_ts, value, source, source_symbol,
          provider_as_of, available_as_of, first_seen_at, retrieved_at,
@@ -111,9 +116,8 @@ def _insert_observation(cur, o: dict) -> None:
          %(provider_as_of)s, %(available_as_of)s, %(first_seen_at)s, %(retrieved_at)s,
          %(frequency)s, %(unit)s, %(transform)s, %(quality_status)s, %(lineage_id)s,
          %(payload_hash)s, %(metadata)s::jsonb)
-        """,
-        {**o, "metadata": json.dumps(o.get("metadata") or {})},
-    )
+    """
+    cur.executemany(sql, [_prepare_observation(o) for o in rows])
 
 
 def persist_bundle(bundle: dict) -> dict:
@@ -144,56 +148,67 @@ def persist_bundle(bundle: dict) -> dict:
             )
 
         latest = _latest_map(conn, series_ids)
-        written = 0
         revised = 0
+        to_insert: list[dict] = []
+
+        for raw in observations:
+            o = dict(raw)
+            key = (o["series_id"], o["observation_ts"], o["lineage_id"])
+            prev = latest.get(key)
+
+            # A new source-file hash alone is NOT a data revision. Revision means the
+            # actual observation value or its quality classification changed.
+            if prev is not None:
+                same = (
+                    float(prev["value"]) == float(o["value"])
+                    and str(prev["quality_status"]) == str(o["quality_status"])
+                )
+                if same:
+                    continue
+                revised += 1
+                o["first_seen_at"] = prev["first_seen_at"].isoformat()
+
+            to_insert.append(o)
+
+        written = len(to_insert)
 
         with conn.cursor() as cur:
-            for raw in observations:
-                o = dict(raw)
-                key = (o["series_id"], o["observation_ts"], o["lineage_id"])
-                prev = latest.get(key)
+            _insert_observations(cur, to_insert)
 
-                # A new source-file hash alone is NOT a data revision. Revision means the
-                # actual observation value or its quality classification changed.
-                if prev is not None:
-                    same = (
-                        float(prev["value"]) == float(o["value"])
-                        and str(prev["quality_status"]) == str(o["quality_status"])
-                    )
-                    if same:
-                        continue
-                    revised += 1
-                    o["first_seen_at"] = prev["first_seen_at"].isoformat()
-
-                _insert_observation(cur, o)
-                written += 1
-
-            for v in bundle.get("vintages", []):
-                cur.execute(
+            vintages = bundle.get("vintages", [])
+            if vintages:
+                cur.executemany(
                     """
                     insert into source_vintages
                     (source_id, retrieved_at, provider_as_of, content_sha256, content_type, byte_count, metadata)
                     values (%s,%s,%s,%s,%s,%s,%s::jsonb)
                     on conflict (source_id, content_sha256) do nothing
                     """,
-                    (
-                        v["source_id"], v["retrieved_at"], v.get("provider_as_of"),
-                        v["content_sha256"], v.get("content_type"), v.get("byte_count"),
-                        json.dumps(v.get("metadata") or {}),
-                    ),
+                    [
+                        (
+                            v["source_id"], v["retrieved_at"], v.get("provider_as_of"),
+                            v["content_sha256"], v.get("content_type"), v.get("byte_count"),
+                            json.dumps(v.get("metadata") or {}),
+                        )
+                        for v in vintages
+                    ],
                 )
 
-            for q in bundle.get("quality_events", []):
-                cur.execute(
+            quality_events = bundle.get("quality_events", [])
+            if quality_events:
+                cur.executemany(
                     """
                     insert into quality_events
                     (run_id, series_id, event_ts, severity, code, message, metadata)
                     values (%s,%s,%s,%s,%s,%s,%s::jsonb)
                     """,
-                    (
-                        q.get("run_id"), q.get("series_id"), q["event_ts"], q["severity"],
-                        q["code"], q["message"], json.dumps(q.get("metadata") or {}),
-                    ),
+                    [
+                        (
+                            q.get("run_id"), q.get("series_id"), q["event_ts"], q["severity"],
+                            q["code"], q["message"], json.dumps(q.get("metadata") or {}),
+                        )
+                        for q in quality_events
+                    ],
                 )
 
             cur.execute(
