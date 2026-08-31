@@ -1,10 +1,21 @@
-# GOLD DATA R2 — Production Data Architecture
+# GOLD DATA R2.6 — Production Data Architecture
 
-Freeze date: 2026-08-31
+Freeze date: 2026-08-31  
+Current schema contract: `GOLD_DATA_R2.6_2026-08-31`
 
 ## Objective
 
 Build a point-in-time, leakage-safe, auditable data plane for Gold Control and the Gold H=1/R4.1 research stack. No source may be silently replaced by another source with a similar economic meaning.
+
+## Non-negotiable rules
+
+1. Provider lineage is part of series identity. Two providers for the same economic concept remain separate series IDs.
+2. `observation_ts` is not automatically an availability timestamp.
+3. If historical release/publication timestamps are not independently reconstructed, `available_as_of` uses the first retrieval time recorded by this data plane.
+4. Historical model code must use `observations_as_of(origin_ts)` or an immutable `forecast_input_snapshots` record. `canonical_latest` and `usable_observations` are CURRENT-state views and are not historical backtest surfaces.
+5. A source-file hash change alone is not a numerical revision. A new observation revision is stored only when value or quality classification changes.
+6. Blocked or licensed data is never silently replaced by a convenient proxy.
+7. Live/indicative XAU is not the frozen R4.1 EOD execution close.
 
 ## Source hierarchy
 
@@ -13,74 +24,180 @@ Build a point-in-time, leakage-safe, auditable data plane for Gold Control and t
 - Tier C: documented independent operational source. Suitable for monitoring/research, not represented as settlement-grade.
 - Tier D: legacy research archive. Pinned for reproducibility and never promoted to a new production authority.
 
-## Approved / blocked production map
+## Current production ingestion — VERIFIED
 
-| Semantic series | Production source | Tier | Storage cadence | Status |
-|---|---|---:|---|---|
-| XAU live | XAUS public API | C | 1–5 min app cache; intraday archival separately | APPROVED indicative |
-| XAU intraday | XAUS intraday | C | hourly backfill of source 2-min samples | APPROVED indicative |
-| GVZ | Cboe official | A | once after Cboe EOD publication + next-day retry | APPROVED |
-| VIX | Cboe official | A | once after Cboe EOD publication + next-day retry | APPROVED |
-| US 10Y | DGS10, Federal Reserve H.15 via FRED/ALFRED | A | daily + revision check | APPROVED |
-| Effective Fed Funds | DFF via FRED/ALFRED | A | daily + revision check | APPROVED |
-| USD/CNY | DEXCHUS, Federal Reserve H.10 via FRED/ALFRED | A | daily; enforce actual availability time | APPROVED |
-| Broad USD index | DTWEXBGS, Federal Reserve H.10 via FRED/ALFRED | A | daily | APPROVED as challenger/proxy only; never called DXY |
-| S&P 500 | SP500 via FRED | A | daily private storage | APPROVED for private model use; raw values not publicly redistributed |
-| DJIA | DJIA via FRED | A | daily private storage | APPROVED for private model use; raw values not publicly redistributed |
-| Nasdaq-100 | NASDAQ100 via FRED | A | daily private storage | APPROVED for private model use; raw values not publicly redistributed |
-| GPR/GPRT/GPRA | Caldara-Iacoviello official workbook | A | monthly vintage archive + daily check around release | APPROVED revision-prone |
-| NEM | Twelve Data | B | daily close | PENDING API-key/symbol validation; internal non-display |
-| Hecla preferred identity | Twelve Data reference/time series | B | daily close | PENDING exact-symbol validation; internal non-display |
-| Barrick current NYSE | Twelve Data, ticker B | B | daily close | PENDING validation; not a silent bridge for ABX.TO legacy |
-| GLL | Twelve Data | B | daily close | PENDING validation; internal non-display |
-| DZZ | Twelve Data | B | daily close | PENDING validation; internal non-display |
-| Exact DXY | ICE Data Indices / authorized vendor | A | daily if licensed | BLOCKED until entitlement/licence |
-| LBMA Gold/Silver benchmark | ICE Benchmark Administration / LBMA | A | benchmark times if licensed | OPTIONAL; licence required for use of real-time/historical benchmark data |
-| LBMA Platinum/Palladium benchmark | ICE Benchmark Administration / LBMA | A | benchmark times if licensed | BLOCKED licence required from 2026-07-01 |
-| XPT/USD, XPD/USD operational alternative | Twelve Data commodities | B | daily if subscribed | PAID Grow+; new model validation required before use |
-| StakTrakr metal archive | pinned repository archive | D | no automatic forward extension as authority | KEEP only for historical reproducibility |
+The following series are automatically collected and persisted to private Neon Postgres. CI performs source checks, schema migration, persistence, deduplication and an end-to-end database audit.
+
+| Series ID | Semantic | Production source | Tier | Current status |
+|---|---|---|---:|---|
+| `XAU_SPOT_XAUS` | XAU live | XAUS public API | C | PASS — indicative monitoring only |
+| `XAU_DAILY_XAUS` | XAU daily cross-check | XAUS history | C | PASS — candidate, not benchmark |
+| `GVZ_CBOE` | GVZ | Cboe official daily history | A | PASS |
+| `VIX_CBOE` | VIX | Cboe official daily history | A | PASS |
+| `DGS10_FRB_H15` | US 10Y | Federal Reserve Board H.15 DDP | A | PASS — direct authority |
+| `DEXCHUS_FRB_H10` | USD/CNY | Federal Reserve Board H.10 DDP | A | PASS — direct authority |
+| `DTWEXBGS_FRB_H10` | broad USD index | Federal Reserve Board H.10 DDP | A | PASS — proxy challenger only, never DXY |
+| `EFFR_NYFED` | effective Fed Funds | New York Fed Markets Data API | A | PASS — direct authority |
+| `GPR_OFFICIAL` | GPR | Caldara-Iacoviello official workbook | A | PASS — revision-prone |
+| `GPRT_OFFICIAL` | GPRT | Caldara-Iacoviello official workbook | A | PASS — revision-prone |
+| `GPRA_OFFICIAL` | GPRA | Caldara-Iacoviello official workbook | A | PASS — revision-prone |
+
+### Direct Fed transport decision
+
+The former production attempt using `fred.stlouisfed.org/graph/fredgraph.csv` timed out systematically from GitHub runners. It is therefore not the production transport for the four macro series above.
+
+The production macro path now reads directly from the primary authorities:
+
+- H.15 DDP for 10-year constant maturity Treasury yield;
+- H.10 DDP for USD/CNY;
+- H.10 DDP for the nominal broad dollar index;
+- New York Fed Markets Data API for EFFR.
+
+The old FRED series IDs remain separate lineage records for research continuity; the direct-authority series are not presented as exact substitutes for any frozen legacy model input.
+
+## Point-in-time / leakage contract
+
+Neon contains three conceptually different surfaces:
+
+### Current state
+
+- `canonical_latest`: latest retrieved revision inside the same provider lineage.
+- `usable_observations`: current quality-filtered state.
+
+These views are useful for live dashboards and current-state diagnostics. They are **not safe for historical backtests by themselves** because a provider may revise an old observation after a historical forecast origin.
+
+### Historical state
+
+`observations_as_of(origin_ts)` is the required database function for historical reconstruction. It applies both:
+
+```text
+retrieved_at <= origin_ts
+AND
+available_as_of <= origin_ts
+```
+
+and then selects the latest revision that was actually knowable by that origin within each provider lineage.
+
+`latest_series_as_of(origin_ts)` returns the latest knowable observation per lineage at that same origin.
+
+### Immutable model state
+
+Once an actual forecast is issued, all values used by the model must also be written to `forecast_input_snapshots`. Later source revisions never rewrite an old forecast snapshot.
+
+## Conservative availability policy
+
+For the direct Fed, Cboe historical files, GPR current workbook and XAUS historical cross-check, exact historical publication timestamps have not yet been fully reconstructed. Therefore historical rows use:
+
+```text
+available_as_of = first retrieval by Gold Data Plane
+```
+
+until a separately audited historical-vintage/release-time reconstruction exists.
+
+Status: `HISTORICAL_RELEASE_TIMESTAMP_RECONSTRUCTION = NOT_PROVEN`.
+
+This is intentionally conservative: it may make old history unavailable to a prospective replay, but it does not manufacture knowledge that was not proven to be available at the time.
+
+### Cboe R2 correction
+
+An early R2 collector version incorrectly equated the Cboe observation date with `available_as_of`. Those raw rows remain in `observations` for audit evidence, but:
+
+- the production collector now uses first-retrieval availability;
+- current canonical Cboe rows carry the corrected availability policy;
+- `observations_as_of()` explicitly excludes the early invalid-availability Cboe records.
+
+The CI point-in-time test proves that zero legacy Cboe rows are exposed in the pre-correction gap.
+
+## Database objects
+
+Private Neon Postgres stores data and provenance. Public GitHub stores code/contracts only.
+
+Primary tables:
+
+- `source_registry`
+- `retrieval_runs`
+- `observations`
+- `source_vintages`
+- `quality_events`
+- `forecast_input_snapshots`
+- `derived_feature_snapshots`
+- `monthly_forecast_contracts`
+- `system_metadata`
+
+Current-state views:
+
+- `canonical_latest`
+- `latest_series`
+- `usable_observations`
+
+Point-in-time functions:
+
+- `observations_as_of(timestamptz)`
+- `latest_series_as_of(timestamptz)`
+
+## Persistence semantics
+
+For the same `(series_id, observation_ts, lineage_id)`:
+
+- unchanged value + unchanged quality classification → no new observation row;
+- changed value or changed quality classification → append a new revision;
+- old revisions are retained;
+- revision-prone source files such as the GPR workbook are separately archived by content hash in `source_vintages`.
+
+The first direct-Fed production load persisted 853 observations. A repeat load of the same 853 observations wrote 0 new rows and 0 revisions, proving the deduplication contract.
 
 ## Scheduling policy
 
-1. Live XAU display is not the EOD execution close. Gold Control may refresh it with a 30–60 second cache.
-2. XAU intraday archival should run hourly at a non-round minute (for example minute 17) and backfill the latest available 2-minute samples. It must deduplicate by source timestamp.
-3. U.S. daily market/index/vendor collectors run only after the relevant market/session has completed. Store the provider date/time and retrieval time separately.
-4. Cboe VIX/GVZ collector runs after EOD publication, then retries the next morning. Never infer a missing close from live values.
-5. FRED/ALFRED collector runs daily. For model snapshots, available-at timestamps/realtime vintage semantics are enforced; publication/revision lag is not ignored.
-6. GPR current workbook is checked daily only near the expected monthly release window and otherwise weekly. Every changed workbook is preserved by content hash as a new source vintage.
-7. Monthly forecast-input snapshots are immutable once a forecast is issued. A later data revision creates a new revision record but does not rewrite the historical forecast snapshot.
-8. R4.1 EOD signal generation runs only after all required EOD inputs pass freshness and lineage checks. A blocked mandatory input blocks the relevant model path rather than invoking a proxy silently.
-
-## Database policy
-
-Private Neon Postgres stores normalized observations and provenance. Public GitHub stores code/contracts only.
-
-Required logical tables:
-
-- `retrieval_runs`: one row per ingestion attempt.
-- `observations`: append-only revisions of series observations.
-- `source_vintages`: hashes/metadata of revision-prone source files.
-- `quality_events`: schema, freshness, gap, outlier, source or licensing failures.
-- `forecast_input_snapshots`: immutable point-in-time feature values used for each model forecast.
-- `derived_feature_snapshots`: Fast/Slow/3M/Emergency and transformed forecast features with formula/version lineage.
-- `source_registry`: source tier, rights/display policy, semantic identity, expected cadence and freshness SLA.
-
-The canonical view must choose the latest retrieval within one lineage only. It must never choose across different providers/semantic definitions.
+- XAU monitoring snapshot: hourly at minute 17, away from GitHub Actions' crowded top-of-hour boundary.
+- Daily authority ingestion: 23:45 UTC.
+- Independent retry/verification pass: 06:25 UTC.
+- Every daily run is source-isolated (`xau`, `cboe`, `fed`, `gpr`), so one provider outage cannot block the other sources.
+- A schema guard runs before daily ingestion and applies the idempotent point-in-time database contract.
+- The final `verify-neon` gate checks required series, source registry, latest retrieval runs, availability timestamps and explicit no-leakage probes.
 
 ## Data-quality gates
 
-Before an observation becomes model-eligible:
+Before a current observation is considered model-eligible:
 
 - schema check passes;
 - numeric/domain check passes;
 - source timestamp is parseable;
-- freshness SLA passes;
-- no impossible calendar duplication;
-- semantic/source lineage matches the frozen contract;
-- if a value changed for an existing observation date, the old value is retained and the change is recorded as a revision;
-- provider substitution is prohibited unless a new model/source version is explicitly validated and frozen.
+- source/provider identity matches the frozen contract;
+- `available_as_of` is present;
+- for retrieval-floor series, `available_as_of` is never earlier than `first_seen_at`;
+- provider substitution is prohibited;
+- current Cboe rows must carry the corrected availability policy;
+- latest ingestion run for each mandatory production source must be `SUCCESS`;
+- end-to-end point-in-time leak tests must pass.
 
-## Migration / bridge rule
+## Approved but not yet production-ingested
+
+These are not silently reported as complete:
+
+| Series | Planned source | Status / requirement |
+|---|---|---|
+| S&P 500 | `SP500` via FRED API | `PENDING_FRED_API_KEY`; private model use, no public raw redistribution |
+| DJIA | `DJIA` via FRED API | `PENDING_FRED_API_KEY`; private model use, no public raw redistribution |
+| Nasdaq-100 | `NASDAQ100` via FRED API | `PENDING_FRED_API_KEY`; private model use, no public raw redistribution |
+| NEM | Twelve Data | PENDING API key + symbol validation; internal non-display |
+| Hecla preferred identity | Twelve Data reference/time series | PENDING exact symbol validation |
+| Barrick current NYSE | Twelve Data ticker `B` | PENDING API key + validation; not a silent bridge for legacy `ABX.TO` |
+| GLL | Twelve Data | PENDING API key + validation |
+| DZZ | Twelve Data | PENDING API key + validation |
+
+## Licensed / blocked inputs
+
+| Input | Status |
+|---|---|
+| Exact DXY / ICE U.S. Dollar Index | `BLOCKED_LICENSE_OR_AUTHORIZED_VENDOR_ENTITLEMENT_REQUIRED` |
+| LBMA Gold/Silver benchmark | optional; appropriate IBA/LBMA data rights required |
+| LBMA Platinum/Palladium | `BLOCKED_LICENSE_REQUIRED_FROM_2026-07-01` |
+| XPT/USD, XPD/USD via Twelve Data | paid Grow+ required; would create a new model lineage and require validation |
+| `GPY` exact identity | `BLOCKED_AMBIGUOUS_IDENTIFIER` |
+| `long_term_trend` exact paper definition | `BLOCKED_DEFINITION_NOT_RECOVERED` |
+| `volatility` exact paper definition | `BLOCKED_DEFINITION_NOT_RECOVERED` |
+
+## Legacy / model migration rule
 
 Legacy model series and new authority/vendor series are separate. For any proposed source migration:
 
@@ -91,10 +208,11 @@ Legacy model series and new authority/vendor series are separate. For any propos
 5. accept only with a new model/data version;
 6. never backfill the new provider into an old frozen model and call it an exact reproduction.
 
-## Current blockers
+## Remaining project-level blockers
 
-- Exact executable VW-MIDAS-SVR Adapt V2 remains BLOCKED_NOT_PROVEN independently of this data plane.
-- Exact DXY requires ICE/authorized-vendor rights; DTWEXBGS is only a separately named dollar proxy challenger.
-- LBMA platinum/palladium data requires IBA licensing from 2026-07-01; free substitution is prohibited for the frozen Patch lineage.
-- Exact `GPY`, `long_term_trend`, and `volatility` paper-feature definitions remain unresolved.
-- Twelve Data Basic is internal non-display; external/public dashboard display requires appropriate rights/plan. Raw vendor prices therefore stay server-side/private.
+- Exact executable VW-MIDAS-SVR Adapt V2 remains `BLOCKED_NOT_PROVEN` independently of this data plane.
+- Direct Fed and broad-dollar authority series do not retroactively prove the exact historical feature identities of the archived VW model.
+- Exact DXY remains licensed/blocked; `DTWEXBGS_FRB_H10` is a separately named proxy challenger only.
+- Platinum/palladium exact benchmark continuity is not solved without appropriate licensing.
+- S&P 500, DJIA and Nasdaq-100 production ingestion is waiting for a FRED API key.
+- Twelve Data market instruments are waiting for API access and symbol/entitlement validation.
