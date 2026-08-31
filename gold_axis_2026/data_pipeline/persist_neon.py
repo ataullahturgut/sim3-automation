@@ -69,7 +69,7 @@ def _latest_map(conn, series_ids: list[str]) -> dict:
     if not series_ids:
         return {}
     sql = """
-        select series_id, observation_ts, lineage_id, value, quality_status, payload_hash
+        select series_id, observation_ts, lineage_id, value, quality_status, first_seen_at
         from canonical_latest
         where series_id = any(%s)
     """
@@ -131,33 +131,23 @@ def persist_bundle(bundle: dict) -> dict:
         revised = 0
 
         with conn.cursor() as cur:
-            for o in observations:
+            for raw in observations:
+                o = dict(raw)
                 key = (o["series_id"], o["observation_ts"], o["lineage_id"])
                 prev = latest.get(key)
-                same = False
+
+                # A new source-file hash alone is NOT a data revision. Revision means the
+                # actual observation value or its quality classification changed.
                 if prev is not None:
                     same = (
                         float(prev["value"]) == float(o["value"])
                         and str(prev["quality_status"]) == str(o["quality_status"])
-                        and (prev["payload_hash"] or None) == (o.get("payload_hash") or None)
                     )
-                if same:
-                    continue
-                if prev is not None:
+                    if same:
+                        continue
                     revised += 1
-                    # Preserve first-seen time across revisions.
-                    with conn.cursor(row_factory=dict_row) as qcur:
-                        qcur.execute(
-                            """
-                            select first_seen_at from canonical_latest
-                            where series_id=%s and observation_ts=%s and lineage_id=%s
-                            """,
-                            (o["series_id"], o["observation_ts"], o["lineage_id"]),
-                        )
-                        row = qcur.fetchone()
-                        if row:
-                            o = dict(o)
-                            o["first_seen_at"] = row["first_seen_at"].isoformat()
+                    o["first_seen_at"] = prev["first_seen_at"].isoformat()
+
                 _insert_observation(cur, o)
                 written += 1
 
