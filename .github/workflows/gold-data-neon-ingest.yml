@@ -1,6 +1,10 @@
 name: Gold Data Neon Ingest
 
 on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - '.github/workflows/gold-data-neon-ingest.yml'
   schedule:
     - cron: '17 * * * *'       # hourly XAU monitoring snapshot, away from top of hour
     - cron: '45 23 * * *'      # daily authority ingest after US session
