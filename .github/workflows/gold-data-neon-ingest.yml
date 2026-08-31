@@ -5,10 +5,13 @@ on:
     branches: [gold-r4-direction-engine]
     paths:
       - '.github/workflows/gold-data-neon-ingest.yml'
+      - 'gold_axis_2026/data_pipeline/collector_r2.py'
       - 'gold_axis_2026/data_pipeline/source_job.py'
       - 'gold_axis_2026/data_pipeline/fed_direct.py'
       - 'gold_axis_2026/data_pipeline/persist_neon.py'
       - 'gold_axis_2026/data_pipeline/verify_neon.py'
+      - 'gold_axis_2026/data_pipeline/apply_schema_patch.py'
+      - 'gold_axis_2026/data_pipeline/schema_patch_r2_6.sql'
       - 'gold_axis_2026/data_pipeline/source_contracts.json'
       - 'gold_axis_2026/data_pipeline/source_contracts_direct.json'
   schedule:
@@ -54,11 +57,34 @@ jobs:
       - name: Persist XAU snapshot
         run: python gold_axis_2026/data_pipeline/source_job.py --source xau --mode hourly --persist
 
-  daily-sources:
+  schema-guard:
     if: >-
       github.event_name == 'push' ||
       (github.event_name == 'schedule' && github.event.schedule != '17 * * * *') ||
       (github.event_name == 'workflow_dispatch' && inputs.mode != 'hourly')
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Require Neon secret
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Apply idempotent point-in-time schema contract
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/apply_schema_patch.py
+          python gold_axis_2026/data_pipeline/apply_schema_patch.py
+
+  daily-sources:
+    needs: schema-guard
+    if: needs.schema-guard.result == 'success'
     strategy:
       fail-fast: false
       matrix:
@@ -106,7 +132,7 @@ jobs:
         run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
       - name: Require Neon secret
         run: test -n "$NEON_DATABASE_URL"
-      - name: Verify persisted data plane
+      - name: Verify persisted data plane and point-in-time contract
         run: |
           python -m py_compile gold_axis_2026/data_pipeline/verify_neon.py
           python gold_axis_2026/data_pipeline/verify_neon.py
