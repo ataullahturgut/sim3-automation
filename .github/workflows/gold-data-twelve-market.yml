@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/gold-data-twelve-market.yml'
       - 'gold_axis_2026/data_pipeline/twelve_data_market.py'
+      - 'gold_axis_2026/data_pipeline/twelve_ingest_verified.py'
       - 'gold_axis_2026/data_pipeline/source_job.py'
       - 'gold_axis_2026/data_pipeline/persist_neon.py'
       - 'gold_axis_2026/data_pipeline/source_contracts_twelve_validated.json'
@@ -43,12 +44,11 @@ jobs:
       - name: Compile private vendor pipeline
         run: |
           python -m py_compile gold_axis_2026/data_pipeline/twelve_data_market.py
+          python -m py_compile gold_axis_2026/data_pipeline/twelve_ingest_verified.py
           python -m py_compile gold_axis_2026/data_pipeline/source_job.py
           python -m py_compile gold_axis_2026/data_pipeline/persist_neon.py
           python -m py_compile gold_axis_2026/data_pipeline/verify_twelve_market.py
-      - name: First private vendor ingestion
-        run: python gold_axis_2026/data_pipeline/source_job.py --source twelve_market --mode "$INGEST_MODE" --persist
-      - name: Repeat ingestion to exercise dedupe
-        run: python gold_axis_2026/data_pipeline/source_job.py --source twelve_market --mode "$INGEST_MODE" --persist
+      - name: Collect once, persist, and replay bundle for dedupe
+        run: python gold_axis_2026/data_pipeline/twelve_ingest_verified.py --mode "$INGEST_MODE"
       - name: Verify Neon persistence and point-in-time contract
         run: python gold_axis_2026/data_pipeline/verify_twelve_market.py
