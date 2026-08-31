@@ -11,10 +11,11 @@ import requests
 import collector_r2 as base
 from fed_direct import collect_fed_direct
 from fred_indices_api import collect_fred_indices
+from twelve_data_market import collect_twelve_market
 from persist_neon import persist_bundle
 
 ROOT = Path(__file__).resolve().parent
-PIPELINE_VERSION = "GOLD_DATA_R2.6_2026-08-31"
+PIPELINE_VERSION = "GOLD_DATA_R2.7_2026-08-31"
 
 
 def bounded_get(session: requests.Session, url: str, **kwargs):
@@ -112,6 +113,9 @@ def collect_source(source: str, mode: str) -> dict:
         elif source == "fred_indices":
             observations.extend(collect_fred_indices(run_id, retrieved_at, mode))
 
+        elif source == "twelve_market":
+            observations.extend(collect_twelve_market(run_id, retrieved_at, mode))
+
         elif source == "gpr":
             tail = None if mode == "backfill" else 36
             gpr_obs, vintage = base.collect_gpr(session, run_id, retrieved_at, tail)
@@ -144,7 +148,7 @@ def collect_source(source: str, mode: str) -> dict:
 
 def main() -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("--source", choices=["xau", "cboe", "fed", "fred_indices", "gpr"], required=True)
+    p.add_argument("--source", choices=["xau", "cboe", "fed", "fred_indices", "twelve_market", "gpr"], required=True)
     p.add_argument("--mode", choices=["hourly", "daily", "backfill"], default="daily")
     p.add_argument("--persist", action="store_true")
     args = p.parse_args()
