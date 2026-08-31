@@ -9,7 +9,6 @@ import pandas as pd
 import requests
 
 import collector_r2 as base
-from collector_r2_bounded import qevent
 from fed_direct import collect_fed_direct
 from persist_neon import persist_bundle
 
@@ -22,6 +21,18 @@ def bounded_get(session: requests.Session, url: str, **kwargs):
     r = session.get(url, timeout=(8, 25), **kwargs)
     r.raise_for_status()
     return r
+
+
+def qevent(run_id: str, series_id, code: str, message: str, metadata=None):
+    return {
+        "run_id": run_id,
+        "series_id": series_id,
+        "event_ts": base.iso_utc(base.utcnow()),
+        "severity": "ERROR",
+        "code": code,
+        "message": message,
+        "metadata": metadata or {},
+    }
 
 
 def collect_xau_history_points(session: requests.Session, run_id: str, retrieved_at, tail: int | None):
