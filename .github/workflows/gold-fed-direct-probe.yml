@@ -1,0 +1,45 @@
+name: Gold Fed Direct Probe
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - '.github/workflows/gold-fed-direct-probe.yml'
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install requests
+        run: pip install requests
+      - name: Probe official Federal Reserve endpoints
+        run: |
+          python - <<'PY'
+          import requests
+
+          urls = {
+            'H15_TREASURY': 'https://www.federalreserve.gov/datadownload/Output.aspx?filetype=csv&from=&label=include&lastobs=20&layout=seriescolumn&rel=H15&series=bf17364827e38702b42a58cf8eaa3f78&to=&type=package',
+            'H10_RATES': 'https://www.federalreserve.gov/datadownload/Output.aspx?filetype=csv&from=&label=include&lastobs=20&layout=seriescolumn&rel=H10&series=60f32914ab61dfab590e0e470153e3ae&to=&type=package',
+            'H10_INDEXES': 'https://www.federalreserve.gov/datadownload/Output.aspx?filetype=csv&from=&label=include&lastobs=20&layout=seriescolumn&rel=H10&series=122e3bcb627e8e53f1bf72a1a09cfb81&to=&type=package',
+            'NYFED_EFFR': 'https://markets.newyorkfed.org/api/rates/unsecured/effr/last/20.json',
+          }
+          headers={'User-Agent':'Gold-Control-Data-R2/1.0'}
+          for name, url in urls.items():
+              print('\n###', name)
+              r=requests.get(url, headers=headers, timeout=(8,25))
+              print('status', r.status_code, 'content-type', r.headers.get('content-type'), 'bytes', len(r.content))
+              r.raise_for_status()
+              if name == 'NYFED_EFFR':
+                  p=r.json()
+                  print('top keys', list(p)[:20])
+                  rows=p.get('refRates') or p.get('rates') or p.get('data') or []
+                  print('row count', len(rows))
+                  print('sample', rows[:2])
+              else:
+                  text=r.text
+                  print('\n'.join(text.splitlines()[:14]))
+          PY
