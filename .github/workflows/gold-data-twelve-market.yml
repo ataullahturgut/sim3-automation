@@ -1,0 +1,54 @@
+name: Gold Data Twelve Market
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - '.github/workflows/gold-data-twelve-market.yml'
+      - 'gold_axis_2026/data_pipeline/twelve_data_market.py'
+      - 'gold_axis_2026/data_pipeline/source_job.py'
+      - 'gold_axis_2026/data_pipeline/persist_neon.py'
+      - 'gold_axis_2026/data_pipeline/source_contracts_twelve_validated.json'
+      - 'gold_axis_2026/data_pipeline/verify_twelve_market.py'
+  schedule:
+    - cron: '35 1 * * 2-6'
+    - cron: '45 12 * * 2-6'
+  workflow_dispatch:
+
+concurrency:
+  group: gold-data-twelve-market
+  cancel-in-progress: true
+
+jobs:
+  ingest-twelve-market:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      INGEST_MODE: daily
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Require protected secrets
+        run: |
+          test -n "$NEON_DATABASE_URL" || { echo "NEON_DATABASE_URL missing"; exit 1; }
+          test -n "$TWELVE_DATA_API_KEY" || { echo "TWELVE_DATA_API_KEY missing"; exit 1; }
+      - name: Compile private vendor pipeline
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/twelve_data_market.py
+          python -m py_compile gold_axis_2026/data_pipeline/source_job.py
+          python -m py_compile gold_axis_2026/data_pipeline/persist_neon.py
+          python -m py_compile gold_axis_2026/data_pipeline/verify_twelve_market.py
+      - name: First private vendor ingestion
+        run: python gold_axis_2026/data_pipeline/source_job.py --source twelve_market --mode "$INGEST_MODE" --persist
+      - name: Repeat ingestion to exercise dedupe
+        run: python gold_axis_2026/data_pipeline/source_job.py --source twelve_market --mode "$INGEST_MODE" --persist
+      - name: Verify Neon persistence and point-in-time contract
+        run: python gold_axis_2026/data_pipeline/verify_twelve_market.py
