@@ -9,6 +9,7 @@ import requests
 import collector_r2 as base
 
 TIME_SERIES_URL = "https://api.twelvedata.com/time_series"
+BACKFILL_START_DATE = "2016-01-01"
 
 SERIES = {
     "NEM_TWELVEDATA": {
@@ -90,6 +91,21 @@ def _validate_meta(series_id: str, meta: dict, spec: dict) -> None:
         raise RuntimeError(f"TWELVE_META_MISMATCH:{series_id}:{mismatches}")
 
 
+def _request_params(spec: dict, mode: str) -> dict:
+    params = {
+        "symbol": spec["symbol"],
+        "interval": "1day",
+        "outputsize": outputsize(mode),
+        "format": "JSON",
+    }
+    if mode == "backfill":
+        # The Gold research stack's audited operational history starts in 2016.
+        # Bounding the request avoids oversized vendor responses while still
+        # covering the full overlap window required for source-bridge tests.
+        params["start_date"] = BACKFILL_START_DATE
+    return params
+
+
 def _collect_one(
     session: requests.Session,
     run_id: str,
@@ -100,14 +116,9 @@ def _collect_one(
 ):
     response = session.get(
         TIME_SERIES_URL,
-        params={
-            "symbol": spec["symbol"],
-            "interval": "1day",
-            "outputsize": outputsize(mode),
-            "format": "JSON",
-        },
+        params=_request_params(spec, mode),
         headers={"Authorization": f"apikey {api_key()}", "User-Agent": "GoldControl/2.7"},
-        timeout=(8, 30),
+        timeout=(8, 35),
     )
     response.raise_for_status()
     payload = response.json()
@@ -176,6 +187,7 @@ def _collect_one(
                 "provider_identity_validation": "PASS_2026-08-31",
                 "completed_session_policy": "observation_date_strictly_before_retrieval_exchange_local_date",
                 "current_session_rows_dropped_from_payload": dropped_current_session,
+                "backfill_start_date": BACKFILL_START_DATE if mode == "backfill" else None,
             },
         ))
     return observations
