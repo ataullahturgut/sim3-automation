@@ -1,0 +1,63 @@
+name: Gold Data Neon Ingest
+
+on:
+  schedule:
+    - cron: '17 * * * *'       # hourly XAU monitoring snapshot, away from top of hour
+    - cron: '45 23 * * *'      # daily authority ingest after US session
+    - cron: '25 6 * * *'       # verification/retry pass next morning
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'hourly, daily, or backfill'
+        required: true
+        default: 'daily'
+        type: choice
+        options:
+          - hourly
+          - daily
+          - backfill
+
+concurrency:
+  group: gold-data-neon-ingest
+  cancel-in-progress: false
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Resolve ingestion mode
+        id: mode
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            MODE="${{ inputs.mode }}"
+          elif [ "${{ github.event.schedule }}" = "17 * * * *" ]; then
+            MODE="hourly"
+          else
+            MODE="daily"
+          fi
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          echo "Resolved mode: $MODE"
+      - name: Require Neon secret
+        shell: bash
+        run: |
+          if [ -z "$NEON_DATABASE_URL" ]; then
+            echo "NEON_DATABASE_URL repository secret is missing"
+            exit 1
+          fi
+      - name: Compile ingestion code
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/collector_r2.py
+          python -m py_compile gold_axis_2026/data_pipeline/persist_neon.py
+      - name: Collect and persist
+        run: python gold_axis_2026/data_pipeline/collector_r2.py --mode "${{ steps.mode.outputs.mode }}" --persist
