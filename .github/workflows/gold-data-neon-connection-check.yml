@@ -1,0 +1,32 @@
+name: Gold Data Neon Connection Check
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - '.github/workflows/gold-data-neon-connection-check.yml'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Require Neon secret
+        shell: bash
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo "NEON_DATABASE_URL missing" && exit 1)
+      - name: Compile
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/collector_r2.py
+          python -m py_compile gold_axis_2026/data_pipeline/persist_neon.py
+      - name: Persist one hourly XAU snapshot
+        run: python gold_axis_2026/data_pipeline/collector_r2.py --mode hourly --persist
