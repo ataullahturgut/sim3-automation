@@ -1,5 +1,12 @@
 {
-  "version": "GOLD_DATA_R2.4_DIRECT_AUTHORITIES_2026-08-31",
+  "version": "GOLD_DATA_R2.5_DIRECT_AUTHORITIES_2026-08-31",
+  "policy": {
+    "provider_lineage_isolated": true,
+    "no_silent_replacement_of_fred_or_legacy_series": true,
+    "availability_policy": "first_retrieval_floor",
+    "historical_release_timestamp_reconstruction": "NOT_PROVEN",
+    "backtest_rule": "direct-authority observations are not point-in-time proven before their first recorded retrieval unless a separate vintage/release reconstruction is added"
+  },
   "series": {
     "DGS10_FRB_H15": {
       "semantic": "US10Y",
@@ -8,8 +15,10 @@
       "symbol": "RIFLGFCY10_N.B",
       "frequency": "daily",
       "unit": "percent",
-      "role": "authority 10-year constant-maturity Treasury yield; new reproducible feature, not silent replacement for legacy ^TNX",
-      "status": "APPROVED_DIRECT_AUTHORITY"
+      "role": "authority 10-year constant-maturity Treasury yield; new reproducible feature, not silent replacement for legacy ^TNX or DGS10_FRED lineage",
+      "status": "APPROVED_DIRECT_AUTHORITY",
+      "availability_policy": "first_retrieval_floor",
+      "historical_release_timestamp_reconstruction": "NOT_PROVEN"
     },
     "DEXCHUS_FRB_H10": {
       "semantic": "USDCNY",
@@ -18,8 +27,10 @@
       "symbol": "RXI_N.B.CH",
       "frequency": "daily observations / release-lagged",
       "unit": "CNY per USD",
-      "role": "Patch macro feature candidate with retrieval-time availability floor",
-      "status": "APPROVED_DIRECT_AUTHORITY"
+      "role": "Patch macro feature candidate; direct authority lineage kept separate from DEXCHUS_FRED",
+      "status": "APPROVED_DIRECT_AUTHORITY",
+      "availability_policy": "first_retrieval_floor",
+      "historical_release_timestamp_reconstruction": "NOT_PROVEN"
     },
     "DTWEXBGS_FRB_H10": {
       "semantic": "USD_BROAD_INDEX",
@@ -28,18 +39,22 @@
       "symbol": "JRXWTFB_N.B",
       "frequency": "daily observations / release-lagged",
       "unit": "index",
-      "role": "authority broad-dollar proxy challenger; explicitly not ICE DXY",
-      "status": "APPROVED_PROXY_ONLY_DIRECT_AUTHORITY"
+      "role": "authority broad-dollar proxy challenger; explicitly not ICE DXY and not silently merged with DTWEXBGS_FRED",
+      "status": "APPROVED_PROXY_ONLY_DIRECT_AUTHORITY",
+      "availability_policy": "first_retrieval_floor",
+      "historical_release_timestamp_reconstruction": "NOT_PROVEN"
     },
     "EFFR_NYFED": {
       "semantic": "FEDFUNDS",
       "tier": "A",
       "source": "Federal Reserve Bank of New York Markets Data API",
       "symbol": "EFFR",
-      "frequency": "business-day rate published next business day",
+      "frequency": "business-day rate published after the effective date",
       "unit": "percent",
-      "role": "effective federal funds rate / Patch macro feature candidate",
-      "status": "APPROVED_DIRECT_AUTHORITY"
+      "role": "effective federal funds rate / Patch macro feature candidate; direct NY Fed lineage kept separate from DFF_FRED",
+      "status": "APPROVED_DIRECT_AUTHORITY",
+      "availability_policy": "first_retrieval_floor",
+      "historical_publication_timestamp_reconstruction": "NOT_PROVEN"
     }
   }
 }
