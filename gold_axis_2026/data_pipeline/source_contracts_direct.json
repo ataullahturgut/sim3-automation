@@ -1,0 +1,45 @@
+{
+  "version": "GOLD_DATA_R2.4_DIRECT_AUTHORITIES_2026-08-31",
+  "series": {
+    "DGS10_FRB_H15": {
+      "semantic": "US10Y",
+      "tier": "A",
+      "source": "Board of Governors of the Federal Reserve System H.15 DDP",
+      "symbol": "RIFLGFCY10_N.B",
+      "frequency": "daily",
+      "unit": "percent",
+      "role": "authority 10-year constant-maturity Treasury yield; new reproducible feature, not silent replacement for legacy ^TNX",
+      "status": "APPROVED_DIRECT_AUTHORITY"
+    },
+    "DEXCHUS_FRB_H10": {
+      "semantic": "USDCNY",
+      "tier": "A",
+      "source": "Board of Governors of the Federal Reserve System H.10 DDP",
+      "symbol": "RXI_N.B.CH",
+      "frequency": "daily observations / release-lagged",
+      "unit": "CNY per USD",
+      "role": "Patch macro feature candidate with retrieval-time availability floor",
+      "status": "APPROVED_DIRECT_AUTHORITY"
+    },
+    "DTWEXBGS_FRB_H10": {
+      "semantic": "USD_BROAD_INDEX",
+      "tier": "A",
+      "source": "Board of Governors of the Federal Reserve System H.10 DDP",
+      "symbol": "JRXWTFB_N.B",
+      "frequency": "daily observations / release-lagged",
+      "unit": "index",
+      "role": "authority broad-dollar proxy challenger; explicitly not ICE DXY",
+      "status": "APPROVED_PROXY_ONLY_DIRECT_AUTHORITY"
+    },
+    "EFFR_NYFED": {
+      "semantic": "FEDFUNDS",
+      "tier": "A",
+      "source": "Federal Reserve Bank of New York Markets Data API",
+      "symbol": "EFFR",
+      "frequency": "business-day rate published next business day",
+      "unit": "percent",
+      "role": "effective federal funds rate / Patch macro feature candidate",
+      "status": "APPROVED_DIRECT_AUTHORITY"
+    }
+  }
+}
