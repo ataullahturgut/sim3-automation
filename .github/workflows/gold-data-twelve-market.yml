@@ -24,13 +24,13 @@ concurrency:
 jobs:
   ingest-twelve-market:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 5
     permissions:
       contents: read
     env:
       NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
       TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
-      INGEST_MODE: daily
+      INGEST_MODE: backfill
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
