@@ -18,26 +18,31 @@ jobs:
           python-version: '3.11'
       - name: Install collector dependencies
         run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
-      - name: Compile pipeline
+      - name: Compile R2 pipeline
         run: |
-          python -m py_compile gold_axis_2026/data_pipeline/collector.py
-          python -m py_compile gold_axis_2026/data_pipeline/persist_supabase.py
-      - name: Run live collector
-        run: python gold_axis_2026/data_pipeline/collector.py
-      - name: Validate bundle
+          python -m py_compile gold_axis_2026/data_pipeline/collector_r2.py
+          python -m py_compile gold_axis_2026/data_pipeline/persist_neon.py
+      - name: Run authority-tier collector smoke
+        run: python gold_axis_2026/data_pipeline/collector_r2.py --mode smoke
+      - name: Validate R2 bundle
         run: |
           python - <<'PY'
           import json
           import pandas as pd
           from pathlib import Path
-          p=Path('gold_axis_2026/data_pipeline/_out')
+          p=Path('gold_axis_2026/data_pipeline/_out_r2')
           o=pd.read_csv(p/'observations.csv')
           m=json.loads((p/'manifest.json').read_text())
           q=json.loads((p/'quality_events.json').read_text())
-          required={'XAU_SPOT','GVZ','VIX','DGS10','FEDFUNDS_DAILY','USDCNY','NDX','SP500','DJI','GPR','GPRT','GPRA'}
+          required={
+            'XAU_SPOT_XAUS','GVZ_CBOE','VIX_CBOE','DGS10_FRED','DFF_FRED',
+            'DEXCHUS_FRED','DTWEXBGS_FRED','SP500_FRED','DJIA_FRED','NASDAQ100_FRED',
+            'GPR_OFFICIAL','GPRT_OFFICIAL','GPRA_OFFICIAL'
+          }
           missing=sorted(required-set(o.series_id.unique()))
           assert not missing, f'missing required series: {missing}'
-          assert len(o)>1000, len(o)
+          assert len(o)>100, len(o)
           assert not any(x.get('severity')=='ERROR' for x in q), q
-          print('Gold Data R1 collector: PASS', m['n_observations'], 'rows', len(m['series']), 'series')
+          assert m['n_errors']==0, m
+          print('Gold Data R2 collector: PASS', m['n_observations'], 'rows', len(m['series']), 'series')
           PY
