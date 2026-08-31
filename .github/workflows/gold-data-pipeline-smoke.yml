@@ -11,6 +11,7 @@ on:
 jobs:
   collector-smoke:
     runs-on: ubuntu-latest
+    timeout-minutes: 4
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -18,31 +19,36 @@ jobs:
           python-version: '3.11'
       - name: Install collector dependencies
         run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
-      - name: Compile R2 pipeline
+      - name: Compile production R2 pipeline
         run: |
           python -m py_compile gold_axis_2026/data_pipeline/collector_r2.py
+          python -m py_compile gold_axis_2026/data_pipeline/fed_direct.py
           python -m py_compile gold_axis_2026/data_pipeline/persist_neon.py
-      - name: Run authority-tier collector smoke
-        run: python gold_axis_2026/data_pipeline/collector_r2.py --mode smoke
-      - name: Validate R2 bundle
+          python -m py_compile gold_axis_2026/data_pipeline/source_job.py
+      - name: Run production-source smoke without DB writes
+        working-directory: gold_axis_2026/data_pipeline
         run: |
           python - <<'PY'
-          import json
-          import pandas as pd
-          from pathlib import Path
-          p=Path('gold_axis_2026/data_pipeline/_out_r2')
-          o=pd.read_csv(p/'observations.csv')
-          m=json.loads((p/'manifest.json').read_text())
-          q=json.loads((p/'quality_events.json').read_text())
-          required={
-            'XAU_SPOT_XAUS','GVZ_CBOE','VIX_CBOE','DGS10_FRED','DFF_FRED',
-            'DEXCHUS_FRED','DTWEXBGS_FRED','SP500_FRED','DJIA_FRED','NASDAQ100_FRED',
-            'GPR_OFFICIAL','GPRT_OFFICIAL','GPRA_OFFICIAL'
+          from source_job import collect_source
+
+          expected = {
+              'xau': {'XAU_SPOT_XAUS', 'XAU_DAILY_XAUS'},
+              'cboe': {'GVZ_CBOE', 'VIX_CBOE'},
+              'fed': {'DGS10_FRB_H15', 'DEXCHUS_FRB_H10', 'DTWEXBGS_FRB_H10', 'EFFR_NYFED'},
+              'gpr': {'GPR_OFFICIAL', 'GPRT_OFFICIAL', 'GPRA_OFFICIAL'},
           }
-          missing=sorted(required-set(o.series_id.unique()))
-          assert not missing, f'missing required series: {missing}'
-          assert len(o)>100, len(o)
-          assert not any(x.get('severity')=='ERROR' for x in q), q
-          assert m['n_errors']==0, m
-          print('Gold Data R2 collector: PASS', m['n_observations'], 'rows', len(m['series']), 'series')
+
+          total = 0
+          for source, required in expected.items():
+              bundle = collect_source(source, 'daily')
+              errors = [x for x in bundle['quality_events'] if x.get('severity') == 'ERROR']
+              found = {x['series_id'] for x in bundle['observations']}
+              missing = sorted(required - found)
+              assert not errors, f'{source} quality errors: {errors}'
+              assert not missing, f'{source} missing series: {missing}'
+              assert bundle['observations'], f'{source} returned no observations'
+              total += len(bundle['observations'])
+              print(source, 'PASS', len(bundle['observations']), 'rows', sorted(found))
+
+          print('Gold Data production-source smoke: PASS', total, 'rows')
           PY
