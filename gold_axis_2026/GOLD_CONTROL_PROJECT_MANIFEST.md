@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.1  
+**Manifest version:** 1.2  
 **Freeze / issue date:** 2026-09-01  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -491,7 +491,7 @@ The frontend must never mirror this whole backend chain on the home screen. It s
 
 ---
 
-# 15. MISSING PRODUCTION COMPONENT — DECISION STATE STORE
+# 15. PRODUCTION COMPONENT — DECISION STATE STORE
 
 The current Streamlit app still expects:
 
@@ -540,7 +540,7 @@ Current Stage 3 implementation artifacts:
 - `gold_axis_2026/data_pipeline/test_decision_store_schema.py`
 - `.github/workflows/gold-control-decision-store-schema-smoke.yml`
 
-The candidate DDL has passed a rollback-only compatibility/constraint smoke against the actual Neon database. **No production decision-store migration has been applied yet.**
+Decision Store V1 passed rollback-only CI, isolated Neon rehearsal, and guarded production migration. Production now contains the three append-only Decision Store tables, the evidence-scoped latest-state view, and the mutation-rejection function. The production migration run was GitHub Actions run `33496843121`, pinned to canonical commit `13d5a027849470b4a95341004300bd97a35e82f9`, and completed `SUCCESS` with `decision_rows=0`. Production writer/reader activation remains a separate Stage 3 gate.
 
 The UI should eventually read canonical stored decision state rather than deriving a decision from live spot.
 
@@ -838,8 +838,9 @@ The project execution order remains:
 | 0 | `PASS` | Manifest read-first contract active |
 | 1 | `PASS_AUDIT_COMPLETE_WITH_OPERATIONAL_BLOCKERS` | Actual Neon inventory generated read-only; XAU source currently degraded and lineage discrepancy remains explicit |
 | 2 | `PASS_CONTRACT_CANONICALIZED; PROSPECTIVE_LEDGER_PROVEN_EMPTY` | Model roles/authority frozen; live forecast-state tables reconciled and contain 0 rows |
-| 3 | `IN_PROGRESS` | DDL + contract + rollback smoke PASS; isolated temporary-branch rehearsal blocked by connector schema mismatch; production migration not applied |
-| 4–12 | `NOT_STARTED / NOT_COMPLETE` | Cannot be promoted ahead of Stage 3 |
+| 3 | `IN_PROGRESS_PRODUCTION_SCHEMA_PASS` | Isolated rehearsal PASS; guarded production migration PASS; Neon resource tree confirms Decision Store objects; production writer/reader not activated |
+| 4 | `PREPARATION_TESTS_PASS; NOT_COMPLETE_AHEAD_OF_STAGE3` | Deterministic R4.1 tests are prepared but Stage 3 writer/reader activation remains open |
+| 5–12 | `NOT_STARTED / NOT_COMPLETE` | Cannot be promoted ahead of Stage 3/4 |
 
 ---
 
@@ -847,33 +848,38 @@ The project execution order remains:
 
 The next canonical task is now:
 
-## `STAGE 3 — DECISION STATE STORE: ISOLATED MIGRATION REHEARSAL → PRODUCTION MIGRATION`
+## `STAGE 3 — DECISION STATE STORE: CONNECT PRODUCTION WRITER / READER WITHOUT ACTIVATING UNPROVEN ACTION MAPPING`
 
-Completed Stage 3 preparation:
+Completed Stage 3 gates:
 
-- live current schema reconciled;
-- decision tables proven absent;
-- exact descriptive state vocabulary frozen;
-- `NOT_PROVEN_POSITION_MAPPING` enforced in the candidate database contract;
-- versioned DDL created;
-- rollback-only compatibility/constraint smoke against actual Neon: `PASS`;
-- rollback verified no persistent schema change.
+- Decision Store V1 contract and versioned DDL: `PASS`;
+- rollback-only schema/writer/reader/adapter CI: `PASS`;
+- isolated Neon branch rehearsal: `PASS`;
+- persistent rehearsal guard verification: `PASS`;
+- production migration via guarded GitHub Actions workflow: `PASS`;
+- production post-migration resource-tree verification: `PASS`;
+- production Decision Store remained empty immediately after migration: `PASS`;
+- `NOT_PROVEN_POSITION_MAPPING` remains enforced.
+
+Production migration evidence:
+
+- workflow run: `33496843121`;
+- job: `99820886297`;
+- canonical migration runner commit: `13d5a027849470b4a95341004300bd97a35e82f9`;
+- marker: `GOLD_CONTROL_STAGE3_PRODUCTION_MIGRATION_PASS`;
+- schema version: `GOLD_CONTROL_DECISION_STORE_V1_2026-09-01`;
+- decision rows immediately after migration: `0`.
 
 Required next gate:
 
-1. create/use an isolated temporary Neon branch from the production branch;
-2. apply `schema_patch_decision_store_v1.sql` there;
-3. verify tables, constraints, indexes, view, append-only behavior, fingerprint idempotency and existing-data compatibility;
-4. compare temporary schema against production;
-5. only after successful isolated rehearsal, apply the same versioned migration to production through an auditable migration path;
-6. verify production schema post-migration;
-7. implement decision persistence writer and read contract.
+1. identify the canonical live/EOD R4.1 execution entry point and exact input snapshot contract;
+2. connect the existing `r4_1_decision_adapter.py` and `decision_store.py` writer to that path without recomputing signals in persistence;
+3. require explicit evidence class and complete prospective provenance before any `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` insert;
+4. connect `decision_store_reader.py` as the canonical read surface while keeping the current app unchanged until the stored-state path is verified;
+5. verify no `HISTORICAL_REPLAY` row can surface as live and no non-null `action_state` can be stored;
+6. only after writer/reader integration passes may Stage 3 be promoted to `PASS`.
 
-Current blocker for the isolated-branch gate:
-
-`BLOCKED_CONNECTOR_SCHEMA_MISMATCH`
-
-The exposed Neon management connector currently presents conflicting argument contracts for branch/SQL management. Do not bypass this by pretending a temporary branch was created. The protected GitHub Actions path is verified for read-only audit and rollback smoke, but has not yet provided an isolated Neon branch lifecycle.
+The direct Neon SQL-management connector still has a camelCase/snake_case contract mismatch, but this no longer blocks the audited GitHub Actions production migration path. It remains an operational tooling issue, not permission debt.
 
 ### Operational work that continues independently
 

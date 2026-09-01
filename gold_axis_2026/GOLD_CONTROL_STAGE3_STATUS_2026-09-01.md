@@ -3,7 +3,7 @@
 **Status date:** 2026-09-01  
 **Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.1  
 **Stage:** 3 — Decision State Store  
-**Current status:** `ISOLATED_REHEARSAL_SCHEMA_APPLIED; PRODUCTION_MIGRATION_NOT_APPLIED`
+**Current status:** `PRODUCTION_SCHEMA_APPLIED_AND_VERIFIED; WRITER_READER_NOT_ACTIVATED`
 
 ## 1. What is now verified
 
@@ -118,7 +118,7 @@ Therefore descriptive states such as `ALIGNED_UP`, `CONFLICT`, or `REVERSAL_RISK
 
 ## 4. What has NOT happened
 
-No production decision-store migration has been applied.
+Production Decision Store V1 schema migration **has been applied and verified**.
 
 No production decision writer/reader has been switched on.
 
@@ -128,19 +128,41 @@ No app screen has been switched to the decision store yet.
 
 No claim is made that connector-side post-migration schema introspection or schema diff has passed; that path remains blocked by the connector contract mismatch.
 
-## 5. Remaining Stage 3 work
+## 5. Production migration evidence and remaining Stage 3 work
 
-Stage 3 becomes eligible for `PASS` only after:
+Production schema migration is now complete.
 
-1. persistent rehearsal branch schema is verified beyond UI object presence, preferably through a working connector or equivalent auditable SQL checks;
-2. persistent rehearsal writer/reader roundtrip is exercised without rollback-only limitations;
-3. production migration plan is reviewed and explicitly approved;
-4. migration is applied to production through an auditable path;
-5. production post-migration schema is verified;
-6. production decision writer/reader are connected without weakening the evidence-class or action-mapping guards.
+Evidence:
+
+- GitHub Actions workflow: `Gold Control Stage 3 Production Migration`
+- run: `33496843121`
+- job: `99820886297`
+- conclusion: `SUCCESS`
+- canonical pinned ref: `13d5a027849470b4a95341004300bd97a35e82f9`
+- exact marker: `GOLD_CONTROL_STAGE3_PRODUCTION_MIGRATION_PASS`
+- schema version: `GOLD_CONTROL_DECISION_STORE_V1_2026-09-01`
+- action mapping: `NOT_PROVEN_POSITION_MAPPING`
+- production decision rows immediately after migration: `0`
+
+Independent Neon resource-tree inspection after the run confirms production contains:
+
+- `decision_runs`
+- `decision_signal_snapshots`
+- `decision_events`
+- `latest_decision_snapshot_by_evidence`
+- `reject_gold_control_decision_mutation`
+- expected Decision Store indexes.
+
+The remaining Stage 3 gate is **not schema migration**. It is production-path integration:
+
+1. bind the canonical live/EOD R4.1 emitted state to `r4_1_decision_adapter.py`;
+2. persist through `decision_store.py` with explicit evidence class and complete provenance;
+3. read through `decision_store_reader.py` with evidence isolation;
+4. keep `action_state` null and do not invent position mapping;
+5. verify the integrated path before switching the app from the transitional `latest_signal.json` dependency.
 
 Current status:
 
-`STAGE_3 = ISOLATED_REHEARSAL_SCHEMA_APPLIED / PRODUCTION_MIGRATION_NOT_APPLIED`
+`STAGE_3 = IN_PROGRESS_PRODUCTION_SCHEMA_PASS / WRITER_READER_INTEGRATION_PENDING`
 
 Stages 4–12 may be prepared non-mutatively where useful, but none may be promoted as complete ahead of Stage 3.
