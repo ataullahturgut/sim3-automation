@@ -7,6 +7,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from decision_source import fetch_current_decision_state
 from live_sources import fetch_gvz_history, fetch_gvz_latest, fetch_xau_history, fetch_xau_spot
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,7 +16,6 @@ PROD = ROOT / "production_closure"
 HISTORY = PROD / "production_history_43.csv"
 SCORECARD = PROD / "common_scorecard.csv"
 PROVENANCE = PROD / "PROVENANCE.json"
-LATEST_SIGNAL = R41 / "output" / "latest_signal.json"
 CONFIG = R41 / "config" / "frozen_r4_1.json"
 BLOCKERS = R41 / "KNOWN_BLOCKERS.md"
 
@@ -128,7 +128,25 @@ def show_decision_box(classification: str, as_of: str, note: str) -> None:
 
 config = load_json(CONFIG)
 prov = load_json(PROVENANCE)
-latest = load_json(LATEST_SIGNAL)
+
+decision_store_error = None
+db_url = os.environ.get("NEON_DATABASE_URL", "").strip()
+if not db_url:
+    try:
+        db_url = str(st.secrets.get("NEON_DATABASE_URL", "")).strip()
+    except Exception:
+        db_url = ""
+
+if db_url:
+    try:
+        latest = fetch_current_decision_state(db_url) or {}
+    except Exception as exc:
+        latest = {}
+        decision_store_error = f"{type(exc).__name__}: {exc}"
+else:
+    latest = {}
+    decision_store_error = "NEON_DATABASE_URL_NOT_CONFIGURED"
+
 history = load_csv(HISTORY)
 scorecard = load_csv(SCORECARD)
 
@@ -140,17 +158,24 @@ now_tab, signals_tab, model_tab, data_tab = st.tabs(["Şimdi", "Sinyaller", "Mod
 with now_tab:
     # The first mobile screen answers one question: what is the latest valid system state?
     if latest:
+        evidence = str(latest.get("evidence_class", "UNRESOLVED"))
+        if evidence == "LIVE_PRODUCTION":
+            decision_note = "Decision Store · LIVE_PRODUCTION · canlı spot değildir"
+        else:
+            decision_note = "Decision Store · PROSPECTIVE_SHADOW · canlı üretim kararı değildir"
         show_decision_box(
             str(latest.get("classification", "UNRESOLVED")),
             str(latest.get("date", "N/A")),
-            "Canlı spot değil; son üretilmiş frozen R4.1 EOD state",
+            decision_note,
         )
     else:
         show_decision_box(
-            "CANLI KARAR YOK",
+            "KANONİK KARAR YOK",
             "N/A",
-            "R4.1 canlı EOD signal pipeline uygulamaya henüz bağlı değil",
+            "Decision Store'da LIVE_PRODUCTION / PROSPECTIVE_SHADOW kayıt yok",
         )
+        if decision_store_error:
+            st.caption(f"Decision Store: {decision_store_error}")
         st.warning("Canlı XAU fiyatından otomatik LONG/EXIT kararı türetilmiyor.")
 
     xau, xau_error = safe_live_xau()
@@ -243,9 +268,9 @@ with signals_tab:
             use_container_width=True,
             hide_index=True,
         )
-        st.caption(f"R4.1 signal as-of: {latest.get('date','N/A')}")
+        st.caption(f"R4.1 stored state as-of: {latest.get('date','N/A')} · evidence: {latest.get('evidence_class','N/A')}")
     else:
-        st.warning("Güncel `latest_signal.json` yok. Statik kuralları canlı sinyal gibi göstermiyoruz.")
+        st.warning("Decision Store’da display-eligible karar yok. HISTORICAL_REPLAY canlı state olarak gösterilmez.")
 
     with st.expander("Frozen R4.1 kuralları"):
         tactical = config.get("tactical", {})
@@ -338,7 +363,11 @@ with data_tab:
     except Exception as exc:
         st.error(f"GVZ günlük seri alınamadı: {type(exc).__name__}: {exc}")
 
-    st.info("Neon data plane ve diğer makro/vendor serileri backend katmanındadır. Bu uygulamaya sorgu bağlantısı kurulmadan burada health PASS gösterilmeyecek.")
+    if db_url:
+        st.success("Neon Decision Store reader: CONNECTED · yalnız LIVE_PRODUCTION / PROSPECTIVE_SHADOW okunur")
+    else:
+        st.warning("Neon Decision Store reader: NOT_CONFIGURED · NEON_DATABASE_URL uygulama ortamında yok")
+    st.info("Diğer makro/vendor serileri backend katmanındadır. UI'ya sorgu bağlantısı kurulmadan health PASS gösterilmeyecek.")
 
     with st.expander("Audit / provenance"):
         c1, c2 = st.columns(2)
