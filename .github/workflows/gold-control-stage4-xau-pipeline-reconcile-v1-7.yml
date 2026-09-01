@@ -1,0 +1,45 @@
+name: Gold Control Stage4 XAU Pipeline Reconcile v1.7
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-stage4-xau-pipeline-reconcile-v1-7.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+
+      - name: Apply deterministic XAU pipeline closure
+        run: python gold_axis_2026/tools/reconcile_stage4_xau_pipeline_v1_7.py
+
+      - name: Verify exact changed scope
+        run: |
+          python -m json.tool gold_axis_2026/data_pipeline/source_contracts.json >/dev/null
+          grep -Fq '**Manifest version:** 1.7' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'APPROVED_CANONICAL_PIPELINE_SUCCESS' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'IN_PROGRESS_BLOCKED_FORECAST_ISSUANCE' gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md
+          grep -Fq 'CLOSED_BY_MANIFEST_V1_7' gold_axis_2026/GOLD_CONTROL_XAU_EOD_SOURCE_CHANGE_CONTROL_2026-09-01.md
+          grep -Fq 'APPROVED_CANONICAL_PIPELINE_SUCCESS' gold_axis_2026/data_pipeline/source_contracts.json
+          test "$(git status --short | awk '{print $2}' | sort | tr '\n' ' ')" = "gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md gold_axis_2026/GOLD_CONTROL_XAU_EOD_SOURCE_CHANGE_CONTROL_2026-09-01.md gold_axis_2026/data_pipeline/source_contracts.json "
+
+      - name: Commit v1.7 closure to canonical branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md \
+                  gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md \
+                  gold_axis_2026/GOLD_CONTROL_XAU_EOD_SOURCE_CHANGE_CONTROL_2026-09-01.md \
+                  gold_axis_2026/data_pipeline/source_contracts.json
+          git commit -m "gold-control: close XAU pipeline blocker in manifest v1.7"
+          git push origin HEAD:gold-r4-direction-engine
