@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import io
-import json
 import math
 import os
 import re
@@ -21,11 +20,7 @@ def load_world_bank_gold() -> pd.Series:
     r = requests.get(WB_URL, headers={"User-Agent": "Gold-Control-Audit/1.0"}, timeout=120)
     r.raise_for_status()
     raw = pd.read_excel(io.BytesIO(r.content), sheet_name="Monthly Prices", header=None)
-
-    # World Bank Pink Sheet workbook layout: commodity names and units are in
-    # metadata rows; data rows use YYYYMMM / YYYYMmm style date codes.
     gold_col = None
-    date_col = 0
     for rr in range(min(12, len(raw))):
         for cc in range(raw.shape[1]):
             v = str(raw.iat[rr, cc]).strip().lower()
@@ -39,15 +34,14 @@ def load_world_bank_gold() -> pd.Series:
 
     rows = []
     for _, row in raw.iterrows():
-        ds = str(row.iloc[date_col]).strip()
+        ds = str(row.iloc[0]).strip()
         m = re.match(r"^(\d{4})M(\d{1,2})$", ds, re.I)
         if not m:
             continue
         y, mo = int(m.group(1)), int(m.group(2))
         val = pd.to_numeric(row.iloc[gold_col], errors="coerce")
-        if pd.isna(val):
-            continue
-        rows.append((pd.Timestamp(y, mo, 1), float(val)))
+        if pd.notna(val):
+            rows.append((pd.Timestamp(y, mo, 1), float(val)))
     if not rows:
         raise RuntimeError("WORLD_BANK_GOLD_DATA_NOT_PARSED")
     s = pd.Series(dict(rows)).sort_index()
@@ -55,12 +49,35 @@ def load_world_bank_gold() -> pd.Series:
     return s
 
 
-def fetch_twelve_hourly_month(api_key: str, month: pd.Timestamp) -> tuple[float | None, int, str | None]:
-    # Reconstruct a research monthly NY17 reference from Twelve 1h history.
-    # 16:00 America/New_York bar closes at 17:00 ET; overlap audit already
-    # proved equality with exact 16:59 1min close on sampled recent dates.
-    start = month.strftime("%Y-%m-01 00:00:00")
-    end = (month + pd.offsets.MonthEnd(0)).strftime("%Y-%m-%d 23:59:59")
+def request_json(session: requests.Session, params: dict) -> tuple[dict | None, str | None]:
+    # Transport/rate-limit safe. No market values are logged here.
+    for attempt in range(8):
+        try:
+            r = session.get(TWELVE_URL, params=params, timeout=120)
+            j = r.json()
+        except (requests.RequestException, ValueError) as exc:
+            if attempt == 7:
+                return None, f"TRANSPORT_{type(exc).__name__}"
+            time.sleep(min(15 * (attempt + 1), 65))
+            continue
+
+        code = j.get("code") if isinstance(j, dict) else None
+        if r.status_code == 429 or code == 429:
+            time.sleep(65)
+            continue
+        if r.status_code != 200 or (isinstance(j, dict) and j.get("status") == "error"):
+            return None, f"HTTP_{r.status_code}_API_{code if code is not None else 'NA'}"
+        return j, None
+    return None, "RATE_LIMIT_EXHAUSTED"
+
+
+def fetch_twelve_hourly_window(
+    session: requests.Session, api_key: str, start_month: pd.Timestamp, end_month: pd.Timestamp
+) -> tuple[dict[pd.Timestamp, tuple[float, int]], str | None]:
+    # Historical research bridge only. The 16:00 America/New_York 1h bar closes
+    # at 17:00 ET. It has its own lineage and is never relabelled as exact 1min.
+    start = start_month.strftime("%Y-%m-01 00:00:00")
+    end = (end_month + pd.offsets.MonthEnd(0)).strftime("%Y-%m-%d 23:59:59")
     params = {
         "symbol": "XAU/USD",
         "interval": "1h",
@@ -71,30 +88,23 @@ def fetch_twelve_hourly_month(api_key: str, month: pd.Timestamp) -> tuple[float 
         "apikey": api_key,
         "order": "ASC",
     }
-    for attempt in range(6):
-        r = requests.get(TWELVE_URL, params=params, timeout=90)
-        try:
-            j = r.json()
-        except Exception:
-            j = {}
-        if r.status_code == 429 or (isinstance(j, dict) and j.get("code") == 429):
-            time.sleep(15 * (attempt + 1))
+    j, err = request_json(session, params)
+    if err or not isinstance(j, dict):
+        return {}, err or "INVALID_RESPONSE"
+
+    by_month: dict[pd.Timestamp, list[float]] = {}
+    for z in j.get("values", []):
+        dt = str(z.get("datetime", ""))
+        if not dt.endswith("16:00:00"):
             continue
-        if r.status_code != 200 or (isinstance(j, dict) and j.get("status") == "error"):
-            return None, 0, f"HTTP_{r.status_code}_API_{j.get('code') if isinstance(j, dict) else 'NA'}"
-        vals = j.get("values", []) if isinstance(j, dict) else []
-        closes = []
-        for z in vals:
-            dt = str(z.get("datetime", ""))
-            if dt.endswith("16:00:00"):
-                try:
-                    closes.append(float(z["close"]))
-                except Exception:
-                    pass
-        if closes:
-            return float(np.mean(closes)), len(closes), None
-        return None, 0, "NO_1600_BAR"
-    return None, 0, "RATE_LIMIT_EXHAUSTED"
+        try:
+            ts = pd.Timestamp(dt)
+            m = pd.Timestamp(ts.year, ts.month, 1)
+            by_month.setdefault(m, []).append(float(z["close"]))
+        except Exception:
+            continue
+    out = {m: (float(np.mean(v)), len(v)) for m, v in by_month.items() if v}
+    return out, None
 
 
 def main() -> None:
@@ -104,8 +114,7 @@ def main() -> None:
     print(f"WORLD_BANK_MONTHS={len(wb)}")
     print(f"WORLD_BANK_HAS_2016_01={pd.Timestamp('2016-01-01') in wb.index}")
 
-    prod_path = ROOT / "production_closure" / "production_history_43.csv"
-    prod = pd.read_csv(prod_path)
+    prod = pd.read_csv(ROOT / "production_closure" / "production_history_43.csv")
     prod["month_ts"] = pd.to_datetime(prod["month"] + "-01")
     merged = prod.merge(wb.rename("wb").rename_axis("month_ts").reset_index(), on="month_ts", how="left")
     actual = pd.to_numeric(merged["actual"], errors="coerce").to_numpy(float)
@@ -121,42 +130,60 @@ def main() -> None:
     if not api_key:
         raise RuntimeError("TWELVE_DATA_API_KEY_MISSING")
 
-    # Pre-frozen overlap sample: full calendar months spread across 2020-2026.
-    sample_months = pd.to_datetime([
-        "2020-04-01", "2020-09-01", "2021-03-01", "2021-11-01",
-        "2022-06-01", "2022-12-01", "2023-06-01", "2023-12-01",
-        "2024-06-01", "2024-12-01", "2025-06-01", "2025-12-01",
-        "2026-01-01", "2026-03-01", "2026-05-01", "2026-07-01",
-    ])
+    # Frozen before this rerun: seven two-month windows spanning 2020-2026.
+    # Grouping reduces Twelve requests while retaining cross-regime coverage.
+    windows = [
+        ("2020-09-01", "2020-10-01"),
+        ("2021-03-01", "2021-04-01"),
+        ("2022-06-01", "2022-07-01"),
+        ("2023-06-01", "2023-07-01"),
+        ("2024-06-01", "2024-07-01"),
+        ("2025-06-01", "2025-07-01"),
+        ("2026-06-01", "2026-07-01"),
+    ]
     rows = []
-    for m in sample_months:
-        ny17, n, err = fetch_twelve_hourly_month(api_key, m)
+    session = requests.Session()
+    session.headers.update({"User-Agent": "Gold-Control-Audit/1.0"})
+
+    for a, b in windows:
+        sm, em = pd.Timestamp(a), pd.Timestamp(b)
+        got, err = fetch_twelve_hourly_window(session, api_key, sm, em)
         if err:
-            print(f"OVERLAP_MONTH={m.strftime('%Y-%m')} STATUS={err} N_NY17=0")
+            print(f"OVERLAP_WINDOW={sm.strftime('%Y-%m')}..{em.strftime('%Y-%m')} STATUS={err}")
         else:
-            wbval = float(wb.loc[m]) if m in wb.index else math.nan
-            abs_gap = abs(ny17 - wbval) if math.isfinite(wbval) else math.nan
-            rel_bps = abs_gap / abs(wbval) * 10000 if math.isfinite(wbval) and wbval != 0 else math.nan
-            rows.append((m, wbval, ny17, n, abs_gap, rel_bps))
-            print(f"OVERLAP_MONTH={m.strftime('%Y-%m')} STATUS=PASS N_NY17={n} ABS_GAP_LOGGED=NO")
-        time.sleep(4)
+            for m in pd.date_range(sm, em, freq="MS"):
+                if m not in got or m not in wb.index:
+                    print(f"OVERLAP_MONTH={m.strftime('%Y-%m')} STATUS=MISSING")
+                    continue
+                ny17, n = got[m]
+                wbval = float(wb.loc[m])
+                abs_gap = abs(ny17 - wbval)
+                rel_bps = abs_gap / abs(wbval) * 10000 if wbval != 0 else math.nan
+                rows.append((m, wbval, ny17, n, abs_gap, rel_bps))
+                print(f"OVERLAP_MONTH={m.strftime('%Y-%m')} STATUS=PASS N_NY17={n} ABS_GAP_LOGGED=NO")
+        time.sleep(12)
 
     if len(rows) < 10:
         raise RuntimeError(f"INSUFFICIENT_OVERLAP_MONTHS:{len(rows)}")
+
+    # Chronological order is essential for return diagnostics.
+    rows.sort(key=lambda x: x[0])
     a = np.array([r[1] for r in rows], float)
     b = np.array([r[2] for r in rows], float)
-    abs_gap = np.abs(a-b)
-    rel_bps = abs_gap/np.abs(a)*10000
-    corr = float(np.corrcoef(a,b)[0,1])
-    ret_a = np.diff(np.log(a)); ret_b = np.diff(np.log(b))
-    ret_corr = float(np.corrcoef(ret_a, ret_b)[0,1]) if len(ret_a) >= 2 else math.nan
-    sign_agree = float(np.mean(np.sign(ret_a) == np.sign(ret_b))) if len(ret_a) else math.nan
+    abs_gap = np.abs(a - b)
+    rel_bps = abs_gap / np.abs(a) * 10000
+    level_corr = float(np.corrcoef(a, b)[0, 1])
+    ret_a = np.diff(np.log(a))
+    ret_b = np.diff(np.log(b))
+    ret_corr = float(np.corrcoef(ret_a, ret_b)[0, 1])
+    sign_agree = float(np.mean(np.sign(ret_a) == np.sign(ret_b)))
+
     print(f"OVERLAP_VALID_MONTHS={len(rows)}")
-    print(f"MONTHLY_LEVEL_CORR={corr:.12f}")
+    print(f"MONTHLY_LEVEL_CORR={level_corr:.12f}")
     print(f"MONTHLY_MEDIAN_ABS_GAP_USD={float(np.median(abs_gap)):.12f}")
-    print(f"MONTHLY_P95_ABS_GAP_USD={float(np.quantile(abs_gap,0.95)):.12f}")
+    print(f"MONTHLY_P95_ABS_GAP_USD={float(np.quantile(abs_gap, 0.95)):.12f}")
     print(f"MONTHLY_MEDIAN_ABS_GAP_BPS={float(np.median(rel_bps)):.9f}")
-    print(f"MONTHLY_P95_ABS_GAP_BPS={float(np.quantile(rel_bps,0.95)):.9f}")
+    print(f"MONTHLY_P95_ABS_GAP_BPS={float(np.quantile(rel_bps, 0.95)):.9f}")
     print(f"MONTHLY_RETURN_CORR={ret_corr:.12f}")
     print(f"MONTHLY_RETURN_SIGN_AGREE={sign_agree:.9f}")
     print("RAW_VENDOR_MARKET_VALUES_LOGGED=NO")
