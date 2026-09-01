@@ -3,7 +3,7 @@
 **Status date:** 2026-09-01  
 **Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.1  
 **Stage:** 3 — Decision State Store  
-**Current status:** `IMPLEMENTATION_VERIFIED_ROLLBACK_ONLY; PRODUCTION_MIGRATION_BLOCKED`
+**Current status:** `ISOLATED_REHEARSAL_SCHEMA_APPLIED; PRODUCTION_MIGRATION_NOT_APPLIED`
 
 ## 1. What is now verified
 
@@ -31,7 +31,7 @@ Job:
 
 `99809509661`
 
-Verified results:
+Verified rollback-only results:
 
 - candidate DDL transactional compatibility: `PASS`
 - evidence-scoped latest-state database view: `PASS`
@@ -59,9 +59,36 @@ DECISION_STORE_READER_SMOKE_PASS evidence_isolation=PASS replay_not_live=PASS ac
 R4_1_DECISION_ADAPTER_SMOKE_PASS engine_repeatability=PASS state_to_payload=PASS provenance_binding=PASS store_roundtrip=PASS idempotency=PASS action_mapping_guard=PASS rollback=PASS
 ```
 
-## 2. Important safety properties
+## 2. Isolated Neon rehearsal branch
 
-### 2.1 Evidence isolation
+A real isolated child branch now exists and has been independently identified through the Neon project resource layer:
+
+- branch name: `gc-stage3-rehearsal-20260901`
+- branch id: `br-long-mountain-b2cgwu86`
+- parent branch: `production`
+- parent id: `br-gentle-mouse-b22dzkr1`
+- database: `neondb`
+- default: `false`
+- protected: `false`
+
+The exact canonical file `gold_axis_2026/data_pipeline/schema_patch_decision_store_v1.sql` was manually executed in the Neon SQL Editor while the rehearsal branch was selected.
+
+The Neon UI reported successful execution of the multi-statement script. The initial `DROP ... IF EXISTS` notices for non-existing legacy triggers/view were expected first-install notices, not migration failures.
+
+The user then opened the rehearsal branch Tables view and the following persisted objects were visibly present:
+
+- `decision_runs`
+- `decision_signal_snapshots`
+- `decision_events`
+- the evidence-scoped latest-decision view (`latest_decision_snapshot_by_evidence`, truncated in the UI list)
+
+This closes the earlier statement that no rehearsal branch existed. The rehearsal branch now exists and the candidate schema has been persistently applied there.
+
+Important limitation: the Neon connector's SQL/describe wrappers still exhibit the camelCase/snake_case argument contract mismatch, so full machine-side introspection of the rehearsal branch after manual application remains `BLOCKED_CONNECTOR_SCHEMA_MISMATCH`. Therefore the current proof for persistent rehearsal application is UI-backed plus the prior rollback-only CI contract tests; it is not yet a full connector-side schema diff/row-level verification.
+
+## 3. Important safety properties
+
+### 3.1 Evidence isolation
 
 The reader requires an explicit evidence class. It does not use an implicit "latest of everything" query.
 
@@ -77,7 +104,7 @@ This prevents:
 
 from happening silently at either the reader or convenience-view layer.
 
-### 2.2 No invented position mapping
+### 3.2 No invented position mapping
 
 The current V1 store continues to enforce:
 
@@ -85,51 +112,35 @@ The current V1 store continues to enforce:
 
 Therefore descriptive states such as `ALIGNED_UP`, `CONFLICT`, or `REVERSAL_RISK_DOWN` are not converted into `BUY`, `SELL`, `HOLD_LONG`, `EXIT`, `REDUCE`, or an exposure percentage.
 
-### 2.3 Engine output is preserved, not reinterpreted by persistence
+### 3.3 Engine output is preserved, not reinterpreted by persistence
 
 `r4_1_decision_adapter.py` maps the already-emitted R4.1 state into the store contract and deterministic audit reason vocabulary. It does not recompute Fast, Slow, Emergency, GVZ or classification and does not create an action state.
 
-## 3. What has NOT happened
+## 4. What has NOT happened
 
 No production decision-store migration has been applied.
 
-No synthetic smoke-test decision remains in Neon.
+No production decision writer/reader has been switched on.
 
 No historical replay has been relabeled as prospective/live.
 
 No app screen has been switched to the decision store yet.
 
-No isolated Neon rehearsal branch is claimed to exist.
+No claim is made that connector-side post-migration schema introspection or schema diff has passed; that path remains blocked by the connector contract mismatch.
 
-## 4. Remaining Stage 3 blocker
-
-The required isolated Neon branch rehearsal is still blocked by the Neon management connector contract mismatch.
-
-On 2026-09-01:
-
-1. the exposed branch-management schema required camelCase arguments (`projectId`, `branchName`), while the underlying MCP implementation rejected those and requested snake_case (`project_id`);
-2. a snake_case retry was rejected by the exposed wrapper itself;
-3. the higher-level database-migration preparation path was also attempted and exhibited the same mismatch: the wrapper accepted camelCase but the underlying MCP required `project_id` / `migration_sql`.
-
-Status:
-
-`BLOCKED_CONNECTOR_SCHEMA_MISMATCH`
-
-This blocker is independently reconfirmed across both branch-creation and migration-preparation paths. Do not bypass it by claiming a temporary branch was created or by applying the candidate schema directly to production.
-
-## 5. Exit path
+## 5. Remaining Stage 3 work
 
 Stage 3 becomes eligible for `PASS` only after:
 
-1. working isolated Neon branch lifecycle is available;
-2. the exact versioned DDL is applied on the isolated branch;
-3. schema and persistence tests pass there without rollback-only limitations;
-4. migration is applied to production through an auditable migration path;
+1. persistent rehearsal branch schema is verified beyond UI object presence, preferably through a working connector or equivalent auditable SQL checks;
+2. persistent rehearsal writer/reader roundtrip is exercised without rollback-only limitations;
+3. production migration plan is reviewed and explicitly approved;
+4. migration is applied to production through an auditable path;
 5. production post-migration schema is verified;
 6. production decision writer/reader are connected without weakening the evidence-class or action-mapping guards.
 
-Until then:
+Current status:
 
-`STAGE_3 = IN_PROGRESS / PRODUCTION_MIGRATION_BLOCKED`
+`STAGE_3 = ISOLATED_REHEARSAL_SCHEMA_APPLIED / PRODUCTION_MIGRATION_NOT_APPLIED`
 
 Stages 4–12 may be prepared non-mutatively where useful, but none may be promoted as complete ahead of Stage 3.
