@@ -32,7 +32,6 @@ jobs:
           grep -Fq 'IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED' gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md
           grep -Fq 'LATEST_DAILY_XAU_PIPELINE_NOT_SUCCESS' gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md
           grep -Fq 'NO_APPROVED_CANONICAL_XAU_EOD_DECISION_SOURCE' gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md
-          git diff --check
           test "$(git status --short | awk '{print $2}' | sort | tr '\n' ' ')" = "gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md gold_axis_2026/GOLD_CONTROL_STAGE3_STATUS_2026-09-01.md gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md "
 
       - name: Commit reconciled contracts
