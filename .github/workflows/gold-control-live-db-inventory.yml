@@ -1,0 +1,50 @@
+name: Gold Control Live DB Inventory
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - '.github/workflows/gold-control-live-db-inventory.yml'
+      - 'gold_axis_2026/data_pipeline/audit_live_inventory.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install audited data-plane dependencies
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+
+      - name: Require private Neon connection secret
+        shell: bash
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo "NEON_DATABASE_URL missing" && exit 1)
+
+      - name: Run read-only inventory audit
+        run: python gold_axis_2026/data_pipeline/audit_live_inventory.py
+
+      - name: Commit metadata-only inventory artifact
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/data_pipeline/audits/GOLD_CONTROL_LIVE_DB_INVENTORY.json
+          if git diff --cached --quiet; then
+            echo "Inventory artifact unchanged"
+          else
+            git commit -m "gold-data: refresh live DB inventory metadata"
+            git push
+          fi
