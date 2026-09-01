@@ -12,6 +12,8 @@ from psycopg.errors import CheckViolation, RaiseException, UniqueViolation
 ROOT = Path(__file__).resolve().parent
 PATCH = ROOT / "schema_patch_decision_store_v1.sql"
 TABLES = ("decision_runs", "decision_signal_snapshots", "decision_events")
+VIEWS = ("latest_decision_snapshot_by_evidence",)
+AMBIGUOUS_VIEW = "latest_decision_snapshot"
 
 
 def _exists(cur, name: str) -> bool:
@@ -30,15 +32,17 @@ def main() -> int:
     try:
         with psycopg.connect(url, autocommit=False) as conn:
             with conn.cursor() as cur:
-                pre = {name: _exists(cur, name) for name in TABLES}
+                objects = TABLES + VIEWS + (AMBIGUOUS_VIEW,)
+                pre = {name: _exists(cur, name) for name in objects}
                 conn.rollback()
 
                 # PostgreSQL DDL is transactional. Execute the production patch and
                 # test constraints, then roll the whole transaction back so this
                 # smoke test cannot persist schema or synthetic decision rows.
                 cur.execute(patch_sql)
-                for name in TABLES:
-                    assert _exists(cur, name), f"TABLE_NOT_CREATED:{name}"
+                for name in TABLES + VIEWS:
+                    assert _exists(cur, name), f"OBJECT_NOT_CREATED:{name}"
+                assert not _exists(cur, AMBIGUOUS_VIEW), "AMBIGUOUS_CROSS_EVIDENCE_LATEST_VIEW_EXISTS"
 
                 run_id = uuid.uuid4()
                 snapshot_id = uuid.uuid4()
@@ -83,6 +87,12 @@ def main() -> int:
                     """,
                     (snapshot_id, run_id, snap_fp),
                 )
+
+                cur.execute(
+                    "SELECT evidence_class, classification FROM latest_decision_snapshot_by_evidence"
+                )
+                latest_rows = cur.fetchall()
+                assert latest_rows == [("HISTORICAL_REPLAY", "ALIGNED_UP")], latest_rows
 
                 cur.execute("SAVEPOINT invalid_action")
                 try:
@@ -156,14 +166,15 @@ def main() -> int:
 
                 conn.rollback()
 
-                post = {name: _exists(cur, name) for name in TABLES}
+                post = {name: _exists(cur, name) for name in objects}
                 conn.rollback()
                 assert post == pre, f"ROLLBACK_SCHEMA_MISMATCH pre={pre} post={post}"
 
         print(
             "DECISION_STORE_SCHEMA_SMOKE_PASS "
-            "transactional_ddl=PASS action_mapping_guard=PASS "
-            "append_only=PASS idempotency_fingerprint=PASS rollback=PASS"
+            "transactional_ddl=PASS evidence_scoped_latest_view=PASS "
+            "action_mapping_guard=PASS append_only=PASS "
+            "idempotency_fingerprint=PASS rollback=PASS"
         )
         return 0
     except Exception as exc:
