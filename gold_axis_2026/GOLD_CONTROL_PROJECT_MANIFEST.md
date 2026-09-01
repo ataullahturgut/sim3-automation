@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.6  
+**Manifest version:** 1.7  
 **Freeze / issue date:** 2026-09-01  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -178,7 +178,7 @@ Provider interval: `1min`
 Requested timezone: `America/New_York`  
 Session boundary: **17:00 ET**  
 Role: canonical R4.1 EOD decision reference  
-Status: `APPROVED_EXECUTABLE_CANONICAL_SOURCE_CONTRACT; PIPELINE_NOT_YET_PRODUCTION_SUCCESS`
+Status: `APPROVED_CANONICAL_PIPELINE_SUCCESS`
 
 The contract deliberately separates **session authority** from **price-data provider**:
 
@@ -199,6 +199,8 @@ Official Twelve Data documentation states that for intraday intervals the reques
 8. Historical reconstruction must use the same provider, interval, timezone and mapping rule; it may not relabel legacy XAUS/LBMA/futures history as Twelve data.
 
 Access/mapping evidence: GitHub Actions run `33510985399`, job `99866288149`, `SUCCESS`, proved the protected Twelve credential can retrieve a valid `XAU/USD` `1min` bar at `16:59:00` with `America/New_York` timezone without logging raw prices or writing to the database.
+
+Production-ingestion evidence: GitHub Actions run `33511805110`, job `99869043161`, `SUCCESS`, executed the frozen canonical writer against Neon. It selected completed trade date `2026-08-31`, stored observation timestamp `2026-08-31T21:00:00+00:00` (17:00 ET), source `Twelve Data`, quality status `APPROVED_CANONICAL_TWELVE_NY17`, retrieval run `12099dfa-a370-4710-aed5-d02388f652ac`=`SUCCESS`, wrote one canonical observation, reported zero quality errors, and logged no raw market price.
 
 This value is named **decision reference price**, not official settlement or official market close. LBMA Gold Price PM remains a benchmark comparator; CME Group Spot Gold Reference Rate remains a 13:29–13:30 ET spot marker; COMEX settlement remains futures semantics; Twelve provider-default `1day` Australia/Sydney bar remains a different daily semantic and is not used here.
 
@@ -875,7 +877,7 @@ The project execution order remains:
 | 1 | `PASS_AUDIT_COMPLETE_WITH_OPERATIONAL_BLOCKERS` | Actual Neon inventory generated read-only; XAU source currently degraded and lineage discrepancy remains explicit |
 | 2 | `PASS_CONTRACT_CANONICALIZED; PROSPECTIVE_LEDGER_PROVEN_EMPTY` | Model roles/authority frozen; live forecast-state tables reconciled and contain 0 rows |
 | 3 | `PASS_DECISION_STORE_AND_READ_PATH` | Production schema PASS; emitted-state bridge rollback PASS; app Decision Store reader PASS; file-only latest-state dependency removed; evidence isolation/action guard enforced |
-| 4 | `IN_PROGRESS_BLOCKED_INPUT_CONTRACTS` | Deterministic engine/bridge tests PASS. Canonical XAU EOD decision reference is `XAU_EOD_TWELVE_NY17`: CME/EBS defines the 17:00 ET session boundary and Twelve Data supplies `XAU/USD` 1-minute data; access/mapping probe PASS. Active blockers are forecast contract, immutable forecast input snapshot, and successful canonical Twelve NY17 Neon ingestion |
+| 4 | `IN_PROGRESS_BLOCKED_FORECAST_ISSUANCE` | Deterministic engine/bridge tests PASS. Canonical `XAU_EOD_TWELVE_NY17` access, mapping and Neon ingestion are PASS. Remaining blockers are the first genuine immutable H=1 forecast input snapshot and monthly forecast contract |
 | 5–12 | `NOT_STARTED / NOT_COMPLETE` | Cannot be promoted ahead of Stage 4 |
 
 ---
@@ -916,11 +918,14 @@ Read-only production audit:
 - result: `SUCCESS` audit execution, `readiness=BLOCKED`;
 - raw market values logged: `NO`.
 
-Confirmed active blockers after manifest v1.6 source revision:
+Confirmed active blockers after manifest v1.7 XAU pipeline closure:
 
 1. `FORECAST_CONTRACT_NOT_ISSUED`
 2. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`
-3. `TWELVE_XAU_NY17_PIPELINE_NOT_SUCCESS`
+
+Closed XAU pipeline blocker:
+
+`TWELVE_XAU_NY17_PIPELINE_NOT_SUCCESS` → `CLOSED_BY_RUN_33511805110`
 
 Closed source-side sub-blockers:
 
@@ -946,11 +951,11 @@ Important source interpretation:
 
 Required next gates, in order:
 
-1. implement the canonical `XAU_EOD_TWELVE_NY17` writer using Twelve `XAU/USD` `1min`, `America/New_York`, exact `16:59:00` bar close and the frozen no-fallback quality gates;
-2. write the new lineage to Neon without overwriting or relabelling XAUS/LBMA/CME/futures history and obtain a successful scheduled daily run;
-3. create the first genuine immutable H=1 forecast input snapshot and monthly forecast contract from the executable frozen forecasting path before outcome realization;
+1. create the first genuine immutable H=1 forecast input snapshot from the executable frozen forecasting path using only data point-in-time available at the issuance origin;
+2. issue the matching monthly forecast contract binding target definition, executable Patch R1 point forecast, audited VW reference, RW benchmark, 3M direction context, model/code version, input snapshot id and issued-at timestamp;
+3. verify the new snapshot/contract rows in Neon before outcome realization;
 4. only then build/schedule the canonical R4.1 EOD issuer using the frozen engine and complete provenance;
-5. the first real forward state must begin as `PROSPECTIVE_SHADOW`; `LIVE_PRODUCTION` remains disabled until Stage 12 graduation;
+5. the first real forward decision state must begin as `PROSPECTIVE_SHADOW`; `LIVE_PRODUCTION` remains disabled until Stage 12 graduation;
 6. do not backfill historical rows and relabel them as prospective.
 
 No `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` decision row may be written while any active Stage-4 readiness blocker remains open.

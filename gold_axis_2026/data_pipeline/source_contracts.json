@@ -1,5 +1,5 @@
 {
-  "version": "GOLD_DATA_R2_2026-09-01_XAU_EOD_TWELVE_NY17_V1",
+  "version": "GOLD_DATA_R2_2026-09-01_XAU_NY17_PIPELINE_V3",
   "status": "SOURCE_ARCHITECTURE_FROZEN_WITH_EXPLICIT_BLOCKERS",
   "principles": {
     "no_silent_provider_substitution": true,
@@ -119,7 +119,7 @@
       "price_field": "close",
       "price_semantic": "end-of-16:59-minute bar = 17:00 ET internal decision reference",
       "role": "canonical R4.1 EOD internal decision reference",
-      "status": "APPROVED_EXECUTABLE_CANONICAL_SOURCE_CONTRACT; PIPELINE_NOT_YET_PRODUCTION_SUCCESS",
+      "status": "APPROVED_CANONICAL_PIPELINE_SUCCESS",
       "access_evidence": {
         "run_id": 33510985399,
         "job_id": 99866288149,
@@ -144,7 +144,18 @@
         "COMEX GC futures settlement or Yahoo GC=F",
         "XAU_DAILY_XAUS",
         "XAU_SPOT_XAUS"
-      ]
+      ],
+      "production_ingestion_evidence": {
+        "workflow_run_id": 33511805110,
+        "job_id": 99869043161,
+        "retrieval_run_id": "12099dfa-a370-4710-aed5-d02388f652ac",
+        "trade_date": "2026-08-31",
+        "observation_ts": "2026-08-31T21:00:00+00:00",
+        "observations_written": 1,
+        "quality_errors": 0,
+        "result": "SUCCESS",
+        "raw_market_values_logged": false
+      }
     },
     "GVZ_CBOE": {
       "semantic": "GVZ",

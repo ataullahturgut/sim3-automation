@@ -1,9 +1,9 @@
 # GOLD CONTROL — STAGE 4 DETERMINISTIC R4.1 STATUS
 
 **Status date:** 2026-09-01  
-**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.6  
+**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.7  
 **Stage:** 4 — Deterministic R4.1 Decision Engine / Issuer  
-**Current status:** `IN_PROGRESS_BLOCKED_INPUT_CONTRACTS`
+**Current status:** `IN_PROGRESS_BLOCKED_FORECAST_ISSUANCE`
 
 ## 1. Verified engine/store state
 
@@ -58,15 +58,18 @@ Status:
 
 1. `FORECAST_CONTRACT_NOT_ISSUED`
 2. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`
-3. `TWELVE_XAU_NY17_PIPELINE_NOT_SUCCESS`
 
-The source-definition/access/mapping blocker is now closed. The remaining XAU task is implementation and a successful canonical Neon ingestion run.
+Closed by canonical production-ingestion run `33511805110`, job `99869043161`:
+
+`TWELVE_XAU_NY17_PIPELINE_NOT_SUCCESS` → `CLOSED`
+
+The run wrote one `XAU_EOD_TWELVE_NY17` observation for completed trade date `2026-08-31` at `2026-08-31T21:00:00+00:00`, with source `Twelve Data`, quality `APPROVED_CANONICAL_TWELVE_NY17`, retrieval status `SUCCESS`, zero quality errors and no raw market-price logging.
 
 ## 6. Required next work
 
-1. implement the canonical `XAU_EOD_TWELVE_NY17` writer with exact 16:59 ET mapping and quality gates;
-2. create the explicit Twelve NY17 series/provider lineage in Neon and obtain a successful daily run;
-3. issue the first genuine immutable H=1 forecast input snapshot and monthly forecast contract before outcome realization;
+1. inspect the live Neon forecast-state table contract and executable Patch R1 issuance path;
+2. create the first genuine immutable H=1 forecast input snapshot using point-in-time available inputs only;
+3. issue the matching monthly forecast contract before target outcome realization and verify both rows in Neon;
 4. build/schedule the canonical R4.1 EOD issuer only after those inputs pass;
 5. first forward Decision Store state = `PROSPECTIVE_SHADOW`, never retroactive and not `LIVE_PRODUCTION`.
 

@@ -106,3 +106,16 @@ No Neon observation or Decision Store row is created by this change-control comm
 - no `LIVE_PRODUCTION` state is authorized;
 - first forward state remains `PROSPECTIVE_SHADOW` after all Stage-4 input blockers pass;
 - `NOT_PROVEN_POSITION_MAPPING` remains unchanged.
+
+
+---
+
+# Manifest v1.7 canonical ingestion closure
+
+GitHub Actions run `33511805110`, job `99869043161`, completed `SUCCESS` on the active v1.6 source contract. The run persisted and verified one canonical `XAU_EOD_TWELVE_NY17` observation for trade date `2026-08-31` with observation timestamp `2026-08-31T21:00:00+00:00` (17:00 ET), Twelve Data lineage, quality `APPROVED_CANONICAL_TWELVE_NY17`, retrieval run `12099dfa-a370-4710-aed5-d02388f652ac`=`SUCCESS`, zero quality errors and no raw-price logging.
+
+Decision:
+
+`TWELVE_XAU_NY17_PIPELINE_NOT_SUCCESS` → `CLOSED_BY_MANIFEST_V1_7`
+
+The XAU EOD input source is no longer a Stage-4 readiness blocker. Remaining Stage-4 blockers are forecast issuance only: `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED` and `FORECAST_CONTRACT_NOT_ISSUED`.
