@@ -12,18 +12,25 @@ import collector_r2 as base
 from persist_neon import persist_bundle
 import twelve_xau_ny17 as ny17
 
-PIPELINE_VERSION = "GOLD_DATA_R2.9_XAU_NY17_BACKFILL_2026-09-01_R2"
-MAX_ATTEMPTS_PER_DATE = 3
-RETRY_SLEEP_SECONDS = (1.0, 3.0)
-INTER_DATE_PACING_SECONDS = 0.35
+PIPELINE_VERSION = "GOLD_DATA_R2.9_XAU_NY17_BACKFILL_2026-09-01_R3"
+MAX_ATTEMPTS_PER_DATE = 4
+SHORT_RETRY_SLEEP_SECONDS = (2.0, 5.0, 10.0)
+# Twelve Data documents that API credits reset every minute and that Basic has
+# 8 API credits/minute. Keep this one-time historical backfill below that floor.
+INTER_DATE_PACING_SECONDS = 8.0
+QUOTA_RESET_SLEEP_SECONDS = 61.0
 
 
-def _dates(start: date, end: date):
+def _dates(start: date, end: date, anchor_dates: tuple[date, ...] = ()):
+    requested = set(anchor_dates)
     d = start
     while d <= end:
         if d.weekday() < 5:
-            yield d
+            requested.add(d)
         d += timedelta(days=1)
+    for d in sorted(requested):
+        if d.weekday() < 5:
+            yield d
 
 
 def _request_with_retry(session: requests.Session, d: date):
@@ -31,21 +38,29 @@ def _request_with_retry(session: requests.Session, d: date):
     for attempt in range(1, MAX_ATTEMPTS_PER_DATE + 1):
         try:
             return ny17._request_day(session, d), failures
-        except (requests.Timeout, requests.ConnectionError, requests.HTTPError) as exc:
+        except requests.RequestException as exc:
             status = getattr(getattr(exc, "response", None), "status_code", None)
+            name = type(exc).__name__
             failures.append({
                 "attempt": attempt,
-                "error": type(exc).__name__,
+                "error": name,
                 "http_status": status,
             })
             retryable = status is None or status == 429 or status >= 500
             if not retryable or attempt >= MAX_ATTEMPTS_PER_DATE:
                 raise
-            time_mod.sleep(RETRY_SLEEP_SECONDS[min(attempt - 1, len(RETRY_SLEEP_SECONDS) - 1)])
+            # urllib3 may surface exhausted 429 retries as requests.RetryError
+            # without the original response attached. Treat that as a quota-window
+            # reset condition rather than hammering the endpoint again immediately.
+            if status == 429 or isinstance(exc, requests.exceptions.RetryError):
+                time_mod.sleep(QUOTA_RESET_SLEEP_SECONDS)
+            else:
+                delay = SHORT_RETRY_SLEEP_SECONDS[min(attempt - 1, len(SHORT_RETRY_SLEEP_SECONDS) - 1)]
+                time_mod.sleep(delay)
     raise RuntimeError("UNREACHABLE_RETRY_STATE")
 
 
-def collect_range(start: date, end: date) -> dict:
+def collect_range(start: date, end: date, anchor_dates: tuple[date, ...] = ()) -> dict:
     if end < start:
         raise ValueError("end before start")
     retrieved_at = datetime.now(timezone.utc)
@@ -56,7 +71,7 @@ def collect_range(start: date, end: date) -> dict:
     provider_errors = []
     retry_summary = []
 
-    for d in _dates(start, end):
+    for d in _dates(start, end, anchor_dates):
         try:
             (payload, raw), failures = _request_with_retry(session, d)
             if failures:
@@ -130,13 +145,25 @@ def collect_range(start: date, end: date) -> dict:
         raise RuntimeError(f"BACKFILL_PROVIDER_ERRORS:{len(provider_errors)}:{summary}")
 
     # Require enough coverage for both Fast SMA20 and Slow weekly SMA4+persistence.
-    if len(observations) < 35:
-        raise RuntimeError(f"BACKFILL_INSUFFICIENT_VALID_TRADE_DATES:{len(observations)}")
-    covered = [o["observation_ts"] for o in observations]
+    in_range_observations = [
+        o for o in observations
+        if start <= datetime.fromisoformat(o["observation_ts"]).astimezone(ny17.NY).date() <= end
+    ]
+    if len(in_range_observations) < 35:
+        raise RuntimeError(f"BACKFILL_INSUFFICIENT_VALID_TRADE_DATES:{len(in_range_observations)}")
+    covered = [o["observation_ts"] for o in in_range_observations]
     first = min(covered)
     last = max(covered)
     if (last - first).days < 50:
         raise RuntimeError("BACKFILL_INSUFFICIENT_CALENDAR_SPAN")
+
+    present_dates = {
+        datetime.fromisoformat(o["observation_ts"]).astimezone(ny17.NY).date()
+        for o in observations
+    }
+    missing_anchors = [d.isoformat() for d in anchor_dates if d not in present_dates]
+    if missing_anchors:
+        raise RuntimeError("BACKFILL_REQUIRED_ANCHORS_MISSING:" + ",".join(missing_anchors))
 
     return {
         "run_id": run_id,
@@ -149,13 +176,15 @@ def collect_range(start: date, end: date) -> dict:
         "quality_events": [],
         "range_start": start.isoformat(),
         "range_end": end.isoformat(),
-        "valid_trade_dates": len(observations),
+        "anchor_dates": [d.isoformat() for d in anchor_dates],
+        "valid_trade_dates": len(in_range_observations),
+        "total_observations": len(observations),
         "missing_weekdays": missing,
         "retried_dates": len(retry_summary),
     }
 
 
-def _verify_neon(min_rows: int = 35) -> dict:
+def _verify_neon(anchor_dates: tuple[date, ...] = (), min_rows: int = 35) -> dict:
     import psycopg
     from psycopg.rows import dict_row
     from persist_neon import _db_url
@@ -178,6 +207,20 @@ def _verify_neon(min_rows: int = 35) -> dict:
                 raise RuntimeError(f"NEON_NY17_WEEK_COVERAGE_INSUFFICIENT:{row['weeks']}")
             if row["latest_source"] != ny17.SOURCE:
                 raise RuntimeError("NEON_NY17_SOURCE_MISMATCH")
+            anchor_present = 0
+            for d in anchor_dates:
+                cur.execute("""
+                    select count(*) as n
+                    from usable_observations
+                    where series_id=%s
+                      and quality_status=%s
+                      and (observation_ts at time zone 'America/New_York')::date=%s
+                """, (ny17.SERIES_ID, ny17.QUALITY_STATUS, d))
+                if int(cur.fetchone()["n"]) < 1:
+                    raise RuntimeError(f"NEON_NY17_REQUIRED_ANCHOR_MISSING:{d.isoformat()}")
+                anchor_present += 1
+            row["required_anchor_count"] = len(anchor_dates)
+            row["required_anchor_present"] = anchor_present
         conn.rollback()
     return row
 
@@ -186,15 +229,19 @@ def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--start", default="2026-07-01")
     p.add_argument("--end", default="2026-08-31")
+    p.add_argument("--anchor", action="append", default=[])
     p.add_argument("--persist", action="store_true")
     args = p.parse_args()
     start = date.fromisoformat(args.start)
     end = date.fromisoformat(args.end)
-    bundle = collect_range(start, end)
+    anchors = tuple(date.fromisoformat(x) for x in args.anchor)
+    bundle = collect_range(start, end, anchors)
     print(json.dumps({
         "range_start": bundle["range_start"],
         "range_end": bundle["range_end"],
+        "anchor_dates": bundle["anchor_dates"],
         "valid_trade_dates": bundle["valid_trade_dates"],
+        "total_observations": bundle["total_observations"],
         "missing_weekday_count": len(bundle["missing_weekdays"]),
         "retried_date_count": bundle["retried_dates"],
         "raw_market_values_logged": False,
@@ -203,7 +250,7 @@ def main() -> int:
     if not args.persist:
         return 0
     result = persist_bundle(bundle)
-    verify = _verify_neon()
+    verify = _verify_neon(anchors)
     print(json.dumps({"persist": result, "verify": verify}, indent=2, default=str))
     if result.get("status") != "SUCCESS":
         return 1
