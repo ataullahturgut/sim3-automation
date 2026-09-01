@@ -1,0 +1,82 @@
+name: Gold Control Manifest Reconcile - Stage 3 Production Schema
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold_control_manifest_reconcile_stage3.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout canonical Gold Control branch
+        uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+
+      - name: Reconcile manifest and Stage 3 status
+        shell: python
+        run: |
+          from pathlib import Path
+
+          manifest_path = Path('gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md')
+          status_path = Path('gold_axis_2026/GOLD_CONTROL_STAGE3_STATUS_2026-09-01.md')
+
+          manifest = manifest_path.read_text(encoding='utf-8')
+          status = status_path.read_text(encoding='utf-8')
+
+          replacements = [
+              ('**Manifest version:** 1.1', '**Manifest version:** 1.2'),
+              ('# 15. MISSING PRODUCTION COMPONENT — DECISION STATE STORE', '# 15. PRODUCTION COMPONENT — DECISION STATE STORE'),
+              (
+                  'The candidate DDL has passed a rollback-only compatibility/constraint smoke against the actual Neon database. **No production decision-store migration has been applied yet.**',
+                  'Decision Store V1 passed rollback-only CI, isolated Neon rehearsal, and guarded production migration. Production now contains the three append-only Decision Store tables, the evidence-scoped latest-state view, and the mutation-rejection function. The production migration run was GitHub Actions run `33496843121`, pinned to canonical commit `13d5a027849470b4a95341004300bd97a35e82f9`, and completed `SUCCESS` with `decision_rows=0`. Production writer/reader activation remains a separate Stage 3 gate.'
+              ),
+              (
+                  '| 3 | `IN_PROGRESS` | DDL + contract + rollback smoke PASS; isolated temporary-branch rehearsal blocked by connector schema mismatch; production migration not applied |\n| 4–12 | `NOT_STARTED / NOT_COMPLETE` | Cannot be promoted ahead of Stage 3 |',
+                  '| 3 | `IN_PROGRESS_PRODUCTION_SCHEMA_PASS` | Isolated rehearsal PASS; guarded production migration PASS; Neon resource tree confirms Decision Store objects; production writer/reader not activated |\n| 4 | `PREPARATION_TESTS_PASS; NOT_COMPLETE_AHEAD_OF_STAGE3` | Deterministic R4.1 tests are prepared but Stage 3 writer/reader activation remains open |\n| 5–12 | `NOT_STARTED / NOT_COMPLETE` | Cannot be promoted ahead of Stage 3/4 |'
+              ),
+          ]
+
+          for old, new in replacements:
+              if old not in manifest:
+                  raise SystemExit(f'MANIFEST_EXPECTED_TEXT_NOT_FOUND: {old[:80]}')
+              manifest = manifest.replace(old, new, 1)
+
+          start = manifest.index('# 24. IMMEDIATE NEXT WORK')
+          marker = '### Operational work that continues independently'
+          end = manifest.index(marker, start)
+          new_section = '''# 24. IMMEDIATE NEXT WORK\n\nThe next canonical task is now:\n\n## `STAGE 3 — DECISION STATE STORE: CONNECT PRODUCTION WRITER / READER WITHOUT ACTIVATING UNPROVEN ACTION MAPPING`\n\nCompleted Stage 3 gates:\n\n- Decision Store V1 contract and versioned DDL: `PASS`;\n- rollback-only schema/writer/reader/adapter CI: `PASS`;\n- isolated Neon branch rehearsal: `PASS`;\n- persistent rehearsal guard verification: `PASS`;\n- production migration via guarded GitHub Actions workflow: `PASS`;\n- production post-migration resource-tree verification: `PASS`;\n- production Decision Store remained empty immediately after migration: `PASS`;\n- `NOT_PROVEN_POSITION_MAPPING` remains enforced.\n\nProduction migration evidence:\n\n- workflow run: `33496843121`;\n- job: `99820886297`;\n- canonical migration runner commit: `13d5a027849470b4a95341004300bd97a35e82f9`;\n- marker: `GOLD_CONTROL_STAGE3_PRODUCTION_MIGRATION_PASS`;\n- schema version: `GOLD_CONTROL_DECISION_STORE_V1_2026-09-01`;\n- decision rows immediately after migration: `0`.\n\nRequired next gate:\n\n1. identify the canonical live/EOD R4.1 execution entry point and exact input snapshot contract;\n2. connect the existing `r4_1_decision_adapter.py` and `decision_store.py` writer to that path without recomputing signals in persistence;\n3. require explicit evidence class and complete prospective provenance before any `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` insert;\n4. connect `decision_store_reader.py` as the canonical read surface while keeping the current app unchanged until the stored-state path is verified;\n5. verify no `HISTORICAL_REPLAY` row can surface as live and no non-null `action_state` can be stored;\n6. only after writer/reader integration passes may Stage 3 be promoted to `PASS`.\n\nThe direct Neon SQL-management connector still has a camelCase/snake_case contract mismatch, but this no longer blocks the audited GitHub Actions production migration path. It remains an operational tooling issue, not permission debt.\n\n'''
+          manifest = manifest[:start] + new_section + manifest[end:]
+
+          status = status.replace(
+              '**Current status:** `ISOLATED_REHEARSAL_SCHEMA_APPLIED; PRODUCTION_MIGRATION_NOT_APPLIED`',
+              '**Current status:** `PRODUCTION_SCHEMA_APPLIED_AND_VERIFIED; WRITER_READER_NOT_ACTIVATED`',
+              1,
+          )
+          old_not_happened = 'No production decision-store migration has been applied.\n\nNo production decision writer/reader has been switched on.'
+          new_not_happened = 'Production Decision Store V1 schema migration **has been applied and verified**.\n\nNo production decision writer/reader has been switched on.'
+          if old_not_happened not in status:
+              raise SystemExit('STAGE3_STATUS_EXPECTED_NOT_HAPPENED_TEXT_NOT_FOUND')
+          status = status.replace(old_not_happened, new_not_happened, 1)
+
+          stage5 = status.index('## 5. Remaining Stage 3 work')
+          status = status[:stage5] + '''## 5. Production migration evidence and remaining Stage 3 work\n\nProduction schema migration is now complete.\n\nEvidence:\n\n- GitHub Actions workflow: `Gold Control Stage 3 Production Migration`\n- run: `33496843121`\n- job: `99820886297`\n- conclusion: `SUCCESS`\n- canonical pinned ref: `13d5a027849470b4a95341004300bd97a35e82f9`\n- exact marker: `GOLD_CONTROL_STAGE3_PRODUCTION_MIGRATION_PASS`\n- schema version: `GOLD_CONTROL_DECISION_STORE_V1_2026-09-01`\n- action mapping: `NOT_PROVEN_POSITION_MAPPING`\n- production decision rows immediately after migration: `0`\n\nIndependent Neon resource-tree inspection after the run confirms production contains:\n\n- `decision_runs`\n- `decision_signal_snapshots`\n- `decision_events`\n- `latest_decision_snapshot_by_evidence`\n- `reject_gold_control_decision_mutation`\n- expected Decision Store indexes.\n\nThe remaining Stage 3 gate is **not schema migration**. It is production-path integration:\n\n1. bind the canonical live/EOD R4.1 emitted state to `r4_1_decision_adapter.py`;\n2. persist through `decision_store.py` with explicit evidence class and complete provenance;\n3. read through `decision_store_reader.py` with evidence isolation;\n4. keep `action_state` null and do not invent position mapping;\n5. verify the integrated path before switching the app from the transitional `latest_signal.json` dependency.\n\nCurrent status:\n\n`STAGE_3 = IN_PROGRESS_PRODUCTION_SCHEMA_PASS / WRITER_READER_INTEGRATION_PENDING`\n\nStages 4–12 may be prepared non-mutatively where useful, but none may be promoted as complete ahead of Stage 3.\n'''
+
+          manifest_path.write_text(manifest, encoding='utf-8')
+          status_path.write_text(status, encoding='utf-8')
+
+      - name: Commit reconciled project contract
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md gold_axis_2026/GOLD_CONTROL_STAGE3_STATUS_2026-09-01.md
+          git diff --cached --check
+          git commit -m "gold-control: reconcile manifest after Stage 3 production schema migration"
+          git push origin HEAD:gold-r4-direction-engine
