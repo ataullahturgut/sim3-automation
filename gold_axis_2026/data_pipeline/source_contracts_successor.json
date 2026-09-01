@@ -1,0 +1,67 @@
+{
+  "version": "GOLD_SUCCESSOR_INPUTS_R1_2026-09-01",
+  "purpose": "Historical replay target plus authoritative historical PIT reconstruction inputs for GOLD_H1_SUCCESSOR_R1. These series are not prospective ledger rows and may not be relabelled as data physically stored at the historical origin.",
+  "series": {
+    "XAU_MONTHLY_WB_PINKSHEET": {
+      "semantic": "World Bank Pink Sheet monthly average gold price, London afternoon fixing basis, USD per troy ounce",
+      "source": "World Bank Pink Sheet",
+      "symbol": "Gold",
+      "tier": "AUTHORITY_PUBLIC",
+      "frequency": "monthly",
+      "unit": "USD/troy_oz",
+      "role": "H1 historical target and realized-outcome benchmark",
+      "status": "APPROVED_HISTORICAL_TARGET_FINAL_VINTAGE_RESEARCH",
+      "license_note": "Public World Bank commodity price data. Historical workbook is a current/final-vintage research surface; it is not backdated as if retrieved at historical forecast origins.",
+      "availability_policy": "retrieval_time_truth; replay target loader enforces at least one completed-month lag",
+      "evidence_class": "HISTORICAL_REPLAY"
+    },
+    "DGS10_ALFRED_PIT_ME": {
+      "semantic": "US 10Y Treasury constant maturity yield: latest valid DGS10 observation visible in ALFRED as of each historical month-end",
+      "source": "Federal Reserve Bank of St. Louis ALFRED",
+      "symbol": "DGS10",
+      "tier": "AUTHORITY_PUBLIC",
+      "frequency": "monthly_snapshot",
+      "unit": "percent",
+      "role": "GOLD_H1_SUCCESSOR_R1 macro feature candidate",
+      "status": "APPROVED_HISTORICAL_PIT_RECONSTRUCTION_RESEARCH",
+      "license_note": "Historical real-time view reconstructed from official FRED/ALFRED API. retrieved_at remains the true 2026 reconstruction time; provider_as_of records the historical month-end queried.",
+      "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION"
+    },
+    "DFF_ALFRED_PIT_ME": {
+      "semantic": "Effective federal funds rate: latest valid DFF observation visible in ALFRED as of each historical month-end",
+      "source": "Federal Reserve Bank of St. Louis ALFRED",
+      "symbol": "DFF",
+      "tier": "AUTHORITY_PUBLIC",
+      "frequency": "monthly_snapshot",
+      "unit": "percent",
+      "role": "GOLD_H1_SUCCESSOR_R1 macro feature candidate",
+      "status": "APPROVED_HISTORICAL_PIT_RECONSTRUCTION_RESEARCH",
+      "license_note": "Historical real-time view reconstructed from official FRED/ALFRED API. retrieved_at remains the true 2026 reconstruction time; provider_as_of records the historical month-end queried.",
+      "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION"
+    },
+    "DEXCHUS_ALFRED_PIT_ME": {
+      "semantic": "Chinese yuan per US dollar: latest valid DEXCHUS observation visible in ALFRED as of each historical month-end",
+      "source": "Federal Reserve Bank of St. Louis ALFRED",
+      "symbol": "DEXCHUS",
+      "tier": "AUTHORITY_PUBLIC",
+      "frequency": "monthly_snapshot",
+      "unit": "CNY/USD",
+      "role": "GOLD_H1_SUCCESSOR_R1 macro feature candidate",
+      "status": "APPROVED_HISTORICAL_PIT_RECONSTRUCTION_RESEARCH",
+      "license_note": "Historical real-time view reconstructed from official FRED/ALFRED API. retrieved_at remains the true 2026 reconstruction time; provider_as_of records the historical month-end queried.",
+      "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION"
+    },
+    "NASDAQ100_ALFRED_PIT_ME": {
+      "semantic": "NASDAQ-100 index: latest valid NASDAQ100 observation visible in ALFRED as of each historical month-end",
+      "source": "Federal Reserve Bank of St. Louis ALFRED",
+      "symbol": "NASDAQ100",
+      "tier": "AUTHORITY_PUBLIC",
+      "frequency": "monthly_snapshot",
+      "unit": "index",
+      "role": "GOLD_H1_SUCCESSOR_R1 macro feature candidate",
+      "status": "APPROVED_HISTORICAL_PIT_RECONSTRUCTION_RESEARCH",
+      "license_note": "Historical real-time view reconstructed from official FRED/ALFRED API. retrieved_at remains the true 2026 reconstruction time; provider_as_of records the historical month-end queried.",
+      "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION"
+    }
+  }
+}
