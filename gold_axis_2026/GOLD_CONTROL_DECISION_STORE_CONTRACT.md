@@ -1,10 +1,10 @@
 # GOLD CONTROL — DECISION STATE STORE CONTRACT
 
-**Contract version:** 0.1 DRAFT-FROZEN-FOR-IMPLEMENTATION  
+**Contract version:** 0.2 FROZEN-FOR-IMPLEMENTATION  
 **Audit date:** 2026-09-01  
 **Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.0  
 **R4.1 config:** `gold_axis_2026/r4_1/config/frozen_r4_1.json`  
-**Stage 3 status:** `CONTRACT_READY; DATABASE_MIGRATION_NOT_APPLIED`
+**Stage 3 status:** `SCHEMA_COMPATIBILITY_SMOKE_PASS; TEMP_BRANCH_TEST_BLOCKED; DATABASE_MIGRATION_NOT_APPLIED`
 
 ---
 
@@ -14,7 +14,7 @@ The current application expects a file-style latest decision artifact. The proje
 
 This contract defines the minimum persistence semantics **without inventing a position/exposure ladder that the recovered R4.1 engine does not currently contain**.
 
-No database migration is applied by this document.
+No production database migration is applied by this document.
 
 ---
 
@@ -254,13 +254,15 @@ Minimum conceptual fields:
 
 `decision_events` must never manufacture an action from classification merely to make the UI look complete.
 
+The Stage 3 DDL candidate goes further and constrains `action_state` to `NULL` while `NOT_PROVEN_POSITION_MAPPING` remains active. This makes the no-fabrication rule database-enforced rather than advisory.
+
 ---
 
 # 8. REASON-CODE CONTRACT
 
-For the first implementation, reason codes should describe the branch that produced the classification rather than produce discretionary prose.
+For the first implementation, reason codes describe the branch that produced the classification rather than produce discretionary prose.
 
-Allowed initial conceptual reasons correspond directly to current engine order:
+Allowed initial reasons correspond directly to current engine order:
 
 - `MACRO_EVENT_DOWN_TRUE`
 - `REVERSAL_DOWN_ALERT_ACTIVE`
@@ -280,7 +282,7 @@ User-facing prose, if used later, must be deterministically templated from snaps
 
 The same engine/config/code/input snapshot evaluated for the same `decision_as_of` should not create duplicate authoritative snapshots.
 
-Implementation should define a deterministic fingerprint over at least:
+Implementation defines a deterministic fingerprint over at least:
 
 - decision as-of
 - engine version
@@ -289,9 +291,11 @@ Implementation should define a deterministic fingerprint over at least:
 - input snapshot reference
 - forecast contract reference.
 
-Repeated persistence of an identical state should be idempotent.
+Repeated persistence of an identical state must be idempotent.
 
 A changed input/revision/code/config is a new lineage, not an overwrite.
+
+The Stage 3 DDL candidate enforces unique fingerprints at run, snapshot and event level.
 
 ---
 
@@ -299,7 +303,7 @@ A changed input/revision/code/config is a new lineage, not an overwrite.
 
 If a required input is unavailable or fails quality checks:
 
-1. record the run attempt;
+1. record the run attempt where the store is available;
 2. mark run status explicitly;
 3. do not fabricate missing signal values;
 4. do not create an authoritative `LIVE_PRODUCTION` decision snapshot;
@@ -337,23 +341,74 @@ The visible distinction remains:
 
 ---
 
-# 12. MIGRATION GATE
+# 12. ACTUAL DATABASE / MIGRATION GATE STATUS
 
-Current direct Neon row/schema verification is blocked by:
+The 2026-09-01 live Neon audit has now directly reconciled the current database through a protected GitHub Actions read path using a read-only transaction and rollback.
+
+Actual state before Stage 3 migration:
+
+- `decision_runs`: **does not exist**
+- `decision_signal_snapshots`: **does not exist**
+- `decision_events`: **does not exist**
+- `forecast_input_snapshots`: exists, **0 rows**
+- `derived_feature_snapshots`: exists, **0 rows**
+- `monthly_forecast_contracts`: exists, **0 rows**
+
+Therefore the former `live Neon schema audit` blocker is closed. The decision-store schema is genuinely absent and the migration is additive rather than an overwrite of unknown decision tables.
+
+## 12.1 DDL candidate
+
+Canonical migration candidate:
+
+`gold_axis_2026/data_pipeline/schema_patch_decision_store_v1.sql`
+
+It implements:
+
+- `decision_runs`
+- `decision_signal_snapshots`
+- `decision_events`
+- exact state/reason/evidence constraints
+- unique idempotency fingerprints
+- append-only UPDATE/DELETE rejection
+- `action_state IS NULL` guard
+- latest successful stored-decision view
+- version/status metadata.
+
+## 12.2 Rollback-only compatibility smoke
+
+Canonical test:
+
+`gold_axis_2026/data_pipeline/test_decision_store_schema.py`
+
+GitHub Actions workflow:
+
+`.github/workflows/gold-control-decision-store-schema-smoke.yml`
+
+Verified result on 2026-09-01:
+
+`DECISION_STORE_SCHEMA_SMOKE_PASS`
+
+Verified gates:
+
+- transactional DDL compatibility: `PASS`
+- action-mapping guard: `PASS`
+- append-only mutation guard: `PASS`
+- idempotency fingerprint: `PASS`
+- full rollback / no persistent schema change: `PASS`
+
+This smoke executed the exact candidate DDL against the actual Neon database inside a transaction, inserted only synthetic `HISTORICAL_REPLAY` smoke rows, tested the constraints, rolled everything back, and verified that the pre/post decision-table existence state was unchanged.
+
+## 12.3 Remaining migration blocker
+
+The contract requires an isolated/temporary Neon branch migration test before applying production DDL.
+
+The currently exposed direct Neon management connector cannot reliably create/use that branch because its external schema and runtime argument contract disagree. Status remains:
 
 `BLOCKED_CONNECTOR_SCHEMA_MISMATCH`
 
-Therefore this contract is committed to GitHub, but **no production database migration is applied in this stage of the audit**.
+No temporary Neon branch was successfully created by the connector and no production migration was applied.
 
-Before migration:
-
-1. restore reliable read-only Neon access;
-2. re-run Stage 1 live DB inventory;
-3. inspect current schema and constraints directly;
-4. generate migration against the actual current schema;
-5. test in an isolated/temporary Neon branch;
-6. verify idempotency and append-only semantics;
-7. only then apply under the migration workflow.
+This blocker must not be bypassed merely because rollback smoke passed. The rollback smoke proves schema compatibility and constraint behavior; it is **not** the isolated-branch migration rehearsal required by this contract.
 
 ---
 
@@ -361,25 +416,31 @@ Before migration:
 
 Current decision:
 
-`CONTRACT_READY; DATABASE_MIGRATION_NOT_APPLIED`
+`SCHEMA_COMPATIBILITY_SMOKE_PASS; TEMP_BRANCH_TEST_BLOCKED_CONNECTOR_SCHEMA_MISMATCH; DATABASE_MIGRATION_NOT_APPLIED`
 
 Completed:
 
 - exact current R4.1 classification vocabulary recovered from code;
 - classification/action distinction formalized;
 - existing replay fields mapped to persistence;
-- run/snapshot/event logical entities defined;
+- run/snapshot/event entities defined;
 - immutability, PIT evidence class, idempotency and app read contract defined;
+- current live Neon schema directly audited;
+- decision tables proven absent before migration;
+- versioned DDL candidate created;
+- DDL tested against actual Neon transactionally without persistent changes;
+- action-state fabrication blocked by a database constraint in the candidate DDL;
+- append-only and fingerprint uniqueness behavior verified;
 - no unrecovered exposure ladder invented.
 
 Open:
 
-- live Neon schema audit;
-- actual DDL migration;
-- persistence implementation;
-- migration tests;
+- isolated/temporary Neon branch migration rehearsal;
+- production DDL migration;
+- post-migration schema verification;
+- persistence writer implementation;
 - runtime decision writer;
 - app reader;
 - **position/action mapping remains `NOT_PROVEN_POSITION_MAPPING`** until separately recovered/frozen.
 
-Stage 3 is **not complete** until the database-backed store exists and is verified.
+Stage 3 is **not complete** until the database-backed store exists on the canonical production branch and persistence behavior is verified there.
