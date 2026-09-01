@@ -1,8 +1,9 @@
 {
   "audit_version": "GOLD_CONTROL_LIVE_DB_INVENTORY_R1",
-  "generated_at_utc": "2026-09-01T08:18:45.702936+00:00",
+  "generated_at_utc": "2026-09-01T08:20:09.811893+00:00",
   "mode": "READ_ONLY_ROLLBACK",
   "contains_observation_values": false,
+  "contains_quality_messages": false,
   "series": [
     {
       "series_id": "BARRICK_B_TWELVEDATA",
@@ -610,5 +611,187 @@
     "quality_error_events": "36",
     "quality_warning_events": "0",
     "latest_quality_event_ts": "2026-09-01T08:17:12.468056+00:00"
-  }
+  },
+  "recent_quality_events": [
+    {
+      "series_id": null,
+      "event_ts": "2026-09-01T08:17:12.468056+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": null,
+      "event_ts": "2026-08-31T14:10:10.024485+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": null,
+      "event_ts": "2026-08-31T13:14:35.919386+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "SP500_FRED",
+      "event_ts": "2026-08-31T13:14:35.919370+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "NASDAQ100_FRED",
+      "event_ts": "2026-08-31T13:14:35.919356+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DJIA_FRED",
+      "event_ts": "2026-08-31T13:14:35.919347+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DTWEXBGS_FRED",
+      "event_ts": "2026-08-31T13:14:35.919338+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DGS10_FRED",
+      "event_ts": "2026-08-31T13:14:35.919327+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DEXCHUS_FRED",
+      "event_ts": "2026-08-31T13:14:35.919308+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DFF_FRED",
+      "event_ts": "2026-08-31T13:14:35.919294+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": null,
+      "event_ts": "2026-08-31T13:14:35.919199+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": null,
+      "event_ts": "2026-08-31T13:04:49.897000+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DJIA_FRED",
+      "event_ts": "2026-08-31T13:04:49.896988+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "NASDAQ100_FRED",
+      "event_ts": "2026-08-31T13:04:49.896979+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "SP500_FRED",
+      "event_ts": "2026-08-31T13:04:49.896973+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DFF_FRED",
+      "event_ts": "2026-08-31T13:04:49.896968+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DGS10_FRED",
+      "event_ts": "2026-08-31T13:04:49.896963+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DTWEXBGS_FRED",
+      "event_ts": "2026-08-31T13:04:49.896957+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DEXCHUS_FRED",
+      "event_ts": "2026-08-31T13:04:49.896950+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": null,
+      "event_ts": "2026-08-31T13:04:49.896863+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "NASDAQ100_FRED",
+      "event_ts": "2026-08-31T13:02:53.477707+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DJIA_FRED",
+      "event_ts": "2026-08-31T13:02:53.477694+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "SP500_FRED",
+      "event_ts": "2026-08-31T13:02:53.477686+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DGS10_FRED",
+      "event_ts": "2026-08-31T13:02:53.477679+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DFF_FRED",
+      "event_ts": "2026-08-31T13:02:53.477670+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DTWEXBGS_FRED",
+      "event_ts": "2026-08-31T13:02:53.477661+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "DEXCHUS_FRED",
+      "event_ts": "2026-08-31T13:02:53.477647+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": null,
+      "event_ts": "2026-08-31T13:02:53.477566+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "SP500_FRED",
+      "event_ts": "2026-08-31T12:59:37.721383+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
+    {
+      "series_id": "NASDAQ100_FRED",
+      "event_ts": "2026-08-31T12:59:37.721379+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    }
+  ]
 }
