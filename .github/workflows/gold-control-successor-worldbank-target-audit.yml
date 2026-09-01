@@ -9,6 +9,7 @@ on:
 permissions:
   contents: read
 
+# Canonical single workflow for the World Bank -> NY17 historical target bridge audit.
 jobs:
   audit:
     runs-on: ubuntu-24.04
