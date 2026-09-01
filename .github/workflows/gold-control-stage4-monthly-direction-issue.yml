@@ -1,0 +1,31 @@
+name: Gold Control Stage4 Monthly Direction Issue
+
+on:
+  workflow_run:
+    workflows: ["Gold Control Stage4 Monthly Direction After Backfill"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  issue:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install psycopg[binary] pandas
+      - name: Require protected database credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Issue immutable September late-bootstrap 3M context
+        run: python gold_axis_2026/data_pipeline/stage4_monthly_direction_issue.py --persist
