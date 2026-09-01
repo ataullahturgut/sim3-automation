@@ -26,14 +26,14 @@ jobs:
         run: |
           import json, os, requests
           key=os.environ['TWELVE_DATA_API_KEY']
-          dates=['2026-07-01','2026-07-15','2026-07-31','2026-08-14','2026-08-31']
+          dates=['2026-05-01','2026-05-29','2026-06-15','2026-06-30','2026-07-31','2026-08-31']
           out=[]
           for d in dates:
               r=requests.get('https://api.twelvedata.com/time_series', params={
                   'symbol':'XAU/USD','interval':'1min',
                   'start_date':f'{d} 16:58:00','end_date':f'{d} 17:01:00',
                   'timezone':'America/New_York','outputsize':10,'format':'JSON'
-              }, headers={'Authorization':f'apikey {key}','User-Agent':'GoldControl-NY17-HistoryDepth/1.0'}, timeout=(8,35))
+              }, headers={'Authorization':f'apikey {key}','User-Agent':'GoldControl-NY17-HistoryDepth/1.1'}, timeout=(8,35))
               r.raise_for_status(); p=r.json()
               if p.get('status')=='error':
                   out.append({'date':d,'status':'API_ERROR','code':p.get('code')})
@@ -47,4 +47,4 @@ jobs:
           print('DATABASE_WRITES=NONE')
           if not all(x['status']=='PASS' for x in out):
               raise SystemExit('TWELVE_NY17_HISTORY_DEPTH_INCOMPLETE')
-          print('TWELVE_NY17_HISTORY_DEPTH_JUL_AUG_PASS')
+          print('TWELVE_NY17_HISTORY_DEPTH_MAY_AUG_PASS')
