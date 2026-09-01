@@ -61,35 +61,11 @@ jobs:
 
           app.write_text(text, encoding='utf-8')
 
-          wf = Path('.github/workflows/gold-control-app-smoke.yml')
-          w = wf.read_text(encoding='utf-8')
-          w = w.replace(
-              "      - 'gold_axis_2026/apps/**'\n",
-              "      - 'gold_axis_2026/apps/**'\n      - 'gold_axis_2026/data_pipeline/decision_store.py'\n      - 'gold_axis_2026/data_pipeline/decision_store_reader.py'\n",
-              1,
-          )
-          w = w.replace(
-              '  smoke:\n    runs-on: ubuntu-latest\n',
-              '  smoke:\n    runs-on: ubuntu-latest\n    env:\n      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}\n',
-              1,
-          )
-          w = w.replace(
-              '          python -m py_compile gold_axis_2026/apps/gold_control.py\n          python -m py_compile gold_axis_2026/apps/live_sources.py\n',
-              '          python -m py_compile gold_axis_2026/apps/gold_control.py\n          python -m py_compile gold_axis_2026/apps/live_sources.py\n          python -m py_compile gold_axis_2026/apps/decision_source.py\n          python -m py_compile gold_axis_2026/data_pipeline/decision_store_reader.py\n',
-              1,
-          )
-          marker = '      - name: Live source connectivity diagnostic\n'
-          if marker not in w:
-              raise SystemExit('APP_SMOKE_MARKER_NOT_FOUND')
-          read_smoke = '''      - name: Decision Store read-only evidence isolation smoke\n        run: |\n          test -n "$NEON_DATABASE_URL" || (echo "NEON_DATABASE_URL missing" && exit 1)\n          PYTHONPATH=gold_axis_2026/apps:gold_axis_2026/data_pipeline python - <<'PY'\n          import os\n          from decision_source import fetch_current_decision_state\n          state = fetch_current_decision_state(os.environ['NEON_DATABASE_URL'])\n          if state is not None:\n              assert state['evidence_class'] in {'LIVE_PRODUCTION', 'PROSPECTIVE_SHADOW'}\n              assert state.get('action_state') is None\n          print('GOLD_CONTROL_DECISION_STORE_APP_READER_PASS replay_excluded=PASS action_mapping_guard=PASS')\n          PY\n\n'''
-          w = w.replace(marker, read_smoke + marker, 1)
-          wf.write_text(w, encoding='utf-8')
-
       - name: Commit Stage 3 reader integration
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add gold_axis_2026/apps/gold_control.py .github/workflows/gold-control-app-smoke.yml
+          git add gold_axis_2026/apps/gold_control.py
           git diff --cached --check
           git commit -m "gold-control: replace file-only latest state with Decision Store reader"
           git push origin HEAD:gold-r4-direction-engine
