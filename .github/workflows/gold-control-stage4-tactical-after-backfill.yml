@@ -1,6 +1,10 @@
 name: Gold Control Stage4 Tactical After Backfill
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-stage4-tactical-after-backfill.yml'
   workflow_run:
     workflows: ["Gold Control XAU NY17 History Backfill"]
     types: [completed]
@@ -11,7 +15,7 @@ permissions:
 
 jobs:
   rehearsal:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 4
     env:
