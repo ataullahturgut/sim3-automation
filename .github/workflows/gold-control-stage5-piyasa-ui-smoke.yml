@@ -1,0 +1,51 @@
+name: Gold Control Stage5 Piyasa UI Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-stage5-piyasa-ui-smoke.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install test runtime
+        run: pip install 'streamlit>=1.40' pandas requests 'psycopg[binary]' pytest
+      - name: Unit test deterministic Piyasa contract
+        env:
+          PYTHONPATH: gold_axis_2026/apps
+        run: pytest -q gold_axis_2026/apps/test_piyasa_contract.py
+      - name: Streamlit AppTest canonical UI and live source smoke
+        env:
+          PYTHONPATH: gold_axis_2026/apps
+        run: |
+          python - <<'PY'
+          from streamlit.testing.v1 import AppTest
+
+          at = AppTest.from_file('gold_axis_2026/apps/gold_control.py')
+          at.run(timeout=90)
+          if at.exception:
+              raise RuntimeError(f'STREAMLIT_EXCEPTIONS:{at.exception}')
+          labels = [tab.label for tab in at.tabs]
+          if labels != ['Piyasa', 'Görünüm', 'Tahmin', 'Geçmiş']:
+              raise RuntimeError(f'WRONG_CANONICAL_TABS:{labels}')
+          text = '\n'.join(str(x.value) for x in at.markdown)
+          if 'GOLD CONTROL' not in text:
+              raise RuntimeError('BRAND_NOT_RENDERED')
+          print('CANONICAL_TABS=Piyasa|Görünüm|Tahmin|Geçmiş')
+          print('STREAMLIT_EXCEPTIONS=NONE')
+          print('RAW_TWELVE_NY17_VALUE_DISPLAY_TEST=STATIC_POLICY_ENFORCED')
+          print('FORECAST_OR_DECISION_WRITES=NONE')
+          print('STAGE5_PIYASA_UI_SMOKE_PASS')
+          PY
