@@ -1,0 +1,31 @@
+name: Gold Control Stage4 Monthly Direction Rehearsal
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-stage4-monthly-direction-rehearsal.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rehearsal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install psycopg[binary]
+      - name: Require protected database credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Rehearse frozen 3M direction from PIT-safe canonical NY17 inputs
+        run: python gold_axis_2026/data_pipeline/stage4_monthly_direction_rehearsal.py
