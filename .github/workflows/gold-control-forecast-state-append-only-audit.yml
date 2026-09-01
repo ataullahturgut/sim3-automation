@@ -1,0 +1,49 @@
+name: Gold Control Forecast State Append Only Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-forecast-state-append-only-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install psycopg[binary]
+      - name: Audit append-only trigger coverage read-only
+        shell: python
+        run: |
+          import json, os
+          import psycopg
+          from psycopg.rows import dict_row
+          tables=['forecast_input_snapshots','derived_feature_snapshots','monthly_forecast_contracts']
+          out={'database_writes':'NONE','tables':{}}
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  for t in tables:
+                      cur.execute('''
+                        select trigger_name,event_manipulation,action_timing,action_statement
+                        from information_schema.triggers
+                        where event_object_schema='public' and event_object_table=%s
+                        order by trigger_name,event_manipulation
+                      ''',(t,))
+                      triggers=[dict(r) for r in cur.fetchall()]
+                      cur.execute(f'select count(*) as n from {t}')
+                      out['tables'][t]={'row_count':cur.fetchone()['n'],'triggers':triggers}
+              conn.rollback()
+          print(json.dumps(out,indent=2,default=str))
+          missing=[t for t,v in out['tables'].items() if not v['triggers']]
+          print('MISSING_APPEND_ONLY_TRIGGER_TABLES='+','.join(missing) if missing else 'MISSING_APPEND_ONLY_TRIGGER_TABLES=NONE')
+          print('FORECAST_STATE_APPEND_ONLY_AUDIT_PASS')
