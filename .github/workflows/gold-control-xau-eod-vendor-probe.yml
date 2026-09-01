@@ -1,0 +1,62 @@
+name: Gold Control XAU EOD Vendor Probe
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-xau-eod-vendor-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - name: Require protected vendor credential
+        run: test -n "$TWELVE_DATA_API_KEY" || { echo 'TWELVE_DATA_API_KEY_MISSING'; exit 1; }
+      - name: Probe XAU USD metadata without logging market values
+        shell: python
+        run: |
+          import os
+          import requests
+
+          key = os.environ['TWELVE_DATA_API_KEY']
+          headers = {'Authorization': f'apikey {key}', 'User-Agent': 'GoldControl-Stage4-EOD-Probe/1.0'}
+
+          def get(url, params):
+              r = requests.get(url, params=params, headers=headers, timeout=(8, 30))
+              print('HTTP_STATUS', r.status_code, url.rsplit('/', 1)[-1])
+              r.raise_for_status()
+              p = r.json()
+              if p.get('status') == 'error':
+                  raise SystemExit(f"TWELVE_API_ERROR:{p.get('code')}:{p.get('message')}")
+              return p
+
+          ts = get('https://api.twelvedata.com/time_series', {
+              'symbol': 'XAU/USD', 'interval': '1day', 'outputsize': 2, 'format': 'JSON'
+          })
+          meta = ts.get('meta') or {}
+          values = ts.get('values') or []
+          if not values:
+              raise SystemExit('XAUUSD_1DAY_NO_VALUES')
+          safe_fields = ['symbol', 'interval', 'currency', 'exchange_timezone', 'exchange', 'mic_code', 'type']
+          print('XAUUSD_TIME_SERIES_ACCESS=PASS')
+          for field in safe_fields:
+              print(f'META_{field.upper()}={meta.get(field)}')
+          print(f'VALUE_ROWS_RETURNED={len(values)}')
+          print('RAW_MARKET_VALUES_LOGGED=NO')
+
+          eod = get('https://api.twelvedata.com/eod', {'symbol': 'XAU/USD'})
+          if 'close' not in eod:
+              raise SystemExit(f"XAUUSD_EOD_NO_CLOSE_FIELD:keys={sorted(eod.keys())}")
+          print('XAUUSD_EOD_ENDPOINT_ACCESS=PASS')
+          print('EOD_CLOSE_VALUE_LOGGED=NO')
+          print('GOLD_CONTROL_XAU_EOD_VENDOR_PROBE_PASS')
