@@ -1,0 +1,52 @@
+name: Gold Control Stage4B Patch August Reproduction
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-stage4b-patch-august-reproduction.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install frozen project runtime
+        run: pip install -r gold_axis_2026/requirements.txt
+      - name: Reproduce retained August Patch without logging forecast value
+        working-directory: gold_axis_2026
+        run: |
+          python - <<'PY'
+          import json, math
+          from pathlib import Path
+          import run_models as rm
+          import run_august_2026 as aug
+
+          prov=json.loads(Path('production_closure/PROVENANCE.json').read_text())
+          expected=float(prov['august_2026_patch_operational_forecast'])
+          core=rm.load_core()
+          wide=rm.fetch_history()
+          got, rr, seeds, selected=aug.august_patch(wide,core)
+          diff=abs(float(got)-expected)
+          rel=diff/abs(expected)
+          print('EXPECTED_VALUE_LOGGED=NO')
+          print('REPRODUCED_VALUE_LOGGED=NO')
+          print(f'ABS_DIFF={diff:.12f}')
+          print(f'REL_DIFF={rel:.12e}')
+          print(f'EXACT_FLOAT_EQUAL={float(got)==expected}')
+          print(f'WITHIN_1E_9={diff <= 1e-9}')
+          print(f'WITHIN_1E_6={diff <= 1e-6}')
+          print('INPUT_CORE_LAST_MONTH='+str(core.index.max().date()))
+          print('HISTORY_LAST_DATE='+str(wide.index.max().date()))
+          print('DATABASE_WRITES=NONE')
+          print('STAGE4B_PATCH_AUGUST_REPRODUCTION_AUDIT_PASS')
+          PY
