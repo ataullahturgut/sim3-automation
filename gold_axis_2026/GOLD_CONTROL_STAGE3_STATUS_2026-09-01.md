@@ -1,9 +1,9 @@
 # GOLD CONTROL — STAGE 3 DECISION STORE STATUS
 
 **Status date:** 2026-09-01  
-**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.2  
+**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.3  
 **Stage:** 3 — Decision State Store  
-**Current status:** `PRODUCTION_SCHEMA_APPLIED_AND_VERIFIED; WRITER_READER_NOT_ACTIVATED`
+**Current status:** `PASS_DECISION_STORE_AND_READ_PATH`
 
 ## 1. What is now verified
 
@@ -128,41 +128,25 @@ No app screen has been switched to the decision store yet.
 
 No claim is made that connector-side post-migration schema introspection or schema diff has passed; that path remains blocked by the connector contract mismatch.
 
-## 5. Production migration evidence and remaining Stage 3 work
+## 5. Stage 3 closure
 
-Production schema migration is now complete.
+Stage 3 is complete.
 
-Evidence:
+Closure evidence:
 
-- GitHub Actions workflow: `Gold Control Stage 3 Production Migration`
-- run: `33496843121`
-- job: `99820886297`
-- conclusion: `SUCCESS`
-- canonical pinned ref: `13d5a027849470b4a95341004300bd97a35e82f9`
-- exact marker: `GOLD_CONTROL_STAGE3_PRODUCTION_MIGRATION_PASS`
-- schema version: `GOLD_CONTROL_DECISION_STORE_V1_2026-09-01`
-- action mapping: `NOT_PROVEN_POSITION_MAPPING`
-- production decision rows immediately after migration: `0`
+- production schema migration: run `33496843121`, job `99820886297`, `SUCCESS`;
+- production schema independently visible in Neon resource tree;
+- guarded R4.1 emitted-state bridge: run `33498177345`, job `99825081623`, `R4_1_DECISION_BRIDGE_SMOKE_PASS`;
+- bridge verification covered state-shape guard, forbidden action guard, drift guard, frozen engine/config identity, store-reader roundtrip, idempotency and rollback;
+- app Decision Store reader integration: canonical commit `50ab446b2b97634a2a812a3b6de655c358f9829b`;
+- app smoke: run `33498603322`, job `99826433286`, `GOLD_CONTROL_DECISION_STORE_APP_READER_PASS`;
+- app no longer depends on `latest_signal.json` for current decision state;
+- reader excludes `HISTORICAL_REPLAY` and refuses non-null action mapping;
+- no synthetic decision row survived rollback tests;
+- production Decision Store remains empty because prospective issuance prerequisites are not yet satisfied.
 
-Independent Neon resource-tree inspection after the run confirms production contains:
+Final Stage 3 status:
 
-- `decision_runs`
-- `decision_signal_snapshots`
-- `decision_events`
-- `latest_decision_snapshot_by_evidence`
-- `reject_gold_control_decision_mutation`
-- expected Decision Store indexes.
+`PASS_DECISION_STORE_AND_READ_PATH`
 
-The remaining Stage 3 gate is **not schema migration**. It is production-path integration:
-
-1. bind the canonical live/EOD R4.1 emitted state to `r4_1_decision_adapter.py`;
-2. persist through `decision_store.py` with explicit evidence class and complete provenance;
-3. read through `decision_store_reader.py` with evidence isolation;
-4. keep `action_state` null and do not invent position mapping;
-5. verify the integrated path before switching the app from the transitional `latest_signal.json` dependency.
-
-Current status:
-
-`STAGE_3 = IN_PROGRESS_PRODUCTION_SCHEMA_PASS / WRITER_READER_INTEGRATION_PENDING`
-
-Stages 4–12 may be prepared non-mutatively where useful, but none may be promoted as complete ahead of Stage 3.
+The absence of a real prospective row is now a Stage 4/11 issuance prerequisite, not unfinished Decision Store infrastructure.

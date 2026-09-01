@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.2  
+**Manifest version:** 1.3  
 **Freeze / issue date:** 2026-09-01  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -838,9 +838,9 @@ The project execution order remains:
 | 0 | `PASS` | Manifest read-first contract active |
 | 1 | `PASS_AUDIT_COMPLETE_WITH_OPERATIONAL_BLOCKERS` | Actual Neon inventory generated read-only; XAU source currently degraded and lineage discrepancy remains explicit |
 | 2 | `PASS_CONTRACT_CANONICALIZED; PROSPECTIVE_LEDGER_PROVEN_EMPTY` | Model roles/authority frozen; live forecast-state tables reconciled and contain 0 rows |
-| 3 | `IN_PROGRESS_PRODUCTION_SCHEMA_PASS` | Isolated rehearsal PASS; guarded production migration PASS; Neon resource tree confirms Decision Store objects; production writer/reader not activated |
-| 4 | `PREPARATION_TESTS_PASS; NOT_COMPLETE_AHEAD_OF_STAGE3` | Deterministic R4.1 tests are prepared but Stage 3 writer/reader activation remains open |
-| 5–12 | `NOT_STARTED / NOT_COMPLETE` | Cannot be promoted ahead of Stage 3/4 |
+| 3 | `PASS_DECISION_STORE_AND_READ_PATH` | Production schema PASS; emitted-state bridge rollback PASS; app Decision Store reader PASS; file-only latest-state dependency removed; evidence isolation/action guard enforced |
+| 4 | `IN_PROGRESS_BLOCKED_INPUT_CONTRACTS` | Deterministic engine/bridge tests PASS, but readiness audit is BLOCKED: forecast contract missing, immutable forecast input snapshot missing, latest daily XAU run not SUCCESS, and no approved canonical XAU EOD decision source |
+| 5–12 | `NOT_STARTED / NOT_COMPLETE` | Cannot be promoted ahead of Stage 4 |
 
 ---
 
@@ -848,38 +848,62 @@ The project execution order remains:
 
 The next canonical task is now:
 
-## `STAGE 3 — DECISION STATE STORE: CONNECT PRODUCTION WRITER / READER WITHOUT ACTIVATING UNPROVEN ACTION MAPPING`
+## `STAGE 4 — DETERMINISTIC R4.1 ISSUER: CLOSE INPUT CONTRACT BLOCKERS BEFORE ANY PROSPECTIVE WRITE`
 
-Completed Stage 3 gates:
+Stage 3 is closed as:
 
-- Decision Store V1 contract and versioned DDL: `PASS`;
-- rollback-only schema/writer/reader/adapter CI: `PASS`;
-- isolated Neon branch rehearsal: `PASS`;
-- persistent rehearsal guard verification: `PASS`;
-- production migration via guarded GitHub Actions workflow: `PASS`;
-- production post-migration resource-tree verification: `PASS`;
-- production Decision Store remained empty immediately after migration: `PASS`;
-- `NOT_PROVEN_POSITION_MAPPING` remains enforced.
+`PASS_DECISION_STORE_AND_READ_PATH`
 
-Production migration evidence:
+Stage 3 closure evidence:
 
-- workflow run: `33496843121`;
-- job: `99820886297`;
-- canonical migration runner commit: `13d5a027849470b4a95341004300bd97a35e82f9`;
-- marker: `GOLD_CONTROL_STAGE3_PRODUCTION_MIGRATION_PASS`;
-- schema version: `GOLD_CONTROL_DECISION_STORE_V1_2026-09-01`;
-- decision rows immediately after migration: `0`.
+- production Decision Store migration: run `33496843121`, job `99820886297`, `SUCCESS`;
+- guarded emitted-state → store → reader bridge: run `33498177345`, job `99825081623`, `R4_1_DECISION_BRIDGE_SMOKE_PASS`;
+- transitional app now reads Decision Store instead of `latest_signal.json`;
+- app read-only evidence-isolation smoke: run `33498603322`, job `99826433286`, `GOLD_CONTROL_DECISION_STORE_APP_READER_PASS`;
+- `HISTORICAL_REPLAY` is excluded from the current-state app reader;
+- `action_state` remains null under `NOT_PROVEN_POSITION_MAPPING`;
+- production Decision Store remains empty because no valid prospective issuer has been authorized.
 
-Required next gate:
+A canonical continuously scheduled live/EOD R4.1 producer is still:
 
-1. identify the canonical live/EOD R4.1 execution entry point and exact input snapshot contract;
-2. connect the existing `r4_1_decision_adapter.py` and `decision_store.py` writer to that path without recomputing signals in persistence;
-3. require explicit evidence class and complete prospective provenance before any `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` insert;
-4. connect `decision_store_reader.py` as the canonical read surface while keeping the current app unchanged until the stored-state path is verified;
-5. verify no `HISTORICAL_REPLAY` row can surface as live and no non-null `action_state` can be stored;
-6. only after writer/reader integration passes may Stage 3 be promoted to `PASS`.
+`NOT_FOUND_CANONICAL_LIVE_R4_1_EMITTER`
 
-The direct Neon SQL-management connector still has a camelCase/snake_case contract mismatch, but this no longer blocks the audited GitHub Actions production migration path. It remains an operational tooling issue, not permission debt.
+The older R4 LONG/CASH / AL/SAT workflow is not an acceptable substitute because that would violate `NOT_PROVEN_POSITION_MAPPING`.
+
+### Stage 4 readiness audit
+
+Read-only production audit:
+
+- run: `33499509482`;
+- job: `99829327414`;
+- commit: `37fed93cbef76f394e8dee8b334f89617d94b3ef`;
+- result: `SUCCESS` audit execution, `readiness=BLOCKED`;
+- raw market values logged: `NO`.
+
+Confirmed blockers:
+
+1. `FORECAST_CONTRACT_NOT_ISSUED`
+2. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`
+3. `LATEST_DAILY_XAU_PIPELINE_NOT_SUCCESS`
+4. `NO_APPROVED_CANONICAL_XAU_EOD_DECISION_SOURCE`
+
+Important source interpretation:
+
+- `XAU_DAILY_XAUS` is transported through the frozen XAUS history endpoint and the registry already documents the upstream Yahoo lineage; upstream disclosure alone is not treated as silent substitution;
+- nevertheless this series is explicitly `operational cross-check only` / `CANDIDATE_NOT_BENCHMARK`, so it is not authorized as the R4.1 canonical EOD decision source;
+- `XAU_SPOT_XAUS` is indicative/non-settlement monitoring and likewise is not the frozen EOD decision close;
+- Cboe GVZ is available and the latest audited daily Cboe run is successful.
+
+Required next gates, in order:
+
+1. define and approve a canonical XAU EOD decision-price source/lineage under change control; do not silently promote the current cross-check or indicative spot series;
+2. restore a successful daily XAU ingestion path for the approved source;
+3. create the first genuine immutable H=1 forecast input snapshot and monthly forecast contract from the executable frozen forecasting path before outcome realization;
+4. only then build/schedule the canonical R4.1 EOD issuer using the frozen engine and complete provenance;
+5. the first real forward state must begin as `PROSPECTIVE_SHADOW`; `LIVE_PRODUCTION` remains disabled until Stage 12 graduation;
+6. do not backfill historical rows and relabel them as prospective.
+
+No `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` decision row may be written while any of the four readiness blockers remains open.
 
 ### Operational work that continues independently
 
@@ -905,9 +929,12 @@ Known mismatch:
 
 Current latest-state dependency:
 
-- `gold_axis_2026/r4_1/output/latest_signal.json`
+- `gold_axis_2026/apps/decision_source.py` reads the production Neon Decision Store;
+- display priority is `LIVE_PRODUCTION`, then explicitly labelled `PROSPECTIVE_SHADOW`;
+- `HISTORICAL_REPLAY` is never surfaced as the current decision;
+- if neither prospective class exists, the app shows `KANONİK KARAR YOK` rather than deriving a decision from live spot.
 
-This is transitional. The roadmap requires database-backed decision state.
+The previous file-only `gold_axis_2026/r4_1/output/latest_signal.json` dependency has been removed from the app path.
 
 Current live adapter contract:
 
