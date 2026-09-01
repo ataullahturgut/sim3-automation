@@ -34,6 +34,8 @@ jobs:
           test -n "$NEON_DATABASE_URL"
           test -n "$FRED_API_KEY"
       - name: Compile governed backfill
-        run: python -m py_compile gold_axis_2026/data_pipeline/successor_input_backfill.py
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/successor_input_backfill.py
+          python -m py_compile gold_axis_2026/data_pipeline/successor_input_backfill_v2.py
       - name: Backfill historical target and PIT reconstruction inputs
-        run: python gold_axis_2026/data_pipeline/successor_input_backfill.py
+        run: python gold_axis_2026/data_pipeline/successor_input_backfill_v2.py
