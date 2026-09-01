@@ -1,0 +1,76 @@
+name: Gold Control Stage4B Legacy Identity Audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-stage4b-legacy-identity-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pandas numpy
+      - name: Compare legacy outputs with production-closure identities
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          import numpy as np
+          import pandas as pd
+          from pathlib import Path
+
+          root=Path('gold_axis_2026')
+          legacy=pd.read_csv(root/'monthly_predictions_2023_2026.csv')
+          prod=pd.read_csv(root/'production_closure/production_history_43.csv')
+          legacy['month']=legacy['month'].astype(str)
+          prod['month']=prod['month'].astype(str)
+          m=prod.merge(legacy,on='month',how='inner',suffixes=('_prod','_legacy'))
+          if len(m) != 43:
+              raise RuntimeError(f'COMMON_MONTHS_NOT_43:{len(m)}')
+
+          pairs={
+              'VW':('vw','vw_midas_msvr'),
+              'PATCH':('patch_r1','causal_patch_transformer'),
+              'RW':('rw_prod','rw_legacy'),
+              'MOM':('mom','ma3'),
+          }
+          out={'common_months':len(m),'pairs':{}}
+          for name,(a,b) in pairs.items():
+              x=pd.to_numeric(m[a],errors='raise').to_numpy(float)
+              y=pd.to_numeric(m[b],errors='raise').to_numpy(float)
+              d=np.abs(x-y)
+              out['pairs'][name]={
+                  'exact_equal_count':int(np.sum(x==y)),
+                  'all_exact_equal':bool(np.array_equal(x,y)),
+                  'max_abs_diff':float(d.max()),
+                  'median_abs_diff':float(np.median(d)),
+                  'mean_abs_diff':float(d.mean()),
+                  'corr':float(np.corrcoef(x,y)[0,1]),
+              }
+          for f in [root/'production_closure/production_history_43.csv',root/'monthly_predictions_2023_2026.csv',root/'run_vw_full_rebuild.py',root/'run_vw_full_rebuild_v2.py',root/'run_august_2026.py']:
+              out.setdefault('sha256',{})[str(f)]=hashlib.sha256(f.read_bytes()).hexdigest()
+
+          print('COMMON_MONTHS=43')
+          for name,v in out['pairs'].items():
+              print(f'{name}_ALL_EXACT_EQUAL={v["all_exact_equal"]}')
+              print(f'{name}_EXACT_EQUAL_COUNT={v["exact_equal_count"]}/43')
+              print(f'{name}_MAX_ABS_DIFF={v["max_abs_diff"]:.12f}')
+              print(f'{name}_MEDIAN_ABS_DIFF={v["median_abs_diff"]:.12f}')
+              print(f'{name}_CORR={v["corr"]:.12f}')
+          print('REBUILD_V1_DECLARES_EXACT_BLOCKED='+str('exact_replication_status\':\'BLOCKED' in (root/'run_vw_full_rebuild.py').read_text().replace(' ','')))
+          print('REBUILD_V2_DECLARES_EXACT_BLOCKED='+str("'exact_replication':'BLOCKED'" in (root/'run_vw_full_rebuild_v2.py').read_text().replace(' ','')))
+          print('PATCH_AUGUST_HARDCODE_PRESENT='+str("T=pd.Timestamp('2026-08-01')" in (root/'run_august_2026.py').read_text()))
+          print('DATABASE_WRITES=NONE')
+          print('RAW_MARKET_VALUES_LOGGED=NO')
+          print('STAGE4B_LEGACY_IDENTITY_AUDIT_PASS')
+          PY
