@@ -1,9 +1,9 @@
 # GOLD CONTROL — STAGE 4 DETERMINISTIC R4.1 STATUS
 
 **Status date:** 2026-09-01  
-**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.7  
+**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.8  
 **Stage:** 4 — Deterministic R4.1 Decision Engine / Issuer  
-**Current status:** `IN_PROGRESS_BLOCKED_FORECAST_ISSUANCE`
+**Current status:** `IN_PROGRESS_BLOCKED_FORECAST_AND_MONTHLY_CONTEXT`
 
 ## 1. Verified engine/store state
 
@@ -54,23 +54,32 @@ Status:
 
 `XAU_EOD_CME_EBS` is no longer the active operational source. CME/EBS remains the authority for the 17:00 ET session convention and an audit/history candidate. Direct EBS Ticker entitlement is therefore **not required** for the manifest v1.6 active path.
 
-## 5. Active readiness blockers
+## 5. Active readiness blockers — manifest v1.8
 
-1. `FORECAST_CONTRACT_NOT_ISSUED`
-2. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`
+1. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`
+2. `FORECAST_CONTRACT_NOT_ISSUED`
+3. `PATCH_R1_CURRENT_ISSUER_NOT_PROVEN`
+4. `VW_CURRENT_MONTHLY_REFERENCE_NOT_ISSUED` / `VW_EXECUTABLE_REPRODUCTION_BLOCKED_NOT_PROVEN`
+5. `MONTHLY_DIRECTION_CONTEXT_NOT_ISSUED`
+6. `CANONICAL_XAU_HISTORY_BACKFILL_NOT_YET_SUCCESS`
 
-Closed by canonical production-ingestion run `33511805110`, job `99869043161`:
-
-`TWELVE_XAU_NY17_PIPELINE_NOT_SUCCESS` → `CLOSED`
-
-The run wrote one `XAU_EOD_TWELVE_NY17` observation for completed trade date `2026-08-31` at `2026-08-31T21:00:00+00:00`, with source `Twelve Data`, quality `APPROVED_CANONICAL_TWELVE_NY17`, retrieval status `SUCCESS`, zero quality errors and no raw market-price logging.
+The latest single-day canonical production ingestion remains `SUCCESS` by run `33511805110`, job `99869043161`; the new history blocker is distinct from that daily-pipeline success and exists because R4.1 Fast/Slow/3M context require longer same-lineage history.
 
 ## 6. Required next work
 
-1. inspect the live Neon forecast-state table contract and executable Patch R1 issuance path;
-2. create the first genuine immutable H=1 forecast input snapshot using point-in-time available inputs only;
-3. issue the matching monthly forecast contract before target outcome realization and verify both rows in Neon;
-4. build/schedule the canonical R4.1 EOD issuer only after those inputs pass;
-5. first forward Decision Store state = `PROSPECTIVE_SHADOW`, never retroactive and not `LIVE_PRODUCTION`.
+1. complete PIT-safe NY17 history backfill and verify sufficient Fast/Slow/monthly-context coverage;
+2. keep exact VW identity `BLOCKED_NOT_PROVEN` unless identity is actually recovered; do not promote rebuild scripts by name similarity;
+3. resolve/freeze the current monthly VW reference and 3M direction issuance contracts;
+4. resolve the current H=1 executable issuer without extending Patch constants beyond their proven horizon by assumption;
+5. only then persist the first immutable forecast input snapshot + monthly forecast contract and verify in Neon;
+6. build/schedule canonical R4.1 issuer only after all mandatory `EngineSnapshot` inputs exist; first forward Decision Store state = `PROSPECTIVE_SHADOW`.
 
 `NOT_PROVEN_POSITION_MAPPING` remains unchanged.
+
+
+## 7. Forecast/monthly-context audit evidence
+
+- forecast schema/horizon audit: run `33512445624`, job `99871192709`, `SUCCESS`; DB read-only; forecast-state row counts all zero; `core5` ends July 2026 and retained Patch runner is August-horizon specific.
+- VW canonical-history forensic: run `33513175499`, job `99873596626`, `SUCCESS`; exact original VW runner/source chain `NOT_FOUND` in reachable canonical history; existing rebuild scripts do not close identity provenance.
+- NY17 May-Aug depth probe: run `33513634775`, job `99875100590`, `SUCCESS`; sampled exact bars available.
+- first atomic Jul-Aug history backfill: run `33512957983`, job `99872871327`, `FAILURE` before persistence because provider/request errors remained; no partial write was authorized by the backfill code.

@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.7  
+**Manifest version:** 1.8  
 **Freeze / issue date:** 2026-09-01  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -877,7 +877,7 @@ The project execution order remains:
 | 1 | `PASS_AUDIT_COMPLETE_WITH_OPERATIONAL_BLOCKERS` | Actual Neon inventory generated read-only; XAU source currently degraded and lineage discrepancy remains explicit |
 | 2 | `PASS_CONTRACT_CANONICALIZED; PROSPECTIVE_LEDGER_PROVEN_EMPTY` | Model roles/authority frozen; live forecast-state tables reconciled and contain 0 rows |
 | 3 | `PASS_DECISION_STORE_AND_READ_PATH` | Production schema PASS; emitted-state bridge rollback PASS; app Decision Store reader PASS; file-only latest-state dependency removed; evidence isolation/action guard enforced |
-| 4 | `IN_PROGRESS_BLOCKED_FORECAST_ISSUANCE` | Deterministic engine/bridge tests PASS. Canonical `XAU_EOD_TWELVE_NY17` access, mapping and Neon ingestion are PASS. Remaining blockers are the first genuine immutable H=1 forecast input snapshot and monthly forecast contract |
+| 4 | `IN_PROGRESS_BLOCKED_FORECAST_AND_MONTHLY_CONTEXT` | Deterministic engine/bridge tests PASS and latest canonical NY17 ingestion PASS. Deeper audit proves current Patch issuer is only frozen through the August target, exact VW production runner remains `BLOCKED_NOT_PROVEN`, R4.1 monthly VW/direction inputs are not issued, forecast snapshot/contract tables are empty, and canonical NY17 history backfill is not yet successful |
 | 5–12 | `NOT_STARTED / NOT_COMPLETE` | Cannot be promoted ahead of Stage 4 |
 
 ---
@@ -918,10 +918,18 @@ Read-only production audit:
 - result: `SUCCESS` audit execution, `readiness=BLOCKED`;
 - raw market values logged: `NO`.
 
-Confirmed active blockers after manifest v1.7 XAU pipeline closure:
+Confirmed active blockers after manifest v1.8 dependency audit:
 
-1. `FORECAST_CONTRACT_NOT_ISSUED`
-2. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`
+1. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`
+2. `FORECAST_CONTRACT_NOT_ISSUED`
+3. `PATCH_R1_CURRENT_ISSUER_NOT_PROVEN`
+   - the retained executable runner is hard-coded to the August 2026 target / July 2026 input horizon; no September issuer is frozen by evidence.
+4. `VW_CURRENT_MONTHLY_REFERENCE_NOT_ISSUED`
+   - `VW_EXECUTABLE_REPRODUCTION_BLOCKED_NOT_PROVEN`; the exact original VW-MIDAS-SVR Adapt V2 runner/source chain is not retained.
+5. `MONTHLY_DIRECTION_CONTEXT_NOT_ISSUED`
+   - R4.1 requires a frozen monthly direction input; it may not be inferred ad hoc by the app or daily issuer.
+6. `CANONICAL_XAU_HISTORY_BACKFILL_NOT_YET_SUCCESS`
+   - one canonical NY17 production observation exists, but Fast/Slow and 3M monthly context require a longer same-lineage history. A PIT-safe backfill is being validated; historical rows retain current retrieval-time availability and are never relabelled as historically knowable.
 
 Closed XAU pipeline blocker:
 
@@ -951,14 +959,27 @@ Important source interpretation:
 
 Required next gates, in order:
 
-1. create the first genuine immutable H=1 forecast input snapshot from the executable frozen forecasting path using only data point-in-time available at the issuance origin;
-2. issue the matching monthly forecast contract binding target definition, executable Patch R1 point forecast, audited VW reference, RW benchmark, 3M direction context, model/code version, input snapshot id and issued-at timestamp;
-3. verify the new snapshot/contract rows in Neon before outcome realization;
-4. only then build/schedule the canonical R4.1 EOD issuer using the frozen engine and complete provenance;
-5. the first real forward decision state must begin as `PROSPECTIVE_SHADOW`; `LIVE_PRODUCTION` remains disabled until Stage 12 graduation;
-6. do not backfill historical rows and relabel them as prospective.
+1. complete and verify PIT-safe same-lineage `XAU_EOD_TWELVE_NY17` history sufficient for frozen Fast/Slow and 3M monthly-context construction; backfilled rows use current retrieval-time availability and do not become retroactively knowable;
+2. resolve the R4.1 monthly price-reference path without silent model substitution: either recover/prove the exact VW-MIDAS-SVR Adapt V2 executable identity, or run a separately governed architecture change with frozen pre-prospective validation before replacing that role;
+3. freeze and issue the monthly direction context under the existing 3M Momentum role from the approved same-lineage input contract;
+4. resolve the current H=1 executable point issuer: Patch R1 may not be date-extended beyond its proven August horizon by editing constants; a successor/bridge requires explicit change control and leakage-safe evidence;
+5. only after the chosen executable forecast path is proven, create the first genuine immutable input snapshot and matching monthly forecast contract with actual issuance timestamp and complete provenance;
+6. verify forecast/monthly-context rows in Neon before target outcome realization;
+7. only then build/schedule the canonical R4.1 EOD issuer; first forward decision state = `PROSPECTIVE_SHADOW`, never retroactive and not `LIVE_PRODUCTION`.
 
 No `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` decision row may be written while any active Stage-4 readiness blocker remains open.
+
+### Manifest v1.8 forecast/monthly-context dependency audit
+
+Evidence:
+
+- live forecast-state schema audit: GitHub Actions run `33512445624`, job `99871192709`, `SUCCESS`, read-only Neon transaction; all three forecast-state tables existed and each had 0 rows;
+- retained Patch input package ended at `core5` month `2026-07-01`; retained Patch runners contain July/August horizon constants, therefore `PATCH_R1_CURRENT_ISSUER_NOT_PROVEN`;
+- canonical-history forensic: run `33513175499`, job `99873596626`, `SUCCESS`; exact original VW-MIDAS-SVR Adapt V2 runner/source chain was not recovered from reachable canonical history; rebuild scripts exist but are explicitly reconstruction/research paths, not identity proof;
+- `r4_1/contracts.py` requires both `monthly_vw_forecast` and `monthly_direction` in every `EngineSnapshot`; neither may be silently replaced with RW/Patch/live spot;
+- NY17 history-depth probe run `33513634775`, job `99875100590`, `SUCCESS`, proves exact 16:59 ET Twelve bars are accessible from May through August 2026 on sampled dates, but the first atomic July-August backfill run `33512957983`, job `99872871327`, failed before persistence due transient provider/request errors.
+
+Canonical audit record: `gold_axis_2026/GOLD_CONTROL_STAGE4_FORECAST_ISSUANCE_AUDIT_2026-09-01.md`.
 
 ### Operational work that continues independently
 

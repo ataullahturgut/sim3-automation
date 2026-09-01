@@ -1,6 +1,6 @@
 # GOLD CONTROL — H=1 FORECAST CANONICALIZATION
 
-**Canonicalization version:** 1.1  
+**Canonicalization version:** 1.2  
 **Audit date:** 2026-09-01  
 **Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.0  
 **Production closure package:** `GOLD_H1_R1_STAGE9B_11_PRODUCTION_CLOSURE_V1.zip`  
@@ -293,3 +293,30 @@ Current Stage 3 preparation already includes:
 - a rollback-only compatibility smoke against the actual Neon database.
 
 The rollback-only smoke does not persist schema changes and is not a substitute for an isolated-branch migration test. Actual production migration remains blocked until the Stage 3 migration gate is satisfied.
+
+
+---
+
+# 12. 2026-09-01 CURRENT-ISSUER AUDIT — MANIFEST V1.8
+
+The historical production-closure role registry remains unchanged, but executability must be separated from **current issuance readiness**.
+
+## Patch R1
+
+The retained executable artifacts prove the historical/closure Patch path through the August 2026 target. The live code audit found `core5_monthly` ending at `2026-07-01`, an August target constant in `run_august_2026.py`, and July cutoffs in retained model code. No audited September-2026 issuer contract was found.
+
+Status: `PATCH_R1_CURRENT_ISSUER_NOT_PROVEN`.
+
+This does not revoke the historical `PATCH_R1_EXECUTABLE` role inside the production-closure package; it prohibits silently date-extending that role into a new prospective target.
+
+## VW-MIDAS-SVR Adapt V2
+
+Canonical reachable-history forensic run `33513175499` found rebuild/research scripts but did not recover the exact original immutable production runner/source preprocessing chain. `r4_1/KNOWN_BLOCKERS.md` and `PROVENANCE.json` already classify exact reproduction as blocked.
+
+Status: `VW_EXECUTABLE_REPRODUCTION_BLOCKED_NOT_PROVEN`.
+
+R4.1 nevertheless requires a numeric `monthly_vw_forecast` input. Therefore Stage 4 cannot silently substitute Patch, RW, a rebuild, or live spot into that field. Recovery of exact identity or an explicit separately validated architecture change is required.
+
+## Forecast ledger
+
+Read-only Neon audit run `33512445624`, job `99871192709`, confirmed `forecast_input_snapshots`, `derived_feature_snapshots`, and `monthly_forecast_contracts` all exist and all remain empty. No row may be created merely to satisfy a readiness count without a valid executable issuance path.
