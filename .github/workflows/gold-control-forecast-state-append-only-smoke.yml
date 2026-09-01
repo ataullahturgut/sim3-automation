@@ -1,0 +1,79 @@
+name: Gold Control Forecast State Append Only Smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-forecast-state-append-only-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install psycopg[binary]
+      - name: Apply guard in transaction, test mutation rejection, rollback all
+        shell: python
+        run: |
+          import os
+          from pathlib import Path
+          import psycopg
+          sql=Path('gold_axis_2026/data_pipeline/schema_patch_forecast_state_append_only_v1.sql').read_text()
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False) as conn:
+              with conn.cursor() as cur:
+                  cur.execute(sql)
+                  cur.execute('''
+                    select event_object_table, count(distinct trigger_name)
+                    from information_schema.triggers
+                    where event_object_schema='public'
+                      and event_object_table in ('forecast_input_snapshots','derived_feature_snapshots','monthly_forecast_contracts')
+                    group by event_object_table order by event_object_table
+                  ''')
+                  cov=dict(cur.fetchall())
+                  expected={'forecast_input_snapshots','derived_feature_snapshots','monthly_forecast_contracts'}
+                  if set(cov)!=expected or any(int(v)<1 for v in cov.values()):
+                      raise RuntimeError(f'TRIGGER_COVERAGE_FAILED:{cov}')
+                  cur.execute('''
+                    insert into derived_feature_snapshots
+                      (feature_name,feature_version,calculation_ts,input_cutoff,value_text,git_commit,input_lineage,quality_status,metadata)
+                    values
+                      ('__APPEND_ONLY_SMOKE__','V1',now(),now(),'TEST','ROLLBACK_ONLY','{}'::jsonb,'ROLLBACK_ONLY','{}'::jsonb)
+                    returning id
+                  ''')
+                  row_id=cur.fetchone()[0]
+                  update_rejected=False
+                  cur.execute('SAVEPOINT update_test')
+                  try:
+                      cur.execute('update derived_feature_snapshots set value_text=%s where id=%s',('MUTATED',row_id))
+                  except psycopg.Error as exc:
+                      update_rejected='IMMUTABLE_FORECAST_STATE_MUTATION_REJECTED' in str(exc)
+                      cur.execute('ROLLBACK TO SAVEPOINT update_test')
+                  if not update_rejected:
+                      raise RuntimeError('UPDATE_MUTATION_NOT_REJECTED')
+                  delete_rejected=False
+                  cur.execute('SAVEPOINT delete_test')
+                  try:
+                      cur.execute('delete from derived_feature_snapshots where id=%s',(row_id,))
+                  except psycopg.Error as exc:
+                      delete_rejected='IMMUTABLE_FORECAST_STATE_MUTATION_REJECTED' in str(exc)
+                      cur.execute('ROLLBACK TO SAVEPOINT delete_test')
+                  if not delete_rejected:
+                      raise RuntimeError('DELETE_MUTATION_NOT_REJECTED')
+              conn.rollback()
+          print('TRIGGER_COVERAGE=3_OF_3')
+          print('UPDATE_REJECTED=YES')
+          print('DELETE_REJECTED=YES')
+          print('DATABASE_PERSISTENT_WRITES=NONE_ROLLBACK_ONLY')
+          print('FORECAST_STATE_APPEND_ONLY_SMOKE_PASS')
