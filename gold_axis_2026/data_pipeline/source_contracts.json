@@ -1,5 +1,5 @@
 {
-  "version": "GOLD_DATA_R2_2026-09-01_XAU_EOD_AUTHORITY_V1",
+  "version": "GOLD_DATA_R2_2026-09-01_XAU_EOD_DECISION_REFERENCE_V2",
   "status": "SOURCE_ARCHITECTURE_FROZEN_WITH_EXPLICIT_BLOCKERS",
   "principles": {
     "no_silent_provider_substitution": true,
@@ -59,17 +59,17 @@
       "status": "CANDIDATE_NOT_BENCHMARK"
     },
     "XAU_EOD_CME_EBS": {
-      "semantic": "XAU_USD_SPOT_EOD_SESSION_CLOSE",
+      "semantic": "XAU_USD_SPOT_EOD_DECISION_REFERENCE",
       "tier": "A",
-      "source": "CME Group / EBS Market on CME Globex",
+      "source": "CME Group / EBS Market on CME Globex; EBS Ticker",
       "symbol": "XAU/USD SM (GCUS)",
-      "frequency": "trade-date daily",
+      "frequency": "trade-date daily derived from 1-second EBS Ticker",
       "unit": "USD/troy_oz",
       "session_timezone": "America/New_York",
       "trade_date_boundary": "17:00 ET",
-      "role": "canonical R4.1 EOD decision-price authority",
-      "status": "APPROVED_AUTHORITY_AND_SESSION; BLOCKED_EXECUTABLE_FIELD_MAPPING_AND_ENTITLEMENT",
-      "fallback_policy": "NONE_SILENT; BLOCK_IF_PRIMARY_UNAVAILABLE",
+      "role": "canonical R4.1 EOD internal decision reference",
+      "status": "APPROVED_EXECUTABLE_DECISION_REFERENCE_CONTRACT; BLOCKED_DATA_ENTITLEMENT",
+      "fallback_policy": "NONE; BLOCK_IF_PRIMARY_UNAVAILABLE_OR_STALE",
       "not_equivalent_to": [
         "LBMA Gold Price AM/PM",
         "CME Group Spot Gold Reference Rate 13:29-13:30 ET marker",
@@ -77,7 +77,29 @@
         "Twelve Data Commodity Aggregate provider-default 1day Australia/Sydney",
         "XAU_DAILY_XAUS",
         "XAU_SPOT_XAUS"
-      ]
+      ],
+      "official_close_claim": false,
+      "data_product": "EBS Ticker",
+      "required_fields": [
+        "Best Bid",
+        "Best Offer",
+        "Timestamp"
+      ],
+      "cutoff_timezone": "America/New_York",
+      "cutoff_time": "17:00:00",
+      "selection_window": "[16:59:00,17:00:00) ET",
+      "selection_rule": "latest one-second slice strictly before cutoff with positive two-sided Best Bid and Best Offer",
+      "price_formula": "(Best Bid + Best Offer) / 2",
+      "quality_gates": [
+        "timestamp_in_final_60_seconds",
+        "best_bid_positive",
+        "best_offer_positive",
+        "best_bid_lte_best_offer"
+      ],
+      "block_if_no_valid_quote": true,
+      "historical_product": "EBS Ticker historical via CME DataMine",
+      "realtime_access_path": "EBS Ticker Direct Delivery via GCP WebSocket or other authorized CME delivery",
+      "entitlement_status": "NOT_PROVEN"
     },
     "GVZ_CBOE": {
       "semantic": "GVZ",

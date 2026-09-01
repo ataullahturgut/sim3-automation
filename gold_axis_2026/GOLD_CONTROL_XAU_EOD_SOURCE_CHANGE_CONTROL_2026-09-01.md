@@ -177,3 +177,54 @@ No Neon market observation and no Decision Store row is authorized by this docum
 - first forward decision state remains `PROSPECTIVE_SHADOW` only after all Stage-4 input blockers pass;
 - `NOT_PROVEN_POSITION_MAPPING` remains unchanged;
 - no 2024+ locked outcome was used to tune the authority/session choice.
+
+
+---
+
+# Manifest v1.5 executable decision-reference amendment
+
+## A. Authority finding
+
+Further CME authority research confirms that EBS Market Spot FX & Precious Metals uses a 17:00 ET trade-date roll, but CME does not expose a single exchange-style official XAU/USD daily close/settlement field for this spot market. EBS Ticker is the official CME market-data product that includes XAU/USD SM and provides one-second time slices with Best Bid, Best Offer, Paid/Given trade data, daily highs/lows and Timestamp. Historical EBS Ticker data is available through CME DataMine; real-time delivery includes direct CME delivery options.
+
+Official CME evidence:
+
+- EBS trading hours / 17:00 ET trade-date roll: https://www.cmegroup.com/trading-hours.html
+- EBS Value Date Calendar / standard-pair EOD definition: https://www.cmegroup.com/content/dam/cmegroup/documents/ebs_value-date-calendar.pdf
+- EBS XAU/USD SM product code GCUS: https://www.cmegroup.com/markets/fx/fx-product-guide.html
+- EBS Ticker fields/frequency/access: https://www.cmegroup.com/market-data/browse/files/ebs-ticker-fact-sheet.pdf
+- CME cash-market historical access/DataMine: https://www.cmegroup.com/datamine.html
+
+## B. Final decision-price contract
+
+Decision:
+
+`CME_EBS_XAUUSD_1700_ET_DECISION_REFERENCE_RULE_APPROVED`
+
+Gold Control will not claim an official spot closing price that CME does not publish. Instead, R4.1 receives a frozen internal EOD **decision reference price** based entirely on official EBS Ticker fields:
+
+1. cutoff = 17:00:00 `America/New_York`;
+2. candidate observations = EBS Ticker `XAU/USD SM (GCUS)` one-second slices in `[16:59:00,17:00:00)` ET;
+3. select latest slice with valid positive `Best Bid` and `Best Offer` and `Best Bid <= Best Offer`;
+4. decision reference = `(Best Bid + Best Offer) / 2`;
+5. if no valid two-sided quote exists in that final 60-second window, emit `BLOCKED_NO_FRESH_TWO_SIDED_EBS_QUOTE`; do not forward-fill or substitute another provider;
+6. persist quote timestamp, source/product identity, retrieval/vintage identifiers and derived hash;
+7. raw licensed EBS fields remain private/non-display unless redistribution rights are separately proven.
+
+This rule is a governance/data-contract definition, not a threshold tuned on 2024+ outcomes.
+
+## C. Why midpoint instead of last trade
+
+EBS Ticker provides two-sided best rates continuously in one-second slices, whereas a last dealt rate can be irregular in time and side-dependent (`Paid`/`Given`). A cutoff midquote gives a deterministic, side-neutral state of the authoritative EBS central market at the frozen trade-date boundary. It is explicitly labelled an internal decision reference, not a benchmark, fixing, settlement or official close.
+
+## D. Blocker reduction
+
+Closed by v1.5:
+
+`CME_EBS_EOD_FIELD_MAPPING_NOT_PROVEN` → `CLOSED_BY_EXECUTABLE_EBS_TICKER_RULE`
+
+Remaining external source blocker:
+
+`CME_EBS_TICKER_DATA_ENTITLEMENT_NOT_PROVEN`
+
+No Neon observation is authorized until the entitlement is actually proven and the ingestion run passes.

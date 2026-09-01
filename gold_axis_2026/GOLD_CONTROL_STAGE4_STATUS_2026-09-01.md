@@ -1,7 +1,7 @@
 # GOLD CONTROL — STAGE 4 DETERMINISTIC R4.1 STATUS
 
 **Status date:** 2026-09-01
-**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.4
+**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.5
 **Stage:** 4 — Deterministic R4.1 Decision Engine / Issuer
 **Current status:** `IN_PROGRESS_BLOCKED_INPUT_CONTRACTS`
 
@@ -30,18 +30,20 @@ Authority research and frozen validation are recorded in:
 
 `GOLD_CONTROL_XAU_EOD_SOURCE_CHANGE_CONTROL_2026-09-01.md`
 
-Approved source/session authority:
+Approved executable decision-reference contract:
 
 - CME Group / EBS Market on CME Globex;
 - XAU/USD SM (`GCUS`);
-- spot XAU/USD semantic;
-- `America/New_York` session timezone;
-- 17:00 ET trade-date boundary;
-- reserved series id `XAU_EOD_CME_EBS`.
+- EBS Ticker one-second market data;
+- `America/New_York` 17:00 ET trade-date boundary;
+- final valid two-sided quote in `[16:59:00,17:00:00)` ET;
+- derived price = `(Best Bid + Best Offer) / 2`;
+- reserved series id `XAU_EOD_CME_EBS`;
+- this is an internal decision reference, not an official spot settlement/close.
 
 Decision:
 
-`CME_EBS_XAUUSD_1700_ET_AUTHORITY_AND_SESSION_APPROVED`
+`CME_EBS_XAUUSD_1700_ET_DECISION_REFERENCE_RULE_APPROVED`
 
 Closed blocker:
 
@@ -80,18 +82,32 @@ The original read-only readiness audit run `33499509482`, job `99829327414` exec
 1. `FORECAST_CONTRACT_NOT_ISSUED`
 2. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`
 3. `CME_EBS_XAU_EOD_PIPELINE_NOT_SUCCESS`
-   - `CME_EBS_DATA_ENTITLEMENT_NOT_PROVEN`
-   - `CME_EBS_EOD_FIELD_MAPPING_NOT_PROVEN`
+   - `CME_EBS_TICKER_DATA_ENTITLEMENT_NOT_PROVEN`
 
 Decision Store and forecast-state tables remain unpopulated by this change-control action.
 
 ## 7. Required next work
 
-1. prove/activate authorized CME/EBS XAU/USD SM data access;
-2. inspect the entitled schema/product and freeze the exact 17:00 ET EOD value field/aggregation; if not provable, remain `BLOCKED`;
+1. prove/activate authorized EBS Ticker access for XAU/USD SM (GCUS);
+2. implement the frozen v1.5 final-minute two-sided midquote rule and its quality gates;
 3. add explicit `XAU_EOD_CME_EBS` ingestion lineage and obtain a successful daily run;
 4. issue the first genuine immutable H=1 forecast input snapshot and monthly forecast contract before outcome realization;
 5. build/schedule the canonical R4.1 EOD issuer only after those prerequisites pass;
 6. first forward Decision Store state must be `PROSPECTIVE_SHADOW`, never retroactive and not `LIVE_PRODUCTION`.
 
 `NOT_PROVEN_POSITION_MAPPING` remains unchanged.
+
+
+## 8. Manifest v1.5 field-mapping closure
+
+Official CME documentation confirms EBS Ticker contains the required `Best Bid`, `Best Offer` and `Timestamp` fields in one-second time slices and includes XAU/USD SM. Manifest v1.5 therefore closes the executable field/aggregation design blocker by defining the 17:00 ET decision reference as the final valid two-sided EBS Ticker midquote in the last minute before trade-date roll.
+
+Closed:
+
+`CME_EBS_EOD_FIELD_MAPPING_NOT_PROVEN`
+
+Remaining source-side blocker:
+
+`CME_EBS_TICKER_DATA_ENTITLEMENT_NOT_PROVEN`
+
+No production write is authorized until entitlement and the actual ingestion run are proven.
