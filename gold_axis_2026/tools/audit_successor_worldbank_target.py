@@ -15,6 +15,14 @@ ROOT = Path(__file__).resolve().parents[1]
 WB_URL = "https://thedocs.worldbank.org/en/doc/74e8be41ceb20fa0da750cda2f6b9e4e-0050012026/related/CMO-Historical-Data-Monthly.xlsx"
 TWELVE_URL = "https://api.twelvedata.com/time_series"
 
+# Frozen before successful overlap scoring. These are research-lineage
+# materiality gates, not identity claims and not production forecast gates.
+BRIDGE_LEVEL_CORR_MIN = 0.995
+BRIDGE_MEDIAN_GAP_BPS_MAX = 50.0
+BRIDGE_P95_GAP_BPS_MAX = 100.0
+BRIDGE_RETURN_CORR_MIN = 0.95
+BRIDGE_SIGN_AGREE_MIN = 0.80
+
 
 def load_world_bank_gold() -> pd.Series:
     r = requests.get(WB_URL, headers={"User-Agent": "Gold-Control-Audit/1.0"}, timeout=120)
@@ -31,7 +39,6 @@ def load_world_bank_gold() -> pd.Series:
             break
     if gold_col is None:
         raise RuntimeError("WORLD_BANK_GOLD_COLUMN_NOT_FOUND")
-
     rows = []
     for _, row in raw.iterrows():
         ds = str(row.iloc[0]).strip()
@@ -87,7 +94,6 @@ def fetch_twelve_hourly_window(
     j, err = request_json(session, params)
     if err or not isinstance(j, dict):
         return {}, err or "INVALID_RESPONSE"
-
     by_month: dict[pd.Timestamp, list[float]] = {}
     for z in j.get("values", []):
         dt = str(z.get("datetime", ""))
@@ -99,8 +105,7 @@ def fetch_twelve_hourly_window(
             by_month.setdefault(m, []).append(float(z["close"]))
         except Exception:
             continue
-    out = {m: (float(np.mean(v)), len(v)) for m, v in by_month.items() if v}
-    return out, None
+    return {m: (float(np.mean(v)), len(v)) for m, v in by_month.items() if v}, None
 
 
 def main() -> None:
@@ -109,6 +114,10 @@ def main() -> None:
     print(f"WORLD_BANK_END={wb.index.max().strftime('%Y-%m')}")
     print(f"WORLD_BANK_MONTHS={len(wb)}")
     print(f"WORLD_BANK_HAS_2016_01={pd.Timestamp('2016-01-01') in wb.index}")
+    frozen_range = pd.date_range("2016-01-01", "2026-07-01", freq="MS")
+    missing_frozen = [m for m in frozen_range if m not in wb.index or not math.isfinite(float(wb.loc[m]))]
+    print(f"WORLD_BANK_FROZEN_WINDOW_EXPECTED_MONTHS={len(frozen_range)}")
+    print(f"WORLD_BANK_FROZEN_WINDOW_MISSING_MONTHS={len(missing_frozen)}")
 
     prod = pd.read_csv(ROOT / "production_closure" / "production_history_43.csv")
     prod["month_ts"] = pd.to_datetime(prod["month"] + "-01")
@@ -126,9 +135,6 @@ def main() -> None:
     if not api_key:
         raise RuntimeError("TWELVE_DATA_API_KEY_MISSING")
 
-    # Frozen before the successful bridge run: seven 3-month windows spanning
-    # 2020-2026. This yields up to 21 level comparisons and 14 genuinely
-    # consecutive monthly-return comparisons using only seven API calls.
     windows = [
         ("2020-08-01", "2020-10-01"),
         ("2021-03-01", "2021-05-01"),
@@ -156,9 +162,7 @@ def main() -> None:
                     continue
                 ny17, n = got[m]
                 wbval = float(wb.loc[m])
-                abs_gap = abs(ny17 - wbval)
-                rel_bps = abs_gap / abs(wbval) * 10000 if wbval != 0 else math.nan
-                rec = (m, wbval, ny17, n, abs_gap, rel_bps)
+                rec = (m, wbval, ny17, n, abs(ny17 - wbval), abs(ny17 - wbval) / abs(wbval) * 10000)
                 rows.append(rec)
                 window_rows.append(rec)
                 print(f"OVERLAP_MONTH={m.strftime('%Y-%m')} STATUS=PASS N_NY17={n} ABS_GAP_LOGGED=NO")
@@ -183,16 +187,34 @@ def main() -> None:
     ret_ny = np.array([x[1] for x in ret_pairs], float)
     ret_corr = float(np.corrcoef(ret_wb, ret_ny)[0, 1])
     sign_agree = float(np.mean(np.sign(ret_wb) == np.sign(ret_ny)))
+    median_bps = float(np.median(rel_bps))
+    p95_bps = float(np.quantile(rel_bps, 0.95))
+
+    coverage_pass = len(missing_frozen) == 0
+    bridge_pass = bool(
+        coverage_pass
+        and level_corr >= BRIDGE_LEVEL_CORR_MIN
+        and median_bps <= BRIDGE_MEDIAN_GAP_BPS_MAX
+        and p95_bps <= BRIDGE_P95_GAP_BPS_MAX
+        and ret_corr >= BRIDGE_RETURN_CORR_MIN
+        and sign_agree >= BRIDGE_SIGN_AGREE_MIN
+    )
 
     print(f"OVERLAP_VALID_MONTHS={len(rows)}")
     print(f"CONSECUTIVE_RETURN_PAIRS={len(ret_pairs)}")
     print(f"MONTHLY_LEVEL_CORR={level_corr:.12f}")
     print(f"MONTHLY_MEDIAN_ABS_GAP_USD={float(np.median(abs_gap)):.12f}")
     print(f"MONTHLY_P95_ABS_GAP_USD={float(np.quantile(abs_gap, 0.95)):.12f}")
-    print(f"MONTHLY_MEDIAN_ABS_GAP_BPS={float(np.median(rel_bps)):.9f}")
-    print(f"MONTHLY_P95_ABS_GAP_BPS={float(np.quantile(rel_bps, 0.95)):.9f}")
+    print(f"MONTHLY_MEDIAN_ABS_GAP_BPS={median_bps:.9f}")
+    print(f"MONTHLY_P95_ABS_GAP_BPS={p95_bps:.9f}")
     print(f"MONTHLY_RETURN_CORR={ret_corr:.12f}")
     print(f"MONTHLY_RETURN_SIGN_AGREE={sign_agree:.9f}")
+    print(f"BRIDGE_LEVEL_CORR_MIN={BRIDGE_LEVEL_CORR_MIN}")
+    print(f"BRIDGE_MEDIAN_GAP_BPS_MAX={BRIDGE_MEDIAN_GAP_BPS_MAX}")
+    print(f"BRIDGE_P95_GAP_BPS_MAX={BRIDGE_P95_GAP_BPS_MAX}")
+    print(f"BRIDGE_RETURN_CORR_MIN={BRIDGE_RETURN_CORR_MIN}")
+    print(f"BRIDGE_SIGN_AGREE_MIN={BRIDGE_SIGN_AGREE_MIN}")
+    print(f"WORLD_BANK_RESEARCH_BRIDGE_PASS={bridge_pass}")
     print("RAW_VENDOR_MARKET_VALUES_LOGGED=NO")
     print("DATABASE_WRITES=NONE")
     print("MODEL_SCORE_RUN=NONE")
