@@ -1,7 +1,7 @@
 # GOLD CONTROL — STAGE 3 DECISION STORE STATUS
 
 **Status date:** 2026-09-01  
-**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.1  
+**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.2  
 **Stage:** 3 — Decision State Store  
 **Current status:** `PRODUCTION_SCHEMA_APPLIED_AND_VERIFIED; WRITER_READER_NOT_ACTIVATED`
 
