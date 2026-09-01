@@ -1,0 +1,62 @@
+name: Gold Control Derived Feature Schema Supplement
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-derived-feature-schema-supplement.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install psycopg[binary]
+      - name: Audit derived feature identity and mutation guards read-only
+        shell: python
+        run: |
+          import json, os
+          import psycopg
+          from psycopg.rows import dict_row
+          out={'database_writes':'NONE'}
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute('''
+                    select ordinal_position,column_name,data_type,is_nullable,column_default,
+                           is_identity,identity_generation
+                    from information_schema.columns
+                    where table_schema='public' and table_name='derived_feature_snapshots'
+                    order by ordinal_position
+                  ''')
+                  out['columns']=[dict(r) for r in cur.fetchall()]
+                  cur.execute('''
+                    select trigger_name,event_manipulation,action_timing,action_statement
+                    from information_schema.triggers
+                    where event_object_schema='public' and event_object_table='derived_feature_snapshots'
+                    order by trigger_name,event_manipulation
+                  ''')
+                  out['triggers']=[dict(r) for r in cur.fetchall()]
+                  cur.execute('''
+                    select c.conname, pg_get_constraintdef(c.oid) as definition
+                    from pg_constraint c
+                    join pg_class t on t.oid=c.conrelid
+                    join pg_namespace n on n.oid=t.relnamespace
+                    where n.nspname='public' and t.relname='derived_feature_snapshots'
+                    order by c.conname
+                  ''')
+                  out['constraints']=[dict(r) for r in cur.fetchall()]
+                  cur.execute('select count(*) as n from derived_feature_snapshots')
+                  out['row_count']=cur.fetchone()['n']
+              conn.rollback()
+          print(json.dumps(out,indent=2,default=str))
+          print('DERIVED_FEATURE_SCHEMA_SUPPLEMENT_PASS')
