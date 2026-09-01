@@ -72,7 +72,7 @@ def load_csv(path: Path) -> pd.DataFrame:
     return df
 
 
-@st.cache_data(ttl=60, show_spinner=False)
+@st.cache_data(ttl=30, show_spinner=False)
 def live_xau() -> dict:
     return fetch_xau_spot()
 

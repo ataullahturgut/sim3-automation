@@ -7,6 +7,7 @@ from typing import Any
 import pandas as pd
 import requests
 
+GOLDAPI_SPOT_URL = "https://api.gold-api.com/price/XAU"
 XAUS_SPOT_URL = "https://xaus.com/api/v1/spot"
 XAUS_HISTORY_URL = "https://xaus.com/api/v1/history"
 CBOE_GVZ_URL = "https://cdn.cboe.com/api/global/us_indices/daily_prices/GVZ_History.csv"
@@ -34,7 +35,50 @@ def _age_seconds(value: Any) -> float | None:
 
 
 def fetch_xau_spot(max_response_age_seconds: int = 300) -> dict[str, Any]:
-    """Indicative XAU/USD spot with explicit freshness metadata.
+    """Gold API indicative XAU/USD display price.
+
+    This provider is frozen for Piyasa display/monitoring only. Its upstream
+    fallback lineage is provider-managed/opaque, so this function must never be
+    used as the R4.1 EOD close, forecast input, VW reference, or decision input.
+    """
+    r = _get(GOLDAPI_SPOT_URL)
+    payload = r.json()
+    symbol = str(payload.get("symbol") or "").upper()
+    currency = str(payload.get("currency") or "").upper()
+    if symbol != "XAU":
+        raise ValueError(f"Gold API symbol mismatch: {symbol!r}")
+    if currency != "USD":
+        raise ValueError(f"Gold API currency mismatch: {currency!r}")
+    price = payload.get("price")
+    if price is None:
+        raise ValueError("Gold API response has no price")
+    price = float(price)
+    if not pd.notna(price) or price <= 0:
+        raise ValueError("Gold API price is not positive finite")
+    updated_at = payload.get("updatedAt")
+    age = _age_seconds(updated_at)
+    stale = age is None or age > max_response_age_seconds
+    return {
+        "price": price,
+        "status": "stale" if stale else "fresh",
+        "as_of": updated_at,
+        "updated_at": updated_at,
+        "provider_age_seconds": age,
+        "response_age_seconds": age,
+        "price_age_seconds": age,
+        "source": "Gold API",
+        "source_series": "XAU_SPOT_GOLDAPI",
+        "stale": stale,
+        "provider_stale": stale,
+        "cache_stale": stale,
+        "endpoint": GOLDAPI_SPOT_URL,
+        "use_role": "INDICATIVE_DISPLAY_ONLY_NO_MODEL_USE",
+        "upstream_lineage": "OPAQUE_PROVIDER_MANAGED_FALLBACK",
+    }
+
+
+def fetch_xau_spot_xaus(max_response_age_seconds: int = 300) -> dict[str, Any]:
+    """Legacy XAUS indicative XAU/USD spot with explicit freshness metadata.
 
     The endpoint's own data_state is preserved, but we also independently check
     the response generation timestamp, per XAUS's documented stale-proof rule.

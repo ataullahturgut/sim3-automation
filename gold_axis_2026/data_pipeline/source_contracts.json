@@ -1,5 +1,5 @@
 {
-  "version": "GOLD_DATA_R2_2026-09-01_XAU_NY17_PIPELINE_V3",
+  "version": "GOLD_DATA_R2_2026-09-01_LIVE_GOLDAPI_V1",
   "status": "SOURCE_ARCHITECTURE_FROZEN_WITH_EXPLICIT_BLOCKERS",
   "principles": {
     "no_silent_provider_substitution": true,
@@ -18,6 +18,44 @@
     "D": "legacy research continuity only; pinned and never promoted to authority"
   },
   "series": {
+    "XAU_SPOT_GOLDAPI": {
+      "semantic": "XAU_SPOT",
+      "tier": "C",
+      "source": "Gold API (gold-api.com)",
+      "symbol": "XAU",
+      "frequency": "live current-price endpoint; provider requests 30-second client cache",
+      "unit": "USD/oz",
+      "provider_endpoint": "https://api.gold-api.com/price/XAU",
+      "role": "primary Gold Control Piyasa live display / monitoring only",
+      "status": "APPROVED_INDICATIVE_PUBLIC_DISPLAY_NO_MODEL_USE",
+      "required_fields": [
+        "symbol",
+        "currency",
+        "price",
+        "updatedAt"
+      ],
+      "freshness_policy": "fresh when updatedAt age <=300s; otherwise display STALE and do not describe as current",
+      "provider_upstream_lineage": "OPAQUE_PROVIDER_MANAGED_FALLBACK",
+      "model_use_allowed": false,
+      "eod_use_allowed": false,
+      "decision_use_allowed": false,
+      "fallback_policy": "NO_SILENT_PROVIDER_MERGE; source identity must remain visible",
+      "display_basis": "Gold API official docs/terms state current-price API is free and website use is supported",
+      "runtime_evidence": {
+        "workflow_run_id": 33518757788,
+        "job_id": 99892357951,
+        "result": "SUCCESS",
+        "raw_market_values_logged": false,
+        "database_writes": "NONE"
+      },
+      "not_equivalent_to": [
+        "XAU_EOD_TWELVE_NY17",
+        "XAU_SPOT_XAUS",
+        "LBMA Gold Price AM/PM",
+        "CME/EBS spot session reference",
+        "COMEX GC futures settlement or Yahoo GC=F"
+      ]
+    },
     "XAU_SPOT_XAUS": {
       "semantic": "XAU_SPOT",
       "tier": "C",
