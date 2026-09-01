@@ -1,0 +1,92 @@
+name: Gold Control Forecast State Schema Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-forecast-state-schema-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install psycopg[binary] pandas
+      - name: Read-only schema and executable-input audit
+        shell: python
+        run: |
+          import base64, gzip, json, os
+          from io import StringIO
+          from pathlib import Path
+          import pandas as pd
+          import psycopg
+          from psycopg.rows import dict_row
+
+          tables = ['forecast_input_snapshots','derived_feature_snapshots','monthly_forecast_contracts']
+          out = {'database_writes':'NONE','raw_market_values_logged':'NO'}
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+              with conn.cursor(row_factory=dict_row) as cur:
+                  cur.execute('''
+                    select table_name, ordinal_position, column_name, data_type, is_nullable, column_default
+                    from information_schema.columns
+                    where table_schema='public' and table_name = any(%s)
+                    order by table_name, ordinal_position
+                  ''', (tables,))
+                  rows=cur.fetchall()
+                  out['columns']={t:[] for t in tables}
+                  for r in rows:
+                      out['columns'][r['table_name']].append({k:r[k] for k in ['ordinal_position','column_name','data_type','is_nullable','column_default']})
+
+                  cur.execute('''
+                    select tc.table_name, tc.constraint_name, tc.constraint_type,
+                           array_agg(kcu.column_name order by kcu.ordinal_position) filter (where kcu.column_name is not null) as columns
+                    from information_schema.table_constraints tc
+                    left join information_schema.key_column_usage kcu
+                      on tc.constraint_name=kcu.constraint_name and tc.table_schema=kcu.table_schema and tc.table_name=kcu.table_name
+                    where tc.table_schema='public' and tc.table_name = any(%s)
+                    group by tc.table_name, tc.constraint_name, tc.constraint_type
+                    order by tc.table_name, tc.constraint_type, tc.constraint_name
+                  ''', (tables,))
+                  out['constraints']=[dict(r) for r in cur.fetchall()]
+                  out['row_counts']={}
+                  for t in tables:
+                      cur.execute(f'SELECT count(*) AS n FROM {t}')
+                      out['row_counts'][t]=cur.fetchone()['n']
+              conn.rollback()
+
+          b64=Path('gold_axis_2026/core5_monthly.csv.gz.b64').read_text().strip()
+          raw=gzip.decompress(base64.b64decode(b64)).decode()
+          core=pd.read_csv(StringIO(raw), parse_dates=['date']).sort_values('date')
+          out['core5']={
+              'first_date':str(core['date'].min().date()),
+              'last_date':str(core['date'].max().date()),
+              'rows':int(len(core)),
+              'columns':list(core.columns),
+              'last_complete_month_available':str(core['date'].max().date()),
+          }
+          # Code-contract facts only, no market values.
+          txt=Path('gold_axis_2026/run_models.py').read_text()
+          aug=Path('gold_axis_2026/run_august_2026.py').read_text()
+          out['patch_code_contract']={
+              'run_models_history_cutoff_hardcoded_2026_07_31': "d<=pd.Timestamp('2026-07-31')" in txt,
+              'patch_samples_end_hardcoded_2026_07_01': "t>pd.Timestamp('2026-07-01')" in txt,
+              'august_runner_target_hardcoded_2026_08': "T=pd.Timestamp('2026-08-01')" in aug,
+              'august_feature_history_cutoff_hardcoded_2026_07_31': "loc[:pd.Timestamp('2026-07-31')]" in aug,
+          }
+          print(json.dumps(out, indent=2, default=str))
+          print('FORECAST_STATE_SCHEMA_AND_PATCH_HORIZON_AUDIT_PASS')
