@@ -1,0 +1,45 @@
+name: Gold Control Data Scheduler - Twelve Market
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold_control_data_twelve_scheduler.yml'
+  schedule:
+    - cron: '35 1 * * 2-6'
+    - cron: '45 12 * * 2-6'
+  workflow_dispatch:
+
+concurrency:
+  group: gold-control-data-twelve-scheduler
+  cancel-in-progress: true
+
+jobs:
+  ingest-twelve-market:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      INGEST_MODE: daily
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Require protected secrets
+        shell: bash
+        run: |
+          test -n "$NEON_DATABASE_URL" || { echo "NEON_DATABASE_URL missing"; exit 1; }
+          test -n "$TWELVE_DATA_API_KEY" || { echo "TWELVE_DATA_API_KEY missing"; exit 1; }
+      - name: Reject previously captured incomplete same-day bars
+        run: python gold_axis_2026/data_pipeline/correct_twelve_incomplete_daily.py
+      - name: Collect once, persist, replay for dedupe
+        run: python gold_axis_2026/data_pipeline/twelve_ingest_verified.py --mode "$INGEST_MODE"
+      - name: Verify Twelve Data persistence and PIT contract
+        run: python gold_axis_2026/data_pipeline/verify_twelve_market.py
