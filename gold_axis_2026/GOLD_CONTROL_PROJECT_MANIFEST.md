@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.3  
+**Manifest version:** 1.4  
 **Freeze / issue date:** 2026-09-01  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -167,6 +167,28 @@ Status: `CANDIDATE_NOT_BENCHMARK`
 
 The persisted operational lineage currently exposes an upstream/source label associated with Yahoo/GC=F. This remains an operational cross-check lineage and is not promoted to settlement/EOD authority.
 
+### Canonical XAU EOD decision-session authority
+
+Series identity reserved for implementation: `XAU_EOD_CME_EBS`  
+Economic semantic: spot XAU/USD daily decision-session close  
+Authority/source: **CME Group / EBS Market on CME Globex**  
+Instrument: **XAU/USD SM**, EBS Market product code **GCUS**  
+Session timezone: `America/New_York`  
+Trade-date boundary: **17:00 ET**  
+Role: canonical R4.1 EOD decision-price authority  
+Status: `APPROVED_AUTHORITY_AND_SESSION; BLOCKED_EXECUTABLE_FIELD_MAPPING_AND_ENTITLEMENT`
+
+Authority decision rationale is frozen in `gold_axis_2026/GOLD_CONTROL_XAU_EOD_SOURCE_CHANGE_CONTROL_2026-09-01.md`.
+
+The authority review found no single reviewed benchmark that is simultaneously a regulated/global gold benchmark and an end-of-trade-date spot close. Therefore the contract separates **benchmark** from **EOD decision-session close**:
+
+- LBMA Gold Price PM remains the global Loco London benchmark and is **not** relabelled as EOD close;
+- CME Group Spot Gold Reference Rate remains a 13:29–13:30 ET spot marker and is **not** relabelled as EOD close;
+- COMEX Gold futures settlement / Yahoo `GC=F` remains futures semantics and is **not** relabelled as spot XAU/USD;
+- Twelve Data provider-default `1day` XAU/USD remains a vendor Commodity Aggregate daily bar in `Australia/Sydney` exchange-local time and is **not** the canonical EBS 17:00 ET close.
+
+The approved source/session contract does **not** authorize an invented price-extraction rule. Before first Neon write, the authorized CME/EBS data entitlement and the exact executable EOD field/aggregation mapping must be audited and frozen. If an explicit EBS EOD close field is unavailable, the project remains `BLOCKED_FIELD_MAPPING_NOT_PROVEN`; no ad-hoc last-trade, midpoint, Twelve, XAUS, LBMA, or futures fallback is permitted under the canonical series id.
+
 ### GVZ
 
 Series: `GVZ_CBOE`  
@@ -227,6 +249,7 @@ The following must remain visibly blocked/unresolved unless their exact problem 
 - Exact historical Causal Patch training source: missing archived training source; archived result is not equivalent to a reproducible executable model
 - XAU persisted source-label vs frozen XAUS contract: `UNRESOLVED_PERSISTED_SOURCE_LABEL_DIFFERS_FROM_XAUS_CONTRACT`
 - Current XAUS source availability incident: `DEGRADED_UPSTREAM_HTTP_503`; unrelated provider ingestion must continue independently
+- Canonical CME/EBS XAU EOD executable ingestion: `BLOCKED_ENTITLEMENT_AND_EOD_FIELD_MAPPING_NOT_PROVEN`; source/session authority is approved, but no price value may be written until exact authorized data mapping is frozen
 - Direct Neon management connector argument/schema mismatch: `BLOCKED_CONNECTOR_SCHEMA_MISMATCH`; do not claim branch/migration operations succeeded when this wrapper rejects them
 
 Blocked data or code may not be approximated and then labeled as the exact original object.
@@ -839,7 +862,7 @@ The project execution order remains:
 | 1 | `PASS_AUDIT_COMPLETE_WITH_OPERATIONAL_BLOCKERS` | Actual Neon inventory generated read-only; XAU source currently degraded and lineage discrepancy remains explicit |
 | 2 | `PASS_CONTRACT_CANONICALIZED; PROSPECTIVE_LEDGER_PROVEN_EMPTY` | Model roles/authority frozen; live forecast-state tables reconciled and contain 0 rows |
 | 3 | `PASS_DECISION_STORE_AND_READ_PATH` | Production schema PASS; emitted-state bridge rollback PASS; app Decision Store reader PASS; file-only latest-state dependency removed; evidence isolation/action guard enforced |
-| 4 | `IN_PROGRESS_BLOCKED_INPUT_CONTRACTS` | Deterministic engine/bridge tests PASS, but readiness audit is BLOCKED: forecast contract missing, immutable forecast input snapshot missing, latest daily XAU run not SUCCESS, and no approved canonical XAU EOD decision source |
+| 4 | `IN_PROGRESS_BLOCKED_INPUT_CONTRACTS` | Deterministic engine/bridge tests PASS. Canonical XAU EOD source/session authority is now approved as CME/EBS XAU/USD SM (GCUS), 17:00 ET trade-date boundary; active blockers are forecast contract, immutable forecast input snapshot, and successful authorized CME/EBS EOD ingestion with exact field mapping |
 | 5–12 | `NOT_STARTED / NOT_COMPLETE` | Cannot be promoted ahead of Stage 4 |
 
 ---
@@ -880,30 +903,38 @@ Read-only production audit:
 - result: `SUCCESS` audit execution, `readiness=BLOCKED`;
 - raw market values logged: `NO`.
 
-Confirmed blockers:
+Confirmed active blockers after XAU authority change control:
 
 1. `FORECAST_CONTRACT_NOT_ISSUED`
 2. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`
-3. `LATEST_DAILY_XAU_PIPELINE_NOT_SUCCESS`
-4. `NO_APPROVED_CANONICAL_XAU_EOD_DECISION_SOURCE`
+3. `CME_EBS_XAU_EOD_PIPELINE_NOT_SUCCESS`
+   - `CME_EBS_DATA_ENTITLEMENT_NOT_PROVEN`
+   - `CME_EBS_EOD_FIELD_MAPPING_NOT_PROVEN`
+
+Closed Stage-4 source-authority blocker:
+
+`NO_APPROVED_CANONICAL_XAU_EOD_DECISION_SOURCE` → `CLOSED_BY_MANIFEST_V1_4`
 
 Important source interpretation:
 
-- `XAU_DAILY_XAUS` is transported through the frozen XAUS history endpoint and the registry already documents the upstream Yahoo lineage; upstream disclosure alone is not treated as silent substitution;
-- nevertheless this series is explicitly `operational cross-check only` / `CANDIDATE_NOT_BENCHMARK`, so it is not authorized as the R4.1 canonical EOD decision source;
-- `XAU_SPOT_XAUS` is indicative/non-settlement monitoring and likewise is not the frozen EOD decision close;
+- canonical R4.1 EOD source/session authority is **CME Group / EBS Market XAU/USD SM (GCUS)** with `America/New_York` trade-date boundary at **17:00 ET**;
+- this approval freezes the economic/source/session identity, not an unverified market-data field; exact CME/EBS EOD value extraction remains blocked until entitlement and schema/field mapping are proven;
+- `XAU_DAILY_XAUS` remains `operational cross-check only` / `CANDIDATE_NOT_BENCHMARK`; its Yahoo/GC=F-like lineage is not spot EOD authority;
+- `XAU_SPOT_XAUS` remains indicative/non-settlement monitoring;
+- LBMA Gold Price PM remains a benchmark, not EOD; CME Spot Gold Reference Rate remains a 13:29–13:30 ET marker, not EOD;
+- Twelve Data `XAU/USD` remains a licensed/internal research bridge and may not be silently substituted for EBS authority because its provider-default daily bar uses `Australia/Sydney` exchange-local semantics;
 - Cboe GVZ is available and the latest audited daily Cboe run is successful.
 
 Required next gates, in order:
 
-1. define and approve a canonical XAU EOD decision-price source/lineage under change control; do not silently promote the current cross-check or indicative spot series;
-2. restore a successful daily XAU ingestion path for the approved source;
+1. prove/activate authorized CME/EBS XAU/USD SM market-data entitlement and freeze the exact EOD value field/aggregation that corresponds to the approved 17:00 ET trade-date boundary;
+2. create the new explicit `XAU_EOD_CME_EBS` lineage and obtain a successful daily ingestion run without overwriting or relabelling XAUS/Twelve/LBMA/futures history;
 3. create the first genuine immutable H=1 forecast input snapshot and monthly forecast contract from the executable frozen forecasting path before outcome realization;
 4. only then build/schedule the canonical R4.1 EOD issuer using the frozen engine and complete provenance;
 5. the first real forward state must begin as `PROSPECTIVE_SHADOW`; `LIVE_PRODUCTION` remains disabled until Stage 12 graduation;
 6. do not backfill historical rows and relabel them as prospective.
 
-No `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` decision row may be written while any of the four readiness blockers remains open.
+No `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` decision row may be written while any active Stage-4 readiness blocker remains open.
 
 ### Operational work that continues independently
 

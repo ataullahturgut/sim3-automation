@@ -1,5 +1,5 @@
 {
-  "version": "GOLD_DATA_R2_2026-08-31",
+  "version": "GOLD_DATA_R2_2026-09-01_XAU_EOD_AUTHORITY_V1",
   "status": "SOURCE_ARCHITECTURE_FROZEN_WITH_EXPLICIT_BLOCKERS",
   "principles": {
     "no_silent_provider_substitution": true,
@@ -18,50 +18,378 @@
     "D": "legacy research continuity only; pinned and never promoted to authority"
   },
   "series": {
-    "XAU_SPOT_XAUS": {"semantic":"XAU_SPOT","tier":"C","source":"XAUS public API","symbol":"XAU","frequency":"live","unit":"USD/oz","role":"Gold Control monitoring; Emergency candidate","status":"APPROVED_INDICATIVE_NOT_SETTLEMENT"},
-    "XAU_INTRADAY_XAUS": {"semantic":"XAU_INTRADAY","tier":"C","source":"XAUS /api/v1/intraday","symbol":"xau","frequency":"2-minute source sampling","unit":"USD/oz","role":"Emergency audit/research","status":"APPROVED_INDICATIVE"},
-    "XAG_INTRADAY_XAUS": {"semantic":"XAG_INTRADAY","tier":"C","source":"XAUS /api/v1/intraday","symbol":"xag","frequency":"2-minute source sampling","unit":"USD/oz","role":"research only","status":"OPTIONAL"},
-    "XAU_DAILY_XAUS": {"semantic":"XAU_DAILY","tier":"C","source":"XAUS /api/v1/history; history upstream documented by XAUS as Yahoo Finance","symbol":"XAUUSD","frequency":"daily","unit":"USD/oz","role":"operational cross-check only","status":"CANDIDATE_NOT_BENCHMARK"},
-
-    "GVZ_CBOE": {"semantic":"GVZ","tier":"A","source":"Cboe official historical price data","symbol":"GVZ","frequency":"daily close","unit":"index","role":"R4 risk cap","status":"APPROVED"},
-    "VIX_CBOE": {"semantic":"VIX","tier":"A","source":"Cboe official historical price data","symbol":"VIX","frequency":"daily close","unit":"index","role":"forecast feature","status":"APPROVED"},
-
-    "DGS10_FRED": {"semantic":"US10Y","tier":"A","source":"Federal Reserve Board H.15 via FRED/ALFRED","symbol":"DGS10","frequency":"daily","unit":"percent","role":"new reproducible 10Y feature; NOT silent replacement for legacy ^TNX","status":"APPROVED"},
-    "DFF_FRED": {"semantic":"FEDFUNDS","tier":"A","source":"Federal Reserve Board H.15 via FRED/ALFRED","symbol":"DFF","frequency":"daily 7-day","unit":"percent","role":"Patch macro feature","status":"APPROVED"},
-    "DEXCHUS_FRED": {"semantic":"USDCNY","tier":"A","source":"Federal Reserve Board H.10 via FRED/ALFRED","symbol":"DEXCHUS","frequency":"daily observations","unit":"CNY per USD","role":"Patch macro feature","status":"APPROVED_WITH_AVAILABILITY_LAG"},
-    "DTWEXBGS_FRED": {"semantic":"USD_BROAD_INDEX","tier":"A","source":"Federal Reserve Board H.10 via FRED/ALFRED","symbol":"DTWEXBGS","frequency":"daily","unit":"index Jan 2006=100","role":"authority-grade dollar proxy challenger; NOT DXY","status":"APPROVED_PROXY_ONLY"},
-    "SP500_FRED": {"semantic":"SP500","tier":"A","source":"S&P Dow Jones Indices via FRED","symbol":"SP500","frequency":"daily close","unit":"index","role":"forecast feature","status":"APPROVED_PRIVATE_MODEL_USE_NO_PUBLIC_RAW_REDISTRIBUTION"},
-    "DJIA_FRED": {"semantic":"DJI","tier":"A","source":"S&P Dow Jones Indices via FRED","symbol":"DJIA","frequency":"daily close","unit":"index","role":"forecast feature","status":"APPROVED_PRIVATE_MODEL_USE_NO_PUBLIC_RAW_REDISTRIBUTION"},
-    "NASDAQ100_FRED": {"semantic":"NDX","tier":"A","source":"Nasdaq Inc. via FRED","symbol":"NASDAQ100","frequency":"daily close","unit":"index","role":"Patch and forecast feature","status":"APPROVED_PRIVATE_MODEL_USE_NO_PUBLIC_RAW_REDISTRIBUTION"},
-
-    "GPR_OFFICIAL": {"semantic":"GPR","tier":"A","source":"Caldara-Iacoviello official workbook","symbol":"GPR","frequency":"monthly vintage","unit":"index","role":"forecast feature","status":"APPROVED_REVISION_PRONE"},
-    "GPRT_OFFICIAL": {"semantic":"GPRT","tier":"A","source":"Caldara-Iacoviello official workbook","symbol":"GPRT","frequency":"monthly vintage","unit":"index","role":"forecast feature","status":"APPROVED_REVISION_PRONE"},
-    "GPRA_OFFICIAL": {"semantic":"GPRA","tier":"A","source":"Caldara-Iacoviello official workbook","symbol":"GPRA","frequency":"monthly vintage","unit":"index","role":"forecast feature","status":"APPROVED_REVISION_PRONE"},
-
-    "NEM_TWELVEDATA": {"semantic":"NEM","tier":"B","source":"Twelve Data","symbol":"NEM","frequency":"daily close","unit":"USD","role":"miner feature","status":"PENDING_FREE_API_KEY_SYMBOL_VALIDATION; INTERNAL_NON_DISPLAY_ONLY"},
-    "HL_PB_TWELVEDATA": {"semantic":"HL_PB","tier":"B","source":"Twelve Data","symbol":"TO_BE_RESOLVED_FROM_REFERENCE_ENDPOINT","frequency":"daily close","unit":"USD","role":"Hecla Series B preferred feature","status":"PENDING_SYMBOL_VALIDATION; INTERNAL_NON_DISPLAY_ONLY"},
-    "BARRICK_B_TWELVEDATA": {"semantic":"BARRICK_NYSE","tier":"B","source":"Twelve Data","symbol":"B","frequency":"daily close","unit":"USD","role":"current Barrick NYSE feature from 2025-05-09; not silent substitute for legacy ABX.TO","status":"PENDING_FREE_API_KEY_SYMBOL_VALIDATION; INTERNAL_NON_DISPLAY_ONLY"},
-    "GLL_TWELVEDATA": {"semantic":"GLL","tier":"B","source":"Twelve Data","symbol":"GLL","frequency":"daily close","unit":"USD","role":"gold inverse product feature","status":"PENDING_FREE_API_KEY_SYMBOL_VALIDATION; INTERNAL_NON_DISPLAY_ONLY"},
-    "DZZ_TWELVEDATA": {"semantic":"DZZ","tier":"B","source":"Twelve Data","symbol":"DZZ","frequency":"daily close","unit":"USD","role":"gold double-short ETN feature","status":"PENDING_FREE_API_KEY_SYMBOL_VALIDATION; INTERNAL_NON_DISPLAY_ONLY"},
-
-    "DXY_ICE": {"semantic":"DXY","tier":"A","source":"ICE Data Indices","symbol":"DXY/DX","frequency":"intraday/daily","unit":"index","role":"exact DXY feature","status":"BLOCKED_LICENSE_OR_AUTHORIZED_VENDOR_ENTITLEMENT_REQUIRED"},
-    "TNX_LEGACY": {"semantic":"US10YT_LEGACY","tier":null,"source":"legacy Yahoo identity","symbol":"^TNX","frequency":"daily","unit":"yield quote","role":"legacy VW rebuild exact identity","status":"BLOCKED_AS_NEW_PRODUCTION_SOURCE; DGS10_KEPT_SEPARATE"},
-    "BARRICK_ABX_TSX_LEGACY": {"semantic":"BARRICK_TSX_PROXY","tier":null,"source":"legacy Yahoo identity","symbol":"ABX.TO","frequency":"daily","unit":"CAD","role":"legacy rebuild proxy","status":"PINNED_LEGACY_ONLY"},
-
-    "LBMA_GOLD": {"semantic":"LBMA_GOLD_PRICE","tier":"A","source":"ICE Benchmark Administration / LBMA","symbol":"LBMA Gold Price AM/PM","frequency":"twice daily","unit":"USD/oz","role":"settlement-grade authority benchmark","status":"OPTIONAL_LICENSE_REQUIRED_FOR_MODEL_USE"},
-    "LBMA_SILVER": {"semantic":"LBMA_SILVER_PRICE","tier":"A","source":"ICE Benchmark Administration / LBMA","symbol":"LBMA Silver Price","frequency":"daily","unit":"USD/oz","role":"authority benchmark","status":"OPTIONAL_LICENSE_REQUIRED_FOR_MODEL_USE"},
-    "LBMA_PLATINUM": {"semantic":"LBMA_PLATINUM_PRICE","tier":"A","source":"ICE Benchmark Administration / LBMA","symbol":"LBMA Platinum Price AM/PM","frequency":"twice daily","unit":"USD/oz","role":"exact authority PGM candidate","status":"BLOCKED_LICENSE_REQUIRED_FROM_2026-07-01"},
-    "LBMA_PALLADIUM": {"semantic":"LBMA_PALLADIUM_PRICE","tier":"A","source":"ICE Benchmark Administration / LBMA","symbol":"LBMA Palladium Price AM/PM","frequency":"twice daily","unit":"USD/oz","role":"exact authority PGM candidate","status":"BLOCKED_LICENSE_REQUIRED_FROM_2026-07-01"},
-    "XPT_TWELVEDATA": {"semantic":"XPTUSD","tier":"B","source":"Twelve Data Grow+ commodities","symbol":"XPT/USD","frequency":"daily/intraday","unit":"USD/oz","role":"operational platinum alternative for a newly validated model only","status":"PAID_GROW_REQUIRED; NOT_SILENT_PATCH_SUBSTITUTE"},
-    "XPD_TWELVEDATA": {"semantic":"XPDUSD","tier":"B","source":"Twelve Data Grow+ commodities","symbol":"XPD/USD","frequency":"daily/intraday","unit":"USD/oz","role":"operational palladium alternative for a newly validated model only","status":"PAID_GROW_REQUIRED; NOT_SILENT_PATCH_SUBSTITUTE"},
-
-    "GOLD_STAKTRAKR_LEGACY": {"semantic":"GOLD_DAILY_LEGACY","tier":"D","source":"lbruton/StakTrakr archive","symbol":"Gold","frequency":"daily","unit":"USD/oz","role":"historical model continuity only","status":"KEEP_PINNED_DO_NOT_EXTEND_AS_AUTHORITY"},
-    "SILVER_STAKTRAKR_LEGACY": {"semantic":"SILVER_DAILY_LEGACY","tier":"D","source":"lbruton/StakTrakr archive","symbol":"Silver","frequency":"daily","unit":"USD/oz","role":"historical model continuity only","status":"KEEP_PINNED_DO_NOT_EXTEND_AS_AUTHORITY"},
-    "PLATINUM_STAKTRAKR_LEGACY": {"semantic":"PLATINUM_DAILY_LEGACY","tier":"D","source":"lbruton/StakTrakr archive","symbol":"Platinum","frequency":"daily","unit":"USD/oz","role":"historical model continuity only","status":"KEEP_PINNED_DO_NOT_EXTEND_AS_AUTHORITY"},
-    "PALLADIUM_STAKTRAKR_LEGACY": {"semantic":"PALLADIUM_DAILY_LEGACY","tier":"D","source":"lbruton/StakTrakr archive","symbol":"Palladium","frequency":"daily","unit":"USD/oz","role":"historical model continuity only","status":"KEEP_PINNED_DO_NOT_EXTEND_AS_AUTHORITY"},
-
-    "GPY_EXACT": {"semantic":"GPY","status":"BLOCKED_AMBIGUOUS_IDENTIFIER"},
-    "LONG_TERM_TREND_EXACT": {"semantic":"LONG_TERM_TREND","status":"BLOCKED_DEFINITION_NOT_RECOVERED"},
-    "VOLATILITY_EXACT": {"semantic":"VOLATILITY","status":"BLOCKED_DEFINITION_NOT_RECOVERED"}
+    "XAU_SPOT_XAUS": {
+      "semantic": "XAU_SPOT",
+      "tier": "C",
+      "source": "XAUS public API",
+      "symbol": "XAU",
+      "frequency": "live",
+      "unit": "USD/oz",
+      "role": "Gold Control monitoring; Emergency candidate",
+      "status": "APPROVED_INDICATIVE_NOT_SETTLEMENT"
+    },
+    "XAU_INTRADAY_XAUS": {
+      "semantic": "XAU_INTRADAY",
+      "tier": "C",
+      "source": "XAUS /api/v1/intraday",
+      "symbol": "xau",
+      "frequency": "2-minute source sampling",
+      "unit": "USD/oz",
+      "role": "Emergency audit/research",
+      "status": "APPROVED_INDICATIVE"
+    },
+    "XAG_INTRADAY_XAUS": {
+      "semantic": "XAG_INTRADAY",
+      "tier": "C",
+      "source": "XAUS /api/v1/intraday",
+      "symbol": "xag",
+      "frequency": "2-minute source sampling",
+      "unit": "USD/oz",
+      "role": "research only",
+      "status": "OPTIONAL"
+    },
+    "XAU_DAILY_XAUS": {
+      "semantic": "XAU_DAILY",
+      "tier": "C",
+      "source": "XAUS /api/v1/history; history upstream documented by XAUS as Yahoo Finance",
+      "symbol": "XAUUSD",
+      "frequency": "daily",
+      "unit": "USD/oz",
+      "role": "operational cross-check only",
+      "status": "CANDIDATE_NOT_BENCHMARK"
+    },
+    "XAU_EOD_CME_EBS": {
+      "semantic": "XAU_USD_SPOT_EOD_SESSION_CLOSE",
+      "tier": "A",
+      "source": "CME Group / EBS Market on CME Globex",
+      "symbol": "XAU/USD SM (GCUS)",
+      "frequency": "trade-date daily",
+      "unit": "USD/troy_oz",
+      "session_timezone": "America/New_York",
+      "trade_date_boundary": "17:00 ET",
+      "role": "canonical R4.1 EOD decision-price authority",
+      "status": "APPROVED_AUTHORITY_AND_SESSION; BLOCKED_EXECUTABLE_FIELD_MAPPING_AND_ENTITLEMENT",
+      "fallback_policy": "NONE_SILENT; BLOCK_IF_PRIMARY_UNAVAILABLE",
+      "not_equivalent_to": [
+        "LBMA Gold Price AM/PM",
+        "CME Group Spot Gold Reference Rate 13:29-13:30 ET marker",
+        "COMEX GC futures settlement or Yahoo GC=F",
+        "Twelve Data Commodity Aggregate provider-default 1day Australia/Sydney",
+        "XAU_DAILY_XAUS",
+        "XAU_SPOT_XAUS"
+      ]
+    },
+    "GVZ_CBOE": {
+      "semantic": "GVZ",
+      "tier": "A",
+      "source": "Cboe official historical price data",
+      "symbol": "GVZ",
+      "frequency": "daily close",
+      "unit": "index",
+      "role": "R4 risk cap",
+      "status": "APPROVED"
+    },
+    "VIX_CBOE": {
+      "semantic": "VIX",
+      "tier": "A",
+      "source": "Cboe official historical price data",
+      "symbol": "VIX",
+      "frequency": "daily close",
+      "unit": "index",
+      "role": "forecast feature",
+      "status": "APPROVED"
+    },
+    "DGS10_FRED": {
+      "semantic": "US10Y",
+      "tier": "A",
+      "source": "Federal Reserve Board H.15 via FRED/ALFRED",
+      "symbol": "DGS10",
+      "frequency": "daily",
+      "unit": "percent",
+      "role": "new reproducible 10Y feature; NOT silent replacement for legacy ^TNX",
+      "status": "APPROVED"
+    },
+    "DFF_FRED": {
+      "semantic": "FEDFUNDS",
+      "tier": "A",
+      "source": "Federal Reserve Board H.15 via FRED/ALFRED",
+      "symbol": "DFF",
+      "frequency": "daily 7-day",
+      "unit": "percent",
+      "role": "Patch macro feature",
+      "status": "APPROVED"
+    },
+    "DEXCHUS_FRED": {
+      "semantic": "USDCNY",
+      "tier": "A",
+      "source": "Federal Reserve Board H.10 via FRED/ALFRED",
+      "symbol": "DEXCHUS",
+      "frequency": "daily observations",
+      "unit": "CNY per USD",
+      "role": "Patch macro feature",
+      "status": "APPROVED_WITH_AVAILABILITY_LAG"
+    },
+    "DTWEXBGS_FRED": {
+      "semantic": "USD_BROAD_INDEX",
+      "tier": "A",
+      "source": "Federal Reserve Board H.10 via FRED/ALFRED",
+      "symbol": "DTWEXBGS",
+      "frequency": "daily",
+      "unit": "index Jan 2006=100",
+      "role": "authority-grade dollar proxy challenger; NOT DXY",
+      "status": "APPROVED_PROXY_ONLY"
+    },
+    "SP500_FRED": {
+      "semantic": "SP500",
+      "tier": "A",
+      "source": "S&P Dow Jones Indices via FRED",
+      "symbol": "SP500",
+      "frequency": "daily close",
+      "unit": "index",
+      "role": "forecast feature",
+      "status": "APPROVED_PRIVATE_MODEL_USE_NO_PUBLIC_RAW_REDISTRIBUTION"
+    },
+    "DJIA_FRED": {
+      "semantic": "DJI",
+      "tier": "A",
+      "source": "S&P Dow Jones Indices via FRED",
+      "symbol": "DJIA",
+      "frequency": "daily close",
+      "unit": "index",
+      "role": "forecast feature",
+      "status": "APPROVED_PRIVATE_MODEL_USE_NO_PUBLIC_RAW_REDISTRIBUTION"
+    },
+    "NASDAQ100_FRED": {
+      "semantic": "NDX",
+      "tier": "A",
+      "source": "Nasdaq Inc. via FRED",
+      "symbol": "NASDAQ100",
+      "frequency": "daily close",
+      "unit": "index",
+      "role": "Patch and forecast feature",
+      "status": "APPROVED_PRIVATE_MODEL_USE_NO_PUBLIC_RAW_REDISTRIBUTION"
+    },
+    "GPR_OFFICIAL": {
+      "semantic": "GPR",
+      "tier": "A",
+      "source": "Caldara-Iacoviello official workbook",
+      "symbol": "GPR",
+      "frequency": "monthly vintage",
+      "unit": "index",
+      "role": "forecast feature",
+      "status": "APPROVED_REVISION_PRONE"
+    },
+    "GPRT_OFFICIAL": {
+      "semantic": "GPRT",
+      "tier": "A",
+      "source": "Caldara-Iacoviello official workbook",
+      "symbol": "GPRT",
+      "frequency": "monthly vintage",
+      "unit": "index",
+      "role": "forecast feature",
+      "status": "APPROVED_REVISION_PRONE"
+    },
+    "GPRA_OFFICIAL": {
+      "semantic": "GPRA",
+      "tier": "A",
+      "source": "Caldara-Iacoviello official workbook",
+      "symbol": "GPRA",
+      "frequency": "monthly vintage",
+      "unit": "index",
+      "role": "forecast feature",
+      "status": "APPROVED_REVISION_PRONE"
+    },
+    "NEM_TWELVEDATA": {
+      "semantic": "NEM",
+      "tier": "B",
+      "source": "Twelve Data",
+      "symbol": "NEM",
+      "frequency": "daily close",
+      "unit": "USD",
+      "role": "miner feature",
+      "status": "PENDING_FREE_API_KEY_SYMBOL_VALIDATION; INTERNAL_NON_DISPLAY_ONLY"
+    },
+    "HL_PB_TWELVEDATA": {
+      "semantic": "HL_PB",
+      "tier": "B",
+      "source": "Twelve Data",
+      "symbol": "TO_BE_RESOLVED_FROM_REFERENCE_ENDPOINT",
+      "frequency": "daily close",
+      "unit": "USD",
+      "role": "Hecla Series B preferred feature",
+      "status": "PENDING_SYMBOL_VALIDATION; INTERNAL_NON_DISPLAY_ONLY"
+    },
+    "BARRICK_B_TWELVEDATA": {
+      "semantic": "BARRICK_NYSE",
+      "tier": "B",
+      "source": "Twelve Data",
+      "symbol": "B",
+      "frequency": "daily close",
+      "unit": "USD",
+      "role": "current Barrick NYSE feature from 2025-05-09; not silent substitute for legacy ABX.TO",
+      "status": "PENDING_FREE_API_KEY_SYMBOL_VALIDATION; INTERNAL_NON_DISPLAY_ONLY"
+    },
+    "GLL_TWELVEDATA": {
+      "semantic": "GLL",
+      "tier": "B",
+      "source": "Twelve Data",
+      "symbol": "GLL",
+      "frequency": "daily close",
+      "unit": "USD",
+      "role": "gold inverse product feature",
+      "status": "PENDING_FREE_API_KEY_SYMBOL_VALIDATION; INTERNAL_NON_DISPLAY_ONLY"
+    },
+    "DZZ_TWELVEDATA": {
+      "semantic": "DZZ",
+      "tier": "B",
+      "source": "Twelve Data",
+      "symbol": "DZZ",
+      "frequency": "daily close",
+      "unit": "USD",
+      "role": "gold double-short ETN feature",
+      "status": "PENDING_FREE_API_KEY_SYMBOL_VALIDATION; INTERNAL_NON_DISPLAY_ONLY"
+    },
+    "DXY_ICE": {
+      "semantic": "DXY",
+      "tier": "A",
+      "source": "ICE Data Indices",
+      "symbol": "DXY/DX",
+      "frequency": "intraday/daily",
+      "unit": "index",
+      "role": "exact DXY feature",
+      "status": "BLOCKED_LICENSE_OR_AUTHORIZED_VENDOR_ENTITLEMENT_REQUIRED"
+    },
+    "TNX_LEGACY": {
+      "semantic": "US10YT_LEGACY",
+      "tier": null,
+      "source": "legacy Yahoo identity",
+      "symbol": "^TNX",
+      "frequency": "daily",
+      "unit": "yield quote",
+      "role": "legacy VW rebuild exact identity",
+      "status": "BLOCKED_AS_NEW_PRODUCTION_SOURCE; DGS10_KEPT_SEPARATE"
+    },
+    "BARRICK_ABX_TSX_LEGACY": {
+      "semantic": "BARRICK_TSX_PROXY",
+      "tier": null,
+      "source": "legacy Yahoo identity",
+      "symbol": "ABX.TO",
+      "frequency": "daily",
+      "unit": "CAD",
+      "role": "legacy rebuild proxy",
+      "status": "PINNED_LEGACY_ONLY"
+    },
+    "LBMA_GOLD": {
+      "semantic": "LBMA_GOLD_PRICE",
+      "tier": "A",
+      "source": "ICE Benchmark Administration / LBMA",
+      "symbol": "LBMA Gold Price AM/PM",
+      "frequency": "twice daily",
+      "unit": "USD/oz",
+      "role": "settlement-grade authority benchmark",
+      "status": "OPTIONAL_LICENSE_REQUIRED_FOR_MODEL_USE"
+    },
+    "LBMA_SILVER": {
+      "semantic": "LBMA_SILVER_PRICE",
+      "tier": "A",
+      "source": "ICE Benchmark Administration / LBMA",
+      "symbol": "LBMA Silver Price",
+      "frequency": "daily",
+      "unit": "USD/oz",
+      "role": "authority benchmark",
+      "status": "OPTIONAL_LICENSE_REQUIRED_FOR_MODEL_USE"
+    },
+    "LBMA_PLATINUM": {
+      "semantic": "LBMA_PLATINUM_PRICE",
+      "tier": "A",
+      "source": "ICE Benchmark Administration / LBMA",
+      "symbol": "LBMA Platinum Price AM/PM",
+      "frequency": "twice daily",
+      "unit": "USD/oz",
+      "role": "exact authority PGM candidate",
+      "status": "BLOCKED_LICENSE_REQUIRED_FROM_2026-07-01"
+    },
+    "LBMA_PALLADIUM": {
+      "semantic": "LBMA_PALLADIUM_PRICE",
+      "tier": "A",
+      "source": "ICE Benchmark Administration / LBMA",
+      "symbol": "LBMA Palladium Price AM/PM",
+      "frequency": "twice daily",
+      "unit": "USD/oz",
+      "role": "exact authority PGM candidate",
+      "status": "BLOCKED_LICENSE_REQUIRED_FROM_2026-07-01"
+    },
+    "XPT_TWELVEDATA": {
+      "semantic": "XPTUSD",
+      "tier": "B",
+      "source": "Twelve Data Grow+ commodities",
+      "symbol": "XPT/USD",
+      "frequency": "daily/intraday",
+      "unit": "USD/oz",
+      "role": "operational platinum alternative for a newly validated model only",
+      "status": "PAID_GROW_REQUIRED; NOT_SILENT_PATCH_SUBSTITUTE"
+    },
+    "XPD_TWELVEDATA": {
+      "semantic": "XPDUSD",
+      "tier": "B",
+      "source": "Twelve Data Grow+ commodities",
+      "symbol": "XPD/USD",
+      "frequency": "daily/intraday",
+      "unit": "USD/oz",
+      "role": "operational palladium alternative for a newly validated model only",
+      "status": "PAID_GROW_REQUIRED; NOT_SILENT_PATCH_SUBSTITUTE"
+    },
+    "GOLD_STAKTRAKR_LEGACY": {
+      "semantic": "GOLD_DAILY_LEGACY",
+      "tier": "D",
+      "source": "lbruton/StakTrakr archive",
+      "symbol": "Gold",
+      "frequency": "daily",
+      "unit": "USD/oz",
+      "role": "historical model continuity only",
+      "status": "KEEP_PINNED_DO_NOT_EXTEND_AS_AUTHORITY"
+    },
+    "SILVER_STAKTRAKR_LEGACY": {
+      "semantic": "SILVER_DAILY_LEGACY",
+      "tier": "D",
+      "source": "lbruton/StakTrakr archive",
+      "symbol": "Silver",
+      "frequency": "daily",
+      "unit": "USD/oz",
+      "role": "historical model continuity only",
+      "status": "KEEP_PINNED_DO_NOT_EXTEND_AS_AUTHORITY"
+    },
+    "PLATINUM_STAKTRAKR_LEGACY": {
+      "semantic": "PLATINUM_DAILY_LEGACY",
+      "tier": "D",
+      "source": "lbruton/StakTrakr archive",
+      "symbol": "Platinum",
+      "frequency": "daily",
+      "unit": "USD/oz",
+      "role": "historical model continuity only",
+      "status": "KEEP_PINNED_DO_NOT_EXTEND_AS_AUTHORITY"
+    },
+    "PALLADIUM_STAKTRAKR_LEGACY": {
+      "semantic": "PALLADIUM_DAILY_LEGACY",
+      "tier": "D",
+      "source": "lbruton/StakTrakr archive",
+      "symbol": "Palladium",
+      "frequency": "daily",
+      "unit": "USD/oz",
+      "role": "historical model continuity only",
+      "status": "KEEP_PINNED_DO_NOT_EXTEND_AS_AUTHORITY"
+    },
+    "GPY_EXACT": {
+      "semantic": "GPY",
+      "status": "BLOCKED_AMBIGUOUS_IDENTIFIER"
+    },
+    "LONG_TERM_TREND_EXACT": {
+      "semantic": "LONG_TERM_TREND",
+      "status": "BLOCKED_DEFINITION_NOT_RECOVERED"
+    },
+    "VOLATILITY_EXACT": {
+      "semantic": "VOLATILITY",
+      "status": "BLOCKED_DEFINITION_NOT_RECOVERED"
+    }
   }
 }
