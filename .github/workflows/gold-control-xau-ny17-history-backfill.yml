@@ -30,7 +30,7 @@ jobs:
         run: |
           test -n "$NEON_DATABASE_URL"
           test -n "$TWELVE_DATA_API_KEY"
-      - name: Backfill canonical NY17 history and monthly anchors and verify
+      - name: Backfill canonical NY17 history and monthly anchors and verify R4
         run: |
           python gold_axis_2026/data_pipeline/twelve_xau_ny17_backfill.py \
             --start 2026-07-01 \
