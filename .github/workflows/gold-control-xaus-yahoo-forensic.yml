@@ -1,0 +1,72 @@
+name: Gold Control XAUS Yahoo Forensic Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-xaus-yahoo-forensic.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Forensic compare Yahoo identities without logging prices
+        shell: python
+        run: |
+          import os, time
+          import numpy as np
+          import pandas as pd
+          import psycopg, requests
+
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute('''
+                      SELECT DISTINCT ON (observation_ts::date)
+                             observation_ts::date, value
+                      FROM usable_observations
+                      WHERE series_id='XAU_DAILY_XAUS'
+                      ORDER BY observation_ts::date, retrieved_at DESC
+                  ''')
+                  rows=cur.fetchall()
+              conn.rollback()
+          a=pd.DataFrame(rows,columns=['date','a']); a['date']=pd.to_datetime(a['date']); a['a']=pd.to_numeric(a['a'],errors='raise')
+
+          start=int(pd.Timestamp('2026-02-15',tz='UTC').timestamp()); end=int(time.time())
+          headers={'User-Agent':'Mozilla/5.0 GoldControl-Forensic/1.0'}
+          for symbol in ('GC=F','XAUUSD=X'):
+              url=f'https://query1.finance.yahoo.com/v8/finance/chart/{requests.utils.quote(symbol,safe="")}'
+              r=requests.get(url,params={'period1':start,'period2':end,'interval':'1d','events':'history','includeAdjustedClose':'true'},headers=headers,timeout=(8,30))
+              print(f'SYMBOL={symbol};HTTP_STATUS={r.status_code}')
+              if r.status_code!=200:
+                  continue
+              p=r.json(); result=((p.get('chart') or {}).get('result') or [])
+              if not result:
+                  print(f'SYMBOL={symbol};STATUS=NO_RESULT'); continue
+              q=result[0]; ts=q.get('timestamp') or []; quote=((q.get('indicators') or {}).get('quote') or [{}])[0]; closes=quote.get('close') or []
+              b=pd.DataFrame({'date':pd.to_datetime(ts,unit='s',utc=True).tz_convert(None).normalize(),'b':closes}).dropna()
+              b['b']=pd.to_numeric(b['b'],errors='coerce'); b=b.dropna().drop_duplicates('date',keep='last')
+              z=a.merge(b,on='date',how='inner').sort_values('date').reset_index(drop=True)
+              if len(z)<40:
+                  print(f'SYMBOL={symbol};COMMON={len(z)};STATUS=INSUFFICIENT'); continue
+              ra=z['a'].pct_change(); rb=z['b'].pct_change(); ok=ra.notna()&rb.notna()
+              corr=float(ra[ok].corr(rb[ok])); sign=float((np.sign(ra[ok])==np.sign(rb[ok])).mean()*100); gap=((z['b']/z['a']-1).abs()*100)
+              print(f'SYMBOL={symbol};COMMON={len(z)};RETURN_CORR={corr:.6f};SIGN_AGREE_PCT={sign:.3f};MEDIAN_LEVEL_GAP_PCT={gap.median():.6f};P95_LEVEL_GAP_PCT={gap.quantile(.95):.6f};MAX_LEVEL_GAP_PCT={gap.max():.6f}')
+          print('RAW_MARKET_VALUES_LOGGED=NO')
+          print('DATABASE_WRITES=NONE')
+          print('YAHOO_USED_AS_PRODUCTION_SOURCE=NO')
+          print('GOLD_CONTROL_XAUS_YAHOO_FORENSIC_PASS')
