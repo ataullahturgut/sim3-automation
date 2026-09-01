@@ -7,6 +7,8 @@
 --   position/exposure mapping is frozen under change control.
 -- - Tables are append-only after insert; corrections require a new run/snapshot/event.
 -- - No historical replay row may be relabeled as prospective/live by mutation.
+-- - There is deliberately no cross-evidence "latest decision" view: replay,
+--   prospective shadow and live production must remain explicitly separated.
 
 CREATE TABLE IF NOT EXISTS decision_runs (
     run_id uuid PRIMARY KEY,
@@ -149,8 +151,12 @@ CREATE TRIGGER decision_events_append_only
 BEFORE UPDATE OR DELETE ON decision_events
 FOR EACH ROW EXECUTE FUNCTION reject_gold_control_decision_mutation();
 
-CREATE OR REPLACE VIEW latest_decision_snapshot AS
-SELECT
+-- Remove the earlier candidate view if it ever existed in a rehearsal branch.
+-- It was ambiguous because it could return HISTORICAL_REPLAY as a generic latest state.
+DROP VIEW IF EXISTS latest_decision_snapshot;
+
+CREATE OR REPLACE VIEW latest_decision_snapshot_by_evidence AS
+SELECT DISTINCT ON (r.evidence_class)
     s.*,
     r.generated_at,
     r.engine_version,
@@ -165,8 +171,7 @@ SELECT
 FROM decision_signal_snapshots s
 JOIN decision_runs r ON r.run_id = s.run_id
 WHERE r.status = 'SUCCESS'
-ORDER BY s.decision_as_of DESC, r.generated_at DESC
-LIMIT 1;
+ORDER BY r.evidence_class, s.decision_as_of DESC, r.generated_at DESC;
 
 COMMENT ON TABLE decision_runs IS
 'Append-only Gold Control decision-engine run ledger. Evidence class distinguishes historical replay, prospective shadow, and live production.';
@@ -174,8 +179,8 @@ COMMENT ON TABLE decision_signal_snapshots IS
 'Immutable exact R4.1 descriptive signal vector for a successful decision run; no inferred position action.';
 COMMENT ON TABLE decision_events IS
 'Append-only classification-change ledger. action_state is constrained NULL until position mapping is independently proven and frozen.';
-COMMENT ON VIEW latest_decision_snapshot IS
-'Latest successful stored descriptive decision snapshot. Live market data must not overwrite or recompute this view.';
+COMMENT ON VIEW latest_decision_snapshot_by_evidence IS
+'Latest successful stored descriptive decision snapshot separately for each evidence class. Consumers must choose the evidence class explicitly.';
 
 INSERT INTO system_metadata (key, value)
 VALUES
