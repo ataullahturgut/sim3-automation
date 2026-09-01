@@ -1,0 +1,71 @@
+name: Gold Control Twelve XAU NY17 1min Contract Probe
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-twelve-ny17-1min-contract-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - name: Probe XAU USD 16:59 New York bars without logging prices
+        shell: python
+        run: |
+          import os, requests
+          from datetime import datetime
+
+          key=os.environ.get('TWELVE_DATA_API_KEY')
+          if not key:
+              raise SystemExit('TWELVE_DATA_API_KEY_MISSING')
+
+          dates=['2026-08-25','2026-08-26','2026-08-27','2026-08-28','2026-08-31']
+          found=0
+          for d in dates:
+              r=requests.get('https://api.twelvedata.com/time_series', params={
+                  'symbol':'XAU/USD',
+                  'interval':'1min',
+                  'date':d,
+                  'timezone':'America/New_York',
+                  'outputsize':5000,
+                  'format':'JSON',
+              }, headers={'Authorization':f'apikey {key}','User-Agent':'GoldControl-Twelve-NY17-Probe/1.0'}, timeout=(8,40))
+              r.raise_for_status()
+              p=r.json()
+              if p.get('status')=='error':
+                  raise SystemExit(f"TWELVE_API_ERROR:{p.get('code')}:{p.get('message')}")
+              vals=p.get('values') or []
+              hit=[v for v in vals if str(v.get('datetime','')).endswith('16:59:00')]
+              if not hit:
+                  print(f'{d}_NY1659_BAR=NOT_FOUND')
+                  continue
+              v=hit[0]
+              for f in ('open','high','low','close'):
+                  x=float(v[f])
+                  if not x>0:
+                      raise SystemExit(f'{d}_INVALID_{f.upper()}')
+              found += 1
+              print(f'{d}_NY1659_BAR=FOUND_VALID_OHLC')
+
+          print(f'DATES_TESTED={len(dates)}')
+          print(f'NY1659_VALID_BAR_DATES={found}')
+          print('SYMBOL=XAU/USD')
+          print('INTERVAL=1min')
+          print('TIMEZONE=America/New_York')
+          print('RAW_MARKET_VALUES_LOGGED=NO')
+          print('DATABASE_WRITES=NONE')
+          if found < 4:
+              raise SystemExit('INSUFFICIENT_NY1659_BAR_COVERAGE')
+          print('TWELVE_XAU_NY17_1MIN_CONTRACT_PROBE_PASS')
