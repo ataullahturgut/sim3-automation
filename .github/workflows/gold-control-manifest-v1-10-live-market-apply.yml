@@ -1,0 +1,55 @@
+name: Gold Control Manifest v1.10 Live Market Apply
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-manifest-v1-10-live-market-apply.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Apply deterministic manifest v1.10 correction
+        run: python gold_axis_2026/tools/apply_manifest_v1_10_live_market.py
+      - name: Verify exact changed scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          git status --short
+          changed="$(git status --short | awk '{print $2}' | sort)"
+          expected="$(printf '%s\n' \
+            gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md \
+            gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md \
+            gold_axis_2026/apps/gold_control.py \
+            gold_axis_2026/apps/live_sources.py \
+            gold_axis_2026/data_pipeline/source_contracts.json | sort)"
+          test "$changed" = "$expected"
+          grep -q 'Manifest version:\*\* 1.10' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'XAU_SPOT_GOLDAPI' gold_axis_2026/data_pipeline/source_contracts.json
+          grep -q 'GOLDAPI_SPOT_URL' gold_axis_2026/apps/live_sources.py
+      - name: Commit and push canonical branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'gold-control-bot'
+          git config user.email 'gold-control-bot@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md \
+                  gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md \
+                  gold_axis_2026/apps/gold_control.py \
+                  gold_axis_2026/apps/live_sources.py \
+                  gold_axis_2026/data_pipeline/source_contracts.json
+          git commit -m 'gold-control: freeze manifest v1.10 live-market dependency correction'
+          git push origin HEAD:gold-r4-direction-engine
