@@ -1,0 +1,45 @@
+name: Gold Control Manifest v1.11 Stage5 Evidence
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-manifest-v1-11-stage5-evidence.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Apply manifest v1.11 Stage5 evidence reconciliation
+        run: python gold_axis_2026/tools/apply_manifest_v1_11_stage5_evidence.py
+      - name: Verify scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          changed="$(git status --short | awk '{print $2}' | sort)"
+          expected="$(printf '%s\n' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md | sort)"
+          test "$changed" = "$expected"
+          grep -q 'Manifest version:\*\* 1.11' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q '33519370028' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q '33519506662' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+      - name: Commit and push canonical
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'gold-control-bot'
+          git config user.email 'gold-control-bot@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md
+          git commit -m 'gold-control: reconcile manifest v1.11 Stage5 data-path evidence'
+          git push origin HEAD:gold-r4-direction-engine
