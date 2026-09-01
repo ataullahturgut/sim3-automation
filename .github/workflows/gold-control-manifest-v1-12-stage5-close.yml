@@ -1,0 +1,45 @@
+name: Gold Control Manifest v1.12 Stage5 Close
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-manifest-v1-12-stage5-close.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Apply deterministic manifest v1.12 Stage5 closure
+        run: python gold_axis_2026/tools/apply_manifest_v1_12_stage5_close.py
+      - name: Verify exact scope and policy markers
+        run: |
+          git diff --exit-code --quiet -- gold_axis_2026/apps/gold_control.py gold_axis_2026/apps/piyasa_contract.py gold_axis_2026/apps/test_piyasa_contract.py || true
+          grep -q 'Manifest version:\*\* 1.12' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'PASS_PIYASA_SCREEN_CONTRACT' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'STAGE 4B — RESOLVE THE H=1 FORECAST ISSUER' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'APPROVED_EXPLICITLY_LABELLED_OPERATIONAL_DISPLAY' gold_axis_2026/data_pipeline/source_contracts.json
+          grep -q 'RAW_VENDOR_NON_DISPLAY_UNLESS_RIGHTS_SEPARATELY_APPROVED' gold_axis_2026/data_pipeline/source_contracts.json
+          changed="$(git diff --name-only)"
+          printf '%s\n' "$changed"
+          test "$(printf '%s\n' "$changed" | sed '/^$/d' | wc -l)" -eq 2
+          printf '%s\n' "$changed" | grep -qx 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+          printf '%s\n' "$changed" | grep -qx 'gold_axis_2026/data_pipeline/source_contracts.json'
+      - name: Commit and push canonical
+        run: |
+          git config user.name 'gold-control-bot'
+          git config user.email 'gold-control-bot@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md gold_axis_2026/data_pipeline/source_contracts.json
+          git commit -m 'gold-control: freeze manifest v1.12 Stage5 closure'
+          git push origin HEAD:gold-r4-direction-engine
