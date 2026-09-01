@@ -28,11 +28,15 @@ def _jsonable(value: Any) -> Any:
 
 
 def _table_count(cur, name: str) -> int:
-    cur.execute("SELECT to_regclass(%s)", (f"public.{name}",))
-    if cur.fetchone()[0] is None:
+    cur.execute("SELECT to_regclass(%s) AS object_name", (f"public.{name}",))
+    object_row = cur.fetchone()
+    if object_row is None or object_row["object_name"] is None:
         return -1
-    cur.execute(f'SELECT count(*) FROM "{name}"')
-    return int(cur.fetchone()[0])
+    cur.execute(f'SELECT count(*) AS n FROM "{name}"')
+    count_row = cur.fetchone()
+    if count_row is None:
+        raise RuntimeError(f"COUNT_RETURNED_NO_ROW:{name}")
+    return int(count_row["n"])
 
 
 def _series_meta(cur, series_id: str) -> dict[str, Any]:
