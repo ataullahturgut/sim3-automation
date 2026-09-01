@@ -2,14 +2,20 @@ from __future__ import annotations
 
 import argparse
 import json
+import time as time_mod
 from dataclasses import asdict
 from datetime import date, datetime, timedelta, timezone
+
+import requests
 
 import collector_r2 as base
 from persist_neon import persist_bundle
 import twelve_xau_ny17 as ny17
 
-PIPELINE_VERSION = "GOLD_DATA_R2.9_XAU_NY17_BACKFILL_2026-09-01"
+PIPELINE_VERSION = "GOLD_DATA_R2.9_XAU_NY17_BACKFILL_2026-09-01_R2"
+MAX_ATTEMPTS_PER_DATE = 3
+RETRY_SLEEP_SECONDS = (1.0, 3.0)
+INTER_DATE_PACING_SECONDS = 0.35
 
 
 def _dates(start: date, end: date):
@@ -18,6 +24,25 @@ def _dates(start: date, end: date):
         if d.weekday() < 5:
             yield d
         d += timedelta(days=1)
+
+
+def _request_with_retry(session: requests.Session, d: date):
+    failures = []
+    for attempt in range(1, MAX_ATTEMPTS_PER_DATE + 1):
+        try:
+            return ny17._request_day(session, d), failures
+        except (requests.Timeout, requests.ConnectionError, requests.HTTPError) as exc:
+            status = getattr(getattr(exc, "response", None), "status_code", None)
+            failures.append({
+                "attempt": attempt,
+                "error": type(exc).__name__,
+                "http_status": status,
+            })
+            retryable = status is None or status == 429 or status >= 500
+            if not retryable or attempt >= MAX_ATTEMPTS_PER_DATE:
+                raise
+            time_mod.sleep(RETRY_SLEEP_SECONDS[min(attempt - 1, len(RETRY_SLEEP_SECONDS) - 1)])
+    raise RuntimeError("UNREACHABLE_RETRY_STATE")
 
 
 def collect_range(start: date, end: date) -> dict:
@@ -29,16 +54,26 @@ def collect_range(start: date, end: date) -> dict:
     observations = []
     missing = []
     provider_errors = []
+    retry_summary = []
 
     for d in _dates(start, end):
         try:
-            payload, raw = ny17._request_day(session, d)
+            (payload, raw), failures = _request_with_retry(session, d)
+            if failures:
+                retry_summary.append({"date": d.isoformat(), "transient_failures": failures})
             bar = ny17._extract_exact_bar(payload, d)
         except Exception as exc:
-            provider_errors.append({"date": d.isoformat(), "error": type(exc).__name__})
+            status = getattr(getattr(exc, "response", None), "status_code", None)
+            provider_errors.append({
+                "date": d.isoformat(),
+                "error": type(exc).__name__,
+                "http_status": status,
+            })
+            time_mod.sleep(INTER_DATE_PACING_SECONDS)
             continue
         if bar is None:
             missing.append(d.isoformat())
+            time_mod.sleep(INTER_DATE_PACING_SECONDS)
             continue
 
         meta = payload.get("meta") or {}
@@ -50,6 +85,7 @@ def collect_range(start: date, end: date) -> dict:
         cutoff_ny = datetime.combine(d, ny17.CUTOFF, tzinfo=ny17.NY)
         cutoff_utc = cutoff_ny.astimezone(timezone.utc)
         if cutoff_utc > retrieved_at:
+            time_mod.sleep(INTER_DATE_PACING_SECONDS)
             continue
 
         observations.append(asdict(base.make_obs(
@@ -83,11 +119,17 @@ def collect_range(start: date, end: date) -> dict:
                 "fallback_policy": "NONE",
             },
         )))
+        time_mod.sleep(INTER_DATE_PACING_SECONDS)
 
+    # Atomic safety rule: no partial DB write if any provider/request failure remains
+    # after retries. Missing market/holiday bars are separate and may be legitimate.
     if provider_errors:
-        raise RuntimeError(f"BACKFILL_PROVIDER_ERRORS:{len(provider_errors)}")
-    # Market/holiday no-bar dates may legitimately be absent; require enough coverage
-    # for both Fast SMA20 and Slow weekly SMA4+persistence.
+        summary = ",".join(
+            f"{x['date']}:{x['error']}:{x['http_status']}" for x in provider_errors
+        )
+        raise RuntimeError(f"BACKFILL_PROVIDER_ERRORS:{len(provider_errors)}:{summary}")
+
+    # Require enough coverage for both Fast SMA20 and Slow weekly SMA4+persistence.
     if len(observations) < 35:
         raise RuntimeError(f"BACKFILL_INSUFFICIENT_VALID_TRADE_DATES:{len(observations)}")
     covered = [o["observation_ts"] for o in observations]
@@ -109,6 +151,7 @@ def collect_range(start: date, end: date) -> dict:
         "range_end": end.isoformat(),
         "valid_trade_dates": len(observations),
         "missing_weekdays": missing,
+        "retried_dates": len(retry_summary),
     }
 
 
@@ -153,6 +196,7 @@ def main() -> int:
         "range_end": bundle["range_end"],
         "valid_trade_dates": bundle["valid_trade_dates"],
         "missing_weekday_count": len(bundle["missing_weekdays"]),
+        "retried_date_count": bundle["retried_dates"],
         "raw_market_values_logged": False,
         "database_write_requested": bool(args.persist),
     }, indent=2))
