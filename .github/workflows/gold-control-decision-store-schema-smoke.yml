@@ -7,6 +7,8 @@ on:
       - '.github/workflows/gold-control-decision-store-schema-smoke.yml'
       - 'gold_axis_2026/data_pipeline/schema_patch_decision_store_v1.sql'
       - 'gold_axis_2026/data_pipeline/test_decision_store_schema.py'
+      - 'gold_axis_2026/data_pipeline/decision_store.py'
+      - 'gold_axis_2026/data_pipeline/test_decision_store_writer.py'
   workflow_dispatch:
 
 concurrency:
@@ -16,7 +18,7 @@ concurrency:
 jobs:
   rollback-smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 4
     permissions:
       contents: read
     env:
@@ -32,7 +34,12 @@ jobs:
         shell: bash
         run: |
           test -n "$NEON_DATABASE_URL" || (echo "NEON_DATABASE_URL missing" && exit 1)
-      - name: Compile rollback-only schema test
-        run: python -m py_compile gold_axis_2026/data_pipeline/test_decision_store_schema.py
+      - name: Compile decision-store schema and writer tests
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/decision_store.py
+          python -m py_compile gold_axis_2026/data_pipeline/test_decision_store_schema.py
+          python -m py_compile gold_axis_2026/data_pipeline/test_decision_store_writer.py
       - name: Execute transactional DDL and rollback smoke
         run: python gold_axis_2026/data_pipeline/test_decision_store_schema.py
+      - name: Execute rollback-only writer integration smoke
+        run: python gold_axis_2026/data_pipeline/test_decision_store_writer.py
