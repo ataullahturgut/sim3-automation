@@ -1,0 +1,59 @@
+name: Gold Control Piyasa History Adapter Smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-piyasa-history-adapter-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pandas requests
+      - name: Smoke current XAU history adapter without logging market values
+        shell: python
+        run: |
+          import importlib.util
+          from pathlib import Path
+          import pandas as pd
+
+          p=Path('gold_axis_2026/apps/live_sources.py')
+          spec=importlib.util.spec_from_file_location('live_sources', p)
+          mod=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(mod)
+
+          df, meta=mod.fetch_xau_history()
+          if len(df) < 200:
+              raise RuntimeError(f'HISTORY_TOO_SHORT:{len(df)}')
+          if df['date'].duplicated().any():
+              raise RuntimeError('DUPLICATE_HISTORY_DATES')
+          if df['close'].isna().any():
+              raise RuntimeError('NULL_CLOSE_VALUES')
+          span=(pd.Timestamp(df['date'].max())-pd.Timestamp(df['date'].min())).days
+          if span < 300:
+              raise RuntimeError(f'HISTORY_SPAN_TOO_SHORT:{span}')
+          latest_age=(pd.Timestamp.now(tz='UTC').tz_localize(None)-pd.Timestamp(df['date'].max())).days
+          if latest_age > 7:
+              raise RuntimeError(f'HISTORY_LATEST_TOO_OLD_DAYS:{latest_age}')
+
+          print(f'ROW_COUNT_GE_200={len(df) >= 200}')
+          print(f'SPAN_DAYS_GE_300={span >= 300}')
+          print(f'LATEST_AGE_DAYS_LE_7={latest_age <= 7}')
+          print('DUPLICATE_DATES=NO')
+          print('NULL_CLOSE_VALUES=NO')
+          print(f"SOURCE_LABEL_PRESENT={bool(meta.get('source'))}")
+          print('RAW_MARKET_VALUES_LOGGED=NO')
+          print('DATABASE_WRITES=NONE')
+          print('PIYASA_HISTORY_ADAPTER_SMOKE_PASS')
