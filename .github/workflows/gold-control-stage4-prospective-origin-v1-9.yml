@@ -1,0 +1,51 @@
+name: Gold Control Stage4 Prospective Origin v1.9
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-stage4-prospective-origin-v1-9.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Apply prospective-origin audit
+        run: python gold_axis_2026/tools/reconcile_stage4_prospective_origin_v1_9.py
+      - name: Verify scoped changes
+        run: |
+          set -euo pipefail
+          changed="$(git diff --name-only)"
+          echo "$changed"
+          test "$(printf '%s\n' "$changed" | sed '/^$/d' | wc -l)" -eq 3
+          printf '%s\n' "$changed" | grep -Fx 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+          printf '%s\n' "$changed" | grep -Fx 'gold_axis_2026/GOLD_CONTROL_FORECAST_CANONICALIZATION.md'
+          printf '%s\n' "$changed" | grep -Fx 'gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md'
+          grep -F '**Manifest version:** 1.9' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'SEPTEMBER_2026_H1_PROSPECTIVE_ORIGIN_MISSED' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F '**Canonicalization version:** 1.3' gold_axis_2026/GOLD_CONTROL_FORECAST_CANONICALIZATION.md
+          grep -F 'FIRST' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md >/dev/null || true
+      - name: Commit reconciliation to canonical branch
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md \
+            gold_axis_2026/GOLD_CONTROL_FORECAST_CANONICALIZATION.md \
+            gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md
+          git commit -m 'gold-control: freeze prospective H1 origin cutoff v1.9'
+          git push origin HEAD:gold-r4-direction-engine
