@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.12  
+**Manifest version:** 1.13  
 **Freeze / issue date:** 2026-09-01  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -643,13 +643,15 @@ Each forecast record must bind:
 
 Later revisions must not rewrite an old forecast snapshot.
 
-Current database state on the 2026-09-01 audit:
+Current forecast-state database reconciliation on 2026-09-01:
 
-- forecast snapshot/contract tables exist;
-- their current row counts are zero;
+- `forecast_input_snapshots`: **0 rows**;
+- `derived_feature_snapshots`: **1 row** — `MONTHLY_DIRECTION_3M`, quality `LATE_BOOTSTRAP_SHADOW_CONTEXT`;
+- `monthly_forecast_contracts`: **0 rows**;
+- append-only UPDATE/DELETE guard coverage: **3/3 tables**;
 - no historical file-backed forecast may be backfilled and relabeled as if it had existed prospectively in Neon.
 
-The first future `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` forecast must be stored before outcome realization with immutable inputs and provenance.
+Evidence: read-only reconcile run `33518909613`, plus the guarded monthly-direction bootstrap issuance run `33516396253`. The first future H=1 `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` forecast must still be stored before outcome realization with immutable inputs and provenance.
 
 ---
 
@@ -1037,14 +1039,14 @@ Important source interpretation:
 
 Required next gates by dependency:
 
-**Piyasa / monitoring lane (current):**
+**Piyasa / monitoring lane — CLOSED:**
 
-1. `XAU_SPOT_GOLDAPI` canonical live adapter activation/smoke is `PASS` by run `33519370028`, job `99894418747`; raw market value was not logged and no forecast/decision/DB write occurred.
-2. Current XAUS 1-year history adapter smoke is `PASS` by run `33519506662`, job `99894890585`; >=200 rows, >=300-day span, latest observation age <=7 days, no duplicate dates/null closes, no DB write.
-3. Keep Gold API live spot, XAUS display history, and Twelve NY17 canonical EOD as visibly separate provider/semantic lineages.
-4. Implement the canonical `Piyasa` screen using only proven data paths: live price + source/freshness, 1-year history/timeframe views supported by the adapter, GVZ latest/history, and the Decision Store strip.
-5. Keep `Canlı spot ≠ son EOD karar` visible and show `KANONİK KARAR YOK` whenever the Decision Store has no display-eligible forward state.
-6. Stage 5 is not PASS until UI-level source/freshness/error-state/mobile smoke is complete.
+1. `XAU_SPOT_GOLDAPI` live adapter: PASS by run `33519370028`, job `99894418747`.
+2. XAUS 1-year operational display-history adapter: PASS by run `33519506662`, job `99894890585`.
+3. Canonical Piyasa UI + deterministic contract + Streamlit runtime smoke: PASS by run `33521193615`, job `99900581399`.
+4. Provider roles are explicit: Gold API live display, XAUS operational display history, Twelve NY17 internal canonical EOD decision reference.
+5. `Canlı spot ≠ son EOD karar` and `KANONİK KARAR YOK` fail-safe behavior are active.
+6. Stage 5 status is `PASS_PIYASA_SCREEN_CONTRACT`; later visual/mobile refinement belongs to Stage 10 and does not reopen Stage 5 data semantics.
 
 **Stage-4B forecast/decision lane (continues fail-closed):**
 
@@ -1084,12 +1086,11 @@ Current Streamlit paths:
 - `gold_axis_2026/apps/gold_control.py`
 - `gold_axis_2026/apps/live_sources.py`
 
-Current app UI architecture is transitional and must not be treated as final product architecture.
+Current app information architecture now matches the canonical primary workflow:
 
-Known mismatch:
+`Piyasa / Görünüm / Tahmin / Geçmiş`
 
-- current app top-level tabs are still `Şimdi / Sinyaller / Model / Veri`
-- final information architecture is `Piyasa / Görünüm / Tahmin / Geçmiş`
+Stage 5 data/display semantics are frozen and smoke-tested. Pixel-level design refinement and mobile interaction QA remain later Stage-10 work; they must not reintroduce fabricated metrics, action mapping, or provider ambiguity.
 
 Current latest-state dependency:
 
@@ -1100,13 +1101,14 @@ Current latest-state dependency:
 
 The previous file-only `gold_axis_2026/r4_1/output/latest_signal.json` dependency has been removed from the app path.
 
-Current live adapter contract after manifest v1.10:
+Current live/display adapter contract after manifest v1.13:
 
 - XAU spot display primary: `XAU_SPOT_GOLDAPI` — indicative monitoring only, explicit source/freshness, never model/EOD/decision input;
 - XAU spot legacy/secondary: `XAU_SPOT_XAUS` — separate degraded lineage, no silent provider merge;
-- XAU history: current XAUS 1-year adapter remains transitional and must be independently healthy before Stage 5 is marked PASS;
-- canonical decision EOD history: `XAU_EOD_TWELVE_NY17` remains separate from the live display source;
-- GVZ: Cboe daily history / latest close.
+- XAU daily display history: `XAU_DAILY_XAUS` — explicitly labelled operational cross-check only; current-day row excluded from last-completed-daily comparison;
+- canonical decision EOD: `XAU_EOD_TWELVE_NY17` — internal model/decision reference, raw numeric value not rendered without separately proven Twelve display rights;
+- GVZ: Cboe daily history / latest close;
+- Stage 5 Piyasa UI contract: PASS by run `33521193615`, job `99900581399`.
 
 Do not pretend the current adapter already provides full intraday history or unlimited historical range. Do not use Twelve raw vendor data in a public/external display path unless the applicable subscription/display rights are separately proven.
 
