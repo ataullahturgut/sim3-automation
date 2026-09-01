@@ -1,0 +1,61 @@
+name: Gold Control Piyasa Live Adapter Smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-piyasa-live-adapter-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pandas requests
+      - name: Smoke canonical Piyasa live adapter without logging price
+        shell: python
+        run: |
+          import importlib.util
+          import math
+          from pathlib import Path
+
+          p=Path('gold_axis_2026/apps/live_sources.py')
+          spec=importlib.util.spec_from_file_location('live_sources', p)
+          mod=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(mod)
+          x=mod.fetch_xau_spot()
+
+          if x.get('source_series') != 'XAU_SPOT_GOLDAPI':
+              raise RuntimeError(f"WRONG_SOURCE_SERIES:{x.get('source_series')}")
+          if x.get('source') != 'Gold API':
+              raise RuntimeError(f"WRONG_SOURCE_LABEL:{x.get('source')}")
+          if x.get('use_role') != 'INDICATIVE_DISPLAY_ONLY_NO_MODEL_USE':
+              raise RuntimeError('WRONG_USE_ROLE')
+          price=float(x.get('price'))
+          if not math.isfinite(price) or price <= 0:
+              raise RuntimeError('INVALID_PRICE')
+          if not x.get('as_of'):
+              raise RuntimeError('MISSING_AS_OF')
+          if x.get('stale'):
+              raise RuntimeError('LIVE_ADAPTER_RETURNED_STALE')
+          if x.get('upstream_lineage') != 'OPAQUE_PROVIDER_MANAGED_FALLBACK':
+              raise RuntimeError('UPSTREAM_LINEAGE_NOT_EXPLICIT')
+
+          print('SOURCE_SERIES=XAU_SPOT_GOLDAPI')
+          print('SOURCE_LABEL=Gold API')
+          print('ROLE=INDICATIVE_DISPLAY_ONLY_NO_MODEL_USE')
+          print('FRESHNESS=PASS')
+          print('RAW_MARKET_VALUE_LOGGED=NO')
+          print('DATABASE_WRITES=NONE')
+          print('FORECAST_OR_DECISION_WRITES=NONE')
+          print('PIYASA_LIVE_ADAPTER_SMOKE_PASS')
