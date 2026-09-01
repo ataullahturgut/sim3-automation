@@ -1,0 +1,33 @@
+name: Gold Control Stage 4 Input Readiness
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/data_pipeline/stage4_input_readiness_audit.py'
+      - 'gold_axis_2026/data_pipeline/schema_patch_r2_6.sql'
+      - 'gold_axis_2026/r4_1/config/frozen_r4_1.json'
+      - '.github/workflows/gold-control-stage4-input-readiness.yml'
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install database dependency
+        run: pip install 'psycopg[binary]>=3.2,<4'
+      - name: Compile Stage 4 audit
+        run: python -m py_compile gold_axis_2026/data_pipeline/stage4_input_readiness_audit.py
+      - name: Require private Neon connection
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Audit Stage 4 inputs read-only
+        run: python gold_axis_2026/data_pipeline/stage4_input_readiness_audit.py
