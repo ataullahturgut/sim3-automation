@@ -46,13 +46,13 @@ jobs:
       - name: Persist canonical XAU monitoring snapshot
         run: python gold_axis_2026/data_pipeline/source_job.py --source xau --mode hourly --persist
 
-  daily-authority:
+  schema-guard:
     if: >-
       github.event_name == 'push' ||
       (github.event_name == 'schedule' && github.event.schedule != '17 * * * *') ||
       (github.event_name == 'workflow_dispatch' && inputs.mode == 'daily')
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 3
     permissions:
       contents: read
     env:
@@ -69,13 +69,49 @@ jobs:
         run: test -n "$NEON_DATABASE_URL"
       - name: Apply idempotent PIT schema contract
         run: python gold_axis_2026/data_pipeline/apply_schema_patch.py
-      - name: Persist XAU daily/spot
-        run: python gold_axis_2026/data_pipeline/source_job.py --source xau --mode daily --persist
-      - name: Persist Cboe GVZ/VIX
-        run: python gold_axis_2026/data_pipeline/source_job.py --source cboe --mode daily --persist
-      - name: Persist direct Fed/NY Fed
-        run: python gold_axis_2026/data_pipeline/source_job.py --source fed --mode daily --persist
-      - name: Persist GPR vintage
-        run: python gold_axis_2026/data_pipeline/source_job.py --source gpr --mode daily --persist
+
+  daily-sources:
+    needs: schema-guard
+    if: needs.schema-guard.result == 'success'
+    strategy:
+      fail-fast: false
+      matrix:
+        source: [xau, cboe, fed, gpr]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Require Neon secret
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Persist ${{ matrix.source }} independently
+        run: python gold_axis_2026/data_pipeline/source_job.py --source "${{ matrix.source }}" --mode daily --persist
+
+  verify-neon:
+    needs: daily-sources
+    if: always() && needs.daily-sources.result != 'skipped'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
       - name: Verify canonical Neon data plane
         run: python gold_axis_2026/data_pipeline/verify_neon.py
