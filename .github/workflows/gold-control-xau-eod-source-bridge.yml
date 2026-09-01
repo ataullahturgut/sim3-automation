@@ -1,0 +1,129 @@
+name: Gold Control XAU EOD Source Bridge
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-xau-eod-source-bridge.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install audit dependencies
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Require protected credentials
+        run: |
+          test -n "$NEON_DATABASE_URL" || { echo 'NEON_DATABASE_URL_MISSING'; exit 1; }
+          test -n "$TWELVE_DATA_API_KEY" || { echo 'TWELVE_DATA_API_KEY_MISSING'; exit 1; }
+      - name: Compare candidate EOD geometry read-only without logging prices
+        shell: python
+        run: |
+          import os
+          import numpy as np
+          import pandas as pd
+          import psycopg
+          import requests
+
+          # Read current approved data plane only; no writes, no raw values in logs.
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute('''
+                      SELECT DISTINCT ON (observation_ts::date)
+                             observation_ts::date AS d, value
+                      FROM usable_observations
+                      WHERE series_id = 'XAU_DAILY_XAUS'
+                      ORDER BY observation_ts::date, retrieved_at DESC
+                  ''')
+                  xaus_rows = cur.fetchall()
+              conn.rollback()
+
+          if len(xaus_rows) < 25:
+              raise SystemExit(f'XAUS_DAILY_INSUFFICIENT:{len(xaus_rows)}')
+          xaus = pd.DataFrame(xaus_rows, columns=['date', 'xaus_close'])
+          xaus['date'] = pd.to_datetime(xaus['date'])
+          xaus['xaus_close'] = pd.to_numeric(xaus['xaus_close'], errors='raise')
+
+          headers = {
+              'Authorization': f"apikey {os.environ['TWELVE_DATA_API_KEY']}",
+              'User-Agent': 'GoldControl-Stage4-SourceBridge/1.0',
+          }
+          r = requests.get(
+              'https://api.twelvedata.com/time_series',
+              params={'symbol':'XAU/USD','interval':'1day','outputsize':5000,'format':'JSON','start_date':'2016-01-01'},
+              headers=headers,
+              timeout=(8, 35),
+          )
+          r.raise_for_status()
+          p = r.json()
+          if p.get('status') == 'error':
+              raise SystemExit(f"TWELVE_API_ERROR:{p.get('code')}:{p.get('message')}")
+          vals = p.get('values') or []
+          if len(vals) < 25:
+              raise SystemExit(f'TWELVE_DAILY_INSUFFICIENT:{len(vals)}')
+          twelve = pd.DataFrame([
+              {'date': pd.to_datetime(v.get('datetime'), errors='coerce'),
+               'twelve_close': pd.to_numeric(v.get('close'), errors='coerce')}
+              for v in vals
+          ]).dropna().drop_duplicates('date', keep='last')
+
+          z = xaus.merge(twelve, on='date', how='inner').sort_values('date').reset_index(drop=True)
+          if len(z) < 25:
+              raise SystemExit(f'COMMON_DATE_INSUFFICIENT:{len(z)}')
+
+          ratio_gap = (z['twelve_close'] / z['xaus_close'] - 1.0).abs() * 100.0
+          ret_a = z['xaus_close'].pct_change()
+          ret_b = z['twelve_close'].pct_change()
+          valid_ret = ret_a.notna() & ret_b.notna()
+          return_corr = float(ret_a[valid_ret].corr(ret_b[valid_ret])) if valid_ret.sum() >= 3 else float('nan')
+          sign_agree = float((np.sign(ret_a[valid_ret]) == np.sign(ret_b[valid_ret])).mean() * 100.0)
+
+          def fast_states(series):
+              s = pd.Series(series, dtype='float64')
+              ma = s.rolling(20, min_periods=20).mean()
+              out = []
+              for i in range(len(s)):
+                  if i < 20 or pd.isna(ma.iloc[i]) or pd.isna(ma.iloc[i-1]):
+                      out.append('INSUFFICIENT_DATA')
+                      continue
+                  a = 'UP' if s.iloc[i-1] > ma.iloc[i-1] else ('DOWN' if s.iloc[i-1] < ma.iloc[i-1] else 'NEUTRAL')
+                  b = 'UP' if s.iloc[i] > ma.iloc[i] else ('DOWN' if s.iloc[i] < ma.iloc[i] else 'NEUTRAL')
+                  out.append('ROBUST_UP' if a == b == 'UP' else ('ROBUST_DOWN' if a == b == 'DOWN' else 'MIXED'))
+              return out
+
+          fa = fast_states(z['xaus_close'].tolist())
+          fb = fast_states(z['twelve_close'].tolist())
+          eligible = [(a,b) for a,b in zip(fa,fb) if a != 'INSUFFICIENT_DATA' and b != 'INSUFFICIENT_DATA']
+          fast_agree = float(sum(a == b for a,b in eligible) / len(eligible) * 100.0) if eligible else float('nan')
+
+          print('XAU_EOD_SOURCE_BRIDGE_READ_ONLY=PASS')
+          print(f'XAUS_ROWS={len(xaus)}')
+          print(f'TWELVE_ROWS={len(twelve)}')
+          print(f'COMMON_DATES={len(z)}')
+          print(f'COMMON_START={z.date.min().date().isoformat()}')
+          print(f'COMMON_END={z.date.max().date().isoformat()}')
+          print(f'MEDIAN_ABS_LEVEL_GAP_PCT={ratio_gap.median():.6f}')
+          print(f'P95_ABS_LEVEL_GAP_PCT={ratio_gap.quantile(0.95):.6f}')
+          print(f'MAX_ABS_LEVEL_GAP_PCT={ratio_gap.max():.6f}')
+          print(f'DAILY_RETURN_CORRELATION={return_corr:.6f}')
+          print(f'DAILY_RETURN_SIGN_AGREEMENT_PCT={sign_agree:.3f}')
+          print(f'FAST_STATE_AGREEMENT_PCT={fast_agree:.3f}')
+          print(f'FAST_ELIGIBLE_DATES={len(eligible)}')
+          print('RAW_MARKET_VALUES_LOGGED=NO')
+          print('DATABASE_WRITES=NONE')
+          print('GOLD_CONTROL_XAU_EOD_SOURCE_BRIDGE_PASS')
