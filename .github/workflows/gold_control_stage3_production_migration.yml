@@ -1,0 +1,55 @@
+name: Gold Control Stage 3 Production Migration
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold_control_stage3_production_migration.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: gold-control-stage3-production-migration
+  cancel-in-progress: false
+
+jobs:
+  migrate-decision-store-v1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      GOLD_CONTROL_CANONICAL_REF: 13d5a027849470b4a95341004300bd97a35e82f9
+    steps:
+      - name: Checkout pinned canonical Gold Control release
+        uses: actions/checkout@v4
+        with:
+          ref: 13d5a027849470b4a95341004300bd97a35e82f9
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install database dependencies
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+
+      - name: Require protected Neon production secret
+        run: test -n "$NEON_DATABASE_URL"
+
+      - name: Compile migration runner
+        run: python -m py_compile gold_axis_2026/data_pipeline/apply_decision_store_v1.py
+
+      - name: Apply exact Decision Store V1 migration and verify
+        run: |
+          set -euo pipefail
+          python gold_axis_2026/data_pipeline/apply_decision_store_v1.py | tee stage3_migration_receipt.txt
+
+      - name: Upload audit receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-stage3-production-migration-receipt
+          path: stage3_migration_receipt.txt
+          if-no-files-found: warn
+          retention-days: 30
