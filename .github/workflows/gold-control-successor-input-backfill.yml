@@ -1,0 +1,39 @@
+name: Gold Control Successor Input Backfill
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/gold-control-successor-input-backfill.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-successor-input-backfill
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install runtime
+        run: pip install pandas requests openpyxl psycopg[binary]
+      - name: Require protected credentials
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$FRED_API_KEY"
+      - name: Compile governed backfill
+        run: python -m py_compile gold_axis_2026/data_pipeline/successor_input_backfill.py
+      - name: Backfill historical target and PIT reconstruction inputs
+        run: python gold_axis_2026/data_pipeline/successor_input_backfill.py
