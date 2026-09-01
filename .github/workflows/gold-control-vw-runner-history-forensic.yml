@@ -1,0 +1,44 @@
+name: Gold Control VW Runner History Forensic
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-vw-runner-history-forensic.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  forensic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+      - name: Search canonical reachable history only
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo 'CANONICAL_HEAD='$(git rev-parse HEAD)
+          echo 'SEARCH_SCOPE=reachable_history_of_gold-r4-direction-engine'
+          echo '--- current tree candidate filenames ---'
+          git ls-tree -r --name-only HEAD | grep -Ei 'vw|midas|msvr|forecast|production' | head -200 || true
+          echo '--- log string search exact model name ---'
+          git log --format='%H %ad %s' --date=iso -S'VW-MIDAS-SVR Adapt V2' -- gold_axis_2026 || true
+          echo '--- log string search production identifiers ---'
+          git log --format='%H %ad %s' --date=iso -S'vw_executable_reproduction_status' -- gold_axis_2026 || true
+          git log --format='%H %ad %s' --date=iso -S'PATCH_R1_EXECUTABLE' -- gold_axis_2026 || true
+          echo '--- files changed in commits matching VW/MSVR terms ---'
+          for sha in $(git log --format='%H' --grep='VW\|MSVR\|MIDAS\|production closure' -i HEAD | head -80); do
+            echo COMMIT=$sha
+            git show --name-only --format='' "$sha" -- gold_axis_2026 | sed '/^$/d' | head -100
+          done
+          echo '--- current textual hits ---'
+          git grep -n -I -E 'VW-MIDAS-SVR Adapt V2|VW_AUDITED_SHADOW_V2|vw_executable_reproduction_status' HEAD -- gold_axis_2026 || true
+          echo 'RAW_MARKET_VALUES_LOGGED=NO'
+          echo 'DATABASE_WRITES=NONE'
+          echo 'VW_RUNNER_HISTORY_FORENSIC_PASS'
