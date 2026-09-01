@@ -12,7 +12,7 @@ import collector_r2 as base
 from persist_neon import persist_bundle
 import twelve_xau_ny17 as ny17
 
-PIPELINE_VERSION = "GOLD_DATA_R2.9_XAU_NY17_BACKFILL_2026-09-01_R3"
+PIPELINE_VERSION = "GOLD_DATA_R2.9_XAU_NY17_BACKFILL_2026-09-01_R4"
 MAX_ATTEMPTS_PER_DATE = 4
 SHORT_RETRY_SLEEP_SECONDS = (2.0, 5.0, 10.0)
 # Twelve Data documents that API credits reset every minute and that Basic has
@@ -151,7 +151,7 @@ def collect_range(start: date, end: date, anchor_dates: tuple[date, ...] = ()) -
     ]
     if len(in_range_observations) < 35:
         raise RuntimeError(f"BACKFILL_INSUFFICIENT_VALID_TRADE_DATES:{len(in_range_observations)}")
-    covered = [o["observation_ts"] for o in in_range_observations]
+    covered = [datetime.fromisoformat(o["observation_ts"]) for o in in_range_observations]
     first = min(covered)
     last = max(covered)
     if (last - first).days < 50:
