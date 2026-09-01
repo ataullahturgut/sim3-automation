@@ -1,0 +1,57 @@
+name: Gold Control Successor R2 Historical Replay
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/gold-control-successor-r2-replay.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-successor-r2-replay
+  cancel-in-progress: false
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install frozen replay runtime
+        run: pip install pandas numpy 'psycopg[binary]' scikit-learn statsmodels
+      - name: Require Neon read path
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Verify manifest and contract before score
+        run: |
+          grep -F '**Manifest version:** 1.15' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'VALIDATION_CONTRACT_FROZEN; HISTORICAL_REPLAY_AUTHORIZED' gold_axis_2026/GOLD_CONTROL_H1_SUCCESSOR_VALIDATION_CONTRACT_R2.md
+          python -m py_compile gold_axis_2026/tools/run_successor_r2_historical_replay.py
+      - name: Run frozen successor R2 historical replay
+        run: python gold_axis_2026/tools/run_successor_r2_historical_replay.py
+      - name: Verify research outputs only
+        run: |
+          set -euo pipefail
+          test -s gold_axis_2026/successor_r2/successor_r2_historical_replay_predictions.csv
+          test -s gold_axis_2026/successor_r2/successor_r2_scorecard.csv
+          test -s gold_axis_2026/successor_r2/successor_r2_evidence.json
+          grep -F '"evidence_class": "HISTORICAL_REPLAY"' gold_axis_2026/successor_r2/successor_r2_evidence.json
+          grep -F '"prospective_claim": false' gold_axis_2026/successor_r2/successor_r2_evidence.json
+      - name: Commit immutable replay evidence to canonical branch
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/successor_r2/
+          git commit -m 'gold-control: record successor R2 historical replay evidence'
+          git push origin HEAD:gold-r4-direction-engine
