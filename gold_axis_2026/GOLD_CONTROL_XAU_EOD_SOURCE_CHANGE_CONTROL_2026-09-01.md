@@ -1,230 +1,108 @@
 # GOLD CONTROL — XAU EOD DECISION SOURCE CHANGE CONTROL
 
 **Status date:** 2026-09-01  
-**Manifest target:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.4  
+**Manifest target:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.6  
 **Stage:** 4 — Deterministic R4.1 Decision Engine / Issuer  
-**Decision:** `CME_EBS_XAUUSD_1700_ET_AUTHORITY_AND_SESSION_APPROVED; EXECUTABLE_INGESTION_BLOCKED`
+**Decision:** `TWELVE_XAUUSD_NY17_CANONICAL_OPERATIONAL_SOURCE_APPROVED`
 
-## 1. Decision summary
+## 1. Final architecture
 
-The canonical R4.1 daily decision-price **source/session authority** is frozen as:
+The active canonical R4.1 EOD decision reference is:
 
-- venue/operator: **CME Group / EBS Market on CME Globex**;
-- spot instrument: **XAU/USD SM**;
-- EBS Market product code: **GCUS**;
-- economic semantic: spot XAU/USD;
-- trade-date/session timezone: `America/New_York`;
-- daily trade-date boundary: **17:00 ET**;
-- reserved canonical series id: `XAU_EOD_CME_EBS`.
+- canonical series: `XAU_EOD_TWELVE_NY17`;
+- economic semantic: spot XAU/USD internal daily decision reference;
+- session-definition authority: CME Group / EBS Market;
+- session boundary: 17:00 ET, `America/New_York`;
+- operational price provider: Twelve Data;
+- provider symbol: `XAU/USD`;
+- provider interval: `1min`;
+- selected bar: exact `16:59:00` ET bar;
+- decision price: selected bar `close`;
+- no silent fallback.
 
-This decision approves the authority, instrument and session boundary. It does **not** invent an executable market-data field. First ingestion remains blocked until authorized CME/EBS entitlement and exact EOD field/aggregation mapping are proven.
+This supersedes `XAU_EOD_CME_EBS` as the active operational ingestion series. The CME/EBS object remains in the registry for audit history and session-methodology provenance only.
 
-## 2. Authority research
+## 2. Why this split is methodologically correct
 
-### 2.1 LBMA Gold Price
+Spot XAU/USD is an OTC market and does not have one universal exchange-style official daily close. CME/EBS is nevertheless an authoritative primary-market source for the **trade-date convention**: EBS spot FX and precious-metals trade date rolls at 17:00 ET. That convention is used to define when Gold Control's daily R4.1 state becomes complete.
 
-Official LBMA/ICE documentation identifies the LBMA Gold Price as the global benchmark for unallocated Loco London gold. The auction begins twice daily at 10:30 and 15:00 London time and benchmark use can require IBA licensing.
+The actual price observation must preserve its real provider lineage. Twelve Data therefore remains visibly the price provider; it is not relabelled as CME/EBS data.
 
-Conclusion:
+Official authority evidence:
 
-`LBMA_GOLD_PRICE_PM = AUTHORITY_BENCHMARK_NOT_EOD_SESSION_CLOSE`
+- CME Group trading hours: EBS Market Spot FX & Precious Metals trade-date roll = 17:00 ET.
+- CME EBS dealing/value-date rules: 17:00 New York is the standard trade-date transition.
+- Twelve Data documentation: intraday timezone may be specified with an IANA timezone; `datetime` identifies the bar open; `close` is the price at the end of the bar.
+- Twelve XAU/USD reference: Gold Spot / US Dollar is an available commodity instrument.
 
-It remains a benchmark/comparator. It is not relabelled as an end-of-trade-date spot close.
+## 3. Executable mapping
 
-Official sources:
+Frozen mapping:
 
-- https://www.lbma.org.uk/prices-and-data/lbma-precious-metal-prices
-- https://www.lbma.org.uk/prices-and-data/lbma-gold-price
-- https://www.ice.com/iba/lbma-precious-metals
+1. request `/time_series?symbol=XAU/USD&interval=1min&timezone=America/New_York`;
+2. after the 17:00 ET boundary, select the unique bar with `datetime=16:59:00` ET for that trade date;
+3. validate positive finite OHLC values;
+4. set `decision_reference_price = close`;
+5. preserve the original Twelve timestamp and retrieval/payload lineage;
+6. if the exact bar is absent/invalid, block the daily issuer; never use provider-default 1day, previous bar, forward-fill, XAUS, LBMA, futures, or a CME-labelled substitute.
 
-### 2.2 CME Group Spot Gold Reference Rate
+Twelve documentation defines the datetime as the bar-open time and close as the end-of-bar price, so the 16:59 one-minute bar ends at the 17:00 ET decision boundary.
 
-CME states that EBS Market data is used for the Spot Gold Reference Rate. The first calculation tier uses trades during 13:29:00–13:30:00 ET.
+## 4. Live access proof
 
-Conclusion:
+GitHub Actions run `33510985399`, job `99866288149`, completed `SUCCESS`.
 
-`CME_SPOT_GOLD_REFERENCE_RATE = AUTHORITY_SPOT_MARKER_NOT_EOD_SESSION_CLOSE`
+The protected credential probe verified, without logging raw prices or writing to Neon:
 
-It is an important independent marker/comparator but is not the daily session boundary.
+- Twelve `XAU/USD` intraday access;
+- `interval=1min`;
+- requested `America/New_York` timezone;
+- exact `16:59:00` bar exists for the audited date;
+- OHLC values were present and positive;
+- executable mapping gate passed.
 
-Official source:
+Result:
 
-- https://www.cmegroup.com/markets/metals-marker-prices.html
+`TWELVE_XAU_NY17_EXECUTABLE_MAPPING_PROVEN`
 
-### 2.3 EBS Market spot precious metals session
+## 5. Historical/frozen validation evidence
 
-CME's official trading-hours schedule states that EBS Market spot FX & precious metals use a **17:00 ET trade-date roll Monday–Thursday** and **17:00 ET Friday close**. CME's EBS product guide lists spot Gold `XAU/USD SM` on EBS Market with product code `GCUS`. CME describes EBS Market as a primary market/reference-price venue and offers real-time/historical spot precious-metals market data.
+Run `33506001316`, job `99850068530`, used only Tactical VAL `2021–2023`; `2024+` was explicitly excluded from source selection. Its NY17 intraday-derived candidate showed that changing daily source/session is not identity-preserving. The validation score is not used to tune the provider choice; it supports explicit new lineage/change control.
 
-Conclusion:
+The active v1.6 mapping is a one-minute exact-cutoff implementation of the already pre-defined 17:00 ET session concept, not a rule fitted to 2024+ outcomes.
 
-`CME_EBS_XAUUSD_SM_1700_ET = BEST_AUTHORITY_MATCH_FOR_R4_1_EOD_DECISION_SESSION`
+## 6. Why provider-default Twelve daily is still rejected
 
-Official sources:
+Twelve provider-default `1day` XAU/USD is returned in the provider's exchange-local commodity timezone (`Australia/Sydney`), and Twelve documents that timezone overrides are ignored for daily intervals. It is therefore a different daily semantic and is not the v1.6 EOD decision series.
 
-- https://www.cmegroup.com/trading-hours.html
-- https://www.cmegroup.com/markets/fx/fx-product-guide.html
-- https://www.cmegroup.com/markets/ebs/ebs-market.html
-- https://www.cmegroup.com/market-data/browse-data/catalog/ebs-spot-fx.html
+## 7. Source identities after v1.6
 
-### 2.4 Twelve Data XAU/USD
+- `XAU_EOD_TWELVE_NY17` — active canonical R4.1 daily decision reference.
+- `XAU_EOD_CME_EBS` — retained audit/history authority candidate; not active ingestion.
+- `XAU_DAILY_XAUS` — operational cross-check only.
+- `XAU_SPOT_XAUS` — indicative monitoring only.
+- `LBMA_GOLD` — authority benchmark candidate, not EOD decision close.
 
-Twelve identifies `XAU/USD` as `Gold Spot / US Dollar`, Commodity Aggregate. Its commodity reference uses `Australia/Sydney` exchange-local timezone and 24/7 schedule. Twelve documentation states timezone selection is ignored for 1day/1week/1month intervals and those bars are returned in exchange-local time.
+## 8. Stage-4 blocker transition
 
-Conclusion:
+Closed/superseded:
 
-`TWELVE_PROVIDER_DEFAULT_1DAY = DOCUMENTED_VENDOR_DAILY_BAR_NOT_EBS_1700_ET_EOD`
-
-Twelve remains useful for private/internal research and bridge testing. It is not authorized as a silent replacement for the canonical EBS authority.
-
-Official sources:
-
-- https://twelvedata.com/markets/300755/commodity/xau-usd
-- https://twelvedata.com/exchanges/commodity
-- https://twelvedata.com/docs
-
-## 3. Frozen validation evidence
-
-GitHub Actions run `33506001316`, job `99850068530`, completed `SUCCESS` using only the frozen Tactical validation period `2021–2023`; `2024+` was explicitly excluded from source selection.
-
-Pinned StakTrakr Gold provider labels in that validation window were `LBMA:754/754`.
-
-Bridge results versus the legacy pinned series:
-
-| Candidate | Fast-state agreement | Slow-state agreement | Return correlation | Return-sign agreement |
-|---|---:|---:|---:|---:|
-| Twelve provider-default Sydney daily | 84.332% | 82.692% | 0.295370 | 58.167% |
-| Twelve 17:00 New York intraday-derived sample | 87.690% | 78.205% | 0.400753 | 60.118% |
-
-Interpretation:
-
-- neither Twelve construction is identity-equivalent to the legacy LBMA-labelled series;
-- these validation scores are **not used to optimize the final authority/session choice**;
-- they prove that a new canonical spot-EOD series must receive a new lineage and a controlled source migration rather than being relabelled as legacy/XAUS/LBMA data.
-
-## 4. Why 17:00 ET is approved
-
-R4.1 requires a completed daily market state, not merely an intraday benchmark observation. Among the reviewed official authorities:
-
-- LBMA PM is an auction benchmark at 15:00 London;
-- CME Spot Gold Reference Rate is a 13:29–13:30 ET marker;
-- EBS Market explicitly defines the spot precious-metals **trade-date roll at 17:00 ET**.
-
-Therefore 17:00 ET is the strongest documented session boundary for a spot-XAU/USD daily decision close without mislabelling a benchmark or futures settlement as EOD.
-
-This is a semantic/market-structure decision, not a hindsight optimization.
-
-## 5. Exact executable price mapping remains blocked
-
-Authority approval does not by itself prove the exact field available under the future CME/EBS entitlement.
-
-Before first `XAU_EOD_CME_EBS` write, the implementation must prove and freeze:
-
-1. authorized CME/EBS market-data entitlement or explicitly authorized redistributor whose lineage is EBS XAU/USD SM;
-2. exact API/file/product identifier and schema;
-3. exact EOD close field supplied by that product, if one exists;
-4. otherwise a separately audited deterministic aggregation rule — no ad-hoc assumption;
-5. `observation_ts`, trade-date and DST handling using `America/New_York`;
-6. holiday/early-close handling from the CME/EBS calendar;
-7. retrieved-at timestamp, payload hash, source vintage and revision policy;
-8. raw-data/private-display restrictions under the applicable licence.
-
-Until these pass:
-
-`CME_EBS_XAU_EOD_PIPELINE_NOT_SUCCESS`
-
-Sub-blockers:
-
-- `CME_EBS_DATA_ENTITLEMENT_NOT_PROVEN`
-- `CME_EBS_EOD_FIELD_MAPPING_NOT_PROVEN`
-
-## 6. Fallback policy
-
-Canonical fallback policy:
-
-`NONE_SILENT`
-
-If the approved EBS source is unavailable or incomplete, R4.1 EOD issuance is `BLOCKED` for that session. The system must not substitute:
-
-- `XAU_DAILY_XAUS`;
-- `XAU_SPOT_XAUS`;
-- Twelve provider-default daily bars;
-- a Twelve-derived 17:00 ET price;
-- LBMA Gold Price PM;
-- CME Spot Gold Reference Rate;
-- COMEX GC settlement / Yahoo `GC=F`;
-- any other provider under the `XAU_EOD_CME_EBS` series identity.
-
-A future contingency source requires its own explicit change-control approval and separate lineage.
-
-## 7. Stage-4 blocker transition
-
-Closed:
-
-`NO_APPROVED_CANONICAL_XAU_EOD_DECISION_SOURCE` → `CLOSED_BY_MANIFEST_V1_4`
+- `CME_EBS_TICKER_DATA_ENTITLEMENT_NOT_PROVEN` — no longer required by active v1.6 path.
+- Twelve XAU/USD 1-minute access — `PROVEN`.
+- Twelve 16:59 ET mapping — `PROVEN`.
 
 Still active:
 
 1. `FORECAST_CONTRACT_NOT_ISSUED`
 2. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`
-3. `CME_EBS_XAU_EOD_PIPELINE_NOT_SUCCESS`
+3. `TWELVE_XAU_NY17_PIPELINE_NOT_SUCCESS`
 
-No Neon market observation and no Decision Store row is authorized by this document alone.
+No Neon observation or Decision Store row is created by this change-control commit itself.
 
-## 8. Evidence-class safeguards
+## 9. Evidence safeguards
 
-- no historical row may be relabelled as prospective;
+- provider identity is never relabelled;
+- no historical row is called prospective;
 - no `LIVE_PRODUCTION` state is authorized;
-- first forward decision state remains `PROSPECTIVE_SHADOW` only after all Stage-4 input blockers pass;
-- `NOT_PROVEN_POSITION_MAPPING` remains unchanged;
-- no 2024+ locked outcome was used to tune the authority/session choice.
-
-
----
-
-# Manifest v1.5 executable decision-reference amendment
-
-## A. Authority finding
-
-Further CME authority research confirms that EBS Market Spot FX & Precious Metals uses a 17:00 ET trade-date roll, but CME does not expose a single exchange-style official XAU/USD daily close/settlement field for this spot market. EBS Ticker is the official CME market-data product that includes XAU/USD SM and provides one-second time slices with Best Bid, Best Offer, Paid/Given trade data, daily highs/lows and Timestamp. Historical EBS Ticker data is available through CME DataMine; real-time delivery includes direct CME delivery options.
-
-Official CME evidence:
-
-- EBS trading hours / 17:00 ET trade-date roll: https://www.cmegroup.com/trading-hours.html
-- EBS Value Date Calendar / standard-pair EOD definition: https://www.cmegroup.com/content/dam/cmegroup/documents/ebs_value-date-calendar.pdf
-- EBS XAU/USD SM product code GCUS: https://www.cmegroup.com/markets/fx/fx-product-guide.html
-- EBS Ticker fields/frequency/access: https://www.cmegroup.com/market-data/browse/files/ebs-ticker-fact-sheet.pdf
-- CME cash-market historical access/DataMine: https://www.cmegroup.com/datamine.html
-
-## B. Final decision-price contract
-
-Decision:
-
-`CME_EBS_XAUUSD_1700_ET_DECISION_REFERENCE_RULE_APPROVED`
-
-Gold Control will not claim an official spot closing price that CME does not publish. Instead, R4.1 receives a frozen internal EOD **decision reference price** based entirely on official EBS Ticker fields:
-
-1. cutoff = 17:00:00 `America/New_York`;
-2. candidate observations = EBS Ticker `XAU/USD SM (GCUS)` one-second slices in `[16:59:00,17:00:00)` ET;
-3. select latest slice with valid positive `Best Bid` and `Best Offer` and `Best Bid <= Best Offer`;
-4. decision reference = `(Best Bid + Best Offer) / 2`;
-5. if no valid two-sided quote exists in that final 60-second window, emit `BLOCKED_NO_FRESH_TWO_SIDED_EBS_QUOTE`; do not forward-fill or substitute another provider;
-6. persist quote timestamp, source/product identity, retrieval/vintage identifiers and derived hash;
-7. raw licensed EBS fields remain private/non-display unless redistribution rights are separately proven.
-
-This rule is a governance/data-contract definition, not a threshold tuned on 2024+ outcomes.
-
-## C. Why midpoint instead of last trade
-
-EBS Ticker provides two-sided best rates continuously in one-second slices, whereas a last dealt rate can be irregular in time and side-dependent (`Paid`/`Given`). A cutoff midquote gives a deterministic, side-neutral state of the authoritative EBS central market at the frozen trade-date boundary. It is explicitly labelled an internal decision reference, not a benchmark, fixing, settlement or official close.
-
-## D. Blocker reduction
-
-Closed by v1.5:
-
-`CME_EBS_EOD_FIELD_MAPPING_NOT_PROVEN` → `CLOSED_BY_EXECUTABLE_EBS_TICKER_RULE`
-
-Remaining external source blocker:
-
-`CME_EBS_TICKER_DATA_ENTITLEMENT_NOT_PROVEN`
-
-No Neon observation is authorized until the entitlement is actually proven and the ingestion run passes.
+- first forward state remains `PROSPECTIVE_SHADOW` after all Stage-4 input blockers pass;
+- `NOT_PROVEN_POSITION_MAPPING` remains unchanged.

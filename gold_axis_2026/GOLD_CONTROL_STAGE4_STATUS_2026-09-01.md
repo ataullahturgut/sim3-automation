@@ -1,113 +1,73 @@
 # GOLD CONTROL — STAGE 4 DETERMINISTIC R4.1 STATUS
 
-**Status date:** 2026-09-01
-**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.5
-**Stage:** 4 — Deterministic R4.1 Decision Engine / Issuer
+**Status date:** 2026-09-01  
+**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.6  
+**Stage:** 4 — Deterministic R4.1 Decision Engine / Issuer  
 **Current status:** `IN_PROGRESS_BLOCKED_INPUT_CONTRACTS`
 
-## 1. What is verified
+## 1. Verified engine/store state
 
-- Frozen R4.1 engine tests are deterministic under the audited test contract.
-- R4.1 descriptive emitted state can be mapped to Decision Store without recomputing signals.
-- Persistence bridge refuses action/exposure fields and unreviewed emitted-state shape drift.
-- Store-reader roundtrip, idempotency and rollback are verified.
-- `LIVE_PRODUCTION` has an additional disabled-by-default write gate.
-- A current app reader exists but there are no display-eligible decision rows.
+- Frozen R4.1 engine is deterministic under the audited contract.
+- Decision Store schema/read path is present and guarded.
+- `action_state` remains null under `NOT_PROVEN_POSITION_MAPPING`.
+- `LIVE_PRODUCTION` remains disabled.
+- No prospective decision row has been fabricated/backfilled.
 
-## 2. Canonical live emitter audit
+## 2. Canonical XAU EOD contract — manifest v1.6
+
+Active canonical series:
+
+`XAU_EOD_TWELVE_NY17`
+
+Contract:
+
+- session-definition authority: CME Group / EBS Market;
+- trade-date boundary: 17:00 ET, `America/New_York`;
+- actual price provider: Twelve Data;
+- provider symbol: `XAU/USD`;
+- interval: `1min`;
+- exact selected bar: `16:59:00` ET;
+- decision reference: that bar's `close`;
+- provider lineage remains Twelve Data;
+- no fallback/forward-fill/provider relabelling.
+
+This is an internal EOD decision reference, not an official market settlement or fixing.
+
+## 3. Access/mapping proof
+
+GitHub Actions run `33510985399`, job `99866288149`: `SUCCESS`.
+
+The protected probe proved:
+
+- Twelve XAU/USD 1-minute access;
+- `America/New_York` timezone request;
+- exact 16:59 bar availability on the audited date;
+- valid OHLC fields;
+- no raw market values logged;
+- no database writes.
 
 Status:
 
-`NOT_FOUND_CANONICAL_LIVE_R4_1_EMITTER`
+`TWELVE_XAU_NY17_EXECUTABLE_MAPPING_PROVEN`
 
-`replay_daily.py` is a sequential replay CLI, not a prospective scheduled issuer.
+## 4. Superseded CME/EBS feed path
 
-The older R4 workflow that emits LONG/CASH and AL/SAT cannot be promoted into R4.1 because the current contract is `NOT_PROVEN_POSITION_MAPPING`.
+`XAU_EOD_CME_EBS` is no longer the active operational source. CME/EBS remains the authority for the 17:00 ET session convention and an audit/history candidate. Direct EBS Ticker entitlement is therefore **not required** for the manifest v1.6 active path.
 
-## 3. Source-authority change-control result
-
-Authority research and frozen validation are recorded in:
-
-`GOLD_CONTROL_XAU_EOD_SOURCE_CHANGE_CONTROL_2026-09-01.md`
-
-Approved executable decision-reference contract:
-
-- CME Group / EBS Market on CME Globex;
-- XAU/USD SM (`GCUS`);
-- EBS Ticker one-second market data;
-- `America/New_York` 17:00 ET trade-date boundary;
-- final valid two-sided quote in `[16:59:00,17:00:00)` ET;
-- derived price = `(Best Bid + Best Offer) / 2`;
-- reserved series id `XAU_EOD_CME_EBS`;
-- this is an internal decision reference, not an official spot settlement/close.
-
-Decision:
-
-`CME_EBS_XAUUSD_1700_ET_DECISION_REFERENCE_RULE_APPROVED`
-
-Closed blocker:
-
-`NO_APPROVED_CANONICAL_XAU_EOD_DECISION_SOURCE` → `CLOSED_BY_MANIFEST_V1_4`
-
-The authority approval does not authorize a guessed close field or vendor substitution.
-
-## 4. Why alternatives were not promoted
-
-- LBMA Gold Price PM is the global Loco London benchmark but is an auction benchmark at 15:00 London, not EOD.
-- CME Group Spot Gold Reference Rate is an EBS-based 13:29–13:30 ET spot marker, not EOD.
-- `XAU_DAILY_XAUS` remains operational cross-check / Yahoo-GC=F-like lineage, not spot-EOD authority.
-- `XAU_SPOT_XAUS` remains indicative monitoring.
-- Twelve provider-default daily XAU/USD uses Commodity Aggregate / `Australia/Sydney` exchange-local daily semantics and is not EBS 17:00 ET EOD.
-
-No silent fallback is approved.
-
-## 5. Frozen validation evidence
-
-Run `33506001316`, job `99850068530`: `SUCCESS`.
-
-Validation period only:
-
-`2021–2023`
-
-`2024+` used for selection:
-
-`NO`
-
-The pinned legacy validation series was LBMA-labelled for 754/754 Gold rows. Neither Twelve daily construction was identity-equivalent to it. Therefore the canonical EBS EOD source receives a new lineage rather than mutating legacy/XAUS/Twelve history.
-
-## 6. Active readiness blockers
-
-The original read-only readiness audit run `33499509482`, job `99829327414` executed successfully. After source-authority change control, active blockers are:
+## 5. Active readiness blockers
 
 1. `FORECAST_CONTRACT_NOT_ISSUED`
 2. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`
-3. `CME_EBS_XAU_EOD_PIPELINE_NOT_SUCCESS`
-   - `CME_EBS_TICKER_DATA_ENTITLEMENT_NOT_PROVEN`
+3. `TWELVE_XAU_NY17_PIPELINE_NOT_SUCCESS`
 
-Decision Store and forecast-state tables remain unpopulated by this change-control action.
+The source-definition/access/mapping blocker is now closed. The remaining XAU task is implementation and a successful canonical Neon ingestion run.
 
-## 7. Required next work
+## 6. Required next work
 
-1. prove/activate authorized EBS Ticker access for XAU/USD SM (GCUS);
-2. implement the frozen v1.5 final-minute two-sided midquote rule and its quality gates;
-3. add explicit `XAU_EOD_CME_EBS` ingestion lineage and obtain a successful daily run;
-4. issue the first genuine immutable H=1 forecast input snapshot and monthly forecast contract before outcome realization;
-5. build/schedule the canonical R4.1 EOD issuer only after those prerequisites pass;
-6. first forward Decision Store state must be `PROSPECTIVE_SHADOW`, never retroactive and not `LIVE_PRODUCTION`.
+1. implement the canonical `XAU_EOD_TWELVE_NY17` writer with exact 16:59 ET mapping and quality gates;
+2. create the explicit Twelve NY17 series/provider lineage in Neon and obtain a successful daily run;
+3. issue the first genuine immutable H=1 forecast input snapshot and monthly forecast contract before outcome realization;
+4. build/schedule the canonical R4.1 EOD issuer only after those inputs pass;
+5. first forward Decision Store state = `PROSPECTIVE_SHADOW`, never retroactive and not `LIVE_PRODUCTION`.
 
 `NOT_PROVEN_POSITION_MAPPING` remains unchanged.
-
-
-## 8. Manifest v1.5 field-mapping closure
-
-Official CME documentation confirms EBS Ticker contains the required `Best Bid`, `Best Offer` and `Timestamp` fields in one-second time slices and includes XAU/USD SM. Manifest v1.5 therefore closes the executable field/aggregation design blocker by defining the 17:00 ET decision reference as the final valid two-sided EBS Ticker midquote in the last minute before trade-date roll.
-
-Closed:
-
-`CME_EBS_EOD_FIELD_MAPPING_NOT_PROVEN`
-
-Remaining source-side blocker:
-
-`CME_EBS_TICKER_DATA_ENTITLEMENT_NOT_PROVEN`
-
-No production write is authorized until entitlement and the actual ingestion run are proven.

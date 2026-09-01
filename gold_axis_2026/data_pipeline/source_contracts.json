@@ -1,5 +1,5 @@
 {
-  "version": "GOLD_DATA_R2_2026-09-01_XAU_EOD_DECISION_REFERENCE_V2",
+  "version": "GOLD_DATA_R2_2026-09-01_XAU_EOD_TWELVE_NY17_V1",
   "status": "SOURCE_ARCHITECTURE_FROZEN_WITH_EXPLICIT_BLOCKERS",
   "principles": {
     "no_silent_provider_substitution": true,
@@ -67,8 +67,8 @@
       "unit": "USD/troy_oz",
       "session_timezone": "America/New_York",
       "trade_date_boundary": "17:00 ET",
-      "role": "canonical R4.1 EOD internal decision reference",
-      "status": "APPROVED_EXECUTABLE_DECISION_REFERENCE_CONTRACT; BLOCKED_DATA_ENTITLEMENT",
+      "role": "superseded authority/feed candidate; 17:00 ET session research reference only",
+      "status": "SUPERSEDED_AS_OPERATIONAL_SOURCE_BY_MANIFEST_V1_6; KEEP_FOR_AUDIT_HISTORY",
       "fallback_policy": "NONE; BLOCK_IF_PRIMARY_UNAVAILABLE_OR_STALE",
       "not_equivalent_to": [
         "LBMA Gold Price AM/PM",
@@ -99,7 +99,52 @@
       "block_if_no_valid_quote": true,
       "historical_product": "EBS Ticker historical via CME DataMine",
       "realtime_access_path": "EBS Ticker Direct Delivery via GCP WebSocket or other authorized CME delivery",
-      "entitlement_status": "NOT_PROVEN"
+      "entitlement_status": "NOT_REQUIRED_FOR_ACTIVE_V1_6_PATH"
+    },
+    "XAU_EOD_TWELVE_NY17": {
+      "semantic": "XAU_USD_SPOT_EOD_DECISION_REFERENCE",
+      "tier": "B",
+      "source": "Twelve Data",
+      "symbol": "XAU/USD",
+      "frequency": "trade-date daily derived from 1-minute intraday bar",
+      "unit": "USD/troy_oz",
+      "session_definition_authority": "CME Group / EBS Market spot FX & precious-metals trade-date roll",
+      "session_timezone": "America/New_York",
+      "trade_date_boundary": "17:00 ET",
+      "provider_endpoint": "/time_series",
+      "provider_interval": "1min",
+      "provider_timezone": "America/New_York",
+      "bar_datetime_semantic": "bar open timestamp per Twelve Data documentation",
+      "selection_rule": "unique bar with datetime exactly 16:59:00 ET for completed trade date",
+      "price_field": "close",
+      "price_semantic": "end-of-16:59-minute bar = 17:00 ET internal decision reference",
+      "role": "canonical R4.1 EOD internal decision reference",
+      "status": "APPROVED_EXECUTABLE_CANONICAL_SOURCE_CONTRACT; PIPELINE_NOT_YET_PRODUCTION_SUCCESS",
+      "access_evidence": {
+        "run_id": 33510985399,
+        "job_id": 99866288149,
+        "result": "SUCCESS"
+      },
+      "quality_gates": [
+        "exactly_one_16_59_bar",
+        "open_positive_finite",
+        "high_positive_finite",
+        "low_positive_finite",
+        "close_positive_finite"
+      ],
+      "block_if_missing_or_invalid": true,
+      "fallback_policy": "NONE_SILENT; BLOCK_IF_PRIMARY_UNAVAILABLE_OR_EXACT_BAR_MISSING",
+      "official_close_claim": false,
+      "display_policy": "RAW_VENDOR_NON_DISPLAY_UNLESS_RIGHTS_SEPARATELY_APPROVED",
+      "not_equivalent_to": [
+        "Twelve Data provider-default 1day Australia/Sydney bar",
+        "LBMA Gold Price AM/PM",
+        "CME Spot Gold Reference Rate",
+        "CME/EBS Ticker midquote",
+        "COMEX GC futures settlement or Yahoo GC=F",
+        "XAU_DAILY_XAUS",
+        "XAU_SPOT_XAUS"
+      ]
     },
     "GVZ_CBOE": {
       "semantic": "GVZ",
