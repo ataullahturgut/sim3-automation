@@ -100,6 +100,19 @@ def main() -> int:
                 )
                 quality_summary = _jsonable_rows(cur.fetchall())[0]
 
+                # Metadata-only failure evidence. Messages/payloads are deliberately
+                # excluded from the public audit artifact to avoid leaking provider
+                # response details or sensitive context.
+                cur.execute(
+                    """
+                    SELECT series_id, event_ts, severity, code
+                    FROM quality_events
+                    ORDER BY event_ts DESC, id DESC
+                    LIMIT 30
+                    """
+                )
+                recent_quality_events = _jsonable_rows(cur.fetchall())
+
             conn.rollback()
 
         payload = {
@@ -107,10 +120,12 @@ def main() -> int:
             "generated_at_utc": datetime.now(timezone.utc).isoformat(),
             "mode": "READ_ONLY_ROLLBACK",
             "contains_observation_values": False,
+            "contains_quality_messages": False,
             "series": series,
             "recent_retrieval_runs": runs,
             "system_metadata": metadata,
             "quality_event_summary": quality_summary,
+            "recent_quality_events": recent_quality_events,
         }
         OUT.parent.mkdir(parents=True, exist_ok=True)
         OUT.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
