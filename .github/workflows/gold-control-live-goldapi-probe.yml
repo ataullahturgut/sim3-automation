@@ -1,0 +1,57 @@
+name: Gold Control Live Gold API Probe
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-live-goldapi-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - name: Probe live XAU schema and freshness without logging raw price
+        shell: python
+        run: |
+          import math
+          from datetime import datetime, timezone
+          import requests
+
+          url='https://api.gold-api.com/price/XAU'
+          r=requests.get(url, timeout=15, headers={'User-Agent':'Gold-Control/1.0'})
+          r.raise_for_status()
+          p=r.json()
+
+          if str(p.get('symbol','')).upper()!='XAU':
+              raise RuntimeError('SYMBOL_NOT_XAU')
+          if str(p.get('currency','')).upper()!='USD':
+              raise RuntimeError('CURRENCY_NOT_USD')
+          price=float(p.get('price'))
+          if not math.isfinite(price) or price <= 0:
+              raise RuntimeError('PRICE_NOT_POSITIVE_FINITE')
+          updated=str(p.get('updatedAt') or '')
+          if not updated:
+              raise RuntimeError('UPDATED_AT_MISSING')
+          ts=datetime.fromisoformat(updated.replace('Z','+00:00'))
+          age=max(0.0,(datetime.now(timezone.utc)-ts.astimezone(timezone.utc)).total_seconds())
+          if age > 600:
+              raise RuntimeError(f'LIVE_DATA_STALE_GT_600S:{round(age,1)}')
+
+          print('HTTP_STATUS=200')
+          print('SYMBOL=XAU')
+          print('CURRENCY=USD')
+          print('PRICE_FIELD=VALID_POSITIVE_FINITE')
+          print('UPDATED_AT=PARSEABLE')
+          print(f'AGE_SECONDS_LT_600={age < 600}')
+          print('RAW_MARKET_VALUE_LOGGED=NO')
+          print('DATABASE_WRITES=NONE')
+          print('GOLDAPI_LIVE_XAU_PROBE_PASS')
