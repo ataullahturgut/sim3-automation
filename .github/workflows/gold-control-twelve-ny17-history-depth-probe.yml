@@ -1,0 +1,50 @@
+name: Gold Control Twelve NY17 History Depth Probe
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-twelve-ny17-history-depth-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - name: Probe selected historical NY17 dates without logging prices
+        shell: python
+        run: |
+          import json, os, requests
+          key=os.environ['TWELVE_DATA_API_KEY']
+          dates=['2026-07-01','2026-07-15','2026-07-31','2026-08-14','2026-08-31']
+          out=[]
+          for d in dates:
+              r=requests.get('https://api.twelvedata.com/time_series', params={
+                  'symbol':'XAU/USD','interval':'1min',
+                  'start_date':f'{d} 16:58:00','end_date':f'{d} 17:01:00',
+                  'timezone':'America/New_York','outputsize':10,'format':'JSON'
+              }, headers={'Authorization':f'apikey {key}','User-Agent':'GoldControl-NY17-HistoryDepth/1.0'}, timeout=(8,35))
+              r.raise_for_status(); p=r.json()
+              if p.get('status')=='error':
+                  out.append({'date':d,'status':'API_ERROR','code':p.get('code')})
+                  continue
+              vals=p.get('values') or []
+              hit=[v for v in vals if str(v.get('datetime','')).endswith('16:59:00')]
+              valid=len(hit)==1 and all(float(hit[0][f])>0 for f in ('open','high','low','close'))
+              out.append({'date':d,'status':'PASS' if valid else 'NO_VALID_1659','count':len(hit)})
+          print(json.dumps(out,indent=2))
+          print('RAW_MARKET_VALUES_LOGGED=NO')
+          print('DATABASE_WRITES=NONE')
+          if not all(x['status']=='PASS' for x in out):
+              raise SystemExit('TWELVE_NY17_HISTORY_DEPTH_INCOMPLETE')
+          print('TWELVE_NY17_HISTORY_DEPTH_JUL_AUG_PASS')
