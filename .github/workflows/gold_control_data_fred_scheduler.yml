@@ -1,0 +1,44 @@
+name: Gold Control Data Scheduler - FRED Indices
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold_control_data_fred_scheduler.yml'
+  schedule:
+    - cron: '15 1 * * 2-6'
+    - cron: '30 12 * * 2-6'
+  workflow_dispatch:
+
+concurrency:
+  group: gold-control-data-fred-scheduler
+  cancel-in-progress: true
+
+jobs:
+  ingest-fred-indices:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Require protected secrets
+        shell: bash
+        run: |
+          test -n "$NEON_DATABASE_URL" || { echo "NEON_DATABASE_URL missing"; exit 1; }
+          test -n "$FRED_API_KEY" || { echo "FRED_API_KEY missing"; exit 1; }
+      - name: Persist private indices
+        run: python gold_axis_2026/data_pipeline/source_job.py --source fred_indices --mode daily --persist
+      - name: Dedupe replay
+        run: python gold_axis_2026/data_pipeline/source_job.py --source fred_indices --mode daily --persist
+      - name: Verify FRED index persistence
+        run: python gold_axis_2026/data_pipeline/verify_fred_indices.py
