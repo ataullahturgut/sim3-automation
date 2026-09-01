@@ -48,3 +48,5 @@ jobs:
             git commit -m "gold-data: refresh live DB inventory metadata"
             git push
           fi
+
+# Audit rerun marker: scheduler-bridge-2026-09-01
