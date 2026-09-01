@@ -1,6 +1,6 @@
 {
   "audit_version": "GOLD_CONTROL_LIVE_DB_INVENTORY_R1",
-  "generated_at_utc": "2026-09-01T08:20:09.811893+00:00",
+  "generated_at_utc": "2026-09-01T08:34:15.566079+00:00",
   "mode": "READ_ONLY_ROLLBACK",
   "contains_observation_values": false,
   "contains_quality_messages": false,
@@ -21,11 +21,11 @@
     {
       "series_id": "DEXCHUS_FRB_H10",
       "first_observation_ts": "2025-10-20T00:00:00+00:00",
-      "last_observation_ts": "2026-08-21T00:00:00+00:00",
+      "last_observation_ts": "2026-08-28T00:00:00+00:00",
       "first_seen_at": "2026-08-31T13:28:21.957530+00:00",
-      "last_retrieved_at": "2026-08-31T13:28:21.957530+00:00",
-      "latest_provider_as_of": "2026-08-21T00:00:00+00:00",
-      "usable_current_rows": "211",
+      "last_retrieved_at": "2026-09-01T08:22:56.416576+00:00",
+      "latest_provider_as_of": "2026-08-28T00:00:00+00:00",
+      "usable_current_rows": "216",
       "lineage_count": "1",
       "latest_source": "Board of Governors of the Federal Reserve System H.10 DDP",
       "latest_lineage_id": "96321f4b8ae1562a97ee",
@@ -34,11 +34,11 @@
     {
       "series_id": "DGS10_FRB_H15",
       "first_observation_ts": "2025-10-24T00:00:00+00:00",
-      "last_observation_ts": "2026-08-27T00:00:00+00:00",
+      "last_observation_ts": "2026-08-28T00:00:00+00:00",
       "first_seen_at": "2026-08-31T13:28:21.957530+00:00",
-      "last_retrieved_at": "2026-08-31T13:28:21.957530+00:00",
-      "latest_provider_as_of": "2026-08-27T00:00:00+00:00",
-      "usable_current_rows": "211",
+      "last_retrieved_at": "2026-09-01T08:22:56.416576+00:00",
+      "latest_provider_as_of": "2026-08-28T00:00:00+00:00",
+      "usable_current_rows": "212",
       "lineage_count": "1",
       "latest_source": "Board of Governors of the Federal Reserve System H.15 DDP",
       "latest_lineage_id": "89f6834d0fedc2f35cd5",
@@ -60,11 +60,11 @@
     {
       "series_id": "DTWEXBGS_FRB_H10",
       "first_observation_ts": "2025-10-20T00:00:00+00:00",
-      "last_observation_ts": "2026-08-21T00:00:00+00:00",
+      "last_observation_ts": "2026-08-28T00:00:00+00:00",
       "first_seen_at": "2026-08-31T13:28:21.957530+00:00",
-      "last_retrieved_at": "2026-08-31T13:28:21.957530+00:00",
-      "latest_provider_as_of": "2026-08-21T00:00:00+00:00",
-      "usable_current_rows": "211",
+      "last_retrieved_at": "2026-09-01T08:22:56.416576+00:00",
+      "latest_provider_as_of": "2026-08-28T00:00:00+00:00",
+      "usable_current_rows": "216",
       "lineage_count": "1",
       "latest_source": "Board of Governors of the Federal Reserve System H.10 DDP",
       "latest_lineage_id": "2da7881dd0115bad361c",
@@ -151,11 +151,11 @@
     {
       "series_id": "GVZ_CBOE",
       "first_observation_ts": "2026-03-10T00:00:00+00:00",
-      "last_observation_ts": "2026-08-28T00:00:00+00:00",
+      "last_observation_ts": "2026-08-31T00:00:00+00:00",
       "first_seen_at": "2026-08-31T12:58:31.028467+00:00",
-      "last_retrieved_at": "2026-08-31T13:39:02.243276+00:00",
-      "latest_provider_as_of": "2026-08-28T00:00:00+00:00",
-      "usable_current_rows": "120",
+      "last_retrieved_at": "2026-09-01T08:22:54.858062+00:00",
+      "latest_provider_as_of": "2026-08-31T00:00:00+00:00",
+      "usable_current_rows": "121",
       "lineage_count": "1",
       "latest_source": "Cboe",
       "latest_lineage_id": "bc66929c829781311e48",
@@ -216,11 +216,11 @@
     {
       "series_id": "VIX_CBOE",
       "first_observation_ts": "2026-03-13T00:00:00+00:00",
-      "last_observation_ts": "2026-08-28T00:00:00+00:00",
+      "last_observation_ts": "2026-08-31T00:00:00+00:00",
       "first_seen_at": "2026-08-31T12:58:31.028467+00:00",
-      "last_retrieved_at": "2026-08-31T13:39:02.243276+00:00",
-      "latest_provider_as_of": "2026-08-28T00:00:00+00:00",
-      "usable_current_rows": "120",
+      "last_retrieved_at": "2026-09-01T08:22:54.858062+00:00",
+      "latest_provider_as_of": "2026-08-31T00:00:00+00:00",
+      "usable_current_rows": "121",
       "lineage_count": "1",
       "latest_source": "Cboe",
       "latest_lineage_id": "2b41c8baa1b7b604b947",
@@ -254,6 +254,50 @@
     }
   ],
   "recent_retrieval_runs": [
+    {
+      "run_id": "3bfe14da-5879-45ea-b430-dca5f5967116",
+      "started_at": "2026-09-01T08:22:56.416576+00:00",
+      "finished_at": "2026-09-01T08:23:06.518270+00:00",
+      "git_sha": "20c57cb7734e1246dc33074ca88873135aaa67b2",
+      "pipeline_version": "GOLD_DATA_R2.7_2026-08-31",
+      "trigger_type": "daily:fed",
+      "status": "SUCCESS",
+      "observations_read": "853",
+      "observations_written": "11"
+    },
+    {
+      "run_id": "a033a3da-859d-4427-9564-828119f1ee92",
+      "started_at": "2026-09-01T08:22:57.249638+00:00",
+      "finished_at": "2026-09-01T08:22:57.351197+00:00",
+      "git_sha": "20c57cb7734e1246dc33074ca88873135aaa67b2",
+      "pipeline_version": "GOLD_DATA_R2.7_2026-08-31",
+      "trigger_type": "daily:xau",
+      "status": "PARTIAL",
+      "observations_read": "0",
+      "observations_written": "0"
+    },
+    {
+      "run_id": "79360345-34fd-4763-ad44-8af207a2f35e",
+      "started_at": "2026-09-01T08:22:54.858062+00:00",
+      "finished_at": "2026-09-01T08:22:55.531109+00:00",
+      "git_sha": "20c57cb7734e1246dc33074ca88873135aaa67b2",
+      "pipeline_version": "GOLD_DATA_R2.7_2026-08-31",
+      "trigger_type": "daily:cboe",
+      "status": "SUCCESS",
+      "observations_read": "240",
+      "observations_written": "2"
+    },
+    {
+      "run_id": "c680afe2-29b3-4ceb-a22b-c6e16c27401a",
+      "started_at": "2026-09-01T08:22:53.133855+00:00",
+      "finished_at": "2026-09-01T08:22:53.861944+00:00",
+      "git_sha": "20c57cb7734e1246dc33074ca88873135aaa67b2",
+      "pipeline_version": "GOLD_DATA_R2.7_2026-08-31",
+      "trigger_type": "daily:gpr",
+      "status": "SUCCESS",
+      "observations_read": "108",
+      "observations_written": "0"
+    },
     {
       "run_id": "89a62a49-ed2c-4e09-962b-c52c5098997d",
       "started_at": "2026-09-01T08:17:57.523661+00:00",
@@ -539,50 +583,6 @@
       "status": "SUCCESS",
       "observations_read": "750",
       "observations_written": "0"
-    },
-    {
-      "run_id": "caac70dd-2138-46ec-a28b-7484741116ec",
-      "started_at": "2026-08-31T14:08:21.599779+00:00",
-      "finished_at": "2026-08-31T14:08:22.756480+00:00",
-      "git_sha": "61139487bb32f563a24ebb7731a7a534c465fd6a",
-      "pipeline_version": "GOLD_DATA_R2.7_2026-08-31",
-      "trigger_type": "daily:fred_indices",
-      "status": "SUCCESS",
-      "observations_read": "750",
-      "observations_written": "0"
-    },
-    {
-      "run_id": "719d232b-6488-4e4e-b6a6-2c1ed301c483",
-      "started_at": "2026-08-31T14:07:22.729551+00:00",
-      "finished_at": "2026-08-31T14:07:23.037335+00:00",
-      "git_sha": "79abfe02ec7a95df92c3f714bf7039ec2bd85a63",
-      "pipeline_version": "GOLD_DATA_R2.6_2026-08-31",
-      "trigger_type": "daily:xau",
-      "status": "SUCCESS",
-      "observations_read": "121",
-      "observations_written": "2"
-    },
-    {
-      "run_id": "c72eb000-ba55-40af-92e8-a376ab16beb5",
-      "started_at": "2026-08-31T14:07:22.607483+00:00",
-      "finished_at": "2026-08-31T14:07:22.871174+00:00",
-      "git_sha": "79abfe02ec7a95df92c3f714bf7039ec2bd85a63",
-      "pipeline_version": "GOLD_DATA_R2.6_2026-08-31",
-      "trigger_type": "daily:cboe",
-      "status": "SUCCESS",
-      "observations_read": "240",
-      "observations_written": "0"
-    },
-    {
-      "run_id": "82c30795-b290-4d9e-b846-59bdf5380c0c",
-      "started_at": "2026-08-31T14:07:21.094001+00:00",
-      "finished_at": "2026-08-31T14:07:21.869074+00:00",
-      "git_sha": "79abfe02ec7a95df92c3f714bf7039ec2bd85a63",
-      "pipeline_version": "GOLD_DATA_R2.6_2026-08-31",
-      "trigger_type": "daily:fed",
-      "status": "SUCCESS",
-      "observations_read": "853",
-      "observations_written": "0"
     }
   ],
   "system_metadata": [
@@ -594,7 +594,7 @@
     {
       "key": "historical_query_contract",
       "value": "USE observations_as_of(origin_ts); canonical_latest is current-state only",
-      "updated_at": "2026-09-01T08:17:11.566590+00:00"
+      "updated_at": "2026-09-01T08:22:37.419444+00:00"
     },
     {
       "key": "project",
@@ -604,15 +604,21 @@
     {
       "key": "schema_version",
       "value": "GOLD_DATA_R2.6_2026-08-31",
-      "updated_at": "2026-09-01T08:17:11.566590+00:00"
+      "updated_at": "2026-09-01T08:22:37.419444+00:00"
     }
   ],
   "quality_event_summary": {
-    "quality_error_events": "36",
+    "quality_error_events": "37",
     "quality_warning_events": "0",
-    "latest_quality_event_ts": "2026-09-01T08:17:12.468056+00:00"
+    "latest_quality_event_ts": "2026-09-01T08:22:57.351077+00:00"
   },
   "recent_quality_events": [
+    {
+      "series_id": null,
+      "event_ts": "2026-09-01T08:22:57.351077+00:00",
+      "severity": "ERROR",
+      "code": "COLLECTOR_FAILURE"
+    },
     {
       "series_id": null,
       "event_ts": "2026-09-01T08:17:12.468056+00:00",
@@ -784,12 +790,6 @@
     {
       "series_id": "SP500_FRED",
       "event_ts": "2026-08-31T12:59:37.721383+00:00",
-      "severity": "ERROR",
-      "code": "COLLECTOR_FAILURE"
-    },
-    {
-      "series_id": "NASDAQ100_FRED",
-      "event_ts": "2026-08-31T12:59:37.721379+00:00",
       "severity": "ERROR",
       "code": "COLLECTOR_FAILURE"
     }
