@@ -1,0 +1,58 @@
+name: Gold Control v1.10 State Reconcile Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-v1-10-state-reconcile-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install psycopg[binary]
+      - name: Read-only forecast/context state reconciliation
+        shell: python
+        run: |
+          import json, os
+          import psycopg
+          from psycopg.rows import dict_row
+
+          tables=['forecast_input_snapshots','derived_feature_snapshots','monthly_forecast_contracts']
+          out={'database_writes':'NONE','counts':{},'append_only_trigger_tables':0}
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  for t in tables:
+                      cur.execute(f'select count(*) as n from {t}')
+                      out['counts'][t]=int(cur.fetchone()['n'])
+                  cur.execute('''
+                    select count(distinct event_object_table) as n
+                    from information_schema.triggers
+                    where event_object_schema='public'
+                      and event_object_table in ('forecast_input_snapshots','derived_feature_snapshots','monthly_forecast_contracts')
+                  ''')
+                  out['append_only_trigger_tables']=int(cur.fetchone()['n'])
+                  cur.execute('''
+                    select id, feature_name, feature_version, quality_status, calculation_ts, input_cutoff
+                    from derived_feature_snapshots
+                    order by id desc limit 1
+                  ''')
+                  row=cur.fetchone()
+                  out['latest_derived_feature']=dict(row) if row else None
+              conn.rollback()
+          if out['append_only_trigger_tables'] != 3:
+              raise RuntimeError('APPEND_ONLY_TRIGGER_COVERAGE_NOT_3_OF_3')
+          print(json.dumps(out, indent=2, default=str))
+          print('RAW_MARKET_VALUES_LOGGED=NO')
+          print('MANIFEST_V1_10_STATE_RECONCILE_AUDIT_PASS')
