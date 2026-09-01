@@ -13,7 +13,7 @@ permissions:
 jobs:
   backfill:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     env:
       NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
       TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
@@ -30,5 +30,11 @@ jobs:
         run: |
           test -n "$NEON_DATABASE_URL"
           test -n "$TWELVE_DATA_API_KEY"
-      - name: Backfill canonical NY17 July-August history and verify
-        run: python gold_axis_2026/data_pipeline/twelve_xau_ny17_backfill.py --start 2026-07-01 --end 2026-08-31 --persist
+      - name: Backfill canonical NY17 history and monthly anchors and verify
+        run: |
+          python gold_axis_2026/data_pipeline/twelve_xau_ny17_backfill.py \
+            --start 2026-07-01 \
+            --end 2026-08-31 \
+            --anchor 2026-05-29 \
+            --anchor 2026-06-30 \
+            --persist
