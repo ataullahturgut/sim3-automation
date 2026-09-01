@@ -20,18 +20,19 @@ jobs:
           ref: gold-r4-direction-engine
           fetch-depth: 0
 
-      - name: Apply deterministic authority contract
-        run: python gold_axis_2026/tools/apply_xau_eod_authority_v1_4.py
+      - name: Apply deterministic EBS decision-reference contract
+        run: python gold_axis_2026/tools/apply_xau_eod_decision_reference_v1_5.py
 
       - name: Verify exact changed scope
         run: |
           python -m json.tool gold_axis_2026/data_pipeline/source_contracts.json >/dev/null
-          grep -Fq '**Manifest version:** 1.4' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          grep -Fq 'CME_EBS_XAUUSD_1700_ET_AUTHORITY_AND_SESSION_APPROVED' gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md
-          grep -Fq 'CME_EBS_XAUUSD_1700_ET_AUTHORITY_AND_SESSION_APPROVED' gold_axis_2026/GOLD_CONTROL_XAU_EOD_SOURCE_CHANGE_CONTROL_2026-09-01.md
+          grep -Fq '**Manifest version:** 1.5' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'CME_EBS_XAUUSD_1700_ET_DECISION_REFERENCE_RULE_APPROVED' gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md
+          grep -Fq 'CME_EBS_XAUUSD_1700_ET_DECISION_REFERENCE_RULE_APPROVED' gold_axis_2026/GOLD_CONTROL_XAU_EOD_SOURCE_CHANGE_CONTROL_2026-09-01.md
+          grep -Fq 'APPROVED_EXECUTABLE_DECISION_REFERENCE_CONTRACT; BLOCKED_DATA_ENTITLEMENT' gold_axis_2026/data_pipeline/source_contracts.json
           test "$(git status --short | awk '{print $2}' | sort | tr '\n' ' ')" = "gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md gold_axis_2026/GOLD_CONTROL_XAU_EOD_SOURCE_CHANGE_CONTROL_2026-09-01.md gold_axis_2026/data_pipeline/source_contracts.json "
 
-      - name: Commit authority contract to canonical branch
+      - name: Commit decision-reference contract to canonical branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -39,5 +40,5 @@ jobs:
                   gold_axis_2026/GOLD_CONTROL_STAGE4_STATUS_2026-09-01.md \
                   gold_axis_2026/GOLD_CONTROL_XAU_EOD_SOURCE_CHANGE_CONTROL_2026-09-01.md \
                   gold_axis_2026/data_pipeline/source_contracts.json
-          git commit -m "gold-control: freeze CME EBS 17ET XAU EOD authority"
+          git commit -m "gold-control: freeze EBS 17ET decision reference v1.5"
           git push origin HEAD:gold-r4-direction-engine
