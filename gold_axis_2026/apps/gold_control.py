@@ -9,6 +9,7 @@ import streamlit as st
 
 from decision_source import fetch_current_decision_state
 from live_sources import fetch_gvz_history, fetch_gvz_latest, fetch_xau_history, fetch_xau_spot
+from piyasa_contract import filter_history_timeframe, gvz_regime, latest_completed_daily_row, price_delta
 
 ROOT = Path(__file__).resolve().parents[1]
 R41 = ROOT / "r4_1"
@@ -23,34 +24,36 @@ st.set_page_config(page_title="Gold Control", page_icon="🟡", layout="wide")
 st.markdown(
     """
     <style>
-    .block-container {padding-top: .75rem; padding-bottom: 3rem; max-width: 920px;}
-    div[data-testid="stMetric"] {
-        border: 1px solid rgba(128,128,128,.25);
-        border-radius: 14px;
-        padding: 10px;
-    }
-    .decisionbox {
-        padding: 16px;
-        border-radius: 16px;
-        border: 1px solid rgba(128,128,128,.35);
-        margin: 6px 0 14px 0;
-    }
-    .decisionbox .eyebrow {font-size:.78rem; opacity:.72; margin-bottom:2px;}
-    .decisionbox .decision {font-size:1.65rem; font-weight:750; line-height:1.15; margin:2px 0 4px 0;}
-    .decisionbox .meta {font-size:.82rem; opacity:.78;}
-    .sourcebox {font-size:.79rem; opacity:.78; margin-top:-6px; margin-bottom:10px;}
-    .sectionnote {font-size:.84rem; opacity:.78;}
-    div[data-baseweb="tab-list"] {gap: .15rem;}
-    button[data-baseweb="tab"] {padding-left: .65rem; padding-right: .65rem;}
-    @media (max-width: 640px) {
-        .block-container {padding-left:.65rem; padding-right:.65rem; padding-top:.45rem;}
-        h1 {font-size:1.55rem !important; margin-bottom:.15rem !important;}
-        h2 {font-size:1.25rem !important;}
-        h3 {font-size:1.05rem !important;}
-        button[data-baseweb="tab"] {padding-left:.42rem; padding-right:.42rem; font-size:.78rem;}
-        div[data-testid="stMetricValue"] {font-size:1.25rem;}
-        .decisionbox .decision {font-size:1.45rem;}
-    }
+      :root { --navy:#082743; --gold:#e2a531; --ink:#10233e; --muted:#63718a; }
+      .block-container {padding-top:.8rem; padding-bottom:3.5rem; max-width:940px;}
+      h1,h2,h3 {color:var(--ink);}
+      .gc-brand {font-size:1.55rem;font-weight:800;letter-spacing:.02em;color:var(--ink);margin-bottom:.1rem;}
+      .gc-brand span {color:var(--gold);font-weight:650;font-size:.78rem;display:block;letter-spacing:.11em;}
+      .market-hero {background:var(--navy);color:white;border-radius:18px;padding:22px 24px;margin:10px 0 16px 0;}
+      .market-kicker {font-size:.77rem;opacity:.72;letter-spacing:.06em;text-transform:uppercase;}
+      .market-price {font-size:2.25rem;font-weight:760;line-height:1.15;margin:.25rem 0;}
+      .market-meta {font-size:.82rem;opacity:.78;line-height:1.45;}
+      .delta-pos {color:#4fd17b;font-weight:700;}
+      .delta-neg {color:#ff6b72;font-weight:700;}
+      .delta-flat {color:#d9e2ec;font-weight:700;}
+      .decision-strip {border:1px solid rgba(8,39,67,.14);border-left:4px solid var(--gold);border-radius:12px;padding:13px 15px;margin:.8rem 0;background:#fff;}
+      .decision-strip .title {font-size:.76rem;color:var(--muted);font-weight:700;letter-spacing:.04em;}
+      .decision-strip .value {font-size:1.15rem;color:var(--ink);font-weight:760;margin-top:.2rem;}
+      .decision-strip .meta {font-size:.8rem;color:var(--muted);margin-top:.25rem;}
+      .sourcebox {font-size:.78rem;color:var(--muted);margin-top:-4px;margin-bottom:8px;line-height:1.4;}
+      div[data-testid="stMetric"] {border:1px solid rgba(8,39,67,.12);border-radius:14px;padding:12px;background:white;}
+      div[data-baseweb="tab-list"] {gap:.12rem;}
+      button[data-baseweb="tab"] {padding-left:.65rem;padding-right:.65rem;}
+      .stAlert {border-radius:12px;}
+      @media (max-width:640px) {
+        .block-container {padding-left:.65rem;padding-right:.65rem;padding-top:.5rem;}
+        .market-hero {padding:18px 17px;border-radius:15px;}
+        .market-price {font-size:1.9rem;}
+        h1 {font-size:1.5rem !important;}
+        h2 {font-size:1.2rem !important;}
+        button[data-baseweb="tab"] {padding-left:.38rem;padding-right:.38rem;font-size:.77rem;}
+        div[data-testid="stMetricValue"] {font-size:1.18rem;}
+      }
     </style>
     """,
     unsafe_allow_html=True,
@@ -92,6 +95,22 @@ def live_gvz_history() -> pd.DataFrame:
     return fetch_gvz_history()
 
 
+def fmt_number(value, digits: int = 2) -> str:
+    try:
+        return f"{float(value):,.{digits}f}"
+    except (TypeError, ValueError):
+        return "N/A" if value is None else str(value)
+
+
+def fmt_ts(value) -> str:
+    if not value:
+        return "N/A"
+    ts = pd.to_datetime(value, utc=True, errors="coerce")
+    if pd.isna(ts):
+        return str(value)
+    return ts.strftime("%d %b %Y %H:%M UTC")
+
+
 def safe_live_xau() -> tuple[dict | None, str | None]:
     try:
         return live_xau(), None
@@ -106,30 +125,26 @@ def safe_live_gvz() -> tuple[dict | None, str | None]:
         return None, f"{type(exc).__name__}: {exc}"
 
 
-def fmt_number(value, digits: int = 2) -> str:
+def safe_xau_history() -> tuple[pd.DataFrame, dict, str | None]:
     try:
-        return f"{float(value):,.{digits}f}"
-    except (TypeError, ValueError):
-        return "N/A" if value is None else str(value)
+        frame, meta = live_xau_history()
+        return frame, meta, None
+    except Exception as exc:
+        return pd.DataFrame(), {}, f"{type(exc).__name__}: {exc}"
 
 
-def show_decision_box(classification: str, as_of: str, note: str) -> None:
-    st.markdown(
-        f"""
-        <div class='decisionbox'>
-          <div class='eyebrow'>SON ÜRETİLMİŞ R4.1 EOD KARARI</div>
-          <div class='decision'>{classification}</div>
-          <div class='meta'>as-of: {as_of} · {note}</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+def safe_gvz_history() -> tuple[pd.DataFrame, str | None]:
+    try:
+        return live_gvz_history(), None
+    except Exception as exc:
+        return pd.DataFrame(), f"{type(exc).__name__}: {exc}"
 
 
 config = load_json(CONFIG)
 prov = load_json(PROVENANCE)
+historical_replay = load_csv(HISTORY)
+scorecard = load_csv(SCORECARD)
 
-decision_store_error = None
 db_url = os.environ.get("NEON_DATABASE_URL", "").strip()
 if not db_url:
     try:
@@ -137,253 +152,231 @@ if not db_url:
     except Exception:
         db_url = ""
 
+latest: dict = {}
+decision_store_error: str | None = None
 if db_url:
     try:
         latest = fetch_current_decision_state(db_url) or {}
     except Exception as exc:
-        latest = {}
         decision_store_error = f"{type(exc).__name__}: {exc}"
 else:
-    latest = {}
     decision_store_error = "NEON_DATABASE_URL_NOT_CONFIGURED"
 
-history = load_csv(HISTORY)
-scorecard = load_csv(SCORECARD)
+st.markdown("<div class='gc-brand'>GOLD CONTROL<span>DECISION SYSTEM</span></div>", unsafe_allow_html=True)
+st.caption("Piyasa → Görünüm → Tahmin → Geçmiş")
 
-st.title("🟡 Gold Control")
-st.caption("Karar → gerekçe → model → veri")
+piyasa_tab, gorunum_tab, tahmin_tab, gecmis_tab = st.tabs(["Piyasa", "Görünüm", "Tahmin", "Geçmiş"])
 
-now_tab, signals_tab, model_tab, data_tab = st.tabs(["Şimdi", "Sinyaller", "Model", "Veri"])
-
-with now_tab:
-    # The first mobile screen answers one question: what is the latest valid system state?
-    if latest:
-        evidence = str(latest.get("evidence_class", "UNRESOLVED"))
-        if evidence == "LIVE_PRODUCTION":
-            decision_note = "Decision Store · LIVE_PRODUCTION · canlı spot değildir"
-        else:
-            decision_note = "Decision Store · PROSPECTIVE_SHADOW · canlı üretim kararı değildir"
-        show_decision_box(
-            str(latest.get("classification", "UNRESOLVED")),
-            str(latest.get("date", "N/A")),
-            decision_note,
-        )
-    else:
-        show_decision_box(
-            "KANONİK KARAR YOK",
-            "N/A",
-            "Decision Store'da LIVE_PRODUCTION / PROSPECTIVE_SHADOW kayıt yok",
-        )
-        if decision_store_error:
-            st.caption(f"Decision Store: {decision_store_error}")
-        st.warning("Canlı XAU fiyatından otomatik LONG/EXIT kararı türetilmiyor.")
+with piyasa_tab:
+    st.subheader("Piyasa")
+    st.caption("Piyasa şu anda ne durumda? Canlı izleme verisi karar veya tahmin değildir.")
 
     xau, xau_error = safe_live_xau()
+    xhist, xmeta, xhist_error = safe_xau_history()
     gvz_live, gvz_error = safe_live_gvz()
 
-    c1, c2 = st.columns(2)
+    completed = latest_completed_daily_row(xhist)
+    completed_close = None if completed is None else float(completed["close"])
+    completed_date = None if completed is None else pd.Timestamp(completed["date"]).date().isoformat()
+    delta = price_delta(None if xau is None else xau.get("price"), completed_close)
+
     if xau:
-        c1.metric("XAU/USD spot", fmt_number(xau.get("price")))
-        xau_status = "STALE" if xau.get("stale") else str(xau.get("status", "unknown")).upper()
-        c1.markdown(
-            f"<div class='sourcebox'>{xau_status} · {xau.get('as_of','N/A')}<br>{xau.get('source','N/A')} · indicative</div>",
+        live_price = float(xau["price"])
+        status = "STALE" if xau.get("stale") else "FRESH"
+        if delta is None:
+            delta_html = "<span class='delta-flat'>Günlük karşılaştırma mevcut değil</span>"
+        else:
+            css = "delta-pos" if delta.absolute > 0 else "delta-neg" if delta.absolute < 0 else "delta-flat"
+            sign = "+" if delta.absolute > 0 else ""
+            delta_html = f"<span class='{css}'>{sign}{delta.absolute:,.2f} USD ({sign}{delta.percent:.2f}%)</span>"
+        st.markdown(
+            f"""
+            <div class='market-hero'>
+              <div class='market-kicker'>XAU/USD · indicative live</div>
+              <div class='market-price'>{live_price:,.2f} USD</div>
+              <div>{delta_html}</div>
+              <div class='market-meta'>
+                {status} · as-of {fmt_ts(xau.get('as_of'))}<br>
+                Source: Gold API · XAU_SPOT_GOLDAPI · display only / no model use
+              </div>
+            </div>
+            """,
             unsafe_allow_html=True,
         )
     else:
-        c1.metric("XAU/USD spot", "UNAVAILABLE")
-        c1.caption(xau_error or "Kaynak hatası")
+        st.error(f"Canlı XAU/USD şu anda alınamıyor: {xau_error or 'UNAVAILABLE'}")
 
+    c1, c2 = st.columns(2)
+    if completed_close is not None:
+        c1.metric("Son tamamlanmış günlük close", f"{completed_close:,.2f} USD")
+        c1.markdown(
+            f"<div class='sourcebox'>{completed_date} · XAUS daily operational cross-check · benchmark/EOD authority değildir</div>",
+            unsafe_allow_html=True,
+        )
+    else:
+        c1.metric("Son tamamlanmış günlük close", "UNAVAILABLE")
+        c1.caption(xhist_error or "Tamamlanmış günlük kayıt bulunamadı")
+
+    gvz_cfg = config.get("gvz", {})
+    full_max = float(gvz_cfg.get("full_cap_max", 25.9795))
+    half_max = float(gvz_cfg.get("half_cap_max", 30.5238))
     if gvz_live:
         gvz_value = float(gvz_live["close"])
-        c2.metric("GVZ", f"{gvz_value:.2f}")
+        regime = gvz_regime(gvz_value, full_max=full_max, half_max=half_max)
+        c2.metric("GVZ", f"{gvz_value:.2f}", regime)
         c2.markdown(
-            f"<div class='sourcebox'>{gvz_live.get('as_of','N/A')} · Cboe daily close</div>",
+            f"<div class='sourcebox'>{gvz_live.get('as_of','N/A')} · Cboe official daily close · direction üretmez</div>",
             unsafe_allow_html=True,
         )
     else:
-        gvz_value = None
         c2.metric("GVZ", "UNAVAILABLE")
-        c2.caption(gvz_error or "Kaynak hatası")
+        c2.caption(gvz_error or "Cboe kaynağı alınamadı")
 
-    st.markdown("#### Kararı oluşturan çekirdek durum")
+    st.markdown("#### XAU günlük görünüm")
+    if not xhist.empty:
+        timeframe = st.radio(
+            "Zaman aralığı",
+            ["1A", "3A", "6A", "1Y"],
+            horizontal=True,
+            label_visibility="collapsed",
+            key="piyasa_timeframe",
+        )
+        chart = filter_history_timeframe(xhist, timeframe)
+        st.line_chart(chart.set_index("date")[["close"]], height=300)
+        st.caption(
+            f"Kaynak: {xmeta.get('source','XAUS history')} · operational daily history / cross-check. "
+            "Bu grafik canonical Twelve NY17 EOD veya settlement serisi değildir."
+        )
+    else:
+        st.warning(f"Günlük tarihçe kullanılamıyor: {xhist_error or 'UNAVAILABLE'}")
+
     if latest:
-        c1, c2 = st.columns(2)
-        c1.metric("Aylık yön", latest.get("monthly_direction_3m", "N/A"))
-        c2.metric("VW aylık referans", fmt_number(latest.get("vw_forecast_frozen")))
-        c1, c2 = st.columns(2)
-        c1.metric("Fast", latest.get("fast_state", "N/A"))
-        c2.metric("Slow", latest.get("slow_state", "N/A"))
-        c1, c2 = st.columns(2)
-        c1.metric("Emergency", latest.get("level_emergency", "N/A"))
-        c2.metric("Reversal", latest.get("reversal_emergency", "N/A"))
-        c1, c2 = st.columns(2)
-        c1.metric("GVZ cap", latest.get("gvz_cap", "N/A"))
-        c2.metric("R4.1 EOD close", fmt_number(latest.get("close")))
-    elif not history.empty:
-        last = history.iloc[-1]
-        st.info("Canlı karar yok. Aşağıdaki değerler yalnız son production-closure model kaydıdır.")
-        c1, c2 = st.columns(2)
-        c1.metric("Son değerlendirme ayı", last["month"].strftime("%Y-%m"))
-        c2.metric("Gerçekleşen", fmt_number(last.get("actual")))
-        c1, c2 = st.columns(2)
-        c1.metric("VW audited reference", fmt_number(last.get("vw")))
-        c2.metric("Patch executable", fmt_number(last.get("patch_r1")))
+        evidence = str(latest.get("evidence_class", "UNRESOLVED"))
+        st.markdown(
+            f"""
+            <div class='decision-strip'>
+              <div class='title'>SON DISPLAY-ELIGIBLE R4.1 EOD DURUMU</div>
+              <div class='value'>{latest.get('classification','UNRESOLVED')}</div>
+              <div class='meta'>as-of {latest.get('decision_as_of') or latest.get('date','N/A')} · {evidence}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            """
+            <div class='decision-strip'>
+              <div class='title'>SON DISPLAY-ELIGIBLE R4.1 EOD DURUMU</div>
+              <div class='value'>KANONİK KARAR YOK</div>
+              <div class='meta'>Decision Store'da LIVE_PRODUCTION / PROSPECTIVE_SHADOW kayıt yok.</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        if decision_store_error and decision_store_error != "NEON_DATABASE_URL_NOT_CONFIGURED":
+            st.caption(f"Decision Store read: {decision_store_error}")
 
-    if gvz_value is not None:
-        gvz_cfg = config.get("gvz", {})
-        full_max = float(gvz_cfg.get("full_cap_max", 25.9795))
-        half_max = float(gvz_cfg.get("half_cap_max", 30.5238))
-        if gvz_value <= full_max:
-            st.success("GVZ rejimi: normal · risk cap 100%")
-        elif gvz_value <= half_max:
-            st.warning("GVZ rejimi: elevated · risk cap 50%")
-        else:
-            st.error("GVZ rejimi: panic · risk cap 25%")
+    st.info("Canlı spot ≠ son EOD karar. Canlı fiyat hiçbir zaman uygulama içinde otomatik yön/pozisyon kararına çevrilmez.")
 
-    if st.button("↻ Canlı veriyi yenile", use_container_width=True):
+    if st.button("↻ Piyasa verisini yenile", use_container_width=True):
         live_xau.clear()
         live_gvz.clear()
         live_xau_history.clear()
         live_gvz_history.clear()
         st.rerun()
 
-    st.caption("Spot izleme verisidir. Son EOD kararının yerine geçmez.")
-
-with signals_tab:
-    st.subheader("Sinyal katmanları")
-    st.caption("Bu ekran 'karar neden böyle?' sorusunu cevaplar. Frozen kural detayları aşağıdaki açılır bölümde tutulur.")
-
-    signal_rows = []
-    if latest:
-        signal_rows = [
-            ("CORE / 3M", latest.get("monthly_direction_3m", "N/A"), "Aylık ana yön prior"),
-            ("Fast Tactical", latest.get("fast_state", "N/A"), "Kısa vadeli teyit"),
-            ("Slow Tactical", latest.get("slow_state", "N/A"), "Daha yavaş trend teyidi"),
-            ("Level Emergency", latest.get("level_emergency", "N/A"), "Frozen VW seviyesinden sapma"),
-            ("Reversal", latest.get("reversal_emergency", "N/A"), "Koşullu reversal alarmı"),
-            ("GVZ", latest.get("gvz_cap", "N/A"), "Pozisyon/risk tavanı"),
-        ]
-        st.dataframe(
-            pd.DataFrame(signal_rows, columns=["Katman", "Son durum", "Rol"]),
-            use_container_width=True,
-            hide_index=True,
-        )
-        st.caption(f"R4.1 stored state as-of: {latest.get('date','N/A')} · evidence: {latest.get('evidence_class','N/A')}")
+with gorunum_tab:
+    st.subheader("Görünüm")
+    st.caption("Sistem neden böyle düşünüyor?")
+    if not latest:
+        st.warning("KANONİK KARAR YOK — Görünüm ekranı display-eligible Decision Store snapshot olmadan karar üretmez.")
+        st.write("Stage 6 status: `BLOCKED_NO_DISPLAY_ELIGIBLE_DECISION_SNAPSHOT`")
     else:
-        st.warning("Decision Store’da display-eligible karar yok. HISTORICAL_REPLAY canlı state olarak gösterilmez.")
-
-    with st.expander("Frozen R4.1 kuralları"):
-        tactical = config.get("tactical", {})
-        emergency = config.get("emergency", {})
-        gvz = config.get("gvz", {})
+        st.markdown(f"### {latest.get('classification','UNRESOLVED')}")
+        st.caption(
+            f"Decision Store · {latest.get('evidence_class','UNRESOLVED')} · as-of {latest.get('decision_as_of') or latest.get('date','N/A')}"
+        )
         rows = [
-            ("Price reference", f"{prov.get('audited_shadow_reference', 'N/A')} — audited shadow/reference"),
-            ("Executable point forecast", prov.get("temporary_executable_point_forecast", "N/A")),
-            ("Core direction", config.get("core", {}).get("direction_model", "N/A")),
-            ("Fast", f"SMA{tactical.get('fast_sma_days','?')} / {tactical.get('fast_persistence_days','?')} day persistence"),
-            ("Slow", f"SMA{tactical.get('slow_sma_weeks','?')} completed weeks / {tactical.get('slow_persistence_weeks','?')} week persistence"),
-            ("Level Emergency", f"±{100*emergency.get('level_threshold_abs',0):.1f}% vs frozen monthly VW"),
-            ("Reversal Emergency", f"±{100*emergency.get('reversal_threshold_abs',0):.1f}% from running extreme · {emergency.get('reversal_role','N/A')}"),
-            ("GVZ normal cap max", gvz.get("full_cap_max", "N/A")),
-            ("GVZ elevated cap max", gvz.get("half_cap_max", "N/A")),
-            ("BOCPD", config.get("bocpd", {}).get("role", "N/A")),
-            ("Macro Event", config.get("macro_event_down", {}).get("status", "N/A")),
+            ("Monthly context", latest.get("monthly_direction_3m", "N/A")),
+            ("Fast", latest.get("fast_state", "N/A")),
+            ("Slow", latest.get("slow_state", "N/A")),
+            ("Regime / BOCPD", latest.get("bocpd_context", "N/A")),
+            ("Level Emergency", latest.get("level_emergency", "N/A")),
+            ("Reversal", latest.get("reversal_emergency", "N/A")),
+            ("GVZ risk cap state", latest.get("gvz_cap", "N/A")),
         ]
-        st.dataframe(pd.DataFrame(rows, columns=["Katman", "Frozen rule/status"]), use_container_width=True, hide_index=True)
+        st.dataframe(pd.DataFrame(rows, columns=["Katman", "Stored state"]), use_container_width=True, hide_index=True)
+        st.info("Action mapping hâlâ NOT_PROVEN_POSITION_MAPPING. BUY/SELL/HOLD/EXIT veya güven yüzdesi üretilmez.")
 
-with model_tab:
-    st.subheader("Aylık tahmin modeli")
-    st.caption("Bu ekran H=1 modelinin ne söylediğini ve geçmişte nasıl performans verdiğini gösterir; execution sinyali değildir.")
+with tahmin_tab:
+    st.subheader("Tahmin")
+    st.caption("Gelecek ay için model ne bekliyor?")
+    st.warning("NOT_ISSUED_IN_CANONICAL_LEDGER")
+    st.write(
+        "Canonical H=1 forecast henüz immutable input snapshot + forecast contract ile prospectively yayımlanmadı. "
+        "Bu nedenle üretim tahmin değeri, tahmin aralığı veya güven yüzdesi gösterilmiyor."
+    )
+    st.caption("Stage 7 status: BLOCKED_FORECAST_NOT_ISSUED")
 
-    c1, c2 = st.columns(2)
-    c1.metric("Analytical reference", prov.get("audited_shadow_reference", "N/A"))
-    c2.metric("Executable fallback", prov.get("temporary_executable_point_forecast", "N/A"))
+    if not scorecard.empty:
+        with st.expander("Araştırma / historical replay model scorecard"):
+            st.warning("HISTORICAL_REPLAY — prospective/live performans değildir.")
+            st.dataframe(scorecard, use_container_width=True, hide_index=True)
 
-    aug_fc = prov.get("august_2026_patch_operational_forecast")
-    if aug_fc is not None:
-        st.info(
-            f"Ağustos 2026 Patch operational forecast: {fmt_number(aug_fc)} · origin {prov.get('august_2026_patch_origin_date','N/A')}"
+with gecmis_tab:
+    st.subheader("Geçmiş")
+    st.caption("Sistem geçmişte gerçekten ne yaptı?")
+    st.info(
+        "Prospective/live forecast ve decision ledger henüz yeterli forward kayıt içermiyor. "
+        "Aşağıdaki dosya-backed sonuçlar yalnız HISTORICAL_REPLAY etiketiyle gösterilir."
+    )
+    if not historical_replay.empty:
+        with st.expander("HISTORICAL_REPLAY · production closure geçmişi"):
+            st.dataframe(historical_replay.sort_values("month", ascending=False), use_container_width=True, hide_index=True)
+    else:
+        st.caption("Historical replay artifact bulunamadı.")
+
+st.divider()
+with st.expander("Sistem / Veri Sağlığı / Audit"):
+    xhist_health, xmeta_health, xhist_health_error = safe_xau_history()
+    gvz_history, gvz_history_error = safe_gvz_history()
+    xau_health, xau_health_error = safe_live_xau()
+
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Gold API live", "PASS" if xau_health else "FAIL")
+    c2.metric("XAU 1Y history", "PASS" if not xhist_health.empty else "FAIL")
+    c3.metric("GVZ history", "PASS" if not gvz_history.empty else "FAIL")
+
+    if xau_health:
+        st.caption(
+            f"Gold API: {xau_health.get('status','unknown').upper()} · {fmt_ts(xau_health.get('as_of'))} · "
+            f"series={xau_health.get('source_series','N/A')} · role={xau_health.get('use_role','N/A')}"
         )
+    elif xau_health_error:
+        st.caption(f"Gold API error: {xau_health_error}")
 
-    st.markdown("#### Production scorecard · 2023-01 → 2026-07")
-    if scorecard.empty:
-        st.error("common_scorecard.csv bulunamadı.")
-    else:
-        labels = {
-            "vw": "VW audited shadow/reference",
-            "patch_r1": "Causal PatchTST R1",
-            "repro_svr": "Repro SVR diagnostic",
-            "mom": "3M Momentum",
-            "rw": "Random Walk",
-        }
-        show = scorecard.copy()
-        show["model"] = show["model"].map(labels).fillna(show["model"])
-        st.dataframe(show, use_container_width=True, hide_index=True)
+    if not xhist_health.empty:
+        st.caption(
+            f"XAUS history: rows={len(xhist_health)} · last={pd.Timestamp(xhist_health['date'].max()).date()} · "
+            f"source={xmeta_health.get('source','N/A')}"
+        )
+    elif xhist_health_error:
+        st.caption(f"XAUS history error: {xhist_health_error}")
 
-    if not history.empty:
-        st.markdown("#### Son 18 ay")
-        st.line_chart(history.tail(18).set_index("month")[["actual", "vw", "patch_r1", "mom", "rw"]])
+    if not gvz_history.empty:
+        st.caption(f"Cboe GVZ: last={pd.Timestamp(gvz_history['date'].max()).date()}")
+    elif gvz_history_error:
+        st.caption(f"GVZ error: {gvz_history_error}")
 
-        r2026 = history[history["month"].dt.year == 2026].copy()
-        with st.expander("2026 aylık replay ve hata detayları"):
-            st.dataframe(r2026.sort_values("month", ascending=False), use_container_width=True, hide_index=True)
-            if not r2026.empty:
-                st.bar_chart(r2026.set_index("month")[["vw_ape", "patch_r1_ape", "mom_ape", "rw_ape"]])
-
-        with st.expander("Tüm production-history ham tablosu"):
-            st.dataframe(history.sort_values("month", ascending=False), use_container_width=True, hide_index=True)
-    else:
-        st.error("production_history_43.csv bulunamadı.")
-
-with data_tab:
-    st.subheader("Veri ve sağlık")
-    st.caption("Bu ekran yalnız uygulamaya gerçekten bağlı kaynakları gösterir. Backend/Neon'daki bir seri UI'ya bağlanmadıysa burada canlıymış gibi gösterilmez.")
-
-    try:
-        xh, xmeta = live_xau_history()
-        c1, c2 = st.columns(2)
-        c1.metric("XAU runtime", "PASS")
-        c2.metric("Son günlük tarih", str(xmeta.get("as_of", "N/A")))
-        st.caption(f"Kaynak: {xmeta.get('source','XAUS')} · günlük cross-check, benchmark değildir")
-        st.line_chart(xh.tail(120).set_index("date")[["close"]])
-        with st.expander("XAU son günlük kayıtlar"):
-            st.dataframe(xh.tail(60).sort_values("date", ascending=False), use_container_width=True, hide_index=True)
-    except Exception as exc:
-        st.error(f"XAU/USD günlük seri alınamadı: {type(exc).__name__}: {exc}")
-
-    try:
-        gh = live_gvz_history()
-        c1, c2 = st.columns(2)
-        c1.metric("GVZ runtime", "PASS")
-        c2.metric("Son günlük tarih", str(gh["date"].max()) if not gh.empty else "N/A")
-        st.caption("Kaynak: Cboe Gold ETF Volatility Index daily history")
-        st.line_chart(gh.tail(120).set_index("date")[["close"]])
-        with st.expander("GVZ son günlük kayıtlar"):
-            st.dataframe(gh.tail(60).sort_values("date", ascending=False), use_container_width=True, hide_index=True)
-    except Exception as exc:
-        st.error(f"GVZ günlük seri alınamadı: {type(exc).__name__}: {exc}")
-
-    if db_url:
-        st.success("Neon Decision Store reader: CONNECTED · yalnız LIVE_PRODUCTION / PROSPECTIVE_SHADOW okunur")
-    else:
-        st.warning("Neon Decision Store reader: NOT_CONFIGURED · NEON_DATABASE_URL uygulama ortamında yok")
-    st.info("Diğer makro/vendor serileri backend katmanındadır. UI'ya sorgu bağlantısı kurulmadan health PASS gösterilmeyecek.")
-
-    with st.expander("Audit / provenance"):
-        c1, c2 = st.columns(2)
-        c1.metric("Branch", "gold-r4-direction-engine")
-        c2.metric("R4.1 freeze", config.get("freeze_date", "N/A"))
-        st.write("**Repository:** `ataullahturgut/sim3-automation`")
-        st.write("**Production package:**", prov.get("source_package", "N/A"))
-        st.write("**Production package SHA256:**", prov.get("source_package_sha256", "N/A"))
-        st.write("**VW executable reproduction:**", prov.get("vw_executable_reproduction_status", "N/A"))
-        st.write("**Runtime SHA:**", os.environ.get("GITHUB_SHA", "Platform runtime SHA not exposed"))
-        st.json(prov)
-        st.json(config)
+    st.write("**Decision Store reader:**", "CONNECTED" if db_url else "NOT_CONFIGURED")
+    st.write("**Canonical branch:** `gold-r4-direction-engine`")
+    st.write("**R4.1 freeze:**", config.get("freeze_date", "N/A"))
+    st.write("**Runtime SHA:**", os.environ.get("GITHUB_SHA", "Platform runtime SHA not exposed"))
+    st.write("**VW executable reproduction:**", prov.get("vw_executable_reproduction_status", "N/A"))
+    st.caption("Twelve NY17 raw market value is intentionally not rendered here without separately proven display rights.")
 
     if BLOCKERS.exists():
         with st.expander("Known blockers"):
             st.markdown(BLOCKERS.read_text(encoding="utf-8"))
 
-st.divider()
-st.caption("Gold Control · karar odaklı mobil görünüm · live ≠ EOD signal · lineage açık")
+st.caption("Gold Control · market-first · live ≠ EOD decision · replay ≠ prospective · source lineage explicit")
