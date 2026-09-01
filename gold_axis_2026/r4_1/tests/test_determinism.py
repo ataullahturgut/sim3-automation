@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 from pathlib import Path
 
@@ -8,11 +9,23 @@ from pandas.testing import assert_frame_equal
 
 from gold_r4 import Direction, FastState, ReversalAlert, SlowState, classify_state, gvz_risk
 from gold_r4.emergency import EmergencyState
-from scripts.replay_daily import run_replay
 
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "config" / "frozen_r4_1.json"
+REPLAY_SCRIPT = ROOT / "scripts" / "replay_daily.py"
+
+
+def _load_run_replay():
+    spec = importlib.util.spec_from_file_location("gold_r4_replay_daily", REPLAY_SCRIPT)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Cannot load replay script: {REPLAY_SCRIPT}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.run_replay
+
+
+run_replay = _load_run_replay()
 
 
 def _synthetic_inputs() -> tuple[pd.DataFrame, pd.DataFrame]:
