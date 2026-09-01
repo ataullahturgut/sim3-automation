@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.11  
+**Manifest version:** 1.12  
 **Freeze / issue date:** 2026-09-01  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -185,10 +185,10 @@ The persisted-source-label discrepancy remains `UNRESOLVED_PERSISTED_SOURCE_LABE
 
 Series: `XAU_DAILY_XAUS`  
 Contract source: XAUS history  
-Role: operational cross-check  
-Status: `CANDIDATE_NOT_BENCHMARK`
+Role: **Piyasa daily history / last-completed-daily display cross-check only**  
+Status: `CANDIDATE_NOT_BENCHMARK; APPROVED_EXPLICITLY_LABELLED_OPERATIONAL_DISPLAY`
 
-The persisted operational lineage currently exposes an upstream/source label associated with Yahoo/GC=F. This remains an operational cross-check lineage and is not promoted to settlement/EOD authority.
+The persisted operational lineage currently exposes an upstream/source label associated with Yahoo/GC=F. This remains an operational cross-check lineage and is not promoted to settlement/EOD authority. Any Piyasa rendering must explicitly disclose that it is not canonical spot/EOD, settlement, benchmark, or model authority. The current-day row is not eligible for the `last completed daily close`; that comparison uses the newest positive daily row strictly before the current UTC date.
 
 ### Canonical XAU EOD decision-reference contract
 
@@ -668,7 +668,7 @@ Primary content:
 - as-of timestamp
 - freshness/stale state
 - source label
-- latest completed daily close
+- latest completed daily close from the explicitly labelled operational display history (`XAU_DAILY_XAUS`), never from raw Twelve vendor data unless display rights are separately proven
 - GVZ latest official close
 - GVZ risk regime
 - XAU historical chart
@@ -677,7 +677,9 @@ Current timeframe contract for the existing XAUS history adapter:
 
 `1A | 3A | 6A | 1Y`
 
-Do not expose `1G`, `1H`, or `Tümü` until a real intraday/longer-history adapter is connected and audited.
+Do not expose `1G`, `1H`, or `Tümü` until a real intraday/longer-history adapter is connected and audited. `XAU_EOD_TWELVE_NY17` remains the internal canonical R4.1 EOD decision-reference lineage; its raw numeric value is not a Piyasa display field unless Twelve external-display rights are separately proven and frozen.
+
+Display/licensing change-control: `gold_axis_2026/GOLD_CONTROL_PIYASA_DISPLAY_CONTRACT_CHANGE_CONTROL_2026-09-01.md`.
 
 Secondary decision strip:
 
@@ -921,6 +923,16 @@ Stage-5 runtime evidence added in manifest v1.11:
 - canonical live adapter smoke: run `33519370028`, job `99894418747`, `SUCCESS`; source series `XAU_SPOT_GOLDAPI`, freshness PASS, role `INDICATIVE_DISPLAY_ONLY_NO_MODEL_USE`, no raw-value logging or writes;
 - current 1-year XAU history adapter smoke: run `33519506662`, job `99894890585`, `SUCCESS`; row/span/freshness/duplicate/null gates PASS, no raw-value logging or writes.
 
+Stage-5 closure evidence added in manifest v1.12:
+
+- Piyasa deterministic contract tests: 4/4 PASS;
+- canonical Streamlit tabs: `Piyasa | Görünüm | Tahmin | Geçmiş`;
+- live Gold API and operational XAUS history rendered with explicit distinct lineage labels;
+- raw Twelve NY17 numeric market value intentionally not rendered;
+- Decision Store absence renders `KANONİK KARAR YOK`;
+- no forecast or decision write performed;
+- run `33521193615`, job `99900581399`, `STAGE5_PIYASA_UI_SMOKE_PASS`.
+
 ## 23.1 Current roadmap status — 2026-09-01
 
 | Stage | Current status | Evidence / blocker |
@@ -931,7 +943,7 @@ Stage-5 runtime evidence added in manifest v1.11:
 | 3 | `PASS_DECISION_STORE_AND_READ_PATH` | Production append-only store/read path active; no fabricated current decision |
 | 4A | `PASS_CURRENT_STATE_SUBSTRATE_FOR_SHADOW_CONTEXT` | NY17 backfill SUCCESS; monthly direction bootstrap issued; Fast/Slow rehearsal SUCCESS; forecast-state append-only guards 3/3 |
 | 4B | `IN_PROGRESS_BLOCKED_FORECAST_ISSUER` | Current H=1 issuer and VW monthly reference remain unresolved; forecast input snapshot/contract not issued |
-| 5 | `IN_PROGRESS_DATA_PATHS_PROVEN_UI_CONTRACT_NOT_COMPLETE` | Gold API live adapter smoke `SUCCESS` (run `33519370028`); XAUS 1-year history adapter smoke `SUCCESS` (run `33519506662`); canonical Piyasa UI/information-architecture implementation remains |
+| 5 | `PASS_PIYASA_SCREEN_CONTRACT` | Canonical Piyasa implementation + deterministic/live Streamlit smoke `SUCCESS` (run `33521193615`, job `99900581399`); approved tabs, live/history sources, freshness/source disclosure, timeframe gate, no decision/forecast writes |
 | 6 | `BLOCKED_NO_DISPLAY_ELIGIBLE_DECISION_SNAPSHOT` | Component rehearsals exist, but no complete forward R4.1 decision row may be fabricated |
 | 7 | `BLOCKED_FORECAST_NOT_ISSUED` | Canonical H=1 forecast ledger has no issued row |
 | 8–12 | `NOT_STARTED / NOT_COMPLETE` | Their own dependency gates are not satisfied |
@@ -941,11 +953,11 @@ Stage-5 runtime evidence added in manifest v1.11:
 
 # 24. IMMEDIATE NEXT WORK
 
-The immediate product task is now:
+The immediate canonical task is now:
 
-## `STAGE 5 — PIYASA UI CONTRACT: BIND PROVEN LIVE/HISTORY DATA TO THE CANONICAL PIYASA SCREEN`
+## `STAGE 4B — RESOLVE THE H=1 FORECAST ISSUER AND VW MONTHLY REFERENCE WITHOUT SILENT MODEL SUBSTITUTION`
 
-Stage 4B forecast-governance work continues in parallel and remains fail-closed until its four active blockers are resolved. Piyasa progress does not authorize a forecast, final decision, action mapping, or prospective evidence claim.
+Stage 5 is closed as `PASS_PIYASA_SCREEN_CONTRACT` by run `33521193615`, job `99900581399`. Stage 6 remains blocked until a display-eligible stored Decision Store state exists. Stage 4B forecast-governance therefore becomes the next dependency to resolve; no September H=1 row may be backdated and no missing VW/Patch identity may be guessed.
 
 Stage 3 is closed as:
 

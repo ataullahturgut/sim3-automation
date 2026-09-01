@@ -1,5 +1,5 @@
 {
-  "version": "GOLD_DATA_R2_2026-09-01_LIVE_GOLDAPI_V1",
+  "version": "GOLD_DATA_R2_2026-09-01_PIYASA_DISPLAY_V2",
   "status": "SOURCE_ARCHITECTURE_FROZEN_WITH_EXPLICIT_BLOCKERS",
   "principles": {
     "no_silent_provider_substitution": true,
@@ -93,8 +93,10 @@
       "symbol": "XAUUSD",
       "frequency": "daily",
       "unit": "USD/oz",
-      "role": "operational cross-check only",
-      "status": "CANDIDATE_NOT_BENCHMARK"
+      "role": "Piyasa daily history / last-completed-daily operational display cross-check only",
+      "status": "CANDIDATE_NOT_BENCHMARK; APPROVED_EXPLICITLY_LABELLED_OPERATIONAL_DISPLAY",
+      "display_policy": "DISPLAY_ALLOWED_ONLY_WITH_EXPLICIT_CROSS_CHECK_LABEL; NOT_CANONICAL_SPOT_EOD_SETTLEMENT_OR_MODEL_AUTHORITY",
+      "completed_daily_rule": "newest positive daily row strictly before current UTC date"
     },
     "XAU_EOD_CME_EBS": {
       "semantic": "XAU_USD_SPOT_EOD_DECISION_REFERENCE",
