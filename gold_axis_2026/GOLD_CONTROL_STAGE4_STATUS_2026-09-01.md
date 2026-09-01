@@ -49,10 +49,40 @@ Decision Store row counts at audit time were zero. Forecast input/derived/contra
 
 Therefore there is currently no approved canonical XAU EOD decision source in the live data plane.
 
-## 5. Next work
+## 5. XAU EOD change-control progress
 
-1. resolve canonical XAU EOD decision-price authority/lineage under change control;
-2. restore successful daily ingestion for that approved source;
+Change-control record:
+
+`GOLD_CONTROL_XAU_EOD_SOURCE_CHANGE_CONTROL_2026-09-01.md`
+
+Current candidate decision:
+
+`TWELVE_XAUUSD_EOD_TECHNICALLY_QUALIFIED_NOT_APPROVED`
+
+Evidence completed without Neon writes or public raw-market-value logging:
+
+- Twelve `XAU/USD` 1-day and `/eod` access proven with protected credential;
+- vendor identity and provider-defined EOD surface documented;
+- read-only bridge against current `XAU_DAILY_XAUS` completed over 120 common dates from 2026-03-11 through 2026-08-31;
+- frozen R4.1 source-dependent states were compared using canonical code and canonical VW monthly references;
+- Fast-state agreement = 89.000%;
+- Slow-state agreement = 100.000%;
+- Emergency Level agreement = 98.990%;
+- Reversal Alert agreement = 98.990%;
+- classification agreement across UP/DOWN/NEUTRAL monthly-direction cases = 95.960%.
+
+The candidate is not a silent substitute because some frozen R4.1 states change. No source promotion has occurred.
+
+The blocker remains open but is narrowed to:
+
+`TWELVE_XAUUSD_SYDNEY_EOD_SOURCE_CHANGE_APPROVAL_REQUIRED`
+
+No `XAU_EOD_TWELVE` observation has been written to Neon.
+
+## 6. Next work
+
+1. decide/approve the exact canonical XAU EOD decision-session contract under change control; current technically qualified candidate is Twelve `XAU/USD` with provider exchange-local `Australia/Sydney` daily EOD semantics;
+2. only after approval, create a new explicit source/series lineage and restore successful daily ingestion for that approved source;
 3. implement genuine prospective H=1 forecast issuance with immutable input snapshot + monthly forecast contract;
 4. construct the canonical EOD R4.1 issuer only after those prerequisites pass;
 5. begin with `PROSPECTIVE_SHADOW`, not `LIVE_PRODUCTION`;
