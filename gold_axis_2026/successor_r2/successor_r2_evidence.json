@@ -1,0 +1,309 @@
+{
+  "canonical_code_sha": "6a5a03fb90512df6200699c1f19fd066d8fdde49",
+  "completed_year_gate_buckets": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "contract": "GOLD_CONTROL_H1_SUCCESSOR_VALIDATION_CONTRACT_R2",
+  "data_audit": {
+    "coverage": {
+      "DEXCHUS_ALFRED_PIT_ME": 128,
+      "DFF_ALFRED_PIT_ME": 128,
+      "DGS10_ALFRED_PIT_ME": 128,
+      "NASDAQ100_ALFRED_PIT_ME": 128,
+      "XAU_MONTHLY_WB_PINKSHEET": 127
+    },
+    "derived_feature_snapshots": 1,
+    "forecast_input_snapshots": 0,
+    "monthly_forecast_contracts": 0,
+    "source_pit_gate": "PASS"
+  },
+  "decision": {
+    "decision": "REJECT_ALL_SUCCESSOR_CANDIDATES_R2",
+    "gate_details": {
+      "DAMPED_TREND_R2_PIT": {
+        "checks": {
+          "beats_at_least_4_completed_years": true,
+          "complete_common_window": true,
+          "deterministic_rerun": true,
+          "mape_le_rw": false,
+          "median_abs_le_rw": true,
+          "no_unresolved_leakage_exception": true,
+          "no_year_ratio_gt_1_5": true,
+          "relative_mae_lt_1": false,
+          "source_provenance_pit": true
+        },
+        "year_ratios": {
+          "2019": 1.0348919473375782,
+          "2020": 0.9821373556752526,
+          "2021": 1.1435552982940185,
+          "2022": 1.077070126887923,
+          "2023": 0.9845355209438367,
+          "2024": 0.9466046909065203,
+          "2025": 0.821796695325654
+        }
+      },
+      "DRIFT_R2_PIT": {
+        "checks": {
+          "beats_at_least_4_completed_years": false,
+          "complete_common_window": true,
+          "deterministic_rerun": true,
+          "mape_le_rw": false,
+          "median_abs_le_rw": false,
+          "no_unresolved_leakage_exception": true,
+          "no_year_ratio_gt_1_5": false,
+          "relative_mae_lt_1": false,
+          "source_provenance_pit": true
+        },
+        "year_ratios": {
+          "2019": 1.4276029802345598,
+          "2020": 0.8655013758804379,
+          "2021": 1.768899824455383,
+          "2022": 1.2466853518697967,
+          "2023": 2.0380773707911275,
+          "2024": 1.0072438960127952,
+          "2025": 0.7199470425172718
+        }
+      },
+      "HUBER_MACRO_R2": {
+        "checks": {
+          "beats_at_least_4_completed_years": false,
+          "complete_common_window": true,
+          "deterministic_rerun": true,
+          "mape_le_rw": false,
+          "median_abs_le_rw": false,
+          "no_unresolved_leakage_exception": true,
+          "no_year_ratio_gt_1_5": false,
+          "relative_mae_lt_1": false,
+          "source_provenance_pit": true
+        },
+        "year_ratios": {
+          "2019": 1.5018124672453719,
+          "2020": 0.640265616204791,
+          "2021": 1.2326995542317034,
+          "2022": 1.918786438281772,
+          "2023": 1.1371581682857521,
+          "2024": 0.8327880447980546,
+          "2025": 0.7200088511397186
+        }
+      },
+      "MOM3_R2_PIT": {
+        "checks": {
+          "beats_at_least_4_completed_years": false,
+          "complete_common_window": true,
+          "deterministic_rerun": true,
+          "mape_le_rw": false,
+          "median_abs_le_rw": false,
+          "no_unresolved_leakage_exception": true,
+          "no_year_ratio_gt_1_5": false,
+          "relative_mae_lt_1": false,
+          "source_provenance_pit": true
+        },
+        "year_ratios": {
+          "2019": 1.456297087775083,
+          "2020": 1.0057317554009857,
+          "2021": 1.5449324149450363,
+          "2022": 1.1963626062209551,
+          "2023": 1.2607770382918644,
+          "2024": 1.1351364463369158,
+          "2025": 0.9496336318499397
+        }
+      },
+      "RIDGE_MACRO_R2": {
+        "checks": {
+          "beats_at_least_4_completed_years": false,
+          "complete_common_window": true,
+          "deterministic_rerun": true,
+          "mape_le_rw": false,
+          "median_abs_le_rw": false,
+          "no_unresolved_leakage_exception": true,
+          "no_year_ratio_gt_1_5": false,
+          "relative_mae_lt_1": true,
+          "source_provenance_pit": true
+        },
+        "year_ratios": {
+          "2019": 1.3022104213716512,
+          "2020": 0.7114752788610296,
+          "2021": 1.1778869947623585,
+          "2022": 1.7184301862008324,
+          "2023": 1.0951985487144362,
+          "2024": 0.8149122545105844,
+          "2025": 0.8296446415049874
+        }
+      },
+      "RW_R2_PIT": {
+        "year_ratios": {
+          "2019": 1.0,
+          "2020": 1.0,
+          "2021": 1.0,
+          "2022": 1.0,
+          "2023": 1.0,
+          "2024": 1.0,
+          "2025": 1.0
+        }
+      },
+      "SVR_RBF_MACRO_R2": {
+        "checks": {
+          "beats_at_least_4_completed_years": false,
+          "complete_common_window": true,
+          "deterministic_rerun": true,
+          "mape_le_rw": false,
+          "median_abs_le_rw": false,
+          "no_unresolved_leakage_exception": true,
+          "no_year_ratio_gt_1_5": false,
+          "relative_mae_lt_1": false,
+          "source_provenance_pit": true
+        },
+        "year_ratios": {
+          "2019": 1.7261796893852355,
+          "2020": 2.9459591513116896,
+          "2021": 1.7303152492910203,
+          "2022": 2.2597732618205195,
+          "2023": 2.506409639921907,
+          "2024": 2.972507275571319,
+          "2025": 2.6562487046147925
+        }
+      }
+    },
+    "selected_model": null
+  },
+  "determinism": {
+    "max_abs_rerun_diff": 0.0,
+    "pass": true
+  },
+  "evidence_class": "HISTORICAL_REPLAY",
+  "evidence_sha256": "5d9596b0e1426e202ef6af0eee4b2fa20c97b7a82366fbcdf9f6a5b4502b55b4",
+  "forecast_ledger_write": "NONE",
+  "macro_series": [
+    "DGS10_ALFRED_PIT_ME",
+    "DFF_ALFRED_PIT_ME",
+    "DEXCHUS_ALFRED_PIT_ME",
+    "NASDAQ100_ALFRED_PIT_ME"
+  ],
+  "prospective_claim": false,
+  "scorecard": [
+    {
+      "MAE": 124.3917525773196,
+      "MAPE_pct": 4.922519501154607,
+      "N": 97,
+      "RMSE": 190.94874359474682,
+      "Relative_MAE_vs_RW": 1.0,
+      "completed_years_beaten_vs_RW": 0,
+      "direction_accuracy": 0.0,
+      "eligible": false,
+      "failed_gates": "MANDATORY_BENCHMARK_NOT_CANDIDATE",
+      "max_completed_year_MAE_ratio_vs_RW": 1.0,
+      "median_abs_error": 73.0,
+      "model": "RW_R2_PIT",
+      "monthly_win_rate_vs_RW": 0.0,
+      "sMAPE_pct": 5.0376783225163635
+    },
+    {
+      "MAE": 152.00355658087616,
+      "MAPE_pct": 6.245348793708262,
+      "N": 97,
+      "RMSE": 249.11031871398055,
+      "Relative_MAE_vs_RW": 1.221974555639399,
+      "completed_years_beaten_vs_RW": 2,
+      "direction_accuracy": 0.5154639175257731,
+      "eligible": false,
+      "failed_gates": "relative_mae_lt_1;mape_le_rw;median_abs_le_rw;beats_at_least_4_completed_years;no_year_ratio_gt_1_5",
+      "max_completed_year_MAE_ratio_vs_RW": 2.0380773707911275,
+      "median_abs_error": 106.42890442890462,
+      "model": "DRIFT_R2_PIT",
+      "monthly_win_rate_vs_RW": 0.4020618556701031,
+      "sMAPE_pct": 6.204458474200482
+    },
+    {
+      "MAE": 138.05428320554356,
+      "MAPE_pct": 5.7021647967111395,
+      "N": 97,
+      "RMSE": 205.2552815171278,
+      "Relative_MAE_vs_RW": 1.1098346984035907,
+      "completed_years_beaten_vs_RW": 1,
+      "direction_accuracy": 0.5979381443298969,
+      "eligible": false,
+      "failed_gates": "relative_mae_lt_1;mape_le_rw;median_abs_le_rw;beats_at_least_4_completed_years;no_year_ratio_gt_1_5",
+      "max_completed_year_MAE_ratio_vs_RW": 1.5449324149450363,
+      "median_abs_error": 97.56992829364981,
+      "model": "MOM3_R2_PIT",
+      "monthly_win_rate_vs_RW": 0.4639175257731959,
+      "sMAPE_pct": 5.665263415094356
+    },
+    {
+      "MAE": 124.89007589437341,
+      "MAPE_pct": 4.9546422032857755,
+      "N": 97,
+      "RMSE": 190.68393531496474,
+      "Relative_MAE_vs_RW": 1.0040060800393023,
+      "completed_years_beaten_vs_RW": 4,
+      "direction_accuracy": 0.6185567010309279,
+      "eligible": false,
+      "failed_gates": "relative_mae_lt_1;mape_le_rw",
+      "max_completed_year_MAE_ratio_vs_RW": 1.1435552982940185,
+      "median_abs_error": 71.83655369107646,
+      "model": "DAMPED_TREND_R2_PIT",
+      "monthly_win_rate_vs_RW": 0.5773195876288659,
+      "sMAPE_pct": 4.989133620440514
+    },
+    {
+      "MAE": 124.09772694533416,
+      "MAPE_pct": 5.074164856299981,
+      "N": 97,
+      "RMSE": 184.08985410134477,
+      "Relative_MAE_vs_RW": 0.9976362931955423,
+      "completed_years_beaten_vs_RW": 3,
+      "direction_accuracy": 0.6701030927835051,
+      "eligible": false,
+      "failed_gates": "mape_le_rw;median_abs_le_rw;beats_at_least_4_completed_years;no_year_ratio_gt_1_5",
+      "max_completed_year_MAE_ratio_vs_RW": 1.7184301862008324,
+      "median_abs_error": 79.6527965806763,
+      "model": "RIDGE_MACRO_R2",
+      "monthly_win_rate_vs_RW": 0.5360824742268041,
+      "sMAPE_pct": 5.208597669538618
+    },
+    {
+      "MAE": 128.87749124816568,
+      "MAPE_pct": 5.341043635618346,
+      "N": 97,
+      "RMSE": 188.348576872285,
+      "Relative_MAE_vs_RW": 1.0360613833144432,
+      "completed_years_beaten_vs_RW": 3,
+      "direction_accuracy": 0.6907216494845361,
+      "eligible": false,
+      "failed_gates": "relative_mae_lt_1;mape_le_rw;median_abs_le_rw;beats_at_least_4_completed_years;no_year_ratio_gt_1_5",
+      "max_completed_year_MAE_ratio_vs_RW": 1.918786438281772,
+      "median_abs_error": 94.60216155325497,
+      "model": "HUBER_MACRO_R2",
+      "monthly_win_rate_vs_RW": 0.5051546391752577,
+      "sMAPE_pct": 5.464202550785186
+    },
+    {
+      "MAE": 324.0038893110432,
+      "MAPE_pct": 12.08955754111099,
+      "N": 97,
+      "RMSE": 512.8028432156508,
+      "Relative_MAE_vs_RW": 2.604705558028443,
+      "completed_years_beaten_vs_RW": 0,
+      "direction_accuracy": 0.44329896907216493,
+      "eligible": false,
+      "failed_gates": "relative_mae_lt_1;mape_le_rw;median_abs_le_rw;beats_at_least_4_completed_years;no_year_ratio_gt_1_5",
+      "max_completed_year_MAE_ratio_vs_RW": 2.972507275571319,
+      "median_abs_error": 200.7982372228439,
+      "model": "SVR_RBF_MACRO_R2",
+      "monthly_win_rate_vs_RW": 0.1134020618556701,
+      "sMAPE_pct": 13.362376545193285
+    }
+  ],
+  "target_series": "XAU_MONTHLY_WB_PINKSHEET",
+  "window": {
+    "N": 97,
+    "end": "2026-07",
+    "start": "2018-07"
+  }
+}
