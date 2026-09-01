@@ -1,0 +1,81 @@
+name: Gold Control Data Scheduler - Authority and XAU
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold_control_data_neon_scheduler.yml'
+  schedule:
+    - cron: '17 * * * *'
+    - cron: '45 23 * * *'
+    - cron: '25 6 * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'hourly or daily'
+        required: true
+        default: 'daily'
+        type: choice
+        options: [hourly, daily]
+
+concurrency:
+  group: gold-control-data-neon-scheduler
+  cancel-in-progress: true
+
+jobs:
+  hourly-xau:
+    if: >-
+      (github.event_name == 'schedule' && github.event.schedule == '17 * * * *') ||
+      (github.event_name == 'workflow_dispatch' && inputs.mode == 'hourly')
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Require Neon secret
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Persist canonical XAU monitoring snapshot
+        run: python gold_axis_2026/data_pipeline/source_job.py --source xau --mode hourly --persist
+
+  daily-authority:
+    if: >-
+      github.event_name == 'push' ||
+      (github.event_name == 'schedule' && github.event.schedule != '17 * * * *') ||
+      (github.event_name == 'workflow_dispatch' && inputs.mode == 'daily')
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Require Neon secret
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Apply idempotent PIT schema contract
+        run: python gold_axis_2026/data_pipeline/apply_schema_patch.py
+      - name: Persist XAU daily/spot
+        run: python gold_axis_2026/data_pipeline/source_job.py --source xau --mode daily --persist
+      - name: Persist Cboe GVZ/VIX
+        run: python gold_axis_2026/data_pipeline/source_job.py --source cboe --mode daily --persist
+      - name: Persist direct Fed/NY Fed
+        run: python gold_axis_2026/data_pipeline/source_job.py --source fed --mode daily --persist
+      - name: Persist GPR vintage
+        run: python gold_axis_2026/data_pipeline/source_job.py --source gpr --mode daily --persist
+      - name: Verify canonical Neon data plane
+        run: python gold_axis_2026/data_pipeline/verify_neon.py
