@@ -1,0 +1,92 @@
+name: Gold Control XAU New York Close Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-xau-ny-close-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Compare deterministic New York cut candidates read-only
+        shell: python
+        run: |
+          import os
+          from zoneinfo import ZoneInfo
+          import numpy as np
+          import pandas as pd
+          import psycopg
+          import requests
+
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute('''
+                      SELECT DISTINCT ON (observation_ts::date)
+                             observation_ts::date, value
+                      FROM usable_observations
+                      WHERE series_id='XAU_DAILY_XAUS'
+                      ORDER BY observation_ts::date, retrieved_at DESC
+                  ''')
+                  rows=cur.fetchall()
+              conn.rollback()
+          a=pd.DataFrame(rows,columns=['date','a'])
+          a['date']=pd.to_datetime(a['date']); a['a']=pd.to_numeric(a['a'],errors='raise')
+
+          headers={'Authorization':f"apikey {os.environ['TWELVE_DATA_API_KEY']}", 'User-Agent':'GoldControl-Stage4-NYCloseAudit/1.0'}
+          r=requests.get('https://api.twelvedata.com/time_series', params={
+              'symbol':'XAU/USD','interval':'1h','outputsize':5000,'format':'JSON',
+              'start_date':'2026-02-15','timezone':'UTC'
+          }, headers=headers, timeout=(8,40))
+          r.raise_for_status(); p=r.json()
+          if p.get('status')=='error': raise SystemExit(f"TWELVE_API_ERROR:{p.get('code')}:{p.get('message')}")
+          vals=p.get('values') or []
+          if len(vals)<500: raise SystemExit(f'TWELVE_1H_INSUFFICIENT:{len(vals)}')
+          h=pd.DataFrame([{'open_ts':pd.to_datetime(v['datetime'],utc=True), 'close':pd.to_numeric(v['close'])} for v in vals]).dropna().drop_duplicates('open_ts',keep='last')
+          h['end_ts']=h['open_ts']+pd.Timedelta(hours=1)
+          h['end_ny']=h['end_ts'].dt.tz_convert(ZoneInfo('America/New_York'))
+
+          def fast(series):
+              s=pd.Series(series,dtype='float64'); ma=s.rolling(20,min_periods=20).mean(); out=[]
+              for i in range(len(s)):
+                  if i<20 or pd.isna(ma.iloc[i]) or pd.isna(ma.iloc[i-1]): out.append(None); continue
+                  p1='UP' if s.iloc[i-1]>ma.iloc[i-1] else ('DOWN' if s.iloc[i-1]<ma.iloc[i-1] else 'NEUTRAL')
+                  p2='UP' if s.iloc[i]>ma.iloc[i] else ('DOWN' if s.iloc[i]<ma.iloc[i] else 'NEUTRAL')
+                  out.append('ROBUST_UP' if p1==p2=='UP' else ('ROBUST_DOWN' if p1==p2=='DOWN' else 'MIXED'))
+              return out
+
+          print(f'TWELVE_1H_ROWS={len(h)}')
+          for cut_hour in (13,14,15,16,17,18,19):
+              c=h[(h['end_ny'].dt.hour==cut_hour)&(h['end_ny'].dt.minute==0)].copy()
+              c['date']=pd.to_datetime(c['end_ny'].dt.date)
+              c=c.sort_values('end_ts').drop_duplicates('date',keep='last').rename(columns={'close':'b'})
+              z=a.merge(c[['date','b']],on='date',how='inner').sort_values('date').reset_index(drop=True)
+              if len(z)<40:
+                  print(f'NY_CUT_HOUR={cut_hour};COMMON={len(z)};STATUS=INSUFFICIENT')
+                  continue
+              ra=z['a'].pct_change(); rb=z['b'].pct_change(); ok=ra.notna()&rb.notna()
+              corr=float(ra[ok].corr(rb[ok])); sign=float((np.sign(ra[ok])==np.sign(rb[ok])).mean()*100)
+              gap=((z['b']/z['a']-1).abs()*100)
+              fa,fb=fast(z['a']),fast(z['b']); pairs=[(u,v) for u,v in zip(fa,fb) if u is not None and v is not None]
+              fagree=sum(u==v for u,v in pairs)/len(pairs)*100 if pairs else float('nan')
+              print(f'NY_CUT_HOUR={cut_hour};COMMON={len(z)};RETURN_CORR={corr:.6f};SIGN_AGREE_PCT={sign:.3f};MEDIAN_LEVEL_GAP_PCT={gap.median():.6f};P95_LEVEL_GAP_PCT={gap.quantile(.95):.6f};FAST_AGREE_PCT={fagree:.3f}')
+          print('RAW_MARKET_VALUES_LOGGED=NO')
+          print('DATABASE_WRITES=NONE')
+          print('GOLD_CONTROL_XAU_NY_CLOSE_AUDIT_PASS')
