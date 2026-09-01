@@ -34,12 +34,16 @@ jobs:
         shell: python
         run: |
           import os
+          import sys
           import numpy as np
           import pandas as pd
           import psycopg
           import requests
 
-          # Read current approved data plane only; no writes, no raw values in logs.
+          sys.path.insert(0, 'gold_axis_2026/r4_1/src')
+          from gold_r4 import Direction, classify_state, completed_weekly_closes, fast_state, slow_state
+          from gold_r4.emergency import EmergencyState
+
           with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False) as conn:
               with conn.cursor() as cur:
                   cur.execute('SET TRANSACTION READ ONLY')
@@ -61,7 +65,7 @@ jobs:
 
           headers = {
               'Authorization': f"apikey {os.environ['TWELVE_DATA_API_KEY']}",
-              'User-Agent': 'GoldControl-Stage4-SourceBridge/1.0',
+              'User-Agent': 'GoldControl-Stage4-SourceBridge/1.1',
           }
           r = requests.get(
               'https://api.twelvedata.com/time_series',
@@ -93,23 +97,51 @@ jobs:
           return_corr = float(ret_a[valid_ret].corr(ret_b[valid_ret])) if valid_ret.sum() >= 3 else float('nan')
           sign_agree = float((np.sign(ret_a[valid_ret]) == np.sign(ret_b[valid_ret])).mean() * 100.0)
 
-          def fast_states(series):
-              s = pd.Series(series, dtype='float64')
-              ma = s.rolling(20, min_periods=20).mean()
-              out = []
-              for i in range(len(s)):
-                  if i < 20 or pd.isna(ma.iloc[i]) or pd.isna(ma.iloc[i-1]):
-                      out.append('INSUFFICIENT_DATA')
-                      continue
-                  a = 'UP' if s.iloc[i-1] > ma.iloc[i-1] else ('DOWN' if s.iloc[i-1] < ma.iloc[i-1] else 'NEUTRAL')
-                  b = 'UP' if s.iloc[i] > ma.iloc[i] else ('DOWN' if s.iloc[i] < ma.iloc[i] else 'NEUTRAL')
-                  out.append('ROBUST_UP' if a == b == 'UP' else ('ROBUST_DOWN' if a == b == 'DOWN' else 'MIXED'))
-              return out
+          fast_pairs = []
+          slow_pairs = []
+          for i, row in z.iterrows():
+              ha = z.loc[:i, ['date','xaus_close']].rename(columns={'xaus_close':'close'})
+              hb = z.loc[:i, ['date','twelve_close']].rename(columns={'twelve_close':'close'})
+              fa = fast_state(ha['close'].tolist()).value
+              fb = fast_state(hb['close'].tolist()).value
+              if fa != 'INSUFFICIENT_DATA' and fb != 'INSUFFICIENT_DATA':
+                  fast_pairs.append((fa, fb))
+              sa = slow_state(completed_weekly_closes(ha[['date','close']], pd.Timestamp(row['date']))).value
+              sb = slow_state(completed_weekly_closes(hb[['date','close']], pd.Timestamp(row['date']))).value
+              if sa != 'INSUFFICIENT_DATA' and sb != 'INSUFFICIENT_DATA':
+                  slow_pairs.append((sa, sb))
 
-          fa = fast_states(z['xaus_close'].tolist())
-          fb = fast_states(z['twelve_close'].tolist())
-          eligible = [(a,b) for a,b in zip(fa,fb) if a != 'INSUFFICIENT_DATA' and b != 'INSUFFICIENT_DATA']
-          fast_agree = float(sum(a == b for a,b in eligible) / len(eligible) * 100.0) if eligible else float('nan')
+          fast_agree = float(sum(a == b for a,b in fast_pairs) / len(fast_pairs) * 100.0) if fast_pairs else float('nan')
+          slow_agree = float(sum(a == b for a,b in slow_pairs) / len(slow_pairs) * 100.0) if slow_pairs else float('nan')
+
+          closure = pd.read_csv('gold_axis_2026/production_closure/production_2026.csv')
+          vw = dict(zip(closure['month'].astype(str), pd.to_numeric(closure['vw'], errors='raise')))
+          ea, eb = EmergencyState(), EmergencyState()
+          emergency_rows = []
+          classification_checks = []
+          for i, row in z.iterrows():
+              month = pd.Timestamp(row['date']).strftime('%Y-%m')
+              if month not in vw:
+                  continue
+              la, ra = ea.update(pd.Timestamp(row['date']), float(row['xaus_close']), float(vw[month]))
+              lb, rb = eb.update(pd.Timestamp(row['date']), float(row['twelve_close']), float(vw[month]))
+              ha = z.loc[:i, ['date','xaus_close']].rename(columns={'xaus_close':'close'})
+              hb = z.loc[:i, ['date','twelve_close']].rename(columns={'twelve_close':'close'})
+              fa = fast_state(ha['close'].tolist())
+              fb = fast_state(hb['close'].tolist())
+              sa = slow_state(completed_weekly_closes(ha[['date','close']], pd.Timestamp(row['date'])))
+              sb = slow_state(completed_weekly_closes(hb[['date','close']], pd.Timestamp(row['date'])))
+              emergency_rows.append((la.value, lb.value, ra.value, rb.value))
+              for md in (Direction.UP, Direction.DOWN, Direction.NEUTRAL):
+                  ca = classify_state(md, la, ra, fa, sa, False)
+                  cb = classify_state(md, lb, rb, fb, sb, False)
+                  classification_checks.append(ca == cb)
+
+          if not emergency_rows:
+              raise SystemExit('NO_CANONICAL_VW_OVERLAP_FOR_EMERGENCY_AUDIT')
+          level_agree = sum(a == b for a,b,_,_ in emergency_rows) / len(emergency_rows) * 100.0
+          reversal_agree = sum(a == b for _,_,a,b in emergency_rows) / len(emergency_rows) * 100.0
+          classification_agree = sum(classification_checks) / len(classification_checks) * 100.0
 
           print('XAU_EOD_SOURCE_BRIDGE_READ_ONLY=PASS')
           print(f'XAUS_ROWS={len(xaus)}')
@@ -123,7 +155,14 @@ jobs:
           print(f'DAILY_RETURN_CORRELATION={return_corr:.6f}')
           print(f'DAILY_RETURN_SIGN_AGREEMENT_PCT={sign_agree:.3f}')
           print(f'FAST_STATE_AGREEMENT_PCT={fast_agree:.3f}')
-          print(f'FAST_ELIGIBLE_DATES={len(eligible)}')
+          print(f'FAST_ELIGIBLE_DATES={len(fast_pairs)}')
+          print(f'SLOW_STATE_AGREEMENT_PCT={slow_agree:.3f}')
+          print(f'SLOW_ELIGIBLE_DATES={len(slow_pairs)}')
+          print(f'EMERGENCY_LEVEL_AGREEMENT_PCT={level_agree:.3f}')
+          print(f'REVERSAL_ALERT_AGREEMENT_PCT={reversal_agree:.3f}')
+          print(f'EMERGENCY_ELIGIBLE_DATES={len(emergency_rows)}')
+          print(f'CLASSIFICATION_AGREEMENT_ACROSS_ALL_MONTHLY_DIRECTIONS_PCT={classification_agree:.3f}')
+          print(f'CLASSIFICATION_CASES={len(classification_checks)}')
           print('RAW_MARKET_VALUES_LOGGED=NO')
           print('DATABASE_WRITES=NONE')
           print('GOLD_CONTROL_XAU_EOD_SOURCE_BRIDGE_PASS')
