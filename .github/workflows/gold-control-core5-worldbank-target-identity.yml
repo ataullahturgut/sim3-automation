@@ -1,0 +1,25 @@
+name: Gold Control CORE5 World Bank Target Identity
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/gold-control-core5-worldbank-target-identity.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install audit runtime
+        run: pip install pandas numpy openpyxl requests
+      - name: Audit CORE5 versus World Bank monthly gold target
+        run: python gold_axis_2026/tools/audit_core5_worldbank_target_identity.py
