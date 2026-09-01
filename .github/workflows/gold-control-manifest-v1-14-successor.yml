@@ -1,0 +1,45 @@
+name: Gold Control Manifest v1.14 Successor
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-manifest-v1-14-successor.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Apply deterministic manifest v1.14 successor governance
+        run: python gold_axis_2026/tools/apply_manifest_v1_14_successor.py
+      - name: Verify markers and exact scope
+        run: |
+          grep -q 'Manifest version:\*\* 1.14' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'IN_PROGRESS_SUCCESSOR_VALIDATION_REQUIRED' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'SUCCESSOR_HISTORICAL_TARGET_NOT_PROVEN' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'PATCH_R1_EXECUTABLE_IDENTITY = BLOCKED_NOT_PROVEN' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'STAGE 4B — SUCCESSOR INPUT READINESS' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q '33522033593' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q '33522158937' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          changed="$(git diff --name-only)"
+          printf '%s\n' "$changed"
+          test "$(printf '%s\n' "$changed" | sed '/^$/d' | wc -l)" -eq 1
+          printf '%s\n' "$changed" | grep -qx 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+      - name: Commit and push canonical
+        run: |
+          git config user.name 'gold-control-bot'
+          git config user.email 'gold-control-bot@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          git commit -m 'gold-control: freeze manifest v1.14 successor governance'
+          git push origin HEAD:gold-r4-direction-engine
