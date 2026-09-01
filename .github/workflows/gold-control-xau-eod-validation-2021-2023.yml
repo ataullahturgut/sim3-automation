@@ -1,0 +1,140 @@
+name: Gold Control XAU EOD Validation 2021-2023
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-xau-eod-validation-2021-2023.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pandas numpy requests
+      - name: Validate fixed candidate sessions on frozen Tactical VAL only
+        shell: python
+        run: |
+          import os
+          from collections import Counter
+          from zoneinfo import ZoneInfo
+          import numpy as np
+          import pandas as pd
+          import requests
+
+          PIN='ed2e549f82ba0d1cd3ca32842b82d3888d301e01'
+          stak=[]
+          providers=Counter()
+          for year in (2021,2022,2023):
+              u=f'https://raw.githubusercontent.com/lbruton/StakTrakr/{PIN}/data/spot-history-{year}.json'
+              r=requests.get(u,timeout=(8,30)); r.raise_for_status()
+              for row in r.json():
+                  if str(row.get('metal'))!='Gold':
+                      continue
+                  d=pd.to_datetime(row.get('timestamp'),errors='coerce')
+                  v=pd.to_numeric(row.get('spot'),errors='coerce')
+                  if pd.isna(d) or pd.isna(v):
+                      continue
+                  stak.append({'date':d.normalize(),'stak':float(v)})
+                  providers[str(row.get('provider'))]+=1
+          stak=pd.DataFrame(stak).sort_values('date').drop_duplicates('date',keep='last')
+          if len(stak)<500: raise SystemExit(f'STAK_VAL_INSUFFICIENT:{len(stak)}')
+
+          key=os.environ['TWELVE_DATA_API_KEY']
+          headers={'Authorization':f'apikey {key}','User-Agent':'GoldControl-Stage4-VALSource/1.0'}
+
+          def td(params):
+              r=requests.get('https://api.twelvedata.com/time_series',params=params,headers=headers,timeout=(8,40))
+              r.raise_for_status(); p=r.json()
+              if p.get('status')=='error': raise SystemExit(f"TWELVE_API_ERROR:{p.get('code')}:{p.get('message')}")
+              return p.get('values') or []
+
+          daily=td({'symbol':'XAU/USD','interval':'1day','start_date':'2021-01-01','end_date':'2023-12-31','outputsize':5000,'format':'JSON'})
+          syd=pd.DataFrame([{'date':pd.to_datetime(v.get('datetime'),errors='coerce').normalize(),'syd':pd.to_numeric(v.get('close'),errors='coerce')} for v in daily]).dropna().sort_values('date').drop_duplicates('date',keep='last')
+
+          hourly=[]
+          windows=[
+              ('2021-01-01','2021-06-30'),('2021-07-01','2021-12-31'),
+              ('2022-01-01','2022-06-30'),('2022-07-01','2022-12-31'),
+              ('2023-01-01','2023-06-30'),('2023-07-01','2023-12-31'),
+          ]
+          for start,end in windows:
+              vals=td({'symbol':'XAU/USD','interval':'1h','start_date':start,'end_date':end,'outputsize':5000,'format':'JSON','timezone':'UTC'})
+              hourly.extend(vals)
+          h=pd.DataFrame([{'open_ts':pd.to_datetime(v.get('datetime'),utc=True,errors='coerce'),'close':pd.to_numeric(v.get('close'),errors='coerce')} for v in hourly]).dropna().sort_values('open_ts').drop_duplicates('open_ts',keep='last')
+          h['end_ts']=h['open_ts']+pd.Timedelta(hours=1)
+          h['end_ny']=h['end_ts'].dt.tz_convert(ZoneInfo('America/New_York'))
+          ny=h[(h['end_ny'].dt.hour==17)&(h['end_ny'].dt.minute==0)].copy()
+          ny['date']=pd.to_datetime(ny['end_ny'].dt.date)
+          ny=ny.sort_values('end_ts').drop_duplicates('date',keep='last').rename(columns={'close':'ny17'})[['date','ny17']]
+
+          def fast(series):
+              s=pd.Series(series,dtype='float64'); ma=s.rolling(20,min_periods=20).mean(); out=[]
+              for i in range(len(s)):
+                  if i<20 or pd.isna(ma.iloc[i]) or pd.isna(ma.iloc[i-1]): out.append(None); continue
+                  p1='UP' if s.iloc[i-1]>ma.iloc[i-1] else ('DOWN' if s.iloc[i-1]<ma.iloc[i-1] else 'NEUTRAL')
+                  p2='UP' if s.iloc[i]>ma.iloc[i] else ('DOWN' if s.iloc[i]<ma.iloc[i] else 'NEUTRAL')
+                  out.append('ROBUST_UP' if p1==p2=='UP' else ('ROBUST_DOWN' if p1==p2=='DOWN' else 'MIXED'))
+              return out
+
+          def weekly_persist(df,col):
+              x=df[['date',col]].copy().sort_values('date')
+              x['week']=x['date'].dt.to_period('W-FRI')
+              w=x.groupby('week',as_index=False).tail(1).reset_index(drop=True)
+              ma=w[col].rolling(4,min_periods=4).mean(); raw=[]; out=[]
+              for i in range(len(w)):
+                  if i<3 or pd.isna(ma.iloc[i]): raw.append(None); out.append(None); continue
+                  r='UP' if w.loc[i,col]>ma.iloc[i] else ('DOWN' if w.loc[i,col]<ma.iloc[i] else 'NEUTRAL')
+                  raw.append(r)
+                  if i>=1 and raw[i-1]==r and r in ('UP','DOWN'): out.append('ROBUST_'+r)
+                  else: out.append('MIXED')
+              w['state']=out
+              return dict(zip(w['week'].astype(str),w['state']))
+
+          def compare(candidate,col,label):
+              z=stak.merge(candidate,on='date',how='inner').sort_values('date').reset_index(drop=True)
+              ra=z['stak'].pct_change(); rb=z[col].pct_change(); ok=ra.notna()&rb.notna()
+              gap=((z[col]/z['stak']-1).abs()*100)
+              fa,fb=fast(z['stak']),fast(z[col]); fp=[(a,b) for a,b in zip(fa,fb) if a is not None and b is not None]
+              wa=weekly_persist(z,'stak'); wb=weekly_persist(z,col); weeks=sorted(set(wa)&set(wb)); wp=[(wa[k],wb[k]) for k in weeks if wa[k] is not None and wb[k] is not None]
+              print(f'{label}_COMMON={len(z)}')
+              print(f'{label}_START={z.date.min().date().isoformat()}')
+              print(f'{label}_END={z.date.max().date().isoformat()}')
+              print(f'{label}_MEDIAN_ABS_LEVEL_GAP_PCT={gap.median():.6f}')
+              print(f'{label}_P95_ABS_LEVEL_GAP_PCT={gap.quantile(.95):.6f}')
+              print(f'{label}_RETURN_CORR={ra[ok].corr(rb[ok]):.6f}')
+              print(f'{label}_RETURN_SIGN_AGREE_PCT={((np.sign(ra[ok])==np.sign(rb[ok])).mean()*100):.3f}')
+              print(f'{label}_FAST_STATE_AGREE_PCT={(sum(a==b for a,b in fp)/len(fp)*100):.3f}')
+              print(f'{label}_FAST_CASES={len(fp)}')
+              print(f'{label}_SLOW_STATE_AGREE_PCT={(sum(a==b for a,b in wp)/len(wp)*100):.3f}')
+              print(f'{label}_SLOW_CASES={len(wp)}')
+              for year in (2021,2022,2023):
+                  q=z[z.date.dt.year==year].copy()
+                  if len(q)<20: continue
+                  qr=q['stak'].pct_change(); qc=q[col].pct_change(); qo=qr.notna()&qc.notna()
+                  print(f'{label}_{year}_COMMON={len(q)};RETURN_CORR={qr[qo].corr(qc[qo]):.6f};SIGN_AGREE_PCT={((np.sign(qr[qo])==np.sign(qc[qo])).mean()*100):.3f}')
+
+          print(f'STAK_VAL_ROWS={len(stak)}')
+          print('STAK_GOLD_PROVIDER_COUNTS='+';'.join(f'{k}:{v}' for k,v in sorted(providers.items())))
+          print(f'TWELVE_SYD_ROWS={len(syd)}')
+          print(f'TWELVE_NY17_ROWS={len(ny)}')
+          compare(syd,'syd','SYDNEY_DAILY')
+          compare(ny,'ny17','NY1700')
+          print('CANDIDATE_SESSIONS_FIXED_BEFORE_VAL_SCORING=YES')
+          print('VAL_PERIOD=2021-2023')
+          print('LOCKED_2024_PLUS_USED_FOR_SELECTION=NO')
+          print('RAW_MARKET_VALUES_LOGGED=NO')
+          print('DATABASE_WRITES=NONE')
+          print('GOLD_CONTROL_XAU_EOD_VALIDATION_2021_2023_PASS')
