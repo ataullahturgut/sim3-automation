@@ -1,0 +1,27 @@
+name: Gold Control Successor Macro PIT Readiness
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/gold-control-successor-macro-pit-readiness.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    env:
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install audit runtime
+        run: pip install pandas requests xlrd
+      - name: Audit successor macro and PIT readiness
+        run: python gold_axis_2026/tools/audit_successor_macro_pit_readiness.py
