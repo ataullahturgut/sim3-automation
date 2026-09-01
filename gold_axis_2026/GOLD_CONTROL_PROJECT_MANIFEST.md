@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.0  
+**Manifest version:** 1.1  
 **Freeze / issue date:** 2026-09-01  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -106,6 +106,7 @@ Current data-plane contract is documented in:
 - `gold_axis_2026/data_pipeline/source_contracts.json`
 - `gold_axis_2026/data_pipeline/source_contracts_direct.json`
 - `gold_axis_2026/data_pipeline/source_contracts_twelve_validated.json`
+- `gold_axis_2026/GOLD_CONTROL_DATA_INVENTORY.md`
 
 ## 3.3 External providers
 
@@ -151,16 +152,20 @@ The frozen Gold Data R2 principles remain binding:
 ### XAU live
 
 Series: `XAU_SPOT_XAUS`  
-Source: XAUS public API  
+Contract source: XAUS public API  
 Role: Gold Control monitoring / Emergency candidate  
 Status: `APPROVED_INDICATIVE_NOT_SETTLEMENT`
+
+Current operational caveat: the live DB audit found the persisted latest source label `gold-api.com`, while the frozen contract names XAUS. This discrepancy is `UNRESOLVED_PERSISTED_SOURCE_LABEL_DIFFERS_FROM_XAUS_CONTRACT`; it is not authorization for a silent source rename or substitution.
 
 ### XAU daily operational history
 
 Series: `XAU_DAILY_XAUS`  
-Source: XAUS history  
+Contract source: XAUS history  
 Role: operational cross-check  
 Status: `CANDIDATE_NOT_BENCHMARK`
+
+The persisted operational lineage currently exposes an upstream/source label associated with Yahoo/GC=F. This remains an operational cross-check lineage and is not promoted to settlement/EOD authority.
 
 ### GVZ
 
@@ -208,9 +213,9 @@ Default UI rule: **do not display raw vendor series unless display rights and pr
 
 ---
 
-# 6. BLOCKED / UNRESOLVED DATA ITEMS
+# 6. BLOCKED / UNRESOLVED DATA AND OPERATIONAL ITEMS
 
-The following must remain visibly blocked unless their exact problem is solved:
+The following must remain visibly blocked/unresolved unless their exact problem is solved:
 
 - Exact ICE DXY: `BLOCKED_LICENSE_OR_AUTHORIZED_VENDOR_ENTITLEMENT_REQUIRED`
 - Exact legacy `^TNX` production identity: `BLOCKED_AS_NEW_PRODUCTION_SOURCE`
@@ -220,6 +225,9 @@ The following must remain visibly blocked unless their exact problem is solved:
 - Exact `volatility` definition: `BLOCKED_DEFINITION_NOT_RECOVERED`
 - Exact archived VW executable runner: `BLOCKED_NOT_PROVEN` / missing original runner source
 - Exact historical Causal Patch training source: missing archived training source; archived result is not equivalent to a reproducible executable model
+- XAU persisted source-label vs frozen XAUS contract: `UNRESOLVED_PERSISTED_SOURCE_LABEL_DIFFERS_FROM_XAUS_CONTRACT`
+- Current XAUS source availability incident: `DEGRADED_UPSTREAM_HTTP_503`; unrelated provider ingestion must continue independently
+- Direct Neon management connector argument/schema mismatch: `BLOCKED_CONNECTOR_SCHEMA_MISMATCH`; do not claim branch/migration operations succeeded when this wrapper rejects them
 
 Blocked data or code may not be approximated and then labeled as the exact original object.
 
@@ -253,7 +261,7 @@ Current archived/audited scorecard evidence:
 | Model | MAPE % | Role / interpretation |
 |---|---:|---|
 | VW-MIDAS-MSVR audited | ~2.672 | strongest audited analytical reference; exact original runner not recovered |
-| Causal Patch archived | ~3.03 | archived challenger result; original historical training source missing |
+| Causal Patch R1 | ~3.075 | executable temporary point-forecast path in the production-closure contract |
 | 3M Momentum R1 | ~3.297 | reproducible direction/price challenger |
 | Random Walk R1 | ~3.302 | mandatory naive benchmark |
 
@@ -270,6 +278,24 @@ Until explicitly superseded by audited evidence:
 - **Model disagreement:** visible to audit/UI where useful
 
 Do not claim the audited VW output is fully executable/reproducible until the exact provenance gap is closed.
+
+## 7.2 Current forecast-ledger state
+
+The live Neon audit proves:
+
+- `forecast_input_snapshots` exists with **0 rows**;
+- `derived_feature_snapshots` exists with **0 rows**;
+- `monthly_forecast_contracts` exists with **0 rows**.
+
+Status:
+
+`PROSPECTIVE_FORECAST_LEDGER_PROVEN_EMPTY`
+
+This means model/contract canonicalization is complete, but no current Neon forecast row may be relabeled as `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION`. Historical closure/replay artifacts keep their original evidence class.
+
+Canonical detail is maintained in:
+
+`gold_axis_2026/GOLD_CONTROL_FORECAST_CANONICALIZATION.md`
 
 ---
 
@@ -477,45 +503,46 @@ That is not sufficient as the long-term production state contract.
 
 ## Required database objects / logical entities
 
-The production roadmap must add or formalize:
+The production roadmap must add:
 
 ### `decision_runs`
 
-Tracks each decision-engine execution.
-
-Minimum conceptual fields:
-
-- run id
-- as-of / decision timestamp
-- generated timestamp
-- code SHA
-- engine version
-- config version
-- status
+Tracks each decision-engine execution and its provenance.
 
 ### `decision_signal_snapshots`
 
-Stores the exact states used by a decision:
-
-- monthly direction/context
-- VW reference
-- Patch point forecast if relevant
-- Fast
-- Slow
-- BOCPD
-- Level Emergency
-- Reversal Emergency
-- Macro Event
-- GVZ / cap
-- linked market/input snapshot
+Stores the exact frozen R4.1 signal vector used by a decision.
 
 ### `decision_events`
 
-Stores the final user-facing state and change log.
+Stores the append-only classification/change history.
 
-Examples of state vocabulary must be frozen explicitly before production use (e.g. `HOLD_LONG`, `EXIT`, `REDUCE`, `UNRESOLVED`).
+The recovered R4.1 engine currently emits **descriptive classifications**, not a proven position instruction. Exact current classification vocabulary is:
 
-The UI should eventually read this canonical stored decision state rather than deriving a decision from live spot.
+- `MACRO_DOWN_RISK`
+- `REVERSAL_RISK_DOWN`
+- `REVERSAL_RISK_UP`
+- `ALIGNED_UP`
+- `ALIGNED_DOWN`
+- `CONFLICT`
+- `UNRESOLVED_MIXED`
+
+Current position/action mapping status:
+
+`NOT_PROVEN_POSITION_MAPPING`
+
+Therefore the database/UI must not fabricate `BUY`, `SELL`, `HOLD_LONG`, `EXIT`, `REDUCE`, or an exposure percentage from those classifications until a separate audited mapping is recovered or frozen under change control.
+
+Current Stage 3 implementation artifacts:
+
+- `gold_axis_2026/GOLD_CONTROL_DECISION_STORE_CONTRACT.md`
+- `gold_axis_2026/data_pipeline/schema_patch_decision_store_v1.sql`
+- `gold_axis_2026/data_pipeline/test_decision_store_schema.py`
+- `.github/workflows/gold-control-decision-store-schema-smoke.yml`
+
+The candidate DDL has passed a rollback-only compatibility/constraint smoke against the actual Neon database. **No production decision-store migration has been applied yet.**
+
+The UI should eventually read canonical stored decision state rather than deriving a decision from live spot.
 
 ---
 
@@ -539,6 +566,14 @@ Each forecast record must bind:
 - status (`PRODUCTION`, `SHADOW`, `BENCHMARK`, `BLOCKED`, etc.).
 
 Later revisions must not rewrite an old forecast snapshot.
+
+Current database state on the 2026-09-01 audit:
+
+- forecast snapshot/contract tables exist;
+- their current row counts are zero;
+- no historical file-backed forecast may be backfilled and relabeled as if it had existed prospectively in Neon.
+
+The first future `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` forecast must be stored before outcome realization with immutable inputs and provenance.
 
 ---
 
@@ -612,6 +647,8 @@ Content:
 - direction challenger/context
 - actual vs issued forecast history
 - model provenance/status
+
+If the canonical forecast ledger has no issued row, production forecast state must be displayed as `NOT_ISSUED_IN_CANONICAL_LEDGER`; file-backed research/closure artifacts may only appear with their evidence label.
 
 Do not show a prediction interval or uncertainty label unless a calibrated interval model exists and has been validated.
 
@@ -726,6 +763,8 @@ Issued by the frozen production path before realization, with immutable input/de
 
 Historical replay must never be described as live prospective evidence.
 
+The current Neon forecast ledger is proven empty; therefore the project does not currently claim a historical Neon-backed `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` forecast record.
+
 This separation is mandatory in the `Geçmiş` screen and in all research reports.
 
 ---
@@ -772,7 +811,7 @@ A challenger may enter production consideration only if it improves the frozen d
 
 # 23. PROJECT ROADMAP — FROZEN EXECUTION ORDER
 
-The project execution order is:
+The project execution order remains:
 
 | Stage | Deliverable | Exit criterion |
 |---|---|---|
@@ -792,39 +831,55 @@ The project execution order is:
 
 **No later stage may be treated as complete by using fabricated placeholders for an incomplete earlier stage.**
 
+## 23.1 Current roadmap status — 2026-09-01
+
+| Stage | Current status | Evidence / blocker |
+|---|---|---|
+| 0 | `PASS` | Manifest read-first contract active |
+| 1 | `PASS_AUDIT_COMPLETE_WITH_OPERATIONAL_BLOCKERS` | Actual Neon inventory generated read-only; XAU source currently degraded and lineage discrepancy remains explicit |
+| 2 | `PASS_CONTRACT_CANONICALIZED; PROSPECTIVE_LEDGER_PROVEN_EMPTY` | Model roles/authority frozen; live forecast-state tables reconciled and contain 0 rows |
+| 3 | `IN_PROGRESS` | DDL + contract + rollback smoke PASS; isolated temporary-branch rehearsal blocked by connector schema mismatch; production migration not applied |
+| 4–12 | `NOT_STARTED / NOT_COMPLETE` | Cannot be promoted ahead of Stage 3 |
+
 ---
 
 # 24. IMMEDIATE NEXT WORK
 
-After this manifest, the next canonical task is:
+The next canonical task is now:
 
-## `STAGE 1 — NEON DATA INVENTORY / HEALTH AUDIT`
+## `STAGE 3 — DECISION STATE STORE: ISOLATED MIGRATION REHEARSAL → PRODUCTION MIGRATION`
 
-Required output:
+Completed Stage 3 preparation:
 
-`GOLD_CONTROL_DATA_INVENTORY`
+- live current schema reconciled;
+- decision tables proven absent;
+- exact descriptive state vocabulary frozen;
+- `NOT_PROVEN_POSITION_MAPPING` enforced in the candidate database contract;
+- versioned DDL created;
+- rollback-only compatibility/constraint smoke against actual Neon: `PASS`;
+- rollback verified no persistent schema change.
 
-For every relevant series, record:
+Required next gate:
 
-- series id
-- semantic id
-- provider
-- source tier
-- role
-- display permission
-- model-use permission/status
-- first observation timestamp
-- last observation timestamp
-- first retrieval timestamp
-- last retrieval timestamp
-- latest provider/as-of timestamp where available
-- observation count
-- current quality status
-- freshness/stale state
-- point-in-time eligibility note
-- blocker/note
+1. create/use an isolated temporary Neon branch from the production branch;
+2. apply `schema_patch_decision_store_v1.sql` there;
+3. verify tables, constraints, indexes, view, append-only behavior, fingerprint idempotency and existing-data compatibility;
+4. compare temporary schema against production;
+5. only after successful isolated rehearsal, apply the same versioned migration to production through an auditable migration path;
+6. verify production schema post-migration;
+7. implement decision persistence writer and read contract.
 
-The inventory must be generated from the actual database where possible, not inferred only from documentation.
+Current blocker for the isolated-branch gate:
+
+`BLOCKED_CONNECTOR_SCHEMA_MISMATCH`
+
+The exposed Neon management connector currently presents conflicting argument contracts for branch/SQL management. Do not bypass this by pretending a temporary branch was created. The protected GitHub Actions path is verified for read-only audit and rollback smoke, but has not yet provided an isolated Neon branch lifecycle.
+
+### Operational work that continues independently
+
+- XAU ingestion remains degraded while the frozen XAUS endpoint returns HTTP 503.
+- Cboe, Fed, GPR, FRED-index and Twelve jobs must remain independently runnable; XAU failure must not block them.
+- No alternate XAU provider may be silently relabeled as the frozen XAUS source.
 
 ---
 
@@ -855,6 +910,8 @@ Current live adapter contract:
 - GVZ: Cboe daily history / latest close
 
 Do not pretend the current adapter already provides full intraday history or unlimited historical range.
+
+The app must not present a position instruction derived from current descriptive R4.1 classification while `NOT_PROVEN_POSITION_MAPPING` remains active.
 
 ---
 
