@@ -1,0 +1,43 @@
+name: Gold Control Manifest v1.13 Reconcile
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-manifest-v1-13-reconcile.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Apply deterministic manifest v1.13 reconciliation
+        run: python gold_axis_2026/tools/apply_manifest_v1_13_reconcile.py
+      - name: Verify reconciliation markers
+        run: |
+          grep -q 'Manifest version:\*\* 1.13' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'Piyasa / monitoring lane — CLOSED' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'forecast_input_snapshots`: \*\*0 rows\*\*' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'derived_feature_snapshots`: \*\*1 row\*\*' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'Piyasa / Görünüm / Tahmin / Geçmiş' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          changed="$(git diff --name-only)"
+          printf '%s\n' "$changed"
+          test "$(printf '%s\n' "$changed" | sed '/^$/d' | wc -l)" -eq 1
+          printf '%s\n' "$changed" | grep -qx 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+      - name: Commit and push canonical
+        run: |
+          git config user.name 'gold-control-bot'
+          git config user.email 'gold-control-bot@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          git commit -m 'gold-control: reconcile manifest v1.13 current state'
+          git push origin HEAD:gold-r4-direction-engine
