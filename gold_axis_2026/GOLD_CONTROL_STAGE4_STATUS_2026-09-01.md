@@ -1,7 +1,7 @@
 # GOLD CONTROL — STAGE 4 DETERMINISTIC R4.1 STATUS
 
 **Status date:** 2026-09-01  
-**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.10  
+**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.11  
 **Stage:** 4A/4B — Current-State Substrate + Forecast-Dependent R4.1 Issuer  
 **Current status:** `4A_PASS_CURRENT_STATE_SUBSTRATE; 4B_IN_PROGRESS_BLOCKED_FORECAST_ISSUER`
 
@@ -51,10 +51,11 @@ Rules:
 
 ## 5. Immediate next work
 
-1. activate `XAU_SPOT_GOLDAPI` in the transitional live adapter and run a no-raw-value app/source smoke;
-2. continue Stage-4B VW/H=1 issuer change-control in parallel;
-3. do not mark `Görünüm` complete until a display-eligible stored forward decision exists;
-4. do not mark `Tahmin` complete until a canonical issued H=1 forecast exists;
-5. first complete forward Decision Store state remains `PROSPECTIVE_SHADOW`; `LIVE_PRODUCTION` stays disabled and `action_state` stays NULL under `NOT_PROVEN_POSITION_MAPPING`.
+1. Gold API live adapter activation/smoke is complete: run `33519370028`, job `99894418747`, `SUCCESS`.
+2. Current XAUS 1-year history adapter smoke is complete: run `33519506662`, job `99894890585`, `SUCCESS`.
+3. Implement and smoke the canonical `Piyasa` UI contract using only these proven monitoring paths plus Cboe GVZ and the evidence-isolated Decision Store strip.
+4. Continue Stage-4B VW/H=1 issuer change-control in parallel; do not infer a forecast/decision from the live UI path.
+5. Do not mark `Görünüm` complete until a display-eligible stored forward decision exists, and do not mark `Tahmin` complete until a canonical issued H=1 forecast exists.
+6. First complete forward Decision Store state remains `PROSPECTIVE_SHADOW`; `LIVE_PRODUCTION` stays disabled and `action_state` stays NULL under `NOT_PROVEN_POSITION_MAPPING`.
 
 Change-control: `gold_axis_2026/GOLD_CONTROL_LIVE_MARKET_ROADMAP_CHANGE_CONTROL_2026-09-01.md`.

@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.10  
+**Manifest version:** 1.11  
 **Freeze / issue date:** 2026-09-01  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -916,6 +916,11 @@ Dependency rule frozen by manifest v1.10:
 
 Change-control record: `gold_axis_2026/GOLD_CONTROL_LIVE_MARKET_ROADMAP_CHANGE_CONTROL_2026-09-01.md`.
 
+Stage-5 runtime evidence added in manifest v1.11:
+
+- canonical live adapter smoke: run `33519370028`, job `99894418747`, `SUCCESS`; source series `XAU_SPOT_GOLDAPI`, freshness PASS, role `INDICATIVE_DISPLAY_ONLY_NO_MODEL_USE`, no raw-value logging or writes;
+- current 1-year XAU history adapter smoke: run `33519506662`, job `99894890585`, `SUCCESS`; row/span/freshness/duplicate/null gates PASS, no raw-value logging or writes.
+
 ## 23.1 Current roadmap status — 2026-09-01
 
 | Stage | Current status | Evidence / blocker |
@@ -926,7 +931,7 @@ Change-control record: `gold_axis_2026/GOLD_CONTROL_LIVE_MARKET_ROADMAP_CHANGE_C
 | 3 | `PASS_DECISION_STORE_AND_READ_PATH` | Production append-only store/read path active; no fabricated current decision |
 | 4A | `PASS_CURRENT_STATE_SUBSTRATE_FOR_SHADOW_CONTEXT` | NY17 backfill SUCCESS; monthly direction bootstrap issued; Fast/Slow rehearsal SUCCESS; forecast-state append-only guards 3/3 |
 | 4B | `IN_PROGRESS_BLOCKED_FORECAST_ISSUER` | Current H=1 issuer and VW monthly reference remain unresolved; forecast input snapshot/contract not issued |
-| 5 | `IN_PROGRESS_LIVE_SOURCE_PROVEN_NOT_UI_COMPLETE` | `XAU_SPOT_GOLDAPI` live-display probe SUCCESS; adapter/UI integration and full history/freshness QA remain |
+| 5 | `IN_PROGRESS_DATA_PATHS_PROVEN_UI_CONTRACT_NOT_COMPLETE` | Gold API live adapter smoke `SUCCESS` (run `33519370028`); XAUS 1-year history adapter smoke `SUCCESS` (run `33519506662`); canonical Piyasa UI/information-architecture implementation remains |
 | 6 | `BLOCKED_NO_DISPLAY_ELIGIBLE_DECISION_SNAPSHOT` | Component rehearsals exist, but no complete forward R4.1 decision row may be fabricated |
 | 7 | `BLOCKED_FORECAST_NOT_ISSUED` | Canonical H=1 forecast ledger has no issued row |
 | 8–12 | `NOT_STARTED / NOT_COMPLETE` | Their own dependency gates are not satisfied |
@@ -938,7 +943,7 @@ Change-control record: `gold_axis_2026/GOLD_CONTROL_LIVE_MARKET_ROADMAP_CHANGE_C
 
 The immediate product task is now:
 
-## `STAGE 5 — PIYASA LIVE MONITORING: ACTIVATE THE PROVEN DISPLAY SOURCE WITHOUT CHANGING DECISION LOGIC`
+## `STAGE 5 — PIYASA UI CONTRACT: BIND PROVEN LIVE/HISTORY DATA TO THE CANONICAL PIYASA SCREEN`
 
 Stage 4B forecast-governance work continues in parallel and remains fail-closed until its four active blockers are resolved. Piyasa progress does not authorize a forecast, final decision, action mapping, or prospective evidence claim.
 
@@ -1020,13 +1025,14 @@ Important source interpretation:
 
 Required next gates by dependency:
 
-**Piyasa / monitoring lane (may proceed now):**
+**Piyasa / monitoring lane (current):**
 
-1. activate `XAU_SPOT_GOLDAPI` in the transitional live adapter with explicit source/freshness metadata;
-2. smoke-test the adapter without logging raw market values;
-3. keep `XAU_SPOT_XAUS` as a distinct secondary/degraded lineage; never silently merge providers;
-4. keep `Canlı spot ≠ son EOD karar` visible and show `KANONİK KARAR YOK` whenever the Decision Store has no display-eligible forward state;
-5. complete the real-history/freshness UI contract before Stage 5 is marked PASS.
+1. `XAU_SPOT_GOLDAPI` canonical live adapter activation/smoke is `PASS` by run `33519370028`, job `99894418747`; raw market value was not logged and no forecast/decision/DB write occurred.
+2. Current XAUS 1-year history adapter smoke is `PASS` by run `33519506662`, job `99894890585`; >=200 rows, >=300-day span, latest observation age <=7 days, no duplicate dates/null closes, no DB write.
+3. Keep Gold API live spot, XAUS display history, and Twelve NY17 canonical EOD as visibly separate provider/semantic lineages.
+4. Implement the canonical `Piyasa` screen using only proven data paths: live price + source/freshness, 1-year history/timeframe views supported by the adapter, GVZ latest/history, and the Decision Store strip.
+5. Keep `Canlı spot ≠ son EOD karar` visible and show `KANONİK KARAR YOK` whenever the Decision Store has no display-eligible forward state.
+6. Stage 5 is not PASS until UI-level source/freshness/error-state/mobile smoke is complete.
 
 **Stage-4B forecast/decision lane (continues fail-closed):**
 
