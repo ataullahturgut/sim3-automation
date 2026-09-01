@@ -5,6 +5,7 @@ on:
     branches: [gold-r4-direction-engine]
     paths:
       - '.github/workflows/gold-control-decision-store-schema-smoke.yml'
+      - 'gold_axis_2026/GOLD_CONTROL_R4_1_EMITTED_STATE_CONTRACT.md'
       - 'gold_axis_2026/data_pipeline/schema_patch_decision_store_v1.sql'
       - 'gold_axis_2026/data_pipeline/test_decision_store_schema.py'
       - 'gold_axis_2026/data_pipeline/decision_store.py'
@@ -13,9 +14,12 @@ on:
       - 'gold_axis_2026/data_pipeline/test_decision_store_reader.py'
       - 'gold_axis_2026/data_pipeline/r4_1_decision_adapter.py'
       - 'gold_axis_2026/data_pipeline/test_r4_1_decision_adapter.py'
+      - 'gold_axis_2026/data_pipeline/r4_1_decision_bridge.py'
+      - 'gold_axis_2026/data_pipeline/test_r4_1_decision_bridge.py'
       - 'gold_axis_2026/r4_1/src/gold_r4/**'
       - 'gold_axis_2026/r4_1/scripts/replay_daily.py'
       - 'gold_axis_2026/r4_1/config/frozen_r4_1.json'
+      - 'gold_axis_2026/r4_1/pyproject.toml'
   workflow_dispatch:
 
 concurrency:
@@ -46,10 +50,12 @@ jobs:
           python -m py_compile gold_axis_2026/data_pipeline/decision_store.py
           python -m py_compile gold_axis_2026/data_pipeline/decision_store_reader.py
           python -m py_compile gold_axis_2026/data_pipeline/r4_1_decision_adapter.py
+          python -m py_compile gold_axis_2026/data_pipeline/r4_1_decision_bridge.py
           python -m py_compile gold_axis_2026/data_pipeline/test_decision_store_schema.py
           python -m py_compile gold_axis_2026/data_pipeline/test_decision_store_writer.py
           python -m py_compile gold_axis_2026/data_pipeline/test_decision_store_reader.py
           python -m py_compile gold_axis_2026/data_pipeline/test_r4_1_decision_adapter.py
+          python -m py_compile gold_axis_2026/data_pipeline/test_r4_1_decision_bridge.py
       - name: Execute transactional DDL and rollback smoke
         run: python gold_axis_2026/data_pipeline/test_decision_store_schema.py
       - name: Execute rollback-only writer integration smoke
@@ -58,3 +64,5 @@ jobs:
         run: python gold_axis_2026/data_pipeline/test_decision_store_reader.py
       - name: Execute rollback-only deterministic R4.1 store roundtrip
         run: python gold_axis_2026/data_pipeline/test_r4_1_decision_adapter.py
+      - name: Execute rollback-only guarded R4.1 bridge smoke
+        run: python gold_axis_2026/data_pipeline/test_r4_1_decision_bridge.py
