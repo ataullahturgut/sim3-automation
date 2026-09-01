@@ -1,17 +1,17 @@
 {
   "audit_version": "GOLD_CONTROL_LIVE_DB_INVENTORY_R1",
-  "generated_at_utc": "2026-09-01T08:14:08.464825+00:00",
+  "generated_at_utc": "2026-09-01T08:18:45.702936+00:00",
   "mode": "READ_ONLY_ROLLBACK",
   "contains_observation_values": false,
   "series": [
     {
       "series_id": "BARRICK_B_TWELVEDATA",
       "first_observation_ts": "2016-01-04T00:00:00+00:00",
-      "last_observation_ts": "2026-08-28T00:00:00+00:00",
+      "last_observation_ts": "2026-08-31T00:00:00+00:00",
       "first_seen_at": "2026-08-31T14:09:09.902335+00:00",
-      "last_retrieved_at": "2026-08-31T14:21:23.685079+00:00",
+      "last_retrieved_at": "2026-09-01T08:17:53.763412+00:00",
       "latest_provider_as_of": null,
-      "usable_current_rows": "2679",
+      "usable_current_rows": "2680",
       "lineage_count": "1",
       "latest_source": "Twelve Data",
       "latest_lineage_id": "4132624656ae9e7477c2",
@@ -46,11 +46,11 @@
     {
       "series_id": "DJIA_FRED",
       "first_observation_ts": "2016-08-29T00:00:00+00:00",
-      "last_observation_ts": "2026-08-28T00:00:00+00:00",
+      "last_observation_ts": "2026-08-31T00:00:00+00:00",
       "first_seen_at": "2026-08-31T13:55:42.613674+00:00",
-      "last_retrieved_at": "2026-08-31T13:57:23.230908+00:00",
+      "last_retrieved_at": "2026-09-01T08:17:25.701333+00:00",
       "latest_provider_as_of": null,
-      "usable_current_rows": "2514",
+      "usable_current_rows": "2515",
       "lineage_count": "1",
       "latest_source": "FRED; underlying S&P Dow Jones Indices",
       "latest_lineage_id": "5802030aa937e9ccae32",
@@ -72,11 +72,11 @@
     {
       "series_id": "DZZ_TWELVEDATA",
       "first_observation_ts": "2016-01-04T00:00:00+00:00",
-      "last_observation_ts": "2026-08-28T00:00:00+00:00",
+      "last_observation_ts": "2026-08-31T00:00:00+00:00",
       "first_seen_at": "2026-08-31T14:09:09.902335+00:00",
-      "last_retrieved_at": "2026-08-31T14:21:23.685079+00:00",
+      "last_retrieved_at": "2026-09-01T08:17:53.763412+00:00",
       "latest_provider_as_of": null,
-      "usable_current_rows": "2679",
+      "usable_current_rows": "2680",
       "lineage_count": "1",
       "latest_source": "Twelve Data",
       "latest_lineage_id": "9e2a21027a3b9b3bacaf",
@@ -98,11 +98,11 @@
     {
       "series_id": "GLL_TWELVEDATA",
       "first_observation_ts": "2016-01-04T00:00:00+00:00",
-      "last_observation_ts": "2026-08-28T00:00:00+00:00",
+      "last_observation_ts": "2026-08-31T00:00:00+00:00",
       "first_seen_at": "2026-08-31T14:09:09.902335+00:00",
-      "last_retrieved_at": "2026-08-31T14:21:23.685079+00:00",
+      "last_retrieved_at": "2026-09-01T08:17:53.763412+00:00",
       "latest_provider_as_of": null,
-      "usable_current_rows": "2679",
+      "usable_current_rows": "2680",
       "lineage_count": "1",
       "latest_source": "Twelve Data",
       "latest_lineage_id": "dc03dc941d38975e8432",
@@ -163,11 +163,11 @@
     {
       "series_id": "HL_PB_TWELVEDATA",
       "first_observation_ts": "2016-01-04T00:00:00+00:00",
-      "last_observation_ts": "2026-08-28T00:00:00+00:00",
+      "last_observation_ts": "2026-08-31T00:00:00+00:00",
       "first_seen_at": "2026-08-31T14:09:09.902335+00:00",
-      "last_retrieved_at": "2026-08-31T14:21:23.685079+00:00",
+      "last_retrieved_at": "2026-09-01T08:17:53.763412+00:00",
       "latest_provider_as_of": null,
-      "usable_current_rows": "2679",
+      "usable_current_rows": "2680",
       "lineage_count": "1",
       "latest_source": "Twelve Data",
       "latest_lineage_id": "0289688034fefa7d52cf",
@@ -176,11 +176,11 @@
     {
       "series_id": "NASDAQ100_FRED",
       "first_observation_ts": "1986-01-02T00:00:00+00:00",
-      "last_observation_ts": "2026-08-28T00:00:00+00:00",
+      "last_observation_ts": "2026-08-31T00:00:00+00:00",
       "first_seen_at": "2026-08-31T13:55:42.613674+00:00",
-      "last_retrieved_at": "2026-08-31T13:57:23.230908+00:00",
+      "last_retrieved_at": "2026-09-01T08:17:25.701333+00:00",
       "latest_provider_as_of": null,
-      "usable_current_rows": "10245",
+      "usable_current_rows": "10246",
       "lineage_count": "1",
       "latest_source": "FRED; underlying Nasdaq Inc.",
       "latest_lineage_id": "0295becc675594385db2",
@@ -189,11 +189,11 @@
     {
       "series_id": "NEM_TWELVEDATA",
       "first_observation_ts": "2016-01-04T00:00:00+00:00",
-      "last_observation_ts": "2026-08-28T00:00:00+00:00",
+      "last_observation_ts": "2026-08-31T00:00:00+00:00",
       "first_seen_at": "2026-08-31T14:09:09.902335+00:00",
-      "last_retrieved_at": "2026-08-31T14:21:23.685079+00:00",
+      "last_retrieved_at": "2026-09-01T08:17:53.763412+00:00",
       "latest_provider_as_of": null,
-      "usable_current_rows": "2679",
+      "usable_current_rows": "2680",
       "lineage_count": "1",
       "latest_source": "Twelve Data",
       "latest_lineage_id": "3618d2ff30626e70ce39",
@@ -202,11 +202,11 @@
     {
       "series_id": "SP500_FRED",
       "first_observation_ts": "2016-08-29T00:00:00+00:00",
-      "last_observation_ts": "2026-08-28T00:00:00+00:00",
+      "last_observation_ts": "2026-08-31T00:00:00+00:00",
       "first_seen_at": "2026-08-31T13:55:42.613674+00:00",
-      "last_retrieved_at": "2026-08-31T13:57:23.230908+00:00",
+      "last_retrieved_at": "2026-09-01T08:17:25.701333+00:00",
       "latest_provider_as_of": null,
-      "usable_current_rows": "2514",
+      "usable_current_rows": "2515",
       "lineage_count": "1",
       "latest_source": "FRED; underlying S&P Dow Jones Indices",
       "latest_lineage_id": "45f76ed77479bb6971d6",
@@ -253,6 +253,72 @@
     }
   ],
   "recent_retrieval_runs": [
+    {
+      "run_id": "89a62a49-ed2c-4e09-962b-c52c5098997d",
+      "started_at": "2026-09-01T08:17:57.523661+00:00",
+      "finished_at": "2026-09-01T08:17:57.523661+00:00",
+      "git_sha": "193ddeb2861078614e2090a943d035d008eb2f0d",
+      "pipeline_version": "GOLD_DATA_R2.7_2026-08-31",
+      "trigger_type": "daily:twelve_market:dedupe_replay",
+      "status": "SUCCESS",
+      "observations_read": "1300",
+      "observations_written": "0"
+    },
+    {
+      "run_id": "eff4f556-3ba7-4c60-9ba6-881cf0a637d4",
+      "started_at": "2026-09-01T08:17:53.763412+00:00",
+      "finished_at": "2026-09-01T08:17:54.519468+00:00",
+      "git_sha": "193ddeb2861078614e2090a943d035d008eb2f0d",
+      "pipeline_version": "GOLD_DATA_R2.7_2026-08-31",
+      "trigger_type": "daily:twelve_market",
+      "status": "SUCCESS",
+      "observations_read": "1300",
+      "observations_written": "5"
+    },
+    {
+      "run_id": "307cd83d-ec54-468c-b4d6-fde38709a8d4",
+      "started_at": "2026-09-01T08:17:51.505524+00:00",
+      "finished_at": "2026-09-01T08:17:51.505524+00:00",
+      "git_sha": "193ddeb2861078614e2090a943d035d008eb2f0d",
+      "pipeline_version": "GOLD_DATA_R2.7_2026-08-31",
+      "trigger_type": "correction:twelve_market_incomplete_daily",
+      "status": "SUCCESS",
+      "observations_read": "0",
+      "observations_written": "0"
+    },
+    {
+      "run_id": "f0749497-08c4-4083-a068-2c0c9c9741de",
+      "started_at": "2026-09-01T08:17:30.285562+00:00",
+      "finished_at": "2026-09-01T08:17:31.136526+00:00",
+      "git_sha": "a050302b1087e8202db93379de4526bb3ff9338e",
+      "pipeline_version": "GOLD_DATA_R2.7_2026-08-31",
+      "trigger_type": "daily:fred_indices",
+      "status": "SUCCESS",
+      "observations_read": "753",
+      "observations_written": "0"
+    },
+    {
+      "run_id": "1568da26-4482-4b12-863c-4864b3c854e7",
+      "started_at": "2026-09-01T08:17:25.701333+00:00",
+      "finished_at": "2026-09-01T08:17:26.578538+00:00",
+      "git_sha": "a050302b1087e8202db93379de4526bb3ff9338e",
+      "pipeline_version": "GOLD_DATA_R2.7_2026-08-31",
+      "trigger_type": "daily:fred_indices",
+      "status": "SUCCESS",
+      "observations_read": "753",
+      "observations_written": "3"
+    },
+    {
+      "run_id": "688f29e3-fa7f-4db5-8834-f57e1ffa026e",
+      "started_at": "2026-09-01T08:17:12.400279+00:00",
+      "finished_at": "2026-09-01T08:17:12.468139+00:00",
+      "git_sha": "687e790d802e04693aac4cff42fc9feb91427137",
+      "pipeline_version": "GOLD_DATA_R2.7_2026-08-31",
+      "trigger_type": "daily:xau",
+      "status": "PARTIAL",
+      "observations_read": "0",
+      "observations_written": "0"
+    },
     {
       "run_id": "1ed3efdd-d777-4e84-88ae-fd65a85046a6",
       "started_at": "2026-08-31T14:22:35.747800+00:00",
@@ -516,72 +582,6 @@
       "status": "SUCCESS",
       "observations_read": "853",
       "observations_written": "0"
-    },
-    {
-      "run_id": "cc04e5cd-3917-4536-8dd8-4be4bb339d72",
-      "started_at": "2026-08-31T14:07:20.328481+00:00",
-      "finished_at": "2026-08-31T14:07:20.765771+00:00",
-      "git_sha": "79abfe02ec7a95df92c3f714bf7039ec2bd85a63",
-      "pipeline_version": "GOLD_DATA_R2.6_2026-08-31",
-      "trigger_type": "daily:gpr",
-      "status": "SUCCESS",
-      "observations_read": "108",
-      "observations_written": "0"
-    },
-    {
-      "run_id": "99baa384-efd1-4d19-b5c4-35bf25204e89",
-      "started_at": "2026-08-31T14:07:07.836971+00:00",
-      "finished_at": "2026-08-31T14:07:08.757398+00:00",
-      "git_sha": "79abfe02ec7a95df92c3f714bf7039ec2bd85a63",
-      "pipeline_version": "GOLD_DATA_R2.6_2026-08-31",
-      "trigger_type": "daily:fred_indices",
-      "status": "SUCCESS",
-      "observations_read": "750",
-      "observations_written": "0"
-    },
-    {
-      "run_id": "3d77ccfe-fb54-4c40-919a-d9c3da9fdbe5",
-      "started_at": "2026-08-31T14:07:01.991711+00:00",
-      "finished_at": "2026-08-31T14:07:03.938350+00:00",
-      "git_sha": "79abfe02ec7a95df92c3f714bf7039ec2bd85a63",
-      "pipeline_version": "GOLD_DATA_R2.6_2026-08-31",
-      "trigger_type": "daily:fred_indices",
-      "status": "SUCCESS",
-      "observations_read": "750",
-      "observations_written": "0"
-    },
-    {
-      "run_id": "7cb8934a-d4ee-4554-902a-4c5cc1e8d7b9",
-      "started_at": "2026-08-31T13:57:35.344255+00:00",
-      "finished_at": "2026-08-31T13:57:41.238947+00:00",
-      "git_sha": "ec1db0f1bcdaddb6784516ea400e952d50e84e9d",
-      "pipeline_version": "GOLD_DATA_R2.6_2026-08-31",
-      "trigger_type": "backfill:fred_indices",
-      "status": "SUCCESS",
-      "observations_read": "15273",
-      "observations_written": "0"
-    },
-    {
-      "run_id": "a25518cf-4ada-4610-a968-b3e24abddb7e",
-      "started_at": "2026-08-31T13:57:23.230908+00:00",
-      "finished_at": "2026-08-31T13:57:29.125436+00:00",
-      "git_sha": "ec1db0f1bcdaddb6784516ea400e952d50e84e9d",
-      "pipeline_version": "GOLD_DATA_R2.6_2026-08-31",
-      "trigger_type": "backfill:fred_indices",
-      "status": "SUCCESS",
-      "observations_read": "15273",
-      "observations_written": "14523"
-    },
-    {
-      "run_id": "4a7bd543-b83e-4291-94de-3a65c6dd460f",
-      "started_at": "2026-08-31T13:55:47.448016+00:00",
-      "finished_at": "2026-08-31T13:55:49.113983+00:00",
-      "git_sha": "4ecba4bc07c9845fc94e9c16a7ec59767717cdfc",
-      "pipeline_version": "GOLD_DATA_R2.6_2026-08-31",
-      "trigger_type": "daily:fred_indices",
-      "status": "SUCCESS",
-      "observations_read": "750",
-      "observations_written": "0"
     }
   ],
   "system_metadata": [
@@ -593,7 +593,7 @@
     {
       "key": "historical_query_contract",
       "value": "USE observations_as_of(origin_ts); canonical_latest is current-state only",
-      "updated_at": "2026-08-31T14:08:28.890844+00:00"
+      "updated_at": "2026-09-01T08:17:11.566590+00:00"
     },
     {
       "key": "project",
@@ -603,12 +603,12 @@
     {
       "key": "schema_version",
       "value": "GOLD_DATA_R2.6_2026-08-31",
-      "updated_at": "2026-08-31T14:08:28.890844+00:00"
+      "updated_at": "2026-09-01T08:17:11.566590+00:00"
     }
   ],
   "quality_event_summary": {
-    "quality_error_events": "35",
+    "quality_error_events": "36",
     "quality_warning_events": "0",
-    "latest_quality_event_ts": "2026-08-31T14:10:10.024485+00:00"
+    "latest_quality_event_ts": "2026-09-01T08:17:12.468056+00:00"
   }
 }
