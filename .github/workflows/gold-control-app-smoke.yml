@@ -5,6 +5,8 @@ on:
     branches: [gold-r4-direction-engine]
     paths:
       - 'gold_axis_2026/apps/**'
+      - 'gold_axis_2026/data_pipeline/decision_store.py'
+      - 'gold_axis_2026/data_pipeline/decision_store_reader.py'
       - 'gold_axis_2026/r4_1/config/**'
       - 'gold_axis_2026/production_closure/**'
       - '.github/workflows/gold-control-app-smoke.yml'
@@ -13,6 +15,8 @@ on:
 jobs:
   smoke:
     runs-on: ubuntu-latest
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -24,6 +28,8 @@ jobs:
         run: |
           python -m py_compile gold_axis_2026/apps/gold_control.py
           python -m py_compile gold_axis_2026/apps/live_sources.py
+          python -m py_compile gold_axis_2026/apps/decision_source.py
+          python -m py_compile gold_axis_2026/data_pipeline/decision_store_reader.py
       - name: Validate production repository inputs
         run: |
           python - <<'PY'
@@ -41,6 +47,18 @@ jobs:
           assert prov.get('source_package')
           assert cfg.get('emergency', {}).get('level_threshold_abs') == 0.04
           print('Gold Control production-lineage inputs: PASS')
+          PY
+      - name: Decision Store read-only evidence isolation smoke
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo "NEON_DATABASE_URL missing" && exit 1)
+          PYTHONPATH=gold_axis_2026/apps:gold_axis_2026/data_pipeline python - <<'PY'
+          import os
+          from decision_source import fetch_current_decision_state
+          state = fetch_current_decision_state(os.environ['NEON_DATABASE_URL'])
+          if state is not None:
+              assert state['evidence_class'] in {'LIVE_PRODUCTION', 'PROSPECTIVE_SHADOW'}
+              assert state.get('action_state') is None
+          print('GOLD_CONTROL_DECISION_STORE_APP_READER_PASS replay_excluded=PASS action_mapping_guard=PASS')
           PY
       - name: Live source connectivity diagnostic
         continue-on-error: true
