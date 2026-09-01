@@ -1,0 +1,51 @@
+name: Gold Control Twelve XAU NY17 Contract Probe Fast
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-twelve-ny17-contract-probe-fast.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - name: Verify exact NY17 mapping
+        shell: python
+        run: |
+          import os, requests
+          key=os.environ['TWELVE_DATA_API_KEY']
+          r=requests.get('https://api.twelvedata.com/time_series', params={
+              'symbol':'XAU/USD','interval':'1min',
+              'start_date':'2026-08-31 16:55:00','end_date':'2026-08-31 17:01:00',
+              'timezone':'America/New_York','outputsize':20,'format':'JSON'
+          }, headers={'Authorization':f'apikey {key}','User-Agent':'GoldControl-NY17-FastProbe/1.0'}, timeout=(8,40))
+          r.raise_for_status(); p=r.json()
+          if p.get('status')=='error': raise SystemExit(f"TWELVE_API_ERROR:{p.get('code')}:{p.get('message')}")
+          vals=p.get('values') or []
+          hit=[v for v in vals if str(v.get('datetime','')).endswith('16:59:00')]
+          if len(hit)!=1: raise SystemExit(f'NY1659_BAR_COUNT={len(hit)}')
+          v=hit[0]
+          for f in ('open','high','low','close'):
+              if float(v[f]) <= 0: raise SystemExit(f'INVALID_{f.upper()}')
+          meta=p.get('meta') or {}
+          print('TWELVE_XAUUSD_1MIN_ACCESS=PASS')
+          print('NY1659_BAR=FOUND_VALID_OHLC')
+          print('PROVIDER_SYMBOL='+str(meta.get('symbol')))
+          print('PROVIDER_INTERVAL='+str(meta.get('interval')))
+          print('REQUEST_TIMEZONE=America/New_York')
+          print('MAPPING=BAR_OPEN_16:59_ET_CLOSE_AT_17:00_ET')
+          print('RAW_MARKET_VALUES_LOGGED=NO')
+          print('DATABASE_WRITES=NONE')
+          print('TWELVE_XAU_NY17_EXECUTABLE_MAPPING_PASS')
