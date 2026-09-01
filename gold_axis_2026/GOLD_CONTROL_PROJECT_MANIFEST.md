@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.8  
+**Manifest version:** 1.9  
 **Freeze / issue date:** 2026-09-01  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -330,6 +330,18 @@ Status:
 `PROSPECTIVE_FORECAST_LEDGER_PROVEN_EMPTY`
 
 This means model/contract canonicalization is complete, but no current Neon forecast row may be relabeled as `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION`. Historical closure/replay artifacts keep their original evidence class.
+
+## 7.3 Prospective-origin cutoff — September 2026
+
+The frozen H=1 contract requires the forecast origin to be the **end of the previous completed calendar month**. The current Neon forecast ledger was still empty after the `2026-08-31` origin had passed, and the first canonical NY17 production observation/backfill work occurred on `2026-09-01`.
+
+Therefore a forecast first created on `2026-09-01` must **not** be backdated to `2026-08-31` or described as a contract-compliant prospective September H=1 issuance.
+
+Status: `SEPTEMBER_2026_H1_PROSPECTIVE_ORIGIN_MISSED`.
+
+The first target still eligible to become a fully contract-compliant prospective H=1 forecast under the frozen origin rule is **October 2026**, with origin at the end of **2026-09-30**, subject to all model/input/provenance blockers being resolved before issuance.
+
+A September monthly direction or R4.1 initialization computed now may only be stored as an explicitly labelled **late bootstrap/shadow context** using its true retrieval/calculation timestamp. Such a bootstrap context does not close the H=1 forecast issuance blocker and may not be presented as a 31-August prospective forecast.
 
 Canonical detail is maintained in:
 
@@ -877,7 +889,7 @@ The project execution order remains:
 | 1 | `PASS_AUDIT_COMPLETE_WITH_OPERATIONAL_BLOCKERS` | Actual Neon inventory generated read-only; XAU source currently degraded and lineage discrepancy remains explicit |
 | 2 | `PASS_CONTRACT_CANONICALIZED; PROSPECTIVE_LEDGER_PROVEN_EMPTY` | Model roles/authority frozen; live forecast-state tables reconciled and contain 0 rows |
 | 3 | `PASS_DECISION_STORE_AND_READ_PATH` | Production schema PASS; emitted-state bridge rollback PASS; app Decision Store reader PASS; file-only latest-state dependency removed; evidence isolation/action guard enforced |
-| 4 | `IN_PROGRESS_BLOCKED_FORECAST_AND_MONTHLY_CONTEXT` | Deterministic engine/bridge tests PASS and latest canonical NY17 ingestion PASS. Deeper audit proves current Patch issuer is only frozen through the August target, exact VW production runner remains `BLOCKED_NOT_PROVEN`, R4.1 monthly VW/direction inputs are not issued, forecast snapshot/contract tables are empty, and canonical NY17 history backfill is not yet successful |
+| 4 | `IN_PROGRESS_BLOCKED_FORECAST_AND_MONTHLY_CONTEXT` | Deterministic engine/bridge tests PASS and latest canonical NY17 ingestion PASS. September H=1 prospective origin was missed because the ledger was empty after 31-Aug; first fully contract-compliant prospective H=1 target is October 2026. Current Patch issuer is only frozen through August, exact VW production runner remains `BLOCKED_NOT_PROVEN`, R4.1 monthly VW/direction inputs are not issued, and canonical NY17 history backfill is still being completed |
 | 5–12 | `NOT_STARTED / NOT_COMPLETE` | Cannot be promoted ahead of Stage 4 |
 
 ---
@@ -931,6 +943,10 @@ Confirmed active blockers after manifest v1.8 dependency audit:
 6. `CANONICAL_XAU_HISTORY_BACKFILL_NOT_YET_SUCCESS`
    - one canonical NY17 production observation exists, but Fast/Slow and 3M monthly context require a longer same-lineage history. A PIT-safe backfill is being validated; historical rows retain current retrieval-time availability and are never relabelled as historically knowable.
 
+Temporal boundary (not a recoverable data blocker):
+
+`SEPTEMBER_2026_H1_PROSPECTIVE_ORIGIN_MISSED` — the frozen 31-August origin passed while the canonical forecast ledger was empty. No reconstruction performed on 1-September or later may be relabelled as a 31-August prospective issuance.
+
 Closed XAU pipeline blocker:
 
 `TWELVE_XAU_NY17_PIPELINE_NOT_SUCCESS` → `CLOSED_BY_RUN_33511805110`
@@ -963,9 +979,11 @@ Required next gates, in order:
 2. resolve the R4.1 monthly price-reference path without silent model substitution: either recover/prove the exact VW-MIDAS-SVR Adapt V2 executable identity, or run a separately governed architecture change with frozen pre-prospective validation before replacing that role;
 3. freeze and issue the monthly direction context under the existing 3M Momentum role from the approved same-lineage input contract;
 4. resolve the current H=1 executable point issuer: Patch R1 may not be date-extended beyond its proven August horizon by editing constants; a successor/bridge requires explicit change control and leakage-safe evidence;
-5. only after the chosen executable forecast path is proven, create the first genuine immutable input snapshot and matching monthly forecast contract with actual issuance timestamp and complete provenance;
-6. verify forecast/monthly-context rows in Neon before target outcome realization;
-7. only then build/schedule the canonical R4.1 EOD issuer; first forward decision state = `PROSPECTIVE_SHADOW`, never retroactive and not `LIVE_PRODUCTION`.
+5. do not manufacture a September H=1 prospective row: its contractual 31-August origin has passed; the first fully contract-compliant prospective H=1 target is October 2026 with origin at end-September;
+6. before that October origin, prove/freeze the executable forecast path and required inputs so the immutable input snapshot + monthly forecast contract can be issued at the real origin timestamp;
+7. a September direction/R4.1 initialization, if operationally useful, may only be an explicitly labelled late bootstrap/shadow context using true retrieval/calculation timestamps and must not close the H=1 forecast blocker;
+8. verify every issued forecast/monthly-context row in Neon before the corresponding outcome realization;
+9. build/schedule the canonical R4.1 EOD issuer only when all mandatory `EngineSnapshot` inputs have valid evidence labels; first forward decision state = `PROSPECTIVE_SHADOW`, never retroactive and not `LIVE_PRODUCTION`.
 
 No `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` decision row may be written while any active Stage-4 readiness blocker remains open.
 

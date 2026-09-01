@@ -1,6 +1,6 @@
 # GOLD CONTROL — H=1 FORECAST CANONICALIZATION
 
-**Canonicalization version:** 1.2  
+**Canonicalization version:** 1.3  
 **Audit date:** 2026-09-01  
 **Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.0  
 **Production closure package:** `GOLD_H1_R1_STAGE9B_11_PRODUCTION_CLOSURE_V1.zip`  
@@ -320,3 +320,24 @@ R4.1 nevertheless requires a numeric `monthly_vw_forecast` input. Therefore Stag
 ## Forecast ledger
 
 Read-only Neon audit run `33512445624`, job `99871192709`, confirmed `forecast_input_snapshots`, `derived_feature_snapshots`, and `monthly_forecast_contracts` all exist and all remain empty. No row may be created merely to satisfy a readiness count without a valid executable issuance path.
+
+---
+
+# 13. PROSPECTIVE ORIGIN CUT-OFF — 2026-09-01
+
+The canonical H=1 contract defines the forecast origin as the **end of the previous completed calendar month**.
+
+The Neon forecast-state reconciliation proves that the immutable forecast ledger remained empty after the `2026-08-31` origin had passed. Accordingly, a September 2026 forecast first computed or persisted on `2026-09-01` cannot be backdated or labelled as a contract-compliant prospective forecast from 31 August.
+
+Status:
+
+`SEPTEMBER_2026_H1_PROSPECTIVE_ORIGIN_MISSED`
+
+Consequences:
+
+1. No reconstructed September forecast may be labelled `PROSPECTIVE_SHADOW` with a 31-August origin.
+2. Any September initialization produced after this audit must use its true issuance/retrieval timestamp and an explicit late-bootstrap/shadow label.
+3. Such a bootstrap does not satisfy the canonical H=1 prospective issuance requirement.
+4. The first target still eligible for a fully contract-compliant prospective H=1 issuance is **October 2026**, with origin at the end of `2026-09-30`, assuming the executable model path, point-in-time inputs, immutable snapshot, and forecast contract are all ready by that origin.
+5. This temporal boundary does not authorize a model substitution or relaxation of VW/Patch provenance blockers.
+

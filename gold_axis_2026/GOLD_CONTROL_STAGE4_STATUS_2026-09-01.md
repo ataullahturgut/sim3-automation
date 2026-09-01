@@ -1,7 +1,7 @@
 # GOLD CONTROL — STAGE 4 DETERMINISTIC R4.1 STATUS
 
 **Status date:** 2026-09-01  
-**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.8  
+**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.9  
 **Stage:** 4 — Deterministic R4.1 Decision Engine / Issuer  
 **Current status:** `IN_PROGRESS_BLOCKED_FORECAST_AND_MONTHLY_CONTEXT`
 
@@ -54,7 +54,7 @@ Status:
 
 `XAU_EOD_CME_EBS` is no longer the active operational source. CME/EBS remains the authority for the 17:00 ET session convention and an audit/history candidate. Direct EBS Ticker entitlement is therefore **not required** for the manifest v1.6 active path.
 
-## 5. Active readiness blockers — manifest v1.8
+## 5. Active readiness blockers — manifest v1.9
 
 1. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`
 2. `FORECAST_CONTRACT_NOT_ISSUED`
@@ -83,3 +83,14 @@ The latest single-day canonical production ingestion remains `SUCCESS` by run `3
 - VW canonical-history forensic: run `33513175499`, job `99873596626`, `SUCCESS`; exact original VW runner/source chain `NOT_FOUND` in reachable canonical history; existing rebuild scripts do not close identity provenance.
 - NY17 May-Aug depth probe: run `33513634775`, job `99875100590`, `SUCCESS`; sampled exact bars available.
 - first atomic Jul-Aug history backfill: run `33512957983`, job `99872871327`, `FAILURE` before persistence because provider/request errors remained; no partial write was authorized by the backfill code.
+
+## 8. Prospective-origin cutoff
+
+The canonical H=1 origin is the end of the previous completed calendar month. The forecast ledger remained empty after the 31-August-2026 origin had passed. Therefore:
+
+`SEPTEMBER_2026_H1_PROSPECTIVE_ORIGIN_MISSED`
+
+This is a temporal evidence boundary, not a data value to reconstruct. A September forecast created now may not be backdated or labelled as a 31-August prospective issuance. The first fully contract-compliant prospective H=1 target remains **October 2026**, origin end-September, subject to the current issuer/VW/input blockers being closed by then.
+
+A September 3M direction or R4.1 initialization may be created only as an explicitly labelled late bootstrap/shadow context with its true calculation and data-availability timestamps. It does not close the H=1 forecast issuance blocker.
+
