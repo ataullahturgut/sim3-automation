@@ -24,7 +24,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install psycopg[binary]
+        run: pip install psycopg[binary] pandas
       - name: Require protected database credential
         run: test -n "$NEON_DATABASE_URL"
       - name: Rehearse frozen 3M direction from PIT-safe canonical NY17 inputs
