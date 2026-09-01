@@ -59,7 +59,7 @@ def _series_meta(cur, series_id: str) -> dict[str, Any]:
             max(observation_ts) AS last_observation_ts,
             max(retrieved_at) AS last_retrieval_ts,
             count(DISTINCT lineage_id) AS lineage_count,
-            (array_agg(source ORDER BY observation_ts DESC, retrieved_at DESC))[1] AS latest_source,
+            (array_agg(source ORDER BY observation_ts DESC, retrieved_at DESC))[1] AS latest_upstream_source,
             (array_agg(source_symbol ORDER BY observation_ts DESC, retrieved_at DESC))[1] AS latest_source_symbol,
             (array_agg(quality_status ORDER BY observation_ts DESC, retrieved_at DESC))[1] AS latest_quality_status,
             (array_agg(lineage_id ORDER BY observation_ts DESC, retrieved_at DESC))[1] AS latest_lineage_id
@@ -106,7 +106,6 @@ def main() -> int:
         with psycopg.connect(url, autocommit=False, row_factory=dict_row) as conn:
             with conn.cursor() as cur:
                 cur.execute("SET TRANSACTION READ ONLY")
-
                 forecast_counts = {name: _table_count(cur, name) for name in FORECAST_TABLES}
                 decision_counts = {name: _table_count(cur, name) for name in DECISION_TABLES}
                 series = {sid: _series_meta(cur, sid) for sid in SERIES}
@@ -126,18 +125,36 @@ def main() -> int:
             blockers.append("IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED")
 
         xau_daily = series["XAU_DAILY_XAUS"]
+        xau_spot = series["XAU_SPOT_XAUS"]
         if int(xau_daily.get("n") or 0) < 25:
             blockers.append("XAU_DAILY_INSUFFICIENT_FOR_FAST")
-        contract_source = str(xau_daily.get("source_name") or "").lower()
-        actual_source = str(xau_daily.get("latest_source") or "").lower()
-        if contract_source and actual_source and contract_source not in actual_source and actual_source not in contract_source:
-            blockers.append("XAU_DAILY_PERSISTED_SOURCE_DIFFERS_FROM_CONTRACT")
 
-        xau_spot = series["XAU_SPOT_XAUS"]
-        spot_contract = str(xau_spot.get("source_name") or "").lower()
-        spot_actual = str(xau_spot.get("latest_source") or "").lower()
-        if spot_contract and spot_actual and spot_contract not in spot_actual and spot_actual not in spot_contract:
-            warnings.append("XAU_SPOT_PERSISTED_SOURCE_DIFFERS_FROM_CONTRACT")
+        # XAUS is the transport/series identity. The payload may disclose an upstream
+        # provider (currently Yahoo for history / another provider for spot). That is
+        # provenance, not by itself a silent transport substitution. The production
+        # issue is authority: the frozen registry explicitly classifies daily XAU as
+        # an operational cross-check and spot as indicative/non-settlement.
+        daily_role = str(xau_daily.get("model_role") or "").lower()
+        daily_status = str(xau_daily.get("status") or "").upper()
+        spot_status = str(xau_spot.get("status") or "").upper()
+        spot_quality = str(xau_spot.get("latest_quality_status") or "").upper()
+        daily_authorized = daily_status == "APPROVED" and "cross-check" not in daily_role
+        spot_authorized = (
+            spot_status == "APPROVED"
+            and "INDICATIVE" not in spot_quality
+            and "NOT_SETTLEMENT" not in spot_quality
+        )
+        if not daily_authorized and not spot_authorized:
+            blockers.append("NO_APPROVED_CANONICAL_XAU_EOD_DECISION_SOURCE")
+
+        daily_upstream = str(xau_daily.get("latest_upstream_source") or "").lower()
+        daily_contract = str(xau_daily.get("source_name") or "").lower()
+        if "yahoo" in daily_upstream and "yahoo" not in daily_contract:
+            warnings.append("XAU_DAILY_UPSTREAM_PROVIDER_NOT_DOCUMENTED_IN_REGISTRY")
+
+        spot_upstream = str(xau_spot.get("latest_upstream_source") or "").strip()
+        if spot_upstream:
+            warnings.append("XAU_SPOT_UPSTREAM_PROVIDER_DISCLOSED_INDICATIVE_ONLY")
 
         if runs.get("daily:xau") and runs["daily:xau"].get("status") != "SUCCESS":
             blockers.append("LATEST_DAILY_XAU_PIPELINE_NOT_SUCCESS")
