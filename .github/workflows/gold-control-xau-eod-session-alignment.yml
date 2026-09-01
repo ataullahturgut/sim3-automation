@@ -1,0 +1,80 @@
+name: Gold Control XAU EOD Session Alignment Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-xau-eod-session-alignment.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Audit date-label shifts without logging prices
+        shell: python
+        run: |
+          import os
+          import numpy as np
+          import pandas as pd
+          import psycopg
+          import requests
+
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute('''
+                      SELECT DISTINCT ON (observation_ts::date)
+                             observation_ts::date, value
+                      FROM usable_observations
+                      WHERE series_id='XAU_DAILY_XAUS'
+                      ORDER BY observation_ts::date, retrieved_at DESC
+                  ''')
+                  rows = cur.fetchall()
+              conn.rollback()
+          a = pd.DataFrame(rows, columns=['date','a'])
+          a['date'] = pd.to_datetime(a['date'])
+          a['a'] = pd.to_numeric(a['a'], errors='raise')
+
+          headers={'Authorization':f"apikey {os.environ['TWELVE_DATA_API_KEY']}", 'User-Agent':'GoldControl-Stage4-SessionAlignment/1.0'}
+          r=requests.get('https://api.twelvedata.com/time_series', params={'symbol':'XAU/USD','interval':'1day','outputsize':5000,'format':'JSON','start_date':'2016-01-01'}, headers=headers, timeout=(8,35))
+          r.raise_for_status(); p=r.json()
+          if p.get('status')=='error': raise SystemExit(f"TWELVE_API_ERROR:{p.get('code')}:{p.get('message')}")
+          b=pd.DataFrame([{'date':pd.to_datetime(v['datetime']), 'b':pd.to_numeric(v['close'])} for v in p.get('values',[])])
+          b=b.dropna().drop_duplicates('date', keep='last')
+
+          def fast(series):
+              s=pd.Series(series,dtype='float64'); ma=s.rolling(20,min_periods=20).mean(); out=[]
+              for i in range(len(s)):
+                  if i < 20 or pd.isna(ma.iloc[i]) or pd.isna(ma.iloc[i-1]): out.append(None); continue
+                  p1='UP' if s.iloc[i-1]>ma.iloc[i-1] else ('DOWN' if s.iloc[i-1]<ma.iloc[i-1] else 'NEUTRAL')
+                  p2='UP' if s.iloc[i]>ma.iloc[i] else ('DOWN' if s.iloc[i]<ma.iloc[i] else 'NEUTRAL')
+                  out.append('ROBUST_UP' if p1==p2=='UP' else ('ROBUST_DOWN' if p1==p2=='DOWN' else 'MIXED'))
+              return out
+
+          for shift in (-1,0,1):
+              x=b.copy(); x['join_date']=x['date']+pd.Timedelta(days=shift)
+              z=a.merge(x[['join_date','b']], left_on='date', right_on='join_date').sort_values('date').reset_index(drop=True)
+              ra=z['a'].pct_change(); rb=z['b'].pct_change(); ok=ra.notna()&rb.notna()
+              corr=float(ra[ok].corr(rb[ok])); sign=float((np.sign(ra[ok])==np.sign(rb[ok])).mean()*100)
+              gap=((z['b']/z['a']-1).abs()*100)
+              fa,fb=fast(z['a']),fast(z['b']); pairs=[(u,v) for u,v in zip(fa,fb) if u is not None and v is not None]
+              fagree=sum(u==v for u,v in pairs)/len(pairs)*100 if pairs else float('nan')
+              print(f'SHIFT_DAYS={shift};COMMON={len(z)};RETURN_CORR={corr:.6f};SIGN_AGREE_PCT={sign:.3f};MEDIAN_LEVEL_GAP_PCT={gap.median():.6f};FAST_AGREE_PCT={fagree:.3f}')
+          print('RAW_MARKET_VALUES_LOGGED=NO')
+          print('DATABASE_WRITES=NONE')
+          print('GOLD_CONTROL_XAU_EOD_SESSION_ALIGNMENT_AUDIT_PASS')
