@@ -50,7 +50,6 @@ def load_world_bank_gold() -> pd.Series:
 
 
 def request_json(session: requests.Session, params: dict) -> tuple[dict | None, str | None]:
-    # Transport/rate-limit safe. No market values are logged here.
     for attempt in range(8):
         try:
             r = session.get(TWELVE_URL, params=params, timeout=120)
@@ -60,7 +59,6 @@ def request_json(session: requests.Session, params: dict) -> tuple[dict | None, 
                 return None, f"TRANSPORT_{type(exc).__name__}"
             time.sleep(min(15 * (attempt + 1), 65))
             continue
-
         code = j.get("code") if isinstance(j, dict) else None
         if r.status_code == 429 or code == 429:
             time.sleep(65)
@@ -74,8 +72,6 @@ def request_json(session: requests.Session, params: dict) -> tuple[dict | None, 
 def fetch_twelve_hourly_window(
     session: requests.Session, api_key: str, start_month: pd.Timestamp, end_month: pd.Timestamp
 ) -> tuple[dict[pd.Timestamp, tuple[float, int]], str | None]:
-    # Historical research bridge only. The 16:00 America/New_York 1h bar closes
-    # at 17:00 ET. It has its own lineage and is never relabelled as exact 1min.
     start = start_month.strftime("%Y-%m-01 00:00:00")
     end = (end_month + pd.offsets.MonthEnd(0)).strftime("%Y-%m-%d 23:59:59")
     params = {
@@ -130,24 +126,27 @@ def main() -> None:
     if not api_key:
         raise RuntimeError("TWELVE_DATA_API_KEY_MISSING")
 
-    # Frozen before this rerun: seven two-month windows spanning 2020-2026.
-    # Grouping reduces Twelve requests while retaining cross-regime coverage.
+    # Frozen before the successful bridge run: seven 3-month windows spanning
+    # 2020-2026. This yields up to 21 level comparisons and 14 genuinely
+    # consecutive monthly-return comparisons using only seven API calls.
     windows = [
-        ("2020-09-01", "2020-10-01"),
-        ("2021-03-01", "2021-04-01"),
-        ("2022-06-01", "2022-07-01"),
-        ("2023-06-01", "2023-07-01"),
-        ("2024-06-01", "2024-07-01"),
-        ("2025-06-01", "2025-07-01"),
-        ("2026-06-01", "2026-07-01"),
+        ("2020-08-01", "2020-10-01"),
+        ("2021-03-01", "2021-05-01"),
+        ("2022-06-01", "2022-08-01"),
+        ("2023-06-01", "2023-08-01"),
+        ("2024-06-01", "2024-08-01"),
+        ("2025-06-01", "2025-08-01"),
+        ("2026-05-01", "2026-07-01"),
     ]
     rows = []
+    ret_pairs: list[tuple[float, float]] = []
     session = requests.Session()
     session.headers.update({"User-Agent": "Gold-Control-Audit/1.0"})
 
     for a, b in windows:
         sm, em = pd.Timestamp(a), pd.Timestamp(b)
         got, err = fetch_twelve_hourly_window(session, api_key, sm, em)
+        window_rows = []
         if err:
             print(f"OVERLAP_WINDOW={sm.strftime('%Y-%m')}..{em.strftime('%Y-%m')} STATUS={err}")
         else:
@@ -159,26 +158,34 @@ def main() -> None:
                 wbval = float(wb.loc[m])
                 abs_gap = abs(ny17 - wbval)
                 rel_bps = abs_gap / abs(wbval) * 10000 if wbval != 0 else math.nan
-                rows.append((m, wbval, ny17, n, abs_gap, rel_bps))
+                rec = (m, wbval, ny17, n, abs_gap, rel_bps)
+                rows.append(rec)
+                window_rows.append(rec)
                 print(f"OVERLAP_MONTH={m.strftime('%Y-%m')} STATUS=PASS N_NY17={n} ABS_GAP_LOGGED=NO")
+            window_rows.sort(key=lambda x: x[0])
+            for prev, cur in zip(window_rows, window_rows[1:]):
+                if cur[0] == prev[0] + pd.offsets.MonthBegin(1):
+                    ret_pairs.append((math.log(cur[1] / prev[1]), math.log(cur[2] / prev[2])))
         time.sleep(12)
 
-    if len(rows) < 10:
+    if len(rows) < 15:
         raise RuntimeError(f"INSUFFICIENT_OVERLAP_MONTHS:{len(rows)}")
+    if len(ret_pairs) < 10:
+        raise RuntimeError(f"INSUFFICIENT_CONSECUTIVE_RETURN_PAIRS:{len(ret_pairs)}")
 
-    # Chronological order is essential for return diagnostics.
     rows.sort(key=lambda x: x[0])
-    a = np.array([r[1] for r in rows], float)
-    b = np.array([r[2] for r in rows], float)
-    abs_gap = np.abs(a - b)
-    rel_bps = abs_gap / np.abs(a) * 10000
-    level_corr = float(np.corrcoef(a, b)[0, 1])
-    ret_a = np.diff(np.log(a))
-    ret_b = np.diff(np.log(b))
-    ret_corr = float(np.corrcoef(ret_a, ret_b)[0, 1])
-    sign_agree = float(np.mean(np.sign(ret_a) == np.sign(ret_b)))
+    levels_wb = np.array([r[1] for r in rows], float)
+    levels_ny = np.array([r[2] for r in rows], float)
+    abs_gap = np.abs(levels_wb - levels_ny)
+    rel_bps = abs_gap / np.abs(levels_wb) * 10000
+    level_corr = float(np.corrcoef(levels_wb, levels_ny)[0, 1])
+    ret_wb = np.array([x[0] for x in ret_pairs], float)
+    ret_ny = np.array([x[1] for x in ret_pairs], float)
+    ret_corr = float(np.corrcoef(ret_wb, ret_ny)[0, 1])
+    sign_agree = float(np.mean(np.sign(ret_wb) == np.sign(ret_ny)))
 
     print(f"OVERLAP_VALID_MONTHS={len(rows)}")
+    print(f"CONSECUTIVE_RETURN_PAIRS={len(ret_pairs)}")
     print(f"MONTHLY_LEVEL_CORR={level_corr:.12f}")
     print(f"MONTHLY_MEDIAN_ABS_GAP_USD={float(np.median(abs_gap)):.12f}")
     print(f"MONTHLY_P95_ABS_GAP_USD={float(np.quantile(abs_gap, 0.95)):.12f}")
