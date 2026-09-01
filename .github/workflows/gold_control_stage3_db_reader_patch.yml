@@ -1,0 +1,95 @@
+name: Gold Control Stage 3 DB Reader Integration
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold_control_stage3_db_reader_patch.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-canonical:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+
+      - name: Patch transitional app to canonical Decision Store reader
+        shell: python
+        run: |
+          from pathlib import Path
+
+          app = Path('gold_axis_2026/apps/gold_control.py')
+          text = app.read_text(encoding='utf-8')
+
+          replacements = [
+              (
+                  'from live_sources import fetch_gvz_history, fetch_gvz_latest, fetch_xau_history, fetch_xau_spot',
+                  'from decision_source import fetch_current_decision_state\nfrom live_sources import fetch_gvz_history, fetch_gvz_latest, fetch_xau_history, fetch_xau_spot',
+              ),
+              (
+                  'LATEST_SIGNAL = R41 / "output" / "latest_signal.json"\n',
+                  '',
+              ),
+              (
+                  'config = load_json(CONFIG)\nprov = load_json(PROVENANCE)\nlatest = load_json(LATEST_SIGNAL)\nhistory = load_csv(HISTORY)\nscorecard = load_csv(SCORECARD)',
+                  '''config = load_json(CONFIG)\nprov = load_json(PROVENANCE)\n\ndecision_store_error = None\ndb_url = os.environ.get("NEON_DATABASE_URL", "").strip()\nif not db_url:\n    try:\n        db_url = str(st.secrets.get("NEON_DATABASE_URL", "")).strip()\n    except Exception:\n        db_url = ""\n\nif db_url:\n    try:\n        latest = fetch_current_decision_state(db_url) or {}\n    except Exception as exc:\n        latest = {}\n        decision_store_error = f"{type(exc).__name__}: {exc}"\nelse:\n    latest = {}\n    decision_store_error = "NEON_DATABASE_URL_NOT_CONFIGURED"\n\nhistory = load_csv(HISTORY)\nscorecard = load_csv(SCORECARD)''',
+              ),
+              (
+                  '''    if latest:\n        show_decision_box(\n            str(latest.get("classification", "UNRESOLVED")),\n            str(latest.get("date", "N/A")),\n            "Canlı spot değil; son üretilmiş frozen R4.1 EOD state",\n        )\n    else:\n        show_decision_box(\n            "CANLI KARAR YOK",\n            "N/A",\n            "R4.1 canlı EOD signal pipeline uygulamaya henüz bağlı değil",\n        )\n        st.warning("Canlı XAU fiyatından otomatik LONG/EXIT kararı türetilmiyor.")''',
+                  '''    if latest:\n        evidence = str(latest.get("evidence_class", "UNRESOLVED"))\n        if evidence == "LIVE_PRODUCTION":\n            decision_note = "Decision Store · LIVE_PRODUCTION · canlı spot değildir"\n        else:\n            decision_note = "Decision Store · PROSPECTIVE_SHADOW · canlı üretim kararı değildir"\n        show_decision_box(\n            str(latest.get("classification", "UNRESOLVED")),\n            str(latest.get("date", "N/A")),\n            decision_note,\n        )\n    else:\n        show_decision_box(\n            "KANONİK KARAR YOK",\n            "N/A",\n            "Decision Store'da LIVE_PRODUCTION / PROSPECTIVE_SHADOW kayıt yok",\n        )\n        if decision_store_error:\n            st.caption(f"Decision Store: {decision_store_error}")\n        st.warning("Canlı XAU fiyatından otomatik LONG/EXIT kararı türetilmiyor.")''',
+              ),
+              (
+                  '        st.caption(f"R4.1 signal as-of: {latest.get(\'date\',\'N/A\')}")\n    else:\n        st.warning("Güncel `latest_signal.json` yok. Statik kuralları canlı sinyal gibi göstermiyoruz.")',
+                  '        st.caption(f"R4.1 stored state as-of: {latest.get(\'date\',\'N/A\')} · evidence: {latest.get(\'evidence_class\',\'N/A\')}")\n    else:\n        st.warning("Decision Store’da display-eligible karar yok. HISTORICAL_REPLAY canlı state olarak gösterilmez.")',
+              ),
+              (
+                  '    st.info("Neon data plane ve diğer makro/vendor serileri backend katmanındadır. Bu uygulamaya sorgu bağlantısı kurulmadan burada health PASS gösterilmeyecek.")',
+                  '''    if db_url:\n        st.success("Neon Decision Store reader: CONNECTED · yalnız LIVE_PRODUCTION / PROSPECTIVE_SHADOW okunur")\n    else:\n        st.warning("Neon Decision Store reader: NOT_CONFIGURED · NEON_DATABASE_URL uygulama ortamında yok")\n    st.info("Diğer makro/vendor serileri backend katmanındadır. UI'ya sorgu bağlantısı kurulmadan health PASS gösterilmeyecek.")''',
+              ),
+          ]
+
+          for old, new in replacements:
+              if old not in text:
+                  raise SystemExit('APP_EXPECTED_TEXT_NOT_FOUND: ' + old[:100])
+              text = text.replace(old, new, 1)
+
+          app.write_text(text, encoding='utf-8')
+
+          wf = Path('.github/workflows/gold-control-app-smoke.yml')
+          w = wf.read_text(encoding='utf-8')
+          w = w.replace(
+              "      - 'gold_axis_2026/apps/**'\n",
+              "      - 'gold_axis_2026/apps/**'\n      - 'gold_axis_2026/data_pipeline/decision_store.py'\n      - 'gold_axis_2026/data_pipeline/decision_store_reader.py'\n",
+              1,
+          )
+          w = w.replace(
+              '  smoke:\n    runs-on: ubuntu-latest\n',
+              '  smoke:\n    runs-on: ubuntu-latest\n    env:\n      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}\n',
+              1,
+          )
+          w = w.replace(
+              '          python -m py_compile gold_axis_2026/apps/gold_control.py\n          python -m py_compile gold_axis_2026/apps/live_sources.py\n',
+              '          python -m py_compile gold_axis_2026/apps/gold_control.py\n          python -m py_compile gold_axis_2026/apps/live_sources.py\n          python -m py_compile gold_axis_2026/apps/decision_source.py\n          python -m py_compile gold_axis_2026/data_pipeline/decision_store_reader.py\n',
+              1,
+          )
+          marker = '      - name: Live source connectivity diagnostic\n'
+          if marker not in w:
+              raise SystemExit('APP_SMOKE_MARKER_NOT_FOUND')
+          read_smoke = '''      - name: Decision Store read-only evidence isolation smoke\n        run: |\n          test -n "$NEON_DATABASE_URL" || (echo "NEON_DATABASE_URL missing" && exit 1)\n          PYTHONPATH=gold_axis_2026/apps:gold_axis_2026/data_pipeline python - <<'PY'\n          import os\n          from decision_source import fetch_current_decision_state\n          state = fetch_current_decision_state(os.environ['NEON_DATABASE_URL'])\n          if state is not None:\n              assert state['evidence_class'] in {'LIVE_PRODUCTION', 'PROSPECTIVE_SHADOW'}\n              assert state.get('action_state') is None\n          print('GOLD_CONTROL_DECISION_STORE_APP_READER_PASS replay_excluded=PASS action_mapping_guard=PASS')\n          PY\n\n'''
+          w = w.replace(marker, read_smoke + marker, 1)
+          wf.write_text(w, encoding='utf-8')
+
+      - name: Commit Stage 3 reader integration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/apps/gold_control.py .github/workflows/gold-control-app-smoke.yml
+          git diff --cached --check
+          git commit -m "gold-control: replace file-only latest state with Decision Store reader"
+          git push origin HEAD:gold-r4-direction-engine
