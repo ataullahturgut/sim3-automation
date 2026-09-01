@@ -1,11 +1,11 @@
 # GOLD CONTROL — H=1 FORECAST CANONICALIZATION
 
-**Canonicalization version:** 1.0  
+**Canonicalization version:** 1.1  
 **Audit date:** 2026-09-01  
 **Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.0  
 **Production closure package:** `GOLD_H1_R1_STAGE9B_11_PRODUCTION_CLOSURE_V1.zip`  
 **Package SHA256:** `943d9b79e19deb4ff56e9e51bba0d5c9ee50725c7a40f51b19187825497c5a0c`  
-**Stage 2 status:** `PARTIAL_COMPLETE_WITH_ISSUANCE_LEDGER_NOT_PROVEN`
+**Stage 2 status:** `PASS_CONTRACT_CANONICALIZED; PROSPECTIVE_LEDGER_PROVEN_EMPTY`
 
 ---
 
@@ -13,7 +13,7 @@
 
 This document prevents forecast-version drift inside Gold Control.
 
-It defines which H=1 artifact is authoritative for the current production-closure release, which models are executable/reference/benchmark/challenger, which historical files are legacy experimental outputs, and which metrics belong to which exact release.
+It defines which H=1 artifact is authoritative for the current production-closure release, which models are executable/reference/benchmark/challenger, which historical files are legacy experimental outputs, which metrics belong to which exact release, and what the current Neon forecast-state store actually contains.
 
 No value from a legacy file may be silently substituted for a production-closure value because the model names look similar.
 
@@ -68,7 +68,7 @@ This is binding.
 | Canonical ID | Exact model / artifact role | Production role | Executability / provenance status | UI treatment |
 |---|---|---|---|---|
 | `VW_AUDITED_SHADOW_V2` | VW-MIDAS-SVR Adapt V2 | audited analytical shadow/reference | audited outputs exist; exact original executable reproduction `BLOCKED_NOT_PROVEN` | show as `Audited reference`, never imply fully reproducible execution |
-| `PATCH_R1_EXECUTABLE` | Causal PatchTST Gold R1 | temporary executable H=1 point-forecast path | reproducible executable path in production closure | show as production/executable point forecast where an issued record exists |
+| `PATCH_R1_EXECUTABLE` | Causal PatchTST Gold R1 | temporary executable H=1 point-forecast path | reproducible executable path in production closure | show as production/executable point forecast only where an immutable issued record exists |
 | `REPRO_SVR_DIAGNOSTIC` | reproducible SVR reconstruction | diagnostic/reconstruction only | executable diagnostic; does not replace audited VW identity | technical/audit only by default |
 | `MOMENTUM_3M_R1` | 3M Momentum | direction challenger/context and price challenger in scorecard | reproducible | direction context; not primary point forecast |
 | `RW_R1` | Random Walk | mandatory naive benchmark | reproducible | benchmark |
@@ -132,7 +132,7 @@ The production-closure provenance records:
 - temporary executable point model: `Causal PatchTST Gold R1`
 - production-closure Patch operational forecast: **4115.6394040298055 USD/oz**
 
-Therefore, if Gold Control needs the August 2026 production-closure Patch value, the canonical value is:
+Therefore, if Gold Control needs the August 2026 production-closure Patch value for research/provenance display, the canonical production-closure value is:
 
 `4115.6394040298055`
 
@@ -140,13 +140,13 @@ Older experimental/archived August forecast values must not overwrite or replace
 
 ### Evidence classification warning
 
-The presence of this operational forecast in the closure package proves the artifact and its stated origin. It does **not by itself prove the exact wall-clock issuance time before August outcomes were observed** because the immutable production forecast ledger has not yet been directly queried/reconciled.
+The presence of this operational forecast in the closure package proves the artifact and its stated origin. The live Neon reconciliation now proves that no immutable forecast input/contract rows were persisted in the current forecast-state tables for this release.
 
-Therefore its evidence label for prospective reporting is:
+Therefore its evidence label for prospective reporting remains:
 
 `OPERATIONAL_CLOSURE_ARTIFACT; PROSPECTIVE_ISSUANCE_TIMESTAMP_NOT_PROVEN`
 
-It must not be silently labeled `LIVE_PRODUCTION` evidence until an immutable issued-at/input-snapshot record proves that status.
+It must not be silently labeled `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` evidence. The empty ledger is evidence of absence from the current canonical database store, not evidence that the historical closure artifact was never created.
 
 ---
 
@@ -183,7 +183,7 @@ This is a scope distinction, not a license to interchange them.
 
 Until a future audited architecture change explicitly unifies these roles:
 
-- `Tahmin` screen may use the canonical issued Patch point forecast and show VW as audited reference;
+- `Tahmin` screen may use a canonical issued Patch point forecast only after an immutable issued record exists, and may show VW as audited reference;
 - R4.1 Emergency/decision calculations must use the exact frozen reference specified by the R4.1 config;
 - no app layer may choose between them dynamically.
 
@@ -216,6 +216,8 @@ Once an immutable issued forecast record exists for the target month, the `Tahmi
 9. exact model version and provenance status;
 10. historical issued-forecast vs actual chart.
 
+Until such a row exists, the primary production forecast area must be `NOT_ISSUED_IN_CANONICAL_LEDGER`; it may separately display research/closure artifacts with their evidence label.
+
 The screen must **not** show:
 
 - a forecast copied from a legacy experimental file when production closure has a different value;
@@ -226,35 +228,39 @@ The screen must **not** show:
 
 ---
 
-# 10. FORECAST STATE STORE REQUIREMENT
+# 10. LIVE NEON FORECAST-STATE RECONCILIATION
 
-The schema contract already contains:
+A protected GitHub Actions read-only audit queried the actual Neon schema/state and rolled the transaction back. The current forecast-state objects are:
 
-- `forecast_input_snapshots`
-- `monthly_forecast_contracts`
+| Object | Exists | Current rows | Audit interpretation |
+|---|---:|---:|---|
+| `forecast_input_snapshots` | yes | **0** | immutable input snapshot surface exists but contains no issued forecast inputs |
+| `derived_feature_snapshots` | yes | **0** | feature snapshot surface exists but is empty |
+| `monthly_forecast_contracts` | yes | **0** | canonical monthly forecast contract table exists but contains no issued forecasts |
 
-But current Neon rows could not be directly queried in the 2026-09-01 audit because of `BLOCKED_CONNECTOR_SCHEMA_MISMATCH`.
+This replaces the previous `ISSUANCE_LEDGER_NOT_PROVEN_CURRENT_DB` status.
 
-Therefore the following are not yet re-proven for the current release:
+Current exact status:
 
-- exact issued-at timestamp per operational forecast;
-- linked immutable input snapshot ID;
-- model/config/code SHA bound to each issued forecast row;
-- current database forecast-ledger completeness.
+`PROSPECTIVE_FORECAST_LEDGER_PROVEN_EMPTY`
 
-Status:
+Consequences:
 
-`ISSUANCE_LEDGER_NOT_PROVEN_CURRENT_DB`.
+1. No existing forecast in the current Neon store can be classified as `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION`.
+2. Historical/closure forecasts remain file-backed research or operational-closure evidence with their original labels; they must not be backfilled and relabeled as if they had been stored prospectively.
+3. The first future production/shadow forecast must write its immutable input snapshot and forecast contract **before outcome realization**.
+4. Later source revisions must not rewrite that forecast snapshot.
+5. Database schema presence is not equivalent to prospective evidence; row existence with timestamp/provenance is required.
 
-This prevents Stage 2 from being called a full production-state `PASS`, even though model roles and file authority are now canonicalized.
+The direct Neon connector wrapper remains unreliable for some management calls (`BLOCKED_CONNECTOR_SCHEMA_MISMATCH`), but this no longer blocks read-only reconciliation because the protected GitHub Actions audit provides a verified read path to the actual database.
 
 ---
 
 # 11. STAGE 2 CLOSURE DECISION
 
-**Decision:** `PARTIAL_COMPLETE_WITH_ISSUANCE_LEDGER_NOT_PROVEN`
+**Decision:** `PASS_CONTRACT_CANONICALIZED; PROSPECTIVE_LEDGER_PROVEN_EMPTY`
 
-Completed:
+Stage 2 exit criterion is satisfied at the contract/canonicalization level:
 
 - H=1 target/origin contract frozen;
 - production artifact authority order frozen;
@@ -263,30 +269,27 @@ Completed:
 - legacy root output lineage separated from production closure;
 - August 2026 closure value canonicalized without claiming unproven prospective issuance;
 - forecast-product role separated from R4.1 monthly decision-reference role;
-- auto selector/ensemble remain off.
+- auto selector/ensemble remain off;
+- current Neon forecast ledger directly reconciled and proven empty rather than left unknown.
 
-Remaining before `STAGE_2 = PASS`:
+`STAGE_2 = PASS` does **not** mean prospective forecast operation has already started. It means the canonical forecast contract and role registry are resolved, and the database starting state is known.
 
-1. direct read-only reconciliation of `monthly_forecast_contracts` and `forecast_input_snapshots`;
-2. prove issued-at timestamp and immutable input snapshot for every forecast that will be labeled prospective/live;
-3. bind model/config/code version to each issued forecast record;
-4. classify each historical record explicitly as `HISTORICAL_REPLAY`, `PROSPECTIVE_SHADOW`, or `LIVE_PRODUCTION`.
+Prospective issuance remains a later operational milestone under Stage 11. The system must accumulate new immutable forecasts from this point forward; it may not manufacture prospective history retrospectively.
 
 ---
 
 # 12. NEXT ROADMAP CONSEQUENCE
 
-Stage 3 is the next structural build:
+The next structural stage is:
 
-`DECISION STATE STORE`
+`STAGE 3 — DECISION STATE STORE`
 
-However database schema/state writes must not be attempted blindly while the direct Neon connector is unable to perform a reliable read-only audit.
+Current Stage 3 preparation already includes:
 
-Non-mutating preparation may proceed:
+- exact descriptive state vocabulary;
+- explicit `NOT_PROVEN_POSITION_MAPPING` guard;
+- run/snapshot/event persistence contract;
+- a versioned DDL candidate;
+- a rollback-only compatibility smoke against the actual Neon database.
 
-- define the decision-store contract;
-- define state vocabulary;
-- map every decision field to frozen model/signal provenance;
-- prepare migration/audit specification;
-
-Actual Neon migration remains gated by a working database access path and migration verification.
+The rollback-only smoke does not persist schema changes and is not a substitute for an isolated-branch migration test. Actual production migration remains blocked until the Stage 3 migration gate is satisfied.
