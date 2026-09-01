@@ -8,10 +8,14 @@ on:
       - '.github/workflows/gold-data-pipeline-smoke.yml'
   workflow_dispatch:
 
+concurrency:
+  group: gold-data-pipeline-smoke
+  cancel-in-progress: true
+
 jobs:
-  collector-smoke:
+  compile:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 3
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -25,10 +29,32 @@ jobs:
           python -m py_compile gold_axis_2026/data_pipeline/fed_direct.py
           python -m py_compile gold_axis_2026/data_pipeline/persist_neon.py
           python -m py_compile gold_axis_2026/data_pipeline/source_job.py
-      - name: Run production-source smoke without DB writes
+          python -m py_compile gold_axis_2026/data_pipeline/audit_live_inventory.py
+          python -m py_compile gold_axis_2026/data_pipeline/render_data_inventory.py
+          python -m py_compile gold_axis_2026/data_pipeline/test_decision_store_schema.py
+
+  source-smoke:
+    needs: compile
+    strategy:
+      fail-fast: false
+      matrix:
+        source: [xau, cboe, fed, gpr]
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install collector dependencies
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Smoke ${{ matrix.source }} without DB writes
         working-directory: gold_axis_2026/data_pipeline
+        env:
+          SOURCE: ${{ matrix.source }}
         run: |
           python - <<'PY'
+          import os
           from source_job import collect_source
 
           expected = {
@@ -38,17 +64,14 @@ jobs:
               'gpr': {'GPR_OFFICIAL', 'GPRT_OFFICIAL', 'GPRA_OFFICIAL'},
           }
 
-          total = 0
-          for source, required in expected.items():
-              bundle = collect_source(source, 'daily')
-              errors = [x for x in bundle['quality_events'] if x.get('severity') == 'ERROR']
-              found = {x['series_id'] for x in bundle['observations']}
-              missing = sorted(required - found)
-              assert not errors, f'{source} quality errors: {errors}'
-              assert not missing, f'{source} missing series: {missing}'
-              assert bundle['observations'], f'{source} returned no observations'
-              total += len(bundle['observations'])
-              print(source, 'PASS', len(bundle['observations']), 'rows', sorted(found))
-
-          print('Gold Data production-source smoke: PASS', total, 'rows')
+          source = os.environ['SOURCE']
+          required = expected[source]
+          bundle = collect_source(source, 'daily')
+          errors = [x for x in bundle['quality_events'] if x.get('severity') == 'ERROR']
+          found = {x['series_id'] for x in bundle['observations']}
+          missing = sorted(required - found)
+          assert not errors, f'{source} quality errors: {[(x.get("code"), x.get("series_id")) for x in errors]}'
+          assert not missing, f'{source} missing series: {missing}'
+          assert bundle['observations'], f'{source} returned no observations'
+          print(source, 'PASS', len(bundle['observations']), 'rows', sorted(found))
           PY
