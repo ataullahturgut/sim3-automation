@@ -1,0 +1,69 @@
+name: Gold Control Patch R1 Prospective Input Bridge V3
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-patch-r1-prospective-input-bridge-v3.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-patch-r1-prospective-input-bridge-v3
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install audit runtime
+        run: pip install pandas numpy requests
+      - name: Require protected source credentials
+        run: |
+          test -n "$TWELVE_DATA_API_KEY"
+          test -n "$FRED_API_KEY"
+      - name: Verify manifest and V3 freeze
+        run: |
+          set -euo pipefail
+          grep -F '**Manifest version:** 1.17' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'FROZEN_BEFORE_V3_SOURCE_RESULT' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V3.md
+          grep -F 'FROZEN_BEFORE_V3_SOURCE_RESULT' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_INPUT_SOURCE_CHANGE_CONTROL_V3_2026-09-02.md
+          grep -F 'L=252' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V3.md
+          grep -F 'PATCH_METALS_TWELVE_DAILY_FULL_HISTORY_V3' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V3.md
+          grep -F 'NASDAQCOM_COMPLETED_MONTH_RETURN_MARKET_CLOSE_V3' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V3.md
+          python -m py_compile gold_axis_2026/tools/audit_patch_r1_prospective_input_bridge_v3.py
+      - name: Run V3 source readiness audit
+        run: python gold_axis_2026/tools/audit_patch_r1_prospective_input_bridge_v3.py
+      - name: Verify evidence isolation
+        run: |
+          set -euo pipefail
+          test -s gold_axis_2026/patch_repro_v1/prospective_input_bridge_v3_source_evidence.json
+          grep -F '"evidence_class": "INPUT_SOURCE_READINESS_AUDIT"' gold_axis_2026/patch_repro_v1/prospective_input_bridge_v3_source_evidence.json
+          grep -F '"prospective_claim": false' gold_axis_2026/patch_repro_v1/prospective_input_bridge_v3_source_evidence.json
+          grep -F '"geometry_changed": false' gold_axis_2026/patch_repro_v1/prospective_input_bridge_v3_source_evidence.json
+          grep -F '"forecast_ledger_write": "NONE"' gold_axis_2026/patch_repro_v1/prospective_input_bridge_v3_source_evidence.json
+          grep -F '"decision_store_write": "NONE"' gold_axis_2026/patch_repro_v1/prospective_input_bridge_v3_source_evidence.json
+          grep -F '"database_write": "NONE"' gold_axis_2026/patch_repro_v1/prospective_input_bridge_v3_source_evidence.json
+          grep -F '"raw_vendor_market_values_logged": false' gold_axis_2026/patch_repro_v1/prospective_input_bridge_v3_source_evidence.json
+      - name: Commit immutable V3 source evidence to canonical branch
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/patch_repro_v1/prospective_input_bridge_v3_source_evidence.json
+          git commit -m 'gold-control: record Patch prospective input bridge V3 source evidence'
+          git push origin HEAD:gold-r4-direction-engine
