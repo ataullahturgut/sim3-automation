@@ -42,6 +42,9 @@ BEGIN
     IF to_regprocedure('reject_gold_control_forecast_state_mutation()') IS NULL THEN
         RAISE EXCEPTION 'BLOCKED_FORECAST_IMMUTABILITY_GUARD_NOT_FOUND';
     END IF;
+    IF to_regclass('public.monthly_forecast_contracts') IS NULL THEN
+        RAISE EXCEPTION 'BLOCKED_CANONICAL_FORECAST_TABLE_NOT_FOUND';
+    END IF;
 END
 $$;
 
@@ -50,5 +53,44 @@ CREATE TRIGGER trg_monthly_expert_forecasts_immutable
 BEFORE UPDATE OR DELETE ON monthly_expert_forecasts
 FOR EACH ROW EXECUTE FUNCTION reject_gold_control_forecast_state_mutation();
 
+-- The legacy Patch V7 writer was created before the manifest v1.22 multi-expert
+-- freeze and can technically target monthly_forecast_contracts directly.  The
+-- following guard makes that path fail closed.  A canonical forecast may only
+-- be inserted after a separately governed selector/aggregation rule exists.
+CREATE OR REPLACE FUNCTION enforce_gold_control_canonical_forecast_governance()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    p jsonb := COALESCE(NEW.provenance, '{}'::jsonb);
+    evidence text := COALESCE(p->>'evidence_class', '');
+    canonical text := lower(COALESCE(p->>'canonical_authority', 'false'));
+    selector_status text := COALESCE(p->>'selector_status', '');
+    selector_rule_version text := COALESCE(p->>'selector_rule_version', '');
+BEGIN
+    IF evidence NOT IN ('PROSPECTIVE_SHADOW', 'LIVE_PRODUCTION') THEN
+        RAISE EXCEPTION 'BLOCKED_CANONICAL_FORECAST_EVIDENCE_NOT_GOVERNED';
+    END IF;
+    IF canonical <> 'true' THEN
+        RAISE EXCEPTION 'BLOCKED_CANONICAL_FORECAST_AUTHORITY_NOT_GOVERNED';
+    END IF;
+    IF selector_status = '' OR selector_status = 'NOT_PROVEN_EXPERT_SELECTION_RULE' THEN
+        RAISE EXCEPTION 'BLOCKED_CANONICAL_FORECAST_SELECTOR_NOT_GOVERNED';
+    END IF;
+    IF selector_rule_version = '' THEN
+        RAISE EXCEPTION 'BLOCKED_CANONICAL_FORECAST_SELECTOR_VERSION_MISSING';
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS trg_monthly_forecast_contracts_governed_insert ON monthly_forecast_contracts;
+CREATE TRIGGER trg_monthly_forecast_contracts_governed_insert
+BEFORE INSERT ON monthly_forecast_contracts
+FOR EACH ROW EXECUTE FUNCTION enforce_gold_control_canonical_forecast_governance();
+
 COMMENT ON TABLE monthly_expert_forecasts IS
 'Manifest v1.22 append-only individual expert ledger. MONTH_END_EXPERT and EARLY_INDICATIVE are separate tracks. Individual rows have canonical_authority=false; selector and ensemble remain OFF until separately frozen change-control.';
+
+COMMENT ON FUNCTION enforce_gold_control_canonical_forecast_governance() IS
+'Manifest v1.22 fail-closed gate. Blocks direct single-expert inserts into monthly_forecast_contracts until a separately governed selector/aggregation rule and version are present in provenance.';
