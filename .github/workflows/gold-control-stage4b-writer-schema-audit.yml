@@ -1,0 +1,53 @@
+name: Gold Control Stage4B Writer Schema Audit
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/data_pipeline/stage4b_forecast_writer_schema_audit.py'
+      - '.github/workflows/gold-control-stage4b-writer-schema-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  schema-audit:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install audit runtime
+        run: pip install 'psycopg[binary]>=3.2,<4'
+
+      - name: Require protected Neon credential
+        run: test -n "$NEON_DATABASE_URL"
+
+      - name: Run read-only forecast writer schema audit
+        run: python gold_axis_2026/data_pipeline/stage4b_forecast_writer_schema_audit.py
+
+      - name: Verify fail-closed evidence
+        run: |
+          grep -F '"read_only": true' gold_axis_2026/stage4b/forecast_writer_schema_evidence.json
+          grep -F '"database_write": "NONE"' gold_axis_2026/stage4b/forecast_writer_schema_evidence.json
+          grep -F '"raw_market_values_logged": false' gold_axis_2026/stage4b/forecast_writer_schema_evidence.json
+          grep -F '"decision": "FORECAST_WRITER_SCHEMA_AUDIT_PASS"' gold_axis_2026/stage4b/forecast_writer_schema_evidence.json
+
+      - name: Commit schema-only evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/stage4b/forecast_writer_schema_evidence.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'gold-control: record Stage4B forecast writer schema audit'
+            git push origin HEAD:gold-r4-direction-engine
+          fi
