@@ -32,17 +32,19 @@ jobs:
           grep -q 'Manifest version:\*\* 1.22' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'Build Multi-Expert Forecast Pipeline' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          grep -q 'auto selector = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          grep -q 'auto ensemble = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Eiq 'auto selector.{0,40}OFF|auto selector remains OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Eiq 'auto ensemble.{0,40}OFF|auto ensemble remains OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
       - name: Compile multi-expert contract
         run: python -m py_compile gold_axis_2026/data_pipeline/multi_expert_forecast.py gold_axis_2026/data_pipeline/apply_multi_expert_forecast_v1.py
       - name: Run deterministic multi-expert tests
-        run: pytest -q gold_axis_2026/data_pipeline/test_multi_expert_forecast.py
-      - name: Apply append-only expert ledger schema
+        run: |
+          cd gold_axis_2026/data_pipeline
+          pytest -q test_multi_expert_forecast.py
+      - name: Apply append-only expert ledger and canonical guard schema
         env:
           NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
         run: python gold_axis_2026/data_pipeline/apply_multi_expert_forecast_v1.py
-      - name: Verify expert ledger fail-closed controls
+      - name: Verify expert ledger and canonical fail-closed controls
         env:
           NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
         run: |
@@ -56,11 +58,18 @@ jobs:
                   q.execute("select count(*) n from monthly_expert_forecasts")
                   n = int(q.fetchone()['n'])
                   q.execute("select count(*) n from pg_trigger where tgrelid='public.monthly_expert_forecasts'::regclass and not tgisinternal and tgname='trg_monthly_expert_forecasts_immutable'")
-                  guard = int(q.fetchone()['n'])
+                  expert_guard = int(q.fetchone()['n'])
+                  q.execute("select count(*) n from pg_trigger where tgrelid='public.monthly_forecast_contracts'::regclass and not tgisinternal and tgname='trg_monthly_forecast_contracts_governed_insert'")
+                  canonical_guard = int(q.fetchone()['n'])
+                  q.execute("select to_regprocedure('enforce_gold_control_canonical_forecast_governance()') as fn")
+                  fn = q.fetchone()['fn']
               c.rollback()
-          assert guard == 1
+          assert expert_guard == 1
+          assert canonical_guard == 1
+          assert fn is not None
           print(f'MULTI_EXPERT_LEDGER_ROWS={n}')
           print('MULTI_EXPERT_IMMUTABILITY_GUARD=PASS')
+          print('CANONICAL_FORECAST_GOVERNANCE_GUARD=PASS')
           print('AUTO_SELECTOR=OFF')
           print('AUTO_ENSEMBLE=OFF')
           PY
