@@ -1,0 +1,19 @@
+{
+  "candidate_id": "CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE",
+  "contract_insert_plan_valid": true,
+  "decision": "PATCH_V7_FORECAST_WRITER_REHEARSAL_PASS",
+  "forecast_contract_rows_after": 0,
+  "forecast_contract_rows_before": 0,
+  "forecast_input_rows_after": 0,
+  "forecast_input_rows_before": 0,
+  "generated_at": "2026-09-02T11:34:34.618572+00:00",
+  "identity_values_consumed": false,
+  "input_insert_plan_valid": true,
+  "mode": "READ_ONLY_EXPLAIN_INSERT_REHEARSAL",
+  "parent_v7_decision": "PATCH_R1_V7_COMPLETED_SESSION_DAILY_FEATURE_MODEL_IMPACT_PASS",
+  "persistent_database_writes": "NONE",
+  "prospective_claim": false,
+  "raw_market_values_logged": false,
+  "rehearsal_pass": true,
+  "schema_decision": "FORECAST_WRITER_SCHEMA_AUDIT_PASS"
+}
