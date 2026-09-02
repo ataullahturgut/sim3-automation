@@ -32,7 +32,10 @@ def visible_text(page: Page) -> str:
 def main_nav_label(page: Page, name: str):
     pattern = re.compile(re.escape(name), re.I)
     root = page.locator(MAIN_NAV)
-    root.first.wait_for(state="visible", timeout=30_000)
+    # A fixed-position descendant can be visible while Streamlit's wrapper has
+    # a zero-sized/hidden bounding box. Require DOM attachment, not wrapper
+    # visibility, then assert the actual interactive label is visible.
+    root.first.wait_for(state="attached", timeout=30_000)
     labels = root.locator("label").filter(has_text=pattern)
     for index in range(min(labels.count(), 8)):
         item = labels.nth(index)
