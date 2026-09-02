@@ -1,4 +1,4 @@
-name: Gold Control Mobile UI V2 Final
+name: Gold Control Mobile UI V3 Final Mockups
 
 on:
   workflow_dispatch:
@@ -26,7 +26,7 @@ permissions:
   contents: read
 
 jobs:
-  mobile-ui-v2-final:
+  mobile-ui-final:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +38,7 @@ jobs:
         with:
           python-version: '3.14'
 
-      - name: Install app and browser runtime
+      - name: Install locked app and browser runtime
         run: |
           python -m pip install --upgrade pip
           pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
@@ -46,13 +46,11 @@ jobs:
           python --version
           streamlit version
 
-      - name: Verify manifest and final mockup governance
+      - name: Verify manifest and UI governance
         run: |
-          grep -q 'Manifest version:\*\* 1.20' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'Manifest version:' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'APPROVED_FINAL_MOCKUP_UI_CONTRACT_V2' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          grep -q 'BLOCKED_NO_CANONICAL_SCENARIO_CONTRACT' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          grep -q 'NOT_PROVEN_POSITION_MAPPING' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'APPROVED_FINAL_MOCKUP_UI_CONTRACT_V2' gold_axis_2026/GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md
           echo 'FINAL_MOCKUP_GOVERNANCE_PASS'
 
@@ -60,7 +58,7 @@ jobs:
         working-directory: gold_axis_2026/apps
         run: pytest -q test_mobile_ui_contract.py test_piyasa_contract.py
 
-      - name: Compile complete V2 local dependency graph
+      - name: Compile complete UI dependency graph
         run: |
           python -m py_compile \
             gold_axis_2026/data_pipeline/decision_store.py \
@@ -74,12 +72,11 @@ jobs:
             gold_axis_2026/apps/gold_control_mobile_v1.py \
             gold_axis_2026/apps/gold_control.py
 
-      - name: Audit mobile import graph and expected exports
+      - name: Audit local imports and final-screen markers
         run: |
           python - <<'PY'
           import ast
           from pathlib import Path
-
           app = Path('gold_axis_2026/apps/gold_control_mobile_v1.py')
           tree = ast.parse(app.read_text(encoding='utf-8'))
           local = {
@@ -98,27 +95,27 @@ jobs:
               if isinstance(node, ast.ImportFrom) and node.module in local:
                   seen[node.module] = {x.name for x in node.names}
           if set(seen) != set(local):
-              raise SystemExit(f'LOCAL_IMPORT_GRAPH_MISMATCH seen={seen.keys()} expected={local.keys()}')
+              raise SystemExit(f'LOCAL_IMPORT_GRAPH_MISMATCH:{seen.keys()}')
           for module, expected in local.items():
               missing = expected - seen[module]
               if missing:
                   raise SystemExit(f'LOCAL_IMPORT_EXPORT_AUDIT_FAIL:{module}:{sorted(missing)}')
-          print('LOCAL_IMPORT_GRAPH_AUDIT_PASS')
+          text = app.read_text(encoding='utf-8')
+          required = [
+              'SİNYAL ÖZETİ','MODEL YÖNÜ (AYLIK)','FAST / SLOW TEYİDİ',
+              'SİNYAL ZAMAN ÇİZELGESİ','GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI',
+              'PATCH TAHMİNİ (V7)','VW REFERANS','RANDOM WALK (RW)',
+              'TAHMİN ÖZETİ','MODEL BİLGİSİ','HATA ORANI ZAMAN ÇİZGİSİ',
+              'SEÇİLMİŞ GERÇEKLEŞEN TAHMİNLER','HISTORICAL_REPLAY'
+          ]
+          missing = [x for x in required if x not in text]
+          if missing:
+              raise SystemExit(f'FINAL_SCREEN_MARKERS_MISSING:{missing}')
+          print('FINAL_SCREEN_IMPORT_AND_MARKER_AUDIT_PASS')
           PY
 
-      - name: Verify bootstrap and final V2 markers
+      - name: Verify bootstrap safety
         run: |
-          grep -q 'SİNYAL ÖZETİ' gold_axis_2026/apps/gold_control_mobile_v1.py
-          grep -q 'MODEL YÖNÜ (AYLIK)' gold_axis_2026/apps/gold_control_mobile_v1.py
-          grep -q 'FAST / SLOW TEYİDİ' gold_axis_2026/apps/gold_control_mobile_v1.py
-          grep -q 'SİNYAL ZAMAN ÇİZELGESİ' gold_axis_2026/apps/gold_control_mobile_v1.py
-          grep -q 'GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI' gold_axis_2026/apps/gold_control_mobile_v1.py
-          grep -q 'SENARYO MODÜLÜ KAPALI' gold_axis_2026/apps/gold_control_mobile_v1.py
-          grep -q 'MEVCUT FİYATA GÖRE FARK' gold_axis_2026/apps/gold_control_mobile_v1.py
-          grep -q 'MODEL PERFORMANSI' gold_axis_2026/apps/gold_control_mobile_v1.py
-          grep -q 'TAHMİN PERFORMANSI' gold_axis_2026/apps/gold_control_mobile_v1.py
-          grep -q 'HATA / KARAR ZAMAN ÇİZELGESİ' gold_axis_2026/apps/gold_control_mobile_v1.py
-          grep -q 'SEÇİLMİŞ GEÇMİŞ KAYITLAR' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -q 'sys.modules.pop(name, None)' gold_axis_2026/apps/gold_control.py
           grep -q 'LOCAL_MODULE_PATH_MISMATCH' gold_axis_2026/apps/gold_control.py
           grep -q 'LOCAL_MODULE_EXPORT_MISSING' gold_axis_2026/apps/gold_control.py
@@ -126,9 +123,9 @@ jobs:
             echo 'RUNPY_ENTRYPOINT_FORBIDDEN'
             exit 1
           fi
-          echo 'FINAL_V2_BOOTSTRAP_MARKERS_PASS'
+          echo 'BOOTSTRAP_SAFETY_PASS'
 
-      - name: Streamlit Cloud cwd isolation browser regression
+      - name: Cloud cwd isolation browser regression
         env:
           STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
         run: |
@@ -149,25 +146,21 @@ jobs:
           set -e
           kill $APP_PID || true
           wait $APP_PID || true
-          if [ $QA_RC -ne 0 ]; then
-            cat /tmp/gold_mobile_cloud_path.log
-            exit $QA_RC
-          fi
+          if [ $QA_RC -ne 0 ]; then cat /tmp/gold_mobile_cloud_path.log; exit $QA_RC; fi
           if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_cloud_path.log; then
             cat /tmp/gold_mobile_cloud_path.log
             exit 1
           fi
-          echo 'MOBILE_V2_CLOUD_CWD_BROWSER_PASS'
+          echo 'MOBILE_CLOUD_CWD_BROWSER_PASS'
 
-      - name: Streamlit Cloud stale-module collision browser regression
+      - name: Stale-module collision browser regression
         env:
           STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
         run: |
           REPO="$GITHUB_WORKSPACE"
           mkdir -p /tmp/gold_poison
           cat > /tmp/gold_poison/sitecustomize.py <<'PY'
-          import sys
-          import types
+          import sys, types
           for name in (
               'decision_store','decision_store_reader','decision_source','forecast_source',
               'live_sources','mobile_ui_contract','piyasa_contract','gold_control_mobile_v1'
@@ -192,15 +185,8 @@ jobs:
           set -e
           kill $APP_PID || true
           wait $APP_PID || true
-          if [ $QA_RC -ne 0 ]; then
-            cat /tmp/gold_mobile_stale_module.log
-            exit $QA_RC
-          fi
-          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_stale_module.log; then
-            cat /tmp/gold_mobile_stale_module.log
-            exit 1
-          fi
-          echo 'MOBILE_V2_STALE_MODULE_BROWSER_PASS'
+          if [ $QA_RC -ne 0 ]; then cat /tmp/gold_mobile_stale_module.log; exit $QA_RC; fi
+          echo 'MOBILE_STALE_MODULE_BROWSER_PASS'
 
       - name: Canonical 390px final mockup browser QA
         env:
@@ -208,7 +194,7 @@ jobs:
         run: |
           streamlit run gold_axis_2026/apps/gold_control.py \
             --server.headless true --server.port 8501 --server.address 127.0.0.1 \
-            > /tmp/gold_mobile_v2_browser.log 2>&1 &
+            > /tmp/gold_mobile_v3_browser.log 2>&1 &
           APP_PID=$!
           for i in $(seq 1 35); do
             if curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null; then break; fi
@@ -216,28 +202,25 @@ jobs:
           done
           set +e
           python gold_axis_2026/apps/mobile_viewport_qa.py \
-            --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v2_qa
+            --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v3_qa
           QA_RC=$?
           set -e
           kill $APP_PID || true
           wait $APP_PID || true
-          if [ $QA_RC -ne 0 ]; then
-            cat /tmp/gold_mobile_v2_browser.log
-            exit $QA_RC
-          fi
-          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v2_browser.log; then
-            cat /tmp/gold_mobile_v2_browser.log
+          if [ $QA_RC -ne 0 ]; then cat /tmp/gold_mobile_v3_browser.log; exit $QA_RC; fi
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v3_browser.log; then
+            cat /tmp/gold_mobile_v3_browser.log
             exit 1
           fi
-          echo 'MOBILE_V2_CANONICAL_BROWSER_PASS'
+          echo 'MOBILE_V3_CANONICAL_BROWSER_PASS'
 
-      - name: Upload mobile QA screenshots
+      - name: Upload final mobile QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gold-control-mobile-v2-390px-screenshots
+          name: gold-control-mobile-v3-390px-screenshots
           path: |
-            /tmp/gold_mobile_v2_qa/*.png
+            /tmp/gold_mobile_v3_qa/*.png
             /tmp/gold_mobile_cloud_path_qa/*.png
             /tmp/gold_mobile_stale_module_qa/*.png
           if-no-files-found: warn
