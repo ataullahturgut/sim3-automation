@@ -1,0 +1,50 @@
+{
+  "candidate_id": "CAUSAL_PATCH_R1_REPRO_V1",
+  "selected_pre_2023_geometry": {
+    "L": 252,
+    "P": 21,
+    "D": 32,
+    "dev_return_mae": 0.024503217715495115
+  },
+  "development_window": {
+    "train_end": "2020-12-01",
+    "validation_start": "2021-01-01",
+    "validation_end": "2022-12-01"
+  },
+  "full_development_ranking": [
+    {
+      "L": 252,
+      "P": 21,
+      "D": 32,
+      "dev_return_mae": 0.024503217715495115
+    },
+    {
+      "L": 252,
+      "P": 7,
+      "D": 24,
+      "dev_return_mae": 0.02528391525425447
+    },
+    {
+      "L": 252,
+      "P": 14,
+      "D": 32,
+      "dev_return_mae": 0.025284519621396894
+    },
+    {
+      "L": 126,
+      "P": 7,
+      "D": 24,
+      "dev_return_mae": 0.025961833591222075
+    },
+    {
+      "L": 126,
+      "P": 14,
+      "D": 32,
+      "dev_return_mae": 0.02640811702699965
+    }
+  ],
+  "daily_metals_source_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+  "core5_sha256": "48678809e6506b049a2c6b215929a807e5b88fd21126a1d51703387376efcebb",
+  "contract_sha256": "a954f5f3d4079c39a2bc5aac324b03647529d25408b24a188ade5047f0091e7e",
+  "locked_score_window_used_for_selection": false
+}
