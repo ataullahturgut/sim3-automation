@@ -17,6 +17,20 @@ def db_url() -> str:
     return value
 
 
+def trigger_count(cur, table: str, trigger: str) -> int:
+    cur.execute(
+        """
+        select count(*) as n
+        from pg_trigger
+        where tgrelid=to_regclass(%s)
+          and not tgisinternal
+          and tgname=%s
+        """,
+        (f"public.{table}", trigger),
+    )
+    return int(cur.fetchone()["n"])
+
+
 def main() -> int:
     sql = PATCH.read_text(encoding="utf-8")
     if not sql.strip():
@@ -29,23 +43,21 @@ def main() -> int:
                 cur.execute("select to_regclass('public.monthly_expert_forecasts') as reg")
                 if cur.fetchone()["reg"] is None:
                     raise RuntimeError("MULTI_EXPERT_LEDGER_NOT_CREATED")
-                cur.execute(
-                    """
-                    select count(*) as n
-                    from pg_trigger
-                    where tgrelid='public.monthly_expert_forecasts'::regclass
-                      and not tgisinternal
-                      and tgname='trg_monthly_expert_forecasts_immutable'
-                    """
-                )
-                if int(cur.fetchone()["n"]) != 1:
+                if trigger_count(cur, "monthly_expert_forecasts", "trg_monthly_expert_forecasts_immutable") != 1:
                     raise RuntimeError("MULTI_EXPERT_IMMUTABILITY_TRIGGER_NOT_PROVEN")
+                if trigger_count(cur, "monthly_forecast_contracts", "trg_monthly_forecast_contracts_governed_insert") != 1:
+                    raise RuntimeError("CANONICAL_FORECAST_GOVERNANCE_TRIGGER_NOT_PROVEN")
+                cur.execute("select to_regprocedure('enforce_gold_control_canonical_forecast_governance()') as fn")
+                if cur.fetchone()["fn"] is None:
+                    raise RuntimeError("CANONICAL_FORECAST_GOVERNANCE_FUNCTION_NOT_PROVEN")
             conn.commit()
         except Exception:
             conn.rollback()
             raise
 
     print("MULTI_EXPERT_FORECAST_LEDGER_SCHEMA=APPLIED")
+    print("MULTI_EXPERT_IMMUTABILITY_TRIGGER=PASS")
+    print("CANONICAL_FORECAST_GOVERNANCE_TRIGGER=PASS")
     print("AUTO_SELECTOR=OFF")
     print("AUTO_ENSEMBLE=OFF")
     print("SELECTOR_STATUS=NOT_PROVEN_EXPERT_SELECTION_RULE")
