@@ -4,10 +4,13 @@ on:
   push:
     branches: [gold-r4-direction-engine]
     paths:
+      - 'gold_axis_2026/GOLD_CONTROL_MULTI_EXPERT_EARLY_INDICATIVE_CONTRACT_2026-09-02.md'
       - 'gold_axis_2026/data_pipeline/multi_expert_forecast.py'
+      - 'gold_axis_2026/data_pipeline/multi_expert_early_indicative.py'
       - 'gold_axis_2026/data_pipeline/schema_patch_multi_expert_forecast_v1.sql'
       - 'gold_axis_2026/data_pipeline/apply_multi_expert_forecast_v1.py'
       - 'gold_axis_2026/data_pipeline/test_multi_expert_forecast.py'
+      - 'gold_axis_2026/data_pipeline/test_multi_expert_early_indicative.py'
       - '.github/workflows/gold-control-multi-expert-ledger-v1.yml'
   workflow_dispatch:
 
@@ -34,12 +37,27 @@ jobs:
           grep -q 'Build Multi-Expert Forecast Pipeline' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Eiq 'auto selector.{0,40}OFF|auto selector remains OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Eiq 'auto ensemble.{0,40}OFF|auto ensemble remains OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-      - name: Compile multi-expert contract
-        run: python -m py_compile gold_axis_2026/data_pipeline/multi_expert_forecast.py gold_axis_2026/data_pipeline/apply_multi_expert_forecast_v1.py
+          grep -q 'FROZEN_FAIL_CLOSED_EARLY_INDICATIVE_CONTRACT_V1' gold_axis_2026/GOLD_CONTROL_MULTI_EXPERT_EARLY_INDICATIVE_CONTRACT_2026-09-02.md
+          grep -q 'BLOCKED_EARLY_INDICATIVE_PATCH_PIT_CONTRACT_NOT_FROZEN' gold_axis_2026/GOLD_CONTROL_MULTI_EXPERT_EARLY_INDICATIVE_CONTRACT_2026-09-02.md
+      - name: Compile multi-expert contracts
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/multi_expert_forecast.py \
+            gold_axis_2026/data_pipeline/multi_expert_early_indicative.py \
+            gold_axis_2026/data_pipeline/apply_multi_expert_forecast_v1.py
       - name: Run deterministic multi-expert tests
         run: |
           cd gold_axis_2026/data_pipeline
-          pytest -q test_multi_expert_forecast.py
+          pytest -q test_multi_expert_forecast.py test_multi_expert_early_indicative.py
+      - name: Prove Early Indicative is fail-closed today
+        run: |
+          cd gold_axis_2026/data_pipeline
+          python multi_expert_early_indicative.py | tee /tmp/early_indicative.log
+          grep -q 'EARLY_INDICATIVE_OVERALL_STATUS=BLOCKED_NO_EXECUTABLE_PIT_SAFE_EXPERT_TRACK' /tmp/early_indicative.log
+          grep -q 'FORECAST_TRACK=EARLY_INDICATIVE' /tmp/early_indicative.log
+          grep -q 'AUTO_SELECTOR=OFF' /tmp/early_indicative.log
+          grep -q 'AUTO_ENSEMBLE=OFF' /tmp/early_indicative.log
+          grep -q 'DATABASE_WRITES=NONE' /tmp/early_indicative.log
       - name: Apply append-only expert ledger and canonical guard schema
         env:
           NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
