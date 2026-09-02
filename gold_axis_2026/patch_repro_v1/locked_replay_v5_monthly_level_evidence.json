@@ -1,0 +1,14 @@
+{
+  "candidate_id": "CAUSAL_PATCH_R1_REPRO_V1_4_XAU_MONTHLY_LEVEL_ORIGIN_SAFE",
+  "evidence_class": "HISTORICAL_REPLAY_MODEL_IMPACT",
+  "prospective_claim": false,
+  "source_gate": "BLOCKED_PATCH_MONTHLY_LEVEL_BRIDGE_V5_SOURCE_NOT_PROVEN",
+  "model_impact_run": "SKIPPED_SOURCE_GATE_NOT_PROVEN",
+  "model_impact_pass": false,
+  "decision": "PATCH_R1_V5_MONTHLY_LEVEL_MODEL_IMPACT_FAIL_NO_RETUNE",
+  "post_result_retune": false,
+  "forecast_ledger_write": "NONE",
+  "decision_store_write": "NONE",
+  "database_write": "NONE",
+  "raw_vendor_market_values_logged": false
+}

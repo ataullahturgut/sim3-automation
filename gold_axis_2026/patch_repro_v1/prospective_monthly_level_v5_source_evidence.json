@@ -1,0 +1,62 @@
+{
+  "candidate_id": "CAUSAL_PATCH_R1_REPRO_V1_4_XAU_MONTHLY_LEVEL_ORIGIN_SAFE",
+  "candidate_series_id": "PATCH_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V5",
+  "evidence_class": "SOURCE_INPUT_SEMANTIC_AUDIT",
+  "prospective_claim": false,
+  "parent_failed_workflow_run": 33617695639,
+  "required_history_start": "2011-02",
+  "provider_access_probes": [
+    {
+      "probe_month": "2011-01",
+      "http_status": 400,
+      "api_code": 400,
+      "accessible": false,
+      "returned_rows": 0,
+      "error_class": null
+    },
+    {
+      "probe_month": "2016-01",
+      "http_status": 400,
+      "api_code": 400,
+      "accessible": false,
+      "returned_rows": 0,
+      "error_class": null
+    },
+    {
+      "probe_month": "2020-01",
+      "http_status": 200,
+      "api_code": null,
+      "accessible": true,
+      "returned_rows": 139,
+      "error_class": null
+    },
+    {
+      "probe_month": "2023-01",
+      "http_status": 200,
+      "api_code": null,
+      "accessible": true,
+      "returned_rows": 473,
+      "error_class": null
+    },
+    {
+      "probe_month": "2026-01",
+      "http_status": 200,
+      "api_code": null,
+      "accessible": true,
+      "returned_rows": 696,
+      "error_class": null
+    }
+  ],
+  "required_start_accessible": false,
+  "source_bridge_pass": false,
+  "model_impact_run": "SKIPPED_SOURCE_GATE_NOT_PROVEN",
+  "decision": "BLOCKED_PATCH_MONTHLY_LEVEL_BRIDGE_V5_SOURCE_NOT_PROVEN",
+  "failure_semantic": "REQUIRED_HOURLY_HISTORY_NOT_ACCESSIBLE_UNDER_CURRENT_PROVIDER_ENTITLEMENT",
+  "thresholds_relaxed": false,
+  "source_substituted": false,
+  "raw_vendor_market_values_logged": false,
+  "database_write": "NONE",
+  "forecast_ledger_write": "NONE",
+  "decision_store_write": "NONE",
+  "audited_at": "2026-09-02T10:10:24.719340+00:00"
+}
