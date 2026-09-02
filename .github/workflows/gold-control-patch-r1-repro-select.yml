@@ -1,0 +1,56 @@
+name: Gold Control Patch R1 Repro Geometry Selection
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/gold-control-patch-r1-repro-select.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-patch-r1-repro-select
+  cancel-in-progress: false
+
+jobs:
+  select:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deterministic selection runtime
+        run: pip install pandas numpy requests torch
+      - name: Verify restored manifest and frozen contract
+        run: |
+          set -euo pipefail
+          grep -F '**Manifest version:** 1.16' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'CAUSAL_PATCH_R1_REPRO_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'FROZEN_BEFORE_LOCKED_REPLAY_SCORE' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_REPRO_CONTRACT_V1.md
+          grep -F 'ed2e549f82ba0d1cd3ca32842b82d3888d301e01' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_REPRO_CONTRACT_V1.md
+          python -m py_compile gold_axis_2026/tools/causal_patch_r1_repro_v1.py
+      - name: Select geometry using pre-2023 development only
+        run: python gold_axis_2026/tools/causal_patch_r1_repro_v1.py --mode select
+      - name: Verify no locked-window selection and freeze artifact
+        run: |
+          set -euo pipefail
+          test -s gold_axis_2026/patch_repro_v1/frozen_geometry.json
+          grep -F '"locked_score_window_used_for_selection": false' gold_axis_2026/patch_repro_v1/frozen_geometry.json
+          grep -F '"daily_metals_source_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01"' gold_axis_2026/patch_repro_v1/frozen_geometry.json
+          test ! -e gold_axis_2026/patch_repro_v1/locked_replay_43.csv
+          test ! -e gold_axis_2026/patch_repro_v1/locked_replay_evidence.json
+      - name: Commit frozen geometry before locked replay
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/patch_repro_v1/frozen_geometry.json
+          git commit -m 'gold-control: freeze pre-2023 Patch R1 repro geometry'
+          git push origin HEAD:gold-r4-direction-engine
