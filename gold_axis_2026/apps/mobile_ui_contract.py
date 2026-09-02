@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+import unicodedata
 from dataclasses import dataclass
 from typing import Any
 
@@ -82,10 +84,20 @@ def evidence_badge(evidence_class: str | None) -> tuple[str, str]:
     return mapping[evidence_class]
 
 
+def _guard_normalize(value: str) -> str:
+    """Normalize Turkish/Unicode spelling for policy-term comparison only."""
+    value = str(value or "").replace("ı", "i").replace("İ", "I")
+    decomposed = unicodedata.normalize("NFKD", value)
+    ascii_like = "".join(ch for ch in decomposed if not unicodedata.combining(ch))
+    return ascii_like.upper()
+
+
 def assert_no_action_mapping(text: str) -> None:
-    upper = str(text or "").upper()
+    normalized = _guard_normalize(text)
     for term in PROHIBITED_ACTION_TERMS:
-        if term in upper:
+        normalized_term = _guard_normalize(term)
+        pattern = rf"(?<![A-Z0-9]){re.escape(normalized_term)}(?![A-Z0-9])"
+        if re.search(pattern, normalized):
             raise RuntimeError(f"NOT_PROVEN_POSITION_MAPPING_UI_VIOLATION:{term}")
 
 
