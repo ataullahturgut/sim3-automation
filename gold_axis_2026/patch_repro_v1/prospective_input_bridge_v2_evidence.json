@@ -1,0 +1,140 @@
+{
+  "contract": "GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V2.md",
+  "candidate_architecture": "CAUSAL_PATCH_R1_REPRO_V1",
+  "reserved_identity_after_model_impact_only": "CAUSAL_PATCH_R1_REPRO_V1_1_ORIGIN_SAFE",
+  "evidence_class": "INPUT_SOURCE_COMPATIBILITY_AUDIT",
+  "prospective_claim": false,
+  "geometry_changed": false,
+  "geometry": {
+    "L": 252,
+    "P": 21,
+    "D": 32
+  },
+  "macro_audit": {
+    "fedfunds": {
+      "fred_series": "DFF",
+      "reconstructions": 43,
+      "missing_reconstructions": 0,
+      "missing_examples": [],
+      "median_abs_relative_gap_pct": 1.943497636105307e-14,
+      "p95_abs_relative_gap_pct": 0.27185216777810034,
+      "median_gate_pct": 0.5,
+      "p95_gate_pct": 1.5,
+      "hard_gate_pass": true,
+      "materiality_gate_pass": true,
+      "pass": true,
+      "source_observation_counts_min": 26,
+      "source_observation_counts_max": 30,
+      "evidence_inherited_from_v1": true,
+      "construction_changed_in_v2": false
+    },
+    "usdcny": {
+      "fred_series": "DEXCHUS",
+      "reconstructions": 43,
+      "missing_reconstructions": 0,
+      "missing_examples": [],
+      "median_abs_relative_gap_pct": 0.06086932685781006,
+      "p95_abs_relative_gap_pct": 0.21799554504200475,
+      "median_gate_pct": 0.2,
+      "p95_gate_pct": 0.75,
+      "hard_gate_pass": true,
+      "materiality_gate_pass": true,
+      "pass": true,
+      "source_observation_counts_min": 14,
+      "source_observation_counts_max": 20,
+      "evidence_inherited_from_v1": true,
+      "construction_changed_in_v2": false
+    },
+    "nasdaq_lag1": {
+      "construction": "NASDAQCOM_LAG1_RETURN_ORIGIN_SAFE_V2",
+      "reconstructions": 41,
+      "missing_reconstructions": 2,
+      "missing_examples": [
+        {
+          "target": "2023-12",
+          "origin_month": "2023-11",
+          "reason": "ALFRED_MONTH_EMPTY"
+        },
+        {
+          "target": "2024-01",
+          "origin_month": "2023-12",
+          "reason": "ALFRED_MONTH_EMPTY"
+        }
+      ],
+      "pooled_level_comparisons": 82,
+      "median_abs_relative_level_gap_pct": 1.6001871193038347e-06,
+      "p95_abs_relative_level_gap_pct": 6.3945690885059e-06,
+      "median_gate_pct": 0.3,
+      "p95_gate_pct": 1.0,
+      "hard_gate_pass": false,
+      "materiality_gate_pass": true,
+      "pass": false,
+      "current_origin_month_nasdaq_required": false,
+      "raw_values_logged": false
+    },
+    "pass": false
+  },
+  "metals_audit": {
+    "series": {
+      "Gold": {
+        "common_daily_observations": 280,
+        "return_pairs": 279,
+        "return_corr": 0.5672455315578913,
+        "sign_agreement": 0.6630824372759857,
+        "median_abs_return_gap_bps": 68.59246530584784,
+        "p95_abs_return_gap_bps": 245.60090782021314,
+        "operational_candidate": "XAU/USD",
+        "interval": "1day",
+        "provider_meta": {
+          "symbol": "XAU/USD",
+          "interval": "1day",
+          "currency": null,
+          "type": "Precious Metal"
+        },
+        "not_lbma_benchmark": true,
+        "median_gap_gate_bps": 75.0,
+        "p95_gap_gate_bps": 300.0,
+        "corr_gate": 0.9,
+        "sign_gate": 0.75,
+        "hard_gate_pass": true,
+        "materiality_gate_pass": false,
+        "pass": false
+      },
+      "Silver": {
+        "operational_candidate": "XAG/USD",
+        "interval": "1day",
+        "not_lbma_benchmark": true,
+        "hard_gate_pass": false,
+        "materiality_gate_pass": false,
+        "pass": false,
+        "not_proven_reason": "HTTP_RETRY_EXHAUSTED"
+      },
+      "Platinum": {
+        "operational_candidate": "XPT/USD",
+        "interval": "1day",
+        "not_lbma_benchmark": true,
+        "hard_gate_pass": false,
+        "materiality_gate_pass": false,
+        "pass": false,
+        "not_proven_reason": "HTTP_RETRY_EXHAUSTED"
+      },
+      "Palladium": {
+        "operational_candidate": "XPD/USD",
+        "interval": "1day",
+        "not_lbma_benchmark": true,
+        "hard_gate_pass": false,
+        "materiality_gate_pass": false,
+        "pass": false,
+        "not_proven_reason": "HTTP_RETRY_EXHAUSTED"
+      }
+    },
+    "pass": false,
+    "raw_values_logged": false
+  },
+  "source_bridge_pass": false,
+  "decision": "BLOCKED_PATCH_PROSPECTIVE_INPUT_V2_SOURCE_NOT_PROVEN",
+  "forecast_ledger_write": "NONE",
+  "decision_store_write": "NONE",
+  "database_write": "NONE",
+  "raw_vendor_market_values_logged": false
+}
