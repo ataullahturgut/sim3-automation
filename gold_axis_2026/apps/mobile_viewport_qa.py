@@ -13,20 +13,17 @@ MAIN_NAV = ".st-key-gc_main_nav"
 
 
 def assert_no_streamlit_exception(page: Page, screen: str) -> None:
-    """Fail on rendered Streamlit exceptions, not merely server-health failures."""
     exception_nodes = page.locator('[data-testid="stException"]')
     if exception_nodes.count() and exception_nodes.first.is_visible():
         text = exception_nodes.first.inner_text()
         raise AssertionError(f"STREAMLIT_EXCEPTION_VISIBLE:{screen}:{text[:500]}")
-
     body = page.locator("body").inner_text().upper()
-    fatal_markers = (
+    for marker in (
         "THIS APP HAS ENCOUNTERED AN ERROR",
         "IMPORTERROR",
         "MODULENOTFOUNDERROR",
         "TRACEBACK (MOST RECENT CALL LAST)",
-    )
-    for marker in fatal_markers:
+    ):
         if marker in body:
             raise AssertionError(f"STREAMLIT_FATAL_MARKER_VISIBLE:{screen}:{marker}")
 
@@ -51,9 +48,6 @@ def visible_text(page: Page) -> str:
 def main_nav_label(page: Page, name: str):
     pattern = re.compile(re.escape(name), re.I)
     root = page.locator(MAIN_NAV)
-    # A fixed-position descendant can be visible while Streamlit's wrapper has
-    # a zero-sized/hidden bounding box. Require DOM attachment, not wrapper
-    # visibility, then assert the actual interactive label is visible.
     root.first.wait_for(state="attached", timeout=30_000)
     labels = root.locator("label").filter(has_text=pattern)
     for index in range(min(labels.count(), 8)):
@@ -108,8 +102,14 @@ def main() -> int:
         page.get_by_text("GOLD CONTROL", exact=False).first.wait_for(state="visible", timeout=45_000)
 
         assert_no_streamlit_exception(page, "bugun")
-        screenshot(page, out, "bugun")
         require_nav_labels(page)
+        first_label = main_nav_label(page, "Bugün")
+        if first_label is not None:
+            print("MAIN_NAV_LABEL_HTML=" + first_label.evaluate("el => el.outerHTML")[:4000])
+        market_root = page.locator(".st-key-gc_market_range")
+        if market_root.count():
+            print("MARKET_RANGE_HTML=" + market_root.first.evaluate("el => el.outerHTML")[:4000])
+        screenshot(page, out, "bugun")
         assert_no_horizontal_overflow(page, "bugun")
 
         click_tab(page, "Görünüm")
@@ -166,7 +166,6 @@ def main() -> int:
             raise AssertionError("MOCKUP_SAMPLE_PERFORMANCE_VISIBLE")
         assert_no_horizontal_overflow(page, "gecmis")
         screenshot(page, out, "gecmis")
-
         browser.close()
 
     print("MOBILE_V2_VIEWPORT_QA_PASS")
