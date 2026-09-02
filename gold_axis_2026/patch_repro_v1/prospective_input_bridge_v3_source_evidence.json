@@ -1,0 +1,56 @@
+{
+  "contract": "GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V3.md",
+  "change_control": "GOLD_CONTROL_CAUSAL_PATCH_R1_INPUT_SOURCE_CHANGE_CONTROL_V3_2026-09-02.md",
+  "candidate_architecture": "CAUSAL_PATCH_R1_REPRO_V1",
+  "reserved_identity_after_model_impact_only": "CAUSAL_PATCH_R1_REPRO_V1_2_TWELVE_DAILY_ORIGIN_SAFE",
+  "evidence_class": "INPUT_SOURCE_READINESS_AUDIT",
+  "prospective_claim": false,
+  "geometry_changed": false,
+  "geometry": {
+    "L": 252,
+    "P": 21,
+    "D": 32
+  },
+  "inherited_macro": {
+    "fedfunds": {
+      "pass": true,
+      "source": "V1_IMMUTABLE_EVIDENCE",
+      "reconstructions": 43
+    },
+    "usdcny": {
+      "pass": true,
+      "source": "V1_IMMUTABLE_EVIDENCE",
+      "reconstructions": 43
+    }
+  },
+  "metals_source_depth": {
+    "lineage": "PATCH_METALS_TWELVE_DAILY_FULL_HISTORY_V3",
+    "pass": false,
+    "not_proven_reason": "TWELVE_SYMBOL_ERROR",
+    "raw_values_logged": false
+  },
+  "nasdaq_source_identity_availability": {
+    "feature": "NASDAQCOM_COMPLETED_MONTH_RETURN_MARKET_CLOSE_V3",
+    "availability_policy": "MARKET_CLOSE_AVAILABILITY_RECONSTRUCTION_NEXT_DAY_V1",
+    "availability_evidence_class": "HISTORICAL_REPLAY_MARKET_CLOSE_AVAILABILITY_RECONSTRUCTION",
+    "core_required_months": 199,
+    "common_months": 199,
+    "missing_months": [],
+    "locked_completed_month_inputs_checked": 86,
+    "availability_violations": [],
+    "median_abs_relative_level_gap_pct": 2.843265787915068e-06,
+    "p95_abs_relative_level_gap_pct": 1.4747471929453622e-05,
+    "median_gate_pct": 0.3,
+    "p95_gate_pct": 1.0,
+    "hard_gate_pass": true,
+    "materiality_gate_pass": true,
+    "pass": true,
+    "raw_values_logged": false
+  },
+  "source_bridge_pass": false,
+  "decision": "BLOCKED_PATCH_PROSPECTIVE_INPUT_V3_SOURCE_NOT_PROVEN",
+  "forecast_ledger_write": "NONE",
+  "decision_store_write": "NONE",
+  "database_write": "NONE",
+  "raw_vendor_market_values_logged": false
+}
