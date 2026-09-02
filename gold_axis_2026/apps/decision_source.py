@@ -19,7 +19,7 @@ from decision_store_reader import read_latest_decision  # noqa: E402
 
 DISPLAY_EVIDENCE_ORDER = ("LIVE_PRODUCTION", "PROSPECTIVE_SHADOW")
 CONTEXT_EVIDENCE_CLASS = "LATE_BOOTSTRAP_SHADOW_CONTEXT"
-MONTHLY_CONTEXT_FEATURE = "MONTHLY_DIRECTION_3M"
+CONTEXT_FEATURES = ("MONTHLY_DIRECTION_3M", "FAST_STATE", "SLOW_STATE")
 
 
 def _iso(value: Any) -> str | None:
@@ -73,56 +73,63 @@ def _to_transitional_app_shape(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _read_monthly_shadow_context(conn) -> dict[str, Any] | None:
-    """Read the already-issued immutable monthly-direction bootstrap context.
-
-    This is deliberately NOT promoted to a Decision Store state.  It exists so
-    the UI can truthfully show the stored monthly prior while Stage 6 remains
-    BLOCKED_NO_DISPLAY_ELIGIBLE_DECISION_SNAPSHOT.
-    """
+def _read_shadow_direction_context(conn) -> dict[str, Any] | None:
+    """Read immutable Stage-4A directional context without promoting it to a decision."""
     query = """
-        SELECT id, calculation_ts, input_cutoff, value_text, feature_version,
-               quality_status, metadata
+        SELECT id, feature_name, calculation_ts, input_cutoff, value_text,
+               feature_version, quality_status, metadata
         FROM derived_feature_snapshots
-        WHERE feature_name = %s
+        WHERE feature_name IN ('MONTHLY_DIRECTION_3M','FAST_STATE','SLOW_STATE')
           AND (
               quality_status = %s
               OR metadata->>'evidence_class' = %s
           )
-        ORDER BY calculation_ts DESC, id DESC
-        LIMIT 1
+        ORDER BY feature_name, calculation_ts DESC, id DESC
     """
     with conn.cursor(row_factory=dict_row) as cur:
-        cur.execute(query, (MONTHLY_CONTEXT_FEATURE, CONTEXT_EVIDENCE_CLASS, CONTEXT_EVIDENCE_CLASS))
-        row = cur.fetchone()
-    if not row:
+        cur.execute(query, (CONTEXT_EVIDENCE_CLASS, CONTEXT_EVIDENCE_CLASS))
+        rows = [dict(r) for r in cur.fetchall()]
+
+    latest: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        feature_name = str(row.get("feature_name") or "")
+        if feature_name in CONTEXT_FEATURES and feature_name not in latest:
+            latest[feature_name] = row
+
+    monthly_row = latest.get("MONTHLY_DIRECTION_3M")
+    if not monthly_row:
         return None
-    value = str(row.get("value_text") or "").strip()
-    if not value:
+    monthly_value = str(monthly_row.get("value_text") or "").strip()
+    if not monthly_value:
         return None
-    metadata = dict(row.get("metadata") or {})
+
+    metadata = dict(monthly_row.get("metadata") or {})
     target_context = str(metadata.get("target_context") or "").strip()
     target_month = f"{target_context}-01" if len(target_context) == 7 else None
+    generated_candidates = [r.get("calculation_ts") for r in latest.values() if r.get("calculation_ts")]
+    generated_at = max(generated_candidates) if generated_candidates else monthly_row.get("calculation_ts")
+    fast_value = str((latest.get("FAST_STATE") or {}).get("value_text") or "YAYIMLANMADI")
+    slow_value = str((latest.get("SLOW_STATE") or {}).get("value_text") or "YAYIMLANMADI")
+
     return {
-        "date": str(row.get("input_cutoff"))[:10] if row.get("input_cutoff") else "N/A",
-        "decision_as_of": _iso(row.get("input_cutoff")),
-        "generated_at": _iso(row.get("calculation_ts")),
+        "date": str(monthly_row.get("input_cutoff"))[:10] if monthly_row.get("input_cutoff") else "N/A",
+        "decision_as_of": _iso(monthly_row.get("input_cutoff")),
+        "generated_at": _iso(generated_at),
         "evidence_class": CONTEXT_EVIDENCE_CLASS,
         "context_only": True,
-        "context_feature_id": row.get("id"),
+        "context_feature_ids": {name: row.get("id") for name, row in latest.items()},
         "target_month": target_month,
-        "monthly_direction_3m": value,
-        "fast_state": "YAYIMLANMADI",
-        "slow_state": "YAYIMLANMADI",
+        "monthly_direction_3m": monthly_value,
+        "fast_state": fast_value,
+        "slow_state": slow_value,
         "level_emergency": "YAYIMLANMADI",
         "reversal_emergency": "YAYIMLANMADI",
         "macro_event_state": "BLOCKED_NOT_FULLY_RECOVERED",
         "bocpd_context": "YAYIMLANMADI",
         "classification": None,
         "action_state": None,
-        "quality_status": row.get("quality_status"),
-        "feature_version": row.get("feature_version"),
-        "prospective_h1_claim": bool(metadata.get("prospective_h1_claim", False)),
+        "quality_status": CONTEXT_EVIDENCE_CLASS,
+        "prospective_h1_claim": False,
     }
 
 
@@ -130,10 +137,10 @@ def fetch_current_decision_state(database_url: str) -> dict[str, Any] | None:
     """Read current display state without inventing a final decision.
 
     Priority is the governed Decision Store: LIVE_PRODUCTION, then
-    PROSPECTIVE_SHADOW.  When neither exists, the function may return only the
-    already-persisted MONTHLY_DIRECTION_3M late-bootstrap shadow context with
-    ``context_only=True``.  That fallback is not a final decision, does not
-    close Stage 6, and contains no action mapping.
+    PROSPECTIVE_SHADOW. When neither exists, the function may return the
+    already-persisted Stage-4A directional context with ``context_only=True``.
+    That fallback is not a final decision, does not close Stage 6, and contains
+    no action mapping.
     """
     url = str(database_url or "").strip()
     if not url:
@@ -153,7 +160,7 @@ def fetch_current_decision_state(database_url: str) -> dict[str, Any] | None:
                 raise RuntimeError("DECISION_EVIDENCE_CLASS_MISMATCH")
             conn.rollback()
             return result
-        context = _read_monthly_shadow_context(conn)
+        context = _read_shadow_direction_context(conn)
         conn.rollback()
         return context
 
