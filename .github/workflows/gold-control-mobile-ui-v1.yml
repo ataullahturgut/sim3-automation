@@ -76,14 +76,39 @@ jobs:
           grep -q 'TAHMİN PERFORMANSI' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -q 'HATA / KARAR ZAMAN ÇİZELGESİ' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -q 'SEÇİLMİŞ GEÇMİŞ KAYITLAR' gold_axis_2026/apps/gold_control_mobile_v1.py
-          grep -q 'importlib.import_module(MODULE_NAME)' gold_axis_2026/apps/gold_control.py
-          grep -q 'importlib.reload' gold_axis_2026/apps/gold_control.py
-          grep -q 'sys.path.insert(0, APP_DIR_STR)' gold_axis_2026/apps/gold_control.py
+          grep -q 'spec_from_file_location' gold_axis_2026/apps/gold_control.py
+          grep -q '_load_exact_module("decision_store"' gold_axis_2026/apps/gold_control.py
+          grep -q '_load_exact_module("decision_store_reader"' gold_axis_2026/apps/gold_control.py
+          grep -q 'refresh=True' gold_axis_2026/apps/gold_control.py
           if grep -Eq '^[[:space:]]*import[[:space:]]+runpy([[:space:]]|$)' gold_axis_2026/apps/gold_control.py; then
             echo 'RUNPY_ENTRYPOINT_FORBIDDEN'
             exit 1
           fi
           echo 'FINAL_V2_SECTION_MARKERS_PASS'
+
+      - name: Streamlit Cloud import-path regression smoke
+        env:
+          STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
+        run: |
+          REPO="$GITHUB_WORKSPACE"
+          cd /tmp
+          streamlit run "$REPO/gold_axis_2026/apps/gold_control.py" \
+            --server.headless true --server.port 8502 --server.address 127.0.0.1 \
+            > /tmp/gold_mobile_cloud_path.log 2>&1 &
+          APP_PID=$!
+          for i in $(seq 1 35); do
+            if curl -fsS http://127.0.0.1:8502/_stcore/health >/dev/null; then
+              echo 'MOBILE_V2_CLOUD_PATH_HEALTH_PASS'
+              kill $APP_PID || true
+              wait $APP_PID || true
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/gold_mobile_cloud_path.log
+          kill $APP_PID || true
+          wait $APP_PID || true
+          exit 1
 
       - name: Canonical Streamlit runtime smoke
         env:
