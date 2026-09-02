@@ -9,9 +9,20 @@ from __future__ import annotations
 
 import importlib
 import sys
+from pathlib import Path
 
 import streamlit as st
 
+
+# Streamlit Cloud can execute the entrypoint with the repository root on
+# sys.path but without this script's directory. The mobile implementation uses
+# sibling-module imports (decision_source, forecast_source, live_sources, ...),
+# so make the canonical apps directory explicit before importing it. This is
+# deterministic and does not depend on the host's Python launcher semantics.
+APP_DIR = Path(__file__).resolve().parent
+APP_DIR_STR = str(APP_DIR)
+if APP_DIR_STR not in sys.path:
+    sys.path.insert(0, APP_DIR_STR)
 
 MODULE_NAME = "gold_control_mobile_v1"
 if MODULE_NAME in sys.modules:
