@@ -1,0 +1,50 @@
+name: Gold Control Manifest V1.20 Final Mockups
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md'
+      - 'gold_axis_2026/tools/reconcile_manifest_v1_20_final_mockups.py'
+      - '.github/workflows/gold-control-manifest-v1-20-final-mockups.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile-final-mockups:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Reconcile manifest v1.20
+        run: python gold_axis_2026/tools/reconcile_manifest_v1_20_final_mockups.py
+
+      - name: Verify final mockup governance markers
+        run: |
+          grep -F '**Manifest version:** 1.20' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'APPROVED_FINAL_MOCKUP_UI_CONTRACT_V2' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F '1 · SİNYAL ÖZETİ' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'BLOCKED_NO_CANONICAL_SCENARIO_CONTRACT' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'four summary metric cards' gold_axis_2026/GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md
+
+      - name: Commit manifest v1.20 reconciliation
+        run: |
+          if git diff --quiet -- gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md; then
+            echo 'MANIFEST_ALREADY_RECONCILED'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          git commit -m 'gold-control: reconcile manifest v1.20 to final mockups'
+          git push origin HEAD:gold-r4-direction-engine
