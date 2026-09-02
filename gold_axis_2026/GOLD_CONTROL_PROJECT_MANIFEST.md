@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.21  
+**Manifest version:** 1.22  
 **Freeze / issue date:** 2026-09-02  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -386,6 +386,43 @@ Immutable Decision Snapshot / Event Ledger
 ```
 
 **Binding interpretation:** the monthly forecast establishes the strategic anchor; the intramonth system incorporates newly available information and may confirm, conflict with, or react against that anchor only through separately frozen rules.
+
+## 7.B BUILD-FIRST / SELECT-LATER EXECUTION POLICY — v1.22
+
+This subsection freezes the implementation order for the multi-expert monthly forecast system.
+
+### Binding execution order
+
+1. **Build the multi-expert forecasting substrate before selecting a winner.** The system must first be able to run, identify, persist and compare the separately governed outputs of Causal Patch Transformer, VW-MIDAS-MSVR, 3M Momentum and the Random Walk benchmark.
+2. During this build phase, **no expert is promoted to canonical authority merely because it looks best on already observed 2026 outcomes**. The existing operational forward-issuer role freeze remains separate from the architectural multi-expert design.
+3. `auto selector = OFF` and `auto ensemble = OFF` remain binding while the substrate and clean forecast history are being built.
+4. The Early Indicative lane may be implemented before an expert selector exists. On each eligible completed-session update, every executable expert is recomputed using only point-in-time-safe information available at that `as_of` time; each expert result is stored separately with target month, origin/as-of time, model/version identity, immutable input lineage and evidence class.
+5. Early Indicative outputs are **not** the canonical month-end H=1 forecast and must not be merged into the official month-end prospective scorecard. They form a separate forecast-revision history for the same fixed target month.
+6. Only after a sufficiently clean comparable expert history exists may a selector/aggregation research phase begin. Candidate selection/combination rules must be learned and validated with leakage-safe rolling/expanding-origin procedures using only information available before each evaluated origin.
+7. Selector/aggregation research must compare against at least the individual experts, Random Walk and simple transparent combination baselines where applicable. A more complex selector is not accepted merely because it wins one episode or one recent year.
+8. A selector/aggregation rule may become canonical only through explicit change control, with a named version, frozen rule, reproducible code, provenance, robustness evidence and prospective-compatible validation.
+9. If no selector/aggregation rule demonstrates stable incremental value, the system keeps the expert outputs separate and does **not** force a synthetic winner for presentation convenience.
+10. The purpose of this order is to generate the unbiased evidence required to choose the best selection/aggregation mechanism later, rather than choosing the mechanism first and then backfitting the evidence to it.
+
+Canonical implementation sequence:
+
+```text
+Build Multi-Expert Forecast Pipeline
+        ↓
+Persist Separate Expert Outputs + Immutable Inputs
+        ↓
+Run Early Indicative Revision Track with New PIT-Safe Data
+        ↓
+Accumulate Comparable Historical / Prospective Evidence
+        ↓
+Research Selector / Combination Rules
+        ↓
+Leakage-Safe Rolling-Origin Validation
+        ↓
+Change-Control Decision: FREEZE SELECTOR / KEEP EXPERTS SEPARATE
+```
+
+**Binding interpretation:** infrastructure and clean evidence come first; expert selection comes later. No future selector may be justified by hindsight from the outcomes it is supposed to predict.
 
 ## 7.1 H=1 role freeze — restored agreed architecture
 
