@@ -10,6 +10,7 @@ from playwright.sync_api import Page, sync_playwright
 PHONE_WIDTH = 390
 PHONE_HEIGHT = 844
 MAIN_NAV = ".st-key-gc_main_nav"
+MARKET_RANGE = ".st-key-gc_market_range"
 
 
 def assert_no_streamlit_exception(page: Page, screen: str) -> None:
@@ -49,14 +50,9 @@ def main_nav_label(page: Page, name: str):
     pattern = re.compile(re.escape(name), re.I)
     root = page.locator(MAIN_NAV)
     root.first.wait_for(state="attached", timeout=30_000)
-    labels = root.locator("label").filter(has_text=pattern)
+    labels = root.locator('label[data-testid="stRadioOption"]').filter(has_text=pattern)
     for index in range(min(labels.count(), 8)):
         item = labels.nth(index)
-        if item.is_visible():
-            return item
-    text_nodes = root.get_by_text(pattern, exact=False)
-    for index in range(min(text_nodes.count(), 8)):
-        item = text_nodes.nth(index)
         if item.is_visible():
             return item
     return None
@@ -70,6 +66,60 @@ def require_nav_labels(page: Page) -> None:
     if missing:
         root_text = page.locator(MAIN_NAV).inner_text() if page.locator(MAIN_NAV).count() else "NO_MAIN_NAV_ROOT"
         raise AssertionError(f"MOBILE_BOTTOM_NAV_MISSING:{missing}:ROOT={root_text}")
+
+
+def assert_segmented_control(page: Page, root_selector: str, expected_count: int, name: str) -> None:
+    root = page.locator(root_selector)
+    root.first.wait_for(state="attached", timeout=30_000)
+    options = root.locator('label[data-testid="stRadioOption"]')
+    if options.count() != expected_count:
+        raise AssertionError(f"{name}_OPTION_COUNT:{options.count()}:{expected_count}")
+
+    widths: list[float] = []
+    for i in range(expected_count):
+        option = options.nth(i)
+        if not option.is_visible():
+            raise AssertionError(f"{name}_OPTION_NOT_VISIBLE:{i}")
+        box = option.bounding_box()
+        if not box:
+            raise AssertionError(f"{name}_OPTION_NO_BOX:{i}")
+        widths.append(float(box["width"]))
+
+        indicator = option.locator(":scope > div > div > div").first
+        if indicator.count():
+            style = indicator.evaluate(
+                "el => ({display:getComputedStyle(el).display, visibility:getComputedStyle(el).visibility, width:el.getBoundingClientRect().width, height:el.getBoundingClientRect().height})"
+            )
+            if style["display"] != "none" and style["visibility"] != "hidden" and (style["width"] > 0 or style["height"] > 0):
+                raise AssertionError(f"{name}_NATIVE_RADIO_VISIBLE:{i}:{style}")
+
+    if max(widths) - min(widths) > 3.0:
+        raise AssertionError(f"{name}_UNEQUAL_WIDTHS:{widths}")
+
+    selected = root.locator('label[data-testid="stRadioOption"][data-selected="true"]')
+    if selected.count() != 1:
+        raise AssertionError(f"{name}_SELECTED_COUNT:{selected.count()}")
+
+
+def assert_bottom_nav_in_viewport(page: Page) -> None:
+    radio = page.locator(f'{MAIN_NAV} [data-testid="stRadio"]').first
+    box = radio.bounding_box()
+    if not box:
+        raise AssertionError("MOBILE_BOTTOM_NAV_NO_BOX")
+    viewport = page.viewport_size
+    if not viewport:
+        raise AssertionError("MOBILE_VIEWPORT_UNKNOWN")
+    if box["x"] < -1 or box["x"] + box["width"] > viewport["width"] + 1:
+        raise AssertionError(f"MOBILE_BOTTOM_NAV_HORIZONTAL_BOUNDS:{box}:{viewport}")
+    if box["y"] + box["height"] > viewport["height"] + 1:
+        raise AssertionError(f"MOBILE_BOTTOM_NAV_VERTICAL_BOUNDS:{box}:{viewport}")
+
+
+def assert_no_visible_tooltip(page: Page) -> None:
+    tooltip = page.locator(".vg-tooltip, #vg-tooltip-element")
+    for index in range(min(tooltip.count(), 8)):
+        if tooltip.nth(index).is_visible():
+            raise AssertionError("PIYASA_TOOLTIP_VISIBLE")
 
 
 def click_tab(page: Page, name: str) -> None:
@@ -103,14 +153,12 @@ def main() -> int:
 
         assert_no_streamlit_exception(page, "bugun")
         require_nav_labels(page)
-        first_label = main_nav_label(page, "Bugün")
-        if first_label is not None:
-            print("MAIN_NAV_LABEL_HTML=" + first_label.evaluate("el => el.outerHTML")[:4000])
-        market_root = page.locator(".st-key-gc_market_range")
-        if market_root.count():
-            print("MARKET_RANGE_HTML=" + market_root.first.evaluate("el => el.outerHTML")[:4000])
-        screenshot(page, out, "bugun")
+        assert_segmented_control(page, MAIN_NAV, 4, "MAIN_NAV")
+        assert_segmented_control(page, MARKET_RANGE, 4, "MARKET_RANGE")
+        assert_bottom_nav_in_viewport(page)
+        assert_no_visible_tooltip(page)
         assert_no_horizontal_overflow(page, "bugun")
+        screenshot(page, out, "bugun")
 
         click_tab(page, "Görünüm")
         assert_no_streamlit_exception(page, "gorunum")
@@ -129,6 +177,8 @@ def main() -> int:
                 raise AssertionError(f"GORUNUM_V2_MARKER_MISSING:{marker}")
         if "POZİSYONU KORU" in body or "GÜÇ: %68" in body:
             raise AssertionError("UNPROVEN_MOCKUP_PLACEHOLDER_VISIBLE_GORUNUM")
+        assert_segmented_control(page, MAIN_NAV, 4, "MAIN_NAV_GORUNUM")
+        assert_bottom_nav_in_viewport(page)
         assert_no_horizontal_overflow(page, "gorunum")
         screenshot(page, out, "gorunum")
 
@@ -147,6 +197,8 @@ def main() -> int:
                 raise AssertionError(f"TAHMIN_V2_MARKER_MISSING:{marker}")
         if "2.420,00" in body or "GÜVEN: %68" in body:
             raise AssertionError("MOCKUP_SAMPLE_NUMBER_VISIBLE_TAHMIN")
+        assert_segmented_control(page, MAIN_NAV, 4, "MAIN_NAV_TAHMIN")
+        assert_bottom_nav_in_viewport(page)
         assert_no_horizontal_overflow(page, "tahmin")
         screenshot(page, out, "tahmin")
 
@@ -164,11 +216,15 @@ def main() -> int:
                 raise AssertionError(f"GECMIS_V2_MARKER_MISSING:{marker}")
         if "+12,8%" in body or "+22,6%" in body:
             raise AssertionError("MOCKUP_SAMPLE_PERFORMANCE_VISIBLE")
+        assert_segmented_control(page, MAIN_NAV, 4, "MAIN_NAV_GECMIS")
+        assert_bottom_nav_in_viewport(page)
         assert_no_horizontal_overflow(page, "gecmis")
         screenshot(page, out, "gecmis")
         browser.close()
 
     print("MOBILE_V2_VIEWPORT_QA_PASS")
+    print("NATIVE_RADIO_INDICATORS=HIDDEN")
+    print("BOTTOM_NAV_EQUAL_WIDTHS=PASS")
     print(f"VIEWPORT={PHONE_WIDTH}x{PHONE_HEIGHT}")
     print(f"SCREENSHOTS={out}")
     return 0
