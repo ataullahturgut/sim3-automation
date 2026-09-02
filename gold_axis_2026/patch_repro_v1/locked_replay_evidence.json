@@ -1,0 +1,50 @@
+{
+  "candidate_id": "CAUSAL_PATCH_R1_REPRO_V1",
+  "evidence_class": "HISTORICAL_REPLAY",
+  "prospective_claim": false,
+  "source_pin": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+  "selected_geometry": {
+    "L": 252,
+    "P": 21,
+    "D": 32,
+    "dev_return_mae": 0.024503217715495115
+  },
+  "N": 43,
+  "target_reconciliation": "43/43",
+  "rw_reconciliation": "43/43",
+  "future_information_used": false,
+  "deterministic_max_abs_diff": 0.0,
+  "patch_repro_metrics": {
+    "MAE": 101.66066044023185,
+    "MAPE_pct": 3.108253722007428,
+    "median_APE_pct": 2.8581486349073812,
+    "worst_APE_pct": 8.94639275208697,
+    "RMSE": 144.53987660967354
+  },
+  "rw_metrics": {
+    "MAE": 107.46511627906976,
+    "MAPE_pct": 3.302322023320139,
+    "median_APE_pct": 2.91497975708502,
+    "worst_APE_pct": 9.625880596205832,
+    "RMSE": 153.0688774740404
+  },
+  "archived_patch_reference_metrics": {
+    "MAE": 101.65919688940058,
+    "MAPE_pct": 3.0746698376678876,
+    "median_APE_pct": 2.7624009318052987,
+    "worst_APE_pct": 9.918938214454219,
+    "RMSE": 146.04096342132317
+  },
+  "vw_audited_reference_metrics": {
+    "MAE": 85.13470186194078,
+    "MAPE_pct": 2.6721495777680135,
+    "median_APE_pct": 1.96294035934745,
+    "worst_APE_pct": 8.83123619221082,
+    "RMSE": 125.18863072618252
+  },
+  "hard_gate_pass": true,
+  "performance_gate_pass": true,
+  "decision": "PATCH_R1_REPRO_V1_HISTORICAL_REPLAY_ELIGIBLE",
+  "forecast_ledger_write": "NONE",
+  "decision_store_write": "NONE"
+}
