@@ -116,22 +116,227 @@ mobile_app = _load_exact_module(
     APP_DIR / "gold_control_mobile_v1.py",
 )
 
-# The implementation-level CSS predates the dedicated main-nav radio key and
-# used a broad stRadio selector. Reset ordinary radios, then re-apply fixed
-# positioning only to the canonical gc_main_nav control.
+# Final V2 presentation overrides.
+# The underlying mobile implementation predates keyed navigation styling, so
+# this layer deliberately scopes the two radio controls and removes Community
+# Cloud chrome that is not part of the Gold Control product surface.
 st.markdown(
     """
 <style>
-[data-testid="stRadio"]{
- position:static!important;left:auto!important;right:auto!important;bottom:auto!important;
- transform:none!important;z-index:auto!important;width:auto!important;max-width:none!important;
- box-shadow:none!important;margin:0!important;
+/* --- Streamlit / Community Cloud chrome is not part of the product UI. --- */
+#MainMenu,
+footer,
+[data-testid="stToolbar"],
+[data-testid="stToolbarActions"],
+[data-testid="stAppToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stStatusWidget"],
+[data-testid="stHeaderActionElements"],
+.stAppToolbar,
+[class*="viewerBadge"],
+[class*="ViewerBadge"]{
+ display:none!important;
+ visibility:hidden!important;
 }
+header[data-testid="stHeader"]{
+ height:0!important;
+ min-height:0!important;
+ background:transparent!important;
+}
+
+/* Vega tooltips are disabled on the phone product surface. They otherwise
+   remain pinned after long-touch on iOS and obscure subsequent cards. */
+.vg-tooltip,
+#vg-tooltip-element,
+.vega-embed .vg-tooltip{
+ display:none!important;
+ visibility:hidden!important;
+ pointer-events:none!important;
+}
+
+/* Reset ordinary radios. The implementation used a broad stRadio selector. */
+[data-testid="stRadio"]{
+ position:static!important;
+ left:auto!important;
+ right:auto!important;
+ bottom:auto!important;
+ transform:none!important;
+ z-index:auto!important;
+ width:auto!important;
+ max-width:none!important;
+ box-shadow:none!important;
+ margin:0!important;
+}
+
+/* --- Canonical fixed four-item bottom navigation. --- */
 .st-key-gc_main_nav [data-testid="stRadio"]{
- position:fixed!important;left:50%!important;transform:translateX(-50%)!important;bottom:.45rem!important;
- z-index:9999!important;width:min(820px,calc(100vw - 1rem))!important;
- background:#fff!important;border:1px solid #e4eaf1!important;border-radius:17px!important;
- padding:.28rem!important;box-shadow:0 8px 28px rgba(15,39,72,.16)!important;
+ position:fixed!important;
+ left:.5rem!important;
+ right:.5rem!important;
+ bottom:max(.45rem,env(safe-area-inset-bottom))!important;
+ transform:none!important;
+ z-index:9999!important;
+ width:auto!important;
+ max-width:844px!important;
+ margin:0 auto!important;
+ background:rgba(255,255,255,.98)!important;
+ border:1px solid #e1e7ef!important;
+ border-radius:18px!important;
+ padding:.3rem!important;
+ box-shadow:0 10px 30px rgba(15,39,72,.16)!important;
+ overflow:hidden!important;
+ backdrop-filter:blur(12px);
+}
+.st-key-gc_main_nav [data-testid="stRadio"] > label{display:none!important}
+.st-key-gc_main_nav div[role="radiogroup"]{
+ display:grid!important;
+ grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ gap:.2rem!important;
+ width:100%!important;
+ align-items:stretch!important;
+}
+.st-key-gc_main_nav label[data-baseweb="radio"]{
+ margin:0!important;
+ padding:0!important;
+ min-width:0!important;
+ width:100%!important;
+ border-radius:13px!important;
+ cursor:pointer!important;
+}
+.st-key-gc_main_nav label[data-baseweb="radio"] > div{
+ width:100%!important;
+ min-height:50px!important;
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ gap:0!important;
+ padding:.56rem .16rem!important;
+ border-radius:13px!important;
+ box-sizing:border-box!important;
+}
+/* Hide BaseWeb's native radio disc; the selected tab itself is the state. */
+.st-key-gc_main_nav label[data-baseweb="radio"] > div > div:first-child{
+ display:none!important;
+ width:0!important;
+ height:0!important;
+ margin:0!important;
+ padding:0!important;
+}
+.st-key-gc_main_nav label[data-baseweb="radio"]:has(input:checked) > div{
+ background:#082a4b!important;
+ box-shadow:0 4px 12px rgba(8,42,75,.16)!important;
+}
+.st-key-gc_main_nav label[data-baseweb="radio"] p{
+ margin:0!important;
+ padding:0!important;
+ color:#53657e!important;
+ font-size:.76rem!important;
+ font-weight:650!important;
+ line-height:1.15!important;
+ white-space:nowrap!important;
+ text-align:center!important;
+}
+.st-key-gc_main_nav label[data-baseweb="radio"]:has(input:checked) p{
+ color:#fff!important;
+ font-weight:850!important;
+}
+.st-key-gc_main_nav input{display:none!important}
+
+/* --- Piyasa time-range control: compact segmented control, not a second nav. --- */
+.st-key-gc_market_range{
+ margin:.1rem 0 .55rem!important;
+}
+.st-key-gc_market_range [data-testid="stRadio"]{
+ display:block!important;
+ background:#f5f8fb!important;
+ border:1px solid #e4eaf1!important;
+ border-radius:12px!important;
+ padding:.22rem!important;
+ width:100%!important;
+}
+.st-key-gc_market_range [data-testid="stRadio"] > label{display:none!important}
+.st-key-gc_market_range div[role="radiogroup"]{
+ display:grid!important;
+ grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ gap:.18rem!important;
+ width:100%!important;
+}
+.st-key-gc_market_range label[data-baseweb="radio"]{
+ margin:0!important;
+ padding:0!important;
+ min-width:0!important;
+ width:100%!important;
+}
+.st-key-gc_market_range label[data-baseweb="radio"] > div{
+ width:100%!important;
+ min-height:38px!important;
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ gap:0!important;
+ padding:.38rem .2rem!important;
+ border-radius:9px!important;
+}
+.st-key-gc_market_range label[data-baseweb="radio"] > div > div:first-child{
+ display:none!important;
+ width:0!important;
+ height:0!important;
+ margin:0!important;
+ padding:0!important;
+}
+.st-key-gc_market_range label[data-baseweb="radio"]:has(input:checked) > div{
+ background:#082a4b!important;
+}
+.st-key-gc_market_range label[data-baseweb="radio"] p{
+ margin:0!important;
+ color:#667790!important;
+ font-size:.76rem!important;
+ font-weight:700!important;
+ white-space:nowrap!important;
+}
+.st-key-gc_market_range label[data-baseweb="radio"]:has(input:checked) p{
+ color:#fff!important;
+ font-weight:850!important;
+}
+.st-key-gc_market_range input{display:none!important}
+
+/* Title-only chart wrappers in the legacy implementation should read as a
+   compact module header, not a large disconnected empty card. */
+.gc-card:has(> .gc-section-title:only-child){
+ padding:.78rem .95rem!important;
+ margin:.7rem 0 .18rem!important;
+ min-height:0!important;
+ border-radius:15px!important;
+ box-shadow:0 2px 10px rgba(16,41,75,.025)!important;
+}
+.gc-card:has(> .gc-section-title:only-child) .gc-section-title{
+ margin-bottom:0!important;
+}
+
+/* Mobile density and safe-area treatment. */
+@media(max-width:620px){
+ .block-container{
+   padding-left:.62rem!important;
+   padding-right:.62rem!important;
+   padding-top:.2rem!important;
+   padding-bottom:7.2rem!important;
+ }
+ .gc-shell{margin-bottom:.72rem!important;padding-top:.35rem!important;padding-bottom:.72rem!important}
+ .gc-pagehead{margin-top:.2rem!important;margin-bottom:.75rem!important}
+ .gc-hero{margin-top:.45rem!important;margin-bottom:.8rem!important}
+ .gc-grid3{gap:.55rem!important}
+ .gc-mini{min-height:92px!important;padding:.72rem .78rem!important}
+ .st-key-gc_main_nav [data-testid="stRadio"]{
+   left:.42rem!important;
+   right:.42rem!important;
+   bottom:max(.35rem,env(safe-area-inset-bottom))!important;
+ }
+ .st-key-gc_main_nav label[data-baseweb="radio"] > div{min-height:48px!important;padding:.5rem .08rem!important}
+ .st-key-gc_main_nav label[data-baseweb="radio"] p{font-size:.70rem!important}
+}
+@media(max-width:370px){
+ .st-key-gc_main_nav label[data-baseweb="radio"] p{font-size:.65rem!important}
+ .gc-brand{font-size:1.04rem!important}
 }
 </style>
     """,
