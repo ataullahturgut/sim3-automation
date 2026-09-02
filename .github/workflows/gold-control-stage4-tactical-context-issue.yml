@@ -1,0 +1,85 @@
+name: Gold Control Stage4A Tactical Context Issue
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_STAGE4A_TACTICAL_CONTEXT_DISPLAY_CONTRACT_2026-09-02.md'
+      - 'gold_axis_2026/data_pipeline/stage4_tactical_context_issue.py'
+      - '.github/workflows/gold-control-stage4-tactical-context-issue.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-stage4a-tactical-context
+  cancel-in-progress: true
+
+jobs:
+  issue-context:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install governed data-plane runtime
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+
+      - name: Verify frozen context contract and compile issuer
+        run: |
+          grep -q 'FROZEN_BEFORE_TACTICAL_CONTEXT_ISSUANCE' gold_axis_2026/GOLD_CONTROL_STAGE4A_TACTICAL_CONTEXT_DISPLAY_CONTRACT_2026-09-02.md
+          grep -q 'LATE_BOOTSTRAP_SHADOW_CONTEXT' gold_axis_2026/GOLD_CONTROL_STAGE4A_TACTICAL_CONTEXT_DISPLAY_CONTRACT_2026-09-02.md
+          grep -q 'prospective_h1_claim=false' gold_axis_2026/GOLD_CONTROL_STAGE4A_TACTICAL_CONTEXT_DISPLAY_CONTRACT_2026-09-02.md
+          python -m py_compile gold_axis_2026/data_pipeline/stage4_tactical_context_issue.py
+          echo 'TACTICAL_CONTEXT_CONTRACT_COMPILE_PASS'
+
+      - name: Dry-run exact frozen tactical context
+        run: python gold_axis_2026/data_pipeline/stage4_tactical_context_issue.py
+
+      - name: Persist immutable Fast Slow shadow context
+        run: python gold_axis_2026/data_pipeline/stage4_tactical_context_issue.py --persist
+
+      - name: Verify context rows without raw market values
+        run: |
+          python - <<'PY'
+          import json, os
+          import psycopg
+          from psycopg.rows import dict_row
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute("""
+                      select feature_name, value_text, quality_status, metadata->>'display_scope' as display_scope,
+                             metadata->>'prospective_h1_claim' as prospective_h1_claim
+                      from derived_feature_snapshots
+                      where feature_name in ('FAST_STATE','SLOW_STATE')
+                        and quality_status='LATE_BOOTSTRAP_SHADOW_CONTEXT'
+                        and metadata->>'target_context'='2026-09'
+                      order by feature_name, calculation_ts desc
+                  """)
+                  rows = [dict(r) for r in cur.fetchall()]
+              conn.rollback()
+          latest = {}
+          for row in rows:
+              latest.setdefault(row['feature_name'], row)
+          if set(latest) != {'FAST_STATE','SLOW_STATE'}:
+              raise SystemExit(f'TACTICAL_CONTEXT_VERIFY_MISSING:{sorted(latest)}')
+          if any(x['display_scope'] != 'COMPONENT_CONTEXT_ONLY' for x in latest.values()):
+              raise SystemExit('TACTICAL_CONTEXT_SCOPE_VIOLATION')
+          if any(str(x['prospective_h1_claim']).lower() != 'false' for x in latest.values()):
+              raise SystemExit('TACTICAL_CONTEXT_PROSPECTIVE_CLAIM_VIOLATION')
+          print('TACTICAL_CONTEXT_DB_VERIFY_PASS')
+          print('CONTEXT_FEATURES=' + ','.join(sorted(latest)))
+          print('RAW_MARKET_VALUES_LOGGED=NO')
+          print('DECISION_STORE_WRITE=NONE')
+          print('CANONICAL_FORECAST_WRITE=NONE')
+          PY
