@@ -109,9 +109,13 @@ mobile_app = _load_exact_module(
     APP_DIR / "gold_control_mobile_v1.py",
 )
 
+# Presentation overrides use Streamlit 1.63 stable data-testid/data-selected
+# attributes verified in the locked Python 3.14 browser runtime. Avoid hashed
+# emotion class names and the removed data-baseweb="radio" structure.
 st.markdown(
     """
 <style>
+/* Community Cloud / Streamlit chrome is not part of the Gold Control surface. */
 #MainMenu,
 footer,
 [data-testid="stToolbar"],
@@ -132,6 +136,7 @@ header[data-testid="stHeader"]{
  background:transparent!important;
 }
 
+/* iOS long-touch can leave Vega tooltips pinned over later cards. */
 .vg-tooltip,
 #vg-tooltip-element,
 .vega-embed .vg-tooltip{
@@ -140,6 +145,7 @@ header[data-testid="stHeader"]{
  pointer-events:none!important;
 }
 
+/* Undo legacy broad radio positioning before styling the two keyed controls. */
 [data-testid="stRadio"]{
  position:static!important;
  left:auto!important;
@@ -153,6 +159,7 @@ header[data-testid="stHeader"]{
  margin:0!important;
 }
 
+/* Canonical four-way bottom navigation. */
 .st-key-gc_main_nav [data-testid="stRadio"]{
  position:fixed!important;
  left:.5rem!important;
@@ -166,20 +173,20 @@ header[data-testid="stHeader"]{
  background:rgba(255,255,255,.98)!important;
  border:1px solid #e1e7ef!important;
  border-radius:18px!important;
- padding:.3rem!important;
+ padding:.30rem!important;
  box-shadow:0 10px 30px rgba(15,39,72,.16)!important;
  overflow:hidden!important;
  backdrop-filter:blur(12px);
 }
-.st-key-gc_main_nav [data-testid="stRadio"] > label{display:none!important}
-.st-key-gc_main_nav div[role="radiogroup"]{
+.st-key-gc_main_nav [data-testid="stRadio"] > [data-testid="stWidgetLabel"]{display:none!important}
+.st-key-gc_main_nav [data-testid="stRadioGroup"]{
  display:grid!important;
  grid-template-columns:repeat(4,minmax(0,1fr))!important;
- gap:.2rem!important;
+ gap:.20rem!important;
  width:100%!important;
  align-items:stretch!important;
 }
-.st-key-gc_main_nav label[data-baseweb="radio"]{
+.st-key-gc_main_nav label[data-testid="stRadioOption"]{
  margin:0!important;
  padding:0!important;
  min-width:0!important;
@@ -187,22 +194,30 @@ header[data-testid="stHeader"]{
  border-radius:13px!important;
  cursor:pointer!important;
 }
-.st-key-gc_main_nav label[data-baseweb="radio"] > div{
+.st-key-gc_main_nav label[data-testid="stRadioOption"] > div{
  width:100%!important;
+ min-width:0!important;
  min-height:50px!important;
+ padding:.56rem .16rem!important;
+ border-radius:13px!important;
+ box-sizing:border-box!important;
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+}
+.st-key-gc_main_nav label[data-testid="stRadioOption"] > div > div{
+ width:100%!important;
+ min-width:0!important;
  display:flex!important;
  align-items:center!important;
  justify-content:center!important;
  gap:0!important;
- padding:.56rem .16rem!important;
- border-radius:13px!important;
- box-sizing:border-box!important;
 }
-.st-key-gc_main_nav label[data-baseweb="radio"] > div > div:first-child,
-.st-key-gc_main_nav input[type="radio"] + div,
-.st-key-gc_main_nav input[type="radio"] ~ div[aria-hidden="true"],
-.st-key-gc_main_nav [data-baseweb="radio"] [aria-hidden="true"]{
+/* Streamlit 1.63 structure: the first child of the content row is the native
+   radio indicator; the second child is stMarkdownContainer. */
+.st-key-gc_main_nav label[data-testid="stRadioOption"] > div > div > div:first-child{
  display:none!important;
+ visibility:hidden!important;
  width:0!important;
  height:0!important;
  min-width:0!important;
@@ -210,12 +225,13 @@ header[data-testid="stHeader"]{
  margin:0!important;
  padding:0!important;
  border:0!important;
+ flex:0 0 0!important;
 }
-.st-key-gc_main_nav label[data-baseweb="radio"]:has(input:checked) > div{
- background:#082a4b!important;
- box-shadow:0 4px 12px rgba(8,42,75,.16)!important;
+.st-key-gc_main_nav label[data-testid="stRadioOption"] [data-testid="stMarkdownContainer"]{
+ width:100%!important;
+ text-align:center!important;
 }
-.st-key-gc_main_nav label[data-baseweb="radio"] p{
+.st-key-gc_main_nav label[data-testid="stRadioOption"] p{
  margin:0!important;
  padding:0!important;
  color:#53657e!important;
@@ -225,13 +241,17 @@ header[data-testid="stHeader"]{
  white-space:nowrap!important;
  text-align:center!important;
 }
-.st-key-gc_main_nav label[data-baseweb="radio"]:has(input:checked) p{
+.st-key-gc_main_nav label[data-testid="stRadioOption"][data-selected="true"] > div{
+ background:#082a4b!important;
+ box-shadow:0 4px 12px rgba(8,42,75,.16)!important;
+}
+.st-key-gc_main_nav label[data-testid="stRadioOption"][data-selected="true"] p{
  color:#fff!important;
  font-weight:850!important;
 }
-.st-key-gc_main_nav input{display:none!important}
 
-.st-key-gc_market_range{margin:.1rem 0 .55rem!important}
+/* Piyasa time range: a compact four-way segmented control. */
+.st-key-gc_market_range{margin:.10rem 0 .55rem!important;width:100%!important}
 .st-key-gc_market_range [data-testid="stRadio"]{
  display:block!important;
  background:#f5f8fb!important;
@@ -240,34 +260,43 @@ header[data-testid="stHeader"]{
  padding:.22rem!important;
  width:100%!important;
 }
-.st-key-gc_market_range [data-testid="stRadio"] > label{display:none!important}
-.st-key-gc_market_range div[role="radiogroup"]{
+.st-key-gc_market_range [data-testid="stRadio"] > [data-testid="stWidgetLabel"]{display:none!important}
+.st-key-gc_market_range [data-testid="stRadioGroup"]{
  display:grid!important;
  grid-template-columns:repeat(4,minmax(0,1fr))!important;
  gap:.18rem!important;
  width:100%!important;
 }
-.st-key-gc_market_range label[data-baseweb="radio"]{
+.st-key-gc_market_range label[data-testid="stRadioOption"]{
  margin:0!important;
  padding:0!important;
  min-width:0!important;
  width:100%!important;
+ border-radius:9px!important;
+ cursor:pointer!important;
 }
-.st-key-gc_market_range label[data-baseweb="radio"] > div{
+.st-key-gc_market_range label[data-testid="stRadioOption"] > div{
  width:100%!important;
+ min-width:0!important;
  min-height:38px!important;
+ padding:.38rem .20rem!important;
+ border-radius:9px!important;
+ box-sizing:border-box!important;
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+}
+.st-key-gc_market_range label[data-testid="stRadioOption"] > div > div{
+ width:100%!important;
+ min-width:0!important;
  display:flex!important;
  align-items:center!important;
  justify-content:center!important;
  gap:0!important;
- padding:.38rem .2rem!important;
- border-radius:9px!important;
 }
-.st-key-gc_market_range label[data-baseweb="radio"] > div > div:first-child,
-.st-key-gc_market_range input[type="radio"] + div,
-.st-key-gc_market_range input[type="radio"] ~ div[aria-hidden="true"],
-.st-key-gc_market_range [data-baseweb="radio"] [aria-hidden="true"]{
+.st-key-gc_market_range label[data-testid="stRadioOption"] > div > div > div:first-child{
  display:none!important;
+ visibility:hidden!important;
  width:0!important;
  height:0!important;
  min-width:0!important;
@@ -275,24 +304,35 @@ header[data-testid="stHeader"]{
  margin:0!important;
  padding:0!important;
  border:0!important;
+ flex:0 0 0!important;
 }
-.st-key-gc_market_range label[data-baseweb="radio"]:has(input:checked) > div{background:#082a4b!important}
-.st-key-gc_market_range label[data-baseweb="radio"] p{
+.st-key-gc_market_range label[data-testid="stRadioOption"] [data-testid="stMarkdownContainer"]{
+ width:100%!important;
+ text-align:center!important;
+}
+.st-key-gc_market_range label[data-testid="stRadioOption"] p{
  margin:0!important;
+ padding:0!important;
  color:#667790!important;
  font-size:.76rem!important;
  font-weight:700!important;
  white-space:nowrap!important;
+ text-align:center!important;
 }
-.st-key-gc_market_range label[data-baseweb="radio"]:has(input:checked) p{
+.st-key-gc_market_range label[data-testid="stRadioOption"][data-selected="true"] > div{
+ background:#082a4b!important;
+}
+.st-key-gc_market_range label[data-testid="stRadioOption"][data-selected="true"] p{
  color:#fff!important;
  font-weight:850!important;
 }
-.st-key-gc_market_range input{display:none!important}
 
+/* The legacy implementation opens/closes the chart card around Streamlit
+   widgets. Render the title-only wrapper as a compact module heading so it
+   doesn't appear as a disconnected empty card. */
 .gc-card:has(> .gc-section-title:only-child){
  padding:.78rem .95rem!important;
- margin:.7rem 0 .18rem!important;
+ margin:.70rem 0 .18rem!important;
  min-height:0!important;
  border-radius:15px!important;
  box-shadow:0 2px 10px rgba(16,41,75,.025)!important;
@@ -303,12 +343,12 @@ header[data-testid="stHeader"]{
  .block-container{
    padding-left:.62rem!important;
    padding-right:.62rem!important;
-   padding-top:.2rem!important;
+   padding-top:.20rem!important;
    padding-bottom:7.2rem!important;
  }
  .gc-shell{margin-bottom:.72rem!important;padding-top:.35rem!important;padding-bottom:.72rem!important}
- .gc-pagehead{margin-top:.2rem!important;margin-bottom:.75rem!important}
- .gc-hero{margin-top:.45rem!important;margin-bottom:.8rem!important}
+ .gc-pagehead{margin-top:.20rem!important;margin-bottom:.75rem!important}
+ .gc-hero{margin-top:.45rem!important;margin-bottom:.80rem!important}
  .gc-grid3{gap:.55rem!important}
  .gc-mini{min-height:92px!important;padding:.72rem .78rem!important}
  .st-key-gc_main_nav [data-testid="stRadio"]{
@@ -316,11 +356,14 @@ header[data-testid="stHeader"]{
    right:.42rem!important;
    bottom:max(.35rem,env(safe-area-inset-bottom))!important;
  }
- .st-key-gc_main_nav label[data-baseweb="radio"] > div{min-height:48px!important;padding:.5rem .08rem!important}
- .st-key-gc_main_nav label[data-baseweb="radio"] p{font-size:.70rem!important}
+ .st-key-gc_main_nav label[data-testid="stRadioOption"] > div{
+   min-height:48px!important;
+   padding:.50rem .08rem!important;
+ }
+ .st-key-gc_main_nav label[data-testid="stRadioOption"] p{font-size:.70rem!important}
 }
 @media(max-width:370px){
- .st-key-gc_main_nav label[data-baseweb="radio"] p{font-size:.65rem!important}
+ .st-key-gc_main_nav label[data-testid="stRadioOption"] p{font-size:.65rem!important}
  .gc-brand{font-size:1.04rem!important}
 }
 </style>
