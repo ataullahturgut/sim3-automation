@@ -1,5 +1,7 @@
-streamlit>=1.40,<2
-pandas>=2.0,<3
-numpy>=1.24,<3
-requests>=2.31,<3
-psycopg[binary]>=3.2,<4
+# Gold Control mobile V2 — validated Streamlit Cloud runtime lock
+# Verified on CPython 3.14.7 by the full browser/runtime audit.
+streamlit==1.63.0
+pandas==2.3.3
+numpy==2.5.2
+requests==2.34.2
+psycopg[binary]==3.3.5
