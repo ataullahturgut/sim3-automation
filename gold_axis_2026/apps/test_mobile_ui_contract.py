@@ -26,6 +26,21 @@ def test_empty_decision_is_fail_closed():
     assert state.title == "KANONİK KARAR YOK"
 
 
+def test_monthly_shadow_context_is_visible_but_not_promoted_to_decision():
+    context = {
+        "context_only": True,
+        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+        "monthly_direction_3m": "UP",
+        "fast_state": "YAYIMLANMADI",
+        "slow_state": "YAYIMLANMADI",
+    }
+    state = decision_view_state(context)
+    assert state.title == "KANONİK KARAR YOK"
+    assert "SHADOW CONTEXT" in state.subtitle
+    assert evidence_badge(context["evidence_class"]) == ("SHADOW CONTEXT", "shadow")
+    assert monthly_intramonth_relation(context) == "INTRAMONTH TEYİT HENÜZ YAYIMLANMADI"
+
+
 def test_empty_forecast_is_fail_closed():
     state = forecast_view_state(None)
     assert state.title == "TAHMİN HENÜZ YAYIMLANMADI"
