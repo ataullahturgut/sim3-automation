@@ -15,100 +15,92 @@ def table_exists(cur) -> bool:
     return bool(row and row["reg"] is not None)
 
 
-def persist_expert_forecast(database_url: str, record: ExpertForecastRecord) -> dict:
-    """Persist one individual expert output with immutable lineage.
+def insert_expert_forecast(cur, record: ExpertForecastRecord, *, verify_snapshots: bool = True) -> dict:
+    """Insert one expert row into the caller's transaction.
 
-    This function cannot create a canonical forecast. The dataclass contract and
-    DB constraints both require canonical_authority=false, selector status
-    NOT_PROVEN_EXPERT_SELECTION_RULE and auto selector/ensemble OFF.
+    The caller owns commit/rollback. This allows input snapshots, derived
+    features and the expert output to become visible atomically.
     """
     record.validate()
-    with psycopg.connect(database_url, autocommit=False, row_factory=dict_row) as conn:
-        try:
-            with conn.cursor() as cur:
-                if not table_exists(cur):
-                    raise RuntimeError("BLOCKED_MULTI_EXPERT_LEDGER_SCHEMA_NOT_APPLIED")
+    if not table_exists(cur):
+        raise RuntimeError("BLOCKED_MULTI_EXPERT_LEDGER_SCHEMA_NOT_APPLIED")
 
-                cur.execute(
-                    "select count(*) as n from forecast_input_snapshots where id=any(%s)",
-                    (list(record.input_snapshot_ids),),
-                )
-                found = int(cur.fetchone()["n"])
-                if found != len(set(record.input_snapshot_ids)):
-                    raise RuntimeError(
-                        f"BLOCKED_EXPERT_INPUT_SNAPSHOT_LINEAGE_INCOMPLETE:{found}/{len(set(record.input_snapshot_ids))}"
-                    )
+    if verify_snapshots:
+        cur.execute(
+            "select count(*) as n from forecast_input_snapshots where id=any(%s)",
+            (list(record.input_snapshot_ids),),
+        )
+        found = int(cur.fetchone()["n"])
+        if found != len(set(record.input_snapshot_ids)):
+            raise RuntimeError(
+                f"BLOCKED_EXPERT_INPUT_SNAPSHOT_LINEAGE_INCOMPLETE:{found}/{len(set(record.input_snapshot_ids))}"
+            )
 
-                cur.execute(
-                    """
-                    select id from monthly_expert_forecasts
-                    where target_month=%s and forecast_track=%s and as_of=%s
-                      and expert_id=%s and model_version=%s
-                    """,
-                    (
-                        record.target_month + "-01" if len(record.target_month) == 7 else record.target_month,
-                        record.forecast_track,
-                        record.as_of,
-                        record.expert_id,
-                        record.model_version,
-                    ),
-                )
-                existing = cur.fetchone()
-                if existing:
-                    conn.rollback()
-                    return {"duplicate": True, "id": int(existing["id"])}
+    cur.execute(
+        """
+        select id from monthly_expert_forecasts
+        where target_month=%s and forecast_track=%s and as_of=%s
+          and expert_id=%s and model_version=%s
+        """,
+        (
+            record.target_month + "-01" if len(record.target_month) == 7 else record.target_month,
+            record.forecast_track,
+            record.as_of,
+            record.expert_id,
+            record.model_version,
+        ),
+    )
+    existing = cur.fetchone()
+    if existing:
+        return {"duplicate": True, "id": int(existing["id"])}
 
-                provenance = dict(record.provenance)
-                provenance.update(
-                    {
-                        "canonical_authority": False,
-                        "selector_status": "NOT_PROVEN_EXPERT_SELECTION_RULE",
-                        "auto_selector": "OFF",
-                        "auto_ensemble": "OFF",
-                    }
-                )
-                cur.execute(
-                    """
-                    insert into monthly_expert_forecasts
-                      (target_month,forecast_origin,as_of,forecast_track,expert_id,
-                       model_name,model_version,expert_role,forecast_value,unit,
-                       evidence_class,git_commit,input_snapshot_ids,input_fingerprint,
-                       selector_status,auto_selector,auto_ensemble,canonical_authority,provenance)
-                    values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
-                            'NOT_PROVEN_EXPERT_SELECTION_RULE','OFF','OFF',false,%s::jsonb)
-                    returning id
-                    """,
-                    (
-                        record.target_month + "-01" if len(record.target_month) == 7 else record.target_month,
-                        record.forecast_origin,
-                        record.as_of,
-                        record.forecast_track,
-                        record.expert_id,
-                        record.model_name,
-                        record.model_version,
-                        record.expert_role,
-                        float(record.forecast_value),
-                        record.unit,
-                        record.evidence_class,
-                        record.git_commit,
-                        list(record.input_snapshot_ids),
-                        record.input_fingerprint,
-                        json.dumps(provenance, sort_keys=True),
-                    ),
-                )
-                row_id = int(cur.fetchone()["id"])
-            conn.commit()
-        except Exception:
-            conn.rollback()
-            raise
+    provenance = dict(record.provenance)
+    provenance.update(
+        {
+            "canonical_authority": False,
+            "selector_status": "NOT_PROVEN_EXPERT_SELECTION_RULE",
+            "auto_selector": "OFF",
+            "auto_ensemble": "OFF",
+        }
+    )
+    cur.execute(
+        """
+        insert into monthly_expert_forecasts
+          (target_month,forecast_origin,as_of,forecast_track,expert_id,
+           model_name,model_version,expert_role,forecast_value,unit,
+           evidence_class,git_commit,input_snapshot_ids,input_fingerprint,
+           selector_status,auto_selector,auto_ensemble,canonical_authority,provenance)
+        values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
+                'NOT_PROVEN_EXPERT_SELECTION_RULE','OFF','OFF',false,%s::jsonb)
+        returning id
+        """,
+        (
+            record.target_month + "-01" if len(record.target_month) == 7 else record.target_month,
+            record.forecast_origin,
+            record.as_of,
+            record.forecast_track,
+            record.expert_id,
+            record.model_name,
+            record.model_version,
+            record.expert_role,
+            float(record.forecast_value),
+            record.unit,
+            record.evidence_class,
+            record.git_commit,
+            list(record.input_snapshot_ids),
+            record.input_fingerprint,
+            json.dumps(provenance, sort_keys=True),
+        ),
+    )
+    return {"duplicate": False, "id": int(cur.fetchone()["id"])}
 
+
+def _post_commit_verify(database_url: str, row_id: int) -> None:
     with psycopg.connect(database_url, autocommit=False, row_factory=dict_row) as conn:
         with conn.cursor() as cur:
             cur.execute(
                 """
-                select id,forecast_track,expert_id,model_version,evidence_class,
-                       selector_status,auto_selector,auto_ensemble,canonical_authority,
-                       input_snapshot_ids,input_fingerprint
+                select id,selector_status,auto_selector,auto_ensemble,canonical_authority
                 from monthly_expert_forecasts where id=%s
                 """,
                 (row_id,),
@@ -123,4 +115,19 @@ def persist_expert_forecast(database_url: str, record: ExpertForecastRecord) -> 
         raise RuntimeError("EXPERT_FORECAST_AUTO_SELECTION_GUARD_FAILED")
     if stored["canonical_authority"] is not False:
         raise RuntimeError("EXPERT_FORECAST_CANONICAL_AUTHORITY_GUARD_FAILED")
-    return {"duplicate": False, "id": row_id, "record": asdict(record)}
+
+
+def persist_expert_forecast(database_url: str, record: ExpertForecastRecord) -> dict:
+    with psycopg.connect(database_url, autocommit=False, row_factory=dict_row) as conn:
+        try:
+            with conn.cursor() as cur:
+                result = insert_expert_forecast(cur, record, verify_snapshots=True)
+            if result["duplicate"]:
+                conn.rollback()
+                return result
+            conn.commit()
+        except Exception:
+            conn.rollback()
+            raise
+    _post_commit_verify(database_url, int(result["id"]))
+    return {**result, "record": asdict(record)}
