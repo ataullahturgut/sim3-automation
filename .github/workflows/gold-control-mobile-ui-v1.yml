@@ -7,7 +7,9 @@ on:
     paths:
       - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
       - 'gold_axis_2026/GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md'
+      - 'gold_axis_2026/apps/gold_control.py'
       - 'gold_axis_2026/apps/gold_control_mobile_v1.py'
+      - 'gold_axis_2026/apps/mobile_viewport_qa.py'
       - 'gold_axis_2026/apps/decision_source.py'
       - 'gold_axis_2026/apps/forecast_source.py'
       - 'gold_axis_2026/apps/mobile_ui_contract.py'
@@ -31,10 +33,11 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install app runtime
+      - name: Install app and browser runtime
         run: |
           python -m pip install --upgrade pip
-          pip install -r gold_axis_2026/apps/requirements.txt pytest
+          pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
+          python -m playwright install --with-deps chromium
 
       - name: Verify manifest and final mockup governance
         run: |
@@ -50,13 +53,15 @@ jobs:
         working-directory: gold_axis_2026/apps
         run: pytest -q test_mobile_ui_contract.py test_piyasa_contract.py
 
-      - name: Compile V2 UI readers and app
+      - name: Compile V2 UI readers and canonical app
         run: |
           python -m py_compile \
             gold_axis_2026/apps/mobile_ui_contract.py \
             gold_axis_2026/apps/decision_source.py \
             gold_axis_2026/apps/forecast_source.py \
-            gold_axis_2026/apps/gold_control_mobile_v1.py
+            gold_axis_2026/apps/mobile_viewport_qa.py \
+            gold_axis_2026/apps/gold_control_mobile_v1.py \
+            gold_axis_2026/apps/gold_control.py
 
       - name: Verify final V2 section markers in implementation
         run: |
@@ -71,19 +76,20 @@ jobs:
           grep -q 'TAHMİN PERFORMANSI' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -q 'HATA / KARAR ZAMAN ÇİZELGESİ' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -q 'SEÇİLMİŞ GEÇMİŞ KAYITLAR' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -q 'gold_control_mobile_v1.py' gold_axis_2026/apps/gold_control.py
           echo 'FINAL_V2_SECTION_MARKERS_PASS'
 
-      - name: Streamlit runtime smoke
+      - name: Canonical Streamlit runtime smoke
         env:
           STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
         run: |
-          streamlit run gold_axis_2026/apps/gold_control_mobile_v1.py \
+          streamlit run gold_axis_2026/apps/gold_control.py \
             --server.headless true --server.port 8501 --server.address 127.0.0.1 \
             > /tmp/gold_mobile_v2.log 2>&1 &
           APP_PID=$!
           for i in $(seq 1 35); do
             if curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null; then
-              echo 'MOBILE_V2_STREAMLIT_HEALTH_PASS'
+              echo 'MOBILE_V2_CANONICAL_STREAMLIT_HEALTH_PASS'
               kill $APP_PID || true
               wait $APP_PID || true
               exit 0
@@ -94,3 +100,36 @@ jobs:
           kill $APP_PID || true
           wait $APP_PID || true
           exit 1
+
+      - name: 390px final mockup browser QA
+        env:
+          STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
+        run: |
+          streamlit run gold_axis_2026/apps/gold_control.py \
+            --server.headless true --server.port 8501 --server.address 127.0.0.1 \
+            > /tmp/gold_mobile_v2_browser.log 2>&1 &
+          APP_PID=$!
+          for i in $(seq 1 35); do
+            if curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          set +e
+          python gold_axis_2026/apps/mobile_viewport_qa.py --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v2_qa
+          QA_RC=$?
+          set -e
+          kill $APP_PID || true
+          wait $APP_PID || true
+          if [ $QA_RC -ne 0 ]; then
+            cat /tmp/gold_mobile_v2_browser.log
+            exit $QA_RC
+          fi
+
+      - name: Upload mobile QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-mobile-v2-390px-screenshots
+          path: /tmp/gold_mobile_v2_qa/*.png
+          if-no-files-found: warn
