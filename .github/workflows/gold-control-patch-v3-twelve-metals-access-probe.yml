@@ -1,0 +1,39 @@
+name: Gold Control Patch V3 Twelve Metals Access Probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-patch-v3-twelve-metals-access-probe.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-patch-v3-twelve-metals-access-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - name: Require credential
+        run: test -n "$TWELVE_DATA_API_KEY"
+      - name: Verify V3 source freeze
+        run: |
+          grep -F 'FROZEN_BEFORE_V3_SOURCE_RESULT' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V3.md
+          python -m py_compile gold_axis_2026/tools/probe_patch_v3_twelve_metals_access.py
+      - name: Probe non-value access and depth
+        run: python gold_axis_2026/tools/probe_patch_v3_twelve_metals_access.py
