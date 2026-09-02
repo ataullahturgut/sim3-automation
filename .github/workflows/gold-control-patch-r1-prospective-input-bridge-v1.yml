@@ -1,0 +1,66 @@
+name: Gold Control Patch R1 Prospective Input Bridge V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-patch-r1-prospective-input-bridge-v1.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-patch-r1-prospective-input-bridge-v1
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install audit runtime
+        run: pip install pandas numpy requests
+      - name: Require protected source credentials
+        run: |
+          test -n "$TWELVE_DATA_API_KEY"
+          test -n "$FRED_API_KEY"
+      - name: Verify contract frozen before result
+        run: |
+          set -euo pipefail
+          grep -F '**Manifest version:** 1.16' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'FROZEN_BEFORE_BRIDGE_AUDIT' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V1.md
+          grep -F 'CAUSAL_PATCH_R1_REPRO_V1' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V1.md
+          grep -F 'ed2e549f82ba0d1cd3ca32842b82d3888d301e01' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V1.md
+          python -m py_compile gold_axis_2026/tools/audit_patch_r1_prospective_input_bridge_v1.py
+      - name: Run source and availability bridge audit
+        run: python gold_axis_2026/tools/audit_patch_r1_prospective_input_bridge_v1.py
+      - name: Verify evidence isolation
+        run: |
+          set -euo pipefail
+          test -s gold_axis_2026/patch_repro_v1/prospective_input_bridge_v1_evidence.json
+          grep -F '"evidence_class": "INPUT_SOURCE_COMPATIBILITY_AUDIT"' gold_axis_2026/patch_repro_v1/prospective_input_bridge_v1_evidence.json
+          grep -F '"prospective_claim": false' gold_axis_2026/patch_repro_v1/prospective_input_bridge_v1_evidence.json
+          grep -F '"forecast_ledger_write": "NONE"' gold_axis_2026/patch_repro_v1/prospective_input_bridge_v1_evidence.json
+          grep -F '"decision_store_write": "NONE"' gold_axis_2026/patch_repro_v1/prospective_input_bridge_v1_evidence.json
+          grep -F '"database_write": "NONE"' gold_axis_2026/patch_repro_v1/prospective_input_bridge_v1_evidence.json
+          grep -F '"raw_vendor_market_values_logged": false' gold_axis_2026/patch_repro_v1/prospective_input_bridge_v1_evidence.json
+      - name: Commit immutable bridge evidence to canonical branch
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/patch_repro_v1/prospective_input_bridge_v1_evidence.json
+          git commit -m 'gold-control: record Patch prospective input bridge v1 evidence'
+          git push origin HEAD:gold-r4-direction-engine
