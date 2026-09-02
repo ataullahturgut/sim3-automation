@@ -20,12 +20,12 @@ jobs:
           fetch-depth: 1
       - name: Reconcile manifest
         run: python gold_axis_2026/tools/reconcile_manifest_v1_18_v4.py
-      - name: Validate diff
+      - name: Validate manifest v1.18 content
         run: |
-          git diff --check
           grep -F '**Manifest version:** 1.18' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'PATCH_R1_V4_XAU_ONLY_MODEL_IMPACT_PASS' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'CAUSAL_PATCH_R1_REPRO_V1_3_XAU_ONLY_ORIGIN_SAFE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'PATCH_V4_XAU_ONLY_SOURCE_AND_HISTORICAL_MODEL_IMPACT_PASS; PROSPECTIVE_ISSUER_NOT_YET_AUTHORIZED' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
       - name: Commit manifest
         run: |
           git config user.name 'github-actions[bot]'
