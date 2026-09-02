@@ -51,6 +51,20 @@ jobs:
             gold_axis_2026/data_pipeline/stage4b_patch_v7_runner_core.py \
             gold_axis_2026/data_pipeline/stage4b_patch_v7_first_shadow_issuer.py \
             gold_axis_2026/data_pipeline/stage4b_multi_expert_patch_v7_month_end_issuer.py
+      - name: Prove Patch V7 runner core is not an issuer
+        run: |
+          cd gold_axis_2026/data_pipeline
+          if python stage4b_patch_v7_runner_core.py > /tmp/patch_core.log 2>&1; then
+            echo 'Patch V7 runner core unexpectedly returned success' >&2
+            exit 1
+          fi
+          grep -q 'RUNNER_CORE_STATUS=BLOCKED_MANIFEST_V1_22_RUNNER_CORE_NOT_AN_ISSUER' /tmp/patch_core.log
+          grep -q 'CANONICAL_PERSISTENCE_STATUS=REMOVED_MANIFEST_V1_22_SINGLE_PATCH_CANONICAL_WRITER' /tmp/patch_core.log
+          grep -q 'DATABASE_WRITES=NONE' /tmp/patch_core.log
+          if grep -q 'insert into monthly_forecast_contracts' stage4b_patch_v7_runner_core.py; then
+            echo 'Retired canonical Patch writer SQL still present in runner core' >&2
+            exit 1
+          fi
       - name: Prove retired single-Patch canonical issuer is blocked before DB access
         run: |
           cd gold_axis_2026/data_pipeline
