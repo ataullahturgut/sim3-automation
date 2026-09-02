@@ -206,7 +206,6 @@ s, n = re.subn(r'### Manifest v1\.15 successor target/input reconciliation.*?###
 if n != 1:
     raise SystemExit("V115_EVIDENCE_REPLACE_FAILED")
 
-# Active-path stale references must be gone.
 for bad in [
     "GOLD_CONTROL_H1_SUCCESSOR_VALIDATION_CONTRACT_R2.md",
     "RUN THE FROZEN SUCCESSOR R2 HISTORICAL REPLAY",
@@ -220,7 +219,7 @@ for required in [
     "**Manifest version:** 1.16",
     "CAUSAL_PATCH_R1_REPRO_V1",
     "VW_AUDITED_SHADOW_V2",
-    "AUTO_SELECTOR:** `OFF",
+    "**Auto selector:** `OFF`",
     "GOLD_CONTROL_FORECAST_PATH_CORRECTION_2026-09-02.md",
     "GOLD_CONTROL_CAUSAL_PATCH_R1_REPRO_CONTRACT_V1.md",
     "IN_PROGRESS_PATCH_R1_REPRODUCIBILITY",
