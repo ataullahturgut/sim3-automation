@@ -1,0 +1,29 @@
+name: Gold Control Patch V4 Nasdaq CHRIS Metals Probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-patch-v4-nasdaq-chris-metals-probe.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - name: Compile probe
+        run: python -m py_compile gold_axis_2026/tools/probe_patch_v4_nasdaq_chris_metals.py
+      - name: Probe anonymous access/depth only
+        run: python gold_axis_2026/tools/probe_patch_v4_nasdaq_chris_metals.py
