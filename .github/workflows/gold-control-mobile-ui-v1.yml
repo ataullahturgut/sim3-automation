@@ -101,7 +101,9 @@ jobs:
               missing = expected - seen[module]
               if missing:
                   raise SystemExit(f'LOCAL_IMPORT_EXPORT_AUDIT_FAIL:{module}:{sorted(missing)}')
-          text = source.upper()
+          def normalized(value: str) -> str:
+              return value.upper().replace('İ','I')
+          text = normalized(source)
           required = [
               'SİNYAL ÖZETİ','MODEL YÖNÜ (AYLIK)','FAST / SLOW TEYİDİ',
               'SİNYAL ZAMAN ÇİZELGESİ','GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI',
@@ -109,7 +111,7 @@ jobs:
               'TAHMİN ÖZETİ','MODEL BİLGİSİ','HATA ORANI ZAMAN ÇİZGİSİ',
               'SEÇİLMİŞ GERÇEKLEŞEN TAHMİNLER','HISTORICAL_REPLAY'
           ]
-          missing = [x for x in required if x not in text]
+          missing = [x for x in required if normalized(x) not in text]
           if missing:
               raise SystemExit(f'FINAL_SCREEN_MARKERS_MISSING:{missing}')
           print('FINAL_SCREEN_IMPORT_AND_MARKER_AUDIT_PASS')
