@@ -1,0 +1,54 @@
+name: Gold Control Patch V5 Source Closure
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/tools/audit_patch_v5_hourly_history_entitlement.py'
+      - '.github/workflows/gold-control-patch-v5-source-closure.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  close-v5-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install probe runtime
+        run: pip install 'requests>=2.31,<3'
+
+      - name: Require protected Twelve credential
+        run: test -n "$TWELVE_DATA_API_KEY"
+
+      - name: Run fail-closed V5 history entitlement audit
+        run: python gold_axis_2026/tools/audit_patch_v5_hourly_history_entitlement.py
+
+      - name: Verify V5 remains failed without retune or substitution
+        run: |
+          grep -F '"decision": "BLOCKED_PATCH_MONTHLY_LEVEL_BRIDGE_V5_SOURCE_NOT_PROVEN"' gold_axis_2026/patch_repro_v1/prospective_monthly_level_v5_source_evidence.json
+          grep -F '"thresholds_relaxed": false' gold_axis_2026/patch_repro_v1/prospective_monthly_level_v5_source_evidence.json
+          grep -F '"source_substituted": false' gold_axis_2026/patch_repro_v1/prospective_monthly_level_v5_source_evidence.json
+          grep -F '"model_impact_run": "SKIPPED_SOURCE_GATE_NOT_PROVEN"' gold_axis_2026/patch_repro_v1/locked_replay_v5_monthly_level_evidence.json
+          grep -F '"database_write": "NONE"' gold_axis_2026/patch_repro_v1/prospective_monthly_level_v5_source_evidence.json
+
+      - name: Commit immutable V5 closure evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/patch_repro_v1/prospective_monthly_level_v5_source_evidence.json \
+                  gold_axis_2026/patch_repro_v1/locked_replay_v5_monthly_level_evidence.json
+          git commit -m 'gold-control: close Patch V5 monthly-level source as not proven'
+          git push origin HEAD:gold-r4-direction-engine
