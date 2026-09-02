@@ -4,7 +4,6 @@ import base64
 import gzip
 import io
 import json
-import math
 import os
 import time
 from pathlib import Path
@@ -111,7 +110,6 @@ def verify_twelve_symbol(symbol: str, api_key: str) -> dict:
 
 
 def fetch_twelve_proxy(symbol: str, hour: int, api_key: str) -> pd.Series:
-    # Fixed chunks keep every 1h request safely below outputsize=5000.
     chunks = [
         ("2026-01-01", "2026-03-20"),
         ("2026-03-21", "2026-06-10"),
@@ -134,8 +132,7 @@ def fetch_twelve_proxy(symbol: str, hour: int, api_key: str) -> pd.Series:
             headers={"Authorization": f"apikey {api_key}", "User-Agent": "Gold-Control-Patch-Input-Bridge/1.0"},
             sleep_base=6.0,
         )
-        vals = p.get("values") or []
-        for z in vals:
+        for z in p.get("values") or []:
             dt = pd.Timestamp(str(z.get("datetime")))
             if dt.hour != hour or dt.minute != 0:
                 continue
@@ -212,30 +209,41 @@ def fred_month_mean_asof(series_id: str, month: pd.Timestamp, api_key: str) -> t
 
 def macro_audit(core: pd.DataFrame, fred_key: str) -> dict:
     raw = {k: [] for k in MACROS}
+    missing = {k: [] for k in MACROS}
     for t in pd.date_range(TARGET_START, TARGET_END, freq="MS"):
         pmonth = t - pd.offsets.MonthBegin(1)
         if pmonth not in core.index:
             raise RuntimeError(f"CORE_MONTH_MISSING:{pmonth.date()}")
-        for i, (name, cfg) in enumerate(MACROS.items()):
-            val, n, max_date = fred_month_mean_asof(cfg["fred"], pmonth, fred_key)
-            locked = float(core.loc[pmonth, name])
-            rel = abs(val - locked) / max(abs(locked), 1e-12) * 100.0
-            raw[name].append({"target": t.strftime("%Y-%m"), "rel_gap_pct": rel, "obs_count": n, "max_source_date": max_date})
+        for name, cfg in MACROS.items():
+            try:
+                val, n, max_date = fred_month_mean_asof(cfg["fred"], pmonth, fred_key)
+                locked = float(core.loc[pmonth, name])
+                rel = abs(val - locked) / max(abs(locked), 1e-12) * 100.0
+                raw[name].append({"target": t.strftime("%Y-%m"), "rel_gap_pct": rel, "obs_count": n, "max_source_date": max_date})
+            except Exception as exc:
+                missing[name].append({
+                    "target": t.strftime("%Y-%m"),
+                    "origin_month": pmonth.strftime("%Y-%m"),
+                    "reason": str(exc).split(":", 1)[0],
+                })
             time.sleep(0.25)
     out = {}
     all_pass = True
     for name, rows in raw.items():
         cfg = MACROS[name]
         gaps = np.array([r["rel_gap_pct"] for r in rows], float)
-        hard = len(rows) == 43 and all(r["obs_count"] > 0 for r in rows)
-        med = float(np.median(gaps))
-        p95 = float(np.quantile(gaps, 0.95))
-        material = med <= cfg["median_rel_pct_max"] and p95 <= cfg["p95_rel_pct_max"]
+        hard = len(rows) == 43 and len(missing[name]) == 0 and all(r["obs_count"] > 0 for r in rows)
+        med = None if len(gaps) == 0 else float(np.median(gaps))
+        p95 = None if len(gaps) == 0 else float(np.quantile(gaps, 0.95))
+        material = bool(med is not None and p95 is not None and med <= cfg["median_rel_pct_max"] and p95 <= cfg["p95_rel_pct_max"])
         passed = hard and material
         all_pass = all_pass and passed
+        counts = [r["obs_count"] for r in rows]
         out[name] = {
             "fred_series": cfg["fred"],
             "reconstructions": len(rows),
+            "missing_reconstructions": len(missing[name]),
+            "missing_examples": missing[name][:10],
             "median_abs_relative_gap_pct": med,
             "p95_abs_relative_gap_pct": p95,
             "median_gate_pct": cfg["median_rel_pct_max"],
@@ -243,8 +251,8 @@ def macro_audit(core: pd.DataFrame, fred_key: str) -> dict:
             "hard_gate_pass": hard,
             "materiality_gate_pass": material,
             "pass": passed,
-            "source_observation_counts_min": int(min(r["obs_count"] for r in rows)),
-            "source_observation_counts_max": int(max(r["obs_count"] for r in rows)),
+            "source_observation_counts_min": None if not counts else int(min(counts)),
+            "source_observation_counts_max": None if not counts else int(max(counts)),
         }
     return {"series": out, "pass": all_pass, "raw_values_logged": False}
 
@@ -252,35 +260,46 @@ def macro_audit(core: pd.DataFrame, fred_key: str) -> dict:
 def metal_audit(api_key: str) -> dict:
     pinned = fetch_pinned_metals()
     out = {}
-    all_pass = True
     identities = {}
+    all_pass = True
     for metal, cfg in METALS.items():
-        identities[metal] = verify_twelve_symbol(cfg["symbol"], api_key)
-        proxy = fetch_twelve_proxy(cfg["symbol"], cfg["hour"], api_key)
-        if metal not in pinned.columns:
-            raise RuntimeError(f"PINNED_METAL_MISSING:{metal}")
-        m = return_metrics(pinned[metal].dropna(), proxy)
-        hard = m["common_daily_observations"] >= 120 and m["return_pairs"] >= 100
-        material = (
-            m["return_corr"] >= 0.90
-            and m["sign_agreement"] >= 0.75
-            and m["median_abs_return_gap_bps"] <= cfg["median_gap_bps_max"]
-            and m["p95_abs_return_gap_bps"] <= 300.0
-        )
-        passed = hard and material
+        try:
+            identities[metal] = verify_twelve_symbol(cfg["symbol"], api_key)
+            proxy = fetch_twelve_proxy(cfg["symbol"], cfg["hour"], api_key)
+            if metal not in pinned.columns:
+                raise RuntimeError(f"PINNED_METAL_MISSING:{metal}")
+            m = return_metrics(pinned[metal].dropna(), proxy)
+            hard = m["common_daily_observations"] >= 120 and m["return_pairs"] >= 100
+            material = (
+                m["return_corr"] >= 0.90
+                and m["sign_agreement"] >= 0.75
+                and m["median_abs_return_gap_bps"] <= cfg["median_gap_bps_max"]
+                and m["p95_abs_return_gap_bps"] <= 300.0
+            )
+            passed = hard and material
+            out[metal] = {
+                **m,
+                "symbol": cfg["symbol"],
+                "london_hour": cfg["hour"],
+                "median_gap_gate_bps": cfg["median_gap_bps_max"],
+                "p95_gap_gate_bps": 300.0,
+                "corr_gate": 0.90,
+                "sign_gate": 0.75,
+                "hard_gate_pass": hard,
+                "materiality_gate_pass": material,
+                "pass": passed,
+            }
+        except Exception as exc:
+            passed = False
+            out[metal] = {
+                "symbol": cfg["symbol"],
+                "london_hour": cfg["hour"],
+                "pass": False,
+                "hard_gate_pass": False,
+                "materiality_gate_pass": False,
+                "not_proven_reason": str(exc).split(":", 1)[0],
+            }
         all_pass = all_pass and passed
-        out[metal] = {
-            **m,
-            "symbol": cfg["symbol"],
-            "london_hour": cfg["hour"],
-            "median_gap_gate_bps": cfg["median_gap_bps_max"],
-            "p95_gap_gate_bps": 300.0,
-            "corr_gate": 0.90,
-            "sign_gate": 0.75,
-            "hard_gate_pass": hard,
-            "materiality_gate_pass": material,
-            "pass": passed,
-        }
     return {"series": out, "identities": identities, "pass": all_pass, "raw_values_logged": False}
 
 
@@ -312,20 +331,26 @@ def main() -> None:
     (OUT / "prospective_input_bridge_v1_evidence.json").write_text(json.dumps(evidence, indent=2), encoding="utf-8")
 
     print(f"PATCH_INPUT_BRIDGE_MACRO_PASS={str(macro['pass']).lower()}")
-    for k, v in macro["series"].items():
-        print(f"MACRO_{k.upper()}_N={v['reconstructions']}")
-        print(f"MACRO_{k.upper()}_MEDIAN_REL_GAP_PCT={v['median_abs_relative_gap_pct']:.9f}")
-        print(f"MACRO_{k.upper()}_P95_REL_GAP_PCT={v['p95_abs_relative_gap_pct']:.9f}")
-        print(f"MACRO_{k.upper()}_PASS={str(v['pass']).lower()}")
+    for name, v in macro["series"].items():
+        u = name.upper()
+        print(f"MACRO_{u}_N={v['reconstructions']}")
+        print(f"MACRO_{u}_MISSING_N={v['missing_reconstructions']}")
+        if v["median_abs_relative_gap_pct"] is not None:
+            print(f"MACRO_{u}_MEDIAN_REL_GAP_PCT={v['median_abs_relative_gap_pct']:.9f}")
+            print(f"MACRO_{u}_P95_REL_GAP_PCT={v['p95_abs_relative_gap_pct']:.9f}")
+        print(f"MACRO_{u}_PASS={str(v['pass']).lower()}")
     print(f"PATCH_INPUT_BRIDGE_METALS_PASS={str(metals['pass']).lower()}")
-    for k, v in metals["series"].items():
-        u = k.upper()
-        print(f"METAL_{u}_COMMON_N={v['common_daily_observations']}")
-        print(f"METAL_{u}_RETURN_PAIRS={v['return_pairs']}")
-        print(f"METAL_{u}_RETURN_CORR={v['return_corr']:.9f}")
-        print(f"METAL_{u}_SIGN_AGREE={v['sign_agreement']:.9f}")
-        print(f"METAL_{u}_MEDIAN_GAP_BPS={v['median_abs_return_gap_bps']:.6f}")
-        print(f"METAL_{u}_P95_GAP_BPS={v['p95_abs_return_gap_bps']:.6f}")
+    for name, v in metals["series"].items():
+        u = name.upper()
+        if "common_daily_observations" in v:
+            print(f"METAL_{u}_COMMON_N={v['common_daily_observations']}")
+            print(f"METAL_{u}_RETURN_PAIRS={v['return_pairs']}")
+            print(f"METAL_{u}_RETURN_CORR={v['return_corr']:.9f}")
+            print(f"METAL_{u}_SIGN_AGREE={v['sign_agreement']:.9f}")
+            print(f"METAL_{u}_MEDIAN_GAP_BPS={v['median_abs_return_gap_bps']:.6f}")
+            print(f"METAL_{u}_P95_GAP_BPS={v['p95_abs_return_gap_bps']:.6f}")
+        else:
+            print(f"METAL_{u}_NOT_PROVEN_REASON={v.get('not_proven_reason')}")
         print(f"METAL_{u}_PASS={str(v['pass']).lower()}")
     print(f"PATCH_PROSPECTIVE_INPUT_BRIDGE_V1_PASS={str(passed).lower()}")
     print(f"PATCH_PROSPECTIVE_INPUT_BRIDGE_V1_DECISION={decision}")
