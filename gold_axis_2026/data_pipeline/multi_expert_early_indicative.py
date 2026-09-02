@@ -8,13 +8,13 @@ from typing import Iterable
 from multi_expert_forecast import (
     AUTO_ENSEMBLE,
     AUTO_SELECTOR,
-    EARLY_INDICATIVE_TRACK if False else TRACK_EARLY_INDICATIVE,
     EXPERT_ORDER,
+    MOMENTUM_EXPERT,
     PATCH_EXPERT,
     RW_EXPERT,
     SELECTOR_STATUS,
+    TRACK_EARLY_INDICATIVE,
     VW_EXPERT,
-    MOMENTUM_EXPERT,
 )
 
 
