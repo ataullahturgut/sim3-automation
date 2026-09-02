@@ -41,6 +41,83 @@ jobs:
       - name: Run read-only inventory audit
         run: python gold_axis_2026/data_pipeline/audit_live_inventory.py
 
+      - name: Diagnose UI display-state metadata
+        run: |
+          python - <<'PY'
+          import json, os
+          import psycopg
+          from psycopg.rows import dict_row
+
+          def scalar(cur, sql, params=()):
+              cur.execute(sql, params)
+              row = cur.fetchone()
+              return next(iter(row.values())) if row else None
+
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+
+                  decision_runs = int(scalar(cur, "select count(*) from decision_runs where status='SUCCESS' and evidence_class in ('PROSPECTIVE_SHADOW','LIVE_PRODUCTION')") or 0)
+                  decision_events = int(scalar(cur, "select count(*) from decision_events e join decision_runs r on r.run_id=e.run_id where r.status='SUCCESS' and r.evidence_class in ('PROSPECTIVE_SHADOW','LIVE_PRODUCTION')") or 0)
+                  decision_latest = None
+                  if decision_runs:
+                      cur.execute("""
+                          select r.evidence_class, s.decision_as_of, s.target_month,
+                                 s.monthly_direction_3m is not null as has_monthly_direction,
+                                 s.fast_state is not null as has_fast,
+                                 s.slow_state is not null as has_slow,
+                                 s.classification is not null as has_classification
+                          from decision_runs r
+                          join decision_signal_snapshots s on s.run_id=r.run_id
+                          where r.status='SUCCESS' and r.evidence_class in ('PROSPECTIVE_SHADOW','LIVE_PRODUCTION')
+                          order by case when r.evidence_class='LIVE_PRODUCTION' then 0 else 1 end,
+                                   s.decision_as_of desc, r.generated_at desc
+                          limit 1
+                      """)
+                      row = cur.fetchone()
+                      if row:
+                          decision_latest = {k: (v.isoformat() if hasattr(v, 'isoformat') else v) for k,v in dict(row).items()}
+
+                  forecast_contracts = int(scalar(cur, "select count(*) from monthly_forecast_contracts") or 0)
+                  governed_canonical = int(scalar(cur, """
+                      select count(*) from monthly_forecast_contracts
+                      where coalesce(provenance->>'evidence_class','') in ('PROSPECTIVE_SHADOW','LIVE_PRODUCTION')
+                        and coalesce((provenance->>'canonical_authority')::boolean,false)=true
+                        and coalesce(provenance->>'auto_selector','OFF')='OFF'
+                        and coalesce(provenance->>'auto_ensemble','OFF')='OFF'
+                        and coalesce(provenance->>'selector_status','') not in ('','NOT_PROVEN_EXPERT_SELECTION_RULE')
+                        and coalesce(provenance->>'selector_rule_version','') <> ''
+                  """) or 0)
+
+                  expert_table = scalar(cur, "select to_regclass('public.monthly_expert_forecasts')") is not None
+                  expert_rows = 0
+                  expert_month_end = 0
+                  expert_early = 0
+                  expert_latest_target = None
+                  if expert_table:
+                      expert_rows = int(scalar(cur, "select count(*) from monthly_expert_forecasts") or 0)
+                      expert_month_end = int(scalar(cur, "select count(*) from monthly_expert_forecasts where forecast_track='MONTH_END_EXPERT' and evidence_class in ('PROSPECTIVE_SHADOW','LIVE_PRODUCTION')") or 0)
+                      expert_early = int(scalar(cur, "select count(*) from monthly_expert_forecasts where forecast_track='EARLY_INDICATIVE' and evidence_class in ('PROSPECTIVE_SHADOW','LIVE_PRODUCTION')") or 0)
+                      expert_latest_target = scalar(cur, "select max(target_month) from monthly_expert_forecasts where evidence_class in ('PROSPECTIVE_SHADOW','LIVE_PRODUCTION')")
+                      if hasattr(expert_latest_target, 'isoformat'):
+                          expert_latest_target = expert_latest_target.isoformat()
+
+              conn.rollback()
+
+          print('UI_DISPLAY_STATE_DIAGNOSTIC=' + json.dumps({
+              'decision_success_runs': decision_runs,
+              'decision_events': decision_events,
+              'decision_latest': decision_latest,
+              'monthly_forecast_contract_rows': forecast_contracts,
+              'governed_canonical_forecast_rows': governed_canonical,
+              'expert_table_exists': expert_table,
+              'expert_rows_total': expert_rows,
+              'expert_rows_month_end_display_eligible': expert_month_end,
+              'expert_rows_early_display_eligible': expert_early,
+              'expert_latest_target_month': expert_latest_target,
+          }, sort_keys=True))
+          PY
+
       - name: Render canonical Stage 1 report
         run: python gold_axis_2026/data_pipeline/render_data_inventory.py
 
