@@ -1,4 +1,4 @@
-name: Gold Control Mobile UI V3 Final Mockups
+name: Gold Control Mobile UI V1.22 Multi-Expert Final
 
 on:
   workflow_dispatch:
@@ -18,6 +18,8 @@ on:
       - 'gold_axis_2026/apps/requirements.txt'
       - 'gold_axis_2026/apps/test_mobile_ui_contract.py'
       - 'gold_axis_2026/apps/test_piyasa_contract.py'
+      - 'gold_axis_2026/data_pipeline/multi_expert_forecast.py'
+      - 'gold_axis_2026/data_pipeline/test_multi_expert_forecast.py'
       - 'gold_axis_2026/data_pipeline/decision_store.py'
       - 'gold_axis_2026/data_pipeline/decision_store_reader.py'
       - '.github/workflows/gold-control-mobile-ui-v1.yml'
@@ -33,11 +35,9 @@ jobs:
         with:
           ref: gold-r4-direction-engine
           fetch-depth: 1
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.14'
-
       - name: Install locked app and browser runtime
         run: |
           python -m pip install --upgrade pip
@@ -45,24 +45,29 @@ jobs:
           python -m playwright install --with-deps chromium
           python --version
           streamlit version
-
-      - name: Verify manifest and UI governance
+      - name: Verify manifest v1.22 and UI governance
         run: |
-          grep -q 'Manifest version:' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'Manifest version:\*\* 1.22' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'APPROVED_FINAL_MOCKUP_UI_CONTRACT_V2' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'Build Multi-Expert Forecast Pipeline' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'auto selector = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'auto ensemble = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'APPROVED_FINAL_MOCKUP_UI_CONTRACT_V2' gold_axis_2026/GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md
-          echo 'FINAL_MOCKUP_GOVERNANCE_PASS'
-
-      - name: Run deterministic UI contract tests
-        working-directory: gold_axis_2026/apps
-        run: pytest -q test_mobile_ui_contract.py test_piyasa_contract.py
-
+          echo 'V122_MULTI_EXPERT_UI_GOVERNANCE_PASS'
+      - name: Run deterministic contracts
+        run: |
+          cd gold_axis_2026/apps
+          pytest -q test_mobile_ui_contract.py test_piyasa_contract.py
+          cd ../data_pipeline
+          pytest -q test_multi_expert_forecast.py
       - name: Compile complete UI dependency graph
         run: |
           python -m py_compile \
             gold_axis_2026/data_pipeline/decision_store.py \
             gold_axis_2026/data_pipeline/decision_store_reader.py \
+            gold_axis_2026/data_pipeline/multi_expert_forecast.py \
             gold_axis_2026/apps/decision_source.py \
             gold_axis_2026/apps/forecast_source.py \
             gold_axis_2026/apps/live_sources.py \
@@ -71,8 +76,7 @@ jobs:
             gold_axis_2026/apps/mobile_viewport_qa.py \
             gold_axis_2026/apps/gold_control_mobile_v1.py \
             gold_axis_2026/apps/gold_control.py
-
-      - name: Audit local imports and final-screen markers
+      - name: Audit local imports and manifest v1.22 screen markers
         run: |
           python - <<'PY'
           import ast
@@ -82,12 +86,17 @@ jobs:
           tree = ast.parse(source)
           local = {
               'decision_source': {'fetch_current_decision_state', 'fetch_decision_history'},
-              'forecast_source': {'fetch_current_forecast', 'fetch_forecast_history'},
+              'forecast_source': {
+                  'fetch_current_forecast','fetch_forecast_history','fetch_latest_expert_forecasts',
+                  'fetch_expert_forecast_history','TRACK_MONTH_END','TRACK_EARLY_INDICATIVE'
+              },
               'live_sources': {'fetch_gvz_latest', 'fetch_xau_history', 'fetch_xau_spot'},
               'mobile_ui_contract': {
-                  'FINAL_MOCKUP_CONTRACT','SCENARIO_STATUS','arrow_state','classification_label',
+                  'FINAL_MOCKUP_CONTRACT','SCENARIO_STATUS','EXPERT_SELECTION_STATUS',
+                  'AUTO_SELECTOR_STATUS','AUTO_ENSEMBLE_STATUS','EXPERT_DISPLAY_ORDER',
+                  'MONTH_END_TRACK','EARLY_INDICATIVE_TRACK','arrow_state','classification_label',
                   'decision_view_state','deterministic_explanation','display_state','evidence_badge',
-                  'forecast_view_state'
+                  'expert_display_state','forecast_view_state','monthly_intramonth_relation'
               },
               'piyasa_contract': {'filter_history_timeframe','gvz_regime','latest_completed_daily_row','price_delta'},
           }
@@ -101,129 +110,83 @@ jobs:
               missing = expected - seen[module]
               if missing:
                   raise SystemExit(f'LOCAL_IMPORT_EXPORT_AUDIT_FAIL:{module}:{sorted(missing)}')
-          def normalized(value: str) -> str:
-              return value.upper().replace('İ','I')
-          text = normalized(source)
-          required = [
-              'SİNYAL ÖZETİ','MODEL YÖNÜ (AYLIK)','FAST / SLOW TEYİDİ',
-              'SİNYAL ZAMAN ÇİZELGESİ','GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI',
-              'PATCH TAHMİNİ (V7)','VW REFERANS','RANDOM WALK (RW)',
-              'TAHMİN ÖZETİ','MODEL BİLGİSİ','HATA ORANI ZAMAN ÇİZGİSİ',
-              'SEÇİLMİŞ GERÇEKLEŞEN TAHMİNLER','HISTORICAL_REPLAY'
+          def n(v): return v.upper().replace('İ','I')
+          text=n(source)
+          required=[
+              'SİNYAL ÖZETİ','MODEL YÖNÜ (AYLIK)','FAST / SLOW TEYİDİ','SİNYAL ZAMAN ÇİZELGESİ',
+              'EMERGENCY DURUMU','SİSTEM YORUMU','MACRO EVENT','BOCPD',
+              'MULTI-EXPERT MONTHLY FORECAST ENGINE','CAUSAL PATCH','VW-MIDAS-MSVR','3M MOMENTUM',
+              'RANDOM WALK','EARLY INDICATIVE','GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI',
+              'MEVCUT FİYATA GÖRE FARK','MODEL PERFORMANSI','MULTI-EXPERT FORECAST LEDGER',
+              'MONTH_END_EXPERT','NOT_PROVEN_EXPERT_SELECTION_RULE','AUTO SELECTOR','AUTO ENSEMBLE',
+              'HISTORICAL_REPLAY'
           ]
-          missing = [x for x in required if normalized(x) not in text]
-          if missing:
-              raise SystemExit(f'FINAL_SCREEN_MARKERS_MISSING:{missing}')
-          print('FINAL_SCREEN_IMPORT_AND_MARKER_AUDIT_PASS')
+          missing=[x for x in required if n(x) not in text]
+          if missing: raise SystemExit(f'V122_SCREEN_MARKERS_MISSING:{missing}')
+          prohibited=['PATCH TAHMİNİ (V7) · ANA H=1 ISSUER','WINNER EXPERT','SELECTED EXPERT']
+          found=[x for x in prohibited if n(x) in text]
+          if found: raise SystemExit(f'V122_PROHIBITED_SINGLE_MODEL_OR_SELECTOR_MARKERS:{found}')
+          print('V122_MULTI_EXPERT_IMPORT_AND_MARKER_AUDIT_PASS')
           PY
-
       - name: Verify bootstrap safety
         run: |
           grep -q 'sys.modules.pop(name, None)' gold_axis_2026/apps/gold_control.py
           grep -q 'LOCAL_MODULE_PATH_MISMATCH' gold_axis_2026/apps/gold_control.py
           grep -q 'LOCAL_MODULE_EXPORT_MISSING' gold_axis_2026/apps/gold_control.py
           if grep -Eq '^[[:space:]]*import[[:space:]]+runpy([[:space:]]|$)' gold_axis_2026/apps/gold_control.py; then
-            echo 'RUNPY_ENTRYPOINT_FORBIDDEN'
-            exit 1
+            echo 'RUNPY_ENTRYPOINT_FORBIDDEN'; exit 1
           fi
           echo 'BOOTSTRAP_SAFETY_PASS'
-
       - name: Cloud cwd isolation browser regression
         env:
           STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
         run: |
-          REPO="$GITHUB_WORKSPACE"
-          cd /tmp
-          streamlit run "$REPO/gold_axis_2026/apps/gold_control.py" \
-            --server.headless true --server.port 8502 --server.address 127.0.0.1 \
-            > /tmp/gold_mobile_cloud_path.log 2>&1 &
+          REPO="$GITHUB_WORKSPACE"; cd /tmp
+          streamlit run "$REPO/gold_axis_2026/apps/gold_control.py" --server.headless true --server.port 8502 --server.address 127.0.0.1 > /tmp/gold_mobile_cloud_path.log 2>&1 &
           APP_PID=$!
-          for i in $(seq 1 35); do
-            if curl -fsS http://127.0.0.1:8502/_stcore/health >/dev/null; then break; fi
-            sleep 1
-          done
-          set +e
-          python "$REPO/gold_axis_2026/apps/mobile_viewport_qa.py" \
-            --url http://127.0.0.1:8502 --out /tmp/gold_mobile_cloud_path_qa
-          QA_RC=$?
-          set -e
-          kill $APP_PID || true
-          wait $APP_PID || true
+          for i in $(seq 1 35); do if curl -fsS http://127.0.0.1:8502/_stcore/health >/dev/null; then break; fi; sleep 1; done
+          set +e; python "$REPO/gold_axis_2026/apps/mobile_viewport_qa.py" --url http://127.0.0.1:8502 --out /tmp/gold_mobile_cloud_path_qa; QA_RC=$?; set -e
+          kill $APP_PID || true; wait $APP_PID || true
           if [ $QA_RC -ne 0 ]; then cat /tmp/gold_mobile_cloud_path.log; exit $QA_RC; fi
-          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_cloud_path.log; then
-            cat /tmp/gold_mobile_cloud_path.log
-            exit 1
-          fi
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_cloud_path.log; then cat /tmp/gold_mobile_cloud_path.log; exit 1; fi
           echo 'MOBILE_CLOUD_CWD_BROWSER_PASS'
-
       - name: Stale-module collision browser regression
         env:
           STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
         run: |
-          REPO="$GITHUB_WORKSPACE"
-          mkdir -p /tmp/gold_poison
+          REPO="$GITHUB_WORKSPACE"; mkdir -p /tmp/gold_poison
           cat > /tmp/gold_poison/sitecustomize.py <<'PY'
           import sys, types
-          for name in (
-              'decision_store','decision_store_reader','decision_source','forecast_source',
-              'live_sources','mobile_ui_contract','piyasa_contract','gold_control_mobile_v1'
-          ):
-              mod = types.ModuleType(name)
-              mod.__file__ = f'/tmp/stale-cache/{name}.py'
-              sys.modules[name] = mod
+          for name in ('decision_store','decision_store_reader','decision_source','forecast_source','live_sources','mobile_ui_contract','piyasa_contract','gold_control_mobile_v1'):
+              mod=types.ModuleType(name); mod.__file__=f'/tmp/stale-cache/{name}.py'; sys.modules[name]=mod
           PY
           cd /tmp
-          PYTHONPATH=/tmp/gold_poison streamlit run "$REPO/gold_axis_2026/apps/gold_control.py" \
-            --server.headless true --server.port 8503 --server.address 127.0.0.1 \
-            > /tmp/gold_mobile_stale_module.log 2>&1 &
+          PYTHONPATH=/tmp/gold_poison streamlit run "$REPO/gold_axis_2026/apps/gold_control.py" --server.headless true --server.port 8503 --server.address 127.0.0.1 > /tmp/gold_mobile_stale_module.log 2>&1 &
           APP_PID=$!
-          for i in $(seq 1 35); do
-            if curl -fsS http://127.0.0.1:8503/_stcore/health >/dev/null; then break; fi
-            sleep 1
-          done
-          set +e
-          PYTHONPATH=/tmp/gold_poison python "$REPO/gold_axis_2026/apps/mobile_viewport_qa.py" \
-            --url http://127.0.0.1:8503 --out /tmp/gold_mobile_stale_module_qa
-          QA_RC=$?
-          set -e
-          kill $APP_PID || true
-          wait $APP_PID || true
+          for i in $(seq 1 35); do if curl -fsS http://127.0.0.1:8503/_stcore/health >/dev/null; then break; fi; sleep 1; done
+          set +e; PYTHONPATH=/tmp/gold_poison python "$REPO/gold_axis_2026/apps/mobile_viewport_qa.py" --url http://127.0.0.1:8503 --out /tmp/gold_mobile_stale_module_qa; QA_RC=$?; set -e
+          kill $APP_PID || true; wait $APP_PID || true
           if [ $QA_RC -ne 0 ]; then cat /tmp/gold_mobile_stale_module.log; exit $QA_RC; fi
           echo 'MOBILE_STALE_MODULE_BROWSER_PASS'
-
       - name: Canonical 390px final mockup browser QA
         env:
           STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
         run: |
-          streamlit run gold_axis_2026/apps/gold_control.py \
-            --server.headless true --server.port 8501 --server.address 127.0.0.1 \
-            > /tmp/gold_mobile_v3_browser.log 2>&1 &
+          streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8501 --server.address 127.0.0.1 > /tmp/gold_mobile_v122_browser.log 2>&1 &
           APP_PID=$!
-          for i in $(seq 1 35); do
-            if curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null; then break; fi
-            sleep 1
-          done
-          set +e
-          python gold_axis_2026/apps/mobile_viewport_qa.py \
-            --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v3_qa
-          QA_RC=$?
-          set -e
-          kill $APP_PID || true
-          wait $APP_PID || true
-          if [ $QA_RC -ne 0 ]; then cat /tmp/gold_mobile_v3_browser.log; exit $QA_RC; fi
-          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v3_browser.log; then
-            cat /tmp/gold_mobile_v3_browser.log
-            exit 1
-          fi
-          echo 'MOBILE_V3_CANONICAL_BROWSER_PASS'
-
+          for i in $(seq 1 35); do if curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null; then break; fi; sleep 1; done
+          set +e; python gold_axis_2026/apps/mobile_viewport_qa.py --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v122_qa; QA_RC=$?; set -e
+          kill $APP_PID || true; wait $APP_PID || true
+          if [ $QA_RC -ne 0 ]; then cat /tmp/gold_mobile_v122_browser.log; exit $QA_RC; fi
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v122_browser.log; then cat /tmp/gold_mobile_v122_browser.log; exit 1; fi
+          echo 'MOBILE_V122_CANONICAL_BROWSER_PASS'
       - name: Upload final mobile QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gold-control-mobile-v3-390px-screenshots
+          name: gold-control-mobile-v122-multi-expert-390px-screenshots
           path: |
-            /tmp/gold_mobile_v3_qa/*.png
+            /tmp/gold_mobile_v122_qa/*.png
             /tmp/gold_mobile_cloud_path_qa/*.png
             /tmp/gold_mobile_stale_module_qa/*.png
           if-no-files-found: warn
