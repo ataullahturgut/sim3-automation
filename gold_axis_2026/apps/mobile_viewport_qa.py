@@ -9,6 +9,7 @@ from playwright.sync_api import Page, sync_playwright
 
 PHONE_WIDTH = 390
 PHONE_HEIGHT = 844
+MAIN_NAV = ".st-key-gc_main_nav"
 
 
 def assert_no_horizontal_overflow(page: Page, screen: str) -> None:
@@ -28,43 +29,39 @@ def visible_text(page: Page) -> str:
     return page.locator("body").inner_text().upper()
 
 
-def visible_label(page: Page, name: str):
+def main_nav_label(page: Page, name: str):
     pattern = re.compile(re.escape(name), re.I)
-    candidates = [
-        page.get_by_text(pattern, exact=False),
-        page.locator("button").filter(has_text=pattern),
-        page.locator('[role="tab"]').filter(has_text=pattern),
-        page.locator('[data-testid="stTab"]') .filter(has_text=pattern),
-    ]
-    for locator in candidates:
-        count = locator.count()
-        for index in range(min(count, 12)):
-            item = locator.nth(index)
-            try:
-                if item.is_visible():
-                    return item
-            except Exception:
-                continue
+    root = page.locator(MAIN_NAV)
+    root.first.wait_for(state="visible", timeout=30_000)
+    labels = root.locator("label").filter(has_text=pattern)
+    for index in range(min(labels.count(), 8)):
+        item = labels.nth(index)
+        if item.is_visible():
+            return item
+    text_nodes = root.get_by_text(pattern, exact=False)
+    for index in range(min(text_nodes.count(), 8)):
+        item = text_nodes.nth(index)
+        if item.is_visible():
+            return item
     return None
 
 
 def require_nav_labels(page: Page) -> None:
     missing: list[str] = []
     for label in ["Bugün", "Görünüm", "Tahmin", "Geçmiş"]:
-        if visible_label(page, label) is None:
+        if main_nav_label(page, label) is None:
             missing.append(label)
     if missing:
-        buttons = page.locator("button").all_inner_texts()
-        body_head = visible_text(page)[:2500]
-        raise AssertionError(f"MOBILE_BOTTOM_NAV_MISSING:{missing}:BUTTONS={buttons}:BODY={body_head}")
+        root_text = page.locator(MAIN_NAV).inner_text() if page.locator(MAIN_NAV).count() else "NO_MAIN_NAV_ROOT"
+        raise AssertionError(f"MOBILE_BOTTOM_NAV_MISSING:{missing}:ROOT={root_text}")
 
 
 def click_tab(page: Page, name: str) -> None:
-    target = visible_label(page, name)
+    target = main_nav_label(page, name)
     if target is None:
         raise AssertionError(f"MOBILE_TAB_CONTROL_NOT_FOUND:{name}")
     target.click()
-    page.wait_for_timeout(950)
+    page.wait_for_timeout(1100)
 
 
 def screenshot(page: Page, out: Path, name: str) -> None:
@@ -87,7 +84,6 @@ def main() -> int:
         page.get_by_text("GOLD CONTROL", exact=False).first.wait_for(state="visible", timeout=45_000)
         page.wait_for_timeout(2200)
 
-        # Always capture the initial phone render, even if a later assertion fails.
         screenshot(page, out, "bugun")
         require_nav_labels(page)
         assert_no_horizontal_overflow(page, "bugun")
