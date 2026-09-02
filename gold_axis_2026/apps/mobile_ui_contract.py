@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import re
-import unicodedata
 from dataclasses import dataclass
 from typing import Any
 
@@ -18,8 +16,37 @@ ALLOWED_CLASSIFICATIONS = {
 
 PROHIBITED_ACTION_TERMS = {
     "BUY", "SELL", "HOLD", "HOLD_LONG", "EXIT", "REDUCE",
-    "POZİSYONU KORU", "AL", "SAT",
+    "POZİSYONU KORU", "POZISYONU KORU", " AL ", " SAT ",
 }
+
+GORUNUM_SECTION_ORDER = (
+    "SİNYAL ÖZETİ",
+    "MODEL YÖNÜ (AYLIK)",
+    "FAST / SLOW TEYİDİ",
+    "RİSK SEVİYESİ",
+    "SİNYAL ZAMAN ÇİZELGESİ",
+    "EMERGENCY DURUMU",
+    "SİSTEM YORUMU",
+)
+
+TAHMIN_SECTION_ORDER = (
+    "GELECEK AY TAHMİNİ",
+    "GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI",
+    "SENARYOLAR",
+    "MEVCUT FİYATA GÖRE FARK",
+    "MODEL PERFORMANSI",
+)
+
+GECMIS_SECTION_ORDER = (
+    "ÖZET METRİKLER",
+    "TAHMİN PERFORMANSI",
+    "HATA / KARAR ZAMAN ÇİZELGESİ",
+    "SEÇİLMİŞ GEÇMİŞ KAYITLAR",
+)
+
+FINAL_MOCKUP_CONTRACT = "APPROVED_FINAL_MOCKUP_UI_CONTRACT_V2"
+SCENARIO_STATUS = "BLOCKED_NO_CANONICAL_SCENARIO_CONTRACT"
+POSITION_STATUS = "NOT_PROVEN_POSITION_MAPPING"
 
 
 @dataclass(frozen=True)
@@ -28,6 +55,52 @@ class ViewState:
     subtitle: str
     tone: str
     evidence_class: str | None = None
+
+
+def normalize_search_text(text: str) -> str:
+    return str(text or "").upper().replace("İ", "I").replace("ı", "I")
+
+
+def assert_no_action_mapping(text: str) -> None:
+    normalized = f" {normalize_search_text(text)} "
+    for term in PROHIBITED_ACTION_TERMS:
+        t = normalize_search_text(term)
+        if t.strip() in normalized:
+            raise RuntimeError(f"NOT_PROVEN_POSITION_MAPPING_UI_VIOLATION:{term}")
+
+
+def display_state(value: Any, fallback: str = "KULLANILAMIYOR") -> str:
+    if value is None:
+        return fallback
+    text = str(value).strip()
+    if not text or text.upper() in {"NONE", "NAN", "N/A"}:
+        return fallback
+    return text
+
+
+def arrow_state(value: Any) -> tuple[str, str]:
+    text = display_state(value, "NÖTR").upper()
+    if "UP" in text or "YUKARI" in text:
+        return "↑", "positive"
+    if "DOWN" in text or "AŞAĞI" in text or "ASAGI" in normalize_search_text(text):
+        return "↓", "negative"
+    return "•", "neutral"
+
+
+def classification_label(value: Any) -> str:
+    mapping = {
+        "ALIGNED_UP": "YUKARI UYUMLU",
+        "ALIGNED_DOWN": "AŞAĞI UYUMLU",
+        "CONFLICT": "ÇELİŞKİ",
+        "UNRESOLVED_MIXED": "KARMA / ÇÖZÜMLENMEDİ",
+        "MACRO_DOWN_RISK": "MAKRO AŞAĞI RİSKİ",
+        "REVERSAL_RISK_DOWN": "AŞAĞI DÖNÜŞ RİSKİ",
+        "REVERSAL_RISK_UP": "YUKARI DÖNÜŞ RİSKİ",
+    }
+    raw = display_state(value, "KANONİK KARAR YOK")
+    label = mapping.get(raw, raw.replace("_", " "))
+    assert_no_action_mapping(label)
+    return label
 
 
 def decision_view_state(decision: dict[str, Any] | None) -> ViewState:
@@ -45,7 +118,7 @@ def decision_view_state(decision: dict[str, Any] | None) -> ViewState:
         "ALIGNED_DOWN", "MACRO_DOWN_RISK", "REVERSAL_RISK_DOWN"
     } else "warning" if classification in {"CONFLICT", "REVERSAL_RISK_UP"} else "neutral"
     return ViewState(
-        title=classification.replace("_", " "),
+        title=classification_label(classification),
         subtitle="Kayıtlı karar durumu — canlı spottan türetilmez.",
         tone=tone,
         evidence_class=decision.get("evidence_class"),
@@ -84,23 +157,6 @@ def evidence_badge(evidence_class: str | None) -> tuple[str, str]:
     return mapping[evidence_class]
 
 
-def _guard_normalize(value: str) -> str:
-    """Normalize Turkish/Unicode spelling for policy-term comparison only."""
-    value = str(value or "").replace("ı", "i").replace("İ", "I")
-    decomposed = unicodedata.normalize("NFKD", value)
-    ascii_like = "".join(ch for ch in decomposed if not unicodedata.combining(ch))
-    return ascii_like.upper()
-
-
-def assert_no_action_mapping(text: str) -> None:
-    normalized = _guard_normalize(text)
-    for term in PROHIBITED_ACTION_TERMS:
-        normalized_term = _guard_normalize(term)
-        pattern = rf"(?<![A-Z0-9]){re.escape(normalized_term)}(?![A-Z0-9])"
-        if re.search(pattern, normalized):
-            raise RuntimeError(f"NOT_PROVEN_POSITION_MAPPING_UI_VIOLATION:{term}")
-
-
 def deterministic_explanation(decision: dict[str, Any] | None) -> str:
     if not decision:
         return "Görünüm, display-eligible Decision Store kaydı oluşana kadar karar üretmez."
@@ -109,7 +165,8 @@ def deterministic_explanation(decision: dict[str, Any] | None) -> str:
     fast = decision.get("fast_state")
     slow = decision.get("slow_state")
     bocpd = decision.get("bocpd_context")
-    emergency = decision.get("level_emergency") or decision.get("reversal_emergency")
+    level = decision.get("level_emergency")
+    reversal = decision.get("reversal_emergency")
     gvz = decision.get("gvz_cap")
     if monthly not in (None, "N/A"):
         parts.append(f"Aylık bağlam: {monthly}")
@@ -117,10 +174,21 @@ def deterministic_explanation(decision: dict[str, Any] | None) -> str:
         parts.append(f"Fast/Slow: {fast or 'N/A'} / {slow or 'N/A'}")
     if bocpd not in (None, "N/A"):
         parts.append(f"Rejim: {bocpd}")
-    if emergency not in (None, "N/A"):
-        parts.append(f"Emergency: {emergency}")
+    if level not in (None, "N/A") or reversal not in (None, "N/A"):
+        parts.append(f"Emergency: {level or 'N/A'} / {reversal or 'N/A'}")
     if gvz not in (None, "N/A"):
         parts.append(f"Risk katmanı: {gvz}")
     result = ". ".join(parts) + ("." if parts else "Kayıtlı alt katman ayrıntısı mevcut değil.")
     assert_no_action_mapping(result)
     return result
+
+
+def v2_layout_contract() -> dict[str, tuple[str, ...] | str]:
+    return {
+        "contract": FINAL_MOCKUP_CONTRACT,
+        "gorunum": GORUNUM_SECTION_ORDER,
+        "tahmin": TAHMIN_SECTION_ORDER,
+        "gecmis": GECMIS_SECTION_ORDER,
+        "scenario_status": SCENARIO_STATUS,
+        "position_status": POSITION_STATUS,
+    }
