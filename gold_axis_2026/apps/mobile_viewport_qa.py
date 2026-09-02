@@ -116,13 +116,16 @@ def require_markers(body: str, screen: str, markers: list[str]) -> None:
 
 
 def marker_y(page: Page, marker: str) -> float:
-    candidates = page.get_by_text(marker, exact=False)
-    for i in range(min(candidates.count(), 12)):
-        item = candidates.nth(i)
-        if item.is_visible():
-            box = item.bounding_box()
-            if box:
-                return float(box["y"])
+    # Prefer the actual section heading so a hero/meta label with similar text
+    # cannot satisfy or disturb the frozen mockup section order.
+    scoped = page.locator(".gc-section-title").filter(has_text=re.compile(re.escape(marker), re.I))
+    for candidates in (scoped, page.get_by_text(marker, exact=False)):
+        for i in range(min(candidates.count(), 12)):
+            item = candidates.nth(i)
+            if item.is_visible():
+                box = item.bounding_box()
+                if box:
+                    return float(box["y"])
     raise AssertionError(f"VISIBLE_MARKER_NOT_FOUND:{marker}")
 
 
