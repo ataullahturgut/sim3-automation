@@ -1,0 +1,47 @@
+name: Gold Control Stage4B Patch V7 Writer Rehearsal
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/data_pipeline/stage4b_patch_v7_writer_rehearsal.py'
+      - '.github/workflows/gold-control-stage4b-writer-rehearsal.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  writer-rehearsal:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install runtime
+        run: pip install 'psycopg[binary]>=3.2,<4'
+      - name: Require Neon credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Run read-only writer rehearsal
+        run: python gold_axis_2026/data_pipeline/stage4b_patch_v7_writer_rehearsal.py
+      - name: Verify no persistent write
+        run: |
+          grep -F '"decision": "PATCH_V7_FORECAST_WRITER_REHEARSAL_PASS"' gold_axis_2026/stage4b/patch_v7_writer_rehearsal_evidence.json
+          grep -F '"persistent_database_writes": "NONE"' gold_axis_2026/stage4b/patch_v7_writer_rehearsal_evidence.json
+          grep -F '"identity_values_consumed": false' gold_axis_2026/stage4b/patch_v7_writer_rehearsal_evidence.json
+          grep -F '"raw_market_values_logged": false' gold_axis_2026/stage4b/patch_v7_writer_rehearsal_evidence.json
+      - name: Commit rehearsal evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/stage4b/patch_v7_writer_rehearsal_evidence.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'gold-control: record Patch V7 forecast writer rehearsal'
+            git push origin HEAD:gold-r4-direction-engine
+          fi
