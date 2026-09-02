@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 from typing import Any
 
+import altair as alt
 import pandas as pd
 import streamlit as st
 
@@ -24,101 +25,60 @@ from mobile_ui_contract import (
 )
 from piyasa_contract import filter_history_timeframe, gvz_regime, latest_completed_daily_row, price_delta
 
-
 ROOT = Path(__file__).resolve().parents[1]
 R41_CONFIG = ROOT / "r4_1" / "config" / "frozen_r4_1.json"
 HISTORICAL_REPLAY = ROOT / "production_closure" / "production_history_43.csv"
 
-st.set_page_config(
-    page_title="Gold Control",
-    page_icon="🟡",
-    layout="centered",
-    initial_sidebar_state="collapsed",
-)
+st.set_page_config(page_title="Gold Control", page_icon="🟡", layout="centered", initial_sidebar_state="collapsed")
 
 st.markdown(
     """
 <style>
 :root{
- --gc-navy:#082a4b;--gc-navy2:#0d3b66;--gc-gold:#f2ad36;--gc-gold2:#ffd98a;
- --gc-ink:#10294b;--gc-muted:#687995;--gc-line:#e4eaf1;--gc-bg:#f8fafc;
- --gc-green:#17a85b;--gc-red:#e43d4e;--gc-blue:#1976d2;--gc-amber:#e59d1c;
+ --gc-navy:#082a4b;--gc-navy2:#0d3b66;--gc-gold:#f2ad36;--gc-ink:#10294b;
+ --gc-muted:#687995;--gc-line:#e3e9f0;--gc-green:#17a85b;--gc-red:#e43d4e;
+ --gc-blue:#1976d2;--gc-amber:#e59d1c;
 }
 [data-testid="stAppViewContainer"]{background:linear-gradient(180deg,#fff 0,#f8fafc 100%);color:var(--gc-ink)}
-.block-container{max-width:860px;padding-top:.45rem;padding-bottom:7.4rem;padding-left:.78rem;padding-right:.78rem}
-#MainMenu,footer{visibility:hidden}
-[data-testid="stHeader"]{background:transparent;height:.15rem}
+.block-container{max-width:860px;padding:.45rem .78rem 7.4rem}
+#MainMenu,footer,[data-testid="stToolbar"],[data-testid="stToolbarActions"],[data-testid="stDecoration"],[data-testid="stStatusWidget"],.stDeployButton{display:none!important;visibility:hidden!important}
+[data-testid="stHeader"]{height:0!important;min-height:0!important;background:transparent!important}
+.vg-tooltip,#vg-tooltip-element{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
 .gc-shell{display:flex;align-items:center;gap:.72rem;border-bottom:1px solid var(--gc-line);padding:.55rem .1rem .9rem;margin-bottom:1rem;min-height:54px}
-.gc-menu{width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--gc-navy)!important;text-decoration:none!important;font-size:1.45rem;font-weight:800}
-.gc-menu:hover{background:#f3f6f9}
-.gc-logo{width:42px;height:42px;border:4px solid var(--gc-gold);border-radius:10px;transform:rotate(30deg);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
-.gc-logo b{transform:rotate(-30deg);color:var(--gc-gold);font-size:1rem}
-.gc-brand{font-size:1.27rem;font-weight:900;letter-spacing:.02em;line-height:1;color:var(--gc-ink)}
-.gc-brand small{display:block;color:var(--gc-gold);letter-spacing:.16em;font-size:.62rem;margin-top:.36rem;font-weight:800}
-.gc-pagehead{display:flex;justify-content:space-between;gap:1rem;align-items:flex-end;margin:.35rem 0 .7rem}
-.gc-pagehead h2{font-size:1.55rem;margin:0;color:var(--gc-ink)}
-.gc-pagehead p{margin:.25rem 0 0;color:var(--gc-muted);font-size:.86rem}
-.gc-updated{font-size:.72rem;color:var(--gc-muted);text-align:right;white-space:nowrap}
-.gc-hero{background:linear-gradient(135deg,#062746 0%,#0b365e 100%);color:#fff;border-radius:18px;padding:1.15rem;margin:.55rem 0 1rem;box-shadow:0 9px 28px rgba(8,42,75,.14);overflow:hidden;position:relative}
-.gc-hero:after{content:"";position:absolute;right:-55px;top:-80px;width:190px;height:190px;border:1px solid rgba(255,255,255,.07);border-radius:50%}
-.gc-hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(145px,.65fr);gap:1rem;align-items:stretch}
-.gc-hero-side{border-left:1px solid rgba(255,255,255,.17);padding-left:1rem}
-.gc-kicker{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;opacity:.8;font-weight:800}
-.gc-big{font-size:2.45rem;font-weight:850;line-height:1.04;margin:.42rem 0}
-.gc-mid{font-size:1.47rem;font-weight:850;line-height:1.14;margin:.35rem 0}
-.gc-hero-label{font-size:.78rem;opacity:.72;margin-top:.15rem}
-.gc-hero-value{font-size:1.22rem;font-weight:850;margin:.22rem 0 .7rem}
-.gc-meta{font-size:.78rem;opacity:.8;line-height:1.45}
-.gc-badge{display:inline-block;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:.32rem .62rem;font-weight:800;font-size:.68rem;margin-top:.55rem}
-.gc-health{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(255,255,255,.23);border-radius:8px;padding:.34rem .55rem;font-size:.72rem;margin-top:.65rem}
-.gc-dot{width:8px;height:8px;border-radius:50%;background:var(--gc-green);display:inline-block}
-.gc-card{background:#fff;border:1px solid var(--gc-line);border-radius:15px;padding:.95rem 1rem;margin:.58rem 0;box-shadow:0 4px 16px rgba(16,41,75,.035)}
-.gc-section-title{display:flex;align-items:center;gap:.55rem;font-size:.94rem;font-weight:850;color:var(--gc-ink);margin-bottom:.55rem}
-.gc-num{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--gc-navy);color:#fff;align-items:center;justify-content:center;font-size:.78rem;font-weight:850;flex:0 0 auto}
-.gc-grid2{display:grid;grid-template-columns:1fr 1fr;gap:.72rem}
-.gc-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.72rem}
-.gc-grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:.64rem}
-.gc-mini{background:#fff;border:1px solid var(--gc-line);border-radius:14px;padding:.85rem;min-height:112px;box-shadow:0 4px 15px rgba(16,41,75,.03)}
-.gc-mini .label{font-size:.69rem;font-weight:800;color:var(--gc-ink);text-transform:uppercase;line-height:1.25}
-.gc-mini .value{font-size:1.45rem;font-weight:850;margin:.45rem 0 .22rem;color:var(--gc-ink)}
-.gc-mini .note{font-size:.72rem;color:var(--gc-muted);line-height:1.35}
-.gc-row{display:flex;justify-content:space-between;align-items:flex-start;gap:.75rem;padding:.5rem 0;border-bottom:1px solid var(--gc-line);font-size:.86rem}
-.gc-row:last-child{border-bottom:none}
-.gc-value{font-weight:800;text-align:right;word-break:break-word}
+.gc-menu{width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--gc-navy)!important;text-decoration:none!important;font-size:1.45rem;font-weight:800}.gc-menu:hover{background:#f3f6f9}
+.gc-logo{width:42px;height:42px;border:4px solid var(--gc-gold);border-radius:10px;transform:rotate(30deg);display:flex;align-items:center;justify-content:center;flex:0 0 auto}.gc-logo b{transform:rotate(-30deg);color:var(--gc-gold);font-size:1rem}
+.gc-brand{font-size:1.27rem;font-weight:900;letter-spacing:.02em;line-height:1;color:var(--gc-ink)}.gc-brand small{display:block;color:var(--gc-gold);letter-spacing:.16em;font-size:.62rem;margin-top:.36rem;font-weight:800}
+.gc-pagehead{display:flex;justify-content:space-between;gap:1rem;align-items:flex-end;margin:.35rem 0 .7rem}.gc-pagehead h2{font-size:1.55rem;margin:0;color:var(--gc-ink)}.gc-pagehead p{margin:.25rem 0 0;color:var(--gc-muted);font-size:.86rem}.gc-updated{font-size:.72rem;color:var(--gc-muted);text-align:right;white-space:nowrap}
+.gc-hero{background:linear-gradient(135deg,#062746 0%,#0b365e 100%);color:#fff;border-radius:18px;padding:1.15rem;margin:.55rem 0 1rem;box-shadow:0 9px 28px rgba(8,42,75,.14);overflow:hidden;position:relative}.gc-hero:after{content:"";position:absolute;right:-55px;top:-80px;width:190px;height:190px;border:1px solid rgba(255,255,255,.07);border-radius:50%}
+.gc-hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(145px,.65fr);gap:1rem;align-items:stretch}.gc-hero-side{border-left:1px solid rgba(255,255,255,.17);padding-left:1rem}
+.gc-kicker{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;opacity:.8;font-weight:800}.gc-big{font-size:2.45rem;font-weight:850;line-height:1.04;margin:.42rem 0}.gc-mid{font-size:1.47rem;font-weight:850;line-height:1.14;margin:.35rem 0}.gc-hero-label{font-size:.78rem;opacity:.72;margin-top:.15rem}.gc-hero-value{font-size:1.22rem;font-weight:850;margin:.22rem 0 .7rem}.gc-meta{font-size:.78rem;opacity:.8;line-height:1.45}
+.gc-badge{display:inline-block;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:.32rem .62rem;font-weight:800;font-size:.68rem;margin-top:.55rem}.gc-health{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(255,255,255,.23);border-radius:8px;padding:.34rem .55rem;font-size:.72rem;margin-top:.65rem}.gc-dot{width:8px;height:8px;border-radius:50%;background:var(--gc-green);display:inline-block}
+.gc-card{background:#fff;border:1px solid var(--gc-line);border-radius:15px;padding:.95rem 1rem;margin:.58rem 0;box-shadow:0 4px 16px rgba(16,41,75,.035)}.gc-section-title{display:flex;align-items:center;gap:.55rem;font-size:.94rem;font-weight:850;color:var(--gc-ink);margin-bottom:.55rem}.gc-num{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--gc-navy);color:#fff;align-items:center;justify-content:center;font-size:.78rem;font-weight:850;flex:0 0 auto}
+.gc-grid2{display:grid;grid-template-columns:1fr 1fr;gap:.72rem}.gc-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.72rem}.gc-grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:.64rem}
+.gc-mini{background:#fff;border:1px solid var(--gc-line);border-radius:14px;padding:.85rem;min-height:112px;box-shadow:0 4px 15px rgba(16,41,75,.03)}.gc-mini .label{font-size:.69rem;font-weight:800;color:var(--gc-ink);text-transform:uppercase;line-height:1.25}.gc-mini .value{font-size:1.45rem;font-weight:850;margin:.45rem 0 .22rem;color:var(--gc-ink)}.gc-mini .note{font-size:.72rem;color:var(--gc-muted);line-height:1.35}
+.gc-row{display:flex;justify-content:space-between;align-items:flex-start;gap:.75rem;padding:.5rem 0;border-bottom:1px solid var(--gc-line);font-size:.86rem}.gc-row:last-child{border-bottom:none}.gc-value{font-weight:800;text-align:right;word-break:break-word}
 .gc-positive{color:var(--gc-green)!important}.gc-negative{color:var(--gc-red)!important}.gc-warning{color:var(--gc-amber)!important}.gc-blue{color:var(--gc-blue)!important}.gc-muted{color:var(--gc-muted)!important}
-.gc-empty{background:#fff;border:1px dashed #cbd5e1;border-radius:15px;padding:1.15rem;text-align:center;margin:.55rem 0;color:var(--gc-muted)}
-.gc-empty strong{display:block;color:var(--gc-ink);font-size:1rem;margin-bottom:.35rem}
-.gc-note{background:#fffaf0;border:1px solid #f5ddb1;border-radius:13px;padding:.8rem .9rem;color:#6f592a;font-size:.78rem;line-height:1.45;margin:.7rem 0}
-.gc-info{background:#f5f8fc;border:1px solid var(--gc-line);border-radius:13px;padding:.8rem .9rem;color:#445a79;font-size:.78rem;line-height:1.45;margin:.7rem 0}
-.gc-statusline{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.45rem}
-.gc-footnote{font-size:.72rem;color:var(--gc-muted);line-height:1.5}
+.gc-empty{background:#fff;border:1px dashed #cbd5e1;border-radius:15px;padding:1.15rem;text-align:center;margin:.55rem 0;color:var(--gc-muted)}.gc-empty strong{display:block;color:var(--gc-ink);font-size:1rem;margin-bottom:.35rem}.gc-note{background:#fffaf0;border:1px solid #f5ddb1;border-radius:13px;padding:.8rem .9rem;color:#6f592a;font-size:.78rem;line-height:1.45;margin:.7rem 0}.gc-info{background:#f5f8fc;border:1px solid var(--gc-line);border-radius:13px;padding:.8rem .9rem;color:#445a79;font-size:.78rem;line-height:1.45;margin:.7rem 0}.gc-statusline{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.45rem}.gc-footnote{font-size:.72rem;color:var(--gc-muted);line-height:1.5}
 
-/* Final V2 mockup bottom navigation: use a real Streamlit radio as the control. */
-[data-testid="stRadio"]{position:fixed!important;left:50%;transform:translateX(-50%);bottom:.45rem;z-index:9999;width:min(820px,calc(100vw - 1rem));background:#fff;border:1px solid var(--gc-line);border-radius:17px;padding:.28rem;box-shadow:0 8px 28px rgba(15,39,72,.16);margin:0!important}
-[data-testid="stRadio"] > label{display:none!important}
-[data-testid="stRadio"] div[role="radiogroup"]{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:.2rem;width:100%}
-[data-testid="stRadio"] div[role="radiogroup"] > label{margin:0!important;padding:.62rem .22rem!important;border-radius:12px;display:flex!important;justify-content:center!important;align-items:center!important;min-width:0!important;cursor:pointer}
-[data-testid="stRadio"] div[role="radiogroup"] > label:has(input:checked){background:var(--gc-navy)!important;color:#fff!important}
-[data-testid="stRadio"] div[role="radiogroup"] > label:has(input:checked) p{color:#fff!important;font-weight:800!important}
-[data-testid="stRadio"] div[role="radiogroup"] > label:not(:has(input:checked)) p{color:#52657f!important}
-[data-testid="stRadio"] input{display:none!important}
-[data-testid="stRadio"] p{font-size:.76rem!important;white-space:nowrap!important;margin:0!important}
+.st-key-gc_main_nav,.st-key-gc_main_nav[data-testid="stRadio"]{position:fixed!important;left:50%!important;transform:translateX(-50%)!important;bottom:max(.45rem,env(safe-area-inset-bottom))!important;z-index:99999!important;width:min(820px,calc(100vw - 1rem))!important;background:#fff!important;border:1px solid var(--gc-line)!important;border-radius:17px!important;padding:.28rem!important;box-shadow:0 8px 28px rgba(15,39,72,.16)!important;margin:0!important}
+.st-key-gc_main_nav [data-testid="stRadio"]{position:static!important;transform:none!important;width:100%!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0!important;background:transparent!important}
+.st-key-gc_main_nav [role="radiogroup"]{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:.2rem!important;width:100%!important}
+.st-key-gc_main_nav label[data-testid="stRadioOption"]{margin:0!important;padding:.64rem .1rem!important;border-radius:12px!important;display:flex!important;justify-content:center!important;align-items:center!important;min-width:0!important;cursor:pointer!important}
+.st-key-gc_main_nav label[data-testid="stRadioOption"]>div:first-child{display:none!important;width:0!important;height:0!important;overflow:hidden!important}
+.st-key-gc_main_nav label[data-testid="stRadioOption"][data-selected="true"]{background:var(--gc-navy)!important}.st-key-gc_main_nav label[data-testid="stRadioOption"][data-selected="true"] p{color:#fff!important;font-weight:850!important}.st-key-gc_main_nav label[data-testid="stRadioOption"] p{font-size:.75rem!important;white-space:nowrap!important;margin:0!important;color:#52657f!important}
 
-@media(max-width:620px){
- .block-container{padding-left:.55rem;padding-right:.55rem;padding-bottom:6.8rem}
- .gc-shell{gap:.5rem}.gc-menu{width:32px;height:36px}.gc-logo{width:38px;height:38px}
- .gc-brand{font-size:1.12rem}.gc-brand small{font-size:.55rem}
- .gc-pagehead{align-items:flex-start}.gc-updated{font-size:.63rem;white-space:normal;max-width:115px}
- .gc-big{font-size:2rem}.gc-mid{font-size:1.28rem}
- .gc-hero-grid{grid-template-columns:1fr}.gc-hero-side{border-left:0;border-top:1px solid rgba(255,255,255,.16);padding-left:0;padding-top:.75rem}
- .gc-grid4{grid-template-columns:1fr 1fr}.gc-grid3{grid-template-columns:1fr}.gc-grid2{grid-template-columns:1fr 1fr}
- .gc-mini{min-height:100px;padding:.75rem}.gc-mini .value{font-size:1.2rem}
- .stDataFrame{font-size:.75rem}
-}
-@media(max-width:390px){
- .gc-grid2{grid-template-columns:1fr 1fr}
- [data-testid="stRadio"] p{font-size:.70rem!important}
-}
+.st-key-gc_market_range,.st-key-gc_market_range[data-testid="stRadio"]{position:static!important;left:auto!important;transform:none!important;bottom:auto!important;width:auto!important;background:#f7f9fc!important;border:1px solid var(--gc-line)!important;border-radius:12px!important;padding:.18rem!important;box-shadow:none!important;margin:.15rem 0 .65rem!important;display:inline-block!important}
+.st-key-gc_market_range [data-testid="stRadio"]{position:static!important;transform:none!important;width:auto!important;border:0!important;padding:0!important;margin:0!important;background:transparent!important;box-shadow:none!important}
+.st-key-gc_market_range [role="radiogroup"]{display:grid!important;grid-template-columns:repeat(4,56px)!important;gap:.15rem!important}
+.st-key-gc_market_range label[data-testid="stRadioOption"]{margin:0!important;padding:.45rem .15rem!important;border-radius:9px!important;display:flex!important;justify-content:center!important;align-items:center!important}
+.st-key-gc_market_range label[data-testid="stRadioOption"]>div:first-child{display:none!important;width:0!important;height:0!important;overflow:hidden!important}
+.st-key-gc_market_range label[data-testid="stRadioOption"][data-selected="true"]{background:var(--gc-navy)!important}.st-key-gc_market_range label[data-testid="stRadioOption"][data-selected="true"] p{color:#fff!important;font-weight:850!important}.st-key-gc_market_range label[data-testid="stRadioOption"] p{font-size:.72rem!important;margin:0!important;color:#52657f!important}
+
+.st-key-gc_market_history_card{background:#fff!important;border:1px solid var(--gc-line)!important;border-radius:16px!important;box-shadow:0 4px 16px rgba(16,41,75,.04)!important;padding:.2rem .2rem .35rem!important;margin:.75rem 0!important;overflow:hidden!important}
+.st-key-gc_market_history_card [data-testid="stAltairChart"]{margin-top:.1rem!important}
+
+@media(max-width:620px){.block-container{padding-left:.55rem;padding-right:.55rem;padding-bottom:7rem}.gc-shell{gap:.5rem}.gc-menu{width:32px;height:36px}.gc-logo{width:38px;height:38px}.gc-brand{font-size:1.12rem}.gc-brand small{font-size:.55rem}.gc-pagehead{align-items:flex-start}.gc-updated{font-size:.63rem;white-space:normal;max-width:115px}.gc-big{font-size:2rem}.gc-mid{font-size:1.28rem}.gc-hero-grid{grid-template-columns:1fr}.gc-hero-side{border-left:0;border-top:1px solid rgba(255,255,255,.16);padding-left:0;padding-top:.75rem}.gc-grid4{grid-template-columns:1fr 1fr}.gc-grid3{grid-template-columns:1fr}.gc-grid2{grid-template-columns:1fr 1fr}.gc-mini{min-height:100px;padding:.75rem}.gc-mini .value{font-size:1.2rem}.stDataFrame{font-size:.75rem}.st-key-gc_main_nav label[data-testid="stRadioOption"] p{font-size:.70rem!important}}
+@media(max-width:360px){.st-key-gc_main_nav label[data-testid="stRadioOption"] p{font-size:.66rem!important}.st-key-gc_market_range [role="radiogroup"]{grid-template-columns:repeat(4,52px)!important}}
 </style>
     """,
     unsafe_allow_html=True,
@@ -196,11 +156,7 @@ def empty_block(title: str, subtitle: str) -> None:
 
 def page_head(title: str, subtitle: str, updated: Any = None) -> None:
     updated_text = "Henüz kayıt yok" if updated in (None, "", "N/A") else fmt_time(updated)
-    st.markdown(
-        f"<div class='gc-pagehead'><div><h2>{title}</h2><p>{subtitle}</p></div>"
-        f"<div class='gc-updated'>Son güncelleme: {updated_text}</div></div>",
-        unsafe_allow_html=True,
-    )
+    st.markdown(f"<div class='gc-pagehead'><div><h2>{title}</h2><p>{subtitle}</p></div><div class='gc-updated'>Son güncelleme: {updated_text}</div></div>", unsafe_allow_html=True)
 
 
 def tone_class(tone: str) -> str:
@@ -208,11 +164,7 @@ def tone_class(tone: str) -> str:
 
 
 def mini_card(label: str, value: str, note: str, value_class: str = "") -> str:
-    return (
-        "<div class='gc-mini'>"
-        f"<div class='label'>{label}</div><div class='value {value_class}'>{value}</div>"
-        f"<div class='note'>{note}</div></div>"
-    )
+    return f"<div class='gc-mini'><div class='label'>{label}</div><div class='value {value_class}'>{value}</div><div class='note'>{note}</div></div>"
 
 
 def stored_risk_label(dec: dict[str, Any] | None) -> str:
@@ -237,6 +189,29 @@ def target_matches(dec: dict[str, Any] | None, fc: dict[str, Any] | None) -> boo
     return str(dec.get("target_month") or "")[:7] == str(fc.get("target_month") or "")[:7]
 
 
+def market_chart(frame: pd.DataFrame) -> None:
+    if frame.empty:
+        return
+    data = frame[["date", "close"]].copy()
+    data["date"] = pd.to_datetime(data["date"], errors="coerce")
+    data["close"] = pd.to_numeric(data["close"], errors="coerce")
+    data = data.dropna().sort_values("date")
+    if data.empty:
+        return
+    chart = (
+        alt.Chart(data)
+        .mark_line(color="#1478c9", strokeWidth=2.4, clip=True)
+        .encode(
+            x=alt.X("date:T", title=None, axis=alt.Axis(format="%b", labelAngle=0, tickCount=5, grid=False)),
+            y=alt.Y("close:Q", title=None, scale=alt.Scale(zero=False), axis=alt.Axis(format=",.0f", tickCount=5)),
+        )
+        .properties(height=260)
+        .configure_view(strokeWidth=0)
+        .configure_axis(domain=False, ticks=False, gridColor="#e8edf3", labelColor="#6b778b", labelFontSize=11)
+    )
+    st.altair_chart(chart, width="stretch")
+
+
 url = db_url()
 decision = safe_call(lambda: fetch_current_decision_state(url), None) if url else None
 decision_rows = safe_call(lambda: fetch_decision_history(url), []) if url else []
@@ -246,18 +221,10 @@ spot = safe_call(get_spot, None)
 hist, hist_meta = safe_call(get_xau_history, (pd.DataFrame(), {}))
 gvz = safe_call(get_gvz, None)
 
-st.markdown(
-    "<div class='gc-shell'>"
-    "<a class='gc-menu' href='#system-health' aria-label='Sistem ve veri sağlığı'>☰</a>"
-    "<div class='gc-logo'><b>G</b></div>"
-    "<div class='gc-brand'>GOLD CONTROL<small>DECISION SYSTEM</small></div>"
-    "</div>",
-    unsafe_allow_html=True,
-)
+st.markdown("<div class='gc-shell'><a class='gc-menu' href='#system-health' aria-label='Sistem ve veri sağlığı'>☰</a><div class='gc-logo'><b>G</b></div><div class='gc-brand'>GOLD CONTROL<small>DECISION SYSTEM</small></div></div>", unsafe_allow_html=True)
 
 NAV_OPTIONS = ["⌂ Bugün", "◉ Görünüm", "↗ Tahmin", "◷ Geçmiş"]
 nav = st.radio("Ana navigasyon", NAV_OPTIONS, horizontal=True, label_visibility="collapsed", key="gc_main_nav")
-
 
 if nav == "⌂ Bugün":
     page_head("BUGÜN", "Piyasa şu anda ne durumda?", None if not spot else spot.get("as_of") or spot.get("updated_at"))
@@ -268,250 +235,123 @@ if nav == "⌂ Bugün":
         delta_text = "Karşılaştırma yok" if delta is None else f"{delta.absolute:+,.2f} USD · {delta.percent:+.2f}%"
         delta_class = "gc-muted" if delta is None else "gc-positive" if delta.absolute >= 0 else "gc-negative"
         freshness = "GÜNCEL" if not spot.get("stale") else "STALE"
-        st.markdown(
-            "<div class='gc-hero'><div class='gc-kicker'>ALTIN ONS · XAU/USD · INDICATIVE LIVE</div>"
-            f"<div class='gc-big'>{fmt_num(spot.get('price'),2)} USD</div>"
-            f"<div class='{delta_class}'><b>{delta_text}</b></div>"
-            f"<div class='gc-statusline'><span class='gc-badge'>{freshness}</span></div>"
-            f"<div class='gc-meta'>Kaynak: {display_state(spot.get('source'),'Gold API')} · display only / no model use</div></div>",
-            unsafe_allow_html=True,
-        )
+        st.markdown("<div class='gc-hero'><div class='gc-kicker'>ALTIN ONS · XAU/USD · INDICATIVE LIVE</div>" f"<div class='gc-big'>{fmt_num(spot.get('price'),2)} USD</div>" f"<div class='{delta_class}'><b>{delta_text}</b></div>" f"<div class='gc-statusline'><span class='gc-badge'>{freshness}</span></div>" f"<div class='gc-meta'>Kaynak: {display_state(spot.get('source'),'Gold API')} · display only / no model use</div></div>", unsafe_allow_html=True)
     else:
         empty_block("CANLI XAU/USD KULLANILAMIYOR", "Kaynak veya bağlantı durumu doğrulanamadı.")
 
     current_state = decision_view_state(decision)
-    st.markdown(
-        "<div class='gc-grid3'>"
-        + mini_card("TAMAMLANMIŞ GÜNLÜK CLOSE", fmt_num(completed_close,2," USD"), "XAUS operasyonel cross-check")
-        + mini_card("GVZ", fmt_num(None if not gvz else gvz.get("close"),2), "Cboe resmi günlük seri")
-        + mini_card("SON KAYITLI DURUM", current_state.title, f"Risk: {stored_risk_label(decision)}")
-        + "</div>",
-        unsafe_allow_html=True,
-    )
+    st.markdown("<div class='gc-grid3'>" + mini_card("TAMAMLANMIŞ GÜNLÜK CLOSE", fmt_num(completed_close,2," USD"), "XAUS operasyonel cross-check") + mini_card("GVZ", fmt_num(None if not gvz else gvz.get("close"),2), "Cboe resmi günlük seri") + mini_card("SON KAYITLI DURUM", current_state.title, f"Risk: {stored_risk_label(decision)}") + "</div>", unsafe_allow_html=True)
 
-    st.markdown("<div class='gc-card'><div class='gc-section-title'><span>PİYASA TARİHÇESİ</span></div>", unsafe_allow_html=True)
-    if not hist.empty:
-        timeframe = st.radio("Aralık", ["1A","3A","6A","1Y"], horizontal=True, key="gc_market_range", label_visibility="collapsed")
-        chart = filter_history_timeframe(hist, timeframe)
-        if not chart.empty:
-            st.line_chart(chart.set_index("date")[["close"]], height=260)
-        st.markdown("<div class='gc-footnote'>XAUS tarihçesi operasyonel display cross-check'tir; canonical EOD/settlement olarak etiketlenmez.</div>", unsafe_allow_html=True)
-    else:
-        empty_block("TARİHÇE KULLANILAMIYOR", "XAUS history kaynağı okunamadı.")
-    st.markdown("</div>", unsafe_allow_html=True)
-    st.markdown(
-        f"<div class='gc-info'><b>Karar bağlamı:</b> {current_state.title}. Canlı spot yalnız piyasa izleme verisidir.<br><b>Canlı spot ≠ son EOD karar.</b></div>",
-        unsafe_allow_html=True,
-    )
-
+    with st.container(border=True, key="gc_market_history_card"):
+        st.markdown("<div class='gc-section-title'><span>PİYASA TARİHÇESİ</span></div>", unsafe_allow_html=True)
+        if not hist.empty:
+            timeframe = st.radio("Aralık", ["1A","3A","6A","1Y"], horizontal=True, key="gc_market_range", label_visibility="collapsed")
+            market_chart(filter_history_timeframe(hist, timeframe))
+            st.markdown("<div class='gc-footnote'>XAUS tarihçesi operasyonel display cross-check'tir; canonical EOD/settlement olarak etiketlenmez.</div>", unsafe_allow_html=True)
+        else:
+            empty_block("TARİHÇE KULLANILAMIYOR", "XAUS history kaynağı okunamadı.")
+    st.markdown(f"<div class='gc-info'><b>Karar bağlamı:</b> {current_state.title}. Canlı spot yalnız piyasa izleme verisidir.<br><b>Canlı spot ≠ son EOD karar.</b></div>", unsafe_allow_html=True)
 
 elif nav == "◉ Görünüm":
     updated = None if not decision else decision.get("generated_at") or decision.get("decision_as_of")
     page_head("GÖRÜNÜM", "Mevcut kayıtlı kararın neden üretildiğini anlayın.", updated)
     state = decision_view_state(decision)
     if decision:
-        badge, _ = evidence_badge(decision.get("evidence_class"))
-        monthly_arrow, monthly_tone = arrow_state(decision.get("monthly_direction_3m"))
-        health = display_state(decision.get("quality_status"), "KALİTE DURUMU YOK")
-        st.markdown(
-            "<div class='gc-hero'><div class='gc-hero-grid'><div>"
-            "<div class='gc-kicker'>MEVCUT KAYITLI DURUM</div>"
-            f"<div class='gc-mid {tone_class(state.tone)}'>{state.title}</div>"
-            f"<div class='gc-meta'>{state.subtitle}</div>"
-            f"<div class='gc-health'><span class='gc-dot'></span>{health}</div>"
-            f"<div class='gc-statusline'><span class='gc-badge'>{badge}</span></div></div>"
-            "<div class='gc-hero-side'><div class='gc-hero-label'>MODEL YÖNÜ (AYLIK)</div>"
-            f"<div class='gc-hero-value {tone_class(monthly_tone)}'>{monthly_arrow} {display_state(decision.get('monthly_direction_3m'))}</div>"
-            "<div class='gc-hero-label'>RİSK SEVİYESİ</div>"
-            f"<div class='gc-hero-value'>{stored_risk_label(decision)}</div></div></div></div>",
-            unsafe_allow_html=True,
-        )
+        badge, _ = evidence_badge(decision.get("evidence_class")); monthly_arrow, monthly_tone = arrow_state(decision.get("monthly_direction_3m")); health = display_state(decision.get("quality_status"), "KALİTE DURUMU YOK")
+        st.markdown("<div class='gc-hero'><div class='gc-hero-grid'><div><div class='gc-kicker'>MEVCUT KAYITLI DURUM</div>" f"<div class='gc-mid {tone_class(state.tone)}'>{state.title}</div><div class='gc-meta'>{state.subtitle}</div><div class='gc-health'><span class='gc-dot'></span>{health}</div><div class='gc-statusline'><span class='gc-badge'>{badge}</span></div></div>" "<div class='gc-hero-side'><div class='gc-hero-label'>MODEL YÖNÜ (AYLIK)</div>" f"<div class='gc-hero-value {tone_class(monthly_tone)}'>{monthly_arrow} {display_state(decision.get('monthly_direction_3m'))}</div><div class='gc-hero-label'>RİSK SEVİYESİ</div><div class='gc-hero-value'>{stored_risk_label(decision)}</div></div></div></div>", unsafe_allow_html=True)
     else:
-        st.markdown(
-            "<div class='gc-hero'><div class='gc-kicker'>MEVCUT KAYITLI DURUM</div>"
-            f"<div class='gc-mid'>{state.title}</div><div class='gc-meta'>{state.subtitle}</div>"
-            "<div class='gc-badge'>YAYIMLANMADI</div></div>",
-            unsafe_allow_html=True,
-        )
-
+        st.markdown(f"<div class='gc-hero'><div class='gc-kicker'>MEVCUT KAYITLI DURUM</div><div class='gc-mid'>{state.title}</div><div class='gc-meta'>{state.subtitle}</div><div class='gc-badge'>YAYIMLANMADI</div></div>", unsafe_allow_html=True)
     rows = html_row("Durum", "KANONİK KARAR YOK", "gc-muted")
     if decision:
-        rows = html_row("Kayıtlı sınıflandırma", classification_label(decision.get("classification")))
-        rows += html_row("Ana aylık bağlam", display_state(decision.get("monthly_direction_3m")))
-        rows += html_row("Evidence", display_state(decision.get("evidence_class")))
+        rows = html_row("Kayıtlı sınıflandırma", classification_label(decision.get("classification"))) + html_row("Ana aylık bağlam", display_state(decision.get("monthly_direction_3m"))) + html_row("Evidence", display_state(decision.get("evidence_class")))
     st.markdown(f"<div class='gc-card'>{section_header(1,'SİNYAL ÖZETİ')}{rows}</div>", unsafe_allow_html=True)
-
     if decision:
-        ma, mt = arrow_state(decision.get("monthly_direction_3m"))
-        fa, ft = arrow_state(decision.get("fast_state")); sa, stn = arrow_state(decision.get("slow_state"))
+        ma, mt = arrow_state(decision.get("monthly_direction_3m")); fa, ft = arrow_state(decision.get("fast_state")); sa, stn = arrow_state(decision.get("slow_state"))
         model_body = f"<div class='gc-mid {tone_class(mt)}'>{ma} {display_state(decision.get('monthly_direction_3m'))}</div><div class='gc-footnote'>Stored monthly context. Güç/güven yüzdesi üretilmez.</div>"
         fs_body = html_row("FAST", f"{fa} {display_state(decision.get('fast_state'))}", tone_class(ft)) + html_row("SLOW", f"{sa} {display_state(decision.get('slow_state'))}", tone_class(stn))
     else:
-        model_body = "<div class='gc-muted'>Kayıtlı aylık yön yok.</div>"
-        fs_body = "<div class='gc-muted'>Fast / Slow stored state yok.</div>"
-    st.markdown(
-        "<div class='gc-grid2'>"
-        f"<div class='gc-card'>{section_header(2,'MODEL YÖNÜ (AYLIK)')}{model_body}</div>"
-        f"<div class='gc-card'>{section_header(3,'FAST / SLOW TEYİDİ')}{fs_body}</div></div>",
-        unsafe_allow_html=True,
-    )
-
-    risk_rows = html_row("Risk durumu", "KULLANILAMIYOR", "gc-muted")
-    if decision:
-        risk_rows = html_row("Risk durumu", stored_risk_label(decision)) + html_row("GVZ", fmt_num(decision.get("gvz"),2)) + html_row("Panic flag", "EVET" if decision.get("gvz_panic") else "HAYIR")
+        model_body = "<div class='gc-muted'>Kayıtlı aylık yön yok.</div>"; fs_body = "<div class='gc-muted'>Fast / Slow stored state yok.</div>"
+    st.markdown("<div class='gc-grid2'>" f"<div class='gc-card'>{section_header(2,'MODEL YÖNÜ (AYLIK)')}{model_body}</div>" f"<div class='gc-card'>{section_header(3,'FAST / SLOW TEYİDİ')}{fs_body}</div></div>", unsafe_allow_html=True)
+    risk_rows = html_row("Risk durumu", "KULLANILAMIYOR", "gc-muted") if not decision else html_row("Risk durumu", stored_risk_label(decision)) + html_row("GVZ", fmt_num(decision.get("gvz"),2)) + html_row("Panic flag", "EVET" if decision.get("gvz_panic") else "HAYIR")
     st.markdown(f"<div class='gc-card'>{section_header(4,'RİSK SEVİYESİ')}{risk_rows}</div>", unsafe_allow_html=True)
-
     st.markdown(f"<div class='gc-card'>{section_header(5,'SİNYAL ZAMAN ÇİZELGESİ')}", unsafe_allow_html=True)
     if decision_rows:
-        timeline = pd.DataFrame({
-            "Tarih":[fmt_time(r.get("event_ts")) for r in decision_rows[:12]],
-            "Durum":[classification_label(r.get("classification")) for r in decision_rows[:12]],
-            "Neden":[display_state(r.get("reason_code")) for r in decision_rows[:12]],
-            "Evidence":[display_state(r.get("evidence_class")) for r in decision_rows[:12]],
-        })
+        timeline = pd.DataFrame({"Tarih":[fmt_time(r.get("event_ts")) for r in decision_rows[:12]],"Durum":[classification_label(r.get("classification")) for r in decision_rows[:12]],"Neden":[display_state(r.get("reason_code")) for r in decision_rows[:12]],"Evidence":[display_state(r.get("evidence_class")) for r in decision_rows[:12]]})
         st.dataframe(timeline, width="stretch", hide_index=True)
     else:
         empty_block("KAYITLI SİNYAL ZAMAN ÇİZELGESİ YOK", "Yalnız gerçek Decision Store event kayıtları burada görünür.")
     st.markdown("</div>", unsafe_allow_html=True)
-
-    emergency_rows = html_row("Durum", "KULLANILAMIYOR", "gc-muted")
-    if decision:
-        emergency_rows = html_row("Level", display_state(decision.get("level_emergency"))) + html_row("Reversal", display_state(decision.get("reversal_emergency"))) + html_row("BOCPD", display_state(decision.get("bocpd_context")))
-    explanation = deterministic_explanation(decision)
-    st.markdown(
-        "<div class='gc-grid2'>"
-        f"<div class='gc-card'>{section_header(6,'EMERGENCY DURUMU')}{emergency_rows}</div>"
-        f"<div class='gc-card'>{section_header(7,'SİSTEM YORUMU')}<div style='font-style:italic;line-height:1.55'>{explanation}</div></div></div>",
-        unsafe_allow_html=True,
-    )
+    emergency_rows = html_row("Durum", "KULLANILAMIYOR", "gc-muted") if not decision else html_row("Level", display_state(decision.get("level_emergency"))) + html_row("Reversal", display_state(decision.get("reversal_emergency"))) + html_row("BOCPD", display_state(decision.get("bocpd_context")))
+    st.markdown("<div class='gc-grid2'>" f"<div class='gc-card'>{section_header(6,'EMERGENCY DURUMU')}{emergency_rows}</div>" f"<div class='gc-card'>{section_header(7,'SİSTEM YORUMU')}<div style='font-style:italic;line-height:1.55'>{deterministic_explanation(decision)}</div></div></div>", unsafe_allow_html=True)
     st.markdown("<div class='gc-note'>Stored state açıklanır; pozisyon, BUY/SELL/HOLD, exposure, keyfi güç veya güven yüzdesi üretilmez.</div>", unsafe_allow_html=True)
-
 
 elif nav == "↗ Tahmin":
     updated = None if not forecast else forecast.get("frozen_at") or forecast.get("forecast_origin")
     page_head("TAHMİN", "Gelecek aya ilişkin canonical H=1 altın fiyat tahmini.", updated)
     fstate = forecast_view_state(forecast)
     if forecast:
-        badge, _ = evidence_badge(forecast.get("evidence_class"))
-        target = str(forecast.get("target_month") or "")[:7]
-        monthly = decision.get("monthly_direction_3m") if target_matches(decision, forecast) else None
-        ma, mt = arrow_state(monthly)
-        st.markdown(
-            "<div class='gc-hero'><div class='gc-kicker'>GELECEK AY TAHMİNİ</div><div class='gc-hero-grid'><div>"
-            f"<div class='gc-hero-label'>Hedef ay: {target}</div><div class='gc-big'>{fmt_num(forecast.get('forecast_value'),2)} {display_state(forecast.get('unit'),'USD/oz')}</div>"
-            f"<div class='gc-badge'>{badge}</div><div class='gc-meta'>Origin: {fmt_time(forecast.get('forecast_origin'))}</div></div>"
-            "<div class='gc-hero-side'><div class='gc-hero-label'>BEKLENEN YÖN / AYLIK BAĞLAM</div>"
-            f"<div class='gc-hero-value {tone_class(mt)}'>{ma} {display_state(monthly)}</div>"
-            "<div class='gc-meta'>Yalnız aynı hedef aya bağlı stored context varsa gösterilir.</div></div></div></div>",
-            unsafe_allow_html=True,
-        )
+        badge, _ = evidence_badge(forecast.get("evidence_class")); target = str(forecast.get("target_month") or "")[:7]; monthly = decision.get("monthly_direction_3m") if target_matches(decision, forecast) else None; ma, mt = arrow_state(monthly)
+        st.markdown("<div class='gc-hero'><div class='gc-kicker'>GELECEK AY TAHMİNİ</div><div class='gc-hero-grid'><div>" f"<div class='gc-hero-label'>Hedef ay: {target}</div><div class='gc-big'>{fmt_num(forecast.get('forecast_value'),2)} {display_state(forecast.get('unit'),'USD/oz')}</div><div class='gc-badge'>{badge}</div><div class='gc-meta'>Origin: {fmt_time(forecast.get('forecast_origin'))}</div></div>" f"<div class='gc-hero-side'><div class='gc-hero-label'>BEKLENEN YÖN / AYLIK BAĞLAM</div><div class='gc-hero-value {tone_class(mt)}'>{ma} {display_state(monthly)}</div><div class='gc-meta'>Yalnız aynı hedef aya bağlı stored context varsa gösterilir.</div></div></div></div>", unsafe_allow_html=True)
     else:
-        st.markdown(
-            "<div class='gc-hero'><div class='gc-kicker'>GELECEK AY TAHMİNİ</div>"
-            f"<div class='gc-mid'>{fstate.title}</div><div class='gc-meta'>{fstate.subtitle}</div><div class='gc-badge'>YAYIMLANMADI</div></div>",
-            unsafe_allow_html=True,
-        )
-
+        st.markdown(f"<div class='gc-hero'><div class='gc-kicker'>GELECEK AY TAHMİNİ</div><div class='gc-mid'>{fstate.title}</div><div class='gc-meta'>{fstate.subtitle}</div><div class='gc-badge'>YAYIMLANMADI</div></div>", unsafe_allow_html=True)
     st.markdown("<div class='gc-card'><div class='gc-section-title'><span>GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI</span></div>", unsafe_allow_html=True)
     if forecast_rows:
         fcf = pd.DataFrame({"target_month":pd.to_datetime([r.get("target_month") for r in forecast_rows],errors="coerce"),"Yayımlanan tahmin":pd.to_numeric([r.get("forecast_value") for r in forecast_rows],errors="coerce")}).dropna().sort_values("target_month")
-        if not fcf.empty:
-            st.line_chart(fcf.set_index("target_month")[["Yayımlanan tahmin"]], height=285)
+        if not fcf.empty: st.line_chart(fcf.set_index("target_month")[["Yayımlanan tahmin"]], height=285)
         st.markdown("<div class='gc-footnote'>Canonical actual bağlanana kadar yalnız prospectively issued forecast noktaları gösterilir.</div>", unsafe_allow_html=True)
-    else:
-        empty_block("KARŞILAŞTIRMA HENÜZ OLUŞMADI", "Canonical prospective forecast geçmişi yok.")
+    else: empty_block("KARŞILAŞTIRMA HENÜZ OLUŞMADI", "Canonical prospective forecast geçmişi yok.")
     st.markdown("</div>", unsafe_allow_html=True)
-
-    st.markdown(
-        "<div class='gc-card'><div class='gc-section-title'><span>SENARYOLAR</span></div>"
-        f"{empty_html('SENARYO MODÜLÜ KAPALI',SCENARIO_STATUS + '<br>Baz / Yukarı / Aşağı ve tahmin bandı yalnız ayrı canonical scenario/interval kontratı sonrası açılır.')}</div>",
-        unsafe_allow_html=True,
-    )
-
+    st.markdown("<div class='gc-card'><div class='gc-section-title'><span>SENARYOLAR</span></div>" f"{empty_html('SENARYO MODÜLÜ KAPALI',SCENARIO_STATUS + '<br>Baz / Yukarı / Aşağı ve tahmin bandı yalnız ayrı canonical scenario/interval kontratı sonrası açılır.')}</div>", unsafe_allow_html=True)
     diff_value = diff_pct = None
     if forecast and spot and spot.get("price"):
         try:
             diff_value = float(forecast["forecast_value"]) - float(spot["price"]); diff_pct = diff_value / float(spot["price"]) * 100.0
-        except Exception:
-            pass
+        except Exception: pass
     if diff_value is not None:
-        cls = "gc-positive" if diff_value >= 0 else "gc-negative"
-        price_body = html_row("Indicative spot",fmt_num(spot.get("price"),2," USD")) + html_row("H=1 tahmin",fmt_num(forecast.get("forecast_value"),2," USD")) + html_row("Fark",f"{diff_value:+,.2f} USD · {diff_pct:+.2f}%",cls) + "<div class='gc-footnote'>Beklenen getiri değildir; aritmetik display karşılaştırmasıdır.</div>"
-    else:
-        price_body = "<div class='gc-muted'>Karşılaştırma için hem spot hem issued forecast gerekir.</div>"
+        cls = "gc-positive" if diff_value >= 0 else "gc-negative"; price_body = html_row("Indicative spot",fmt_num(spot.get("price"),2," USD")) + html_row("H=1 tahmin",fmt_num(forecast.get("forecast_value"),2," USD")) + html_row("Fark",f"{diff_value:+,.2f} USD · {diff_pct:+.2f}%",cls) + "<div class='gc-footnote'>Beklenen getiri değildir; aritmetik display karşılaştırmasıdır.</div>"
+    else: price_body = "<div class='gc-muted'>Karşılaştırma için hem spot hem issued forecast gerekir.</div>"
     perf_body = html_row("Yayımlanan prospective/live",str(len(forecast_rows))) + html_row("Realized prospective MAPE","—","gc-muted") + html_row("Realized prospective MAE","—","gc-muted") + html_row("Yön isabeti","—","gc-muted") + "<div class='gc-footnote'>Outcome + canonical actual sonrası hesaplanır.</div>"
-    st.markdown(
-        "<div class='gc-grid2'>"
-        f"<div class='gc-card'><div class='gc-section-title'><span>MEVCUT FİYATA GÖRE FARK</span></div>{price_body}</div>"
-        f"<div class='gc-card'><div class='gc-section-title'><span>MODEL PERFORMANSI</span></div>{perf_body}</div></div>",
-        unsafe_allow_html=True,
-    )
+    st.markdown("<div class='gc-grid2'>" f"<div class='gc-card'><div class='gc-section-title'><span>MEVCUT FİYATA GÖRE FARK</span></div>{price_body}</div>" f"<div class='gc-card'><div class='gc-section-title'><span>MODEL PERFORMANSI</span></div>{perf_body}</div></div>", unsafe_allow_html=True)
     if forecast:
         with st.expander("Model bilgisi / Audit"):
             st.write("Model:",forecast.get("model_name")); st.write("Versiyon:",forecast.get("model_version")); st.write("Evidence:",forecast.get("evidence_class")); st.write("Forecast contract ID:",forecast.get("id")); st.write("Input snapshot sayısı:",len(forecast.get("forecast_input_snapshot_ids") or [])); st.write("Git SHA:",forecast.get("git_commit"))
     st.markdown("<div class='gc-info'>Tahmin yalnız immutable canonical forecast ledger'dan gelir. Kalibre edilmemiş güven, tahmin bandı veya senaryo olasılığı gösterilmez. Yatırım tavsiyesi değildir.</div>", unsafe_allow_html=True)
 
-
 else:
     latest_hist_update = forecast_rows[0].get("frozen_at") or forecast_rows[0].get("forecast_origin") if forecast_rows else (decision_rows[0].get("event_ts") if decision_rows else None)
     page_head("PERFORMANS", "Sistem geçmiş performansı ve karar geçmişi.", latest_hist_update)
-    st.markdown(
-        "<div class='gc-grid4'>"
-        + mini_card("YAYIMLANAN İLERİ TAHMİN",str(len(forecast_rows)),"PROSPECTIVE_SHADOW + LIVE_PRODUCTION")
-        + mini_card("PROSPECTIVE MAPE","—","Canonical actual sonrası")
-        + mini_card("PROSPECTIVE MAE","—","Canonical actual sonrası")
-        + mini_card("YÖN İSABETİ","—","Frozen direction outcome sonrası")
-        + "</div>",
-        unsafe_allow_html=True,
-    )
-
+    st.markdown("<div class='gc-grid4'>" + mini_card("YAYIMLANAN İLERİ TAHMİN",str(len(forecast_rows)),"PROSPECTIVE_SHADOW + LIVE_PRODUCTION") + mini_card("PROSPECTIVE MAPE","—","Canonical actual sonrası") + mini_card("PROSPECTIVE MAE","—","Canonical actual sonrası") + mini_card("YÖN İSABETİ","—","Frozen direction outcome sonrası") + "</div>", unsafe_allow_html=True)
     st.markdown("<div class='gc-card'><div class='gc-section-title'><span>TAHMİN PERFORMANSI</span></div>", unsafe_allow_html=True)
     if forecast_rows:
         fdf = pd.DataFrame({"target_month":pd.to_datetime([r.get("target_month") for r in forecast_rows],errors="coerce"),"Yayımlanan tahmin":pd.to_numeric([r.get("forecast_value") for r in forecast_rows],errors="coerce")}).dropna().sort_values("target_month")
-        if not fdf.empty:
-            st.line_chart(fdf.set_index("target_month"),height=300)
+        if not fdf.empty: st.line_chart(fdf.set_index("target_month"),height=300)
         st.markdown("<div class='gc-footnote'>Actual bağlanmadığı sürece equity curve, buy-and-hold kıyası veya portföy getirisi değildir.</div>",unsafe_allow_html=True)
-    else:
-        empty_block("İLERİYE DÖNÜK PERFORMANS HENÜZ OLUŞMADI","Prospective/live forecast ledger'da gösterilecek kayıt yok.")
+    else: empty_block("İLERİYE DÖNÜK PERFORMANS HENÜZ OLUŞMADI","Prospective/live forecast ledger'da gösterilecek kayıt yok.")
     st.markdown("</div>",unsafe_allow_html=True)
-
     st.markdown("<div class='gc-card'><div class='gc-section-title'><span>HATA / KARAR ZAMAN ÇİZELGESİ</span></div>",unsafe_allow_html=True)
     if decision_rows:
         ddf = pd.DataFrame({"event_ts":pd.to_datetime([r.get("event_ts") for r in decision_rows],errors="coerce",utc=True),"Stored close":pd.to_numeric([r.get("close") for r in decision_rows],errors="coerce")}).dropna().sort_values("event_ts")
-        if not ddf.empty:
-            st.line_chart(ddf.set_index("event_ts")[["Stored close"]],height=250)
+        if not ddf.empty: st.line_chart(ddf.set_index("event_ts")[["Stored close"]],height=250)
         markers = pd.DataFrame({"Tarih":[fmt_time(r.get("event_ts")) for r in decision_rows[:10]],"Durum":[classification_label(r.get("classification")) for r in decision_rows[:10]],"Evidence":[display_state(r.get("evidence_class")) for r in decision_rows[:10]]})
         st.dataframe(markers,width="stretch",hide_index=True)
-    else:
-        empty_block("KARAR EVENT GEÇMİŞİ YOK","Portfolio drawdown uydurulmaz; bu alan gerçek Decision Store eventleriyle dolar.")
+    else: empty_block("KARAR EVENT GEÇMİŞİ YOK","Portfolio drawdown uydurulmaz; bu alan gerçek Decision Store eventleriyle dolar.")
     st.markdown("</div>",unsafe_allow_html=True)
-
     st.markdown("<div class='gc-card'><div class='gc-section-title'><span>SEÇİLMİŞ GEÇMİŞ KAYITLAR</span></div>",unsafe_allow_html=True)
     hist_forecast,hist_decision = st.tabs(["Tahmin kayıtları","Karar kayıtları"])
     with hist_forecast:
-        if forecast_rows:
-            frame = pd.DataFrame([{"Hedef":str(r.get("target_month") or "")[:7],"Tahmin":r.get("forecast_value"),"Birim":r.get("unit"),"Evidence":r.get("evidence_class"),"Model":r.get("model_version"),"Origin":fmt_time(r.get("forecast_origin"))} for r in forecast_rows])
-            st.dataframe(frame,width="stretch",hide_index=True)
-        else:
-            st.caption("Prospective/live forecast kaydı yok.")
+        if forecast_rows: st.dataframe(pd.DataFrame([{"Hedef":str(r.get("target_month") or "")[:7],"Tahmin":r.get("forecast_value"),"Birim":r.get("unit"),"Evidence":r.get("evidence_class"),"Model":r.get("model_version"),"Origin":fmt_time(r.get("forecast_origin"))} for r in forecast_rows]),width="stretch",hide_index=True)
+        else: st.caption("Prospective/live forecast kaydı yok.")
     with hist_decision:
-        if decision_rows:
-            frame = pd.DataFrame([{"Tarih":fmt_time(r.get("event_ts")),"Durum":classification_label(r.get("classification")),"Neden":r.get("reason_code"),"Evidence":r.get("evidence_class")} for r in decision_rows])
-            st.dataframe(frame,width="stretch",hide_index=True)
-        else:
-            st.caption("Prospective/live decision event kaydı yok.")
+        if decision_rows: st.dataframe(pd.DataFrame([{"Tarih":fmt_time(r.get("event_ts")),"Durum":classification_label(r.get("classification")),"Neden":r.get("reason_code"),"Evidence":r.get("evidence_class")} for r in decision_rows]),width="stretch",hide_index=True)
+        else: st.caption("Prospective/live decision event kaydı yok.")
     st.markdown("</div>",unsafe_allow_html=True)
-
     if HISTORICAL_REPLAY.exists():
         with st.expander("Araştırma · HISTORICAL_REPLAY"):
-            replay = pd.read_csv(HISTORICAL_REPLAY)
-            st.warning("HISTORICAL_REPLAY — prospective/live performans değildir.")
+            replay = pd.read_csv(HISTORICAL_REPLAY); st.warning("HISTORICAL_REPLAY — prospective/live performans değildir.")
             if {"month","actual","patch_r1","rw"}.issubset(replay.columns):
                 rchart = replay[["month","actual","patch_r1","rw"]].copy(); rchart["month"] = pd.to_datetime(rchart["month"],errors="coerce"); rchart = rchart.dropna().sort_values("month").set_index("month"); st.line_chart(rchart,height=260)
-            cols = [c for c in ["month","actual","patch_r1","patch_r1_ape","rw","rw_ape"] if c in replay.columns]
-            st.dataframe(replay[cols].tail(12),width="stretch",hide_index=True)
+            cols = [c for c in ["month","actual","patch_r1","patch_r1_ape","rw","rw_ape"] if c in replay.columns]; st.dataframe(replay[cols].tail(12),width="stretch",hide_index=True)
     st.markdown("<div class='gc-note'>YBB/12A strateji getirisi, portföy maksimum düşüşü, trade sayısı, giriş/çıkış ve DOĞRU/YANLIŞ trade sonucu execution/portfolio kontratı olmadan gösterilmez.</div>",unsafe_allow_html=True)
-
 
 st.markdown("<div id='system-health'></div>",unsafe_allow_html=True)
 with st.expander("Sistem / Veri Sağlığı / Audit"):
