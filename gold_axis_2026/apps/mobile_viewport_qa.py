@@ -6,7 +6,6 @@ from pathlib import Path
 
 from playwright.sync_api import Page, sync_playwright
 
-
 PHONE_WIDTH = 390
 PHONE_HEIGHT = 844
 MAIN_NAV = ".st-key-gc_main_nav"
@@ -23,10 +22,7 @@ def assert_no_streamlit_exception(page: Page, screen: str) -> None:
         text = exception_nodes.first.inner_text()
         raise AssertionError(f"STREAMLIT_EXCEPTION_VISIBLE:{screen}:{text[:500]}")
     body = normalize_text(page.locator("body").inner_text())
-    for marker in (
-        "THIS APP HAS ENCOUNTERED AN ERROR", "IMPORTERROR", "MODULENOTFOUNDERROR",
-        "TRACEBACK (MOST RECENT CALL LAST)",
-    ):
+    for marker in ("THIS APP HAS ENCOUNTERED AN ERROR", "IMPORTERROR", "MODULENOTFOUNDERROR", "TRACEBACK (MOST RECENT CALL LAST)"):
         if marker in body:
             raise AssertionError(f"STREAMLIT_FATAL_MARKER_VISIBLE:{screen}:{marker}")
 
@@ -98,7 +94,7 @@ def assert_no_visible_tooltip(page: Page) -> None:
     tooltip = page.locator(".vg-tooltip, #vg-tooltip-element")
     for index in range(min(tooltip.count(), 8)):
         if tooltip.nth(index).is_visible():
-            raise AssertionError("PIYASA_TOOLTIP_VISIBLE")
+            raise AssertionError("CHART_TOOLTIP_VISIBLE")
 
 
 def click_tab(page: Page, name: str) -> None:
@@ -119,6 +115,32 @@ def require_markers(body: str, screen: str, markers: list[str]) -> None:
             raise AssertionError(f"{screen}_FINAL_MARKER_MISSING:{marker}")
 
 
+def marker_y(page: Page, marker: str) -> float:
+    candidates = page.get_by_text(marker, exact=False)
+    for i in range(min(candidates.count(), 12)):
+        item = candidates.nth(i)
+        if item.is_visible():
+            box = item.bounding_box()
+            if box:
+                return float(box["y"])
+    raise AssertionError(f"VISIBLE_MARKER_NOT_FOUND:{marker}")
+
+
+def assert_vertical_order(page: Page, screen: str, markers: list[str]) -> None:
+    positions = [(marker, marker_y(page, marker)) for marker in markers]
+    ys = [y for _, y in positions]
+    if any(b <= a for a, b in zip(ys, ys[1:])):
+        raise AssertionError(f"{screen}_VERTICAL_ORDER_MISMATCH:{positions}")
+
+
+def grid_column_count(page: Page, selector: str) -> int:
+    root = page.locator(selector).first
+    if not root.count() or not root.is_visible():
+        raise AssertionError(f"GRID_NOT_VISIBLE:{selector}")
+    value = root.evaluate("el => getComputedStyle(el).gridTemplateColumns")
+    return len([x for x in str(value).split() if x])
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(); parser.add_argument("--url", default="http://127.0.0.1:8501"); parser.add_argument("--out", default="/tmp/gold_mobile_v122_qa"); args = parser.parse_args()
     out = Path(args.out); out.mkdir(parents=True, exist_ok=True)
@@ -130,32 +152,30 @@ def main() -> int:
         require_nav_labels(page); assert_segmented_control(page,MAIN_NAV,4,"MAIN_NAV"); assert_segmented_control(page,MARKET_RANGE,4,"MARKET_RANGE"); assert_bottom_nav_in_viewport(page); assert_no_visible_tooltip(page); assert_no_horizontal_overflow(page,"bugun"); screenshot(page,out,"bugun")
 
         click_tab(page,"Görünüm"); assert_no_streamlit_exception(page,"gorunum"); page.get_by_text("GÖRÜNÜM",exact=True).first.wait_for(state="visible",timeout=15_000); body=visible_text(page)
-        require_markers(body,"GORUNUM",[
-            "MEVCUT KAYITLI DURUM","SİNYAL ÖZETİ","MODEL YÖNÜ (AYLIK)","FAST / SLOW TEYİDİ",
-            "RİSK SEVİYESİ","SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU",
-            "MACRO EVENT","BOCPD","NOT_PROVEN_EXPERT_SELECTION_RULE","AUTO SELECTOR","AUTO ENSEMBLE",
-        ])
+        require_markers(body,"GORUNUM",["MEVCUT KAYITLI DURUM","SİNYAL ÖZETİ","MODEL YÖNÜ (AYLIK)","FAST / SLOW TEYİDİ","RİSK SEVİYESİ","SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU","MACRO EVENT","BOCPD","NOT_PROVEN_EXPERT_SELECTION_RULE","AUTO SELECTOR","AUTO ENSEMBLE"])
+        assert_vertical_order(page,"GORUNUM",["SİNYAL ÖZETİ","MODEL YÖNÜ (AYLIK)","FAST / SLOW TEYİDİ","RİSK SEVİYESİ","SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU"])
+        if grid_column_count(page,".gc-grid2") != 1:
+            raise AssertionError("GORUNUM_MOBILE_CARDS_MUST_STACK")
         if normalize_text("POZİSYONU KORU") in body or normalize_text("GÜÇ: %68") in body:
             raise AssertionError("UNPROVEN_MOCKUP_PLACEHOLDER_VISIBLE_GORUNUM")
         assert_segmented_control(page,MAIN_NAV,4,"MAIN_NAV_GORUNUM"); assert_bottom_nav_in_viewport(page); assert_no_horizontal_overflow(page,"gorunum"); screenshot(page,out,"gorunum")
 
         click_tab(page,"Tahmin"); assert_no_streamlit_exception(page,"tahmin"); page.get_by_text("TAHMİN",exact=True).first.wait_for(state="visible",timeout=15_000); body=visible_text(page)
-        require_markers(body,"TAHMIN",[
-            "GELECEK AY TAHMİNİ","MULTI-EXPERT MONTHLY FORECAST ENGINE","CAUSAL PATCH","VW-MIDAS-MSVR",
-            "3M MOMENTUM","RANDOM WALK","GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI","EARLY INDICATIVE",
-            "MEVCUT FİYATA GÖRE FARK","MODEL PERFORMANSI","NOT_PROVEN_EXPERT_SELECTION_RULE",
-            "AUTO SELECTOR","AUTO ENSEMBLE","HISTORICAL_REPLAY",
-        ])
+        require_markers(body,"TAHMIN",["GELECEK AY TAHMİNİ","MULTI-EXPERT MONTHLY FORECAST ENGINE","CAUSAL PATCH","VW-MIDAS-MSVR","3M MOMENTUM","RANDOM WALK","GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI","EARLY INDICATIVE","MEVCUT FİYATA GÖRE FARK","MODEL PERFORMANSI","NOT_PROVEN_EXPERT_SELECTION_RULE","AUTO SELECTOR","AUTO ENSEMBLE","HISTORICAL_REPLAY"])
+        assert_vertical_order(page,"TAHMIN",["GELECEK AY TAHMİNİ","GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI","MULTI-EXPERT MONTHLY FORECAST ENGINE","MEVCUT FİYATA GÖRE FARK","MODEL PERFORMANSI"])
+        if grid_column_count(page,".gc-grid2") != 1:
+            raise AssertionError("TAHMIN_MOBILE_MODULES_MUST_STACK")
+        if grid_column_count(page,".gc-expert-grid") != 2:
+            raise AssertionError("TAHMIN_EXPERT_GRID_EXPECTED_2X2_AT_390PX")
         if "2.420,00" in body or normalize_text("GÜVEN: %68") in body:
             raise AssertionError("MOCKUP_SAMPLE_NUMBER_VISIBLE_TAHMIN")
         assert_segmented_control(page,MAIN_NAV,4,"MAIN_NAV_TAHMIN"); assert_bottom_nav_in_viewport(page); assert_no_horizontal_overflow(page,"tahmin"); screenshot(page,out,"tahmin")
 
         click_tab(page,"Geçmiş"); assert_no_streamlit_exception(page,"gecmis"); page.get_by_text("GEÇMİŞ",exact=True).first.wait_for(state="visible",timeout=15_000); body=visible_text(page)
-        require_markers(body,"GECMIS",[
-            "MAPE","MAE (USD)","YÖN DOĞRULUĞU","TOPLAM TAHMİN","TAHMİN – GERÇEKLEŞEN KARŞILAŞTIRMASI",
-            "HATA ORANI ZAMAN ÇİZGİSİ","SEÇİLMİŞ GERÇEKLEŞEN TAHMİNLER","MULTI-EXPERT FORECAST LEDGER",
-            "MONTH_END_EXPERT","EARLY INDICATIVE","HISTORICAL_REPLAY","NOT_PROVEN_EXPERT_SELECTION_RULE",
-        ])
+        require_markers(body,"GECMIS",["MAPE","MAE (USD)","YÖN DOĞRULUĞU","REALIZED TAHMİN","TAHMİN PERFORMANSI","HATA / KARAR ZAMAN ÇİZELGESİ","SEÇİLMİŞ GEÇMİŞ KAYITLAR","MULTI-EXPERT FORECAST LEDGER","MONTH_END_EXPERT","EARLY INDICATIVE","HISTORICAL_REPLAY","NOT_PROVEN_EXPERT_SELECTION_RULE"])
+        assert_vertical_order(page,"GECMIS",["PROSPECTIVE / LIVE CANONICAL SCORECARD","TAHMİN PERFORMANSI","HATA / KARAR ZAMAN ÇİZGİSİ","SEÇİLMİŞ GEÇMİŞ KAYITLAR","MULTI-EXPERT FORECAST LEDGER"])
+        if grid_column_count(page,".gc-grid4") != 2:
+            raise AssertionError("GECMIS_SUMMARY_CARDS_EXPECTED_2X2_AT_390PX")
         if "+12,8%" in body or "+22,6%" in body:
             raise AssertionError("MOCKUP_SAMPLE_PERFORMANCE_VISIBLE")
         assert_segmented_control(page,MAIN_NAV,4,"MAIN_NAV_GECMIS"); assert_bottom_nav_in_viewport(page); assert_no_horizontal_overflow(page,"gecmis"); screenshot(page,out,"gecmis")
