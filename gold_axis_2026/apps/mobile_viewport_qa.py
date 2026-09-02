@@ -4,11 +4,12 @@ import argparse
 import re
 from pathlib import Path
 
-from playwright.sync_api import Page, sync_playwright
+from playwright.sync_api import Locator, Page, sync_playwright
 
 
 PHONE_WIDTH = 390
 PHONE_HEIGHT = 844
+TAB_SELECTOR = 'button[data-baseweb="tab"]'
 
 
 def assert_no_horizontal_overflow(page: Page, screen: str) -> None:
@@ -28,9 +29,22 @@ def visible_text(page: Page) -> str:
     return page.locator("body").inner_text().upper()
 
 
+def tab_locator(page: Page) -> Locator:
+    tabs = page.locator(TAB_SELECTOR)
+    tabs.first.wait_for(state="visible", timeout=30_000)
+    return tabs
+
+
+def tab_texts(page: Page) -> list[str]:
+    return [text.strip() for text in tab_locator(page).all_inner_texts()]
+
+
 def click_tab(page: Page, name: str) -> None:
-    page.get_by_role("tab", name=re.compile(name, re.I)).click()
-    page.wait_for_timeout(650)
+    tabs = tab_locator(page)
+    target = tabs.filter(has_text=re.compile(name, re.I)).first
+    target.wait_for(state="visible", timeout=15_000)
+    target.click()
+    page.wait_for_timeout(850)
 
 
 def screenshot(page: Page, out: Path, name: str) -> None:
@@ -51,12 +65,12 @@ def main() -> int:
         page = browser.new_page(viewport={"width": PHONE_WIDTH, "height": PHONE_HEIGHT}, device_scale_factor=1)
         page.goto(args.url, wait_until="domcontentloaded", timeout=60_000)
         page.get_by_text("GOLD CONTROL", exact=False).first.wait_for(state="visible", timeout=45_000)
-        page.wait_for_timeout(1500)
+        page.wait_for_timeout(1800)
 
-        tabs = page.get_by_role("tab").all_inner_texts()
+        tabs = tab_texts(page)
         expected = ["Bugün", "Görünüm", "Tahmin", "Geçmiş"]
         for label in expected:
-            if not any(label.lower() in t.lower() for t in tabs):
+            if not any(label.lower() in text.lower() for text in tabs):
                 raise AssertionError(f"MOBILE_BOTTOM_NAV_MISSING:{label}:{tabs}")
 
         assert_no_horizontal_overflow(page, "bugun")
