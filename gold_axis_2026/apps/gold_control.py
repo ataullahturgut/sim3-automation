@@ -2,12 +2,22 @@ from __future__ import annotations
 
 # Canonical Gold Control Streamlit entrypoint.
 # Presentation authority: manifest v1.20 / final mobile V2 contract.
-# Use normal module import semantics in hosted Streamlit. This deliberately
-# avoids runpy so deployment errors point to the real application line.
+# Hosted Streamlit re-executes this file on widget interaction. Python caches
+# imported modules, so execute the mobile implementation exactly once per
+# Streamlit script run via importlib reload/import semantics. This avoids runpy
+# while preserving correct rerun behavior.
+
+import importlib
+import sys
 
 import streamlit as st
 
-import gold_control_mobile_v1  # noqa: F401
+
+MODULE_NAME = "gold_control_mobile_v1"
+if MODULE_NAME in sys.modules:
+    mobile_app = importlib.reload(sys.modules[MODULE_NAME])
+else:
+    mobile_app = importlib.import_module(MODULE_NAME)
 
 # The implementation-level CSS predates the dedicated main-nav radio key and
 # used a broad stRadio selector. Reset ordinary radios, then re-apply fixed
