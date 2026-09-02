@@ -12,9 +12,14 @@ on:
       - 'gold_axis_2026/apps/mobile_viewport_qa.py'
       - 'gold_axis_2026/apps/decision_source.py'
       - 'gold_axis_2026/apps/forecast_source.py'
+      - 'gold_axis_2026/apps/live_sources.py'
       - 'gold_axis_2026/apps/mobile_ui_contract.py'
+      - 'gold_axis_2026/apps/piyasa_contract.py'
+      - 'gold_axis_2026/apps/requirements.txt'
       - 'gold_axis_2026/apps/test_mobile_ui_contract.py'
       - 'gold_axis_2026/apps/test_piyasa_contract.py'
+      - 'gold_axis_2026/data_pipeline/decision_store.py'
+      - 'gold_axis_2026/data_pipeline/decision_store_reader.py'
       - '.github/workflows/gold-control-mobile-ui-v1.yml'
 
 permissions:
@@ -38,6 +43,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
           python -m playwright install --with-deps chromium
+          python --version
+          streamlit version
 
       - name: Verify manifest and final mockup governance
         run: |
@@ -53,17 +60,53 @@ jobs:
         working-directory: gold_axis_2026/apps
         run: pytest -q test_mobile_ui_contract.py test_piyasa_contract.py
 
-      - name: Compile V2 UI readers and canonical app
+      - name: Compile complete V2 local dependency graph
         run: |
           python -m py_compile \
-            gold_axis_2026/apps/mobile_ui_contract.py \
+            gold_axis_2026/data_pipeline/decision_store.py \
+            gold_axis_2026/data_pipeline/decision_store_reader.py \
             gold_axis_2026/apps/decision_source.py \
             gold_axis_2026/apps/forecast_source.py \
+            gold_axis_2026/apps/live_sources.py \
+            gold_axis_2026/apps/mobile_ui_contract.py \
+            gold_axis_2026/apps/piyasa_contract.py \
             gold_axis_2026/apps/mobile_viewport_qa.py \
             gold_axis_2026/apps/gold_control_mobile_v1.py \
             gold_axis_2026/apps/gold_control.py
 
-      - name: Verify final V2 section markers in implementation
+      - name: Audit mobile import graph and expected exports
+        run: |
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+
+          app = Path('gold_axis_2026/apps/gold_control_mobile_v1.py')
+          tree = ast.parse(app.read_text(encoding='utf-8'))
+          local = {
+              'decision_source': {'fetch_current_decision_state', 'fetch_decision_history'},
+              'forecast_source': {'fetch_current_forecast', 'fetch_forecast_history'},
+              'live_sources': {'fetch_gvz_latest', 'fetch_xau_history', 'fetch_xau_spot'},
+              'mobile_ui_contract': {
+                  'FINAL_MOCKUP_CONTRACT','SCENARIO_STATUS','arrow_state','classification_label',
+                  'decision_view_state','deterministic_explanation','display_state','evidence_badge',
+                  'forecast_view_state'
+              },
+              'piyasa_contract': {'filter_history_timeframe','gvz_regime','latest_completed_daily_row','price_delta'},
+          }
+          seen = {}
+          for node in ast.walk(tree):
+              if isinstance(node, ast.ImportFrom) and node.module in local:
+                  seen[node.module] = {x.name for x in node.names}
+          if set(seen) != set(local):
+              raise SystemExit(f'LOCAL_IMPORT_GRAPH_MISMATCH seen={seen.keys()} expected={local.keys()}')
+          for module, expected in local.items():
+              missing = expected - seen[module]
+              if missing:
+                  raise SystemExit(f'LOCAL_IMPORT_EXPORT_AUDIT_FAIL:{module}:{sorted(missing)}')
+          print('LOCAL_IMPORT_GRAPH_AUDIT_PASS')
+          PY
+
+      - name: Verify bootstrap and final V2 markers
         run: |
           grep -q 'SİNYAL ÖZETİ' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -q 'MODEL YÖNÜ (AYLIK)' gold_axis_2026/apps/gold_control_mobile_v1.py
@@ -76,17 +119,16 @@ jobs:
           grep -q 'TAHMİN PERFORMANSI' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -q 'HATA / KARAR ZAMAN ÇİZELGESİ' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -q 'SEÇİLMİŞ GEÇMİŞ KAYITLAR' gold_axis_2026/apps/gold_control_mobile_v1.py
-          grep -q 'spec_from_file_location' gold_axis_2026/apps/gold_control.py
-          grep -q '_load_exact_module("decision_store"' gold_axis_2026/apps/gold_control.py
-          grep -q '_load_exact_module("decision_store_reader"' gold_axis_2026/apps/gold_control.py
-          grep -q 'refresh=True' gold_axis_2026/apps/gold_control.py
+          grep -q 'sys.modules.pop(name, None)' gold_axis_2026/apps/gold_control.py
+          grep -q 'LOCAL_MODULE_PATH_MISMATCH' gold_axis_2026/apps/gold_control.py
+          grep -q 'LOCAL_MODULE_EXPORT_MISSING' gold_axis_2026/apps/gold_control.py
           if grep -Eq '^[[:space:]]*import[[:space:]]+runpy([[:space:]]|$)' gold_axis_2026/apps/gold_control.py; then
             echo 'RUNPY_ENTRYPOINT_FORBIDDEN'
             exit 1
           fi
-          echo 'FINAL_V2_SECTION_MARKERS_PASS'
+          echo 'FINAL_V2_BOOTSTRAP_MARKERS_PASS'
 
-      - name: Streamlit Cloud import-path regression smoke
+      - name: Streamlit Cloud cwd isolation browser regression
         env:
           STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
         run: |
@@ -97,42 +139,70 @@ jobs:
             > /tmp/gold_mobile_cloud_path.log 2>&1 &
           APP_PID=$!
           for i in $(seq 1 35); do
-            if curl -fsS http://127.0.0.1:8502/_stcore/health >/dev/null; then
-              echo 'MOBILE_V2_CLOUD_PATH_HEALTH_PASS'
-              kill $APP_PID || true
-              wait $APP_PID || true
-              exit 0
-            fi
+            if curl -fsS http://127.0.0.1:8502/_stcore/health >/dev/null; then break; fi
             sleep 1
           done
-          cat /tmp/gold_mobile_cloud_path.log
+          set +e
+          python "$REPO/gold_axis_2026/apps/mobile_viewport_qa.py" \
+            --url http://127.0.0.1:8502 --out /tmp/gold_mobile_cloud_path_qa
+          QA_RC=$?
+          set -e
           kill $APP_PID || true
           wait $APP_PID || true
-          exit 1
+          if [ $QA_RC -ne 0 ]; then
+            cat /tmp/gold_mobile_cloud_path.log
+            exit $QA_RC
+          fi
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_cloud_path.log; then
+            cat /tmp/gold_mobile_cloud_path.log
+            exit 1
+          fi
+          echo 'MOBILE_V2_CLOUD_CWD_BROWSER_PASS'
 
-      - name: Canonical Streamlit runtime smoke
+      - name: Streamlit Cloud stale-module collision browser regression
         env:
           STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
         run: |
-          streamlit run gold_axis_2026/apps/gold_control.py \
-            --server.headless true --server.port 8501 --server.address 127.0.0.1 \
-            > /tmp/gold_mobile_v2.log 2>&1 &
+          REPO="$GITHUB_WORKSPACE"
+          mkdir -p /tmp/gold_poison
+          cat > /tmp/gold_poison/sitecustomize.py <<'PY'
+          import sys
+          import types
+          for name in (
+              'decision_store','decision_store_reader','decision_source','forecast_source',
+              'live_sources','mobile_ui_contract','piyasa_contract','gold_control_mobile_v1'
+          ):
+              mod = types.ModuleType(name)
+              mod.__file__ = f'/tmp/stale-cache/{name}.py'
+              sys.modules[name] = mod
+          PY
+          cd /tmp
+          PYTHONPATH=/tmp/gold_poison streamlit run "$REPO/gold_axis_2026/apps/gold_control.py" \
+            --server.headless true --server.port 8503 --server.address 127.0.0.1 \
+            > /tmp/gold_mobile_stale_module.log 2>&1 &
           APP_PID=$!
           for i in $(seq 1 35); do
-            if curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null; then
-              echo 'MOBILE_V2_CANONICAL_STREAMLIT_HEALTH_PASS'
-              kill $APP_PID || true
-              wait $APP_PID || true
-              exit 0
-            fi
+            if curl -fsS http://127.0.0.1:8503/_stcore/health >/dev/null; then break; fi
             sleep 1
           done
-          cat /tmp/gold_mobile_v2.log
+          set +e
+          PYTHONPATH=/tmp/gold_poison python "$REPO/gold_axis_2026/apps/mobile_viewport_qa.py" \
+            --url http://127.0.0.1:8503 --out /tmp/gold_mobile_stale_module_qa
+          QA_RC=$?
+          set -e
           kill $APP_PID || true
           wait $APP_PID || true
-          exit 1
+          if [ $QA_RC -ne 0 ]; then
+            cat /tmp/gold_mobile_stale_module.log
+            exit $QA_RC
+          fi
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_stale_module.log; then
+            cat /tmp/gold_mobile_stale_module.log
+            exit 1
+          fi
+          echo 'MOBILE_V2_STALE_MODULE_BROWSER_PASS'
 
-      - name: 390px final mockup browser QA
+      - name: Canonical 390px final mockup browser QA
         env:
           STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
         run: |
@@ -141,13 +211,12 @@ jobs:
             > /tmp/gold_mobile_v2_browser.log 2>&1 &
           APP_PID=$!
           for i in $(seq 1 35); do
-            if curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null; then
-              break
-            fi
+            if curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null; then break; fi
             sleep 1
           done
           set +e
-          python gold_axis_2026/apps/mobile_viewport_qa.py --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v2_qa
+          python gold_axis_2026/apps/mobile_viewport_qa.py \
+            --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v2_qa
           QA_RC=$?
           set -e
           kill $APP_PID || true
@@ -156,11 +225,19 @@ jobs:
             cat /tmp/gold_mobile_v2_browser.log
             exit $QA_RC
           fi
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v2_browser.log; then
+            cat /tmp/gold_mobile_v2_browser.log
+            exit 1
+          fi
+          echo 'MOBILE_V2_CANONICAL_BROWSER_PASS'
 
       - name: Upload mobile QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: gold-control-mobile-v2-390px-screenshots
-          path: /tmp/gold_mobile_v2_qa/*.png
+          path: |
+            /tmp/gold_mobile_v2_qa/*.png
+            /tmp/gold_mobile_cloud_path_qa/*.png
+            /tmp/gold_mobile_stale_module_qa/*.png
           if-no-files-found: warn
