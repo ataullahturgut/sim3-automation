@@ -2,24 +2,16 @@ from __future__ import annotations
 
 # Canonical Gold Control Streamlit entrypoint.
 # Presentation authority: manifest v1.20 / final mobile V2 contract.
-# The implementation remains in gold_control_mobile_v1.py to preserve its
-# audited candidate history while this file stays the deployment entrypoint.
-
-import runpy
-from pathlib import Path
+# Use normal module import semantics in hosted Streamlit. This deliberately
+# avoids runpy so deployment errors point to the real application line.
 
 import streamlit as st
 
-
-APP = Path(__file__).with_name("gold_control_mobile_v1.py")
-if not APP.exists():
-    raise RuntimeError("GOLD_CONTROL_MOBILE_V2_ENTRYPOINT_NOT_FOUND")
-
-runpy.run_path(str(APP), run_name="__main__")
+import gold_control_mobile_v1  # noqa: F401
 
 # The implementation-level CSS predates the dedicated main-nav radio key and
-# intentionally used a broad stRadio selector. Canonical entrypoint scopes the
-# fixed positioning to gc_main_nav so timeframe radios remain normal controls.
+# used a broad stRadio selector. Reset ordinary radios, then re-apply fixed
+# positioning only to the canonical gc_main_nav control.
 st.markdown(
     """
 <style>
