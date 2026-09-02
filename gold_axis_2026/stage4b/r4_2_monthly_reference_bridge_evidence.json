@@ -1,0 +1,17 @@
+{
+  "evidence_id": "R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_V1",
+  "validated_at": "2026-09-02T09:57:06.502032+00:00",
+  "validated_git_sha": "35672cb609ec3442d0e5ed18058521a5495b4333",
+  "issuer_identity": "CAUSAL_PATCH_R1_REPRO_V1_3_XAU_ONLY_ORIGIN_SAFE",
+  "legacy_r4_1_config_blob": "18a5a107d46d80081d03babe60f8853b8fe24d55",
+  "legacy_emergency_geometry_changed": false,
+  "reference_model_relabelled_as_vw": false,
+  "persisted_reference_gate": "FAIL_CLOSED_WHEN_IDS_MISSING",
+  "bridge_tests": "PASS",
+  "decision": "R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_PASS",
+  "database_writes": "NONE",
+  "forecast_ledger_write": "NONE",
+  "decision_store_write": "NONE",
+  "raw_market_values_logged": false,
+  "prospective_claim": false
+}

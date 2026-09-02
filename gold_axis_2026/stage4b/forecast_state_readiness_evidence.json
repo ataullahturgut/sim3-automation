@@ -1,0 +1,357 @@
+{
+  "audit": "STAGE4B_FORECAST_STATE_READINESS_V1",
+  "checked_at": "2026-09-02T09:57:02.932396+00:00",
+  "database_writes": "NONE",
+  "raw_market_values_logged": false,
+  "tables": {
+    "forecast_input_snapshots": [
+      {
+        "column_name": "id",
+        "data_type": "bigint",
+        "udt_name": "int8",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "column_name": "forecast_origin",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "column_name": "target_period",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "column_name": "model_name",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "column_name": "model_version",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "column_name": "git_commit",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "column_name": "series_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "column_name": "semantic_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 8
+      },
+      {
+        "column_name": "observation_ts",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 9
+      },
+      {
+        "column_name": "value_used",
+        "data_type": "double precision",
+        "udt_name": "float8",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 10
+      },
+      {
+        "column_name": "available_as_of",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 11
+      },
+      {
+        "column_name": "retrieved_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 12
+      },
+      {
+        "column_name": "transform",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 13
+      },
+      {
+        "column_name": "lineage_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 14
+      },
+      {
+        "column_name": "metadata",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "is_nullable": "NO",
+        "column_default": "'{}'::jsonb",
+        "ordinal_position": 15
+      }
+    ],
+    "derived_feature_snapshots": [
+      {
+        "column_name": "id",
+        "data_type": "bigint",
+        "udt_name": "int8",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "column_name": "feature_name",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "column_name": "feature_version",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "column_name": "calculation_ts",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "column_name": "input_cutoff",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "column_name": "value_num",
+        "data_type": "double precision",
+        "udt_name": "float8",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "column_name": "value_text",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 7
+      },
+      {
+        "column_name": "git_commit",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 8
+      },
+      {
+        "column_name": "input_lineage",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "is_nullable": "NO",
+        "column_default": "'{}'::jsonb",
+        "ordinal_position": 9
+      },
+      {
+        "column_name": "quality_status",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 10
+      },
+      {
+        "column_name": "metadata",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "is_nullable": "NO",
+        "column_default": "'{}'::jsonb",
+        "ordinal_position": 11
+      }
+    ],
+    "monthly_forecast_contracts": [
+      {
+        "column_name": "id",
+        "data_type": "bigint",
+        "udt_name": "int8",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 1
+      },
+      {
+        "column_name": "target_month",
+        "data_type": "date",
+        "udt_name": "date",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 2
+      },
+      {
+        "column_name": "forecast_origin",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 3
+      },
+      {
+        "column_name": "model_name",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 4
+      },
+      {
+        "column_name": "model_version",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 5
+      },
+      {
+        "column_name": "forecast_value",
+        "data_type": "double precision",
+        "udt_name": "float8",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 6
+      },
+      {
+        "column_name": "unit",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": "'USD/oz'::text",
+        "ordinal_position": 7
+      },
+      {
+        "column_name": "model_role",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 8
+      },
+      {
+        "column_name": "frozen_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "is_nullable": "NO",
+        "column_default": null,
+        "ordinal_position": 9
+      },
+      {
+        "column_name": "git_commit",
+        "data_type": "text",
+        "udt_name": "text",
+        "is_nullable": "YES",
+        "column_default": null,
+        "ordinal_position": 10
+      },
+      {
+        "column_name": "provenance",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "is_nullable": "NO",
+        "column_default": "'{}'::jsonb",
+        "ordinal_position": 11
+      }
+    ]
+  },
+  "triggers": {
+    "forecast_input_snapshots": [
+      {
+        "trigger_name": "trg_forecast_input_snapshots_immutable",
+        "event_manipulation": "DELETE",
+        "action_timing": "BEFORE"
+      },
+      {
+        "trigger_name": "trg_forecast_input_snapshots_immutable",
+        "event_manipulation": "UPDATE",
+        "action_timing": "BEFORE"
+      }
+    ],
+    "derived_feature_snapshots": [
+      {
+        "trigger_name": "trg_derived_feature_snapshots_immutable",
+        "event_manipulation": "DELETE",
+        "action_timing": "BEFORE"
+      },
+      {
+        "trigger_name": "trg_derived_feature_snapshots_immutable",
+        "event_manipulation": "UPDATE",
+        "action_timing": "BEFORE"
+      }
+    ],
+    "monthly_forecast_contracts": [
+      {
+        "trigger_name": "trg_monthly_forecast_contracts_immutable",
+        "event_manipulation": "DELETE",
+        "action_timing": "BEFORE"
+      },
+      {
+        "trigger_name": "trg_monthly_forecast_contracts_immutable",
+        "event_manipulation": "UPDATE",
+        "action_timing": "BEFORE"
+      }
+    ]
+  },
+  "row_counts": {
+    "forecast_input_snapshots": 0,
+    "derived_feature_snapshots": 1,
+    "monthly_forecast_contracts": 0
+  },
+  "immutability_guards": "3/3_PASS",
+  "forecast_ledger_state": "EMPTY_PRE_ISSUANCE",
+  "readiness": "PASS",
+  "status": "STAGE4B_FORECAST_STATE_READINESS_PASS"
+}
