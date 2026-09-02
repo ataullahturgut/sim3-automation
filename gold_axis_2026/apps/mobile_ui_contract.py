@@ -248,7 +248,7 @@ def expert_display_state(expert_id: str, rows: list[dict[str, Any]] | None) -> d
 
 def monthly_intramonth_relation(decision: dict[str, Any] | None) -> str:
     if not decision:
-        return "UNRESOLVED_NO_DISPLAY_ELIGIBLE_DECISION"
+        return "KARAR HENÜZ YAYIMLANMADI"
     monthly = display_state(decision.get("monthly_direction_3m"), "UNRESOLVED")
     fast = display_state(decision.get("fast_state"), "UNRESOLVED")
     slow = display_state(decision.get("slow_state"), "UNRESOLVED")
