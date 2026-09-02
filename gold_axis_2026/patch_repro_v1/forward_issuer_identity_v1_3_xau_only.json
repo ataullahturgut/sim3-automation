@@ -1,0 +1,52 @@
+{
+  "issuer_identity": "CAUSAL_PATCH_R1_REPRO_V1_3_XAU_ONLY_ORIGIN_SAFE",
+  "status": "FROZEN_FORWARD_ISSUER_CANDIDATE_NOT_YET_PROSPECTIVE",
+  "manifest_version": "1.18",
+  "frozen_on": "2026-09-02",
+  "architecture_family": "PATCH_TRANSFORMER_RETAINED",
+  "geometry": {"L": 252, "P": 21, "D": 32},
+  "daily_channels": ["XAU"],
+  "omitted_not_imputed": ["XAG", "XPT", "XPD"],
+  "macro_semantics": {
+    "fedfunds": "V1_PROVEN_DFF_FEDFUNDS_CONTINUATION",
+    "usdcny": "V1_PROVEN_DEXCHUS_USDCNY_CONTINUATION",
+    "nasdaq": "NASDAQCOM_COMPLETED_MONTH_RETURN_MARKET_CLOSE_V3",
+    "gpr": "EXISTING_CONSERVATIVE_LAG_RULE"
+  },
+  "target": "NEXT_CALENDAR_MONTH_AVERAGE_XAU_USD",
+  "origin": "END_OF_PREVIOUS_COMPLETED_CALENDAR_MONTH",
+  "auto_selector": false,
+  "auto_ensemble_primary": false,
+  "source_commit": "e24b93062446641b206393196942d7d494b9806d",
+  "frozen_blobs": {
+    "runner": "24ab1645304b719ca3c6a3c0b5c867934a9df836",
+    "v4_change_control": "6eee89465ffd6b5e2209dfb74dc73a76aa3d6f7f",
+    "v4_input_contract": "41f02269387816ec4bc7319c7146cddd081d67f8",
+    "geometry": "c65fa295d5ce5ac669ee7b444bd2e19a650bcb6b",
+    "source_evidence": "12d1f88b53f760c0f6cb4d627a5a9b050a55069d",
+    "model_impact_evidence": "76085ebd591f487a850736001800ef87ec5c5a5b",
+    "model_impact_rows": "a110070b593244a4de3963b9d9c2a90ad7f9b81b",
+    "core5": "d3389e532d943734fda632495c0be3bf11c276f3"
+  },
+  "historical_evidence": {
+    "evidence_class": "HISTORICAL_REPLAY_MODEL_IMPACT",
+    "prospective_claim": false,
+    "decision": "PATCH_R1_V4_XAU_ONLY_MODEL_IMPACT_PASS",
+    "target_reconciliation": "43/43",
+    "rw_reconciliation": "43/43",
+    "deterministic_max_abs_diff": 0.0,
+    "future_information_violations": 0,
+    "candidate_mape_pct": 3.133034811,
+    "rw_mape_pct": 3.302322023,
+    "candidate_mae": 102.233331072,
+    "rw_mae": 107.465116279,
+    "worst_ape_ratio_vs_rw": 0.937202691
+  },
+  "forward_gate": {
+    "generic_monthly_reference_emergency_bridge_validated": false,
+    "immutable_forecast_input_snapshot_issued": false,
+    "forecast_contract_issued": false,
+    "complete_forward_engine_snapshot_issued": false,
+    "first_allowed_evidence_class": "PROSPECTIVE_SHADOW"
+  }
+}
