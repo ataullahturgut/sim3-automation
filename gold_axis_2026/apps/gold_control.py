@@ -2,33 +2,64 @@ from __future__ import annotations
 
 # Canonical Gold Control Streamlit entrypoint.
 # Presentation authority: manifest v1.20 / final mobile V2 contract.
-# Hosted Streamlit re-executes this file on widget interaction. Python caches
-# imported modules, so execute the mobile implementation exactly once per
-# Streamlit script run via importlib reload/import semantics. This avoids runpy
-# while preserving correct rerun behavior.
+#
+# Streamlit Cloud may execute this file with launcher-specific import paths.
+# Do not rely on sibling-module discovery. Load the small local dependency set
+# from exact repository file paths, register them under the legacy module names
+# used by the V2 implementation, then execute the mobile implementation from
+# its exact file path. This is deterministic across Python launcher semantics.
 
-import importlib
+import importlib.util
 import sys
 from pathlib import Path
 
 import streamlit as st
 
 
-# Streamlit Cloud can execute the entrypoint with the repository root on
-# sys.path but without this script's directory. The mobile implementation uses
-# sibling-module imports (decision_source, forecast_source, live_sources, ...),
-# so make the canonical apps directory explicit before importing it. This is
-# deterministic and does not depend on the host's Python launcher semantics.
 APP_DIR = Path(__file__).resolve().parent
-APP_DIR_STR = str(APP_DIR)
-if APP_DIR_STR not in sys.path:
-    sys.path.insert(0, APP_DIR_STR)
+GOLD_ROOT = APP_DIR.parent
+DATA_PIPELINE_DIR = GOLD_ROOT / "data_pipeline"
 
-MODULE_NAME = "gold_control_mobile_v1"
-if MODULE_NAME in sys.modules:
-    mobile_app = importlib.reload(sys.modules[MODULE_NAME])
-else:
-    mobile_app = importlib.import_module(MODULE_NAME)
+
+def _load_exact_module(name: str, path: Path, *, refresh: bool = False):
+    """Load one local module from an exact path without sys.path discovery."""
+    if not refresh and name in sys.modules:
+        return sys.modules[name]
+    spec = importlib.util.spec_from_file_location(name, path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Cannot create import spec for {name} at {path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    try:
+        spec.loader.exec_module(module)
+    except Exception:
+        # Do not leave a half-imported module cached after a failed load.
+        sys.modules.pop(name, None)
+        raise
+    return module
+
+
+# decision_source -> decision_store_reader -> decision_store dependency chain.
+_load_exact_module("decision_store", DATA_PIPELINE_DIR / "decision_store.py")
+_load_exact_module("decision_store_reader", DATA_PIPELINE_DIR / "decision_store_reader.py")
+
+# Local app dependencies imported by gold_control_mobile_v1.py.
+for _module_name in (
+    "decision_source",
+    "forecast_source",
+    "live_sources",
+    "mobile_ui_contract",
+    "piyasa_contract",
+):
+    _load_exact_module(_module_name, APP_DIR / f"{_module_name}.py")
+
+# Streamlit re-executes this entrypoint on every widget interaction, so execute
+# the presentation module afresh each time while keeping deterministic helpers.
+mobile_app = _load_exact_module(
+    "gold_control_mobile_v1",
+    APP_DIR / "gold_control_mobile_v1.py",
+    refresh=True,
+)
 
 # The implementation-level CSS predates the dedicated main-nav radio key and
 # used a broad stRadio selector. Reset ordinary radios, then re-apply fixed
