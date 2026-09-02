@@ -1,0 +1,667 @@
+{
+  "database": {
+    "database_name": "neondb",
+    "server_version": "18.6 (c5250a2)"
+  },
+  "database_write": "NONE",
+  "decision": "FORECAST_WRITER_SCHEMA_AUDIT_PASS",
+  "generated_at": "2026-09-02T11:32:04.899437+00:00",
+  "raw_market_values_logged": false,
+  "read_only": true,
+  "schema_audit_pass": true,
+  "tables": {
+    "derived_feature_snapshots": {
+      "columns": [
+        {
+          "column_default": null,
+          "column_name": "id",
+          "data_type": "bigint",
+          "identity_generation": "BY DEFAULT",
+          "is_identity": "YES",
+          "is_nullable": "NO",
+          "ordinal_position": 1
+        },
+        {
+          "column_default": null,
+          "column_name": "feature_name",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 2
+        },
+        {
+          "column_default": null,
+          "column_name": "feature_version",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 3
+        },
+        {
+          "column_default": null,
+          "column_name": "calculation_ts",
+          "data_type": "timestamp with time zone",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 4
+        },
+        {
+          "column_default": null,
+          "column_name": "input_cutoff",
+          "data_type": "timestamp with time zone",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 5
+        },
+        {
+          "column_default": null,
+          "column_name": "value_num",
+          "data_type": "double precision",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "YES",
+          "ordinal_position": 6
+        },
+        {
+          "column_default": null,
+          "column_name": "value_text",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "YES",
+          "ordinal_position": 7
+        },
+        {
+          "column_default": null,
+          "column_name": "git_commit",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "YES",
+          "ordinal_position": 8
+        },
+        {
+          "column_default": "'{}'::jsonb",
+          "column_name": "input_lineage",
+          "data_type": "jsonb",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 9
+        },
+        {
+          "column_default": null,
+          "column_name": "quality_status",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 10
+        },
+        {
+          "column_default": "'{}'::jsonb",
+          "column_name": "metadata",
+          "data_type": "jsonb",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 11
+        }
+      ],
+      "constraints": [
+        {
+          "conname": "derived_feature_snapshots_check",
+          "contype": "c",
+          "definition": "CHECK (((value_num IS NOT NULL) OR (value_text IS NOT NULL)))"
+        },
+        {
+          "conname": "derived_feature_snapshots_calculation_ts_not_null",
+          "contype": "n",
+          "definition": "NOT NULL calculation_ts"
+        },
+        {
+          "conname": "derived_feature_snapshots_feature_name_not_null",
+          "contype": "n",
+          "definition": "NOT NULL feature_name"
+        },
+        {
+          "conname": "derived_feature_snapshots_feature_version_not_null",
+          "contype": "n",
+          "definition": "NOT NULL feature_version"
+        },
+        {
+          "conname": "derived_feature_snapshots_id_not_null",
+          "contype": "n",
+          "definition": "NOT NULL id"
+        },
+        {
+          "conname": "derived_feature_snapshots_input_cutoff_not_null",
+          "contype": "n",
+          "definition": "NOT NULL input_cutoff"
+        },
+        {
+          "conname": "derived_feature_snapshots_input_lineage_not_null",
+          "contype": "n",
+          "definition": "NOT NULL input_lineage"
+        },
+        {
+          "conname": "derived_feature_snapshots_metadata_not_null",
+          "contype": "n",
+          "definition": "NOT NULL metadata"
+        },
+        {
+          "conname": "derived_feature_snapshots_quality_status_not_null",
+          "contype": "n",
+          "definition": "NOT NULL quality_status"
+        },
+        {
+          "conname": "derived_feature_snapshots_pkey",
+          "contype": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "conname": "derived_feature_snapshots_feature_name_feature_version_calc_key",
+          "contype": "u",
+          "definition": "UNIQUE (feature_name, feature_version, calculation_ts, input_cutoff)"
+        }
+      ],
+      "exists": true,
+      "id_column": {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "bigint",
+        "identity_generation": "BY DEFAULT",
+        "is_identity": "YES",
+        "is_nullable": "NO",
+        "ordinal_position": 1
+      },
+      "immutable_trigger_count": 1,
+      "indexes": [
+        {
+          "indexdef": "CREATE INDEX derived_feature_latest_idx ON public.derived_feature_snapshots USING btree (feature_name, calculation_ts DESC)",
+          "indexname": "derived_feature_latest_idx"
+        },
+        {
+          "indexdef": "CREATE UNIQUE INDEX derived_feature_snapshots_feature_name_feature_version_calc_key ON public.derived_feature_snapshots USING btree (feature_name, feature_version, calculation_ts, input_cutoff)",
+          "indexname": "derived_feature_snapshots_feature_name_feature_version_calc_key"
+        },
+        {
+          "indexdef": "CREATE UNIQUE INDEX derived_feature_snapshots_pkey ON public.derived_feature_snapshots USING btree (id)",
+          "indexname": "derived_feature_snapshots_pkey"
+        }
+      ],
+      "max_id": 2,
+      "primary_key_count": 1,
+      "row_count": 1,
+      "serial_sequence": "public.derived_feature_snapshots_id_seq",
+      "triggers": [
+        {
+          "definition": "CREATE TRIGGER trg_derived_feature_snapshots_immutable BEFORE DELETE OR UPDATE ON public.derived_feature_snapshots FOR EACH ROW EXECUTE FUNCTION reject_gold_control_forecast_state_mutation()",
+          "tgname": "trg_derived_feature_snapshots_immutable"
+        }
+      ],
+      "unique_constraint_count": 1
+    },
+    "forecast_input_snapshots": {
+      "columns": [
+        {
+          "column_default": null,
+          "column_name": "id",
+          "data_type": "bigint",
+          "identity_generation": "BY DEFAULT",
+          "is_identity": "YES",
+          "is_nullable": "NO",
+          "ordinal_position": 1
+        },
+        {
+          "column_default": null,
+          "column_name": "forecast_origin",
+          "data_type": "timestamp with time zone",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 2
+        },
+        {
+          "column_default": null,
+          "column_name": "target_period",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 3
+        },
+        {
+          "column_default": null,
+          "column_name": "model_name",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 4
+        },
+        {
+          "column_default": null,
+          "column_name": "model_version",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 5
+        },
+        {
+          "column_default": null,
+          "column_name": "git_commit",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "YES",
+          "ordinal_position": 6
+        },
+        {
+          "column_default": null,
+          "column_name": "series_id",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 7
+        },
+        {
+          "column_default": null,
+          "column_name": "semantic_id",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "YES",
+          "ordinal_position": 8
+        },
+        {
+          "column_default": null,
+          "column_name": "observation_ts",
+          "data_type": "timestamp with time zone",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 9
+        },
+        {
+          "column_default": null,
+          "column_name": "value_used",
+          "data_type": "double precision",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 10
+        },
+        {
+          "column_default": null,
+          "column_name": "available_as_of",
+          "data_type": "timestamp with time zone",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 11
+        },
+        {
+          "column_default": null,
+          "column_name": "retrieved_at",
+          "data_type": "timestamp with time zone",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 12
+        },
+        {
+          "column_default": null,
+          "column_name": "transform",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 13
+        },
+        {
+          "column_default": null,
+          "column_name": "lineage_id",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 14
+        },
+        {
+          "column_default": "'{}'::jsonb",
+          "column_name": "metadata",
+          "data_type": "jsonb",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 15
+        }
+      ],
+      "constraints": [
+        {
+          "conname": "forecast_input_snapshots_available_as_of_not_null",
+          "contype": "n",
+          "definition": "NOT NULL available_as_of"
+        },
+        {
+          "conname": "forecast_input_snapshots_forecast_origin_not_null",
+          "contype": "n",
+          "definition": "NOT NULL forecast_origin"
+        },
+        {
+          "conname": "forecast_input_snapshots_id_not_null",
+          "contype": "n",
+          "definition": "NOT NULL id"
+        },
+        {
+          "conname": "forecast_input_snapshots_lineage_id_not_null",
+          "contype": "n",
+          "definition": "NOT NULL lineage_id"
+        },
+        {
+          "conname": "forecast_input_snapshots_metadata_not_null",
+          "contype": "n",
+          "definition": "NOT NULL metadata"
+        },
+        {
+          "conname": "forecast_input_snapshots_model_name_not_null",
+          "contype": "n",
+          "definition": "NOT NULL model_name"
+        },
+        {
+          "conname": "forecast_input_snapshots_model_version_not_null",
+          "contype": "n",
+          "definition": "NOT NULL model_version"
+        },
+        {
+          "conname": "forecast_input_snapshots_observation_ts_not_null",
+          "contype": "n",
+          "definition": "NOT NULL observation_ts"
+        },
+        {
+          "conname": "forecast_input_snapshots_retrieved_at_not_null",
+          "contype": "n",
+          "definition": "NOT NULL retrieved_at"
+        },
+        {
+          "conname": "forecast_input_snapshots_series_id_not_null",
+          "contype": "n",
+          "definition": "NOT NULL series_id"
+        },
+        {
+          "conname": "forecast_input_snapshots_target_period_not_null",
+          "contype": "n",
+          "definition": "NOT NULL target_period"
+        },
+        {
+          "conname": "forecast_input_snapshots_transform_not_null",
+          "contype": "n",
+          "definition": "NOT NULL transform"
+        },
+        {
+          "conname": "forecast_input_snapshots_value_used_not_null",
+          "contype": "n",
+          "definition": "NOT NULL value_used"
+        },
+        {
+          "conname": "forecast_input_snapshots_pkey",
+          "contype": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "conname": "forecast_input_snapshots_forecast_origin_target_period_mode_key",
+          "contype": "u",
+          "definition": "UNIQUE (forecast_origin, target_period, model_name, model_version, series_id, transform)"
+        }
+      ],
+      "exists": true,
+      "id_column": {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "bigint",
+        "identity_generation": "BY DEFAULT",
+        "is_identity": "YES",
+        "is_nullable": "NO",
+        "ordinal_position": 1
+      },
+      "immutable_trigger_count": 1,
+      "indexes": [
+        {
+          "indexdef": "CREATE UNIQUE INDEX forecast_input_snapshots_forecast_origin_target_period_mode_key ON public.forecast_input_snapshots USING btree (forecast_origin, target_period, model_name, model_version, series_id, transform)",
+          "indexname": "forecast_input_snapshots_forecast_origin_target_period_mode_key"
+        },
+        {
+          "indexdef": "CREATE UNIQUE INDEX forecast_input_snapshots_pkey ON public.forecast_input_snapshots USING btree (id)",
+          "indexname": "forecast_input_snapshots_pkey"
+        },
+        {
+          "indexdef": "CREATE INDEX forecast_snapshot_model_idx ON public.forecast_input_snapshots USING btree (model_name, model_version, forecast_origin DESC)",
+          "indexname": "forecast_snapshot_model_idx"
+        },
+        {
+          "indexdef": "CREATE INDEX forecast_snapshot_origin_idx ON public.forecast_input_snapshots USING btree (forecast_origin DESC, target_period)",
+          "indexname": "forecast_snapshot_origin_idx"
+        }
+      ],
+      "max_id": null,
+      "primary_key_count": 1,
+      "row_count": 0,
+      "serial_sequence": "public.forecast_input_snapshots_id_seq",
+      "triggers": [
+        {
+          "definition": "CREATE TRIGGER trg_forecast_input_snapshots_immutable BEFORE DELETE OR UPDATE ON public.forecast_input_snapshots FOR EACH ROW EXECUTE FUNCTION reject_gold_control_forecast_state_mutation()",
+          "tgname": "trg_forecast_input_snapshots_immutable"
+        }
+      ],
+      "unique_constraint_count": 1
+    },
+    "monthly_forecast_contracts": {
+      "columns": [
+        {
+          "column_default": null,
+          "column_name": "id",
+          "data_type": "bigint",
+          "identity_generation": "BY DEFAULT",
+          "is_identity": "YES",
+          "is_nullable": "NO",
+          "ordinal_position": 1
+        },
+        {
+          "column_default": null,
+          "column_name": "target_month",
+          "data_type": "date",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 2
+        },
+        {
+          "column_default": null,
+          "column_name": "forecast_origin",
+          "data_type": "timestamp with time zone",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 3
+        },
+        {
+          "column_default": null,
+          "column_name": "model_name",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 4
+        },
+        {
+          "column_default": null,
+          "column_name": "model_version",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 5
+        },
+        {
+          "column_default": null,
+          "column_name": "forecast_value",
+          "data_type": "double precision",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 6
+        },
+        {
+          "column_default": "'USD/oz'::text",
+          "column_name": "unit",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 7
+        },
+        {
+          "column_default": null,
+          "column_name": "model_role",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 8
+        },
+        {
+          "column_default": null,
+          "column_name": "frozen_at",
+          "data_type": "timestamp with time zone",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 9
+        },
+        {
+          "column_default": null,
+          "column_name": "git_commit",
+          "data_type": "text",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "YES",
+          "ordinal_position": 10
+        },
+        {
+          "column_default": "'{}'::jsonb",
+          "column_name": "provenance",
+          "data_type": "jsonb",
+          "identity_generation": null,
+          "is_identity": "NO",
+          "is_nullable": "NO",
+          "ordinal_position": 11
+        }
+      ],
+      "constraints": [
+        {
+          "conname": "monthly_forecast_contracts_forecast_origin_not_null",
+          "contype": "n",
+          "definition": "NOT NULL forecast_origin"
+        },
+        {
+          "conname": "monthly_forecast_contracts_forecast_value_not_null",
+          "contype": "n",
+          "definition": "NOT NULL forecast_value"
+        },
+        {
+          "conname": "monthly_forecast_contracts_frozen_at_not_null",
+          "contype": "n",
+          "definition": "NOT NULL frozen_at"
+        },
+        {
+          "conname": "monthly_forecast_contracts_id_not_null",
+          "contype": "n",
+          "definition": "NOT NULL id"
+        },
+        {
+          "conname": "monthly_forecast_contracts_model_name_not_null",
+          "contype": "n",
+          "definition": "NOT NULL model_name"
+        },
+        {
+          "conname": "monthly_forecast_contracts_model_role_not_null",
+          "contype": "n",
+          "definition": "NOT NULL model_role"
+        },
+        {
+          "conname": "monthly_forecast_contracts_model_version_not_null",
+          "contype": "n",
+          "definition": "NOT NULL model_version"
+        },
+        {
+          "conname": "monthly_forecast_contracts_provenance_not_null",
+          "contype": "n",
+          "definition": "NOT NULL provenance"
+        },
+        {
+          "conname": "monthly_forecast_contracts_target_month_not_null",
+          "contype": "n",
+          "definition": "NOT NULL target_month"
+        },
+        {
+          "conname": "monthly_forecast_contracts_unit_not_null",
+          "contype": "n",
+          "definition": "NOT NULL unit"
+        },
+        {
+          "conname": "monthly_forecast_contracts_pkey",
+          "contype": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "conname": "monthly_forecast_contracts_target_month_model_name_model_ve_key",
+          "contype": "u",
+          "definition": "UNIQUE (target_month, model_name, model_version, model_role)"
+        }
+      ],
+      "exists": true,
+      "id_column": {
+        "column_default": null,
+        "column_name": "id",
+        "data_type": "bigint",
+        "identity_generation": "BY DEFAULT",
+        "is_identity": "YES",
+        "is_nullable": "NO",
+        "ordinal_position": 1
+      },
+      "immutable_trigger_count": 1,
+      "indexes": [
+        {
+          "indexdef": "CREATE INDEX monthly_contract_target_idx ON public.monthly_forecast_contracts USING btree (target_month DESC)",
+          "indexname": "monthly_contract_target_idx"
+        },
+        {
+          "indexdef": "CREATE UNIQUE INDEX monthly_forecast_contracts_pkey ON public.monthly_forecast_contracts USING btree (id)",
+          "indexname": "monthly_forecast_contracts_pkey"
+        },
+        {
+          "indexdef": "CREATE UNIQUE INDEX monthly_forecast_contracts_target_month_model_name_model_ve_key ON public.monthly_forecast_contracts USING btree (target_month, model_name, model_version, model_role)",
+          "indexname": "monthly_forecast_contracts_target_month_model_name_model_ve_key"
+        }
+      ],
+      "max_id": null,
+      "primary_key_count": 1,
+      "row_count": 0,
+      "serial_sequence": "public.monthly_forecast_contracts_id_seq",
+      "triggers": [
+        {
+          "definition": "CREATE TRIGGER trg_monthly_forecast_contracts_immutable BEFORE DELETE OR UPDATE ON public.monthly_forecast_contracts FOR EACH ROW EXECUTE FUNCTION reject_gold_control_forecast_state_mutation()",
+          "tgname": "trg_monthly_forecast_contracts_immutable"
+        }
+      ],
+      "unique_constraint_count": 1
+    }
+  }
+}
