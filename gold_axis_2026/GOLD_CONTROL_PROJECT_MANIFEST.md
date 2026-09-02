@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.20  
+**Manifest version:** 1.21  
 **Freeze / issue date:** 2026-09-02  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -332,6 +332,60 @@ Current archived/audited scorecard evidence:
 | Causal Patch R1 archived | ~3.03–3.08 depending exact closure artifact | historical Patch evidence; exact old training source/identity not fully recovered |
 | 3M Momentum R1 | ~3.297 | reproducible direction challenger/context |
 | Random Walk R1 | ~3.302 | mandatory naive benchmark |
+
+## 7.A CANONICAL CORE FORECAST / DECISION LOGIC — v1.21
+
+This subsection freezes the **system-level forecasting and decision logic**. It is the architectural rule that governs how the monthly forecasting layer and intramonth decision layers relate to one another.
+
+### Binding core logic
+
+1. **The next calendar month's average XAU/USD price is a multi-expert monthly forecasting problem.** The system architecture is not defined as a single-model forecast system.
+2. The monthly expert set is:
+   - **Causal Patch Transformer**;
+   - **VW-MIDAS-MSVR**;
+   - **3M Momentum**;
+   - **Random Walk (RW)** as the mandatory benchmark, not as a promoted expert solely because it is simple.
+3. Each monthly expert output must remain separately identifiable and auditable by target month, forecast origin, model/version identity, evidence class and point-in-time-safe input lineage.
+4. The monthly forecast layer provides the system's **strategic monthly direction/prior/context**. This monthly view is an anchor for the decision system; it is **not an unconditional daily execution instruction**.
+5. The intramonth system must **not follow the monthly forecast blindly**. As new eligible information becomes available during the month, the daily/weekly state is updated through the separately governed tactical, event, emergency, regime and risk layers.
+6. The intramonth layer roles remain distinct:
+   - **Fast / Slow:** tactical confirmation / conflict state; not a permanent hard exposure gate;
+   - **Macro Event:** event-risk state only when its timestamp-safe rule is fully recovered/frozen; current incomplete historical reconstruction remains `BLOCKED_NOT_FULLY_RECOVERED`;
+   - **Emergency:** intramonth abnormal-move / reversal alert layer capable of identifying conditions that the monthly anchor cannot update quickly enough;
+   - **BOCPD:** regime/break context and alert only; not a standalone price forecast or direction generator;
+   - **GVZ:** volatility/risk-cap layer; it constrains risk and does not determine gold direction.
+7. Therefore a valid intramonth state may **disagree with the monthly prior**. Any resulting final decision state must still come only from a frozen, audited mapping/engine and must preserve the true information set available at that time. No later outcome may be used to retrofit an execution rule.
+8. The exact archived **expert-selection / aggregation rule** that produced different lead experts in the 2026 replay has not yet been proven from executable historical logic. Its status is `NOT_PROVEN_EXPERT_SELECTION_RULE`. No selector or ensemble rule may be invented from observed 2026 outcomes and presented as historical or production authority.
+9. Until that selector/aggregation contract is recovered or newly frozen under change control, **auto selector remains OFF and auto ensemble remains OFF**. Individual expert forecasts may be compared and stored, but a composite or selected canonical forecast requires an explicitly governed rule.
+10. The operational role freeze below may designate a currently reproducible forward issuer candidate (for example Patch V7) for ledger issuance. That operational limitation **does not redefine the Gold Control architecture as a single-model forecasting system**.
+
+Canonical system summary:
+
+```text
+Multi-Expert Monthly Forecast Engine
+  ├─ Causal Patch Transformer
+  ├─ VW-MIDAS-MSVR
+  ├─ 3M Momentum
+  └─ Random Walk benchmark
+          ↓
+Monthly Direction / Prior / Context
+          ↓
+Fast / Slow tactical confirmation-conflict
+          ↓
+Macro Event state (only when contract-complete)
+          ↓
+Emergency intramonth reversal / abnormal-move layer
+          ↓
+BOCPD regime / break context
+          ↓
+GVZ risk cap
+          ↓
+Frozen Final Decision State
+          ↓
+Immutable Decision Snapshot / Event Ledger
+```
+
+**Binding interpretation:** the monthly forecast establishes the strategic anchor; the intramonth system incorporates newly available information and may confirm, conflict with, or react against that anchor only through separately frozen rules.
 
 ## 7.1 H=1 role freeze — restored agreed architecture
 
