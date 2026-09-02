@@ -1,0 +1,66 @@
+name: Gold Control Multi-Expert Ledger V1
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/data_pipeline/multi_expert_forecast.py'
+      - 'gold_axis_2026/data_pipeline/schema_patch_multi_expert_forecast_v1.sql'
+      - 'gold_axis_2026/data_pipeline/apply_multi_expert_forecast_v1.py'
+      - 'gold_axis_2026/data_pipeline/test_multi_expert_forecast.py'
+      - '.github/workflows/gold-control-multi-expert-ledger-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  multi-expert-ledger-v1:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install runtime
+        run: pip install 'psycopg[binary]==3.3.5' pytest
+      - name: Verify manifest v1.22 governance
+        run: |
+          grep -q 'Manifest version:\*\* 1.22' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'Build Multi-Expert Forecast Pipeline' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'auto selector = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'auto ensemble = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+      - name: Compile multi-expert contract
+        run: python -m py_compile gold_axis_2026/data_pipeline/multi_expert_forecast.py gold_axis_2026/data_pipeline/apply_multi_expert_forecast_v1.py
+      - name: Run deterministic multi-expert tests
+        run: pytest -q gold_axis_2026/data_pipeline/test_multi_expert_forecast.py
+      - name: Apply append-only expert ledger schema
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/data_pipeline/apply_multi_expert_forecast_v1.py
+      - name: Verify expert ledger fail-closed controls
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          python - <<'PY'
+          import os
+          import psycopg
+          from psycopg.rows import dict_row
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as c:
+              with c.cursor() as q:
+                  q.execute('SET TRANSACTION READ ONLY')
+                  q.execute("select count(*) n from monthly_expert_forecasts")
+                  n = int(q.fetchone()['n'])
+                  q.execute("select count(*) n from pg_trigger where tgrelid='public.monthly_expert_forecasts'::regclass and not tgisinternal and tgname='trg_monthly_expert_forecasts_immutable'")
+                  guard = int(q.fetchone()['n'])
+              c.rollback()
+          assert guard == 1
+          print(f'MULTI_EXPERT_LEDGER_ROWS={n}')
+          print('MULTI_EXPERT_IMMUTABILITY_GUARD=PASS')
+          print('AUTO_SELECTOR=OFF')
+          print('AUTO_ENSEMBLE=OFF')
+          PY
