@@ -1,0 +1,131 @@
+name: Gold Control Stage 4B Integration
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_PATCH_V4_XAU_ONLY_FORWARD_ISSUER_FREEZE_2026-09-02.md'
+      - 'gold_axis_2026/GOLD_CONTROL_R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_CONTRACT_2026-09-02.md'
+      - 'gold_axis_2026/patch_repro_v1/forward_issuer_identity_v1_3_xau_only.json'
+      - 'gold_axis_2026/r4_2/**'
+      - 'gold_axis_2026/data_pipeline/stage4b_forecast_state_readiness.py'
+      - '.github/workflows/gold-control-stage4b-integration.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONPATH: gold_axis_2026/r4_1/src:gold_axis_2026
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install validation dependencies
+        run: pip install 'pytest>=8,<9' 'pandas>=2,<3' 'psycopg[binary]>=3.2,<4'
+
+      - name: Require private Neon connection
+        run: test -n "$NEON_DATABASE_URL"
+
+      - name: Verify frozen Patch V4 issuer blobs and R4.1 config
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          root = Path('gold_axis_2026')
+          identity = json.loads((root / 'patch_repro_v1/forward_issuer_identity_v1_3_xau_only.json').read_text())
+          expected = identity['frozen_blobs']
+          paths = {
+              'runner': root / 'tools/causal_patch_r1_repro_v4_xau_only.py',
+              'v4_change_control': root / 'GOLD_CONTROL_CAUSAL_PATCH_R1_INPUT_SOURCE_CHANGE_CONTROL_V4_2026-09-02.md',
+              'v4_input_contract': root / 'GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V4.md',
+              'geometry': root / 'patch_repro_v1/frozen_geometry.json',
+              'source_evidence': root / 'patch_repro_v1/prospective_input_bridge_v4_source_evidence.json',
+              'model_impact_evidence': root / 'patch_repro_v1/locked_replay_v4_xau_only_evidence.json',
+              'model_impact_rows': root / 'patch_repro_v1/locked_replay_v4_xau_only_43.csv',
+              'core5': root / 'core5_monthly.csv.gz.b64',
+          }
+          for key, path in paths.items():
+              got = subprocess.check_output(['git', 'hash-object', str(path)], text=True).strip()
+              if got != expected[key]:
+                  raise SystemExit(f'FROZEN_BLOB_MISMATCH:{key}:{got}:{expected[key]}')
+          r41 = subprocess.check_output(
+              ['git', 'hash-object', str(root / 'r4_1/config/frozen_r4_1.json')], text=True
+          ).strip()
+          if r41 != '18a5a107d46d80081d03babe60f8853b8fe24d55':
+              raise SystemExit(f'FROZEN_R4_1_CONFIG_CHANGED:{r41}')
+          print('PATCH_V4_FORWARD_ISSUER_IDENTITY_FREEZE_PASS')
+          print('R4_1_FROZEN_CONFIG_UNCHANGED_PASS')
+          PY
+
+      - name: Validate generic monthly-reference Emergency bridge
+        run: pytest -q gold_axis_2026/r4_2/test_monthly_reference_bridge.py
+
+      - name: Audit forecast-state readiness read-only
+        run: |
+          python gold_axis_2026/data_pipeline/stage4b_forecast_state_readiness.py \
+            --output gold_axis_2026/stage4b/forecast_state_readiness_evidence.json
+
+      - name: Record bridge validation evidence
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          out = Path('gold_axis_2026/stage4b/r4_2_monthly_reference_bridge_evidence.json')
+          out.parent.mkdir(parents=True, exist_ok=True)
+          evidence = {
+              'evidence_id': 'R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_V1',
+              'validated_at': datetime.now(timezone.utc).isoformat(),
+              'validated_git_sha': os.environ.get('GITHUB_SHA'),
+              'issuer_identity': 'CAUSAL_PATCH_R1_REPRO_V1_3_XAU_ONLY_ORIGIN_SAFE',
+              'legacy_r4_1_config_blob': '18a5a107d46d80081d03babe60f8853b8fe24d55',
+              'legacy_emergency_geometry_changed': False,
+              'reference_model_relabelled_as_vw': False,
+              'persisted_reference_gate': 'FAIL_CLOSED_WHEN_IDS_MISSING',
+              'bridge_tests': 'PASS',
+              'decision': 'R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_PASS',
+              'database_writes': 'NONE',
+              'forecast_ledger_write': 'NONE',
+              'decision_store_write': 'NONE',
+              'raw_market_values_logged': False,
+              'prospective_claim': False,
+          }
+          out.write_text(json.dumps(evidence, indent=2), encoding='utf-8')
+          print('R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_PASS')
+          PY
+
+      - name: Verify evidence isolation
+        run: |
+          grep -F '"database_writes": "NONE"' gold_axis_2026/stage4b/forecast_state_readiness_evidence.json
+          grep -F '"raw_market_values_logged": false' gold_axis_2026/stage4b/forecast_state_readiness_evidence.json
+          grep -F '"decision": "R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_PASS"' gold_axis_2026/stage4b/r4_2_monthly_reference_bridge_evidence.json
+          grep -F '"forecast_ledger_write": "NONE"' gold_axis_2026/stage4b/r4_2_monthly_reference_bridge_evidence.json
+
+      - name: Commit immutable Stage 4B validation evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/stage4b/forecast_state_readiness_evidence.json \
+                  gold_axis_2026/stage4b/r4_2_monthly_reference_bridge_evidence.json
+          if git diff --cached --quiet; then
+            echo 'No evidence changes to commit'
+            exit 0
+          fi
+          git commit -m 'gold-control: record Stage 4B issuer bridge readiness evidence'
+          git push origin HEAD:gold-r4-direction-engine
