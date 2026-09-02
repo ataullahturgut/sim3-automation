@@ -1,0 +1,52 @@
+{
+  "contract": "GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V4.md",
+  "change_control": "GOLD_CONTROL_CAUSAL_PATCH_R1_INPUT_SOURCE_CHANGE_CONTROL_V4_2026-09-02.md",
+  "candidate_architecture": "CAUSAL_PATCH_R1_REPRO_V1",
+  "reserved_identity_after_model_impact_only": "CAUSAL_PATCH_R1_REPRO_V1_3_XAU_ONLY_ORIGIN_SAFE",
+  "evidence_class": "INPUT_SOURCE_READINESS_AUDIT",
+  "prospective_claim": false,
+  "geometry_changed": false,
+  "geometry": {
+    "L": 252,
+    "P": 21,
+    "D": 32
+  },
+  "daily_channels": [
+    "XAU"
+  ],
+  "omitted_not_imputed": [
+    "XAG",
+    "XPT",
+    "XPD"
+  ],
+  "inherited_source_proof": {
+    "fedfunds_pass": true,
+    "usdcny_pass": true,
+    "nasdaq_v3_pass": true,
+    "nasdaq_common_months": 199,
+    "nasdaq_locked_inputs_checked": 86,
+    "nasdaq_availability_violations": 0
+  },
+  "xau_source": {
+    "lineage": "PATCH_XAU_TWELVE_DAILY_FULL_HISTORY_V4",
+    "symbol": "XAU/USD",
+    "interval": "1day",
+    "type": "Precious Metal",
+    "rows": 4487,
+    "first_date": "2010-01-01",
+    "last_date": "2026-08-30",
+    "rows_through_2011_02_28": 302,
+    "pre_origin_gate": 253,
+    "total_rows_gate": 3500,
+    "recent_gate_date": "2026-08-28",
+    "duplicates": 0,
+    "pass": true,
+    "raw_values_logged": false
+  },
+  "source_bridge_pass": true,
+  "decision": "PATCH_PROSPECTIVE_INPUT_BRIDGE_V4_SOURCE_PASS",
+  "forecast_ledger_write": "NONE",
+  "decision_store_write": "NONE",
+  "database_write": "NONE",
+  "raw_vendor_market_values_logged": false
+}
