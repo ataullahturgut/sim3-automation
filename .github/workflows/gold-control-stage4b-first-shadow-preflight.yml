@@ -7,6 +7,7 @@ on:
       - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
       - 'gold_axis_2026/GOLD_CONTROL_PATCH_V7_FIRST_PROSPECTIVE_SHADOW_ISSUER_CONTRACT_2026-09-02.md'
       - 'gold_axis_2026/data_pipeline/stage4b_patch_v7_first_shadow_issuer.py'
+      - 'gold_axis_2026/data_pipeline/stage4b_patch_v7_runner_core.py'
       - 'gold_axis_2026/data_pipeline/stage4b_multi_expert_patch_v7_month_end_issuer.py'
       - 'gold_axis_2026/data_pipeline/multi_expert_forecast.py'
       - 'gold_axis_2026/data_pipeline/multi_expert_forecast_store.py'
@@ -47,8 +48,24 @@ jobs:
           python -m py_compile \
             gold_axis_2026/data_pipeline/multi_expert_forecast.py \
             gold_axis_2026/data_pipeline/multi_expert_forecast_store.py \
+            gold_axis_2026/data_pipeline/stage4b_patch_v7_runner_core.py \
             gold_axis_2026/data_pipeline/stage4b_patch_v7_first_shadow_issuer.py \
             gold_axis_2026/data_pipeline/stage4b_multi_expert_patch_v7_month_end_issuer.py
+      - name: Prove retired single-Patch canonical issuer is blocked before DB access
+        run: |
+          cd gold_axis_2026/data_pipeline
+          python stage4b_patch_v7_first_shadow_issuer.py --mode preflight | tee /tmp/legacy_patch_preflight.log
+          grep -q 'LEGACY_CANONICAL_ISSUER_STATUS=BLOCKED_MANIFEST_V1_22_USE_MULTI_EXPERT_MONTH_END_ISSUER' /tmp/legacy_patch_preflight.log
+          grep -q 'SELECTOR_STATUS=NOT_PROVEN_EXPERT_SELECTION_RULE' /tmp/legacy_patch_preflight.log
+          grep -q 'AUTO_SELECTOR=OFF' /tmp/legacy_patch_preflight.log
+          grep -q 'AUTO_ENSEMBLE=OFF' /tmp/legacy_patch_preflight.log
+          grep -q 'CANONICAL_FORECAST_CONTRACT_WRITE=FORBIDDEN' /tmp/legacy_patch_preflight.log
+          grep -q 'DATABASE_WRITES=NONE' /tmp/legacy_patch_preflight.log
+          if python stage4b_patch_v7_first_shadow_issuer.py --mode issue-if-eligible > /tmp/legacy_patch_issue.log 2>&1; then
+            echo 'Legacy canonical issuer unexpectedly returned success' >&2
+            exit 1
+          fi
+          grep -q 'BLOCKED_MANIFEST_V1_22_USE_MULTI_EXPERT_MONTH_END_ISSUER' /tmp/legacy_patch_issue.log
       - name: Run fail-closed multi-expert preflight
         run: |
           python gold_axis_2026/data_pipeline/stage4b_multi_expert_patch_v7_month_end_issuer.py --mode preflight | tee /tmp/multi_expert_patch_preflight.log
