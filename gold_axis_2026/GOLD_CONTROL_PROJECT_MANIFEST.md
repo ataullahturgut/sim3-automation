@@ -1,7 +1,7 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.15  
-**Freeze / issue date:** 2026-09-01  
+**Manifest version:** 1.16  
+**Freeze / issue date:** 2026-09-02  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
 **Project root:** `gold_axis_2026/`
@@ -301,7 +301,11 @@ Canonical target:
 
 > **Next calendar month's average XAU/USD price**
 
-Successor R2 historical target/outcome lineage: `XAU_MONTHLY_WB_PINKSHEET` (World Bank Pink Sheet monthly Gold average, legacy-CORE5 compatible). The daily R4 decision-reference lineage remains `XAU_EOD_TWELVE_NY17`; the two roles are intentionally separate and may not be relabelled as one another.
+Historical outcome/data-plane support:
+
+- the locked CORE5 monthly gold target remains the canonical historical H=1 research target artifact;
+- `XAU_MONTHLY_WB_PINKSHEET` is retained as a separately named World Bank historical data-plane lineage because the 127-month identity audit showed material equivalence to CORE5; it is not relabelled as CORE5 and does not redefine the forecast product;
+- `XAU_EOD_TWELVE_NY17` remains the daily R4 decision-reference lineage; monthly forecast target and daily decision reference are intentionally different roles.
 
 Canonical origin:
 
@@ -324,27 +328,35 @@ Current archived/audited scorecard evidence:
 
 | Model | MAPE % | Role / interpretation |
 |---|---:|---|
-| VW-MIDAS-MSVR audited | ~2.672 | strongest audited analytical reference; exact original runner not recovered |
-| Causal Patch R1 | ~3.075 | executable temporary point-forecast path in the production-closure contract |
-| 3M Momentum R1 | ~3.297 | reproducible direction/price challenger |
+| VW-MIDAS-MSVR audited | ~2.672 | audited analytical shadow/reference; exact original runner not recovered |
+| Causal Patch R1 archived | ~3.03–3.08 depending exact closure artifact | historical Patch evidence; exact old training source/identity not fully recovered |
+| 3M Momentum R1 | ~3.297 | reproducible direction challenger/context |
 | Random Walk R1 | ~3.302 | mandatory naive benchmark |
 
-## 7.1 Archived role freeze and successor requirement
+## 7.1 H=1 role freeze — restored agreed architecture
 
-Historical production-closure evidence remains immutable:
+The active H=1 development path is **not a broad model search**.
 
-- **Archived audited analytical reference:** VW-MIDAS-MSVR Adapt V2 — historical reference only; executable identity recovery rejected as `BLOCKED_NOT_PROVEN`;
-- **Archived Patch role:** Causal Patch R1 — historical production-closure artifact only; retained runner does not reproduce the canonical August Patch artifact and therefore `PATCH_R1_EXECUTABLE_IDENTITY_NOT_PROVEN`;
-- **Direction challenger/context:** 3M Momentum — reproducible context role preserved;
-- **Benchmark:** Random Walk — mandatory naive benchmark and 43/43 identity-verified across legacy/canonical files;
-- **Auto selector:** `OFF / REJECT_NOT_PROVEN`;
-- **Auto ensemble for primary:** `OFF / REJECT_FOR_PRIMARY`.
+Frozen roles:
 
-No archived VW/Patch artifact may be presented as a current executable model. A new H=1 production path requires a new identity under `GOLD_H1_SUCCESSOR_R1`; reserved engine lane `R4.2-SHADOW-CANDIDATE`, status `VALIDATION_ONLY_NOT_APPROVED`.
+- **Intended production point-forecast path:** `CAUSAL_PATCH_R1_REPRO_V1` — a new deterministic, causal, reproducible implementation of the retained Patch architecture. It is not yet production-approved and may not claim exact archived executable identity unless separately proven;
+- **Audited shadow/reference:** `VW_AUDITED_SHADOW_V2` — historical analytical reference; exact original executable runner remains `BLOCKED_NOT_PROVEN`;
+- **Direction challenger/context:** `MOMENTUM_3M_R1`;
+- **Mandatory naive benchmark:** `RW_R1`;
+- **Auto selector:** `OFF`;
+- **Auto ensemble primary:** `OFF`.
 
-Canonical change-control: `gold_axis_2026/GOLD_CONTROL_STAGE4B_FORECAST_SUCCESSOR_CHANGE_CONTROL_2026-09-01.md`.
-Canonical R1 validation contract (superseded for the first scored successor replay): `gold_axis_2026/GOLD_CONTROL_H1_SUCCESSOR_VALIDATION_CONTRACT_R1.md`.
-Canonical active successor validation contract: `gold_axis_2026/GOLD_CONTROL_H1_SUCCESSOR_VALIDATION_CONTRACT_R2.md`.
+The simple monthly Ridge/Huber/SVR/Drift/Damped R2 successor lane introduced on 2026-09-01 is retired from the active production-development path. Its prior run remains recoverable in Git history as a negative historical experiment; it is not the next canonical model lane.
+
+Binding correction record:
+
+`gold_axis_2026/GOLD_CONTROL_FORECAST_PATH_CORRECTION_2026-09-02.md`
+
+Active reproducibility contract:
+
+`gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_REPRO_CONTRACT_V1.md`
+
+The earlier successor R1/change-control documents are retained only as audit evidence of the failed exact legacy identity-recovery attempt. They do not override this v1.16 role freeze.
 
 ## 7.2 Current forecast-ledger state
 
@@ -941,21 +953,22 @@ Stage-5 closure evidence added in manifest v1.12:
 - no forecast or decision write performed;
 - run `33521193615`, job `99900581399`, `STAGE5_PIYASA_UI_SMOKE_PASS`.
 
-## 23.1 Current roadmap status — 2026-09-01
+## 23.1 Current roadmap status — 2026-09-02
 
 | Stage | Current status | Evidence / blocker |
 |---|---|---|
 | 0 | `PASS` | Manifest read-first contract active |
-| 1 | `PASS_AUDIT_COMPLETE_WITH_OPERATIONAL_BLOCKERS` | Data inventory/lineage audited; XAUS remains degraded but independent sources continue |
-| 2 | `PASS_CONTRACT_CANONICALIZED; FORECAST_NOT_ISSUED` | Forecast roles frozen; no prospective H=1 row exists; one late-bootstrap monthly-direction context row exists |
+| 1 | `PASS_AUDIT_COMPLETE_WITH_OPERATIONAL_BLOCKERS` | Data inventory/lineage audited; useful 2026-09-01 historical/PIT backfill retained |
+| 2 | `PASS_CONTRACT_CANONICALIZED; FORECAST_NOT_ISSUED` | H=1 target/origin and restored Patch/VW/3M/RW role registry frozen; no prospective H=1 row exists |
 | 3 | `PASS_DECISION_STORE_AND_READ_PATH` | Production append-only store/read path active; no fabricated current decision |
 | 4A | `PASS_CURRENT_STATE_SUBSTRATE_FOR_SHADOW_CONTEXT` | NY17 backfill SUCCESS; monthly direction bootstrap issued; Fast/Slow rehearsal SUCCESS; forecast-state append-only guards 3/3 |
-| 4B | `IN_PROGRESS_SUCCESSOR_R2_HISTORICAL_REPLAY_AUTHORIZED` | Legacy VW/Patch recovery rejected; World Bank/CORE5 target identity proven; 127 target rows + four 128-row ALFRED PIT reconstruction series persisted to Neon; R2 contract frozen before scoring; comparative replay is the next gate; forecast snapshot/contract not issued |
-| 5 | `PASS_PIYASA_SCREEN_CONTRACT` | Canonical Piyasa implementation + deterministic/live Streamlit smoke `SUCCESS` (run `33521193615`, job `99900581399`); approved tabs, live/history sources, freshness/source disclosure, timeframe gate, no decision/forecast writes |
-| 6 | `BLOCKED_NO_DISPLAY_ELIGIBLE_DECISION_SNAPSHOT` | Component rehearsals exist, but no complete forward R4.1 decision row may be fabricated |
+| 4B | `IN_PROGRESS_PATCH_R1_REPRODUCIBILITY` | Broad R2 model-search lane retired; Causal Patch reproducibility contract frozen before locked score; VW remains audited reference; forecast snapshot/contract not issued |
+| 5 | `PASS_PIYASA_SCREEN_CONTRACT` | Canonical Piyasa implementation + deterministic/live Streamlit smoke PASS |
+| 6 | `BLOCKED_NO_DISPLAY_ELIGIBLE_DECISION_SNAPSHOT` | No complete forward stored decision row may be fabricated |
 | 7 | `BLOCKED_FORECAST_NOT_ISSUED` | Canonical H=1 forecast ledger has no issued row |
 | 8–12 | `NOT_STARTED / NOT_COMPLETE` | Their own dependency gates are not satisfied |
 
+The architecture remains the agreed six-layer system: data plane → H=1 forecast/monthly context → Fast/Slow tactical → BOCPD break → Emergency → GVZ risk/Decision State. The R2 detour did not alter those layers.
 
 ---
 
@@ -963,9 +976,20 @@ Stage-5 closure evidence added in manifest v1.12:
 
 The immediate canonical task is now:
 
-## `STAGE 4B — RUN THE FROZEN SUCCESSOR R2 HISTORICAL REPLAY AND APPLY THE PRE-FROZEN RW GATES`
+## `STAGE 4B — BUILD AND VALIDATE CAUSAL_PATCH_R1_REPRO_V1; KEEP VW AS AUDITED REFERENCE; DO NOT REOPEN A BROAD MODEL SEARCH`
 
-Stage 5 remains closed as `PASS_PIYASA_SCREEN_CONTRACT`. Stage 6 remains blocked until a display-eligible stored Decision Store state exists. Successor input readiness is now sufficient for the first controlled R2 score run. The historical monthly forecast outcome is the separately named World Bank/CORE5-compatible target; Twelve NY17 remains the daily decision reference. No September H=1 row may be backdated, no reconstructed historical observation may be called prospective, and no successor may inherit a legacy VW/Patch identity.
+Required sequence:
+
+1. use the locked CORE5 monthly artifact and the exact pinned daily precious-metals source commit;
+2. apply the conservative origin-safe GPR lag and causal daily decomposition rules frozen in `GOLD_CONTROL_CAUSAL_PATCH_R1_REPRO_CONTRACT_V1.md`;
+3. select Patch geometry only on pre-2023 development data;
+4. run the locked 43-month `2023-01→2026-07` replay twice and prove deterministic equality;
+5. compare the candidate with RW on the same 43 months and report archived Patch/VW only as references;
+6. if the Patch reproducibility/performance gates pass, freeze its new executable identity before any future issuance;
+7. if it fails, keep work inside the Patch reproducibility problem unless a new explicit change-control authorizes a different model family;
+8. before the first eligible future origin, write immutable forecast input snapshot + forecast contract; no September backdating.
+
+Stage 5 remains closed as `PASS_PIYASA_SCREEN_CONTRACT`. Stage 6 remains blocked until a display-eligible stored Decision Store state exists. The first still-eligible contract-compliant prospective H=1 target remains October 2026 at the end-September origin, subject to completion of Stage 4B.
 
 Stage 3 is closed as:
 
@@ -997,29 +1021,29 @@ Read-only production audit:
 - result: `SUCCESS` audit execution, `readiness=BLOCKED`;
 - raw market values logged: `NO`.
 
-Confirmed active Stage-4B successor blockers after manifest v1.14 change-control:
+Confirmed active Stage-4B blockers after manifest v1.16 path correction:
 
-1. `SUCCESSOR_HISTORICAL_TARGET_AND_MINIMAL_MACRO_PIT_READINESS = CLOSED_FOR_R2_HISTORICAL_REPLAY`
-   - archived CORE5 target identity is materially matched by World Bank Pink Sheet over 127/127 months; 127 target rows and four complete 128-row ALFRED month-end PIT reconstruction series are persisted in Neon with explicit historical-reconstruction lineage;
-2. `GOLD_H1_SUCCESSOR_R2_NOT_VALIDATED`
-   - R2 candidate definitions and acceptance gates are frozen before scoring, but no successor model has yet passed them;
-3. `R4_2_MONTHLY_REFERENCE_BRIDGE_NOT_VALIDATED`
-   - a non-VW successor may not be inserted into the R4.1 `monthly_vw_forecast` field; a generic R4.2 monthly-reference contract and Emergency-geometry validation are required;
-4. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`
-5. `FORECAST_CONTRACT_NOT_ISSUED`
+1. `PATCH_R1_REPRODUCIBLE_PRODUCTION_IMPLEMENTATION_NOT_YET_VALIDATED`
+   - the agreed primary architecture is restored, but the new deterministic causal implementation has not yet passed its locked replay gates;
+2. `PATCH_R1_ARCHIVED_EXECUTABLE_IDENTITY_NOT_PROVEN`
+   - the old archived Patch artifact remains historical evidence; the new reproducible implementation must use a new explicit identity unless exact equivalence is proven;
+3. `VW_EXECUTABLE_IDENTITY_RECOVERY = BLOCKED_NOT_PROVEN`
+   - VW remains audited shadow/reference and does not need to be silently reconstructed or substituted into a new executable identity;
+4. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`;
+5. `FORECAST_CONTRACT_NOT_ISSUED`.
 
-Legacy-route statuses retained for audit:
+Useful data readiness retained from 2026-09-01:
 
-- `VW_EXECUTABLE_IDENTITY_RECOVERY = REJECTED_BLOCKED_NOT_PROVEN`;
-- `PATCH_R1_EXECUTABLE_IDENTITY = BLOCKED_NOT_PROVEN`.
+- CORE5 ↔ World Bank target identity audit PASS over 127/127 months;
+- governed Neon historical/PIT backfill wrote 639 source-labelled observations and did not create a forecast contract;
+- ALFRED DGS10/DFF/DEXCHUS/NASDAQ100 PIT reconstructions remain data-plane assets, but they do not force those variables into the Patch model beyond the frozen Patch contract.
 
-Stage-4B executable-identity audit evidence added in manifest v1.14:
+Retired-model-path note:
 
-- legacy-vs-production identity audit: run `33522033593`, job `99903431886`, `SUCCESS`; VW exact equality `0/43`, Patch exact equality `0/43`, RW exact equality `43/43`; high correlation is explicitly not accepted as identity proof;
-- retained August Patch reproduction audit: run `33522158937`, job `99903852563`, `SUCCESS`; canonical-vs-reproduced absolute difference `33.825192815012 USD`, relative difference ~`0.8219%`, exact/1e-6 equality `FALSE`; input package ends 2026-07;
-- current 2026 model-risk authority reference: Federal Reserve SR 26-2 / interagency revised guidance; principles applied as governance reference, not a legal-applicability claim;
-- successor change-control frozen: `GOLD_CONTROL_STAGE4B_FORECAST_SUCCESSOR_CHANGE_CONTROL_2026-09-01.md`;
-- successor validation contract frozen before comparative scoring: `GOLD_CONTROL_H1_SUCCESSOR_VALIDATION_CONTRACT_R1.md`.
+- the simple R2 Ridge/Huber/SVR/Drift/Damped replay is no longer an active production-development lane;
+- its Git history is retained for audit, but active R2 contract/runner/score artifacts were removed from the canonical tree on 2026-09-02.
+
+Legacy executable-identity audit evidence remains valid: the old VW/Patch exact executable identities were not recovered. This is a provenance fact, not a mandate to abandon the agreed Patch/VW role architecture.
 
 Closed current-state/context gates:
 
@@ -1069,30 +1093,40 @@ Required next gates by dependency:
 5. `Canlı spot ≠ son EOD karar` and `KANONİK KARAR YOK` fail-safe behavior are active.
 6. Stage 5 status is `PASS_PIYASA_SCREEN_CONTRACT`; later visual/mobile refinement belongs to Stage 10 and does not reopen Stage 5 data semantics.
 
-**Stage-4B successor lane (continues fail-closed for prospective issuance):**
+**Stage-4B H=1 forecast lane (fail-closed for prospective issuance):**
 
-1. execute `GOLD_CONTROL_H1_SUCCESSOR_VALIDATION_CONTRACT_R2.md` on the frozen `2018-07→2026-07` common historical-replay window;
-2. compare `RW_R2_PIT`, `DRIFT_R2_PIT`, `MOM3_R2_PIT`, `DAMPED_TREND_R2_PIT`, `RIDGE_MACRO_R2`, `HUBER_MACRO_R2`, and `SVR_RBF_MACRO_R2` exactly as frozen before scores;
-3. if no candidate passes every RW/robustness gate, return `REJECT_ALL_SUCCESSOR_CANDIDATES_R2` without post-score feature/model changes;
-4. if a candidate passes, freeze the selected successor identity and validate the R4.2 generic `monthly_price_reference` bridge; do not mutate historical R4.1 VW identity;
-5. revalidate Level Emergency geometry under the new monthly reference without tuning thresholds on 2026 outcomes;
+1. execute `GOLD_CONTROL_CAUSAL_PATCH_R1_REPRO_CONTRACT_V1.md`;
+2. do not add Ridge/Huber/SVR/DOW/DMA/Transformer variants or other model families to the production path merely because they are available or interesting;
+3. keep `VW_AUDITED_SHADOW_V2` as audited reference, `MOMENTUM_3M_R1` as direction context, and `RW_R1` as benchmark;
+4. if `CAUSAL_PATCH_R1_REPRO_V1` passes its frozen replay gates, freeze its executable version and input contract;
+5. revalidate the monthly-reference/Emergency bridge before inserting a new executable forecast into the complete EngineSnapshot;
 6. before a real eligible month-end origin, persist immutable forecast input snapshot + forecast contract;
 7. first forward forecast/decision evidence remains `PROSPECTIVE_SHADOW`, never retroactive and not `LIVE_PRODUCTION`.
 
-No `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` **decision** row may be written while an active Stage-4B successor blocker prevents construction of the complete versioned EngineSnapshot. This does not block non-decision `Piyasa` monitoring.
+No `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` **decision** row may be written while an active Stage-4B blocker prevents construction of the complete versioned EngineSnapshot. This does not block non-decision `Piyasa` monitoring.
 
-### Manifest v1.15 successor target/input reconciliation
+### Manifest v1.16 forecast-path correction and retained data evidence
 
-Pre-score evidence now frozen:
+The approved architecture was restored on 2026-09-02 after the simple R2 successor model-search detour was identified as inconsistent with the previously agreed H=1 role freeze.
 
-- CORE5 ↔ World Bank monthly target identity audit: run `33535312896`, job `99948062874`, `SUCCESS`; 2016-01→2026-07 common months `127/127`, exact equality `123/127`, all `127/127` within USD 0.50, maximum absolute difference USD 0.33, level correlation `0.9999999987`.
-- successor macro PIT readiness audit: run `33534515351`, job `99945412291`, `SUCCESS`; 2016 as-of probes passed for DGS10, DFF, DEXCHUS and NASDAQ100; DTWEXBGS/SP500/DJIA were not admitted to the first R2 common surface; VIX/GVZ/GPR remain separate PIT/vintage gates.
-- governed Neon backfill: run `33538748716`, job `99959440836`, `SUCCESS`; retrieval run `1b4ccbe6-0372-411e-95d9-eb832d637a00`; observations read/written `639/639`, revisions `0`; `XAU_MONTHLY_WB_PINKSHEET=127` rows (2016-01→2026-07); each of `DGS10_ALFRED_PIT_ME`, `DFF_ALFRED_PIT_ME`, `DEXCHUS_ALFRED_PIT_ME`, `NASDAQ100_ALFRED_PIT_ME`=`128` rows (2016-01-31→2026-08-31), one lineage and one quality class per series.
-- historical reconstruction rows preserve the true 2026 `retrieved_at`; ALFRED historical month-end is carried as `provider_as_of`. They are `HISTORICAL_REPLAY_RECONSTRUCTION`, not evidence that Gold Control physically stored them at old origins.
-- forecast-state counts after this data write remained `forecast_input_snapshots=0`, `derived_feature_snapshots=1`, `monthly_forecast_contracts=0`; the backfill did not manufacture an issued forecast.
-- active successor contract before first comparative score: `GOLD_CONTROL_H1_SUCCESSOR_VALIDATION_CONTRACT_R2.md`.
+Preserved evidence:
 
-R2 deliberately defers nonessential unresolved inputs rather than blocking an acceptable first validation system. Deferred inputs require later versioned change-control before use.
+- CORE5 ↔ World Bank monthly target identity audit: run `33535312896`, job `99948062874`, `SUCCESS`; 127/127 common months, 123/127 exact, all within USD 0.50;
+- governed Neon historical/PIT backfill: run `33538748716`, job `99959440836`, `SUCCESS`; 639/639 observations written, revisions 0, no forecast issuance;
+- forecast-state counts after the write remained `forecast_input_snapshots=0`, `derived_feature_snapshots=1`, `monthly_forecast_contracts=0`;
+- Decision Store, NY17, Fast/Slow, BOCPD, Emergency, GVZ and Piyasa contracts remain unchanged.
+
+Rolled back from active path:
+
+- R2 validation contract;
+- R2 replay runner/workflow;
+- active R2 score/prediction/evidence files;
+- manifest instruction to continue Ridge/Huber/SVR/Drift/Damped as the next canonical forecast lane.
+
+Binding replacement:
+
+- `GOLD_CONTROL_FORECAST_PATH_CORRECTION_2026-09-02.md`;
+- `GOLD_CONTROL_CAUSAL_PATCH_R1_REPRO_CONTRACT_V1.md`.
 
 ### Manifest v1.8 forecast/monthly-context dependency audit
 
