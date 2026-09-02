@@ -17,7 +17,7 @@ from multi_expert_forecast import (
     TRACK_MONTH_END,
     ExpertForecastRecord,
 )
-from multi_expert_forecast_store import persist_expert_forecast, table_exists
+from multi_expert_forecast_store import insert_expert_forecast, table_exists
 
 
 EXPERT = EXPERT_REGISTRY[PATCH_EXPERT]
@@ -47,12 +47,36 @@ def expert_ledger_state(url: str) -> dict:
     return {"table_exists": True, "duplicate": duplicate, "rows": rows}
 
 
-def _persist_inputs_and_feature(url: str, issued_at: datetime, result: dict, sha: str) -> tuple[list[int], int]:
+def persist_atomic(url: str, issued_at: datetime, result: dict, sha: str) -> dict:
+    """Persist exact Patch inputs + derived feature + individual expert row atomically."""
     with psycopg.connect(url, autocommit=False, row_factory=dict_row) as conn:
         try:
             with conn.cursor() as cur:
+                if not table_exists(cur):
+                    raise RuntimeError("BLOCKED_MULTI_EXPERT_LEDGER_SCHEMA_NOT_APPLIED")
+                cur.execute(
+                    """
+                    select id from monthly_expert_forecasts
+                    where target_month=%s and forecast_track=%s and expert_id=%s and model_version=%s
+                    order by id desc limit 1
+                    """,
+                    (legacy.FIRST_TARGET.date(), TRACK_MONTH_END, PATCH_EXPERT, EXPERT.model_version),
+                )
+                existing = cur.fetchone()
+                if existing:
+                    conn.rollback()
+                    return {"duplicate": True, "expert_id": int(existing["id"])}
+
                 ids: list[int] = []
-                common = {"expert_id": PATCH_EXPERT, "forecast_track": TRACK_MONTH_END, "evidence_class": EVIDENCE_CLASS}
+                common = {
+                    "expert_id": PATCH_EXPERT,
+                    "forecast_track": TRACK_MONTH_END,
+                    "evidence_class": EVIDENCE_CLASS,
+                    "selector_status": SELECTOR_STATUS,
+                    "auto_selector": AUTO_SELECTOR,
+                    "auto_ensemble": AUTO_ENSEMBLE,
+                    "canonical_authority": False,
+                }
                 ids.append(legacy.insert_snapshot(
                     cur, issued_at=issued_at, target_period=TARGET_PERIOD, sha=sha,
                     series_id="PATCH_V7_TRAINING_TENSOR", semantic_id="MODEL_TRAINING_TENSOR",
@@ -89,6 +113,7 @@ def _persist_inputs_and_feature(url: str, issued_at: datetime, result: dict, sha
                     lineage="PATCH_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V6_ANCHOR",
                     metadata={"source_meta":result["source_meta"]["anchor"],**common},
                 ))
+
                 cur.execute(
                     """
                     insert into derived_feature_snapshots
@@ -102,19 +127,65 @@ def _persist_inputs_and_feature(url: str, issued_at: datetime, result: dict, sha
                         result["predicted_return"], sha,
                         json.dumps({"forecast_input_snapshot_ids":ids,"input_fingerprint":result["input_fingerprint"]}),
                         EVIDENCE_CLASS,
-                        json.dumps({"target_month":TARGET_PERIOD,"prospective_claim":True,"expert_id":PATCH_EXPERT,"forecast_track":TRACK_MONTH_END,"selector_status":SELECTOR_STATUS,"auto_selector":AUTO_SELECTOR,"auto_ensemble":AUTO_ENSEMBLE}),
+                        json.dumps({"target_month":TARGET_PERIOD,"prospective_claim":True,**common}),
                     ),
                 )
                 derived_id = int(cur.fetchone()["id"])
+
+                record = ExpertForecastRecord(
+                    target_month=TARGET_PERIOD,
+                    forecast_origin=issued_at,
+                    as_of=issued_at,
+                    forecast_track=TRACK_MONTH_END,
+                    expert_id=PATCH_EXPERT,
+                    model_name=EXPERT.model_name,
+                    model_version=EXPERT.model_version,
+                    expert_role=EXPERT.expert_role,
+                    forecast_value=float(result["forecast"]),
+                    unit="USD/oz",
+                    evidence_class=EVIDENCE_CLASS,
+                    git_commit=sha,
+                    input_snapshot_ids=tuple(ids),
+                    input_fingerprint=result["input_fingerprint"],
+                    provenance={
+                        **common,
+                        "derived_feature_snapshot_id": derived_id,
+                        "model_impact_parent": "PATCH_R1_V7_COMPLETED_SESSION_DAILY_FEATURE_MODEL_IMPACT_PASS",
+                        "writer_rehearsal_parent": "PATCH_V7_FORECAST_WRITER_REHEARSAL_PASS",
+                        "decision_store_write": "NONE",
+                        "canonical_forecast_contract_write": "NONE",
+                        "manifest_version": "1.22",
+                    },
+                )
+                stored = insert_expert_forecast(cur, record, verify_snapshots=True)
+                if stored.get("duplicate"):
+                    raise RuntimeError("UNEXPECTED_PATCH_EXPERT_DUPLICATE_DURING_ATOMIC_ISSUANCE")
+                expert_id = int(stored["id"])
             conn.commit()
         except Exception:
             conn.rollback()
             raise
-    return ids, derived_id
+
+    with psycopg.connect(url, autocommit=False, row_factory=dict_row) as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                select id,selector_status,auto_selector,auto_ensemble,canonical_authority,input_snapshot_ids
+                from monthly_expert_forecasts where id=%s
+                """,
+                (expert_id,),
+            )
+            row = cur.fetchone()
+        conn.rollback()
+    if not row or row["selector_status"] != SELECTOR_STATUS or row["auto_selector"] != "OFF" or row["auto_ensemble"] != "OFF" or row["canonical_authority"] is not False:
+        raise RuntimeError("PATCH_MULTI_EXPERT_POST_COMMIT_VERIFY_FAILED")
+    if len(row["input_snapshot_ids"] or []) != len(ids):
+        raise RuntimeError("PATCH_MULTI_EXPERT_SNAPSHOT_BINDING_VERIFY_FAILED")
+    return {"duplicate": False, "expert_id": expert_id, "snapshot_ids": ids, "derived_id": derived_id}
 
 
 def preflight(now_utc: datetime) -> int:
-    parents = legacy.static_gates()
+    legacy.static_gates()
     url = legacy.env("NEON_DATABASE_URL")
     state = expert_ledger_state(url)
     eligible, reason = legacy.eligibility(now_utc)
@@ -149,42 +220,13 @@ def issue_if_eligible(now_utc: datetime) -> int:
 
     result = legacy.build_forecast(now_utc)
     sha = legacy.git_sha()
-    ids, derived_id = _persist_inputs_and_feature(url, now_utc, result, sha)
-    record = ExpertForecastRecord(
-        target_month=TARGET_PERIOD,
-        forecast_origin=now_utc,
-        as_of=now_utc,
-        forecast_track=TRACK_MONTH_END,
-        expert_id=PATCH_EXPERT,
-        model_name=EXPERT.model_name,
-        model_version=EXPERT.model_version,
-        expert_role=EXPERT.expert_role,
-        forecast_value=float(result["forecast"]),
-        unit="USD/oz",
-        evidence_class=EVIDENCE_CLASS,
-        git_commit=sha,
-        input_snapshot_ids=tuple(ids),
-        input_fingerprint=result["input_fingerprint"],
-        provenance={
-            "canonical_authority": False,
-            "selector_status": SELECTOR_STATUS,
-            "auto_selector": AUTO_SELECTOR,
-            "auto_ensemble": AUTO_ENSEMBLE,
-            "derived_feature_snapshot_id": derived_id,
-            "model_impact_parent": "PATCH_R1_V7_COMPLETED_SESSION_DAILY_FEATURE_MODEL_IMPACT_PASS",
-            "writer_rehearsal_parent": "PATCH_V7_FORECAST_WRITER_REHEARSAL_PASS",
-            "decision_store_write": "NONE",
-            "canonical_forecast_contract_write": "NONE",
-            "manifest_version": "1.22",
-        },
-    )
-    stored = persist_expert_forecast(url, record)
+    persisted = persist_atomic(url, now_utc, result, sha)
     print("MULTI_EXPERT_PATCH_ISSUER_STATE=MONTH_END_EXPERT_ISSUED_VERIFIED")
     print(f"TARGET_MONTH={TARGET_PERIOD}")
     print(f"EXPERT_ID={PATCH_EXPERT}")
-    print(f"EXPERT_LEDGER_ID={stored['id']}")
-    print(f"FORECAST_INPUT_SNAPSHOT_COUNT={len(ids)}")
-    print(f"DERIVED_FEATURE_SNAPSHOT_ID={derived_id}")
+    print(f"EXPERT_LEDGER_ID={persisted['expert_id']}")
+    print(f"FORECAST_INPUT_SNAPSHOT_COUNT={len(persisted['snapshot_ids'])}")
+    print(f"DERIVED_FEATURE_SNAPSHOT_ID={persisted['derived_id']}")
     print(f"SELECTOR_STATUS={SELECTOR_STATUS}")
     print("FORECAST_VALUE_LOGGED=NO")
     print("CANONICAL_FORECAST_CONTRACT_WRITE=NONE")
