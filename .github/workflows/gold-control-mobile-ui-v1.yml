@@ -76,7 +76,11 @@ jobs:
           grep -q 'TAHMİN PERFORMANSI' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -q 'HATA / KARAR ZAMAN ÇİZELGESİ' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -q 'SEÇİLMİŞ GEÇMİŞ KAYITLAR' gold_axis_2026/apps/gold_control_mobile_v1.py
-          grep -q 'gold_control_mobile_v1.py' gold_axis_2026/apps/gold_control.py
+          grep -q 'import gold_control_mobile_v1' gold_axis_2026/apps/gold_control.py
+          if grep -q 'runpy' gold_axis_2026/apps/gold_control.py; then
+            echo 'RUNPY_ENTRYPOINT_FORBIDDEN'
+            exit 1
+          fi
           echo 'FINAL_V2_SECTION_MARKERS_PASS'
 
       - name: Canonical Streamlit runtime smoke
