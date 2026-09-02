@@ -78,7 +78,8 @@ jobs:
           import ast
           from pathlib import Path
           app = Path('gold_axis_2026/apps/gold_control_mobile_v1.py')
-          tree = ast.parse(app.read_text(encoding='utf-8'))
+          source = app.read_text(encoding='utf-8')
+          tree = ast.parse(source)
           local = {
               'decision_source': {'fetch_current_decision_state', 'fetch_decision_history'},
               'forecast_source': {'fetch_current_forecast', 'fetch_forecast_history'},
@@ -100,7 +101,7 @@ jobs:
               missing = expected - seen[module]
               if missing:
                   raise SystemExit(f'LOCAL_IMPORT_EXPORT_AUDIT_FAIL:{module}:{sorted(missing)}')
-          text = app.read_text(encoding='utf-8')
+          text = source.upper()
           required = [
               'SİNYAL ÖZETİ','MODEL YÖNÜ (AYLIK)','FAST / SLOW TEYİDİ',
               'SİNYAL ZAMAN ÇİZELGESİ','GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI',
