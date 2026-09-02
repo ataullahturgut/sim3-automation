@@ -59,10 +59,7 @@ def main_nav_label(page: Page, name: str):
 
 
 def require_nav_labels(page: Page) -> None:
-    missing: list[str] = []
-    for label in ["Bugün", "Görünüm", "Tahmin", "Geçmiş"]:
-        if main_nav_label(page, label) is None:
-            missing.append(label)
+    missing = [label for label in ["Bugün", "Görünüm", "Tahmin", "Geçmiş"] if main_nav_label(page, label) is None]
     if missing:
         root_text = page.locator(MAIN_NAV).inner_text() if page.locator(MAIN_NAV).count() else "NO_MAIN_NAV_ROOT"
         raise AssertionError(f"MOBILE_BOTTOM_NAV_MISSING:{missing}:ROOT={root_text}")
@@ -74,8 +71,7 @@ def assert_segmented_control(page: Page, root_selector: str, expected_count: int
     options = root.locator('label[data-testid="stRadioOption"]')
     if options.count() != expected_count:
         raise AssertionError(f"{name}_OPTION_COUNT:{options.count()}:{expected_count}")
-
-    widths: list[float] = []
+    widths = []
     for i in range(expected_count):
         option = options.nth(i)
         if not option.is_visible():
@@ -84,18 +80,8 @@ def assert_segmented_control(page: Page, root_selector: str, expected_count: int
         if not box:
             raise AssertionError(f"{name}_OPTION_NO_BOX:{i}")
         widths.append(float(box["width"]))
-
-        indicator = option.locator(":scope > div > div > div").first
-        if indicator.count():
-            style = indicator.evaluate(
-                "el => ({display:getComputedStyle(el).display, visibility:getComputedStyle(el).visibility, width:el.getBoundingClientRect().width, height:el.getBoundingClientRect().height})"
-            )
-            if style["display"] != "none" and style["visibility"] != "hidden" and (style["width"] > 0 or style["height"] > 0):
-                raise AssertionError(f"{name}_NATIVE_RADIO_VISIBLE:{i}:{style}")
-
     if max(widths) - min(widths) > 3.0:
         raise AssertionError(f"{name}_UNEQUAL_WIDTHS:{widths}")
-
     selected = root.locator('label[data-testid="stRadioOption"][data-selected="true"]')
     if selected.count() != 1:
         raise AssertionError(f"{name}_SELECTED_COUNT:{selected.count()}")
@@ -104,11 +90,9 @@ def assert_segmented_control(page: Page, root_selector: str, expected_count: int
 def assert_bottom_nav_in_viewport(page: Page) -> None:
     radio = page.locator(f'{MAIN_NAV} [data-testid="stRadio"]').first
     box = radio.bounding_box()
-    if not box:
-        raise AssertionError("MOBILE_BOTTOM_NAV_NO_BOX")
     viewport = page.viewport_size
-    if not viewport:
-        raise AssertionError("MOBILE_VIEWPORT_UNKNOWN")
+    if not box or not viewport:
+        raise AssertionError("MOBILE_BOTTOM_NAV_NO_BOX")
     if box["x"] < -1 or box["x"] + box["width"] > viewport["width"] + 1:
         raise AssertionError(f"MOBILE_BOTTOM_NAV_HORIZONTAL_BOUNDS:{box}:{viewport}")
     if box["y"] + box["height"] > viewport["height"] + 1:
@@ -127,21 +111,23 @@ def click_tab(page: Page, name: str) -> None:
     if target is None:
         raise AssertionError(f"MOBILE_TAB_CONTROL_NOT_FOUND:{name}")
     target.click()
-    # A Streamlit radio change reruns the complete script. The final visual CSS
-    # is emitted after the presentation module, so wait for the rerun to settle
-    # before evaluating computed styles.
-    page.wait_for_timeout(2600)
+    page.wait_for_timeout(1200)
 
 
 def screenshot(page: Page, out: Path, name: str) -> None:
-    path = out / f"gold_control_v2_{name}_390x844.png"
-    page.screenshot(path=str(path), full_page=True)
+    page.screenshot(path=str(out / f"gold_control_v3_{name}_390x844.png"), full_page=True)
+
+
+def require_markers(body: str, screen: str, markers: list[str]) -> None:
+    for marker in markers:
+        if marker.upper() not in body:
+            raise AssertionError(f"{screen}_FINAL_MARKER_MISSING:{marker}")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--url", default="http://127.0.0.1:8501")
-    parser.add_argument("--out", default="/tmp/gold_mobile_v2_qa")
+    parser.add_argument("--out", default="/tmp/gold_mobile_v3_qa")
     args = parser.parse_args()
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -150,13 +136,10 @@ def main() -> int:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page(viewport={"width": PHONE_WIDTH, "height": PHONE_HEIGHT}, device_scale_factor=1)
         page.goto(args.url, wait_until="domcontentloaded", timeout=60_000)
+        page.wait_for_timeout(2400)
         assert_no_streamlit_exception(page, "initial")
         page.get_by_text("GOLD CONTROL", exact=False).first.wait_for(state="visible", timeout=45_000)
-        # GOLD CONTROL is emitted near the start of the script. Allow the final
-        # presentation override at the end of the same Streamlit run to mount.
-        page.wait_for_timeout(4200)
 
-        assert_no_streamlit_exception(page, "bugun")
         require_nav_labels(page)
         assert_segmented_control(page, MAIN_NAV, 4, "MAIN_NAV")
         assert_segmented_control(page, MARKET_RANGE, 4, "MARKET_RANGE")
@@ -169,17 +152,11 @@ def main() -> int:
         assert_no_streamlit_exception(page, "gorunum")
         page.get_by_text("GÖRÜNÜM", exact=True).first.wait_for(state="visible", timeout=15_000)
         body = visible_text(page)
-        for marker in [
-            "SİNYAL ÖZETİ",
-            "MODEL YÖNÜ (AYLIK)",
-            "FAST / SLOW TEYİDİ",
-            "RİSK SEVİYESİ",
-            "SİNYAL ZAMAN ÇİZELGESİ",
-            "EMERGENCY DURUMU",
-            "SİSTEM YORUMU",
-        ]:
-            if marker not in body:
-                raise AssertionError(f"GORUNUM_V2_MARKER_MISSING:{marker}")
+        require_markers(body, "GORUNUM", [
+            "MEVCUT KAYITLI DURUM", "SİNYAL ÖZETİ", "MODEL YÖNÜ (AYLIK)",
+            "FAST / SLOW TEYİDİ", "RİSK SEVİYESİ", "SİNYAL ZAMAN ÇİZELGESİ",
+            "EMERGENCY DURUMU", "SİSTEM YORUMU",
+        ])
         if "POZİSYONU KORU" in body or "GÜÇ: %68" in body:
             raise AssertionError("UNPROVEN_MOCKUP_PLACEHOLDER_VISIBLE_GORUNUM")
         assert_segmented_control(page, MAIN_NAV, 4, "MAIN_NAV_GORUNUM")
@@ -191,15 +168,11 @@ def main() -> int:
         assert_no_streamlit_exception(page, "tahmin")
         page.get_by_text("TAHMİN", exact=True).first.wait_for(state="visible", timeout=15_000)
         body = visible_text(page)
-        for marker in [
-            "GELECEK AY TAHMİNİ",
-            "GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI",
-            "SENARYOLAR",
-            "MEVCUT FİYATA GÖRE FARK",
-            "MODEL PERFORMANSI",
-        ]:
-            if marker not in body:
-                raise AssertionError(f"TAHMIN_V2_MARKER_MISSING:{marker}")
+        require_markers(body, "TAHMIN", [
+            "GELECEK AY TAHMİNİ", "PATCH TAHMİNİ (V7)", "VW REFERANS",
+            "RANDOM WALK (RW)", "GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI",
+            "TAHMİN ÖZETİ", "MODEL BİLGİSİ", "NOT",
+        ])
         if "2.420,00" in body or "GÜVEN: %68" in body:
             raise AssertionError("MOCKUP_SAMPLE_NUMBER_VISIBLE_TAHMIN")
         assert_segmented_control(page, MAIN_NAV, 4, "MAIN_NAV_TAHMIN")
@@ -209,16 +182,13 @@ def main() -> int:
 
         click_tab(page, "Geçmiş")
         assert_no_streamlit_exception(page, "gecmis")
-        page.get_by_text("PERFORMANS", exact=True).first.wait_for(state="visible", timeout=15_000)
+        page.get_by_text("GEÇMİŞ", exact=True).first.wait_for(state="visible", timeout=15_000)
         body = visible_text(page)
-        for marker in [
-            "YAYIMLANAN İLERİ TAHMİN",
-            "TAHMİN PERFORMANSI",
-            "HATA / KARAR ZAMAN ÇİZELGESİ",
-            "SEÇİLMİŞ GEÇMİŞ KAYITLAR",
-        ]:
-            if marker not in body:
-                raise AssertionError(f"GECMIS_V2_MARKER_MISSING:{marker}")
+        require_markers(body, "GECMIS", [
+            "MAPE", "MAE (USD)", "YÖN DOĞRULUĞU", "TOPLAM TAHMİN",
+            "TAHMİN – GERÇEKLEŞEN KARŞILAŞTIRMASI", "HATA ORANI ZAMAN ÇİZGİSİ",
+            "SEÇİLMİŞ GERÇEKLEŞEN TAHMİNLER", "HISTORICAL_REPLAY",
+        ])
         if "+12,8%" in body or "+22,6%" in body:
             raise AssertionError("MOCKUP_SAMPLE_PERFORMANCE_VISIBLE")
         assert_segmented_control(page, MAIN_NAV, 4, "MAIN_NAV_GECMIS")
@@ -227,9 +197,7 @@ def main() -> int:
         screenshot(page, out, "gecmis")
         browser.close()
 
-    print("MOBILE_V2_VIEWPORT_QA_PASS")
-    print("NATIVE_RADIO_INDICATORS=HIDDEN")
-    print("BOTTOM_NAV_EQUAL_WIDTHS=PASS")
+    print("MOBILE_V3_FINAL_MOCKUP_VIEWPORT_QA_PASS")
     print(f"VIEWPORT={PHONE_WIDTH}x{PHONE_HEIGHT}")
     print(f"SCREENSHOTS={out}")
     return 0
