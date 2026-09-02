@@ -1,0 +1,52 @@
+name: Gold Control Stage4B First Shadow Preflight
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_PATCH_V7_FIRST_PROSPECTIVE_SHADOW_ISSUER_CONTRACT_2026-09-02.md'
+      - 'gold_axis_2026/data_pipeline/stage4b_patch_v7_first_shadow_issuer.py'
+      - '.github/workflows/gold-control-stage4b-first-shadow-preflight.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install issuer import runtime
+        run: |
+          pip install 'numpy>=1.26,<3' 'pandas>=2,<3' 'requests>=2.31,<3' 'psycopg[binary]>=3.2,<4'
+          pip install --index-url https://download.pytorch.org/whl/cpu 'torch>=2.5,<3'
+      - name: Require Neon credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Compile issuer
+        run: python -m py_compile gold_axis_2026/data_pipeline/stage4b_patch_v7_first_shadow_issuer.py
+      - name: Run fail-closed preflight
+        run: python gold_axis_2026/data_pipeline/stage4b_patch_v7_first_shadow_issuer.py --mode preflight
+      - name: Verify preflight evidence
+        run: |
+          grep -F '"decision": "FIRST_SHADOW_ISSUER_PREFLIGHT_PASS_WAITING_FOR_ELIGIBLE_ORIGIN"' gold_axis_2026/stage4b/first_shadow_issuer_preflight_evidence.json
+          grep -F '"september_backfill_allowed": false' gold_axis_2026/stage4b/first_shadow_issuer_preflight_evidence.json
+          grep -F '"persistent_database_writes": "NONE"' gold_axis_2026/stage4b/first_shadow_issuer_preflight_evidence.json
+          grep -F '"raw_market_values_logged": false' gold_axis_2026/stage4b/first_shadow_issuer_preflight_evidence.json
+      - name: Commit preflight metadata evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/stage4b/first_shadow_issuer_preflight_evidence.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'gold-control: record first prospective shadow issuer preflight'
+            git push origin HEAD:gold-r4-direction-engine
+          fi
