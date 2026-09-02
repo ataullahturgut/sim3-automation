@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.18  
+**Manifest version:** 1.19  
 **Freeze / issue date:** 2026-09-02  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -339,7 +339,7 @@ The active H=1 development path is **not a broad model search**.
 
 Frozen roles:
 
-- **Intended production point-forecast path:** `CAUSAL_PATCH_R1_REPRO_V1_3_XAU_ONLY_ORIGIN_SAFE` — the V4 XAU-only successor of the reproducible Patch path, retaining the frozen Patch architecture and `L=252`, `P=21`, `D=32`. V4 source and locked historical model-impact gates passed, but it is not yet a prospective/live production issuer. `CAUSAL_PATCH_R1_REPRO_V1` remains immutable predecessor evidence and the exact archived historical Patch executable identity remains separately unproven;
+- **Intended forward point-forecast issuer candidate:** `CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE` — Patch V7. It retains the frozen Patch Transformer geometry `L=252`, `P=21`, `D=32`, uses the V6 origin-safe daily-train/hourly-anchor monthly-level architecture, and adds the completed-session daily-feature rule `observation_date < origin_date`. V7 locked historical model-impact gates passed with zero same-origin daily-feature use, zero future-information violations, deterministic rerun equality, and performance better than RW on the frozen 43-month window. Evidence remains `HISTORICAL_REPLAY_MODEL_IMPACT`; no live/prospective performance claim is made until a real pre-outcome forecast is issued. `CAUSAL_PATCH_R1_REPRO_V1` remains immutable predecessor evidence and the exact archived historical Patch executable identity remains separately unproven;
 - **Audited shadow/reference:** `VW_AUDITED_SHADOW_V2` — historical analytical reference; exact original executable runner remains `BLOCKED_NOT_PROVEN`;
 - **Direction challenger/context:** `MOMENTUM_3M_R1`;
 - **Mandatory naive benchmark:** `RW_R1`;
@@ -374,6 +374,8 @@ Status:
 `FORECAST_LEDGER_NOT_ISSUED; MONTHLY_DIRECTION_BOOTSTRAP_CONTEXT_PRESENT`
 
 Historical closure/replay artifacts keep their original evidence class. No forecast may be relabelled as `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` unless it was issued before outcome realization with an immutable input snapshot and contract.
+
+Manifest v1.19 operational update: forecast-writer schema audit `FORECAST_WRITER_SCHEMA_AUDIT_PASS` confirmed identity/PK/unique/immutable guards; read-only writer rehearsal `PATCH_V7_FORECAST_WRITER_REHEARSAL_PASS` validated insert plans with zero persistent rows and no identity consumption; first-shadow preflight `FIRST_SHADOW_ISSUER_PREFLIGHT_PASS_WAITING_FOR_ELIGIBLE_ORIGIN` confirmed the ledger remains empty and the earliest eligible target/origin is October 2026 / end-September. No forecast has yet been issued.
 
 ## 7.3 Prospective-origin cutoff — September 2026
 
@@ -795,6 +797,30 @@ Contains:
 
 This is secondary navigation, not one of the four primary user tabs.
 
+## 17.6 Approved mobile product UI V1
+
+Binding presentation specification:
+
+`gold_axis_2026/GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V1.md`
+
+Status: `APPROVED_MOBILE_PRODUCT_UI_CONTRACT_V1`.
+
+The approved 2026-09-02 mobile mockup direction is binding for visual hierarchy, navy/gold/white palette, mobile card structure, hero treatment and bottom-navigation concept. Mockup sample numbers are not data authority. Manifest/data/ledger semantics override every placeholder inside a drawing.
+
+Mobile bottom-navigation label `Bugün` is an approved user-facing alias for the canonical `Piyasa` screen; the underlying screen/data contract remains `Piyasa`.
+
+Production UI must specifically remove or replace mockup elements that are not currently authorized:
+
+- no `POZİSYONU KORU`, BUY/SELL/HOLD/EXIT or exposure mapping while `NOT_PROVEN_POSITION_MAPPING` remains active;
+- no arbitrary `Güç %`, confidence label/percentage or forecast band;
+- no fabricated forecast/reference values;
+- no YBB/12M strategy return, drawdown, trade count or entry/exit performance until an audited execution/portfolio contract exists;
+- `Tahmin` renders a numeric value only from canonical `monthly_forecast_contracts`;
+- `Görünüm` renders a current state only from a display-eligible Decision Store row;
+- `Geçmiş` keeps `HISTORICAL_REPLAY`, `PROSPECTIVE_SHADOW`, and `LIVE_PRODUCTION` visibly separated.
+
+Implementation candidate: `gold_axis_2026/apps/gold_control_mobile_v1.py`; it is not yet a Stage-10 completion claim.
+
 ---
 
 # 18. UI / DESIGN SYSTEM FREEZE
@@ -962,7 +988,7 @@ Stage-5 closure evidence added in manifest v1.12:
 | 2 | `PASS_CONTRACT_CANONICALIZED; FORECAST_NOT_ISSUED` | H=1 target/origin and restored Patch/VW/3M/RW role registry frozen; no prospective H=1 row exists |
 | 3 | `PASS_DECISION_STORE_AND_READ_PATH` | Production append-only store/read path active; no fabricated current decision |
 | 4A | `PASS_CURRENT_STATE_SUBSTRATE_FOR_SHADOW_CONTEXT` | NY17 backfill SUCCESS; monthly direction bootstrap issued; Fast/Slow rehearsal SUCCESS; forecast-state append-only guards 3/3 |
-| 4B | `PATCH_V4_XAU_ONLY_SOURCE_AND_HISTORICAL_MODEL_IMPACT_PASS; PROSPECTIVE_ISSUER_NOT_YET_AUTHORIZED` | V4 XAU-only source gate PASS and locked 43-month model-impact PASS under frozen geometry; remaining gates are executable/input identity freeze, monthly-reference→Emergency bridge validation, immutable forecast snapshot/contract, and complete forward EngineSnapshot |
+| 4B | `PATCH_V7_MODEL_IMPACT_PASS; R4_2_BRIDGE_PASS; WRITER_PREFLIGHT_PASS; WAITING_ELIGIBLE_ORIGIN` | V7 completed-session PIT gate PASS; generic monthly-reference→Emergency bridge PASS; forecast schema + read-only writer rehearsal + first-shadow preflight PASS. Forecast/input ledgers remain empty until a real eligible origin; complete forward EngineSnapshot/Decision Store issuance remains outstanding. |
 | 5 | `PASS_PIYASA_SCREEN_CONTRACT` | Canonical Piyasa implementation + deterministic/live Streamlit smoke PASS |
 | 6 | `BLOCKED_NO_DISPLAY_ELIGIBLE_DECISION_SNAPSHOT` | No complete forward stored decision row may be fabricated |
 | 7 | `BLOCKED_FORECAST_NOT_ISSUED` | Canonical H=1 forecast ledger has no issued row |
@@ -976,7 +1002,7 @@ The architecture remains the agreed six-layer system: data plane → H=1 forecas
 
 The immediate canonical task is now:
 
-## `STAGE 4B — FREEZE PATCH V4 XAU-ONLY EXECUTABLE/INPUT IDENTITY; VALIDATE MONTHLY-REFERENCE → EMERGENCY BRIDGE; DO NOT REOPEN MODEL SEARCH`
+## `STAGE 4B — PATCH V7 FORWARD ISSUER PREPARED; COMPLETE ENGINE SNAPSHOT + REAL ELIGIBLE-ORIGIN ISSUANCE; DO NOT REOPEN MODEL SEARCH`
 
 Completed and frozen:
 
@@ -997,14 +1023,16 @@ Active successor identity after the V4 source + model-impact gates:
 
 This identity must be frozen as a versioned executable/input contract before it is allowed to issue any forward forecast. It does not inherit the exact archived Patch executable identity claim.
 
-Remaining Stage-4B dependency gates:
+Remaining Stage-4B dependency gates after v1.19 reconciliation:
 
-1. freeze the V4 XAU-only executable/input identity and provenance as the only active Patch issuer candidate; do not reopen broad model search or reuse locked outcomes for tuning;
-2. validate the generic monthly-price-reference → Emergency geometry bridge without silently relabelling the historical R4.1 `monthly_vw_forecast` identity;
-3. before an eligible future month-end origin, persist the immutable forecast input snapshot and H=1 forecast contract with model version, code SHA, source identities and issued-at timestamp;
-4. construct the complete versioned `EngineSnapshot` required by the downstream decision engine;
-5. the first forward evidence remains `PROSPECTIVE_SHADOW`; promotion to `LIVE_PRODUCTION` requires the later predefined prospective graduation gates;
-6. September 2026 remains non-backfillable under the frozen end-of-previous-month origin rule. The next possible fully compliant H=1 target is October 2026 at the end-September origin, only if all remaining Stage-4B gates close before issuance.
+1. V7 completed-session Patch identity is the active forward issuer candidate: `CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE`; do not reopen broad model search or retune from locked outcomes;
+2. R4.2 generic monthly-price-reference → Emergency bridge is validated; do not relabel the generic reference as historical `monthly_vw_forecast`;
+3. forecast DB schema/identity/immutability audit and read-only writer rehearsal are PASS; no real forecast row is authorized before an eligible origin;
+4. first-shadow issuer preflight is PASS and correctly returns `SKIP_NOT_ELIGIBLE_ORIGIN` on 2026-09-02; September remains non-backfillable;
+5. first possible contract-compliant target remains October 2026 at the end-September origin, after the issuer's availability/time gates close;
+6. a complete versioned forward `EngineSnapshot` and subsequent Decision Store write still must be built from the actually persisted forecast contract/snapshot IDs;
+7. first real forward forecast/decision evidence remains `PROSPECTIVE_SHADOW`; `LIVE_PRODUCTION` requires later prospective graduation gates;
+8. operational scheduler/dispatcher must actually execute from the repository default-branch scheduling surface without moving model authority out of `gold-r4-direction-engine`.
 
 Stage 5 remains closed as `PASS_PIYASA_SCREEN_CONTRACT`. Stage 6 remains blocked until a display-eligible stored Decision Store state exists. October 2026 at the end-September origin remains only a possible next prospective target if every Stage-4B gate closes before that origin.
 
@@ -1128,7 +1156,7 @@ Required next gates by dependency:
 
 **Stage-4B H=1 forecast lane (fail-closed for prospective issuance):**
 
-1. `CAUSAL_PATCH_R1_REPRO_V1_3_XAU_ONLY_ORIGIN_SAFE` is the active Patch issuer candidate after V4 source + historical model-impact PASS; its predecessor and archived artifacts remain immutable historical evidence;
+1. `CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE` is the active Patch issuer candidate after V6 monthly-level source/model gates plus V7 completed-session PIT historical model-impact PASS; its predecessor and archived artifacts remain immutable historical evidence;
 2. do not add Ridge/Huber/SVR/DOW/DMA/new Transformer variants or other model families merely because remaining production integration gates are difficult;
 3. keep `VW_AUDITED_SHADOW_V2` as audited reference, `MOMENTUM_3M_R1` as direction context, and `RW_R1` as benchmark;
 4. freeze the V4 executable/input identity and provenance without any post-result retuning;
@@ -1138,6 +1166,22 @@ Required next gates by dependency:
 8. September 2026 may not be backdated; October 2026 remains only a possible next fully compliant target if all gates close before the end-September origin.
 
 No `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` **decision** row may be written while an active Stage-4B blocker prevents construction of the complete versioned EngineSnapshot. This does not block non-decision `Piyasa` monitoring.
+
+### Manifest v1.19 Patch V7 / writer / mobile-UI reconciliation
+
+New frozen evidence and product decisions on 2026-09-02:
+
+- V5 hourly full-history monthly-level bridge failed closed on provider history entitlement; model scoring was skipped and thresholds were not relaxed;
+- V6 daily-train/hourly-anchor monthly-level architecture passed source and locked model-impact gates without changing Patch geometry;
+- V7 froze the final completed-session daily-feature correction before results: `TWELVE_XAU_USD_1DAY_OBSERVATION_DATE_STRICTLY_BEFORE_ORIGIN_DATE`; 43/43 origins used only strictly pre-origin daily observations, same-origin use 0, future-information violations 0, deterministic max diff 0;
+- V7 candidate MAPE `3.212376055%` vs RW `3.302322023%`, MAE `104.214302424` vs RW `107.465116279`, worst APE `9.016478855%` vs RW `9.625880596%`; hard/performance/model-impact gates PASS; evidence remains `HISTORICAL_REPLAY_MODEL_IMPACT`;
+- active forward candidate identity: `CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE`;
+- R4.2 generic monthly reference → Emergency bridge passed 5/5 tests while frozen R4.1 config remained unchanged;
+- production forecast writer schema audit passed; `forecast_input_snapshots` and `monthly_forecast_contracts` remained 0 rows and immutable guards were verified;
+- read-only writer rehearsal passed with insert-plan validation, 0→0 persistent rows and no identity consumption;
+- first-shadow issuer preflight passed, September backfill remains forbidden, earliest eligible origin is 2026-09-30 after 17:20 America/New_York, first target October 2026; no forecast value has been issued yet;
+- mobile product presentation is frozen by `GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V1.md`; approved mockup aesthetics do not authorize fabricated metrics or action mapping;
+- mobile Streamlit implementation candidate begins at `gold_axis_2026/apps/gold_control_mobile_v1.py`, backed by canonical Decision Store/forecast-ledger readers and fail-closed empty states.
 
 ### Manifest v1.18 V3/V4 input-continuation and model-impact reconciliation
 
@@ -1221,8 +1265,11 @@ Canonical audit record: `gold_axis_2026/GOLD_CONTROL_STAGE4_FORECAST_ISSUANCE_AU
 
 Current Streamlit paths:
 
-- `gold_axis_2026/apps/gold_control.py`
-- `gold_axis_2026/apps/live_sources.py`
+- `gold_axis_2026/apps/gold_control.py` — current canonical Stage-5 app;
+- `gold_axis_2026/apps/gold_control_mobile_v1.py` — manifest-aligned mobile UI V1 implementation candidate;
+- `gold_axis_2026/apps/live_sources.py`;
+- `gold_axis_2026/apps/forecast_source.py` — read-only canonical forecast-ledger display reader;
+- `gold_axis_2026/apps/mobile_ui_contract.py` — deterministic presentation-state contract.
 
 Current app information architecture now matches the canonical primary workflow:
 
