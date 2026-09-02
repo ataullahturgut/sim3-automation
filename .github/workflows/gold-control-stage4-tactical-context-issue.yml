@@ -1,5 +1,6 @@
 name: Gold Control Stage4A Tactical Context Issue
 
+# Governed late-bootstrap context issuer. No Decision Store or forecast write.
 on:
   workflow_dispatch:
   push:
@@ -51,7 +52,7 @@ jobs:
       - name: Verify context rows without raw market values
         run: |
           python - <<'PY'
-          import json, os
+          import os
           import psycopg
           from psycopg.rows import dict_row
           with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as conn:
