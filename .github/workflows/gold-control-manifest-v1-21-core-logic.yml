@@ -1,0 +1,68 @@
+name: Gold Control Manifest v1.21 Core Logic Patch
+
+on:
+  push:
+    branches:
+      - gold-r4-direction-engine
+    paths:
+      - .github/workflows/gold-control-manifest-v1-21-core-logic.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch-manifest:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+
+      - name: Patch canonical manifest
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md')
+          text = path.read_text(encoding='utf-8')
+
+          old_version = '**Manifest version:** 1.20  '
+          new_version = '**Manifest version:** 1.21  '
+          if old_version not in text:
+              raise SystemExit('MANIFEST_VERSION_ANCHOR_NOT_FOUND_OR_ALREADY_CHANGED')
+          text = text.replace(old_version, new_version, 1)
+
+          anchor = '## 7.1 H=1 role freeze — restored agreed architecture\n'
+          if anchor not in text:
+              raise SystemExit('H1_ROLE_FREEZE_ANCHOR_NOT_FOUND')
+
+          block = '''## 7.A CANONICAL CORE FORECAST / DECISION LOGIC — v1.21\n\nThis subsection freezes the **system-level forecasting and decision logic**. It is the architectural rule that governs how the monthly forecasting layer and intramonth decision layers relate to one another.\n\n### Binding core logic\n\n1. **The next calendar month's average XAU/USD price is a multi-expert monthly forecasting problem.** The system architecture is not defined as a single-model forecast system.\n2. The monthly expert set is:\n   - **Causal Patch Transformer**;\n   - **VW-MIDAS-MSVR**;\n   - **3M Momentum**;\n   - **Random Walk (RW)** as the mandatory benchmark, not as a promoted expert solely because it is simple.\n3. Each monthly expert output must remain separately identifiable and auditable by target month, forecast origin, model/version identity, evidence class and point-in-time-safe input lineage.\n4. The monthly forecast layer provides the system's **strategic monthly direction/prior/context**. This monthly view is an anchor for the decision system; it is **not an unconditional daily execution instruction**.\n5. The intramonth system must **not follow the monthly forecast blindly**. As new eligible information becomes available during the month, the daily/weekly state is updated through the separately governed tactical, event, emergency, regime and risk layers.\n6. The intramonth layer roles remain distinct:\n   - **Fast / Slow:** tactical confirmation / conflict state; not a permanent hard exposure gate;\n   - **Macro Event:** event-risk state only when its timestamp-safe rule is fully recovered/frozen; current incomplete historical reconstruction remains `BLOCKED_NOT_FULLY_RECOVERED`;\n   - **Emergency:** intramonth abnormal-move / reversal alert layer capable of identifying conditions that the monthly anchor cannot update quickly enough;\n   - **BOCPD:** regime/break context and alert only; not a standalone price forecast or direction generator;\n   - **GVZ:** volatility/risk-cap layer; it constrains risk and does not determine gold direction.\n7. Therefore a valid intramonth state may **disagree with the monthly prior**. Any resulting final decision state must still come only from a frozen, audited mapping/engine and must preserve the true information set available at that time. No later outcome may be used to retrofit an execution rule.\n8. The exact archived **expert-selection / aggregation rule** that produced different lead experts in the 2026 replay has not yet been proven from executable historical logic. Its status is `NOT_PROVEN_EXPERT_SELECTION_RULE`. No selector or ensemble rule may be invented from observed 2026 outcomes and presented as historical or production authority.\n9. Until that selector/aggregation contract is recovered or newly frozen under change control, **auto selector remains OFF and auto ensemble remains OFF**. Individual expert forecasts may be compared and stored, but a composite or selected canonical forecast requires an explicitly governed rule.\n10. The operational role freeze below may designate a currently reproducible forward issuer candidate (for example Patch V7) for ledger issuance. That operational limitation **does not redefine the Gold Control architecture as a single-model forecasting system**.\n\nCanonical system summary:\n\n```text\nMulti-Expert Monthly Forecast Engine\n  ├─ Causal Patch Transformer\n  ├─ VW-MIDAS-MSVR\n  ├─ 3M Momentum\n  └─ Random Walk benchmark\n          ↓\nMonthly Direction / Prior / Context\n          ↓\nFast / Slow tactical confirmation-conflict\n          ↓\nMacro Event state (only when contract-complete)\n          ↓\nEmergency intramonth reversal / abnormal-move layer\n          ↓\nBOCPD regime / break context\n          ↓\nGVZ risk cap\n          ↓\nFrozen Final Decision State\n          ↓\nImmutable Decision Snapshot / Event Ledger\n```\n\n**Binding interpretation:** the monthly forecast establishes the strategic anchor; the intramonth system incorporates newly available information and may confirm, conflict with, or react against that anchor only through separately frozen rules.\n\n'''
+
+          if '## 7.A CANONICAL CORE FORECAST / DECISION LOGIC — v1.21' in text:
+              raise SystemExit('V1_21_CORE_LOGIC_ALREADY_PRESENT')
+
+          text = text.replace(anchor, block + anchor, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Validate manifest patch
+        shell: bash
+        run: |
+          grep -q 'Manifest version:.*1.21' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q '7.A CANONICAL CORE FORECAST / DECISION LOGIC' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'Multi-Expert Monthly Forecast Engine' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'auto selector remains OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'monthly forecast establishes the strategic anchor' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          echo MANIFEST_V1_21_CORE_LOGIC_PATCH_PASS
+
+      - name: Commit manifest v1.21
+        shell: bash
+        run: |
+          git config user.name 'gold-control-governance-bot'
+          git config user.email 'gold-control-governance-bot@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          git commit -m 'gold-control: freeze multi-expert monthly core logic in manifest v1.21'
+          git push origin HEAD:gold-r4-direction-engine
