@@ -1,0 +1,61 @@
+{
+  "candidate_id": "CAUSAL_PATCH_R1_REPRO_V1_5_DAILY_TRAIN_HOURLY_ANCHOR_ORIGIN_SAFE",
+  "evidence_class": "SOURCE_INPUT_SEMANTIC_AUDIT",
+  "prospective_claim": false,
+  "daily_training_series_id": "PATCH_XAU_TWELVE_DAILY_MONTHLY_MEAN_V6_TRAIN",
+  "hourly_anchor_series_id": "PATCH_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V6_ANCHOR",
+  "daily_training_required_months": 186,
+  "daily_training_missing_months": 0,
+  "daily_training_low_count_months": 0,
+  "hourly_anchor_required_months": 43,
+  "hourly_anchor_missing_months": 0,
+  "hourly_anchor_low_count_months": 0,
+  "minimum_daily_observations_per_month": 15,
+  "daily_training_vs_core5": {
+    "common_months": 186,
+    "level_corr": 0.9999782199393625,
+    "median_abs_gap_bps": 8.78862539146122,
+    "p95_abs_gap_bps": 31.46279582254919,
+    "monthly_return_corr": 0.9973131278920159,
+    "monthly_return_sign_agree": 0.9621621621621622
+  },
+  "hourly_anchor_vs_daily_training": {
+    "common_months": 43,
+    "level_corr": 0.9999928156091437,
+    "median_abs_gap_bps": 6.681285533402343,
+    "p95_abs_gap_bps": 22.542320356909457,
+    "monthly_return_corr": 0.9990941273318381,
+    "monthly_return_sign_agree": 0.9761904761904762
+  },
+  "hourly_source_semantic": {
+    "provider": "Twelve Data",
+    "symbol": "XAU/USD",
+    "interval": "1h",
+    "requested_timezone": "America/New_York",
+    "selected_bar_open_time": "16:00:00",
+    "selected_bar_end_semantic": "17:00_ET_HOURLY_CLOSE",
+    "request_count": 8,
+    "selected_daily_observation_count": 932,
+    "first_selected_date": "2022-12-01",
+    "last_selected_date": "2026-06-30"
+  },
+  "frozen_gates": {
+    "level_corr_min": 0.995,
+    "median_gap_bps_max": 50.0,
+    "p95_gap_bps_max": 100.0,
+    "return_corr_min": 0.95,
+    "sign_agree_min": 0.8
+  },
+  "daily_training_coverage_pass": true,
+  "hourly_anchor_coverage_pass": true,
+  "daily_training_materiality_pass": true,
+  "hourly_anchor_materiality_pass": true,
+  "source_bridge_pass": true,
+  "decision": "PATCH_MONTHLY_LEVEL_BRIDGE_V6_SOURCE_PASS",
+  "thresholds_relaxed": false,
+  "post_result_source_substitution": false,
+  "raw_vendor_market_values_logged": false,
+  "database_write": "NONE",
+  "forecast_ledger_write": "NONE",
+  "decision_store_write": "NONE"
+}

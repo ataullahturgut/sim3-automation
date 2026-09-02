@@ -1,0 +1,46 @@
+{
+  "candidate_id": "CAUSAL_PATCH_R1_REPRO_V1_5_DAILY_TRAIN_HOURLY_ANCHOR_ORIGIN_SAFE",
+  "parent_candidate_id": "CAUSAL_PATCH_R1_REPRO_V1_3_XAU_ONLY_ORIGIN_SAFE",
+  "evidence_class": "HISTORICAL_REPLAY_MODEL_IMPACT",
+  "prospective_claim": false,
+  "source_gate": "PATCH_MONTHLY_LEVEL_BRIDGE_V6_SOURCE_PASS",
+  "daily_training_series_id": "PATCH_XAU_TWELVE_DAILY_MONTHLY_MEAN_V6_TRAIN",
+  "hourly_anchor_series_id": "PATCH_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V6_ANCHOR",
+  "training_target_lag_months": 1,
+  "geometry": {
+    "L": 252,
+    "P": 21,
+    "D": 32
+  },
+  "geometry_reselected": false,
+  "locked_window": "2023-01..2026-07",
+  "N": 43,
+  "target_reconciliation": "43/43",
+  "rw_reconciliation": "43/43",
+  "future_information_violations": 0,
+  "deterministic_max_abs_diff": 0.0,
+  "candidate_metrics": {
+    "MAE": 97.60934308161728,
+    "MAPE_pct": 3.0134297915638313,
+    "median_APE_pct": 2.053037647707501,
+    "worst_APE_pct": 8.524727843095874,
+    "RMSE": 140.47987456568367
+  },
+  "rw_metrics": {
+    "MAE": 107.46511627906976,
+    "MAPE_pct": 3.3023220233201385,
+    "median_APE_pct": 2.91497975708502,
+    "worst_APE_pct": 9.625880596205832,
+    "RMSE": 153.0688774740404
+  },
+  "worst_ape_ratio_vs_rw": 0.8856049852162107,
+  "hard_gate_pass": true,
+  "performance_gate_pass": true,
+  "model_impact_pass": true,
+  "decision": "PATCH_R1_V6_MONTHLY_LEVEL_MODEL_IMPACT_PASS",
+  "post_result_retune": false,
+  "raw_vendor_market_values_logged": false,
+  "database_write": "NONE",
+  "forecast_ledger_write": "NONE",
+  "decision_store_write": "NONE"
+}
