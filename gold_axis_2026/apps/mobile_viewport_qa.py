@@ -12,6 +12,25 @@ PHONE_HEIGHT = 844
 MAIN_NAV = ".st-key-gc_main_nav"
 
 
+def assert_no_streamlit_exception(page: Page, screen: str) -> None:
+    """Fail on rendered Streamlit exceptions, not merely server-health failures."""
+    exception_nodes = page.locator('[data-testid="stException"]')
+    if exception_nodes.count() and exception_nodes.first.is_visible():
+        text = exception_nodes.first.inner_text()
+        raise AssertionError(f"STREAMLIT_EXCEPTION_VISIBLE:{screen}:{text[:500]}")
+
+    body = page.locator("body").inner_text().upper()
+    fatal_markers = (
+        "THIS APP HAS ENCOUNTERED AN ERROR",
+        "IMPORTERROR",
+        "MODULENOTFOUNDERROR",
+        "TRACEBACK (MOST RECENT CALL LAST)",
+    )
+    for marker in fatal_markers:
+        if marker in body:
+            raise AssertionError(f"STREAMLIT_FATAL_MARKER_VISIBLE:{screen}:{marker}")
+
+
 def assert_no_horizontal_overflow(page: Page, screen: str) -> None:
     dims = page.evaluate(
         """() => ({
@@ -84,14 +103,17 @@ def main() -> int:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page(viewport={"width": PHONE_WIDTH, "height": PHONE_HEIGHT}, device_scale_factor=1)
         page.goto(args.url, wait_until="domcontentloaded", timeout=60_000)
-        page.get_by_text("GOLD CONTROL", exact=False).first.wait_for(state="visible", timeout=45_000)
         page.wait_for_timeout(2200)
+        assert_no_streamlit_exception(page, "initial")
+        page.get_by_text("GOLD CONTROL", exact=False).first.wait_for(state="visible", timeout=45_000)
 
+        assert_no_streamlit_exception(page, "bugun")
         screenshot(page, out, "bugun")
         require_nav_labels(page)
         assert_no_horizontal_overflow(page, "bugun")
 
         click_tab(page, "Görünüm")
+        assert_no_streamlit_exception(page, "gorunum")
         page.get_by_text("GÖRÜNÜM", exact=True).first.wait_for(state="visible", timeout=15_000)
         body = visible_text(page)
         for marker in [
@@ -111,6 +133,7 @@ def main() -> int:
         screenshot(page, out, "gorunum")
 
         click_tab(page, "Tahmin")
+        assert_no_streamlit_exception(page, "tahmin")
         page.get_by_text("TAHMİN", exact=True).first.wait_for(state="visible", timeout=15_000)
         body = visible_text(page)
         for marker in [
@@ -128,6 +151,7 @@ def main() -> int:
         screenshot(page, out, "tahmin")
 
         click_tab(page, "Geçmiş")
+        assert_no_streamlit_exception(page, "gecmis")
         page.get_by_text("PERFORMANS", exact=True).first.wait_for(state="visible", timeout=15_000)
         body = visible_text(page)
         for marker in [
