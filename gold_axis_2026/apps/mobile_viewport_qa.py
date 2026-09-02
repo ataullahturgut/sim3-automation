@@ -116,16 +116,23 @@ def require_markers(body: str, screen: str, markers: list[str]) -> None:
 
 
 def marker_y(page: Page, marker: str) -> float:
-    # Prefer the actual section heading so a hero/meta label with similar text
-    # cannot satisfy or disturb the frozen mockup section order.
-    scoped = page.locator(".gc-section-title").filter(has_text=re.compile(re.escape(marker), re.I))
-    for candidates in (scoped, page.get_by_text(marker, exact=False)):
-        for i in range(min(candidates.count(), 12)):
-            item = candidates.nth(i)
-            if item.is_visible():
-                box = item.bounding_box()
-                if box:
-                    return float(box["y"])
+    # Section headings are compared with the same Turkish-safe normalization as
+    # the textual contract, avoiding Unicode case-fold differences in browser regex.
+    normalized_marker = normalize_text(marker)
+    headings = page.locator(".gc-section-title")
+    for i in range(min(headings.count(), 64)):
+        item = headings.nth(i)
+        if item.is_visible() and normalized_marker in normalize_text(item.inner_text()):
+            box = item.bounding_box()
+            if box:
+                return float(box["y"])
+    candidates = page.get_by_text(marker, exact=False)
+    for i in range(min(candidates.count(), 12)):
+        item = candidates.nth(i)
+        if item.is_visible():
+            box = item.bounding_box()
+            if box:
+                return float(box["y"])
     raise AssertionError(f"VISIBLE_MARKER_NOT_FOUND:{marker}")
 
 
@@ -175,7 +182,7 @@ def main() -> int:
         assert_segmented_control(page,MAIN_NAV,4,"MAIN_NAV_TAHMIN"); assert_bottom_nav_in_viewport(page); assert_no_horizontal_overflow(page,"tahmin"); screenshot(page,out,"tahmin")
 
         click_tab(page,"Geçmiş"); assert_no_streamlit_exception(page,"gecmis"); page.get_by_text("GEÇMİŞ",exact=True).first.wait_for(state="visible",timeout=15_000); body=visible_text(page)
-        require_markers(body,"GECMIS",["MAPE","MAE (USD)","YÖN DOĞRULUĞU","REALIZED TAHMİN","TAHMİN PERFORMANSI","HATA / KARAR ZAMAN ÇİZELGESİ","SEÇİLMİŞ GEÇMİŞ KAYITLAR","MULTI-EXPERT FORECAST LEDGER","MONTH_END_EXPERT","EARLY INDICATIVE","HISTORICAL_REPLAY","NOT_PROVEN_EXPERT_SELECTION_RULE"])
+        require_markers(body,"GECMIS",["MAPE","MAE (USD)","YÖN DOĞRULUĞU","REALIZED TAHMİN","TAHMİN PERFORMANSI","HATA / KARAR ZAMAN ÇİZGİSİ","SEÇİLMİŞ GEÇMİŞ KAYITLAR","MULTI-EXPERT FORECAST LEDGER","MONTH_END_EXPERT","EARLY INDICATIVE","HISTORICAL_REPLAY","NOT_PROVEN_EXPERT_SELECTION_RULE"])
         assert_vertical_order(page,"GECMIS",["PROSPECTIVE / LIVE CANONICAL SCORECARD","TAHMİN PERFORMANSI","HATA / KARAR ZAMAN ÇİZGİSİ","SEÇİLMİŞ GEÇMİŞ KAYITLAR","MULTI-EXPERT FORECAST LEDGER"])
         if grid_column_count(page,".gc-grid4") != 2:
             raise AssertionError("GECMIS_SUMMARY_CARDS_EXPECTED_2X2_AT_390PX")
