@@ -26,9 +26,6 @@ def _load_exact_module(name: str, path: Path, *, required_exports: tuple[str, ..
     """Force-load one local module from an exact path and validate its identity."""
     expected_path = path.resolve(strict=True)
     importlib.invalidate_caches()
-
-    # Streamlit Cloud may retain a stale or foreign module with the same generic
-    # name. Never reuse it for canonical local modules.
     sys.modules.pop(name, None)
 
     spec = importlib.util.spec_from_file_location(name, expected_path)
@@ -56,8 +53,6 @@ def _load_exact_module(name: str, path: Path, *, required_exports: tuple[str, ..
     return module
 
 
-# Full local dependency chain used by the mobile V2 application. Load in
-# dependency order and verify every symbol consumed by downstream modules.
 _load_exact_module(
     "decision_store",
     DATA_PIPELINE_DIR / "decision_store.py",
@@ -109,21 +104,14 @@ _load_exact_module(
     ),
 )
 
-# Execute the presentation module afresh on every Streamlit rerun. Its legacy
-# sibling imports now resolve only to the exact modules registered above.
 mobile_app = _load_exact_module(
     "gold_control_mobile_v1",
     APP_DIR / "gold_control_mobile_v1.py",
 )
 
-# Final V2 presentation overrides.
-# The underlying mobile implementation predates keyed navigation styling, so
-# this layer deliberately scopes the two radio controls and removes Community
-# Cloud chrome that is not part of the Gold Control product surface.
 st.markdown(
     """
 <style>
-/* --- Streamlit / Community Cloud chrome is not part of the product UI. --- */
 #MainMenu,
 footer,
 [data-testid="stToolbar"],
@@ -144,8 +132,6 @@ header[data-testid="stHeader"]{
  background:transparent!important;
 }
 
-/* Vega tooltips are disabled on the phone product surface. They otherwise
-   remain pinned after long-touch on iOS and obscure subsequent cards. */
 .vg-tooltip,
 #vg-tooltip-element,
 .vega-embed .vg-tooltip{
@@ -154,7 +140,6 @@ header[data-testid="stHeader"]{
  pointer-events:none!important;
 }
 
-/* Reset ordinary radios. The implementation used a broad stRadio selector. */
 [data-testid="stRadio"]{
  position:static!important;
  left:auto!important;
@@ -168,7 +153,6 @@ header[data-testid="stHeader"]{
  margin:0!important;
 }
 
-/* --- Canonical fixed four-item bottom navigation. --- */
 .st-key-gc_main_nav [data-testid="stRadio"]{
  position:fixed!important;
  left:.5rem!important;
@@ -214,13 +198,18 @@ header[data-testid="stHeader"]{
  border-radius:13px!important;
  box-sizing:border-box!important;
 }
-/* Hide BaseWeb's native radio disc; the selected tab itself is the state. */
-.st-key-gc_main_nav label[data-baseweb="radio"] > div > div:first-child{
+.st-key-gc_main_nav label[data-baseweb="radio"] > div > div:first-child,
+.st-key-gc_main_nav input[type="radio"] + div,
+.st-key-gc_main_nav input[type="radio"] ~ div[aria-hidden="true"],
+.st-key-gc_main_nav [data-baseweb="radio"] [aria-hidden="true"]{
  display:none!important;
  width:0!important;
  height:0!important;
+ min-width:0!important;
+ min-height:0!important;
  margin:0!important;
  padding:0!important;
+ border:0!important;
 }
 .st-key-gc_main_nav label[data-baseweb="radio"]:has(input:checked) > div{
  background:#082a4b!important;
@@ -242,10 +231,7 @@ header[data-testid="stHeader"]{
 }
 .st-key-gc_main_nav input{display:none!important}
 
-/* --- Piyasa time-range control: compact segmented control, not a second nav. --- */
-.st-key-gc_market_range{
- margin:.1rem 0 .55rem!important;
-}
+.st-key-gc_market_range{margin:.1rem 0 .55rem!important}
 .st-key-gc_market_range [data-testid="stRadio"]{
  display:block!important;
  background:#f5f8fb!important;
@@ -277,16 +263,20 @@ header[data-testid="stHeader"]{
  padding:.38rem .2rem!important;
  border-radius:9px!important;
 }
-.st-key-gc_market_range label[data-baseweb="radio"] > div > div:first-child{
+.st-key-gc_market_range label[data-baseweb="radio"] > div > div:first-child,
+.st-key-gc_market_range input[type="radio"] + div,
+.st-key-gc_market_range input[type="radio"] ~ div[aria-hidden="true"],
+.st-key-gc_market_range [data-baseweb="radio"] [aria-hidden="true"]{
  display:none!important;
  width:0!important;
  height:0!important;
+ min-width:0!important;
+ min-height:0!important;
  margin:0!important;
  padding:0!important;
+ border:0!important;
 }
-.st-key-gc_market_range label[data-baseweb="radio"]:has(input:checked) > div{
- background:#082a4b!important;
-}
+.st-key-gc_market_range label[data-baseweb="radio"]:has(input:checked) > div{background:#082a4b!important}
 .st-key-gc_market_range label[data-baseweb="radio"] p{
  margin:0!important;
  color:#667790!important;
@@ -300,8 +290,6 @@ header[data-testid="stHeader"]{
 }
 .st-key-gc_market_range input{display:none!important}
 
-/* Title-only chart wrappers in the legacy implementation should read as a
-   compact module header, not a large disconnected empty card. */
 .gc-card:has(> .gc-section-title:only-child){
  padding:.78rem .95rem!important;
  margin:.7rem 0 .18rem!important;
@@ -309,11 +297,8 @@ header[data-testid="stHeader"]{
  border-radius:15px!important;
  box-shadow:0 2px 10px rgba(16,41,75,.025)!important;
 }
-.gc-card:has(> .gc-section-title:only-child) .gc-section-title{
- margin-bottom:0!important;
-}
+.gc-card:has(> .gc-section-title:only-child) .gc-section-title{margin-bottom:0!important}
 
-/* Mobile density and safe-area treatment. */
 @media(max-width:620px){
  .block-container{
    padding-left:.62rem!important;
