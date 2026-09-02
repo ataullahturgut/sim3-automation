@@ -13,12 +13,16 @@ MAIN_NAV = ".st-key-gc_main_nav"
 MARKET_RANGE = ".st-key-gc_market_range"
 
 
+def normalize_text(value: str) -> str:
+    return value.upper().replace("İ", "I")
+
+
 def assert_no_streamlit_exception(page: Page, screen: str) -> None:
     exception_nodes = page.locator('[data-testid="stException"]')
     if exception_nodes.count() and exception_nodes.first.is_visible():
         text = exception_nodes.first.inner_text()
         raise AssertionError(f"STREAMLIT_EXCEPTION_VISIBLE:{screen}:{text[:500]}")
-    body = page.locator("body").inner_text().upper()
+    body = normalize_text(page.locator("body").inner_text())
     for marker in (
         "THIS APP HAS ENCOUNTERED AN ERROR",
         "IMPORTERROR",
@@ -43,7 +47,7 @@ def assert_no_horizontal_overflow(page: Page, screen: str) -> None:
 
 
 def visible_text(page: Page) -> str:
-    return page.locator("body").inner_text().upper()
+    return normalize_text(page.locator("body").inner_text())
 
 
 def main_nav_label(page: Page, name: str):
@@ -119,8 +123,9 @@ def screenshot(page: Page, out: Path, name: str) -> None:
 
 
 def require_markers(body: str, screen: str, markers: list[str]) -> None:
+    normalized_body = normalize_text(body)
     for marker in markers:
-        if marker.upper() not in body:
+        if normalize_text(marker) not in normalized_body:
             raise AssertionError(f"{screen}_FINAL_MARKER_MISSING:{marker}")
 
 
@@ -157,7 +162,7 @@ def main() -> int:
             "FAST / SLOW TEYİDİ", "RİSK SEVİYESİ", "SİNYAL ZAMAN ÇİZELGESİ",
             "EMERGENCY DURUMU", "SİSTEM YORUMU",
         ])
-        if "POZİSYONU KORU" in body or "GÜÇ: %68" in body:
+        if normalize_text("POZİSYONU KORU") in body or normalize_text("GÜÇ: %68") in body:
             raise AssertionError("UNPROVEN_MOCKUP_PLACEHOLDER_VISIBLE_GORUNUM")
         assert_segmented_control(page, MAIN_NAV, 4, "MAIN_NAV_GORUNUM")
         assert_bottom_nav_in_viewport(page)
@@ -173,7 +178,7 @@ def main() -> int:
             "RANDOM WALK (RW)", "GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI",
             "TAHMİN ÖZETİ", "MODEL BİLGİSİ", "NOT",
         ])
-        if "2.420,00" in body or "GÜVEN: %68" in body:
+        if "2.420,00" in body or normalize_text("GÜVEN: %68") in body:
             raise AssertionError("MOCKUP_SAMPLE_NUMBER_VISIBLE_TAHMIN")
         assert_segmented_control(page, MAIN_NAV, 4, "MAIN_NAV_TAHMIN")
         assert_bottom_nav_in_viewport(page)
