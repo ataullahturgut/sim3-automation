@@ -1,12 +1,9 @@
 from __future__ import annotations
 
-"""Canonical Gold Control Streamlit entrypoint.
-
-Presentation authority is the final mobile V2 contract frozen in manifest v1.20.
-The implementation lives in ``gold_control_mobile_v1.py`` for continuity with
-its audited candidate history; this wrapper prevents the legacy desktop UI from
-remaining the production/deployment entrypoint.
-"""
+# Canonical Gold Control Streamlit entrypoint.
+# Presentation authority: manifest v1.20 / final mobile V2 contract.
+# The implementation remains in gold_control_mobile_v1.py to preserve its
+# audited candidate history while this file stays the deployment entrypoint.
 
 import runpy
 from pathlib import Path
