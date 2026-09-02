@@ -18,6 +18,8 @@ from decision_store_reader import read_latest_decision  # noqa: E402
 
 
 DISPLAY_EVIDENCE_ORDER = ("LIVE_PRODUCTION", "PROSPECTIVE_SHADOW")
+CONTEXT_EVIDENCE_CLASS = "LATE_BOOTSTRAP_SHADOW_CONTEXT"
+MONTHLY_CONTEXT_FEATURE = "MONTHLY_DIRECTION_3M"
 
 
 def _iso(value: Any) -> str | None:
@@ -31,7 +33,7 @@ def _iso(value: Any) -> str | None:
 
 
 def _to_transitional_app_shape(row: dict[str, Any]) -> dict[str, Any]:
-    """Map stored state to the existing UI field names without recomputing signals."""
+    """Map stored Decision Store state to UI field names without recomputing signals."""
     decision_as_of = row.get("decision_as_of")
     if isinstance(decision_as_of, datetime):
         display_date = decision_as_of.date().isoformat()
@@ -67,21 +69,79 @@ def _to_transitional_app_shape(row: dict[str, Any]) -> dict[str, Any]:
         "engine_version": row.get("engine_version"),
         "config_version": row.get("config_version"),
         "code_sha": row.get("code_sha"),
+        "context_only": False,
+    }
+
+
+def _read_monthly_shadow_context(conn) -> dict[str, Any] | None:
+    """Read the already-issued immutable monthly-direction bootstrap context.
+
+    This is deliberately NOT promoted to a Decision Store state.  It exists so
+    the UI can truthfully show the stored monthly prior while Stage 6 remains
+    BLOCKED_NO_DISPLAY_ELIGIBLE_DECISION_SNAPSHOT.
+    """
+    query = """
+        SELECT id, calculation_ts, input_cutoff, value_text, feature_version,
+               quality_status, metadata
+        FROM derived_feature_snapshots
+        WHERE feature_name = %s
+          AND (
+              quality_status = %s
+              OR metadata->>'evidence_class' = %s
+          )
+        ORDER BY calculation_ts DESC, id DESC
+        LIMIT 1
+    """
+    with conn.cursor(row_factory=dict_row) as cur:
+        cur.execute(query, (MONTHLY_CONTEXT_FEATURE, CONTEXT_EVIDENCE_CLASS, CONTEXT_EVIDENCE_CLASS))
+        row = cur.fetchone()
+    if not row:
+        return None
+    value = str(row.get("value_text") or "").strip()
+    if not value:
+        return None
+    metadata = dict(row.get("metadata") or {})
+    target_context = str(metadata.get("target_context") or "").strip()
+    target_month = f"{target_context}-01" if len(target_context) == 7 else None
+    return {
+        "date": str(row.get("input_cutoff"))[:10] if row.get("input_cutoff") else "N/A",
+        "decision_as_of": _iso(row.get("input_cutoff")),
+        "generated_at": _iso(row.get("calculation_ts")),
+        "evidence_class": CONTEXT_EVIDENCE_CLASS,
+        "context_only": True,
+        "context_feature_id": row.get("id"),
+        "target_month": target_month,
+        "monthly_direction_3m": value,
+        "fast_state": "YAYIMLANMADI",
+        "slow_state": "YAYIMLANMADI",
+        "level_emergency": "YAYIMLANMADI",
+        "reversal_emergency": "YAYIMLANMADI",
+        "macro_event_state": "BLOCKED_NOT_FULLY_RECOVERED",
+        "bocpd_context": "YAYIMLANMADI",
+        "classification": None,
+        "action_state": None,
+        "quality_status": row.get("quality_status"),
+        "feature_version": row.get("feature_version"),
+        "prospective_h1_claim": bool(metadata.get("prospective_h1_claim", False)),
     }
 
 
 def fetch_current_decision_state(database_url: str) -> dict[str, Any] | None:
-    """Read the latest display-eligible stored decision state.
+    """Read current display state without inventing a final decision.
 
-    Historical replay is deliberately excluded. LIVE_PRODUCTION has priority;
-    PROSPECTIVE_SHADOW is returned only when no live-production row exists and
-    remains explicitly labelled by evidence_class.
+    Priority is the governed Decision Store: LIVE_PRODUCTION, then
+    PROSPECTIVE_SHADOW.  When neither exists, the function may return only the
+    already-persisted MONTHLY_DIRECTION_3M late-bootstrap shadow context with
+    ``context_only=True``.  That fallback is not a final decision, does not
+    close Stage 6, and contains no action mapping.
     """
     url = str(database_url or "").strip()
     if not url:
         raise RuntimeError("NEON_DATABASE_URL_NOT_CONFIGURED")
 
-    with psycopg.connect(url, autocommit=True) as conn:
+    with psycopg.connect(url, autocommit=False) as conn:
+        with conn.cursor() as cur:
+            cur.execute("SET TRANSACTION READ ONLY")
         for evidence_class in DISPLAY_EVIDENCE_ORDER:
             row = read_latest_decision(conn, evidence_class)
             if row is None:
@@ -91,15 +151,19 @@ def fetch_current_decision_state(database_url: str) -> dict[str, Any] | None:
             result = _to_transitional_app_shape(row)
             if result.get("evidence_class") != evidence_class:
                 raise RuntimeError("DECISION_EVIDENCE_CLASS_MISMATCH")
+            conn.rollback()
             return result
-    return None
+        context = _read_monthly_shadow_context(conn)
+        conn.rollback()
+        return context
 
 
 def fetch_decision_history(database_url: str, limit: int = 80) -> list[dict[str, Any]]:
     """Return only prospectively stored/live decision events for UI history.
 
-    HISTORICAL_REPLAY is intentionally excluded from this production-facing
-    history. action_state remains forbidden by the Decision Store V1 contract.
+    HISTORICAL_REPLAY and LATE_BOOTSTRAP_SHADOW_CONTEXT are intentionally
+    excluded from this production-facing history. action_state remains
+    forbidden by the Decision Store V1 contract.
     """
     url = str(database_url or "").strip()
     if not url:
