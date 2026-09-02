@@ -1,0 +1,58 @@
+name: Gold Control Patch R1 Prospective Input Bridge V4
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-patch-r1-prospective-input-bridge-v4.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pandas numpy requests
+      - name: Require credential and freeze
+        run: |
+          test -n "$TWELVE_DATA_API_KEY"
+          grep -F 'FROZEN_BEFORE_V4_SOURCE_RESULT' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V4.md
+          grep -F 'FROZEN_BEFORE_V4_SOURCE_RESULT' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_INPUT_SOURCE_CHANGE_CONTROL_V4_2026-09-02.md
+          grep -F 'L=252' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V4.md
+          grep -F 'OMITTED_NOT_IMPUTED' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V4.md
+          python -m py_compile gold_axis_2026/tools/audit_patch_r1_prospective_input_bridge_v4.py
+      - name: Run V4 source audit
+        run: python gold_axis_2026/tools/audit_patch_r1_prospective_input_bridge_v4.py
+      - name: Verify evidence isolation
+        run: |
+          set -euo pipefail
+          f=gold_axis_2026/patch_repro_v1/prospective_input_bridge_v4_source_evidence.json
+          test -s "$f"
+          grep -F '"evidence_class": "INPUT_SOURCE_READINESS_AUDIT"' "$f"
+          grep -F '"prospective_claim": false' "$f"
+          grep -F '"geometry_changed": false' "$f"
+          grep -F '"forecast_ledger_write": "NONE"' "$f"
+          grep -F '"decision_store_write": "NONE"' "$f"
+          grep -F '"database_write": "NONE"' "$f"
+          grep -F '"raw_vendor_market_values_logged": false' "$f"
+      - name: Commit immutable V4 source evidence
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/patch_repro_v1/prospective_input_bridge_v4_source_evidence.json
+          git commit -m 'gold-control: record Patch V4 XAU-only source evidence'
+          git push origin HEAD:gold-r4-direction-engine
