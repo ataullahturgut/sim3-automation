@@ -53,6 +53,7 @@ AUTO_SELECTOR_STATUS = "OFF"
 AUTO_ENSEMBLE_STATUS = "OFF"
 MONTH_END_TRACK = "MONTH_END_EXPERT"
 EARLY_INDICATIVE_TRACK = "EARLY_INDICATIVE"
+CONTEXT_EVIDENCE_CLASS = "LATE_BOOTSTRAP_SHADOW_CONTEXT"
 EXPERT_DISPLAY_ORDER = (
     "CAUSAL_PATCH",
     "VW_MIDAS_MSVR",
@@ -149,6 +150,13 @@ def decision_view_state(decision: dict[str, Any] | None) -> ViewState:
             tone="neutral",
             evidence_class=None,
         )
+    if decision.get("context_only") is True:
+        return ViewState(
+            title="KANONİK KARAR YOK",
+            subtitle="Aylık yön SHADOW CONTEXT mevcut; tam Decision Store snapshot henüz yok.",
+            tone="neutral",
+            evidence_class=CONTEXT_EVIDENCE_CLASS,
+        )
     classification = str(decision.get("classification") or "UNRESOLVED_MIXED")
     if classification not in ALLOWED_CLASSIFICATIONS:
         raise RuntimeError(f"UNAPPROVED_UI_CLASSIFICATION:{classification}")
@@ -192,6 +200,7 @@ def evidence_badge(evidence_class: str | None) -> tuple[str, str]:
         "HISTORICAL_REPLAY": ("HISTORICAL REPLAY", "research"),
         "PROSPECTIVE_SHADOW": ("PROSPECTIVE SHADOW", "shadow"),
         "LIVE_PRODUCTION": ("LIVE PRODUCTION", "production"),
+        CONTEXT_EVIDENCE_CLASS: ("SHADOW CONTEXT", "shadow"),
     }
     if evidence_class is None:
         return ("YAYIMLANMADI", "neutral")
@@ -249,6 +258,8 @@ def expert_display_state(expert_id: str, rows: list[dict[str, Any]] | None) -> d
 def monthly_intramonth_relation(decision: dict[str, Any] | None) -> str:
     if not decision:
         return "KARAR HENÜZ YAYIMLANMADI"
+    if decision.get("context_only") is True:
+        return "INTRAMONTH TEYİT HENÜZ YAYIMLANMADI"
     monthly = display_state(decision.get("monthly_direction_3m"), "UNRESOLVED")
     fast = display_state(decision.get("fast_state"), "UNRESOLVED")
     slow = display_state(decision.get("slow_state"), "UNRESOLVED")
@@ -272,6 +283,15 @@ def deterministic_explanation(decision: dict[str, Any] | None) -> str:
             "Fast/Slow, Macro Event, Emergency, BOCPD ve GVZ yalnız kendi dondurulmuş rolleriyle "
             "yeni uygun veri geldikçe intramonth durumu günceller. Kayıtlı final karar henüz yok."
         )
+    if decision.get("context_only") is True:
+        monthly = display_state(decision.get("monthly_direction_3m"), "YAYIMLANMADI")
+        result = (
+            f"Aylık yön shadow context: {monthly}. Bu değer immutable derived-feature kaydından okunur; "
+            "final Decision Store kararı değildir. Fast/Slow ve diğer intramonth katmanlar henüz "
+            "display-eligible tam snapshot olarak yayımlanmadığı için final sınıflandırma üretilmez."
+        )
+        assert_no_action_mapping(result)
+        return result
     parts: list[str] = []
     monthly = decision.get("monthly_direction_3m")
     fast = decision.get("fast_state")
