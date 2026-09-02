@@ -1,0 +1,77 @@
+name: Gold Control Patch R1 V4 XAU-only Model Impact
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-patch-r1-v4-xau-only-model-impact.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-patch-r1-v4-xau-only-model-impact
+  cancel-in-progress: false
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install replay runtime
+        run: |
+          pip install pandas numpy requests
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Verify credentials and frozen V4 gates
+        run: |
+          set -euo pipefail
+          test -n "$TWELVE_DATA_API_KEY"
+          test -n "$FRED_API_KEY"
+          grep -F 'CAUSAL_PATCH_R1_REPRO_V1_3_XAU_ONLY_ORIGIN_SAFE' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V4.md
+          grep -F 'MAPE `< RW MAPE`' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_INPUT_SOURCE_CHANGE_CONTROL_V4_2026-09-02.md
+          grep -F 'MAE `< RW MAE`' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_INPUT_SOURCE_CHANGE_CONTROL_V4_2026-09-02.md
+          grep -F 'worst APE `<= 1.25 × RW worst APE`' gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_INPUT_SOURCE_CHANGE_CONTROL_V4_2026-09-02.md
+          grep -F '"source_bridge_pass": true' gold_axis_2026/patch_repro_v1/prospective_input_bridge_v4_source_evidence.json
+          python - <<'PY'
+          import json
+          p=json.load(open('gold_axis_2026/patch_repro_v1/frozen_geometry.json'))['selected_pre_2023_geometry']
+          assert (int(p['L']),int(p['P']),int(p['D']))==(252,21,32),p
+          print('FROZEN_GEOMETRY_252_21_32_PASS')
+          PY
+          python -m py_compile gold_axis_2026/tools/causal_patch_r1_repro_v4_xau_only.py
+      - name: Run locked V4 replay twice internally
+        run: python gold_axis_2026/tools/causal_patch_r1_repro_v4_xau_only.py
+      - name: Verify evidence isolation and no retune
+        run: |
+          set -euo pipefail
+          f=gold_axis_2026/patch_repro_v1/locked_replay_v4_xau_only_evidence.json
+          test -s "$f"
+          test -s gold_axis_2026/patch_repro_v1/locked_replay_v4_xau_only_43.csv
+          grep -F '"evidence_class": "HISTORICAL_REPLAY_MODEL_IMPACT"' "$f"
+          grep -F '"prospective_claim": false' "$f"
+          grep -F '"geometry_reselected": false' "$f"
+          grep -F '"post_result_retune": false' "$f"
+          grep -F '"forecast_ledger_write": "NONE"' "$f"
+          grep -F '"decision_store_write": "NONE"' "$f"
+          grep -F '"database_write": "NONE"' "$f"
+          grep -F '"raw_vendor_market_values_logged": false' "$f"
+      - name: Commit immutable V4 model-impact evidence
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/patch_repro_v1/locked_replay_v4_xau_only_evidence.json gold_axis_2026/patch_repro_v1/locked_replay_v4_xau_only_43.csv
+          git commit -m 'gold-control: record frozen Patch V4 XAU-only model-impact replay'
+          git push origin HEAD:gold-r4-direction-engine
