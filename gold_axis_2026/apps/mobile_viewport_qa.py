@@ -127,7 +127,10 @@ def click_tab(page: Page, name: str) -> None:
     if target is None:
         raise AssertionError(f"MOBILE_TAB_CONTROL_NOT_FOUND:{name}")
     target.click()
-    page.wait_for_timeout(1100)
+    # A Streamlit radio change reruns the complete script. The final visual CSS
+    # is emitted after the presentation module, so wait for the rerun to settle
+    # before evaluating computed styles.
+    page.wait_for_timeout(2600)
 
 
 def screenshot(page: Page, out: Path, name: str) -> None:
@@ -147,9 +150,11 @@ def main() -> int:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page(viewport={"width": PHONE_WIDTH, "height": PHONE_HEIGHT}, device_scale_factor=1)
         page.goto(args.url, wait_until="domcontentloaded", timeout=60_000)
-        page.wait_for_timeout(2200)
         assert_no_streamlit_exception(page, "initial")
         page.get_by_text("GOLD CONTROL", exact=False).first.wait_for(state="visible", timeout=45_000)
+        # GOLD CONTROL is emitted near the start of the script. Allow the final
+        # presentation override at the end of the same Streamlit run to mount.
+        page.wait_for_timeout(4200)
 
         assert_no_streamlit_exception(page, "bugun")
         require_nav_labels(page)
