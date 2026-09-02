@@ -42,7 +42,7 @@ def load_inputs(cur, calc_ts: datetime) -> list[dict]:
         FROM observations_as_of(%s)
         WHERE series_id=%s AND quality_status=%s
           AND observation_ts >= timestamptz '2026-07-01 00:00:00+00'
-          AND observation_ts < timestamptz %s
+          AND observation_ts < %s::timestamptz
         ORDER BY observation_ts, retrieved_at, id
         """,
         (calc_ts, SERIES_ID, QUALITY_INPUT, CUTOFF_TS),
@@ -134,8 +134,9 @@ def main() -> int:
             if int(cur.fetchone()["n"]) != 1:
                 raise RuntimeError("DERIVED_FEATURE_IMMUTABILITY_GUARD_NOT_ACTIVE")
 
-            rows = load_inputs(cur, calc_ts)
-            fast, slow, fingerprint, lineage_id, input_cutoff = calculate(rows)
+            input_rows = load_inputs(cur, calc_ts)
+            input_count = len(input_rows)
+            fast, slow, fingerprint, lineage_id, input_cutoff = calculate(input_rows)
             values = {"FAST_STATE": fast, "SLOW_STATE": slow}
 
             for feature_name, feature_version in FEATURES.items():
@@ -152,7 +153,7 @@ def main() -> int:
                 "target_context": TARGET_CONTEXT,
                 "fast_state": fast,
                 "slow_state": slow,
-                "input_count": len(rows),
+                "input_count": input_count,
                 "input_fingerprint": fingerprint,
                 "raw_market_values_logged": False,
                 "prospective_h1_claim": False,
@@ -169,9 +170,9 @@ def main() -> int:
                 "series_id": SERIES_ID,
                 "source": "Twelve Data",
                 "lineage_id": lineage_id,
-                "selected_input_ids": [int(r["id"]) for r in rows],
-                "selected_observation_ts": [r["observation_ts"].isoformat() for r in rows],
-                "selected_available_as_of": [r["available_as_of"].isoformat() for r in rows],
+                "selected_input_ids": [int(r["id"]) for r in input_rows],
+                "selected_observation_ts": [r["observation_ts"].isoformat() for r in input_rows],
+                "selected_available_as_of": [r["available_as_of"].isoformat() for r in input_rows],
                 "input_fingerprint": fingerprint,
             }
             for feature_name, feature_version in FEATURES.items():
@@ -210,13 +211,13 @@ def main() -> int:
         with conn.cursor() as cur:
             cur.execute("SET TRANSACTION READ ONLY")
             for feature_name, feature_version in FEATURES.items():
-                rows = existing_context(cur, feature_name, feature_version)
-                if not rows:
+                verified_rows = existing_context(cur, feature_name, feature_version)
+                if not verified_rows:
                     raise RuntimeError(f"TACTICAL_CONTEXT_POST_COMMIT_MISSING:{feature_name}")
-                row = rows[0]
-                if row.get("value_text") != values[feature_name]:
+                verified = verified_rows[0]
+                if verified.get("value_text") != values[feature_name]:
                     raise RuntimeError(f"TACTICAL_CONTEXT_POST_COMMIT_VALUE_MISMATCH:{feature_name}")
-                if (row.get("metadata") or {}).get("input_fingerprint") != fingerprint:
+                if (verified.get("metadata") or {}).get("input_fingerprint") != fingerprint:
                     raise RuntimeError(f"TACTICAL_CONTEXT_POST_COMMIT_FINGERPRINT_MISMATCH:{feature_name}")
         conn.rollback()
 
@@ -226,7 +227,7 @@ def main() -> int:
         "fast_state": fast,
         "slow_state": slow,
         "inserted_ids": inserted,
-        "input_count": len(rows),
+        "input_count": input_count,
         "input_fingerprint": fingerprint,
         "raw_market_values_logged": False,
         "prospective_h1_claim": False,
