@@ -1,0 +1,44 @@
+name: Gold Control Manifest v1.16 Restore Agreed Flow
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/gold-control-manifest-v1-16-restore-agreed-flow.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Apply v1.16 agreed-flow restoration
+        run: python gold_axis_2026/tools/reconcile_manifest_v1_16_restore_agreed_flow.py
+      - name: Verify scoped manifest change
+        run: |
+          set -euo pipefail
+          test "$(git diff --name-only | sed '/^$/d' | wc -l)" -eq 1
+          git diff --name-only | grep -Fx 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+          grep -F '**Manifest version:** 1.16' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'IN_PROGRESS_PATCH_R1_REPRODUCIBILITY' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'CAUSAL_PATCH_R1_REPRO_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'VW_AUDITED_SHADOW_V2' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          ! grep -F 'GOLD_CONTROL_H1_SUCCESSOR_VALIDATION_CONTRACT_R2.md' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+      - name: Commit manifest v1.16 to canonical branch
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          git commit -m 'gold-control: restore agreed forecast path manifest v1.16'
+          git push origin HEAD:gold-r4-direction-engine
