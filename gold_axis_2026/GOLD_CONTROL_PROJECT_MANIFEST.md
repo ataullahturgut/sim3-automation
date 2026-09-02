@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.19  
+**Manifest version:** 1.20  
 **Freeze / issue date:** 2026-09-02  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -797,29 +797,127 @@ Contains:
 
 This is secondary navigation, not one of the four primary user tabs.
 
-## 17.6 Approved mobile product UI V1
+## 17.6 Final mobile mockup contract V2
 
 Binding presentation specification:
 
-`gold_axis_2026/GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V1.md`
+`gold_axis_2026/GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md`
 
-Status: `APPROVED_MOBILE_PRODUCT_UI_CONTRACT_V1`.
+Status: `APPROVED_FINAL_MOCKUP_UI_CONTRACT_V2`.
 
-The approved 2026-09-02 mobile mockup direction is binding for visual hierarchy, navy/gold/white palette, mobile card structure, hero treatment and bottom-navigation concept. Mockup sample numbers are not data authority. Manifest/data/ledger semantics override every placeholder inside a drawing.
+This V2 contract supersedes V1 for presentation structure. It does **not** change model, source, forecast, decision, threshold, evidence, licensing, or point-in-time semantics.
 
-Mobile bottom-navigation label `Bugün` is an approved user-facing alias for the canonical `Piyasa` screen; the underlying screen/data contract remains `Piyasa`.
+The latest approved mockup family is now the canonical visual target for `Görünüm`, `Tahmin`, and `Geçmiş/Performans`; `Bugün` / canonical `Piyasa` must be restyled into the same shell.
 
-Production UI must specifically remove or replace mockup elements that are not currently authorized:
+### Global mobile shell — binding
 
-- no `POZİSYONU KORU`, BUY/SELL/HOLD/EXIT or exposure mapping while `NOT_PROVEN_POSITION_MAPPING` remains active;
-- no arbitrary `Güç %`, confidence label/percentage or forecast band;
-- no fabricated forecast/reference values;
-- no YBB/12M strategy return, drawdown, trade count or entry/exit performance until an audited execution/portfolio contract exists;
-- `Tahmin` renders a numeric value only from canonical `monthly_forecast_contracts`;
-- `Görünüm` renders a current state only from a display-eligible Decision Store row;
-- `Geçmiş` keeps `HISTORICAL_REPLAY`, `PROSPECTIVE_SHADOW`, and `LIVE_PRODUCTION` visibly separated.
+Every primary screen must use the same product shell:
 
-Implementation candidate: `gold_axis_2026/apps/gold_control_mobile_v1.py`; it is not yet a Stage-10 completion claim.
+- compact white institutional header;
+- Gold Control logo + `DECISION SYSTEM` subtitle;
+- menu affordance on the left;
+- notification/profile controls only if implemented, never decorative dead controls;
+- page title, short subtitle, and real last-update/freshness timestamp when available;
+- white/light cool-neutral page surface;
+- deep navy primary hero where the mockup uses one;
+- controlled gold brand/selection accent;
+- green only for favorable/up/normal state;
+- red only for adverse/down/alert state;
+- restrained white cards with subtle cool-gray border/shadow;
+- four-item bottom navigation: `Bugün | Görünüm | Tahmin | Geçmiş`;
+- one consistent navy/gold selected-state treatment across the four tabs.
+
+`Bugün` remains only a user-facing alias for canonical `Piyasa`.
+
+### Görünüm — final mockup hierarchy
+
+The screen order is frozen as:
+
+1. `GÖRÜNÜM` page header + last update;
+2. deep navy primary state hero;
+3. `1 · SİNYAL ÖZETİ`;
+4. `2 · MODEL YÖNÜ (AYLIK)`;
+5. `3 · FAST / SLOW TEYİDİ`;
+6. `4 · RİSK SEVİYESİ`;
+7. `5 · SİNYAL ZAMAN ÇİZELGESİ`;
+8. `6 · EMERGENCY DURUMU`;
+9. `7 · SİSTEM YORUMU`;
+10. explanatory footer note;
+11. bottom navigation.
+
+The hero composition is also frozen: primary stored state on the left/center, monthly context on the upper-right, GVZ/risk state on the lower-right, plus a real system-health pill only when supported.
+
+Mockup-to-production substitutions are mandatory:
+
+- `POZİSYONU KORU` slot -> stored descriptive R4 classification;
+- `MODEL YÖNÜ` -> stored monthly direction/context;
+- `RİSK SEVİYESİ` -> frozen GVZ risk-state translation;
+- `SİSTEM AKTİF` -> only a real health state;
+- signal timeline -> actual stored decision/model events only;
+- system comment -> deterministic explanation generated only from stored state.
+
+The following visible mockup content remains blocked until separately proven: `POZİSYONU KORU`, position/action labels, BUY/SELL/HOLD/EXIT/REDUCE, `Güç %`, and arbitrary confidence labels.
+
+### Tahmin — final mockup hierarchy
+
+The screen order is frozen as:
+
+1. `TAHMİN` page header + last update;
+2. deep navy `GELECEK AY TAHMİNİ` hero;
+3. `GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI` chart;
+4. scenario/module row, only when a canonical scenario contract exists;
+5. `MEVCUT FİYATA GÖRE FARK`;
+6. `MODEL PERFORMANSI`;
+7. methodology / non-advice information note;
+8. bottom navigation.
+
+The hero layout is frozen but data-gated:
+
+- left slot = canonical immutable H=1 point forecast from `monthly_forecast_contracts` after issuance;
+- right slot = separately stored/frozen monthly direction context;
+- target month, evidence class and origin/issued time must remain available in the UI hierarchy.
+
+Before a valid issuance, the hero must show `TAHMİN HENÜZ YAYIMLANMADI` and `NOT_ISSUED_IN_CANONICAL_LEDGER`, never a mockup number.
+
+The mockup's confidence gauge, `Güven %`, lower/base/upper scenario values and forecast band are reserved visual slots only and remain hidden until a calibrated scenario/interval contract is frozen, prospectively validated and immutably stored.
+
+The three-card `Baz / Yukarı / Aşağı` row has current status `BLOCKED_NO_CANONICAL_SCENARIO_CONTRACT`. It may not be populated by inventing scenarios or by relabelling VW/RW references as upside/downside cases.
+
+`MEVCUT FİYATA GÖRE FARK` may compare the current indicative display spot with the issued H=1 point forecast when both are available; this is a comparison, not expected return.
+
+`MODEL PERFORMANSI` must use realized prospective/live forecast rows for production-facing metrics. Historical replay belongs in a separately labelled research surface.
+
+### Geçmiş / Performans — final mockup hierarchy
+
+The bottom-navigation key remains `Geçmiş`; a user-facing `PERFORMANS` page heading is allowed.
+
+The screen order is frozen as:
+
+1. page header + last update;
+2. four summary metric cards;
+3. large primary history/performance chart;
+4. secondary timeline/risk/error chart;
+5. selected historical records table/list;
+6. evidence/methodology footer;
+7. bottom navigation.
+
+The four-card row is visually binding but labels are data-contract dependent. Under the current production contract, preferred production-safe metrics are realized prospective forecast count, prospective MAPE, prospective MAE USD, and prospective direction hit rate only if direction has a frozen definition. Insufficient history renders an empty/not-enough-history state.
+
+The original mockup's YBB strategy return, 12-month strategy return, portfolio maximum drawdown, trade count, entry/exit prices, trade return, `DOĞRU/YANLIŞ` trading outcome, strategy equity curve and buy-and-hold outperformance remain blocked until an audited execution/portfolio contract exists.
+
+The primary chart slot should therefore use actual-vs-issued forecast history or another frozen forecast-performance view until a strategy ledger exists. The secondary drawdown/timeline slot may use forecast error plus actual stored event markers; it must not fabricate portfolio drawdown.
+
+`HISTORICAL_REPLAY`, `PROSPECTIVE_SHADOW`, and `LIVE_PRODUCTION` must remain visibly separate. Replay metrics may not populate prospective summary cards.
+
+### Final mockup interpretation rule
+
+The final mockups are authority for **layout and visual hierarchy**, not for example values.
+
+If a mockup slot lacks an authorized datum, the slot is hidden, empty-stated, or relabelled truthfully. It is never filled with a placeholder number merely to preserve visual balance.
+
+If implementation and the V2 mockup structure disagree, V2 controls presentation. If V2 presentation and canonical data/model/evidence semantics disagree, the canonical semantic contract controls content truth.
+
+Implementation candidate remains `gold_axis_2026/apps/gold_control_mobile_v1.py`, but it must be reconciled to this V2 hierarchy before Stage-10 mobile QA can pass.
 
 ---
 
@@ -950,11 +1048,17 @@ The project roadmap is dependency-gated rather than globally linear. Model/decis
 | 7 | **Tahmin Screen** | Real canonical issued forecast drives display |
 | 8 | **Geçmiş Screen** | Real forecast/decision ledgers; replay/prospective/live separated |
 | 9 | **System Health / Audit Screen** | Full lineage/provenance/blockers exposed technically |
-| 10 | **Mobile QA** | Mobile-first UX validated |
+| 10 | **Mobile QA** | Final V2 mockup hierarchy, phone viewport behavior, empty states and semantic gates validated |
 | 11 | **Prospective Shadow Run** | New forecasts/decisions stored before outcomes, immutable ledger accumulating |
 | 12 | **Production Graduation** | Predefined prospective acceptance gates satisfied |
 
 Dependency rule frozen by manifest v1.10:
+
+Final-mockup rule added by manifest v1.20:
+
+- Stage 10 is not a generic responsive-design check; it must validate fidelity to `GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md`.
+- Mockup layout slots may remain hidden/empty when their data contract is unresolved; a visual placeholder never satisfies a stage gate.
+- `Görünüm`, `Tahmin`, and `Geçmiş` implementation must preserve the final V2 section ordering unless a later explicit UI change-control supersedes it.
 
 - Stage 5 may proceed independently of unresolved Stage-4B forecast/VW blockers because `Piyasa` is a monitoring surface and must not infer a decision from live spot.
 - Stage 6 cannot be marked complete without a display-eligible stored Decision Store state.
