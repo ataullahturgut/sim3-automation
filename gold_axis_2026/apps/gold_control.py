@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 # Canonical Gold Control Streamlit entrypoint.
-# Presentation authority: manifest v1.20 / final mobile V2 contract.
+# Presentation authority: manifest v1.22 / final mobile V2 contract.
 #
 # Streamlit Cloud can preserve module objects across hot-reload/deploy cycles.
 # Do not trust sys.path discovery or an existing sys.modules entry for any local
@@ -71,7 +71,14 @@ _load_exact_module(
 _load_exact_module(
     "forecast_source",
     APP_DIR / "forecast_source.py",
-    required_exports=("fetch_current_forecast", "fetch_forecast_history"),
+    required_exports=(
+        "fetch_current_forecast",
+        "fetch_forecast_history",
+        "fetch_latest_expert_forecasts",
+        "fetch_expert_forecast_history",
+        "TRACK_MONTH_END",
+        "TRACK_EARLY_INDICATIVE",
+    ),
 )
 _load_exact_module(
     "live_sources",
@@ -84,13 +91,21 @@ _load_exact_module(
     required_exports=(
         "FINAL_MOCKUP_CONTRACT",
         "SCENARIO_STATUS",
+        "EXPERT_SELECTION_STATUS",
+        "AUTO_SELECTOR_STATUS",
+        "AUTO_ENSEMBLE_STATUS",
+        "EXPERT_DISPLAY_ORDER",
+        "MONTH_END_TRACK",
+        "EARLY_INDICATIVE_TRACK",
         "arrow_state",
         "classification_label",
         "decision_view_state",
         "deterministic_explanation",
         "display_state",
         "evidence_badge",
+        "expert_display_state",
         "forecast_view_state",
+        "monthly_intramonth_relation",
     ),
 )
 _load_exact_module(
@@ -115,7 +130,6 @@ mobile_app = _load_exact_module(
 st.markdown(
     """
 <style>
-/* Community Cloud / Streamlit chrome is not part of the Gold Control surface. */
 #MainMenu,
 footer,
 [data-testid="stToolbar"],
@@ -135,8 +149,6 @@ header[data-testid="stHeader"]{
  min-height:0!important;
  background:transparent!important;
 }
-
-/* iOS long-touch can leave Vega tooltips pinned over later cards. */
 .vg-tooltip,
 #vg-tooltip-element,
 .vega-embed .vg-tooltip{
@@ -144,8 +156,6 @@ header[data-testid="stHeader"]{
  visibility:hidden!important;
  pointer-events:none!important;
 }
-
-/* Undo legacy broad radio positioning before styling the two keyed controls. */
 [data-testid="stRadio"]{
  position:static!important;
  left:auto!important;
@@ -158,8 +168,6 @@ header[data-testid="stHeader"]{
  box-shadow:none!important;
  margin:0!important;
 }
-
-/* Canonical four-way bottom navigation. */
 .st-key-gc_main_nav [data-testid="stRadio"]{
  position:fixed!important;
  left:.5rem!important;
@@ -213,8 +221,6 @@ header[data-testid="stHeader"]{
  justify-content:center!important;
  gap:0!important;
 }
-/* Streamlit 1.63 structure: the first child of the content row is the native
-   radio indicator; the second child is stMarkdownContainer. */
 .st-key-gc_main_nav label[data-testid="stRadioOption"] > div > div > div:first-child{
  display:none!important;
  visibility:hidden!important;
@@ -249,8 +255,6 @@ header[data-testid="stHeader"]{
  color:#fff!important;
  font-weight:850!important;
 }
-
-/* Piyasa time range: a compact four-way segmented control. */
 .st-key-gc_market_range{margin:.10rem 0 .55rem!important;width:100%!important}
 .st-key-gc_market_range [data-testid="stRadio"]{
  display:block!important;
@@ -326,10 +330,6 @@ header[data-testid="stHeader"]{
  color:#fff!important;
  font-weight:850!important;
 }
-
-/* The legacy implementation opens/closes the chart card around Streamlit
-   widgets. Render the title-only wrapper as a compact module heading so it
-   doesn't appear as a disconnected empty card. */
 .gc-card:has(> .gc-section-title:only-child){
  padding:.78rem .95rem!important;
  margin:.70rem 0 .18rem!important;
@@ -338,7 +338,6 @@ header[data-testid="stHeader"]{
  box-shadow:0 2px 10px rgba(16,41,75,.025)!important;
 }
 .gc-card:has(> .gc-section-title:only-child) .gc-section-title{margin-bottom:0!important}
-
 @media(max-width:620px){
  .block-container{
    padding-left:.62rem!important;
