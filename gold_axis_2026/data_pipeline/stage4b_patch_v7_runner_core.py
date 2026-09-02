@@ -1,6 +1,16 @@
 from __future__ import annotations
 
-import argparse
+"""PIT-safe Patch V7 construction helpers for the manifest v1.22 Multi-Expert engine.
+
+This module is intentionally NOT an issuer.  The legacy single-Patch canonical
+writer was removed when Gold Control moved to the v1.22 build-first/select-later
+architecture.  The governed Patch issuer may import the deterministic data/model
+construction helpers below and persist the result only as a MONTH_END_EXPERT row
+through ``stage4b_multi_expert_patch_v7_month_end_issuer.py``.
+
+Direct execution and legacy canonical persistence are fail-closed by design.
+"""
+
 import base64
 import hashlib
 import io
@@ -10,15 +20,13 @@ import os
 import subprocess
 import sys
 from calendar import monthrange
-from datetime import datetime, time, timezone
+from datetime import datetime, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import numpy as np
 import pandas as pd
-import psycopg
 import requests
-from psycopg.rows import dict_row
 
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / "tools"
@@ -32,7 +40,6 @@ CONTRACT = ROOT / "GOLD_CONTROL_PATCH_V7_FIRST_PROSPECTIVE_SHADOW_ISSUER_CONTRAC
 V7_EVIDENCE = ROOT / "patch_repro_v1" / "locked_replay_v7_daily_feature_pit_evidence.json"
 SCHEMA_EVIDENCE = ROOT / "stage4b" / "forecast_writer_schema_evidence.json"
 WRITER_EVIDENCE = ROOT / "stage4b" / "patch_v7_writer_rehearsal_evidence.json"
-PREFLIGHT_OUT = ROOT / "stage4b" / "first_shadow_issuer_preflight_evidence.json"
 
 MODEL_NAME = "CAUSAL_PATCH_R1"
 MODEL_VERSION = "CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE"
@@ -44,6 +51,11 @@ NY = ZoneInfo("America/New_York")
 TWELVE_URL = "https://api.twelvedata.com/time_series"
 FRED_URL = "https://api.stlouisfed.org/fred/series/observations"
 GPR_URL = "https://www.matteoiacoviello.com/gpr_files/data_gpr_export.xls"
+
+ARCHITECTURE_CONTRACT = "MANIFEST_V1_22_MULTI_EXPERT_BUILD_FIRST_SELECT_LATER"
+DIRECT_EXECUTION_STATUS = "BLOCKED_MANIFEST_V1_22_RUNNER_CORE_NOT_AN_ISSUER"
+CANONICAL_PERSISTENCE_STATUS = "REMOVED_MANIFEST_V1_22_SINGLE_PATCH_CANONICAL_WRITER"
+REPLACEMENT_ISSUER = "stage4b_multi_expert_patch_v7_month_end_issuer.py"
 
 
 def env(name: str) -> str:
@@ -88,26 +100,6 @@ def eligibility(now_utc: datetime) -> tuple[bool, str]:
     if local.timetz().replace(tzinfo=None) < time(17, 20):
         return False, "SKIP_BEFORE_17_20_ET"
     return True, "ELIGIBLE_FIRST_PROSPECTIVE_SHADOW_ORIGIN"
-
-
-def read_ledger_state(url: str) -> dict:
-    with psycopg.connect(url, autocommit=False, row_factory=dict_row) as conn:
-        with conn.cursor() as cur:
-            cur.execute("SET TRANSACTION READ ONLY")
-            cur.execute("select count(*) as n from forecast_input_snapshots")
-            inputs = int(cur.fetchone()["n"])
-            cur.execute("select count(*) as n from monthly_forecast_contracts")
-            contracts = int(cur.fetchone()["n"])
-            cur.execute(
-                """
-                select count(*) as n from monthly_forecast_contracts
-                where target_month=%s and model_name=%s and model_version=%s and model_role=%s
-                """,
-                (FIRST_TARGET.date(), MODEL_NAME, MODEL_VERSION, MODEL_ROLE),
-            )
-            duplicate = int(cur.fetchone()["n"])
-        conn.rollback()
-    return {"forecast_input_rows": inputs, "forecast_contract_rows": contracts, "target_duplicate_rows": duplicate}
 
 
 def request_json(session: requests.Session, url: str, params: dict, headers: dict | None = None) -> dict:
@@ -295,6 +287,7 @@ def pack_npz(**arrays) -> tuple[str, str]:
 
 
 def build_forecast(now_utc: datetime) -> dict:
+    del now_utc  # origin is frozen by the governed V7 contract
     origin_date = FIRST_ORIGIN_DATE
     core = v6.load_core()
     session = requests.Session(); session.headers.update({"User-Agent": "Gold-Control-First-Shadow/1.0"})
@@ -366,6 +359,7 @@ def build_forecast(now_utc: datetime) -> dict:
 
 
 def insert_snapshot(cur, *, issued_at, target_period, sha, series_id, semantic_id, observation_ts, value, transform, lineage, metadata) -> int:
+    """Persist one immutable input snapshot through a caller-owned transaction."""
     cur.execute(
         """
         insert into forecast_input_snapshots
@@ -381,159 +375,20 @@ def insert_snapshot(cur, *, issued_at, target_period, sha, series_id, semantic_i
     return int(cur.fetchone()["id"])
 
 
-def persist_shadow(url: str, issued_at: datetime, result: dict, sha: str) -> dict:
-    target_period = "2026-10"
-    with psycopg.connect(url, autocommit=False, row_factory=dict_row) as conn:
-        try:
-            with conn.cursor() as cur:
-                cur.execute(
-                    """select count(*) as n from monthly_forecast_contracts
-                       where target_month=%s and model_name=%s and model_version=%s and model_role=%s""",
-                    (FIRST_TARGET.date(), MODEL_NAME, MODEL_VERSION, MODEL_ROLE),
-                )
-                if int(cur.fetchone()["n"]) != 0:
-                    conn.rollback(); return {"duplicate": True}
-
-                ids = []
-                ids.append(insert_snapshot(
-                    cur, issued_at=issued_at, target_period=target_period, sha=sha,
-                    series_id="PATCH_V7_TRAINING_TENSOR", semantic_id="MODEL_TRAINING_TENSOR",
-                    observation_ts=issued_at, value=len(result["training"]),
-                    transform="NPZ_COMPRESSED_EXACT_TRAINING_TENSOR_V1", lineage=MODEL_VERSION,
-                    metadata={"encoding":"npz_compressed_base64","payload_b64":result["training_payload"],"sha256":result["training_sha"],"training_sample_count":len(result["training"]),"train_valid_cut":result["training_cut"],"evidence_class":EVIDENCE_CLASS},
-                ))
-                ids.append(insert_snapshot(
-                    cur, issued_at=issued_at, target_period=target_period, sha=sha,
-                    series_id="PATCH_V7_TEST_X_TENSOR", semantic_id="MODEL_TEST_X_TENSOR",
-                    observation_ts=issued_at, value=252,
-                    transform="NPZ_COMPRESSED_EXACT_252X2_TEST_TENSOR_V1", lineage=MODEL_VERSION,
-                    metadata={"encoding":"npz_compressed_base64","payload_b64":result["test_payload"],"sha256":result["test_sha"],"shape":[252,2],"daily_feature_max_date":result["daily_max_date"],"same_origin_date_use":False,"evidence_class":EVIDENCE_CLASS},
-                ))
-                macro_specs = [
-                    ("DFF_FRED","FEDFUNDS",result["test_macro"][0],"MONTHLY_MEAN_DFF_ASOF_2026_09_30",result["source_meta"]["fedfunds"]),
-                    ("NASDAQCOM_COMPLETED_MONTH_RETURN_MARKET_CLOSE_V3","NASDAQ_RETURN",result["test_macro"][1],"LOG_COMPLETED_MONTH_MEAN_RETURN_AUG_OVER_JUL_V3",{"months":["2026-08","2026-07"]}),
-                    ("DEXCHUS_FRED","USDCNY_RETURN",result["test_macro"][2],"LOG_MONTHLY_MEAN_RETURN_SEP_OVER_AUG_OWN_MONTHEND_VINTAGES",{"sep":result["source_meta"]["fx_sep"],"aug":result["source_meta"]["fx_aug"]}),
-                    ("GPR_OFFICIAL","GPR_LOG1P_LAG2",result["test_macro"][3],"LOG1P_GPR_2026_08_LAG2",result["source_meta"]["gpr"]),
-                    ("GPR_OFFICIAL","GPR_MINMAX_Z_LAG2",result["test_macro"][4],"MINMAX_Z_GPR_2026_08_LAG2_FROZEN_CORE_PLUS_CURRENT",result["source_meta"]["gpr"]),
-                ]
-                for series_id, semantic_id, value, transform, meta in macro_specs:
-                    ids.append(insert_snapshot(cur, issued_at=issued_at, target_period=target_period, sha=sha,
-                        series_id=series_id, semantic_id=semantic_id, observation_ts=issued_at,
-                        value=value, transform=transform, lineage=series_id,
-                        metadata={"source_meta":meta,"evidence_class":EVIDENCE_CLASS}))
-                ids.append(insert_snapshot(cur, issued_at=issued_at, target_period=target_period, sha=sha,
-                    series_id="PATCH_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V6_ANCHOR",
-                    semantic_id="MONTHLY_REFERENCE_ANCHOR", observation_ts=issued_at,
-                    value=result["anchor"], transform="MONTHLY_MEAN_17ET_HOURLY_CLOSE_2026_09",
-                    lineage="PATCH_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V6_ANCHOR",
-                    metadata={"source_meta":result["source_meta"]["anchor"],"evidence_class":EVIDENCE_CLASS}))
-
-                cur.execute(
-                    """
-                    insert into derived_feature_snapshots
-                      (feature_name,feature_version,calculation_ts,input_cutoff,value_num,
-                       git_commit,input_lineage,quality_status,metadata)
-                    values (%s,%s,%s,%s,%s,%s,%s::jsonb,%s,%s::jsonb)
-                    returning id
-                    """,
-                    ("PATCH_V7_PREDICTED_LOG_RETURN",MODEL_VERSION,issued_at,issued_at,
-                     result["predicted_return"],sha,json.dumps({"forecast_input_snapshot_ids":ids,"input_fingerprint":result["input_fingerprint"]}),
-                     EVIDENCE_CLASS,json.dumps({"target_month":"2026-10","prospective_claim":True,"auto_selector":"OFF","auto_ensemble":"OFF"})),
-                )
-                derived_id = int(cur.fetchone()["id"])
-
-                provenance = {
-                    "evidence_class": EVIDENCE_CLASS, "prospective_claim": True,
-                    "forecast_input_snapshot_ids": ids, "derived_feature_snapshot_id": derived_id,
-                    "input_fingerprint": result["input_fingerprint"], "model_impact_parent": "PATCH_R1_V7_COMPLETED_SESSION_DAILY_FEATURE_MODEL_IMPACT_PASS",
-                    "writer_rehearsal_parent": "PATCH_V7_FORECAST_WRITER_REHEARSAL_PASS",
-                    "auto_selector": "OFF", "auto_ensemble": "OFF", "decision_store_write": "NONE",
-                }
-                cur.execute(
-                    """
-                    insert into monthly_forecast_contracts
-                      (target_month,forecast_origin,model_name,model_version,forecast_value,
-                       unit,model_role,frozen_at,git_commit,provenance)
-                    values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s::jsonb)
-                    returning id
-                    """,
-                    (FIRST_TARGET.date(),issued_at,MODEL_NAME,MODEL_VERSION,result["forecast"],
-                     "USD/oz",MODEL_ROLE,issued_at,sha,json.dumps(provenance)),
-                )
-                contract_id = int(cur.fetchone()["id"])
-            conn.commit()
-        except Exception:
-            conn.rollback(); raise
-
-    with psycopg.connect(url, autocommit=False, row_factory=dict_row) as conn:
-        with conn.cursor() as cur:
-            cur.execute("SET TRANSACTION READ ONLY")
-            cur.execute("select id,model_name,model_version,model_role,provenance from monthly_forecast_contracts where id=%s", (contract_id,))
-            contract = cur.fetchone()
-            cur.execute("select count(*) as n from forecast_input_snapshots where id=any(%s)", (ids,))
-            snapshot_n = int(cur.fetchone()["n"])
-        conn.rollback()
-    if not contract or snapshot_n != len(ids) or contract["model_version"] != MODEL_VERSION or (contract["provenance"] or {}).get("evidence_class") != EVIDENCE_CLASS:
-        raise RuntimeError("FIRST_SHADOW_POST_COMMIT_VERIFY_FAILED")
-    return {"duplicate":False,"contract_id":contract_id,"snapshot_ids":ids,"derived_feature_id":derived_id,"snapshot_count":snapshot_n}
-
-
-def preflight(now_utc: datetime) -> int:
-    parents = static_gates(); url = env("NEON_DATABASE_URL"); ledger = read_ledger_state(url); eligible, reason = eligibility(now_utc)
-    passed = bool(ledger["forecast_input_rows"] == 0 and ledger["forecast_contract_rows"] == 0 and ledger["target_duplicate_rows"] == 0)
-    evidence = {
-        "generated_at": now_utc.isoformat(), "candidate_id": MODEL_VERSION,
-        "parents": parents, "ledger": ledger, "current_origin_eligible": eligible,
-        "eligibility_state": reason, "earliest_eligible_origin": "2026-09-30 after 17:20 America/New_York",
-        "first_target": "2026-10", "september_backfill_allowed": False,
-        "persistent_database_writes": "NONE", "raw_market_values_logged": False,
-        "preflight_pass": passed,
-        "decision": "FIRST_SHADOW_ISSUER_PREFLIGHT_PASS_WAITING_FOR_ELIGIBLE_ORIGIN" if passed else "BLOCKED_FIRST_SHADOW_ISSUER_PREFLIGHT",
-    }
-    PREFLIGHT_OUT.parent.mkdir(parents=True, exist_ok=True); PREFLIGHT_OUT.write_text(json.dumps(evidence,indent=2,sort_keys=True),encoding="utf-8")
-    print(f"FIRST_SHADOW_ISSUER_PREFLIGHT_PASS={str(passed).lower()}")
-    print(f"ELIGIBILITY_STATE={reason}")
-    print("SEPTEMBER_BACKFILL_ALLOWED=NO")
-    print("PERSISTENT_DATABASE_WRITES=NONE")
-    print("RAW_MARKET_VALUES_LOGGED=NO")
-    return 0 if passed else 3
-
-
-def issue_if_eligible(now_utc: datetime) -> int:
-    static_gates(); url = env("NEON_DATABASE_URL"); eligible, reason = eligibility(now_utc)
-    if not eligible:
-        print(f"FIRST_SHADOW_ISSUER_STATE={reason}")
-        print("DATABASE_WRITES=NONE")
-        print("RAW_MARKET_VALUES_LOGGED=NO")
-        return 0
-    ledger = read_ledger_state(url)
-    if ledger["target_duplicate_rows"] > 0:
-        print("FIRST_SHADOW_ISSUER_STATE=SKIP_ALREADY_ISSUED")
-        print("DATABASE_WRITES=NONE")
-        return 0
-    if ledger["forecast_input_rows"] != 0 or ledger["forecast_contract_rows"] != 0:
-        raise RuntimeError(f"PRE_ISSUANCE_LEDGER_NOT_EMPTY:{ledger}")
-    result = build_forecast(now_utc); sha = git_sha(); persisted = persist_shadow(url, now_utc, result, sha)
-    if persisted.get("duplicate"):
-        print("FIRST_SHADOW_ISSUER_STATE=SKIP_ALREADY_ISSUED_RACE")
-        return 0
-    print("FIRST_SHADOW_ISSUER_STATE=PROSPECTIVE_SHADOW_ISSUED_VERIFIED")
-    print(f"TARGET_MONTH=2026-10")
-    print(f"MODEL_VERSION={MODEL_VERSION}")
-    print(f"EVIDENCE_CLASS={EVIDENCE_CLASS}")
-    print(f"FORECAST_CONTRACT_ID={persisted['contract_id']}")
-    print(f"FORECAST_INPUT_SNAPSHOT_COUNT={persisted['snapshot_count']}")
-    print(f"DERIVED_FEATURE_SNAPSHOT_ID={persisted['derived_feature_id']}")
-    print("FORECAST_VALUE_LOGGED=NO")
-    print("RAW_MARKET_VALUES_LOGGED=NO")
-    print("DECISION_STORE_WRITE=NONE")
-    return 0
+def persist_shadow(*_args, **_kwargs):
+    """Retired compatibility trap: single-Patch canonical persistence is forbidden."""
+    raise RuntimeError(CANONICAL_PERSISTENCE_STATUS)
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(); parser.add_argument("--mode", choices=["preflight","issue-if-eligible"], required=True); args = parser.parse_args()
-    now_utc = datetime.now(timezone.utc)
-    return preflight(now_utc) if args.mode == "preflight" else issue_if_eligible(now_utc)
+    print(f"RUNNER_CORE_STATUS={DIRECT_EXECUTION_STATUS}")
+    print(f"ARCHITECTURE_CONTRACT={ARCHITECTURE_CONTRACT}")
+    print(f"CANONICAL_PERSISTENCE_STATUS={CANONICAL_PERSISTENCE_STATUS}")
+    print(f"REPLACEMENT_ISSUER={REPLACEMENT_ISSUER}")
+    print("DATABASE_WRITES=NONE")
+    print("FORECAST_VALUE_LOGGED=NO")
+    print("RAW_MARKET_VALUES_LOGGED=NO")
+    return 3
 
 
 if __name__ == "__main__":
