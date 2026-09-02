@@ -1,0 +1,23 @@
+{
+  "candidate_id": "CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE",
+  "current_origin_eligible": false,
+  "decision": "FIRST_SHADOW_ISSUER_PREFLIGHT_PASS_WAITING_FOR_ELIGIBLE_ORIGIN",
+  "earliest_eligible_origin": "2026-09-30 after 17:20 America/New_York",
+  "eligibility_state": "SKIP_NOT_ELIGIBLE_ORIGIN",
+  "first_target": "2026-10",
+  "generated_at": "2026-09-02T11:41:41.990555+00:00",
+  "ledger": {
+    "forecast_contract_rows": 0,
+    "forecast_input_rows": 0,
+    "target_duplicate_rows": 0
+  },
+  "parents": {
+    "schema": "FORECAST_WRITER_SCHEMA_AUDIT_PASS",
+    "v7": "PATCH_R1_V7_COMPLETED_SESSION_DAILY_FEATURE_MODEL_IMPACT_PASS",
+    "writer": "PATCH_V7_FORECAST_WRITER_REHEARSAL_PASS"
+  },
+  "persistent_database_writes": "NONE",
+  "preflight_pass": true,
+  "raw_market_values_logged": false,
+  "september_backfill_allowed": false
+}
