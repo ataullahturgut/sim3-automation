@@ -14,22 +14,32 @@ on:
 
 jobs:
   smoke:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      - name: Install app dependencies
-        run: pip install -r gold_axis_2026/apps/requirements.txt
-      - name: Compile app and data adapters
+          python-version: '3.14'
+      - name: Install locked app dependencies
         run: |
-          python -m py_compile gold_axis_2026/apps/gold_control.py
-          python -m py_compile gold_axis_2026/apps/live_sources.py
-          python -m py_compile gold_axis_2026/apps/decision_source.py
-          python -m py_compile gold_axis_2026/data_pipeline/decision_store_reader.py
+          python -m pip install --upgrade pip
+          pip install -r gold_axis_2026/apps/requirements.txt
+          python --version
+          streamlit version
+      - name: Compile complete app and decision-reader graph
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/decision_store.py \
+            gold_axis_2026/data_pipeline/decision_store_reader.py \
+            gold_axis_2026/apps/decision_source.py \
+            gold_axis_2026/apps/forecast_source.py \
+            gold_axis_2026/apps/live_sources.py \
+            gold_axis_2026/apps/mobile_ui_contract.py \
+            gold_axis_2026/apps/piyasa_contract.py \
+            gold_axis_2026/apps/gold_control_mobile_v1.py \
+            gold_axis_2026/apps/gold_control.py
       - name: Validate production repository inputs
         run: |
           python - <<'PY'
@@ -46,7 +56,7 @@ jobs:
           assert not score.empty
           assert prov.get('source_package')
           assert cfg.get('emergency', {}).get('level_threshold_abs') == 0.04
-          print('Gold Control production-lineage inputs: PASS')
+          print('GOLD_CONTROL_PRODUCTION_LINEAGE_INPUTS_PASS')
           PY
       - name: Decision Store read-only evidence isolation smoke
         run: |
@@ -60,11 +70,23 @@ jobs:
               assert state.get('action_state') is None
           print('GOLD_CONTROL_DECISION_STORE_APP_READER_PASS replay_excluded=PASS action_mapping_guard=PASS')
           PY
-      - name: Live source connectivity diagnostic
+      - name: Live source connectivity diagnostic without raw market logging
         continue-on-error: true
         run: |
           PYTHONPATH=gold_axis_2026/apps python - <<'PY'
           from live_sources import fetch_gvz_latest, fetch_xau_spot
-          print('XAU:', fetch_xau_spot())
-          print('GVZ:', fetch_gvz_latest())
+
+          xau = fetch_xau_spot()
+          assert isinstance(xau, dict)
+          assert float(xau['price']) > 0
+          assert xau.get('source')
+          assert xau.get('as_of')
+          print('XAU_DISPLAY_SOURCE_CONNECTIVITY_PASS source=', xau.get('source'), 'status=', xau.get('status'))
+
+          gvz = fetch_gvz_latest()
+          assert isinstance(gvz, dict)
+          assert float(gvz['close']) > 0
+          assert gvz.get('source')
+          assert gvz.get('as_of')
+          print('GVZ_SOURCE_CONNECTIVITY_PASS source=', gvz.get('source'))
           PY
