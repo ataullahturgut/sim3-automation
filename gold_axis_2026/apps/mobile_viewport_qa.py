@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+# Production-backed acceptance requires Monthly 3M, FAST, and SLOW to be visible above the mobile fold.
+
 import argparse
 import re
 from pathlib import Path
