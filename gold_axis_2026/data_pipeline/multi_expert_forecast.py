@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import Any, Iterable
 
 
-MANIFEST_VERSION = "1.22"
+MANIFEST_VERSION = "1.24"
 SELECTOR_STATUS = "NOT_PROVEN_EXPERT_SELECTION_RULE"
 AUTO_SELECTOR = "OFF"
 AUTO_ENSEMBLE = "OFF"
@@ -20,6 +20,11 @@ VW_EXPERT = "VW_MIDAS_MSVR"
 MOMENTUM_EXPERT = "MOMENTUM_3M"
 RW_EXPERT = "RANDOM_WALK"
 EXPERT_ORDER = (PATCH_EXPERT, VW_EXPERT, MOMENTUM_EXPERT, RW_EXPERT)
+
+SIMPLE_EXPERT_SOURCE_ID = "SIMPLE_EXPERT_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V2"
+RW_V2_VERSION = "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"
+MOMENTUM_V2_VERSION = "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"
+SIMPLE_EXPERT_SOURCE_EVIDENCE = "SIMPLE_EXPERT_V2_SOURCE_BINDING_PASS"
 
 
 @dataclass(frozen=True)
@@ -56,19 +61,19 @@ EXPERT_REGISTRY: dict[str, ExpertDefinition] = {
         expert_id=MOMENTUM_EXPERT,
         label="3M Momentum",
         model_name="MOMENTUM_3M",
-        model_version="MOMENTUM_3M_R1",
+        model_version=MOMENTUM_V2_VERSION,
         expert_role="EXPERT",
-        execution_status="BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND",
-        status_reason="Formula is reproducible, but a manifest-authorized forward monthly level source has not been bound to this expert.",
+        execution_status="EXECUTABLE_FORWARD_EXPERT",
+        status_reason="Source-bound V2 passed the frozen 43-origin source/materiality/non-inferiority audit; issuance waits for an eligible prospective month-end origin.",
     ),
     RW_EXPERT: ExpertDefinition(
         expert_id=RW_EXPERT,
         label="Random Walk",
         model_name="RANDOM_WALK",
-        model_version="RW_R1",
+        model_version=RW_V2_VERSION,
         expert_role="BENCHMARK",
-        execution_status="BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND",
-        status_reason="Benchmark formula is reproducible, but a manifest-authorized forward monthly level source has not been bound.",
+        execution_status="EXECUTABLE_FORWARD_EXPERT",
+        status_reason="Source-bound V2 passed the frozen 43-origin source/materiality/non-inferiority audit; issuance waits for an eligible prospective month-end origin.",
     ),
 }
 
@@ -140,7 +145,7 @@ def registry_rows() -> list[dict[str, str]]:
 def executable_experts() -> tuple[str, ...]:
     return tuple(
         x for x in EXPERT_ORDER
-        if EXPERT_REGISTRY[x].execution_status == "EXECUTABLE_FORWARD_ISSUER_CANDIDATE"
+        if EXPERT_REGISTRY[x].execution_status.startswith("EXECUTABLE_FORWARD_")
     )
 
 
@@ -158,6 +163,16 @@ def momentum_3m_r1(monthly_levels: Iterable[float]) -> float:
     recent = values[-4:]
     returns = [recent[i] / recent[i - 1] - 1.0 for i in range(1, 4)]
     return recent[-1] * (1.0 + sum(returns) / 3.0)
+
+
+def rw_r2_source_bound(monthly_levels: Iterable[float]) -> float:
+    """Forward V2 RW formula; source semantics are enforced by the issuer contract."""
+    return rw_r1(monthly_levels)
+
+
+def momentum_3m_r2_source_bound(monthly_levels: Iterable[float]) -> float:
+    """Forward V2 3M Momentum formula; source semantics are enforced by the issuer contract."""
+    return momentum_3m_r1(monthly_levels)
 
 
 def expert_status(expert_id: str) -> dict[str, str]:

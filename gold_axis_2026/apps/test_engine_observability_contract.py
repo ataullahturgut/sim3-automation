@@ -64,7 +64,11 @@ def test_current_direction_context_is_visible_even_without_h1_expert_rows() -> N
     rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [])}
 
     assert rows["MOMENTUM_3M"]["output"] is None
-    assert rows["MOMENTUM_3M"]["status"] == "BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND"
+    assert rows["MOMENTUM_3M"]["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
+    assert rows["MOMENTUM_3M"]["version"] == "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"
+    assert rows["RANDOM_WALK"]["output"] is None
+    assert rows["RANDOM_WALK"]["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
+    assert rows["RANDOM_WALK"]["version"] == "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"
 
     assert rows["MONTHLY_DIRECTION_3M"]["output"] == "DOWN"
     assert rows["MONTHLY_DIRECTION_3M"]["status"] == "STORED_CONTEXT_AVAILABLE"
@@ -121,5 +125,5 @@ def test_inventory_counts_are_explicit() -> None:
     assert counts["total"] == 12
     assert counts["active"] == 4
     assert counts["issued"] == 0
-    assert counts["blocked"] == 7
-    assert counts["waiting"] == 1
+    assert counts["blocked"] == 5
+    assert counts["waiting"] == 3

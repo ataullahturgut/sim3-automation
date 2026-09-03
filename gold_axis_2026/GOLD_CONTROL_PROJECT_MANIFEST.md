@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.23
+**Manifest version:** 1.24
 **Freeze / issue date:** 2026-09-03
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -1555,3 +1555,23 @@ That is the production standard.
 When a project-level decision changes, update this file in the **same change set** as the relevant code/config/data-contract modification.
 
 If the manifest and implementation disagree, the discrepancy is a release blocker until reconciled.
+
+## 7.D SIMPLE-EXPERT SOURCE BINDING V2 — FROZEN PASS / FORWARD READINESS
+
+Status frozen on 2026-09-03 under `GOLD_CONTROL_SIMPLE_EXPERT_SOURCE_BINDING_V2_CHANGE_CONTROL_2026-09-03.md`.
+
+- Source identity: `SIMPLE_EXPERT_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V2`.
+- Provider/semantic: Twelve Data `XAU/USD`, `1h`, `America/New_York`; use the close of the bar opened at `16:00:00` and aggregate positive finite selected closes to the completed calendar-month arithmetic mean; minimum 15 unique selected dates; no interpolation/forward-fill/provider substitution.
+- CME/EBS 17:00 ET trade-date-roll evidence is supporting market-session context; the Gold Control source remains explicitly a Twelve hourly-derived measurement and is not relabelled as an official EBS/LBMA/settlement fixing.
+- Frozen validation window: `2023-01..2026-07`, `N=43`; historical evidence class `HISTORICAL_REPLAY_MODEL_IMPACT`, not prospective proof.
+- Extended required source months `2022-09..2026-06`: 46/46 present, zero low-count months, zero duplicate selected dates.
+- Extended source vs CORE5: level correlation `0.9999721441764589`; median gap `10.9548 bps`; p95 gap `33.2791 bps`; return correlation `0.9964220374584144`; return direction agreement `0.9555555555555556`.
+- Actual/R1 reconciliation: actual `43/43`; RW R1 `43/43`; Momentum R1 `43/43`; future-information violations `0`; deterministic rerun max diff `0.0`.
+- Random Walk V2 identity: `RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND`; result `RW_R2_SOURCE_BINDING_MODEL_IMPACT_PASS`.
+- 3M Momentum V2 identity: `MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND`; result `MOMENTUM_3M_R2_SOURCE_BINDING_MODEL_IMPACT_PASS`.
+- Joint gate: `SIMPLE_EXPERT_V2_SOURCE_BINDING_PASS`.
+- No threshold relaxation, post-result retuning, provider substitution, database write, forecast-ledger write, or Decision Store write occurred during validation.
+- Forward status after this PASS: both V2 experts are executable, but **no September 2026 origin may be backfilled**. Their first eligible H=1 month-end issuance remains the end-September 2026 origin for the October 2026 target, subject to the frozen source-completion and immutable-snapshot gates.
+- Until an eligible origin is actually issued, UI status is `WAITING_ELIGIBLE_MONTH_END_ORIGIN`, not a fabricated forecast value.
+- `NOT_PROVEN_EXPERT_SELECTION_RULE` remains binding; `AUTO_SELECTOR=OFF`; `AUTO_ENSEMBLE=OFF`; every individual expert remains `canonical_authority=false`.
+- This change does not authorize BUY/SELL/HOLD/EXIT/REDUCE or exposure mapping.

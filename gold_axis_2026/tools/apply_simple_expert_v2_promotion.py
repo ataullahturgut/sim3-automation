@@ -246,32 +246,11 @@ Status frozen on 2026-09-03 under `GOLD_CONTROL_SIMPLE_EXPERT_SOURCE_BINDING_V2_
 
 def patch_mobile_workflow_manifest_gate() -> None:
     path = REPO_ROOT / ".github" / "workflows" / "gold-control-mobile-ui-v1.yml"
-    replace_once(
-        path,
-        "name: Gold Control Mobile UI V1.23 Engine Observability Final",
-        "name: Gold Control Mobile UI V1.24 Engine Observability Final",
-    )
-    replace_once(
-        path,
-        "- name: Verify manifest v1.23 and engine observability governance",
-        "- name: Verify manifest v1.24 and engine observability governance",
-    )
-    replace_once(
-        path,
-        "grep -q 'Manifest version:\\\*\\\* 1.23' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md",
-        "grep -q 'Manifest version:\\\*\\\* 1.24' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md",
-    )
-    replace_once(
-        path,
-        "echo 'V123_ENGINE_OBSERVABILITY_UI_GOVERNANCE_PASS'",
-        "echo 'V124_ENGINE_OBSERVABILITY_UI_GOVERNANCE_PASS'",
-    )
-    replace_once(
-        path,
-        "- name: Audit local imports and manifest v1.23 screen markers",
-        "- name: Audit local imports and manifest v1.24 screen markers",
-    )
-
+    replace_once(path, "name: Gold Control Mobile UI V1.23 Engine Observability Final", "name: Gold Control Mobile UI V1.24 Engine Observability Final")
+    replace_once(path, "- name: Verify manifest v1.23 and engine observability governance", "- name: Verify manifest v1.24 and engine observability governance")
+    replace_once(path, "1.23' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md", "1.24' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md")
+    replace_once(path, "echo 'V123_ENGINE_OBSERVABILITY_UI_GOVERNANCE_PASS'", "echo 'V124_ENGINE_OBSERVABILITY_UI_GOVERNANCE_PASS'")
+    replace_once(path, "- name: Audit local imports and manifest v1.23 screen markers", "- name: Audit local imports and manifest v1.24 screen markers")
 
 def main() -> None:
     verify_evidence()

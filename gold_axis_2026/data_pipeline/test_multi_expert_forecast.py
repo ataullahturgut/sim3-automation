@@ -17,7 +17,9 @@ from multi_expert_forecast import (
     ExpertForecastRecord,
     executable_experts,
     momentum_3m_r1,
+    momentum_3m_r2_source_bound,
     rw_r1,
+    rw_r2_source_bound,
     selector_contract,
 )
 
@@ -38,17 +40,21 @@ def test_selector_and_ensemble_are_binding_off():
     }
 
 
-def test_only_patch_is_currently_forward_executable():
-    assert executable_experts() == (PATCH_EXPERT,)
+def test_patch_rw_and_momentum_are_forward_executable_after_frozen_v2_source_pass():
+    assert executable_experts() == (PATCH_EXPERT, MOMENTUM_EXPERT, RW_EXPERT)
     assert EXPERT_REGISTRY[VW_EXPERT].execution_status == "BLOCKED_NOT_PROVEN_EXECUTABLE"
-    assert EXPERT_REGISTRY[MOMENTUM_EXPERT].execution_status == "BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND"
-    assert EXPERT_REGISTRY[RW_EXPERT].execution_status == "BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND"
+    assert EXPERT_REGISTRY[MOMENTUM_EXPERT].execution_status == "EXECUTABLE_FORWARD_EXPERT"
+    assert EXPERT_REGISTRY[RW_EXPERT].execution_status == "EXECUTABLE_FORWARD_EXPERT"
+    assert EXPERT_REGISTRY[MOMENTUM_EXPERT].model_version == "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"
+    assert EXPERT_REGISTRY[RW_EXPERT].model_version == "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"
 
 
-def test_rw_and_momentum_formulas_are_reproducible_but_source_agnostic():
+def test_rw_and_momentum_formulas_preserve_r1_math_under_explicit_v2_source_binding():
     levels = [100.0, 110.0, 121.0, 133.1]
     assert rw_r1(levels) == pytest.approx(133.1)
     assert momentum_3m_r1(levels) == pytest.approx(146.41)
+    assert rw_r2_source_bound(levels) == pytest.approx(rw_r1(levels))
+    assert momentum_3m_r2_source_bound(levels) == pytest.approx(momentum_3m_r1(levels))
 
 
 def _record(track=TRACK_MONTH_END, provenance=None):
