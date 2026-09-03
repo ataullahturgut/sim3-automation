@@ -1,0 +1,43 @@
+name: Gold Control V1.26 QA Status Migration Hotfix
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - '.github/workflows/gold-control-v126-patcher-status-hotfix.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  harden-migration:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Add final exact QA status migration guard
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('gold_axis_2026/tools/apply_v126_system_recovery.py')
+          text = p.read_text(encoding='utf-8')
+          anchor = 'print("V126_SYSTEM_RECOVERY_PATCH_APPLIED")'
+          assert text.count(anchor) == 1, text.count(anchor)
+          block = '''# Final QA semantic migration guard: run after every other QA rewrite.\nreplace_once(\n    qa,\n    '        if status != "STORED_CONTEXT_AVAILABLE":',\n    '        if status not in {"STORED_CONTEXT_AVAILABLE", "AKTİF · STORED CONTEXT"}:',\n)\nqa_text = qa.read_text(encoding="utf-8")\nif 'if status != "STORED_CONTEXT_AVAILABLE":' in qa_text:\n    raise RuntimeError("STALE_DIRECTION_STATUS_ASSERTION_REMAINS")\nif 'AKTİF · STORED CONTEXT' not in qa_text:\n    raise RuntimeError("HUMAN_READABLE_DIRECTION_STATUS_ASSERTION_NOT_INSTALLED")\n\n'''
+          text = text.replace(anchor, block + anchor, 1)
+          p.write_text(text, encoding='utf-8')
+          PY
+          python -m py_compile gold_axis_2026/tools/apply_v126_system_recovery.py
+          grep -Fq 'STALE_DIRECTION_STATUS_ASSERTION_REMAINS' gold_axis_2026/tools/apply_v126_system_recovery.py
+          grep -Fq 'HUMAN_READABLE_DIRECTION_STATUS_ASSERTION_NOT_INSTALLED' gold_axis_2026/tools/apply_v126_system_recovery.py
+      - name: Commit hardened migration
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/tools/apply_v126_system_recovery.py
+          git diff --cached --check
+          git commit -m 'gold-control: harden v1.26 direction status QA migration'
+          git push origin HEAD:gold-r4-direction-engine
