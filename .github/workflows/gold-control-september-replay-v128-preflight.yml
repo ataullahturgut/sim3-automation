@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: gold-control-september-replay-v128
+          ref: ${{ github.sha }}
           fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
@@ -79,7 +79,16 @@ jobs:
           assert set(x['experts'])=={'RANDOM_WALK','MOMENTUM_3M'}
           assert x['causal_patch_replay_status']=='BLOCKED_REPLAY_INPUT_SET_NOT_REPRODUCIBLE_FOR_2026_08_31'
           assert x['vw_replay_status']=='BLOCKED_NOT_PROVEN_EXECUTABLE'
-          assert 'forecast_value' not in json.dumps(x)
+          def keys(v):
+              if isinstance(v,dict):
+                  for k,child in v.items():
+                      yield k
+                      yield from keys(child)
+              elif isinstance(v,list):
+                  for child in v:
+                      yield from keys(child)
+          assert 'forecast_value' not in set(keys(x))
+          assert 'value_used' not in set(keys(x))
           print('SEPTEMBER_REPLAY_EVIDENCE_SEMANTICS_PASS')
           PY
       - name: Production read-only no-backdating guard
