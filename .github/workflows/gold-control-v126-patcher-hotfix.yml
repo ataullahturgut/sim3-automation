@@ -1,0 +1,37 @@
+name: Gold Control V1.26 Patcher Count Correction
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - '.github/workflows/gold-control-v126-patcher-hotfix.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  correct-patcher-count:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Correct only the audited v123 occurrence count
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('gold_axis_2026/tools/apply_v126_system_recovery.py')
+          text = p.read_text(encoding='utf-8')
+          old = "replace_all(qa, 'v123', 'v126', expected=6)"
+          new = "replace_all(qa, 'v123', 'v126', expected=2)"
+          assert text.count(old) == 1, text.count(old)
+          p.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+          git diff --check
+          grep -Fq "replace_all(qa, 'v123', 'v126', expected=2)" gold_axis_2026/tools/apply_v126_system_recovery.py
+      - name: Commit audited patcher correction
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/tools/apply_v126_system_recovery.py
+          git commit -m 'gold-control: correct audited v126 QA replacement count'
+          git push origin HEAD:gold-r4-direction-engine
