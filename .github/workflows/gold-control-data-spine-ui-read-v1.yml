@@ -1,0 +1,81 @@
+name: Gold Control Data Spine UI Read V1
+
+on:
+  push:
+    branches: [gold-control-data-spine-ui-read-v1]
+    paths:
+      - 'gold_axis_2026/apps/runtime_source.py'
+      - 'gold_axis_2026/tools/apply_data_spine_ui_read_v1.py'
+      - '.github/workflows/gold-control-data-spine-ui-read-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  data-spine-ui-read-v1:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-data-spine-ui-read-v1
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install runtime
+        run: pip install 'psycopg[binary]==3.3.5' pytest pandas altair streamlit
+      - name: Apply read-only runtime integration
+        run: python gold_axis_2026/tools/apply_data_spine_ui_read_v1.py
+      - name: Compile application read graph
+        run: |
+          python -m py_compile \
+            gold_axis_2026/apps/runtime_source.py \
+            gold_axis_2026/apps/decision_source.py \
+            gold_axis_2026/apps/engine_observability_contract.py \
+            gold_axis_2026/apps/gold_control_mobile_v1.py
+      - name: Run deterministic observability tests
+        run: |
+          cd gold_axis_2026/apps
+          pytest -q test_engine_observability_contract.py test_mobile_ui_contract.py
+      - name: Prove live production Data Evidence Spine read-only source
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          cd gold_axis_2026/apps
+          python - <<'PY'
+          import os
+          from runtime_source import fetch_runtime_observability
+          state = fetch_runtime_observability(os.environ['NEON_DATABASE_URL'])
+          assert state['status'] == 'DATA_EVIDENCE_SPINE_RUNTIME_HEALTH_PASS', state
+          assert state['runtime_engine_count'] == 12, state
+          assert state['context_exactly_one_link'] == 7, state
+          assert state['context_expected'] == 7, state
+          assert state['integrity_ok'] is True, state
+          assert state['database_writes'] == 'NONE', state
+          print('DATA_SPINE_UI_RUNTIME_READ=12/12')
+          print('DATA_SPINE_UI_CONTEXT_LINKS=7/7')
+          print('DATA_SPINE_UI_INTEGRITY=PASS')
+          print('DATABASE_WRITES=NONE')
+          PY
+      - name: Verify no selector/action promotion
+        run: |
+          grep -q 'runtime_rows' gold_axis_2026/apps/engine_observability_contract.py
+          grep -q 'fetch_runtime_observability' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -q 'DB Evidence Spine:' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -q 'row\["direction_vote"\] and runtime.get' gold_axis_2026/apps/engine_observability_contract.py
+          grep -q 'canonical_authority' gold_axis_2026/apps/engine_observability_contract.py
+      - name: Commit verified integration
+        run: |
+          if git diff --quiet; then
+            echo 'DATA_SPINE_UI_READ_NO_DIFF'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            gold_axis_2026/apps/engine_observability_contract.py \
+            gold_axis_2026/apps/gold_control_mobile_v1.py \
+            gold_axis_2026/apps/test_engine_observability_contract.py
+          git commit -m 'gold-control: bind UI inventory to production runtime ledger'
+          git push origin HEAD:gold-control-data-spine-ui-read-v1
