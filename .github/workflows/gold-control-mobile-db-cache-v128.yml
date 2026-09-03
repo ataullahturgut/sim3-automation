@@ -1,0 +1,91 @@
+name: Gold Control Mobile DB Read Cache V1.28
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-control-september-replay-v128]
+    paths:
+      - 'gold_axis_2026/tools/apply_mobile_db_read_cache_v128.py'
+      - '.github/workflows/gold-control-mobile-db-cache-v128.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install app and browser runtime
+        run: |
+          pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
+          python -m playwright install --with-deps chromium
+      - name: Apply DB read cache without changing evidence semantics
+        run: |
+          python gold_axis_2026/tools/apply_mobile_db_read_cache_v128.py
+          grep -Fq '@st.cache_data(ttl=30, show_spinner=False)' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -Fq 'get_latest_experts_cached(url,TRACK_HISTORICAL_REPLAY)' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -Fq 'REPLAY · PROSPECTIVE DEĞİL' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -Fq 'NOT_ISSUED_MISSED_2026_08_31_ORIGIN' gold_axis_2026/apps/gold_control_mobile_v1.py
+      - name: Compile and run deterministic contracts
+        run: |
+          python -m py_compile gold_axis_2026/apps/gold_control_mobile_v1.py gold_axis_2026/apps/forecast_source.py gold_axis_2026/apps/runtime_source.py gold_axis_2026/apps/mobile_viewport_qa.py
+          cd gold_axis_2026/apps
+          pytest -q test_mobile_ui_contract.py test_piyasa_contract.py test_engine_observability_contract.py test_ui_manifest_consistency_v126.py test_production_display_snapshot.py
+          cd ../data_pipeline
+          pytest -q test_multi_expert_forecast.py test_data_evidence_spine.py test_historical_replay_contract.py
+      - name: Production replay and operational runtime remain separated
+        run: |
+          PYTHONPATH=gold_axis_2026/apps python - <<'PY'
+          import os
+          from forecast_source import TRACK_HISTORICAL_REPLAY, TRACK_MONTH_END, fetch_latest_expert_forecasts, fetch_current_forecast
+          from runtime_source import fetch_runtime_observability
+          url=os.environ['NEON_DATABASE_URL']
+          r=fetch_latest_expert_forecasts(url,TRACK_HISTORICAL_REPLAY)
+          assert len(r)==2 and {x['expert_id'] for x in r}=={'MOMENTUM_3M','RANDOM_WALK'}
+          assert all(x['evidence_class']=='HISTORICAL_REPLAY' and x['provenance'].get('prospective_claim') is False for x in r)
+          assert fetch_latest_expert_forecasts(url,TRACK_MONTH_END)==[]
+          assert fetch_current_forecast(url) is None
+          runtime=fetch_runtime_observability(url); states={x['engine_id']:x for x in runtime['runtime']}
+          assert sum(x['runtime_status']=='ACTIVE' for x in states.values())==4
+          assert sum(x['runtime_status']=='WAITING' for x in states.values())==3
+          assert sum(x['runtime_status']=='BLOCKED' for x in states.values())==5
+          assert states['MOMENTUM_3M']['runtime_status']=='WAITING' and states['RANDOM_WALK']['runtime_status']=='WAITING'
+          assert sum(x.get('direction_vote_permitted') is True for x in states.values())==3
+          print('MOBILE_DB_CACHE_SEMANTICS_PASS replay=2 operational=4/3/5 direction_votes=3 canonical=0')
+          PY
+      - name: Existing 390x844 browser content contract remains unchanged
+        run: |
+          rm -rf /tmp/gold_mobile_cache_qa
+          streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8501 --server.address 127.0.0.1 >/tmp/gold_mobile_cache.log 2>&1 &
+          APP_PID=$!
+          for i in $(seq 1 45); do curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null && break; sleep 1; done
+          python gold_axis_2026/apps/mobile_viewport_qa.py --url http://127.0.0.1:8501 --out /tmp/gold_mobile_cache_qa
+          kill $APP_PID || true
+          wait $APP_PID || true
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_cache.log; then cat /tmp/gold_mobile_cache.log; exit 1; fi
+          echo 'MOBILE_DB_CACHE_390X844_PASS'
+      - name: Upload accepted screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-mobile-db-cache-v128-390x844
+          path: /tmp/gold_mobile_cache_qa/*.png
+          if-no-files-found: error
+          retention-days: 30
+      - name: Commit accepted cache patch
+        run: |
+          git add gold_axis_2026/apps/gold_control_mobile_v1.py
+          git diff --cached --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'gold-control: cache read-only mobile DB evidence across navigation'
+          git push origin HEAD:gold-control-september-replay-v128
