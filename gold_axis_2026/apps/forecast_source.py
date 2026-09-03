@@ -6,6 +6,11 @@ from typing import Any
 import psycopg
 from psycopg.rows import dict_row
 
+from production_display_snapshot import (
+    load_production_display_snapshot,
+    snapshot_historical_replay_rows,
+)
+
 
 DISPLAY_EVIDENCE = ("LIVE_PRODUCTION", "PROSPECTIVE_SHADOW")
 REPLAY_EVIDENCE = ("HISTORICAL_REPLAY",)
@@ -122,6 +127,14 @@ def _evidence_for_track(forecast_track: str) -> tuple[str, ...]:
     return DISPLAY_EVIDENCE
 
 
+def _snapshot_replay_rows() -> list[dict[str, Any]]:
+    rows = snapshot_historical_replay_rows(load_production_display_snapshot())
+    normalized = [_normalize_expert(row) for row in rows]
+    order = {x: i for i, x in enumerate(EXPERT_ORDER)}
+    normalized.sort(key=lambda r: order.get(str(r.get("expert_id")), 99))
+    return normalized
+
+
 def fetch_latest_expert_forecasts(
     database_url: str,
     forecast_track: str = TRACK_MONTH_END,
@@ -130,7 +143,7 @@ def fetch_latest_expert_forecasts(
     if forecast_track not in VALID_TRACKS:
         raise ValueError(f"INVALID_FORECAST_TRACK:{forecast_track}")
     if not database_url:
-        return []
+        return _snapshot_replay_rows() if forecast_track == TRACK_HISTORICAL_REPLAY else []
     evidence = _evidence_for_track(forecast_track)
     with psycopg.connect(database_url, row_factory=dict_row) as conn:
         with conn.cursor() as cur:
@@ -178,7 +191,7 @@ def fetch_expert_forecast_history(
     if forecast_track is not None and forecast_track not in VALID_TRACKS:
         raise ValueError(f"INVALID_FORECAST_TRACK:{forecast_track}")
     if not database_url:
-        return []
+        return _snapshot_replay_rows()[: max(1, min(int(limit), 2000))] if forecast_track == TRACK_HISTORICAL_REPLAY else []
     evidence = _evidence_for_track(forecast_track) if forecast_track is not None else DISPLAY_EVIDENCE
     with psycopg.connect(database_url, row_factory=dict_row) as conn:
         with conn.cursor() as cur:
