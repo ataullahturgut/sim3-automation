@@ -1,0 +1,68 @@
+name: Gold Control Production Display Snapshot Refresh
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-production-display-snapshot-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install database runtime only
+        run: pip install 'psycopg[binary]==3.3.5'
+      - name: Export production snapshot with read-only transaction
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo 'NEON_DATABASE_URL missing' && exit 1)
+          python gold_axis_2026/tools/export_production_display_snapshot.py --out /tmp/production_display_snapshot.json
+          PYTHONPATH=gold_axis_2026/apps python - <<'PY'
+          import json
+          from pathlib import Path
+          from production_display_snapshot import validate_production_display_snapshot
+          snap=json.loads(Path('/tmp/production_display_snapshot.json').read_text(encoding='utf-8'))
+          validate_production_display_snapshot(snap)
+          assert len(snap['runtime'])==12
+          assert len(snap['features'])==7
+          assert snap['context_exactly_one_link']==7
+          assert snap['database_writes']=='NONE'
+          print('PRODUCTION_DISPLAY_SNAPSHOT_REFRESH_VALIDATION_PASS')
+          PY
+      - name: Commit only when governed display state changed
+        id: commit
+        run: |
+          cp /tmp/production_display_snapshot.json gold_axis_2026/apps/production_display_snapshot.json
+          if git diff --quiet -- gold_axis_2026/apps/production_display_snapshot.json; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+            echo 'PRODUCTION_DISPLAY_SNAPSHOT_UNCHANGED'
+            exit 0
+          fi
+          git diff --check -- gold_axis_2026/apps/production_display_snapshot.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/apps/production_display_snapshot.json
+          git commit -m 'gold-control: refresh production display snapshot'
+          git push origin HEAD:gold-r4-direction-engine
+          echo 'changed=true' >> "$GITHUB_OUTPUT"
+      - name: Keep deployment mirror on exact canonical snapshot state
+        if: steps.commit.outputs.changed == 'true'
+        run: |
+          git fetch origin gold-r4-direction-engine-ui-v122-final
+          git merge-base --is-ancestor origin/gold-r4-direction-engine-ui-v122-final HEAD || (echo 'UI_MIRROR_NOT_FAST_FORWARDABLE' && exit 1)
+          git push origin HEAD:gold-r4-direction-engine-ui-v122-final
+          echo 'UI_MIRROR_SNAPSHOT_REFRESH_PASS'
