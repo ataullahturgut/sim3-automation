@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import Any, Iterable
 
 
-MANIFEST_VERSION = "1.24"
+MANIFEST_VERSION = "1.25"
 SELECTOR_STATUS = "NOT_PROVEN_EXPERT_SELECTION_RULE"
 AUTO_SELECTOR = "OFF"
 AUTO_ENSEMBLE = "OFF"
