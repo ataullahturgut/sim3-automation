@@ -1,0 +1,159 @@
+name: Gold Control Mobile UI V1.25 Data Evidence Spine Final
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+      - 'gold_axis_2026/GOLD_CONTROL_DATA_EVIDENCE_SPINE_CONTRACT_2026-09-03.md'
+      - 'gold_axis_2026/GOLD_CONTROL_ENGINE_OBSERVABILITY_CONTRACT_2026-09-03.md'
+      - 'gold_axis_2026/apps/**'
+      - 'gold_axis_2026/data_pipeline/data_evidence_spine.py'
+      - 'gold_axis_2026/data_pipeline/data_evidence_spine_audit.py'
+      - 'gold_axis_2026/data_pipeline/multi_expert_forecast.py'
+      - 'gold_axis_2026/data_pipeline/decision_store.py'
+      - 'gold_axis_2026/data_pipeline/decision_store_reader.py'
+      - '.github/workflows/gold-control-mobile-ui-v125-final.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  production-browser-acceptance:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Install locked app and browser runtime
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
+          python -m playwright install --with-deps chromium
+          python --version
+          streamlit version
+
+      - name: Verify manifest v1.25 governance and frozen locks
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo 'NEON_DATABASE_URL missing' && exit 1)
+          grep -Fq '**Manifest version:** 1.25' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'FROZEN_DATA_EVIDENCE_SPINE_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'RUNTIME_BOOTSTRAP_PRODUCTION_PASS' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'FROZEN_ALL_GOVERNED_ENGINES_VISIBLE_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'auto selector = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'auto ensemble = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'NOT_PROVEN_POSITION_MAPPING' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          echo 'V125_DATA_EVIDENCE_SPINE_GOVERNANCE_PASS'
+
+      - name: Compile complete DB-to-UI read graph
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/data_evidence_spine.py \
+            gold_axis_2026/data_pipeline/data_evidence_spine_audit.py \
+            gold_axis_2026/data_pipeline/decision_store.py \
+            gold_axis_2026/data_pipeline/decision_store_reader.py \
+            gold_axis_2026/data_pipeline/multi_expert_forecast.py \
+            gold_axis_2026/apps/runtime_source.py \
+            gold_axis_2026/apps/decision_source.py \
+            gold_axis_2026/apps/engine_observability_contract.py \
+            gold_axis_2026/apps/forecast_source.py \
+            gold_axis_2026/apps/live_sources.py \
+            gold_axis_2026/apps/mobile_ui_contract.py \
+            gold_axis_2026/apps/piyasa_contract.py \
+            gold_axis_2026/apps/mobile_viewport_qa.py \
+            gold_axis_2026/apps/gold_control_mobile_v1.py \
+            gold_axis_2026/apps/gold_control.py
+
+      - name: Run deterministic contracts
+        run: |
+          cd gold_axis_2026/apps
+          pytest -q test_mobile_ui_contract.py test_piyasa_contract.py test_engine_observability_contract.py
+          cd ../data_pipeline
+          pytest -q test_multi_expert_forecast.py test_data_evidence_spine.py
+
+      - name: Prove production DB evidence spine read-only
+        run: |
+          PYTHONPATH=gold_axis_2026/apps:gold_axis_2026/data_pipeline python - <<'PY'
+          import os
+          from runtime_source import fetch_runtime_observability
+          from decision_source import fetch_current_decision_state
+
+          url = os.environ['NEON_DATABASE_URL']
+          runtime = fetch_runtime_observability(url)
+          assert runtime['status'] == 'DATA_EVIDENCE_SPINE_RUNTIME_HEALTH_PASS', runtime
+          assert runtime['runtime_engine_count'] == 12, runtime
+          assert runtime['context_exactly_one_link'] == 7, runtime
+          assert runtime['integrity_ok'] is True, runtime
+          assert runtime['database_writes'] == 'NONE', runtime
+
+          states = {r['engine_id']: r for r in runtime['runtime']}
+          assert len(states) == 12
+          assert sum(1 for r in states.values() if r['runtime_status'] == 'ACTIVE') == 4
+          assert sum(1 for r in states.values() if r['runtime_status'] == 'WAITING') == 3
+          assert sum(1 for r in states.values() if r['runtime_status'] == 'BLOCKED') == 5
+          assert sum(1 for r in states.values() if r.get('direction_vote')) == 3
+
+          state = fetch_current_decision_state(url)
+          if state is not None:
+              assert state.get('action_state') is None
+              assert state.get('classification') is None or state.get('context_only') is not True
+          print('PRODUCTION_DB_TO_UI_READ_PASS runtime=12/12 active=4 waiting=3 blocked=5 context_links=7/7 integrity=PASS writes=NONE')
+          PY
+
+      - name: Verify selector ensemble and action remain locked
+        run: |
+          grep -R -Fq 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/apps
+          grep -R -Fq 'AUTO_SELECTOR' gold_axis_2026/apps
+          grep -R -Fq 'AUTO_ENSEMBLE' gold_axis_2026/apps
+          if grep -Eq 'action_state[[:space:]]*=[[:space:]]*["'"'](BUY|SELL|HOLD|EXIT|REDUCE)' gold_axis_2026/apps/*.py; then
+            echo 'UNPROVEN_POSITION_MAPPING_FOUND'; exit 1
+          fi
+          echo 'SELECTOR_ENSEMBLE_POSITION_LOCKS_PASS'
+
+      - name: Canonical production-backed 390x844 browser QA
+        run: |
+          rm -rf /tmp/gold_mobile_v125_qa
+          streamlit run gold_axis_2026/apps/gold_control.py \
+            --server.headless true --server.port 8501 --server.address 127.0.0.1 \
+            > /tmp/gold_mobile_v125_browser.log 2>&1 &
+          APP_PID=$!
+          for i in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null; then break; fi
+            sleep 1
+          done
+          set +e
+          python gold_axis_2026/apps/mobile_viewport_qa.py \
+            --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v125_qa
+          QA_RC=$?
+          set -e
+          kill $APP_PID || true
+          wait $APP_PID || true
+          if [ $QA_RC -ne 0 ]; then
+            cat /tmp/gold_mobile_v125_browser.log
+            exit $QA_RC
+          fi
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v125_browser.log; then
+            cat /tmp/gold_mobile_v125_browser.log
+            exit 1
+          fi
+          test -s /tmp/gold_mobile_v125_qa/gold_control_v123_gorunum_390x844.png
+          echo 'MOBILE_V125_PRODUCTION_BACKED_BROWSER_PASS'
+          echo 'DATA_EVIDENCE_SPINE_UI_VISIBLE=12/12:7/7:PASS'
+          echo 'VIEWPORT=390x844'
+
+      - name: Upload production-backed screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-v125-production-backed-390x844-screenshots
+          path: /tmp/gold_mobile_v125_qa/*.png
+          if-no-files-found: error
+          retention-days: 30
