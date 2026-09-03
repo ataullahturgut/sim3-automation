@@ -1,4 +1,4 @@
-name: Gold Control Mobile UI V1.22 Multi-Expert Final
+name: Gold Control Mobile UI V1.23 Engine Observability Final
 
 on:
   workflow_dispatch:
@@ -6,11 +6,14 @@ on:
     branches: [gold-r4-direction-engine]
     paths:
       - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+      - 'gold_axis_2026/GOLD_CONTROL_ENGINE_OBSERVABILITY_CONTRACT_2026-09-03.md'
       - 'gold_axis_2026/GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md'
       - 'gold_axis_2026/apps/gold_control.py'
       - 'gold_axis_2026/apps/gold_control_mobile_v1.py'
       - 'gold_axis_2026/apps/mobile_viewport_qa.py'
       - 'gold_axis_2026/apps/decision_source.py'
+      - 'gold_axis_2026/apps/engine_observability_contract.py'
+      - 'gold_axis_2026/apps/test_engine_observability_contract.py'
       - 'gold_axis_2026/apps/forecast_source.py'
       - 'gold_axis_2026/apps/live_sources.py'
       - 'gold_axis_2026/apps/mobile_ui_contract.py'
@@ -45,21 +48,23 @@ jobs:
           python -m playwright install --with-deps chromium
           python --version
           streamlit version
-      - name: Verify manifest v1.22 and UI governance
+      - name: Verify manifest v1.23 and engine observability governance
         run: |
-          grep -q 'Manifest version:\*\* 1.22' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'Manifest version:\*\* 1.23' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'APPROVED_FINAL_MOCKUP_UI_CONTRACT_V2' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'Build Multi-Expert Forecast Pipeline' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'auto selector = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'auto ensemble = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'FROZEN_ALL_GOVERNED_ENGINES_VISIBLE_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'GOLD_CONTROL_ENGINE_OBSERVABILITY_CONTRACT_2026-09-03.md' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'APPROVED_FINAL_MOCKUP_UI_CONTRACT_V2' gold_axis_2026/GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md
-          echo 'V122_MULTI_EXPERT_UI_GOVERNANCE_PASS'
+          echo 'V123_ENGINE_OBSERVABILITY_UI_GOVERNANCE_PASS'
       - name: Run deterministic contracts
         run: |
           cd gold_axis_2026/apps
-          pytest -q test_mobile_ui_contract.py test_piyasa_contract.py
+          pytest -q test_mobile_ui_contract.py test_piyasa_contract.py test_engine_observability_contract.py
           cd ../data_pipeline
           pytest -q test_multi_expert_forecast.py
       - name: Compile complete UI dependency graph
@@ -69,6 +74,7 @@ jobs:
             gold_axis_2026/data_pipeline/decision_store_reader.py \
             gold_axis_2026/data_pipeline/multi_expert_forecast.py \
             gold_axis_2026/apps/decision_source.py \
+            gold_axis_2026/apps/engine_observability_contract.py \
             gold_axis_2026/apps/forecast_source.py \
             gold_axis_2026/apps/live_sources.py \
             gold_axis_2026/apps/mobile_ui_contract.py \
@@ -76,7 +82,7 @@ jobs:
             gold_axis_2026/apps/mobile_viewport_qa.py \
             gold_axis_2026/apps/gold_control_mobile_v1.py \
             gold_axis_2026/apps/gold_control.py
-      - name: Audit local imports and manifest v1.22 screen markers
+      - name: Audit local imports and manifest v1.23 screen markers
         run: |
           python - <<'PY'
           import ast
@@ -86,6 +92,9 @@ jobs:
           tree = ast.parse(source)
           local = {
               'decision_source': {'fetch_current_decision_state', 'fetch_decision_history'},
+              'engine_observability_contract': {
+                  'ENGINE_OBSERVABILITY_CONTRACT','build_engine_inventory','engine_inventory_counts'
+              },
               'forecast_source': {
                   'fetch_current_forecast','fetch_forecast_history','fetch_latest_expert_forecasts',
                   'fetch_expert_forecast_history','TRACK_MONTH_END','TRACK_EARLY_INDICATIVE'
@@ -119,14 +128,15 @@ jobs:
               'RANDOM WALK','EARLY INDICATIVE','GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI',
               'MEVCUT FİYATA GÖRE FARK','MODEL PERFORMANSI','MULTI-EXPERT FORECAST LEDGER',
               'MONTH_END_EXPERT','NOT_PROVEN_EXPERT_SELECTION_RULE','AUTO SELECTOR','AUTO ENSEMBLE',
-              'HISTORICAL_REPLAY'
+              'HISTORICAL_REPLAY','TÜM TAHMİN VE YÖN MOTORLARI',
+              'ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V1'
           ]
           missing=[x for x in required if n(x) not in text]
-          if missing: raise SystemExit(f'V122_SCREEN_MARKERS_MISSING:{missing}')
+          if missing: raise SystemExit(f'V123_SCREEN_MARKERS_MISSING:{missing}')
           prohibited=['PATCH TAHMİNİ (V7) · ANA H=1 ISSUER','WINNER EXPERT','SELECTED EXPERT']
           found=[x for x in prohibited if n(x) in text]
-          if found: raise SystemExit(f'V122_PROHIBITED_SINGLE_MODEL_OR_SELECTOR_MARKERS:{found}')
-          print('V122_MULTI_EXPERT_IMPORT_AND_MARKER_AUDIT_PASS')
+          if found: raise SystemExit(f'V123_PROHIBITED_SINGLE_MODEL_OR_SELECTOR_MARKERS:{found}')
+          print('V123_MULTI_EXPERT_IMPORT_AND_MARKER_AUDIT_PASS')
           PY
       - name: Verify bootstrap safety
         run: |
@@ -157,7 +167,7 @@ jobs:
           REPO="$GITHUB_WORKSPACE"; mkdir -p /tmp/gold_poison
           cat > /tmp/gold_poison/sitecustomize.py <<'PY'
           import sys, types
-          for name in ('decision_store','decision_store_reader','decision_source','forecast_source','live_sources','mobile_ui_contract','piyasa_contract','gold_control_mobile_v1'):
+          for name in ('decision_store','decision_store_reader','decision_source','engine_observability_contract','forecast_source','live_sources','mobile_ui_contract','piyasa_contract','gold_control_mobile_v1'):
               mod=types.ModuleType(name); mod.__file__=f'/tmp/stale-cache/{name}.py'; sys.modules[name]=mod
           PY
           cd /tmp
@@ -172,21 +182,21 @@ jobs:
         env:
           STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
         run: |
-          streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8501 --server.address 127.0.0.1 > /tmp/gold_mobile_v122_browser.log 2>&1 &
+          streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8501 --server.address 127.0.0.1 > /tmp/gold_mobile_v123_browser.log 2>&1 &
           APP_PID=$!
           for i in $(seq 1 35); do if curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null; then break; fi; sleep 1; done
-          set +e; python gold_axis_2026/apps/mobile_viewport_qa.py --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v122_qa; QA_RC=$?; set -e
+          set +e; python gold_axis_2026/apps/mobile_viewport_qa.py --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v123_qa; QA_RC=$?; set -e
           kill $APP_PID || true; wait $APP_PID || true
-          if [ $QA_RC -ne 0 ]; then cat /tmp/gold_mobile_v122_browser.log; exit $QA_RC; fi
-          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v122_browser.log; then cat /tmp/gold_mobile_v122_browser.log; exit 1; fi
-          echo 'MOBILE_V122_CANONICAL_BROWSER_PASS'
+          if [ $QA_RC -ne 0 ]; then cat /tmp/gold_mobile_v123_browser.log; exit $QA_RC; fi
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v123_browser.log; then cat /tmp/gold_mobile_v123_browser.log; exit 1; fi
+          echo 'MOBILE_V123_CANONICAL_BROWSER_PASS'
       - name: Upload final mobile QA screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gold-control-mobile-v122-multi-expert-390px-screenshots
+          name: gold-control-mobile-v123-engine-observability-390px-screenshots
           path: |
-            /tmp/gold_mobile_v122_qa/*.png
+            /tmp/gold_mobile_v123_qa/*.png
             /tmp/gold_mobile_cloud_path_qa/*.png
             /tmp/gold_mobile_stale_module_qa/*.png
           if-no-files-found: warn
