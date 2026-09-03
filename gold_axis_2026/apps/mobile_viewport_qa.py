@@ -204,7 +204,8 @@ def main() -> int:
             "Emergency · Reversal","BOCPD","GVZ Risk Cap",
             "SİNYAL ÖZETİ","MODEL YÖNÜ (AYLIK)","FAST / SLOW TEYİDİ","RİSK SEVİYESİ",
             "SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU",
-            "NOT_PROVEN_EXPERT_SELECTION_RULE","AUTO SELECTOR","AUTO ENSEMBLE"
+            "NOT_PROVEN_EXPERT_SELECTION_RULE","AUTO SELECTOR","AUTO ENSEMBLE",
+            "DB Evidence Spine: runtime 12/12","context link 7/7","integrity PASS"
         ])
         assert_direction_summary_above_fold(page)
         engine_cards = page.locator(".gc-expert")
@@ -233,7 +234,7 @@ def main() -> int:
         if columns(page, ".gc-grid4") != 2: raise AssertionError("GECMIS_SUMMARY_CARDS_EXPECTED_2X2_AT_390PX")
         if "+12,8%" in body(page) or "+22,6%" in body(page): raise AssertionError("MOCKUP_SAMPLE_PERFORMANCE_VISIBLE")
         shot(page, out, "gecmis"); browser.close()
-    print("MOBILE_V123_ALL_ENGINE_FINAL_MOCKUP_VIEWPORT_QA_PASS"); print("ENGINE_INVENTORY_VISIBLE=12/12"); print("DIRECTION_CONTEXT_VISIBLE=3/3"); print("DIRECTION_SUMMARY_ABOVE_FOLD=3/3"); print(f"VIEWPORT={PHONE_WIDTH}x{PHONE_HEIGHT}"); print(f"SCREENSHOTS={out}"); return 0
+    print("MOBILE_V123_ALL_ENGINE_FINAL_MOCKUP_VIEWPORT_QA_PASS"); print("ENGINE_INVENTORY_VISIBLE=12/12"); print("DIRECTION_CONTEXT_VISIBLE=3/3"); print("DIRECTION_SUMMARY_ABOVE_FOLD=3/3"); print("DATA_EVIDENCE_SPINE_UI_VISIBLE=12/12:7/7:PASS"); print(f"VIEWPORT={PHONE_WIDTH}x{PHONE_HEIGHT}"); print(f"SCREENSHOTS={out}"); return 0
 
 
 if __name__ == "__main__":
