@@ -159,6 +159,31 @@ def assert_direction_engine_values(page: Page, engine_cards) -> None:
             raise AssertionError(f"DIRECTION_ENGINE_STATUS_NOT_STORED:{label}:{status}")
 
 
+def assert_direction_summary_above_fold(page: Page) -> None:
+    summary = page.locator(".gc-direction-summary")
+    if summary.count() != 1 or not summary.first.is_visible():
+        raise AssertionError(f"DIRECTION_SUMMARY_COUNT:{summary.count()}:1")
+    box = summary.first.bounding_box()
+    nav_box = page.locator(f'{MAIN_NAV} [data-testid="stRadio"]').first.bounding_box()
+    if not box or not nav_box:
+        raise AssertionError(f"DIRECTION_SUMMARY_BOUNDS:{box}:{nav_box}")
+    if box["y"] < 0 or box["y"] + box["height"] > nav_box["y"] - 4:
+        raise AssertionError(f"DIRECTION_SUMMARY_NOT_ABOVE_FOLD:{box}:{nav_box}")
+    cards = summary.locator(".gc-mini")
+    if cards.count() != 4:
+        raise AssertionError(f"DIRECTION_SUMMARY_CARD_COUNT:{cards.count()}:4")
+    for label in ("MONTHLY 3M", "FAST", "SLOW"):
+        card = cards.filter(has_text=re.compile(re.escape(label), re.I))
+        if card.count() != 1:
+            raise AssertionError(f"DIRECTION_SUMMARY_ENGINE_COUNT:{label}:{card.count()}:1")
+        value = norm(card.first.locator(".value").inner_text().strip())
+        if value in {"", "—", "YAYIMLANMADI", "NOT_ISSUED"}:
+            raise AssertionError(f"DIRECTION_SUMMARY_VALUE_MISSING:{label}:{value}")
+        card_box = card.first.bounding_box()
+        if not card_box or card_box["y"] + card_box["height"] > nav_box["y"] - 4:
+            raise AssertionError(f"DIRECTION_SUMMARY_ENGINE_NOT_VISIBLE:{label}:{card_box}:{nav_box}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--url", default="http://127.0.0.1:8501"); ap.add_argument("--out", default="/tmp/gold_mobile_v123_qa"); args = ap.parse_args()
     out = Path(args.out); out.mkdir(parents=True, exist_ok=True)
@@ -171,7 +196,7 @@ def main() -> int:
 
         click(page, "Görünüm"); page.get_by_text("GÖRÜNÜM", exact=True).first.wait_for(state="visible", timeout=15_000); common(page, "gorunum")
         markers(page, "GORUNUM", [
-            "MEVCUT KAYITLI DURUM","TÜM TAHMİN VE YÖN MOTORLARI",
+            "MEVCUT KAYITLI DURUM","YÖN MOTORLARI ÖZETİ · STORED CONTEXT","TÜM TAHMİN VE YÖN MOTORLARI",
             "Causal Patch","VW-MIDAS-MSVR","3M Momentum · H=1 Expert","Random Walk",
             "Monthly Direction · 3M","FAST","SLOW","Macro Event","Emergency · Level",
             "Emergency · Reversal","BOCPD","GVZ Risk Cap",
@@ -179,6 +204,7 @@ def main() -> int:
             "SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU",
             "NOT_PROVEN_EXPERT_SELECTION_RULE","AUTO SELECTOR","AUTO ENSEMBLE"
         ])
+        assert_direction_summary_above_fold(page)
         engine_cards = page.locator(".gc-expert")
         if engine_cards.count() != 12:
             raise AssertionError(f"GORUNUM_ENGINE_INVENTORY_COUNT:{engine_cards.count()}:12")
@@ -186,7 +212,7 @@ def main() -> int:
             if not engine_cards.nth(i).is_visible() or not engine_cards.nth(i).bounding_box():
                 raise AssertionError(f"GORUNUM_ENGINE_CARD_NOT_VISIBLE:{i}")
         assert_direction_engine_values(page, engine_cards)
-        ordered(page, "GORUNUM", ["TÜM TAHMİN VE YÖN MOTORLARI","SİNYAL ÖZETİ","MODEL YÖNÜ (AYLIK)","FAST / SLOW TEYİDİ","RİSK SEVİYESİ","SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU"])
+        ordered(page, "GORUNUM", ["YÖN MOTORLARI ÖZETİ · STORED CONTEXT","TÜM TAHMİN VE YÖN MOTORLARI","SİNYAL ÖZETİ","MODEL YÖNÜ (AYLIK)","FAST / SLOW TEYİDİ","RİSK SEVİYESİ","SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU"])
         if columns(page, ".gc-grid2") != 1: raise AssertionError("GORUNUM_MOBILE_CARDS_MUST_STACK")
         if norm("POZİSYONU KORU") in body(page) or norm("GÜÇ: %68") in body(page): raise AssertionError("UNPROVEN_MOCKUP_PLACEHOLDER_VISIBLE_GORUNUM")
         shot(page, out, "gorunum")
@@ -205,7 +231,7 @@ def main() -> int:
         if columns(page, ".gc-grid4") != 2: raise AssertionError("GECMIS_SUMMARY_CARDS_EXPECTED_2X2_AT_390PX")
         if "+12,8%" in body(page) or "+22,6%" in body(page): raise AssertionError("MOCKUP_SAMPLE_PERFORMANCE_VISIBLE")
         shot(page, out, "gecmis"); browser.close()
-    print("MOBILE_V123_ALL_ENGINE_FINAL_MOCKUP_VIEWPORT_QA_PASS"); print("ENGINE_INVENTORY_VISIBLE=12/12"); print("DIRECTION_CONTEXT_VISIBLE=3/3"); print(f"VIEWPORT={PHONE_WIDTH}x{PHONE_HEIGHT}"); print(f"SCREENSHOTS={out}"); return 0
+    print("MOBILE_V123_ALL_ENGINE_FINAL_MOCKUP_VIEWPORT_QA_PASS"); print("ENGINE_INVENTORY_VISIBLE=12/12"); print("DIRECTION_CONTEXT_VISIBLE=3/3"); print("DIRECTION_SUMMARY_ABOVE_FOLD=3/3"); print(f"VIEWPORT={PHONE_WIDTH}x{PHONE_HEIGHT}"); print(f"SCREENSHOTS={out}"); return 0
 
 
 if __name__ == "__main__":

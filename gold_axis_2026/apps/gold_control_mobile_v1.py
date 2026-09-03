@@ -259,6 +259,19 @@ if nav=="⌂ Bugün":
 elif nav=="◉ Görünüm":
     updated=None if not decision else decision.get("generated_at") or decision.get("decision_as_of"); page_head("GÖRÜNÜM","Önce tüm tahmin, yön, event, emergency, rejim ve risk motorlarını gör; karar/selector katmanı sonraki aşamadır.",updated); state=decision_view_state(decision); monthly=None if not decision else decision.get("monthly_direction_3m"); ma,mt=arrow_state(monthly); live_gvz=None if not gvz else gvz.get("close"); stored_risk=stored_risk_label(decision); relation=monthly_intramonth_relation(decision); badge_text=evidence_badge(decision.get("evidence_class"))[0] if decision else "YAYIMLANMADI"
     st.markdown("<div class='gc-hero'><div class='gc-hero-layout'><div class='gc-hero-icon'>◎</div>"+f"<div><div class='gc-kicker'>MEVCUT KAYITLI DURUM</div><div class='gc-mid'>{esc(state.title)}</div><div class='gc-meta'>{esc(state.subtitle)}</div><span class='gc-badge'>{esc(badge_text)}</span></div><div class='gc-hero-side'><div><div class='gc-hero-label'>MODEL YÖNÜ / MONTHLY PRIOR</div><div class='gc-hero-value {tone_class(mt)}'>{esc(ma)} {esc(display_state(monthly,'YAYIMLANMADI'))}</div></div><div><div class='gc-hero-label'>RİSK SEVİYESİ</div><div class='gc-hero-value'>{esc(stored_risk)}</div></div></div></div></div>",unsafe_allow_html=True)
+    fast_value=None if not decision else decision.get("fast_state")
+    slow_value=None if not decision else decision.get("slow_state")
+    fa,ft=arrow_state(fast_value); sa,stn=arrow_state(slow_value)
+    direction_summary=(
+        "<div class='gc-card gc-direction-summary'><div class='gc-section-title'>YÖN MOTORLARI ÖZETİ · STORED CONTEXT</div>"
+        +"<div class='gc-grid4'>"
+        +mini_card("MONTHLY 3M",f"{ma} {display_state(monthly,'YAYIMLANMADI')}","Stratejik monthly prior",tone_class(mt))
+        +mini_card("FAST",f"{fa} {display_state(fast_value,'YAYIMLANMADI')}","Taktik yön teyidi",tone_class(ft))
+        +mini_card("SLOW",f"{sa} {display_state(slow_value,'YAYIMLANMADI')}","Orta hız yön teyidi",tone_class(stn))
+        +mini_card("GVZ RİSK",stored_risk,"Risk-only · yön oyu değildir")
+        +"</div><div class='gc-footnote' style='margin-top:.55rem'>Bu özet seçim/ensemble değildir; yalnız persisted motor context'ini görünür kılar.</div></div>"
+    )
+    st.markdown(direction_summary,unsafe_allow_html=True)
     inventory_summary=(
         f"Toplam {engine_counts['total']} motor/kanal · "
         f"Stored context {engine_counts['active']} · Issued expert {engine_counts['issued']} · "
