@@ -1,0 +1,167 @@
+name: Gold Control V1.30 Aug31 State Replay Recovery
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-control-aug31-state-replay-v130]
+    paths:
+      - 'gold_axis_2026/tools/apply_v130_aug31_state_replay_ui.py'
+      - 'gold_axis_2026/tools/export_aug31_state_replay_snapshot.py'
+      - 'gold_axis_2026/apps/aug31_state_replay_source.py'
+      - 'gold_axis_2026/apps/test_aug31_state_replay_source.py'
+      - '.github/workflows/gold-control-v130-aug31-state-replay-recovery.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  recover:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-aug31-state-replay-v130
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install app and browser runtime
+        run: |
+          pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
+          python -m playwright install --with-deps chromium
+      - name: Apply frozen v1.30 UI and manifest patch
+        run: |
+          python gold_axis_2026/tools/apply_v130_aug31_state_replay_ui.py
+          grep -Fq '**Manifest version:** 1.30' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'FROZEN_AUG31_EOD_STATE_REPLAY_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'FROZEN_AUG31_STATE_REPLAY_DISPLAY_SNAPSHOT_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+      - name: Export read-only Aug31 state replay deployment snapshot
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/tools/export_aug31_state_replay_snapshot.py
+          test -s gold_axis_2026/apps/aug31_state_replay_snapshot.json
+      - name: Compile complete replay display graph
+        run: |
+          python -m py_compile \
+            gold_axis_2026/apps/aug31_state_replay_source.py \
+            gold_axis_2026/apps/gold_control_mobile_v1.py \
+            gold_axis_2026/apps/gold_control.py \
+            gold_axis_2026/tools/export_aug31_state_replay_snapshot.py
+      - name: Deterministic contracts
+        run: |
+          cd gold_axis_2026/apps
+          pytest -q \
+            test_aug31_state_replay_source.py \
+            test_mobile_ui_contract.py \
+            test_piyasa_contract.py \
+            test_engine_observability_contract.py \
+            test_production_display_snapshot.py \
+            test_replay_snapshot_fallback_v129.py
+          cd ../data_pipeline
+          pytest -q test_multi_expert_forecast.py test_data_evidence_spine.py test_historical_replay_contract.py
+      - name: Production DB state replay and authority separation
+        run: |
+          PYTHONPATH=gold_axis_2026/apps python - <<'PY'
+          import os
+          import psycopg
+          from psycopg.rows import dict_row
+          from aug31_state_replay_source import fetch_aug31_state_replay
+          state=fetch_aug31_state_replay(os.environ['NEON_DATABASE_URL'])
+          assert state['source_mode']=='NEON_DB_READ_ONLY',state
+          assert state['monthly_direction_3m']=='DOWN'
+          assert state['fast_state']=='ROBUST_UP'
+          assert state['slow_state']=='ROBUST_UP'
+          assert state['gvz_value']==24.4
+          assert state['gvz_cap']==1.0
+          assert state['gvz_panic'] is False
+          assert state['gvz_regime']=='NORMAL'
+          assert state['prospective_h1_claim'] is False
+          assert state['current_runtime_authority'] is False
+          assert state['canonical_authority'] is False
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'],autocommit=False,row_factory=dict_row) as c:
+            with c.cursor() as cur:
+              cur.execute('SET TRANSACTION READ ONLY')
+              cur.execute('select runtime_status,count(*) n from latest_engine_runtime_state group by runtime_status')
+              assert {r['runtime_status']:r['n'] for r in cur.fetchall()}=={'ACTIVE':4,'WAITING':3,'BLOCKED':5}
+              cur.execute('select count(*) n from latest_engine_runtime_state where direction_vote_permitted'); assert cur.fetchone()['n']==3
+              cur.execute('select count(*) n from monthly_forecast_contracts'); assert cur.fetchone()['n']==0
+              cur.execute('select count(*) n from decision_signal_snapshots'); assert cur.fetchone()['n']==0
+            c.rollback()
+          print('V130_PRODUCTION_STATE_REPLAY_PASS DOWN ROBUST_UP ROBUST_UP GVZ=24.40/NORMAL runtime=4/3/5 canonical=0 decision=0 writes=NONE')
+          PY
+      - name: DB-less 390x844 visual acceptance
+        run: |
+          rm -rf /tmp/gold_v130_state_replay && mkdir -p /tmp/gold_v130_state_replay
+          env -u NEON_DATABASE_URL streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8530 --server.address 127.0.0.1 >/tmp/gold_v130_state_replay.log 2>&1 &
+          PID=$!
+          for i in $(seq 1 45); do curl -fsS http://127.0.0.1:8530/_stcore/health >/dev/null && break; sleep 1; done
+          env -u NEON_DATABASE_URL python - <<'PY'
+          import re
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+          out=Path('/tmp/gold_v130_state_replay/gold_control_v130_aug31_state_replay_390x844.png')
+          with sync_playwright() as p:
+            b=p.chromium.launch(headless=True)
+            page=b.new_page(viewport={'width':390,'height':844},device_scale_factor=1)
+            page.goto('http://127.0.0.1:8530',wait_until='domcontentloaded',timeout=60000)
+            page.get_by_text('GOLD CONTROL',exact=False).first.wait_for(state='visible',timeout=45000)
+            page.locator('.st-key-gc_main_nav label[data-testid="stRadioOption"]').filter(has_text=re.compile('Tahmin',re.I)).first.click()
+            heading=page.get_by_text('31 AĞUSTOS 2026 EOD STATE REPLAY',exact=True).first
+            heading.wait_for(state='visible',timeout=20000)
+            body=page.locator('body').inner_text()
+            for value in ('4,345.81 USD','4,397.31 USD','DOWN','ROBUST_UP','24.40','NORMAL','1.0'):
+              assert value in body,value
+            for blocker in (
+              'BLOCKED_REPLAY_INPUT_SET_NOT_REPRODUCIBLE_FOR_2026_08_31',
+              'BLOCKED_NOT_PROVEN_EXECUTABLE',
+              'BLOCKED_NOT_FULLY_RECOVERED',
+              'BLOCKED_NO_AUTHORIZED_REPLAY_MONTHLY_REFERENCE',
+              'BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED',
+            ):
+              assert blocker in body,blocker
+            assert 'HISTORICAL REPLAY · PROSPECTIVE DEĞİL' in body
+            assert 'NOT_ISSUED_MISSED_2026_08_31_ORIGIN' in body
+            assert 'BUY' not in body and 'SELL' not in body and 'HOLD' not in body
+            heading.evaluate("el=>el.scrollIntoView({block:'start'})")
+            page.wait_for_timeout(500)
+            page.screenshot(path=str(out),full_page=False)
+            b.close()
+          assert out.is_file() and out.stat().st_size>0
+          print('V130_DBLESS_AUG31_STATE_REPLAY_VISUAL_PASS')
+          PY
+          kill $PID || true; wait $PID || true
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_v130_state_replay.log; then cat /tmp/gold_v130_state_replay.log; exit 1; fi
+      - name: Production DB-backed canonical mobile regression
+        run: |
+          rm -rf /tmp/gold_v130_db_qa
+          streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8531 --server.address 127.0.0.1 >/tmp/gold_v130_db.log 2>&1 &
+          PID=$!
+          for i in $(seq 1 45); do curl -fsS http://127.0.0.1:8531/_stcore/health >/dev/null && break; sleep 1; done
+          python gold_axis_2026/apps/mobile_viewport_qa.py --url http://127.0.0.1:8531 --out /tmp/gold_v130_db_qa
+          kill $PID || true; wait $PID || true
+          grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_v130_db.log && (cat /tmp/gold_v130_db.log; exit 1) || true
+      - name: Commit recovered v1.30 application state
+        run: |
+          git status --short
+          git add \
+            gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md \
+            gold_axis_2026/apps/gold_control.py \
+            gold_axis_2026/apps/gold_control_mobile_v1.py \
+            gold_axis_2026/apps/aug31_state_replay_snapshot.json
+          git diff --cached --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'gold-control: activate v1.30 Aug31 EOD state replay display'
+          git push origin HEAD:gold-control-aug31-state-replay-v130
+      - name: Upload visual evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-v130-aug31-state-replay-390x844
+          path: |
+            /tmp/gold_v130_state_replay/*.png
+            /tmp/gold_v130_db_qa/*.png
+          if-no-files-found: error
+          retention-days: 30
