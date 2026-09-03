@@ -56,6 +56,7 @@ def test_contract_and_engine_inventory_are_exact():
     )
     assert RUNTIME_STATUSES == {"ACTIVE", "ISSUED", "WAITING", "BLOCKED", "NOT_PROVEN"}
     assert "RUNTIME_GOVERNANCE_AUDIT" in RUNTIME_EVIDENCE_CLASSES
+    assert "HISTORICAL_REPLAY" in RUNTIME_EVIDENCE_CLASSES
 
 
 def test_month_end_input_set_requires_exact_origin_as_of():
@@ -72,8 +73,10 @@ def test_input_set_rejects_future_origin_and_unknown_contract_values():
         _spec(forecast_track="UNKNOWN").validate()
     with pytest.raises(ValueError, match="INVALID_INPUT_SET_EXPERT"):
         _spec(expert_id="UNKNOWN").validate()
-    with pytest.raises(ValueError, match="INVALID_INPUT_SET_EVIDENCE_CLASS"):
+    with pytest.raises(ValueError, match="HISTORICAL_REPLAY_INPUT_SET_EVIDENCE_REQUIRES_REPLAY_TRACK"):
         _spec(evidence_class="HISTORICAL_REPLAY").validate()
+    with pytest.raises(ValueError, match="INVALID_INPUT_SET_EVIDENCE_CLASS"):
+        _spec(evidence_class="UNKNOWN").validate()
     with pytest.raises(ValueError, match="INPUT_SET_FINGERPRINT_REQUIRED"):
         _spec(input_fingerprint="").validate()
 
