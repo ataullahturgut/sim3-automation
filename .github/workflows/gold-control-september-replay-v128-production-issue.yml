@@ -1,0 +1,90 @@
+name: Gold Control September Replay V1.28 Production Issue
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-control-september-replay-v128]
+    paths:
+      - '.github/workflows/gold-control-september-replay-v128-production-issue.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  issue:
+    runs-on: ubuntu-24.04
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-september-replay-v128
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install runtime
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Verify production replay schema and prewrite invariants
+        run: |
+          test -n "$TWELVE_DATA_API_KEY"
+          test -n "$NEON_DATABASE_URL"
+          PYTHONPATH=gold_axis_2026/data_pipeline python - <<'PY'
+          import os, psycopg
+          from psycopg.rows import dict_row
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute("select to_regclass('public.latest_historical_replay_engine_state') as reg")
+                  assert cur.fetchone()['reg'] is not None
+                  cur.execute("select runtime_status,count(*)::int n from latest_engine_runtime_state group by runtime_status")
+                  counts={r['runtime_status']:r['n'] for r in cur.fetchall()}
+                  assert counts=={'ACTIVE':4,'WAITING':3,'BLOCKED':5}, counts
+                  cur.execute("select count(*)::int n from monthly_forecast_contracts")
+                  assert cur.fetchone()['n']==0
+                  cur.execute("select count(*)::int n from decision_signal_snapshots")
+                  assert cur.fetchone()['n']==0
+              conn.rollback()
+          print('SEPTEMBER_REPLAY_PRODUCTION_PREWRITE_PASS runtime=4/3/5 canonical=0 decision=0')
+          PY
+      - name: Issue frozen September historical replay
+        run: |
+          cd gold_axis_2026/data_pipeline
+          python september_2026_simple_expert_historical_replay.py --mode issue
+      - name: Production postwrite Evidence Spine audit
+        run: |
+          PYTHONPATH=gold_axis_2026/data_pipeline python - <<'PY'
+          import os, psycopg
+          from psycopg.rows import dict_row
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute("select expert_id,count(*)::int n from monthly_expert_forecasts where target_month='2026-09-01' and forecast_track='HISTORICAL_REPLAY' and evidence_class='HISTORICAL_REPLAY' group by expert_id order by expert_id")
+                  exp={r['expert_id']:r['n'] for r in cur.fetchall()}
+                  assert exp=={'MOMENTUM_3M':1,'RANDOM_WALK':1}, exp
+                  cur.execute("select count(*)::int n from forecast_input_sets where target_month='2026-09-01' and forecast_track='HISTORICAL_REPLAY'")
+                  assert cur.fetchone()['n']==2
+                  cur.execute("select count(*)::int n from forecast_input_snapshots where target_period='2026-09' and metadata->>'historical_replay'='true'")
+                  assert cur.fetchone()['n']==5
+                  cur.execute("select count(*)::int n from latest_historical_replay_engine_state where target_context='2026-09'")
+                  assert cur.fetchone()['n']==2
+                  cur.execute("select runtime_status,count(*)::int n from latest_engine_runtime_state group by runtime_status")
+                  counts={r['runtime_status']:r['n'] for r in cur.fetchall()}
+                  assert counts=={'ACTIVE':4,'WAITING':3,'BLOCKED':5}, counts
+                  cur.execute("select count(*)::int n from monthly_forecast_contracts")
+                  assert cur.fetchone()['n']==0
+                  cur.execute("select count(*)::int n from decision_signal_snapshots")
+                  assert cur.fetchone()['n']==0
+                  cur.execute("select orphan_input_snapshots,expert_rows_without_input_set,expert_input_fingerprint_mismatches from data_evidence_spine_health_v1")
+                  h=cur.fetchone(); assert int(h['orphan_input_snapshots'])==0 and int(h['expert_rows_without_input_set'])==0 and int(h['expert_input_fingerprint_mismatches'])==0, h
+              conn.rollback()
+          print('SEPTEMBER_REPLAY_PRODUCTION_POSTWRITE_PASS experts=2 input_sets=2 snapshots=5 replay_runtime=2 operational_runtime=4/3/5 integrity=PASS canonical=0 decision=0')
+          PY
+      - name: Upload replay issuance evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: september-2026-historical-replay-production-evidence
+          path: gold_axis_2026/stage4b/september_2026_simple_expert_historical_replay_evidence.json
+          if-no-files-found: error
+          retention-days: 90
