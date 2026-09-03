@@ -1,0 +1,96 @@
+name: Gold Control Simple Expert V2 Source Binding
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_SIMPLE_EXPERT_SOURCE_BINDING_V2_CHANGE_CONTROL_2026-09-03.md'
+      - 'gold_axis_2026/tools/simple_expert_v2_source_binding.py'
+      - '.github/workflows/gold-control-simple-expert-v2-source-binding.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  frozen-source-binding:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install validation runtime
+        run: pip install 'numpy>=1.26,<3' 'pandas>=2,<3' 'requests>=2.31,<3'
+
+      - name: Require protected provider credential
+        run: test -n "$TWELVE_DATA_API_KEY"
+
+      - name: Verify pre-result freeze and parent evidence
+        run: |
+          grep -F 'FROZEN_BEFORE_SOURCE_BINDING_RESULT' gold_axis_2026/GOLD_CONTROL_SIMPLE_EXPERT_SOURCE_BINDING_V2_CHANGE_CONTROL_2026-09-03.md
+          grep -F 'RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND' gold_axis_2026/GOLD_CONTROL_SIMPLE_EXPERT_SOURCE_BINDING_V2_CHANGE_CONTROL_2026-09-03.md
+          grep -F 'MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND' gold_axis_2026/GOLD_CONTROL_SIMPLE_EXPERT_SOURCE_BINDING_V2_CHANGE_CONTROL_2026-09-03.md
+          grep -F 'V2 MAPE `<= 1.05 × R1 MAPE`' gold_axis_2026/GOLD_CONTROL_SIMPLE_EXPERT_SOURCE_BINDING_V2_CHANGE_CONTROL_2026-09-03.md
+          grep -F 'V2 worst APE `<= 1.10 × R1 worst APE`' gold_axis_2026/GOLD_CONTROL_SIMPLE_EXPERT_SOURCE_BINDING_V2_CHANGE_CONTROL_2026-09-03.md
+          python - <<'PY'
+          import json
+          p='gold_axis_2026/patch_repro_v1/prospective_monthly_level_v6_source_evidence.json'
+          e=json.load(open(p))
+          assert e['decision']=='PATCH_MONTHLY_LEVEL_BRIDGE_V6_SOURCE_PASS', e['decision']
+          assert e['source_bridge_pass'] is True
+          assert e['thresholds_relaxed'] is False
+          print('SIMPLE_EXPERT_V2_PARENT_SOURCE_PASS')
+          PY
+
+      - name: Compile frozen validator
+        run: python -m py_compile gold_axis_2026/tools/simple_expert_v2_source_binding.py
+
+      - name: Run frozen source-binding and model-impact gates
+        id: validate
+        continue-on-error: true
+        run: python gold_axis_2026/tools/simple_expert_v2_source_binding.py
+
+      - name: Verify evidence isolation
+        if: always()
+        run: |
+          test -f gold_axis_2026/simple_expert_v2/simple_expert_v2_source_binding_evidence.json
+          grep -F '"raw_vendor_market_values_logged": false' gold_axis_2026/simple_expert_v2/simple_expert_v2_source_binding_evidence.json
+          grep -F '"database_write": "NONE"' gold_axis_2026/simple_expert_v2/simple_expert_v2_source_binding_evidence.json
+          grep -F '"forecast_ledger_write": "NONE"' gold_axis_2026/simple_expert_v2/simple_expert_v2_source_binding_evidence.json
+          grep -F '"decision_store_write": "NONE"' gold_axis_2026/simple_expert_v2/simple_expert_v2_source_binding_evidence.json
+          grep -F '"post_result_retune": false' gold_axis_2026/simple_expert_v2/simple_expert_v2_source_binding_evidence.json
+          grep -F '"thresholds_relaxed": false' gold_axis_2026/simple_expert_v2/simple_expert_v2_source_binding_evidence.json
+
+      - name: Commit immutable result evidence before enforcement
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/simple_expert_v2/simple_expert_v2_source_binding_evidence.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'gold-control: record frozen simple-expert V2 source-binding evidence'
+            git push origin HEAD:gold-r4-direction-engine
+          fi
+
+      - name: Enforce frozen joint PASS
+        run: |
+          python - <<'PY'
+          import json
+          p='gold_axis_2026/simple_expert_v2/simple_expert_v2_source_binding_evidence.json'
+          e=json.load(open(p))
+          print('RW_DECISION='+e['rw_decision'])
+          print('MOMENTUM_DECISION='+e['momentum_decision'])
+          print('JOINT_DECISION='+e['decision'])
+          if e['decision']!='SIMPLE_EXPERT_V2_SOURCE_BINDING_PASS':
+              raise SystemExit('SIMPLE_EXPERT_V2_SOURCE_BINDING_FAIL_NO_RETUNE')
+          print('SIMPLE_EXPERT_V2_SOURCE_BINDING_PASS')
+          PY
