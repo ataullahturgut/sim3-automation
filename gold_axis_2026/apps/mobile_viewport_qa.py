@@ -123,7 +123,7 @@ def columns(page: Page, selector: str) -> int:
 
 
 def shot(page: Page, out: Path, name: str) -> None:
-    page.screenshot(path=str(out / f"gold_control_v122_{name}_390x844.png"), full_page=True)
+    page.screenshot(path=str(out / f"gold_control_v123_{name}_390x844.png"), full_page=True)
 
 
 def common(page: Page, screen: str) -> None:
@@ -131,7 +131,7 @@ def common(page: Page, screen: str) -> None:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(); ap.add_argument("--url", default="http://127.0.0.1:8501"); ap.add_argument("--out", default="/tmp/gold_mobile_v122_qa"); args = ap.parse_args()
+    ap = argparse.ArgumentParser(); ap.add_argument("--url", default="http://127.0.0.1:8501"); ap.add_argument("--out", default="/tmp/gold_mobile_v123_qa"); args = ap.parse_args()
     out = Path(args.out); out.mkdir(parents=True, exist_ok=True)
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
@@ -141,8 +141,22 @@ def main() -> int:
         common(page, "bugun"); segmented(page, MARKET_RANGE, 4, "MARKET_RANGE"); shot(page, out, "bugun")
 
         click(page, "Görünüm"); page.get_by_text("GÖRÜNÜM", exact=True).first.wait_for(state="visible", timeout=15_000); common(page, "gorunum")
-        markers(page, "GORUNUM", ["MEVCUT KAYITLI DURUM","SİNYAL ÖZETİ","MODEL YÖNÜ (AYLIK)","FAST / SLOW TEYİDİ","RİSK SEVİYESİ","SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU","MACRO EVENT","BOCPD","NOT_PROVEN_EXPERT_SELECTION_RULE","AUTO SELECTOR","AUTO ENSEMBLE"])
-        ordered(page, "GORUNUM", ["SİNYAL ÖZETİ","MODEL YÖNÜ (AYLIK)","FAST / SLOW TEYİDİ","RİSK SEVİYESİ","SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU"])
+        markers(page, "GORUNUM", [
+            "MEVCUT KAYITLI DURUM","TÜM TAHMİN VE YÖN MOTORLARI",
+            "Causal Patch","VW-MIDAS-MSVR","3M Momentum · H=1 Expert","Random Walk",
+            "Monthly Direction · 3M","FAST","SLOW","Macro Event","Emergency · Level",
+            "Emergency · Reversal","BOCPD","GVZ Risk Cap",
+            "SİNYAL ÖZETİ","MODEL YÖNÜ (AYLIK)","FAST / SLOW TEYİDİ","RİSK SEVİYESİ",
+            "SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU",
+            "NOT_PROVEN_EXPERT_SELECTION_RULE","AUTO SELECTOR","AUTO ENSEMBLE"
+        ])
+        engine_cards = page.locator(".gc-expert")
+        if engine_cards.count() != 12:
+            raise AssertionError(f"GORUNUM_ENGINE_INVENTORY_COUNT:{engine_cards.count()}:12")
+        for i in range(12):
+            if not engine_cards.nth(i).is_visible() or not engine_cards.nth(i).bounding_box():
+                raise AssertionError(f"GORUNUM_ENGINE_CARD_NOT_VISIBLE:{i}")
+        ordered(page, "GORUNUM", ["TÜM TAHMİN VE YÖN MOTORLARI","SİNYAL ÖZETİ","MODEL YÖNÜ (AYLIK)","FAST / SLOW TEYİDİ","RİSK SEVİYESİ","SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU"])
         if columns(page, ".gc-grid2") != 1: raise AssertionError("GORUNUM_MOBILE_CARDS_MUST_STACK")
         if norm("POZİSYONU KORU") in body(page) or norm("GÜÇ: %68") in body(page): raise AssertionError("UNPROVEN_MOCKUP_PLACEHOLDER_VISIBLE_GORUNUM")
         shot(page, out, "gorunum")
@@ -161,7 +175,7 @@ def main() -> int:
         if columns(page, ".gc-grid4") != 2: raise AssertionError("GECMIS_SUMMARY_CARDS_EXPECTED_2X2_AT_390PX")
         if "+12,8%" in body(page) or "+22,6%" in body(page): raise AssertionError("MOCKUP_SAMPLE_PERFORMANCE_VISIBLE")
         shot(page, out, "gecmis"); browser.close()
-    print("MOBILE_V122_MULTI_EXPERT_FINAL_MOCKUP_VIEWPORT_QA_PASS"); print(f"VIEWPORT={PHONE_WIDTH}x{PHONE_HEIGHT}"); print(f"SCREENSHOTS={out}"); return 0
+    print("MOBILE_V123_ALL_ENGINE_FINAL_MOCKUP_VIEWPORT_QA_PASS"); print("ENGINE_INVENTORY_VISIBLE=12/12"); print(f"VIEWPORT={PHONE_WIDTH}x{PHONE_HEIGHT}"); print(f"SCREENSHOTS={out}"); return 0
 
 
 if __name__ == "__main__":
