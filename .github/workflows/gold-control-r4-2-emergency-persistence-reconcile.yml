@@ -1,0 +1,108 @@
+name: Gold Control R4.2 Emergency Persistence Reconcile
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+      - 'gold_axis_2026/GOLD_CONTROL_R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_CONTRACT_2026-09-02.md'
+      - 'gold_axis_2026/GOLD_CONTROL_R4_2_EMERGENCY_PERSISTENCE_RECONCILIATION_2026-09-03.md'
+      - 'gold_axis_2026/r4_2/**'
+      - 'gold_axis_2026/apps/decision_source.py'
+      - '.github/workflows/gold-control-r4-2-emergency-persistence-reconcile.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify manifest and frozen R4.2 authority
+        run: |
+          grep -q 'R4.2 generic monthly-price-reference → Emergency bridge is validated' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_PASS' gold_axis_2026/GOLD_CONTROL_R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_CONTRACT_2026-09-02.md
+          grep -q 'no Neon/forecast-ledger/Decision Store write is permitted during bridge validation' gold_axis_2026/GOLD_CONTROL_R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_CONTRACT_2026-09-02.md
+          grep -q 'BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE' gold_axis_2026/apps/decision_source.py
+          grep -q 'AUDITED_ACTIVE_BLOCKER_NOT_STALE' gold_axis_2026/GOLD_CONTROL_R4_2_EMERGENCY_PERSISTENCE_RECONCILIATION_2026-09-03.md
+          echo 'R4_2_AUTHORITY_CHAIN_PASS'
+
+      - name: Install read-only Neon audit runtime
+        run: pip install 'psycopg[binary]>=3.2,<4'
+
+      - name: Reconcile production persistence state
+        run: |
+          python - <<'PY'
+          import os
+          import psycopg
+          from psycopg.rows import dict_row
+
+          expected_empty = {
+              'forecast_input_snapshots',
+              'monthly_forecast_contracts',
+              'monthly_expert_forecasts',
+              'decision_signal_snapshots',
+          }
+
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute("""
+                      SELECT 'forecast_input_snapshots' AS object, COUNT(*)::bigint AS row_count
+                      FROM forecast_input_snapshots
+                      UNION ALL
+                      SELECT 'monthly_forecast_contracts', COUNT(*)::bigint
+                      FROM monthly_forecast_contracts
+                      UNION ALL
+                      SELECT 'monthly_expert_forecasts', COUNT(*)::bigint
+                      FROM monthly_expert_forecasts
+                      UNION ALL
+                      SELECT 'decision_signal_snapshots', COUNT(*)::bigint
+                      FROM decision_signal_snapshots
+                      ORDER BY object
+                  """)
+                  counts = {r['object']: int(r['row_count']) for r in cur.fetchall()}
+
+                  cur.execute("""
+                      SELECT feature_name, COUNT(*)::bigint AS row_count
+                      FROM derived_feature_snapshots
+                      WHERE feature_name ILIKE '%MONTH%'
+                         OR feature_name ILIKE '%EMERGENCY%'
+                         OR feature_name ILIKE '%REFERENCE%'
+                      GROUP BY feature_name
+                      ORDER BY feature_name
+                  """)
+                  derived = {r['feature_name']: int(r['row_count']) for r in cur.fetchall()}
+              conn.rollback()
+
+          if set(counts) != expected_empty:
+              raise SystemExit(f'R4_2_PERSISTENCE_AUDIT_SCHEMA_MISMATCH:{counts}')
+
+          print('FORECAST_STATE_COUNTS=' + ','.join(f'{k}:{counts[k]}' for k in sorted(counts)))
+          print('MONTHLY_EMERGENCY_DERIVED=' + (','.join(f'{k}:{v}' for k, v in sorted(derived.items())) or 'NONE'))
+          print('R4_2_BRIDGE_STATUS=R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_PASS')
+
+          if all(v == 0 for v in counts.values()):
+              if any('EMERGENCY' in k.upper() or 'REFERENCE' in k.upper() for k in derived):
+                  raise SystemExit(f'R4_2_UNEXPECTED_DERIVED_EMERGENCY_OR_REFERENCE:{derived}')
+              print('PERSISTED_MONTHLY_REFERENCE_STATUS=BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE')
+              print('BLOCKER_STALE=FALSE')
+              print('EMERGENCY_FORWARD_CONTEXT=BLOCKED')
+              print('R4_2_EMERGENCY_PERSISTENCE_RECONCILE_PASS')
+          else:
+              print('PERSISTED_FORECAST_STATE_DETECTED=TRUE')
+              print('BLOCKER_STALE=REQUIRES_FORWARD_PROVENANCE_AUDIT')
+              raise SystemExit('R4_2_PERSISTENCE_STATE_CHANGED_RECONCILIATION_REQUIRED')
+          PY
