@@ -211,4 +211,16 @@ cross_test.write_text(
     encoding="utf-8",
 )
 
+# Final QA semantic migration guard: run after every other QA rewrite.
+replace_once(
+    qa,
+    '        if status != "STORED_CONTEXT_AVAILABLE":',
+    '        if status not in {"STORED_CONTEXT_AVAILABLE", "AKTİF · STORED CONTEXT"}:',
+)
+qa_text = qa.read_text(encoding="utf-8")
+if 'if status != "STORED_CONTEXT_AVAILABLE":' in qa_text:
+    raise RuntimeError("STALE_DIRECTION_STATUS_ASSERTION_REMAINS")
+if 'AKTİF · STORED CONTEXT' not in qa_text:
+    raise RuntimeError("HUMAN_READABLE_DIRECTION_STATUS_ASSERTION_NOT_INSTALLED")
+
 print("V126_SYSTEM_RECOVERY_PATCH_APPLIED")
