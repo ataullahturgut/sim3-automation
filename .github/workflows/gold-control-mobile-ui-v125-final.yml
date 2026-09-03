@@ -1,4 +1,4 @@
-name: Gold Control Mobile UI V1.27 Compatibility Final
+name: Gold Control Mobile UI V1.29 Compatibility Final
 
 on:
   workflow_dispatch:
@@ -8,7 +8,8 @@ on:
       - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
       - 'gold_axis_2026/GOLD_CONTROL_DATA_EVIDENCE_SPINE_CONTRACT_2026-09-03.md'
       - 'gold_axis_2026/GOLD_CONTROL_ENGINE_OBSERVABILITY_CONTRACT_2026-09-03.md'
-      - 'gold_axis_2026/GOLD_CONTROL_DEPLOYMENT_DISPLAY_SNAPSHOT_CONTRACT_2026-09-03.md'
+      - 'gold_axis_2026/GOLD_CONTROL_DEPLOYMENT_DISPLAY_SNAPSHOT_CONTRACT_V2_2026-09-03.md'
+      - 'gold_axis_2026/apps/V129_REPLAY_FALLBACK_VERIFICATION.md'
       - 'gold_axis_2026/apps/**'
       - 'gold_axis_2026/data_pipeline/data_evidence_spine.py'
       - 'gold_axis_2026/data_pipeline/data_evidence_spine_audit.py'
@@ -40,11 +41,11 @@ jobs:
           pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
           python -m playwright install --with-deps chromium
 
-      - name: Verify manifest v1.27 governance and frozen locks
+      - name: Verify manifest v1.29 governance and frozen locks
         run: |
           test -n "$NEON_DATABASE_URL" || (echo 'NEON_DATABASE_URL missing' && exit 1)
-          grep -Fq '**Manifest version:** 1.27' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          grep -Fq 'FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq '**Manifest version:** 1.29' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V2' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'FROZEN_SYSTEM_RECOVERY_UI_CONSISTENCY_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'FROZEN_DATA_EVIDENCE_SPINE_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'FROZEN_ALL_GOVERNED_ENGINES_VISIBLE_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
@@ -52,7 +53,7 @@ jobs:
           grep -Fq 'auto selector = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'auto ensemble = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'NOT_PROVEN_POSITION_MAPPING' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          echo 'V127_MOBILE_GOVERNANCE_PASS'
+          echo 'V129_MOBILE_GOVERNANCE_PASS'
 
       - name: Compile complete DB snapshot to UI graph
         run: |
@@ -74,7 +75,7 @@ jobs:
             gold_axis_2026/apps/gold_control_mobile_v1.py \
             gold_axis_2026/apps/gold_control.py
 
-      - name: Run deterministic recovery and deployment contracts
+      - name: Run deterministic v1.29 contracts
         run: |
           cd gold_axis_2026/apps
           pytest -q \
@@ -82,16 +83,18 @@ jobs:
             test_piyasa_contract.py \
             test_engine_observability_contract.py \
             test_ui_manifest_consistency_v126.py \
-            test_production_display_snapshot.py
+            test_production_display_snapshot.py \
+            test_replay_snapshot_fallback_v129.py
           cd ../data_pipeline
-          pytest -q test_multi_expert_forecast.py test_data_evidence_spine.py
+          pytest -q test_multi_expert_forecast.py test_data_evidence_spine.py test_historical_replay_contract.py
 
-      - name: Prove production DB evidence spine read-only
+      - name: Prove production DB evidence spine and replay read-only
         run: |
           PYTHONPATH=gold_axis_2026/apps:gold_axis_2026/data_pipeline python - <<'PY'
           import os
           from runtime_source import fetch_runtime_observability
           from decision_source import fetch_current_decision_state
+          from forecast_source import TRACK_HISTORICAL_REPLAY, fetch_latest_expert_forecasts
           url=os.environ['NEON_DATABASE_URL']
           runtime=fetch_runtime_observability(url)
           assert runtime['source_mode']=='NEON_DB_READ_ONLY', runtime
@@ -111,24 +114,34 @@ jobs:
           assert state['slow_state'] not in (None,'','YAYIMLANMADI')
           assert state.get('classification') is None
           assert state.get('action_state') is None
-          print('V127_PRODUCTION_DB_TO_UI_PASS runtime=12/12 context=7/7 writes=NONE')
+          replay=fetch_latest_expert_forecasts(url,TRACK_HISTORICAL_REPLAY)
+          assert {r['expert_id'] for r in replay}=={'MOMENTUM_3M','RANDOM_WALK'}
+          assert all(r['canonical_authority'] is False for r in replay)
+          assert all(r['provenance']['prospective_claim'] is False for r in replay)
+          print('V129_PRODUCTION_DB_TO_UI_PASS runtime=12/12 context=7/7 replay=2 writes=NONE')
           PY
 
-      - name: Prove deployment fallback without database URL
+      - name: Prove deployment fallback without database URL including replay
         run: |
           env -u NEON_DATABASE_URL PYTHONPATH=gold_axis_2026/apps python - <<'PY'
           from decision_source import fetch_current_decision_state
           from runtime_source import fetch_runtime_observability
+          from forecast_source import TRACK_HISTORICAL_REPLAY, TRACK_MONTH_END, TRACK_EARLY_INDICATIVE, fetch_latest_expert_forecasts
           state=fetch_current_decision_state('')
           runtime=fetch_runtime_observability('')
+          replay=fetch_latest_expert_forecasts('',TRACK_HISTORICAL_REPLAY)
           assert state['source_mode']=='PRODUCTION_SNAPSHOT_FALLBACK'
           assert runtime['source_mode']=='PRODUCTION_SNAPSHOT_FALLBACK'
           assert state['monthly_direction_3m'] not in (None,'','YAYIMLANMADI')
           assert state['fast_state'] not in (None,'','YAYIMLANMADI')
           assert state['slow_state'] not in (None,'','YAYIMLANMADI')
           assert runtime['runtime_engine_count']==12 and runtime['context_exactly_one_link']==7
+          assert {r['expert_id'] for r in replay}=={'MOMENTUM_3M','RANDOM_WALK'}
+          assert all(float(r['forecast_value'])>0 for r in replay)
+          assert fetch_latest_expert_forecasts('',TRACK_MONTH_END)==[]
+          assert fetch_latest_expert_forecasts('',TRACK_EARLY_INDICATIVE)==[]
           assert state.get('classification') is None and state.get('action_state') is None
-          print('V127_DEPLOYMENT_FALLBACK_SOURCE_PASS')
+          print('V129_DEPLOYMENT_FALLBACK_SOURCE_PASS replay=2')
           PY
 
       - name: Verify selector ensemble and action remain locked
@@ -147,29 +160,29 @@ jobs:
 
       - name: Canonical production-backed 390x844 browser QA
         run: |
-          rm -rf /tmp/gold_mobile_v127_qa
+          rm -rf /tmp/gold_mobile_v129_qa
           streamlit run gold_axis_2026/apps/gold_control.py \
             --server.headless true --server.port 8501 --server.address 127.0.0.1 \
-            >/tmp/gold_mobile_v127_browser.log 2>&1 &
+            >/tmp/gold_mobile_v129_browser.log 2>&1 &
           APP_PID=$!
           for i in $(seq 1 45); do
             curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null && break
             sleep 1
           done
           python gold_axis_2026/apps/mobile_viewport_qa.py \
-            --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v127_qa
+            --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v129_qa
           kill $APP_PID || true
           wait $APP_PID || true
-          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v127_browser.log; then
-            cat /tmp/gold_mobile_v127_browser.log
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v129_browser.log; then
+            cat /tmp/gold_mobile_v129_browser.log
             exit 1
           fi
-          echo 'MOBILE_V127_PRODUCTION_BACKED_BROWSER_PASS'
+          echo 'MOBILE_V129_PRODUCTION_BACKED_BROWSER_PASS'
 
       - name: Upload production-backed screenshots
         uses: actions/upload-artifact@v4
         with:
-          name: gold-control-v127-compatibility-production-backed-390x844-screenshots
-          path: /tmp/gold_mobile_v127_qa/*.png
+          name: gold-control-v129-compatibility-production-backed-390x844-screenshots
+          path: /tmp/gold_mobile_v129_qa/*.png
           if-no-files-found: error
           retention-days: 30
