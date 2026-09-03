@@ -1,0 +1,4 @@
+Gold Control v1.23 direction-summary acceptance trigger.
+Purpose: force App Smoke and Mobile UI production-backed CI on the connector-authored canonical HEAD after the bot-applied UI patch.
+Required acceptance: ENGINE_INVENTORY_VISIBLE=12/12; DIRECTION_CONTEXT_VISIBLE=3/3; DIRECTION_SUMMARY_ABOVE_FOLD=3/3; VIEWPORT=390x844.
+No runtime behavior, model logic, selector state, forecast state, or Neon state is changed by this file.
