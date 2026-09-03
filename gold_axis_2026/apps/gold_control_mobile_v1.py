@@ -18,6 +18,7 @@ from engine_observability_contract import (
 )
 from forecast_source import (
     TRACK_EARLY_INDICATIVE,
+    TRACK_HISTORICAL_REPLAY,
     TRACK_MONTH_END,
     fetch_current_forecast,
     fetch_expert_forecast_history,
@@ -251,6 +252,8 @@ month_end_experts=safe_call(lambda:fetch_latest_expert_forecasts(url,TRACK_MONTH
 early_experts=safe_call(lambda:fetch_latest_expert_forecasts(url,TRACK_EARLY_INDICATIVE),[]) if url else []
 month_end_history=safe_call(lambda:fetch_expert_forecast_history(url,TRACK_MONTH_END),[]) if url else []
 early_history=safe_call(lambda:fetch_expert_forecast_history(url,TRACK_EARLY_INDICATIVE),[]) if url else []
+historical_replay_experts=[]
+historical_replay_history=[]
 spot=safe_call(get_spot,None); hist,hist_meta=safe_call(get_xau_history,(pd.DataFrame(),{})); gvz=safe_call(get_gvz,None); replay=load_replay(); rmetrics=replay_metrics(replay); _=classification_label
 runtime_rows=[] if not runtime_obs else list(runtime_obs.get("runtime") or [])
 engine_rows=build_engine_inventory(decision,month_end_experts,early_experts,runtime_rows); engine_counts=engine_inventory_counts(engine_rows)
@@ -334,6 +337,7 @@ elif nav=="◉ Görünüm":
     explanation=deterministic_explanation(decision); st.markdown("<div class='gc-grid2'>"+f"<div class='gc-card'>{section_header(6,'EMERGENCY DURUMU')}{emergency_rows}</div>"+f"<div class='gc-card'>{section_header(7,'SİSTEM YORUMU')}<div style='font-style:italic;line-height:1.62'>{esc(explanation)}</div>{pipeline_html()}</div></div>",unsafe_allow_html=True); st.markdown(selector_lock_html(),unsafe_allow_html=True); st.markdown("<div class='gc-note'>Aylık prior ile intramonth durum çelişebilir. Sistem yeni uygun veriler geldikçe Fast/Slow, Macro Event, Emergency, BOCPD ve GVZ'nin yalnız dondurulmuş rolleriyle güncellenir; 2026 sonucuna bakarak expert seçimi yapılmaz.</div>",unsafe_allow_html=True)
 
 elif nav=="↗ Tahmin":
+    historical_replay_experts=safe_call(lambda:fetch_latest_expert_forecasts(url,TRACK_HISTORICAL_REPLAY),[]) if url else []
     expert_update=month_end_experts[0].get("as_of") if month_end_experts else (early_experts[0].get("as_of") if early_experts else None); updated=forecast.get("frozen_at") if forecast else expert_update; page_head("TAHMİN","Gelecek ay için kanonik sonuç ve ayrı Multi-Expert kanıt katmanı.",updated); fstate=forecast_view_state(forecast)
     if forecast:
         target=str(forecast.get("target_month") or "")[:7]; badge=evidence_badge(forecast.get("evidence_class"))[0]; hero_title=fmt_num(forecast.get("forecast_value"),2," USD"); hero_sub=f"Hedef dönem: {target}"; direction=decision.get("monthly_direction_3m") if target_matches(decision,forecast) else None; da,_=arrow_state(direction); direction_text=f"{da} {display_state(direction,'—')}"; origin_text=fmt_time(forecast.get("forecast_origin"))
@@ -348,6 +352,8 @@ elif nav=="↗ Tahmin":
             st.markdown("<div class='gc-replay-head'><strong>Prospective geçmiş henüz yok; araştırma referansı gösteriliyor.</strong><span class='gc-replay-pill'>HISTORICAL_REPLAY</span></div>",unsafe_allow_html=True); research=replay.tail(12)[["month","actual","patch_r1","vw","mom","rw"]].rename(columns={"month":"Tarih","actual":"Gerçekleşen","patch_r1":"Causal Patch","vw":"VW-MIDAS-MSVR","mom":"3M Momentum","rw":"Random Walk"}); plot_lines(research,"Tarih",["Gerçekleşen","Causal Patch","VW-MIDAS-MSVR","3M Momentum","Random Walk"],275); st.caption("Historical replay prospective değildir ve selector otoritesi yaratmaz.")
         else: st.markdown(empty_html("KARŞILAŞTIRMA HENÜZ OLUŞMADI","MONTH_END_EXPERT veya gösterilebilir araştırma geçmişi yok."),unsafe_allow_html=True)
     st.markdown("<div class='gc-card'><div class='gc-section-title'>MULTI-EXPERT MONTHLY FORECAST ENGINE</div><div class='gc-footnote'>Aynı target için Causal Patch, VW-MIDAS-MSVR, 3M Momentum ve Random Walk ayrı kimlik/evidence ile tutulur. Winner yoktur.</div>"+expert_cards(month_end_experts)+selector_lock_html()+"<div class='gc-track-head'><b>EARLY INDICATIVE · AYRI REVISION TRACK</b><span class='gc-track-pill'>PIT-SAFE ONLY</span></div>"+(expert_cards(early_experts) if early_experts else empty_html("EARLY INDICATIVE HENÜZ YOK","Ay-sonu kanonik forecast'tan ayrı tutulur; PIT-safe contract açılmadan sayı üretilmez."))+"</div>",unsafe_allow_html=True)
+    replay_db_body=(expert_cards(historical_replay_experts) if historical_replay_experts else empty_html("EYLÜL 2026 REPLAY KAYDI YOK","Production Evidence Spine üzerinde HISTORICAL_REPLAY kaydı okunamadı."))
+    st.markdown("<div class='gc-replay'><div class='gc-replay-head'><strong>EYLÜL 2026 HISTORICAL REPLAY</strong><span class='gc-replay-pill'>REPLAY · PROSPECTIVE DEĞİL</span></div>"+replay_db_body+"<div class='gc-footnote' style='margin-top:.65rem'><b>Resmî prospective durum:</b> NOT_ISSUED_MISSED_2026_08_31_ORIGIN. Bu satırlar 31 Ağustos bilgi kesitiyle sonradan yeniden hesaplanmıştır; canonical forecast, selector, ensemble veya yön oyu değildir.</div></div>",unsafe_allow_html=True)
     st.markdown("<div class='gc-card'><div class='gc-section-title'>SENARYOLAR</div>"+empty_html("SENARYOLAR HENÜZ YAYIMLANMADI",SCENARIO_STATUS)+"<div class='gc-footnote'>Kanonik senaryo kontratı açılmadan baz/iyimser/kötümser sayı üretilmez.</div></div>",unsafe_allow_html=True)
     spot_value=None if not spot else spot.get("price")
     if forecast and spot_value:
@@ -360,6 +366,7 @@ elif nav=="↗ Tahmin":
     st.markdown(f"<div class='gc-note'><b>Metodoloji:</b> Monthly forecast stratejik anchor/prior'dır; günlük işlem emri değildir. Scenario status: <b>{esc(SCENARIO_STATUS)}</b>. Auto selector: <b>{esc(AUTO_SELECTOR_STATUS)}</b>. Auto ensemble: <b>{esc(AUTO_ENSEMBLE_STATUS)}</b>. Selector: <b>{esc(EXPERT_SELECTION_STATUS)}</b>. Build first → ayrı expert çıktıları → Early Indicative → temiz karşılaştırmalı geçmiş → rolling-origin leakage-safe selector araştırması. Yatırım tavsiyesi değildir.</div>",unsafe_allow_html=True)
 
 else:
+    historical_replay_history=safe_call(lambda:fetch_expert_forecast_history(url,TRACK_HISTORICAL_REPLAY),[]) if url else []
     latest=month_end_history[0].get("as_of") if month_end_history else (early_history[0].get("as_of") if early_history else None); page_head("GEÇMİŞ","Sistem geçmişte gerçekten ne yaptı? Evidence sınıfları birbirine karıştırılmaz.",latest); realized_count=0
     st.markdown("<div class='gc-section-title'>ÖZET METRİKLER</div><div class='gc-footnote' style='margin-bottom:.45rem'><b>PROSPECTIVE / LIVE CANONICAL SCORECARD</b> · Historical Replay bu kartlara girmez.</div>",unsafe_allow_html=True); st.markdown("<div class='gc-grid4'>"+mini_card("REALIZED TAHMİN",str(realized_count),"Outcome-linked prospective/live")+mini_card("MAPE","—","YETERLİ VERİ YOK")+mini_card("MAE (USD)","—","YETERLİ VERİ YOK")+mini_card("YÖN DOĞRULUĞU","—","Frozen outcome tanımı sonrası")+"</div>",unsafe_allow_html=True)
     with st.container(border=True):
@@ -384,6 +391,14 @@ else:
         if not edf.empty and "as_of" in edf.columns:
             pivot=edf.pivot_table(index="as_of",columns="expert_id",values="forecast_value",aggfunc="last").reset_index(); plot_lines(pivot,"as_of",[c for c in EXPERT_DISPLAY_ORDER if c in pivot.columns],250); st.caption("Early Indicative canonical month-end H=1 scorecard'a karıştırılmaz.")
         else: st.markdown(empty_html("EARLY INDICATIVE REVISION YOK","PIT-safe completed-session güncellemeleri ayrı track'te saklanacak."),unsafe_allow_html=True)
+    rdf=expert_history_frame(historical_replay_history)
+    with st.container(border=True):
+        st.markdown("<div class='gc-section-title'>PRODUCTION HISTORICAL_REPLAY · EYLÜL 2026</div>",unsafe_allow_html=True)
+        if not rdf.empty:
+            pivot=rdf.pivot_table(index="target_month",columns="expert_id",values="forecast_value",aggfunc="last").reset_index(); plot_lines(pivot,"target_month",[c for c in EXPERT_DISPLAY_ORDER if c in pivot.columns],250)
+            cols=[c for c in ["target_month","expert_id","model_version","forecast_value","evidence_class","forecast_origin","as_of"] if c in rdf.columns]; table=rdf[cols].copy(); table["target_month"]=table["target_month"].dt.strftime("%Y-%m"); st.dataframe(table,width="stretch",hide_index=True)
+            st.caption("REPLAY · PROSPECTIVE DEĞİL · official prospective status: NOT_ISSUED_MISSED_2026_08_31_ORIGIN")
+        else: st.markdown(empty_html("PRODUCTION HISTORICAL_REPLAY KAYDI YOK","Replay ledger yalnız HISTORICAL_REPLAY evidence ile okunur."),unsafe_allow_html=True)
     if not replay.empty and {"actual","patch_r1","vw","mom","rw"}.issubset(replay.columns):
         st.markdown("<div class='gc-replay'><div class='gc-replay-head'><strong>ARAŞTIRMA GEÇMİŞİ — AYRI KANIT SINIFI</strong><span class='gc-replay-pill'>HISTORICAL_REPLAY</span></div><div class='gc-grid4'>"+mini_card("PATCH MAPE",fmt_num(rmetrics.get("patch_mape"),2,"%"),"Historical replay")+mini_card("VW MAPE",fmt_num(rmetrics.get("vw_mape"),2,"%"),"Historical analytical")+mini_card("3M MAPE",fmt_num(rmetrics.get("mom_mape"),2,"%"),"Context challenger")+mini_card("RW MAPE",fmt_num(rmetrics.get("rw_mape"),2,"%"),"Benchmark")+"</div></div>",unsafe_allow_html=True)
         with st.container(border=True):
@@ -392,4 +407,4 @@ else:
 
 st.markdown("<div id='system-health'></div>",unsafe_allow_html=True)
 with st.expander("Sistem / Veri Sağlığı / Audit"):
-    st.write("UI contract:",FINAL_MOCKUP_CONTRACT); st.write("Engine observability:",ENGINE_OBSERVABILITY_CONTRACT); st.write("Governed engine inventory:",engine_counts); st.write("Architecture:",MULTI_EXPERT_ARCHITECTURE); st.write("Neon:","BAĞLI" if url else "YAPILANDIRILMADI"); st.write("Decision Store:","KAYIT VAR" if decision else "KAYIT YOK"); st.write("Canonical forecast ledger:","KAYIT VAR" if forecast else "KAYIT YOK / SELECTOR NOT PROVEN"); st.write("MONTH_END_EXPERT rows:",len(month_end_history)); st.write("EARLY_INDICATIVE rows:",len(early_history)); st.write("Auto selector:",AUTO_SELECTOR_STATUS); st.write("Auto ensemble:",AUTO_ENSEMBLE_STATUS); st.write("Selector status:",EXPERT_SELECTION_STATUS); st.write("Scenario status:",SCENARIO_STATUS); st.write("Patch executable expert:",PATCH_EXACT_ID); st.write("Patch geometry:",PATCH_GEOMETRY); st.write("VW executable status:","BLOCKED_NOT_PROVEN_EXECUTABLE"); st.write("3M/RW forward source binding:","BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND"); st.write("Historical replay:","MEVCUT" if not replay.empty else "YOK"); st.write("Track constants:",MONTH_END_TRACK,EARLY_INDICATIVE_TRACK)
+    st.write("UI contract:",FINAL_MOCKUP_CONTRACT); st.write("Engine observability:",ENGINE_OBSERVABILITY_CONTRACT); st.write("Governed engine inventory:",engine_counts); st.write("Architecture:",MULTI_EXPERT_ARCHITECTURE); st.write("Neon:","BAĞLI" if url else "YAPILANDIRILMADI"); st.write("Decision Store:","KAYIT VAR" if decision else "KAYIT YOK"); st.write("Canonical forecast ledger:","KAYIT VAR" if forecast else "KAYIT YOK / SELECTOR NOT PROVEN"); st.write("MONTH_END_EXPERT rows:",len(month_end_history)); st.write("EARLY_INDICATIVE rows:",len(early_history)); st.write("HISTORICAL_REPLAY rows (active view):",len(historical_replay_history)); st.write("Auto selector:",AUTO_SELECTOR_STATUS); st.write("Auto ensemble:",AUTO_ENSEMBLE_STATUS); st.write("Selector status:",EXPERT_SELECTION_STATUS); st.write("Scenario status:",SCENARIO_STATUS); st.write("Patch executable expert:",PATCH_EXACT_ID); st.write("Patch geometry:",PATCH_GEOMETRY); st.write("VW executable status:","BLOCKED_NOT_PROVEN_EXECUTABLE"); st.write("3M/RW forward source binding:","BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND"); st.write("Historical replay:","MEVCUT" if not replay.empty else "YOK"); st.write("Track constants:",MONTH_END_TRACK,EARLY_INDICATIVE_TRACK)
