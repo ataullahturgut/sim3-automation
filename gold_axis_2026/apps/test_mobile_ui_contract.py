@@ -18,6 +18,7 @@ from mobile_ui_contract import (
     assert_no_action_mapping,
     classification_label,
     decision_view_state,
+    deterministic_explanation,
     evidence_badge,
     expert_display_state,
     forecast_view_state,
@@ -158,13 +159,44 @@ def test_noncanonical_expert_cannot_fill_canonical_hero():
 
 
 def test_unproven_position_language_is_rejected():
-    for text in ["Pozisyonu koru", "POZİSYONU KORU", "BUY", "SELL", "HOLD_LONG"]:
+    for text in ["Pozisyonu koru", "POZİSYONU KORU", "BUY", "SELL", "HOLD_LONG", "AL", "SAT"]:
         try:
             assert_no_action_mapping(text)
         except RuntimeError as exc:
             assert "NOT_PROVEN_POSITION_MAPPING_UI_VIOLATION" in str(exc)
         else:
             raise AssertionError(f"position action must be rejected: {text}")
+
+
+def test_action_guard_does_not_match_substrings_inside_descriptive_words():
+    for text in [
+        "final Decision Store kararı değildir",
+        "Aylık prior stratejik anchor'dır",
+        "Sinyal kayıtları immutable context'tir",
+        "Makro olay yalnız risk bağlamıdır",
+    ]:
+        assert_no_action_mapping(text)
+
+
+def test_context_explanation_with_real_direction_values_is_descriptive_not_action():
+    context = {
+        "context_only": True,
+        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+        "monthly_direction_3m": "DOWN",
+        "fast_state": "ROBUST_UP",
+        "slow_state": "ROBUST_UP",
+        "macro_event_state": "BLOCKED_NOT_FULLY_RECOVERED",
+        "level_emergency": "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE",
+        "reversal_emergency": "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE",
+        "bocpd_context": "BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED",
+        "gvz_cap": 0.5,
+        "classification": None,
+        "action_state": None,
+    }
+    result = deterministic_explanation(context)
+    assert "Aylık prior: DOWN" in result
+    assert "Fast/Slow: ROBUST_UP / ROBUST_UP" in result
+    assert "final Decision Store kararı değildir" in result
 
 
 def test_classification_labels_are_descriptive_not_actions():
