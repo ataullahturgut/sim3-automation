@@ -1,0 +1,111 @@
+name: Gold Control September Replay V1.28 Preflight
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-control-september-replay-v128]
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_SEPTEMBER_2026_REPLAY_AND_CURRENT_CONTEXT_CONTRACT_2026-09-03.md'
+      - 'gold_axis_2026/data_pipeline/schema_patch_historical_replay_v1.sql'
+      - 'gold_axis_2026/data_pipeline/september_2026_simple_expert_historical_replay.py'
+      - '.github/workflows/gold-control-september-replay-v128-preflight.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-september-replay-v128
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install replay runtime
+        run: |
+          pip install -r gold_axis_2026/data_pipeline/requirements.txt
+          pip install pandas numpy requests
+      - name: Verify frozen replay contract before result
+        run: |
+          test -n "$TWELVE_DATA_API_KEY" || (echo 'TWELVE_DATA_API_KEY missing' && exit 1)
+          test -n "$NEON_DATABASE_URL" || (echo 'NEON_DATABASE_URL missing' && exit 1)
+          grep -Fq 'FROZEN_SEPTEMBER_2026_HISTORICAL_REPLAY_AND_CURRENT_CONTEXT_V1' gold_axis_2026/GOLD_CONTROL_SEPTEMBER_2026_REPLAY_AND_CURRENT_CONTEXT_CONTRACT_2026-09-03.md
+          grep -Fq 'NOT_ISSUED_MISSED_2026_08_31_ORIGIN' gold_axis_2026/GOLD_CONTROL_SEPTEMBER_2026_REPLAY_AND_CURRENT_CONTEXT_CONTRACT_2026-09-03.md
+          grep -Fq 'BLOCKED_REPLAY_INPUT_SET_NOT_REPRODUCIBLE_FOR_2026_08_31' gold_axis_2026/GOLD_CONTROL_SEPTEMBER_2026_REPLAY_AND_CURRENT_CONTEXT_CONTRACT_2026-09-03.md
+          grep -Fq 'BLOCKED_NOT_PROVEN_EXECUTABLE' gold_axis_2026/GOLD_CONTROL_SEPTEMBER_2026_REPLAY_AND_CURRENT_CONTEXT_CONTRACT_2026-09-03.md
+      - name: Compile replay path
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/september_2026_simple_expert_historical_replay.py \
+            gold_axis_2026/data_pipeline/multi_expert_forecast.py \
+            gold_axis_2026/data_pipeline/multi_expert_forecast_store.py \
+            gold_axis_2026/data_pipeline/data_evidence_spine.py
+      - name: Run frozen replay dry-run twice without logging prices
+        run: |
+          cd gold_axis_2026/data_pipeline
+          python september_2026_simple_expert_historical_replay.py --mode dry-run | tee /tmp/replay_run1.log
+          cp ../stage4b/september_2026_simple_expert_historical_replay_evidence.json /tmp/replay_evidence_1.json
+          python september_2026_simple_expert_historical_replay.py --mode dry-run | tee /tmp/replay_run2.log
+          cmp /tmp/replay_evidence_1.json ../stage4b/september_2026_simple_expert_historical_replay_evidence.json
+          if grep -Eiq 'forecast_value[=:][[:space:]]*[0-9]|close[=:][[:space:]]*[0-9]|price[=:][[:space:]]*[0-9]' /tmp/replay_run1.log /tmp/replay_run2.log; then
+            echo 'RAW_OR_FORECAST_VALUE_LOGGED'
+            exit 1
+          fi
+          echo 'SEPTEMBER_REPLAY_DETERMINISM_PASS'
+      - name: Validate dry-run evidence semantics
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('gold_axis_2026/stage4b/september_2026_simple_expert_historical_replay_evidence.json')
+          x=json.loads(p.read_text())
+          assert x['status']=='SEPTEMBER_2026_SIMPLE_EXPERT_HISTORICAL_REPLAY_DRY_RUN_PASS'
+          assert x['target_month']=='2026-09'
+          assert x['forecast_origin']=='2026-08-31T21:00:00+00:00'
+          assert x['forecast_track']=='HISTORICAL_REPLAY'
+          assert x['evidence_class']=='HISTORICAL_REPLAY'
+          assert x['prospective_claim'] is False
+          assert x['database_writes']=='NONE'
+          assert x['source']['duplicate_selected_dates']==0
+          assert x['source']['last_selected_date']<'2026-09-01'
+          assert set(x['monthly_counts'])=={'2026-05','2026-06','2026-07','2026-08'}
+          assert min(x['monthly_counts'].values())>=15
+          assert set(x['experts'])=={'RANDOM_WALK','MOMENTUM_3M'}
+          assert x['causal_patch_replay_status']=='BLOCKED_REPLAY_INPUT_SET_NOT_REPRODUCIBLE_FOR_2026_08_31'
+          assert x['vw_replay_status']=='BLOCKED_NOT_PROVEN_EXECUTABLE'
+          assert 'forecast_value' not in json.dumps(x)
+          print('SEPTEMBER_REPLAY_EVIDENCE_SEMANTICS_PASS')
+          PY
+      - name: Production read-only no-backdating guard
+        run: |
+          PYTHONPATH=gold_axis_2026/data_pipeline python - <<'PY'
+          import os, psycopg
+          from psycopg.rows import dict_row
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'],autocommit=False,row_factory=dict_row) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute("select count(*)::int n from monthly_expert_forecasts where target_month='2026-09-01'")
+                  assert cur.fetchone()['n']==0
+                  cur.execute("select count(*)::int n from monthly_forecast_contracts")
+                  assert cur.fetchone()['n']==0
+                  cur.execute("select count(*)::int n from decision_signal_snapshots")
+                  assert cur.fetchone()['n']==0
+                  cur.execute("select runtime_status,count(*)::int n from latest_engine_runtime_state group by runtime_status")
+                  counts={r['runtime_status']:r['n'] for r in cur.fetchall()}
+                  assert counts=={'ACTIVE':4,'WAITING':3,'BLOCKED':5}, counts
+              conn.rollback()
+          print('PRODUCTION_REPLAY_PREWRITE_GUARD_PASS expert_sep=0 canonical=0 decision=0 runtime=4/3/5 writes=NONE')
+          PY
+      - name: Upload replay evidence without raw prices
+        uses: actions/upload-artifact@v4
+        with:
+          name: september-2026-historical-replay-preflight-evidence
+          path: gold_axis_2026/stage4b/september_2026_simple_expert_historical_replay_evidence.json
+          if-no-files-found: error
+          retention-days: 30
