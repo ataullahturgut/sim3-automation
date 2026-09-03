@@ -39,7 +39,44 @@ jobs:
           PY
 
       - name: Apply fail-closed registry manifest observability and CI patch
-        run: python gold_axis_2026/tools/apply_simple_expert_v2_promotion.py
+        run: |
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'gold_axis_2026/tools')
+          import apply_simple_expert_v2_promotion as p
+
+          p.verify_evidence()
+          p.patch_multi_expert()
+          p.patch_multi_expert_tests()
+          p.patch_observability()
+          p.patch_observability_tests()
+          p.patch_manifest()
+
+          wf = Path('.github/workflows/gold-control-mobile-ui-v1.yml')
+          text = wf.read_text(encoding='utf-8')
+          replacements = [
+              ('name: Gold Control Mobile UI V1.23 Engine Observability Final', 'name: Gold Control Mobile UI V1.24 Engine Observability Final'),
+              ('- name: Verify manifest v1.23 and engine observability governance', '- name: Verify manifest v1.24 and engine observability governance'),
+              ("1.23' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md", "1.24' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md"),
+              ("echo 'V123_ENGINE_OBSERVABILITY_UI_GOVERNANCE_PASS'", "echo 'V124_ENGINE_OBSERVABILITY_UI_GOVERNANCE_PASS'"),
+              ('- name: Audit local imports and manifest v1.23 screen markers', '- name: Audit local imports and manifest v1.24 screen markers'),
+          ]
+          for old, new in replacements:
+              if text.count(old) != 1:
+                  raise SystemExit(f'MOBILE_WORKFLOW_PATCH_COUNT:{old}:{text.count(old)}')
+              text = text.replace(old, new, 1)
+          wf.write_text(text, encoding='utf-8')
+
+          # Repair the reusable patcher itself so future reruns use escape-agnostic matching.
+          patcher = Path('gold_axis_2026/tools/apply_simple_expert_v2_promotion.py')
+          src = patcher.read_text(encoding='utf-8')
+          start = src.index('def patch_mobile_workflow_manifest_gate() -> None:\n')
+          end = src.index('\ndef main() -> None:\n', start)
+          fixed = '''def patch_mobile_workflow_manifest_gate() -> None:\n    path = REPO_ROOT / ".github" / "workflows" / "gold-control-mobile-ui-v1.yml"\n    replace_once(path, "name: Gold Control Mobile UI V1.23 Engine Observability Final", "name: Gold Control Mobile UI V1.24 Engine Observability Final")\n    replace_once(path, "- name: Verify manifest v1.23 and engine observability governance", "- name: Verify manifest v1.24 and engine observability governance")\n    replace_once(path, "1.23' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md", "1.24' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md")\n    replace_once(path, "echo 'V123_ENGINE_OBSERVABILITY_UI_GOVERNANCE_PASS'", "echo 'V124_ENGINE_OBSERVABILITY_UI_GOVERNANCE_PASS'")\n    replace_once(path, "- name: Audit local imports and manifest v1.23 screen markers", "- name: Audit local imports and manifest v1.24 screen markers")\n\n'''
+          patcher.write_text(src[:start] + fixed + src[end+1:], encoding='utf-8')
+          print('SIMPLE_EXPERT_V2_PROMOTION_PATCH_PASS')
+          PY
 
       - name: Compile promoted graph
         run: |
@@ -64,7 +101,7 @@ jobs:
           grep -F '**Manifest version:** 1.24' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'SIMPLE_EXPERT_V2_SOURCE_BINDING_PASS' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'WAITING_ELIGIBLE_MONTH_END_ORIGIN' gold_axis_2026/apps/engine_observability_contract.py
-          grep -F "Manifest version:\\\*\\\* 1.24" .github/workflows/gold-control-mobile-ui-v1.yml
+          grep -F "1.24' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md" .github/workflows/gold-control-mobile-ui-v1.yml
           echo 'SIMPLE_EXPERT_V2_LOCKS_AND_MANIFEST_PASS'
 
       - name: Commit promoted state atomically
@@ -77,6 +114,7 @@ jobs:
             gold_axis_2026/data_pipeline/test_multi_expert_forecast.py \
             gold_axis_2026/apps/engine_observability_contract.py \
             gold_axis_2026/apps/test_engine_observability_contract.py \
+            gold_axis_2026/tools/apply_simple_expert_v2_promotion.py \
             .github/workflows/gold-control-mobile-ui-v1.yml
           if git diff --cached --quiet; then
             echo 'PROMOTION_NO_DIFF'; exit 1
