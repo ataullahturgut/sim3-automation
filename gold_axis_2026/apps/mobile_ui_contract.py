@@ -54,6 +54,7 @@ AUTO_ENSEMBLE_STATUS = "OFF"
 MONTH_END_TRACK = "MONTH_END_EXPERT"
 EARLY_INDICATIVE_TRACK = "EARLY_INDICATIVE"
 CONTEXT_EVIDENCE_CLASS = "LATE_BOOTSTRAP_SHADOW_CONTEXT"
+INTRAMONTH_PENDING_LABEL = "INTRAMONTH TEYİT HENÜZ YAYIMLANMADI"
 EXPERT_DISPLAY_ORDER = (
     "CAUSAL_PATCH",
     "VW_MIDAS_MSVR",
@@ -281,7 +282,7 @@ def monthly_intramonth_relation(decision: dict[str, Any] | None) -> str:
         if not monthly_ok and (fast_ok or slow_ok):
             return "MONTHLY_PRIOR_NOT_ISSUED_TACTICAL_CONTEXT_AVAILABLE"
         if monthly_ok and not (fast_ok or slow_ok):
-            return "INTRAMONTH_TEYİT_HENÜZ_YAYIMLANMADI"
+            return INTRAMONTH_PENDING_LABEL
         if not monthly_ok and not (fast_ok or slow_ok):
             return "UNRESOLVED_INSUFFICIENT_STORED_STATE"
     elif not monthly_ok or not (fast_ok or slow_ok):
