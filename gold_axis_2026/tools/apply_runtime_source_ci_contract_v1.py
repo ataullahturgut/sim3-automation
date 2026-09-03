@@ -32,11 +32,13 @@ def patch_mobile() -> None:
         "      - name: Verify manifest v1.23 and engine observability governance",
         "      - name: Verify manifest v1.25 and Data Evidence Spine governance",
     )
-    text = replace_once(
-        text,
-        "          grep -q 'Manifest version:\\\*\\\* 1.23' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md",
-        "          grep -q 'Manifest version:\\\*\\\* 1.25' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md\n          grep -q 'FROZEN_DATA_EVIDENCE_SPINE_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md\n          grep -q 'RUNTIME_BOOTSTRAP_PRODUCTION_PASS' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md",
+    manifest_old = r"          grep -q 'Manifest version:\*\* 1.23' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md"
+    manifest_new = (
+        r"          grep -q 'Manifest version:\*\* 1.25' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md"
+        "\n          grep -q 'FROZEN_DATA_EVIDENCE_SPINE_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md"
+        "\n          grep -q 'RUNTIME_BOOTSTRAP_PRODUCTION_PASS' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md"
     )
+    text = replace_once(text, manifest_old, manifest_new)
     text = replace_once(
         text,
         "          echo 'V123_ENGINE_OBSERVABILITY_UI_GOVERNANCE_PASS'",
