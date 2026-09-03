@@ -77,15 +77,15 @@ EXPERT_DISPLAY = {
     },
     "MOMENTUM_3M": {
         "label": "3M Momentum",
-        "model_version": "MOMENTUM_3M_R1",
-        "role": "Direction challenger / context expert",
-        "empty_status": "BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND",
+        "model_version": "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
+        "role": "Monthly expert / direction challenger; H=1 price output is distinct from stored monthly direction context",
+        "empty_status": "WAITING_ELIGIBLE_MONTH_END_ORIGIN",
     },
     "RANDOM_WALK": {
         "label": "Random Walk",
-        "model_version": "RW_R1",
+        "model_version": "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
         "role": "Mandatory naive benchmark",
-        "empty_status": "BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND",
+        "empty_status": "WAITING_ELIGIBLE_MONTH_END_ORIGIN",
     },
 }
 
@@ -178,7 +178,7 @@ def forecast_view_state(forecast: dict[str, Any] | None) -> ViewState:
     if not forecast:
         return ViewState(
             title="TAHMİN HENÜZ YAYIMLANMADI",
-            subtitle="NOT_ISSUED_IN_CANONICAL_LEDGER",
+            subtitle="Kanonik forecast ledger'da henüz yayımlanmış kayıt yok.",
             tone="neutral",
             evidence_class=None,
         )

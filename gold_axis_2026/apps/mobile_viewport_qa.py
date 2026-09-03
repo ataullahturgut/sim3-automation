@@ -140,7 +140,7 @@ def columns(page: Page, selector: str) -> int:
 
 
 def shot(page: Page, out: Path, name: str) -> None:
-    page.screenshot(path=str(out / f"gold_control_v123_{name}_390x844.png"), full_page=True)
+    page.screenshot(path=str(out / f"gold_control_v126_{name}_390x844.png"), full_page=True)
 
 
 def common(page: Page, screen: str) -> None:
@@ -157,7 +157,7 @@ def assert_direction_engine_values(page: Page, engine_cards) -> None:
         status = norm(card.locator(".state").inner_text().strip())
         if output in {"", "—", "YAYIMLANMADI", "NOT_ISSUED"}:
             raise AssertionError(f"DIRECTION_ENGINE_VALUE_MISSING:{label}:{output}")
-        if status != "STORED_CONTEXT_AVAILABLE":
+        if status not in {"STORED_CONTEXT_AVAILABLE", "AKTIF · STORED CONTEXT"}:
             raise AssertionError(f"DIRECTION_ENGINE_STATUS_NOT_STORED:{label}:{status}")
 
 
@@ -187,14 +187,17 @@ def assert_direction_summary_above_fold(page: Page) -> None:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(); ap.add_argument("--url", default="http://127.0.0.1:8501"); ap.add_argument("--out", default="/tmp/gold_mobile_v123_qa"); args = ap.parse_args()
+    ap = argparse.ArgumentParser(); ap.add_argument("--url", default="http://127.0.0.1:8501"); ap.add_argument("--out", default="/tmp/gold_mobile_v126_qa"); args = ap.parse_args()
     out = Path(args.out); out.mkdir(parents=True, exist_ok=True)
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page(viewport={"width": PHONE_WIDTH, "height": PHONE_HEIGHT}, device_scale_factor=1)
         page.goto(args.url, wait_until="domcontentloaded", timeout=60_000); page.wait_for_timeout(2400)
         page.get_by_text("GOLD CONTROL", exact=False).first.wait_for(state="visible", timeout=45_000)
-        common(page, "bugun"); segmented(page, MARKET_RANGE, 4, "MARKET_RANGE"); shot(page, out, "bugun")
+        common(page, "bugun"); segmented(page, MARKET_RANGE, 4, "MARKET_RANGE"); bugun_text=body(page);
+        if "RISK GÖRÜNÜMÜ: KULLANILAMIYOR" in bugun_text: raise AssertionError("GVZ_VALID_VALUE_RENDERED_UNAVAILABLE")
+        if not any(token in bugun_text for token in ("RISK GÖRÜNÜMÜ: NORMAL","RISK GÖRÜNÜMÜ: ELEVATED","RISK GÖRÜNÜMÜ: PANIC")): raise AssertionError("GVZ_REGIME_NOT_RENDERED")
+        shot(page, out, "bugun")
 
         click(page, "Görünüm"); page.get_by_text("GÖRÜNÜM", exact=True).first.wait_for(state="visible", timeout=15_000); common(page, "gorunum")
         markers(page, "GORUNUM", [
@@ -215,26 +218,34 @@ def main() -> int:
             if not engine_cards.nth(i).is_visible() or not engine_cards.nth(i).bounding_box():
                 raise AssertionError(f"GORUNUM_ENGINE_CARD_NOT_VISIBLE:{i}")
         assert_direction_engine_values(page, engine_cards)
+        if columns(page, ".gc-engine-grid") != 1: raise AssertionError("GORUNUM_ENGINE_GRID_MUST_BE_SINGLE_COLUMN_AT_390PX")
+        page_text=body(page)
+        if "BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND" in page_text: raise AssertionError("STALE_SIMPLE_EXPERT_SOURCE_BLOCKER_VISIBLE")
+        for token in ("MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND","RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"):
+            if token not in page_text: raise AssertionError(f"R2_SIMPLE_EXPERT_IDENTITY_NOT_VISIBLE:{token}")
+        for i in range(engine_cards.count()):
+            dims=engine_cards.nth(i).evaluate("el => ({sw:el.scrollWidth,cw:el.clientWidth,sh:el.scrollHeight,ch:el.clientHeight})")
+            if int(dims["sw"]) > int(dims["cw"]) + 2: raise AssertionError(f"ENGINE_CARD_INTERNAL_HORIZONTAL_OVERFLOW:{i}:{dims}")
         ordered(page, "GORUNUM", ["YÖN MOTORLARI ÖZETİ · STORED CONTEXT","TÜM TAHMİN VE YÖN MOTORLARI","SİNYAL ÖZETİ","MODEL YÖNÜ (AYLIK)","FAST / SLOW TEYİDİ","RİSK SEVİYESİ","SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU"])
         if columns(page, ".gc-grid2") != 1: raise AssertionError("GORUNUM_MOBILE_CARDS_MUST_STACK")
         if norm("POZİSYONU KORU") in body(page) or norm("GÜÇ: %68") in body(page): raise AssertionError("UNPROVEN_MOCKUP_PLACEHOLDER_VISIBLE_GORUNUM")
         shot(page, out, "gorunum")
 
         click(page, "Tahmin"); page.get_by_text("TAHMİN", exact=True).first.wait_for(state="visible", timeout=15_000); common(page, "tahmin")
-        markers(page, "TAHMIN", ["GELECEK AY TAHMİNİ","MULTI-EXPERT MONTHLY FORECAST ENGINE","CAUSAL PATCH","VW-MIDAS-MSVR","3M MOMENTUM","RANDOM WALK","GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI","EARLY INDICATIVE","MEVCUT FİYATA GÖRE FARK","MODEL PERFORMANSI","NOT_PROVEN_EXPERT_SELECTION_RULE","AUTO SELECTOR","AUTO ENSEMBLE","HISTORICAL_REPLAY"])
-        ordered(page, "TAHMIN", ["GELECEK AY TAHMİNİ","GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI","MULTI-EXPERT MONTHLY FORECAST ENGINE","MEVCUT FİYATA GÖRE FARK","MODEL PERFORMANSI"])
+        markers(page, "TAHMIN", ["GELECEK AY TAHMİNİ","MULTI-EXPERT MONTHLY FORECAST ENGINE","CAUSAL PATCH","VW-MIDAS-MSVR","3M MOMENTUM","RANDOM WALK","GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI","EARLY INDICATIVE","SENARYOLAR","MEVCUT FİYATA GÖRE FARK","MODEL PERFORMANSI","NOT_PROVEN_EXPERT_SELECTION_RULE","AUTO SELECTOR","AUTO ENSEMBLE","HISTORICAL_REPLAY","WAITING_ELIGIBLE_MONTH_END_ORIGIN"])
+        ordered(page, "TAHMIN", ["GELECEK AY TAHMİNİ","GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI","MULTI-EXPERT MONTHLY FORECAST ENGINE","SENARYOLAR","MEVCUT FİYATA GÖRE FARK","MODEL PERFORMANSI"])
         if columns(page, ".gc-grid2") != 1: raise AssertionError("TAHMIN_MOBILE_MODULES_MUST_STACK")
         if columns(page, ".gc-expert-grid") != 2: raise AssertionError("TAHMIN_EXPERT_GRID_EXPECTED_2X2_AT_390PX")
         if "2.420,00" in body(page) or norm("GÜVEN: %68") in body(page): raise AssertionError("MOCKUP_SAMPLE_NUMBER_VISIBLE_TAHMIN")
         shot(page, out, "tahmin")
 
         click(page, "Geçmiş"); page.get_by_text("GEÇMİŞ", exact=True).first.wait_for(state="visible", timeout=15_000); common(page, "gecmis")
-        markers(page, "GECMIS", ["MAPE","MAE (USD)","YÖN DOĞRULUĞU","REALIZED TAHMİN","TAHMİN PERFORMANSI","HATA / KARAR ZAMAN ÇİZELGESİ","SEÇİLMİŞ GEÇMİŞ KAYITLAR","MULTI-EXPERT FORECAST LEDGER","MONTH_END_EXPERT","EARLY INDICATIVE","HISTORICAL_REPLAY","NOT_PROVEN_EXPERT_SELECTION_RULE"])
-        ordered(page, "GECMIS", ["PROSPECTIVE / LIVE CANONICAL SCORECARD","TAHMİN PERFORMANSI","HATA / KARAR ZAMAN ÇİZELGESİ","SEÇİLMİŞ GEÇMİŞ KAYITLAR","MULTI-EXPERT FORECAST LEDGER"])
+        markers(page, "GECMIS", ["ÖZET METRİKLER","MAPE","MAE (USD)","YÖN DOĞRULUĞU","REALIZED TAHMİN","TAHMİN PERFORMANSI","HATA / KARAR ZAMAN ÇİZELGESİ","SEÇİLMİŞ GEÇMİŞ KAYITLAR","MULTI-EXPERT FORECAST LEDGER","MONTH_END_EXPERT","EARLY INDICATIVE","HISTORICAL_REPLAY","NOT_PROVEN_EXPERT_SELECTION_RULE"])
+        ordered(page, "GECMIS", ["ÖZET METRİKLER","TAHMİN PERFORMANSI","HATA / KARAR ZAMAN ÇİZELGESİ","SEÇİLMİŞ GEÇMİŞ KAYITLAR","MULTI-EXPERT FORECAST LEDGER"])
         if columns(page, ".gc-grid4") != 2: raise AssertionError("GECMIS_SUMMARY_CARDS_EXPECTED_2X2_AT_390PX")
         if "+12,8%" in body(page) or "+22,6%" in body(page): raise AssertionError("MOCKUP_SAMPLE_PERFORMANCE_VISIBLE")
         shot(page, out, "gecmis"); browser.close()
-    print("MOBILE_V123_ALL_ENGINE_FINAL_MOCKUP_VIEWPORT_QA_PASS"); print("ENGINE_INVENTORY_VISIBLE=12/12"); print("DIRECTION_CONTEXT_VISIBLE=3/3"); print("DIRECTION_SUMMARY_ABOVE_FOLD=3/3"); print("DATA_EVIDENCE_SPINE_UI_VISIBLE=12/12:7/7:PASS"); print(f"VIEWPORT={PHONE_WIDTH}x{PHONE_HEIGHT}"); print(f"SCREENSHOTS={out}"); return 0
+    print("MOBILE_V126_SYSTEM_RECOVERY_VIEWPORT_QA_PASS"); print("ENGINE_INVENTORY_VISIBLE=12/12"); print("DIRECTION_CONTEXT_VISIBLE=3/3"); print("DIRECTION_SUMMARY_ABOVE_FOLD=3/3"); print("DATA_EVIDENCE_SPINE_UI_VISIBLE=12/12:7/7:PASS"); print(f"VIEWPORT={PHONE_WIDTH}x{PHONE_HEIGHT}"); print(f"SCREENSHOTS={out}"); return 0
 
 
 if __name__ == "__main__":

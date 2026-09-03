@@ -128,7 +128,7 @@ def test_gvz_shadow_context_is_risk_only_and_never_promoted_to_decision():
 def test_empty_forecast_is_fail_closed():
     state = forecast_view_state(None)
     assert state.title == "TAHMİN HENÜZ YAYIMLANMADI"
-    assert state.subtitle == "NOT_ISSUED_IN_CANONICAL_LEDGER"
+    assert state.subtitle == "Kanonik forecast ledger'da henüz yayımlanmış kayıt yok."
 
 
 def test_prospective_shadow_badge_is_explicit():
@@ -206,7 +206,7 @@ def test_classification_labels_are_descriptive_not_actions():
     assert classification_label("CONFLICT") == "ÇELİŞKİ"
 
 
-def test_final_v2_mockup_contract_is_frozen_with_v122_expert_policy():
+def test_final_v2_mockup_contract_is_frozen_with_v126_expert_policy():
     contract = v2_layout_contract()
     assert contract["contract"] == FINAL_MOCKUP_CONTRACT == "APPROVED_FINAL_MOCKUP_UI_CONTRACT_V2"
     assert contract["gorunum"] == GORUNUM_SECTION_ORDER
@@ -231,8 +231,8 @@ def test_empty_expert_states_do_not_invent_forecasts_or_winner():
     assert patch["forecast_value"] is None
     assert patch["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
     assert vw["status"] == "BLOCKED_NOT_PROVEN_EXECUTABLE"
-    assert mom["status"] == "BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND"
-    assert rw["status"] == "BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND"
+    assert mom["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
+    assert rw["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
 
 
 def test_monthly_prior_intramonth_conflict_is_allowed_state():

@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.25
+**Manifest version:** 1.26
 **Freeze / issue date:** 2026-09-03
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -1648,3 +1648,30 @@ Status frozen on 2026-09-03 under `GOLD_CONTROL_SIMPLE_EXPERT_SOURCE_BINDING_V2_
 - Until an eligible origin is actually issued, UI status is `WAITING_ELIGIBLE_MONTH_END_ORIGIN`, not a fabricated forecast value.
 - `NOT_PROVEN_EXPERT_SELECTION_RULE` remains binding; `AUTO_SELECTOR=OFF`; `AUTO_ENSEMBLE=OFF`; every individual expert remains `canonical_authority=false`.
 - This change does not authorize BUY/SELL/HOLD/EXIT/REDUCE or exposure mapping.
+
+### Manifest v1.26 — systematic UI/runtime consistency recovery
+
+Status: `FROZEN_SYSTEM_RECOVERY_UI_CONSISTENCY_V1`
+
+This patch closes presentation/runtime inconsistencies exposed by production-backed mobile evidence. It is a **bug-fix / consistency recovery**, not a model-selection, source-substitution, threshold-retuning, selector, ensemble, or position-mapping change.
+
+Closed defects:
+
+1. **GVZ display invocation mismatch** — the UI called the keyword-only frozen `gvz_regime(..., full_max=..., half_max=...)` contract positionally, which was caught and rendered as `KULLANILAMIYOR` despite valid GVZ data. The call is corrected without changing the frozen thresholds `25.9795 / 30.5238` or caps `1.0 / 0.5 / 0.25`.
+2. **Simple-expert UI contract drift** — `mobile_ui_contract.py` still carried pre-promotion `MOMENTUM_3M_R1` / `RW_R1` identities and `BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND`. The user-facing forecast contract is synchronized to the already-approved R2 identities `MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND` and `RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND`, both remaining `WAITING_ELIGIBLE_MONTH_END_ORIGIN`. No forecast value is issued by this patch.
+3. **Mobile engine-card readability** — the governed 12-engine inventory remains complete, but the 390 px inventory surface now stacks engine cards in one column and enforces internal word wrapping so immutable technical status/version identifiers cannot be clipped inside a card.
+4. **Frozen layout visibility** — `SENARYOLAR` is now rendered explicitly as fail-closed while `BLOCKED_NO_CANONICAL_SCENARIO_CONTRACT` remains active; `ÖZET METRİKLER` is rendered explicitly on `Geçmiş`. No scenario value or prospective score is fabricated.
+5. **Acceptance drift** — production mobile QA is versioned to v1.26 and adds fail-closed checks for stale R1 simple-expert contracts, internal card overflow, visible scenario/summary sections, valid GVZ regime rendering, selector/ensemble/action locks, and the production DB evidence spine.
+
+Binding operational state remains unchanged by this recovery:
+
+- governed engines/channels: `12/12`;
+- runtime distribution: `4 ACTIVE / 3 WAITING / 5 BLOCKED`;
+- direction-vote permission: `3` (`Monthly Direction`, `FAST`, `SLOW` only);
+- current expert issuance: `0`;
+- current canonical H=1 forecast: not issued;
+- selector: `NOT_PROVEN_EXPERT_SELECTION_RULE`;
+- auto selector = `OFF`;
+- auto ensemble = `OFF`;
+- position mapping: `NOT_PROVEN_POSITION_MAPPING`;
+- September 2026 backfill remains forbidden; no current result is converted into a prospective claim.

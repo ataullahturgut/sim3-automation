@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 # Canonical Gold Control Streamlit entrypoint.
-# Presentation authority: manifest v1.23 / final mobile V2 shell + all-engine observability contract.
+# Presentation authority: manifest v1.26 / final mobile V2 shell + all-engine observability contract.
 #
 # Streamlit Cloud can preserve module objects across hot-reload/deploy cycles.
 # Do not trust sys.path discovery or an existing sys.modules entry for any local
