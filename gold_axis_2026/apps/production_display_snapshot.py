@@ -6,7 +6,8 @@ from pathlib import Path
 from typing import Any
 
 
-SNAPSHOT_CONTRACT = "FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V1"
+SNAPSHOT_CONTRACT = "FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V2"
+LEGACY_SNAPSHOT_CONTRACT = "FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V1"
 SNAPSHOT_SOURCE_MODE = "PRODUCTION_SNAPSHOT_FALLBACK"
 SNAPSHOT_PATH = Path(__file__).with_name("production_display_snapshot.json")
 EXPECTED_ENGINE_COUNT = 12
@@ -34,6 +35,9 @@ FORBIDDEN_KEYS = {
     "password",
     "selector_weights",
 }
+REPLAY_TRACK = "HISTORICAL_REPLAY"
+REPLAY_EVIDENCE = "HISTORICAL_REPLAY"
+SELECTOR_LOCK = "NOT_PROVEN_EXPERT_SELECTION_RULE"
 
 
 def _payload_for_hash(snapshot: dict[str, Any]) -> dict[str, Any]:
@@ -63,10 +67,43 @@ def _reject_forbidden_keys(value: Any, path: str = "snapshot") -> None:
             _reject_forbidden_keys(child, f"{path}[{index}]")
 
 
+def _validate_replay_rows(snapshot: dict[str, Any]) -> None:
+    rows = snapshot.get("historical_replay_experts", [])
+    if not isinstance(rows, list):
+        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_INVALID")
+    if snapshot.get("snapshot_contract") == LEGACY_SNAPSHOT_CONTRACT:
+        if rows:
+            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_LEGACY_REPLAY_FORBIDDEN")
+        return
+    ids: list[str] = []
+    for row in rows:
+        if not isinstance(row, dict):
+            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_ROW_INVALID")
+        if row.get("forecast_track") != REPLAY_TRACK or row.get("evidence_class") != REPLAY_EVIDENCE:
+            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_TRACK_EVIDENCE_MISMATCH")
+        if row.get("canonical_authority") is not False:
+            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_CANONICAL_AUTHORITY_VIOLATION")
+        if row.get("selector_status") != SELECTOR_LOCK or row.get("auto_selector") != "OFF" or row.get("auto_ensemble") != "OFF":
+            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_SELECTOR_LOCK_VIOLATION")
+        provenance = dict(row.get("provenance") or {})
+        if provenance.get("historical_replay") is not True or provenance.get("prospective_claim") is not False:
+            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_PROSPECTIVE_CLAIM_VIOLATION")
+        if provenance.get("canonical_authority") is not False or provenance.get("direction_vote_permitted") is not False:
+            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_AUTHORITY_VIOLATION")
+        ids.append(str(row.get("expert_id") or ""))
+    if len(ids) != len(set(ids)) or "" in ids:
+        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_IDENTITY_INVALID")
+    target = snapshot.get("historical_replay_target_month")
+    if rows and not target:
+        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_TARGET_MISSING")
+    if rows and any(str(row.get("target_month") or "")[:7] != str(target)[:7] for row in rows):
+        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_TARGET_MISMATCH")
+
+
 def validate_production_display_snapshot(snapshot: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(snapshot, dict):
         raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_NOT_OBJECT")
-    if snapshot.get("snapshot_contract") != SNAPSHOT_CONTRACT:
+    if snapshot.get("snapshot_contract") not in {SNAPSHOT_CONTRACT, LEGACY_SNAPSHOT_CONTRACT}:
         raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_CONTRACT_MISMATCH")
     if snapshot.get("database_writes") != "NONE":
         raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_WRITE_CLAIM_INVALID")
@@ -110,6 +147,7 @@ def validate_production_display_snapshot(snapshot: dict[str, Any]) -> dict[str, 
     if int(snapshot.get("context_exactly_one_link") or 0) != len(REQUIRED_CONTEXT_FEATURES):
         raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_CONTEXT_LINK_MISMATCH")
 
+    _validate_replay_rows(snapshot)
     _reject_forbidden_keys(snapshot)
     return snapshot
 
@@ -130,6 +168,11 @@ def snapshot_feature_rows(snapshot: dict[str, Any]) -> list[dict[str, Any]]:
     return [dict(row) for row in validated["features"]]
 
 
+def snapshot_historical_replay_rows(snapshot: dict[str, Any]) -> list[dict[str, Any]]:
+    validated = validate_production_display_snapshot(snapshot)
+    return [dict(row) for row in validated.get("historical_replay_experts", [])]
+
+
 def snapshot_runtime_observability(snapshot: dict[str, Any]) -> dict[str, Any]:
     validated = validate_production_display_snapshot(snapshot)
     health = dict(validated["health"])
@@ -137,7 +180,7 @@ def snapshot_runtime_observability(snapshot: dict[str, Any]) -> dict[str, Any]:
         "contract": "FROZEN_DATA_EVIDENCE_SPINE_V1_READ_ONLY_APP_V1",
         "status": "DATA_EVIDENCE_SPINE_RUNTIME_HEALTH_PASS",
         "source_mode": SNAPSHOT_SOURCE_MODE,
-        "snapshot_contract": SNAPSHOT_CONTRACT,
+        "snapshot_contract": validated.get("snapshot_contract"),
         "snapshot_source_state_at": validated.get("source_state_at"),
         "snapshot_payload_sha256": validated.get("payload_sha256"),
         "runtime": [dict(row) for row in validated["runtime"]],
