@@ -58,16 +58,29 @@ jobs:
           assert cfg.get('emergency', {}).get('level_threshold_abs') == 0.04
           print('GOLD_CONTROL_PRODUCTION_LINEAGE_INPUTS_PASS')
           PY
-      - name: Decision Store read-only evidence isolation smoke
+      - name: Decision and partial-context read-only isolation smoke
         run: |
           test -n "$NEON_DATABASE_URL" || (echo "NEON_DATABASE_URL missing" && exit 1)
           PYTHONPATH=gold_axis_2026/apps:gold_axis_2026/data_pipeline python - <<'PY'
           import os
-          from decision_source import fetch_current_decision_state
+          from decision_source import CONTEXT_EVIDENCE_CLASS, fetch_current_decision_state
+
           state = fetch_current_decision_state(os.environ['NEON_DATABASE_URL'])
           if state is not None:
-              assert state['evidence_class'] in {'LIVE_PRODUCTION', 'PROSPECTIVE_SHADOW'}
               assert state.get('action_state') is None
+              if state.get('context_only') is True:
+                  assert state['evidence_class'] == CONTEXT_EVIDENCE_CLASS
+                  assert state.get('classification') is None
+                  components = {
+                      'monthly': state.get('monthly_direction_3m'),
+                      'fast': state.get('fast_state'),
+                      'slow': state.get('slow_state'),
+                  }
+                  visible = {k: v for k, v in components.items() if v not in (None, '', 'YAYIMLANMADI')}
+                  assert visible, 'PARTIAL_CONTEXT_READER_RETURNED_NO_VISIBLE_COMPONENTS'
+                  print('GOLD_CONTROL_PARTIAL_CONTEXT_APP_READER_PASS components=' + ','.join(sorted(visible)))
+              else:
+                  assert state['evidence_class'] in {'LIVE_PRODUCTION', 'PROSPECTIVE_SHADOW'}
           print('GOLD_CONTROL_DECISION_STORE_APP_READER_PASS replay_excluded=PASS action_mapping_guard=PASS')
           PY
       - name: Live source connectivity diagnostic without raw market logging
