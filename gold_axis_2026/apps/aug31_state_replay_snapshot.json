@@ -1,0 +1,153 @@
+{
+  "blocked_components": {
+    "BOCPD": "BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED",
+    "CAUSAL_PATCH": "BLOCKED_REPLAY_INPUT_SET_NOT_REPRODUCIBLE_FOR_2026_08_31",
+    "EMERGENCY_LEVEL": "BLOCKED_NO_AUTHORIZED_REPLAY_MONTHLY_REFERENCE",
+    "EMERGENCY_REVERSAL": "BLOCKED_NO_AUTHORIZED_REPLAY_MONTHLY_REFERENCE",
+    "MACRO_EVENT": "BLOCKED_NOT_FULLY_RECOVERED",
+    "VW_MIDAS_MSVR": "BLOCKED_NOT_PROVEN_EXECUTABLE"
+  },
+  "database_writes": "NONE",
+  "evidence_class": "HISTORICAL_REPLAY",
+  "features": [
+    {
+      "calculation_ts": "2026-09-03T20:35:46.630512+00:00",
+      "feature_name": "AUG31_REPLAY_FAST_STATE",
+      "feature_version": "R4_1_SMA20_2_MARKET_DAY_PERSISTENCE_V1",
+      "git_commit": "fba605195f3dff2cf3e4e4f7dd9f8b6dc92dc59b",
+      "input_cutoff": "2026-08-31T21:00:00+00:00",
+      "metadata": {
+        "canonical_authority": false,
+        "contract": "GOLD_CONTROL_AUG31_EOD_STATE_REPLAY_CONTRACT_2026-09-03.md",
+        "current_runtime_authority": false,
+        "evidence_class": "HISTORICAL_REPLAY",
+        "prospective_h1_claim": false,
+        "role": "TACTICAL_CONTEXT",
+        "state_as_of": "2026-08-31T21:00:00+00:00",
+        "target_context": "2026-09"
+      },
+      "quality_status": "HISTORICAL_REPLAY",
+      "value_text": "ROBUST_UP"
+    },
+    {
+      "calculation_ts": "2026-09-03T20:35:46.630512+00:00",
+      "feature_name": "AUG31_REPLAY_GVZ_CAP",
+      "feature_version": "R4_1_GVZ_RISK_CAP_CONTEXT_V1",
+      "git_commit": "fba605195f3dff2cf3e4e4f7dd9f8b6dc92dc59b",
+      "input_cutoff": "2026-08-31T21:00:00+00:00",
+      "metadata": {
+        "canonical_authority": false,
+        "contract": "GOLD_CONTROL_AUG31_EOD_STATE_REPLAY_CONTRACT_2026-09-03.md",
+        "current_runtime_authority": false,
+        "evidence_class": "HISTORICAL_REPLAY",
+        "prospective_h1_claim": false,
+        "role": "RISK_ONLY",
+        "state_as_of": "2026-08-31T21:00:00+00:00",
+        "target_context": "2026-09"
+      },
+      "quality_status": "HISTORICAL_REPLAY",
+      "value_text": "1.0"
+    },
+    {
+      "calculation_ts": "2026-09-03T20:35:46.630512+00:00",
+      "feature_name": "AUG31_REPLAY_GVZ_PANIC",
+      "feature_version": "R4_1_GVZ_RISK_CAP_CONTEXT_V1",
+      "git_commit": "fba605195f3dff2cf3e4e4f7dd9f8b6dc92dc59b",
+      "input_cutoff": "2026-08-31T21:00:00+00:00",
+      "metadata": {
+        "canonical_authority": false,
+        "contract": "GOLD_CONTROL_AUG31_EOD_STATE_REPLAY_CONTRACT_2026-09-03.md",
+        "current_runtime_authority": false,
+        "evidence_class": "HISTORICAL_REPLAY",
+        "prospective_h1_claim": false,
+        "role": "RISK_ONLY",
+        "state_as_of": "2026-08-31T21:00:00+00:00",
+        "target_context": "2026-09"
+      },
+      "quality_status": "HISTORICAL_REPLAY",
+      "value_text": "false"
+    },
+    {
+      "calculation_ts": "2026-09-03T20:35:46.630512+00:00",
+      "feature_name": "AUG31_REPLAY_GVZ_REGIME",
+      "feature_version": "R4_1_GVZ_RISK_CAP_CONTEXT_V1",
+      "git_commit": "fba605195f3dff2cf3e4e4f7dd9f8b6dc92dc59b",
+      "input_cutoff": "2026-08-31T21:00:00+00:00",
+      "metadata": {
+        "canonical_authority": false,
+        "contract": "GOLD_CONTROL_AUG31_EOD_STATE_REPLAY_CONTRACT_2026-09-03.md",
+        "current_runtime_authority": false,
+        "evidence_class": "HISTORICAL_REPLAY",
+        "prospective_h1_claim": false,
+        "role": "RISK_ONLY",
+        "state_as_of": "2026-08-31T21:00:00+00:00",
+        "target_context": "2026-09"
+      },
+      "quality_status": "HISTORICAL_REPLAY",
+      "value_text": "NORMAL"
+    },
+    {
+      "calculation_ts": "2026-09-03T20:35:46.630512+00:00",
+      "feature_name": "AUG31_REPLAY_GVZ_VALUE",
+      "feature_version": "R4_1_GVZ_RISK_CAP_CONTEXT_V1",
+      "git_commit": "fba605195f3dff2cf3e4e4f7dd9f8b6dc92dc59b",
+      "input_cutoff": "2026-08-31T21:00:00+00:00",
+      "metadata": {
+        "canonical_authority": false,
+        "contract": "GOLD_CONTROL_AUG31_EOD_STATE_REPLAY_CONTRACT_2026-09-03.md",
+        "current_runtime_authority": false,
+        "evidence_class": "HISTORICAL_REPLAY",
+        "prospective_h1_claim": false,
+        "role": "RISK_ONLY",
+        "state_as_of": "2026-08-31T21:00:00+00:00",
+        "target_context": "2026-09"
+      },
+      "quality_status": "HISTORICAL_REPLAY",
+      "value_text": "24.40"
+    },
+    {
+      "calculation_ts": "2026-09-03T20:35:46.630512+00:00",
+      "feature_name": "AUG31_REPLAY_MONTHLY_DIRECTION_3M",
+      "feature_version": "R4_1_3M_SIMPLE_RETURN_V1",
+      "git_commit": "fba605195f3dff2cf3e4e4f7dd9f8b6dc92dc59b",
+      "input_cutoff": "2026-08-31T21:00:00+00:00",
+      "metadata": {
+        "canonical_authority": false,
+        "contract": "GOLD_CONTROL_AUG31_EOD_STATE_REPLAY_CONTRACT_2026-09-03.md",
+        "current_runtime_authority": false,
+        "evidence_class": "HISTORICAL_REPLAY",
+        "prospective_h1_claim": false,
+        "role": "STRATEGIC_DIRECTION_CONTEXT",
+        "state_as_of": "2026-08-31T21:00:00+00:00",
+        "target_context": "2026-09"
+      },
+      "quality_status": "HISTORICAL_REPLAY",
+      "value_text": "DOWN"
+    },
+    {
+      "calculation_ts": "2026-09-03T20:35:46.630512+00:00",
+      "feature_name": "AUG31_REPLAY_SLOW_STATE",
+      "feature_version": "R4_1_COMPLETED_WEEKLY_SMA4_2_WEEK_PERSISTENCE_V1",
+      "git_commit": "fba605195f3dff2cf3e4e4f7dd9f8b6dc92dc59b",
+      "input_cutoff": "2026-08-31T21:00:00+00:00",
+      "metadata": {
+        "canonical_authority": false,
+        "contract": "GOLD_CONTROL_AUG31_EOD_STATE_REPLAY_CONTRACT_2026-09-03.md",
+        "current_runtime_authority": false,
+        "evidence_class": "HISTORICAL_REPLAY",
+        "prospective_h1_claim": false,
+        "role": "TACTICAL_CONTEXT",
+        "state_as_of": "2026-08-31T21:00:00+00:00",
+        "target_context": "2026-09"
+      },
+      "quality_status": "HISTORICAL_REPLAY",
+      "value_text": "ROBUST_UP"
+    }
+  ],
+  "payload_sha256": "26db02bf447047e06ddf3a7ab8589b1250ec887c77845946235ccbfd7c60463d",
+  "snapshot_contract": "FROZEN_AUG31_STATE_REPLAY_DISPLAY_SNAPSHOT_V1",
+  "source": "NEON_PRODUCTION_READ_ONLY_EXPORT",
+  "source_state_at": "2026-09-03T20:35:46.630512+00:00",
+  "state_as_of": "2026-08-31T21:00:00+00:00",
+  "target_context": "2026-09"
+}

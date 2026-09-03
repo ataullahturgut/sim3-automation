@@ -73,6 +73,11 @@ _load_exact_module(
     ),
 )
 _load_exact_module(
+    "aug31_state_replay_source",
+    APP_DIR / "aug31_state_replay_source.py",
+    required_exports=("fetch_aug31_state_replay",),
+)
+_load_exact_module(
     "decision_source",
     APP_DIR / "decision_source.py",
     required_exports=("fetch_current_decision_state", "fetch_decision_history"),

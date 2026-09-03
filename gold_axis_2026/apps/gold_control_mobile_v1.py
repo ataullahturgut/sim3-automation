@@ -27,6 +27,7 @@ from forecast_source import (
 )
 from live_sources import fetch_gvz_latest, fetch_xau_history, fetch_xau_spot
 from runtime_source import fetch_runtime_observability
+from aug31_state_replay_source import fetch_aug31_state_replay
 from mobile_ui_contract import (
     AUTO_ENSEMBLE_STATUS,
     AUTO_SELECTOR_STATUS,
@@ -118,6 +119,8 @@ def get_forecast_history_cached(database_url: str): return fetch_forecast_histor
 def get_latest_experts_cached(database_url: str, forecast_track: str): return fetch_latest_expert_forecasts(database_url,forecast_track)
 @st.cache_data(ttl=30, show_spinner=False)
 def get_expert_history_cached(database_url: str, forecast_track: str): return fetch_expert_forecast_history(database_url,forecast_track)
+@st.cache_data(ttl=30, show_spinner=False)
+def get_aug31_state_replay_cached(database_url: str): return fetch_aug31_state_replay(database_url)
 
 def safe_call(fn, default):
     try: return fn()
@@ -209,6 +212,29 @@ def engine_output_display(row: dict[str, Any]) -> str:
     if row.get("direction_vote") is True:
         arrow,_=arrow_state(value); return f"{arrow} {display_state(value,'—')}"
     return display_state(value,"—")
+
+def aug31_state_replay_html(state: dict[str, Any] | None) -> str:
+    if not state:
+        return empty_html("31 AĞUSTOS STATE REPLAY OKUNAMADI","Production Evidence Spine ve deployment replay snapshot kullanılamıyor.")
+    ma,mt=arrow_state(state.get("monthly_direction_3m")); fa,ft=arrow_state(state.get("fast_state")); sa,stn=arrow_state(state.get("slow_state"))
+    source="DB READ-ONLY" if state.get("source_mode")=="NEON_DB_READ_ONLY" else "SNAPSHOT FALLBACK"
+    rows=(
+        html_row("Monthly Direction 3M",f"{ma} {display_state(state.get('monthly_direction_3m'),'—')}",tone_class(mt))
+        +html_row("FAST",f"{fa} {display_state(state.get('fast_state'),'—')}",tone_class(ft))
+        +html_row("SLOW",f"{sa} {display_state(state.get('slow_state'),'—')}",tone_class(stn))
+        +html_row("GVZ",f"{fmt_num(state.get('gvz_value'),2)} · {display_state(state.get('gvz_regime'),'—')}")
+        +html_row("GVZ risk cap",fmt_num(state.get("gvz_cap"),1))
+    )
+    blockers=dict(state.get("blocked_components") or {})
+    blocker_rows="".join(html_row(k,v,"gc-warning") for k,v in blockers.items())
+    return (
+        "<div class='gc-card' style='margin-top:.7rem'><div class='gc-section-title'>31 AĞUSTOS 2026 EOD STATE REPLAY</div>"
+        +f"<div class='gc-footnote'><b>HISTORICAL REPLAY · PROSPECTIVE DEĞİL</b> · state boundary 31.08.2026 17:00 ET · kaynak: {esc(source)}. Bu durumlar H=1 fiyat tahmini değildir ve current yön oyu/kararı değiştirmez.</div>"
+        +rows
+        +"<div class='gc-track-head'><b>REPLAY'DE DOLDURULAMAYAN MOTORLAR</b><span class='gc-track-pill'>FAIL-CLOSED</span></div>"
+        +blocker_rows
+        +"</div>"
+    )
 
 def engine_status_label(value: Any) -> str:
     raw=display_state(value,"UNRESOLVED").upper()
@@ -355,6 +381,7 @@ elif nav=="◉ Görünüm":
 
 elif nav=="↗ Tahmin":
     historical_replay_experts=safe_call(lambda:get_latest_experts_cached(url,TRACK_HISTORICAL_REPLAY),[])
+    aug31_state_replay=safe_call(lambda:get_aug31_state_replay_cached(url),None)
     expert_update=month_end_experts[0].get("as_of") if month_end_experts else (early_experts[0].get("as_of") if early_experts else None); updated=forecast.get("frozen_at") if forecast else expert_update; page_head("TAHMİN","Gelecek ay için kanonik sonuç ve ayrı Multi-Expert kanıt katmanı.",updated); fstate=forecast_view_state(forecast)
     if forecast:
         target=str(forecast.get("target_month") or "")[:7]; badge=evidence_badge(forecast.get("evidence_class"))[0]; hero_title=fmt_num(forecast.get("forecast_value"),2," USD"); hero_sub=f"Hedef dönem: {target}"; direction=decision.get("monthly_direction_3m") if target_matches(decision,forecast) else None; da,_=arrow_state(direction); direction_text=f"{da} {display_state(direction,'—')}"; origin_text=fmt_time(forecast.get("forecast_origin"))
@@ -370,7 +397,7 @@ elif nav=="↗ Tahmin":
         else: st.markdown(empty_html("KARŞILAŞTIRMA HENÜZ OLUŞMADI","MONTH_END_EXPERT veya gösterilebilir araştırma geçmişi yok."),unsafe_allow_html=True)
     st.markdown("<div class='gc-card'><div class='gc-section-title'>MULTI-EXPERT MONTHLY FORECAST ENGINE</div><div class='gc-footnote'>Aynı target için Causal Patch, VW-MIDAS-MSVR, 3M Momentum ve Random Walk ayrı kimlik/evidence ile tutulur. Winner yoktur.</div>"+expert_cards(month_end_experts)+selector_lock_html()+"<div class='gc-track-head'><b>EARLY INDICATIVE · AYRI REVISION TRACK</b><span class='gc-track-pill'>PIT-SAFE ONLY</span></div>"+(expert_cards(early_experts) if early_experts else empty_html("EARLY INDICATIVE HENÜZ YOK","Ay-sonu kanonik forecast'tan ayrı tutulur; PIT-safe contract açılmadan sayı üretilmez."))+"</div>",unsafe_allow_html=True)
     replay_db_body=(expert_cards(historical_replay_experts) if historical_replay_experts else empty_html("EYLÜL 2026 REPLAY KAYDI YOK","Production Evidence Spine üzerinde HISTORICAL_REPLAY kaydı okunamadı."))
-    st.markdown("<div class='gc-replay'><div class='gc-replay-head'><strong>EYLÜL 2026 HISTORICAL REPLAY</strong><span class='gc-replay-pill'>REPLAY · PROSPECTIVE DEĞİL</span></div>"+replay_db_body+"<div class='gc-footnote' style='margin-top:.65rem'><b>Resmî prospective durum:</b> NOT_ISSUED_MISSED_2026_08_31_ORIGIN. Bu satırlar 31 Ağustos bilgi kesitiyle sonradan yeniden hesaplanmıştır; canonical forecast, selector, ensemble veya yön oyu değildir.</div></div>",unsafe_allow_html=True)
+    st.markdown("<div class='gc-replay'><div class='gc-replay-head'><strong>EYLÜL 2026 HISTORICAL REPLAY</strong><span class='gc-replay-pill'>REPLAY · PROSPECTIVE DEĞİL</span></div><div class='gc-footnote'><b>H=1 EXPERT REPLAY</b> · Aşağıdaki USD değerleri Eylül aylık ortalama fiyat replay'idir.</div>"+replay_db_body+aug31_state_replay_html(aug31_state_replay)+"<div class='gc-footnote' style='margin-top:.65rem'><b>Resmî prospective durum:</b> NOT_ISSUED_MISSED_2026_08_31_ORIGIN. H=1 replay ile 31 Ağustos EOD state replay birbirinden ayrıdır; hiçbiri canonical forecast, selector, ensemble, current yön oyu veya karar değildir.</div></div>",unsafe_allow_html=True)
     st.markdown("<div class='gc-card'><div class='gc-section-title'>SENARYOLAR</div>"+empty_html("SENARYOLAR HENÜZ YAYIMLANMADI",SCENARIO_STATUS)+"<div class='gc-footnote'>Kanonik senaryo kontratı açılmadan baz/iyimser/kötümser sayı üretilmez.</div></div>",unsafe_allow_html=True)
     spot_value=None if not spot else spot.get("price")
     if forecast and spot_value:

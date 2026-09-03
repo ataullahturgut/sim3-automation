@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.29
+**Manifest version:** 1.30
 **Freeze / issue date:** 2026-09-03
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -1699,3 +1699,17 @@ Binding operational state remains unchanged by this recovery:
 - MONTH_END_EXPERT and EARLY_INDICATIVE remain empty when not genuinely issued; snapshot replay never populates those tracks.
 - Canonical forecast, Decision Store and position/action mapping remain unchanged and locked.
 - Required deployment acceptance: with `NEON_DATABASE_URL` deliberately absent, the 390×844 Tahmin screen must visibly render the production replay values for the available replay experts and the `REPLAY · PROSPECTIVE DEĞİL` marker.
+
+
+## v1.30 — 31-August EOD State Historical Replay Closure
+
+- Frozen contract: `FROZEN_AUG31_EOD_STATE_REPLAY_V1`.
+- Deployment fallback contract: `FROZEN_AUG31_STATE_REPLAY_DISPLAY_SNAPSHOT_V1`.
+- September official H=1 prospective status remains `NOT_ISSUED_MISSED_2026_08_31_ORIGIN`; no backdating or prospective relabeling is introduced.
+- The existing September H=1 historical replay remains separate: `MOMENTUM_3M` and `RANDOM_WALK` price-level replay only.
+- A second replay layer now reconstructs the 31-August EOD component state from frozen rules and source observations ending at the boundary: Monthly Direction 3M, FAST, SLOW and GVZ risk state.
+- State replay rows are persisted under replay-specific feature identities with `HISTORICAL_REPLAY`, `prospective_h1_claim=false`, `current_runtime_authority=false`, `canonical_authority=false`; `latest_engine_runtime_state` excludes them.
+- Components that cannot be exactly reproduced remain explicit blockers: Causal Patch replay input set, VW executable identity, full Macro Event rule, authorized Emergency monthly reference, and exact BOCPD forward rule.
+- UI must show `31 AĞUSTOS 2026 EOD STATE REPLAY` inside the September replay surface, distinct from H=1 expert replay. FAST/SLOW/GVZ state values are not H=1 forecasts.
+- A hosting instance without `NEON_DATABASE_URL` reads a fingerprint-validated read-only state-replay deployment snapshot generated from production Neon.
+- Locks retained: `NOT_PROVEN_EXPERT_SELECTION_RULE`, `AUTO_SELECTOR=OFF`, `AUTO_ENSEMBLE=OFF`, `NOT_PROVEN_POSITION_MAPPING`; canonical forecast and Decision Store remain empty.
