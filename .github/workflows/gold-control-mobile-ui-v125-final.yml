@@ -114,10 +114,19 @@ jobs:
           grep -R -Fq 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/apps
           grep -R -Fq 'AUTO_SELECTOR' gold_axis_2026/apps
           grep -R -Fq 'AUTO_ENSEMBLE' gold_axis_2026/apps
-          if grep -Eq 'action_state[[:space:]]*=[[:space:]]*["'"'](BUY|SELL|HOLD|EXIT|REDUCE)' gold_axis_2026/apps/*.py; then
-            echo 'UNPROVEN_POSITION_MAPPING_FOUND'; exit 1
-          fi
-          echo 'SELECTOR_ENSEMBLE_POSITION_LOCKS_PASS'
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          text = "\n".join(
+              p.read_text(encoding="utf-8")
+              for p in Path("gold_axis_2026/apps").glob("*.py")
+          )
+          pattern = re.compile(r"action_state\s*=\s*['\"](?:BUY|SELL|HOLD|EXIT|REDUCE)['\"]")
+          if pattern.search(text):
+              raise SystemExit("UNPROVEN_POSITION_MAPPING_FOUND")
+          print("SELECTOR_ENSEMBLE_POSITION_LOCKS_PASS")
+          PY
 
       - name: Canonical production-backed 390x844 browser QA
         run: |
