@@ -1,0 +1,46 @@
+name: Gold Control Runtime Source CI Contract V1
+
+on:
+  push:
+    branches: [gold-control-data-spine-ui-read-v1]
+    paths:
+      - 'gold_axis_2026/tools/apply_runtime_source_ci_contract_v1.py'
+      - '.github/workflows/gold-control-runtime-source-ci-contract-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-ci-contract:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-data-spine-ui-read-v1
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Apply runtime source CI contract
+        run: python gold_axis_2026/tools/apply_runtime_source_ci_contract_v1.py
+      - name: Verify updated workflow governance
+        run: |
+          grep -q 'V1.25 Data Evidence Spine Final' .github/workflows/gold-control-mobile-ui-v1.yml
+          grep -q 'Manifest version:\\\*\\\* 1.25' .github/workflows/gold-control-mobile-ui-v1.yml
+          grep -q 'runtime_source.py' .github/workflows/gold-control-mobile-ui-v1.yml
+          grep -q "'runtime_source': {'fetch_runtime_observability'}" .github/workflows/gold-control-mobile-ui-v1.yml
+          grep -q 'RUNTIME_BOOTSTRAP_PRODUCTION_PASS' .github/workflows/gold-control-mobile-ui-v1.yml
+          grep -q 'runtime_source.py' .github/workflows/gold-control-app-smoke.yml
+          grep -q 'GOLD_CONTROL_DATA_EVIDENCE_SPINE_APP_READER_PASS' .github/workflows/gold-control-app-smoke.yml
+      - name: Commit CI contract repair
+        run: |
+          if git diff --quiet; then
+            echo 'RUNTIME_SOURCE_CI_CONTRACT_NO_DIFF'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .github/workflows/gold-control-mobile-ui-v1.yml .github/workflows/gold-control-app-smoke.yml
+          git commit -m 'gold-control: align app CI with evidence spine v1.25'
+          git push origin HEAD:gold-control-data-spine-ui-read-v1
