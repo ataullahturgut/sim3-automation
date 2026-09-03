@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = ROOT.parent
 EVIDENCE = ROOT / "simple_expert_v2" / "simple_expert_v2_source_binding_evidence.json"
 
 
@@ -120,7 +121,7 @@ def momentum_3m_r2_source_bound(monthly_levels: Iterable[float]) -> float:
     path.write_text(text.replace(marker, addition + marker, 1), encoding="utf-8")
 
 
-def patch_tests() -> None:
+def patch_multi_expert_tests() -> None:
     path = ROOT / "data_pipeline" / "test_multi_expert_forecast.py"
     replace_once(
         path,
@@ -191,6 +192,24 @@ def patch_observability() -> None:
     )
 
 
+def patch_observability_tests() -> None:
+    path = ROOT / "apps" / "test_engine_observability_contract.py"
+    replace_once(
+        path,
+        '    assert rows["MOMENTUM_3M"]["status"] == "BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND"\n',
+        '    assert rows["MOMENTUM_3M"]["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"\n'
+        '    assert rows["MOMENTUM_3M"]["version"] == "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"\n'
+        '    assert rows["RANDOM_WALK"]["output"] is None\n'
+        '    assert rows["RANDOM_WALK"]["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"\n'
+        '    assert rows["RANDOM_WALK"]["version"] == "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"\n',
+    )
+    replace_once(
+        path,
+        '    assert counts["blocked"] == 7\n    assert counts["waiting"] == 1\n',
+        '    assert counts["blocked"] == 5\n    assert counts["waiting"] == 3\n',
+    )
+
+
 def patch_manifest() -> None:
     path = ROOT / "GOLD_CONTROL_PROJECT_MANIFEST.md"
     text = path.read_text(encoding="utf-8")
@@ -225,12 +244,43 @@ Status frozen on 2026-09-03 under `GOLD_CONTROL_SIMPLE_EXPERT_SOURCE_BINDING_V2_
     )
 
 
+def patch_mobile_workflow_manifest_gate() -> None:
+    path = REPO_ROOT / ".github" / "workflows" / "gold-control-mobile-ui-v1.yml"
+    replace_once(
+        path,
+        "name: Gold Control Mobile UI V1.23 Engine Observability Final",
+        "name: Gold Control Mobile UI V1.24 Engine Observability Final",
+    )
+    replace_once(
+        path,
+        "- name: Verify manifest v1.23 and engine observability governance",
+        "- name: Verify manifest v1.24 and engine observability governance",
+    )
+    replace_once(
+        path,
+        "grep -q 'Manifest version:\\\*\\\* 1.23' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md",
+        "grep -q 'Manifest version:\\\*\\\* 1.24' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md",
+    )
+    replace_once(
+        path,
+        "echo 'V123_ENGINE_OBSERVABILITY_UI_GOVERNANCE_PASS'",
+        "echo 'V124_ENGINE_OBSERVABILITY_UI_GOVERNANCE_PASS'",
+    )
+    replace_once(
+        path,
+        "- name: Audit local imports and manifest v1.23 screen markers",
+        "- name: Audit local imports and manifest v1.24 screen markers",
+    )
+
+
 def main() -> None:
     verify_evidence()
     patch_multi_expert()
-    patch_tests()
+    patch_multi_expert_tests()
     patch_observability()
+    patch_observability_tests()
     patch_manifest()
+    patch_mobile_workflow_manifest_gate()
     print("SIMPLE_EXPERT_V2_PROMOTION_PATCH_PASS")
 
 
