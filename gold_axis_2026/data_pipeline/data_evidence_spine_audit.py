@@ -18,6 +18,15 @@ IMMUTABILITY_TRIGGERS = (
     "trg_engine_execution_expert_outputs_immutable",
     "trg_engine_execution_decision_outputs_immutable",
 )
+CONTEXT_FEATURES = (
+    "MONTHLY_DIRECTION_3M",
+    "FAST_STATE",
+    "SLOW_STATE",
+    "GVZ_VALUE",
+    "GVZ_CAP",
+    "GVZ_PANIC",
+    "GVZ_REGIME",
+)
 
 
 def main() -> int:
@@ -96,6 +105,40 @@ def main() -> int:
                 """
             )
             expert_runtime_link_mismatches = int(cur.fetchone()["n"])
+
+            context_link_mismatches = 0
+            context_target = None
+            if args.require_runtime_12:
+                cur.execute(
+                    """
+                    select metadata->>'target_context' as target_context
+                    from derived_feature_snapshots
+                    where feature_name in ('MONTHLY_DIRECTION_3M','FAST_STATE','SLOW_STATE','GVZ_REGIME')
+                      and coalesce(metadata->>'target_context','') <> ''
+                    order by calculation_ts desc,id desc limit 1
+                    """
+                )
+                row = cur.fetchone()
+                context_target = str(row["target_context"]) if row and row["target_context"] else None
+                if not context_target:
+                    context_link_mismatches = len(CONTEXT_FEATURES)
+                else:
+                    cur.execute(
+                        """
+                        with expected as (
+                            select id
+                            from derived_feature_snapshots
+                            where feature_name=any(%s)
+                              and metadata->>'target_context'=%s
+                        )
+                        select count(*) as n
+                        from expected e
+                        where (select count(*) from engine_execution_derived_outputs o
+                               where o.derived_feature_snapshot_id=e.id) <> 1
+                        """,
+                        (list(CONTEXT_FEATURES), context_target),
+                    )
+                    context_link_mismatches = int(cur.fetchone()["n"])
         conn.rollback()
 
     extended_integrity = {
@@ -110,7 +153,10 @@ def main() -> int:
         and all(v == 0 for v in extended_integrity.values())
         and guard_count == len(IMMUTABILITY_TRIGGERS)
     )
-    runtime_ok = len(runtime) == 12 if args.require_runtime_12 else True
+    runtime_ok = True
+    if args.require_runtime_12:
+        runtime_ok = len(runtime) == 12 and context_link_mismatches == 0
+
     passed = integrity_ok and runtime_ok
     print(json.dumps({
         "status": "PASS" if passed else "BLOCKED",
@@ -118,6 +164,9 @@ def main() -> int:
         "extended_integrity": extended_integrity,
         "runtime_engine_count": len(runtime),
         "runtime": runtime,
+        "required_context_target": context_target,
+        "required_context_link_count": len(CONTEXT_FEATURES) if args.require_runtime_12 else None,
+        "context_link_mismatches": context_link_mismatches if args.require_runtime_12 else None,
         "required_guard_count": len(IMMUTABILITY_TRIGGERS),
         "actual_guard_count": guard_count,
         "integrity_ok": integrity_ok,
