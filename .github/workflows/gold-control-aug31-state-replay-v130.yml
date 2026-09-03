@@ -1,0 +1,77 @@
+name: Gold Control Aug31 EOD State Replay V1.30
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-control-aug31-state-replay-v130]
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_AUG31_EOD_STATE_REPLAY_CONTRACT_2026-09-03.md'
+      - 'gold_axis_2026/data_pipeline/aug31_eod_state_historical_replay.py'
+      - 'gold_axis_2026/data_pipeline/aug31_eod_state_historical_replay_v2.py'
+      - '.github/workflows/gold-control-aug31-state-replay-v130.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  dry-run:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-aug31-state-replay-v130
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install runtime
+        run: |
+          pip install 'psycopg[binary]==3.3.5' pandas==2.3.3 numpy==2.5.2
+      - name: Compile frozen replay writer
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/aug31_eod_state_historical_replay.py \
+            gold_axis_2026/data_pipeline/aug31_eod_state_historical_replay_v2.py
+          grep -Fq 'FROZEN_AUG31_EOD_STATE_REPLAY_V1' gold_axis_2026/GOLD_CONTROL_AUG31_EOD_STATE_REPLAY_CONTRACT_2026-09-03.md
+      - name: Run twice read-only and prove deterministic state
+        run: |
+          cd gold_axis_2026/data_pipeline
+          python aug31_eod_state_historical_replay_v2.py | tee /tmp/a.json
+          python aug31_eod_state_historical_replay_v2.py | tee /tmp/b.json
+          for marker in \
+            '"monthly_direction": "DOWN"' \
+            '"fast_state": "ROBUST_UP"' \
+            '"slow_state": "ROBUST_UP"' \
+            '"gvz_value": 24.4' \
+            '"gvz_cap": 1.0' \
+            '"gvz_regime": "NORMAL"' \
+            '"prospective_h1_claim": false' \
+            '"current_runtime_authority": false' \
+            '"canonical_forecast_write": "NONE"' \
+            '"decision_store_write": "NONE"'; do
+              grep -Fq "$marker" /tmp/a.json
+              grep -Fq "$marker" /tmp/b.json
+          done
+          grep -Fq 'AUG31_EOD_STATE_HISTORICAL_REPLAY_V2_DRY_RUN_PASS' /tmp/a.json
+          grep -Fq 'AUG31_EOD_STATE_HISTORICAL_REPLAY_V2_DRY_RUN_PASS' /tmp/b.json
+          echo 'AUG31_STATE_REPLAY_DETERMINISTIC_DRY_RUN_PASS'
+      - name: Production remains unchanged after dry-run
+        run: |
+          python - <<'PY'
+          import os, psycopg
+          from psycopg.rows import dict_row
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as c:
+              with c.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute("select count(*) n from derived_feature_snapshots where feature_name like 'AUG31_REPLAY_%'")
+                  assert cur.fetchone()['n']==0
+                  cur.execute('select runtime_status,count(*) n from latest_engine_runtime_state group by runtime_status')
+                  counts={r['runtime_status']:r['n'] for r in cur.fetchall()}
+                  assert counts=={'ACTIVE':4,'WAITING':3,'BLOCKED':5}, counts
+                  cur.execute('select count(*) n from monthly_forecast_contracts'); assert cur.fetchone()['n']==0
+                  cur.execute('select count(*) n from decision_signal_snapshots'); assert cur.fetchone()['n']==0
+              c.rollback()
+          print('AUG31_STATE_REPLAY_DRY_RUN_NO_WRITE_PASS')
+          PY
