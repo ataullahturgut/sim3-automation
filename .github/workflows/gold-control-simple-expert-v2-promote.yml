@@ -50,7 +50,7 @@ jobs:
 
       - name: Run promoted deterministic contracts
         run: |
-          pip install pytest
+          pip install pytest 'psycopg[binary]>=3.2,<4'
           cd gold_axis_2026/data_pipeline
           pytest -q test_multi_expert_forecast.py
           cd ../apps
