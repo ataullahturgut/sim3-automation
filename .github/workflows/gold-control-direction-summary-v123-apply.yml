@@ -1,5 +1,6 @@
 name: Gold Control Direction Summary V1.23 Apply
 
+# Compact v2: Monthly 3M / FAST / SLOW must fit above the fixed mobile navigation.
 on:
   push:
     branches: [gold-r4-direction-engine]
@@ -23,22 +24,23 @@ jobs:
         with:
           python-version: '3.14'
 
-      - name: Apply fail-closed direction summary patch
+      - name: Apply fail-closed compact direction summary patch
         run: |
           python gold_axis_2026/tools/apply_direction_summary_v123.py
           git diff --check
           grep -F 'YÖN MOTORLARI ÖZETİ · STORED CONTEXT' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -F 'gc-direction-cell' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -F 'DIRECTION_SUMMARY_ABOVE_FOLD=3/3' gold_axis_2026/apps/mobile_viewport_qa.py
-          echo 'DIRECTION_SUMMARY_PATCH_APPLY_PASS'
+          echo 'DIRECTION_SUMMARY_COMPACT_PATCH_APPLY_PASS'
 
       - name: Compile patched UI and QA
         run: |
           python -m py_compile \
             gold_axis_2026/apps/gold_control_mobile_v1.py \
             gold_axis_2026/apps/mobile_viewport_qa.py
-          echo 'DIRECTION_SUMMARY_COMPILE_PASS'
+          echo 'DIRECTION_SUMMARY_COMPACT_COMPILE_PASS'
 
-      - name: Commit verified direction summary upgrade
+      - name: Commit verified compact direction summary upgrade
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -46,9 +48,9 @@ jobs:
             gold_axis_2026/apps/gold_control_mobile_v1.py \
             gold_axis_2026/apps/mobile_viewport_qa.py
           if git diff --cached --quiet; then
-            echo 'DIRECTION_SUMMARY_NO_DIFF_TO_COMMIT'
+            echo 'DIRECTION_SUMMARY_COMPACT_NO_DIFF_TO_COMMIT'
             exit 0
           fi
-          git commit -m 'gold-control: show stored direction engines above fold'
+          git commit -m 'gold-control: compact stored direction engines above fold'
           git push origin HEAD:gold-r4-direction-engine
-          echo 'DIRECTION_SUMMARY_VERIFIED_PUSH_PASS'
+          echo 'DIRECTION_SUMMARY_COMPACT_VERIFIED_PUSH_PASS'
