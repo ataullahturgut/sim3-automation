@@ -153,7 +153,7 @@ def decision_view_state(decision: dict[str, Any] | None) -> ViewState:
     if decision.get("context_only") is True:
         return ViewState(
             title="KANONİK KARAR YOK",
-            subtitle="Aylık yön SHADOW CONTEXT mevcut; tam Decision Store snapshot henüz yok.",
+            subtitle="Kısmi SHADOW CONTEXT mevcut; tam Decision Store snapshot henüz yok.",
             tone="neutral",
             evidence_class=CONTEXT_EVIDENCE_CLASS,
         )
@@ -255,20 +255,49 @@ def expert_display_state(expert_id: str, rows: list[dict[str, Any]] | None) -> d
     return base
 
 
+def _component_is_available(value: Any) -> bool:
+    text = display_state(value, "YAYIMLANMADI").upper()
+    return text not in {
+        "YAYIMLANMADI",
+        "KULLANILAMIYOR",
+        "UNRESOLVED",
+        "NONE",
+        "N/A",
+        "NAN",
+    }
+
+
 def monthly_intramonth_relation(decision: dict[str, Any] | None) -> str:
     if not decision:
         return "KARAR HENÜZ YAYIMLANMADI"
+    monthly = display_state(decision.get("monthly_direction_3m"), "YAYIMLANMADI")
+    fast = display_state(decision.get("fast_state"), "YAYIMLANMADI")
+    slow = display_state(decision.get("slow_state"), "YAYIMLANMADI")
+    monthly_ok = _component_is_available(monthly)
+    fast_ok = _component_is_available(fast)
+    slow_ok = _component_is_available(slow)
+
     if decision.get("context_only") is True:
-        return "INTRAMONTH TEYİT HENÜZ YAYIMLANMADI"
-    monthly = display_state(decision.get("monthly_direction_3m"), "UNRESOLVED")
-    fast = display_state(decision.get("fast_state"), "UNRESOLVED")
-    slow = display_state(decision.get("slow_state"), "UNRESOLVED")
-    if monthly == "UNRESOLVED" or (fast == "UNRESOLVED" and slow == "UNRESOLVED"):
+        if not monthly_ok and (fast_ok or slow_ok):
+            return "MONTHLY_PRIOR_NOT_ISSUED_TACTICAL_CONTEXT_AVAILABLE"
+        if monthly_ok and not (fast_ok or slow_ok):
+            return "INTRAMONTH_TEYİT_HENÜZ_YAYIMLANMADI"
+        if not monthly_ok and not (fast_ok or slow_ok):
+            return "UNRESOLVED_INSUFFICIENT_STORED_STATE"
+    elif not monthly_ok or not (fast_ok or slow_ok):
         return "UNRESOLVED_INSUFFICIENT_STORED_STATE"
+
     ma, _ = arrow_state(monthly)
     fa, _ = arrow_state(fast)
     sa, _ = arrow_state(slow)
-    intramonth = fa if fa == sa and fa in {"↑", "↓"} else "•"
+    if fast_ok and slow_ok:
+        intramonth = fa if fa == sa and fa in {"↑", "↓"} else "•"
+    elif fast_ok:
+        intramonth = fa
+    elif slow_ok:
+        intramonth = sa
+    else:
+        intramonth = "•"
     if ma in {"↑", "↓"} and intramonth in {"↑", "↓"} and ma != intramonth:
         return "MONTHLY_PRIOR_INTRAMONTH_CONFLICT_ALLOWED"
     if ma in {"↑", "↓"} and intramonth == ma:
@@ -283,34 +312,42 @@ def deterministic_explanation(decision: dict[str, Any] | None) -> str:
             "Fast/Slow, Macro Event, Emergency, BOCPD ve GVZ yalnız kendi dondurulmuş rolleriyle "
             "yeni uygun veri geldikçe intramonth durumu günceller. Kayıtlı final karar henüz yok."
         )
+
+    monthly = display_state(decision.get("monthly_direction_3m"), "YAYIMLANMADI")
+    fast = display_state(decision.get("fast_state"), "YAYIMLANMADI")
+    slow = display_state(decision.get("slow_state"), "YAYIMLANMADI")
+    macro = display_state(decision.get("macro_event_state"), "BLOCKED_NOT_FULLY_RECOVERED")
+    level = display_state(decision.get("level_emergency"), "YAYIMLANMADI")
+    reversal = display_state(decision.get("reversal_emergency"), "YAYIMLANMADI")
+    bocpd = display_state(decision.get("bocpd_context"), "YAYIMLANMADI")
+    gvz = display_state(decision.get("gvz_cap"), "YAYIMLANMADI")
+
     if decision.get("context_only") is True:
-        monthly = display_state(decision.get("monthly_direction_3m"), "YAYIMLANMADI")
-        result = (
-            f"Aylık yön shadow context: {monthly}. Bu değer immutable derived-feature kaydından okunur; "
-            "final Decision Store kararı değildir. Fast/Slow ve diğer intramonth katmanlar henüz "
-            "display-eligible tam snapshot olarak yayımlanmadığı için final sınıflandırma üretilmez."
-        )
+        parts = [
+            f"Aylık prior: {monthly}",
+            f"Fast/Slow: {fast} / {slow}",
+            f"Macro Event: {macro}",
+            f"Emergency Level/Reversal: {level} / {reversal}",
+            f"BOCPD: {bocpd}",
+            f"GVZ stored risk cap: {gvz}",
+            f"Prior/intramonth: {monthly_intramonth_relation(decision)}",
+            "Bu kayıtlar kısmi immutable shadow context'tir; final Decision Store kararı değildir",
+        ]
+        result = ". ".join(parts) + "."
         assert_no_action_mapping(result)
         return result
+
     parts: list[str] = []
-    monthly = decision.get("monthly_direction_3m")
-    fast = decision.get("fast_state")
-    slow = decision.get("slow_state")
-    macro = decision.get("macro_event_state")
-    bocpd = decision.get("bocpd_context")
-    level = decision.get("level_emergency")
-    reversal = decision.get("reversal_emergency")
-    gvz = decision.get("gvz_cap")
-    if monthly not in (None, "N/A"):
+    if _component_is_available(monthly):
         parts.append(f"Aylık prior: {monthly}")
-    if fast not in (None, "N/A") or slow not in (None, "N/A"):
-        parts.append(f"Fast/Slow: {fast or 'N/A'} / {slow or 'N/A'}")
-    parts.append(f"Macro Event: {macro if macro not in (None, 'N/A') else 'BLOCKED_NOT_FULLY_RECOVERED'}")
-    if level not in (None, "N/A") or reversal not in (None, "N/A"):
-        parts.append(f"Emergency: {level or 'N/A'} / {reversal or 'N/A'}")
-    if bocpd not in (None, "N/A"):
+    if _component_is_available(fast) or _component_is_available(slow):
+        parts.append(f"Fast/Slow: {fast} / {slow}")
+    parts.append(f"Macro Event: {macro}")
+    if _component_is_available(level) or _component_is_available(reversal):
+        parts.append(f"Emergency: {level} / {reversal}")
+    if _component_is_available(bocpd):
         parts.append(f"BOCPD: {bocpd}")
-    if gvz not in (None, "N/A"):
+    if _component_is_available(gvz):
         parts.append(f"GVZ risk cap: {gvz}")
     parts.append(f"Prior/intramonth: {monthly_intramonth_relation(decision)}")
     result = ". ".join(parts) + "."
