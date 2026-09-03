@@ -1,0 +1,101 @@
+name: Gold Control Replay Snapshot Final V1.29
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/apps/V129_REPLAY_FALLBACK_VERIFICATION.md'
+      - '.github/workflows/gold-control-replay-snapshot-final-v129.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  exact-head:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install runtime
+        run: |
+          pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
+          python -m playwright install --with-deps chromium
+      - name: Verify frozen v1.29 governance
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          grep -Fq '**Manifest version:** 1.29' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V2' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'NOT_PROVEN_POSITION_MAPPING' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+      - name: Fresh production snapshot must equal committed snapshot
+        run: |
+          python gold_axis_2026/tools/export_production_display_snapshot.py --out /tmp/current_v2.json
+          cmp gold_axis_2026/apps/production_display_snapshot.json /tmp/current_v2.json
+      - name: Deterministic contracts
+        run: |
+          cd gold_axis_2026/apps
+          pytest -q test_production_display_snapshot.py test_replay_snapshot_fallback_v129.py test_mobile_ui_contract.py test_engine_observability_contract.py test_ui_manifest_consistency_v126.py
+          cd ../data_pipeline
+          pytest -q test_historical_replay_contract.py test_data_evidence_spine.py test_multi_expert_forecast.py
+      - name: Production read-only evidence audit
+        run: |
+          PYTHONPATH=gold_axis_2026/data_pipeline python gold_axis_2026/data_pipeline/data_evidence_spine_audit.py --require-runtime-12
+      - name: DB and snapshot replay exact equality
+        run: |
+          PYTHONPATH=gold_axis_2026/apps python - <<'PY'
+          import os
+          from forecast_source import TRACK_HISTORICAL_REPLAY,fetch_latest_expert_forecasts
+          db=fetch_latest_expert_forecasts(os.environ['NEON_DATABASE_URL'],TRACK_HISTORICAL_REPLAY)
+          snap=fetch_latest_expert_forecasts('',TRACK_HISTORICAL_REPLAY)
+          def s(rows): return [(r['expert_id'],round(float(r['forecast_value']),10),r['model_version']) for r in rows]
+          assert s(db)==s(snap)
+          assert {r['expert_id'] for r in snap}=={'MOMENTUM_3M','RANDOM_WALK'}
+          assert all(r['canonical_authority'] is False and r['provenance']['prospective_claim'] is False for r in snap)
+          print('V129_DB_SNAPSHOT_REPLAY_EQUAL_PASS',s(snap))
+          PY
+      - name: Exact-head DB-less 390x844 visual proof
+        run: |
+          rm -rf /tmp/v129_final && mkdir -p /tmp/v129_final
+          env -u NEON_DATABASE_URL streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8530 --server.address 127.0.0.1 >/tmp/v129_final.log 2>&1 &
+          PID=$!
+          for i in $(seq 1 45); do curl -fsS http://127.0.0.1:8530/_stcore/health >/dev/null && break; sleep 1; done
+          env -u NEON_DATABASE_URL python - <<'PY'
+          import json,re
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+          snap=json.loads(Path('gold_axis_2026/apps/production_display_snapshot.json').read_text())
+          vals={r['expert_id']:f"{float(r['forecast_value']):,.2f}" for r in snap['historical_replay_experts']}
+          out=Path('/tmp/v129_final/gold_control_v129_exact_head_replay_390x844.png')
+          with sync_playwright() as p:
+              b=p.chromium.launch(headless=True); page=b.new_page(viewport={'width':390,'height':844})
+              page.goto('http://127.0.0.1:8530',wait_until='domcontentloaded',timeout=60000)
+              page.get_by_text('GOLD CONTROL',exact=False).first.wait_for(state='visible',timeout=45000)
+              page.locator('.st-key-gc_main_nav label[data-testid="stRadioOption"]').filter(has_text=re.compile('Tahmin',re.I)).first.click()
+              page.get_by_text('EYLÜL 2026 HISTORICAL REPLAY',exact=True).first.wait_for(state='visible',timeout=20000)
+              body=page.locator('body').inner_text()
+              assert vals['MOMENTUM_3M'] in body and vals['RANDOM_WALK'] in body
+              assert 'REPLAY · PROSPECTIVE DEĞİL' in body
+              assert 'NOT_ISSUED_MISSED_2026_08_31_ORIGIN' in body
+              assert 'KANONİK SONUÇ YOK' in body
+              page.get_by_text('EYLÜL 2026 HISTORICAL REPLAY',exact=True).first.scroll_into_view_if_needed()
+              page.wait_for_timeout(400); page.screenshot(path=str(out),full_page=False); b.close()
+          print('V129_EXACT_HEAD_DBLESS_VISUAL_PASS',vals)
+          PY
+          kill $PID || true; wait $PID || true
+          test -s /tmp/v129_final/gold_control_v129_exact_head_replay_390x844.png
+          grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/v129_final.log && (cat /tmp/v129_final.log; exit 1) || true
+      - name: Upload final exact-head visual proof
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-v129-exact-head-replay-proof-390x844
+          path: /tmp/v129_final/*.png
+          if-no-files-found: error
+          retention-days: 30
