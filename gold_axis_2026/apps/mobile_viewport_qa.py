@@ -130,6 +130,20 @@ def common(page: Page, screen: str) -> None:
     no_exception(page, screen); segmented(page, MAIN_NAV, 4, f"MAIN_NAV_{screen.upper()}"); bottom_nav_ok(page); no_tooltip(page); no_overflow(page, screen)
 
 
+def assert_direction_engine_values(page: Page, engine_cards) -> None:
+    for label in ("Monthly Direction · 3M", "FAST", "SLOW"):
+        cards = engine_cards.filter(has_text=re.compile(re.escape(label), re.I))
+        if cards.count() != 1:
+            raise AssertionError(f"DIRECTION_ENGINE_CARD_COUNT:{label}:{cards.count()}:1")
+        card = cards.first
+        output = norm(card.locator(".forecast").inner_text().strip())
+        status = norm(card.locator(".state").inner_text().strip())
+        if output in {"", "—", "YAYIMLANMADI", "NOT_ISSUED"}:
+            raise AssertionError(f"DIRECTION_ENGINE_VALUE_MISSING:{label}:{output}")
+        if status != "STORED_CONTEXT_AVAILABLE":
+            raise AssertionError(f"DIRECTION_ENGINE_STATUS_NOT_STORED:{label}:{status}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(); ap.add_argument("--url", default="http://127.0.0.1:8501"); ap.add_argument("--out", default="/tmp/gold_mobile_v123_qa"); args = ap.parse_args()
     out = Path(args.out); out.mkdir(parents=True, exist_ok=True)
@@ -156,6 +170,7 @@ def main() -> int:
         for i in range(12):
             if not engine_cards.nth(i).is_visible() or not engine_cards.nth(i).bounding_box():
                 raise AssertionError(f"GORUNUM_ENGINE_CARD_NOT_VISIBLE:{i}")
+        assert_direction_engine_values(page, engine_cards)
         ordered(page, "GORUNUM", ["TÜM TAHMİN VE YÖN MOTORLARI","SİNYAL ÖZETİ","MODEL YÖNÜ (AYLIK)","FAST / SLOW TEYİDİ","RİSK SEVİYESİ","SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU"])
         if columns(page, ".gc-grid2") != 1: raise AssertionError("GORUNUM_MOBILE_CARDS_MUST_STACK")
         if norm("POZİSYONU KORU") in body(page) or norm("GÜÇ: %68") in body(page): raise AssertionError("UNPROVEN_MOCKUP_PLACEHOLDER_VISIBLE_GORUNUM")
@@ -175,7 +190,7 @@ def main() -> int:
         if columns(page, ".gc-grid4") != 2: raise AssertionError("GECMIS_SUMMARY_CARDS_EXPECTED_2X2_AT_390PX")
         if "+12,8%" in body(page) or "+22,6%" in body(page): raise AssertionError("MOCKUP_SAMPLE_PERFORMANCE_VISIBLE")
         shot(page, out, "gecmis"); browser.close()
-    print("MOBILE_V123_ALL_ENGINE_FINAL_MOCKUP_VIEWPORT_QA_PASS"); print("ENGINE_INVENTORY_VISIBLE=12/12"); print(f"VIEWPORT={PHONE_WIDTH}x{PHONE_HEIGHT}"); print(f"SCREENSHOTS={out}"); return 0
+    print("MOBILE_V123_ALL_ENGINE_FINAL_MOCKUP_VIEWPORT_QA_PASS"); print("ENGINE_INVENTORY_VISIBLE=12/12"); print("DIRECTION_CONTEXT_VISIBLE=3/3"); print(f"VIEWPORT={PHONE_WIDTH}x{PHONE_HEIGHT}"); print(f"SCREENSHOTS={out}"); return 0
 
 
 if __name__ == "__main__":
