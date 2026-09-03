@@ -1,3 +1,4 @@
+# Mobile browser acceptance separately proves Monthly 3M / FAST / SLOW are fully visible above the fixed 390px navigation.
 from datetime import datetime, timezone
 
 from decision_source import _shape_shadow_direction_context
