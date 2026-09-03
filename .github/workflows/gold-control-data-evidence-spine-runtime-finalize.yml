@@ -1,0 +1,53 @@
+name: Gold Control Data Evidence Spine Runtime Finalize
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/tools/finalize_data_evidence_spine_runtime_manifest_v125.py'
+      - '.github/workflows/gold-control-data-evidence-spine-runtime-finalize.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  finalize-runtime-manifest:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install runtime
+        run: pip install 'psycopg[binary]==3.3.5'
+      - name: Require production 12-engine and 7-link audit
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/data_pipeline/data_evidence_spine_audit.py --require-runtime-12
+      - name: Finalize manifest runtime status
+        run: python gold_axis_2026/tools/finalize_data_evidence_spine_runtime_manifest_v125.py
+      - name: Verify final governance status
+        run: |
+          grep -q 'Manifest version:\*\* 1.25' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'RUNTIME_BOOTSTRAP_PRODUCTION_PASS' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          if grep -q 'PENDING_CANONICAL_BOOTSTRAP' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md; then
+            echo 'STALE_PENDING_BOOTSTRAP_STATUS_FOUND'
+            exit 1
+          fi
+          grep -q '3c7e2b1bae588ce38982c0804e78bc576642382a' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+      - name: Commit runtime bootstrap evidence status
+        run: |
+          if git diff --quiet; then
+            echo 'RUNTIME_MANIFEST_NO_DIFF'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          git commit -m 'gold-control: record production runtime bootstrap pass'
+          git push origin HEAD:gold-r4-direction-engine
