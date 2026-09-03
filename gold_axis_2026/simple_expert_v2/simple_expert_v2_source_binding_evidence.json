@@ -1,0 +1,138 @@
+{
+  "N": 43,
+  "actual_reconciliation": "43/43",
+  "contract": "GOLD_CONTROL_SIMPLE_EXPERT_SOURCE_BINDING_V2_CHANGE_CONTROL_2026-09-03.md",
+  "contract_status": "FROZEN_BEFORE_SOURCE_BINDING_RESULT",
+  "database_write": "NONE",
+  "decision": "SIMPLE_EXPERT_V2_SOURCE_BINDING_PASS",
+  "decision_store_write": "NONE",
+  "deterministic_max_abs_diff": 0.0,
+  "evidence_class": "HISTORICAL_REPLAY_MODEL_IMPACT",
+  "extended_source_vs_core5": {
+    "common_months": 46,
+    "level_corr": 0.9999721441764589,
+    "median_abs_gap_bps": 10.954758677463559,
+    "monthly_return_corr": 0.9964220374584144,
+    "monthly_return_sign_agree": 0.9555555555555556,
+    "p95_abs_gap_bps": 33.279141790809376
+  },
+  "forecast_ledger_write": "NONE",
+  "future_information_violations": 0,
+  "hard_integrity_gates": {
+    "actual_reconciliation_43_43": true,
+    "deterministic_rerun_exact": true,
+    "duplicate_selected_source_dates_zero": true,
+    "extended_source_materiality_pass": true,
+    "future_information_violations_zero": true,
+    "low_count_source_months_zero": true,
+    "momentum_r1_reconciliation_43_43": true,
+    "parent_v6_source_pass": true,
+    "required_source_coverage_complete": true,
+    "rw_r1_reconciliation_43_43": true
+  },
+  "hard_integrity_pass": true,
+  "locked_window": "2023-01..2026-07",
+  "minimum_selected_observations_per_month": 15,
+  "momentum_3m": {
+    "expert": "MOMENTUM_3M",
+    "forecast_corr_vs_r1": 0.9999396312512385,
+    "gates": {
+      "forecast_corr_pass": true,
+      "mae_noninferiority_pass": true,
+      "mape_noninferiority_pass": true,
+      "worst_ape_noninferiority_pass": true
+    },
+    "noninferiority_pass": true,
+    "r1_metrics": {
+      "MAE": 103.9768974645221,
+      "MAPE_pct": 3.29729687556857,
+      "RMSE": 147.9107047673716,
+      "median_APE_pct": 2.7739525829323,
+      "worst_APE_pct": 10.73544419315177
+    },
+    "v2_metrics": {
+      "MAE": 105.8696687755157,
+      "MAPE_pct": 3.3444413147502363,
+      "RMSE": 148.6202784618476,
+      "median_APE_pct": 2.517613513276432,
+      "worst_APE_pct": 10.954227466955246
+    },
+    "v2_over_r1_ratios": {
+      "MAE": 1.0182037679248839,
+      "MAPE": 1.0142979055149643,
+      "worst_APE": 1.020379526907982
+    }
+  },
+  "momentum_decision": "MOMENTUM_3M_R2_SOURCE_BINDING_MODEL_IMPACT_PASS",
+  "momentum_model_version": "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
+  "momentum_r1_reconciliation": "43/43",
+  "noninferiority_thresholds": {
+    "forecast_corr_min": 0.995,
+    "mae_ratio_max": 1.05,
+    "mape_ratio_max": 1.05,
+    "worst_ape_ratio_max": 1.1
+  },
+  "parent_source_decision": "PATCH_MONTHLY_LEVEL_BRIDGE_V6_SOURCE_PASS",
+  "post_result_retune": false,
+  "prospective_claim": false,
+  "provider_substitution": false,
+  "random_walk": {
+    "expert": "RANDOM_WALK",
+    "forecast_corr_vs_r1": 0.9999696950393444,
+    "gates": {
+      "forecast_corr_pass": true,
+      "mae_noninferiority_pass": true,
+      "mape_noninferiority_pass": true,
+      "worst_ape_noninferiority_pass": true
+    },
+    "noninferiority_pass": true,
+    "r1_metrics": {
+      "MAE": 107.46511627906976,
+      "MAPE_pct": 3.3023220233201385,
+      "RMSE": 153.0688774740404,
+      "median_APE_pct": 2.91497975708502,
+      "worst_APE_pct": 9.625880596205832
+    },
+    "v2_metrics": {
+      "MAE": 107.66140836898614,
+      "MAPE_pct": 3.3002320934706404,
+      "RMSE": 153.24686095122425,
+      "median_APE_pct": 2.915379880727627,
+      "worst_APE_pct": 9.432641684454612
+    },
+    "v2_over_r1_ratios": {
+      "MAE": 1.001826565649514,
+      "MAPE": 0.9993671332369346,
+      "worst_APE": 0.9799250666139172
+    }
+  },
+  "raw_vendor_market_values_logged": false,
+  "required_source_months": 46,
+  "rw_decision": "RW_R2_SOURCE_BINDING_MODEL_IMPACT_PASS",
+  "rw_model_version": "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
+  "rw_r1_reconciliation": "43/43",
+  "source_id": "SIMPLE_EXPERT_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V2",
+  "source_low_count_month_count": 0,
+  "source_materiality_thresholds": {
+    "level_corr_min": 0.995,
+    "median_gap_bps_max": 50.0,
+    "p95_gap_bps_max": 100.0,
+    "return_corr_min": 0.95,
+    "sign_agree_min": 0.8
+  },
+  "source_missing_month_count": 0,
+  "source_semantic": {
+    "duplicate_selected_dates": 0,
+    "first_selected_date": "2022-09-01",
+    "interval": "1h",
+    "last_selected_date": "2026-06-30",
+    "provider": "Twelve Data",
+    "request_count": 8,
+    "requested_timezone": "America/New_York",
+    "selected_bar_end_semantic": "17:00_ET_HOURLY_CLOSE",
+    "selected_bar_open_time": "16:00:00",
+    "selected_daily_observation_count": 987,
+    "symbol": "XAU/USD"
+  },
+  "thresholds_relaxed": false
+}
