@@ -40,24 +40,31 @@ def load_config() -> dict:
         "full_cap_max",
         "half_cap_max",
         "panic_above",
-        "normal_cap",
-        "elevated_cap",
-        "panic_cap",
+        "caps",
         "role",
     }
     if not required.issubset(gvz):
         raise RuntimeError(f"GVZ_FROZEN_CONFIG_MISSING:{sorted(required - set(gvz))}")
+    caps = dict(gvz.get("caps") or {})
+    required_caps = {"normal", "elevated", "panic"}
+    if not required_caps.issubset(caps):
+        raise RuntimeError(f"GVZ_FROZEN_CONFIG_CAPS_MISSING:{sorted(required_caps - set(caps))}")
     if float(gvz["panic_above"]) != float(gvz["half_cap_max"]):
         raise RuntimeError("GVZ_FROZEN_CONFIG_PANIC_BOUNDARY_MISMATCH")
     if str(gvz["role"]) != "RISK_ONLY":
         raise RuntimeError("GVZ_FROZEN_CONFIG_ROLE_MISMATCH")
     if (
-        float(gvz["normal_cap"]) != 1.0
-        or float(gvz["elevated_cap"]) != 0.5
-        or float(gvz["panic_cap"]) != 0.25
+        float(caps["normal"]) != 1.0
+        or float(caps["elevated"]) != 0.5
+        or float(caps["panic"]) != 0.25
     ):
         raise RuntimeError("GVZ_FROZEN_CONFIG_CAP_MISMATCH")
-    return gvz
+    return {
+        **gvz,
+        "normal_cap": float(caps["normal"]),
+        "elevated_cap": float(caps["elevated"]),
+        "panic_cap": float(caps["panic"]),
+    }
 
 
 def load_latest_input(cur, calc_ts: datetime) -> dict:
