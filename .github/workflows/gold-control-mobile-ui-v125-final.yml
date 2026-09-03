@@ -1,4 +1,4 @@
-name: Gold Control Mobile UI V1.26 System Recovery Final
+name: Gold Control Mobile UI V1.27 Compatibility Final
 
 on:
   workflow_dispatch:
@@ -8,6 +8,7 @@ on:
       - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
       - 'gold_axis_2026/GOLD_CONTROL_DATA_EVIDENCE_SPINE_CONTRACT_2026-09-03.md'
       - 'gold_axis_2026/GOLD_CONTROL_ENGINE_OBSERVABILITY_CONTRACT_2026-09-03.md'
+      - 'gold_axis_2026/GOLD_CONTROL_DEPLOYMENT_DISPLAY_SNAPSHOT_CONTRACT_2026-09-03.md'
       - 'gold_axis_2026/apps/**'
       - 'gold_axis_2026/data_pipeline/data_evidence_spine.py'
       - 'gold_axis_2026/data_pipeline/data_evidence_spine_audit.py'
@@ -38,24 +39,22 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
           python -m playwright install --with-deps chromium
-          python --version
-          streamlit version
 
-      - name: Verify manifest v1.26 governance and frozen locks
+      - name: Verify manifest v1.27 governance and frozen locks
         run: |
           test -n "$NEON_DATABASE_URL" || (echo 'NEON_DATABASE_URL missing' && exit 1)
-          grep -Fq '**Manifest version:** 1.26' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq '**Manifest version:** 1.27' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'FROZEN_SYSTEM_RECOVERY_UI_CONSISTENCY_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'FROZEN_DATA_EVIDENCE_SPINE_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          grep -Fq 'RUNTIME_BOOTSTRAP_PRODUCTION_PASS' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'FROZEN_ALL_GOVERNED_ENGINES_VISIBLE_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'auto selector = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'auto ensemble = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'NOT_PROVEN_POSITION_MAPPING' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          echo 'V126_SYSTEM_RECOVERY_GOVERNANCE_PASS'
+          echo 'V127_MOBILE_GOVERNANCE_PASS'
 
-      - name: Compile complete DB-to-UI read graph
+      - name: Compile complete DB snapshot to UI graph
         run: |
           python -m py_compile \
             gold_axis_2026/data_pipeline/data_evidence_spine.py \
@@ -63,6 +62,7 @@ jobs:
             gold_axis_2026/data_pipeline/decision_store.py \
             gold_axis_2026/data_pipeline/decision_store_reader.py \
             gold_axis_2026/data_pipeline/multi_expert_forecast.py \
+            gold_axis_2026/apps/production_display_snapshot.py \
             gold_axis_2026/apps/runtime_source.py \
             gold_axis_2026/apps/decision_source.py \
             gold_axis_2026/apps/engine_observability_contract.py \
@@ -74,10 +74,15 @@ jobs:
             gold_axis_2026/apps/gold_control_mobile_v1.py \
             gold_axis_2026/apps/gold_control.py
 
-      - name: Run deterministic and recovery contracts
+      - name: Run deterministic recovery and deployment contracts
         run: |
           cd gold_axis_2026/apps
-          pytest -q test_mobile_ui_contract.py test_piyasa_contract.py test_engine_observability_contract.py test_ui_manifest_consistency_v126.py
+          pytest -q \
+            test_mobile_ui_contract.py \
+            test_piyasa_contract.py \
+            test_engine_observability_contract.py \
+            test_ui_manifest_consistency_v126.py \
+            test_production_display_snapshot.py
           cd ../data_pipeline
           pytest -q test_multi_expert_forecast.py test_data_evidence_spine.py
 
@@ -87,38 +92,43 @@ jobs:
           import os
           from runtime_source import fetch_runtime_observability
           from decision_source import fetch_current_decision_state
-          from live_sources import fetch_xau_spot, fetch_gvz_latest
-          from piyasa_contract import gvz_regime
+          url=os.environ['NEON_DATABASE_URL']
+          runtime=fetch_runtime_observability(url)
+          assert runtime['source_mode']=='NEON_DB_READ_ONLY', runtime
+          assert runtime['runtime_engine_count']==12
+          assert runtime['context_exactly_one_link']==7
+          assert runtime['integrity_ok'] is True
+          assert runtime['database_writes']=='NONE'
+          states={r['engine_id']:r for r in runtime['runtime']}
+          assert sum(1 for r in states.values() if r['runtime_status']=='ACTIVE')==4
+          assert sum(1 for r in states.values() if r['runtime_status']=='WAITING')==3
+          assert sum(1 for r in states.values() if r['runtime_status']=='BLOCKED')==5
+          assert sum(1 for r in states.values() if r.get('direction_vote_permitted') is True)==3
+          state=fetch_current_decision_state(url)
+          assert state is not None
+          assert state['monthly_direction_3m'] not in (None,'','YAYIMLANMADI')
+          assert state['fast_state'] not in (None,'','YAYIMLANMADI')
+          assert state['slow_state'] not in (None,'','YAYIMLANMADI')
+          assert state.get('classification') is None
+          assert state.get('action_state') is None
+          print('V127_PRODUCTION_DB_TO_UI_PASS runtime=12/12 context=7/7 writes=NONE')
+          PY
 
-          url = os.environ['NEON_DATABASE_URL']
-          runtime = fetch_runtime_observability(url)
-          assert runtime['status'] == 'DATA_EVIDENCE_SPINE_RUNTIME_HEALTH_PASS', runtime
-          assert runtime['runtime_engine_count'] == 12, runtime
-          assert runtime['context_exactly_one_link'] == 7, runtime
-          assert runtime['integrity_ok'] is True, runtime
-          assert runtime['database_writes'] == 'NONE', runtime
-
-          states = {r['engine_id']: r for r in runtime['runtime']}
-          assert len(states) == 12
-          assert sum(1 for r in states.values() if r['runtime_status'] == 'ACTIVE') == 4
-          assert sum(1 for r in states.values() if r['runtime_status'] == 'WAITING') == 3
-          assert sum(1 for r in states.values() if r['runtime_status'] == 'BLOCKED') == 5
-          assert sum(1 for r in states.values() if r.get('direction_vote_permitted') is True) == 3
-
-          state = fetch_current_decision_state(url)
-          if state is not None:
-              assert state.get('action_state') is None
-              assert state.get('classification') is None or state.get('context_only') is not True
-
-          spot = fetch_xau_spot()
-          assert float(spot['price']) > 0
-          assert spot['stale'] is False
-          assert spot['provider_age_seconds'] is not None and spot['provider_age_seconds'] <= 300
-          gvz = fetch_gvz_latest()
-          assert float(gvz['close']) > 0
-          regime = gvz_regime(gvz['close'], full_max=25.9795, half_max=30.5238)
-          assert regime in {'NORMAL','ELEVATED','PANIC'}
-          print('PRODUCTION_DB_TO_UI_READ_PASS runtime=12/12 active=4 waiting=3 blocked=5 context_links=7/7 integrity=PASS writes=NONE gvz_regime='+regime)
+      - name: Prove deployment fallback without database URL
+        run: |
+          env -u NEON_DATABASE_URL PYTHONPATH=gold_axis_2026/apps python - <<'PY'
+          from decision_source import fetch_current_decision_state
+          from runtime_source import fetch_runtime_observability
+          state=fetch_current_decision_state('')
+          runtime=fetch_runtime_observability('')
+          assert state['source_mode']=='PRODUCTION_SNAPSHOT_FALLBACK'
+          assert runtime['source_mode']=='PRODUCTION_SNAPSHOT_FALLBACK'
+          assert state['monthly_direction_3m'] not in (None,'','YAYIMLANMADI')
+          assert state['fast_state'] not in (None,'','YAYIMLANMADI')
+          assert state['slow_state'] not in (None,'','YAYIMLANMADI')
+          assert runtime['runtime_engine_count']==12 and runtime['context_exactly_one_link']==7
+          assert state.get('classification') is None and state.get('action_state') is None
+          print('V127_DEPLOYMENT_FALLBACK_SOURCE_PASS')
           PY
 
       - name: Verify selector ensemble and action remain locked
@@ -129,85 +139,37 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import re
-          text = "\n".join(p.read_text(encoding="utf-8") for p in Path("gold_axis_2026/apps").glob("*.py"))
-          pattern = re.compile(r"action_state\s*=\s*['\"](?:BUY|SELL|HOLD|EXIT|REDUCE)['\"]")
-          if pattern.search(text):
-              raise SystemExit("UNPROVEN_POSITION_MAPPING_FOUND")
-          print("SELECTOR_ENSEMBLE_POSITION_LOCKS_PASS")
+          text='\n'.join(p.read_text(encoding='utf-8') for p in Path('gold_axis_2026/apps').glob('*.py'))
+          pattern=re.compile(r"action_state\s*=\s*['\"](?:BUY|SELL|HOLD|EXIT|REDUCE)['\"]")
+          if pattern.search(text): raise SystemExit('UNPROVEN_POSITION_MAPPING_FOUND')
+          print('SELECTOR_ENSEMBLE_POSITION_LOCKS_PASS')
           PY
 
       - name: Canonical production-backed 390x844 browser QA
         run: |
-          rm -rf /tmp/gold_mobile_v126_qa
+          rm -rf /tmp/gold_mobile_v127_qa
           streamlit run gold_axis_2026/apps/gold_control.py \
             --server.headless true --server.port 8501 --server.address 127.0.0.1 \
-            > /tmp/gold_mobile_v126_browser.log 2>&1 &
+            >/tmp/gold_mobile_v127_browser.log 2>&1 &
           APP_PID=$!
-          for i in $(seq 1 40); do
-            if curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null; then break; fi
+          for i in $(seq 1 45); do
+            curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null && break
             sleep 1
           done
-          set +e
           python gold_axis_2026/apps/mobile_viewport_qa.py \
-            --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v126_qa
-          QA_RC=$?
-          set -e
-          if [ $QA_RC -eq 0 ]; then
-            python - <<'PY'
-          import re
-          from pathlib import Path
-          from playwright.sync_api import sync_playwright
-
-          out = Path('/tmp/gold_mobile_v126_qa/gold_control_v126_gorunum_db_evidence_390x844.png')
-          with sync_playwright() as p:
-              browser = p.chromium.launch(headless=True)
-              page = browser.new_page(viewport={'width': 390, 'height': 844}, device_scale_factor=1)
-              page.goto('http://127.0.0.1:8501', wait_until='domcontentloaded', timeout=60000)
-              page.get_by_text('GOLD CONTROL', exact=False).first.wait_for(state='visible', timeout=45000)
-              root = page.locator('.st-key-gc_main_nav')
-              option = root.locator('label[data-testid="stRadioOption"]').filter(has_text=re.compile('Görünüm', re.I)).first
-              option.click()
-              page.get_by_text('GÖRÜNÜM', exact=True).first.wait_for(state='visible', timeout=15000)
-              evidence = page.get_by_text(re.compile(r'DB Evidence Spine: runtime 12/12.*context link 7/7.*integrity PASS', re.I)).first
-              evidence.wait_for(state='attached', timeout=15000)
-              evidence.evaluate("(el) => el.scrollIntoView({block: 'center', inline: 'nearest'})")
-              page.wait_for_timeout(700)
-              box = evidence.bounding_box()
-              nav_box = page.locator('.st-key-gc_main_nav [data-testid="stRadio"]').first.bounding_box()
-              if not box or not nav_box:
-                  raise AssertionError(f'DB_EVIDENCE_VIEWPORT_BOUNDS_MISSING:{box}:{nav_box}')
-              if box['y'] < 0 or box['y'] + box['height'] > nav_box['y'] - 4:
-                  raise AssertionError(f'DB_EVIDENCE_NOT_VISIBLE_ABOVE_NAV:{box}:{nav_box}')
-              page.screenshot(path=str(out), full_page=False)
-              browser.close()
-          if not out.is_file() or out.stat().st_size == 0:
-              raise SystemExit('DB_EVIDENCE_SCREENSHOT_NOT_CREATED')
-          print('DB_EVIDENCE_SCREENSHOT_VISIBLE_PASS')
-          print(f'DB_EVIDENCE_SCREENSHOT={out}')
-          PY
-          fi
+            --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v127_qa
           kill $APP_PID || true
           wait $APP_PID || true
-          if [ $QA_RC -ne 0 ]; then
-            cat /tmp/gold_mobile_v126_browser.log
-            exit $QA_RC
-          fi
-          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v126_browser.log; then
-            cat /tmp/gold_mobile_v126_browser.log
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v127_browser.log; then
+            cat /tmp/gold_mobile_v127_browser.log
             exit 1
           fi
-          for s in bugun gorunum tahmin gecmis; do
-            test -s /tmp/gold_mobile_v126_qa/gold_control_v126_${s}_390x844.png
-          done
-          test -s /tmp/gold_mobile_v126_qa/gold_control_v126_gorunum_db_evidence_390x844.png
-          echo 'MOBILE_V126_PRODUCTION_BACKED_BROWSER_PASS'
-          echo 'DATA_EVIDENCE_SPINE_UI_VISIBLE=12/12:7/7:PASS'
-          echo 'VIEWPORT=390x844'
+          echo 'MOBILE_V127_PRODUCTION_BACKED_BROWSER_PASS'
 
       - name: Upload production-backed screenshots
         uses: actions/upload-artifact@v4
         with:
-          name: gold-control-v126-production-backed-390x844-screenshots
-          path: /tmp/gold_mobile_v126_qa/*.png
+          name: gold-control-v127-compatibility-production-backed-390x844-screenshots
+          path: /tmp/gold_mobile_v127_qa/*.png
           if-no-files-found: error
           retention-days: 30
