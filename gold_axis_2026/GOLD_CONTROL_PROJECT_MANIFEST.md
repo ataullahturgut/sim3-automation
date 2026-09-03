@@ -799,7 +799,7 @@ Current production data-plane reconciliation on 2026-09-03 after Data Evidence S
 - orphan input snapshots / expert rows without input set / fingerprint mismatches: **0 / 0 / 0**;
 - no historical file-backed forecast or decision was backfilled or prospectively relabeled.
 
-Production Neon migration `5281e7d0-8335-41c5-bff2-a15e2b91b017` was applied successfully to branch `production` (`br-gentle-mouse-b22dzkr1`) after a temporary-branch positive chain test and negative FK/immutability tests. The first future H=1 `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` expert forecast must still be stored before outcome realization with immutable inputs and provenance. Runtime bootstrap is an observability/provenance operation only and remains `PENDING_CANONICAL_BOOTSTRAP` until the canonical code SHA is promoted and the 12-engine post-write audit passes.
+Production Neon migration `5281e7d0-8335-41c5-bff2-a15e2b91b017` was applied successfully to branch `production` (`br-gentle-mouse-b22dzkr1`) after a temporary-branch positive chain test and negative FK/immutability tests. The first future H=1 `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` expert forecast must still be stored before outcome realization with immutable inputs and provenance. Runtime bootstrap completed as an observability/provenance operation using canonical bootstrap code SHA `3c7e2b1bae588ce38982c0804e78bc576642382a`. The production post-write audit proved 12/12 runtime states, 4 ACTIVE / 3 WAITING / 5 BLOCKED, 3 direction-vote-permitted context motors, and exactly-one runtime linkage for all seven persisted component-context rows. No forecast, expert forecast, canonical forecast or Decision Store row was fabricated by bootstrap.
 
 ## 16.1 Data Evidence Spine V1 — normalized production evidence chain
 
@@ -852,7 +852,7 @@ Binding rules:
 11. Decision Store V1 is retained but remains empty while expert selection and position mapping are not proven. Future Decision Store V2 normalized binding status is `BLOCKED_DECISION_STORE_V2_SELECTION_CONTRACT`.
 12. UI continues to use `SET TRANSACTION READ ONLY`. A dedicated least-privilege DB reader role is desirable defense-in-depth but remains `NOT_PROVEN_PROVISIONED` until separately created and tested.
 13. Production schema migration status is `APPLIED_PRODUCTION_PASS`; migration ID is `5281e7d0-8335-41c5-bff2-a15e2b91b017`.
-14. Runtime-ledger bootstrap status at this manifest issue point is `PENDING_CANONICAL_BOOTSTRAP`; it may only link the existing seven persisted context rows and status-only WAITING/BLOCKED engines, with no recalculation or prospective relabeling.
+14. Runtime-ledger bootstrap status is `RUNTIME_BOOTSTRAP_PRODUCTION_PASS` using canonical bootstrap code SHA `3c7e2b1bae588ce38982c0804e78bc576642382a`; it linked only the existing seven persisted context rows and status-only WAITING/BLOCKED engines, with no recalculation or prospective relabeling.
 15. Selector, ensemble, canonical forecast issuance and position mapping locks are unchanged: `NOT_PROVEN_EXPERT_SELECTION_RULE`, `AUTO_SELECTOR=OFF`, `AUTO_ENSEMBLE=OFF`, `NOT_PROVEN_POSITION_MAPPING`.
 
 Migration acceptance was fail-closed: the temporary Neon migration preserved existing production rows, accepted a valid synthetic evidence chain, rejected expert/input-set identity violations, rejected append-only mutation, and production post-migration integrity remained clean.
@@ -863,7 +863,7 @@ Schema migration status:
 
 Runtime bootstrap status:
 
-`PENDING_CANONICAL_BOOTSTRAP`
+`RUNTIME_BOOTSTRAP_PRODUCTION_PASS`
 
 ---
 
