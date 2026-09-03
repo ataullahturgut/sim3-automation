@@ -46,19 +46,34 @@ def nav_label(page: Page, name: str):
 
 def segmented(page: Page, selector: str, count: int, name: str) -> None:
     root = page.locator(selector); root.first.wait_for(state="attached", timeout=30_000)
-    opts = root.locator('label[data-testid="stRadioOption"]')
-    if opts.count() != count:
-        raise AssertionError(f"{name}_OPTION_COUNT:{opts.count()}:{count}")
-    widths = []
-    for i in range(count):
-        opt = opts.nth(i)
-        if not opt.is_visible() or not opt.bounding_box():
-            raise AssertionError(f"{name}_OPTION_NOT_VISIBLE:{i}")
-        widths.append(float(opt.bounding_box()["width"]))
-    if max(widths) - min(widths) > 3:
-        raise AssertionError(f"{name}_UNEQUAL_WIDTHS:{widths}")
-    if root.locator('label[data-testid="stRadioOption"][data-selected="true"]').count() != 1:
-        raise AssertionError(f"{name}_SELECTED_COUNT")
+    last_count = -1
+    last_widths: list[float] = []
+    last_selected = -1
+    for _ in range(48):
+        opts = root.locator('label[data-testid="stRadioOption"]')
+        last_count = opts.count()
+        widths: list[float] = []
+        visible = last_count == count
+        if visible:
+            for i in range(count):
+                opt = opts.nth(i)
+                box = opt.bounding_box() if opt.is_visible() else None
+                if not box:
+                    visible = False
+                    break
+                widths.append(float(box["width"]))
+        last_widths = widths
+        last_selected = root.locator('label[data-testid="stRadioOption"][data-selected="true"]').count()
+        if visible and len(widths) == count and max(widths) - min(widths) <= 3 and last_selected == 1:
+            return
+        page.wait_for_timeout(250)
+    if last_count != count:
+        raise AssertionError(f"{name}_OPTION_COUNT:{last_count}:{count}")
+    if len(last_widths) != count:
+        raise AssertionError(f"{name}_OPTION_NOT_VISIBLE:{last_widths}")
+    if max(last_widths) - min(last_widths) > 3:
+        raise AssertionError(f"{name}_UNEQUAL_WIDTHS:{last_widths}")
+    raise AssertionError(f"{name}_SELECTED_COUNT:{last_selected}:1")
 
 
 def bottom_nav_ok(page: Page) -> None:
