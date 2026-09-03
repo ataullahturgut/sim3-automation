@@ -144,6 +144,40 @@ jobs:
             --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v125_qa
           QA_RC=$?
           set -e
+          if [ $QA_RC -eq 0 ]; then
+            python - <<'PY'
+          import re
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+
+          out = Path('/tmp/gold_mobile_v125_qa/gold_control_v125_gorunum_db_evidence_390x844.png')
+          with sync_playwright() as p:
+              browser = p.chromium.launch(headless=True)
+              page = browser.new_page(viewport={'width': 390, 'height': 844}, device_scale_factor=1)
+              page.goto('http://127.0.0.1:8501', wait_until='domcontentloaded', timeout=60000)
+              page.get_by_text('GOLD CONTROL', exact=False).first.wait_for(state='visible', timeout=45000)
+              root = page.locator('.st-key-gc_main_nav')
+              option = root.locator('label[data-testid="stRadioOption"]').filter(has_text=re.compile('Görünüm', re.I)).first
+              option.click()
+              page.get_by_text('GÖRÜNÜM', exact=True).first.wait_for(state='visible', timeout=15000)
+              evidence = page.get_by_text(re.compile(r'DB Evidence Spine: runtime 12/12.*context link 7/7.*integrity PASS', re.I)).first
+              evidence.wait_for(state='attached', timeout=15000)
+              evidence.scroll_into_view_if_needed()
+              page.wait_for_timeout(700)
+              box = evidence.bounding_box()
+              nav_box = page.locator('.st-key-gc_main_nav [data-testid="stRadio"]').first.bounding_box()
+              if not box or not nav_box:
+                  raise AssertionError(f'DB_EVIDENCE_VIEWPORT_BOUNDS_MISSING:{box}:{nav_box}')
+              if box['y'] < 0 or box['y'] + box['height'] > nav_box['y'] - 4:
+                  raise AssertionError(f'DB_EVIDENCE_NOT_VISIBLE_ABOVE_NAV:{box}:{nav_box}')
+              page.screenshot(path=str(out), full_page=False)
+              browser.close()
+          if not out.is_file() or out.stat().st_size == 0:
+              raise SystemExit('DB_EVIDENCE_SCREENSHOT_NOT_CREATED')
+          print('DB_EVIDENCE_SCREENSHOT_VISIBLE_PASS')
+          print(f'DB_EVIDENCE_SCREENSHOT={out}')
+          PY
+          fi
           kill $APP_PID || true
           wait $APP_PID || true
           if [ $QA_RC -ne 0 ]; then
@@ -155,6 +189,7 @@ jobs:
             exit 1
           fi
           test -s /tmp/gold_mobile_v125_qa/gold_control_v123_gorunum_390x844.png
+          test -s /tmp/gold_mobile_v125_qa/gold_control_v125_gorunum_db_evidence_390x844.png
           echo 'MOBILE_V125_PRODUCTION_BACKED_BROWSER_PASS'
           echo 'DATA_EVIDENCE_SPINE_UI_VISIBLE=12/12:7/7:PASS'
           echo 'VIEWPORT=390x844'
