@@ -1,3 +1,6 @@
+from datetime import datetime, timezone
+
+from decision_source import _shape_shadow_direction_context
 from mobile_ui_contract import (
     AUTO_ENSEMBLE_STATUS,
     AUTO_SELECTOR_STATUS,
@@ -10,6 +13,7 @@ from mobile_ui_contract import (
     MONTH_END_TRACK,
     SCENARIO_STATUS,
     TAHMIN_SECTION_ORDER,
+    arrow_state,
     assert_no_action_mapping,
     classification_label,
     decision_view_state,
@@ -39,6 +43,48 @@ def test_monthly_shadow_context_is_visible_but_not_promoted_to_decision():
     assert "SHADOW CONTEXT" in state.subtitle
     assert evidence_badge(context["evidence_class"]) == ("SHADOW CONTEXT", "shadow")
     assert monthly_intramonth_relation(context) == "INTRAMONTH TEYİT HENÜZ YAYIMLANMADI"
+
+
+def test_fast_slow_shadow_context_survives_missing_monthly_direction():
+    ts = datetime(2026, 9, 2, 18, 36, tzinfo=timezone.utc)
+    rows = [
+        {
+            "id": 3,
+            "feature_name": "FAST_STATE",
+            "calculation_ts": ts,
+            "input_cutoff": ts,
+            "value_text": "ROBUST_UP",
+            "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+            "metadata": {
+                "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+                "target_context": "2026-09",
+            },
+        },
+        {
+            "id": 4,
+            "feature_name": "SLOW_STATE",
+            "calculation_ts": ts,
+            "input_cutoff": ts,
+            "value_text": "ROBUST_UP",
+            "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+            "metadata": {
+                "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+                "target_context": "2026-09",
+            },
+        },
+    ]
+    context = _shape_shadow_direction_context(rows)
+    assert context is not None
+    assert context["context_only"] is True
+    assert context["monthly_direction_3m"] == "YAYIMLANMADI"
+    assert context["fast_state"] == "ROBUST_UP"
+    assert context["slow_state"] == "ROBUST_UP"
+    assert context["classification"] is None
+    assert context["action_state"] is None
+    assert context["prospective_h1_claim"] is False
+    assert decision_view_state(context).title == "KANONİK KARAR YOK"
+    assert arrow_state(context["fast_state"])[0] == "↑"
+    assert arrow_state(context["slow_state"])[0] == "↑"
 
 
 def test_empty_forecast_is_fail_closed():
