@@ -34,6 +34,7 @@ jobs:
             gold_axis_2026/data_pipeline/decision_store.py \
             gold_axis_2026/data_pipeline/decision_store_reader.py \
             gold_axis_2026/apps/decision_source.py \
+            gold_axis_2026/apps/engine_observability_contract.py \
             gold_axis_2026/apps/forecast_source.py \
             gold_axis_2026/apps/live_sources.py \
             gold_axis_2026/apps/mobile_ui_contract.py \
