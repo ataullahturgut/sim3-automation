@@ -89,6 +89,40 @@ def test_fast_slow_shadow_context_survives_missing_monthly_direction():
     assert arrow_state(context["slow_state"])[0] == "↑"
 
 
+def test_gvz_shadow_context_is_risk_only_and_never_promoted_to_decision():
+    ts = datetime(2026, 9, 3, 10, 14, 35, tzinfo=timezone.utc)
+    common = {
+        "calculation_ts": ts,
+        "input_cutoff": ts,
+        "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+        "metadata": {
+            "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+            "target_context": "2026-09",
+            "display_scope": "COMPONENT_CONTEXT_ONLY",
+            "prospective_h1_claim": False,
+            "direction_vote": False,
+            "role": "RISK_ONLY",
+        },
+    }
+    rows = [
+        {**common, "id": 5, "feature_name": "GVZ_VALUE", "value_text": "26.14"},
+        {**common, "id": 6, "feature_name": "GVZ_CAP", "value_text": "0.5"},
+        {**common, "id": 7, "feature_name": "GVZ_PANIC", "value_text": "false"},
+        {**common, "id": 8, "feature_name": "GVZ_REGIME", "value_text": "ELEVATED"},
+    ]
+    context = _shape_shadow_direction_context(rows)
+    assert context is not None
+    assert context["context_only"] is True
+    assert context["gvz"] == 26.14
+    assert context["gvz_cap"] == 0.5
+    assert context["gvz_panic"] is False
+    assert context["gvz_regime"] == "ELEVATED"
+    assert context["classification"] is None
+    assert context["action_state"] is None
+    assert context["prospective_h1_claim"] is False
+    assert decision_view_state(context).title == "KANONİK KARAR YOK"
+
+
 def test_empty_forecast_is_fail_closed():
     state = forecast_view_state(None)
     assert state.title == "TAHMİN HENÜZ YAYIMLANMADI"
