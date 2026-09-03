@@ -100,7 +100,7 @@ jobs:
           assert sum(1 for r in states.values() if r['runtime_status'] == 'ACTIVE') == 4
           assert sum(1 for r in states.values() if r['runtime_status'] == 'WAITING') == 3
           assert sum(1 for r in states.values() if r['runtime_status'] == 'BLOCKED') == 5
-          assert sum(1 for r in states.values() if r.get('direction_vote')) == 3
+          assert sum(1 for r in states.values() if r.get('direction_vote_permitted') is True) == 3
 
           state = fetch_current_decision_state(url)
           if state is not None:
