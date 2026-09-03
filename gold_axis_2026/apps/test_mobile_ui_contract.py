@@ -10,6 +10,7 @@ from mobile_ui_contract import (
     FINAL_MOCKUP_CONTRACT,
     GECMIS_SECTION_ORDER,
     GORUNUM_SECTION_ORDER,
+    INTRAMONTH_PENDING_LABEL,
     MONTH_END_TRACK,
     SCENARIO_STATUS,
     TAHMIN_SECTION_ORDER,
@@ -42,7 +43,8 @@ def test_monthly_shadow_context_is_visible_but_not_promoted_to_decision():
     assert state.title == "KANONİK KARAR YOK"
     assert "SHADOW CONTEXT" in state.subtitle
     assert evidence_badge(context["evidence_class"]) == ("SHADOW CONTEXT", "shadow")
-    assert monthly_intramonth_relation(context) == "INTRAMONTH TEYİT HENÜZ YAYIMLANMADI"
+    assert INTRAMONTH_PENDING_LABEL == "INTRAMONTH TEYİT HENÜZ YAYIMLANMADI"
+    assert monthly_intramonth_relation(context) == INTRAMONTH_PENDING_LABEL
 
 
 def test_fast_slow_shadow_context_survives_missing_monthly_direction():
