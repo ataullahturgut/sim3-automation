@@ -1,0 +1,55 @@
+name: Gold Control V1.30 Replay Core Repair
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-control-aug31-state-replay-v130]
+    paths:
+      - 'gold_axis_2026/tools/repair_v130_aug31_core_main.py'
+      - '.github/workflows/gold-control-v130-core-repair.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-aug31-state-replay-v130
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install replay runtime
+        run: pip install 'psycopg[binary]==3.3.5' pandas==2.3.3 numpy==2.5.2
+      - name: Repair stale core main table reference
+        run: |
+          python gold_axis_2026/tools/repair_v130_aug31_core_main.py
+          ! grep -Fq 'canonical_monthly_forecasts' gold_axis_2026/data_pipeline/aug31_eod_state_historical_replay.py
+          grep -Fq 'monthly_forecast_contracts' gold_axis_2026/data_pipeline/aug31_eod_state_historical_replay.py
+      - name: Compile and prove both replay entrypoints dry-run
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/aug31_eod_state_historical_replay.py \
+            gold_axis_2026/data_pipeline/aug31_eod_state_historical_replay_v2.py
+          cd gold_axis_2026/data_pipeline
+          python aug31_eod_state_historical_replay.py | tee /tmp/core.log
+          python aug31_eod_state_historical_replay_v2.py | tee /tmp/v2.log
+          grep -Fq 'AUG31_EOD_STATE_HISTORICAL_REPLAY_DRY_RUN_PASS' /tmp/core.log
+          grep -Fq 'AUG31_EOD_STATE_HISTORICAL_REPLAY_V2_DRY_RUN_PASS' /tmp/v2.log
+          grep -Fq '"monthly_direction": "DOWN"' /tmp/core.log
+          grep -Fq '"fast_state": "ROBUST_UP"' /tmp/core.log
+          grep -Fq '"slow_state": "ROBUST_UP"' /tmp/core.log
+          grep -Fq '"gvz_regime": "NORMAL"' /tmp/core.log
+      - name: Commit only repaired core
+        run: |
+          git add gold_axis_2026/data_pipeline/aug31_eod_state_historical_replay.py
+          git diff --cached --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'gold-control: repair v1.30 Aug31 replay core entrypoint'
+          git push origin HEAD:gold-control-aug31-state-replay-v130
