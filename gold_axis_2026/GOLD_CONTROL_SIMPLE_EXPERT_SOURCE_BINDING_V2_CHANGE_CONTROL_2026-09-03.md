@@ -60,6 +60,16 @@ Construction:
 
 The historical validation fetch must cover at least `2022-09-01` through `2026-06-30`, because the January 2023 Momentum forecast requires four completed input months (`2022-09..2022-12`).
 
+Because the first three required months precede the already frozen V6 hourly-anchor audit window, the new validation must independently extend the same source-materiality audit over **all required source months `2022-09..2026-06`** against the frozen CORE5 monthly target artifact. The inherited V6 materiality thresholds remain unchanged:
+
+- level correlation `>= 0.995`;
+- median absolute relative level gap `<= 50 bps`;
+- p95 absolute relative level gap `<= 100 bps`;
+- consecutive monthly log-return correlation `>= 0.95`;
+- monthly return direction agreement `>= 0.80`.
+
+This extension is a source-semantic gate, not a forecast-performance tuning step.
+
 ## 4. Frozen formulas
 
 ### Random Walk V2
@@ -111,16 +121,17 @@ These gates are frozen before running the new source-binding evaluation. They ma
 All must pass:
 
 1. Parent source evidence decision is exactly `PATCH_MONTHLY_LEVEL_BRIDGE_V6_SOURCE_PASS`.
-2. Actual reconciliation = `43/43`.
-3. Archived R1 RW reconciliation = `43/43`.
-4. Archived R1 Momentum reconciliation = `43/43`.
-5. Required source-month coverage = `100%`.
-6. Low-count required source months = `0`.
-7. Duplicate selected source dates = `0`.
-8. Future-information violations = `0`.
-9. Deterministic formula rerun max absolute difference = `0`.
-10. No raw Twelve market value may be logged into CI output/evidence.
-11. No Neon, forecast ledger, or Decision Store write is permitted during validation.
+2. Extended source-materiality audit over required months `2022-09..2026-06` passes every unchanged V6 materiality threshold in section 3.
+3. Actual reconciliation = `43/43`.
+4. Archived R1 RW reconciliation = `43/43`.
+5. Archived R1 Momentum reconciliation = `43/43`.
+6. Required source-month coverage = `100%`.
+7. Low-count required source months = `0`.
+8. Duplicate selected source dates = `0`.
+9. Future-information violations = `0`.
+10. Deterministic formula rerun max absolute difference = `0`.
+11. No raw Twelve market value may be logged into CI output/evidence.
+12. No Neon, forecast ledger, or Decision Store write is permitted during validation.
 
 ### 6.2 Source-substitution materiality / non-inferiority gates
 
