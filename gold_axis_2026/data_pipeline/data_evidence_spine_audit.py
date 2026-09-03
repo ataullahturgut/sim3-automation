@@ -51,7 +51,7 @@ def main() -> int:
             runtime = [dict(r) for r in cur.fetchall()]
             cur.execute(
                 """
-                select count(*) as n from information_schema.triggers
+                select count(distinct trigger_name) as n from information_schema.triggers
                 where event_object_schema='public' and trigger_name=any(%s)
                 """,
                 (list(IMMUTABILITY_TRIGGERS),),
