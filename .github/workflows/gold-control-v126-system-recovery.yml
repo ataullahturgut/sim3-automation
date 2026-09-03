@@ -5,6 +5,7 @@ on:
     branches: [gold-r4-direction-engine]
     paths:
       - 'gold_axis_2026/tools/apply_v126_system_recovery.py'
+      - '.github/workflows/gold-control-v126-system-recovery.yml'
   workflow_dispatch:
 
 permissions:
@@ -25,7 +26,12 @@ jobs:
           python-version: '3.14'
 
       - name: Apply frozen v1.26 recovery patch
-        run: python gold_axis_2026/tools/apply_v126_system_recovery.py
+        run: |
+          python gold_axis_2026/tools/apply_v126_system_recovery.py
+          grep -Fq '**Manifest version:** 1.26' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'FROZEN_SYSTEM_RECOVERY_UI_CONSISTENCY_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'if status not in {"STORED_CONTEXT_AVAILABLE", "AKTİF · STORED CONTEXT"}:' gold_axis_2026/apps/mobile_viewport_qa.py
+          ! grep -Fq 'if status != "STORED_CONTEXT_AVAILABLE":' gold_axis_2026/apps/mobile_viewport_qa.py
 
       - name: Install app and QA runtime
         run: |
@@ -116,9 +122,12 @@ jobs:
             cat /tmp/gold_mobile_v126_browser.log
             exit 1
           fi
+          for s in bugun gorunum tahmin gecmis; do
+            test -s /tmp/gold_mobile_v126_qa/gold_control_v126_${s}_390x844.png
+          done
           echo 'V126_PRODUCTION_BACKED_BROWSER_RECOVERY_PASS'
 
-      - name: Assert stale UI contracts are gone
+      - name: Assert stale UI contracts are gone and governance remains locked
         run: |
           ! grep -R -F 'BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND' gold_axis_2026/apps/mobile_ui_contract.py gold_axis_2026/apps/gold_control_mobile_v1.py
           ! grep -R -F 'MOMENTUM_3M_R1' gold_axis_2026/apps/mobile_ui_contract.py
@@ -126,7 +135,11 @@ jobs:
           ! grep -R -F 'MANIFEST_V1_23' gold_axis_2026/apps/gold_control.py gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -Fq '**Manifest version:** 1.26' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'FROZEN_SYSTEM_RECOVERY_UI_CONSISTENCY_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          echo 'V126_STALE_CONTRACT_SCAN_PASS'
+          grep -Fq 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'auto selector = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'auto ensemble = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'NOT_PROVEN_POSITION_MAPPING' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          echo 'V126_STALE_CONTRACT_AND_GOVERNANCE_SCAN_PASS'
 
       - name: Commit recovered non-workflow files
         run: |
@@ -140,6 +153,7 @@ jobs:
             gold_axis_2026/apps/mobile_viewport_qa.py \
             gold_axis_2026/apps/test_mobile_ui_contract.py \
             gold_axis_2026/apps/test_ui_manifest_consistency_v126.py
+          git diff --cached --check
           git diff --cached --quiet && { echo 'NO_RECOVERY_DIFF'; exit 1; }
           git commit -m 'gold-control: close v1.26 UI runtime consistency defects'
           git push origin HEAD:gold-r4-direction-engine
