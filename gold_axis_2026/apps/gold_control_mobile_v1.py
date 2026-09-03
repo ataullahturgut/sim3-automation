@@ -11,6 +11,11 @@ import pandas as pd
 import streamlit as st
 
 from decision_source import fetch_current_decision_state, fetch_decision_history
+from engine_observability_contract import (
+    ENGINE_OBSERVABILITY_CONTRACT,
+    build_engine_inventory,
+    engine_inventory_counts,
+)
 from forecast_source import (
     TRACK_EARLY_INDICATIVE,
     TRACK_MONTH_END,
@@ -47,11 +52,11 @@ HISTORICAL_REPLAY = ROOT / "production_closure" / "production_history_43.csv"
 
 PATCH_EXACT_ID = "CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE"
 PATCH_GEOMETRY = "L=252 / P=21 / D=32"
-MULTI_EXPERT_ARCHITECTURE = "MANIFEST_V1_22_MULTI_EXPERT_BUILD_FIRST_SELECT_LATER"
+MULTI_EXPERT_ARCHITECTURE = "MANIFEST_V1_23_MULTI_EXPERT_BUILD_FIRST_SELECT_LATER_ENGINE_OBSERVABILITY"
 MACRO_EVENT_STATUS = "BLOCKED_NOT_FULLY_RECOVERED"
 SELECTOR_RULE_STATUS = "NOT_PROVEN_EXPERT_SELECTION_RULE"
 if EXPERT_SELECTION_STATUS != SELECTOR_RULE_STATUS:
-    raise RuntimeError("MANIFEST_V1_22_SELECTOR_STATUS_MISMATCH")
+    raise RuntimeError("MANIFEST_V1_23_SELECTOR_STATUS_MISMATCH")
 
 st.set_page_config(page_title="Gold Control", page_icon="🟡", layout="centered", initial_sidebar_state="collapsed")
 
@@ -176,6 +181,28 @@ def expert_cards(rows: list[dict[str, Any]]) -> str:
         cards.append("<div class='gc-expert'>"+f"<div class='name'>{esc(x['label'])}</div><div class='role'>{esc(x['role'])}</div><div class='forecast'>{esc(value)}</div><div class='state'>{esc(status)}</div></div>")
     return "<div class='gc-expert-grid'>"+"".join(cards)+"</div>"
 
+def engine_output_display(row: dict[str, Any]) -> str:
+    value=row.get("output")
+    if value is None or str(value).strip()=="": return "—"
+    if row.get("category")=="MONTHLY_FORECAST":
+        try: return fmt_num(value,2," USD")
+        except Exception: return display_state(value,"—")
+    if row.get("direction_vote") is True:
+        arrow,_=arrow_state(value); return f"{arrow} {display_state(value,'—')}"
+    return display_state(value,"—")
+
+def engine_inventory_cards(rows: list[dict[str, Any]]) -> str:
+    cards=[]
+    for row in rows:
+        output=engine_output_display(row); status=display_state(row.get("status"),"UNRESOLVED")
+        evidence=display_state(row.get("evidence_class"),"NO_CURRENT_EVIDENCE")
+        version=display_state(row.get("version"),"VERSION_NOT_PROVEN")
+        updated=fmt_time(row.get("as_of"))
+        vote="YÖN OYU" if row.get("direction_vote") is True else "YÖN OYU DEĞİL"
+        detail=f"{row.get('category')} · {vote} · {evidence} · {version} · Son: {updated}"
+        cards.append("<div class='gc-expert'>"+f"<div class='name'>{esc(row.get('label'))}</div><div class='role'>{esc(row.get('role'))}</div><div class='forecast'>{esc(output)}</div><div class='state'>{esc(status)}</div><div class='note' style='font-size:.61rem;color:var(--gc-muted);line-height:1.35;margin-top:.34rem'>{esc(detail)}</div></div>")
+    return "<div class='gc-expert-grid'>"+"".join(cards)+"</div>"
+
 def selector_lock_html() -> str:
     return "<div class='gc-lock'>"+f"<div>AUTO SELECTOR<b>{esc(AUTO_SELECTOR_STATUS)}</b></div><div>AUTO ENSEMBLE<b>{esc(AUTO_ENSEMBLE_STATUS)}</b></div><div>SELECTION / AGGREGATION RULE<b>{esc(EXPERT_SELECTION_STATUS)}</b></div></div>"
 
@@ -208,6 +235,7 @@ forecast=safe_call(lambda:fetch_current_forecast(url),None) if url else None; fo
 month_end_experts=safe_call(lambda:fetch_latest_expert_forecasts(url,TRACK_MONTH_END),[]) if url else []; early_experts=safe_call(lambda:fetch_latest_expert_forecasts(url,TRACK_EARLY_INDICATIVE),[]) if url else []
 month_end_history=safe_call(lambda:fetch_expert_forecast_history(url,TRACK_MONTH_END),[]) if url else []; early_history=safe_call(lambda:fetch_expert_forecast_history(url,TRACK_EARLY_INDICATIVE),[]) if url else []
 spot=safe_call(get_spot,None); hist,hist_meta=safe_call(get_xau_history,(pd.DataFrame(),{})); gvz=safe_call(get_gvz,None); replay=load_replay(); rmetrics=replay_metrics(replay); _=classification_label
+engine_rows=build_engine_inventory(decision,month_end_experts,early_experts); engine_counts=engine_inventory_counts(engine_rows)
 
 st.markdown("<div class='gc-shell'><div class='gc-menu'>☰</div><div class='gc-logo'><b>G</b></div><div class='gc-brand'>GOLD CONTROL<small>DECISION SYSTEM</small></div></div>",unsafe_allow_html=True)
 NAV_OPTIONS=["⌂ Bugün","◉ Görünüm","↗ Tahmin","◷ Geçmiş"]; nav=st.radio("Ana navigasyon",NAV_OPTIONS,horizontal=True,label_visibility="collapsed",key="gc_main_nav")
@@ -229,8 +257,20 @@ if nav=="⌂ Bugün":
     st.markdown(f"<div class='gc-info'><b>Karar bağlamı:</b> {esc(state.title)}. Canlı spot yalnız piyasa izleme verisidir. <b>Canlı spot ≠ son EOD karar.</b></div>",unsafe_allow_html=True)
 
 elif nav=="◉ Görünüm":
-    updated=None if not decision else decision.get("generated_at") or decision.get("decision_as_of"); page_head("GÖRÜNÜM","Sistem neden böyle düşünüyor? Aylık prior ve intramonth katmanlar ayrı okunur.",updated); state=decision_view_state(decision); monthly=None if not decision else decision.get("monthly_direction_3m"); ma,mt=arrow_state(monthly); live_gvz=None if not gvz else gvz.get("close"); stored_risk=stored_risk_label(decision); relation=monthly_intramonth_relation(decision); badge_text=evidence_badge(decision.get("evidence_class"))[0] if decision else "YAYIMLANMADI"
+    updated=None if not decision else decision.get("generated_at") or decision.get("decision_as_of"); page_head("GÖRÜNÜM","Önce tüm tahmin, yön, event, emergency, rejim ve risk motorlarını gör; karar/selector katmanı sonraki aşamadır.",updated); state=decision_view_state(decision); monthly=None if not decision else decision.get("monthly_direction_3m"); ma,mt=arrow_state(monthly); live_gvz=None if not gvz else gvz.get("close"); stored_risk=stored_risk_label(decision); relation=monthly_intramonth_relation(decision); badge_text=evidence_badge(decision.get("evidence_class"))[0] if decision else "YAYIMLANMADI"
     st.markdown("<div class='gc-hero'><div class='gc-hero-layout'><div class='gc-hero-icon'>◎</div>"+f"<div><div class='gc-kicker'>MEVCUT KAYITLI DURUM</div><div class='gc-mid'>{esc(state.title)}</div><div class='gc-meta'>{esc(state.subtitle)}</div><span class='gc-badge'>{esc(badge_text)}</span></div><div class='gc-hero-side'><div><div class='gc-hero-label'>MODEL YÖNÜ / MONTHLY PRIOR</div><div class='gc-hero-value {tone_class(mt)}'>{esc(ma)} {esc(display_state(monthly,'YAYIMLANMADI'))}</div></div><div><div class='gc-hero-label'>RİSK SEVİYESİ</div><div class='gc-hero-value'>{esc(stored_risk)}</div></div></div></div></div>",unsafe_allow_html=True)
+    inventory_summary=(
+        f"Toplam {engine_counts['total']} motor/kanal · "
+        f"Stored context {engine_counts['active']} · Issued expert {engine_counts['issued']} · "
+        f"Blocked/Not proven {engine_counts['blocked']} · Waiting {engine_counts['waiting']}"
+    )
+    st.markdown(
+        "<div class='gc-card'><div class='gc-section-title'>TÜM TAHMİN VE YÖN MOTORLARI</div>"
+        +f"<div class='gc-footnote'><b>{esc(ENGINE_OBSERVABILITY_CONTRACT)}</b><br>{esc(inventory_summary)}<br>"
+        +"Bir motor blocked olsa bile kartı görünür kalır. Stored yön context'i ile H=1 fiyat forecast'ı birbirine dönüştürülmez.</div>"
+        +engine_inventory_cards(engine_rows)+"</div>",
+        unsafe_allow_html=True,
+    )
     summary=html_row("Frozen Final Decision State",state.title)+html_row("Monthly Direction / Prior / Context",display_state(monthly,"YAYIMLANMADI"))+html_row("Prior / intramonth ilişki",relation)+html_row("Evidence",badge_text); st.markdown(f"<div class='gc-card'>{section_header(1,'SİNYAL ÖZETİ')}{summary}</div>",unsafe_allow_html=True)
     if decision:
         fa,ft=arrow_state(decision.get("fast_state")); sa,stn=arrow_state(decision.get("slow_state")); model_body=f"<div class='gc-mid {tone_class(mt)}'>{esc(ma)} {esc(display_state(monthly))}</div><div class='gc-footnote'>Stratejik anchor/prior; günlük işlem emri değildir.</div>"; fs_body=html_row("FAST",f"{fa} {display_state(decision.get('fast_state'))}",tone_class(ft))+html_row("SLOW",f"{sa} {display_state(decision.get('slow_state'))}",tone_class(stn))
@@ -307,4 +347,4 @@ else:
 
 st.markdown("<div id='system-health'></div>",unsafe_allow_html=True)
 with st.expander("Sistem / Veri Sağlığı / Audit"):
-    st.write("UI contract:",FINAL_MOCKUP_CONTRACT); st.write("Architecture:",MULTI_EXPERT_ARCHITECTURE); st.write("Neon:","BAĞLI" if url else "YAPILANDIRILMADI"); st.write("Decision Store:","KAYIT VAR" if decision else "KAYIT YOK"); st.write("Canonical forecast ledger:","KAYIT VAR" if forecast else "KAYIT YOK / SELECTOR NOT PROVEN"); st.write("MONTH_END_EXPERT rows:",len(month_end_history)); st.write("EARLY_INDICATIVE rows:",len(early_history)); st.write("Auto selector:",AUTO_SELECTOR_STATUS); st.write("Auto ensemble:",AUTO_ENSEMBLE_STATUS); st.write("Selector status:",EXPERT_SELECTION_STATUS); st.write("Scenario status:",SCENARIO_STATUS); st.write("Patch executable expert:",PATCH_EXACT_ID); st.write("Patch geometry:",PATCH_GEOMETRY); st.write("VW executable status:","BLOCKED_NOT_PROVEN_EXECUTABLE"); st.write("3M/RW forward source binding:","BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND"); st.write("Historical replay:","MEVCUT" if not replay.empty else "YOK"); st.write("Track constants:",MONTH_END_TRACK,EARLY_INDICATIVE_TRACK)
+    st.write("UI contract:",FINAL_MOCKUP_CONTRACT); st.write("Engine observability:",ENGINE_OBSERVABILITY_CONTRACT); st.write("Governed engine inventory:",engine_counts); st.write("Architecture:",MULTI_EXPERT_ARCHITECTURE); st.write("Neon:","BAĞLI" if url else "YAPILANDIRILMADI"); st.write("Decision Store:","KAYIT VAR" if decision else "KAYIT YOK"); st.write("Canonical forecast ledger:","KAYIT VAR" if forecast else "KAYIT YOK / SELECTOR NOT PROVEN"); st.write("MONTH_END_EXPERT rows:",len(month_end_history)); st.write("EARLY_INDICATIVE rows:",len(early_history)); st.write("Auto selector:",AUTO_SELECTOR_STATUS); st.write("Auto ensemble:",AUTO_ENSEMBLE_STATUS); st.write("Selector status:",EXPERT_SELECTION_STATUS); st.write("Scenario status:",SCENARIO_STATUS); st.write("Patch executable expert:",PATCH_EXACT_ID); st.write("Patch geometry:",PATCH_GEOMETRY); st.write("VW executable status:","BLOCKED_NOT_PROVEN_EXECUTABLE"); st.write("3M/RW forward source binding:","BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND"); st.write("Historical replay:","MEVCUT" if not replay.empty else "YOK"); st.write("Track constants:",MONTH_END_TRACK,EARLY_INDICATIVE_TRACK)

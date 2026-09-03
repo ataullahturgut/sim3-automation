@@ -170,6 +170,13 @@ def _shape_shadow_direction_context(rows: list[dict[str, Any]]) -> dict[str, Any
         "context_only": True,
         "context_components": tuple(sorted(latest)),
         "context_feature_ids": {name: row.get("id") for name, row in latest.items()},
+        "context_feature_versions": {name: row.get("feature_version") for name, row in latest.items()},
+        "context_feature_updated_at": {name: _iso(row.get("calculation_ts")) for name, row in latest.items()},
+        "context_feature_input_cutoff": {name: _iso(row.get("input_cutoff")) for name, row in latest.items()},
+        "context_feature_evidence": {
+            name: (dict(row.get("metadata") or {}).get("evidence_class") or row.get("quality_status"))
+            for name, row in latest.items()
+        },
         "target_month": target_month,
         "monthly_direction_3m": monthly_value,
         "fast_state": fast_value,

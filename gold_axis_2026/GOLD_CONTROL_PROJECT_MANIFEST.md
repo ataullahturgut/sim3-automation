@@ -1,7 +1,7 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.22  
-**Freeze / issue date:** 2026-09-02  
+**Manifest version:** 1.23
+**Freeze / issue date:** 2026-09-03
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
 **Project root:** `gold_axis_2026/`
@@ -40,7 +40,8 @@ It is a **mobile-first, auditable gold decision-support system** that:
 6. applies volatility/risk constraints,
 7. stores the exact decision state that existed at each decision time,
 8. separates live/prospective evidence from historical replay,
-9. exposes the result through a simple user-facing interface without leaking backend complexity into the main UX.
+9. exposes the result through a simple user-facing interface without leaking backend complexity into the main UX,
+10. exposes a complete governed forecast/direction/event/regime/risk motor inventory so users can verify what is running, waiting, blocked, or not proven before any later selector/final-decision research.
 
 The product is a **decision-support system**, not an autonomous self-learning trading system.
 
@@ -51,7 +52,7 @@ The product is a **decision-support system**, not an autonomous self-learning tr
 The frontend must answer four questions in this order:
 
 1. **Piyasa** — Piyasa şu anda ne durumda?
-2. **Görünüm** — Sistem neden böyle düşünüyor?
+2. **Görünüm** — Hangi tahmin/yön/event/regime/risk motorları mevcut, hangileri çalışıyor veya blocked, son meşru çıktıları nedir ve sistem neden böyle düşünüyor?
 3. **Tahmin** — Gelecek ay için model ne bekliyor?
 4. **Geçmiş** — Sistem geçmişte gerçekten ne yaptı?
 
@@ -423,6 +424,33 @@ Change-Control Decision: FREEZE SELECTOR / KEEP EXPERTS SEPARATE
 ```
 
 **Binding interpretation:** infrastructure and clean evidence come first; expert selection comes later. No future selector may be justified by hindsight from the outcomes it is supposed to predict.
+
+## 7.C ALL-ENGINE OBSERVABILITY / INVENTORY-FIRST POLICY — v1.23
+
+This subsection freezes the user-facing observability requirement before any future expert-selection or final-decision research.
+
+Binding contract:
+
+`gold_axis_2026/GOLD_CONTROL_ENGINE_OBSERVABILITY_CONTRACT_2026-09-03.md`
+
+Status:
+
+`FROZEN_ALL_GOVERNED_ENGINES_VISIBLE_V1`
+
+Binding rules:
+
+1. **All governed forecast and direction-related motors must remain visible as inventory items even when they have no issued value.** `BLOCKED`, `NOT_PROVEN`, `WAITING`, and `NOT_ISSUED` are legitimate observable states and must not collapse into a blank card.
+2. The frozen inventory covers the four monthly H=1 experts (Causal Patch, VW-MIDAS-MSVR, 3M Momentum, Random Walk), the stored Monthly Direction 3M channel, Fast, Slow, Macro Event, Emergency Level, Emergency Reversal, BOCPD, and GVZ risk context.
+3. Each item must expose its role, latest legitimate output if one exists, explicit operational status/blocker, model/feature version, evidence class, target/as-of context, and whether it is permitted to cast a direction vote.
+4. A stored direction context is **not** an H=1 point forecast. In particular, `MONTHLY_DIRECTION_3M` may be displayable while the `MOMENTUM_3M` H=1 monthly-level expert remains `BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND`.
+5. GVZ remains risk-only and must never be rendered as a bullish/bearish direction vote.
+6. Historical replay may be displayed as research evidence but may never be silently promoted to a current prospective/live output.
+7. The application remains a read/presentation layer; it may not invent missing outputs, recompute production direction from live spot, or substitute providers/values merely to populate the inventory.
+8. `AUTO_SELECTOR=OFF`, `AUTO_ENSEMBLE=OFF`, `NOT_PROVEN_EXPERT_SELECTION_RULE`, and `NOT_PROVEN_POSITION_MAPPING` remain unchanged. Engine visibility does not authorize a winner, composite forecast, or action mapping.
+9. The implementation sequence is now explicitly: **see all motors → verify operation/evidence → accumulate clean comparable outputs → research selector/decision rules later**.
+10. The existing `APPROVED_FINAL_MOCKUP_UI_CONTRACT_V2` remains the visual-shell authority; this v1.23 contract extends content completeness/observability and does not change model methodology.
+
+Authority rationale: the 2026 Federal Reserve/OCC/FDIC revised model-risk guidance emphasizes comprehensive model inventory, ongoing monitoring, limitations, outputs and functioning status; NIST AI RMF Govern 1.6 calls for mechanisms to inventory AI systems; NIST AI 800-4 emphasizes post-deployment functionality/operational monitoring. Gold Control adopts these principles as internal engineering governance, without claiming banking-regulatory applicability.
 
 ## 7.1 H=1 role freeze — restored agreed architecture
 
