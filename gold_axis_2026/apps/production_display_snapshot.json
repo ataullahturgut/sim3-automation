@@ -1,0 +1,275 @@
+{
+  "context_exactly_one_link": 7,
+  "database_writes": "NONE",
+  "features": [
+    {
+      "calculation_ts": "2026-09-01T13:56:22.357310+00:00",
+      "feature_name": "MONTHLY_DIRECTION_3M",
+      "feature_version": "R4_1_3M_SIMPLE_RETURN_V1",
+      "git_commit": "b681f41914f275c705f2aa9721519f59075e60a3",
+      "id": 2,
+      "input_cutoff": "2026-09-01T13:49:02.380053+00:00",
+      "metadata": {
+        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+        "prospective_h1_claim": false,
+        "target_context": "2026-09"
+      },
+      "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+      "value_text": "DOWN"
+    },
+    {
+      "calculation_ts": "2026-09-02T18:36:16.680481+00:00",
+      "feature_name": "FAST_STATE",
+      "feature_version": "R4_1_SMA20_2_MARKET_DAY_PERSISTENCE_V1",
+      "git_commit": "1b67d8f5059f80d349a7477905506c9e64a3cb19",
+      "id": 3,
+      "input_cutoff": "2026-09-01T13:49:02.380053+00:00",
+      "metadata": {
+        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+        "prospective_h1_claim": false,
+        "target_context": "2026-09"
+      },
+      "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+      "value_text": "ROBUST_UP"
+    },
+    {
+      "calculation_ts": "2026-09-02T18:36:16.680481+00:00",
+      "feature_name": "SLOW_STATE",
+      "feature_version": "R4_1_COMPLETED_WEEKLY_SMA4_2_WEEK_PERSISTENCE_V1",
+      "git_commit": "1b67d8f5059f80d349a7477905506c9e64a3cb19",
+      "id": 4,
+      "input_cutoff": "2026-09-01T13:49:02.380053+00:00",
+      "metadata": {
+        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+        "prospective_h1_claim": false,
+        "target_context": "2026-09"
+      },
+      "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+      "value_text": "ROBUST_UP"
+    },
+    {
+      "calculation_ts": "2026-09-03T10:14:35.790176+00:00",
+      "feature_name": "GVZ_VALUE",
+      "feature_version": "R4_1_GVZ_RISK_CAP_CONTEXT_V1",
+      "git_commit": "b3facb8e677398f59ee2897c6c69ee22f1e5b71f",
+      "id": 5,
+      "input_cutoff": "2026-09-03T01:26:55.875433+00:00",
+      "metadata": {
+        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+        "prospective_h1_claim": false,
+        "target_context": "2026-09"
+      },
+      "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+      "value_text": "26.14"
+    },
+    {
+      "calculation_ts": "2026-09-03T10:14:35.790176+00:00",
+      "feature_name": "GVZ_CAP",
+      "feature_version": "R4_1_GVZ_RISK_CAP_CONTEXT_V1",
+      "git_commit": "b3facb8e677398f59ee2897c6c69ee22f1e5b71f",
+      "id": 6,
+      "input_cutoff": "2026-09-03T01:26:55.875433+00:00",
+      "metadata": {
+        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+        "prospective_h1_claim": false,
+        "target_context": "2026-09"
+      },
+      "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+      "value_text": "0.5"
+    },
+    {
+      "calculation_ts": "2026-09-03T10:14:35.790176+00:00",
+      "feature_name": "GVZ_PANIC",
+      "feature_version": "R4_1_GVZ_RISK_CAP_CONTEXT_V1",
+      "git_commit": "b3facb8e677398f59ee2897c6c69ee22f1e5b71f",
+      "id": 7,
+      "input_cutoff": "2026-09-03T01:26:55.875433+00:00",
+      "metadata": {
+        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+        "prospective_h1_claim": false,
+        "target_context": "2026-09"
+      },
+      "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+      "value_text": "false"
+    },
+    {
+      "calculation_ts": "2026-09-03T10:14:35.790176+00:00",
+      "feature_name": "GVZ_REGIME",
+      "feature_version": "R4_1_GVZ_RISK_CAP_CONTEXT_V1",
+      "git_commit": "b3facb8e677398f59ee2897c6c69ee22f1e5b71f",
+      "id": 8,
+      "input_cutoff": "2026-09-03T01:26:55.875433+00:00",
+      "metadata": {
+        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+        "prospective_h1_claim": false,
+        "target_context": "2026-09"
+      },
+      "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+      "value_text": "ELEVATED"
+    }
+  ],
+  "health": {
+    "canonical_forecasts": 0,
+    "decision_snapshots": 0,
+    "derived_features": 7,
+    "engine_runs": 12,
+    "expert_forecasts": 0,
+    "expert_input_fingerprint_mismatches": 0,
+    "expert_rows_without_input_set": 0,
+    "input_members": 0,
+    "input_sets": 0,
+    "input_snapshots": 0,
+    "orphan_input_snapshots": 0
+  },
+  "payload_sha256": "ed10260a82a574f458cba5f536f73742120b75455318b3c99e2169da32866b3c",
+  "runtime": [
+    {
+      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "direction_vote_permitted": false,
+      "engine_id": "BOCPD",
+      "engine_role": "REGIME_CONTEXT",
+      "engine_version": "NOT_RECOVERED_FORWARD_RULE",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
+      "runtime_status": "BLOCKED",
+      "status_code": "BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED",
+      "target_context": "2026-09"
+    },
+    {
+      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "direction_vote_permitted": false,
+      "engine_id": "CAUSAL_PATCH",
+      "engine_role": "MONTHLY_H1_EXPERT",
+      "engine_version": "CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
+      "runtime_status": "WAITING",
+      "status_code": "WAITING_ELIGIBLE_MONTH_END_ORIGIN",
+      "target_context": "2026-09"
+    },
+    {
+      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "direction_vote_permitted": false,
+      "engine_id": "EMERGENCY_LEVEL",
+      "engine_role": "EMERGENCY_CONTEXT",
+      "engine_version": "R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_PASS",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
+      "runtime_status": "BLOCKED",
+      "status_code": "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE",
+      "target_context": "2026-09"
+    },
+    {
+      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "direction_vote_permitted": false,
+      "engine_id": "EMERGENCY_REVERSAL",
+      "engine_role": "EMERGENCY_CONTEXT",
+      "engine_version": "R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_PASS",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
+      "runtime_status": "BLOCKED",
+      "status_code": "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE",
+      "target_context": "2026-09"
+    },
+    {
+      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "direction_vote_permitted": true,
+      "engine_id": "FAST",
+      "engine_role": "TACTICAL_DIRECTION_CONTEXT",
+      "engine_version": "R4_1_SMA20_2_MARKET_DAY_PERSISTENCE_V1",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
+      "runtime_status": "ACTIVE",
+      "status_code": "VERIFIED_PERSISTED_CONTEXT_AVAILABLE",
+      "target_context": "2026-09"
+    },
+    {
+      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "direction_vote_permitted": false,
+      "engine_id": "GVZ_RISK",
+      "engine_role": "RISK_ONLY_CONTEXT",
+      "engine_version": "R4_1_GVZ_RISK_CAP_CONTEXT_V1",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
+      "runtime_status": "ACTIVE",
+      "status_code": "VERIFIED_PERSISTED_CONTEXT_AVAILABLE",
+      "target_context": "2026-09"
+    },
+    {
+      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "direction_vote_permitted": false,
+      "engine_id": "MACRO_EVENT",
+      "engine_role": "EVENT_CONTEXT",
+      "engine_version": "NOT_FULLY_RECOVERED",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
+      "runtime_status": "BLOCKED",
+      "status_code": "BLOCKED_NOT_FULLY_RECOVERED",
+      "target_context": "2026-09"
+    },
+    {
+      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "direction_vote_permitted": false,
+      "engine_id": "MOMENTUM_3M",
+      "engine_role": "MONTHLY_H1_EXPERT",
+      "engine_version": "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
+      "runtime_status": "WAITING",
+      "status_code": "WAITING_ELIGIBLE_MONTH_END_ORIGIN",
+      "target_context": "2026-09"
+    },
+    {
+      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "direction_vote_permitted": true,
+      "engine_id": "MONTHLY_DIRECTION_3M",
+      "engine_role": "STRATEGIC_DIRECTION_CONTEXT",
+      "engine_version": "R4_1_3M_SIMPLE_RETURN_V1",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
+      "runtime_status": "ACTIVE",
+      "status_code": "VERIFIED_PERSISTED_CONTEXT_AVAILABLE",
+      "target_context": "2026-09"
+    },
+    {
+      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "direction_vote_permitted": false,
+      "engine_id": "RANDOM_WALK",
+      "engine_role": "MONTHLY_H1_BENCHMARK",
+      "engine_version": "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
+      "runtime_status": "WAITING",
+      "status_code": "WAITING_ELIGIBLE_MONTH_END_ORIGIN",
+      "target_context": "2026-09"
+    },
+    {
+      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "direction_vote_permitted": true,
+      "engine_id": "SLOW",
+      "engine_role": "TACTICAL_DIRECTION_CONTEXT",
+      "engine_version": "R4_1_COMPLETED_WEEKLY_SMA4_2_WEEK_PERSISTENCE_V1",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
+      "runtime_status": "ACTIVE",
+      "status_code": "VERIFIED_PERSISTED_CONTEXT_AVAILABLE",
+      "target_context": "2026-09"
+    },
+    {
+      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "direction_vote_permitted": false,
+      "engine_id": "VW_MIDAS_MSVR",
+      "engine_role": "MONTHLY_H1_EXPERT",
+      "engine_version": "VW_AUDITED_SHADOW_V2",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
+      "runtime_status": "BLOCKED",
+      "status_code": "BLOCKED_NOT_PROVEN_EXECUTABLE",
+      "target_context": "2026-09"
+    }
+  ],
+  "snapshot_contract": "FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V1",
+  "source": "NEON_PRODUCTION_READ_ONLY_EXPORT",
+  "source_state_at": "2026-09-03T14:42:23.229633+00:00",
+  "target_context": "2026-09"
+}

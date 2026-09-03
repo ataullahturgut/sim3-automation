@@ -5,6 +5,11 @@ from typing import Any
 import psycopg
 from psycopg.rows import dict_row
 
+from production_display_snapshot import (
+    load_production_display_snapshot,
+    snapshot_runtime_observability,
+)
+
 
 RUNTIME_SOURCE_CONTRACT = "FROZEN_DATA_EVIDENCE_SPINE_V1_READ_ONLY_APP_V1"
 EXPECTED_ENGINE_COUNT = 12
@@ -24,17 +29,17 @@ def _to_dict(row: Any) -> dict[str, Any]:
 
 
 def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
-    """Read Data Evidence Spine runtime/health state without recomputation.
-
-    This source is observability-only. It cannot create forecasts, direction values,
-    selector weights, decisions, or actions. Component values continue to come from
-    their governed immutable output ledgers.
-    """
+    """Read runtime/health without recomputation; Neon primary, snapshot fallback."""
     url = str(database_url or "").strip()
     if not url:
-        raise RuntimeError("NEON_DATABASE_URL_NOT_CONFIGURED")
+        return snapshot_runtime_observability(load_production_display_snapshot())
 
-    with psycopg.connect(url, autocommit=False, row_factory=dict_row) as conn:
+    try:
+        conn_ctx = psycopg.connect(url, autocommit=False, row_factory=dict_row)
+    except psycopg.OperationalError:
+        return snapshot_runtime_observability(load_production_display_snapshot())
+
+    with conn_ctx as conn:
         with conn.cursor() as cur:
             cur.execute("SET TRANSACTION READ ONLY")
             cur.execute("select to_regclass('public.latest_engine_runtime_state') as runtime_view, to_regclass('public.data_evidence_spine_health_v1') as health_view")
@@ -122,4 +127,8 @@ def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
         "context_exactly_one_link": context_exactly_one_link,
         "context_complete": context_complete,
         "database_writes": "NONE",
+        "source_mode": "NEON_DB_READ_ONLY",
+        "snapshot_contract": None,
+        "snapshot_source_state_at": None,
+        "snapshot_payload_sha256": None,
     }

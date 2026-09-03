@@ -64,6 +64,15 @@ _load_exact_module(
     required_exports=("read_latest_decision",),
 )
 _load_exact_module(
+    "production_display_snapshot",
+    APP_DIR / "production_display_snapshot.py",
+    required_exports=(
+        "load_production_display_snapshot",
+        "snapshot_feature_rows",
+        "snapshot_runtime_observability",
+    ),
+)
+_load_exact_module(
     "decision_source",
     APP_DIR / "decision_source.py",
     required_exports=("fetch_current_decision_state", "fetch_decision_history"),

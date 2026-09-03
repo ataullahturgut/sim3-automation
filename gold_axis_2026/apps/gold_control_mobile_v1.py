@@ -242,9 +242,9 @@ def plot_lines(df: pd.DataFrame, x: str, columns: list[str], height: int=270) ->
     st.altair_chart(chart,width="stretch")
 
 url=db_url()
-decision=safe_call(lambda:fetch_current_decision_state(url),None) if url else None
+decision=safe_call(lambda:fetch_current_decision_state(url),None)
 decision_rows=safe_call(lambda:fetch_decision_history(url),[]) if url else []
-runtime_obs=safe_call(lambda:fetch_runtime_observability(url),None) if url else None
+runtime_obs=safe_call(lambda:fetch_runtime_observability(url),None)
 forecast=safe_call(lambda:fetch_current_forecast(url),None) if url else None
 forecast_rows=safe_call(lambda:fetch_forecast_history(url),[]) if url else []
 month_end_experts=safe_call(lambda:fetch_latest_expert_forecasts(url,TRACK_MONTH_END),[]) if url else []
@@ -297,13 +297,17 @@ elif nav=="◉ Görünüm":
     )
     if runtime_obs:
         spine_ok=runtime_obs.get("status")=="DATA_EVIDENCE_SPINE_RUNTIME_HEALTH_PASS"
+        source_mode=display_state(runtime_obs.get("source_mode"),"UNKNOWN_SOURCE")
+        source_label="DB Evidence Spine" if source_mode=="NEON_DB_READ_ONLY" else "Production Evidence Snapshot · FALLBACK"
         spine_summary=(
-            f"DB Evidence Spine: runtime {runtime_obs.get('runtime_engine_count',0)}/12 · "
+            f"{source_label}: runtime {runtime_obs.get('runtime_engine_count',0)}/12 · "
             f"context link {runtime_obs.get('context_exactly_one_link',0)}/{runtime_obs.get('context_expected',7)} · "
             f"integrity {'PASS' if spine_ok else 'BLOCKED'}"
         )
+        if source_mode=="PRODUCTION_SNAPSHOT_FALLBACK" and runtime_obs.get("snapshot_source_state_at"):
+            spine_summary += f" · state {fmt_time(runtime_obs.get('snapshot_source_state_at'))}"
     else:
-        spine_summary="DB Evidence Spine: KULLANILAMIYOR"
+        spine_summary="Production Evidence: BLOCKED · DB ve doğrulanmış snapshot kullanılamıyor"
     st.markdown(
         "<div class='gc-card'><div class='gc-section-title'>TÜM TAHMİN VE YÖN MOTORLARI</div>"
         +f"<div class='gc-footnote'><b>{esc(ENGINE_OBSERVABILITY_CONTRACT)}</b><br>{esc(inventory_summary)}<br>{esc(spine_summary)}<br>"

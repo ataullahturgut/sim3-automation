@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.26
+**Manifest version:** 1.27
 **Freeze / issue date:** 2026-09-03
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -1675,3 +1675,15 @@ Binding operational state remains unchanged by this recovery:
 - auto ensemble = `OFF`;
 - position mapping: `NOT_PROVEN_POSITION_MAPPING`;
 - September 2026 backfill remains forbidden; no current result is converted into a prospective claim.
+
+
+## v1.27 — Deployment Display Snapshot Recovery
+
+- Frozen contract: `FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V1`.
+- Neon remains the primary immutable state/evidence authority and is read with `SET TRANSACTION READ ONLY`.
+- `apps/production_display_snapshot.json` is a fingerprint-validated display-only replica for a hosting environment where `NEON_DATABASE_URL` is absent or operationally unreachable.
+- The snapshot is restricted to 12 governed runtime states, seven persisted display context features and evidence-spine health counters; it carries no credentials, selector weights, canonical forecast, final classification or action mapping.
+- Snapshot fallback is explicitly labelled `PRODUCTION_SNAPSHOT_FALLBACK`; it may not masquerade as a direct DB read.
+- A DB/schema/governance violation remains fail-closed and is not hidden by fallback.
+- Deployment regression requires the no-DB-URL browser path to show the persisted Monthly/FAST/SLOW/GVZ context instead of falsely reporting `NO_CURRENT_EVIDENCE`.
+- Locks retained: `NOT_PROVEN_EXPERT_SELECTION_RULE`, `AUTO_SELECTOR=OFF`, `AUTO_ENSEMBLE=OFF`, `NOT_PROVEN_POSITION_MAPPING`.

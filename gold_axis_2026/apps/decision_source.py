@@ -8,6 +8,13 @@ from typing import Any
 import psycopg
 from psycopg.rows import dict_row
 
+from production_display_snapshot import (
+    SNAPSHOT_CONTRACT,
+    SNAPSHOT_SOURCE_MODE,
+    load_production_display_snapshot,
+    snapshot_feature_rows,
+)
+
 
 GOLD_ROOT = Path(__file__).resolve().parents[1]
 DATA_PIPELINE_ROOT = GOLD_ROOT / "data_pipeline"
@@ -218,20 +225,19 @@ def _read_shadow_direction_context(conn) -> dict[str, Any] | None:
     return _shape_shadow_direction_context(rows)
 
 
-def fetch_current_decision_state(database_url: str) -> dict[str, Any] | None:
-    """Read current display state without inventing a final decision.
+def _read_snapshot_shadow_direction_context() -> dict[str, Any] | None:
+    snapshot = load_production_display_snapshot()
+    context = _shape_shadow_direction_context(snapshot_feature_rows(snapshot))
+    if context is None:
+        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_CONTEXT_EMPTY")
+    context["source_mode"] = SNAPSHOT_SOURCE_MODE
+    context["snapshot_contract"] = SNAPSHOT_CONTRACT
+    context["snapshot_source_state_at"] = snapshot.get("source_state_at")
+    context["snapshot_payload_sha256"] = snapshot.get("payload_sha256")
+    return context
 
-    Priority is the governed Decision Store: LIVE_PRODUCTION, then
-    PROSPECTIVE_SHADOW. When neither exists, the function may return already
-    persisted Stage-4A direction/tactical/GVZ component context with
-    ``context_only=True``. Missing one component never suppresses other
-    available components. Emergency, BOCPD and Macro remain explicit blockers
-    until their own governed forward contracts are satisfied.
-    """
-    url = str(database_url or "").strip()
-    if not url:
-        raise RuntimeError("NEON_DATABASE_URL_NOT_CONFIGURED")
 
+def _read_db_current_decision_state(url: str) -> dict[str, Any] | None:
     with psycopg.connect(url, autocommit=False) as conn:
         with conn.cursor() as cur:
             cur.execute("SET TRANSACTION READ ONLY")
@@ -244,11 +250,30 @@ def fetch_current_decision_state(database_url: str) -> dict[str, Any] | None:
             result = _to_transitional_app_shape(row)
             if result.get("evidence_class") != evidence_class:
                 raise RuntimeError("DECISION_EVIDENCE_CLASS_MISMATCH")
+            result["source_mode"] = "NEON_DB_READ_ONLY"
             conn.rollback()
             return result
         context = _read_shadow_direction_context(conn)
+        if context is not None:
+            context["source_mode"] = "NEON_DB_READ_ONLY"
         conn.rollback()
         return context
+
+
+def fetch_current_decision_state(database_url: str) -> dict[str, Any] | None:
+    """Read current governed display state with a validated deployment fallback.
+
+    Neon remains primary. A missing URL or operational connectivity failure may
+    use the frozen production display snapshot. Governance/schema violations are
+    never converted into fallback data.
+    """
+    url = str(database_url or "").strip()
+    if not url:
+        return _read_snapshot_shadow_direction_context()
+    try:
+        return _read_db_current_decision_state(url)
+    except psycopg.OperationalError:
+        return _read_snapshot_shadow_direction_context()
 
 
 def fetch_decision_history(database_url: str, limit: int = 80) -> list[dict[str, Any]]:
