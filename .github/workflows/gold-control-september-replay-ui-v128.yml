@@ -1,0 +1,142 @@
+name: Gold Control September Replay UI V1.28
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-control-september-replay-v128]
+    paths:
+      - 'gold_axis_2026/tools/apply_september_replay_ui_v128.py'
+      - 'gold_axis_2026/apps/forecast_source.py'
+      - '.github/workflows/gold-control-september-replay-ui-v128.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  ui-acceptance:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Install app and browser runtime
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Apply fail-closed September replay UI patch
+        run: |
+          python gold_axis_2026/tools/apply_september_replay_ui_v128.py
+          grep -Fq 'TRACK_HISTORICAL_REPLAY' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -Fq 'REPLAY · PROSPECTIVE DEĞİL' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -Fq 'NOT_ISSUED_MISSED_2026_08_31_ORIGIN' gold_axis_2026/apps/gold_control_mobile_v1.py
+
+      - name: Compile complete replay read-to-UI graph
+        run: |
+          python -m py_compile \
+            gold_axis_2026/apps/forecast_source.py \
+            gold_axis_2026/apps/runtime_source.py \
+            gold_axis_2026/apps/decision_source.py \
+            gold_axis_2026/apps/engine_observability_contract.py \
+            gold_axis_2026/apps/mobile_ui_contract.py \
+            gold_axis_2026/apps/mobile_viewport_qa.py \
+            gold_axis_2026/apps/gold_control_mobile_v1.py \
+            gold_axis_2026/apps/gold_control.py
+
+      - name: Run deterministic app contracts
+        run: |
+          cd gold_axis_2026/apps
+          pytest -q \
+            test_mobile_ui_contract.py \
+            test_piyasa_contract.py \
+            test_engine_observability_contract.py \
+            test_ui_manifest_consistency_v126.py \
+            test_production_display_snapshot.py
+
+      - name: Prove production replay is separate read-only evidence
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          PYTHONPATH=gold_axis_2026/apps:gold_axis_2026/data_pipeline python - <<'PY'
+          import os
+          from forecast_source import (
+              TRACK_HISTORICAL_REPLAY, TRACK_MONTH_END,
+              fetch_current_forecast, fetch_latest_expert_forecasts,
+              fetch_expert_forecast_history,
+          )
+          from runtime_source import fetch_runtime_observability
+          url=os.environ['NEON_DATABASE_URL']
+          replay=fetch_latest_expert_forecasts(url,TRACK_HISTORICAL_REPLAY)
+          assert len(replay)==2, replay
+          assert {r['expert_id'] for r in replay}=={'MOMENTUM_3M','RANDOM_WALK'}
+          for r in replay:
+              assert str(r['target_month'])[:7]=='2026-09'
+              assert r['forecast_track']=='HISTORICAL_REPLAY'
+              assert r['evidence_class']=='HISTORICAL_REPLAY'
+              assert r['canonical_authority'] is False
+              p=r['provenance']
+              assert p.get('historical_replay') is True
+              assert p.get('prospective_claim') is False
+              assert p.get('official_prospective_status')=='NOT_ISSUED_MISSED_2026_08_31_ORIGIN'
+          hist=fetch_expert_forecast_history(url,TRACK_HISTORICAL_REPLAY)
+          assert len(hist)==2, hist
+          assert fetch_latest_expert_forecasts(url,TRACK_MONTH_END)==[]
+          assert fetch_current_forecast(url) is None
+          runtime=fetch_runtime_observability(url)
+          assert runtime['runtime_engine_count']==12
+          states={r['engine_id']:r for r in runtime['runtime']}
+          assert sum(1 for r in states.values() if r['runtime_status']=='ACTIVE')==4
+          assert sum(1 for r in states.values() if r['runtime_status']=='WAITING')==3
+          assert sum(1 for r in states.values() if r['runtime_status']=='BLOCKED')==5
+          assert states['MOMENTUM_3M']['runtime_status']=='WAITING'
+          assert states['RANDOM_WALK']['runtime_status']=='WAITING'
+          assert sum(1 for r in states.values() if r.get('direction_vote_permitted') is True)==3
+          print('SEPTEMBER_REPLAY_UI_READ_SEPARATION_PASS replay=2 month_end=0 canonical=0 operational=4/3/5')
+          PY
+
+      - name: Production-backed 390x844 browser QA
+        run: |
+          rm -rf /tmp/gold_mobile_v128_qa
+          streamlit run gold_axis_2026/apps/gold_control.py \
+            --server.headless true --server.port 8501 --server.address 127.0.0.1 \
+            >/tmp/gold_mobile_v128_browser.log 2>&1 &
+          APP_PID=$!
+          for i in $(seq 1 45); do
+            curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null && break
+            sleep 1
+          done
+          python gold_axis_2026/apps/mobile_viewport_qa.py \
+            --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v128_qa
+          kill $APP_PID || true
+          wait $APP_PID || true
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v128_browser.log; then
+            cat /tmp/gold_mobile_v128_browser.log
+            exit 1
+          fi
+          echo 'SEPTEMBER_REPLAY_V128_PRODUCTION_BACKED_BROWSER_PASS'
+
+      - name: Upload replay UI screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-september-replay-v128-390x844-screenshots
+          path: /tmp/gold_mobile_v128_qa/*.png
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Commit accepted replay UI to feature branch
+        run: |
+          git status --short
+          git add gold_axis_2026/apps/gold_control_mobile_v1.py gold_axis_2026/apps/mobile_viewport_qa.py
+          git diff --cached --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'gold-control: expose September replay as non-prospective DB evidence'
+          git push origin HEAD:gold-control-september-replay-v128
