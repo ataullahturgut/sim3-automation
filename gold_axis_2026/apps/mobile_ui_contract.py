@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from typing import Any
 
@@ -16,7 +17,7 @@ ALLOWED_CLASSIFICATIONS = {
 
 PROHIBITED_ACTION_TERMS = {
     "BUY", "SELL", "HOLD", "HOLD_LONG", "EXIT", "REDUCE",
-    "POZİSYONU KORU", "POZISYONU KORU", " AL ", " SAT ",
+    "POZİSYONU KORU", "POZISYONU KORU", "AL", "SAT",
 }
 
 GORUNUM_SECTION_ORDER = (
@@ -102,10 +103,11 @@ def normalize_search_text(text: str) -> str:
 
 
 def assert_no_action_mapping(text: str) -> None:
-    normalized = f" {normalize_search_text(text)} "
+    """Reject explicit action language without false positives inside ordinary words."""
+    normalized = normalize_search_text(text)
     for term in PROHIBITED_ACTION_TERMS:
-        t = normalize_search_text(term)
-        if t.strip() in normalized:
+        token = normalize_search_text(term).strip()
+        if re.search(rf"(?<!\w){re.escape(token)}(?!\w)", normalized, flags=re.UNICODE):
             raise RuntimeError(f"NOT_PROVEN_POSITION_MAPPING_UI_VIOLATION:{term}")
 
 
