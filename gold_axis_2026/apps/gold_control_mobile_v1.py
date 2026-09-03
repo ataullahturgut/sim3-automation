@@ -354,7 +354,7 @@ elif nav=="◉ Görünüm":
     explanation=deterministic_explanation(decision); st.markdown("<div class='gc-grid2'>"+f"<div class='gc-card'>{section_header(6,'EMERGENCY DURUMU')}{emergency_rows}</div>"+f"<div class='gc-card'>{section_header(7,'SİSTEM YORUMU')}<div style='font-style:italic;line-height:1.62'>{esc(explanation)}</div>{pipeline_html()}</div></div>",unsafe_allow_html=True); st.markdown(selector_lock_html(),unsafe_allow_html=True); st.markdown("<div class='gc-note'>Aylık prior ile intramonth durum çelişebilir. Sistem yeni uygun veriler geldikçe Fast/Slow, Macro Event, Emergency, BOCPD ve GVZ'nin yalnız dondurulmuş rolleriyle güncellenir; 2026 sonucuna bakarak expert seçimi yapılmaz.</div>",unsafe_allow_html=True)
 
 elif nav=="↗ Tahmin":
-    historical_replay_experts=safe_call(lambda:get_latest_experts_cached(url,TRACK_HISTORICAL_REPLAY),[]) if url else []
+    historical_replay_experts=safe_call(lambda:get_latest_experts_cached(url,TRACK_HISTORICAL_REPLAY),[])
     expert_update=month_end_experts[0].get("as_of") if month_end_experts else (early_experts[0].get("as_of") if early_experts else None); updated=forecast.get("frozen_at") if forecast else expert_update; page_head("TAHMİN","Gelecek ay için kanonik sonuç ve ayrı Multi-Expert kanıt katmanı.",updated); fstate=forecast_view_state(forecast)
     if forecast:
         target=str(forecast.get("target_month") or "")[:7]; badge=evidence_badge(forecast.get("evidence_class"))[0]; hero_title=fmt_num(forecast.get("forecast_value"),2," USD"); hero_sub=f"Hedef dönem: {target}"; direction=decision.get("monthly_direction_3m") if target_matches(decision,forecast) else None; da,_=arrow_state(direction); direction_text=f"{da} {display_state(direction,'—')}"; origin_text=fmt_time(forecast.get("forecast_origin"))
@@ -383,7 +383,7 @@ elif nav=="↗ Tahmin":
     st.markdown(f"<div class='gc-note'><b>Metodoloji:</b> Monthly forecast stratejik anchor/prior'dır; günlük işlem emri değildir. Scenario status: <b>{esc(SCENARIO_STATUS)}</b>. Auto selector: <b>{esc(AUTO_SELECTOR_STATUS)}</b>. Auto ensemble: <b>{esc(AUTO_ENSEMBLE_STATUS)}</b>. Selector: <b>{esc(EXPERT_SELECTION_STATUS)}</b>. Build first → ayrı expert çıktıları → Early Indicative → temiz karşılaştırmalı geçmiş → rolling-origin leakage-safe selector araştırması. Yatırım tavsiyesi değildir.</div>",unsafe_allow_html=True)
 
 else:
-    historical_replay_history=safe_call(lambda:get_expert_history_cached(url,TRACK_HISTORICAL_REPLAY),[]) if url else []
+    historical_replay_history=safe_call(lambda:get_expert_history_cached(url,TRACK_HISTORICAL_REPLAY),[])
     latest=month_end_history[0].get("as_of") if month_end_history else (early_history[0].get("as_of") if early_history else None); page_head("GEÇMİŞ","Sistem geçmişte gerçekten ne yaptı? Evidence sınıfları birbirine karıştırılmaz.",latest); realized_count=0
     st.markdown("<div class='gc-section-title'>ÖZET METRİKLER</div><div class='gc-footnote' style='margin-bottom:.45rem'><b>PROSPECTIVE / LIVE CANONICAL SCORECARD</b> · Historical Replay bu kartlara girmez.</div>",unsafe_allow_html=True); st.markdown("<div class='gc-grid4'>"+mini_card("REALIZED TAHMİN",str(realized_count),"Outcome-linked prospective/live")+mini_card("MAPE","—","YETERLİ VERİ YOK")+mini_card("MAE (USD)","—","YETERLİ VERİ YOK")+mini_card("YÖN DOĞRULUĞU","—","Frozen outcome tanımı sonrası")+"</div>",unsafe_allow_html=True)
     with st.container(border=True):

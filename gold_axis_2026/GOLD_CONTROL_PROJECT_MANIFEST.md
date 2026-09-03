@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.27
+**Manifest version:** 1.29
 **Freeze / issue date:** 2026-09-03
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -1687,3 +1687,15 @@ Binding operational state remains unchanged by this recovery:
 - A DB/schema/governance violation remains fail-closed and is not hidden by fallback.
 - Deployment regression requires the no-DB-URL browser path to show the persisted Monthly/FAST/SLOW/GVZ context instead of falsely reporting `NO_CURRENT_EVIDENCE`.
 - Locks retained: `NOT_PROVEN_EXPERT_SELECTION_RULE`, `AUTO_SELECTOR=OFF`, `AUTO_ENSEMBLE=OFF`, `NOT_PROVEN_POSITION_MAPPING`.
+
+
+## v1.29 — Deployment Replay Snapshot Closure
+
+- Frozen marker: `FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V2`.
+- Root cause closed: a hosting instance without `NEON_DATABASE_URL` previously received stored direction/risk context from the display snapshot but historical replay readers returned an empty list.
+- V2 extends the display-only snapshot with governed `HISTORICAL_REPLAY` expert rows.
+- Replay rows must remain `canonical_authority=false`, `prospective_claim=false`, `direction_vote_permitted=false`, selector `NOT_PROVEN_EXPERT_SELECTION_RULE`, auto selector OFF and auto ensemble OFF.
+- Mobile Tahmin/Geçmiş replay reads are no longer skipped when the DB URL is absent; only the validated V2 snapshot may satisfy that fallback.
+- MONTH_END_EXPERT and EARLY_INDICATIVE remain empty when not genuinely issued; snapshot replay never populates those tracks.
+- Canonical forecast, Decision Store and position/action mapping remain unchanged and locked.
+- Required deployment acceptance: with `NEON_DATABASE_URL` deliberately absent, the 390×844 Tahmin screen must visibly render the production replay values for the available replay experts and the `REPLAY · PROSPECTIVE DEĞİL` marker.
