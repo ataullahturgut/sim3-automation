@@ -12,7 +12,7 @@ import psycopg
 from psycopg.rows import dict_row
 
 
-SNAPSHOT_CONTRACT = "FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V1"
+SNAPSHOT_CONTRACT = "FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V2"
 REQUIRED_FEATURES = (
     "MONTHLY_DIRECTION_3M",
     "FAST_STATE",
@@ -23,6 +23,9 @@ REQUIRED_FEATURES = (
     "GVZ_REGIME",
 )
 EXPECTED_ENGINE_COUNT = 12
+REPLAY_TRACK = "HISTORICAL_REPLAY"
+REPLAY_EVIDENCE = "HISTORICAL_REPLAY"
+SELECTOR_LOCK = "NOT_PROVEN_EXPERT_SELECTION_RULE"
 
 
 def _jsonable(value: Any) -> Any:
@@ -120,10 +123,51 @@ def export_snapshot(database_url: str) -> dict[str, Any]:
             context_links = int(cur.fetchone()["n"])
             if context_links != len(REQUIRED_FEATURES):
                 raise RuntimeError(f"SNAPSHOT_CONTEXT_LINK_INVALID:{context_links}")
+
+            cur.execute(
+                """
+                WITH newest AS (
+                    SELECT max(target_month) AS target_month
+                    FROM monthly_expert_forecasts
+                    WHERE forecast_track=%s AND evidence_class=%s
+                ), ranked AS (
+                    SELECT e.*,
+                           row_number() OVER (PARTITION BY e.expert_id ORDER BY e.as_of DESC,e.id DESC) AS rn
+                    FROM monthly_expert_forecasts e,newest n
+                    WHERE e.forecast_track=%s
+                      AND e.evidence_class=%s
+                      AND e.target_month=n.target_month
+                      AND e.canonical_authority=false
+                      AND e.selector_status=%s
+                      AND e.auto_selector='OFF'
+                      AND e.auto_ensemble='OFF'
+                )
+                SELECT id,target_month,forecast_origin,as_of,forecast_track,
+                       expert_id,model_name,model_version,expert_role,forecast_value,
+                       unit,evidence_class,git_commit,input_snapshot_ids,input_fingerprint,
+                       selector_status,auto_selector,auto_ensemble,canonical_authority,
+                       provenance,created_at
+                FROM ranked
+                WHERE rn=1
+                ORDER BY expert_id
+                """,
+                (REPLAY_TRACK, REPLAY_EVIDENCE, REPLAY_TRACK, REPLAY_EVIDENCE, SELECTOR_LOCK),
+            )
+            replay_rows = [_jsonable(dict(row)) for row in cur.fetchall()]
+            replay_targets = {str(row.get("target_month") or "")[:7] for row in replay_rows}
+            if len(replay_targets) > 1:
+                raise RuntimeError(f"SNAPSHOT_REPLAY_TARGETS_INVALID:{sorted(replay_targets)}")
+            for row in replay_rows:
+                p = dict(row.get("provenance") or {})
+                if p.get("historical_replay") is not True or p.get("prospective_claim") is not False:
+                    raise RuntimeError(f"SNAPSHOT_REPLAY_PROSPECTIVE_GUARD_INVALID:{row.get('expert_id')}")
+                if p.get("canonical_authority") is not False or p.get("direction_vote_permitted") is not False:
+                    raise RuntimeError(f"SNAPSHOT_REPLAY_AUTHORITY_GUARD_INVALID:{row.get('expert_id')}")
         conn.rollback()
 
     timestamps = [str(row.get("as_of") or "") for row in runtime]
     timestamps.extend(str(row.get("calculation_ts") or "") for row in features)
+    timestamps.extend(str(row.get("created_at") or "") for row in replay_rows)
     source_state_at = max(t for t in timestamps if t)
 
     snapshot: dict[str, Any] = {
@@ -133,6 +177,8 @@ def export_snapshot(database_url: str) -> dict[str, Any]:
         "target_context": target_context,
         "runtime": runtime,
         "features": features,
+        "historical_replay_target_month": next(iter(replay_targets), None),
+        "historical_replay_experts": replay_rows,
         "health": health,
         "context_exactly_one_link": context_links,
         "database_writes": "NONE",
@@ -144,10 +190,7 @@ def export_snapshot(database_url: str) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--database-url", default=os.environ.get("NEON_DATABASE_URL", ""))
-    parser.add_argument(
-        "--out",
-        default="gold_axis_2026/apps/production_display_snapshot.json",
-    )
+    parser.add_argument("--out", default="gold_axis_2026/apps/production_display_snapshot.json")
     args = parser.parse_args()
     snapshot = export_snapshot(args.database_url)
     output = Path(args.out)
@@ -157,6 +200,7 @@ def main() -> int:
     print(
         "PRODUCTION_DISPLAY_SNAPSHOT_EXPORT_PASS "
         f"runtime={len(snapshot['runtime'])}/12 features={len(snapshot['features'])}/7 "
+        f"replay={len(snapshot['historical_replay_experts'])} "
         f"links={snapshot['context_exactly_one_link']}/7 target={snapshot['target_context']} "
         f"sha256={snapshot['payload_sha256']} writes=NONE"
     )
