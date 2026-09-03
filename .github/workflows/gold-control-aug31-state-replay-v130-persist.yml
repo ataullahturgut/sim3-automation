@@ -1,0 +1,83 @@
+name: Gold Control Aug31 EOD State Replay V1.30 Persist
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-control-aug31-state-replay-v130]
+    paths:
+      - '.github/workflows/gold-control-aug31-state-replay-v130-persist.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  persist-and-audit:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-aug31-state-replay-v130
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install runtime
+        run: pip install 'psycopg[binary]==3.3.5' pandas==2.3.3 numpy==2.5.2
+      - name: Persist frozen historical state replay
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          cd gold_axis_2026/data_pipeline
+          python aug31_eod_state_historical_replay_v2.py --persist | tee /tmp/persist.log
+          grep -Eq 'AUG31_EOD_STATE_HISTORICAL_REPLAY_V2_(PERSIST|ALREADY_PRESENT)_PASS' /tmp/persist.log
+          grep -Fq '"monthly_direction": "DOWN"' /tmp/persist.log
+          grep -Fq '"fast_state": "ROBUST_UP"' /tmp/persist.log
+          grep -Fq '"slow_state": "ROBUST_UP"' /tmp/persist.log
+          grep -Fq '"gvz_value": 24.4' /tmp/persist.log
+          grep -Fq '"gvz_cap": 1.0' /tmp/persist.log
+          grep -Fq '"gvz_regime": "NORMAL"' /tmp/persist.log
+          grep -Fq '"prospective_h1_claim": false' /tmp/persist.log
+          grep -Fq '"current_runtime_authority": false' /tmp/persist.log
+      - name: Independent production read-only audit
+        run: |
+          python - <<'PY'
+          import os, psycopg
+          from psycopg.rows import dict_row
+          names={
+            'AUG31_REPLAY_MONTHLY_DIRECTION_3M':'DOWN',
+            'AUG31_REPLAY_FAST_STATE':'ROBUST_UP',
+            'AUG31_REPLAY_SLOW_STATE':'ROBUST_UP',
+            'AUG31_REPLAY_GVZ_VALUE':'24.40',
+            'AUG31_REPLAY_GVZ_CAP':'1.0',
+            'AUG31_REPLAY_GVZ_PANIC':'false',
+            'AUG31_REPLAY_GVZ_REGIME':'NORMAL',
+          }
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as c:
+            with c.cursor() as cur:
+              cur.execute('SET TRANSACTION READ ONLY')
+              cur.execute("select feature_name,value_text,metadata from derived_feature_snapshots where feature_name=any(%s) and metadata->>'evidence_class'='HISTORICAL_REPLAY' and metadata->>'state_as_of'='2026-08-31T21:00:00+00:00'",(list(names),))
+              rows={r['feature_name']:r for r in cur.fetchall()}
+              assert set(rows)==set(names), rows.keys()
+              for k,v in names.items():
+                assert rows[k]['value_text']==v,(k,rows[k]['value_text'],v)
+                m=rows[k]['metadata']
+                assert m['prospective_h1_claim'] is False
+                assert m['current_runtime_authority'] is False
+                assert m['canonical_authority'] is False
+                assert m['decision_store_write']=='NONE'
+                assert m['canonical_forecast_write']=='NONE'
+              cur.execute("select count(*) n from engine_execution_runs where evidence_class='HISTORICAL_REPLAY' and metadata->>'contract'='GOLD_CONTROL_AUG31_EOD_STATE_REPLAY_CONTRACT_2026-09-03.md' and metadata->>'state_as_of'='2026-08-31T21:00:00+00:00'")
+              assert cur.fetchone()['n']==4
+              cur.execute("select count(*) n from engine_execution_derived_outputs o join engine_execution_runs r on r.run_id=o.run_id where r.evidence_class='HISTORICAL_REPLAY' and r.metadata->>'contract'='GOLD_CONTROL_AUG31_EOD_STATE_REPLAY_CONTRACT_2026-09-03.md'")
+              assert cur.fetchone()['n']==7
+              cur.execute('select runtime_status,count(*) n from latest_engine_runtime_state group by runtime_status')
+              assert {r['runtime_status']:r['n'] for r in cur.fetchall()}=={'ACTIVE':4,'WAITING':3,'BLOCKED':5}
+              cur.execute('select count(*) n from latest_engine_runtime_state where direction_vote_permitted'); assert cur.fetchone()['n']==3
+              cur.execute('select count(*) n from monthly_forecast_contracts'); assert cur.fetchone()['n']==0
+              cur.execute('select count(*) n from decision_signal_snapshots'); assert cur.fetchone()['n']==0
+              cur.execute('select count(*) n from decision_runs'); assert cur.fetchone()['n']==0
+              cur.execute('select count(*) n from decision_events'); assert cur.fetchone()['n']==0
+            c.rollback()
+          print('AUG31_STATE_REPLAY_PRODUCTION_AUDIT_PASS features=7 runs=4 links=7 runtime=12/12 distribution=4/3/5 canonical=0 decision=0')
+          PY
