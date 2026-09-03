@@ -38,7 +38,7 @@ jobs:
           print('SIMPLE_EXPERT_V2_PROMOTION_EVIDENCE_PASS')
           PY
 
-      - name: Apply fail-closed registry manifest and observability patch
+      - name: Apply fail-closed registry manifest observability and CI patch
         run: python gold_axis_2026/tools/apply_simple_expert_v2_promotion.py
 
       - name: Compile promoted graph
@@ -56,7 +56,7 @@ jobs:
           cd ../apps
           pytest -q test_engine_observability_contract.py test_mobile_ui_contract.py
 
-      - name: Verify selector and action locks remain closed
+      - name: Verify selector action and manifest locks remain closed
         run: |
           grep -F 'SELECTOR_STATUS = "NOT_PROVEN_EXPERT_SELECTION_RULE"' gold_axis_2026/data_pipeline/multi_expert_forecast.py
           grep -F 'AUTO_SELECTOR = "OFF"' gold_axis_2026/data_pipeline/multi_expert_forecast.py
@@ -64,9 +64,10 @@ jobs:
           grep -F '**Manifest version:** 1.24' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'SIMPLE_EXPERT_V2_SOURCE_BINDING_PASS' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'WAITING_ELIGIBLE_MONTH_END_ORIGIN' gold_axis_2026/apps/engine_observability_contract.py
+          grep -F "Manifest version:\\\*\\\* 1.24" .github/workflows/gold-control-mobile-ui-v1.yml
           echo 'SIMPLE_EXPERT_V2_LOCKS_AND_MANIFEST_PASS'
 
-      - name: Commit promoted state
+      - name: Commit promoted state atomically
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -74,7 +75,9 @@ jobs:
             gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md \
             gold_axis_2026/data_pipeline/multi_expert_forecast.py \
             gold_axis_2026/data_pipeline/test_multi_expert_forecast.py \
-            gold_axis_2026/apps/engine_observability_contract.py
+            gold_axis_2026/apps/engine_observability_contract.py \
+            gold_axis_2026/apps/test_engine_observability_contract.py \
+            .github/workflows/gold-control-mobile-ui-v1.yml
           if git diff --cached --quiet; then
             echo 'PROMOTION_NO_DIFF'; exit 1
           fi
