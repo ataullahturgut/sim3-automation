@@ -65,12 +65,27 @@ class ForecastInputSetSpec:
             raise ValueError("INPUT_SET_AS_OF_BEFORE_ORIGIN")
         if self.forecast_track == "MONTH_END_EXPERT" and self.as_of != self.forecast_origin:
             raise ValueError("MONTH_END_INPUT_SET_AS_OF_MUST_EQUAL_ORIGIN")
-        if self.forecast_track not in {"MONTH_END_EXPERT", "EARLY_INDICATIVE"}:
+        if self.forecast_track not in {"MONTH_END_EXPERT", "EARLY_INDICATIVE", "HISTORICAL_REPLAY"}:
             raise ValueError("INVALID_INPUT_SET_FORECAST_TRACK")
         if self.expert_id not in {"CAUSAL_PATCH", "VW_MIDAS_MSVR", "MOMENTUM_3M", "RANDOM_WALK"}:
             raise ValueError("INVALID_INPUT_SET_EXPERT")
-        if self.evidence_class not in {"PROSPECTIVE_SHADOW", "LIVE_PRODUCTION"}:
+        if self.evidence_class not in {"PROSPECTIVE_SHADOW", "LIVE_PRODUCTION", "HISTORICAL_REPLAY"}:
             raise ValueError("INVALID_INPUT_SET_EVIDENCE_CLASS")
+        if self.forecast_track == "HISTORICAL_REPLAY":
+            if self.evidence_class != "HISTORICAL_REPLAY":
+                raise ValueError("HISTORICAL_REPLAY_INPUT_SET_REQUIRES_REPLAY_EVIDENCE")
+            if self.as_of <= self.forecast_origin:
+                raise ValueError("HISTORICAL_REPLAY_INPUT_SET_AS_OF_MUST_BE_AFTER_ORIGIN")
+            if self.metadata.get("historical_replay") is not True:
+                raise ValueError("HISTORICAL_REPLAY_INPUT_SET_METADATA_REQUIRED")
+            if self.metadata.get("prospective_claim") is not False:
+                raise ValueError("HISTORICAL_REPLAY_INPUT_SET_PROSPECTIVE_CLAIM_MUST_BE_FALSE")
+            if str(self.metadata.get("information_cutoff")) != self.forecast_origin.isoformat():
+                raise ValueError("HISTORICAL_REPLAY_INPUT_SET_CUTOFF_MISMATCH")
+            if str(self.metadata.get("replay_executed_at")) != self.as_of.isoformat():
+                raise ValueError("HISTORICAL_REPLAY_INPUT_SET_EXECUTION_TIME_MISMATCH")
+        elif self.evidence_class == "HISTORICAL_REPLAY":
+            raise ValueError("HISTORICAL_REPLAY_INPUT_SET_EVIDENCE_REQUIRES_REPLAY_TRACK")
         if not self.input_fingerprint:
             raise ValueError("INPUT_SET_FINGERPRINT_REQUIRED")
 

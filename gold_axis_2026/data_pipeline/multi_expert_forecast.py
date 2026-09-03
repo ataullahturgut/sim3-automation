@@ -5,15 +5,16 @@ from datetime import datetime
 from typing import Any, Iterable
 
 
-MANIFEST_VERSION = "1.25"
+MANIFEST_VERSION = "1.28"
 SELECTOR_STATUS = "NOT_PROVEN_EXPERT_SELECTION_RULE"
 AUTO_SELECTOR = "OFF"
 AUTO_ENSEMBLE = "OFF"
 
 TRACK_MONTH_END = "MONTH_END_EXPERT"
 TRACK_EARLY_INDICATIVE = "EARLY_INDICATIVE"
-FORECAST_TRACKS = frozenset({TRACK_MONTH_END, TRACK_EARLY_INDICATIVE})
-DISPLAY_EVIDENCE_CLASSES = frozenset({"PROSPECTIVE_SHADOW", "LIVE_PRODUCTION"})
+TRACK_HISTORICAL_REPLAY = "HISTORICAL_REPLAY"
+FORECAST_TRACKS = frozenset({TRACK_MONTH_END, TRACK_EARLY_INDICATIVE, TRACK_HISTORICAL_REPLAY})
+DISPLAY_EVIDENCE_CLASSES = frozenset({"PROSPECTIVE_SHADOW", "LIVE_PRODUCTION", "HISTORICAL_REPLAY"})
 
 PATCH_EXPERT = "CAUSAL_PATCH"
 VW_EXPERT = "VW_MIDAS_MSVR"
@@ -108,12 +109,28 @@ class ExpertForecastRecord:
             raise ValueError(f"EXPERT_ROLE_MISMATCH:{self.expert_id}")
         if self.evidence_class not in DISPLAY_EVIDENCE_CLASSES:
             raise ValueError(f"INVALID_EVIDENCE_CLASS:{self.evidence_class}")
+        if self.forecast_track == TRACK_HISTORICAL_REPLAY:
+            if self.evidence_class != "HISTORICAL_REPLAY":
+                raise ValueError("HISTORICAL_REPLAY_TRACK_REQUIRES_REPLAY_EVIDENCE")
+        elif self.evidence_class == "HISTORICAL_REPLAY":
+            raise ValueError("HISTORICAL_REPLAY_EVIDENCE_REQUIRES_REPLAY_TRACK")
         if not self.target_month or len(self.target_month) < 7:
             raise ValueError("TARGET_MONTH_REQUIRED")
         if self.forecast_origin.tzinfo is None or self.as_of.tzinfo is None:
             raise ValueError("TIMEZONE_AWARE_TIMESTAMPS_REQUIRED")
         if self.as_of < self.forecast_origin:
             raise ValueError("AS_OF_BEFORE_FORECAST_ORIGIN")
+        if self.forecast_track == TRACK_HISTORICAL_REPLAY:
+            if self.as_of <= self.forecast_origin:
+                raise ValueError("HISTORICAL_REPLAY_AS_OF_MUST_BE_AFTER_ORIGIN")
+            if self.provenance.get("historical_replay") is not True:
+                raise ValueError("HISTORICAL_REPLAY_PROVENANCE_REQUIRED")
+            if self.provenance.get("prospective_claim") is not False:
+                raise ValueError("HISTORICAL_REPLAY_PROSPECTIVE_CLAIM_MUST_BE_FALSE")
+            if str(self.provenance.get("information_cutoff")) != self.forecast_origin.isoformat():
+                raise ValueError("HISTORICAL_REPLAY_INFORMATION_CUTOFF_MISMATCH")
+            if str(self.provenance.get("replay_executed_at")) != self.as_of.isoformat():
+                raise ValueError("HISTORICAL_REPLAY_EXECUTION_TIME_MISMATCH")
         if not isinstance(self.forecast_value, (int, float)) or not (self.forecast_value > 0):
             raise ValueError("POSITIVE_FORECAST_VALUE_REQUIRED")
         if not self.input_snapshot_ids:

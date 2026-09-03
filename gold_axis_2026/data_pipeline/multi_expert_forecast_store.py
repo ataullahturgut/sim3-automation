@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import asdict
+from datetime import datetime
 
 import psycopg
 from psycopg.rows import dict_row
@@ -31,7 +32,7 @@ def _verify_snapshot_identity_and_pit(cur, record: ExpertForecastRecord) -> tupl
     cur.execute(
         """
         select id,forecast_origin,target_period,model_name,model_version,
-               available_as_of,retrieved_at
+               observation_ts,available_as_of,retrieved_at,metadata
         from forecast_input_snapshots where id=any(%s)
         order by id
         """,
@@ -52,10 +53,41 @@ def _verify_snapshot_identity_and_pit(cur, record: ExpertForecastRecord) -> tupl
             raise RuntimeError("BLOCKED_EXPERT_INPUT_SNAPSHOT_MODEL_IDENTITY_MISMATCH")
         if row["available_as_of"] > record.as_of or row["retrieved_at"] > record.as_of:
             raise RuntimeError("BLOCKED_EXPERT_INPUT_SNAPSHOT_PIT_VIOLATION")
+        if record.forecast_track == "HISTORICAL_REPLAY":
+            metadata = dict(row.get("metadata") or {})
+            if metadata.get("historical_replay") is not True or metadata.get("prospective_claim") is not False:
+                raise RuntimeError("BLOCKED_HISTORICAL_REPLAY_SNAPSHOT_METADATA_INVALID")
+            source_period_end_text = str(metadata.get("source_period_end") or "")
+            if not source_period_end_text:
+                raise RuntimeError("BLOCKED_HISTORICAL_REPLAY_SOURCE_PERIOD_END_MISSING")
+            try:
+                source_period_end = datetime.fromisoformat(source_period_end_text.replace("Z", "+00:00"))
+            except Exception as exc:
+                raise RuntimeError("BLOCKED_HISTORICAL_REPLAY_SOURCE_PERIOD_END_INVALID") from exc
+            if source_period_end.tzinfo is None:
+                raise RuntimeError("BLOCKED_HISTORICAL_REPLAY_SOURCE_PERIOD_END_NAIVE")
+            if source_period_end > record.forecast_origin:
+                raise RuntimeError("BLOCKED_HISTORICAL_REPLAY_SOURCE_PERIOD_AFTER_ORIGIN")
+            if row["observation_ts"] > record.forecast_origin or row["available_as_of"] > record.forecast_origin:
+                raise RuntimeError("BLOCKED_HISTORICAL_REPLAY_INFORMATION_AFTER_ORIGIN")
+            if str(row["target_period"]) == source_period_end.strftime("%Y-%m"):
+                raise RuntimeError("BLOCKED_HISTORICAL_REPLAY_TARGET_DATA_AS_INPUT")
     return snapshot_ids
 
 
 def _create_and_bind_input_set(cur, record: ExpertForecastRecord, snapshot_ids: tuple[int, ...]) -> str:
+    input_set_metadata = {
+        "contract": "FROZEN_DATA_EVIDENCE_SPINE_V1",
+        "source": "multi_expert_forecast_store.insert_expert_forecast",
+        "selector_status": "NOT_PROVEN_EXPERT_SELECTION_RULE",
+        "auto_selector": "OFF",
+        "auto_ensemble": "OFF",
+        "canonical_authority": False,
+    }
+    if record.forecast_track == "HISTORICAL_REPLAY":
+        for key in ("historical_replay", "prospective_claim", "information_cutoff", "replay_executed_at", "official_prospective_status", "source_id"):
+            if key in record.provenance:
+                input_set_metadata[key] = record.provenance[key]
     input_set_id = create_forecast_input_set(
         cur,
         ForecastInputSetSpec(
@@ -69,14 +101,7 @@ def _create_and_bind_input_set(cur, record: ExpertForecastRecord, snapshot_ids: 
             evidence_class=record.evidence_class,
             input_fingerprint=record.input_fingerprint,
             git_commit=record.git_commit,
-            metadata={
-                "contract": "FROZEN_DATA_EVIDENCE_SPINE_V1",
-                "source": "multi_expert_forecast_store.insert_expert_forecast",
-                "selector_status": "NOT_PROVEN_EXPERT_SELECTION_RULE",
-                "auto_selector": "OFF",
-                "auto_ensemble": "OFF",
-                "canonical_authority": False,
-            },
+            metadata=input_set_metadata,
         ),
     )
     for snapshot_id in snapshot_ids:
@@ -195,6 +220,10 @@ def insert_expert_forecast(cur, record: ExpertForecastRecord, *, verify_snapshot
             "auto_selector": "OFF",
             "auto_ensemble": "OFF",
             "canonical_authority": False,
+            "historical_replay": record.forecast_track == "HISTORICAL_REPLAY",
+            "prospective_claim": False if record.forecast_track == "HISTORICAL_REPLAY" else record.provenance.get("prospective_claim"),
+            "information_cutoff": record.provenance.get("information_cutoff"),
+            "replay_executed_at": record.provenance.get("replay_executed_at"),
         },
         monthly_expert_forecast_ids=(expert_row_id,),
     )
