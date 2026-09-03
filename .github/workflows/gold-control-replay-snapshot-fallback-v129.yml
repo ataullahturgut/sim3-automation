@@ -1,0 +1,138 @@
+name: Gold Control Replay Snapshot Fallback V1.29
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/tools/apply_replay_snapshot_fallback_v129.py'
+      - 'gold_axis_2026/apps/production_display_snapshot.py'
+      - 'gold_axis_2026/apps/forecast_source.py'
+      - 'gold_axis_2026/apps/test_replay_snapshot_fallback_v129.py'
+      - 'gold_axis_2026/GOLD_CONTROL_DEPLOYMENT_DISPLAY_SNAPSHOT_CONTRACT_V2_2026-09-03.md'
+      - '.github/workflows/gold-control-replay-snapshot-fallback-v129.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-replay-snapshot-fallback-v129
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install runtime
+        run: |
+          pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
+          python -m playwright install --with-deps chromium
+      - name: Apply exact mobile and manifest patch
+        run: |
+          python gold_axis_2026/tools/apply_replay_snapshot_fallback_v129.py
+          grep -Fq '**Manifest version:** 1.29' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V2' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V2' gold_axis_2026/GOLD_CONTROL_DEPLOYMENT_DISPLAY_SNAPSHOT_CONTRACT_V2_2026-09-03.md
+      - name: Export fresh production V2 snapshot read-only
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/tools/export_production_display_snapshot.py --out gold_axis_2026/apps/production_display_snapshot.json
+          PYTHONPATH=gold_axis_2026/apps python - <<'PY'
+          from production_display_snapshot import load_production_display_snapshot, snapshot_historical_replay_rows
+          s=load_production_display_snapshot()
+          rows=snapshot_historical_replay_rows(s)
+          assert s['snapshot_contract']=='FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V2'
+          assert len(s['runtime'])==12 and len(s['features'])==7 and s['context_exactly_one_link']==7
+          assert len(rows)==2, rows
+          assert {r['expert_id'] for r in rows}=={'MOMENTUM_3M','RANDOM_WALK'}
+          assert all(r['canonical_authority'] is False for r in rows)
+          assert all(r['provenance']['prospective_claim'] is False for r in rows)
+          print('V2_SNAPSHOT_REPLAY_EXPORT_PASS',[(r['expert_id'],r['forecast_value']) for r in rows])
+          PY
+      - name: Compile and deterministic tests
+        run: |
+          python -m py_compile gold_axis_2026/apps/production_display_snapshot.py gold_axis_2026/apps/forecast_source.py gold_axis_2026/apps/gold_control_mobile_v1.py gold_axis_2026/tools/export_production_display_snapshot.py
+          cd gold_axis_2026/apps
+          pytest -q test_production_display_snapshot.py test_replay_snapshot_fallback_v129.py test_mobile_ui_contract.py test_engine_observability_contract.py test_ui_manifest_consistency_v126.py
+          cd ../data_pipeline
+          pytest -q test_historical_replay_contract.py test_data_evidence_spine.py test_multi_expert_forecast.py
+      - name: Prove DB-backed and snapshot-backed replay agree
+        run: |
+          PYTHONPATH=gold_axis_2026/apps python - <<'PY'
+          import os
+          from forecast_source import TRACK_HISTORICAL_REPLAY, fetch_latest_expert_forecasts
+          db=fetch_latest_expert_forecasts(os.environ['NEON_DATABASE_URL'],TRACK_HISTORICAL_REPLAY)
+          snap=fetch_latest_expert_forecasts('',TRACK_HISTORICAL_REPLAY)
+          def shape(rows): return [(r['expert_id'],round(float(r['forecast_value']),10),r['model_version']) for r in rows]
+          assert shape(db)==shape(snap),(shape(db),shape(snap))
+          assert all(r['canonical_authority'] is False for r in snap)
+          assert all(r['provenance']['prospective_claim'] is False for r in snap)
+          print('DB_SNAPSHOT_REPLAY_EXACT_MATCH_PASS',shape(snap))
+          PY
+      - name: DB-less 390x844 browser must visibly show replay values
+        run: |
+          rm -rf /tmp/v129_replay_fallback && mkdir -p /tmp/v129_replay_fallback
+          env -u NEON_DATABASE_URL streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8529 --server.address 127.0.0.1 >/tmp/v129_replay_browser.log 2>&1 &
+          PID=$!
+          for i in $(seq 1 45); do curl -fsS http://127.0.0.1:8529/_stcore/health >/dev/null && break; sleep 1; done
+          env -u NEON_DATABASE_URL python - <<'PY'
+          import json,re
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+          snap=json.loads(Path('gold_axis_2026/apps/production_display_snapshot.json').read_text())
+          rows=snap['historical_replay_experts']
+          values={r['expert_id']:float(r['forecast_value']) for r in rows}
+          expected={k:f'{v:,.2f}' for k,v in values.items()}
+          out=Path('/tmp/v129_replay_fallback/gold_control_v129_replay_fallback_tahmin_390x844.png')
+          with sync_playwright() as p:
+              b=p.chromium.launch(headless=True)
+              page=b.new_page(viewport={'width':390,'height':844},device_scale_factor=1)
+              page.goto('http://127.0.0.1:8529',wait_until='domcontentloaded',timeout=60000)
+              page.get_by_text('GOLD CONTROL',exact=False).first.wait_for(state='visible',timeout=45000)
+              page.locator('.st-key-gc_main_nav label[data-testid="stRadioOption"]').filter(has_text=re.compile('Tahmin',re.I)).first.click()
+              page.get_by_text('TAHMİN',exact=True).first.wait_for(state='visible',timeout=20000)
+              replay=page.get_by_text('EYLÜL 2026 HISTORICAL REPLAY',exact=True).first
+              replay.wait_for(state='visible',timeout=20000)
+              body=page.locator('body').inner_text()
+              assert 'REPLAY · PROSPECTIVE DEĞİL' in body
+              assert '3M Momentum' in body and 'Random Walk' in body
+              assert expected['MOMENTUM_3M'] in body,(expected,body)
+              assert expected['RANDOM_WALK'] in body,(expected,body)
+              assert 'NOT_ISSUED_MISSED_2026_08_31_ORIGIN' in body
+              replay.scroll_into_view_if_needed(); page.wait_for_timeout(500)
+              page.screenshot(path=str(out),full_page=False)
+              b.close()
+          assert out.is_file() and out.stat().st_size>0
+          print('V129_DBLESS_REPLAY_BROWSER_PASS',expected)
+          PY
+          kill $PID || true; wait $PID || true
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/v129_replay_browser.log; then cat /tmp/v129_replay_browser.log; exit 1; fi
+      - name: Commit recovered canonical state
+        run: |
+          git add -A gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md \
+            gold_axis_2026/apps/gold_control_mobile_v1.py \
+            gold_axis_2026/apps/production_display_snapshot.json \
+            gold_axis_2026/apps/replay_fallback_fix_marker.tmp || true
+          git diff --cached --check
+          if git diff --cached --quiet; then echo 'NO_PATCHED_STATE_TO_COMMIT'; exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'gold-control: activate DB-less replay snapshot fallback v1.29'
+          git push origin HEAD:gold-r4-direction-engine
+      - name: Upload real DB-less proof
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-v129-dbless-replay-proof-390x844
+          path: /tmp/v129_replay_fallback/*.png
+          if-no-files-found: error
+          retention-days: 30
