@@ -488,7 +488,7 @@ def main() -> int:
             status_counts = {r["runtime_status"]: int(r["n"]) for r in cur.fetchall()}
             if status_counts != {"ACTIVE": 4, "WAITING": 3, "BLOCKED": 5}:
                 raise RuntimeError(f"AUG31_STATE_REPLAY_RUNTIME_DISTRIBUTION_CHANGED:{status_counts}")
-            cur.execute("SELECT count(*) AS n FROM canonical_monthly_forecasts")
+            cur.execute("SELECT count(*) AS n FROM monthly_forecast_contracts")
             canonical_count = int(cur.fetchone()["n"])
             cur.execute("SELECT count(*) AS n FROM decision_signal_snapshots")
             decision_count = int(cur.fetchone()["n"])
