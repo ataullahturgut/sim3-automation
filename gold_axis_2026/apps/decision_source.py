@@ -19,7 +19,18 @@ from decision_store_reader import read_latest_decision  # noqa: E402
 
 DISPLAY_EVIDENCE_ORDER = ("LIVE_PRODUCTION", "PROSPECTIVE_SHADOW")
 CONTEXT_EVIDENCE_CLASS = "LATE_BOOTSTRAP_SHADOW_CONTEXT"
-CONTEXT_FEATURES = ("MONTHLY_DIRECTION_3M", "FAST_STATE", "SLOW_STATE")
+CONTEXT_FEATURES = (
+    "MONTHLY_DIRECTION_3M",
+    "FAST_STATE",
+    "SLOW_STATE",
+    "GVZ_VALUE",
+    "GVZ_CAP",
+    "GVZ_PANIC",
+    "GVZ_REGIME",
+)
+EMERGENCY_CONTEXT_STATUS = "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE"
+BOCPD_CONTEXT_STATUS = "BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED"
+MACRO_EVENT_CONTEXT_STATUS = "BLOCKED_NOT_FULLY_RECOVERED"
 
 
 def _iso(value: Any) -> str | None:
@@ -59,7 +70,9 @@ def _to_transitional_app_shape(row: dict[str, Any]) -> dict[str, Any]:
         "gvz": row.get("gvz_value"),
         "gvz_cap": row.get("gvz_cap"),
         "gvz_panic": row.get("gvz_panic"),
+        "gvz_regime": None,
         "macro_event_down": row.get("macro_event_down"),
+        "macro_event_state": row.get("macro_event_down"),
         "bocpd_context": row.get("bocpd_context"),
         "classification": row.get("classification"),
         "reason_code": row.get("reason_code"),
@@ -82,13 +95,33 @@ def _row_target_context(row: dict[str, Any]) -> str:
     return str(metadata.get("target_context") or "").strip()
 
 
-def _shape_shadow_direction_context(rows: list[dict[str, Any]]) -> dict[str, Any] | None:
-    """Shape component shadow context without requiring the monthly-prior component.
+def _latest_value(latest: dict[str, dict[str, Any]], feature_name: str, fallback: str) -> str:
+    return str((latest.get(feature_name) or {}).get("value_text") or fallback).strip() or fallback
 
-    The newest target_context is selected first so FAST/SLOW and monthly direction
-    are never silently mixed across different target periods. Any available
-    component may be displayed as context, but this object can never become a
-    final Decision Store classification or action.
+
+def _parse_float_text(value: str) -> float | None:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _parse_bool_text(value: str) -> bool | None:
+    text = str(value or "").strip().lower()
+    if text == "true":
+        return True
+    if text == "false":
+        return False
+    return None
+
+
+def _shape_shadow_direction_context(rows: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """Shape governed component shadow context without promoting it to a decision.
+
+    The newest target_context is selected first so monthly, tactical, and risk
+    components are never silently mixed across different periods. Any available
+    component may be displayed as context; this object can never become a final
+    Decision Store classification or action.
     """
     eligible = [
         dict(row)
@@ -121,9 +154,13 @@ def _shape_shadow_direction_context(rows: list[dict[str, Any]]) -> dict[str, Any
     generated_candidates = [r.get("calculation_ts") for r in latest.values() if r.get("calculation_ts")]
     generated_at = max(generated_candidates) if generated_candidates else anchor_row.get("calculation_ts")
 
-    monthly_value = str((latest.get("MONTHLY_DIRECTION_3M") or {}).get("value_text") or "YAYIMLANMADI").strip()
-    fast_value = str((latest.get("FAST_STATE") or {}).get("value_text") or "YAYIMLANMADI").strip()
-    slow_value = str((latest.get("SLOW_STATE") or {}).get("value_text") or "YAYIMLANMADI").strip()
+    monthly_value = _latest_value(latest, "MONTHLY_DIRECTION_3M", "YAYIMLANMADI")
+    fast_value = _latest_value(latest, "FAST_STATE", "YAYIMLANMADI")
+    slow_value = _latest_value(latest, "SLOW_STATE", "YAYIMLANMADI")
+    gvz_value_text = _latest_value(latest, "GVZ_VALUE", "YAYIMLANMADI")
+    gvz_cap_text = _latest_value(latest, "GVZ_CAP", "YAYIMLANMADI")
+    gvz_panic_text = _latest_value(latest, "GVZ_PANIC", "YAYIMLANMADI")
+    gvz_regime = _latest_value(latest, "GVZ_REGIME", "YAYIMLANMADI")
 
     return {
         "date": str(anchor_row.get("input_cutoff"))[:10] if anchor_row.get("input_cutoff") else "N/A",
@@ -134,13 +171,17 @@ def _shape_shadow_direction_context(rows: list[dict[str, Any]]) -> dict[str, Any
         "context_components": tuple(sorted(latest)),
         "context_feature_ids": {name: row.get("id") for name, row in latest.items()},
         "target_month": target_month,
-        "monthly_direction_3m": monthly_value or "YAYIMLANMADI",
-        "fast_state": fast_value or "YAYIMLANMADI",
-        "slow_state": slow_value or "YAYIMLANMADI",
-        "level_emergency": "YAYIMLANMADI",
-        "reversal_emergency": "YAYIMLANMADI",
-        "macro_event_state": "BLOCKED_NOT_FULLY_RECOVERED",
-        "bocpd_context": "YAYIMLANMADI",
+        "monthly_direction_3m": monthly_value,
+        "fast_state": fast_value,
+        "slow_state": slow_value,
+        "level_emergency": EMERGENCY_CONTEXT_STATUS,
+        "reversal_emergency": EMERGENCY_CONTEXT_STATUS,
+        "macro_event_state": MACRO_EVENT_CONTEXT_STATUS,
+        "bocpd_context": BOCPD_CONTEXT_STATUS,
+        "gvz": _parse_float_text(gvz_value_text),
+        "gvz_cap": _parse_float_text(gvz_cap_text),
+        "gvz_panic": _parse_bool_text(gvz_panic_text),
+        "gvz_regime": gvz_regime,
         "classification": None,
         "action_state": None,
         "quality_status": CONTEXT_EVIDENCE_CLASS,
@@ -154,7 +195,10 @@ def _read_shadow_direction_context(conn) -> dict[str, Any] | None:
         SELECT id, feature_name, calculation_ts, input_cutoff, value_text,
                feature_version, quality_status, metadata
         FROM derived_feature_snapshots
-        WHERE feature_name IN ('MONTHLY_DIRECTION_3M','FAST_STATE','SLOW_STATE')
+        WHERE feature_name IN (
+            'MONTHLY_DIRECTION_3M','FAST_STATE','SLOW_STATE',
+            'GVZ_VALUE','GVZ_CAP','GVZ_PANIC','GVZ_REGIME'
+        )
           AND (
               quality_status = %s
               OR metadata->>'evidence_class' = %s
@@ -172,10 +216,10 @@ def fetch_current_decision_state(database_url: str) -> dict[str, Any] | None:
 
     Priority is the governed Decision Store: LIVE_PRODUCTION, then
     PROSPECTIVE_SHADOW. When neither exists, the function may return already
-    persisted Stage-4A direction/tactical components with ``context_only=True``.
-    Missing MONTHLY_DIRECTION_3M does not suppress available FAST/SLOW context.
-    This fallback is not a final decision, does not close Stage 6, and contains
-    no action mapping.
+    persisted Stage-4A direction/tactical/GVZ component context with
+    ``context_only=True``. Missing one component never suppresses other
+    available components. Emergency, BOCPD and Macro remain explicit blockers
+    until their own governed forward contracts are satisfied.
     """
     url = str(database_url or "").strip()
     if not url:
