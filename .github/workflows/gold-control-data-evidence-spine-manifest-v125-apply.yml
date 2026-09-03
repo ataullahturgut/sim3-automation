@@ -1,0 +1,47 @@
+name: Gold Control Data Evidence Spine Manifest v1.25 Apply
+
+on:
+  push:
+    branches: [gold-control-data-evidence-spine-v1]
+    paths:
+      - 'gold_axis_2026/tools/apply_data_evidence_spine_manifest_v125.py'
+      - '.github/workflows/gold-control-data-evidence-spine-manifest-v125-apply.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply-manifest-v125:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-data-evidence-spine-v1
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Apply manifest v1.25 change control
+        run: python gold_axis_2026/tools/apply_data_evidence_spine_manifest_v125.py
+      - name: Verify manifest and model registry alignment
+        run: |
+          grep -q 'Manifest version:\*\* 1.25' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'FROZEN_DATA_EVIDENCE_SPINE_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'APPLIED_PRODUCTION_PASS' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'PENDING_CANONICAL_BOOTSTRAP' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'MANIFEST_VERSION = "1.25"' gold_axis_2026/data_pipeline/multi_expert_forecast.py
+          grep -q 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'AUTO_SELECTOR=OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'AUTO_ENSEMBLE=OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+      - name: Commit governed manifest candidate
+        run: |
+          if git diff --quiet; then
+            echo 'MANIFEST_V125_NO_DIFF'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md gold_axis_2026/data_pipeline/multi_expert_forecast.py
+          git commit -m 'gold-control: freeze data evidence spine manifest v1.25'
+          git push origin HEAD:gold-control-data-evidence-spine-v1
