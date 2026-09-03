@@ -1,0 +1,81 @@
+name: Gold Control Historical Replay Data Layer V1.28
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-control-september-replay-v128]
+    paths:
+      - 'gold_axis_2026/tools/apply_historical_replay_data_contract_v128.py'
+      - 'gold_axis_2026/data_pipeline/test_historical_replay_contract.py'
+      - '.github/workflows/gold-control-historical-replay-data-layer-v128.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  data-layer:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install data runtime
+        run: |
+          pip install -r gold_axis_2026/data_pipeline/requirements.txt pytest
+      - name: Apply fail-closed replay data patch
+        run: |
+          python gold_axis_2026/tools/apply_historical_replay_data_contract_v128.py
+          grep -Fq 'TRACK_HISTORICAL_REPLAY = "HISTORICAL_REPLAY"' gold_axis_2026/data_pipeline/multi_expert_forecast.py
+          grep -Fq 'BLOCKED_HISTORICAL_REPLAY_SOURCE_PERIOD_AFTER_ORIGIN' gold_axis_2026/data_pipeline/multi_expert_forecast_store.py
+      - name: Compile replay write graph
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/multi_expert_forecast.py \
+            gold_axis_2026/data_pipeline/data_evidence_spine.py \
+            gold_axis_2026/data_pipeline/multi_expert_forecast_store.py \
+            gold_axis_2026/data_pipeline/september_2026_simple_expert_historical_replay.py
+      - name: Run deterministic data contracts
+        run: |
+          cd gold_axis_2026/data_pipeline
+          pytest -q test_historical_replay_contract.py test_multi_expert_forecast.py test_data_evidence_spine.py
+      - name: Verify migration and runtime-view separation statically
+        run: |
+          grep -Fq "'HISTORICAL_REPLAY'::text" gold_axis_2026/data_pipeline/schema_patch_historical_replay_v1.sql
+          grep -Fq "WHERE evidence_class <> 'HISTORICAL_REPLAY'" gold_axis_2026/data_pipeline/schema_patch_historical_replay_v1.sql
+          grep -Fq 'latest_historical_replay_engine_state' gold_axis_2026/data_pipeline/schema_patch_historical_replay_v1.sql
+      - name: Production read-only guard remains untouched
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          PYTHONPATH=gold_axis_2026/data_pipeline python - <<'PY'
+          import os,psycopg
+          from psycopg.rows import dict_row
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'],autocommit=False,row_factory=dict_row) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute("select count(*)::int n from monthly_expert_forecasts where target_month='2026-09-01'")
+                  assert cur.fetchone()['n']==0
+                  cur.execute("select count(*)::int n from monthly_forecast_contracts")
+                  assert cur.fetchone()['n']==0
+                  cur.execute("select count(*)::int n from decision_signal_snapshots")
+                  assert cur.fetchone()['n']==0
+              conn.rollback()
+          print('HISTORICAL_REPLAY_DATA_LAYER_PRODUCTION_READ_ONLY_GUARD_PASS')
+          PY
+      - name: Commit patched data layer to feature branch
+        run: |
+          git status --short
+          git add \
+            gold_axis_2026/data_pipeline/multi_expert_forecast.py \
+            gold_axis_2026/data_pipeline/data_evidence_spine.py \
+            gold_axis_2026/data_pipeline/multi_expert_forecast_store.py
+          git diff --cached --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'gold-control: activate historical replay data contract v1.28'
+          git push origin HEAD:gold-control-september-replay-v128
