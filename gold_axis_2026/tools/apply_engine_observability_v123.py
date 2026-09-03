@@ -129,7 +129,7 @@ def engine_inventory_cards(rows: list[dict[str, Any]]) -> str:
 
 def patch_manifest() -> None:
     path = GOLD / "GOLD_CONTROL_PROJECT_MANIFEST.md"
-    replace_once(path, "**Manifest version:** 1.22  \n**Freeze / issue date:** 2026-09-02  \n", "**Manifest version:** 1.23  \n**Freeze / issue date:** 2026-09-03  \n")
+    replace_once(path, "**Manifest version:** 1.22  \n**Freeze / issue date:** 2026-09-02  \n", "**Manifest version:** 1.23\n**Freeze / issue date:** 2026-09-03\n")
     replace_once(
         path,
         "9. exposes the result through a simple user-facing interface without leaking backend complexity into the main UX.\n",
