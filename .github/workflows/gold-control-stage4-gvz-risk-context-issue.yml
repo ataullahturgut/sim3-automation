@@ -1,0 +1,112 @@
+name: Gold Control Stage4A GVZ Risk Context Issue
+
+# Governed GVZ risk-only late-bootstrap context issuer.
+# No Decision Store classification, action mapping, or forecast write.
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_STAGE4A_GVZ_RISK_CONTEXT_CONTRACT_2026-09-03.md'
+      - 'gold_axis_2026/data_pipeline/stage4_gvz_risk_context_issue.py'
+      - '.github/workflows/gold-control-stage4-gvz-risk-context-issue.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-stage4a-gvz-risk-context
+  cancel-in-progress: true
+
+jobs:
+  issue-gvz-context:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install governed data-plane runtime
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+
+      - name: Verify frozen GVZ context contract and compile issuer
+        run: |
+          grep -q 'FROZEN_BEFORE_GVZ_CONTEXT_ISSUANCE' gold_axis_2026/GOLD_CONTROL_STAGE4A_GVZ_RISK_CONTEXT_CONTRACT_2026-09-03.md
+          grep -q 'LATE_BOOTSTRAP_SHADOW_CONTEXT' gold_axis_2026/GOLD_CONTROL_STAGE4A_GVZ_RISK_CONTEXT_CONTRACT_2026-09-03.md
+          grep -q 'direction vote = `false`' gold_axis_2026/GOLD_CONTROL_STAGE4A_GVZ_RISK_CONTEXT_CONTRACT_2026-09-03.md
+          python -m py_compile gold_axis_2026/data_pipeline/stage4_gvz_risk_context_issue.py
+          echo 'GVZ_RISK_CONTEXT_CONTRACT_COMPILE_PASS'
+
+      - name: Dry-run exact frozen GVZ risk context
+        run: python gold_axis_2026/data_pipeline/stage4_gvz_risk_context_issue.py
+
+      - name: Persist immutable GVZ risk-only shadow context
+        run: python gold_axis_2026/data_pipeline/stage4_gvz_risk_context_issue.py --persist
+
+      - name: Verify GVZ context rows without raw market values
+        run: |
+          python - <<'PY'
+          import os
+          from datetime import datetime, timezone
+          import psycopg
+          from psycopg.rows import dict_row
+
+          target_context = datetime.now(timezone.utc).strftime('%Y-%m')
+          expected = {'GVZ_VALUE','GVZ_CAP','GVZ_PANIC','GVZ_REGIME'}
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute("""
+                      SELECT feature_name, value_text, quality_status,
+                             metadata->>'display_scope' AS display_scope,
+                             metadata->>'prospective_h1_claim' AS prospective_h1_claim,
+                             metadata->>'direction_vote' AS direction_vote,
+                             metadata->>'role' AS role,
+                             metadata->>'input_fingerprint' AS input_fingerprint
+                      FROM derived_feature_snapshots
+                      WHERE feature_name IN ('GVZ_VALUE','GVZ_CAP','GVZ_PANIC','GVZ_REGIME')
+                        AND feature_version='R4_1_GVZ_RISK_CAP_CONTEXT_V1'
+                        AND quality_status='LATE_BOOTSTRAP_SHADOW_CONTEXT'
+                        AND metadata->>'target_context'=%s
+                      ORDER BY calculation_ts DESC, id DESC
+                  """, (target_context,))
+                  rows = [dict(r) for r in cur.fetchall()]
+              conn.rollback()
+
+          latest = {}
+          for row in rows:
+              latest.setdefault(row['feature_name'], row)
+          if set(latest) != expected:
+              raise SystemExit(f'GVZ_CONTEXT_VERIFY_MISSING:{sorted(expected-set(latest))}')
+          if any(x['display_scope'] != 'COMPONENT_CONTEXT_ONLY' for x in latest.values()):
+              raise SystemExit('GVZ_CONTEXT_SCOPE_VIOLATION')
+          if any(str(x['prospective_h1_claim']).lower() != 'false' for x in latest.values()):
+              raise SystemExit('GVZ_CONTEXT_PROSPECTIVE_CLAIM_VIOLATION')
+          if any(str(x['direction_vote']).lower() != 'false' for x in latest.values()):
+              raise SystemExit('GVZ_CONTEXT_DIRECTION_VOTE_VIOLATION')
+          if any(x['role'] != 'RISK_ONLY' for x in latest.values()):
+              raise SystemExit('GVZ_CONTEXT_ROLE_VIOLATION')
+          if len({x['input_fingerprint'] for x in latest.values()}) != 1:
+              raise SystemExit('GVZ_CONTEXT_FINGERPRINT_MISMATCH')
+          if latest['GVZ_REGIME']['value_text'] not in {'NORMAL','ELEVATED','PANIC'}:
+              raise SystemExit('GVZ_CONTEXT_REGIME_INVALID')
+          if latest['GVZ_CAP']['value_text'] not in {'1','1.0','0.5','0.25'}:
+              raise SystemExit('GVZ_CONTEXT_CAP_INVALID')
+          if latest['GVZ_PANIC']['value_text'] not in {'true','false'}:
+              raise SystemExit('GVZ_CONTEXT_PANIC_INVALID')
+          print('GVZ_RISK_CONTEXT_DB_VERIFY_PASS')
+          print('CONTEXT_FEATURES=' + ','.join(sorted(latest)))
+          print('REGIME=' + latest['GVZ_REGIME']['value_text'])
+          print('CAP=' + latest['GVZ_CAP']['value_text'])
+          print('RAW_GVZ_VALUE_LOGGED=NO')
+          print('DIRECTION_VOTE=FALSE')
+          print('DECISION_STORE_WRITE=NONE')
+          print('CANONICAL_FORECAST_WRITE=NONE')
+          PY
