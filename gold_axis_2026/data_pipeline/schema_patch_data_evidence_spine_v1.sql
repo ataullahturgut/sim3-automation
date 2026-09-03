@@ -20,6 +20,9 @@ BEGIN
     IF to_regprocedure('reject_gold_control_forecast_state_mutation()') IS NULL THEN
         RAISE EXCEPTION 'BLOCKED_FORECAST_IMMUTABILITY_GUARD_NOT_FOUND';
     END IF;
+    IF to_regprocedure('gen_random_uuid()') IS NULL THEN
+        RAISE EXCEPTION 'BLOCKED_UUID_GENERATOR_NOT_FOUND';
+    END IF;
 END
 $$;
 
@@ -63,28 +66,22 @@ CREATE TABLE IF NOT EXISTS forecast_input_sets (
 CREATE INDEX IF NOT EXISTS forecast_input_sets_identity_idx
     ON forecast_input_sets (expert_id, model_version, target_month DESC, as_of DESC);
 
-ALTER TABLE forecast_input_snapshots
-    ADD COLUMN IF NOT EXISTS input_set_id uuid;
-
+-- The old uniqueness key could not distinguish repeated Early Indicative revisions
+-- at different as-of timestamps. Keep duplicate protection but include the persisted
+-- retrieval timestamp and semantic identity. This does not modify any existing row.
 ALTER TABLE forecast_input_snapshots
     DROP CONSTRAINT IF EXISTS forecast_input_snapshots_forecast_origin_target_period_mode_key;
-
-ALTER TABLE forecast_input_snapshots
-    DROP CONSTRAINT IF EXISTS forecast_input_snapshots_input_set_id_fkey;
-ALTER TABLE forecast_input_snapshots
-    ADD CONSTRAINT forecast_input_snapshots_input_set_id_fkey
-    FOREIGN KEY (input_set_id) REFERENCES forecast_input_sets(input_set_id) ON DELETE RESTRICT;
-
-ALTER TABLE forecast_input_snapshots
-    ALTER COLUMN input_set_id SET NOT NULL;
-
-CREATE UNIQUE INDEX IF NOT EXISTS forecast_input_snapshots_set_semantic_uidx
+CREATE UNIQUE INDEX IF NOT EXISTS forecast_input_snapshots_revision_safe_uidx
     ON forecast_input_snapshots (
-        input_set_id,
+        forecast_origin,
+        target_period,
+        model_name,
+        model_version,
         series_id,
         COALESCE(semantic_id,''),
         observation_ts,
-        transform
+        transform,
+        retrieved_at
     );
 
 CREATE TABLE IF NOT EXISTS forecast_input_set_members (
@@ -97,63 +94,13 @@ CREATE TABLE IF NOT EXISTS forecast_input_set_members (
 
 ALTER TABLE monthly_expert_forecasts
     ADD COLUMN IF NOT EXISTS input_set_id uuid;
-
 ALTER TABLE monthly_expert_forecasts
     DROP CONSTRAINT IF EXISTS monthly_expert_forecasts_input_set_id_fkey;
 ALTER TABLE monthly_expert_forecasts
     ADD CONSTRAINT monthly_expert_forecasts_input_set_id_fkey
     FOREIGN KEY (input_set_id) REFERENCES forecast_input_sets(input_set_id) ON DELETE RESTRICT;
-
 ALTER TABLE monthly_expert_forecasts
     ALTER COLUMN input_set_id SET NOT NULL;
-
-CREATE OR REPLACE FUNCTION enforce_gold_control_input_snapshot_binding()
-RETURNS trigger
-LANGUAGE plpgsql
-AS $$
-DECLARE
-    s forecast_input_sets%ROWTYPE;
-BEGIN
-    SELECT * INTO s FROM forecast_input_sets WHERE input_set_id = NEW.input_set_id;
-    IF NOT FOUND THEN
-        RAISE EXCEPTION 'BLOCKED_INPUT_SET_NOT_FOUND:%', NEW.input_set_id;
-    END IF;
-    IF NEW.forecast_origin IS DISTINCT FROM s.forecast_origin THEN
-        RAISE EXCEPTION 'BLOCKED_INPUT_SET_FORECAST_ORIGIN_MISMATCH';
-    END IF;
-    IF NEW.target_period IS DISTINCT FROM to_char(s.target_month, 'YYYY-MM') THEN
-        RAISE EXCEPTION 'BLOCKED_INPUT_SET_TARGET_PERIOD_MISMATCH';
-    END IF;
-    IF NEW.model_name IS DISTINCT FROM s.model_name OR NEW.model_version IS DISTINCT FROM s.model_version THEN
-        RAISE EXCEPTION 'BLOCKED_INPUT_SET_MODEL_IDENTITY_MISMATCH';
-    END IF;
-    IF NEW.available_as_of > s.as_of OR NEW.retrieved_at > s.as_of THEN
-        RAISE EXCEPTION 'BLOCKED_INPUT_SET_PIT_VIOLATION';
-    END IF;
-    RETURN NEW;
-END;
-$$;
-
-DROP TRIGGER IF EXISTS trg_forecast_input_snapshot_binding ON forecast_input_snapshots;
-CREATE TRIGGER trg_forecast_input_snapshot_binding
-BEFORE INSERT ON forecast_input_snapshots
-FOR EACH ROW EXECUTE FUNCTION enforce_gold_control_input_snapshot_binding();
-
-CREATE OR REPLACE FUNCTION register_gold_control_input_set_member()
-RETURNS trigger
-LANGUAGE plpgsql
-AS $$
-BEGIN
-    INSERT INTO forecast_input_set_members(input_set_id, snapshot_id)
-    VALUES (NEW.input_set_id, NEW.id);
-    RETURN NEW;
-END;
-$$;
-
-DROP TRIGGER IF EXISTS trg_forecast_input_set_member ON forecast_input_snapshots;
-CREATE TRIGGER trg_forecast_input_set_member
-AFTER INSERT ON forecast_input_snapshots
-FOR EACH ROW EXECUTE FUNCTION register_gold_control_input_set_member();
 
 CREATE OR REPLACE FUNCTION enforce_gold_control_expert_input_set_binding()
 RETURNS trigger
@@ -163,7 +110,59 @@ DECLARE
     s forecast_input_sets%ROWTYPE;
     db_ids bigint[];
     row_ids bigint[];
+    found_count bigint;
+    invalid_count bigint;
 BEGIN
+    SELECT array_agg(x ORDER BY x)
+      INTO row_ids
+      FROM (SELECT DISTINCT unnest(NEW.input_snapshot_ids) AS x) q;
+    IF row_ids IS NULL OR cardinality(row_ids) = 0 THEN
+        RAISE EXCEPTION 'BLOCKED_EXPERT_INPUT_SET_EMPTY';
+    END IF;
+
+    SELECT count(*) INTO found_count
+      FROM forecast_input_snapshots
+     WHERE id = ANY(row_ids);
+    IF found_count <> cardinality(row_ids) THEN
+        RAISE EXCEPTION 'BLOCKED_EXPERT_INPUT_SNAPSHOT_LINEAGE_INCOMPLETE:%/%', found_count, cardinality(row_ids);
+    END IF;
+
+    SELECT count(*) INTO invalid_count
+      FROM forecast_input_snapshots
+     WHERE id = ANY(row_ids)
+       AND (
+           forecast_origin IS DISTINCT FROM NEW.forecast_origin
+           OR target_period IS DISTINCT FROM to_char(NEW.target_month, 'YYYY-MM')
+           OR model_name IS DISTINCT FROM NEW.model_name
+           OR model_version IS DISTINCT FROM NEW.model_version
+           OR available_as_of > NEW.as_of
+           OR retrieved_at > NEW.as_of
+       );
+    IF invalid_count <> 0 THEN
+        RAISE EXCEPTION 'BLOCKED_EXPERT_INPUT_SET_SNAPSHOT_IDENTITY_OR_PIT_MISMATCH:%', invalid_count;
+    END IF;
+
+    IF NEW.input_set_id IS NULL THEN
+        NEW.input_set_id := gen_random_uuid();
+        INSERT INTO forecast_input_sets(
+            input_set_id,target_month,forecast_origin,as_of,forecast_track,expert_id,
+            model_name,model_version,evidence_class,input_fingerprint,git_commit,metadata
+        ) VALUES (
+            NEW.input_set_id,NEW.target_month,NEW.forecast_origin,NEW.as_of,NEW.forecast_track,NEW.expert_id,
+            NEW.model_name,NEW.model_version,NEW.evidence_class,NEW.input_fingerprint,NEW.git_commit,
+            jsonb_build_object(
+                'contract','FROZEN_DATA_EVIDENCE_SPINE_V1',
+                'normalization_mode','DB_TRIGGER_FROM_VERIFIED_LEGACY_SNAPSHOT_ARRAY',
+                'selector_status',NEW.selector_status,
+                'auto_selector',NEW.auto_selector,
+                'auto_ensemble',NEW.auto_ensemble,
+                'canonical_authority',NEW.canonical_authority
+            )
+        );
+        INSERT INTO forecast_input_set_members(input_set_id,snapshot_id)
+        SELECT NEW.input_set_id, x FROM unnest(row_ids) AS x ORDER BY x;
+    END IF;
+
     SELECT * INTO s FROM forecast_input_sets WHERE input_set_id = NEW.input_set_id;
     IF NOT FOUND THEN
         RAISE EXCEPTION 'BLOCKED_EXPERT_INPUT_SET_NOT_FOUND:%', NEW.input_set_id;
@@ -179,7 +178,6 @@ BEGIN
        OR NEW.evidence_class IS DISTINCT FROM s.evidence_class THEN
         RAISE EXCEPTION 'BLOCKED_EXPERT_INPUT_SET_IDENTITY_MISMATCH';
     END IF;
-
     IF NEW.input_fingerprint IS DISTINCT FROM s.input_fingerprint THEN
         RAISE EXCEPTION 'BLOCKED_EXPERT_INPUT_SET_FINGERPRINT_MISMATCH';
     END IF;
@@ -188,14 +186,6 @@ BEGIN
       INTO db_ids
       FROM forecast_input_set_members
      WHERE input_set_id = NEW.input_set_id;
-
-    SELECT array_agg(x ORDER BY x)
-      INTO row_ids
-      FROM unnest(NEW.input_snapshot_ids) AS x;
-
-    IF db_ids IS NULL OR cardinality(db_ids) = 0 THEN
-        RAISE EXCEPTION 'BLOCKED_EXPERT_INPUT_SET_EMPTY';
-    END IF;
     IF db_ids IS DISTINCT FROM row_ids THEN
         RAISE EXCEPTION 'BLOCKED_EXPERT_INPUT_SET_MEMBERSHIP_MISMATCH';
     END IF;
@@ -221,7 +211,6 @@ DROP TRIGGER IF EXISTS trg_forecast_input_sets_immutable ON forecast_input_sets;
 CREATE TRIGGER trg_forecast_input_sets_immutable
 BEFORE UPDATE OR DELETE ON forecast_input_sets
 FOR EACH ROW EXECUTE FUNCTION reject_gold_control_data_spine_mutation();
-
 DROP TRIGGER IF EXISTS trg_forecast_input_set_members_immutable ON forecast_input_set_members;
 CREATE TRIGGER trg_forecast_input_set_members_immutable
 BEFORE UPDATE OR DELETE ON forecast_input_set_members
@@ -250,7 +239,6 @@ CREATE TABLE IF NOT EXISTS engine_execution_runs (
     metadata jsonb NOT NULL DEFAULT '{}'::jsonb,
     created_at timestamptz NOT NULL DEFAULT now()
 );
-
 CREATE UNIQUE INDEX IF NOT EXISTS engine_execution_runs_identity_uidx
     ON engine_execution_runs (
         engine_id, engine_version, as_of, COALESCE(target_context,''), evidence_class, status_code
@@ -264,14 +252,12 @@ CREATE TABLE IF NOT EXISTS engine_execution_derived_outputs (
     PRIMARY KEY (run_id, derived_feature_snapshot_id),
     UNIQUE (derived_feature_snapshot_id)
 );
-
 CREATE TABLE IF NOT EXISTS engine_execution_expert_outputs (
     run_id uuid NOT NULL REFERENCES engine_execution_runs(run_id) ON DELETE RESTRICT,
     monthly_expert_forecast_id bigint NOT NULL REFERENCES monthly_expert_forecasts(id) ON DELETE RESTRICT,
     PRIMARY KEY (run_id, monthly_expert_forecast_id),
     UNIQUE (monthly_expert_forecast_id)
 );
-
 CREATE TABLE IF NOT EXISTS engine_execution_decision_outputs (
     run_id uuid NOT NULL REFERENCES engine_execution_runs(run_id) ON DELETE RESTRICT,
     decision_snapshot_id uuid NOT NULL REFERENCES decision_signal_snapshots(snapshot_id) ON DELETE RESTRICT,
@@ -283,17 +269,14 @@ DROP TRIGGER IF EXISTS trg_engine_execution_runs_immutable ON engine_execution_r
 CREATE TRIGGER trg_engine_execution_runs_immutable
 BEFORE UPDATE OR DELETE ON engine_execution_runs
 FOR EACH ROW EXECUTE FUNCTION reject_gold_control_data_spine_mutation();
-
 DROP TRIGGER IF EXISTS trg_engine_execution_derived_outputs_immutable ON engine_execution_derived_outputs;
 CREATE TRIGGER trg_engine_execution_derived_outputs_immutable
 BEFORE UPDATE OR DELETE ON engine_execution_derived_outputs
 FOR EACH ROW EXECUTE FUNCTION reject_gold_control_data_spine_mutation();
-
 DROP TRIGGER IF EXISTS trg_engine_execution_expert_outputs_immutable ON engine_execution_expert_outputs;
 CREATE TRIGGER trg_engine_execution_expert_outputs_immutable
 BEFORE UPDATE OR DELETE ON engine_execution_expert_outputs
 FOR EACH ROW EXECUTE FUNCTION reject_gold_control_data_spine_mutation();
-
 DROP TRIGGER IF EXISTS trg_engine_execution_decision_outputs_immutable ON engine_execution_decision_outputs;
 CREATE TRIGGER trg_engine_execution_decision_outputs_immutable
 BEFORE UPDATE OR DELETE ON engine_execution_decision_outputs
@@ -331,9 +314,9 @@ SELECT
       WHERE e.input_fingerprint IS DISTINCT FROM s.input_fingerprint) AS expert_input_fingerprint_mismatches;
 
 COMMENT ON TABLE forecast_input_sets IS
-'Gold Control Data Evidence Spine V1: immutable header for one exact expert/as-of input set. Repeated Early Indicative revisions use distinct as_of/input_set identities.';
+'Gold Control Data Evidence Spine V1: immutable header for one exact expert/as-of input set. The legacy writer is normalized fail-closed by the expert insert trigger.';
 COMMENT ON TABLE forecast_input_set_members IS
-'Normalized immutable membership between sealed forecast input sets and semantic forecast_input_snapshots.';
+'Normalized immutable membership between forecast input sets and semantic forecast_input_snapshots.';
 COMMENT ON TABLE engine_execution_runs IS
 'Append-only runtime status ledger for all 12 governed Gold Control motors. Status-only rows are legitimate and do not imply a forecast/decision output.';
 COMMENT ON VIEW latest_engine_runtime_state IS
