@@ -33,6 +33,8 @@ permissions:
 jobs:
   mobile-ui-final:
     runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -50,6 +52,7 @@ jobs:
           streamlit version
       - name: Verify manifest v1.23 and engine observability governance
         run: |
+          test -n "$NEON_DATABASE_URL" || (echo 'NEON_DATABASE_URL missing for production-backed browser QA' && exit 1)
           grep -q 'Manifest version:\*\* 1.23' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'APPROVED_FINAL_MOCKUP_UI_CONTRACT_V2' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'Build Multi-Expert Forecast Pipeline' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
