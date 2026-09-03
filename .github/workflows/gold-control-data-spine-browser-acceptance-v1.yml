@@ -1,0 +1,45 @@
+name: Gold Control Data Spine Browser Acceptance V1
+
+on:
+  push:
+    branches: [gold-control-data-spine-ui-read-v1]
+    paths:
+      - 'gold_axis_2026/tools/apply_data_spine_browser_acceptance_v1.py'
+      - '.github/workflows/gold-control-data-spine-browser-acceptance-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-browser-acceptance:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-data-spine-ui-read-v1
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Apply browser acceptance
+        run: python gold_axis_2026/tools/apply_data_spine_browser_acceptance_v1.py
+      - name: Compile QA
+        run: python -m py_compile gold_axis_2026/apps/mobile_viewport_qa.py
+      - name: Verify acceptance markers
+        run: |
+          grep -q 'DB Evidence Spine: runtime 12/12' gold_axis_2026/apps/mobile_viewport_qa.py
+          grep -q 'context link 7/7' gold_axis_2026/apps/mobile_viewport_qa.py
+          grep -q 'integrity PASS' gold_axis_2026/apps/mobile_viewport_qa.py
+          grep -q 'DATA_EVIDENCE_SPINE_UI_VISIBLE=12/12:7/7:PASS' gold_axis_2026/apps/mobile_viewport_qa.py
+      - name: Commit verified browser acceptance
+        run: |
+          if git diff --quiet; then
+            echo 'DATA_SPINE_BROWSER_ACCEPTANCE_NO_DIFF'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/apps/mobile_viewport_qa.py
+          git commit -m 'gold-control: require evidence spine in mobile browser QA'
+          git push origin HEAD:gold-control-data-spine-ui-read-v1
