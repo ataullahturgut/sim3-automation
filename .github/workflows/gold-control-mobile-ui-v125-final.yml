@@ -162,7 +162,7 @@ jobs:
               page.get_by_text('GÖRÜNÜM', exact=True).first.wait_for(state='visible', timeout=15000)
               evidence = page.get_by_text(re.compile(r'DB Evidence Spine: runtime 12/12.*context link 7/7.*integrity PASS', re.I)).first
               evidence.wait_for(state='attached', timeout=15000)
-              evidence.scroll_into_view_if_needed()
+              evidence.evaluate("(el) => el.scrollIntoView({block: 'center', inline: 'nearest'})")
               page.wait_for_timeout(700)
               box = evidence.bounding_box()
               nav_box = page.locator('.st-key-gc_main_nav [data-testid="stRadio"]').first.bounding_box()
