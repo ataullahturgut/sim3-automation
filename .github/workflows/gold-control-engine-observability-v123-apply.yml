@@ -1,0 +1,101 @@
+name: Gold Control Engine Observability V1.23 Apply
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - '.github/workflows/gold-control-engine-observability-v123-apply.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply-and-verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Apply fail-closed v1.23 patches
+        run: |
+          python gold_axis_2026/tools/apply_engine_observability_v123.py
+          python gold_axis_2026/tools/apply_engine_observability_v123_bootstrap_ci.py
+          git diff --check
+          echo 'V123_FAIL_CLOSED_PATCH_APPLY_PASS'
+
+      - name: Verify frozen governance markers
+        run: |
+          grep -F '**Manifest version:** 1.23' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'FROZEN_ALL_GOVERNED_ENGINES_VISIBLE_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'GOLD_CONTROL_ENGINE_OBSERVABILITY_CONTRACT_2026-09-03.md' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'TÜM TAHMİN VE YÖN MOTORLARI' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -F 'ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V1' gold_axis_2026/apps/engine_observability_contract.py
+          grep -F 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'Auto selector' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -F 'Auto ensemble' gold_axis_2026/apps/gold_control_mobile_v1.py
+          echo 'V123_ENGINE_OBSERVABILITY_GOVERNANCE_PASS'
+
+      - name: Install app test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r gold_axis_2026/apps/requirements.txt pytest
+
+      - name: Compile changed dependency graph
+        run: |
+          python -m py_compile \
+            gold_axis_2026/apps/decision_source.py \
+            gold_axis_2026/apps/engine_observability_contract.py \
+            gold_axis_2026/apps/forecast_source.py \
+            gold_axis_2026/apps/mobile_ui_contract.py \
+            gold_axis_2026/apps/gold_control_mobile_v1.py \
+            gold_axis_2026/apps/gold_control.py
+          echo 'V123_COMPILE_PASS'
+
+      - name: Run deterministic UI and observability contracts
+        run: |
+          cd gold_axis_2026/apps
+          pytest -q test_engine_observability_contract.py test_mobile_ui_contract.py test_piyasa_contract.py
+          echo 'V123_DETERMINISTIC_CONTRACTS_PASS'
+
+      - name: Verify inventory semantics without Neon writes
+        run: |
+          PYTHONPATH=gold_axis_2026/apps python - <<'PY'
+          from engine_observability_contract import ENGINE_DISPLAY_ORDER, build_engine_inventory
+          rows = build_engine_inventory(None, [], [])
+          assert len(rows) == 12
+          assert tuple(x['engine_id'] for x in rows) == ENGINE_DISPLAY_ORDER
+          assert all(x['canonical_authority'] is False for x in rows)
+          by_id = {x['engine_id']: x for x in rows}
+          assert by_id['GVZ_RISK']['direction_vote'] is False
+          assert by_id['VW_MIDAS_MSVR']['status'] == 'BLOCKED_NOT_PROVEN_EXECUTABLE'
+          assert by_id['MOMENTUM_3M']['status'] == 'BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND'
+          assert by_id['EMERGENCY_LEVEL']['status'] == 'BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE'
+          assert by_id['BOCPD']['status'] == 'BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED'
+          print('V123_INVENTORY_FAIL_CLOSED_PASS total=12 canonical_authority=false')
+          PY
+
+      - name: Commit verified v1.23 observability upgrade
+        run: |
+          if git diff --quiet; then
+            echo 'V123_NO_DIFF_TO_COMMIT'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md \
+            gold_axis_2026/apps/decision_source.py \
+            gold_axis_2026/apps/gold_control.py \
+            gold_axis_2026/apps/gold_control_mobile_v1.py \
+            .github/workflows/gold-control-mobile-ui-v1.yml \
+            .github/workflows/gold-control-app-smoke.yml
+          git commit -m 'gold-control: expose all governed forecast and direction engines'
+          git push origin HEAD:gold-r4-direction-engine
+          echo 'V123_VERIFIED_UPGRADE_PUSH_PASS'
