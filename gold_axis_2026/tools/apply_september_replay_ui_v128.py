@@ -18,8 +18,16 @@ app=replace_once(app,
 'import replay track')
 app=replace_once(app,
 "early_history=safe_call(lambda:fetch_expert_forecast_history(url,TRACK_EARLY_INDICATIVE),[]) if url else []\n",
-"early_history=safe_call(lambda:fetch_expert_forecast_history(url,TRACK_EARLY_INDICATIVE),[]) if url else []\nhistorical_replay_experts=safe_call(lambda:fetch_latest_expert_forecasts(url,TRACK_HISTORICAL_REPLAY),[]) if url else []\nhistorical_replay_history=safe_call(lambda:fetch_expert_forecast_history(url,TRACK_HISTORICAL_REPLAY),[]) if url else []\n",
-'load replay ledgers')
+"early_history=safe_call(lambda:fetch_expert_forecast_history(url,TRACK_EARLY_INDICATIVE),[]) if url else []\nhistorical_replay_experts=[]\nhistorical_replay_history=[]\n",
+'initialize replay ledgers without eager DB read')
+app=replace_once(app,
+"elif nav==\"↗ Tahmin\":\n    expert_update=",
+"elif nav==\"↗ Tahmin\":\n    historical_replay_experts=safe_call(lambda:fetch_latest_expert_forecasts(url,TRACK_HISTORICAL_REPLAY),[]) if url else []\n    expert_update=",
+'lazy load replay experts on Tahmin')
+app=replace_once(app,
+"else:\n    latest=month_end_history[0].get(\"as_of\") if month_end_history else (early_history[0].get(\"as_of\") if early_history else None); page_head(\"GEÇMİŞ\"",
+"else:\n    historical_replay_history=safe_call(lambda:fetch_expert_forecast_history(url,TRACK_HISTORICAL_REPLAY),[]) if url else []\n    latest=month_end_history[0].get(\"as_of\") if month_end_history else (early_history[0].get(\"as_of\") if early_history else None); page_head(\"GEÇMİŞ\"",
+'lazy load replay history on Gecmis')
 replay_card="""    replay_db_body=(expert_cards(historical_replay_experts) if historical_replay_experts else empty_html(\"EYLÜL 2026 REPLAY KAYDI YOK\",\"Production Evidence Spine üzerinde HISTORICAL_REPLAY kaydı okunamadı.\"))
     st.markdown(\"<div class='gc-replay'><div class='gc-replay-head'><strong>EYLÜL 2026 HISTORICAL REPLAY</strong><span class='gc-replay-pill'>REPLAY · PROSPECTIVE DEĞİL</span></div>\"+replay_db_body+\"<div class='gc-footnote' style='margin-top:.65rem'><b>Resmî prospective durum:</b> NOT_ISSUED_MISSED_2026_08_31_ORIGIN. Bu satırlar 31 Ağustos bilgi kesitiyle sonradan yeniden hesaplanmıştır; canonical forecast, selector, ensemble veya yön oyu değildir.</div></div>\",unsafe_allow_html=True)
 """
@@ -42,7 +50,7 @@ history_block+"    if not replay.empty and {\"actual\",\"patch_r1\",\"vw\",\"mom
 'insert replay history DB block')
 app=replace_once(app,
 "st.write(\"EARLY_INDICATIVE rows:\",len(early_history)); st.write(\"Auto selector:\",AUTO_SELECTOR_STATUS)",
-"st.write(\"EARLY_INDICATIVE rows:\",len(early_history)); st.write(\"HISTORICAL_REPLAY rows:\",len(historical_replay_history)); st.write(\"Auto selector:\",AUTO_SELECTOR_STATUS)",
+"st.write(\"EARLY_INDICATIVE rows:\",len(early_history)); st.write(\"HISTORICAL_REPLAY rows (active view):\",len(historical_replay_history)); st.write(\"Auto selector:\",AUTO_SELECTOR_STATUS)",
 'audit replay count')
 APP.write_text(app,encoding='utf-8')
 
