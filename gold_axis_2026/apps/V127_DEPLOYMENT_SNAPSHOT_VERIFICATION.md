@@ -9,4 +9,7 @@ Required exact-head acceptance:
 - snapshot fingerprint and 12-runtime / 7-context / 7-link integrity gates pass;
 - browser with `NEON_DATABASE_URL` deliberately absent visibly renders persisted Monthly Direction, FAST, SLOW and GVZ context from the validated production snapshot;
 - browser with production Neon available still passes the canonical 390x844 mobile QA;
-- selector, ensemble and position-mapping locks remain closed.
+- selector, ensemble and position-mapping locks remain closed;
+- the legacy mobile compatibility gate is upgraded to v1.27 and must also pass on this exact head.
+
+Final all-gates trigger: 2026-09-03 deployment-data recovery closure.
