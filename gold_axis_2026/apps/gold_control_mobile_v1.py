@@ -263,13 +263,13 @@ elif nav=="◉ Görünüm":
     slow_value=None if not decision else decision.get("slow_state")
     fa,ft=arrow_state(fast_value); sa,stn=arrow_state(slow_value)
     direction_summary=(
-        "<div class='gc-card gc-direction-summary'><div class='gc-section-title'>YÖN MOTORLARI ÖZETİ · STORED CONTEXT</div>"
-        +"<div class='gc-grid4'>"
-        +mini_card("MONTHLY 3M",f"{ma} {display_state(monthly,'YAYIMLANMADI')}","Stratejik monthly prior",tone_class(mt))
-        +mini_card("FAST",f"{fa} {display_state(fast_value,'YAYIMLANMADI')}","Taktik yön teyidi",tone_class(ft))
-        +mini_card("SLOW",f"{sa} {display_state(slow_value,'YAYIMLANMADI')}","Orta hız yön teyidi",tone_class(stn))
-        +mini_card("GVZ RİSK",stored_risk,"Risk-only · yön oyu değildir")
-        +"</div><div class='gc-footnote' style='margin-top:.55rem'>Bu özet seçim/ensemble değildir; yalnız persisted motor context'ini görünür kılar.</div></div>"
+        "<div class='gc-card gc-direction-summary' style='padding:.62rem .68rem;margin:.42rem 0'>"
+        +"<div class='gc-section-title' style='margin-bottom:.42rem'>YÖN MOTORLARI ÖZETİ · STORED CONTEXT</div>"
+        +"<div class='gc-direction-strip' style='display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.36rem'>"
+        +f"<div class='gc-direction-cell' style='min-width:0;border:1px solid var(--gc-line);border-radius:12px;padding:.52rem .42rem;text-align:center'><div style='font-size:.59rem;font-weight:900;color:var(--gc-muted)'>MONTHLY 3M</div><div class='{tone_class(mt)}' style='font-size:.95rem;font-weight:900;margin:.22rem 0'>{esc(ma)} {esc(display_state(monthly,'YAYIMLANMADI'))}</div><div style='font-size:.56rem;color:var(--gc-muted)'>Stratejik prior</div></div>"
+        +f"<div class='gc-direction-cell' style='min-width:0;border:1px solid var(--gc-line);border-radius:12px;padding:.52rem .42rem;text-align:center'><div style='font-size:.59rem;font-weight:900;color:var(--gc-muted)'>FAST</div><div class='{tone_class(ft)}' style='font-size:.95rem;font-weight:900;margin:.22rem 0'>{esc(fa)} {esc(display_state(fast_value,'YAYIMLANMADI'))}</div><div style='font-size:.56rem;color:var(--gc-muted)'>Taktik teyit</div></div>"
+        +f"<div class='gc-direction-cell' style='min-width:0;border:1px solid var(--gc-line);border-radius:12px;padding:.52rem .42rem;text-align:center'><div style='font-size:.59rem;font-weight:900;color:var(--gc-muted)'>SLOW</div><div class='{tone_class(stn)}' style='font-size:.95rem;font-weight:900;margin:.22rem 0'>{esc(sa)} {esc(display_state(slow_value,'YAYIMLANMADI'))}</div><div style='font-size:.56rem;color:var(--gc-muted)'>Orta hız teyidi</div></div>"
+        +"</div><div class='gc-footnote' style='margin-top:.38rem'>Persisted context · selector/ensemble değildir. GVZ risk-only olarak aşağıdaki risk bölümünde kalır.</div></div>"
     )
     st.markdown(direction_summary,unsafe_allow_html=True)
     inventory_summary=(

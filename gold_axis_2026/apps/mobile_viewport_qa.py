@@ -171,16 +171,16 @@ def assert_direction_summary_above_fold(page: Page) -> None:
         raise AssertionError(f"DIRECTION_SUMMARY_BOUNDS:{box}:{nav_box}")
     if box["y"] < 0 or box["y"] + box["height"] > nav_box["y"] - 4:
         raise AssertionError(f"DIRECTION_SUMMARY_NOT_ABOVE_FOLD:{box}:{nav_box}")
-    cards = summary.locator(".gc-mini")
-    if cards.count() != 4:
-        raise AssertionError(f"DIRECTION_SUMMARY_CARD_COUNT:{cards.count()}:4")
+    cards = summary.locator(".gc-direction-cell")
+    if cards.count() != 3:
+        raise AssertionError(f"DIRECTION_SUMMARY_CARD_COUNT:{cards.count()}:3")
     for label in ("MONTHLY 3M", "FAST", "SLOW"):
         card = cards.filter(has_text=re.compile(re.escape(label), re.I))
         if card.count() != 1:
             raise AssertionError(f"DIRECTION_SUMMARY_ENGINE_COUNT:{label}:{card.count()}:1")
-        value = norm(card.first.locator(".value").inner_text().strip())
-        if value in {"", "—", "YAYIMLANMADI", "NOT_ISSUED"}:
-            raise AssertionError(f"DIRECTION_SUMMARY_VALUE_MISSING:{label}:{value}")
+        value_text = norm(card.first.inner_text().strip())
+        if not any(token in value_text for token in ("UP", "DOWN", "NEUTRAL", "ROBUST")):
+            raise AssertionError(f"DIRECTION_SUMMARY_VALUE_MISSING:{label}:{value_text}")
         card_box = card.first.bounding_box()
         if not card_box or card_box["y"] + card_box["height"] > nav_box["y"] - 4:
             raise AssertionError(f"DIRECTION_SUMMARY_ENGINE_NOT_VISIBLE:{label}:{card_box}:{nav_box}")
