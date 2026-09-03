@@ -25,6 +25,7 @@ from forecast_source import (
     fetch_latest_expert_forecasts,
 )
 from live_sources import fetch_gvz_latest, fetch_xau_history, fetch_xau_spot
+from runtime_source import fetch_runtime_observability
 from mobile_ui_contract import (
     AUTO_ENSEMBLE_STATUS,
     AUTO_SELECTOR_STATUS,
@@ -230,12 +231,19 @@ def plot_lines(df: pd.DataFrame, x: str, columns: list[str], height: int=270) ->
     chart=(alt.Chart(frame).mark_line(strokeWidth=2.2).encode(x=alt.X(f"{x}:T",title=None),y=alt.Y("Değer:Q",title="USD",scale=alt.Scale(zero=False)),color=alt.Color("Seri:N",title=None)).properties(height=height).configure_view(strokeOpacity=0).configure_axis(gridColor="#edf1f5",labelColor="#687995",titleColor="#687995").configure_legend(labelColor="#52657f",orient="bottom"))
     st.altair_chart(chart,width="stretch")
 
-url=db_url(); decision=safe_call(lambda:fetch_current_decision_state(url),None) if url else None; decision_rows=safe_call(lambda:fetch_decision_history(url),[]) if url else []
-forecast=safe_call(lambda:fetch_current_forecast(url),None) if url else None; forecast_rows=safe_call(lambda:fetch_forecast_history(url),[]) if url else []
-month_end_experts=safe_call(lambda:fetch_latest_expert_forecasts(url,TRACK_MONTH_END),[]) if url else []; early_experts=safe_call(lambda:fetch_latest_expert_forecasts(url,TRACK_EARLY_INDICATIVE),[]) if url else []
-month_end_history=safe_call(lambda:fetch_expert_forecast_history(url,TRACK_MONTH_END),[]) if url else []; early_history=safe_call(lambda:fetch_expert_forecast_history(url,TRACK_EARLY_INDICATIVE),[]) if url else []
+url=db_url()
+decision=safe_call(lambda:fetch_current_decision_state(url),None) if url else None
+decision_rows=safe_call(lambda:fetch_decision_history(url),[]) if url else []
+runtime_obs=safe_call(lambda:fetch_runtime_observability(url),None) if url else None
+forecast=safe_call(lambda:fetch_current_forecast(url),None) if url else None
+forecast_rows=safe_call(lambda:fetch_forecast_history(url),[]) if url else []
+month_end_experts=safe_call(lambda:fetch_latest_expert_forecasts(url,TRACK_MONTH_END),[]) if url else []
+early_experts=safe_call(lambda:fetch_latest_expert_forecasts(url,TRACK_EARLY_INDICATIVE),[]) if url else []
+month_end_history=safe_call(lambda:fetch_expert_forecast_history(url,TRACK_MONTH_END),[]) if url else []
+early_history=safe_call(lambda:fetch_expert_forecast_history(url,TRACK_EARLY_INDICATIVE),[]) if url else []
 spot=safe_call(get_spot,None); hist,hist_meta=safe_call(get_xau_history,(pd.DataFrame(),{})); gvz=safe_call(get_gvz,None); replay=load_replay(); rmetrics=replay_metrics(replay); _=classification_label
-engine_rows=build_engine_inventory(decision,month_end_experts,early_experts); engine_counts=engine_inventory_counts(engine_rows)
+runtime_rows=[] if not runtime_obs else list(runtime_obs.get("runtime") or [])
+engine_rows=build_engine_inventory(decision,month_end_experts,early_experts,runtime_rows); engine_counts=engine_inventory_counts(engine_rows)
 
 st.markdown("<div class='gc-shell'><div class='gc-menu'>☰</div><div class='gc-logo'><b>G</b></div><div class='gc-brand'>GOLD CONTROL<small>DECISION SYSTEM</small></div></div>",unsafe_allow_html=True)
 NAV_OPTIONS=["⌂ Bugün","◉ Görünüm","↗ Tahmin","◷ Geçmiş"]; nav=st.radio("Ana navigasyon",NAV_OPTIONS,horizontal=True,label_visibility="collapsed",key="gc_main_nav")
@@ -277,9 +285,18 @@ elif nav=="◉ Görünüm":
         f"Stored context {engine_counts['active']} · Issued expert {engine_counts['issued']} · "
         f"Blocked/Not proven {engine_counts['blocked']} · Waiting {engine_counts['waiting']}"
     )
+    if runtime_obs:
+        spine_ok=runtime_obs.get("status")=="DATA_EVIDENCE_SPINE_RUNTIME_HEALTH_PASS"
+        spine_summary=(
+            f"DB Evidence Spine: runtime {runtime_obs.get('runtime_engine_count',0)}/12 · "
+            f"context link {runtime_obs.get('context_exactly_one_link',0)}/{runtime_obs.get('context_expected',7)} · "
+            f"integrity {'PASS' if spine_ok else 'BLOCKED'}"
+        )
+    else:
+        spine_summary="DB Evidence Spine: KULLANILAMIYOR"
     st.markdown(
         "<div class='gc-card'><div class='gc-section-title'>TÜM TAHMİN VE YÖN MOTORLARI</div>"
-        +f"<div class='gc-footnote'><b>{esc(ENGINE_OBSERVABILITY_CONTRACT)}</b><br>{esc(inventory_summary)}<br>"
+        +f"<div class='gc-footnote'><b>{esc(ENGINE_OBSERVABILITY_CONTRACT)}</b><br>{esc(inventory_summary)}<br>{esc(spine_summary)}<br>"
         +"Bir motor blocked olsa bile kartı görünür kalır. Stored yön context'i ile H=1 fiyat forecast'ı birbirine dönüştürülmez.</div>"
         +engine_inventory_cards(engine_rows)+"</div>",
         unsafe_allow_html=True,

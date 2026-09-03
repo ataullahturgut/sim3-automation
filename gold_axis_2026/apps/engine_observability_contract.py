@@ -268,12 +268,20 @@ def build_engine_inventory(
     decision: dict[str, Any] | None,
     month_end_experts: list[dict[str, Any]] | None,
     early_experts: list[dict[str, Any]] | None,
+    runtime_rows: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     """Return every governed motor even when it has no issued value.
 
-    This is a presentation/read-model inventory. It must never create a selector,
-    ensemble, final action, or substitute a missing forward output.
+    Output values remain sourced only from governed expert/component ledgers.
+    Data Evidence Spine runtime rows may supply operational status/provenance,
+    but can never synthesize an output, selector, ensemble, final action, or
+    canonical authority.
     """
+    runtime_by_engine = {
+        _text(row.get("engine_id")): dict(row)
+        for row in (runtime_rows or [])
+        if _text(row.get("engine_id")) in ENGINE_REGISTRY
+    }
     out: list[dict[str, Any]] = []
     for engine_id in ENGINE_DISPLAY_ORDER:
         base = ENGINE_REGISTRY[engine_id]
@@ -281,6 +289,38 @@ def build_engine_inventory(
             row = _expert_row(engine_id, base, month_end_experts, early_experts)
         else:
             row = _component_row(engine_id, base, decision)
+
+        runtime = runtime_by_engine.get(engine_id)
+        if runtime:
+            runtime_status = _text(runtime.get("runtime_status")).upper()
+            status_code = _text(runtime.get("status_code"))
+            if runtime_status in {"WAITING", "BLOCKED", "NOT_PROVEN"} and status_code:
+                row["status"] = status_code
+            elif runtime_status == "ACTIVE" and status_code:
+                row["status"] = "STORED_CONTEXT_AVAILABLE" if _available(row.get("output")) else status_code
+            elif runtime_status == "ISSUED" and not _available(row.get("output")) and status_code:
+                row["status"] = status_code
+
+            row["runtime_status"] = runtime_status or None
+            row["runtime_status_code"] = status_code or None
+            row["runtime_version"] = runtime.get("engine_version")
+            row["runtime_role"] = runtime.get("engine_role")
+            row["runtime_evidence_class"] = runtime.get("evidence_class")
+            row["runtime_as_of"] = runtime.get("as_of")
+            row["runtime_target_context"] = runtime.get("target_context")
+            row["runtime_git_commit"] = runtime.get("git_commit")
+            row["direction_vote"] = bool(
+                row["direction_vote"] and runtime.get("direction_vote_permitted") is True
+            )
+        else:
+            row["runtime_status"] = None
+            row["runtime_status_code"] = None
+            row["runtime_version"] = None
+            row["runtime_role"] = None
+            row["runtime_evidence_class"] = None
+            row["runtime_as_of"] = None
+            row["runtime_target_context"] = None
+            row["runtime_git_commit"] = None
         out.append(row)
     return out
 

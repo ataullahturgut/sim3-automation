@@ -52,6 +52,38 @@ def _decision() -> dict:
     }
 
 
+def _runtime_rows() -> list[dict]:
+    status = {
+        "CAUSAL_PATCH": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False),
+        "VW_MIDAS_MSVR": ("BLOCKED", "BLOCKED_NOT_PROVEN_EXECUTABLE", False),
+        "MOMENTUM_3M": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False),
+        "RANDOM_WALK": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False),
+        "MONTHLY_DIRECTION_3M": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True),
+        "FAST": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True),
+        "SLOW": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True),
+        "MACRO_EVENT": ("BLOCKED", "BLOCKED_NOT_FULLY_RECOVERED", False),
+        "EMERGENCY_LEVEL": ("BLOCKED", "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE", False),
+        "EMERGENCY_REVERSAL": ("BLOCKED", "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE", False),
+        "BOCPD": ("BLOCKED", "BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED", False),
+        "GVZ_RISK": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", False),
+    }
+    return [
+        {
+            "engine_id": engine_id,
+            "engine_version": f"runtime::{engine_id}",
+            "engine_role": "TEST_RUNTIME_ROLE",
+            "as_of": "2026-09-03T14:43:00Z",
+            "target_context": "2026-09",
+            "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+            "runtime_status": values[0],
+            "status_code": values[1],
+            "direction_vote_permitted": values[2],
+            "git_commit": "3c7e2b1",
+        }
+        for engine_id, values in status.items()
+    ]
+
+
 def test_all_governed_engines_are_always_present() -> None:
     rows = build_engine_inventory(_decision(), [], [])
     assert ENGINE_OBSERVABILITY_CONTRACT == "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V1"
@@ -127,3 +159,28 @@ def test_inventory_counts_are_explicit() -> None:
     assert counts["issued"] == 0
     assert counts["blocked"] == 5
     assert counts["waiting"] == 3
+
+
+def test_runtime_ledger_is_status_authority_but_never_output_authority() -> None:
+    decision = _decision()
+    rows = {row["engine_id"]: row for row in build_engine_inventory(decision, [], [], _runtime_rows())}
+    assert rows["MONTHLY_DIRECTION_3M"]["output"] == "DOWN"
+    assert rows["MONTHLY_DIRECTION_3M"]["status"] == "STORED_CONTEXT_AVAILABLE"
+    assert rows["MONTHLY_DIRECTION_3M"]["runtime_status"] == "ACTIVE"
+    assert rows["MONTHLY_DIRECTION_3M"]["runtime_status_code"] == "VERIFIED_PERSISTED_CONTEXT_AVAILABLE"
+    assert rows["MONTHLY_DIRECTION_3M"]["runtime_evidence_class"] == "RUNTIME_GOVERNANCE_AUDIT"
+    assert rows["MONTHLY_DIRECTION_3M"]["direction_vote"] is True
+    assert rows["GVZ_RISK"]["direction_vote"] is False
+    assert rows["CAUSAL_PATCH"]["output"] is None
+    assert rows["CAUSAL_PATCH"]["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
+    assert rows["VW_MIDAS_MSVR"]["status"] == "BLOCKED_NOT_PROVEN_EXECUTABLE"
+    assert all(row["canonical_authority"] is False for row in rows.values())
+
+
+def test_runtime_cannot_self_promote_non_direction_engine_to_direction_vote() -> None:
+    runtime = _runtime_rows()
+    for row in runtime:
+        if row["engine_id"] == "GVZ_RISK":
+            row["direction_vote_permitted"] = True
+    rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [], runtime)}
+    assert rows["GVZ_RISK"]["direction_vote"] is False
