@@ -167,7 +167,7 @@ replace_once(
 )
 
 # 6) Version the browser evidence correctly and make it detect the defects that escaped v1.25.
-replace_all(qa, 'v123', 'v126', expected=6)
+replace_all(qa, 'v123', 'v126', expected=2)
 replace_all(qa, 'V123', 'V126', expected=1)
 replace_once(
     qa,
