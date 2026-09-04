@@ -33,6 +33,14 @@ The 31-Aug close must never be treated as a September close.
 
 Archived `BOCPD` remains BLOCKED. Separate identity `BOCPD_RETURN_SUCCESSOR_V1` may be extended through completed August 2026 using the frozen development prior, expected run length 36, Normal-Inverse-Gamma observation model and MAP-reset state rule unchanged. August is an out-of-lock historical context only, not validation or production evidence. Evidence must be explicitly successor historical replay context, direction vote false, no selector/ensemble/action/position authority, and actual source/retrieval lineage retained.
 
+### August context source bridge — frozen before result
+
+The frozen V1 validation source remains CORE5 `gold_monthly`; that historical validation contract is not changed. If the frozen CORE5 artifact does not contain an August-2026 row, the August **context-only extension** may use the separately named measurement `PATCH_XAU_TWELVE_DAILY_MONTHLY_MEAN_V6_TRAIN` (arithmetic mean of positive finite Twelve Data XAU/USD `1day` closes, minimum 15 observations) solely under a new context identity:
+
+`BOCPD_RETURN_SUCCESSOR_V1_AUG31_CONTEXT_BRIDGE_V1`.
+
+Authority for this bridge is the pre-result V6 source contract `GOLD_CONTROL_CAUSAL_PATCH_R1_MONTHLY_LEVEL_INPUT_CHANGE_CONTROL_V6_2026-09-02.md`, which froze materiality equivalence gates versus CORE5 before its source result. The bridged August value must **not** be relabelled CORE5, may not modify V1 validation/locked evidence, and may only produce out-of-lock replay context. If the prior V6 source gate is not PASS, or August has fewer than 15 valid daily observations, the BOCPD successor context must fail closed instead of substituting another source.
+
 ## Out of scope
 
 VW-MIDAS-MSVR, Macro Event, prospective September issuance, canonical forecast, Decision Store action, model selection/ensemble, post-result threshold or feature retuning, destructive Neon mutations.
@@ -40,7 +48,7 @@ VW-MIDAS-MSVR, Macro Event, prospective September issuance, canonical forecast, 
 ## Required sequence
 
 1. Freeze this file before new replay outputs are viewed.
-2. Implement deterministic replay-only construction on a feature branch.
+2. Implement deterministic replay-only construction on the feature branch.
 3. Run dry-run CI with production credentials for read/source access only.
 4. Require PIT, determinism, provenance and authority-isolation gates.
 5. Freeze evidence with exact SHA/run and observed outputs.
@@ -50,7 +58,7 @@ VW-MIDAS-MSVR, Macro Event, prospective September issuance, canonical forecast, 
 
 ## Acceptance gates
 
-PASS requires: Patch geometry 252/21/32 unchanged; no Patch daily feature on/after 31-Aug origin; deterministic Patch replay; historical-not-prospective evidence; Emergency month-open exactly NEUTRAL/OFF; archived BOCPD remains BLOCKED; successor V1 frozen rule unchanged; August clearly out-of-lock replay context; no new direction vote; no canonical forecast/Decision Store write; operational runtime unchanged; late-retrieved inputs preserve actual timestamps.
+PASS requires: Patch geometry 252/21/32 unchanged; no Patch daily feature on/after 31-Aug origin; deterministic Patch replay; historical-not-prospective evidence; Emergency month-open exactly NEUTRAL/OFF; archived BOCPD remains BLOCKED; successor V1 frozen rule unchanged; any August context bridge retains its separate identity and prior source-gate authority; August clearly out-of-lock replay context; no new direction vote; no canonical forecast/Decision Store write; operational runtime unchanged; late-retrieved inputs preserve actual timestamps.
 
 ## Failure rule
 
