@@ -246,6 +246,24 @@ def engine_status_label(value: Any) -> str:
     if raw.startswith("WAITING_") or raw=="NOT_ISSUED": return "BEKLİYOR"
     return raw.replace("_"," ")
 
+def engine_activation_note(value: Any) -> str:
+    raw=display_state(value,"UNRESOLVED").upper()
+    if raw=="STORED_CONTEXT_AVAILABLE":
+        return "ÇALIŞIYOR · persisted context mevcut."
+    if raw=="WAITING_ELIGIBLE_MONTH_END_ORIGIN":
+        return "Uygun ay-sonu originini bekliyor. v1.30 planında ilk meşru aday: Eylül sonu → Ekim 2026 H=1; yalnız issuer/PIT gate'leri geçerse."
+    if raw=="BLOCKED_NOT_PROVEN_EXECUTABLE":
+        return "Takvime bağlı değil; exact executable runner ve provenance kanıtlanmadan çalışmaz."
+    if raw=="BLOCKED_NOT_FULLY_RECOVERED":
+        return "Takvime bağlı değil; frozen event kuralı/uygulaması tam recovery ve validation olmadan çalışmaz."
+    if raw=="BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE":
+        return "Takvime bağlı değil; authorized persisted monthly price reference üretilmeden çalışmaz."
+    if raw=="BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED":
+        return "Takvime bağlı değil; exact forward BOCPD kuralı recover/freeze/test edilmeden çalışmaz."
+    if raw.startswith("ISSUED_"):
+        return "Çıktı yayımlandı; evidence/track kuralları içinde ayrı expert olarak gösterilir."
+    return "Mevcut teknik durum değişmeden sayı veya yön uydurulmaz."
+
 def engine_inventory_cards(rows: list[dict[str, Any]]) -> str:
     cards=[]
     for row in rows:
@@ -254,8 +272,9 @@ def engine_inventory_cards(rows: list[dict[str, Any]]) -> str:
         version=display_state(row.get("version"),"VERSION_NOT_PROVEN")
         updated=fmt_time(row.get("as_of"))
         vote="YÖN OYU" if row.get("direction_vote") is True else "YÖN OYU DEĞİL"
+        activation=engine_activation_note(raw_status)
         detail=f"{row.get('category')} · {vote} · {evidence} · {version} · Son: {updated}"
-        cards.append("<div class='gc-expert'>"+f"<div class='name'>{esc(row.get('label'))}</div><div class='role'>{esc(row.get('role'))}</div><div class='forecast'>{esc(output)}</div><div class='state'>{esc(status)}</div><div class='note' style='font-size:.60rem;color:var(--gc-muted);line-height:1.35;margin-top:.34rem'>Teknik durum: {esc(raw_status)}</div><div class='note' style='font-size:.60rem;color:var(--gc-muted);line-height:1.35;margin-top:.26rem'>{esc(detail)}</div></div>")
+        cards.append("<div class='gc-expert'>"+f"<div class='name'>{esc(row.get('label'))}</div><div class='role'>{esc(row.get('role'))}</div><div class='forecast'>{esc(output)}</div><div class='state'>{esc(status)}</div><div class='note' style='font-size:.60rem;color:var(--gc-muted);line-height:1.35;margin-top:.34rem'>Teknik durum: {esc(raw_status)}</div><div class='note' style='font-size:.60rem;color:var(--gc-muted);line-height:1.35;margin-top:.26rem'>{esc(detail)}</div><div class='note' style='font-size:.62rem;color:var(--gc-ink);line-height:1.38;margin-top:.34rem'><b>Ne zaman:</b> {esc(activation)}</div></div>")
     return "<div class='gc-expert-grid gc-engine-grid'>"+"".join(cards)+"</div>"
 
 def selector_lock_html() -> str:
@@ -355,7 +374,7 @@ elif nav=="◉ Görünüm":
     else:
         spine_summary="Production Evidence: BLOCKED · DB ve doğrulanmış snapshot kullanılamıyor"
     st.markdown(
-        "<div class='gc-card'><div class='gc-section-title'>TÜM TAHMİN VE YÖN MOTORLARI</div>"
+        "<div class='gc-card'><div class='gc-section-title'>TÜM TAHMİN, YÖN, EVENT, REJİM VE RİSK MOTORLARI</div>"
         +f"<div class='gc-footnote'><b>{esc(ENGINE_OBSERVABILITY_CONTRACT)}</b><br>{esc(inventory_summary)}<br>{esc(spine_summary)}<br>"
         +"Bir motor blocked olsa bile kartı görünür kalır. Stored yön context'i ile H=1 fiyat forecast'ı birbirine dönüştürülmez.</div>"
         +engine_inventory_cards(engine_rows)+"</div>",
@@ -382,9 +401,22 @@ elif nav=="◉ Görünüm":
 elif nav=="↗ Tahmin":
     historical_replay_experts=safe_call(lambda:get_latest_experts_cached(url,TRACK_HISTORICAL_REPLAY),[])
     aug31_state_replay=safe_call(lambda:get_aug31_state_replay_cached(url),None)
-    expert_update=month_end_experts[0].get("as_of") if month_end_experts else (early_experts[0].get("as_of") if early_experts else None); updated=forecast.get("frozen_at") if forecast else expert_update; page_head("TAHMİN","Gelecek ay için kanonik sonuç ve ayrı Multi-Expert kanıt katmanı.",updated); fstate=forecast_view_state(forecast)
+    replay_update=historical_replay_experts[0].get("as_of") if historical_replay_experts else None
+    expert_update=month_end_experts[0].get("as_of") if month_end_experts else (early_experts[0].get("as_of") if early_experts else None); updated=forecast.get("frozen_at") if forecast else (expert_update or replay_update); page_head("TAHMİN","Gelecek ay için kanonik sonuç ve ayrı Multi-Expert kanıt katmanı.",updated); fstate=forecast_view_state(forecast)
     if forecast:
         target=str(forecast.get("target_month") or "")[:7]; badge=evidence_badge(forecast.get("evidence_class"))[0]; hero_title=fmt_num(forecast.get("forecast_value"),2," USD"); hero_sub=f"Hedef dönem: {target}"; direction=decision.get("monthly_direction_3m") if target_matches(decision,forecast) else None; da,_=arrow_state(direction); direction_text=f"{da} {display_state(direction,'—')}"; origin_text=fmt_time(forecast.get("forecast_origin"))
+    elif historical_replay_experts:
+        replay_by_id={str(r.get("expert_id") or ""):r for r in historical_replay_experts}
+        replay_primary=replay_by_id.get("MOMENTUM_3M") or replay_by_id.get("RANDOM_WALK") or historical_replay_experts[0]
+        replay_target=str(replay_primary.get("target_month") or "")[:7]
+        mom=replay_by_id.get("MOMENTUM_3M"); rw=replay_by_id.get("RANDOM_WALK")
+        mom_value=fmt_num(None if not mom else mom.get("forecast_value"),2)
+        rw_value=fmt_num(None if not rw else rw.get("forecast_value"),2)
+        hero_title=f"{mom_value} / {rw_value} USD"
+        hero_sub=f"3M Momentum / Random Walk · Hedef: {replay_target} · 31 Ağustos bilgi kesiti"
+        badge="REPLAY · PROSPECTIVE DEĞİL"
+        direction_text="31 AĞUSTOS REPLAY"
+        origin_text=fmt_time(replay_primary.get("forecast_origin"))
     else:
         hero_title=fstate.title; hero_sub=fstate.subtitle; badge="KANONİK SONUÇ YOK"; direction_text="—"; origin_text="—"
     st.markdown("<div class='gc-hero'><div class='gc-hero-layout'><div class='gc-hero-icon'>↗</div>"+f"<div><div class='gc-kicker'>GELECEK AY TAHMİNİ</div><div class='gc-mid'>{esc(hero_title)}</div><div class='gc-meta'>{esc(hero_sub)}</div><span class='gc-badge gc-badge-gold'>{esc(badge)}</span></div><div class='gc-hero-side'><div><div class='gc-hero-label'>MONTHLY DIRECTION / PRIOR</div><div class='gc-hero-value'>{esc(direction_text)}</div></div><div><div class='gc-hero-label'>CANONICAL ORIGIN</div><div class='gc-hero-value' style='font-size:.90rem'>{esc(origin_text)}</div></div></div></div></div>",unsafe_allow_html=True)
