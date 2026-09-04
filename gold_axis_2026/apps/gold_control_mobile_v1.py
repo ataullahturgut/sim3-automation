@@ -28,6 +28,8 @@ from forecast_source import (
 from live_sources import fetch_gvz_latest, fetch_xau_history, fetch_xau_spot
 from runtime_source import fetch_runtime_observability
 from aug31_state_replay_source import fetch_aug31_state_replay
+from aug31_replay_expansion_source import fetch_aug31_replay_expansion
+from aug31_replay_expansion_display import attach_aug31_replay_expansion
 from mobile_ui_contract import (
     AUTO_ENSEMBLE_STATUS,
     AUTO_SELECTOR_STATUS,
@@ -121,6 +123,8 @@ def get_latest_experts_cached(database_url: str, forecast_track: str): return fe
 def get_expert_history_cached(database_url: str, forecast_track: str): return fetch_expert_forecast_history(database_url,forecast_track)
 @st.cache_data(ttl=30, show_spinner=False)
 def get_aug31_state_replay_cached(database_url: str): return fetch_aug31_state_replay(database_url)
+@st.cache_data(ttl=30, show_spinner=False)
+def get_aug31_replay_expansion_cached(database_url: str): return fetch_aug31_replay_expansion(database_url)
 
 def safe_call(fn, default):
     try: return fn()
@@ -213,7 +217,7 @@ def engine_output_display(row: dict[str, Any]) -> str:
         arrow,_=arrow_state(value); return f"{arrow} {display_state(value,'—')}"
     return display_state(value,"—")
 
-def aug31_state_replay_html(state: dict[str, Any] | None) -> str:
+def aug31_state_replay_html(state: dict[str, Any] | None, expansion: dict[str, Any] | None = None) -> str:
     if not state:
         return empty_html("31 AĞUSTOS STATE REPLAY OKUNAMADI","Production Evidence Spine ve deployment replay snapshot kullanılamıyor.")
     ma,mt=arrow_state(state.get("monthly_direction_3m")); fa,ft=arrow_state(state.get("fast_state")); sa,stn=arrow_state(state.get("slow_state"))
@@ -225,14 +229,40 @@ def aug31_state_replay_html(state: dict[str, Any] | None) -> str:
         +html_row("GVZ",f"{fmt_num(state.get('gvz_value'),2)} · {display_state(state.get('gvz_regime'),'—')}")
         +html_row("GVZ risk cap",fmt_num(state.get("gvz_cap"),1))
     )
-    blockers=dict(state.get("blocked_components") or {})
+    if expansion:
+        blockers={
+            "VW-MIDAS-MSVR":"BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN",
+            "Macro Event":"BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED",
+            "BOCPD · archived":display_state(expansion.get("bocpd_archived_engine_status"),"BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED"),
+        }
+    else:
+        blockers=dict(state.get("blocked_components") or {})
     blocker_rows="".join(html_row(k,v,"gc-warning") for k,v in blockers.items())
     return (
-        "<div class='gc-card' style='margin-top:.7rem'><div class='gc-section-title'>31 AĞUSTOS 2026 EOD STATE REPLAY</div>"
+        "<div class='gc-card' style='margin-top:.7rem'><div class='gc-section-title'>31 AĞUSTOS 2026 YÖN / RİSK STATE REPLAY</div>"
         +f"<div class='gc-footnote'><b>HISTORICAL REPLAY · PROSPECTIVE DEĞİL</b> · state boundary 31.08.2026 17:00 ET · kaynak: {esc(source)}. Bu durumlar H=1 fiyat tahmini değildir ve current yön oyu/kararı değiştirmez.</div>"
         +rows
-        +"<div class='gc-track-head'><b>REPLAY'DE DOLDURULAMAYAN MOTORLAR</b><span class='gc-track-pill'>FAIL-CLOSED</span></div>"
+        +"<div class='gc-track-head'><b>REPLAY'DE HALEN BLOCKED / ARCHIVED</b><span class='gc-track-pill'>FAIL-CLOSED</span></div>"
         +blocker_rows
+        +"</div>"
+    )
+
+def aug31_replay_expansion_html(replay: dict[str, Any] | None) -> str:
+    if not replay:
+        return empty_html("31 AĞUSTOS GENİŞLETİLMİŞ REPLAY OKUNAMADI","Causal Patch / Emergency / BOCPD successor immutable replay evidence kullanılamıyor.")
+    source="DB READ-ONLY" if replay.get("source_mode")=="NEON_DB_READ_ONLY" else "SNAPSHOT FALLBACK"
+    rows=(
+        html_row("Causal Patch · Eylül H=1",fmt_num(replay.get("causal_patch_forecast"),2," USD"))
+        +html_row("Emergency · Level",display_state(replay.get("emergency_level"),"—"))
+        +html_row("Emergency · Reversal",display_state(replay.get("emergency_reversal"),"—"))
+        +html_row("BOCPD successor V1",display_state(replay.get("bocpd_successor_state"),"—"))
+    )
+    return (
+        "<div class='gc-card' style='margin-top:.7rem;border-color:#f0d8a7'>"
+        +"<div class='gc-section-title'>31 AĞUSTOS REPLAY · RECOVERED / SUCCESSOR CONTEXT</div>"
+        +f"<div class='gc-footnote'><b>HISTORICAL_REPLAY · PROSPECTIVE ISSUED DEĞİL</b> · information boundary 31.08.2026 17:00 ET · kaynak: {esc(source)}.</div>"
+        +rows
+        +f"<div class='gc-footnote' style='margin-top:.55rem'>Patch günlük feature son tarihi: {esc(display_state(replay.get('causal_patch_daily_max_date'),'—'))}. Emergency month-open başlangıcıdır; 31 Ağustos close Eylül close sayılmaz. Archived BOCPD: <b>{esc(display_state(replay.get('bocpd_archived_engine_status'),'BLOCKED'))}</b>. Successor <b>{esc(display_state(replay.get('bocpd_successor_id'),'BOCPD_RETURN_SUCCESSOR_V1'))}</b> yalnız research / out-of-lock historical replay context'tir. Selector OFF · Ensemble OFF · canonical authority false · direction vote false.</div>"
         +"</div>"
     )
 
@@ -251,15 +281,15 @@ def engine_activation_note(value: Any) -> str:
     if raw=="STORED_CONTEXT_AVAILABLE":
         return "ÇALIŞIYOR · persisted context mevcut."
     if raw=="WAITING_ELIGIBLE_MONTH_END_ORIGIN":
-        return "Uygun ay-sonu originini bekliyor. v1.30 planında ilk meşru aday: Eylül sonu → Ekim 2026 H=1; yalnız issuer/PIT gate'leri geçerse."
+        return "Uygun ay-sonu originini bekliyor. İlk meşru prospective aday: Eylül sonu → Ekim 2026 H=1; yalnız issuer/PIT gate'leri geçerse. 31 Ağustos replay referansı ayrı HISTORICAL_REPLAY evidence katmanıdır."
     if raw=="BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN":
         return "Takvime bağlı değil; exact archived VW replication ve PIT/revision-safe source-vintage contract kanıtlanmadan çalışmaz."
     if raw=="BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED":
         return "Takvime bağlı değil; exact macro score, consensus ve release-vintage/timestamp contract recover edilmeden çalışmaz."
     if raw=="WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE":
-        return "İlk governed CAUSAL_PATCH expert referansını bekliyor. İlk meşru aday: Eylül sonu → Ekim 2026 H=1."
+        return "İlk governed prospective CAUSAL_PATCH expert referansını bekliyor. İlk meşru aday: Eylül sonu → Ekim 2026 H=1. 31 Ağustos historical replay Emergency state'i bu forward requirement'ı karşılamaz."
     if raw=="BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED":
-        return "Takvime bağlı değil; L=36 ve frozen threshold recover edildi, ancak exact prior/init ve reset-score implementation recover edilmeden çalışmaz."
+        return "Archived BOCPD takvime bağlı değil; exact prior/init ve reset-score implementation recover edilmeden çalışmaz. BOCPD_RETURN_SUCCESSOR_V1 ayrı research/HISTORICAL_REPLAY context olarak gösterilebilir; archived motoru ACTIVE yapmaz."
     if raw.startswith("ISSUED_"):
         return "Çıktı yayımlandı; evidence/track kuralları içinde ayrı expert olarak gösterilir."
     return "Mevcut teknik durum değişmeden sayı veya yön uydurulmaz."
@@ -274,7 +304,22 @@ def engine_inventory_cards(rows: list[dict[str, Any]]) -> str:
         vote="YÖN OYU" if row.get("direction_vote") is True else "YÖN OYU DEĞİL"
         activation=engine_activation_note(raw_status)
         detail=f"{row.get('category')} · {vote} · {evidence} · {version} · Son: {updated}"
-        cards.append("<div class='gc-expert'>"+f"<div class='name'>{esc(row.get('label'))}</div><div class='role'>{esc(row.get('role'))}</div><div class='forecast'>{esc(output)}</div><div class='state'>{esc(status)}</div><div class='note' style='font-size:.60rem;color:var(--gc-muted);line-height:1.35;margin-top:.34rem'>Teknik durum: {esc(raw_status)}</div><div class='note' style='font-size:.60rem;color:var(--gc-muted);line-height:1.35;margin-top:.26rem'>{esc(detail)}</div><div class='note' style='font-size:.62rem;color:var(--gc-ink);line-height:1.38;margin-top:.34rem'><b>Ne zaman:</b> {esc(activation)}</div></div>")
+        ref=row.get("replay_reference") if isinstance(row.get("replay_reference"),dict) else None
+        replay_html=""
+        if ref:
+            ref_output=fmt_num(ref.get("output"),2," USD") if ref.get("unit")=="USD/oz" else display_state(ref.get("output"),"—")
+            archived=ref.get("archived_engine_status")
+            archived_html=(f"<div style='font-size:.57rem;color:var(--gc-warning);line-height:1.34;margin-top:.22rem'><b>Archived runtime:</b> {esc(archived)}</div>" if archived else "")
+            replay_html=(
+                "<div style='margin-top:.52rem;padding:.48rem .52rem;border:1px solid #f0d8a7;border-radius:10px;background:#fffaf0'>"
+                +f"<div style='font-size:.58rem;font-weight:900;color:#8a5b00'>{esc(ref.get('label'))} · REPLAY · PROSPECTIVE DEĞİL</div>"
+                +f"<div style='font-size:.88rem;font-weight:900;color:var(--gc-ink);margin:.22rem 0'>{esc(ref_output)}</div>"
+                +f"<div style='font-size:.56rem;color:var(--gc-muted);line-height:1.34'>{esc(ref.get('evidence_class'))} · {esc(ref.get('version'))}</div>"
+                +archived_html
+                +f"<div style='font-size:.57rem;color:var(--gc-muted);line-height:1.34;margin-top:.22rem'>{esc(ref.get('note'))}</div>"
+                +"</div>"
+            )
+        cards.append("<div class='gc-expert'>"+f"<div class='name'>{esc(row.get('label'))}</div><div class='role'>{esc(row.get('role'))}</div><div class='forecast'>{esc(output)}</div><div class='state'>{esc(status)}</div><div class='note' style='font-size:.60rem;color:var(--gc-muted);line-height:1.35;margin-top:.34rem'>Operasyonel teknik durum: {esc(raw_status)}</div>"+replay_html+f"<div class='note' style='font-size:.60rem;color:var(--gc-muted);line-height:1.35;margin-top:.26rem'>{esc(detail)}</div><div class='note' style='font-size:.62rem;color:var(--gc-ink);line-height:1.38;margin-top:.34rem'><b>Ne zaman:</b> {esc(activation)}</div></div>")
     return "<div class='gc-expert-grid gc-engine-grid'>"+"".join(cards)+"</div>"
 
 def selector_lock_html() -> str:
@@ -316,9 +361,11 @@ month_end_history=safe_call(lambda:get_expert_history_cached(url,TRACK_MONTH_END
 early_history=safe_call(lambda:get_expert_history_cached(url,TRACK_EARLY_INDICATIVE),[]) if url else []
 historical_replay_experts=[]
 historical_replay_history=[]
+aug31_state_replay=safe_call(lambda:get_aug31_state_replay_cached(url),None) if url else None
+aug31_replay_expansion=safe_call(lambda:get_aug31_replay_expansion_cached(url),None) if url else None
 spot=safe_call(get_spot,None); hist,hist_meta=safe_call(get_xau_history,(pd.DataFrame(),{})); gvz=safe_call(get_gvz,None); replay=load_replay(); rmetrics=replay_metrics(replay); _=classification_label
 runtime_rows=[] if not runtime_obs else list(runtime_obs.get("runtime") or [])
-engine_rows=build_engine_inventory(decision,month_end_experts,early_experts,runtime_rows); engine_counts=engine_inventory_counts(engine_rows)
+engine_rows=attach_aug31_replay_expansion(build_engine_inventory(decision,month_end_experts,early_experts,runtime_rows),aug31_replay_expansion); engine_counts=engine_inventory_counts(engine_rows)
 
 st.markdown("<div class='gc-shell'><div class='gc-menu'>☰</div><div class='gc-logo'><b>G</b></div><div class='gc-brand'>GOLD CONTROL<small>DECISION SYSTEM</small></div></div>",unsafe_allow_html=True)
 NAV_OPTIONS=["⌂ Bugün","◉ Görünüm","↗ Tahmin","◷ Geçmiş"]; nav=st.radio("Ana navigasyon",NAV_OPTIONS,horizontal=True,label_visibility="collapsed",key="gc_main_nav")
@@ -395,12 +442,14 @@ elif nav=="◉ Görünüm":
     if decision:
         emergency_rows=html_row("Macro Event",display_state(decision.get("macro_event_state"),MACRO_EVENT_STATUS))+html_row("Emergency · Level",display_state(decision.get("level_emergency")))+html_row("Emergency · Reversal",display_state(decision.get("reversal_emergency")))+html_row("BOCPD",display_state(decision.get("bocpd_context")))
     else:
-        emergency_rows=html_row("Macro Event",MACRO_EVENT_STATUS,"gc-warning")+html_row("Emergency","YAYIMLANMADI","gc-muted")+html_row("BOCPD","YAYIMLANMADI","gc-muted")
+        if aug31_replay_expansion:
+            emergency_rows=html_row("Macro Event",MACRO_EVENT_STATUS,"gc-warning")+html_row("Emergency · Level",f"{display_state(aug31_replay_expansion.get('emergency_level'),'—')} · 31 AĞUSTOS REPLAY","gc-warning")+html_row("Emergency · Reversal",f"{display_state(aug31_replay_expansion.get('emergency_reversal'),'—')} · 31 AĞUSTOS REPLAY","gc-warning")+html_row("BOCPD",f"Archived BLOCKED · Successor: {display_state(aug31_replay_expansion.get('bocpd_successor_state'),'—')}","gc-warning")
+        else:
+            emergency_rows=html_row("Macro Event",MACRO_EVENT_STATUS,"gc-warning")+html_row("Emergency","YAYIMLANMADI","gc-muted")+html_row("BOCPD","YAYIMLANMADI","gc-muted")
     explanation=deterministic_explanation(decision); st.markdown("<div class='gc-grid2'>"+f"<div class='gc-card'>{section_header(6,'EMERGENCY DURUMU')}{emergency_rows}</div>"+f"<div class='gc-card'>{section_header(7,'SİSTEM YORUMU')}<div style='font-style:italic;line-height:1.62'>{esc(explanation)}</div>{pipeline_html()}</div></div>",unsafe_allow_html=True); st.markdown(selector_lock_html(),unsafe_allow_html=True); st.markdown("<div class='gc-note'>Aylık prior ile intramonth durum çelişebilir. Sistem yeni uygun veriler geldikçe Fast/Slow, Macro Event, Emergency, BOCPD ve GVZ'nin yalnız dondurulmuş rolleriyle güncellenir; 2026 sonucuna bakarak expert seçimi yapılmaz.</div>",unsafe_allow_html=True)
 
 elif nav=="↗ Tahmin":
     historical_replay_experts=safe_call(lambda:get_latest_experts_cached(url,TRACK_HISTORICAL_REPLAY),[])
-    aug31_state_replay=safe_call(lambda:get_aug31_state_replay_cached(url),None)
     replay_update=historical_replay_experts[0].get("as_of") if historical_replay_experts else None
     expert_update=month_end_experts[0].get("as_of") if month_end_experts else (early_experts[0].get("as_of") if early_experts else None); updated=forecast.get("frozen_at") if forecast else (expert_update or replay_update); page_head("TAHMİN","Mevcut hedef ay için geçerli replay/reference ve gelecek H=1 kanonik sonuçları ayrı evidence katmanlarında gösterilir.",updated); fstate=forecast_view_state(forecast)
     if forecast:
@@ -436,7 +485,7 @@ elif nav=="↗ Tahmin":
         else: st.markdown(empty_html("KARŞILAŞTIRMA HENÜZ OLUŞMADI","MONTH_END_EXPERT veya gösterilebilir araştırma geçmişi yok."),unsafe_allow_html=True)
     st.markdown("<div class='gc-card'><div class='gc-section-title'>MULTI-EXPERT MONTHLY FORECAST ENGINE</div><div class='gc-footnote'>Aynı target için Causal Patch, VW-MIDAS-MSVR, 3M Momentum ve Random Walk ayrı kimlik/evidence ile tutulur. Winner yoktur.</div>"+expert_cards(month_end_experts)+selector_lock_html()+"<div class='gc-track-head'><b>EARLY INDICATIVE · AYRI REVISION TRACK</b><span class='gc-track-pill'>PIT-SAFE ONLY</span></div>"+(expert_cards(early_experts) if early_experts else empty_html("EARLY INDICATIVE HENÜZ YOK","Ay-sonu kanonik forecast'tan ayrı tutulur; PIT-safe contract açılmadan sayı üretilmez."))+"</div>",unsafe_allow_html=True)
     replay_db_body=(expert_cards(historical_replay_experts) if historical_replay_experts else empty_html("EYLÜL 2026 REPLAY KAYDI YOK","Production Evidence Spine üzerinde HISTORICAL_REPLAY kaydı okunamadı."))
-    st.markdown("<div class='gc-replay'><div class='gc-replay-head'><strong>EYLÜL 2026 HISTORICAL REPLAY</strong><span class='gc-replay-pill'>REPLAY · PROSPECTIVE DEĞİL</span></div><div class='gc-footnote'><b>H=1 EXPERT REPLAY</b> · Aşağıdaki USD değerleri Eylül aylık ortalama fiyat replay'idir.</div>"+replay_db_body+aug31_state_replay_html(aug31_state_replay)+"<div class='gc-footnote' style='margin-top:.65rem'><b>Resmî prospective issuance durumu:</b> NOT_ISSUED_MISSED_2026_08_31_ORIGIN. H=1 replay ile 31 Ağustos EOD state replay ayrı evidence katmanlarıdır; canonical forecast, selector, ensemble veya karar otoritesi yaratmazlar. Ancak her ikisinin target context'i 2026-09 olduğu için Eylül kapanana kadar mevcut ay için referans/context olarak görünür kalırlar. Provenance HISTORICAL_REPLAY olarak korunur.</div></div>",unsafe_allow_html=True)
+    st.markdown("<div class='gc-replay'><div class='gc-replay-head'><strong>EYLÜL 2026 HISTORICAL REPLAY</strong><span class='gc-replay-pill'>REPLAY · PROSPECTIVE DEĞİL</span></div><div class='gc-footnote'><b>H=1 EXPERT REPLAY</b> · Aşağıdaki USD değerleri Eylül aylık ortalama fiyat replay'idir.</div>"+replay_db_body+aug31_state_replay_html(aug31_state_replay,aug31_replay_expansion)+aug31_replay_expansion_html(aug31_replay_expansion)+"<div class='gc-footnote' style='margin-top:.65rem'><b>Resmî prospective issuance durumu:</b> NOT_ISSUED_MISSED_2026_08_31_ORIGIN. H=1 replay ile 31 Ağustos EOD state replay ayrı evidence katmanlarıdır; canonical forecast, selector, ensemble veya karar otoritesi yaratmazlar. Ancak her ikisinin target context'i 2026-09 olduğu için Eylül kapanana kadar mevcut ay için referans/context olarak görünür kalırlar. Provenance HISTORICAL_REPLAY olarak korunur.</div></div>",unsafe_allow_html=True)
     st.markdown("<div class='gc-card'><div class='gc-section-title'>SENARYOLAR</div>"+empty_html("SENARYOLAR HENÜZ YAYIMLANMADI",SCENARIO_STATUS)+"<div class='gc-footnote'>Kanonik senaryo kontratı açılmadan baz/iyimser/kötümser sayı üretilmez.</div></div>",unsafe_allow_html=True)
     spot_value=None if not spot else spot.get("price")
     if forecast and spot_value:
