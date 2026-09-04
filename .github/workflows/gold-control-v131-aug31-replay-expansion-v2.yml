@@ -1,0 +1,128 @@
+name: Gold Control V1.31 Aug31 Replay Expansion V2
+
+on:
+  push:
+    branches:
+      - gold-control-v131-aug31-replay-expansion-v2
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md'
+      - 'gold_axis_2026/data_pipeline/aug31_replay_expansion_v2.py'
+      - '.github/workflows/gold-control-v131-aug31-replay-expansion-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dry-run-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install frozen replay runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          pip install 'numpy>=1.26,<3' 'pandas>=2,<3' 'requests>=2.31,<3' 'psycopg[binary]>=3.2,<4' xlrd
+          pip install --index-url https://download.pytorch.org/whl/cpu 'torch>=2.5,<3'
+
+      - name: Freeze and authority assertions
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'Manifest version:.*1.31' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'FROZEN_BEFORE_AUG31_EXPANSION_RESULT' gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md
+          grep -q 'L=252, P=21, D=32' gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md
+          grep -q 'prospective_claim=false' gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md
+          grep -q 'Archived `BOCPD` remains BLOCKED' gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md
+          grep -q 'PATCH_MONTHLY_LEVEL_BRIDGE_V6_SOURCE_PASS' gold_axis_2026/patch_repro_v1/locked_replay_v6_monthly_level_evidence.json
+
+      - name: Compile replay graph
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/aug31_replay_expansion_v2.py \
+            gold_axis_2026/data_pipeline/stage4b_patch_v7_runner_core.py \
+            gold_axis_2026/tools/causal_patch_r1_repro_v6_monthly_level.py \
+            gold_axis_2026/tools/causal_patch_r1_repro_v7_daily_feature_pit.py \
+            gold_axis_2026/tools/bocpd_return_successor_v1.py
+
+      - name: Prove dry-run code has no SQL write statements
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -Eqi '\b(insert|update|delete|alter|drop|truncate|create)[[:space:]]+' gold_axis_2026/data_pipeline/aug31_replay_expansion_v2.py; then
+            echo 'FORBIDDEN_SQL_WRITE_TOKEN_IN_DRY_RUN' >&2
+            grep -Ein '\b(insert|update|delete|alter|drop|truncate|create)[[:space:]]+' gold_axis_2026/data_pipeline/aug31_replay_expansion_v2.py || true
+            exit 1
+          fi
+
+      - name: Require read/source credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$NEON_DATABASE_URL"
+          test -n "$TWELVE_DATA_API_KEY"
+          test -n "$FRED_API_KEY"
+
+      - name: Run Aug31 Patch Emergency BOCPD replay dry-run
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/aug31-replay-v2
+          python gold_axis_2026/data_pipeline/aug31_replay_expansion_v2.py \
+            --output /tmp/aug31-replay-v2/evidence.json | tee /tmp/aug31-replay-v2/run.log
+          grep -q 'AUG31_REPLAY_EXPANSION_V2_DRY_RUN_PASS=true' /tmp/aug31-replay-v2/run.log
+          grep -q 'EMERGENCY_LEVEL=NEUTRAL' /tmp/aug31-replay-v2/run.log
+          grep -q 'EMERGENCY_REVERSAL=OFF' /tmp/aug31-replay-v2/run.log
+          grep -q 'PROSPECTIVE_CLAIM=false' /tmp/aug31-replay-v2/run.log
+          grep -q 'CURRENT_RUNTIME_AUTHORITY=false' /tmp/aug31-replay-v2/run.log
+          grep -q 'CANONICAL_FORECAST_WRITE=NONE' /tmp/aug31-replay-v2/run.log
+          grep -q 'DECISION_STORE_WRITE=NONE' /tmp/aug31-replay-v2/run.log
+          grep -q 'DATABASE_WRITES=NONE' /tmp/aug31-replay-v2/run.log
+
+      - name: Verify evidence invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          p='/tmp/aug31-replay-v2/evidence.json'
+          d=json.load(open(p))
+          assert d['historical_replay'] is True
+          assert d['prospective_claim'] is False
+          assert d['current_runtime_authority'] is False
+          assert d['canonical_authority'] is False
+          assert d['auto_selector']=='OFF'
+          assert d['auto_ensemble']=='OFF'
+          assert d['patch']['daily_max_date'] < '2026-08-31'
+          assert d['emergency']['level']=='NEUTRAL'
+          assert d['emergency']['reversal']=='OFF'
+          assert d['emergency']['reason']=='MONTH_OPEN_INITIALIZED_NO_SEPTEMBER_EOD_OBSERVATION'
+          assert d['bocpd_successor']['direction_vote_permitted'] is False
+          assert d['bocpd_successor']['validation_claim'] is False
+          assert d['bocpd_successor']['production_claim'] is False
+          assert d['archived_bocpd']['unchanged'] is True
+          assert d['production_runtime_before']=={'counts':{'ACTIVE':4,'BLOCKED':3,'WAITING':5},'direction_votes':3}
+          assert all(v==0 for v in d['authority_counts_before'].values())
+          assert d['database_writes']=='NONE'
+          print('AUG31_REPLAY_EXPANSION_V2_EVIDENCE_INVARIANTS_PASS')
+          PY
+
+      - name: Upload replay evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-aug31-replay-expansion-v2-${{ github.sha }}
+          path: /tmp/aug31-replay-v2/
+          if-no-files-found: error
+          retention-days: 30
