@@ -57,6 +57,14 @@ def test_ui_primary_semantics_are_origin_first_and_audit_is_secondary():
     assert "EYLÜL 2026 HISTORICAL REPLAY" not in text
 
 
+def test_db_less_mode_invokes_governed_aug31_snapshots_instead_of_skipping_them():
+    text = APP.read_text(encoding="utf-8")
+    assert "aug31_state_replay=safe_call(lambda:get_aug31_state_replay_cached(url),None)" in text
+    assert "aug31_replay_expansion=safe_call(lambda:get_aug31_replay_expansion_cached(url),None)" in text
+    assert "aug31_state_replay=safe_call(lambda:get_aug31_state_replay_cached(url),None) if url else None" not in text
+    assert "aug31_replay_expansion=safe_call(lambda:get_aug31_replay_expansion_cached(url),None) if url else None" not in text
+
+
 def test_reconstruction_does_not_claim_backdated_issuance():
     text = MANIFEST.read_text(encoding="utf-8")
     assert "must **not** say or imply `issued on 31-Aug`" in text
