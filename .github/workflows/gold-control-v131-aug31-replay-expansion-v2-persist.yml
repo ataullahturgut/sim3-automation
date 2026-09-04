@@ -1,0 +1,89 @@
+name: Gold Control V1.31 Aug31 Replay Expansion V2 Persist
+
+on:
+  push:
+    branches:
+      - gold-control-v131-aug31-replay-expansion-v2
+    paths:
+      - 'gold_axis_2026/data_pipeline/aug31_replay_expansion_v2_persist.py'
+      - 'gold_axis_2026/stage4b/aug31_replay_expansion_v2_evidence.json'
+      - 'gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_ENGINEERING_EVIDENCE_2026-09-04.md'
+      - '.github/workflows/gold-control-v131-aug31-replay-expansion-v2-persist.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  append-only-persist:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install persistence runtime
+        run: pip install 'psycopg[binary]>=3.2,<4'
+      - name: Verify frozen evidence authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'Manifest version:.*1.31' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'FROZEN_BEFORE_AUG31_EXPANSION_RESULT' gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md
+          grep -q 'PASS_READ_ONLY_REPLAY_CONSTRUCTION' gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_ENGINEERING_EVIDENCE_2026-09-04.md
+          python - <<'PY'
+          import json
+          p='gold_axis_2026/stage4b/aug31_replay_expansion_v2_evidence.json'
+          d=json.load(open(p))
+          assert d['artifact_digest']=='sha256:f90a38ba6239931b272a5cff9f631f9bc9bb3c04dbc5ff10ffbf5f4fc4bb9b20'
+          assert d['dry_run_git_commit']=='f255fbcc7f8e3513242fe9f99cfc380d234dc94e'
+          assert d['dry_run_workflow_run']==33879414201
+          assert d['dry_run_pass'] is True
+          assert d['prospective_claim'] is False
+          assert d['canonical_authority'] is False
+          assert d['patch']['daily_max_date'] < '2026-08-31'
+          assert d['emergency']['level']=='NEUTRAL'
+          assert d['emergency']['reversal']=='OFF'
+          assert d['archived_bocpd']['unchanged'] is True
+          print('AUG31_REPLAY_V2_FROZEN_EVIDENCE_AUTHORITY_PASS')
+          PY
+      - name: Compile persistence graph
+        run: python -m py_compile gold_axis_2026/data_pipeline/aug31_replay_expansion_v2_persist.py
+      - name: Read-only persistence preflight
+        run: python gold_axis_2026/data_pipeline/aug31_replay_expansion_v2_persist.py
+      - name: Append-only historical replay persistence
+        run: python gold_axis_2026/data_pipeline/aug31_replay_expansion_v2_persist.py --persist
+      - name: Independent read-only post-persist audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os, psycopg
+          from psycopg.rows import dict_row
+          u=os.environ['NEON_DATABASE_URL']
+          with psycopg.connect(u,autocommit=False,row_factory=dict_row) as c:
+            with c.cursor() as cur:
+              cur.execute('SET TRANSACTION READ ONLY')
+              cur.execute("select runtime_status,count(*)::int n from latest_engine_runtime_state group by runtime_status")
+              counts={r['runtime_status']:r['n'] for r in cur.fetchall()}
+              assert counts=={'ACTIVE':4,'WAITING':5,'BLOCKED':3}, counts
+              cur.execute("select count(*)::int n from latest_engine_runtime_state where direction_vote_permitted")
+              assert cur.fetchone()['n']==3
+              cur.execute("select engine_id,status_code,metadata from latest_historical_replay_engine_state where target_context='2026-09' and engine_id in ('CAUSAL_PATCH','EMERGENCY_LEVEL','EMERGENCY_REVERSAL','BOCPD') order by engine_id")
+              rows=cur.fetchall(); assert len(rows)==4, rows
+              by={r['engine_id']:r for r in rows}
+              assert by['CAUSAL_PATCH']['status_code']=='HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE'
+              assert by['EMERGENCY_LEVEL']['metadata']['emergency_level']=='NEUTRAL'
+              assert by['EMERGENCY_REVERSAL']['metadata']['emergency_reversal']=='OFF'
+              assert by['BOCPD']['metadata']['successor_state']=='NO_ADVERSE_BREAK_CANDIDATE'
+              assert by['BOCPD']['metadata']['archived_engine_status']=='BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED'
+              for t in ('monthly_forecast_contracts','decision_signal_snapshots','decision_runs','decision_events'):
+                cur.execute(f'select count(*)::int n from {t}'); assert cur.fetchone()['n']==0, t
+            c.rollback()
+          print('AUG31_REPLAY_EXPANSION_V2_POST_PERSIST_AUDIT_PASS')
+          PY
