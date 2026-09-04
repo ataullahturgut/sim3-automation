@@ -56,7 +56,7 @@ HISTORICAL_REPLAY = ROOT / "production_closure" / "production_history_43.csv"
 PATCH_EXACT_ID = "CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE"
 PATCH_GEOMETRY = "L=252 / P=21 / D=32"
 MULTI_EXPERT_ARCHITECTURE = "MANIFEST_V1_26_MULTI_EXPERT_BUILD_FIRST_SELECT_LATER_ENGINE_OBSERVABILITY"
-MACRO_EVENT_STATUS = "BLOCKED_NOT_FULLY_RECOVERED"
+MACRO_EVENT_STATUS = "BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED"
 SELECTOR_RULE_STATUS = "NOT_PROVEN_EXPERT_SELECTION_RULE"
 if EXPERT_SELECTION_STATUS != SELECTOR_RULE_STATUS:
     raise RuntimeError("MANIFEST_V1_26_SELECTOR_STATUS_MISMATCH")
@@ -252,14 +252,14 @@ def engine_activation_note(value: Any) -> str:
         return "ÇALIŞIYOR · persisted context mevcut."
     if raw=="WAITING_ELIGIBLE_MONTH_END_ORIGIN":
         return "Uygun ay-sonu originini bekliyor. v1.30 planında ilk meşru aday: Eylül sonu → Ekim 2026 H=1; yalnız issuer/PIT gate'leri geçerse."
-    if raw=="BLOCKED_NOT_PROVEN_EXECUTABLE":
-        return "Takvime bağlı değil; exact executable runner ve provenance kanıtlanmadan çalışmaz."
-    if raw=="BLOCKED_NOT_FULLY_RECOVERED":
-        return "Takvime bağlı değil; frozen event kuralı/uygulaması tam recovery ve validation olmadan çalışmaz."
-    if raw=="BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE":
-        return "Takvime bağlı değil; authorized persisted monthly price reference üretilmeden çalışmaz."
-    if raw=="BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED":
-        return "Takvime bağlı değil; exact forward BOCPD kuralı recover/freeze/test edilmeden çalışmaz."
+    if raw=="BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN":
+        return "Takvime bağlı değil; exact archived VW replication ve PIT/revision-safe source-vintage contract kanıtlanmadan çalışmaz."
+    if raw=="BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED":
+        return "Takvime bağlı değil; exact macro score, consensus ve release-vintage/timestamp contract recover edilmeden çalışmaz."
+    if raw=="WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE":
+        return "İlk governed CAUSAL_PATCH expert referansını bekliyor. İlk meşru aday: Eylül sonu → Ekim 2026 H=1."
+    if raw=="BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED":
+        return "Takvime bağlı değil; L=36 ve frozen threshold recover edildi, ancak exact prior/init ve reset-score implementation recover edilmeden çalışmaz."
     if raw.startswith("ISSUED_"):
         return "Çıktı yayımlandı; evidence/track kuralları içinde ayrı expert olarak gösterilir."
     return "Mevcut teknik durum değişmeden sayı veya yön uydurulmaz."
