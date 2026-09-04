@@ -1,0 +1,106 @@
+name: Gold Control Patch V7 Month-End Expert Issuer
+
+on:
+  workflow_call:
+    inputs:
+      mode:
+        description: 'preflight or issue-if-eligible'
+        required: false
+        default: 'issue-if-eligible'
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  patch-month-end-expert:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install frozen issuer runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          pip install 'numpy>=1.26,<3' 'pandas>=2,<3' 'requests>=2.31,<3' 'psycopg[binary]>=3.2,<4' xlrd
+          pip install --index-url https://download.pytorch.org/whl/cpu 'torch>=2.5,<3'
+
+      - name: Validate requested mode
+        shell: bash
+        env:
+          ISSUER_MODE: ${{ inputs.mode }}
+        run: |
+          set -euo pipefail
+          case "$ISSUER_MODE" in
+            preflight|issue-if-eligible) ;;
+            *) echo "INVALID_PATCH_ISSUER_MODE=$ISSUER_MODE" >&2; exit 2 ;;
+          esac
+
+      - name: Compile governed multi-expert issuer
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/multi_expert_forecast.py \
+            gold_axis_2026/data_pipeline/multi_expert_forecast_store.py \
+            gold_axis_2026/data_pipeline/stage4b_patch_v7_runner_core.py \
+            gold_axis_2026/data_pipeline/stage4b_patch_v7_first_shadow_issuer.py \
+            gold_axis_2026/data_pipeline/stage4b_multi_expert_patch_v7_month_end_issuer.py
+
+      - name: Enforce manifest and issuer locks
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'auto selector = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'auto ensemble = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'FROZEN_BEFORE_FIRST_ELIGIBLE_FORWARD_ORIGIN' gold_axis_2026/GOLD_CONTROL_PATCH_V7_FIRST_PROSPECTIVE_SHADOW_ISSUER_CONTRACT_2026-09-02.md
+          grep -q 'September 2026 may never be inserted as prospective evidence' gold_axis_2026/GOLD_CONTROL_PATCH_V7_FIRST_PROSPECTIVE_SHADOW_ISSUER_CONTRACT_2026-09-02.md
+
+      - name: Require production credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$NEON_DATABASE_URL"
+          if [ "${{ inputs.mode }}" = 'issue-if-eligible' ]; then
+            test -n "$TWELVE_DATA_API_KEY"
+            test -n "$FRED_API_KEY"
+          fi
+
+      - name: Run governed Patch issuer
+        shell: bash
+        env:
+          ISSUER_MODE: ${{ inputs.mode }}
+        run: |
+          set -euo pipefail
+          python gold_axis_2026/data_pipeline/stage4b_multi_expert_patch_v7_month_end_issuer.py \
+            --mode "$ISSUER_MODE" | tee /tmp/patch_issuer.log
+          grep -q 'AUTO_SELECTOR=OFF' /tmp/patch_issuer.log || true
+          grep -q 'AUTO_ENSEMBLE=OFF' /tmp/patch_issuer.log || true
+          if grep -q 'FORECAST_VALUE_LOGGED=' /tmp/patch_issuer.log; then
+            grep -q 'FORECAST_VALUE_LOGGED=NO' /tmp/patch_issuer.log
+          fi
+
+      - name: Verify no forbidden canonical decision authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -Eq 'insert[[:space:]]+into[[:space:]]+monthly_forecast_contracts' gold_axis_2026/data_pipeline/stage4b_multi_expert_patch_v7_month_end_issuer.py; then
+            echo 'FORBIDDEN_CANONICAL_FORECAST_WRITE_FOUND' >&2
+            exit 1
+          fi
+          if grep -Eq 'insert[[:space:]]+into[[:space:]]+decision_(events|runs|signal_snapshots)' gold_axis_2026/data_pipeline/stage4b_multi_expert_patch_v7_month_end_issuer.py; then
+            echo 'FORBIDDEN_DECISION_STORE_WRITE_FOUND' >&2
+            exit 1
+          fi
+          echo 'PATCH_V7_MULTI_EXPERT_AUTHORITY_SPLIT_PASS'
