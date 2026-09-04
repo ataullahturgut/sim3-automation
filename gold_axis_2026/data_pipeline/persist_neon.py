@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 import os
+import re
+import subprocess
 from pathlib import Path
 
 import psycopg
@@ -11,6 +13,7 @@ ROOT = Path(__file__).resolve().parent
 CONTRACTS_PATH = ROOT / "source_contracts.json"
 DIRECT_CONTRACTS_PATH = ROOT / "source_contracts_direct.json"
 TWELVE_VALIDATED_CONTRACTS_PATH = ROOT / "source_contracts_twelve_validated.json"
+_SHA40 = re.compile(r"^[0-9a-f]{40}$")
 
 
 def _db_url() -> str:
@@ -18,6 +21,43 @@ def _db_url() -> str:
     if not url:
         raise RuntimeError("NEON_DATABASE_URL is not set")
     return url
+
+
+def _code_git_sha() -> str | None:
+    """Return the SHA of the code actually checked out for this writer.
+
+    Reusable GitHub workflows inherit the caller's GITHUB_SHA, which can differ
+    from the explicitly checked-out canonical branch. Prefer an explicit
+    GOLD_CODE_SHA override, otherwise resolve repository HEAD, and use
+    GITHUB_SHA only as a last-resort fallback for non-git execution contexts.
+    """
+    override = os.environ.get("GOLD_CODE_SHA", "").strip().lower()
+    if override:
+        if not _SHA40.fullmatch(override):
+            raise RuntimeError("INVALID_GOLD_CODE_SHA")
+        return override
+
+    try:
+        proc = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        checked_out = proc.stdout.strip().lower()
+        if _SHA40.fullmatch(checked_out):
+            return checked_out
+    except (OSError, subprocess.SubprocessError):
+        pass
+
+    fallback = os.environ.get("GITHUB_SHA", "").strip().lower()
+    if not fallback:
+        return None
+    if not _SHA40.fullmatch(fallback):
+        raise RuntimeError("INVALID_GITHUB_SHA")
+    return fallback
 
 
 def _load_contracts() -> dict:
@@ -145,6 +185,8 @@ def persist_bundle(bundle: dict) -> dict:
     series_ids = sorted({o["series_id"] for o in observations})
     errors = [x for x in bundle.get("quality_events", []) if x.get("severity") == "ERROR"]
     run_status = "PARTIAL" if errors else "SUCCESS"
+    code_git_sha = _code_git_sha()
+    workflow_git_sha = os.environ.get("GITHUB_SHA")
 
     with psycopg.connect(_db_url(), autocommit=False) as conn:
         seed_source_registry(conn)
@@ -160,10 +202,14 @@ def persist_bundle(bundle: dict) -> dict:
                 """,
                 (
                     bundle["run_id"], bundle["started_at"], bundle["finished_at"],
-                    os.environ.get("GITHUB_SHA"), bundle["pipeline_version"], bundle.get("mode"),
+                    code_git_sha, bundle["pipeline_version"], bundle.get("mode"),
                     run_status, len(observations),
                     "Collector completed with source errors" if errors else None,
-                    json.dumps({"mode": bundle.get("mode")}),
+                    json.dumps({
+                        "mode": bundle.get("mode"),
+                        "code_git_sha": code_git_sha,
+                        "workflow_git_sha": workflow_git_sha,
+                    }),
                 ),
             )
 
