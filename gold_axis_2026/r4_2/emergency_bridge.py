@@ -17,8 +17,11 @@ class EmergencyBridgeResult:
     reference_model_id: str
     reference_target_month: str
     reference_evidence_class: str
+    reference_identity_family: str | None
     input_snapshot_id: str | None
     forecast_contract_id: str | None
+    input_set_id: str | None
+    expert_forecast_id: str | None
 
 
 def evaluate_emergency(
@@ -29,11 +32,11 @@ def evaluate_emergency(
     monthly_reference: MonthlyPriceReference,
     require_persisted_reference: bool = False,
 ) -> EmergencyBridgeResult:
-    """Apply the frozen R4.1 Emergency geometry to an explicitly named reference.
+    """Apply frozen R4.1 Emergency geometry to an explicitly named reference.
 
-    This function intentionally passes only the numeric reference value into the
-    frozen EmergencyState calculation. The model identity is carried separately
-    and is never relabelled as ``monthly_vw_forecast``.
+    Only the numeric reference value enters the frozen EmergencyState geometry.
+    Provenance is carried separately. An expert-ledger reference is never
+    relabelled as a canonical forecast contract or as ``monthly_vw_forecast``.
     """
 
     monthly_reference.validate(require_persisted_ids=require_persisted_reference)
@@ -44,6 +47,9 @@ def evaluate_emergency(
         reference_model_id=monthly_reference.model_id,
         reference_target_month=monthly_reference.target_month,
         reference_evidence_class=monthly_reference.evidence_class,
+        reference_identity_family=monthly_reference.persisted_identity_family(),
         input_snapshot_id=monthly_reference.input_snapshot_id,
         forecast_contract_id=monthly_reference.forecast_contract_id,
+        input_set_id=monthly_reference.input_set_id,
+        expert_forecast_id=monthly_reference.expert_forecast_id,
     )
