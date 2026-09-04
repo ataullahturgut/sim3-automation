@@ -1,0 +1,64 @@
+{
+  "contract_version": "BOCPD_RETURN_SUCCESSOR_V1",
+  "status": "FROZEN_PRE_REGISTERED_CANDIDATE_V1",
+  "archived_identity": "BOCPD",
+  "archived_status": "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED",
+  "role": "REGIME_BREAK_CONTEXT",
+  "direction_vote_permitted": false,
+  "position_mapping_permitted": false,
+  "database_writes_permitted": false,
+  "source": {
+    "artifact": "gold_axis_2026/core5_monthly.csv.gz.b64",
+    "field": "gold_monthly",
+    "semantic": "CORE5 monthly average gold price research axis",
+    "transform": "log(P_t/P_t-1)",
+    "completed_month_only": true
+  },
+  "windows": {
+    "development_start": "2010-01-01",
+    "development_end": "2020-12-01",
+    "validation_start": "2021-01-01",
+    "validation_end": "2023-12-01",
+    "locked_start": "2024-01-01",
+    "locked_end": "2026-07-01",
+    "tuning_2026": "NONE"
+  },
+  "hazard": {
+    "expected_run_length_months": 36,
+    "type": "CONSTANT_GEOMETRIC",
+    "value": 0.027777777777777776
+  },
+  "observation_model": {
+    "family": "GAUSSIAN_UNKNOWN_MEAN_VARIANCE",
+    "conjugate_prior": "NORMAL_INVERSE_GAMMA",
+    "predictive": "STUDENT_T",
+    "prior_fit_window": "DEVELOPMENT_ONLY",
+    "mu0": "DEVELOPMENT_MEAN",
+    "kappa0": 1.0,
+    "alpha0": 2.0,
+    "beta0": "DEVELOPMENT_SAMPLE_VARIANCE_TIMES_ALPHA0_MINUS_1"
+  },
+  "state_rule": {
+    "previous_map": "argmax R_t_minus_1",
+    "expected_uninterrupted_run": "previous_map_plus_1",
+    "current_map": "argmax R_t",
+    "map_reset": "current_map_less_than_expected_uninterrupted_run",
+    "reset_fraction": "max(0,(expected_run-current_map)/expected_run)",
+    "adverse_break_candidate": "map_reset AND completed_month_log_return_less_than_0",
+    "true_state": "ADVERSE_BREAK_CANDIDATE",
+    "false_state": "NO_ADVERSE_BREAK_CANDIDATE",
+    "numeric_alarm_threshold": null,
+    "archived_threshold_reused": false
+  },
+  "evidence": {
+    "historical": "HISTORICAL_REPLAY_SUCCESSOR_RESEARCH",
+    "future_first_allowed": "PROSPECTIVE_SHADOW",
+    "live_production_authorized": false
+  },
+  "authority": {
+    "method": "Adams and MacKay (2007), Bayesian Online Changepoint Detection, arXiv:0710.3742",
+    "project_manifest": "gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md",
+    "recovery_audit": "gold_axis_2026/GOLD_CONTROL_V130_UNRESOLVED_ENGINE_RECOVERY_AUDIT_2026-09-04.md",
+    "change_control": "gold_axis_2026/GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_CHANGE_CONTROL_2026-09-04.md"
+  }
+}
