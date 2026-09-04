@@ -1,20 +1,12 @@
 name: Gold Data Twelve Market
 
 on:
-  push:
-    branches: [gold-r4-direction-engine]
-    paths:
-      - 'gold_axis_2026/data_pipeline/twelve_data_market.py'
-      - 'gold_axis_2026/data_pipeline/twelve_ingest_verified.py'
-      - 'gold_axis_2026/data_pipeline/correct_twelve_incomplete_daily.py'
-      - 'gold_axis_2026/data_pipeline/source_job.py'
-      - 'gold_axis_2026/data_pipeline/persist_neon.py'
-      - 'gold_axis_2026/data_pipeline/source_contracts_twelve_validated.json'
-      - 'gold_axis_2026/data_pipeline/verify_twelve_market.py'
-  schedule:
-    - cron: '35 1 * * 2-6'
-    - cron: '45 12 * * 2-6'
-  workflow_dispatch:
+  workflow_call:
+    secrets:
+      NEON_DATABASE_URL:
+        required: true
+      TWELVE_DATA_API_KEY:
+        required: true
 
 concurrency:
   group: gold-data-twelve-market
@@ -32,6 +24,9 @@ jobs:
       INGEST_MODE: daily
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -51,7 +46,7 @@ jobs:
           python -m py_compile gold_axis_2026/data_pipeline/verify_twelve_market.py
       - name: Reject any previously captured incomplete same-day bars
         run: python gold_axis_2026/data_pipeline/correct_twelve_incomplete_daily.py
-      - name: Collect once, persist, and replay bundle for dedupe
+      - name: Collect once persist and replay bundle for dedupe
         run: python gold_axis_2026/data_pipeline/twelve_ingest_verified.py --mode "$INGEST_MODE"
       - name: Verify Neon persistence and point-in-time contract
         run: python gold_axis_2026/data_pipeline/verify_twelve_market.py
