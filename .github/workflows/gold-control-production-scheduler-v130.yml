@@ -1,0 +1,104 @@
+name: Gold Control Production Scheduler V1.30
+
+on:
+  push:
+    branches: [gold-control-v130-default-scheduler-dispatcher, main]
+    paths:
+      - '.github/workflows/gold-control-production-scheduler-v130.yml'
+  schedule:
+    - cron: '17 * * * *'       # core hourly XAU
+    - cron: '45 23 * * *'      # core daily authority ingest
+    - cron: '25 6 * * *'       # core daily independent retry
+    - cron: '15 1 * * 2-6'     # FRED indices after US session
+    - cron: '30 12 * * 2-6'    # FRED indices retry
+    - cron: '35 1 * * 2-6'     # Twelve market after US session
+    - cron: '45 12 * * 2-6'    # Twelve market retry
+    - cron: '10 22 * * 1-5'    # canonical XAU NY17 after 17:00 New York
+  workflow_dispatch:
+    inputs:
+      lane:
+        description: 'Explicit production lane to run'
+        required: true
+        default: 'core-daily'
+        type: choice
+        options:
+          - core-hourly
+          - core-daily
+          - fred-indices
+          - twelve-market
+          - xau-ny17
+
+permissions:
+  contents: read
+
+jobs:
+  validate-dispatcher:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Verify canonical reusable-writer authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin gold-r4-direction-engine --depth=1
+          for f in \
+            .github/workflows/gold-data-neon-ingest.yml \
+            .github/workflows/gold-data-fred-indices.yml \
+            .github/workflows/gold-data-twelve-market.yml \
+            .github/workflows/gold-data-xau-ny17.yml
+          do
+            text="$(git show origin/gold-r4-direction-engine:$f)"
+            grep -Fq 'workflow_call:' <<<"$text"
+            grep -Fq 'ref: gold-r4-direction-engine' <<<"$text"
+            if grep -Eq '^[[:space:]]+schedule:' <<<"$text"; then
+              echo "Canonical writer still owns a schedule: $f" >&2
+              exit 1
+            fi
+          done
+          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md \
+            | grep -Fq 'default-branch scheduling surface'
+          echo 'V130_DEFAULT_BRANCH_DISPATCHER_AUTHORITY_PASS'
+
+  core-hourly:
+    if: >-
+      (github.event_name == 'schedule' && github.event.schedule == '17 * * * *') ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'core-hourly')
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-neon-ingest.yml@gold-r4-direction-engine
+    with:
+      mode: hourly
+    secrets: inherit
+
+  core-daily:
+    if: >-
+      (github.event_name == 'schedule' && (github.event.schedule == '45 23 * * *' || github.event.schedule == '25 6 * * *')) ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'core-daily')
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-neon-ingest.yml@gold-r4-direction-engine
+    with:
+      mode: daily
+    secrets: inherit
+
+  fred-indices:
+    if: >-
+      (github.event_name == 'schedule' && (github.event.schedule == '15 1 * * 2-6' || github.event.schedule == '30 12 * * 2-6')) ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'fred-indices')
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-fred-indices.yml@gold-r4-direction-engine
+    with:
+      mode: daily
+    secrets: inherit
+
+  twelve-market:
+    if: >-
+      (github.event_name == 'schedule' && (github.event.schedule == '35 1 * * 2-6' || github.event.schedule == '45 12 * * 2-6')) ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'twelve-market')
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-twelve-market.yml@gold-r4-direction-engine
+    secrets: inherit
+
+  xau-ny17:
+    if: >-
+      (github.event_name == 'schedule' && github.event.schedule == '10 22 * * 1-5') ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'xau-ny17')
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-xau-ny17.yml@gold-r4-direction-engine
+    secrets: inherit
