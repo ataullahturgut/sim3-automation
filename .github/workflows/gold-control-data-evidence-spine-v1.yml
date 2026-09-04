@@ -5,8 +5,10 @@ on:
     branches:
       - gold-control-data-evidence-spine-v1
       - gold-r4-direction-engine
+      - gold-control-v131-postmerge-ci-reconcile
     paths:
       - 'gold_axis_2026/GOLD_CONTROL_DATA_EVIDENCE_SPINE_CONTRACT_2026-09-03.md'
+      - 'gold_axis_2026/GOLD_CONTROL_V131_POSTMERGE_CI_RECONCILIATION_2026-09-04.md'
       - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
       - 'gold_axis_2026/data_pipeline/data_evidence_spine.py'
       - 'gold_axis_2026/data_pipeline/data_evidence_spine_preflight.py'
@@ -16,6 +18,7 @@ on:
       - 'gold_axis_2026/data_pipeline/multi_expert_forecast_store.py'
       - 'gold_axis_2026/data_pipeline/schema_patch_data_evidence_spine_neon_v1.sql'
       - 'gold_axis_2026/data_pipeline/test_data_evidence_spine.py'
+      - 'gold_axis_2026/data_pipeline/test_data_evidence_spine_preflight.py'
       - '.github/workflows/gold-control-data-evidence-spine-v1.yml'
   workflow_dispatch:
 
@@ -45,7 +48,7 @@ jobs:
       - name: Run deterministic evidence spine tests
         run: |
           cd gold_axis_2026/data_pipeline
-          pytest -q test_data_evidence_spine.py test_multi_expert_forecast.py test_multi_expert_early_indicative.py
+          pytest -q test_data_evidence_spine.py test_data_evidence_spine_preflight.py test_multi_expert_forecast.py test_multi_expert_early_indicative.py
       - name: Verify production parser-safe migration contract
         run: |
           grep -q 'monthly_expert_forecasts_input_set_identity_fkey' gold_axis_2026/data_pipeline/schema_patch_data_evidence_spine_neon_v1.sql
