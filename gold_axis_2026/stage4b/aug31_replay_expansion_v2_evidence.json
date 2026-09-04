@@ -1,0 +1,121 @@
+{
+  "artifact_digest": "sha256:f90a38ba6239931b272a5cff9f631f9bc9bb3c04dbc5ff10ffbf5f4fc4bb9b20",
+  "artifact_name": "gold-control-aug31-replay-expansion-v2-f255fbcc7f8e3513242fe9f99cfc380d234dc94e",
+  "archived_bocpd": {
+    "status": "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED",
+    "unchanged": true
+  },
+  "authority_counts_before": {
+    "decision_events": 0,
+    "decision_runs": 0,
+    "decision_signal_snapshots": 0,
+    "monthly_forecast_contracts": 0
+  },
+  "auto_ensemble": "OFF",
+  "auto_selector": "OFF",
+  "bocpd_successor": {
+    "archived_identity": "BOCPD",
+    "archived_identity_status": "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED",
+    "context_identity": "BOCPD_RETURN_SUCCESSOR_V1_AUG31_CONTEXT_BRIDGE_V1",
+    "direction_vote_permitted": false,
+    "evidence_class": "HISTORICAL_REPLAY_SUCCESSOR_CONTEXT",
+    "expected_run_length": 36,
+    "expected_uninterrupted_run": 6,
+    "log_return": 0.07622174452967813,
+    "map_reset": false,
+    "map_run": 6,
+    "previous_map_run": 5,
+    "prior": {
+      "alpha0": 2.0,
+      "beta0": 0.0011254083384199375,
+      "kappa0": 1.0,
+      "mu0": 0.0037338484049869755
+    },
+    "production_claim": false,
+    "reset_fraction": 0.0,
+    "retrieved_post_origin": true,
+    "source_bridge_used": true,
+    "source_series": "PATCH_XAU_TWELVE_DAILY_MONTHLY_MEAN_V6_TRAIN",
+    "state": "NO_ADVERSE_BREAK_CANDIDATE",
+    "successor_id": "BOCPD_RETURN_SUCCESSOR_V1",
+    "validation_claim": false
+  },
+  "canonical_authority": false,
+  "canonical_forecast_write": "NONE",
+  "contract": "GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md",
+  "current_runtime_authority": false,
+  "database_writes": "NONE_DRY_RUN",
+  "decision_store_write": "NONE",
+  "dry_run_git_commit": "f255fbcc7f8e3513242fe9f99cfc380d234dc94e",
+  "dry_run_pass": true,
+  "dry_run_workflow_run": 33879414201,
+  "emergency": {
+    "direction_vote_permitted": false,
+    "level": "NEUTRAL",
+    "monthly_reference": 4452.046728838838,
+    "reason": "MONTH_OPEN_INITIALIZED_NO_SEPTEMBER_EOD_OBSERVATION",
+    "reference_evidence": "HISTORICAL_REPLAY",
+    "reference_identity": "CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE",
+    "reversal": "OFF"
+  },
+  "evidence_class": "HISTORICAL_REPLAY",
+  "historical_replay": true,
+  "information_cutoff": "2026-08-31T21:00:00+00:00",
+  "patch": {
+    "anchor": 4397.305673870967,
+    "august_daily_count": 30,
+    "august_daily_level": 4395.589154333333,
+    "daily_max_date": "2026-08-30",
+    "forecast": 4452.046728838838,
+    "input_fingerprint": "029d71f693775159c120f9782c1bf3e91888ad04fe06b88b4322bced400c5554",
+    "predicted_return": 0.012371922987700623,
+    "source_meta": {
+      "anchor": {
+        "bar_end": "17:00_ET",
+        "bar_open": "16:00:00",
+        "first_date": "2026-08-01",
+        "interval": "1h",
+        "last_date": "2026-08-31",
+        "observation_count": 31,
+        "provider": "Twelve Data",
+        "symbol": "XAU/USD",
+        "timezone": "America/New_York"
+      },
+      "fed_aug": {
+        "max_source_date": "2026-08-28",
+        "observation_count": 28,
+        "provider_realtime_asof": "2026-08-31",
+        "series": "DFF"
+      },
+      "fx_aug": {
+        "max_source_date": "2026-08-28",
+        "observation_count": 20,
+        "provider_realtime_asof": "2026-08-31",
+        "series": "DEXCHUS"
+      },
+      "nasdaq_realtime_asof": "2026-08-31",
+      "retrieved_post_origin": true
+    },
+    "test_macro": [
+      3.630000114440918,
+      -0.01745421439409256,
+      -0.005743545945733786,
+      5.0348076820373535,
+      0.3468133509159088
+    ],
+    "training_cut": 157,
+    "training_n": 185
+  },
+  "position_mapping": "NOT_PROVEN_POSITION_MAPPING",
+  "production_runtime_before": {
+    "counts": {
+      "ACTIVE": 4,
+      "BLOCKED": 3,
+      "WAITING": 5
+    },
+    "direction_votes": 3
+  },
+  "prospective_claim": false,
+  "replay_executed_at": "2026-09-04T13:42:09.025554+00:00",
+  "target_context": "2026-09"
+}
