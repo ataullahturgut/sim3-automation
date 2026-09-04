@@ -1,0 +1,109 @@
+name: Gold Control V1.30 Recovery Status Authority Validation
+
+on:
+  push:
+    branches:
+      - gold-control-v130-recovery-status-hardening
+      - gold-r4-direction-engine
+    paths:
+      - 'gold_axis_2026/apps/decision_source.py'
+      - 'gold_axis_2026/apps/engine_observability_contract.py'
+      - 'gold_axis_2026/apps/test_engine_observability_contract.py'
+      - 'gold_axis_2026/GOLD_CONTROL_V130_UNRESOLVED_ENGINE_RECOVERY_AUDIT_2026-09-04.md'
+      - '.github/workflows/gold-control-v130-recovery-status-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install frozen test and read-only audit runtime
+        run: python -m pip install -q pytest 'psycopg[binary]>=3.2,<4'
+      - name: Compile recovery-state app modules
+        run: |
+          python -m py_compile \
+            gold_axis_2026/apps/decision_source.py \
+            gold_axis_2026/apps/engine_observability_contract.py \
+            gold_axis_2026/apps/test_engine_observability_contract.py
+      - name: Run engine observability regression
+        run: |
+          cd gold_axis_2026/apps
+          pytest -q test_engine_observability_contract.py
+      - name: Verify frozen source semantics and global locks
+        shell: bash
+        run: |
+          set -euo pipefail
+          audit=gold_axis_2026/GOLD_CONTROL_V130_UNRESOLVED_ENGINE_RECOVERY_AUDIT_2026-09-04.md
+          grep -q 'FROZEN_RECOVERY_AUDIT_V1' "$audit"
+          grep -q 'AUTO_SELECTOR = OFF' "$audit"
+          grep -q 'AUTO_ENSEMBLE = OFF' "$audit"
+          grep -q 'NOT_PROVEN_POSITION_MAPPING' "$audit"
+          grep -q 'BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN' "$audit"
+          grep -q 'BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED' "$audit"
+          grep -q 'BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED' "$audit"
+          grep -q 'WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE' "$audit"
+          grep -q 'EMERGENCY_CONTEXT_STATUS = "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE"' gold_axis_2026/apps/decision_source.py
+          grep -q 'BOCPD_CONTEXT_STATUS = "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED"' gold_axis_2026/apps/decision_source.py
+          grep -q 'MACRO_EVENT_CONTEXT_STATUS = "BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED"' gold_axis_2026/apps/decision_source.py
+          echo RECOVERY_SOURCE_AUTHORITY_PASS
+      - name: Read-only production Neon runtime audit
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          import psycopg
+          from psycopg.rows import dict_row
+
+          expected = {
+              'VW_MIDAS_MSVR': ('BLOCKED', 'BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN'),
+              'MACRO_EVENT': ('BLOCKED', 'BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED'),
+              'BOCPD': ('BLOCKED', 'BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED'),
+              'EMERGENCY_LEVEL': ('WAITING', 'WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE'),
+              'EMERGENCY_REVERSAL': ('WAITING', 'WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE'),
+          }
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute('SELECT engine_id, runtime_status, status_code, direction_vote_permitted FROM latest_engine_runtime_state ORDER BY engine_id')
+                  rows = {r['engine_id']: r for r in cur.fetchall()}
+                  cur.execute('SELECT runtime_status, COUNT(*)::int AS n FROM latest_engine_runtime_state GROUP BY runtime_status')
+                  counts = {r['runtime_status']: r['n'] for r in cur.fetchall()}
+                  cur.execute('SELECT COUNT(*)::int AS n FROM latest_engine_runtime_state WHERE direction_vote_permitted')
+                  votes = int(cur.fetchone()['n'])
+                  cur.execute('''
+                      SELECT
+                        (SELECT COUNT(*) FROM decision_runs)::int AS decision_runs,
+                        (SELECT COUNT(*) FROM decision_events)::int AS decision_events,
+                        (SELECT COUNT(*) FROM decision_signal_snapshots)::int AS decision_signal_snapshots,
+                        (SELECT COUNT(*) FROM monthly_forecast_contracts)::int AS monthly_forecast_contracts
+                  ''')
+                  authority = dict(cur.fetchone())
+              conn.rollback()
+
+          if counts != {'ACTIVE': 4, 'BLOCKED': 3, 'WAITING': 5}:
+              raise SystemExit(f'RUNTIME_DISTRIBUTION_MISMATCH:{counts}')
+          if votes != 3:
+              raise SystemExit(f'DIRECTION_VOTE_COUNT_MISMATCH:{votes}')
+          for engine_id, pair in expected.items():
+              row = rows.get(engine_id)
+              got = (row['runtime_status'], row['status_code']) if row else None
+              if got != pair:
+                  raise SystemExit(f'ENGINE_STATE_MISMATCH:{engine_id}:{got}:{pair}')
+              if row['direction_vote_permitted']:
+                  raise SystemExit(f'UNAUTHORIZED_DIRECTION_VOTE:{engine_id}')
+          if any(int(v) != 0 for v in authority.values()):
+              raise SystemExit(f'AUTHORITY_TABLE_NOT_EMPTY:{authority}')
+          print('RUNTIME_COUNTS=ACTIVE:4,WAITING:5,BLOCKED:3')
+          print('DIRECTION_VOTES=3')
+          print('AUTHORITY_TABLES_ZERO=TRUE')
+          print('RECOVERY_PRODUCTION_READ_ONLY_AUDIT_PASS')
+          PY
