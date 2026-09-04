@@ -6,6 +6,7 @@ on:
     branches: [gold-control-aug31-state-replay-v130]
     paths:
       - 'gold_axis_2026/tools/apply_v130_aug31_state_replay_ui.py'
+      - 'gold_axis_2026/tools/export_production_display_snapshot.py'
       - 'gold_axis_2026/tools/export_aug31_state_replay_snapshot.py'
       - 'gold_axis_2026/apps/aug31_state_replay_source.py'
       - 'gold_axis_2026/apps/test_aug31_state_replay_source.py'
@@ -38,9 +39,11 @@ jobs:
           grep -Fq '**Manifest version:** 1.30' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'FROZEN_AUG31_EOD_STATE_REPLAY_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'FROZEN_AUG31_STATE_REPLAY_DISPLAY_SNAPSHOT_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-      - name: Export read-only Aug31 state replay deployment snapshot
+      - name: Export fresh read-only production deployment snapshots
         run: |
           test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/tools/export_production_display_snapshot.py
+          test -s gold_axis_2026/apps/production_display_snapshot.json
           python gold_axis_2026/tools/export_aug31_state_replay_snapshot.py
           test -s gold_axis_2026/apps/aug31_state_replay_snapshot.json
       - name: Compile complete replay display graph
@@ -49,6 +52,7 @@ jobs:
             gold_axis_2026/apps/aug31_state_replay_source.py \
             gold_axis_2026/apps/gold_control_mobile_v1.py \
             gold_axis_2026/apps/gold_control.py \
+            gold_axis_2026/tools/export_production_display_snapshot.py \
             gold_axis_2026/tools/export_aug31_state_replay_snapshot.py
       - name: Deterministic contracts
         run: |
@@ -150,11 +154,12 @@ jobs:
             gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md \
             gold_axis_2026/apps/gold_control.py \
             gold_axis_2026/apps/gold_control_mobile_v1.py \
+            gold_axis_2026/apps/production_display_snapshot.json \
             gold_axis_2026/apps/aug31_state_replay_snapshot.json
           git diff --cached --check
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'gold-control: activate v1.30 Aug31 EOD state replay display'
+          git commit -m 'gold-control: refresh v1.30 production deployment snapshots'
           git push origin HEAD:gold-control-aug31-state-replay-v130
       - name: Upload visual evidence
         uses: actions/upload-artifact@v4
