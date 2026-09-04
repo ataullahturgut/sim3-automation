@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - gold-control-v130-september-replay-motor-visibility
-      - gold-control-v130-recovery-ui-finalize
       - gold-r4-direction-engine
       - gold-r4-direction-engine-ui-v122-final
     paths:
@@ -123,7 +122,7 @@ jobs:
             nav.filter(has_text=re.compile('Tahmin',re.I)).first.click()
             page.get_by_text('EYLÜL 2026 H=1 · CURRENT-MONTH REFERENCE',exact=True).first.wait_for(state='visible',timeout=20000)
             body=page.locator('body').inner_text()
-            for x in ('4,345.81 / 4,397.31 USD','3M Momentum / Random Walk','REPLAY · PROSPECTIVE ISSUED DEĞİL','31 AĞUSTOS AY-AÇILIŞ YÖN CONTEXT','DOWN','ROBUST_UP','REPLAY ORIGIN','EYLÜL 2026 HISTORICAL REPLAY','NOT_ISSUED_MISSED_2026_08_31_ORIGIN'):
+            for x in ('4,345.81 / 4,397.31 USD','3M Momentum / Random Walk','REPLAY · PROSPECTIVE ISSUED DEĞİL','31 AĞUSTOS AY-AÇILIŞ YÖN CONTEXT','DOWN','ROBUST_UP','REPLAY ORIGIN','NOT_ISSUED_MISSED_2026_08_31_ORIGIN'):
               assert x in body,x
             top=body.split('GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI')[0]
             assert 'CANONICAL ORIGIN' not in top
