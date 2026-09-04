@@ -1,6 +1,6 @@
 name: Gold Control V1.30 Recovery Status Patch Once
 
-# exact-head trigger: 2026-09-04
+# exact-head trigger: 2026-09-04-r2
 on:
   push:
     branches: [gold-control-v130-recovery-status-hardening]
@@ -52,7 +52,7 @@ jobs:
           p = 'gold_axis_2026/apps/test_engine_observability_contract.py'
           replace_exact(p, 'BLOCKED_NOT_PROVEN_EXECUTABLE', 'BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN', expected=3)
           replace_exact(p, 'BLOCKED_NOT_FULLY_RECOVERED', 'BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED', expected=3)
-          replace_exact(p, 'BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE', 'WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE', expected=4)
+          replace_exact(p, 'BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE', 'WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE', expected=6)
           replace_exact(p, 'BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED', 'BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED', expected=3)
           replace_exact(p, '"EMERGENCY_LEVEL": ("BLOCKED", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", False),', '"EMERGENCY_LEVEL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", False),')
           replace_exact(p, '"EMERGENCY_REVERSAL": ("BLOCKED", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", False),', '"EMERGENCY_REVERSAL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", False),')
