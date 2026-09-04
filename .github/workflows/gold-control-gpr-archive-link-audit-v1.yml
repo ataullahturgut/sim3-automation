@@ -1,0 +1,24 @@
+name: Gold Control GPR Archive Link Audit V1
+
+on:
+  push:
+    paths:
+      - 'gold_axis_2026/tools/audit_gpr_archive_link_v1.py'
+      - '.github/workflows/gold-control-gpr-archive-link-audit-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-link:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - name: Resolve official GPR vintage/archive hrefs
+        run: python gold_axis_2026/tools/audit_gpr_archive_link_v1.py
