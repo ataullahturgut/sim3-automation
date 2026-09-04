@@ -20,20 +20,20 @@ AUDIT_EVIDENCE = "RUNTIME_GOVERNANCE_AUDIT"
 
 STATUS_SPECS = {
     "CAUSAL_PATCH": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", "MONTHLY_H1_EXPERT", False),
-    "VW_MIDAS_MSVR": ("BLOCKED", "BLOCKED_NOT_PROVEN_EXECUTABLE", "MONTHLY_H1_EXPERT", False),
+    "VW_MIDAS_MSVR": ("BLOCKED", "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN", "MONTHLY_H1_EXPERT", False),
     "MOMENTUM_3M": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", "MONTHLY_H1_EXPERT", False),
     "RANDOM_WALK": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", "MONTHLY_H1_BENCHMARK", False),
-    "MACRO_EVENT": ("BLOCKED", "BLOCKED_NOT_FULLY_RECOVERED", "EVENT_CONTEXT", False),
-    "EMERGENCY_LEVEL": ("BLOCKED", "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE", "EMERGENCY_CONTEXT", False),
-    "EMERGENCY_REVERSAL": ("BLOCKED", "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE", "EMERGENCY_CONTEXT", False),
-    "BOCPD": ("BLOCKED", "BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED", "REGIME_CONTEXT", False),
+    "MACRO_EVENT": ("BLOCKED", "BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED", "EVENT_CONTEXT", False),
+    "EMERGENCY_LEVEL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", "EMERGENCY_CONTEXT", False),
+    "EMERGENCY_REVERSAL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", "EMERGENCY_CONTEXT", False),
+    "BOCPD": ("BLOCKED", "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED", "REGIME_CONTEXT", False),
 }
 
 STATIC_VERSIONS = {
-    "MACRO_EVENT": "NOT_FULLY_RECOVERED",
-    "EMERGENCY_LEVEL": "R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_PASS",
-    "EMERGENCY_REVERSAL": "R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_PASS",
-    "BOCPD": "NOT_RECOVERED_FORWARD_RULE",
+    "MACRO_EVENT": "MACRO_EVENT_PARTIAL_RULE_RECOVERED_SOURCE_CONTRACT_BLOCKED",
+    "EMERGENCY_LEVEL": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1",
+    "EMERGENCY_REVERSAL": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1",
+    "BOCPD": "BOCPD_RETURN_R1_PARTIAL_RECOVERY_L36_THRESHOLD_LOCKED",
 }
 
 CONTEXT_FEATURES = {
@@ -171,12 +171,17 @@ def main() -> int:
             plan = build_plan(cur, now)
             if not args.persist:
                 conn.rollback()
-                print(json.dumps({
-                    "status": "DRY_RUN_PASS",
-                    "engine_count": len(plan),
+                counts = {
                     "active": sum(x["runtime_status"] == "ACTIVE" for x in plan),
                     "waiting": sum(x["runtime_status"] == "WAITING" for x in plan),
                     "blocked": sum(x["runtime_status"] == "BLOCKED" for x in plan),
+                }
+                if counts != {"active": 4, "waiting": 5, "blocked": 3}:
+                    raise RuntimeError(f"RUNTIME_BOOTSTRAP_DRY_RUN_COUNTS_INVALID:{counts}")
+                print(json.dumps({
+                    "status": "DRY_RUN_PASS",
+                    "engine_count": len(plan),
+                    **counts,
                     "database_writes": "NONE",
                     "target_context": plan[0]["target_context"],
                 }, sort_keys=True))
@@ -212,7 +217,7 @@ def main() -> int:
             cur.execute("select count(*) as n from latest_engine_runtime_state")
             total = int(cur.fetchone()["n"])
         conn.rollback()
-    if total != 12 or counts.get("ACTIVE") != 4 or counts.get("WAITING") != 3 or counts.get("BLOCKED") != 5:
+    if total != 12 or counts.get("ACTIVE") != 4 or counts.get("WAITING") != 5 or counts.get("BLOCKED") != 3:
         raise RuntimeError(f"RUNTIME_BOOTSTRAP_POST_COMMIT_COUNTS_INVALID:{total}:{counts}")
     print(json.dumps({"status": "INSERTED_VERIFIED", "total": total, "counts": counts, "run_ids": run_ids}, sort_keys=True))
     print("DATA_EVIDENCE_SPINE_RUNTIME_BOOTSTRAP_PASS")
