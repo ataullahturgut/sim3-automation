@@ -1,0 +1,22 @@
+name: TMP Gold Control V1.32 Manifest Consumer Audit
+
+on:
+  push:
+    branches: [gold-control-v132-monthly-origin-contract]
+    paths: ['.github/workflows/tmp-v132-manifest-consumer-audit.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enumerate manifest-coupled workflow assertions
+        run: |
+          set -euo pipefail
+          echo '=== WORKFLOWS REFERENCING PROJECT MANIFEST ==='
+          grep -R -n -E 'GOLD_CONTROL_PROJECT_MANIFEST.md|Manifest version|manifest v1\.' .github/workflows || true
+          echo '=== APP/TEST FILES REFERENCING MANIFEST VERSION ==='
+          grep -R -n -E 'Manifest version|1\.31|1\.30' gold_axis_2026/apps --include='*.py' || true
