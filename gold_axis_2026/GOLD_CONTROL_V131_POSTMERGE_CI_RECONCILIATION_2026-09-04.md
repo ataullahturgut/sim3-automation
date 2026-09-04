@@ -6,14 +6,15 @@
 
 ## Purpose
 
-After canonical promotion of `BOCPD_RETURN_SUCCESSOR_V1`, two pre-existing CI surfaces became stale without indicating a model or production-data failure:
+After canonical promotion of `BOCPD_RETURN_SUCCESSOR_V1`, three pre-existing validation/bootstrap surfaces were stale without indicating a model or production-data failure:
 
 1. `Gold Control Data Evidence Spine V1` still treated any existing forecast input/expert rows as a pre-migration blocker even though the production evidence-spine schema is already migrated and governed historical-replay expert rows now legitimately exist.
 2. `Gold Control Mobile UI V1.30 Compatibility Final` still hard-coded manifest version 1.30 and the superseded operational distribution `4 ACTIVE / 3 WAITING / 5 BLOCKED`.
+3. `data_evidence_spine_runtime_bootstrap.py` still carried the superseded seed map `4/3/5`; if invoked with `--persist`, it could append stale runtime governance state and therefore had to be reconciled before any future use.
 
-This change-control updates validation semantics only. It does not change model formulas, data-source contracts, engine outputs, production rows, Decision Store, selector/ensemble locks, position mapping, or runtime authority.
+This change-control updates validation/bootstrap governance semantics only. It does not change model formulas, data-source contracts, model outputs, Decision Store, selector/ensemble locks, position mapping, or current production evidence. No production write is authorized by this reconciliation itself.
 
-## Data Evidence Spine rule
+## Data Evidence Spine preflight rule
 
 The preflight must distinguish three modes:
 
@@ -21,7 +22,26 @@ The preflight must distinguish three modes:
 - `ALREADY_MIGRATED`: all V1 evidence-spine objects exist. Existing governed rows are allowed at preflight; their referential/PIT/immutability correctness is proved by the immediately following read-only `data_evidence_spine_audit.py` gate.
 - `PARTIAL_MIGRATION`: only some V1 objects exist. Fail closed.
 
-In all modes, legacy PIT availability and immutability guards remain mandatory. No database writes are authorized by preflight.
+In all modes, legacy PIT availability and immutability guards remain mandatory. Decision authority rows remain disallowed by this preflight. No database writes are authorized by preflight.
+
+## Runtime bootstrap rule
+
+The 12-engine bootstrap must reproduce the current governed operational state, not an obsolete recovery snapshot.
+
+Required dry-run/persist target distribution:
+
+- `ACTIVE = 4`: `MONTHLY_DIRECTION_3M`, `FAST`, `SLOW`, `GVZ_RISK`;
+- `WAITING = 5`: `CAUSAL_PATCH`, `MOMENTUM_3M`, `RANDOM_WALK`, `EMERGENCY_LEVEL`, `EMERGENCY_REVERSAL`;
+- `BLOCKED = 3`: archived `VW_MIDAS_MSVR`, `MACRO_EVENT`, `BOCPD`.
+
+Required recovery semantics include:
+
+- Emergency engines: `WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE`;
+- VW: `BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN`;
+- Macro: `BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED`;
+- archived BOCPD: `BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED`.
+
+The new `BOCPD_RETURN_SUCCESSOR_V1` is **not** a thirteenth current runtime engine and must not replace archived BOCPD in production authority until a separate prospective-promotion contract is satisfied.
 
 ## Mobile UI v1.31 rule
 
@@ -54,10 +74,10 @@ The compatibility workflow must validate:
 
 Acceptance requires, on the exact feature head and again after canonical promotion:
 
-1. Data Evidence Spine deterministic tests pass;
+1. Data Evidence Spine deterministic tests pass, including preflight-mode and runtime-bootstrap status-map tests;
 2. read-only production preflight reports `ALREADY_MIGRATED` and passes;
 3. read-only production integrity audit passes;
-4. 12-engine dry-run bootstrap passes without writes;
+4. 12-engine dry-run bootstrap reports `4/5/3` and `database_writes=NONE`;
 5. Mobile UI deterministic tests pass;
 6. production runtime assertions pass at `4/5/3` with exact blocked/waiting identities;
 7. production-backed 390x844 browser QA passes;
