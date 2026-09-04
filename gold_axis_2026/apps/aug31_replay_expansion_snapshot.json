@@ -1,0 +1,186 @@
+{
+  "artifact_digest": "sha256:f90a38ba6239931b272a5cff9f631f9bc9bb3c04dbc5ff10ffbf5f4fc4bb9b20",
+  "database_writes": "NONE",
+  "evidence_class": "HISTORICAL_REPLAY",
+  "features": [
+    {
+      "calculation_ts": "2026-09-04T13:42:09.025554+00:00",
+      "feature_name": "AUG31_REPLAY_CAUSAL_PATCH_SEPTEMBER_FORECAST",
+      "feature_version": "AUG31_REPLAY_EXPANSION_V2",
+      "input_cutoff": "2026-08-31T21:00:00+00:00",
+      "input_lineage": {
+        "daily_max_date": "2026-08-30",
+        "input_fingerprint": "029d71f693775159c120f9782c1bf3e91888ad04fe06b88b4322bced400c5554"
+      },
+      "metadata": {
+        "artifact_digest": "sha256:f90a38ba6239931b272a5cff9f631f9bc9bb3c04dbc5ff10ffbf5f4fc4bb9b20",
+        "auto_ensemble": "OFF",
+        "auto_selector": "OFF",
+        "canonical_authority": false,
+        "contract": "GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md",
+        "current_runtime_authority": false,
+        "direction_vote_permitted": false,
+        "forecast_origin": "2026-08-31T21:00:00+00:00",
+        "historical_replay": true,
+        "prospective_claim": false,
+        "reference_kind": "HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE",
+        "state_as_of": "2026-08-31T21:00:00+00:00",
+        "target_context": "2026-09"
+      },
+      "quality_status": "HISTORICAL_REPLAY",
+      "value_num": 4452.046728838838,
+      "value_text": null
+    },
+    {
+      "calculation_ts": "2026-09-04T13:42:09.025554+00:00",
+      "feature_name": "AUG31_REPLAY_CAUSAL_PATCH_PREDICTED_LOG_RETURN",
+      "feature_version": "AUG31_REPLAY_EXPANSION_V2",
+      "input_cutoff": "2026-08-31T21:00:00+00:00",
+      "input_lineage": {
+        "daily_max_date": "2026-08-30",
+        "input_fingerprint": "029d71f693775159c120f9782c1bf3e91888ad04fe06b88b4322bced400c5554"
+      },
+      "metadata": {
+        "artifact_digest": "sha256:f90a38ba6239931b272a5cff9f631f9bc9bb3c04dbc5ff10ffbf5f4fc4bb9b20",
+        "auto_ensemble": "OFF",
+        "auto_selector": "OFF",
+        "canonical_authority": false,
+        "contract": "GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md",
+        "current_runtime_authority": false,
+        "direction_vote_permitted": false,
+        "historical_replay": true,
+        "prospective_claim": false,
+        "reference_kind": "HISTORICAL_REPLAY_DIAGNOSTIC",
+        "state_as_of": "2026-08-31T21:00:00+00:00",
+        "target_context": "2026-09"
+      },
+      "quality_status": "HISTORICAL_REPLAY",
+      "value_num": 0.012371922987700623,
+      "value_text": null
+    },
+    {
+      "calculation_ts": "2026-09-04T13:42:09.025554+00:00",
+      "feature_name": "AUG31_REPLAY_EMERGENCY_LEVEL",
+      "feature_version": "AUG31_REPLAY_EXPANSION_V2",
+      "input_cutoff": "2026-08-31T21:00:00+00:00",
+      "input_lineage": {
+        "input_fingerprint": "029d71f693775159c120f9782c1bf3e91888ad04fe06b88b4322bced400c5554"
+      },
+      "metadata": {
+        "artifact_digest": "sha256:f90a38ba6239931b272a5cff9f631f9bc9bb3c04dbc5ff10ffbf5f4fc4bb9b20",
+        "auto_ensemble": "OFF",
+        "auto_selector": "OFF",
+        "canonical_authority": false,
+        "contract": "GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md",
+        "current_runtime_authority": false,
+        "direction_vote_permitted": false,
+        "historical_replay": true,
+        "monthly_reference": 4452.046728838838,
+        "prospective_claim": false,
+        "reason": "MONTH_OPEN_INITIALIZED_NO_SEPTEMBER_EOD_OBSERVATION",
+        "reference_kind": "HISTORICAL_REPLAY_MONTH_OPEN_STATE",
+        "state_as_of": "2026-08-31T21:00:00+00:00",
+        "target_context": "2026-09"
+      },
+      "quality_status": "HISTORICAL_REPLAY",
+      "value_num": null,
+      "value_text": "NEUTRAL"
+    },
+    {
+      "calculation_ts": "2026-09-04T13:42:09.025554+00:00",
+      "feature_name": "AUG31_REPLAY_EMERGENCY_REVERSAL",
+      "feature_version": "AUG31_REPLAY_EXPANSION_V2",
+      "input_cutoff": "2026-08-31T21:00:00+00:00",
+      "input_lineage": {
+        "input_fingerprint": "029d71f693775159c120f9782c1bf3e91888ad04fe06b88b4322bced400c5554"
+      },
+      "metadata": {
+        "artifact_digest": "sha256:f90a38ba6239931b272a5cff9f631f9bc9bb3c04dbc5ff10ffbf5f4fc4bb9b20",
+        "auto_ensemble": "OFF",
+        "auto_selector": "OFF",
+        "canonical_authority": false,
+        "contract": "GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md",
+        "current_runtime_authority": false,
+        "direction_vote_permitted": false,
+        "historical_replay": true,
+        "monthly_reference": 4452.046728838838,
+        "prospective_claim": false,
+        "reason": "MONTH_OPEN_INITIALIZED_NO_SEPTEMBER_EOD_OBSERVATION",
+        "reference_kind": "HISTORICAL_REPLAY_MONTH_OPEN_STATE",
+        "state_as_of": "2026-08-31T21:00:00+00:00",
+        "target_context": "2026-09"
+      },
+      "quality_status": "HISTORICAL_REPLAY",
+      "value_num": null,
+      "value_text": "OFF"
+    },
+    {
+      "calculation_ts": "2026-09-04T13:42:09.025554+00:00",
+      "feature_name": "AUG31_REPLAY_BOCPD_SUCCESSOR_STATE",
+      "feature_version": "AUG31_REPLAY_EXPANSION_V2",
+      "input_cutoff": "2026-08-31T21:00:00+00:00",
+      "input_lineage": {
+        "input_fingerprint": "9ad26a95f2b064e6ceb89e722bd8f6f889d19df7b7e261af7b9c14ac7f79c658",
+        "source_series": "PATCH_XAU_TWELVE_DAILY_MONTHLY_MEAN_V6_TRAIN"
+      },
+      "metadata": {
+        "archived_engine_status": "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED",
+        "artifact_digest": "sha256:f90a38ba6239931b272a5cff9f631f9bc9bb3c04dbc5ff10ffbf5f4fc4bb9b20",
+        "auto_ensemble": "OFF",
+        "auto_selector": "OFF",
+        "canonical_authority": false,
+        "context_identity": "BOCPD_RETURN_SUCCESSOR_V1_AUG31_CONTEXT_BRIDGE_V1",
+        "contract": "GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md",
+        "current_runtime_authority": false,
+        "direction_vote_permitted": false,
+        "historical_replay": true,
+        "prospective_claim": false,
+        "reference_kind": "HISTORICAL_REPLAY_SUCCESSOR_CONTEXT",
+        "state_as_of": "2026-08-31T21:00:00+00:00",
+        "successor_id": "BOCPD_RETURN_SUCCESSOR_V1",
+        "target_context": "2026-09"
+      },
+      "quality_status": "HISTORICAL_REPLAY",
+      "value_num": null,
+      "value_text": "NO_ADVERSE_BREAK_CANDIDATE"
+    },
+    {
+      "calculation_ts": "2026-09-04T13:42:09.025554+00:00",
+      "feature_name": "AUG31_REPLAY_BOCPD_SUCCESSOR_RESET_FRACTION",
+      "feature_version": "AUG31_REPLAY_EXPANSION_V2",
+      "input_cutoff": "2026-08-31T21:00:00+00:00",
+      "input_lineage": {
+        "input_fingerprint": "9ad26a95f2b064e6ceb89e722bd8f6f889d19df7b7e261af7b9c14ac7f79c658",
+        "source_series": "PATCH_XAU_TWELVE_DAILY_MONTHLY_MEAN_V6_TRAIN"
+      },
+      "metadata": {
+        "artifact_digest": "sha256:f90a38ba6239931b272a5cff9f631f9bc9bb3c04dbc5ff10ffbf5f4fc4bb9b20",
+        "auto_ensemble": "OFF",
+        "auto_selector": "OFF",
+        "canonical_authority": false,
+        "contract": "GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md",
+        "current_runtime_authority": false,
+        "direction_vote_permitted": false,
+        "expected_run_length": 36,
+        "historical_replay": true,
+        "log_return": 0.07622174452967813,
+        "map_reset": false,
+        "map_run": 6,
+        "previous_map_run": 5,
+        "prospective_claim": false,
+        "reference_kind": "HISTORICAL_REPLAY_SUCCESSOR_CONTEXT",
+        "state_as_of": "2026-08-31T21:00:00+00:00",
+        "successor_id": "BOCPD_RETURN_SUCCESSOR_V1",
+        "target_context": "2026-09"
+      },
+      "quality_status": "HISTORICAL_REPLAY",
+      "value_num": 0.0,
+      "value_text": null
+    }
+  ],
+  "payload_sha256": "33384f05bbd39bd04028b3b42921dbb420e7ca2e18bd1cba4420c52ae617582a",
+  "snapshot_contract": "FROZEN_AUG31_REPLAY_EXPANSION_V2_DISPLAY_SNAPSHOT_V1",
+  "source_state_at": "2026-09-04T13:42:09.025554+00:00",
+  "state_as_of": "2026-08-31T21:00:00+00:00",
+  "target_context": "2026-09"
+}
