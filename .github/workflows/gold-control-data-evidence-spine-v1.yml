@@ -19,6 +19,7 @@ on:
       - 'gold_axis_2026/data_pipeline/schema_patch_data_evidence_spine_neon_v1.sql'
       - 'gold_axis_2026/data_pipeline/test_data_evidence_spine.py'
       - 'gold_axis_2026/data_pipeline/test_data_evidence_spine_preflight.py'
+      - 'gold_axis_2026/data_pipeline/test_data_evidence_spine_runtime_bootstrap.py'
       - '.github/workflows/gold-control-data-evidence-spine-v1.yml'
   workflow_dispatch:
 
@@ -48,7 +49,7 @@ jobs:
       - name: Run deterministic evidence spine tests
         run: |
           cd gold_axis_2026/data_pipeline
-          pytest -q test_data_evidence_spine.py test_data_evidence_spine_preflight.py test_multi_expert_forecast.py test_multi_expert_early_indicative.py
+          pytest -q test_data_evidence_spine.py test_data_evidence_spine_preflight.py test_data_evidence_spine_runtime_bootstrap.py test_multi_expert_forecast.py test_multi_expert_early_indicative.py
       - name: Verify production parser-safe migration contract
         run: |
           grep -q 'monthly_expert_forecasts_input_set_identity_fkey' gold_axis_2026/data_pipeline/schema_patch_data_evidence_spine_neon_v1.sql
