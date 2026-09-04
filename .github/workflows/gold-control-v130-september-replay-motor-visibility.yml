@@ -38,12 +38,14 @@ jobs:
       - name: Verify frozen presentation contract and compile
         run: |
           grep -Fq '**Manifest version:** 1.30' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          grep -Fq 'REPLAY · PROSPECTIVE DEĞİL' gold_axis_2026/apps/gold_control_mobile_v1.py
-          grep -Fq 'EYLÜL 2026 H=1 REPLAY' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -Fq 'REPLAY · PROSPECTIVE ISSUED DEĞİL' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -Fq 'EYLÜL 2026 H=1 · CURRENT-MONTH REFERENCE' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -Fq '31 AĞUSTOS AY-AÇILIŞ YÖN CONTEXT' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -Fq 'REPLAY ORIGIN' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -Fq 'Eylül sonu → Ekim 2026 H=1' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -Fq 'AUTO_SELECTOR = OFF' gold_axis_2026/GOLD_CONTROL_SEPTEMBER_REPLAY_VISIBILITY_CHANGE_CONTROL_2026-09-04.md
           grep -Fq 'AUTO_ENSEMBLE = OFF' gold_axis_2026/GOLD_CONTROL_SEPTEMBER_REPLAY_VISIBILITY_CHANGE_CONTROL_2026-09-04.md
+          grep -Fq 'Target relevance and evidence provenance are separate' gold_axis_2026/GOLD_CONTROL_SEPTEMBER_REPLAY_VISIBILITY_CHANGE_CONTROL_2026-09-04.md
           python -m py_compile gold_axis_2026/apps/gold_control_mobile_v1.py gold_axis_2026/apps/forecast_source.py gold_axis_2026/apps/engine_observability_contract.py gold_axis_2026/apps/gold_control.py
           cd gold_axis_2026/apps
           pytest -q test_mobile_ui_contract.py test_engine_observability_contract.py test_aug31_state_replay_source.py test_production_display_snapshot.py
@@ -56,15 +58,26 @@ jobs:
           from psycopg.rows import dict_row
           from forecast_source import TRACK_HISTORICAL_REPLAY, fetch_latest_expert_forecasts
           from runtime_source import fetch_runtime_observability
+          from aug31_state_replay_source import fetch_aug31_state_replay
           url=os.environ['NEON_DATABASE_URL']
           rows=fetch_latest_expert_forecasts(url,TRACK_HISTORICAL_REPLAY)
           by={r['expert_id']:r for r in rows}
           assert set(by)=={'MOMENTUM_3M','RANDOM_WALK'}
           assert abs(float(by['MOMENTUM_3M']['forecast_value'])-4345.814584037808)<1e-9
           assert abs(float(by['RANDOM_WALK']['forecast_value'])-4397.305673870967)<1e-9
+          assert all(str(r['target_month'])[:7]=='2026-09' for r in rows)
           assert all(r['evidence_class']=='HISTORICAL_REPLAY' for r in rows)
           assert all(r['canonical_authority'] is False for r in rows)
           assert all(r['auto_selector']=='OFF' and r['auto_ensemble']=='OFF' for r in rows)
+          aug=fetch_aug31_state_replay(url)
+          assert aug['target_context']=='2026-09'
+          assert aug['state_as_of']=='2026-08-31T21:00:00+00:00'
+          assert aug['evidence_class']=='HISTORICAL_REPLAY'
+          assert aug['prospective_h1_claim'] is False
+          assert aug['canonical_authority'] is False
+          assert aug['monthly_direction_3m']=='DOWN'
+          assert aug['fast_state']=='ROBUST_UP'
+          assert aug['slow_state']=='ROBUST_UP'
           rt=fetch_runtime_observability(url)
           dist={}
           for r in rt['runtime']: dist[r['runtime_status']]=dist.get(r['runtime_status'],0)+1
@@ -78,7 +91,7 @@ jobs:
               cur.execute('select count(*) n from decision_runs'); assert cur.fetchone()['n']==0
               cur.execute('select count(*) n from decision_events'); assert cur.fetchone()['n']==0
             conn.rollback()
-          print('V130_SEPTEMBER_REPLAY_VISIBILITY_PRODUCTION_AUDIT_PASS writes=NONE')
+          print('V130_SEPTEMBER_CURRENT_MONTH_REFERENCE_PRODUCTION_AUDIT_PASS writes=NONE')
           PY
       - name: DB-backed 390x844 visual proof
         run: |
@@ -98,13 +111,13 @@ jobs:
             page.get_by_text('GOLD CONTROL',exact=False).first.wait_for(state='visible',timeout=45000)
             nav=page.locator('.st-key-gc_main_nav label[data-testid="stRadioOption"]')
             nav.filter(has_text=re.compile('Tahmin',re.I)).first.click()
-            page.get_by_text('EYLÜL 2026 H=1 REPLAY',exact=True).first.wait_for(state='visible',timeout=20000)
+            page.get_by_text('EYLÜL 2026 H=1 · CURRENT-MONTH REFERENCE',exact=True).first.wait_for(state='visible',timeout=20000)
             body=page.locator('body').inner_text()
-            for x in ('4,345.81 / 4,397.31 USD','3M Momentum / Random Walk','REPLAY · PROSPECTIVE DEĞİL','STATE BAĞLAMI','REPLAY ORIGIN','EYLÜL 2026 HISTORICAL REPLAY','NOT_ISSUED_MISSED_2026_08_31_ORIGIN'):
+            for x in ('4,345.81 / 4,397.31 USD','3M Momentum / Random Walk','REPLAY · PROSPECTIVE ISSUED DEĞİL','31 AĞUSTOS AY-AÇILIŞ YÖN CONTEXT','DOWN','ROBUST_UP','REPLAY ORIGIN','EYLÜL 2026 HISTORICAL REPLAY','NOT_ISSUED_MISSED_2026_08_31_ORIGIN'):
               assert x in body,x
             top=body.split('GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI')[0]
             assert 'CANONICAL ORIGIN' not in top
-            page.screenshot(path=str(out/'tahmin_september_replay_top_390x844.png'),full_page=False)
+            page.screenshot(path=str(out/'tahmin_september_current_month_reference_390x844.png'),full_page=False)
             nav.filter(has_text=re.compile('Görünüm',re.I)).first.click()
             heading=page.get_by_text('TÜM TAHMİN, YÖN, EVENT, REJİM VE RİSK MOTORLARI',exact=True).first
             heading.wait_for(state='visible',timeout=20000)
@@ -116,7 +129,7 @@ jobs:
             page.wait_for_timeout(300)
             page.screenshot(path=str(out/'gorunum_motor_timing_390x844.png'),full_page=False)
             b.close()
-          print('V130_SEPTEMBER_REPLAY_VISIBILITY_DB_VISUAL_PASS')
+          print('V130_SEPTEMBER_CURRENT_MONTH_REFERENCE_DB_VISUAL_PASS')
           PY
           kill $PID || true; wait $PID || true
       - name: DB-less replay fallback proof
@@ -137,19 +150,19 @@ jobs:
             page.get_by_text('GOLD CONTROL',exact=False).first.wait_for(state='visible',timeout=45000)
             nav=page.locator('.st-key-gc_main_nav label[data-testid="stRadioOption"]')
             nav.filter(has_text=re.compile('Tahmin',re.I)).first.click()
-            page.get_by_text('EYLÜL 2026 H=1 REPLAY',exact=True).first.wait_for(state='visible',timeout=20000)
+            page.get_by_text('EYLÜL 2026 H=1 · CURRENT-MONTH REFERENCE',exact=True).first.wait_for(state='visible',timeout=20000)
             body=page.locator('body').inner_text()
-            for x in ('4,345.81 / 4,397.31 USD','REPLAY · PROSPECTIVE DEĞİL','REPLAY ORIGIN'):
+            for x in ('4,345.81 / 4,397.31 USD','REPLAY · PROSPECTIVE ISSUED DEĞİL','31 AĞUSTOS AY-AÇILIŞ YÖN CONTEXT','DOWN','ROBUST_UP','REPLAY ORIGIN'):
               assert x in body,x
-            page.screenshot(path=str(out/'tahmin_september_replay_fallback_390x844.png'),full_page=False)
+            page.screenshot(path=str(out/'tahmin_september_current_month_reference_fallback_390x844.png'),full_page=False)
             b.close()
-          print('V130_SEPTEMBER_REPLAY_VISIBILITY_DBLESS_PASS')
+          print('V130_SEPTEMBER_CURRENT_MONTH_REFERENCE_DBLESS_PASS')
           PY
           kill $PID || true; wait $PID || true
       - name: Upload regression evidence
         uses: actions/upload-artifact@v4
         with:
-          name: gold-control-v130-september-replay-visibility-regression
+          name: gold-control-v130-september-current-month-reference-regression
           path: |
             /tmp/v130_sep_reg/*.png
             /tmp/v130_sep_fallback/*.png
