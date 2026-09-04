@@ -159,6 +159,8 @@ jobs:
               nav=page.locator('.st-key-gc_main_nav label[data-testid="stRadioOption"]')
               nav.filter(has_text=re.compile('Tahmin',re.I)).first.click()
               page.get_by_text('EYLÜL 2026 · 31 AĞUSTOS ORIGIN',exact=True).first.wait_for(state='visible',timeout=25000)
+              page.get_by_text(re.compile(r'ORIGIN_RECONSTRUCTION / HISTORICAL_REPLAY',re.I)).first.wait_for(state='visible',timeout=25000)
+              page.get_by_text(re.compile(r'30 Eylül origin → Ekim 2026',re.I)).first.wait_for(state='visible',timeout=25000)
               body=page.locator('body').inner_text()
               for token in ('4,345.81 / 4,397.31 / 4,452.05 USD','3M Momentum / Random Walk / Causal Patch','EYLÜL AY-AÇILIŞ YÖN MOTORLARI','DOWN','ROBUST_UP','ORIGIN_RECONSTRUCTION / HISTORICAL_REPLAY','4 Eylül','30 Eylül origin → Ekim 2026'):
                   assert token in body,token
@@ -167,6 +169,8 @@ jobs:
               page.screenshot(path=str(out/'tahmin_v132_390x844.png'),full_page=False)
               nav.filter(has_text=re.compile('Görünüm',re.I)).first.click()
               page.get_by_text('TÜM TAHMİN, YÖN, EVENT, REJİM VE RİSK MOTORLARI',exact=True).first.wait_for(state='visible',timeout=25000)
+              page.get_by_text('Causal Patch',exact=True).first.wait_for(state='visible',timeout=25000)
+              page.get_by_text(re.compile(r'EYLÜL / 31 AĞUSTOS ORIGIN',re.I)).first.wait_for(state='visible',timeout=25000)
               body=page.locator('body').inner_text()
               for token in ('EYLÜL / 31 AĞUSTOS ORIGIN','Causal Patch','EMERGENCY','BOCPD','WAITING_ELIGIBLE_MONTH_END_ORIGIN','BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED'):
                   assert token in body,token
@@ -196,6 +200,7 @@ jobs:
               nav=page.locator('.st-key-gc_main_nav label[data-testid="stRadioOption"]')
               nav.filter(has_text=re.compile('Tahmin',re.I)).first.click()
               page.get_by_text('EYLÜL 2026 · 31 AĞUSTOS ORIGIN',exact=True).first.wait_for(state='visible',timeout=25000)
+              page.get_by_text(re.compile(r'30 Eylül origin → Ekim 2026',re.I)).first.wait_for(state='visible',timeout=25000)
               body=page.locator('body').inner_text()
               for token in ('4,345.81 / 4,397.31 / 4,452.05 USD','DOWN','ROBUST_UP','4 Eylül','30 Eylül origin → Ekim 2026'):
                   assert token in body,token
