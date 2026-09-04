@@ -1,0 +1,44 @@
+name: Gold Control GPR Vintage Archive Audit V1
+
+on:
+  push:
+    paths:
+      - 'gold_axis_2026/tools/audit_gpr_monthly_vintage_archive_v1.py'
+      - '.github/workflows/gold-control-gpr-vintage-archive-audit-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install audit runtime
+        run: pip install requests
+      - name: Probe official monthly GPR vintage archive only
+        run: python gold_axis_2026/tools/audit_gpr_monthly_vintage_archive_v1.py --out /tmp/gpr_vintage_archive_audit_v1.json
+      - name: Publish compact source-readiness summary
+        run: |
+          python - <<'PY'
+          import json, os
+          e=json.load(open('/tmp/gpr_vintage_archive_audit_v1.json'))
+          assert e['model_score_run']=='NONE'
+          assert e['database_writes']=='NONE'
+          c={k:e[k] for k in ['range','n_probed','n_accessible','first_accessible','last_accessible','longest_contiguous','latest_contiguous_tail','model_score_run','database_writes']}
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as f:
+              f.write('## GPR monthly vintage archive readiness\n\n```json\n'+json.dumps(c,indent=2,sort_keys=True)+'\n```\n')
+          print('GPR_ARCHIVE_AUDIT_SUMMARY='+json.dumps(c,sort_keys=True))
+          PY
+      - name: Upload source-readiness evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gpr-vintage-archive-audit-v1-${{ github.sha }}
+          path: /tmp/gpr_vintage_archive_audit_v1.json
+          if-no-files-found: error
+          retention-days: 30
