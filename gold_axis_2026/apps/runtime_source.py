@@ -11,7 +11,7 @@ from production_display_snapshot import (
 )
 
 
-RUNTIME_SOURCE_CONTRACT = "FROZEN_DATA_EVIDENCE_SPINE_V1_READ_ONLY_APP_V1"
+RUNTIME_SOURCE_CONTRACT = "FROZEN_DATA_EVIDENCE_SPINE_V1_READ_ONLY_APP_V2_CURRENT_MONTH_REFERENCE"
 EXPECTED_ENGINE_COUNT = 12
 CONTEXT_FEATURES = (
     "MONTHLY_DIRECTION_3M",
@@ -26,6 +26,89 @@ CONTEXT_FEATURES = (
 
 def _to_dict(row: Any) -> dict[str, Any]:
     return dict(row) if row is not None else {}
+
+
+def _runtime_target_context(runtime: list[dict[str, Any]]) -> str | None:
+    targets = [str(row.get("target_context") or "").strip() for row in runtime]
+    targets = [value for value in targets if value]
+    if not targets:
+        return None
+    # The view is one latest row per engine. Prefer the most common current
+    # target and break ties deterministically by the lexical month key.
+    counts: dict[str, int] = {}
+    for value in targets:
+        counts[value] = counts.get(value, 0) + 1
+    return max(sorted(counts), key=lambda value: counts[value])
+
+
+def _attach_current_month_replay_references(
+    cur: psycopg.Cursor[Any],
+    runtime: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], int, str | None]:
+    """Attach governed replay evidence without changing operational runtime state.
+
+    Historical replay is presentation/reference evidence only. We intentionally
+    preserve runtime_status/status_code from latest_engine_runtime_state and add
+    a nested current_month_reference object to metadata for the observability
+    layer. No selector, ensemble, canonical authority, or decision output is
+    synthesized here.
+    """
+    target_context = _runtime_target_context(runtime)
+    if not target_context:
+        return runtime, 0, None
+
+    cur.execute(
+        """
+        select distinct on (expert_id)
+               expert_id, model_version, forecast_value, unit, target_month,
+               forecast_origin, as_of, evidence_class, forecast_track,
+               canonical_authority, auto_selector, auto_ensemble, selector_status
+        from monthly_expert_forecasts
+        where forecast_track='HISTORICAL_REPLAY'
+          and to_char(target_month, 'YYYY-MM')=%s
+        order by expert_id, as_of desc, id desc
+        """,
+        (target_context,),
+    )
+    refs = {str(row["expert_id"]): dict(row) for row in cur.fetchall()}
+
+    attached = 0
+    enriched: list[dict[str, Any]] = []
+    for source_row in runtime:
+        row = dict(source_row)
+        ref = refs.get(str(row.get("engine_id") or ""))
+        if ref:
+            # Fail closed: only replay rows with no canonical/auto authority can
+            # be exposed as current-month reference evidence.
+            if (
+                str(ref.get("evidence_class") or "") == "HISTORICAL_REPLAY"
+                and ref.get("canonical_authority") is False
+                and str(ref.get("auto_selector") or "") == "OFF"
+                and str(ref.get("auto_ensemble") or "") == "OFF"
+            ):
+                metadata = dict(row.get("metadata") or {})
+                metadata["current_month_reference"] = {
+                    "reference_kind": "HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE",
+                    "expert_id": ref.get("expert_id"),
+                    "model_version": ref.get("model_version"),
+                    "forecast_value": ref.get("forecast_value"),
+                    "unit": ref.get("unit"),
+                    "target_month": ref.get("target_month"),
+                    "forecast_origin": ref.get("forecast_origin"),
+                    "as_of": ref.get("as_of"),
+                    "evidence_class": ref.get("evidence_class"),
+                    "forecast_track": ref.get("forecast_track"),
+                    "canonical_authority": False,
+                    "auto_selector": "OFF",
+                    "auto_ensemble": "OFF",
+                    "selector_status": ref.get("selector_status"),
+                    "operational_runtime_status": row.get("runtime_status"),
+                    "operational_status_code": row.get("status_code"),
+                }
+                row["metadata"] = metadata
+                attached += 1
+        enriched.append(row)
+    return enriched, attached, target_context
 
 
 def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
@@ -56,6 +139,8 @@ def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
                     "context_target": None,
                     "context_expected": len(CONTEXT_FEATURES),
                     "context_exactly_one_link": 0,
+                    "current_month_reference_target": None,
+                    "current_month_reference_count": 0,
                     "database_writes": "NONE",
                 }
 
@@ -69,6 +154,9 @@ def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
                 """
             )
             runtime = [dict(row) for row in cur.fetchall()]
+            runtime, current_month_reference_count, current_month_reference_target = (
+                _attach_current_month_replay_references(cur, runtime)
+            )
 
             cur.execute("select * from data_evidence_spine_health_v1")
             health = _to_dict(cur.fetchone())
@@ -126,6 +214,8 @@ def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
         "context_expected": len(CONTEXT_FEATURES),
         "context_exactly_one_link": context_exactly_one_link,
         "context_complete": context_complete,
+        "current_month_reference_target": current_month_reference_target,
+        "current_month_reference_count": current_month_reference_count,
         "database_writes": "NONE",
         "source_mode": "NEON_DB_READ_ONLY",
         "snapshot_contract": None,
