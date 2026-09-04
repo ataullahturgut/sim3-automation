@@ -1,1781 +1,565 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.31
-**Freeze / issue date:** 2026-09-04
+**Manifest version:** 1.32  
+**Freeze / issue date:** 2026-09-04  
 **Repository:** `ataullahturgut/sim3-automation`  
-**Canonical branch:** `gold-r4-direction-engine`  
+**Canonical model/app branch:** `gold-r4-direction-engine`  
+**Scheduler branch:** `main`  
 **Project root:** `gold_axis_2026/`
 
 ---
 
-## 0. MANDATORY READ-FIRST PROTOCOL
+# 0. SOLE PROJECT-MANIFEST AUTHORITY
 
-This file is the canonical project decision manifest for Gold Control.
+This file is the **only canonical Gold Control project manifest**.
 
-Before changing code, UI, data contracts, model roles, signal rules, thresholds, source mappings, or production behavior:
+Binding identity:
 
-1. **Read this manifest first.**
-2. Check the current frozen files and production artifacts referenced here.
-3. Do not silently change an approved role, threshold, source, target, horizon, or validation contract.
-4. If new evidence conflicts with this manifest, mark the conflict explicitly as `UNRESOLVED` and update this manifest only after the evidence has been audited.
-5. Missing historical code, training logic, provider lineage, definitions, or thresholds must be labeled `NOT_FOUND`, `NOT_PROVEN`, `UNRESOLVED`, or `BLOCKED` as appropriate. Never reconstruct a missing rule by guesswork and present it as original.
-6. Historical replay, retrospective backtest, and genuinely prospective/live evidence must remain visibly separated.
-7. No new model, feature, data source, selector, ensemble, news block, whale-flow input, or UI metric enters the production path merely because it looks useful. It requires leakage-safe incremental evidence under the frozen contract.
+`gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md`
 
-**Default rule:** if a proposed change does not close a defined roadmap gap below, it stays outside the production path.
+Rules:
+
+1. No other Markdown, YAML, JSON, workflow, status note, change-control document, replay report, handover, or historical manifest version is a second project manifest.
+2. Historical change-control, validation, status and evidence documents remain audit evidence only.
+3. If an older document conflicts with this file, this v1.32 manifest governs unless a newer audited manifest version explicitly supersedes it.
+4. `FILE_MANIFEST_SHA256.txt` is a repository file-checksum inventory, **not** the Gold Control project decision manifest.
+5. Old `apply_manifest_*` / `reconcile_manifest_*` scripts and workflow names are historical tooling, not independent manifest authority.
+6. Git history may contain older manifest versions, but the current branch may contain only this single canonical project-manifest file.
+
+Before changing model roles, target/horizon, origin timing, source mappings, thresholds, UI semantics, runtime authority, selector/ensemble behavior or production writes, read this file first.
 
 ---
 
 # 1. PRODUCT DEFINITION
 
-Gold Control is not only a price-forecast model.
+Gold Control is a mobile-first, auditable gold decision-support system.
 
-It is a **mobile-first, auditable gold decision-support system** that:
+It must:
 
-1. monitors current and historical market data,
-2. produces an H=1 monthly-average XAU/USD forecast,
-3. maintains a monthly direction context,
-4. detects short/medium-horizon tactical reversals,
-5. detects regime breaks and abnormal intramonth moves,
-6. applies volatility/risk constraints,
-7. stores the exact decision state that existed at each decision time,
-8. separates live/prospective evidence from historical replay,
-9. exposes the result through a simple user-facing interface without leaking backend complexity into the main UX,
-10. exposes a complete governed forecast/direction/event/regime/risk motor inventory so users can verify what is running, waiting, blocked, or not proven before any later selector/final-decision research.
+- monitor current and historical market data;
+- produce H=1 monthly-average XAU/USD forecasts;
+- maintain monthly direction context;
+- maintain tactical Fast/Slow context;
+- detect intramonth Emergency conditions;
+- detect regime/break context;
+- apply volatility/risk context;
+- expose every governed motor as ACTIVE / WAITING / BLOCKED or equivalent observable state;
+- preserve exact evidence provenance and point-in-time availability;
+- keep forecast/direction evidence separate from any later decision/action mapping.
 
-The product is a **decision-support system**, not an autonomous self-learning trading system.
+It is **not** an autonomous trading system.
 
----
-
-# 2. PRIMARY SYSTEM QUESTION FLOW
-
-The frontend must answer four questions in this order:
-
-1. **Piyasa** — Piyasa şu anda ne durumda?
-2. **Görünüm** — Hangi tahmin/yön/event/regime/risk motorları mevcut, hangileri çalışıyor veya blocked, son meşru çıktıları nedir ve sistem neden böyle düşünüyor?
-3. **Tahmin** — Gelecek ay için model ne bekliyor?
-4. **Geçmiş** — Sistem geçmişte gerçekten ne yaptı?
-
-Technical health/audit is a secondary system view, not a top-level user workflow.
-
-Canonical navigation:
+Canonical top-level UI:
 
 `Piyasa | Görünüm | Tahmin | Geçmiş`
 
-Secondary technical surface:
-
-`Sistem / Veri Sağlığı / Audit`
-
 ---
 
-# 3. SOURCE-OF-TRUTH HIERARCHY
+# 2. SOURCE-OF-TRUTH HIERARCHY
 
-## 3.1 GitHub
+## 2.1 GitHub
 
 GitHub is authoritative for:
 
-- application code,
-- model/signal implementation code,
-- frozen configuration,
-- source contracts,
-- version history,
-- this project manifest,
-- reproducibility/audit documents.
+- code;
+- frozen model/signal contracts;
+- source contracts;
+- this manifest;
+- reproducibility and audit evidence.
 
-GitHub must not be treated as the authoritative store for mutable live decision state.
+## 2.2 Production Neon
 
-## 3.2 Neon Postgres
+Production Neon is authoritative for mutable/current data state:
 
-Neon is the authoritative dynamic data plane for:
+- observations and provider lineage;
+- retrieval/vintage/PIT availability;
+- derived feature snapshots;
+- engine runtime state;
+- forecast contracts when legitimately issued;
+- decision snapshots/events when legitimately issued.
 
-- observations,
-- provider lineage,
-- source vintages,
-- retrieval runs,
-- quality events,
-- point-in-time data availability,
-- immutable forecast input snapshots,
-- derived feature snapshots,
-- forecast contracts,
-- future decision snapshots/events.
+## 2.3 Application
 
-Current data-plane contract is documented in:
+The application is a read/presentation layer. It must not silently:
 
-- `gold_axis_2026/data_pipeline/GOLD_DATA_R2_ARCHITECTURE.md`
-- `gold_axis_2026/data_pipeline/schema.sql`
-- `gold_axis_2026/data_pipeline/schema_patch_r2_6.sql`
-- `gold_axis_2026/data_pipeline/source_contracts.json`
-- `gold_axis_2026/data_pipeline/source_contracts_direct.json`
-- `gold_axis_2026/data_pipeline/source_contracts_twelve_validated.json`
-- `gold_axis_2026/data_pipeline/source_contracts_successor.json`
-- `gold_axis_2026/GOLD_CONTROL_DATA_INVENTORY.md`
-
-## 3.3 External providers
-
-External providers are ingestion origins only. Provider identity and lineage are part of series identity and may not be silently substituted.
-
-## 3.4 Application
-
-The app is a presentation and interaction layer.
-
-The app must not:
-
-- tune thresholds,
-- choose new features,
-- silently swap providers,
-- infer a new production direction directly from live spot,
-- alter frozen model rules,
-- convert monitoring data into settlement/EOD data without a contract.
+- tune thresholds;
+- choose models;
+- create an ensemble;
+- substitute providers;
+- manufacture missing outputs;
+- convert a reconstruction into a backdated prospective issuance;
+- create BUY / SELL / HOLD / EXIT / REDUCE mappings.
 
 ---
 
-# 4. DATA CONTRACT — NON-NEGOTIABLE RULES
+# 3. NON-NEGOTIABLE GOVERNANCE LOCKS
 
-The frozen Gold Data R2 principles remain binding:
+The following remain frozen:
 
-1. No silent provider substitution.
-2. Same economic semantic from different providers remains separate lineage/series identity.
-3. Point-in-time availability is mandatory.
-4. `observation_ts` is not automatically an availability timestamp.
-5. Historical code must use `observations_as_of(origin_ts)` or an immutable forecast snapshot.
-6. `canonical_latest` and `usable_observations` are current-state views, not historical backtest surfaces.
-7. Backfilled history does not become retroactively knowable before first recorded retrieval unless historical publication/vintage timing is independently reconstructed.
-8. Live/indicative XAU is not the frozen R4.1 EOD execution close.
-9. Vendor current-day bars are not assumed completed while the relevant session may still be open.
-10. Raw licensed/vendor series must respect display/redistribution rights.
-11. Blocked inputs do not receive invented proxies under the same name.
-
----
-
-# 5. VERIFIED / APPROVED DATA ROLES
-
-## 5.1 Display/monitoring-capable core
-
-### XAU live — primary `Piyasa` display monitoring
-
-Series: `XAU_SPOT_GOLDAPI`  
-Source: Gold API (`gold-api.com`)  
-Role: **indicative live display / market monitoring only**  
-Status: `APPROVED_INDICATIVE_PUBLIC_DISPLAY_NO_MODEL_USE`
-
-Frozen provider contract:
-
-- endpoint: `GET https://api.gold-api.com/price/XAU`;
-- expected symbol/currency: `XAU` / `USD`;
-- required fields: positive finite `price`, parseable `updatedAt`;
-- provider asks clients to cache the current-price response for 30 seconds;
-- UI must show source and freshness/stale state;
-- provider-managed upstream fallback is opaque, therefore this series is **not** authority-grade and is prohibited from EOD, benchmark, H=1 forecast, VW reference, Fast/Slow source, or final-decision use;
-- it is not equivalent to `XAU_EOD_TWELVE_NY17`, `XAU_SPOT_XAUS`, LBMA, CME/EBS, COMEX settlement, or Yahoo/GC=F.
-
-Authority/licensing decision record:
-
-`gold_axis_2026/GOLD_CONTROL_LIVE_MARKET_ROADMAP_CHANGE_CONTROL_2026-09-01.md`
-
-Operational proof: GitHub Actions run `33518757788`, job `99892357951`, `SUCCESS`; HTTP/schema/freshness were validated without logging the raw market price and without database writes.
-
-### XAU live — legacy / secondary indicative lineage
-
-Series: `XAU_SPOT_XAUS`  
-Contract source: XAUS public API  
-Role: secondary monitoring / operational cross-check; Emergency candidate only under its separately frozen role  
-Status: `APPROVED_INDICATIVE_NOT_SETTLEMENT; DEGRADED_UPSTREAM_HTTP_503`
-
-The persisted-source-label discrepancy remains `UNRESOLVED_PERSISTED_SOURCE_LABEL_DIFFERS_FROM_XAUS_CONTRACT`. `XAU_SPOT_XAUS` and `XAU_SPOT_GOLDAPI` remain separate provider lineages and may never be silently merged or relabelled.
-
-### XAU daily operational history
-
-Series: `XAU_DAILY_XAUS`  
-Contract source: XAUS history  
-Role: **Piyasa daily history / last-completed-daily display cross-check only**  
-Status: `CANDIDATE_NOT_BENCHMARK; APPROVED_EXPLICITLY_LABELLED_OPERATIONAL_DISPLAY`
-
-The persisted operational lineage currently exposes an upstream/source label associated with Yahoo/GC=F. This remains an operational cross-check lineage and is not promoted to settlement/EOD authority. Any Piyasa rendering must explicitly disclose that it is not canonical spot/EOD, settlement, benchmark, or model authority. The current-day row is not eligible for the `last completed daily close`; that comparison uses the newest positive daily row strictly before the current UTC date.
-
-### Canonical XAU EOD decision-reference contract
-
-Canonical series: `XAU_EOD_TWELVE_NY17`  
-Economic semantic: **spot XAU/USD 17:00 ET internal EOD decision reference price**  
-Session-definition authority: **CME Group / EBS Market**  
-Operational market-data provider: **Twelve Data**  
-Provider symbol: `XAU/USD`  
-Provider interval: `1min`  
-Requested timezone: `America/New_York`  
-Session boundary: **17:00 ET**  
-Role: canonical R4.1 EOD decision reference  
-Status: `APPROVED_CANONICAL_PIPELINE_SUCCESS`
-
-The contract deliberately separates **session authority** from **price-data provider**:
-
-- CME/EBS is the authority for the 17:00 ET spot FX / precious-metals trade-date roll;
-- Twelve Data supplies the actual `XAU/USD` intraday OHLC observation used operationally;
-- the stored series lineage is Twelve Data and must never be labelled as CME/EBS price data;
-- `XAU_EOD_CME_EBS` is retained only as a superseded authority/feed candidate and is not the active production-ingestion series.
-
-Official Twelve Data documentation states that for intraday intervals the requested IANA timezone may be applied, `datetime` identifies when the bar was opened, and `close` is the price at the end of that bar. Therefore the frozen R4.1 decision-reference rule is:
-
-1. Request Twelve Data `/time_series` for `XAU/USD`, `interval=1min`, `timezone=America/New_York`.
-2. Select the bar whose `datetime` is exactly `16:59:00` ET for the completed EBS trade date.
-3. Require positive finite OHLC values and a unique `16:59:00` bar.
-4. Use that bar's `close` as the 17:00 ET internal decision reference price.
-5. If the exact 16:59 bar is absent, duplicated, invalid, or not retrievable after the session boundary, emit `BLOCKED_NO_VALID_TWELVE_NY1659_BAR`; no forward-fill or provider substitution is allowed.
-6. Persist provider symbol, interval, requested timezone, source bar timestamp, retrieval timestamp, source vintage/payload hash and derived decision-price hash.
-7. Raw vendor data remains subject to Twelve Data display/redistribution rights.
-8. Historical reconstruction must use the same provider, interval, timezone and mapping rule; it may not relabel legacy XAUS/LBMA/futures history as Twelve data.
-
-Access/mapping evidence: GitHub Actions run `33510985399`, job `99866288149`, `SUCCESS`, proved the protected Twelve credential can retrieve a valid `XAU/USD` `1min` bar at `16:59:00` with `America/New_York` timezone without logging raw prices or writing to the database.
-
-Production-ingestion evidence: GitHub Actions run `33511805110`, job `99869043161`, `SUCCESS`, executed the frozen canonical writer against Neon. It selected completed trade date `2026-08-31`, stored observation timestamp `2026-08-31T21:00:00+00:00` (17:00 ET), source `Twelve Data`, quality status `APPROVED_CANONICAL_TWELVE_NY17`, retrieval run `12099dfa-a370-4710-aed5-d02388f652ac`=`SUCCESS`, wrote one canonical observation, reported zero quality errors, and logged no raw market price.
-
-This value is named **decision reference price**, not official settlement or official market close. LBMA Gold Price PM remains a benchmark comparator; CME Group Spot Gold Reference Rate remains a 13:29–13:30 ET spot marker; COMEX settlement remains futures semantics; Twelve provider-default `1day` Australia/Sydney bar remains a different daily semantic and is not used here.
-
-### GVZ
-
-Series: `GVZ_CBOE`  
-Source: Cboe official history  
-Role: R4 risk cap  
-Status: `APPROVED`
-
-### VIX
-
-Series: `VIX_CBOE`  
-Source: Cboe official history  
-Role: forecast feature  
-Status: `APPROVED`
-
-## 5.2 Authority-grade macro/market data plane
-
-Approved or approved-with-lag/proxy roles include:
-
-- `DGS10_FRB_H15` — US 10Y constant-maturity Treasury yield
-- `DEXCHUS_FRB_H10` — USD/CNY
-- `DTWEXBGS_FRB_H10` — broad USD index proxy challenger, explicitly **not DXY**
-- `EFFR_NYFED` — effective federal funds rate
-- `GPR_OFFICIAL`
-- `GPRT_OFFICIAL`
-- `GPRA_OFFICIAL`
-- `SP500_FRED`
-- `DJIA_FRED`
-- `NASDAQ100_FRED`
-
-These are data-plane assets. Their presence in Neon does **not** automatically authorize them as replacements inside an archived model.
-
-## 5.3 Vendor internal/non-display series
-
-Validated Twelve Data identities include:
-
-- `NEM_TWELVEDATA`
-- `BARRICK_B_TWELVEDATA`
-- `GLL_TWELVEDATA`
-- `DZZ_TWELVEDATA`
-- `HL_PB_TWELVEDATA`
-
-Role: private/internal model use.  
-Default UI rule: **do not display raw vendor series unless display rights and product need are separately approved.**
+- `AUTO_SELECTOR = OFF`
+- `AUTO_ENSEMBLE = OFF`
+- `NOT_PROVEN_EXPERT_SELECTION_RULE`
+- `NOT_PROVEN_POSITION_MAPPING`
+- no automatic BUY / SELL / HOLD / EXIT / REDUCE output
+- no hindsight threshold tuning
+- no random-split model validation for time series
+- no silent provider substitution
+- no proxy may be presented under the exact identity of a blocked original source/model
+- historical reconstruction, backtest and genuinely prospective evidence must remain distinguishable in audit metadata
+- replay/reconstruction must never alter a true historical `issued_at`, `created_at`, retrieval timestamp or source vintage
 
 ---
 
-# 6. BLOCKED / UNRESOLVED DATA AND OPERATIONAL ITEMS
+# 4. CANONICAL MONTHLY ORIGIN CYCLE — BINDING v1.32 CORRECTION
 
-The following must remain visibly blocked/unresolved unless their exact problem is solved:
+This section supersedes all older wording that implied September 2026 forecasts should wait until the end of September.
 
-- Exact ICE DXY: `BLOCKED_LICENSE_OR_AUTHORIZED_VENDOR_ENTITLEMENT_REQUIRED`
-- Exact legacy `^TNX` production identity: `BLOCKED_AS_NEW_PRODUCTION_SOURCE`
-- LBMA platinum/palladium: `BLOCKED_LICENSE_REQUIRED_FROM_2026-07-01`
-- Exact GPY identity: `BLOCKED_AMBIGUOUS_IDENTIFIER`
-- Exact `long_term_trend` definition: `BLOCKED_DEFINITION_NOT_RECOVERED`
-- Exact `volatility` definition: `BLOCKED_DEFINITION_NOT_RECOVERED`
-- Exact archived VW executable runner: `BLOCKED_NOT_PROVEN` / missing original runner source
-- Exact historical Causal Patch training source: missing archived training source; archived result is not equivalent to a reproducible executable model
-- XAU persisted source-label vs frozen XAUS contract: `UNRESOLVED_PERSISTED_SOURCE_LABEL_DIFFERS_FROM_XAUS_CONTRACT`
-- Current XAUS source availability incident: `DEGRADED_UPSTREAM_HTTP_503`; unrelated provider ingestion must continue independently
-- Canonical Twelve NY17 XAU ingestion: `APPROVED_CANONICAL_PIPELINE_SUCCESS`; single-day production ingestion and PIT-safe same-lineage history backfill are proven. Historical backfill preserves actual retrieval-time availability and is not retroactively knowable.
-- Direct Neon management connector argument/schema mismatch: `BLOCKED_CONNECTOR_SCHEMA_MISMATCH`; do not claim branch/migration operations succeeded when this wrapper rejects them
+## 4.1 Core rule
 
-Blocked data or code may not be approximated and then labeled as the exact original object.
+For target calendar month **M**, the H=1 forecast origin is the completed month-end boundary immediately before M.
+
+Formally:
+
+`origin(M) = completed month-end boundary of M-1`
+
+`target(origin) = immediately following calendar month`
+
+Examples:
+
+| Information/origin boundary | Target month |
+|---|---|
+| 2026-08-31 | **September 2026** |
+| 2026-09-30 | **October 2026** |
+| 2026-10-31 | **November 2026** |
+| 2026-11-30 | **December 2026** |
+
+Therefore:
+
+> **31 August data are the information set for September forecast and month-open direction motors.**
+
+and:
+
+> **30 September data are the information set for October forecast and month-open direction motors.**
+
+There is no rule that September forecast motors should remain blank until 30 September.
+
+## 4.2 What is frozen at month open
+
+At each valid month-end origin, the system should create a month-open snapshot for the immediately following month containing every governed output that is technically executable at that origin.
+
+This includes, according to each motor's own contract:
+
+- H=1 point-forecast expert outputs;
+- Monthly Direction 3M context;
+- month-open Fast/Slow context;
+- monthly Patch reference where executable;
+- Emergency initialization state/reference;
+- regime/risk context that is legitimately available at the origin.
+
+The month-open snapshot is immutable as an origin snapshot.
+
+## 4.3 Intramonth updating
+
+The target-month snapshot and intramonth monitoring are different objects.
+
+During the target month:
+
+- the month-open H=1 forecasts remain tied to their month-end origin;
+- Monthly Direction month-open snapshot remains historically immutable;
+- FAST / SLOW may update as their frozen daily/weekly contracts receive new completed observations;
+- Emergency Level / Reversal may update intramonth against the frozen monthly reference;
+- Macro/Event or other event engines may update only under their own recovered/frozen contracts;
+- updated intramonth state must never rewrite the original month-open origin snapshot.
 
 ---
 
-# 7. H=1 FORECAST CONTRACT
+# 5. SEPTEMBER 2026 — CURRENT GOVERNED ORIGIN SET
+
+## 5.1 Correct target/origin relationship
+
+Target month:
+
+`2026-09`
+
+Required information boundary:
+
+`2026-08-31T21:00:00Z` = 31 Aug 2026 17:00 ET
+
+The system must treat the reconstructed 31-August information set as the **September 2026 month-open reference set**.
+
+## 5.2 Current September outputs reconstructed from the 31-Aug information boundary
+
+The following governed values have been reproduced and persisted in the historical/reconstruction evidence lane:
+
+| Motor / context | September 2026 month-open result |
+|---|---:|
+| `MONTHLY_DIRECTION_3M` | `DOWN` |
+| `FAST` | `ROBUST_UP` |
+| `SLOW` | `ROBUST_UP` |
+| `MOMENTUM_3M` H=1 | `4345.814584037808 USD/oz` |
+| `RANDOM_WALK` H=1 | `4397.305673870967 USD/oz` |
+| `CAUSAL_PATCH` H=1 reference | `4452.046728838838 USD/oz` |
+| `EMERGENCY_LEVEL` month-open state | `NEUTRAL` |
+| `EMERGENCY_REVERSAL` month-open state | `OFF` |
+| `BOCPD_RETURN_SUCCESSOR_V1` context | `NO_ADVERSE_BREAK_CANDIDATE` |
+
+Patch last selected daily feature date:
+
+`2026-08-30`
+
+This satisfies the frozen `< origin_date` daily-feature rule for the reconstructed 31-Aug origin.
+
+## 5.3 September evidence semantics
+
+The **target/origin logic is valid**: these are September outputs based on the 31-Aug information boundary.
+
+However, some of these values were actually calculated/persisted on 2026-09-04 rather than being emitted on 2026-08-31.
+
+Therefore the system must preserve two facts simultaneously:
+
+1. **Business/forecast interpretation:** September 2026 month-open forecast/direction reference using the 31-Aug origin information set.
+2. **Audit/evidence interpretation:** later reconstruction of that origin; not a false claim that the output was actually issued on 31 August.
+
+Required UI primary semantics:
+
+`EYLÜL 2026 · 31 AĞUSTOS ORIGIN`
+
+Required audit/provenance semantics for reconstructed outputs:
+
+`ORIGIN_RECONSTRUCTION / HISTORICAL_REPLAY`
+
+or an equivalent explicit secondary label such as:
+
+`31 Ağustos bilgi setiyle 4 Eylül'de yeniden hesaplandı`
+
+The UI must **not** make the September reference look like expired history merely because reconstruction occurred after month open.
+
+The UI also must **not** say or imply `issued on 31-Aug` when no such immutable issuance existed.
+
+---
+
+# 6. OCTOBER 2026 AND FORWARD MONTHLY OPERATION
+
+The next normal monthly cycle is:
+
+- September observations accumulate during September;
+- after the completed 2026-09-30 origin boundary and each motor's availability/PIT gates;
+- the system calculates **October 2026** H=1 forecasts and month-open direction/reference states;
+- if these are actually calculated and immutably persisted before October outcome realization, they may enter the appropriate prospective/shadow evidence class under their individual contracts.
+
+The same rule repeats every month.
+
+No motor should wait until target-month end to generate that same target month's month-open forecast.
+
+---
+
+# 7. H=1 FORECAST TARGET AND VALIDATION CONTRACT
 
 Canonical target:
 
 > **Next calendar month's average XAU/USD price**
 
-Historical outcome/data-plane support:
-
-- the locked CORE5 monthly gold target remains the canonical historical H=1 research target artifact;
-- `XAU_MONTHLY_WB_PINKSHEET` is retained as a separately named World Bank historical data-plane lineage because the 127-month identity audit showed material equivalence to CORE5; it is not relabelled as CORE5 and does not redefine the forecast product;
-- `XAU_EOD_TWELVE_NY17` remains the daily R4 decision-reference lineage; monthly forecast target and daily decision reference are intentionally different roles.
-
 Canonical origin:
 
-> **End of the previous completed calendar month**
+> **Completed month-end information boundary immediately before the target month**
 
-Validation rules:
+Binding validation rules:
 
-- random split forbidden,
-- future target information forbidden,
-- tuning only on past rolling/expanding origins,
-- publication lag mandatory,
-- vintage safety mandatory,
-- benchmark comparison at the same horizon mandatory.
+- rolling/expanding origin only;
+- future target information forbidden;
+- origin-local data availability mandatory;
+- publication lag mandatory;
+- vintage/PIT safety mandatory;
+- benchmark comparison at identical origin/horizon mandatory;
+- no 2026 hindsight tuning;
+- model identity, source identity and target identity may not be silently changed.
 
-Common audited evaluation window:
-
-`2023-01 → 2026-07`, `N=43`
-
-Current archived/audited scorecard evidence:
-
-| Model | MAPE % | Role / interpretation |
-|---|---:|---|
-| VW-MIDAS-MSVR audited | ~2.672 | audited analytical shadow/reference; exact original runner not recovered |
-| Causal Patch R1 archived | ~3.03–3.08 depending exact closure artifact | historical Patch evidence; exact old training source/identity not fully recovered |
-| 3M Momentum R1 | ~3.297 | reproducible direction challenger/context |
-| Random Walk R1 | ~3.302 | mandatory naive benchmark |
-
-## 7.A CANONICAL CORE FORECAST / DECISION LOGIC — v1.21
-
-This subsection freezes the **system-level forecasting and decision logic**. It is the architectural rule that governs how the monthly forecasting layer and intramonth decision layers relate to one another.
-
-### Binding core logic
-
-1. **The next calendar month's average XAU/USD price is a multi-expert monthly forecasting problem.** The system architecture is not defined as a single-model forecast system.
-2. The monthly expert set is:
-   - **Causal Patch Transformer**;
-   - **VW-MIDAS-MSVR**;
-   - **3M Momentum**;
-   - **Random Walk (RW)** as the mandatory benchmark, not as a promoted expert solely because it is simple.
-3. Each monthly expert output must remain separately identifiable and auditable by target month, forecast origin, model/version identity, evidence class and point-in-time-safe input lineage.
-4. The monthly forecast layer provides the system's **strategic monthly direction/prior/context**. This monthly view is an anchor for the decision system; it is **not an unconditional daily execution instruction**.
-5. The intramonth system must **not follow the monthly forecast blindly**. As new eligible information becomes available during the month, the daily/weekly state is updated through the separately governed tactical, event, emergency, regime and risk layers.
-6. The intramonth layer roles remain distinct:
-   - **Fast / Slow:** tactical confirmation / conflict state; not a permanent hard exposure gate;
-   - **Macro Event:** event-risk state only when its timestamp-safe rule is fully recovered/frozen; current incomplete historical reconstruction remains `BLOCKED_NOT_FULLY_RECOVERED`;
-   - **Emergency:** intramonth abnormal-move / reversal alert layer capable of identifying conditions that the monthly anchor cannot update quickly enough;
-   - **BOCPD:** regime/break context and alert only; not a standalone price forecast or direction generator;
-   - **GVZ:** volatility/risk-cap layer; it constrains risk and does not determine gold direction.
-7. Therefore a valid intramonth state may **disagree with the monthly prior**. Any resulting final decision state must still come only from a frozen, audited mapping/engine and must preserve the true information set available at that time. No later outcome may be used to retrofit an execution rule.
-8. The exact archived **expert-selection / aggregation rule** that produced different lead experts in the 2026 replay has not yet been proven from executable historical logic. Its status is `NOT_PROVEN_EXPERT_SELECTION_RULE`. No selector or ensemble rule may be invented from observed 2026 outcomes and presented as historical or production authority.
-9. Until that selector/aggregation contract is recovered or newly frozen under change control, **auto selector remains OFF and auto ensemble remains OFF**. Individual expert forecasts may be compared and stored, but a composite or selected canonical forecast requires an explicitly governed rule.
-10. The operational role freeze below may designate a currently reproducible forward issuer candidate (for example Patch V7) for ledger issuance. That operational limitation **does not redefine the Gold Control architecture as a single-model forecasting system**.
-
-Canonical system summary:
-
-```text
-Multi-Expert Monthly Forecast Engine
-  ├─ Causal Patch Transformer
-  ├─ VW-MIDAS-MSVR
-  ├─ 3M Momentum
-  └─ Random Walk benchmark
-          ↓
-Monthly Direction / Prior / Context
-          ↓
-Fast / Slow tactical confirmation-conflict
-          ↓
-Macro Event state (only when contract-complete)
-          ↓
-Emergency intramonth reversal / abnormal-move layer
-          ↓
-BOCPD regime / break context
-          ↓
-GVZ risk cap
-          ↓
-Frozen Final Decision State
-          ↓
-Immutable Decision Snapshot / Event Ledger
-```
-
-**Binding interpretation:** the monthly forecast establishes the strategic anchor; the intramonth system incorporates newly available information and may confirm, conflict with, or react against that anchor only through separately frozen rules.
-
-## 7.B BUILD-FIRST / SELECT-LATER EXECUTION POLICY — v1.22
-
-This subsection freezes the implementation order for the multi-expert monthly forecast system.
-
-### Binding execution order
-
-1. **Build the multi-expert forecasting substrate before selecting a winner.** The system must first be able to run, identify, persist and compare the separately governed outputs of Causal Patch Transformer, VW-MIDAS-MSVR, 3M Momentum and the Random Walk benchmark.
-2. During this build phase, **no expert is promoted to canonical authority merely because it looks best on already observed 2026 outcomes**. The existing operational forward-issuer role freeze remains separate from the architectural multi-expert design.
-3. `auto selector = OFF` and `auto ensemble = OFF` remain binding while the substrate and clean forecast history are being built.
-4. The Early Indicative lane may be implemented before an expert selector exists. On each eligible completed-session update, every executable expert is recomputed using only point-in-time-safe information available at that `as_of` time; each expert result is stored separately with target month, origin/as-of time, model/version identity, immutable input lineage and evidence class.
-5. Early Indicative outputs are **not** the canonical month-end H=1 forecast and must not be merged into the official month-end prospective scorecard. They form a separate forecast-revision history for the same fixed target month.
-6. Only after a sufficiently clean comparable expert history exists may a selector/aggregation research phase begin. Candidate selection/combination rules must be learned and validated with leakage-safe rolling/expanding-origin procedures using only information available before each evaluated origin.
-7. Selector/aggregation research must compare against at least the individual experts, Random Walk and simple transparent combination baselines where applicable. A more complex selector is not accepted merely because it wins one episode or one recent year.
-8. A selector/aggregation rule may become canonical only through explicit change control, with a named version, frozen rule, reproducible code, provenance, robustness evidence and prospective-compatible validation.
-9. If no selector/aggregation rule demonstrates stable incremental value, the system keeps the expert outputs separate and does **not** force a synthetic winner for presentation convenience.
-10. The purpose of this order is to generate the unbiased evidence required to choose the best selection/aggregation mechanism later, rather than choosing the mechanism first and then backfitting the evidence to it.
-
-Canonical implementation sequence:
-
-```text
-Build Multi-Expert Forecast Pipeline
-        ↓
-Persist Separate Expert Outputs + Immutable Inputs
-        ↓
-Run Early Indicative Revision Track with New PIT-Safe Data
-        ↓
-Accumulate Comparable Historical / Prospective Evidence
-        ↓
-Research Selector / Combination Rules
-        ↓
-Leakage-Safe Rolling-Origin Validation
-        ↓
-Change-Control Decision: FREEZE SELECTOR / KEEP EXPERTS SEPARATE
-```
-
-**Binding interpretation:** infrastructure and clean evidence come first; expert selection comes later. No future selector may be justified by hindsight from the outcomes it is supposed to predict.
-
-## 7.C ALL-ENGINE OBSERVABILITY / INVENTORY-FIRST POLICY — v1.23
-
-This subsection freezes the user-facing observability requirement before any future expert-selection or final-decision research.
-
-Binding contract:
-
-`gold_axis_2026/GOLD_CONTROL_ENGINE_OBSERVABILITY_CONTRACT_2026-09-03.md`
-
-Status:
-
-`FROZEN_ALL_GOVERNED_ENGINES_VISIBLE_V1`
-
-Binding rules:
-
-1. **All governed forecast and direction-related motors must remain visible as inventory items even when they have no issued value.** `BLOCKED`, `NOT_PROVEN`, `WAITING`, and `NOT_ISSUED` are legitimate observable states and must not collapse into a blank card.
-2. The frozen inventory covers the four monthly H=1 experts (Causal Patch, VW-MIDAS-MSVR, 3M Momentum, Random Walk), the stored Monthly Direction 3M channel, Fast, Slow, Macro Event, Emergency Level, Emergency Reversal, BOCPD, and GVZ risk context.
-3. Each item must expose its role, latest legitimate output if one exists, explicit operational status/blocker, model/feature version, evidence class, target/as-of context, and whether it is permitted to cast a direction vote.
-4. A stored direction context is **not** an H=1 point forecast. In particular, `MONTHLY_DIRECTION_3M` may be displayable while the `MOMENTUM_3M` H=1 monthly-level expert remains `BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND`.
-5. GVZ remains risk-only and must never be rendered as a bullish/bearish direction vote.
-6. Historical replay may be displayed as research evidence but may never be silently promoted to a current prospective/live output.
-7. The application remains a read/presentation layer; it may not invent missing outputs, recompute production direction from live spot, or substitute providers/values merely to populate the inventory.
-8. `AUTO_SELECTOR=OFF`, `AUTO_ENSEMBLE=OFF`, `NOT_PROVEN_EXPERT_SELECTION_RULE`, and `NOT_PROVEN_POSITION_MAPPING` remain unchanged. Engine visibility does not authorize a winner, composite forecast, or action mapping.
-9. The implementation sequence is now explicitly: **see all motors → verify operation/evidence → accumulate clean comparable outputs → research selector/decision rules later**.
-10. The existing `APPROVED_FINAL_MOCKUP_UI_CONTRACT_V2` remains the visual-shell authority; this v1.23 contract extends content completeness/observability and does not change model methodology.
-
-Authority rationale: the 2026 Federal Reserve/OCC/FDIC revised model-risk guidance emphasizes comprehensive model inventory, ongoing monitoring, limitations, outputs and functioning status; NIST AI RMF Govern 1.6 calls for mechanisms to inventory AI systems; NIST AI 800-4 emphasizes post-deployment functionality/operational monitoring. Gold Control adopts these principles as internal engineering governance, without claiming banking-regulatory applicability.
-
-## 7.1 H=1 role freeze — restored agreed architecture
-
-The active H=1 development path is **not a broad model search**.
-
-Frozen roles:
-
-- **Intended forward point-forecast issuer candidate:** `CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE` — Patch V7. It retains the frozen Patch Transformer geometry `L=252`, `P=21`, `D=32`, uses the V6 origin-safe daily-train/hourly-anchor monthly-level architecture, and adds the completed-session daily-feature rule `observation_date < origin_date`. V7 locked historical model-impact gates passed with zero same-origin daily-feature use, zero future-information violations, deterministic rerun equality, and performance better than RW on the frozen 43-month window. Evidence remains `HISTORICAL_REPLAY_MODEL_IMPACT`; no live/prospective performance claim is made until a real pre-outcome forecast is issued. `CAUSAL_PATCH_R1_REPRO_V1` remains immutable predecessor evidence and the exact archived historical Patch executable identity remains separately unproven;
-- **Audited shadow/reference:** `VW_AUDITED_SHADOW_V2` — historical analytical reference; exact original executable runner remains `BLOCKED_NOT_PROVEN`;
-- **Direction challenger/context:** `MOMENTUM_3M_R1`;
-- **Mandatory naive benchmark:** `RW_R1`;
-- **Auto selector:** `OFF`;
-- **Auto ensemble primary:** `OFF`.
-
-The simple monthly Ridge/Huber/SVR/Drift/Damped R2 successor lane introduced on 2026-09-01 is retired from the active production-development path. Its prior run remains recoverable in Git history as a negative historical experiment; it is not the next canonical model lane.
-
-Binding correction record:
-
-`gold_axis_2026/GOLD_CONTROL_FORECAST_PATH_CORRECTION_2026-09-02.md`
-
-Active reproducibility contract:
-
-`gold_axis_2026/GOLD_CONTROL_CAUSAL_PATCH_R1_REPRO_CONTRACT_V1.md`
-
-The earlier successor R1/change-control documents are retained only as audit evidence of the failed exact legacy identity-recovery attempt. They do not override this v1.16 role freeze.
-
-## 7.2 Current forecast-ledger state
-
-The live Neon reconcile audit (run `33518909613`, job `99892866821`, `SUCCESS`) proves:
-
-- `forecast_input_snapshots` = **0 rows**;
-- `derived_feature_snapshots` = **1 row**;
-- `monthly_forecast_contracts` = **0 rows**;
-- append-only mutation guards cover all three forecast-state tables (3/3).
-
-The single derived row is `MONTHLY_DIRECTION_3M`, version `R4_1_3M_SIMPLE_RETURN_V1`, quality `LATE_BOOTSTRAP_SHADOW_CONTEXT`. It was calculated and persisted on 2026-09-01 with its true timestamps. It is **not** a prospective H=1 forecast and does not close the forecast-input or forecast-contract blockers.
-
-Status:
-
-`FORECAST_LEDGER_NOT_ISSUED; MONTHLY_DIRECTION_BOOTSTRAP_CONTEXT_PRESENT`
-
-Historical closure/replay artifacts keep their original evidence class. No forecast may be relabelled as `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` unless it was issued before outcome realization with an immutable input snapshot and contract.
-
-Manifest v1.19 operational update: forecast-writer schema audit `FORECAST_WRITER_SCHEMA_AUDIT_PASS` confirmed identity/PK/unique/immutable guards; read-only writer rehearsal `PATCH_V7_FORECAST_WRITER_REHEARSAL_PASS` validated insert plans with zero persistent rows and no identity consumption; first-shadow preflight `FIRST_SHADOW_ISSUER_PREFLIGHT_PASS_WAITING_FOR_ELIGIBLE_ORIGIN` confirmed the ledger remains empty and the earliest eligible target/origin is October 2026 / end-September. No forecast has yet been issued.
-
-## 7.3 Prospective-origin cutoff — September 2026
-
-The frozen H=1 contract requires the forecast origin to be the **end of the previous completed calendar month**. The current Neon forecast ledger was still empty after the `2026-08-31` origin had passed, and the first canonical NY17 production observation/backfill work occurred on `2026-09-01`.
-
-Therefore a forecast first created on `2026-09-01` must **not** be backdated to `2026-08-31` or described as a contract-compliant prospective September H=1 issuance.
-
-Status: `SEPTEMBER_2026_H1_PROSPECTIVE_ORIGIN_MISSED`.
-
-The first target still eligible to become a fully contract-compliant prospective H=1 forecast under the frozen origin rule is **October 2026**, with origin at the end of **2026-09-30**, subject to all model/input/provenance blockers being resolved before issuance.
-
-A September monthly direction or R4.1 initialization computed now may only be stored as an explicitly labelled **late bootstrap/shadow context** using its true retrieval/calculation timestamp. Such a bootstrap context does not close the H=1 forecast issuance blocker and may not be presented as a 31-August prospective forecast.
-
-Canonical detail is maintained in:
-
-`gold_axis_2026/GOLD_CONTROL_FORECAST_CANONICALIZATION.md`
+A reconstructed historical origin may be useful as current-month reference or research evidence but cannot be counted as a truly prospective observation unless it was genuinely emitted before outcome realization.
 
 ---
 
-# 8. MONTHLY DIRECTION LAYER
+# 8. FORECAST / DIRECTION MOTOR ROLES
 
-Long-history monthly direction audit conclusion:
+## 8.1 H=1 price experts
 
-1. No additional simple monthly trend/MA rule has stable enough validation evidence to replace or hard-gate the current direction layer.
-2. 3M Momentum remains useful as a bull/trend-continuation challenger/context signal.
-3. Its recent directional hit rate must not be generalized into a universal downside detector.
-4. VW direction may be kept as a disagreement/context signal; VW is stronger as a level forecast than as a standalone direction classifier.
-5. Old TACTICAL V2 exact M20/M40 rule remains blocked because the exact formula/threshold/time-axis contract was not recovered.
+Governed expert identities currently include:
 
-Canonical monthly direction concept:
+- `CAUSAL_PATCH`
+- `MOMENTUM_3M`
+- `RANDOM_WALK`
+- archived `VW_MIDAS_MSVR`
 
-`Monthly context = VW level view + 3M Momentum prior + visible disagreement`
+Current role rules:
 
-No monthly signal alone is sufficient to define the final daily execution state.
+- Causal Patch is the intended forward challenger/issuer lane under its frozen V7 contracts.
+- Momentum 3M and Random Walk remain separate expert/reference outputs.
+- Their outputs must not be averaged or winner-selected without a separately proven selector contract.
+- archived VW remains blocked until its exact executable/PIT contract is recovered or a separately named successor is built.
 
----
+## 8.2 Direction/context motors
 
-# 9. TACTICAL R1 — FAST / SLOW
-
-Tactical R1 is a **CONFIRM / CONFLICT** layer.
-
-It is not:
-
-- a continuous hard gate,
-- an automatic full direction flipper,
-- a replacement for the monthly model.
-
-## 9.1 Fast
-
-Frozen concept:
-
-- daily market close versus SMA20,
-- persistent confirmation across 2 market days.
-
-Role:
-
-- early reversal confirmation / alert,
-- short-horizon trend state.
-
-Current audit status:
-
-`PROVISIONAL_PASS_WITH_SOURCE_ROBUSTNESS_CONSTRAINT`
-
-Fast must not be promoted beyond its audited role without a clean long-history source-consistent replay.
-
-## 9.2 Slow
-
-Frozen concept:
-
-- completed weekly close versus SMA4 of completed weekly closes,
-- persistent state across 2 completed weeks.
-
-Role:
-
-- slower tactical trend confirmation.
-
-## 9.3 Rejected tactical architecture
-
-Continuous weekly hard-gates were rejected because drawdown improvement came with excessive bull-upside sacrifice.
-
-Therefore:
-
-`FAST/SLOW != permanent exposure gate`
+- `MONTHLY_DIRECTION_3M` — monthly direction context; direction vote permitted.
+- `FAST` — tactical short-horizon context; direction vote permitted under frozen contract.
+- `SLOW` — tactical slower context; direction vote permitted under frozen contract.
+- `GVZ_RISK` — risk-only, never a direction vote.
+- Emergency — intramonth alert/context, not standalone automatic action.
+- BOCPD successor — regime/break context only, no direction vote.
 
 ---
 
-# 10. BOCPD REGIME / BREAK LAYER
+# 9. BOCPD GOVERNANCE
 
-Approved detector:
+Archived engine:
 
-`BOCPD-RETURN`
+`BOCPD`
 
-Approved role:
-
-> **REGIME / BREAK ALERT ONLY**
-
-It is not:
-
-- a price forecast,
-- a standalone direction generator,
-- an automatic exit rule by itself.
-
-Rejected in the final BOCPD/CUSUM audit:
-
-- CUSUM-return
-- BOCPD-volatility
-- Dual BOCPD
-
-The historical 2024–2026 evaluation is a **locked historical replay**, not genuinely unseen prospective evidence.
-
-This distinction must remain visible in reporting and UI.
-
-
-## 10.1 BOCPD successor recovery path — v1.31 research evidence
-
-The exact archived `BOCPD` executable identity remains:
+remains:
 
 `BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED`
 
-That archived identity has **not** been reconstructed by guesswork and has not been reactivated.
+It must not be silently repaired or renamed.
 
-Under the successor path authorized by `GOLD_CONTROL_V130_UNRESOLVED_ENGINE_RECOVERY_AUDIT_2026-09-04.md`, a clearly separate research identity has been created:
+Separate successor identity:
 
 `BOCPD_RETURN_SUCCESSOR_V1`
 
-Governance/evidence files:
-
-- `gold_axis_2026/GOLD_CONTROL_UNRESOLVED_ENGINE_SUCCESSOR_ROADMAP_2026-09-04.md`
-- `gold_axis_2026/GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_CHANGE_CONTROL_2026-09-04.md`
-- `gold_axis_2026/GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_RISK_VALIDATION_CONTRACT_2026-09-04.md`
-- `gold_axis_2026/GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_ENGINEERING_EVIDENCE_2026-09-04.md`
-- `gold_axis_2026/GOLD_CONTROL_PROJECT_STAGE_BOCPD_SUCCESSOR_V1_STATUS_2026-09-04.md`
-- `gold_axis_2026/bocpd_successor_v1/frozen_contract_v1.json`
-- `gold_axis_2026/tools/bocpd_return_successor_v1.py`
-- `gold_axis_2026/tools/bocpd_return_successor_v1_risk_validation.py`
-
-Methodological authority for the new recursion is Adams & MacKay (2007), *Bayesian Online Changepoint Detection*, arXiv:0710.3742. This authority supports the BOCPD framework; it does **not** prove the missing archived Gold Control prior/reset-score implementation.
-
-Frozen successor role:
-
-`REGIME_BREAK_CONTEXT`
-
-Frozen successor constraints:
-
-- direction vote = `false`;
-- no H=1 price forecast;
-- no automatic exit/action;
-- no selector/ensemble role;
-- no position mapping;
-- completed monthly CORE5 GOLD log-return research axis;
-- `L=36`, constant hazard `1/36`;
-- DEV `2010-01..2020-12` only for prior fitting;
-- VAL `2021-01..2023-12` untouched by fitting;
-- LOCK `2024-01..2026-07` diagnostic only;
-- 2026 tuning = `NONE`;
-- archived threshold `0.034027906134261016` is **not reused** because archived score equivalence is not proven;
-- historical evidence classes remain non-prospective.
-
-Engineering evidence:
-
-- run `33872811566` = `SUCCESS`, 9 tests PASS;
-- run `33873106128` = `SUCCESS`, 14 combined engineering/risk tests PASS;
-- run-2 tested SHA `993ad49abae525a58362dd7d51f551d965cf2156`;
-- frozen replay rows `199` = DEV `132` + VAL `36` + LOCK `31`;
-- deterministic result hash `59195f0375b43a30f77829b10d33101cc737624a9626b5281f9c637ab046358a`;
-- posterior normalization, development-only prior, prefix invariance/PIT, no-threshold-reuse, no-validation-tuning, no-locked-tuning and no-write gates all PASS;
-- database writes = `NONE`;
-- prospective claim = `false`;
-- promotion authorized = `false`.
-
-Risk-diagnostic evidence reused the previously frozen Gold Control BOCPD severity semantics rather than introducing a post-result success threshold: 2–3 month primary horizon, cumulative forward GOLD return `<= -3%` as the tail definition, 1M secondary only, no automatic exposure action and locked replay excluded from approval. Validation candidate N=`5` showed descriptive downside-risk separation (candidate 2M/3M tail rates `60%/60%` versus non-candidate `12.90%/19.35%`; candidate mean 3M forward return `-3.55%` versus non-candidate `+2.12%`). This remains `DESCRIPTIVE_ONLY`; locked candidate N=`2` remains `DIAGNOSTIC_ONLY`.
-
-Maximum current successor status:
+Current maximum status:
 
 `RESEARCH_SHADOW_CANDIDATE_RISK_DIAGNOSTIC_COMPLETE_PROSPECTIVE_VALIDATION_REQUIRED`
 
-This status does **not** change the current production runtime inventory, does not replace the blocked archived `BOCPD` row, and does not create Decision Store authority. A later prospective-shadow observation requires a separately frozen completed-month issuer contract and may not backdate historical months as prospective.
-
----
-
-# 11. EMERGENCY LAYER
-
-Emergency exists to detect intramonth states the monthly model cannot update quickly enough.
-
-## 11.1 Level Emergency
-
 Role:
 
-- detect large deviation from the frozen monthly reference.
+`REGIME_BREAK_CONTEXT`
 
-Frozen R4.1 concept:
+Locks:
 
-- compare current/frozen EOD price state against frozen monthly VW reference,
-- use the frozen absolute threshold from R4.1 config,
-- do not tune the threshold on later 2026 outcomes.
+- direction vote = false;
+- no H=1 price forecast;
+- no automatic action;
+- no selector/ensemble role;
+- no position mapping;
+- no archived-threshold reuse under an unproven score identity.
 
-## 11.2 Reversal Emergency
+September reconstructed context:
 
-Role:
+`NO_ADVERSE_BREAK_CANDIDATE`
 
-- after an extreme move, detect a sufficiently large reversal from the running peak/trough.
-
-Status/role:
-
-- alert layer,
-- not an automatic full direction flip.
-
-The exact current threshold/rule must always be read from `gold_axis_2026/r4_1/config/frozen_r4_1.json`, not from memory or a mockup.
+This does not reactivate archived BOCPD.
 
 ---
 
-# 12. GVZ RISK LAYER
+# 10. EMERGENCY GOVERNANCE
 
-GVZ is a risk/exposure-cap layer.
+Emergency uses the governed monthly reference for the target month and then monitors completed target-month observations.
 
-It does **not** determine gold direction.
+September 2026 month-open reconstruction:
 
-Interpretation:
+- monthly Patch reference = `4452.046728838838 USD/oz`;
+- `EMERGENCY_LEVEL = NEUTRAL`;
+- `EMERGENCY_REVERSAL = OFF`.
 
-> "Even if the directional state is favorable, how much risk is the system allowed to carry?"
+31-Aug close is not a September close.
 
-The exact current thresholds must be read from the frozen R4.1 config.
+Therefore September Emergency begins from the frozen monthly reference and changes only when legitimate September observations satisfy its frozen rules.
 
-UI may translate the frozen bands into user-facing states such as:
-
-- Normal
-- Elevated
-- Panic
-
-but must not infer direction from GVZ.
+Emergency remains an alert/context layer; it does not create an automatic BUY / SELL / EXIT action.
 
 ---
 
-# 13. MACRO EVENT LAYER
+# 11. CURRENT PRODUCTION RUNTIME AUTHORITY
 
-Macro-event logic is a separate event-risk override layer.
+Last audited production runtime distribution:
 
-Known recovered rule status is partial. If the full timestamp-safe consensus/vintage construction is not reproducible, status remains:
+- `ACTIVE = 4`
+- `WAITING = 5`
+- `BLOCKED = 3`
+- direction-vote permitted = `3`
 
-`BLOCKED_NOT_FULLY_RECOVERED`
+Current BLOCKED archived identities:
 
-Do not fabricate historical consensus or event timestamps to complete the rule.
+- `VW_MIDAS_MSVR` — `BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN`
+- `MACRO_EVENT` — `BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED`
+- `BOCPD` — `BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED`
 
----
+Current WAITING forward-runtime identities include:
 
-# 14. CANONICAL DECISION FLOW
+- `CAUSAL_PATCH`
+- `MOMENTUM_3M`
+- `RANDOM_WALK`
+- `EMERGENCY_LEVEL`
+- `EMERGENCY_REVERSAL`
 
-The target production flow is:
+**Interpretation of WAITING after v1.32:**
 
-```text
-Market/Data Snapshot
-        ↓
-H=1 Monthly Price Forecast
-        ↓
-Monthly Direction Context
-        ↓
-Fast Tactical
-        ↓
-Slow Tactical
-        ↓
-BOCPD Regime/Break Alert
-        ↓
-Level / Reversal Emergency
-        ↓
-Macro Event State
-        ↓
-GVZ Risk Cap
-        ↓
-FINAL DECISION STATE
-        ↓
-Immutable Decision Snapshot / Event Ledger
-```
+WAITING means **waiting for the next forward issuance/update gate**, not that the current September month-open reference is absent.
 
-The frontend must never mirror this whole backend chain on the home screen. It should progressively disclose it.
+For September, reconstructed 31-Aug reference outputs may be shown separately as available current-month origin references while the forward runtime waits for 30-Sep → October issuance.
+
+This dual-state distinction is mandatory in the UI.
 
 ---
 
-# 15. PRODUCTION COMPONENT — DECISION STATE STORE
+# 12. CURRENT PRODUCTION AUTHORITY STORES
 
-The current Streamlit app still expects:
+Last audited counts remain:
 
-`gold_axis_2026/r4_1/output/latest_signal.json`
+- `monthly_forecast_contracts = 0`
+- `decision_signal_snapshots = 0`
+- `decision_runs = 0`
+- `decision_events = 0`
 
-as a latest decision-state artifact.
+The September reconstruction evidence does not populate these tables as a backdated canonical/prospective issuance.
 
-That is not sufficient as the long-term production state contract.
+Reconstructed values may live only in explicitly non-canonical historical/reconstruction evidence lanes with:
 
-## Required database objects / logical entities
-
-The production roadmap must add:
-
-### `decision_runs`
-
-Tracks each decision-engine execution and its provenance.
-
-### `decision_signal_snapshots`
-
-Stores the exact frozen R4.1 signal vector used by a decision.
-
-### `decision_events`
-
-Stores the append-only classification/change history.
-
-The recovered R4.1 engine currently emits **descriptive classifications**, not a proven position instruction. Exact current classification vocabulary is:
-
-- `MACRO_DOWN_RISK`
-- `REVERSAL_RISK_DOWN`
-- `REVERSAL_RISK_UP`
-- `ALIGNED_UP`
-- `ALIGNED_DOWN`
-- `CONFLICT`
-- `UNRESOLVED_MIXED`
-
-Current position/action mapping status:
-
-`NOT_PROVEN_POSITION_MAPPING`
-
-Therefore the database/UI must not fabricate `BUY`, `SELL`, `HOLD_LONG`, `EXIT`, `REDUCE`, or an exposure percentage from those classifications until a separate audited mapping is recovered or frozen under change control.
-
-Current Stage 3 implementation artifacts:
-
-- `gold_axis_2026/GOLD_CONTROL_DECISION_STORE_CONTRACT.md`
-- `gold_axis_2026/data_pipeline/schema_patch_decision_store_v1.sql`
-- `gold_axis_2026/data_pipeline/test_decision_store_schema.py`
-- `.github/workflows/gold-control-decision-store-schema-smoke.yml`
-
-Decision Store V1 passed rollback-only CI, isolated Neon rehearsal, and guarded production migration. Production now contains the three append-only Decision Store tables, the evidence-scoped latest-state view, and the mutation-rejection function. The production migration run was GitHub Actions run `33496843121`, pinned to canonical commit `13d5a027849470b4a95341004300bd97a35e82f9`, and completed `SUCCESS` with `decision_rows=0`. Production writer/reader activation remains a separate Stage 3 gate.
-
-The UI should eventually read canonical stored decision state rather than deriving a decision from live spot.
+- `prospective_claim = false`
+- `canonical_authority = false`
+- `direction_vote_permitted = false` for replay-only engine-execution rows unless a separate live runtime state independently grants a vote
+- `AUTO_SELECTOR = OFF`
+- `AUTO_ENSEMBLE = OFF`
 
 ---
 
-# 16. FORECAST STATE STORE
+# 13. UI CONTRACT — v1.32
 
-Every issued production forecast must be immutable and auditable.
+## 13.1 Tahmin
 
-Each forecast record must bind:
+During September 2026, the first useful forecast surface must show September month-open information, not an empty card waiting for 30 September.
 
-- forecast origin,
-- target month,
-- target definition,
-- production point forecast,
-- audited shadow/reference,
-- RW benchmark,
-- direction challenger/context,
-- model version,
-- input snapshot id,
-- code SHA,
-- issued-at timestamp,
-- status (`PRODUCTION`, `SHADOW`, `BENCHMARK`, `BLOCKED`, etc.).
+Primary heading:
 
-Later revisions must not rewrite an old forecast snapshot.
+`EYLÜL 2026 · 31 AĞUSTOS ORIGIN`
 
-Current production data-plane reconciliation on 2026-09-03 after Data Evidence Spine V1 schema migration:
+It may show the separate governed September expert outputs:
 
-- `forecast_input_snapshots`: **0 rows**;
-- `forecast_input_sets`: **0 rows**;
-- `forecast_input_set_members`: **0 rows**;
-- `monthly_expert_forecasts`: **0 rows**;
-- `monthly_forecast_contracts`: **0 rows**;
-- `decision_signal_snapshots`: **0 rows**;
-- `decision_runs`: **0 rows**;
-- `decision_events`: **0 rows**;
-- `derived_feature_snapshots`: **7 immutable component-context rows** — `MONTHLY_DIRECTION_3M`, `FAST_STATE`, `SLOW_STATE`, `GVZ_VALUE`, `GVZ_CAP`, `GVZ_PANIC`, `GVZ_REGIME`;
-- `engine_execution_runs`: **0 rows pending canonical runtime bootstrap**;
-- Data Evidence Spine immutable guard names: **6/6**;
-- expert/input-set composite identity FK: **1/1**;
-- orphan input snapshots / expert rows without input set / fingerprint mismatches: **0 / 0 / 0**;
-- no historical file-backed forecast or decision was backfilled or prospectively relabeled.
+- Momentum 3M
+- Random Walk
+- Causal Patch
 
-Production Neon migration `5281e7d0-8335-41c5-bff2-a15e2b91b017` was applied successfully to branch `production` (`br-gentle-mouse-b22dzkr1`) after a temporary-branch positive chain test and negative FK/immutability tests. The first future H=1 `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` expert forecast must still be stored before outcome realization with immutable inputs and provenance. Runtime bootstrap completed as an observability/provenance operation using canonical bootstrap code SHA `3c7e2b1bae588ce38982c0804e78bc576642382a`. The production post-write audit proved 12/12 runtime states, 4 ACTIVE / 3 WAITING / 5 BLOCKED, 3 direction-vote-permitted context motors, and exactly-one runtime linkage for all seven persisted component-context rows. No forecast, expert forecast, canonical forecast or Decision Store row was fabricated by bootstrap.
+No synthetic average/winner may be invented.
 
-## 16.1 Data Evidence Spine V1 — normalized production evidence chain
+Secondary provenance must explain when a value was reconstructed later.
 
-Frozen contract:
+## 13.2 Görünüm
 
-`gold_axis_2026/GOLD_CONTROL_DATA_EVIDENCE_SPINE_CONTRACT_2026-09-03.md`
+Every governed motor remains visible.
 
-Frozen marker:
+For motors with a September reconstructed origin result and a forward WAITING/BLOCKED runtime state, the card must show both:
 
-`FROZEN_DATA_EVIDENCE_SPINE_V1`
+1. **Eylül / 31 Ağustos origin referansı** — available reconstructed result;
+2. **İleri operasyonel durum** — ACTIVE / WAITING / BLOCKED for the next live/prospective cycle.
 
-Authoritative production migration:
+A user must never interpret `WAITING` as “September için hiçbir sonuç yok” when a valid reconstructed September origin reference exists.
 
-`gold_axis_2026/data_pipeline/schema_patch_data_evidence_spine_neon_v1.sql`
+## 13.3 Geçmiş
 
-Required production evidence chain:
+Geçmiş/audit view must preserve true calculation/persistence timestamps and evidence class.
 
-```text
-retrieval/source lineage
-        ↓
-observations / observations_as_of(as_of)
-        ↓
-forecast_input_sets
-        ↓
-forecast_input_snapshots + forecast_input_set_members
-        ↓
-monthly_expert_forecasts
-        ↓
-engine_execution_runs + normalized output links
-        ↓
-future governed selector / canonical forecast
-        ↓
-Decision Store
-        ↓
-read-only application
-```
-
-Binding rules:
-
-1. Every future expert forecast must have a non-null `input_set_id`.
-2. Expert/input-set identity is enforced by composite foreign key across target, origin, as-of, track, expert, model, evidence class and input fingerprint.
-3. Snapshot membership is normalized in `forecast_input_set_members`; the existing `input_snapshot_ids[]` remains audit-readable but is not the only lineage representation.
-4. The application/store must verify that every member snapshot matches input-set origin/target/model identity and that `available_as_of <= as_of` and `retrieved_at <= as_of` before commit.
-5. Every issued expert output must be linked to exactly one `engine_execution_runs` row in the same database transaction.
-6. All 12 governed motors must have a runtime ledger state even when the legitimate state is `WAITING`, `BLOCKED` or `NOT_PROVEN`; status-only rows must never fabricate outputs.
-7. `latest_engine_runtime_state` and `data_evidence_spine_health_v1` are read-only observability surfaces; neither is a selector or final-decision authority.
-8. `forecast_input_sets`, membership and engine runtime/output-link tables are append-only using the existing proven Gold Control mutation-rejection function.
-9. `canonical_latest` and `usable_observations` remain current-state convenience surfaces only; historical/forward reconstruction must use `observations_as_of(as_of)` or a sealed immutable input set.
-10. Existing `derived_feature_snapshots` rows must not be edited or prospectively relabeled during runtime-ledger bootstrap.
-11. Decision Store V1 is retained but remains empty while expert selection and position mapping are not proven. Future Decision Store V2 normalized binding status is `BLOCKED_DECISION_STORE_V2_SELECTION_CONTRACT`.
-12. UI continues to use `SET TRANSACTION READ ONLY`. A dedicated least-privilege DB reader role is desirable defense-in-depth but remains `NOT_PROVEN_PROVISIONED` until separately created and tested.
-13. Production schema migration status is `APPLIED_PRODUCTION_PASS`; migration ID is `5281e7d0-8335-41c5-bff2-a15e2b91b017`.
-14. Runtime-ledger bootstrap status is `RUNTIME_BOOTSTRAP_PRODUCTION_PASS` using canonical bootstrap code SHA `3c7e2b1bae588ce38982c0804e78bc576642382a`; it linked only the existing seven persisted context rows and status-only WAITING/BLOCKED engines, with no recalculation or prospective relabeling.
-15. Selector, ensemble, canonical forecast issuance and position mapping locks are unchanged: `NOT_PROVEN_EXPERT_SELECTION_RULE`, `AUTO_SELECTOR=OFF`, `AUTO_ENSEMBLE=OFF`, `NOT_PROVEN_POSITION_MAPPING`.
-
-Migration acceptance was fail-closed: the temporary Neon migration preserved existing production rows, accepted a valid synthetic evidence chain, rejected expert/input-set identity violations, rejected append-only mutation, and production post-migration integrity remained clean.
-
-Schema migration status:
-
-`APPLIED_PRODUCTION_PASS`
-
-Runtime bootstrap status:
-
-`RUNTIME_BOOTSTRAP_PRODUCTION_PASS`
+No historical timestamp may be rewritten for visual convenience.
 
 ---
 
-# 17. FRONTEND INFORMATION ARCHITECTURE
+# 14. DATA CONTRACT — CORE RULES
 
-## 17.1 Screen 1 — `Piyasa`
+1. No silent provider substitution.
+2. Provider identity is part of series identity.
+3. Point-in-time availability is mandatory.
+4. Historical/reconstructed code must use origin-bounded observations/snapshots.
+5. Retrieval-time backfills do not become retroactively knowable.
+6. Live/indicative XAU is not canonical EOD authority.
+7. Current-day bars cannot be assumed completed before the frozen session boundary.
+8. Raw vendor/licensed data must respect display/redistribution rights.
+9. Blocked inputs receive no invented same-name proxy.
 
-Question:
+Canonical R4 decision-reference series:
 
-> **Piyasa şu anda ne durumda?**
+`XAU_EOD_TWELVE_NY17`
 
-Primary content:
+Semantic:
 
-- XAU/USD indicative live price
-- absolute / percentage change if defensibly calculable from available completed data
-- as-of timestamp
-- freshness/stale state
-- source label
-- latest completed daily close from the explicitly labelled operational display history (`XAU_DAILY_XAUS`), never from raw Twelve vendor data unless display rights are separately proven
-- GVZ latest official close
-- GVZ risk regime
-- XAU historical chart
+`spot XAU/USD 17:00 ET internal decision reference`
 
-Current timeframe contract for the existing XAUS history adapter:
+Operational mapping:
 
-`1A | 3A | 6A | 1Y`
+- Twelve Data `XAU/USD`
+- interval `1min`
+- timezone `America/New_York`
+- exact bar open `16:59:00` ET
+- use bar close as 17:00 ET internal decision reference
 
-Do not expose `1G`, `1H`, or `Tümü` until a real intraday/longer-history adapter is connected and audited. `XAU_EOD_TWELVE_NY17` remains the internal canonical R4.1 EOD decision-reference lineage; its raw numeric value is not a Piyasa display field unless Twelve external-display rights are separately proven and frozen.
-
-Display/licensing change-control: `gold_axis_2026/GOLD_CONTROL_PIYASA_DISPLAY_CONTRACT_CHANGE_CONTROL_2026-09-01.md`.
-
-Secondary decision strip:
-
-- last stored EOD decision state
-- decision as-of timestamp
-- explicit warning: `Canlı spot ≠ son EOD karar`
-
-Home screen must be market-first, not model-first.
-
-## 17.2 Screen 2 — `Görünüm`
-
-Question:
-
-> **Sistem neden böyle düşünüyor?**
-
-Content:
-
-- final stored decision state
-- monthly context
-- Fast
-- Slow
-- regime/break alert
-- Emergency
-- GVZ/risk
-- deterministic plain-language explanation generated only from stored states
-- expandable technical details
-
-Do not show invented confidence metrics.
-
-## 17.3 Screen 3 — `Tahmin`
-
-Question:
-
-> **Gelecek ay için model ne bekliyor?**
-
-Content:
-
-- target month
-- production H=1 point forecast
-- current spot comparison
-- audited VW shadow/reference
-- RW benchmark
-- direction challenger/context
-- actual vs issued forecast history
-- model provenance/status
-
-If the canonical forecast ledger has no issued row, production forecast state must be displayed as `NOT_ISSUED_IN_CANONICAL_LEDGER`; file-backed research/closure artifacts may only appear with their evidence label.
-
-Do not show a prediction interval or uncertainty label unless a calibrated interval model exists and has been validated.
-
-## 17.4 Screen 4 — `Geçmiş`
-
-Question:
-
-> **Sistem geçmişte gerçekten ne yaptı?**
-
-Two separate histories:
-
-### Forecast history
-
-- issued forecast
-- actual
-- APE/error
-- model version
-- origin
-
-### Decision history
-
-- actual stored decision events
-- timestamp
-- signal-state context
-- price at decision/evaluation point
-- reason code
-
-Never invent historical decision dates for visual design.
-
-## 17.5 Technical screen — `Sistem / Veri Sağlığı`
-
-Contains:
-
-- source status
-- last retrieval
-- freshness
-- latest pipeline run
-- quality events
-- model version
-- decision-engine version
-- config version
-- Git SHA
-- forecast snapshot id
-- decision snapshot id
-- blockers/provenance
-
-This is secondary navigation, not one of the four primary user tabs.
-
-## 17.6 Final mobile mockup contract V2
-
-Binding presentation specification:
-
-`gold_axis_2026/GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md`
-
-Status: `APPROVED_FINAL_MOCKUP_UI_CONTRACT_V2`.
-
-This V2 contract supersedes V1 for presentation structure. It does **not** change model, source, forecast, decision, threshold, evidence, licensing, or point-in-time semantics.
-
-The latest approved mockup family is now the canonical visual target for `Görünüm`, `Tahmin`, and `Geçmiş/Performans`; `Bugün` / canonical `Piyasa` must be restyled into the same shell.
-
-### Global mobile shell — binding
-
-Every primary screen must use the same product shell:
-
-- compact white institutional header;
-- Gold Control logo + `DECISION SYSTEM` subtitle;
-- menu affordance on the left;
-- notification/profile controls only if implemented, never decorative dead controls;
-- page title, short subtitle, and real last-update/freshness timestamp when available;
-- white/light cool-neutral page surface;
-- deep navy primary hero where the mockup uses one;
-- controlled gold brand/selection accent;
-- green only for favorable/up/normal state;
-- red only for adverse/down/alert state;
-- restrained white cards with subtle cool-gray border/shadow;
-- four-item bottom navigation: `Bugün | Görünüm | Tahmin | Geçmiş`;
-- one consistent navy/gold selected-state treatment across the four tabs.
-
-`Bugün` remains only a user-facing alias for canonical `Piyasa`.
-
-### Görünüm — final mockup hierarchy
-
-The screen order is frozen as:
-
-1. `GÖRÜNÜM` page header + last update;
-2. deep navy primary state hero;
-3. `1 · SİNYAL ÖZETİ`;
-4. `2 · MODEL YÖNÜ (AYLIK)`;
-5. `3 · FAST / SLOW TEYİDİ`;
-6. `4 · RİSK SEVİYESİ`;
-7. `5 · SİNYAL ZAMAN ÇİZELGESİ`;
-8. `6 · EMERGENCY DURUMU`;
-9. `7 · SİSTEM YORUMU`;
-10. explanatory footer note;
-11. bottom navigation.
-
-The hero composition is also frozen: primary stored state on the left/center, monthly context on the upper-right, GVZ/risk state on the lower-right, plus a real system-health pill only when supported.
-
-Mockup-to-production substitutions are mandatory:
-
-- `POZİSYONU KORU` slot -> stored descriptive R4 classification;
-- `MODEL YÖNÜ` -> stored monthly direction/context;
-- `RİSK SEVİYESİ` -> frozen GVZ risk-state translation;
-- `SİSTEM AKTİF` -> only a real health state;
-- signal timeline -> actual stored decision/model events only;
-- system comment -> deterministic explanation generated only from stored state.
-
-The following visible mockup content remains blocked until separately proven: `POZİSYONU KORU`, position/action labels, BUY/SELL/HOLD/EXIT/REDUCE, `Güç %`, and arbitrary confidence labels.
-
-### Tahmin — final mockup hierarchy
-
-The screen order is frozen as:
-
-1. `TAHMİN` page header + last update;
-2. deep navy `GELECEK AY TAHMİNİ` hero;
-3. `GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI` chart;
-4. scenario/module row, only when a canonical scenario contract exists;
-5. `MEVCUT FİYATA GÖRE FARK`;
-6. `MODEL PERFORMANSI`;
-7. methodology / non-advice information note;
-8. bottom navigation.
-
-The hero layout is frozen but data-gated:
-
-- left slot = canonical immutable H=1 point forecast from `monthly_forecast_contracts` after issuance;
-- right slot = separately stored/frozen monthly direction context;
-- target month, evidence class and origin/issued time must remain available in the UI hierarchy.
-
-Before a valid issuance, the hero must show `TAHMİN HENÜZ YAYIMLANMADI` and `NOT_ISSUED_IN_CANONICAL_LEDGER`, never a mockup number.
-
-The mockup's confidence gauge, `Güven %`, lower/base/upper scenario values and forecast band are reserved visual slots only and remain hidden until a calibrated scenario/interval contract is frozen, prospectively validated and immutably stored.
-
-The three-card `Baz / Yukarı / Aşağı` row has current status `BLOCKED_NO_CANONICAL_SCENARIO_CONTRACT`. It may not be populated by inventing scenarios or by relabelling VW/RW references as upside/downside cases.
-
-`MEVCUT FİYATA GÖRE FARK` may compare the current indicative display spot with the issued H=1 point forecast when both are available; this is a comparison, not expected return.
-
-`MODEL PERFORMANSI` must use realized prospective/live forecast rows for production-facing metrics. Historical replay belongs in a separately labelled research surface.
-
-### Geçmiş / Performans — final mockup hierarchy
-
-The bottom-navigation key remains `Geçmiş`; a user-facing `PERFORMANS` page heading is allowed.
-
-The screen order is frozen as:
-
-1. page header + last update;
-2. four summary metric cards;
-3. large primary history/performance chart;
-4. secondary timeline/risk/error chart;
-5. selected historical records table/list;
-6. evidence/methodology footer;
-7. bottom navigation.
-
-The four-card row is visually binding but labels are data-contract dependent. Under the current production contract, preferred production-safe metrics are realized prospective forecast count, prospective MAPE, prospective MAE USD, and prospective direction hit rate only if direction has a frozen definition. Insufficient history renders an empty/not-enough-history state.
-
-The original mockup's YBB strategy return, 12-month strategy return, portfolio maximum drawdown, trade count, entry/exit prices, trade return, `DOĞRU/YANLIŞ` trading outcome, strategy equity curve and buy-and-hold outperformance remain blocked until an audited execution/portfolio contract exists.
-
-The primary chart slot should therefore use actual-vs-issued forecast history or another frozen forecast-performance view until a strategy ledger exists. The secondary drawdown/timeline slot may use forecast error plus actual stored event markers; it must not fabricate portfolio drawdown.
-
-`HISTORICAL_REPLAY`, `PROSPECTIVE_SHADOW`, and `LIVE_PRODUCTION` must remain visibly separate. Replay metrics may not populate prospective summary cards.
-
-### Final mockup interpretation rule
-
-The final mockups are authority for **layout and visual hierarchy**, not for example values.
-
-If a mockup slot lacks an authorized datum, the slot is hidden, empty-stated, or relabelled truthfully. It is never filled with a placeholder number merely to preserve visual balance.
-
-If implementation and the V2 mockup structure disagree, V2 controls presentation. If V2 presentation and canonical data/model/evidence semantics disagree, the canonical semantic contract controls content truth.
-
-Implementation candidate remains `gold_axis_2026/apps/gold_control_mobile_v1.py`, but it must be reconciled to this V2 hierarchy before Stage-10 mobile QA can pass.
+This is an internal decision reference, **not official settlement/official close**.
 
 ---
 
-# 18. UI / DESIGN SYSTEM FREEZE
+# 15. CURRENT EVIDENCE FILES REFERENCED BY THIS MANIFEST
 
-Approved direction:
+The following are supporting evidence, not independent manifests:
 
-- corporate/institutional financial visual language,
-- light/white primary surfaces,
-- restrained navy as the institutional anchor,
-- controlled gold accent for brand/selection,
-- green only for favorable/up/normal states,
-- red only for adverse/down/alert states,
-- amber only for attention/warning,
-- high whitespace,
-- strong typographic hierarchy,
-- thin separators instead of excessive card boxes,
-- mobile-first layout,
-- no decorative glow-heavy luxury-trading aesthetic,
-- no black/white-only dashboard theme,
-- no dashboard-card overload,
-- no fake metrics added for visual balance.
+- `GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md`
+- `GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_ENGINEERING_EVIDENCE_2026-09-04.md`
+- `GOLD_CONTROL_V131_AUG31_REPLAY_UI_FINAL_EVIDENCE_2026-09-04.md`
+- `GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_CHANGE_CONTROL_2026-09-04.md`
+- `GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_ENGINEERING_EVIDENCE_2026-09-04.md`
+- `GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_RISK_VALIDATION_CONTRACT_2026-09-04.md`
+- `GOLD_CONTROL_R4_2_PATCH_EXPERT_EMERGENCY_REFERENCE_CHANGE_CONTROL_2026-09-04.md`
+- `GOLD_CONTROL_DATA_EVIDENCE_SPINE_CONTRACT_2026-09-03.md`
+- `GOLD_CONTROL_ENGINE_OBSERVABILITY_CONTRACT_2026-09-03.md`
+- `GOLD_CONTROL_DECISION_STORE_CONTRACT.md`
+- `GOLD_CONTROL_FORECAST_CANONICALIZATION.md`
+- `GOLD_CONTROL_CAUSAL_PATCH_R1_REPRO_CONTRACT_V1.md`
+- `GOLD_CONTROL_CAUSAL_PATCH_R1_DAILY_FEATURE_PIT_CHANGE_CONTROL_V7_2026-09-02.md`
+- `GOLD_CONTROL_PATCH_V7_FIRST_PROSPECTIVE_SHADOW_ISSUER_CONTRACT_2026-09-02.md`
 
-The frontend should follow progressive disclosure:
-
-1. action/meaning,
-2. explanation,
-3. technical mechanism/audit.
+Where old wording in these historical files conflicts with the v1.32 monthly-origin correction, **v1.32 controls the current product behavior** while the historical document remains immutable evidence of what was believed/frozen at that earlier time.
 
 ---
 
-# 19. METRICS THAT MUST NOT BE INVENTED
+# 16. UNRESOLVED / NEXT WORK
 
-Until separately defined, computed, and validated, the following are prohibited in production UI:
+## 16.1 VW successor
 
-- `Güven: Orta`
-- `Güç: %68`
-- arbitrary confidence percentages
-- arbitrary uncertainty labels
-- direction accuracy percentages not tied to a named audited dataset/window
-- arbitrary trade counts
-- fabricated decision dates
-- fabricated forecast values
-- fabricated forecast bands
+Archived `VW_MIDAS_MSVR` remains blocked.
 
-If a metric has no frozen definition and lineage, it does not appear.
+If exact replication cannot be proven, build only under a separate successor identity with pre-result change control and PIT-safe validation.
 
----
+## 16.2 Macro successor
 
-# 20. REPLAY VS PROSPECTIVE EVIDENCE
+Archived Macro Event remains blocked until exact score/consensus/vintage contract is recovered.
 
-Every performance result must be labeled as one of:
+A consensus-free alternative, if researched, requires a separate successor identity.
 
-### `HISTORICAL_REPLAY`
+## 16.3 BOCPD successor
 
-Rules/architecture evaluated on historical data, even if locked before a sub-window.
+Continue prospective/shadow evidence under its separate identity; do not replace archived BOCPD.
 
-### `PROSPECTIVE_SHADOW`
+## 16.4 September → October live cycle
 
-Decision/forecast recorded before outcome realization but not yet used as production authority.
+The next forward monthly issuance target is **October 2026 using the completed 30-Sep origin**, not September.
 
-### `LIVE_PRODUCTION`
+This must be executed on-time under the month-end contract so it becomes genuinely prospective rather than reconstructed.
 
-Issued by the frozen production path before realization, with immutable input/decision snapshots.
+## 16.5 Governance hardening
 
-Historical replay must never be described as live prospective evidence.
+Branch protection/rulesets remain unresolved unless separately proven configured:
 
-The current Neon forecast ledger is proven empty; therefore the project does not currently claim a historical Neon-backed `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` forecast record.
-
-This separation is mandatory in the `Geçmiş` screen and in all research reports.
+`UNRESOLVED_GOVERNANCE_HARDENING = BRANCH_PROTECTION_NOT_CONFIGURED`
 
 ---
 
-# 21. CHANGE-CONTROL POLICY
+# 17. FINAL BINDING SUMMARY
 
-A production-rule change requires all of the following:
+The governing monthly operating rule is now unambiguous:
 
-1. explicit reason/problem statement,
-2. frozen development evidence,
-3. leakage-safe rolling/expanding-origin validation,
-4. comparison against the current production/reference baseline,
-5. robustness check across regimes where possible,
-6. source/provenance audit,
-7. no tuning on the final locked/prospective evaluation period,
-8. new version identifier,
-9. manifest update,
-10. code/config commit.
+> **At each completed month-end, Gold Control computes the immediately following month's forecast and month-open direction/reference state using only information available at that origin.**
 
-A change that improves one recent episode but was discovered by inspecting that episode cannot silently become production logic.
+For the current period:
 
----
+> **31 Aug 2026 → September 2026 forecast/direction reference.**
 
-# 22. CHALLENGER RESEARCH POLICY
+Next cycle:
 
-The following remain research-lane ideas only until incremental evidence exists:
+> **30 Sep 2026 → October 2026 forecast/direction reference.**
 
-- new Transformer architectures,
-- LSTM/GRU variants,
-- XGBoost/boosted-tree price models,
-- news sentiment,
-- whale/large-flow features,
-- ETF/futures/positioning features,
-- options-derived variables,
-- new regime models,
-- auto selector,
-- auto ensemble,
-- confidence meta-model,
-- self-learning threshold adaptation.
+If an origin was reconstructed later, the target/origin interpretation remains valid, but the audit metadata must truthfully identify it as a reconstruction rather than falsely backdating the issuance.
 
-A challenger may enter production consideration only if it improves the frozen decision/forecast objective under the same causal information contract.
-
----
-
-# 23. PROJECT ROADMAP — FROZEN DEPENDENCY-GATED EXECUTION
-
-The project roadmap is dependency-gated rather than globally linear. Model/decision claims preserve strict causal gates, while the market-monitoring surface may progress once its own data/display contract is proven.
-
-| Stage | Deliverable | Exit criterion / dependency |
-|---|---|---|
-| 0 | **Production Manifest** | Read-first governance contract active |
-| 1 | **Neon Data Inventory / Health Audit** | Actual inventory, freshness, quality, lineage and display policy documented |
-| 2 | **Forecast Canonicalization** | Forecast target/origin and model roles unambiguous; no false prospective history |
-| 3 | **Decision State Store** | Append-only decision persistence/read path present; evidence isolation enforced |
-| 4A | **Current-state data/context substrate** | Canonical NY17 history sufficient; monthly direction context and Fast/Slow calculable; immutable state infrastructure proven |
-| 4B | **Forecast-dependent R4.1 issuer** | Current H=1 issuer + VW reference + immutable forecast snapshot/contract + complete EngineSnapshot; first forward decision may be `PROSPECTIVE_SHADOW` |
-| 5 | **Piyasa Screen** | Real live/history data only; source/freshness visible; may progress in parallel with 4B because it does not create a forecast or decision |
-| 6 | **Görünüm Screen** | Real display-eligible stored decision snapshot drives explanation; no fabricated action/confidence |
-| 7 | **Tahmin Screen** | Real canonical issued forecast drives display |
-| 8 | **Geçmiş Screen** | Real forecast/decision ledgers; replay/prospective/live separated |
-| 9 | **System Health / Audit Screen** | Full lineage/provenance/blockers exposed technically |
-| 10 | **Mobile QA** | Final V2 mockup hierarchy, phone viewport behavior, empty states and semantic gates validated |
-| 11 | **Prospective Shadow Run** | New forecasts/decisions stored before outcomes, immutable ledger accumulating |
-| 12 | **Production Graduation** | Predefined prospective acceptance gates satisfied |
-
-Dependency rule frozen by manifest v1.10:
-
-Final-mockup rule added by manifest v1.20:
-
-- Stage 10 is not a generic responsive-design check; it must validate fidelity to `GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V2_FINAL_MOCKUPS.md`.
-- Mockup layout slots may remain hidden/empty when their data contract is unresolved; a visual placeholder never satisfies a stage gate.
-- `Görünüm`, `Tahmin`, and `Geçmiş` implementation must preserve the final V2 section ordering unless a later explicit UI change-control supersedes it.
-
-- Stage 5 may proceed independently of unresolved Stage-4B forecast/VW blockers because `Piyasa` is a monitoring surface and must not infer a decision from live spot.
-- Stage 6 cannot be marked complete without a display-eligible stored Decision Store state.
-- Stage 7 cannot be marked complete without a canonical issued H=1 forecast.
-- Stage 8 must never mix historical replay with prospective/live evidence.
-- No stage may use fabricated placeholders to satisfy its own exit criterion.
-
-Change-control record: `gold_axis_2026/GOLD_CONTROL_LIVE_MARKET_ROADMAP_CHANGE_CONTROL_2026-09-01.md`.
-
-Stage-5 runtime evidence added in manifest v1.11:
-
-- canonical live adapter smoke: run `33519370028`, job `99894418747`, `SUCCESS`; source series `XAU_SPOT_GOLDAPI`, freshness PASS, role `INDICATIVE_DISPLAY_ONLY_NO_MODEL_USE`, no raw-value logging or writes;
-- current 1-year XAU history adapter smoke: run `33519506662`, job `99894890585`, `SUCCESS`; row/span/freshness/duplicate/null gates PASS, no raw-value logging or writes.
-
-Stage-5 closure evidence added in manifest v1.12:
-
-- Piyasa deterministic contract tests: 4/4 PASS;
-- canonical Streamlit tabs: `Piyasa | Görünüm | Tahmin | Geçmiş`;
-- live Gold API and operational XAUS history rendered with explicit distinct lineage labels;
-- raw Twelve NY17 numeric market value intentionally not rendered;
-- Decision Store absence renders `KANONİK KARAR YOK`;
-- no forecast or decision write performed;
-- run `33521193615`, job `99900581399`, `STAGE5_PIYASA_UI_SMOKE_PASS`.
-
-## 23.1 Current roadmap status — 2026-09-02
-
-| Stage | Current status | Evidence / blocker |
-|---|---|---|
-| 0 | `PASS` | Manifest read-first contract active |
-| 1 | `PASS_AUDIT_COMPLETE_WITH_OPERATIONAL_BLOCKERS` | Data inventory/lineage audited; useful 2026-09-01 historical/PIT backfill retained |
-| 2 | `PASS_CONTRACT_CANONICALIZED; FORECAST_NOT_ISSUED` | H=1 target/origin and restored Patch/VW/3M/RW role registry frozen; no prospective H=1 row exists |
-| 3 | `PASS_DECISION_STORE_AND_READ_PATH` | Production append-only store/read path active; no fabricated current decision |
-| 4A | `PASS_CURRENT_STATE_SUBSTRATE_FOR_SHADOW_CONTEXT` | NY17 backfill SUCCESS; monthly direction bootstrap issued; Fast/Slow rehearsal SUCCESS; forecast-state append-only guards 3/3 |
-| 4B | `PATCH_V7_MODEL_IMPACT_PASS; R4_2_BRIDGE_PASS; WRITER_PREFLIGHT_PASS; WAITING_ELIGIBLE_ORIGIN` | V7 completed-session PIT gate PASS; generic monthly-reference→Emergency bridge PASS; forecast schema + read-only writer rehearsal + first-shadow preflight PASS. Forecast/input ledgers remain empty until a real eligible origin; complete forward EngineSnapshot/Decision Store issuance remains outstanding. |
-| 5 | `PASS_PIYASA_SCREEN_CONTRACT` | Canonical Piyasa implementation + deterministic/live Streamlit smoke PASS |
-| 6 | `BLOCKED_NO_DISPLAY_ELIGIBLE_DECISION_SNAPSHOT` | No complete forward stored decision row may be fabricated |
-| 7 | `BLOCKED_FORECAST_NOT_ISSUED` | Canonical H=1 forecast ledger has no issued row |
-| 8–12 | `NOT_STARTED / NOT_COMPLETE` | Their own dependency gates are not satisfied |
-
-The architecture remains the agreed six-layer system: data plane → H=1 forecast/monthly context → Fast/Slow tactical → BOCPD break → Emergency → GVZ risk/Decision State. The R2 detour did not alter those layers.
-
----
-
-# 24. IMMEDIATE NEXT WORK
-
-The immediate canonical task is now:
-
-## `STAGE 4B — PATCH V7 FORWARD ISSUER PREPARED; COMPLETE ENGINE SNAPSHOT + REAL ELIGIBLE-ORIGIN ISSUANCE; DO NOT REOPEN MODEL SEARCH`
-
-Completed and frozen:
-
-1. `CAUSAL_PATCH_R1_REPRO_V1` geometry was selected only on pre-2023 development data: `L=252`, `P=21`, `D=32`;
-2. the original reproducible Patch locked replay established historical eligibility under the frozen 43-month window; archived exact historical Patch executable identity remains separate and unproven;
-3. prospective-input bridge V1 failed closed and did not authorize substitution, threshold relaxation, or production issuance;
-4. V2 was closed as `FAIL`;
-5. V3 repaired the NASDAQ continuation without changing model geometry: 199 monthly comparisons, 0 missing, 86/86 locked completed-month inputs availability-safe, 0 availability violations; DFF/FEDFUNDS and DEXCHUS/USD-CNY semantics remained passed;
-6. current Twelve entitlement proved `XAU/USD` accessible while `XAG/USD`, `XPT/USD`, and `XPD/USD` require higher provider entitlement; alternative Nasdaq Data Link/CME four-metal probes returned HTTP 403 and were not treated as usable;
-7. V4 change-control was frozen before result inspection: Patch architecture unchanged, `L=252`, `P=21`, `D=32`; daily metals changed from four channels to XAU only; Silver/Platinum/Palladium are `OMITTED_NOT_IMPUTED` with no zero-fill, stale carry-forward, synthetic proxy, futures substitution, or silent provider mixing;
-8. V4 source gate passed by workflow run `33606111783`, job `100170350792`: Twelve XAU full history contained 4487 daily observations from `2010-01-01`, including 302 observations before the original first model boundary; NASDAQ/FEDFUNDS/USD-CNY inherited/validated source gates passed; raw vendor prices were not logged and no database/forecast/decision writes occurred;
-9. V4 locked model-impact replay passed by workflow run `33606337904`, job `100171077252`: target reconciliation `43/43`, RW reconciliation `43/43`, deterministic max absolute difference `0`, future-information violations `0`, V4 MAPE `3.133034811%` < RW `3.302322023%`, V4 MAE `102.233331072` < RW `107.465116279`, V4 worst APE `9.021401201%`, RW worst APE `9.625880596%`, worst-APE ratio `0.937202691`, `V4_MODEL_IMPACT_PASS=true`;
-10. model-impact evidence is explicitly `HISTORICAL_REPLAY_MODEL_IMPACT`, `prospective_claim=false`; geometry was not reselected, no post-result retune occurred, and Neon / forecast ledger / Decision Store writes remained `NONE`.
-
-Active successor identity after the V4 source + model-impact gates:
-
-`CAUSAL_PATCH_R1_REPRO_V1_3_XAU_ONLY_ORIGIN_SAFE`
-
-This identity must be frozen as a versioned executable/input contract before it is allowed to issue any forward forecast. It does not inherit the exact archived Patch executable identity claim.
-
-Remaining Stage-4B dependency gates after v1.19 reconciliation:
-
-1. V7 completed-session Patch identity is the active forward issuer candidate: `CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE`; do not reopen broad model search or retune from locked outcomes;
-2. R4.2 generic monthly-price-reference → Emergency bridge is validated; do not relabel the generic reference as historical `monthly_vw_forecast`;
-3. forecast DB schema/identity/immutability audit and read-only writer rehearsal are PASS; no real forecast row is authorized before an eligible origin;
-4. first-shadow issuer preflight is PASS and correctly returns `SKIP_NOT_ELIGIBLE_ORIGIN` on 2026-09-02; September remains non-backfillable;
-5. first possible contract-compliant target remains October 2026 at the end-September origin, after the issuer's availability/time gates close;
-6. a complete versioned forward `EngineSnapshot` and subsequent Decision Store write still must be built from the actually persisted forecast contract/snapshot IDs;
-7. first real forward forecast/decision evidence remains `PROSPECTIVE_SHADOW`; `LIVE_PRODUCTION` requires later prospective graduation gates;
-8. operational scheduler/dispatcher must actually execute from the repository default-branch scheduling surface without moving model authority out of `gold-r4-direction-engine`.
-
-Stage 5 remains closed as `PASS_PIYASA_SCREEN_CONTRACT`. Stage 6 remains blocked until a display-eligible stored Decision Store state exists. October 2026 at the end-September origin remains only a possible next prospective target if every Stage-4B gate closes before that origin.
-
-Stage 3 is closed as:
-
-`PASS_DECISION_STORE_AND_READ_PATH`
-
-Stage 3 closure evidence:
-
-- production Decision Store migration: run `33496843121`, job `99820886297`, `SUCCESS`;
-- guarded emitted-state → store → reader bridge: run `33498177345`, job `99825081623`, `R4_1_DECISION_BRIDGE_SMOKE_PASS`;
-- transitional app now reads Decision Store instead of `latest_signal.json`;
-- app read-only evidence-isolation smoke: run `33498603322`, job `99826433286`, `GOLD_CONTROL_DECISION_STORE_APP_READER_PASS`;
-- `HISTORICAL_REPLAY` is excluded from the current-state app reader;
-- `action_state` remains null under `NOT_PROVEN_POSITION_MAPPING`;
-- production Decision Store remains empty because no valid prospective issuer has been authorized.
-
-A canonical continuously scheduled live/EOD R4.1 producer is still:
-
-`NOT_FOUND_CANONICAL_LIVE_R4_1_EMITTER`
-
-The older R4 LONG/CASH / AL/SAT workflow is not an acceptable substitute because that would violate `NOT_PROVEN_POSITION_MAPPING`.
-
-### Stage 4 readiness audit
-
-Read-only production audit:
-
-- run: `33499509482`;
-- job: `99829327414`;
-- commit: `37fed93cbef76f394e8dee8b334f89617d94b3ef`;
-- result: `SUCCESS` audit execution, `readiness=BLOCKED`;
-- raw market values logged: `NO`.
-
-Confirmed active Stage-4B blockers after manifest v1.18 reconciliation:
-
-1. `PATCH_V4_EXECUTABLE_INPUT_IDENTITY_NOT_YET_FROZEN_AS_FORWARD_ISSUER`
-   - V4 source and locked historical model-impact gates passed, but the forward issuer contract/provenance still must be frozen before a real origin;
-2. `R4_2_MONTHLY_REFERENCE_BRIDGE_NOT_VALIDATED`
-   - Patch/V4 may not be silently inserted into the historical R4.1 `monthly_vw_forecast` identity; the generic monthly-reference → Emergency geometry must be validated explicitly;
-3. `IMMUTABLE_FORECAST_INPUT_SNAPSHOT_NOT_ISSUED`;
-4. `FORECAST_CONTRACT_NOT_ISSUED`;
-5. `COMPLETE_FORWARD_ENGINE_SNAPSHOT_NOT_ISSUED`.
-
-Closed/superseded Stage-4B input-semantic blockers:
-
-- `BLOCKED_PATCH_PROSPECTIVE_INPUT_SEMANTICS_NOT_PROVEN` → **closed for the active V4 XAU-only path** by V3/V4 source evidence plus V4 locked model-impact PASS;
-- `NASDAQCOM_MONTH_END_PIT_CONTINUATION_NOT_COMPLETE` → **closed by V3**: 199 comparisons, 0 missing, 86/86 locked input availability-safe, 0 availability violations;
-- `PATCH_DAILY_METALS_OPERATIONAL_CONTINUATION_NOT_PROVEN` → the original four-metal continuation remains unproven and is **not** relabelled as passed; it is superseded for the active path by pre-frozen V4 change-control using accessible XAU only, with Silver/Platinum/Palladium `OMITTED_NOT_IMPUTED`;
-- Twelve XAU V4 source continuation → **PASS** by run `33606111783`, job `100170350792`;
-- V4 model-impact gate → **PASS** by run `33606337904`, job `100171077252`.
-
-Retained provenance/reference limitations that do not authorize fabrication:
-
-- `PATCH_R1_ARCHIVED_EXECUTABLE_IDENTITY_NOT_PROVEN` — old archived Patch exact identity remains historical-only; the V4 successor uses its own explicit identity;
-- `VW_EXECUTABLE_IDENTITY_RECOVERY = BLOCKED_NOT_PROVEN` — VW remains audited shadow/reference and is not silently rebuilt or promoted as an executable production issuer.
-
-Closed Stage-4B sub-gate:
-
-- `PATCH_R1_REPRODUCIBLE_PRODUCTION_IMPLEMENTATION_NOT_YET_VALIDATED` → **closed for HISTORICAL_REPLAY only** by run `33600343405`, job `100152429384`; deterministic replay PASS, Patch beat RW on MAPE and MAE. This does not constitute a prospective issuer approval.
-
-Useful data readiness retained from 2026-09-01:
-
-- CORE5 ↔ World Bank target identity audit PASS over 127/127 months;
-- governed Neon historical/PIT backfill wrote 639 source-labelled observations and did not create a forecast contract;
-- ALFRED DGS10/DFF/DEXCHUS/NASDAQ100 PIT reconstructions remain data-plane assets, but they do not force those variables into the Patch model beyond the frozen Patch contract.
-
-Retired-model-path note:
-
-- the simple R2 Ridge/Huber/SVR/Drift/Damped replay is no longer an active production-development lane;
-- its Git history is retained for audit, but active R2 contract/runner/score artifacts were removed from the canonical tree on 2026-09-02.
-
-Legacy executable-identity audit evidence remains valid: the old VW/Patch exact executable identities were not recovered. This is a provenance fact, not a mandate to abandon the agreed Patch/VW role architecture.
-
-Closed current-state/context gates:
-
-- `CANONICAL_XAU_HISTORY_BACKFILL_NOT_YET_SUCCESS` → `CLOSED_BY_RUN_33515654716`;
-- `MONTHLY_DIRECTION_CONTEXT_NOT_ISSUED` → closed for **late-bootstrap shadow context only** by run `33516396253`; this does not close H=1 forecast issuance;
-- Fast/Slow calculability → rehearsal `SUCCESS` by run `33516790212` (`ROBUST_UP` / `ROBUST_UP`), read-only and not a prospective forecast claim;
-- forecast-state DB immutability → production append-only migration `SUCCESS` by run `33516015898`; reconcile audit run `33518909613` confirms trigger coverage 3/3.
-
-Temporal boundary (not a recoverable data blocker):
-
-`SEPTEMBER_2026_H1_PROSPECTIVE_ORIGIN_MISSED` — the frozen 31-August origin passed while the canonical forecast ledger was empty. No reconstruction performed on 1-September or later may be relabelled as a 31-August prospective issuance.
-
-Closed XAU pipeline blocker:
-
-`TWELVE_XAU_NY17_PIPELINE_NOT_SUCCESS` → `CLOSED_BY_RUN_33511805110`
-
-Closed source-side sub-blockers:
-
-- `CME_EBS_TICKER_DATA_ENTITLEMENT_NOT_PROVEN` → superseded; direct CME/EBS feed is no longer required for the active operational contract.
-- Twelve `XAU/USD` 1-minute credential/access → `PROVEN` by run `33510985399`, job `99866288149`.
-- Twelve exact `16:59 ET` bar mapping → `PROVEN` by the same run.
-
-Closed Stage-4 source-authority blocker:
-
-`NO_APPROVED_CANONICAL_XAU_EOD_DECISION_SOURCE` → `CLOSED_BY_MANIFEST_V1_4`
-
-Important source interpretation:
-
-- canonical R4.1 EOD series is **`XAU_EOD_TWELVE_NY17`**;
-- **CME/EBS supplies the market-session convention only**: spot FX & precious-metals trade date rolls at **17:00 ET**;
-- **Twelve Data is the actual operational price provider**: `XAU/USD`, `1min`, `timezone=America/New_York`; the exact `16:59:00` bar close is the 17:00 ET internal decision reference;
-- this is a Gold Control decision-reference construction, not an official CME close, LBMA fixing, or Twelve provider-default daily close;
-- `XAU_EOD_CME_EBS` is superseded as the active operational series because licensed EBS Ticker access is unnecessary for this contract;
-- `XAU_DAILY_XAUS` remains operational cross-check only / `CANDIDATE_NOT_BENCHMARK`;
-- `XAU_SPOT_XAUS` remains indicative monitoring;
-- no silent fallback, relabelling, or forward-fill is allowed if the exact Twelve NY17 input is unavailable;
-- Cboe GVZ and the Fed/FRED/GPR/Twelve auxiliary pipelines remain independent.
-
-Required next gates by dependency:
-
-**Piyasa / monitoring lane — CLOSED:**
-
-1. `XAU_SPOT_GOLDAPI` live adapter: PASS by run `33519370028`, job `99894418747`.
-2. XAUS 1-year operational display-history adapter: PASS by run `33519506662`, job `99894890585`.
-3. Canonical Piyasa UI + deterministic contract + Streamlit runtime smoke: PASS by run `33521193615`, job `99900581399`.
-4. Provider roles are explicit: Gold API live display, XAUS operational display history, Twelve NY17 internal canonical EOD decision reference.
-5. `Canlı spot ≠ son EOD karar` and `KANONİK KARAR YOK` fail-safe behavior are active.
-6. Stage 5 status is `PASS_PIYASA_SCREEN_CONTRACT`; later visual/mobile refinement belongs to Stage 10 and does not reopen Stage 5 data semantics.
-
-**Stage-4B H=1 forecast lane (fail-closed for prospective issuance):**
-
-1. `CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE` is the active Patch issuer candidate after V6 monthly-level source/model gates plus V7 completed-session PIT historical model-impact PASS; its predecessor and archived artifacts remain immutable historical evidence;
-2. do not add Ridge/Huber/SVR/DOW/DMA/new Transformer variants or other model families merely because remaining production integration gates are difficult;
-3. keep `VW_AUDITED_SHADOW_V2` as audited reference, `MOMENTUM_3M_R1` as direction context, and `RW_R1` as benchmark;
-4. freeze the V4 executable/input identity and provenance without any post-result retuning;
-5. validate the generic monthly-price-reference/Emergency bridge before building a complete EngineSnapshot;
-6. before a real eligible month-end origin, persist immutable forecast input snapshot + forecast contract;
-7. first forward forecast/decision evidence remains `PROSPECTIVE_SHADOW`, never retroactive and not `LIVE_PRODUCTION`;
-8. September 2026 may not be backdated; October 2026 remains only a possible next fully compliant target if all gates close before the end-September origin.
-
-No `PROSPECTIVE_SHADOW` or `LIVE_PRODUCTION` **decision** row may be written while an active Stage-4B blocker prevents construction of the complete versioned EngineSnapshot. This does not block non-decision `Piyasa` monitoring.
-
-### Manifest v1.19 Patch V7 / writer / mobile-UI reconciliation
-
-New frozen evidence and product decisions on 2026-09-02:
-
-- V5 hourly full-history monthly-level bridge failed closed on provider history entitlement; model scoring was skipped and thresholds were not relaxed;
-- V6 daily-train/hourly-anchor monthly-level architecture passed source and locked model-impact gates without changing Patch geometry;
-- V7 froze the final completed-session daily-feature correction before results: `TWELVE_XAU_USD_1DAY_OBSERVATION_DATE_STRICTLY_BEFORE_ORIGIN_DATE`; 43/43 origins used only strictly pre-origin daily observations, same-origin use 0, future-information violations 0, deterministic max diff 0;
-- V7 candidate MAPE `3.212376055%` vs RW `3.302322023%`, MAE `104.214302424` vs RW `107.465116279`, worst APE `9.016478855%` vs RW `9.625880596%`; hard/performance/model-impact gates PASS; evidence remains `HISTORICAL_REPLAY_MODEL_IMPACT`;
-- active forward candidate identity: `CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE`;
-- R4.2 generic monthly reference → Emergency bridge passed 5/5 tests while frozen R4.1 config remained unchanged;
-- production forecast writer schema audit passed; `forecast_input_snapshots` and `monthly_forecast_contracts` remained 0 rows and immutable guards were verified;
-- read-only writer rehearsal passed with insert-plan validation, 0→0 persistent rows and no identity consumption;
-- first-shadow issuer preflight passed, September backfill remains forbidden, earliest eligible origin is 2026-09-30 after 17:20 America/New_York, first target October 2026; no forecast value has been issued yet;
-- mobile product presentation is frozen by `GOLD_CONTROL_MOBILE_UI_PRODUCT_SPEC_V1.md`; approved mockup aesthetics do not authorize fabricated metrics or action mapping;
-- mobile Streamlit implementation candidate begins at `gold_axis_2026/apps/gold_control_mobile_v1.py`, backed by canonical Decision Store/forecast-ledger readers and fail-closed empty states.
-
-### Manifest v1.18 V3/V4 input-continuation and model-impact reconciliation
-
-New frozen evidence on 2026-09-02, reconciled after manifest v1.17:
-
-- V2 was closed `FAIL`; no threshold relaxation or silent substitution followed;
-- V3 completed-month NASDAQ continuation passed: 199 monthly comparisons, 0 missing, 86/86 locked inputs availability-safe, 0 availability violations;
-- Twelve entitlement proved `XAU/USD` available and `XAG/USD` / `XPT/USD` / `XPD/USD` unavailable under the current plan; alternative anonymous Nasdaq Data Link/CME four-metal probes returned HTTP 403;
-- V4 source/input change-control was frozen before the result: retained Patch Transformer and `L=252`, `P=21`, `D=32`; active daily metal channel set became XAU-only; removed metals are `OMITTED_NOT_IMPUTED`;
-- V4 source workflow run `33606111783`, job `100170350792`, `SUCCESS`; XAU history count 4487 from `2010-01-01`, with 302 observations before the original first model boundary; source gate PASS; raw vendor price logging NO; DB/forecast/decision writes NONE;
-- V4 model-impact workflow run `33606337904`, job `100171077252`, `SUCCESS`; `V4_TARGET_RECONCILIATION=43/43`, `V4_RW_RECONCILIATION=43/43`, deterministic max diff `0`, future-information violations `0`;
-- V4 MAPE `3.133034811%` versus RW `3.302322023%`; V4 MAE `102.233331072` versus RW `107.465116279`; V4 worst APE `9.021401201%` versus RW `9.625880596%`; worst-APE ratio `0.937202691`;
-- `V4_HARD_GATE_PASS=true`, `V4_PERFORMANCE_GATE_PASS=true`, `V4_MODEL_IMPACT_PASS=true`, decision `PATCH_R1_V4_XAU_ONLY_MODEL_IMPACT_PASS`;
-- evidence class remains `HISTORICAL_REPLAY_MODEL_IMPACT` with `prospective_claim=false`; no geometry reselection, no post-result retune, no Neon/forecast-ledger/Decision Store writes;
-- evidence commit from the model-impact workflow: `ee9f68e7225e830b9156ba85a8333b61e68f1437`;
-- active successor identity reserved by the frozen V4 change-control: `CAUSAL_PATCH_R1_REPRO_V1_3_XAU_ONLY_ORIGIN_SAFE`.
-
-This closes the active Patch prospective-input semantic blocker for the V4 XAU-only path **without** converting historical replay into prospective evidence. The remaining path is issuer identity freeze → monthly-reference/Emergency bridge → immutable forecast snapshot/contract → complete forward EngineSnapshot → first real `PROSPECTIVE_SHADOW`.
-
-### Manifest v1.17 Patch reproducibility and prospective-input evidence
-
-New frozen evidence on 2026-09-02:
-
-- Patch pre-2023 geometry selection run `33600168927`, job `100151896585`, SUCCESS: `L=252`, `P=21`, `D=32`; locked score window not used for selection;
-- Patch locked replay run `33600343405`, job `100152429384`, SUCCESS: target reconciliation `43/43`, RW reconciliation `43/43`, deterministic max absolute difference `0`, Patch MAPE `3.108253722%`, RW MAPE `3.302322023%`, Patch MAE `101.660660440`, RW MAE `107.465116279`;
-- historical-replay status: `PATCH_R1_REPRO_V1_HISTORICAL_REPLAY_ELIGIBLE`; forecast/decision writes NONE;
-- prospective-input bridge V1 contract frozen before audit: `GOLD_CONTROL_CAUSAL_PATCH_R1_PROSPECTIVE_INPUT_BRIDGE_CONTRACT_V1.md`;
-- bridge run `33602829565`, successful fail-closed attempt job `100161187043`, evidence commit `1a27dca699b6aa4c3c421156eafda6656d6061c4`;
-- DFF→FEDFUNDS PASS `43/43`; DEXCHUS→USDCNY PASS `43/43`;
-- NASDAQCOM hard gate FAIL `40/43` because origin months `2023-10`, `2023-11`, `2023-12` returned no valid month-end ALFRED reconstruction; available-month materiality was within the frozen threshold;
-- metal continuation V1 overall FAIL/NOT_PROVEN: Gold coverage `29`, return correlation `0.776370092`, median return gap `83.777600 bps`, p95 `466.614818 bps`; Silver/Platinum/Palladium ended `HTTP_RETRY_EXHAUSTED` and are not semantic passes;
-- overall bridge decision: `BLOCKED_PATCH_PROSPECTIVE_INPUT_SEMANTICS_NOT_PROVEN`;
-- raw vendor values logged NO; DB, forecast-ledger and Decision Store writes NONE.
-
-This evidence does **not** reopen model search and does **not** permit post-result threshold relaxation. The next work is versioned input-semantic correction only.
-
-### Manifest v1.16 forecast-path correction and retained data evidence
-
-The approved architecture was restored on 2026-09-02 after the simple R2 successor model-search detour was identified as inconsistent with the previously agreed H=1 role freeze.
-
-Preserved evidence:
-
-- CORE5 ↔ World Bank monthly target identity audit: run `33535312896`, job `99948062874`, `SUCCESS`; 127/127 common months, 123/127 exact, all within USD 0.50;
-- governed Neon historical/PIT backfill: run `33538748716`, job `99959440836`, `SUCCESS`; 639/639 observations written, revisions 0, no forecast issuance;
-- forecast-state counts after the write remained `forecast_input_snapshots=0`, `derived_feature_snapshots=1`, `monthly_forecast_contracts=0`;
-- Decision Store, NY17, Fast/Slow, BOCPD, Emergency, GVZ and Piyasa contracts remain unchanged.
-
-Rolled back from active path:
-
-- R2 validation contract;
-- R2 replay runner/workflow;
-- active R2 score/prediction/evidence files;
-- manifest instruction to continue Ridge/Huber/SVR/Drift/Damped as the next canonical forecast lane.
-
-Binding replacement:
-
-- `GOLD_CONTROL_FORECAST_PATH_CORRECTION_2026-09-02.md`;
-- `GOLD_CONTROL_CAUSAL_PATCH_R1_REPRO_CONTRACT_V1.md`.
-
-### Manifest v1.8 forecast/monthly-context dependency audit
-
-Evidence:
-
-- live forecast-state schema audit: GitHub Actions run `33512445624`, job `99871192709`, `SUCCESS`, read-only Neon transaction; all three forecast-state tables existed and each had 0 rows;
-- retained Patch input package ended at `core5` month `2026-07-01`; retained Patch runners contain July/August horizon constants, therefore `PATCH_R1_CURRENT_ISSUER_NOT_PROVEN`;
-- canonical-history forensic: run `33513175499`, job `99873596626`, `SUCCESS`; exact original VW-MIDAS-SVR Adapt V2 runner/source chain was not recovered from reachable canonical history; rebuild scripts exist but are explicitly reconstruction/research paths, not identity proof;
-- `r4_1/contracts.py` requires both `monthly_vw_forecast` and `monthly_direction` in every `EngineSnapshot`; neither may be silently replaced with RW/Patch/live spot;
-- NY17 history-depth probe run `33513634775`, job `99875100590`, `SUCCESS`, proves exact 16:59 ET Twelve bars are accessible from May through August 2026 on sampled dates, but the first atomic July-August backfill run `33512957983`, job `99872871327`, failed before persistence due transient provider/request errors.
-
-Canonical audit record: `gold_axis_2026/GOLD_CONTROL_STAGE4_FORECAST_ISSUANCE_AUDIT_2026-09-01.md`.
-
-### Operational work that continues independently
-
-- XAU ingestion remains degraded while the frozen XAUS endpoint returns HTTP 503.
-- Cboe, Fed, GPR, FRED-index and Twelve jobs must remain independently runnable; XAU failure must not block them.
-- No alternate XAU provider may be silently relabeled as the frozen XAUS source.
-
----
-
-# 25. CURRENT APP CONTRACT / TECHNICAL DEBT
-
-Current Streamlit paths:
-
-- `gold_axis_2026/apps/gold_control.py` — current canonical Stage-5 app;
-- `gold_axis_2026/apps/gold_control_mobile_v1.py` — manifest-aligned mobile UI V1 implementation candidate;
-- `gold_axis_2026/apps/live_sources.py`;
-- `gold_axis_2026/apps/forecast_source.py` — read-only canonical forecast-ledger display reader;
-- `gold_axis_2026/apps/mobile_ui_contract.py` — deterministic presentation-state contract.
-
-Current app information architecture now matches the canonical primary workflow:
-
-`Piyasa / Görünüm / Tahmin / Geçmiş`
-
-Stage 5 data/display semantics are frozen and smoke-tested. Pixel-level design refinement and mobile interaction QA remain later Stage-10 work; they must not reintroduce fabricated metrics, action mapping, or provider ambiguity.
-
-Current latest-state dependency:
-
-- `gold_axis_2026/apps/decision_source.py` reads the production Neon Decision Store;
-- display priority is `LIVE_PRODUCTION`, then explicitly labelled `PROSPECTIVE_SHADOW`;
-- `HISTORICAL_REPLAY` is never surfaced as the current decision;
-- if neither prospective class exists, the app shows `KANONİK KARAR YOK` rather than deriving a decision from live spot.
-
-The previous file-only `gold_axis_2026/r4_1/output/latest_signal.json` dependency has been removed from the app path.
-
-Current live/display adapter contract after manifest v1.13:
-
-- XAU spot display primary: `XAU_SPOT_GOLDAPI` — indicative monitoring only, explicit source/freshness, never model/EOD/decision input;
-- XAU spot legacy/secondary: `XAU_SPOT_XAUS` — separate degraded lineage, no silent provider merge;
-- XAU daily display history: `XAU_DAILY_XAUS` — explicitly labelled operational cross-check only; current-day row excluded from last-completed-daily comparison;
-- canonical decision EOD: `XAU_EOD_TWELVE_NY17` — internal model/decision reference, raw numeric value not rendered without separately proven Twelve display rights;
-- GVZ: Cboe daily history / latest close;
-- Stage 5 Piyasa UI contract: PASS by run `33521193615`, job `99900581399`.
-
-Do not pretend the current adapter already provides full intraday history or unlimited historical range. Do not use Twelve raw vendor data in a public/external display path unless the applicable subscription/display rights are separately proven.
-
-The app must not present a position instruction derived from current descriptive R4.1 classification while `NOT_PROVEN_POSITION_MAPPING` remains active.
-
----
-
-# 26. IMPLEMENTATION PRINCIPLE
-
-The project must now optimize for:
-
-> **reproducibility + auditability + causal correctness + operational clarity**
-
-not for:
-
-> maximum number of models, indicators, tabs, or attractive metrics.
-
-A lower-complexity rule with complete lineage is preferred over a more impressive but irreproducible black box.
-
----
-
-# 27. FINAL PROJECT NORTH STAR
-
-The project is successful when Gold Control can answer, without hindsight:
-
-> **“At this exact time, what data did the system actually know, what did each frozen model/signal say, what final state did the engine issue, why did it issue it, and what happened afterward?”**
-
-The final system must make that answer reproducible from stored snapshots and versioned code.
-
-That is the production standard.
-
----
-
-## Manifest maintenance rule
-
-When a project-level decision changes, update this file in the **same change set** as the relevant code/config/data-contract modification.
-
-If the manifest and implementation disagree, the discrepancy is a release blocker until reconciled.
-
-## 7.D SIMPLE-EXPERT SOURCE BINDING V2 — FROZEN PASS / FORWARD READINESS
-
-Status frozen on 2026-09-03 under `GOLD_CONTROL_SIMPLE_EXPERT_SOURCE_BINDING_V2_CHANGE_CONTROL_2026-09-03.md`.
-
-- Source identity: `SIMPLE_EXPERT_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V2`.
-- Provider/semantic: Twelve Data `XAU/USD`, `1h`, `America/New_York`; use the close of the bar opened at `16:00:00` and aggregate positive finite selected closes to the completed calendar-month arithmetic mean; minimum 15 unique selected dates; no interpolation/forward-fill/provider substitution.
-- CME/EBS 17:00 ET trade-date-roll evidence is supporting market-session context; the Gold Control source remains explicitly a Twelve hourly-derived measurement and is not relabelled as an official EBS/LBMA/settlement fixing.
-- Frozen validation window: `2023-01..2026-07`, `N=43`; historical evidence class `HISTORICAL_REPLAY_MODEL_IMPACT`, not prospective proof.
-- Extended required source months `2022-09..2026-06`: 46/46 present, zero low-count months, zero duplicate selected dates.
-- Extended source vs CORE5: level correlation `0.9999721441764589`; median gap `10.9548 bps`; p95 gap `33.2791 bps`; return correlation `0.9964220374584144`; return direction agreement `0.9555555555555556`.
-- Actual/R1 reconciliation: actual `43/43`; RW R1 `43/43`; Momentum R1 `43/43`; future-information violations `0`; deterministic rerun max diff `0.0`.
-- Random Walk V2 identity: `RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND`; result `RW_R2_SOURCE_BINDING_MODEL_IMPACT_PASS`.
-- 3M Momentum V2 identity: `MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND`; result `MOMENTUM_3M_R2_SOURCE_BINDING_MODEL_IMPACT_PASS`.
-- Joint gate: `SIMPLE_EXPERT_V2_SOURCE_BINDING_PASS`.
-- No threshold relaxation, post-result retuning, provider substitution, database write, forecast-ledger write, or Decision Store write occurred during validation.
-- Forward status after this PASS: both V2 experts are executable, but **no September 2026 origin may be backfilled**. Their first eligible H=1 month-end issuance remains the end-September 2026 origin for the October 2026 target, subject to the frozen source-completion and immutable-snapshot gates.
-- Until an eligible origin is actually issued, UI status is `WAITING_ELIGIBLE_MONTH_END_ORIGIN`, not a fabricated forecast value.
-- `NOT_PROVEN_EXPERT_SELECTION_RULE` remains binding; `AUTO_SELECTOR=OFF`; `AUTO_ENSEMBLE=OFF`; every individual expert remains `canonical_authority=false`.
-- This change does not authorize BUY/SELL/HOLD/EXIT/REDUCE or exposure mapping.
-
-### Manifest v1.26 — systematic UI/runtime consistency recovery
-
-Status: `FROZEN_SYSTEM_RECOVERY_UI_CONSISTENCY_V1`
-
-This patch closes presentation/runtime inconsistencies exposed by production-backed mobile evidence. It is a **bug-fix / consistency recovery**, not a model-selection, source-substitution, threshold-retuning, selector, ensemble, or position-mapping change.
-
-Closed defects:
-
-1. **GVZ display invocation mismatch** — the UI called the keyword-only frozen `gvz_regime(..., full_max=..., half_max=...)` contract positionally, which was caught and rendered as `KULLANILAMIYOR` despite valid GVZ data. The call is corrected without changing the frozen thresholds `25.9795 / 30.5238` or caps `1.0 / 0.5 / 0.25`.
-2. **Simple-expert UI contract drift** — `mobile_ui_contract.py` still carried pre-promotion `MOMENTUM_3M_R1` / `RW_R1` identities and `BLOCKED_FORWARD_MONTHLY_LEVEL_SOURCE_NOT_BOUND`. The user-facing forecast contract is synchronized to the already-approved R2 identities `MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND` and `RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND`, both remaining `WAITING_ELIGIBLE_MONTH_END_ORIGIN`. No forecast value is issued by this patch.
-3. **Mobile engine-card readability** — the governed 12-engine inventory remains complete, but the 390 px inventory surface now stacks engine cards in one column and enforces internal word wrapping so immutable technical status/version identifiers cannot be clipped inside a card.
-4. **Frozen layout visibility** — `SENARYOLAR` is now rendered explicitly as fail-closed while `BLOCKED_NO_CANONICAL_SCENARIO_CONTRACT` remains active; `ÖZET METRİKLER` is rendered explicitly on `Geçmiş`. No scenario value or prospective score is fabricated.
-5. **Acceptance drift** — production mobile QA is versioned to v1.26 and adds fail-closed checks for stale R1 simple-expert contracts, internal card overflow, visible scenario/summary sections, valid GVZ regime rendering, selector/ensemble/action locks, and the production DB evidence spine.
-
-Binding operational state remains unchanged by this recovery:
-
-- governed engines/channels: `12/12`;
-- runtime distribution: `4 ACTIVE / 3 WAITING / 5 BLOCKED`;
-- direction-vote permission: `3` (`Monthly Direction`, `FAST`, `SLOW` only);
-- current expert issuance: `0`;
-- current canonical H=1 forecast: not issued;
-- selector: `NOT_PROVEN_EXPERT_SELECTION_RULE`;
-- auto selector = `OFF`;
-- auto ensemble = `OFF`;
-- position mapping: `NOT_PROVEN_POSITION_MAPPING`;
-- September 2026 backfill remains forbidden; no current result is converted into a prospective claim.
-
-
-## v1.27 — Deployment Display Snapshot Recovery
-
-- Frozen contract: `FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V1`.
-- Neon remains the primary immutable state/evidence authority and is read with `SET TRANSACTION READ ONLY`.
-- `apps/production_display_snapshot.json` is a fingerprint-validated display-only replica for a hosting environment where `NEON_DATABASE_URL` is absent or operationally unreachable.
-- The snapshot is restricted to 12 governed runtime states, seven persisted display context features and evidence-spine health counters; it carries no credentials, selector weights, canonical forecast, final classification or action mapping.
-- Snapshot fallback is explicitly labelled `PRODUCTION_SNAPSHOT_FALLBACK`; it may not masquerade as a direct DB read.
-- A DB/schema/governance violation remains fail-closed and is not hidden by fallback.
-- Deployment regression requires the no-DB-URL browser path to show the persisted Monthly/FAST/SLOW/GVZ context instead of falsely reporting `NO_CURRENT_EVIDENCE`.
-- Locks retained: `NOT_PROVEN_EXPERT_SELECTION_RULE`, `AUTO_SELECTOR=OFF`, `AUTO_ENSEMBLE=OFF`, `NOT_PROVEN_POSITION_MAPPING`.
-
-
-## v1.29 — Deployment Replay Snapshot Closure
-
-- Frozen marker: `FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V2`.
-- Root cause closed: a hosting instance without `NEON_DATABASE_URL` previously received stored direction/risk context from the display snapshot but historical replay readers returned an empty list.
-- V2 extends the display-only snapshot with governed `HISTORICAL_REPLAY` expert rows.
-- Replay rows must remain `canonical_authority=false`, `prospective_claim=false`, `direction_vote_permitted=false`, selector `NOT_PROVEN_EXPERT_SELECTION_RULE`, auto selector OFF and auto ensemble OFF.
-- Mobile Tahmin/Geçmiş replay reads are no longer skipped when the DB URL is absent; only the validated V2 snapshot may satisfy that fallback.
-- MONTH_END_EXPERT and EARLY_INDICATIVE remain empty when not genuinely issued; snapshot replay never populates those tracks.
-- Canonical forecast, Decision Store and position/action mapping remain unchanged and locked.
-- Required deployment acceptance: with `NEON_DATABASE_URL` deliberately absent, the 390×844 Tahmin screen must visibly render the production replay values for the available replay experts and the `REPLAY · PROSPECTIVE DEĞİL` marker.
-
-
-## v1.30 — 31-August EOD State Historical Replay Closure
-
-- Frozen contract: `FROZEN_AUG31_EOD_STATE_REPLAY_V1`.
-- Deployment fallback contract: `FROZEN_AUG31_STATE_REPLAY_DISPLAY_SNAPSHOT_V1`.
-- September official H=1 prospective status remains `NOT_ISSUED_MISSED_2026_08_31_ORIGIN`; no backdating or prospective relabeling is introduced.
-- The existing September H=1 historical replay remains separate: `MOMENTUM_3M` and `RANDOM_WALK` price-level replay only.
-- A second replay layer now reconstructs the 31-August EOD component state from frozen rules and source observations ending at the boundary: Monthly Direction 3M, FAST, SLOW and GVZ risk state.
-- State replay rows are persisted under replay-specific feature identities with `HISTORICAL_REPLAY`, `prospective_h1_claim=false`, `current_runtime_authority=false`, `canonical_authority=false`; `latest_engine_runtime_state` excludes them.
-- Components that cannot be exactly reproduced remain explicit blockers: Causal Patch replay input set, VW executable identity, full Macro Event rule, authorized Emergency monthly reference, and exact BOCPD forward rule.
-- UI must show `31 AĞUSTOS 2026 EOD STATE REPLAY` inside the September replay surface, distinct from H=1 expert replay. FAST/SLOW/GVZ state values are not H=1 forecasts.
-- A hosting instance without `NEON_DATABASE_URL` reads a fingerprint-validated read-only state-replay deployment snapshot generated from production Neon.
-- Locks retained: `NOT_PROVEN_EXPERT_SELECTION_RULE`, `AUTO_SELECTOR=OFF`, `AUTO_ENSEMBLE=OFF`, `NOT_PROVEN_POSITION_MAPPING`; canonical forecast and Decision Store remain empty.
+`AUTO_SELECTOR=OFF` and `AUTO_ENSEMBLE=OFF` remain binding.
