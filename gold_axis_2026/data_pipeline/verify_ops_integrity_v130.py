@@ -2,11 +2,29 @@ from __future__ import annotations
 
 import json
 import os
+from datetime import datetime, timezone
 
 import psycopg
 from psycopg.rows import dict_row
 
-KNOWN_MAX_EXACT_DUPLICATE_EXTRA_ROWS = 1
+KNOWN_LEGACY_DUPLICATE = {
+    "series_id": "XAU_DAILY_XAUS",
+    "observation_ts": datetime(2026, 8, 31, tzinfo=timezone.utc),
+    "lineage_id": "68c41f97ba9e2e6ba5f5",
+    "value": 4491.2,
+    "quality_status": "CANDIDATE_NOT_BENCHMARK",
+    "n": 2,
+}
+REQUIRED_LATEST_TRIGGERS = {
+    "hourly:xau",
+    "daily:xau",
+    "daily:cboe",
+    "daily:fed",
+    "daily:gpr",
+    "daily:fred_indices",
+    "daily:twelve_market",
+    "daily:twelve_xau_ny17",
+}
 
 
 def _db_url() -> str:
@@ -14,6 +32,17 @@ def _db_url() -> str:
     if not value:
         raise RuntimeError("NEON_DATABASE_URL is not set")
     return value
+
+
+def _is_known_legacy_duplicate(row: dict) -> bool:
+    return (
+        row["series_id"] == KNOWN_LEGACY_DUPLICATE["series_id"]
+        and row["observation_ts"] == KNOWN_LEGACY_DUPLICATE["observation_ts"]
+        and row["lineage_id"] == KNOWN_LEGACY_DUPLICATE["lineage_id"]
+        and abs(float(row["value"]) - KNOWN_LEGACY_DUPLICATE["value"]) < 1e-9
+        and row["quality_status"] == KNOWN_LEGACY_DUPLICATE["quality_status"]
+        and int(row["n"]) == KNOWN_LEGACY_DUPLICATE["n"]
+    )
 
 
 def main() -> int:
@@ -81,21 +110,22 @@ def main() -> int:
                 raise AssertionError(f"V130_RELATIONSHIP_INTEGRITY_FAILURE:{bad}")
 
             cur.execute("""
-                WITH d AS (
-                    SELECT series_id,observation_ts,lineage_id,value,quality_status,COUNT(*)::bigint AS n
-                    FROM observations
-                    GROUP BY series_id,observation_ts,lineage_id,value,quality_status
-                    HAVING COUNT(*)>1
-                )
-                SELECT COUNT(*)::bigint AS duplicate_groups,
-                       COALESCE(SUM(n-1),0)::bigint AS duplicate_extra_rows,
-                       COUNT(DISTINCT series_id)::bigint AS affected_series
-                FROM d
+                SELECT series_id,observation_ts,lineage_id,value,quality_status,COUNT(*)::bigint AS n
+                FROM observations
+                GROUP BY series_id,observation_ts,lineage_id,value,quality_status
+                HAVING COUNT(*)>1
+                ORDER BY series_id,observation_ts,lineage_id
             """)
-            duplicate = dict(cur.fetchone())
-            duplicate = {k: int(v) for k, v in duplicate.items()}
-            if duplicate["duplicate_extra_rows"] > KNOWN_MAX_EXACT_DUPLICATE_EXTRA_ROWS:
-                raise AssertionError(f"V130_UNEXPECTED_DUPLICATE_GROWTH:{duplicate}")
+            duplicate_rows = [dict(r) for r in cur.fetchall()]
+            unexpected_duplicates = [r for r in duplicate_rows if not _is_known_legacy_duplicate(r)]
+            if unexpected_duplicates:
+                raise AssertionError(f"V130_UNEXPECTED_EXACT_DUPLICATE:{unexpected_duplicates}")
+            duplicate = {
+                "duplicate_groups": len(duplicate_rows),
+                "duplicate_extra_rows": sum(int(r["n"]) - 1 for r in duplicate_rows),
+                "affected_series": len({r["series_id"] for r in duplicate_rows}),
+                "legacy_exception_only": bool(duplicate_rows),
+            }
 
             cur.execute("""
                 SELECT 'decision_events' object,COUNT(*)::bigint n FROM decision_events
@@ -109,7 +139,8 @@ def main() -> int:
                 raise AssertionError(f"V130_UNAUTHORIZED_DECISION_OR_CANONICAL_STATE:{authority_counts}")
 
             cur.execute("""
-                SELECT trigger_type,status,finished_at,observations_read,observations_written,pipeline_version,git_sha
+                SELECT trigger_type,status,finished_at,observations_read,observations_written,
+                       pipeline_version,git_sha,metadata
                 FROM (
                     SELECT *,ROW_NUMBER() OVER (PARTITION BY trigger_type ORDER BY finished_at DESC NULLS LAST,started_at DESC) rn
                     FROM retrieval_runs
@@ -120,6 +151,29 @@ def main() -> int:
                 ) x WHERE rn=1 ORDER BY trigger_type
             """)
             latest_runs = [dict(r) for r in cur.fetchall()]
+            latest_by_trigger = {r["trigger_type"]: r for r in latest_runs}
+            missing_triggers = sorted(REQUIRED_LATEST_TRIGGERS - set(latest_by_trigger))
+            non_success = {
+                k: v["status"] for k, v in latest_by_trigger.items()
+                if v["status"] != "SUCCESS"
+            }
+            if missing_triggers or non_success:
+                raise AssertionError(
+                    f"V130_LATEST_INGESTION_HEALTH_FAILURE:missing={missing_triggers}:non_success={non_success}"
+                )
+
+            provenance_mismatches = []
+            for row in latest_runs:
+                metadata = row.get("metadata") or {}
+                code_sha = metadata.get("code_git_sha") if isinstance(metadata, dict) else None
+                if code_sha and row.get("git_sha") != code_sha:
+                    provenance_mismatches.append({
+                        "trigger_type": row["trigger_type"],
+                        "git_sha": row.get("git_sha"),
+                        "code_git_sha": code_sha,
+                    })
+            if provenance_mismatches:
+                raise AssertionError(f"V130_CODE_SHA_PROVENANCE_MISMATCH:{provenance_mismatches}")
 
             cur.execute("""
                 SELECT series_id,MAX(observation_ts) latest_observation_ts,MAX(retrieved_at) latest_retrieved_at,COUNT(*)::bigint rows
@@ -136,6 +190,7 @@ def main() -> int:
     report["exact_duplicates"] = duplicate
     report["authority_counts"] = authority_counts
     report["latest_ingestion_runs"] = latest_runs
+    report["provenance_mismatches"] = provenance_mismatches
     report["freshness_observations"] = freshness
     print(json.dumps(report, indent=2, default=str))
     print("GOLD_CONTROL_V130_OPS_INTEGRITY_PASS")
