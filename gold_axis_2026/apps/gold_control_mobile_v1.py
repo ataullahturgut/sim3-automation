@@ -361,8 +361,8 @@ month_end_history=safe_call(lambda:get_expert_history_cached(url,TRACK_MONTH_END
 early_history=safe_call(lambda:get_expert_history_cached(url,TRACK_EARLY_INDICATIVE),[]) if url else []
 historical_replay_experts=[]
 historical_replay_history=[]
-aug31_state_replay=safe_call(lambda:get_aug31_state_replay_cached(url),None) if url else None
-aug31_replay_expansion=safe_call(lambda:get_aug31_replay_expansion_cached(url),None) if url else None
+aug31_state_replay=safe_call(lambda:get_aug31_state_replay_cached(url),None)
+aug31_replay_expansion=safe_call(lambda:get_aug31_replay_expansion_cached(url),None)
 spot=safe_call(get_spot,None); hist,hist_meta=safe_call(get_xau_history,(pd.DataFrame(),{})); gvz=safe_call(get_gvz,None); replay=load_replay(); rmetrics=replay_metrics(replay); _=classification_label
 runtime_rows=[] if not runtime_obs else list(runtime_obs.get("runtime") or [])
 engine_rows=attach_aug31_replay_expansion(build_engine_inventory(decision,month_end_experts,early_experts,runtime_rows),aug31_replay_expansion); engine_counts=engine_inventory_counts(engine_rows)
