@@ -402,7 +402,7 @@ elif nav=="↗ Tahmin":
     historical_replay_experts=safe_call(lambda:get_latest_experts_cached(url,TRACK_HISTORICAL_REPLAY),[])
     aug31_state_replay=safe_call(lambda:get_aug31_state_replay_cached(url),None)
     replay_update=historical_replay_experts[0].get("as_of") if historical_replay_experts else None
-    expert_update=month_end_experts[0].get("as_of") if month_end_experts else (early_experts[0].get("as_of") if early_experts else None); updated=forecast.get("frozen_at") if forecast else (expert_update or replay_update); page_head("TAHMİN","Gelecek ay için kanonik sonuç ve ayrı Multi-Expert kanıt katmanı.",updated); fstate=forecast_view_state(forecast)
+    expert_update=month_end_experts[0].get("as_of") if month_end_experts else (early_experts[0].get("as_of") if early_experts else None); updated=forecast.get("frozen_at") if forecast else (expert_update or replay_update); page_head("TAHMİN","Mevcut hedef ay için geçerli replay/reference ve gelecek H=1 kanonik sonuçları ayrı evidence katmanlarında gösterilir.",updated); fstate=forecast_view_state(forecast)
     if forecast:
         target=str(forecast.get("target_month") or "")[:7]; badge=evidence_badge(forecast.get("evidence_class"))[0]; hero_title=fmt_num(forecast.get("forecast_value"),2," USD"); hero_sub=f"Hedef dönem: {target}"; direction=decision.get("monthly_direction_3m") if target_matches(decision,forecast) else None; da,_=arrow_state(direction); direction_text=f"{da} {display_state(direction,'—')}"; origin_text=fmt_time(forecast.get("forecast_origin")); hero_kicker="GELECEK AY TAHMİNİ"; direction_label="MONTHLY DIRECTION / PRIOR"; origin_label="CANONICAL ORIGIN"
     elif historical_replay_experts:
@@ -413,12 +413,16 @@ elif nav=="↗ Tahmin":
         mom_value=fmt_num(None if not mom else mom.get("forecast_value"),2)
         rw_value=fmt_num(None if not rw else rw.get("forecast_value"),2)
         hero_title=f"{mom_value} / {rw_value} USD"
-        hero_sub=f"3M Momentum / Random Walk · Hedef: {replay_target} · 31 Ağustos bilgi kesiti"
-        badge="REPLAY · PROSPECTIVE DEĞİL"
-        direction_text="31 AĞUSTOS REPLAY"
+        hero_sub=f"3M Momentum / Random Walk · Hedef: {replay_target} · Eylül kapanana kadar ay-içi referans · 31 Ağustos bilgi kesiti"
+        badge="REPLAY · PROSPECTIVE ISSUED DEĞİL"
+        replay_monthly=None if not aug31_state_replay else aug31_state_replay.get("monthly_direction_3m")
+        replay_fast=None if not aug31_state_replay else aug31_state_replay.get("fast_state")
+        replay_slow=None if not aug31_state_replay else aug31_state_replay.get("slow_state")
+        rma,_=arrow_state(replay_monthly); rfa,_=arrow_state(replay_fast); rsa,_=arrow_state(replay_slow)
+        direction_text=f"M {rma} {display_state(replay_monthly,'—')} · F {rfa} {display_state(replay_fast,'—')} · S {rsa} {display_state(replay_slow,'—')}"
         origin_text=fmt_time(replay_primary.get("forecast_origin"))
-        hero_kicker="EYLÜL 2026 H=1 REPLAY"
-        direction_label="STATE BAĞLAMI"
+        hero_kicker="EYLÜL 2026 H=1 · CURRENT-MONTH REFERENCE"
+        direction_label="31 AĞUSTOS AY-AÇILIŞ YÖN CONTEXT"
         origin_label="REPLAY ORIGIN"
     else:
         hero_title=fstate.title; hero_sub=fstate.subtitle; badge="KANONİK SONUÇ YOK"; direction_text="—"; origin_text="—"; hero_kicker="GELECEK AY TAHMİNİ"; direction_label="MONTHLY DIRECTION / PRIOR"; origin_label="CANONICAL ORIGIN"
@@ -432,7 +436,7 @@ elif nav=="↗ Tahmin":
         else: st.markdown(empty_html("KARŞILAŞTIRMA HENÜZ OLUŞMADI","MONTH_END_EXPERT veya gösterilebilir araştırma geçmişi yok."),unsafe_allow_html=True)
     st.markdown("<div class='gc-card'><div class='gc-section-title'>MULTI-EXPERT MONTHLY FORECAST ENGINE</div><div class='gc-footnote'>Aynı target için Causal Patch, VW-MIDAS-MSVR, 3M Momentum ve Random Walk ayrı kimlik/evidence ile tutulur. Winner yoktur.</div>"+expert_cards(month_end_experts)+selector_lock_html()+"<div class='gc-track-head'><b>EARLY INDICATIVE · AYRI REVISION TRACK</b><span class='gc-track-pill'>PIT-SAFE ONLY</span></div>"+(expert_cards(early_experts) if early_experts else empty_html("EARLY INDICATIVE HENÜZ YOK","Ay-sonu kanonik forecast'tan ayrı tutulur; PIT-safe contract açılmadan sayı üretilmez."))+"</div>",unsafe_allow_html=True)
     replay_db_body=(expert_cards(historical_replay_experts) if historical_replay_experts else empty_html("EYLÜL 2026 REPLAY KAYDI YOK","Production Evidence Spine üzerinde HISTORICAL_REPLAY kaydı okunamadı."))
-    st.markdown("<div class='gc-replay'><div class='gc-replay-head'><strong>EYLÜL 2026 HISTORICAL REPLAY</strong><span class='gc-replay-pill'>REPLAY · PROSPECTIVE DEĞİL</span></div><div class='gc-footnote'><b>H=1 EXPERT REPLAY</b> · Aşağıdaki USD değerleri Eylül aylık ortalama fiyat replay'idir.</div>"+replay_db_body+aug31_state_replay_html(aug31_state_replay)+"<div class='gc-footnote' style='margin-top:.65rem'><b>Resmî prospective durum:</b> NOT_ISSUED_MISSED_2026_08_31_ORIGIN. H=1 replay ile 31 Ağustos EOD state replay birbirinden ayrıdır; hiçbiri canonical forecast, selector, ensemble, current yön oyu veya karar değildir.</div></div>",unsafe_allow_html=True)
+    st.markdown("<div class='gc-replay'><div class='gc-replay-head'><strong>EYLÜL 2026 HISTORICAL REPLAY</strong><span class='gc-replay-pill'>REPLAY · PROSPECTIVE DEĞİL</span></div><div class='gc-footnote'><b>H=1 EXPERT REPLAY</b> · Aşağıdaki USD değerleri Eylül aylık ortalama fiyat replay'idir.</div>"+replay_db_body+aug31_state_replay_html(aug31_state_replay)+"<div class='gc-footnote' style='margin-top:.65rem'><b>Resmî prospective issuance durumu:</b> NOT_ISSUED_MISSED_2026_08_31_ORIGIN. H=1 replay ile 31 Ağustos EOD state replay ayrı evidence katmanlarıdır; canonical forecast, selector, ensemble veya karar otoritesi yaratmazlar. Ancak her ikisinin target context'i 2026-09 olduğu için Eylül kapanana kadar mevcut ay için referans/context olarak görünür kalırlar. Provenance HISTORICAL_REPLAY olarak korunur.</div></div>",unsafe_allow_html=True)
     st.markdown("<div class='gc-card'><div class='gc-section-title'>SENARYOLAR</div>"+empty_html("SENARYOLAR HENÜZ YAYIMLANMADI",SCENARIO_STATUS)+"<div class='gc-footnote'>Kanonik senaryo kontratı açılmadan baz/iyimser/kötümser sayı üretilmez.</div></div>",unsafe_allow_html=True)
     spot_value=None if not spot else spot.get("price")
     if forecast and spot_value:
