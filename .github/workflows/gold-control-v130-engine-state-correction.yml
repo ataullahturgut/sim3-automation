@@ -1,0 +1,74 @@
+name: Gold Control V1.30 Engine State Correction
+
+on:
+  push:
+    branches:
+      - gold-control-v130-engine-state-correction
+      - gold-r4-direction-engine
+    paths:
+      - 'gold_axis_2026/apps/runtime_source.py'
+      - 'gold_axis_2026/apps/engine_observability_contract.py'
+      - '.github/workflows/gold-control-v130-engine-state-correction.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install app dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r gold_axis_2026/apps/requirements.txt
+      - name: Compile observability graph
+        run: |
+          python -m py_compile \
+            gold_axis_2026/apps/runtime_source.py \
+            gold_axis_2026/apps/engine_observability_contract.py \
+            gold_axis_2026/apps/gold_control_mobile_v1.py
+      - name: Production read-only dual-state audit
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo "NEON_DATABASE_URL missing" && exit 1)
+          PYTHONPATH=gold_axis_2026/apps python - <<'PY'
+          import os
+          from runtime_source import fetch_runtime_observability
+          from engine_observability_contract import build_engine_inventory, engine_inventory_counts
+
+          obs = fetch_runtime_observability(os.environ['NEON_DATABASE_URL'])
+          assert obs['status'] == 'DATA_EVIDENCE_SPINE_RUNTIME_HEALTH_PASS', obs
+          assert obs['runtime_engine_count'] == 12, obs['runtime_engine_count']
+          assert obs['current_month_reference_target'] == '2026-09', obs
+          assert obs['current_month_reference_count'] == 2, obs
+
+          inventory = build_engine_inventory(None, [], [], obs['runtime'])
+          by_id = {row['engine_id']: row for row in inventory}
+          for engine_id, expected in {
+              'MOMENTUM_3M': 4345.814584037808,
+              'RANDOM_WALK': 4397.305673870967,
+          }.items():
+              row = by_id[engine_id]
+              assert row['status'].startswith('ISSUED_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE'), row
+              assert row['evidence_class'] == 'HISTORICAL_REPLAY', row
+              assert row['forecast_track'] == 'HISTORICAL_REPLAY', row
+              assert row['canonical_authority'] is False, row
+              assert row['operational_runtime_status'] == 'WAITING', row
+              assert row['operational_status'] == 'WAITING_ELIGIBLE_MONTH_END_ORIGIN', row
+              assert abs(float(row['output']) - expected) < 1e-9, row
+              assert row['direction_vote'] is False, row
+
+          counts = engine_inventory_counts(inventory)
+          assert counts == {
+              'total': 12,
+              'active': 0,
+              'issued': 2,
+              'blocked': 5,
+              'waiting': 1,
+              'other': 4,
+          }, counts
+          print('DUAL_STATE_CURRENT_MONTH_REFERENCE_PASS', counts)
+          PY
