@@ -1,0 +1,51 @@
+name: Gold Control R4.2 Patch Expert Emergency Reference Validation
+
+on:
+  push:
+    branches:
+      - gold-control-v130-emergency-expert-reference
+      - gold-r4-direction-engine
+    paths:
+      - 'gold_axis_2026/r4_2/contracts.py'
+      - 'gold_axis_2026/r4_2/emergency_bridge.py'
+      - 'gold_axis_2026/r4_2/monthly_expert_reference.py'
+      - 'gold_axis_2026/r4_2/test_monthly_reference_bridge.py'
+      - 'gold_axis_2026/r4_2/test_multi_expert_reference_bridge.py'
+      - 'gold_axis_2026/GOLD_CONTROL_R4_2_PATCH_EXPERT_EMERGENCY_REFERENCE_CHANGE_CONTROL_2026-09-04.md'
+      - '.github/workflows/gold-control-r4-2-patch-expert-emergency-reference-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install frozen bridge test runtime
+        run: pip install pandas pytest
+      - name: Compile R4.2 bridge
+        run: |
+          python -m py_compile \
+            gold_axis_2026/r4_2/contracts.py \
+            gold_axis_2026/r4_2/emergency_bridge.py \
+            gold_axis_2026/r4_2/monthly_expert_reference.py \
+            gold_axis_2026/r4_2/test_monthly_reference_bridge.py \
+            gold_axis_2026/r4_2/test_multi_expert_reference_bridge.py
+      - name: Run legacy and multi-expert bridge tests
+        run: |
+          pytest -q \
+            gold_axis_2026/r4_2/test_monthly_reference_bridge.py \
+            gold_axis_2026/r4_2/test_multi_expert_reference_bridge.py
+      - name: Verify authority locks
+        run: |
+          set -euo pipefail
+          grep -q 'FROZEN_PATCH_EXPERT_EMERGENCY_REFERENCE_V1' gold_axis_2026/GOLD_CONTROL_R4_2_PATCH_EXPERT_EMERGENCY_REFERENCE_CHANGE_CONTROL_2026-09-04.md
+          grep -q 'AUTO_SELECTOR = OFF' gold_axis_2026/GOLD_CONTROL_R4_2_PATCH_EXPERT_EMERGENCY_REFERENCE_CHANGE_CONTROL_2026-09-04.md
+          grep -q 'AUTO_ENSEMBLE = OFF' gold_axis_2026/GOLD_CONTROL_R4_2_PATCH_EXPERT_EMERGENCY_REFERENCE_CHANGE_CONTROL_2026-09-04.md
+          grep -q 'September Emergency Level/Reversal remain blocked' gold_axis_2026/GOLD_CONTROL_R4_2_PATCH_EXPERT_EMERGENCY_REFERENCE_CHANGE_CONTROL_2026-09-04.md
+          echo 'R4_2_PATCH_EXPERT_EMERGENCY_REFERENCE_PASS'
