@@ -1,0 +1,100 @@
+{
+  "engine_id": "VW_MIDAS_SVR_XAU_SUCCESSOR_V1",
+  "contract_version": "V1_2026-09-04",
+  "role": "H1_MONTHLY_PRICE_RESEARCH_EXPERT",
+  "evidence_class": "HISTORICAL_REPLAY_SUCCESSOR_RESEARCH",
+  "production_authorized": false,
+  "prospective_claim": false,
+  "direction_vote_permitted": false,
+  "db_writes_permitted": false,
+  "auto_selector": false,
+  "auto_ensemble": false,
+  "position_mapping": "NOT_PROVEN_POSITION_MAPPING",
+  "archived_engine_id": "VW_MIDAS_MSVR",
+  "archived_engine_status_must_remain": "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN",
+  "method_authority": {
+    "paper": "Wang et al. (2026), What drives precious metals pricing? An explainable Mixed-frequency machine learning approach",
+    "doi": "10.1007/s13563-025-00586-8",
+    "adaptation_note": "Single-output XAU Gold Control adaptation; not exact paper or archived engine replication"
+  },
+  "target": {
+    "horizon": 1,
+    "business_semantic": "next calendar month's average XAU/USD price",
+    "research_series_id": "XAU_MONTHLY_AVG_NY17_HOURLY_RESEARCH_V1",
+    "research_daily_source_id": "XAU_DAILY_NY17_TWELVE_1H_RESEARCH_V1",
+    "provider": "Twelve Data",
+    "symbol": "XAU/USD",
+    "interval": "1h",
+    "timezone": "America/New_York",
+    "selector_timestamp": "16:00:00",
+    "selector_semantic": "hourly bar ending at internal 17:00 ET reference",
+    "not_official_settlement_or_close": true,
+    "not_exact_production_1min_identity": true
+  },
+  "source_gate": {
+    "required_start_month": "2020-03",
+    "required_end_month": "2026-08",
+    "minimum_valid_daily_references_per_month": 15,
+    "no_silent_month_skip": true,
+    "raw_vendor_values_may_be_logged": false,
+    "raw_vendor_values_may_be_committed": false
+  },
+  "gpr": {
+    "source": "Caldara-Iacoviello official GPR vintage archive",
+    "origin_rule": "at end of month p use observation p-1 from archive vintage labelled YYYYMM=p",
+    "missing_vintage_policy": "BLOCKED_GPR_VINTAGE_PIT_NOT_PROVEN",
+    "normalization": "causal_minmax_within_same_vintage_through_p_minus_1",
+    "zero_range_value": 0.5,
+    "lambda_base": 0.1,
+    "alpha": 10.0
+  },
+  "features": [
+    "MR_lag1",
+    "MR_lag2",
+    "MR_lag3",
+    "MR_abs_lag1",
+    "MR_MA_3",
+    "MR_MA_6",
+    "MR_sign_lag1",
+    "VW_DAILY_RETURN",
+    "GPR_norm_lagged",
+    "month_sin",
+    "month_cos"
+  ],
+  "model": {
+    "class": "sklearn.svm.SVR",
+    "kernel": "rbf",
+    "scale_features_inside_fold": true,
+    "scale_target_inside_fold": true,
+    "C_grid": [0.25, 1.0, 4.0],
+    "gamma_grid": [0.05, 0.2, 0.8],
+    "epsilon_grid": [0.01, 0.05, 0.1],
+    "inner_objective": "mean_absolute_log_return_error",
+    "inner_max_recent_origins": 12,
+    "minimum_fit_samples": 24,
+    "tie_break": ["lower_C", "lower_gamma", "lower_epsilon"]
+  },
+  "windows": {
+    "source": ["2020-03", "2026-08"],
+    "development": ["2020-04", "2022-12"],
+    "validation": ["2023-01", "2024-12"],
+    "locked_diagnostic": ["2025-01", "2026-07"],
+    "current_origin_reconstruction": {
+      "origin": "2026-08-31",
+      "target": "2026-09",
+      "prospective_claim": false
+    }
+  },
+  "benchmark": "RW_ORIGIN_MONTH_AVERAGE",
+  "validation_gates": {
+    "relative_mae_vs_rw_lt": 1.0,
+    "mape_not_worse_than_rw": true,
+    "median_ae_not_worse_than_rw": true,
+    "monthly_win_rate_vs_rw_gte": 0.5,
+    "max_calendar_year_mae_ratio_vs_rw": 1.5,
+    "source_pit_pass_required": true,
+    "determinism_pass_required": true,
+    "prefix_invariance_pass_required": true
+  },
+  "maximum_v1_status_if_all_gates_pass": "HISTORICAL_REPLAY_SPECIALIZED_SHADOW_ELIGIBLE_PROSPECTIVE_VALIDATION_REQUIRED"
+}
