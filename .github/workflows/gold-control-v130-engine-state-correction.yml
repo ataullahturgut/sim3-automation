@@ -66,8 +66,8 @@ jobs:
               'total': 12,
               'active': 0,
               'issued': 2,
-              'blocked': 5,
-              'waiting': 1,
+              'blocked': 3,
+              'waiting': 3,
               'other': 4,
           }, counts
           print('DUAL_STATE_CURRENT_MONTH_REFERENCE_PASS', counts)
