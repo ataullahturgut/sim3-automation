@@ -1,17 +1,12 @@
 name: Gold Data XAU NY17 Canonical
 
 on:
-  push:
-    branches: [gold-r4-direction-engine]
-    paths:
-      - '.github/workflows/gold-data-xau-ny17.yml'
-      - 'gold_axis_2026/data_pipeline/twelve_xau_ny17.py'
-      - 'gold_axis_2026/data_pipeline/persist_neon.py'
-      - 'gold_axis_2026/data_pipeline/source_contracts.json'
-  schedule:
-    # 22:10 UTC is after 17:00 America/New_York in both EDT and EST.
-    - cron: '10 22 * * 1-5'
-  workflow_dispatch:
+  workflow_call:
+    secrets:
+      NEON_DATABASE_URL:
+        required: true
+      TWELVE_DATA_API_KEY:
+        required: true
 
 concurrency:
   group: gold-data-xau-ny17-canonical
@@ -29,6 +24,9 @@ jobs:
       TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
