@@ -1,101 +1,17 @@
-name: Gold Control V1.27 Deployment Snapshot Final
+name: Gold Control V1.27 Deployment Snapshot Final Historical Manual
 
 on:
   workflow_dispatch:
-  push:
-    branches: [gold-r4-direction-engine]
-    paths:
-      - 'gold_axis_2026/apps/V127_DEPLOYMENT_SNAPSHOT_VERIFICATION.md'
-      - 'gold_axis_2026/apps/production_display_snapshot.json'
-      - 'gold_axis_2026/apps/production_display_snapshot.py'
-      - 'gold_axis_2026/apps/decision_source.py'
-      - 'gold_axis_2026/apps/runtime_source.py'
-      - 'gold_axis_2026/apps/gold_control_mobile_v1.py'
-      - 'gold_axis_2026/apps/gold_control.py'
-      - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
 
 permissions:
   contents: read
 
 jobs:
-  exact-head-acceptance:
+  historical-record:
     runs-on: ubuntu-24.04
-    env:
-      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
-      STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.14'
-      - name: Install runtime
+      - name: Historical workflow notice
         run: |
-          pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
-          python -m playwright install --with-deps chromium
-      - name: Verify v1.27 governance
-        run: |
-          test -n "$NEON_DATABASE_URL"
-          grep -Fq '**Manifest version:** 1.27' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          grep -Fq 'FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          grep -Fq 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          grep -Fq 'NOT_PROVEN_POSITION_MAPPING' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-      - name: Prove committed snapshot equals current production state
-        run: |
-          python gold_axis_2026/tools/export_production_display_snapshot.py --out /tmp/current_production_display_snapshot.json
-          cmp gold_axis_2026/apps/production_display_snapshot.json /tmp/current_production_display_snapshot.json
-      - name: Compile and deterministic tests
-        run: |
-          python -m py_compile gold_axis_2026/apps/production_display_snapshot.py gold_axis_2026/apps/decision_source.py gold_axis_2026/apps/runtime_source.py gold_axis_2026/apps/gold_control_mobile_v1.py gold_axis_2026/apps/gold_control.py
-          cd gold_axis_2026/apps
-          pytest -q test_mobile_ui_contract.py test_piyasa_contract.py test_engine_observability_contract.py test_ui_manifest_consistency_v126.py test_production_display_snapshot.py
-          cd ../data_pipeline
-          pytest -q test_multi_expert_forecast.py test_data_evidence_spine.py
-      - name: Snapshot-only browser exact-head proof
-        run: |
-          rm -rf /tmp/v127_snapshot_final && mkdir -p /tmp/v127_snapshot_final
-          env -u NEON_DATABASE_URL streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8512 --server.address 127.0.0.1 >/tmp/v127_snapshot.log 2>&1 &
-          PID=$!
-          for i in $(seq 1 45); do curl -fsS http://127.0.0.1:8512/_stcore/health >/dev/null && break; sleep 1; done
-          env -u NEON_DATABASE_URL python - <<'PY'
-          import json,re
-          from pathlib import Path
-          from playwright.sync_api import sync_playwright
-          snap=json.loads(Path('gold_axis_2026/apps/production_display_snapshot.json').read_text())
-          v={r['feature_name']:r['value_text'] for r in snap['features']}
-          out=Path('/tmp/v127_snapshot_final/gold_control_v127_snapshot_only_390x844.png')
-          with sync_playwright() as p:
-              b=p.chromium.launch(headless=True); page=b.new_page(viewport={'width':390,'height':844})
-              page.goto('http://127.0.0.1:8512',wait_until='domcontentloaded',timeout=60000)
-              page.get_by_text('GOLD CONTROL',exact=False).first.wait_for(state='visible',timeout=45000)
-              page.locator('.st-key-gc_main_nav label[data-testid="stRadioOption"]').filter(has_text=re.compile('Görünüm',re.I)).first.click()
-              page.get_by_text('GÖRÜNÜM',exact=True).first.wait_for(state='visible',timeout=15000)
-              body=page.locator('body').inner_text()
-              for expected in (v['MONTHLY_DIRECTION_3M'],v['FAST_STATE'],v['SLOW_STATE'],v['GVZ_VALUE'],v['GVZ_REGIME']): assert expected in body
-              assert 'Production Evidence Snapshot · FALLBACK' in body
-              assert 'runtime 12/12' in body and 'context link 7/7' in body and 'integrity PASS' in body
-              assert 'KANONİK KARAR YOK' in body
-              page.get_by_text(re.compile(r'Production Evidence Snapshot.*runtime 12/12',re.I)).first.scroll_into_view_if_needed()
-              page.wait_for_timeout(400); page.screenshot(path=str(out),full_page=False); b.close()
-          print('V127_EXACT_HEAD_SNAPSHOT_ONLY_BROWSER_PASS')
-          PY
-          kill $PID || true; wait $PID || true
-          test -s /tmp/v127_snapshot_final/gold_control_v127_snapshot_only_390x844.png
-      - name: Production DB-backed browser exact-head proof
-        run: |
-          rm -rf /tmp/v127_db_final
-          streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8513 --server.address 127.0.0.1 >/tmp/v127_db.log 2>&1 &
-          PID=$!
-          for i in $(seq 1 45); do curl -fsS http://127.0.0.1:8513/_stcore/health >/dev/null && break; sleep 1; done
-          python gold_axis_2026/apps/mobile_viewport_qa.py --url http://127.0.0.1:8513 --out /tmp/v127_db_final
-          kill $PID || true; wait $PID || true
-      - name: Upload exact-head evidence
-        uses: actions/upload-artifact@v4
-        with:
-          name: gold-control-v127-exact-head-snapshot-and-db-screenshots
-          path: |
-            /tmp/v127_snapshot_final/*.png
-            /tmp/v127_db_final/*.png
-          if-no-files-found: error
-          retention-days: 30
+          echo 'V1.27 acceptance is superseded by manifest v1.30.'
+          echo 'Its exact executable history and prior Actions evidence remain in Git history.'
+          echo 'This workflow is intentionally manual-only and is not a current release gate.'
