@@ -38,9 +38,17 @@ def _payload_hash(snapshot: dict[str, Any]) -> str:
 
 
 def _iso(value: Any) -> str:
-    text = str(value or "").strip()
+    """Normalize DB datetime objects and ISO strings to the frozen UTC text form."""
+    if value is None:
+        return ""
+    if hasattr(value, "isoformat"):
+        text = str(value.isoformat())
+    else:
+        text = str(value).strip()
     if text.endswith("Z"):
-        return text[:-1] + "+00:00"
+        text = text[:-1] + "+00:00"
+    if "T" not in text and " " in text:
+        text = text.replace(" ", "T", 1)
     return text
 
 
