@@ -1,0 +1,149 @@
+name: Gold Control BOCPD Return Successor V1
+
+on:
+  push:
+    branches:
+      - gold-control-bocpd-successor-v1
+      - gold-r4-direction-engine
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+      - 'gold_axis_2026/GOLD_CONTROL_UNRESOLVED_ENGINE_SUCCESSOR_ROADMAP_2026-09-04.md'
+      - 'gold_axis_2026/GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_CHANGE_CONTROL_2026-09-04.md'
+      - 'gold_axis_2026/GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_RISK_VALIDATION_CONTRACT_2026-09-04.md'
+      - 'gold_axis_2026/GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_ENGINEERING_EVIDENCE_2026-09-04.md'
+      - 'gold_axis_2026/GOLD_CONTROL_PROJECT_STAGE_BOCPD_SUCCESSOR_V1_STATUS_2026-09-04.md'
+      - 'gold_axis_2026/bocpd_successor_v1/**'
+      - 'gold_axis_2026/tools/bocpd_return_successor_v1.py'
+      - 'gold_axis_2026/tools/bocpd_return_successor_v1_risk_validation.py'
+      - 'gold_axis_2026/tools/test_bocpd_return_successor_v1.py'
+      - 'gold_axis_2026/tools/test_bocpd_return_successor_v1_risk_validation.py'
+      - 'gold_axis_2026/tools/apply_manifest_v1_31_bocpd_successor.py'
+      - 'gold_axis_2026/core5_monthly.csv.gz.b64'
+      - '.github/workflows/gold-control-bocpd-successor-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install research-test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas pytest
+
+      - name: Manifest and archived-identity governance assertions
+        run: |
+          set -euo pipefail
+          grep -F '**Manifest version:** 1.31' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'BOCPD_RETURN_SUCCESSOR_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'RESEARCH_SHADOW_CANDIDATE_RISK_DIAGNOSTIC_COMPLETE_PROSPECTIVE_VALIDATION_REQUIRED' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'AUTO_SELECTOR=OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'AUTO_ENSEMBLE=OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'NOT_PROVEN_POSITION_MAPPING' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+
+      - name: Contract deterministic PIT and risk tests
+        working-directory: gold_axis_2026/tools
+        run: |
+          pytest -q \
+            test_bocpd_return_successor_v1.py \
+            test_bocpd_return_successor_v1_risk_validation.py
+
+      - name: Historical successor engineering replay
+        working-directory: gold_axis_2026/tools
+        run: |
+          set -euo pipefail
+          rm -rf ../bocpd_successor_v1/evidence
+          python bocpd_return_successor_v1.py --output-dir ../bocpd_successor_v1/evidence | tee /tmp/bocpd_successor_v1.log
+
+          grep -Fx 'CANDIDATE_STATUS=RESEARCH_SHADOW_CANDIDATE_ENGINEERING_PASS' /tmp/bocpd_successor_v1.log
+          grep -Fx 'DIRECTION_VOTE_PERMITTED=NO' /tmp/bocpd_successor_v1.log
+          grep -Fx 'POSITION_MAPPING_PERMITTED=NO' /tmp/bocpd_successor_v1.log
+          grep -Fx 'PROSPECTIVE_CLAIM=NO' /tmp/bocpd_successor_v1.log
+          grep -Fx 'PROMOTION_AUTHORIZED=NO' /tmp/bocpd_successor_v1.log
+          grep -Fx 'DATABASE_WRITES=NONE' /tmp/bocpd_successor_v1.log
+
+      - name: Frozen historical risk diagnostic
+        working-directory: gold_axis_2026/tools
+        run: |
+          set -euo pipefail
+          python bocpd_return_successor_v1_risk_validation.py --output-dir ../bocpd_successor_v1/evidence | tee /tmp/bocpd_successor_v1_risk.log
+
+          grep -Fx 'VALIDATION_STATUS=VALIDATION_RISK_DIAGNOSTIC_COMPLETE' /tmp/bocpd_successor_v1_risk.log
+          grep -Fx 'INTERPRETATION=DESCRIPTIVE_ONLY' /tmp/bocpd_successor_v1_risk.log
+          grep -Fx 'PRIMARY_RISK_HORIZON=2-3M' /tmp/bocpd_successor_v1_risk.log
+          grep -Fx 'TAIL_DEFINITION=CUMULATIVE_FORWARD_GOLD_RETURN_LE_MINUS_3PCT' /tmp/bocpd_successor_v1_risk.log
+          grep -Fx 'DIRECTION_VOTE_PERMITTED=NO' /tmp/bocpd_successor_v1_risk.log
+          grep -Fx 'AUTOMATIC_ACTION_APPROVED=NO' /tmp/bocpd_successor_v1_risk.log
+          grep -Fx 'PROSPECTIVE_CLAIM=NO' /tmp/bocpd_successor_v1_risk.log
+          grep -Fx 'PROMOTION_AUTHORIZED=NO' /tmp/bocpd_successor_v1_risk.log
+          grep -Fx 'DATABASE_WRITES=NONE' /tmp/bocpd_successor_v1_risk.log
+
+      - name: Audit generated evidence contracts
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path('gold_axis_2026/bocpd_successor_v1/evidence')
+          engineering = json.loads((root / 'bocpd_return_successor_v1_evidence.json').read_text())
+          risk = json.loads((root / 'bocpd_return_successor_v1_risk_evidence.json').read_text())
+
+          assert engineering['successor_id'] == 'BOCPD_RETURN_SUCCESSOR_V1'
+          assert engineering['archived_identity'] == 'BOCPD'
+          assert engineering['successor_id'] != engineering['archived_identity']
+          assert engineering['archived_identity_status'].startswith('BLOCKED_')
+          assert engineering['candidate_status'] == 'RESEARCH_SHADOW_CANDIDATE_ENGINEERING_PASS'
+          assert engineering['direction_vote_permitted'] is False
+          assert engineering['position_mapping_permitted'] is False
+          assert engineering['database_writes'] == 'NONE'
+          assert engineering['prospective_claim'] is False
+          assert engineering['promotion_authorized'] is False
+          assert engineering['archived_threshold_reused'] is False
+          assert engineering['numeric_alarm_threshold'] is None
+          assert engineering['row_count'] == 199
+          assert engineering['period_counts'] == {'DEV': 132, 'LOCK': 31, 'VAL': 36}
+          assert all(engineering['hard_gates'].values())
+          assert len(engineering['determinism_sha256']) == 64
+
+          assert risk['successor_id'] == engineering['successor_id']
+          assert risk['engineering_determinism_sha256'] == engineering['determinism_sha256']
+          assert risk['validation_status'] == 'VALIDATION_RISK_DIAGNOSTIC_COMPLETE'
+          assert risk['interpretation'] == 'DESCRIPTIVE_ONLY'
+          assert risk['primary_risk_horizon'] == '2-3M'
+          assert risk['tail_definition'] == 'CUMULATIVE_FORWARD_GOLD_RETURN_LE_MINUS_3PCT'
+          assert risk['locked_role'] == 'DIAGNOSTIC_ONLY'
+          assert risk['direction_vote_permitted'] is False
+          assert risk['automatic_action_approved'] is False
+          assert risk['database_writes'] == 'NONE'
+          assert risk['prospective_claim'] is False
+          assert risk['promotion_authorized'] is False
+          assert all(risk['hard_gates'].values())
+
+          print('BOCPD_SUCCESSOR_EVIDENCE_AUDIT=PASS')
+          print('BOCPD_SUCCESSOR_RISK_DIAGNOSTIC_AUDIT=PASS')
+          print('DATABASE_WRITES=NONE')
+          print('PROSPECTIVE_CLAIM=NO')
+          print('PROMOTION_AUTHORIZED=NO')
+          PY
+
+      - name: Upload non-production research evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-bocpd-return-successor-v1-evidence
+          path: |
+            gold_axis_2026/bocpd_successor_v1/evidence/bocpd_return_successor_v1_evidence.json
+            gold_axis_2026/bocpd_successor_v1/evidence/bocpd_return_successor_v1_replay.csv
+            gold_axis_2026/bocpd_successor_v1/evidence/bocpd_return_successor_v1_risk_evidence.json
+            gold_axis_2026/bocpd_successor_v1/evidence/bocpd_return_successor_v1_risk_validation.csv
+          if-no-files-found: error
+          retention-days: 30
