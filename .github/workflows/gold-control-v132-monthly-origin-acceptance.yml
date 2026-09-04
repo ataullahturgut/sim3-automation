@@ -168,7 +168,7 @@ jobs:
               nav.filter(has_text=re.compile('Görünüm',re.I)).first.click()
               page.get_by_text('TÜM TAHMİN, YÖN, EVENT, REJİM VE RİSK MOTORLARI',exact=True).first.wait_for(state='visible',timeout=25000)
               body=page.locator('body').inner_text()
-              for token in ('EYLÜL / 31 AĞUSTOS ORIGIN','CAUSAL PATCH','EMERGENCY','BOCPD','WAITING_ELIGIBLE_MONTH_END_ORIGIN','BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED'):
+              for token in ('EYLÜL / 31 AĞUSTOS ORIGIN','Causal Patch','EMERGENCY','BOCPD','WAITING_ELIGIBLE_MONTH_END_ORIGIN','BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED'):
                   assert token in body,token
               assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 2')
               page.screenshot(path=str(out/'gorunum_v132_390x844.png'),full_page=False)
