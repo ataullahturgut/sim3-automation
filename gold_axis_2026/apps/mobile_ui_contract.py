@@ -73,7 +73,7 @@ EXPERT_DISPLAY = {
         "label": "VW-MIDAS-MSVR",
         "model_version": "VW_AUDITED_SHADOW_V2",
         "role": "Audited analytical shadow/reference",
-        "empty_status": "BLOCKED_NOT_PROVEN_EXECUTABLE",
+        "empty_status": "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN",
     },
     "MOMENTUM_3M": {
         "label": "3M Momentum",
