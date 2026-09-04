@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - gold-control-v130-september-replay-motor-visibility
+      - gold-control-v130-recovery-ui-finalize
       - gold-r4-direction-engine
       - gold-r4-direction-engine-ui-v122-final
     paths:
@@ -81,7 +82,16 @@ jobs:
           rt=fetch_runtime_observability(url)
           dist={}
           for r in rt['runtime']: dist[r['runtime_status']]=dist.get(r['runtime_status'],0)+1
-          assert dist=={'ACTIVE':4,'WAITING':3,'BLOCKED':5},dist
+          assert dist=={'ACTIVE':4,'WAITING':5,'BLOCKED':3},dist
+          blocked={r['engine_id']:r['status_code'] for r in rt['runtime'] if r['runtime_status']=='BLOCKED'}
+          assert blocked=={
+            'VW_MIDAS_MSVR':'BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN',
+            'MACRO_EVENT':'BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED',
+            'BOCPD':'BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED',
+          },blocked
+          waiting={r['engine_id']:r['status_code'] for r in rt['runtime'] if r['runtime_status']=='WAITING'}
+          assert waiting['EMERGENCY_LEVEL']=='WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE',waiting
+          assert waiting['EMERGENCY_REVERSAL']=='WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE',waiting
           assert sum(1 for r in rt['runtime'] if r.get('direction_vote_permitted') is True)==3
           with psycopg.connect(url,autocommit=False,row_factory=dict_row) as conn:
             with conn.cursor() as cur:
@@ -91,7 +101,7 @@ jobs:
               cur.execute('select count(*) n from decision_runs'); assert cur.fetchone()['n']==0
               cur.execute('select count(*) n from decision_events'); assert cur.fetchone()['n']==0
             conn.rollback()
-          print('V130_SEPTEMBER_CURRENT_MONTH_REFERENCE_PRODUCTION_AUDIT_PASS writes=NONE')
+          print('V130_SEPTEMBER_CURRENT_MONTH_REFERENCE_PRODUCTION_AUDIT_PASS writes=NONE dist=4/5/3')
           PY
       - name: DB-backed 390x844 visual proof
         run: |
@@ -122,9 +132,17 @@ jobs:
             heading=page.get_by_text('TÜM TAHMİN, YÖN, EVENT, REJİM VE RİSK MOTORLARI',exact=True).first
             heading.wait_for(state='visible',timeout=20000)
             body=page.locator('body').inner_text()
-            for x in ('Eylül sonu → Ekim 2026 H=1','exact executable runner','authorized persisted monthly price reference','exact forward BOCPD','Toplam 12 motor/kanal'):
+            for x in (
+              'Eylül sonu → Ekim 2026 H=1',
+              'exact archived VW replication',
+              'exact macro score',
+              'İlk governed CAUSAL_PATCH expert referansını bekliyor',
+              'L=36 ve frozen threshold recover edildi',
+              'Toplam 12 motor/kanal',
+            ):
               assert x in body,x
-            assert 'BUY' not in body and 'SELL' not in body and 'HOLD' not in body
+            tokens=set(re.findall(r'\b[A-Z]+\b',body))
+            assert not ({'BUY','SELL','HOLD','EXIT','REDUCE'} & tokens),tokens
             heading.evaluate("el=>el.scrollIntoView({block:'start'})")
             page.wait_for_timeout(300)
             page.screenshot(path=str(out/'gorunum_motor_timing_390x844.png'),full_page=False)
