@@ -2,7 +2,7 @@ name: Gold Control Production Scheduler V1.30
 
 on:
   push:
-    branches: [gold-control-v130-default-scheduler-dispatcher, main]
+    branches: [main]
     paths:
       - '.github/workflows/gold-control-production-scheduler-v130.yml'
   schedule:
