@@ -1,11 +1,12 @@
-name: Gold Control Mobile UI V1.30 Compatibility Final
+name: Gold Control Mobile UI V1.31 Compatibility Final
 
 on:
   workflow_dispatch:
   push:
-    branches: [gold-r4-direction-engine]
+    branches: [gold-r4-direction-engine, gold-control-v131-postmerge-ci-reconcile]
     paths:
       - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+      - 'gold_axis_2026/GOLD_CONTROL_V131_POSTMERGE_CI_RECONCILIATION_2026-09-04.md'
       - 'gold_axis_2026/GOLD_CONTROL_DATA_EVIDENCE_SPINE_CONTRACT_2026-09-03.md'
       - 'gold_axis_2026/GOLD_CONTROL_ENGINE_OBSERVABILITY_CONTRACT_2026-09-03.md'
       - 'gold_axis_2026/GOLD_CONTROL_DEPLOYMENT_DISPLAY_SNAPSHOT_CONTRACT_V2_2026-09-03.md'
@@ -44,20 +45,21 @@ jobs:
           pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
           python -m playwright install --with-deps chromium
 
-      - name: Verify manifest v1.30 governance and frozen locks
+      - name: Verify manifest v1.31 governance and frozen locks
         run: |
           test -n "$NEON_DATABASE_URL" || (echo 'NEON_DATABASE_URL missing' && exit 1)
-          grep -Fq '**Manifest version:** 1.30' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq '**Manifest version:** 1.31' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V2' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'FROZEN_AUG31_EOD_STATE_REPLAY_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'FROZEN_AUG31_STATE_REPLAY_DISPLAY_SNAPSHOT_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'FROZEN_DATA_EVIDENCE_SPINE_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'FROZEN_ALL_GOVERNED_ENGINES_VISIBLE_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'BOCPD_RETURN_SUCCESSOR_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'auto selector = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'auto ensemble = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'NOT_PROVEN_POSITION_MAPPING' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          echo 'V130_MOBILE_GOVERNANCE_PASS'
+          echo 'V131_MOBILE_GOVERNANCE_PASS'
 
       - name: Compile complete DB snapshot replay to UI graph
         run: |
@@ -82,7 +84,7 @@ jobs:
             gold_axis_2026/apps/gold_control_mobile_v1.py \
             gold_axis_2026/apps/gold_control.py
 
-      - name: Run deterministic v1.30 contracts
+      - name: Run deterministic v1.31 contracts
         run: |
           cd gold_axis_2026/apps
           pytest -q \
@@ -111,9 +113,13 @@ jobs:
           assert runtime['runtime_engine_count']==12 and runtime['context_exactly_one_link']==7 and runtime['integrity_ok'] is True
           states={r['engine_id']:r for r in runtime['runtime']}
           assert sum(1 for r in states.values() if r['runtime_status']=='ACTIVE')==4
-          assert sum(1 for r in states.values() if r['runtime_status']=='WAITING')==3
-          assert sum(1 for r in states.values() if r['runtime_status']=='BLOCKED')==5
+          assert sum(1 for r in states.values() if r['runtime_status']=='WAITING')==5
+          assert sum(1 for r in states.values() if r['runtime_status']=='BLOCKED')==3
           assert sum(1 for r in states.values() if r.get('direction_vote_permitted') is True)==3
+          assert {k for k,v in states.items() if v['runtime_status']=='BLOCKED'}=={'VW_MIDAS_MSVR','MACRO_EVENT','BOCPD'}
+          assert {k for k,v in states.items() if v['runtime_status']=='WAITING'}=={'CAUSAL_PATCH','MOMENTUM_3M','RANDOM_WALK','EMERGENCY_LEVEL','EMERGENCY_REVERSAL'}
+          assert states['EMERGENCY_LEVEL']['status_code']=='WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE'
+          assert states['EMERGENCY_REVERSAL']['status_code']=='WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE'
           current=fetch_current_decision_state(url)
           assert current['monthly_direction_3m']=='DOWN'
           assert current['fast_state']=='ROBUST_UP'
@@ -139,7 +145,7 @@ jobs:
               cur.execute('select count(*) n from decision_runs'); assert cur.fetchone()['n']==0
               cur.execute('select count(*) n from decision_events'); assert cur.fetchone()['n']==0
             c.rollback()
-          print('V130_PRODUCTION_DB_TO_UI_PASS runtime=12/12 distribution=4/3/5 expert_replay=2 state_replay=7 runs=4 links=7 canonical=0 decision=0 writes=NONE')
+          print('V131_PRODUCTION_DB_TO_UI_PASS runtime=12/12 distribution=4/5/3 expert_replay=2 state_replay=7 runs=4 links=7 canonical=0 decision=0 writes=NONE')
           PY
 
       - name: Prove DB-less deployment fallback including both replay layers
@@ -163,7 +169,7 @@ jobs:
           assert fetch_latest_expert_forecasts('',TRACK_MONTH_END)==[]
           assert fetch_latest_expert_forecasts('',TRACK_EARLY_INDICATIVE)==[]
           assert state.get('classification') is None and state.get('action_state') is None
-          print('V130_DEPLOYMENT_FALLBACK_SOURCE_PASS expert_replay=2 state_replay=7')
+          print('V131_DEPLOYMENT_FALLBACK_SOURCE_PASS expert_replay=2 state_replay=7')
           PY
 
       - name: Verify selector ensemble and action remain locked
@@ -181,19 +187,19 @@ jobs:
 
       - name: Canonical production-backed 390x844 browser QA
         run: |
-          rm -rf /tmp/gold_mobile_v130_qa
-          streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8501 --server.address 127.0.0.1 >/tmp/gold_mobile_v130_browser.log 2>&1 &
+          rm -rf /tmp/gold_mobile_v131_qa
+          streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8501 --server.address 127.0.0.1 >/tmp/gold_mobile_v131_browser.log 2>&1 &
           APP_PID=$!
           for i in $(seq 1 45); do curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null && break; sleep 1; done
-          python gold_axis_2026/apps/mobile_viewport_qa.py --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v130_qa
+          python gold_axis_2026/apps/mobile_viewport_qa.py --url http://127.0.0.1:8501 --out /tmp/gold_mobile_v131_qa
           kill $APP_PID || true; wait $APP_PID || true
-          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v130_browser.log; then cat /tmp/gold_mobile_v130_browser.log; exit 1; fi
-          echo 'MOBILE_V130_PRODUCTION_BACKED_BROWSER_PASS'
+          if grep -Eq 'ImportError|ModuleNotFoundError|Traceback \(most recent call last\)' /tmp/gold_mobile_v131_browser.log; then cat /tmp/gold_mobile_v131_browser.log; exit 1; fi
+          echo 'MOBILE_V131_PRODUCTION_BACKED_BROWSER_PASS'
 
       - name: Upload production-backed screenshots
         uses: actions/upload-artifact@v4
         with:
-          name: gold-control-v130-compatibility-production-backed-390x844-screenshots
-          path: /tmp/gold_mobile_v130_qa/*.png
+          name: gold-control-v131-compatibility-production-backed-390x844-screenshots
+          path: /tmp/gold_mobile_v131_qa/*.png
           if-no-files-found: error
           retention-days: 30
