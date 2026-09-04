@@ -7,7 +7,7 @@
 
 ## 1. Purpose
 
-The September 2026 H=1 rows already persisted in production Neon are historical replay evidence and must be visible to the user during September without being misrepresented as a prospective/canonical forecast.
+The September 2026 H=1 rows already persisted in production Neon are historical replay evidence. Because their target month is the currently open September 2026 period, they must remain visible during September as current-month reference evidence without being misrepresented as prospectively issued or canonical.
 
 The governed engine inventory must also distinguish engines that are already active, engines waiting for the next eligible month-end origin, and engines that are technically blocked with no date-based automatic activation.
 
@@ -28,10 +28,13 @@ Production historical-replay expert rows:
 Presentation requirements:
 
 - The first visible Forecast/Tahmin hero may show the two replay expert values when no governed canonical forecast exists.
-- The hero must say `EYLÜL 2026 H=1 REPLAY` and `REPLAY · PROSPECTIVE DEĞİL`.
+- Because the replay target is `2026-09` and September is still open, the first visible hero must treat these rows as a **current-month reference**, not as expired history.
+- The hero must say `EYLÜL 2026 H=1 · CURRENT-MONTH REFERENCE` and `REPLAY · PROSPECTIVE ISSUED DEĞİL`.
+- The same hero must expose the governed 31 August month-open replay direction context: `MONTHLY_DIRECTION_3M = DOWN`, `FAST = ROBUST_UP`, `SLOW = ROBUST_UP`.
 - Replay origin must be labelled `REPLAY ORIGIN`, never `CANONICAL ORIGIN`.
-- The values remain separate expert outputs; no average, winner, selector, ensemble, or synthetic canonical forecast may be invented.
-- Official prospective September state remains `NOT_ISSUED_MISSED_2026_08_31_ORIGIN`.
+- Target relevance and evidence provenance are separate: the rows remain relevant to September until September closes, while their evidence class remains `HISTORICAL_REPLAY` and their prospective-issued claim remains false.
+- The values remain separate expert outputs; no average, winner, selector, ensemble, synthetic canonical forecast, or position action may be invented.
+- Official prospective issuance state remains `NOT_ISSUED_MISSED_2026_08_31_ORIGIN`.
 
 ## 3. Governed motor inventory and activation gates
 
@@ -86,8 +89,8 @@ This change does not alter:
 Before canonical promotion:
 
 1. deterministic app tests PASS;
-2. production read-only audit proves exact September replay values and 4/3/5 runtime distribution;
-3. 390×844 DB-backed Forecast screen visibly shows both replay values at the top with replay-only labels;
+2. production read-only audit proves exact September replay values, exact 31 August direction replay context, and 4/3/5 runtime distribution;
+3. 390×844 DB-backed Forecast screen visibly shows both replay values and the 31 August direction context at the top with current-month-reference and replay provenance labels;
 4. 390×844 engine-inventory view shows activation timing/blocker explanations;
 5. no action/selector/ensemble/canonical authority is introduced;
 6. canonical and deployment/UI branches are fast-forwarded only after the exact candidate head passes.
