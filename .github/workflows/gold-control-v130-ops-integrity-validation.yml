@@ -2,7 +2,7 @@ name: Gold Control V1.30 Ops Integrity Validation
 
 on:
   push:
-    branches: [gold-control-v130-ops-integrity-cleanup, gold-control-v130-provenance-hardening, gold-r4-direction-engine]
+    branches: [gold-r4-direction-engine]
     paths:
       - '.github/workflows/gold-control-v130-ops-integrity-validation.yml'
       - '.github/workflows/gold-data-neon-ingest.yml'
