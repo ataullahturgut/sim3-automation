@@ -29,8 +29,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install preflight runtime
-        run: pip install 'numpy>=1.26,<3' 'pandas>=2,<3' 'requests>=2.31,<3' 'psycopg[binary]>=3.2,<4' xlrd
+      - name: Install frozen preflight runtime
+        run: |
+          set -euo pipefail
+          pip install 'numpy>=1.26,<3' 'pandas>=2,<3' 'requests>=2.31,<3' 'psycopg[binary]>=3.2,<4' xlrd
+          pip install --index-url https://download.pytorch.org/whl/cpu 'torch>=2.5,<3'
       - name: Compile governed issuer path
         run: |
           python -m py_compile \
