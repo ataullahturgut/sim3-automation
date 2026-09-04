@@ -1,4 +1,4 @@
-name: Gold Control V1.30 September Replay Visibility Regression
+name: Gold Control V1.31 September Replay Visibility Regression
 
 on:
   push:
@@ -12,7 +12,14 @@ on:
       - 'gold_axis_2026/apps/forecast_source.py'
       - 'gold_axis_2026/apps/engine_observability_contract.py'
       - 'gold_axis_2026/apps/production_display_snapshot.json'
+      - 'gold_axis_2026/apps/aug31_replay_expansion_source.py'
+      - 'gold_axis_2026/apps/aug31_replay_expansion_display.py'
+      - 'gold_axis_2026/apps/aug31_replay_expansion_snapshot.json'
+      - 'gold_axis_2026/apps/test_aug31_replay_expansion_display.py'
+      - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
       - 'gold_axis_2026/GOLD_CONTROL_SEPTEMBER_REPLAY_VISIBILITY_CHANGE_CONTROL_2026-09-04.md'
+      - 'gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md'
+      - 'gold_axis_2026/GOLD_CONTROL_V131_AUG31_REPLAY_UI_FINAL_EVIDENCE_2026-09-04.md'
   workflow_dispatch:
 
 permissions:
@@ -35,20 +42,23 @@ jobs:
         run: |
           pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
           python -m playwright install --with-deps chromium
-      - name: Verify frozen presentation contract and compile
+      - name: Verify frozen v1.31 presentation authority and compile
         run: |
-          grep -Fq '**Manifest version:** 1.30' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq '**Manifest version:** 1.31' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -Fq 'REPLAY · PROSPECTIVE ISSUED DEĞİL' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -Fq 'EYLÜL 2026 H=1 · CURRENT-MONTH REFERENCE' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -Fq '31 AĞUSTOS AY-AÇILIŞ YÖN CONTEXT' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -Fq '31 AĞUSTOS REPLAY · RECOVERED / SUCCESSOR CONTEXT' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -Fq 'REPLAY ORIGIN' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -Fq 'Eylül sonu → Ekim 2026 H=1' gold_axis_2026/apps/gold_control_mobile_v1.py
           grep -Fq 'AUTO_SELECTOR = OFF' gold_axis_2026/GOLD_CONTROL_SEPTEMBER_REPLAY_VISIBILITY_CHANGE_CONTROL_2026-09-04.md
           grep -Fq 'AUTO_ENSEMBLE = OFF' gold_axis_2026/GOLD_CONTROL_SEPTEMBER_REPLAY_VISIBILITY_CHANGE_CONTROL_2026-09-04.md
           grep -Fq 'Target relevance and evidence provenance are separate' gold_axis_2026/GOLD_CONTROL_SEPTEMBER_REPLAY_VISIBILITY_CHANGE_CONTROL_2026-09-04.md
-          python -m py_compile gold_axis_2026/apps/gold_control_mobile_v1.py gold_axis_2026/apps/forecast_source.py gold_axis_2026/apps/engine_observability_contract.py gold_axis_2026/apps/gold_control.py
+          grep -Fq 'FROZEN_BEFORE_AUG31_EXPANSION_RESULT' gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md
+          grep -Fq 'PASS_GOVERNED_HISTORICAL_REPLAY_UI_CLOSURE' gold_axis_2026/GOLD_CONTROL_V131_AUG31_REPLAY_UI_FINAL_EVIDENCE_2026-09-04.md
+          python -m py_compile gold_axis_2026/apps/gold_control_mobile_v1.py gold_axis_2026/apps/forecast_source.py gold_axis_2026/apps/engine_observability_contract.py gold_axis_2026/apps/aug31_replay_expansion_source.py gold_axis_2026/apps/aug31_replay_expansion_display.py gold_axis_2026/apps/gold_control.py
           cd gold_axis_2026/apps
-          pytest -q test_mobile_ui_contract.py test_engine_observability_contract.py test_aug31_state_replay_source.py test_production_display_snapshot.py
+          pytest -q test_mobile_ui_contract.py test_engine_observability_contract.py test_aug31_state_replay_source.py test_aug31_replay_expansion_display.py test_production_display_snapshot.py
       - name: Read-only production replay and runtime audit
         run: |
           test -n "$NEON_DATABASE_URL"
@@ -59,6 +69,7 @@ jobs:
           from forecast_source import TRACK_HISTORICAL_REPLAY, fetch_latest_expert_forecasts
           from runtime_source import fetch_runtime_observability
           from aug31_state_replay_source import fetch_aug31_state_replay
+          from aug31_replay_expansion_source import fetch_aug31_replay_expansion
           url=os.environ['NEON_DATABASE_URL']
           rows=fetch_latest_expert_forecasts(url,TRACK_HISTORICAL_REPLAY)
           by={r['expert_id']:r for r in rows}
@@ -78,6 +89,21 @@ jobs:
           assert aug['monthly_direction_3m']=='DOWN'
           assert aug['fast_state']=='ROBUST_UP'
           assert aug['slow_state']=='ROBUST_UP'
+          exp=fetch_aug31_replay_expansion(url)
+          assert exp['source_mode']=='NEON_DB_READ_ONLY'
+          assert exp['target_context']=='2026-09'
+          assert exp['state_as_of']=='2026-08-31T21:00:00+00:00'
+          assert abs(float(exp['causal_patch_forecast'])-4452.046728838838)<1e-9
+          assert exp['causal_patch_daily_max_date']=='2026-08-30'
+          assert exp['emergency_level']=='NEUTRAL'
+          assert exp['emergency_reversal']=='OFF'
+          assert exp['bocpd_successor_id']=='BOCPD_RETURN_SUCCESSOR_V1'
+          assert exp['bocpd_successor_state']=='NO_ADVERSE_BREAK_CANDIDATE'
+          assert exp['bocpd_archived_engine_status']=='BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED'
+          assert exp['prospective_claim'] is False
+          assert exp['canonical_authority'] is False
+          assert exp['direction_vote_permitted'] is False
+          assert exp['auto_selector']=='OFF' and exp['auto_ensemble']=='OFF'
           rt=fetch_runtime_observability(url)
           dist={}
           for r in rt['runtime']: dist[r['runtime_status']]=dist.get(r['runtime_status'],0)+1
@@ -89,6 +115,7 @@ jobs:
             'BOCPD':'BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED',
           },blocked
           waiting={r['engine_id']:r['status_code'] for r in rt['runtime'] if r['runtime_status']=='WAITING'}
+          assert waiting['CAUSAL_PATCH']=='WAITING_ELIGIBLE_MONTH_END_ORIGIN',waiting
           assert waiting['EMERGENCY_LEVEL']=='WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE',waiting
           assert waiting['EMERGENCY_REVERSAL']=='WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE',waiting
           assert sum(1 for r in rt['runtime'] if r.get('direction_vote_permitted') is True)==3
@@ -100,19 +127,19 @@ jobs:
               cur.execute('select count(*) n from decision_runs'); assert cur.fetchone()['n']==0
               cur.execute('select count(*) n from decision_events'); assert cur.fetchone()['n']==0
             conn.rollback()
-          print('V130_SEPTEMBER_CURRENT_MONTH_REFERENCE_PRODUCTION_AUDIT_PASS writes=NONE dist=4/5/3')
+          print('V131_SEPTEMBER_REPLAY_VISIBILITY_PRODUCTION_AUDIT_PASS writes=NONE dist=4/5/3')
           PY
       - name: DB-backed 390x844 visual proof
         run: |
-          rm -rf /tmp/v130_sep_reg && mkdir -p /tmp/v130_sep_reg
-          streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8553 --server.address 127.0.0.1 >/tmp/v130_sep_reg.log 2>&1 &
+          rm -rf /tmp/v131_sep_reg && mkdir -p /tmp/v131_sep_reg
+          streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8553 --server.address 127.0.0.1 >/tmp/v131_sep_reg.log 2>&1 &
           PID=$!
           for i in $(seq 1 45); do curl -fsS http://127.0.0.1:8553/_stcore/health >/dev/null && break; sleep 1; done
           python - <<'PY'
           import re
           from pathlib import Path
           from playwright.sync_api import sync_playwright
-          out=Path('/tmp/v130_sep_reg')
+          out=Path('/tmp/v131_sep_reg')
           with sync_playwright() as p:
             b=p.chromium.launch(headless=True)
             page=b.new_page(viewport={'width':390,'height':844},device_scale_factor=1)
@@ -122,11 +149,19 @@ jobs:
             nav.filter(has_text=re.compile('Tahmin',re.I)).first.click()
             page.get_by_text('EYLÜL 2026 H=1 · CURRENT-MONTH REFERENCE',exact=True).first.wait_for(state='visible',timeout=20000)
             body=page.locator('body').inner_text()
-            for x in ('4,345.81 / 4,397.31 USD','3M Momentum / Random Walk','REPLAY · PROSPECTIVE ISSUED DEĞİL','31 AĞUSTOS AY-AÇILIŞ YÖN CONTEXT','DOWN','ROBUST_UP','REPLAY ORIGIN','NOT_ISSUED_MISSED_2026_08_31_ORIGIN'):
+            for x in (
+              '4,345.81 / 4,397.31 USD','3M Momentum / Random Walk',
+              'REPLAY · PROSPECTIVE ISSUED DEĞİL','31 AĞUSTOS AY-AÇILIŞ YÖN CONTEXT',
+              'DOWN','ROBUST_UP','REPLAY ORIGIN','NOT_ISSUED_MISSED_2026_08_31_ORIGIN',
+              '31 AĞUSTOS REPLAY · RECOVERED / SUCCESSOR CONTEXT','Causal Patch · Eylül H=1',
+              '4,452.05 USD','Emergency · Level','NEUTRAL','Emergency · Reversal','OFF',
+              'BOCPD successor V1','NO_ADVERSE_BREAK_CANDIDATE','HISTORICAL_REPLAY · PROSPECTIVE ISSUED DEĞİL',
+            ):
               assert x in body,x
             top=body.split('GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI')[0]
             assert 'CANONICAL ORIGIN' not in top
-            page.screenshot(path=str(out/'tahmin_september_current_month_reference_390x844.png'),full_page=False)
+            assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 2')
+            page.screenshot(path=str(out/'tahmin_september_replay_v131_390x844.png'),full_page=False)
             nav.filter(has_text=re.compile('Görünüm',re.I)).first.click()
             heading=page.get_by_text('TÜM TAHMİN, YÖN, EVENT, REJİM VE RİSK MOTORLARI',exact=True).first
             heading.wait_for(state='visible',timeout=20000)
@@ -135,31 +170,37 @@ jobs:
               'Eylül sonu → Ekim 2026 H=1',
               'exact archived VW replication',
               'exact macro score',
-              'İlk governed CAUSAL_PATCH expert referansını bekliyor',
-              'L=36 ve frozen threshold recover edildi',
+              'İlk governed prospective CAUSAL_PATCH expert referansını bekliyor',
+              'Archived BOCPD takvime bağlı değil',
+              'BOCPD_RETURN_SUCCESSOR_V1',
+              '31 AĞUSTOS REPLAY · REPLAY · PROSPECTIVE DEĞİL',
+              '31 AĞUSTOS AY-AÇILIŞ REPLAY · REPLAY · PROSPECTIVE DEĞİL',
+              'NO_ADVERSE_BREAK_CANDIDATE',
+              'Operasyonel teknik durum',
               'Toplam 12 motor/kanal',
             ):
               assert x in body,x
             tokens=set(re.findall(r'\b[A-Z]+\b',body))
             assert not ({'BUY','SELL','HOLD','EXIT','REDUCE'} & tokens),tokens
+            assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 2')
             heading.evaluate("el=>el.scrollIntoView({block:'start'})")
             page.wait_for_timeout(300)
-            page.screenshot(path=str(out/'gorunum_motor_timing_390x844.png'),full_page=False)
+            page.screenshot(path=str(out/'gorunum_motor_replay_v131_390x844.png'),full_page=False)
             b.close()
-          print('V130_SEPTEMBER_CURRENT_MONTH_REFERENCE_DB_VISUAL_PASS')
+          print('V131_SEPTEMBER_REPLAY_VISIBILITY_DB_VISUAL_PASS')
           PY
           kill $PID || true; wait $PID || true
       - name: DB-less replay fallback proof
         run: |
-          rm -rf /tmp/v130_sep_fallback && mkdir -p /tmp/v130_sep_fallback
-          env -u NEON_DATABASE_URL streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8554 --server.address 127.0.0.1 >/tmp/v130_sep_fallback.log 2>&1 &
+          rm -rf /tmp/v131_sep_fallback && mkdir -p /tmp/v131_sep_fallback
+          env -u NEON_DATABASE_URL streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8554 --server.address 127.0.0.1 >/tmp/v131_sep_fallback.log 2>&1 &
           PID=$!
           for i in $(seq 1 45); do curl -fsS http://127.0.0.1:8554/_stcore/health >/dev/null && break; sleep 1; done
           env -u NEON_DATABASE_URL python - <<'PY'
           import re
           from pathlib import Path
           from playwright.sync_api import sync_playwright
-          out=Path('/tmp/v130_sep_fallback')
+          out=Path('/tmp/v131_sep_fallback')
           with sync_playwright() as p:
             b=p.chromium.launch(headless=True)
             page=b.new_page(viewport={'width':390,'height':844},device_scale_factor=1)
@@ -169,19 +210,26 @@ jobs:
             nav.filter(has_text=re.compile('Tahmin',re.I)).first.click()
             page.get_by_text('EYLÜL 2026 H=1 · CURRENT-MONTH REFERENCE',exact=True).first.wait_for(state='visible',timeout=20000)
             body=page.locator('body').inner_text()
-            for x in ('4,345.81 / 4,397.31 USD','REPLAY · PROSPECTIVE ISSUED DEĞİL','31 AĞUSTOS AY-AÇILIŞ YÖN CONTEXT','DOWN','ROBUST_UP','REPLAY ORIGIN'):
+            for x in (
+              '4,345.81 / 4,397.31 USD','REPLAY · PROSPECTIVE ISSUED DEĞİL',
+              '31 AĞUSTOS AY-AÇILIŞ YÖN CONTEXT','DOWN','ROBUST_UP','REPLAY ORIGIN',
+              '31 AĞUSTOS REPLAY · RECOVERED / SUCCESSOR CONTEXT','4,452.05 USD',
+              'Emergency · Level','NEUTRAL','Emergency · Reversal','OFF',
+              'BOCPD successor V1','NO_ADVERSE_BREAK_CANDIDATE',
+            ):
               assert x in body,x
-            page.screenshot(path=str(out/'tahmin_september_current_month_reference_fallback_390x844.png'),full_page=False)
+            assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 2')
+            page.screenshot(path=str(out/'tahmin_september_replay_v131_fallback_390x844.png'),full_page=False)
             b.close()
-          print('V130_SEPTEMBER_CURRENT_MONTH_REFERENCE_DBLESS_PASS')
+          print('V131_SEPTEMBER_REPLAY_VISIBILITY_DBLESS_PASS')
           PY
           kill $PID || true; wait $PID || true
       - name: Upload regression evidence
         uses: actions/upload-artifact@v4
         with:
-          name: gold-control-v130-september-current-month-reference-regression
+          name: gold-control-v131-september-replay-visibility-regression
           path: |
-            /tmp/v130_sep_reg/*.png
-            /tmp/v130_sep_fallback/*.png
+            /tmp/v131_sep_reg/*.png
+            /tmp/v131_sep_fallback/*.png
           if-no-files-found: error
           retention-days: 30
