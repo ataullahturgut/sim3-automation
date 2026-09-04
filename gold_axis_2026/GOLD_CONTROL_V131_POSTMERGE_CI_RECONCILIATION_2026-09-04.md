@@ -6,12 +6,13 @@
 
 ## Purpose
 
-After canonical promotion of `BOCPD_RETURN_SUCCESSOR_V1`, four pre-existing validation/bootstrap/presentation surfaces were stale without indicating a model or production-data failure:
+After canonical promotion of `BOCPD_RETURN_SUCCESSOR_V1`, five pre-existing validation/bootstrap/presentation surfaces were stale without indicating a model or production-data failure:
 
 1. `Gold Control Data Evidence Spine V1` still treated any existing forecast input/expert rows as a pre-migration blocker even though the production evidence-spine schema is already migrated and governed historical-replay expert rows now legitimately exist.
 2. `Gold Control Mobile UI V1.30 Compatibility Final` still hard-coded manifest version 1.30 and the superseded operational distribution `4 ACTIVE / 3 WAITING / 5 BLOCKED`.
 3. `data_evidence_spine_runtime_bootstrap.py` still carried the superseded seed map `4/3/5`; if invoked with `--persist`, it could append stale runtime governance state and therefore had to be reconciled before any future use.
 4. `mobile_ui_contract.py` still used the superseded VW empty-state code `BLOCKED_NOT_PROVEN_EXECUTABLE`, while the governed registry and production runtime use `BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN`.
+5. `test_mobile_ui_contract.py` independently pinned that superseded VW empty-state code and therefore had to be updated without weakening the no-forecast/no-winner assertion.
 
 This change-control updates validation/bootstrap/presentation governance semantics only. It does not change model formulas, data-source contracts, model outputs, Decision Store, selector/ensemble locks, position mapping, or current production evidence. No production write is authorized by this reconciliation itself.
 
@@ -57,7 +58,7 @@ The compatibility workflow and UI fallback contract must validate/expose:
 - production operational distribution `4 ACTIVE / 5 WAITING / 3 BLOCKED`;
 - `CAUSAL_PATCH`, `MOMENTUM_3M`, `RANDOM_WALK`, `EMERGENCY_LEVEL`, `EMERGENCY_REVERSAL` are `WAITING` in current operational authority;
 - archived `VW_MIDAS_MSVR`, `MACRO_EVENT`, `BOCPD` remain the three `BLOCKED` operational identities;
-- the VW expert-display empty state equals the governed registry code `BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN`;
+- the VW expert-display empty state and its deterministic test fixture equal the governed registry code `BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN`;
 - the new `BOCPD_RETURN_SUCCESSOR_V1` remains research-only and is not inserted into current runtime authority by this CI reconciliation.
 
 ## Locks retained
@@ -80,7 +81,7 @@ Acceptance requires, on the exact feature head and again after canonical promoti
 2. read-only production preflight reports `ALREADY_MIGRATED` and passes;
 3. read-only production integrity audit passes;
 4. 12-engine dry-run bootstrap reports `4/5/3` and `database_writes=NONE`;
-5. Mobile UI deterministic tests pass, including expert-display/registry consistency;
+5. Mobile UI deterministic tests pass, including expert-display/registry consistency and no-invented-forecast/no-winner behavior;
 6. production runtime assertions pass at `4/5/3` with exact blocked/waiting identities;
 7. production-backed 390x844 browser QA passes;
 8. selector/ensemble/action locks remain intact.
