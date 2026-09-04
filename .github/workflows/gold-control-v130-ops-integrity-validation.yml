@@ -1,0 +1,61 @@
+name: Gold Control V1.30 Ops Integrity Validation
+
+on:
+  push:
+    branches: [gold-control-v130-ops-integrity-cleanup]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install frozen data runtime and tests
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt pytest
+      - name: Compile changed data-plane modules
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/fed_direct.py
+          python -m py_compile gold_axis_2026/data_pipeline/verify_ops_integrity_v130.py
+      - name: Run Fed resilience unit tests
+        run: pytest -q gold_axis_2026/data_pipeline/test_fed_direct_resilience.py
+      - name: Verify writer workflow authority split
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          writers = [
+              '.github/workflows/gold-data-neon-ingest.yml',
+              '.github/workflows/gold-data-fred-indices.yml',
+              '.github/workflows/gold-data-twelve-market.yml',
+              '.github/workflows/gold-data-xau-ny17.yml',
+          ]
+          for name in writers:
+              text = Path(name).read_text(encoding='utf-8')
+              assert 'workflow_call:' in text, name
+              assert '\n  schedule:' not in text, name
+              assert '\n  push:' not in text, name
+              assert 'ref: gold-r4-direction-engine' in text, name
+          retired = [
+              '.github/workflows/gold-control-r4-2-emergency-persistence-reconcile.yml',
+              '.github/workflows/gold-control-stage4b-first-shadow-preflight.yml',
+              '.github/workflows/gold-control-v127-deployment-snapshot-final.yml',
+          ]
+          for name in retired:
+              text = Path(name).read_text(encoding='utf-8')
+              assert 'workflow_dispatch:' in text, name
+              assert '\n  push:' not in text, name
+          print('V130_WORKFLOW_AUTHORITY_SPLIT_PASS')
+          PY
+      - name: Run read-only production relational integrity audit
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/data_pipeline/verify_ops_integrity_v130.py
