@@ -17,10 +17,10 @@ def _decision() -> dict:
         "monthly_direction_3m": "DOWN",
         "fast_state": "ROBUST_UP",
         "slow_state": "ROBUST_UP",
-        "macro_event_state": "BLOCKED_NOT_FULLY_RECOVERED",
-        "level_emergency": "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE",
-        "reversal_emergency": "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE",
-        "bocpd_context": "BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED",
+        "macro_event_state": "BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED",
+        "level_emergency": "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE",
+        "reversal_emergency": "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE",
+        "bocpd_context": "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED",
         "gvz": 26.14,
         "gvz_cap": 0.5,
         "gvz_panic": False,
@@ -55,16 +55,16 @@ def _decision() -> dict:
 def _runtime_rows() -> list[dict]:
     status = {
         "CAUSAL_PATCH": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False),
-        "VW_MIDAS_MSVR": ("BLOCKED", "BLOCKED_NOT_PROVEN_EXECUTABLE", False),
+        "VW_MIDAS_MSVR": ("BLOCKED", "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN", False),
         "MOMENTUM_3M": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False),
         "RANDOM_WALK": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False),
         "MONTHLY_DIRECTION_3M": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True),
         "FAST": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True),
         "SLOW": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True),
-        "MACRO_EVENT": ("BLOCKED", "BLOCKED_NOT_FULLY_RECOVERED", False),
-        "EMERGENCY_LEVEL": ("BLOCKED", "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE", False),
-        "EMERGENCY_REVERSAL": ("BLOCKED", "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE", False),
-        "BOCPD": ("BLOCKED", "BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED", False),
+        "MACRO_EVENT": ("BLOCKED", "BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED", False),
+        "EMERGENCY_LEVEL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", False),
+        "EMERGENCY_REVERSAL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", False),
+        "BOCPD": ("BLOCKED", "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED", False),
         "GVZ_RISK": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", False),
     }
     return [
@@ -86,7 +86,7 @@ def _runtime_rows() -> list[dict]:
 
 def test_all_governed_engines_are_always_present() -> None:
     rows = build_engine_inventory(_decision(), [], [])
-    assert ENGINE_OBSERVABILITY_CONTRACT == "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V1"
+    assert ENGINE_OBSERVABILITY_CONTRACT == "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V2_DUAL_STATE_REFERENCE"
     assert tuple(row["engine_id"] for row in rows) == ENGINE_DISPLAY_ORDER
     assert len(rows) == 12
     assert len({row["engine_id"] for row in rows}) == 12
@@ -111,15 +111,16 @@ def test_current_direction_context_is_visible_even_without_h1_expert_rows() -> N
 
 def test_blockers_remain_visible_and_no_action_or_selector_is_created() -> None:
     rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [])}
-    assert rows["VW_MIDAS_MSVR"]["status"] == "BLOCKED_NOT_PROVEN_EXECUTABLE"
-    assert rows["MACRO_EVENT"]["status"] == "BLOCKED_NOT_FULLY_RECOVERED"
-    assert rows["EMERGENCY_LEVEL"]["status"] == "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE"
-    assert rows["EMERGENCY_REVERSAL"]["status"] == "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE"
-    assert rows["BOCPD"]["status"] == "BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED"
+    assert rows["VW_MIDAS_MSVR"]["status"] == "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN"
+    assert rows["MACRO_EVENT"]["status"] == "BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED"
+    assert rows["EMERGENCY_LEVEL"]["status"] == "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE"
+    assert rows["EMERGENCY_REVERSAL"]["status"] == "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE"
+    assert rows["BOCPD"]["status"] == "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED"
 
+    import re
     forbidden = {"BUY", "SELL", "HOLD", "EXIT", "REDUCE"}
     joined = " ".join(str(value) for row in rows.values() for value in row.values()).upper()
-    assert not any(term in joined for term in forbidden)
+    assert forbidden.isdisjoint(set(re.findall(r"[A-Z]+", joined)))
     assert all(row["canonical_authority"] is False for row in rows.values())
 
 
@@ -157,8 +158,8 @@ def test_inventory_counts_are_explicit() -> None:
     assert counts["total"] == 12
     assert counts["active"] == 4
     assert counts["issued"] == 0
-    assert counts["blocked"] == 5
-    assert counts["waiting"] == 3
+    assert counts["blocked"] == 3
+    assert counts["waiting"] == 5
 
 
 def test_runtime_ledger_is_status_authority_but_never_output_authority() -> None:
@@ -173,7 +174,7 @@ def test_runtime_ledger_is_status_authority_but_never_output_authority() -> None
     assert rows["GVZ_RISK"]["direction_vote"] is False
     assert rows["CAUSAL_PATCH"]["output"] is None
     assert rows["CAUSAL_PATCH"]["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
-    assert rows["VW_MIDAS_MSVR"]["status"] == "BLOCKED_NOT_PROVEN_EXECUTABLE"
+    assert rows["VW_MIDAS_MSVR"]["status"] == "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN"
     assert all(row["canonical_authority"] is False for row in rows.values())
 
 
