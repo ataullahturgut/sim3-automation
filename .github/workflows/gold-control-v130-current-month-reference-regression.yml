@@ -1,3 +1,4 @@
+# Frozen invariant: while target_context is 2026-09 and September is open, replay forecast + Aug31 state remain current-month reference; provenance remains HISTORICAL_REPLAY.
 name: Gold Control V1.30 Current-Month Reference Regression
 
 on:
