@@ -1,0 +1,170 @@
+name: Gold Control V1.30 September Replay and Motor Visibility
+
+on:
+  push:
+    branches: [gold-control-v130-september-replay-motor-visibility]
+    paths:
+      - '.github/workflows/gold-control-v130-september-replay-motor-visibility.yml'
+      - 'gold_axis_2026/apps/gold_control_mobile_v1.py'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-validate:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: gold-control-v130-september-replay-motor-visibility
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install locked app runtime
+        run: |
+          pip install -r gold_axis_2026/apps/requirements.txt pytest playwright
+          python -m playwright install --with-deps chromium
+      - name: Apply fail-closed presentation patch
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('gold_axis_2026/apps/gold_control_mobile_v1.py')
+          text=p.read_text(encoding='utf-8')
+          changed=False
+
+          old="<div class='gc-card'><div class='gc-section-title'>TÜM TAHMİN VE YÖN MOTORLARI</div>"
+          new="<div class='gc-card'><div class='gc-section-title'>TÜM TAHMİN, YÖN, EVENT, REJİM VE RİSK MOTORLARI</div>"
+          if old in text:
+              text=text.replace(old,new,1); changed=True
+          elif new not in text:
+              raise RuntimeError('ENGINE_INVENTORY_TITLE_ANCHOR_MISSING')
+
+          marker="\ndef engine_inventory_cards(rows: list[dict[str, Any]]) -> str:\n"
+          activation='''\ndef engine_activation_note(value: Any) -> str:\n    raw=display_state(value,"UNRESOLVED").upper()\n    if raw=="STORED_CONTEXT_AVAILABLE":\n        return "ÇALIŞIYOR · persisted context mevcut."\n    if raw=="WAITING_ELIGIBLE_MONTH_END_ORIGIN":\n        return "Uygun ay-sonu originini bekliyor. v1.30 planında ilk meşru aday: Eylül sonu → Ekim 2026 H=1; yalnız issuer/PIT gate'leri geçerse."\n    if raw=="BLOCKED_NOT_PROVEN_EXECUTABLE":\n        return "Takvime bağlı değil; exact executable runner ve provenance kanıtlanmadan çalışmaz."\n    if raw=="BLOCKED_NOT_FULLY_RECOVERED":\n        return "Takvime bağlı değil; frozen event kuralı/uygulaması tam recovery ve validation olmadan çalışmaz."\n    if raw=="BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE":\n        return "Takvime bağlı değil; authorized persisted monthly price reference üretilmeden çalışmaz."\n    if raw=="BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED":\n        return "Takvime bağlı değil; exact forward BOCPD kuralı recover/freeze/test edilmeden çalışmaz."\n    if raw.startswith("ISSUED_"):\n        return "Çıktı yayımlandı; evidence/track kuralları içinde ayrı expert olarak gösterilir."\n    return "Mevcut teknik durum değişmeden sayı veya yön uydurulmaz."\n\ndef engine_inventory_cards(rows: list[dict[str, Any]]) -> str:\n'''
+          if 'def engine_activation_note(value: Any) -> str:' not in text:
+              if marker not in text: raise RuntimeError('ENGINE_CARD_FUNCTION_ANCHOR_MISSING')
+              text=text.replace(marker,activation,1); changed=True
+
+          old_detail="        detail=f\"{row.get('category')} · {vote} · {evidence} · {version} · Son: {updated}\"\n"
+          new_detail="        activation=engine_activation_note(raw_status)\n        detail=f\"{row.get('category')} · {vote} · {evidence} · {version} · Son: {updated}\"\n"
+          if old_detail in text:
+              text=text.replace(old_detail,new_detail,1); changed=True
+          elif new_detail not in text:
+              raise RuntimeError('ENGINE_DETAIL_ANCHOR_MISSING')
+
+          old_card="margin-top:.26rem'>{esc(detail)}</div></div>\")"
+          new_card="margin-top:.26rem'>{esc(detail)}</div><div class='note' style='font-size:.62rem;color:var(--gc-ink);line-height:1.38;margin-top:.34rem'><b>Ne zaman:</b> {esc(activation)}</div></div>\")"
+          if old_card in text:
+              text=text.replace(old_card,new_card,1); changed=True
+          elif new_card not in text:
+              raise RuntimeError('ENGINE_CARD_HTML_ANCHOR_MISSING')
+
+          old_update="    expert_update=month_end_experts[0].get(\"as_of\") if month_end_experts else (early_experts[0].get(\"as_of\") if early_experts else None); updated=forecast.get(\"frozen_at\") if forecast else expert_update; page_head(\"TAHMİN\",\"Gelecek ay için kanonik sonuç ve ayrı Multi-Expert kanıt katmanı.\",updated); fstate=forecast_view_state(forecast)\n"
+          new_update="    replay_update=historical_replay_experts[0].get(\"as_of\") if historical_replay_experts else None\n    expert_update=month_end_experts[0].get(\"as_of\") if month_end_experts else (early_experts[0].get(\"as_of\") if early_experts else None); updated=forecast.get(\"frozen_at\") if forecast else (expert_update or replay_update); page_head(\"TAHMİN\",\"Gelecek ay için kanonik sonuç ve ayrı Multi-Expert kanıt katmanı.\",updated); fstate=forecast_view_state(forecast)\n"
+          if old_update in text:
+              text=text.replace(old_update,new_update,1); changed=True
+          elif new_update not in text:
+              raise RuntimeError('FORECAST_UPDATED_ANCHOR_MISSING')
+
+          old_else='''    else:\n        hero_title=fstate.title; hero_sub=fstate.subtitle; badge="KANONİK SONUÇ YOK"; direction_text="—"; origin_text="—"\n'''
+          new_else='''    elif historical_replay_experts:\n        replay_by_id={str(r.get("expert_id") or ""):r for r in historical_replay_experts}\n        replay_primary=replay_by_id.get("MOMENTUM_3M") or replay_by_id.get("RANDOM_WALK") or historical_replay_experts[0]\n        replay_target=str(replay_primary.get("target_month") or "")[:7]\n        mom=replay_by_id.get("MOMENTUM_3M"); rw=replay_by_id.get("RANDOM_WALK")\n        mom_value=fmt_num(None if not mom else mom.get("forecast_value"),2)\n        rw_value=fmt_num(None if not rw else rw.get("forecast_value"),2)\n        hero_title=f"{mom_value} / {rw_value} USD"\n        hero_sub=f"3M Momentum / Random Walk · Hedef: {replay_target} · 31 Ağustos bilgi kesiti"\n        badge="REPLAY · PROSPECTIVE DEĞİL"\n        direction_text="31 AĞUSTOS REPLAY"\n        origin_text=fmt_time(replay_primary.get("forecast_origin"))\n    else:\n        hero_title=fstate.title; hero_sub=fstate.subtitle; badge="KANONİK SONUÇ YOK"; direction_text="—"; origin_text="—"\n'''
+          if old_else in text:
+              text=text.replace(old_else,new_else,1); changed=True
+          elif 'badge="REPLAY · PROSPECTIVE DEĞİL"' not in text:
+              raise RuntimeError('FORECAST_HERO_FALLBACK_ANCHOR_MISSING')
+
+          if changed:
+              p.write_text(text,encoding='utf-8')
+              print('V130_SEPTEMBER_REPLAY_MOTOR_VISIBILITY_PATCH_APPLIED')
+          else:
+              print('V130_SEPTEMBER_REPLAY_MOTOR_VISIBILITY_ALREADY_APPLIED')
+          PY
+      - name: Verify governance locks and compile
+        run: |
+          grep -Fq '**Manifest version:** 1.30' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -Fq 'REPLAY · PROSPECTIVE DEĞİL' gold_axis_2026/apps/gold_control_mobile_v1.py
+          grep -Fq 'Eylül sonu → Ekim 2026 H=1' gold_axis_2026/apps/gold_control_mobile_v1.py
+          python -m py_compile gold_axis_2026/apps/gold_control_mobile_v1.py gold_axis_2026/apps/forecast_source.py gold_axis_2026/apps/engine_observability_contract.py
+          cd gold_axis_2026/apps
+          pytest -q test_mobile_ui_contract.py test_engine_observability_contract.py test_aug31_state_replay_source.py test_production_display_snapshot.py
+      - name: Read-only production evidence audit
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          PYTHONPATH=gold_axis_2026/apps python - <<'PY'
+          import os
+          from forecast_source import TRACK_HISTORICAL_REPLAY, fetch_latest_expert_forecasts
+          from runtime_source import fetch_runtime_observability
+          url=os.environ['NEON_DATABASE_URL']
+          rows=fetch_latest_expert_forecasts(url,TRACK_HISTORICAL_REPLAY)
+          by={r['expert_id']:r for r in rows}
+          assert set(by)=={'MOMENTUM_3M','RANDOM_WALK'}
+          assert abs(float(by['MOMENTUM_3M']['forecast_value'])-4345.814584037808)<1e-9
+          assert abs(float(by['RANDOM_WALK']['forecast_value'])-4397.305673870967)<1e-9
+          assert all(r['evidence_class']=='HISTORICAL_REPLAY' and not r['canonical_authority'] for r in rows)
+          rt=fetch_runtime_observability(url)
+          dist={}
+          for r in rt['runtime']: dist[r['runtime_status']]=dist.get(r['runtime_status'],0)+1
+          assert dist=={'ACTIVE':4,'WAITING':3,'BLOCKED':5},dist
+          assert sum(1 for r in rt['runtime'] if r.get('direction_vote_permitted') is True)==3
+          print('V130_SEPTEMBER_REPLAY_RUNTIME_AUDIT_PASS')
+          PY
+      - name: DB-backed 390x844 visual proof
+        run: |
+          rm -rf /tmp/v130_sep && mkdir -p /tmp/v130_sep
+          streamlit run gold_axis_2026/apps/gold_control.py --server.headless true --server.port 8551 --server.address 127.0.0.1 >/tmp/v130_sep.log 2>&1 &
+          PID=$!
+          for i in $(seq 1 45); do curl -fsS http://127.0.0.1:8551/_stcore/health >/dev/null && break; sleep 1; done
+          python - <<'PY'
+          import re
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+          out=Path('/tmp/v130_sep')
+          with sync_playwright() as p:
+            b=p.chromium.launch(headless=True)
+            page=b.new_page(viewport={'width':390,'height':844},device_scale_factor=1)
+            page.goto('http://127.0.0.1:8551',wait_until='domcontentloaded',timeout=60000)
+            page.get_by_text('GOLD CONTROL',exact=False).first.wait_for(state='visible',timeout=45000)
+            nav=page.locator('.st-key-gc_main_nav label[data-testid="stRadioOption"]')
+            nav.filter(has_text=re.compile('Tahmin',re.I)).first.click()
+            page.get_by_text('REPLAY · PROSPECTIVE DEĞİL',exact=True).first.wait_for(state='visible',timeout=20000)
+            body=page.locator('body').inner_text()
+            for x in ('4,345.81 / 4,397.31 USD','3M Momentum / Random Walk','31 AĞUSTOS REPLAY','EYLÜL 2026 HISTORICAL REPLAY','NOT_ISSUED_MISSED_2026_08_31_ORIGIN'):
+              assert x in body,x
+            page.screenshot(path=str(out/'tahmin_september_replay_top_390x844.png'),full_page=False)
+            nav.filter(has_text=re.compile('Görünüm',re.I)).first.click()
+            page.get_by_text('TÜM TAHMİN, YÖN, EVENT, REJİM VE RİSK MOTORLARI',exact=True).first.wait_for(state='visible',timeout=20000)
+            body=page.locator('body').inner_text()
+            for x in ('Eylül sonu → Ekim 2026 H=1','exact executable runner','authorized persisted monthly price reference','exact forward BOCPD'):
+              assert x in body,x
+            assert 'BUY' not in body and 'SELL' not in body and 'HOLD' not in body
+            page.get_by_text('TÜM TAHMİN, YÖN, EVENT, REJİM VE RİSK MOTORLARI',exact=True).first.evaluate("el=>el.scrollIntoView({block:'start'})")
+            page.wait_for_timeout(300)
+            page.screenshot(path=str(out/'gorunum_motor_timing_390x844.png'),full_page=False)
+            b.close()
+          print('V130_SEPTEMBER_REPLAY_MOTOR_VISUAL_PASS')
+          PY
+          kill $PID || true; wait $PID || true
+      - name: Commit validated presentation change
+        run: |
+          if git diff --quiet -- gold_axis_2026/apps/gold_control_mobile_v1.py; then
+            echo 'V130_PRESENTATION_HEAD_ALREADY_VALIDATED'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/apps/gold_control_mobile_v1.py
+          git commit -m 'gold-control: surface September replay and motor activation timing'
+          git push origin HEAD:gold-control-v130-september-replay-motor-visibility
+      - name: Upload visual evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-v130-september-replay-motor-visibility
+          path: /tmp/v130_sep/*.png
+          if-no-files-found: error
+          retention-days: 30
