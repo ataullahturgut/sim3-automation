@@ -111,8 +111,8 @@
   "health": {
     "canonical_forecasts": 0,
     "decision_snapshots": 0,
-    "derived_features": 7,
-    "engine_runs": 14,
+    "derived_features": 14,
+    "engine_runs": 18,
     "expert_forecasts": 2,
     "expert_input_fingerprint_mismatches": 0,
     "expert_rows_without_input_set": 0,
@@ -211,7 +211,7 @@
     }
   ],
   "historical_replay_target_month": "2026-09",
-  "payload_sha256": "06f61a46ed4c9f43f7cd0034bb445c899613f714fb689708eb3797815e94ccf0",
+  "payload_sha256": "052228f6de2a9320ead17a9428b6426f382f56898c24b17d49444c62937308cc",
   "runtime": [
     {
       "as_of": "2026-09-03T14:42:23.229633+00:00",
