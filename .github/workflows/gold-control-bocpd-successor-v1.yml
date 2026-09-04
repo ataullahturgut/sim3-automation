@@ -5,6 +5,7 @@ on:
     branches:
       - gold-control-bocpd-successor-v1
       - gold-r4-direction-engine
+      - gold-control-v132-monthly-origin-contract
     paths:
       - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
       - 'gold_axis_2026/GOLD_CONTROL_UNRESOLVED_ENGINE_SUCCESSOR_ROADMAP_2026-09-04.md'
@@ -43,12 +44,13 @@ jobs:
       - name: Manifest and archived-identity governance assertions
         run: |
           set -euo pipefail
-          grep -F '**Manifest version:** 1.31' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F '**Manifest version:** 1.32' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'only canonical Gold Control project manifest' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'BOCPD_RETURN_SUCCESSOR_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'RESEARCH_SHADOW_CANDIDATE_RISK_DIAGNOSTIC_COMPLETE_PROSPECTIVE_VALIDATION_REQUIRED' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          grep -F 'AUTO_SELECTOR=OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          grep -F 'AUTO_ENSEMBLE=OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'AUTO_SELECTOR = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'AUTO_ENSEMBLE = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'NOT_PROVEN_POSITION_MAPPING' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
 
       - name: Contract deterministic PIT and risk tests
