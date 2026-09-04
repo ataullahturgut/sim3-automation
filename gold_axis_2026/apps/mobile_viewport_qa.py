@@ -201,7 +201,7 @@ def main() -> int:
 
         click(page, "Görünüm"); page.get_by_text("GÖRÜNÜM", exact=True).first.wait_for(state="visible", timeout=15_000); common(page, "gorunum")
         markers(page, "GORUNUM", [
-            "MEVCUT KAYITLI DURUM","YÖN MOTORLARI ÖZETİ · STORED CONTEXT","TÜM TAHMİN VE YÖN MOTORLARI",
+            "MEVCUT KAYITLI DURUM","YÖN MOTORLARI ÖZETİ · STORED CONTEXT","TÜM TAHMİN, YÖN, EVENT, REJİM VE RİSK MOTORLARI",
             "Causal Patch","VW-MIDAS-MSVR","3M Momentum · H=1 Expert","Random Walk",
             "Monthly Direction · 3M","FAST","SLOW","Macro Event","Emergency · Level",
             "Emergency · Reversal","BOCPD","GVZ Risk Cap",
@@ -226,14 +226,16 @@ def main() -> int:
         for i in range(engine_cards.count()):
             dims=engine_cards.nth(i).evaluate("el => ({sw:el.scrollWidth,cw:el.clientWidth,sh:el.scrollHeight,ch:el.clientHeight})")
             if int(dims["sw"]) > int(dims["cw"]) + 2: raise AssertionError(f"ENGINE_CARD_INTERNAL_HORIZONTAL_OVERFLOW:{i}:{dims}")
-        ordered(page, "GORUNUM", ["YÖN MOTORLARI ÖZETİ · STORED CONTEXT","TÜM TAHMİN VE YÖN MOTORLARI","SİNYAL ÖZETİ","MODEL YÖNÜ (AYLIK)","FAST / SLOW TEYİDİ","RİSK SEVİYESİ","SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU"])
+        ordered(page, "GORUNUM", ["YÖN MOTORLARI ÖZETİ · STORED CONTEXT","TÜM TAHMİN, YÖN, EVENT, REJİM VE RİSK MOTORLARI","SİNYAL ÖZETİ","MODEL YÖNÜ (AYLIK)","FAST / SLOW TEYİDİ","RİSK SEVİYESİ","SİNYAL ZAMAN ÇİZELGESİ","EMERGENCY DURUMU","SİSTEM YORUMU"])
         if columns(page, ".gc-grid2") != 1: raise AssertionError("GORUNUM_MOBILE_CARDS_MUST_STACK")
         if norm("POZİSYONU KORU") in body(page) or norm("GÜÇ: %68") in body(page): raise AssertionError("UNPROVEN_MOCKUP_PLACEHOLDER_VISIBLE_GORUNUM")
         shot(page, out, "gorunum")
 
         click(page, "Tahmin"); page.get_by_text("TAHMİN", exact=True).first.wait_for(state="visible", timeout=15_000); common(page, "tahmin")
-        markers(page, "TAHMIN", ["GELECEK AY TAHMİNİ","MULTI-EXPERT MONTHLY FORECAST ENGINE","CAUSAL PATCH","VW-MIDAS-MSVR","3M MOMENTUM","RANDOM WALK","GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI","EARLY INDICATIVE","SENARYOLAR","MEVCUT FİYATA GÖRE FARK","MODEL PERFORMANSI","NOT_PROVEN_EXPERT_SELECTION_RULE","AUTO SELECTOR","AUTO ENSEMBLE","HISTORICAL_REPLAY","REPLAY · PROSPECTIVE DEĞİL","EYLÜL 2026 HISTORICAL REPLAY","NOT_ISSUED_MISSED_2026_08_31_ORIGIN","WAITING_ELIGIBLE_MONTH_END_ORIGIN"])
-        ordered(page, "TAHMIN", ["GELECEK AY TAHMİNİ","GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI","MULTI-EXPERT MONTHLY FORECAST ENGINE","SENARYOLAR","MEVCUT FİYATA GÖRE FARK","MODEL PERFORMANSI"])
+        tahmin_body=body(page)
+        forecast_hero_marker="EYLÜL 2026 H=1 REPLAY" if "EYLÜL 2026 H=1 REPLAY" in tahmin_body else "GELECEK AY TAHMİNİ"
+        markers(page, "TAHMIN", [forecast_hero_marker,"MULTI-EXPERT MONTHLY FORECAST ENGINE","CAUSAL PATCH","VW-MIDAS-MSVR","3M MOMENTUM","RANDOM WALK","GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI","EARLY INDICATIVE","SENARYOLAR","MEVCUT FİYATA GÖRE FARK","MODEL PERFORMANSI","NOT_PROVEN_EXPERT_SELECTION_RULE","AUTO SELECTOR","AUTO ENSEMBLE","HISTORICAL_REPLAY","REPLAY · PROSPECTIVE DEĞİL","EYLÜL 2026 HISTORICAL REPLAY","NOT_ISSUED_MISSED_2026_08_31_ORIGIN","WAITING_ELIGIBLE_MONTH_END_ORIGIN"])
+        ordered(page, "TAHMIN", [forecast_hero_marker,"GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI","MULTI-EXPERT MONTHLY FORECAST ENGINE","SENARYOLAR","MEVCUT FİYATA GÖRE FARK","MODEL PERFORMANSI"])
         if columns(page, ".gc-grid2") != 1: raise AssertionError("TAHMIN_MOBILE_MODULES_MUST_STACK")
         if columns(page, ".gc-expert-grid") != 2: raise AssertionError("TAHMIN_EXPERT_GRID_EXPECTED_2X2_AT_390PX")
         if "2.420,00" in body(page) or norm("GÜVEN: %68") in body(page): raise AssertionError("MOCKUP_SAMPLE_NUMBER_VISIBLE_TAHMIN")
