@@ -1,0 +1,66 @@
+name: Gold Control Patch Forward Ops Validation
+
+on:
+  push:
+    branches:
+      - gold-control-v130-patch-forward-ops
+      - gold-r4-direction-engine
+    paths:
+      - '.github/workflows/gold-control-patch-v7-month-end-expert-issuer.yml'
+      - '.github/workflows/gold-control-patch-forward-ops-validation.yml'
+      - 'gold_axis_2026/data_pipeline/stage4b_multi_expert_patch_v7_month_end_issuer.py'
+      - 'gold_axis_2026/data_pipeline/stage4b_patch_v7_runner_core.py'
+      - 'gold_axis_2026/GOLD_CONTROL_PATCH_V7_FIRST_PROSPECTIVE_SHADOW_ISSUER_CONTRACT_2026-09-02.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install preflight runtime
+        run: pip install 'numpy>=1.26,<3' 'pandas>=2,<3' 'requests>=2.31,<3' 'psycopg[binary]>=3.2,<4' xlrd
+      - name: Compile governed issuer path
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/multi_expert_forecast.py \
+            gold_axis_2026/data_pipeline/multi_expert_forecast_store.py \
+            gold_axis_2026/data_pipeline/stage4b_patch_v7_runner_core.py \
+            gold_axis_2026/data_pipeline/stage4b_patch_v7_first_shadow_issuer.py \
+            gold_axis_2026/data_pipeline/stage4b_multi_expert_patch_v7_month_end_issuer.py
+      - name: Production read-only preflight
+        run: |
+          set -euo pipefail
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/data_pipeline/stage4b_multi_expert_patch_v7_month_end_issuer.py --mode preflight | tee /tmp/preflight.log
+          grep -q 'MULTI_EXPERT_PATCH_PREFLIGHT_PASS=true' /tmp/preflight.log
+          grep -q 'ELIGIBILITY_STATE=SKIP_NOT_ELIGIBLE_ORIGIN' /tmp/preflight.log
+          grep -q 'EXPERT_ID=CAUSAL_PATCH' /tmp/preflight.log
+          grep -q 'FORECAST_TRACK=MONTH_END_EXPERT' /tmp/preflight.log
+          grep -q 'SELECTOR_STATUS=NOT_PROVEN_EXPERT_SELECTION_RULE' /tmp/preflight.log
+          grep -q 'AUTO_SELECTOR=OFF' /tmp/preflight.log
+          grep -q 'AUTO_ENSEMBLE=OFF' /tmp/preflight.log
+          grep -q 'CANONICAL_FORECAST_CONTRACT_WRITE=NONE' /tmp/preflight.log
+          grep -q 'DATABASE_WRITES=NONE' /tmp/preflight.log
+      - name: Validate reusable workflow authority split
+        run: |
+          set -euo pipefail
+          f=.github/workflows/gold-control-patch-v7-month-end-expert-issuer.yml
+          grep -q 'workflow_call:' "$f"
+          if grep -Eq '^[[:space:]]+schedule:' "$f"; then
+            echo 'CANONICAL_PATCH_ISSUER_MUST_NOT_OWN_SCHEDULE' >&2
+            exit 1
+          fi
+          grep -q 'ref: gold-r4-direction-engine' "$f"
+          echo 'PATCH_FORWARD_OPS_VALIDATION_PASS'
