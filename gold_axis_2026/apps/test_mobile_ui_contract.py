@@ -230,7 +230,7 @@ def test_empty_expert_states_do_not_invent_forecasts_or_winner():
     rw = expert_display_state("RANDOM_WALK", [])
     assert patch["forecast_value"] is None
     assert patch["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
-    assert vw["status"] == "BLOCKED_NOT_PROVEN_EXECUTABLE"
+    assert vw["status"] == "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN"
     assert mom["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
     assert rw["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
 
