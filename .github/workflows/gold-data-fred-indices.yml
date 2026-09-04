@@ -1,31 +1,21 @@
 name: Gold Data FRED Indices
 
 on:
-  push:
-    branches: [gold-r4-direction-engine]
-    paths:
-      - '.github/workflows/gold-data-fred-indices.yml'
-      - 'gold_axis_2026/data_pipeline/fred_indices_api.py'
-      - 'gold_axis_2026/data_pipeline/source_job.py'
-      - 'gold_axis_2026/data_pipeline/persist_neon.py'
-      - 'gold_axis_2026/data_pipeline/verify_fred_indices.py'
-      - 'gold_axis_2026/data_pipeline/source_contracts.json'
-  workflow_dispatch:
+  workflow_call:
     inputs:
       mode:
         description: 'daily or backfill'
-        required: true
+        required: false
         default: 'daily'
-        type: choice
-        options:
-          - daily
-          - backfill
-  schedule:
-    - cron: '15 1 * * 2-6'     # after US session, Tue-Sat UTC for prior business day
-    - cron: '30 12 * * 2-6'    # independent retry pass
+        type: string
+    secrets:
+      NEON_DATABASE_URL:
+        required: true
+      FRED_API_KEY:
+        required: true
 
 concurrency:
-  group: gold-data-fred-indices
+  group: gold-data-fred-indices-${{ inputs.mode }}
   cancel-in-progress: true
 
 jobs:
@@ -37,9 +27,12 @@ jobs:
     env:
       NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
       FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
-      INGEST_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event_name == 'push' && contains(github.event.head_commit.message, '[backfill]') && 'backfill' || 'daily') }}
+      INGEST_MODE: ${{ inputs.mode }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -50,7 +43,7 @@ jobs:
         run: |
           test -n "$NEON_DATABASE_URL" || { echo "NEON_DATABASE_URL missing"; exit 1; }
           test -n "$FRED_API_KEY" || { echo "FRED_API_KEY missing"; exit 1; }
-          echo "Required secrets are configured."
+          test "$INGEST_MODE" = 'daily' -o "$INGEST_MODE" = 'backfill'
       - name: Compile private index pipeline
         run: |
           python -m py_compile gold_axis_2026/data_pipeline/fred_indices_api.py
