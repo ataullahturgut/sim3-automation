@@ -2,7 +2,19 @@ name: Gold Control V1.30 Ops Integrity Validation
 
 on:
   push:
-    branches: [gold-control-v130-ops-integrity-cleanup]
+    branches: [gold-control-v130-ops-integrity-cleanup, gold-r4-direction-engine]
+    paths:
+      - '.github/workflows/gold-control-v130-ops-integrity-validation.yml'
+      - '.github/workflows/gold-data-neon-ingest.yml'
+      - '.github/workflows/gold-data-fred-indices.yml'
+      - '.github/workflows/gold-data-twelve-market.yml'
+      - '.github/workflows/gold-data-xau-ny17.yml'
+      - '.github/workflows/gold-control-r4-2-emergency-persistence-reconcile.yml'
+      - '.github/workflows/gold-control-stage4b-first-shadow-preflight.yml'
+      - '.github/workflows/gold-control-v127-deployment-snapshot-final.yml'
+      - 'gold_axis_2026/data_pipeline/fed_direct.py'
+      - 'gold_axis_2026/data_pipeline/test_fed_direct_resilience.py'
+      - 'gold_axis_2026/data_pipeline/verify_ops_integrity_v130.py'
   workflow_dispatch:
 
 permissions:
