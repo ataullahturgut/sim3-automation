@@ -1,44 +1,23 @@
 name: Gold Data Neon Ingest
 
 on:
-  push:
-    branches: [gold-r4-direction-engine]
-    paths:
-      - '.github/workflows/gold-data-neon-ingest.yml'
-      - 'gold_axis_2026/data_pipeline/collector_r2.py'
-      - 'gold_axis_2026/data_pipeline/source_job.py'
-      - 'gold_axis_2026/data_pipeline/fed_direct.py'
-      - 'gold_axis_2026/data_pipeline/persist_neon.py'
-      - 'gold_axis_2026/data_pipeline/verify_neon.py'
-      - 'gold_axis_2026/data_pipeline/apply_schema_patch.py'
-      - 'gold_axis_2026/data_pipeline/schema_patch_r2_6.sql'
-      - 'gold_axis_2026/data_pipeline/source_contracts.json'
-      - 'gold_axis_2026/data_pipeline/source_contracts_direct.json'
-  schedule:
-    - cron: '17 * * * *'       # hourly XAU snapshot; deliberately away from top of hour
-    - cron: '45 23 * * *'      # daily authority ingest after US session
-    - cron: '25 6 * * *'       # independent verification/retry pass
-  workflow_dispatch:
+  workflow_call:
     inputs:
       mode:
         description: 'hourly, daily, or backfill'
         required: true
-        default: 'daily'
-        type: choice
-        options:
-          - hourly
-          - daily
-          - backfill
+        type: string
+    secrets:
+      NEON_DATABASE_URL:
+        required: true
 
 concurrency:
-  group: gold-data-neon-ingest
+  group: gold-data-neon-ingest-${{ inputs.mode }}
   cancel-in-progress: true
 
 jobs:
   hourly-xau:
-    if: >-
-      (github.event_name == 'schedule' && github.event.schedule == '17 * * * *') ||
-      (github.event_name == 'workflow_dispatch' && inputs.mode == 'hourly')
+    if: inputs.mode == 'hourly'
     runs-on: ubuntu-latest
     timeout-minutes: 2
     permissions:
@@ -47,6 +26,9 @@ jobs:
       NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -58,10 +40,7 @@ jobs:
         run: python gold_axis_2026/data_pipeline/source_job.py --source xau --mode hourly --persist
 
   schema-guard:
-    if: >-
-      github.event_name == 'push' ||
-      (github.event_name == 'schedule' && github.event.schedule != '17 * * * *') ||
-      (github.event_name == 'workflow_dispatch' && inputs.mode != 'hourly')
+    if: inputs.mode == 'daily' || inputs.mode == 'backfill'
     runs-on: ubuntu-latest
     timeout-minutes: 2
     permissions:
@@ -70,6 +49,9 @@ jobs:
       NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -95,9 +77,12 @@ jobs:
       contents: read
     env:
       NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
-      INGEST_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'daily' }}
+      INGEST_MODE: ${{ inputs.mode }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -125,6 +110,9 @@ jobs:
       NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
