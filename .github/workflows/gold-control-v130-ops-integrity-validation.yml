@@ -2,7 +2,7 @@ name: Gold Control V1.30 Ops Integrity Validation
 
 on:
   push:
-    branches: [gold-control-v130-ops-integrity-cleanup, gold-r4-direction-engine]
+    branches: [gold-control-v130-ops-integrity-cleanup, gold-control-v130-provenance-hardening, gold-r4-direction-engine]
     paths:
       - '.github/workflows/gold-control-v130-ops-integrity-validation.yml'
       - '.github/workflows/gold-data-neon-ingest.yml'
@@ -13,7 +13,9 @@ on:
       - '.github/workflows/gold-control-stage4b-first-shadow-preflight.yml'
       - '.github/workflows/gold-control-v127-deployment-snapshot-final.yml'
       - 'gold_axis_2026/data_pipeline/fed_direct.py'
+      - 'gold_axis_2026/data_pipeline/persist_neon.py'
       - 'gold_axis_2026/data_pipeline/test_fed_direct_resilience.py'
+      - 'gold_axis_2026/data_pipeline/test_persist_neon_git_sha.py'
       - 'gold_axis_2026/data_pipeline/verify_ops_integrity_v130.py'
   workflow_dispatch:
 
@@ -37,9 +39,12 @@ jobs:
       - name: Compile changed data-plane modules
         run: |
           python -m py_compile gold_axis_2026/data_pipeline/fed_direct.py
+          python -m py_compile gold_axis_2026/data_pipeline/persist_neon.py
           python -m py_compile gold_axis_2026/data_pipeline/verify_ops_integrity_v130.py
       - name: Run Fed resilience unit tests
         run: pytest -q gold_axis_2026/data_pipeline/test_fed_direct_resilience.py
+      - name: Run code-SHA provenance unit tests
+        run: pytest -q gold_axis_2026/data_pipeline/test_persist_neon_git_sha.py
       - name: Verify writer workflow authority split
         run: |
           python - <<'PY'
