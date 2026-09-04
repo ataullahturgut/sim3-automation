@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 
-ENGINE_OBSERVABILITY_CONTRACT = "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V1"
+ENGINE_OBSERVABILITY_CONTRACT = "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V2_DUAL_STATE_REFERENCE"
 
 ENGINE_DISPLAY_ORDER = (
     "CAUSAL_PATCH",
@@ -264,18 +264,41 @@ def _expert_row(
     }
 
 
+def _current_month_reference(runtime: dict[str, Any] | None) -> dict[str, Any] | None:
+    if not runtime:
+        return None
+    metadata = runtime.get("metadata")
+    if not isinstance(metadata, dict):
+        return None
+    ref = metadata.get("current_month_reference")
+    if not isinstance(ref, dict):
+        return None
+    if _text(ref.get("reference_kind")) != "HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE":
+        return None
+    if _text(ref.get("evidence_class")) != "HISTORICAL_REPLAY":
+        return None
+    if ref.get("canonical_authority") is not False:
+        return None
+    if _text(ref.get("auto_selector")) != "OFF" or _text(ref.get("auto_ensemble")) != "OFF":
+        return None
+    if ref.get("forecast_value") is None:
+        return None
+    return dict(ref)
+
+
 def build_engine_inventory(
     decision: dict[str, Any] | None,
     month_end_experts: list[dict[str, Any]] | None,
     early_experts: list[dict[str, Any]] | None,
     runtime_rows: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
-    """Return every governed motor even when it has no issued value.
+    """Return every governed motor, separating runtime and current-month replay state.
 
     Output values remain sourced only from governed expert/component ledgers.
-    Data Evidence Spine runtime rows may supply operational status/provenance,
-    but can never synthesize an output, selector, ensemble, final action, or
-    canonical authority.
+    Runtime rows may carry a read-only historical-replay reference attached by
+    runtime_source. That reference may make an expert visible as ISSUED for the
+    current target month, but it never changes operational runtime authority,
+    selector/ensemble locks, canonical authority, or direction-vote permission.
     """
     runtime_by_engine = {
         _text(row.get("engine_id")): dict(row)
@@ -312,6 +335,28 @@ def build_engine_inventory(
             row["direction_vote"] = bool(
                 row["direction_vote"] and runtime.get("direction_vote_permitted") is True
             )
+
+            ref = _current_month_reference(runtime)
+            if ref and not _available(row.get("output")):
+                next_runtime = status_code or runtime_status or "UNRESOLVED_RUNTIME_STATE"
+                row["operational_status"] = next_runtime
+                row["operational_runtime_status"] = runtime_status or None
+                row["reference_status"] = "ISSUED_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE"
+                row["status"] = (
+                    "ISSUED_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE"
+                    + (f"__NEXT_RUNTIME_{next_runtime}" if next_runtime else "")
+                )
+                row["output"] = ref.get("forecast_value")
+                row["evidence_class"] = "HISTORICAL_REPLAY"
+                row["target_month"] = ref.get("target_month")
+                row["as_of"] = ref.get("as_of") or ref.get("forecast_origin")
+                row["version"] = ref.get("model_version") or row["version"]
+                row["forecast_track"] = ref.get("forecast_track") or "HISTORICAL_REPLAY"
+                row["canonical_authority"] = False
+                row["reference_forecast_origin"] = ref.get("forecast_origin")
+                row["reference_selector_status"] = ref.get("selector_status")
+                row["reference_auto_selector"] = "OFF"
+                row["reference_auto_ensemble"] = "OFF"
         else:
             row["runtime_status"] = None
             row["runtime_status_code"] = None
