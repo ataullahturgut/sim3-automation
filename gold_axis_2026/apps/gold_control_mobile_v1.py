@@ -404,7 +404,7 @@ elif nav=="↗ Tahmin":
     replay_update=historical_replay_experts[0].get("as_of") if historical_replay_experts else None
     expert_update=month_end_experts[0].get("as_of") if month_end_experts else (early_experts[0].get("as_of") if early_experts else None); updated=forecast.get("frozen_at") if forecast else (expert_update or replay_update); page_head("TAHMİN","Gelecek ay için kanonik sonuç ve ayrı Multi-Expert kanıt katmanı.",updated); fstate=forecast_view_state(forecast)
     if forecast:
-        target=str(forecast.get("target_month") or "")[:7]; badge=evidence_badge(forecast.get("evidence_class"))[0]; hero_title=fmt_num(forecast.get("forecast_value"),2," USD"); hero_sub=f"Hedef dönem: {target}"; direction=decision.get("monthly_direction_3m") if target_matches(decision,forecast) else None; da,_=arrow_state(direction); direction_text=f"{da} {display_state(direction,'—')}"; origin_text=fmt_time(forecast.get("forecast_origin"))
+        target=str(forecast.get("target_month") or "")[:7]; badge=evidence_badge(forecast.get("evidence_class"))[0]; hero_title=fmt_num(forecast.get("forecast_value"),2," USD"); hero_sub=f"Hedef dönem: {target}"; direction=decision.get("monthly_direction_3m") if target_matches(decision,forecast) else None; da,_=arrow_state(direction); direction_text=f"{da} {display_state(direction,'—')}"; origin_text=fmt_time(forecast.get("forecast_origin")); hero_kicker="GELECEK AY TAHMİNİ"; direction_label="MONTHLY DIRECTION / PRIOR"; origin_label="CANONICAL ORIGIN"
     elif historical_replay_experts:
         replay_by_id={str(r.get("expert_id") or ""):r for r in historical_replay_experts}
         replay_primary=replay_by_id.get("MOMENTUM_3M") or replay_by_id.get("RANDOM_WALK") or historical_replay_experts[0]
@@ -417,9 +417,12 @@ elif nav=="↗ Tahmin":
         badge="REPLAY · PROSPECTIVE DEĞİL"
         direction_text="31 AĞUSTOS REPLAY"
         origin_text=fmt_time(replay_primary.get("forecast_origin"))
+        hero_kicker="EYLÜL 2026 H=1 REPLAY"
+        direction_label="STATE BAĞLAMI"
+        origin_label="REPLAY ORIGIN"
     else:
-        hero_title=fstate.title; hero_sub=fstate.subtitle; badge="KANONİK SONUÇ YOK"; direction_text="—"; origin_text="—"
-    st.markdown("<div class='gc-hero'><div class='gc-hero-layout'><div class='gc-hero-icon'>↗</div>"+f"<div><div class='gc-kicker'>GELECEK AY TAHMİNİ</div><div class='gc-mid'>{esc(hero_title)}</div><div class='gc-meta'>{esc(hero_sub)}</div><span class='gc-badge gc-badge-gold'>{esc(badge)}</span></div><div class='gc-hero-side'><div><div class='gc-hero-label'>MONTHLY DIRECTION / PRIOR</div><div class='gc-hero-value'>{esc(direction_text)}</div></div><div><div class='gc-hero-label'>CANONICAL ORIGIN</div><div class='gc-hero-value' style='font-size:.90rem'>{esc(origin_text)}</div></div></div></div></div>",unsafe_allow_html=True)
+        hero_title=fstate.title; hero_sub=fstate.subtitle; badge="KANONİK SONUÇ YOK"; direction_text="—"; origin_text="—"; hero_kicker="GELECEK AY TAHMİNİ"; direction_label="MONTHLY DIRECTION / PRIOR"; origin_label="CANONICAL ORIGIN"
+    st.markdown("<div class='gc-hero'><div class='gc-hero-layout'><div class='gc-hero-icon'>↗</div>"+f"<div><div class='gc-kicker'>{esc(hero_kicker)}</div><div class='gc-mid'>{esc(hero_title)}</div><div class='gc-meta'>{esc(hero_sub)}</div><span class='gc-badge gc-badge-gold'>{esc(badge)}</span></div><div class='gc-hero-side'><div><div class='gc-hero-label'>{esc(direction_label)}</div><div class='gc-hero-value'>{esc(direction_text)}</div></div><div><div class='gc-hero-label'>{esc(origin_label)}</div><div class='gc-hero-value' style='font-size:.90rem'>{esc(origin_text)}</div></div></div></div></div>",unsafe_allow_html=True)
     with st.container(border=True):
         st.markdown("<div class='gc-section-title'>GEÇMİŞ VE TAHMİN KARŞILAŞTIRMASI</div>",unsafe_allow_html=True); mdf=expert_history_frame(month_end_history)
         if not mdf.empty:
