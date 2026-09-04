@@ -1,5 +1,6 @@
 name: Gold Control R4.2 Patch Expert Emergency Reference Validation
 
+# Exact-head regression for the frozen Patch-referenced Emergency bridge.
 on:
   push:
     branches:
