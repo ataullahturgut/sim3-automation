@@ -1,0 +1,97 @@
+name: Gold Control VW MIDAS SVR XAU Successor V1
+
+on:
+  push:
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V1_CHANGE_CONTROL_2026-09-04.md'
+      - 'gold_axis_2026/vw_midas_svr_xau_successor_v1/**'
+      - 'gold_axis_2026/tools/vw_midas_svr_xau_successor_v1.py'
+      - 'gold_axis_2026/tools/test_vw_midas_svr_xau_successor_v1.py'
+      - '.github/workflows/gold-control-vw-midas-svr-xau-successor-v1.yml'
+      - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-vw-midas-svr-xau-successor-v1-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install research-test dependencies
+        run: pip install numpy pandas requests scikit-learn xlrd pytest
+      - name: Assert manifest and archived identity governance
+        run: |
+          set -euo pipefail
+          grep -F '**Manifest version:** 1.32' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'VW_MIDAS_MSVR' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F '`AUTO_SELECTOR = OFF`' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F '`AUTO_ENSEMBLE = OFF`' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'PRE_REGISTERED_RESEARCH_SUCCESSOR_V1' gold_axis_2026/GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V1_CHANGE_CONTROL_2026-09-04.md
+          python -m py_compile gold_axis_2026/tools/vw_midas_svr_xau_successor_v1.py gold_axis_2026/tools/test_vw_midas_svr_xau_successor_v1.py
+      - name: Deterministic and PIT contract tests
+        run: pytest -q gold_axis_2026/tools/test_vw_midas_svr_xau_successor_v1.py
+      - name: Historical source gate and frozen replay
+        run: |
+          set -euo pipefail
+          test -n "$TWELVE_DATA_API_KEY"
+          rm -rf /tmp/vw_successor_v1
+          python gold_axis_2026/tools/vw_midas_svr_xau_successor_v1.py --out-dir /tmp/vw_successor_v1
+      - name: Audit research evidence and publish compact summary
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path('/tmp/vw_successor_v1/vw_midas_svr_xau_successor_v1_evidence.json')
+          e=json.loads(p.read_text())
+          assert e['engine_id']=='VW_MIDAS_SVR_XAU_SUCCESSOR_V1'
+          assert e['prospective_claim'] is False
+          assert e['production_authorized'] is False
+          assert e['db_writes']=='NONE'
+          assert e['archived_vw_status_changed'] is False
+          assert e['deterministic_rerun'] is True
+          assert e['prefix_invariance'] is True
+          assert e['source_audit']['twelve_months_expected']==e['source_audit']['twelve_months_passed']
+          assert e['source_audit']['gpr_vintages_expected']==e['source_audit']['gpr_vintages_passed']
+          compact={
+            'engine_id':e['engine_id'],
+            'maximum_v1_status':e['maximum_v1_status'],
+            'validation_gate_pass':e['validation_gate_pass'],
+            'validation_failed_gates':e['validation_failed_gates'],
+            'validation_metrics':e['validation_metrics'],
+            'validation_year_mae_ratio_vs_rw':e['validation_year_mae_ratio_vs_rw'],
+            'locked_metrics_diagnostic_only':e['locked_metrics_diagnostic_only'],
+            'current_origin_reconstruction':e['current_origin_reconstruction'],
+            'source_audit':e['source_audit'],
+            'prospective_claim':False,
+            'production_authorized':False,
+            'db_writes':'NONE',
+          }
+          text='```json\n'+json.dumps(compact,indent=2,sort_keys=True)+'\n```\n'
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as f:
+              f.write('## VW MIDAS SVR XAU Successor V1 frozen research evidence\n\n'+text)
+          print('EVIDENCE_AUDIT=PASS')
+          print('PROSPECTIVE_CLAIM=FALSE')
+          print('PRODUCTION_AUTHORIZED=FALSE')
+          print('DATABASE_WRITES=NONE')
+          PY
+      - name: Upload non-production research evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: vw-midas-svr-xau-successor-v1-${{ github.sha }}
+          path: /tmp/vw_successor_v1/
+          if-no-files-found: error
+          retention-days: 30
