@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import math
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -10,6 +11,7 @@ import pandas as pd
 HERE = Path(__file__).resolve().parent
 SPEC = importlib.util.spec_from_file_location("vwv1", HERE / "vw_midas_svr_xau_successor_v1.py")
 M = importlib.util.module_from_spec(SPEC)
+sys.modules["vwv1"] = M
 assert SPEC.loader is not None
 SPEC.loader.exec_module(M)
 
