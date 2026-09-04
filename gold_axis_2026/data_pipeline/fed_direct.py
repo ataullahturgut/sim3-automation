@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import io
+import time as time_mod
 from typing import Iterable
 
 import pandas as pd
@@ -24,6 +25,8 @@ H10_INDEX_PACKAGE_URL = (
     "rel=H10&series=122e3bcb627e8e53f1bf72a1a09cfb81&to=&type=package"
 )
 NYFED_EFFR_URL = "https://markets.newyorkfed.org/api/rates/unsecured/effr/last/{lastobs}.json"
+GET_ATTEMPTS = 3
+GET_RETRY_SLEEP_SECONDS = (0.5, 1.5)
 
 DIRECT_SERIES = {
     "DGS10_FRB_H15": {
@@ -68,15 +71,39 @@ def _lastobs(mode: str) -> int:
 
 
 def _get(session: requests.Session, url: str) -> requests.Response:
-    response = session.get(url, headers=base.HEADERS, timeout=(8, 25))
-    response.raise_for_status()
-    return response
+    last_error: Exception | None = None
+    for attempt in range(GET_ATTEMPTS):
+        try:
+            response = session.get(url, headers=base.HEADERS, timeout=(8, 25))
+            response.raise_for_status()
+            if not response.content or not response.content.strip():
+                raise RuntimeError("FED_DIRECT_EMPTY_HTTP_BODY")
+            return response
+        except requests.RequestException as exc:
+            last_error = exc
+            status = getattr(getattr(exc, "response", None), "status_code", None)
+            retryable = status is None or status == 429 or status >= 500
+            if not retryable or attempt >= GET_ATTEMPTS - 1:
+                raise
+        except RuntimeError as exc:
+            last_error = exc
+            if str(exc) != "FED_DIRECT_EMPTY_HTTP_BODY" or attempt >= GET_ATTEMPTS - 1:
+                raise
+        time_mod.sleep(GET_RETRY_SLEEP_SECONDS[min(attempt, len(GET_RETRY_SLEEP_SECONDS) - 1)])
+    if last_error is not None:
+        raise last_error
+    raise RuntimeError("FED_DIRECT_GET_UNREACHABLE")
 
 
 def _read_frb_package(content: bytes) -> pd.DataFrame:
     # Federal Reserve DDP package CSV contains five metadata rows followed by
     # the actual Time Period header row.
-    df = pd.read_csv(io.BytesIO(content), skiprows=5)
+    if not content or not content.strip():
+        raise ValueError("FRB_DDP_EMPTY_BODY")
+    try:
+        df = pd.read_csv(io.BytesIO(content), skiprows=5)
+    except pd.errors.EmptyDataError as exc:
+        raise ValueError("FRB_DDP_EMPTY_CSV") from exc
     if "Time Period" not in df.columns:
         raise ValueError(f"FRB_DDP_TIME_PERIOD_MISSING:{list(df.columns)}")
     df["Time Period"] = pd.to_datetime(df["Time Period"], errors="coerce")
