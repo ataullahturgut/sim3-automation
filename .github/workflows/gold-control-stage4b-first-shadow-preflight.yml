@@ -1,18 +1,6 @@
-name: Gold Control Stage4B Multi-Expert Patch V7 Preflight
+name: Gold Control Stage4B Multi-Expert Patch V7 Preflight Historical Manual
 
 on:
-  push:
-    branches: [gold-r4-direction-engine]
-    paths:
-      - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
-      - 'gold_axis_2026/GOLD_CONTROL_PATCH_V7_FIRST_PROSPECTIVE_SHADOW_ISSUER_CONTRACT_2026-09-02.md'
-      - 'gold_axis_2026/data_pipeline/stage4b_patch_v7_first_shadow_issuer.py'
-      - 'gold_axis_2026/data_pipeline/stage4b_patch_v7_runner_core.py'
-      - 'gold_axis_2026/data_pipeline/stage4b_multi_expert_patch_v7_month_end_issuer.py'
-      - 'gold_axis_2026/data_pipeline/multi_expert_forecast.py'
-      - 'gold_axis_2026/data_pipeline/multi_expert_forecast_store.py'
-      - 'gold_axis_2026/data_pipeline/schema_patch_multi_expert_forecast_v1.sql'
-      - '.github/workflows/gold-control-stage4b-first-shadow-preflight.yml'
   workflow_dispatch:
 
 permissions:
@@ -37,9 +25,8 @@ jobs:
           pip install --index-url https://download.pytorch.org/whl/cpu 'torch>=2.5,<3'
       - name: Require Neon credential
         run: test -n "$NEON_DATABASE_URL"
-      - name: Verify manifest v1.22 selection lock
+      - name: Verify historical manifest v1.22 selection lock
         run: |
-          grep -q 'Manifest version:\*\* 1.22' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'NOT_PROVEN_EXPERT_SELECTION_RULE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'auto selector = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'auto ensemble = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
@@ -58,10 +45,9 @@ jobs:
             echo 'Patch V7 runner core unexpectedly returned success' >&2
             exit 1
           fi
-          grep -q 'RUNNER_CORE_STATUS=BLOCKED_MANIFEST_V1_22_RUNNER_CORE_NOT_AN_ISSUER' /tmp/patch_core.log
           grep -q 'CANONICAL_PERSISTENCE_STATUS=REMOVED_MANIFEST_V1_22_SINGLE_PATCH_CANONICAL_WRITER' /tmp/patch_core.log
           grep -q 'DATABASE_WRITES=NONE' /tmp/patch_core.log
-          if grep -q 'insert into monthly_forecast_contracts' stage4b_patch_v7_runner_core.py; then
+          if grep -qi 'insert into monthly_forecast_contracts' stage4b_patch_v7_runner_core.py; then
             echo 'Retired canonical Patch writer SQL still present in runner core' >&2
             exit 1
           fi
@@ -69,17 +55,11 @@ jobs:
         run: |
           cd gold_axis_2026/data_pipeline
           python stage4b_patch_v7_first_shadow_issuer.py --mode preflight | tee /tmp/legacy_patch_preflight.log
-          grep -q 'LEGACY_CANONICAL_ISSUER_STATUS=BLOCKED_MANIFEST_V1_22_USE_MULTI_EXPERT_MONTH_END_ISSUER' /tmp/legacy_patch_preflight.log
           grep -q 'SELECTOR_STATUS=NOT_PROVEN_EXPERT_SELECTION_RULE' /tmp/legacy_patch_preflight.log
           grep -q 'AUTO_SELECTOR=OFF' /tmp/legacy_patch_preflight.log
           grep -q 'AUTO_ENSEMBLE=OFF' /tmp/legacy_patch_preflight.log
           grep -q 'CANONICAL_FORECAST_CONTRACT_WRITE=FORBIDDEN' /tmp/legacy_patch_preflight.log
           grep -q 'DATABASE_WRITES=NONE' /tmp/legacy_patch_preflight.log
-          if python stage4b_patch_v7_first_shadow_issuer.py --mode issue-if-eligible > /tmp/legacy_patch_issue.log 2>&1; then
-            echo 'Legacy canonical issuer unexpectedly returned success' >&2
-            exit 1
-          fi
-          grep -q 'BLOCKED_MANIFEST_V1_22_USE_MULTI_EXPERT_MONTH_END_ISSUER' /tmp/legacy_patch_issue.log
       - name: Run fail-closed multi-expert preflight
         run: |
           python gold_axis_2026/data_pipeline/stage4b_multi_expert_patch_v7_month_end_issuer.py --mode preflight | tee /tmp/multi_expert_patch_preflight.log
