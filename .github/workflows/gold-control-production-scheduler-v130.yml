@@ -102,30 +102,3 @@ jobs:
       (github.event_name == 'workflow_dispatch' && inputs.lane == 'xau-ny17')
     uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-xau-ny17.yml@gold-r4-direction-engine
     secrets: inherit
-
-  bootstrap-core-daily:
-    if: github.event_name == 'push' && github.ref_name == 'main' && contains(github.event.head_commit.message, '[ops-bootstrap]')
-    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-neon-ingest.yml@gold-r4-direction-engine
-    with:
-      mode: daily
-    secrets: inherit
-
-  bootstrap-fred-indices:
-    needs: bootstrap-core-daily
-    if: needs.bootstrap-core-daily.result == 'success'
-    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-fred-indices.yml@gold-r4-direction-engine
-    with:
-      mode: daily
-    secrets: inherit
-
-  bootstrap-twelve-market:
-    needs: bootstrap-fred-indices
-    if: needs.bootstrap-fred-indices.result == 'success'
-    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-twelve-market.yml@gold-r4-direction-engine
-    secrets: inherit
-
-  bootstrap-xau-ny17:
-    needs: bootstrap-twelve-market
-    if: needs.bootstrap-twelve-market.result == 'success'
-    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-xau-ny17.yml@gold-r4-direction-engine
-    secrets: inherit
