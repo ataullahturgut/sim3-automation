@@ -1,0 +1,165 @@
+name: Gold Control V1.31 Aug31 Replay UI Validation
+
+on:
+  push:
+    branches:
+      - gold-control-v131-aug31-replay-expansion-v2
+      - gold-r4-direction-engine
+      - gold-r4-direction-engine-ui-v122-final
+    paths:
+      - 'gold_axis_2026/apps/aug31_replay_expansion_source.py'
+      - 'gold_axis_2026/apps/aug31_replay_expansion_display.py'
+      - 'gold_axis_2026/apps/aug31_replay_expansion_snapshot.json'
+      - 'gold_axis_2026/apps/test_aug31_replay_expansion_display.py'
+      - 'gold_axis_2026/apps/gold_control_mobile_v1.py'
+      - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+      - 'gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md'
+      - 'gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_ENGINEERING_EVIDENCE_2026-09-04.md'
+      - '.github/workflows/gold-control-v131-aug31-replay-ui-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install validation runtime
+        run: |
+          pip install 'psycopg[binary]>=3.2,<4' pytest streamlit altair pandas requests playwright
+          python -m playwright install --with-deps chromium
+      - name: Verify manifest and frozen authority
+        run: |
+          set -euo pipefail
+          grep -q 'Manifest version:.*1.31' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'FROZEN_BEFORE_AUG31_EXPANSION_RESULT' gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md
+          grep -q 'PASS_READ_ONLY_REPLAY_CONSTRUCTION' gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_ENGINEERING_EVIDENCE_2026-09-04.md
+          grep -q '4452.046728838838' gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_ENGINEERING_EVIDENCE_2026-09-04.md
+          grep -q 'NO_ADVERSE_BREAK_CANDIDATE' gold_axis_2026/GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_ENGINEERING_EVIDENCE_2026-09-04.md
+      - name: Compile and unit-test replay display contract
+        working-directory: gold_axis_2026/apps
+        run: |
+          python -m py_compile aug31_replay_expansion_source.py aug31_replay_expansion_display.py gold_control_mobile_v1.py
+          pytest -q test_aug31_replay_expansion_display.py
+      - name: Read-only production evidence audit
+        working-directory: gold_axis_2026/apps
+        run: |
+          python - <<'PY'
+          import os
+          import psycopg
+          from psycopg.rows import dict_row
+          from aug31_replay_expansion_source import fetch_aug31_replay_expansion
+
+          url=os.environ['NEON_DATABASE_URL']
+          r=fetch_aug31_replay_expansion(url)
+          assert r['source_mode']=='NEON_DB_READ_ONLY', r
+          assert r['target_context']=='2026-09'
+          assert r['state_as_of']=='2026-08-31T21:00:00+00:00'
+          assert r['causal_patch_forecast']==4452.046728838838
+          assert r['causal_patch_daily_max_date']=='2026-08-30'
+          assert r['emergency_level']=='NEUTRAL'
+          assert r['emergency_reversal']=='OFF'
+          assert r['bocpd_successor_id']=='BOCPD_RETURN_SUCCESSOR_V1'
+          assert r['bocpd_successor_state']=='NO_ADVERSE_BREAK_CANDIDATE'
+          assert r['bocpd_archived_engine_status']=='BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED'
+          assert r['prospective_claim'] is False
+          assert r['canonical_authority'] is False
+          assert r['direction_vote_permitted'] is False
+          assert r['auto_selector']=='OFF' and r['auto_ensemble']=='OFF'
+
+          with psycopg.connect(url,autocommit=False,row_factory=dict_row) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('SET TRANSACTION READ ONLY')
+                  cur.execute("select runtime_status,count(*)::int n from latest_engine_runtime_state group by runtime_status")
+                  counts={row['runtime_status']:row['n'] for row in cur.fetchall()}
+                  assert counts=={'ACTIVE':4,'WAITING':5,'BLOCKED':3}, counts
+                  cur.execute('select count(*)::int n from latest_engine_runtime_state where direction_vote_permitted')
+                  assert cur.fetchone()['n']==3
+                  for table in ('monthly_forecast_contracts','decision_signal_snapshots','decision_runs','decision_events'):
+                      cur.execute(f'select count(*)::int n from {table}')
+                      assert cur.fetchone()['n']==0, table
+              conn.rollback()
+          print('AUG31_REPLAY_UI_PRODUCTION_AUTHORITY_PASS')
+          PY
+      - name: Verify snapshot fallback independent of Neon
+        working-directory: gold_axis_2026/apps
+        run: |
+          python - <<'PY'
+          from aug31_replay_expansion_source import fetch_aug31_replay_expansion
+          r=fetch_aug31_replay_expansion('')
+          assert r['source_mode']=='PRODUCTION_SNAPSHOT_FALLBACK'
+          assert r['snapshot_payload_sha256']=='33384f05bbd39bd04028b3b42921dbb420e7ca2e18bd1cba4420c52ae617582a'
+          assert r['causal_patch_forecast']==4452.046728838838
+          assert r['emergency_level']=='NEUTRAL' and r['emergency_reversal']=='OFF'
+          assert r['bocpd_successor_state']=='NO_ADVERSE_BREAK_CANDIDATE'
+          print('AUG31_REPLAY_UI_SNAPSHOT_FALLBACK_PASS')
+          PY
+      - name: Start mobile app
+        run: |
+          nohup streamlit run gold_axis_2026/apps/gold_control_mobile_v1.py --server.headless true --server.address 127.0.0.1 --server.port 8501 > /tmp/gold-control-streamlit.log 2>&1 &
+          for i in $(seq 1 45); do
+            if curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/gold-control-streamlit.log
+          exit 1
+      - name: Mobile browser regression 390x844
+        run: |
+          mkdir -p /tmp/gold-ui
+          python - <<'PY'
+          from playwright.sync_api import sync_playwright
+
+          with sync_playwright() as p:
+              browser=p.chromium.launch(headless=True)
+              page=browser.new_page(viewport={'width':390,'height':844},device_scale_factor=1)
+              errors=[]
+              page.on('pageerror',lambda e: errors.append(str(e)))
+              page.goto('http://127.0.0.1:8501',wait_until='networkidle',timeout=120000)
+
+              page.get_by_text('◉ Görünüm',exact=True).click()
+              page.wait_for_timeout(2500)
+              body=page.locator('body').inner_text()
+              for text in (
+                  'Causal Patch','31 AĞUSTOS REPLAY','4,452.05 USD',
+                  'Emergency · Level','NEUTRAL','Emergency · Reversal','OFF',
+                  'SUCCESSOR V1 · 31 AĞUSTOS REPLAY','NO_ADVERSE_BREAK_CANDIDATE',
+                  'Operasyonel teknik durum','BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED',
+              ):
+                  assert text in body, text
+              assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 2')
+              page.screenshot(path='/tmp/gold-ui/gorunum_aug31_replay_390x844.png',full_page=True)
+
+              page.get_by_text('↗ Tahmin',exact=True).click()
+              page.wait_for_timeout(2500)
+              body=page.locator('body').inner_text()
+              for text in (
+                  'EYLÜL 2026 HISTORICAL REPLAY',
+                  '31 AĞUSTOS REPLAY · RECOVERED / SUCCESSOR CONTEXT',
+                  'Causal Patch · Eylül H=1','4,452.05 USD',
+                  'Emergency · Level','NEUTRAL','Emergency · Reversal','OFF',
+                  'BOCPD successor V1','NO_ADVERSE_BREAK_CANDIDATE',
+                  'HISTORICAL_REPLAY · PROSPECTIVE ISSUED DEĞİL',
+              ):
+                  assert text in body, text
+              assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 2')
+              page.screenshot(path='/tmp/gold-ui/tahmin_aug31_replay_390x844.png',full_page=True)
+              assert not errors, errors
+              browser.close()
+          print('AUG31_REPLAY_UI_MOBILE_BROWSER_PASS')
+          PY
+      - name: Upload mobile regression screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-v131-aug31-replay-ui-${{ github.sha }}
+          path: /tmp/gold-ui/*.png
+          if-no-files-found: error
