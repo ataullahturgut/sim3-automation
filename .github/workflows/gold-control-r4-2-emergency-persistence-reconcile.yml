@@ -1,16 +1,7 @@
-name: Gold Control R4.2 Emergency Persistence Reconcile
+name: Gold Control R4.2 Emergency Persistence Reconcile Historical Manual
 
 on:
   workflow_dispatch:
-  push:
-    branches: [gold-r4-direction-engine]
-    paths:
-      - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
-      - 'gold_axis_2026/GOLD_CONTROL_R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_CONTRACT_2026-09-02.md'
-      - 'gold_axis_2026/GOLD_CONTROL_R4_2_EMERGENCY_PERSISTENCE_RECONCILIATION_2026-09-03.md'
-      - 'gold_axis_2026/r4_2/**'
-      - 'gold_axis_2026/apps/decision_source.py'
-      - '.github/workflows/gold-control-r4-2-emergency-persistence-reconcile.yml'
 
 permissions:
   contents: read
@@ -42,7 +33,7 @@ jobs:
       - name: Install read-only Neon audit runtime
         run: pip install 'psycopg[binary]>=3.2,<4'
 
-      - name: Reconcile production persistence state
+      - name: Reconcile historical R4.2 production persistence state
         run: |
           python - <<'PY'
           import os
