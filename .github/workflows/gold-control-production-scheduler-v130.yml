@@ -14,6 +14,8 @@ on:
     - cron: '35 1 * * 2-6'     # Twelve market after US session
     - cron: '45 12 * * 2-6'    # Twelve market retry
     - cron: '10 22 * * 1-5'    # canonical XAU NY17 after 17:00 New York
+    - cron: '30 21 30 9 *'     # Patch V7 Sep-30 17:30 ET first eligible October H=1 issuance
+    - cron: '30 22 30 9 *'     # Patch V7 controlled retry at Sep-30 18:30 ET
   workflow_dispatch:
     inputs:
       lane:
@@ -27,6 +29,7 @@ on:
           - fred-indices
           - twelve-market
           - xau-ny17
+          - patch-month-end
 
 permissions:
   contents: read
@@ -48,7 +51,8 @@ jobs:
             .github/workflows/gold-data-neon-ingest.yml \
             .github/workflows/gold-data-fred-indices.yml \
             .github/workflows/gold-data-twelve-market.yml \
-            .github/workflows/gold-data-xau-ny17.yml
+            .github/workflows/gold-data-xau-ny17.yml \
+            .github/workflows/gold-control-patch-v7-month-end-expert-issuer.yml
           do
             text="$(git show origin/gold-r4-direction-engine:$f)"
             grep -Fq 'workflow_call:' <<<"$text"
@@ -60,6 +64,10 @@ jobs:
           done
           git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md \
             | grep -Fq 'default-branch scheduling surface'
+          patch_contract="$(git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PATCH_V7_FIRST_PROSPECTIVE_SHADOW_ISSUER_CONTRACT_2026-09-02.md)"
+          grep -Fq '2026-09-30' <<<"$patch_contract"
+          grep -Fq '17:20' <<<"$patch_contract"
+          grep -Fq 'September 2026 may never be inserted as prospective evidence' <<<"$patch_contract"
           echo 'V130_DEFAULT_BRANCH_DISPATCHER_AUTHORITY_PASS'
 
   core-hourly:
@@ -101,4 +109,13 @@ jobs:
       (github.event_name == 'schedule' && github.event.schedule == '10 22 * * 1-5') ||
       (github.event_name == 'workflow_dispatch' && inputs.lane == 'xau-ny17')
     uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-xau-ny17.yml@gold-r4-direction-engine
+    secrets: inherit
+
+  patch-month-end:
+    if: >-
+      (github.event_name == 'schedule' && (github.event.schedule == '30 21 30 9 *' || github.event.schedule == '30 22 30 9 *')) ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'patch-month-end')
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-control-patch-v7-month-end-expert-issuer.yml@gold-r4-direction-engine
+    with:
+      mode: issue-if-eligible
     secrets: inherit
