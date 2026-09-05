@@ -1,0 +1,122 @@
+name: Gold Control Broad Research Data Spine R1 Preflight
+
+on:
+  push:
+    branches:
+      - gold-control-broad-research-data-spine-r1
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_BROAD_RESEARCH_DATA_SPINE_CHANGE_CONTROL_2026-09-05.md'
+      - 'gold_axis_2026/data_pipeline/source_contracts_research_broad.json'
+      - 'gold_axis_2026/tools/audit_broad_research_data_spine_r1.py'
+      - 'gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py'
+      - '.github/workflows/gold-control-broad-research-data-spine-r1-preflight.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: gold-control-broad-research-data-spine-r1-preflight
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - name: Checkout exact feature push SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Require feature branch and protected source credentials
+        run: |
+          test "${GITHUB_REF_NAME}" = "gold-control-broad-research-data-spine-r1"
+          test -n "$NEON_DATABASE_URL" || { echo "NEON_DATABASE_URL missing"; exit 1; }
+          test -n "$TWELVE_DATA_API_KEY" || { echo "TWELVE_DATA_API_KEY missing"; exit 1; }
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install governed data dependencies
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+
+      - name: Compile and validate frozen contracts
+        run: |
+          python -m py_compile gold_axis_2026/tools/audit_broad_research_data_spine_r1.py
+          python -m py_compile gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py
+          python -m json.tool gold_axis_2026/data_pipeline/source_contracts_research_broad.json >/dev/null
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          c=json.loads(Path('gold_axis_2026/data_pipeline/source_contracts_research_broad.json').read_text())
+          assert c['scope']=='RESEARCH_DATA_ONLY'
+          assert c['governance']['model_scores'] is False
+          assert c['governance']['forecast_writes'] is False
+          assert c['governance']['decision_writes'] is False
+          assert c['governance']['auto_selector']=='OFF'
+          assert c['governance']['auto_ensemble']=='OFF'
+          assert c['tier_a']['staktrakr_four_metal_daily']['pinned_commit']=='429d8e612d504a964846ff6438dbdb28ace630c3'
+          assert c['tier_a']['xau_hourly_derived_daily']['not_equivalent_to']=='XAU_EOD_TWELVE_NY17'
+          PY
+
+      - name: Clone official Caldara-Iacoviello GPR archive with full history
+        run: git clone --quiet https://github.com/iacoviel/iacoviel.github.io.git /tmp/iacoviel-gpr
+
+      - name: Rebuild exact 54-origin GPR PIT coverage evidence
+        run: |
+          python gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py \
+            --upstream-repo /tmp/iacoviel-gpr \
+            --start 2022-03 \
+            --end 2026-08 \
+            --skip-http \
+            --json-out gpr_pit_coverage_broad_r1.json \
+            --md-out gpr_pit_coverage_broad_r1.md
+          python - <<'PY'
+          import json
+          d=json.load(open('gpr_pit_coverage_broad_r1.json', encoding='utf-8'))
+          rows=d['rows']
+          assert len(rows)==54, len(rows)
+          assert all(r['repo_git_pit_proven'] for r in rows), [r['origin_month'] for r in rows if not r['repo_git_pit_proven']]
+          PY
+
+      - name: Run source-only broad research preflight
+        run: |
+          python gold_axis_2026/tools/audit_broad_research_data_spine_r1.py \
+            --gpr-upstream-repo /tmp/iacoviel-gpr \
+            --gpr-coverage-json gpr_pit_coverage_broad_r1.json \
+            --json-out broad_research_data_spine_r1_preflight.json \
+            --md-out broad_research_data_spine_r1_preflight.md
+
+      - name: Assert no-write no-score PASS evidence
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('broad_research_data_spine_r1_preflight.json', encoding='utf-8'))
+          assert d['final_gate']=='PASS', d['final_gate']
+          assert d['database_writes']=='NONE'
+          assert d['model_scores']=='NONE'
+          assert d['forecast_writes']=='NONE'
+          assert d['decision_writes']=='NONE'
+          assert d['raw_market_values_logged'] is False
+          assert d['sources']['staktrakr']['status']=='PASS'
+          assert d['sources']['twelve_xau_hourly']['status']=='PASS'
+          assert d['sources']['gpr_companions']['status']=='PASS'
+          PY
+
+      - name: Upload non-vendor preflight evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: broad-research-data-spine-r1-preflight-${{ github.sha }}
+          path: |
+            gpr_pit_coverage_broad_r1.json
+            gpr_pit_coverage_broad_r1.md
+            broad_research_data_spine_r1_preflight.json
+            broad_research_data_spine_r1_preflight.md
+          if-no-files-found: error
