@@ -86,8 +86,6 @@ The validation supports only immediate event-risk/context classification. It doe
     old_ui = "The archived `MACRO_EVENT` identity remains visible only in audit/history surfaces where its recovery-blocked lineage is relevant.\n\n"
     text = text.replace(old_ui, "")
 
-    # Any remaining standalone old engine name in current-manifest prose is rewritten
-    # to the only governed current identity. Historical Git commits remain untouched.
     text = clear_legacy_token(text)
 
     if LEGACY_BLOCKER in text:
@@ -132,6 +130,7 @@ def patch_mobile() -> None:
         'MACRO_EVENT_SUCCESSOR_STATUS = "MACRO_MIXED_OR_SMALL"',
     )
     text = text.replace("MACRO_EVENT_STATUS", "MACRO_EVENT_SUCCESSOR_STATUS")
+    text = text.replace(LEGACY_BLOCKER, "MACRO_MIXED_OR_SMALL")
     text = clear_legacy_token(text)
     if LEGACY_BLOCKER in text:
         raise RuntimeError("mobile UI still contains legacy Macro blocker")
