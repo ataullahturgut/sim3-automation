@@ -1,0 +1,102 @@
+name: Gold Control Macro Event Successor V2 Event Reaction Validation
+
+on:
+  push:
+    branches:
+      - gold-control-macro-event-successor-v2-robust-score
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V2_EVENT_REACTION_PREREG_2026-09-05.md'
+      - 'gold_axis_2026/GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V2_EVENT_REACTION_CHANGE_CONTROL_2026-09-05.md'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v2_event_reaction_validation.py'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v2_score_replay.py'
+      - 'gold_axis_2026/tests/test_macro_event_successor_v2_event_reaction_validation.py'
+      - '.github/workflows/gold-control-macro-event-successor-v2-event-reaction-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-reaction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - name: Checkout authorized V2 branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pytest requests 'psycopg[binary]'
+
+      - name: Require protected secrets
+        run: |
+          test -n "$NEON_DATABASE_URL" || { echo "NEON_DATABASE_URL missing"; exit 1; }
+          test -n "$TWELVE_DATA_API_KEY" || { echo "TWELVE_DATA_API_KEY missing"; exit 1; }
+
+      - name: Unit and compile tests
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v2_score_replay.py
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v2_event_reaction_validation.py
+          pytest -q gold_axis_2026/tests/test_macro_event_successor_v2_event_reaction_validation.py
+
+      - name: Run frozen read-only gold reaction validation
+        working-directory: gold_axis_2026/data_pipeline
+        run: |
+          python macro_event_successor_v2_event_reaction_validation.py > ../../../macro_event_successor_v2_event_reaction_summary.json
+          cat ../../../macro_event_successor_v2_event_reaction_summary.json
+
+      - name: Enforce governance boundaries
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_successor_v2_event_reaction_summary.json', encoding='utf-8'))
+          allowed={
+            'PASS_EVENT_REACTION_EVIDENCE',
+            'FAIL_EVENT_REACTION_EVIDENCE',
+            'BLOCKED_TWELVE_HISTORICAL_INTRADAY_ACCESS',
+          }
+          assert d['status'] in allowed, d
+          assert d['engine_id']=='MACRO_EVENT_SUCCESSOR_V2', d
+          assert d['validation_id']=='MACRO_EVENT_SUCCESSOR_V2_EVENT_REACTION_VALIDATION_V1', d
+          assert d['production_db_write'] is False, d
+          assert d['model_result_persisted_to_neon'] is False, d
+          assert d['direction_vote'] is False, d
+          assert d['forecast_or_decision_write'] is False, d
+          if d['status'] in {'PASS_EVENT_REACTION_EVIDENCE','FAIL_EVENT_REACTION_EVIDENCE'}:
+              assert d['event_count']==8, d
+              assert d['decision_counts_before']==d['decision_counts_after'], d
+              assert len(d['events'])==8, d
+          PY
+
+      - name: Publish validation summary
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_successor_v2_event_reaction_summary.json', encoding='utf-8'))
+          print('## Macro Event Successor V2 gold event-reaction validation')
+          print(f"- Status: `{d['status']}`")
+          if 'event_count' in d:
+              print(f"- Events: `{d['event_count']}`")
+              print(f"- Directional hits: `{d['directional_hits']}/{d['event_count']}`")
+              print(f"- Exact sign-test p: `{d['one_sided_exact_sign_test_p']}`")
+              print(f"- Median signed R15: `{d['median_signed_r15_pct']}`%")
+              print(f"- Promotion status: `{d['promotion_status']}`")
+          else:
+              print(f"- Promotion status: `{d['promotion_status']}`")
+          PY
+
+      - name: Upload derived reaction evidence only
+        uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-successor-v2-event-reaction-summary
+          path: macro_event_successor_v2_event_reaction_summary.json
+          if-no-files-found: error
