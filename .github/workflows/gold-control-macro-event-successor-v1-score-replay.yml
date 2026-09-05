@@ -1,0 +1,88 @@
+name: Gold Control Macro Event Successor V1 Score Replay
+
+on:
+  push:
+    branches:
+      - gold-control-macro-event-successor-v1-source-contract
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V1_SCORE_REPLAY_CHANGE_CONTROL_2026-09-05.md'
+      - 'gold_axis_2026/GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V1_SCORE_PREREG_2026-09-05.md'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v1_score_replay.py'
+      - 'gold_axis_2026/tests/test_macro_event_successor_v1_score_replay.py'
+      - '.github/workflows/gold-control-macro-event-successor-v1-score-replay.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - name: Checkout authorized research branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pytest 'psycopg[binary]'
+
+      - name: Unit and compile tests
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v1_score_replay.py
+          pytest -q gold_axis_2026/tests/test_macro_event_successor_v1_score_replay.py
+
+      - name: Run frozen read-only score replay
+        run: |
+          python gold_axis_2026/data_pipeline/macro_event_successor_v1_score_replay.py > macro_event_successor_v1_score_replay_summary.json
+          cat macro_event_successor_v1_score_replay_summary.json
+
+      - name: Enforce authority boundaries
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_successor_v1_score_replay_summary.json', encoding='utf-8'))
+          assert d['status']=='PASS_PREREG_REPLAY_REPRODUCIBLE', d
+          assert d['source_run_id']=='6a18db17-6fb2-4bf8-a20b-f3b6d529ca8a', d
+          assert d['complete_case_months']==126, d
+          assert d['source_observations']==756, d
+          assert d['scored_events']==102, d
+          assert d['insufficient_history_events']==24, d
+          assert d['prefix_invariance'] is True, d
+          assert d['production_db_write'] is False, d
+          assert d['model_result_persisted_to_neon'] is False, d
+          assert d['direction_vote'] is False, d
+          assert d['forecast_or_decision_write'] is False, d
+          assert d['decision_counts_before']==d['decision_counts_after'], d
+          PY
+
+      - name: Publish replay summary
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_successor_v1_score_replay_summary.json', encoding='utf-8'))
+          print('## Macro Event Successor V1 preregistered replay')
+          print(f"- Status: `{d['status']}`")
+          print(f"- Complete cases: `{d['complete_case_months']}`")
+          print(f"- Scored events: `{d['scored_events']}`")
+          print(f"- Latest reference month: `{d['latest']['reference_month']}`")
+          print(f"- Latest state: `{d['latest']['state']}`")
+          print(f"- Latest score: `{d['latest']['score']}`")
+          print(f"- VAL+LOCK shock events: `{d['out_of_sample_shock_events_val_lock']}`")
+          print(f"- Promotion: `{d['promotion_status']}`")
+          PY
+
+      - name: Upload derived replay evidence only
+        uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-successor-v1-score-replay-summary
+          path: macro_event_successor_v1_score_replay_summary.json
+          if-no-files-found: error
