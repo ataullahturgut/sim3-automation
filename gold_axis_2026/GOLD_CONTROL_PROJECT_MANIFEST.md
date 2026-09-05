@@ -424,7 +424,7 @@ Emergency remains an alert/context layer; it does not create an automatic BUY / 
 
 # 11. CURRENT PRODUCTION RUNTIME AUTHORITY — v1.35 TARGET STATE
 
-After the v1.34 code + production runtime migration is applied and verified, the current governed application inventory is:
+After the v1.35 code + production runtime migration is applied and verified, the current governed application inventory is:
 
 - `ACTIVE = 6`
 - `WAITING = 5`
@@ -635,7 +635,7 @@ This v1.33 GPR authorization explicitly does **not** permit writes to:
 - selector/ensemble state
 - position/action mappings.
 
-The separate v1.34 BOCPD promotion authorization is independent of this GPR clause.
+The separate v1.34 BOCPD and v1.35 Macro Event promotion authorizations are independent of this GPR clause.
 
 Successful GPR source ingestion remains valid as a reusable governed data plane even though VW V2 subsequently failed its model validation gates.
 
