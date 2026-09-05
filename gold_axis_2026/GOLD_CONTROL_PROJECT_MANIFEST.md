@@ -1,7 +1,7 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.32  
-**Freeze / issue date:** 2026-09-04  
+**Manifest version:** 1.33  
+**Freeze / issue date:** 2026-09-05  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical model/app branch:** `gold-r4-direction-engine`  
 **Scheduler branch:** `main`  
@@ -21,7 +21,7 @@ Rules:
 
 1. No other Markdown, YAML, JSON, workflow, status note, change-control document, replay report, handover, or historical manifest version is a second project manifest.
 2. Historical change-control, validation, status and evidence documents remain audit evidence only.
-3. If an older document conflicts with this file, this v1.32 manifest governs unless a newer audited manifest version explicitly supersedes it.
+3. If an older document conflicts with this file, this v1.33 manifest governs unless a newer audited manifest version explicitly supersedes it.
 4. `FILE_MANIFEST_SHA256.txt` is a repository file-checksum inventory, **not** the Gold Control project decision manifest.
 5. Old `apply_manifest_*` / `reconcile_manifest_*` scripts and workflow names are historical tooling, not independent manifest authority.
 6. Git history may contain older manifest versions, but the current branch may contain only this single canonical project-manifest file.
@@ -296,6 +296,8 @@ Current role rules:
 - Their outputs must not be averaged or winner-selected without a separately proven selector contract.
 - archived VW remains blocked until its exact executable/PIT contract is recovered or a separately named successor is built.
 
+Separate research identity `VW_MIDAS_SVR_XAU_SUCCESSOR_V2` is pre-registered under source-driven V2 change control. It has no production/runtime or selector authority merely because its source data plane is populated.
+
 ## 8.2 Direction/context motors
 
 - `MONTHLY_DIRECTION_3M` — monthly direction context; direction vote permitted.
@@ -418,6 +420,8 @@ Reconstructed values may live only in explicitly non-canonical historical/recons
 - `AUTO_SELECTOR = OFF`
 - `AUTO_ENSEMBLE = OFF`
 
+The v1.33 GPR source-data ingestion authorization below does **not** change these four authority-store counts and does not grant forecast/decision authority.
+
 ---
 
 # 13. UI CONTRACT — v1.32
@@ -489,6 +493,63 @@ Operational mapping:
 
 This is an internal decision reference, **not official settlement/official close**.
 
+## 14.1 v1.33 GPR historical PIT data-plane authorization
+
+Binding authorization token:
+
+`MANIFEST_V1_33_GPR_PIT_DATA_PLANE`
+
+Separate historical reconstruction series:
+
+`GPR_OFFICIAL_GIT_PIT`
+
+This identity is distinct from current/final-vintage `GPR_OFFICIAL` and must never be silently substituted for it.
+
+Authority/source:
+
+- Caldara-Iacoviello authors' official repository `iacoviel/iacoviel.github.io`;
+- directory `gpr_archive_files`;
+- exact monthly vintage identity `data_gpr_export_YYYYMM.xls`;
+- evidence class `HISTORICAL_REPLAY_RECONSTRUCTION`.
+
+Pre-result exhaustive audit established a continuous PIT-proven origin window:
+
+`2022-03` through `2026-08` = **54 origins**.
+
+For each origin `p`, the exact vintage file must have an official Git archive-add timestamp no later than the last-calendar-day 17:00 America/New_York origin cutoff, parse successfully, and contain GPR observation `p-1`. Current/final-vintage substitution is forbidden.
+
+Timestamp semantics are binding:
+
+- `retrieved_at` = true current reconstruction time;
+- `first_seen_at` = true current reconstruction time on first insert;
+- `provider_as_of` / `available_as_of` = proven earliest official Git archive-add commit floor for that exact vintage;
+- this Git timestamp is not described as a newspaper publication timestamp or historical Gold Control retrieval timestamp.
+
+Production Neon write authority under v1.33 is restricted to the existing source-data/audit plane:
+
+- `source_registry`
+- `retrieval_runs`
+- `observations`
+- `source_vintages`
+- `quality_events` if applicable.
+
+No new table is required or authorized.
+
+The canonical production ingestion workflow must rebuild the source audit, require **54/54** V2 vintages with `quality_errors=0`, use vintage-specific lineage and payload hashes, and verify the four forecast/decision authority-store counts before and after persistence.
+
+This authorization explicitly does **not** permit writes to:
+
+- `monthly_forecast_contracts`
+- `decision_signal_snapshots`
+- `decision_runs`
+- `decision_events`
+- engine runtime authority
+- model promotion/validation state
+- selector/ensemble state
+- position/action mappings.
+
+Successful GPR source ingestion removes only the VW V2 GPR data-plane blocker. It does not prove VW V2 model performance or prospective eligibility.
+
 ---
 
 # 15. CURRENT EVIDENCE FILES REFERENCED BY THIS MANIFEST
@@ -509,8 +570,12 @@ The following are supporting evidence, not independent manifests:
 - `GOLD_CONTROL_CAUSAL_PATCH_R1_REPRO_CONTRACT_V1.md`
 - `GOLD_CONTROL_CAUSAL_PATCH_R1_DAILY_FEATURE_PIT_CHANGE_CONTROL_V7_2026-09-02.md`
 - `GOLD_CONTROL_PATCH_V7_FIRST_PROSPECTIVE_SHADOW_ISSUER_CONTRACT_2026-09-02.md`
+- `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V1_CHANGE_CONTROL_2026-09-04.md`
+- `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_CHANGE_CONTROL_2026-09-05.md`
+- `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_SOURCE_IDENTITY_AMENDMENT_2026-09-05.md`
+- `GOLD_CONTROL_GPR_PIT_DATA_PLANE_CHANGE_CONTROL_2026-09-05.md`
 
-Where old wording in these historical files conflicts with the v1.32 monthly-origin correction, **v1.32 controls the current product behavior** while the historical document remains immutable evidence of what was believed/frozen at that earlier time.
+Where old wording in these historical files conflicts with the v1.32 monthly-origin correction or the v1.33 GPR PIT source-data authorization, **this v1.33 manifest controls current product/data-plane behavior** while the historical document remains immutable evidence of what was believed/frozen at that earlier time.
 
 ---
 
@@ -520,7 +585,11 @@ Where old wording in these historical files conflicts with the v1.32 monthly-ori
 
 Archived `VW_MIDAS_MSVR` remains blocked.
 
-If exact replication cannot be proven, build only under a separate successor identity with pre-result change control and PIT-safe validation.
+`VW_MIDAS_SVR_XAU_SUCCESSOR_V1` is terminally `SOURCE_BLOCKED_NO_MODEL_SCORE`; its frozen direct historical GPR source did not pass the required source/PIT gate and V1 must not be rewritten after the fact.
+
+Separate `VW_MIDAS_SVR_XAU_SUCCESSOR_V2` is pre-registered before model scoring. Its source-driven GPR window is `2022-03..2026-08`, and its historical GPR inputs must use `GPR_OFFICIAL_GIT_PIT` after the v1.33 data-plane ingestion gate passes.
+
+V2 still requires the frozen XAU research-to-production lineage/materiality bridge and untouched Random-Walk validation before any historical shadow-eligibility label. No V2 model score may change its pre-registered features, SVR grid, minimum fit, validation window or gates.
 
 ## 16.2 Macro successor
 
@@ -559,6 +628,8 @@ For the current period:
 Next cycle:
 
 > **30 Sep 2026 → October 2026 forecast/direction reference.**
+
+v1.33 additionally authorizes the separately identified `GPR_OFFICIAL_GIT_PIT` historical source-reconstruction series to be persisted to the existing production Neon source-data plane only after its canonical 54/54 source gate passes. This authorization does not create a forecast, decision, model promotion or prospective claim.
 
 If an origin was reconstructed later, the target/origin interpretation remains valid, but the audit metadata must truthfully identify it as a reconstruction rather than falsely backdating the issuance.
 

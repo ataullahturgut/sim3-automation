@@ -1,0 +1,108 @@
+name: Gold Control GPR PIT Production Ingest V2
+
+on:
+  push:
+    branches:
+      - gold-r4-direction-engine
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+      - 'gold_axis_2026/GOLD_CONTROL_GPR_PIT_DATA_PLANE_CHANGE_CONTROL_2026-09-05.md'
+      - 'gold_axis_2026/data_pipeline/gpr_vintage_backfill_v2.py'
+      - 'gold_axis_2026/data_pipeline/persist_gpr_pit_bundle_v2.py'
+      - 'gold_axis_2026/data_pipeline/source_contract_gpr_pit_v2.json'
+      - 'gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py'
+      - '.github/workflows/gold-control-gpr-pit-production-ingest-v2.yml'
+
+concurrency:
+  group: gold-control-gpr-pit-production-ingest-v2
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      GPR_PIT_PRODUCTION_WRITE_AUTHORIZED: MANIFEST_V1_33_GPR_PIT_DATA_PLANE
+      GOLD_CONTROL_MANIFEST_VERSION: '1.33'
+    steps:
+      - name: Checkout exact canonical push SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Require canonical branch and manifest authorization
+        run: |
+          test "${GITHUB_REF_NAME}" = "gold-r4-direction-engine"
+          grep -F '**Manifest version:** 1.33' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'MANIFEST_V1_33_GPR_PIT_DATA_PLANE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'GPR_OFFICIAL_GIT_PIT' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          test -n "$NEON_DATABASE_URL"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pandas xlrd 'psycopg[binary]'
+
+      - name: Compile governed ingestion code
+        run: |
+          python -m py_compile gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py
+          python -m py_compile gold_axis_2026/data_pipeline/gpr_vintage_backfill_v2.py
+          python -m py_compile gold_axis_2026/data_pipeline/persist_neon.py
+          python -m py_compile gold_axis_2026/data_pipeline/persist_gpr_pit_bundle_v2.py
+          python -m json.tool gold_axis_2026/data_pipeline/source_contract_gpr_pit_v2.json >/dev/null
+
+      - name: Clone official Caldara-Iacoviello archive with full history
+        run: git clone --quiet https://github.com/iacoviel/iacoviel.github.io.git /tmp/iacoviel-gpr
+
+      - name: Rebuild exact source evidence
+        run: |
+          python gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py \
+            --upstream-repo /tmp/iacoviel-gpr \
+            --start 2020-09 \
+            --end 2026-08 \
+            --json-out gpr_pit_coverage_v2.json \
+            --md-out gpr_pit_coverage_v2.md
+
+      - name: Build clean 54 of 54 governed PIT bundle
+        run: |
+          python gold_axis_2026/data_pipeline/gpr_vintage_backfill_v2.py \
+            --upstream-repo /tmp/iacoviel-gpr \
+            --coverage-json gpr_pit_coverage_v2.json \
+            --start-origin 2022-03 \
+            --end-origin 2026-08 \
+            --require-all-proven \
+            --bundle-out gpr_vintage_bundle_v2.json \
+            --summary-out gpr_vintage_bundle_v2_summary.json
+          python - <<'PY'
+          import json
+          d=json.load(open('gpr_vintage_bundle_v2_summary.json', encoding='utf-8'))
+          assert d['series_id'] == 'GPR_OFFICIAL_GIT_PIT', d
+          assert d['required_vintages'] == 54, d
+          assert d['proven_vintages_built'] == 54, d
+          assert d['quality_errors'] == 0, d
+          assert d['all_required_proven'] is True, d
+          PY
+
+      - name: Persist source data only to production Neon
+        run: |
+          python gold_axis_2026/data_pipeline/persist_gpr_pit_bundle_v2.py \
+            --bundle gpr_vintage_bundle_v2.json | tee gpr_pit_production_ingest_result.json
+
+      - name: Upload non-vendor audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gpr-pit-production-ingest-v2-${{ github.sha }}
+          path: |
+            gpr_pit_coverage_v2.json
+            gpr_pit_coverage_v2.md
+            gpr_vintage_bundle_v2_summary.json
+            gpr_pit_production_ingest_result.json
+          if-no-files-found: error
