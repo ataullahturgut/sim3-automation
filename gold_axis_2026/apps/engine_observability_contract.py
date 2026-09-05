@@ -90,7 +90,7 @@ ENGINE_REGISTRY: dict[str, dict[str, Any]] = {
     "MACRO_EVENT_SUCCESSOR_V2": {
         "label": "Macro Event · Successor V2",
         "category": "EVENT_RISK",
-        "role": "Active timestamp-safe labor-event risk/context; successor to archived MACRO_EVENT",
+        "role": "Active timestamp-safe labor-event risk/context",
         "version": "MACRO_EVENT_SUCCESSOR_V2",
         "default_status": "WAITING_RUNTIME_PROMOTION_RECORD",
         "direction_vote": False,

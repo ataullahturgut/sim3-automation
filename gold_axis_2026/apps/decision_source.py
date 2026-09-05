@@ -37,7 +37,6 @@ CONTEXT_FEATURES = (
 )
 EMERGENCY_CONTEXT_STATUS = "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE"
 BOCPD_CONTEXT_STATUS = "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED"
-MACRO_EVENT_CONTEXT_STATUS = "BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED"
 
 
 def _iso(value: Any) -> str | None:
@@ -78,8 +77,6 @@ def _to_transitional_app_shape(row: dict[str, Any]) -> dict[str, Any]:
         "gvz_cap": row.get("gvz_cap"),
         "gvz_panic": row.get("gvz_panic"),
         "gvz_regime": None,
-        "macro_event_down": row.get("macro_event_down"),
-        "macro_event_state": row.get("macro_event_down"),
         "bocpd_context": row.get("bocpd_context"),
         "classification": row.get("classification"),
         "reason_code": row.get("reason_code"),
@@ -190,7 +187,6 @@ def _shape_shadow_direction_context(rows: list[dict[str, Any]]) -> dict[str, Any
         "slow_state": slow_value,
         "level_emergency": EMERGENCY_CONTEXT_STATUS,
         "reversal_emergency": EMERGENCY_CONTEXT_STATUS,
-        "macro_event_state": MACRO_EVENT_CONTEXT_STATUS,
         "bocpd_context": BOCPD_CONTEXT_STATUS,
         "gvz": _parse_float_text(gvz_value_text),
         "gvz_cap": _parse_float_text(gvz_cap_text),
@@ -308,7 +304,6 @@ def fetch_decision_history(database_url: str, limit: int = 80) -> list[dict[str,
             s.gvz_value,
             s.gvz_cap,
             s.gvz_panic,
-            s.macro_event_down,
             s.bocpd_context,
             s.quality_status,
             r.run_id,
@@ -358,8 +353,7 @@ def fetch_decision_history(database_url: str, limit: int = 80) -> list[dict[str,
             "gvz": row.get("gvz_value"),
             "gvz_cap": row.get("gvz_cap"),
             "gvz_panic": row.get("gvz_panic"),
-            "macro_event_down": row.get("macro_event_down"),
-            "bocpd_context": row.get("bocpd_context"),
+                "bocpd_context": row.get("bocpd_context"),
             "quality_status": row.get("quality_status"),
             "run_id": _iso(row.get("run_id")),
             "generated_at": _iso(row.get("generated_at")),

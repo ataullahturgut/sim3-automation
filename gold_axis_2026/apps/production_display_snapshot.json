@@ -111,8 +111,8 @@
   "health": {
     "canonical_forecasts": 0,
     "decision_snapshots": 0,
-    "derived_features": 14,
-    "engine_runs": 18,
+    "derived_features": 20,
+    "engine_runs": 31,
     "expert_forecasts": 2,
     "expert_input_fingerprint_mismatches": 0,
     "expert_rows_without_input_set": 0,
@@ -211,18 +211,18 @@
     }
   ],
   "historical_replay_target_month": "2026-09",
-  "payload_sha256": "052228f6de2a9320ead17a9428b6426f382f56898c24b17d49444c62937308cc",
+  "payload_sha256": "31e0efe3323c49b897f733d3ad6368059c447299fc02f5f2886de08cd5c1e392",
   "runtime": [
     {
-      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "as_of": "2026-09-05T14:34:24.041101+00:00",
       "direction_vote_permitted": false,
-      "engine_id": "BOCPD",
-      "engine_role": "REGIME_CONTEXT",
-      "engine_version": "NOT_RECOVERED_FORWARD_RULE",
+      "engine_id": "BOCPD_RETURN_SUCCESSOR_V1",
+      "engine_role": "REGIME_BREAK_CONTEXT",
+      "engine_version": "BOCPD_RETURN_SUCCESSOR_V1",
       "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
-      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
-      "runtime_status": "BLOCKED",
-      "status_code": "BLOCKED_EXACT_FORWARD_BOCPD_RULE_NOT_RECOVERED",
+      "git_commit": "e09a2b90f7747292949a1c0718c70f6faae72246",
+      "runtime_status": "ACTIVE",
+      "status_code": "ACTIVE_BOCPD_RETURN_SUCCESSOR_V1_REGIME_CONTEXT",
       "target_context": "2026-09"
     },
     {
@@ -238,27 +238,27 @@
       "target_context": "2026-09"
     },
     {
-      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "as_of": "2026-09-04T10:30:33.827176+00:00",
       "direction_vote_permitted": false,
       "engine_id": "EMERGENCY_LEVEL",
       "engine_role": "EMERGENCY_CONTEXT",
-      "engine_version": "R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_PASS",
+      "engine_version": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1",
       "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
-      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
-      "runtime_status": "BLOCKED",
-      "status_code": "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE",
+      "git_commit": "a47a9e2caf009426e24f121a3cb05d21591f3d69",
+      "runtime_status": "WAITING",
+      "status_code": "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE",
       "target_context": "2026-09"
     },
     {
-      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "as_of": "2026-09-04T10:30:33.830598+00:00",
       "direction_vote_permitted": false,
       "engine_id": "EMERGENCY_REVERSAL",
       "engine_role": "EMERGENCY_CONTEXT",
-      "engine_version": "R4_2_MONTHLY_REFERENCE_EMERGENCY_BRIDGE_PASS",
+      "engine_version": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1",
       "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
-      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
-      "runtime_status": "BLOCKED",
-      "status_code": "BLOCKED_NO_PERSISTED_MONTHLY_PRICE_REFERENCE",
+      "git_commit": "a47a9e2caf009426e24f121a3cb05d21591f3d69",
+      "runtime_status": "WAITING",
+      "status_code": "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE",
       "target_context": "2026-09"
     },
     {
@@ -286,15 +286,15 @@
       "target_context": "2026-09"
     },
     {
-      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "as_of": "2026-09-05T17:40:18.137322+00:00",
       "direction_vote_permitted": false,
-      "engine_id": "MACRO_EVENT",
-      "engine_role": "EVENT_CONTEXT",
-      "engine_version": "NOT_FULLY_RECOVERED",
+      "engine_id": "MACRO_EVENT_SUCCESSOR_V2",
+      "engine_role": "EVENT_RISK_CONTEXT",
+      "engine_version": "MACRO_EVENT_SUCCESSOR_V2",
       "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
-      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
-      "runtime_status": "BLOCKED",
-      "status_code": "BLOCKED_NOT_FULLY_RECOVERED",
+      "git_commit": "4773df621fb710fd95a3a75eeee0ea12dec13429",
+      "runtime_status": "ACTIVE",
+      "status_code": "ACTIVE_MACRO_EVENT_SUCCESSOR_V2_EVENT_RISK_CONTEXT",
       "target_context": "2026-09"
     },
     {
@@ -346,20 +346,20 @@
       "target_context": "2026-09"
     },
     {
-      "as_of": "2026-09-03T14:42:23.229633+00:00",
+      "as_of": "2026-09-04T11:27:24.723229+00:00",
       "direction_vote_permitted": false,
       "engine_id": "VW_MIDAS_MSVR",
       "engine_role": "MONTHLY_H1_EXPERT",
       "engine_version": "VW_AUDITED_SHADOW_V2",
       "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
-      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
+      "git_commit": "5e27629ffe5930ac89ba1abaaf55f1dd21e9e909",
       "runtime_status": "BLOCKED",
-      "status_code": "BLOCKED_NOT_PROVEN_EXECUTABLE",
+      "status_code": "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN",
       "target_context": "2026-09"
     }
   ],
   "snapshot_contract": "FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V2",
   "source": "NEON_PRODUCTION_READ_ONLY_EXPORT",
-  "source_state_at": "2026-09-03T19:21:36.602894+00:00",
+  "source_state_at": "2026-09-05T17:40:18.137322+00:00",
   "target_context": "2026-09"
 }

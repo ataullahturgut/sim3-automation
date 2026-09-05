@@ -58,7 +58,7 @@ HISTORICAL_REPLAY = ROOT / "production_closure" / "production_history_43.csv"
 PATCH_EXACT_ID = "CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE"
 PATCH_GEOMETRY = "L=252 / P=21 / D=32"
 MULTI_EXPERT_ARCHITECTURE = "MANIFEST_V1_26_MULTI_EXPERT_BUILD_FIRST_SELECT_LATER_ENGINE_OBSERVABILITY"
-MACRO_EVENT_STATUS = "BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED"
+MACRO_EVENT_SUCCESSOR_STATUS = "MACRO_MIXED_OR_SMALL"
 SELECTOR_RULE_STATUS = "NOT_PROVEN_EXPERT_SELECTION_RULE"
 if EXPERT_SELECTION_STATUS != SELECTOR_RULE_STATUS:
     raise RuntimeError("MANIFEST_V1_26_SELECTOR_STATUS_MISMATCH")
@@ -232,7 +232,7 @@ def aug31_state_replay_html(state: dict[str, Any] | None, expansion: dict[str, A
     if expansion:
         blockers={
             "VW-MIDAS-MSVR":"BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN",
-            "Macro Event":"BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED",
+            "Macro Event":"MACRO_MIXED_OR_SMALL",
             "BOCPD · archived":display_state(expansion.get("bocpd_archived_engine_status"),"BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED"),
         }
     else:
@@ -284,7 +284,7 @@ def engine_activation_note(value: Any) -> str:
         return "Eylül için 31 Ağustos origin referansı mevcut. İleri operasyonel durum bir sonraki aylık döngüyü bekliyor: 30 Eylül origin → Ekim 2026 H=1; yalnız issuer/PIT gate'leri geçerse. Eylül referansının audit sınıfı ORIGIN_RECONSTRUCTION / HISTORICAL_REPLAY olarak korunur."
     if raw=="BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN":
         return "Takvime bağlı değil; exact archived VW replication ve PIT/revision-safe source-vintage contract kanıtlanmadan çalışmaz."
-    if raw=="BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED":
+    if raw=="MACRO_MIXED_OR_SMALL":
         return "Takvime bağlı değil; exact macro score, consensus ve release-vintage/timestamp contract recover edilmeden çalışmaz."
     if raw=="WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE":
         return "Eylül ay-açılış Emergency state'i 31 Ağustos origin referansıyla mevcut. İleri operasyonel lane, 30 Eylül origin → Ekim için zamanında yayımlanacak governed CAUSAL_PATCH referansını bekliyor. Reconstruction forward prospective kanıt yerine geçmez."
@@ -440,12 +440,12 @@ elif nav=="◉ Görünüm":
             plot_lines(filter_history_timeframe(hist,"6A").rename(columns={"date":"Tarih","close":"Operasyonel Close"}),"Tarih",["Operasyonel Close"],245); st.caption(f"Persisted Decision Store event sayısı: {len(decision_rows)}. Fiyat hareketi tek başına karar eventi değildir.")
         else: st.markdown(empty_html("ZAMAN ÇİZELGESİ KULLANILAMIYOR","Display-authorized fiyat tarihçesi okunamadı."),unsafe_allow_html=True)
     if decision:
-        emergency_rows=html_row("Macro Event",display_state(decision.get("macro_event_state"),MACRO_EVENT_STATUS))+html_row("Emergency · Level",display_state(decision.get("level_emergency")))+html_row("Emergency · Reversal",display_state(decision.get("reversal_emergency")))+html_row("BOCPD",display_state(decision.get("bocpd_context")))
+        emergency_rows=html_row("Macro Event",display_state(decision.get("macro_event_state"),MACRO_EVENT_SUCCESSOR_STATUS))+html_row("Emergency · Level",display_state(decision.get("level_emergency")))+html_row("Emergency · Reversal",display_state(decision.get("reversal_emergency")))+html_row("BOCPD",display_state(decision.get("bocpd_context")))
     else:
         if aug31_replay_expansion:
-            emergency_rows=html_row("Macro Event",MACRO_EVENT_STATUS,"gc-warning")+html_row("Emergency · Level",f"{display_state(aug31_replay_expansion.get('emergency_level'),'—')} · EYLÜL / 31 AĞUSTOS ORIGIN","gc-warning")+html_row("Emergency · Reversal",f"{display_state(aug31_replay_expansion.get('emergency_reversal'),'—')} · EYLÜL / 31 AĞUSTOS ORIGIN","gc-warning")+html_row("BOCPD",f"Archived BLOCKED · Successor: {display_state(aug31_replay_expansion.get('bocpd_successor_state'),'—')}","gc-warning")
+            emergency_rows=html_row("Macro Event",MACRO_EVENT_SUCCESSOR_STATUS,"gc-warning")+html_row("Emergency · Level",f"{display_state(aug31_replay_expansion.get('emergency_level'),'—')} · EYLÜL / 31 AĞUSTOS ORIGIN","gc-warning")+html_row("Emergency · Reversal",f"{display_state(aug31_replay_expansion.get('emergency_reversal'),'—')} · EYLÜL / 31 AĞUSTOS ORIGIN","gc-warning")+html_row("BOCPD",f"Archived BLOCKED · Successor: {display_state(aug31_replay_expansion.get('bocpd_successor_state'),'—')}","gc-warning")
         else:
-            emergency_rows=html_row("Macro Event",MACRO_EVENT_STATUS,"gc-warning")+html_row("Emergency","YAYIMLANMADI","gc-muted")+html_row("BOCPD","YAYIMLANMADI","gc-muted")
+            emergency_rows=html_row("Macro Event",MACRO_EVENT_SUCCESSOR_STATUS,"gc-warning")+html_row("Emergency","YAYIMLANMADI","gc-muted")+html_row("BOCPD","YAYIMLANMADI","gc-muted")
     explanation=deterministic_explanation(decision); st.markdown("<div class='gc-grid2'>"+f"<div class='gc-card'>{section_header(6,'EMERGENCY DURUMU')}{emergency_rows}</div>"+f"<div class='gc-card'>{section_header(7,'SİSTEM YORUMU')}<div style='font-style:italic;line-height:1.62'>{esc(explanation)}</div>{pipeline_html()}</div></div>",unsafe_allow_html=True); st.markdown(selector_lock_html(),unsafe_allow_html=True); st.markdown("<div class='gc-note'>Aylık prior ile intramonth durum çelişebilir. Sistem yeni uygun veriler geldikçe Fast/Slow, Macro Event, Emergency, BOCPD ve GVZ'nin yalnız dondurulmuş rolleriyle güncellenir; 2026 sonucuna bakarak expert seçimi yapılmaz.</div>",unsafe_allow_html=True)
 
 elif nav=="↗ Tahmin":
