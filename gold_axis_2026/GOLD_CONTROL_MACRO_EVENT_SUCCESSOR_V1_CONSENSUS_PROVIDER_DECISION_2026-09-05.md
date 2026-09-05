@@ -3,108 +3,85 @@
 Date: 2026-09-05
 Branch: `gold-control-macro-event-successor-v1-source-contract`
 Engine identity: `MACRO_EVENT_SUCCESSOR_V1`
-Scope: source/provider decision only. No model score, direction vote, Forecast Store write, or Decision Store write is authorized by this document.
+Scope: doctoral-research source/provider decision only. No model score, direction vote, Forecast Store write, or Decision Store write is authorized by this document.
 
 ## 1. Decision
 
-For historical event-level market consensus, the first executable candidate is **Trading Economics Economic Calendar Point-in-Time (TE PIT)**.
+For this doctoral-research path, the working historical event-level consensus source is **Investing.com Economic Calendar**.
 
-This does **not** mean TE is already approved for model use. It means TE is the best currently executable candidate to audit because it exposes a structured historical economic-calendar API, explicitly documents point-in-time preservation, and separates the survey `Forecast` field from `TEForecast` (Trading Economics' own model forecast).
+The user explicitly chose Investing.com for internal doctoral research after the paid Trading Economics path was judged too costly. This is a research-governance decision, not a legal conclusion about Investing.com licensing. Investing.com terms currently state that use/storage/reproduction of site data requires prior written permission. Therefore this source is classified **RESEARCH_ONLY_DOCTORAL_INTERNAL / USER_ACCEPTED_LICENSE_RISK** and is not promoted as a licensed production authority source.
 
-Provider hierarchy for research/audit:
+Provider hierarchy for this research path:
 
-1. **Bloomberg Economic Calendar historical consensus** — preferred authority benchmark when entitlement/data access is available, because Federal Reserve research commonly uses the latest Bloomberg panel median immediately before releases.
-2. **Trading Economics Economic Calendar Point-in-Time** — primary executable candidate for this successor under current project constraints. Its `Forecast` field is the survey consensus; `TEForecast` is forbidden as a substitute.
-3. **Reuters pre-release economist survey reporting** — independent public spot-check/evidence lane only; not a primary bulk ingestion source because coverage and structured historical retrieval are not guaranteed.
-4. **Econoday** — secondary candidate only if TE/Bloomberg are unavailable and a separate entitlement/PIT audit proves historical pre-release consensus preservation. No automatic fallback is authorized.
+1. **Investing.com Economic Calendar** — primary research consensus source for normalized historical `Forecast` values.
+2. **Reuters pre-release economist survey reporting** — independent public spot-check lane for selected releases.
+3. **Bloomberg Economic Calendar historical consensus** — preferred professional benchmark if entitlement becomes available later.
+4. **Trading Economics PIT** — optional paid validation source only; not required for the current doctoral path.
 
 ## 2. Frozen event components
 
-The successor consensus input universe is limited to the U.S. BLS Employment Situation event family:
+The consensus input universe remains limited to the U.S. BLS Employment Situation event family:
 
-- `Non Farm Payrolls` / headline total nonfarm payroll monthly change
+- headline `Nonfarm Payrolls`
 - `Unemployment Rate`
-- `Average Hourly Earnings MoM` for all employees on private nonfarm payrolls
+- `Average Hourly Earnings (MoM)` for all employees on private nonfarm payrolls
 
-No extra macro indicators may be added during this source audit.
+No extra macro indicators may be added during this source phase.
 
-## 3. TE PIT fields and semantics
+## 3. Investing.com semantics and binding rules
 
-Required TE fields:
+Investing.com Economic Calendar states that:
 
-- `CalendarId`
-- `Date`
-- `Country`
-- `Category`
-- `Event`
-- `Reference`
-- `ReferenceDate`
-- `Source`
-- `SourceURL`
-- `Actual`
-- `Previous`
-- `Forecast`
-- `TEForecast`
-- `DateSpan`
-- `Importance`
-- `LastUpdate`
-- `Revised`
-- `Unit`
-- `Ticker`
-- `Symbol`
+- `Forecast` / `Consensus` is the consensus estimate from economists before the data is released;
+- `Previous` is the prior reporting-period value;
+- `Actual` is populated when the official number is released.
 
-Binding rules:
+Binding rules for Gold Control:
 
-- `Forecast` is the only TE field eligible to become market-consensus input after provider audit.
-- `TEForecast` is a proprietary TE model projection and is **forbidden** as market consensus.
-- `Actual` from TE is not the authority actual for model construction; BLS/ALFRED first-release reconstruction remains the actual-data authority lane.
-- `LastUpdate` is record-update metadata and must not be silently reinterpreted as the time at which the survey consensus first became available.
-- Where the provider preserves a pre-release survey `Forecast` attached to the release event but does not expose the exact last pre-release forecast-update timestamp, the project may only treat the consensus as eligible **at the official release timestamp**, tagged `PRE_RELEASE_CONSENSUS_FIELD_PRESERVED_BY_PROVIDER`. It may not be used for a decision timestamp strictly before the release.
-- Current website calendar pages, search-engine caches, or post-release news articles are not substitutes for the governed PIT API record.
+- Only the Investing.com **Forecast/Consensus** value is eligible as the research consensus input.
+- Investing.com `Actual` is **not** the authority actual. BLS/ALFRED first-release reconstruction remains the actual-data authority lane.
+- We do not claim the Investing.com page preserves the exact final pre-release update timestamp unless separately proven.
+- Therefore historical consensus reconstructed from the calendar is eligible **no earlier than the official BLS release timestamp**, tagged `PRE_RELEASE_CONSENSUS_PRESERVED_ON_INVESTING_CALENDAR_RESEARCH_RECONSTRUCTION`.
+- It must not be used for any decision timestamp strictly before the official release.
+- Missing consensus is fail-closed. It is not filled from another provider after viewing model results.
+- Provider identity is frozen for the research dataset; no per-origin provider switching is allowed.
 
-## 4. Why the timestamp rule is necessary
+## 4. Storage / redistribution rule for this doctoral path
 
-Public evidence shows that consensus can change during the days before a release. For example, Reuters reported an August-2025 payroll expectation of 78k one week before the report, while the immediate release-day Reuters poll figure was 75k. Therefore, selecting an arbitrary earlier survey snapshot would create a different model input.
+Because the source terms contain explicit restrictions on use/storage, this project will minimize retained material:
 
-The same issue is visible in August-2026: public Trading Economics calendar material and release-day Reuters reporting did not show an identical headline payroll consensus. That is not by itself evidence that either provider is wrong; it proves that provider identity and snapshot timing are part of the model contract.
+- do **not** archive raw Investing.com HTML or bulk page content in the public repository;
+- do **not** redistribute the Investing.com dataset;
+- retain only normalized research fields required for reproducibility: event date, reference month, event identity, consensus numeric value/unit, source URL/reference, retrieval timestamp, evidence classification, and hash/provenance metadata;
+- label every retained consensus observation `RESEARCH_ONLY_DOCTORAL_INTERNAL` and `USER_ACCEPTED_LICENSE_RISK`;
+- do not represent this dataset as a licensed production data feed.
 
-Accordingly, provider identity is frozen once chosen. No per-origin provider switching is allowed.
+The project should seek permission or replace the provider before any external/commercial deployment.
 
-## 5. Provider audit gates
+## 5. Audit gates before scoring
 
-Before TE PIT can be approved for historical model input, an authenticated API audit must pass all of the following on multiple separated release dates:
+Before Investing.com consensus can enter Macro Event historical scoring, the following must pass on multiple separated release dates and then on the intended historical coverage window:
 
-1. U.S. records for all three frozen indicators are retrievable.
-2. The event date/time is exact (`DateSpan = 0`) and corresponds to the official Employment Situation release.
-3. `Forecast` is present and numerically parseable for each required indicator/origin used in scoring.
-4. `Forecast` and `TEForecast` remain separately identifiable.
-5. Reference month/date can be aligned unambiguously with the BLS/ALFRED actual reconstruction.
-6. No current-vintage actual is substituted for the BLS/ALFRED first print.
-7. Missing consensus is fail-closed; it is not imputed from `TEForecast`, previous consensus, current web pages, or another provider.
-8. Raw licensed provider payloads are not committed to the public repository. Audit evidence records hashes, field-presence checks, identifiers, and normalized non-licensed metadata only unless license terms explicitly permit more.
-9. No model score or production authority-store write occurs during source audit.
+1. The three frozen indicators are identifiable without ambiguity.
+2. `Forecast/Consensus` is present and numerically parseable.
+3. Event date and reference month align with the BLS/ALFRED first-print reconstruction.
+4. Units are frozen (`thousand_persons_change`, `percent`, `percent_mom`).
+5. Missing values remain missing; no imputation from Reuters, Bloomberg, Trading Economics, previous consensus, or current pages.
+6. Selected releases are independently spot-checked against Reuters where available.
+7. No current-vintage actual substitutes for BLS/ALFRED first print.
+8. No raw page archive is committed to the public repository.
+9. No model score, direction vote, Forecast Store write, or Decision Store write occurs during source audit.
 
-## 6. Independent authority checks
-
-Provider semantics are checked against:
-
-- Federal Reserve research using actual minus market consensus, commonly Bloomberg panel median, with historical standardization.
-- Reuters pre-release survey reports as public event-specific spot checks.
-- BLS/ALFRED for official first-release actuals and release-time alignment.
-
-A mismatch between TE and Reuters does not automatically fail TE because the survey populations/statistics and snapshot times can differ. It must be recorded as a provider-methodology difference and cannot be repaired by switching providers after viewing model results.
-
-## 7. Current stop point
-
-As of this decision:
+## 6. Current stop point
 
 - BLS current machine access: proven.
 - ALFRED initial-release access: proven.
 - ALFRED-as-of construction vs selected BLS first releases: proven on the frozen sample audit.
-- TE PIT provider documentation: found and suitable for authenticated audit.
-- `TRADING_ECONOMICS_API_KEY`: not configured in the project CI environment at the last verified preflight.
-- Consensus provider: **NOT YET APPROVED FOR MODEL USE**.
-- Model scoring: **NOT AUTHORIZED**.
-- Production DB ingestion of consensus: **NOT AUTHORIZED**.
+- Investing.com calendar semantics for `Forecast/Consensus`, `Actual`, and `Previous`: publicly documented.
+- Investing.com provider selection for internal doctoral research: **USER AUTHORIZED**.
+- Investing.com source classification: **RESEARCH_ONLY_DOCTORAL_INTERNAL / USER_ACCEPTED_LICENSE_RISK**.
+- Historical coverage audit: **PENDING**.
+- Model scoring: **NOT AUTHORIZED YET**.
+- Forecast/Decision Store writes: **NOT AUTHORIZED**.
 
-Next executable action: run the frozen authenticated TE PIT provider audit when entitlement is available; if it passes, freeze exact event mappings and then authorize a separate governed consensus-ingestion bundle for Neon.
+Next executable action: build and run an Investing.com historical consensus coverage/reconciliation audit for NFP, unemployment, and AHE; if coverage passes, create a separate normalized research-ingestion bundle for Neon and then proceed to the frozen historical Macro Event score replay.
