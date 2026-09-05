@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.33  
+**Manifest version:** 1.34  
 **Freeze / issue date:** 2026-09-05  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical model/app branch:** `gold-r4-direction-engine`  
@@ -21,7 +21,7 @@ Rules:
 
 1. No other Markdown, YAML, JSON, workflow, status note, change-control document, replay report, handover, or historical manifest version is a second project manifest.
 2. Historical change-control, validation, status and evidence documents remain audit evidence only.
-3. If an older document conflicts with this file, this v1.33 manifest governs unless a newer audited manifest version explicitly supersedes it.
+3. If an older document conflicts with this file, this v1.34 manifest governs unless a newer audited manifest version explicitly supersedes it.
 4. `FILE_MANIFEST_SHA256.txt` is a repository file-checksum inventory, **not** the Gold Control project decision manifest.
 5. Old `apply_manifest_*` / `reconcile_manifest_*` scripts and workflow names are historical tooling, not independent manifest authority.
 6. Git history may contain older manifest versions, but the current branch may contain only this single canonical project-manifest file.
@@ -295,8 +295,7 @@ Current role rules:
 - Momentum 3M and Random Walk remain separate expert/reference outputs.
 - Their outputs must not be averaged or winner-selected without a separately proven selector contract.
 - archived VW remains blocked until its exact executable/PIT contract is recovered or a separately named successor is built.
-
-Separate research identity `VW_MIDAS_SVR_XAU_SUCCESSOR_V2` is pre-registered under source-driven V2 change control. It has no production/runtime or selector authority merely because its source data plane is populated.
+- `VW_MIDAS_SVR_XAU_SUCCESSOR_V2` is terminally rejected under its frozen untouched-validation contract and has no production/runtime or selector authority.
 
 ## 8.2 Direction/context motors
 
@@ -305,48 +304,49 @@ Separate research identity `VW_MIDAS_SVR_XAU_SUCCESSOR_V2` is pre-registered und
 - `SLOW` — tactical slower context; direction vote permitted under frozen contract.
 - `GVZ_RISK` — risk-only, never a direction vote.
 - Emergency — intramonth alert/context, not standalone automatic action.
-- BOCPD successor — regime/break context only, no direction vote.
+- `BOCPD_RETURN_SUCCESSOR_V1` — active regime/break context only; no direction vote.
 
 ---
 
-# 9. BOCPD GOVERNANCE
+# 9. BOCPD GOVERNANCE — v1.34 RUNTIME REPLACEMENT
 
-Archived engine:
+Archived engine identity:
 
 `BOCPD`
 
-remains:
+remains historically traceable with the recovery limitation:
 
 `BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED`
 
-It must not be silently repaired or renamed.
-
-Separate successor identity:
+The archived identity is **not** repaired or renamed. It is removed from the current governed application runtime slot and replaced by the separately validated successor identity:
 
 `BOCPD_RETURN_SUCCESSOR_V1`
 
-Current maximum status:
+Current operational status after the v1.34 runtime deployment:
 
-`RESEARCH_SHADOW_CANDIDATE_RISK_DIAGNOSTIC_COMPLETE_PROSPECTIVE_VALIDATION_REQUIRED`
+`ACTIVE_BOCPD_RETURN_SUCCESSOR_V1_REGIME_CONTEXT`
 
 Role:
 
 `REGIME_BREAK_CONTEXT`
 
-Locks:
+Binding locks remain:
 
 - direction vote = false;
 - no H=1 price forecast;
 - no automatic action;
 - no selector/ensemble role;
 - no position mapping;
-- no archived-threshold reuse under an unproven score identity.
+- no archived-threshold reuse under an unproven score identity;
+- frozen successor mathematics, prior, hazard and state rule are unchanged by this promotion.
 
-September reconstructed context:
+September reconstructed context from the 31-Aug information set:
 
 `NO_ADVERSE_BREAK_CANDIDATE`
 
-This does not reactivate archived BOCPD.
+This September state remains `HISTORICAL_REPLAY` evidence because it was reconstructed later; the **runtime promotion itself** is effective only at the true 2026-09-05 deployment time and must not be backdated to 31 August.
+
+Prospective outcome monitoring remains required for ongoing model-risk monitoring, but a 30-Sep prospective observation is no longer a prerequisite for using the successor as the active **regime/break context** engine.
 
 ---
 
@@ -368,20 +368,26 @@ Emergency remains an alert/context layer; it does not create an automatic BUY / 
 
 ---
 
-# 11. CURRENT PRODUCTION RUNTIME AUTHORITY
+# 11. CURRENT PRODUCTION RUNTIME AUTHORITY — v1.34 TARGET STATE
 
-Last audited production runtime distribution:
+After the v1.34 code + production runtime migration is applied and verified, the current governed application inventory is:
 
-- `ACTIVE = 4`
+- `ACTIVE = 5`
 - `WAITING = 5`
-- `BLOCKED = 3`
+- `BLOCKED = 2`
 - direction-vote permitted = `3`
+- total current governed application motors = `12`
 
-Current BLOCKED archived identities:
+Current BLOCKED application identities:
 
 - `VW_MIDAS_MSVR` — `BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN`
 - `MACRO_EVENT` — `BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED`
-- `BOCPD` — `BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED`
+
+Current active BOCPD replacement:
+
+- `BOCPD_RETURN_SUCCESSOR_V1` — `ACTIVE_BOCPD_RETURN_SUCCESSOR_V1_REGIME_CONTEXT`
+
+The archived `BOCPD` ledger identity remains queryable for audit/history but is no longer part of the 12-motor current application registry. Its latest archival runtime record may remain `BLOCKED` with explicit `replaced_by = BOCPD_RETURN_SUCCESSOR_V1` metadata; this does not increase the current application blocked count.
 
 Current WAITING forward-runtime identities include:
 
@@ -390,8 +396,6 @@ Current WAITING forward-runtime identities include:
 - `RANDOM_WALK`
 - `EMERGENCY_LEVEL`
 - `EMERGENCY_REVERSAL`
-
-**Interpretation of WAITING after v1.32:**
 
 WAITING means **waiting for the next forward issuance/update gate**, not that the current September month-open reference is absent.
 
@@ -403,7 +407,11 @@ This dual-state distinction is mandatory in the UI.
 
 # 12. CURRENT PRODUCTION AUTHORITY STORES
 
-Last audited counts remain:
+The BOCPD successor runtime replacement is explicitly authorized to update only the append-only engine runtime ledger/schema required to introduce the new engine identity.
+
+It does **not** authorize writes to the forecast/decision authority stores.
+
+The required invariant remains:
 
 - `monthly_forecast_contracts = 0`
 - `decision_signal_snapshots = 0`
@@ -420,11 +428,11 @@ Reconstructed values may live only in explicitly non-canonical historical/recons
 - `AUTO_SELECTOR = OFF`
 - `AUTO_ENSEMBLE = OFF`
 
-The v1.33 GPR source-data ingestion authorization below does **not** change these four authority-store counts and does not grant forecast/decision authority.
+The v1.33 GPR source-data ingestion authorization below also does **not** change these four authority-store counts and does not grant forecast/decision authority.
 
 ---
 
-# 13. UI CONTRACT — v1.32
+# 13. UI CONTRACT — v1.34
 
 ## 13.1 Tahmin
 
@@ -446,7 +454,17 @@ Secondary provenance must explain when a value was reconstructed later.
 
 ## 13.2 Görünüm
 
-Every governed motor remains visible.
+Every current governed motor remains visible.
+
+`BOCPD_RETURN_SUCCESSOR_V1` replaces the archived `BOCPD` card in the current 12-motor application inventory and must display:
+
+- operational runtime status: `ACTIVE`;
+- role: `REGIME_BREAK_CONTEXT`;
+- September / 31-Aug context reference: `NO_ADVERSE_BREAK_CANDIDATE`;
+- reference evidence: `HISTORICAL_REPLAY`;
+- direction vote: `false`.
+
+The archived `BOCPD` identity remains visible only in audit/history surfaces where its recovery-blocked lineage is relevant.
 
 For motors with a September reconstructed origin result and a forward WAITING/BLOCKED runtime state, the card must show both:
 
@@ -537,7 +555,7 @@ No new table is required or authorized.
 
 The canonical production ingestion workflow must rebuild the source audit, require **54/54** V2 vintages with `quality_errors=0`, use vintage-specific lineage and payload hashes, and verify the four forecast/decision authority-store counts before and after persistence.
 
-This authorization explicitly does **not** permit writes to:
+This v1.33 GPR authorization explicitly does **not** permit writes to:
 
 - `monthly_forecast_contracts`
 - `decision_signal_snapshots`
@@ -548,7 +566,9 @@ This authorization explicitly does **not** permit writes to:
 - selector/ensemble state
 - position/action mappings.
 
-Successful GPR source ingestion removes only the VW V2 GPR data-plane blocker. It does not prove VW V2 model performance or prospective eligibility.
+The separate v1.34 BOCPD promotion authorization is independent of this GPR clause.
+
+Successful GPR source ingestion remains valid as a reusable governed data plane even though VW V2 subsequently failed its model validation gates.
 
 ---
 
@@ -562,6 +582,7 @@ The following are supporting evidence, not independent manifests:
 - `GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_CHANGE_CONTROL_2026-09-04.md`
 - `GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_ENGINEERING_EVIDENCE_2026-09-04.md`
 - `GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_RISK_VALIDATION_CONTRACT_2026-09-04.md`
+- `GOLD_CONTROL_BOCPD_SUCCESSOR_V1_PROMOTION_CHANGE_CONTROL_2026-09-05.md`
 - `GOLD_CONTROL_R4_2_PATCH_EXPERT_EMERGENCY_REFERENCE_CHANGE_CONTROL_2026-09-04.md`
 - `GOLD_CONTROL_DATA_EVIDENCE_SPINE_CONTRACT_2026-09-03.md`
 - `GOLD_CONTROL_ENGINE_OBSERVABILITY_CONTRACT_2026-09-03.md`
@@ -573,9 +594,11 @@ The following are supporting evidence, not independent manifests:
 - `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V1_CHANGE_CONTROL_2026-09-04.md`
 - `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_CHANGE_CONTROL_2026-09-05.md`
 - `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_SOURCE_IDENTITY_AMENDMENT_2026-09-05.md`
+- `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_PRE_SCORE_ELIGIBILITY_CORRECTION_2026-09-05.md`
+- `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_TERMINAL_VALIDATION_EVIDENCE_2026-09-05.md`
 - `GOLD_CONTROL_GPR_PIT_DATA_PLANE_CHANGE_CONTROL_2026-09-05.md`
 
-Where old wording in these historical files conflicts with the v1.32 monthly-origin correction or the v1.33 GPR PIT source-data authorization, **this v1.33 manifest controls current product/data-plane behavior** while the historical document remains immutable evidence of what was believed/frozen at that earlier time.
+Where old wording in these historical files conflicts with the v1.32 monthly-origin correction, the v1.33 GPR PIT source-data authorization, the terminal VW V2 result, or the v1.34 BOCPD runtime replacement, **this v1.34 manifest controls current product/runtime behavior** while the historical document remains immutable evidence of what was believed/frozen at that earlier time.
 
 ---
 
@@ -585,27 +608,42 @@ Where old wording in these historical files conflicts with the v1.32 monthly-ori
 
 Archived `VW_MIDAS_MSVR` remains blocked.
 
-`VW_MIDAS_SVR_XAU_SUCCESSOR_V1` is terminally `SOURCE_BLOCKED_NO_MODEL_SCORE`; its frozen direct historical GPR source did not pass the required source/PIT gate and V1 must not be rewritten after the fact.
+`VW_MIDAS_SVR_XAU_SUCCESSOR_V1` remains terminally `SOURCE_BLOCKED_NO_MODEL_SCORE`.
 
-Separate `VW_MIDAS_SVR_XAU_SUCCESSOR_V2` is pre-registered before model scoring. Its source-driven GPR window is `2022-03..2026-08`, and its historical GPR inputs must use `GPR_OFFICIAL_GIT_PIT` after the v1.33 data-plane ingestion gate passes.
+`VW_MIDAS_SVR_XAU_SUCCESSOR_V2` reached executable untouched validation after its pre-score date-arithmetic correction was frozen. Its binding terminal result is:
 
-V2 still requires the frozen XAU research-to-production lineage/materiality bridge and untouched Random-Walk validation before any historical shadow-eligibility label. No V2 model score may change its pre-registered features, SVR grid, minimum fit, validation window or gates.
+`REJECT_ALL_VW_SUCCESSOR_V2_CANDIDATES`
+
+Untouched validation `2024-10..2025-09` failed two pre-registered hard gates:
+
+- median absolute error was worse than Random Walk (`75.061714` vs `67.491510`);
+- the `2024-10..2024-12` origin bucket MAE ratio was `1.631148`, above the frozen `1.50` cap.
+
+The locked diagnostic `2025-10..2026-07` was also worse than Random Walk on Relative MAE (`1.044906`).
+
+Therefore V2 receives no September reconstruction, no prospective/shadow promotion, no selector/ensemble entry, and no production forecast/Decision Store authority. Post-result feature/grid/window/gate retuning is prohibited.
+
+The `GPR_OFFICIAL_GIT_PIT` data plane remains valid independently of this model rejection.
 
 ## 16.2 Macro successor
 
 Archived Macro Event remains blocked until exact score/consensus/vintage contract is recovered.
 
-A consensus-free alternative, if researched, requires a separate successor identity.
+A separately named successor may be built under a new authority/source/change-control contract. This is the next unresolved-engine engineering priority after BOCPD runtime closure.
 
 ## 16.3 BOCPD successor
 
-Continue prospective/shadow evidence under its separate identity; do not replace archived BOCPD.
+`BOCPD_RETURN_SUCCESSOR_V1` is the active current regime/break-context engine after the v1.34 runtime migration is applied and verified.
+
+The archived `BOCPD` identity remains historical/recovery-blocked evidence only.
+
+Continue prospective monitoring for model-risk evidence, but do not re-impose a rule that the engine must wait for 30-Sep before it can be used as current regime context.
 
 ## 16.4 September → October live cycle
 
-The next forward monthly issuance target is **October 2026 using the completed 30-Sep origin**, not September.
+The next forward monthly issuance target is **October 2026 using the completed 30-Sep origin** for the normal monthly cycle.
 
-This must be executed on-time under the month-end contract so it becomes genuinely prospective rather than reconstructed.
+This does not invalidate the current BOCPD successor runtime promotion or its reconstructed September context.
 
 ## 16.5 Governance hardening
 
@@ -617,19 +655,23 @@ Branch protection/rulesets remain unresolved unless separately proven configured
 
 # 17. FINAL BINDING SUMMARY
 
-The governing monthly operating rule is now unambiguous:
+The governing monthly operating rule remains:
 
 > **At each completed month-end, Gold Control computes the immediately following month's forecast and month-open direction/reference state using only information available at that origin.**
 
 For the current period:
 
-> **31 Aug 2026 → September 2026 forecast/direction reference.**
+> **31 Aug 2026 → September 2026 forecast/direction/regime reference.**
 
-Next cycle:
+The current BOCPD regime reference for September is:
 
-> **30 Sep 2026 → October 2026 forecast/direction reference.**
+> **`BOCPD_RETURN_SUCCESSOR_V1 = NO_ADVERSE_BREAK_CANDIDATE`.**
 
-v1.33 additionally authorizes the separately identified `GPR_OFFICIAL_GIT_PIT` historical source-reconstruction series to be persisted to the existing production Neon source-data plane only after its canonical 54/54 source gate passes. This authorization does not create a forecast, decision, model promotion or prospective claim.
+v1.34 authorizes the separately named and validated `BOCPD_RETURN_SUCCESSOR_V1` to replace archived `BOCPD` in the current application/runtime inventory, while preserving the archived identity as historical audit evidence and preserving `direction_vote=false`.
+
+v1.34 also records the binding terminal rejection of `VW_MIDAS_SVR_XAU_SUCCESSOR_V2`; that model receives no promotion.
+
+The v1.33 `GPR_OFFICIAL_GIT_PIT` source-data authorization remains valid independently.
 
 If an origin was reconstructed later, the target/origin interpretation remains valid, but the audit metadata must truthfully identify it as a reconstruction rather than falsely backdating the issuance.
 
