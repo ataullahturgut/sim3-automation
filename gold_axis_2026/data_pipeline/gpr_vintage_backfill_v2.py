@@ -72,8 +72,11 @@ def earliest_add_commit(repo: Path, relpath: str) -> tuple[str, datetime] | None
 
 
 def previous_month(month: str) -> str:
-    p = pd.Period(month, freq="M") - 1
-    return str(p)
+    return str(pd.Period(month, freq="M") - 1)
+
+
+def month_range(start: str, end: str) -> list[str]:
+    return [str(x) for x in pd.period_range(start, end, freq="M")]
 
 
 def parse_gpr_workbook(raw: bytes) -> pd.DataFrame:
@@ -97,21 +100,37 @@ def parse_gpr_workbook(raw: bytes) -> pd.DataFrame:
     return best
 
 
-def load_coverage(path: Path) -> list[dict]:
+def load_coverage(path: Path, start_origin: str, end_origin: str) -> list[dict]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     rows = payload.get("rows")
     if not isinstance(rows, list):
         raise RuntimeError("COVERAGE_ROWS_MISSING")
-    return rows
+    wanted = month_range(start_origin, end_origin)
+    by_origin = {str(r.get("origin_month")): r for r in rows}
+    missing = [m for m in wanted if m not in by_origin]
+    if missing:
+        raise RuntimeError(f"COVERAGE_ORIGINS_MISSING:{','.join(missing)}")
+    return [by_origin[m] for m in wanted]
 
 
-def build_bundle(repo: Path, coverage_path: Path, retrieved_at: datetime) -> tuple[dict, list[VintageRecord]]:
-    coverage = load_coverage(coverage_path)
+def build_bundle(
+    repo: Path,
+    coverage_path: Path,
+    retrieved_at: datetime,
+    start_origin: str,
+    end_origin: str,
+    require_all_proven: bool,
+) -> tuple[dict, list[VintageRecord]]:
+    coverage = load_coverage(coverage_path, start_origin, end_origin)
     run_id = str(uuid.uuid4())
     observations: list[dict] = []
     vintages: list[dict] = []
     quality_events: list[dict] = []
     records: list[VintageRecord] = []
+
+    unproven = [str(c["origin_month"]) for c in coverage if not bool(c.get("repo_git_pit_proven"))]
+    if require_all_proven and unproven:
+        raise RuntimeError(f"GPR_V2_REQUIRED_ORIGINS_NOT_PIT_PROVEN:{','.join(unproven)}")
 
     for c in coverage:
         origin = str(c["origin_month"])
@@ -144,6 +163,8 @@ def build_bundle(repo: Path, coverage_path: Path, retrieved_at: datetime) -> tup
         usable = df[df["date"].dt.to_period("M") <= pd.Period(required_month, freq="M")].copy()
         required = usable[usable["date"].dt.to_period("M") == pd.Period(required_month, freq="M")]
         if required.empty:
+            if require_all_proven:
+                raise RuntimeError(f"GPR_REQUIRED_P_MINUS_1_MISSING:{origin}:{required_month}")
             quality_events.append({
                 "run_id": run_id,
                 "series_id": SERIES_ID,
@@ -217,6 +238,10 @@ def build_bundle(repo: Path, coverage_path: Path, retrieved_at: datetime) -> tup
             required_value_present=True,
         ))
 
+    requested = month_range(start_origin, end_origin)
+    if require_all_proven and len(records) != len(requested):
+        raise RuntimeError(f"GPR_V2_COVERAGE_INCOMPLETE:{len(records)}/{len(requested)}")
+
     bundle = {
         "run_id": run_id,
         "started_at": retrieved_at.isoformat(),
@@ -233,6 +258,10 @@ def build_bundle(repo: Path, coverage_path: Path, retrieved_at: datetime) -> tup
             "forecast_write": False,
             "source_series_id": SERIES_ID,
             "source_locator": "official iacoviel/iacoviel.github.io git history",
+            "start_origin": start_origin,
+            "end_origin": end_origin,
+            "required_origin_count": len(requested),
+            "require_all_proven": require_all_proven,
             "current_final_vintage_substitution_allowed": False,
         },
     }
@@ -243,19 +272,34 @@ def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--upstream-repo", type=Path, required=True)
     p.add_argument("--coverage-json", type=Path, required=True)
+    p.add_argument("--start-origin", default="2022-03")
+    p.add_argument("--end-origin", default="2026-08")
+    p.add_argument("--require-all-proven", action="store_true")
     p.add_argument("--bundle-out", type=Path, default=Path("gpr_vintage_bundle_v2.json"))
     p.add_argument("--summary-out", type=Path, default=Path("gpr_vintage_bundle_v2_summary.json"))
     args = p.parse_args()
     if not (args.upstream_repo / ".git").exists():
         raise SystemExit("UPSTREAM_REPO_IS_NOT_A_GIT_CLONE")
     retrieved_at = utcnow()
-    bundle, records = build_bundle(args.upstream_repo, args.coverage_json, retrieved_at)
+    bundle, records = build_bundle(
+        args.upstream_repo,
+        args.coverage_json,
+        retrieved_at,
+        args.start_origin,
+        args.end_origin,
+        args.require_all_proven,
+    )
     args.bundle_out.write_text(json.dumps(bundle, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    requested_count = len(month_range(args.start_origin, args.end_origin))
     summary = {
         "pipeline_version": PIPELINE_VERSION,
+        "start_origin": args.start_origin,
+        "end_origin": args.end_origin,
+        "required_vintages": requested_count,
         "proven_vintages_built": len(records),
         "observation_rows_built": len(bundle["observations"]),
         "quality_errors": sum(1 for q in bundle["quality_events"] if q.get("severity") == "ERROR"),
+        "all_required_proven": len(records) == requested_count and not bundle["quality_events"],
         "origins": [asdict(r) for r in records],
         "production_write": False,
         "binding_note": "Bundle construction is research evidence only; persistence requires canonical governance acceptance.",
