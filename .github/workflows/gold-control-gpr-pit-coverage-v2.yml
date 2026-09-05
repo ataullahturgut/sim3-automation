@@ -48,13 +48,24 @@ jobs:
             --md-out gpr_pit_coverage_v2.md
           cat gpr_pit_coverage_v2.md >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Build replay bundle from PIT-proven official Git vintages
+      - name: Build clean 54-origin V2 replay bundle
         run: |
           python gold_axis_2026/data_pipeline/gpr_vintage_backfill_v2.py \
             --upstream-repo /tmp/iacoviel-gpr \
             --coverage-json gpr_pit_coverage_v2.json \
+            --start-origin 2022-03 \
+            --end-origin 2026-08 \
+            --require-all-proven \
             --bundle-out gpr_vintage_bundle_v2.json \
             --summary-out gpr_vintage_bundle_v2_summary.json
+          python - <<'PY'
+          import json
+          d=json.load(open('gpr_vintage_bundle_v2_summary.json', encoding='utf-8'))
+          assert d['required_vintages'] == 54, d
+          assert d['proven_vintages_built'] == 54, d
+          assert d['quality_errors'] == 0, d
+          assert d['all_required_proven'] is True, d
+          PY
           echo '## GPR vintage bundle' >> "$GITHUB_STEP_SUMMARY"
           echo '```json' >> "$GITHUB_STEP_SUMMARY"
           cat gpr_vintage_bundle_v2_summary.json | python -c 'import json,sys; d=json.load(sys.stdin); d.pop("origins",None); print(json.dumps(d,indent=2,sort_keys=True))' >> "$GITHUB_STEP_SUMMARY"
