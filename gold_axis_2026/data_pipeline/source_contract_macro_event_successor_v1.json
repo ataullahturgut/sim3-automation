@@ -1,15 +1,34 @@
 {
-  "version": "MACRO_EVENT_SUCCESSOR_V1_SOURCE_CONTRACT_2026-09-05",
+  "version": "MACRO_EVENT_SUCCESSOR_V1_SOURCE_CONTRACT_2026-09-05_R2",
   "engine_id": "MACRO_EVENT_SUCCESSOR_V1",
   "purpose": "Governed source identities for U.S. Employment Situation first-print actuals and point-in-time market consensus. This contract authorizes source audit/reconstruction only; it does not authorize model scoring or forecast/decision writes.",
   "event_family": "BLS_EMPLOYMENT_SITUATION",
-  "point_in_time_rule": "For any event at t, a model input is eligible only when available_as_of <= t. Current-vintage substitution for historical first-print actuals or post-release consensus is forbidden.",
+  "point_in_time_rule": "For any event at t, a model input is eligible only when its provider semantics prove that it was a pre-release consensus associated with that event. Current-vintage substitution for historical first-print actuals or post-release consensus is forbidden.",
   "authority_store_writes": false,
   "direction_vote": false,
+  "consensus_provider_policy": {
+    "preferred_authority_benchmark": "Bloomberg Economic Calendar historical latest pre-release panel consensus, when entitlement is available",
+    "primary_executable_candidate": "Trading Economics Economic Calendar Point-in-Time",
+    "primary_candidate_status": "PENDING_AUTHENTICATED_PROVIDER_AUDIT",
+    "independent_public_spot_check": "Reuters pre-release economist survey reporting",
+    "secondary_candidate": "Econoday, only after separate historical PIT/entitlement audit",
+    "forbidden_substitutes": [
+      "Trading Economics TEForecast",
+      "current Trading Economics website calendar without governed PIT retrieval",
+      "post-release news consensus reconstructed after the fact",
+      "previous-event consensus carry-forward",
+      "per-origin provider switching after viewing model results"
+    ],
+    "te_forecast_semantic": "Forecast = survey consensus from representative group of economists",
+    "te_teforecast_semantic": "TEForecast = Trading Economics proprietary/model projection; never market consensus",
+    "te_availability_semantics": "When TE PIT preserves the pre-release Forecast field but does not expose the exact last pre-release consensus update timestamp, the consensus may be eligible only at the official release timestamp and must be tagged PRE_RELEASE_CONSENSUS_FIELD_PRESERVED_BY_PROVIDER_AT_EVENT_RELEASE. It may not be used for a decision timestamp strictly before release.",
+    "te_lastupdate_policy": "LastUpdate is record-update metadata and must not be treated as the consensus availability timestamp.",
+    "raw_payload_policy": "Do not commit licensed raw provider payloads to the public repository; retain hashes/identifiers and only license-permitted evidence."
+  },
   "series": {
     "MACRO_NFP_ACTUAL_FIRST_PRINT": {
       "semantic": "BLS Employment Situation first-published total nonfarm payroll employment monthly change",
-      "source": "U.S. Bureau of Labor Statistics Employment Situation archive",
+      "source": "U.S. Bureau of Labor Statistics Employment Situation archive / ALFRED as-of release reconstruction after equivalence audit",
       "symbol": "NFP_HEADLINE_FIRST_PRINT",
       "tier": "AUTHORITY_PUBLIC",
       "frequency": "event_monthly",
@@ -18,11 +37,11 @@
       "status": "CANDIDATE_AUTHORITY_FIRST_PRINT_AUDIT",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
       "availability_policy": "official BLS release timestamp at 08:30 America/New_York",
-      "revision_policy": "archive release first print; later revisions must not overwrite the archived first print"
+      "revision_policy": "release-date first print; later revisions must not overwrite the archived first print"
     },
     "MACRO_UNEMP_ACTUAL_FIRST_PRINT": {
       "semantic": "BLS Employment Situation first-published unemployment rate",
-      "source": "U.S. Bureau of Labor Statistics Employment Situation archive",
+      "source": "U.S. Bureau of Labor Statistics Employment Situation archive / ALFRED as-of release reconstruction after equivalence audit",
       "symbol": "UNEMP_RATE_FIRST_PRINT",
       "tier": "AUTHORITY_PUBLIC",
       "frequency": "event_monthly",
@@ -31,11 +50,11 @@
       "status": "CANDIDATE_AUTHORITY_FIRST_PRINT_AUDIT",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
       "availability_policy": "official BLS release timestamp at 08:30 America/New_York",
-      "revision_policy": "archive release first print; later revisions must not overwrite the archived first print"
+      "revision_policy": "release-date first print; later revisions must not overwrite the archived first print"
     },
     "MACRO_AHE_ACTUAL_FIRST_PRINT": {
       "semantic": "BLS Employment Situation first-published average hourly earnings month-over-month change for all employees on private nonfarm payrolls",
-      "source": "U.S. Bureau of Labor Statistics Employment Situation archive",
+      "source": "U.S. Bureau of Labor Statistics Employment Situation archive / ALFRED as-of release reconstruction after equivalence audit",
       "symbol": "AHE_ALL_EMPLOYEES_MOM_FIRST_PRINT",
       "tier": "AUTHORITY_PUBLIC",
       "frequency": "event_monthly",
@@ -44,43 +63,46 @@
       "status": "CANDIDATE_AUTHORITY_FIRST_PRINT_AUDIT",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
       "availability_policy": "official BLS release timestamp at 08:30 America/New_York",
-      "revision_policy": "prefer explicitly published MoM percent; when older release gives cents change and current level only, derive MoM transparently from those first-release fields and tag transform metadata"
+      "revision_policy": "derive transparently from as-of-release AHE levels when needed; construction equivalence must be audited against BLS first releases"
     },
     "MACRO_NFP_CONSENSUS_PIT": {
-      "semantic": "Last approved pre-release market consensus for headline NFP change",
-      "source": "PENDING_PIT_CONSENSUS_PROVIDER",
-      "symbol": null,
-      "tier": "PENDING_AUDIT",
+      "semantic": "Provider-preserved pre-release market consensus for headline NFP change associated with the Employment Situation release",
+      "source": "TRADING_ECONOMICS_ECONOMIC_CALENDAR_PIT_CANDIDATE",
+      "symbol": "Non Farm Payrolls / Forecast",
+      "tier": "PENDING_AUTHENTICATED_AUDIT",
       "frequency": "event_monthly",
       "unit": "thousand_persons_change",
       "role": "MACRO_EVENT_SUCCESSOR_V1 consensus input",
-      "status": "PENDING_PIT_CONSENSUS_AUDIT",
+      "status": "PENDING_TE_PIT_PROVIDER_AUDIT",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
-      "availability_policy": "last approved provider snapshot strictly before official release time"
+      "availability_policy": "eligible no earlier than official release timestamp after provider audit; exact pre-release update time must not be invented",
+      "forbidden_field": "TEForecast"
     },
     "MACRO_UNEMP_CONSENSUS_PIT": {
-      "semantic": "Last approved pre-release market consensus for unemployment rate",
-      "source": "PENDING_PIT_CONSENSUS_PROVIDER",
-      "symbol": null,
-      "tier": "PENDING_AUDIT",
+      "semantic": "Provider-preserved pre-release market consensus for unemployment rate associated with the Employment Situation release",
+      "source": "TRADING_ECONOMICS_ECONOMIC_CALENDAR_PIT_CANDIDATE",
+      "symbol": "Unemployment Rate / Forecast",
+      "tier": "PENDING_AUTHENTICATED_AUDIT",
       "frequency": "event_monthly",
       "unit": "percent",
       "role": "MACRO_EVENT_SUCCESSOR_V1 consensus input",
-      "status": "PENDING_PIT_CONSENSUS_AUDIT",
+      "status": "PENDING_TE_PIT_PROVIDER_AUDIT",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
-      "availability_policy": "last approved provider snapshot strictly before official release time"
+      "availability_policy": "eligible no earlier than official release timestamp after provider audit; exact pre-release update time must not be invented",
+      "forbidden_field": "TEForecast"
     },
     "MACRO_AHE_CONSENSUS_PIT": {
-      "semantic": "Last approved pre-release market consensus for average hourly earnings month-over-month change",
-      "source": "PENDING_PIT_CONSENSUS_PROVIDER",
-      "symbol": null,
-      "tier": "PENDING_AUDIT",
+      "semantic": "Provider-preserved pre-release market consensus for average hourly earnings month-over-month change associated with the Employment Situation release",
+      "source": "TRADING_ECONOMICS_ECONOMIC_CALENDAR_PIT_CANDIDATE",
+      "symbol": "Average Hourly Earnings MoM / Forecast",
+      "tier": "PENDING_AUTHENTICATED_AUDIT",
       "frequency": "event_monthly",
       "unit": "percent_mom",
       "role": "MACRO_EVENT_SUCCESSOR_V1 consensus input",
-      "status": "PENDING_PIT_CONSENSUS_AUDIT",
+      "status": "PENDING_TE_PIT_PROVIDER_AUDIT",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
-      "availability_policy": "last approved provider snapshot strictly before official release time"
+      "availability_policy": "eligible no earlier than official release timestamp after provider audit; exact pre-release update time must not be invented",
+      "forbidden_field": "TEForecast"
     }
   }
 }
