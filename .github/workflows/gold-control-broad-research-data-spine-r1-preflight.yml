@@ -9,12 +9,13 @@ on:
       - 'gold_axis_2026/data_pipeline/source_contracts_research_broad.json'
       - 'gold_axis_2026/tools/audit_broad_research_data_spine_r1.py'
       - 'gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py'
+      - 'gold_axis_2026/core5_monthly.csv.gz.b64'
       - '.github/workflows/gold-control-broad-research-data-spine-r1-preflight.yml'
   workflow_dispatch:
 
 concurrency:
   group: gold-control-broad-research-data-spine-r1-preflight
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -62,7 +63,10 @@ jobs:
           assert c['governance']['decision_writes'] is False
           assert c['governance']['auto_selector']=='OFF'
           assert c['governance']['auto_ensemble']=='OFF'
-          assert c['tier_a']['staktrakr_four_metal_daily']['pinned_commit']=='429d8e612d504a964846ff6438dbdb28ace630c3'
+          assert c['tier_a']['staktrakr_four_metal_daily']['pinned_commit']=='ed2e549f82ba0d1cd3ca32842b82d3888d301e01'
+          assert c['tier_a']['core5_locked_monthly']['required_rows']==390
+          assert c['tier_a']['core5_locked_monthly']['start_month']=='1994-02'
+          assert c['tier_a']['core5_locked_monthly']['end_month']=='2026-07'
           assert c['tier_a']['xau_hourly_derived_daily']['not_equivalent_to']=='XAU_EOD_TWELVE_NY17'
           PY
 
@@ -105,7 +109,9 @@ jobs:
           assert d['forecast_writes']=='NONE'
           assert d['decision_writes']=='NONE'
           assert d['raw_market_values_logged'] is False
+          assert d['sources']['core5_locked_monthly']['status']=='PASS'
           assert d['sources']['staktrakr']['status']=='PASS'
+          assert d['sources']['staktrakr']['pinned_commit']=='ed2e549f82ba0d1cd3ca32842b82d3888d301e01'
           assert d['sources']['twelve_xau_hourly']['status']=='PASS'
           assert d['sources']['gpr_companions']['status']=='PASS'
           PY
