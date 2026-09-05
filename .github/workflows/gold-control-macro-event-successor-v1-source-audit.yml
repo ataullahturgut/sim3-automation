@@ -1,0 +1,77 @@
+name: Gold Control Macro Event Successor V1 Source Audit
+
+on:
+  push:
+    branches:
+      - gold-control-macro-event-successor-v1-source-contract
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V1_SOURCE_CONTRACT_2026-09-05.md'
+      - 'gold_axis_2026/data_pipeline/source_contract_macro_event_successor_v1.json'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v1_sources.py'
+      - 'gold_axis_2026/tests/test_macro_event_successor_v1_sources.py'
+      - '.github/workflows/gold-control-macro-event-successor-v1-source-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TRADING_ECONOMICS_API_KEY: ${{ secrets.TRADING_ECONOMICS_API_KEY }}
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pytest requests
+
+      - name: Contract, unit and compile tests
+        run: |
+          python -m json.tool gold_axis_2026/data_pipeline/source_contract_macro_event_successor_v1.json >/dev/null
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v1_sources.py
+          pytest -q gold_axis_2026/tests/test_macro_event_successor_v1_sources.py
+
+      - name: Audit BLS first-print archive and optional PIT consensus provider
+        run: |
+          python gold_axis_2026/data_pipeline/macro_event_successor_v1_sources.py \
+            --start-reference 2016-01 \
+            --end-reference 2026-08 \
+            --bundle-out macro_event_bls_bundle_v1.json \
+            --summary-out macro_event_source_audit_v1.json \
+            --md-out macro_event_source_audit_v1.md
+          cat macro_event_source_audit_v1.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Enforce source-only invariants
+        run: |
+          python - <<'PY'
+          import json
+          d = json.load(open('macro_event_source_audit_v1.json', encoding='utf-8'))
+          assert d['bls']['status'] == 'PASS', d['bls']
+          assert d['bls']['decision_store_writes'] == 0, d['bls']
+          assert d['bls']['model_score_run'] is False, d['bls']
+          assert d['consensus']['approved_for_model_use'] is False, d['consensus']
+          b = json.load(open('macro_event_bls_bundle_v1.json', encoding='utf-8'))
+          assert b['metadata']['forecast_or_decision_write'] is False, b['metadata']
+          assert b['metadata']['current_vintage_substitution_allowed'] is False, b['metadata']
+          assert b['evidence_class'] == 'HISTORICAL_REPLAY_RECONSTRUCTION', b
+          PY
+
+      - name: Upload source audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-successor-v1-source-audit
+          path: |
+            macro_event_bls_bundle_v1.json
+            macro_event_source_audit_v1.json
+            macro_event_source_audit_v1.md
+          if-no-files-found: error
