@@ -51,8 +51,8 @@ jobs:
       - name: Run frozen read-only gold reaction validation
         working-directory: gold_axis_2026/data_pipeline
         run: |
-          python macro_event_successor_v2_event_reaction_validation.py > ../../../macro_event_successor_v2_event_reaction_summary.json
-          cat ../../../macro_event_successor_v2_event_reaction_summary.json
+          python macro_event_successor_v2_event_reaction_validation.py > ../../macro_event_successor_v2_event_reaction_summary.json
+          cat ../../macro_event_successor_v2_event_reaction_summary.json
 
       - name: Enforce governance boundaries
         run: |
