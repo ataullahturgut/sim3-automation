@@ -1,0 +1,41 @@
+name: Gold Control VW V2 XAU Exact 1m Entitlement Probe
+
+on:
+  push:
+    branches:
+      - gold-control-vw-midas-svr-xau-successor-v2-validation
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_VW_V2_XAU_EXACT_1MIN_HISTORY_ENTITLEMENT_PROBE_2026-09-05.md'
+      - 'gold_axis_2026/tools/vw_v2_xau_exact_1min_entitlement_probe.py'
+      - '.github/workflows/gold-control-vw-v2-xau-exact-1min-entitlement-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependency
+        run: pip install requests
+      - name: Compile probe
+        run: python -m py_compile gold_axis_2026/tools/vw_v2_xau_exact_1min_entitlement_probe.py
+      - name: Probe frozen historical dates
+        run: python gold_axis_2026/tools/vw_v2_xau_exact_1min_entitlement_probe.py
+      - name: Upload source-only evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vw-v2-exact-1min-entitlement-probe
+          path: gold_axis_2026/vw_midas_svr_xau_successor_v2/bridge_probe/exact_1min_entitlement_probe.json
+          if-no-files-found: warn
