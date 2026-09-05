@@ -1,0 +1,86 @@
+{
+  "version": "MACRO_EVENT_SUCCESSOR_V1_SOURCE_CONTRACT_2026-09-05",
+  "engine_id": "MACRO_EVENT_SUCCESSOR_V1",
+  "purpose": "Governed source identities for U.S. Employment Situation first-print actuals and point-in-time market consensus. This contract authorizes source audit/reconstruction only; it does not authorize model scoring or forecast/decision writes.",
+  "event_family": "BLS_EMPLOYMENT_SITUATION",
+  "point_in_time_rule": "For any event at t, a model input is eligible only when available_as_of <= t. Current-vintage substitution for historical first-print actuals or post-release consensus is forbidden.",
+  "authority_store_writes": false,
+  "direction_vote": false,
+  "series": {
+    "MACRO_NFP_ACTUAL_FIRST_PRINT": {
+      "semantic": "BLS Employment Situation first-published total nonfarm payroll employment monthly change",
+      "source": "U.S. Bureau of Labor Statistics Employment Situation archive",
+      "symbol": "NFP_HEADLINE_FIRST_PRINT",
+      "tier": "AUTHORITY_PUBLIC",
+      "frequency": "event_monthly",
+      "unit": "thousand_persons_change",
+      "role": "MACRO_EVENT_SUCCESSOR_V1 actual input",
+      "status": "CANDIDATE_AUTHORITY_FIRST_PRINT_AUDIT",
+      "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+      "availability_policy": "official BLS release timestamp at 08:30 America/New_York",
+      "revision_policy": "archive release first print; later revisions must not overwrite the archived first print"
+    },
+    "MACRO_UNEMP_ACTUAL_FIRST_PRINT": {
+      "semantic": "BLS Employment Situation first-published unemployment rate",
+      "source": "U.S. Bureau of Labor Statistics Employment Situation archive",
+      "symbol": "UNEMP_RATE_FIRST_PRINT",
+      "tier": "AUTHORITY_PUBLIC",
+      "frequency": "event_monthly",
+      "unit": "percent",
+      "role": "MACRO_EVENT_SUCCESSOR_V1 actual input",
+      "status": "CANDIDATE_AUTHORITY_FIRST_PRINT_AUDIT",
+      "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+      "availability_policy": "official BLS release timestamp at 08:30 America/New_York",
+      "revision_policy": "archive release first print; later revisions must not overwrite the archived first print"
+    },
+    "MACRO_AHE_ACTUAL_FIRST_PRINT": {
+      "semantic": "BLS Employment Situation first-published average hourly earnings month-over-month change for all employees on private nonfarm payrolls",
+      "source": "U.S. Bureau of Labor Statistics Employment Situation archive",
+      "symbol": "AHE_ALL_EMPLOYEES_MOM_FIRST_PRINT",
+      "tier": "AUTHORITY_PUBLIC",
+      "frequency": "event_monthly",
+      "unit": "percent_mom",
+      "role": "MACRO_EVENT_SUCCESSOR_V1 actual input",
+      "status": "CANDIDATE_AUTHORITY_FIRST_PRINT_AUDIT",
+      "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+      "availability_policy": "official BLS release timestamp at 08:30 America/New_York",
+      "revision_policy": "prefer explicitly published MoM percent; when older release gives cents change and current level only, derive MoM transparently from those first-release fields and tag transform metadata"
+    },
+    "MACRO_NFP_CONSENSUS_PIT": {
+      "semantic": "Last approved pre-release market consensus for headline NFP change",
+      "source": "PENDING_PIT_CONSENSUS_PROVIDER",
+      "symbol": null,
+      "tier": "PENDING_AUDIT",
+      "frequency": "event_monthly",
+      "unit": "thousand_persons_change",
+      "role": "MACRO_EVENT_SUCCESSOR_V1 consensus input",
+      "status": "PENDING_PIT_CONSENSUS_AUDIT",
+      "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+      "availability_policy": "last approved provider snapshot strictly before official release time"
+    },
+    "MACRO_UNEMP_CONSENSUS_PIT": {
+      "semantic": "Last approved pre-release market consensus for unemployment rate",
+      "source": "PENDING_PIT_CONSENSUS_PROVIDER",
+      "symbol": null,
+      "tier": "PENDING_AUDIT",
+      "frequency": "event_monthly",
+      "unit": "percent",
+      "role": "MACRO_EVENT_SUCCESSOR_V1 consensus input",
+      "status": "PENDING_PIT_CONSENSUS_AUDIT",
+      "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+      "availability_policy": "last approved provider snapshot strictly before official release time"
+    },
+    "MACRO_AHE_CONSENSUS_PIT": {
+      "semantic": "Last approved pre-release market consensus for average hourly earnings month-over-month change",
+      "source": "PENDING_PIT_CONSENSUS_PROVIDER",
+      "symbol": null,
+      "tier": "PENDING_AUDIT",
+      "frequency": "event_monthly",
+      "unit": "percent_mom",
+      "role": "MACRO_EVENT_SUCCESSOR_V1 consensus input",
+      "status": "PENDING_PIT_CONSENSUS_AUDIT",
+      "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+      "availability_policy": "last approved provider snapshot strictly before official release time"
+    }
+  }
+}
