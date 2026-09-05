@@ -37,7 +37,7 @@ jobs:
         run: python gold_axis_2026/tools/apply_v136_remove_legacy_macro_event.py
 
       - name: Install validation runtime
-        run: pip install pytest 'psycopg[binary]==3.3.5'
+        run: pip install pytest pandas 'psycopg[binary]==3.3.5'
 
       - name: Validate active application code
         run: |
