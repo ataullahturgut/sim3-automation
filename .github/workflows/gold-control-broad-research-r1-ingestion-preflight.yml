@@ -1,0 +1,143 @@
+name: Gold Control Broad Research R1 Ingestion Engineering Preflight
+
+on:
+  push:
+    branches:
+      - gold-control-broad-research-data-spine-r1
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_BROAD_RESEARCH_DATA_SPINE_R1_NEON_INGESTION_CHANGE_CONTROL_2026-09-05.md'
+      - 'gold_axis_2026/data_pipeline/broad_research_data_spine_r1_ingest.py'
+      - 'gold_axis_2026/data_pipeline/source_contracts_research_broad.json'
+      - 'gold_axis_2026/core5_monthly.csv.gz.b64'
+      - 'gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py'
+      - '.github/workflows/gold-control-broad-research-r1-ingestion-preflight.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: gold-control-broad-research-r1-ingestion-preflight
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-only-ingestion-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - name: Checkout exact feature push SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Require feature branch and protected read credentials
+        run: |
+          test "${GITHUB_REF_NAME}" = "gold-control-broad-research-data-spine-r1"
+          test -n "$NEON_DATABASE_URL" || { echo "NEON_DATABASE_URL missing"; exit 1; }
+          test -n "$TWELVE_DATA_API_KEY" || { echo "TWELVE_DATA_API_KEY missing"; exit 1; }
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install governed data dependencies
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+
+      - name: Compile writer and assert production authority is not active
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/broad_research_data_spine_r1_ingest.py
+          python - <<'PY'
+          import os
+          assert not os.environ.get("BROAD_RESEARCH_PRODUCTION_WRITE_AUTHORIZED")
+          assert not os.environ.get("GOLD_CONTROL_MANIFEST_VERSION")
+          PY
+
+      - name: Clone official Caldara-Iacoviello archive with full history
+        run: git clone --quiet https://github.com/iacoviel/iacoviel.github.io.git /tmp/iacoviel-gpr
+
+      - name: Rebuild exact 54-origin base GPR PIT coverage evidence
+        run: |
+          python gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py \
+            --upstream-repo /tmp/iacoviel-gpr \
+            --start 2022-03 \
+            --end 2026-08 \
+            --skip-http \
+            --json-out gpr_pit_coverage_ingestion_r1.json \
+            --md-out gpr_pit_coverage_ingestion_r1.md
+          python - <<'PY'
+          import json
+          d=json.load(open('gpr_pit_coverage_ingestion_r1.json', encoding='utf-8'))
+          rows=d['rows']
+          assert len(rows)==54
+          assert all(r['repo_git_pit_proven'] for r in rows)
+          PY
+
+      - name: Build complete Tier-A ingestion bundle in no-write mode
+        run: |
+          python gold_axis_2026/data_pipeline/broad_research_data_spine_r1_ingest.py \
+            --gpr-upstream-repo /tmp/iacoviel-gpr \
+            --gpr-coverage-json gpr_pit_coverage_ingestion_r1.json \
+            --verify-neon-invariants \
+            --summary-out broad_research_ingestion_r1_summary.json
+
+      - name: Assert build-only ingestion gates
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('broad_research_ingestion_r1_summary.json', encoding='utf-8'))
+          assert d['status']=='PASS'
+          assert d['series_count']==12
+          assert d['sources']['core5']['rows']==1950
+          assert d['sources']['core5']['months']==390
+          assert d['sources']['staktrakr']['annual_files']==17
+          assert all(v > 0 for v in d['sources']['staktrakr']['series_rows'].values())
+          assert d['sources']['twelve_xau_hourly']['months']==54
+          assert d['sources']['twelve_xau_hourly']['min_days_per_month']>=15
+          assert d['sources']['gpr_companions']['vintages']==54
+          assert all(v==54 for v in d['sources']['gpr_companions']['origins_by_series'].values())
+          assert d['quality_events']==0
+          assert d['database_writes']=='NONE'
+          assert d['model_scores']=='NONE'
+          assert d['forecast_writes']=='NONE'
+          assert d['decision_writes']=='NONE'
+          assert d['engine_runtime_writes']=='NONE'
+          assert d['raw_market_values_logged'] is False
+          assert d['production_write_authority_active'] is False
+          assert all(v==0 for v in d['neon_prewrite_invariants']['decision_counts'].values())
+          assert d['neon_prewrite_invariants']['runtime_counts']=={'ACTIVE':6,'BLOCKED':1,'WAITING':5}
+          PY
+
+      - name: Prove persist mode is blocked on feature branch
+        env:
+          BROAD_RESEARCH_PRODUCTION_WRITE_AUTHORIZED: MANIFEST_V1_37_BROAD_RESEARCH_DATA_SPINE_R1
+          GOLD_CONTROL_MANIFEST_VERSION: '1.37'
+          BROAD_RESEARCH_PREFLIGHT_HEAD_SHA: a0a06bbce8249f8e7ac4cc0f482f1f68c711657b
+          BROAD_RESEARCH_PREFLIGHT_ARTIFACT_DIGEST: sha256:ba4300d3501211ce7deaeea61627042f066ec45e679f672deb1741e26e102f1a
+        run: |
+          set +e
+          python gold_axis_2026/data_pipeline/broad_research_data_spine_r1_ingest.py \
+            --gpr-upstream-repo /tmp/iacoviel-gpr \
+            --gpr-coverage-json gpr_pit_coverage_ingestion_r1.json \
+            --persist \
+            --summary-out SHOULD_NOT_EXIST.json > persist_block_stdout.txt 2> persist_block_stderr.txt
+          rc=$?
+          set -e
+          test "$rc" -ne 0
+          grep -q "BROAD_RESEARCH_WRITE_REQUIRES_CANONICAL_BRANCH" persist_block_stderr.txt
+          test ! -f SHOULD_NOT_EXIST.json
+          rm -f persist_block_stdout.txt persist_block_stderr.txt
+
+      - name: Upload non-vendor ingestion engineering evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: broad-research-r1-ingestion-preflight-${{ github.sha }}
+          path: |
+            broad_research_ingestion_r1_summary.json
+            gpr_pit_coverage_ingestion_r1.json
+            gpr_pit_coverage_ingestion_r1.md
+          if-no-files-found: error
