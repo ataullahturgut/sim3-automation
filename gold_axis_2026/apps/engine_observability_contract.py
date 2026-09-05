@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 
-ENGINE_OBSERVABILITY_CONTRACT = "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V2_DUAL_STATE_REFERENCE"
+ENGINE_OBSERVABILITY_CONTRACT = "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V3_BOCPD_SUCCESSOR_PROMOTED"
 
 ENGINE_DISPLAY_ORDER = (
     "CAUSAL_PATCH",
@@ -16,7 +16,7 @@ ENGINE_DISPLAY_ORDER = (
     "MACRO_EVENT",
     "EMERGENCY_LEVEL",
     "EMERGENCY_REVERSAL",
-    "BOCPD",
+    "BOCPD_RETURN_SUCCESSOR_V1",
     "GVZ_RISK",
 )
 
@@ -114,14 +114,15 @@ ENGINE_REGISTRY: dict[str, dict[str, Any]] = {
         "direction_vote": False,
         "decision_key": "reversal_emergency",
     },
-    "BOCPD": {
-        "label": "BOCPD",
+    "BOCPD_RETURN_SUCCESSOR_V1": {
+        "label": "BOCPD · Successor V1",
         "category": "REGIME_BREAK",
-        "role": "Regime/break context and alert only",
-        "version": "BOCPD_RETURN_R1_PARTIAL_RECOVERY_L36_THRESHOLD_LOCKED",
-        "default_status": "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED",
+        "role": "Active regime/break context and alert only; successor to archived BOCPD",
+        "version": "BOCPD_RETURN_SUCCESSOR_V1",
+        "default_status": "WAITING_RUNTIME_PROMOTION_RECORD",
         "direction_vote": False,
-        "decision_key": "bocpd_context",
+        "decision_key": "bocpd_successor_context",
+        "feature_name": "BOCPD_RETURN_SUCCESSOR_V1_STATE",
     },
     "GVZ_RISK": {
         "label": "GVZ Risk Cap",
@@ -286,6 +287,28 @@ def _current_month_reference(runtime: dict[str, Any] | None) -> dict[str, Any] |
     return dict(ref)
 
 
+def _successor_context_reference(engine_id: str, runtime: dict[str, Any] | None) -> dict[str, Any] | None:
+    if engine_id != "BOCPD_RETURN_SUCCESSOR_V1" or not runtime:
+        return None
+    metadata = runtime.get("metadata")
+    if not isinstance(metadata, dict):
+        return None
+    if _text(metadata.get("successor_id")) != "BOCPD_RETURN_SUCCESSOR_V1":
+        return None
+    state = metadata.get("current_state")
+    if not _available(state):
+        return None
+    if runtime.get("direction_vote_permitted") is not False:
+        return None
+    return {
+        "state": _text(state),
+        "evidence_class": _text(metadata.get("current_state_evidence_class")) or _text(runtime.get("evidence_class")),
+        "state_as_of": metadata.get("current_state_as_of") or runtime.get("as_of"),
+        "information_cutoff": metadata.get("information_cutoff"),
+        "reference_kind": metadata.get("reference_kind") or "RUNTIME_SUCCESSOR_CONTEXT_REFERENCE",
+    }
+
+
 def build_engine_inventory(
     decision: dict[str, Any] | None,
     month_end_experts: list[dict[str, Any]] | None,
@@ -294,11 +317,10 @@ def build_engine_inventory(
 ) -> list[dict[str, Any]]:
     """Return every governed motor, separating runtime and current-month replay state.
 
-    Output values remain sourced only from governed expert/component ledgers.
-    Runtime rows may carry a read-only historical-replay reference attached by
-    runtime_source. That reference may make an expert visible as ISSUED for the
-    current target month, but it never changes operational runtime authority,
-    selector/ensemble locks, canonical authority, or direction-vote permission.
+    Output values remain sourced only from governed expert/component ledgers or
+    an explicitly governed runtime successor-context reference. Runtime rows may
+    carry a read-only historical-replay reference; this never changes selector,
+    ensemble, canonical forecast, direction-vote or position authority.
     """
     runtime_by_engine = {
         _text(row.get("engine_id")): dict(row)
@@ -335,6 +357,21 @@ def build_engine_inventory(
             row["direction_vote"] = bool(
                 row["direction_vote"] and runtime.get("direction_vote_permitted") is True
             )
+
+            successor_ref = _successor_context_reference(engine_id, runtime)
+            if successor_ref and not _available(row.get("output")):
+                row["operational_status"] = status_code or runtime_status or "UNRESOLVED_RUNTIME_STATE"
+                row["operational_runtime_status"] = runtime_status or None
+                row["reference_status"] = "ISSUED_SUCCESSOR_CONTEXT_REFERENCE"
+                row["status"] = "STORED_CONTEXT_AVAILABLE"
+                row["output"] = successor_ref["state"]
+                row["evidence_class"] = successor_ref["evidence_class"]
+                row["target_month"] = runtime.get("target_context")
+                row["as_of"] = successor_ref["state_as_of"]
+                row["input_cutoff"] = successor_ref["information_cutoff"]
+                row["version"] = runtime.get("engine_version") or row["version"]
+                row["canonical_authority"] = False
+                row["reference_kind"] = successor_ref["reference_kind"]
 
             ref = _current_month_reference(runtime)
             if ref and not _available(row.get("output")):
