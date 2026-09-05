@@ -22,7 +22,21 @@ REQUIRED_FEATURES = (
     "GVZ_PANIC",
     "GVZ_REGIME",
 )
-EXPECTED_ENGINE_COUNT = 12
+CURRENT_ENGINE_IDS = (
+    "CAUSAL_PATCH",
+    "VW_MIDAS_MSVR",
+    "MOMENTUM_3M",
+    "RANDOM_WALK",
+    "MONTHLY_DIRECTION_3M",
+    "FAST",
+    "SLOW",
+    "MACRO_EVENT_SUCCESSOR_V2",
+    "EMERGENCY_LEVEL",
+    "EMERGENCY_REVERSAL",
+    "BOCPD_RETURN_SUCCESSOR_V1",
+    "GVZ_RISK",
+)
+EXPECTED_ENGINE_COUNT = len(CURRENT_ENGINE_IDS)
 REPLAY_TRACK = "HISTORICAL_REPLAY"
 REPLAY_EVIDENCE = "HISTORICAL_REPLAY"
 SELECTOR_LOCK = "NOT_PROVEN_EXPERT_SELECTION_RULE"
@@ -59,12 +73,19 @@ def export_snapshot(database_url: str) -> dict[str, Any]:
                        evidence_class,runtime_status,status_code,direction_vote_permitted,
                        git_commit
                 FROM latest_engine_runtime_state
+                WHERE engine_id = ANY(%s)
                 ORDER BY engine_id
-                """
+                """,
+                (list(CURRENT_ENGINE_IDS),),
             )
             runtime = [_jsonable(dict(row)) for row in cur.fetchall()]
-            if len(runtime) != EXPECTED_ENGINE_COUNT or len({r["engine_id"] for r in runtime}) != EXPECTED_ENGINE_COUNT:
-                raise RuntimeError(f"SNAPSHOT_RUNTIME_CARDINALITY_INVALID:{len(runtime)}")
+            runtime_ids = {str(r["engine_id"]) for r in runtime}
+            if (
+                len(runtime) != EXPECTED_ENGINE_COUNT
+                or len(runtime_ids) != EXPECTED_ENGINE_COUNT
+                or runtime_ids != set(CURRENT_ENGINE_IDS)
+            ):
+                raise RuntimeError(f"SNAPSHOT_RUNTIME_CARDINALITY_INVALID:{len(runtime)}:{sorted(runtime_ids)}")
 
             targets = {str(row.get("target_context") or "") for row in runtime}
             if len(targets) != 1:
@@ -199,7 +220,7 @@ def main() -> int:
     output.write_text(text, encoding="utf-8")
     print(
         "PRODUCTION_DISPLAY_SNAPSHOT_EXPORT_PASS "
-        f"runtime={len(snapshot['runtime'])}/12 features={len(snapshot['features'])}/7 "
+        f"runtime={len(snapshot['runtime'])}/{EXPECTED_ENGINE_COUNT} features={len(snapshot['features'])}/7 "
         f"replay={len(snapshot['historical_replay_experts'])} "
         f"links={snapshot['context_exactly_one_link']}/7 target={snapshot['target_context']} "
         f"sha256={snapshot['payload_sha256']} writes=NONE"
