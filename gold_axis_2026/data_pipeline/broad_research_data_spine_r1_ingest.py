@@ -145,7 +145,7 @@ def build_core5(bundle: dict[str, Any], retrieved_at: datetime) -> dict[str, Any
     raw = gzip.decompress(compressed)
     df = pd.read_csv(io.BytesIO(raw))
     required_cols = ["date", *CORE5_SERIES.keys()]
-    if list(df.columns) != required_cols:
+    if len(df.columns) != len(required_cols) or set(df.columns) != set(required_cols):
         raise RuntimeError(f"CORE5_SCHEMA_MISMATCH:{list(df.columns)}")
     dates = pd.to_datetime(df["date"], errors="raise", utc=True)
     if len(df) != 390 or dates.iloc[0].date().isoformat() != "1994-02-01" or dates.iloc[-1].date().isoformat() != "2026-07-01":
