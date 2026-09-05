@@ -1,0 +1,63 @@
+name: Gold Control VW MIDAS SVR XAU Successor V2 Source Preflight
+
+on:
+  push:
+    branches:
+      - gold-control-vw-midas-svr-xau-successor-v2-validation
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_PRE_SCORE_ELIGIBILITY_CORRECTION_2026-09-05.md'
+      - 'gold_axis_2026/tools/vw_midas_svr_xau_successor_v2_source_preflight.py'
+      - '.github/workflows/gold-control-vw-midas-svr-xau-successor-v2-source-preflight.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pandas requests psycopg[binary]
+
+      - name: Compile preflight
+        run: python -m py_compile gold_axis_2026/tools/vw_midas_svr_xau_successor_v2_source_preflight.py
+
+      - name: Run pre-score source preflight
+        run: python gold_axis_2026/tools/vw_midas_svr_xau_successor_v2_source_preflight.py
+
+      - name: Assert evidence semantics
+        run: |
+          python - <<'PY'
+          import json
+          p='gold_axis_2026/vw_midas_svr_xau_successor_v2/source_preflight/source_preflight_evidence.json'
+          d=json.load(open(p, encoding='utf-8'))
+          assert d['source_gate_pass'] is True, d
+          assert d['model_scoring_executed'] is False, d
+          assert d['database_write'] is False, d
+          assert d['forecast_write'] is False, d
+          assert d['decision_write'] is False, d
+          assert d['gpr_source_gate']['origin_count'] == 54, d
+          assert d['eligibility_arithmetic']['first_fully_tunable_outer_origin'] == '2024-10', d
+          assert d['eligibility_arithmetic']['validation_origin_count'] == 12, d
+          print('VW_V2_SOURCE_PREFLIGHT_ASSERTIONS=PASS')
+          PY
+
+      - name: Upload preflight evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: vw-v2-source-preflight
+          path: gold_axis_2026/vw_midas_svr_xau_successor_v2/source_preflight/source_preflight_evidence.json
+          if-no-files-found: error
