@@ -1,17 +1,24 @@
-from gold_axis_2026.data_pipeline.macro_event_successor_v1_consensus_provider_audit import (
-    EVENTS,
-    audit_row,
-    parse_number,
-    select_event,
-)
+from __future__ import annotations
+
+import importlib.util
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+MOD_PATH = ROOT / "data_pipeline" / "macro_event_successor_v1_consensus_provider_audit.py"
+spec = importlib.util.spec_from_file_location("macro_event_successor_v1_consensus_provider_audit", MOD_PATH)
+assert spec and spec.loader
+mod = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = mod
+spec.loader.exec_module(mod)
 
 
 def test_parse_number_units():
-    assert parse_number("175K") == 175.0
-    assert parse_number("4.2%") == 4.2
-    assert parse_number("0.3%") == 0.3
-    assert parse_number(56) == 56.0
-    assert parse_number("") is None
+    assert mod.parse_number("175K") == 175.0
+    assert mod.parse_number("4.2%") == 4.2
+    assert mod.parse_number("0.3%") == 0.3
+    assert mod.parse_number(56) == 56.0
+    assert mod.parse_number("") is None
 
 
 def test_select_event_exact_us_category_and_date():
@@ -29,7 +36,7 @@ def test_select_event_exact_us_category_and_date():
             "Date": "2024-09-06T12:30:00",
         },
     ]
-    row, n = select_event(payload, "Non Farm Payrolls", "2024-09-06")
+    row, n = mod.select_event(payload, "Non Farm Payrolls", "2024-09-06")
     assert n == 1
     assert row is payload[0]
 
@@ -61,7 +68,7 @@ def test_audit_row_keeps_forecast_and_teforecast_separate():
         "release_date": "2024-09-06",
         "reference_month": "2024-08",
     }
-    out = audit_row(row, EVENTS["nfp"], sample, 160.0)
+    out = mod.audit_row(row, mod.EVENTS["nfp"], sample, 160.0)
     assert out["structural_status"] == "PASS"
     assert out["forecast_and_teforecast_separately_identifiable"] is True
     assert out["teforecast_eligible_for_consensus"] is False
