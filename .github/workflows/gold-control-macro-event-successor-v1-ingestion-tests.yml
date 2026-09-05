@@ -1,0 +1,34 @@
+name: Gold Control Macro Event Research Ingestion Tests
+
+on:
+  push:
+    branches:
+      - gold-control-macro-event-successor-v1-source-contract
+    paths:
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v1_research_neon_ingest.py'
+      - 'gold_axis_2026/tests/test_macro_event_successor_v1_research_neon_ingest.py'
+      - 'gold_axis_2026/data_pipeline/source_contract_macro_event_successor_v1.json'
+      - 'gold_axis_2026/GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V1_RESEARCH_DATA_PLANE_CHANGE_CONTROL_2026-09-05.md'
+      - '.github/workflows/gold-control-macro-event-successor-v1-ingestion-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pytest requests beautifulsoup4 'psycopg[binary]'
+      - name: Contract and unit tests
+        run: |
+          python -m json.tool gold_axis_2026/data_pipeline/source_contract_macro_event_successor_v1.json >/dev/null
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v1_research_neon_ingest.py
+          pytest -q \
+            gold_axis_2026/tests/test_macro_event_successor_v1_investing_coverage_audit.py \
+            gold_axis_2026/tests/test_macro_event_successor_v1_research_neon_ingest.py
