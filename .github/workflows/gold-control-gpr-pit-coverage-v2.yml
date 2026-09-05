@@ -1,0 +1,56 @@
+name: Gold Control GPR PIT Coverage V2
+
+on:
+  push:
+    branches:
+      - gold-control-gpr-pit-ingestion-v1
+    paths:
+      - 'gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py'
+      - 'gold_axis_2026/tests/test_audit_gpr_pit_coverage_v2.py'
+      - '.github/workflows/gold-control-gpr-pit-coverage-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout Gold Control feature branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Unit tests
+        run: |
+          pip install pytest
+          pytest -q gold_axis_2026/tests/test_audit_gpr_pit_coverage_v2.py
+
+      - name: Clone official Caldara-Iacoviello archive with history
+        run: git clone --quiet https://github.com/iacoviel/iacoviel.github.io.git /tmp/iacoviel-gpr
+
+      - name: Audit all 72 frozen VW V1 GPR origins
+        run: |
+          python gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py \
+            --upstream-repo /tmp/iacoviel-gpr \
+            --start 2020-09 \
+            --end 2026-08 \
+            --json-out gpr_pit_coverage_v2.json \
+            --md-out gpr_pit_coverage_v2.md
+          cat gpr_pit_coverage_v2.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gpr-pit-coverage-v2
+          path: |
+            gpr_pit_coverage_v2.json
+            gpr_pit_coverage_v2.md
+          if-no-files-found: error
