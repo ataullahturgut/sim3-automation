@@ -17,7 +17,6 @@ def _decision() -> dict:
         "monthly_direction_3m": "DOWN",
         "fast_state": "ROBUST_UP",
         "slow_state": "ROBUST_UP",
-        "macro_event_state": "BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED",
         "level_emergency": "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE",
         "reversal_emergency": "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE",
         # Historical archived field deliberately retained in the decision payload.
@@ -116,7 +115,6 @@ def test_all_governed_engines_are_always_present() -> None:
     assert ENGINE_OBSERVABILITY_CONTRACT == "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V4_BOCPD_AND_MACRO_SUCCESSORS_PROMOTED"
     assert tuple(row["engine_id"] for row in rows) == ENGINE_DISPLAY_ORDER
     assert "BOCPD" not in ENGINE_DISPLAY_ORDER
-    assert "MACRO_EVENT" not in ENGINE_DISPLAY_ORDER
     assert "BOCPD_RETURN_SUCCESSOR_V1" in ENGINE_DISPLAY_ORDER
     assert "MACRO_EVENT_SUCCESSOR_V2" in ENGINE_DISPLAY_ORDER
     assert len(rows) == 12
@@ -140,13 +138,12 @@ def test_current_direction_context_is_visible_even_without_h1_expert_rows() -> N
     assert rows["SLOW"]["output"] == "ROBUST_UP"
 
 
-def test_archived_successors_are_replaced_in_current_registry_without_losing_vw_blocker() -> None:
+def test_current_successors_are_present_without_losing_vw_blocker() -> None:
     rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [])}
     assert rows["VW_MIDAS_MSVR"]["status"] == "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN"
     assert rows["EMERGENCY_LEVEL"]["status"] == "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE"
     assert rows["EMERGENCY_REVERSAL"]["status"] == "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE"
     assert "BOCPD" not in rows
-    assert "MACRO_EVENT" not in rows
     assert rows["BOCPD_RETURN_SUCCESSOR_V1"]["status"] == "WAITING_RUNTIME_PROMOTION_RECORD"
     assert rows["MACRO_EVENT_SUCCESSOR_V2"]["status"] == "WAITING_RUNTIME_PROMOTION_RECORD"
     assert rows["BOCPD_RETURN_SUCCESSOR_V1"]["direction_vote"] is False
