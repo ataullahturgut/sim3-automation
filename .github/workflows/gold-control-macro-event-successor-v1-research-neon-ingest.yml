@@ -1,0 +1,91 @@
+name: Gold Control Macro Event Research Neon Ingest
+
+on:
+  push:
+    branches:
+      - gold-control-macro-event-successor-v1-source-contract
+    paths:
+      - '.github/workflows/gold-control-macro-event-successor-v1-research-neon-ingest.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+      MACRO_RESEARCH_INGESTION_AUTHORIZED: USER_AUTH_2026_09_05_INVESTING_DOCTORAL_RESEARCH
+    steps:
+      - name: Checkout authorized research branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install ingestion dependencies
+        run: pip install requests beautifulsoup4 'psycopg[binary]'
+
+      - name: Assert contract and secrets without revealing values
+        run: |
+          python - <<'PY'
+          import json, os
+          d=json.load(open('gold_axis_2026/data_pipeline/source_contract_macro_event_successor_v1.json', encoding='utf-8'))
+          assert d['version']=='MACRO_EVENT_SUCCESSOR_V1_SOURCE_CONTRACT_2026-09-05_R4', d['version']
+          assert d['source_data_plane_writes'] is True
+          assert d['authority_store_writes'] is False
+          assert d['model_score_authorized'] is False
+          assert d['direction_vote'] is False
+          assert os.environ.get('NEON_DATABASE_URL','').strip(), 'NEON_DATABASE_URL_NOT_SET'
+          assert os.environ.get('FRED_API_KEY','').strip(), 'FRED_API_KEY_NOT_SET'
+          PY
+
+      - name: Ingest complete-case research source panel
+        run: |
+          python gold_axis_2026/data_pipeline/macro_event_successor_v1_research_neon_ingest.py > macro_event_research_neon_ingest_summary.json
+          cat macro_event_research_neon_ingest_summary.json
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_research_neon_ingest_summary.json', encoding='utf-8'))
+          assert d['status']=='SUCCESS', d
+          assert d['complete_case_months']==126, d
+          assert d['series_count']==6, d
+          assert d['raw_investing_payload_stored'] is False, d
+          assert d['model_score_run'] is False, d
+          assert d['direction_vote'] is False, d
+          assert d['forecast_or_decision_write'] is False, d
+          assert d['decision_counts_before']==d['decision_counts_after'], d
+          PY
+
+      - name: Publish non-value audit summary
+        if: always()
+        run: |
+          if [ -f macro_event_research_neon_ingest_summary.json ]; then
+            python - <<'PY'
+          import json
+          d=json.load(open('macro_event_research_neon_ingest_summary.json', encoding='utf-8'))
+          print('## Macro Event Successor V1 research Neon ingestion')
+          print(f"- Status: `{d.get('status')}`")
+          print(f"- Complete-case months: `{d.get('complete_case_months')}`")
+          print(f"- Series: `{d.get('series_count')}`")
+          print(f"- Observations read: `{d.get('observations_read')}`")
+          print(f"- Observations written: `{d.get('observations_written')}`")
+          print(f"- Forecast/Decision write: `{d.get('forecast_or_decision_write')}`")
+          print(f"- Raw Investing payload stored: `{d.get('raw_investing_payload_stored')}`")
+          PY
+          fi
+
+      - name: Upload counts-only ingestion evidence
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-research-neon-ingest-summary
+          path: macro_event_research_neon_ingest_summary.json
+          if-no-files-found: error
