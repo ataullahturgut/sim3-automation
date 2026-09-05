@@ -6,6 +6,7 @@ on:
       - gold-control-remove-legacy-macro-event-final
     paths:
       - 'gold_axis_2026/tools/apply_v136_remove_legacy_macro_event.py'
+      - 'gold_axis_2026/tools/export_production_display_snapshot.py'
       - '.github/workflows/gold-control-v136-remove-legacy-macro-event.yml'
   workflow_dispatch:
 
@@ -44,7 +45,8 @@ jobs:
           python -m py_compile \
             gold_axis_2026/apps/engine_observability_contract.py \
             gold_axis_2026/apps/decision_source.py \
-            gold_axis_2026/apps/gold_control_mobile_v1.py
+            gold_axis_2026/apps/gold_control_mobile_v1.py \
+            gold_axis_2026/tools/export_production_display_snapshot.py
           PYTHONPATH=gold_axis_2026/apps pytest -q \
             gold_axis_2026/apps/test_engine_observability_contract.py \
             gold_axis_2026/apps/test_ui_manifest_consistency_v126.py
@@ -82,6 +84,7 @@ jobs:
             Path('gold_axis_2026/apps/decision_source.py'),
             Path('gold_axis_2026/apps/gold_control_mobile_v1.py'),
             Path('gold_axis_2026/apps/test_engine_observability_contract.py'),
+            Path('gold_axis_2026/tools/export_production_display_snapshot.py'),
             Path('gold_axis_2026/apps/production_display_snapshot.json'),
           ]
           for p in files:
@@ -108,6 +111,7 @@ jobs:
                   gold_axis_2026/apps/decision_source.py \
                   gold_axis_2026/apps/gold_control_mobile_v1.py \
                   gold_axis_2026/apps/test_engine_observability_contract.py \
+                  gold_axis_2026/tools/export_production_display_snapshot.py \
                   gold_axis_2026/apps/production_display_snapshot.json
           git diff --cached --check -- ':!gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
           git commit -m 'gold-control: remove legacy Macro Event from current state'
