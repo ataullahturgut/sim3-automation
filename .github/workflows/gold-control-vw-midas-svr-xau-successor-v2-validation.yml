@@ -1,0 +1,73 @@
+name: Gold Control VW MIDAS SVR XAU Successor V2 Validation
+
+on:
+  push:
+    branches:
+      - gold-control-vw-midas-svr-xau-successor-v2-validation
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_PRE_SCORE_ELIGIBILITY_CORRECTION_2026-09-05.md'
+      - 'gold_axis_2026/tools/vw_midas_svr_xau_successor_v2.py'
+      - 'gold_axis_2026/tests/test_vw_midas_svr_xau_successor_v2.py'
+      - '.github/workflows/gold-control-vw-midas-svr-xau-successor-v2-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pytest numpy pandas requests psycopg[binary] scikit-learn
+
+      - name: Compile engine
+        run: python -m py_compile gold_axis_2026/tools/vw_midas_svr_xau_successor_v2.py
+
+      - name: Contract unit tests
+        run: pytest -q gold_axis_2026/tests/test_vw_midas_svr_xau_successor_v2.py
+
+      - name: Execute untouched historical validation and locked diagnostic
+        run: |
+          rm -rf /tmp/vw-v2-evidence
+          python gold_axis_2026/tools/vw_midas_svr_xau_successor_v2.py --out-dir /tmp/vw-v2-evidence
+
+      - name: Assert governance and evidence boundaries
+        run: |
+          python - <<'PY'
+          import json
+          p='/tmp/vw-v2-evidence/vw_midas_svr_xau_successor_v2_evidence.json'
+          d=json.load(open(p, encoding='utf-8'))
+          assert d['engine_id'] == 'VW_MIDAS_SVR_XAU_SUCCESSOR_V2', d
+          assert d['prospective_claim'] is False, d
+          assert d['production_authorized'] is False, d
+          assert d['db_writes'] == 'NONE', d
+          assert d['forecast_or_decision_store_write'] is False, d
+          assert d['selector_or_ensemble_change'] is False, d
+          assert d['archived_vw_status_changed'] is False, d
+          assert d['deterministic_rerun'] is True, d
+          assert d['prefix_invariance'] is True, d
+          assert d['validation_origin_window'] == ['2024-10','2025-09'], d
+          assert d['current_sep2026_reconstruction']['status'] == 'NOT_RUN_PROSPECTIVE_LINEAGE_BRIDGE_NOT_PROVEN', d
+          assert d['prospective_bridge_status'] == 'NOT_PROVEN_FINAL_BRIDGE_PASS', d
+          print('VW_V2_GOVERNANCE_ASSERTIONS=PASS')
+          PY
+
+      - name: Upload metrics-only evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: vw-v2-validation-evidence
+          path: /tmp/vw-v2-evidence/vw_midas_svr_xau_successor_v2_evidence.json
+          if-no-files-found: error
