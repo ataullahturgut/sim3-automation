@@ -14,6 +14,8 @@ from bs4 import BeautifulSoup
 
 ENDPOINT = "https://www.investing.com/economic-calendar/more-history"
 REFERER_BASE = "https://www.investing.com/economic-calendar/"
+REQUEST_INTERVAL_SECONDS = 7.0
+MAX_429_RETRIES = 4
 
 EVENTS = {
     "nfp": {
@@ -78,7 +80,7 @@ def parse_release_date_and_reference(value: str) -> tuple[date, str]:
     rel_month, rel_day, rel_year, ref_mon = m.groups()
     rel = date(int(rel_year), MONTHS[rel_month], int(rel_day))
     if not ref_mon:
-        ref_d = (rel.replace(day=1) - timedelta(days=1))
+        ref_d = rel.replace(day=1) - timedelta(days=1)
         return rel, f"{ref_d.year:04d}-{ref_d.month:02d}"
     ref_month_num = MONTHS[ref_mon]
     ref_year = rel.year - 1 if ref_month_num > rel.month else rel.year
@@ -130,16 +132,26 @@ def fetch_page(session: requests.Session, event_attr_id: str, anchor: date) -> d
         "event_timestamp": anchor.isoformat(),
         "is_speech": "0",
     }
-    r = session.post(ENDPOINT, data=payload, timeout=25)
-    if r.status_code != 200:
-        raise RuntimeError(f"HTTP_{r.status_code}")
-    try:
-        data = r.json()
-    except Exception as exc:
-        raise RuntimeError("NON_JSON_RESPONSE") from exc
-    if not isinstance(data, dict) or "historyRows" not in data:
-        raise RuntimeError("UNEXPECTED_RESPONSE_SCHEMA")
-    return data
+    for attempt in range(MAX_429_RETRIES + 1):
+        r = session.post(ENDPOINT, data=payload, timeout=25)
+        if r.status_code == 429 and attempt < MAX_429_RETRIES:
+            retry_after = r.headers.get("Retry-After")
+            try:
+                wait_seconds = max(float(retry_after), 15.0) if retry_after else 20.0 * (attempt + 1)
+            except ValueError:
+                wait_seconds = 20.0 * (attempt + 1)
+            time.sleep(wait_seconds)
+            continue
+        if r.status_code != 200:
+            raise RuntimeError(f"HTTP_{r.status_code}")
+        try:
+            data = r.json()
+        except Exception as exc:
+            raise RuntimeError("NON_JSON_RESPONSE") from exc
+        if not isinstance(data, dict) or "historyRows" not in data:
+            raise RuntimeError("UNEXPECTED_RESPONSE_SCHEMA")
+        return data
+    raise RuntimeError("HTTP_429_RETRY_EXHAUSTED")
 
 
 def fetch_event_history(event_attr_id: str, start_ref: str, end_ref: str) -> tuple[list[HistoryRow], dict[str, Any]]:
@@ -195,7 +207,7 @@ def fetch_event_history(event_attr_id: str, start_ref: str, end_ref: str) -> tup
             blocker = f"anchor={anchor};oldest={oldest}"
             break
         anchor = new_anchor
-        time.sleep(0.35)
+        time.sleep(REQUEST_INTERVAL_SECONDS)
 
     rows = [by_ref[k] for k in sorted(by_ref)]
     meta = {
@@ -204,6 +216,8 @@ def fetch_event_history(event_attr_id: str, start_ref: str, end_ref: str) -> tup
         "request_count": calls,
         "page_hash_count": len(page_hashes),
         "page_hash_chain": hashlib.sha256("".join(page_hashes).encode("utf-8")).hexdigest() if page_hashes else None,
+        "request_interval_seconds": REQUEST_INTERVAL_SECONDS,
+        "max_429_retries": MAX_429_RETRIES,
     }
     return rows, meta
 
@@ -249,6 +263,7 @@ def main() -> int:
             "unit": spec["unit"],
             **summarize_event(rows, expected, meta),
         }
+        time.sleep(REQUEST_INTERVAL_SECONDS)
 
     endpoint_pass = all(v["endpoint_status"] == "PASS_ENDPOINT_ACCESS" for v in results.values())
     min_coverage = min((v["forecast_coverage_ratio"] for v in results.values()), default=0.0)
@@ -278,7 +293,7 @@ def main() -> int:
         "forecast_or_decision_write": False,
         "direction_vote": False,
         "raw_provider_payload_committed": False,
-        "note": "Coverage audit only. Investing.com actual values are not model authority; BLS/ALFRED remains the first-print actual lane. Exact historical pre-release update timestamps are not inferred from this endpoint."
+        "note": "Coverage audit only. Investing.com actual values are not model authority; BLS/ALFRED remains the first-print actual lane. Exact historical pre-release update timestamps are not inferred from this endpoint. HTTP 429 is respected with throttling/backoff; no rate-limit bypass is attempted."
     }
     with open(args.out, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2, sort_keys=True)
