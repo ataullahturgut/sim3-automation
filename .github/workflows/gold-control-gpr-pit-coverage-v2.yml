@@ -7,6 +7,8 @@ on:
     paths:
       - 'gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py'
       - 'gold_axis_2026/data_pipeline/gpr_vintage_backfill_v2.py'
+      - 'gold_axis_2026/data_pipeline/persist_gpr_pit_bundle_v2.py'
+      - 'gold_axis_2026/data_pipeline/source_contract_gpr_pit_v2.json'
       - 'gold_axis_2026/tests/test_audit_gpr_pit_coverage_v2.py'
       - '.github/workflows/gold-control-gpr-pit-coverage-v2.yml'
   workflow_dispatch:
@@ -30,10 +32,15 @@ jobs:
           python-version: '3.11'
 
       - name: Install audit dependencies
-        run: pip install pytest pandas xlrd
+        run: pip install pytest pandas xlrd psycopg[binary]
 
-      - name: Unit tests
-        run: pytest -q gold_axis_2026/tests/test_audit_gpr_pit_coverage_v2.py
+      - name: Unit and compile tests
+        run: |
+          pytest -q gold_axis_2026/tests/test_audit_gpr_pit_coverage_v2.py
+          python -m py_compile gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py
+          python -m py_compile gold_axis_2026/data_pipeline/gpr_vintage_backfill_v2.py
+          python -m py_compile gold_axis_2026/data_pipeline/persist_gpr_pit_bundle_v2.py
+          python -m json.tool gold_axis_2026/data_pipeline/source_contract_gpr_pit_v2.json >/dev/null
 
       - name: Clone official Caldara-Iacoviello archive with history
         run: git clone --quiet https://github.com/iacoviel/iacoviel.github.io.git /tmp/iacoviel-gpr
@@ -61,6 +68,7 @@ jobs:
           python - <<'PY'
           import json
           d=json.load(open('gpr_vintage_bundle_v2_summary.json', encoding='utf-8'))
+          assert d['series_id'] == 'GPR_OFFICIAL_GIT_PIT', d
           assert d['required_vintages'] == 54, d
           assert d['proven_vintages_built'] == 54, d
           assert d['quality_errors'] == 0, d
