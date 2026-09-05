@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - gold-control-bocpd-successor-v1
+      - gold-control-bocpd-successor-v1-promotion
       - gold-r4-direction-engine
       - gold-control-v132-monthly-origin-contract
     paths:
@@ -13,12 +14,16 @@ on:
       - 'gold_axis_2026/GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_RISK_VALIDATION_CONTRACT_2026-09-04.md'
       - 'gold_axis_2026/GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_ENGINEERING_EVIDENCE_2026-09-04.md'
       - 'gold_axis_2026/GOLD_CONTROL_PROJECT_STAGE_BOCPD_SUCCESSOR_V1_STATUS_2026-09-04.md'
+      - 'gold_axis_2026/GOLD_CONTROL_BOCPD_SUCCESSOR_V1_PROMOTION_CHANGE_CONTROL_2026-09-05.md'
       - 'gold_axis_2026/bocpd_successor_v1/**'
       - 'gold_axis_2026/tools/bocpd_return_successor_v1.py'
       - 'gold_axis_2026/tools/bocpd_return_successor_v1_risk_validation.py'
       - 'gold_axis_2026/tools/test_bocpd_return_successor_v1.py'
       - 'gold_axis_2026/tools/test_bocpd_return_successor_v1_risk_validation.py'
       - 'gold_axis_2026/tools/apply_manifest_v1_31_bocpd_successor.py'
+      - 'gold_axis_2026/apps/engine_observability_contract.py'
+      - 'gold_axis_2026/apps/test_engine_observability_contract.py'
+      - 'gold_axis_2026/data_pipeline/schema_patch_bocpd_successor_v1_runtime_promotion.sql'
       - 'gold_axis_2026/core5_monthly.csv.gz.b64'
       - '.github/workflows/gold-control-bocpd-successor-v1.yml'
   workflow_dispatch:
@@ -41,14 +46,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install numpy pandas pytest
 
-      - name: Manifest and archived-identity governance assertions
+      - name: Manifest and successor-promotion governance assertions
         run: |
           set -euo pipefail
-          grep -F '**Manifest version:** 1.32' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F '**Manifest version:** 1.34' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'only canonical Gold Control project manifest' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'BOCPD_RETURN_SUCCESSOR_V1' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
-          grep -F 'RESEARCH_SHADOW_CANDIDATE_RISK_DIAGNOSTIC_COMPLETE_PROSPECTIVE_VALIDATION_REQUIRED' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'ACTIVE_BOCPD_RETURN_SUCCESSOR_V1_REGIME_CONTEXT' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'AUTO_SELECTOR = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'AUTO_ENSEMBLE = OFF' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -F 'NOT_PROVEN_POSITION_MAPPING' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
@@ -59,6 +64,11 @@ jobs:
           pytest -q \
             test_bocpd_return_successor_v1.py \
             test_bocpd_return_successor_v1_risk_validation.py
+
+      - name: Runtime promotion observability tests
+        working-directory: gold_axis_2026/apps
+        run: |
+          pytest -q test_engine_observability_contract.py
 
       - name: Historical successor engineering replay
         working-directory: gold_axis_2026/tools
@@ -135,7 +145,7 @@ jobs:
           print('BOCPD_SUCCESSOR_RISK_DIAGNOSTIC_AUDIT=PASS')
           print('DATABASE_WRITES=NONE')
           print('PROSPECTIVE_CLAIM=NO')
-          print('PROMOTION_AUTHORIZED=NO')
+          print('PROMOTION_AUTHORIZED=NO_IN_HISTORICAL_RESEARCH_ARTIFACT')
           PY
 
       - name: Upload non-production research evidence
