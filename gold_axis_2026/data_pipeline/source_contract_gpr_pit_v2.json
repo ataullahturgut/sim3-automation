@@ -1,0 +1,38 @@
+{
+  "version": "GOLD_GPR_PIT_SOURCE_V2_2026-09-05",
+  "status": "PRE_REGISTERED_HISTORICAL_PIT_RECONSTRUCTION_SOURCE",
+  "series": {
+    "GPR_OFFICIAL_GIT_PIT": {
+      "semantic": "GPR historical monthly vintage reconstruction from the authors' official Git archive",
+      "source": "Caldara-Iacoviello official GitHub archive",
+      "symbol": "GPR",
+      "tier": "A",
+      "frequency": "monthly_vintage",
+      "unit": "index",
+      "role": "VW_MIDAS_SVR_XAU_SUCCESSOR_V2 historical PIT research feature",
+      "status": "APPROVED_HISTORICAL_PIT_RECONSTRUCTION_RESEARCH",
+      "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+      "official_repository": "iacoviel/iacoviel.github.io",
+      "official_directory": "gpr_archive_files",
+      "filename_pattern": "data_gpr_export_YYYYMM.xls",
+      "origin_rule": "forecast origin month p uses exact vintage YYYYMM=p and GPR observation p-1",
+      "availability_policy": "official_git_archive_earliest_add_commit_floor",
+      "retrieved_at_policy": "true current reconstruction time; never backdated",
+      "first_seen_at_policy": "true current reconstruction time; never backdated",
+      "provider_as_of_policy": "earliest official Git archive add commit timestamp for exact vintage file",
+      "available_as_of_policy": "same official Git archive add commit floor after cutoff proof",
+      "continuous_proven_origin_start": "2022-03",
+      "continuous_proven_origin_end": "2026-08",
+      "required_origin_count": 54,
+      "required_observation_rule": "p-1 must exist and parse in every exact vintage",
+      "current_final_vintage_substitution_allowed": false,
+      "not_equivalent_to": [
+        "GPR_OFFICIAL current/final-vintage retrieval",
+        "a backdated original system retrieval",
+        "a newspaper publication timestamp"
+      ],
+      "model_use_allowed": "historical replay/reconstruction only until separate VW V2 validation and promotion gates pass",
+      "display_allowed": false
+    }
+  }
+}
