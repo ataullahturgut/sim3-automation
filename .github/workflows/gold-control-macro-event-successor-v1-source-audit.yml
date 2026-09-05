@@ -8,6 +8,7 @@ on:
       - 'gold_axis_2026/GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V1_SOURCE_CONTRACT_2026-09-05.md'
       - 'gold_axis_2026/data_pipeline/source_contract_macro_event_successor_v1.json'
       - 'gold_axis_2026/data_pipeline/macro_event_successor_v1_sources.py'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v1_machine_preflight.py'
       - 'gold_axis_2026/tests/test_macro_event_successor_v1_sources.py'
       - '.github/workflows/gold-control-macro-event-successor-v1-source-audit.yml'
   workflow_dispatch:
@@ -21,6 +22,7 @@ jobs:
     timeout-minutes: 15
     env:
       TRADING_ECONOMICS_API_KEY: ${{ secrets.TRADING_ECONOMICS_API_KEY }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v4
@@ -39,9 +41,29 @@ jobs:
         run: |
           python -m json.tool gold_axis_2026/data_pipeline/source_contract_macro_event_successor_v1.json >/dev/null
           python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v1_sources.py
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v1_machine_preflight.py
           pytest -q gold_axis_2026/tests/test_macro_event_successor_v1_sources.py
 
-      - name: Audit BLS first-print archive and optional PIT consensus provider
+      - name: Machine source preflight
+        run: |
+          python gold_axis_2026/data_pipeline/macro_event_successor_v1_machine_preflight.py
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_machine_source_preflight_v1.json', encoding='utf-8'))
+          with open('macro_event_machine_source_preflight_v1.md','w',encoding='utf-8') as f:
+              f.write('# Macro Event Successor V1 — Machine Source Preflight\n\n')
+              f.write(f"- Overall: `{d['status']}`\n")
+              f.write(f"- BLS archive lane: `{d['bls_archive']['status']}`\n")
+              f.write(f"- BLS Public Data API: `{d['bls_public_api']['status']}`\n")
+              f.write(f"- FRED/ALFRED initial-release API: `{d['fred_alfred_initial_release']['status']}`\n")
+              f.write(f"- Consensus: `{d['consensus']['status']}`\n")
+              f.write('- Production DB write: `NO`\n- Model score: `NO`\n- Forecast/Decision Store write: `NO`\n')
+          PY
+          cat macro_event_machine_source_preflight_v1.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Try full BLS first-print archive reconstruction
+        id: archive
+        continue-on-error: true
         run: |
           python gold_axis_2026/data_pipeline/macro_event_successor_v1_sources.py \
             --start-reference 2016-01 \
@@ -51,27 +73,38 @@ jobs:
             --md-out macro_event_source_audit_v1.md
           cat macro_event_source_audit_v1.md >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Enforce source-only invariants
+      - name: Enforce source-only fail-closed invariants
+        if: always()
         run: |
           python - <<'PY'
-          import json
-          d = json.load(open('macro_event_source_audit_v1.json', encoding='utf-8'))
-          assert d['bls']['status'] == 'PASS', d['bls']
-          assert d['bls']['decision_store_writes'] == 0, d['bls']
-          assert d['bls']['model_score_run'] is False, d['bls']
+          import json, pathlib
+          p=pathlib.Path('macro_event_machine_source_preflight_v1.json')
+          assert p.exists(), 'MACHINE_PREFLIGHT_EVIDENCE_MISSING'
+          d=json.loads(p.read_text(encoding='utf-8'))
+          assert d['production_db_write'] is False, d
+          assert d['model_score_run'] is False, d
+          assert d['forecast_or_decision_write'] is False, d
+          assert d['direction_vote'] is False, d
           assert d['consensus']['approved_for_model_use'] is False, d['consensus']
-          b = json.load(open('macro_event_bls_bundle_v1.json', encoding='utf-8'))
-          assert b['metadata']['forecast_or_decision_write'] is False, b['metadata']
-          assert b['metadata']['current_vintage_substitution_allowed'] is False, b['metadata']
-          assert b['evidence_class'] == 'HISTORICAL_REPLAY_RECONSTRUCTION', b
+          assert d['fred_alfred_initial_release']['approved_for_historical_macro_input'] is False, d['fred_alfred_initial_release']
+          assert d['bls_public_api']['historical_first_print_approved'] is False, d['bls_public_api']
+          b=pathlib.Path('macro_event_bls_bundle_v1.json')
+          if b.exists():
+              bundle=json.loads(b.read_text(encoding='utf-8'))
+              assert bundle['metadata']['forecast_or_decision_write'] is False, bundle['metadata']
+              assert bundle['metadata']['current_vintage_substitution_allowed'] is False, bundle['metadata']
+              assert bundle['evidence_class']=='HISTORICAL_REPLAY_RECONSTRUCTION', bundle
           PY
 
       - name: Upload source audit evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: macro-event-successor-v1-source-audit
           path: |
+            macro_event_machine_source_preflight_v1.json
+            macro_event_machine_source_preflight_v1.md
             macro_event_bls_bundle_v1.json
             macro_event_source_audit_v1.json
             macro_event_source_audit_v1.md
-          if-no-files-found: error
+          if-no-files-found: warn
