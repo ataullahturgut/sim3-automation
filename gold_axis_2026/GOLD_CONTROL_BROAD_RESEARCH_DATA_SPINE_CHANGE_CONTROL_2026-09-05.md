@@ -47,11 +47,11 @@ The old research code requested annual `spot-history-YYYY.json` files for 2010..
 - Platinum
 - Palladium
 
-For the governed reconstruction the upstream repository is pinned to commit:
+For the governed historical reconstruction the upstream repository is pinned to the verified pre-research-run data refresh commit:
 
-`ed2e549f82ba0d1cd3ca32842b82d3888d301e01`
+`429d8e612d504a964846ff6438dbdb28ace630c3`
 
-This is **not** claimed to be the file state that was available at each historical forecast origin. It is a current historical reconstruction for research reproducibility only.
+That commit is dated 2026-08-19 and refreshed the 2026 spot bundle. It is used only as a reproducible reconstruction anchor before the retained 2026-08-26 research implementation. It is **not** evidence that the same payload was available unchanged at every historical forecast origin and therefore does **not** create a historical PIT claim.
 
 Separate research identities are reserved:
 
