@@ -97,18 +97,22 @@ def probe_fred_initial_release(session: requests.Session) -> dict:
                 "api_key": key,
                 "file_type": "json",
                 "output_type": 4,
+                "realtime_start": "2016-01-01",
+                "realtime_end": "2026-09-05",
                 "observation_start": "2024-01-01",
                 "observation_end": "2026-08-31",
                 "limit": 100,
                 "sort_order": "desc",
             })
-            j = r.json() if r.status_code == 200 else None
+            j = r.json() if r.headers.get("content-type", "").lower().startswith("application/json") else None
             obs = (j or {}).get("observations", []) if isinstance(j, dict) else []
             valid = [x for x in obs if str(x.get("value", ".")) not in {".", "", "nan", "None"}]
             rows[name] = {
                 "series_id": sid,
                 "http_status": r.status_code,
                 "valid_initial_release_rows": len(valid),
+                "api_error_code": (j or {}).get("error_code") if isinstance(j, dict) and r.status_code != 200 else None,
+                "api_error_message": (j or {}).get("error_message") if isinstance(j, dict) and r.status_code != 200 else None,
                 "raw_value_logged": False,
             }
         except Exception as exc:
