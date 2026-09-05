@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -8,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "tools" / "audit_gpr_pit_coverage_v2.py"
 spec = importlib.util.spec_from_file_location("audit_gpr_pit_coverage_v2", SCRIPT)
 mod = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = mod
 assert spec.loader is not None
 spec.loader.exec_module(mod)
 
