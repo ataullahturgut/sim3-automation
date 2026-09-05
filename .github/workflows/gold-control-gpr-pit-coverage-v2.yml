@@ -6,6 +6,7 @@ on:
       - gold-control-gpr-pit-ingestion-v1
     paths:
       - 'gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py'
+      - 'gold_axis_2026/data_pipeline/gpr_vintage_backfill_v2.py'
       - 'gold_axis_2026/tests/test_audit_gpr_pit_coverage_v2.py'
       - '.github/workflows/gold-control-gpr-pit-coverage-v2.yml'
   workflow_dispatch:
@@ -16,7 +17,7 @@ permissions:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - name: Checkout Gold Control feature branch
         uses: actions/checkout@v4
@@ -28,10 +29,11 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install audit dependencies
+        run: pip install pytest pandas xlrd
+
       - name: Unit tests
-        run: |
-          pip install pytest
-          pytest -q gold_axis_2026/tests/test_audit_gpr_pit_coverage_v2.py
+        run: pytest -q gold_axis_2026/tests/test_audit_gpr_pit_coverage_v2.py
 
       - name: Clone official Caldara-Iacoviello archive with history
         run: git clone --quiet https://github.com/iacoviel/iacoviel.github.io.git /tmp/iacoviel-gpr
@@ -46,6 +48,18 @@ jobs:
             --md-out gpr_pit_coverage_v2.md
           cat gpr_pit_coverage_v2.md >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Build replay bundle from PIT-proven official Git vintages
+        run: |
+          python gold_axis_2026/data_pipeline/gpr_vintage_backfill_v2.py \
+            --upstream-repo /tmp/iacoviel-gpr \
+            --coverage-json gpr_pit_coverage_v2.json \
+            --bundle-out gpr_vintage_bundle_v2.json \
+            --summary-out gpr_vintage_bundle_v2_summary.json
+          echo '## GPR vintage bundle' >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          cat gpr_vintage_bundle_v2_summary.json | python -c 'import json,sys; d=json.load(sys.stdin); d.pop("origins",None); print(json.dumps(d,indent=2,sort_keys=True))' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
       - name: Upload audit evidence
         uses: actions/upload-artifact@v4
         with:
@@ -53,4 +67,6 @@ jobs:
           path: |
             gpr_pit_coverage_v2.json
             gpr_pit_coverage_v2.md
+            gpr_vintage_bundle_v2.json
+            gpr_vintage_bundle_v2_summary.json
           if-no-files-found: error
