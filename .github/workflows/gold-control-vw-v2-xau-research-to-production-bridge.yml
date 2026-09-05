@@ -1,0 +1,41 @@
+name: Gold Control VW V2 XAU Research to Production Bridge
+
+on:
+  push:
+    branches:
+      - gold-control-vw-midas-svr-xau-successor-v2-validation
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_VW_V2_XAU_RESEARCH_TO_PRODUCTION_BRIDGE_EXECUTION_CONTRACT_2026-09-05.md'
+      - 'gold_axis_2026/tools/vw_v2_xau_research_to_production_bridge.py'
+      - '.github/workflows/gold-control-vw-v2-xau-research-to-production-bridge.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas requests
+      - name: Compile bridge
+        run: python -m py_compile gold_axis_2026/tools/vw_v2_xau_research_to_production_bridge.py
+      - name: Execute frozen bridge
+        run: python gold_axis_2026/tools/vw_v2_xau_research_to_production_bridge.py
+      - name: Upload metrics-only bridge evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vw-v2-xau-lineage-bridge-evidence
+          path: gold_axis_2026/vw_midas_svr_xau_successor_v2/bridge/xau_research_to_production_bridge_evidence.json
+          if-no-files-found: warn
