@@ -1,13 +1,15 @@
 from __future__ import annotations
 
 import importlib.util
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MOD_PATH = ROOT / "data_pipeline" / "macro_event_successor_v1_sources.py"
 spec = importlib.util.spec_from_file_location("macro_event_successor_v1_sources", MOD_PATH)
-mod = importlib.util.module_from_spec(spec)
 assert spec and spec.loader
+mod = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = mod
 spec.loader.exec_module(mod)
 
 
