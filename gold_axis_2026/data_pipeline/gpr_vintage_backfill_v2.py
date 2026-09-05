@@ -14,7 +14,7 @@ from pathlib import Path
 import pandas as pd
 
 PIPELINE_VERSION = "GOLD_GPR_VINTAGE_PIT_BACKFILL_V2_2026-09-05"
-SERIES_ID = "GPR_OFFICIAL"
+SERIES_ID = "GPR_OFFICIAL_GIT_PIT"
 SOURCE_NAME = "Caldara-Iacoviello official GitHub archive"
 SOURCE_SYMBOL = "GPR"
 EVIDENCE_CLASS = "HISTORICAL_REPLAY_RECONSTRUCTION"
@@ -38,20 +38,12 @@ def utcnow() -> datetime:
 
 
 def git_bytes(repo: Path, commit: str, relpath: str) -> bytes:
-    proc = subprocess.run(
-        ["git", "show", f"{commit}:{relpath}"],
-        cwd=repo,
-        check=True,
-        capture_output=True,
-        timeout=90,
-    )
+    proc = subprocess.run(["git", "show", f"{commit}:{relpath}"], cwd=repo, check=True, capture_output=True, timeout=90)
     return proc.stdout
 
 
 def git_text(repo: Path, *args: str) -> str:
-    proc = subprocess.run(
-        ["git", *args], cwd=repo, check=True, capture_output=True, text=True, timeout=90
-    )
+    proc = subprocess.run(["git", *args], cwd=repo, check=True, capture_output=True, text=True, timeout=90)
     return proc.stdout.strip()
 
 
@@ -113,14 +105,7 @@ def load_coverage(path: Path, start_origin: str, end_origin: str) -> list[dict]:
     return [by_origin[m] for m in wanted]
 
 
-def build_bundle(
-    repo: Path,
-    coverage_path: Path,
-    retrieved_at: datetime,
-    start_origin: str,
-    end_origin: str,
-    require_all_proven: bool,
-) -> tuple[dict, list[VintageRecord]]:
+def build_bundle(repo: Path, coverage_path: Path, retrieved_at: datetime, start_origin: str, end_origin: str, require_all_proven: bool) -> tuple[dict, list[VintageRecord]]:
     coverage = load_coverage(coverage_path, start_origin, end_origin)
     run_id = str(uuid.uuid4())
     observations: list[dict] = []
@@ -135,15 +120,7 @@ def build_bundle(
     for c in coverage:
         origin = str(c["origin_month"])
         if not bool(c.get("repo_git_pit_proven")):
-            quality_events.append({
-                "run_id": run_id,
-                "series_id": SERIES_ID,
-                "event_ts": retrieved_at.isoformat(),
-                "severity": "ERROR",
-                "code": "GPR_VINTAGE_PIT_NOT_PROVEN",
-                "message": f"Official Git archive does not prove vintage availability by origin {origin}",
-                "metadata": {"origin_month": origin, "coverage_status": c.get("pit_status")},
-            })
+            quality_events.append({"run_id": run_id, "series_id": SERIES_ID, "event_ts": retrieved_at.isoformat(), "severity": "ERROR", "code": "GPR_VINTAGE_PIT_NOT_PROVEN", "message": f"Official Git archive does not prove vintage availability by origin {origin}", "metadata": {"origin_month": origin, "coverage_status": c.get("pit_status")}})
             continue
 
         compact = origin.replace("-", "")
@@ -165,18 +142,10 @@ def build_bundle(
         if required.empty:
             if require_all_proven:
                 raise RuntimeError(f"GPR_REQUIRED_P_MINUS_1_MISSING:{origin}:{required_month}")
-            quality_events.append({
-                "run_id": run_id,
-                "series_id": SERIES_ID,
-                "event_ts": retrieved_at.isoformat(),
-                "severity": "ERROR",
-                "code": "GPR_REQUIRED_P_MINUS_1_MISSING",
-                "message": f"Vintage {origin} lacks required GPR observation {required_month}",
-                "metadata": {"origin_month": origin, "required_observation_month": required_month, "archive_path": relpath},
-            })
+            quality_events.append({"run_id": run_id, "series_id": SERIES_ID, "event_ts": retrieved_at.isoformat(), "severity": "ERROR", "code": "GPR_REQUIRED_P_MINUS_1_MISSING", "message": f"Vintage {origin} lacks required GPR observation {required_month}", "metadata": {"origin_month": origin, "required_observation_month": required_month, "archive_path": relpath}})
             continue
 
-        lineage = f"GPR_OFFICIAL_GIT_VINTAGE_{compact}_{payload_hash[:12]}"
+        lineage = f"GPR_OFFICIAL_GIT_PIT_{compact}_{payload_hash[:12]}"
         for _, row in usable.iterrows():
             obs_month = pd.Timestamp(row["date"]).to_period("M").to_timestamp()
             observations.append({
@@ -207,36 +176,20 @@ def build_bundle(
                     "retrieval_time_not_backdated": True,
                     "evidence_class": EVIDENCE_CLASS,
                     "vintage_specific_lineage": True,
+                    "separate_from_current_final_vintage_series": "GPR_OFFICIAL",
                 },
             })
 
         vintages.append({
-            "source_id": f"GPR_OFFICIAL_GIT_VINTAGE_{compact}",
+            "source_id": f"GPR_OFFICIAL_GIT_PIT_VINTAGE_{compact}",
             "retrieved_at": retrieved_at.isoformat(),
             "provider_as_of": commit_at.isoformat(),
             "content_sha256": payload_hash,
             "content_type": "application/vnd.ms-excel",
             "byte_count": len(raw),
-            "metadata": {
-                "origin_month": origin,
-                "required_observation_month": required_month,
-                "archive_path": relpath,
-                "archive_commit_sha": commit_sha,
-                "archive_commit_at": commit_at.isoformat(),
-                "availability_policy": "official_git_archive_commit_floor",
-                "evidence_class": EVIDENCE_CLASS,
-            },
+            "metadata": {"origin_month": origin, "required_observation_month": required_month, "archive_path": relpath, "archive_commit_sha": commit_sha, "archive_commit_at": commit_at.isoformat(), "availability_policy": "official_git_archive_commit_floor", "evidence_class": EVIDENCE_CLASS},
         })
-        records.append(VintageRecord(
-            origin_month=origin,
-            required_observation_month=required_month,
-            archive_path=relpath,
-            archive_commit_sha=commit_sha,
-            archive_commit_at=commit_at.isoformat(),
-            payload_sha256=payload_hash,
-            row_count=len(usable),
-            required_value_present=True,
-        ))
+        records.append(VintageRecord(origin, required_month, relpath, commit_sha, commit_at.isoformat(), payload_hash, len(usable), True))
 
     requested = month_range(start_origin, end_origin)
     if require_all_proven and len(records) != len(requested):
@@ -247,23 +200,12 @@ def build_bundle(
         "started_at": retrieved_at.isoformat(),
         "finished_at": utcnow().isoformat(),
         "pipeline_version": PIPELINE_VERSION,
-        "mode": "historical_reconstruction:gpr_official_git_vintage",
+        "mode": "historical_reconstruction:gpr_official_git_pit",
         "evidence_class": EVIDENCE_CLASS,
         "observations": observations,
         "vintages": vintages,
         "quality_events": quality_events,
-        "metadata": {
-            "production_write": False,
-            "decision_write": False,
-            "forecast_write": False,
-            "source_series_id": SERIES_ID,
-            "source_locator": "official iacoviel/iacoviel.github.io git history",
-            "start_origin": start_origin,
-            "end_origin": end_origin,
-            "required_origin_count": len(requested),
-            "require_all_proven": require_all_proven,
-            "current_final_vintage_substitution_allowed": False,
-        },
+        "metadata": {"production_write": False, "decision_write": False, "forecast_write": False, "source_series_id": SERIES_ID, "source_locator": "official iacoviel/iacoviel.github.io git history", "start_origin": start_origin, "end_origin": end_origin, "required_origin_count": len(requested), "require_all_proven": require_all_proven, "current_final_vintage_substitution_allowed": False},
     }
     return bundle, records
 
@@ -281,18 +223,12 @@ def main() -> int:
     if not (args.upstream_repo / ".git").exists():
         raise SystemExit("UPSTREAM_REPO_IS_NOT_A_GIT_CLONE")
     retrieved_at = utcnow()
-    bundle, records = build_bundle(
-        args.upstream_repo,
-        args.coverage_json,
-        retrieved_at,
-        args.start_origin,
-        args.end_origin,
-        args.require_all_proven,
-    )
+    bundle, records = build_bundle(args.upstream_repo, args.coverage_json, retrieved_at, args.start_origin, args.end_origin, args.require_all_proven)
     args.bundle_out.write_text(json.dumps(bundle, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     requested_count = len(month_range(args.start_origin, args.end_origin))
     summary = {
         "pipeline_version": PIPELINE_VERSION,
+        "series_id": SERIES_ID,
         "start_origin": args.start_origin,
         "end_origin": args.end_origin,
         "required_vintages": requested_count,
