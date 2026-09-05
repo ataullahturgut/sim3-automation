@@ -1,0 +1,33 @@
+name: Gold Control Macro Event Neon Ingestion Preflight
+
+on:
+  push:
+    branches:
+      - gold-control-macro-event-successor-v1-source-contract
+    paths:
+      - '.github/workflows/gold-control-macro-event-successor-v1-neon-preflight.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+    steps:
+      - name: Check required secret presence without revealing values
+        run: |
+          python - <<'PY'
+          import os
+          checks={
+            'NEON_DATABASE_URL': bool(os.environ.get('NEON_DATABASE_URL','').strip()),
+            'FRED_API_KEY': bool(os.environ.get('FRED_API_KEY','').strip()),
+          }
+          print(checks)
+          assert checks['NEON_DATABASE_URL'], 'NEON_DATABASE_URL_NOT_CONFIGURED'
+          assert checks['FRED_API_KEY'], 'FRED_API_KEY_NOT_CONFIGURED'
+          PY
