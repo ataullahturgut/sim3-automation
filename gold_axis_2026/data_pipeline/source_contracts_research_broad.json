@@ -1,0 +1,65 @@
+{
+  "contract_version": "BROAD_RESEARCH_DATA_SPINE_R1_2026-09-05",
+  "scope": "RESEARCH_DATA_ONLY",
+  "governance": {
+    "model_scores": false,
+    "forecast_writes": false,
+    "decision_writes": false,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF",
+    "raw_market_values_in_logs": false,
+    "silent_provider_substitution": false,
+    "backdated_retrieval_timestamps": false
+  },
+  "tier_a": {
+    "staktrakr_four_metal_daily": {
+      "upstream_repo": "lbruton/StakTrakr",
+      "pinned_commit": "429d8e612d504a964846ff6438dbdb28ace630c3",
+      "years": [2010, 2026],
+      "end_date": "2026-07-31",
+      "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+      "series": {
+        "Gold": "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+        "Silver": "XAG_STAKTRAKR_RESEARCH_DAILY_R1",
+        "Platinum": "XPT_STAKTRAKR_RESEARCH_DAILY_R1",
+        "Palladium": "XPD_STAKTRAKR_RESEARCH_DAILY_R1"
+      }
+    },
+    "xau_hourly_derived_daily": {
+      "series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+      "provider": "Twelve Data",
+      "symbol": "XAU/USD",
+      "interval": "1h",
+      "timezone": "America/New_York",
+      "selected_bar_time": "16:00:00",
+      "start_month": "2022-03",
+      "end_month": "2026-08",
+      "min_selected_days_per_month": 15,
+      "evidence_class": "HISTORICAL_RESEARCH_RETRIEVAL_NOT_CANONICAL_NY17",
+      "not_equivalent_to": "XAU_EOD_TWELVE_NY17"
+    },
+    "gpr_companion_vintages": {
+      "upstream_repo": "iacoviel/iacoviel.github.io",
+      "origin_start": "2022-03",
+      "origin_end": "2026-08",
+      "required_origin_count": 54,
+      "availability_policy": "EARLIEST_OFFICIAL_GIT_ARCHIVE_ADD_COMMIT_FLOOR",
+      "series": ["GPRT_OFFICIAL_GIT_PIT", "GPRA_OFFICIAL_GIT_PIT"],
+      "base_authority_series": "GPR_OFFICIAL_GIT_PIT"
+    },
+    "existing_neon_inventory": [
+      "DJIA_FRED", "NASDAQ100_FRED", "SP500_FRED", "DGS10_ALFRED_PIT_ME",
+      "DFF_ALFRED_PIT_ME", "DEXCHUS_ALFRED_PIT_ME", "NASDAQ100_ALFRED_PIT_ME",
+      "BARRICK_B_TWELVEDATA", "NEM_TWELVEDATA", "DZZ_TWELVEDATA",
+      "GLL_TWELVEDATA", "HL_PB_TWELVEDATA", "VIX_CBOE", "GVZ_CBOE"
+    ]
+  },
+  "tier_b_source_contract_backlog": [
+    "DFII10_REAL_YIELD", "TREASURY_CURVE_DGS2_DGS5_DGS10_DGS30",
+    "BREAKEVENS_T5YIE_T10YIE", "EXACT_DXY_SEPARATE_IDENTITY",
+    "CPI_PCE_RELEASE_SURPRISES", "MOVE_AND_UNCERTAINTY_STRESS",
+    "ETF_HOLDINGS_FLOWS", "CENTRAL_BANK_WGC_DEMAND", "CFTC_POSITIONING",
+    "FUTURES_CURVE_BASIS_CARRY", "OPTIONS_IV_SKEW", "OIL_SILVER_COPPER_CONTEXT",
+    "M2_GLOBAL_LIQUIDITY"
+  ]
+}
