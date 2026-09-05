@@ -1,14 +1,48 @@
 {
-  "version": "MACRO_EVENT_SUCCESSOR_V1_SOURCE_CONTRACT_2026-09-05_R3",
+  "version": "MACRO_EVENT_SUCCESSOR_V1_SOURCE_CONTRACT_2026-09-05_R4",
   "engine_id": "MACRO_EVENT_SUCCESSOR_V1",
-  "purpose": "Governed source identities for U.S. Employment Situation first-print actuals and doctoral-research market consensus. This contract authorizes source audit/reconstruction only; it does not authorize model scoring or forecast/decision writes.",
+  "purpose": "Governed source identities for U.S. Employment Situation first-print actuals and doctoral-research market consensus. R4 authorizes governed research source-data ingestion only; it does not authorize model scoring, runtime promotion, direction voting, or forecast/decision writes.",
   "event_family": "BLS_EMPLOYMENT_SITUATION",
   "point_in_time_rule": "For any event at t, a model input is eligible only when provider semantics support that it is a pre-release consensus associated with that event. When exact pre-release update time is not proven, reconstructed consensus is eligible no earlier than the official BLS release timestamp. Current-vintage substitution for historical first-print actuals or post-result provider switching is forbidden.",
+  "source_data_plane_writes": true,
   "authority_store_writes": false,
+  "model_score_authorized": false,
+  "runtime_promotion_authorized": false,
   "direction_vote": false,
+  "coverage_contract": {
+    "reference_window_start": "2016-01",
+    "reference_window_end": "2026-08",
+    "expected_reference_months": 128,
+    "minimum_forecast_coverage_ratio": 0.98,
+    "audit_status": "PASS_COVERAGE_RESEARCH_DATASET_ELIGIBLE",
+    "complete_case_rule": "All three Investing.com consensus fields must be present for an event. Missing consensus is fail-closed; no imputation, carry-forward, model forecast substitution, or provider switching is permitted.",
+    "known_excluded_reference_months": [
+      "2020-08",
+      "2025-10"
+    ],
+    "expected_complete_case_months_before_actual_quality_checks": 126,
+    "nfp": {
+      "rows_present": 128,
+      "forecasts_present": 127,
+      "coverage_ratio": 0.992188,
+      "missing_forecasts": ["2025-10"]
+    },
+    "unemployment": {
+      "rows_present": 127,
+      "forecasts_present": 127,
+      "coverage_ratio": 0.992188,
+      "missing_rows": ["2025-10"]
+    },
+    "ahe_mom": {
+      "rows_present": 128,
+      "forecasts_present": 126,
+      "coverage_ratio": 0.984375,
+      "missing_forecasts": ["2020-08", "2025-10"]
+    }
+  },
   "consensus_provider_policy": {
     "working_research_provider": "Investing.com Economic Calendar",
-    "working_provider_status": "RESEARCH_ONLY_DOCTORAL_INTERNAL_USER_ACCEPTED_LICENSE_RISK",
+    "working_provider_status": "APPROVED_DOCTORAL_RESEARCH_INTERNAL_COVERAGE_PASS_USER_ACCEPTED_LICENSE_RISK",
     "user_authorization_date": "2026-09-05",
     "professional_benchmark_if_entitled": "Bloomberg Economic Calendar historical latest pre-release panel consensus",
     "independent_public_spot_check": "Reuters pre-release economist survey reporting",
@@ -28,81 +62,87 @@
   "series": {
     "MACRO_NFP_ACTUAL_FIRST_PRINT": {
       "semantic": "BLS Employment Situation first-published total nonfarm payroll employment monthly change",
-      "source": "U.S. Bureau of Labor Statistics Employment Situation archive / ALFRED as-of release reconstruction after equivalence audit",
-      "symbol": "NFP_HEADLINE_FIRST_PRINT",
+      "source": "Federal Reserve Bank of St. Louis ALFRED / U.S. Bureau of Labor Statistics",
+      "symbol": "PAYEMS_ASOF_RELEASE_NFP_CHANGE",
       "tier": "AUTHORITY_PUBLIC",
       "frequency": "event_monthly",
       "unit": "thousand_persons_change",
       "role": "MACRO_EVENT_SUCCESSOR_V1 actual input",
-      "status": "CANDIDATE_AUTHORITY_FIRST_PRINT_AUDIT",
+      "status": "APPROVED_HISTORICAL_FIRST_PRINT_RECONSTRUCTION_RESEARCH",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
       "availability_policy": "official BLS release timestamp at 08:30 America/New_York",
-      "revision_policy": "release-date first print; later revisions must not overwrite the archived first print"
+      "revision_policy": "derive headline change from PAYEMS current-month and previous-month levels visible in ALFRED as of the release date; later revisions must not replace the release-date reconstruction",
+      "construction_audit": "PASS_CONSTRUCTION_EQUIVALENCE_SAMPLE"
     },
     "MACRO_UNEMP_ACTUAL_FIRST_PRINT": {
       "semantic": "BLS Employment Situation first-published unemployment rate",
-      "source": "U.S. Bureau of Labor Statistics Employment Situation archive / ALFRED as-of release reconstruction after equivalence audit",
-      "symbol": "UNEMP_RATE_FIRST_PRINT",
+      "source": "Federal Reserve Bank of St. Louis ALFRED / U.S. Bureau of Labor Statistics",
+      "symbol": "UNRATE_ASOF_RELEASE",
       "tier": "AUTHORITY_PUBLIC",
       "frequency": "event_monthly",
       "unit": "percent",
       "role": "MACRO_EVENT_SUCCESSOR_V1 actual input",
-      "status": "CANDIDATE_AUTHORITY_FIRST_PRINT_AUDIT",
+      "status": "APPROVED_HISTORICAL_FIRST_PRINT_RECONSTRUCTION_RESEARCH",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
       "availability_policy": "official BLS release timestamp at 08:30 America/New_York",
-      "revision_policy": "release-date first print; later revisions must not overwrite the archived first print"
+      "revision_policy": "use UNRATE value visible in ALFRED as of the release date; later revisions/current vintage must not replace it",
+      "construction_audit": "PASS_CONSTRUCTION_EQUIVALENCE_SAMPLE"
     },
     "MACRO_AHE_ACTUAL_FIRST_PRINT": {
       "semantic": "BLS Employment Situation first-published average hourly earnings month-over-month change for all employees on private nonfarm payrolls",
-      "source": "U.S. Bureau of Labor Statistics Employment Situation archive / ALFRED as-of release reconstruction after equivalence audit",
-      "symbol": "AHE_ALL_EMPLOYEES_MOM_FIRST_PRINT",
+      "source": "Federal Reserve Bank of St. Louis ALFRED / U.S. Bureau of Labor Statistics",
+      "symbol": "CES0500000003_ASOF_RELEASE_MOM",
       "tier": "AUTHORITY_PUBLIC",
       "frequency": "event_monthly",
       "unit": "percent_mom",
       "role": "MACRO_EVENT_SUCCESSOR_V1 actual input",
-      "status": "CANDIDATE_AUTHORITY_FIRST_PRINT_AUDIT",
+      "status": "APPROVED_HISTORICAL_FIRST_PRINT_RECONSTRUCTION_RESEARCH",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
       "availability_policy": "official BLS release timestamp at 08:30 America/New_York",
-      "revision_policy": "derive transparently from as-of-release AHE levels when needed; construction equivalence must be audited against BLS first releases"
+      "revision_policy": "derive from current and previous AHE levels visible in ALFRED as of release date and round to the BLS-published one-decimal MoM convention",
+      "construction_audit": "PASS_CONSTRUCTION_EQUIVALENCE_SAMPLE"
     },
     "MACRO_NFP_CONSENSUS_PIT": {
       "semantic": "Investing.com preserved pre-release economist consensus for headline NFP change associated with the Employment Situation release",
       "source": "INVESTING_COM_ECONOMIC_CALENDAR_RESEARCH_ONLY",
-      "symbol": "Nonfarm Payrolls / Forecast",
+      "symbol": "Nonfarm Payrolls / Forecast / event_attr_id=227",
       "tier": "RESEARCH_ONLY_DOCTORAL_INTERNAL",
       "frequency": "event_monthly",
       "unit": "thousand_persons_change",
       "role": "MACRO_EVENT_SUCCESSOR_V1 consensus input",
-      "status": "PENDING_INVESTING_HISTORICAL_COVERAGE_AUDIT",
+      "status": "APPROVED_DOCTORAL_RESEARCH_INTERNAL_COVERAGE_PASS",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
       "availability_policy": "eligible no earlier than official BLS release timestamp unless exact pre-release update time is separately proven",
-      "license_label": "USER_ACCEPTED_LICENSE_RISK_NO_REDISTRIBUTION"
+      "license_note": "USER_ACCEPTED_LICENSE_RISK_NO_REDISTRIBUTION; internal doctoral research only",
+      "coverage_ratio": 0.992188
     },
     "MACRO_UNEMP_CONSENSUS_PIT": {
       "semantic": "Investing.com preserved pre-release economist consensus for unemployment rate associated with the Employment Situation release",
       "source": "INVESTING_COM_ECONOMIC_CALENDAR_RESEARCH_ONLY",
-      "symbol": "Unemployment Rate / Forecast",
+      "symbol": "Unemployment Rate / Forecast / event_attr_id=300",
       "tier": "RESEARCH_ONLY_DOCTORAL_INTERNAL",
       "frequency": "event_monthly",
       "unit": "percent",
       "role": "MACRO_EVENT_SUCCESSOR_V1 consensus input",
-      "status": "PENDING_INVESTING_HISTORICAL_COVERAGE_AUDIT",
+      "status": "APPROVED_DOCTORAL_RESEARCH_INTERNAL_COVERAGE_PASS",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
       "availability_policy": "eligible no earlier than official BLS release timestamp unless exact pre-release update time is separately proven",
-      "license_label": "USER_ACCEPTED_LICENSE_RISK_NO_REDISTRIBUTION"
+      "license_note": "USER_ACCEPTED_LICENSE_RISK_NO_REDISTRIBUTION; internal doctoral research only",
+      "coverage_ratio": 0.992188
     },
     "MACRO_AHE_CONSENSUS_PIT": {
       "semantic": "Investing.com preserved pre-release economist consensus for average hourly earnings month-over-month change associated with the Employment Situation release",
       "source": "INVESTING_COM_ECONOMIC_CALENDAR_RESEARCH_ONLY",
-      "symbol": "Average Hourly Earnings (MoM) / Forecast",
+      "symbol": "Average Hourly Earnings (MoM) / Forecast / event_attr_id=8",
       "tier": "RESEARCH_ONLY_DOCTORAL_INTERNAL",
       "frequency": "event_monthly",
       "unit": "percent_mom",
       "role": "MACRO_EVENT_SUCCESSOR_V1 consensus input",
-      "status": "PENDING_INVESTING_HISTORICAL_COVERAGE_AUDIT",
+      "status": "APPROVED_DOCTORAL_RESEARCH_INTERNAL_COVERAGE_PASS",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
       "availability_policy": "eligible no earlier than official BLS release timestamp unless exact pre-release update time is separately proven",
-      "license_label": "USER_ACCEPTED_LICENSE_RISK_NO_REDISTRIBUTION"
+      "license_note": "USER_ACCEPTED_LICENSE_RISK_NO_REDISTRIBUTION; internal doctoral research only",
+      "coverage_ratio": 0.984375
     }
   }
 }
