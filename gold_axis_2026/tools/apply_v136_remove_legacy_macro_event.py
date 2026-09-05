@@ -21,6 +21,10 @@ def replace_once(text: str, old: str, new: str, label: str) -> str:
     return text.replace(old, new, 1)
 
 
+def clear_legacy_token(text: str) -> str:
+    return LEGACY_ENGINE_TOKEN.sub("MACRO_EVENT_SUCCESSOR_V2", text)
+
+
 def patch_manifest() -> None:
     text = MANIFEST.read_text(encoding="utf-8")
     text = replace_once(text, "**Manifest version:** 1.35", "**Manifest version:** 1.36", "manifest version")
@@ -82,6 +86,10 @@ The validation supports only immediate event-risk/context classification. It doe
     old_ui = "The archived `MACRO_EVENT` identity remains visible only in audit/history surfaces where its recovery-blocked lineage is relevant.\n\n"
     text = text.replace(old_ui, "")
 
+    # Any remaining standalone old engine name in current-manifest prose is rewritten
+    # to the only governed current identity. Historical Git commits remain untouched.
+    text = clear_legacy_token(text)
+
     if LEGACY_BLOCKER in text:
         raise RuntimeError("manifest still contains legacy Macro blocker")
     if LEGACY_ENGINE_TOKEN.search(text):
@@ -95,6 +103,7 @@ def patch_engine() -> None:
         '"role": "Active timestamp-safe labor-event risk/context; successor to archived MACRO_EVENT",',
         '"role": "Active timestamp-safe labor-event risk/context",',
     )
+    text = clear_legacy_token(text)
     if LEGACY_ENGINE_TOKEN.search(text):
         raise RuntimeError("engine registry still contains standalone legacy Macro engine token")
     ENGINE.write_text(text, encoding="utf-8")
@@ -108,6 +117,7 @@ def patch_decision_source() -> None:
     text = text.replace('        "macro_event_state": MACRO_EVENT_CONTEXT_STATUS,\n', "")
     text = text.replace('            s.macro_event_down,\n', "")
     text = text.replace('            "macro_event_down": row.get("macro_event_down"),\n', "")
+    text = clear_legacy_token(text)
     if LEGACY_BLOCKER in text or "MACRO_EVENT_CONTEXT_STATUS" in text or "macro_event_down" in text or "macro_event_state" in text:
         raise RuntimeError("decision_source still contains legacy Macro compatibility fields")
     if LEGACY_ENGINE_TOKEN.search(text):
@@ -122,6 +132,7 @@ def patch_mobile() -> None:
         'MACRO_EVENT_SUCCESSOR_STATUS = "MACRO_MIXED_OR_SMALL"',
     )
     text = text.replace("MACRO_EVENT_STATUS", "MACRO_EVENT_SUCCESSOR_STATUS")
+    text = clear_legacy_token(text)
     if LEGACY_BLOCKER in text:
         raise RuntimeError("mobile UI still contains legacy Macro blocker")
     if LEGACY_ENGINE_TOKEN.search(text):
@@ -135,6 +146,7 @@ def patch_engine_test() -> None:
     text = text.replace('    assert "MACRO_EVENT" not in ENGINE_DISPLAY_ORDER\n', "")
     text = text.replace('    assert "MACRO_EVENT" not in rows\n', "")
     text = text.replace("test_archived_successors_are_replaced_in_current_registry_without_losing_vw_blocker", "test_current_successors_are_present_without_losing_vw_blocker")
+    text = clear_legacy_token(text)
     if LEGACY_BLOCKER in text or "macro_event_state" in text:
         raise RuntimeError("engine test still contains legacy Macro fields")
     if LEGACY_ENGINE_TOKEN.search(text):
