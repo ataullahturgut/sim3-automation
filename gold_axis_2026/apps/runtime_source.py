@@ -5,6 +5,7 @@ from typing import Any
 import psycopg
 from psycopg.rows import dict_row
 
+from engine_observability_contract import ENGINE_DISPLAY_ORDER
 from production_display_snapshot import (
     load_production_display_snapshot,
     snapshot_runtime_observability,
@@ -12,7 +13,7 @@ from production_display_snapshot import (
 
 
 RUNTIME_SOURCE_CONTRACT = "FROZEN_DATA_EVIDENCE_SPINE_V1_READ_ONLY_APP_V2_CURRENT_MONTH_REFERENCE"
-EXPECTED_ENGINE_COUNT = 12
+EXPECTED_ENGINE_COUNT = len(ENGINE_DISPLAY_ORDER)
 CONTEXT_FEATURES = (
     "MONTHLY_DIRECTION_3M",
     "FAST_STATE",
@@ -150,8 +151,10 @@ def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
                        evidence_class,runtime_status,status_code,direction_vote_permitted,
                        git_commit,input_fingerprint,metadata,created_at
                 from latest_engine_runtime_state
+                where engine_id=any(%s)
                 order by engine_id
-                """
+                """,
+                (list(ENGINE_DISPLAY_ORDER),),
             )
             runtime = [dict(row) for row in cur.fetchall()]
             runtime, current_month_reference_count, current_month_reference_target = (
