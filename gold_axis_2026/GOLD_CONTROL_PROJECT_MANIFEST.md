@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.34  
+**Manifest version:** 1.35  
 **Freeze / issue date:** 2026-09-05  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical model/app branch:** `gold-r4-direction-engine`  
@@ -21,7 +21,7 @@ Rules:
 
 1. No other Markdown, YAML, JSON, workflow, status note, change-control document, replay report, handover, or historical manifest version is a second project manifest.
 2. Historical change-control, validation, status and evidence documents remain audit evidence only.
-3. If an older document conflicts with this file, this v1.34 manifest governs unless a newer audited manifest version explicitly supersedes it.
+3. If an older document conflicts with this file, this v1.35 manifest governs unless a newer audited manifest version explicitly supersedes it.
 4. `FILE_MANIFEST_SHA256.txt` is a repository file-checksum inventory, **not** the Gold Control project decision manifest.
 5. Old `apply_manifest_*` / `reconcile_manifest_*` scripts and workflow names are historical tooling, not independent manifest authority.
 6. Git history may contain older manifest versions, but the current branch may contain only this single canonical project-manifest file.
@@ -305,6 +305,7 @@ Current role rules:
 - `GVZ_RISK` — risk-only, never a direction vote.
 - Emergency — intramonth alert/context, not standalone automatic action.
 - `BOCPD_RETURN_SUCCESSOR_V1` — active regime/break context only; no direction vote.
+- `MACRO_EVENT_SUCCESSOR_V2` — active labor-event risk/context only; no direction vote and no H=1 price forecast.
 
 ---
 
@@ -350,6 +351,59 @@ Prospective outcome monitoring remains required for ongoing model-risk monitorin
 
 ---
 
+# 9A. MACRO EVENT GOVERNANCE — v1.35 RUNTIME REPLACEMENT
+
+Archived engine identity:
+
+`MACRO_EVENT`
+
+remains historically traceable with the recovery limitation:
+
+`BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED`
+
+The archived identity is **not** repaired or renamed. Its partially recovered historical rule remains audit evidence only. It is removed from the current governed application runtime slot and replaced by the separately preregistered and validated successor identity:
+
+`MACRO_EVENT_SUCCESSOR_V2`
+
+Current operational target status after the v1.35 runtime deployment:
+
+`ACTIVE_MACRO_EVENT_SUCCESSOR_V2_EVENT_RISK_CONTEXT`
+
+Role:
+
+`EVENT_RISK_CONTEXT`
+
+Binding locks remain:
+
+- direction vote = false;
+- no H=1 monthly-average XAU/USD price forecast;
+- no automatic action;
+- no selector/ensemble role;
+- no position mapping;
+- no post-result retuning of the frozen V2 robust-score rule;
+- no silent consensus-provider substitution;
+- source lineage remains bound to the governed research source run `6a18db17-6fb2-4bf8-a20b-f3b6d529ca8a` for the validated historical evidence.
+
+Validation basis frozen before this promotion:
+
+- robust-score replay: `PASS_V2_ROBUST_PREREG_REPLAY_REPRODUCIBLE`;
+- event-reaction validation: `PASS_EVENT_REACTION_EVIDENCE`;
+- frozen VAL+LOCK strong-shock events: `8`;
+- directional hits in the preregistered 15-minute primary window: `7/8` = `87.5%`;
+- exact one-sided sign-test p-value: `0.03515625`;
+- median signed R15: `+0.9590818647119803%`.
+
+Latest governed event-context reference from the frozen panel is the August 2026 Employment Situation released 2026-09-04:
+
+- robust composite score = `-0.414773053241`;
+- state = `MACRO_MIXED_OR_SMALL`.
+
+This current September state remains `HISTORICAL_REPLAY` evidence because it was reconstructed later from historical/PIT research data. The **runtime promotion itself** is effective only at the true 2026-09-05 deployment time and must not be backdated to 2026-09-04.
+
+The validation supports the narrow intended use of immediate event-risk/context classification. It does **not** establish H=1 monthly forecast skill, trading profitability, automatic action authority, selector/ensemble eligibility, or position mapping.
+
+---
+
 # 10. EMERGENCY GOVERNANCE
 
 Emergency uses the governed monthly reference for the target month and then monitors completed target-month observations.
@@ -368,26 +422,31 @@ Emergency remains an alert/context layer; it does not create an automatic BUY / 
 
 ---
 
-# 11. CURRENT PRODUCTION RUNTIME AUTHORITY — v1.34 TARGET STATE
+# 11. CURRENT PRODUCTION RUNTIME AUTHORITY — v1.35 TARGET STATE
 
 After the v1.34 code + production runtime migration is applied and verified, the current governed application inventory is:
 
-- `ACTIVE = 5`
+- `ACTIVE = 6`
 - `WAITING = 5`
-- `BLOCKED = 2`
+- `BLOCKED = 1`
 - direction-vote permitted = `3`
 - total current governed application motors = `12`
 
-Current BLOCKED application identities:
+Current BLOCKED application identity:
 
 - `VW_MIDAS_MSVR` — `BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN`
-- `MACRO_EVENT` — `BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED`
+
+Current active replacements:
+
+- `MACRO_EVENT_SUCCESSOR_V2` — `ACTIVE_MACRO_EVENT_SUCCESSOR_V2_EVENT_RISK_CONTEXT`
 
 Current active BOCPD replacement:
 
 - `BOCPD_RETURN_SUCCESSOR_V1` — `ACTIVE_BOCPD_RETURN_SUCCESSOR_V1_REGIME_CONTEXT`
 
 The archived `BOCPD` ledger identity remains queryable for audit/history but is no longer part of the 12-motor current application registry. Its latest archival runtime record may remain `BLOCKED` with explicit `replaced_by = BOCPD_RETURN_SUCCESSOR_V1` metadata; this does not increase the current application blocked count.
+
+The archived `MACRO_EVENT` ledger identity likewise remains queryable for audit/history but is no longer part of the 12-motor current application registry. Its latest archival runtime record may remain `BLOCKED` with explicit `replaced_by = MACRO_EVENT_SUCCESSOR_V2` metadata; this also does not increase the current application blocked count.
 
 Current WAITING forward-runtime identities include:
 
@@ -407,7 +466,7 @@ This dual-state distinction is mandatory in the UI.
 
 # 12. CURRENT PRODUCTION AUTHORITY STORES
 
-The BOCPD successor runtime replacement is explicitly authorized to update only the append-only engine runtime ledger/schema required to introduce the new engine identity.
+The BOCPD and Macro Event successor runtime replacements are explicitly authorized to update only the append-only engine runtime ledger/schema required to introduce their separately validated successor identities.
 
 It does **not** authorize writes to the forecast/decision authority stores.
 
@@ -432,7 +491,7 @@ The v1.33 GPR source-data ingestion authorization below also does **not** change
 
 ---
 
-# 13. UI CONTRACT — v1.34
+# 13. UI CONTRACT — v1.35
 
 ## 13.1 Tahmin
 
@@ -465,6 +524,16 @@ Every current governed motor remains visible.
 - direction vote: `false`.
 
 The archived `BOCPD` identity remains visible only in audit/history surfaces where its recovery-blocked lineage is relevant.
+
+`MACRO_EVENT_SUCCESSOR_V2` replaces the archived `MACRO_EVENT` card in the current 12-motor application inventory and must display:
+
+- operational runtime status: `ACTIVE`;
+- role: `EVENT_RISK_CONTEXT`;
+- current September event-context reference: `MACRO_MIXED_OR_SMALL`;
+- reference evidence: `HISTORICAL_REPLAY`;
+- direction vote: `false`.
+
+The archived `MACRO_EVENT` identity remains visible only in audit/history surfaces where its recovery-blocked lineage is relevant.
 
 For motors with a September reconstructed origin result and a forward WAITING/BLOCKED runtime state, the card must show both:
 
