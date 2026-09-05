@@ -1,0 +1,93 @@
+name: Gold Control VW V2 Terminal Manifest Finalize
+
+on:
+  push:
+    branches:
+      - gold-control-vw-midas-svr-xau-successor-v2-validation
+    paths:
+      - '.github/workflows/gold-control-vw-v2-terminal-manifest-finalize.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: gold-control-vw-midas-svr-xau-successor-v2-validation
+          fetch-depth: 0
+
+      - name: Patch canonical manifest on feature branch
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          p=Path('gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('**Manifest version:** 1.33', '**Manifest version:** 1.34', 1)
+          s=s.replace('this v1.33 manifest governs unless a newer audited manifest version explicitly supersedes it.',
+                      'this v1.34 manifest governs unless a newer audited manifest version explicitly supersedes it.', 1)
+          s=s.replace('Separate research identity `VW_MIDAS_SVR_XAU_SUCCESSOR_V2` is pre-registered under source-driven V2 change control. It has no production/runtime or selector authority merely because its source data plane is populated.',
+                      'Separate research identity `VW_MIDAS_SVR_XAU_SUCCESSOR_V2` completed its untouched historical validation and is terminally `REJECT_ALL_VW_SUCCESSOR_V2_CANDIDATES`. It has no production/runtime, selector, ensemble or prospective authority.')
+          s=s.replace('**this v1.33 manifest controls current product/data-plane behavior**',
+                      '**this v1.34 manifest controls current product/data-plane behavior**')
+
+          replacement='''## 16.1 VW successor
+
+Archived `VW_MIDAS_MSVR` remains:
+
+`BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN`.
+
+`VW_MIDAS_SVR_XAU_SUCCESSOR_V1` remains terminally:
+
+`SOURCE_BLOCKED_NO_MODEL_SCORE`.
+
+`VW_MIDAS_SVR_XAU_SUCCESSOR_V2` completed its preregistered untouched historical validation after the v1.33 GPR PIT data-plane gate passed. The source preflight was complete (`XAU 54/54`, `GPR 54/54`), deterministic rerun and prefix invariance passed, and no production/Decision Store write occurred.
+
+V2 aggregate validation improved on RW for Relative MAE (`0.859987`) and MAPE (`3.260387%` vs `3.706419%`), but two frozen gates failed:
+
+- candidate median absolute error `75.061714` > RW `67.491510`;
+- source-determined origin bucket `2024-10..2024-12` MAE ratio vs RW = `1.631148` > frozen `1.50` cap.
+
+Binding V2 disposition:
+
+`REJECT_ALL_VW_SUCCESSOR_V2_CANDIDATES`
+
+The locked diagnostic was also worse than RW on Relative MAE (`1.044906`) and cannot rescue validation. No September 2026 V2 reconstruction is issued. No post-result feature/source/grid/window/gate retuning is permitted.
+
+The separately governed `GPR_OFFICIAL_GIT_PIT` source-data plane remains valid as a reusable historical PIT research asset; V2 model rejection does not roll it back.
+
+The XAU research-to-production lineage bridge may continue as source evidence, but its outcome cannot promote or rescue rejected V2.
+
+'''
+          pattern=r'## 16\.1 VW successor\n.*?(?=## 16\.2 Macro successor)'
+          s2,n=re.subn(pattern,replacement,s,flags=re.S)
+          if n != 1:
+              raise SystemExit(f'VW_SECTION_REPLACEMENT_COUNT={n}')
+          s=s2
+
+          evidence='- `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_TERMINAL_VALIDATION_EVIDENCE_2026-09-05.md`\n'
+          anchor='- `GOLD_CONTROL_GPR_PIT_DATA_PLANE_CHANGE_CONTROL_2026-09-05.md`\n'
+          if evidence not in s:
+              if anchor not in s:
+                  raise SystemExit('EVIDENCE_ANCHOR_NOT_FOUND')
+              s=s.replace(anchor, anchor+evidence, 1)
+
+          p.write_text(s,encoding='utf-8')
+          assert '**Manifest version:** 1.34' in s
+          assert '`REJECT_ALL_VW_SUCCESSOR_V2_CANDIDATES`' in s
+          assert '## 16.2 Macro successor' in s
+          PY
+
+      - name: Commit manifest v1.34
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          git diff --cached --check
+          git commit -m 'gold-control: manifest v1.34 close VW V2 as rejected'
+          git push origin HEAD:gold-control-vw-midas-svr-xau-successor-v2-validation
