@@ -20,6 +20,8 @@ def _decision() -> dict:
         "macro_event_state": "BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED",
         "level_emergency": "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE",
         "reversal_emergency": "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE",
+        # Historical archived field deliberately retained in the decision payload.
+        # The promoted successor registry must not read this value as successor output.
         "bocpd_context": "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED",
         "gvz": 26.14,
         "gvz_cap": 0.5,
@@ -54,31 +56,44 @@ def _decision() -> dict:
 
 def _runtime_rows() -> list[dict]:
     status = {
-        "CAUSAL_PATCH": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False),
-        "VW_MIDAS_MSVR": ("BLOCKED", "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN", False),
-        "MOMENTUM_3M": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False),
-        "RANDOM_WALK": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False),
-        "MONTHLY_DIRECTION_3M": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True),
-        "FAST": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True),
-        "SLOW": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True),
-        "MACRO_EVENT": ("BLOCKED", "BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED", False),
-        "EMERGENCY_LEVEL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", False),
-        "EMERGENCY_REVERSAL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", False),
-        "BOCPD": ("BLOCKED", "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED", False),
-        "GVZ_RISK": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", False),
+        "CAUSAL_PATCH": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False, {}),
+        "VW_MIDAS_MSVR": ("BLOCKED", "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN", False, {}),
+        "MOMENTUM_3M": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False, {}),
+        "RANDOM_WALK": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False, {}),
+        "MONTHLY_DIRECTION_3M": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True, {}),
+        "FAST": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True, {}),
+        "SLOW": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True, {}),
+        "MACRO_EVENT": ("BLOCKED", "BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED", False, {}),
+        "EMERGENCY_LEVEL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", False, {}),
+        "EMERGENCY_REVERSAL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", False, {}),
+        "BOCPD_RETURN_SUCCESSOR_V1": (
+            "ACTIVE",
+            "ACTIVE_BOCPD_RETURN_SUCCESSOR_V1_REGIME_CONTEXT",
+            False,
+            {
+                "successor_id": "BOCPD_RETURN_SUCCESSOR_V1",
+                "current_state": "NO_ADVERSE_BREAK_CANDIDATE",
+                "current_state_evidence_class": "HISTORICAL_REPLAY",
+                "current_state_as_of": "2026-08-31T21:00:00Z",
+                "information_cutoff": "2026-08-31T21:00:00Z",
+                "reference_kind": "HISTORICAL_REPLAY_SUCCESSOR_CONTEXT",
+            },
+        ),
+        "GVZ_RISK": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", False, {}),
     }
     return [
         {
             "engine_id": engine_id,
-            "engine_version": f"runtime::{engine_id}",
-            "engine_role": "TEST_RUNTIME_ROLE",
-            "as_of": "2026-09-03T14:43:00Z",
+            "engine_version": "BOCPD_RETURN_SUCCESSOR_V1" if engine_id == "BOCPD_RETURN_SUCCESSOR_V1" else f"runtime::{engine_id}",
+            "engine_role": "REGIME_BREAK_CONTEXT" if engine_id == "BOCPD_RETURN_SUCCESSOR_V1" else "TEST_RUNTIME_ROLE",
+            "as_of": "2026-09-05T14:30:00Z",
             "target_context": "2026-09",
             "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
             "runtime_status": values[0],
             "status_code": values[1],
             "direction_vote_permitted": values[2],
-            "git_commit": "3c7e2b1",
+            "git_commit": "test-sha",
+            "metadata": values[3],
         }
         for engine_id, values in status.items()
     ]
@@ -86,8 +101,10 @@ def _runtime_rows() -> list[dict]:
 
 def test_all_governed_engines_are_always_present() -> None:
     rows = build_engine_inventory(_decision(), [], [])
-    assert ENGINE_OBSERVABILITY_CONTRACT == "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V2_DUAL_STATE_REFERENCE"
+    assert ENGINE_OBSERVABILITY_CONTRACT == "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V3_BOCPD_SUCCESSOR_PROMOTED"
     assert tuple(row["engine_id"] for row in rows) == ENGINE_DISPLAY_ORDER
+    assert "BOCPD" not in ENGINE_DISPLAY_ORDER
+    assert "BOCPD_RETURN_SUCCESSOR_V1" in ENGINE_DISPLAY_ORDER
     assert len(rows) == 12
     assert len({row["engine_id"] for row in rows}) == 12
 
@@ -109,19 +126,35 @@ def test_current_direction_context_is_visible_even_without_h1_expert_rows() -> N
     assert rows["SLOW"]["output"] == "ROBUST_UP"
 
 
-def test_blockers_remain_visible_and_no_action_or_selector_is_created() -> None:
+def test_archived_bocpd_is_replaced_in_current_registry_without_losing_other_blockers() -> None:
     rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [])}
     assert rows["VW_MIDAS_MSVR"]["status"] == "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN"
     assert rows["MACRO_EVENT"]["status"] == "BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED"
     assert rows["EMERGENCY_LEVEL"]["status"] == "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE"
     assert rows["EMERGENCY_REVERSAL"]["status"] == "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE"
-    assert rows["BOCPD"]["status"] == "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED"
+    assert "BOCPD" not in rows
+    assert rows["BOCPD_RETURN_SUCCESSOR_V1"]["status"] == "WAITING_RUNTIME_PROMOTION_RECORD"
+    assert rows["BOCPD_RETURN_SUCCESSOR_V1"]["direction_vote"] is False
 
     import re
     forbidden = {"BUY", "SELL", "HOLD", "EXIT", "REDUCE"}
     joined = " ".join(str(value) for row in rows.values() for value in row.values()).upper()
     assert forbidden.isdisjoint(set(re.findall(r"[A-Z]+", joined)))
     assert all(row["canonical_authority"] is False for row in rows.values())
+
+
+def test_promoted_bocpd_successor_runtime_exposes_aug31_context_without_direction_vote() -> None:
+    rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [], _runtime_rows())}
+    bocpd = rows["BOCPD_RETURN_SUCCESSOR_V1"]
+    assert bocpd["runtime_status"] == "ACTIVE"
+    assert bocpd["runtime_status_code"] == "ACTIVE_BOCPD_RETURN_SUCCESSOR_V1_REGIME_CONTEXT"
+    assert bocpd["status"] == "STORED_CONTEXT_AVAILABLE"
+    assert bocpd["output"] == "NO_ADVERSE_BREAK_CANDIDATE"
+    assert bocpd["evidence_class"] == "HISTORICAL_REPLAY"
+    assert bocpd["as_of"] == "2026-08-31T21:00:00Z"
+    assert bocpd["reference_kind"] == "HISTORICAL_REPLAY_SUCCESSOR_CONTEXT"
+    assert bocpd["direction_vote"] is False
+    assert bocpd["canonical_authority"] is False
 
 
 def test_gvz_is_visible_as_risk_not_direction() -> None:
@@ -152,17 +185,25 @@ def test_issued_expert_row_overrides_waiting_status_but_not_canonical_authority(
     assert patch["canonical_authority"] is False
 
 
-def test_inventory_counts_are_explicit() -> None:
-    rows = build_engine_inventory(_decision(), [], [])
-    counts = engine_inventory_counts(rows)
-    assert counts["total"] == 12
-    assert counts["active"] == 4
-    assert counts["issued"] == 0
-    assert counts["blocked"] == 3
-    assert counts["waiting"] == 5
+def test_inventory_counts_are_explicit_before_and_after_runtime_promotion_record() -> None:
+    fallback_rows = build_engine_inventory(_decision(), [], [])
+    fallback_counts = engine_inventory_counts(fallback_rows)
+    assert fallback_counts["total"] == 12
+    assert fallback_counts["active"] == 4
+    assert fallback_counts["issued"] == 0
+    assert fallback_counts["blocked"] == 2
+    assert fallback_counts["waiting"] == 6
+
+    promoted_rows = build_engine_inventory(_decision(), [], [], _runtime_rows())
+    promoted_counts = engine_inventory_counts(promoted_rows)
+    assert promoted_counts["total"] == 12
+    assert promoted_counts["active"] == 5
+    assert promoted_counts["issued"] == 0
+    assert promoted_counts["blocked"] == 2
+    assert promoted_counts["waiting"] == 5
 
 
-def test_runtime_ledger_is_status_authority_but_never_output_authority() -> None:
+def test_runtime_ledger_is_status_authority_but_not_direction_vote_authority() -> None:
     decision = _decision()
     rows = {row["engine_id"]: row for row in build_engine_inventory(decision, [], [], _runtime_rows())}
     assert rows["MONTHLY_DIRECTION_3M"]["output"] == "DOWN"
@@ -175,6 +216,7 @@ def test_runtime_ledger_is_status_authority_but_never_output_authority() -> None
     assert rows["CAUSAL_PATCH"]["output"] is None
     assert rows["CAUSAL_PATCH"]["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
     assert rows["VW_MIDAS_MSVR"]["status"] == "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN"
+    assert rows["BOCPD_RETURN_SUCCESSOR_V1"]["direction_vote"] is False
     assert all(row["canonical_authority"] is False for row in rows.values())
 
 
