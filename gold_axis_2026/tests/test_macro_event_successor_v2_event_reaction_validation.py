@@ -5,7 +5,9 @@ import math
 import sys
 from pathlib import Path
 
-PIPELINE = Path(__file__).resolve().parents[1] / "data_pipeline" / "macro_event_successor_v2_event_reaction_validation.py"
+PIPELINE_DIR = Path(__file__).resolve().parents[1] / "data_pipeline"
+sys.path.insert(0, str(PIPELINE_DIR))
+PIPELINE = PIPELINE_DIR / "macro_event_successor_v2_event_reaction_validation.py"
 spec = importlib.util.spec_from_file_location("macro_event_successor_v2_event_reaction_validation", PIPELINE)
 mod = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = mod
