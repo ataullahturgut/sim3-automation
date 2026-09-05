@@ -9,6 +9,7 @@ on:
       - 'gold_axis_2026/data_pipeline/source_contract_macro_event_successor_v1.json'
       - 'gold_axis_2026/data_pipeline/macro_event_successor_v1_sources.py'
       - 'gold_axis_2026/data_pipeline/macro_event_successor_v1_machine_preflight.py'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v1_alfred_construction_audit.py'
       - 'gold_axis_2026/tests/test_macro_event_successor_v1_sources.py'
       - '.github/workflows/gold-control-macro-event-successor-v1-source-audit.yml'
   workflow_dispatch:
@@ -42,6 +43,7 @@ jobs:
           python -m json.tool gold_axis_2026/data_pipeline/source_contract_macro_event_successor_v1.json >/dev/null
           python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v1_sources.py
           python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v1_machine_preflight.py
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v1_alfred_construction_audit.py
           pytest -q gold_axis_2026/tests/test_macro_event_successor_v1_sources.py
 
       - name: Machine source preflight
@@ -60,6 +62,22 @@ jobs:
               f.write('- Production DB write: `NO`\n- Model score: `NO`\n- Forecast/Decision Store write: `NO`\n')
           PY
           cat macro_event_machine_source_preflight_v1.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Validate ALFRED as-of construction against frozen BLS releases
+        run: |
+          python gold_axis_2026/data_pipeline/macro_event_successor_v1_alfred_construction_audit.py
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_alfred_construction_audit_v1.json', encoding='utf-8'))
+          with open('macro_event_alfred_construction_audit_v1.md','w',encoding='utf-8') as f:
+              f.write('# Macro Event Successor V1 — ALFRED Construction Audit\n\n')
+              f.write(f"- Status: `{d['status']}`\n")
+              f.write(f"- Authority reference checks: `{d['authority_reference_count']}`\n")
+              for row in d['results']:
+                  f.write(f"- {row['reference_month']} / {row['release_date']}: `{row['status']}`\n")
+              f.write('- Model score: `NO`\n- Production DB write: `NO`\n')
+          PY
+          cat macro_event_alfred_construction_audit_v1.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Try full BLS first-print archive reconstruction
         id: archive
@@ -86,8 +104,11 @@ jobs:
           assert d['forecast_or_decision_write'] is False, d
           assert d['direction_vote'] is False, d
           assert d['consensus']['approved_for_model_use'] is False, d['consensus']
-          assert d['fred_alfred_initial_release']['approved_for_historical_macro_input'] is False, d['fred_alfred_initial_release']
           assert d['bls_public_api']['historical_first_print_approved'] is False, d['bls_public_api']
+          a=pathlib.Path('macro_event_alfred_construction_audit_v1.json')
+          assert a.exists(), 'ALFRED_CONSTRUCTION_EVIDENCE_MISSING'
+          ad=json.loads(a.read_text(encoding='utf-8'))
+          assert ad['model_score_run'] is False and ad['production_db_write'] is False, ad
           b=pathlib.Path('macro_event_bls_bundle_v1.json')
           if b.exists():
               bundle=json.loads(b.read_text(encoding='utf-8'))
@@ -104,6 +125,8 @@ jobs:
           path: |
             macro_event_machine_source_preflight_v1.json
             macro_event_machine_source_preflight_v1.md
+            macro_event_alfred_construction_audit_v1.json
+            macro_event_alfred_construction_audit_v1.md
             macro_event_bls_bundle_v1.json
             macro_event_source_audit_v1.json
             macro_event_source_audit_v1.md
