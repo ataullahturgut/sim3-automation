@@ -25,20 +25,15 @@ SERIES = {
     "unemp": ("MACRO_UNEMP_ACTUAL_FIRST_PRINT", "percent"),
     "ahe": ("MACRO_AHE_ACTUAL_FIRST_PRINT", "percent_mom"),
 }
-
 TE_INDICATORS = {
     "nfp": "non farm payrolls",
     "unemp": "unemployment rate",
     "ahe": "average hourly earnings mom",
 }
-
 MONTHS = {
-    name.lower(): idx
-    for idx, name in enumerate(
-        [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December",
-        ],
+    name.lower(): i
+    for i, name in enumerate(
+        ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
         1,
     )
 }
@@ -97,16 +92,14 @@ def reference_month_from_text(text: str) -> str:
         r"Employment Situation\s*[-–—]{1,2}\s*([A-Za-z]+)\s+(20\d{2})",
     ]
     for pat in patterns:
-        m = re.search(pat, text, flags=re.I)
-        if m:
-            month = MONTHS.get(m.group(1).lower())
-            if month:
-                return f"{int(m.group(2)):04d}-{month:02d}"
+        m = re.search(pat, text, re.I)
+        if m and m.group(1).lower() in MONTHS:
+            return f"{int(m.group(2)):04d}-{MONTHS[m.group(1).lower()]:02d}"
     raise ValueError("BLS_REFERENCE_MONTH_NOT_FOUND")
 
 
 def release_ts_from_url(url: str) -> datetime:
-    m = re.search(r"empsit_(\d{2})(\d{2})(\d{4})\.htm", url, flags=re.I)
+    m = re.search(r"empsit_(\d{2})(\d{2})(\d{4})\.htm", url, re.I)
     if not m:
         raise ValueError("BLS_RELEASE_DATE_NOT_IN_URL")
     month, day, year = map(int, m.groups())
@@ -114,162 +107,125 @@ def release_ts_from_url(url: str) -> datetime:
 
 
 def parse_nfp(text: str) -> float:
-    low = text.lower()
-    pos = low.find("nonfarm payroll employment")
+    pos = text.lower().find("nonfarm payroll employment")
     if pos < 0:
         raise ValueError("BLS_NFP_ANCHOR_NOT_FOUND")
     window = text[pos:pos + 900]
-
-    signed = re.search(r"changed\s+(?:very\s+)?little\s*\(\s*([+-])\s*([\d,]+)\s*\)", window, re.I)
-    if signed:
-        val = float(signed.group(2).replace(",", "")) / 1000.0
-        return val if signed.group(1) == "+" else -val
-
-    m = re.search(
-        r"(?:increased|rose|grew|advanced|gained)\s+by\s+([\d,]+)",
-        window,
-        re.I,
-    )
+    m = re.search(r"changed\s+(?:very\s+)?little\s*\(\s*([+-])\s*([\d,]+)\s*\)", window, re.I)
+    if not m:
+        m = re.search(r"(?:was\s+)?(?:little|essentially)\s+changed\s*\(\s*([+-])\s*([\d,]+)\s*\)", window, re.I)
+    if m:
+        v = float(m.group(2).replace(",", "")) / 1000.0
+        return v if m.group(1) == "+" else -v
+    m = re.search(r"(?:increased|rose|grew|advanced|gained)\s+by\s+([\d,]+)", window, re.I)
     if m:
         return float(m.group(1).replace(",", "")) / 1000.0
-
-    m = re.search(
-        r"(?:decreased|declined|fell|dropped)\s+by\s+([\d,]+)",
-        window,
-        re.I,
-    )
+    m = re.search(r"(?:decreased|declined|fell|dropped)\s+by\s+([\d,]+)", window, re.I)
     if m:
         return -float(m.group(1).replace(",", "")) / 1000.0
-
-    # Some releases phrase the sentence as "employment was little changed (-X)".
-    signed = re.search(r"(?:was\s+)?(?:little|essentially)\s+changed\s*\(\s*([+-])\s*([\d,]+)\s*\)", window, re.I)
-    if signed:
-        val = float(signed.group(2).replace(",", "")) / 1000.0
-        return val if signed.group(1) == "+" else -val
     raise ValueError("BLS_NFP_VALUE_NOT_FOUND")
 
 
 def parse_unemployment(text: str) -> float:
-    low = text.lower()
-    pos = low.find("unemployment rate")
+    pos = text.lower().find("unemployment rate")
     if pos < 0:
         raise ValueError("BLS_UNEMP_ANCHOR_NOT_FOUND")
     window = text[pos:pos + 650]
-    patterns = [
+    for pat in [
         r"unemployment rate.{0,180}?(?:to|at|was)\s+([0-9]+(?:\.[0-9]+)?)\s+percent",
         r"unemployment rate\s*\(\s*([0-9]+(?:\.[0-9]+)?)\s+percent\s*\)",
-    ]
-    for pat in patterns:
+    ]:
         m = re.search(pat, window, re.I)
         if m:
-            value = float(m.group(1))
-            if 0.0 <= value <= 30.0:
-                return value
+            v = float(m.group(1))
+            if 0 <= v <= 30:
+                return v
     raise ValueError("BLS_UNEMP_VALUE_NOT_FOUND")
 
 
 def parse_ahe(text: str) -> tuple[float, str]:
     low = text.lower()
-    anchors = [
+    pos = -1
+    for anchor in [
         "average hourly earnings for all employees on private nonfarm payrolls",
         "average hourly earnings for all employees on private nonfarm",
         "average hourly earnings",
-    ]
-    pos = -1
-    for anchor in anchors:
+    ]:
         pos = low.find(anchor)
         if pos >= 0:
             break
     if pos < 0:
         raise ValueError("BLS_AHE_ANCHOR_NOT_FOUND")
-    window = text[pos:pos + 1100]
+    window = text[pos:pos + 900]
 
-    # Preferred: BLS explicitly publishes the month-over-month percentage.
-    m = re.search(
-        r"(?:rose|increased|advanced|grew|edged\s+up|was\s+up)\s+(?:by\s+)?(?:\$?[0-9.]+\s*,?\s*)?(?:or\s+)?([0-9]+(?:\.[0-9]+)?)\s+percent",
-        window,
-        re.I,
-    )
-    if m:
-        return float(m.group(1)), "PUBLISHED_MOM_PERCENT"
+    up = r"rose|increased|advanced|grew|edged\s+up|was\s+up"
+    down = r"declined|decreased|fell|edged\s+down|was\s+down"
 
-    m = re.search(
-        r"(?:declined|decreased|fell|edged\s+down|was\s+down)\s+(?:by\s+)?(?:\$?[0-9.]+\s*,?\s*)?(?:or\s+)?([0-9]+(?:\.[0-9]+)?)\s+percent",
-        window,
-        re.I,
-    )
-    if m:
-        return -float(m.group(1)), "PUBLISHED_MOM_PERCENT"
-
-    # Older releases often provide cents change and the current hourly level, but no percent.
-    cents_match = re.search(
-        r"(?:rose|increased|advanced|grew|edged\s+up)\s*(?:by\s*)?\(?\+?([0-9]+)\s+cents?\)?",
-        window,
-        re.I,
-    )
-    sign = 1.0
-    if not cents_match:
-        cents_match = re.search(
-            r"(?:declined|decreased|fell|edged\s+down)\s*(?:by\s*)?\(?-?([0-9]+)\s+cents?\)?",
+    # Modern wording: "rose by 10 cents, or 0.3 percent" or "$0.10, or 0.3 percent".
+    for verbs, sign in [(up, 1.0), (down, -1.0)]:
+        m = re.search(
+            rf"(?:{verbs})\s+(?:by\s+)?\$?[0-9]+(?:\.[0-9]+)?\s*(?:cents?)?\s*,\s*or\s+([0-9]+(?:\.[0-9]+)?)\s+percent",
             window,
             re.I,
         )
+        if m:
+            return sign * float(m.group(1)), "PUBLISHED_MOM_PERCENT"
+        m = re.search(
+            rf"(?:{verbs})\s+(?:by\s+)?([0-9]+(?:\.[0-9]+)?)\s+percent",
+            window,
+            re.I,
+        )
+        if m:
+            return sign * float(m.group(1)), "PUBLISHED_MOM_PERCENT"
+
+    # Older wording: cents change plus current level; derive transparently from the same first release.
+    cents = re.search(rf"(?:{up})\s*(?:by\s*)?\(?\+?([0-9]+)\s+cents?\)?", window, re.I)
+    sign = 1.0
+    if not cents:
+        cents = re.search(rf"(?:{down})\s*(?:by\s*)?\(?-?([0-9]+)\s+cents?\)?", window, re.I)
         sign = -1.0
-    level_match = re.search(r"to\s+\$([0-9]+(?:\.[0-9]+)?)", window, re.I)
-    if cents_match and level_match:
-        delta = sign * float(cents_match.group(1)) / 100.0
-        current = float(level_match.group(1))
+    level = re.search(r"to\s+\$([0-9]+(?:\.[0-9]+)?)", window, re.I)
+    if cents and level:
+        delta = sign * float(cents.group(1)) / 100.0
+        current = float(level.group(1))
         previous = current - delta
         if previous <= 0:
             raise ValueError("BLS_AHE_DERIVED_PREVIOUS_NONPOSITIVE")
-        mom = (current / previous - 1.0) * 100.0
-        return mom, "DERIVED_FROM_FIRST_RELEASE_CENTS_AND_LEVEL"
-
+        return (current / previous - 1.0) * 100.0, "DERIVED_FROM_FIRST_RELEASE_CENTS_AND_LEVEL"
     raise ValueError("BLS_AHE_VALUE_NOT_FOUND")
 
 
 def parse_release(url: str, html: str) -> ParsedRelease:
-    parser = LinkAndTextParser()
-    parser.feed(html)
-    text = parser.text
-    ref = reference_month_from_text(text)
-    release_ts = release_ts_from_url(url)
-    nfp = parse_nfp(text)
-    unemp = parse_unemployment(text)
-    ahe, ahe_transform = parse_ahe(text)
-    return ParsedRelease(ref, release_ts, nfp, unemp, ahe, ahe_transform)
+    p = LinkAndTextParser()
+    p.feed(html)
+    text = p.text
+    ahe, transform = parse_ahe(text)
+    return ParsedRelease(
+        reference_month_from_text(text),
+        release_ts_from_url(url),
+        parse_nfp(text),
+        parse_unemployment(text),
+        ahe,
+        transform,
+    )
 
 
 def discover_archive_urls(session: requests.Session) -> list[str]:
     r = get(session, BLS_ARCHIVE_INDEX)
-    parser = LinkAndTextParser()
-    parser.feed(r.text)
+    p = LinkAndTextParser()
+    p.feed(r.text)
     urls = []
-    for href in parser.links:
+    for href in p.links:
         u = urljoin(BLS_ARCHIVE_INDEX, href)
         if re.search(r"/news\.release/archives/empsit_\d{8}\.htm$", u, re.I):
             urls.append(u)
     return sorted(set(urls))
 
 
-def in_range(ref: str, start_ref: str, end_ref: str) -> bool:
-    return start_ref <= ref <= end_ref
-
-
-def make_observation(
-    run_id: str,
-    series_id: str,
-    release_ts: datetime,
-    value: float,
-    unit: str,
-    retrieved_at: datetime,
-    payload_hash: str,
-    reference_month: str,
-    url: str,
-    transform: str,
-) -> dict:
-    release_iso = iso(release_ts)
-    retrieved_iso = iso(retrieved_at)
+def make_observation(run_id: str, series_id: str, release_ts: datetime, value: float, unit: str,
+                     retrieved_at: datetime, payload_hash: str, reference_month: str, url: str,
+                     transform: str) -> dict:
+    release_iso, retrieved_iso = iso(release_ts), iso(retrieved_at)
     return {
         "run_id": run_id,
         "series_id": series_id,
@@ -300,42 +256,42 @@ def make_observation(
     }
 
 
+def _expected_months(start_ref: str, end_ref: str) -> list[str]:
+    y, m = map(int, start_ref.split("-"))
+    ey, em = map(int, end_ref.split("-"))
+    out = []
+    while (y, m) <= (ey, em):
+        out.append(f"{y:04d}-{m:02d}")
+        m += 1
+        if m == 13:
+            y, m = y + 1, 1
+    return out
+
+
 def build_bls_bundle(start_ref: str, end_ref: str) -> tuple[dict, dict]:
     retrieved_at = datetime.now(timezone.utc)
     run_id = str(uuid.uuid4())
     session = requests.Session()
     urls = discover_archive_urls(session)
+    start_year, end_year = int(start_ref[:4]), int(end_ref[:4])
 
-    observations: list[dict] = []
-    vintages: list[dict] = []
-    failures: list[dict] = []
-    releases: list[dict] = []
-
+    observations, vintages, failures, releases = [], [], [], []
     for url in urls:
         try:
+            url_year = release_ts_from_url(url).year
+            if url_year < start_year or url_year > end_year + 1:
+                continue
             r = get(session, url)
             parsed = parse_release(url, r.text)
-            if not in_range(parsed.reference_month, start_ref, end_ref):
+            if not (start_ref <= parsed.reference_month <= end_ref):
                 continue
             ph = sha256_bytes(r.content)
-            values = {
-                "nfp": parsed.nfp_thousands,
-                "unemp": parsed.unemployment_pct,
-                "ahe": parsed.ahe_mom_pct,
-            }
-            transforms = {
-                "nfp": "first_print_release_value",
-                "unemp": "first_print_release_value",
-                "ahe": parsed.ahe_transform,
-            }
-            for key, value in values.items():
+            vals = {"nfp": parsed.nfp_thousands, "unemp": parsed.unemployment_pct, "ahe": parsed.ahe_mom_pct}
+            trans = {"nfp": "first_print_release_value", "unemp": "first_print_release_value", "ahe": parsed.ahe_transform}
+            for key, value in vals.items():
                 sid, unit = SERIES[key]
-                observations.append(
-                    make_observation(
-                        run_id, sid, parsed.release_ts, value, unit, retrieved_at,
-                        ph, parsed.reference_month, url, transforms[key],
-                    )
-                )
+                observations.append(make_observation(run_id, sid, parsed.release_ts, value, unit, retrieved_at,
+                                                     ph, parsed.reference_month, url, trans[key]))
             vintages.append({
                 "source_id": f"BLS_EMPSIT_ARCHIVE_{parsed.reference_month.replace('-', '')}",
                 "retrieved_at": iso(retrieved_at),
@@ -362,32 +318,19 @@ def build_bls_bundle(start_ref: str, end_ref: str) -> tuple[dict, dict]:
             failures.append({"url": url, "error": f"{type(exc).__name__}:{exc}"})
 
     releases.sort(key=lambda x: x["reference_month"])
-    expected = []
-    y, m = map(int, start_ref.split("-"))
-    ey, em = map(int, end_ref.split("-"))
-    while (y, m) <= (ey, em):
-        expected.append(f"{y:04d}-{m:02d}")
-        m += 1
-        if m == 13:
-            y += 1
-            m = 1
-    present = {r["reference_month"] for r in releases}
-    missing = [x for x in expected if x not in present]
-    # BLS archive explicitly records that October 2025 was not published during the appropriations lapse.
+    present = {x["reference_month"] for x in releases}
+    missing = [x for x in _expected_months(start_ref, end_ref) if x not in present]
     structural_missing = [x for x in missing if x == "2025-10"]
     unexpected_missing = [x for x in missing if x not in structural_missing]
-
-    quality_events = []
-    for x in unexpected_missing:
-        quality_events.append({
-            "run_id": run_id,
-            "series_id": None,
-            "event_ts": iso(retrieved_at),
-            "severity": "ERROR",
-            "code": "BLS_UNEXPECTED_REFERENCE_MONTH_MISSING",
-            "message": x,
-            "metadata": {},
-        })
+    quality_events = [{
+        "run_id": run_id,
+        "series_id": None,
+        "event_ts": iso(retrieved_at),
+        "severity": "ERROR",
+        "code": "BLS_UNEXPECTED_REFERENCE_MONTH_MISSING",
+        "message": x,
+        "metadata": {},
+    } for x in unexpected_missing]
 
     bundle = {
         "run_id": run_id,
@@ -421,8 +364,8 @@ def build_bls_bundle(start_ref: str, end_ref: str) -> tuple[dict, dict]:
         "unexpected_missing_reference_months": unexpected_missing,
         "parse_failure_count": len(failures),
         "parse_failures": failures,
-        "ahe_published_percent_count": sum(r["ahe_transform"] == "PUBLISHED_MOM_PERCENT" for r in releases),
-        "ahe_derived_count": sum(r["ahe_transform"] == "DERIVED_FROM_FIRST_RELEASE_CENTS_AND_LEVEL" for r in releases),
+        "ahe_published_percent_count": sum(x["ahe_transform"] == "PUBLISHED_MOM_PERCENT" for x in releases),
+        "ahe_derived_count": sum(x["ahe_transform"] == "DERIVED_FROM_FIRST_RELEASE_CENTS_AND_LEVEL" for x in releases),
         "decision_store_writes": 0,
         "model_score_run": False,
     }
@@ -438,44 +381,36 @@ def audit_te_pit(api_key: str, start_date: str, end_date: str) -> dict:
         "indicators": {},
     }
     for key, indicator in TE_INDICATORS.items():
-        url = (
-            f"{TE_BASE}/calendar/country/united%20states/indicator/"
-            f"{quote(indicator, safe='')}/{start_date}/{end_date}"
-        )
-        r = get(session, url, params={"c": api_key, "f": "json"})
-        payload = r.json()
+        url = f"{TE_BASE}/calendar/country/united%20states/indicator/{quote(indicator, safe='')}/{start_date}/{end_date}"
+        payload = get(session, url, params={"c": api_key, "f": "json"}).json()
         if not isinstance(payload, list):
             raise ValueError(f"TE_PIT_SCHEMA_{key}")
         rows = []
         for item in payload:
-            if not isinstance(item, dict):
-                continue
-            rows.append({
-                "CalendarId": item.get("CalendarId"),
-                "Date": item.get("Date"),
-                "Reference": item.get("Reference"),
-                "ReferenceDate": item.get("ReferenceDate"),
-                "Forecast_present": str(item.get("Forecast") or "").strip() != "",
-                "LastUpdate": item.get("LastUpdate"),
-                "Revised_present": str(item.get("Revised") or "").strip() != "",
-                "Ticker": item.get("Ticker"),
-                "Symbol": item.get("Symbol"),
-            })
+            if isinstance(item, dict):
+                rows.append({
+                    "CalendarId": item.get("CalendarId"),
+                    "Date": item.get("Date"),
+                    "Reference": item.get("Reference"),
+                    "ReferenceDate": item.get("ReferenceDate"),
+                    "Forecast_present": bool(str(item.get("Forecast") or "").strip()),
+                    "LastUpdate": item.get("LastUpdate"),
+                    "Revised_present": bool(str(item.get("Revised") or "").strip()),
+                    "Ticker": item.get("Ticker"),
+                    "Symbol": item.get("Symbol"),
+                })
         out["indicators"][key] = {
             "indicator": indicator,
             "row_count": len(rows),
-            "forecast_present_count": sum(r["Forecast_present"] for r in rows),
+            "forecast_present_count": sum(x["Forecast_present"] for x in rows),
             "rows": rows,
         }
-    # A provider probe is not enough to approve chronology. Approval requires event-by-event comparison
-    # against captured pre-release states under a separately frozen consensus audit.
     return out
 
 
 def write_md(path: Path, summary: dict, consensus: dict) -> None:
-    lines = [
-        "# Macro Event Successor V1 — Source/PIT Readiness Audit",
-        "",
+    path.write_text("\n".join([
+        "# Macro Event Successor V1 — Source/PIT Readiness Audit", "",
         f"- BLS status: `{summary['status']}`",
         f"- BLS releases: `{summary['release_count']}`",
         f"- BLS observations: `{summary['observation_count']}`",
@@ -488,11 +423,9 @@ def write_md(path: Path, summary: dict, consensus: dict) -> None:
         f"- Consensus PIT status: `{consensus['status']}`",
         "- Model score run: `NO`",
         "- Production DB write: `NO`",
-        "- Forecast/Decision Store write: `NO`",
-        "",
-        "Consensus remains unapproved until the separate event-by-event pre-release chronology audit passes.",
-    ]
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        "- Forecast/Decision Store write: `NO`", "",
+        "Consensus remains unapproved until a separate event-by-event pre-release chronology audit passes.",
+    ]) + "\n", encoding="utf-8")
 
 
 def main() -> int:
@@ -525,11 +458,11 @@ def main() -> int:
             "approved_for_model_use": False,
         }
 
-    full_summary = {"bls": summary, "consensus": consensus}
+    full = {"bls": summary, "consensus": consensus}
     args.bundle_out.write_text(json.dumps(bundle, indent=2, sort_keys=True), encoding="utf-8")
-    args.summary_out.write_text(json.dumps(full_summary, indent=2, sort_keys=True), encoding="utf-8")
+    args.summary_out.write_text(json.dumps(full, indent=2, sort_keys=True), encoding="utf-8")
     write_md(args.md_out, summary, consensus)
-    print(json.dumps(full_summary, indent=2, sort_keys=True))
+    print(json.dumps(full, indent=2, sort_keys=True))
     return 0 if summary["status"] == "PASS" else 1
 
 
