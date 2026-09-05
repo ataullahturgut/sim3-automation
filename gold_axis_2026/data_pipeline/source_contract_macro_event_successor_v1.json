@@ -1,29 +1,29 @@
 {
-  "version": "MACRO_EVENT_SUCCESSOR_V1_SOURCE_CONTRACT_2026-09-05_R2",
+  "version": "MACRO_EVENT_SUCCESSOR_V1_SOURCE_CONTRACT_2026-09-05_R3",
   "engine_id": "MACRO_EVENT_SUCCESSOR_V1",
-  "purpose": "Governed source identities for U.S. Employment Situation first-print actuals and point-in-time market consensus. This contract authorizes source audit/reconstruction only; it does not authorize model scoring or forecast/decision writes.",
+  "purpose": "Governed source identities for U.S. Employment Situation first-print actuals and doctoral-research market consensus. This contract authorizes source audit/reconstruction only; it does not authorize model scoring or forecast/decision writes.",
   "event_family": "BLS_EMPLOYMENT_SITUATION",
-  "point_in_time_rule": "For any event at t, a model input is eligible only when its provider semantics prove that it was a pre-release consensus associated with that event. Current-vintage substitution for historical first-print actuals or post-release consensus is forbidden.",
+  "point_in_time_rule": "For any event at t, a model input is eligible only when provider semantics support that it is a pre-release consensus associated with that event. When exact pre-release update time is not proven, reconstructed consensus is eligible no earlier than the official BLS release timestamp. Current-vintage substitution for historical first-print actuals or post-result provider switching is forbidden.",
   "authority_store_writes": false,
   "direction_vote": false,
   "consensus_provider_policy": {
-    "preferred_authority_benchmark": "Bloomberg Economic Calendar historical latest pre-release panel consensus, when entitlement is available",
-    "primary_executable_candidate": "Trading Economics Economic Calendar Point-in-Time",
-    "primary_candidate_status": "PENDING_AUTHENTICATED_PROVIDER_AUDIT",
+    "working_research_provider": "Investing.com Economic Calendar",
+    "working_provider_status": "RESEARCH_ONLY_DOCTORAL_INTERNAL_USER_ACCEPTED_LICENSE_RISK",
+    "user_authorization_date": "2026-09-05",
+    "professional_benchmark_if_entitled": "Bloomberg Economic Calendar historical latest pre-release panel consensus",
     "independent_public_spot_check": "Reuters pre-release economist survey reporting",
-    "secondary_candidate": "Econoday, only after separate historical PIT/entitlement audit",
+    "optional_paid_validation": "Trading Economics Economic Calendar Point-in-Time",
     "forbidden_substitutes": [
-      "Trading Economics TEForecast",
-      "current Trading Economics website calendar without governed PIT retrieval",
-      "post-release news consensus reconstructed after the fact",
+      "per-origin provider switching after viewing model results",
+      "post-release consensus invented from another provider",
       "previous-event consensus carry-forward",
-      "per-origin provider switching after viewing model results"
+      "Investing.com Actual as authority actual",
+      "current-vintage BLS/FRED value substituted for historical first print"
     ],
-    "te_forecast_semantic": "Forecast = survey consensus from representative group of economists",
-    "te_teforecast_semantic": "TEForecast = Trading Economics proprietary/model projection; never market consensus",
-    "te_availability_semantics": "When TE PIT preserves the pre-release Forecast field but does not expose the exact last pre-release consensus update timestamp, the consensus may be eligible only at the official release timestamp and must be tagged PRE_RELEASE_CONSENSUS_FIELD_PRESERVED_BY_PROVIDER_AT_EVENT_RELEASE. It may not be used for a decision timestamp strictly before release.",
-    "te_lastupdate_policy": "LastUpdate is record-update metadata and must not be treated as the consensus availability timestamp.",
-    "raw_payload_policy": "Do not commit licensed raw provider payloads to the public repository; retain hashes/identifiers and only license-permitted evidence."
+    "investing_forecast_semantic": "Forecast/Consensus = consensus estimate from economists before the data is released, per Investing.com Economic Calendar FAQ",
+    "investing_availability_semantics": "Unless exact pre-release forecast-update timestamp is separately proven, preserved historical consensus is eligible no earlier than the official BLS release timestamp and must be tagged PRE_RELEASE_CONSENSUS_PRESERVED_ON_INVESTING_CALENDAR_RESEARCH_RECONSTRUCTION.",
+    "storage_policy": "Research-only normalized fields and provenance metadata only; do not commit raw Investing.com HTML or bulk page content to the public repository; no redistribution; seek permission or replace provider before external/commercial deployment.",
+    "legal_classification_note": "USER_ACCEPTED_LICENSE_RISK is a project governance label, not a legal conclusion. Investing.com terms currently restrict use/storage without prior written permission."
   },
   "series": {
     "MACRO_NFP_ACTUAL_FIRST_PRINT": {
@@ -66,43 +66,43 @@
       "revision_policy": "derive transparently from as-of-release AHE levels when needed; construction equivalence must be audited against BLS first releases"
     },
     "MACRO_NFP_CONSENSUS_PIT": {
-      "semantic": "Provider-preserved pre-release market consensus for headline NFP change associated with the Employment Situation release",
-      "source": "TRADING_ECONOMICS_ECONOMIC_CALENDAR_PIT_CANDIDATE",
-      "symbol": "Non Farm Payrolls / Forecast",
-      "tier": "PENDING_AUTHENTICATED_AUDIT",
+      "semantic": "Investing.com preserved pre-release economist consensus for headline NFP change associated with the Employment Situation release",
+      "source": "INVESTING_COM_ECONOMIC_CALENDAR_RESEARCH_ONLY",
+      "symbol": "Nonfarm Payrolls / Forecast",
+      "tier": "RESEARCH_ONLY_DOCTORAL_INTERNAL",
       "frequency": "event_monthly",
       "unit": "thousand_persons_change",
       "role": "MACRO_EVENT_SUCCESSOR_V1 consensus input",
-      "status": "PENDING_TE_PIT_PROVIDER_AUDIT",
+      "status": "PENDING_INVESTING_HISTORICAL_COVERAGE_AUDIT",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
-      "availability_policy": "eligible no earlier than official release timestamp after provider audit; exact pre-release update time must not be invented",
-      "forbidden_field": "TEForecast"
+      "availability_policy": "eligible no earlier than official BLS release timestamp unless exact pre-release update time is separately proven",
+      "license_label": "USER_ACCEPTED_LICENSE_RISK_NO_REDISTRIBUTION"
     },
     "MACRO_UNEMP_CONSENSUS_PIT": {
-      "semantic": "Provider-preserved pre-release market consensus for unemployment rate associated with the Employment Situation release",
-      "source": "TRADING_ECONOMICS_ECONOMIC_CALENDAR_PIT_CANDIDATE",
+      "semantic": "Investing.com preserved pre-release economist consensus for unemployment rate associated with the Employment Situation release",
+      "source": "INVESTING_COM_ECONOMIC_CALENDAR_RESEARCH_ONLY",
       "symbol": "Unemployment Rate / Forecast",
-      "tier": "PENDING_AUTHENTICATED_AUDIT",
+      "tier": "RESEARCH_ONLY_DOCTORAL_INTERNAL",
       "frequency": "event_monthly",
       "unit": "percent",
       "role": "MACRO_EVENT_SUCCESSOR_V1 consensus input",
-      "status": "PENDING_TE_PIT_PROVIDER_AUDIT",
+      "status": "PENDING_INVESTING_HISTORICAL_COVERAGE_AUDIT",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
-      "availability_policy": "eligible no earlier than official release timestamp after provider audit; exact pre-release update time must not be invented",
-      "forbidden_field": "TEForecast"
+      "availability_policy": "eligible no earlier than official BLS release timestamp unless exact pre-release update time is separately proven",
+      "license_label": "USER_ACCEPTED_LICENSE_RISK_NO_REDISTRIBUTION"
     },
     "MACRO_AHE_CONSENSUS_PIT": {
-      "semantic": "Provider-preserved pre-release market consensus for average hourly earnings month-over-month change associated with the Employment Situation release",
-      "source": "TRADING_ECONOMICS_ECONOMIC_CALENDAR_PIT_CANDIDATE",
-      "symbol": "Average Hourly Earnings MoM / Forecast",
-      "tier": "PENDING_AUTHENTICATED_AUDIT",
+      "semantic": "Investing.com preserved pre-release economist consensus for average hourly earnings month-over-month change associated with the Employment Situation release",
+      "source": "INVESTING_COM_ECONOMIC_CALENDAR_RESEARCH_ONLY",
+      "symbol": "Average Hourly Earnings (MoM) / Forecast",
+      "tier": "RESEARCH_ONLY_DOCTORAL_INTERNAL",
       "frequency": "event_monthly",
       "unit": "percent_mom",
       "role": "MACRO_EVENT_SUCCESSOR_V1 consensus input",
-      "status": "PENDING_TE_PIT_PROVIDER_AUDIT",
+      "status": "PENDING_INVESTING_HISTORICAL_COVERAGE_AUDIT",
       "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
-      "availability_policy": "eligible no earlier than official release timestamp after provider audit; exact pre-release update time must not be invented",
-      "forbidden_field": "TEForecast"
+      "availability_policy": "eligible no earlier than official BLS release timestamp unless exact pre-release update time is separately proven",
+      "license_label": "USER_ACCEPTED_LICENSE_RISK_NO_REDISTRIBUTION"
     }
   }
 }
