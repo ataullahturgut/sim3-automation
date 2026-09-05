@@ -1,0 +1,83 @@
+{
+  "contract_version": "BROAD_RESEARCH_DATA_SPINE_R1_2026-09-05",
+  "scope": "RESEARCH_DATA_ONLY",
+  "governance": {
+    "model_scores": false,
+    "forecast_writes": false,
+    "decision_writes": false,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF",
+    "raw_market_values_in_logs": false,
+    "silent_provider_substitution": false,
+    "backdated_retrieval_timestamps": false
+  },
+  "tier_a": {
+    "core5_locked_monthly": {
+      "source_id": "CORE5_MONTHLY_LOCKED_RESEARCH_R1",
+      "source_path": "gold_axis_2026/core5_monthly.csv.gz.b64",
+      "source_lineage_reference": "GOLD_H1_R1_CANONICAL_DATASET_V1.xlsx / Source_Lineage CORE5_MONTHLY",
+      "required_rows": 390,
+      "start_month": "1994-02",
+      "end_month": "2026-07",
+      "variables": ["GOLD_USD_OZ", "FEDFUNDS", "NASDAQ_AVG", "USDCNY_AVG", "GPR_CORE_ROUNDED"],
+      "evidence_class": "LOCKED_LOCAL_RESEARCH_SNAPSHOT_NOT_HISTORICAL_PIT",
+      "series": {
+        "GOLD_USD_OZ": "CORE5_GOLD_USD_OZ_RESEARCH_R1",
+        "FEDFUNDS": "CORE5_FEDFUNDS_RESEARCH_R1",
+        "NASDAQ_AVG": "CORE5_NASDAQ_AVG_RESEARCH_R1",
+        "USDCNY_AVG": "CORE5_USDCNY_AVG_RESEARCH_R1",
+        "GPR_CORE_ROUNDED": "CORE5_GPR_ROUNDED_RESEARCH_R1"
+      }
+    },
+    "staktrakr_four_metal_daily": {
+      "upstream_repo": "lbruton/StakTrakr",
+      "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+      "pin_authority": "GOLD_H1_R1_CANONICAL_DATASET_V1.xlsx / Source_Lineage PRECIOUS_METALS_DAILY_PINNED",
+      "years": [2010, 2026],
+      "end_date": "2026-07-31",
+      "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+      "series": {
+        "Gold": "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+        "Silver": "XAG_STAKTRAKR_RESEARCH_DAILY_R1",
+        "Platinum": "XPT_STAKTRAKR_RESEARCH_DAILY_R1",
+        "Palladium": "XPD_STAKTRAKR_RESEARCH_DAILY_R1"
+      }
+    },
+    "xau_hourly_derived_daily": {
+      "series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+      "provider": "Twelve Data",
+      "symbol": "XAU/USD",
+      "interval": "1h",
+      "timezone": "America/New_York",
+      "selected_bar_time": "16:00:00",
+      "start_month": "2022-03",
+      "end_month": "2026-08",
+      "min_selected_days_per_month": 15,
+      "evidence_class": "HISTORICAL_RESEARCH_RETRIEVAL_NOT_CANONICAL_NY17",
+      "not_equivalent_to": "XAU_EOD_TWELVE_NY17"
+    },
+    "gpr_companion_vintages": {
+      "upstream_repo": "iacoviel/iacoviel.github.io",
+      "origin_start": "2022-03",
+      "origin_end": "2026-08",
+      "required_origin_count": 54,
+      "availability_policy": "EARLIEST_OFFICIAL_GIT_ARCHIVE_ADD_COMMIT_FLOOR",
+      "series": ["GPRT_OFFICIAL_GIT_PIT", "GPRA_OFFICIAL_GIT_PIT"],
+      "base_authority_series": "GPR_OFFICIAL_GIT_PIT"
+    },
+    "existing_neon_inventory": [
+      "DJIA_FRED", "NASDAQ100_FRED", "SP500_FRED", "DGS10_ALFRED_PIT_ME",
+      "DFF_ALFRED_PIT_ME", "DEXCHUS_ALFRED_PIT_ME", "NASDAQ100_ALFRED_PIT_ME",
+      "BARRICK_B_TWELVEDATA", "NEM_TWELVEDATA", "DZZ_TWELVEDATA",
+      "GLL_TWELVEDATA", "HL_PB_TWELVEDATA", "VIX_CBOE", "GVZ_CBOE"
+    ]
+  },
+  "tier_b_source_contract_backlog": [
+    "DFII10_REAL_YIELD", "TREASURY_CURVE_DGS2_DGS5_DGS10_DGS30",
+    "BREAKEVENS_T5YIE_T10YIE", "EXACT_DXY_SEPARATE_IDENTITY",
+    "CPI_PCE_RELEASE_SURPRISES", "MOVE_AND_UNCERTAINTY_STRESS",
+    "ETF_HOLDINGS_FLOWS", "CENTRAL_BANK_WGC_DEMAND", "CFTC_POSITIONING",
+    "FUTURES_CURVE_BASIS_CARRY", "OPTIONS_IV_SKEW", "OIL_SILVER_COPPER_CONTEXT",
+    "M2_GLOBAL_LIQUIDITY"
+  ]
+}

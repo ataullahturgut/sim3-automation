@@ -1,7 +1,7 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.36  
-**Freeze / issue date:** 2026-09-05  
+**Manifest version:** 1.37  
+**Freeze / issue date:** 2026-09-06  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical model/app branch:** `gold-r4-direction-engine`  
 **Scheduler branch:** `main`  
@@ -21,7 +21,7 @@ Rules:
 
 1. No other Markdown, YAML, JSON, workflow, status note, change-control document, replay report, handover, or historical manifest version is a second project manifest.
 2. Historical change-control, validation, status and evidence documents remain audit evidence only.
-3. If an older document conflicts with this file, this v1.36 manifest governs unless a newer audited manifest version explicitly supersedes it.
+3. If an older document conflicts with this file, this v1.37 manifest governs unless a newer audited manifest version explicitly supersedes it.
 4. `FILE_MANIFEST_SHA256.txt` is a repository file-checksum inventory, **not** the Gold Control project decision manifest.
 5. Old `apply_manifest_*` / `reconcile_manifest_*` scripts and workflow names are historical tooling, not independent manifest authority.
 6. Git history may contain older manifest versions, but the current branch may contain only this single canonical project-manifest file.
@@ -414,9 +414,9 @@ Emergency remains an alert/context layer; it does not create an automatic BUY / 
 
 ---
 
-# 11. CURRENT PRODUCTION RUNTIME AUTHORITY — v1.36
+# 11. CURRENT PRODUCTION RUNTIME AUTHORITY — v1.37
 
-Under v1.36, the current governed application inventory is:
+Under v1.37, the current governed application inventory is:
 
 - `ACTIVE = 6`
 - `WAITING = 5`
@@ -481,7 +481,7 @@ The v1.33 GPR source-data ingestion authorization below also does **not** change
 
 ---
 
-# 13. UI CONTRACT — v1.36
+# 13. UI CONTRACT — v1.37
 
 ## 13.1 Tahmin
 
@@ -627,6 +627,26 @@ The separate v1.34 BOCPD and v1.35 Macro Event promotion authorizations are inde
 
 Successful GPR source ingestion remains valid as a reusable governed data plane even though VW V2 subsequently failed its model validation gates.
 
+
+## 14.2 v1.37 Broad Research Data Spine R1 production source-data authorization
+
+Binding authorization token:
+
+`MANIFEST_V1_37_BROAD_RESEARCH_DATA_SPINE_R1`
+
+This is strictly a research source-data/audit-plane authorization. It grants no model score, forecast issuance, decision write, runtime mutation, selector/ensemble role, or action/position mapping.
+
+Frozen source preflight: head `a0a06bbce8249f8e7ac4cc0f482f1f68c711657b`, run `33989608218`, artifact digest `sha256:ba4300d3501211ce7deaeea61627042f066ec45e679f672deb1741e26e102f1a`, result `SUCCESS`.
+
+Frozen ingestion engineering: writer commit `671ca6ef84dcc4ffbbf6a6f216b8352897a1ff95`, writer blob `3bb80b42961e0a16fbbf40eb14ab5340d169e797`, run `33991644883`, artifact digest `sha256:b1ae7a83d321372061d950c5f1cc8fad8262b570215f9a09ae22a4452fa355b5`, corrected CORE5 blob `bd7c1df860cc2975f123e300be597e9dec42e5c3`, result `ENGINEERING_PREFLIGHT_PASS`.
+
+The first production persistence is authorized only after canonical execution re-proves, before persistence: exactly 12 research series; 71,075 observations; 126 source-vintage rows; zero quality events; CORE5 390 rows per series; StakTrakr XAU/XAG/XPT/XPD 4,230/4,230/4,229/4,229; Twelve-derived XAU 1,177 rows across 54/54 months with minimum 15 selected days; GPRT/GPRA 25,515/25,515 rows with 54/54 origins; empty reserved Broad R1 registry/observation/vintage namespace; all four forecast/decision authority stores equal zero; runtime exactly ACTIVE=6 / WAITING=5 / BLOCKED=1.
+
+Authorized production tables are only `source_registry`, `retrieval_runs`, `observations`, `source_vintages`, and `quality_events`. Writes to `monthly_forecast_contracts`, `decision_signal_snapshots`, `decision_runs`, `decision_events`, engine runtime authority, model promotion/validation state, selector/ensemble state, and action/position mappings are forbidden.
+
+Evidence semantics remain frozen: CORE5 is not historical PIT; StakTrakr makes no origin-PIT claim; Twelve Data 1h/16:00 America/New_York is historical research retrieval and is not canonical `XAU_EOD_TWELVE_NY17`; GPRT/GPRA are separate official-Git vintage reconstruction identities; retrieval/first-seen timestamps are never backdated; silent provider substitution is forbidden; raw vendor values are not emitted to CI evidence.
+
+`AUTO_SELECTOR=OFF` and `AUTO_ENSEMBLE=OFF` remain binding.
 ---
 
 # 15. CURRENT EVIDENCE FILES REFERENCED BY THIS MANIFEST
@@ -654,8 +674,11 @@ The following are supporting evidence, not independent manifests:
 - `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_PRE_SCORE_ELIGIBILITY_CORRECTION_2026-09-05.md`
 - `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_TERMINAL_VALIDATION_EVIDENCE_2026-09-05.md`
 - `GOLD_CONTROL_GPR_PIT_DATA_PLANE_CHANGE_CONTROL_2026-09-05.md`
+- `GOLD_CONTROL_BROAD_RESEARCH_DATA_SPINE_CHANGE_CONTROL_2026-09-05.md`
+- `GOLD_CONTROL_BROAD_RESEARCH_DATA_SPINE_R1_NEON_INGESTION_CHANGE_CONTROL_2026-09-05.md`
+- `GOLD_CONTROL_BROAD_RESEARCH_DATA_SPINE_R1_NEON_INGESTION_ENGINEERING_EVIDENCE_2026-09-05.md`
 
-Where old wording in these historical files conflicts with the v1.32 monthly-origin correction, the v1.33 GPR PIT source-data authorization, the terminal VW V2 result, or the v1.34 BOCPD runtime replacement, **this v1.34 manifest controls current product/runtime behavior** while the historical document remains immutable evidence of what was believed/frozen at that earlier time.
+Where old wording in these historical files conflicts with the v1.32 monthly-origin correction, the v1.33 GPR PIT source-data authorization, the terminal VW V2 result, or the v1.34 BOCPD runtime replacement, **this v1.37 manifest controls current product/runtime behavior** while the historical document remains immutable evidence of what was believed/frozen at that earlier time.
 
 ---
 
@@ -729,6 +752,8 @@ v1.34 authorizes the separately named and validated `BOCPD_RETURN_SUCCESSOR_V1` 
 v1.34 also records the binding terminal rejection of `VW_MIDAS_SVR_XAU_SUCCESSOR_V2`; that model receives no promotion.
 
 The v1.33 `GPR_OFFICIAL_GIT_PIT` source-data authorization remains valid independently.
+
+v1.37 additionally authorizes the frozen Broad Research Data Spine R1 first production persistence under section 14.2 and only under its exact source-data/audit-plane gates.
 
 If an origin was reconstructed later, the target/origin interpretation remains valid, but the audit metadata must truthfully identify it as a reconstruction rather than falsely backdating the issuance.
 
