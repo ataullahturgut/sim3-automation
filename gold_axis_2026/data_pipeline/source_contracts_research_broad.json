@@ -12,9 +12,27 @@
     "backdated_retrieval_timestamps": false
   },
   "tier_a": {
+    "core5_locked_monthly": {
+      "source_id": "CORE5_MONTHLY_LOCKED_RESEARCH_R1",
+      "source_path": "gold_axis_2026/core5_monthly.csv.gz.b64",
+      "source_lineage_reference": "GOLD_H1_R1_CANONICAL_DATASET_V1.xlsx / Source_Lineage CORE5_MONTHLY",
+      "required_rows": 390,
+      "start_month": "1994-02",
+      "end_month": "2026-07",
+      "variables": ["GOLD_USD_OZ", "FEDFUNDS", "NASDAQ_AVG", "USDCNY_AVG", "GPR_CORE_ROUNDED"],
+      "evidence_class": "LOCKED_LOCAL_RESEARCH_SNAPSHOT_NOT_HISTORICAL_PIT",
+      "series": {
+        "GOLD_USD_OZ": "CORE5_GOLD_USD_OZ_RESEARCH_R1",
+        "FEDFUNDS": "CORE5_FEDFUNDS_RESEARCH_R1",
+        "NASDAQ_AVG": "CORE5_NASDAQ_AVG_RESEARCH_R1",
+        "USDCNY_AVG": "CORE5_USDCNY_AVG_RESEARCH_R1",
+        "GPR_CORE_ROUNDED": "CORE5_GPR_ROUNDED_RESEARCH_R1"
+      }
+    },
     "staktrakr_four_metal_daily": {
       "upstream_repo": "lbruton/StakTrakr",
-      "pinned_commit": "429d8e612d504a964846ff6438dbdb28ace630c3",
+      "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+      "pin_authority": "GOLD_H1_R1_CANONICAL_DATASET_V1.xlsx / Source_Lineage PRECIOUS_METALS_DAILY_PINNED",
       "years": [2010, 2026],
       "end_date": "2026-07-31",
       "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
