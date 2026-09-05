@@ -1,0 +1,114 @@
+name: Gold Control V1.36 Remove Legacy Macro Event
+
+on:
+  push:
+    branches:
+      - gold-control-remove-legacy-macro-event-final
+    paths:
+      - 'gold_axis_2026/tools/apply_v136_remove_legacy_macro_event.py'
+      - '.github/workflows/gold-control-v136-remove-legacy-macro-event.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-v136-remove-legacy-macro-event
+  cancel-in-progress: false
+
+jobs:
+  cleanup-validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - name: Checkout cleanup branch
+        uses: actions/checkout@v4
+        with:
+          ref: gold-control-remove-legacy-macro-event-final
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Apply deterministic v1.36 cleanup
+        run: python gold_axis_2026/tools/apply_v136_remove_legacy_macro_event.py
+
+      - name: Install validation runtime
+        run: pip install pytest 'psycopg[binary]==3.3.5'
+
+      - name: Validate active application code
+        run: |
+          python -m py_compile \
+            gold_axis_2026/apps/engine_observability_contract.py \
+            gold_axis_2026/apps/decision_source.py \
+            gold_axis_2026/apps/gold_control_mobile_v1.py
+          PYTHONPATH=gold_axis_2026/apps pytest -q \
+            gold_axis_2026/apps/test_engine_observability_contract.py \
+            gold_axis_2026/apps/test_ui_manifest_consistency_v126.py
+
+      - name: Refresh production display snapshot from current registry
+        run: |
+          test -n "$NEON_DATABASE_URL" || (echo 'NEON_DATABASE_URL missing' && exit 1)
+          python gold_axis_2026/tools/export_production_display_snapshot.py --out gold_axis_2026/apps/production_display_snapshot.json
+          PYTHONPATH=gold_axis_2026/apps python - <<'PY'
+          import json, re
+          from pathlib import Path
+          from production_display_snapshot import validate_production_display_snapshot
+          p=Path('gold_axis_2026/apps/production_display_snapshot.json')
+          snap=json.loads(p.read_text(encoding='utf-8'))
+          validate_production_display_snapshot(snap)
+          assert len(snap['runtime']) == 12
+          ids=[r['engine_id'] for r in snap['runtime']]
+          assert 'MACRO_EVENT_SUCCESSOR_V2' in ids
+          text=p.read_text(encoding='utf-8')
+          assert not re.search(r'(?<![A-Z0-9_])MACRO_EVENT(?![A-Z0-9_])', text)
+          assert 'BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED' not in text
+          print('PRODUCTION_SNAPSHOT_CURRENT_MACRO_SUCCESSOR_ONLY_PASS')
+          PY
+
+      - name: Prove current manifest and active app tree contain no legacy identity
+        run: |
+          python - <<'PY'
+          import re
+          from pathlib import Path
+          legacy=re.compile(r'(?<![A-Z0-9_])MACRO_EVENT(?![A-Z0-9_])')
+          blocker='BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED'
+          files=[
+            Path('gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'),
+            Path('gold_axis_2026/apps/engine_observability_contract.py'),
+            Path('gold_axis_2026/apps/decision_source.py'),
+            Path('gold_axis_2026/apps/gold_control_mobile_v1.py'),
+            Path('gold_axis_2026/apps/test_engine_observability_contract.py'),
+            Path('gold_axis_2026/apps/production_display_snapshot.json'),
+          ]
+          for p in files:
+            t=p.read_text(encoding='utf-8')
+            assert not legacy.search(t), f'legacy engine token remains in {p}'
+            assert blocker not in t, f'legacy blocker remains in {p}'
+          d=Path('gold_axis_2026/apps/decision_source.py').read_text(encoding='utf-8')
+          for token in ('MACRO_EVENT_CONTEXT_STATUS','macro_event_down','macro_event_state'):
+            assert token not in d, f'legacy compatibility field remains: {token}'
+          m=Path('gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md').read_text(encoding='utf-8')
+          assert '**Manifest version:** 1.36' in m
+          assert 'MACRO_EVENT_SUCCESSOR_V2' in m
+          print('V136_CURRENT_TREE_LEGACY_MACRO_ABSENCE_PASS')
+          PY
+
+      - name: Commit clean current tree and remove one-shot tooling
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm gold_axis_2026/tools/apply_v136_remove_legacy_macro_event.py \
+                 .github/workflows/gold-control-v136-remove-legacy-macro-event.yml
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md \
+                  gold_axis_2026/apps/engine_observability_contract.py \
+                  gold_axis_2026/apps/decision_source.py \
+                  gold_axis_2026/apps/gold_control_mobile_v1.py \
+                  gold_axis_2026/apps/test_engine_observability_contract.py \
+                  gold_axis_2026/apps/production_display_snapshot.json
+          git diff --cached --check -- ':!gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+          git commit -m 'gold-control: remove legacy Macro Event from current state'
+          git push origin HEAD:gold-control-remove-legacy-macro-event-final
