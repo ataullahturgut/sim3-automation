@@ -1,0 +1,39 @@
+name: Gold Control Macro Event Successor V1 Score Tests
+
+on:
+  push:
+    branches:
+      - gold-control-macro-event-successor-v1-source-contract
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V1_SCORE_PREREG_2026-09-05.md'
+      - 'gold_axis_2026/tools/replay_macro_event_successor_v1_score.py'
+      - 'gold_axis_2026/tests/test_replay_macro_event_successor_v1_score.py'
+      - '.github/workflows/gold-control-macro-event-successor-v1-score-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  score-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pytest 'psycopg[binary]'
+      - name: Compile and unit test frozen score
+        run: |
+          python -m py_compile gold_axis_2026/tools/replay_macro_event_successor_v1_score.py
+          pytest -q gold_axis_2026/tests/test_replay_macro_event_successor_v1_score.py
+      - name: Assert no score workflow writes are present
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('gold_axis_2026/tools/replay_macro_event_successor_v1_score.py').read_text(encoding='utf-8').lower()
+          assert 'insert into' not in p
+          assert 'update ' not in p
+          assert 'delete from' not in p
+          PY

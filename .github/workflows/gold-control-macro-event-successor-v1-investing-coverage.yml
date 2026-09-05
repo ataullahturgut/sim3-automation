@@ -1,0 +1,84 @@
+name: Gold Control Macro Event Investing Coverage Audit
+
+on:
+  push:
+    branches:
+      - gold-control-macro-event-successor-v1-source-contract
+    paths:
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v1_investing_coverage_audit.py'
+      - 'gold_axis_2026/tests/test_macro_event_successor_v1_investing_coverage_audit.py'
+      - 'gold_axis_2026/data_pipeline/source_contract_macro_event_successor_v1.json'
+      - '.github/workflows/gold-control-macro-event-successor-v1-investing-coverage.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  investing-coverage-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pytest requests beautifulsoup4
+
+      - name: Unit and compile tests
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v1_investing_coverage_audit.py
+          pytest -q gold_axis_2026/tests/test_macro_event_successor_v1_investing_coverage_audit.py
+
+      - name: Run Investing historical consensus coverage audit
+        run: |
+          python gold_axis_2026/data_pipeline/macro_event_successor_v1_investing_coverage_audit.py \
+            --start-reference 2016-01 \
+            --end-reference 2026-08 \
+            --out macro_event_investing_coverage_audit_v1.json
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_investing_coverage_audit_v1.json', encoding='utf-8'))
+          with open('macro_event_investing_coverage_audit_v1.md','w',encoding='utf-8') as f:
+              f.write('# Macro Event Successor V1 — Investing Historical Consensus Coverage Audit\n\n')
+              f.write(f"- Status: `{d['status']}`\n")
+              f.write(f"- Research-ingestion eligible: `{d['eligible_for_research_ingestion']}`\n")
+              f.write(f"- Window: `{d['reference_window']['start']}..{d['reference_window']['end']}` ({d['reference_window']['expected_months']} months)\n")
+              for key,row in d['results'].items():
+                  f.write(f"- {key}: endpoint `{row['endpoint_status']}`, forecast coverage `{row['forecast_coverage_ratio']:.3f}`, rows `{row['rows_present']}/{row['expected_reference_months']}`, missing forecasts `{row['missing_forecast_count']}`\n")
+              f.write('- Raw provider payload committed: `NO`\n')
+              f.write('- Production DB write: `NO`\n- Model score: `NO`\n- Forecast/Decision Store write: `NO`\n')
+          PY
+          cat macro_event_investing_coverage_audit_v1.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Enforce research-only fail-closed invariants
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_investing_coverage_audit_v1.json', encoding='utf-8'))
+          assert d['provider_scope']=='DOCTORAL_RESEARCH_INTERNAL_USER_ACCEPTED_LICENSE_RISK', d
+          assert d['production_db_write'] is False, d
+          assert d['model_score_run'] is False, d
+          assert d['forecast_or_decision_write'] is False, d
+          assert d['direction_vote'] is False, d
+          assert d['raw_provider_payload_committed'] is False, d
+          for row in d['results'].values():
+              assert row['raw_values_logged'] is False, row
+              assert row['normalized_values_committed'] is False, row
+          PY
+
+      - name: Upload coverage evidence only
+        uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-investing-coverage-audit
+          path: |
+            macro_event_investing_coverage_audit_v1.json
+            macro_event_investing_coverage_audit_v1.md
+          if-no-files-found: error
