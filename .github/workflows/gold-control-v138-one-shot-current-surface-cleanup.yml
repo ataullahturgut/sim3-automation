@@ -65,16 +65,11 @@ jobs:
               text = text.replace('"ACTIVE": 6, "WAITING": 5, "BLOCKED": 1', '"ACTIVE": 6, "WAITING": 6, "BLOCKED": 0')
               p.write_text(text, encoding="utf-8")
 
-          # Keep the Aug31 direction/risk replay reader because the application uses
-          # it, but remove the superseded VW identity from its current fallback surface.
           p = Path("gold_axis_2026/apps/aug31_state_replay_source.py")
           text = p.read_text(encoding="utf-8")
           text = re.sub(r'^\s*"' + re.escape(old) + r'"\s*:\s*"[^"]+",\s*\n', '', text, flags=re.MULTILINE)
           p.write_text(text, encoding="utf-8")
 
-          # The current snapshot fallback is regenerated logically: remove only the
-          # superseded VW blocker and recompute its integrity hash. Historical Git
-          # commits retain the original snapshot for audit.
           snap_path = Path("gold_axis_2026/apps/aug31_state_replay_snapshot.json")
           snap = json.loads(snap_path.read_text(encoding="utf-8"))
           blockers = dict(snap.get("blocked_components") or {})
@@ -86,8 +81,6 @@ jobs:
           snap["payload_sha256"] = hashlib.sha256(raw).hexdigest()
           snap_path.write_text(json.dumps(snap, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
-          # Remove the superseded VW line from the Aug31 blocked/archived UI block;
-          # the new V1 appears through the governed expert/runtime surfaces instead.
           p = Path("gold_axis_2026/apps/gold_control_mobile_v1.py")
           text = p.read_text(encoding="utf-8")
           text = re.sub(r'^\s*"VW-MIDAS-MSVR"\s*:\s*"BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN",\s*\n', '', text, flags=re.MULTILINE)
@@ -97,11 +90,13 @@ jobs:
               ".github/workflows/gold-control-v130-recovery-status-validation.yml",
               ".github/workflows/gold-control-v132-monthly-origin-acceptance.yml",
               "gold_axis_2026/data_pipeline/aug31_eod_state_historical_replay.py",
+              "gold_axis_2026/data_pipeline/aug31_eod_state_historical_replay_v2.py",
               "gold_axis_2026/run_models.py",
               "gold_axis_2026/summary_2026.json",
               "gold_axis_2026/tools/apply_data_spine_ui_read_v1.py",
               "gold_axis_2026/tools/apply_v126_system_recovery.py",
               "gold_axis_2026/tools/export_aug31_state_replay_snapshot.py",
+              "gold_axis_2026/tools/repair_v130_aug31_core_main.py",
           ]
           for name in obsolete:
               p = Path(name)
@@ -115,7 +110,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for token in aug31_eod_state_historical_replay apply_data_spine_ui_read_v1 apply_v126_system_recovery export_aug31_state_replay_snapshot; do
+          for token in aug31_eod_state_historical_replay apply_data_spine_ui_read_v1 apply_v126_system_recovery export_aug31_state_replay_snapshot repair_v130_aug31_core_main; do
             if git grep -n "$token" -- '*.py' ':!gold_axis_2026/apps/test_*' ':!gold_axis_2026/data_pipeline/test_*'; then
               echo "STALE_LEGACY_IMPORT_OR_REFERENCE=$token"
               exit 1
