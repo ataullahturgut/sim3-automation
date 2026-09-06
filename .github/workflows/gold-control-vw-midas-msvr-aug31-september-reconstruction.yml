@@ -31,8 +31,15 @@ jobs:
       - name: Run Aug31 reconstruction
         env:
           NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
-        run: python gold_axis_2026/tools/vw_midas_msvr_successor_v1_aug31_september_reconstruction.py --output vw_midas_msvr_aug31_sep_reconstruction.json
+        shell: bash
+        run: |
+          set +e
+          python gold_axis_2026/tools/vw_midas_msvr_successor_v1_aug31_september_reconstruction.py --output vw_midas_msvr_aug31_sep_reconstruction.json > reconstruction.log 2>&1
+          code=$?
+          cat reconstruction.log
+          exit $code
       - name: Assert governance
+        if: success()
         run: |
           python - <<'PY'
           import json
@@ -51,6 +58,8 @@ jobs:
         if: always()
         with:
           name: vw-msvr-aug31-september-reconstruction-${{ github.sha }}
-          path: vw_midas_msvr_aug31_sep_reconstruction.json
+          path: |
+            vw_midas_msvr_aug31_sep_reconstruction.json
+            reconstruction.log
           if-no-files-found: warn
           retention-days: 90
