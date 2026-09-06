@@ -17,7 +17,7 @@ It MUST NOT claim that the forecast was issued on 2026-08-31.
 - frozen V1 mathematics/architecture/grid: unchanged from the 2026-09-06 V1 change-control
 
 ## 3. August 2026 four-metal reconstruction bridge
-Historical StakTrakr R1 is pinned and ends 2026-07-31. It is not silently extended.
+Historical production StakTrakr R1 is pinned and ends 2026-07-31. It is not silently extended.
 
 For this reconstruction only, use one coherent current-source family:
 - Myfxbook XAUUSD daily historical close
@@ -28,22 +28,31 @@ For this reconstruction only, use one coherent current-source family:
 Identity:
 `MYFXBOOK_FOUR_METAL_AUG31_RECONSTRUCTION_V1`
 
+The exact August values used are frozen in:
+`gold_axis_2026/data_pipeline/myfxbook_four_metal_august_2026_reconstruction_snapshot.csv`
+
 Use only dates <= 2026-08-31 and only dates where all four metals are present.
 No imputation, interpolation, or mixed provider fill.
 
-## 4. Bridge gate frozen before model output
-Before using Myfxbook August values in V1, compare July 2026 Myfxbook daily closes with the historical StakTrakr R1 panel on exact common dates.
+## 4. Bridge gate frozen before model output — corrected source-overlap window
+The first engineering attempt used a July bridge, but GitHub Actions received HTTP 403 when trying to fetch Myfxbook HTML directly. No model forecast was produced in that attempt.
 
-Required:
-- >= 20 exact common four-metal dates in July 2026;
+Before any model output, the bridge window is therefore corrected to the direct overlap between:
+- frozen Myfxbook August reconstruction snapshot; and
+- upstream StakTrakr commit `ed2e549f82ba0d1cd3ca32842b82d3888d301e01`, whose 2026 spot-history payload contains August observations through 2026-08-19.
+
+Bridge comparison uses exact common dates in 2026-08-02..2026-08-19.
+
+Required, frozen before forecast output:
+- >= 12 exact common four-metal dates;
 - for each metal, median daily APE <= 2.5%;
 - for each metal, 95th-percentile daily APE <= 7.5%;
-- for each metal, July monthly-mean APE <= 3.0%;
+- for each metal, overlap-window mean APE <= 3.0%;
 - no sign inversion or unit mismatch.
 
 If any gate fails: `BLOCKED_AUG31_MYFXBOOK_STAKTRAKR_BRIDGE_NOT_PROVEN` and no V1 September forecast is issued.
 
-These gates are diagnostic continuity gates, not historical model-performance gates.
+This correction changes only the source-overlap diagnostic window. It does not change model mathematics, target, feature definitions, hyperparameter grid, historical replay results, or forecast output after seeing a forecast; no forecast existed when this correction was frozen.
 
 ## 5. August completeness
 Required before model execution:
@@ -76,4 +85,4 @@ This is a reconstruction measurement bridge and must not be presented as identic
 - no runtime mutation;
 - no selector/ensemble activation;
 - output artifact only on feature branch;
-- preserve source URLs, retrieval time, common dates, bridge metrics, model configuration, forecast and benchmark.
+- preserve source evidence, retrieval time, common dates, bridge metrics, model configuration, forecast and benchmark.
