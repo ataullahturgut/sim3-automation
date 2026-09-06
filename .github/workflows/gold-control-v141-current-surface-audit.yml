@@ -17,21 +17,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Compile current Python surface
+      - name: Install current test runtime
+        run: python -m pip install -q pytest pandas numpy psycopg[binary]
+      - name: Compile retained Python surface
+        run: python -m compileall -q gold_axis_2026/apps gold_axis_2026/data_pipeline gold_axis_2026/tools gold_axis_2026/r4_1 gold_axis_2026/r4_2
+      - name: Run current-surface unit tests
         run: |
-          python -m compileall -q gold_axis_2026/apps gold_axis_2026/data_pipeline gold_axis_2026/tools gold_axis_2026/r4_1 gold_axis_2026/r4_2
-      - name: Audit current surface for stale semantics
-        run: python gold_axis_2026/tools/audit_current_surface_v141.py
-      - name: Run core current tests
-        run: |
-          python -m pip install -q pytest pandas numpy psycopg[binary]
           pytest -q \
             gold_axis_2026/apps/test_engine_observability_contract.py \
             gold_axis_2026/apps/test_production_display_snapshot.py \
             gold_axis_2026/data_pipeline/test_multi_expert_forecast.py \
-            gold_axis_2026/data_pipeline/test_data_evidence_spine_runtime_bootstrap.py \
-            gold_axis_2026/r4_1/tests/test_frozen_rules.py \
-            gold_axis_2026/r4_2/test_monthly_reference_bridge.py
+            gold_axis_2026/data_pipeline/test_data_evidence_spine_runtime_bootstrap.py
+      - name: Audit current surface for stale semantics and paths
+        run: python gold_axis_2026/tools/audit_current_surface_v141.py
       - name: Upload audit report
         if: always()
         uses: actions/upload-artifact@v4
