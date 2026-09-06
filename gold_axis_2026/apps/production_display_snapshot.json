@@ -112,7 +112,7 @@
     "canonical_forecasts": 0,
     "decision_snapshots": 0,
     "derived_features": 20,
-    "engine_runs": 31,
+    "engine_runs": 35,
     "expert_forecasts": 2,
     "expert_input_fingerprint_mismatches": 0,
     "expert_rows_without_input_set": 0,
@@ -211,7 +211,7 @@
     }
   ],
   "historical_replay_target_month": "2026-09",
-  "payload_sha256": "31e0efe3323c49b897f733d3ad6368059c447299fc02f5f2886de08cd5c1e392",
+  "payload_sha256": "72b064bfecede96f6b3062d6d0be7add3d86e78f2da39400c04c96f7390e43c1",
   "runtime": [
     {
       "as_of": "2026-09-05T14:34:24.041101+00:00",
@@ -286,13 +286,13 @@
       "target_context": "2026-09"
     },
     {
-      "as_of": "2026-09-05T17:40:18.137322+00:00",
+      "as_of": "2026-09-05T18:12:17.839942+00:00",
       "direction_vote_permitted": false,
       "engine_id": "MACRO_EVENT_SUCCESSOR_V2",
       "engine_role": "EVENT_RISK_CONTEXT",
       "engine_version": "MACRO_EVENT_SUCCESSOR_V2",
       "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
-      "git_commit": "4773df621fb710fd95a3a75eeee0ea12dec13429",
+      "git_commit": "e3dbb74754265084719a972aa447c23882abde09",
       "runtime_status": "ACTIVE",
       "status_code": "ACTIVE_MACRO_EVENT_SUCCESSOR_V2_EVENT_RISK_CONTEXT",
       "target_context": "2026-09"
@@ -346,20 +346,20 @@
       "target_context": "2026-09"
     },
     {
-      "as_of": "2026-09-04T11:27:24.723229+00:00",
+      "as_of": "2026-09-06T19:05:14.537590+00:00",
       "direction_vote_permitted": false,
-      "engine_id": "VW_MIDAS_MSVR",
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
       "engine_role": "MONTHLY_H1_EXPERT",
-      "engine_version": "VW_AUDITED_SHADOW_V2",
+      "engine_version": "VW_MIDAS_MSVR_SUCCESSOR_V1",
       "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
-      "git_commit": "5e27629ffe5930ac89ba1abaaf55f1dd21e9e909",
-      "runtime_status": "BLOCKED",
-      "status_code": "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN",
+      "git_commit": "4db47d5170ab457f276180d7ca13f41c73b838eb",
+      "runtime_status": "WAITING",
+      "status_code": "WAITING_ORIGIN_NOT_REACHED",
       "target_context": "2026-09"
     }
   ],
   "snapshot_contract": "FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V2",
   "source": "NEON_PRODUCTION_READ_ONLY_EXPORT",
-  "source_state_at": "2026-09-05T17:40:18.137322+00:00",
+  "source_state_at": "2026-09-06T19:05:14.537590+00:00",
   "target_context": "2026-09"
 }
