@@ -1,0 +1,56 @@
+name: Gold Control VW MSVR Aug31 September Reconstruction
+
+on:
+  push:
+    branches: [gold-control-vw-midas-msvr-successor-v1]
+    paths:
+      - gold_axis_2026/GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_AUG31_SEPTEMBER_RECONSTRUCTION_CONTRACT.md
+      - gold_axis_2026/tools/vw_midas_msvr_successor_v1_aug31_september_reconstruction.py
+      - .github/workflows/gold-control-vw-midas-msvr-aug31-september-reconstruction.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reconstruct:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'pandas>=2,<3' 'psycopg[binary]>=3.2,<4' 'requests>=2.31,<3' 'lxml>=5,<7' 'beautifulsoup4>=4.12,<5'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/vw_midas_msvr_successor_v1.py gold_axis_2026/tools/vw_midas_msvr_successor_v1_aug31_september_reconstruction.py
+      - name: Run Aug31 reconstruction
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_msvr_successor_v1_aug31_september_reconstruction.py --output vw_midas_msvr_aug31_sep_reconstruction.json
+      - name: Assert governance
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('vw_midas_msvr_aug31_sep_reconstruction.json'))
+          assert r['origin_boundary']=='2026-08-31'
+          assert r['target_month']=='2026-09'
+          assert r['evidence_class']=='ORIGIN_RECONSTRUCTION_HISTORICAL_REPLAY'
+          assert r['august_common_days']>=20
+          assert r['august_last_common_date']=='2026-08-31'
+          assert r['governance']['prospective_claim'] is False
+          assert r['governance']['database_writes']=='NONE'
+          print('SEPTEMBER_FORECAST=',r['september_xau_monthly_average_forecast'])
+          print('RW=',r['random_walk_same_origin'])
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vw-msvr-aug31-september-reconstruction-${{ github.sha }}
+          path: vw_midas_msvr_aug31_sep_reconstruction.json
+          if-no-files-found: warn
+          retention-days: 90
