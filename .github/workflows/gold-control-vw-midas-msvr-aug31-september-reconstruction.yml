@@ -2,7 +2,7 @@ name: Gold Control VW MSVR Aug31 September Reconstruction
 
 on:
   push:
-    branches: [gold-control-vw-midas-msvr-successor-v1]
+    branches: [gold-control-vw-midas-msvr-successor-v1, gold-r4-direction-engine]
     paths:
       - gold_axis_2026/GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_AUG31_SEPTEMBER_RECONSTRUCTION_CONTRACT.md
       - gold_axis_2026/tools/vw_midas_msvr_successor_v1_aug31_september_reconstruction.py
@@ -44,6 +44,7 @@ jobs:
           python - <<'PY'
           import json
           r=json.load(open('vw_midas_msvr_aug31_sep_reconstruction.json'))
+          assert r['model_id']=='VW_MIDAS_MSVR_SUCCESSOR_V1'
           assert r['origin_boundary']=='2026-08-31'
           assert r['target_month']=='2026-09'
           assert r['evidence_class']=='ORIGIN_RECONSTRUCTION_HISTORICAL_REPLAY'
