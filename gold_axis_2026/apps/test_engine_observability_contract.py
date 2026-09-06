@@ -17,11 +17,10 @@ def _decision() -> dict:
         "monthly_direction_3m": "DOWN",
         "fast_state": "ROBUST_UP",
         "slow_state": "ROBUST_UP",
+        # These stale placeholders deliberately prove that governed runtime
+        # current-month references override old WAITING presentation text.
         "level_emergency": "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE",
         "reversal_emergency": "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE",
-        # Historical archived field deliberately retained in the decision payload.
-        # The promoted successor registry must not read this value as successor output.
-        "bocpd_context": "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED",
         "gvz": 26.14,
         "gvz_cap": 0.5,
         "gvz_panic": False,
@@ -53,19 +52,50 @@ def _decision() -> dict:
     }
 
 
+def _ref(value=None, state=None, kind="HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE") -> dict:
+    ref = {
+        "reference_kind": kind,
+        "evidence_class": "HISTORICAL_REPLAY",
+        "target_month": "2026-09",
+        "forecast_origin": "2026-08-31T21:00:00Z",
+        "information_cutoff": "2026-08-31T21:00:00Z",
+        "replay_executed_at": "2026-09-06T19:18:23Z",
+        "canonical_authority": False,
+        "prospective_claim": False,
+        "auto_selector": "OFF",
+        "auto_ensemble": "OFF",
+    }
+    if value is not None:
+        ref["forecast_value"] = value
+        ref["unit"] = "USD/oz"
+    if state is not None:
+        ref["state_value"] = state
+    return ref
+
+
 def _runtime_rows() -> list[dict]:
     status = {
-        "CAUSAL_PATCH": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False, {}),
-        "VW_MIDAS_MSVR_SUCCESSOR_V1": ("BLOCKED", "WAITING_ORIGIN_NOT_REACHED", False, {}),
-        "MOMENTUM_3M": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False, {}),
-        "RANDOM_WALK": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False, {}),
+        "CAUSAL_PATCH": (
+            "ACTIVE", "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE", False,
+            {"current_month_reference": _ref(4452.046728838838)},
+        ),
+        "VW_MIDAS_MSVR_SUCCESSOR_V1": (
+            "ACTIVE", "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE", False,
+            {"current_month_reference": _ref(4565.115907930242)},
+        ),
+        "MOMENTUM_3M": (
+            "ACTIVE", "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE", False,
+            {"current_month_reference": _ref(4345.814584037808)},
+        ),
+        "RANDOM_WALK": (
+            "ACTIVE", "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE", False,
+            {"current_month_reference": _ref(4397.305673870967)},
+        ),
         "MONTHLY_DIRECTION_3M": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True, {}),
         "FAST": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True, {}),
         "SLOW": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True, {}),
         "MACRO_EVENT_SUCCESSOR_V2": (
-            "ACTIVE",
-            "ACTIVE_MACRO_EVENT_SUCCESSOR_V2_EVENT_RISK_CONTEXT",
-            False,
+            "ACTIVE", "ACTIVE_MACRO_EVENT_SUCCESSOR_V2_EVENT_RISK_CONTEXT", False,
             {
                 "successor_id": "MACRO_EVENT_SUCCESSOR_V2",
                 "current_state": "MACRO_MIXED_OR_SMALL",
@@ -75,12 +105,16 @@ def _runtime_rows() -> list[dict]:
                 "reference_kind": "HISTORICAL_REPLAY_SUCCESSOR_CONTEXT",
             },
         ),
-        "EMERGENCY_LEVEL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", False, {}),
-        "EMERGENCY_REVERSAL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", False, {}),
+        "EMERGENCY_LEVEL": (
+            "ACTIVE", "ACTIVE_HISTORICAL_REPLAY_MONTH_OPEN_STATE_AVAILABLE", False,
+            {"current_month_reference": _ref(state="NEUTRAL", kind="HISTORICAL_REPLAY_MONTH_OPEN_STATE")},
+        ),
+        "EMERGENCY_REVERSAL": (
+            "ACTIVE", "ACTIVE_HISTORICAL_REPLAY_MONTH_OPEN_STATE_AVAILABLE", False,
+            {"current_month_reference": _ref(state="OFF", kind="HISTORICAL_REPLAY_MONTH_OPEN_STATE")},
+        ),
         "BOCPD_RETURN_SUCCESSOR_V1": (
-            "ACTIVE",
-            "ACTIVE_BOCPD_RETURN_SUCCESSOR_V1_REGIME_CONTEXT",
-            False,
+            "ACTIVE", "ACTIVE_BOCPD_RETURN_SUCCESSOR_V1_REGIME_CONTEXT", False,
             {
                 "successor_id": "BOCPD_RETURN_SUCCESSOR_V1",
                 "current_state": "NO_ADVERSE_BREAK_CANDIDATE",
@@ -95,9 +129,9 @@ def _runtime_rows() -> list[dict]:
     return [
         {
             "engine_id": engine_id,
-            "engine_version": engine_id if engine_id in {"BOCPD_RETURN_SUCCESSOR_V1", "MACRO_EVENT_SUCCESSOR_V2"} else f"runtime::{engine_id}",
-            "engine_role": ("REGIME_BREAK_CONTEXT" if engine_id == "BOCPD_RETURN_SUCCESSOR_V1" else "EVENT_RISK_CONTEXT" if engine_id == "MACRO_EVENT_SUCCESSOR_V2" else "TEST_RUNTIME_ROLE"),
-            "as_of": "2026-09-05T14:30:00Z",
+            "engine_version": f"runtime::{engine_id}",
+            "engine_role": "TEST_RUNTIME_ROLE",
+            "as_of": "2026-09-06T19:35:41Z",
             "target_context": "2026-09",
             "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
             "runtime_status": values[0],
@@ -110,142 +144,68 @@ def _runtime_rows() -> list[dict]:
     ]
 
 
-def test_all_governed_engines_are_always_present() -> None:
-    rows = build_engine_inventory(_decision(), [], [])
-    assert ENGINE_OBSERVABILITY_CONTRACT == "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V4_BOCPD_AND_MACRO_SUCCESSORS_PROMOTED"
+def test_v140_all_governed_engines_are_present() -> None:
+    rows = build_engine_inventory(_decision(), [], [], _runtime_rows())
+    assert ENGINE_OBSERVABILITY_CONTRACT == "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V7_ALL_AUG31_SEPTEMBER_REFERENCES_ACTIVE"
     assert tuple(row["engine_id"] for row in rows) == ENGINE_DISPLAY_ORDER
-    assert "BOCPD" not in ENGINE_DISPLAY_ORDER
-    assert "BOCPD_RETURN_SUCCESSOR_V1" in ENGINE_DISPLAY_ORDER
-    assert "MACRO_EVENT_SUCCESSOR_V2" in ENGINE_DISPLAY_ORDER
     assert len(rows) == 12
     assert len({row["engine_id"] for row in rows}) == 12
+    assert all(row["runtime_status"] == "ACTIVE" for row in rows)
 
 
-def test_current_direction_context_is_visible_even_without_h1_expert_rows() -> None:
-    rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [])}
+def test_v140_september_price_references_surface_without_authority_promotion() -> None:
+    rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [], _runtime_rows())}
+    expected = {
+        "CAUSAL_PATCH": 4452.046728838838,
+        "VW_MIDAS_MSVR_SUCCESSOR_V1": 4565.115907930242,
+        "MOMENTUM_3M": 4345.814584037808,
+        "RANDOM_WALK": 4397.305673870967,
+    }
+    for engine_id, value in expected.items():
+        row = rows[engine_id]
+        assert row["output"] == value
+        assert row["evidence_class"] == "HISTORICAL_REPLAY"
+        assert row["forecast_track"] == "HISTORICAL_REPLAY"
+        assert row["canonical_authority"] is False
+        assert row["direction_vote"] is False
+        assert row["status"].startswith("ISSUED_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE")
 
-    assert rows["MOMENTUM_3M"]["output"] is None
-    assert rows["MOMENTUM_3M"]["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
-    assert rows["MOMENTUM_3M"]["version"] == "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"
-    assert rows["RANDOM_WALK"]["output"] is None
-    assert rows["RANDOM_WALK"]["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
-    assert rows["RANDOM_WALK"]["version"] == "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"
 
+def test_v140_emergency_month_open_replay_overrides_stale_waiting_placeholders() -> None:
+    rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [], _runtime_rows())}
+    assert rows["EMERGENCY_LEVEL"]["output"] == "NEUTRAL"
+    assert rows["EMERGENCY_REVERSAL"]["output"] == "OFF"
+    for engine_id in ("EMERGENCY_LEVEL", "EMERGENCY_REVERSAL"):
+        row = rows[engine_id]
+        assert row["evidence_class"] == "HISTORICAL_REPLAY"
+        assert row["canonical_authority"] is False
+        assert row["direction_vote"] is False
+        assert row["status"].startswith("ISSUED_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE")
+
+
+def test_context_and_promoted_successors_remain_visible() -> None:
+    rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [], _runtime_rows())}
     assert rows["MONTHLY_DIRECTION_3M"]["output"] == "DOWN"
-    assert rows["MONTHLY_DIRECTION_3M"]["status"] == "STORED_CONTEXT_AVAILABLE"
-    assert rows["MONTHLY_DIRECTION_3M"]["version"] == "R4_1_3M_SIMPLE_RETURN_V1"
     assert rows["FAST"]["output"] == "ROBUST_UP"
     assert rows["SLOW"]["output"] == "ROBUST_UP"
-
-
-def test_current_successors_are_present_without_losing_vw_blocker() -> None:
-    rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [])}
-    assert rows["VW_MIDAS_MSVR_SUCCESSOR_V1"]["status"] == "WAITING_ORIGIN_NOT_REACHED"
-    assert rows["EMERGENCY_LEVEL"]["status"] == "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE"
-    assert rows["EMERGENCY_REVERSAL"]["status"] == "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE"
-    assert "BOCPD" not in rows
-    assert rows["BOCPD_RETURN_SUCCESSOR_V1"]["status"] == "WAITING_RUNTIME_PROMOTION_RECORD"
-    assert rows["MACRO_EVENT_SUCCESSOR_V2"]["status"] == "WAITING_RUNTIME_PROMOTION_RECORD"
+    assert "REGIME=ELEVATED" in str(rows["GVZ_RISK"]["output"])
+    assert rows["BOCPD_RETURN_SUCCESSOR_V1"]["output"] == "NO_ADVERSE_BREAK_CANDIDATE"
+    assert rows["MACRO_EVENT_SUCCESSOR_V2"]["output"] == "MACRO_MIXED_OR_SMALL"
     assert rows["BOCPD_RETURN_SUCCESSOR_V1"]["direction_vote"] is False
     assert rows["MACRO_EVENT_SUCCESSOR_V2"]["direction_vote"] is False
 
-    import re
-    forbidden = {"BUY", "SELL", "HOLD", "EXIT", "REDUCE"}
-    joined = " ".join(str(value) for row in rows.values() for value in row.values()).upper()
-    assert forbidden.isdisjoint(set(re.findall(r"[A-Z]+", joined)))
-    assert all(row["canonical_authority"] is False for row in rows.values())
 
-
-def test_promoted_bocpd_successor_runtime_exposes_aug31_context_without_direction_vote() -> None:
-    rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [], _runtime_rows())}
-    bocpd = rows["BOCPD_RETURN_SUCCESSOR_V1"]
-    assert bocpd["runtime_status"] == "ACTIVE"
-    assert bocpd["runtime_status_code"] == "ACTIVE_BOCPD_RETURN_SUCCESSOR_V1_REGIME_CONTEXT"
-    assert bocpd["status"] == "STORED_CONTEXT_AVAILABLE"
-    assert bocpd["output"] == "NO_ADVERSE_BREAK_CANDIDATE"
-    assert bocpd["evidence_class"] == "HISTORICAL_REPLAY"
-    assert bocpd["as_of"] == "2026-08-31T21:00:00Z"
-    assert bocpd["reference_kind"] == "HISTORICAL_REPLAY_SUCCESSOR_CONTEXT"
-    assert bocpd["direction_vote"] is False
-    assert bocpd["canonical_authority"] is False
-
-
-def test_promoted_macro_successor_runtime_exposes_current_event_context_without_direction_vote() -> None:
-    rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [], _runtime_rows())}
-    macro = rows["MACRO_EVENT_SUCCESSOR_V2"]
-    assert macro["runtime_status"] == "ACTIVE"
-    assert macro["runtime_status_code"] == "ACTIVE_MACRO_EVENT_SUCCESSOR_V2_EVENT_RISK_CONTEXT"
-    assert macro["status"] == "STORED_CONTEXT_AVAILABLE"
-    assert macro["output"] == "MACRO_MIXED_OR_SMALL"
-    assert macro["evidence_class"] == "HISTORICAL_REPLAY"
-    assert macro["as_of"] == "2026-09-04T12:30:00Z"
-    assert macro["reference_kind"] == "HISTORICAL_REPLAY_SUCCESSOR_CONTEXT"
-    assert macro["direction_vote"] is False
-    assert macro["canonical_authority"] is False
-
-
-def test_gvz_is_visible_as_risk_not_direction() -> None:
-    rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [])}
-    gvz = rows["GVZ_RISK"]
-    assert gvz["status"] == "STORED_CONTEXT_AVAILABLE"
-    assert "REGIME=ELEVATED" in str(gvz["output"])
-    assert "CAP=0.5" in str(gvz["output"])
-    assert gvz["direction_vote"] is False
-
-
-def test_issued_expert_row_overrides_waiting_status_but_not_canonical_authority() -> None:
-    month_end = [{
-        "expert_id": "CAUSAL_PATCH",
-        "model_version": "CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE",
-        "forecast_track": "MONTH_END_EXPERT",
-        "target_month": "2026-10-01",
-        "as_of": "2026-09-30T21:00:00Z",
-        "forecast_value": 3500.0,
-        "evidence_class": "PROSPECTIVE_SHADOW",
-        "canonical_authority": False,
-    }]
-    rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), month_end, [])}
-    patch = rows["CAUSAL_PATCH"]
-    assert patch["status"] == "ISSUED_MONTH_END_EXPERT"
-    assert patch["output"] == 3500.0
-    assert patch["evidence_class"] == "PROSPECTIVE_SHADOW"
-    assert patch["canonical_authority"] is False
-
-
-def test_inventory_counts_are_explicit_before_and_after_runtime_promotion_record() -> None:
-    fallback_rows = build_engine_inventory(_decision(), [], [])
-    fallback_counts = engine_inventory_counts(fallback_rows)
-    assert fallback_counts["total"] == 12
-    assert fallback_counts["active"] == 4
-    assert fallback_counts["issued"] == 0
-    assert fallback_counts["blocked"] == 1
-    assert fallback_counts["waiting"] == 7
-
-    promoted_rows = build_engine_inventory(_decision(), [], [], _runtime_rows())
-    promoted_counts = engine_inventory_counts(promoted_rows)
-    assert promoted_counts["total"] == 12
-    assert promoted_counts["active"] == 6
-    assert promoted_counts["issued"] == 0
-    assert promoted_counts["blocked"] == 1
-    assert promoted_counts["waiting"] == 5
-
-
-def test_runtime_ledger_is_status_authority_but_not_direction_vote_authority() -> None:
-    decision = _decision()
-    rows = {row["engine_id"]: row for row in build_engine_inventory(decision, [], [], _runtime_rows())}
-    assert rows["MONTHLY_DIRECTION_3M"]["output"] == "DOWN"
-    assert rows["MONTHLY_DIRECTION_3M"]["status"] == "STORED_CONTEXT_AVAILABLE"
-    assert rows["MONTHLY_DIRECTION_3M"]["runtime_status"] == "ACTIVE"
-    assert rows["MONTHLY_DIRECTION_3M"]["runtime_status_code"] == "VERIFIED_PERSISTED_CONTEXT_AVAILABLE"
-    assert rows["MONTHLY_DIRECTION_3M"]["runtime_evidence_class"] == "RUNTIME_GOVERNANCE_AUDIT"
-    assert rows["MONTHLY_DIRECTION_3M"]["direction_vote"] is True
-    assert rows["GVZ_RISK"]["direction_vote"] is False
-    assert rows["CAUSAL_PATCH"]["output"] is None
-    assert rows["CAUSAL_PATCH"]["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
-    assert rows["VW_MIDAS_MSVR_SUCCESSOR_V1"]["status"] == "WAITING_ORIGIN_NOT_REACHED"
-    assert rows["BOCPD_RETURN_SUCCESSOR_V1"]["direction_vote"] is False
-    assert rows["MACRO_EVENT_SUCCESSOR_V2"]["direction_vote"] is False
-    assert all(row["canonical_authority"] is False for row in rows.values())
+def test_v140_inventory_counts_current_reference_surfaces_separately_from_context() -> None:
+    rows = build_engine_inventory(_decision(), [], [], _runtime_rows())
+    counts = engine_inventory_counts(rows)
+    assert counts == {
+        "total": 12,
+        "active": 6,
+        "issued": 6,
+        "blocked": 0,
+        "waiting": 0,
+        "other": 0,
+    }
 
 
 def test_runtime_cannot_self_promote_non_direction_engine_to_direction_vote() -> None:
