@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.39  
+**Manifest version:** 1.40  
 **Freeze / issue date:** 2026-09-06  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical model/app branch:** `gold-r4-direction-engine`  
@@ -21,7 +21,7 @@ Rules:
 
 1. No other Markdown, YAML, JSON, workflow, status note, change-control document, replay report, handover, or historical manifest version is a second project manifest.
 2. Historical change-control, validation, status and evidence documents remain immutable audit evidence only.
-3. If older evidence conflicts with this file, this v1.39 manifest governs current product/runtime behavior.
+3. If older evidence conflicts with this file, this v1.40 manifest governs current product/runtime behavior.
 4. Git history remains the historical record; current runtime/model inventory must contain only identities currently governed by this manifest.
 5. `FILE_MANIFEST_SHA256.txt` is a repository checksum inventory, not a project decision manifest.
 6. Before changing model roles, target/horizon, origin timing, source mappings, thresholds, UI semantics, runtime authority, selector/ensemble behavior or production writes, read this file first.
@@ -145,7 +145,7 @@ No September expert values may be averaged or winner-selected without a separate
 
 ---
 
-# 6. H=1 FORECAST EXPERT INVENTORY — v1.39
+# 6. H=1 FORECAST EXPERT INVENTORY — v1.40
 
 Current governed H=1 expert identities are:
 
@@ -342,12 +342,12 @@ No context motor creates an automatic position/action mapping.
 
 ---
 
-# 11. CURRENT PRODUCTION RUNTIME AUTHORITY — v1.39 TARGET STATE
+# 11. CURRENT PRODUCTION RUNTIME AUTHORITY — v1.40 TARGET STATE
 
 After the v1.38 runtime canonicalization migration, the current governed 12-motor application inventory must be exactly:
 
-- `ACTIVE = 7`
-- `WAITING = 5`
+- `ACTIVE = 12`
+- `WAITING = 0`
 - `BLOCKED = 0`
 - direction-vote permitted = `3`
 - total current governed motors = `12`
@@ -361,14 +361,15 @@ ACTIVE:
 - `BOCPD_RETURN_SUCCESSOR_V1`
 - `MACRO_EVENT_SUCCESSOR_V2`
 - `VW_MIDAS_MSVR_SUCCESSOR_V1`
-
-WAITING:
-
 - `CAUSAL_PATCH`
 - `MOMENTUM_3M`
 - `RANDOM_WALK`
 - `EMERGENCY_LEVEL`
 - `EMERGENCY_REVERSAL`
+
+WAITING:
+
+- none in the current governed 12-motor inventory.
 
 `VW_MIDAS_MSVR_SUCCESSOR_V1` runtime status is `ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE`; its September value remains explicitly historical-replay/origin-reconstruction evidence and is not a backdated prospective issue. The 30-Sep → October prospective test remains a separate later validation gate.
 
@@ -376,38 +377,42 @@ No superseded VW identity may exist in the current application registry or curre
 
 ---
 
-# 12. v1.39 PRODUCTION RUNTIME ACTIVATION AUTHORIZATION
+# 12. v1.40 AUG31 -> SEPTEMBER CURRENT-REFERENCE ACTIVATION AUTHORIZATION
 
 Binding authorization token:
 
-`MANIFEST_V1_39_VW_SUCCESSOR_V1_SEPTEMBER_REFERENCE_ACTIVATION`
+`MANIFEST_V1_40_ALL_AUG31_SEPTEMBER_REFERENCE_ACTIVATION`
 
-This authorization is narrowly limited to truthful current-month runtime observability for the already validated and re-executed `VW_MIDAS_MSVR_SUCCESSOR_V1` September reference.
+The user-directed current-month objective is to run and expose every already-proven 31-Aug -> September motor now. 30 September is not a blocker for these September references.
 
-Authorized production change:
+Authorized append-only current runtime changes:
 
-1. append one current runtime row for `VW_MIDAS_MSVR_SUCCESSOR_V1` with:
-   - `runtime_status = ACTIVE`;
-   - `status_code = ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE`;
-   - `direction_vote_permitted = false`;
-   - current-month reference `4565.115907930242 USD/oz`;
-   - `target_month = 2026-09`;
-   - information/origin boundary `2026-08-31T21:00:00Z`;
-   - evidence class for the current-month reference = `HISTORICAL_REPLAY`;
-   - `prospective_claim = false`;
-   - `canonical_authority = false`;
-   - `AUTO_SELECTOR = OFF`;
-   - `AUTO_ENSEMBLE = OFF`;
-   - no backdating of the actual 2026-09-06 reconstruction execution.
+- `CAUSAL_PATCH` -> ACTIVE historical-replay current-month reference `4452.046728838838 USD/oz`;
+- `MOMENTUM_3M` -> ACTIVE historical-replay current-month reference `4345.814584037808 USD/oz`;
+- `RANDOM_WALK` -> ACTIVE historical-replay current-month reference `4397.305673870967 USD/oz`;
+- `EMERGENCY_LEVEL` -> ACTIVE historical-replay month-open state `NEUTRAL`;
+- `EMERGENCY_REVERSAL` -> ACTIVE historical-replay month-open state `OFF`.
+
+The already-active `VW_MIDAS_MSVR_SUCCESSOR_V1` September reference remains `4565.115907930242 USD/oz`.
+
+For all six reconstructed/replayed September reference surfaces:
+
+- information/origin boundary remains `2026-08-31T21:00:00Z`;
+- actual reconstruction/replay execution timestamps are preserved;
+- evidence remains `HISTORICAL_REPLAY` / origin reconstruction as applicable;
+- `prospective_claim = false`;
+- `canonical_authority = false`;
+- `direction_vote_permitted = false` for these expert/reference outputs;
+- `AUTO_SELECTOR = OFF`;
+- `AUTO_ENSEMBLE = OFF`;
+- no forecast-contract or Decision Store write is authorized.
 
 Required post-write assertions:
 
-- current governed runtime = `ACTIVE 7 / WAITING 5 / BLOCKED 0`;
+- current governed runtime = `ACTIVE 12 / WAITING 0 / BLOCKED 0`;
 - all four forecast/decision authority stores remain zero;
 - no historical timestamp is rewritten;
-- no superseded VW identity is reintroduced into current code, manifest, constraints or application registry.
-
-The earlier v1.38 identity-canonicalization migration remains historical audit evidence. This v1.39 authorization does not grant selector, ensemble, BUY/SELL/action, canonical production forecast or decision-store authority.
+- archived/superseded identities remain audit history and are not reactivated.
 
 ---
 
@@ -424,7 +429,7 @@ Source-data ingestion, historical reconstruction, runtime observability, and suc
 
 ---
 
-# 14. UI CONTRACT — v1.39
+# 14. UI CONTRACT — v1.40
 
 ## 14.1 Tahmin
 
@@ -544,25 +549,15 @@ These are supporting evidence/contracts; this manifest remains the only current 
 
 # 19. NEXT LEGITIMATE STOP POINT
 
-Do not build another VW/MSVR model and do not retune V1.
+The 31-Aug -> September current-month reconstruction/replay layer is now the immediate operational target; it does not wait for 30 September.
 
-The immediate project stop point is **not 30 September**. The September 2026 current-month reference for `VW_MIDAS_MSVR_SUCCESSOR_V1` is already executable from the completed 31-Aug information boundary and must be carried as an ACTIVE historical-replay current-month reference.
+After v1.40 activation, the current governed 12-motor inventory must have no WAITING or BLOCKED current identity. Historical blocked rows for superseded identities remain immutable audit evidence and must not be revived.
 
-Next, audit and activate the remaining current WAITING motors wherever their already-frozen 31-Aug → September evidence is sufficient:
-
-- `CAUSAL_PATCH`;
-- `MOMENTUM_3M`;
-- `RANDOM_WALK`;
-- `EMERGENCY_LEVEL`;
-- `EMERGENCY_REVERSAL`.
-
-Each activation must preserve its exact evidence class and calculation time; reconstruction/historical replay must not be relabelled prospective. If a motor lacks a proven executable/source contract, fail closed with its exact WAITING/BLOCKED reason rather than inventing an output.
-
-Only after the current September motor inventory is reconciled does the later prospective VW/MSVR validation gate remain:
+The next engineering step is therefore consistency verification across production Neon, runtime bootstrap, application observability and the production display snapshot. Only after that current-month reconciliation is complete does the separate later VW/MSVR prospective validation milestone remain:
 
 `2026-09-30 origin -> 2026-10 target`
 
-That later gate requires September four-metal source completeness, the September GPR origin vintage, target-anchor readiness, no leakage and the frozen V1 code/config identity.
+That later prospective test does not invalidate or postpone the September historical-replay current-month references.
 
 ---
 
@@ -588,8 +583,8 @@ First genuine prospective test:
 
 `30 Sep 2026 -> October 2026`
 
-Target v1.39 runtime inventory after September-reference activation:
+Target v1.40 runtime inventory after Aug31-to-September current-reference activation:
 
-`ACTIVE 7 / WAITING 5 / BLOCKED 0 / TOTAL 12`
+`ACTIVE 12 / WAITING 0 / BLOCKED 0 / TOTAL 12`
 
 `AUTO_SELECTOR=OFF`, `AUTO_ENSEMBLE=OFF`, and `NOT_PROVEN_POSITION_MAPPING` remain binding.

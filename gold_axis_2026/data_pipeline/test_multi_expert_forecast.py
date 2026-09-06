@@ -24,7 +24,7 @@ from multi_expert_forecast import (
 )
 
 
-def test_manifest_v139_expert_set_is_exact_and_ordered():
+def test_manifest_v140_expert_set_is_exact_and_ordered():
     assert EXPERT_ORDER == (PATCH_EXPERT, VW_EXPERT, MOMENTUM_EXPERT, RW_EXPERT)
     assert set(EXPERT_REGISTRY) == set(EXPERT_ORDER)
 

@@ -22,12 +22,12 @@ AUDIT_EVIDENCE = "RUNTIME_GOVERNANCE_AUDIT"
 # authority. The separate 2026-09-30 -> 2026-10 prospective gate remains a
 # later validation milestone, not a blocker for the September reference.
 STATUS_SPECS = {
-    "CAUSAL_PATCH": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", "MONTHLY_H1_EXPERT", False),
+    "CAUSAL_PATCH": ("ACTIVE", "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE", "MONTHLY_H1_EXPERT", False),
     "VW_MIDAS_MSVR_SUCCESSOR_V1": ("ACTIVE", "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE", "MONTHLY_H1_EXPERT", False),
-    "MOMENTUM_3M": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", "MONTHLY_H1_EXPERT", False),
-    "RANDOM_WALK": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", "MONTHLY_H1_BENCHMARK", False),
-    "EMERGENCY_LEVEL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", "EMERGENCY_CONTEXT", False),
-    "EMERGENCY_REVERSAL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", "EMERGENCY_CONTEXT", False),
+    "MOMENTUM_3M": ("ACTIVE", "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE", "MONTHLY_H1_EXPERT", False),
+    "RANDOM_WALK": ("ACTIVE", "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE", "MONTHLY_H1_BENCHMARK", False),
+    "EMERGENCY_LEVEL": ("ACTIVE", "ACTIVE_HISTORICAL_REPLAY_MONTH_OPEN_STATE_AVAILABLE", "EMERGENCY_CONTEXT", False),
+    "EMERGENCY_REVERSAL": ("ACTIVE", "ACTIVE_HISTORICAL_REPLAY_MONTH_OPEN_STATE_AVAILABLE", "EMERGENCY_CONTEXT", False),
 }
 
 STATIC_VERSIONS = {
@@ -49,26 +49,105 @@ CONTEXT_FEATURES = {
 }
 GVZ_FEATURES = ("GVZ_VALUE", "GVZ_CAP", "GVZ_PANIC", "GVZ_REGIME")
 
-VW_SEPTEMBER_REFERENCE = {
-    "reference_kind": "HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE",
-    "evidence_class": "HISTORICAL_REPLAY",
-    "target_month": "2026-09",
-    "forecast_origin": "2026-08-31T21:00:00Z",
-    "information_cutoff": "2026-08-31T21:00:00Z",
-    "source_origin_boundary": "2026-08-31",
-    "replay_executed_at": "2026-09-06T19:18:23Z",
-    "forecast_value": 4565.115907930242,
-    "unit": "USD/oz",
-    "canonical_authority": False,
-    "prospective_claim": False,
-    "auto_selector": "OFF",
-    "auto_ensemble": "OFF",
-    "selected_config": [1.0, 0.05, 0.5],
-    "august_common_days": 26,
-    "random_walk_same_origin": 4404.829230769231,
-    "reconstruction_workflow_run_id": 34054462706,
-    "reconstruction_head_sha": "24bede3ef96ba655ebb2108dc69ccf7dfc7e2f33",
-    "reconstruction_artifact_id": 9995535377,
+CURRENT_MONTH_REFERENCES = {
+    "CAUSAL_PATCH": {
+        "reference_kind": "HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE",
+        "evidence_class": "HISTORICAL_REPLAY",
+        "target_month": "2026-09",
+        "forecast_origin": "2026-08-31T21:00:00Z",
+        "information_cutoff": "2026-08-31T21:00:00Z",
+        "replay_executed_at": "2026-09-04T13:42:09.025554Z",
+        "forecast_value": 4452.046728838838,
+        "unit": "USD/oz",
+        "input_fingerprint": "1d7669396dfda83062c4adfe9957b96eb76bd5a568a22c703fa841cff4791eb6",
+        "canonical_authority": False,
+        "prospective_claim": False,
+        "auto_selector": "OFF",
+        "auto_ensemble": "OFF",
+    },
+    "VW_MIDAS_MSVR_SUCCESSOR_V1": {
+        "reference_kind": "HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE",
+        "evidence_class": "HISTORICAL_REPLAY",
+        "target_month": "2026-09",
+        "forecast_origin": "2026-08-31T21:00:00Z",
+        "information_cutoff": "2026-08-31T21:00:00Z",
+        "source_origin_boundary": "2026-08-31",
+        "replay_executed_at": "2026-09-06T19:18:23Z",
+        "forecast_value": 4565.115907930242,
+        "unit": "USD/oz",
+        "canonical_authority": False,
+        "prospective_claim": False,
+        "auto_selector": "OFF",
+        "auto_ensemble": "OFF",
+        "selected_config": [1.0, 0.05, 0.5],
+        "august_common_days": 26,
+        "random_walk_same_origin": 4404.829230769231,
+        "reconstruction_workflow_run_id": 34054462706,
+        "reconstruction_head_sha": "24bede3ef96ba655ebb2108dc69ccf7dfc7e2f33",
+        "reconstruction_artifact_id": 9995535377,
+    },
+    "MOMENTUM_3M": {
+        "reference_kind": "HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE",
+        "evidence_class": "HISTORICAL_REPLAY",
+        "target_month": "2026-09",
+        "forecast_origin": "2026-08-31T21:00:00Z",
+        "information_cutoff": "2026-08-31T21:00:00Z",
+        "replay_executed_at": "2026-09-03T19:21:35Z",
+        "forecast_value": 4345.814584037808,
+        "unit": "USD/oz",
+        "input_fingerprint": "79a4665141f2209fc077c1f67ecf3fbb7145df0df41bcbb621bfa77382774c43",
+        "canonical_authority": False,
+        "prospective_claim": False,
+        "auto_selector": "OFF",
+        "auto_ensemble": "OFF",
+        "selector_status": "NOT_PROVEN_EXPERT_SELECTION_RULE",
+    },
+    "RANDOM_WALK": {
+        "reference_kind": "HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE",
+        "evidence_class": "HISTORICAL_REPLAY",
+        "target_month": "2026-09",
+        "forecast_origin": "2026-08-31T21:00:00Z",
+        "information_cutoff": "2026-08-31T21:00:00Z",
+        "replay_executed_at": "2026-09-03T19:21:35Z",
+        "forecast_value": 4397.305673870967,
+        "unit": "USD/oz",
+        "input_fingerprint": "1ab3d6a747d191d44476cec1d772766eb2e801c566213223c8d95a88aaf6fca7",
+        "canonical_authority": False,
+        "prospective_claim": False,
+        "auto_selector": "OFF",
+        "auto_ensemble": "OFF",
+        "selector_status": "NOT_PROVEN_EXPERT_SELECTION_RULE",
+    },
+    "EMERGENCY_LEVEL": {
+        "reference_kind": "HISTORICAL_REPLAY_MONTH_OPEN_STATE",
+        "evidence_class": "HISTORICAL_REPLAY",
+        "target_month": "2026-09",
+        "forecast_origin": "2026-08-31T21:00:00Z",
+        "information_cutoff": "2026-08-31T21:00:00Z",
+        "replay_executed_at": "2026-09-04T13:42:09.025554Z",
+        "state_value": "NEUTRAL",
+        "monthly_reference": 4452.046728838838,
+        "reason": "MONTH_OPEN_INITIALIZED_NO_SEPTEMBER_EOD_OBSERVATION",
+        "canonical_authority": False,
+        "prospective_claim": False,
+        "auto_selector": "OFF",
+        "auto_ensemble": "OFF",
+    },
+    "EMERGENCY_REVERSAL": {
+        "reference_kind": "HISTORICAL_REPLAY_MONTH_OPEN_STATE",
+        "evidence_class": "HISTORICAL_REPLAY",
+        "target_month": "2026-09",
+        "forecast_origin": "2026-08-31T21:00:00Z",
+        "information_cutoff": "2026-08-31T21:00:00Z",
+        "replay_executed_at": "2026-09-04T13:42:09.025554Z",
+        "state_value": "OFF",
+        "monthly_reference": 4452.046728838838,
+        "reason": "MONTH_OPEN_INITIALIZED_NO_SEPTEMBER_EOD_OBSERVATION",
+        "canonical_authority": False,
+        "prospective_claim": False,
+        "auto_selector": "OFF",
+        "auto_ensemble": "OFF",
+    },
 }
 
 
@@ -200,23 +279,28 @@ def build_plan(cur, now: datetime) -> list[dict]:
         else:
             version = STATIC_VERSIONS[engine_id]
         metadata = {
-            "audit_scope": "CANONICAL_MANIFEST_RUNTIME_STATUS_V139",
+            "audit_scope": "CANONICAL_MANIFEST_RUNTIME_STATUS_V140",
             "no_output_fabricated": True,
             "auto_selector": "OFF",
             "auto_ensemble": "OFF",
         }
-        if engine_id == "VW_MIDAS_MSVR_SUCCESSOR_V1":
+        if engine_id in CURRENT_MONTH_REFERENCES:
             metadata.update(
                 {
-                    "model_status": "ACTIVE_RESEARCH_SHADOW_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE",
-                    "current_month_reference": dict(VW_SEPTEMBER_REFERENCE),
-                    "no_prospective_forecast_issued": True,
-                    "later_prospective_validation_origin": "2026-09-30T21:00:00Z",
-                    "later_prospective_validation_target": "2026-10",
+                    "model_status": "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE",
+                    "current_month_reference": dict(CURRENT_MONTH_REFERENCES[engine_id]),
+                    "no_prospective_issuance": True,
                     "prospective_claim": False,
                     "canonical_forecast_authority": False,
                 }
             )
+            if engine_id == "VW_MIDAS_MSVR_SUCCESSOR_V1":
+                metadata.update(
+                    {
+                        "later_prospective_validation_origin": "2026-09-30T21:00:00Z",
+                        "later_prospective_validation_target": "2026-10",
+                    }
+                )
         else:
             metadata["no_forecast_issued"] = True
         rows.append(
@@ -243,8 +327,8 @@ def build_plan(cur, now: datetime) -> list[dict]:
         "waiting": sum(x["runtime_status"] == "WAITING" for x in rows),
         "blocked": sum(x["runtime_status"] == "BLOCKED" for x in rows),
     }
-    if counts != {"active": 7, "waiting": 5, "blocked": 0}:
-        raise RuntimeError(f"RUNTIME_BOOTSTRAP_V139_COUNTS_INVALID:{counts}")
+    if counts != {"active": 12, "waiting": 0, "blocked": 0}:
+        raise RuntimeError(f"RUNTIME_BOOTSTRAP_V140_COUNTS_INVALID:{counts}")
     return rows
 
 
@@ -313,10 +397,10 @@ def main() -> int:
             cur.execute("select count(*) as n from latest_engine_runtime_state where engine_id=any(%s)", ([r["engine_id"] for r in plan],))
             total = int(cur.fetchone()["n"])
         conn.rollback()
-    if total != 12 or counts.get("ACTIVE") != 7 or counts.get("WAITING") != 5 or counts.get("BLOCKED", 0) != 0:
+    if total != 12 or counts.get("ACTIVE") != 12 or counts.get("WAITING", 0) != 0 or counts.get("BLOCKED", 0) != 0:
         raise RuntimeError(f"RUNTIME_BOOTSTRAP_POST_COMMIT_COUNTS_INVALID:{total}:{counts}")
     print(json.dumps({"status": "INSERTED_VERIFIED", "total": total, "counts": counts, "run_ids": run_ids}, sort_keys=True))
-    print("DATA_EVIDENCE_SPINE_RUNTIME_BOOTSTRAP_V139_PASS")
+    print("DATA_EVIDENCE_SPINE_RUNTIME_BOOTSTRAP_V140_PASS")
     return 0
 
 

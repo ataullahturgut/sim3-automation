@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 
-ENGINE_OBSERVABILITY_CONTRACT = "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V6_VW_MSVR_SUCCESSOR_V1_SEPTEMBER_REFERENCE_ACTIVE"
+ENGINE_OBSERVABILITY_CONTRACT = "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V7_ALL_AUG31_SEPTEMBER_REFERENCES_ACTIVE"
 
 ENGINE_DISPLAY_ORDER = (
     "CAUSAL_PATCH",
@@ -26,7 +26,7 @@ ENGINE_REGISTRY: dict[str, dict[str, Any]] = {
         "category": "MONTHLY_FORECAST",
         "role": "Forward issuer candidate / monthly expert",
         "version": "CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE",
-        "default_status": "WAITING_ELIGIBLE_MONTH_END_ORIGIN",
+        "default_status": "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE",
         "direction_vote": False,
         "expert_id": "CAUSAL_PATCH",
     },
@@ -44,7 +44,7 @@ ENGINE_REGISTRY: dict[str, dict[str, Any]] = {
         "category": "MONTHLY_FORECAST",
         "role": "Monthly expert / direction challenger; H=1 price output is distinct from stored monthly direction context",
         "version": "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
-        "default_status": "WAITING_ELIGIBLE_MONTH_END_ORIGIN",
+        "default_status": "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE",
         "direction_vote": False,
         "expert_id": "MOMENTUM_3M",
     },
@@ -53,7 +53,7 @@ ENGINE_REGISTRY: dict[str, dict[str, Any]] = {
         "category": "MONTHLY_FORECAST",
         "role": "Mandatory naive benchmark",
         "version": "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
-        "default_status": "WAITING_ELIGIBLE_MONTH_END_ORIGIN",
+        "default_status": "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE",
         "direction_vote": False,
         "expert_id": "RANDOM_WALK",
     },
@@ -101,7 +101,7 @@ ENGINE_REGISTRY: dict[str, dict[str, Any]] = {
         "category": "EMERGENCY",
         "role": "Abnormal level-move alert/context",
         "version": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1",
-        "default_status": "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE",
+        "default_status": "ACTIVE_HISTORICAL_REPLAY_MONTH_OPEN_STATE_AVAILABLE",
         "direction_vote": False,
         "decision_key": "level_emergency",
     },
@@ -110,7 +110,7 @@ ENGINE_REGISTRY: dict[str, dict[str, Any]] = {
         "category": "EMERGENCY",
         "role": "Reversal alert/context; alert-only under frozen geometry",
         "version": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1",
-        "default_status": "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE",
+        "default_status": "ACTIVE_HISTORICAL_REPLAY_MONTH_OPEN_STATE_AVAILABLE",
         "direction_vote": False,
         "decision_key": "reversal_emergency",
     },
@@ -282,7 +282,7 @@ def _current_month_reference(runtime: dict[str, Any] | None) -> dict[str, Any] |
         return None
     if _text(ref.get("auto_selector")) != "OFF" or _text(ref.get("auto_ensemble")) != "OFF":
         return None
-    if ref.get("forecast_value") is None:
+    if ref.get("forecast_value") is None and ref.get("state_value") is None:
         return None
     return dict(ref)
 
@@ -384,7 +384,7 @@ def build_engine_inventory(
                     "ISSUED_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE"
                     + (f"__NEXT_RUNTIME_{next_runtime}" if next_runtime else "")
                 )
-                row["output"] = ref.get("forecast_value")
+                row["output"] = ref.get("forecast_value") if ref.get("forecast_value") is not None else ref.get("state_value")
                 row["evidence_class"] = "HISTORICAL_REPLAY"
                 row["target_month"] = ref.get("target_month")
                 row["as_of"] = ref.get("as_of") or ref.get("forecast_origin")
