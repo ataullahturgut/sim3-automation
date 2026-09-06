@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import Any, Iterable
 
 
-MANIFEST_VERSION = "1.38"
+MANIFEST_VERSION = "1.39"
 SELECTOR_STATUS = "NOT_PROVEN_EXPERT_SELECTION_RULE"
 AUTO_SELECTOR = "OFF"
 AUTO_ENSEMBLE = "OFF"
@@ -56,10 +56,12 @@ EXPERT_REGISTRY: dict[str, ExpertDefinition] = {
         model_name=VW_EXPERT,
         model_version=VW_V1_VERSION,
         expert_role="EXPERT",
-        execution_status="RESEARCH_SHADOW_WAITING_FIRST_PROSPECTIVE_ORIGIN",
+        execution_status="ACTIVE_RESEARCH_SHADOW_CURRENT_MONTH_HISTORICAL_REPLAY",
         status_reason=(
-            "Historical replay passed under the frozen V1 contract. The first genuine prospective "
-            "origin is 2026-09-30; no production forecast, selector, ensemble or action authority is granted."
+            "The frozen V1 model is executable and the September 2026 H=1 current-month reference was "
+            "reconstructed from the completed 2026-08-31 information boundary. The result remains "
+            "HISTORICAL_REPLAY, is not backdated as a 31-Aug issuance, and grants no production forecast, "
+            "selector, ensemble or action authority. The 2026-09-30 prospective test is a later validation gate."
         ),
     ),
     MOMENTUM_EXPERT: ExpertDefinition(
