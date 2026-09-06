@@ -17,6 +17,20 @@ FOUR_METALS = (
     "XPT_STAKTRAKR_RESEARCH_DAILY_R1",
     "XPD_STAKTRAKR_RESEARCH_DAILY_R1",
 )
+RUNTIME_ENGINE_IDS = (
+    "MONTHLY_DIRECTION_3M",
+    "FAST",
+    "SLOW",
+    "GVZ_RISK",
+    "BOCPD_RETURN_SUCCESSOR_V1",
+    "MACRO_EVENT_SUCCESSOR_V2",
+    "CAUSAL_PATCH",
+    "MOMENTUM_3M",
+    "RANDOM_WALK",
+    "EMERGENCY_LEVEL",
+    "EMERGENCY_REVERSAL",
+    "VW_MIDAS_MSVR",
+)
 GPR_PIT = "GPR_OFFICIAL_GIT_PIT"
 CORE_GOLD = "CORE5_GOLD_USD_OZ_RESEARCH_R1"
 FOUR_METAL_REFRESH_CONTRACT = Path("gold_axis_2026/GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_FOUR_METAL_PROSPECTIVE_SOURCE_REFRESH_CONTRACT.md")
@@ -34,10 +48,9 @@ def authority_counts(cur):
 
 def runtime_counts(cur):
     cur.execute(
-        "SELECT runtime_status, count(*)::int "
-        "FROM latest_engine_runtime_state "
-        "WHERE COALESCE((metadata->>'current_application_registry')::boolean,true)=true "
-        "GROUP BY runtime_status ORDER BY runtime_status"
+        "SELECT runtime_status, count(*)::int FROM latest_engine_runtime_state "
+        "WHERE engine_id = ANY(%s) GROUP BY runtime_status ORDER BY runtime_status",
+        (list(RUNTIME_ENGINE_IDS),),
     )
     return {status: int(n) for status, n in cur.fetchall()}
 
