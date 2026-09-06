@@ -38,11 +38,14 @@ jobs:
         run: |
           set -euo pipefail
           OLD_ID="VW_MIDAS_"'MSVR'
-          if git grep -n -E "${OLD_ID}([^A-Z0-9_]|$)" -- '*.py' '*.json' '*.yml' '*.yaml' 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'; then
+          mapfile -t files < <(git ls-files '*.py' '*.json' '*.yml' '*.yaml' 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md' \
+            | grep -v '^gold_axis_2026/apps/production_display_snapshot.json$')
+          if printf '%s\n' "${files[@]}" | xargs -r grep -n -E "${OLD_ID}([^A-Z0-9_]|$)"; then
             echo "FORBIDDEN_SUPERSEDED_VW_IDENTITY_FOUND"
             exit 1
           fi
           echo "CURRENT_EXECUTABLE_CONFIG_IDENTITY_CLEAN=PASS"
+          echo "NOTE: production_display_snapshot.json is intentionally excluded until the live DB migration is completed and the snapshot is regenerated from production."
 
       - name: Compile frozen Successor V1 runners
         run: |
@@ -51,6 +54,7 @@ jobs:
             gold_axis_2026/tools/vw_midas_msvr_successor_v1_aug31_september_reconstruction.py \
             gold_axis_2026/tools/vw_midas_msvr_successor_v1_prospective_readiness.py \
             gold_axis_2026/apps/engine_observability_contract.py \
+            gold_axis_2026/data_pipeline/data_evidence_spine.py \
             gold_axis_2026/data_pipeline/data_evidence_spine_runtime_bootstrap.py
 
       - name: Assert governance locks remain
