@@ -29,6 +29,7 @@ jobs:
           set -euo pipefail
           python - <<'PY'
           from pathlib import Path
+          import hashlib, json, re
 
           old = "VW_MIDAS_" + "MSVR"
           new = "VW_MIDAS_MSVR_SUCCESSOR_V1"
@@ -44,7 +45,6 @@ jobs:
               "gold_axis_2026/tools/export_production_display_snapshot.py",
               "gold_axis_2026/tools/vw_midas_msvr_successor_v1_prospective_readiness.py",
           ]
-
           replacements = [
               (old, new),
               ("VW-MIDAS-MSVR", "VW/MSVR Successor V1"),
@@ -53,7 +53,6 @@ jobs:
               ("BLOCKED_NOT_PROVEN_EXECUTABLE", "WAITING_ORIGIN_NOT_REACHED"),
               ("Audited analytical shadow/reference", "Research-shadow H=1 expert; first prospective origin 2026-09-30"),
           ]
-
           for name in update_paths:
               p = Path(name)
               if not p.exists():
@@ -61,18 +60,42 @@ jobs:
               text = p.read_text(encoding="utf-8")
               for a, b in replacements:
                   text = text.replace(a, b)
-              # Current v1.38 runtime target changed only because the VW slot moved
-              # from superseded BLOCKED to Successor V1 WAITING.
               text = text.replace("{'ACTIVE': 6, 'WAITING': 5, 'BLOCKED': 1}", "{'ACTIVE': 6, 'WAITING': 6, 'BLOCKED': 0}")
               text = text.replace('{"ACTIVE": 6, "WAITING": 5, "BLOCKED": 1}', '{"ACTIVE": 6, "WAITING": 6, "BLOCKED": 0}')
               text = text.replace('"ACTIVE": 6, "WAITING": 5, "BLOCKED": 1', '"ACTIVE": 6, "WAITING": 6, "BLOCKED": 0')
               p.write_text(text, encoding="utf-8")
 
+          # Keep the Aug31 direction/risk replay reader because the application uses
+          # it, but remove the superseded VW identity from its current fallback surface.
+          p = Path("gold_axis_2026/apps/aug31_state_replay_source.py")
+          text = p.read_text(encoding="utf-8")
+          text = re.sub(r'^\s*"' + re.escape(old) + r'"\s*:\s*"[^"]+",\s*\n', '', text, flags=re.MULTILINE)
+          p.write_text(text, encoding="utf-8")
+
+          # The current snapshot fallback is regenerated logically: remove only the
+          # superseded VW blocker and recompute its integrity hash. Historical Git
+          # commits retain the original snapshot for audit.
+          snap_path = Path("gold_axis_2026/apps/aug31_state_replay_snapshot.json")
+          snap = json.loads(snap_path.read_text(encoding="utf-8"))
+          blockers = dict(snap.get("blocked_components") or {})
+          blockers.pop(old, None)
+          snap["blocked_components"] = blockers
+          payload = dict(snap)
+          payload.pop("payload_sha256", None)
+          raw = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+          snap["payload_sha256"] = hashlib.sha256(raw).hexdigest()
+          snap_path.write_text(json.dumps(snap, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+          # Remove the superseded VW line from the Aug31 blocked/archived UI block;
+          # the new V1 appears through the governed expert/runtime surfaces instead.
+          p = Path("gold_axis_2026/apps/gold_control_mobile_v1.py")
+          text = p.read_text(encoding="utf-8")
+          text = re.sub(r'^\s*"VW-MIDAS-MSVR"\s*:\s*"BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN",\s*\n', '', text, flags=re.MULTILINE)
+          p.write_text(text, encoding="utf-8")
+
           obsolete = [
               ".github/workflows/gold-control-v130-recovery-status-validation.yml",
               ".github/workflows/gold-control-v132-monthly-origin-acceptance.yml",
-              "gold_axis_2026/apps/aug31_state_replay_snapshot.json",
-              "gold_axis_2026/apps/aug31_state_replay_source.py",
               "gold_axis_2026/data_pipeline/aug31_eod_state_historical_replay.py",
               "gold_axis_2026/run_models.py",
               "gold_axis_2026/summary_2026.json",
@@ -85,16 +108,15 @@ jobs:
               if p.exists():
                   p.unlink()
 
-          # This one-shot mutator is not part of the finished project surface.
           Path('.github/workflows/gold-control-v138-one-shot-current-surface-cleanup.yml').unlink()
           PY
 
-      - name: Validate no stale imports of deleted legacy files
+      - name: Validate deleted legacy code has no live import
         shell: bash
         run: |
           set -euo pipefail
-          for token in aug31_state_replay_source aug31_eod_state_historical_replay apply_data_spine_ui_read_v1 apply_v126_system_recovery export_aug31_state_replay_snapshot; do
-            if git grep -n "$token" -- '*.py' ':!gold_axis_2026/tools/*' ':!gold_axis_2026/apps/test_*' ':!gold_axis_2026/data_pipeline/test_*'; then
+          for token in aug31_eod_state_historical_replay apply_data_spine_ui_read_v1 apply_v126_system_recovery export_aug31_state_replay_snapshot; do
+            if git grep -n "$token" -- '*.py' ':!gold_axis_2026/apps/test_*' ':!gold_axis_2026/data_pipeline/test_*'; then
               echo "STALE_LEGACY_IMPORT_OR_REFERENCE=$token"
               exit 1
             fi
@@ -110,9 +132,5 @@ jobs:
           git config user.name "gold-control-governance-bot"
           git config user.email "gold-control-governance-bot@users.noreply.github.com"
           git add -A
-          if git diff --cached --quiet; then
-            echo "No cleanup changes"
-            exit 0
-          fi
           git commit -m "Gold Control v1.38: remove superseded VW current surface"
           git push origin HEAD:gold-control-vw-successor-v1-canonicalization-v138
