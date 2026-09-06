@@ -63,3 +63,5 @@ jobs:
           path: vw_midas_msvr_successor_v1_prospective_readiness.json
           if-no-files-found: warn
           retention-days: 90
+
+# Frozen-readiness trigger: 2026-09-06; no model or gate change.
