@@ -1,17 +1,26 @@
-from data_evidence_spine_runtime_bootstrap import CURRENT_MONTH_REFERENCES, STATIC_VERSIONS, STATUS_SPECS
+from data_evidence_spine_runtime_bootstrap import (
+    ACTIVE_SUCCESSORS,
+    CONTEXT_FEATURES,
+    CURRENT_MONTH_REFERENCES,
+    STATIC_VERSIONS,
+    STATUS_SPECS,
+)
 
 
-def test_runtime_bootstrap_distribution_matches_v141_current_surface():
-    statuses = {engine_id: spec[0] for engine_id, spec in STATUS_SPECS.items()}
-    assert len(statuses) == 12
-    assert sum(v == "ACTIVE" for v in statuses.values()) == 12
-    assert sum(v == "WAITING" for v in statuses.values()) == 0
-    assert sum(v == "BLOCKED" for v in statuses.values()) == 0
+def test_runtime_bootstrap_partition_is_exactly_twelve_current_identities():
+    status_ids = set(STATUS_SPECS)
+    context_ids = set(CONTEXT_FEATURES)
+    successor_ids = set(ACTIVE_SUCCESSORS)
+    assert status_ids.isdisjoint(context_ids)
+    assert status_ids.isdisjoint(successor_ids)
+    assert context_ids.isdisjoint(successor_ids)
+    assert len(status_ids | context_ids | successor_ids) == 12
+    assert {spec[0] for spec in STATUS_SPECS.values()} == {"ACTIVE"}
 
 
-def test_runtime_bootstrap_has_no_waiting_identity():
-    waiting = {engine_id for engine_id, spec in STATUS_SPECS.items() if spec[0] == "WAITING"}
-    assert waiting == set()
+def test_runtime_bootstrap_has_no_waiting_or_blocked_status_spec():
+    assert not {engine_id for engine_id, spec in STATUS_SPECS.items() if spec[0] == "WAITING"}
+    assert not {engine_id for engine_id, spec in STATUS_SPECS.items() if spec[0] == "BLOCKED"}
 
 
 def test_runtime_bootstrap_vw_current_reference_is_active_and_nonprospective():
