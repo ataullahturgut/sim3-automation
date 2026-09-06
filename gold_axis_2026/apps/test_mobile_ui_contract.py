@@ -217,7 +217,7 @@ def test_final_v2_mockup_contract_is_frozen_with_v126_expert_policy():
     assert contract["auto_selector"] == AUTO_SELECTOR_STATUS == "OFF"
     assert contract["auto_ensemble"] == AUTO_ENSEMBLE_STATUS == "OFF"
     assert contract["expert_order"] == EXPERT_DISPLAY_ORDER == (
-        "CAUSAL_PATCH", "VW_MIDAS_MSVR", "MOMENTUM_3M", "RANDOM_WALK"
+        "CAUSAL_PATCH", "VW_MIDAS_MSVR_SUCCESSOR_V1", "MOMENTUM_3M", "RANDOM_WALK"
     )
     assert contract["month_end_track"] == MONTH_END_TRACK == "MONTH_END_EXPERT"
     assert contract["early_indicative_track"] == EARLY_INDICATIVE_TRACK == "EARLY_INDICATIVE"
@@ -225,12 +225,12 @@ def test_final_v2_mockup_contract_is_frozen_with_v126_expert_policy():
 
 def test_empty_expert_states_do_not_invent_forecasts_or_winner():
     patch = expert_display_state("CAUSAL_PATCH", [])
-    vw = expert_display_state("VW_MIDAS_MSVR", [])
+    vw = expert_display_state("VW_MIDAS_MSVR_SUCCESSOR_V1", [])
     mom = expert_display_state("MOMENTUM_3M", [])
     rw = expert_display_state("RANDOM_WALK", [])
     assert patch["forecast_value"] is None
     assert patch["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
-    assert vw["status"] == "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN"
+    assert vw["status"] == "WAITING_ORIGIN_NOT_REACHED"
     assert mom["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
     assert rw["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
 

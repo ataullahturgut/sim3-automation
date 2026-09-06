@@ -231,7 +231,6 @@ def aug31_state_replay_html(state: dict[str, Any] | None, expansion: dict[str, A
     )
     if expansion:
         blockers={
-            "VW-MIDAS-MSVR":"BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN",
             "Macro Event":"MACRO_MIXED_OR_SMALL",
             "BOCPD · archived":display_state(expansion.get("bocpd_archived_engine_status"),"BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED"),
         }

@@ -6,7 +6,7 @@ from piyasa_contract import gvz_regime
 
 
 def test_monthly_expert_display_contract_matches_governed_registry():
-    for engine_id in ("CAUSAL_PATCH", "VW_MIDAS_MSVR", "MOMENTUM_3M", "RANDOM_WALK"):
+    for engine_id in ("CAUSAL_PATCH", "VW_MIDAS_MSVR_SUCCESSOR_V1", "MOMENTUM_3M", "RANDOM_WALK"):
         assert EXPERT_DISPLAY[engine_id]["model_version"] == ENGINE_REGISTRY[engine_id]["version"]
         assert EXPERT_DISPLAY[engine_id]["empty_status"] == ENGINE_REGISTRY[engine_id]["default_status"]
 

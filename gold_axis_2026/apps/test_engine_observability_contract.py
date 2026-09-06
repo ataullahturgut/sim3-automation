@@ -56,7 +56,7 @@ def _decision() -> dict:
 def _runtime_rows() -> list[dict]:
     status = {
         "CAUSAL_PATCH": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False, {}),
-        "VW_MIDAS_MSVR": ("BLOCKED", "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN", False, {}),
+        "VW_MIDAS_MSVR_SUCCESSOR_V1": ("BLOCKED", "WAITING_ORIGIN_NOT_REACHED", False, {}),
         "MOMENTUM_3M": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False, {}),
         "RANDOM_WALK": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", False, {}),
         "MONTHLY_DIRECTION_3M": ("ACTIVE", "VERIFIED_PERSISTED_CONTEXT_AVAILABLE", True, {}),
@@ -140,7 +140,7 @@ def test_current_direction_context_is_visible_even_without_h1_expert_rows() -> N
 
 def test_current_successors_are_present_without_losing_vw_blocker() -> None:
     rows = {row["engine_id"]: row for row in build_engine_inventory(_decision(), [], [])}
-    assert rows["VW_MIDAS_MSVR"]["status"] == "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN"
+    assert rows["VW_MIDAS_MSVR_SUCCESSOR_V1"]["status"] == "WAITING_ORIGIN_NOT_REACHED"
     assert rows["EMERGENCY_LEVEL"]["status"] == "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE"
     assert rows["EMERGENCY_REVERSAL"]["status"] == "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE"
     assert "BOCPD" not in rows
@@ -242,7 +242,7 @@ def test_runtime_ledger_is_status_authority_but_not_direction_vote_authority() -
     assert rows["GVZ_RISK"]["direction_vote"] is False
     assert rows["CAUSAL_PATCH"]["output"] is None
     assert rows["CAUSAL_PATCH"]["status"] == "WAITING_ELIGIBLE_MONTH_END_ORIGIN"
-    assert rows["VW_MIDAS_MSVR"]["status"] == "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN"
+    assert rows["VW_MIDAS_MSVR_SUCCESSOR_V1"]["status"] == "WAITING_ORIGIN_NOT_REACHED"
     assert rows["BOCPD_RETURN_SUCCESSOR_V1"]["direction_vote"] is False
     assert rows["MACRO_EVENT_SUCCESSOR_V2"]["direction_vote"] is False
     assert all(row["canonical_authority"] is False for row in rows.values())

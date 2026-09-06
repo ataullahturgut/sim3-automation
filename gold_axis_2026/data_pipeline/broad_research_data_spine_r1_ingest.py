@@ -640,7 +640,7 @@ def current_runtime_counts(conn: psycopg.Connection) -> dict[str, int]:
       ('MONTHLY_DIRECTION_3M'),('FAST'),('SLOW'),('GVZ_RISK'),
       ('BOCPD_RETURN_SUCCESSOR_V1'),('MACRO_EVENT_SUCCESSOR_V2'),
       ('CAUSAL_PATCH'),('MOMENTUM_3M'),('RANDOM_WALK'),
-      ('EMERGENCY_LEVEL'),('EMERGENCY_REVERSAL'),('VW_MIDAS_MSVR')
+      ('EMERGENCY_LEVEL'),('EMERGENCY_REVERSAL'),('VW_MIDAS_MSVR_SUCCESSOR_V1')
     )
     select l.runtime_status, count(*)::bigint as n
     from current_ids c
