@@ -1,61 +1,103 @@
 # GOLD CONTROL — VW_MIDAS_MSVR_SUCCESSOR_V1 FOUR-METAL PROSPECTIVE SOURCE REFRESH CONTRACT
 
-Frozen: 2026-09-06, before the first prospective origin.
+Frozen: 2026-09-06, before the first genuinely prospective origin.
 Model: `VW_MIDAS_MSVR_SUCCESSOR_V1`
 Scope: prospective shadow research input only.
 
-## Source identity
+## 1. Source identity
 
 Repository: `lbruton/StakTrakr`
 Default branch observed at freeze: `main`
 Annual payload path: `data/spot-history-2026.json`
 Required metals: exactly `Gold`, `Silver`, `Platinum`, `Palladium`.
 
-Historical R1 rows remain pinned historical reconstruction and are not mutated or silently extended.
+Historical R1 rows remain pinned historical reconstruction and are never mutated or silently extended.
 
-New prospective identity:
+New prospective snapshot identity:
 `STAKTRAKR_FOUR_METAL_PROSPECTIVE_GIT_SNAPSHOT_V1`
 
-## Snapshot rule at prospective issuance
+The current upstream `main` commit observed on 2026-09-06 is `ed2e549f82ba0d1cd3ca32842b82d3888d301e01`; its release evidence states spot-bundle coverage only through 2026-08-19. It is current-state evidence only and is not preselected as the 30-Sep issuance snapshot.
 
-At each prospective issuance attempt:
-1. query the Git history for `data/spot-history-2026.json`;
-2. choose the latest commit visible at retrieval time whose commit timestamp is not later than the actual retrieval/issuance time;
-3. pin that exact commit SHA;
-4. fetch the annual payload from that exact commit, never from an unpinned moving branch for model execution;
-5. record retrieval timestamp, commit timestamp, commit SHA and payload SHA-256 in the research evidence;
-6. filter the forecast information set to observations dated no later than the frozen forecast origin;
-7. ignore any target-month rows that may already exist in the retrieved file;
-8. do not backdate the retrieval time.
+## 2. Snapshot rule at prospective issuance
 
-The currently observed file commit `429d8e612d504a964846ff6438dbdb28ace630c3` dated 2026-08-19 is current-state evidence only; it is NOT preselected as the September issuance snapshot. The actual issuance snapshot must be the exact commit observed and pinned at issuance.
+At each prospective issuance/readiness attempt:
+1. resolve the latest Git commit affecting `data/spot-history-2026.json` that is actually visible at retrieval time;
+2. pin that exact commit SHA before parsing model inputs;
+3. fetch the annual payload from that pinned commit, never from an unpinned moving branch for model execution;
+4. record actual retrieval timestamp, commit timestamp, commit SHA, and payload SHA-256;
+5. parse only the `metal`, `timestamp`, `spot`, and provenance/provider fields required by the historical V1 source semantics;
+6. filter forecast features to observations dated no later than the frozen origin;
+7. ignore all target-month rows even if the retrieved annual file already contains them;
+8. never backdate retrieval or availability timestamps.
 
-## September 2026 completeness gate for the first prospective test
+No production Neon persistence is required for this prospective snapshot. The exact pinned source artifact itself is the research evidence source.
+
+## 3. Historical-lineage continuity gate
+
+Because historical V1 used the pinned StakTrakr R1 reconstruction through 2026-07-31, the prospective snapshot must prove that it has not silently redefined the source history.
+
+Before issuance:
+- compare every common July 2026 date/metal available in both the frozen R1 panel and the new pinned prospective snapshot;
+- require the same four metal identities and same row semantics;
+- any conflicting same-date value or material historical revision fails closed;
+- no revised July value may be silently accepted merely to make the new snapshot executable.
+
+Failure status:
+`BLOCKED_STAKTRAKR_PROSPECTIVE_HISTORY_REVISION_OR_SEMANTIC_DRIFT`.
+
+A separately preregistered bridge would be required to override this failure; post-result acceptance is forbidden.
+
+## 4. August + September completeness gates for first prospective test
+
+The October 2026 feature vector requires:
+- `MR_m(2026-09) = log(M_m(2026-09) / M_m(2026-08))`;
+- within-September weighted daily returns.
+
+Therefore both months are required. The old R1 endpoint at 2026-07-31 is not enough.
 
 Before a 2026-09-30 information-set forecast may be issued:
 - all four required metals must be present;
 - use only dates where all four metals are simultaneously present;
-- at least 20 common complete four-metal dates must exist in September 2026;
-- latest common date must be >= 2026-09-27;
+- August 2026 must contain at least 20 common complete four-metal dates;
+- September 2026 must contain at least 20 common complete four-metal dates;
+- latest common September date must be >= 2026-09-27;
+- observations after 2026-09-30 are excluded from issuance features even if present in the retrieved snapshot;
 - no missing-metal imputation;
 - no interpolation;
 - no provider substitution;
-- no mixing another metal source into the panel;
-- observations after 2026-09-30 are excluded even if present in the snapshot.
+- no mixing another metal source into one leg of the four-output panel.
 
-If any gate fails: `WAITING_FOUR_METAL_SOURCE_DATA`.
+If source semantics/continuity pass but month coverage is incomplete:
+`WAITING_FOUR_METAL_SOURCE_DATA`.
 
-## Persistence rule
+## 5. Source payload discipline
 
-This prospective snapshot is consumed directly as a research artifact. It does NOT authorize production Neon persistence and does not extend manifest v1.37 Broad R1 write authority.
+For duplicate rows within the exact pinned payload:
+- an exact same-date/same-metal duplicate with the same value may be deterministically de-duplicated;
+- conflicting values for the same metal/date fail closed;
+- provider labels are retained as provenance and must not be used to silently choose a preferred value after seeing outcomes.
 
-Any future persistence into production Neon requires a separate manifest/change-control authorization and a separately named lineage.
+The payload does not formally encode a unit contract, so this prospective contract does not invent a unit claim that was absent from the historical StakTrakr research source.
 
-## Governance
+## 6. Persistence / authority rule
+
+This prospective snapshot is consumed directly as a research artifact.
+
+It does NOT authorize:
+- production Neon source writes;
+- extension of the historical `*_STAKTRAKR_RESEARCH_DAILY_R1` identities;
+- production forecast writes;
+- decision writes;
+- runtime mutation.
+
+Any future production persistence requires a separate manifest/change-control authorization and separately named lineage.
+
+## 7. Governance locks
 
 - model mathematics unchanged;
-- no selector/ensemble activation;
-- no forecast/decision production writes;
-- no runtime mutation;
-- no silent lineage reuse;
-- exact snapshot identity must be preserved in the prospective forecast evidence.
+- frozen V1 features/grid/nested selection unchanged;
+- `AUTO_SELECTOR=OFF`;
+- `AUTO_ENSEMBLE=OFF`;
+- no backdated issuance;
+- no target-month information in issuance;
+- exact snapshot identity must be frozen in prospective forecast evidence.
