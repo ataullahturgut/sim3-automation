@@ -1,0 +1,45 @@
+name: Gold Control v1.41 Clean Current Surface Once
+
+on:
+  push:
+    branches:
+      - gold-control-clean-current-surface-v141
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-clean-current-surface-v141
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply clean-current-surface cleanup
+        run: python gold_axis_2026/tools/apply_current_surface_cleanup_v141.py
+      - name: Remove one-shot cleanup machinery
+        run: |
+          git rm -f gold_axis_2026/tools/apply_current_surface_cleanup_v141.py
+          git rm -f .github/workflows/gold-control-v141-clean-current-surface-once.yml
+      - name: Compile retained Python surface
+        run: python -m compileall -q gold_axis_2026/apps gold_axis_2026/data_pipeline gold_axis_2026/tools gold_axis_2026/r4_1 gold_axis_2026/r4_2
+      - name: Commit cleanup
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m "Gold Control v1.41: remove superseded current-tree surface"
+          git push origin HEAD:gold-control-clean-current-surface-v141
+      - name: Upload cleanup report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-current-surface-cleanup-v141
+          path: current_surface_cleanup_v141.json
+          if-no-files-found: ignore
