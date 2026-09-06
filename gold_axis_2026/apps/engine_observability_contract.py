@@ -3,11 +3,11 @@ from __future__ import annotations
 from typing import Any
 
 
-ENGINE_OBSERVABILITY_CONTRACT = "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V4_BOCPD_AND_MACRO_SUCCESSORS_PROMOTED"
+ENGINE_OBSERVABILITY_CONTRACT = "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V5_VW_MSVR_SUCCESSOR_V1_CANONICALIZED"
 
 ENGINE_DISPLAY_ORDER = (
     "CAUSAL_PATCH",
-    "VW_MIDAS_MSVR",
+    "VW_MIDAS_MSVR_SUCCESSOR_V1",
     "MOMENTUM_3M",
     "RANDOM_WALK",
     "MONTHLY_DIRECTION_3M",
@@ -30,14 +30,14 @@ ENGINE_REGISTRY: dict[str, dict[str, Any]] = {
         "direction_vote": False,
         "expert_id": "CAUSAL_PATCH",
     },
-    "VW_MIDAS_MSVR": {
-        "label": "VW-MIDAS-MSVR",
+    "VW_MIDAS_MSVR_SUCCESSOR_V1": {
+        "label": "VW/MSVR Successor V1",
         "category": "MONTHLY_FORECAST",
-        "role": "Audited analytical shadow/reference",
-        "version": "VW_AUDITED_SHADOW_V2",
-        "default_status": "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN",
+        "role": "Research-shadow monthly H=1 expert; first prospective origin 2026-09-30",
+        "version": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+        "default_status": "WAITING_ORIGIN_NOT_REACHED",
         "direction_vote": False,
-        "expert_id": "VW_MIDAS_MSVR",
+        "expert_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
     },
     "MOMENTUM_3M": {
         "label": "3M Momentum · H=1 Expert",
@@ -117,7 +117,7 @@ ENGINE_REGISTRY: dict[str, dict[str, Any]] = {
     "BOCPD_RETURN_SUCCESSOR_V1": {
         "label": "BOCPD · Successor V1",
         "category": "REGIME_BREAK",
-        "role": "Active regime/break context and alert only; successor to archived BOCPD",
+        "role": "Active regime/break context and alert only",
         "version": "BOCPD_RETURN_SUCCESSOR_V1",
         "default_status": "WAITING_RUNTIME_PROMOTION_RECORD",
         "direction_vote": False,
