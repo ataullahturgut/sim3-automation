@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 
-ENGINE_OBSERVABILITY_CONTRACT = "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V5_VW_MSVR_SUCCESSOR_V1_CANONICALIZED"
+ENGINE_OBSERVABILITY_CONTRACT = "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V6_VW_MSVR_SUCCESSOR_V1_SEPTEMBER_REFERENCE_ACTIVE"
 
 ENGINE_DISPLAY_ORDER = (
     "CAUSAL_PATCH",
@@ -33,9 +33,9 @@ ENGINE_REGISTRY: dict[str, dict[str, Any]] = {
     "VW_MIDAS_MSVR_SUCCESSOR_V1": {
         "label": "VW/MSVR Successor V1",
         "category": "MONTHLY_FORECAST",
-        "role": "Research-shadow monthly H=1 expert; first prospective origin 2026-09-30",
+        "role": "Monthly H=1 research-shadow expert; September reference reconstructed from the completed 2026-08-31 information boundary",
         "version": "VW_MIDAS_MSVR_SUCCESSOR_V1",
-        "default_status": "WAITING_ORIGIN_NOT_REACHED",
+        "default_status": "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE",
         "direction_vote": False,
         "expert_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
     },
