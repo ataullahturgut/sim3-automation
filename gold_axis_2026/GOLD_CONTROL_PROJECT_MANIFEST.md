@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.37  
+**Manifest version:** 1.38  
 **Freeze / issue date:** 2026-09-06  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical model/app branch:** `gold-r4-direction-engine`  
@@ -20,13 +20,11 @@ Binding identity:
 Rules:
 
 1. No other Markdown, YAML, JSON, workflow, status note, change-control document, replay report, handover, or historical manifest version is a second project manifest.
-2. Historical change-control, validation, status and evidence documents remain audit evidence only.
-3. If an older document conflicts with this file, this v1.37 manifest governs unless a newer audited manifest version explicitly supersedes it.
-4. `FILE_MANIFEST_SHA256.txt` is a repository file-checksum inventory, **not** the Gold Control project decision manifest.
-5. Old `apply_manifest_*` / `reconcile_manifest_*` scripts and workflow names are historical tooling, not independent manifest authority.
-6. Git history may contain older manifest versions, but the current branch may contain only this single canonical project-manifest file.
-
-Before changing model roles, target/horizon, origin timing, source mappings, thresholds, UI semantics, runtime authority, selector/ensemble behavior or production writes, read this file first.
+2. Historical change-control, validation, status and evidence documents remain immutable audit evidence only.
+3. If older evidence conflicts with this file, this v1.38 manifest governs current product/runtime behavior.
+4. Git history remains the historical record; current runtime/model inventory must contain only identities currently governed by this manifest.
+5. `FILE_MANIFEST_SHA256.txt` is a repository checksum inventory, not a project decision manifest.
+6. Before changing model roles, target/horizon, origin timing, source mappings, thresholds, UI semantics, runtime authority, selector/ensemble behavior or production writes, read this file first.
 
 ---
 
@@ -43,7 +41,7 @@ It must:
 - detect intramonth Emergency conditions;
 - detect regime/break context;
 - apply volatility/risk context;
-- expose every governed motor as ACTIVE / WAITING / BLOCKED or equivalent observable state;
+- expose every current governed motor as ACTIVE / WAITING / BLOCKED or equivalent observable state;
 - preserve exact evidence provenance and point-in-time availability;
 - keep forecast/direction evidence separate from any later decision/action mapping.
 
@@ -59,36 +57,15 @@ Canonical top-level UI:
 
 ## 2.1 GitHub
 
-GitHub is authoritative for:
-
-- code;
-- frozen model/signal contracts;
-- source contracts;
-- this manifest;
-- reproducibility and audit evidence.
+GitHub is authoritative for code, frozen model/signal contracts, source contracts, this manifest, reproducibility and audit evidence.
 
 ## 2.2 Production Neon
 
-Production Neon is authoritative for mutable/current data state:
-
-- observations and provider lineage;
-- retrieval/vintage/PIT availability;
-- derived feature snapshots;
-- engine runtime state;
-- forecast contracts when legitimately issued;
-- decision snapshots/events when legitimately issued.
+Production Neon is authoritative for mutable/current data state: observations and provider lineage, retrieval/vintage/PIT availability, derived feature snapshots, engine runtime state, forecast contracts when legitimately issued, and decision snapshots/events when legitimately issued.
 
 ## 2.3 Application
 
-The application is a read/presentation layer. It must not silently:
-
-- tune thresholds;
-- choose models;
-- create an ensemble;
-- substitute providers;
-- manufacture missing outputs;
-- convert a reconstruction into a backdated prospective issuance;
-- create BUY / SELL / HOLD / EXIT / REDUCE mappings.
+The application is a read/presentation layer. It must not silently tune thresholds, choose models, create an ensemble, substitute providers, manufacture missing outputs, convert reconstruction into backdated prospective issuance, or create BUY / SELL / HOLD / EXIT / REDUCE mappings.
 
 ---
 
@@ -104,21 +81,16 @@ The following remain frozen:
 - no hindsight threshold tuning
 - no random-split model validation for time series
 - no silent provider substitution
-- no proxy may be presented under the exact identity of a blocked original source/model
-- historical reconstruction, backtest and genuinely prospective evidence must remain distinguishable in audit metadata
-- replay/reconstruction must never alter a true historical `issued_at`, `created_at`, retrieval timestamp or source vintage
+- historical reconstruction, backtest and genuinely prospective evidence remain distinguishable
+- replay/reconstruction never changes true historical timestamps or source vintages
+- target, model identity, source identity and scoring measurement cannot be silently redefined
+- production forecast/decision authority writes require explicit manifest authorization
 
 ---
 
-# 4. CANONICAL MONTHLY ORIGIN CYCLE — BINDING v1.32 CORRECTION
-
-This section supersedes all older wording that implied September 2026 forecasts should wait until the end of September.
-
-## 4.1 Core rule
+# 4. CANONICAL MONTHLY ORIGIN CYCLE
 
 For target calendar month **M**, the H=1 forecast origin is the completed month-end boundary immediately before M.
-
-Formally:
 
 `origin(M) = completed month-end boundary of M-1`
 
@@ -128,337 +100,315 @@ Examples:
 
 | Information/origin boundary | Target month |
 |---|---|
-| 2026-08-31 | **September 2026** |
-| 2026-09-30 | **October 2026** |
-| 2026-10-31 | **November 2026** |
-| 2026-11-30 | **December 2026** |
+| 2026-08-31 | September 2026 |
+| 2026-09-30 | October 2026 |
+| 2026-10-31 | November 2026 |
+| 2026-11-30 | December 2026 |
 
-Therefore:
-
-> **31 August data are the information set for September forecast and month-open direction motors.**
-
-and:
-
-> **30 September data are the information set for October forecast and month-open direction motors.**
-
-There is no rule that September forecast motors should remain blank until 30 September.
-
-## 4.2 What is frozen at month open
-
-At each valid month-end origin, the system should create a month-open snapshot for the immediately following month containing every governed output that is technically executable at that origin.
-
-This includes, according to each motor's own contract:
-
-- H=1 point-forecast expert outputs;
-- Monthly Direction 3M context;
-- month-open Fast/Slow context;
-- monthly Patch reference where executable;
-- Emergency initialization state/reference;
-- regime/risk context that is legitimately available at the origin.
-
-The month-open snapshot is immutable as an origin snapshot.
-
-## 4.3 Intramonth updating
-
-The target-month snapshot and intramonth monitoring are different objects.
-
-During the target month:
-
-- the month-open H=1 forecasts remain tied to their month-end origin;
-- Monthly Direction month-open snapshot remains historically immutable;
-- FAST / SLOW may update as their frozen daily/weekly contracts receive new completed observations;
-- Emergency Level / Reversal may update intramonth against the frozen monthly reference;
-- Macro/Event or other event engines may update only under their own recovered/frozen contracts;
-- updated intramonth state must never rewrite the original month-open origin snapshot.
+At each valid origin the month-open snapshot is immutable. Intramonth updates may create later state, but they never rewrite that origin snapshot.
 
 ---
 
-# 5. SEPTEMBER 2026 — CURRENT GOVERNED ORIGIN SET
-
-## 5.1 Correct target/origin relationship
-
-Target month:
-
-`2026-09`
+# 5. SEPTEMBER 2026 — CURRENT ORIGIN REFERENCES
 
 Required information boundary:
 
-`2026-08-31T21:00:00Z` = 31 Aug 2026 17:00 ET
+`2026-08-31T21:00:00Z` = 31 Aug 2026 17:00 ET.
 
-The system must treat the reconstructed 31-August information set as the **September 2026 month-open reference set**.
+Current reconstructed September references:
 
-## 5.2 Current September outputs reconstructed from the 31-Aug information boundary
+| Motor / context | September 2026 result | Evidence semantics |
+|---|---:|---|
+| `MONTHLY_DIRECTION_3M` | `DOWN` | reconstruction |
+| `FAST` | `ROBUST_UP` | reconstruction |
+| `SLOW` | `ROBUST_UP` | reconstruction |
+| `MOMENTUM_3M` H=1 | `4345.814584037808 USD/oz` | historical replay |
+| `RANDOM_WALK` H=1 | `4397.305673870967 USD/oz` | historical replay |
+| `CAUSAL_PATCH` H=1 reference | `4452.046728838838 USD/oz` | historical replay |
+| `VW_MIDAS_MSVR_SUCCESSOR_V1` H=1 | `4565.115907930242 USD/oz` | origin reconstruction / historical replay |
+| `EMERGENCY_LEVEL` | `NEUTRAL` | reconstruction |
+| `EMERGENCY_REVERSAL` | `OFF` | reconstruction |
+| `BOCPD_RETURN_SUCCESSOR_V1` | `NO_ADVERSE_BREAK_CANDIDATE` | historical replay context |
+| `MACRO_EVENT_SUCCESSOR_V2` | `MACRO_MIXED_OR_SMALL` | historical replay context |
 
-The following governed values have been reproduced and persisted in the historical/reconstruction evidence lane:
+The `VW_MIDAS_MSVR_SUCCESSOR_V1` September value was calculated on 2026-09-06 from the completed 31-Aug information boundary. It is **not** evidence that a forecast was actually issued on 31-Aug and must not be backdated.
 
-| Motor / context | September 2026 month-open result |
-|---|---:|
-| `MONTHLY_DIRECTION_3M` | `DOWN` |
-| `FAST` | `ROBUST_UP` |
-| `SLOW` | `ROBUST_UP` |
-| `MOMENTUM_3M` H=1 | `4345.814584037808 USD/oz` |
-| `RANDOM_WALK` H=1 | `4397.305673870967 USD/oz` |
-| `CAUSAL_PATCH` H=1 reference | `4452.046728838838 USD/oz` |
-| `EMERGENCY_LEVEL` month-open state | `NEUTRAL` |
-| `EMERGENCY_REVERSAL` month-open state | `OFF` |
-| `BOCPD_RETURN_SUCCESSOR_V1` context | `NO_ADVERSE_BREAK_CANDIDATE` |
-
-Patch last selected daily feature date:
-
-`2026-08-30`
-
-This satisfies the frozen `< origin_date` daily-feature rule for the reconstructed 31-Aug origin.
-
-## 5.3 September evidence semantics
-
-The **target/origin logic is valid**: these are September outputs based on the 31-Aug information boundary.
-
-However, some of these values were actually calculated/persisted on 2026-09-04 rather than being emitted on 2026-08-31.
-
-Therefore the system must preserve two facts simultaneously:
-
-1. **Business/forecast interpretation:** September 2026 month-open forecast/direction reference using the 31-Aug origin information set.
-2. **Audit/evidence interpretation:** later reconstruction of that origin; not a false claim that the output was actually issued on 31 August.
-
-Required UI primary semantics:
+Required UI provenance wording is equivalent to:
 
 `EYLÜL 2026 · 31 AĞUSTOS ORIGIN`
 
-Required audit/provenance semantics for reconstructed outputs:
+and
 
-`ORIGIN_RECONSTRUCTION / HISTORICAL_REPLAY`
+`31 Ağustos bilgi setiyle 6 Eylül'de yeniden hesaplandı · HISTORICAL_REPLAY`
 
-or an equivalent explicit secondary label such as:
-
-`31 Ağustos bilgi setiyle 4 Eylül'de yeniden hesaplandı`
-
-The UI must **not** make the September reference look like expired history merely because reconstruction occurred after month open.
-
-The UI also must **not** say or imply `issued on 31-Aug` when no such immutable issuance existed.
+No September expert values may be averaged or winner-selected without a separately proven selector contract.
 
 ---
 
-# 6. OCTOBER 2026 AND FORWARD MONTHLY OPERATION
+# 6. H=1 FORECAST EXPERT INVENTORY — v1.38
 
-The next normal monthly cycle is:
-
-- September observations accumulate during September;
-- after the completed 2026-09-30 origin boundary and each motor's availability/PIT gates;
-- the system calculates **October 2026** H=1 forecasts and month-open direction/reference states;
-- if these are actually calculated and immutably persisted before October outcome realization, they may enter the appropriate prospective/shadow evidence class under their individual contracts.
-
-The same rule repeats every month.
-
-No motor should wait until target-month end to generate that same target month's month-open forecast.
-
----
-
-# 7. H=1 FORECAST TARGET AND VALIDATION CONTRACT
-
-Canonical target:
-
-> **Next calendar month's average XAU/USD price**
-
-Canonical origin:
-
-> **Completed month-end information boundary immediately before the target month**
-
-Binding validation rules:
-
-- rolling/expanding origin only;
-- future target information forbidden;
-- origin-local data availability mandatory;
-- publication lag mandatory;
-- vintage/PIT safety mandatory;
-- benchmark comparison at identical origin/horizon mandatory;
-- no 2026 hindsight tuning;
-- model identity, source identity and target identity may not be silently changed.
-
-A reconstructed historical origin may be useful as current-month reference or research evidence but cannot be counted as a truly prospective observation unless it was genuinely emitted before outcome realization.
-
----
-
-# 8. FORECAST / DIRECTION MOTOR ROLES
-
-## 8.1 H=1 price experts
-
-Governed expert identities currently include:
+Current governed H=1 expert identities are:
 
 - `CAUSAL_PATCH`
 - `MOMENTUM_3M`
 - `RANDOM_WALK`
-- archived `VW_MIDAS_MSVR`
+- `VW_MIDAS_MSVR_SUCCESSOR_V1`
 
-Current role rules:
+`VW_MIDAS_MSVR_SUCCESSOR_V1` is the sole governed VW/MSVR identity in the current model/runtime/application inventory.
 
-- Causal Patch is the intended forward challenger/issuer lane under its frozen V7 contracts.
-- Momentum 3M and Random Walk remain separate expert/reference outputs.
-- Their outputs must not be averaged or winner-selected without a separately proven selector contract.
-- archived VW remains blocked until its exact executable/PIT contract is recovered or a separately named successor is built.
-- `VW_MIDAS_SVR_XAU_SUCCESSOR_V2` is terminally rejected under its frozen untouched-validation contract and has no production/runtime or selector authority.
+Its current maximum authority is:
 
-## 8.2 Direction/context motors
+`RESEARCH_SHADOW_CANDIDATE_HISTORICAL_REPLAY_PASS_PROSPECTIVE_VALIDATION_REQUIRED`
 
-- `MONTHLY_DIRECTION_3M` — monthly direction context; direction vote permitted.
-- `FAST` — tactical short-horizon context; direction vote permitted under frozen contract.
-- `SLOW` — tactical slower context; direction vote permitted under frozen contract.
-- `GVZ_RISK` — risk-only, never a direction vote.
-- Emergency — intramonth alert/context, not standalone automatic action.
-- `BOCPD_RETURN_SUCCESSOR_V1` — active regime/break context only; no direction vote.
-- `MACRO_EVENT_SUCCESSOR_V2` — active labor-event risk/context only; no direction vote and no H=1 price forecast.
+Operational runtime state before its first genuine prospective origin:
 
----
+`WAITING_ORIGIN_NOT_REACHED`
 
-# 9. BOCPD GOVERNANCE — v1.34 RUNTIME REPLACEMENT
+It has:
 
-Archived engine identity:
+- no selector authority;
+- no ensemble authority;
+- no automatic action authority;
+- no production forecast-contract authority;
+- no decision-store authority;
+- no position mapping.
 
-`BOCPD`
-
-remains historically traceable with the recovery limitation:
-
-`BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED`
-
-The archived identity is **not** repaired or renamed. It is removed from the current governed application runtime slot and replaced by the separately validated successor identity:
-
-`BOCPD_RETURN_SUCCESSOR_V1`
-
-Current operational status after the v1.34 runtime deployment:
-
-`ACTIVE_BOCPD_RETURN_SUCCESSOR_V1_REGIME_CONTEXT`
-
-Role:
-
-`REGIME_BREAK_CONTEXT`
-
-Binding locks remain:
-
-- direction vote = false;
-- no H=1 price forecast;
-- no automatic action;
-- no selector/ensemble role;
-- no position mapping;
-- no archived-threshold reuse under an unproven score identity;
-- frozen successor mathematics, prior, hazard and state rule are unchanged by this promotion.
-
-September reconstructed context from the 31-Aug information set:
-
-`NO_ADVERSE_BREAK_CANDIDATE`
-
-This September state remains `HISTORICAL_REPLAY` evidence because it was reconstructed later; the **runtime promotion itself** is effective only at the true 2026-09-05 deployment time and must not be backdated to 31 August.
-
-Prospective outcome monitoring remains required for ongoing model-risk monitoring, but a 30-Sep prospective observation is no longer a prerequisite for using the successor as the active **regime/break context** engine.
+Historical repository evidence may retain superseded names as immutable audit history, but superseded identities are not part of the current manifest, current runtime registry, current application registry or executable production path.
 
 ---
 
-# 9A. MACRO EVENT SUCCESSOR V2 GOVERNANCE — v1.36
+# 7. VW_MIDAS_MSVR_SUCCESSOR_V1 — FROZEN MODEL CONTRACT
 
-Current governed engine identity:
+## 7.1 Target and horizon
 
-`MACRO_EVENT_SUCCESSOR_V2`
+- target: next calendar month's average XAU/USD price;
+- horizon: H=1 month;
+- origin: completed prior calendar month-end;
+- random split forbidden;
+- future target information forbidden.
 
-Operational status:
+## 7.2 Four-metal input surface
 
-`ACTIVE_MACRO_EVENT_SUCCESSOR_V2_EVENT_RISK_CONTEXT`
+Historical replay uses four metals:
 
-Role:
+- Gold
+- Silver
+- Platinum
+- Palladium
 
-`EVENT_RISK_CONTEXT`
+Two features are produced per metal:
 
-Binding locks remain:
+1. prior monthly log return;
+2. GPR-adaptive weighted within-origin-month daily log return.
 
-- direction vote = false;
-- no H=1 monthly-average XAU/USD price forecast;
-- no automatic action;
-- no selector/ensemble role;
-- no position mapping;
-- no post-result retuning of the frozen V2 robust-score rule;
-- no silent consensus-provider substitution;
-- source lineage remains bound to governed research source run `6a18db17-6fb2-4bf8-a20b-f3b6d529ca8a` for the validated historical evidence.
+Frozen input dimension = `8`.
 
-Validation basis frozen before promotion:
+For metal `m`, target month `t`, origin month `p=t-1`, previous month `pp=t-2`:
 
-- robust-score replay: `PASS_V2_ROBUST_PREREG_REPLAY_REPRODUCIBLE`;
-- event-reaction validation: `PASS_EVENT_REACTION_EVIDENCE`;
-- frozen VAL+LOCK strong-shock events: `8`;
-- directional hits in the preregistered 15-minute primary window: `7/8` = `87.5%`;
-- exact one-sided sign-test p-value: `0.03515625`;
-- median signed R15: `+0.9590818647119803%`.
+`MR_m(p) = log(M_m(p) / M_m(pp))`
 
-Latest governed event-context reference from the frozen panel is the August 2026 Employment Situation released 2026-09-04:
+GPR uses `GPR_OFFICIAL_GIT_PIT` with origin vintage `p` and publication-lagged observation `p-1`.
 
-- robust composite score = `-0.414773053241`;
-- state = `MACRO_MIXED_OR_SMALL`.
+`lambda = 0.1 * exp(-10 * z_GPR)`
 
-This September state remains `HISTORICAL_REPLAY` evidence because it was reconstructed later from historical/PIT research data. Runtime activation is effective only at its true deployment time and is not backdated to the event release.
+Daily-return age weights:
 
-The validation supports only immediate event-risk/context classification. It does **not** establish H=1 monthly forecast skill, trading profitability, automatic action authority, selector/ensemble eligibility, or position mapping.
+`w_i = exp(-lambda * age_i) / sum(exp(-lambda * age))`
+
+Weighted within-month return:
+
+`VW_m(p) = sum(w_i * r_i)`
+
+Frozen feature vector:
+
+`X_t = [MR_Gold,VW_Gold, MR_Silver,VW_Silver, MR_Platinum,VW_Platinum, MR_Palladium,VW_Palladium]`
+
+The model jointly predicts next-month log returns for all four metals.
+
+## 7.3 MSVR architecture
+
+- true multi-output MSVR;
+- one joint four-output model;
+- RBF kernel;
+- deterministic implementation;
+- X and Y standardization fitted only on training rows for each fit.
+
+Frozen hyperparameter grid:
+
+- `C in {0.1, 1.0, 10.0}`
+- `epsilon in {0.02, 0.05}`
+- `gamma_scale in {0.5, 1.0}`
+- actual `gamma = gamma_scale / 8`
+
+## 7.4 Nested rolling-origin selection
+
+For each outer target:
+
+- candidate hyperparameters are scored only on earlier target months;
+- origin-local GPR PIT availability is required;
+- at least 6 eligible prior inner forecasts are required;
+- selection objective is mean absolute Gold log-return error;
+- deterministic tie-break is lower C, then lower epsilon, then lower gamma_scale;
+- after selection, refit on all eligible training targets before the outer target;
+- no post-result retuning.
+
+## 7.5 Historical replay evidence
+
+Evaluation window: `2023-01..2026-07`, N=`43`.
+
+Frozen results:
+
+| Metric | Successor V1 | Random Walk |
+|---|---:|---:|
+| MAE | `87.70325` | `107.46512` |
+| MAPE | `2.69106498%` | `3.30232202%` |
+| Relative MAE | `0.816109` | `1.000000` |
+| Median AE | `50.49628` | `72.00000` |
+
+The 2026 Jan-Jul partial period was slightly worse than Random Walk and remains disclosed. Historical PASS is not production superiority.
 
 ---
 
-# 10. EMERGENCY GOVERNANCE
+# 8. FIRST GENUINELY PROSPECTIVE VW/MSVR SHADOW TEST
 
-Emergency uses the governed monthly reference for the target month and then monitors completed target-month observations.
+First preregistered genuine prospective origin:
 
-September 2026 month-open reconstruction:
+`2026-09-30T21:00:00Z`
 
-- monthly Patch reference = `4452.046728838838 USD/oz`;
-- `EMERGENCY_LEVEL = NEUTRAL`;
-- `EMERGENCY_REVERSAL = OFF`.
+Target month:
 
-31-Aug close is not a September close.
+`2026-10`
 
-Therefore September Emergency begins from the frozen monthly reference and changes only when legitimate September observations satisfy its frozen rules.
+Current state on 2026-09-06:
 
-Emergency remains an alert/context layer; it does not create an automatic BUY / SELL / EXIT action.
+`WAITING_ORIGIN_NOT_REACHED`
+
+Secondary readiness conditions:
+
+- `WAITING_FOUR_METAL_SOURCE_DATA`
+- `WAITING_GPR_2026_09_ORIGIN_VINTAGE`
+
+Before issuance, the frozen prospective source-refresh and XAU target-anchor contracts must pass. No October actual or partial October target information may enter training, selection, scaling, features or issuance.
+
+Maximum valid state after a successful origin-time issue:
+
+`PROSPECTIVE_SHADOW_FORECAST_ISSUED_AWAITING_TARGET_MATURITY`
+
+A single prospective month is evidence, not proof of production superiority.
 
 ---
 
-# 11. CURRENT PRODUCTION RUNTIME AUTHORITY — v1.37
+# 9. SOURCE / MEASUREMENT RULES FOR THE VW/MSVR SUCCESSOR
 
-Under v1.37, the current governed application inventory is:
+Historical Broad Research Data Spine R1 remains frozen evidence.
+
+Historical four-metal R1 identities:
+
+- `XAU_STAKTRAKR_RESEARCH_DAILY_R1`
+- `XAG_STAKTRAKR_RESEARCH_DAILY_R1`
+- `XPT_STAKTRAKR_RESEARCH_DAILY_R1`
+- `XPD_STAKTRAKR_RESEARCH_DAILY_R1`
+
+These are historical-reconstruction research series and are not silently relabelled as live market PIT data.
+
+The August 2026 Myfxbook four-metal snapshot was used only under the separately frozen reconstruction bridge for the 31-Aug → September reconstruction. It does not automatically become the prospective provider contract.
+
+Primary GPR input remains:
+
+`GPR_OFFICIAL_GIT_PIT`
+
+No current/final GPR substitution is permitted for historical or prospective origin logic.
+
+The price-level anchor and later actual used for prospective scoring must follow the separately frozen target-measurement bridge. Changing a measurement source without disclosure is forbidden.
+
+---
+
+# 10. DIRECTION / RISK / REGIME MOTORS
+
+Current direction/context motors:
+
+- `MONTHLY_DIRECTION_3M` — strategic monthly direction; direction vote permitted.
+- `FAST` — tactical short-horizon direction; direction vote permitted.
+- `SLOW` — tactical slower direction; direction vote permitted.
+- `GVZ_RISK` — risk-only; no direction vote.
+- `EMERGENCY_LEVEL` — intramonth alert/context; no automatic action.
+- `EMERGENCY_REVERSAL` — intramonth alert/context; no automatic action.
+- `BOCPD_RETURN_SUCCESSOR_V1` — active regime/break context; no direction vote.
+- `MACRO_EVENT_SUCCESSOR_V2` — active labor-event risk/context; no direction vote and no H=1 price forecast.
+
+No context motor creates an automatic position/action mapping.
+
+---
+
+# 11. CURRENT PRODUCTION RUNTIME AUTHORITY — v1.38 TARGET STATE
+
+After the v1.38 runtime canonicalization migration, the current governed 12-motor application inventory must be exactly:
 
 - `ACTIVE = 6`
-- `WAITING = 5`
-- `BLOCKED = 1`
+- `WAITING = 6`
+- `BLOCKED = 0`
 - direction-vote permitted = `3`
-- total current governed application motors = `12`
+- total current governed motors = `12`
 
-Current BLOCKED application identity:
+ACTIVE:
 
-- `VW_MIDAS_MSVR` — `BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN`
+- `MONTHLY_DIRECTION_3M`
+- `FAST`
+- `SLOW`
+- `GVZ_RISK`
+- `BOCPD_RETURN_SUCCESSOR_V1`
+- `MACRO_EVENT_SUCCESSOR_V2`
 
-Current active replacements:
-
-- `MACRO_EVENT_SUCCESSOR_V2` — `ACTIVE_MACRO_EVENT_SUCCESSOR_V2_EVENT_RISK_CONTEXT`
-
-Current active BOCPD replacement:
-
-- `BOCPD_RETURN_SUCCESSOR_V1` — `ACTIVE_BOCPD_RETURN_SUCCESSOR_V1_REGIME_CONTEXT`
-
-The archived `BOCPD` ledger identity remains queryable for audit/history but is no longer part of the 12-motor current application registry. Its latest archival runtime record may remain `BLOCKED` with explicit `replaced_by = BOCPD_RETURN_SUCCESSOR_V1` metadata; this does not increase the current application blocked count.
-
-Current WAITING forward-runtime identities include:
+WAITING:
 
 - `CAUSAL_PATCH`
 - `MOMENTUM_3M`
 - `RANDOM_WALK`
+- `VW_MIDAS_MSVR_SUCCESSOR_V1`
 - `EMERGENCY_LEVEL`
 - `EMERGENCY_REVERSAL`
 
-WAITING means **waiting for the next forward issuance/update gate**, not that the current September month-open reference is absent.
+`VW_MIDAS_MSVR_SUCCESSOR_V1` runtime status is `WAITING_ORIGIN_NOT_REACHED`; its September reconstruction may be exposed separately as a non-canonical current-month reference while the prospective runtime waits for 30-Sep → October.
 
-For September, reconstructed 31-Aug reference outputs may be shown separately as available current-month origin references while the forward runtime waits for 30-Sep → October issuance.
-
-This dual-state distinction is mandatory in the UI.
+No superseded VW identity may exist in the current application registry or current production runtime rows after this migration.
 
 ---
 
-# 12. CURRENT PRODUCTION AUTHORITY STORES
+# 12. v1.38 PRODUCTION DATABASE CANONICALIZATION AUTHORIZATION
 
-The BOCPD and Macro Event successor runtime replacements are explicitly authorized to update only the append-only engine runtime ledger/schema required to introduce their separately validated successor identities.
+Binding authorization token:
 
-It does **not** authorize writes to the forecast/decision authority stores.
+`MANIFEST_V1_38_VW_SUCCESSOR_V1_CANONICALIZATION`
+
+This authorization is narrowly limited to current model/runtime identity cleanup and successor registration.
+
+Authorized production changes:
+
+1. remove superseded VW runtime rows from `engine_execution_runs` after proving there are no dependent expert/derived/decision output rows;
+2. update the allowed-engine/model identity check constraints on `engine_execution_runs`, `forecast_input_sets`, and `monthly_expert_forecasts` so the current successor identity replaces the superseded identity;
+3. insert one truthful current runtime row for `VW_MIDAS_MSVR_SUCCESSOR_V1` with:
+   - `runtime_status = WAITING`;
+   - `status_code = WAITING_ORIGIN_NOT_REACHED`;
+   - `direction_vote_permitted = false`;
+   - no backdating;
+   - no production forecast authority;
+   - no selector/ensemble authority;
+   - September reconstruction reference, if included, explicitly labelled historical replay / non-canonical.
+
+Required post-migration assertions:
+
+- superseded VW current-runtime row count = `0`;
+- `VW_MIDAS_MSVR_SUCCESSOR_V1` current-runtime row count >= `1` and latest state = `WAITING`;
+- current governed runtime = `ACTIVE 6 / WAITING 6 / BLOCKED 0`;
+- all four forecast/decision authority stores remain zero;
+- no dependent orphan rows are created;
+- no historical timestamps are rewritten.
+
+This authorization does **not** permit model promotion beyond research-shadow WAITING status.
+
+---
+
+# 13. CURRENT PRODUCTION AUTHORITY STORES
 
 The required invariant remains:
 
@@ -467,96 +417,53 @@ The required invariant remains:
 - `decision_runs = 0`
 - `decision_events = 0`
 
-The September reconstruction evidence does not populate these tables as a backdated canonical/prospective issuance.
-
-Reconstructed values may live only in explicitly non-canonical historical/reconstruction evidence lanes with:
-
-- `prospective_claim = false`
-- `canonical_authority = false`
-- `direction_vote_permitted = false` for replay-only engine-execution rows unless a separate live runtime state independently grants a vote
-- `AUTO_SELECTOR = OFF`
-- `AUTO_ENSEMBLE = OFF`
-
-The v1.33 GPR source-data ingestion authorization below also does **not** change these four authority-store counts and does not grant forecast/decision authority.
+Source-data ingestion, historical reconstruction, runtime observability, and successor registration do not grant forecast/decision authority.
 
 ---
 
-# 13. UI CONTRACT — v1.37
+# 14. UI CONTRACT — v1.38
 
-## 13.1 Tahmin
+## 14.1 Tahmin
 
-During September 2026, the first useful forecast surface must show September month-open information, not an empty card waiting for 30 September.
-
-Primary heading:
-
-`EYLÜL 2026 · 31 AĞUSTOS ORIGIN`
-
-It may show the separate governed September expert outputs:
+During September 2026 the forecast surface may show the four separate governed H=1 references:
 
 - Momentum 3M
 - Random Walk
 - Causal Patch
+- VW/MSVR Successor V1
 
-No synthetic average/winner may be invented.
+The V1 September value must display historical-reconstruction provenance. No synthetic average/winner may be invented.
 
-Secondary provenance must explain when a value was reconstructed later.
+## 14.2 Görünüm
 
-## 13.2 Görünüm
+Every current governed motor remains visible. The VW/MSVR card must use only `VW_MIDAS_MSVR_SUCCESSOR_V1` and show both:
 
-Every current governed motor remains visible.
+1. September / 31-Aug origin reconstructed reference = `4565.115907930242 USD/oz`;
+2. forward operational state = `WAITING_ORIGIN_NOT_REACHED` for 30-Sep → October.
 
-`BOCPD_RETURN_SUCCESSOR_V1` replaces the archived `BOCPD` card in the current 12-motor application inventory and must display:
+The current application UI must not render a superseded VW runtime/model card.
 
-- operational runtime status: `ACTIVE`;
-- role: `REGIME_BREAK_CONTEXT`;
-- September / 31-Aug context reference: `NO_ADVERSE_BREAK_CANDIDATE`;
-- reference evidence: `HISTORICAL_REPLAY`;
-- direction vote: `false`.
+## 14.3 Geçmiş
 
-The archived `BOCPD` identity remains visible only in audit/history surfaces where its recovery-blocked lineage is relevant.
-
-`MACRO_EVENT_SUCCESSOR_V2` replaces the archived `MACRO_EVENT_SUCCESSOR_V2` card in the current 12-motor application inventory and must display:
-
-- operational runtime status: `ACTIVE`;
-- role: `EVENT_RISK_CONTEXT`;
-- current September event-context reference: `MACRO_MIXED_OR_SMALL`;
-- reference evidence: `HISTORICAL_REPLAY`;
-- direction vote: `false`.
-
-For motors with a September reconstructed origin result and a forward WAITING/BLOCKED runtime state, the card must show both:
-
-1. **Eylül / 31 Ağustos origin referansı** — available reconstructed result;
-2. **İleri operasyonel durum** — ACTIVE / WAITING / BLOCKED for the next live/prospective cycle.
-
-A user must never interpret `WAITING` as “September için hiçbir sonuç yok” when a valid reconstructed September origin reference exists.
-
-## 13.3 Geçmiş
-
-Geçmiş/audit view must preserve true calculation/persistence timestamps and evidence class.
-
-No historical timestamp may be rewritten for visual convenience.
+Historical/audit surfaces preserve true calculation/persistence timestamps and evidence class. Git history and immutable historical evidence may retain prior identities for audit traceability; they are not current model inventory.
 
 ---
 
-# 14. DATA CONTRACT — CORE RULES
+# 15. CORE DATA CONTRACT
 
 1. No silent provider substitution.
 2. Provider identity is part of series identity.
 3. Point-in-time availability is mandatory.
-4. Historical/reconstructed code must use origin-bounded observations/snapshots.
+4. Historical/reconstructed code uses origin-bounded observations/snapshots.
 5. Retrieval-time backfills do not become retroactively knowable.
 6. Live/indicative XAU is not canonical EOD authority.
 7. Current-day bars cannot be assumed completed before the frozen session boundary.
-8. Raw vendor/licensed data must respect display/redistribution rights.
-9. Blocked inputs receive no invented same-name proxy.
+8. Raw vendor/licensed data respects display/redistribution rights.
+9. Missing inputs fail closed; they are not filled with invented same-name proxies.
 
-Canonical R4 decision-reference series:
+Canonical R4 decision-reference series remains:
 
 `XAU_EOD_TWELVE_NY17`
-
-Semantic:
-
-`spot XAU/USD 17:00 ET internal decision reference`
 
 Operational mapping:
 
@@ -564,197 +471,119 @@ Operational mapping:
 - interval `1min`
 - timezone `America/New_York`
 - exact bar open `16:59:00` ET
-- use bar close as 17:00 ET internal decision reference
+- bar close used as 17:00 ET internal decision reference
 
-This is an internal decision reference, **not official settlement/official close**.
+This is an internal decision reference, not official settlement/official close.
 
-## 14.1 v1.33 GPR historical PIT data-plane authorization
+---
 
-Binding authorization token:
+# 16. GPR PIT DATA PLANE
 
-`MANIFEST_V1_33_GPR_PIT_DATA_PLANE`
-
-Separate historical reconstruction series:
+Binding identity:
 
 `GPR_OFFICIAL_GIT_PIT`
 
-This identity is distinct from current/final-vintage `GPR_OFFICIAL` and must never be silently substituted for it.
-
 Authority/source:
 
-- Caldara-Iacoviello authors' official repository `iacoviel/iacoviel.github.io`;
-- directory `gpr_archive_files`;
-- exact monthly vintage identity `data_gpr_export_YYYYMM.xls`;
+- Caldara-Iacoviello official repository;
+- exact monthly archive vintage;
 - evidence class `HISTORICAL_REPLAY_RECONSTRUCTION`.
 
-Pre-result exhaustive audit established a continuous PIT-proven origin window:
+Continuous PIT-proven origin window currently established:
 
-`2022-03` through `2026-08` = **54 origins**.
+`2022-03` through `2026-08` = 54 origins.
 
-For each origin `p`, the exact vintage file must have an official Git archive-add timestamp no later than the last-calendar-day 17:00 America/New_York origin cutoff, parse successfully, and contain GPR observation `p-1`. Current/final-vintage substitution is forbidden.
+For each origin, the exact vintage must be available by the origin cutoff and contain the required lag observation. Current/final-vintage substitution is forbidden.
 
-Timestamp semantics are binding:
-
-- `retrieved_at` = true current reconstruction time;
-- `first_seen_at` = true current reconstruction time on first insert;
-- `provider_as_of` / `available_as_of` = proven earliest official Git archive-add commit floor for that exact vintage;
-- this Git timestamp is not described as a newspaper publication timestamp or historical Gold Control retrieval timestamp.
-
-Production Neon write authority under v1.33 is restricted to the existing source-data/audit plane:
-
-- `source_registry`
-- `retrieval_runs`
-- `observations`
-- `source_vintages`
-- `quality_events` if applicable.
-
-No new table is required or authorized.
-
-The canonical production ingestion workflow must rebuild the source audit, require **54/54** V2 vintages with `quality_errors=0`, use vintage-specific lineage and payload hashes, and verify the four forecast/decision authority-store counts before and after persistence.
-
-This v1.33 GPR authorization explicitly does **not** permit writes to:
-
-- `monthly_forecast_contracts`
-- `decision_signal_snapshots`
-- `decision_runs`
-- `decision_events`
-- engine runtime authority
-- model promotion/validation state
-- selector/ensemble state
-- position/action mappings.
-
-The separate v1.34 BOCPD and v1.35 Macro Event promotion authorizations are independent of this GPR clause.
-
-Successful GPR source ingestion remains valid as a reusable governed data plane even though VW V2 subsequently failed its model validation gates.
-
-
-## 14.2 v1.37 Broad Research Data Spine R1 production source-data authorization
-
-Binding authorization token:
-
-`MANIFEST_V1_37_BROAD_RESEARCH_DATA_SPINE_R1`
-
-This is strictly a research source-data/audit-plane authorization. It grants no model score, forecast issuance, decision write, runtime mutation, selector/ensemble role, or action/position mapping.
-
-Frozen source preflight: head `a0a06bbce8249f8e7ac4cc0f482f1f68c711657b`, run `33989608218`, artifact digest `sha256:ba4300d3501211ce7deaeea61627042f066ec45e679f672deb1741e26e102f1a`, result `SUCCESS`.
-
-Frozen ingestion engineering: writer commit `671ca6ef84dcc4ffbbf6a6f216b8352897a1ff95`, writer blob `3bb80b42961e0a16fbbf40eb14ab5340d169e797`, run `33991644883`, artifact digest `sha256:b1ae7a83d321372061d950c5f1cc8fad8262b570215f9a09ae22a4452fa355b5`, corrected CORE5 blob `bd7c1df860cc2975f123e300be597e9dec42e5c3`, result `ENGINEERING_PREFLIGHT_PASS`.
-
-The first production persistence is authorized only after canonical execution re-proves, before persistence: exactly 12 research series; 71,075 observations; 126 source-vintage rows; zero quality events; CORE5 390 rows per series; StakTrakr XAU/XAG/XPT/XPD 4,230/4,230/4,229/4,229; Twelve-derived XAU 1,177 rows across 54/54 months with minimum 15 selected days; GPRT/GPRA 25,515/25,515 rows with 54/54 origins; empty reserved Broad R1 registry/observation/vintage namespace; all four forecast/decision authority stores equal zero; runtime exactly ACTIVE=6 / WAITING=5 / BLOCKED=1.
-
-Authorized production tables are only `source_registry`, `retrieval_runs`, `observations`, `source_vintages`, and `quality_events`. Writes to `monthly_forecast_contracts`, `decision_signal_snapshots`, `decision_runs`, `decision_events`, engine runtime authority, model promotion/validation state, selector/ensemble state, and action/position mappings are forbidden.
-
-Evidence semantics remain frozen: CORE5 is not historical PIT; StakTrakr makes no origin-PIT claim; Twelve Data 1h/16:00 America/New_York is historical research retrieval and is not canonical `XAU_EOD_TWELVE_NY17`; GPRT/GPRA are separate official-Git vintage reconstruction identities; retrieval/first-seen timestamps are never backdated; silent provider substitution is forbidden; raw vendor values are not emitted to CI evidence.
-
-`AUTO_SELECTOR=OFF` and `AUTO_ENSEMBLE=OFF` remain binding.
----
-
-# 15. CURRENT EVIDENCE FILES REFERENCED BY THIS MANIFEST
-
-The following are supporting evidence, not independent manifests:
-
-- `GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_CHANGE_CONTROL_2026-09-04.md`
-- `GOLD_CONTROL_AUG31_REPLAY_EXPANSION_V2_ENGINEERING_EVIDENCE_2026-09-04.md`
-- `GOLD_CONTROL_V131_AUG31_REPLAY_UI_FINAL_EVIDENCE_2026-09-04.md`
-- `GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_CHANGE_CONTROL_2026-09-04.md`
-- `GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_ENGINEERING_EVIDENCE_2026-09-04.md`
-- `GOLD_CONTROL_BOCPD_RETURN_SUCCESSOR_V1_RISK_VALIDATION_CONTRACT_2026-09-04.md`
-- `GOLD_CONTROL_BOCPD_SUCCESSOR_V1_PROMOTION_CHANGE_CONTROL_2026-09-05.md`
-- `GOLD_CONTROL_R4_2_PATCH_EXPERT_EMERGENCY_REFERENCE_CHANGE_CONTROL_2026-09-04.md`
-- `GOLD_CONTROL_DATA_EVIDENCE_SPINE_CONTRACT_2026-09-03.md`
-- `GOLD_CONTROL_ENGINE_OBSERVABILITY_CONTRACT_2026-09-03.md`
-- `GOLD_CONTROL_DECISION_STORE_CONTRACT.md`
-- `GOLD_CONTROL_FORECAST_CANONICALIZATION.md`
-- `GOLD_CONTROL_CAUSAL_PATCH_R1_REPRO_CONTRACT_V1.md`
-- `GOLD_CONTROL_CAUSAL_PATCH_R1_DAILY_FEATURE_PIT_CHANGE_CONTROL_V7_2026-09-02.md`
-- `GOLD_CONTROL_PATCH_V7_FIRST_PROSPECTIVE_SHADOW_ISSUER_CONTRACT_2026-09-02.md`
-- `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V1_CHANGE_CONTROL_2026-09-04.md`
-- `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_CHANGE_CONTROL_2026-09-05.md`
-- `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_SOURCE_IDENTITY_AMENDMENT_2026-09-05.md`
-- `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_PRE_SCORE_ELIGIBILITY_CORRECTION_2026-09-05.md`
-- `GOLD_CONTROL_VW_MIDAS_SVR_XAU_SUCCESSOR_V2_TERMINAL_VALIDATION_EVIDENCE_2026-09-05.md`
-- `GOLD_CONTROL_GPR_PIT_DATA_PLANE_CHANGE_CONTROL_2026-09-05.md`
-- `GOLD_CONTROL_BROAD_RESEARCH_DATA_SPINE_CHANGE_CONTROL_2026-09-05.md`
-- `GOLD_CONTROL_BROAD_RESEARCH_DATA_SPINE_R1_NEON_INGESTION_CHANGE_CONTROL_2026-09-05.md`
-- `GOLD_CONTROL_BROAD_RESEARCH_DATA_SPINE_R1_NEON_INGESTION_ENGINEERING_EVIDENCE_2026-09-05.md`
-
-Where old wording in these historical files conflicts with the v1.32 monthly-origin correction, the v1.33 GPR PIT source-data authorization, the terminal VW V2 result, or the v1.34 BOCPD runtime replacement, **this v1.37 manifest controls current product/runtime behavior** while the historical document remains immutable evidence of what was believed/frozen at that earlier time.
+Source-data writes remain restricted to the source/audit plane and do not authorize forecast/decision writes.
 
 ---
 
-# 16. UNRESOLVED / NEXT WORK
+# 17. BROAD RESEARCH DATA SPINE R1
 
-## 16.1 VW successor
+Broad Research Data Spine R1 remains canonical research source-data evidence:
 
-Archived `VW_MIDAS_MSVR` remains blocked.
+- exact research series = `12`;
+- observations = `71,075`;
+- source-vintage rows under the frozen ingestion evidence = `126`;
+- quality events = `0` under the frozen ingestion evidence.
 
-`VW_MIDAS_SVR_XAU_SUCCESSOR_V1` remains terminally `SOURCE_BLOCKED_NO_MODEL_SCORE`.
+Evidence semantics remain frozen:
 
-`VW_MIDAS_SVR_XAU_SUCCESSOR_V2` reached executable untouched validation after its pre-score date-arithmetic correction was frozen. Its binding terminal result is:
-
-`REJECT_ALL_VW_SUCCESSOR_V2_CANDIDATES`
-
-Untouched validation `2024-10..2025-09` failed two pre-registered hard gates:
-
-- median absolute error was worse than Random Walk (`75.061714` vs `67.491510`);
-- the `2024-10..2024-12` origin bucket MAE ratio was `1.631148`, above the frozen `1.50` cap.
-
-The locked diagnostic `2025-10..2026-07` was also worse than Random Walk on Relative MAE (`1.044906`).
-
-Therefore V2 receives no September reconstruction, no prospective/shadow promotion, no selector/ensemble entry, and no production forecast/Decision Store authority. Post-result feature/grid/window/gate retuning is prohibited.
-
-The `GPR_OFFICIAL_GIT_PIT` data plane remains valid independently of this model rejection.
-
-## 16.2 Macro successor
-
-Archived Macro Event remains blocked until exact score/consensus/vintage contract is recovered.
-
-A separately named successor may be built under a new authority/source/change-control contract. This is the next unresolved-engine engineering priority after BOCPD runtime closure.
-
-## 16.3 BOCPD successor
-
-`BOCPD_RETURN_SUCCESSOR_V1` is the active current regime/break-context engine after the v1.34 runtime migration is applied and verified.
-
-The archived `BOCPD` identity remains historical/recovery-blocked evidence only.
-
-Continue prospective monitoring for model-risk evidence, but do not re-impose a rule that the engine must wait for 30-Sep before it can be used as current regime context.
-
-## 16.4 September → October live cycle
-
-The next forward monthly issuance target is **October 2026 using the completed 30-Sep origin** for the normal monthly cycle.
-
-This does not invalidate the current BOCPD successor runtime promotion or its reconstructed September context.
-
-## 16.5 Governance hardening
-
-Branch protection/rulesets remain unresolved unless separately proven configured:
-
-`UNRESOLVED_GOVERNANCE_HARDENING = BRANCH_PROTECTION_NOT_CONFIGURED`
+- CORE5 is not historical PIT;
+- StakTrakr R1 makes no origin-PIT claim;
+- Twelve-derived hourly research XAU is not canonical `XAU_EOD_TWELVE_NY17`;
+- GPRT/GPRA are separate official-Git reconstruction identities;
+- retrieval/first-seen timestamps are never backdated;
+- silent provider substitution is forbidden.
 
 ---
 
-# 17. FINAL BINDING SUMMARY
+# 18. CURRENT EVIDENCE FOR VW_MIDAS_MSVR_SUCCESSOR_V1
 
-The governing monthly operating rule remains:
+Current supporting evidence includes:
 
-> **At each completed month-end, Gold Control computes the immediately following month's forecast and month-open direction/reference state using only information available at that origin.**
+- `GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_CHANGE_CONTROL_2026-09-06.md`
+- `GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_ENGINEERING_EVIDENCE_2026-09-06.md`
+- `GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_AUG31_SEPTEMBER_RECONSTRUCTION_CONTRACT.md`
+- `GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_AUG31_SEPTEMBER_RECONSTRUCTION_EVIDENCE_2026-09-06.md`
+- `GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_PROSPECTIVE_SHADOW_CONTRACT_2026-09-06.md`
+- `GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_PROSPECTIVE_READINESS_EVIDENCE_2026-09-06.md`
+- `GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_FOUR_METAL_PROSPECTIVE_SOURCE_REFRESH_CONTRACT.md`
+- `GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_XAU_TARGET_ANCHOR_BRIDGE_CONTRACT.md`
+- `gold_axis_2026/tools/vw_midas_msvr_successor_v1.py`
+- `gold_axis_2026/tools/vw_midas_msvr_successor_v1_aug31_september_reconstruction.py`
+- `gold_axis_2026/tools/vw_midas_msvr_successor_v1_prospective_readiness.py`
 
-For the current period:
+These are supporting evidence/contracts; this manifest remains the only current project manifest.
 
-> **31 Aug 2026 → September 2026 forecast/direction/regime reference.**
+---
 
-The current BOCPD regime reference for September is:
+# 19. NEXT LEGITIMATE STOP POINT
 
-> **`BOCPD_RETURN_SUCCESSOR_V1 = NO_ADVERSE_BREAK_CANDIDATE`.**
+Do not build another VW/MSVR model and do not retune V1.
 
-v1.34 authorizes the separately named and validated `BOCPD_RETURN_SUCCESSOR_V1` to replace archived `BOCPD` in the current application/runtime inventory, while preserving the archived identity as historical audit evidence and preserving `direction_vote=false`.
+The next legitimate forward gate for this model is:
 
-v1.34 also records the binding terminal rejection of `VW_MIDAS_SVR_XAU_SUCCESSOR_V2`; that model receives no promotion.
+`2026-09-30 origin -> 2026-10 target`
 
-The v1.33 `GPR_OFFICIAL_GIT_PIT` source-data authorization remains valid independently.
+Before issuance, prove:
 
-v1.37 additionally authorizes the frozen Broad Research Data Spine R1 first production persistence under section 14.2 and only under its exact source-data/audit-plane gates.
+- September four-metal prospective source completeness;
+- September GPR origin vintage availability with required August lag observation;
+- target-anchor measurement readiness;
+- no leakage;
+- frozen V1 code/config identity;
+- authority-store zero invariant before the shadow issue.
 
-If an origin was reconstructed later, the target/origin interpretation remains valid, but the audit metadata must truthfully identify it as a reconstruction rather than falsely backdating the issuance.
+If any gate fails, fail closed with the exact WAITING/BLOCKED reason. Do not substitute data/providers or change the model after seeing October information.
 
-`AUTO_SELECTOR=OFF` and `AUTO_ENSEMBLE=OFF` remain binding.
+---
+
+# 20. FINAL BINDING SUMMARY
+
+Current VW/MSVR model identity:
+
+`VW_MIDAS_MSVR_SUCCESSOR_V1`
+
+Current model status:
+
+`HISTORICAL_REPLAY_PASS / RESEARCH_SHADOW / PROSPECTIVE_VALIDATION_REQUIRED`
+
+September reconstructed H=1 reference:
+
+`4565.115907930242 USD/oz`
+
+Forward runtime state:
+
+`WAITING_ORIGIN_NOT_REACHED`
+
+First genuine prospective test:
+
+`30 Sep 2026 -> October 2026`
+
+Target v1.38 runtime inventory after canonicalization:
+
+`ACTIVE 6 / WAITING 6 / BLOCKED 0 / TOTAL 12`
+
+`AUTO_SELECTOR=OFF`, `AUTO_ENSEMBLE=OFF`, and `NOT_PROVEN_POSITION_MAPPING` remain binding.
