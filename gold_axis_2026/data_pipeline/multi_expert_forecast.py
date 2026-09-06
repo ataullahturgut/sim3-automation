@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import Any, Iterable
 
 
-MANIFEST_VERSION = "1.40"
+MANIFEST_VERSION = "1.41"
 SELECTOR_STATUS = "NOT_PROVEN_EXPERT_SELECTION_RULE"
 AUTO_SELECTOR = "OFF"
 AUTO_ENSEMBLE = "OFF"
@@ -71,7 +71,7 @@ EXPERT_REGISTRY: dict[str, ExpertDefinition] = {
         model_version=MOMENTUM_V2_VERSION,
         expert_role="EXPERT",
         execution_status="EXECUTABLE_FORWARD_EXPERT",
-        status_reason="Source-bound V2 passed the frozen 43-origin source/materiality/non-inferiority audit; issuance waits for an eligible prospective month-end origin.",
+        status_reason="Current September H=1 historical-replay reference is available; the executable remains eligible for later origin-time issuance under its frozen source contract.",
     ),
     RW_EXPERT: ExpertDefinition(
         expert_id=RW_EXPERT,
@@ -80,7 +80,7 @@ EXPERT_REGISTRY: dict[str, ExpertDefinition] = {
         model_version=RW_V2_VERSION,
         expert_role="BENCHMARK",
         execution_status="EXECUTABLE_FORWARD_EXPERT",
-        status_reason="Source-bound V2 passed the frozen 43-origin source/materiality/non-inferiority audit; issuance waits for an eligible prospective month-end origin.",
+        status_reason="Current September H=1 historical-replay reference is available; the executable remains eligible for later origin-time issuance under its frozen source contract.",
     ),
 }
 
