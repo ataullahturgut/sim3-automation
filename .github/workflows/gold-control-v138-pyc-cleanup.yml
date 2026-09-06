@@ -1,0 +1,40 @@
+name: Gold Control v1.38 Remove Generated Python Bytecode
+
+on:
+  push:
+    branches: [gold-control-vw-successor-v1-canonicalization-v138]
+    paths:
+      - .github/workflows/gold-control-v138-pyc-cleanup.yml
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-vw-successor-v1-canonicalization-v138
+          fetch-depth: 0
+
+      - name: Remove generated Python bytecode and prevent recurrence
+        shell: bash
+        run: |
+          set -euo pipefail
+          find gold_axis_2026 -type d -name __pycache__ -prune -exec rm -rf {} +
+          touch .gitignore
+          grep -qxF '__pycache__/' .gitignore || printf '\n__pycache__/\n' >> .gitignore
+          grep -qxF '*.py[cod]' .gitignore || printf '*.py[cod]\n' >> .gitignore
+          rm .github/workflows/gold-control-v138-pyc-cleanup.yml
+
+      - name: Commit generated-file cleanup
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "gold-control-governance-bot"
+          git config user.email "gold-control-governance-bot@users.noreply.github.com"
+          git add -A
+          git commit -m "Gold Control v1.38: remove generated Python bytecode"
+          git push origin HEAD:gold-control-vw-successor-v1-canonicalization-v138
