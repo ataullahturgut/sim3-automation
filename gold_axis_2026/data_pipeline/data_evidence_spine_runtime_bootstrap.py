@@ -15,12 +15,15 @@ from multi_expert_forecast import EXPERT_REGISTRY
 
 AUDIT_EVIDENCE = "RUNTIME_GOVERNANCE_AUDIT"
 
-# v1.38 current governed inventory. The VW/MSVR slot is the separately validated
-# Successor V1 research-shadow identity and is WAITING for its first genuine
-# prospective origin. No superseded VW runtime identity is part of this plan.
+# v1.39 current governed inventory. VW/MSVR Successor V1 is ACTIVE as a
+# research-shadow current-month reference reconstructed strictly from the
+# completed 2026-08-31 information boundary. This does not relabel the result
+# as a forecast issued on 2026-08-31 and grants no selector/ensemble/action
+# authority. The separate 2026-09-30 -> 2026-10 prospective gate remains a
+# later validation milestone, not a blocker for the September reference.
 STATUS_SPECS = {
     "CAUSAL_PATCH": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", "MONTHLY_H1_EXPERT", False),
-    "VW_MIDAS_MSVR_SUCCESSOR_V1": ("WAITING", "WAITING_ORIGIN_NOT_REACHED", "MONTHLY_H1_EXPERT", False),
+    "VW_MIDAS_MSVR_SUCCESSOR_V1": ("ACTIVE", "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE", "MONTHLY_H1_EXPERT", False),
     "MOMENTUM_3M": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", "MONTHLY_H1_EXPERT", False),
     "RANDOM_WALK": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", "MONTHLY_H1_BENCHMARK", False),
     "EMERGENCY_LEVEL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", "EMERGENCY_CONTEXT", False),
@@ -45,6 +48,28 @@ CONTEXT_FEATURES = {
     "GVZ_RISK": ("GVZ_REGIME", "RISK_ONLY_CONTEXT", False),
 }
 GVZ_FEATURES = ("GVZ_VALUE", "GVZ_CAP", "GVZ_PANIC", "GVZ_REGIME")
+
+VW_SEPTEMBER_REFERENCE = {
+    "reference_kind": "HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE",
+    "evidence_class": "HISTORICAL_REPLAY",
+    "target_month": "2026-09",
+    "forecast_origin": "2026-08-31T21:00:00Z",
+    "information_cutoff": "2026-08-31T21:00:00Z",
+    "source_origin_boundary": "2026-08-31",
+    "replay_executed_at": "2026-09-06T19:18:23Z",
+    "forecast_value": 4565.115907930242,
+    "unit": "USD/oz",
+    "canonical_authority": False,
+    "prospective_claim": False,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF",
+    "selected_config": [1.0, 0.05, 0.5],
+    "august_common_days": 26,
+    "random_walk_same_origin": 4404.829230769231,
+    "reconstruction_workflow_run_id": 34054462706,
+    "reconstruction_head_sha": "24bede3ef96ba655ebb2108dc69ccf7dfc7e2f33",
+    "reconstruction_artifact_id": 9995535377,
+}
 
 
 def git_sha() -> str:
@@ -175,22 +200,25 @@ def build_plan(cur, now: datetime) -> list[dict]:
         else:
             version = STATIC_VERSIONS[engine_id]
         metadata = {
-            "audit_scope": "CANONICAL_MANIFEST_RUNTIME_STATUS_V138",
+            "audit_scope": "CANONICAL_MANIFEST_RUNTIME_STATUS_V139",
             "no_output_fabricated": True,
-            "no_forecast_issued": True,
             "auto_selector": "OFF",
             "auto_ensemble": "OFF",
         }
         if engine_id == "VW_MIDAS_MSVR_SUCCESSOR_V1":
             metadata.update(
                 {
-                    "model_status": "RESEARCH_SHADOW_CANDIDATE_HISTORICAL_REPLAY_PASS_PROSPECTIVE_VALIDATION_REQUIRED",
-                    "first_prospective_origin": "2026-09-30T21:00:00Z",
-                    "first_prospective_target": "2026-10",
+                    "model_status": "ACTIVE_RESEARCH_SHADOW_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE",
+                    "current_month_reference": dict(VW_SEPTEMBER_REFERENCE),
+                    "no_prospective_forecast_issued": True,
+                    "later_prospective_validation_origin": "2026-09-30T21:00:00Z",
+                    "later_prospective_validation_target": "2026-10",
                     "prospective_claim": False,
                     "canonical_forecast_authority": False,
                 }
             )
+        else:
+            metadata["no_forecast_issued"] = True
         rows.append(
             {
                 "engine_id": engine_id,
@@ -215,8 +243,8 @@ def build_plan(cur, now: datetime) -> list[dict]:
         "waiting": sum(x["runtime_status"] == "WAITING" for x in rows),
         "blocked": sum(x["runtime_status"] == "BLOCKED" for x in rows),
     }
-    if counts != {"active": 6, "waiting": 6, "blocked": 0}:
-        raise RuntimeError(f"RUNTIME_BOOTSTRAP_V138_COUNTS_INVALID:{counts}")
+    if counts != {"active": 7, "waiting": 5, "blocked": 0}:
+        raise RuntimeError(f"RUNTIME_BOOTSTRAP_V139_COUNTS_INVALID:{counts}")
     return rows
 
 
@@ -285,10 +313,10 @@ def main() -> int:
             cur.execute("select count(*) as n from latest_engine_runtime_state where engine_id=any(%s)", ([r["engine_id"] for r in plan],))
             total = int(cur.fetchone()["n"])
         conn.rollback()
-    if total != 12 or counts.get("ACTIVE") != 6 or counts.get("WAITING") != 6 or counts.get("BLOCKED", 0) != 0:
+    if total != 12 or counts.get("ACTIVE") != 7 or counts.get("WAITING") != 5 or counts.get("BLOCKED", 0) != 0:
         raise RuntimeError(f"RUNTIME_BOOTSTRAP_POST_COMMIT_COUNTS_INVALID:{total}:{counts}")
     print(json.dumps({"status": "INSERTED_VERIFIED", "total": total, "counts": counts, "run_ids": run_ids}, sort_keys=True))
-    print("DATA_EVIDENCE_SPINE_RUNTIME_BOOTSTRAP_V138_PASS")
+    print("DATA_EVIDENCE_SPINE_RUNTIME_BOOTSTRAP_V139_PASS")
     return 0
 
 
