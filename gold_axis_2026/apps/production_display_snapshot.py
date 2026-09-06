@@ -6,12 +6,24 @@ from pathlib import Path
 from typing import Any
 
 
-SNAPSHOT_CONTRACT = "FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V2"
-LEGACY_SNAPSHOT_CONTRACT = "FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V1"
-SNAPSHOT_SOURCE_MODE = "PRODUCTION_SNAPSHOT_FALLBACK"
+SNAPSHOT_CONTRACT = "GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V141"
+SNAPSHOT_SOURCE_MODE = "PRODUCTION_CURRENT_SNAPSHOT_FALLBACK"
 SNAPSHOT_PATH = Path(__file__).with_name("production_display_snapshot.json")
-EXPECTED_ENGINE_COUNT = 12
-REQUIRED_CONTEXT_FEATURES = (
+CURRENT_ENGINE_IDS = (
+    "VW_MIDAS_MSVR_SUCCESSOR_V1",
+    "CAUSAL_PATCH",
+    "MOMENTUM_3M",
+    "RANDOM_WALK",
+    "MONTHLY_DIRECTION_3M",
+    "FAST",
+    "SLOW",
+    "MACRO_EVENT_SUCCESSOR_V2",
+    "BOCPD_RETURN_SUCCESSOR_V1",
+    "EMERGENCY_LEVEL",
+    "EMERGENCY_REVERSAL",
+    "GVZ_RISK",
+)
+CURRENT_CONTEXT_FEATURES = (
     "MONTHLY_DIRECTION_3M",
     "FAST_STATE",
     "SLOW_STATE",
@@ -25,19 +37,21 @@ INTEGRITY_ZERO_FIELDS = (
     "expert_rows_without_input_set",
     "expert_input_fingerprint_mismatches",
 )
+AUTHORITY_ZERO_FIELDS = (
+    "monthly_forecast_contracts",
+    "decision_signal_snapshots",
+    "decision_runs",
+    "decision_events",
+)
 FORBIDDEN_KEYS = {
     "action_state",
     "classification",
-    "canonical_forecast",
     "canonical_forecast_value",
     "database_url",
     "connection_string",
     "password",
     "selector_weights",
 }
-REPLAY_TRACK = "HISTORICAL_REPLAY"
-REPLAY_EVIDENCE = "HISTORICAL_REPLAY"
-SELECTOR_LOCK = "NOT_PROVEN_EXPERT_SELECTION_RULE"
 
 
 def _payload_for_hash(snapshot: dict[str, Any]) -> dict[str, Any]:
@@ -52,6 +66,7 @@ def payload_sha256(snapshot: dict[str, Any]) -> str:
         ensure_ascii=False,
         sort_keys=True,
         separators=(",", ":"),
+        default=str,
     ).encode("utf-8")
     return hashlib.sha256(canonical).hexdigest()
 
@@ -60,94 +75,62 @@ def _reject_forbidden_keys(value: Any, path: str = "snapshot") -> None:
     if isinstance(value, dict):
         for key, child in value.items():
             if str(key).lower() in FORBIDDEN_KEYS:
-                raise RuntimeError(f"PRODUCTION_DISPLAY_SNAPSHOT_FORBIDDEN_KEY:{path}.{key}")
+                raise RuntimeError(f"CURRENT_SNAPSHOT_FORBIDDEN_KEY:{path}.{key}")
             _reject_forbidden_keys(child, f"{path}.{key}")
     elif isinstance(value, list):
         for index, child in enumerate(value):
             _reject_forbidden_keys(child, f"{path}[{index}]")
 
 
-def _validate_replay_rows(snapshot: dict[str, Any]) -> None:
-    rows = snapshot.get("historical_replay_experts", [])
-    if not isinstance(rows, list):
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_INVALID")
-    if snapshot.get("snapshot_contract") == LEGACY_SNAPSHOT_CONTRACT:
-        if rows:
-            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_LEGACY_REPLAY_FORBIDDEN")
-        return
-    ids: list[str] = []
-    for row in rows:
-        if not isinstance(row, dict):
-            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_ROW_INVALID")
-        if row.get("forecast_track") != REPLAY_TRACK or row.get("evidence_class") != REPLAY_EVIDENCE:
-            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_TRACK_EVIDENCE_MISMATCH")
-        if row.get("canonical_authority") is not False:
-            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_CANONICAL_AUTHORITY_VIOLATION")
-        if row.get("selector_status") != SELECTOR_LOCK or row.get("auto_selector") != "OFF" or row.get("auto_ensemble") != "OFF":
-            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_SELECTOR_LOCK_VIOLATION")
-        provenance = dict(row.get("provenance") or {})
-        if provenance.get("historical_replay") is not True or provenance.get("prospective_claim") is not False:
-            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_PROSPECTIVE_CLAIM_VIOLATION")
-        if provenance.get("canonical_authority") is not False or provenance.get("direction_vote_permitted") is not False:
-            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_AUTHORITY_VIOLATION")
-        ids.append(str(row.get("expert_id") or ""))
-    if len(ids) != len(set(ids)) or "" in ids:
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_IDENTITY_INVALID")
-    target = snapshot.get("historical_replay_target_month")
-    if rows and not target:
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_TARGET_MISSING")
-    if rows and any(str(row.get("target_month") or "")[:7] != str(target)[:7] for row in rows):
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_REPLAY_TARGET_MISMATCH")
-
-
 def validate_production_display_snapshot(snapshot: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(snapshot, dict):
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_NOT_OBJECT")
-    if snapshot.get("snapshot_contract") not in {SNAPSHOT_CONTRACT, LEGACY_SNAPSHOT_CONTRACT}:
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_CONTRACT_MISMATCH")
+        raise RuntimeError("CURRENT_SNAPSHOT_NOT_OBJECT")
+    if snapshot.get("snapshot_contract") != SNAPSHOT_CONTRACT:
+        raise RuntimeError("CURRENT_SNAPSHOT_CONTRACT_MISMATCH")
     if snapshot.get("database_writes") != "NONE":
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_WRITE_CLAIM_INVALID")
+        raise RuntimeError("CURRENT_SNAPSHOT_WRITE_CLAIM_INVALID")
 
     expected_hash = str(snapshot.get("payload_sha256") or "").strip().lower()
     actual_hash = payload_sha256(snapshot)
     if not expected_hash or expected_hash != actual_hash:
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_FINGERPRINT_MISMATCH")
+        raise RuntimeError("CURRENT_SNAPSHOT_FINGERPRINT_MISMATCH")
 
     runtime = snapshot.get("runtime")
-    if not isinstance(runtime, list) or len(runtime) != EXPECTED_ENGINE_COUNT:
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_RUNTIME_COUNT_MISMATCH")
+    if not isinstance(runtime, list) or len(runtime) != len(CURRENT_ENGINE_IDS):
+        raise RuntimeError("CURRENT_SNAPSHOT_RUNTIME_COUNT_MISMATCH")
     engine_ids = [str(row.get("engine_id") or "") for row in runtime if isinstance(row, dict)]
-    if len(engine_ids) != EXPECTED_ENGINE_COUNT or len(set(engine_ids)) != EXPECTED_ENGINE_COUNT or "" in engine_ids:
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_RUNTIME_IDENTITY_INVALID")
-
-    features = snapshot.get("features")
-    if not isinstance(features, list) or len(features) != len(REQUIRED_CONTEXT_FEATURES):
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_FEATURE_COUNT_MISMATCH")
-    feature_names = [str(row.get("feature_name") or "") for row in features if isinstance(row, dict)]
-    if set(feature_names) != set(REQUIRED_CONTEXT_FEATURES) or len(feature_names) != len(set(feature_names)):
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_FEATURE_IDENTITY_INVALID")
+    if set(engine_ids) != set(CURRENT_ENGINE_IDS) or len(engine_ids) != len(set(engine_ids)):
+        raise RuntimeError("CURRENT_SNAPSHOT_RUNTIME_IDENTITY_MISMATCH")
+    if any(str(row.get("runtime_status") or "").upper() != "ACTIVE" for row in runtime):
+        raise RuntimeError("CURRENT_SNAPSHOT_RUNTIME_NOT_ALL_ACTIVE")
 
     target_context = str(snapshot.get("target_context") or "").strip()
     if len(target_context) != 7:
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_TARGET_CONTEXT_INVALID")
-    for row in runtime:
-        if str(row.get("target_context") or "") != target_context:
-            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_RUNTIME_TARGET_MISMATCH")
-    for row in features:
-        metadata = dict(row.get("metadata") or {})
-        if str(metadata.get("target_context") or "") != target_context:
-            raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_FEATURE_TARGET_MISMATCH")
+        raise RuntimeError("CURRENT_SNAPSHOT_TARGET_CONTEXT_INVALID")
+    if any(str(row.get("target_context") or "") != target_context for row in runtime):
+        raise RuntimeError("CURRENT_SNAPSHOT_RUNTIME_TARGET_MISMATCH")
+
+    features = snapshot.get("features")
+    if not isinstance(features, list) or len(features) != len(CURRENT_CONTEXT_FEATURES):
+        raise RuntimeError("CURRENT_SNAPSHOT_FEATURE_COUNT_MISMATCH")
+    feature_names = [str(row.get("feature_name") or "") for row in features if isinstance(row, dict)]
+    if set(feature_names) != set(CURRENT_CONTEXT_FEATURES) or len(feature_names) != len(set(feature_names)):
+        raise RuntimeError("CURRENT_SNAPSHOT_FEATURE_IDENTITY_MISMATCH")
 
     health = snapshot.get("health")
     if not isinstance(health, dict):
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_HEALTH_INVALID")
+        raise RuntimeError("CURRENT_SNAPSHOT_HEALTH_INVALID")
     for key in INTEGRITY_ZERO_FIELDS:
         if int(health.get(key) or 0) != 0:
-            raise RuntimeError(f"PRODUCTION_DISPLAY_SNAPSHOT_INTEGRITY_BLOCKED:{key}")
-    if int(snapshot.get("context_exactly_one_link") or 0) != len(REQUIRED_CONTEXT_FEATURES):
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_CONTEXT_LINK_MISMATCH")
+            raise RuntimeError(f"CURRENT_SNAPSHOT_INTEGRITY_BLOCKED:{key}")
 
-    _validate_replay_rows(snapshot)
+    authority = snapshot.get("authority_store_counts")
+    if not isinstance(authority, dict):
+        raise RuntimeError("CURRENT_SNAPSHOT_AUTHORITY_COUNTS_MISSING")
+    for key in AUTHORITY_ZERO_FIELDS:
+        if int(authority.get(key) or 0) != 0:
+            raise RuntimeError(f"CURRENT_SNAPSHOT_UNAUTHORIZED_AUTHORITY_STATE:{key}")
+
     _reject_forbidden_keys(snapshot)
     return snapshot
 
@@ -155,11 +138,11 @@ def validate_production_display_snapshot(snapshot: dict[str, Any]) -> dict[str, 
 def load_production_display_snapshot(path: Path | str | None = None) -> dict[str, Any]:
     snapshot_path = Path(path) if path is not None else SNAPSHOT_PATH
     if not snapshot_path.is_file():
-        raise RuntimeError(f"PRODUCTION_DISPLAY_SNAPSHOT_NOT_FOUND:{snapshot_path}")
+        raise RuntimeError(f"CURRENT_SNAPSHOT_NOT_FOUND:{snapshot_path}")
     try:
         raw = json.loads(snapshot_path.read_text(encoding="utf-8"))
     except Exception as exc:
-        raise RuntimeError("PRODUCTION_DISPLAY_SNAPSHOT_JSON_INVALID") from exc
+        raise RuntimeError("CURRENT_SNAPSHOT_JSON_INVALID") from exc
     return validate_production_display_snapshot(raw)
 
 
@@ -169,28 +152,27 @@ def snapshot_feature_rows(snapshot: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def snapshot_historical_replay_rows(snapshot: dict[str, Any]) -> list[dict[str, Any]]:
-    validated = validate_production_display_snapshot(snapshot)
-    return [dict(row) for row in validated.get("historical_replay_experts", [])]
+    """Compatibility read for forecast history: current snapshot stores no separate replay ledger."""
+    validate_production_display_snapshot(snapshot)
+    return []
 
 
 def snapshot_runtime_observability(snapshot: dict[str, Any]) -> dict[str, Any]:
     validated = validate_production_display_snapshot(snapshot)
     health = dict(validated["health"])
     return {
-        "contract": "FROZEN_DATA_EVIDENCE_SPINE_V1_READ_ONLY_APP_V1",
-        "status": "DATA_EVIDENCE_SPINE_RUNTIME_HEALTH_PASS",
+        "contract": "GOLD_CONTROL_CURRENT_RUNTIME_SOURCE_V141",
+        "status": "CURRENT_RUNTIME_HEALTH_PASS",
         "source_mode": SNAPSHOT_SOURCE_MODE,
-        "snapshot_contract": validated.get("snapshot_contract"),
+        "snapshot_contract": SNAPSHOT_CONTRACT,
         "snapshot_source_state_at": validated.get("source_state_at"),
         "snapshot_payload_sha256": validated.get("payload_sha256"),
         "runtime": [dict(row) for row in validated["runtime"]],
-        "runtime_engine_count": EXPECTED_ENGINE_COUNT,
+        "runtime_engine_count": len(CURRENT_ENGINE_IDS),
         "health": health,
         "integrity_ok": True,
         "runtime_complete": True,
         "context_target": validated.get("target_context"),
-        "context_expected": len(REQUIRED_CONTEXT_FEATURES),
-        "context_exactly_one_link": int(validated["context_exactly_one_link"]),
-        "context_complete": True,
+        "context_feature_count": len(CURRENT_CONTEXT_FEATURES),
         "database_writes": "NONE",
     }
