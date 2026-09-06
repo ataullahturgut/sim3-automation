@@ -24,7 +24,7 @@ from multi_expert_forecast import (
 )
 
 
-def test_manifest_v122_expert_set_is_exact_and_ordered():
+def test_manifest_v139_expert_set_is_exact_and_ordered():
     assert EXPERT_ORDER == (PATCH_EXPERT, VW_EXPERT, MOMENTUM_EXPERT, RW_EXPERT)
     assert set(EXPERT_REGISTRY) == set(EXPERT_ORDER)
 
@@ -40,9 +40,9 @@ def test_selector_and_ensemble_are_binding_off():
     }
 
 
-def test_patch_rw_and_momentum_are_forward_executable_after_frozen_v2_source_pass():
+def test_forward_executable_set_and_vw_current_replay_status_are_explicit():
     assert executable_experts() == (PATCH_EXPERT, MOMENTUM_EXPERT, RW_EXPERT)
-    assert EXPERT_REGISTRY[VW_EXPERT].execution_status == "BLOCKED_NOT_PROVEN_EXECUTABLE"
+    assert EXPERT_REGISTRY[VW_EXPERT].execution_status == "ACTIVE_RESEARCH_SHADOW_CURRENT_MONTH_HISTORICAL_REPLAY"
     assert EXPERT_REGISTRY[MOMENTUM_EXPERT].execution_status == "EXECUTABLE_FORWARD_EXPERT"
     assert EXPERT_REGISTRY[RW_EXPERT].execution_status == "EXECUTABLE_FORWARD_EXPERT"
     assert EXPERT_REGISTRY[MOMENTUM_EXPERT].model_version == "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"
