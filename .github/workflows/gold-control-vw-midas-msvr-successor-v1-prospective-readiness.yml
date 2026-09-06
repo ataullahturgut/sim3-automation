@@ -51,8 +51,9 @@ jobs:
           assert r['governance']['runtime_mutation']=='NONE'
           assert r['governance']['auto_selector']=='OFF'
           assert r['governance']['auto_ensemble']=='OFF'
-          assert r['forecast_origin']=='2026-09-30'
+          assert r['forecast_origin']=='2026-09-30T21:00:00Z'
           assert r['target_month']=='2026-10'
+          assert r['runtime_counts']=={'ACTIVE': 6, 'BLOCKED': 1, 'WAITING': 5}
           print('PROSPECTIVE_READINESS_STATUS='+r['status'])
           print('BLOCKERS='+';'.join(r['blockers']))
           PY
