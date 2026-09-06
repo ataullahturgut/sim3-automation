@@ -1,5 +1,6 @@
 name: Gold Control VW Successor V1 Canonicalization v1.38
 
+# Revalidation trigger after one-shot current-surface cleanup.
 on:
   push:
     branches: [gold-control-vw-successor-v1-canonicalization-v138]
