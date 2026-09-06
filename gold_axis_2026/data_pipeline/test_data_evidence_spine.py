@@ -39,7 +39,7 @@ def _spec(**overrides):
 
 
 def test_contract_and_engine_inventory_are_exact():
-    assert SPINE_CONTRACT == "FROZEN_DATA_EVIDENCE_SPINE_V1"
+    assert SPINE_CONTRACT == "FROZEN_DATA_EVIDENCE_SPINE_V1_CURRENT_REGISTRY_V138"
     assert ENGINE_IDS == (
         "CAUSAL_PATCH",
         "VW_MIDAS_MSVR_SUCCESSOR_V1",
@@ -48,10 +48,10 @@ def test_contract_and_engine_inventory_are_exact():
         "MONTHLY_DIRECTION_3M",
         "FAST",
         "SLOW",
-        "MACRO_EVENT",
+        "MACRO_EVENT_SUCCESSOR_V2",
         "EMERGENCY_LEVEL",
         "EMERGENCY_REVERSAL",
-        "BOCPD",
+        "BOCPD_RETURN_SUCCESSOR_V1",
         "GVZ_RISK",
     )
     assert RUNTIME_STATUSES == {"ACTIVE", "ISSUED", "WAITING", "BLOCKED", "NOT_PROVEN"}
