@@ -1,0 +1,60 @@
+name: Gold Control v1.38 Refresh Production Snapshot Once
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - '.github/workflows/gold-control-v138-refresh-production-snapshot-once.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-production-snapshot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install runtime
+        run: pip install 'psycopg[binary]==3.3.5'
+
+      - name: Export production display snapshot read-only
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/export_production_display_snapshot.py
+
+      - name: Assert current VW identity is Successor V1 only
+        shell: bash
+        run: |
+          set -euo pipefail
+          SNAP='gold_axis_2026/apps/production_display_snapshot.json'
+          grep -F '"engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1"' "$SNAP"
+          if grep -F '"engine_id": "VW_MIDAS_MSVR"' "$SNAP"; then
+            echo 'FORBIDDEN_SUPERSEDED_VW_RUNTIME_IN_SNAPSHOT'
+            exit 1
+          fi
+          grep -F '"runtime_status": "WAITING"' "$SNAP"
+          grep -F '"status_code": "WAITING_ORIGIN_NOT_REACHED"' "$SNAP"
+
+      - name: Commit refreshed snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'gold-control-governance-bot'
+          git config user.email 'gold-control-governance-bot@users.noreply.github.com'
+          git add gold_axis_2026/apps/production_display_snapshot.json
+          if git diff --cached --quiet; then
+            echo 'SNAPSHOT_ALREADY_CURRENT'
+            exit 0
+          fi
+          git commit -m 'Gold Control v1.38: refresh production snapshot after VW migration'
+          git push origin HEAD:gold-r4-direction-engine
