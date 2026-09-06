@@ -1,0 +1,67 @@
+name: Gold Control VW Successor V1 Canonicalization v1.38
+
+# Revalidation trigger after current-surface and generated-bytecode cleanup.
+on:
+  push:
+    branches: [gold-control-vw-successor-v1-canonicalization-v138]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  canonicalization-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile current Python surface
+        run: python -m compileall -q gold_axis_2026
+
+      - name: Assert canonical manifest v1.38 and Successor V1
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -F '**Manifest version:** 1.38' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F '`VW_MIDAS_MSVR_SUCCESSOR_V1`' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'ACTIVE 6 / WAITING 6 / BLOCKED 0 / TOTAL 12' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+
+      - name: Assert superseded VW identity absent from current executable/config surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          OLD_ID="VW_MIDAS_"'MSVR'
+          mapfile -t files < <(git ls-files '*.py' '*.json' '*.yml' '*.yaml' 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md' \
+            | grep -v '^gold_axis_2026/apps/production_display_snapshot.json$')
+          if printf '%s\n' "${files[@]}" | xargs -r grep -n -E "${OLD_ID}([^A-Z0-9_]|$)"; then
+            echo "FORBIDDEN_SUPERSEDED_VW_IDENTITY_FOUND"
+            exit 1
+          fi
+          echo "CURRENT_EXECUTABLE_CONFIG_IDENTITY_CLEAN=PASS"
+          echo "NOTE: production_display_snapshot.json is intentionally excluded until the live DB migration is completed and the snapshot is regenerated from production."
+
+      - name: Compile frozen Successor V1 runners
+        run: |
+          python -m py_compile \
+            gold_axis_2026/tools/vw_midas_msvr_successor_v1.py \
+            gold_axis_2026/tools/vw_midas_msvr_successor_v1_aug31_september_reconstruction.py \
+            gold_axis_2026/tools/vw_midas_msvr_successor_v1_prospective_readiness.py \
+            gold_axis_2026/apps/engine_observability_contract.py \
+            gold_axis_2026/data_pipeline/data_evidence_spine.py \
+            gold_axis_2026/data_pipeline/data_evidence_spine_runtime_bootstrap.py
+
+      - name: Assert governance locks remain
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -F '`AUTO_SELECTOR=OFF`' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F '`AUTO_ENSEMBLE=OFF`' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F '`NOT_PROVEN_POSITION_MAPPING`' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md

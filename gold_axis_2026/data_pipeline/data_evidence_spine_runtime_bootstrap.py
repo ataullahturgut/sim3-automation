@@ -5,7 +5,6 @@ import json
 import os
 import subprocess
 from datetime import datetime, timezone
-from pathlib import Path
 
 import psycopg
 from psycopg.rows import dict_row
@@ -14,27 +13,30 @@ from data_evidence_spine import record_engine_execution, spine_schema_ready
 from multi_expert_forecast import EXPERT_REGISTRY
 
 
-ROOT = Path(__file__).resolve().parents[1]
-TARGET_CONTEXT = "2026-09"
 AUDIT_EVIDENCE = "RUNTIME_GOVERNANCE_AUDIT"
 
+# v1.38 current governed inventory. The VW/MSVR slot is the separately validated
+# Successor V1 research-shadow identity and is WAITING for its first genuine
+# prospective origin. No superseded VW runtime identity is part of this plan.
 STATUS_SPECS = {
     "CAUSAL_PATCH": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", "MONTHLY_H1_EXPERT", False),
-    "VW_MIDAS_MSVR": ("BLOCKED", "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN", "MONTHLY_H1_EXPERT", False),
+    "VW_MIDAS_MSVR_SUCCESSOR_V1": ("WAITING", "WAITING_ORIGIN_NOT_REACHED", "MONTHLY_H1_EXPERT", False),
     "MOMENTUM_3M": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", "MONTHLY_H1_EXPERT", False),
     "RANDOM_WALK": ("WAITING", "WAITING_ELIGIBLE_MONTH_END_ORIGIN", "MONTHLY_H1_BENCHMARK", False),
-    "MACRO_EVENT": ("BLOCKED", "BLOCKED_EXACT_MACRO_SCORE_CONSENSUS_AND_VINTAGE_CONTRACT_NOT_RECOVERED", "EVENT_CONTEXT", False),
     "EMERGENCY_LEVEL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", "EMERGENCY_CONTEXT", False),
     "EMERGENCY_REVERSAL": ("WAITING", "WAITING_FIRST_GOVERNED_PATCH_EXPERT_REFERENCE", "EMERGENCY_CONTEXT", False),
-    "BOCPD": ("BLOCKED", "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED", "REGIME_CONTEXT", False),
 }
 
 STATIC_VERSIONS = {
-    "MACRO_EVENT": "MACRO_EVENT_PARTIAL_RULE_RECOVERED_SOURCE_CONTRACT_BLOCKED",
+    "VW_MIDAS_MSVR_SUCCESSOR_V1": "VW_MIDAS_MSVR_SUCCESSOR_V1",
     "EMERGENCY_LEVEL": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1",
     "EMERGENCY_REVERSAL": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1",
-    "BOCPD": "BOCPD_RETURN_R1_PARTIAL_RECOVERY_L36_THRESHOLD_LOCKED",
 }
+
+ACTIVE_SUCCESSORS = (
+    "BOCPD_RETURN_SUCCESSOR_V1",
+    "MACRO_EVENT_SUCCESSOR_V2",
+)
 
 CONTEXT_FEATURES = {
     "MONTHLY_DIRECTION_3M": ("MONTHLY_DIRECTION_3M", "STRATEGIC_DIRECTION_CONTEXT", True),
@@ -88,6 +90,48 @@ def _context_outputs(cur, target_context: str) -> dict[str, dict]:
     return latest
 
 
+def _latest_active_successor_rows(cur, now: datetime, target_context: str) -> list[dict]:
+    rows: list[dict] = []
+    for engine_id in ACTIVE_SUCCESSORS:
+        cur.execute(
+            """
+            select engine_id,engine_version,engine_role,evidence_class,runtime_status,
+                   status_code,direction_vote_permitted,input_fingerprint,metadata
+            from engine_execution_runs
+            where engine_id=%s and evidence_class<>'HISTORICAL_REPLAY'
+            order by as_of desc,created_at desc,run_id desc
+            limit 1
+            """,
+            (engine_id,),
+        )
+        raw = cur.fetchone()
+        if not raw:
+            raise RuntimeError(f"BLOCKED_RUNTIME_BOOTSTRAP_ACTIVE_SUCCESSOR_MISSING:{engine_id}")
+        source = dict(raw)
+        if source["runtime_status"] != "ACTIVE" or source["direction_vote_permitted"] is not False:
+            raise RuntimeError(f"BLOCKED_RUNTIME_BOOTSTRAP_ACTIVE_SUCCESSOR_STATE_INVALID:{engine_id}")
+        metadata = dict(source.get("metadata") or {})
+        metadata["bootstrap_copied_from_latest_governed_successor"] = True
+        metadata["no_recalculation"] = True
+        rows.append(
+            {
+                "engine_id": engine_id,
+                "engine_version": source["engine_version"],
+                "engine_role": source["engine_role"],
+                "as_of": now,
+                "target_context": target_context,
+                "evidence_class": AUDIT_EVIDENCE,
+                "runtime_status": "ACTIVE",
+                "status_code": source["status_code"],
+                "direction_vote_permitted": False,
+                "input_fingerprint": source.get("input_fingerprint"),
+                "derived_feature_snapshot_ids": [],
+                "metadata": metadata,
+            }
+        )
+    return rows
+
+
 def build_plan(cur, now: datetime) -> list[dict]:
     target_context = _latest_target_context(cur)
     latest = _context_outputs(cur, target_context)
@@ -123,11 +167,30 @@ def build_plan(cur, now: datetime) -> list[dict]:
             }
         )
 
+    rows.extend(_latest_active_successor_rows(cur, now, target_context))
+
     for engine_id, (runtime_status, status_code, role, direction_vote) in STATUS_SPECS.items():
         if engine_id in EXPERT_REGISTRY:
             version = EXPERT_REGISTRY[engine_id].model_version
         else:
             version = STATIC_VERSIONS[engine_id]
+        metadata = {
+            "audit_scope": "CANONICAL_MANIFEST_RUNTIME_STATUS_V138",
+            "no_output_fabricated": True,
+            "no_forecast_issued": True,
+            "auto_selector": "OFF",
+            "auto_ensemble": "OFF",
+        }
+        if engine_id == "VW_MIDAS_MSVR_SUCCESSOR_V1":
+            metadata.update(
+                {
+                    "model_status": "RESEARCH_SHADOW_CANDIDATE_HISTORICAL_REPLAY_PASS_PROSPECTIVE_VALIDATION_REQUIRED",
+                    "first_prospective_origin": "2026-09-30T21:00:00Z",
+                    "first_prospective_target": "2026-10",
+                    "prospective_claim": False,
+                    "canonical_forecast_authority": False,
+                }
+            )
         rows.append(
             {
                 "engine_id": engine_id,
@@ -141,16 +204,19 @@ def build_plan(cur, now: datetime) -> list[dict]:
                 "direction_vote_permitted": direction_vote,
                 "input_fingerprint": None,
                 "derived_feature_snapshot_ids": [],
-                "metadata": {
-                    "audit_scope": "CANONICAL_MANIFEST_RUNTIME_STATUS",
-                    "no_output_fabricated": True,
-                    "no_forecast_issued": True,
-                },
+                "metadata": metadata,
             }
         )
 
     if len(rows) != 12 or len({r["engine_id"] for r in rows}) != 12:
         raise RuntimeError("RUNTIME_BOOTSTRAP_ENGINE_INVENTORY_NOT_12")
+    counts = {
+        "active": sum(x["runtime_status"] == "ACTIVE" for x in rows),
+        "waiting": sum(x["runtime_status"] == "WAITING" for x in rows),
+        "blocked": sum(x["runtime_status"] == "BLOCKED" for x in rows),
+    }
+    if counts != {"active": 6, "waiting": 6, "blocked": 0}:
+        raise RuntimeError(f"RUNTIME_BOOTSTRAP_V138_COUNTS_INVALID:{counts}")
     return rows
 
 
@@ -176,8 +242,6 @@ def main() -> int:
                     "waiting": sum(x["runtime_status"] == "WAITING" for x in plan),
                     "blocked": sum(x["runtime_status"] == "BLOCKED" for x in plan),
                 }
-                if counts != {"active": 4, "waiting": 5, "blocked": 3}:
-                    raise RuntimeError(f"RUNTIME_BOOTSTRAP_DRY_RUN_COUNTS_INVALID:{counts}")
                 print(json.dumps({
                     "status": "DRY_RUN_PASS",
                     "engine_count": len(plan),
@@ -212,15 +276,19 @@ def main() -> int:
     with psycopg.connect(url, autocommit=False, row_factory=dict_row) as conn:
         with conn.cursor() as cur:
             cur.execute("SET TRANSACTION READ ONLY")
-            cur.execute("select runtime_status,count(*) as n from latest_engine_runtime_state group by runtime_status order by runtime_status")
+            cur.execute(
+                "select runtime_status,count(*) as n from latest_engine_runtime_state "
+                "where engine_id=any(%s) group by runtime_status order by runtime_status",
+                ([r["engine_id"] for r in plan],),
+            )
             counts = {r["runtime_status"]: int(r["n"]) for r in cur.fetchall()}
-            cur.execute("select count(*) as n from latest_engine_runtime_state")
+            cur.execute("select count(*) as n from latest_engine_runtime_state where engine_id=any(%s)", ([r["engine_id"] for r in plan],))
             total = int(cur.fetchone()["n"])
         conn.rollback()
-    if total != 12 or counts.get("ACTIVE") != 4 or counts.get("WAITING") != 5 or counts.get("BLOCKED") != 3:
+    if total != 12 or counts.get("ACTIVE") != 6 or counts.get("WAITING") != 6 or counts.get("BLOCKED", 0) != 0:
         raise RuntimeError(f"RUNTIME_BOOTSTRAP_POST_COMMIT_COUNTS_INVALID:{total}:{counts}")
     print(json.dumps({"status": "INSERTED_VERIFIED", "total": total, "counts": counts, "run_ids": run_ids}, sort_keys=True))
-    print("DATA_EVIDENCE_SPINE_RUNTIME_BOOTSTRAP_PASS")
+    print("DATA_EVIDENCE_SPINE_RUNTIME_BOOTSTRAP_V138_PASS")
     return 0
 
 

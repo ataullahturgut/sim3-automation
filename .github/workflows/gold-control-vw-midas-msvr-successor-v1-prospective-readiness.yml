@@ -1,0 +1,68 @@
+name: Gold Control VW MSVR V1 Prospective Readiness
+
+on:
+  push:
+    branches: [gold-control-vw-midas-msvr-successor-v1]
+    paths:
+      - gold_axis_2026/GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_PROSPECTIVE_SHADOW_CONTRACT_2026-09-06.md
+      - gold_axis_2026/VW_MIDAS_MSVR_SUCCESSOR_V1_PROSPECTIVE_DESIGN_NOTE_2026-09-06.md
+      - gold_axis_2026/tools/vw_midas_msvr_successor_v1_prospective_readiness.py
+      - .github/workflows/gold-control-vw-midas-msvr-successor-v1-prospective-readiness.yml
+      - gold_axis_2026/GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_FOUR_METAL_PROSPECTIVE_SOURCE_REFRESH_CONTRACT.md
+      - gold_axis_2026/GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_XAU_TARGET_ANCHOR_BRIDGE_CONTRACT.md
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-vw-msvr-v1-prospective-readiness
+  cancel-in-progress: false
+
+jobs:
+  readiness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install readiness dependencies
+        run: python -m pip install 'psycopg[binary]>=3.2,<4' 'requests>=2.31,<3' 'pandas>=2,<3' 'xlrd>=2,<3'
+      - name: Compile readiness checker
+        run: python -m py_compile gold_axis_2026/tools/vw_midas_msvr_successor_v1_prospective_readiness.py
+      - name: Run read-only readiness check
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_msvr_successor_v1_prospective_readiness.py --output vw_midas_msvr_successor_v1_prospective_readiness.json
+      - name: Assert no authority writes and expected state schema
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('vw_midas_msvr_successor_v1_prospective_readiness.json'))
+          assert r['authority_invariants_unchanged'] is True
+          assert r['governance']['database_writes']=='NONE'
+          assert r['governance']['forecast_writes']=='NONE'
+          assert r['governance']['decision_writes']=='NONE'
+          assert r['governance']['runtime_mutation']=='NONE'
+          assert r['governance']['auto_selector']=='OFF'
+          assert r['governance']['auto_ensemble']=='OFF'
+          assert r['forecast_origin']=='2026-09-30T21:00:00Z'
+          assert r['target_month']=='2026-10'
+          assert r['runtime_counts']=={'ACTIVE': 6, 'BLOCKED': 1, 'WAITING': 5}
+          print('PROSPECTIVE_READINESS_STATUS='+r['status'])
+          print('BLOCKERS='+';'.join(r['blockers']))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vw-msvr-v1-prospective-readiness-${{ github.sha }}
+          path: vw_midas_msvr_successor_v1_prospective_readiness.json
+          if-no-files-found: warn
+          retention-days: 90
+
+# Frozen readiness; direct public-Git source checks only, no model/gate change.

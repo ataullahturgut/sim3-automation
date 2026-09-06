@@ -58,7 +58,7 @@ CONTEXT_EVIDENCE_CLASS = "LATE_BOOTSTRAP_SHADOW_CONTEXT"
 INTRAMONTH_PENDING_LABEL = "INTRAMONTH TEYİT HENÜZ YAYIMLANMADI"
 EXPERT_DISPLAY_ORDER = (
     "CAUSAL_PATCH",
-    "VW_MIDAS_MSVR",
+    "VW_MIDAS_MSVR_SUCCESSOR_V1",
     "MOMENTUM_3M",
     "RANDOM_WALK",
 )
@@ -69,11 +69,11 @@ EXPERT_DISPLAY = {
         "role": "Forward issuer candidate / expert",
         "empty_status": "WAITING_ELIGIBLE_MONTH_END_ORIGIN",
     },
-    "VW_MIDAS_MSVR": {
-        "label": "VW-MIDAS-MSVR",
-        "model_version": "VW_AUDITED_SHADOW_V2",
-        "role": "Audited analytical shadow/reference",
-        "empty_status": "BLOCKED_EXACT_REPLICATION_AND_PIT_SOURCE_CONTRACT_NOT_PROVEN",
+    "VW_MIDAS_MSVR_SUCCESSOR_V1": {
+        "label": "VW/MSVR Successor V1",
+        "model_version": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+        "role": "Research-shadow H=1 expert; first prospective origin 2026-09-30",
+        "empty_status": "WAITING_ORIGIN_NOT_REACHED",
     },
     "MOMENTUM_3M": {
         "label": "3M Momentum",

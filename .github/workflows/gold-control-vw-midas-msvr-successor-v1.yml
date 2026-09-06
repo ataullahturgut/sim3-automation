@@ -1,0 +1,72 @@
+name: Gold Control VW MIDAS MSVR Successor V1
+
+on:
+  push:
+    branches: [gold-control-vw-midas-msvr-successor-v1]
+    paths:
+      - gold_axis_2026/GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_CHANGE_CONTROL_2026-09-06.md
+      - gold_axis_2026/tools/vw_midas_msvr_successor_v1.py
+      - .github/workflows/gold-control-vw-midas-msvr-successor-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-vw-midas-msvr-successor-v1
+  cancel-in-progress: false
+
+jobs:
+  historical-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install minimal research dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Compile runner
+        run: python -m py_compile gold_axis_2026/tools/vw_midas_msvr_successor_v1.py
+      - name: Assert research-only surface
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('gold_axis_2026/tools/vw_midas_msvr_successor_v1.py').read_text()
+          forbidden=['INSERT INTO','UPDATE monthly_forecast_contracts','UPDATE decision_','DELETE FROM','TRUNCATE ','CREATE TABLE','ALTER TABLE','DROP TABLE']
+          bad=[x for x in forbidden if x.lower() in p.lower()]
+          assert not bad, bad
+          assert 'AUTO_SELECTOR' not in p or 'auto_selector' in p
+          print('RESEARCH_ONLY_STATIC_GATE=PASS')
+          PY
+      - name: Run deterministic PIT-safe nested replay and legacy reconciliation
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_msvr_successor_v1.py --determinism-check --output vw_midas_msvr_successor_v1_result.json
+      - name: Assert output governance and 43-month window
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('vw_midas_msvr_successor_v1_result.json'))
+          assert r['determinism_check']=='PASS'
+          assert r['governed_nested_pit']['metrics']['n']==43
+          assert r['governance']['database_writes']=='NONE'
+          assert r['governance']['forecast_writes']=='NONE'
+          assert r['governance']['decision_writes']=='NONE'
+          assert r['governance']['auto_selector']=='OFF'
+          assert r['governance']['auto_ensemble']=='OFF'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          print('OUTPUT_GOVERNANCE_GATE=PASS')
+          print('FINAL_GATE='+r['final_gate'])
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vw-midas-msvr-successor-v1-${{ github.sha }}
+          path: vw_midas_msvr_successor_v1_result.json
+          if-no-files-found: warn
+          retention-days: 90

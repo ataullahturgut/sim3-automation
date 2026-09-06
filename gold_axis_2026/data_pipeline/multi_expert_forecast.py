@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import Any, Iterable
 
 
-MANIFEST_VERSION = "1.28"
+MANIFEST_VERSION = "1.38"
 SELECTOR_STATUS = "NOT_PROVEN_EXPERT_SELECTION_RULE"
 AUTO_SELECTOR = "OFF"
 AUTO_ENSEMBLE = "OFF"
@@ -17,7 +17,7 @@ FORECAST_TRACKS = frozenset({TRACK_MONTH_END, TRACK_EARLY_INDICATIVE, TRACK_HIST
 DISPLAY_EVIDENCE_CLASSES = frozenset({"PROSPECTIVE_SHADOW", "LIVE_PRODUCTION", "HISTORICAL_REPLAY"})
 
 PATCH_EXPERT = "CAUSAL_PATCH"
-VW_EXPERT = "VW_MIDAS_MSVR"
+VW_EXPERT = "VW_MIDAS_MSVR_SUCCESSOR_V1"
 MOMENTUM_EXPERT = "MOMENTUM_3M"
 RW_EXPERT = "RANDOM_WALK"
 EXPERT_ORDER = (PATCH_EXPERT, VW_EXPERT, MOMENTUM_EXPERT, RW_EXPERT)
@@ -26,6 +26,7 @@ SIMPLE_EXPERT_SOURCE_ID = "SIMPLE_EXPERT_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V2"
 RW_V2_VERSION = "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"
 MOMENTUM_V2_VERSION = "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"
 SIMPLE_EXPERT_SOURCE_EVIDENCE = "SIMPLE_EXPERT_V2_SOURCE_BINDING_PASS"
+VW_V1_VERSION = "VW_MIDAS_MSVR_SUCCESSOR_V1"
 
 
 @dataclass(frozen=True)
@@ -51,12 +52,15 @@ EXPERT_REGISTRY: dict[str, ExpertDefinition] = {
     ),
     VW_EXPERT: ExpertDefinition(
         expert_id=VW_EXPERT,
-        label="VW-MIDAS-MSVR",
-        model_name="VW_MIDAS_MSVR",
-        model_version="VW_AUDITED_SHADOW_V2",
+        label="VW/MSVR Successor V1",
+        model_name=VW_EXPERT,
+        model_version=VW_V1_VERSION,
         expert_role="EXPERT",
-        execution_status="BLOCKED_NOT_PROVEN_EXECUTABLE",
-        status_reason="Exact archived executable runner is not proven; historical analytical evidence is not a forward issuer.",
+        execution_status="RESEARCH_SHADOW_WAITING_FIRST_PROSPECTIVE_ORIGIN",
+        status_reason=(
+            "Historical replay passed under the frozen V1 contract. The first genuine prospective "
+            "origin is 2026-09-30; no production forecast, selector, ensemble or action authority is granted."
+        ),
     ),
     MOMENTUM_EXPERT: ExpertDefinition(
         expert_id=MOMENTUM_EXPERT,
@@ -183,12 +187,10 @@ def momentum_3m_r1(monthly_levels: Iterable[float]) -> float:
 
 
 def rw_r2_source_bound(monthly_levels: Iterable[float]) -> float:
-    """Forward V2 RW formula; source semantics are enforced by the issuer contract."""
     return rw_r1(monthly_levels)
 
 
 def momentum_3m_r2_source_bound(monthly_levels: Iterable[float]) -> float:
-    """Forward V2 3M Momentum formula; source semantics are enforced by the issuer contract."""
     return momentum_3m_r1(monthly_levels)
 
 

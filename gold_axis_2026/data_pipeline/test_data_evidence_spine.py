@@ -42,7 +42,7 @@ def test_contract_and_engine_inventory_are_exact():
     assert SPINE_CONTRACT == "FROZEN_DATA_EVIDENCE_SPINE_V1"
     assert ENGINE_IDS == (
         "CAUSAL_PATCH",
-        "VW_MIDAS_MSVR",
+        "VW_MIDAS_MSVR_SUCCESSOR_V1",
         "MOMENTUM_3M",
         "RANDOM_WALK",
         "MONTHLY_DIRECTION_3M",

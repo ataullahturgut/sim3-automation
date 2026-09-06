@@ -9,7 +9,7 @@ from typing import Any, Iterable
 from psycopg.rows import dict_row
 
 
-SPINE_CONTRACT = "FROZEN_DATA_EVIDENCE_SPINE_V1"
+SPINE_CONTRACT = "FROZEN_DATA_EVIDENCE_SPINE_V1_CURRENT_REGISTRY_V138"
 SCHEMA_REQUIRED_OBJECTS = (
     "forecast_input_sets",
     "forecast_input_set_members",
@@ -20,18 +20,19 @@ SCHEMA_REQUIRED_OBJECTS = (
 )
 ENGINE_IDS = (
     "CAUSAL_PATCH",
-    "VW_MIDAS_MSVR",
+    "VW_MIDAS_MSVR_SUCCESSOR_V1",
     "MOMENTUM_3M",
     "RANDOM_WALK",
     "MONTHLY_DIRECTION_3M",
     "FAST",
     "SLOW",
-    "MACRO_EVENT",
+    "MACRO_EVENT_SUCCESSOR_V2",
     "EMERGENCY_LEVEL",
     "EMERGENCY_REVERSAL",
-    "BOCPD",
+    "BOCPD_RETURN_SUCCESSOR_V1",
     "GVZ_RISK",
 )
+H1_EXPERT_IDS = frozenset({"CAUSAL_PATCH", "VW_MIDAS_MSVR_SUCCESSOR_V1", "MOMENTUM_3M", "RANDOM_WALK"})
 RUNTIME_STATUSES = frozenset({"ACTIVE", "ISSUED", "WAITING", "BLOCKED", "NOT_PROVEN"})
 RUNTIME_EVIDENCE_CLASSES = frozenset(
     {
@@ -67,7 +68,7 @@ class ForecastInputSetSpec:
             raise ValueError("MONTH_END_INPUT_SET_AS_OF_MUST_EQUAL_ORIGIN")
         if self.forecast_track not in {"MONTH_END_EXPERT", "EARLY_INDICATIVE", "HISTORICAL_REPLAY"}:
             raise ValueError("INVALID_INPUT_SET_FORECAST_TRACK")
-        if self.expert_id not in {"CAUSAL_PATCH", "VW_MIDAS_MSVR", "MOMENTUM_3M", "RANDOM_WALK"}:
+        if self.expert_id not in H1_EXPERT_IDS:
             raise ValueError("INVALID_INPUT_SET_EXPERT")
         if self.evidence_class not in {"PROSPECTIVE_SHADOW", "LIVE_PRODUCTION", "HISTORICAL_REPLAY"}:
             raise ValueError("INVALID_INPUT_SET_EVIDENCE_CLASS")
