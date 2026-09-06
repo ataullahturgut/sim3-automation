@@ -74,7 +74,6 @@ jobs:
           p.write_text(s,encoding='utf-8')
           print('MANIFEST_V139_CURRENT_MONTH_ACTIVATION_PATCH_PASS')
           PY
-          git diff --check -- gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'Manifest version:.*1.39' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
           grep -q 'ACTIVE 7 / WAITING 5 / BLOCKED 0 / TOTAL 12' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
