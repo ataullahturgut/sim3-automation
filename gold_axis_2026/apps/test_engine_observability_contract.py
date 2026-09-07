@@ -36,7 +36,11 @@ def _runtime_rows() -> list[dict]:
         "RANDOM_WALK": 4397.305673870967,
     }
     for engine_id in ENGINE_DISPLAY_ORDER:
-        metadata: dict = {"current_registry": True}
+        metadata: dict = {
+            "current_registry": True,
+            "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
+            "runtime_selection_rule": "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT",
+        }
         display_output = None
         display_evidence = None
         vote = engine_id in {"MONTHLY_DIRECTION_3M", "FAST", "SLOW"}
@@ -61,13 +65,13 @@ def _runtime_rows() -> list[dict]:
                 "information_cutoff": "2026-09-04T12:30:00Z",
             })
         elif engine_id == "MONTHLY_DIRECTION_3M":
-            display_output, display_evidence = "DOWN", "LATE_BOOTSTRAP_SHADOW_CONTEXT"
+            display_output, display_evidence = "DOWN", "HISTORICAL_REPLAY_CONTEXT"
         elif engine_id == "FAST":
-            display_output, display_evidence = "ROBUST_UP", "LATE_BOOTSTRAP_SHADOW_CONTEXT"
+            display_output, display_evidence = "ROBUST_UP", "HISTORICAL_REPLAY_CONTEXT"
         elif engine_id == "SLOW":
-            display_output, display_evidence = "ROBUST_UP", "LATE_BOOTSTRAP_SHADOW_CONTEXT"
+            display_output, display_evidence = "ROBUST_UP", "HISTORICAL_REPLAY_CONTEXT"
         elif engine_id == "GVZ_RISK":
-            display_output, display_evidence = "GVZ=26.14 · REGIME=ELEVATED · CAP=0.5 · PANIC=false", "LATE_BOOTSTRAP_SHADOW_CONTEXT"
+            display_output, display_evidence = "GVZ=26.14 · REGIME=ELEVATED · CAP=0.5 · PANIC=false", "HISTORICAL_REPLAY_CONTEXT"
         row = {
             "engine_id": engine_id,
             "engine_version": f"current::{engine_id}",
@@ -94,7 +98,7 @@ def _runtime_rows() -> list[dict]:
 
 def test_current_contract_and_exact_inventory() -> None:
     rows = build_engine_inventory(None, None, None, _runtime_rows())
-    assert ENGINE_OBSERVABILITY_CONTRACT == "GOLD_CONTROL_CURRENT_ENGINE_OBSERVABILITY_V141"
+    assert ENGINE_OBSERVABILITY_CONTRACT == "GOLD_CONTROL_CURRENT_ENGINE_OBSERVABILITY_V142"
     assert tuple(row["engine_id"] for row in rows) == ENGINE_DISPLAY_ORDER
     assert len(rows) == 12
     assert len({row["engine_id"] for row in rows}) == 12
