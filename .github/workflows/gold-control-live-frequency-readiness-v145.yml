@@ -1,0 +1,41 @@
+name: Gold Control Live Frequency Readiness V1.45
+
+on:
+  push:
+    branches:
+      - gold-control-live-frequency-v145
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_FREQUENCY_AND_LATENCY_CONTRACT_V145_2026-09-07.md'
+      - 'gold_axis_2026/tools/audit_live_frequency_readiness_v145.py'
+      - '.github/workflows/gold-control-live-frequency-readiness-v145.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-live-frequency-v145
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install audit runtime
+        run: pip install -q 'psycopg[binary]>=3.2,<4'
+      - name: Require production read secret
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Compile V1.45 audit
+        run: python -m py_compile gold_axis_2026/tools/audit_live_frequency_readiness_v145.py
+      - name: Audit engine-frequency and live-source readiness
+        run: python gold_axis_2026/tools/audit_live_frequency_readiness_v145.py | tee live_frequency_readiness_v145.json
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-live-frequency-readiness-v145
+          path: live_frequency_readiness_v145.json
