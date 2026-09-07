@@ -1,0 +1,83 @@
+name: Gold Control Emergency Live V1.45 Activate Once
+
+on:
+  push:
+    branches:
+      - gold-control-live-frequency-v145
+    paths:
+      - '.github/workflows/gold-control-emergency-live-v145-activate-once.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-emergency-live-v145-activate-once
+  cancel-in-progress: false
+
+jobs:
+  activate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      GOLD_CODE_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-live-frequency-v145
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install runtime
+        run: |
+          pip install -q -r gold_axis_2026/data_pipeline/requirements.txt
+          pip install -q websocket-client
+      - name: Require protected credentials
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$TWELVE_DATA_API_KEY"
+      - name: Compile activation code
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/twelve_xau_intraday_backfill_v145.py \
+            gold_axis_2026/data_pipeline/live_xau_emergency_v145.py \
+            gold_axis_2026/tools/audit_live_frequency_readiness_v145.py
+      - name: Persist bounded 7-day intraday bootstrap
+        run: |
+          python gold_axis_2026/data_pipeline/twelve_xau_intraday_backfill_v145.py \
+            --lookback-days 7 --persist | tee emergency_bootstrap_v145.jsonl
+      - name: Persist live WebSocket completed-minute shadow data and Emergency states
+        run: |
+          python gold_axis_2026/data_pipeline/live_xau_emergency_v145.py \
+            --duration-seconds 130 --persist | tee emergency_live_v145.jsonl
+      - name: Audit frequency and live readiness
+        run: |
+          python gold_axis_2026/tools/audit_live_frequency_readiness_v145.py | tee live_frequency_readiness_v145.json
+      - name: Assert Emergency live readiness and authority isolation
+        run: |
+          python - <<'PY'
+          import json, os
+          import psycopg
+          p=json.load(open('live_frequency_readiness_v145.json', encoding='utf-8'))
+          r=p['readiness']
+          assert r['EMERGENCY_LIVE_LEVEL_READY'] is True, r
+          assert r['EMERGENCY_LIVE_REVERSAL_READY'] is True, r
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=True) as conn:
+              with conn.cursor() as cur:
+                  for table in ('monthly_forecast_contracts','decision_signal_snapshots','decision_runs','decision_events'):
+                      cur.execute(f'select count(*) from {table}')
+                      n=cur.fetchone()[0]
+                      assert n == 0, (table,n)
+          print('EMERGENCY_LIVE_V145_ACTIVATION_PASS')
+          PY
+      - name: Upload activation evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-emergency-live-v145-activation
+          path: |
+            emergency_bootstrap_v145.jsonl
+            emergency_live_v145.jsonl
+            live_frequency_readiness_v145.json
