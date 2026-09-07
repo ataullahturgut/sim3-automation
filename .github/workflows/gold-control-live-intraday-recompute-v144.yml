@@ -1,0 +1,106 @@
+name: Gold Control Live Intramonth Recompute V1.44
+
+on:
+  push:
+    branches:
+      - gold-control-live-intraday-recompute-v144
+      - gold-r4-direction-engine
+    paths:
+      - 'gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py'
+      - 'gold_axis_2026/data_pipeline/test_live_intramonth_recompute_v144.py'
+      - 'gold_axis_2026/GOLD_CONTROL_LIVE_INTRAMONTH_RECOMPUTE_CONTRACT_V144_2026-09-07.md'
+      - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+      - '.github/workflows/gold-control-live-intraday-recompute-v144.yml'
+  workflow_call:
+    inputs:
+      evidence_mode:
+        required: false
+        type: string
+        default: prospective-shadow
+    secrets:
+      NEON_DATABASE_URL:
+        required: true
+  workflow_dispatch:
+    inputs:
+      evidence_mode:
+        description: 'catchup or prospective-shadow'
+        required: true
+        default: prospective-shadow
+        type: choice
+        options:
+          - catchup
+          - prospective-shadow
+      persist:
+        description: 'Persist append-only context rows'
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-live-intraday-recompute-v144
+  cancel-in-progress: false
+
+jobs:
+  unit-and-dry-run:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install governed runtime
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt pytest
+      - name: Compile and run frozen-rule tests
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py
+          PYTHONPATH=gold_axis_2026/data_pipeline pytest -q gold_axis_2026/data_pipeline/test_live_intramonth_recompute_v144.py
+      - name: Read-only production dry run
+        if: ${{ env.NEON_DATABASE_URL != '' }}
+        run: |
+          python gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py \
+            --evidence-mode catchup
+
+  persist:
+    if: >-
+      (github.event_name == 'workflow_call') ||
+      (github.event_name == 'workflow_dispatch' && inputs.persist == true)
+    needs: unit-and-dry-run
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install governed runtime
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Persist append-only intramonth context
+        run: |
+          MODE='${{ inputs.evidence_mode }}'
+          if [ -z "$MODE" ]; then MODE='prospective-shadow'; fi
+          python gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py \
+            --persist \
+            --evidence-mode "$MODE"
+      - name: Verify no decision authority was opened
+        run: |
+          python - <<'PY'
+          import os, psycopg
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=True) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('select (select count(*) from monthly_forecast_contracts),(select count(*) from decision_signal_snapshots),(select count(*) from decision_runs),(select count(*) from decision_events)')
+                  values=cur.fetchone()
+                  assert values == (0,0,0,0), values
+                  print('V144_AUTHORITY_STORES_REMAIN_ZERO')
+          PY
