@@ -11,6 +11,7 @@ from production_display_snapshot import load_production_display_snapshot, snapsh
 
 RUNTIME_SOURCE_CONTRACT = "GOLD_CONTROL_CURRENT_RUNTIME_SOURCE_V141"
 CURRENT_RUNTIME_VIEW = "current_engine_runtime_state_v1"
+CURRENT_CONTEXT_VIEW = "current_context_feature_state_v1"
 EXPECTED_ENGINE_COUNT = len(ENGINE_DISPLAY_ORDER)
 CURRENT_CONTEXT_FEATURES = (
     "MONTHLY_DIRECTION_3M",
@@ -41,13 +42,12 @@ def _latest_target_context(runtime: list[dict[str, Any]]) -> str | None:
 def _latest_features(cur: psycopg.Cursor[Any], target_context: str) -> dict[str, dict[str, Any]]:
     cur.execute(
         """
-        select distinct on (feature_name)
-               id,feature_name,feature_version,calculation_ts,input_cutoff,
-               value_num,value_text,quality_status,git_commit,metadata,input_lineage
-        from derived_feature_snapshots
+        select id,feature_name,feature_version,calculation_ts,input_cutoff,
+               value_num,value_text,quality_status,git_commit,metadata
+        from current_context_feature_state_v1
         where feature_name=any(%s)
           and metadata->>'target_context'=%s
-        order by feature_name,calculation_ts desc,id desc
+        order by feature_name
         """,
         (list(CURRENT_CONTEXT_FEATURES), target_context),
     )
@@ -105,7 +105,7 @@ def _enrich_runtime(runtime: list[dict[str, Any]], features: dict[str, dict[str,
 
 
 def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
-    """Read the current governed runtime surface. No recomputation and no writes."""
+    """Read only the sanitized current runtime/context surfaces."""
     url = str(database_url or "").strip()
     if not url:
         return snapshot_runtime_observability(load_production_display_snapshot())
@@ -120,10 +120,11 @@ def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
             cur.execute("SET TRANSACTION READ ONLY")
             cur.execute(
                 "select to_regclass('public.current_engine_runtime_state_v1') as runtime_view, "
+                "to_regclass('public.current_context_feature_state_v1') as context_view, "
                 "to_regclass('public.data_evidence_spine_health_v1') as health_view"
             )
             schema = _to_dict(cur.fetchone())
-            if schema.get("runtime_view") is None or schema.get("health_view") is None:
+            if any(schema.get(key) is None for key in ("runtime_view", "context_view", "health_view")):
                 conn.rollback()
                 return snapshot_runtime_observability(load_production_display_snapshot())
 
@@ -150,6 +151,7 @@ def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
         len(runtime) == EXPECTED_ENGINE_COUNT
         and current_ids == set(ENGINE_DISPLAY_ORDER)
         and all(str(row.get("runtime_status") or "").upper() == "ACTIVE" for row in runtime)
+        and len(features) == len(CURRENT_CONTEXT_FEATURES)
     )
     integrity_ok = bool(
         int(health.get("orphan_input_snapshots") or 0) == 0
@@ -168,7 +170,7 @@ def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
         "context_target": target_context,
         "context_feature_count": len(features),
         "database_writes": "NONE",
-        "source_mode": "NEON_CURRENT_RUNTIME_VIEW_READ_ONLY",
+        "source_mode": "NEON_CURRENT_SURFACES_READ_ONLY",
         "snapshot_contract": None,
         "snapshot_source_state_at": None,
         "snapshot_payload_sha256": None,
