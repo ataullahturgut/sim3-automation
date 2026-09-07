@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - gold-r4-direction-engine
-      - gold-control-clean-current-surface-v141
+      - gold-control-clean-current-surface-v141-final
     paths:
       - 'gold_axis_2026/apps/**'
       - 'gold_axis_2026/tools/export_production_display_snapshot.py'
@@ -49,6 +49,8 @@ jobs:
           assert len(snapshot['features']) == 7
           assert all(r['runtime_status'] == 'ACTIVE' for r in snapshot['runtime'])
           assert all((r.get('metadata') or {}).get('current_surface_contract') == 'GOLD_CONTROL_CURRENT_SURFACE_V141' for r in snapshot['runtime'])
+          assert all(f['quality_status'] == 'HISTORICAL_REPLAY_CONTEXT' for f in snapshot['features'])
+          assert all((f.get('metadata') or {}).get('current_surface_contract') == 'GOLD_CONTROL_CURRENT_SURFACE_V141' for f in snapshot['features'])
           print('CURRENT_APP_SNAPSHOT_PASS')
           PY
       - name: Production current-surface read-only smoke
