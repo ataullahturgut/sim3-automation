@@ -1,0 +1,72 @@
+name: Gold Control Market Shock Challenger V1 LM Sn Fix
+
+on:
+  push:
+    branches:
+      - gold-control-market-shock-challenger-v1-lm-sn-fix
+    paths:
+      - '.github/workflows/gold-control-market-shock-challenger-v1-lm-sn-fix.yml'
+      - 'gold_axis_2026/tools/market_shock_challenger_v1_lm_sn_fix.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-market-shock-challenger-v1-lm-sn-fix
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      TWELVE_MIN_REQUEST_INTERVAL_SECONDS: '9.0'
+      GOLD_CODE_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-market-shock-challenger-v1-lm-sn-fix
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install validation runtime
+        run: pip install -q pandas numpy scipy requests
+      - name: Require protected Twelve credential
+        run: test -n "$TWELVE_DATA_API_KEY"
+      - name: Compile original and isolated patch
+        run: |
+          python -m py_compile gold_axis_2026/tools/market_shock_challenger_v1.py
+          python -m py_compile gold_axis_2026/tools/market_shock_challenger_v1_lm_sn_fix.py
+      - name: Verify Lee-Mykland Eq 13 Sn correction
+        run: |
+          python - <<'PY'
+          import math
+          from gold_axis_2026.tools.market_shock_challenger_v1_lm_sn_fix import lm_critical
+          n = 288
+          c = math.sqrt(2.0 / math.pi)
+          root = math.sqrt(2.0 * math.log(n))
+          cn = root / c - (math.log(math.pi) + math.log(math.log(n))) / (2.0 * c * root)
+          sn = 1.0 / (c * root)
+          alpha = 0.001
+          beta = -math.log(-math.log(1.0 - alpha))
+          expected = cn + sn * beta
+          actual = lm_critical(alpha, n)
+          assert abs(actual - expected) < 1e-12, (actual, expected)
+          print({'c': c, 'Cn': cn, 'Sn': sn, 'critical_999': actual})
+          PY
+      - name: Run apples-to-apples V1 historical and synthetic replay
+        run: |
+          python gold_axis_2026/tools/market_shock_challenger_v1_lm_sn_fix.py \
+            --start '2020-04-06 00:00:00' \
+            --end '2026-08-31 23:59:59' \
+            --output market_shock_challenger_v1_lm_sn_fix_report.json
+      - name: Upload aggregate evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-market-shock-challenger-v1-lm-sn-fix-report
+          path: market_shock_challenger_v1_lm_sn_fix_report.json
+          if-no-files-found: error
