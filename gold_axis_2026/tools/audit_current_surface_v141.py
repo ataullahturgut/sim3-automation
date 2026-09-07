@@ -21,6 +21,9 @@ CURRENT_RUNTIME_FILES = [
     GC / "data_pipeline" / "data_evidence_spine_runtime_bootstrap.py",
     GC / "data_pipeline" / "multi_expert_forecast.py",
     GC / "tools" / "export_production_display_snapshot.py",
+    GC / "tools" / "vw_midas_msvr_successor_v1_prospective_readiness.py",
+    WORKFLOW_DIR / "gold-control-vw-midas-msvr-successor-v1-prospective-readiness.yml",
+    WORKFLOW_DIR / "gold-control-gpr-pit-coverage-v2.yml",
 ]
 
 FORBIDDEN_CURRENT_PATTERNS = {
@@ -29,11 +32,12 @@ FORBIDDEN_CURRENT_PATTERNS = {
     "stale_missed_origin_status": re.compile(r"NOT_ISSUED_MISSED_2026_08_31_ORIGIN|SEPTEMBER_2026_H1_PROSPECTIVE_ORIGIN_MISSED"),
     "superseded_snapshot_contract": re.compile(r"LEGACY_SNAPSHOT_CONTRACT|FROZEN_PRODUCTION_DISPLAY_SNAPSHOT_V[123]"),
     "old_manifest_runtime_scope": re.compile(r"MANIFEST_V1_(?:2[0-9]|3[0-9]|40)"),
+    "fixed_old_manifest_write_authority": re.compile(r"MANIFEST_V1_33_GPR_PIT_DATA_PLANE|GOLD_CONTROL_MANIFEST_VERSION.{0,30}1\.33"),
+    "duplicated_successor_identity": re.compile(r"SUCCESSOR_V1_SUCCESSOR_V1"),
     "date_specific_replay_dependency": re.compile(r"aug31_state_replay|aug31_replay_expansion", re.IGNORECASE),
     "old_mobile_entrypoint": re.compile(r"gold_control_mobile_v1"),
     "old_stage_contract": re.compile(r"GOLD_CONTROL_STAGE4|GOLD_CONTROL_STAGE_4"),
     "old_context_evidence": re.compile(r"LATE_BOOTSTRAP_SHADOW_CONTEXT"),
-    "old_macro_identity": re.compile(r"MACRO_EVENT_SUCCESSOR_V1"),
 }
 
 LEGACY_PATH_TOKENS = (
@@ -45,7 +49,7 @@ LEGACY_PATH_TOKENS = (
     "causal_patch_r1_repro_v1.py", "causal_patch_r1_repro_v4_xau_only.py",
     "causal_patch_r1_repro_v5_monthly_level.py", "prospective_input_bridge_v1",
     "prospective_input_bridge_v2", "prospective_input_bridge_v3", "prospective_input_bridge_v4",
-    "tmp-gold-2026-model-test",
+    "tmp-gold-2026-model-test", "gpr-pit-production-ingest",
 )
 
 EXPECTED_ENGINES = {
@@ -119,7 +123,6 @@ def validate_snapshot() -> list[dict[str, str]]:
 
 
 def workflow_reference_findings() -> list[dict[str, str]]:
-    """Fail if a retained Gold Control workflow names a repository path that no longer exists."""
     findings: list[dict[str, str]] = []
     path_pattern = re.compile(r"(?P<path>(?:gold_axis_2026|\.github/workflows)/[A-Za-z0-9_./-]+\.(?:py|md|json|csv|yml|yaml|txt|sql|toml))")
     for workflow in sorted(WORKFLOW_DIR.glob("gold-control-*.yml")):
