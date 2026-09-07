@@ -9,9 +9,11 @@ from engine_observability_contract import ENGINE_DISPLAY_ORDER
 from production_display_snapshot import load_production_display_snapshot, snapshot_runtime_observability
 
 
-RUNTIME_SOURCE_CONTRACT = "GOLD_CONTROL_CURRENT_RUNTIME_SOURCE_V141"
+RUNTIME_SOURCE_CONTRACT = "GOLD_CONTROL_CURRENT_RUNTIME_SOURCE_V142"
+CURRENT_SURFACE_CONTRACT = "GOLD_CONTROL_CURRENT_SURFACE_V142"
 CURRENT_RUNTIME_VIEW = "current_engine_runtime_state_v1"
 CURRENT_CONTEXT_VIEW = "current_context_feature_state_v1"
+CURRENT_SOURCE_VIEW = "current_source_registry_v1"
 EXPECTED_ENGINE_COUNT = len(ENGINE_DISPLAY_ORDER)
 CURRENT_CONTEXT_FEATURES = (
     "MONTHLY_DIRECTION_3M",
@@ -28,15 +30,10 @@ def _to_dict(row: Any) -> dict[str, Any]:
     return dict(row) if row is not None else {}
 
 
-def _latest_target_context(runtime: list[dict[str, Any]]) -> str | None:
-    values = [str(row.get("target_context") or "").strip() for row in runtime]
-    values = [value for value in values if value]
-    if not values:
-        return None
-    counts: dict[str, int] = {}
-    for value in values:
-        counts[value] = counts.get(value, 0) + 1
-    return max(sorted(counts), key=lambda value: counts[value])
+def _runtime_target_context(runtime: list[dict[str, Any]]) -> str | None:
+    targets = {str(row.get("target_context") or "").strip() for row in runtime}
+    targets.discard("")
+    return next(iter(targets)) if len(targets) == 1 else None
 
 
 def _latest_features(cur: psycopg.Cursor[Any], target_context: str) -> dict[str, dict[str, Any]]:
@@ -105,7 +102,7 @@ def _enrich_runtime(runtime: list[dict[str, Any]], features: dict[str, dict[str,
 
 
 def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
-    """Read only the sanitized current runtime/context surfaces."""
+    """Read only the sanitized, latest-complete current production surfaces."""
     url = str(database_url or "").strip()
     if not url:
         return snapshot_runtime_observability(load_production_display_snapshot())
@@ -121,10 +118,11 @@ def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
             cur.execute(
                 "select to_regclass('public.current_engine_runtime_state_v1') as runtime_view, "
                 "to_regclass('public.current_context_feature_state_v1') as context_view, "
+                "to_regclass('public.current_source_registry_v1') as source_view, "
                 "to_regclass('public.data_evidence_spine_health_v1') as health_view"
             )
             schema = _to_dict(cur.fetchone())
-            if any(schema.get(key) is None for key in ("runtime_view", "context_view", "health_view")):
+            if any(schema.get(key) is None for key in ("runtime_view", "context_view", "source_view", "health_view")):
                 conn.rollback()
                 return snapshot_runtime_observability(load_production_display_snapshot())
 
@@ -138,20 +136,46 @@ def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
                 """
             )
             runtime = [dict(row) for row in cur.fetchall()]
-            target_context = _latest_target_context(runtime)
+            target_context = _runtime_target_context(runtime)
             features = _latest_features(cur, target_context) if target_context else {}
             runtime = _enrich_runtime(runtime, features)
+
+            cur.execute("select count(*) as n from current_source_registry_v1")
+            source_count = int(cur.fetchone()["n"])
+            cur.execute(
+                """
+                select count(*) as n
+                from current_source_registry_v1
+                where status ilike 'BLOCKED%%' or status ilike 'OPTIONAL%%' or status ilike 'PAID%%'
+                """
+            )
+            disallowed_source_count = int(cur.fetchone()["n"])
 
             cur.execute("select * from data_evidence_spine_health_v1")
             health = _to_dict(cur.fetchone())
         conn.rollback()
 
     current_ids = {str(row.get("engine_id") or "") for row in runtime}
+    runtime_contract_ok = all(
+        isinstance(row.get("metadata"), dict)
+        and row["metadata"].get("current_surface_contract") == CURRENT_SURFACE_CONTRACT
+        for row in runtime
+    )
+    context_contract_ok = all(
+        isinstance(row.get("metadata"), dict)
+        and row["metadata"].get("current_surface_contract") == CURRENT_SURFACE_CONTRACT
+        and row["metadata"].get("context_selection_rule") == "LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT"
+        for row in features.values()
+    )
     runtime_complete = (
         len(runtime) == EXPECTED_ENGINE_COUNT
         and current_ids == set(ENGINE_DISPLAY_ORDER)
         and all(str(row.get("runtime_status") or "").upper() == "ACTIVE" for row in runtime)
+        and target_context is not None
         and len(features) == len(CURRENT_CONTEXT_FEATURES)
+        and runtime_contract_ok
+        and context_contract_ok
+        and disallowed_source_count == 0
     )
     integrity_ok = bool(
         int(health.get("orphan_input_snapshots") or 0) == 0
@@ -169,8 +193,10 @@ def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
         "runtime_complete": runtime_complete,
         "context_target": target_context,
         "context_feature_count": len(features),
+        "current_source_count": source_count,
+        "disallowed_current_source_count": disallowed_source_count,
         "database_writes": "NONE",
-        "source_mode": "NEON_CURRENT_SURFACES_READ_ONLY",
+        "source_mode": "NEON_LATEST_COMPLETE_CURRENT_SURFACES_READ_ONLY",
         "snapshot_contract": None,
         "snapshot_source_state_at": None,
         "snapshot_payload_sha256": None,

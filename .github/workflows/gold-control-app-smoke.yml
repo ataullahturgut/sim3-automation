@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - gold-r4-direction-engine
-      - gold-control-clean-current-surface-v141-final
+      - gold-control-current-surface-v142
     paths:
       - 'gold_axis_2026/apps/**'
       - 'gold_axis_2026/tools/export_production_display_snapshot.py'
@@ -43,14 +43,15 @@ jobs:
       - name: Validate committed current snapshot
         run: |
           PYTHONPATH=gold_axis_2026/apps python - <<'PY'
-          from production_display_snapshot import load_production_display_snapshot
+          from production_display_snapshot import CURRENT_SURFACE_CONTRACT, load_production_display_snapshot
           snapshot=load_production_display_snapshot()
+          assert snapshot['current_surface_contract'] == CURRENT_SURFACE_CONTRACT == 'GOLD_CONTROL_CURRENT_SURFACE_V142'
           assert len(snapshot['runtime']) == 12
           assert len(snapshot['features']) == 7
           assert all(r['runtime_status'] == 'ACTIVE' for r in snapshot['runtime'])
-          assert all((r.get('metadata') or {}).get('current_surface_contract') == 'GOLD_CONTROL_CURRENT_SURFACE_V141' for r in snapshot['runtime'])
-          assert all(f['quality_status'] == 'HISTORICAL_REPLAY_CONTEXT' for f in snapshot['features'])
-          assert all((f.get('metadata') or {}).get('current_surface_contract') == 'GOLD_CONTROL_CURRENT_SURFACE_V141' for f in snapshot['features'])
+          assert all((r.get('metadata') or {}).get('runtime_selection_rule') == 'LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT' for r in snapshot['runtime'])
+          assert all((f.get('metadata') or {}).get('context_selection_rule') == 'LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT' for f in snapshot['features'])
+          assert snapshot['source_surface']['disallowed_current_source_count'] == 0
           print('CURRENT_APP_SNAPSHOT_PASS')
           PY
       - name: Production current-surface read-only smoke
@@ -64,6 +65,7 @@ jobs:
           assert state['integrity_ok'] is True
           assert state['runtime_engine_count'] == 12
           assert state['context_feature_count'] == 7
+          assert state['disallowed_current_source_count'] == 0
           assert all(r['runtime_status'] == 'ACTIVE' for r in state['runtime'])
           print('CURRENT_APP_PRODUCTION_READ_PASS')
           PY

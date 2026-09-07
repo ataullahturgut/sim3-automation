@@ -15,7 +15,7 @@ from multi_expert_forecast import EXPERT_REGISTRY
 
 AUDIT_EVIDENCE = "RUNTIME_GOVERNANCE_AUDIT"
 
-# v1.41 current governed inventory. VW/MSVR Successor V1 is ACTIVE as a
+# v1.42 current governed inventory. VW/MSVR Successor V1 is ACTIVE as a
 # research-shadow current-month reference reconstructed strictly from the
 # completed 2026-08-31 information boundary. This does not relabel the result
 # as a forecast issued on 2026-08-31 and grants no selector/ensemble/action
@@ -279,7 +279,7 @@ def build_plan(cur, now: datetime) -> list[dict]:
         else:
             version = STATIC_VERSIONS[engine_id]
         metadata = {
-            "audit_scope": "CANONICAL_MANIFEST_RUNTIME_STATUS_V141",
+            "audit_scope": "CANONICAL_MANIFEST_RUNTIME_STATUS_V142",
             "no_output_fabricated": True,
             "auto_selector": "OFF",
             "auto_ensemble": "OFF",
@@ -328,7 +328,7 @@ def build_plan(cur, now: datetime) -> list[dict]:
         "blocked": sum(x["runtime_status"] == "BLOCKED" for x in rows),
     }
     if counts != {"active": 12, "waiting": 0, "blocked": 0}:
-        raise RuntimeError(f"RUNTIME_BOOTSTRAP_V140_COUNTS_INVALID:{counts}")
+        raise RuntimeError(f"RUNTIME_BOOTSTRAP_V142_COUNTS_INVALID:{counts}")
     return rows
 
 
@@ -400,7 +400,7 @@ def main() -> int:
     if total != 12 or counts.get("ACTIVE") != 12 or counts.get("WAITING", 0) != 0 or counts.get("BLOCKED", 0) != 0:
         raise RuntimeError(f"RUNTIME_BOOTSTRAP_POST_COMMIT_COUNTS_INVALID:{total}:{counts}")
     print(json.dumps({"status": "INSERTED_VERIFIED", "total": total, "counts": counts, "run_ids": run_ids}, sort_keys=True))
-    print("DATA_EVIDENCE_SPINE_RUNTIME_BOOTSTRAP_V141_PASS")
+    print("DATA_EVIDENCE_SPINE_RUNTIME_BOOTSTRAP_V142_PASS")
     return 0
 
 

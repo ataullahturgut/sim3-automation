@@ -91,7 +91,7 @@ def validate_snapshot() -> list[dict[str, str]]:
     except Exception as exc:
         return [{"kind": "snapshot_json_invalid", "path": relative, "match": type(exc).__name__}]
 
-    if snapshot.get("snapshot_contract") != "GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V141":
+    if snapshot.get("snapshot_contract") != "GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V142":
         findings.append({"kind": "snapshot_contract_invalid", "path": relative, "match": str(snapshot.get("snapshot_contract"))})
     runtime = snapshot.get("runtime") or []
     ids = {str(row.get("engine_id") or "") for row in runtime if isinstance(row, dict)}
@@ -100,7 +100,7 @@ def validate_snapshot() -> list[dict[str, str]]:
     if any(str(row.get("runtime_status") or "").upper() != "ACTIVE" for row in runtime if isinstance(row, dict)):
         findings.append({"kind": "snapshot_runtime_not_all_active", "path": relative, "match": ""})
     for row in runtime:
-        if isinstance(row, dict) and (row.get("metadata") or {}).get("current_surface_contract") != "GOLD_CONTROL_CURRENT_SURFACE_V141":
+        if isinstance(row, dict) and (row.get("metadata") or {}).get("current_surface_contract") != "GOLD_CONTROL_CURRENT_SURFACE_V142":
             findings.append({"kind": "snapshot_runtime_contract_invalid", "path": relative, "match": str(row.get("engine_id"))})
 
     features = snapshot.get("features") or []
@@ -113,7 +113,7 @@ def validate_snapshot() -> list[dict[str, str]]:
         metadata = row.get("metadata") or {}
         if row.get("quality_status") != "HISTORICAL_REPLAY_CONTEXT":
             findings.append({"kind": "snapshot_feature_evidence_invalid", "path": relative, "match": str(row.get("feature_name"))})
-        if metadata.get("current_surface_contract") != "GOLD_CONTROL_CURRENT_SURFACE_V141":
+        if metadata.get("current_surface_contract") != "GOLD_CONTROL_CURRENT_SURFACE_V142":
             findings.append({"kind": "snapshot_feature_contract_invalid", "path": relative, "match": str(row.get("feature_name"))})
 
     authority = snapshot.get("authority_store_counts") or {}
@@ -154,14 +154,14 @@ def main() -> int:
     findings = scan_current_runtime() + validate_snapshot() + workflow_reference_findings()
     legacy = legacy_paths()
     report = {
-        "contract": "GOLD_CONTROL_CURRENT_SURFACE_AUDIT_V141",
+        "contract": "GOLD_CONTROL_CURRENT_SURFACE_AUDIT_V142",
         "current_runtime_findings": findings,
         "legacy_path_count": len(legacy),
         "legacy_paths": legacy,
         "pass": not findings and not legacy,
     }
     print(json.dumps(report, indent=2, ensure_ascii=False))
-    Path("current_surface_audit_v141.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
+    Path("current_surface_audit_v142.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
     return 0 if report["pass"] else 2
 
 

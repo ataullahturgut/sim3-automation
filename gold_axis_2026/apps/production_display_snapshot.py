@@ -6,7 +6,8 @@ from pathlib import Path
 from typing import Any
 
 
-SNAPSHOT_CONTRACT = "GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V141"
+SNAPSHOT_CONTRACT = "GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V142"
+CURRENT_SURFACE_CONTRACT = "GOLD_CONTROL_CURRENT_SURFACE_V142"
 SNAPSHOT_SOURCE_MODE = "PRODUCTION_CURRENT_SNAPSHOT_FALLBACK"
 SNAPSHOT_PATH = Path(__file__).with_name("production_display_snapshot.json")
 CURRENT_ENGINE_IDS = (
@@ -87,6 +88,8 @@ def validate_production_display_snapshot(snapshot: dict[str, Any]) -> dict[str, 
         raise RuntimeError("CURRENT_SNAPSHOT_NOT_OBJECT")
     if snapshot.get("snapshot_contract") != SNAPSHOT_CONTRACT:
         raise RuntimeError("CURRENT_SNAPSHOT_CONTRACT_MISMATCH")
+    if snapshot.get("current_surface_contract") != CURRENT_SURFACE_CONTRACT:
+        raise RuntimeError("CURRENT_SNAPSHOT_SURFACE_CONTRACT_MISMATCH")
     if snapshot.get("database_writes") != "NONE":
         raise RuntimeError("CURRENT_SNAPSHOT_WRITE_CLAIM_INVALID")
 
@@ -103,6 +106,12 @@ def validate_production_display_snapshot(snapshot: dict[str, Any]) -> dict[str, 
         raise RuntimeError("CURRENT_SNAPSHOT_RUNTIME_IDENTITY_MISMATCH")
     if any(str(row.get("runtime_status") or "").upper() != "ACTIVE" for row in runtime):
         raise RuntimeError("CURRENT_SNAPSHOT_RUNTIME_NOT_ALL_ACTIVE")
+    for row in runtime:
+        metadata = row.get("metadata") if isinstance(row, dict) else None
+        if not isinstance(metadata, dict) or metadata.get("current_surface_contract") != CURRENT_SURFACE_CONTRACT:
+            raise RuntimeError("CURRENT_SNAPSHOT_RUNTIME_SURFACE_CONTRACT_MISMATCH")
+        if metadata.get("runtime_selection_rule") != "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT":
+            raise RuntimeError("CURRENT_SNAPSHOT_RUNTIME_SELECTION_RULE_MISMATCH")
 
     target_context = str(snapshot.get("target_context") or "").strip()
     if len(target_context) != 7:
@@ -116,6 +125,26 @@ def validate_production_display_snapshot(snapshot: dict[str, Any]) -> dict[str, 
     feature_names = [str(row.get("feature_name") or "") for row in features if isinstance(row, dict)]
     if set(feature_names) != set(CURRENT_CONTEXT_FEATURES) or len(feature_names) != len(set(feature_names)):
         raise RuntimeError("CURRENT_SNAPSHOT_FEATURE_IDENTITY_MISMATCH")
+    for row in features:
+        if not isinstance(row, dict):
+            raise RuntimeError("CURRENT_SNAPSHOT_FEATURE_INVALID")
+        if row.get("quality_status") != "HISTORICAL_REPLAY_CONTEXT":
+            raise RuntimeError("CURRENT_SNAPSHOT_FEATURE_EVIDENCE_INVALID")
+        metadata = row.get("metadata")
+        if not isinstance(metadata, dict) or metadata.get("current_surface_contract") != CURRENT_SURFACE_CONTRACT:
+            raise RuntimeError("CURRENT_SNAPSHOT_FEATURE_SURFACE_CONTRACT_MISMATCH")
+        if metadata.get("context_selection_rule") != "LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT":
+            raise RuntimeError("CURRENT_SNAPSHOT_FEATURE_SELECTION_RULE_MISMATCH")
+        if metadata.get("target_context") != target_context:
+            raise RuntimeError("CURRENT_SNAPSHOT_FEATURE_TARGET_MISMATCH")
+
+    source_surface = snapshot.get("source_surface")
+    if not isinstance(source_surface, dict):
+        raise RuntimeError("CURRENT_SNAPSHOT_SOURCE_SURFACE_MISSING")
+    if int(source_surface.get("current_source_count") or 0) <= 0:
+        raise RuntimeError("CURRENT_SNAPSHOT_SOURCE_SURFACE_EMPTY")
+    if int(source_surface.get("disallowed_current_source_count") or 0) != 0:
+        raise RuntimeError("CURRENT_SNAPSHOT_DISALLOWED_SOURCE_PRESENT")
 
     health = snapshot.get("health")
     if not isinstance(health, dict):
@@ -152,7 +181,6 @@ def snapshot_feature_rows(snapshot: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def snapshot_historical_replay_rows(snapshot: dict[str, Any]) -> list[dict[str, Any]]:
-    """Compatibility read for forecast history: current snapshot stores no separate replay ledger."""
     validate_production_display_snapshot(snapshot)
     return []
 
@@ -160,8 +188,9 @@ def snapshot_historical_replay_rows(snapshot: dict[str, Any]) -> list[dict[str, 
 def snapshot_runtime_observability(snapshot: dict[str, Any]) -> dict[str, Any]:
     validated = validate_production_display_snapshot(snapshot)
     health = dict(validated["health"])
+    source_surface = dict(validated["source_surface"])
     return {
-        "contract": "GOLD_CONTROL_CURRENT_RUNTIME_SOURCE_V141",
+        "contract": "GOLD_CONTROL_CURRENT_RUNTIME_SOURCE_V142",
         "status": "CURRENT_RUNTIME_HEALTH_PASS",
         "source_mode": SNAPSHOT_SOURCE_MODE,
         "snapshot_contract": SNAPSHOT_CONTRACT,
@@ -174,5 +203,7 @@ def snapshot_runtime_observability(snapshot: dict[str, Any]) -> dict[str, Any]:
         "runtime_complete": True,
         "context_target": validated.get("target_context"),
         "context_feature_count": len(CURRENT_CONTEXT_FEATURES),
+        "current_source_count": int(source_surface.get("current_source_count") or 0),
+        "disallowed_current_source_count": int(source_surface.get("disallowed_current_source_count") or 0),
         "database_writes": "NONE",
     }

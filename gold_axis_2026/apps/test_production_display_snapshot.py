@@ -8,6 +8,7 @@ from production_display_snapshot import (
     AUTHORITY_ZERO_FIELDS,
     CURRENT_CONTEXT_FEATURES,
     CURRENT_ENGINE_IDS,
+    CURRENT_SURFACE_CONTRACT,
     SNAPSHOT_CONTRACT,
     payload_sha256,
     validate_production_display_snapshot,
@@ -27,7 +28,11 @@ def _snapshot() -> dict:
             "status_code": "ACTIVE_CURRENT_CONTEXT_AVAILABLE",
             "direction_vote_permitted": engine_id in {"MONTHLY_DIRECTION_3M", "FAST", "SLOW"},
             "git_commit": "test-sha",
-            "metadata": {},
+            "metadata": {
+                "current_surface_contract": CURRENT_SURFACE_CONTRACT,
+                "runtime_selection_rule": "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT",
+                "provenance_status": "INPUT_FINGERPRINT_PRESENT",
+            },
         }
         for engine_id in CURRENT_ENGINE_IDS
     ]
@@ -39,18 +44,28 @@ def _snapshot() -> dict:
             "input_cutoff": "2026-09-03T01:26:55Z",
             "value_num": None,
             "value_text": "TEST",
-            "quality_status": "TEST_CONTEXT",
-            "metadata": {"target_context": "2026-09"},
+            "quality_status": "HISTORICAL_REPLAY_CONTEXT",
+            "metadata": {
+                "current_surface_contract": CURRENT_SURFACE_CONTRACT,
+                "target_context": "2026-09",
+                "context_selection_rule": "LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT",
+            },
         }
         for feature_name in CURRENT_CONTEXT_FEATURES
     ]
     snapshot = {
         "snapshot_contract": SNAPSHOT_CONTRACT,
+        "current_surface_contract": CURRENT_SURFACE_CONTRACT,
         "source": "TEST",
         "source_state_at": "2026-09-06T19:35:41Z",
         "target_context": "2026-09",
         "runtime": runtime,
         "features": features,
+        "source_surface": {
+            "current_source_count": 45,
+            "disallowed_current_source_count": 0,
+            "selection_rule": "OBSERVATION_BACKED_OR_EXPLICIT_LIVE_DISPLAY_AND_NOT_BLOCKED_OPTIONAL_PAID",
+        },
         "health": {
             "orphan_input_snapshots": 0,
             "expert_rows_without_input_set": 0,
@@ -66,7 +81,9 @@ def _snapshot() -> dict:
 def test_current_snapshot_contract_accepts_exact_current_surface() -> None:
     snapshot = validate_production_display_snapshot(_snapshot())
     assert snapshot["snapshot_contract"] == SNAPSHOT_CONTRACT
+    assert snapshot["current_surface_contract"] == CURRENT_SURFACE_CONTRACT
     assert len(snapshot["runtime"]) == 12
+    assert len(snapshot["features"]) == 7
     assert {row["engine_id"] for row in snapshot["runtime"]} == set(CURRENT_ENGINE_IDS)
 
 
@@ -91,4 +108,12 @@ def test_snapshot_rejects_authority_store_writes() -> None:
     snapshot["authority_store_counts"]["decision_runs"] = 1
     snapshot["payload_sha256"] = payload_sha256(snapshot)
     with pytest.raises(RuntimeError, match="UNAUTHORIZED_AUTHORITY_STATE"):
+        validate_production_display_snapshot(snapshot)
+
+
+def test_snapshot_rejects_disallowed_current_source() -> None:
+    snapshot = _snapshot()
+    snapshot["source_surface"]["disallowed_current_source_count"] = 1
+    snapshot["payload_sha256"] = payload_sha256(snapshot)
+    with pytest.raises(RuntimeError, match="DISALLOWED_SOURCE_PRESENT"):
         validate_production_display_snapshot(snapshot)

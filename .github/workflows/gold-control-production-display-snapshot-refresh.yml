@@ -1,9 +1,8 @@
 name: Gold Control Current Snapshot Refresh
 
 on:
+  workflow_call:
   workflow_dispatch:
-  schedule:
-    - cron: '17 * * * *'
 
 permissions:
   contents: write
@@ -27,23 +26,24 @@ jobs:
           python-version: '3.12'
       - name: Install database runtime
         run: pip install 'psycopg[binary]>=3.2,<4'
-      - name: Export sanitized current snapshot read-only
+      - name: Export latest-complete current snapshot read-only
         run: |
           test -n "$NEON_DATABASE_URL" || (echo 'NEON_DATABASE_URL missing' && exit 1)
           python gold_axis_2026/tools/export_production_display_snapshot.py --out /tmp/production_display_snapshot.json
           PYTHONPATH=gold_axis_2026/apps python - <<'PY'
           import json
           from pathlib import Path
-          from production_display_snapshot import SNAPSHOT_CONTRACT, validate_production_display_snapshot
+          from production_display_snapshot import CURRENT_SURFACE_CONTRACT, SNAPSHOT_CONTRACT, validate_production_display_snapshot
           snap=json.loads(Path('/tmp/production_display_snapshot.json').read_text(encoding='utf-8'))
           validate_production_display_snapshot(snap)
-          assert snap['snapshot_contract'] == SNAPSHOT_CONTRACT == 'GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V141'
+          assert snap['snapshot_contract'] == SNAPSHOT_CONTRACT == 'GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V142'
+          assert snap['current_surface_contract'] == CURRENT_SURFACE_CONTRACT == 'GOLD_CONTROL_CURRENT_SURFACE_V142'
           assert len(snap['runtime']) == 12
           assert len(snap['features']) == 7
           assert all(r['runtime_status'] == 'ACTIVE' for r in snap['runtime'])
-          assert all((r.get('metadata') or {}).get('current_surface_contract') == 'GOLD_CONTROL_CURRENT_SURFACE_V141' for r in snap['runtime'])
-          assert all(f['quality_status'] == 'HISTORICAL_REPLAY_CONTEXT' for f in snap['features'])
-          assert all((f.get('metadata') or {}).get('current_surface_contract') == 'GOLD_CONTROL_CURRENT_SURFACE_V141' for f in snap['features'])
+          assert all((r.get('metadata') or {}).get('runtime_selection_rule') == 'LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT' for r in snap['runtime'])
+          assert all((f.get('metadata') or {}).get('context_selection_rule') == 'LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT' for f in snap['features'])
+          assert snap['source_surface']['disallowed_current_source_count'] == 0
           assert snap['database_writes'] == 'NONE'
           print('CURRENT_PRODUCTION_SNAPSHOT_VALIDATION_PASS')
           PY

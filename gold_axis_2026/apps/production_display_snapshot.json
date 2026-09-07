@@ -5,6 +5,7 @@
     "decision_signal_snapshots": 0,
     "monthly_forecast_contracts": 0
   },
+  "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
   "database_writes": "NONE",
   "features": [
     {
@@ -16,7 +17,8 @@
       "input_cutoff": "2026-09-01T13:49:02.380053+00:00",
       "metadata": {
         "canonical_forecast_authority": false,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "context_selection_rule": "LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT",
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
         "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
         "prospective_h1_claim": false,
         "raw_history_preserved": true,
@@ -36,7 +38,8 @@
       "input_cutoff": "2026-09-03T01:26:55.875433+00:00",
       "metadata": {
         "canonical_forecast_authority": false,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "context_selection_rule": "LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT",
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
         "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
         "prospective_h1_claim": false,
         "raw_history_preserved": true,
@@ -56,7 +59,8 @@
       "input_cutoff": "2026-09-03T01:26:55.875433+00:00",
       "metadata": {
         "canonical_forecast_authority": false,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "context_selection_rule": "LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT",
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
         "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
         "prospective_h1_claim": false,
         "raw_history_preserved": true,
@@ -76,7 +80,8 @@
       "input_cutoff": "2026-09-03T01:26:55.875433+00:00",
       "metadata": {
         "canonical_forecast_authority": false,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "context_selection_rule": "LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT",
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
         "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
         "prospective_h1_claim": false,
         "raw_history_preserved": true,
@@ -96,7 +101,8 @@
       "input_cutoff": "2026-09-03T01:26:55.875433+00:00",
       "metadata": {
         "canonical_forecast_authority": false,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "context_selection_rule": "LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT",
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
         "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
         "prospective_h1_claim": false,
         "raw_history_preserved": true,
@@ -116,7 +122,8 @@
       "input_cutoff": "2026-09-01T13:49:02.380053+00:00",
       "metadata": {
         "canonical_forecast_authority": false,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "context_selection_rule": "LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT",
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
         "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
         "prospective_h1_claim": false,
         "raw_history_preserved": true,
@@ -136,7 +143,8 @@
       "input_cutoff": "2026-09-01T13:49:02.380053+00:00",
       "metadata": {
         "canonical_forecast_authority": false,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "context_selection_rule": "LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT",
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
         "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
         "prospective_h1_claim": false,
         "raw_history_preserved": true,
@@ -161,7 +169,7 @@
     "input_snapshots": 5,
     "orphan_input_snapshots": 0
   },
-  "payload_sha256": "4528c3d6ff115e74bc233e7fb4004c0ac8dba957435114f7ee996b558ef97368",
+  "payload_sha256": "ca797667b3707cd3cf1a013bc5454431eb41b48647407a0a069f170b329d61ae",
   "runtime": [
     {
       "as_of": "2026-09-05T14:34:24.041101+00:00",
@@ -181,9 +189,11 @@
         "current_state": "NO_ADVERSE_BREAK_CANDIDATE",
         "current_state_as_of": "2026-09-04T13:42:09.025Z",
         "current_state_evidence_class": "HISTORICAL_REPLAY",
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
         "information_cutoff": "2026-08-31T21:00:00Z",
-        "prospective_claim": false
+        "prospective_claim": false,
+        "provenance_status": "INPUT_FINGERPRINT_PRESENT",
+        "runtime_selection_rule": "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT"
       },
       "run_id": "9ae7bab1-66e2-40a8-9f00-40bf5809b4b4",
       "runtime_status": "ACTIVE",
@@ -220,8 +230,10 @@
           "unit": "USD/oz"
         },
         "current_registry": true,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
-        "prospective_claim": false
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
+        "prospective_claim": false,
+        "provenance_status": "INPUT_FINGERPRINT_PRESENT",
+        "runtime_selection_rule": "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT"
       },
       "run_id": "4288d84b-c0d3-4009-854f-cae89d9b78c1",
       "runtime_status": "ACTIVE",
@@ -259,9 +271,11 @@
           "target_month": "2026-09"
         },
         "current_registry": true,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
         "prospective_claim": false,
-        "reference_expert_id": "CAUSAL_PATCH"
+        "provenance_status": "REFERENCE_METADATA_BOUND_INPUT_FINGERPRINT_NOT_AVAILABLE",
+        "reference_expert_id": "CAUSAL_PATCH",
+        "runtime_selection_rule": "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT"
       },
       "run_id": "e07e6776-8147-489d-a36b-e5c9a47c48e5",
       "runtime_status": "ACTIVE",
@@ -299,9 +313,11 @@
           "target_month": "2026-09"
         },
         "current_registry": true,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
         "prospective_claim": false,
-        "reference_expert_id": "CAUSAL_PATCH"
+        "provenance_status": "REFERENCE_METADATA_BOUND_INPUT_FINGERPRINT_NOT_AVAILABLE",
+        "reference_expert_id": "CAUSAL_PATCH",
+        "runtime_selection_rule": "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT"
       },
       "run_id": "419b4d46-5d32-4783-9254-32d032a1bef8",
       "runtime_status": "ACTIVE",
@@ -323,8 +339,10 @@
         "auto_selector": "OFF",
         "canonical_forecast_authority": false,
         "current_registry": true,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
-        "prospective_claim": false
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
+        "prospective_claim": false,
+        "provenance_status": "INPUT_FINGERPRINT_PRESENT",
+        "runtime_selection_rule": "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT"
       },
       "run_id": "da3a428f-b97e-48ca-acac-194fd4382fa5",
       "runtime_status": "ACTIVE",
@@ -346,9 +364,11 @@
         "auto_selector": "OFF",
         "canonical_forecast_authority": false,
         "current_registry": true,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
         "prospective_claim": false,
-        "risk_only": true
+        "provenance_status": "INPUT_FINGERPRINT_PRESENT",
+        "risk_only": true,
+        "runtime_selection_rule": "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT"
       },
       "run_id": "0824b0c7-d228-4028-84f5-8586959949ec",
       "runtime_status": "ACTIVE",
@@ -373,9 +393,11 @@
         "current_state": "MACRO_MIXED_OR_SMALL",
         "current_state_as_of": "2026-09-04T12:30:00Z",
         "current_state_evidence_class": "HISTORICAL_REPLAY",
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
         "information_cutoff": "2026-09-04T12:30:00Z",
-        "prospective_claim": false
+        "prospective_claim": false,
+        "provenance_status": "INPUT_FINGERPRINT_PRESENT",
+        "runtime_selection_rule": "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT"
       },
       "run_id": "3131ce62-49ec-43a5-bfbb-0cad9f0a23ad",
       "runtime_status": "ACTIVE",
@@ -413,8 +435,10 @@
           "unit": "USD/oz"
         },
         "current_registry": true,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
-        "prospective_claim": false
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
+        "prospective_claim": false,
+        "provenance_status": "INPUT_FINGERPRINT_PRESENT",
+        "runtime_selection_rule": "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT"
       },
       "run_id": "a80e872e-94dd-4b3f-ad9c-ef46c2d65b52",
       "runtime_status": "ACTIVE",
@@ -436,8 +460,10 @@
         "auto_selector": "OFF",
         "canonical_forecast_authority": false,
         "current_registry": true,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
-        "prospective_claim": false
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
+        "prospective_claim": false,
+        "provenance_status": "INPUT_FINGERPRINT_PRESENT",
+        "runtime_selection_rule": "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT"
       },
       "run_id": "42d08448-ce25-4d67-9994-42dcbe1fe892",
       "runtime_status": "ACTIVE",
@@ -475,8 +501,10 @@
           "unit": "USD/oz"
         },
         "current_registry": true,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
-        "prospective_claim": false
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
+        "prospective_claim": false,
+        "provenance_status": "INPUT_FINGERPRINT_PRESENT",
+        "runtime_selection_rule": "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT"
       },
       "run_id": "bbdcbaff-8d2a-4f78-b521-ce6bafafbc4e",
       "runtime_status": "ACTIVE",
@@ -498,8 +526,10 @@
         "auto_selector": "OFF",
         "canonical_forecast_authority": false,
         "current_registry": true,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
-        "prospective_claim": false
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
+        "prospective_claim": false,
+        "provenance_status": "INPUT_FINGERPRINT_PRESENT",
+        "runtime_selection_rule": "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT"
       },
       "run_id": "12ae1cb2-2ebc-47ba-a76d-22bc40e2fc7c",
       "runtime_status": "ACTIVE",
@@ -546,10 +576,12 @@
           "unit": "USD/oz"
         },
         "current_registry": true,
-        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V142",
         "later_prospective_validation_origin": "2026-09-30T21:00:00Z",
         "later_prospective_validation_target": "2026-10",
-        "prospective_claim": false
+        "prospective_claim": false,
+        "provenance_status": "REFERENCE_METADATA_BOUND_INPUT_FINGERPRINT_NOT_AVAILABLE",
+        "runtime_selection_rule": "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT"
       },
       "run_id": "0c651a69-42fb-414b-9ae4-cbe90ca6acfd",
       "runtime_status": "ACTIVE",
@@ -557,8 +589,13 @@
       "target_context": "2026-09"
     }
   ],
-  "snapshot_contract": "GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V141",
-  "source": "NEON_PRODUCTION_CURRENT_SURFACES_READ_ONLY_EXPORT",
+  "snapshot_contract": "GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V142",
+  "source": "NEON_PRODUCTION_LATEST_COMPLETE_CURRENT_SURFACES_READ_ONLY_EXPORT",
   "source_state_at": "2026-09-07T06:15:00.035844+00:00",
+  "source_surface": {
+    "current_source_count": 45,
+    "disallowed_current_source_count": 0,
+    "selection_rule": "OBSERVATION_BACKED_OR_EXPLICIT_LIVE_DISPLAY_AND_NOT_BLOCKED_OPTIONAL_PAID"
+  },
   "target_context": "2026-09"
 }

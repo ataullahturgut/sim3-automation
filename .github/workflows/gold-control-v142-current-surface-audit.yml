@@ -1,10 +1,10 @@
-name: Gold Control v1.41 Current Surface Audit
+name: Gold Control v1.42 Current Surface Audit
 
 on:
   push:
     branches:
       - gold-r4-direction-engine
-      - gold-control-v141-postmerge-stale-contract-cleanup
+      - gold-control-current-surface-v142
   workflow_dispatch:
 
 permissions:
@@ -23,7 +23,7 @@ jobs:
       - name: Compile retained Python surface
         run: python -m compileall -q gold_axis_2026/apps gold_axis_2026/data_pipeline gold_axis_2026/tools gold_axis_2026/r4_1 gold_axis_2026/r4_2
       - name: Inventory full current tree
-        run: python gold_axis_2026/tools/inventory_full_current_tree_v141.py
+        run: python gold_axis_2026/tools/inventory_full_current_tree_v142.py
       - name: Run current-surface unit tests
         run: |
           pytest -q \
@@ -32,13 +32,13 @@ jobs:
             gold_axis_2026/data_pipeline/test_multi_expert_forecast.py \
             gold_axis_2026/data_pipeline/test_data_evidence_spine_runtime_bootstrap.py
       - name: Audit current surface for stale semantics, legacy paths and broken workflow references
-        run: python gold_axis_2026/tools/audit_current_surface_v141.py
+        run: python gold_axis_2026/tools/audit_current_surface_v142.py
       - name: Upload current-tree reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gold-control-current-surface-audit-v141
+          name: gold-control-current-surface-audit-v142
           path: |
-            current_surface_audit_v141.json
-            full_current_tree_inventory_v141.json
+            current_surface_audit_v142.json
+            full_current_tree_inventory_v142.json
           if-no-files-found: ignore
