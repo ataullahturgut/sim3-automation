@@ -1,0 +1,54 @@
+name: Gold Control Emergency Intraday Validation V1.46
+
+on:
+  push:
+    branches:
+      - gold-control-live-frequency-v145
+    paths:
+      - '.github/workflows/gold-control-emergency-intraday-validation-v146.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-emergency-intraday-validation-v146
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      GOLD_CODE_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-live-frequency-v145
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install validation runtime
+        run: pip install -q pandas requests
+      - name: Require protected Twelve credential
+        run: test -n "$TWELVE_DATA_API_KEY"
+      - name: Compile validation code
+        run: python -m py_compile gold_axis_2026/tools/emergency_intraday_replay_validation_v146.py
+      - name: Run frozen-threshold historical intraday replay
+        run: |
+          python gold_axis_2026/tools/emergency_intraday_replay_validation_v146.py \
+            --start-month 2023-01 \
+            --end-month 2026-07 \
+            --output-json emergency_intraday_replay_v146.json \
+            --output-csv emergency_intraday_replay_v146_months.csv
+      - name: Upload aggregate validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-emergency-intraday-validation-v146
+          path: |
+            emergency_intraday_replay_v146.json
+            emergency_intraday_replay_v146_months.csv
+          if-no-files-found: warn
