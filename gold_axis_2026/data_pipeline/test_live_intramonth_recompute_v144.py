@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
-
 import pandas as pd
 
 import live_intramonth_recompute_v144 as mod
@@ -102,8 +100,8 @@ def test_ny_trade_date_preserves_17et_session_date() -> None:
 
 
 def test_emergency_reference_replay_is_not_promoted_to_prospective() -> None:
-    # The writer enforces this in _insert_runtime: a historical reference forces
-    # HISTORICAL_REPLAY runtime evidence even when the surrounding context lane
-    # later operates in prospective-shadow mode.
+    # Current runtime inventory rows remain governance-audit rows. The historical
+    # monthly-reference class is preserved separately in metadata and must never
+    # be rewritten as a prospective H=1 claim.
     assert _reference()["evidence_class"] == "HISTORICAL_REPLAY"
     assert _reference()["prospective_claim"] is False
