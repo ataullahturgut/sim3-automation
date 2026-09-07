@@ -1,0 +1,133 @@
+name: Gold Control Production Scheduler V1.42
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gold-control-production-scheduler-v142.yml'
+  schedule:
+    - cron: '17 * * * *'       # core hourly XAU
+    - cron: '27 * * * *'       # current production snapshot refresh
+    - cron: '45 23 * * *'      # core daily authority ingest
+    - cron: '25 6 * * *'       # core daily independent retry
+    - cron: '15 1 * * 2-6'     # FRED indices after US session
+    - cron: '30 12 * * 2-6'    # FRED indices retry
+    - cron: '35 1 * * 2-6'     # Twelve market after US session
+    - cron: '45 12 * * 2-6'    # Twelve market retry
+    - cron: '10 22 * * 1-5'    # canonical XAU NY17 after 17:00 New York
+    - cron: '30 21 30 9 *'     # Patch V7 Sep-30 17:30 ET eligible October H=1 issuance
+    - cron: '30 22 30 9 *'     # Patch V7 controlled retry
+  workflow_dispatch:
+    inputs:
+      lane:
+        description: 'Explicit production lane to run'
+        required: true
+        default: 'core-daily'
+        type: choice
+        options:
+          - core-hourly
+          - snapshot-refresh
+          - core-daily
+          - fred-indices
+          - twelve-market
+          - xau-ny17
+          - patch-month-end
+
+permissions:
+  contents: read
+
+jobs:
+  validate-dispatcher:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Verify canonical scheduler contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin gold-r4-direction-engine --depth=1
+          for f in \
+            .github/workflows/gold-data-neon-ingest.yml \
+            .github/workflows/gold-data-fred-indices.yml \
+            .github/workflows/gold-data-twelve-market.yml \
+            .github/workflows/gold-data-xau-ny17.yml \
+            .github/workflows/gold-control-patch-v7-month-end-expert-issuer.yml \
+            .github/workflows/gold-control-production-display-snapshot-refresh.yml
+          do
+            text="$(git show origin/gold-r4-direction-engine:$f)"
+            grep -Fq 'workflow_call:' <<<"$text"
+            if grep -Eq '^[[:space:]]+schedule:' <<<"$text"; then
+              echo "Canonical reusable workflow still owns a schedule: $f" >&2
+              exit 1
+            fi
+          done
+          manifest="$(git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md)"
+          grep -Fq '**Manifest version:** 1.42' <<<"$manifest"
+          grep -Fq 'default-branch scheduling surface' <<<"$manifest"
+          grep -Fq 'LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT' <<<"$manifest"
+          grep -Fq 'LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT' <<<"$manifest"
+          snapshot="$(git show origin/gold-r4-direction-engine:.github/workflows/gold-control-production-display-snapshot-refresh.yml)"
+          grep -Fq 'GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V142' <<<"$snapshot"
+          echo 'V142_DEFAULT_BRANCH_DISPATCHER_AUTHORITY_PASS'
+
+  core-hourly:
+    if: >-
+      (github.event_name == 'schedule' && github.event.schedule == '17 * * * *') ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'core-hourly')
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-neon-ingest.yml@gold-r4-direction-engine
+    with:
+      mode: hourly
+    secrets: inherit
+
+  snapshot-refresh:
+    if: >-
+      (github.event_name == 'schedule' && github.event.schedule == '27 * * * *') ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'snapshot-refresh')
+    permissions:
+      contents: write
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-control-production-display-snapshot-refresh.yml@gold-r4-direction-engine
+    secrets: inherit
+
+  core-daily:
+    if: >-
+      (github.event_name == 'schedule' && (github.event.schedule == '45 23 * * *' || github.event.schedule == '25 6 * * *')) ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'core-daily')
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-neon-ingest.yml@gold-r4-direction-engine
+    with:
+      mode: daily
+    secrets: inherit
+
+  fred-indices:
+    if: >-
+      (github.event_name == 'schedule' && (github.event.schedule == '15 1 * * 2-6' || github.event.schedule == '30 12 * * 2-6')) ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'fred-indices')
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-fred-indices.yml@gold-r4-direction-engine
+    with:
+      mode: daily
+    secrets: inherit
+
+  twelve-market:
+    if: >-
+      (github.event_name == 'schedule' && (github.event.schedule == '35 1 * * 2-6' || github.event.schedule == '45 12 * * 2-6')) ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'twelve-market')
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-twelve-market.yml@gold-r4-direction-engine
+    secrets: inherit
+
+  xau-ny17:
+    if: >-
+      (github.event_name == 'schedule' && github.event.schedule == '10 22 * * 1-5') ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'xau-ny17')
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-xau-ny17.yml@gold-r4-direction-engine
+    secrets: inherit
+
+  patch-month-end:
+    if: >-
+      (github.event_name == 'schedule' && (github.event.schedule == '30 21 30 9 *' || github.event.schedule == '30 22 30 9 *')) ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'patch-month-end')
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-control-patch-v7-month-end-expert-issuer.yml@gold-r4-direction-engine
+    with:
+      mode: issue-if-eligible
+    secrets: inherit
