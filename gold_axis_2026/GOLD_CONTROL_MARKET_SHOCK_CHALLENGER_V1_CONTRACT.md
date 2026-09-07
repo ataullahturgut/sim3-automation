@@ -22,6 +22,8 @@ The pre-registered design follows high-frequency jump/anomaly literature:
 5. **Non-instantaneous fast move coverage.** A 30-minute standardized fast-move tail detector covers unusually fast, large moves that need not be one-bar jumps.
 6. **Streaming drift discipline.** Parameters are re-estimated only at pre-defined calendar boundaries from data strictly preceding the scored segment; metrics are reported by segment rather than pooling incompatible score distributions.
 
+The 2025 gold-specific study is used only as an external scale/sanity reference, not as a calibration target for Twelve Data spot XAU/USD. It reports intraday gold-futures jumps as rare (~0.43% probability) and average detected jump magnitudes around +1.59% / -1.78%. Different instrument, venue and sample mean these values cannot be asserted as Twelve spot truth.
+
 ## 3. Frozen candidate definitions
 
 ### C1 — `LM_JUMP_5M`
@@ -85,17 +87,31 @@ For each segment and detector:
 
 Because real history does not contain an authoritative complete label set for all true/false gold shocks, an additional controlled audit injects permanent price-level jumps into real historical volatility contexts. The tested jump sizes are frozen before execution: `0.25%, 0.50%, 0.75%, 1.00%, 1.50%, 2.00%`, both signs. Injection locations are sampled deterministically from eligible non-gap holdout bars with a fixed seed. Detection power is reported by size/sign/segment. Null sampled bars provide an empirical no-injection alert rate, but this is test calibration evidence, not a claim about economic false positives.
 
-## 6. Promotion gates
+## 6. Quantitative research acceptance gates — frozen before holdout review
 
-Promotion is `BLOCKED` unless all are satisfied:
+These gates are intentionally conservative and are not a claim that the external gold-futures rates are identical to Twelve spot XAU/USD.
+
+1. `2.00%` injected permanent jumps: consensus detection power must be **>= 95% in every scored holdout segment**.
+2. `1.50%` injected permanent jumps: consensus detection power must be **>= 80% in every scored holdout segment**.
+3. Synthetic detection power should be non-decreasing with jump magnitude, allowing at most a **2 percentage-point Monte-Carlo tolerance** between adjacent tested sizes.
+4. Historical consensus bar rate must remain **< 1.0% in every holdout segment**; this is a broad anti-saturation gate, not a target rate.
+5. On deterministic no-injection sampled bars, consensus alert rate must remain **< 1.0% in every holdout segment**. This is a calibration diagnostic, not a real-history false-positive rate.
+6. Consensus alert rate must be lower than the median alert rate of the three constituent main detectors in each segment; otherwise the 2-of-3 layer is not providing meaningful selectivity.
+7. Real-history `FALSE_POSITIVE_RATE` remains `NOT_PROVEN` unless an independent authoritative event-label contract is later issued.
+
+Failure of any numeric gate means `REJECT_OR_REVISE_CHALLENGER_V1`; the same V1 thresholds or vote rule may not be adjusted post hoc to manufacture a pass. Any revised candidate must receive a new challenger identity and a fresh pre-registration.
+
+## 7. Promotion gates
+
+Production promotion is `BLOCKED` unless all are satisfied:
 
 1. historical fetch and point-in-time segmentation complete;
-2. synthetic-injection audit demonstrates monotone detection power as jump size rises, with strong power for economically large jumps;
-3. consensus is materially less trigger-happy than single detectors and does not collapse into near-continuous alarm state;
-4. yearly/segment behavior is stable enough to survive concept-drift review;
-5. no monthly H=1 forecast reference is used by the challenger;
-6. exact implementation tests pass;
-7. code/data provenance and provider identity are explicit;
+2. all Section 6 quantitative research acceptance gates pass;
+3. yearly/segment behavior is stable enough to survive concept-drift review;
+4. no monthly H=1 forecast reference is used by the challenger;
+5. exact implementation tests pass;
+6. code/data provenance and provider identity are explicit;
+7. exact provider/session-calendar handling is separately governed for production streaming;
 8. a separate governance decision explicitly approves a new runtime identity.
 
 If these gates fail, the outcome is `REJECT_OR_REVISE_CHALLENGER`; thresholds are not retroactively tuned under the same identity.
