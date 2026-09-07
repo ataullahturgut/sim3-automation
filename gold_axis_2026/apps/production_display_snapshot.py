@@ -33,6 +33,17 @@ CURRENT_CONTEXT_FEATURES = (
     "GVZ_PANIC",
     "GVZ_REGIME",
 )
+# The current-surface interface remains V142 for compatibility, while V1.44
+# preserves the governed evidence class of each selected context row instead of
+# rewriting every context as HISTORICAL_REPLAY_CONTEXT.
+ALLOWED_CONTEXT_QUALITY_STATUSES = frozenset(
+    {
+        "HISTORICAL_REPLAY_CONTEXT",
+        "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+        "HISTORICAL_REPLAY_INTRAMONTH_CONTEXT",
+        "PROSPECTIVE_SHADOW_INTRAMONTH_CONTEXT",
+    }
+)
 INTEGRITY_ZERO_FIELDS = (
     "orphan_input_snapshots",
     "expert_rows_without_input_set",
@@ -128,7 +139,7 @@ def validate_production_display_snapshot(snapshot: dict[str, Any]) -> dict[str, 
     for row in features:
         if not isinstance(row, dict):
             raise RuntimeError("CURRENT_SNAPSHOT_FEATURE_INVALID")
-        if row.get("quality_status") != "HISTORICAL_REPLAY_CONTEXT":
+        if str(row.get("quality_status") or "") not in ALLOWED_CONTEXT_QUALITY_STATUSES:
             raise RuntimeError("CURRENT_SNAPSHOT_FEATURE_EVIDENCE_INVALID")
         metadata = row.get("metadata")
         if not isinstance(metadata, dict) or metadata.get("current_surface_contract") != CURRENT_SURFACE_CONTRACT:
@@ -137,6 +148,9 @@ def validate_production_display_snapshot(snapshot: dict[str, Any]) -> dict[str, 
             raise RuntimeError("CURRENT_SNAPSHOT_FEATURE_SELECTION_RULE_MISMATCH")
         if metadata.get("target_context") != target_context:
             raise RuntimeError("CURRENT_SNAPSHOT_FEATURE_TARGET_MISMATCH")
+        evidence_class = str(metadata.get("evidence_class") or "")
+        if evidence_class and evidence_class != str(row.get("quality_status") or ""):
+            raise RuntimeError("CURRENT_SNAPSHOT_FEATURE_EVIDENCE_METADATA_MISMATCH")
 
     source_surface = snapshot.get("source_surface")
     if not isinstance(source_surface, dict):
