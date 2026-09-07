@@ -66,12 +66,29 @@ def _request_day(session: requests.Session, d: date) -> tuple[dict, bytes]:
         },
         timeout=(8, 35),
     )
-    response.raise_for_status()
-    payload = response.json()
+
+    try:
+        payload = response.json()
+    except ValueError:
+        response.raise_for_status()
+        raise RuntimeError("TWELVE_NON_JSON_RESPONSE")
+
     if payload.get("status") == "error":
+        try:
+            code = int(payload.get("code"))
+        except (TypeError, ValueError):
+            code = None
+        # Twelve Data documents 404 as requested data not found. In a bounded
+        # exact-date query this is retained as a no-bar day (e.g. holiday / no
+        # provider record), never filled or substituted. All other provider
+        # errors remain fail-closed.
+        if code == 404:
+            return payload, response.content
         raise RuntimeError(
             f"TWELVE_API_ERROR:{payload.get('code')}:{payload.get('message')}"
         )
+
+    response.raise_for_status()
     return payload, response.content
 
 
@@ -108,6 +125,8 @@ def _extract_exact_bar(payload: dict, d: date) -> dict | None:
 
 
 def _validated_provider_identity(payload: dict) -> None:
+    if payload.get("status") == "error" and int(payload.get("code") or 0) == 404:
+        return
     meta = payload.get("meta") or {}
     provider_symbol = meta.get("symbol") or SYMBOL
     if provider_symbol != SYMBOL:
@@ -209,10 +228,10 @@ def collect_recent_completed(
             # A transport/HTTP failure means this run cannot prove recent-window
             # completeness. Do not silently reinterpret it as a market holiday.
             raise RuntimeError(f"BLOCKED_TWELVE_HTTP_{code}:{d.isoformat()}") from exc
-        except RuntimeError as exc:
-            # Provider errors, symbol/interval mismatch and malformed exact bars are
-            # fail-closed. Only a successful response with no exact bar may represent
-            # a non-trading/provider-no-bar date.
+        except RuntimeError:
+            # Authentication, quota, provider errors, identity mismatch and malformed
+            # exact bars are all fail-closed. Only a documented 404/no exact bar is
+            # retained as a non-bar date.
             raise
 
     if not found:
@@ -252,12 +271,14 @@ def collect_recent_completed(
 
 
 def collect_latest_completed(now_utc: datetime | None = None) -> dict:
-    """Compatibility wrapper retaining the original latest-bar entry point.
-
-    Production uses bounded reconciliation; callers that explicitly use this
-    function retain the prior single-day/latest completed search behavior.
-    """
-    return collect_recent_completed(now_utc, reconcile_days=0)
+    """Compatibility wrapper for callers expecting one latest completed record."""
+    bundle = collect_recent_completed(now_utc, reconcile_days=10)
+    expected = bundle["selected_cutoff_utc"]
+    bundle["observations"] = [
+        o for o in bundle["observations"] if o.get("observation_ts") == expected
+    ]
+    bundle["mode"] = "daily:twelve_xau_ny17"
+    return bundle
 
 
 def _self_test() -> None:
@@ -276,6 +297,7 @@ def _self_test() -> None:
     assert bar is not None and bar["close"] == 1.5
     assert _extract_exact_bar({"values": []}, date(2026, 8, 31)) is None
     _validated_provider_identity({"meta": {"symbol": SYMBOL, "interval": INTERVAL}})
+    _validated_provider_identity({"status": "error", "code": 404})
     assert len(_candidate_dates(datetime(2026, 9, 7, 18, 0, tzinfo=NY), 7)) == 8
     print("TWELVE_XAU_NY17_SELF_TEST_PASS")
 
