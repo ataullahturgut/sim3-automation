@@ -1,16 +1,6 @@
-name: Gold Control GPR PIT Coverage V2
+name: Gold Control GPR PIT Historical Coverage Audit
 
 on:
-  push:
-    branches:
-      - gold-control-gpr-pit-ingestion-v1
-    paths:
-      - 'gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py'
-      - 'gold_axis_2026/data_pipeline/gpr_vintage_backfill_v2.py'
-      - 'gold_axis_2026/data_pipeline/persist_gpr_pit_bundle_v2.py'
-      - 'gold_axis_2026/data_pipeline/source_contract_gpr_pit_v2.json'
-      - 'gold_axis_2026/tests/test_audit_gpr_pit_coverage_v2.py'
-      - '.github/workflows/gold-control-gpr-pit-coverage-v2.yml'
   workflow_dispatch:
 
 permissions:
@@ -21,9 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - name: Checkout Gold Control feature branch
+      - name: Checkout canonical code
         uses: actions/checkout@v4
         with:
+          ref: gold-r4-direction-engine
           fetch-depth: 1
 
       - name: Set up Python
@@ -32,20 +23,19 @@ jobs:
           python-version: '3.11'
 
       - name: Install audit dependencies
-        run: pip install pytest pandas xlrd psycopg[binary]
+        run: pip install pytest pandas xlrd
 
       - name: Unit and compile tests
         run: |
           pytest -q gold_axis_2026/tests/test_audit_gpr_pit_coverage_v2.py
           python -m py_compile gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py
           python -m py_compile gold_axis_2026/data_pipeline/gpr_vintage_backfill_v2.py
-          python -m py_compile gold_axis_2026/data_pipeline/persist_gpr_pit_bundle_v2.py
           python -m json.tool gold_axis_2026/data_pipeline/source_contract_gpr_pit_v2.json >/dev/null
 
       - name: Clone official Caldara-Iacoviello archive with history
         run: git clone --quiet https://github.com/iacoviel/iacoviel.github.io.git /tmp/iacoviel-gpr
 
-      - name: Audit all 72 frozen VW V1 GPR origins
+      - name: Audit frozen VW V1 historical GPR origins
         run: |
           python gold_axis_2026/tools/audit_gpr_pit_coverage_v2.py \
             --upstream-repo /tmp/iacoviel-gpr \
@@ -55,7 +45,7 @@ jobs:
             --md-out gpr_pit_coverage_v2.md
           cat gpr_pit_coverage_v2.md >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Build clean 54-origin V2 replay bundle
+      - name: Rebuild historical 54-origin governed replay bundle without database writes
         run: |
           python gold_axis_2026/data_pipeline/gpr_vintage_backfill_v2.py \
             --upstream-repo /tmp/iacoviel-gpr \
@@ -74,15 +64,11 @@ jobs:
           assert d['quality_errors'] == 0, d
           assert d['all_required_proven'] is True, d
           PY
-          echo '## GPR vintage bundle' >> "$GITHUB_STEP_SUMMARY"
-          echo '```json' >> "$GITHUB_STEP_SUMMARY"
-          cat gpr_vintage_bundle_v2_summary.json | python -c 'import json,sys; d=json.load(sys.stdin); d.pop("origins",None); print(json.dumps(d,indent=2,sort_keys=True))' >> "$GITHUB_STEP_SUMMARY"
-          echo '```' >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Upload audit evidence
+      - name: Upload read-only reproducibility evidence
         uses: actions/upload-artifact@v4
         with:
-          name: gpr-pit-coverage-v2
+          name: gpr-pit-historical-coverage-audit
           path: |
             gpr_pit_coverage_v2.json
             gpr_pit_coverage_v2.md
