@@ -14,7 +14,8 @@ import psycopg
 from psycopg.rows import dict_row
 
 
-SNAPSHOT_CONTRACT = "GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V141"
+SNAPSHOT_CONTRACT = "GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V142"
+CURRENT_SURFACE_CONTRACT = "GOLD_CONTROL_CURRENT_SURFACE_V142"
 CURRENT_ENGINE_IDS = (
     "VW_MIDAS_MSVR_SUCCESSOR_V1",
     "CAUSAL_PATCH",
@@ -77,10 +78,11 @@ def export_snapshot(database_url: str) -> dict[str, Any]:
             cur.execute("SET TRANSACTION READ ONLY")
             cur.execute(
                 "select to_regclass('public.current_engine_runtime_state_v1') as runtime_view, "
-                "to_regclass('public.current_context_feature_state_v1') as context_view"
+                "to_regclass('public.current_context_feature_state_v1') as context_view, "
+                "to_regclass('public.current_source_registry_v1') as source_view"
             )
             row = cur.fetchone()
-            if not row or row["runtime_view"] is None or row["context_view"] is None:
+            if not row or any(row[key] is None for key in ("runtime_view", "context_view", "source_view")):
                 raise RuntimeError("CURRENT_SURFACE_VIEW_NOT_AVAILABLE")
 
             cur.execute(
@@ -98,6 +100,12 @@ def export_snapshot(database_url: str) -> dict[str, Any]:
                 raise RuntimeError(f"CURRENT_SNAPSHOT_RUNTIME_INVALID:{len(runtime)}:{sorted(ids)}")
             if any(str(row.get("runtime_status") or "").upper() != "ACTIVE" for row in runtime):
                 raise RuntimeError("CURRENT_SNAPSHOT_RUNTIME_NOT_ALL_ACTIVE")
+            for row in runtime:
+                metadata = row.get("metadata") or {}
+                if metadata.get("current_surface_contract") != CURRENT_SURFACE_CONTRACT:
+                    raise RuntimeError("CURRENT_SNAPSHOT_RUNTIME_CONTRACT_INVALID")
+                if metadata.get("runtime_selection_rule") != "LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT":
+                    raise RuntimeError("CURRENT_SNAPSHOT_RUNTIME_SELECTION_RULE_INVALID")
 
             targets = {str(row.get("target_context") or "") for row in runtime}
             if len(targets) != 1:
@@ -123,8 +131,25 @@ def export_snapshot(database_url: str) -> dict[str, Any]:
                 if feature.get("quality_status") != "HISTORICAL_REPLAY_CONTEXT":
                     raise RuntimeError("CURRENT_SNAPSHOT_CONTEXT_EVIDENCE_INVALID")
                 metadata = feature.get("metadata") or {}
-                if metadata.get("current_surface_contract") != "GOLD_CONTROL_CURRENT_SURFACE_V141":
+                if metadata.get("current_surface_contract") != CURRENT_SURFACE_CONTRACT:
                     raise RuntimeError("CURRENT_SNAPSHOT_CONTEXT_CONTRACT_INVALID")
+                if metadata.get("context_selection_rule") != "LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT":
+                    raise RuntimeError("CURRENT_SNAPSHOT_CONTEXT_SELECTION_RULE_INVALID")
+
+            cur.execute("select count(*) as n from current_source_registry_v1")
+            current_source_count = int(cur.fetchone()["n"])
+            cur.execute(
+                """
+                select count(*) as n
+                from current_source_registry_v1
+                where status ilike 'BLOCKED%%' or status ilike 'OPTIONAL%%' or status ilike 'PAID%%'
+                """
+            )
+            disallowed_current_source_count = int(cur.fetchone()["n"])
+            if current_source_count <= 0 or disallowed_current_source_count != 0:
+                raise RuntimeError(
+                    f"CURRENT_SNAPSHOT_SOURCE_SURFACE_INVALID:{current_source_count}:{disallowed_current_source_count}"
+                )
 
             cur.execute("select * from data_evidence_spine_health_v1")
             health_row = cur.fetchone()
@@ -153,11 +178,17 @@ def export_snapshot(database_url: str) -> dict[str, Any]:
 
     snapshot: dict[str, Any] = {
         "snapshot_contract": SNAPSHOT_CONTRACT,
-        "source": "NEON_PRODUCTION_CURRENT_SURFACES_READ_ONLY_EXPORT",
+        "current_surface_contract": CURRENT_SURFACE_CONTRACT,
+        "source": "NEON_PRODUCTION_LATEST_COMPLETE_CURRENT_SURFACES_READ_ONLY_EXPORT",
         "source_state_at": source_state_at,
         "target_context": target_context,
         "runtime": runtime,
         "features": features,
+        "source_surface": {
+            "current_source_count": current_source_count,
+            "disallowed_current_source_count": disallowed_current_source_count,
+            "selection_rule": "OBSERVATION_BACKED_OR_EXPLICIT_LIVE_DISPLAY_AND_NOT_BLOCKED_OPTIONAL_PAID",
+        },
         "health": health,
         "authority_store_counts": authority_store_counts,
         "database_writes": "NONE",
@@ -178,6 +209,7 @@ def main() -> int:
     print(
         "CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_EXPORT_PASS "
         f"runtime={len(snapshot['runtime'])}/12 features={len(snapshot['features'])}/7 "
+        f"sources={snapshot['source_surface']['current_source_count']} "
         f"target={snapshot['target_context']} sha256={snapshot['payload_sha256']} writes=NONE"
     )
     return 0
