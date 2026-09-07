@@ -75,10 +75,13 @@ def export_snapshot(database_url: str) -> dict[str, Any]:
     with psycopg.connect(url, autocommit=False, row_factory=dict_row) as conn:
         with conn.cursor() as cur:
             cur.execute("SET TRANSACTION READ ONLY")
-            cur.execute("select to_regclass('public.current_engine_runtime_state_v1') as current_runtime_view")
+            cur.execute(
+                "select to_regclass('public.current_engine_runtime_state_v1') as runtime_view, "
+                "to_regclass('public.current_context_feature_state_v1') as context_view"
+            )
             row = cur.fetchone()
-            if not row or row["current_runtime_view"] is None:
-                raise RuntimeError("CURRENT_RUNTIME_VIEW_NOT_AVAILABLE")
+            if not row or row["runtime_view"] is None or row["context_view"] is None:
+                raise RuntimeError("CURRENT_SURFACE_VIEW_NOT_AVAILABLE")
 
             cur.execute(
                 """
@@ -103,13 +106,12 @@ def export_snapshot(database_url: str) -> dict[str, Any]:
 
             cur.execute(
                 """
-                select distinct on (feature_name)
-                       id,feature_name,feature_version,calculation_ts,input_cutoff,
+                select id,feature_name,feature_version,calculation_ts,input_cutoff,
                        value_num,value_text,git_commit,quality_status,metadata
-                from derived_feature_snapshots
+                from current_context_feature_state_v1
                 where feature_name=any(%s)
                   and metadata->>'target_context'=%s
-                order by feature_name,calculation_ts desc,id desc
+                order by feature_name
                 """,
                 (list(CURRENT_CONTEXT_FEATURES), target_context),
             )
@@ -117,6 +119,12 @@ def export_snapshot(database_url: str) -> dict[str, Any]:
             names = {str(row.get("feature_name") or "") for row in features}
             if len(features) != len(CURRENT_CONTEXT_FEATURES) or names != set(CURRENT_CONTEXT_FEATURES):
                 raise RuntimeError(f"CURRENT_SNAPSHOT_FEATURES_INVALID:{sorted(names)}")
+            for feature in features:
+                if feature.get("quality_status") != "HISTORICAL_REPLAY_CONTEXT":
+                    raise RuntimeError("CURRENT_SNAPSHOT_CONTEXT_EVIDENCE_INVALID")
+                metadata = feature.get("metadata") or {}
+                if metadata.get("current_surface_contract") != "GOLD_CONTROL_CURRENT_SURFACE_V141":
+                    raise RuntimeError("CURRENT_SNAPSHOT_CONTEXT_CONTRACT_INVALID")
 
             cur.execute("select * from data_evidence_spine_health_v1")
             health_row = cur.fetchone()
@@ -145,7 +153,7 @@ def export_snapshot(database_url: str) -> dict[str, Any]:
 
     snapshot: dict[str, Any] = {
         "snapshot_contract": SNAPSHOT_CONTRACT,
-        "source": "NEON_PRODUCTION_CURRENT_SURFACE_READ_ONLY_EXPORT",
+        "source": "NEON_PRODUCTION_CURRENT_SURFACES_READ_ONLY_EXPORT",
         "source_state_at": source_state_at,
         "target_context": target_context,
         "runtime": runtime,
