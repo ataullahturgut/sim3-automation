@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import math
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -12,6 +13,7 @@ MODULE_PATH = ROOT / "gold_axis_2026" / "tools" / "market_shock_challenger_v1.py
 spec = importlib.util.spec_from_file_location("market_shock_challenger_v1", MODULE_PATH)
 assert spec and spec.loader
 m = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = m
 spec.loader.exec_module(m)
 
 
