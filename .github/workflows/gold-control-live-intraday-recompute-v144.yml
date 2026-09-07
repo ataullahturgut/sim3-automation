@@ -10,6 +10,7 @@ on:
       - 'gold_axis_2026/data_pipeline/test_live_intramonth_recompute_v144.py'
       - 'gold_axis_2026/data_pipeline/twelve_xau_ny17.py'
       - 'gold_axis_2026/tools/audit_live_intramonth_postwrite_v144.py'
+      - 'gold_axis_2026/tools/audit_model_data_readiness_v143_cli_safe.py'
       - 'gold_axis_2026/GOLD_CONTROL_LIVE_INTRAMONTH_RECOMPUTE_CONTRACT_V144_2026-09-07.md'
       - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
       - '.github/workflows/gold-control-live-intraday-recompute-v144.yml'
@@ -64,7 +65,8 @@ jobs:
         run: |
           python -m py_compile \
             gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py \
-            gold_axis_2026/tools/audit_live_intramonth_postwrite_v144.py
+            gold_axis_2026/tools/audit_live_intramonth_postwrite_v144.py \
+            gold_axis_2026/tools/audit_model_data_readiness_v143_cli_safe.py
           PYTHONPATH=gold_axis_2026/data_pipeline pytest -q gold_axis_2026/data_pipeline/test_live_intramonth_recompute_v144.py
       - name: Read-only production preflight
         if: ${{ env.NEON_DATABASE_URL != '' }}
@@ -117,7 +119,7 @@ jobs:
             --evidence-mode catchup
       - name: Run strict post-write readiness audits
         run: |
-          python gold_axis_2026/tools/audit_model_data_readiness_v143.py
+          python gold_axis_2026/tools/audit_model_data_readiness_v143_cli_safe.py
           python gold_axis_2026/tools/audit_live_intramonth_postwrite_v144.py
 
   persist:
@@ -147,7 +149,7 @@ jobs:
             --evidence-mode "$MODE"
       - name: Post-write readiness and authority checks
         run: |
-          python gold_axis_2026/tools/audit_model_data_readiness_v143.py
+          python gold_axis_2026/tools/audit_model_data_readiness_v143_cli_safe.py
           python gold_axis_2026/tools/audit_live_intramonth_postwrite_v144.py
           python - <<'PY'
           import os, psycopg
