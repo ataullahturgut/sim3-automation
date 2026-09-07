@@ -1,0 +1,54 @@
+name: Gold Control Model Data Readiness V1.43
+
+on:
+  workflow_call:
+    secrets:
+      NEON_DATABASE_URL:
+        required: true
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-model-data-readiness-v143
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install read-only audit dependency
+        run: pip install 'psycopg[binary]>=3.2,<4'
+
+      - name: Compile and self-test readiness auditor
+        run: |
+          python -m py_compile gold_axis_2026/tools/audit_model_data_readiness_v143.py
+          env -u NEON_DATABASE_URL python gold_axis_2026/tools/audit_model_data_readiness_v143.py --self-test
+
+      - name: Audit production model-data readiness fail-closed
+        run: |
+          mkdir -p gold_axis_2026/data_pipeline/audits
+          python gold_axis_2026/tools/audit_model_data_readiness_v143.py \
+            --json-out gold_axis_2026/data_pipeline/audits/GOLD_CONTROL_MODEL_DATA_READINESS_V143.json
+
+      - name: Upload readiness evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-model-data-readiness-v143-${{ github.run_id }}
+          path: gold_axis_2026/data_pipeline/audits/GOLD_CONTROL_MODEL_DATA_READINESS_V143.json
+          if-no-files-found: warn
+          retention-days: 30
