@@ -1,12 +1,13 @@
-name: Gold Control Production Scheduler V1.30
+name: Gold Control Production Scheduler V1.42
 
 on:
   push:
     branches: [main]
     paths:
-      - '.github/workflows/gold-control-production-scheduler-v130.yml'
+      - '.github/workflows/gold-control-production-scheduler-v142.yml'
   schedule:
     - cron: '17 * * * *'       # core hourly XAU
+    - cron: '27 * * * *'       # current production snapshot refresh
     - cron: '45 23 * * *'      # core daily authority ingest
     - cron: '25 6 * * *'       # core daily independent retry
     - cron: '15 1 * * 2-6'     # FRED indices after US session
@@ -14,8 +15,8 @@ on:
     - cron: '35 1 * * 2-6'     # Twelve market after US session
     - cron: '45 12 * * 2-6'    # Twelve market retry
     - cron: '10 22 * * 1-5'    # canonical XAU NY17 after 17:00 New York
-    - cron: '30 21 30 9 *'     # Patch V7 Sep-30 17:30 ET first eligible October H=1 issuance
-    - cron: '30 22 30 9 *'     # Patch V7 controlled retry at Sep-30 18:30 ET
+    - cron: '30 21 30 9 *'     # Patch V7 Sep-30 17:30 ET eligible October H=1 issuance
+    - cron: '30 22 30 9 *'     # Patch V7 controlled retry
   workflow_dispatch:
     inputs:
       lane:
@@ -25,6 +26,7 @@ on:
         type: choice
         options:
           - core-hourly
+          - snapshot-refresh
           - core-daily
           - fred-indices
           - twelve-market
@@ -42,7 +44,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - name: Verify canonical reusable-writer authority
+      - name: Verify canonical scheduler contract
         shell: bash
         run: |
           set -euo pipefail
@@ -52,23 +54,24 @@ jobs:
             .github/workflows/gold-data-fred-indices.yml \
             .github/workflows/gold-data-twelve-market.yml \
             .github/workflows/gold-data-xau-ny17.yml \
-            .github/workflows/gold-control-patch-v7-month-end-expert-issuer.yml
+            .github/workflows/gold-control-patch-v7-month-end-expert-issuer.yml \
+            .github/workflows/gold-control-production-display-snapshot-refresh.yml
           do
             text="$(git show origin/gold-r4-direction-engine:$f)"
             grep -Fq 'workflow_call:' <<<"$text"
-            grep -Fq 'ref: gold-r4-direction-engine' <<<"$text"
             if grep -Eq '^[[:space:]]+schedule:' <<<"$text"; then
-              echo "Canonical writer still owns a schedule: $f" >&2
+              echo "Canonical reusable workflow still owns a schedule: $f" >&2
               exit 1
             fi
           done
-          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md \
-            | grep -Fq 'default-branch scheduling surface'
-          patch_contract="$(git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PATCH_V7_FIRST_PROSPECTIVE_SHADOW_ISSUER_CONTRACT_2026-09-02.md)"
-          grep -Fq '2026-09-30' <<<"$patch_contract"
-          grep -Fq '17:20' <<<"$patch_contract"
-          grep -Fq 'September 2026 may never be inserted as prospective evidence' <<<"$patch_contract"
-          echo 'V130_DEFAULT_BRANCH_DISPATCHER_AUTHORITY_PASS'
+          manifest="$(git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md)"
+          grep -Fq '**Manifest version:** 1.42' <<<"$manifest"
+          grep -Fq 'default-branch scheduling surface' <<<"$manifest"
+          grep -Fq 'LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT' <<<"$manifest"
+          grep -Fq 'LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT' <<<"$manifest"
+          snapshot="$(git show origin/gold-r4-direction-engine:.github/workflows/gold-control-production-display-snapshot-refresh.yml)"
+          grep -Fq 'GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V142' <<<"$snapshot"
+          echo 'V142_DEFAULT_BRANCH_DISPATCHER_AUTHORITY_PASS'
 
   core-hourly:
     if: >-
@@ -77,6 +80,15 @@ jobs:
     uses: ataullahturgut/sim3-automation/.github/workflows/gold-data-neon-ingest.yml@gold-r4-direction-engine
     with:
       mode: hourly
+    secrets: inherit
+
+  snapshot-refresh:
+    if: >-
+      (github.event_name == 'schedule' && github.event.schedule == '27 * * * *') ||
+      (github.event_name == 'workflow_dispatch' && inputs.lane == 'snapshot-refresh')
+    permissions:
+      contents: write
+    uses: ataullahturgut/sim3-automation/.github/workflows/gold-control-production-display-snapshot-refresh.yml@gold-r4-direction-engine
     secrets: inherit
 
   core-daily:
