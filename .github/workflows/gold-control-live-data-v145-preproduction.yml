@@ -1,0 +1,55 @@
+name: Gold Control Live Data V1.45 Preproduction
+
+on:
+  push:
+    branches:
+      - gold-control-live-frequency-v145
+    paths:
+      - 'gold_axis_2026/data_pipeline/twelve_xau_intraday_backfill_v145.py'
+      - 'gold_axis_2026/data_pipeline/live_xau_emergency_v145.py'
+      - 'gold_axis_2026/tools/probe_twelve_gvz_websocket_v145.py'
+      - '.github/workflows/gold-control-live-data-v145-preproduction.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preproduction:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-live-frequency-v145
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install runtime
+        run: |
+          pip install -q -r gold_axis_2026/data_pipeline/requirements.txt
+          pip install -q websocket-client
+      - name: Require protected credentials
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$TWELVE_DATA_API_KEY"
+      - name: Compile V1.45 live-data code
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/twelve_xau_intraday_backfill_v145.py \
+            gold_axis_2026/data_pipeline/live_xau_emergency_v145.py \
+            gold_axis_2026/tools/probe_twelve_gvz_websocket_v145.py
+      - name: Emergency minute aggregation self-test
+        run: python gold_axis_2026/data_pipeline/live_xau_emergency_v145.py --self-test --duration-seconds 60
+      - name: Twelve XAU intraday REST bootstrap dry-run
+        run: python gold_axis_2026/data_pipeline/twelve_xau_intraday_backfill_v145.py --lookback-days 1
+      - name: Twelve GVZ WebSocket probe
+        run: python gold_axis_2026/tools/probe_twelve_gvz_websocket_v145.py --timeout-seconds 25 --out twelve_gvz_ws_preflight_v145.json
+      - name: Upload GVZ probe evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-twelve-gvz-ws-preflight-v145
+          path: twelve_gvz_ws_preflight_v145.json
