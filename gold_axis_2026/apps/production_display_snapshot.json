@@ -15,18 +15,15 @@
       "id": 3,
       "input_cutoff": "2026-09-01T13:49:02.380053+00:00",
       "metadata": {
-        "canonical_forecast_write": "NONE",
-        "contract": "GOLD_CONTROL_STAGE4A_TACTICAL_CONTEXT_DISPLAY_CONTRACT_2026-09-02.md",
-        "decision_store_write": "NONE",
-        "display_scope": "COMPONENT_CONTEXT_ONLY",
-        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
-        "input_fingerprint": "b62eb48a6ef25edcadb366f3ad3b0451397c8db9c20dad4485e692d7a5cd449f",
-        "position_mapping": "NOT_PROVEN_POSITION_MAPPING",
+        "canonical_forecast_authority": false,
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
         "prospective_h1_claim": false,
-        "raw_market_values_logged": false,
+        "raw_history_preserved": true,
+        "source_derived_feature_snapshot_id": 3,
         "target_context": "2026-09"
       },
-      "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+      "quality_status": "HISTORICAL_REPLAY_CONTEXT",
       "value_num": null,
       "value_text": "ROBUST_UP"
     },
@@ -38,28 +35,15 @@
       "id": 6,
       "input_cutoff": "2026-09-03T01:26:55.875433+00:00",
       "metadata": {
-        "canonical_forecast_write": "NONE",
-        "contract": "GOLD_CONTROL_STAGE4A_GVZ_RISK_CONTEXT_CONTRACT_2026-09-03.md",
-        "decision_store_write": "NONE",
-        "direction_vote": false,
-        "display_scope": "COMPONENT_CONTEXT_ONLY",
-        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
-        "frozen_thresholds": {
-          "elevated_cap": 0.5,
-          "full_cap_max": 25.9795,
-          "half_cap_max": 30.5238,
-          "normal_cap": 1.0,
-          "panic_above": 30.5238,
-          "panic_cap": 0.25
-        },
-        "input_fingerprint": "a283843d9d6c65de74e833560b509e75e32bd28bd7f73d64d503a9fc75c3c2a9",
-        "position_mapping": "NOT_PROVEN_POSITION_MAPPING",
+        "canonical_forecast_authority": false,
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
         "prospective_h1_claim": false,
-        "raw_market_values_logged": false,
-        "role": "RISK_ONLY",
+        "raw_history_preserved": true,
+        "source_derived_feature_snapshot_id": 6,
         "target_context": "2026-09"
       },
-      "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+      "quality_status": "HISTORICAL_REPLAY_CONTEXT",
       "value_num": null,
       "value_text": "0.5"
     },
@@ -71,28 +55,15 @@
       "id": 7,
       "input_cutoff": "2026-09-03T01:26:55.875433+00:00",
       "metadata": {
-        "canonical_forecast_write": "NONE",
-        "contract": "GOLD_CONTROL_STAGE4A_GVZ_RISK_CONTEXT_CONTRACT_2026-09-03.md",
-        "decision_store_write": "NONE",
-        "direction_vote": false,
-        "display_scope": "COMPONENT_CONTEXT_ONLY",
-        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
-        "frozen_thresholds": {
-          "elevated_cap": 0.5,
-          "full_cap_max": 25.9795,
-          "half_cap_max": 30.5238,
-          "normal_cap": 1.0,
-          "panic_above": 30.5238,
-          "panic_cap": 0.25
-        },
-        "input_fingerprint": "a283843d9d6c65de74e833560b509e75e32bd28bd7f73d64d503a9fc75c3c2a9",
-        "position_mapping": "NOT_PROVEN_POSITION_MAPPING",
+        "canonical_forecast_authority": false,
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
         "prospective_h1_claim": false,
-        "raw_market_values_logged": false,
-        "role": "RISK_ONLY",
+        "raw_history_preserved": true,
+        "source_derived_feature_snapshot_id": 7,
         "target_context": "2026-09"
       },
-      "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+      "quality_status": "HISTORICAL_REPLAY_CONTEXT",
       "value_num": null,
       "value_text": "false"
     },
@@ -104,28 +75,15 @@
       "id": 8,
       "input_cutoff": "2026-09-03T01:26:55.875433+00:00",
       "metadata": {
-        "canonical_forecast_write": "NONE",
-        "contract": "GOLD_CONTROL_STAGE4A_GVZ_RISK_CONTEXT_CONTRACT_2026-09-03.md",
-        "decision_store_write": "NONE",
-        "direction_vote": false,
-        "display_scope": "COMPONENT_CONTEXT_ONLY",
-        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
-        "frozen_thresholds": {
-          "elevated_cap": 0.5,
-          "full_cap_max": 25.9795,
-          "half_cap_max": 30.5238,
-          "normal_cap": 1.0,
-          "panic_above": 30.5238,
-          "panic_cap": 0.25
-        },
-        "input_fingerprint": "a283843d9d6c65de74e833560b509e75e32bd28bd7f73d64d503a9fc75c3c2a9",
-        "position_mapping": "NOT_PROVEN_POSITION_MAPPING",
+        "canonical_forecast_authority": false,
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
         "prospective_h1_claim": false,
-        "raw_market_values_logged": false,
-        "role": "RISK_ONLY",
+        "raw_history_preserved": true,
+        "source_derived_feature_snapshot_id": 8,
         "target_context": "2026-09"
       },
-      "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+      "quality_status": "HISTORICAL_REPLAY_CONTEXT",
       "value_num": null,
       "value_text": "ELEVATED"
     },
@@ -137,28 +95,15 @@
       "id": 5,
       "input_cutoff": "2026-09-03T01:26:55.875433+00:00",
       "metadata": {
-        "canonical_forecast_write": "NONE",
-        "contract": "GOLD_CONTROL_STAGE4A_GVZ_RISK_CONTEXT_CONTRACT_2026-09-03.md",
-        "decision_store_write": "NONE",
-        "direction_vote": false,
-        "display_scope": "COMPONENT_CONTEXT_ONLY",
-        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
-        "frozen_thresholds": {
-          "elevated_cap": 0.5,
-          "full_cap_max": 25.9795,
-          "half_cap_max": 30.5238,
-          "normal_cap": 1.0,
-          "panic_above": 30.5238,
-          "panic_cap": 0.25
-        },
-        "input_fingerprint": "a283843d9d6c65de74e833560b509e75e32bd28bd7f73d64d503a9fc75c3c2a9",
-        "position_mapping": "NOT_PROVEN_POSITION_MAPPING",
+        "canonical_forecast_authority": false,
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
         "prospective_h1_claim": false,
-        "raw_market_values_logged": false,
-        "role": "RISK_ONLY",
+        "raw_history_preserved": true,
+        "source_derived_feature_snapshot_id": 5,
         "target_context": "2026-09"
       },
-      "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+      "quality_status": "HISTORICAL_REPLAY_CONTEXT",
       "value_num": null,
       "value_text": "26.14"
     },
@@ -170,33 +115,15 @@
       "id": 2,
       "input_cutoff": "2026-09-01T13:49:02.380053+00:00",
       "metadata": {
-        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
-        "h1_forecast_blocker_closed": false,
-        "input_fingerprint": "426ecb82ece5b8b4c0970fa4c093d17d700a6f3dcfe655b1d1fdf8c87ff30206",
-        "late_bootstrap_reason": "SEPTEMBER_2026_H1_PROSPECTIVE_ORIGIN_MISSED",
-        "manifest_contract": "GOLD_CONTROL_PROJECT_MANIFEST.md v1.9 prospective-origin cutoff",
+        "canonical_forecast_authority": false,
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
         "prospective_h1_claim": false,
-        "raw_market_values_logged": false,
-        "required_months": [
-          "2026-05",
-          "2026-06",
-          "2026-07",
-          "2026-08"
-        ],
-        "return_signs": [
-          "NEG",
-          "POS",
-          "POS"
-        ],
-        "selected_observation_dates": [
-          "2026-05-29",
-          "2026-06-30",
-          "2026-07-31",
-          "2026-08-31"
-        ],
+        "raw_history_preserved": true,
+        "source_derived_feature_snapshot_id": 2,
         "target_context": "2026-09"
       },
-      "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+      "quality_status": "HISTORICAL_REPLAY_CONTEXT",
       "value_num": null,
       "value_text": "DOWN"
     },
@@ -208,18 +135,15 @@
       "id": 4,
       "input_cutoff": "2026-09-01T13:49:02.380053+00:00",
       "metadata": {
-        "canonical_forecast_write": "NONE",
-        "contract": "GOLD_CONTROL_STAGE4A_TACTICAL_CONTEXT_DISPLAY_CONTRACT_2026-09-02.md",
-        "decision_store_write": "NONE",
-        "display_scope": "COMPONENT_CONTEXT_ONLY",
-        "evidence_class": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
-        "input_fingerprint": "b62eb48a6ef25edcadb366f3ad3b0451397c8db9c20dad4485e692d7a5cd449f",
-        "position_mapping": "NOT_PROVEN_POSITION_MAPPING",
+        "canonical_forecast_authority": false,
+        "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V141",
+        "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
         "prospective_h1_claim": false,
-        "raw_market_values_logged": false,
+        "raw_history_preserved": true,
+        "source_derived_feature_snapshot_id": 4,
         "target_context": "2026-09"
       },
-      "quality_status": "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+      "quality_status": "HISTORICAL_REPLAY_CONTEXT",
       "value_num": null,
       "value_text": "ROBUST_UP"
     }
@@ -237,7 +161,7 @@
     "input_snapshots": 5,
     "orphan_input_snapshots": 0
   },
-  "payload_sha256": "dc202e98f31852627f2761737f5bec997632ba950f6800beeee70fa81174f3f3",
+  "payload_sha256": "4528c3d6ff115e74bc233e7fb4004c0ac8dba957435114f7ee996b558ef97368",
   "runtime": [
     {
       "as_of": "2026-09-05T14:34:24.041101+00:00",
@@ -634,7 +558,7 @@
     }
   ],
   "snapshot_contract": "GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V141",
-  "source": "NEON_PRODUCTION_CURRENT_SURFACE_READ_ONLY_EXPORT",
+  "source": "NEON_PRODUCTION_CURRENT_SURFACES_READ_ONLY_EXPORT",
   "source_state_at": "2026-09-07T06:15:00.035844+00:00",
   "target_context": "2026-09"
 }
