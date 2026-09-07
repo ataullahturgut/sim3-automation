@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - gold-control-clean-current-surface-v141
+      - gold-control-clean-current-surface-v141-final
   workflow_dispatch:
 
 permissions:
@@ -30,7 +31,7 @@ jobs:
             gold_axis_2026/apps/test_production_display_snapshot.py \
             gold_axis_2026/data_pipeline/test_multi_expert_forecast.py \
             gold_axis_2026/data_pipeline/test_data_evidence_spine_runtime_bootstrap.py
-      - name: Audit current surface for stale semantics and paths
+      - name: Audit current surface for stale semantics, legacy paths and broken workflow references
         run: python gold_axis_2026/tools/audit_current_surface_v141.py
       - name: Upload current-tree reports
         if: always()
