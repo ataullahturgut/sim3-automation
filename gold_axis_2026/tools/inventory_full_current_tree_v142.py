@@ -27,8 +27,8 @@ CONTENT_TOKENS = (
 )
 SCAN_EXTENSIONS = {".py", ".md", ".txt", ".json", ".yml", ".yaml", ".toml"}
 SELF_EXCLUDE = {
-    "gold_axis_2026/tools/audit_current_surface_v141.py",
-    "gold_axis_2026/tools/inventory_full_current_tree_v141.py",
+    "gold_axis_2026/tools/audit_current_surface_v142.py",
+    "gold_axis_2026/tools/inventory_full_current_tree_v142.py",
 }
 REFERENCE_SCAN_EXTENSIONS = {".py", ".json", ".yml", ".yaml", ".toml"}
 
@@ -131,7 +131,7 @@ def main() -> int:
     references = root_doc_references(files, root_doc_paths)
     workflows = sorted(rel(p) for p in (ROOT / ".github" / "workflows").glob("gold-control-*.yml"))
     report = {
-        "contract": "GOLD_CONTROL_FULL_CURRENT_TREE_INVENTORY_V141",
+        "contract": "GOLD_CONTROL_FULL_CURRENT_TREE_INVENTORY_V142",
         "scanned_file_count": len(files),
         "legacy_path_hits": legacy_path_hits(files),
         "legacy_content_hits": legacy_content_hits(files),
@@ -144,7 +144,7 @@ def main() -> int:
         "gold_control_workflow_count": len(workflows),
         "app_reachability": app_reachability(),
     }
-    Path("full_current_tree_inventory_v141.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
+    Path("full_current_tree_inventory_v142.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
     print(json.dumps(report, indent=2, ensure_ascii=False))
     return 0
 
