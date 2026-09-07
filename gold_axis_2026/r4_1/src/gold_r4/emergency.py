@@ -23,12 +23,22 @@ class EmergencyState:
         self.running_trough = None
 
     def update(self, date: pd.Timestamp, close: float, monthly_vw_forecast: float) -> tuple[Direction, ReversalAlert]:
-        """Frozen R4.1 EOD Emergency Direction + reversal alert."""
+        """Emergency level + path-dependent reversal state.
+
+        V1.46 defect fix: reversal is evaluated against the pre-existing
+        shock excursion before a same-observation opposite level breach is
+        allowed to replace that state. This preserves running-peak/running-
+        trough drawdown/drawup semantics and prevents a sharp cross-through
+        from erasing the reversal event. The frozen +/-4% thresholds are not
+        retuned here.
+        """
         month_key = date.strftime("%Y-%m")
         if self.current_month != month_key:
             self._reset_month(month_key)
         if monthly_vw_forecast <= 0:
             raise ValueError("monthly_vw_forecast must be positive")
+        if close <= 0:
+            raise ValueError("close must be positive")
 
         displacement = close / monthly_vw_forecast - 1.0
         if displacement >= self.level_threshold_abs:
@@ -38,6 +48,23 @@ class EmergencyState:
         else:
             level = Direction.NEUTRAL
 
+        # Evaluate reversal against the excursion that existed before this
+        # observation. Otherwise a one-step move from +4% territory to -4%
+        # territory (or vice versa) can overwrite shock_direction before the
+        # peak-to-current drawdown / trough-to-current drawup is measured.
+        alert = ReversalAlert.OFF
+        prior_direction = self.shock_direction
+        if prior_direction == Direction.UP:
+            self.running_peak = max(self.running_peak or close, close)
+            if close / self.running_peak - 1.0 <= -self.reversal_threshold_abs:
+                alert = ReversalAlert.DOWN_ALERT
+        elif prior_direction == Direction.DOWN:
+            self.running_trough = min(self.running_trough or close, close)
+            if close / self.running_trough - 1.0 >= self.reversal_threshold_abs:
+                alert = ReversalAlert.UP_ALERT
+
+        # Only after measuring the prior excursion may the current level breach
+        # become the regime tracked for the next observation.
         if level == Direction.UP and self.shock_direction != Direction.UP:
             self.shock_direction = Direction.UP
             self.running_peak = close
@@ -46,15 +73,9 @@ class EmergencyState:
             self.shock_direction = Direction.DOWN
             self.running_trough = close
             self.running_peak = None
-
-        alert = ReversalAlert.OFF
-        if self.shock_direction == Direction.UP:
+        elif level == Direction.UP:
             self.running_peak = max(self.running_peak or close, close)
-            if close / self.running_peak - 1.0 <= -self.reversal_threshold_abs:
-                alert = ReversalAlert.DOWN_ALERT
-        elif self.shock_direction == Direction.DOWN:
+        elif level == Direction.DOWN:
             self.running_trough = min(self.running_trough or close, close)
-            if close / self.running_trough - 1.0 >= self.reversal_threshold_abs:
-                alert = ReversalAlert.UP_ALERT
 
         return level, alert
