@@ -39,6 +39,14 @@ CURRENT_CONTEXT_FEATURES = (
     "GVZ_PANIC",
     "GVZ_REGIME",
 )
+ALLOWED_CONTEXT_QUALITY_STATUSES = frozenset(
+    {
+        "HISTORICAL_REPLAY_CONTEXT",
+        "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+        "HISTORICAL_REPLAY_INTRAMONTH_CONTEXT",
+        "PROSPECTIVE_SHADOW_INTRAMONTH_CONTEXT",
+    }
+)
 AUTHORITY_TABLES = (
     "monthly_forecast_contracts",
     "decision_signal_snapshots",
@@ -128,13 +136,19 @@ def export_snapshot(database_url: str) -> dict[str, Any]:
             if len(features) != len(CURRENT_CONTEXT_FEATURES) or names != set(CURRENT_CONTEXT_FEATURES):
                 raise RuntimeError(f"CURRENT_SNAPSHOT_FEATURES_INVALID:{sorted(names)}")
             for feature in features:
-                if feature.get("quality_status") != "HISTORICAL_REPLAY_CONTEXT":
-                    raise RuntimeError("CURRENT_SNAPSHOT_CONTEXT_EVIDENCE_INVALID")
+                quality = str(feature.get("quality_status") or "")
+                if quality not in ALLOWED_CONTEXT_QUALITY_STATUSES:
+                    raise RuntimeError(f"CURRENT_SNAPSHOT_CONTEXT_EVIDENCE_INVALID:{quality}")
                 metadata = feature.get("metadata") or {}
                 if metadata.get("current_surface_contract") != CURRENT_SURFACE_CONTRACT:
                     raise RuntimeError("CURRENT_SNAPSHOT_CONTEXT_CONTRACT_INVALID")
                 if metadata.get("context_selection_rule") != "LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT":
                     raise RuntimeError("CURRENT_SNAPSHOT_CONTEXT_SELECTION_RULE_INVALID")
+                metadata_evidence = str(metadata.get("evidence_class") or "")
+                if metadata_evidence and metadata_evidence != quality:
+                    raise RuntimeError(
+                        f"CURRENT_SNAPSHOT_CONTEXT_EVIDENCE_METADATA_MISMATCH:{feature.get('feature_name')}:{quality}:{metadata_evidence}"
+                    )
 
             cur.execute("select count(*) as n from current_source_registry_v1")
             current_source_count = int(cur.fetchone()["n"])
