@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.43  
+**Manifest version:** 1.44  
 **Issue date:** 2026-09-07  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -14,40 +14,31 @@
 
 This file is the only current Gold Control project manifest.
 
-GitHub is the authority for current code, model contracts, reproducibility and this manifest. Production Neon is the authority for mutable source observations, point-in-time lineage, current runtime/context state and legitimately issued forecast/decision records.
+GitHub is the authority for current code, frozen model/feature contracts, reproducibility and this manifest. Production Neon is the authority for mutable source observations, point-in-time lineage, append-only current runtime/context state and legitimately issued forecast/decision records.
 
-Superseded implementation detail belongs in Git history or immutable audit storage, not in current application/runtime views. Historical rows may remain immutable; current views must hide superseded identities and stale contracts.
+Historical implementation detail belongs in Git history or immutable audit storage, not in current application/runtime views. Current views may summarize historical evidence but may not rewrite or destroy it.
 
-The application is read/presentation only. It may not silently choose a model, average experts, tune thresholds, substitute providers, backdate reconstructed evidence or manufacture an action.
+Gold Control is a decision-support system, not an autonomous trading system. The application may not silently choose a model, average experts, tune thresholds, substitute providers, backdate evidence or manufacture an action.
 
-**V1.43 adds a separate data-readiness authority:** an engine can be registered `ACTIVE` while its live input chain is stale. `ACTIVE` therefore proves current governed identity presence, not source freshness or successful live recomputation.
+Binding current data/readiness contracts:
 
-Binding data-readiness contract:
+- `GOLD_CONTROL_MODEL_DATA_READINESS_CONTRACT_V143_2026-09-07.md`
+- `GOLD_CONTROL_LIVE_INTRAMONTH_RECOMPUTE_CONTRACT_V144_2026-09-07.md`
 
-`GOLD_CONTROL_MODEL_DATA_READINESS_CONTRACT_V143_2026-09-07.md`
+Binding current operational implementations:
 
-Read-only production auditor:
+- canonical XAU reconciliation: `data_pipeline/twelve_xau_ny17.py`
+- live intramonth append-only recompute: `data_pipeline/live_intramonth_recompute_v144.py`
+- read-only model-data readiness audit: `tools/audit_model_data_readiness_v143.py`
+- strict post-write intramonth audit: `tools/audit_live_intramonth_postwrite_v144.py`
 
-`tools/audit_model_data_readiness_v143.py`
-
----
-
-## 2. Product definition
-
-Gold Control is an auditable XAU/USD decision-support system, not an autonomous trading system.
-
-The system has four separate responsibilities:
-
-1. estimate the next calendar month's average XAU/USD level;
-2. maintain strategic and tactical direction context at different time scales;
-3. detect intramonth shock, reversal, event and regime conditions;
-4. expose volatility/risk context and immutable evidence provenance.
-
-A price forecast is not a tactical direction signal. A risk/regime context is not a price forecast. No single context is an automatic position instruction.
+`ACTIVE` means a governed identity is present on the current runtime surface. It is **not** by itself a source-freshness or successful-recomputation certificate.
 
 ---
 
-## 3. Current governed architecture
+## 2. Governed architecture
+
+The current architecture is:
 
 `Monthly H=1 expert layer`
 
@@ -89,7 +80,7 @@ No other identity belongs to the current governed runtime inventory.
 
 ---
 
-## 4. Governance locks
+## 3. Governance locks
 
 The following remain binding:
 
@@ -101,206 +92,224 @@ The following remain binding:
 - no hindsight threshold tuning
 - no random-split time-series validation
 - no silent provider substitution
-- no interpolation or forward-fill of a missing canonical XAU session reference
+- no interpolation or forward-fill of missing canonical XAU session references
 - no backdating of reconstruction/replay evidence
 - no mutation of immutable historical forecast/runtime evidence
-- no production forecast/decision authority write without explicit later manifest authorization
-- no relabelling of a stale derived context as live-fresh merely because its runtime identity is `ACTIVE`
+- no production forecast/decision authority write without explicit later authorization
+- no stale derived context may be labelled fresh merely because the engine is `ACTIVE`
+- no target-month observation may be inserted into a frozen target-month H=1 forecast after its origin
 
 Expert disagreement is displayed; it is not silently resolved.
 
 ---
 
-## 5. Monthly origin and evidence contract
+## 4. Evidence and point-in-time semantics
 
-For target calendar month `M`, the H=1 origin is the completed month-end boundary immediately before `M`.
+Evidence classes are separate:
 
-`origin(M) = completed month-end boundary of M-1`
+- `HISTORICAL_REPLAY`: reconstructed after the original origin from information bounded to that historical origin;
+- `PROSPECTIVE_SHADOW`: issued after the governed mechanism is deployed and before the relevant future outcome is known;
+- `LIVE_PRODUCTION`: only when separately authorized.
 
-The target is the next calendar month's average XAU/USD price.
+Current runtime inventory rows may use the governance wrapper class `RUNTIME_GOVERNANCE_AUDIT`; detailed context/reference evidence remains explicit in metadata. This wrapper does not convert a historical H=1 reference into prospective evidence.
 
-Current September 2026 information boundary:
+For any historical forecast origin, every input must satisfy the point-in-time availability rule for that origin. Later target observations and later revisions are forbidden.
 
-`2026-08-31T21:00:00Z` = 31 Aug 2026 17:00 ET.
-
-A month-open snapshot is immutable. Later intramonth observations may update tactical, emergency, event and risk context, but may not rewrite the month-open snapshot.
-
-Evidence classes remain explicit:
-
-- `HISTORICAL_REPLAY`: reconstructed later from a frozen historical information boundary;
-- `PROSPECTIVE_SHADOW`: issued at a real future origin before target realization;
-- `LIVE_PRODUCTION`: only when separately authorized and legitimately issued.
-
-Reconstruction may never be relabelled as prospective evidence.
-
-Time-series evaluation and tuning remain forecasting-origin / point-in-time safe: observations or revisions not available at an origin may not enter that origin's training, tuning or forecast input set.
+For current intramonth context, the relevant completed source observations may be consumed as they become available because FAST/SLOW/Emergency/GVZ are monitoring layers rather than the frozen H=1 monthly forecast.
 
 ---
 
-## 6. September 2026 current references and freshness interpretation
+## 5. September 2026 H=1 origin and frozen references
 
-The following values were reconstructed from the completed 31-Aug information boundary. They are current September references, but not backdated prospective issuance evidence.
+Target month: `2026-09`  
+Frozen information boundary: `2026-08-31T21:00:00Z` = 31 Aug 2026 17:00 ET.
 
-| Identity | Current September reference | Semantics | V1.43 interpretation |
-|---|---:|---|---|
-| `VW_MIDAS_MSVR_SUCCESSOR_V1` | `4565.115907930242 USD/oz` | H=1 price reference | frozen Aug-31 replay reference; do not refresh from September data |
-| `CAUSAL_PATCH` | `4452.046728838838 USD/oz` | H=1 price reference | frozen Aug-31 replay reference; do not refresh from September data |
-| `MOMENTUM_3M` | `4345.814584037808 USD/oz` | H=1 price reference | source-bound R2 historical replay; do not refresh from September data |
-| `RANDOM_WALK` | `4397.305673870967 USD/oz` | H=1 benchmark | source-bound R2 historical replay; do not refresh from September data |
-| `MONTHLY_DIRECTION_3M` | `DOWN` | strategic monthly context | month-origin context; not a live daily freshness claim |
-| `FAST` | `ROBUST_UP` | tactical short-horizon context | current persisted value may be stale until V1.43 readiness passes |
-| `SLOW` | `ROBUST_UP` | tactical slower context | current persisted value may be stale until V1.43 readiness passes |
-| `MACRO_EVENT_SUCCESSOR_V2` | `MACRO_MIXED_OR_SMALL` | intramonth event-risk context | release/PIT semantics remain separate |
-| `BOCPD_RETURN_SUCCESSOR_V1` | `NO_ADVERSE_BREAK_CANDIDATE` | regime/break context | current context, not a price/direction forecast |
-| `EMERGENCY_LEVEL` | `NEUTRAL` | month-open emergency state | replay month-open state; not live-fresh after target-month observations arrive |
-| `EMERGENCY_REVERSAL` | `OFF` | month-open emergency state | replay month-open state; not live-fresh after target-month observations arrive |
-| `GVZ_RISK` | current persisted risk context | risk only | current persisted value may be stale until latest eligible GVZ is consumed |
+Current September H=1 reconstruction references:
 
-The four H=1 expert values must not be averaged, weighted or winner-selected while the selector lock remains in force.
+| Identity | September reference | Evidence / role |
+|---|---:|---|
+| `VW_MIDAS_MSVR_SUCCESSOR_V1` | `4565.115907930242 USD/oz` | H=1 historical-origin reconstruction |
+| `CAUSAL_PATCH` | `4452.046728838838 USD/oz` | H=1 historical-origin reconstruction |
+| `MOMENTUM_3M` | `4345.814584037808 USD/oz` | source-bound R2 historical replay |
+| `RANDOM_WALK` | `4397.305673870967 USD/oz` | mandatory source-bound R2 benchmark |
 
-30 Sep 2026 is a later eligible prospective validation origin for October; it does not block the September reference.
+These values are frozen for September. September observations do not trigger their recomputation.
 
-**Production audit finding on 7 Sep 2026:** the governed inventory is complete, but the intramonth data path is not yet entitled to a global `READY` claim. During the audit, canonical `XAU_EOD_TWELVE_NY17` was at trade date 2026-09-03 while the approved independent daily XAU cross-check had 2026-09-04; FAST/SLOW and GVZ derived contexts predated newer eligible source availability; Emergency still carried a month-open no-September-EOD reason despite accepted September XAU observations. These are freshness/readiness blockers, not reasons to rewrite the frozen H=1 monthly references.
+30 Sep 2026 is a later eligible prospective validation origin for October. It does not block the September references.
+
+No selector/ensemble is authorized among the four experts.
 
 ---
 
-## 7. Motor semantics and governed model input binding
+## 6. Source-to-model binding
 
 ### `VW_MIDAS_MSVR_SUCCESSOR_V1`
-Current VW/MSVR model identity. Frozen 8-feature four-metal MSVR with origin-local GPR point-in-time input. Historical replay window is 2023-01..2026-07, N=43. Historical replay MAPE is `2.69106498%` versus Random Walk `3.30232202%`. Historical replay performance is evidence, not proof of future superiority.
-
-Historical replay input availability does not establish prospective runtime readiness. The four-metal prospective source refresh, GPR vintage/publication-lag rule and XAU target-anchor bridge remain separate gates. A replay reference may not be promoted to prospective merely because the model code is reproducible.
+Frozen four-metal MSVR with origin-local GPR PIT input. Historical replay success does not by itself prove prospective source readiness. Prospective four-metal inputs, GPR publication/vintage rule and target-anchor inputs remain separate gates.
 
 ### `CAUSAL_PATCH`
-Current monthly H=1 expert. Completed-session/PIT safeguards remain part of its executable identity. No selector or action authority. Historical replay and a legitimately persisted prospective Patch expert are separate evidence classes.
+Frozen monthly H=1 expert. Completed-session/PIT safeguards remain part of the identity. Historical-replay and legitimately prospective Patch evidence remain distinct.
 
 ### `MOMENTUM_3M`
-Current monthly H=1 expert. Distinct from `MONTHLY_DIRECTION_3M`.
+Current identity: `MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND`.
 
-Current source-bound identity:
-
-`MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND`
-
-Its persisted September replay input set is restricted to:
-
-`SIMPLE_EXPERT_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V2`
-
-No target-month observation may enter the September H=1 input set.
+September persisted input set is restricted to `SIMPLE_EXPERT_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V2`; target-month observations are forbidden.
 
 ### `RANDOM_WALK`
-Mandatory same-origin naive benchmark.
+Current identity: `RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND`.
 
-Current source-bound identity:
-
-`RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND`
-
-Its persisted September replay input set is restricted to:
-
-`SIMPLE_EXPERT_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V2`
+September persisted input set is restricted to the same governed R2 monthly-mean series and is origin-bounded.
 
 ### `MONTHLY_DIRECTION_3M`
-Strategic monthly direction/prior context; not an H=1 price forecast. It is origin-frozen for the target month and is not refreshed merely because new target-month daily bars arrive.
+Strategic monthly direction/prior. It is frozen at the target-month origin and is not a daily-refresh component.
 
 ### `FAST`
-Short-horizon tactical context from completed daily XAU observations and frozen SMA20/persistence logic. Governed daily XAU input is `XAU_EOD_TWELVE_NY17`. A FAST value whose input cutoff precedes a newer eligible canonical XAU availability is `STALE_RELATIVE_TO_SOURCE`, even if its runtime identity is ACTIVE.
+Source: `XAU_EOD_TWELVE_NY17` only.  
+Rule: frozen R4.1 SMA20 + two completed-trade-date persistence rule.  
+Freshness: latest FAST input must consume the newest eligible canonical XAU available to the current monitoring run.
 
 ### `SLOW`
-Slower tactical confirmation context from completed weekly observations and frozen SMA4/persistence logic. Governed underlying input is `XAU_EOD_TWELVE_NY17`. Incomplete weeks may not be treated as completed weeks. Source freshness and completed-week semantics are separate checks.
+Underlying source: `XAU_EOD_TWELVE_NY17` only.  
+Rule: frozen R4.1 completed weekly close / SMA4 + two completed-week persistence rule.  
+Incomplete weeks are excluded.
 
-### `MACRO_EVENT_SUCCESSOR_V2`
-Timestamp-safe labor-event risk/context. Intramonth event information may not be inserted retroactively into the month-open snapshot. Scheduled/revision-prone macro inputs are freshness-checked by release/availability/vintage semantics, not by observation date alone.
+### `EMERGENCY_LEVEL` / `EMERGENCY_REVERSAL`
+XAU source: accepted completed target-month `XAU_EOD_TWELVE_NY17` observations. The state is replayed chronologically from the beginning of the target month at each refresh so peak/trough memory is deterministic and recoverable.
 
-### `BOCPD_RETURN_SUCCESSOR_V1`
-Regime/break context only. No H=1 price forecast, no direction vote, no automatic action.
-
-### `EMERGENCY_LEVEL`
-Intramonth abnormal-level detector evaluated from accepted completed target-month observations against an explicitly permitted frozen monthly reference.
-
-A month-open `NO_*OBSERVATION` state becomes stale after the first eligible target-month canonical XAU observation exists. It must not be silently reused as a live state.
-
-### `EMERGENCY_REVERSAL`
-Intramonth peak/trough reversal detector. Alert/context only. Same stale month-open rule as `EMERGENCY_LEVEL`.
-
-The existing Patch Emergency bridge requires an eligible persisted Patch expert reference with the permitted prospective evidence class before a live Emergency reference is claimed. A September historical-replay Patch reference is not silently upgraded to that class.
+The monthly reference remains explicit and immutable for the target month. For September 2026 the current Causal Patch reference is `HISTORICAL_REPLAY`; therefore the recomputed Emergency state may be described as **current-input / historical-reference context**, but it may not be relabelled as a prospective September forecast or prospective monthly reference.
 
 ### `GVZ_RISK`
-Volatility/risk context only. It never predicts gold direction. A GVZ-derived context is stale when its input cutoff precedes the latest eligible `GVZ_CBOE` availability.
+Source: `GVZ_CBOE` only. Frozen R4.1 thresholds remain binding. It is risk context only and never predicts gold direction.
+
+### `BOCPD_RETURN_SUCCESSOR_V1`
+Regime/break context only; no price forecast, no direction vote, no automatic action.
+
+### `MACRO_EVENT_SUCCESSOR_V2`
+Release-aware event-risk context. Release timestamps and vintage semantics govern availability; revised macro values may not be inserted backward into earlier origins.
 
 ---
 
-## 8. Current source surface and data-ingestion contract
+## 7. Canonical XAU ingestion contract
 
-The current database source surface is `current_source_registry_v1`.
-
-It must include only:
-
-- observation-backed source identities that are not `BLOCKED`, `OPTIONAL` or `PAID`-required placeholders; and
-- explicitly approved non-persisted live display identity `XAU_SPOT_GOLDAPI`.
-
-The raw `source_registry` remains historical/audit storage and is not itself a current surface.
-
-### Canonical tactical XAU source
-
-Current operational completed-daily XAU decision reference:
+Canonical tactical XAU series:
 
 `XAU_EOD_TWELVE_NY17`
 
-Semantics: Twelve Data `XAU/USD`, intraday `1min`, `America/New_York`; unique exact 16:59 bar close is stored at the 17:00 ET session boundary. CME/EBS regular hours are authority for the 17:00 ET trade-date-roll convention; the Twelve Data value remains an **internal NY17 decision reference**, not an official CME/EBS settlement or fixing.
+Provider/input contract:
 
-Required rules:
+- provider: Twelve Data;
+- symbol: `XAU/USD`;
+- interval: `1min`;
+- requested timezone: `America/New_York`;
+- accepted bar: unique exact `16:59:00` source bar;
+- accepted value: bar `close` after positive/range-valid OHLC checks;
+- stored timestamp: corresponding `17:00 ET` session boundary converted to UTC;
+- fallback: none;
+- interpolation: forbidden;
+- forward-fill: forbidden;
+- silent provider substitution: forbidden;
+- official CME/EBS settlement/fixing claim: forbidden.
 
-- exact unique `16:59:00` source bar only;
-- positive/range-valid OHLC;
-- no interpolation;
-- no forward fill;
-- no silent fallback or provider substitution;
-- no official-settlement claim;
-- vendor raw data remains private unless rights are separately approved;
-- production ingestion performs bounded recent exact-bar reconciliation so a previously missed recent date can be recovered later if the provider supplies the exact validated bar;
-- provider `404 / data not found` may be retained as a no-bar date; authentication, permission, rate-limit, parameter and server failures remain fail-closed;
-- a newer accepted `XAU_DAILY_XAUS` cross-check date than canonical NY17 means the tactical data plane is not ready until reconciled or explicitly adjudicated. The cross-check never becomes silent model authority.
+CME/EBS regular-hours convention supplies the 17:00 ET trade-date-roll basis. The Twelve Data value is Gold Control's internal NY17 reference, not an official CME price.
 
-### Macro/revision-prone sources
+### Gap recovery
 
-Wall-clock age is not used as a universal freshness test.
+The production collector must perform bounded recent exact-bar reconciliation. It may recover a recent previously missed trade date only when Twelve Data later supplies the exact valid 16:59 bar.
 
-- completed-session market data are assessed against eligible completed sessions;
-- scheduled macro data are assessed against release/availability timestamps;
-- revision-prone macro replay uses point-in-time vintage evidence where available (for example ALFRED/FRED real-time periods) and never injects current revisions into historical origins;
-- monthly GPR continues to obey its frozen publication-lag/vintage rule.
+Provider `404 / data not found` is treated as a no-bar result for that exact-date query. Authentication, permission, rate-limit, invalid-parameter, malformed-bar and server failures remain fail-closed.
 
-Research-only source identities may remain visible through the current source surface when they are observation-backed and required for reproducibility. Blocked/license placeholders and empty future candidates are not current.
+`XAU_DAILY_XAUS` is an independent operational cross-check only. If its accepted trade date is newer than canonical NY17, intramonth recomputation is blocked until canonical NY17 catches up or the discrepancy is explicitly adjudicated. The cross-check never becomes silent model authority.
 
 ---
 
-## 9. Current runtime, context selection and data readiness
+## 8. Append-only live intramonth recomputation — V1.44
 
-### Runtime inventory
+Binding writer:
 
-The application/runtime authority view is `current_engine_runtime_state_v1`.
+`data_pipeline/live_intramonth_recompute_v144.py`
 
-It must select the **latest complete target context containing all 12 governed engine identities**, then select the latest row for each engine inside that target context.
+The writer may append only:
+
+- `FAST_STATE`
+- `SLOW_STATE`
+- `GVZ_VALUE`
+- `GVZ_CAP`
+- `GVZ_PANIC`
+- `GVZ_REGIME`
+- current runtime/context rows for `FAST`, `SLOW`, `GVZ_RISK`, `EMERGENCY_LEVEL`, `EMERGENCY_REVERSAL`
+
+It may not write or mutate:
+
+- monthly H=1 forecasts;
+- `monthly_forecast_contracts`;
+- `decision_signal_snapshots`;
+- `decision_runs`;
+- `decision_events`;
+- selector/ensemble weights;
+- position/action instructions.
+
+### Fail-closed prerequisites
+
+Before any persistence:
+
+1. current target context must be unique;
+2. canonical XAU must have enough valid history for FAST;
+3. canonical XAU must not trail the accepted independent daily XAU cross-check;
+4. XAU rows must have canonical approved quality;
+5. GVZ must have an approved source row;
+6. required current runtime identities must exist;
+7. Emergency monthly reference must have positive value, matching target month, explicit evidence class and no unexpected authority promotion.
+
+Any failed prerequisite causes zero context writes.
+
+### Idempotency
+
+Each logical output receives a SHA-256 fingerprint over the exact governed inputs and contract version. A new append-only row is inserted only when that component's latest target-context fingerprint changes. Re-running identical inputs must therefore create no duplicate logical state.
+
+### Provenance
+
+Persisted context must record or carry:
+
+- source series identity;
+- selected source observation ID(s)/timestamps;
+- `available_as_of` input cutoff;
+- lineage IDs;
+- input fingerprint;
+- feature/model version;
+- Git commit;
+- target context;
+- context issuance mode;
+- `prospective_h1_claim=false`;
+- `canonical_forecast_authority=false`;
+- `AUTO_SELECTOR=OFF`;
+- `AUTO_ENSEMBLE=OFF`;
+- `decision_store_write=NONE`.
+
+### Catch-up vs prospective-shadow
+
+`catchup` is used when source observations were already available before deployment of this writer. It is historical/reconstruction context and is never relabelled prospective.
+
+`prospective-shadow` is used only for later observations first consumed by the deployed scheduled writer. FAST/SLOW/GVZ may receive prospective-shadow context evidence. Emergency remains limited by the evidence class of its monthly reference.
+
+---
+
+## 9. Runtime and current-context selection
+
+`current_engine_runtime_state_v1` must expose the latest complete target context containing all 12 governed engine identities.
 
 Selection rule:
 
 `LATEST_COMPLETE_12_ENGINE_TARGET_CONTEXT`
 
-Expected current inventory state:
+Expected inventory:
 
-- `ACTIVE = 12`
-- `WAITING = 0`
-- `BLOCKED = 0`
-- total = `12`
+- 12 total
+- 12 ACTIVE
+- 0 WAITING
+- 0 BLOCKED
 
-This prevents a partially-created future month from replacing the current complete production context.
+This is inventory state, not a freshness certificate.
 
-**This inventory state is not a freshness certificate.**
-
-### Context-feature inventory
-
-The current derived-context view is `current_context_feature_state_v1`.
-
-It must select the **latest complete target context containing all 7 governed context features**:
+`current_context_feature_state_v1` must expose the latest complete target context containing exactly:
 
 - `MONTHLY_DIRECTION_3M`
 - `FAST_STATE`
@@ -314,136 +323,97 @@ Selection rule:
 
 `LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT`
 
-This prevents September + October rows from being simultaneously exposed as current during rollover and prevents a partial future context from taking authority.
+A partial future month may not displace the latest complete current context.
 
-### V1.43 model-data readiness
+---
 
-Four states are now distinct:
+## 10. Readiness states and acceptance audits
+
+The following are distinct:
 
 - `CURRENT_SURFACE_REGISTERED`
 - `MONTHLY_REFERENCE_VALID`
 - `INTRAMONTH_DATA_READY`
 - `OPERATIONAL_MODEL_DATA_READY`
 
-The read-only readiness workflow is:
+Readiness audit:
 
-`.github/workflows/gold-control-model-data-readiness-v143.yml`
+`tools/audit_model_data_readiness_v143.py`
 
-A stale intramonth context must fail the readiness audit while preserving the current/historical evidence row. The audit never repairs data by writing a forecast, decision or authority row.
+Strict V1.44 post-write audit:
 
----
+`tools/audit_live_intramonth_postwrite_v144.py`
 
-## 10. Provenance and point-in-time rule
+A V1.44 intramonth refresh is accepted only if both audits pass and authority stores remain zero.
 
-Current views must not invent missing input fingerprints.
+The strict post-write audit must prove at least:
 
-When a governed runtime row has no `input_fingerprint`, current metadata must expose:
-
-`REFERENCE_METADATA_BOUND_INPUT_FINGERPRINT_NOT_AVAILABLE`
-
-When present, it must expose:
-
-`INPUT_FINGERPRINT_PRESENT`
-
-Missing provenance is reported, not fabricated.
-
-For an output to be described as current/fresh, its lineage must be traceable directly or through immutable input sets to the relevant source identity, observation timestamp, `available_as_of`, `retrieved_at`, quality status, lineage/snapshot member IDs, input fingerprint, model/feature version, Git commit and target/origin semantics.
-
-For historical replay, each selected input must satisfy the frozen origin's point-in-time availability rule. Future target observations and later revisions are forbidden.
+- canonical XAU is not behind the accepted cross-check;
+- FAST/SLOW are bound to canonical XAU and are fresh relative to its latest availability;
+- all four GVZ-derived features are bound to latest eligible `GVZ_CBOE`;
+- FAST/SLOW/GVZ runtime rows carry the V1.44 refresh contract and input fingerprints;
+- Emergency no longer exposes the stale month-open no-observation placeholder after target-month XAU exists;
+- Emergency state is recomputed from current target-month XAU with explicit monthly-reference provenance;
+- forecast/decision authority stores remain zero.
 
 ---
 
-## 11. Application and snapshot contract
-
-The current application reads only:
-
-- `current_engine_runtime_state_v1`;
-- `current_context_feature_state_v1`;
-- `current_source_registry_v1` for current-source audit/health;
-- current market display data;
-- canonical forecast/decision stores only if later legitimately populated.
-
-The committed fallback snapshot contract is:
-
-`GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V142`
-
-The current surface contract is:
-
-`GOLD_CONTROL_CURRENT_SURFACE_V142`
-
-A valid V142 snapshot proves inventory and authority-lock consistency:
-
-- exact 12 governed engines, all ACTIVE;
-- one common complete target context;
-- exact 7 current context features from the same target context;
-- zero blocked/optional/paid rows in the current source surface;
-- zero unauthorized forecast/decision authority rows;
-- no forbidden action/selector payload.
-
-**It does not by itself prove source freshness or live recomputation.** V1.43 model-data readiness is an additional required operational gate.
-
----
-
-## 12. Scheduling authority
+## 11. Scheduling authority and dependency order
 
 GitHub scheduled workflows run from the repository default branch. Therefore:
 
-- `main` is the **default-branch scheduling surface**;
-- canonical implementation remains `gold-r4-direction-engine`;
-- scheduled jobs on `main` call reusable workflows pinned to `gold-r4-direction-engine`;
-- reusable canonical writer/refresh workflows must not own independent `schedule:` triggers;
-- snapshot refresh must be dispatched by the default-branch scheduler, not rely on a non-default-branch cron;
-- model-data readiness is a read-only lane and must run after source-ingestion windows often enough to detect stale production context;
-- a failing readiness lane must not be bypassed by relabelling an old context current.
+- `main` owns cron/scheduling only;
+- model/data implementation authority remains `gold-r4-direction-engine`;
+- `main` calls reusable canonical workflows pinned to canonical authority;
+- canonical reusable workflows do not own independent cron schedules.
 
-This separation is operational only; `main` does not become model/code authority.
+Required intramonth dependency order:
+
+`source ingestion succeeds`
+
+→ `canonical NY17 reconciliation where applicable`
+
+→ `V1.44 append-only intramonth recompute`
+
+→ `readiness + strict post-write audit`
+
+→ `snapshot/UI refresh`
+
+Derived recomputation must not be scheduled as if ingestion success were irrelevant.
+
+The canonical `xau-ny17` lane must trigger recomputation only after successful NY17 reconciliation. A second recompute after the daily authority ingest/retry is required so newly released GVZ data is consumed without waiting for the next unrelated event.
 
 ---
 
-## 13. Deployment mirror
+## 12. Application/snapshot and deployment mirror
 
-`gold-r4-direction-engine-ui-v122-final` is a deployment mirror only.
+The application is read/presentation only. It consumes current runtime/context/source surfaces and may consume legitimately issued forecast/decision stores only if those stores are later authorized and populated.
 
-After a governed canonical release passes current-surface and application smoke tests, the deployment mirror must point to the exact canonical release HEAD. It must not carry independent model, manifest or runtime semantics.
+The deployment mirror `gold-r4-direction-engine-ui-v122-final` must point to the exact governed canonical release HEAD after release validation. It carries no independent model semantics.
+
+Current-view evidence labels must not hide the distinction between catch-up/historical context and prospective-shadow context. If a database view sanitizes every derived context to a historical label, that observability defect must be corrected through a separately tested database migration before V1.44 is declared fully operational.
 
 ---
 
-## 14. V1.43 model-data gate
+## 13. V1.44 release gate
 
-V1.43 preserves the clean current surface and adds an independent operational-readiness gate.
+V1.44 may become canonical only after:
 
-Required invariant set:
+1. unit/frozen-rule tests for the writer pass;
+2. read-only preflight proves correct fail-closed behavior against the current production state;
+3. canonical NY17 bounded reconciliation is run before the first production catch-up;
+4. append-only catch-up writes only authorized context/runtime tables;
+5. both readiness audits pass after the catch-up;
+6. authority stores remain `0/0/0/0`;
+7. September H=1 references remain numerically and evidentially unchanged;
+8. main scheduler is updated to enforce ingestion → recompute → audit → snapshot ordering;
+9. current-context database view exposes non-misleading evidence/freshness semantics;
+10. application smoke passes and deployment mirror equals canonical release HEAD.
 
-1. `current_source_registry_v1` contains no blocked/optional/paid placeholder and no empty source except the explicit non-persisted live display source;
-2. `current_engine_runtime_state_v1` exposes exactly one latest complete 12-engine target context;
-3. `current_context_feature_state_v1` exposes exactly one latest complete 7-feature target context;
-4. current runtime inventory is `12 ACTIVE / 0 WAITING / 0 BLOCKED`;
-5. missing fingerprints are reported, never synthesized;
-6. production authority stores remain `0/0/0/0` unless later explicitly authorized;
-7. current V142 snapshot continues to validate inventory/authority locks;
-8. canonical app smoke passes against production current views;
-9. default-branch scheduler owns cron and dispatches reusable canonical workflows;
-10. deployment mirror equals the intended canonical release HEAD when deployed;
-11. canonical NY17 XAU is not behind an accepted later daily XAU cross-check, or the discrepancy is explicitly adjudicated without silent substitution;
-12. FAST/SLOW lineage is `XAU_EOD_TWELVE_NY17` and their input cutoffs are not stale relative to the latest eligible canonical XAU availability;
-13. GVZ-derived context is not stale relative to the latest eligible `GVZ_CBOE` availability;
-14. Emergency no-observation month-open placeholders are not described as live after target-month XAU exists;
-15. September H=1 references remain frozen to the Aug-31 origin and retain `HISTORICAL_REPLAY`, `prospective_claim=false`, `canonical_authority=false`, selector OFF and ensemble OFF;
-16. current RW/Momentum identities and immutable September input sets remain source-bound R2 with no post-origin input;
-17. historical VW replay and prospective VW readiness remain separate; no prospective claim is issued until its prospective input gates pass.
-
-Until checks 11–17 pass, the correct statement is:
+Until this gate is complete, the correct statement is:
 
 `CURRENT_SURFACE_REGISTERED = TRUE`
 
 but
 
-`OPERATIONAL_MODEL_DATA_READY = FALSE`
-
-for the affected live intramonth path.
-
-The next governed implementation target is the **append-only live intramonth recomputation chain** with replay-equivalence, idempotency, explicit lineage and fail-closed tests:
-
-`canonical XAU / eligible risk-event sources → FAST/SLOW → permitted Emergency bridge → GVZ / regime-event contexts → current presentation`
-
-No decision/forecast authority write is authorized by this manifest merely to complete that chain.
+`OPERATIONAL_MODEL_DATA_READY = NOT_YET_PROVEN`.
