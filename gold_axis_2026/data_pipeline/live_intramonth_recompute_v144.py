@@ -7,7 +7,6 @@ import os
 import subprocess
 import sys
 import uuid
-from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -172,23 +171,69 @@ def _causal_reference(runtime: dict[str, dict[str, Any]], target_context: str) -
     evidence = str(ref.get("evidence_class") or "").strip()
     if evidence not in {"HISTORICAL_REPLAY", "PROSPECTIVE_SHADOW", "LIVE_PRODUCTION"}:
         raise RuntimeError(f"BLOCKED_EMERGENCY_REFERENCE_EVIDENCE:{evidence or 'MISSING'}")
-    if ref.get("canonical_authority") is True:
+    if ref.get("canonical_authority") is True or ref.get("canonical_forecast_authority") is True:
         raise RuntimeError("BLOCKED_EMERGENCY_REFERENCE_CANONICAL_AUTHORITY_UNEXPECTED")
     return {**ref, "forecast_value": float(value), "evidence_class": evidence, "target_month": ref_target}
 
 
-def _compute(xau: list[dict[str, Any]], gvz: dict[str, Any], target_context: str, reference: dict[str, Any]) -> dict[str, Any]:
-    daily = pd.DataFrame(
+def _daily_frame(xau: list[dict[str, Any]]) -> pd.DataFrame:
+    rows = []
+    for r in xau:
+        ts = pd.Timestamp(r["observation_ts"])
+        if ts.tzinfo is None:
+            ts = ts.tz_localize("UTC")
+        date = ts.tz_convert("America/New_York").tz_localize(None).normalize()
+        rows.append(
+            {
+                "date": date,
+                "close": float(r["value"]),
+                "id": int(r["id"]),
+                "observation_ts": _utc_iso(r["observation_ts"]),
+                "available_as_of": _utc_iso(r["available_as_of"]),
+                "lineage_id": str(r["lineage_id"]),
+            }
+        )
+    return pd.DataFrame(rows).sort_values("date").reset_index(drop=True)
+
+
+def _weekly_payload(daily: pd.DataFrame, asof: pd.Timestamp) -> list[dict[str, Any]]:
+    x = daily.loc[daily["date"] <= asof].copy().sort_values("date").set_index("date")
+    closes = x["close"].resample("W-FRI").last().dropna()
+    ids = x["id"].resample("W-FRI").last().reindex(closes.index)
+    observation_ts = x["observation_ts"].resample("W-FRI").last().reindex(closes.index)
+    available_as_of = x["available_as_of"].resample("W-FRI").last().reindex(closes.index)
+    lineage_id = x["lineage_id"].resample("W-FRI").last().reindex(closes.index)
+    if asof.weekday() < 4:
+        current_week_end = asof.to_period("W-FRI").end_time.normalize()
+        keep = closes.index < current_week_end
+        closes = closes.loc[keep]
+        ids = ids.loc[keep]
+        observation_ts = observation_ts.loc[keep]
+        available_as_of = available_as_of.loc[keep]
+        lineage_id = lineage_id.loc[keep]
+    return [
         {
-            "date": [pd.Timestamp(r["observation_ts"]).tz_convert("America/New_York").tz_localize(None).normalize() for r in xau],
-            "close": [float(r["value"]) for r in xau],
+            "week_end": pd.Timestamp(idx).date().isoformat(),
+            "close": float(closes.loc[idx]),
+            "source_observation_id": int(ids.loc[idx]),
+            "source_observation_ts": str(observation_ts.loc[idx]),
+            "source_available_as_of": str(available_as_of.loc[idx]),
+            "lineage_id": str(lineage_id.loc[idx]),
         }
-    ).sort_values("date")
+        for idx in closes.index
+    ]
+
+
+def _compute(xau: list[dict[str, Any]], gvz: dict[str, Any], target_context: str, reference: dict[str, Any]) -> dict[str, Any]:
+    daily = _daily_frame(xau)
     latest_date = pd.Timestamp(daily.iloc[-1]["date"])
 
     fast = fast_state(daily["close"].tolist()).value
-    weekly = completed_weekly_closes(daily, latest_date)
-    slow = slow_state(weekly).value
+    weekly_closes = completed_weekly_closes(daily[["date", "close"]], latest_date)
+    slow = slow_state(weekly_closes).value
+    weekly_lineage = _weekly_payload(daily, latest_date)
+    if len(weekly_lineage) < 5:
+        raise RuntimeError(f"BLOCKED_SLOW_MIN_COMPLETED_WEEKS:{len(weekly_lineage)}")
 
     target_daily = daily[daily["date"].dt.strftime("%Y-%m") == target_context]
     if target_daily.empty:
@@ -203,17 +248,10 @@ def _compute(xau: list[dict[str, Any]], gvz: dict[str, Any], target_context: str
     risk = gvz_risk(float(gvz["value"]))
     regime = "NORMAL" if risk.cap == 1.0 else ("ELEVATED" if risk.cap == 0.5 else "PANIC")
 
-    xau_recent = [
-        {
-            "id": int(r["id"]),
-            "observation_ts": _utc_iso(r["observation_ts"]),
-            "value": float(r["value"]),
-            "available_as_of": _utc_iso(r["available_as_of"]),
-            "lineage_id": str(r["lineage_id"]),
-        }
-        for r in xau[-60:]
-    ]
-    xau_target = [r for r in xau_recent if _ny_trade_date(r["observation_ts"])[:7] == target_context]
+    xau_recent = daily.tail(60)[["id", "observation_ts", "close", "available_as_of", "lineage_id"]].rename(columns={"close": "value"}).to_dict("records")
+    fast_lineage = xau_recent[-21:]
+    slow_lineage = weekly_lineage[-5:]
+    emergency_lineage = target_daily[["id", "observation_ts", "close", "available_as_of", "lineage_id"]].rename(columns={"close": "value"}).to_dict("records")
     gvz_payload = {
         "id": int(gvz["id"]),
         "observation_ts": _utc_iso(gvz["observation_ts"]),
@@ -236,11 +274,13 @@ def _compute(xau: list[dict[str, Any]], gvz: dict[str, Any], target_context: str
         "xau_latest_trade_date": _ny_trade_date(xau[-1]["observation_ts"]),
         "gvz_latest_observation_ts": gvz_payload["observation_ts"],
         "gvz_latest_available_as_of": gvz_payload["available_as_of"],
-        "fast_fingerprint": _fingerprint("FAST", xau_recent[-21:]),
-        "slow_fingerprint": _fingerprint("SLOW", xau_recent),
-        "emergency_fingerprint": _fingerprint("EMERGENCY", {"xau": xau_target, "reference": reference}),
+        "fast_fingerprint": _fingerprint("FAST", fast_lineage),
+        "slow_fingerprint": _fingerprint("SLOW", slow_lineage),
+        "emergency_fingerprint": _fingerprint("EMERGENCY", {"xau": emergency_lineage, "reference": reference}),
         "gvz_fingerprint": _fingerprint("GVZ", gvz_payload),
-        "xau_lineage": xau_recent,
+        "fast_lineage": fast_lineage,
+        "slow_lineage": slow_lineage,
+        "emergency_lineage": emergency_lineage,
         "gvz_lineage": gvz_payload,
     }
 
@@ -267,7 +307,7 @@ def _insert_feature(
     value_text: str | None,
     input_cutoff: str,
     fingerprint: str,
-    lineage: dict[str, Any],
+    lineage: dict[str, Any] | list[dict[str, Any]],
     target_context: str,
     code_sha: str | None,
     evidence_mode: str,
@@ -284,7 +324,8 @@ def _insert_feature(
         """,
         (
             name, FEATURE_VERSION, calculation_ts, input_cutoff, value_num, value_text, code_sha,
-            json.dumps(lineage), quality,
+            json.dumps({"source": XAU_SERIES if name in {"FAST_STATE", "SLOW_STATE"} else GVZ_SERIES, "selected_inputs": lineage}),
+            quality,
             json.dumps({
                 "contract": CONTRACT,
                 "target_context": target_context,
@@ -332,15 +373,18 @@ def _insert_runtime(
 ) -> bool:
     if _latest_runtime_fingerprint(cur, engine_id, target_context) == fingerprint:
         return False
-    evidence_class = "PROSPECTIVE_SHADOW" if evidence_mode == "prospective-shadow" else "HISTORICAL_REPLAY"
-    status_code = "ACTIVE_INTRAMONTH_CURRENT_CONTEXT_REFRESHED"
+
+    detail = "PROSPECTIVE_SHADOW_INTRAMONTH_CONTEXT" if evidence_mode == "prospective-shadow" else "HISTORICAL_REPLAY_INTRAMONTH_CONTEXT"
+    status_code = "ACTIVE_INTRAMONTH_PROSPECTIVE_SHADOW_CONTEXT_REFRESHED" if evidence_mode == "prospective-shadow" else "ACTIVE_INTRAMONTH_CATCHUP_CONTEXT_REFRESHED"
     if reference is not None and reference.get("evidence_class") == "HISTORICAL_REPLAY":
-        evidence_class = "HISTORICAL_REPLAY"
-        status_code = "ACTIVE_INTRAMONTH_HISTORICAL_REFERENCE_CONTEXT_REFRESHED"
+        detail = "CURRENT_INPUT_HISTORICAL_REFERENCE_CONTEXT"
+        status_code = "ACTIVE_INTRAMONTH_CURRENT_INPUT_HISTORICAL_REFERENCE_CONTEXT"
+
     metadata = {
         "current_surface_contract": "GOLD_CONTROL_CURRENT_SURFACE_V144",
         "current_registry": True,
         "current_state": state,
+        "current_state_evidence_class": detail,
         "current_state_as_of": calculation_ts.isoformat(),
         "information_cutoff": information_cutoff,
         "source_observation_ts": source_observation_ts,
@@ -348,6 +392,7 @@ def _insert_runtime(
         "input_fingerprint": fingerprint,
         "operational_refresh_contract": CONTRACT,
         "context_issuance_mode": evidence_mode,
+        "prospective_claim": False,
         "prospective_h1_claim": False,
         "canonical_forecast_authority": False,
         "auto_selector": "OFF",
@@ -361,17 +406,31 @@ def _insert_runtime(
             "reference_evidence_class": reference["evidence_class"],
             "reference_forecast_origin": reference.get("forecast_origin"),
             "reference_prospective_claim": bool(reference.get("prospective_claim", False)),
+            "current_month_reference": {
+                "reference_kind": "CURRENT_INTRAMONTH_RECOMPUTED_STATE",
+                "state_value": state,
+                "target_month": target_context,
+                "monthly_reference": reference["forecast_value"],
+                "reference_expert_id": "CAUSAL_PATCH",
+                "reference_evidence_class": reference["evidence_class"],
+                "forecast_origin": reference.get("forecast_origin"),
+                "information_cutoff": information_cutoff,
+                "source_observation_ts": source_observation_ts,
+                "prospective_claim": False,
+                "canonical_authority": False,
+            },
         })
+
     cur.execute(
         """
         insert into engine_execution_runs
         (run_id,engine_id,engine_version,engine_role,as_of,target_context,evidence_class,runtime_status,status_code,
          direction_vote_permitted,git_commit,input_fingerprint,metadata,created_at)
-        values (%s,%s,%s,%s,%s,%s,%s,'ACTIVE',%s,%s,%s,%s,%s::jsonb,%s)
+        values (%s,%s,%s,%s,%s,%s,'RUNTIME_GOVERNANCE_AUDIT','ACTIVE',%s,%s,%s,%s,%s::jsonb,%s)
         """,
         (
             str(uuid.uuid4()), engine_id, base["engine_version"], base["engine_role"], calculation_ts,
-            target_context, evidence_class, status_code, bool(base.get("direction_vote_permitted")), code_sha,
+            target_context, status_code, bool(base.get("direction_vote_permitted")), code_sha,
             fingerprint, json.dumps(metadata), calculation_ts,
         ),
     )
@@ -407,15 +466,9 @@ def run(*, persist: bool, evidence_mode: str) -> dict[str, Any]:
             if persist:
                 xau_cutoff = state["xau_latest_available_as_of"]
                 gvz_cutoff = state["gvz_latest_available_as_of"]
-                common_meta = {
-                    "series_id": XAU_SERIES,
-                    "selected_observation_ids": [r["id"] for r in state["xau_lineage"]],
-                    "latest_observation_ts": state["xau_latest_observation_ts"],
-                    "latest_available_as_of": xau_cutoff,
-                }
                 specs = [
-                    ("FAST_STATE", None, state["fast"], xau_cutoff, state["fast_fingerprint"], common_meta),
-                    ("SLOW_STATE", None, state["slow"], xau_cutoff, state["slow_fingerprint"], common_meta),
+                    ("FAST_STATE", None, state["fast"], xau_cutoff, state["fast_fingerprint"], state["fast_lineage"]),
+                    ("SLOW_STATE", None, state["slow"], xau_cutoff, state["slow_fingerprint"], state["slow_lineage"]),
                     ("GVZ_VALUE", state["gvz_value"], None, gvz_cutoff, state["gvz_fingerprint"], state["gvz_lineage"]),
                     ("GVZ_CAP", state["gvz_cap"], None, gvz_cutoff, state["gvz_fingerprint"], state["gvz_lineage"]),
                     ("GVZ_PANIC", None, str(state["gvz_panic"]).lower(), gvz_cutoff, state["gvz_fingerprint"], state["gvz_lineage"]),
