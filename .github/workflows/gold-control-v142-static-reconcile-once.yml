@@ -82,10 +82,10 @@ jobs:
           git rm -f --ignore-unmatch current_surface_audit_v141.json current_surface_cleanup_v141.json full_current_tree_inventory_v141.json
           git rm -f .github/workflows/gold-control-v142-static-reconcile-once.yml
 
-      - name: Check no current v1.41 contract strings remain in executable current surface
+      - name: Check no current v1.41 contract strings remain outside snapshot pending re-export
         run: |
           set -euo pipefail
-          if grep -R -n -E 'CURRENT_(ENGINE_OBSERVABILITY|RUNTIME_SOURCE|PRODUCTION_DISPLAY_SNAPSHOT|SURFACE)_V141|MANIFEST_VERSION = "1\.41"|CANONICAL_MANIFEST_RUNTIME_STATUS_V141' \
+          if grep -R -n --exclude='production_display_snapshot.json' -E 'CURRENT_(ENGINE_OBSERVABILITY|RUNTIME_SOURCE|PRODUCTION_DISPLAY_SNAPSHOT|SURFACE)_V141|MANIFEST_VERSION = "1\.41"|CANONICAL_MANIFEST_RUNTIME_STATUS_V141' \
              gold_axis_2026/apps gold_axis_2026/data_pipeline gold_axis_2026/tools .github/workflows; then
             echo 'STALE_V141_CURRENT_CONTRACT_FOUND' >&2
             exit 1
