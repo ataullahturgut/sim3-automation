@@ -1,0 +1,71 @@
+name: Gold Control Emergency V1.46 Segmented Replay
+
+on:
+  push:
+    branches:
+      - gold-control-emergency-v146-segmented-replay
+    paths:
+      - '.github/workflows/gold-control-emergency-v146-segmented-replay.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-emergency-v146-segmented-replay
+  cancel-in-progress: false
+
+jobs:
+  replay:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - tag: '2023'
+            start_month: '2023-01'
+            end_month: '2023-12'
+          - tag: '2024'
+            start_month: '2024-01'
+            end_month: '2024-12'
+          - tag: '2025'
+            start_month: '2025-01'
+            end_month: '2025-12'
+          - tag: '2026_jan_jul'
+            start_month: '2026-01'
+            end_month: '2026-07'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      GOLD_CODE_SHA: ${{ github.sha }}
+      TWELVE_MIN_REQUEST_INTERVAL_SECONDS: '9.0'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-emergency-v146-segmented-replay
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install validation runtime
+        run: pip install -q pandas requests
+      - name: Require protected Twelve credential
+        run: test -n "$TWELVE_DATA_API_KEY"
+      - name: Compile frozen Emergency validation code
+        run: python -m py_compile gold_axis_2026/tools/emergency_intraday_replay_validation_v146.py
+      - name: Run frozen-threshold segmented historical replay
+        run: |
+          python gold_axis_2026/tools/emergency_intraday_replay_validation_v146.py \
+            --start-month '${{ matrix.start_month }}' \
+            --end-month '${{ matrix.end_month }}' \
+            --output-json 'emergency_intraday_replay_v146_${{ matrix.tag }}.json' \
+            --output-csv 'emergency_intraday_replay_v146_${{ matrix.tag }}_months.csv'
+      - name: Upload aggregate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-emergency-v146-${{ matrix.tag }}
+          path: |
+            emergency_intraday_replay_v146_${{ matrix.tag }}.json
+            emergency_intraday_replay_v146_${{ matrix.tag }}_months.csv
+          if-no-files-found: warn
