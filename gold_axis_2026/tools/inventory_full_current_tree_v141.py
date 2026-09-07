@@ -13,7 +13,6 @@ PATH_TOKENS = (
     "stage4", "stage_4", "aug31", "september_replay", "macro_event_successor_v1",
     "direction_summary_acceptance_trigger", "mobile_viewport_qa",
 )
-
 CONTENT_TOKENS = (
     "GOLD_CONTROL_STAGE4",
     "GOLD_CONTROL_STAGE_4",
@@ -26,8 +25,15 @@ CONTENT_TOKENS = (
     "SEPTEMBER_2026_H1_PROSPECTIVE_ORIGIN_MISSED",
     "MACRO_EVENT_SUCCESSOR_V1",
 )
-
 SCAN_EXTENSIONS = {".py", ".md", ".txt", ".json", ".yml", ".yaml", ".toml"}
+SELF_EXCLUDE = {
+    "gold_axis_2026/tools/audit_current_surface_v141.py",
+    "gold_axis_2026/tools/inventory_full_current_tree_v141.py",
+}
+
+
+def rel(path: Path) -> str:
+    return str(path.relative_to(ROOT)).replace("\\", "/")
 
 
 def current_tree_files() -> list[Path]:
@@ -43,28 +49,23 @@ def current_tree_files() -> list[Path]:
 
 
 def legacy_path_hits(files: list[Path]) -> list[str]:
-    hits = []
-    for path in files:
-        rel = str(path.relative_to(ROOT)).replace("\\", "/")
-        low = rel.lower()
-        if any(token in low for token in PATH_TOKENS):
-            hits.append(rel)
-    return hits
+    return [rel(path) for path in files if any(token in rel(path).lower() for token in PATH_TOKENS)]
 
 
 def legacy_content_hits(files: list[Path]) -> list[dict[str, object]]:
     hits: list[dict[str, object]] = []
     for path in files:
+        relative = rel(path)
+        if relative in SELF_EXCLUDE:
+            continue
         try:
             text = path.read_text(encoding="utf-8")
         except Exception:
             continue
-        rel = str(path.relative_to(ROOT)).replace("\\", "/")
         for token in CONTENT_TOKENS:
-            if token not in text:
-                continue
-            lines = [i + 1 for i, line in enumerate(text.splitlines()) if token in line]
-            hits.append({"path": rel, "token": token, "lines": lines[:20]})
+            if token in text:
+                lines = [i + 1 for i, line in enumerate(text.splitlines()) if token in line]
+                hits.append({"path": relative, "token": token, "lines": lines[:20]})
     return hits
 
 
@@ -85,9 +86,9 @@ def local_imports(path: Path) -> set[str]:
 def app_reachability() -> dict[str, object]:
     app_dir = GC / "apps"
     modules = {path.stem: path for path in app_dir.glob("*.py") if not path.name.startswith("test_")}
-    entry = "gold_control"
+    # gold_control.py dynamically loads gold_control_mobile.py, so both are explicit roots.
+    queue = ["gold_control", "gold_control_mobile"]
     reachable: set[str] = set()
-    queue = [entry]
     while queue:
         name = queue.pop()
         if name in reachable or name not in modules:
@@ -96,21 +97,26 @@ def app_reachability() -> dict[str, object]:
         for dep in local_imports(modules[name]):
             if dep in modules and dep not in reachable:
                 queue.append(dep)
-    unused = sorted(set(modules) - reachable)
     return {
-        "entrypoint": entry,
+        "entrypoints": ["gold_control", "gold_control_mobile"],
         "reachable_modules": sorted(reachable),
-        "unused_modules": unused,
+        "unused_modules": sorted(set(modules) - reachable),
     }
 
 
 def main() -> int:
     files = current_tree_files()
+    root_docs = sorted(rel(p) for p in GC.glob("GOLD_CONTROL_*.md"))
+    workflows = sorted(rel(p) for p in (ROOT / ".github" / "workflows").glob("gold-control-*.yml"))
     report = {
         "contract": "GOLD_CONTROL_FULL_CURRENT_TREE_INVENTORY_V141",
         "scanned_file_count": len(files),
         "legacy_path_hits": legacy_path_hits(files),
         "legacy_content_hits": legacy_content_hits(files),
+        "root_gold_control_docs": root_docs,
+        "root_gold_control_doc_count": len(root_docs),
+        "gold_control_workflows": workflows,
+        "gold_control_workflow_count": len(workflows),
         "app_reachability": app_reachability(),
     }
     Path("full_current_tree_inventory_v141.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
