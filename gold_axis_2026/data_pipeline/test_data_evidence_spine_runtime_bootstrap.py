@@ -1,36 +1,44 @@
-from data_evidence_spine_runtime_bootstrap import CURRENT_MONTH_REFERENCES, STATIC_VERSIONS, STATUS_SPECS
+from data_evidence_spine_runtime_bootstrap import (
+    ACTIVE_SUCCESSORS,
+    CONTEXT_FEATURES,
+    CURRENT_MONTH_REFERENCES,
+    STATIC_VERSIONS,
+    STATUS_SPECS,
+)
 
 
-def test_runtime_bootstrap_distribution_matches_v140_target():
-    statuses = {engine_id: spec[0] for engine_id, spec in STATUS_SPECS.items()}
-    # Four persisted context engines + two validated context successors are ACTIVE.
-    # VW/MSVR Successor V1 is also ACTIVE as a non-prospective September
-    # historical-replay current-month reference. Five governed identities remain WAITING.
-    assert sum(v == "ACTIVE" for v in statuses.values()) == 6
-    assert sum(v == "WAITING" for v in statuses.values()) == 0
-    assert sum(v == "BLOCKED" for v in statuses.values()) == 0
+def test_runtime_bootstrap_partition_is_exactly_twelve_current_identities():
+    status_ids = set(STATUS_SPECS)
+    context_ids = set(CONTEXT_FEATURES)
+    successor_ids = set(ACTIVE_SUCCESSORS)
+    assert status_ids.isdisjoint(context_ids)
+    assert status_ids.isdisjoint(successor_ids)
+    assert context_ids.isdisjoint(successor_ids)
+    assert len(status_ids | context_ids | successor_ids) == 12
+    assert {spec[0] for spec in STATUS_SPECS.values()} == {"ACTIVE"}
 
 
-def test_runtime_bootstrap_exact_waiting_identities():
-    waiting = {engine_id for engine_id, spec in STATUS_SPECS.items() if spec[0] == "WAITING"}
-    assert waiting == set()
+def test_runtime_bootstrap_has_no_waiting_or_blocked_status_spec():
+    assert not {engine_id for engine_id, spec in STATUS_SPECS.items() if spec[0] == "WAITING"}
+    assert not {engine_id for engine_id, spec in STATUS_SPECS.items() if spec[0] == "BLOCKED"}
 
 
 def test_runtime_bootstrap_vw_current_reference_is_active_and_nonprospective():
     assert STATUS_SPECS["VW_MIDAS_MSVR_SUCCESSOR_V1"][0] == "ACTIVE"
     assert STATUS_SPECS["VW_MIDAS_MSVR_SUCCESSOR_V1"][1] == "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE"
     assert STATIC_VERSIONS["VW_MIDAS_MSVR_SUCCESSOR_V1"] == "VW_MIDAS_MSVR_SUCCESSOR_V1"
-    assert CURRENT_MONTH_REFERENCES["VW_MIDAS_MSVR_SUCCESSOR_V1"]["reference_kind"] == "HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE"
-    assert CURRENT_MONTH_REFERENCES["VW_MIDAS_MSVR_SUCCESSOR_V1"]["evidence_class"] == "HISTORICAL_REPLAY"
-    assert CURRENT_MONTH_REFERENCES["VW_MIDAS_MSVR_SUCCESSOR_V1"]["target_month"] == "2026-09"
-    assert CURRENT_MONTH_REFERENCES["VW_MIDAS_MSVR_SUCCESSOR_V1"]["forecast_value"] == 4565.115907930242
-    assert CURRENT_MONTH_REFERENCES["VW_MIDAS_MSVR_SUCCESSOR_V1"]["canonical_authority"] is False
-    assert CURRENT_MONTH_REFERENCES["VW_MIDAS_MSVR_SUCCESSOR_V1"]["prospective_claim"] is False
-    assert CURRENT_MONTH_REFERENCES["VW_MIDAS_MSVR_SUCCESSOR_V1"]["auto_selector"] == "OFF"
-    assert CURRENT_MONTH_REFERENCES["VW_MIDAS_MSVR_SUCCESSOR_V1"]["auto_ensemble"] == "OFF"
+    ref = CURRENT_MONTH_REFERENCES["VW_MIDAS_MSVR_SUCCESSOR_V1"]
+    assert ref["reference_kind"] == "HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE"
+    assert ref["evidence_class"] == "HISTORICAL_REPLAY"
+    assert ref["target_month"] == "2026-09"
+    assert ref["forecast_value"] == 4565.115907930242
+    assert ref["canonical_authority"] is False
+    assert ref["prospective_claim"] is False
+    assert ref["auto_selector"] == "OFF"
+    assert ref["auto_ensemble"] == "OFF"
 
 
-def test_runtime_bootstrap_all_aug31_september_references_are_active_and_nonprospective():
+def test_runtime_bootstrap_current_september_references_are_nonprospective():
     assert set(CURRENT_MONTH_REFERENCES) == {
         "CAUSAL_PATCH",
         "VW_MIDAS_MSVR_SUCCESSOR_V1",

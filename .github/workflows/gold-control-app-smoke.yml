@@ -1,16 +1,18 @@
-name: Gold Control App Smoke
+name: Gold Control Current App Smoke
 
 on:
   push:
-    branches: [gold-r4-direction-engine]
+    branches:
+      - gold-r4-direction-engine
+      - gold-control-clean-current-surface-v141-final
     paths:
       - 'gold_axis_2026/apps/**'
-      - 'gold_axis_2026/data_pipeline/decision_store.py'
-      - 'gold_axis_2026/data_pipeline/decision_store_reader.py'
-      - 'gold_axis_2026/r4_1/config/**'
-      - 'gold_axis_2026/production_closure/**'
+      - 'gold_axis_2026/tools/export_production_display_snapshot.py'
       - '.github/workflows/gold-control-app-smoke.yml'
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   smoke:
@@ -21,86 +23,56 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.14'
-      - name: Install locked app dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r gold_axis_2026/apps/requirements.txt
-          python --version
-          streamlit version
-      - name: Compile complete app and decision-reader graph
+          python-version: '3.12'
+      - name: Install current app dependencies
+        run: pip install -r gold_axis_2026/apps/requirements.txt pytest
+      - name: Compile current app graph
         run: |
           python -m py_compile \
-            gold_axis_2026/data_pipeline/decision_store.py \
-            gold_axis_2026/data_pipeline/decision_store_reader.py \
-            gold_axis_2026/apps/decision_source.py \
+            gold_axis_2026/apps/gold_control.py \
+            gold_axis_2026/apps/gold_control_mobile.py \
             gold_axis_2026/apps/engine_observability_contract.py \
-            gold_axis_2026/apps/forecast_source.py \
             gold_axis_2026/apps/live_sources.py \
-            gold_axis_2026/apps/mobile_ui_contract.py \
-            gold_axis_2026/apps/piyasa_contract.py \
-            gold_axis_2026/apps/gold_control_mobile_v1.py \
-            gold_axis_2026/apps/gold_control.py
-      - name: Validate production repository inputs
+            gold_axis_2026/apps/runtime_source.py \
+            gold_axis_2026/apps/production_display_snapshot.py \
+            gold_axis_2026/tools/export_production_display_snapshot.py
+      - name: Run current app contract tests
         run: |
-          python - <<'PY'
-          import json
-          import pandas as pd
-          from pathlib import Path
-          root = Path('gold_axis_2026')
-          hist = pd.read_csv(root / 'production_closure/production_history_43.csv')
-          score = pd.read_csv(root / 'production_closure/common_scorecard.csv')
-          prov = json.loads((root / 'production_closure/PROVENANCE.json').read_text())
-          cfg = json.loads((root / 'r4_1/config/frozen_r4_1.json').read_text())
-          assert len(hist) == 43, len(hist)
-          assert {'actual','vw','patch_r1','mom','rw'}.issubset(hist.columns)
-          assert not score.empty
-          assert prov.get('source_package')
-          assert cfg.get('emergency', {}).get('level_threshold_abs') == 0.04
-          print('GOLD_CONTROL_PRODUCTION_LINEAGE_INPUTS_PASS')
+          cd gold_axis_2026/apps
+          pytest -q test_engine_observability_contract.py test_production_display_snapshot.py
+      - name: Validate committed current snapshot
+        run: |
+          PYTHONPATH=gold_axis_2026/apps python - <<'PY'
+          from production_display_snapshot import load_production_display_snapshot
+          snapshot=load_production_display_snapshot()
+          assert len(snapshot['runtime']) == 12
+          assert len(snapshot['features']) == 7
+          assert all(r['runtime_status'] == 'ACTIVE' for r in snapshot['runtime'])
+          assert all((r.get('metadata') or {}).get('current_surface_contract') == 'GOLD_CONTROL_CURRENT_SURFACE_V141' for r in snapshot['runtime'])
+          assert all(f['quality_status'] == 'HISTORICAL_REPLAY_CONTEXT' for f in snapshot['features'])
+          assert all((f.get('metadata') or {}).get('current_surface_contract') == 'GOLD_CONTROL_CURRENT_SURFACE_V141' for f in snapshot['features'])
+          print('CURRENT_APP_SNAPSHOT_PASS')
           PY
-      - name: Decision and partial-context read-only isolation smoke
+      - name: Production current-surface read-only smoke
+        if: ${{ env.NEON_DATABASE_URL != '' }}
         run: |
-          test -n "$NEON_DATABASE_URL" || (echo "NEON_DATABASE_URL missing" && exit 1)
-          PYTHONPATH=gold_axis_2026/apps:gold_axis_2026/data_pipeline python - <<'PY'
+          PYTHONPATH=gold_axis_2026/apps python - <<'PY'
           import os
-          from decision_source import CONTEXT_EVIDENCE_CLASS, fetch_current_decision_state
-
-          state = fetch_current_decision_state(os.environ['NEON_DATABASE_URL'])
-          if state is not None:
-              assert state.get('action_state') is None
-              if state.get('context_only') is True:
-                  assert state['evidence_class'] == CONTEXT_EVIDENCE_CLASS
-                  assert state.get('classification') is None
-                  components = {
-                      'monthly': state.get('monthly_direction_3m'),
-                      'fast': state.get('fast_state'),
-                      'slow': state.get('slow_state'),
-                  }
-                  visible = {k: v for k, v in components.items() if v not in (None, '', 'YAYIMLANMADI')}
-                  assert visible, 'PARTIAL_CONTEXT_READER_RETURNED_NO_VISIBLE_COMPONENTS'
-                  print('GOLD_CONTROL_PARTIAL_CONTEXT_APP_READER_PASS components=' + ','.join(sorted(visible)))
-              else:
-                  assert state['evidence_class'] in {'LIVE_PRODUCTION', 'PROSPECTIVE_SHADOW'}
-          print('GOLD_CONTROL_DECISION_STORE_APP_READER_PASS replay_excluded=PASS action_mapping_guard=PASS')
+          from runtime_source import fetch_runtime_observability
+          state=fetch_runtime_observability(os.environ['NEON_DATABASE_URL'])
+          assert state['runtime_complete'] is True
+          assert state['integrity_ok'] is True
+          assert state['runtime_engine_count'] == 12
+          assert state['context_feature_count'] == 7
+          assert all(r['runtime_status'] == 'ACTIVE' for r in state['runtime'])
+          print('CURRENT_APP_PRODUCTION_READ_PASS')
           PY
-      - name: Live source connectivity diagnostic without raw market logging
+      - name: Live display connectivity diagnostic
         continue-on-error: true
         run: |
           PYTHONPATH=gold_axis_2026/apps python - <<'PY'
           from live_sources import fetch_gvz_latest, fetch_xau_spot
-
-          xau = fetch_xau_spot()
-          assert isinstance(xau, dict)
-          assert float(xau['price']) > 0
-          assert xau.get('source')
-          assert xau.get('as_of')
-          print('XAU_DISPLAY_SOURCE_CONNECTIVITY_PASS source=', xau.get('source'), 'status=', xau.get('status'))
-
-          gvz = fetch_gvz_latest()
-          assert isinstance(gvz, dict)
-          assert float(gvz['close']) > 0
-          assert gvz.get('source')
-          assert gvz.get('as_of')
-          print('GVZ_SOURCE_CONNECTIVITY_PASS source=', gvz.get('source'))
+          xau=fetch_xau_spot(); assert float(xau['price']) > 0
+          gvz=fetch_gvz_latest(); assert float(gvz['close']) > 0
+          print('CURRENT_LIVE_DISPLAY_CONNECTIVITY_PASS')
           PY

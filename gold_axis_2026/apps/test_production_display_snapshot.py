@@ -4,63 +4,91 @@ import copy
 
 import pytest
 
-from decision_source import fetch_current_decision_state
 from production_display_snapshot import (
-    SNAPSHOT_SOURCE_MODE,
-    load_production_display_snapshot,
+    AUTHORITY_ZERO_FIELDS,
+    CURRENT_CONTEXT_FEATURES,
+    CURRENT_ENGINE_IDS,
+    SNAPSHOT_CONTRACT,
+    payload_sha256,
     validate_production_display_snapshot,
 )
-from runtime_source import fetch_runtime_observability
 
 
-def _feature_map(snapshot):
-    return {row["feature_name"]: row["value_text"] for row in snapshot["features"]}
+def _snapshot() -> dict:
+    runtime = [
+        {
+            "engine_id": engine_id,
+            "engine_version": f"current::{engine_id}",
+            "engine_role": "CURRENT_ROLE",
+            "as_of": "2026-09-06T19:35:41Z",
+            "target_context": "2026-09",
+            "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+            "runtime_status": "ACTIVE",
+            "status_code": "ACTIVE_CURRENT_CONTEXT_AVAILABLE",
+            "direction_vote_permitted": engine_id in {"MONTHLY_DIRECTION_3M", "FAST", "SLOW"},
+            "git_commit": "test-sha",
+            "metadata": {},
+        }
+        for engine_id in CURRENT_ENGINE_IDS
+    ]
+    features = [
+        {
+            "feature_name": feature_name,
+            "feature_version": "CURRENT_TEST",
+            "calculation_ts": "2026-09-03T10:14:35Z",
+            "input_cutoff": "2026-09-03T01:26:55Z",
+            "value_num": None,
+            "value_text": "TEST",
+            "quality_status": "TEST_CONTEXT",
+            "metadata": {"target_context": "2026-09"},
+        }
+        for feature_name in CURRENT_CONTEXT_FEATURES
+    ]
+    snapshot = {
+        "snapshot_contract": SNAPSHOT_CONTRACT,
+        "source": "TEST",
+        "source_state_at": "2026-09-06T19:35:41Z",
+        "target_context": "2026-09",
+        "runtime": runtime,
+        "features": features,
+        "health": {
+            "orphan_input_snapshots": 0,
+            "expert_rows_without_input_set": 0,
+            "expert_input_fingerprint_mismatches": 0,
+        },
+        "authority_store_counts": {key: 0 for key in AUTHORITY_ZERO_FIELDS},
+        "database_writes": "NONE",
+    }
+    snapshot["payload_sha256"] = payload_sha256(snapshot)
+    return snapshot
 
 
-def test_missing_database_url_uses_validated_production_snapshot() -> None:
-    snapshot = load_production_display_snapshot()
-    expected = _feature_map(snapshot)
-
-    state = fetch_current_decision_state("")
-    assert state is not None
-    assert state["source_mode"] == SNAPSHOT_SOURCE_MODE
-    assert state["context_only"] is True
-    assert state["monthly_direction_3m"] == expected["MONTHLY_DIRECTION_3M"]
-    assert state["fast_state"] == expected["FAST_STATE"]
-    assert state["slow_state"] == expected["SLOW_STATE"]
-    assert state["monthly_direction_3m"] not in {"", "YAYIMLANMADI", "NOT_ISSUED"}
-    assert state["fast_state"] not in {"", "YAYIMLANMADI", "NOT_ISSUED"}
-    assert state["slow_state"] not in {"", "YAYIMLANMADI", "NOT_ISSUED"}
-    assert state["gvz"] == float(expected["GVZ_VALUE"])
-    assert state["gvz_cap"] == float(expected["GVZ_CAP"])
-    assert state["gvz_regime"] == expected["GVZ_REGIME"]
-    assert state["classification"] is None
-    assert state["action_state"] is None
-    assert state["prospective_h1_claim"] is False
-
-
-def test_missing_database_url_runtime_uses_snapshot_without_promoting_authority() -> None:
-    snapshot = load_production_display_snapshot()
-    runtime = fetch_runtime_observability("")
-
-    assert runtime["source_mode"] == SNAPSHOT_SOURCE_MODE
-    assert runtime["runtime_engine_count"] == 12
-    assert runtime["context_exactly_one_link"] == 7
-    assert runtime["integrity_ok"] is True
-    assert runtime["database_writes"] == "NONE"
-
-    states = {row["engine_id"]: row for row in runtime["runtime"]}
-    assert len(states) == 12
-    expected_states = {row["engine_id"]: row for row in snapshot["runtime"]}
-    assert set(states) == set(expected_states)
-    assert sum(1 for row in states.values() if row.get("direction_vote_permitted") is True) == sum(
-        1 for row in expected_states.values() if row.get("direction_vote_permitted") is True
-    )
+def test_current_snapshot_contract_accepts_exact_current_surface() -> None:
+    snapshot = validate_production_display_snapshot(_snapshot())
+    assert snapshot["snapshot_contract"] == SNAPSHOT_CONTRACT
+    assert len(snapshot["runtime"]) == 12
+    assert {row["engine_id"] for row in snapshot["runtime"]} == set(CURRENT_ENGINE_IDS)
 
 
 def test_snapshot_fingerprint_tamper_fails_closed() -> None:
-    snapshot = load_production_display_snapshot()
+    snapshot = _snapshot()
     tampered = copy.deepcopy(snapshot)
     tampered["features"][0]["value_text"] = "TAMPERED"
     with pytest.raises(RuntimeError, match="FINGERPRINT_MISMATCH"):
         validate_production_display_snapshot(tampered)
+
+
+def test_snapshot_rejects_non_active_current_runtime() -> None:
+    snapshot = _snapshot()
+    snapshot["runtime"][0]["runtime_status"] = "WAITING"
+    snapshot["payload_sha256"] = payload_sha256(snapshot)
+    with pytest.raises(RuntimeError, match="RUNTIME_NOT_ALL_ACTIVE"):
+        validate_production_display_snapshot(snapshot)
+
+
+def test_snapshot_rejects_authority_store_writes() -> None:
+    snapshot = _snapshot()
+    snapshot["authority_store_counts"]["decision_runs"] = 1
+    snapshot["payload_sha256"] = payload_sha256(snapshot)
+    with pytest.raises(RuntimeError, match="UNAUTHORIZED_AUTHORITY_STATE"):
+        validate_production_display_snapshot(snapshot)

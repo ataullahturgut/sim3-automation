@@ -6,15 +6,14 @@ import psycopg
 from psycopg.rows import dict_row
 
 from engine_observability_contract import ENGINE_DISPLAY_ORDER
-from production_display_snapshot import (
-    load_production_display_snapshot,
-    snapshot_runtime_observability,
-)
+from production_display_snapshot import load_production_display_snapshot, snapshot_runtime_observability
 
 
-RUNTIME_SOURCE_CONTRACT = "FROZEN_DATA_EVIDENCE_SPINE_V1_READ_ONLY_APP_V2_CURRENT_MONTH_REFERENCE"
+RUNTIME_SOURCE_CONTRACT = "GOLD_CONTROL_CURRENT_RUNTIME_SOURCE_V141"
+CURRENT_RUNTIME_VIEW = "current_engine_runtime_state_v1"
+CURRENT_CONTEXT_VIEW = "current_context_feature_state_v1"
 EXPECTED_ENGINE_COUNT = len(ENGINE_DISPLAY_ORDER)
-CONTEXT_FEATURES = (
+CURRENT_CONTEXT_FEATURES = (
     "MONTHLY_DIRECTION_3M",
     "FAST_STATE",
     "SLOW_STATE",
@@ -29,91 +28,84 @@ def _to_dict(row: Any) -> dict[str, Any]:
     return dict(row) if row is not None else {}
 
 
-def _runtime_target_context(runtime: list[dict[str, Any]]) -> str | None:
-    targets = [str(row.get("target_context") or "").strip() for row in runtime]
-    targets = [value for value in targets if value]
-    if not targets:
+def _latest_target_context(runtime: list[dict[str, Any]]) -> str | None:
+    values = [str(row.get("target_context") or "").strip() for row in runtime]
+    values = [value for value in values if value]
+    if not values:
         return None
-    # The view is one latest row per engine. Prefer the most common current
-    # target and break ties deterministically by the lexical month key.
     counts: dict[str, int] = {}
-    for value in targets:
+    for value in values:
         counts[value] = counts.get(value, 0) + 1
     return max(sorted(counts), key=lambda value: counts[value])
 
 
-def _attach_current_month_replay_references(
-    cur: psycopg.Cursor[Any],
-    runtime: list[dict[str, Any]],
-) -> tuple[list[dict[str, Any]], int, str | None]:
-    """Attach governed replay evidence without changing operational runtime state.
-
-    Historical replay is presentation/reference evidence only. We intentionally
-    preserve runtime_status/status_code from latest_engine_runtime_state and add
-    a nested current_month_reference object to metadata for the observability
-    layer. No selector, ensemble, canonical authority, or decision output is
-    synthesized here.
-    """
-    target_context = _runtime_target_context(runtime)
-    if not target_context:
-        return runtime, 0, None
-
+def _latest_features(cur: psycopg.Cursor[Any], target_context: str) -> dict[str, dict[str, Any]]:
     cur.execute(
         """
-        select distinct on (expert_id)
-               expert_id, model_version, forecast_value, unit, target_month,
-               forecast_origin, as_of, evidence_class, forecast_track,
-               canonical_authority, auto_selector, auto_ensemble, selector_status
-        from monthly_expert_forecasts
-        where forecast_track='HISTORICAL_REPLAY'
-          and to_char(target_month, 'YYYY-MM')=%s
-        order by expert_id, as_of desc, id desc
+        select id,feature_name,feature_version,calculation_ts,input_cutoff,
+               value_num,value_text,quality_status,git_commit,metadata
+        from current_context_feature_state_v1
+        where feature_name=any(%s)
+          and metadata->>'target_context'=%s
+        order by feature_name
         """,
-        (target_context,),
+        (list(CURRENT_CONTEXT_FEATURES), target_context),
     )
-    refs = {str(row["expert_id"]): dict(row) for row in cur.fetchall()}
+    return {str(row["feature_name"]): dict(row) for row in cur.fetchall()}
 
-    attached = 0
+
+def _feature_value(row: dict[str, Any] | None) -> Any:
+    if not row:
+        return None
+    return row.get("value_num") if row.get("value_num") is not None else row.get("value_text")
+
+
+def _enrich_runtime(runtime: list[dict[str, Any]], features: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+    feature_map = {
+        "MONTHLY_DIRECTION_3M": "MONTHLY_DIRECTION_3M",
+        "FAST": "FAST_STATE",
+        "SLOW": "SLOW_STATE",
+    }
     enriched: list[dict[str, Any]] = []
-    for source_row in runtime:
-        row = dict(source_row)
-        ref = refs.get(str(row.get("engine_id") or ""))
-        if ref:
-            # Fail closed: only replay rows with no canonical/auto authority can
-            # be exposed as current-month reference evidence.
-            if (
-                str(ref.get("evidence_class") or "") == "HISTORICAL_REPLAY"
-                and ref.get("canonical_authority") is False
-                and str(ref.get("auto_selector") or "") == "OFF"
-                and str(ref.get("auto_ensemble") or "") == "OFF"
-            ):
-                metadata = dict(row.get("metadata") or {})
-                metadata["current_month_reference"] = {
-                    "reference_kind": "HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE",
-                    "expert_id": ref.get("expert_id"),
-                    "model_version": ref.get("model_version"),
-                    "forecast_value": ref.get("forecast_value"),
-                    "unit": ref.get("unit"),
-                    "target_month": ref.get("target_month"),
-                    "forecast_origin": ref.get("forecast_origin"),
-                    "as_of": ref.get("as_of"),
-                    "evidence_class": ref.get("evidence_class"),
-                    "forecast_track": ref.get("forecast_track"),
-                    "canonical_authority": False,
-                    "auto_selector": "OFF",
-                    "auto_ensemble": "OFF",
-                    "selector_status": ref.get("selector_status"),
-                    "operational_runtime_status": row.get("runtime_status"),
-                    "operational_status_code": row.get("status_code"),
-                }
-                row["metadata"] = metadata
-                attached += 1
+    for raw in runtime:
+        row = dict(raw)
+        engine_id = str(row.get("engine_id") or "")
+        feature_name = feature_map.get(engine_id)
+        if feature_name:
+            feature = features.get(feature_name)
+            if feature:
+                row["display_output"] = _feature_value(feature)
+                row["display_evidence_class"] = feature.get("quality_status")
+                row["display_as_of"] = feature.get("calculation_ts")
+                row["display_input_cutoff"] = feature.get("input_cutoff")
+                row["display_feature_version"] = feature.get("feature_version")
+        elif engine_id == "GVZ_RISK":
+            gvz_value = _feature_value(features.get("GVZ_VALUE"))
+            gvz_regime = _feature_value(features.get("GVZ_REGIME"))
+            gvz_cap = _feature_value(features.get("GVZ_CAP"))
+            gvz_panic = _feature_value(features.get("GVZ_PANIC"))
+            parts: list[str] = []
+            if gvz_value is not None:
+                parts.append(f"GVZ={gvz_value}")
+            if gvz_regime is not None:
+                parts.append(f"REGIME={gvz_regime}")
+            if gvz_cap is not None:
+                parts.append(f"CAP={gvz_cap}")
+            if gvz_panic is not None:
+                parts.append(f"PANIC={gvz_panic}")
+            if parts:
+                anchor = features.get("GVZ_REGIME") or features.get("GVZ_VALUE")
+                row["display_output"] = " · ".join(parts)
+                row["display_evidence_class"] = None if not anchor else anchor.get("quality_status")
+                row["display_as_of"] = None if not anchor else anchor.get("calculation_ts")
+                row["display_input_cutoff"] = None if not anchor else anchor.get("input_cutoff")
+                row["display_feature_version"] = None if not anchor else anchor.get("feature_version")
         enriched.append(row)
-    return enriched, attached, target_context
+    return enriched
 
 
 def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
-    """Read runtime/health without recomputation; Neon primary, snapshot fallback."""
+    """Read only the sanitized current runtime/context surfaces."""
     url = str(database_url or "").strip()
     if not url:
         return snapshot_runtime_observability(load_production_display_snapshot())
@@ -126,101 +118,59 @@ def fetch_runtime_observability(database_url: str) -> dict[str, Any]:
     with conn_ctx as conn:
         with conn.cursor() as cur:
             cur.execute("SET TRANSACTION READ ONLY")
-            cur.execute("select to_regclass('public.latest_engine_runtime_state') as runtime_view, to_regclass('public.data_evidence_spine_health_v1') as health_view")
+            cur.execute(
+                "select to_regclass('public.current_engine_runtime_state_v1') as runtime_view, "
+                "to_regclass('public.current_context_feature_state_v1') as context_view, "
+                "to_regclass('public.data_evidence_spine_health_v1') as health_view"
+            )
             schema = _to_dict(cur.fetchone())
-            if schema.get("runtime_view") is None or schema.get("health_view") is None:
+            if any(schema.get(key) is None for key in ("runtime_view", "context_view", "health_view")):
                 conn.rollback()
-                return {
-                    "contract": RUNTIME_SOURCE_CONTRACT,
-                    "status": "BLOCKED_DATA_EVIDENCE_SPINE_SCHEMA_NOT_AVAILABLE",
-                    "runtime": [],
-                    "runtime_engine_count": 0,
-                    "health": {},
-                    "integrity_ok": False,
-                    "context_target": None,
-                    "context_expected": len(CONTEXT_FEATURES),
-                    "context_exactly_one_link": 0,
-                    "current_month_reference_target": None,
-                    "current_month_reference_count": 0,
-                    "database_writes": "NONE",
-                }
+                return snapshot_runtime_observability(load_production_display_snapshot())
 
             cur.execute(
                 """
                 select run_id,engine_id,engine_version,engine_role,as_of,target_context,
                        evidence_class,runtime_status,status_code,direction_vote_permitted,
                        git_commit,input_fingerprint,metadata,created_at
-                from latest_engine_runtime_state
-                where engine_id=any(%s)
+                from current_engine_runtime_state_v1
                 order by engine_id
-                """,
-                (list(ENGINE_DISPLAY_ORDER),),
+                """
             )
             runtime = [dict(row) for row in cur.fetchall()]
-            runtime, current_month_reference_count, current_month_reference_target = (
-                _attach_current_month_replay_references(cur, runtime)
-            )
+            target_context = _latest_target_context(runtime)
+            features = _latest_features(cur, target_context) if target_context else {}
+            runtime = _enrich_runtime(runtime, features)
 
             cur.execute("select * from data_evidence_spine_health_v1")
             health = _to_dict(cur.fetchone())
-
-            cur.execute(
-                """
-                select metadata->>'target_context' as target_context
-                from derived_feature_snapshots
-                where feature_name in ('MONTHLY_DIRECTION_3M','FAST_STATE','SLOW_STATE','GVZ_REGIME')
-                  and coalesce(metadata->>'target_context','') <> ''
-                order by calculation_ts desc,id desc limit 1
-                """
-            )
-            target_row = cur.fetchone()
-            context_target = str(target_row["target_context"]) if target_row and target_row["target_context"] else None
-
-            context_exactly_one_link = 0
-            if context_target:
-                cur.execute(
-                    """
-                    with expected as (
-                        select id
-                        from derived_feature_snapshots
-                        where feature_name=any(%s)
-                          and metadata->>'target_context'=%s
-                    )
-                    select count(*) as n
-                    from expected e
-                    where (select count(*) from engine_execution_derived_outputs o
-                           where o.derived_feature_snapshot_id=e.id) = 1
-                    """,
-                    (list(CONTEXT_FEATURES), context_target),
-                )
-                context_exactly_one_link = int(cur.fetchone()["n"])
         conn.rollback()
 
+    current_ids = {str(row.get("engine_id") or "") for row in runtime}
+    runtime_complete = (
+        len(runtime) == EXPECTED_ENGINE_COUNT
+        and current_ids == set(ENGINE_DISPLAY_ORDER)
+        and all(str(row.get("runtime_status") or "").upper() == "ACTIVE" for row in runtime)
+        and len(features) == len(CURRENT_CONTEXT_FEATURES)
+    )
     integrity_ok = bool(
         int(health.get("orphan_input_snapshots") or 0) == 0
         and int(health.get("expert_rows_without_input_set") or 0) == 0
         and int(health.get("expert_input_fingerprint_mismatches") or 0) == 0
     )
-    runtime_complete = len(runtime) == EXPECTED_ENGINE_COUNT
-    context_complete = context_exactly_one_link == len(CONTEXT_FEATURES)
-    status = "DATA_EVIDENCE_SPINE_RUNTIME_HEALTH_PASS" if (integrity_ok and runtime_complete and context_complete) else "BLOCKED_DATA_EVIDENCE_SPINE_RUNTIME_HEALTH"
 
     return {
         "contract": RUNTIME_SOURCE_CONTRACT,
-        "status": status,
+        "status": "CURRENT_RUNTIME_HEALTH_PASS" if (runtime_complete and integrity_ok) else "CURRENT_RUNTIME_HEALTH_BLOCKED",
         "runtime": runtime,
         "runtime_engine_count": len(runtime),
         "health": health,
         "integrity_ok": integrity_ok,
         "runtime_complete": runtime_complete,
-        "context_target": context_target,
-        "context_expected": len(CONTEXT_FEATURES),
-        "context_exactly_one_link": context_exactly_one_link,
-        "context_complete": context_complete,
-        "current_month_reference_target": current_month_reference_target,
-        "current_month_reference_count": current_month_reference_count,
+        "context_target": target_context,
+        "context_feature_count": len(features),
         "database_writes": "NONE",
-        "source_mode": "NEON_DB_READ_ONLY",
+        "source_mode": "NEON_CURRENT_SURFACES_READ_ONLY",
         "snapshot_contract": None,
         "snapshot_source_state_at": None,
         "snapshot_payload_sha256": None,

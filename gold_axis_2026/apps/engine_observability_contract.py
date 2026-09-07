@@ -3,139 +3,97 @@ from __future__ import annotations
 from typing import Any
 
 
-ENGINE_OBSERVABILITY_CONTRACT = "ALL_GOVERNED_FORECAST_DIRECTION_ENGINES_VISIBLE_V7_ALL_AUG31_SEPTEMBER_REFERENCES_ACTIVE"
+ENGINE_OBSERVABILITY_CONTRACT = "GOLD_CONTROL_CURRENT_ENGINE_OBSERVABILITY_V141"
 
 ENGINE_DISPLAY_ORDER = (
-    "CAUSAL_PATCH",
     "VW_MIDAS_MSVR_SUCCESSOR_V1",
+    "CAUSAL_PATCH",
     "MOMENTUM_3M",
     "RANDOM_WALK",
     "MONTHLY_DIRECTION_3M",
     "FAST",
     "SLOW",
     "MACRO_EVENT_SUCCESSOR_V2",
+    "BOCPD_RETURN_SUCCESSOR_V1",
     "EMERGENCY_LEVEL",
     "EMERGENCY_REVERSAL",
-    "BOCPD_RETURN_SUCCESSOR_V1",
     "GVZ_RISK",
 )
 
 ENGINE_REGISTRY: dict[str, dict[str, Any]] = {
-    "CAUSAL_PATCH": {
-        "label": "Causal Patch",
-        "category": "MONTHLY_FORECAST",
-        "role": "Forward issuer candidate / monthly expert",
-        "version": "CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE",
-        "default_status": "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE",
-        "direction_vote": False,
-        "expert_id": "CAUSAL_PATCH",
-    },
     "VW_MIDAS_MSVR_SUCCESSOR_V1": {
         "label": "VW/MSVR Successor V1",
         "category": "MONTHLY_FORECAST",
-        "role": "Monthly H=1 research-shadow expert; September reference reconstructed from the completed 2026-08-31 information boundary",
-        "version": "VW_MIDAS_MSVR_SUCCESSOR_V1",
-        "default_status": "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE",
+        "role": "Monthly H=1 price expert",
         "direction_vote": False,
-        "expert_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+    },
+    "CAUSAL_PATCH": {
+        "label": "Causal Patch",
+        "category": "MONTHLY_FORECAST",
+        "role": "Monthly H=1 price expert",
+        "direction_vote": False,
     },
     "MOMENTUM_3M": {
         "label": "3M Momentum · H=1 Expert",
         "category": "MONTHLY_FORECAST",
-        "role": "Monthly expert / direction challenger; H=1 price output is distinct from stored monthly direction context",
-        "version": "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
-        "default_status": "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE",
+        "role": "Monthly H=1 price expert",
         "direction_vote": False,
-        "expert_id": "MOMENTUM_3M",
     },
     "RANDOM_WALK": {
         "label": "Random Walk",
         "category": "MONTHLY_FORECAST",
-        "role": "Mandatory naive benchmark",
-        "version": "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
-        "default_status": "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE",
+        "role": "Mandatory same-origin benchmark",
         "direction_vote": False,
-        "expert_id": "RANDOM_WALK",
     },
     "MONTHLY_DIRECTION_3M": {
         "label": "Monthly Direction · 3M",
         "category": "STRATEGIC_DIRECTION",
-        "role": "Strategic monthly direction / prior / context",
-        "version": "R4_1_3M_SIMPLE_RETURN_V1",
-        "default_status": "NOT_ISSUED",
+        "role": "Strategic monthly direction / prior",
         "direction_vote": True,
-        "decision_key": "monthly_direction_3m",
-        "feature_name": "MONTHLY_DIRECTION_3M",
     },
     "FAST": {
         "label": "FAST",
         "category": "TACTICAL_DIRECTION",
-        "role": "Short-horizon tactical confirmation/conflict state",
-        "version": "R4_1_SMA20_2_MARKET_DAY_PERSISTENCE_V1",
-        "default_status": "NOT_ISSUED",
+        "role": "Short-horizon tactical confirmation/conflict",
         "direction_vote": True,
-        "decision_key": "fast_state",
-        "feature_name": "FAST_STATE",
     },
     "SLOW": {
         "label": "SLOW",
         "category": "TACTICAL_DIRECTION",
-        "role": "Medium-horizon tactical confirmation/conflict state",
-        "version": "R4_1_COMPLETED_WEEKLY_SMA4_2_WEEK_PERSISTENCE_V1",
-        "default_status": "NOT_ISSUED",
+        "role": "Slower tactical confirmation/conflict",
         "direction_vote": True,
-        "decision_key": "slow_state",
-        "feature_name": "SLOW_STATE",
     },
     "MACRO_EVENT_SUCCESSOR_V2": {
         "label": "Macro Event · Successor V2",
         "category": "EVENT_RISK",
-        "role": "Active timestamp-safe labor-event risk/context",
-        "version": "MACRO_EVENT_SUCCESSOR_V2",
-        "default_status": "WAITING_RUNTIME_PROMOTION_RECORD",
+        "role": "Timestamp-safe labor-event risk/context",
         "direction_vote": False,
-        "decision_key": "macro_event_successor_context",
-    },
-    "EMERGENCY_LEVEL": {
-        "label": "Emergency · Level",
-        "category": "EMERGENCY",
-        "role": "Abnormal level-move alert/context",
-        "version": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1",
-        "default_status": "ACTIVE_HISTORICAL_REPLAY_MONTH_OPEN_STATE_AVAILABLE",
-        "direction_vote": False,
-        "decision_key": "level_emergency",
-    },
-    "EMERGENCY_REVERSAL": {
-        "label": "Emergency · Reversal",
-        "category": "EMERGENCY",
-        "role": "Reversal alert/context; alert-only under frozen geometry",
-        "version": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1",
-        "default_status": "ACTIVE_HISTORICAL_REPLAY_MONTH_OPEN_STATE_AVAILABLE",
-        "direction_vote": False,
-        "decision_key": "reversal_emergency",
     },
     "BOCPD_RETURN_SUCCESSOR_V1": {
         "label": "BOCPD · Successor V1",
         "category": "REGIME_BREAK",
-        "role": "Active regime/break context and alert only",
-        "version": "BOCPD_RETURN_SUCCESSOR_V1",
-        "default_status": "WAITING_RUNTIME_PROMOTION_RECORD",
+        "role": "Regime/break context only",
         "direction_vote": False,
-        "decision_key": "bocpd_successor_context",
-        "feature_name": "BOCPD_RETURN_SUCCESSOR_V1_STATE",
+    },
+    "EMERGENCY_LEVEL": {
+        "label": "Emergency · Level",
+        "category": "EMERGENCY",
+        "role": "Intramonth abnormal-level alert/context",
+        "direction_vote": False,
+    },
+    "EMERGENCY_REVERSAL": {
+        "label": "Emergency · Reversal",
+        "category": "EMERGENCY",
+        "role": "Intramonth peak/trough reversal alert/context",
+        "direction_vote": False,
     },
     "GVZ_RISK": {
-        "label": "GVZ Risk Cap",
+        "label": "GVZ Risk",
         "category": "RISK",
-        "role": "Volatility/risk-cap context; never a gold-direction vote",
-        "version": "R4_1_GVZ_RISK_CAP_CONTEXT_V1",
-        "default_status": "NOT_ISSUED",
+        "role": "Volatility/risk context only",
         "direction_vote": False,
-        "feature_name": "GVZ_REGIME",
     },
 }
-
-_MISSING = {"", "NONE", "N/A", "NAN", "NOT_ISSUED", "YAYIMLANMADI", "KULLANILAMIYOR"}
 
 
 def _text(value: Any) -> str:
@@ -143,171 +101,74 @@ def _text(value: Any) -> str:
 
 
 def _available(value: Any) -> bool:
-    return _text(value).upper() not in _MISSING
+    return value is not None and _text(value).upper() not in {"", "NONE", "N/A", "NAN"}
 
 
 def _latest_expert(rows: list[dict[str, Any]] | None, expert_id: str) -> dict[str, Any] | None:
     candidates = [dict(row) for row in (rows or []) if _text(row.get("expert_id")) == expert_id]
     if not candidates:
         return None
-    return max(
-        candidates,
-        key=lambda row: (
-            _text(row.get("as_of")),
-            _text(row.get("created_at")),
-            _text(row.get("target_month")),
-        ),
-    )
+    return max(candidates, key=lambda row: (_text(row.get("as_of")), _text(row.get("created_at"))))
 
 
-def _component_meta(decision: dict[str, Any] | None, feature_name: str | None, field: str) -> Any:
-    if not decision or not feature_name:
+def _decision_value(engine_id: str, decision: dict[str, Any] | None) -> Any:
+    if not decision:
         return None
-    mapping = decision.get(field)
-    if isinstance(mapping, dict):
-        return mapping.get(feature_name)
-    return None
-
-
-def _component_row(engine_id: str, base: dict[str, Any], decision: dict[str, Any] | None) -> dict[str, Any]:
-    key = base.get("decision_key")
-    feature_name = base.get("feature_name")
-    value = decision.get(key) if decision and key else None
-
+    key_map = {
+        "MONTHLY_DIRECTION_3M": "monthly_direction_3m",
+        "FAST": "fast_state",
+        "SLOW": "slow_state",
+        "MACRO_EVENT_SUCCESSOR_V2": "macro_event_successor_context",
+        "BOCPD_RETURN_SUCCESSOR_V1": "bocpd_successor_context",
+        "EMERGENCY_LEVEL": "level_emergency",
+        "EMERGENCY_REVERSAL": "reversal_emergency",
+    }
     if engine_id == "GVZ_RISK":
-        gvz_value = decision.get("gvz") if decision else None
-        gvz_regime = decision.get("gvz_regime") if decision else None
-        gvz_cap = decision.get("gvz_cap") if decision else None
-        gvz_panic = decision.get("gvz_panic") if decision else None
-        parts = []
-        if gvz_value is not None:
-            parts.append(f"GVZ={gvz_value}")
-        if _available(gvz_regime):
-            parts.append(f"REGIME={gvz_regime}")
-        if gvz_cap is not None:
-            parts.append(f"CAP={gvz_cap}")
-        if gvz_panic is not None:
-            parts.append(f"PANIC={str(bool(gvz_panic)).lower()}")
-        value = " · ".join(parts) if parts else None
-
-    status = base["default_status"]
-    if _available(value):
-        value_text = _text(value)
-        status = value_text if value_text.startswith(("BLOCKED_", "NOT_PROVEN_", "WAITING_")) else "STORED_CONTEXT_AVAILABLE"
-
-    version = _component_meta(decision, feature_name, "context_feature_versions") or base["version"]
-    updated_at = _component_meta(decision, feature_name, "context_feature_updated_at")
-    input_cutoff = _component_meta(decision, feature_name, "context_feature_input_cutoff")
-    evidence = _component_meta(decision, feature_name, "context_feature_evidence")
-    if evidence is None and decision:
-        evidence = decision.get("evidence_class")
-
-    return {
-        "engine_id": engine_id,
-        "label": base["label"],
-        "category": base["category"],
-        "role": base["role"],
-        "version": version,
-        "output": value,
-        "status": status,
-        "evidence_class": evidence,
-        "target_month": None if not decision else decision.get("target_month"),
-        "as_of": updated_at or input_cutoff or (None if not decision else decision.get("generated_at") or decision.get("decision_as_of")),
-        "input_cutoff": input_cutoff,
-        "direction_vote": bool(base["direction_vote"]),
-        "canonical_authority": False,
-        "forecast_track": None,
-    }
+        parts: list[str] = []
+        if decision.get("gvz") is not None:
+            parts.append(f"GVZ={decision['gvz']}")
+        if _available(decision.get("gvz_regime")):
+            parts.append(f"REGIME={decision['gvz_regime']}")
+        if decision.get("gvz_cap") is not None:
+            parts.append(f"CAP={decision['gvz_cap']}")
+        if decision.get("gvz_panic") is not None:
+            parts.append(f"PANIC={str(bool(decision['gvz_panic'])).lower()}")
+        return " · ".join(parts) if parts else None
+    key = key_map.get(engine_id)
+    return decision.get(key) if key else None
 
 
-def _expert_row(
-    engine_id: str,
-    base: dict[str, Any],
-    month_end_rows: list[dict[str, Any]] | None,
-    early_rows: list[dict[str, Any]] | None,
-) -> dict[str, Any]:
-    expert_id = str(base["expert_id"])
-    month = _latest_expert(month_end_rows, expert_id)
-    early = _latest_expert(early_rows, expert_id)
-    row = month or early
-    if row:
-        track = _text(row.get("forecast_track")) or ("MONTH_END_EXPERT" if month else "EARLY_INDICATIVE")
-        status = "ISSUED_MONTH_END_EXPERT" if month else "ISSUED_EARLY_INDICATIVE_ONLY"
-        output = row.get("forecast_value")
-        evidence = row.get("evidence_class")
-        version = row.get("model_version") or base["version"]
-        target_month = row.get("target_month")
-        as_of = row.get("as_of") or row.get("created_at")
-    else:
-        track = None
-        status = base["default_status"]
-        output = None
-        evidence = None
-        version = base["version"]
-        target_month = None
-        as_of = None
+def _runtime_reference(runtime: dict[str, Any]) -> tuple[Any, str | None, Any, Any]:
+    if _available(runtime.get("display_output")):
+        return (
+            runtime.get("display_output"),
+            _text(runtime.get("display_evidence_class")) or None,
+            runtime.get("display_as_of"),
+            runtime.get("display_input_cutoff"),
+        )
 
-    return {
-        "engine_id": engine_id,
-        "label": base["label"],
-        "category": base["category"],
-        "role": base["role"],
-        "version": version,
-        "output": output,
-        "status": status,
-        "evidence_class": evidence,
-        "target_month": target_month,
-        "as_of": as_of,
-        "input_cutoff": None,
-        "direction_vote": bool(base["direction_vote"]),
-        "canonical_authority": False,
-        "forecast_track": track,
-    }
+    metadata = runtime.get("metadata") if isinstance(runtime.get("metadata"), dict) else {}
+    reference = metadata.get("current_month_reference") if isinstance(metadata.get("current_month_reference"), dict) else None
+    if reference:
+        value = reference.get("forecast_value") if reference.get("forecast_value") is not None else reference.get("state_value")
+        if _available(value):
+            return (
+                value,
+                _text(reference.get("evidence_class")) or None,
+                reference.get("replay_executed_at") or reference.get("as_of") or runtime.get("as_of"),
+                reference.get("information_cutoff") or reference.get("forecast_origin"),
+            )
 
-
-def _current_month_reference(runtime: dict[str, Any] | None) -> dict[str, Any] | None:
-    if not runtime:
-        return None
-    metadata = runtime.get("metadata")
-    if not isinstance(metadata, dict):
-        return None
-    ref = metadata.get("current_month_reference")
-    if not isinstance(ref, dict):
-        return None
-    if _text(ref.get("reference_kind")) != "HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE":
-        return None
-    if _text(ref.get("evidence_class")) != "HISTORICAL_REPLAY":
-        return None
-    if ref.get("canonical_authority") is not False:
-        return None
-    if _text(ref.get("auto_selector")) != "OFF" or _text(ref.get("auto_ensemble")) != "OFF":
-        return None
-    if ref.get("forecast_value") is None and ref.get("state_value") is None:
-        return None
-    return dict(ref)
-
-
-def _successor_context_reference(engine_id: str, runtime: dict[str, Any] | None) -> dict[str, Any] | None:
-    governed_successors = {"BOCPD_RETURN_SUCCESSOR_V1", "MACRO_EVENT_SUCCESSOR_V2"}
-    if engine_id not in governed_successors or not runtime:
-        return None
-    metadata = runtime.get("metadata")
-    if not isinstance(metadata, dict):
-        return None
-    if _text(metadata.get("successor_id")) != engine_id:
-        return None
     state = metadata.get("current_state")
-    if not _available(state):
-        return None
-    if runtime.get("direction_vote_permitted") is not False:
-        return None
-    return {
-        "state": _text(state),
-        "evidence_class": _text(metadata.get("current_state_evidence_class")) or _text(runtime.get("evidence_class")),
-        "state_as_of": metadata.get("current_state_as_of") or runtime.get("as_of"),
-        "information_cutoff": metadata.get("information_cutoff"),
-        "reference_kind": metadata.get("reference_kind") or "RUNTIME_SUCCESSOR_CONTEXT_REFERENCE",
-    }
+    if _available(state):
+        return (
+            state,
+            _text(metadata.get("current_state_evidence_class")) or _text(runtime.get("evidence_class")) or None,
+            metadata.get("current_state_as_of") or runtime.get("as_of"),
+            metadata.get("information_cutoff"),
+        )
+
+    return None, None, runtime.get("as_of"), None
 
 
 def build_engine_inventory(
@@ -316,110 +177,95 @@ def build_engine_inventory(
     early_experts: list[dict[str, Any]] | None,
     runtime_rows: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
-    """Return every governed motor, separating runtime and current-month replay state.
+    """Build the current 12-motor display from current runtime authority.
 
-    Output values remain sourced only from governed expert/component ledgers or
-    an explicitly governed runtime successor-context reference. Runtime rows may
-    carry a read-only historical-replay reference; this never changes selector,
-    ensemble, canonical forecast, direction-vote or position authority.
+    Runtime state is authoritative. Expert/decision rows may supply a display value
+    when a runtime row has no embedded value, but they never change runtime status,
+    selector/ensemble locks or direction-vote authority.
     """
     runtime_by_engine = {
         _text(row.get("engine_id")): dict(row)
         for row in (runtime_rows or [])
         if _text(row.get("engine_id")) in ENGINE_REGISTRY
     }
+    monthly_expert_ids = {
+        "VW_MIDAS_MSVR_SUCCESSOR_V1",
+        "CAUSAL_PATCH",
+        "MOMENTUM_3M",
+        "RANDOM_WALK",
+    }
+
     out: list[dict[str, Any]] = []
     for engine_id in ENGINE_DISPLAY_ORDER:
         base = ENGINE_REGISTRY[engine_id]
-        if base.get("expert_id"):
-            row = _expert_row(engine_id, base, month_end_experts, early_experts)
-        else:
-            row = _component_row(engine_id, base, decision)
-
         runtime = runtime_by_engine.get(engine_id)
+
+        output = None
+        evidence = None
+        as_of = None
+        input_cutoff = None
         if runtime:
-            runtime_status = _text(runtime.get("runtime_status")).upper()
-            status_code = _text(runtime.get("status_code"))
-            if runtime_status in {"WAITING", "BLOCKED", "NOT_PROVEN"} and status_code:
-                row["status"] = status_code
-            elif runtime_status == "ACTIVE" and status_code:
-                row["status"] = "STORED_CONTEXT_AVAILABLE" if _available(row.get("output")) else status_code
-            elif runtime_status == "ISSUED" and not _available(row.get("output")) and status_code:
-                row["status"] = status_code
+            output, evidence, as_of, input_cutoff = _runtime_reference(runtime)
 
-            row["runtime_status"] = runtime_status or None
-            row["runtime_status_code"] = status_code or None
-            row["runtime_version"] = runtime.get("engine_version")
-            row["runtime_role"] = runtime.get("engine_role")
-            row["runtime_evidence_class"] = runtime.get("evidence_class")
-            row["runtime_as_of"] = runtime.get("as_of")
-            row["runtime_target_context"] = runtime.get("target_context")
-            row["runtime_git_commit"] = runtime.get("git_commit")
-            row["direction_vote"] = bool(
-                row["direction_vote"] and runtime.get("direction_vote_permitted") is True
-            )
+        if not _available(output) and engine_id in monthly_expert_ids:
+            candidate = _latest_expert(month_end_experts, engine_id) or _latest_expert(early_experts, engine_id)
+            if candidate:
+                output = candidate.get("forecast_value")
+                evidence = _text(candidate.get("evidence_class")) or evidence
+                as_of = candidate.get("as_of") or candidate.get("created_at") or as_of
 
-            successor_ref = _successor_context_reference(engine_id, runtime)
-            if successor_ref and not _available(row.get("output")):
-                row["operational_status"] = status_code or runtime_status or "UNRESOLVED_RUNTIME_STATE"
-                row["operational_runtime_status"] = runtime_status or None
-                row["reference_status"] = "ISSUED_SUCCESSOR_CONTEXT_REFERENCE"
-                row["status"] = "STORED_CONTEXT_AVAILABLE"
-                row["output"] = successor_ref["state"]
-                row["evidence_class"] = successor_ref["evidence_class"]
-                row["target_month"] = runtime.get("target_context")
-                row["as_of"] = successor_ref["state_as_of"]
-                row["input_cutoff"] = successor_ref["information_cutoff"]
-                row["version"] = runtime.get("engine_version") or row["version"]
-                row["canonical_authority"] = False
-                row["reference_kind"] = successor_ref["reference_kind"]
+        if not _available(output):
+            decision_value = _decision_value(engine_id, decision)
+            if _available(decision_value):
+                output = decision_value
+                if decision:
+                    evidence = _text(decision.get("evidence_class")) or evidence
+                    as_of = decision.get("generated_at") or decision.get("decision_as_of") or as_of
 
-            ref = _current_month_reference(runtime)
-            if ref and not _available(row.get("output")):
-                next_runtime = status_code or runtime_status or "UNRESOLVED_RUNTIME_STATE"
-                row["operational_status"] = next_runtime
-                row["operational_runtime_status"] = runtime_status or None
-                row["reference_status"] = "ISSUED_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE"
-                row["status"] = (
-                    "ISSUED_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE"
-                    + (f"__NEXT_RUNTIME_{next_runtime}" if next_runtime else "")
-                )
-                row["output"] = ref.get("forecast_value") if ref.get("forecast_value") is not None else ref.get("state_value")
-                row["evidence_class"] = "HISTORICAL_REPLAY"
-                row["target_month"] = ref.get("target_month")
-                row["as_of"] = ref.get("as_of") or ref.get("forecast_origin")
-                row["version"] = ref.get("model_version") or row["version"]
-                row["forecast_track"] = ref.get("forecast_track") or "HISTORICAL_REPLAY"
-                row["canonical_authority"] = False
-                row["reference_forecast_origin"] = ref.get("forecast_origin")
-                row["reference_selector_status"] = ref.get("selector_status")
-                row["reference_auto_selector"] = "OFF"
-                row["reference_auto_ensemble"] = "OFF"
+        if runtime:
+            runtime_status = _text(runtime.get("runtime_status")).upper() or "MISSING_RUNTIME_STATUS"
+            status_code = _text(runtime.get("status_code")) or "MISSING_RUNTIME_STATUS_CODE"
+            direction_vote = bool(base["direction_vote"] and runtime.get("direction_vote_permitted") is True)
         else:
-            row["runtime_status"] = None
-            row["runtime_status_code"] = None
-            row["runtime_version"] = None
-            row["runtime_role"] = None
-            row["runtime_evidence_class"] = None
-            row["runtime_as_of"] = None
-            row["runtime_target_context"] = None
-            row["runtime_git_commit"] = None
-        out.append(row)
+            runtime_status = "MISSING"
+            status_code = "MISSING_CURRENT_RUNTIME_RECORD"
+            direction_vote = False
+
+        out.append(
+            {
+                "engine_id": engine_id,
+                "label": base["label"],
+                "category": base["category"],
+                "role": base["role"],
+                "output": output,
+                "status": status_code,
+                "runtime_status": runtime_status,
+                "runtime_status_code": status_code,
+                "evidence_class": evidence,
+                "target_month": None if not runtime else runtime.get("target_context"),
+                "as_of": as_of or (None if not runtime else runtime.get("as_of")),
+                "input_cutoff": input_cutoff,
+                "version": None if not runtime else runtime.get("engine_version"),
+                "git_commit": None if not runtime else runtime.get("git_commit"),
+                "direction_vote": direction_vote,
+                "canonical_authority": False,
+            }
+        )
     return out
 
 
 def engine_inventory_counts(rows: list[dict[str, Any]]) -> dict[str, int]:
-    counts = {"total": len(rows), "active": 0, "issued": 0, "blocked": 0, "waiting": 0, "other": 0}
+    counts = {"total": len(rows), "active": 0, "waiting": 0, "blocked": 0, "missing": 0, "other": 0}
     for row in rows:
-        status = _text(row.get("status")).upper()
-        if status.startswith("ISSUED_"):
-            counts["issued"] += 1
-        elif status == "STORED_CONTEXT_AVAILABLE":
+        runtime_status = _text(row.get("runtime_status")).upper()
+        if runtime_status == "ACTIVE":
             counts["active"] += 1
-        elif status.startswith(("BLOCKED_", "NOT_PROVEN_")):
-            counts["blocked"] += 1
-        elif status.startswith(("WAITING_", "NOT_ISSUED")):
+        elif runtime_status == "WAITING":
             counts["waiting"] += 1
+        elif runtime_status in {"BLOCKED", "NOT_PROVEN"}:
+            counts["blocked"] += 1
+        elif runtime_status in {"", "MISSING"}:
+            counts["missing"] += 1
         else:
             counts["other"] += 1
     return counts
