@@ -1,0 +1,105 @@
+name: Gold Control v1.42 Static Reconcile Once
+
+on:
+  push:
+    branches:
+      - gold-control-current-surface-v142
+    paths:
+      - '.github/workflows/gold-control-v142-static-reconcile-once.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-current-surface-v142
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reconcile v1.42 current contracts and audit names
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          replacements = {
+              'gold_axis_2026/apps/engine_observability_contract.py': [
+                  ('GOLD_CONTROL_CURRENT_ENGINE_OBSERVABILITY_V141', 'GOLD_CONTROL_CURRENT_ENGINE_OBSERVABILITY_V142'),
+              ],
+              'gold_axis_2026/data_pipeline/data_evidence_spine_runtime_bootstrap.py': [
+                  ('# v1.41 current governed inventory.', '# v1.42 current governed inventory.'),
+                  ('CANONICAL_MANIFEST_RUNTIME_STATUS_V141', 'CANONICAL_MANIFEST_RUNTIME_STATUS_V142'),
+                  ('RUNTIME_BOOTSTRAP_V140_COUNTS_INVALID', 'RUNTIME_BOOTSTRAP_V142_COUNTS_INVALID'),
+                  ('DATA_EVIDENCE_SPINE_RUNTIME_BOOTSTRAP_V141_PASS', 'DATA_EVIDENCE_SPINE_RUNTIME_BOOTSTRAP_V142_PASS'),
+              ],
+              'gold_axis_2026/data_pipeline/multi_expert_forecast.py': [
+                  ('MANIFEST_VERSION = "1.41"', 'MANIFEST_VERSION = "1.42"'),
+              ],
+              'gold_axis_2026/data_pipeline/test_data_evidence_spine_runtime_bootstrap.py': [
+                  ('v141', 'v142'),
+                  ('V141', 'V142'),
+                  ('1.41', '1.42'),
+              ],
+          }
+          for name, reps in replacements.items():
+              path = Path(name)
+              text = path.read_text(encoding='utf-8')
+              for old, new in reps:
+                  text = text.replace(old, new)
+              path.write_text(text, encoding='utf-8')
+          PY
+
+          git mv gold_axis_2026/tools/audit_current_surface_v141.py gold_axis_2026/tools/audit_current_surface_v142.py
+          git mv gold_axis_2026/tools/inventory_full_current_tree_v141.py gold_axis_2026/tools/inventory_full_current_tree_v142.py
+          git mv .github/workflows/gold-control-v141-current-surface-audit.yml .github/workflows/gold-control-v142-current-surface-audit.yml
+
+          python - <<'PY'
+          from pathlib import Path
+          for name in [
+              'gold_axis_2026/tools/audit_current_surface_v142.py',
+              'gold_axis_2026/tools/inventory_full_current_tree_v142.py',
+              '.github/workflows/gold-control-v142-current-surface-audit.yml',
+          ]:
+              path=Path(name)
+              text=path.read_text(encoding='utf-8')
+              for old,new in [
+                  ('V141','V142'),('v141','v142'),('1.41','1.42'),
+                  ('gold-control-clean-current-surface-v141','gold-control-current-surface-v142'),
+                  ('GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V141','GOLD_CONTROL_CURRENT_PRODUCTION_DISPLAY_SNAPSHOT_V142'),
+                  ('GOLD_CONTROL_CURRENT_SURFACE_V141','GOLD_CONTROL_CURRENT_SURFACE_V142'),
+              ]:
+                  text=text.replace(old,new)
+              path.write_text(text,encoding='utf-8')
+          PY
+
+          git rm -f --ignore-unmatch current_surface_audit_v141.json current_surface_cleanup_v141.json full_current_tree_inventory_v141.json
+          git rm -f .github/workflows/gold-control-v142-static-reconcile-once.yml
+
+      - name: Check no current v1.41 contract strings remain in executable current surface
+        run: |
+          set -euo pipefail
+          if grep -R -n -E 'CURRENT_(ENGINE_OBSERVABILITY|RUNTIME_SOURCE|PRODUCTION_DISPLAY_SNAPSHOT|SURFACE)_V141|MANIFEST_VERSION = "1\.41"|CANONICAL_MANIFEST_RUNTIME_STATUS_V141' \
+             gold_axis_2026/apps gold_axis_2026/data_pipeline gold_axis_2026/tools .github/workflows; then
+            echo 'STALE_V141_CURRENT_CONTRACT_FOUND' >&2
+            exit 1
+          fi
+      - name: Run v1.42 static unit tests
+        run: |
+          python -m pip install -q pytest pandas numpy 'psycopg[binary]>=3.2,<4'
+          python -m compileall -q gold_axis_2026/apps gold_axis_2026/data_pipeline gold_axis_2026/tools
+          PYTHONPATH=gold_axis_2026/apps pytest -q gold_axis_2026/apps/test_engine_observability_contract.py gold_axis_2026/apps/test_production_display_snapshot.py
+          PYTHONPATH=gold_axis_2026/data_pipeline pytest -q gold_axis_2026/data_pipeline/test_data_evidence_spine_runtime_bootstrap.py gold_axis_2026/data_pipeline/test_multi_expert_forecast.py
+      - name: Commit reconciliation
+        run: |
+          git config user.name gold-control-governance-bot
+          git config user.email gold-control-governance-bot@users.noreply.github.com
+          git add -A
+          git commit -m 'Gold Control v1.42: reconcile current static contracts'
+          git push origin HEAD:gold-control-current-surface-v142
