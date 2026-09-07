@@ -26,10 +26,8 @@ EARLIEST_URL = "https://api.twelvedata.com/earliest_timestamp"
 ANCHOR_FILE = ROOT / "gold_axis_2026" / "patch_repro_v1" / "locked_replay_v6_monthly_level_43.csv"
 ANCHOR_COLUMN = "patch_v6"
 THRESHOLD = 0.04
-# Official Twelve start_date/end_date semantics are used with outputsize omitted.
-# One bounded calendar-month request therefore avoids artificial outputsize restriction.
-CHUNK_DAYS = 31
-MIN_REQUEST_INTERVAL_SECONDS = float(os.environ.get("TWELVE_MIN_REQUEST_INTERVAL_SECONDS", "9.0"))
+PAGE_OUTPUTSIZE = 5000
+MIN_REQUEST_INTERVAL_SECONDS = float(os.environ.get("TWELVE_MIN_REQUEST_INTERVAL_SECONDS", "8.5"))
 _LAST_REQUEST_MONOTONIC = 0.0
 
 
@@ -57,6 +55,7 @@ class MonthMetrics:
     cross_through_without_expected_alert: int
     gap_gt_120s_count_unclassified: int
     max_gap_seconds_unclassified: float | None
+    provider_pages: int
 
 
 def _api_key() -> str:
@@ -133,48 +132,77 @@ def _month_bounds(month: str) -> tuple[pd.Timestamp, pd.Timestamp]:
     return start, end
 
 
-def _fetch_month(session: requests.Session, month: str) -> list[tuple[pd.Timestamp, float]]:
+def _fetch_month(session: requests.Session, month: str) -> tuple[list[tuple[pd.Timestamp, float]], int]:
+    """Fetch a full calendar month using deterministic backward 5000-row pages.
+
+    Twelve documents a 5000-record request ceiling. Each request is bounded by
+    the month start and a moving end_date. When a page is full, the next page
+    ends one minute before the earliest returned row. Duplicate/conflicting
+    minutes and non-progress are fail-closed.
+    """
     start, end = _month_bounds(month)
     rows: dict[pd.Timestamp, float] = {}
-    chunk_start = start
-    while chunk_start <= end:
-        chunk_end = min(chunk_start + pd.Timedelta(days=CHUNK_DAYS) - pd.Timedelta(seconds=1), end)
+    cursor_end = end
+    pages = 0
+
+    while cursor_end >= start:
         payload = _request_json(
             session,
             TIME_SERIES_URL,
             {
                 "symbol": SYMBOL,
                 "interval": INTERVAL,
-                "start_date": chunk_start.strftime("%Y-%m-%d %H:%M:%S"),
-                "end_date": chunk_end.strftime("%Y-%m-%d %H:%M:%S"),
+                "start_date": start.strftime("%Y-%m-%d %H:%M:%S"),
+                "end_date": cursor_end.strftime("%Y-%m-%d %H:%M:%S"),
+                "outputsize": PAGE_OUTPUTSIZE,
                 "timezone": "UTC",
                 "format": "JSON",
             },
         )
+        pages += 1
         meta = payload.get("meta") or {}
         if meta.get("symbol") not in (None, SYMBOL):
             raise RuntimeError(f"TWELVE_SYMBOL_MISMATCH:{month}:{meta.get('symbol')}")
         if meta.get("interval") not in (None, INTERVAL):
             raise RuntimeError(f"TWELVE_INTERVAL_MISMATCH:{month}:{meta.get('interval')}")
+
         values = payload.get("values") or []
-        # Exact 5000 is suspicious because 5000 is also the provider's outputsize ceiling.
-        # Do not silently accept a possibly clipped month.
-        if len(values) == 5000:
-            raise RuntimeError(f"BLOCKED_POSSIBLE_PROVIDER_TRUNCATION:{month}:5000")
+        if not values:
+            break
+
+        page_rows: dict[pd.Timestamp, float] = {}
         for item in values:
             ts = pd.to_datetime(item.get("datetime"), utc=True, errors="coerce")
-            if pd.isna(ts) or ts < start or ts > end:
+            if pd.isna(ts):
+                continue
+            ts = pd.Timestamp(ts).floor("min")
+            if ts < start or ts > cursor_end:
                 continue
             close = pd.to_numeric(item.get("close"), errors="coerce")
             if pd.isna(close) or float(close) <= 0:
                 raise RuntimeError(f"TWELVE_INVALID_CLOSE:{month}:{item.get('datetime')}")
-            ts = pd.Timestamp(ts).floor("min")
             val = float(close)
+            if ts in page_rows and page_rows[ts] != val:
+                raise RuntimeError(f"TWELVE_PAGE_DUPLICATE_CONFLICT:{month}:{ts.isoformat()}")
+            page_rows[ts] = val
+
+        if not page_rows:
+            raise RuntimeError(f"TWELVE_PAGE_NO_VALID_ROWS:{month}:{cursor_end.isoformat()}")
+
+        for ts, val in page_rows.items():
             if ts in rows and rows[ts] != val:
                 raise RuntimeError(f"TWELVE_DUPLICATE_MINUTE_CONFLICT:{month}:{ts.isoformat()}")
             rows[ts] = val
-        chunk_start = chunk_end + pd.Timedelta(seconds=1)
-    return sorted(rows.items(), key=lambda x: x[0])
+
+        earliest = min(page_rows)
+        if earliest <= start or len(values) < PAGE_OUTPUTSIZE:
+            break
+        next_end = earliest - pd.Timedelta(minutes=1)
+        if next_end >= cursor_end:
+            raise RuntimeError(f"TWELVE_PAGINATION_NON_PROGRESS:{month}:{cursor_end.isoformat()}")
+        cursor_end = next_end
+
+    return sorted(rows.items(), key=lambda x: x[0]), pages
 
 
 def _episodes(values: list[str], target: str) -> int:
@@ -187,13 +215,18 @@ def _episodes(values: list[str], target: str) -> int:
     return n
 
 
-def _validate_month(month: str, anchor: float, points: list[tuple[pd.Timestamp, float]]) -> MonthMetrics:
+def _validate_month(
+    month: str,
+    anchor: float,
+    points: list[tuple[pd.Timestamp, float]],
+    provider_pages: int,
+) -> MonthMetrics:
     if anchor <= 0:
         raise RuntimeError(f"INVALID_ANCHOR:{month}:{anchor}")
     if not points:
         return MonthMetrics(
             month, anchor, 0, None, None, None, None, None, None,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, None,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, None, provider_pages,
         )
 
     state = EmergencyState(level_threshold_abs=THRESHOLD, reversal_threshold_abs=THRESHOLD)
@@ -249,6 +282,7 @@ def _validate_month(month: str, anchor: float, points: list[tuple[pd.Timestamp, 
         cross_through_without_expected_alert=cross_through_missing_alert,
         gap_gt_120s_count_unclassified=len(gaps),
         max_gap_seconds_unclassified=max(gaps) if gaps else None,
+        provider_pages=provider_pages,
     )
 
 
@@ -308,7 +342,8 @@ def main() -> int:
         "validation_scope": {
             "start_month": args.start_month,
             "end_month": args.end_month,
-            "chunk_days": CHUNK_DAYS,
+            "page_outputsize": PAGE_OUTPUTSIZE,
+            "pagination": "BACKWARD_END_DATE_ONE_MINUTE_BEFORE_EARLIEST_RETURNED_ROW",
             "min_request_interval_seconds": MIN_REQUEST_INTERVAL_SECONDS,
         },
     }
@@ -320,16 +355,17 @@ def main() -> int:
         session = _session()
         report["provider_earliest_timestamp_1min"] = _earliest_timestamp(session)
         for month, anchor in anchors:
-            points = _fetch_month(session, month)
-            metrics = _validate_month(month, anchor, points)
+            points, pages = _fetch_month(session, month)
+            metrics = _validate_month(month, anchor, points, pages)
             month_rows.append(metrics)
             print(json.dumps({
                 "month": month,
+                "provider_pages": pages,
                 "observed_minutes": metrics.observed_minutes,
                 "level_episodes": metrics.up_level_episodes + metrics.down_level_episodes,
                 "reversal_episodes": metrics.up_alert_episodes + metrics.down_alert_episodes,
                 "cross_through": metrics.cross_through_transitions,
-            }, sort_keys=True))
+            }, sort_keys=True), flush=True)
 
         total_minutes = sum(x.observed_minutes for x in month_rows)
         zero_months = [x.month for x in month_rows if x.observed_minutes == 0]
@@ -346,6 +382,7 @@ def main() -> int:
             "months_retrieved": len(month_rows),
             "zero_observation_months": zero_months,
             "observed_minutes": total_minutes,
+            "provider_pages": sum(x.provider_pages for x in month_rows),
             "months_with_level_episode": months_level,
             "months_with_reversal_episode": months_reversal,
             "level_episodes": total_level_episodes,
