@@ -6,6 +6,7 @@ on:
       - gold-control-live-frequency-v145
     paths:
       - '.github/workflows/gold-control-emergency-intraday-validation-v146.yml'
+      - 'gold_axis_2026/tools/emergency_intraday_replay_validation_v146.py'
   workflow_dispatch:
 
 permissions:
@@ -22,6 +23,7 @@ jobs:
     env:
       TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
       GOLD_CODE_SHA: ${{ github.sha }}
+      TWELVE_MIN_REQUEST_INTERVAL_SECONDS: '9.0'
     steps:
       - uses: actions/checkout@v4
         with:
