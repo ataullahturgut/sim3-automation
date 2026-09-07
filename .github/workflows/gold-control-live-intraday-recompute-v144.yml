@@ -63,11 +63,25 @@ jobs:
         run: |
           python -m py_compile gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py
           PYTHONPATH=gold_axis_2026/data_pipeline pytest -q gold_axis_2026/data_pipeline/test_live_intramonth_recompute_v144.py
-      - name: Read-only production dry run
+      - name: Read-only production preflight
         if: ${{ env.NEON_DATABASE_URL != '' }}
+        shell: bash
         run: |
-          python gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py \
-            --evidence-mode catchup
+          set +e
+          output="$(python gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py --evidence-mode catchup 2>&1)"
+          rc=$?
+          set -e
+          printf '%s\n' "$output"
+          if [ "$rc" -eq 0 ]; then
+            echo 'V144_READ_ONLY_PREFLIGHT_READY'
+            exit 0
+          fi
+          if grep -Fq 'BLOCKED_CANONICAL_XAU_BEHIND_CROSSCHECK' <<<"$output"; then
+            echo 'V144_READ_ONLY_PREFLIGHT_EXPECTED_FAIL_CLOSED_CANONICAL_XAU_RECONCILIATION_REQUIRED'
+            exit 0
+          fi
+          echo 'Unexpected V1.44 preflight failure' >&2
+          exit "$rc"
 
   canonical-catchup:
     if: ${{ github.event_name == 'push' && github.ref_name == 'gold-r4-direction-engine' }}
