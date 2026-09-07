@@ -1,5 +1,6 @@
 name: Gold Control v1.41 Finalize Current Surface Once
 
+# Retry after UUID/Decimal snapshot serialization hardening.
 on:
   push:
     branches:
