@@ -5,6 +5,7 @@ import copy
 import pytest
 
 from production_display_snapshot import (
+    ALLOWED_CONTEXT_QUALITY_STATUSES,
     AUTHORITY_ZERO_FIELDS,
     CURRENT_CONTEXT_FEATURES,
     CURRENT_ENGINE_IDS,
@@ -48,6 +49,7 @@ def _snapshot() -> dict:
             "metadata": {
                 "current_surface_contract": CURRENT_SURFACE_CONTRACT,
                 "target_context": "2026-09",
+                "evidence_class": "HISTORICAL_REPLAY_CONTEXT",
                 "context_selection_rule": "LATEST_COMPLETE_7_FEATURE_TARGET_CONTEXT",
             },
         }
@@ -85,6 +87,39 @@ def test_current_snapshot_contract_accepts_exact_current_surface() -> None:
     assert len(snapshot["runtime"]) == 12
     assert len(snapshot["features"]) == 7
     assert {row["engine_id"] for row in snapshot["runtime"]} == set(CURRENT_ENGINE_IDS)
+
+
+def test_snapshot_accepts_governed_v144_context_evidence_classes() -> None:
+    snapshot = _snapshot()
+    statuses = [
+        "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+        "HISTORICAL_REPLAY_INTRAMONTH_CONTEXT",
+        "PROSPECTIVE_SHADOW_INTRAMONTH_CONTEXT",
+    ]
+    for index, status in enumerate(statuses):
+        snapshot["features"][index]["quality_status"] = status
+        snapshot["features"][index]["metadata"]["evidence_class"] = status
+    snapshot["payload_sha256"] = payload_sha256(snapshot)
+    validated = validate_production_display_snapshot(snapshot)
+    assert {validated["features"][i]["quality_status"] for i in range(len(statuses))} <= ALLOWED_CONTEXT_QUALITY_STATUSES
+
+
+def test_snapshot_rejects_unknown_context_evidence() -> None:
+    snapshot = _snapshot()
+    snapshot["features"][0]["quality_status"] = "UNPROVEN_CONTEXT"
+    snapshot["features"][0]["metadata"]["evidence_class"] = "UNPROVEN_CONTEXT"
+    snapshot["payload_sha256"] = payload_sha256(snapshot)
+    with pytest.raises(RuntimeError, match="FEATURE_EVIDENCE_INVALID"):
+        validate_production_display_snapshot(snapshot)
+
+
+def test_snapshot_rejects_context_evidence_metadata_mismatch() -> None:
+    snapshot = _snapshot()
+    snapshot["features"][0]["quality_status"] = "HISTORICAL_REPLAY_INTRAMONTH_CONTEXT"
+    snapshot["features"][0]["metadata"]["evidence_class"] = "LATE_BOOTSTRAP_SHADOW_CONTEXT"
+    snapshot["payload_sha256"] = payload_sha256(snapshot)
+    with pytest.raises(RuntimeError, match="FEATURE_EVIDENCE_METADATA_MISMATCH"):
+        validate_production_display_snapshot(snapshot)
 
 
 def test_snapshot_fingerprint_tamper_fails_closed() -> None:
