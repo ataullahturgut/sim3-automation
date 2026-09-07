@@ -10,7 +10,8 @@ from pathlib import Path
 import psycopg
 import requests
 
-MODEL_ID = "VW_MIDAS_MSVR_SUCCESSOR_V1_SUCCESSOR_V1"
+MODEL_ID = "VW_MIDAS_MSVR_SUCCESSOR_V1"
+READINESS_CONTRACT = "VW_MIDAS_MSVR_SUCCESSOR_V1_FUTURE_PROSPECTIVE_VALIDATION_READINESS_V141"
 ORIGIN_CUTOFF = datetime(2026, 9, 30, 21, 0, 0, tzinfo=timezone.utc)
 ORIGIN_DATE = date(2026, 9, 30)
 TARGET_MONTH = "2026-10"
@@ -43,10 +44,10 @@ RUNTIME_ENGINE_IDS = (
 GPR_PIT = "GPR_OFFICIAL_GIT_PIT"
 CORE_GOLD = "CORE5_GOLD_USD_OZ_RESEARCH_R1"
 FOUR_METAL_REFRESH_CONTRACT = Path(
-    "gold_axis_2026/GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_SUCCESSOR_V1_FOUR_METAL_PROSPECTIVE_SOURCE_REFRESH_CONTRACT.md"
+    "gold_axis_2026/GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_FOUR_METAL_PROSPECTIVE_SOURCE_REFRESH_CONTRACT.md"
 )
 ANCHOR_BRIDGE_CONTRACT = Path(
-    "gold_axis_2026/GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_SUCCESSOR_V1_XAU_TARGET_ANCHOR_BRIDGE_CONTRACT.md"
+    "gold_axis_2026/GOLD_CONTROL_VW_MIDAS_MSVR_SUCCESSOR_V1_XAU_TARGET_ANCHOR_BRIDGE_CONTRACT.md"
 )
 
 
@@ -66,7 +67,7 @@ def authority_counts(cur):
 
 def runtime_counts(cur):
     cur.execute(
-        "SELECT runtime_status, count(*)::int FROM latest_engine_runtime_state "
+        "SELECT runtime_status, count(*)::int FROM current_engine_runtime_state_v1 "
         "WHERE engine_id = ANY(%s) GROUP BY runtime_status ORDER BY runtime_status",
         (list(RUNTIME_ENGINE_IDS),),
     )
@@ -163,30 +164,19 @@ def continuity_check(historical, snapshot):
             old = historical[metal][d]
             new = snap_rows[metal][d]
             if abs(old - new) > 1e-9:
-                mismatches.append(
-                    {
-                        "date": d.isoformat(),
-                        "metal": metal,
-                        "old": old,
-                        "new": new,
-                    }
-                )
-    gate = bool(hist_common) and not mismatches and not snapshot["conflicting_duplicates"]
+                mismatches.append({"date": d.isoformat(), "metal": metal, "old": old, "new": new})
     return {
         "historical_july_common_days": len(hist_common),
         "compared_values": compared,
         "mismatch_count": len(mismatches),
         "mismatches_preview": mismatches[:10],
-        "gate": gate,
+        "gate": bool(hist_common) and not mismatches and not snapshot["conflicting_duplicates"],
     }
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument(
-        "--output",
-        default="vw_midas_msvr_successor_v1_prospective_readiness.json",
-    )
+    ap.add_argument("--output", default="vw_midas_msvr_successor_v1_prospective_readiness.json")
     args = ap.parse_args()
     dsn = os.environ.get("NEON_DATABASE_URL")
     if not dsn:
@@ -209,8 +199,7 @@ def main():
 
             cur.execute(
                 "SELECT count(*)::int, min(available_as_of), max(observation_ts)::date "
-                "FROM observations WHERE series_id=%s "
-                "AND metadata->>'origin_month'='2026-09'",
+                "FROM observations WHERE series_id=%s AND metadata->>'origin_month'='2026-09'",
                 (GPR_PIT,),
             )
             gpr_rows, gpr_available, gpr_last_obs = cur.fetchone()
@@ -221,15 +210,9 @@ def main():
                 (GPR_PIT,),
             )
             gpr_aug_rows = int(cur.fetchone()[0])
-            cur.execute(
-                "SELECT max(metadata->>'origin_month') FROM observations WHERE series_id=%s",
-                (GPR_PIT,),
-            )
+            cur.execute("SELECT max(metadata->>'origin_month') FROM observations WHERE series_id=%s", (GPR_PIT,))
             gpr_latest_origin = cur.fetchone()[0]
-            cur.execute(
-                "SELECT max(observation_ts)::date FROM observations WHERE series_id=%s",
-                (CORE_GOLD,),
-            )
+            cur.execute("SELECT max(observation_ts)::date FROM observations WHERE series_id=%s", (CORE_GOLD,))
             core_gold_last = cur.fetchone()[0]
             after = authority_counts(cur)
 
@@ -271,21 +254,24 @@ def main():
         blockers.append("BLOCKED_TARGET_ANCHOR_REFRESH_CONTRACT_NOT_FROZEN")
 
     if not origin_reached:
-        status = "WAITING_ORIGIN_NOT_REACHED"
+        status = "FUTURE_VALIDATION_ORIGIN_NOT_REACHED"
     elif blockers:
         status = blockers[0]
     else:
         status = "READY_FOR_IMMUTABLE_PROSPECTIVE_SHADOW_ISSUANCE"
 
     out = {
+        "contract": READINESS_CONTRACT,
         "model_id": MODEL_ID,
-        "scope": "PROSPECTIVE_SHADOW_READINESS_ONLY",
+        "scope": "FUTURE_PROSPECTIVE_VALIDATION_READINESS_ONLY_DOES_NOT_BLOCK_CURRENT_SEPTEMBER_REFERENCE",
         "checked_at_utc": now.isoformat(),
         "forecast_origin": "2026-09-30T21:00:00Z",
         "target_month": TARGET_MONTH,
         "status": status,
         "origin_reached": origin_reached,
         "blockers": blockers,
+        "current_runtime_counts": runtime,
+        "current_september_reference_blocked": False,
         "four_metal": {
             "source_contract_frozen": four_metal_contract,
             "source_error": source_error,
@@ -313,7 +299,6 @@ def main():
         "authority_counts_before": before,
         "authority_counts_after": after,
         "authority_invariants_unchanged": before == after,
-        "runtime_counts": runtime,
         "governance": {
             "database_writes": "NONE",
             "forecast_writes": "NONE",
@@ -326,6 +311,8 @@ def main():
     }
     if before != after:
         raise RuntimeError("AUTHORITY_INVARIANT_CHANGED_DURING_READINESS_CHECK")
+    if runtime != {"ACTIVE": 12}:
+        raise RuntimeError(f"CURRENT_RUNTIME_INVENTORY_NOT_12_ACTIVE:{runtime}")
     Path(args.output).write_text(json.dumps(out, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({"status": status, "blockers": blockers, "origin_reached": origin_reached}, sort_keys=True))
 
