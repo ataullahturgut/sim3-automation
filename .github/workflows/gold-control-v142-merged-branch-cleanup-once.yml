@@ -1,0 +1,77 @@
+name: Gold Control v1.42 Merged Branch Cleanup Once
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/gold-control-v142-merged-branch-cleanup-once.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Fetch all remote branches
+        run: git fetch --prune origin '+refs/heads/*:refs/remotes/origin/*'
+      - name: Delete only fully merged obsolete Gold branches
+        shell: bash
+        run: |
+          set -euo pipefail
+          : > /tmp/deleted.txt
+          : > /tmp/retained-unmerged.txt
+          while IFS= read -r ref; do
+            branch="${ref#refs/remotes/origin/}"
+            case "$branch" in
+              main|gold-r4-direction-engine|gold-r4-direction-engine-ui-v122-final|HEAD)
+                continue
+                ;;
+            esac
+            case "$branch" in
+              gold-control-*|gold-r4-direction-engine-recovery-work|tmp-gold-*|DO-NOT-USE-RECOVERY-3|STOP-CREATING-BRANCHES)
+                ;;
+              *)
+                continue
+                ;;
+            esac
+
+            if git merge-base --is-ancestor "refs/remotes/origin/$branch" refs/remotes/origin/gold-r4-direction-engine \
+               || git merge-base --is-ancestor "refs/remotes/origin/$branch" refs/remotes/origin/main; then
+              echo "DELETE_MERGED $branch"
+              git push origin --delete "$branch"
+              echo "$branch" >> /tmp/deleted.txt
+            else
+              echo "RETAIN_UNMERGED $branch"
+              echo "$branch" >> /tmp/retained-unmerged.txt
+            fi
+          done < <(git for-each-ref --format='%(refname)' refs/remotes/origin | sort)
+
+          echo '--- deleted merged branches ---'
+          cat /tmp/deleted.txt || true
+          echo '--- retained unmerged branches ---'
+          cat /tmp/retained-unmerged.txt || true
+          echo "deleted_count=$(wc -l < /tmp/deleted.txt)" >> "$GITHUB_STEP_SUMMARY"
+          echo "retained_unmerged_count=$(wc -l < /tmp/retained-unmerged.txt)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload cleanup inventory
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-v142-branch-cleanup
+          path: |
+            /tmp/deleted.txt
+            /tmp/retained-unmerged.txt
+          if-no-files-found: error
+      - name: Remove one-shot workflow from main
+        run: |
+          git config user.name 'gold-control-governance-bot'
+          git config user.email 'gold-control-governance-bot@users.noreply.github.com'
+          git rm .github/workflows/gold-control-v142-merged-branch-cleanup-once.yml
+          git commit -m 'Gold Control v1.42: remove completed branch cleanup workflow'
+          git push origin HEAD:main
