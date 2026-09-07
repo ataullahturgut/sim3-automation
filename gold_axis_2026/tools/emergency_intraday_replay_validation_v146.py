@@ -6,7 +6,7 @@ import os
 import sys
 import time
 from dataclasses import asdict, dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
@@ -26,7 +26,11 @@ EARLIEST_URL = "https://api.twelvedata.com/earliest_timestamp"
 ANCHOR_FILE = ROOT / "gold_axis_2026" / "patch_repro_v1" / "locked_replay_v6_monthly_level_43.csv"
 ANCHOR_COLUMN = "patch_v6"
 THRESHOLD = 0.04
-CHUNK_DAYS = 3  # <= 4320 calendar minutes, below the documented 5000-output ceiling.
+# Official Twelve start_date/end_date semantics are used with outputsize omitted.
+# One bounded calendar-month request therefore avoids artificial outputsize restriction.
+CHUNK_DAYS = 31
+MIN_REQUEST_INTERVAL_SECONDS = float(os.environ.get("TWELVE_MIN_REQUEST_INTERVAL_SECONDS", "9.0"))
+_LAST_REQUEST_MONOTONIC = 0.0
 
 
 @dataclass
@@ -73,14 +77,24 @@ def _session() -> requests.Session:
     return s
 
 
+def _pace_request() -> None:
+    global _LAST_REQUEST_MONOTONIC
+    now = time.monotonic()
+    elapsed = now - _LAST_REQUEST_MONOTONIC
+    if _LAST_REQUEST_MONOTONIC > 0 and elapsed < MIN_REQUEST_INTERVAL_SECONDS:
+        time.sleep(MIN_REQUEST_INTERVAL_SECONDS - elapsed)
+    _LAST_REQUEST_MONOTONIC = time.monotonic()
+
+
 def _request_json(session: requests.Session, url: str, params: dict) -> dict:
-    waits = [0, 2, 5, 10]
+    waits = [0, 10, 20, 30]
     last_error: Exception | None = None
     for wait in waits:
         if wait:
             time.sleep(wait)
         try:
-            r = session.get(url, params=params, timeout=(8, 60))
+            _pace_request()
+            r = session.get(url, params=params, timeout=(8, 90))
             try:
                 payload = r.json()
             except ValueError as exc:
@@ -101,11 +115,7 @@ def _request_json(session: requests.Session, url: str, params: dict) -> dict:
 
 
 def _earliest_timestamp(session: requests.Session) -> str | None:
-    payload = _request_json(
-        session,
-        EARLIEST_URL,
-        {"symbol": SYMBOL, "interval": INTERVAL},
-    )
+    payload = _request_json(session, EARLIEST_URL, {"symbol": SYMBOL, "interval": INTERVAL})
     for key in ("datetime", "timestamp", "earliest_timestamp"):
         if payload.get(key) is not None:
             return str(payload[key])
@@ -147,8 +157,10 @@ def _fetch_month(session: requests.Session, month: str) -> list[tuple[pd.Timesta
         if meta.get("interval") not in (None, INTERVAL):
             raise RuntimeError(f"TWELVE_INTERVAL_MISMATCH:{month}:{meta.get('interval')}")
         values = payload.get("values") or []
-        if len(values) >= 5000:
-            raise RuntimeError(f"BLOCKED_POSSIBLE_PROVIDER_TRUNCATION:{month}:{len(values)}")
+        # Exact 5000 is suspicious because 5000 is also the provider's outputsize ceiling.
+        # Do not silently accept a possibly clipped month.
+        if len(values) == 5000:
+            raise RuntimeError(f"BLOCKED_POSSIBLE_PROVIDER_TRUNCATION:{month}:5000")
         for item in values:
             ts = pd.to_datetime(item.get("datetime"), utc=True, errors="coerce")
             if pd.isna(ts) or ts < start or ts > end:
@@ -168,10 +180,10 @@ def _fetch_month(session: requests.Session, month: str) -> list[tuple[pd.Timesta
 def _episodes(values: list[str], target: str) -> int:
     n = 0
     prev = None
-    for v in values:
-        if v == target and prev != target:
+    for value in values:
+        if value == target and prev != target:
             n += 1
-        prev = v
+        prev = value
     return n
 
 
@@ -187,14 +199,12 @@ def _validate_month(month: str, anchor: float, points: list[tuple[pd.Timestamp, 
     state = EmergencyState(level_threshold_abs=THRESHOLD, reversal_threshold_abs=THRESHOLD)
     levels: list[str] = []
     alerts: list[str] = []
-    directions: list[str] = []
     cross_through = 0
     cross_through_missing_alert = 0
     transitions = 0
-    prev_direction = Direction.NEUTRAL
 
-    prices = [p for _, p in points]
-    disps = [p / anchor - 1.0 for p in prices]
+    prices = [price for _, price in points]
+    displacements = [price / anchor - 1.0 for price in prices]
 
     for ts, close in points:
         before = state.shock_direction
@@ -202,7 +212,6 @@ def _validate_month(month: str, anchor: float, points: list[tuple[pd.Timestamp, 
         after = state.shock_direction
         levels.append(level.value)
         alerts.append(alert.value)
-        directions.append(after.value)
         if after != before:
             transitions += 1
             if before in (Direction.UP, Direction.DOWN) and after in (Direction.UP, Direction.DOWN) and before != after:
@@ -210,9 +219,8 @@ def _validate_month(month: str, anchor: float, points: list[tuple[pd.Timestamp, 
                 expected = ReversalAlert.DOWN_ALERT if before == Direction.UP else ReversalAlert.UP_ALERT
                 if alert != expected:
                     cross_through_missing_alert += 1
-        prev_direction = after
 
-    gaps = []
+    gaps: list[float] = []
     for i in range(1, len(points)):
         gap = (points[i][0] - points[i - 1][0]).total_seconds()
         if gap > 120:
@@ -226,8 +234,8 @@ def _validate_month(month: str, anchor: float, points: list[tuple[pd.Timestamp, 
         last_ts=points[-1][0].isoformat(),
         min_price=min(prices),
         max_price=max(prices),
-        min_displacement=min(disps),
-        max_displacement=max(disps),
+        min_displacement=min(displacements),
+        max_displacement=max(displacements),
         up_level_rows=sum(v == Direction.UP.value for v in levels),
         down_level_rows=sum(v == Direction.DOWN.value for v in levels),
         up_level_episodes=_episodes(levels, Direction.UP.value),
@@ -252,7 +260,7 @@ def _load_anchors(start_month: str, end_month: str) -> list[tuple[str, float]]:
         raise RuntimeError(f"ANCHOR_FILE_MISSING_COLUMNS:{sorted(missing)}")
     df["month"] = df["month"].astype(str)
     mask = (df["month"] >= start_month) & (df["month"] <= end_month)
-    out = []
+    out: list[tuple[str, float]] = []
     for _, row in df.loc[mask].sort_values("month").iterrows():
         value = pd.to_numeric(row[ANCHOR_COLUMN], errors="coerce")
         if pd.isna(value) or float(value) <= 0:
@@ -301,6 +309,7 @@ def main() -> int:
             "start_month": args.start_month,
             "end_month": args.end_month,
             "chunk_days": CHUNK_DAYS,
+            "min_request_interval_seconds": MIN_REQUEST_INTERVAL_SECONDS,
         },
     }
 
@@ -314,18 +323,13 @@ def main() -> int:
             points = _fetch_month(session, month)
             metrics = _validate_month(month, anchor, points)
             month_rows.append(metrics)
-            print(
-                json.dumps(
-                    {
-                        "month": month,
-                        "observed_minutes": metrics.observed_minutes,
-                        "level_episodes": metrics.up_level_episodes + metrics.down_level_episodes,
-                        "reversal_episodes": metrics.up_alert_episodes + metrics.down_alert_episodes,
-                        "cross_through": metrics.cross_through_transitions,
-                    },
-                    sort_keys=True,
-                )
-            )
+            print(json.dumps({
+                "month": month,
+                "observed_minutes": metrics.observed_minutes,
+                "level_episodes": metrics.up_level_episodes + metrics.down_level_episodes,
+                "reversal_episodes": metrics.up_alert_episodes + metrics.down_alert_episodes,
+                "cross_through": metrics.cross_through_transitions,
+            }, sort_keys=True))
 
         total_minutes = sum(x.observed_minutes for x in month_rows)
         zero_months = [x.month for x in month_rows if x.observed_minutes == 0]
@@ -358,7 +362,11 @@ def main() -> int:
             "SESSION_GAP_VALIDITY": "NOT_PROVEN_SESSION_CALENDAR_UNRESOLVED",
             "PRODUCTION_PROMOTION": "BLOCKED_PENDING_GOVERNANCE_AND_RELEASE_GATES",
         }
-        report["status"] = "PASS_REPLAY_EXECUTION_WITH_METHOD_LIMITATIONS" if not zero_months and cross_missing == 0 else "BLOCKED_OR_FAIL"
+        report["status"] = (
+            "PASS_REPLAY_EXECUTION_WITH_METHOD_LIMITATIONS"
+            if not zero_months and cross_missing == 0
+            else "BLOCKED_OR_FAIL"
+        )
         _write_outputs(report, month_rows, json_path, csv_path)
         print(json.dumps(report, indent=2, sort_keys=True))
         return 0 if report["status"] == "PASS_REPLAY_EXECUTION_WITH_METHOD_LIMITATIONS" else 2
