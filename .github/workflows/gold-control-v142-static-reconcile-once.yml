@@ -22,13 +22,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Reconcile v1.42 current contracts and audit names
+      - name: Reconcile v1.42 non-workflow current contracts
         shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
           from pathlib import Path
-
           replacements = {
               'gold_axis_2026/apps/engine_observability_contract.py': [
                   ('GOLD_CONTROL_CURRENT_ENGINE_OBSERVABILITY_V141', 'GOLD_CONTROL_CURRENT_ENGINE_OBSERVABILITY_V142'),
@@ -43,29 +42,24 @@ jobs:
                   ('MANIFEST_VERSION = "1.41"', 'MANIFEST_VERSION = "1.42"'),
               ],
               'gold_axis_2026/data_pipeline/test_data_evidence_spine_runtime_bootstrap.py': [
-                  ('v141', 'v142'),
-                  ('V141', 'V142'),
-                  ('1.41', '1.42'),
+                  ('v141', 'v142'), ('V141', 'V142'), ('1.41', '1.42'),
               ],
           }
-          for name, reps in replacements.items():
-              path = Path(name)
-              text = path.read_text(encoding='utf-8')
-              for old, new in reps:
-                  text = text.replace(old, new)
-              path.write_text(text, encoding='utf-8')
+          for name,reps in replacements.items():
+              path=Path(name)
+              text=path.read_text(encoding='utf-8')
+              for old,new in reps:
+                  text=text.replace(old,new)
+              path.write_text(text,encoding='utf-8')
           PY
 
           git mv gold_axis_2026/tools/audit_current_surface_v141.py gold_axis_2026/tools/audit_current_surface_v142.py
           git mv gold_axis_2026/tools/inventory_full_current_tree_v141.py gold_axis_2026/tools/inventory_full_current_tree_v142.py
-          git mv .github/workflows/gold-control-v141-current-surface-audit.yml .github/workflows/gold-control-v142-current-surface-audit.yml
-
           python - <<'PY'
           from pathlib import Path
           for name in [
               'gold_axis_2026/tools/audit_current_surface_v142.py',
               'gold_axis_2026/tools/inventory_full_current_tree_v142.py',
-              '.github/workflows/gold-control-v142-current-surface-audit.yml',
           ]:
               path=Path(name)
               text=path.read_text(encoding='utf-8')
@@ -78,15 +72,13 @@ jobs:
                   text=text.replace(old,new)
               path.write_text(text,encoding='utf-8')
           PY
-
           git rm -f --ignore-unmatch current_surface_audit_v141.json current_surface_cleanup_v141.json full_current_tree_inventory_v141.json
-          git rm -f .github/workflows/gold-control-v142-static-reconcile-once.yml
 
-      - name: Check no current v1.41 contract strings remain outside snapshot pending re-export
+      - name: Check no current v1.41 contract strings remain outside snapshot and workflow cleanup
         run: |
           set -euo pipefail
           if grep -R -n --exclude='production_display_snapshot.json' -E 'CURRENT_(ENGINE_OBSERVABILITY|RUNTIME_SOURCE|PRODUCTION_DISPLAY_SNAPSHOT|SURFACE)_V141|MANIFEST_VERSION = "1\.41"|CANONICAL_MANIFEST_RUNTIME_STATUS_V141' \
-             gold_axis_2026/apps gold_axis_2026/data_pipeline gold_axis_2026/tools .github/workflows; then
+             gold_axis_2026/apps gold_axis_2026/data_pipeline gold_axis_2026/tools; then
             echo 'STALE_V141_CURRENT_CONTRACT_FOUND' >&2
             exit 1
           fi
@@ -96,10 +88,11 @@ jobs:
           python -m compileall -q gold_axis_2026/apps gold_axis_2026/data_pipeline gold_axis_2026/tools
           PYTHONPATH=gold_axis_2026/apps pytest -q gold_axis_2026/apps/test_engine_observability_contract.py gold_axis_2026/apps/test_production_display_snapshot.py
           PYTHONPATH=gold_axis_2026/data_pipeline pytest -q gold_axis_2026/data_pipeline/test_data_evidence_spine_runtime_bootstrap.py gold_axis_2026/data_pipeline/test_multi_expert_forecast.py
-      - name: Commit reconciliation
+      - name: Commit non-workflow reconciliation
         run: |
           git config user.name gold-control-governance-bot
           git config user.email gold-control-governance-bot@users.noreply.github.com
-          git add -A
+          git add gold_axis_2026 current_surface_audit_v141.json current_surface_cleanup_v141.json full_current_tree_inventory_v141.json 2>/dev/null || true
+          git add -A -- gold_axis_2026 current_surface_audit_v141.json current_surface_cleanup_v141.json full_current_tree_inventory_v141.json
           git commit -m 'Gold Control v1.42: reconcile current static contracts'
           git push origin HEAD:gold-control-current-surface-v142
