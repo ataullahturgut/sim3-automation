@@ -8,6 +8,7 @@ on:
     paths:
       - 'gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py'
       - 'gold_axis_2026/data_pipeline/test_live_intramonth_recompute_v144.py'
+      - 'gold_axis_2026/data_pipeline/twelve_xau_ny17.py'
       - 'gold_axis_2026/GOLD_CONTROL_LIVE_INTRAMONTH_RECOMPUTE_CONTRACT_V144_2026-09-07.md'
       - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
       - '.github/workflows/gold-control-live-intraday-recompute-v144.yml'
@@ -51,7 +52,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ github.event_name == 'push' && github.ref_name || 'gold-r4-direction-engine' }}
           fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
@@ -67,6 +68,38 @@ jobs:
         run: |
           python gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py \
             --evidence-mode catchup
+
+  canonical-catchup:
+    if: ${{ github.event_name == 'push' && github.ref_name == 'gold-r4-direction-engine' }}
+    needs: unit-and-dry-run
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install governed runtime
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Reconcile canonical NY17 before derived-state catch-up
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$TWELVE_DATA_API_KEY"
+          python gold_axis_2026/data_pipeline/twelve_xau_ny17.py \
+            --persist \
+            --reconcile-days 7
+      - name: Persist append-only September catch-up context
+        run: |
+          python gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py \
+            --persist \
+            --evidence-mode catchup
+      - name: Run post-write model-data readiness audit
+        run: python gold_axis_2026/tools/audit_model_data_readiness_v143.py
 
   persist:
     if: >-
@@ -93,8 +126,9 @@ jobs:
           python gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py \
             --persist \
             --evidence-mode "$MODE"
-      - name: Verify no decision authority was opened
+      - name: Post-write readiness and authority checks
         run: |
+          python gold_axis_2026/tools/audit_model_data_readiness_v143.py
           python - <<'PY'
           import os, psycopg
           with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=True) as conn:
