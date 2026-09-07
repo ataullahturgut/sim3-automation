@@ -1,0 +1,32 @@
+name: Gold Control Market Shock Challenger V1 Unit Tests
+
+on:
+  push:
+    branches:
+      - gold-control-market-shock-challenger-v1
+    paths:
+      - '.github/workflows/gold-control-market-shock-challenger-v1-tests.yml'
+      - 'gold_axis_2026/tests/test_market_shock_challenger_v1.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-market-shock-challenger-v1
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test runtime
+        run: pip install -q pandas numpy scipy requests pytest
+      - name: Compile challenger
+        run: python -m py_compile gold_axis_2026/tools/market_shock_challenger_v1.py
+      - name: Run deterministic tests
+        run: pytest -q gold_axis_2026/tests/test_market_shock_challenger_v1.py
