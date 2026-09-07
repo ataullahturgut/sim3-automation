@@ -1,0 +1,125 @@
+name: Gold Control Unified Emergency Replay V1
+
+on:
+  push:
+    branches:
+      - gold-control-unified-emergency-replay-v1
+  workflow_dispatch:
+
+concurrency:
+  group: gold-control-twelve-unified-research-replay
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+  TWELVE_MIN_REQUEST_INTERVAL_SECONDS: '10.0'
+
+jobs:
+  market-shock-unified:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-unified-emergency-replay-v1
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install validation runtime
+        run: pip install -q pandas numpy scipy requests
+
+      - name: Require protected Twelve credential
+        run: test -n "$TWELVE_DATA_API_KEY"
+
+      - name: Compile unified replay
+        run: |
+          python -m py_compile gold_axis_2026/tools/market_shock_challenger_v1.py
+          python -m py_compile gold_axis_2026/tools/market_shock_challenger_v1_lm_sn_fix.py
+          python -m py_compile gold_axis_2026/tools/market_shock_direction_audit_v1.py
+          python -m py_compile gold_axis_2026/tools/market_shock_unified_replay_v1.py
+
+      - name: Verify Lee-Mykland Eq 13 Sn correction
+        run: |
+          python - <<'PY'
+          import math
+          from gold_axis_2026.tools.market_shock_challenger_v1_lm_sn_fix import lm_critical
+          n = 288
+          c = math.sqrt(2.0 / math.pi)
+          root = math.sqrt(2.0 * math.log(n))
+          cn = root / c - (math.log(math.pi) + math.log(math.log(n))) / (2.0 * c * root)
+          sn = 1.0 / (c * root)
+          alpha = 0.001
+          beta = -math.log(-math.log(1.0 - alpha))
+          expected = cn + sn * beta
+          actual = lm_critical(alpha, n)
+          assert abs(actual - expected) < 1e-12, (actual, expected)
+          print({'critical_999': actual})
+          PY
+
+      - name: Run single-fetch Sn-corrected replay and direction audit
+        env:
+          GOLD_CODE_SHA: ${{ github.sha }}
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python -m gold_axis_2026.tools.market_shock_unified_replay_v1 \
+            --start '2020-04-06 00:00:00' \
+            --end '2026-08-31 23:59:59' \
+            --output market_shock_unified_replay_v1.json
+
+      - name: Upload aggregate 5m evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-market-shock-unified-replay-v1
+          path: market_shock_unified_replay_v1.json
+          if-no-files-found: error
+
+  emergency-sequential:
+    needs: market-shock-unified
+    if: ${{ always() && needs.market-shock-unified.result == 'success' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-unified-emergency-replay-v1
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install validation runtime
+        run: pip install -q pandas requests
+
+      - name: Require protected Twelve credential
+        run: test -n "$TWELVE_DATA_API_KEY"
+
+      - name: Compile frozen Emergency replay
+        run: python -m py_compile gold_axis_2026/tools/emergency_intraday_replay_validation_v146.py
+
+      - name: Run frozen Emergency replay sequentially with no parallel Twelve calls
+        env:
+          GOLD_CODE_SHA: ${{ github.sha }}
+        run: |
+          python gold_axis_2026/tools/emergency_intraday_replay_validation_v146.py \
+            --start-month '2023-01' \
+            --end-month '2026-07' \
+            --output-json emergency_intraday_replay_v146_unified.json \
+            --output-csv emergency_intraday_replay_v146_unified_months.csv
+
+      - name: Upload aggregate 1m Emergency evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-emergency-v146-sequential-replay
+          path: |
+            emergency_intraday_replay_v146_unified.json
+            emergency_intraday_replay_v146_unified_months.csv
+          if-no-files-found: warn
