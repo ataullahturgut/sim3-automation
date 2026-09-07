@@ -1,0 +1,49 @@
+name: Gold Control Twelve XAU WebSocket Preflight V1.45
+
+on:
+  push:
+    branches:
+      - gold-control-live-frequency-v145
+    paths:
+      - 'gold_axis_2026/tools/probe_twelve_xau_websocket_v145.py'
+      - '.github/workflows/gold-control-twelve-xau-ws-preflight-v145.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-live-frequency-v145
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install WebSocket runtime
+        run: pip install -q websocket-client
+      - name: Compile preflight
+        run: python -m py_compile gold_axis_2026/tools/probe_twelve_xau_websocket_v145.py
+      - name: Probe XAU/USD WebSocket entitlement and live event delivery
+        run: python gold_axis_2026/tools/probe_twelve_xau_websocket_v145.py --timeout-seconds 25 --out twelve_xau_ws_preflight_v145.json
+      - name: Validate evidence document
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('twelve_xau_ws_preflight_v145.json', encoding='utf-8'))
+          assert p['contract']=='GOLD_CONTROL_TWELVE_XAU_WS_PREFLIGHT_V145'
+          assert p['status'] in {'PROVEN','NOT_PROVEN','BLOCKED'}
+          print('XAU_WS_PREFLIGHT_STATUS='+p['status'])
+          if p.get('blocker'):
+              print('BLOCKER='+str(p['blocker']))
+          PY
+      - name: Upload preflight evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-twelve-xau-ws-preflight-v145
+          path: twelve_xau_ws_preflight_v145.json
