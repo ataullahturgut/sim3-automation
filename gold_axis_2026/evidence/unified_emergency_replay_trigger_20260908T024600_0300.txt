@@ -1,0 +1,1 @@
+Harmless workflow retrigger marker after Twelve Data daily quota reset. No methodology, threshold, source, or production-code change.
