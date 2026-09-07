@@ -9,6 +9,8 @@ import psycopg
 from psycopg.rows import dict_row
 
 CONTRACT = "GOLD_CONTROL_LIVE_FREQUENCY_READINESS_V145"
+LIVE_XAU_SERIES = "XAU_LIVE_TWELVE_WS_1M"
+BOOTSTRAP_XAU_SERIES = "XAU_INTRADAY_TWELVE_REST_1M"
 
 
 def _db_url() -> str:
@@ -25,22 +27,22 @@ def _one(cur, sql: str, params: tuple = ()) -> dict[str, Any] | None:
 
 
 def _source(cur, series_id: str) -> dict[str, Any]:
-    reg = _one(
-        cur,
-        "select series_id,source_name,source_symbol,frequency,model_role,status from source_registry where series_id=%s",
-        (series_id,),
-    )
-    latest = _one(
+    reg = _one(cur, "select series_id,source_name,source_symbol,frequency,model_role,status,metadata from source_registry where series_id=%s", (series_id,))
+    latest = _one(cur, "select observation_ts,available_as_of,retrieved_at,value,quality_status,lineage_id from canonical_latest where series_id=%s order by observation_ts desc limit 1", (series_id,))
+    cur.execute("select count(*) as n from observations where series_id=%s", (series_id,))
+    return {"registry": reg, "latest": latest, "observation_count": int(cur.fetchone()["n"])}
+
+
+def _feature(cur, name: str) -> dict[str, Any] | None:
+    return _one(
         cur,
         """
-        select observation_ts,available_as_of,retrieved_at,value,quality_status,lineage_id
-        from canonical_latest where series_id=%s order by observation_ts desc limit 1
+        select feature_name,calculation_ts,input_cutoff,value_text,quality_status,metadata
+        from derived_feature_snapshots where feature_name=%s
+        order by calculation_ts desc,id desc limit 1
         """,
-        (series_id,),
+        (name,),
     )
-    cur.execute("select count(*) as n from observations where series_id=%s", (series_id,))
-    n = int(cur.fetchone()["n"])
-    return {"registry": reg, "latest": latest, "observation_count": n}
 
 
 def run() -> dict[str, Any]:
@@ -55,10 +57,10 @@ def run() -> dict[str, Any]:
             "MONTHLY_DIRECTION_3M": "MONTH_OPEN_FROZEN",
             "FAST": "COMPLETED_TRADE_DATE_DAILY",
             "SLOW": "COMPLETED_WEEK",
-            "EMERGENCY_LEVEL": "INTRADAY_ALERT_PLUS_EOD_CONFIRMATION",
-            "EMERGENCY_REVERSAL": "INTRADAY_ALERT_PLUS_EOD_CONFIRMATION",
+            "EMERGENCY_LEVEL": "INTRADAY_PROVISIONAL_PLUS_EOD_CONFIRMATION",
+            "EMERGENCY_REVERSAL": "INTRADAY_PROVISIONAL_PLUS_EOD_CONFIRMATION",
             "MACRO_EVENT_SUCCESSOR_V2": "OFFICIAL_RELEASE_TIME",
-            "GVZ_RISK": "INTRADAY_IF_USED_AS_LIVE_RISK_CAP_ELSE_EOD",
+            "GVZ_RISK": "INTRADAY_ONLY_IF_SEPARATE_LIVE_SOURCE_PROVEN_ELSE_EOD",
             "BOCPD_RETURN_SUCCESSOR_V1": "COMPLETED_MONTH",
         },
     }
@@ -70,9 +72,8 @@ def run() -> dict[str, Any]:
                 key: _source(cur, key)
                 for key in (
                     "XAU_EOD_TWELVE_NY17",
-                    "XAU_SPOT_XAUS",
-                    "XAU_INTRADAY_XAUS",
-                    "XAU_LIVE_TWELVE_WS",
+                    LIVE_XAU_SERIES,
+                    BOOTSTRAP_XAU_SERIES,
                     "GVZ_CBOE",
                     "GVZ_CBOE_LIVE",
                     "MACRO_NFP_ACTUAL_FIRST_PRINT",
@@ -81,12 +82,23 @@ def run() -> dict[str, Any]:
             }
             out["sources"] = sources
 
-            emergency_ws = sources["XAU_LIVE_TWELVE_WS"]
+            emergency_ws = sources[LIVE_XAU_SERIES]
+            emergency_bootstrap = sources[BOOTSTRAP_XAU_SERIES]
+            level_feature = _feature(cur, "EMERGENCY_LIVE_LEVEL")
+            reversal_feature = _feature(cur, "EMERGENCY_LIVE_REVERSAL")
             emergency_live_ready = bool(
                 emergency_ws["registry"]
                 and emergency_ws["observation_count"] > 0
                 and emergency_ws["latest"]
-                and str(emergency_ws["registry"].get("status") or "").startswith("APPROVED")
+                and str(emergency_ws["registry"].get("status") or "").startswith("APPROVED_LIVE_SHADOW")
+                and level_feature
+            )
+            reversal_live_ready = bool(
+                emergency_live_ready
+                and emergency_bootstrap["registry"]
+                and emergency_bootstrap["observation_count"] > 0
+                and reversal_feature
+                and (reversal_feature.get("metadata") or {}).get("reversal_bootstrap_complete") is True
             )
 
             macro_actual = sources["MACRO_NFP_ACTUAL_FIRST_PRINT"]
@@ -94,9 +106,7 @@ def run() -> dict[str, Any]:
             macro_history_present = bool(macro_actual["observation_count"] and macro_consensus["observation_count"])
             macro_operational_status = "NOT_YET_PROVEN"
             if macro_actual["registry"] and macro_consensus["registry"]:
-                statuses = " ".join(
-                    str(x.get("status") or "") for x in (macro_actual["registry"], macro_consensus["registry"])
-                )
+                statuses = " ".join(str(x.get("status") or "") for x in (macro_actual["registry"], macro_consensus["registry"]))
                 if "LIVE_PRODUCTION" in statuses or "PROSPECTIVE_EVENT_TIME" in statuses:
                     macro_operational_status = "PROVEN"
 
@@ -108,8 +118,13 @@ def run() -> dict[str, Any]:
                 and str(gvz_live["registry"].get("status") or "").startswith("APPROVED")
             )
 
+            out["live_features"] = {
+                "EMERGENCY_LIVE_LEVEL": level_feature,
+                "EMERGENCY_LIVE_REVERSAL": reversal_feature,
+            }
             out["readiness"] = {
-                "EMERGENCY_LIVE_DATA_READY": emergency_live_ready,
+                "EMERGENCY_LIVE_LEVEL_READY": emergency_live_ready,
+                "EMERGENCY_LIVE_REVERSAL_READY": reversal_live_ready,
                 "MACRO_EVENT_HISTORICAL_EVENT_DATA_PRESENT": macro_history_present,
                 "MACRO_EVENT_LIVE_DATA_READY": macro_operational_status,
                 "GVZ_INTRADAY_RISK_READY": gvz_intraday_ready,
@@ -121,7 +136,9 @@ def run() -> dict[str, Any]:
 
             blockers: list[str] = []
             if not emergency_live_ready:
-                blockers.append("EMERGENCY_LIVE_AUTHORITY_NOT_PROVEN")
+                blockers.append("EMERGENCY_LIVE_MINUTE_SOURCE_OR_LEVEL_CONTEXT_NOT_ACTIVE")
+            if not reversal_live_ready:
+                blockers.append("EMERGENCY_LIVE_REVERSAL_BOOTSTRAP_NOT_COMPLETE")
             if macro_operational_status != "PROVEN":
                 blockers.append("MACRO_EVENT_PROSPECTIVE_EVENT_TIME_INGESTION_NOT_PROVEN")
             if not gvz_intraday_ready:
@@ -129,16 +146,12 @@ def run() -> dict[str, Any]:
             out["blockers"] = blockers
             out["live_operational_ready"] = not blockers
         conn.rollback()
-
     return out
 
 
 def main() -> int:
     result = run()
     print(json.dumps(result, indent=2, default=str))
-    # Audit is informational until V1.45 activation. It must accurately expose
-    # blockers but does not fail CI simply because unprovisioned live feeds are
-    # intentionally still blocked.
     return 0
 
 
