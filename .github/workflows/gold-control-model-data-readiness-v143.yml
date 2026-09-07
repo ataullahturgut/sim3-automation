@@ -35,20 +35,21 @@ jobs:
 
       - name: Compile and self-test readiness auditor
         run: |
-          python -m py_compile gold_axis_2026/tools/audit_model_data_readiness_v143.py
-          env -u NEON_DATABASE_URL python gold_axis_2026/tools/audit_model_data_readiness_v143.py --self-test
+          python -m py_compile \
+            gold_axis_2026/tools/audit_model_data_readiness_v143.py \
+            gold_axis_2026/tools/audit_model_data_readiness_v143_cli_safe.py
+          env -u NEON_DATABASE_URL python gold_axis_2026/tools/audit_model_data_readiness_v143_cli_safe.py --self-test
 
       - name: Audit production model-data readiness fail-closed
         run: |
-          mkdir -p gold_axis_2026/data_pipeline/audits
-          python gold_axis_2026/tools/audit_model_data_readiness_v143.py \
-            --json-out gold_axis_2026/data_pipeline/audits/GOLD_CONTROL_MODEL_DATA_READINESS_V143.json
+          python gold_axis_2026/tools/audit_model_data_readiness_v143_cli_safe.py \
+            --json-out /tmp/GOLD_CONTROL_MODEL_DATA_READINESS_V143.json
 
       - name: Upload readiness evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: gold-control-model-data-readiness-v143-${{ github.run_id }}
-          path: gold_axis_2026/data_pipeline/audits/GOLD_CONTROL_MODEL_DATA_READINESS_V143.json
+          path: /tmp/GOLD_CONTROL_MODEL_DATA_READINESS_V143.json
           if-no-files-found: warn
           retention-days: 30
