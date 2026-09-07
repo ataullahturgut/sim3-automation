@@ -1,0 +1,104 @@
+name: Gold Control V1.45 Emergency Shadow Activation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - gold-control-live-frequency-v145
+    paths:
+      - 'gold_axis_2026/V145_EMERGENCY_SHADOW_ACTIVATE.marker'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-v145-emergency-shadow-activation
+  cancel-in-progress: false
+
+jobs:
+  activate-shadow:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-live-frequency-v145
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install runtime
+        run: |
+          pip install -q -r gold_axis_2026/data_pipeline/requirements.txt
+          pip install -q websocket-client
+      - name: Require protected credentials
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$TWELVE_DATA_API_KEY"
+      - name: Compile activation code
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/twelve_xau_intraday_backfill_v145.py \
+            gold_axis_2026/data_pipeline/live_xau_emergency_v145.py \
+            gold_axis_2026/tools/audit_live_frequency_readiness_v145.py
+      - name: Persist current-month intraday bootstrap as historical catch-up
+        run: |
+          python gold_axis_2026/data_pipeline/twelve_xau_intraday_backfill_v145.py \
+            --lookback-days 7 \
+            --persist | tee v145_xau_intraday_bootstrap_activation.json
+      - name: Persist bounded WebSocket Emergency live-shadow smoke
+        run: |
+          python gold_axis_2026/data_pipeline/live_xau_emergency_v145.py \
+            --duration-seconds 150 \
+            --persist | tee v145_emergency_live_shadow_activation.json
+      - name: Audit V1.45 persisted live-frequency state
+        run: |
+          python gold_axis_2026/tools/audit_live_frequency_readiness_v145.py | tee v145_live_frequency_post_activation.json
+      - name: Verify Emergency ready and authority stores untouched
+        run: |
+          python - <<'PY'
+          import json, os
+          import psycopg
+          from psycopg.rows import dict_row
+
+          audit=json.load(open('v145_live_frequency_post_activation.json', encoding='utf-8'))
+          readiness=audit['readiness']
+          assert readiness['EMERGENCY_LIVE_LEVEL_READY'] is True, readiness
+          assert readiness['EMERGENCY_LIVE_REVERSAL_READY'] is True, readiness
+
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=False, row_factory=dict_row) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('set transaction read only')
+                  cur.execute("select count(*) n from observations where series_id='XAU_LIVE_TWELVE_WS_1M'")
+                  assert int(cur.fetchone()['n']) > 0
+                  cur.execute("select count(*) n from observations where series_id='XAU_INTRADAY_TWELVE_REST_1M'")
+                  assert int(cur.fetchone()['n']) > 0
+                  cur.execute("select feature_name,value_text,quality_status,metadata from derived_feature_snapshots where feature_name in ('EMERGENCY_LIVE_LEVEL','EMERGENCY_LIVE_REVERSAL') order by calculation_ts desc,id desc")
+                  rows=cur.fetchall()
+                  assert {r['feature_name'] for r in rows} >= {'EMERGENCY_LIVE_LEVEL','EMERGENCY_LIVE_REVERSAL'}
+                  counts={}
+                  for table in ('monthly_forecast_contracts','decision_signal_snapshots','decision_runs','decision_events'):
+                      cur.execute(f'select count(*) n from {table}')
+                      counts[table]=int(cur.fetchone()['n'])
+                  assert counts == {
+                      'monthly_forecast_contracts':0,
+                      'decision_signal_snapshots':0,
+                      'decision_runs':0,
+                      'decision_events':0,
+                  }, counts
+              conn.rollback()
+          print('V145_EMERGENCY_SHADOW_ACTIVATION_PASS')
+          PY
+      - name: Upload activation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-v145-emergency-shadow-activation
+          path: |
+            v145_xau_intraday_bootstrap_activation.json
+            v145_emergency_live_shadow_activation.json
+            v145_live_frequency_post_activation.json
+          if-no-files-found: ignore
