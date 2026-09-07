@@ -37,7 +37,16 @@ FORBIDDEN_CURRENT_PATTERNS = {
     "date_specific_replay_dependency": re.compile(r"aug31_state_replay|aug31_replay_expansion", re.IGNORECASE),
     "old_mobile_entrypoint": re.compile(r"gold_control_mobile_v1"),
     "old_stage_contract": re.compile(r"GOLD_CONTROL_STAGE4|GOLD_CONTROL_STAGE_4"),
-    "old_context_evidence": re.compile(r"LATE_BOOTSTRAP_SHADOW_CONTEXT"),
+}
+
+# V1.44 deliberately preserves the governed evidence class of the selected
+# context row instead of coercing every current feature to one generic replay
+# label. These are evidence labels, not authority or action states.
+ALLOWED_CONTEXT_EVIDENCE = {
+    "HISTORICAL_REPLAY_CONTEXT",
+    "LATE_BOOTSTRAP_SHADOW_CONTEXT",
+    "HISTORICAL_REPLAY_INTRAMONTH_CONTEXT",
+    "PROSPECTIVE_SHADOW_INTRAMONTH_CONTEXT",
 }
 
 LEGACY_PATH_TOKENS = (
@@ -111,8 +120,12 @@ def validate_snapshot() -> list[dict[str, str]]:
         if not isinstance(row, dict):
             continue
         metadata = row.get("metadata") or {}
-        if row.get("quality_status") != "HISTORICAL_REPLAY_CONTEXT":
-            findings.append({"kind": "snapshot_feature_evidence_invalid", "path": relative, "match": str(row.get("feature_name"))})
+        quality = str(row.get("quality_status") or "")
+        evidence = str(metadata.get("evidence_class") or "")
+        if quality not in ALLOWED_CONTEXT_EVIDENCE:
+            findings.append({"kind": "snapshot_feature_evidence_invalid", "path": relative, "match": f"{row.get('feature_name')}:{quality}"})
+        if evidence and evidence != quality:
+            findings.append({"kind": "snapshot_feature_evidence_metadata_mismatch", "path": relative, "match": f"{row.get('feature_name')}:{quality}:{evidence}"})
         if metadata.get("current_surface_contract") != "GOLD_CONTROL_CURRENT_SURFACE_V142":
             findings.append({"kind": "snapshot_feature_contract_invalid", "path": relative, "match": str(row.get("feature_name"))})
 
