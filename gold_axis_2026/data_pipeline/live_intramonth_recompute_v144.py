@@ -316,6 +316,7 @@ def _insert_feature(
     if _latest_feature_fingerprint(cur, name, target_context) == fingerprint:
         return False
     quality = "PROSPECTIVE_SHADOW_INTRAMONTH_CONTEXT" if evidence_mode == "prospective-shadow" else "HISTORICAL_REPLAY_INTRAMONTH_CONTEXT"
+    series_id = XAU_SERIES if name in {"FAST_STATE", "SLOW_STATE"} else GVZ_SERIES
     cur.execute(
         """
         insert into derived_feature_snapshots
@@ -324,7 +325,7 @@ def _insert_feature(
         """,
         (
             name, FEATURE_VERSION, calculation_ts, input_cutoff, value_num, value_text, code_sha,
-            json.dumps({"source": XAU_SERIES if name in {"FAST_STATE", "SLOW_STATE"} else GVZ_SERIES, "selected_inputs": lineage}),
+            json.dumps({"source": "Twelve Data" if series_id == XAU_SERIES else "Cboe", "series_id": series_id, "selected_inputs": lineage}),
             quality,
             json.dumps({
                 "contract": CONTRACT,
