@@ -30,6 +30,7 @@ SELF_EXCLUDE = {
     "gold_axis_2026/tools/audit_current_surface_v141.py",
     "gold_axis_2026/tools/inventory_full_current_tree_v141.py",
 }
+REFERENCE_SCAN_EXTENSIONS = {".py", ".json", ".yml", ".yaml", ".toml"}
 
 
 def rel(path: Path) -> str:
@@ -69,6 +70,26 @@ def legacy_content_hits(files: list[Path]) -> list[dict[str, object]]:
     return hits
 
 
+def root_doc_references(files: list[Path], root_docs: list[Path]) -> dict[str, list[str]]:
+    references: dict[str, list[str]] = {}
+    executable_files = [p for p in files if p.suffix.lower() in REFERENCE_SCAN_EXTENSIONS and p not in root_docs]
+    cache: dict[Path, str] = {}
+    for path in executable_files:
+        try:
+            cache[path] = path.read_text(encoding="utf-8")
+        except Exception:
+            pass
+    for doc in root_docs:
+        names = {doc.name, rel(doc)}
+        referrers: list[str] = []
+        for path, text in cache.items():
+            if any(name in text for name in names):
+                referrers.append(rel(path))
+        if referrers:
+            references[rel(doc)] = sorted(referrers)
+    return references
+
+
 def local_imports(path: Path) -> set[str]:
     try:
         tree = ast.parse(path.read_text(encoding="utf-8"))
@@ -86,7 +107,6 @@ def local_imports(path: Path) -> set[str]:
 def app_reachability() -> dict[str, object]:
     app_dir = GC / "apps"
     modules = {path.stem: path for path in app_dir.glob("*.py") if not path.name.startswith("test_")}
-    # gold_control.py dynamically loads gold_control_mobile.py, so both are explicit roots.
     queue = ["gold_control", "gold_control_mobile"]
     reachable: set[str] = set()
     while queue:
@@ -106,7 +126,9 @@ def app_reachability() -> dict[str, object]:
 
 def main() -> int:
     files = current_tree_files()
-    root_docs = sorted(rel(p) for p in GC.glob("GOLD_CONTROL_*.md"))
+    root_doc_paths = sorted(GC.glob("GOLD_CONTROL_*.md"))
+    root_docs = [rel(p) for p in root_doc_paths]
+    references = root_doc_references(files, root_doc_paths)
     workflows = sorted(rel(p) for p in (ROOT / ".github" / "workflows").glob("gold-control-*.yml"))
     report = {
         "contract": "GOLD_CONTROL_FULL_CURRENT_TREE_INVENTORY_V141",
@@ -115,6 +137,9 @@ def main() -> int:
         "legacy_content_hits": legacy_content_hits(files),
         "root_gold_control_docs": root_docs,
         "root_gold_control_doc_count": len(root_docs),
+        "root_docs_referenced_by_executable_or_config": references,
+        "root_docs_referenced_count": len(references),
+        "root_docs_unreferenced": sorted(set(root_docs) - set(references)),
         "gold_control_workflows": workflows,
         "gold_control_workflow_count": len(workflows),
         "app_reachability": app_reachability(),
