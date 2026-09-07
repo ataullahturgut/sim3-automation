@@ -1,0 +1,160 @@
+name: Gold Control Live Intramonth Recompute V1.44
+
+on:
+  push:
+    branches:
+      - gold-control-live-intraday-recompute-v144
+      - gold-r4-direction-engine
+    paths:
+      - 'gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py'
+      - 'gold_axis_2026/data_pipeline/test_live_intramonth_recompute_v144.py'
+      - 'gold_axis_2026/data_pipeline/twelve_xau_ny17.py'
+      - 'gold_axis_2026/tools/audit_live_intramonth_postwrite_v144.py'
+      - 'gold_axis_2026/GOLD_CONTROL_LIVE_INTRAMONTH_RECOMPUTE_CONTRACT_V144_2026-09-07.md'
+      - 'gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md'
+      - '.github/workflows/gold-control-live-intraday-recompute-v144.yml'
+  workflow_call:
+    inputs:
+      evidence_mode:
+        required: false
+        type: string
+        default: prospective-shadow
+    secrets:
+      NEON_DATABASE_URL:
+        required: true
+  workflow_dispatch:
+    inputs:
+      evidence_mode:
+        description: 'catchup or prospective-shadow'
+        required: true
+        default: prospective-shadow
+        type: choice
+        options:
+          - catchup
+          - prospective-shadow
+      persist:
+        description: 'Persist append-only context rows'
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-live-intraday-recompute-v144
+  cancel-in-progress: false
+
+jobs:
+  unit-and-dry-run:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'push' && github.ref_name || 'gold-r4-direction-engine' }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install governed runtime
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt pytest
+      - name: Compile and run frozen-rule tests
+        run: |
+          python -m py_compile \
+            gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py \
+            gold_axis_2026/tools/audit_live_intramonth_postwrite_v144.py
+          PYTHONPATH=gold_axis_2026/data_pipeline pytest -q gold_axis_2026/data_pipeline/test_live_intramonth_recompute_v144.py
+      - name: Read-only production preflight
+        if: ${{ env.NEON_DATABASE_URL != '' }}
+        shell: bash
+        run: |
+          set +e
+          output="$(python gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py --evidence-mode catchup 2>&1)"
+          rc=$?
+          set -e
+          printf '%s\n' "$output"
+          if [ "$rc" -eq 0 ]; then
+            echo 'V144_READ_ONLY_PREFLIGHT_READY'
+            exit 0
+          fi
+          if grep -Fq 'BLOCKED_CANONICAL_XAU_BEHIND_CROSSCHECK' <<<"$output"; then
+            echo 'V144_READ_ONLY_PREFLIGHT_EXPECTED_FAIL_CLOSED_CANONICAL_XAU_RECONCILIATION_REQUIRED'
+            exit 0
+          fi
+          echo 'Unexpected V1.44 preflight failure' >&2
+          exit "$rc"
+
+  canonical-catchup:
+    if: ${{ github.event_name == 'push' && github.ref_name == 'gold-r4-direction-engine' }}
+    needs: unit-and-dry-run
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install governed runtime
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Reconcile canonical NY17 before derived-state catch-up
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$TWELVE_DATA_API_KEY"
+          python gold_axis_2026/data_pipeline/twelve_xau_ny17.py \
+            --persist \
+            --reconcile-days 7
+      - name: Persist append-only September catch-up context
+        run: |
+          python gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py \
+            --persist \
+            --evidence-mode catchup
+      - name: Run strict post-write readiness audits
+        run: |
+          python gold_axis_2026/tools/audit_model_data_readiness_v143.py
+          python gold_axis_2026/tools/audit_live_intramonth_postwrite_v144.py
+
+  persist:
+    if: >-
+      (github.event_name == 'workflow_call') ||
+      (github.event_name == 'workflow_dispatch' && inputs.persist == true)
+    needs: unit-and-dry-run
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install governed runtime
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Persist append-only intramonth context
+        run: |
+          MODE='${{ inputs.evidence_mode }}'
+          if [ -z "$MODE" ]; then MODE='prospective-shadow'; fi
+          python gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py \
+            --persist \
+            --evidence-mode "$MODE"
+      - name: Post-write readiness and authority checks
+        run: |
+          python gold_axis_2026/tools/audit_model_data_readiness_v143.py
+          python gold_axis_2026/tools/audit_live_intramonth_postwrite_v144.py
+          python - <<'PY'
+          import os, psycopg
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=True) as conn:
+              with conn.cursor() as cur:
+                  cur.execute('select (select count(*) from monthly_forecast_contracts),(select count(*) from decision_signal_snapshots),(select count(*) from decision_runs),(select count(*) from decision_events)')
+                  values=cur.fetchone()
+                  assert values == (0,0,0,0), values
+                  print('V144_AUTHORITY_STORES_REMAIN_ZERO')
+          PY
