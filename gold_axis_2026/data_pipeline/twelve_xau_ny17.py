@@ -19,10 +19,12 @@ SYMBOL = "XAU/USD"
 INTERVAL = "1min"
 NY = ZoneInfo("America/New_York")
 TIME_SERIES_URL = "https://api.twelvedata.com/time_series"
-PIPELINE_VERSION = "GOLD_DATA_R2.8_XAU_NY17_2026-09-01"
+PIPELINE_VERSION = "GOLD_DATA_R2.9_XAU_NY17_RECENT_RECONCILE_2026-09-07"
 QUALITY_STATUS = "APPROVED_CANONICAL_TWELVE_NY17"
 CUTOFF = time(17, 0, 0)
 TARGET_BAR = time(16, 59, 0)
+DEFAULT_RECONCILE_DAYS = 7
+MAX_RECONCILE_DAYS = 14
 
 
 def _api_key() -> str:
@@ -60,7 +62,7 @@ def _request_day(session: requests.Session, d: date) -> tuple[dict, bytes]:
         params=params,
         headers={
             "Authorization": f"apikey {_api_key()}",
-            "User-Agent": "GoldControl-XAU-NY17/1.0",
+            "User-Agent": "GoldControl-XAU-NY17/1.1",
         },
         timeout=(8, 35),
     )
@@ -105,44 +107,7 @@ def _extract_exact_bar(payload: dict, d: date) -> dict | None:
     return {"item": bar, **parsed}
 
 
-def collect_latest_completed(now_utc: datetime | None = None) -> dict:
-    retrieved_at = now_utc or datetime.now(timezone.utc)
-    if retrieved_at.tzinfo is None:
-        retrieved_at = retrieved_at.replace(tzinfo=timezone.utc)
-    else:
-        retrieved_at = retrieved_at.astimezone(timezone.utc)
-    now_ny = retrieved_at.astimezone(NY)
-
-    session = base.session()
-    selected = None
-    attempts = []
-    for d in _candidate_dates(now_ny):
-        # Skip obvious weekend dates without making unnecessary vendor calls.
-        if d.weekday() >= 5:
-            continue
-        try:
-            payload, raw = _request_day(session, d)
-            bar = _extract_exact_bar(payload, d)
-            attempts.append({"date": d.isoformat(), "result": "BAR_FOUND" if bar else "NO_EXACT_BAR"})
-            if bar is not None:
-                selected = (d, payload, raw, bar)
-                break
-        except requests.HTTPError as exc:
-            attempts.append({"date": d.isoformat(), "result": f"HTTP_{exc.response.status_code if exc.response else 'ERROR'}"})
-            continue
-        except RuntimeError as exc:
-            # Provider/API errors and invalid exact bars are not silently bypassed once a bar exists.
-            if str(exc).startswith("TWELVE_API_ERROR"):
-                raise
-            attempts.append({"date": d.isoformat(), "result": str(exc).split(":", 1)[0]})
-            if "NOT_UNIQUE" in str(exc) or "INVALID_" in str(exc) or "OUTSIDE_RANGE" in str(exc):
-                raise
-            continue
-
-    if selected is None:
-        raise RuntimeError("BLOCKED_NO_VALID_TWELVE_NY1659_BAR")
-
-    trade_date, payload, raw, bar = selected
+def _validated_provider_identity(payload: dict) -> None:
     meta = payload.get("meta") or {}
     provider_symbol = meta.get("symbol") or SYMBOL
     if provider_symbol != SYMBOL:
@@ -151,14 +116,24 @@ def collect_latest_completed(now_utc: datetime | None = None) -> dict:
     if provider_interval not in (None, INTERVAL):
         raise RuntimeError(f"TWELVE_INTERVAL_MISMATCH:{provider_interval}")
 
+
+def _observation_for_bar(
+    *,
+    run_id: str,
+    retrieved_at: datetime,
+    trade_date: date,
+    raw: bytes,
+    bar: dict,
+    attempts: list[dict],
+    reconcile_days: int,
+):
     cutoff_ny = datetime.combine(trade_date, CUTOFF, tzinfo=NY)
     cutoff_utc = cutoff_ny.astimezone(timezone.utc)
     if cutoff_utc > retrieved_at:
         raise RuntimeError("BLOCKED_SESSION_NOT_COMPLETED")
 
-    run_id = str(base.uuid.uuid4())
     payload_hash = base.sha256_bytes(raw)
-    observation = base.make_obs(
+    return base.make_obs(
         run_id,
         SERIES_ID,
         cutoff_utc,
@@ -186,22 +161,103 @@ def collect_latest_completed(now_utc: datetime | None = None) -> dict:
             "availability_policy": "retrieval_time_floor",
             "rights_policy": "PRIVATE_INTERNAL_NON_DISPLAY_NO_PUBLIC_RAW_REDISTRIBUTION",
             "fallback_policy": "NONE",
+            "reconciliation_policy": "BOUNDED_RECENT_EXACT_BAR_RECONCILIATION",
+            "reconcile_days": reconcile_days,
             "candidate_attempts": attempts,
         },
     )
+
+
+def collect_recent_completed(
+    now_utc: datetime | None = None,
+    *,
+    reconcile_days: int = DEFAULT_RECONCILE_DAYS,
+) -> dict:
+    if reconcile_days < 0 or reconcile_days > MAX_RECONCILE_DAYS:
+        raise ValueError(
+            f"reconcile_days must be between 0 and {MAX_RECONCILE_DAYS}"
+        )
+
+    retrieved_at = now_utc or datetime.now(timezone.utc)
+    if retrieved_at.tzinfo is None:
+        retrieved_at = retrieved_at.replace(tzinfo=timezone.utc)
+    else:
+        retrieved_at = retrieved_at.astimezone(timezone.utc)
+    now_ny = retrieved_at.astimezone(NY)
+
+    session = base.session()
+    attempts: list[dict] = []
+    found: list[tuple[date, dict, bytes, dict]] = []
+
+    for d in _candidate_dates(now_ny, lookback_days=reconcile_days):
+        # Weekends are not treated as expected trade dates. Holidays are resolved
+        # by the provider: NO_EXACT_BAR is retained as evidence, not interpolated.
+        if d.weekday() >= 5:
+            attempts.append({"date": d.isoformat(), "result": "SKIP_WEEKEND"})
+            continue
+        try:
+            payload, raw = _request_day(session, d)
+            _validated_provider_identity(payload)
+            bar = _extract_exact_bar(payload, d)
+            attempts.append(
+                {"date": d.isoformat(), "result": "BAR_FOUND" if bar else "NO_EXACT_BAR"}
+            )
+            if bar is not None:
+                found.append((d, payload, raw, bar))
+        except requests.HTTPError as exc:
+            code = exc.response.status_code if exc.response is not None else "ERROR"
+            # A transport/HTTP failure means this run cannot prove recent-window
+            # completeness. Do not silently reinterpret it as a market holiday.
+            raise RuntimeError(f"BLOCKED_TWELVE_HTTP_{code}:{d.isoformat()}") from exc
+        except RuntimeError as exc:
+            # Provider errors, symbol/interval mismatch and malformed exact bars are
+            # fail-closed. Only a successful response with no exact bar may represent
+            # a non-trading/provider-no-bar date.
+            raise
+
+    if not found:
+        raise RuntimeError("BLOCKED_NO_VALID_TWELVE_NY1659_BAR_IN_RECONCILIATION_WINDOW")
+
+    run_id = str(base.uuid.uuid4())
+    observations = [
+        _observation_for_bar(
+            run_id=run_id,
+            retrieved_at=retrieved_at,
+            trade_date=d,
+            raw=raw,
+            bar=bar,
+            attempts=attempts,
+            reconcile_days=reconcile_days,
+        )
+        for d, _payload, raw, bar in sorted(found, key=lambda x: x[0])
+    ]
+
+    latest_trade_date = max(d for d, _payload, _raw, _bar in found)
+    latest_cutoff_utc = datetime.combine(latest_trade_date, CUTOFF, tzinfo=NY).astimezone(timezone.utc)
 
     return {
         "run_id": run_id,
         "started_at": base.iso_utc(retrieved_at),
         "finished_at": base.iso_utc(datetime.now(timezone.utc)),
         "pipeline_version": PIPELINE_VERSION,
-        "mode": "daily:twelve_xau_ny17",
-        "observations": [asdict(observation)],
+        "mode": "daily:twelve_xau_ny17_recent_reconcile",
+        "observations": [asdict(o) for o in observations],
         "vintages": [],
         "quality_events": [],
-        "selected_trade_date": trade_date.isoformat(),
-        "selected_cutoff_utc": cutoff_utc.isoformat(),
+        "selected_trade_date": latest_trade_date.isoformat(),
+        "selected_cutoff_utc": latest_cutoff_utc.isoformat(),
+        "reconciled_trade_dates": sorted(d.isoformat() for d, _payload, _raw, _bar in found),
+        "candidate_attempts": attempts,
     }
+
+
+def collect_latest_completed(now_utc: datetime | None = None) -> dict:
+    """Compatibility wrapper retaining the original latest-bar entry point.
+
+    Production uses bounded reconciliation; callers that explicitly use this
+    function retain the prior single-day/latest completed search behavior.
+    """
+    return collect_recent_completed(now_utc, reconcile_days=0)
 
 
 def _self_test() -> None:
@@ -219,10 +275,12 @@ def _self_test() -> None:
     bar = _extract_exact_bar(payload, date(2026, 8, 31))
     assert bar is not None and bar["close"] == 1.5
     assert _extract_exact_bar({"values": []}, date(2026, 8, 31)) is None
+    _validated_provider_identity({"meta": {"symbol": SYMBOL, "interval": INTERVAL}})
+    assert len(_candidate_dates(datetime(2026, 9, 7, 18, 0, tzinfo=NY), 7)) == 8
     print("TWELVE_XAU_NY17_SELF_TEST_PASS")
 
 
-def _verify_neon(run_id: str, expected_ts: str) -> dict:
+def _verify_neon(run_id: str, expected_min_ts: str) -> dict:
     import psycopg
     from persist_neon import _db_url
 
@@ -244,8 +302,11 @@ def _verify_neon(run_id: str, expected_ts: str) -> dict:
             source, symbol, quality, obs_ts = row
             if source != SOURCE or symbol != SYMBOL or quality != QUALITY_STATUS:
                 raise RuntimeError("NEON_VERIFY_LINEAGE_OR_QUALITY_MISMATCH")
-            if obs_ts.isoformat() != expected_ts:
-                raise RuntimeError(f"NEON_VERIFY_TIMESTAMP_MISMATCH:{obs_ts.isoformat()}:{expected_ts}")
+            expected = datetime.fromisoformat(expected_min_ts.replace("Z", "+00:00"))
+            if obs_ts < expected:
+                raise RuntimeError(
+                    f"NEON_VERIFY_TIMESTAMP_BEHIND:{obs_ts.isoformat()}:{expected.isoformat()}"
+                )
 
             cur.execute("select status from retrieval_runs where run_id=%s", (run_id,))
             rr = cur.fetchone()
@@ -254,7 +315,8 @@ def _verify_neon(run_id: str, expected_ts: str) -> dict:
 
     return {
         "series_id": SERIES_ID,
-        "latest_observation_ts": expected_ts,
+        "latest_observation_ts": obs_ts.isoformat(),
+        "minimum_expected_observation_ts": expected.isoformat(),
         "source": SOURCE,
         "quality_status": QUALITY_STATUS,
         "retrieval_run_status": "SUCCESS",
@@ -265,6 +327,12 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--persist", action="store_true")
     parser.add_argument("--self-test", action="store_true")
+    parser.add_argument(
+        "--reconcile-days",
+        type=int,
+        default=DEFAULT_RECONCILE_DAYS,
+        help=f"bounded recent reconciliation lookback, 0..{MAX_RECONCILE_DAYS}",
+    )
     args = parser.parse_args()
 
     if args.self_test:
@@ -272,12 +340,14 @@ def main() -> int:
         if not args.persist:
             return 0
 
-    bundle = collect_latest_completed()
+    bundle = collect_recent_completed(reconcile_days=args.reconcile_days)
     print(json.dumps({
         "series_id": SERIES_ID,
         "run_id": bundle["run_id"],
         "selected_trade_date": bundle["selected_trade_date"],
         "selected_cutoff_utc": bundle["selected_cutoff_utc"],
+        "reconciled_trade_dates": bundle["reconciled_trade_dates"],
+        "candidate_attempts": bundle["candidate_attempts"],
         "raw_market_values_logged": False,
         "database_write_requested": bool(args.persist),
     }, indent=2))
