@@ -8,6 +8,7 @@ on:
       - 'gold_axis_2026/data_pipeline/twelve_xau_intraday_backfill_v145.py'
       - 'gold_axis_2026/data_pipeline/live_xau_emergency_v145.py'
       - 'gold_axis_2026/tools/probe_twelve_gvz_websocket_v145.py'
+      - 'gold_axis_2026/tools/probe_bls_employment_event_v145.py'
       - '.github/workflows/gold-control-live-data-v145-preproduction.yml'
   workflow_dispatch:
 
@@ -17,7 +18,7 @@ permissions:
 jobs:
   preproduction:
     runs-on: ubuntu-24.04
-    timeout-minutes: 8
+    timeout-minutes: 10
     env:
       NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
       TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
@@ -41,15 +42,20 @@ jobs:
           python -m py_compile \
             gold_axis_2026/data_pipeline/twelve_xau_intraday_backfill_v145.py \
             gold_axis_2026/data_pipeline/live_xau_emergency_v145.py \
-            gold_axis_2026/tools/probe_twelve_gvz_websocket_v145.py
-      - name: Emergency minute aggregation self-test
-        run: python gold_axis_2026/data_pipeline/live_xau_emergency_v145.py --self-test --duration-seconds 60
+            gold_axis_2026/tools/probe_twelve_gvz_websocket_v145.py \
+            gold_axis_2026/tools/probe_bls_employment_event_v145.py
+      - name: Emergency live XAU dry-run and minute aggregation self-test
+        run: python gold_axis_2026/data_pipeline/live_xau_emergency_v145.py --self-test --duration-seconds 75
       - name: Twelve XAU intraday REST bootstrap dry-run
         run: python gold_axis_2026/data_pipeline/twelve_xau_intraday_backfill_v145.py --lookback-days 1
+      - name: BLS Employment Situation actual-source preflight
+        run: python gold_axis_2026/tools/probe_bls_employment_event_v145.py --out bls_employment_event_preflight_v145.json
       - name: Twelve GVZ WebSocket probe
         run: python gold_axis_2026/tools/probe_twelve_gvz_websocket_v145.py --timeout-seconds 25 --out twelve_gvz_ws_preflight_v145.json
-      - name: Upload GVZ probe evidence
+      - name: Upload live-data evidence
         uses: actions/upload-artifact@v4
         with:
-          name: gold-control-twelve-gvz-ws-preflight-v145
-          path: twelve_gvz_ws_preflight_v145.json
+          name: gold-control-live-data-v145-preproduction
+          path: |
+            bls_employment_event_preflight_v145.json
+            twelve_gvz_ws_preflight_v145.json
