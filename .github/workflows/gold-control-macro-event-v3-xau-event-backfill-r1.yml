@@ -41,9 +41,45 @@ jobs:
           python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_xau_event_backfill_r1.py
           python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_historical_reaction_test_r1.py
           python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_historical_reaction_test_r2.py
+      - name: Preflight Twelve Data daily credit state
+        id: twelve_preflight
+        run: |
+          python - <<'PY'
+          import json, os, requests
+          r=requests.get('https://api.twelvedata.com/time_series',params={
+              'symbol':'XAU/USD','interval':'1min','outputsize':1,'timezone':'UTC'
+          },headers={'Authorization':f"apikey {os.environ['TWELVE_DATA_API_KEY']}",'User-Agent':'Gold-Control-Macro-Event-V3-Preflight/1.0'},timeout=(10,30))
+          text=r.text
+          daily_blocked=(r.status_code==429 and 'run out of api credits for the day' in text.lower())
+          if not daily_blocked:
+              try:
+                  p=r.json()
+                  daily_blocked=(int(p.get('code') or 0)==429 and 'run out of api credits for the day' in str(p.get('message') or '').lower())
+              except Exception:
+                  pass
+          with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf-8') as f:
+              f.write(f"daily_blocked={'true' if daily_blocked else 'false'}\n")
+          if daily_blocked:
+              result={
+                  'status':'BLOCKED_PROVIDER_DAILY_CREDIT_EXHAUSTED',
+                  'observations_written':0,
+                  'resume_safe':True,
+                  'commit_scope':'per_event',
+                  'production_authority':False,
+                  'market_shock_threshold_changed':False,
+                  'provider':'Twelve Data',
+                  'reason':'Daily API credit allowance exhausted; no provider substitution performed.'
+              }
+              open('macro_event_successor_v3_xau_event_backfill_r1_result.json','w',encoding='utf-8').write(json.dumps(result,indent=2,sort_keys=True))
+              print(json.dumps(result,indent=2,sort_keys=True))
+          else:
+              r.raise_for_status()
+              print('TWELVE_DAILY_CREDIT_PREFLIGHT_PASS')
+          PY
       - name: Backfill missing Macro Event XAU bars from existing Twelve Data channel
+        if: ${{ steps.twelve_preflight.outputs.daily_blocked != 'true' }}
         run: python gold_axis_2026/data_pipeline/macro_event_successor_v3_xau_event_backfill_r1.py
-      - name: Re-run frozen Macro Event reaction test
+      - name: Re-run frozen Macro Event 1m reaction test
         working-directory: gold_axis_2026/data_pipeline
         run: python macro_event_successor_v3_historical_reaction_test_r2.py
       - name: Validate governance
