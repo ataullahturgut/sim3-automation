@@ -206,7 +206,7 @@
     "input_snapshots": 5,
     "orphan_input_snapshots": 0
   },
-  "payload_sha256": "5d70c23e727f33c22ab720a66947e2c1b8f55e6959d4b3ff0aeb5b160343cd8b",
+  "payload_sha256": "ed74310594cef72514eb5f601a995f113202ad61f2817050ee9abbb4d17b95c4",
   "runtime": [
     {
       "as_of": "2026-09-05T14:34:24.041101+00:00",
@@ -681,7 +681,7 @@
   "source": "NEON_PRODUCTION_LATEST_COMPLETE_CURRENT_SURFACES_READ_ONLY_EXPORT",
   "source_state_at": "2026-09-07T10:41:39.366060+00:00",
   "source_surface": {
-    "current_source_count": 49,
+    "current_source_count": 61,
     "disallowed_current_source_count": 0,
     "selection_rule": "OBSERVATION_BACKED_OR_EXPLICIT_LIVE_DISPLAY_AND_NOT_BLOCKED_OPTIONAL_PAID"
   },
