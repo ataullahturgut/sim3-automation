@@ -4,11 +4,17 @@ on:
   push:
     branches:
       - gold-control-unified-emergency-replay-v1
+    paths:
+      - 'gold_axis_2026/tools/market_shock_challenger_v1.py'
+      - 'gold_axis_2026/tools/market_shock_challenger_v1_lm_sn_fix.py'
+      - 'gold_axis_2026/tools/market_shock_direction_audit_v1.py'
+      - 'gold_axis_2026/tools/market_shock_unified_replay_v1.py'
+      - 'gold_axis_2026/tools/emergency_intraday_replay_validation_v146.py'
   workflow_dispatch:
 
 concurrency:
   group: gold-control-twelve-unified-research-replay
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -26,24 +32,19 @@ jobs:
         with:
           ref: gold-control-unified-emergency-replay-v1
           fetch-depth: 1
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
       - name: Install validation runtime
         run: pip install -q pandas numpy scipy requests
-
       - name: Require protected Twelve credential
         run: test -n "$TWELVE_DATA_API_KEY"
-
       - name: Compile unified replay
         run: |
           python -m py_compile gold_axis_2026/tools/market_shock_challenger_v1.py
           python -m py_compile gold_axis_2026/tools/market_shock_challenger_v1_lm_sn_fix.py
           python -m py_compile gold_axis_2026/tools/market_shock_direction_audit_v1.py
           python -m py_compile gold_axis_2026/tools/market_shock_unified_replay_v1.py
-
       - name: Verify Lee-Mykland Eq 13 Sn correction
         run: |
           python - <<'PY'
@@ -61,7 +62,6 @@ jobs:
           assert abs(actual - expected) < 1e-12, (actual, expected)
           print({'critical_999': actual})
           PY
-
       - name: Run single-fetch Sn-corrected replay and direction audit
         env:
           GOLD_CODE_SHA: ${{ github.sha }}
@@ -71,7 +71,6 @@ jobs:
             --start '2020-04-06 00:00:00' \
             --end '2026-08-31 23:59:59' \
             --output market_shock_unified_replay_v1.json
-
       - name: Upload aggregate 5m evidence only
         if: always()
         uses: actions/upload-artifact@v4
@@ -90,20 +89,15 @@ jobs:
         with:
           ref: gold-control-unified-emergency-replay-v1
           fetch-depth: 1
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
       - name: Install validation runtime
         run: pip install -q pandas requests
-
       - name: Require protected Twelve credential
         run: test -n "$TWELVE_DATA_API_KEY"
-
       - name: Compile frozen Emergency replay
         run: python -m py_compile gold_axis_2026/tools/emergency_intraday_replay_validation_v146.py
-
       - name: Run frozen Emergency replay sequentially with no parallel Twelve calls
         env:
           GOLD_CODE_SHA: ${{ github.sha }}
@@ -113,7 +107,6 @@ jobs:
             --end-month '2026-07' \
             --output-json emergency_intraday_replay_v146_unified.json \
             --output-csv emergency_intraday_replay_v146_unified_months.csv
-
       - name: Upload aggregate 1m Emergency evidence only
         if: always()
         uses: actions/upload-artifact@v4
