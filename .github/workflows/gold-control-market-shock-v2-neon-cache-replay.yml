@@ -1,0 +1,88 @@
+name: Gold Control Market Shock V2 Neon Cache Replay
+
+on:
+  push:
+    branches:
+      - gold-control-market-shock-challenger-v2
+    paths:
+      - '.github/workflows/gold-control-market-shock-v2-neon-cache-replay.yml'
+      - 'gold_axis_2026/tools/market_shock_challenger_v2_neon_cache_replay.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-market-shock-v2-neon-cache-replay
+  cancel-in-progress: false
+
+env:
+  NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+  GOLD_CODE_SHA: ${{ github.sha }}
+  PYTHONPATH: ${{ github.workspace }}
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-market-shock-challenger-v2
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install replay runtime
+        run: pip install -q pandas numpy scipy requests pytest 'psycopg[binary]'
+      - name: Require Neon credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Compile corrected V2 and cache wrapper
+        run: |
+          python -m py_compile gold_axis_2026/tools/market_shock_challenger_v2.py
+          python -m py_compile gold_axis_2026/tools/market_shock_challenger_v2_neon_cache_replay.py
+      - name: Run deterministic V2 tests
+        run: pytest -q gold_axis_2026/tests/test_market_shock_challenger_v2.py
+      - name: Run corrected V2 historical replay from Neon cache
+        id: replay
+        shell: bash
+        run: |
+          set +e
+          python -m gold_axis_2026.tools.market_shock_challenger_v2_neon_cache_replay \
+            --start '2020-04-06 00:00:00' \
+            --end '2026-08-31 23:59:59' \
+            --output market_shock_challenger_v2_neon_cache_report.json
+          rc=$?
+          echo "model_exit_code=$rc" >> "$GITHUB_OUTPUT"
+          test -f market_shock_challenger_v2_neon_cache_report.json || exit 20
+          python - <<'PY'
+          import json
+          p='market_shock_challenger_v2_neon_cache_report.json'
+          d=json.load(open(p,encoding='utf-8'))
+          print(json.dumps({
+              'status':d.get('status'),
+              'history':d.get('history'),
+              'gates':d.get('gates'),
+              'segments':[{
+                  'year':s.get('year'),
+                  'signal_bars':s.get('market_shock_v2',{}).get('signal_bars'),
+                  'episodes':s.get('market_shock_v2',{}).get('episodes'),
+                  'signal_rate':s.get('market_shock_v2',{}).get('signal_rate')
+              } for s in d.get('segments',[])],
+              'synthetic':[{
+                  'year':s.get('year'),
+                  'no_injection_rate':s.get('no_injection_market_shock_rate'),
+                  'power_1p5':s.get('market_shock_v2_power_by_abs_size',{}).get('0.015'),
+                  'power_2p0':s.get('market_shock_v2_power_by_abs_size',{}).get('0.02')
+              } for s in d.get('synthetic_injection',[])]
+          },indent=2,sort_keys=True))
+          if d.get('status') == 'BLOCKED_EXECUTION':
+              raise SystemExit(21)
+          PY
+      - name: Upload V2 Neon replay evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-market-shock-v2-neon-cache-replay
+          path: market_shock_challenger_v2_neon_cache_report.json
+          if-no-files-found: error
