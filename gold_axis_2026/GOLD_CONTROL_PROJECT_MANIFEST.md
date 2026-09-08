@@ -24,6 +24,7 @@ Binding current data/readiness contracts:
 
 - `GOLD_CONTROL_MODEL_DATA_READINESS_CONTRACT_V143_2026-09-07.md`
 - `GOLD_CONTROL_LIVE_INTRAMONTH_RECOMPUTE_CONTRACT_V144_2026-09-07.md`
+- `GOLD_CONTROL_HISTORICAL_PILOT_READINESS_CONTRACT_V145_2026-09-08.md`
 
 Binding current operational implementations:
 
@@ -32,9 +33,8 @@ Binding current operational implementations:
 - read-only current/live model-data readiness audit: `tools/audit_model_data_readiness_v143.py`
 - strict post-write intramonth audit: `tools/audit_live_intramonth_postwrite_v144.py`
 
-Planned V1.45 historical-pilot artifacts, not yet binding until separately created/frozen:
+Planned V1.45 historical-pilot implementation, not yet binding until separately created/reviewed/frozen:
 
-- `GOLD_CONTROL_HISTORICAL_PILOT_READINESS_CONTRACT_V145_2026-09-08.md`
 - `tools/audit_historical_pilot_readiness_v145.py`
 
 `ACTIVE` means a governed identity is present on the current runtime surface. It is **not** by itself a source-freshness, historical-pilot-readiness or successful-recomputation certificate.
@@ -255,7 +255,7 @@ Rules:
 - storage must be append-only or immutable-artifact based, with explicit source, retrieval, quality, lineage and fingerprint metadata;
 - current production canonical semantics may not be silently rewritten to pretend reconstructed rows were available at the original historical origin.
 
-Historical pilot readiness is established by the V1.45 historical-pilot audit once that audit is separately created and frozen; it is not established by the V1.43 current/live readiness audit.
+Historical pilot readiness is established by the binding `GOLD_CONTROL_HISTORICAL_PILOT_READINESS_CONTRACT_V145_2026-09-08.md` plus its separately reviewed/frozen read-only auditor; it is not established by the V1.43 current/live readiness audit.
 
 ---
 
@@ -388,33 +388,41 @@ The strict post-write audit must prove at least:
 
 ### 10.2 Historical-pilot readiness
 
-Historical pilot readiness must be audited separately across the fixed evaluation origins.
+Historical-pilot readiness is governed by:
 
-Required states:
+`GOLD_CONTROL_HISTORICAL_PILOT_READINESS_CONTRACT_V145_2026-09-08.md`
 
-- `READY`
+The historical pilot uses 20 common **target-month readiness cells**, not one identical forecast-origin semantic for all engines:
+
+- `2025-01..2025-12` = 12 retrospective validation target-month cells;
+- `2026-01..2026-08` = 8 retrospective frozen OOS target-month cells.
+
+The binding top-level readiness states are:
+
+- `READY_PROVEN`
+- `READY_TO_REPLAY`
 - `PARTIAL`
 - `BLOCKED_DATA`
+- `BLOCKED_PIT`
+- `BLOCKED_CONTRACT`
 - `IMPLEMENTATION_FAIL`
-- `NOT_PROVEN`
+- `CONTRACTUAL_EXCLUSION`
 
-The planned V1.45 audit must produce at minimum a `12 engines × 20 target origins` matrix covering:
+The planned V1.45 auditor must produce at minimum a `12 engines × 20 target-month cells = 240 rows` matrix and preserve each engine's role-specific evaluation clock.
 
-- `2025-01..2025-12` = 12 retrospective validation targets;
-- `2026-01..2026-08` = 8 retrospective frozen OOS targets.
-
-For each engine/origin the audit must expose:
+For each engine/cell the audit must expose:
 
 - governed engine/model version;
-- role;
+- role/evaluation-clock semantic;
 - required source identities;
-- required historical depth;
+- required historical depth/prehistory;
 - source coverage;
 - point-in-time/reconstruction evidence class;
 - source binding and lineage status;
 - future-information/leakage status;
 - deterministic/reproducibility evidence where applicable;
-- final readiness state and blocker code.
+- specific replay-evidence reference where available;
+- final readiness state and blocker/reason codes.
 
 No model-performance score is permitted to convert a readiness failure into a pass.
 
@@ -472,7 +480,7 @@ Before role performance is interpreted, every component must prove as applicable
 - explicit reconstruction/vintage semantics;
 - deterministic rerun/reconciliation evidence where defined by the component contract.
 
-A component that cannot satisfy its required technical/data gate remains `BLOCKED_DATA`, `IMPLEMENTATION_FAIL` or `NOT_PROVEN`. It is not repaired or tuned inside the frozen pilot.
+A component that cannot satisfy its required technical/data gate remains explicitly blocked/not proven under the V1.45 readiness contract. It is not repaired or tuned inside the frozen pilot.
 
 ### 11.5 Role-specific validation
 
@@ -557,22 +565,23 @@ The current first-order historical-pilot blockers are data-plane issues, not a m
 
 ### Priority A — historical canonical NY17 sleeve
 
-The project must first establish the exact missing historical NY17 dates required for `2025-01..2026-08` pilot origins plus each component's necessary lookback.
+The project must first establish the exact missing historical NY17 dates required for `2025-01..2026-08` pilot target-month cells plus each component's necessary lookback.
 
 The approved resolution order is:
 
-1. enumerate required session dates/origin windows;
-2. query Twelve Data only for missing exact `XAU/USD`, `1min`, `16:59 America/New_York` bars;
-3. classify each requested date as `AVAILABLE`, `PROVIDER_NO_BAR`, `ENTITLEMENT_BLOCKED`, `REQUEST_ERROR` or another explicit fail-closed code;
-4. accept only exact valid bars;
-5. persist or archive with truthful retrieval timestamps, lineage and historical-reconstruction evidence labels;
-6. rerun the V1.45 historical-pilot readiness audit once implemented.
+1. run/freeze the V1.45 baseline readiness audit before backfill;
+2. enumerate required session dates/cell windows;
+3. query Twelve Data only for missing exact `XAU/USD`, `1min`, `16:59 America/New_York` bars;
+4. classify each requested date using the binding V1.45 exact-date acquisition codes;
+5. accept only exact valid bars or explicitly adjudicated provider no-bar dates;
+6. persist/archive with truthful retrieval timestamps, lineage and historical-reconstruction evidence labels;
+7. rerun the unchanged V1.45 historical-pilot readiness audit.
 
 No broad intraday cache expansion is required when a minimal exact-bar reconstruction is sufficient.
 
 ### Priority B — historical GVZ sleeve
 
-Historical `GVZ_CBOE` coverage required by the pilot must be completed from the governed Cboe official historical source.
+Historical `GVZ_CBOE` coverage required by the pilot must be completed from the governed Cboe official historical source, after the frozen baseline audit identifies the exact gap.
 
 Historical GVZ retrieval may support historical replay but may not be represented as if Gold Control had prospectively stored the observation at the original historical date.
 
@@ -581,9 +590,9 @@ Historical GVZ retrieval may support historical replay but may not be represente
 After Priority A/B:
 
 - close the outstanding 2026-August Patch replay proof if not already covered by an existing frozen contract/evidence artifact;
-- close the outstanding 2026-August BOCPD status under a separately explicit frozen-extension rule if permitted; otherwise retain `NOT_PROVEN`;
+- close the outstanding 2026-August BOCPD status under a separately explicit evaluation-only frozen-extension rule if permitted; otherwise retain `BLOCKED_CONTRACT`/`NOT_PROVEN`;
 - run/verify the outstanding source-bound August RW/Momentum historical replays;
-- verify the final retrospective VW origin required by `GOLD_PILOT_V1`.
+- verify the final retrospective VW target cell required by `GOLD_PILOT_V1`.
 
 No result-driven model redesign is part of these closure tasks.
 
@@ -663,15 +672,21 @@ unless and until V1.43/V1.44 audits prove otherwise at a later current state.
 
 The project is not blocked on designing another model or selector.
 
+Current V1.45 governance state:
+
+- `HISTORICAL_PILOT_READINESS_CONTRACT = FROZEN`
+- `HISTORICAL_PILOT_AUDITOR = NOT_YET_IMPLEMENTED`
+- `HISTORICAL_DATA_BACKFILL = NOT_YET_AUTHORIZED_BY_BASELINE_AUDIT`
+
 The next governed work is:
 
-1. create/freeze `GOLD_CONTROL_HISTORICAL_PILOT_READINESS_CONTRACT_V145_2026-09-08.md`;
-2. implement the read-only `tools/audit_historical_pilot_readiness_v145.py`;
-3. produce the exact `12 × 20` historical readiness matrix;
-4. resolve Priority A historical NY17 gaps under Section 7.2/12;
-5. resolve Priority B GVZ historical coverage;
-6. close remaining frozen-origin evidence gaps without retuning;
-7. freeze `GOLD_PILOT_V1` validation/contribution metrics before scoring uninspected frozen OOS results;
+1. implement/review/freeze the read-only `tools/audit_historical_pilot_readiness_v145.py` against the binding V1.45 readiness contract;
+2. produce and preserve the baseline `12 × 20 = 240` historical readiness-cell matrix;
+3. only after that baseline, resolve Priority A historical NY17 gaps using the exact recorded blocker list;
+4. resolve Priority B GVZ historical coverage using the exact recorded blocker list;
+5. close remaining frozen-origin evidence gaps without retuning;
+6. rerun the unchanged V1.45 readiness audit;
+7. freeze `GOLD_PILOT_V1` validation/contribution metrics before role-performance scoring;
 8. execute role-specific validation and contribution analysis;
 9. retain the architecture review as a post-pilot decision;
 10. move later genuinely unseen issuances to `PROSPECTIVE_SHADOW`.
