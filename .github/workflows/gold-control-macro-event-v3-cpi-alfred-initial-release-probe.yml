@@ -1,0 +1,35 @@
+name: Gold Control Macro V3 CPI ALFRED Initial Release Probe
+
+on:
+  push:
+    branches: [gold-control-macro-event-successor-v3]
+    paths: ['.github/workflows/gold-control-macro-event-v3-cpi-alfred-initial-release-probe.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    env:
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - name: Query initial releases only
+        run: |
+          python - <<'PY'
+          import json, os, requests
+          p={
+            'series_id':'CPIAUCSL','api_key':os.environ['FRED_API_KEY'],'file_type':'json',
+            'output_type':4,'observation_start':'2015-12-01','observation_end':'2026-08-01','limit':2000
+          }
+          r=requests.get('https://api.stlouisfed.org/fred/series/observations',params=p,timeout=60)
+          r.raise_for_status()
+          d=r.json(); obs=d.get('observations',[])
+          safe={'count':len(obs),'keys':sorted(obs[0].keys()) if obs else [],'first':obs[:3],'last':obs[-3:]}
+          print(json.dumps(safe,indent=2))
+          PY
