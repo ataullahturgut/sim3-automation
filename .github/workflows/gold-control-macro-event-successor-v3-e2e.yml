@@ -37,12 +37,13 @@ jobs:
       - name: Compile and run frozen V3 tests
         run: |
           python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_pipeline.py
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_pipeline_dbcompat.py
           pytest -q \
             gold_axis_2026/tests/test_macro_event_successor_v3_pipeline.py \
             gold_axis_2026/tests/test_macro_event_successor_v3_source_readiness.py \
             gold_axis_2026/tests/test_macro_event_successor_v3_fomc_source_readiness.py
       - name: Run historical end-to-end model and persist research evidence
-        run: python gold_axis_2026/data_pipeline/macro_event_successor_v3_pipeline.py
+        run: python gold_axis_2026/data_pipeline/macro_event_successor_v3_pipeline_dbcompat.py
       - name: Enforce governance and minimum output
         run: |
           python - <<'PY'
