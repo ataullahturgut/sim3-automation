@@ -20,6 +20,16 @@ def test_scope_is_frozen_to_employment_and_inflation_calendar_consensus():
     }
 
 
+def test_reference_month_suffix_normalization_is_narrow():
+    assert m.normalize_event_name("CPI (MoM) (Mar)") == "CPI (MoM)"
+    assert m.normalize_event_name("Core CPI (MoM) (Aug)") == "Core CPI (MoM)"
+    assert m.normalize_event_name("Nonfarm Payrolls (Aug)") == "Nonfarm Payrolls"
+    # Do not strip arbitrary parentheses or broaden the event identity.
+    assert m.normalize_event_name("CPI (YoY) (Mar)") == "CPI (YoY)"
+    assert m.normalize_event_name("Cleveland CPI (MoM) (Mar)") == "Cleveland CPI (MoM)"
+    assert m.normalize_event_name("CPI (MoM) final") == "CPI (MoM) final"
+
+
 def test_parse_number_units():
     assert m.parse_number("0.3%") == (0.3, "percent")
     assert m.parse_number("55K") == (55.0, "thousand")
