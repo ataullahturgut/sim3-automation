@@ -1,0 +1,82 @@
+name: Gold Control Market Shock V2 Robustness Audit
+
+on:
+  push:
+    branches:
+      - gold-control-market-shock-challenger-v2
+    paths:
+      - '.github/workflows/gold-control-market-shock-v2-robustness-audit.yml'
+      - 'gold_axis_2026/tools/market_shock_v2_robustness_audit.py'
+      - 'gold_axis_2026/GOLD_CONTROL_MARKET_SHOCK_V2_ROBUSTNESS_CONTRACT_2026-09-08.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-market-shock-v2-robustness-audit
+  cancel-in-progress: false
+
+env:
+  NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+  GOLD_CODE_SHA: ${{ github.sha }}
+  PYTHONPATH: ${{ github.workspace }}
+  ROBUSTNESS_OUTPUT: market_shock_v2_robustness_report.json
+
+jobs:
+  robustness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-market-shock-challenger-v2
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install audit runtime
+        run: pip install -q pandas numpy scipy requests pytest 'psycopg[binary]'
+      - name: Require Neon credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Compile V2 robustness audit
+        run: |
+          python -m py_compile gold_axis_2026/tools/market_shock_challenger_v2.py
+          python -m py_compile gold_axis_2026/tools/market_shock_v2_robustness_audit.py
+      - name: Run deterministic V2 unit suite unchanged
+        run: pytest -q gold_axis_2026/tests/test_market_shock_challenger_v2.py
+      - name: Run pre-registered robustness audit
+        id: audit
+        shell: bash
+        run: |
+          set +e
+          python -m gold_axis_2026.tools.market_shock_v2_robustness_audit
+          rc=$?
+          echo "audit_exit_code=$rc" >> "$GITHUB_OUTPUT"
+          test -f market_shock_v2_robustness_report.json || exit 20
+          python - <<'PY'
+          import json
+          d=json.load(open('market_shock_v2_robustness_report.json',encoding='utf-8'))
+          print(json.dumps({
+              'robustness_gate': d.get('robustness_gate'),
+              'repository_cleanup_readiness': d.get('repository_cleanup_readiness'),
+              'robustness_checks': d.get('robustness_checks'),
+              'base_v2_research_gates': (d.get('base_v2_research_gate_recheck') or {}).get('gates'),
+              'R3_seed_min_1p5': (d.get('R3_seed_stability') or {}).get('min_1p5_power'),
+              'R3_seed_min_2p0': (d.get('R3_seed_stability') or {}).get('min_2p0_power'),
+              'R4_regime_min_1p5': (d.get('R4_volatility_regime') or {}).get('min_regime_1p5_power'),
+              'R4_regime_min_2p0': (d.get('R4_volatility_regime') or {}).get('min_regime_2p0_power'),
+              'R5_max_direction_difference': (d.get('R5_direction_symmetry') or {}).get('max_abs_difference'),
+              'R7_noise_max_signal_rate': (d.get('R7_microstructure_noise_stress') or {}).get('max_noise_signal_rate'),
+              'R7_noise_max_inflation': (d.get('R7_microstructure_noise_stress') or {}).get('max_inflation_multiple'),
+          },indent=2,sort_keys=True))
+          if d.get('status') == 'BLOCKED_EXECUTION':
+              raise SystemExit(21)
+          PY
+      - name: Upload robustness evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-market-shock-v2-robustness-audit
+          path: market_shock_v2_robustness_report.json
+          if-no-files-found: error
