@@ -1,0 +1,67 @@
+name: Gold Control Macro Event Successor V3 E2E
+
+on:
+  push:
+    branches:
+      - gold-control-macro-event-successor-v3
+    paths:
+      - '.github/workflows/gold-control-macro-event-successor-v3-e2e.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+      CME_FEDWATCH_API_URL: ${{ secrets.CME_FEDWATCH_API_URL }}
+      CME_FEDWATCH_API_KEY: ${{ secrets.CME_FEDWATCH_API_KEY }}
+      CME_FEDWATCH_SCHEMA_VERSION: ${{ secrets.CME_FEDWATCH_SCHEMA_VERSION }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install pytest requests beautifulsoup4 'psycopg[binary]'
+      - name: Require governed core credentials
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$FRED_API_KEY"
+      - name: Compile and run frozen V3 tests
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_pipeline.py
+          pytest -q \
+            gold_axis_2026/tests/test_macro_event_successor_v3_pipeline.py \
+            gold_axis_2026/tests/test_macro_event_successor_v3_source_readiness.py \
+            gold_axis_2026/tests/test_macro_event_successor_v3_fomc_source_readiness.py
+      - name: Run historical end-to-end model and persist research evidence
+        run: python gold_axis_2026/data_pipeline/macro_event_successor_v3_pipeline.py
+      - name: Enforce governance and minimum output
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_successor_v3_result.json',encoding='utf-8'))
+          assert d['engine_id']=='MACRO_EVENT_SUCCESSOR_V3', d
+          assert d['production_authority'] is False, d
+          assert d['market_shock_threshold_changed'] is False, d
+          assert d['raw_market_shock_episode_changed'] is False, d
+          assert d['employment']['raw_events'] >= 100, d
+          assert d['employment']['scored_events'] >= 70, d
+          assert d['inflation']['complete_events'] >= 90, d
+          assert d['inflation']['scored_events'] >= 60, d
+          assert d['status'].startswith('PASS_EMPLOYMENT_INFLATION_E2E'), d
+          print('MACRO_EVENT_V3_E2E_GOVERNANCE_PASS')
+          PY
+      - name: Upload immutable result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-successor-v3-e2e-result
+          path: macro_event_successor_v3_result.json
+          if-no-files-found: error
