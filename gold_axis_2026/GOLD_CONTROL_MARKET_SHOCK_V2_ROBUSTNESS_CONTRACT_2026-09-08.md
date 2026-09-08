@@ -119,3 +119,27 @@ This cleanup status does **not** authorize:
 - rewriting historical evidence.
 
 If any R1–R6 gate FAILS, V1 files are not deleted in the same change set and the robustness defect must be investigated first.
+
+## 7. Post-audit execution record — 2026-09-08
+
+This section records execution after the pre-registered gates above were frozen; it does not alter any gate or parameter.
+
+Robustness workflow run `34203093319` completed successfully on commit `0be8eefc313235da0b1095c6f5cca9cff9a5326b` using the complete 482,734-row Neon 5-minute research cache.
+
+Results:
+
+- R1 deterministic rerun: `PASS`;
+- R2 prefix invariance: `PASS`;
+- R3 20-seed synthetic stability: `PASS`; minimum 1.50% power `0.9716666666666667`, minimum 2.00% power `0.9883333333333333`;
+- R4 volatility-regime robustness: `PASS`; minimum regime 1.50% power `0.9430258197595847`, minimum regime 2.00% power `0.9800483675937122`;
+- R5 direction symmetry: `PASS`; maximum absolute UP/DOWN power difference `0.0007824447842941229`;
+- R6 gap safety: `PASS`;
+- R7 microstructure-noise stress remains diagnostic: maximum stressed signal rate `0.013977309101255468`, maximum inflation multiple `1.6666666666666665`, formal false-positive claim `NOT_PROVEN`.
+
+Overall robustness gate: `PASS`. Repository cleanup readiness: `SOLE_CURRENT_MARKET_SHOCK_RESEARCH_IMPLEMENTATION_READY`.
+
+The original V2 research acceptance gate remains `FAIL` because the 2026 real-history shock-bar rate is `0.010278479211864708` against the frozen strict `<0.01` gate and the maximum no-injection sampled alert rate is exactly `0.01` against the frozen strict `<0.01` gate. These thresholds were not changed after seeing results.
+
+Following the robustness PASS, the rejected V1 implementation, V1 unit test, two V1 workflows, V1 contract and duplicate V1 rejection note were removed from the current `gold-control-market-shock-challenger-v2` tree. Git history remains the immutable audit trail. The V2 contract continues to record that V1 was rejected for the primary Lee–Mykland formula defect.
+
+Production status remains `BLOCKED_RESEARCH_CHALLENGER_ONLY`; no runtime, UI, selector, action mapping, production Neon write, canonical merge or deployment promotion is authorized by this cleanup.
