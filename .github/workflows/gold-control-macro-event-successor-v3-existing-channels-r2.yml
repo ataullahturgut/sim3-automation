@@ -41,7 +41,35 @@ jobs:
           python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_inflation_channel_backfill_r2.py
           python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_existing_channels_r2.py
           pytest -q gold_axis_2026/tests/test_macro_event_successor_v3_existing_channels_r2.py
+      - name: Check existing governed Inflation channel backfill
+        id: inflation_source
+        run: |
+          python - <<'PY'
+          import json, os
+          import psycopg
+          from psycopg.rows import dict_row
+          pipeline='MACRO_EVENT_SUCCESSOR_V3_INFLATION_EXISTING_CHANNEL_R2_2026-09-08'
+          with psycopg.connect(os.environ['NEON_DATABASE_URL']) as conn:
+              with conn.cursor(row_factory=dict_row) as cur:
+                  cur.execute("""select run_id,observations_written,metadata from retrieval_runs
+                                 where pipeline_version=%s and status='SUCCESS' and observations_written>0
+                                 order by finished_at desc limit 1""",(pipeline,))
+                  row=cur.fetchone()
+          if row:
+              meta=row['metadata'] or {}
+              out={'status':'PASS_EXISTING_CHANNEL_INFLATION_BACKFILL','run_id':str(row['run_id']),
+                   'complete_case_months':int(meta.get('complete_case_months',0)),
+                   'expected_months':int(meta.get('expected_months',0)),
+                   'excluded':meta.get('excluded',{}),'observations_written':int(row['observations_written']),
+                   'source_channel_reuse':True,'reused_existing_backfill':True,
+                   'model_score_run':False,'market_shock_changed':False,'production_authority':False}
+              open('macro_event_v3_inflation_channel_backfill_r2_result.json','w',encoding='utf-8').write(json.dumps(out,indent=2,sort_keys=True))
+              with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf-8') as f: f.write('needs_backfill=false\n')
+          else:
+              with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf-8') as f: f.write('needs_backfill=true\n')
+          PY
       - name: Backfill Inflation through existing Gold Control channels
+        if: steps.inflation_source.outputs.needs_backfill == 'true'
         run: python gold_axis_2026/data_pipeline/macro_event_successor_v3_inflation_channel_backfill_r2.py
       - name: Score V3 from governed Neon channels only
         run: python gold_axis_2026/data_pipeline/macro_event_successor_v3_existing_channels_r2.py
