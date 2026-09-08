@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import math
+
 import pandas as pd
 
 import market_shock_macro_event_joint_audit_v1 as audit
@@ -37,7 +39,27 @@ def verify_cache_lineage_fixed(conn) -> dict:
     return out
 
 
+def sanitize_nonfinite(x):
+    if isinstance(x, float) and not math.isfinite(x):
+        return "INF" if x > 0 else "-INF" if x < 0 else "NaN"
+    if isinstance(x, dict):
+        return {k: sanitize_nonfinite(v) for k, v in x.items()}
+    if isinstance(x, list):
+        return [sanitize_nonfinite(v) for v in x]
+    if isinstance(x, tuple):
+        return tuple(sanitize_nonfinite(v) for v in x)
+    return x
+
+
 audit.verify_cache_lineage = verify_cache_lineage_fixed
+_original_dumps = audit.json.dumps
+
+
+def safe_dumps(obj, *args, **kwargs):
+    return _original_dumps(sanitize_nonfinite(obj), *args, **kwargs)
+
+
+audit.json.dumps = safe_dumps
 
 if __name__ == "__main__":
     raise SystemExit(audit.main())
