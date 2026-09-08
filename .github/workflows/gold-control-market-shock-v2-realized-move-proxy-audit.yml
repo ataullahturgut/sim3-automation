@@ -1,0 +1,124 @@
+name: Gold Control Market Shock V2 Realized Move Proxy Audit
+
+on:
+  push:
+    branches:
+      - gold-control-market-shock-challenger-v2
+    paths:
+      - '.github/workflows/gold-control-market-shock-v2-realized-move-proxy-audit.yml'
+      - 'gold_axis_2026/tools/market_shock_v2_realized_move_proxy_audit.py'
+      - 'gold_axis_2026/GOLD_CONTROL_MARKET_SHOCK_V2_REALIZED_MOVE_PROXY_AUDIT_CONTRACT_2026-09-08.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-market-shock-v2-realized-move-proxy-audit
+  cancel-in-progress: false
+
+env:
+  NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+  PYTHONPATH: ${{ github.workspace }}
+  GOLD_CODE_SHA: ${{ github.sha }}
+
+jobs:
+  sequential-proxy-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-market-shock-challenger-v2
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install audit runtime
+        run: pip install -q pandas numpy scipy requests pytest 'psycopg[binary]'
+      - name: Require Neon credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Compile audit
+        run: |
+          python -m py_compile gold_axis_2026/tools/market_shock_challenger_v2.py
+          python -m py_compile gold_axis_2026/tools/market_shock_v2_realized_move_proxy_audit.py
+      - name: Run unchanged V2 deterministic unit suite
+        run: pytest -q gold_axis_2026/tests/test_market_shock_challenger_v2.py
+      - name: Sequential proxy audit 2026 then 2025 then 2024
+        id: audit
+        shell: bash
+        run: |
+          set +e
+          python -m gold_axis_2026.tools.market_shock_v2_realized_move_proxy_audit \
+            --year 2026 --output market_shock_v2_proxy_2026.json
+          rc2026=$?
+          status2026=$(python - <<'PY'
+          import json
+          d=json.load(open('market_shock_v2_proxy_2026.json',encoding='utf-8'))
+          print(d.get('gate',{}).get('status',d.get('status','UNKNOWN')))
+          PY
+          )
+          echo "2026_status=$status2026" >> "$GITHUB_OUTPUT"
+
+          if [ "$status2026" != "PASS_PROXY_VALIDATION" ]; then
+            echo "Sequential stop after 2026: $status2026"
+            exit 0
+          fi
+
+          python -m gold_axis_2026.tools.market_shock_v2_realized_move_proxy_audit \
+            --year 2025 --output market_shock_v2_proxy_2025.json
+          rc2025=$?
+          status2025=$(python - <<'PY'
+          import json
+          d=json.load(open('market_shock_v2_proxy_2025.json',encoding='utf-8'))
+          print(d.get('gate',{}).get('status',d.get('status','UNKNOWN')))
+          PY
+          )
+          echo "2025_status=$status2025" >> "$GITHUB_OUTPUT"
+
+          if [ "$status2025" != "PASS_PROXY_VALIDATION" ]; then
+            echo "Sequential stop after 2025: $status2025"
+            exit 0
+          fi
+
+          python -m gold_axis_2026.tools.market_shock_v2_realized_move_proxy_audit \
+            --year 2024 --output market_shock_v2_proxy_2024.json
+          rc2024=$?
+          status2024=$(python - <<'PY'
+          import json
+          d=json.load(open('market_shock_v2_proxy_2024.json',encoding='utf-8'))
+          print(d.get('gate',{}).get('status',d.get('status','UNKNOWN')))
+          PY
+          )
+          echo "2024_status=$status2024" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Print concise audit result
+        if: always()
+        run: |
+          python - <<'PY'
+          import glob,json,os
+          for p in sorted(glob.glob('market_shock_v2_proxy_*.json'), reverse=True):
+              d=json.load(open(p,encoding='utf-8'))
+              e=d.get('episode_results',{})
+              c=d.get('matched_controls',{})
+              print(json.dumps({
+                  'year':d.get('year'),
+                  'status':d.get('gate',{}).get('status',d.get('status')),
+                  'episodes':e.get('episodes'),
+                  'supported':e.get('supported'),
+                  'unsupported':e.get('unsupported'),
+                  'proxy_precision':e.get('proxy_precision'),
+                  'proxy_false_alarm_rate':e.get('proxy_false_alarm_rate'),
+                  'wilson_95_low':e.get('wilson_95_low'),
+                  'control_support_rate':c.get('support_rate'),
+                  'enrichment_ratio':c.get('enrichment_ratio'),
+                  'control_completion_rate':c.get('completion_rate'),
+              },sort_keys=True))
+          PY
+      - name: Upload sequential proxy evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-market-shock-v2-realized-move-proxy-audit
+          path: market_shock_v2_proxy_*.json
+          if-no-files-found: error
