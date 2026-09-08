@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/gold-control-market-shock-macro-event-joint-audit-v1.yml'
       - 'gold_axis_2026/tools/market_shock_macro_event_joint_audit_v1.py'
+      - 'gold_axis_2026/tools/market_shock_macro_event_joint_audit_v1_runner.py'
       - 'gold_axis_2026/GOLD_CONTROL_MARKET_SHOCK_MACRO_EVENT_JOINT_AUDIT_V1_PREREG_2026-09-08.md'
   workflow_dispatch:
 
@@ -44,10 +45,12 @@ jobs:
           python -m py_compile "$MARKET_SHOCK_MODULE_DIR/market_shock_challenger_v2.py" "$MARKET_SHOCK_MODULE_DIR/market_shock_challenger_v3.py"
 
       - name: Compile joint audit
-        run: python -m py_compile gold_axis_2026/tools/market_shock_macro_event_joint_audit_v1.py
+        run: |
+          python -m py_compile gold_axis_2026/tools/market_shock_macro_event_joint_audit_v1.py
+          python -m py_compile gold_axis_2026/tools/market_shock_macro_event_joint_audit_v1_runner.py
 
       - name: Run frozen joint audit
-        run: python gold_axis_2026/tools/market_shock_macro_event_joint_audit_v1.py
+        run: python gold_axis_2026/tools/market_shock_macro_event_joint_audit_v1_runner.py
 
       - name: Enforce research-only governance
         run: |
