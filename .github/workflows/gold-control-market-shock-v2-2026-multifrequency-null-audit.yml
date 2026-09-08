@@ -1,0 +1,59 @@
+name: Gold Control Market Shock V2 2026 Multi-Frequency Null Audit
+
+on:
+  push:
+    branches:
+      - gold-control-market-shock-challenger-v2
+    paths:
+      - '.github/workflows/gold-control-market-shock-v2-2026-multifrequency-null-audit.yml'
+      - 'gold_axis_2026/tools/market_shock_v2_2026_multifrequency_null_audit.py'
+      - 'gold_axis_2026/GOLD_CONTROL_MARKET_SHOCK_V2_2026_MULTIFREQUENCY_NULL_AUDIT_CONTRACT.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+  PYTHONPATH: ${{ github.workspace }}
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-market-shock-challenger-v2
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install audit runtime
+        run: pip install -q pandas numpy scipy requests pytest 'psycopg[binary]'
+      - name: Require Neon credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Compile audit
+        run: python -m py_compile gold_axis_2026/tools/market_shock_v2_2026_multifrequency_null_audit.py
+      - name: Preserve V2 unit tests
+        run: pytest -q gold_axis_2026/tests/test_market_shock_challenger_v2.py
+      - name: Run matched-control sanity audit
+        run: |
+          python -m gold_axis_2026.tools.market_shock_v2_2026_multifrequency_null_audit \
+            --output market_shock_v2_2026_multifrequency_null_audit.json
+      - name: Print result
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('market_shock_v2_2026_multifrequency_null_audit.json',encoding='utf-8'))
+          print(json.dumps({k:d.get(k) for k in ('status','observed','controls','comparison','governance')},indent=2,sort_keys=True))
+          if d.get('status') == 'BLOCKED_EXECUTION':
+              raise SystemExit(21)
+          PY
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-market-shock-v2-2026-multifrequency-null-audit
+          path: market_shock_v2_2026_multifrequency_null_audit.json
+          if-no-files-found: error
