@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install requests beautifulsoup4
-      - name: Probe one-year calendar range
+      - name: Probe historical CPI identities
         run: |
           python - <<'PY'
           import json,re,requests
@@ -25,19 +25,21 @@ jobs:
           base='https://www.investing.com/economic-calendar/'
           filt=base+'Service/getCalendarFilteredData'
           h={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131 Safari/537.36','Accept-Language':'en-US,en;q=0.9','X-Requested-With':'XMLHttpRequest','Referer':base,'Origin':'https://www.investing.com'}
-          s=requests.Session(); r=s.get(base,headers=h,timeout=60); print('base',r.status_code); r.raise_for_status()
+          s=requests.Session(); r=s.get(base,headers=h,timeout=60); r.raise_for_status()
           soup=BeautifulSoup(r.text,'html.parser'); tz='55'; tf='timeRemain'
           sel=soup.find('select',{'id':'timeZone'}); opt=sel.find('option',selected=True) if sel else None
           if opt and opt.get('value'): tz=str(opt['value'])
           chk=soup.find('input',{'name':'timeFilter','checked':True})
           if chk and chk.get('value'): tf=str(chk['value'])
           payload=[('dateFrom','2016-01-01'),('dateTo','2016-12-31'),('timeZone',tz),('timeFilter',tf),('currentTab','custom'),('submitFilters','1'),('limit_from','0')]
-          rr=s.post(filt,data=payload,headers=h,timeout=60); print('post',rr.status_code,'len',len(rr.text)); rr.raise_for_status(); body=rr.json(); html=str(body.get('data') or '')
+          rr=s.post(filt,data=payload,headers=h,timeout=60); rr.raise_for_status(); html=str(rr.json().get('data') or '')
           sp=BeautifulSoup('<table>'+html+'</table>','html.parser'); rows=[]
           for tr in sp.find_all('tr'):
-            attr=str(tr.get('event_attr_id') or tr.get('event_attr_ID') or '')
-            if attr not in {'69','56'}: continue
-            cell=tr.select_one('td.event'); fore=tr.select_one('td.fore')
-            rows.append({'attr':attr,'name':' '.join(cell.get_text(' ',strip=True).split()) if cell else None,'forecast':fore.get_text(' ',strip=True) if fore else None,'datetime':tr.get('data-event-datetime'),'id':tr.get('id')})
-          print(json.dumps({'matched':len(rows),'first':rows[:5],'last':rows[-5:]},indent=2))
+            cell=tr.select_one('td.event')
+            if not cell: continue
+            name=' '.join(cell.get_text(' ',strip=True).split())
+            if 'CPI' not in name.upper() and 'CONSUMER PRICE' not in name.upper(): continue
+            fore=tr.select_one('td.fore'); act=tr.select_one('td.act'); prev=tr.select_one('td.prev')
+            rows.append({'attr':str(tr.get('event_attr_id') or tr.get('event_attr_ID') or ''),'name':name,'forecast':fore.get_text(' ',strip=True) if fore else None,'actual':act.get_text(' ',strip=True) if act else None,'previous':prev.get_text(' ',strip=True) if prev else None,'datetime':tr.get('data-event-datetime'),'id':tr.get('id')})
+          print(json.dumps({'matched':len(rows),'rows':rows[:80]},indent=2))
           PY
