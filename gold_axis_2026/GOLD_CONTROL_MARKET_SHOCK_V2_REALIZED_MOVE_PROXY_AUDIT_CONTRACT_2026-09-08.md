@@ -40,6 +40,7 @@ For each signal episode, create five deterministic matched control windows from 
 
 - same number of 5-minute bars as the signal episode;
 - no Market Shock V2 signal bar inside the control window;
+- every control window must be at least 60 minutes away from every Market Shock V2 signal bar, so the same shock cannot contaminate the background control;
 - no >10-minute gap inside the control window;
 - the raw-return horizon required by the signal episode type must be available;
 - deterministic seed `20260908 + year`;
