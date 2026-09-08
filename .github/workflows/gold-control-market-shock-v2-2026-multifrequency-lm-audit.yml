@@ -1,0 +1,67 @@
+name: Gold Control Market Shock V2 2026 Multi-Frequency LM Audit
+
+on:
+  push:
+    branches:
+      - gold-control-market-shock-challenger-v2
+    paths:
+      - '.github/workflows/gold-control-market-shock-v2-2026-multifrequency-lm-audit.yml'
+      - 'gold_axis_2026/tools/market_shock_v2_2026_multifrequency_lm_audit.py'
+      - 'gold_axis_2026/GOLD_CONTROL_MARKET_SHOCK_V2_2026_MULTIFREQUENCY_LM_AUDIT_CONTRACT.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+  GOLD_CODE_SHA: ${{ github.sha }}
+  PYTHONPATH: ${{ github.workspace }}
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-market-shock-challenger-v2
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install audit runtime
+        run: pip install -q pandas numpy scipy requests pytest 'psycopg[binary]'
+      - name: Require Neon credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Compile audit
+        run: python -m py_compile gold_axis_2026/tools/market_shock_v2_2026_multifrequency_lm_audit.py
+      - name: Preserve V2 deterministic unit suite
+        run: pytest -q gold_axis_2026/tests/test_market_shock_challenger_v2.py
+      - name: Run 2026 Jan-May multi-frequency audit
+        run: |
+          python -m gold_axis_2026.tools.market_shock_v2_2026_multifrequency_lm_audit \
+            --output market_shock_v2_2026_multifrequency_lm_audit.json
+      - name: Print concise result
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('market_shock_v2_2026_multifrequency_lm_audit.json',encoding='utf-8'))
+          print(json.dumps({
+            'status':d.get('status'),
+            'scope':d.get('scope'),
+            'frequency_models':d.get('frequency_models'),
+            'all_lm_episodes':d.get('all_lm_episodes'),
+            'prior_unconfirmed_target':d.get('prior_unconfirmed_target'),
+            'interpretation_contract':d.get('interpretation_contract')
+          },indent=2,sort_keys=True))
+          if d.get('status') == 'BLOCKED_EXECUTION':
+              raise SystemExit(21)
+          PY
+      - name: Upload multi-frequency evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-market-shock-v2-2026-multifrequency-lm-audit
+          path: market_shock_v2_2026_multifrequency_lm_audit.json
+          if-no-files-found: error
