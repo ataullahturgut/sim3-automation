@@ -1,0 +1,40 @@
+name: Gold Control Macro V3 Investing Event History Probe
+
+on:
+  push:
+    branches: [gold-control-macro-event-successor-v3]
+    paths: ['.github/workflows/gold-control-macro-v3-investing-event-history-probe.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4
+      - name: Probe direct event history
+        run: |
+          python - <<'PY'
+          import json,requests
+          from bs4 import BeautifulSoup
+          h={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131 Safari/537.36','Accept-Language':'en-US,en;q=0.9','X-Requested-With':'XMLHttpRequest','Referer':'https://www.investing.com/economic-calendar/','Origin':'https://www.investing.com','Accept':'application/json, text/javascript, */*; q=0.01'}
+          s=requests.Session()
+          for eid in ('69','56'):
+            page=f'https://www.investing.com/economic-calendar/--{eid}'
+            r=s.get(page,headers=h,timeout=60); print('page',eid,r.status_code,len(r.text)); r.raise_for_status()
+            for ts in ('','1','2'):
+              data={'eventID':eid,'event_attr_ID':eid,'event_timestamp':ts,'is_speech':'0'}
+              rr=s.post('https://www.investing.com/economic-calendar/more-history',data=data,headers={**h,'Referer':page},timeout=60)
+              print('history',eid,'ts',repr(ts),'status',rr.status_code,'len',len(rr.text),'type',rr.headers.get('content-type'))
+              if rr.status_code!=200:
+                print(rr.text[:500]); continue
+              try:
+                body=rr.json(); print('keys',sorted(body.keys()) if isinstance(body,dict) else type(body).__name__); print(json.dumps(body,default=str)[:3000])
+              except Exception:
+                print(rr.text[:3000])
+          PY
