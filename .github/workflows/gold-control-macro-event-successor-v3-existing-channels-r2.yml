@@ -1,0 +1,73 @@
+name: Gold Control Macro Event Successor V3 Existing Channels R2
+
+on:
+  push:
+    branches: [gold-control-macro-event-successor-v3]
+    paths:
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_inflation_channel_backfill_r2.py'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_existing_channels_r2.py'
+      - 'gold_axis_2026/tests/test_macro_event_successor_v3_existing_channels_r2.py'
+      - '.github/workflows/gold-control-macro-event-successor-v3-existing-channels-r2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  existing-channels-r2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+      CME_FEDWATCH_API_URL: ${{ secrets.CME_FEDWATCH_API_URL }}
+      CME_FEDWATCH_API_KEY: ${{ secrets.CME_FEDWATCH_API_KEY }}
+      CME_FEDWATCH_SCHEMA_VERSION: ${{ secrets.CME_FEDWATCH_SCHEMA_VERSION }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install pytest requests beautifulsoup4 'psycopg[binary]'
+      - name: Require existing governed channel credentials
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$FRED_API_KEY"
+      - name: Compile and test source/model separation
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_inflation_channel_backfill_r2.py
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_existing_channels_r2.py
+          pytest -q gold_axis_2026/tests/test_macro_event_successor_v3_existing_channels_r2.py
+      - name: Backfill Inflation through existing Gold Control channels
+        run: python gold_axis_2026/data_pipeline/macro_event_successor_v3_inflation_channel_backfill_r2.py
+      - name: Score V3 from governed Neon channels only
+        run: python gold_axis_2026/data_pipeline/macro_event_successor_v3_existing_channels_r2.py
+      - name: Enforce result and governance
+        run: |
+          python - <<'PY'
+          import json
+          b=json.load(open('macro_event_v3_inflation_channel_backfill_r2_result.json',encoding='utf-8'))
+          r=json.load(open('macro_event_successor_v3_existing_channels_r2_result.json',encoding='utf-8'))
+          assert b['status']=='PASS_EXISTING_CHANNEL_INFLATION_BACKFILL', b
+          assert b['source_channel_reuse'] is True, b
+          assert b['production_authority'] is False, b
+          assert r['status']=='PASS_EMPLOYMENT_INFLATION_EXISTING_CHANNELS_FOMC_BLOCKED', r
+          assert r['model_layer_external_http_calls'] is False, r
+          assert r['employment']['raw_events']==126, r
+          assert r['employment']['scored_events']==102, r
+          assert r['inflation']['raw_events']>24, r
+          assert r['market_shock_threshold_changed'] is False, r
+          assert r['raw_market_shock_episode_changed'] is False, r
+          assert r['production_authority'] is False, r
+          print('MACRO_EVENT_V3_EXISTING_CHANNELS_R2_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-successor-v3-existing-channels-r2
+          path: |
+            macro_event_v3_inflation_channel_backfill_r2_result.json
+            macro_event_successor_v3_existing_channels_r2_result.json
+          if-no-files-found: error
