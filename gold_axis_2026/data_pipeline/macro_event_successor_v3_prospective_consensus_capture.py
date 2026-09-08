@@ -27,6 +27,13 @@ FAMILY_EVENTS = {
     },
 }
 
+# Investing appends the reference month to current-calendar event labels, e.g.
+# "CPI (MoM) (Mar)". V3 normalizes only this terminal month suffix; it does
+# not fuzzy-match, rename event families, or broaden scope.
+_REFERENCE_MONTH_SUFFIX = re.compile(
+    r"\s+\((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\)$"
+)
+
 
 @dataclass(frozen=True)
 class ConsensusSnapshot:
@@ -79,6 +86,10 @@ def parse_number(text: str) -> tuple[float | None, str | None]:
         return None, None
 
 
+def normalize_event_name(name: str) -> str:
+    return _REFERENCE_MONTH_SUFFIX.sub("", " ".join(name.split())).strip()
+
+
 def _defaults(session: requests.Session) -> tuple[str, str]:
     r = session.get(BASE, headers=headers(), timeout=(10, 40))
     r.raise_for_status()
@@ -90,19 +101,21 @@ def _defaults(session: requests.Session) -> tuple[str, str]:
         selected = select.find("option", selected=True)
         if selected and selected.get("value"):
             tz = str(selected["value"])
-    checked = soup.find("input", {"name": "timeFilter", "checked": True})
+    checked = soup.find("input", {"name": "timeFilter", "checked": True)
     if checked and checked.get("value"):
         time_filter = str(checked["value"])
     return tz, time_filter
 
 
 def _event_name(row) -> str:
-    cell = row.find("td", class_=lambda c: c and "event" in str(c).split())
-    return " ".join(cell.get_text(" ", strip=True).split()) if cell else ""
+    cell = row.select_one("td.event")
+    if not cell:
+        return ""
+    return normalize_event_name(cell.get_text(" ", strip=True))
 
 
 def _currency(row) -> str | None:
-    cell = row.find("td", class_=lambda c: c and "flagCur" in str(c).split())
+    cell = row.select_one("td.flagCur")
     if not cell:
         return None
     text = " ".join(cell.get_text(" ", strip=True).split())
@@ -111,7 +124,7 @@ def _currency(row) -> str | None:
 
 
 def _forecast_text(row) -> str:
-    cell = row.find("td", class_=lambda c: c and "fore" in str(c).split())
+    cell = row.select_one("td.fore")
     return " ".join(cell.get_text(" ", strip=True).split()) if cell else ""
 
 
