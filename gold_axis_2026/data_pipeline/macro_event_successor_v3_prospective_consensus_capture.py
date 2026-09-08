@@ -101,7 +101,7 @@ def _defaults(session: requests.Session) -> tuple[str, str]:
         selected = select.find("option", selected=True)
         if selected and selected.get("value"):
             tz = str(selected["value"])
-    checked = soup.find("input", {"name": "timeFilter", "checked": True)
+    checked = soup.find("input", {"name": "timeFilter", "checked": True})
     if checked and checked.get("value"):
         time_filter = str(checked["value"])
     return tz, time_filter
