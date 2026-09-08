@@ -1,0 +1,61 @@
+name: Gold Control Macro Event V3 Prospective CPI Capture
+
+on:
+  push:
+    branches:
+      - gold-control-macro-event-successor-v3
+    paths:
+      - '.github/workflows/gold-control-macro-event-successor-v3-prospective-cpi-capture.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install pytest requests beautifulsoup4
+      - name: Compile and unit test prospective capture contract
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_prospective_consensus_capture.py
+          pytest -q gold_axis_2026/tests/test_macro_event_successor_v3_prospective_consensus_capture.py
+      - name: Capture Sep-11 CPI/Core CPI consensus before official BLS release
+        run: |
+          python gold_axis_2026/data_pipeline/macro_event_successor_v3_prospective_consensus_capture.py \
+            --family INFLATION \
+            --event-date 2026-09-11 \
+            --official-release-at 2026-09-11T08:30:00-04:00 \
+            --out macro_event_successor_v3_cpi_2026_09_11_pre_release_capture.json
+          cat macro_event_successor_v3_cpi_2026_09_11_pre_release_capture.json
+      - name: Enforce prospective-only semantics
+        run: |
+          python - <<'PY'
+          import json
+          p='macro_event_successor_v3_cpi_2026_09_11_pre_release_capture.json'
+          d=json.load(open(p, encoding='utf-8'))
+          assert d['engine_id']=='MACRO_EVENT_SUCCESSOR_V3', d
+          assert d['family']=='INFLATION', d
+          assert d['capture_before_release'] is True, d
+          assert d['historical_backdating'] is False, d
+          assert d['production_db_write'] is False, d
+          assert d['market_shock_threshold_changed'] is False, d
+          assert d['raw_market_shock_episode_changed'] is False, d
+          # A missing provider forecast is an evidence result, never silently filled.
+          assert d['status'] in {'PASS_PROSPECTIVE_PRE_RELEASE_CAPTURE','BLOCKED_INCOMPLETE_PROSPECTIVE_CAPTURE'}, d
+          print('MACRO_EVENT_V3_PROSPECTIVE_CAPTURE_GOVERNANCE_PASS')
+          PY
+      - name: Upload immutable run artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-v3-cpi-2026-09-11-pre-release-capture
+          path: macro_event_successor_v3_cpi_2026_09_11_pre_release_capture.json
+          if-no-files-found: error
