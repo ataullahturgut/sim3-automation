@@ -1,0 +1,37 @@
+{
+  "inventory_id": "GOLD_CONTROL_HISTORICAL_GAP_INVENTORY_V145",
+  "production_write": "NONE",
+  "performance_scoring": false,
+  "ny17": {
+    "required_calendar_range": "2024-09-01..2026-08-31",
+    "candidate_calendar_dates": 730,
+    "already_canonical_dates": 46,
+    "candidate_dates_requiring_probe_or_upgrade": 684,
+    "available_cache_exact_close_only": 412,
+    "unresolved_exact_date_probe_required": 242,
+    "entitlement_blocked": 30,
+    "exact_write_count": "NOT_PROVEN_UNTIL_684_EXACT_DATE_PROBES_COMPLETE",
+    "provider_quota_evidence": "xau_intraday_research_cache_batches batch_id=43: 801 credits used / daily limit 800"
+  },
+  "gvz": {
+    "official_source_url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/GVZ_History.csv",
+    "official_payload_sha256": "7a2acc2e858d48fc02b7e4925f88df0716fba0a69e7d64c7d94039ed49771fd3",
+    "missing_rows_to_write": 295,
+    "missing_start": "2025-01-02",
+    "missing_end": "2026-03-09",
+    "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+    "prospective_claim": false
+  },
+  "artifact_sha256": {
+    "historical_gap_inventory_v145.json": "8afc902f47a2110b7da84f2b2438e73a929de1f587644b1465b89fed043a9edc",
+    "historical_gvz_gap_inventory_v145.csv": "7b55f5e2bf056f3cd42f7178b18386d12feeac2d5c32714c93a37afc6fd2702a",
+    "historical_gvz_production_source_v145.json": "75fdc042ba711d8076c258af79ed651ca7afcd5af4f2c783708e3a263fb16c11",
+    "historical_ny17_gap_inventory_source_v145.json": "d7bb8a8934333d48eeb7c3c228a61b050a1f970b360b0adfc0c666ce126a2ed9",
+    "historical_ny17_gap_inventory_v145.csv": "58df0c4f523b9e6d33dede14a5b305996aaa1c5525ac808620aef881d6ead499"
+  },
+  "tests": {
+    "readiness_auditor_tests": "7/7 PASS",
+    "gap_inventory_mapping_tests": "3/3 PASS",
+    "exact_date_probe_classifier_tests": "4/4 PASS"
+  }
+}

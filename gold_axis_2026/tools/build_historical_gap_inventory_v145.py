@@ -5,6 +5,7 @@ import csv
 import hashlib
 import io
 import json
+import copy
 import urllib.request
 from collections import Counter, defaultdict
 from datetime import date, datetime, timezone
@@ -147,7 +148,16 @@ def main() -> int:
     parser.add_argument("--gvz-csv", default=str(root / "gold_axis_2026/data_pipeline/audits/historical_gvz_gap_inventory_v145.csv"))
     args = parser.parse_args()
     inventory = build_inventory(load_json(Path(args.ny_source)), load_json(Path(args.gvz_production)))
-    Path(args.out_json).write_text(json.dumps(inventory, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    summary = copy.deepcopy(inventory)
+    summary["ny17"].pop("rows")
+    summary["gvz"].pop("rows")
+    dependencies = summary.pop("readiness_cell_date_dependencies")
+    summary["readiness_cell_dependency_counts"] = {cell: len(dates) for cell, dates in dependencies.items()}
+    summary["row_artifacts"] = {
+        "ny17": Path(args.ny_csv).name,
+        "gvz": Path(args.gvz_csv).name,
+    }
+    Path(args.out_json).write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     write_csv(Path(args.ny_csv), inventory["ny17"]["rows"], ["trade_date", "acquisition_status", "evidence_status", "canonical_n", "cache_exact_n", "exact_close", "lineage_id", "retrieved_at", "gap_action", "impacted_readiness_cells"])
     write_csv(Path(args.gvz_csv), inventory["gvz"]["rows"], ["observation_date", "value", "acquisition_status", "gap_action", "evidence_class", "prospective_claim", "impacted_readiness_cells"])
     print(json.dumps({"ny17": {k: inventory["ny17"][k] for k in ("already_canonical_dates", "candidate_dates_requiring_probe_or_upgrade", "candidate_status_counts", "write_count")}, "gvz": {k: inventory["gvz"][k] for k in ("official_rows_in_pilot", "production_distinct_dates", "missing_rows_to_write", "missing_start", "missing_end", "missing_by_month")}}, sort_keys=True))
