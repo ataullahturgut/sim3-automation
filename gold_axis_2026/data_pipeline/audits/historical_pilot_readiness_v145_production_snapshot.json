@@ -1,0 +1,4112 @@
+{
+  "runtime": [
+    {
+      "engine_id": "BOCPD_RETURN_SUCCESSOR_V1",
+      "git_commit": "e09a2b90f7747292949a1c0718c70f6faae72246",
+      "engine_role": "REGIME_BREAK_CONTEXT",
+      "status_code": "ACTIVE_BOCPD_RETURN_SUCCESSOR_V1_REGIME_CONTEXT",
+      "auto_ensemble": "OFF",
+      "auto_selector": "OFF",
+      "engine_version": "BOCPD_RETURN_SUCCESSOR_V1",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "runtime_status": "ACTIVE",
+      "target_context": "2026-09",
+      "input_fingerprint": "4d51d967455ddcd43f12a73780268ed0f68c793fbbddc525599aa089956c7fc6"
+    },
+    {
+      "engine_id": "CAUSAL_PATCH",
+      "git_commit": "a0afec6fcfcc553c394bfbd88425676b4f5d1479",
+      "engine_role": "MONTHLY_H1_EXPERT",
+      "status_code": "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE",
+      "auto_ensemble": "OFF",
+      "auto_selector": "OFF",
+      "engine_version": "CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "runtime_status": "ACTIVE",
+      "target_context": "2026-09",
+      "input_fingerprint": "1d7669396dfda83062c4adfe9957b96eb76bd5a568a22c703fa841cff4791eb6"
+    },
+    {
+      "engine_id": "EMERGENCY_LEVEL",
+      "git_commit": "387cbeb083c04a9ee6ebdb5dfec6616e9aac407c",
+      "engine_role": "EMERGENCY_CONTEXT",
+      "status_code": "ACTIVE_INTRAMONTH_CURRENT_INPUT_HISTORICAL_REFERENCE_CONTEXT",
+      "auto_ensemble": "OFF",
+      "auto_selector": "OFF",
+      "engine_version": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "runtime_status": "ACTIVE",
+      "target_context": "2026-09",
+      "input_fingerprint": "f15c36cea4dfdd7d49233fd642ee621aaf80b47e749e55b3b6df72921311c4b3"
+    },
+    {
+      "engine_id": "EMERGENCY_REVERSAL",
+      "git_commit": "387cbeb083c04a9ee6ebdb5dfec6616e9aac407c",
+      "engine_role": "EMERGENCY_CONTEXT",
+      "status_code": "ACTIVE_INTRAMONTH_CURRENT_INPUT_HISTORICAL_REFERENCE_CONTEXT",
+      "auto_ensemble": "OFF",
+      "auto_selector": "OFF",
+      "engine_version": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "runtime_status": "ACTIVE",
+      "target_context": "2026-09",
+      "input_fingerprint": "f15c36cea4dfdd7d49233fd642ee621aaf80b47e749e55b3b6df72921311c4b3"
+    },
+    {
+      "engine_id": "FAST",
+      "git_commit": "387cbeb083c04a9ee6ebdb5dfec6616e9aac407c",
+      "engine_role": "TACTICAL_DIRECTION_CONTEXT",
+      "status_code": "ACTIVE_INTRAMONTH_CATCHUP_CONTEXT_REFRESHED",
+      "auto_ensemble": "OFF",
+      "auto_selector": "OFF",
+      "engine_version": "R4_1_SMA20_2_MARKET_DAY_PERSISTENCE_V1",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "runtime_status": "ACTIVE",
+      "target_context": "2026-09",
+      "input_fingerprint": "d1758f359919b51bc6174e1584909e51e5d4b2bc95b58e7dc0e6200e144577d6"
+    },
+    {
+      "engine_id": "GVZ_RISK",
+      "git_commit": "387cbeb083c04a9ee6ebdb5dfec6616e9aac407c",
+      "engine_role": "RISK_ONLY_CONTEXT",
+      "status_code": "ACTIVE_INTRAMONTH_CATCHUP_CONTEXT_REFRESHED",
+      "auto_ensemble": "OFF",
+      "auto_selector": "OFF",
+      "engine_version": "R4_1_GVZ_RISK_CAP_CONTEXT_V1",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "runtime_status": "ACTIVE",
+      "target_context": "2026-09",
+      "input_fingerprint": "e7b92532937e1cb75f9a22138b7bbb7c7f078daca6afef2fdab7554436e8b7bf"
+    },
+    {
+      "engine_id": "MACRO_EVENT_SUCCESSOR_V2",
+      "git_commit": "e3dbb74754265084719a972aa447c23882abde09",
+      "engine_role": "EVENT_RISK_CONTEXT",
+      "status_code": "ACTIVE_MACRO_EVENT_SUCCESSOR_V2_EVENT_RISK_CONTEXT",
+      "auto_ensemble": "OFF",
+      "auto_selector": "OFF",
+      "engine_version": "MACRO_EVENT_SUCCESSOR_V2",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "runtime_status": "ACTIVE",
+      "target_context": "2026-09",
+      "input_fingerprint": "f70278151929afce0fbc52cf0db8aeb4fff72f515fbd5cd116390ebb7b575e8a"
+    },
+    {
+      "engine_id": "MOMENTUM_3M",
+      "git_commit": "a0afec6fcfcc553c394bfbd88425676b4f5d1479",
+      "engine_role": "MONTHLY_H1_EXPERT",
+      "status_code": "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE",
+      "auto_ensemble": "OFF",
+      "auto_selector": "OFF",
+      "engine_version": "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "runtime_status": "ACTIVE",
+      "target_context": "2026-09",
+      "input_fingerprint": "79a4665141f2209fc077c1f67ecf3fbb7145df0df41bcbb621bfa77382774c43"
+    },
+    {
+      "engine_id": "MONTHLY_DIRECTION_3M",
+      "git_commit": "3c7e2b1bae588ce38982c0804e78bc576642382a",
+      "engine_role": "STRATEGIC_DIRECTION_CONTEXT",
+      "status_code": "VERIFIED_PERSISTED_CONTEXT_AVAILABLE",
+      "auto_ensemble": "OFF",
+      "auto_selector": "OFF",
+      "engine_version": "R4_1_3M_SIMPLE_RETURN_V1",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "runtime_status": "ACTIVE",
+      "target_context": "2026-09",
+      "input_fingerprint": "426ecb82ece5b8b4c0970fa4c093d17d700a6f3dcfe655b1d1fdf8c87ff30206"
+    },
+    {
+      "engine_id": "RANDOM_WALK",
+      "git_commit": "a0afec6fcfcc553c394bfbd88425676b4f5d1479",
+      "engine_role": "MONTHLY_H1_BENCHMARK",
+      "status_code": "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE",
+      "auto_ensemble": "OFF",
+      "auto_selector": "OFF",
+      "engine_version": "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "runtime_status": "ACTIVE",
+      "target_context": "2026-09",
+      "input_fingerprint": "1ab3d6a747d191d44476cec1d772766eb2e801c566213223c8d95a88aaf6fca7"
+    },
+    {
+      "engine_id": "SLOW",
+      "git_commit": "387cbeb083c04a9ee6ebdb5dfec6616e9aac407c",
+      "engine_role": "TACTICAL_DIRECTION_CONTEXT",
+      "status_code": "ACTIVE_INTRAMONTH_CATCHUP_CONTEXT_REFRESHED",
+      "auto_ensemble": "OFF",
+      "auto_selector": "OFF",
+      "engine_version": "R4_1_COMPLETED_WEEKLY_SMA4_2_WEEK_PERSISTENCE_V1",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "runtime_status": "ACTIVE",
+      "target_context": "2026-09",
+      "input_fingerprint": "b9206683c010b5e0cdc957e92cbdfc06fd3320e7f2c3a759564f6f1757a385a5"
+    },
+    {
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "git_commit": "9a1e2878ea3c29f7ce43012f12dbcc642404245b",
+      "engine_role": "MONTHLY_H1_EXPERT",
+      "status_code": "ACTIVE_HISTORICAL_REPLAY_CURRENT_MONTH_REFERENCE_AVAILABLE",
+      "auto_ensemble": "OFF",
+      "auto_selector": "OFF",
+      "engine_version": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "evidence_class": "RUNTIME_GOVERNANCE_AUDIT",
+      "runtime_status": "ACTIVE",
+      "target_context": "2026-09",
+      "input_fingerprint": null
+    }
+  ],
+  "sources": [
+    {
+      "n": 25515,
+      "max_ts": "2026-07-01T00:00:00+00:00",
+      "min_ts": "1985-01-01T00:00:00+00:00",
+      "status": "APPROVED_HISTORICAL_PIT_RECONSTRUCTION_RESEARCH",
+      "frequency": "monthly_vintage",
+      "lineage_n": 54,
+      "series_id": "GPR_OFFICIAL_GIT_PIT",
+      "source_name": "Caldara-Iacoviello official GitHub archive",
+      "source_symbol": "GPR",
+      "null_available": 0,
+      "quality_statuses": [
+        "APPROVED_HISTORICAL_PIT_RECONSTRUCTION_RESEARCH"
+      ]
+    },
+    {
+      "n": 245,
+      "max_ts": "2026-09-04T00:00:00+00:00",
+      "min_ts": "2026-03-10T00:00:00+00:00",
+      "status": "APPROVED",
+      "frequency": "daily close",
+      "lineage_n": 1,
+      "series_id": "GVZ_CBOE",
+      "source_name": "Cboe official historical price data",
+      "source_symbol": "GVZ",
+      "null_available": 0,
+      "quality_statuses": [
+        "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+        "OK"
+      ]
+    },
+    {
+      "n": 126,
+      "max_ts": "2026-09-04T12:30:00+00:00",
+      "min_ts": "2016-02-05T13:30:00+00:00",
+      "status": "APPROVED_HISTORICAL_FIRST_PRINT_RECONSTRUCTION_RESEARCH",
+      "frequency": "event_monthly",
+      "lineage_n": 126,
+      "series_id": "MACRO_AHE_ACTUAL_FIRST_PRINT",
+      "source_name": "Federal Reserve Bank of St. Louis ALFRED / U.S. Bureau of Labor Statistics",
+      "source_symbol": "CES0500000003_ASOF_RELEASE_MOM",
+      "null_available": 0,
+      "quality_statuses": [
+        "APPROVED_HISTORICAL_FIRST_PRINT_RECONSTRUCTION_RESEARCH"
+      ]
+    },
+    {
+      "n": 126,
+      "max_ts": "2026-09-04T12:30:00+00:00",
+      "min_ts": "2016-02-05T13:30:00+00:00",
+      "status": "APPROVED_DOCTORAL_RESEARCH_INTERNAL_COVERAGE_PASS",
+      "frequency": "event_monthly",
+      "lineage_n": 126,
+      "series_id": "MACRO_AHE_CONSENSUS_PIT",
+      "source_name": "INVESTING_COM_ECONOMIC_CALENDAR_RESEARCH_ONLY",
+      "source_symbol": "Average Hourly Earnings (MoM) / Forecast / event_attr_id=8",
+      "null_available": 0,
+      "quality_statuses": [
+        "APPROVED_DOCTORAL_RESEARCH_INTERNAL_COVERAGE_PASS"
+      ]
+    },
+    {
+      "n": 126,
+      "max_ts": "2026-09-04T12:30:00+00:00",
+      "min_ts": "2016-02-05T13:30:00+00:00",
+      "status": "APPROVED_HISTORICAL_FIRST_PRINT_RECONSTRUCTION_RESEARCH",
+      "frequency": "event_monthly",
+      "lineage_n": 126,
+      "series_id": "MACRO_NFP_ACTUAL_FIRST_PRINT",
+      "source_name": "Federal Reserve Bank of St. Louis ALFRED / U.S. Bureau of Labor Statistics",
+      "source_symbol": "PAYEMS_ASOF_RELEASE_NFP_CHANGE",
+      "null_available": 0,
+      "quality_statuses": [
+        "APPROVED_HISTORICAL_FIRST_PRINT_RECONSTRUCTION_RESEARCH"
+      ]
+    },
+    {
+      "n": 126,
+      "max_ts": "2026-09-04T12:30:00+00:00",
+      "min_ts": "2016-02-05T13:30:00+00:00",
+      "status": "APPROVED_DOCTORAL_RESEARCH_INTERNAL_COVERAGE_PASS",
+      "frequency": "event_monthly",
+      "lineage_n": 126,
+      "series_id": "MACRO_NFP_CONSENSUS_PIT",
+      "source_name": "INVESTING_COM_ECONOMIC_CALENDAR_RESEARCH_ONLY",
+      "source_symbol": "Nonfarm Payrolls / Forecast / event_attr_id=227",
+      "null_available": 0,
+      "quality_statuses": [
+        "APPROVED_DOCTORAL_RESEARCH_INTERNAL_COVERAGE_PASS"
+      ]
+    },
+    {
+      "n": 126,
+      "max_ts": "2026-09-04T12:30:00+00:00",
+      "min_ts": "2016-02-05T13:30:00+00:00",
+      "status": "APPROVED_HISTORICAL_FIRST_PRINT_RECONSTRUCTION_RESEARCH",
+      "frequency": "event_monthly",
+      "lineage_n": 126,
+      "series_id": "MACRO_UNEMP_ACTUAL_FIRST_PRINT",
+      "source_name": "Federal Reserve Bank of St. Louis ALFRED / U.S. Bureau of Labor Statistics",
+      "source_symbol": "UNRATE_ASOF_RELEASE",
+      "null_available": 0,
+      "quality_statuses": [
+        "APPROVED_HISTORICAL_FIRST_PRINT_RECONSTRUCTION_RESEARCH"
+      ]
+    },
+    {
+      "n": 126,
+      "max_ts": "2026-09-04T12:30:00+00:00",
+      "min_ts": "2016-02-05T13:30:00+00:00",
+      "status": "APPROVED_DOCTORAL_RESEARCH_INTERNAL_COVERAGE_PASS",
+      "frequency": "event_monthly",
+      "lineage_n": 126,
+      "series_id": "MACRO_UNEMP_CONSENSUS_PIT",
+      "source_name": "INVESTING_COM_ECONOMIC_CALENDAR_RESEARCH_ONLY",
+      "source_symbol": "Unemployment Rate / Forecast / event_attr_id=300",
+      "null_available": 0,
+      "quality_statuses": [
+        "APPROVED_DOCTORAL_RESEARCH_INTERNAL_COVERAGE_PASS"
+      ]
+    },
+    {
+      "n": 4230,
+      "max_ts": "2026-07-31T00:00:00+00:00",
+      "min_ts": "2010-01-04T00:00:00+00:00",
+      "status": "APPROVED_RESEARCH_ONLY_NOT_PIT",
+      "frequency": "daily",
+      "lineage_n": 17,
+      "series_id": "XAG_STAKTRAKR_RESEARCH_DAILY_R1",
+      "source_name": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+      "source_symbol": "Silver",
+      "null_available": 0,
+      "quality_statuses": [
+        "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT"
+      ]
+    },
+    {
+      "n": 51,
+      "max_ts": "2026-09-07T21:00:00+00:00",
+      "min_ts": "2026-05-29T21:00:00+00:00",
+      "status": "APPROVED_CANONICAL_PIPELINE_SUCCESS",
+      "frequency": "trade-date daily derived from 1-minute intraday bar",
+      "lineage_n": 1,
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "source_name": "Twelve Data",
+      "source_symbol": "XAU/USD",
+      "null_available": 0,
+      "quality_statuses": [
+        "APPROVED_CANONICAL_TWELVE_NY17"
+      ]
+    },
+    {
+      "n": 4230,
+      "max_ts": "2026-07-31T00:00:00+00:00",
+      "min_ts": "2010-01-04T00:00:00+00:00",
+      "status": "APPROVED_RESEARCH_ONLY_NOT_PIT",
+      "frequency": "daily",
+      "lineage_n": 17,
+      "series_id": "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+      "source_name": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+      "source_symbol": "Gold",
+      "null_available": 0,
+      "quality_statuses": [
+        "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT"
+      ]
+    },
+    {
+      "n": 4229,
+      "max_ts": "2026-07-31T00:00:00+00:00",
+      "min_ts": "2010-01-04T00:00:00+00:00",
+      "status": "APPROVED_RESEARCH_ONLY_NOT_PIT",
+      "frequency": "daily",
+      "lineage_n": 17,
+      "series_id": "XPD_STAKTRAKR_RESEARCH_DAILY_R1",
+      "source_name": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+      "source_symbol": "Palladium",
+      "null_available": 0,
+      "quality_statuses": [
+        "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT"
+      ]
+    },
+    {
+      "n": 4229,
+      "max_ts": "2026-07-31T00:00:00+00:00",
+      "min_ts": "2010-01-04T00:00:00+00:00",
+      "status": "APPROVED_RESEARCH_ONLY_NOT_PIT",
+      "frequency": "daily",
+      "lineage_n": 17,
+      "series_id": "XPT_STAKTRAKR_RESEARCH_DAILY_R1",
+      "source_name": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+      "source_symbol": "Platinum",
+      "null_available": 0,
+      "quality_statuses": [
+        "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT"
+      ]
+    },
+    {
+      "n": 0,
+      "max_ts": null,
+      "min_ts": null,
+      "status": null,
+      "frequency": null,
+      "lineage_n": 0,
+      "series_id": null,
+      "source_name": null,
+      "source_symbol": null,
+      "null_available": 1,
+      "quality_statuses": null
+    }
+  ],
+  "snapshot_at": "2026-09-08T22:13:30.188405+00:00",
+  "tx_snapshot": "297987:297987:",
+  "cache_months": [
+    {
+      "mth": "2023-01",
+      "max_ts": "2023-02-01T04:59:00+00:00",
+      "min_ts": "2023-01-02T23:00:00+00:00",
+      "exact_1659_count": 7
+    },
+    {
+      "mth": "2023-02",
+      "max_ts": "2023-03-01T04:59:00+00:00",
+      "min_ts": "2023-02-01T05:00:00+00:00",
+      "exact_1659_count": 6
+    },
+    {
+      "mth": "2023-03",
+      "max_ts": "2023-03-31T19:59:00+00:00",
+      "min_ts": "2023-03-01T05:00:00+00:00",
+      "exact_1659_count": 9
+    },
+    {
+      "mth": "2023-04",
+      "max_ts": "2023-05-01T03:59:00+00:00",
+      "min_ts": "2023-04-02T22:01:00+00:00",
+      "exact_1659_count": 6
+    },
+    {
+      "mth": "2023-05",
+      "max_ts": "2023-06-01T03:59:00+00:00",
+      "min_ts": "2023-05-01T04:00:00+00:00",
+      "exact_1659_count": 11
+    },
+    {
+      "mth": "2023-06",
+      "max_ts": "2023-06-30T20:58:00+00:00",
+      "min_ts": "2023-06-01T04:00:00+00:00",
+      "exact_1659_count": 6
+    },
+    {
+      "mth": "2023-07",
+      "max_ts": "2023-08-01T03:59:00+00:00",
+      "min_ts": "2023-07-02T22:05:00+00:00",
+      "exact_1659_count": 5
+    },
+    {
+      "mth": "2023-08",
+      "max_ts": "2023-09-01T03:59:00+00:00",
+      "min_ts": "2023-08-01T04:00:00+00:00",
+      "exact_1659_count": 11
+    },
+    {
+      "mth": "2023-09",
+      "max_ts": "2023-09-29T20:58:00+00:00",
+      "min_ts": "2023-09-01T04:00:00+00:00",
+      "exact_1659_count": 10
+    },
+    {
+      "mth": "2023-10",
+      "max_ts": "2023-11-01T03:59:00+00:00",
+      "min_ts": "2023-10-01T22:00:00+00:00",
+      "exact_1659_count": 7
+    },
+    {
+      "mth": "2023-11",
+      "max_ts": "2023-12-01T04:59:00+00:00",
+      "min_ts": "2023-11-01T04:00:00+00:00",
+      "exact_1659_count": 4
+    },
+    {
+      "mth": "2023-12",
+      "max_ts": "2023-12-29T19:59:00+00:00",
+      "min_ts": "2023-12-01T05:00:00+00:00",
+      "exact_1659_count": 7
+    },
+    {
+      "mth": "2024-01",
+      "max_ts": "2024-02-01T04:59:00+00:00",
+      "min_ts": "2024-01-01T23:01:00+00:00",
+      "exact_1659_count": 9
+    },
+    {
+      "mth": "2024-02",
+      "max_ts": "2024-03-01T04:59:00+00:00",
+      "min_ts": "2024-02-01T05:00:00+00:00",
+      "exact_1659_count": 5
+    },
+    {
+      "mth": "2024-03",
+      "max_ts": "2024-04-01T03:59:00+00:00",
+      "min_ts": "2024-03-01T05:00:00+00:00",
+      "exact_1659_count": 8
+    },
+    {
+      "mth": "2024-04",
+      "max_ts": "2024-05-01T03:59:00+00:00",
+      "min_ts": "2024-04-01T04:00:00+00:00",
+      "exact_1659_count": 9
+    },
+    {
+      "mth": "2024-05",
+      "max_ts": "2024-05-31T20:59:00+00:00",
+      "min_ts": "2024-05-01T04:00:00+00:00",
+      "exact_1659_count": 13
+    },
+    {
+      "mth": "2024-06",
+      "max_ts": "2024-07-01T03:59:00+00:00",
+      "min_ts": "2024-06-02T23:00:00+00:00",
+      "exact_1659_count": 11
+    },
+    {
+      "mth": "2024-07",
+      "max_ts": "2024-08-01T03:59:00+00:00",
+      "min_ts": "2024-07-01T04:00:00+00:00",
+      "exact_1659_count": 13
+    },
+    {
+      "mth": "2024-08",
+      "max_ts": "2024-08-30T20:59:00+00:00",
+      "min_ts": "2024-08-01T04:00:00+00:00",
+      "exact_1659_count": 14
+    },
+    {
+      "mth": "2024-09",
+      "max_ts": "2024-10-01T03:59:00+00:00",
+      "min_ts": "2024-09-01T22:05:00+00:00",
+      "exact_1659_count": 13
+    },
+    {
+      "mth": "2024-10",
+      "max_ts": "2024-11-01T03:59:00+00:00",
+      "min_ts": "2024-10-01T04:00:00+00:00",
+      "exact_1659_count": 13
+    },
+    {
+      "mth": "2024-11",
+      "max_ts": "2024-11-29T19:43:00+00:00",
+      "min_ts": "2024-11-01T04:00:00+00:00",
+      "exact_1659_count": 9
+    },
+    {
+      "mth": "2024-12",
+      "max_ts": "2024-12-31T21:58:00+00:00",
+      "min_ts": "2024-12-01T23:05:00+00:00",
+      "exact_1659_count": 7
+    },
+    {
+      "mth": "2025-01",
+      "max_ts": "2025-01-31T21:58:00+00:00",
+      "min_ts": "2025-01-01T23:01:00+00:00",
+      "exact_1659_count": 6
+    },
+    {
+      "mth": "2025-02",
+      "max_ts": "2025-02-28T21:59:00+00:00",
+      "min_ts": "2025-02-02T23:05:00+00:00",
+      "exact_1659_count": 5
+    },
+    {
+      "mth": "2025-03",
+      "max_ts": "2025-04-01T03:59:00+00:00",
+      "min_ts": "2025-03-02T23:05:00+00:00",
+      "exact_1659_count": 9
+    },
+    {
+      "mth": "2025-04",
+      "max_ts": "2025-05-01T03:59:00+00:00",
+      "min_ts": "2025-04-01T04:00:00+00:00",
+      "exact_1659_count": 11
+    },
+    {
+      "mth": "2025-05",
+      "max_ts": "2025-05-31T13:59:00+00:00",
+      "min_ts": "2025-05-01T04:00:00+00:00",
+      "exact_1659_count": 20
+    },
+    {
+      "mth": "2025-06",
+      "max_ts": "2025-07-01T03:58:00+00:00",
+      "min_ts": "2025-06-01T14:01:00+00:00",
+      "exact_1659_count": 17
+    },
+    {
+      "mth": "2025-07",
+      "max_ts": "2025-08-01T03:59:00+00:00",
+      "min_ts": "2025-07-01T04:00:00+00:00",
+      "exact_1659_count": 22
+    },
+    {
+      "mth": "2025-08",
+      "max_ts": "2025-09-01T03:59:00+00:00",
+      "min_ts": "2025-08-01T04:00:00+00:00",
+      "exact_1659_count": 19
+    },
+    {
+      "mth": "2025-09",
+      "max_ts": "2025-10-01T03:59:00+00:00",
+      "min_ts": "2025-09-01T04:00:00+00:00",
+      "exact_1659_count": 22
+    },
+    {
+      "mth": "2025-10",
+      "max_ts": "2025-11-01T03:59:00+00:00",
+      "min_ts": "2025-10-01T04:00:00+00:00",
+      "exact_1659_count": 23
+    },
+    {
+      "mth": "2025-11",
+      "max_ts": "2025-12-01T04:59:00+00:00",
+      "min_ts": "2025-11-01T04:00:00+00:00",
+      "exact_1659_count": 23
+    },
+    {
+      "mth": "2025-12",
+      "max_ts": "2026-01-01T04:59:00+00:00",
+      "min_ts": "2025-12-01T05:00:00+00:00",
+      "exact_1659_count": 27
+    },
+    {
+      "mth": "2026-01",
+      "max_ts": "2026-02-01T04:59:00+00:00",
+      "min_ts": "2026-01-01T05:00:00+00:00",
+      "exact_1659_count": 30
+    },
+    {
+      "mth": "2026-02",
+      "max_ts": "2026-03-01T04:59:00+00:00",
+      "min_ts": "2026-02-01T05:00:00+00:00",
+      "exact_1659_count": 28
+    },
+    {
+      "mth": "2026-03",
+      "max_ts": "2026-04-01T03:59:00+00:00",
+      "min_ts": "2026-03-01T05:00:00+00:00",
+      "exact_1659_count": 31
+    },
+    {
+      "mth": "2026-04",
+      "max_ts": "2026-05-01T03:59:00+00:00",
+      "min_ts": "2026-04-01T04:00:00+00:00",
+      "exact_1659_count": 30
+    },
+    {
+      "mth": "2026-05",
+      "max_ts": "2026-05-31T23:59:00+00:00",
+      "min_ts": "2026-05-01T04:00:00+00:00",
+      "exact_1659_count": 31
+    },
+    {
+      "mth": "2026-06",
+      "max_ts": "2026-06-30T23:59:00+00:00",
+      "min_ts": "2026-06-13T15:20:00+00:00",
+      "exact_1659_count": 18
+    }
+  ],
+  "observations": [
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-10T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-10T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-10T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-11T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-11T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-11T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-12T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-12T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-12T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-13T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-13T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-13T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-16T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-16T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-16T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-17T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-17T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-17T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-18T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-18T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-18T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-19T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-19T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-19T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-20T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-20T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-20T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-23T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-23T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-23T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-24T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-24T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-24T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-25T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-25T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-25T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-26T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-26T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-26T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-27T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-27T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-27T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-30T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-30T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-30T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-03-31T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-03-31T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-03-31T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-01T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-01T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-01T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-02T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-02T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-02T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-06T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-06T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-06T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-07T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-07T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-07T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-08T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-08T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-08T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-09T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-09T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-09T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-10T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-10T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-10T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-13T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-13T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-13T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-14T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-14T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-14T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-15T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-15T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-15T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-16T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-16T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-16T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-17T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-17T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-17T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-20T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-20T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-20T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-21T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-21T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-21T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-22T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-22T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-22T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-23T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-23T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-23T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-24T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-24T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-24T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-27T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-27T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-27T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-28T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-28T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-28T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-29T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-29T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-29T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-04-30T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-04-30T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-04-30T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-01T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-01T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-01T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-04T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-04T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-04T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-05T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-05T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-05T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-06T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-06T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-06T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-07T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-07T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-07T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-08T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-08T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-08T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-11T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-11T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-11T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-12T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-12T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-12T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-13T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-13T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-13T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-14T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-14T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-14T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-15T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-15T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-15T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-18T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-18T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-18T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-19T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-19T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-19T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-20T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-20T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-20T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-21T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-21T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-21T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-22T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-22T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-22T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-26T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-26T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-26T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-27T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-27T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-27T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-28T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-28T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-28T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-05-29T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-05-29T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-05-29T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-01T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-01T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-01T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-02T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-02T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-02T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-03T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-03T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-03T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-04T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-04T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-04T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-05T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-05T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-05T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-08T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-08T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-08T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-09T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-09T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-09T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-10T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-10T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-10T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-11T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-11T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-11T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-12T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-12T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-12T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-15T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-15T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-15T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-16T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-16T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-16T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-17T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-17T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-17T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-18T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-18T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-18T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-22T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-22T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-22T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-23T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-23T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-23T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-24T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-24T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-24T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-25T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-25T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-25T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-26T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-26T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-26T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-29T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-29T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-29T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-06-30T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-06-30T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-06-30T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-01T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-01T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-01T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-02T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-02T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-02T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-06T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-06T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-06T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-07T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-07T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-07T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-08T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-08T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-08T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-09T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-09T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-09T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-10T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-10T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-10T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-13T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-13T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-13T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-14T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-14T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-14T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-15T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-15T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-15T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-16T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-16T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-16T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-17T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-17T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-17T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-20T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-20T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-20T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-21T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-21T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-21T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-22T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-22T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-22T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-23T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-23T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-23T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-24T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-24T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-24T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-27T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-27T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-27T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-28T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-28T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-28T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-29T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-29T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-29T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-30T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-30T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-30T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-07-31T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-07-31T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-07-31T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-03T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-03T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-03T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-04T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-04T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-04T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-05T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-05T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-05T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-06T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-06T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-06T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-07T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-07T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-07T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-10T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-10T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-10T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-11T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-11T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-11T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-12T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-12T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-12T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-13T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-13T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-13T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-14T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-14T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-14T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-17T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-17T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-17T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-18T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-18T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-18T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-19T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-19T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-19T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-20T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-20T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-20T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-21T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-21T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-21T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-24T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-24T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-24T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-25T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-25T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-25T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-26T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-26T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-26T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-27T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-27T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-27T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T12:58:31.028467+00:00",
+      "observation_ts": "2026-08-28T00:00:00+00:00",
+      "quality_status": "OK",
+      "available_as_of": "2026-08-28T00:00:00+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-08-31T13:39:02.243276+00:00",
+      "observation_ts": "2026-08-28T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-08-31T13:39:02.243276+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": null,
+        "evidence_class": null
+      },
+      "series_id": "GVZ_CBOE",
+      "lineage_id": "bc66929c829781311e48",
+      "retrieved_at": "2026-09-01T08:22:54.858062+00:00",
+      "observation_ts": "2026-08-31T00:00:00+00:00",
+      "quality_status": "APPROVED_AUTHORITY_RETRIEVAL_FLOOR",
+      "available_as_of": "2026-09-01T08:22:54.858062+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-05-29",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-05-29T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-06-30",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-06-30T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-01",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-01T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-02",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-02T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-03",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-03T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-06",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-06T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-07",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-07T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-08",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-08T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-09",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-09T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-10",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-10T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-13",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-13T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-14",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-14T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-15",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-15T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-16",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-16T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-17",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-17T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-20",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-20T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-21",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-21T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-22",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-22T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-23",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-23T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-24",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-24T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-27",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-27T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-28",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-28T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-29",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-29T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-30",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-30T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-07-31",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-07-31T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-03",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-03T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-04",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-04T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-05",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-05T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-06",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-06T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-07",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-07T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-10",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-10T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-11",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-11T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-12",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-12T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-13",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-13T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-14",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-14T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-17",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-17T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-18",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-18T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-19",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-19T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-20",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-20T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-21",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-21T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-24",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-24T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-25",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-25T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-26",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-26T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-27",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-27T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-28",
+        "evidence_class": "HISTORICAL_BACKFILL_CURRENTLY_RETRIEVED"
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:49:02.380053+00:00",
+      "observation_ts": "2026-08-28T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:49:02.380053+00:00"
+    },
+    {
+      "metadata": {
+        "trade_date": "2026-08-31",
+        "evidence_class": null
+      },
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "lineage_id": "23ec4fc6a71b7c211fb1",
+      "retrieved_at": "2026-09-01T13:10:47.204368+00:00",
+      "observation_ts": "2026-08-31T21:00:00+00:00",
+      "quality_status": "APPROVED_CANONICAL_TWELVE_NY17",
+      "available_as_of": "2026-09-01T13:10:47.204368+00:00"
+    }
+  ],
+  "system_metadata": [
+    {
+      "key": "data_policy",
+      "value": "POINT_IN_TIME_NO_SILENT_PROVIDER_SUBSTITUTION",
+      "updated_at": "2026-08-31T12:27:13.803033+00:00"
+    },
+    {
+      "key": "decision_action_mapping_status",
+      "value": "NOT_PROVEN_POSITION_MAPPING",
+      "updated_at": "2026-09-01T10:20:02.143629+00:00"
+    },
+    {
+      "key": "decision_store_schema_version",
+      "value": "GOLD_CONTROL_DECISION_STORE_V1_2026-09-01",
+      "updated_at": "2026-09-01T10:20:02.143629+00:00"
+    },
+    {
+      "key": "historical_query_contract",
+      "value": "USE observations_as_of(origin_ts); canonical_latest is current-state only",
+      "updated_at": "2026-09-08T11:30:17.665497+00:00"
+    },
+    {
+      "key": "project",
+      "value": "Gold Control",
+      "updated_at": "2026-08-31T12:27:13.803033+00:00"
+    },
+    {
+      "key": "schema_version",
+      "value": "GOLD_DATA_R2.6_2026-08-31",
+      "updated_at": "2026-09-08T11:30:17.665497+00:00"
+    }
+  ],
+  "authority_counts": {
+    "decision_runs": 0,
+    "decision_events": 0,
+    "decision_signal_snapshots": 0,
+    "monthly_forecast_contracts": 0
+  }
+}
+

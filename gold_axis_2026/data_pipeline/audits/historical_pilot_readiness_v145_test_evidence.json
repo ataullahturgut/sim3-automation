@@ -1,0 +1,40 @@
+{
+  "audit_id": "GOLD_CONTROL_HISTORICAL_PILOT_READINESS_V145",
+  "auditor_git_commit": "6df05a5f145a5797ff1a11b40f60adb77ede33b8",
+  "database_snapshot_at": "2026-09-08T22:13:30.188405+00:00",
+  "database_tx_snapshot": "297987:297987:",
+  "production_snapshot_sha256": "9190a69a12d0fde031d26528bf6a4567b77fff1e20cb26b5039e9d12d2eb2dab",
+  "matrix_sha256": "27ab1e20e7c4ac3292152af70adeb88172557afa0599c129fd07fe7d9f0c56a3",
+  "json_sha256": "d38faf3ea24caa6606812ba74ea5dfa69d98482ac12f9bbfbf9852ca26662aa0",
+  "csv_sha256": "dce6875d2aed9396e9c3aba3c2644d390a89d4e5f810647647cb0b1e009302ae",
+  "same_snapshot_rerun_identical": true,
+  "read_only_sql_static_audit": "PASS",
+  "production_writes": "NONE",
+  "performance_fields_consumed": false,
+  "engine_count": 12,
+  "target_month_count": 20,
+  "matrix_row_count": 240,
+  "authority_counts_before_and_after_snapshot": {
+    "monthly_forecast_contracts": 0,
+    "decision_signal_snapshots": 0,
+    "decision_runs": 0,
+    "decision_events": 0
+  },
+  "tests": {
+    "test_auditor_sql_is_select_only_and_transaction_read_only": "PASS",
+    "test_bocpd_august_is_contract_blocked": "PASS",
+    "test_contractual_exclusion_remains_visible": "PASS",
+    "test_deterministic_rerun_same_snapshot": "PASS",
+    "test_every_row_has_required_public_fields_and_known_status": "PASS",
+    "test_exact_inventory_and_axis_cardinality": "PASS",
+    "test_performance_values_cannot_change_readiness": "PASS"
+  },
+  "status_counts": {
+    "READY_PROVEN": 114,
+    "READY_TO_REPLAY": 9,
+    "PARTIAL": 101,
+    "BLOCKED_DATA": 14,
+    "BLOCKED_CONTRACT": 1,
+    "CONTRACTUAL_EXCLUSION": 1
+  }
+}
