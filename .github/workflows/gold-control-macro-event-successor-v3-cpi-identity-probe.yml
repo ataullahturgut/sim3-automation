@@ -1,0 +1,48 @@
+name: Gold Control Macro Event V3 CPI Identity Probe
+
+on:
+  push:
+    branches:
+      - gold-control-macro-event-successor-v3
+    paths:
+      - '.github/workflows/gold-control-macro-event-successor-v3-cpi-identity-probe.yml'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_investing_cpi_identity_probe.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+      - name: Run metadata-only CPI identity probe
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_investing_cpi_identity_probe.py
+          python gold_axis_2026/data_pipeline/macro_event_successor_v3_investing_cpi_identity_probe.py
+      - name: Enforce no-value/no-write semantics
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_successor_v3_investing_cpi_identity_probe.json', encoding='utf-8'))
+          assert d['engine_id']=='MACRO_EVENT_SUCCESSOR_V3', d
+          assert d['family']=='INFLATION', d
+          assert d['raw_provider_values_logged'] is False, d
+          assert d['production_db_write'] is False, d
+          assert d['historical_pit_claim'] is False, d
+          print(json.dumps(d, indent=2, sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-v3-cpi-identity-probe
+          path: macro_event_successor_v3_investing_cpi_identity_probe.json
+          if-no-files-found: error
