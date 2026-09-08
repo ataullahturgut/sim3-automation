@@ -1,0 +1,60 @@
+name: Gold Control Macro Event Successor V3 Inflation Source Audit
+
+on:
+  push:
+    branches:
+      - gold-control-macro-event-successor-v3
+    paths:
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_inflation_source_audit.py'
+      - 'gold_axis_2026/tests/test_macro_event_successor_v3_inflation_source_audit.py'
+      - '.github/workflows/gold-control-macro-event-successor-v3-inflation-source-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-inflation-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install pytest requests beautifulsoup4
+      - name: Require FRED credential
+        run: test -n "$FRED_API_KEY"
+      - name: Compile and unit test frozen inflation source contract
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_inflation_source_audit.py
+          pytest -q gold_axis_2026/tests/test_macro_event_successor_v3_inflation_source_audit.py
+      - name: Run CPI/Core CPI authority and consensus-source audit
+        run: |
+          python gold_axis_2026/data_pipeline/macro_event_successor_v3_inflation_source_audit.py > macro_event_successor_v3_inflation_source_audit_stdout.json
+          cat macro_event_successor_v3_inflation_source_audit.json
+      - name: Enforce no promotion and scope locks
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_successor_v3_inflation_source_audit.json', encoding='utf-8'))
+          assert d['engine_id']=='MACRO_EVENT_SUCCESSOR_V3', d
+          assert d['family']=='INFLATION', d
+          assert d['definition']=='CPI_MOM_SA_PLUS_CORE_CPI_MOM_SA', d
+          assert d['historical_locked_validation_authorized'] is False, d
+          assert d['production_db_write'] is False, d
+          assert d['market_shock_threshold_changed'] is False, d
+          assert d['scope_expanded_beyond_cpi_core_cpi'] is False, d
+          print('MACRO_EVENT_V3_INFLATION_GOVERNANCE_PASS')
+          PY
+      - name: Upload derived source audit only
+        uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-successor-v3-inflation-source-audit
+          path: macro_event_successor_v3_inflation_source_audit.json
+          if-no-files-found: error
