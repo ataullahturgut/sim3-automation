@@ -32,10 +32,9 @@ Binding current operational implementations:
 - live intramonth append-only recompute: `data_pipeline/live_intramonth_recompute_v144.py`
 - read-only current/live model-data readiness audit: `tools/audit_model_data_readiness_v143.py`
 - strict post-write intramonth audit: `tools/audit_live_intramonth_postwrite_v144.py`
-
-Planned V1.45 historical-pilot implementation, not yet binding until separately created/reviewed/frozen:
-
 - `tools/audit_historical_pilot_readiness_v145.py`
+
+The V1.45 historical-pilot auditor is implemented and test-proven read-only under the binding frozen contract. Its frozen baseline and gap evidence are preserved under `data_pipeline/audits/`. This implementation does not score performance and has no production-write authority.
 
 `ACTIVE` means a governed identity is present on the current runtime surface. It is **not** by itself a source-freshness, historical-pilot-readiness or successful-recomputation certificate.
 
@@ -675,21 +674,33 @@ The project is not blocked on designing another model or selector.
 Current V1.45 governance state:
 
 - `HISTORICAL_PILOT_READINESS_CONTRACT = FROZEN`
-- `HISTORICAL_PILOT_AUDITOR = NOT_YET_IMPLEMENTED`
-- `HISTORICAL_DATA_BACKFILL = NOT_YET_AUTHORIZED_BY_BASELINE_AUDIT`
+- `HISTORICAL_PILOT_AUDITOR = IMPLEMENTED_READ_ONLY_AND_TESTED`
+- `BASELINE_READINESS_MATRIX = PRESERVED_12_X_20`
+- `HISTORICAL_DATA_BACKFILL = NOT_AUTHORIZED`
+- `NY17_EXACT_WRITE_SET = NOT_PROVEN_ENTITLEMENT_BLOCKED`
+- `GVZ_EXACT_WRITE_SET = PROVEN_295_OFFICIAL_CBOE_ROWS`
+
+Implementation and evidence checkpoints:
+
+- auditor and tests: `6df05a5f145a5797ff1a11b40f60adb77ede33b8`;
+- frozen baseline evidence: `f2c96afed24356cd91775a5eeb6eb70be465940b`;
+- gap inventory implementation/tests: `240b2f17f747661abf8286e49892399ce9bbc41f`;
+- fail-closed exact-date probe implementation/tests: `dc38d86b229d3f7cbd6583c5a2c9f732ce64f7d0`;
+- exact NY17/GVZ gap evidence: `ad7af6135a218839e668f56330cdf15bc434cd6e`;
+- governed GitHub Actions probe: `82340f78d142f732c6b668d4847bd1f23a5d87d2`;
+- blocked provider probe evidence and workflow path correction: `e310c8de1db6456412208fd2e6ed229a86ccc4ac`.
 
 The next governed work is:
 
-1. implement/review/freeze the read-only `tools/audit_historical_pilot_readiness_v145.py` against the binding V1.45 readiness contract;
-2. produce and preserve the baseline `12 × 20 = 240` historical readiness-cell matrix;
-3. only after that baseline, resolve Priority A historical NY17 gaps using the exact recorded blocker list;
-4. resolve Priority B GVZ historical coverage using the exact recorded blocker list;
-5. close remaining frozen-origin evidence gaps without retuning;
-6. rerun the unchanged V1.45 readiness audit;
-7. freeze `GOLD_PILOT_V1` validation/contribution metrics before role-performance scoring;
-8. execute role-specific validation and contribution analysis;
-9. retain the architecture review as a post-pilot decision;
-10. move later genuinely unseen issuances to `PROSPECTIVE_SHADOW`.
+1. resolve the Twelve Data entitlement/quota blocker and complete exact-date NY17 probing; do not infer the production write count from blocked candidates;
+2. prepare one explicit approval package only after the NY17 exact write set is proven, including the already proven 295-row official-Cboe GVZ set;
+3. after explicit approval, resolve Priority A NY17 and Priority B GVZ gaps using only the frozen providers and exact recorded write sets;
+4. close remaining frozen-origin evidence gaps without retuning;
+5. rerun the unchanged V1.45 readiness audit;
+6. freeze `GOLD_PILOT_V1` validation/contribution metrics before role-performance scoring;
+7. execute role-specific validation and contribution analysis;
+8. retain the architecture review as a post-pilot decision;
+9. move later genuinely unseen issuances to `PROSPECTIVE_SHADOW`.
 
 Until the historical-pilot gate is complete, the correct statement is:
 
