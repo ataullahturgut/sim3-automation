@@ -1,0 +1,69 @@
+name: Gold Control Market Shock + Macro Event 2026 All-Events Diagnostic
+
+on:
+  push:
+    branches: [gold-control-market-shock-macro-event-joint-audit-v1]
+    paths:
+      - '.github/workflows/gold-control-market-shock-macro-event-2026-all-events-diagnostic.yml'
+      - 'gold_axis_2026/tools/market_shock_macro_event_2026_all_events_diagnostic.py'
+      - 'gold_axis_2026/GOLD_CONTROL_MARKET_SHOCK_MACRO_EVENT_2026_ALL_EVENTS_DIAGNOSTIC_PREREG_2026-09-08.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  all-events-diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      MARKET_SHOCK_MODULE_DIR: /tmp/gold_market_shock_v3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install numpy pandas scipy requests 'psycopg[binary]'
+      - name: Require Neon credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Materialize exact frozen Market Shock V3 implementation
+        run: |
+          mkdir -p "$MARKET_SHOCK_MODULE_DIR"
+          git fetch --depth=1 origin gold-control-market-shock-challenger-v3
+          git show FETCH_HEAD:gold_axis_2026/tools/market_shock_challenger_v2.py > "$MARKET_SHOCK_MODULE_DIR/market_shock_challenger_v2.py"
+          git show FETCH_HEAD:gold_axis_2026/tools/market_shock_challenger_v3.py > "$MARKET_SHOCK_MODULE_DIR/market_shock_challenger_v3.py"
+          test "$(git rev-parse FETCH_HEAD)" = "12edc11e42b58d9c91fb587efdda9269cae4c91a"
+          python -m py_compile "$MARKET_SHOCK_MODULE_DIR/market_shock_challenger_v2.py" "$MARKET_SHOCK_MODULE_DIR/market_shock_challenger_v3.py"
+      - name: Compile diagnostic
+        run: |
+          python -m py_compile gold_axis_2026/tools/market_shock_macro_event_joint_audit_v1.py
+          python -m py_compile gold_axis_2026/tools/market_shock_macro_event_joint_audit_2026ytd.py
+          python -m py_compile gold_axis_2026/tools/market_shock_macro_event_2026_all_events_diagnostic.py
+      - name: Run preregistered all-event diagnostic
+        run: python gold_axis_2026/tools/market_shock_macro_event_2026_all_events_diagnostic.py
+      - name: Enforce governance
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('market_shock_macro_event_2026_all_events_diagnostic_report.json',encoding='utf-8'))
+          assert d['evidence_class']=='HISTORICAL_RESEARCH_AUDIT', d
+          assert d['prospective_claim'] is False, d
+          assert d['production_authority'] is False, d
+          assert d['neon_write'] is False, d
+          assert d['threshold_changed'] is False, d
+          assert d['threshold_selected_from_outcomes'] is False, d
+          assert d['market_shock_standalone_status_unchanged']=='FAILED_RESEARCH_GATES_NOT_PROMOTED', d
+          assert d['macro_events']==21, d
+          print('ALL_EVENTS_DIAGNOSTIC_GOVERNANCE_PASS', d['diagnostic_flags'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: market-shock-macro-event-2026-all-events-diagnostic
+          path: |
+            market_shock_macro_event_2026_all_events_diagnostic_report.json
+            market_shock_macro_event_2026_all_events_diagnostic_events.csv
+          if-no-files-found: error
