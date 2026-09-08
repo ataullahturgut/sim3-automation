@@ -10,7 +10,7 @@
 This audit follows the robustness logic in:
 
 - Lee & Mykland (2008), intraday volatility-standardized jump detection;
-- Lee & Mykland (2012), Journal of Econometrics, DOI 10.1016/j.jeconom.2012.04.001: market microstructure noise can distort ultra-high-frequency jump detection and requires explicit treatment;
+- Lee & Mykland (2012), Journal of Econometrics, DOI 10.1016/j.jeconom.2012.03.001: market microstructure noise can distort ultra-high-frequency jump detection and requires explicit treatment;
 - Boudt, Croux & Laurent (2011), Journal of Empirical Finance, DOI 10.1016/j.jempfin.2010.11.005: robust periodicity adjustment improves intraday jump accuracy, increases power for relatively small jumps in low-volatility slots, and reduces spurious detections in high-volatility slots;
 - Dumitru & Urga (2012), Journal of Business & Economic Statistics, DOI 10.1080/07350015.2012.663250: ABD/LM perform well and combining tests/frequencies can reduce spurious jumps;
 - Maneesoonthorn, Martin & Forbes (2020), Journal of Econometrics, DOI 10.1016/j.jeconom.2020.03.012: jump-test size/power depends on sampling frequency, volatility jumps, and microstructure noise;
