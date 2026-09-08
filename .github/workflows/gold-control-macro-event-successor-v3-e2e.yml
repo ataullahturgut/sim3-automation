@@ -6,6 +6,9 @@ on:
       - gold-control-macro-event-successor-v3
     paths:
       - '.github/workflows/gold-control-macro-event-successor-v3-e2e.yml'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_pipeline.py'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_pipeline_dbcompat.py'
+      - 'gold_axis_2026/tests/test_macro_event_successor_v3_pipeline.py'
   workflow_dispatch:
 
 permissions:
