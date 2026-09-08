@@ -1,0 +1,63 @@
+name: Gold Control Macro Event Successor V3 Live Shadow
+
+on:
+  push:
+    branches: [gold-control-macro-event-successor-v3]
+    paths:
+      - '.github/workflows/gold-control-macro-event-successor-v3-live.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 10 * * 1-5'
+    - cron: '15 12 * * 1-5'
+    - cron: '15 13 * * 1-5'
+    - cron: '0 14 * * 1-5'
+
+permissions:
+  contents: read
+
+jobs:
+  live-shadow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+      CME_FEDWATCH_API_URL: ${{ secrets.CME_FEDWATCH_API_URL }}
+      CME_FEDWATCH_API_KEY: ${{ secrets.CME_FEDWATCH_API_KEY }}
+      CME_FEDWATCH_SCHEMA_VERSION: ${{ secrets.CME_FEDWATCH_SCHEMA_VERSION }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 'psycopg[binary]'
+      - name: Require governed core credentials
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$FRED_API_KEY"
+      - name: Compile prospective lane
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_live.py
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_prospective_consensus_capture.py
+      - name: Capture or process governed event window
+        run: python gold_axis_2026/data_pipeline/macro_event_successor_v3_live.py
+      - name: Enforce shadow-only governance
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_successor_v3_live_result.json',encoding='utf-8'))
+          assert d['engine_id']=='MACRO_EVENT_SUCCESSOR_V3', d
+          assert d['production_authority'] is False, d
+          assert d['market_shock_threshold_changed'] is False, d
+          assert d['raw_market_shock_episode_changed'] is False, d
+          assert d['status']=='SUCCESS_PROSPECTIVE_SHADOW_LANE', d
+          print('MACRO_EVENT_V3_LIVE_SHADOW_GOVERNANCE_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-successor-v3-live-shadow-result
+          path: macro_event_successor_v3_live_result.json
+          if-no-files-found: error
