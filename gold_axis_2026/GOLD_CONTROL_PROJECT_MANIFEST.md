@@ -373,6 +373,16 @@ Strict V1.44 post-write audit:
 
 A V1.44 intramonth refresh is accepted only if both audits pass and authority stores remain zero.
 
+The strict post-write audit must prove at least:
+
+- canonical XAU is not behind the accepted cross-check;
+- FAST/SLOW are bound to canonical XAU and are fresh relative to its latest availability;
+- all four GVZ-derived features are bound to latest eligible `GVZ_CBOE`;
+- FAST/SLOW/GVZ runtime rows carry the V1.44 refresh contract and input fingerprints;
+- Emergency no longer exposes the stale month-open no-observation placeholder after target-month XAU exists;
+- Emergency state is recomputed from current target-month XAU with explicit monthly-reference provenance;
+- forecast/decision authority stores remain zero.
+
 ### 10.2 Historical-pilot readiness
 
 Historical pilot readiness must be audited separately across the fixed evaluation origins.
@@ -617,9 +627,40 @@ The deployment mirror `gold-r4-direction-engine-ui-v122-final` must point to the
 
 Current-view evidence labels must not hide the distinction between catch-up/historical context and prospective-shadow context. Historical pilot readiness must not be presented as live/prospective readiness.
 
+If a database view sanitizes every derived context to a historical label, that observability defect must be corrected through a separately tested database migration before V1.44 is declared fully operational.
+
 ---
 
-## 15. V1.45 project stop point and next governed work
+## 15. Current V1.44 live-operational release gate retained
+
+V1.45 adds historical-pilot governance; it does **not** waive or retroactively satisfy the existing V1.44 live-operational release gate.
+
+The V1.44 live lane remains accepted only after:
+
+1. unit/frozen-rule tests for the writer pass;
+2. read-only preflight proves correct fail-closed behavior against the current production state;
+3. canonical NY17 bounded reconciliation is run before the first production catch-up;
+4. append-only catch-up writes only authorized context/runtime tables;
+5. both current/live readiness audits pass after the catch-up;
+6. authority stores remain `0/0/0/0`;
+7. September H=1 references remain numerically and evidentially unchanged;
+8. main scheduler enforces ingestion → recompute → audit → snapshot ordering;
+9. current-context database view exposes non-misleading evidence/freshness semantics;
+10. application smoke passes and deployment mirror equals canonical release HEAD.
+
+Until that live-operational gate is complete, the correct live statement remains:
+
+`CURRENT_SURFACE_REGISTERED = TRUE`
+
+but
+
+`OPERATIONAL_MODEL_DATA_READY = NOT_YET_PROVEN`
+
+unless and until V1.43/V1.44 audits prove otherwise at a later current state.
+
+---
+
+## 16. V1.45 historical-pilot stop point and next governed work
 
 The project is not blocked on designing another model or selector.
 
@@ -636,10 +677,6 @@ The next governed work is:
 9. retain the architecture review as a post-pilot decision;
 10. move later genuinely unseen issuances to `PROSPECTIVE_SHADOW`.
 
-Until the historical-pilot gate is complete, the correct statements are:
-
-`CURRENT_SURFACE_REGISTERED = TRUE`
-
-but current/live operational freshness remains governed independently by V1.43/V1.44, and:
+Until the historical-pilot gate is complete, the correct statement is:
 
 `GOLD_PILOT_V1_HISTORICAL_READINESS = NOT_YET_PROVEN`.
