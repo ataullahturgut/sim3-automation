@@ -1,0 +1,52 @@
+name: Gold Control Macro Event V3 XAU 5m Corroboration R1
+
+on:
+  push:
+    branches: [gold-control-macro-event-successor-v3]
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V3_XAU_5M_CORROBORATION_CONTRACT_2026-09-08.md'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_historical_reaction_test_5m_r1.py'
+      - '.github/workflows/gold-control-macro-event-v3-xau-5m-corroboration-r1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  corroboration-5m:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install 'psycopg[binary]'
+      - name: Require governed Neon connection
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Compile frozen test
+        run: python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_historical_reaction_test_5m_r1.py
+      - name: Run frozen 5m corroboration test
+        run: python gold_axis_2026/data_pipeline/macro_event_successor_v3_historical_reaction_test_5m_r1.py
+      - name: Enforce governance
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('macro_event_successor_v3_historical_reaction_test_5m_r1_result.json',encoding='utf-8'))
+          assert r['status'] in {'PASS_5M_CORROBORATION','FAIL_5M_CORROBORATION'}, r
+          assert r['replaces_1m_test'] is False, r
+          assert r['production_authority'] is False, r
+          assert r['market_shock_threshold_changed'] is False, r
+          assert r['raw_market_shock_episode_changed'] is False, r
+          print('MACRO_EVENT_V3_XAU_5M_CORROBORATION_COMPLETED')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-v3-xau-5m-corroboration-r1
+          path: macro_event_successor_v3_historical_reaction_test_5m_r1_result.json
+          if-no-files-found: error
