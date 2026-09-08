@@ -1,0 +1,46 @@
+{
+  "artifact_digest": "sha256:64ae389e8fea266f1181801fd0f29bdd65985cfe263552a24894f4fc994891fe",
+  "artifact_id": 10079811291,
+  "artifact_json_sha256": "effda8cc01b1e560b87dfd707a8ff9a078fe378df396d8724e3080e1f362f2c4",
+  "canonical_head_sha": "82340f78d142f732c6b668d4847bd1f23a5d87d2",
+  "conclusion": "success",
+  "contract": "GOLD_CONTROL_HISTORICAL_PILOT_READINESS_CONTRACT_V145",
+  "date_range_of_candidates": {
+    "first": "2024-09-01",
+    "last": "2026-08-30"
+  },
+  "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+  "exact_production_write_count": "NOT_PROVEN",
+  "impacted_readiness_cell_count": 100,
+  "impacted_readiness_engines": [
+    "MONTHLY_DIRECTION_3M",
+    "FAST",
+    "SLOW",
+    "EMERGENCY_LEVEL",
+    "EMERGENCY_REVERSAL"
+  ],
+  "performance_scoring": false,
+  "probe_id": "GOLD_CONTROL_HISTORICAL_NY17_EXACT_DATE_PROBE_V145",
+  "production_write": "NONE",
+  "provider": {
+    "accepted_source_time": "16:59:00",
+    "first_attempt_date": "2024-09-01",
+    "first_attempt_payload_sha256": "ea4ed9b59a3b5af2b30d698483c6638bba7d15b69cb97a61fffc1ac4f15e4323",
+    "first_attempt_provider_code": 429,
+    "first_attempt_provider_message": "You have run out of API credits for the day. 959 API credits were used, with the current limit being 800.",
+    "interval": "1min",
+    "name": "Twelve Data",
+    "requested_dates": 1,
+    "stored_semantic": "17:00 ET",
+    "symbol": "XAU/USD",
+    "timezone": "America/New_York"
+  },
+  "prospective_claim": false,
+  "row_count": 684,
+  "status_counts": {
+    "ENTITLEMENT_BLOCKED": 684
+  },
+  "unrequested_after_first_blocker": 683,
+  "workflow_run_id": 34286901329,
+  "workflow_run_url": "https://github.com/ataullahturgut/sim3-automation/actions/runs/34286901329"
+}

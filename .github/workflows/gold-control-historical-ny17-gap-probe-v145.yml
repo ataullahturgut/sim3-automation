@@ -24,7 +24,11 @@ jobs:
       - name: Verify secret
         run: test -n "$TWELVE_DATA_API_KEY"
       - name: Run fail-closed exact-date probe
-        run: python gold_axis_2026/tools/probe_historical_ny17_gaps_v145.py --pacing-seconds 8.5
+        run: |
+          python gold_axis_2026/tools/probe_historical_ny17_gaps_v145.py \
+            --pacing-seconds 8.5 \
+            --out-json historical_ny17_exact_date_probe_v145.json \
+            --out-csv historical_ny17_exact_date_probe_v145.csv
       - name: Upload immutable probe evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -32,5 +36,5 @@ jobs:
           name: historical-ny17-exact-date-probe-v145
           if-no-files-found: error
           path: |
-            gold_axis_2026/data_pipeline/audits/historical_ny17_exact_date_probe_v145.json
-            gold_axis_2026/data_pipeline/audits/historical_ny17_exact_date_probe_v145.csv
+            historical_ny17_exact_date_probe_v145.json
+            historical_ny17_exact_date_probe_v145.csv
