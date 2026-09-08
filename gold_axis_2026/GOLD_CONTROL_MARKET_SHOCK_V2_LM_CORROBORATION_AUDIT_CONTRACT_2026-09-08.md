@@ -103,3 +103,41 @@ Report:
 `production_promotion = BLOCKED_RESEARCH_ONLY`  
 `canonical_merge = NOT_AUTHORIZED`  
 `production_neon_write = NONE`
+
+## 12. Execution record — 2026
+
+Workflow run `34205666369` completed successfully on commit `7e6474840aae0608c7e2f9f36ed2933f51021409`.
+
+Observed 2026 LM corroboration:
+
+- LM-containing episodes: `381`;
+- ABD5 confirmed: `178`;
+- LM10 confirmed: `220`;
+- EVT30 confirmed: `46`;
+- BNS-day secondary support: `58`;
+- at least one primary corroboration: `300 / 381 = 0.7874015748`;
+- multi-method strong (at least two of ABD5/LM10/EVT30): `129 / 381 = 0.3385826772`;
+- LM-only uncorroborated: `81 / 381 = 0.2125984252`.
+
+Raw 0.50% diagnostic by tier:
+
+- `MULTI_METHOD_STRONG`: 69/129 supported = `0.5348837209`; median absolute 5-minute raw move `0.0042848885`; p90 `0.0118897707`;
+- `CORROBORATED` with exactly one primary corroboration: 23/171 supported = `0.1345029240`; median absolute 5-minute raw move `0.0025260029`;
+- `LM_ONLY_UNCORROBORATED`: 10/81 supported = `0.1234567901`; median absolute 5-minute raw move `0.0021260992`.
+
+Research-only filter diagnostic `EVT30 OR (LM5 AND (ABD5 OR LM10))`:
+
+- baseline V2 signal bars: `578`, rate `0.0102784792`;
+- filtered diagnostic signal bars: `488`, rate `0.0086780240`;
+- filtered diagnostic episodes: `304`;
+- old raw-0.50% proxy precision: `0.3125` versus baseline `0.2727272727`.
+
+Interpretation:
+
+- evidence does **not** support the claim that most LM episodes are random/noise; 78.7% receive at least one primary corroboration;
+- evidence does support a quality gradient: multi-method-strong events are materially larger and much more likely to satisfy the old 0.50% economic-magnitude proxy;
+- 21.3% remain LM-only uncorroborated and require a dedicated higher-frequency/noise audit before they can be classified;
+- the filter diagnostic lowers the historical signal rate below the frozen 1% rate gate, but it contains an ex-post ABD component and therefore is **not a production-eligible live rule**;
+- authoritative false-positive rate remains `NOT_PROVEN`.
+
+Next scientific step is restricted to 2026: use the complete common-support 1-minute cache through 2026-05 to perform 1/3/5/10-minute LM frequency-stability analysis, focused especially on the LM-only-unccorroborated class. No 2025 audit is authorized until this 2026 question is resolved.
