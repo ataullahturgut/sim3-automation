@@ -127,6 +127,57 @@ def request_event(session: requests.Session, event: dict) -> tuple[dict[datetime
     raise RuntimeError(last_error or "TWELVE_RETRY_EXHAUSTED")
 
 
+def insert_run_start(conn, run_id: str, started: datetime, target_count: int) -> None:
+    with conn.cursor() as cur:
+        cur.execute("""insert into retrieval_runs
+            (run_id,started_at,git_sha,pipeline_version,trigger_type,status,observations_read,observations_written,notes,metadata)
+            values(%s,%s,%s,%s,%s,'RUNNING',%s,0,%s,%s::jsonb)""",
+            (run_id, started, git_sha(), PIPELINE_VERSION, "macro_event_v3_xau_event_backfill",
+             target_count, "Targeted event-window XAU 1m historical reconstruction",
+             json.dumps({"resume_safe": True, "commit_scope": "per_event"}, sort_keys=True)))
+    conn.commit()
+
+
+def persist_event_rows(conn, rows: list[tuple]) -> int:
+    if not rows:
+        return 0
+    with conn.cursor() as cur:
+        for row in rows:
+            cur.execute("""insert into observations
+                (run_id,series_id,observation_ts,value,source,source_symbol,provider_as_of,available_as_of,first_seen_at,retrieved_at,frequency,unit,transform,quality_status,lineage_id,payload_hash,metadata)
+                values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s::jsonb)""", row)
+    conn.commit()
+    return len(rows)
+
+
+def update_run_progress(conn, run_id: str, inserted: int, blocked: list[dict], completed_events: int) -> None:
+    with conn.cursor() as cur:
+        cur.execute("""update retrieval_runs
+            set observations_written=%s,
+                metadata=%s::jsonb,
+                notes=%s
+            where run_id=%s::uuid""",
+            (inserted,
+             json.dumps({"blocked": blocked, "events_completed_from_provider": completed_events, "resume_safe": True, "commit_scope": "per_event"}, sort_keys=True),
+             "Targeted event-window XAU 1m historical reconstruction; progress committed per event",
+             run_id))
+    conn.commit()
+
+
+def finalize_run(conn, run_id: str, status: str, inserted: int, blocked: list[dict], completed_events: int) -> None:
+    with conn.cursor() as cur:
+        cur.execute("""update retrieval_runs
+            set finished_at=now(), status=%s, observations_written=%s,
+                metadata=%s::jsonb,
+                notes=%s
+            where run_id=%s::uuid""",
+            (status, inserted,
+             json.dumps({"blocked": blocked, "events_completed_from_provider": completed_events, "resume_safe": True, "commit_scope": "per_event"}, sort_keys=True),
+             "Targeted event-window XAU 1m historical reconstruction; resume-safe per-event commits",
+             run_id))
+    conn.commit()
+
+
 def main() -> int:
     run_id = str(uuid.uuid4())
     retrieved = datetime.now(timezone.utc)
@@ -140,11 +191,13 @@ def main() -> int:
             if any(t not in have for t in req):
                 targets.append(e)
 
+        insert_run_start(conn, run_id, retrieved, len(targets))
         inserted = 0
         supported_after = 0
-        blocked = []
-        rows_to_write = []
+        blocked: list[dict] = []
+
         for i, e in enumerate(targets):
+            event_rows: list[tuple] = []
             try:
                 bars, payload_hash = request_event(session, e)
                 missing = []
@@ -169,35 +222,31 @@ def main() -> int:
                         "historical_retrieval_not_original_pit_capture": True,
                         "production_authority": False,
                     }
-                    rows_to_write.append((
+                    event_rows.append((
                         run_id, SERIES_ID, t, bars[t], "Twelve Data XAU/USD Commodity Aggregate", "XAU/USD",
                         retrieved, retrieved, retrieved, retrieved, "1min", "USD/oz", "LEVEL",
                         "APPROVED_HISTORICAL_REACTION_RECONSTRUCTION", f"{SERIES_ID}:{t.isoformat()}", payload_hash,
                         json.dumps(meta, sort_keys=True),
                     ))
-                    have.add(t)
                 if missing:
                     blocked.append({"family": e["family"], "event_ts": e["event_ts"].isoformat(), "missing": missing, "reason": "MISSING_REQUIRED_BARS_IN_PROVIDER_RESPONSE"})
                 else:
                     supported_after += 1
+
+                inserted += persist_event_rows(conn, event_rows)
+                for row in event_rows:
+                    have.add(row[2])
+                update_run_progress(conn, run_id, inserted, blocked, supported_after)
             except Exception as exc:
+                conn.rollback()
                 blocked.append({"family": e["family"], "event_ts": e["event_ts"].isoformat(), "reason": f"{type(exc).__name__}:{exc}"})
+                update_run_progress(conn, run_id, inserted, blocked, supported_after)
+
             if i + 1 < len(targets):
                 time.sleep(8)
 
-        with conn.cursor() as cur:
-            cur.execute("""insert into retrieval_runs
-                (run_id,started_at,finished_at,git_sha,pipeline_version,trigger_type,status,observations_read,observations_written,notes,metadata)
-                values(%s,%s,now(),%s,%s,%s,%s,%s,%s,%s,%s::jsonb)""",
-                (run_id, retrieved, git_sha(), PIPELINE_VERSION, "macro_event_v3_xau_event_backfill",
-                 "SUCCESS" if not blocked else "PARTIAL", len(targets), len(rows_to_write),
-                 "Targeted event-window XAU 1m historical reconstruction", json.dumps({"blocked": blocked}, sort_keys=True)))
-            for row in rows_to_write:
-                cur.execute("""insert into observations
-                    (run_id,series_id,observation_ts,value,source,source_symbol,provider_as_of,available_as_of,first_seen_at,retrieved_at,frequency,unit,transform,quality_status,lineage_id,payload_hash,metadata)
-                    values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s::jsonb)""", row)
-                inserted += 1
-        conn.commit()
+        final_status = "SUCCESS" if not blocked else "PARTIAL"
+        finalize_run(conn, run_id, final_status, inserted, blocked, supported_after)
 
     result = {
         "status": "PASS_XAU_EVENT_BACKFILL_COMPLETE" if not blocked else "PARTIAL_XAU_EVENT_BACKFILL",
@@ -208,6 +257,8 @@ def main() -> int:
         "observations_written": inserted,
         "blocked": blocked,
         "series_id": SERIES_ID,
+        "resume_safe": True,
+        "commit_scope": "per_event",
         "production_authority": False,
         "market_shock_threshold_changed": False,
     }
