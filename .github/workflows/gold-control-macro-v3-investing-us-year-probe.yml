@@ -1,0 +1,46 @@
+name: Gold Control Macro V3 Investing US Year Probe
+
+on:
+  push:
+    branches: [gold-control-macro-event-successor-v3]
+    paths: ['.github/workflows/gold-control-macro-v3-investing-us-year-probe.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4
+      - name: Probe US-only full year
+        run: |
+          python - <<'PY'
+          import json,requests
+          from bs4 import BeautifulSoup
+          base='https://www.investing.com/economic-calendar/'; filt=base+'Service/getCalendarFilteredData'
+          h={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131 Safari/537.36','Accept-Language':'en-US,en;q=0.9','X-Requested-With':'XMLHttpRequest','Referer':base,'Origin':'https://www.investing.com'}
+          s=requests.Session(); r=s.get(base,headers=h,timeout=60); r.raise_for_status(); soup=BeautifulSoup(r.text,'html.parser'); tz='55'; tf='timeRemain'
+          sel=soup.find('select',{'id':'timeZone'}); opt=sel.find('option',selected=True) if sel else None
+          if opt and opt.get('value'): tz=str(opt['value'])
+          chk=soup.find('input',{'name':'timeFilter','checked':True})
+          if chk and chk.get('value'): tf=str(chk['value'])
+          for key in ('country[]','countries[]'):
+            payload=[('dateFrom','2016-01-01'),('dateTo','2016-12-31'),('timeZone',tz),('timeFilter',tf),('currentTab','custom'),('submitFilters','1'),('limit_from','0'),(key,'5')]
+            rr=s.post(filt,data=payload,headers=h,timeout=60); print('key',key,'status',rr.status_code,'len',len(rr.text)); rr.raise_for_status(); html=str(rr.json().get('data') or '')
+            sp=BeautifulSoup('<table>'+html+'</table>','html.parser'); rows=[]; us_total=0
+            for tr in sp.find_all('tr'):
+              cell=tr.select_one('td.event')
+              if not cell: continue
+              flag=tr.select_one('td.flagCur span'); country=str(flag.get('title') or '') if flag else ''
+              if country=='United States': us_total+=1
+              attr=str(tr.get('event_attr_id') or tr.get('event_attr_ID') or '')
+              if attr not in {'69','56'} or country!='United States': continue
+              fore=tr.select_one('td.fore')
+              rows.append({'attr':attr,'name':' '.join(cell.get_text(' ',strip=True).split()),'forecast':fore.get_text(' ',strip=True) if fore else None,'datetime':tr.get('data-event-datetime')})
+            print(json.dumps({'key':key,'us_total':us_total,'cpi_rows':len(rows),'first':rows[:4],'last':rows[-4:]},indent=2))
+          PY
