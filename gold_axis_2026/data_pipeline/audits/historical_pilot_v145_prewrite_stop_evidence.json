@@ -1,0 +1,44 @@
+{
+  "authority_store_counts_after_workflow": {
+    "decision_events": 0,
+    "decision_runs": 0,
+    "decision_signal_snapshots": 0,
+    "monthly_forecast_contracts": 0
+  },
+  "canonical_branch": "gold-r4-direction-engine",
+  "canonical_head_at_trigger": "e4ee74d7a5a3221291ec43dd66b404438376948c",
+  "contract": "GOLD_CONTROL_HISTORICAL_PILOT_READINESS_CONTRACT_V145",
+  "evidence_captured_at": "2026-09-08T22:52:11.568669+00:00",
+  "governance_state": "FROZEN_BEFORE_HISTORICAL_GAP_COMPLETION_AND_BEFORE_GOLD_PILOT_V1_SCORING",
+  "historical_data_write": "NONE",
+  "incidental_workflow_assessment": {
+    "database_persist_function_reached": false,
+    "failure": "TWELVE_DATA_HTTP_429_BEFORE_PERSIST_BUNDLE",
+    "job": "canonical-catchup",
+    "job_id": 102267224526,
+    "production_write_requested_by_existing_workflow": true,
+    "result": "FAIL_BEFORE_DATABASE_WRITE",
+    "run_id": 34287747592,
+    "run_url": "https://github.com/ataullahturgut/sim3-automation/actions/runs/34287747592",
+    "trigger": "push changing gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md"
+  },
+  "ny17_production_after_workflow": {
+    "max_observation_ts": "2026-09-07 21:00:00+00",
+    "min_observation_ts": "2026-05-29 21:00:00+00",
+    "row_count": 51,
+    "series_id": "XAU_EOD_TWELVE_NY17"
+  },
+  "production_branch_id": "br-gentle-mouse-b22dzkr1",
+  "production_database": "neondb",
+  "production_project_id": "winter-art-94880101",
+  "production_write_authority": "NOT_GRANTED",
+  "required_governance_decision": "Whether to remove automatic canonical-catchup persistence from canonical-branch push events and require explicit workflow_dispatch persist=true",
+  "stage_status": {
+    "stage_1_current_state_reverify": "PASS",
+    "stage_2_historical_readiness_auditor": "PASS",
+    "stage_3_auditor_tests": "PASS",
+    "stage_4_baseline_readiness_matrix": "PASS",
+    "stage_5_exact_gap_inventory": "PARTIAL_NY17_ENTITLEMENT_BLOCKED_GVZ_PROVEN",
+    "stage_6_production_write_approval_package": "BLOCKED_NY17_EXACT_WRITE_SET_NOT_PROVEN"
+  }
+}
