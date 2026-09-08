@@ -249,3 +249,13 @@ Promotion would require separate change-control after:
 - locked-sequence evidence,
 - runtime/prospective capture proof,
 - governance approval.
+
+## 13. Pre-result implementation artifacts
+
+The following artifacts were added after this contract was frozen and before any V3 source-readiness workflow output was inspected:
+
+- `gold_axis_2026/data_pipeline/macro_event_successor_v3_source_readiness.py`
+- `gold_axis_2026/tests/test_macro_event_successor_v3_source_readiness.py`
+- `.github/workflows/gold-control-macro-event-successor-v3-source-readiness.yml`
+
+They implement only the scope and fail-closed states defined above. This section records implementation provenance and does not change any threshold, event family, validation window, or acceptance semantics.
