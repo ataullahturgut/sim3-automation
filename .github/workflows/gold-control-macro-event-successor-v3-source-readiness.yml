@@ -1,0 +1,63 @@
+name: Gold Control Macro Event Successor V3 Source Readiness
+
+on:
+  push:
+    branches:
+      - gold-control-macro-event-successor-v3
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V3_PREREG_2026-09-08.md'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_source_readiness.py'
+      - 'gold_axis_2026/tests/test_macro_event_successor_v3_source_readiness.py'
+      - '.github/workflows/gold-control-macro-event-successor-v3-source-readiness.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install pytest 'psycopg[binary]>=3.2,<4'
+      - name: Require Neon credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Compile and unit test frozen V3 contract
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_source_readiness.py
+          pytest -q gold_axis_2026/tests/test_macro_event_successor_v3_source_readiness.py
+      - name: Run read-only production Neon source-readiness audit
+        run: |
+          python gold_axis_2026/data_pipeline/macro_event_successor_v3_source_readiness.py > macro_event_successor_v3_source_readiness.json
+          cat macro_event_successor_v3_source_readiness.json
+      - name: Enforce frozen governance semantics
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_successor_v3_source_readiness.json', encoding='utf-8'))
+          assert d['engine_id']=='MACRO_EVENT_SUCCESSOR_V3', d
+          assert d['scope']==['EMPLOYMENT','INFLATION','FOMC'], d
+          assert d['market_shock_role']=='CONTEXT_ONLY_NOT_HARD_GATE', d
+          assert d['primary_match_window_minutes']==10, d
+          assert d['diagnostic_window_minutes']==30, d
+          assert d['raw_market_shock_episode_deletion_permitted'] is False, d
+          assert d['production_promotion']=='BLOCKED_RESEARCH_CHALLENGER_ONLY', d
+          by={x['family']:x for x in d['families']}
+          assert set(by)=={'EMPLOYMENT','INFLATION','FOMC'}, d
+          print('MACRO_EVENT_SUCCESSOR_V3_GOVERNANCE_PASS')
+          PY
+      - name: Upload source-readiness evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-successor-v3-source-readiness
+          path: macro_event_successor_v3_source_readiness.json
+          if-no-files-found: error
