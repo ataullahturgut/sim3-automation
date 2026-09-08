@@ -1,0 +1,2 @@
+Harmless workflow retrigger after prior Twelve Data daily-quota exhaustion.
+No detector methodology, thresholds, sources, or production code changed.
