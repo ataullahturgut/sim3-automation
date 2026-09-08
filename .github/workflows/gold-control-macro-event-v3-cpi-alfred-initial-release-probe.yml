@@ -1,4 +1,4 @@
-name: Gold Control Macro V3 CPI ALFRED Initial Release Probe
+name: Gold Control Macro V3 CPI Official Release Probe
 
 on:
   push:
@@ -19,17 +19,21 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install requests
-      - name: Query initial releases only
+      - name: Query source-published release dates
         run: |
           python - <<'PY'
           import json, os, requests
-          p={
-            'series_id':'CPIAUCSL','api_key':os.environ['FRED_API_KEY'],'file_type':'json',
-            'output_type':4,'observation_start':'2015-12-01','observation_end':'2026-08-01','limit':2000
-          }
-          r=requests.get('https://api.stlouisfed.org/fred/series/observations',params=p,timeout=60)
+          key=os.environ['FRED_API_KEY']
+          base='https://api.stlouisfed.org/fred'
+          r=requests.get(base+'/series/release',params={'series_id':'CPIAUCSL','api_key':key,'file_type':'json'},timeout=60)
+          print('series_release_status',r.status_code)
+          print(r.text[:2000])
           r.raise_for_status()
-          d=r.json(); obs=d.get('observations',[])
-          safe={'count':len(obs),'keys':sorted(obs[0].keys()) if obs else [],'first':obs[:3],'last':obs[-3:]}
-          print(json.dumps(safe,indent=2))
+          d=r.json(); rel=(d.get('releases') or [])[0]; rid=rel['id']
+          q={'release_id':rid,'api_key':key,'file_type':'json','realtime_start':'2016-01-01','realtime_end':'2026-09-08','limit':10000,'sort_order':'asc'}
+          rr=requests.get(base+'/release/dates',params=q,timeout=60)
+          print('release_dates_status',rr.status_code)
+          rr.raise_for_status()
+          x=rr.json().get('release_dates',[])
+          print(json.dumps({'release':rel,'count':len(x),'first':x[:5],'last':x[-5:]},indent=2))
           PY
