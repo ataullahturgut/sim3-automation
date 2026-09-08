@@ -27,6 +27,10 @@ OFFSETS = (-1, 4, 14, 29)
 API_URL = "https://api.twelvedata.com/time_series"
 
 
+class DailyCreditExhausted(RuntimeError):
+    pass
+
+
 def env(name: str) -> str:
     v = os.environ.get(name, "").strip()
     if not v:
@@ -58,14 +62,9 @@ def load_events(conn) -> list[dict]:
     for r in rows:
         meta = r["metadata"] or {}
         state = str(meta.get("state") or "")
-        if state not in STRONG:
-            continue
-        out.append({
-            "family": rev[r["series_id"]],
-            "event_ts": r["observation_ts"],
-            "state": state,
-            "score": float(r["value"]),
-        })
+        if state in STRONG:
+            out.append({"family": rev[r["series_id"]], "event_ts": r["observation_ts"],
+                        "state": state, "score": float(r["value"])})
     out.sort(key=lambda x: (x["event_ts"], x["family"]))
     return out
 
@@ -85,34 +84,33 @@ def existing_times(conn, events: list[dict]) -> set[datetime]:
 
 def request_event(session: requests.Session, event: dict) -> tuple[dict[datetime, float], str]:
     ts = event["event_ts"]
-    start = ts - timedelta(minutes=5)
-    end = ts + timedelta(minutes=35)
     params = {
-        "symbol": "XAU/USD",
-        "interval": "1min",
-        "timezone": "UTC",
-        "start_date": start.strftime("%Y-%m-%d %H:%M:%S"),
-        "end_date": end.strftime("%Y-%m-%d %H:%M:%S"),
-        "format": "JSON",
-        "outputsize": 100,
+        "symbol": "XAU/USD", "interval": "1min", "timezone": "UTC",
+        "start_date": (ts - timedelta(minutes=5)).strftime("%Y-%m-%d %H:%M:%S"),
+        "end_date": (ts + timedelta(minutes=35)).strftime("%Y-%m-%d %H:%M:%S"),
+        "format": "JSON", "outputsize": 100,
     }
     last_error = None
     for attempt in range(3):
-        r = session.get(
-            API_URL,
-            params=params,
-            headers={"Authorization": f"apikey {env('TWELVE_DATA_API_KEY')}", "User-Agent": "Gold-Control-Macro-Event-V3/1.0"},
-            timeout=(10, 45),
-        )
+        r = session.get(API_URL, params=params,
+                        headers={"Authorization": f"apikey {env('TWELVE_DATA_API_KEY')}",
+                                 "User-Agent": "Gold-Control-Macro-Event-V3/1.0"},
+                        timeout=(10, 45))
         payload_hash = hashlib.sha256(r.content).hexdigest()
+        text = r.text[:500]
         if r.status_code == 429:
-            last_error = f"HTTP_429:{r.text[:300]}"
+            if "run out of API credits for the day" in text.lower():
+                raise DailyCreditExhausted(f"HTTP_429_DAILY_CREDIT_EXHAUSTED:{text}")
+            last_error = f"HTTP_429:{text}"
             time.sleep(30 * (attempt + 1))
             continue
         r.raise_for_status()
         payload = r.json()
         if payload.get("status") == "error":
-            raise RuntimeError(f"TWELVE_API_ERROR:{payload.get('code')}:{payload.get('message')}")
+            msg = str(payload.get("message") or "")
+            if int(payload.get("code") or 0) == 429 and "run out of api credits for the day" in msg.lower():
+                raise DailyCreditExhausted(f"API_429_DAILY_CREDIT_EXHAUSTED:{msg}")
+            raise RuntimeError(f"TWELVE_API_ERROR:{payload.get('code')}:{msg}")
         out = {}
         for item in payload.get("values") or []:
             raw = str(item.get("datetime") or "")
@@ -150,31 +148,19 @@ def persist_event_rows(conn, rows: list[tuple]) -> int:
     return len(rows)
 
 
-def update_run_progress(conn, run_id: str, inserted: int, blocked: list[dict], completed_events: int) -> None:
+def update_run(conn, run_id: str, status: str, inserted: int, blocked: list[dict], completed_events: int, finish: bool = False) -> None:
     with conn.cursor() as cur:
         cur.execute("""update retrieval_runs
-            set observations_written=%s,
+            set status=%s, observations_written=%s,
                 metadata=%s::jsonb,
-                notes=%s
-            where run_id=%s::uuid""",
-            (inserted,
-             json.dumps({"blocked": blocked, "events_completed_from_provider": completed_events, "resume_safe": True, "commit_scope": "per_event"}, sort_keys=True),
-             "Targeted event-window XAU 1m historical reconstruction; progress committed per event",
-             run_id))
-    conn.commit()
-
-
-def finalize_run(conn, run_id: str, status: str, inserted: int, blocked: list[dict], completed_events: int) -> None:
-    with conn.cursor() as cur:
-        cur.execute("""update retrieval_runs
-            set finished_at=now(), status=%s, observations_written=%s,
-                metadata=%s::jsonb,
-                notes=%s
+                notes=%s,
+                finished_at=case when %s then now() else finished_at end
             where run_id=%s::uuid""",
             (status, inserted,
-             json.dumps({"blocked": blocked, "events_completed_from_provider": completed_events, "resume_safe": True, "commit_scope": "per_event"}, sort_keys=True),
+             json.dumps({"blocked": blocked, "events_completed_from_provider": completed_events,
+                         "resume_safe": True, "commit_scope": "per_event"}, sort_keys=True),
              "Targeted event-window XAU 1m historical reconstruction; resume-safe per-event commits",
-             run_id))
+             finish, run_id))
     conn.commit()
 
 
@@ -182,15 +168,11 @@ def main() -> int:
     run_id = str(uuid.uuid4())
     retrieved = datetime.now(timezone.utc)
     session = requests.Session()
+    daily_credit_blocked = False
     with psycopg.connect(env("NEON_DATABASE_URL"), autocommit=False) as conn:
         events = load_events(conn)
         have = existing_times(conn, events)
-        targets = []
-        for e in events:
-            req = [e["event_ts"] + timedelta(minutes=o) for o in OFFSETS]
-            if any(t not in have for t in req):
-                targets.append(e)
-
+        targets = [e for e in events if any(e["event_ts"] + timedelta(minutes=o) not in have for o in OFFSETS)]
         insert_run_start(conn, run_id, retrieved, len(targets))
         inserted = 0
         supported_after = 0
@@ -208,60 +190,49 @@ def main() -> int:
                     if t not in bars:
                         missing.append(t.isoformat())
                         continue
-                    meta = {
-                        "engine": ENGINE,
-                        "family": e["family"],
-                        "event_ts": e["event_ts"].isoformat(),
-                        "event_state": e["state"],
-                        "event_score": e["score"],
-                        "offset_minutes": offset,
-                        "symbol": "XAU/USD",
-                        "interval": "1min",
-                        "timezone": "UTC",
-                        "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
-                        "historical_retrieval_not_original_pit_capture": True,
-                        "production_authority": False,
-                    }
-                    event_rows.append((
-                        run_id, SERIES_ID, t, bars[t], "Twelve Data XAU/USD Commodity Aggregate", "XAU/USD",
-                        retrieved, retrieved, retrieved, retrieved, "1min", "USD/oz", "LEVEL",
-                        "APPROVED_HISTORICAL_REACTION_RECONSTRUCTION", f"{SERIES_ID}:{t.isoformat()}", payload_hash,
-                        json.dumps(meta, sort_keys=True),
-                    ))
+                    meta = {"engine": ENGINE, "family": e["family"], "event_ts": e["event_ts"].isoformat(),
+                            "event_state": e["state"], "event_score": e["score"], "offset_minutes": offset,
+                            "symbol": "XAU/USD", "interval": "1min", "timezone": "UTC",
+                            "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+                            "historical_retrieval_not_original_pit_capture": True,
+                            "production_authority": False}
+                    event_rows.append((run_id, SERIES_ID, t, bars[t], "Twelve Data XAU/USD Commodity Aggregate", "XAU/USD",
+                                       retrieved, retrieved, retrieved, retrieved, "1min", "USD/oz", "LEVEL",
+                                       "APPROVED_HISTORICAL_REACTION_RECONSTRUCTION",
+                                       f"{SERIES_ID}:{t.isoformat()}", payload_hash, json.dumps(meta, sort_keys=True)))
                 if missing:
-                    blocked.append({"family": e["family"], "event_ts": e["event_ts"].isoformat(), "missing": missing, "reason": "MISSING_REQUIRED_BARS_IN_PROVIDER_RESPONSE"})
+                    blocked.append({"family": e["family"], "event_ts": e["event_ts"].isoformat(),
+                                    "missing": missing, "reason": "MISSING_REQUIRED_BARS_IN_PROVIDER_RESPONSE"})
                 else:
                     supported_after += 1
-
                 inserted += persist_event_rows(conn, event_rows)
                 for row in event_rows:
                     have.add(row[2])
-                update_run_progress(conn, run_id, inserted, blocked, supported_after)
+                update_run(conn, run_id, "RUNNING", inserted, blocked, supported_after)
+            except DailyCreditExhausted as exc:
+                conn.rollback()
+                blocked.append({"family": e["family"], "event_ts": e["event_ts"].isoformat(),
+                                "reason": f"BLOCKED_PROVIDER_DAILY_CREDIT_EXHAUSTED:{exc}"})
+                daily_credit_blocked = True
+                update_run(conn, run_id, "BLOCKED", inserted, blocked, supported_after, finish=True)
+                break
             except Exception as exc:
                 conn.rollback()
-                blocked.append({"family": e["family"], "event_ts": e["event_ts"].isoformat(), "reason": f"{type(exc).__name__}:{exc}"})
-                update_run_progress(conn, run_id, inserted, blocked, supported_after)
-
+                blocked.append({"family": e["family"], "event_ts": e["event_ts"].isoformat(),
+                                "reason": f"{type(exc).__name__}:{exc}"})
+                update_run(conn, run_id, "RUNNING", inserted, blocked, supported_after)
             if i + 1 < len(targets):
                 time.sleep(8)
 
-        final_status = "SUCCESS" if not blocked else "PARTIAL"
-        finalize_run(conn, run_id, final_status, inserted, blocked, supported_after)
+        if not daily_credit_blocked:
+            update_run(conn, run_id, "SUCCESS" if not blocked else "PARTIAL", inserted, blocked, supported_after, finish=True)
 
-    result = {
-        "status": "PASS_XAU_EVENT_BACKFILL_COMPLETE" if not blocked else "PARTIAL_XAU_EVENT_BACKFILL",
-        "run_id": run_id,
-        "strong_events_total": len(events),
-        "events_needing_provider_backfill": len(targets),
-        "events_completed_from_provider": supported_after,
-        "observations_written": inserted,
-        "blocked": blocked,
-        "series_id": SERIES_ID,
-        "resume_safe": True,
-        "commit_scope": "per_event",
-        "production_authority": False,
-        "market_shock_threshold_changed": False,
-    }
+    status = "BLOCKED_PROVIDER_DAILY_CREDIT_EXHAUSTED" if daily_credit_blocked else ("PASS_XAU_EVENT_BACKFILL_COMPLETE" if not blocked else "PARTIAL_XAU_EVENT_BACKFILL")
+    result = {"status": status, "run_id": run_id, "strong_events_total": len(events),
+              "events_needing_provider_backfill": len(targets), "events_completed_from_provider": supported_after,
+              "observations_written": inserted, "blocked": blocked, "series_id": SERIES_ID,
+              "resume_safe": True, "commit_scope": "per_event", "production_authority": False,
+              "market_shock_threshold_changed": False}
     with open("macro_event_successor_v3_xau_event_backfill_r1_result.json", "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2, sort_keys=True)
     print(json.dumps(result, indent=2, sort_keys=True))
