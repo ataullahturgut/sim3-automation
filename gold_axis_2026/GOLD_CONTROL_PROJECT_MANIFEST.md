@@ -24,7 +24,6 @@ Binding current data/readiness contracts:
 
 - `GOLD_CONTROL_MODEL_DATA_READINESS_CONTRACT_V143_2026-09-07.md`
 - `GOLD_CONTROL_LIVE_INTRAMONTH_RECOMPUTE_CONTRACT_V144_2026-09-07.md`
-- `GOLD_CONTROL_HISTORICAL_PILOT_READINESS_CONTRACT_V145_2026-09-08.md`
 
 Binding current operational implementations:
 
@@ -32,7 +31,11 @@ Binding current operational implementations:
 - live intramonth append-only recompute: `data_pipeline/live_intramonth_recompute_v144.py`
 - read-only current/live model-data readiness audit: `tools/audit_model_data_readiness_v143.py`
 - strict post-write intramonth audit: `tools/audit_live_intramonth_postwrite_v144.py`
-- read-only historical pilot readiness audit: `tools/audit_historical_pilot_readiness_v145.py`
+
+Planned V1.45 historical-pilot artifacts, not yet binding until separately created/frozen:
+
+- `GOLD_CONTROL_HISTORICAL_PILOT_READINESS_CONTRACT_V145_2026-09-08.md`
+- `tools/audit_historical_pilot_readiness_v145.py`
 
 `ACTIVE` means a governed identity is present on the current runtime surface. It is **not** by itself a source-freshness, historical-pilot-readiness or successful-recomputation certificate.
 
@@ -252,7 +255,7 @@ Rules:
 - storage must be append-only or immutable-artifact based, with explicit source, retrieval, quality, lineage and fingerprint metadata;
 - current production canonical semantics may not be silently rewritten to pretend reconstructed rows were available at the original historical origin.
 
-Historical pilot readiness is established by the V1.45 historical-pilot audit, not by the V1.43 current/live readiness audit.
+Historical pilot readiness is established by the V1.45 historical-pilot audit once that audit is separately created and frozen; it is not established by the V1.43 current/live readiness audit.
 
 ---
 
@@ -395,11 +398,7 @@ Required states:
 - `IMPLEMENTATION_FAIL`
 - `NOT_PROVEN`
 
-Historical-pilot readiness audit:
-
-`tools/audit_historical_pilot_readiness_v145.py`
-
-The audit must produce at minimum a `12 engines × 20 target origins` matrix covering:
+The planned V1.45 audit must produce at minimum a `12 engines × 20 target origins` matrix covering:
 
 - `2025-01..2025-12` = 12 retrospective validation targets;
 - `2026-01..2026-08` = 8 retrospective frozen OOS targets.
@@ -567,7 +566,7 @@ The approved resolution order is:
 3. classify each requested date as `AVAILABLE`, `PROVIDER_NO_BAR`, `ENTITLEMENT_BLOCKED`, `REQUEST_ERROR` or another explicit fail-closed code;
 4. accept only exact valid bars;
 5. persist or archive with truthful retrieval timestamps, lineage and historical-reconstruction evidence labels;
-6. rerun V1.45 historical-pilot readiness audit.
+6. rerun the V1.45 historical-pilot readiness audit once implemented.
 
 No broad intraday cache expansion is required when a minimal exact-bar reconstruction is sufficient.
 
@@ -666,7 +665,7 @@ The project is not blocked on designing another model or selector.
 
 The next governed work is:
 
-1. implement/freeze `GOLD_CONTROL_HISTORICAL_PILOT_READINESS_CONTRACT_V145_2026-09-08.md`;
+1. create/freeze `GOLD_CONTROL_HISTORICAL_PILOT_READINESS_CONTRACT_V145_2026-09-08.md`;
 2. implement the read-only `tools/audit_historical_pilot_readiness_v145.py`;
 3. produce the exact `12 × 20` historical readiness matrix;
 4. resolve Priority A historical NY17 gaps under Section 7.2/12;
