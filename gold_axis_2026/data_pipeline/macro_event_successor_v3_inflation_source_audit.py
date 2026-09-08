@@ -5,7 +5,7 @@ import json
 import os
 import re
 from dataclasses import dataclass
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -53,6 +53,9 @@ TARGET_EVENT_NAMES = {
     "Core CPI (MoM)": "MACRO_CORE_CPI_CONSENSUS_PIT",
 }
 DISCOVERY_DATE = "2026-04-10"
+_REFERENCE_MONTH_SUFFIX = re.compile(
+    r"\s+\((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\)$"
+)
 
 
 @dataclass(frozen=True)
@@ -112,6 +115,10 @@ def pct_mom_1dp(current: float, previous: float) -> float:
     return round((current / previous - 1.0) * 100.0, 1)
 
 
+def normalize_event_name(name: str) -> str:
+    return _REFERENCE_MONTH_SUFFIX.sub("", " ".join(name.split())).strip()
+
+
 def audit_alfred_actuals() -> dict[str, Any]:
     s = requests.Session()
     rows = []
@@ -149,7 +156,7 @@ def audit_alfred_actuals() -> dict[str, Any]:
             "derived_headline_cpi_mom_1dp": got_headline,
             "expected_headline_cpi_mom_1dp": check["expected_cpi_mom_pct_1dp"],
             "derived_core_cpi_mom_1dp": got_core,
-            "expected_core_cpi_mom_1dp": check["expected_core_cpi_mom_pct_1dp"],
+            "expected_core_cpi_mom_pct_1dp": check["expected_core_cpi_mom_pct_1dp"],
             "raw_levels_logged": False,
         })
     passed = len(rows) == len(CHECKS) and all(r["status"] == "PASS" for r in rows)
@@ -183,21 +190,21 @@ def _base_defaults(session: requests.Session) -> tuple[str, str]:
         selected = tz.find("option", selected=True)
         if selected and selected.get("value"):
             timezone_value = str(selected["value"])
-    checked = soup.find("input", {"name": "timeFilter", "checked": True})
+    checked = soup.find("input", {"name": "timeFilter", "checked": True)
     if checked and checked.get("value"):
         time_filter = str(checked["value"])
     return timezone_value, time_filter
 
 
 def _event_name(row) -> str:
-    cell = row.find("td", class_=lambda c: c and "event" in str(c).split())
+    cell = row.select_one("td.event")
     if not cell:
         return ""
-    return " ".join(cell.get_text(" ", strip=True).split())
+    return normalize_event_name(cell.get_text(" ", strip=True))
 
 
 def _currency(row) -> str | None:
-    cell = row.find("td", class_=lambda c: c and "flagCur" in str(c).split())
+    cell = row.select_one("td.flagCur")
     if not cell:
         return None
     text = " ".join(cell.get_text(" ", strip=True).split())
@@ -206,8 +213,7 @@ def _currency(row) -> str | None:
 
 
 def _forecast_present(row) -> bool:
-    # Presence only; do not log the provider value in this source-discovery audit.
-    cell = row.find("td", class_=lambda c: c and "fore" in str(c).split())
+    cell = row.select_one("td.fore")
     if cell is None:
         return False
     text = " ".join(cell.get_text(" ", strip=True).split())
