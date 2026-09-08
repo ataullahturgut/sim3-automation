@@ -1,0 +1,82 @@
+name: Gold Control XAU Intraday Cache Audit Replay V1
+
+on:
+  push:
+    branches:
+      - gold-control-unified-emergency-replay-v1
+    paths:
+      - '.github/workflows/gold-control-xau-intraday-cache-audit-replay-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-xau-intraday-cache-audit-replay-v1
+  cancel-in-progress: false
+
+env:
+  NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+  PYTHONPATH: ${{ github.workspace }}
+
+jobs:
+  audit-and-replay:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-unified-emergency-replay-v1
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install cache replay runtime
+        run: pip install -q pandas numpy scipy requests 'psycopg[binary]'
+      - name: Require Neon credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Audit exact research cache counts
+        id: audit
+        shell: bash
+        run: |
+          python - <<'PY' | tee xau_intraday_cache_audit_v1.json
+          import json, os
+          import psycopg
+          with psycopg.connect(os.environ['NEON_DATABASE_URL']) as conn, conn.cursor() as cur:
+              cur.execute("select count(*), min(observation_ts), max(observation_ts) from xau_intraday_research_cache_5m")
+              five = cur.fetchone()
+              cur.execute("select count(*), min(observation_ts), max(observation_ts) from xau_intraday_research_cache_1m")
+              one = cur.fetchone()
+          report = {
+              'contract':'GOLD_CONTROL_XAU_INTRADAY_CACHE_AUDIT_V1',
+              '5min':{'rows':int(five[0]),'first_ts':five[1].isoformat() if five[1] else None,'last_ts':five[2].isoformat() if five[2] else None},
+              '1min':{'rows':int(one[0]),'first_ts':one[1].isoformat() if one[1] else None,'last_ts':one[2].isoformat() if one[2] else None},
+              'expected':{'5min_rows':482734,'1min_rows':1393783},
+              'cache_complete_for_replay':int(five[0])==482734 and int(one[0])==1393783,
+              'prospective_claim':False,
+              'production_promotion':'BLOCKED_RESEARCH_ONLY'
+          }
+          print(json.dumps(report, indent=2, sort_keys=True))
+          with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf-8') as f:
+              f.write('cache_complete=' + ('true' if report['cache_complete_for_replay'] else 'false') + '\n')
+          PY
+      - name: Replay Market Shock and Emergency from Neon cache with zero provider calls
+        if: steps.audit.outputs.cache_complete == 'true'
+        run: |
+          python -m py_compile gold_axis_2026/tools/xau_intraday_cache_model_replay_v1.py
+          python -m gold_axis_2026.tools.xau_intraday_cache_model_replay_v1 \
+            --market-json market_shock_cache_replay_v1.json \
+            --emergency-json emergency_cache_replay_v146.json \
+            --emergency-csv emergency_cache_replay_v146_months.csv \
+            --equivalence-json xau_intraday_cache_replay_equivalence_v1.json
+      - name: Upload audit and equivalence evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-xau-intraday-cache-audit-replay-v1
+          path: |
+            xau_intraday_cache_audit_v1.json
+            market_shock_cache_replay_v1.json
+            emergency_cache_replay_v146.json
+            emergency_cache_replay_v146_months.csv
+            xau_intraday_cache_replay_equivalence_v1.json
+          if-no-files-found: warn
