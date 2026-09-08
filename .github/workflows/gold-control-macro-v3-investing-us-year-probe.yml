@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install requests beautifulsoup4
-      - name: Probe Investing pagination
+      - name: Probe half-year US CPI bulk retrieval
         run: |
           python - <<'PY'
           import json,requests
@@ -29,22 +29,20 @@ jobs:
           if opt and opt.get('value'): tz=str(opt['value'])
           chk=soup.find('input',{'name':'timeFilter','checked':True})
           if chk and chk.get('value'): tf=str(chk['value'])
-          all_cpi=[]
-          for off in (0,200,400,600,800,1000):
-            payload=[('dateFrom','2016-01-01'),('dateTo','2016-12-31'),('timeZone',tz),('timeFilter',tf),('currentTab','custom'),('submitFilters','1'),('limit_from',str(off)),('country[]','5')]
-            rr=s.post(filt,data=payload,headers=h,timeout=60); print('offset',off,'status',rr.status_code,'len',len(rr.text)); rr.raise_for_status(); html=str(rr.json().get('data') or '')
+          for start,end in [('2016-01-01','2016-06-30'),('2016-07-01','2016-12-31')]:
+            payload=[('dateFrom',start),('dateTo',end),('timeZone',tz),('timeFilter',tf),('currentTab','custom'),('submitFilters','1'),('limit_from','0'),('country[]','5')]
+            rr=s.post(filt,data=payload,headers=h,timeout=60); print(start,end,'status',rr.status_code,'len',len(rr.text)); rr.raise_for_status(); body=rr.json(); html=str(body.get('data') or '')
+            print('body_keys',sorted(body.keys()))
             sp=BeautifulSoup('<table>'+html+'</table>','html.parser'); rows=[]; total=0
             for tr in sp.find_all('tr'):
               cell=tr.select_one('td.event')
               if not cell: continue
               flag=tr.select_one('td.flagCur span'); country=str(flag.get('title') or '') if flag else ''
               if country!='United States': continue
-              total += 1
+              total+=1
               attr=str(tr.get('event_attr_id') or tr.get('event_attr_ID') or '')
               if attr not in {'69','56'}: continue
               fore=tr.select_one('td.fore')
               rows.append({'attr':attr,'name':' '.join(cell.get_text(' ',strip=True).split()),'forecast':fore.get_text(' ',strip=True) if fore else None,'datetime':tr.get('data-event-datetime')})
-            all_cpi.extend(rows)
-            print(json.dumps({'offset':off,'us_rows':total,'cpi_rows':len(rows),'first':rows[:2],'last':rows[-2:]},indent=2))
-          print(json.dumps({'all_cpi_count':len(all_cpi),'unique_datetimes':sorted(set(x['datetime'] for x in all_cpi))},indent=2))
+            print(json.dumps({'range':[start,end],'us_rows':total,'cpi_rows':len(rows),'unique_datetimes':sorted(set(x['datetime'] for x in rows)),'rows':rows},indent=2))
           PY
