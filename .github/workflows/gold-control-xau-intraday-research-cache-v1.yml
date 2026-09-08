@@ -1,0 +1,107 @@
+name: Gold Control XAU Intraday Research Cache V1
+
+on:
+  push:
+    branches:
+      - gold-control-unified-emergency-replay-v1
+    paths:
+      - 'gold_axis_2026/tools/xau_intraday_research_cache_ingest_v1.py'
+      - 'gold_axis_2026/tools/xau_intraday_cache_model_replay_v1.py'
+      - '.github/workflows/gold-control-xau-intraday-research-cache-v1.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: gold-control-twelve-unified-research-replay
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+  NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+  TWELVE_MIN_REQUEST_INTERVAL_SECONDS: '10.0'
+  PYTHONPATH: ${{ github.workspace }}
+
+jobs:
+  ingest-and-cache-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-unified-emergency-replay-v1
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install research cache runtime
+        run: pip install -q pandas numpy scipy requests 'psycopg[binary]'
+
+      - name: Require protected credentials
+        run: |
+          test -n "$TWELVE_DATA_API_KEY"
+          test -n "$NEON_DATABASE_URL"
+
+      - name: Compile cache and replay code
+        run: |
+          python -m py_compile gold_axis_2026/tools/xau_intraday_research_cache_ingest_v1.py
+          python -m py_compile gold_axis_2026/tools/xau_intraday_cache_model_replay_v1.py
+          python -m py_compile gold_axis_2026/tools/market_shock_unified_replay_v1.py
+          python -m py_compile gold_axis_2026/tools/emergency_intraday_replay_validation_v146.py
+
+      - name: Persist compact historical XAU cache to Neon
+        env:
+          GOLD_CODE_SHA: ${{ github.sha }}
+        run: |
+          python -m gold_axis_2026.tools.xau_intraday_research_cache_ingest_v1 \
+            --five-start '2020-04-06 00:00:00' \
+            --five-end '2026-08-31 23:59:59' \
+            --one-start-month '2023-01' \
+            --one-end-month '2026-07' \
+            --output xau_intraday_research_cache_ingest_v1.json
+
+      - name: Replay model from Neon cache when complete
+        env:
+          GOLD_CODE_SHA: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          import json, subprocess, sys
+          report=json.load(open('xau_intraday_research_cache_ingest_v1.json'))
+          if not report['audit']['cache_complete_for_replay']:
+              print('CACHE_PARTIAL_MODEL_EQUIVALENCE_DEFERRED', json.dumps(report['audit'], sort_keys=True))
+              raise SystemExit(0)
+          subprocess.check_call([
+              sys.executable, '-m', 'gold_axis_2026.tools.xau_intraday_cache_model_replay_v1',
+              '--market-json', 'market_shock_cache_replay_v1.json',
+              '--emergency-json', 'emergency_cache_replay_v146.json',
+              '--emergency-csv', 'emergency_cache_replay_v146_months.csv',
+              '--equivalence-json', 'xau_intraday_cache_replay_equivalence_v1.json',
+          ])
+          PY
+
+      - name: Verify no authority-store writes
+        run: |
+          python - <<'PY'
+          import os, psycopg
+          with psycopg.connect(os.environ['NEON_DATABASE_URL']) as conn, conn.cursor() as cur:
+              cur.execute('select (select count(*) from monthly_forecast_contracts),(select count(*) from decision_signal_snapshots),(select count(*) from decision_runs),(select count(*) from decision_events)')
+              values=cur.fetchone()
+              assert values == (0,0,0,0), values
+              print('RESEARCH_CACHE_AUTHORITY_STORES_REMAIN_ZERO')
+          PY
+
+      - name: Upload aggregate cache evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-xau-intraday-research-cache-v1
+          path: |
+            xau_intraday_research_cache_ingest_v1.json
+            market_shock_cache_replay_v1.json
+            emergency_cache_replay_v146.json
+            emergency_cache_replay_v146_months.csv
+            xau_intraday_cache_replay_equivalence_v1.json
+          if-no-files-found: warn
