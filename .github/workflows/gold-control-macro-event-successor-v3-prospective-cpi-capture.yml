@@ -6,6 +6,8 @@ on:
       - gold-control-macro-event-successor-v3
     paths:
       - '.github/workflows/gold-control-macro-event-successor-v3-prospective-cpi-capture.yml'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_prospective_consensus_capture.py'
+      - 'gold_axis_2026/tests/test_macro_event_successor_v3_prospective_consensus_capture.py'
   workflow_dispatch:
 
 permissions:
@@ -49,8 +51,12 @@ jobs:
           assert d['production_db_write'] is False, d
           assert d['market_shock_threshold_changed'] is False, d
           assert d['raw_market_shock_episode_changed'] is False, d
-          # A missing provider forecast is an evidence result, never silently filled.
           assert d['status'] in {'PASS_PROSPECTIVE_PRE_RELEASE_CAPTURE','BLOCKED_INCOMPLETE_PROSPECTIVE_CAPTURE'}, d
+          if d['status']=='PASS_PROSPECTIVE_PRE_RELEASE_CAPTURE':
+              by={x['event_name']:x for x in d['snapshots']}
+              assert set(by)=={'CPI (MoM)','Core CPI (MoM)'}, d
+              assert by['CPI (MoM)']['event_attr_id']=='69', d
+              assert by['Core CPI (MoM)']['event_attr_id']=='56', d
           print('MACRO_EVENT_V3_PROSPECTIVE_CAPTURE_GOVERNANCE_PASS')
           PY
       - name: Upload immutable run artifact
