@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import hashlib
-import re
+import time
 from datetime import datetime
 
 import requests
@@ -64,46 +64,59 @@ def consensus_and_timestamp_for_date(release_date: str) -> tuple[dict[str, float
         ("timeFilter", tf), ("currentTab", "custom"), ("submitFilters", "1"),
         ("limit_from", "0"),
     ]
-    r = _INV_SESSION.post(core.INVESTING_FILTERED, data=payload, headers=core.inv_headers(), timeout=(10, 60))
-    if r.status_code == 429:
-        raise RuntimeError("INVESTING_RATE_LIMIT")
-    r.raise_for_status()
-    body = r.json(); html = str(body.get("data") or "")
-    if not html:
-        raise RuntimeError("INVESTING_NO_DATA")
-    soup = BeautifulSoup(f"<table>{html}</table>", "html.parser")
-    found: dict[str, float] = {}
-    timestamps: set[str] = set()
-    for tr in soup.find_all("tr"):
-        cell = tr.select_one("td.event")
-        if not cell:
+    last_status: int | None = None
+    for attempt in range(8):
+        r = _INV_SESSION.post(core.INVESTING_FILTERED, data=payload, headers=core.inv_headers(), timeout=(10, 60))
+        last_status = r.status_code
+        if r.status_code == 429:
+            retry_after = r.headers.get("Retry-After")
+            try:
+                wait = float(retry_after) if retry_after else min(5.0 * (attempt + 1), 30.0)
+            except ValueError:
+                wait = min(5.0 * (attempt + 1), 30.0)
+            time.sleep(max(wait, 2.0))
             continue
-        name = core.normalize_event_name(cell.get_text(" ", strip=True))
-        if name not in core.INVESTING_IDS:
+        if 500 <= r.status_code < 600:
+            time.sleep(min(3.0 * (attempt + 1), 20.0))
             continue
-        attr = str(tr.get("event_attr_id") or tr.get("event_attr_ID") or "")
-        if attr != core.INVESTING_IDS[name]:
-            continue
-        fore = tr.select_one("td.fore")
-        val = core.parse_provider_number(fore.get_text(" ", strip=True) if fore else "")
-        pdt = str(tr.get("data-event-datetime") or tr.get("event_timestamp") or "")
-        if val is not None and pdt:
-            found[name] = val
-            timestamps.add(pdt)
-    if set(found) != set(core.INVESTING_IDS) or len(timestamps) != 1:
-        raise RuntimeError(f"NO_EXACT_MONTHLY_CPI_PAIR:{sorted(found)}:{sorted(timestamps)}")
-    digest = hashlib.sha256(html.encode()).hexdigest()
-    return found, digest, next(iter(timestamps))
+        r.raise_for_status()
+        body = r.json(); html = str(body.get("data") or "")
+        if not html:
+            raise RuntimeError("INVESTING_NO_DATA")
+        soup = BeautifulSoup(f"<table>{html}</table>", "html.parser")
+        found: dict[str, float] = {}
+        timestamps: set[str] = set()
+        countries: set[str] = set()
+        for tr in soup.find_all("tr"):
+            cell = tr.select_one("td.event")
+            if not cell:
+                continue
+            name = core.normalize_event_name(cell.get_text(" ", strip=True))
+            if name not in core.INVESTING_IDS:
+                continue
+            attr = str(tr.get("event_attr_id") or tr.get("event_attr_ID") or "")
+            if attr != core.INVESTING_IDS[name]:
+                continue
+            flag = tr.select_one("td.flagCur span")
+            country = str(flag.get("title") or "") if flag else ""
+            if country != "United States":
+                continue
+            fore = tr.select_one("td.fore")
+            val = core.parse_provider_number(fore.get_text(" ", strip=True) if fore else "")
+            pdt = str(tr.get("data-event-datetime") or tr.get("event_timestamp") or "")
+            if val is not None and pdt:
+                found[name] = val
+                timestamps.add(pdt)
+                countries.add(country)
+        if set(found) != set(core.INVESTING_IDS) or len(timestamps) != 1 or countries != {"United States"}:
+            raise RuntimeError(f"NO_EXACT_US_MONTHLY_CPI_PAIR:{sorted(found)}:{sorted(timestamps)}:{sorted(countries)}")
+        digest = hashlib.sha256(html.encode()).hexdigest()
+        return found, digest, next(iter(timestamps))
+    raise RuntimeError(f"INVESTING_RATE_LIMIT_RETRY_EXHAUSTED:{release_date}:{last_status}")
 
 
 def official_cpi_release_schedule(start_year: int, end_year: int) -> list[dict]:
-    """Cross-validate official FRED CPI release dates with exact provider event identities.
-
-    FRED release_id=10 supplies source-published dates. Special/revision release dates
-    are excluded unless exact headline CPI MoM event_attr_id=69 and Core CPI MoM
-    event_attr_id=56 are both present on that date. Provider event datetime must equal
-    the governed BLS 08:30 America/New_York timestamp.
-    """
+    """Cross-validate official FRED CPI release dates with exact US provider event identities."""
     key = core.require_env("FRED_API_KEY")
     base = "https://api.stlouisfed.org/fred"
     rel = core.get(base + "/series/release", params={"series_id": "CPIAUCSL", "api_key": key, "file_type": "json"}).json()
@@ -121,13 +134,20 @@ def official_cpi_release_schedule(start_year: int, end_year: int) -> list[dict]:
     ).json()
     out: list[dict] = []
     seen: set[str] = set()
+    diagnostics: list[str] = []
     for row in payload.get("release_dates") or []:
         d = datetime.strptime(str(row["date"]), "%Y-%m-%d")
         if not (start_year <= d.year <= end_year):
             continue
         try:
             consensus, digest, provider_dt = consensus_and_timestamp_for_date(d.date().isoformat())
-        except Exception:
+        except RuntimeError as exc:
+            # Special/revision FRED release dates may legitimately lack the exact CPI/Core pair.
+            # Rate-limit exhaustion is NOT silently skipped.
+            if str(exc).startswith("INVESTING_RATE_LIMIT_RETRY_EXHAUSTED"):
+                raise
+            diagnostics.append(f"{d.date()}:{exc}")
+            time.sleep(1.0)
             continue
         release_local = datetime(d.year, d.month, d.day, 8, 30, tzinfo=core.ET)
         expected_utc = release_local.astimezone(core.UTC).strftime("%Y/%m/%d %H:%M:%S")
@@ -142,10 +162,11 @@ def official_cpi_release_schedule(start_year: int, end_year: int) -> list[dict]:
             "reference_month": ref,
             "release_at": release_local.astimezone(core.UTC),
             "release_date": d.date().isoformat(),
-            "authority_url": "FRED_RELEASE_ID_10_SOURCE_DATE_PLUS_EXACT_CPI69_CORE56_0830ET_MATCH",
+            "authority_url": "FRED_RELEASE_ID_10_SOURCE_DATE_PLUS_EXACT_US_CPI69_CORE56_0830ET_MATCH",
         })
+        time.sleep(1.25)
     if len(out) < 120:
-        raise RuntimeError(f"CONFIRMED_CPI_RELEASE_COVERAGE_TOO_SHORT:{len(out)}")
+        raise RuntimeError(f"CONFIRMED_CPI_RELEASE_COVERAGE_TOO_SHORT:{len(out)}:diagnostics={diagnostics[:8]}")
     return out
 
 
