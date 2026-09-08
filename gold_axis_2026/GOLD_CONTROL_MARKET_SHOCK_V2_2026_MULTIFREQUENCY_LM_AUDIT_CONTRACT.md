@@ -57,9 +57,11 @@ The authoritative event population is V2 LM5 episodes in 2026-01..2026-05.
 
 An alternative-frequency signal confirms an LM5 episode when its signal timestamp is within the following absolute tolerance of any LM5 signal timestamp in that episode:
 
-- 1m: ±2 minutes;
-- 3m: ±3 minutes;
+- 1m: ±5 minutes;
+- 3m: ±5 minutes;
 - 10m: ±10 minutes.
+
+The 1m/3m tolerances are bin-alignment tolerances only: a jump occurring near the beginning of the authoritative 5-minute bar must not be declared unconfirmed merely because the alternative bar closes earlier. These tolerances were frozen before any multi-frequency output was viewed.
 
 5m is the base detector and is not counted as an independent confirmation.
 
