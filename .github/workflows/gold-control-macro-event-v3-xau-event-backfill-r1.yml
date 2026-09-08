@@ -1,0 +1,64 @@
+name: Gold Control Macro Event V3 XAU Event Backfill R1
+
+on:
+  push:
+    branches: [gold-control-macro-event-successor-v3]
+    paths:
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_xau_event_backfill_r1.py'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_historical_reaction_test_r2.py'
+      - '.github/workflows/gold-control-macro-event-v3-xau-event-backfill-r1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  xau-event-backfill-and-retest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install requests 'psycopg[binary]'
+      - name: Require governed channels
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$TWELVE_DATA_API_KEY"
+      - name: Compile
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_xau_event_backfill_r1.py
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_historical_reaction_test_r1.py
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_historical_reaction_test_r2.py
+      - name: Backfill missing Macro Event XAU bars from existing Twelve Data channel
+        run: python gold_axis_2026/data_pipeline/macro_event_successor_v3_xau_event_backfill_r1.py
+      - name: Re-run frozen Macro Event reaction test
+        working-directory: gold_axis_2026/data_pipeline
+        run: python macro_event_successor_v3_historical_reaction_test_r2.py
+      - name: Validate governance
+        run: |
+          python - <<'PY'
+          import json
+          a=json.load(open('macro_event_successor_v3_xau_event_backfill_r1_result.json',encoding='utf-8'))
+          b=json.load(open('gold_axis_2026/data_pipeline/macro_event_successor_v3_historical_reaction_test_r2_result.json',encoding='utf-8'))
+          assert a['production_authority'] is False, a
+          assert a['market_shock_threshold_changed'] is False, a
+          assert b['production_authority'] is False, b
+          assert b['market_shock_threshold_changed'] is False, b
+          assert b['raw_market_shock_episode_changed'] is False, b
+          print('MACRO_EVENT_V3_XAU_EVENT_BACKFILL_AND_RETEST_COMPLETED')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-v3-xau-event-backfill-r1
+          path: |
+            macro_event_successor_v3_xau_event_backfill_r1_result.json
+            gold_axis_2026/data_pipeline/macro_event_successor_v3_historical_reaction_test_r2_result.json
+          if-no-files-found: error
