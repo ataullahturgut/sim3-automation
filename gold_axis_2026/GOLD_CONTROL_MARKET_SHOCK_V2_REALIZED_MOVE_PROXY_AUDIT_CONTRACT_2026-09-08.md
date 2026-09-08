@@ -98,3 +98,33 @@ This audit:
 - does not prove an authoritative real false-positive rate;
 - does not create prospective evidence;
 - does not authorize production promotion, UI promotion, selector use, action mapping, production Neon writes, canonical merge, or deployment.
+
+## 9. Execution record — 2026 first-stage stop
+
+Workflow run `34204696538` executed the pre-registered sequence on commit `85a422dcc8efa9209772e6c8aee1957f170729f8`.
+
+2026 results:
+
+- V2 eligible bars: `56,234`;
+- V2 signal bars: `578`;
+- V2 signal rate: `0.010278479211864708`;
+- signal episodes: `385`;
+- proxy-supported episodes: `105`;
+- proxy-unsupported episodes: `280`;
+- episode proxy precision: `0.2727272727272727`;
+- proxy false-alarm diagnostic: `0.7272727272727273`;
+- Wilson 95% lower bound: `0.23064919385117447`;
+- matched controls constructed: `1,925 / 1,925`;
+- matched-control support rate: `0.007792207792207792`;
+- enrichment ratio: `35.0`;
+- LM-containing episodes: `381`, supported `102`, precision `0.2677165354330709`;
+- EVT-containing episodes: `50`, supported `38`, precision `0.76`;
+- compound episodes: `46`, supported `35`, precision `0.7608695652173914`.
+
+Gate result: `FAIL_PROXY_VALIDATION` because the pre-registered `>=0.80` episode precision and `>=0.75` Wilson lower-bound gates failed. The enrichment and control-completion gates passed.
+
+Per the frozen sequential rule, **2025 and 2024 were not executed**.
+
+Interpretation constraint: this failure means that most V2 episodes did not reach the frozen absolute `0.50%` raw-move floor on the component's own horizon. It does **not** prove that 72.7% of alarms are true false positives. The 35x enrichment versus matched ordinary windows indicates that the V2 alarms are strongly non-random; the real-history authoritative false-positive rate remains `NOT_PROVEN_NO_INDEPENDENT_EVENT_LABEL_SET`.
+
+Production status remains `BLOCKED_RESEARCH_CHALLENGER_ONLY`. No model parameter, alarm threshold, canonical manifest, production runtime, UI or deployment was changed by this audit.
