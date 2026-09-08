@@ -1,0 +1,71 @@
+name: Gold Control Macro Event V3 FOMC USMPD Historical R1
+
+on:
+  push:
+    branches: [gold-control-macro-event-successor-v3]
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V3_FOMC_USMPD_HISTORICAL_CONTRACT_2026-09-08.md'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_fomc_usmpd_ingest_r1.py'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_existing_channels_r3.py'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_historical_reaction_test_r1.py'
+      - '.github/workflows/gold-control-macro-event-v3-fomc-usmpd-historical-r1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fomc-usmpd-historical:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install requests openpyxl numpy 'psycopg[binary]'
+      - name: Require governed Neon connection
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Compile frozen implementation
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_fomc_usmpd_ingest_r1.py
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_existing_channels_r3.py
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_historical_reaction_test_r1.py
+      - name: Ingest official SF Fed USMPD and frozen GSS factors
+        run: python gold_axis_2026/data_pipeline/macro_event_successor_v3_fomc_usmpd_ingest_r1.py
+      - name: Bind FOMC into Macro Event V3
+        run: python gold_axis_2026/data_pipeline/macro_event_successor_v3_existing_channels_r3.py
+      - name: Run frozen 2021-2025 Macro Event reaction test
+        run: python gold_axis_2026/data_pipeline/macro_event_successor_v3_historical_reaction_test_r1.py
+      - name: Enforce governance and result schema
+        run: |
+          python - <<'PY'
+          import json
+          a=json.load(open('macro_event_v3_fomc_usmpd_ingest_r1_result.json',encoding='utf-8'))
+          b=json.load(open('macro_event_successor_v3_existing_channels_r3_result.json',encoding='utf-8'))
+          c=json.load(open('macro_event_successor_v3_historical_reaction_test_r1_result.json',encoding='utf-8'))
+          assert a['status'] in {'PASS_USMPD_FOMC_HISTORICAL_INGEST','PASS_REUSED_EXISTING_USMPD_SOURCE_RUN'}, a
+          assert a['production_authority'] is False, a
+          assert b['status']=='PASS_EMPLOYMENT_INFLATION_FOMC_HISTORICAL_MODEL_BOUND', b
+          assert b['fomc']['prefix_invariance'] is True, b
+          assert b['model_layer_external_http_calls'] is False, b
+          assert b['production_authority'] is False, b
+          assert c['status'] in {'PASS_EVENT_REACTION_EVIDENCE','FAIL_EVENT_REACTION_EVIDENCE'}, c
+          assert c['production_authority'] is False, c
+          assert c['market_shock_threshold_changed'] is False, c
+          assert c['raw_market_shock_episode_changed'] is False, c
+          print('MACRO_EVENT_V3_FOMC_USMPD_HISTORICAL_PIPELINE_COMPLETED')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-v3-fomc-usmpd-historical-r1
+          path: |
+            macro_event_v3_fomc_usmpd_ingest_r1_result.json
+            macro_event_successor_v3_existing_channels_r3_result.json
+            macro_event_successor_v3_historical_reaction_test_r1_result.json
+          if-no-files-found: error
