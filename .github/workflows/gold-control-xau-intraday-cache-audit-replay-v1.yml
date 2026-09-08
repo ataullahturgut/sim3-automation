@@ -34,7 +34,7 @@ jobs:
         run: pip install -q pandas numpy scipy requests 'psycopg[binary]'
       - name: Require Neon credential
         run: test -n "$NEON_DATABASE_URL"
-      - name: Audit exact research cache counts
+      - name: Audit exact research cache counts and eligible partial scope
         id: audit
         shell: bash
         run: |
@@ -46,20 +46,53 @@ jobs:
               five = cur.fetchone()
               cur.execute("select count(*), min(observation_ts), max(observation_ts) from xau_intraday_research_cache_1m")
               one = cur.fetchone()
+              cur.execute("""
+                  select count(*), min(observation_ts), max(observation_ts)
+                  from xau_intraday_research_cache_1m
+                  where observation_ts >= '2023-01-01T00:00:00Z'
+                    and observation_ts < '2026-06-01T00:00:00Z'
+              """)
+              eligible = cur.fetchone()
+          full_complete = int(five[0]) == 482734 and int(one[0]) == 1393783
+          partial_ready = int(five[0]) == 482734 and int(eligible[0]) == 1305943
           report = {
               'contract':'GOLD_CONTROL_XAU_INTRADAY_CACHE_AUDIT_V1',
               '5min':{'rows':int(five[0]),'first_ts':five[1].isoformat() if five[1] else None,'last_ts':five[2].isoformat() if five[2] else None},
               '1min':{'rows':int(one[0]),'first_ts':one[1].isoformat() if one[1] else None,'last_ts':one[2].isoformat() if one[2] else None},
-              'expected':{'5min_rows':482734,'1min_rows':1393783},
-              'cache_complete_for_replay':int(five[0])==482734 and int(one[0])==1393783,
+              'expected_full':{'5min_rows':482734,'1min_rows':1393783},
+              'partial_eligible_1min':{
+                  'scope':'2023-01-01T00:00:00Z <= ts < 2026-06-01T00:00:00Z',
+                  'rows':int(eligible[0]),
+                  'expected_rows':1305943,
+                  'first_ts':eligible[1].isoformat() if eligible[1] else None,
+                  'last_ts':eligible[2].isoformat() if eligible[2] else None,
+              },
+              'proven_incomplete_1min_ranges':[
+                  {
+                      'missing_from':'2026-06-01T00:00:00Z',
+                      'missing_through':'2026-06-13T15:19:00Z',
+                      'missing_baseline_minutes':18200,
+                      'decision':'EXCLUDE_ENTIRE_2026-06_FROM_PARTIAL_REPLAY'
+                  },
+                  {
+                      'missing_from':'2026-07-01T00:00:00Z',
+                      'missing_through':'2026-07-31T23:59:00Z',
+                      'missing_baseline_minutes':44640,
+                      'decision':'EXCLUDE_ENTIRE_2026-07_FROM_PARTIAL_REPLAY'
+                  }
+              ],
+              'cache_complete_for_full_replay':full_complete,
+              'cache_ready_for_partial_replay':partial_ready,
+              'partial_replay_end_month':'2026-05',
               'prospective_claim':False,
               'production_promotion':'BLOCKED_RESEARCH_ONLY'
           }
           print(json.dumps(report, indent=2, sort_keys=True))
           with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf-8') as f:
-              f.write('cache_complete=' + ('true' if report['cache_complete_for_replay'] else 'false') + '\n')
+              f.write('cache_complete=' + ('true' if full_complete else 'false') + '\n')
+              f.write('partial_ready=' + ('true' if partial_ready else 'false') + '\n')
           PY
-      - name: Replay Market Shock and Emergency from Neon cache with zero provider calls
+      - name: Replay full Market Shock and Emergency from Neon cache with zero provider calls
         if: steps.audit.outputs.cache_complete == 'true'
         run: |
           python -m py_compile gold_axis_2026/tools/xau_intraday_cache_model_replay_v1.py
@@ -68,6 +101,15 @@ jobs:
             --emergency-json emergency_cache_replay_v146.json \
             --emergency-csv emergency_cache_replay_v146_months.csv \
             --equivalence-json xau_intraday_cache_replay_equivalence_v1.json
+      - name: Replay partial cache on complete 1m months only
+        if: steps.audit.outputs.cache_complete != 'true' && steps.audit.outputs.partial_ready == 'true'
+        run: |
+          python -m py_compile gold_axis_2026/tools/xau_intraday_partial_cache_model_replay_v1.py
+          python -m gold_axis_2026.tools.xau_intraday_partial_cache_model_replay_v1 \
+            --market-json market_shock_partial_cache_replay_v1.json \
+            --emergency-json emergency_partial_cache_replay_v146.json \
+            --emergency-csv emergency_partial_cache_replay_v146_months.csv \
+            --equivalence-json xau_intraday_partial_cache_replay_equivalence_v1.json
       - name: Upload audit and equivalence evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -79,4 +121,8 @@ jobs:
             emergency_cache_replay_v146.json
             emergency_cache_replay_v146_months.csv
             xau_intraday_cache_replay_equivalence_v1.json
+            market_shock_partial_cache_replay_v1.json
+            emergency_partial_cache_replay_v146.json
+            emergency_partial_cache_replay_v146_months.csv
+            xau_intraday_partial_cache_replay_equivalence_v1.json
           if-no-files-found: warn
