@@ -1,0 +1,64 @@
+name: Gold Control Macro Event V3 FOMC Source Readiness
+
+on:
+  push:
+    branches:
+      - gold-control-macro-event-successor-v3
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V3_FOMC_SOURCE_CONTRACT_2026-09-08.md'
+      - 'gold_axis_2026/data_pipeline/macro_event_successor_v3_fomc_source_readiness.py'
+      - 'gold_axis_2026/tests/test_macro_event_successor_v3_fomc_source_readiness.py'
+      - '.github/workflows/gold-control-macro-event-successor-v3-fomc-source-readiness.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      CME_FEDWATCH_API_URL: ${{ secrets.CME_FEDWATCH_API_URL }}
+      CME_FEDWATCH_API_KEY: ${{ secrets.CME_FEDWATCH_API_KEY }}
+      CME_FEDWATCH_SCHEMA_VERSION: ${{ secrets.CME_FEDWATCH_SCHEMA_VERSION }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test dependency
+        run: pip install pytest
+      - name: Compile and unit test FOMC source contract
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v3_fomc_source_readiness.py
+          pytest -q gold_axis_2026/tests/test_macro_event_successor_v3_fomc_source_readiness.py
+      - name: Audit current CME FedWatch project configuration
+        run: |
+          python gold_axis_2026/data_pipeline/macro_event_successor_v3_fomc_source_readiness.py > macro_event_successor_v3_fomc_source_readiness.json
+          cat macro_event_successor_v3_fomc_source_readiness.json
+      - name: Enforce fail-closed V3 FOMC semantics
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('macro_event_successor_v3_fomc_source_readiness.json', encoding='utf-8'))
+          assert d['engine_id']=='MACRO_EVENT_SUCCESSOR_V3', d
+          assert d['family']=='FOMC', d
+          assert d['source_candidate']=='CME_FEDWATCH_API', d
+          assert d['target_surprise_formula_frozen'] is True, d
+          assert d['future_path_vector_formula_frozen'] is True, d
+          assert d['scalar_path_factor_formula_frozen'] is False, d
+          assert d['locked_2026_validation_authorized'] is False, d
+          assert d['production_promotion']=='BLOCKED_RESEARCH_CHALLENGER_ONLY', d
+          assert d['readiness']['production_db_write'] is False, d
+          assert d['readiness']['market_shock_threshold_changed'] is False, d
+          assert d['readiness']['raw_market_shock_episode_changed'] is False, d
+          print('MACRO_EVENT_V3_FOMC_SOURCE_GOVERNANCE_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-successor-v3-fomc-source-readiness
+          path: macro_event_successor_v3_fomc_source_readiness.json
+          if-no-files-found: error
