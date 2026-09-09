@@ -142,7 +142,7 @@ def read_database_snapshot(database_url: str) -> dict[str, Any]:
             cur.execute("select interval,requested_start,requested_end,first_ts,last_ts,retrieved_at,provider,symbol,evidence_class,status,error,metadata,payload_sha256,code_sha from xau_intraday_research_cache_batches order by batch_id")
             cache_batches = list(cur.fetchall())
             cur.execute("""
-                select to_char(observation_ts at time zone 'America/New_York','YYYY-MM') month,
+                select to_char(observation_ts at time zone 'America/New_York','YYYY-MM') as month_key,
                        count(*) filter(where (observation_ts at time zone 'America/New_York')::time='16:59:00')::bigint exact_1659_count,
                        min(observation_ts) min_ts,max(observation_ts) max_ts
                 from xau_intraday_research_cache_1m group by 1 order by 1
