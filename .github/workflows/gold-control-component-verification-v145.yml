@@ -1,0 +1,74 @@
+name: Gold Control Component Verification V1.45
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - gold-r4-direction-engine
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_COMPONENT_VERIFICATION_PROTOCOL_V145_2026-09-09.md'
+      - 'gold_axis_2026/tools/audit_component_verification_v145_r1.py'
+      - 'gold_axis_2026/tests/test_audit_component_verification_v145_r1.py'
+      - '.github/workflows/gold-control-component-verification-v145.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install verification dependencies
+        run: python -m pip install --upgrade pip pytest numpy pandas 'psycopg[binary]'
+      - name: Compile verifier
+        run: python -m py_compile gold_axis_2026/tools/audit_component_verification_v145_r1.py
+      - name: Run verifier unit tests
+        run: pytest -q gold_axis_2026/tests/test_audit_component_verification_v145_r1.py
+      - name: Run frozen R4.1 tests
+        run: |
+          python -m pip install -e gold_axis_2026/r4_1
+          pytest -q gold_axis_2026/r4_1/tests
+      - name: Run frozen BOCPD tests
+        run: python gold_axis_2026/tools/test_bocpd_return_successor_v1.py
+      - name: Run VW technical deterministic replay
+        run: python gold_axis_2026/tools/vw_midas_msvr_successor_v1.py --output /tmp/vw_component_verification_v145.json --determinism-check
+      - name: Run read-only Component Verification
+        run: |
+          python gold_axis_2026/tools/audit_component_verification_v145_r1.py \
+            --r4-tests-pass \
+            --bocpd-tests-pass \
+            --vw-result /tmp/vw_component_verification_v145.json \
+            --output-json /tmp/component_verification_v145_r1.json \
+            --output-csv /tmp/component_verification_v145_r1.csv
+      - name: Enforce governance invariants
+        run: |
+          python - <<'PY'
+          import json
+          p='/tmp/component_verification_v145_r1.json'
+          x=json.load(open(p))
+          assert x['engine_count']==12
+          assert x['production_database_access']=='READ_ONLY'
+          assert x['production_writes']=='NONE'
+          assert x['performance_fields_consumed'] is False
+          assert set(x['authority_counts'])=={'monthly_forecast_contracts','decision_signal_snapshots','decision_runs','decision_events'}
+          assert all(v==0 for v in x['authority_counts'].values()), x['authority_counts']
+          assert sum(x['status_counts'].values())==12
+          assert x['status_counts'].get('FAIL',0)==0, x['status_counts']
+          print(json.dumps({'mode':x['mode'],'status_counts':x['status_counts'],'authority_counts':x['authority_counts']},sort_keys=True))
+          PY
+      - name: Upload immutable verification evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-component-verification-v145-r1
+          if-no-files-found: error
+          path: |
+            /tmp/component_verification_v145_r1.json
+            /tmp/component_verification_v145_r1.csv
+            /tmp/vw_component_verification_v145.json
