@@ -1,0 +1,42 @@
+{
+  "artifact_digest": "sha256:1b25c17d30570157e707f19f31b740bf1a808d5a8487c829759e6fee35a739fe",
+  "artifact_id": 10103461707,
+  "authority_counts": {
+    "decision_events": 0,
+    "decision_runs": 0,
+    "decision_signal_snapshots": 0,
+    "monthly_forecast_contracts": 0
+  },
+  "baseline_matrix_sha256": "27ab1e20e7c4ac3292152af70adeb88172557afa0599c129fd07fe7d9f0c56a3",
+  "baseline_status_counts": {
+    "BLOCKED_CONTRACT": 1,
+    "BLOCKED_DATA": 14,
+    "CONTRACTUAL_EXCLUSION": 1,
+    "PARTIAL": 101,
+    "READY_PROVEN": 114,
+    "READY_TO_REPLAY": 9
+  },
+  "deterministic_same_snapshot_rerun": "PASS",
+  "first_failed_run": {
+    "failure": "IMPLEMENTATION_FAIL:POSTGRES_RESERVED_ALIAS_MONTH",
+    "run_id": 34350339413,
+    "status": "RECORDED_AND_FIXED"
+  },
+  "git_head": "20d7b31759101e1fdd2999a5b8963046956c8a6a",
+  "matrix_rows": 240,
+  "performance_scoring": false,
+  "post_gap_matrix_sha256": "cf0659c9b1dced5a1e6d65c788a5aab08784c91cf0a0ee068d04ba02ef3c1921",
+  "post_gap_status_counts": {
+    "BLOCKED_CONTRACT": 1,
+    "CONTRACTUAL_EXCLUSION": 1,
+    "READY_PROVEN": 114,
+    "READY_TO_REPLAY": 124
+  },
+  "production_database_write": "NONE",
+  "production_snapshot_at": "2026-09-09T12:20:40.854572+00:00",
+  "production_tx_snapshot": "317442:317442:",
+  "prospective_claim": false,
+  "read_only": true,
+  "status": "PASS",
+  "workflow_run_id": 34350444121
+}
