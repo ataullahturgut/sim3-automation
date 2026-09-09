@@ -1,0 +1,108 @@
+# architecture review v145
+
+```json
+{
+  "auto_ensemble": "OFF",
+  "auto_selector": "OFF",
+  "production_authority": false,
+  "rows": [
+    {
+      "contribution": "UNIQUE_CONTRIBUTION_PROVEN",
+      "decision": "VALIDATED_CORE",
+      "engine_id": "CAUSAL_PATCH",
+      "role": "VALIDATED_CORE",
+      "single_metric_removal": false,
+      "technical": "PASS"
+    },
+    {
+      "contribution": "UNIQUE_CONTRIBUTION_PROVEN",
+      "decision": "VALIDATED_CORE",
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "role": "VALIDATED_CORE",
+      "single_metric_removal": false,
+      "technical": "PASS"
+    },
+    {
+      "contribution": "UNIQUE_CONTRIBUTION_PROVEN",
+      "decision": "VALIDATED_CORE",
+      "engine_id": "MOMENTUM_3M",
+      "role": "VALIDATED_CORE",
+      "single_metric_removal": false,
+      "technical": "PASS"
+    },
+    {
+      "contribution": "MANDATORY_BENCHMARK",
+      "decision": "VALIDATED_CORE",
+      "engine_id": "RANDOM_WALK",
+      "role": "VALIDATED_CORE",
+      "single_metric_removal": false,
+      "technical": "PASS"
+    },
+    {
+      "contribution": "COMPLEMENTARY",
+      "decision": "VALIDATED_COMPLEMENTARY",
+      "engine_id": "MONTHLY_DIRECTION_3M",
+      "role": "VALIDATED_COMPLEMENTARY",
+      "single_metric_removal": false,
+      "technical": "PASS"
+    },
+    {
+      "contribution": "COMPLEMENTARY",
+      "decision": "VALIDATED_COMPLEMENTARY",
+      "engine_id": "FAST",
+      "role": "VALIDATED_COMPLEMENTARY",
+      "single_metric_removal": false,
+      "technical": "PASS"
+    },
+    {
+      "contribution": "COMPLEMENTARY",
+      "decision": "VALIDATED_COMPLEMENTARY",
+      "engine_id": "SLOW",
+      "role": "VALIDATED_COMPLEMENTARY",
+      "single_metric_removal": false,
+      "technical": "PASS"
+    },
+    {
+      "contribution": "COMPLEMENTARY",
+      "decision": "VALIDATED_COMPLEMENTARY",
+      "engine_id": "MACRO_EVENT_SUCCESSOR_V2",
+      "role": "VALIDATED_COMPLEMENTARY",
+      "single_metric_removal": false,
+      "technical": "PASS"
+    },
+    {
+      "contribution": "INSUFFICIENT_EVIDENCE",
+      "decision": "BLOCKED_DATA",
+      "engine_id": "BOCPD_RETURN_SUCCESSOR_V1",
+      "role": "BLOCKED",
+      "single_metric_removal": false,
+      "technical": "BLOCKED"
+    },
+    {
+      "contribution": "INSUFFICIENT_EVIDENCE",
+      "decision": "NOT_PROVEN",
+      "engine_id": "EMERGENCY_LEVEL",
+      "role": "NOT_PROVEN",
+      "single_metric_removal": false,
+      "technical": "PASS"
+    },
+    {
+      "contribution": "INSUFFICIENT_EVIDENCE",
+      "decision": "NOT_PROVEN",
+      "engine_id": "EMERGENCY_REVERSAL",
+      "role": "NOT_PROVEN",
+      "single_metric_removal": false,
+      "technical": "PASS"
+    },
+    {
+      "contribution": "COMPLEMENTARY",
+      "decision": "VALIDATED_COMPLEMENTARY",
+      "engine_id": "GVZ_RISK",
+      "role": "VALIDATED_COMPLEMENTARY",
+      "single_metric_removal": false,
+      "technical": "PASS"
+    }
+  ],
+  "weight_optimization": "NONE"
+}
+```
