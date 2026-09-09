@@ -1,0 +1,32 @@
+{
+  "audit_id": "GOLD_CONTROL_DATA_COMPLETION_READINESS_V146_20260909",
+  "status": "PASS_WITH_PROSPECTIVE_WAITING_AND_DISCLOSED_SLOW_GENERIC_AUDIT_FAIL",
+  "engine_count": 12,
+  "historical_pilot_data_ready": {"status": "PASS", "ready_engines": 12, "total_engines": 12},
+  "prospective_shadow_data_ready": {"status": "NOT_PROVEN", "ready_engines": 0, "total_engines": 12},
+  "current_intramonth_data_ready": {"status": "PASS_ROLE_CLOCK", "ready_engines": 5, "relevant_engines": 5},
+  "rows": [
+    {"engine_id":"CAUSAL_PATCH","frozen_identity":"PASS","source_identity":"PASS","origin_pit":"PASS","future_information":0,"lineage":"PASS","determinism":"PASS","historical_pilot_readiness":"DATA_READY","prospective_source_readiness":"NOT_PROVEN","current_live_freshness":"NOT_APPLICABLE","final_status":"HISTORICAL_READY_PROSPECTIVE_NOT_PROVEN"},
+    {"engine_id":"VW_MIDAS_MSVR_SUCCESSOR_V1","frozen_identity":"PASS","source_identity":"PASS","origin_pit":"PASS_GPR_202609","future_information":0,"lineage":"PASS","determinism":"PASS","historical_pilot_readiness":"DATA_READY","prospective_source_readiness":"WAITING_FOUR_METAL_SOURCE_DATA","current_live_freshness":"NOT_APPLICABLE","final_status":"WAITING_SOURCE_CALENDAR"},
+    {"engine_id":"MOMENTUM_3M","frozen_identity":"PASS","source_identity":"PASS","origin_pit":"PASS","future_information":0,"lineage":"PASS","determinism":"PASS","historical_pilot_readiness":"DATA_READY","prospective_source_readiness":"NOT_PROVEN","current_live_freshness":"NOT_APPLICABLE","final_status":"HISTORICAL_READY_PROSPECTIVE_NOT_PROVEN"},
+    {"engine_id":"RANDOM_WALK","frozen_identity":"PASS","source_identity":"PASS","origin_pit":"PASS","future_information":0,"lineage":"PASS","determinism":"PASS","historical_pilot_readiness":"DATA_READY","prospective_source_readiness":"NOT_PROVEN","current_live_freshness":"NOT_APPLICABLE","final_status":"HISTORICAL_READY_PROSPECTIVE_NOT_PROVEN"},
+    {"engine_id":"MONTHLY_DIRECTION_3M","frozen_identity":"PASS","source_identity":"PASS","origin_pit":"PASS","future_information":0,"lineage":"PASS","determinism":"PASS","historical_pilot_readiness":"DATA_READY","prospective_source_readiness":"NOT_PROVEN","current_live_freshness":"NOT_APPLICABLE","final_status":"HISTORICAL_READY_PROSPECTIVE_NOT_PROVEN"},
+    {"engine_id":"FAST","frozen_identity":"PASS","source_identity":"PASS","origin_pit":"PASS","future_information":0,"lineage":"PASS","determinism":"PASS","historical_pilot_readiness":"DATA_READY","prospective_source_readiness":"NOT_PROVEN","current_live_freshness":"PASS_SEP09_NY17","final_status":"CURRENT_INTRAMONTH_DATA_READY"},
+    {"engine_id":"SLOW","frozen_identity":"PASS","source_identity":"PASS","origin_pit":"PASS","future_information":0,"lineage":"PASS","determinism":"PASS","historical_pilot_readiness":"DATA_READY","prospective_source_readiness":"NOT_PROVEN","current_live_freshness":"PASS_COMPLETED_WEEK_SEP04","final_status":"CURRENT_INTRAMONTH_DATA_READY"},
+    {"engine_id":"MACRO_EVENT_SUCCESSOR_V2","frozen_identity":"PASS","source_identity":"PASS","origin_pit":"PASS","future_information":0,"lineage":"PASS","determinism":"PASS","historical_pilot_readiness":"DATA_READY_WITH_CONTRACTUAL_EXCLUSION","prospective_source_readiness":"NOT_PROVEN","current_live_freshness":"NOT_APPLICABLE","final_status":"HISTORICAL_READY_PROSPECTIVE_NOT_PROVEN"},
+    {"engine_id":"BOCPD_RETURN_SUCCESSOR_V1","frozen_identity":"PASS","source_identity":"PASS_WORLDBANK","origin_pit":"PASS_EVALUATION_ONLY","future_information":0,"lineage":"PASS","determinism":"PASS","historical_pilot_readiness":"DATA_READY","prospective_source_readiness":"NOT_PROVEN","current_live_freshness":"NOT_APPLICABLE","final_status":"HISTORICAL_READY_PROSPECTIVE_NOT_PROVEN"},
+    {"engine_id":"EMERGENCY_LEVEL","frozen_identity":"PASS","source_identity":"PASS","origin_pit":"PASS","future_information":0,"lineage":"PASS","determinism":"PASS","historical_pilot_readiness":"DATA_READY","prospective_source_readiness":"NOT_PROVEN","current_live_freshness":"PASS_SEP09_NY17","final_status":"CURRENT_INTRAMONTH_DATA_READY"},
+    {"engine_id":"EMERGENCY_REVERSAL","frozen_identity":"PASS","source_identity":"PASS","origin_pit":"PASS","future_information":0,"lineage":"PASS","determinism":"PASS","historical_pilot_readiness":"DATA_READY","prospective_source_readiness":"NOT_PROVEN","current_live_freshness":"PASS_SEP09_NY17","final_status":"CURRENT_INTRAMONTH_DATA_READY"},
+    {"engine_id":"GVZ_RISK","frozen_identity":"PASS","source_identity":"PASS","origin_pit":"PASS","future_information":0,"lineage":"PASS","determinism":"PASS","historical_pilot_readiness":"DATA_READY","prospective_source_readiness":"NOT_PROVEN","current_live_freshness":"PASS_SEP08_GVZ","final_status":"CURRENT_INTRAMONTH_DATA_READY"}
+  ],
+  "production_writes": {"XAU_EOD_TWELVE_NY17_inserted":1,"GVZ_CBOE_inserted":0,"GPR_OFFICIAL_GIT_PIT_inserted":0,"CORE5_inserted":0,"feature_rows_inserted":"NOT_PROVEN_COUNT","runtime_rows_refreshed":5},
+  "authority_counts":{"monthly_forecast_contracts":0,"decision_signal_snapshots":0,"decision_runs":0,"decision_events":0},
+  "auto_selector":"OFF",
+  "auto_ensemble":"OFF",
+  "forecast_or_decision_authority_written":false,
+  "leakage_violations":0,
+  "pit_violations":0,
+  "workflow_run":34409095422,
+  "workflow_artifact":10126512516,
+  "workflow_artifact_sha256":"30c62dad02ef9dcdf622ecea8837648a2e69c11c166b2b98a9991ef4f5d57144"
+}

@@ -735,3 +735,24 @@ remain unchanged and binding.
 
 Current authority locks remain `AUTO_SELECTOR=OFF`, `AUTO_ENSEMBLE=OFF`,
 `NOT_PROVEN_POSITION_MAPPING`, and no automatic BUY/SELL/HOLD/EXIT/REDUCE.
+
+---
+
+## 18. V1.46 data-completion reconciliation — 2026-09-09
+
+The exact World Bank Pink Sheet August Gold value (`4411 USD/troy ounce`) closes
+the BOCPD evaluation-only and four H=1 realized-target data gaps through an
+immutable historical reconstruction artifact. The frozen CORE5 payload remains
+unchanged. BOCPD deterministic/prefix-invariance tests pass; no tuning occurred.
+
+The official GPR 202609 vintage contains the required August observation and was
+committed by the official source on 2026-09-01, before the 2026-09-30 origin.
+The VW four-metal gate remains `WAITING_FOUR_METAL_SOURCE_DATA` because the pinned
+upstream snapshot contains only 19 common August dates and no September dates.
+No prospective forecast was issued.
+
+Authorized V1.44 live catch-up run `34409095422` inserted one new exact NY17 row
+and refreshed FAST, SLOW, both Emergency roles and GVZ_RISK. SLOW remains bound
+to the last completed-week observation by contract. Final authority counts remain
+zero and selector/ensemble remain OFF. Binding detail is recorded in
+`data_pipeline/audits/data_completion_readiness_v146_20260909.md`.
