@@ -1,0 +1,43 @@
+{
+  "alternate_provider_fill": false,
+  "audit_id": "GOLD_CONTROL_VW_FOUR_METAL_CURRENT_READINESS_V146",
+  "august_gate": "WAITING_FOUR_METAL_SOURCE_DATA",
+  "commit_at": "2026-08-19T01:14:12Z",
+  "commit_sha": "429d8e612d504a964846ff6438dbdb28ace630c3",
+  "conflicting_duplicates": 0,
+  "database_writes": "NONE",
+  "forecast_issued": false,
+  "metals": [
+    "Gold",
+    "Silver",
+    "Platinum",
+    "Palladium"
+  ],
+  "months": {
+    "2026-07": {
+      "common_days": 31,
+      "first": "2026-07-01",
+      "last": "2026-07-31"
+    },
+    "2026-08": {
+      "common_days": 19,
+      "first": "2026-08-01",
+      "last": "2026-08-19"
+    },
+    "2026-09": {
+      "common_days": 0,
+      "first": null,
+      "last": null
+    }
+  },
+  "no_imputation": true,
+  "no_interpolation": true,
+  "origin_reached": false,
+  "path": "data/spot-history-2026.json",
+  "payload_sha256": "dad4dc75cd6b4644bf11d869f4a638bf98046ea81cb2c9cd927d18afcfb61416",
+  "repository": "lbruton/StakTrakr",
+  "retrieved_at": "2026-09-09T21:50:00Z",
+  "september_gate": "WAITING_FOUR_METAL_SOURCE_DATA",
+  "source_identity": "STAKTRAKR_FOUR_METAL_PROSPECTIVE_GIT_SNAPSHOT_V1",
+  "status": "WAITING_FOUR_METAL_SOURCE_DATA"
+}

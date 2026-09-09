@@ -1,0 +1,20 @@
+{
+  "archive_commit_at": "2026-09-01T14:27:55Z",
+  "archive_commit_sha": "21449bec606bc5a5b1bf58d08ce526dc35d66c94",
+  "archive_path": "gpr_archive_files/data_gpr_export_202609.xls",
+  "audit_id": "GOLD_CONTROL_GPR_2026_09_ORIGIN_VINTAGE_V146",
+  "database_writes": "NONE",
+  "evidence_class": "PROSPECTIVE_SOURCE_READINESS_EVIDENCE",
+  "future_information_violations": 0,
+  "observation_value": 117.9188461303711,
+  "origin_cutoff_utc": "2026-09-30T21:00:00Z",
+  "origin_month": "2026-09",
+  "p_minus_1_lag": "PASS",
+  "payload_sha256": "6ff388db4aa34eb66433d4c13c9f82d88316714889a1fc9e6a8c0ce1158d5eae",
+  "prospective_forecast_issued": false,
+  "required_observation_month": "2026-08",
+  "revised_value_backdating": false,
+  "row_count": 1520,
+  "series_id": "GPR_OFFICIAL_GIT_PIT",
+  "status": "PASS"
+}

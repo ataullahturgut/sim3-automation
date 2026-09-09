@@ -1,0 +1,85 @@
+{
+  "actual_value": 4411.0,
+  "aggregation": "WORLD_BANK_PINK_SHEET_MONTHLY_GOLD",
+  "audit_id": "GOLD_CONTROL_AUGUST_2026_EXACT_TARGET_V146",
+  "auto_ensemble": "OFF",
+  "auto_selector": "OFF",
+  "available_as_of": "2026-09-09T21:45:00Z",
+  "bocpd": {
+    "determinism_sha256": "2ba7a80f3b3f44c1c19507cf270872c229b57c92ff68c4acfc51f4af208c5545",
+    "deterministic_rerun": "PASS",
+    "engine_id": "BOCPD_RETURN_SUCCESSOR_V1",
+    "future_information_violations": 0,
+    "log_return": 0.07972159245652716,
+    "map_run": 6,
+    "model_or_threshold_change": "NONE",
+    "p_run0": 0.02777777777777777,
+    "prefix_invariance": "PASS",
+    "state": "NO_ADVERSE_BREAK_CANDIDATE",
+    "status": "PASS"
+  },
+  "canonical_forecast_authority": false,
+  "database_writes": "NONE",
+  "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+  "frozen_core5_prefix_identity": {
+    "checked_rows": 127,
+    "claim": "SEMANTIC_IDENTITY_WITH_OFFICIAL_WORKBOOK_DISPLAY_PRECISION",
+    "exact_equal_rows": 123,
+    "max_abs_difference_usd": 0.32999999999992724,
+    "mismatch_rows": 0,
+    "status": "PASS",
+    "within_display_precision_rows": 127
+  },
+  "frozen_source_overwritten": false,
+  "h1_2026_08": {
+    "CAUSAL_PATCH": {
+      "absolute_error": 384.671539394893,
+      "actual": 4411.0,
+      "ape_percent": 8.720733153364158,
+      "direction_hit": false,
+      "forecast": 4026.328460605107,
+      "future_information_violations": 0,
+      "origin_month": "2026-07",
+      "target_month": "2026-08"
+    },
+    "MOMENTUM_3M": {
+      "absolute_error": 528.99602279295,
+      "actual": 4411.0,
+      "ape_percent": 11.992655243549082,
+      "direction_hit": false,
+      "forecast": 3882.00397720705,
+      "future_information_violations": 0,
+      "origin_month": "2026-07",
+      "target_month": "2026-08"
+    },
+    "RANDOM_WALK": {
+      "absolute_error": 334.3213099999998,
+      "actual": 4411.0,
+      "ape_percent": 7.579263432328267,
+      "direction_hit": true,
+      "forecast": 4076.67869,
+      "future_information_violations": 0,
+      "origin_month": "2026-07",
+      "target_month": "2026-08"
+    },
+    "VW_MIDAS_MSVR_SUCCESSOR_V1": {
+      "absolute_error": 330.72302412358204,
+      "actual": 4411.0,
+      "ape_percent": 7.497688146079846,
+      "direction_hit": true,
+      "forecast": 4080.276975876418,
+      "future_information_violations": 0,
+      "origin_month": "2026-07",
+      "target_month": "2026-08"
+    }
+  },
+  "no_tuning_confirmation": true,
+  "prospective_claim": false,
+  "retrieved_at": "2026-09-09T21:45:00Z",
+  "source_identity": "WORLD_BANK_PINK_SHEET_MONTHLY_GOLD_USD_PER_TROY_OUNCE",
+  "source_payload_sha256": "9fdcfa8a2aed9a1bb545a10c1a5ce036c6a0acd4766f450424ca800b4b5a0225",
+  "source_url": "https://thedocs.worldbank.org/en/doc/74e8be41ceb20fa0da750cda2f6b9e4e-0050012026/related/CMO-Historical-Data-Monthly.xlsx",
+  "status": "PASS",
+  "target_month": "2026-08",
+  "unit": "USD_PER_TROY_OUNCE"
+}
