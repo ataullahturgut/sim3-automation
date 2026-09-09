@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
-      - run: pip install numpy pandas scipy pytest 'psycopg[binary]>=3.2,<4'
+      - run: pip install numpy pandas scipy pytest requests 'psycopg[binary]>=3.2,<4'
       - name: Unit tests
         run: pytest -q gold_axis_2026/tests/test_run_gold_pilot_validation_v145.py gold_axis_2026/tools/test_bocpd_return_successor_v1.py gold_axis_2026/tools/test_bocpd_return_successor_v1_risk_validation.py
       - name: Frozen Macro V2 replay
