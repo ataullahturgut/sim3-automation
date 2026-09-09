@@ -1,0 +1,20 @@
+{
+  "allowed_target_month": "2026-08",
+  "contract_id": "GOLD_CONTROL_BOCPD_2026_08_EVALUATION_EXTENSION_V145",
+  "database_writes_permitted": false,
+  "direction_vote_permitted": false,
+  "frozen_before_output_execution_or_inspection": true,
+  "hazard_expected_run_length_months": 36,
+  "model_or_threshold_change": "NONE",
+  "parent_identity": "BOCPD_RETURN_SUCCESSOR_V1",
+  "position_mapping_permitted": false,
+  "prospective_claim": false,
+  "source": {
+    "artifact": "gold_axis_2026/core5_monthly.csv.gz.b64",
+    "completed_month_only": true,
+    "field": "gold_monthly",
+    "transform": "log(P_t/P_t-1)"
+  },
+  "status": "FROZEN_BEFORE_2026_08_BOCPD_OUTPUT_EXECUTION_OR_INSPECTION",
+  "substitution_permitted": false
+}
