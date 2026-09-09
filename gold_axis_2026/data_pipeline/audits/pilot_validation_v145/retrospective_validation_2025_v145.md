@@ -1,0 +1,783 @@
+# retrospective validation 2025 v145
+
+```json
+{
+  "evidence_class": "RETROSPECTIVE_VALIDATION_WINDOW",
+  "monthly_evidence": [
+    {
+      "actual": 2710.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "CAUSAL_PATCH",
+      "forecast": 2633.5183941174582,
+      "origin_month": "2024-12",
+      "rw": 2648.0,
+      "target_month": "2025-01"
+    },
+    {
+      "actual": 2895.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "CAUSAL_PATCH",
+      "forecast": 2715.6749755283067,
+      "origin_month": "2025-01",
+      "rw": 2710.0,
+      "target_month": "2025-02"
+    },
+    {
+      "actual": 2983.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "CAUSAL_PATCH",
+      "forecast": 2919.644807895668,
+      "origin_month": "2025-02",
+      "rw": 2895.0,
+      "target_month": "2025-03"
+    },
+    {
+      "actual": 3218.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "CAUSAL_PATCH",
+      "forecast": 3022.603680470286,
+      "origin_month": "2025-03",
+      "rw": 2983.0,
+      "target_month": "2025-04"
+    },
+    {
+      "actual": 3309.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "CAUSAL_PATCH",
+      "forecast": 3305.6004596076755,
+      "origin_month": "2025-04",
+      "rw": 3218.0,
+      "target_month": "2025-05"
+    },
+    {
+      "actual": 3353.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "CAUSAL_PATCH",
+      "forecast": 3327.745424598738,
+      "origin_month": "2025-05",
+      "rw": 3309.0,
+      "target_month": "2025-06"
+    },
+    {
+      "actual": 3340.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "CAUSAL_PATCH",
+      "forecast": 3383.4010291145414,
+      "origin_month": "2025-06",
+      "rw": 3353.0,
+      "target_month": "2025-07"
+    },
+    {
+      "actual": 3368.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "CAUSAL_PATCH",
+      "forecast": 3386.793035738361,
+      "origin_month": "2025-07",
+      "rw": 3340.0,
+      "target_month": "2025-08"
+    },
+    {
+      "actual": 3667.68,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "CAUSAL_PATCH",
+      "forecast": 3382.296818698462,
+      "origin_month": "2025-08",
+      "rw": 3368.0,
+      "target_month": "2025-09"
+    },
+    {
+      "actual": 4058.33,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "CAUSAL_PATCH",
+      "forecast": 3700.591358520879,
+      "origin_month": "2025-09",
+      "rw": 3667.68,
+      "target_month": "2025-10"
+    },
+    {
+      "actual": 4087.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "CAUSAL_PATCH",
+      "forecast": 4093.518600249174,
+      "origin_month": "2025-10",
+      "rw": 4058.33,
+      "target_month": "2025-11"
+    },
+    {
+      "actual": 4309.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "CAUSAL_PATCH",
+      "forecast": 4122.881586109356,
+      "origin_month": "2025-11",
+      "rw": 4087.0,
+      "target_month": "2025-12"
+    },
+    {
+      "actual": 2710.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "forecast": 2625.1511748036664,
+      "origin_month": "2024-12",
+      "rw": 2648.0,
+      "target_month": "2025-01"
+    },
+    {
+      "actual": 2895.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "forecast": 2815.7282402670226,
+      "origin_month": "2025-01",
+      "rw": 2710.0,
+      "target_month": "2025-02"
+    },
+    {
+      "actual": 2983.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "forecast": 2886.996644329364,
+      "origin_month": "2025-02",
+      "rw": 2895.0,
+      "target_month": "2025-03"
+    },
+    {
+      "actual": 3218.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "forecast": 3151.614933320759,
+      "origin_month": "2025-03",
+      "rw": 2983.0,
+      "target_month": "2025-04"
+    },
+    {
+      "actual": 3309.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "forecast": 3269.9799012696835,
+      "origin_month": "2025-04",
+      "rw": 3218.0,
+      "target_month": "2025-05"
+    },
+    {
+      "actual": 3353.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "forecast": 3353.998692920965,
+      "origin_month": "2025-05",
+      "rw": 3309.0,
+      "target_month": "2025-06"
+    },
+    {
+      "actual": 3340.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "forecast": 3331.142937175244,
+      "origin_month": "2025-06",
+      "rw": 3353.0,
+      "target_month": "2025-07"
+    },
+    {
+      "actual": 3368.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "forecast": 3339.8632692818223,
+      "origin_month": "2025-07",
+      "rw": 3340.0,
+      "target_month": "2025-08"
+    },
+    {
+      "actual": 3667.68,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "forecast": 3443.22716739825,
+      "origin_month": "2025-08",
+      "rw": 3368.0,
+      "target_month": "2025-09"
+    },
+    {
+      "actual": 4058.33,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "forecast": 3782.845029957113,
+      "origin_month": "2025-09",
+      "rw": 3667.68,
+      "target_month": "2025-10"
+    },
+    {
+      "actual": 4087.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "forecast": 4087.463111590868,
+      "origin_month": "2025-10",
+      "rw": 4058.33,
+      "target_month": "2025-11"
+    },
+    {
+      "actual": 4309.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "forecast": 4231.65571236958,
+      "origin_month": "2025-11",
+      "rw": 4087.0,
+      "target_month": "2025-12"
+    },
+    {
+      "actual": 2710.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "MOMENTUM_3M",
+      "forecast": 2675.058766588142,
+      "origin_month": "2024-12",
+      "rw": 2648.0,
+      "target_month": "2025-01"
+    },
+    {
+      "actual": 2895.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "MOMENTUM_3M",
+      "forecast": 2717.0316438495006,
+      "origin_month": "2025-01",
+      "rw": 2710.0,
+      "target_month": "2025-02"
+    },
+    {
+      "actual": 2983.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "MOMENTUM_3M",
+      "forecast": 2982.378753900627,
+      "origin_month": "2025-02",
+      "rw": 2895.0,
+      "target_month": "2025-03"
+    },
+    {
+      "actual": 3218.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "MOMENTUM_3M",
+      "forecast": 3104.385047925515,
+      "origin_month": "2025-03",
+      "rw": 2983.0,
+      "target_month": "2025-04"
+    },
+    {
+      "actual": 3309.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "MOMENTUM_3M",
+      "forecast": 3408.33683863975,
+      "origin_month": "2025-04",
+      "rw": 3218.0,
+      "target_month": "2025-05"
+    },
+    {
+      "actual": 3353.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "MOMENTUM_3M",
+      "forecast": 3460.6133308545463,
+      "origin_month": "2025-05",
+      "rw": 3309.0,
+      "target_month": "2025-06"
+    },
+    {
+      "actual": 3340.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "MOMENTUM_3M",
+      "forecast": 3487.51705593199,
+      "origin_month": "2025-06",
+      "rw": 3353.0,
+      "target_month": "2025-07"
+    },
+    {
+      "actual": 3368.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "MOMENTUM_3M",
+      "forecast": 3381.970860225313,
+      "origin_month": "2025-07",
+      "rw": 3340.0,
+      "target_month": "2025-08"
+    },
+    {
+      "actual": 3667.68,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "MOMENTUM_3M",
+      "forecast": 3387.9870335706432,
+      "origin_month": "2025-08",
+      "rw": 3368.0,
+      "target_month": "2025-09"
+    },
+    {
+      "actual": 4058.33,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "MOMENTUM_3M",
+      "forecast": 3781.9706926066647,
+      "origin_month": "2025-09",
+      "rw": 3667.68,
+      "target_month": "2025-10"
+    },
+    {
+      "actual": 4087.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "MOMENTUM_3M",
+      "forecast": 4334.125082499349,
+      "origin_month": "2025-10",
+      "rw": 4058.33,
+      "target_month": "2025-11"
+    },
+    {
+      "actual": 4309.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "MOMENTUM_3M",
+      "forecast": 4362.946853032419,
+      "origin_month": "2025-11",
+      "rw": 4087.0,
+      "target_month": "2025-12"
+    },
+    {
+      "actual": 2710.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "RANDOM_WALK",
+      "forecast": 2648.0,
+      "origin_month": "2024-12",
+      "rw": 2648.0,
+      "target_month": "2025-01"
+    },
+    {
+      "actual": 2895.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "RANDOM_WALK",
+      "forecast": 2710.0,
+      "origin_month": "2025-01",
+      "rw": 2710.0,
+      "target_month": "2025-02"
+    },
+    {
+      "actual": 2983.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "RANDOM_WALK",
+      "forecast": 2895.0,
+      "origin_month": "2025-02",
+      "rw": 2895.0,
+      "target_month": "2025-03"
+    },
+    {
+      "actual": 3218.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "RANDOM_WALK",
+      "forecast": 2983.0,
+      "origin_month": "2025-03",
+      "rw": 2983.0,
+      "target_month": "2025-04"
+    },
+    {
+      "actual": 3309.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "RANDOM_WALK",
+      "forecast": 3218.0,
+      "origin_month": "2025-04",
+      "rw": 3218.0,
+      "target_month": "2025-05"
+    },
+    {
+      "actual": 3353.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "RANDOM_WALK",
+      "forecast": 3309.0,
+      "origin_month": "2025-05",
+      "rw": 3309.0,
+      "target_month": "2025-06"
+    },
+    {
+      "actual": 3340.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "RANDOM_WALK",
+      "forecast": 3353.0,
+      "origin_month": "2025-06",
+      "rw": 3353.0,
+      "target_month": "2025-07"
+    },
+    {
+      "actual": 3368.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "RANDOM_WALK",
+      "forecast": 3340.0,
+      "origin_month": "2025-07",
+      "rw": 3340.0,
+      "target_month": "2025-08"
+    },
+    {
+      "actual": 3667.68,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "RANDOM_WALK",
+      "forecast": 3368.0,
+      "origin_month": "2025-08",
+      "rw": 3368.0,
+      "target_month": "2025-09"
+    },
+    {
+      "actual": 4058.33,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "RANDOM_WALK",
+      "forecast": 3667.68,
+      "origin_month": "2025-09",
+      "rw": 3667.68,
+      "target_month": "2025-10"
+    },
+    {
+      "actual": 4087.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "RANDOM_WALK",
+      "forecast": 4058.33,
+      "origin_month": "2025-10",
+      "rw": 4058.33,
+      "target_month": "2025-11"
+    },
+    {
+      "actual": 4309.0,
+      "blocker_code": "",
+      "cell_status": "SCORED",
+      "engine_id": "RANDOM_WALK",
+      "forecast": 4087.0,
+      "origin_month": "2025-11",
+      "rw": 4087.0,
+      "target_month": "2025-12"
+    }
+  ],
+  "no_tuning_confirmation": true,
+  "rows": [
+    {
+      "aggregate": {
+        "direction_accuracy": 0.8333333333333334,
+        "mae": 120.09709662960393,
+        "mape_pct": 3.416703840186278,
+        "median_ae": 69.918398993437,
+        "median_ape_pct": 2.4730372538503085,
+        "n": 12,
+        "rmse": 165.12362348202768,
+        "status": "SCORED",
+        "worst_ae": 357.7386414791208
+      },
+      "engine_id": "CAUSAL_PATCH",
+      "known_limitations": [],
+      "role": "H1_PRICE",
+      "status": "COMPLETE"
+    },
+    {
+      "aggregate": {
+        "direction_accuracy": 0.75,
+        "mae": 81.77223286161063,
+        "mape_pct": 2.3478514686366574,
+        "median_ae": 71.86467715483036,
+        "median_ape_pct": 1.9289384263714595,
+        "n": 12,
+        "rmse": 116.1012636882619,
+        "status": "SCORED",
+        "worst_ae": 275.48497004288674
+      },
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "known_limitations": [],
+      "role": "H1_PRICE",
+      "status": "COMPLETE"
+    },
+    {
+      "aggregate": {
+        "direction_accuracy": 0.9166666666666666,
+        "mae": 129.39234022852293,
+        "mape_pct": 3.6471104173913296,
+        "median_ae": 110.61414146451557,
+        "median_ape_pct": 3.3700358360919687,
+        "n": 12,
+        "rmse": 160.1538228508955,
+        "status": "SCORED",
+        "worst_ae": 279.6929664293566
+      },
+      "engine_id": "MOMENTUM_3M",
+      "known_limitations": [],
+      "role": "H1_PRICE",
+      "status": "COMPLETE"
+    },
+    {
+      "aggregate": {
+        "direction_accuracy": 0.0,
+        "mae": 140.58333333333334,
+        "mape_pct": 3.9886663198118257,
+        "median_ae": 89.5,
+        "median_ape_pct": 2.8500629182370902,
+        "n": 12,
+        "rmse": 183.650368408742,
+        "status": "SCORED",
+        "worst_ae": 390.6500000000001
+      },
+      "engine_id": "RANDOM_WALK",
+      "known_limitations": [],
+      "role": "H1_PRICE",
+      "status": "COMPLETE"
+    },
+    {
+      "aggregate": {
+        "cells": 12,
+        "hit_rate_non_neutral": 0.5833333333333334,
+        "hits": 7,
+        "misses": 5,
+        "neutral": 0
+      },
+      "engine_id": "MONTHLY_DIRECTION_3M",
+      "known_limitations": [],
+      "role": "CONTEXT_OR_RISK",
+      "status": "VALIDATED_COMPLEMENTARY"
+    },
+    {
+      "aggregate": {
+        "direct_false_flip_proxy": 0,
+        "distinct_state_share": 0.9215686274509803,
+        "mean_persistence_observations": 7.0344827586206895,
+        "next_observation_direction_agreement": 0.4791666666666667,
+        "observations": 204,
+        "state_changes": 28
+      },
+      "engine_id": "FAST",
+      "known_limitations": [],
+      "role": "CONTEXT_OR_RISK",
+      "status": "VALIDATED_COMPLEMENTARY"
+    },
+    {
+      "aggregate": {
+        "direct_false_flip_proxy": 0,
+        "distinct_state_share": 0.6911764705882353,
+        "mean_persistence_observations": 11.333333333333334,
+        "next_observation_direction_agreement": 0.3697916666666667,
+        "observations": 204,
+        "state_changes": 17
+      },
+      "engine_id": "SLOW",
+      "known_limitations": [],
+      "role": "CONTEXT_OR_RISK",
+      "status": "VALIDATED_COMPLEMENTARY"
+    },
+    {
+      "aggregate": {
+        "contractual_exclusion": "2025-10",
+        "event_reaction_status": "PASS_EVENT_REACTION_EVIDENCE",
+        "monthly_states": [
+          {
+            "evidence_window": "LOCK",
+            "reference_month": "2025-01",
+            "state": "MACRO_MIXED_OR_SMALL"
+          },
+          {
+            "evidence_window": "LOCK",
+            "reference_month": "2025-02",
+            "state": "MACRO_MIXED_OR_SMALL"
+          },
+          {
+            "evidence_window": "LOCK",
+            "reference_month": "2025-03",
+            "state": "MACRO_MIXED_OR_SMALL"
+          },
+          {
+            "evidence_window": "LOCK",
+            "reference_month": "2025-04",
+            "state": "MACRO_MIXED_OR_SMALL"
+          },
+          {
+            "evidence_window": "LOCK",
+            "reference_month": "2025-05",
+            "state": "MACRO_MIXED_OR_SMALL"
+          },
+          {
+            "evidence_window": "LOCK",
+            "reference_month": "2025-06",
+            "state": "MACRO_MIXED_OR_SMALL"
+          },
+          {
+            "evidence_window": "LOCK",
+            "reference_month": "2025-07",
+            "state": "MACRO_MIXED_OR_SMALL"
+          },
+          {
+            "evidence_window": "LOCK",
+            "reference_month": "2025-08",
+            "state": "MACRO_MIXED_OR_SMALL"
+          },
+          {
+            "evidence_window": "LOCK",
+            "reference_month": "2025-09",
+            "state": "MACRO_MIXED_OR_SMALL"
+          },
+          {
+            "evidence_window": "LOCK",
+            "reference_month": "2025-11",
+            "state": "MACRO_MIXED_OR_SMALL"
+          },
+          {
+            "evidence_window": "LOCK",
+            "reference_month": "2025-12",
+            "state": "MACRO_MIXED_OR_SMALL"
+          }
+        ],
+        "status": "PASS_V2_ROBUST_PREREG_REPLAY_REPRODUCIBLE"
+      },
+      "engine_id": "MACRO_EVENT_SUCCESSOR_V2",
+      "known_limitations": [],
+      "role": "CONTEXT_OR_RISK",
+      "status": "VALIDATED_COMPLEMENTARY"
+    },
+    {
+      "aggregate": {
+        "blocker_code": null,
+        "monthly_states": [
+          {
+            "month": "2025-01-01",
+            "state": "NO_ADVERSE_BREAK_CANDIDATE"
+          },
+          {
+            "month": "2025-02-01",
+            "state": "NO_ADVERSE_BREAK_CANDIDATE"
+          },
+          {
+            "month": "2025-03-01",
+            "state": "NO_ADVERSE_BREAK_CANDIDATE"
+          },
+          {
+            "month": "2025-04-01",
+            "state": "NO_ADVERSE_BREAK_CANDIDATE"
+          },
+          {
+            "month": "2025-05-01",
+            "state": "NO_ADVERSE_BREAK_CANDIDATE"
+          },
+          {
+            "month": "2025-06-01",
+            "state": "NO_ADVERSE_BREAK_CANDIDATE"
+          },
+          {
+            "month": "2025-07-01",
+            "state": "NO_ADVERSE_BREAK_CANDIDATE"
+          },
+          {
+            "month": "2025-08-01",
+            "state": "NO_ADVERSE_BREAK_CANDIDATE"
+          },
+          {
+            "month": "2025-09-01",
+            "state": "NO_ADVERSE_BREAK_CANDIDATE"
+          },
+          {
+            "month": "2025-10-01",
+            "state": "NO_ADVERSE_BREAK_CANDIDATE"
+          },
+          {
+            "month": "2025-11-01",
+            "state": "NO_ADVERSE_BREAK_CANDIDATE"
+          },
+          {
+            "month": "2025-12-01",
+            "state": "NO_ADVERSE_BREAK_CANDIDATE"
+          }
+        ],
+        "status": "VALIDATION_RISK_DIAGNOSTIC_COMPLETE"
+      },
+      "engine_id": "BOCPD_RETURN_SUCCESSOR_V1",
+      "known_limitations": [],
+      "role": "CONTEXT_OR_RISK",
+      "status": "BLOCKED"
+    },
+    {
+      "aggregate": {
+        "alert_months": 8,
+        "alert_observations": 77,
+        "first_alert_by_month": {
+          "2025-01": "2025-01-21",
+          "2025-02": "2025-02-14",
+          "2025-03": "2025-03-27",
+          "2025-04": "2025-04-11",
+          "2025-09": "2025-09-02",
+          "2025-10": "2025-10-01",
+          "2025-11": "2025-11-04",
+          "2025-12": "2025-12-12"
+        },
+        "independent_false_miss_label": "NOT_PROVEN",
+        "observations": 204
+      },
+      "engine_id": "EMERGENCY_LEVEL",
+      "known_limitations": [],
+      "role": "CONTEXT_OR_RISK",
+      "status": "NOT_PROVEN"
+    },
+    {
+      "aggregate": {
+        "alert_months": 3,
+        "alert_observations": 22,
+        "first_alert_by_month": {
+          "2025-10": "2025-10-21",
+          "2025-11": "2025-11-10",
+          "2025-12": "2025-12-29"
+        },
+        "independent_false_miss_label": "NOT_PROVEN",
+        "observations": 204
+      },
+      "engine_id": "EMERGENCY_REVERSAL",
+      "known_limitations": [],
+      "role": "CONTEXT_OR_RISK",
+      "status": "NOT_PROVEN"
+    },
+    {
+      "aggregate": {
+        "cap_below_one": 13,
+        "cap_runs_mean": 22.727272727272727,
+        "mean_next_gold_return_stressed": -0.0010946046074800514,
+        "mean_next_gold_return_unstressed": 0.0019096195335923368,
+        "observations": 250,
+        "panic": 3
+      },
+      "engine_id": "GVZ_RISK",
+      "known_limitations": [],
+      "role": "CONTEXT_OR_RISK",
+      "status": "VALIDATED_COMPLEMENTARY"
+    }
+  ],
+  "window": "2025-01..2025-12"
+}
+```
