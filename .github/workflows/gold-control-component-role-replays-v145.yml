@@ -1,0 +1,57 @@
+name: Gold Control Component Role Replays V1.45
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/tools/run_component_role_replays_v145.py'
+      - 'gold_axis_2026/tests/test_run_component_role_replays_v145.py'
+      - 'gold_axis_2026/GOLD_CONTROL_H1_2026_08_EVALUATION_ONLY_REPLAY_CONTRACT_V145_2026-09-09.md'
+      - 'gold_axis_2026/GOLD_CONTROL_BOCPD_2026_08_EVALUATION_EXTENSION_V145_2026-09-09.md'
+      - '.github/workflows/gold-control-component-role-replays-v145.yml'
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install numpy pandas requests torch 'psycopg[binary]>=3.2,<4' pytest
+      - name: Unit and frozen R4 tests
+        run: |
+          pip install -e gold_axis_2026/r4_1
+          pytest -q gold_axis_2026/r4_1/tests gold_axis_2026/tests/test_run_component_role_replays_v145.py
+      - name: Download frozen reconstruction bundle
+        run: |
+          gh run download 34349389199 --repo "$GITHUB_REPOSITORY" \
+            --name gold-control-historical-reconstruction-v145 \
+            --dir /tmp/reconstruction
+          test "$(sha256sum /tmp/reconstruction/historical_reconstruction_bundle_v145/historical_ny17_replay_lane_v145.csv | cut -d' ' -f1)" = "00d96fc46b47a5937929460176fdcf4562580a56b4b51c20bb91732bba040f81"
+          test "$(sha256sum /tmp/reconstruction/historical_reconstruction_bundle_v145/historical_gvz_replay_lane_v145.csv | cut -d' ' -f1)" = "8c11a86cf43dc66faf8658d37c444a4650b0175c639daa511af1e5330d941059"
+      - name: Run component role replays
+        run: |
+          python gold_axis_2026/tools/run_component_role_replays_v145.py \
+            --database-url "$NEON_DATABASE_URL" \
+            --ny17 /tmp/reconstruction/historical_reconstruction_bundle_v145/historical_ny17_replay_lane_v145.csv \
+            --gvz /tmp/reconstruction/historical_reconstruction_bundle_v145/historical_gvz_replay_lane_v145.csv \
+            --output-dir /tmp/component-role-replays
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-control-component-role-replays-v145
+          if-no-files-found: error
+          retention-days: 90
+          path: /tmp/component-role-replays/
