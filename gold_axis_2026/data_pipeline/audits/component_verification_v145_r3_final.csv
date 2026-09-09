@@ -1,0 +1,13 @@
+engine_id,component_verification_status,C1_FROZEN_IDENTITY,C2_IMPLEMENTATION_RULE,C3_SOURCE_BINDING,C4_HISTORICAL_COVERAGE,C5_ORIGIN_PIT,C6_FUTURE_INFORMATION,C7_RECONSTRUCTION_VINTAGE,C8_DETERMINISM_REPRODUCIBILITY,C9_PILOT_CELL_EXECUTION,evidence_reference
+CAUSAL_PATCH,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json
+VW_MIDAS_MSVR_SUCCESSOR_V1,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json
+MOMENTUM_3M,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json
+RANDOM_WALK,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json
+MONTHLY_DIRECTION_3M,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json
+FAST,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json
+SLOW,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json
+MACRO_EVENT_SUCCESSOR_V2,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V2_ROBUST_SCORE_PREREG_2026-09-05.md
+BOCPD_RETURN_SUCCESSOR_V1,BLOCKED,PASS,PASS,PASS,BLOCKED,PASS,PASS,PASS,PASS,BLOCKED,gold_axis_2026/GOLD_CONTROL_BOCPD_2026_08_EVALUATION_EXTENSION_V145_2026-09-09.md
+EMERGENCY_LEVEL,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json
+EMERGENCY_REVERSAL,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json
+GVZ_RISK,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,PASS,gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json

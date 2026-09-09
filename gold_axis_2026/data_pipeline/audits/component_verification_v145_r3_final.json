@@ -1,0 +1,1215 @@
+{
+  "audit_id": "GOLD_CONTROL_COMPONENT_VERIFICATION_V145_R3_FINAL",
+  "authority_counts": {
+    "decision_events": 0,
+    "decision_runs": 0,
+    "decision_signal_snapshots": 0,
+    "monthly_forecast_contracts": 0
+  },
+  "auto_ensemble": "OFF",
+  "auto_selector": "OFF",
+  "engine_count": 12,
+  "mode": "FINAL_POST_GAP_COMPONENT_VERIFICATION",
+  "model_or_threshold_change": "NONE",
+  "performance_fields_consumed": false,
+  "production_database_access": "READ_ONLY",
+  "production_writes": "NONE",
+  "protocol": "gold_axis_2026/GOLD_CONTROL_COMPONENT_VERIFICATION_PROTOCOL_V145_2026-09-09.md",
+  "rows": [
+    {
+      "component_verification_status": "PASS",
+      "dimensions": {
+        "C1_FROZEN_IDENTITY": {
+          "evidence": {
+            "actual": "CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE",
+            "expected": "CAUSAL_PATCH_R1_REPRO_V1_6_COMPLETED_SESSION_DAILY_FEATURE_ORIGIN_SAFE"
+          },
+          "status": "PASS"
+        },
+        "C2_IMPLEMENTATION_RULE": {
+          "evidence": {
+            "D": 32,
+            "L": 252,
+            "P": 21
+          },
+          "status": "PASS"
+        },
+        "C3_SOURCE_BINDING": {
+          "evidence": "TWELVE_XAU_USD_1DAY_OBSERVATION_DATE_STRICTLY_BEFORE_ORIGIN_DATE",
+          "status": "PASS"
+        },
+        "C4_HISTORICAL_COVERAGE": {
+          "evidence": "existing replay plus governed 2026-08 extension",
+          "status": "PASS"
+        },
+        "C5_ORIGIN_PIT": {
+          "evidence": {
+            "origin_month": "2026-07"
+          },
+          "status": "PASS"
+        },
+        "C6_FUTURE_INFORMATION": {
+          "evidence": 0,
+          "status": "PASS"
+        },
+        "C7_RECONSTRUCTION_VINTAGE": {
+          "evidence": {
+            "prospective_claim": false
+          },
+          "status": "PASS"
+        },
+        "C8_DETERMINISM_REPRODUCIBILITY": {
+          "evidence": "PASS",
+          "status": "PASS"
+        },
+        "C9_PILOT_CELL_EXECUTION": {
+          "evidence": {
+            "determinism": "PASS",
+            "deterministic_max_abs_diff": 0.0,
+            "engine_id": "CAUSAL_PATCH",
+            "forecast": 4026.328460605107,
+            "future_information_violations": 0,
+            "origin_month": "2026-07",
+            "performance_consumed": false,
+            "prospective_claim": false,
+            "selected_feature_max_date": "2026-07-29",
+            "target_month": "2026-08",
+            "training_sample_count": 184
+          },
+          "status": "PASS"
+        }
+      },
+      "engine_id": "CAUSAL_PATCH",
+      "evidence_reference": "gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json",
+      "performance_fields_consumed": false
+    },
+    {
+      "component_verification_status": "PASS",
+      "dimensions": {
+        "C1_FROZEN_IDENTITY": {
+          "evidence": {
+            "actual": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+            "expected": "VW_MIDAS_MSVR_SUCCESSOR_V1"
+          },
+          "status": "PASS"
+        },
+        "C2_IMPLEMENTATION_RULE": {
+          "evidence": "frozen true multi-output MSVR/grid/nested rule",
+          "status": "PASS"
+        },
+        "C3_SOURCE_BINDING": {
+          "evidence": [
+            "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+            "XAG_STAKTRAKR_RESEARCH_DAILY_R1",
+            "XPT_STAKTRAKR_RESEARCH_DAILY_R1",
+            "XPD_STAKTRAKR_RESEARCH_DAILY_R1",
+            "GPR_OFFICIAL_GIT_PIT"
+          ],
+          "status": "PASS"
+        },
+        "C4_HISTORICAL_COVERAGE": {
+          "evidence": "existing replay plus governed 2026-08 extension",
+          "status": "PASS"
+        },
+        "C5_ORIGIN_PIT": {
+          "evidence": {
+            "origin_month": "2026-07"
+          },
+          "status": "PASS"
+        },
+        "C6_FUTURE_INFORMATION": {
+          "evidence": 0,
+          "status": "PASS"
+        },
+        "C7_RECONSTRUCTION_VINTAGE": {
+          "evidence": {
+            "prospective_claim": false
+          },
+          "status": "PASS"
+        },
+        "C8_DETERMINISM_REPRODUCIBILITY": {
+          "evidence": "PASS",
+          "status": "PASS"
+        },
+        "C9_PILOT_CELL_EXECUTION": {
+          "evidence": {
+            "determinism": "PASS",
+            "deterministic_max_abs_diff": 0.0,
+            "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+            "forecast": 4080.276975876418,
+            "future_information_violations": 0,
+            "inner_n": 52,
+            "origin_month": "2026-07",
+            "performance_consumed": false,
+            "predicted_log_return_gold": 0.0017850436898481595,
+            "prospective_claim": false,
+            "selected_config": [
+              1.0,
+              0.05,
+              1.0
+            ],
+            "target_month": "2026-08",
+            "training_sample_count": 197
+          },
+          "status": "PASS"
+        }
+      },
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "evidence_reference": "gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json",
+      "performance_fields_consumed": false
+    },
+    {
+      "component_verification_status": "PASS",
+      "dimensions": {
+        "C1_FROZEN_IDENTITY": {
+          "evidence": {
+            "actual": "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
+            "expected": "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"
+          },
+          "status": "PASS"
+        },
+        "C2_IMPLEMENTATION_RULE": {
+          "evidence": "MOMENTUM_3M_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
+          "status": "PASS"
+        },
+        "C3_SOURCE_BINDING": {
+          "evidence": {
+            "source_id": "SIMPLE_EXPERT_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V2",
+            "source_semantic": {
+              "duplicate_selected_dates": 0,
+              "first_selected_date": "2022-09-01",
+              "interval": "1h",
+              "last_selected_date": "2026-06-30",
+              "provider": "Twelve Data",
+              "request_count": 8,
+              "requested_timezone": "America/New_York",
+              "selected_bar_end_semantic": "17:00_ET_HOURLY_CLOSE",
+              "selected_bar_open_time": "16:00:00",
+              "selected_daily_observation_count": 987,
+              "symbol": "XAU/USD"
+            }
+          },
+          "status": "PASS"
+        },
+        "C4_HISTORICAL_COVERAGE": {
+          "evidence": "existing replay plus governed 2026-08 extension",
+          "status": "PASS"
+        },
+        "C5_ORIGIN_PIT": {
+          "evidence": {
+            "origin_month": "2026-07"
+          },
+          "status": "PASS"
+        },
+        "C6_FUTURE_INFORMATION": {
+          "evidence": 0,
+          "status": "PASS"
+        },
+        "C7_RECONSTRUCTION_VINTAGE": {
+          "evidence": {
+            "prospective_claim": false
+          },
+          "status": "PASS"
+        },
+        "C8_DETERMINISM_REPRODUCIBILITY": {
+          "evidence": "PASS",
+          "status": "PASS"
+        },
+        "C9_PILOT_CELL_EXECUTION": {
+          "evidence": {
+            "determinism": "PASS",
+            "engine_id": "MOMENTUM_3M",
+            "forecast": 3882.00397720705,
+            "future_information_violations": 0,
+            "origin_month": "2026-07",
+            "performance_consumed": false,
+            "prospective_claim": false,
+            "target_month": "2026-08"
+          },
+          "status": "PASS"
+        }
+      },
+      "engine_id": "MOMENTUM_3M",
+      "evidence_reference": "gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json",
+      "performance_fields_consumed": false
+    },
+    {
+      "component_verification_status": "PASS",
+      "dimensions": {
+        "C1_FROZEN_IDENTITY": {
+          "evidence": {
+            "actual": "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
+            "expected": "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND"
+          },
+          "status": "PASS"
+        },
+        "C2_IMPLEMENTATION_RULE": {
+          "evidence": "RW_R2_NY17_HOURLY_MONTHLY_MEAN_SOURCE_BOUND",
+          "status": "PASS"
+        },
+        "C3_SOURCE_BINDING": {
+          "evidence": {
+            "source_id": "SIMPLE_EXPERT_XAU_TWELVE_NY17_HOURLY_MONTHLY_MEAN_V2",
+            "source_semantic": {
+              "duplicate_selected_dates": 0,
+              "first_selected_date": "2022-09-01",
+              "interval": "1h",
+              "last_selected_date": "2026-06-30",
+              "provider": "Twelve Data",
+              "request_count": 8,
+              "requested_timezone": "America/New_York",
+              "selected_bar_end_semantic": "17:00_ET_HOURLY_CLOSE",
+              "selected_bar_open_time": "16:00:00",
+              "selected_daily_observation_count": 987,
+              "symbol": "XAU/USD"
+            }
+          },
+          "status": "PASS"
+        },
+        "C4_HISTORICAL_COVERAGE": {
+          "evidence": "existing replay plus governed 2026-08 extension",
+          "status": "PASS"
+        },
+        "C5_ORIGIN_PIT": {
+          "evidence": {
+            "origin_month": "2026-07"
+          },
+          "status": "PASS"
+        },
+        "C6_FUTURE_INFORMATION": {
+          "evidence": 0,
+          "status": "PASS"
+        },
+        "C7_RECONSTRUCTION_VINTAGE": {
+          "evidence": {
+            "prospective_claim": false
+          },
+          "status": "PASS"
+        },
+        "C8_DETERMINISM_REPRODUCIBILITY": {
+          "evidence": "PASS",
+          "status": "PASS"
+        },
+        "C9_PILOT_CELL_EXECUTION": {
+          "evidence": {
+            "determinism": "PASS",
+            "engine_id": "RANDOM_WALK",
+            "forecast": 4076.67869,
+            "future_information_violations": 0,
+            "origin_month": "2026-07",
+            "performance_consumed": false,
+            "prospective_claim": false,
+            "target_month": "2026-08"
+          },
+          "status": "PASS"
+        }
+      },
+      "engine_id": "RANDOM_WALK",
+      "evidence_reference": "gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json",
+      "performance_fields_consumed": false
+    },
+    {
+      "component_verification_status": "PASS",
+      "dimensions": {
+        "C1_FROZEN_IDENTITY": {
+          "evidence": {
+            "actual": "R4_1_3M_SIMPLE_RETURN_V1",
+            "expected": "R4_1_3M_SIMPLE_RETURN_V1"
+          },
+          "status": "PASS"
+        },
+        "C2_IMPLEMENTATION_RULE": {
+          "evidence": {
+            "code": "r4_1/src/gold_r4/monthly.py",
+            "frozen_tests_pass": true,
+            "static_tokens": [
+              "m3 = sum(completed_month_returns[-3:]) / 3.0",
+              "return Direction.UP",
+              "return Direction.DOWN",
+              "return Direction.NEUTRAL"
+            ]
+          },
+          "status": "PASS"
+        },
+        "C3_SOURCE_BINDING": {
+          "evidence": {
+            "frequency": "trade-date daily derived from 1-minute intraday bar",
+            "metadata": {
+              "access_evidence": {
+                "job_id": 99866288149,
+                "result": "SUCCESS",
+                "run_id": 33510985399
+              },
+              "bar_datetime_semantic": "bar open timestamp per Twelve Data documentation",
+              "block_if_missing_or_invalid": true,
+              "display_policy": "RAW_VENDOR_NON_DISPLAY_UNLESS_RIGHTS_SEPARATELY_APPROVED",
+              "fallback_policy": "NONE_SILENT; BLOCK_IF_PRIMARY_UNAVAILABLE_OR_EXACT_BAR_MISSING",
+              "not_equivalent_to": [
+                "Twelve Data provider-default 1day Australia/Sydney bar",
+                "LBMA Gold Price AM/PM",
+                "CME Spot Gold Reference Rate",
+                "CME/EBS Ticker midquote",
+                "COMEX GC futures settlement or Yahoo GC=F",
+                "XAU_DAILY_XAUS",
+                "XAU_SPOT_XAUS"
+              ],
+              "official_close_claim": false,
+              "price_field": "close",
+              "price_semantic": "end-of-16:59-minute bar = 17:00 ET internal decision reference",
+              "production_ingestion_evidence": {
+                "job_id": 99869043161,
+                "observation_ts": "2026-08-31T21:00:00+00:00",
+                "observations_written": 1,
+                "quality_errors": 0,
+                "raw_market_values_logged": false,
+                "result": "SUCCESS",
+                "retrieval_run_id": "12099dfa-a370-4710-aed5-d02388f652ac",
+                "trade_date": "2026-08-31",
+                "workflow_run_id": 33511805110
+              },
+              "provider_endpoint": "/time_series",
+              "provider_interval": "1min",
+              "provider_timezone": "America/New_York",
+              "quality_gates": [
+                "exactly_one_16_59_bar",
+                "open_positive_finite",
+                "high_positive_finite",
+                "low_positive_finite",
+                "close_positive_finite"
+              ],
+              "selection_rule": "unique bar with datetime exactly 16:59:00 ET for completed trade date",
+              "session_definition_authority": "CME Group / EBS Market spot FX & precious-metals trade-date roll",
+              "session_timezone": "America/New_York",
+              "trade_date_boundary": "17:00 ET"
+            },
+            "series_id": "XAU_EOD_TWELVE_NY17",
+            "source_name": "Twelve Data",
+            "source_symbol": "XAU/USD",
+            "status": "APPROVED_CANONICAL_PIPELINE_SUCCESS"
+          },
+          "status": "PASS"
+        },
+        "C4_HISTORICAL_COVERAGE": {
+          "evidence": {
+            "ny17_status_counts": {
+              "PROVIDER_NO_BAR": 242,
+              "VALID_EXACT_BAR": 442
+            },
+            "path": "gold_axis_2026/data_pipeline/audits/historical_reconstruction_bundle_v145/historical_reconstruction_bundle_v145.json",
+            "status": "PASS"
+          },
+          "status": "PASS"
+        },
+        "C5_ORIGIN_PIT": {
+          "evidence": "frozen chronological/completed-period rule",
+          "status": "PASS"
+        },
+        "C6_FUTURE_INFORMATION": {
+          "evidence": "chronological replay; no performance input",
+          "status": "PASS"
+        },
+        "C7_RECONSTRUCTION_VINTAGE": {
+          "evidence": {
+            "ny17_status_counts": {
+              "PROVIDER_NO_BAR": 242,
+              "VALID_EXACT_BAR": 442
+            },
+            "path": "gold_axis_2026/data_pipeline/audits/historical_reconstruction_bundle_v145/historical_reconstruction_bundle_v145.json",
+            "status": "PASS"
+          },
+          "status": "PASS"
+        },
+        "C8_DETERMINISM_REPRODUCIBILITY": {
+          "evidence": "8f76fc3432df7052940e27ae645c2ba3df7c0b66b1d8192708cc2b3255a1195e",
+          "status": "PASS"
+        },
+        "C9_PILOT_CELL_EXECUTION": {
+          "evidence": {
+            "determinism": "PASS",
+            "future_information_violations": 0,
+            "observation_rows": 400,
+            "output_sha256": "8f76fc3432df7052940e27ae645c2ba3df7c0b66b1d8192708cc2b3255a1195e",
+            "pilot_cells_executed": 20,
+            "status": "PASS"
+          },
+          "status": "PASS"
+        }
+      },
+      "engine_id": "MONTHLY_DIRECTION_3M",
+      "evidence_reference": "gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json",
+      "performance_fields_consumed": false
+    },
+    {
+      "component_verification_status": "PASS",
+      "dimensions": {
+        "C1_FROZEN_IDENTITY": {
+          "evidence": {
+            "actual": "R4_1_SMA20_2_MARKET_DAY_PERSISTENCE_V1",
+            "expected": "R4_1_SMA20_2_MARKET_DAY_PERSISTENCE_V1"
+          },
+          "status": "PASS"
+        },
+        "C2_IMPLEMENTATION_RULE": {
+          "evidence": {
+            "code": "r4_1/src/gold_r4/tactical.py",
+            "frozen_tests_pass": true,
+            "static_tokens": [
+              "sma_days: int = 20",
+              "persistence_days: int = 2"
+            ]
+          },
+          "status": "PASS"
+        },
+        "C3_SOURCE_BINDING": {
+          "evidence": {
+            "frequency": "trade-date daily derived from 1-minute intraday bar",
+            "metadata": {
+              "access_evidence": {
+                "job_id": 99866288149,
+                "result": "SUCCESS",
+                "run_id": 33510985399
+              },
+              "bar_datetime_semantic": "bar open timestamp per Twelve Data documentation",
+              "block_if_missing_or_invalid": true,
+              "display_policy": "RAW_VENDOR_NON_DISPLAY_UNLESS_RIGHTS_SEPARATELY_APPROVED",
+              "fallback_policy": "NONE_SILENT; BLOCK_IF_PRIMARY_UNAVAILABLE_OR_EXACT_BAR_MISSING",
+              "not_equivalent_to": [
+                "Twelve Data provider-default 1day Australia/Sydney bar",
+                "LBMA Gold Price AM/PM",
+                "CME Spot Gold Reference Rate",
+                "CME/EBS Ticker midquote",
+                "COMEX GC futures settlement or Yahoo GC=F",
+                "XAU_DAILY_XAUS",
+                "XAU_SPOT_XAUS"
+              ],
+              "official_close_claim": false,
+              "price_field": "close",
+              "price_semantic": "end-of-16:59-minute bar = 17:00 ET internal decision reference",
+              "production_ingestion_evidence": {
+                "job_id": 99869043161,
+                "observation_ts": "2026-08-31T21:00:00+00:00",
+                "observations_written": 1,
+                "quality_errors": 0,
+                "raw_market_values_logged": false,
+                "result": "SUCCESS",
+                "retrieval_run_id": "12099dfa-a370-4710-aed5-d02388f652ac",
+                "trade_date": "2026-08-31",
+                "workflow_run_id": 33511805110
+              },
+              "provider_endpoint": "/time_series",
+              "provider_interval": "1min",
+              "provider_timezone": "America/New_York",
+              "quality_gates": [
+                "exactly_one_16_59_bar",
+                "open_positive_finite",
+                "high_positive_finite",
+                "low_positive_finite",
+                "close_positive_finite"
+              ],
+              "selection_rule": "unique bar with datetime exactly 16:59:00 ET for completed trade date",
+              "session_definition_authority": "CME Group / EBS Market spot FX & precious-metals trade-date roll",
+              "session_timezone": "America/New_York",
+              "trade_date_boundary": "17:00 ET"
+            },
+            "series_id": "XAU_EOD_TWELVE_NY17",
+            "source_name": "Twelve Data",
+            "source_symbol": "XAU/USD",
+            "status": "APPROVED_CANONICAL_PIPELINE_SUCCESS"
+          },
+          "status": "PASS"
+        },
+        "C4_HISTORICAL_COVERAGE": {
+          "evidence": {
+            "ny17_status_counts": {
+              "PROVIDER_NO_BAR": 242,
+              "VALID_EXACT_BAR": 442
+            },
+            "path": "gold_axis_2026/data_pipeline/audits/historical_reconstruction_bundle_v145/historical_reconstruction_bundle_v145.json",
+            "status": "PASS"
+          },
+          "status": "PASS"
+        },
+        "C5_ORIGIN_PIT": {
+          "evidence": "frozen chronological/completed-period rule",
+          "status": "PASS"
+        },
+        "C6_FUTURE_INFORMATION": {
+          "evidence": "chronological replay; no performance input",
+          "status": "PASS"
+        },
+        "C7_RECONSTRUCTION_VINTAGE": {
+          "evidence": {
+            "ny17_status_counts": {
+              "PROVIDER_NO_BAR": 242,
+              "VALID_EXACT_BAR": 442
+            },
+            "path": "gold_axis_2026/data_pipeline/audits/historical_reconstruction_bundle_v145/historical_reconstruction_bundle_v145.json",
+            "status": "PASS"
+          },
+          "status": "PASS"
+        },
+        "C8_DETERMINISM_REPRODUCIBILITY": {
+          "evidence": "1912193d80e4f7d41d47dcb1fb8a63fbe6f8e0f961413ae8a5b27fa045a8dd31",
+          "status": "PASS"
+        },
+        "C9_PILOT_CELL_EXECUTION": {
+          "evidence": {
+            "determinism": "PASS",
+            "future_information_violations": 0,
+            "observation_rows": 400,
+            "output_sha256": "1912193d80e4f7d41d47dcb1fb8a63fbe6f8e0f961413ae8a5b27fa045a8dd31",
+            "pilot_cells_executed": 20,
+            "status": "PASS"
+          },
+          "status": "PASS"
+        }
+      },
+      "engine_id": "FAST",
+      "evidence_reference": "gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json",
+      "performance_fields_consumed": false
+    },
+    {
+      "component_verification_status": "PASS",
+      "dimensions": {
+        "C1_FROZEN_IDENTITY": {
+          "evidence": {
+            "actual": "R4_1_COMPLETED_WEEKLY_SMA4_2_WEEK_PERSISTENCE_V1",
+            "expected": "R4_1_COMPLETED_WEEKLY_SMA4_2_WEEK_PERSISTENCE_V1"
+          },
+          "status": "PASS"
+        },
+        "C2_IMPLEMENTATION_RULE": {
+          "evidence": {
+            "code": "r4_1/src/gold_r4/tactical.py",
+            "frozen_tests_pass": true,
+            "static_tokens": [
+              "sma_weeks: int = 4",
+              "persistence_weeks: int = 2",
+              "resample(\"W-FRI\")"
+            ]
+          },
+          "status": "PASS"
+        },
+        "C3_SOURCE_BINDING": {
+          "evidence": {
+            "frequency": "trade-date daily derived from 1-minute intraday bar",
+            "metadata": {
+              "access_evidence": {
+                "job_id": 99866288149,
+                "result": "SUCCESS",
+                "run_id": 33510985399
+              },
+              "bar_datetime_semantic": "bar open timestamp per Twelve Data documentation",
+              "block_if_missing_or_invalid": true,
+              "display_policy": "RAW_VENDOR_NON_DISPLAY_UNLESS_RIGHTS_SEPARATELY_APPROVED",
+              "fallback_policy": "NONE_SILENT; BLOCK_IF_PRIMARY_UNAVAILABLE_OR_EXACT_BAR_MISSING",
+              "not_equivalent_to": [
+                "Twelve Data provider-default 1day Australia/Sydney bar",
+                "LBMA Gold Price AM/PM",
+                "CME Spot Gold Reference Rate",
+                "CME/EBS Ticker midquote",
+                "COMEX GC futures settlement or Yahoo GC=F",
+                "XAU_DAILY_XAUS",
+                "XAU_SPOT_XAUS"
+              ],
+              "official_close_claim": false,
+              "price_field": "close",
+              "price_semantic": "end-of-16:59-minute bar = 17:00 ET internal decision reference",
+              "production_ingestion_evidence": {
+                "job_id": 99869043161,
+                "observation_ts": "2026-08-31T21:00:00+00:00",
+                "observations_written": 1,
+                "quality_errors": 0,
+                "raw_market_values_logged": false,
+                "result": "SUCCESS",
+                "retrieval_run_id": "12099dfa-a370-4710-aed5-d02388f652ac",
+                "trade_date": "2026-08-31",
+                "workflow_run_id": 33511805110
+              },
+              "provider_endpoint": "/time_series",
+              "provider_interval": "1min",
+              "provider_timezone": "America/New_York",
+              "quality_gates": [
+                "exactly_one_16_59_bar",
+                "open_positive_finite",
+                "high_positive_finite",
+                "low_positive_finite",
+                "close_positive_finite"
+              ],
+              "selection_rule": "unique bar with datetime exactly 16:59:00 ET for completed trade date",
+              "session_definition_authority": "CME Group / EBS Market spot FX & precious-metals trade-date roll",
+              "session_timezone": "America/New_York",
+              "trade_date_boundary": "17:00 ET"
+            },
+            "series_id": "XAU_EOD_TWELVE_NY17",
+            "source_name": "Twelve Data",
+            "source_symbol": "XAU/USD",
+            "status": "APPROVED_CANONICAL_PIPELINE_SUCCESS"
+          },
+          "status": "PASS"
+        },
+        "C4_HISTORICAL_COVERAGE": {
+          "evidence": {
+            "ny17_status_counts": {
+              "PROVIDER_NO_BAR": 242,
+              "VALID_EXACT_BAR": 442
+            },
+            "path": "gold_axis_2026/data_pipeline/audits/historical_reconstruction_bundle_v145/historical_reconstruction_bundle_v145.json",
+            "status": "PASS"
+          },
+          "status": "PASS"
+        },
+        "C5_ORIGIN_PIT": {
+          "evidence": "frozen chronological/completed-period rule",
+          "status": "PASS"
+        },
+        "C6_FUTURE_INFORMATION": {
+          "evidence": "chronological replay; no performance input",
+          "status": "PASS"
+        },
+        "C7_RECONSTRUCTION_VINTAGE": {
+          "evidence": {
+            "ny17_status_counts": {
+              "PROVIDER_NO_BAR": 242,
+              "VALID_EXACT_BAR": 442
+            },
+            "path": "gold_axis_2026/data_pipeline/audits/historical_reconstruction_bundle_v145/historical_reconstruction_bundle_v145.json",
+            "status": "PASS"
+          },
+          "status": "PASS"
+        },
+        "C8_DETERMINISM_REPRODUCIBILITY": {
+          "evidence": "391085ef20c86bdf7f9c3fb483e55c93656101a421bbe9bdb660249de69b6832",
+          "status": "PASS"
+        },
+        "C9_PILOT_CELL_EXECUTION": {
+          "evidence": {
+            "determinism": "PASS",
+            "future_information_violations": 0,
+            "observation_rows": 400,
+            "output_sha256": "391085ef20c86bdf7f9c3fb483e55c93656101a421bbe9bdb660249de69b6832",
+            "pilot_cells_executed": 20,
+            "status": "PASS"
+          },
+          "status": "PASS"
+        }
+      },
+      "engine_id": "SLOW",
+      "evidence_reference": "gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json",
+      "performance_fields_consumed": false
+    },
+    {
+      "component_verification_status": "PASS",
+      "dimensions": {
+        "C1_FROZEN_IDENTITY": {
+          "evidence": {
+            "actual": "MACRO_EVENT_SUCCESSOR_V2",
+            "expected": "MACRO_EVENT_SUCCESSOR_V2"
+          },
+          "status": "PASS"
+        },
+        "C2_IMPLEMENTATION_RULE": {
+          "evidence": "frozen robust-score rule",
+          "status": "PASS"
+        },
+        "C3_SOURCE_BINDING": {
+          "evidence": {
+            "run": {
+              "observations_read": 756,
+              "observations_written": 756,
+              "pipeline_version": "MACRO_EVENT_SUCCESSOR_V1_RESEARCH_DATA_PLANE_R1",
+              "run_id": "6a18db17-6fb2-4bf8-a20b-f3b6d529ca8a",
+              "status": "SUCCESS",
+              "trigger_type": "macro_event_successor_v1_research_source_ingestion"
+            },
+            "series_counts": [
+              {
+                "n": 126,
+                "null_available": 0,
+                "series_id": "MACRO_AHE_ACTUAL_FIRST_PRINT"
+              },
+              {
+                "n": 126,
+                "null_available": 0,
+                "series_id": "MACRO_AHE_CONSENSUS_PIT"
+              },
+              {
+                "n": 126,
+                "null_available": 0,
+                "series_id": "MACRO_NFP_ACTUAL_FIRST_PRINT"
+              },
+              {
+                "n": 126,
+                "null_available": 0,
+                "series_id": "MACRO_NFP_CONSENSUS_PIT"
+              },
+              {
+                "n": 126,
+                "null_available": 0,
+                "series_id": "MACRO_UNEMP_ACTUAL_FIRST_PRINT"
+              },
+              {
+                "n": 126,
+                "null_available": 0,
+                "series_id": "MACRO_UNEMP_CONSENSUS_PIT"
+              }
+            ]
+          },
+          "status": "PASS"
+        },
+        "C4_HISTORICAL_COVERAGE": {
+          "evidence": "126 complete cases / 756 rows; 2025-10 explicit exclusion",
+          "status": "PASS"
+        },
+        "C5_ORIGIN_PIT": {
+          "evidence": "first-print + consensus PIT panel",
+          "status": "PASS"
+        },
+        "C6_FUTURE_INFORMATION": {
+          "evidence": "prefix invariance executed",
+          "status": "PASS"
+        },
+        "C7_RECONSTRUCTION_VINTAGE": {
+          "evidence": "first-print/consensus PIT identities retained",
+          "status": "PASS"
+        },
+        "C8_DETERMINISM_REPRODUCIBILITY": {
+          "evidence": {
+            "hash_a": "fa3ed187a8858b658803855fa62b56e2707e9c4192c27cb7256240be4114d2f7",
+            "hash_b": "fa3ed187a8858b658803855fa62b56e2707e9c4192c27cb7256240be4114d2f7"
+          },
+          "status": "PASS"
+        },
+        "C9_PILOT_CELL_EXECUTION": {
+          "evidence": "2025-10 remains CONTRACTUAL_EXCLUSION",
+          "status": "PASS"
+        }
+      },
+      "engine_id": "MACRO_EVENT_SUCCESSOR_V2",
+      "evidence_reference": "GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V2_ROBUST_SCORE_PREREG_2026-09-05.md",
+      "performance_fields_consumed": false
+    },
+    {
+      "component_verification_status": "BLOCKED",
+      "dimensions": {
+        "C1_FROZEN_IDENTITY": {
+          "evidence": {
+            "actual": "BOCPD_RETURN_SUCCESSOR_V1",
+            "expected": "BOCPD_RETURN_SUCCESSOR_V1"
+          },
+          "status": "PASS"
+        },
+        "C2_IMPLEMENTATION_RULE": {
+          "evidence": {
+            "contract": true,
+            "tests": true
+          },
+          "status": "PASS"
+        },
+        "C3_SOURCE_BINDING": {
+          "evidence": {
+            "artifact": "gold_axis_2026/core5_monthly.csv.gz.b64",
+            "completed_month_only": true,
+            "field": "gold_monthly",
+            "semantic": "CORE5 monthly average gold price research axis",
+            "transform": "log(P_t/P_t-1)"
+          },
+          "status": "PASS"
+        },
+        "C4_HISTORICAL_COVERAGE": {
+          "evidence": {
+            "blocker_code": "CORE5_GOLD_MONTHLY_2026_08_NOT_FOUND",
+            "engine_id": "BOCPD_RETURN_SUCCESSOR_V1",
+            "model_or_threshold_change": "NONE",
+            "output_computed": false,
+            "prospective_claim": false,
+            "source_last_month": "2026-07",
+            "status": "BLOCKED_DATA"
+          },
+          "status": "BLOCKED"
+        },
+        "C5_ORIGIN_PIT": {
+          "evidence": "completed month only",
+          "status": "PASS"
+        },
+        "C6_FUTURE_INFORMATION": {
+          "evidence": "tuning_2026=NONE",
+          "status": "PASS"
+        },
+        "C7_RECONSTRUCTION_VINTAGE": {
+          "evidence": {
+            "database_writes_permitted": false,
+            "evidence": {
+              "current": "HISTORICAL_REPLAY_CONTEXT",
+              "future_first_allowed": "PROSPECTIVE_SHADOW",
+              "live_production_authorized": false
+            }
+          },
+          "status": "PASS"
+        },
+        "C8_DETERMINISM_REPRODUCIBILITY": {
+          "evidence": "frozen BOCPD tests",
+          "status": "PASS"
+        },
+        "C9_PILOT_CELL_EXECUTION": {
+          "evidence": {
+            "blocker": {
+              "blocker_code": "CORE5_GOLD_MONTHLY_2026_08_NOT_FOUND",
+              "engine_id": "BOCPD_RETURN_SUCCESSOR_V1",
+              "model_or_threshold_change": "NONE",
+              "output_computed": false,
+              "prospective_claim": false,
+              "source_last_month": "2026-07",
+              "status": "BLOCKED_DATA"
+            },
+            "extension_contract": "gold_axis_2026/bocpd_successor_v1/evaluation_extension_2026_08_v145.json"
+          },
+          "status": "BLOCKED"
+        }
+      },
+      "engine_id": "BOCPD_RETURN_SUCCESSOR_V1",
+      "evidence_reference": "gold_axis_2026/GOLD_CONTROL_BOCPD_2026_08_EVALUATION_EXTENSION_V145_2026-09-09.md",
+      "performance_fields_consumed": false
+    },
+    {
+      "component_verification_status": "PASS",
+      "dimensions": {
+        "C1_FROZEN_IDENTITY": {
+          "evidence": {
+            "actual": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1",
+            "expected": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1"
+          },
+          "status": "PASS"
+        },
+        "C2_IMPLEMENTATION_RULE": {
+          "evidence": {
+            "code": "r4_1/src/gold_r4/emergency.py",
+            "frozen_tests_pass": true,
+            "static_tokens": [
+              "level_threshold_abs: float = 0.04",
+              "displacement = close / monthly_vw_forecast - 1.0",
+              "level = Direction.UP",
+              "level = Direction.DOWN",
+              "level = Direction.NEUTRAL"
+            ]
+          },
+          "status": "PASS"
+        },
+        "C3_SOURCE_BINDING": {
+          "evidence": {
+            "frequency": "trade-date daily derived from 1-minute intraday bar",
+            "metadata": {
+              "access_evidence": {
+                "job_id": 99866288149,
+                "result": "SUCCESS",
+                "run_id": 33510985399
+              },
+              "bar_datetime_semantic": "bar open timestamp per Twelve Data documentation",
+              "block_if_missing_or_invalid": true,
+              "display_policy": "RAW_VENDOR_NON_DISPLAY_UNLESS_RIGHTS_SEPARATELY_APPROVED",
+              "fallback_policy": "NONE_SILENT; BLOCK_IF_PRIMARY_UNAVAILABLE_OR_EXACT_BAR_MISSING",
+              "not_equivalent_to": [
+                "Twelve Data provider-default 1day Australia/Sydney bar",
+                "LBMA Gold Price AM/PM",
+                "CME Spot Gold Reference Rate",
+                "CME/EBS Ticker midquote",
+                "COMEX GC futures settlement or Yahoo GC=F",
+                "XAU_DAILY_XAUS",
+                "XAU_SPOT_XAUS"
+              ],
+              "official_close_claim": false,
+              "price_field": "close",
+              "price_semantic": "end-of-16:59-minute bar = 17:00 ET internal decision reference",
+              "production_ingestion_evidence": {
+                "job_id": 99869043161,
+                "observation_ts": "2026-08-31T21:00:00+00:00",
+                "observations_written": 1,
+                "quality_errors": 0,
+                "raw_market_values_logged": false,
+                "result": "SUCCESS",
+                "retrieval_run_id": "12099dfa-a370-4710-aed5-d02388f652ac",
+                "trade_date": "2026-08-31",
+                "workflow_run_id": 33511805110
+              },
+              "provider_endpoint": "/time_series",
+              "provider_interval": "1min",
+              "provider_timezone": "America/New_York",
+              "quality_gates": [
+                "exactly_one_16_59_bar",
+                "open_positive_finite",
+                "high_positive_finite",
+                "low_positive_finite",
+                "close_positive_finite"
+              ],
+              "selection_rule": "unique bar with datetime exactly 16:59:00 ET for completed trade date",
+              "session_definition_authority": "CME Group / EBS Market spot FX & precious-metals trade-date roll",
+              "session_timezone": "America/New_York",
+              "trade_date_boundary": "17:00 ET"
+            },
+            "series_id": "XAU_EOD_TWELVE_NY17",
+            "source_name": "Twelve Data",
+            "source_symbol": "XAU/USD",
+            "status": "APPROVED_CANONICAL_PIPELINE_SUCCESS"
+          },
+          "status": "PASS"
+        },
+        "C4_HISTORICAL_COVERAGE": {
+          "evidence": {
+            "ny17_status_counts": {
+              "PROVIDER_NO_BAR": 242,
+              "VALID_EXACT_BAR": 442
+            },
+            "path": "gold_axis_2026/data_pipeline/audits/historical_reconstruction_bundle_v145/historical_reconstruction_bundle_v145.json",
+            "status": "PASS"
+          },
+          "status": "PASS"
+        },
+        "C5_ORIGIN_PIT": {
+          "evidence": "frozen chronological/completed-period rule",
+          "status": "PASS"
+        },
+        "C6_FUTURE_INFORMATION": {
+          "evidence": "chronological replay; no performance input",
+          "status": "PASS"
+        },
+        "C7_RECONSTRUCTION_VINTAGE": {
+          "evidence": {
+            "ny17_status_counts": {
+              "PROVIDER_NO_BAR": 242,
+              "VALID_EXACT_BAR": 442
+            },
+            "path": "gold_axis_2026/data_pipeline/audits/historical_reconstruction_bundle_v145/historical_reconstruction_bundle_v145.json",
+            "status": "PASS"
+          },
+          "status": "PASS"
+        },
+        "C8_DETERMINISM_REPRODUCIBILITY": {
+          "evidence": "098dcc8d829e3940f6eb738038f91e5d2a84bb72530fb70c2657daa4a18cb494",
+          "status": "PASS"
+        },
+        "C9_PILOT_CELL_EXECUTION": {
+          "evidence": {
+            "determinism": "PASS",
+            "future_information_violations": 0,
+            "observation_rows": 400,
+            "output_sha256": "098dcc8d829e3940f6eb738038f91e5d2a84bb72530fb70c2657daa4a18cb494",
+            "pilot_cells_executed": 20,
+            "status": "PASS"
+          },
+          "status": "PASS"
+        }
+      },
+      "engine_id": "EMERGENCY_LEVEL",
+      "evidence_reference": "gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json",
+      "performance_fields_consumed": false
+    },
+    {
+      "component_verification_status": "PASS",
+      "dimensions": {
+        "C1_FROZEN_IDENTITY": {
+          "evidence": {
+            "actual": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1",
+            "expected": "R4_2_PATCH_EXPERT_REFERENCE_READY_V1"
+          },
+          "status": "PASS"
+        },
+        "C2_IMPLEMENTATION_RULE": {
+          "evidence": {
+            "code": "r4_1/src/gold_r4/emergency.py",
+            "frozen_tests_pass": true,
+            "static_tokens": [
+              "reversal_threshold_abs: float = 0.04",
+              "alert = ReversalAlert.DOWN_ALERT",
+              "alert = ReversalAlert.UP_ALERT",
+              "self._reset_month(month_key)"
+            ]
+          },
+          "status": "PASS"
+        },
+        "C3_SOURCE_BINDING": {
+          "evidence": {
+            "frequency": "trade-date daily derived from 1-minute intraday bar",
+            "metadata": {
+              "access_evidence": {
+                "job_id": 99866288149,
+                "result": "SUCCESS",
+                "run_id": 33510985399
+              },
+              "bar_datetime_semantic": "bar open timestamp per Twelve Data documentation",
+              "block_if_missing_or_invalid": true,
+              "display_policy": "RAW_VENDOR_NON_DISPLAY_UNLESS_RIGHTS_SEPARATELY_APPROVED",
+              "fallback_policy": "NONE_SILENT; BLOCK_IF_PRIMARY_UNAVAILABLE_OR_EXACT_BAR_MISSING",
+              "not_equivalent_to": [
+                "Twelve Data provider-default 1day Australia/Sydney bar",
+                "LBMA Gold Price AM/PM",
+                "CME Spot Gold Reference Rate",
+                "CME/EBS Ticker midquote",
+                "COMEX GC futures settlement or Yahoo GC=F",
+                "XAU_DAILY_XAUS",
+                "XAU_SPOT_XAUS"
+              ],
+              "official_close_claim": false,
+              "price_field": "close",
+              "price_semantic": "end-of-16:59-minute bar = 17:00 ET internal decision reference",
+              "production_ingestion_evidence": {
+                "job_id": 99869043161,
+                "observation_ts": "2026-08-31T21:00:00+00:00",
+                "observations_written": 1,
+                "quality_errors": 0,
+                "raw_market_values_logged": false,
+                "result": "SUCCESS",
+                "retrieval_run_id": "12099dfa-a370-4710-aed5-d02388f652ac",
+                "trade_date": "2026-08-31",
+                "workflow_run_id": 33511805110
+              },
+              "provider_endpoint": "/time_series",
+              "provider_interval": "1min",
+              "provider_timezone": "America/New_York",
+              "quality_gates": [
+                "exactly_one_16_59_bar",
+                "open_positive_finite",
+                "high_positive_finite",
+                "low_positive_finite",
+                "close_positive_finite"
+              ],
+              "selection_rule": "unique bar with datetime exactly 16:59:00 ET for completed trade date",
+              "session_definition_authority": "CME Group / EBS Market spot FX & precious-metals trade-date roll",
+              "session_timezone": "America/New_York",
+              "trade_date_boundary": "17:00 ET"
+            },
+            "series_id": "XAU_EOD_TWELVE_NY17",
+            "source_name": "Twelve Data",
+            "source_symbol": "XAU/USD",
+            "status": "APPROVED_CANONICAL_PIPELINE_SUCCESS"
+          },
+          "status": "PASS"
+        },
+        "C4_HISTORICAL_COVERAGE": {
+          "evidence": {
+            "ny17_status_counts": {
+              "PROVIDER_NO_BAR": 242,
+              "VALID_EXACT_BAR": 442
+            },
+            "path": "gold_axis_2026/data_pipeline/audits/historical_reconstruction_bundle_v145/historical_reconstruction_bundle_v145.json",
+            "status": "PASS"
+          },
+          "status": "PASS"
+        },
+        "C5_ORIGIN_PIT": {
+          "evidence": "frozen chronological/completed-period rule",
+          "status": "PASS"
+        },
+        "C6_FUTURE_INFORMATION": {
+          "evidence": "chronological replay; no performance input",
+          "status": "PASS"
+        },
+        "C7_RECONSTRUCTION_VINTAGE": {
+          "evidence": {
+            "ny17_status_counts": {
+              "PROVIDER_NO_BAR": 242,
+              "VALID_EXACT_BAR": 442
+            },
+            "path": "gold_axis_2026/data_pipeline/audits/historical_reconstruction_bundle_v145/historical_reconstruction_bundle_v145.json",
+            "status": "PASS"
+          },
+          "status": "PASS"
+        },
+        "C8_DETERMINISM_REPRODUCIBILITY": {
+          "evidence": "bcd92032fe6469cc332796ed097476423a408c3eee2e0481e975b6c1ddb050a3",
+          "status": "PASS"
+        },
+        "C9_PILOT_CELL_EXECUTION": {
+          "evidence": {
+            "determinism": "PASS",
+            "future_information_violations": 0,
+            "observation_rows": 400,
+            "output_sha256": "bcd92032fe6469cc332796ed097476423a408c3eee2e0481e975b6c1ddb050a3",
+            "pilot_cells_executed": 20,
+            "status": "PASS"
+          },
+          "status": "PASS"
+        }
+      },
+      "engine_id": "EMERGENCY_REVERSAL",
+      "evidence_reference": "gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json",
+      "performance_fields_consumed": false
+    },
+    {
+      "component_verification_status": "PASS",
+      "dimensions": {
+        "C1_FROZEN_IDENTITY": {
+          "evidence": {
+            "actual": "R4_1_GVZ_RISK_CAP_CONTEXT_V1",
+            "expected": "R4_1_GVZ_RISK_CAP_CONTEXT_V1"
+          },
+          "status": "PASS"
+        },
+        "C2_IMPLEMENTATION_RULE": {
+          "evidence": {
+            "rule": true,
+            "tests": true
+          },
+          "status": "PASS"
+        },
+        "C3_SOURCE_BINDING": {
+          "evidence": {
+            "frequency": "daily close",
+            "metadata": {},
+            "series_id": "GVZ_CBOE",
+            "source_name": "Cboe official historical price data",
+            "source_symbol": "GVZ",
+            "status": "APPROVED"
+          },
+          "status": "PASS"
+        },
+        "C4_HISTORICAL_COVERAGE": {
+          "evidence": {
+            "first": "2025-01-02",
+            "last": "2026-03-09",
+            "rows": 295
+          },
+          "status": "PASS"
+        },
+        "C5_ORIGIN_PIT": {
+          "evidence": "chronological released Cboe observations",
+          "status": "PASS"
+        },
+        "C6_FUTURE_INFORMATION": {
+          "evidence": "risk-only context; no performance input",
+          "status": "PASS"
+        },
+        "C7_RECONSTRUCTION_VINTAGE": {
+          "evidence": {
+            "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+            "prospective_claim": false
+          },
+          "status": "PASS"
+        },
+        "C8_DETERMINISM_REPRODUCIBILITY": {
+          "evidence": "ced62fae3e4ed195ff9fc0ffc792c8806722be3d1a8c7744623a2229222efa10",
+          "status": "PASS"
+        },
+        "C9_PILOT_CELL_EXECUTION": {
+          "evidence": {
+            "determinism": "PASS",
+            "future_information_violations": 0,
+            "observation_rows": 416,
+            "output_sha256": "ced62fae3e4ed195ff9fc0ffc792c8806722be3d1a8c7744623a2229222efa10",
+            "pilot_cells_executed": 20,
+            "status": "PASS"
+          },
+          "status": "PASS"
+        }
+      },
+      "engine_id": "GVZ_RISK",
+      "evidence_reference": "gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json",
+      "performance_fields_consumed": false
+    }
+  ],
+  "snapshot_at": "2026-09-09 12:53:39.583386+00:00",
+  "status_counts": {
+    "BLOCKED": 1,
+    "PASS": 11
+  },
+  "tx_snapshot": "320513:320513:"
+}
