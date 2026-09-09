@@ -1,0 +1,53 @@
+{
+  "evidence_id": "GOLD_CONTROL_HISTORICAL_GVZ_RECONSTRUCTION_LANE_V145",
+  "status": "PASS_GAP_COMPLETED_AS_IMMUTABLE_ARTIFACT_LANE",
+  "artifact_lane_id": "GVZ_CBOE_HISTORICAL_REPLAY_V145",
+  "governed_source_series_id": "GVZ_CBOE",
+  "source": "Cboe official historical price data",
+  "source_url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/GVZ_History.csv",
+  "official_source_page": "https://www.cboe.com/tradable-products/vix/vix-historical-data",
+  "official_payload_sha256": "7a2acc2e858d48fc02b7e4925f88df0716fba0a69e7d64c7d94039ed49771fd3",
+  "source_retrieved_at": "2026-09-08T22:33:54.850582+00:00",
+  "row_artifact": "gold_axis_2026/data_pipeline/audits/historical_gvz_gap_inventory_v145.csv",
+  "row_artifact_sha256": "7b55f5e2bf056f3cd42f7178b18386d12feeac2d5c32714c93a37afc6fd2702a",
+  "historical_rows": 295,
+  "first_observation_date": "2025-01-02",
+  "last_observation_date": "2026-03-09",
+  "missing_by_month": {
+    "2025-01": 20,
+    "2025-02": 19,
+    "2025-03": 21,
+    "2025-04": 21,
+    "2025-05": 21,
+    "2025-06": 20,
+    "2025-07": 22,
+    "2025-08": 21,
+    "2025-09": 21,
+    "2025-10": 23,
+    "2025-11": 19,
+    "2025-12": 22,
+    "2026-01": 20,
+    "2026-02": 19,
+    "2026-03": 6
+  },
+  "production_reconciliation_2026_09_09": {
+    "query_mode": "READ_ONLY_SELECT",
+    "range": "2025-01-02..2026-03-09",
+    "existing_GVZ_CBOE_rows_in_range": 0,
+    "production_write": "NONE"
+  },
+  "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+  "prospective_claim": false,
+  "interpolation": "FORBIDDEN_AND_NOT_USED",
+  "forward_fill": "FORBIDDEN_AND_NOT_USED",
+  "model_change": "NONE",
+  "threshold_change": "NONE",
+  "readiness_effect": {
+    "data_blocker": "REMOVED_FOR_ARTIFACT_BASED_HISTORICAL_REPLAY",
+    "maximum_status_before_replay": "READY_TO_REPLAY",
+    "ready_proven_claim": false,
+    "affected_engine": "GVZ_RISK",
+    "affected_cells": "2025-01..2026-03"
+  },
+  "production_database_write_required_for_historical_pilot": false
+}
