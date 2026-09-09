@@ -1,0 +1,83 @@
+name: Gold Control Authorized Live Catch-up 2026-09-09
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/checkpoints/LIVE_CATCHUP_20260909_AUTHORIZED.md'
+      - '.github/workflows/gold-control-live-catchup-20260909.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-live-catchup-20260909
+  cancel-in-progress: false
+
+jobs:
+  controlled-catchup:
+    runs-on: ubuntu-24.04
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r gold_axis_2026/data_pipeline/requirements.txt pytest
+      - name: Frozen-rule tests
+        run: PYTHONPATH=gold_axis_2026/data_pipeline pytest -q gold_axis_2026/data_pipeline/test_live_intramonth_recompute_v144.py
+      - name: Require governed credentials
+        run: test -n "$NEON_DATABASE_URL" && test -n "$TWELVE_DATA_API_KEY"
+      - name: Pre-write immutable snapshot
+        run: |
+          mkdir -p evidence
+          python - <<'PY'
+          import hashlib,json,os
+          from datetime import datetime,timezone
+          import psycopg
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=True) as c:
+            with c.cursor() as q:
+              q.execute("SELECT engine_id,target_context,runtime_status,source_observation_ts::text,information_cutoff::text FROM current_engine_runtime_state_v1 WHERE engine_id IN ('FAST','SLOW','EMERGENCY_LEVEL','EMERGENCY_REVERSAL','GVZ_RISK') ORDER BY engine_id")
+              rows=[list(r) for r in q.fetchall()]
+              q.execute("SELECT (SELECT count(*) FROM monthly_forecast_contracts),(SELECT count(*) FROM decision_signal_snapshots),(SELECT count(*) FROM decision_runs),(SELECT count(*) FROM decision_events)")
+              authority=list(q.fetchone())
+          raw=json.dumps(rows,sort_keys=True,separators=(',',':')).encode()
+          out={'captured_at':datetime.now(timezone.utc).isoformat(),'runtime_rows':rows,'runtime_sha256':hashlib.sha256(raw).hexdigest(),'authority_counts':authority}
+          open('evidence/prewrite.json','w').write(json.dumps(out,indent=2,sort_keys=True)+'\n')
+          assert authority == [0,0,0,0], authority
+          PY
+      - name: Exact NY17 bounded reconciliation
+        run: python gold_axis_2026/data_pipeline/twelve_xau_ny17.py --persist --reconcile-days 7
+      - name: Frozen V1.44 catch-up persistence
+        run: python gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py --persist --evidence-mode catchup | tee evidence/recompute.log
+      - name: Post-write reconciliation
+        run: |
+          python gold_axis_2026/tools/audit_model_data_readiness_v143_cli_safe.py | tee evidence/readiness.log
+          python gold_axis_2026/tools/audit_live_intramonth_postwrite_v144.py | tee evidence/postwrite.log
+          python - <<'PY'
+          import hashlib,json,os
+          from datetime import datetime,timezone
+          import psycopg
+          with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=True) as c:
+            with c.cursor() as q:
+              q.execute("SELECT engine_id,target_context,runtime_status,source_observation_ts::text,information_cutoff::text FROM current_engine_runtime_state_v1 WHERE engine_id IN ('FAST','SLOW','EMERGENCY_LEVEL','EMERGENCY_REVERSAL','GVZ_RISK') ORDER BY engine_id")
+              rows=[list(r) for r in q.fetchall()]
+              q.execute("SELECT (SELECT count(*) FROM monthly_forecast_contracts),(SELECT count(*) FROM decision_signal_snapshots),(SELECT count(*) FROM decision_runs),(SELECT count(*) FROM decision_events)")
+              authority=list(q.fetchone())
+          raw=json.dumps(rows,sort_keys=True,separators=(',',':')).encode()
+          out={'captured_at':datetime.now(timezone.utc).isoformat(),'runtime_rows':rows,'runtime_sha256':hashlib.sha256(raw).hexdigest(),'authority_counts':authority}
+          open('evidence/postwrite.json','w').write(json.dumps(out,indent=2,sort_keys=True)+'\n')
+          assert authority == [0,0,0,0], authority
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-control-live-catchup-20260909
+          path: evidence/
+          retention-days: 90
+
