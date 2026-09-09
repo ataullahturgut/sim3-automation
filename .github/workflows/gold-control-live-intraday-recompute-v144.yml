@@ -34,7 +34,7 @@ on:
           - catchup
           - prospective-shadow
       persist:
-        description: 'Persist append-only context rows'
+        description: 'Explicitly authorize production append-only persistence'
         required: true
         default: false
         type: boolean
@@ -88,8 +88,8 @@ jobs:
           echo 'Unexpected V1.44 preflight failure' >&2
           exit "$rc"
 
-  canonical-catchup:
-    if: ${{ github.event_name == 'push' && github.ref_name == 'gold-r4-direction-engine' }}
+  persist:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.persist == true }}
     needs: unit-and-dry-run
     runs-on: ubuntu-24.04
     env:
@@ -105,41 +105,17 @@ jobs:
           python-version: '3.11'
       - name: Install governed runtime
         run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
-      - name: Reconcile canonical NY17 before derived-state catch-up
+      - name: Require explicit production-write prerequisites
         run: |
+          test "${{ github.event_name }}" = "workflow_dispatch"
+          test "${{ inputs.persist }}" = "true"
           test -n "$NEON_DATABASE_URL"
           test -n "$TWELVE_DATA_API_KEY"
+      - name: Reconcile canonical NY17 before derived-state persistence
+        run: |
           python gold_axis_2026/data_pipeline/twelve_xau_ny17.py \
             --persist \
             --reconcile-days 7
-      - name: Persist append-only September catch-up context
-        run: |
-          python gold_axis_2026/data_pipeline/live_intramonth_recompute_v144.py \
-            --persist \
-            --evidence-mode catchup
-      - name: Run strict post-write readiness audits
-        run: |
-          python gold_axis_2026/tools/audit_model_data_readiness_v143_cli_safe.py
-          python gold_axis_2026/tools/audit_live_intramonth_postwrite_v144.py
-
-  persist:
-    if: >-
-      (github.event_name == 'workflow_call') ||
-      (github.event_name == 'workflow_dispatch' && inputs.persist == true)
-    needs: unit-and-dry-run
-    runs-on: ubuntu-24.04
-    env:
-      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: gold-r4-direction-engine
-          fetch-depth: 1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Install governed runtime
-        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
       - name: Persist append-only intramonth context
         run: |
           MODE='${{ inputs.evidence_mode }}'
