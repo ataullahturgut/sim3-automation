@@ -1,11 +1,16 @@
 {
-  "snapshot_at": "2026-09-09T13:36:14.511Z",
-  "tx_snapshot": "324609:324609:",
+  "snapshot_at": "2026-09-09T13:40:08.896Z",
+  "tx_snapshot": "324614:324614:",
   "database_access": "READ_ONLY",
   "database_writes": "NONE",
   "engine_count": 12,
   "auto_selector_non_off": 0,
   "auto_ensemble_non_off": 0,
+  "historical_artifact_lane_rows": 0,
+  "canonical_observation_counts": {
+    "XAU_EOD_TWELVE_NY17": 52,
+    "GVZ_CBOE": 246
+  },
   "authority_counts": {
     "monthly_forecast_contracts": 0,
     "decision_signal_snapshots": 0,
