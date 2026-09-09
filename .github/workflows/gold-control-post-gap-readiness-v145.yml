@@ -1,0 +1,73 @@
+name: Gold Control Post-gap Readiness V1.45
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/tools/audit_historical_pilot_readiness_v145.py'
+      - 'gold_axis_2026/tools/apply_historical_gap_completion_overlay_v145.py'
+      - 'gold_axis_2026/tools/test_audit_historical_pilot_readiness_v145.py'
+      - 'gold_axis_2026/tools/test_apply_historical_gap_completion_overlay_v145.py'
+      - 'gold_axis_2026/data_pipeline/audits/historical_reconstruction_bundle_v145/**'
+      - '.github/workflows/gold-control-post-gap-readiness-v145.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'psycopg[binary]>=3.2,<4'
+      - name: Static and overlay tests
+        run: |
+          python gold_axis_2026/tests/test_audit_historical_pilot_readiness_v145.py
+          python gold_axis_2026/tools/test_apply_historical_gap_completion_overlay_v145.py
+      - name: Read-only production snapshot and deterministic baseline rerun
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/tools/audit_historical_pilot_readiness_v145.py \
+            --database-url "$NEON_DATABASE_URL" \
+            --snapshot-out /tmp/readiness-snapshot.json \
+            --out-json /tmp/baseline-a.json \
+            --out-csv /tmp/baseline-a.csv
+          python gold_axis_2026/tools/audit_historical_pilot_readiness_v145.py \
+            --snapshot-json /tmp/readiness-snapshot.json \
+            --out-json /tmp/baseline-b.json \
+            --out-csv /tmp/baseline-b.csv
+          cmp /tmp/baseline-a.json /tmp/baseline-b.json
+          cmp /tmp/baseline-a.csv /tmp/baseline-b.csv
+      - name: Apply frozen reconstruction overlay twice
+        run: |
+          python gold_axis_2026/tools/apply_historical_gap_completion_overlay_v145.py \
+            --baseline /tmp/baseline-a.csv \
+            --out-csv /tmp/post-gap-a.csv \
+            --out-json /tmp/post-gap-a.json \
+            --out-md /tmp/post-gap-a.md
+          python gold_axis_2026/tools/apply_historical_gap_completion_overlay_v145.py \
+            --baseline /tmp/baseline-b.csv \
+            --out-csv /tmp/post-gap-b.csv \
+            --out-json /tmp/post-gap-b.json \
+            --out-md /tmp/post-gap-b.md
+          cmp /tmp/post-gap-a.csv /tmp/post-gap-b.csv
+          cmp /tmp/post-gap-a.json /tmp/post-gap-b.json
+          cmp /tmp/post-gap-a.md /tmp/post-gap-b.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-post-gap-readiness-v145
+          if-no-files-found: error
+          retention-days: 90
+          path: |
+            /tmp/baseline-a.json
+            /tmp/baseline-a.csv
+            /tmp/post-gap-a.json
+            /tmp/post-gap-a.csv
+            /tmp/post-gap-a.md
