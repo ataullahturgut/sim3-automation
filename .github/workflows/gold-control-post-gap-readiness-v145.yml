@@ -7,7 +7,7 @@ on:
     paths:
       - 'gold_axis_2026/tools/audit_historical_pilot_readiness_v145.py'
       - 'gold_axis_2026/tools/apply_historical_gap_completion_overlay_v145.py'
-      - 'gold_axis_2026/tools/test_audit_historical_pilot_readiness_v145.py'
+      - 'gold_axis_2026/tests/test_audit_historical_pilot_readiness_v145.py'
       - 'gold_axis_2026/tools/test_apply_historical_gap_completion_overlay_v145.py'
       - 'gold_axis_2026/data_pipeline/audits/historical_reconstruction_bundle_v145/**'
       - '.github/workflows/gold-control-post-gap-readiness-v145.yml'
