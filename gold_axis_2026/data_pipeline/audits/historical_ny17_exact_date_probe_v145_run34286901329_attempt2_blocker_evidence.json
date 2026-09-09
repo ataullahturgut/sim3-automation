@@ -1,0 +1,54 @@
+{
+  "checkpoint_id": "GOLD_CONTROL_HISTORICAL_NY17_EXACT_DATE_PROBE_V145_RUN34286901329_ATTEMPT2_BLOCKER",
+  "contract": "GOLD_CONTROL_HISTORICAL_PILOT_READINESS_CONTRACT_V145",
+  "contract_status_preserved": "FROZEN_BEFORE_HISTORICAL_GAP_COMPLETION_AND_BEFORE_GOLD_PILOT_V1_SCORING",
+  "manifest_version_preserved": "1.45",
+  "canonical_branch": "gold-r4-direction-engine",
+  "probe_source_head_sha": "82340f78d142f732c6b668d4847bd1f23a5d87d2",
+  "workflow_run_id": 34286901329,
+  "workflow_run_attempt": 2,
+  "workflow_status": "completed",
+  "workflow_conclusion": "failure",
+  "artifact_id": 10100916974,
+  "artifact_zip_sha256": "b6ed359b1f5cdc1c4fdc191f1f4f6efb3b71f97ea4195c49aca87901acdcf3e9",
+  "artifact_json_sha256": "cf5ac90073e594ff861005957505c7acaca8c2dea9cb9328721307c509fe9ae5",
+  "artifact_json_row_count": 684,
+  "artifact_status_counts": {
+    "VALID_EXACT_BAR": 441,
+    "PROVIDER_NO_BAR": 242,
+    "REQUEST_ERROR": 1
+  },
+  "unresolved_count": 1,
+  "unresolved_rows": [
+    {
+      "trade_date": "2025-05-13",
+      "acquisition_status": "REQUEST_ERROR",
+      "provider_code": null,
+      "provider_message": "IncompleteRead:IncompleteRead(74709 bytes read)"
+    }
+  ],
+  "final_adjudication_gate": "BLOCKED",
+  "gap_completion_bundle_executed": false,
+  "post_gap_overlay_executed": false,
+  "workflow_failure_note": "After the JSON artifact had accumulated all 684 rows, CSV serialization failed because VALID_EXACT_BAR rows contain OHLC/source_bar_datetime fields absent from the CSV fieldnames. The immutable JSON artifact was nevertheless uploaded. This technical CSV failure does not override the substantive unresolved REQUEST_ERROR on 2025-05-13.",
+  "production_write": "NONE",
+  "performance_scoring": false,
+  "selector_ensemble_change": "NONE",
+  "model_source_semantics_change": "NONE",
+  "readiness_baseline_status_counts_unchanged": {
+    "READY_PROVEN": 114,
+    "READY_TO_REPLAY": 9,
+    "PARTIAL": 101,
+    "BLOCKED_DATA": 14,
+    "BLOCKED_CONTRACT": 1,
+    "CONTRACTUAL_EXCLUSION": 1
+  },
+  "readiness_matrix_rows": 240,
+  "authority_counts_last_frozen_read_only_evidence": {
+    "monthly_forecast_contracts": 0,
+    "decision_signal_snapshots": 0,
+    "decision_runs": 0,
+    "decision_events": 0
+  },
+  "next_allowed_action": "Re-probe only the unresolved 2025-05-13 exact NY17 candidate under the unchanged frozen provider/source semantics; do not build the historical reconstruction bundle or apply the post-gap overlay until every candidate is VALID_EXACT_BAR or PROVIDER_NO_BAR."
+}
