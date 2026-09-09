@@ -1,0 +1,28 @@
+{
+  "artifact_zip_sha256": "79bd7a0fa4024e5fbc3ebe8b4f912468d010c86437a8ed6360fd64206eed8430",
+  "bundle_id": "GOLD_CONTROL_HISTORICAL_RECONSTRUCTION_BUNDLE_V145",
+  "deterministic_rerun": "PASS",
+  "gvz": {
+    "first_date": "2025-01-02",
+    "last_date": "2026-03-09",
+    "lane_id": "GVZ_CBOE_HISTORICAL_REPLAY_V145",
+    "output_sha256": "8c11a86cf43dc66faf8658d37c444a4650b0175c639daa511af1e5330d941059",
+    "rows": 295,
+    "source_payload_sha256": "7a2acc2e858d48fc02b7e4925f88df0716fba0a69e7d64c7d94039ed49771fd3"
+  },
+  "ny17": {
+    "lane_id": "XAU_EOD_TWELVE_NY17_HISTORICAL_REPLAY_V145",
+    "no_bar_output_sha256": "f76fffe5989f15e21725b4ae2873250ea834b373d53f9f32933c7a2064538ec2",
+    "provider_no_bar": 242,
+    "unresolved": 0,
+    "valid_output_sha256": "00d96fc46b47a5937929460176fdcf4562580a56b4b51c20bb91732bba040f81",
+    "valid_rows": 442
+  },
+  "performance_scoring": false,
+  "production_database_write": "NONE",
+  "prospective_claim": false,
+  "status": "PASS",
+  "storage": "IMMUTABLE_GITHUB_ARTIFACT_LANES",
+  "workflow_artifact_id": 10103029670,
+  "workflow_run_id": 34349389199
+}

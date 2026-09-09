@@ -1,0 +1,54 @@
+{
+  "bundle_id": "GOLD_CONTROL_HISTORICAL_RECONSTRUCTION_BUNDLE_V145",
+  "gvz_lane_id": "GVZ_CBOE_HISTORICAL_REPLAY_V145",
+  "inputs": {
+    "gap_summary": {
+      "path": "gold_axis_2026/data_pipeline/audits/historical_gap_inventory_v145.json",
+      "sha256": "8afc902f47a2110b7da84f2b2438e73a929de1f587644b1465b89fed043a9edc"
+    },
+    "gvz_inventory": {
+      "path": "gold_axis_2026/data_pipeline/audits/historical_gvz_gap_inventory_v145.csv",
+      "sha256": "7b55f5e2bf056f3cd42f7178b18386d12feeac2d5c32714c93a37afc6fd2702a"
+    },
+    "ny_inventory": {
+      "path": "gold_axis_2026/data_pipeline/audits/historical_ny17_gap_inventory_v145.csv",
+      "sha256": "58df0c4f523b9e6d33dede14a5b305996aaa1c5525ac808620aef881d6ead499"
+    },
+    "ny_probe": {
+      "path": "github-actions:run-34348854514/historical_ny17_exact_date_probe_v145.json",
+      "sha256": "b4b66535617ec074d84ca9a7c157f22f509d9d7c35dc6e1f42b9937b4681ddf4"
+    }
+  },
+  "ny17_lane_id": "XAU_EOD_TWELVE_NY17_HISTORICAL_REPLAY_V145",
+  "ny17_status_counts": {
+    "PROVIDER_NO_BAR": 242,
+    "VALID_EXACT_BAR": 442
+  },
+  "outputs": {
+    "gvz_valid": {
+      "path": "github-actions:run-34349389199/historical_gvz_replay_lane_v145.csv",
+      "rows": 295,
+      "sha256": "8c11a86cf43dc66faf8658d37c444a4650b0175c639daa511af1e5330d941059"
+    },
+    "ny17_no_bar": {
+      "path": "github-actions:run-34349389199/historical_ny17_no_bar_adjudications_v145.csv",
+      "rows": 242,
+      "sha256": "f76fffe5989f15e21725b4ae2873250ea834b373d53f9f32933c7a2064538ec2"
+    },
+    "ny17_valid": {
+      "path": "github-actions:run-34349389199/historical_ny17_replay_lane_v145.csv",
+      "rows": 442,
+      "sha256": "00d96fc46b47a5937929460176fdcf4562580a56b4b51c20bb91732bba040f81"
+    }
+  },
+  "performance_scoring": false,
+  "production_database_write": "NONE",
+  "prospective_claim": false,
+  "status": "PASS",
+  "storage": "IMMUTABLE_GITHUB_ARTIFACT_LANES",
+  "workflow_artifact": {
+    "artifact_digest": "sha256:79bd7a0fa4024e5fbc3ebe8b4f912468d010c86437a8ed6360fd64206eed8430",
+    "artifact_id": 10103029670,
+    "run_id": 34349389199
+  }
+}
