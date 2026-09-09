@@ -34,6 +34,13 @@ jobs:
         run: |
           python macro_event_successor_v2_score_replay.py > /tmp/macro_v2.json
           python macro_event_successor_v2_event_reaction_validation.py > /tmp/macro_reaction_v2.json
+          python - <<'PY' > /tmp/macro_rows_v2.json
+          import dataclasses,json,psycopg
+          import macro_event_successor_v2_score_replay as m
+          with psycopg.connect(m.db_url()) as c: panel,_=m.load_frozen_panel(c)
+          rows=m.compute_scores(panel); m.assert_prefix_invariance(panel,rows)
+          print(json.dumps([dataclasses.asdict(r) for r in rows],sort_keys=True))
+          PY
       - name: Frozen BOCPD partial risk replay
         run: python gold_axis_2026/tools/bocpd_return_successor_v1_risk_validation.py --output-dir /tmp/bocpd
       - name: Sequential role, contribution, window, architecture and shadow evaluation
@@ -42,7 +49,9 @@ jobs:
             --vw gold_axis_2026/data_pipeline/audits/vw_successor_frozen_replay_43_v145.csv \
             --macro /tmp/macro_v2.json \
             --macro-reaction /tmp/macro_reaction_v2.json \
+            --macro-rows /tmp/macro_rows_v2.json \
             --bocpd /tmp/bocpd/bocpd_return_successor_v1_risk_evidence.json \
+            --bocpd-rows /tmp/bocpd/bocpd_return_successor_v1_risk_validation.csv \
             --out /tmp/pilot_validation_v145
       - name: Enforce frozen governance
         run: |

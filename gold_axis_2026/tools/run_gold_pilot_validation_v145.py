@@ -135,11 +135,11 @@ def contribution(h1: pd.DataFrame, contexts: dict, macro: dict, macro_reaction: 
 
 
 def main() -> int:
-    p=argparse.ArgumentParser(); p.add_argument("--vw",required=True,type=Path); p.add_argument("--macro",required=True,type=Path); p.add_argument("--macro-reaction",required=True,type=Path); p.add_argument("--bocpd",required=True,type=Path); p.add_argument("--out",required=True,type=Path); a=p.parse_args()
+    p=argparse.ArgumentParser(); p.add_argument("--vw",required=True,type=Path); p.add_argument("--macro",required=True,type=Path); p.add_argument("--macro-reaction",required=True,type=Path); p.add_argument("--macro-rows",required=True,type=Path); p.add_argument("--bocpd",required=True,type=Path); p.add_argument("--bocpd-rows",required=True,type=Path); p.add_argument("--out",required=True,type=Path); a=p.parse_args()
     a.out.mkdir(parents=True,exist_ok=True)
     component=json.loads((AUDITS/"component_role_replays_v145/component_role_replays_v145.json").read_text())
     component_final=json.loads((AUDITS/"component_verification_v145_r3_final.json").read_text())
-    macro=json.loads(a.macro.read_text()); macro_reaction=json.loads(a.macro_reaction.read_text()); bocpd=json.loads(a.bocpd.read_text())
+    macro=json.loads(a.macro.read_text()); macro_reaction=json.loads(a.macro_reaction.read_text()); macro_rows=pd.DataFrame(json.loads(a.macro_rows.read_text())); bocpd=json.loads(a.bocpd.read_text()); bocpd_rows=pd.read_csv(a.bocpd_rows)
     h1=h1_data(a.vw,component); ny=pd.read_csv(AUDITS/"component_role_replays_v145/ny17_context_role_replay_v145.csv"); gvz=pd.read_csv(AUDITS/"component_role_replays_v145/gvz_role_replay_v145.csv")
     ctx=context_metrics(ny,gvz); ctx["MACRO_EVENT_SUCCESSOR_V2"]={"status":macro.get("status"),"complete_case_months":macro.get("complete_case_months"),"state_counts":macro.get("state_counts"),"shock_events":macro.get("shock_events"),"event_reaction":macro_reaction,"contractual_exclusion":"2025-10"}
     ctx["BOCPD_RETURN_SUCCESSOR_V1"]={"status":"BLOCKED_DATA","blocker_code":"CORE5_GOLD_MONTHLY_2026_08_NOT_FOUND","partial_risk_validation":bocpd.get("validation_status")}
@@ -157,8 +157,10 @@ def main() -> int:
         monthly=[]; summaries=[]
         scoped_ny=ny[ny.target_month.str.startswith(year)].copy(); scoped_gvz=gvz[gvz.target_month.str.startswith(year)].copy()
         scoped_ctx=context_metrics(scoped_ny,scoped_gvz)
-        scoped_ctx["MACRO_EVENT_SUCCESSOR_V2"]={"status":macro.get("status"),"event_reaction_status":macro_reaction.get("status"),"contractual_exclusion":"2025-10" if year=="2025" else None}
-        scoped_ctx["BOCPD_RETURN_SUCCESSOR_V1"]={"status":"BLOCKED_DATA" if year=="2026" else bocpd.get("validation_status"),"blocker_code":"CORE5_GOLD_MONTHLY_2026_08_NOT_FOUND" if year=="2026" else None}
+        ms=macro_rows[macro_rows.reference_month.astype(str).str.startswith(year)]
+        scoped_ctx["MACRO_EVENT_SUCCESSOR_V2"]={"status":macro.get("status"),"event_reaction_status":macro_reaction.get("status"),"monthly_states":ms[["reference_month","state","evidence_window"]].to_dict("records"),"contractual_exclusion":"2025-10" if year=="2025" else None}
+        bs=bocpd_rows[bocpd_rows.month.astype(str).str.startswith(year)]
+        scoped_ctx["BOCPD_RETURN_SUCCESSOR_V1"]={"status":"BLOCKED_DATA" if year=="2026" else bocpd.get("validation_status"),"monthly_states":bs[[c for c in ("month","state","cp_probability","run_length_map") if c in bs.columns]].to_dict("records"),"blocker_code":"CORE5_GOLD_MONTHLY_2026_08_NOT_FOUND" if year=="2026" else None}
         for engine in ENGINES:
             if engine in ENGINES[:4]:
                 z=h1[(h1.engine_id==engine)&h1.target_month.str.startswith(year)]; summaries.append({"engine_id":engine,"role":"H1_PRICE","status":"PARTIAL_BLOCKED_DATA" if (z.cell_status=="BLOCKED_DATA").any() else "COMPLETE","aggregate":stats(z[z.cell_status=="SCORED"]),"known_limitations":["2026-08_REALIZED_TARGET_NOT_FOUND"] if year=="2026" else []})
@@ -178,9 +180,14 @@ def main() -> int:
     objects={"role_specific_validation_v145.json":role_doc,"incremental_contribution_v145.json":contrib,"retrospective_validation_2025_v145.json":reports["2025"],"frozen_oos_2026_jan_aug_v145.json":reports["2026"],"architecture_review_v145.json":arch,"prospective_shadow_readiness_v145.json":shadow}
     for name,obj in objects.items(): (a.out/name).write_text(json.dumps(obj,indent=2,sort_keys=True,default=safe)+"\n")
     h1.to_csv(a.out/"pilot_h1_monthly_evidence_v145.csv",index=False)
+    pd.DataFrame([{"engine_id":r["engine_id"],"component_status":r["component_status"],"role_validation_status":r["role_validation_status"]} for r in role]).to_csv(a.out/"role_specific_validation_v145.csv",index=False)
+    pd.DataFrame([{k:v for k,v in r.items() if k!="role_metric"} for r in contrib["rows"]]).to_csv(a.out/"incremental_contribution_v145.csv",index=False)
+    for year,name in (("2025","retrospective_validation_2025_v145.csv"),("2026","frozen_oos_2026_jan_aug_v145.csv")):
+        pd.DataFrame([{"engine_id":r["engine_id"],"role":r["role"],"status":r["status"],"n":r["aggregate"].get("n"),"mae":r["aggregate"].get("mae"),"mape_pct":r["aggregate"].get("mape_pct"),"direction_accuracy":r["aggregate"].get("direction_accuracy")} for r in reports[year]["rows"]]).to_csv(a.out/name,index=False)
+    pd.DataFrame(architecture).to_csv(a.out/"architecture_review_v145.csv",index=False)
     for name,obj in objects.items():
         md="# "+name.replace("_"," ").replace(".json","")+"\n\n```json\n"+json.dumps(obj,indent=2,sort_keys=True,default=safe)+"\n```\n"; (a.out/name.replace(".json",".md")).write_text(md)
-    manifest={"inputs":{"vw_sha256":sha(a.vw),"macro_sha256":sha(a.macro),"macro_reaction_sha256":sha(a.macro_reaction),"bocpd_sha256":sha(a.bocpd)},"outputs":{n:sha(a.out/n) for n in objects},"engine_count":12,"pilot_months":20,"production_writes":"NONE","authority_created":False}
+    manifest={"inputs":{"vw_sha256":sha(a.vw),"macro_sha256":sha(a.macro),"macro_reaction_sha256":sha(a.macro_reaction),"macro_rows_sha256":sha(a.macro_rows),"bocpd_sha256":sha(a.bocpd),"bocpd_rows_sha256":sha(a.bocpd_rows)},"outputs":{p.name:sha(p) for p in a.out.iterdir() if p.is_file()},"engine_count":12,"pilot_months":20,"production_writes":"NONE","authority_created":False}
     (a.out/"pilot_validation_run_manifest_v145.json").write_text(json.dumps(manifest,indent=2,sort_keys=True)+"\n")
     print(json.dumps({"engine_count":12,"role_statuses":pd.Series([r["role_validation_status"] for r in role]).value_counts().to_dict(),"shadow":shadow["status"]},sort_keys=True))
     return 0
