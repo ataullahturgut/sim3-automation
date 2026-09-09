@@ -1,7 +1,7 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.45  
-**Issue date:** 2026-09-08  
+**Manifest version:** 1.46
+**Issue date:** 2026-09-09
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
 **Default-branch scheduler:** `main`  
@@ -705,3 +705,33 @@ The next governed work is:
 Until the historical-pilot gate is complete, the correct statement is:
 
 `GOLD_PILOT_V1_HISTORICAL_READINESS = NOT_YET_PROVEN`.
+
+---
+
+## 17. V1.46 governed pilot execution state
+
+This section supersedes Section 16 only for current execution state. The V1.45
+historical contract, identities, clocks, prohibitions and evidence semantics
+remain unchanged and binding.
+
+* Exact NY17 adjudication: 684 candidate dates; 442 exact valid bars, 242
+  explicit provider-no-bar dates, zero unresolved. The immutable historical
+  artifact lane is authoritative; no production row was required or written.
+* Official Cboe GVZ reconstruction: 295 rows for 2025-01-02..2026-03-09 in the
+  immutable artifact lane; no duplicate production row was created.
+* Post-gap readiness: 240/240 cells classified; 114 `READY_PROVEN`, 124
+  `READY_TO_REPLAY`, one `BLOCKED_CONTRACT`, one `CONTRACTUAL_EXCLUSION`.
+* Final component verification: 11 `PASS`, BOCPD `BLOCKED_DATA` for exact
+  2026-08 CORE5 gold monthly input.
+* Role validation: four `VALIDATED_CORE`, five `VALIDATED_COMPLEMENTARY`, two
+  `NOT_PROVEN` Emergency roles, one blocked BOCPD role.
+* Architecture review: no engine deletion; selector/ensemble and weight
+  optimization remain off.
+* 2025 retrospective validation is complete without tuning. The 2026 Jan-Aug
+  report is explicitly partial: Jan-Jul are scoreable and August realized H=1
+  target / BOCPD source coverage remains blocked.
+* Prospective shadow preparation exists only as an observation/evaluation lane.
+  Overall status is `BLOCKED_DATA`, not `PROSPECTIVE_SHADOW_READY`.
+
+Current authority locks remain `AUTO_SELECTOR=OFF`, `AUTO_ENSEMBLE=OFF`,
+`NOT_PROVEN_POSITION_MAPPING`, and no automatic BUY/SELL/HOLD/EXIT/REDUCE.

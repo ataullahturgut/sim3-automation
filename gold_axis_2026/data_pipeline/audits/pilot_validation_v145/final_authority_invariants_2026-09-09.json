@@ -1,0 +1,15 @@
+{
+  "snapshot_at": "2026-09-09T13:36:14.511Z",
+  "tx_snapshot": "324609:324609:",
+  "database_access": "READ_ONLY",
+  "database_writes": "NONE",
+  "engine_count": 12,
+  "auto_selector_non_off": 0,
+  "auto_ensemble_non_off": 0,
+  "authority_counts": {
+    "monthly_forecast_contracts": 0,
+    "decision_signal_snapshots": 0,
+    "decision_runs": 0,
+    "decision_events": 0
+  }
+}
