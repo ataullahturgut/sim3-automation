@@ -9,8 +9,11 @@ on:
       - 'gold_axis_2026/GOLD_CONTROL_COMPONENT_VERIFICATION_PROTOCOL_V145_2026-09-09.md'
       - 'gold_axis_2026/tools/audit_component_verification_v145_r1.py'
       - 'gold_axis_2026/tools/audit_component_verification_v145_r2.py'
+      - 'gold_axis_2026/tools/audit_component_verification_v145_r3.py'
       - 'gold_axis_2026/tests/test_audit_component_verification_v145_r1.py'
       - 'gold_axis_2026/tests/test_audit_component_verification_v145_r2.py'
+      - 'gold_axis_2026/tests/test_audit_component_verification_v145_r3.py'
+      - 'gold_axis_2026/data_pipeline/audits/component_role_replays_v145/**'
       - 'gold_axis_2026/tools/test_bocpd_return_successor_v1.py'
       - 'gold_axis_2026/bocpd_successor_v1/frozen_contract_v1.json'
       - '.github/workflows/gold-control-component-verification-v145.yml'
@@ -35,8 +38,9 @@ jobs:
         run: |
           python -m py_compile gold_axis_2026/tools/audit_component_verification_v145_r1.py
           python -m py_compile gold_axis_2026/tools/audit_component_verification_v145_r2.py
+          python -m py_compile gold_axis_2026/tools/audit_component_verification_v145_r3.py
       - name: Run verifier unit tests
-        run: pytest -q gold_axis_2026/tests/test_audit_component_verification_v145_r1.py gold_axis_2026/tests/test_audit_component_verification_v145_r2.py
+        run: pytest -q gold_axis_2026/tests/test_audit_component_verification_v145_r1.py gold_axis_2026/tests/test_audit_component_verification_v145_r2.py gold_axis_2026/tests/test_audit_component_verification_v145_r3.py
       - name: Run frozen R4.1 tests
         run: |
           python -m pip install -e gold_axis_2026/r4_1
@@ -53,6 +57,14 @@ jobs:
             --vw-result /tmp/vw_component_verification_v145.json \
             --output-json /tmp/component_verification_v145_r2.json \
             --output-csv /tmp/component_verification_v145_r2.csv
+      - name: Run read-only Component Verification R3 Final
+        run: |
+          python gold_axis_2026/tools/audit_component_verification_v145_r3.py \
+            --r4-tests-pass \
+            --bocpd-tests-pass \
+            --vw-result /tmp/vw_component_verification_v145.json \
+            --output-json /tmp/component_verification_v145_r3_final.json \
+            --output-csv /tmp/component_verification_v145_r3_final.csv
       - name: Enforce governance invariants
         run: |
           python - <<'PY'
@@ -69,6 +81,12 @@ jobs:
           assert all(v==0 for v in x['authority_counts'].values()), x['authority_counts']
           assert sum(x['status_counts'].values())==12
           assert set(x['status_counts']).issubset({'PASS','NOT_PROVEN','BLOCKED','FAIL'})
+          y=json.load(open('/tmp/component_verification_v145_r3_final.json'))
+          assert y['audit_id']=='GOLD_CONTROL_COMPONENT_VERIFICATION_V145_R3_FINAL'
+          assert y['status_counts']=={'PASS':11,'BLOCKED':1}, y['status_counts']
+          assert all(v==0 for v in y['authority_counts'].values()), y['authority_counts']
+          assert y['performance_fields_consumed'] is False
+          assert y['auto_selector']=='OFF' and y['auto_ensemble']=='OFF'
           print(json.dumps({'mode':x['mode'],'status_counts':x['status_counts'],'authority_counts':x['authority_counts']},sort_keys=True))
           PY
       - name: Upload immutable verification evidence
@@ -80,4 +98,6 @@ jobs:
           path: |
             /tmp/component_verification_v145_r2.json
             /tmp/component_verification_v145_r2.csv
+            /tmp/component_verification_v145_r3_final.json
+            /tmp/component_verification_v145_r3_final.csv
             /tmp/vw_component_verification_v145.json
