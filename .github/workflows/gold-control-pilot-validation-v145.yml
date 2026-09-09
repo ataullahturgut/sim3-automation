@@ -1,0 +1,63 @@
+name: Gold Control Pilot Validation V1.45
+
+on:
+  push:
+    branches: [gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_ROLE_VALIDATION_AND_CONTRIBUTION_CONTRACT_V145_2026-09-09.md'
+      - 'gold_axis_2026/tools/run_gold_pilot_validation_v145.py'
+      - 'gold_axis_2026/tests/test_run_gold_pilot_validation_v145.py'
+      - 'gold_axis_2026/data_pipeline/audits/vw_successor_frozen_replay_43_v145.csv'
+      - '.github/workflows/gold-control-pilot-validation-v145.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install numpy pandas scipy pytest 'psycopg[binary]>=3.2,<4'
+      - name: Unit tests
+        run: pytest -q gold_axis_2026/tests/test_run_gold_pilot_validation_v145.py gold_axis_2026/tools/test_bocpd_return_successor_v1.py gold_axis_2026/tools/test_bocpd_return_successor_v1_risk_validation.py
+      - name: Frozen Macro V2 replay
+        working-directory: gold_axis_2026/data_pipeline
+        run: python macro_event_successor_v2_score_replay.py > /tmp/macro_v2.json
+      - name: Frozen BOCPD partial risk replay
+        run: python gold_axis_2026/tools/bocpd_return_successor_v1_risk_validation.py --output-dir /tmp/bocpd
+      - name: Sequential role, contribution, window, architecture and shadow evaluation
+        run: |
+          python gold_axis_2026/tools/run_gold_pilot_validation_v145.py \
+            --vw gold_axis_2026/data_pipeline/audits/vw_successor_frozen_replay_43_v145.csv \
+            --macro /tmp/macro_v2.json \
+            --bocpd /tmp/bocpd/bocpd_return_successor_v1_risk_evidence.json \
+            --out /tmp/pilot_validation_v145
+      - name: Enforce frozen governance
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          p=pathlib.Path('/tmp/pilot_validation_v145')
+          role=json.load(open(p/'role_specific_validation_v145.json'))
+          arch=json.load(open(p/'architecture_review_v145.json'))
+          shadow=json.load(open(p/'prospective_shadow_readiness_v145.json'))
+          assert len(role['rows'])==12
+          assert role['auto_selector']=='OFF' and role['auto_ensemble']=='OFF'
+          assert not role['production_authority'] and not role['prospective_claim']
+          assert len(arch['rows'])==12 and arch['weight_optimization']=='NONE'
+          assert shadow['trade_authority'] is False
+          assert shadow['auto_selector']=='OFF' and shadow['auto_ensemble']=='OFF'
+          assert shadow['status']!='PROSPECTIVE_SHADOW_READY'
+          print('FROZEN_GOVERNANCE_PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-pilot-validation-v145
+          path: /tmp/pilot_validation_v145
+          if-no-files-found: error
