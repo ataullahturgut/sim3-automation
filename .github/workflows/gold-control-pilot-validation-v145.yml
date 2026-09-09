@@ -29,7 +29,11 @@ jobs:
         run: pytest -q gold_axis_2026/tests/test_run_gold_pilot_validation_v145.py gold_axis_2026/tools/test_bocpd_return_successor_v1.py gold_axis_2026/tools/test_bocpd_return_successor_v1_risk_validation.py
       - name: Frozen Macro V2 replay
         working-directory: gold_axis_2026/data_pipeline
-        run: python macro_event_successor_v2_score_replay.py > /tmp/macro_v2.json
+        env:
+          TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+        run: |
+          python macro_event_successor_v2_score_replay.py > /tmp/macro_v2.json
+          python macro_event_successor_v2_event_reaction_validation.py > /tmp/macro_reaction_v2.json
       - name: Frozen BOCPD partial risk replay
         run: python gold_axis_2026/tools/bocpd_return_successor_v1_risk_validation.py --output-dir /tmp/bocpd
       - name: Sequential role, contribution, window, architecture and shadow evaluation
@@ -37,6 +41,7 @@ jobs:
           python gold_axis_2026/tools/run_gold_pilot_validation_v145.py \
             --vw gold_axis_2026/data_pipeline/audits/vw_successor_frozen_replay_43_v145.csv \
             --macro /tmp/macro_v2.json \
+            --macro-reaction /tmp/macro_reaction_v2.json \
             --bocpd /tmp/bocpd/bocpd_return_successor_v1_risk_evidence.json \
             --out /tmp/pilot_validation_v145
       - name: Enforce frozen governance
