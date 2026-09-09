@@ -37,7 +37,7 @@ jobs:
       - name: Download frozen reconstruction bundle
         run: |
           gh run download 34349389199 --repo "$GITHUB_REPOSITORY" \
-            --name gold-control-historical-reconstruction-v145 \
+            --name gold-control-historical-reconstruction-bundle-v145 \
             --dir /tmp/reconstruction
           test "$(sha256sum /tmp/reconstruction/historical_reconstruction_bundle_v145/historical_ny17_replay_lane_v145.csv | cut -d' ' -f1)" = "00d96fc46b47a5937929460176fdcf4562580a56b4b51c20bb91732bba040f81"
           test "$(sha256sum /tmp/reconstruction/historical_reconstruction_bundle_v145/historical_gvz_replay_lane_v145.csv | cut -d' ' -f1)" = "8c11a86cf43dc66faf8658d37c444a4650b0175c639daa511af1e5330d941059"
