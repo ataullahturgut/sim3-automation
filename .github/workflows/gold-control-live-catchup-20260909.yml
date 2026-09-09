@@ -42,7 +42,7 @@ jobs:
           import psycopg
           with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=True) as c:
             with c.cursor() as q:
-              q.execute("SELECT engine_id,target_context,runtime_status,source_observation_ts::text,information_cutoff::text FROM current_engine_runtime_state_v1 WHERE engine_id IN ('FAST','SLOW','EMERGENCY_LEVEL','EMERGENCY_REVERSAL','GVZ_RISK') ORDER BY engine_id")
+              q.execute("SELECT engine_id,target_context,runtime_status,metadata->>'source_observation_ts',metadata->>'information_cutoff' FROM current_engine_runtime_state_v1 WHERE engine_id IN ('FAST','SLOW','EMERGENCY_LEVEL','EMERGENCY_REVERSAL','GVZ_RISK') ORDER BY engine_id")
               rows=[list(r) for r in q.fetchall()]
               q.execute("SELECT (SELECT count(*) FROM monthly_forecast_contracts),(SELECT count(*) FROM decision_signal_snapshots),(SELECT count(*) FROM decision_runs),(SELECT count(*) FROM decision_events)")
               authority=list(q.fetchone())
@@ -65,7 +65,7 @@ jobs:
           import psycopg
           with psycopg.connect(os.environ['NEON_DATABASE_URL'], autocommit=True) as c:
             with c.cursor() as q:
-              q.execute("SELECT engine_id,target_context,runtime_status,source_observation_ts::text,information_cutoff::text FROM current_engine_runtime_state_v1 WHERE engine_id IN ('FAST','SLOW','EMERGENCY_LEVEL','EMERGENCY_REVERSAL','GVZ_RISK') ORDER BY engine_id")
+              q.execute("SELECT engine_id,target_context,runtime_status,metadata->>'source_observation_ts',metadata->>'information_cutoff' FROM current_engine_runtime_state_v1 WHERE engine_id IN ('FAST','SLOW','EMERGENCY_LEVEL','EMERGENCY_REVERSAL','GVZ_RISK') ORDER BY engine_id")
               rows=[list(r) for r in q.fetchall()]
               q.execute("SELECT (SELECT count(*) FROM monthly_forecast_contracts),(SELECT count(*) FROM decision_signal_snapshots),(SELECT count(*) FROM decision_runs),(SELECT count(*) FROM decision_events)")
               authority=list(q.fetchone())
@@ -80,4 +80,3 @@ jobs:
           name: gold-control-live-catchup-20260909
           path: evidence/
           retention-days: 90
-
