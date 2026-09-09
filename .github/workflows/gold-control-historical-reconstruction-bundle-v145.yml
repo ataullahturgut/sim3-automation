@@ -13,10 +13,14 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   test:
     runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ github.token }}
+      NY17_FINAL_RUN_ID: '34348854514'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,8 +37,35 @@ jobs:
       - name: Run fail-closed bundle tests
         run: |
           python -m unittest -v gold_axis_2026/tools/test_build_historical_reconstruction_bundle_v145.py
+      - name: Download final immutable NY17 adjudication
+        run: |
+          gh run download "$NY17_FINAL_RUN_ID" \
+            --repo "$GITHUB_REPOSITORY" \
+            --name historical-ny17-exact-date-probe-v145 \
+            --dir final-ny17-probe
+          test -s final-ny17-probe/historical_ny17_exact_date_probe_v145.json
+      - name: Build and deterministically rerun frozen reconstruction bundle
+        run: |
+          python gold_axis_2026/tools/build_historical_reconstruction_bundle_v145.py \
+            --ny-probe final-ny17-probe/historical_ny17_exact_date_probe_v145.json \
+            --output-dir historical_reconstruction_bundle_v145
+          find historical_reconstruction_bundle_v145 -type f -print0 | sort -z | xargs -0 sha256sum > bundle-run-1.sha256
+          python gold_axis_2026/tools/build_historical_reconstruction_bundle_v145.py \
+            --ny-probe final-ny17-probe/historical_ny17_exact_date_probe_v145.json \
+            --output-dir historical_reconstruction_bundle_v145
+          find historical_reconstruction_bundle_v145 -type f -print0 | sort -z | xargs -0 sha256sum > bundle-run-2.sha256
+          diff -u bundle-run-1.sha256 bundle-run-2.sha256
       - name: Assert no production-write dependency
         run: |
           ! grep -Ei 'psycopg|persist_bundle|NEON_DATABASE_URL|insert[[:space:]]+into|delete[[:space:]]+from|update[[:space:]]+observations' \
             gold_axis_2026/tools/build_historical_reconstruction_bundle_v145.py
           echo 'V145_HISTORICAL_RECONSTRUCTION_BUNDLE_READ_ONLY_PASS'
+      - name: Upload immutable reconstruction bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-historical-reconstruction-bundle-v145
+          if-no-files-found: error
+          path: |
+            historical_reconstruction_bundle_v145/
+            bundle-run-1.sha256
+            bundle-run-2.sha256
