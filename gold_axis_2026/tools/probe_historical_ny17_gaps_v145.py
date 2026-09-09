@@ -17,6 +17,7 @@ from typing import Any
 
 URL = "https://api.twelvedata.com/time_series"
 ACCEPTED_TIME = "16:59:00"
+FINAL_STATUSES = {"VALID_EXACT_BAR", "PROVIDER_NO_BAR"}
 
 
 def classify_error(code: int | str | None, message: str) -> str:
@@ -73,6 +74,43 @@ def request_date(api_key: str, trade_date: str) -> tuple[dict[str, Any], str, st
     return classify_payload(payload), retrieved_at, hashlib.sha256(raw).hexdigest()
 
 
+def csv_fields(rows: list[dict[str, Any]]) -> list[str]:
+    """Return a deterministic union; status-specific OHLC fields must not be lost."""
+    preferred = [
+        "trade_date", "acquisition_status", "provider_code", "provider_message",
+        "source_bar_datetime", "open", "high", "low", "close", "retrieved_at",
+        "payload_sha256", "provider", "symbol", "interval", "timezone",
+        "accepted_source_time", "stored_semantic", "evidence_class",
+        "prospective_claim", "impacted_readiness_cells",
+    ]
+    present = {key for row in rows for key in row}
+    return [key for key in preferred if key in present] + sorted(present - set(preferred))
+
+
+def merge_rows(
+    candidates: list[dict[str, str]],
+    fresh_rows: list[dict[str, Any]],
+    resume_payload: dict[str, Any] | None,
+) -> list[dict[str, Any]]:
+    expected = [row["trade_date"] for row in candidates]
+    by_date: dict[str, dict[str, Any]] = {}
+    if resume_payload is not None:
+        if resume_payload.get("probe_id") != "GOLD_CONTROL_HISTORICAL_NY17_EXACT_DATE_PROBE_V145":
+            raise ValueError("RESUME_PROBE_ID_MISMATCH")
+        for row in resume_payload.get("rows") or []:
+            trade_date = str(row.get("trade_date") or "")
+            if trade_date in by_date:
+                raise ValueError(f"RESUME_DUPLICATE_TRADE_DATE:{trade_date}")
+            by_date[trade_date] = row
+    for row in fresh_rows:
+        by_date[row["trade_date"]] = row
+    missing = [trade_date for trade_date in expected if trade_date not in by_date]
+    extra = sorted(set(by_date) - set(expected))
+    if missing or extra:
+        raise ValueError(f"MERGED_COVERAGE_MISMATCH:missing={len(missing)}:extra={len(extra)}")
+    return [by_date[trade_date] for trade_date in expected]
+
+
 def main() -> int:
     root = Path(__file__).resolve().parents[2]
     parser = argparse.ArgumentParser()
@@ -81,37 +119,47 @@ def main() -> int:
     parser.add_argument("--out-csv", default=str(root / "gold_axis_2026/data_pipeline/audits/historical_ny17_exact_date_probe_v145.csv"))
     parser.add_argument("--pacing-seconds", type=float, default=8.0)
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--only-date", action="append", default=[])
+    parser.add_argument("--resume-json")
     args = parser.parse_args()
     api_key = os.environ.get("TWELVE_DATA_API_KEY", "").strip()
     if not api_key: raise SystemExit("BLOCKED_DATA:TWELVE_DATA_API_KEY_NOT_SET")
     with Path(args.inventory).open(encoding="utf-8", newline="") as fh:
         candidates = [r for r in csv.DictReader(fh) if r["gap_action"] != "NO_WRITE_ALREADY_CANONICAL"]
-    if args.limit is not None: candidates = candidates[:args.limit]
-    out: list[dict[str, Any]] = []
+    candidate_dates = {row["trade_date"] for row in candidates}
+    unknown_dates = sorted(set(args.only_date) - candidate_dates)
+    if unknown_dates:
+        raise SystemExit(f"INVALID_REQUEST:ONLY_DATE_NOT_IN_INVENTORY:{','.join(unknown_dates)}")
+    targets = [row for row in candidates if not args.only_date or row["trade_date"] in set(args.only_date)]
+    if args.limit is not None: targets = targets[:args.limit]
+    fresh: list[dict[str, Any]] = []
     entitlement_blocked = False
-    for i, row in enumerate(candidates):
+    for i, row in enumerate(targets):
         if entitlement_blocked:
             result = {"acquisition_status": "ENTITLEMENT_BLOCKED", "provider_code": None, "provider_message": "not requested after provider quota/entitlement blocker in same run"}
             retrieved_at = None; payload_sha256 = None
         else:
             result, retrieved_at, payload_sha256 = request_date(api_key, row["trade_date"])
             if result["acquisition_status"] == "ENTITLEMENT_BLOCKED": entitlement_blocked = True
-            if i + 1 < len(candidates) and not entitlement_blocked: time.sleep(args.pacing_seconds)
-        out.append({"trade_date": row["trade_date"], **result, "retrieved_at": retrieved_at, "payload_sha256": payload_sha256,
+            if i + 1 < len(targets) and not entitlement_blocked: time.sleep(args.pacing_seconds)
+        fresh.append({"trade_date": row["trade_date"], **result, "retrieved_at": retrieved_at, "payload_sha256": payload_sha256,
                     "provider": "Twelve Data", "symbol": "XAU/USD", "interval": "1min", "timezone": "America/New_York",
                     "accepted_source_time": ACCEPTED_TIME, "stored_semantic": "17:00 ET", "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
                     "prospective_claim": False, "impacted_readiness_cells": json.loads(row["impacted_readiness_cells"])})
+    resume_payload = json.loads(Path(args.resume_json).read_text(encoding="utf-8")) if args.resume_json else None
+    out = merge_rows(candidates, fresh, resume_payload) if resume_payload is not None else fresh
     payload = {"probe_id": "GOLD_CONTROL_HISTORICAL_NY17_EXACT_DATE_PROBE_V145", "production_write": "NONE", "performance_scoring": False,
                "row_count": len(out), "rows": out}
     Path(args.out_json).write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    fields = list(out[0]) if out else ["trade_date", "acquisition_status"]
+    fields = csv_fields(out) if out else ["trade_date", "acquisition_status"]
     with Path(args.out_csv).open("w", encoding="utf-8", newline="") as fh:
-        writer = csv.DictWriter(fh, fieldnames=fields); writer.writeheader()
+        writer = csv.DictWriter(fh, fieldnames=fields, extrasaction="raise"); writer.writeheader()
         for row in out:
             flat = dict(row); flat["impacted_readiness_cells"] = json.dumps(flat["impacted_readiness_cells"], separators=(",", ":")); writer.writerow(flat)
     counts: dict[str, int] = {}
     for row in out: counts[row["acquisition_status"]] = counts.get(row["acquisition_status"], 0) + 1
-    print(json.dumps({"row_count": len(out), "status_counts": counts, "production_write": "NONE"}, sort_keys=True))
+    unresolved = sum(value for status, value in counts.items() if status not in FINAL_STATUSES)
+    print(json.dumps({"row_count": len(out), "fresh_request_count": len(fresh), "status_counts": counts, "unresolved_count": unresolved, "production_write": "NONE"}, sort_keys=True))
     return 0
 
 
