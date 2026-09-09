@@ -1,0 +1,50 @@
+{
+  "artifact_digest": "sha256:b5de36b77cd24626e2c264510dac57adcb9483b36ff444c9861100b913ceb7d6",
+  "artifact_id": 10102818986,
+  "artifact_json_sha256": "b4b66535617ec074d84ca9a7c157f22f509d9d7c35dc6e1f42b9937b4681ddf4",
+  "artifact_csv_sha256": "94db339eb5d34b7df35a4342082710fc4900f9ac141168138c82ec3db66434b9",
+  "canonical_head": "0a938d0628cee6c9e0ca948eb2e6d048a89ff574",
+  "checkpoint_id": "GOLD_CONTROL_HISTORICAL_NY17_EXACT_ADJUDICATION_FINAL_V145",
+  "contract_status": "FROZEN_BEFORE_HISTORICAL_GAP_COMPLETION_AND_BEFORE_GOLD_PILOT_V1_SCORING",
+  "database_write": "NONE_ARTIFACT_LANE_IS_FROZEN_AUTHORITY",
+  "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+  "final_adjudication": "PASS",
+  "final_status_counts": {
+    "PROVIDER_NO_BAR": 242,
+    "VALID_EXACT_BAR": 442
+  },
+  "governed_source": {
+    "accepted_source_time": "16:59:00",
+    "interval": "1min",
+    "provider": "Twelve Data",
+    "stored_semantic": "17:00 ET",
+    "symbol": "XAU/USD",
+    "timezone": "America/New_York"
+  },
+  "interpolation": false,
+  "forward_fill": false,
+  "provider_substitution": false,
+  "prospective_claim": false,
+  "row_count": 684,
+  "retry": {
+    "prior_status": "REQUEST_ERROR:IncompleteRead",
+    "replacement_payload_sha256": "83050adb5515518cb556bdf1d9392d7e027438a943f9231d415dc8d697c1f04c",
+    "replacement_retrieved_at": "2026-09-09T12:03:40.683749+00:00",
+    "replacement_status": "VALID_EXACT_BAR",
+    "trade_date": "2025-05-13"
+  },
+  "unresolved_count": 0,
+  "workflow_run_id": 34348854514,
+  "workflow_run_url": "https://github.com/ataullahturgut/sim3-automation/actions/runs/34348854514",
+  "production_postcheck": {
+    "authority_counts": {
+      "decision_events": 0,
+      "decision_runs": 0,
+      "decision_signal_snapshots": 0,
+      "monthly_forecast_contracts": 0
+    },
+    "series_id": "XAU_EOD_TWELVE_NY17",
+    "row_count": 52,
+    "verified_at": "2026-09-09 12:05:17.778715+00"
+  }
+}
