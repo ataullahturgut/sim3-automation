@@ -32,6 +32,7 @@ def test_final_status_precedence():
 
 def test_ny17_bundle_is_fail_closed_when_absent_or_incomplete(monkeypatch, tmp_path):
     monkeypatch.setattr(m, "AUDITS", tmp_path)
+    monkeypatch.setattr(m, "ROOT", tmp_path)
     ok, _ = m.ny17_bundle(); assert ok is False
     p = tmp_path / "historical_reconstruction_bundle_v145"
     p.mkdir()
