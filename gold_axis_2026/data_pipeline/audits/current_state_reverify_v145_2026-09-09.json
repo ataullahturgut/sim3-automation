@@ -1,0 +1,79 @@
+{
+  "audit_id": "GOLD_CONTROL_CURRENT_STATE_REVERIFY_V145_2026_09_09",
+  "authority_counts": {
+    "decision_events": 0,
+    "decision_runs": 0,
+    "decision_signal_snapshots": 0,
+    "monthly_forecast_contracts": 0
+  },
+  "auto_ensemble_non_off_count": 0,
+  "auto_selector_non_off_count": 0,
+  "canonical_branch": "gold-r4-direction-engine",
+  "canonical_head": "fb8542a526edcd069b8180b9e703ad2f57699da5",
+  "component_verification": {
+    "artifact_json_sha256": "f860d1c569fdb912cae4f8f20c4edf821dbc660027135d5a203abf358be892c9",
+    "audit_id": "GOLD_CONTROL_COMPONENT_VERIFICATION_V145_R2",
+    "mode": "PROVISIONAL_PRE_GAP",
+    "status_counts": {
+      "BLOCKED": 6,
+      "NOT_PROVEN": 5,
+      "PASS": 1
+    },
+    "workflow_run_id": 34343484809
+  },
+  "contract": {
+    "path": "gold_axis_2026/GOLD_CONTROL_HISTORICAL_PILOT_READINESS_CONTRACT_V145_2026-09-08.md",
+    "sha256": "8e3e0348366da3a8938b56d57d82ada41efc6c7b4ce497cef1f4c63c5da59dcb",
+    "status": "FROZEN_BEFORE_HISTORICAL_GAP_COMPLETION_AND_BEFORE_GOLD_PILOT_V1_SCORING"
+  },
+  "database": {
+    "branch_id": "br-gentle-mouse-b22dzkr1",
+    "database_name": "neondb",
+    "project_id": "winter-art-94880101",
+    "snapshot_at": "2026-09-09 11:54:15.061888+00",
+    "tx_snapshot": "315431:315431:"
+  },
+  "database_writes_by_this_audit": "NONE",
+  "engine_count": 12,
+  "engine_identity_drift": "NONE",
+  "engine_status": "12_OF_12_ACTIVE",
+  "gvz_current_production": {
+    "distinct_timestamps": 126,
+    "max_observation_ts": "2026-09-08 00:00:00+00",
+    "min_observation_ts": "2026-03-10 00:00:00+00",
+    "rows": 246,
+    "series_id": "GVZ_CBOE"
+  },
+  "historical_reconstruction_write_drift": "NONE_FOUND_FOR_GOVERNED_NY17_OR_GVZ_LANES",
+  "manifest": {
+    "path": "gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md",
+    "sha256": "c9815fbfa54470264cdf17a229dcedf4d6bbcc5b848eb05b8413229d545f688c",
+    "version": "1.45"
+  },
+  "ny17_current_production": {
+    "distinct_timestamps": 52,
+    "max_observation_ts": "2026-09-08 21:00:00+00",
+    "min_observation_ts": "2026-05-29 21:00:00+00",
+    "rows": 52,
+    "series_id": "XAU_EOD_TWELVE_NY17"
+  },
+  "source_registry": {
+    "count": 81,
+    "drift_assessment": "NON_GOVERNED_MACRO_EVENT_SUCCESSOR_V3_RESEARCH_RECORDS_PRESENT_WITH_PRODUCTION_AUTHORITY_FALSE; GOVERNED_12_ENGINE_IDENTITIES_UNCHANGED"
+  },
+  "status": "PASS_WITH_NON_GOVERNED_RESEARCH_REGISTRY_OBSERVATION",
+  "tests": {
+    "component_verification_r1_r2": "PASS_AFTER_INSTALLING_MISSING_LOCAL_PSYCOG_DEPENDENCY",
+    "current_surface_v142": "PASS",
+    "historical_readiness_v145": "7_OF_7_PASS",
+    "historical_reconstruction_bundle": "PASS"
+  },
+  "unexpected_write_review": {
+    "finding": "NO_HISTORICAL_GAP_COMPLETION_WRITE_FOUND",
+    "latest_governed_rows": [
+      "XAU_EOD_TWELVE_NY17:2026-09-08:APPROVED_CANONICAL_TWELVE_NY17",
+      "GVZ_CBOE:2026-09-08:APPROVED_AUTHORITY_RETRIEVAL_FLOOR"
+    ],
+    "classification": "CURRENT_LIVE_OR_CATCHUP_COLLECTION_NOT_HISTORICAL_PILOT_RECONSTRUCTION"
+  }
+}
