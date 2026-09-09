@@ -1,0 +1,163 @@
+{
+  "audit_id": "GOLD_CONTROL_COMPONENT_ROLE_REPLAYS_V145",
+  "authority_counts": {
+    "decision_events": 0,
+    "decision_runs": 0,
+    "decision_signal_snapshots": 0,
+    "monthly_forecast_contracts": 0
+  },
+  "auto_ensemble": "OFF",
+  "auto_selector": "OFF",
+  "bocpd_2026_08": {
+    "blocker_code": "CORE5_GOLD_MONTHLY_2026_08_NOT_FOUND",
+    "engine_id": "BOCPD_RETURN_SUCCESSOR_V1",
+    "model_or_threshold_change": "NONE",
+    "output_computed": false,
+    "prospective_claim": false,
+    "source_last_month": "2026-07",
+    "status": "BLOCKED_DATA"
+  },
+  "determinism_sha256": "7b209af9660a0af09def08689dd6434ee4427fa18eb0fb545de7f9b5f8b59de2",
+  "gvz": {
+    "determinism": "PASS",
+    "future_information_violations": 0,
+    "observation_rows": 416,
+    "output_sha256": "ced62fae3e4ed195ff9fc0ffc792c8806722be3d1a8c7744623a2229222efa10",
+    "pilot_cells_executed": 20,
+    "status": "PASS"
+  },
+  "h1_2026_08": {
+    "CAUSAL_PATCH": {
+      "determinism": "PASS",
+      "deterministic_max_abs_diff": 0.0,
+      "engine_id": "CAUSAL_PATCH",
+      "forecast": 4026.328460605107,
+      "future_information_violations": 0,
+      "origin_month": "2026-07",
+      "performance_consumed": false,
+      "prospective_claim": false,
+      "selected_feature_max_date": "2026-07-29",
+      "target_month": "2026-08",
+      "training_sample_count": 184
+    },
+    "MOMENTUM_3M": {
+      "determinism": "PASS",
+      "engine_id": "MOMENTUM_3M",
+      "forecast": 3882.00397720705,
+      "future_information_violations": 0,
+      "origin_month": "2026-07",
+      "performance_consumed": false,
+      "prospective_claim": false,
+      "target_month": "2026-08"
+    },
+    "RANDOM_WALK": {
+      "determinism": "PASS",
+      "engine_id": "RANDOM_WALK",
+      "forecast": 4076.67869,
+      "future_information_violations": 0,
+      "origin_month": "2026-07",
+      "performance_consumed": false,
+      "prospective_claim": false,
+      "target_month": "2026-08"
+    },
+    "VW_MIDAS_MSVR_SUCCESSOR_V1": {
+      "determinism": "PASS",
+      "deterministic_max_abs_diff": 0.0,
+      "engine_id": "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "forecast": 4080.276975876418,
+      "future_information_violations": 0,
+      "inner_n": 52,
+      "origin_month": "2026-07",
+      "performance_consumed": false,
+      "predicted_log_return_gold": 0.0017850436898481595,
+      "prospective_claim": false,
+      "selected_config": [
+        1.0,
+        0.05,
+        1.0
+      ],
+      "target_month": "2026-08",
+      "training_sample_count": 197
+    }
+  },
+  "macro_event": {
+    "contractual_exclusion": "2025-10",
+    "status": "PASS_EXISTING_FROZEN_REPLAY"
+  },
+  "ny17_context": {
+    "EMERGENCY_LEVEL": {
+      "determinism": "PASS",
+      "future_information_violations": 0,
+      "observation_rows": 400,
+      "output_sha256": "098dcc8d829e3940f6eb738038f91e5d2a84bb72530fb70c2657daa4a18cb494",
+      "pilot_cells_executed": 20,
+      "status": "PASS"
+    },
+    "EMERGENCY_REVERSAL": {
+      "determinism": "PASS",
+      "future_information_violations": 0,
+      "observation_rows": 400,
+      "output_sha256": "bcd92032fe6469cc332796ed097476423a408c3eee2e0481e975b6c1ddb050a3",
+      "pilot_cells_executed": 20,
+      "status": "PASS"
+    },
+    "FAST": {
+      "determinism": "PASS",
+      "future_information_violations": 0,
+      "observation_rows": 400,
+      "output_sha256": "1912193d80e4f7d41d47dcb1fb8a63fbe6f8e0f961413ae8a5b27fa045a8dd31",
+      "pilot_cells_executed": 20,
+      "status": "PASS"
+    },
+    "MONTHLY_DIRECTION_3M": {
+      "determinism": "PASS",
+      "future_information_violations": 0,
+      "observation_rows": 400,
+      "output_sha256": "8f76fc3432df7052940e27ae645c2ba3df7c0b66b1d8192708cc2b3255a1195e",
+      "pilot_cells_executed": 20,
+      "status": "PASS"
+    },
+    "SLOW": {
+      "determinism": "PASS",
+      "future_information_violations": 0,
+      "observation_rows": 400,
+      "output_sha256": "391085ef20c86bdf7f9c3fb483e55c93656101a421bbe9bdb660249de69b6832",
+      "pilot_cells_executed": 20,
+      "status": "PASS"
+    }
+  },
+  "performance_fields_consumed": false,
+  "production_database_access": "READ_ONLY",
+  "production_writes": "NONE",
+  "prospective_claim": false,
+  "source_reconstruction": {
+    "hourly": {
+      "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+      "interval": "1h",
+      "monthly_counts": {
+        "2026-04": 30,
+        "2026-05": 31,
+        "2026-06": 30,
+        "2026-07": 31
+      },
+      "payload_sha256": "be374912f463cd34f1f395cbc48195a7fe911c6fd76ccf7a2ee65b2658e0d448",
+      "prospective_claim": false,
+      "provider": "Twelve Data",
+      "retrieved_at": "2026-09-09T12:46:27.683333+00:00",
+      "selected_bar_open_time": "16:00:00",
+      "selected_dates": 122,
+      "stored_semantic": "17:00_ET_HOURLY_CLOSE",
+      "symbol": "XAU/USD",
+      "timezone": "America/New_York"
+    },
+    "patch_daily": {
+      "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION",
+      "payload_sha256": "6cd1d1c87d1655fa428365aacb4d2f0d7582ae16693fb4316e1a6f977df2a816",
+      "prospective_claim": false,
+      "retrieved_at": "2026-09-09T12:46:42.610114+00:00",
+      "rows": 4455,
+      "selected_max_date": "2026-07-29"
+    }
+  },
+  "status": "PASS_WITH_BOCPD_BLOCKED_DATA"
+}
