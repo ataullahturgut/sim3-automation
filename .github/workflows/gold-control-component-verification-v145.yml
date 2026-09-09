@@ -8,7 +8,9 @@ on:
     paths:
       - 'gold_axis_2026/GOLD_CONTROL_COMPONENT_VERIFICATION_PROTOCOL_V145_2026-09-09.md'
       - 'gold_axis_2026/tools/audit_component_verification_v145_r1.py'
+      - 'gold_axis_2026/tools/audit_component_verification_v145_r2.py'
       - 'gold_axis_2026/tests/test_audit_component_verification_v145_r1.py'
+      - 'gold_axis_2026/tests/test_audit_component_verification_v145_r2.py'
       - '.github/workflows/gold-control-component-verification-v145.yml'
 
 permissions:
@@ -27,10 +29,12 @@ jobs:
           python-version: '3.11'
       - name: Install verification dependencies
         run: python -m pip install --upgrade pip pytest numpy pandas 'psycopg[binary]'
-      - name: Compile verifier
-        run: python -m py_compile gold_axis_2026/tools/audit_component_verification_v145_r1.py
+      - name: Compile verifiers
+        run: |
+          python -m py_compile gold_axis_2026/tools/audit_component_verification_v145_r1.py
+          python -m py_compile gold_axis_2026/tools/audit_component_verification_v145_r2.py
       - name: Run verifier unit tests
-        run: pytest -q gold_axis_2026/tests/test_audit_component_verification_v145_r1.py
+        run: pytest -q gold_axis_2026/tests/test_audit_component_verification_v145_r1.py gold_axis_2026/tests/test_audit_component_verification_v145_r2.py
       - name: Run frozen R4.1 tests
         run: |
           python -m pip install -e gold_axis_2026/r4_1
@@ -39,24 +43,26 @@ jobs:
         run: python gold_axis_2026/tools/test_bocpd_return_successor_v1.py
       - name: Run VW technical deterministic replay
         run: python gold_axis_2026/tools/vw_midas_msvr_successor_v1.py --output /tmp/vw_component_verification_v145.json --determinism-check
-      - name: Run read-only Component Verification
+      - name: Run read-only Component Verification R2
         run: |
-          python gold_axis_2026/tools/audit_component_verification_v145_r1.py \
+          python gold_axis_2026/tools/audit_component_verification_v145_r2.py \
             --r4-tests-pass \
             --bocpd-tests-pass \
             --vw-result /tmp/vw_component_verification_v145.json \
-            --output-json /tmp/component_verification_v145_r1.json \
-            --output-csv /tmp/component_verification_v145_r1.csv
+            --output-json /tmp/component_verification_v145_r2.json \
+            --output-csv /tmp/component_verification_v145_r2.csv
       - name: Enforce governance invariants
         run: |
           python - <<'PY'
           import json
-          p='/tmp/component_verification_v145_r1.json'
+          p='/tmp/component_verification_v145_r2.json'
           x=json.load(open(p))
+          assert x['audit_id']=='GOLD_CONTROL_COMPONENT_VERIFICATION_V145_R2'
           assert x['engine_count']==12
           assert x['production_database_access']=='READ_ONLY'
           assert x['production_writes']=='NONE'
           assert x['performance_fields_consumed'] is False
+          assert x['model_or_contract_change']=='NONE'
           assert set(x['authority_counts'])=={'monthly_forecast_contracts','decision_signal_snapshots','decision_runs','decision_events'}
           assert all(v==0 for v in x['authority_counts'].values()), x['authority_counts']
           assert sum(x['status_counts'].values())==12
@@ -67,9 +73,9 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gold-control-component-verification-v145-r1
+          name: gold-control-component-verification-v145-r2
           if-no-files-found: error
           path: |
-            /tmp/component_verification_v145_r1.json
-            /tmp/component_verification_v145_r1.csv
+            /tmp/component_verification_v145_r2.json
+            /tmp/component_verification_v145_r2.csv
             /tmp/vw_component_verification_v145.json
