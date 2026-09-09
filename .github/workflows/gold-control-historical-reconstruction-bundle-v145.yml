@@ -1,0 +1,40 @@
+name: Gold Control Historical Reconstruction Bundle V1.45
+
+on:
+  push:
+    branches:
+      - gold-r4-direction-engine
+    paths:
+      - 'gold_axis_2026/tools/build_historical_reconstruction_bundle_v145.py'
+      - 'gold_axis_2026/tools/test_build_historical_reconstruction_bundle_v145.py'
+      - 'gold_axis_2026/GOLD_CONTROL_HISTORICAL_RECONSTRUCTION_ARTIFACT_LANES_V145_2026-09-09.md'
+      - '.github/workflows/gold-control-historical-reconstruction-bundle-v145.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile
+        run: |
+          python -m py_compile \
+            gold_axis_2026/tools/build_historical_reconstruction_bundle_v145.py \
+            gold_axis_2026/tools/test_build_historical_reconstruction_bundle_v145.py
+      - name: Run fail-closed bundle tests
+        run: |
+          python -m unittest -v gold_axis_2026/tools/test_build_historical_reconstruction_bundle_v145.py
+      - name: Assert no production-write dependency
+        run: |
+          ! grep -Ei 'psycopg|persist_bundle|NEON_DATABASE_URL|insert[[:space:]]+into|delete[[:space:]]+from|update[[:space:]]+observations' \
+            gold_axis_2026/tools/build_historical_reconstruction_bundle_v145.py
+          echo 'V145_HISTORICAL_RECONSTRUCTION_BUNDLE_READ_ONLY_PASS'
