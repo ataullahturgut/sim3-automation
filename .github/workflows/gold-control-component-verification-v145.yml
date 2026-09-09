@@ -11,6 +11,8 @@ on:
       - 'gold_axis_2026/tools/audit_component_verification_v145_r2.py'
       - 'gold_axis_2026/tests/test_audit_component_verification_v145_r1.py'
       - 'gold_axis_2026/tests/test_audit_component_verification_v145_r2.py'
+      - 'gold_axis_2026/tools/test_bocpd_return_successor_v1.py'
+      - 'gold_axis_2026/bocpd_successor_v1/frozen_contract_v1.json'
       - '.github/workflows/gold-control-component-verification-v145.yml'
 
 permissions:
@@ -40,7 +42,7 @@ jobs:
           python -m pip install -e gold_axis_2026/r4_1
           pytest -q gold_axis_2026/r4_1/tests
       - name: Run frozen BOCPD tests
-        run: python gold_axis_2026/tools/test_bocpd_return_successor_v1.py
+        run: pytest -q gold_axis_2026/tools/test_bocpd_return_successor_v1.py
       - name: Run VW technical deterministic replay
         run: python gold_axis_2026/tools/vw_midas_msvr_successor_v1.py --output /tmp/vw_component_verification_v145.json --determinism-check
       - name: Run read-only Component Verification R2

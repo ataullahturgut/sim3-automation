@@ -1,6 +1,8 @@
 {
   "contract_version": "BOCPD_RETURN_SUCCESSOR_V1",
   "status": "ACTIVE_CURRENT_CONTEXT_HISTORICAL_REPLAY",
+  "archived_identity": "BOCPD",
+  "archived_status": "BLOCKED_EXACT_BOCPD_PRIOR_AND_RESET_SCORE_IMPLEMENTATION_NOT_RECOVERED",
   "role": "REGIME_BREAK_CONTEXT",
   "direction_vote_permitted": false,
   "position_mapping_permitted": false,
@@ -45,7 +47,8 @@
     "adverse_break_candidate": "map_reset AND completed_month_log_return_less_than_0",
     "true_state": "ADVERSE_BREAK_CANDIDATE",
     "false_state": "NO_ADVERSE_BREAK_CANDIDATE",
-    "numeric_alarm_threshold": null
+    "numeric_alarm_threshold": null,
+    "archived_threshold_reused": false
   },
   "evidence": {
     "current": "HISTORICAL_REPLAY_CONTEXT",
