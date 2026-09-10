@@ -1,0 +1,14 @@
+{
+  "model_id":"HS_SDL_DMA_DIRECTION_FUSION_V1",
+  "status":"FROZEN_BEFORE_OUTER_SCORING",
+  "inventory_origin_count":400,
+  "minimum_calibration_matured_origins":60,
+  "minimum_outer_matured_origins":200,
+  "direction_mapping":{"UP":"p_cal >= 0.60","DOWN":"p_cal <= 0.40","UNCERTAIN":"0.40 < p_cal < 0.60"},
+  "abstention_rule":"SYMMETRIC_FIXED_0_40_0_60",
+  "promotion_rule":{"primary":"BRIER","required_improvement_vs_p50":0.005,"allowed_brier_gap_vs_best_simple_baseline":0.002,"calibration_intercept_abs_max":0.25,"calibration_slope_min":0.5,"calibration_slope_max":1.5,"require_both_time_halves_finite":true},
+  "hard_rejection":["LEAKAGE_OR_PREFIX_INVARIANCE_FAIL","DETERMINISM_FAIL","PIT_FAIL","MANDATORY_BASELINE_MISSING","CALIBRATION_SAMPLE_LT_60","OUTER_SAMPLE_LT_200"],
+  "threshold_origin":"GOVERNANCE_PREREGISTRATION_AFTER_COUNT_INVENTORY_BEFORE_OUTER_SCORING",
+  "outer_results_consumed":false,
+  "production_authority":false
+}

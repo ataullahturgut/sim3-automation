@@ -1,0 +1,17 @@
+{
+  "model_id":"HS_SDL_DMA_DIRECTION_FUSION_V1",
+  "status":"FROZEN_BEFORE_OUTER_SCORING",
+  "minimum_training_matured_origins":60,
+  "ridge_lambda_set":[0.25,1.0,4.0],
+  "state_discount_set":[1.0,0.99,0.97],
+  "dma_alpha_set":[1.0,0.99,0.95],
+  "initial_candidate_weights":"EQUAL",
+  "probability_clip_epsilon":0.000001,
+  "calibration":{"form":"PLATT_LOGIT","minimum_matured_inner_oos":60,"window":"EXPANDING_ALL_PRIOR_MATURED_INNER_OOS","ridge_lambda":0.0001,"outer_target_in_fit":false},
+  "selection_score":"INNER_MATURED_RAW_BRIER",
+  "tie_breaking":"LEXICOGRAPHIC_CONFIG_ID",
+  "random_seed":20260910,
+  "randomness_used":false,
+  "preprocessing":"FIXED_ONE_HOT_NO_SCALING",
+  "three_day_delay":"UPDATE_ONLY_WHEN_TARGET_INDEX_LE_ORIGIN_INDEX"
+}
