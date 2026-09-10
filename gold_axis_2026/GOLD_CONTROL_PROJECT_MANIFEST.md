@@ -1111,3 +1111,35 @@ The V1.48 core is grounded in the following authority chain:
 - Hansen, P.R., Lunde, A., Nason, J.M. (2011), “The Model Confidence Set,” *Econometrica*, 79(2), 453–497. DOI `10.3982/ECTA5771`. This supports retaining a superior set instead of forcing a unique winner when statistical evidence does not distinguish candidates.
 
 These sources justify the **architecture and evaluation discipline**. They do not prove that HS-SDL-DMA will outperform Gold Control baselines on the project's data. That empirical claim remains `NOT_PROVEN` until the frozen replay and subsequent evidence gates pass.
+
+---
+
+## 20. V1.48 HS-SDL-DMA implementation and first frozen replay state
+
+The Section 19 build order was executed on a feature branch without changing the
+frozen architecture. Exact inventory contains 400 retrospective NY17 origins.
+FAST, SLOW and MONTHLY_DIRECTION use categorical one-hot contrasts; no numeric
+vote encoding was invented. Context-only components lacking an exact daily PIT
+join are excluded from the initial three nested candidates.
+
+Candidate universe, inner grid, calibration and abstention/promotion rules were
+committed before outer scoring. Deterministic nested replay subsequently produced
+279 calibrated outer 1D and 273 calibrated outer 3D predictions. Evidence is
+`RETROSPECTIVE_PSEUDO_REAL_TIME_VALIDATED`, never prospective.
+
+Neither horizon passed the preregistered promotion gates. HS-SDL-DMA Brier was
+`0.254468` (1D) and `0.255404` (3D), versus `0.25` for the mandatory constant
+probability baseline. Calibration/stability gates also failed. Therefore:
+
+- `CORE_IMPLEMENTATION = IMPLEMENTED_RESEARCH_ONLY`
+- `CORE_RETROSPECTIVE_VALIDATION = VALID_RUN_PROMOTION_NOT_PROVEN`
+- `NEXT_NY17_1D_PROBABILITY = NOT_PROVEN`
+- `NEXT_NY17_3D_PROBABILITY = NOT_PROVEN`
+- `DASHBOARD_SHORT_HORIZON_PROBABILITY = NOT_PROVEN`
+- `LATER_GENUINE_PROSPECTIVE_SHADOW = BLOCKED_PROMOTION_NOT_PROVEN`
+- `CORE_PRODUCTION_AUTHORITY = CLOSED`
+- `TODAY_TO_NY17_PROBABILITY = BLOCKED_CONTRACT`
+- `AUTO_SELECTOR = OFF`; `AUTO_ENSEMBLE = OFF`
+
+Full evidence is in `HS_SDL_DMA_RETROSPECTIVE_VALIDATION_REPORT_V1_2026-09-10.md`
+and `data_pipeline/audits/hs_sdl_dma_replay_v1/`.

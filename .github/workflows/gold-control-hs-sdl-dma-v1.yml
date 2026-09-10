@@ -1,0 +1,41 @@
+name: Gold Control HS-SDL-DMA V1
+
+on:
+  push:
+    branches: [gold-hs-sdl-dma-v1, gold-r4-direction-engine]
+    paths:
+      - 'gold_axis_2026/hs_sdl_dma_v1/**'
+      - 'gold_axis_2026/tools/audit_hs_sdl_dma_inventory_v1.py'
+      - 'gold_axis_2026/tools/run_hs_sdl_dma_replay_v1.py'
+      - 'gold_axis_2026/tests/test_hs_sdl_dma_*'
+      - '.github/workflows/gold-control-hs-sdl-dma-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  governance-and-determinism:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install numpy pandas pytest
+      - name: Contract leakage maturity and dashboard tests
+        run: pytest -q gold_axis_2026/tests/test_hs_sdl_dma_*.py
+      - name: Rebuild inventory and replay deterministically
+        run: |
+          python gold_axis_2026/tools/audit_hs_sdl_dma_inventory_v1.py --output /tmp/inventory_a.json
+          python gold_axis_2026/tools/audit_hs_sdl_dma_inventory_v1.py --output /tmp/inventory_b.json
+          python gold_axis_2026/tools/run_hs_sdl_dma_replay_v1.py --output-dir /tmp/replay_a
+          python gold_axis_2026/tools/run_hs_sdl_dma_replay_v1.py --output-dir /tmp/replay_b
+          diff -u /tmp/inventory_a.json /tmp/inventory_b.json
+          diff -ru /tmp/replay_a /tmp/replay_b
+      - name: Authority assertions
+        run: |
+          ! grep -RFn '"production_authority": true' gold_axis_2026/hs_sdl_dma_v1 gold_axis_2026/data_pipeline/audits/hs_sdl_dma_replay_v1
+          ! grep -RFn 'production_authority = True' gold_axis_2026/hs_sdl_dma_v1 gold_axis_2026/data_pipeline/audits/hs_sdl_dma_replay_v1
+          grep -Fn '"auto_selector": "OFF"' gold_axis_2026/data_pipeline/audits/hs_sdl_dma_replay_v1/hs_sdl_dma_replay_v1.json
+          grep -Fn '"auto_ensemble": "OFF"' gold_axis_2026/data_pipeline/audits/hs_sdl_dma_replay_v1/hs_sdl_dma_replay_v1.json

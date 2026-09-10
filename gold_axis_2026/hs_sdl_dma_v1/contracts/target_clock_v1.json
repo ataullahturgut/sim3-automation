@@ -1,0 +1,14 @@
+{
+  "model_id":"HS_SDL_DMA_DIRECTION_FUSION_V1",
+  "source_identity":"XAU_EOD_TWELVE_NY17",
+  "anchor_semantic":"COMPLETED_17_00_AMERICA_NEW_YORK_BOUNDARY",
+  "eligible_progression":"NEXT_ROWS_IN_CANONICAL_CHRONOLOGICAL_NY17_SERIES",
+  "provider_no_bar":"DATE_IS_NOT_ELIGIBLE_AND_IS_NOT_INTERPOLATED",
+  "NEXT_NY17_1D":{"target_offset_eligible_observations":1,"maturity":"WHEN_OFFSET_1_OBSERVATION_EXISTS"},
+  "NEXT_NY17_3D":{"target_offset_eligible_observations":3,"maturity":"WHEN_OFFSET_3_OBSERVATION_EXISTS"},
+  "weekend_holiday_rule":"NO_CALENDAR_ARITHMETIC;ADVANCE_ONLY_ACROSS_ACTUALLY_PRESENT_GOVERNED_NY17_ROWS",
+  "interpolation":false,
+  "forward_fill":false,
+  "alternate_provider":false,
+  "today_to_ny17":"BLOCKED_CONTRACT"
+}

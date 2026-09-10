@@ -1,0 +1,15 @@
+{
+  "model_id":"HS_SDL_DMA_DIRECTION_FUSION_V1",
+  "status":"FROZEN_BEFORE_OUTER_SCORING",
+  "candidate_count":3,
+  "candidates":[
+    {"id":"M1_FAST","columns":["INTERCEPT","fast_state__ROBUST_DOWN","fast_state__ROBUST_UP"]},
+    {"id":"M2_FAST_SLOW","extends":"M1_FAST","columns":["INTERCEPT","fast_state__ROBUST_DOWN","fast_state__ROBUST_UP","slow_state__ROBUST_DOWN","slow_state__ROBUST_UP"]},
+    {"id":"M3_FAST_SLOW_MONTHLY","extends":"M2_FAST_SLOW","columns":["INTERCEPT","fast_state__ROBUST_DOWN","fast_state__ROBUST_UP","slow_state__ROBUST_DOWN","slow_state__ROBUST_UP","monthly_direction_3m__DOWN","monthly_direction_3m__UP"]}
+  ],
+  "context_main_effects":[],
+  "context_interactions":[],
+  "forbidden_as_direction_votes":["BOCPD_RETURN_SUCCESSOR_V1","GVZ_RISK","MACRO_EVENT_SUCCESSOR_V2","EMERGENCY_LEVEL","EMERGENCY_REVERSAL"],
+  "monthly_h1_experts_included":false,
+  "global_auto_ensemble":"OFF"
+}
