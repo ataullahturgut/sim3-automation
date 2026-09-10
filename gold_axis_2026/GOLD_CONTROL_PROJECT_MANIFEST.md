@@ -1,7 +1,7 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.46
-**Issue date:** 2026-09-09
+**Manifest version:** 1.47
+**Issue date:** 2026-09-10
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
 **Default-branch scheduler:** `main`  
@@ -14,13 +14,17 @@
 
 This file is the only current Gold Control project manifest.
 
+**Single-manifest rule:** `gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md` is the sole project-level authority for Gold Control forecasting, direction, risk, validation, readiness and future research governance. No second Gold Control project manifest may be created. Files whose names contain `manifest`, including run manifests, validation manifests or historical artifacts, are subordinate evidence artifacts only and are never competing project authority. Handover documents, checkpoints, contracts, preregistrations, design notes, reports and audit outputs are also subordinate to this file. If any subordinate artifact conflicts with this manifest, the copy of this file at the current canonical `gold-r4-direction-engine` HEAD wins.
+
+Every new ChatGPT/Work/Codex Gold Control session must first re-read the current canonical branch HEAD and this exact manifest path/version before interpreting a handover, checkpoint, audit artifact or historical run manifest. A cached, copied or older manifest is not current authority.
+
 GitHub is the authority for current code, frozen model/feature contracts, reproducibility and this manifest. Production Neon is the authority for mutable source observations, point-in-time lineage, append-only current runtime/context state and legitimately issued forecast/decision records.
 
 Historical implementation detail belongs in Git history or immutable audit storage, not in current application/runtime views. Current views may summarize historical evidence but may not rewrite or destroy it.
 
 Gold Control is a decision-support system, not an autonomous trading system. The application may not silently choose a model, average experts, tune thresholds, substitute providers, backdate evidence or manufacture an action.
 
-Binding current data/readiness contracts:
+Referenced current data/readiness contracts are subordinate implementation contracts and are binding only to the extent that they are consistent with this sole manifest:
 
 - `GOLD_CONTROL_MODEL_DATA_READINESS_CONTRACT_V143_2026-09-07.md`
 - `GOLD_CONTROL_LIVE_INTRAMONTH_RECOMPUTE_CONTRACT_V144_2026-09-07.md`
@@ -110,7 +114,7 @@ The following remain binding:
 
 Expert disagreement is displayed; it is not silently resolved.
 
-Any post-pilot change to a governed engine, source, threshold, feature, hyperparameter, role or evaluation rule requires a separately named challenger/change-control contract and may not rewrite the frozen pilot.
+Any post-pilot change to a governed engine, source, threshold, feature, hyperparameter, role or evaluation rule requires explicit versioned change control. That change control may be recorded directly in a new section of this sole manifest and may use subordinate implementation/evidence artifacts, but no subordinate file may become a second project manifest or supersede this file. The frozen pilot may not be rewritten.
 
 ---
 
@@ -756,3 +760,232 @@ and refreshed FAST, SLOW, both Emergency roles and GVZ_RISK. SLOW remains bound
 to the last completed-week observation by contract. Final authority counts remain
 zero and selector/ensemble remain OFF. Binding detail is recorded in
 `data_pipeline/audits/data_completion_readiness_v146_20260909.md`.
+
+---
+
+## 19. V1.47 single-manifest forecast architecture and multi-horizon direction-fusion programme — 2026-09-10
+
+This section is the binding forward research/development plan for Gold Control. It does not rewrite the frozen V1.45 pilot, does not change the four September H=1 references, does not add a thirteenth current runtime engine, and grants no forecast, decision or trading authority. Where Sections 16–18 describe earlier stop points, this section controls only the forward methodology and document-governance plan; historical evidence remains immutable.
+
+### 19.1 Objective: separate forecast, monitoring and early warning
+
+Gold Control must answer separate questions rather than collapse them into one signal:
+
+1. **Monthly price forecast:** What is the next calendar month's average XAU/USD level or distribution?
+2. **Short-horizon direction:** What is the calibrated probability that XAU/USD will be higher at a specified next-session / multi-session horizon?
+3. **Regime/event/risk state:** Has the information environment changed enough to reduce confidence in the base forecast?
+4. **Early-warning state:** Has an abnormal move already started, or has a reversal condition appeared?
+
+The conceptual analogy to earthquake systems is limited to architecture: a background forecast is kept separate from continuously updated sensors, regime/event monitoring and an early-warning layer. It is **not** a claim that gold prices and earthquakes have the same stochastic process, predictability or causal mechanism. Earthquake/CSEP practice is used only as inspiration for prospective testing discipline, immutable forecast issuance and separation of forecast from early warning.
+
+### 19.2 Current governed inventory remains unchanged
+
+The current governed runtime inventory remains exactly the 12 identities in Section 2. V1.47 does not promote any new model or context engine.
+
+Research status is frozen as follows:
+
+- `MULTI_HORIZON_DIRECTION_FUSION = RESEARCH_CHALLENGER_NOT_IMPLEMENTED`
+- `INTRADAY_TO_NY17_DIRECTION_PROBABILITY = NOT_PROVEN`
+- `NEXT_NY17_1D_DIRECTION_PROBABILITY = NOT_PROVEN`
+- `NEXT_NY17_1_3D_DIRECTION_PROBABILITY = NOT_PROVEN`
+- `DASHBOARD_PROBABILITY_UI = SPECIFIED_NOT_IMPLEMENTED`
+- `AUTO_SELECTOR = OFF`
+- `AUTO_ENSEMBLE = OFF`
+- `PRODUCTION_FORECAST_AUTHORITY = CLOSED`
+- `PRODUCTION_DECISION_AUTHORITY = CLOSED`
+
+Historical/research identities such as `TVP_AR`, `DMA`, `DMS`, `IDMA`, the Market Shock V3 research lane and Macro Event V3 research lane are not current governed engines. They may enter a future research candidate inventory only after their exact code, target, source, PIT semantics and historical evidence are recovered and frozen. `BYDZ` is currently `NOT_FOUND` as an exact governed/research identity and must not be guessed, renamed or mapped to another method without primary project evidence.
+
+### 19.3 Horizon and target separation
+
+The existing canonical monthly target remains unchanged:
+
+- `MONTHLY_H1`: next calendar month's average XAU/USD; prior completed month-end information boundary as already governed.
+
+The short-horizon programme introduces research targets, not production outputs:
+
+| Research horizon | Primary research event | Status |
+|---|---|---|
+| `INTRADAY_TO_NY17` | XAU/USD is higher at the same eligible NY17 boundary than at the governed intraday issuance anchor | `BLOCKED_CONTRACT` until exact intraday anchor/source/session clock is frozen |
+| `NEXT_NY17_1D` | next eligible completed NY17 reference is above the current completed NY17 anchor | `RESEARCH_TARGET_DEFINED` |
+| `NEXT_NY17_1_3D` | third subsequent eligible completed NY17 reference is above the current completed NY17 anchor | `RESEARCH_TARGET_DEFINED` |
+| `MONTHLY_H1` | existing next-month average XAU/USD target | `CURRENT_CANONICAL_TARGET` |
+
+For the directional research targets, the primary event is `future_return > 0`. Material-move probabilities such as `P(return > +x%)` or `P(return < -x%)` require a separate pre-registered threshold and may not be chosen after viewing outer-test outcomes.
+
+`INTRADAY_TO_NY17` may not be implemented from an arbitrary live quote. Before any historical or live run, the exact intraday price source, timestamp semantics, session calendar, latency, stale-data rule, fallback policy and output clock must be frozen in this manifest or in a subordinate implementation artifact explicitly referenced by a later version of this manifest. Until then the dashboard must show `NOT_PROVEN` rather than an intraday probability.
+
+### 19.4 Sensor-role discipline for short-horizon research
+
+Current components keep their original roles. Fusion research may consume their origin-safe states as candidate predictors/context only under the following restrictions:
+
+- `FAST`: short-horizon tactical direction candidate input.
+- `SLOW`: slower tactical/context candidate input.
+- `MONTHLY_DIRECTION_3M`: strategic prior/context candidate input; never refreshed with target-month future information.
+- `MACRO_EVENT_SUCCESSOR_V2`: release-aware event-risk context. It is not automatically converted into a direction vote. Any directional use requires separately demonstrated incremental value under an origin-safe research design.
+- `BOCPD_RETURN_SUCCESSOR_V1`: regime/break conditioning only. It remains **not a direction vote** and cannot directly manufacture `UP` or `DOWN` probability.
+- `GVZ_RISK`: risk/uncertainty conditioning only. It remains **not a gold-direction predictor** and cannot directly manufacture `UP` or `DOWN` probability.
+- `EMERGENCY_LEVEL` / `EMERGENCY_REVERSAL`: early-warning / abnormal-move / reversal context. They may reduce or qualify confidence when legitimately known at issuance time, but they do not rewrite an already issued monthly H=1 forecast.
+- Market Shock research: non-canonical research context only; no live or fusion use until exact identity and frozen validation are re-established.
+- H=1 price experts: may supply background forecast/disagreement context when origin-compatible, but target-month observations may not leak backward into their frozen forecast.
+
+No raw count of green/red engines is a probability model. `5 of 7 engines UP` may be displayed as descriptive disagreement evidence if useful, but it may not be relabelled `P(UP)=71%`.
+
+### 19.5 Direction Fusion research output
+
+A future validated Direction Fusion challenger may produce, separately for each eligible horizon:
+
+- `P_UP`: calibrated probability that the horizon return is positive;
+- `DIRECTION`: `UP`, `DOWN` or `UNCERTAIN`, only under pre-registered mapping rules;
+- `CONFIDENCE`: a separately defined evidence-confidence state, not a synonym for `P_UP`;
+- `AS_OF`: exact information cutoff;
+- `SOURCE_FRESHNESS`: freshness state for every required input family;
+- `REGIME_STATE`: conditioning context, if proven;
+- `EVENT_RISK_STATE`: conditioning context, if proven;
+- `TAIL_RISK_STATE`: conditioning context, if proven;
+- `EARLY_WARNING_STATE`: current abnormal-move/reversal state, if applicable.
+
+A displayed probability must come from out-of-sample/pseudo-real-time calibrated predictions. Raw model scores, vote fractions, uncalibrated classifier outputs or in-sample fitted probabilities may not be displayed as user probabilities.
+
+`CONFIDENCE` must be separated from direction probability. Its future rule may consider at least calibration error, effective historical sample size, model disagreement, source freshness, regime instability and risk/event conditions. The thresholds for `HIGH / MEDIUM / LOW` or any equivalent labels must be frozen **before** the corresponding outer test is inspected. Until that rule is validated, confidence is `NOT_PROVEN`.
+
+Expected percentage move or price magnitude may be shown only if a separately evaluated magnitude/return model supports it. Direction probability alone does not authorize an expected-return number.
+
+### 19.6 Retrospective development when waiting for many future months is impractical
+
+A lack of time for long prospective accumulation does not authorize hindsight tuning. The approved high-information retrospective design is **nested rolling/expanding-origin pseudo-real-time validation**.
+
+For every outer origin:
+
+1. reconstruct only information genuinely available by that origin, including publication lags and vintage rules;
+2. fit preprocessing only on the training/inner data available by that origin;
+3. if feature/model/calibration/hyperparameter selection is required, learn it only from earlier inner rolling origins;
+4. issue the outer prediction without access to that outer target or any later observation;
+5. score only after the frozen outer prediction exists;
+6. retain the prediction, input fingerprint, source vintages, code commit and evaluation result immutably.
+
+Random split is forbidden. Whole-sample preprocessing before fold construction is forbidden. Future revisions may not be inserted into historical origins unless the historical source contract proves that revision was actually available then.
+
+The 2026 Jan–Aug outcomes are already known to the project. They remain valid evidence for the previously frozen V1.45 pilot, but they are **not an untouched future test set for a challenger designed after those outcomes were inspected**. New challenger work must label this reuse transparently and rely on a broader origin sequence, nested outer testing and later genuinely unseen evidence rather than pretending Jan–Aug is pristine.
+
+Before new challenger scoring begins, the candidate universe must be frozen. Adding candidates repeatedly after seeing the same outer outcomes is data snooping and is not permitted inside one frozen evaluation round.
+
+### 19.7 Evaluation metrics and model comparison
+
+Metrics must match the target and role.
+
+For monthly H=1 price forecasts, permitted core metrics include:
+
+- MAE and RMSE;
+- MAPE/APE where numerically meaningful;
+- bias;
+- skill/relative loss versus the mandatory same-horizon Random Walk benchmark;
+- direction correctness as a secondary diagnostic;
+- stability by year/regime/origin bucket;
+- worst-period and tail-error diagnostics.
+
+For binary direction probabilities, the core evidence must include:
+
+- Brier score;
+- log loss where probabilities are bounded/handled under a pre-registered numerical rule;
+- calibration/reliability diagnostics;
+- directional accuracy and balanced accuracy as secondary classification diagnostics;
+- discrimination diagnostics where sample size supports them;
+- sample count/effective sample size;
+- performance by regime/risk/event state and by time bucket;
+- stability and worst-period behavior.
+
+For full predictive distributions, if later implemented, use proper scoring/coverage diagnostics such as CRPS, interval coverage and sharpness subject to calibration. Existing point forecasts may not be retroactively presented as P10/P50/P90 distributions without a separately validated probabilistic model.
+
+Pairwise forecast-comparison tests such as Diebold–Mariano may be used when their assumptions and loss differential are appropriate. When many models are compared, multiple-comparison-aware procedures such as Hansen's SPA and Model Confidence Set may be used. The system must not force a unique winner when the data support a set of statistically indistinguishable superior models.
+
+Forecast combination may be evaluated only as an offline research challenger. Equal-weight combination is a mandatory simple benchmark if combination is studied; more complex weights must be estimated only from inner-origin historical losses and must be compared against the simple benchmark. A successful research combination does **not** turn `AUTO_ENSEMBLE` on.
+
+### 19.8 Dashboard presentation contract
+
+The intended user-facing top layer is horizon-based rather than model-name-based. When evidence exists, the top cards are:
+
+1. `TODAY / NY17`
+2. `NEXT 1D`
+3. `NEXT 1–3D`
+4. `NEXT MONTH`
+
+Each short-horizon card may display only evidence actually proven for that horizon:
+
+- direction or `UNCERTAIN`;
+- calibrated `P(UP)` if and only if calibration is validated;
+- confidence if and only if the confidence rule is validated;
+- exact `as_of` / last-update time;
+- freshness/evidence status;
+- expected move only if a magnitude model is separately validated.
+
+If a probability is not proven, the dashboard must show `NOT_PROVEN` / `Olasılık henüz kalibre edilmedi`; it must never invent a percentage for visual completeness.
+
+The `NEXT MONTH` card must preserve the current H=1 governance. While no expert selector/ensemble/probabilistic H=1 distribution is authorized, it may show the individual governed expert point forecasts, their disagreement/range and evidence class. It may **not** silently collapse them into a single P50, weighted average or winner. P10/P50/P90 may appear only after a probabilistic H=1 model or combination has separately passed its validation and authorization gates.
+
+A secondary `WHY / NEDEN?` area may show which validated signals support, oppose or qualify the displayed horizon view. This is explanatory evidence, not a vote count. `BOCPD`, `GVZ`, Macro Event and Emergency must be labelled according to their actual role (regime, risk, event, early warning) rather than falsely displayed as price forecasters.
+
+Colors/icons must communicate direction, uncertainty, freshness and alarm separately. A green/up indicator is not a BUY instruction; red/down is not a SELL instruction. No dashboard element may manufacture position sizing or action mapping while `NOT_PROVEN_POSITION_MAPPING` remains binding.
+
+### 19.9 Promotion gates for multi-horizon Direction Fusion
+
+`MULTI_HORIZON_DIRECTION_FUSION` remains research-only until all applicable gates pass:
+
+1. exact horizon/target semantics are frozen;
+2. exact source identities and time/session clocks are frozen;
+3. historical coverage and PIT/vintage availability are proven;
+4. candidate predictor/model universe is frozen before outer-test inspection;
+5. deterministic nested rolling/expanding-origin replay passes with zero future-information violations;
+6. fold-local preprocessing/calibration is proven;
+7. probability calibration and proper scoring evidence pass pre-registered acceptance rules;
+8. mandatory simple baselines are included;
+9. stability/worst-regime diagnostics are acceptable under pre-registered criteria;
+10. model-comparison/multiple-comparison evidence is reported without forcing a false unique winner;
+11. dashboard representations are traceable to exact evidence and show `NOT_PROVEN` where evidence is absent;
+12. no current 12-engine role is silently changed;
+13. no monthly H=1 historical forecast is rewritten;
+14. production Neon authority tables remain untouched unless a later explicit production authorization is issued;
+15. `AUTO_SELECTOR` and `AUTO_ENSEMBLE` remain OFF until separately authorized after the research gates.
+
+Passing retrospective nested pseudo-real-time validation permits the label `RETROSPECTIVE_PSEUDO_REAL_TIME_VALIDATED` only. It does not permit `PROSPECTIVE_VALIDATED`. Genuine pre-outcome issuance remains the only basis for prospective evidence.
+
+### 19.10 Near-term governed work order
+
+The next research/development order is:
+
+`CURRENT STATE REVERIFY`
+
+→ `EXACT HISTORICAL/RESEARCH ENGINE INVENTORY RECOVERY`
+
+→ `HORIZON + SOURCE CLOCK FREEZE`
+
+→ `CANDIDATE UNIVERSE FREEZE`
+
+→ `NESTED ROLLING/EXPANDING PSEUDO-REAL-TIME REPLAY`
+
+→ `PROBABILITY CALIBRATION + ROLE-SPECIFIC METRICS`
+
+→ `DM / SPA / MODEL CONFIDENCE SET WHERE APPLICABLE`
+
+→ `FUSION CHALLENGER COMPARISON`
+
+→ `DASHBOARD EVIDENCE CONTRACT TEST`
+
+→ `ARCHITECTURE / PROMOTION REVIEW`
+
+→ `LATER GENUINE PROSPECTIVE SHADOW`
+
+No result-driven threshold/model/source change may be inserted inside this sequence after the relevant evaluation round has been frozen. If a challenger fails, its failure is retained and a new versioned challenger round is required.
+
+### 19.11 Academic basis for V1.47 methodology
+
+The methodological design is grounded in established forecast-evaluation literature and uses earthquake testing only as a systems/testing analogy:
+
+- Tashman, L.J. (2000), “Out-of-sample tests of forecasting accuracy: an analysis and review,” *International Journal of Forecasting*, 16(4), 437–450. DOI: `10.1016/S0169-2070(00)00065-0`. Supports explicit fixed/rolling-origin, updating/recalibration and multiple-test-period design choices.
+- Gneiting, T., Balabdaoui, F., Raftery, A.E. (2007), “Probabilistic Forecasts, Calibration and Sharpness,” *Journal of the Royal Statistical Society: Series B*, 69(2), 243–268. DOI: `10.1111/j.1467-9868.2007.00587.x`. Supports calibration, sharpness and proper scoring of probabilistic forecasts.
+- Timmermann, A. (2006), “Forecast Combinations,” *Handbook of Economic Forecasting*, Vol. 1, 135–196. DOI: `10.1016/S1574-0706(05)01004-9`. Supports evaluating simple forecast combinations as robust benchmarks rather than assuming optimized weights dominate.
+- Hansen, P.R. (2005), “A Test for Superior Predictive Ability,” *Journal of Business & Economic Statistics*, 23, 365–380. DOI: `10.1198/073500105000000063`. Supports multiple-model predictive-ability testing/data-snooping control.
+- Hansen, P.R., Lunde, A., Nason, J.M. (2011), “The Model Confidence Set,” *Econometrica*, 79(2), 453–497. DOI: `10.3982/ECTA5771`. Supports retaining a statistically defensible set of superior models when data do not justify a unique winner.
+- Collaboratory for the Study of Earthquake Predictability (CSEP), official testing programme. Used here only as an analogy for rigorous, predeclared, prospective forecast-testing discipline and separation of forecast experiments from early-warning interpretation; it supplies no gold-price model and no statistical-equivalence claim.
+
+These references justify the **evaluation architecture**, not automatic promotion of any specific Gold Control model. Every model/source/threshold still requires Gold Control-specific evidence under this manifest.
