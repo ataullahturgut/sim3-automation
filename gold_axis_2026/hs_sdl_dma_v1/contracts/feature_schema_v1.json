@@ -1,0 +1,19 @@
+{
+  "model_id": "HS_SDL_DMA_DIRECTION_FUSION_V1",
+  "status": "FROZEN_BEFORE_OUTER_SCORING",
+  "source_artifact": "gold_axis_2026/data_pipeline/audits/component_role_replays_v145/ny17_context_role_replay_v145.csv",
+  "features": {
+    "fast_state": {"role":"DIRECTION_CAPABLE","type":"CATEGORICAL_ONE_HOT","levels":["MIXED","ROBUST_DOWN","ROBUST_UP"],"reference":"MIXED","missing":"HARD_STOP_BLOCKED_INVENTORY","scaling":"NONE"},
+    "slow_state": {"role":"DIRECTION_CAPABLE","type":"CATEGORICAL_ONE_HOT","levels":["NOT_YET_ROBUST","ROBUST_DOWN","ROBUST_UP"],"reference":"NOT_YET_ROBUST","missing":"HARD_STOP_BLOCKED_INVENTORY","scaling":"NONE"},
+    "monthly_direction_3m": {"role":"DIRECTION_CAPABLE","type":"CATEGORICAL_ONE_HOT","levels":["NEUTRAL","DOWN","UP"],"reference":"NEUTRAL","missing":"HARD_STOP_BLOCKED_INVENTORY","scaling":"NONE"},
+    "bocpd": {"role":"CONTEXT_ONLY","admitted_initial_core":false,"reason":"DAILY_ORIGIN_PIT_PANEL_NOT_PROVEN"},
+    "gvz": {"role":"CONTEXT_ONLY","admitted_initial_core":false,"reason":"EXACT_DAILY_ASOF_JOIN_NOT_PRESENT_IN_FROZEN_DIRECTION_PANEL"},
+    "macro_event": {"role":"CONTEXT_ONLY","admitted_initial_core":false,"reason":"RELEASE_ASOF_DAILY_PANEL_NOT_PROVEN"},
+    "emergency_level": {"role":"CONTEXT_ONLY","admitted_initial_core":false,"levels":["NEUTRAL","DOWN","UP"],"reason":"ROLE_PRESERVING_INTERACTION_NOT_ADMITTED_IN_INITIAL_SMALL_SET"},
+    "emergency_reversal": {"role":"CONTEXT_ONLY","admitted_initial_core":false,"levels":["OFF","DOWN_ALERT","UP_ALERT"],"reason":"ROLE_PRESERVING_INTERACTION_NOT_ADMITTED_IN_INITIAL_SMALL_SET"}
+  },
+  "whole_sample_preprocessing": false,
+  "context_main_effects": "FORBIDDEN",
+  "position_mapping": "NOT_PROVEN",
+  "production_authority": false
+}

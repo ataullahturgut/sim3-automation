@@ -1,0 +1,154 @@
+{
+  "audit_id": "HS_SDL_DMA_HISTORICAL_INVENTORY_V1",
+  "context_interactions": "NOT_ADMITTED_INITIAL_CORE",
+  "core_feature_schema": "PASS_DIRECTION_ONLY",
+  "database_access": "READ_ONLY_SEPARATE_CURRENT_STATE_SNAPSHOT",
+  "database_writes": "NONE",
+  "duplicate_origins": 0,
+  "inventory": [
+    {
+      "coverage_end": "2026-08-30",
+      "coverage_start": "2025-01-03",
+      "engine_id": "FAST",
+      "evidence_lineage": "data_pipeline/audits/component_role_replays_v145/ny17_context_role_replay_v145.csv",
+      "historical_field": "fast_state",
+      "levels": [
+        "MIXED",
+        "ROBUST_DOWN",
+        "ROBUST_UP"
+      ],
+      "missing": 0,
+      "pit_reconstructibility": "PASS",
+      "role": "DIRECTION_CAPABLE",
+      "rows": 400,
+      "value_type": "CATEGORICAL"
+    },
+    {
+      "coverage_end": "2026-08-30",
+      "coverage_start": "2025-01-03",
+      "engine_id": "SLOW",
+      "evidence_lineage": "data_pipeline/audits/component_role_replays_v145/ny17_context_role_replay_v145.csv",
+      "historical_field": "slow_state",
+      "levels": [
+        "NOT_YET_ROBUST",
+        "ROBUST_DOWN",
+        "ROBUST_UP"
+      ],
+      "missing": 0,
+      "pit_reconstructibility": "PASS",
+      "role": "DIRECTION_CAPABLE",
+      "rows": 400,
+      "value_type": "CATEGORICAL"
+    },
+    {
+      "coverage_end": "2026-08-30",
+      "coverage_start": "2025-01-03",
+      "engine_id": "MONTHLY_DIRECTION_3M",
+      "evidence_lineage": "data_pipeline/audits/component_role_replays_v145/ny17_context_role_replay_v145.csv",
+      "historical_field": "monthly_direction_3m",
+      "levels": [
+        "DOWN",
+        "UP"
+      ],
+      "missing": 0,
+      "pit_reconstructibility": "PASS",
+      "role": "DIRECTION_CAPABLE",
+      "rows": 400,
+      "value_type": "CATEGORICAL"
+    },
+    {
+      "coverage_end": "2026-08-30",
+      "coverage_start": "2025-01-03",
+      "engine_id": "EMERGENCY_LEVEL",
+      "evidence_lineage": "data_pipeline/audits/component_role_replays_v145/ny17_context_role_replay_v145.csv",
+      "historical_field": "emergency_level",
+      "levels": [
+        "DOWN",
+        "NEUTRAL",
+        "UP"
+      ],
+      "missing": 0,
+      "pit_reconstructibility": "PASS_NOT_ADMITTED_INITIAL_CORE",
+      "role": "CONTEXT_ONLY",
+      "rows": 400,
+      "value_type": "CATEGORICAL"
+    },
+    {
+      "coverage_end": "2026-08-30",
+      "coverage_start": "2025-01-03",
+      "engine_id": "EMERGENCY_REVERSAL",
+      "evidence_lineage": "data_pipeline/audits/component_role_replays_v145/ny17_context_role_replay_v145.csv",
+      "historical_field": "emergency_reversal",
+      "levels": [
+        "DOWN_ALERT",
+        "OFF",
+        "UP_ALERT"
+      ],
+      "missing": 0,
+      "pit_reconstructibility": "PASS_NOT_ADMITTED_INITIAL_CORE",
+      "role": "CONTEXT_ONLY",
+      "rows": 400,
+      "value_type": "CATEGORICAL"
+    },
+    {
+      "coverage_end": null,
+      "coverage_start": null,
+      "engine_id": "BOCPD_RETURN_SUCCESSOR_V1",
+      "evidence_lineage": "NOT_PROVEN",
+      "historical_field": "NOT_FOUND_IN_PANEL",
+      "levels": [],
+      "missing": null,
+      "pit_reconstructibility": "BLOCKED_PIT_DAILY_ORIGIN_PANEL_NOT_PROVEN",
+      "role": "CONTEXT_ONLY",
+      "rows": 0,
+      "value_type": "NOT_PROVEN"
+    },
+    {
+      "coverage_end": null,
+      "coverage_start": null,
+      "engine_id": "GVZ_RISK",
+      "evidence_lineage": "NOT_PROVEN",
+      "historical_field": "NOT_FOUND_IN_PANEL",
+      "levels": [],
+      "missing": null,
+      "pit_reconstructibility": "BLOCKED_PIT_EXACT_ASOF_JOIN_NOT_IN_DIRECTION_PANEL",
+      "role": "CONTEXT_ONLY",
+      "rows": 0,
+      "value_type": "NOT_PROVEN"
+    },
+    {
+      "coverage_end": null,
+      "coverage_start": null,
+      "engine_id": "MACRO_EVENT_SUCCESSOR_V2",
+      "evidence_lineage": "NOT_PROVEN",
+      "historical_field": "NOT_FOUND_IN_PANEL",
+      "levels": [],
+      "missing": null,
+      "pit_reconstructibility": "BLOCKED_PIT_RELEASE_ASOF_DAILY_PANEL_NOT_PROVEN",
+      "role": "CONTEXT_ONLY",
+      "rows": 0,
+      "value_type": "NOT_PROVEN"
+    }
+  ],
+  "origin_end": "2026-08-30",
+  "origin_rows": 400,
+  "origin_start": "2025-01-03",
+  "prospective_claim": false,
+  "source_artifact": "data_pipeline/audits/component_role_replays_v145/ny17_context_role_replay_v145.csv",
+  "source_sha256": "bce430057ce543f73c6bb5526264fce412da1297755fe3aa4deb2575c4f324b3",
+  "status": "PASS_DIRECTION_CORE_WITH_CONTEXT_PIT_EXCLUSIONS",
+  "targets": {
+    "NEXT_NY17_1D": {
+      "first_origin": "2025-01-03",
+      "last_origin": "2026-08-29",
+      "last_target": "2026-08-30",
+      "matured_rows": 399
+    },
+    "NEXT_NY17_3D": {
+      "first_origin": "2025-01-03",
+      "last_origin": "2026-08-22",
+      "last_target": "2026-08-30",
+      "matured_rows": 397
+    }
+  }
+}
