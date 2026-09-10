@@ -35,7 +35,7 @@ jobs:
           diff -ru /tmp/replay_a /tmp/replay_b
       - name: Authority assertions
         run: |
-          ! rg -n '"production_authority": true' gold_axis_2026/hs_sdl_dma_v1 gold_axis_2026/data_pipeline/audits/hs_sdl_dma_replay_v1
-          ! rg -n 'production_authority = True' gold_axis_2026/hs_sdl_dma_v1 gold_axis_2026/data_pipeline/audits/hs_sdl_dma_replay_v1
-          rg -n '"auto_selector": "OFF"' gold_axis_2026/data_pipeline/audits/hs_sdl_dma_replay_v1/hs_sdl_dma_replay_v1.json
-          rg -n '"auto_ensemble": "OFF"' gold_axis_2026/data_pipeline/audits/hs_sdl_dma_replay_v1/hs_sdl_dma_replay_v1.json
+          ! grep -RFn '"production_authority": true' gold_axis_2026/hs_sdl_dma_v1 gold_axis_2026/data_pipeline/audits/hs_sdl_dma_replay_v1
+          ! grep -RFn 'production_authority = True' gold_axis_2026/hs_sdl_dma_v1 gold_axis_2026/data_pipeline/audits/hs_sdl_dma_replay_v1
+          grep -Fn '"auto_selector": "OFF"' gold_axis_2026/data_pipeline/audits/hs_sdl_dma_replay_v1/hs_sdl_dma_replay_v1.json
+          grep -Fn '"auto_ensemble": "OFF"' gold_axis_2026/data_pipeline/audits/hs_sdl_dma_replay_v1/hs_sdl_dma_replay_v1.json
