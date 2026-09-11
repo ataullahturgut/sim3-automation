@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "gold_axis_2026/v149_thesis/**"
+      - "gold_axis_2026/tests/test_v149_rich_short_horizon.py"
       - ".github/workflows/gold-control-v149-thesis-rich-model.yml"
   workflow_dispatch:
 
@@ -23,7 +24,9 @@ jobs:
           python-version: "3.12"
           cache: pip
       - name: Install frozen dependencies
-        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 psycopg[binary]==3.2.10
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 psycopg[binary]==3.2.10 pytest==8.4.2
+      - name: Test chronology, maturity, prefix invariance and determinism
+        run: pytest -q gold_axis_2026/tests/test_v149_rich_short_horizon.py
       - name: Run frozen retrospective replay
         run: python -m gold_axis_2026.v149_thesis.run_rich_short_horizon
       - uses: actions/upload-artifact@v4
