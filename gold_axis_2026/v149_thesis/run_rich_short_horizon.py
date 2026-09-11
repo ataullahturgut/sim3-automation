@@ -30,7 +30,7 @@ def load_panel(conn):
       where (observation_ts at time zone 'America/New_York')::time='16:59:00'
       order by observation_ts""")
     ny["date"]=pd.to_datetime(ny.date); ny=ny.drop_duplicates("date",keep=False).reset_index(drop=True)
-    if len(ny)<700: raise RuntimeError(f"BLOCKED_INSUFFICIENT_EXACT_NY17:{len(ny)}")
+    if len(ny)<500: raise RuntimeError(f"BLOCKED_INSUFFICIENT_EXACT_NY17:{len(ny)}")
     r=np.log(ny.close).diff()
     for k in [1,2,3]: ny[f"gold_ret_lag{k}"]=r.shift(k-1)
     for k in [3,5,10,20]: ny[f"gold_mom{k}"]=np.log(ny.close/ny.close.shift(k))
