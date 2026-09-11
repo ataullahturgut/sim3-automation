@@ -67,3 +67,46 @@ def test_candidate_freeze_precedes_outer_and_authority_closed():
     assert freeze["short_horizon"]["NEXT_NY17_1D"]["outer_start_index"]==240
     assert freeze["short_horizon"]["NEXT_NY17_3D"]["outer_start_index"]==240
     assert set(freeze["short_model_configs"])=={"LOGISTIC_C0.1","LOGISTIC_C1","LOGISTIC_C10","GBRT_D1","GBRT_D2","HISTGB_D2","HISTGB_D3"}
+
+
+def test_outer_evidence_is_research_only_and_fail_closed():
+    result=json.loads((ROOT/"data_pipeline/audits/v149_research/v149_outer_results.json").read_text())
+    assert result["evidence_class"]=="RETROSPECTIVE_RESEARCH_DIAGNOSTIC_NOT_PROSPECTIVE"
+    assert result["production_authority"] is False
+    assert result["production_writes"]=="NONE"
+    assert result["auto_selector"]=="OFF" and result["auto_ensemble"]=="OFF"
+    assert result["monthly"]["promotion"]=="NOT_PROVEN"
+    assert result["monthly"]["all_seven_architecture"]=="BLOCKED_PIT"
+    assert result["monthly"]["superior_set"]["formal_hansen_mcs"]=="NOT_PROVEN"
+    for horizon in ["NEXT_NY17_1D","NEXT_NY17_3D"]:
+        assert result["short_horizon"][horizon]["promotion"]=="NOT_PROVEN"
+
+
+def test_outer_origin_maturity_and_expected_deterministic_hashes():
+    result=json.loads((ROOT/"data_pipeline/audits/v149_research/v149_outer_results.json").read_text())
+    assert result["output_hashes"]=={
+        "monthly":"91ab3fd7a56411572d626e09f74d01467b3fb61becd1d9bffdb30ec2a4eebdf5",
+        "NEXT_NY17_1D":"00a0e8130ebf2db72a364a715fad8572774d913cf532433b9516ed65961b50b5",
+        "NEXT_NY17_3D":"ec0729a57c10e4738083e929b1f2297c5218613dfe26e8c2bab1877051c4ebc9",
+    }
+    one=pd.read_csv(ROOT/"data_pipeline/audits/v149_research/next_ny17_1d_outer_v149.csv",parse_dates=["origin_date","target_date"])
+    three=pd.read_csv(ROOT/"data_pipeline/audits/v149_research/next_ny17_3d_outer_v149.csv",parse_dates=["origin_date","target_date"])
+    assert len(one)==159 and len(three)==157
+    assert (one.target_date>one.origin_date).all()
+    assert (three.target_date>three.origin_date).all()
+    governed_dates=load_features().date.dt.strftime("%Y-%m-%d").tolist()
+    assert all(
+        row.target_date.strftime("%Y-%m-%d")==governed_dates[row.origin_index+3]
+        for row in three.itertuples()
+    )
+
+
+def test_calibration_is_prior_only_and_no_candidate_was_added_post_freeze():
+    freeze=json.loads((ROOT/"v149_research/contracts/limited_candidate_freeze_v149.json").read_text())
+    configured=set(freeze["short_model_configs"])
+    for horizon in ["next_ny17_1d","next_ny17_3d"]:
+        frame=pd.read_csv(ROOT/f"data_pipeline/audits/v149_research/{horizon}_outer_v149.csv")
+        assert frame.calibration_n.min()>=40
+        assert set(frame.probability_config).issubset(configured)
+        assert set(frame.return_config).issubset(configured)
+        assert (frame.origin_index>frame.calibration_n).all()
