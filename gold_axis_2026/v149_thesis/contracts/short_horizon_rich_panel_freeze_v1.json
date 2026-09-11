@@ -1,0 +1,30 @@
+{
+  "contract_id": "GOLD_CONTROL_V149_THESIS_RICH_PANEL_FREEZE_V1",
+  "status": "FROZEN_BEFORE_RICH_PANEL_SCORING",
+  "authority": "GOLD_CONTROL_PROJECT_MANIFEST_V1.49_SECTION_19",
+  "evidence_class": "RETROSPECTIVE_HISTORICAL_RECONSTRUCTION_NOT_PROSPECTIVE",
+  "origin": "exact Twelve Data XAU/USD 1min 16:59:00 America/New_York bar; stored NY17 semantic",
+  "targets": ["NEXT_NY17_1D", "NEXT_NY17_3D"],
+  "development_end": "2024-12-31",
+  "retrospective_validation": ["2025-01-01", "2025-12-31"],
+  "retrospective_frozen_oos": ["2026-01-01", "2026-08-31"],
+  "blocks": {
+    "B0": ["gold lagged returns", "gold momentum", "gold realized volatility"],
+    "B1": ["one-observation-lagged XAG", "one-observation-lagged XPT", "one-observation-lagged XPD"],
+    "B2": ["one-observation-lagged DGS10", "one-observation-lagged DFF", "one-observation-lagged DEXCHUS"],
+    "B3": ["one-observation-lagged NASDAQ100", "one-observation-lagged SP500", "one-observation-lagged DJIA", "one-observation-lagged VIX", "one-observation-lagged GVZ"],
+    "B4": ["FAST", "SLOW", "MONTHLY_DIRECTION_3M", "EMERGENCY_LEVEL", "EMERGENCY_REVERSAL"],
+    "B6": ["same-day post-release Macro Event V3 employment/inflation score"]
+  },
+  "clock_safety": "cross-market daily observations are shifted by one governed NY17 origin; macro score requires available_as_of <= origin",
+  "market_shock_role": "separate event-confirmation study only; never unconditional direction vote",
+  "candidate_families": ["LOGISTIC_RIDGE_C0.1", "LOGISTIC_RIDGE_C1", "HIST_GRADIENT_BOOST_D2"],
+  "block_selection": "development origins only; retain only if Brier improves by >=0.002 and log loss does not worsen",
+  "calibration": "Platt fit only on matured prior-origin predictions; minimum 60",
+  "outer_change_rule": "no feature, threshold, family or calibration change after 2025/2026 scoring",
+  "three_day_inference": "circular block resampling with block >=4",
+  "mandatory_baselines": ["P50", "EXPANDING_UP_FREQUENCY", "B0_LOGISTIC"],
+  "auto_selector": "OFF",
+  "auto_ensemble": "OFF",
+  "production_authority": false
+}
