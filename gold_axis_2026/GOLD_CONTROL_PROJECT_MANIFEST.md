@@ -1,7 +1,7 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.48
-**Issue date:** 2026-09-10
+**Manifest version:** 1.49
+**Issue date:** 2026-09-11
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
 **Default-branch scheduler:** `main`  
@@ -87,6 +87,8 @@ Current governed identities are exactly:
 No other identity belongs to the current governed runtime inventory.
 
 The 12 governed identities are **not** a single homogeneous model-selection pool. They occupy different functional roles. Historical validation must therefore be role-specific and may not rank all 12 identities under one common forecasting metric.
+
+V1.49 adds a research programme for improving monthly and short-horizon predictive power. That research programme does not itself add a thirteenth governed runtime identity, activate a selector/ensemble, or change production authority. A new research model or integration rule becomes runtime-governed only after separate evidence-based promotion and a later manifest version.
 
 ---
 
@@ -763,376 +765,414 @@ zero and selector/ensemble remain OFF. Binding detail is recorded in
 
 ---
 
-## 19. V1.48 frozen short-horizon mathematical core — HS-SDL-DMA — 2026-09-10
+## 19. V1.49 Gold forecasting research architecture — monthly + short-horizon predictive power — 2026-09-11
 
-This section **replaces the former V1.47 open-ended mathematical/fusion research specification in full**. It is the sole current mathematical specification for the Gold Control short-horizon direction programme. Earlier chat proposals, exploratory names, density-first primary architectures, BPS-as-core proposals, DOW-as-core proposals, loss-discounted-pool-as-core proposals or other alternative primary formulations are not current authority. They may be studied only as challengers under Section 19.11 and may not be used to implement the core.
+This section **replaces the former V1.48 HS-SDL-DMA short-horizon mathematical-core specification in full**. The V1.48 HS-SDL-DMA implementation/result is retained as historical negative evidence in Section 20, but it is no longer the current primary Gold forecasting architecture.
 
-This section does not rewrite `GOLD_PILOT_V1`, does not change the four frozen September H=1 monthly references, does not add a thirteenth current governed runtime engine, and grants no production forecast, decision or trading authority.
+The primary research objective of Gold Control is now explicit:
 
-### 19.1 Frozen core identity and status
+> **maximize real out-of-sample predictive power for gold at both the next-month and short-horizon (1D/3D) levels, subject to strict point-in-time integrity, leakage prevention, reproducibility, benchmark discipline and evidence-based promotion.**
 
-The official short-horizon research core is:
+Methodological elegance is a constraint, not the optimization target. A model is not promoted because it is theoretically sophisticated; it must add reproducible OOS predictive information under the exact governed target and information boundary.
 
-`HS_SDL_DMA_DIRECTION_FUSION_V1`
+This section does not change the frozen September 2026 monthly references, does not activate automatic model selection or averaging, does not add a current runtime identity and grants no production/trading authority.
 
-Expanded name:
+### 19.1 Binding research questions and status
 
-**Horizon-Specific Shrinkage Dynamic Logistic Regression + Small Dynamic Model Averaging + Inner-OOS Probability Recalibration + Abstention**.
+Gold Control has two distinct forecasting programmes:
 
-Binding status:
+1. **MONTHLY H=1** — forecast the next calendar month's average XAU/USD price/return from the previous completed month-end origin.
+2. **SHORT HORIZON** — forecast separately `NEXT_NY17_1D` and `NEXT_NY17_3D`, with probabilistic direction and, where supported, expected-return/magnitude outputs.
 
-- `SHORT_HORIZON_CORE_MODEL = HS_SDL_DMA_DIRECTION_FUSION_V1`
-- `CORE_ARCHITECTURE = FROZEN_RESEARCH_SPECIFICATION`
-- `CORE_IMPLEMENTATION = NOT_IMPLEMENTED`
-- `CORE_RETROSPECTIVE_VALIDATION = NOT_RUN`
-- `CORE_PROSPECTIVE_VALIDATION = NOT_RUN`
-- `CORE_PRODUCTION_AUTHORITY = CLOSED`
-- `TODAY_TO_NY17_PROBABILITY = BLOCKED_CONTRACT`
+The two programmes may share data/context, but they must not be forced into one statistical model.
+
+Binding current research status:
+
+- `MONTHLY_RESEARCH_ARCHITECTURE = FROZEN_FOR_DIAGNOSTIC_STAGE`
+- `MONTHLY_FINAL_INTEGRATION_RULE = NOT_YET_SELECTED`
+- `MONTHLY_PRODUCTION_MODEL = NOT_YET_PROMOTED`
+- `SHORT_HORIZON_RESEARCH_ARCHITECTURE = FROZEN_FOR_INCREMENTAL_VALUE_STAGE`
+- `SHORT_HORIZON_FINAL_MODEL = NOT_YET_SELECTED`
+- `HS_SDL_DMA_DIRECTION_FUSION_V1 = NOT_PROVEN_RETAINED_BASELINE`
 - `NEXT_NY17_1D_PROBABILITY = NOT_PROVEN`
 - `NEXT_NY17_3D_PROBABILITY = NOT_PROVEN`
-- `DASHBOARD_SHORT_HORIZON_PROBABILITY = NOT_PROVEN`
+- `TODAY_TO_NY17_PROBABILITY = BLOCKED_CONTRACT`
 - `AUTO_SELECTOR = OFF`
 - `AUTO_ENSEMBLE = OFF`
 - `NOT_PROVEN_POSITION_MAPPING`
+- `CORE_PRODUCTION_AUTHORITY = CLOSED`
 
-The word `DMA` inside this research-core identity does **not** activate the current/global `AUTO_ENSEMBLE`. It is an internal, offline/replay mathematical component of this named challenger only. It does not average the four governed monthly H=1 experts, does not create a production selector, and does not authorize automatic production weighting.
+A future final integration rule/model must be selected from evidence generated under this Section 19 sequence, not from chat preference or one favorable year.
 
-### 19.2 Forecast questions and exact primary targets
+### 19.2 Monthly research core — existing Gold Control models are retained
 
-The short-horizon programme is a binary probabilistic direction problem, not a point-price model and not a trading-action model.
+The monthly programme starts from the models already shown to contain useful information in Gold Control and in gold-specific literature. They are **research views**, not automatically equal-weight experts.
 
-For each eligible completed NY17 anchor at time `t` and horizon `h`:
+#### A. Mixed-frequency cross-metal view
+
+`VW_MIDAS_MSVR_SUCCESSOR_V1`
+
+Role: capture nonlinear, mixed-frequency and cross-precious-metal information from Gold/Silver/Platinum/Palladium with origin-safe GPR conditioning under its governed contract.
+
+It remains a principal monthly research model. Its historical success and later instability are reasons to study complementarity/conditional performance, not reasons to delete or automatically promote it.
+
+#### B. Dynamic macro-financial view family
+
+- `DMA`
+- `DMS`
+- `IDMA` / separately governed adaptive-forgetting variants
+
+Role: capture time-varying relevance of macro-financial predictors and model uncertainty.
+
+The existing Gold Control CORE5 evidence (`GOLD`, `FEDFUNDS`, `NASDAQ`, `USD/CNY`, `GPR`) supports continued study of this family. DMA, DMS and IDMA must **not** be assumed to be three independent votes. Whether they should remain separate forecasts, be reduced to a parsimonious macro view, or enter an integration rule separately must be determined by the mandatory complementarity/encompassing audit in Section 19.4.
+
+#### C. Existing independent monthly views
+
+- `CAUSAL_PATCH`
+- `MOMENTUM_3M`
+
+They remain independent research forecasts/context views and may contribute only if their OOS errors/information are not redundant with VW or the macro-dynamic family.
+
+#### D. Mandatory benchmark / defensive anchor
+
+`RANDOM_WALK`
+
+RW is never removed from monthly evaluation. It is both the mandatory same-horizon benchmark and a candidate defensive anchor if later research proves that model edge is unstable and benchmark anchoring improves genuine OOS performance.
+
+#### E. Additional challengers
+
+No additional model is admitted merely because a paper reports low error. A challenger requires exact H=1 target parity, PIT-safe inputs, reproducible implementation and preregistration before outer scoring.
+
+Potentially serious later challengers include PIT-safe implementations of data-rich regularized/tree models and gold-specific temporal architectures such as Patch/DPformer-family methods. They are not current winners and are not allowed to displace the existing monthly core before the existing-model complementarity audit is complete.
+
+### 19.3 Monthly evidence already established — interpretation boundary
+
+Existing evidence motivates the research programme but does not preselect the final integration rule.
+
+Gold Control has previously observed:
+
+- `VW_MIDAS_MSVR` historical/common-window MAPE below the Random Walk benchmark;
+- 2025 governed validation in which VW materially outperformed RW on MAE;
+- 2026 Jan-Jul frozen OOS in which VW no longer retained that advantage and Momentum performed better;
+- CORE5 DMA/DMS/IDMA historical replay in which dynamic macro-family forecasts improved H=1 MAPE versus RW.
+
+Correct inference:
+
+`RELATIVE_MODEL_PERFORMANCE_IS_TIME_VARYING = SUPPORTED`
+
+Not yet proven:
+
+- that any one model universally dominates;
+- that models are sufficiently complementary to justify combination;
+- that regime/context variables can predict which model will be best at the next origin;
+- that any particular weighting/selector/ensemble improves future OOS performance.
+
+Therefore no monthly integration method may be selected before Section 19.4 is executed.
+
+### 19.4 Mandatory monthly forecast complementarity / encompassing audit
+
+Before any new selector, ensemble or final monthly model is implemented, Work must construct a **same-target, same-origin, PIT-compatible monthly forecast panel** containing all legitimately reconstructible H=1 forecasts for:
+
+- VW-MIDAS-MSVR;
+- DMA;
+- DMS;
+- IDMA where valid;
+- Causal Patch;
+- Momentum 3M;
+- Random Walk.
+
+For every common origin, retain forecast, target, error, absolute error/loss, origin cutoff, source/vintage lineage and evidence class.
+
+The audit must answer, at minimum:
+
+1. **Forecast/error dependence** — pairwise forecast, error and loss-differential correlation/covariance; rolling versions where sample size permits.
+2. **Forecast encompassing** — whether one forecast contains the useful predictive information of another under the common H=1 target.
+3. **Unconditional predictive accuracy** — Diebold-Mariano or an assumption-appropriate equivalent on preregistered losses.
+4. **Conditional predictive ability** — Giacomini-White-style analysis or an assumption-appropriate equivalent asking whether relative forecast performance is predictable from information available at the origin.
+5. **Multiple-model uncertainty** — Model Confidence Set / superior-set analysis where sample size and dependence assumptions permit; do not force a unique winner if the data do not identify one.
+6. **Disagreement information** — test whether cross-model dispersion/disagreement predicts subsequent forecast error, absolute error or regime failure.
+7. **Time/regime stability** — characterize whether relative loss changes systematically with pre-origin macro/risk/regime states, without treating post-outcome explanations as predictors.
+8. **Redundancy classification** — identify models/views that are `NON_REDUNDANT`, `PARTIALLY_REDUNDANT`, `ENCOMPASSED/REDUNDANT_NOT_PROVEN`, or `BLOCKED`.
+
+No integration weights may be optimized using the final outer observations of the same audit sequence.
+
+### 19.5 Integration-family selection is conditional on the audit — no preselected ensemble
+
+V1.49 deliberately does **not** declare one final ensemble formula.
+
+The permitted research logic is diagnostic:
+
+#### Case A — one forecast encompasses others
+
+Prefer the more parsimonious forecast/view. Do not add dominated forecasts merely to create an ensemble.
+
+#### Case B — forecasts contain complementary information but simple combination already captures it
+
+An equal-weight/simple-average combination is the mandatory combination benchmark. More complex weighting must beat it OOS after estimation cost.
+
+#### Case C — strong common-factor/high-correlation structure exists
+
+A factor-adjusted / regularized combination family becomes eligible for preregistration. Its purpose is to avoid counting the same forecast information multiple times while preserving genuine residual predictive content.
+
+#### Case D — complementary model edge exists but decays/changes over time
+
+A benchmark-anchored or iterated combination family becomes eligible for preregistration, including a second-stage combination with Random Walk/no-change if the development evidence supports defensive shrinkage when model edge weakens.
+
+#### Case E — pre-origin state variables genuinely predict relative model loss
+
+Only then may a conditional/regime-adaptive weighting or selection rule be preregistered. BOCPD, GVZ, macro-event or other state variables may not be used as regime selectors merely because they are intuitively plausible.
+
+All integration families selected for formal testing must be frozen from development/inner evidence **before** final outer comparison. Result-driven movement from one family to another on the same outer sample is forbidden.
+
+### 19.6 Monthly target and evaluation contract
+
+The canonical monthly target remains:
+
+`NEXT_MONTH_MONTHLY_AVERAGE_XAU_USD`
+
+Origin remains the previous completed calendar month-end under the existing governed source contract.
+
+Primary monthly evaluation must include:
+
+- MAE;
+- RMSE / MSFE;
+- relative MAE and/or relative MSFE versus same-origin RW;
+- median absolute error;
+- signed error / bias;
+- MAPE/sMAPE as supporting scale-free diagnostics, not sole selection criteria;
+- direction accuracy as secondary information only;
+- worst-period error;
+- rolling/time stability;
+- model win/loss concentration by period;
+- forecast disagreement and error correlation;
+- DM/GW/MCS or assumption-appropriate statistical evidence.
+
+A complex integration rule is not promoted unless it beats both RW and a simple-combination benchmark robustly enough under preregistered criteria.
+
+### 19.7 Short-horizon research objective — direction plus magnitude, not state-vote fusion alone
+
+The short-horizon programme remains two separate targets:
+
+- `NEXT_NY17_1D`
+- `NEXT_NY17_3D`
+
+For eligible completed NY17 anchor `t`:
 
 `r_(t,h) = log(P_(t+h) / P_t)`
 
 `Y_(t,h) = 1{r_(t,h) > 0}`
 
-and the model estimates:
+Primary probabilistic output:
 
-`p_(t,h) = P(Y_(t,h)=1 | F_t)`.
+`P(Y_(t,h)=1 | F_t)`
 
-`F_t` means only information proven available by the exact forecast origin/cutoff.
+The new research programme must also evaluate whether forecasting expected return/magnitude adds useful information:
 
-The primary frozen horizons are separate models:
+`E[r_(t,h) | F_t]`
 
-- `NEXT_NY17_1D`: the next eligible completed NY17 reference versus the current completed NY17 anchor;
-- `NEXT_NY17_3D`: the third subsequent eligible completed NY17 reference versus the current completed NY17 anchor.
+and, only if sample size and calibration support it, conditional quantiles/intervals may be researched later.
 
-There is **no single mathematical target named `1–3D`**. A user-facing “1–3 day outlook” may summarize the separately validated `1D` and `3D` outputs, but it may not be treated as a third target unless a later manifest version defines one.
+The failed V1.48 HS-SDL-DMA run proves that a narrow FAST/SLOW/MONTHLY_DIRECTION state-fusion architecture did not add sufficient predictive power. It does **not** prove that short-horizon gold is unpredictable using a richer PIT-safe market information set.
 
-`TODAY_TO_NY17` remains `BLOCKED_CONTRACT`: no intraday probability may be implemented until the exact intraday XAU source, issuance anchor, timestamp/session semantics, latency rule, stale-data rule, fallback policy and historical PIT availability are frozen. An arbitrary live quote may not be substituted.
+### 19.8 Short-horizon information blocks — incremental predictive-content design
 
-The existing `MONTHLY_H1` target remains unchanged and separate: next calendar month's average XAU/USD under its existing month-origin contract. HS-SDL-DMA does not alter that target.
+Short-horizon research must proceed by predeclared **information blocks**, not by unconstrained feature search.
 
-### 19.3 Role-preserving input architecture
+Candidate blocks are:
 
-The current Gold Control components are heterogeneous and must not be falsely treated as homogeneous votes or homogeneous predictive-density experts.
+#### Block 0 — parsimonious gold-history baseline
 
-Direction-capable candidate inputs are represented conceptually by:
+Origin-safe own-history features such as lagged returns, momentum, range and realized-volatility/realized-moment features whose exact definitions are frozen before scoring.
 
-`D_t = [FAST_t, SLOW_t, MONTHLY_DIRECTION_3M_t]`.
+#### Block 1 — cross-precious-metal information
 
-Conditioning/context inputs are represented conceptually by:
+Gold/Silver/Platinum/Palladium returns and origin-safe relative/dispersion information where exact PIT data are available.
 
-`C_t = [BOCPD_t, GVZ_t, MACRO_EVENT_t, EMERGENCY_LEVEL_t, EMERGENCY_REVERSAL_t]`.
+#### Block 2 — FX and rates
 
-Binding role restrictions:
+USD/DXY-related variables, nominal/real yield or curve variables only when source/vintage/timestamp semantics are proven for each origin.
 
-- `FAST` may provide short-horizon tactical direction information.
-- `SLOW` may provide slower tactical/directional context.
-- `MONTHLY_DIRECTION_3M` may provide strategic prior/context if its value was frozen and available at the short-horizon origin.
-- `BOCPD_RETURN_SUCCESSOR_V1` remains regime/break context only. It may condition the reliability/effect of a direction-capable input; it is not itself an `UP`/`DOWN` vote.
-- `GVZ_RISK` remains uncertainty/risk context only. It may condition the reliability/effect of a direction-capable input; it is not itself an `UP`/`DOWN` vote.
-- `MACRO_EVENT_SUCCESSOR_V2` remains release-aware event context. Any directional incremental contribution must be learned origin-safely; the event state is not automatically assigned a sign.
-- `EMERGENCY_LEVEL` / `EMERGENCY_REVERSAL` remain early-warning/abnormal-move/reversal context. They do not rewrite a previously issued monthly forecast.
-- Market Shock research is non-canonical and is excluded from the initial core feature set unless separately recovered, frozen and admitted by a later manifest version.
-- The four monthly H=1 price experts are **not automatically short-horizon features**. Any later use must prove origin compatibility and incremental value without target-month leakage.
+#### Block 3 — equity/risk/commodity cross-market information
 
-No raw vote fraction may be interpreted as a probability. `5 of 7 signals UP` is not `P(UP)=71%`.
+Examples may include Nasdaq/S&P/global equity, VIX/GVZ/OVX and selected commodity signals, but only after exact source and time-boundary parity are frozen.
 
-### 19.4 Exact core statistical form
+#### Block 4 — existing Gold Control direction/context states
 
-For each horizon `h ∈ {1D, 3D}` and each pre-frozen candidate specification `M_k`:
+- `FAST`
+- `SLOW`
+- `MONTHLY_DIRECTION_3M`
+- `BOCPD_RETURN_SUCCESSOR_V1`
+- `GVZ_RISK`
+- `MACRO_EVENT_SUCCESSOR_V2`
+- `EMERGENCY_LEVEL`
+- `EMERGENCY_REVERSAL`
 
-`Y_(t,h) ~ Bernoulli(p_(k,t,h))`
+These components keep their declared semantic roles. GVZ, BOCPD, Macro Event and Emergency do not become unconditional UP/DOWN votes. Their value must be demonstrated as incremental/interaction/context information.
 
-with
+#### Block 5 — positioning/flow/news sleeves
 
-`logit(p_(k,t,h)) = x_(k,t,h)' theta_(k,t,h)`
+CFTC positioning, ETF/flow variables or gold-related news/NLP features may be researched only when genuine historical timestamp/PIT availability is proven. If a source cannot be reconstructed origin-safely, the block remains `BLOCKED_PIT` and is not approximated with final/current data.
 
-and
+The required experiment is **incremental predictive-content testing**: begin with a parsimonious baseline and add pre-frozen blocks one at a time or in a preregistered sequence. A block remains only if it adds robust nested-OOS information after complexity/estimation cost.
 
-`logit(p) = log(p/(1-p))`.
+### 19.9 Short-horizon model-family research
 
-The design vector `x_(k,t,h)` may contain only:
+V1.49 does not preselect a final short-horizon estimator.
 
-1. an intercept;
-2. origin-safe encodings of approved direction-capable inputs from `D_t`;
-3. pre-frozen role-preserving interaction terms of the form `direction_input × context_input`.
+The first serious candidate family must include:
 
-Context-only main effects that would silently convert BOCPD, GVZ or Emergency into independent direction votes are forbidden in the initial core. Macro Event may not receive an unconditional directional sign by construction.
+- regularized linear/logistic models as parsimonious mandatory baselines;
+- LightGBM and/or equivalent gradient-boosted tree models when sample size supports them;
+- XGBoost/GBRT-type nonlinear tabular challengers;
+- HS-SDL-DMA V1 as a retained NOT_PROVEN historical benchmark, not the default core.
 
-The initial candidate set must be **small and nested** and may contain at most four non-baseline specifications. Before the first outer test is run, the exact canonical field names, categorical/continuous encodings, missing-state handling and permitted interactions must be recovered from current code/evidence and frozen. Until that inventory is complete:
+Deep-learning / CNN-LSTM / TCN / Transformer-family models may enter only after data volume, target parity and PIT-safe feature history are sufficient and only under the same frozen nested OOS test. They do not receive preference merely because of model capacity.
 
-`CORE_FEATURE_SCHEMA = BLOCKED_INVENTORY`.
+For probability outputs, calibration is mandatory before any user-facing percentage. Raw scores, raw vote fractions and in-sample fitted probabilities are not calibrated probabilities.
 
-No programmer may guess state encodings such as `-1/0/+1`, invent a strength score, map labels to numbers without a frozen rule, or manufacture continuous values from categorical engine states.
+### 19.10 Mandatory nested pseudo-real-time validation for both programmes
 
-### 19.5 Shrinkage dynamic logistic state evolution
-
-Within each candidate model, coefficients may evolve over time:
-
-`theta_(k,t,h) = theta_(k,t-1,h) + omega_(k,t,h)`
-
-with a state-evolution uncertainty controlled by a pre-frozen discount/shrinkage rule.
-
-The core requirement is **shrinkage toward stability**: when the data do not support time variation, the effective parameter evolution must be driven toward the static-model limit rather than forced to drift. A static regularized logistic model is therefore not an unrelated alternative; it is the mandatory stability benchmark and limiting case against which dynamic complexity must justify itself.
-
-The exact coefficient regularization strength and state discount/forgetting hyperparameters must be selected only inside the inner rolling/expanding-origin procedure from a small pre-frozen admissible set. They may not be hand-tuned from outer results, 2026 Jan–Aug outcomes, dashboard behavior or prospective outcomes.
-
-A more elaborate TVP process-variance shrinkage prior may be researched later, but it is not silently part of V1.48 unless explicitly implemented, tested and promoted by a later manifest version.
-
-### 19.6 Small Dynamic Model Averaging layer
-
-Model uncertainty is handled across the small pre-frozen candidate set, not across an uncontrolled universe.
-
-Let `pi_(k,t|t-1,h)` be the pre-outcome weight of candidate `k` at origin `t`. The DMA transition uses a forgetting factor `alpha_h` under the frozen implementation:
-
-`pi_(k,t|t-1,h) ∝ pi_(k,t-1|t-1,h) ^ alpha_h`,
-
-normalized across the admitted candidate set.
-
-After the relevant target has matured, the model probability is updated using that candidate's Bernoulli predictive likelihood. The next raw probability is:
-
-`p_raw_(t,h) = Σ_k pi_(k,t|t-1,h) * p_(k,t,h)`.
-
-Rules:
-
-- initial candidate weights must be explicit and reproducible;
-- `alpha_h` is horizon-specific and must be selected only inside inner rolling origins from a pre-frozen admissible set;
-- no weight may be updated using an outcome that has not yet matured;
-- the `3D` model may not consume the `t→t+3` outcome before the third subsequent eligible NY17 observation exists;
-- no future overlap outcome may leak into preprocessing, coefficient state, weight update, calibration or model selection;
-- a small candidate set is mandatory; uncontrolled combinatorial model search is forbidden in the core.
-
-### 19.7 Probability recalibration is mandatory before dashboard use
-
-`p_raw` is a research probability, not automatically a user-display probability.
-
-Using only inner rolling-origin out-of-sample predictions, the primary recalibration form is deliberately low-dimensional:
-
-`z_(t,h) = logit(clip(p_raw_(t,h)))`
-
-`p_cal_(t,h) = logistic(a_h + b_h * z_(t,h))`.
-
-The clipping epsilon, calibration training window/minimum sample and any regularization must be frozen before outer scoring. Recalibration may not be fit on the outer target being evaluated.
-
-If there are insufficient origin-safe inner predictions to estimate calibration reliably:
-
-`CALIBRATION_STATUS = BLOCKED_INSUFFICIENT_SAMPLE`
-
-and the dashboard may not display a calibrated percentage for that horizon.
-
-Raw classifier scores, raw DMA probabilities, vote fractions or in-sample fitted probabilities may never be relabelled as calibrated user probabilities.
-
-### 19.8 Direction mapping and abstention
-
-The production-facing semantic output, if later validated, is deliberately three-state:
-
-- `UP`
-- `DOWN`
-- `UNCERTAIN`
-
-The system is not required to issue a direction on every origin.
-
-`UP/DOWN` mapping must use `p_cal` plus a pre-registered abstention/risk-coverage rule. The exact abstention threshold/coverage trade-off is **not to be guessed during implementation**. It must be frozen before the first outer evaluation after historical sample size and feasible inner-origin count are audited, but before any outer outcome is inspected.
-
-Until that rule is frozen and validated:
-
-`ABSTENTION_RULE = NOT_YET_FROZEN`
-
-and any dashboard direction probability remains research-only.
-
-`CONFIDENCE` is not equal to `P_UP`. A later confidence state may use calibration quality, effective sample size, source freshness, model disagreement and regime/risk conditions, but its mapping requires its own pre-registered rule.
-
-Expected percentage move, target price, P10/P50/P90 or full return density is **not part of the V1.48 core**. Those may be developed later as separate magnitude/distribution challengers after short-horizon direction is validated.
-
-### 19.9 Validation design — mandatory nested pseudo-real-time evaluation
-
-Long future waiting is not replaced by hindsight tuning. The development design is nested rolling/expanding-origin pseudo-real-time validation.
+All substantive model/integration/feature choices must be evaluated by nested rolling/expanding-origin pseudo-real-time procedures.
 
 At each outer origin:
 
-1. reconstruct only data and states genuinely available by that cutoff;
-2. apply all preprocessing/encoding only from data available within that training origin;
-3. choose candidate specification, coefficient regularization, state discount/forgetting factor, DMA forgetting factor and calibration parameters only through earlier inner origins;
-4. issue and immutably retain the outer probability before reading the outer target;
-5. score only after the target matures;
-6. retain input fingerprints, exact source/vintage lineage, code commit, chosen hyperparameters, raw probability, calibrated probability and outcome.
+1. construct only data known by the origin cutoff;
+2. fit scaling/encoding/decomposition/feature transforms within the training origin only;
+3. select hyperparameters, feature blocks, integration family and calibration rules only from earlier inner origins;
+4. freeze the outer forecast before target maturity;
+5. score only after the target becomes available;
+6. retain source/vintage lineage, fingerprints, code commit, specification and output.
 
 Forbidden:
 
-- random train/test split;
-- whole-sample scaling/encoding before temporal folds;
-- later-vintage macro backfill into earlier origins;
-- result-driven feature creation;
-- selecting a hyperparameter after looking at the outer month/day;
-- repeatedly enlarging the candidate universe after inspecting the same outer sequence;
-- claiming the already-observed 2026 Jan–Aug window is a pristine future test for this post-hoc challenger.
+- random split;
+- whole-sample normalization/decomposition;
+- final-vintage substitution into earlier origins;
+- target leakage;
+- adding a new model/feature block after seeing the same final outer results;
+- selecting an integration rule from the final outer sample;
+- relabelling known 2025/2026 outcomes as pristine unseen prospective evidence.
 
-The 2026 Jan–Aug evidence remains valid for the prior frozen pilot only. New short-horizon challenger evidence must be labelled according to its actual reconstruction/evaluation status.
+The already observed 2025/2026 periods may be used only as correctly labelled retrospective research/diagnostic evidence for a newly designed V1.49 architecture. Genuine future proof begins only after a final candidate system is frozen and issued before the outcome.
 
-### 19.10 Primary metrics and mandatory baselines
+### 19.11 Short-horizon evaluation
 
-The primary probabilistic score is **Brier score**:
+Primary probabilistic metrics:
 
-`BS_h = mean((p_cal_(t,h) - Y_(t,h))^2)`.
+- Brier score;
+- log loss;
+- calibration intercept/slope;
+- reliability diagnostics.
 
-Mandatory supporting evidence:
+Supporting metrics:
 
-- log loss under a pre-frozen numerical clipping rule;
-- calibration intercept and calibration slope;
-- reliability/calibration diagnostics;
-- directional accuracy and balanced accuracy as secondary diagnostics;
-- sample count and effective/matured origin count;
-- stability by time/regime/risk/event strata where sample size permits;
+- balanced accuracy;
+- directional accuracy;
+- expected-return error/loss if magnitude is modeled;
+- time/regime/risk stability;
 - worst-period behavior;
-- source-freshness and missing-state sensitivity.
+- matured origin count/effective sample;
+- missing/freshness sensitivity.
 
-Mandatory baselines/challengers for the first frozen round:
+Mandatory probability baselines include:
 
-- `P_UP = 0.50` naive probability;
-- expanding historical UP-frequency probability;
-- `FAST_ONLY` origin-safe probabilistic baseline where historically reconstructible;
-- static regularized logistic baseline using the same admitted feature semantics;
-- equal-weight average of the same admitted candidate probabilities as a simple combination benchmark.
+- `P_UP = 0.50`;
+- expanding historical UP frequency;
+- parsimonious own-history model;
+- retained HS-SDL-DMA V1 result where exact origin parity permits comparison.
 
-The dynamic core must justify complexity against these simpler alternatives. A complex model is not promoted merely because it has the best point estimate on one period.
+For 3D overlapping targets, inference must account for dependence with a preregistered HAC/block-resampling design or an assumption-appropriate equivalent.
 
-For multiple-model comparison, Model Confidence Set / SPA-style procedures may be used where sample size and assumptions support them. The system must not force one winner when the data support a statistically indistinguishable superior set.
+No model is promoted on raw accuracy alone.
 
-For `3D`, overlapping targets induce dependence. Statistical inference and resampling must account for that dependence with an appropriate pre-frozen HAC/block-resampling design; ordinary independent-observation tests are not sufficient.
+### 19.12 Research sequence — binding order for Work
 
-Numerical promotion thresholds are deliberately not invented here. They must be pre-registered after the exact historical origin count/feature availability audit and **before** outer performance is inspected. Until then:
-
-`CORE_PROMOTION_THRESHOLDS = NOT_YET_FROZEN`.
-
-### 19.11 Challenger hierarchy — core does not move when new papers appear
-
-The HS-SDL-DMA architecture is the frozen primary core for the next implementation/validation round. New literature does not automatically replace it.
-
-Permitted secondary challengers, only after exact target/PIT parity is established, include:
-
-- standard `DMA` / `DMS` benchmark variants;
-- `DOW-DMA`;
-- `IDMA` / adaptive-forgetting variants;
-- loss-discounted pooling;
-- Dynamic Bayesian Predictive Synthesis / dynamic prediction pools;
-- XGBoost or other calibrated nonlinear tabular classifier;
-- distributional/quantile models;
-- deep-learning/Transformer-family models when historical sample size and PIT-safe inputs justify them.
-
-These are **not core** and must not be implemented as though V1.48 selected them. They compete against HS-SDL-DMA under the same frozen origins, target definition, information set and evaluation rules. Any later replacement of the core requires a new manifest version and explicit evidence that the challenger provides robust incremental value rather than one-period improvement.
-
-### 19.12 Dashboard binding
-
-The intended top-level short-horizon cards are:
-
-- `TODAY / NY17` — remains `BLOCKED_CONTRACT` until the intraday anchor/source contract exists;
-- `NEXT 1D` — driven only by validated `NEXT_NY17_1D` output;
-- `NEXT 3D` — driven only by validated `NEXT_NY17_3D` output;
-- `NEXT MONTH` — remains under the separate existing H=1 monthly expert governance.
-
-For an eligible validated short-horizon card, the dashboard may eventually show:
-
-- `UP / DOWN / UNCERTAIN`;
-- calibrated `P_UP`;
-- confidence only when its rule is validated;
-- exact `AS_OF` cutoff;
-- source/evidence freshness;
-- explanatory `NEDEN?` context showing support/conflict without pretending all components are direction votes.
-
-If calibration or the horizon model is not proven, display `NOT_PROVEN / Olasılık henüz kalibre edilmedi`. Do not invent a percentage for visual completeness.
-
-A green/up indicator is not `BUY`; red/down is not `SELL`. Position sizing/action mapping remains unauthorized.
-
-### 19.13 Immediate build order and hard stop points
-
-The next implementation order is frozen as:
+The next governed research order is:
 
 `CURRENT CANONICAL STATE REVERIFY`
 
-→ `EXACT SHORT-HORIZON HISTORICAL INPUT/STATE INVENTORY`
+→ `MONTHLY SAME-ORIGIN FORECAST PANEL RECONSTRUCTION`
 
-→ `1D / 3D SOURCE + SESSION CLOCK VERIFICATION`
+→ `MONTHLY COMPLEMENTARITY / ENCOMPASSING / ERROR-DEPENDENCE AUDIT`
 
-→ `EXACT FEATURE ENCODING + MISSING-STATE FREEZE`
+→ `DM + CONDITIONAL PREDICTIVE ABILITY + MCS/SUPERIOR-SET ANALYSIS`
 
-→ `SMALL CANDIDATE SPECIFICATION FREEZE (K ≤ 4)`
+→ `MONTHLY INTEGRATION-FAMILY DIAGNOSIS`
 
-→ `INNER HYPERPARAMETER / CALIBRATION RULE FREEZE`
+→ `FREEZE LIMITED MONTHLY INTEGRATION CANDIDATES + SIMPLE/RW BASELINES`
 
-→ `ABSTENTION + PROMOTION RULE PREREGISTRATION`
+→ `SHORT-HORIZON PIT DATA / SOURCE / CLOCK INVENTORY`
 
-→ `DETERMINISTIC NESTED ROLLING/EXPANDING REPLAY`
+→ `SHORT-HORIZON INFORMATION-BLOCK DEFINITIONS`
 
-→ `BASELINE + CALIBRATION + STABILITY TESTS`
+→ `INCREMENTAL PREDICTIVE-CONTENT AUDIT`
 
-→ `MCS / SPA / OVERLAP-AWARE INFERENCE WHERE APPLICABLE`
+→ `FREEZE LIMITED SHORT-HORIZON MODEL CANDIDATES`
 
-→ `CORE VS CHALLENGER REVIEW`
+→ `NESTED ROLLING/EXPANDING PSEUDO-REAL-TIME REPLAY`
 
-→ `DASHBOARD EVIDENCE CONTRACT TEST`
+→ `CALIBRATION + STABILITY + STATISTICAL COMPARISON`
+
+→ `MONTHLY + SHORT-HORIZON ARCHITECTURE REVIEW`
+
+→ `DASHBOARD EVIDENCE CONTRACT REVIEW`
 
 → `LATER GENUINE PROSPECTIVE SHADOW`.
 
-Hard stops:
+The sequence may not be reordered to choose an ensemble/model before the diagnostics that justify it.
 
-- if exact feature/state encoding cannot be recovered: `BLOCKED_INVENTORY`;
-- if PIT availability cannot be proven: `BLOCKED_PIT`;
-- if a source/session clock is ambiguous: `BLOCKED_CONTRACT`;
-- if calibration sample is insufficient: `BLOCKED_INSUFFICIENT_SAMPLE`;
-- if leakage/prefix invariance fails: `IMPLEMENTATION_FAIL`;
-- if baselines are not included: `VALIDATION_INVALID`;
-- if promotion thresholds were set after outer results were viewed: `GOVERNANCE_FAIL`.
+### 19.13 Hard-stop states
 
-No blocked condition may be silently repaired by imputation, relabelling, alternate provider substitution or retrospective threshold tuning.
+Use explicit fail-closed states:
 
-### 19.14 Academic authority basis for the frozen core
+- feature/source identity cannot be recovered: `BLOCKED_INVENTORY`;
+- origin availability/vintage cannot be proven: `BLOCKED_PIT`;
+- target/source/session clock ambiguous: `BLOCKED_CONTRACT`;
+- insufficient common-origin sample for a claimed comparison: `BLOCKED_INSUFFICIENT_SAMPLE`;
+- leakage/prefix/determinism failure: `IMPLEMENTATION_FAIL`;
+- missing mandatory RW/simple baselines: `VALIDATION_INVALID`;
+- model/feature/integration family selected after final outer outcomes were inspected: `GOVERNANCE_FAIL`;
+- statistical evidence does not establish superiority/complementarity: `NOT_PROVEN`.
 
-The V1.48 core is grounded in the following authority chain:
+No blocked condition may be repaired through silent imputation, final-vintage substitution, alternate-provider substitution, backdating or hindsight retuning.
 
-- McCormick, T.H., Raftery, A.E., Madigan, D., Burd, R.S. (2012), “Dynamic Logistic Regression and Dynamic Model Averaging for Binary Classification,” *Biometrics*, 68(1), 23–30. DOI `10.1111/j.1541-0420.2011.01645.x`. This is the direct methodological basis for online binary probability prediction under both time-varying coefficients and model uncertainty.
-- Raftery, A.E., Kárný, M., Ettler, P. (2010), “Online Prediction Under Model Uncertainty via Dynamic Model Averaging,” *Technometrics*, 52(1), 52–66. DOI `10.1198/TECH.2009.08104`. This supplies the core DMA model-uncertainty/forgetting framework and supports using a small set of substantively motivated models.
-- Bitto, A., Frühwirth-Schnatter, S. (2019), “Achieving shrinkage in a time-varying parameter model framework,” *Journal of Econometrics*, 210(1), 75–97. DOI `10.1016/j.jeconom.2018.11.006`. This supports the principle that time-varying parameters should shrink toward static behavior when time variation is not supported; V1.48 uses that principle conservatively and does not silently import the paper's full MCMC specification.
-- Aye, G.C., Gupta, R., Hammoudeh, S., Kim, W.J. (2015), “Forecasting the price of gold using dynamic model averaging,” *International Review of Financial Analysis*, 41, 257–266. DOI `10.1016/j.irfa.2015.03.010`. This supplies direct gold-market evidence that model/predictor relevance can vary through time and that dynamic model selection/averaging is a serious gold-forecast benchmark.
-- Gneiting, T., Balabdaoui, F., Raftery, A.E. (2007), “Probabilistic Forecasts, Calibration and Sharpness,” *JRSS Series B*, 69(2), 243–268. DOI `10.1111/j.1467-9868.2007.00587.x`. This is the probability-calibration/proper-scoring authority for not exposing uncalibrated model scores as probabilities.
-- Tashman, L.J. (2000), “Out-of-sample tests of forecasting accuracy: an analysis and review,” *International Journal of Forecasting*, 16(4), 437–450. DOI `10.1016/S0169-2070(00)00065-0`. This supports explicit rolling-origin, updating/recalibration and multiple-test-period evaluation design.
-- Hansen, P.R., Lunde, A., Nason, J.M. (2011), “The Model Confidence Set,” *Econometrica*, 79(2), 453–497. DOI `10.3982/ECTA5771`. This supports retaining a superior set instead of forcing a unique winner when statistical evidence does not distinguish candidates.
+### 19.14 Academic authority basis for V1.49
 
-These sources justify the **architecture and evaluation discipline**. They do not prove that HS-SDL-DMA will outperform Gold Control baselines on the project's data. That empirical claim remains `NOT_PROVEN` until the frozen replay and subsequent evidence gates pass.
+The research design is grounded in an authority chain rather than one model paper:
+
+- Aye, G.C., Gupta, R., Hammoudeh, S., Kim, W.J. (2015), “Forecasting the price of gold using dynamic model averaging,” *International Review of Financial Analysis*, 41, 257–266. DOI `10.1016/j.irfa.2015.03.010`. Direct gold evidence for time-varying model/predictor relevance and DMA/DMS forecasting.
+- Baur, D.G., Beckmann, J., Czudaj, R. (2016), “A melting pot — Gold price forecasts under model and parameter uncertainty,” *International Review of Financial Analysis*, 48, 282–291. DOI `10.1016/j.irfa.2016.10.010`. Gold-specific evidence that DMA improves forecasts and predictor relevance changes over time.
+- Chen/Yang/Lan (2026), “Three horizon-specific drivers of gold prices with Iterated Dynamic Model Averaging,” *Economics Letters*, 268, 113147. DOI `10.1016/j.econlet.2026.113147`. Supports horizon-dependent gold drivers and adaptive model/predictor weighting; Gold Control's CORE5 implementation is not claimed to be an exact replication.
+- Wang et al. (2026), “What drives precious metals pricing? An explainable Mixed-frequency machine learning approach,” *Mineral Economics*. Supports mixed-frequency, cross-precious-metal nonlinear forecasting as the methodological family behind the VW-MIDAS-MSVR research view; exact archived Gold Control identity remains governed separately.
+- Diebold, F.X., Mariano, R.S. (1995), “Comparing Predictive Accuracy,” *Journal of Business & Economic Statistics*. DOI `10.1080/07350015.1995.10524599`. Basis for pairwise predictive-accuracy comparison under explicit loss functions.
+- Giacomini, R., White, H. (2006), “Tests of Conditional Predictive Ability,” *Econometrica*. DOI `10.1111/j.1468-0262.2006.00718.x`. Basis for asking whether relative forecast performance is predictable from information available at the origin.
+- Hansen, P.R., Lunde, A., Nason, J.M. (2011), “The Model Confidence Set,” *Econometrica*, 79(2), 453–497. DOI `10.3982/ECTA5771`. Basis for retaining a statistically indistinguishable superior set rather than manufacturing a unique winner.
+- Tashman, L.J. (2000), “Out-of-sample tests of forecasting accuracy: an analysis and review,” *International Journal of Forecasting*, 16(4), 437–450. DOI `10.1016/S0169-2070(00)00065-0`. Basis for rolling-origin/multiple-test-period evaluation.
+- Hewamalage, H., Ackermann, K., Bergmeir, C. (2023), “Forecast evaluation for data scientists: common pitfalls and best practices,” *Data Mining and Knowledge Discovery*, 37, 788–832. DOI `10.1007/s10618-022-00894-5`. Basis for avoiding random split, whole-sample preprocessing/decomposition leakage and weak benchmark design.
+- Gneiting, T., Balabdaoui, F., Raftery, A.E. (2007), “Probabilistic Forecasts, Calibration and Sharpness,” *JRSS Series B*, 69(2), 243–268. DOI `10.1111/j.1467-9868.2007.00587.x`. Basis for probability calibration/proper probabilistic evaluation.
+- Lee, S., Lee, T.-H. (2026), “Improving the simple average combined forecast via factor-adjusted regularization,” *International Journal of Forecasting*. DOI `10.1016/j.ijforecast.2026.07.008`. This is a **conditional candidate family**, relevant only if the complementarity audit demonstrates a strong common-factor/high-correlation problem.
+- “Raising the bar in commodity price forecasting: Evidence from iterated forecast combinations” (2026), *Economic Modelling*, article 107800. DOI `10.1016/j.econmod.2026.107800`. This is a **conditional candidate family**, relevant only if the audit demonstrates complementary but time-unstable model edge and benchmark anchoring is justified.
+- Ha et al. (2026), “Machine learning-based portfolio optimization: comparative analysis with the all-weather portfolio strategy,” *Financial Innovation*, 12:112. DOI `10.1186/s40854-026-00927-8`, together with the 2023 *Chaos, Solitons & Fractals* gold ML study, PII `S0960077923009803`. These support regularized/tree-based data-rich short-horizon challengers; they do not prove Gold Control performance without the Section 19 nested PIT-safe test.
+- 2024 *Finance Research Letters* 1-day-ahead gold-futures/news study, PII `S1544612324011450`. Supports a future news/NLP information sleeve only if Gold Control can prove historical timestamp/PIT availability.
+
+These authorities justify the **research questions, candidate information channels, diagnostic sequence and evaluation discipline**. They do not predetermine the winning model or integration rule.
 
 ---
 
-## 20. V1.48 HS-SDL-DMA implementation and first frozen replay state
+## 20. Retained V1.48 HS-SDL-DMA negative evidence — historical baseline only
 
-The Section 19 build order was executed on a feature branch without changing the
-frozen architecture. Exact inventory contains 400 retrospective NY17 origins.
-FAST, SLOW and MONTHLY_DIRECTION use categorical one-hot contrasts; no numeric
-vote encoding was invented. Context-only components lacking an exact daily PIT
-join are excluded from the initial three nested candidates.
+This section preserves the V1.48 short-horizon experiment as immutable research evidence. It is **not** the current primary mathematical core after V1.49.
 
-Candidate universe, inner grid, calibration and abstention/promotion rules were
-committed before outer scoring. Deterministic nested replay subsequently produced
-279 calibrated outer 1D and 273 calibrated outer 3D predictions. Evidence is
-`RETROSPECTIVE_PSEUDO_REAL_TIME_VALIDATED`, never prospective.
+The former V1.48 build order was executed on a feature branch. Exact inventory contained 400 retrospective NY17 origins. FAST, SLOW and MONTHLY_DIRECTION used categorical one-hot contrasts; no numeric vote encoding was invented. Context-only components lacking an exact daily PIT join were excluded from the initial three nested candidates.
 
-Neither horizon passed the preregistered promotion gates. HS-SDL-DMA Brier was
-`0.254468` (1D) and `0.255404` (3D), versus `0.25` for the mandatory constant
-probability baseline. Calibration/stability gates also failed. Therefore:
+Candidate universe, inner grid, calibration and abstention/promotion rules were committed before outer scoring. Deterministic nested replay produced 279 calibrated outer 1D and 273 calibrated outer 3D predictions. Evidence class remains `RETROSPECTIVE_PSEUDO_REAL_TIME_VALIDATED`, never prospective.
 
-- `CORE_IMPLEMENTATION = IMPLEMENTED_RESEARCH_ONLY`
-- `CORE_RETROSPECTIVE_VALIDATION = VALID_RUN_PROMOTION_NOT_PROVEN`
+Neither horizon passed the preregistered promotion gates. HS-SDL-DMA Brier was `0.254468` (1D) and `0.255404` (3D), versus `0.25` for the mandatory constant-probability baseline. Calibration/stability gates also failed.
+
+Binding interpretation after V1.49:
+
+- `HS_SDL_DMA_DIRECTION_FUSION_V1 = NOT_PROVEN_RETAINED_BASELINE`
+- `HS_SDL_DMA_RETROSPECTIVE_VALIDATION = VALID_RUN_PROMOTION_NOT_PROVEN`
 - `NEXT_NY17_1D_PROBABILITY = NOT_PROVEN`
 - `NEXT_NY17_3D_PROBABILITY = NOT_PROVEN`
 - `DASHBOARD_SHORT_HORIZON_PROBABILITY = NOT_PROVEN`
@@ -1141,5 +1181,6 @@ probability baseline. Calibration/stability gates also failed. Therefore:
 - `TODAY_TO_NY17_PROBABILITY = BLOCKED_CONTRACT`
 - `AUTO_SELECTOR = OFF`; `AUTO_ENSEMBLE = OFF`
 
-Full evidence is in `HS_SDL_DMA_RETROSPECTIVE_VALIDATION_REPORT_V1_2026-09-10.md`
-and `data_pipeline/audits/hs_sdl_dma_replay_v1/`.
+The result must not be deleted, relabelled or tuned away. It serves as a negative control and mandatory historical benchmark for the richer V1.49 short-horizon research programme where origin parity permits comparison.
+
+Full evidence remains in `HS_SDL_DMA_RETROSPECTIVE_VALIDATION_REPORT_V1_2026-09-10.md` and `data_pipeline/audits/hs_sdl_dma_replay_v1/`.
