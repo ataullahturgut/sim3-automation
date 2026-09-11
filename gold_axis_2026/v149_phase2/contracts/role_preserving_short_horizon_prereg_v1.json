@@ -1,0 +1,62 @@
+{
+  "contract_id": "GOLD_CONTROL_V149_ROLE_PRESERVING_SHORT_HORIZON_PREREG_V1",
+  "status": "FROZEN_BEFORE_PHASE2_SCORING",
+  "authority": "GOLD_CONTROL_PROJECT_MANIFEST.md_V1.49_SECTION_19",
+  "evidence_class": "RETROSPECTIVE_RESEARCH_DESIGN_NOT_PROSPECTIVE",
+  "targets": {
+    "NEXT_NY17_1D": "third-party governed NY17 observation immediately after origin",
+    "NEXT_NY17_3D": "third subsequent governed NY17 observation after origin"
+  },
+  "origin": "completed governed NY17 observation at stored 17:00 America/New_York semantic",
+  "hypotheses": [
+    "H1_CROSS_MARKET_INCREMENTAL_OVER_GOLD_ONLY",
+    "H2_DIRECTION_STATE_INCREMENTAL_CONDITIONAL_VALUE",
+    "H3_EVENT_SPECIALIST_INCREMENTAL_VALUE_AND_DECAY",
+    "H4_RISK_REGIME_VALUE_FOR_VOLATILITY_CALIBRATION_CONFIDENCE"
+  ],
+  "role_constraints": {
+    "FAST": "direction-state interaction, not an unconditional vote",
+    "SLOW": "slow direction-state interaction, not an unconditional vote",
+    "MONTHLY_DIRECTION_3M": "strategic prior/context only",
+    "MACRO_EVENT_SUCCESSOR_V2": "event specialist; actual surprise only after release",
+    "BOCPD_RETURN_SUCCESSOR_V1": "regime interaction only",
+    "GVZ_RISK": "volatility/risk/calibration context, not direction vote",
+    "EMERGENCY_LEVEL": "deviation/stress context",
+    "EMERGENCY_REVERSAL": "reversal-risk context",
+    "MARKET_SHOCK_V3": "noncanonical confirmation challenger only; blocked until canonical artifact recovery"
+  },
+  "incremental_order": [
+    "B0_GOLD_OWN_HISTORY",
+    "B1_CROSS_PRECIOUS_METALS",
+    "B2_FX_RATES",
+    "B3_EQUITY_RISK_COMMODITIES",
+    "B4_DIRECTION_STATES",
+    "B5_RISK_REGIME_STATES",
+    "B6_POST_RELEASE_EVENT_SPECIALIST"
+  ],
+  "model_families_eligible_after_inventory": [
+    "REGULARIZED_LOGISTIC_LINEAR",
+    "RANDOM_FOREST",
+    "LIGHTGBM_OR_EQUIVALENT_BOOSTED_TREE",
+    "XGBOOST_OR_GBRT"
+  ],
+  "deep_learning": "INELIGIBLE_UNTIL_PIT_SAFE_SAMPLE_ADEQUACY_PROVEN",
+  "primary_probability_metrics": ["BRIER", "LOG_LOSS", "CALIBRATION_INTERCEPT", "CALIBRATION_SLOPE"],
+  "supporting_metrics": ["BALANCED_ACCURACY", "DIRECTION_ACCURACY", "TIME_STABILITY", "WORST_PERIOD"],
+  "dependence_rule_3d": "HAC_OR_BLOCK_RESAMPLING_REQUIRED",
+  "selection_rule": "INNER_ORIGINS_ONLY",
+  "outer_outcomes_visible": true,
+  "outer_evidence_label": "RETROSPECTIVE_RESEARCH_DIAGNOSTIC_NOT_PRISTINE",
+  "forbidden": [
+    "RANDOM_SPLIT",
+    "WHOLE_SAMPLE_PREPROCESSING",
+    "FINAL_VINTAGE_BACKFILL",
+    "SILENT_PROVIDER_SUBSTITUTION",
+    "EQUAL_ENGINE_VOTE",
+    "POST_OUTER_FEATURE_OR_MODEL_ADDITION",
+    "RAW_SCORE_AS_CALIBRATED_PROBABILITY"
+  ],
+  "auto_selector": "OFF",
+  "auto_ensemble": "OFF",
+  "production_authority": false
+}

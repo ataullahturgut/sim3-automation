@@ -1,0 +1,63 @@
+{
+  "audit_id": "GOLD_CONTROL_V149_PHASE2_SOURCE_CLOCK_INVENTORY_V1",
+  "canonical_head": "728e7f7f265e074886cc2ff9b9aca3066470c56c",
+  "manifest_version": "1.49",
+  "manifest_sha256": "6cd8ce4b455b64103289a20f5ff483296d3df064c7d5baee561b570ef0006b36",
+  "production_snapshot_date": "2026-09-11",
+  "production_writes": "NONE",
+  "lanes": {
+    "NY17_TARGET_AND_DIRECTION_STATES": {
+      "status": "READY_TO_BUILD_RETROSPECTIVE_PANEL",
+      "artifact": "data_pipeline/audits/component_role_replays_v145/ny17_context_role_replay_v145.csv",
+      "origins": 400,
+      "fields": ["close", "MONTHLY_DIRECTION_3M", "FAST", "SLOW", "EMERGENCY_LEVEL", "EMERGENCY_REVERSAL"],
+      "evidence_class": "RETROSPECTIVE_HISTORICAL_RECONSTRUCTION_NOT_PROSPECTIVE"
+    },
+    "GVZ": {
+      "status": "PARTIAL_REPLAY_VALUE_READY_EXACT_RELEASE_CLOCK_NOT_PROVEN",
+      "artifact": "data_pipeline/audits/component_role_replays_v145/gvz_role_replay_v145.csv",
+      "artifact_rows": 416,
+      "production_series": "GVZ_CBOE",
+      "production_rows": 248,
+      "production_min_ts": "2026-03-10",
+      "role": "VOLATILITY_RISK_CONFIDENCE_ONLY"
+    },
+    "MACRO_EVENT_SUCCESSOR_V2": {
+      "status": "EVENT_PANEL_RECONSTRUCTIBLE_SEPARATE_DAILY_JOIN_NOT_BUILT",
+      "source_rows_each": 126,
+      "series": [
+        "MACRO_NFP_ACTUAL_FIRST_PRINT", "MACRO_NFP_CONSENSUS_PIT",
+        "MACRO_UNEMP_ACTUAL_FIRST_PRINT", "MACRO_UNEMP_CONSENSUS_PIT",
+        "MACRO_AHE_ACTUAL_FIRST_PRINT", "MACRO_AHE_CONSENSUS_PIT"
+      ],
+      "release_clock": "08:30 America/New_York",
+      "role": "POST_RELEASE_EVENT_SPECIALIST"
+    },
+    "BOCPD_RETURN_SUCCESSOR_V1": {
+      "status": "BLOCKED_DAILY_ORIGIN_STATE_ARTIFACT",
+      "role": "REGIME_INTERACTION_ONLY"
+    },
+    "CROSS_PRECIOUS_METALS": {
+      "status": "BLOCKED_PIT",
+      "reason": "XAG/XPT/XPD research daily rows were retrieved in 2026-09 and registry explicitly labels them NOT_PIT"
+    },
+    "FX_RATES": {
+      "status": "PARTIAL",
+      "reason": "ALFRED month-end PIT series exist; exact daily NY17-origin history is not proven"
+    },
+    "EQUITY_RISK_COMMODITIES": {
+      "status": "BLOCKED_PIT_FOR_HISTORICAL_DAILY_ORIGINS",
+      "reason": "daily observations exist but available_as_of reflects 2026 retrieval for old rows"
+    },
+    "MARKET_SHOCK_V3": {
+      "status": "NOT_FOUND_CANONICAL",
+      "reason": "no contract, implementation, artifact, commit or fingerprint found on canonical branch or accessible Git history"
+    }
+  },
+  "authority_invariants": {
+    "governed_engine_count": 12,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF",
+    "production_authority": false
+  }
+}
