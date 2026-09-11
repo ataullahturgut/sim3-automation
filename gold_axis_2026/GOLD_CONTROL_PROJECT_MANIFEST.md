@@ -1184,3 +1184,37 @@ Binding interpretation after V1.49:
 The result must not be deleted, relabelled or tuned away. It serves as a negative control and mandatory historical benchmark for the richer V1.49 short-horizon research programme where origin parity permits comparison.
 
 Full evidence remains in `HS_SDL_DMA_RETROSPECTIVE_VALIDATION_REPORT_V1_2026-09-10.md` and `data_pipeline/audits/hs_sdl_dma_replay_v1/`.
+
+---
+
+## 21. V1.49 execution state — 2026-09-11 retrospective research checkpoint
+
+This section records execution results under the frozen Section 19 architecture. It does not revise the Section 19 research design and does not create production authority.
+
+### 21.1 Monthly programme
+
+- Four frozen PIT-compatible views (VW, Patch, Momentum, RW) have 43 common target months from 2023-01 through 2026-07.
+- The requested seven-view common PIT panel has zero valid origins. Available CORE5 material is `APPROVED_RESEARCH_ONLY_NOT_PIT`; DMA/DMS/IDMA remain `BLOCKED_PIT` and are excluded from candidate selection.
+- Development diagnostics classify the four valid views as partially redundant. No DM or conditional-predictive-ability comparison established a 5% advantage. Formal MCS is `BLOCKED_INSUFFICIENT_SAMPLE`.
+- The only pre-outer integration candidates were RW and `SIMPLE_EQUAL_4`; complex integration remains `NOT_PROVEN`.
+- In the 2025-01 through 2026-07 retrospective outer window (N=19), VW had the best point MAE (132.561) and RMSE (176.076), versus RW 176.053 and 216.326. VW-versus-RW HAC squared-loss p-value was 0.0917. Monthly promotion remains `NOT_PROVEN`.
+
+### 21.2 Short-horizon programme
+
+- The exact historical reconstruction contains 400 chronological NY17 origins, with 399 mature 1D and 397 mature 3D targets.
+- Block 0 and categorical Block 4 were executable. Blocks 1, 2, 3 and 5 remain `BLOCKED_CONTRACT` or `BLOCKED_PIT`; no substitution or backfill was used.
+- Block 4 improved development Brier by 0.00215 for 1D and 0.00627 for 3D and was frozen before outer scoring.
+- Frozen nested outer replay produced 159 1D and 157 overlapping 3D observations. V1.49 Brier was 0.261830 (1D) and 0.276739 (3D), both worse than the mandatory 0.25 benchmark. Both calibration gates failed.
+- `NEXT_NY17_1D = NOT_PROVEN`; `NEXT_NY17_3D = NOT_PROVEN`; `HS_SDL_DMA_DIRECTION_FUSION_V1 = NOT_PROVEN_RETAINED_BASELINE`.
+
+### 21.3 Governance disposition
+
+- Evidence class: `RETROSPECTIVE_RESEARCH_DIAGNOSTIC_NOT_PROSPECTIVE`.
+- Leakage accepted: none. Missing PIT proof remains explicit blocker evidence.
+- Full-run determinism: PASS; three reruns produced identical monthly, 1D and 3D output hashes.
+- `AUTO_SELECTOR = OFF`; `AUTO_ENSEMBLE = OFF`.
+- Production forecast/decision authority: CLOSED. Production database writes: NONE.
+- Dashboard short-horizon probability: CLOSED.
+- `LATER_GENUINE_PROSPECTIVE_SHADOW = BLOCKED_PIT_AND_PROMOTION_NOT_PROVEN`.
+
+Binding execution evidence is `GOLD_CONTROL_V149_RESEARCH_EXECUTION_REPORT_2026-09-11.md` and `data_pipeline/audits/v149_research/`.

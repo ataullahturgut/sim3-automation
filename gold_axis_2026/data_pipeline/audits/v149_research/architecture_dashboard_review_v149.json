@@ -1,0 +1,41 @@
+{
+  "audit_version": "V1.49",
+  "evidence_class": "RETROSPECTIVE_RESEARCH_DIAGNOSTIC_NOT_PROSPECTIVE",
+  "monthly": {
+    "VW_MIDAS_MSVR_SUCCESSOR_V1": "VALIDATED_CORE_POINT_ESTIMATE_NOT_STATISTICALLY_PROMOTED",
+    "CAUSAL_PATCH": "VALIDATED_COMPLEMENTARY_INCREMENTAL_NOT_PROVEN",
+    "MOMENTUM_3M": "VALIDATED_COMPLEMENTARY_INCREMENTAL_NOT_PROVEN",
+    "RANDOM_WALK": "MANDATORY_DEFENSIVE_BENCHMARK",
+    "DMA": "BLOCKED_PIT",
+    "DMS": "BLOCKED_PIT",
+    "IDMA": "BLOCKED_PIT",
+    "SIMPLE_EQUAL_4": "BENCHMARK_ONLY_PROMOTION_NOT_PROVEN",
+    "complex_integration": "NOT_PROVEN",
+    "prospective_shadow": "BLOCKED_PIT_AND_PROMOTION_NOT_PROVEN"
+  },
+  "short_horizon": {
+    "HS_SDL_DMA_DIRECTION_FUSION_V1": "NOT_PROVEN_RETAINED_BASELINE",
+    "block_0_gold_own_history": "RETAINED_BASELINE",
+    "block_1_cross_precious_metals": "BLOCKED_CONTRACT",
+    "block_2_fx_rates": "BLOCKED_PIT",
+    "block_3_equities_risk_commodities": "BLOCKED_PIT",
+    "block_4_gold_control_context": "DEVELOPMENT_GAIN_OUTER_GAIN_NOT_PROVEN",
+    "block_5_positioning_flow_news": "BLOCKED_PIT",
+    "NEXT_NY17_1D": "NOT_PROVEN",
+    "NEXT_NY17_3D": "NOT_PROVEN",
+    "probability_dashboard": "CLOSED_CALIBRATION_AND_SKILL_NOT_PROVEN",
+    "prospective_shadow": "BLOCKED_PROMOTION_NOT_PROVEN"
+  },
+  "dashboard_contract": {
+    "monthly_research_metrics": "DISPLAY_ALLOWED_WITH_RETROSPECTIVE_LABEL",
+    "short_raw_scores_as_probability": "FORBIDDEN",
+    "short_calibrated_probability": "NOT_PROVEN_DO_NOT_DISPLAY_AS_AUTHORITY",
+    "historical_reconstruction_as_prospective": "FORBIDDEN",
+    "buy_sell_hold_exit_reduce": "FORBIDDEN",
+    "production_forecast_authority": "CLOSED"
+  },
+  "auto_selector": "OFF",
+  "auto_ensemble": "OFF",
+  "production_authority": false,
+  "production_writes": "NONE"
+}
