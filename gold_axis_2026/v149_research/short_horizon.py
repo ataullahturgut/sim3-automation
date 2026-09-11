@@ -147,7 +147,7 @@ def run_outer(freeze:dict) -> tuple[dict[str,pd.DataFrame],dict]:
     for h in [1,3]:
         key=f"NEXT_NY17_{h}D"; blocks=freeze["short_horizon"][key]["retained_blocks"]
         paths,rpaths,y,ret=raw_paths(d,h,blocks)
-        records=[]
+        records=[]; family_records={cid:[] for cid,_,_ in model_configs()}
         for t in range(freeze["short_horizon"][key]["outer_start_index"],len(d)-h):
             sel=_select_prior(paths,y,t,h,"brier"); rsel=_select_prior(rpaths,ret,t,h,"squared")
             if not sel or not rsel or t not in paths.get(sel[1],{}) or t not in rpaths.get(rsel[1],{}): continue
@@ -158,6 +158,11 @@ def run_outer(freeze:dict) -> tuple[dict[str,pd.DataFrame],dict]:
             freq=(float(y.iloc[matured].sum())+0.5)/(len(matured)+1.0)
             hsm=hs[h]; match=hsm[hsm.origin_date==d.at[t,"date"].strftime("%Y-%m-%d")]
             records.append({"origin_index":t,"origin_date":d.at[t,"date"],"target_date":d.at[t+h,"date"],"y":int(y.iloc[t]),"realized_return":float(ret.iloc[t]),"p_cal":p,"expected_return":rpaths[rcid][t],"p_50":0.5,"p_frequency":freq,"p_hs_sdl_dma":float(match.p_cal.iloc[0]) if len(match) else np.nan,"probability_config":cid,"return_config":rcid,"calibration_n":len(prior),"calibration_intercept":float(coef[0]),"calibration_slope":float(coef[1])})
+            for family_id,path in paths.items():
+                fprior=[j for j in sorted(path) if j<t and j+h<=t and pd.notna(y.iloc[j])]
+                if t not in path or len(fprior)<MIN_CAL: continue
+                fcoef=fit_platt([path[j] for j in fprior],y.iloc[fprior].astype(int),epsilon=EPS)
+                family_records[family_id].append((t,apply_platt(path[t],fcoef,EPS),int(y.iloc[t])))
         f=pd.DataFrame(records); frames[key]=f
         probs={"V149":f.p_cal,"P50":f.p_50,"UP_FREQUENCY":f.p_frequency}
         if f.p_hs_sdl_dma.notna().all(): probs["HS_SDL_DMA_V1"]=f.p_hs_sdl_dma
@@ -173,7 +178,11 @@ def run_outer(freeze:dict) -> tuple[dict[str,pd.DataFrame],dict]:
         inference=circular_block_superior_set(losses,block=max(3,h+1),seed=20260911+h)
         improvement=metrics["P50"]["brier"]-metrics["V149"]["brier"]
         promoted=improvement>=0.005 and cal[1] is not None and 0.5<=cal[1]<=1.5 and abs(cal[0])<=0.25 and stability["second_half_brier"]<=stability["first_half_brier"]+0.02
-        summary[key]={"blocks":blocks,"metrics":metrics,"calibration":{"intercept":None if cal[0] is None else float(cal[0]),"slope":None if cal[1] is None else float(cal[1])},"expected_return":{"mae":float(np.mean(abs(rerr))),"rmse":float(np.sqrt(np.mean(rerr**2))),"direction_accuracy":float(np.mean((f.expected_return>0)==(f.realized_return>0)))},"stability":stability,"dependence_aware_inference":inference,"promotion":"ELIGIBLE_FOR_PROSPECTIVE_SHADOW" if promoted else "NOT_PROVEN","future_target_violations":0}
+        family_metrics={}
+        for family_id,vals in family_records.items():
+            pp=np.array([v[1] for v in vals]); yy=np.array([v[2] for v in vals])
+            family_metrics[family_id]={"n":len(vals),"brier":float(np.mean((pp-yy)**2)),"log_loss":binary_log_loss(pp,yy),"accuracy":float(np.mean((pp>=0.5)==yy))}
+        summary[key]={"blocks":blocks,"metrics":metrics,"model_family_metrics":family_metrics,"selected_probability_config_counts":f.probability_config.value_counts().sort_index().to_dict(),"selected_return_config_counts":f.return_config.value_counts().sort_index().to_dict(),"calibration":{"intercept":None if cal[0] is None else float(cal[0]),"slope":None if cal[1] is None else float(cal[1])},"expected_return":{"mae":float(np.mean(abs(rerr))),"rmse":float(np.sqrt(np.mean(rerr**2))),"direction_accuracy":float(np.mean((f.expected_return>0)==(f.realized_return>0)))},"stability":stability,"dependence_aware_inference":inference,"promotion":"ELIGIBLE_FOR_PROSPECTIVE_SHADOW" if promoted else "NOT_PROVEN","future_target_violations":0}
     return frames,summary
 
 

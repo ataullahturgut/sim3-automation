@@ -141,6 +141,17 @@ def evaluate_monthly_candidates(panel: pd.DataFrame, outer_start="2025-01") -> t
     for m in metrics:
         metrics[m]["relative_mae_vs_rw"]=metrics[m]["mae"]/rw["mae"]
         metrics[m]["relative_msfe_vs_rw"]=(metrics[m]["rmse"]**2)/(rw["rmse"]**2)
+        prior=out[m].shift(1)-out.realized_target.shift(1)
+        current=out[m]-out.realized_target
+        metrics[m]["direction_accuracy"]=float(np.mean(np.sign(out[m]-out["RW"])==np.sign(out.realized_target-out["RW"])))
+        metrics[m]["first_half_mae"]=float(abs(current.iloc[:len(out)//2]).mean())
+        metrics[m]["second_half_mae"]=float(abs(current.iloc[len(out)//2:]).mean())
+    losses={m:(out[m]-out.realized_target).to_numpy()**2 for m in metrics}
+    dm_vs_rw={m:hac_mean_test(losses[m]-losses["RW"],lag=1) for m in metrics if m!="RW"}
+    dm_vs_simple={m:hac_mean_test(losses[m]-losses["SIMPLE_EQUAL_4"],lag=1) for m in metrics if m!="SIMPLE_EQUAL_4"}
+    winner=pd.DataFrame({m:abs(out[m]-out.realized_target) for m in metrics}).idxmin(axis=1).value_counts().to_dict()
+    disagreement=out[PIT_SAFE_MODELS].std(axis=1)
+    mean_ae=pd.DataFrame({m:abs(out[m]-out.realized_target) for m in PIT_SAFE_MODELS}).mean(axis=1)
     best=min(metrics,key=lambda m:(metrics[m]["mae"],m))
     promoted=(best=="SIMPLE_EQUAL_4" and metrics[best]["relative_mae_vs_rw"]<0.95 and metrics[best]["relative_msfe_vs_rw"]<0.95)
-    return out[["forecast_origin","target_month","realized_target"]+PIT_SAFE_MODELS+["SIMPLE_EQUAL_4"]],{"outer_window":[str(out.target_month.min()),str(out.target_month.max())],"n":len(out),"metrics":metrics,"best_point_estimate":best,"promotion":"ELIGIBLE" if promoted else "NOT_PROVEN","all_seven_architecture":"BLOCKED_PIT"}
+    return out[["forecast_origin","target_month","realized_target"]+PIT_SAFE_MODELS+["SIMPLE_EQUAL_4"]],{"outer_window":[str(out.target_month.min()),str(out.target_month.max())],"n":len(out),"metrics":metrics,"best_point_estimate":best,"win_counts":winner,"dm_hac_vs_rw":dm_vs_rw,"dm_hac_vs_simple":dm_vs_simple,"superior_set":circular_block_superior_set(losses,block=3,seed=20260911),"forecast_disagreement_error_correlation":float(np.corrcoef(disagreement,mean_ae)[0,1]),"promotion":"ELIGIBLE" if promoted else "NOT_PROVEN","all_seven_architecture":"BLOCKED_PIT"}
