@@ -5,6 +5,7 @@ import csv
 import hashlib
 import json
 import os
+import re
 import subprocess
 from collections import Counter, defaultdict
 from datetime import date, datetime, timezone
@@ -80,9 +81,15 @@ def repository_evidence(root: Path) -> dict[str, Any]:
     patch = json.loads((gc / "patch_repro_v1/locked_replay_v7_daily_feature_pit_evidence.json").read_text())
     simple = json.loads((gc / "simple_expert_v2/simple_expert_v2_source_binding_evidence.json").read_text())
     bocpd = json.loads((gc / "bocpd_successor_v1/frozen_contract_v1.json").read_text())
+    match = re.search(r"\*\*Manifest version:\*\*\s*([0-9]+)\.([0-9]+)", manifest)
+    manifest_version = tuple(map(int, match.groups())) if match else None
+    minimum_version = tuple(map(int, MANIFEST_VERSION.split(".")))
+    manifest_ok = bool(manifest_version and manifest_version >= minimum_version and CONTRACT in manifest)
     return {
         "git_head": _git_head(root),
-        "manifest_ok": f"**Manifest version:** {MANIFEST_VERSION}" in manifest,
+        "manifest_ok": manifest_ok,
+        "manifest_version_observed": ".".join(map(str, manifest_version)) if manifest_version else "NOT_FOUND",
+        "manifest_minimum_version": MANIFEST_VERSION,
         "contract_ok": CONTRACT_STATUS in contract,
         "contract_sha256": hashlib.sha256(contract.encode()).hexdigest(),
         "manifest_sha256": hashlib.sha256(manifest.encode()).hexdigest(),

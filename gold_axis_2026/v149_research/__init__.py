@@ -1,0 +1,6 @@
+"""Gold Control V1.49 research-only, fail-closed forecasting audits."""
+
+EVIDENCE_CLASS = "RETROSPECTIVE_RESEARCH_DIAGNOSTIC"
+PRODUCTION_AUTHORITY = False
+AUTO_SELECTOR = "OFF"
+AUTO_ENSEMBLE = "OFF"

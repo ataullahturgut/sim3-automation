@@ -1,0 +1,34 @@
+{
+  "NEXT_NY17_1D": {
+    "block4_brier_gain": 0.002148029675215768,
+    "block4_decision": "RETAIN",
+    "variants": {
+      "BLOCK0": {
+        "brier": 0.2703839453888787,
+        "log_loss": 0.7421654217356458,
+        "n": 100
+      },
+      "BLOCK0_PLUS_BLOCK4": {
+        "brier": 0.26823591571366295,
+        "log_loss": 0.7355341349394667,
+        "n": 100
+      }
+    }
+  },
+  "NEXT_NY17_3D": {
+    "block4_brier_gain": 0.006267815719545766,
+    "block4_decision": "RETAIN",
+    "variants": {
+      "BLOCK0": {
+        "brier": 0.2581342019865485,
+        "log_loss": 0.7364262187557866,
+        "n": 96
+      },
+      "BLOCK0_PLUS_BLOCK4": {
+        "brier": 0.25186638626700275,
+        "log_loss": 0.7268044507587638,
+        "n": 96
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "audit_version": "V1.49",
+  "status": "PASS",
+  "evidence_class": "RETROSPECTIVE_RESEARCH_TEST_EVIDENCE",
+  "independent_full_runs": 3,
+  "committed_code_run_sha": "48effa3754d88e4db858e0a90b1592140b9fa729",
+  "identical_output_hashes": {
+    "monthly": "91ab3fd7a56411572d626e09f74d01467b3fb61becd1d9bffdb30ec2a4eebdf5",
+    "NEXT_NY17_1D": "00a0e8130ebf2db72a364a715fad8572774d913cf532433b9516ed65961b50b5",
+    "NEXT_NY17_3D": "ec0729a57c10e4738083e929b1f2297c5218613dfe26e8c2bab1877051c4ebc9"
+  },
+  "prefix_invariance": "PASS",
+  "no_future_target": "PASS",
+  "target_maturity_3d": "PASS",
+  "calibration_prior_only": "PASS",
+  "candidate_freeze_enforced": "PASS",
+  "production_writes": "NONE"
+}

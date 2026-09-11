@@ -1,0 +1,261 @@
+{
+  "complex_integration": "NOT_PROVEN",
+  "conditional_predictive_ability": {
+    "MOMENTUM__RW": {
+      "df": 3,
+      "lag": 1,
+      "n": 43,
+      "p_value": 0.3998506651120354,
+      "status": "COMPUTED",
+      "wald": 2.9471176473637852
+    },
+    "PATCH__MOMENTUM": {
+      "df": 3,
+      "lag": 1,
+      "n": 43,
+      "p_value": 0.8589654784275909,
+      "status": "COMPUTED",
+      "wald": 0.7601812655909485
+    },
+    "PATCH__RW": {
+      "df": 3,
+      "lag": 1,
+      "n": 43,
+      "p_value": 0.1487015345675923,
+      "status": "COMPUTED",
+      "wald": 5.337280366915532
+    },
+    "VW__MOMENTUM": {
+      "df": 3,
+      "lag": 1,
+      "n": 43,
+      "p_value": 0.20096230124033948,
+      "status": "COMPUTED",
+      "wald": 4.630251056323461
+    },
+    "VW__PATCH": {
+      "df": 3,
+      "lag": 1,
+      "n": 43,
+      "p_value": 0.06541872499408714,
+      "status": "COMPUTED",
+      "wald": 7.212695697051263
+    },
+    "VW__RW": {
+      "df": 3,
+      "lag": 1,
+      "n": 43,
+      "p_value": 0.024628636155139792,
+      "status": "COMPUTED",
+      "wald": 9.38126482064869
+    }
+  },
+  "development_n": 43,
+  "development_window": [
+    "2023-01",
+    "2026-07"
+  ],
+  "disagreement_relation": {
+    "corr_dispersion_mean_absolute_error": 0.5819331386759915,
+    "n": 43
+  },
+  "dm_squared_loss": {
+    "MOMENTUM__RW": {
+      "lag": 1,
+      "mean_diff": -1552.5046663822181,
+      "n": 43,
+      "p_value_two_sided": 0.8591916051123317,
+      "statistic": -0.17740331310547786,
+      "status": "COMPUTED"
+    },
+    "PATCH__MOMENTUM": {
+      "lag": 1,
+      "mean_diff": -549.6135877523185,
+      "n": 43,
+      "p_value_two_sided": 0.9242565878630018,
+      "statistic": -0.09507332221093248,
+      "status": "COMPUTED"
+    },
+    "PATCH__RW": {
+      "lag": 1,
+      "mean_diff": -2102.118254134535,
+      "n": 43,
+      "p_value_two_sided": 0.6467461637561089,
+      "statistic": -0.45828713759518713,
+      "status": "COMPUTED"
+    },
+    "VW__MOMENTUM": {
+      "lag": 1,
+      "mean_diff": -6205.383321684084,
+      "n": 43,
+      "p_value_two_sided": 0.29924869453135267,
+      "statistic": -1.0380458824717609,
+      "status": "COMPUTED"
+    },
+    "VW__PATCH": {
+      "lag": 1,
+      "mean_diff": -5655.769733931766,
+      "n": 43,
+      "p_value_two_sided": 0.014258193614481095,
+      "statistic": -2.4506919045671136,
+      "status": "COMPUTED"
+    },
+    "VW__RW": {
+      "lag": 1,
+      "mean_diff": -7757.8879880663,
+      "n": 43,
+      "p_value_two_sided": 0.08060600356956006,
+      "statistic": -1.747180670455778,
+      "status": "COMPUTED"
+    }
+  },
+  "error_correlation": {
+    "MOMENTUM": {
+      "MOMENTUM": 1.0,
+      "PATCH": 0.8390191,
+      "RW": 0.74652471,
+      "VW": 0.82058938
+    },
+    "PATCH": {
+      "MOMENTUM": 0.8390191,
+      "PATCH": 1.0,
+      "RW": 0.94828381,
+      "VW": 0.92915689
+    },
+    "RW": {
+      "MOMENTUM": 0.74652471,
+      "PATCH": 0.94828381,
+      "RW": 1.0,
+      "VW": 0.87707109
+    },
+    "VW": {
+      "MOMENTUM": 0.82058938,
+      "PATCH": 0.92915689,
+      "RW": 0.87707109,
+      "VW": 1.0
+    }
+  },
+  "excluded_blocked_models": [
+    "DMA",
+    "DMS",
+    "IDMA"
+  ],
+  "forecast_correlation": {
+    "MOMENTUM": {
+      "MOMENTUM": 1.0,
+      "PATCH": 0.99687262,
+      "RW": 0.99595627,
+      "VW": 0.99683774
+    },
+    "PATCH": {
+      "MOMENTUM": 0.99687262,
+      "PATCH": 1.0,
+      "RW": 0.99947402,
+      "VW": 0.99855024
+    },
+    "RW": {
+      "MOMENTUM": 0.99595627,
+      "PATCH": 0.99947402,
+      "RW": 1.0,
+      "VW": 0.99808387
+    },
+    "VW": {
+      "MOMENTUM": 0.99683774,
+      "PATCH": 0.99855024,
+      "RW": 0.99808387,
+      "VW": 1.0
+    }
+  },
+  "integration_diagnosis": "ONLY_MANDATORY_RW_AND_SIMPLE_EQUAL_4_ELIGIBLE",
+  "label": "POST_FREEZE_FULL_RETROSPECTIVE_DIAGNOSTIC",
+  "metrics": {
+    "MOMENTUM": {
+      "bias": 21.60560879267149,
+      "mae": 103.9768974645221,
+      "mape": 3.29729687556857,
+      "median_ae": 67.22316048210268,
+      "n": 43,
+      "rmse": 147.9107047673716,
+      "smape": 3.2794591484420312,
+      "worst_ae": 521.3131700194499
+    },
+    "PATCH": {
+      "bias": -12.99610066056531,
+      "mae": 101.65919688940058,
+      "mape": 3.0746698376678876,
+      "median_ae": 62.79267443802405,
+      "n": 43,
+      "rmse": 146.04096342132317,
+      "smape": 3.0899477855138824,
+      "worst_ae": 419.3727077071244
+    },
+    "RW": {
+      "bias": -52.906976744186046,
+      "mae": 107.46511627906976,
+      "mape": 3.302322023320139,
+      "median_ae": 72.0,
+      "n": 43,
+      "rmse": 153.0688774740404,
+      "smape": 3.364340187353508,
+      "worst_ae": 444.0
+    },
+    "VW": {
+      "bias": -17.156806721955608,
+      "mae": 85.13470186194078,
+      "mape": 2.6721495777680135,
+      "median_ae": 55.1397914772092,
+      "n": 43,
+      "rmse": 125.18863072618252,
+      "smape": 2.6878599330992916,
+      "worst_ae": 373.3846662066735
+    }
+  },
+  "models": [
+    "VW",
+    "PATCH",
+    "MOMENTUM",
+    "RW"
+  ],
+  "redundancy": {
+    "MOMENTUM": "PARTIALLY_REDUNDANT",
+    "PATCH": "PARTIALLY_REDUNDANT",
+    "RW": "PARTIALLY_REDUNDANT",
+    "VW": "PARTIALLY_REDUNDANT"
+  },
+  "seven_model_claim": "BLOCKED_PIT",
+  "superior_set": {
+    "best_point_estimate": "VW",
+    "block": 3,
+    "formal_hansen_mcs": "NOT_PROVEN",
+    "models": {
+      "MOMENTUM": {
+        "difference_vs_best": 6205.383321684084,
+        "in_5pct_set": true,
+        "mean_loss": 21877.57658478057,
+        "p_one_sided": 0.12993503248375812
+      },
+      "PATCH": {
+        "difference_vs_best": 5655.769733931766,
+        "in_5pct_set": false,
+        "mean_loss": 21327.96299702825,
+        "p_one_sided": 0.01699150424787606
+      },
+      "RW": {
+        "difference_vs_best": 7757.8879880663,
+        "in_5pct_set": false,
+        "mean_loss": 23430.08125116279,
+        "p_one_sided": 0.04147926036981509
+      },
+      "VW": {
+        "difference_vs_best": 0.0,
+        "in_5pct_set": true,
+        "mean_loss": 15672.193263096491,
+        "p_one_sided": 1.0
+      }
+    },
+    "n": 43,
+    "repetitions": 2000,
+    "status": "MCS_STYLE_DIAGNOSTIC"
+  },
+  "use_for_candidate_selection": false
+}
