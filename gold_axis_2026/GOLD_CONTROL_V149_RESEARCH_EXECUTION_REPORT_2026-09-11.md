@@ -176,3 +176,18 @@ The V1.49 suite passed 9/9 tests. The wider repository suite initially exposed a
 The design follows Manifest Section 19.14 and the cited primary literature: Diebold-Mariano for predictive-accuracy comparison, Giacomini-White for conditional predictive ability, Hansen-Lunde-Nason for superior-set discipline, Tashman for rolling OOS, Hewamalage et al. for leakage controls, and Gneiting et al. for calibration/proper scoring. Given the small monthly sample, the stored HAC and block-resampling results are assumption-aware diagnostics; they are not relabelled as a fully powered formal MCS.
 
 Machine-readable results are under `data_pipeline/audits/v149_research/`. The architecture/dashboard decision is `architecture_dashboard_review_v149.json`; deterministic evidence is `determinism_evidence_v149.json`.
+
+## 14. GitHub and final authority closeout
+
+- Feature branch: `gold-v149-research`.
+- Research PR: `#35`.
+- PR head: `bdcd5dd8cdb9698168965a3a5b5c87272e20afd8`.
+- GitHub Actions governance job: PASS.
+- Research merge/canonical checkpoint: `f02c49457992b4952e5b79c930c14e7dbf947130`.
+- Post-merge Neon snapshot: `2026-09-11T10:52:24.036Z`.
+- Post-merge engine inventory: 12.
+- Post-merge authority counts (`monthly_forecast_contracts`, `decision_signal_snapshots`, `decision_runs`, `decision_events`): `0/0/0/0`.
+- Post-merge non-OFF selector/ensemble counts: `0/0`.
+- Historical or production rows inserted by V1.49: 0.
+
+The closeout-only report commit is delivered through a second narrow PR. Its merge SHA becomes the final canonical HEAD and supersedes the research merge SHA only as repository bookkeeping; it does not alter any result, model, threshold, feature or authority state.

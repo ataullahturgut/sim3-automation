@@ -11,3 +11,5 @@
 Authority invariants at every checkpoint: `AUTO_SELECTOR=OFF`, `AUTO_ENSEMBLE=OFF`, production forecast/decision authority closed. Rows inserted: 0. Conflicts: 0.
 
 The final test-compatibility checkpoint and GitHub PR/merge identity are recorded by Git history and the closing section of the execution report.
+
+Research PR `#35` passed GitHub Actions and merged at canonical checkpoint `f02c49457992b4952e5b79c930c14e7dbf947130`. The subsequent closeout PR changes documentation only and records the final canonical merge identity.
