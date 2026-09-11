@@ -1218,3 +1218,22 @@ This section records execution results under the frozen Section 19 architecture.
 - `LATER_GENUINE_PROSPECTIVE_SHADOW = BLOCKED_PIT_AND_PROMOTION_NOT_PROVEN`.
 
 Binding execution evidence is `GOLD_CONTROL_V149_RESEARCH_EXECUTION_REPORT_2026-09-11.md` and `data_pipeline/audits/v149_research/`.
+
+---
+
+## 22. V1.49 Phase-2 role-preserving direction checkpoint — 2026-09-11
+
+This execution-state section does not alter the frozen Section 19 architecture and does not create a new model or production authority.
+
+- A role-preserving event/regime direction is accepted only as a preregistered research hypothesis.
+- The general `NEXT_NY17_1D` / `NEXT_NY17_3D` programme and the sparse Macro Event + Market Shock event study are separate evaluation lanes.
+- The deterministic inventory panel contains 400 NY17 origins, 399 mature 1D targets and 397 mature 3D targets.
+- Block 0 and the already-tested Block 4 state fields are ready for retrospective replay; they do not constitute new incremental evidence.
+- `GVZ_RISK = BLOCKED_PIT_EXACT_RELEASE_CLOCK_NOT_PROVEN` for an exact NY17-origin join.
+- `MACRO_EVENT_SUCCESSOR_V2 = BLOCKED_PANEL_DAILY_ASOF_JOIN_NOT_CANONICAL` for the proposed daily study.
+- `BOCPD_RETURN_SUCCESSOR_V1 = BLOCKED_DATA_DAILY_ORIGIN_STATE_NOT_FOUND`.
+- `MARKET_SHOCK_V3 = NOT_FOUND_CANONICAL`; numerical claims supplied outside canonical evidence are not admitted.
+- Phase-2 model scoring is blocked until at least one genuinely incremental information lane proves exact source, clock and PIT availability.
+- Evidence remains retrospective, `AUTO_SELECTOR = OFF`, `AUTO_ENSEMBLE = OFF`, and production authority remains closed.
+
+Binding checkpoint evidence is `GOLD_CONTROL_V149_PHASE2_DIRECTION_AND_ACTION_CHECKPOINT_2026-09-11.md` and `data_pipeline/audits/v149_phase2/`.
