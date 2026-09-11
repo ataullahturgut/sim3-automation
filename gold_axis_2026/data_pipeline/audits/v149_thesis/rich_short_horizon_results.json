@@ -1,0 +1,420 @@
+{
+  "auto_ensemble": "OFF",
+  "auto_selector": "OFF",
+  "complete_case_coverage": {
+    "B0": 565,
+    "B1": 585,
+    "B2": 223,
+    "B3": 97,
+    "B6": 585
+  },
+  "contract": "GOLD_CONTROL_V149_THESIS_RICH_PANEL_FREEZE_V1",
+  "development_end_index": 213,
+  "evidence_class": "RETROSPECTIVE_HISTORICAL_RECONSTRUCTION_NOT_PROSPECTIVE",
+  "incremental_audit": {
+    "B1": {
+      "1D": {
+        "base": {
+          "calibration": {
+            "intercept": -0.3273692093515639,
+            "slope": -0.034488466144438824
+          },
+          "p": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.2671440824016153,
+            "log_loss": 0.7278973819442083,
+            "n": 12
+          },
+          "p50": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453,
+            "n": 12
+          },
+          "pfreq": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.2543380769062027,
+            "log_loss": 0.7018295714001545,
+            "n": 12
+          }
+        },
+        "brier_gain": 0.003645894485468426,
+        "trial": {
+          "calibration": {
+            "intercept": -0.37792002230849986,
+            "slope": 0.13934686495694218
+          },
+          "p": {
+            "balanced_accuracy": 0.5714285714285714,
+            "brier": 0.2634981879161469,
+            "log_loss": 0.7209872720457987,
+            "n": 12
+          },
+          "p50": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453,
+            "n": 12
+          },
+          "pfreq": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.2543380769062027,
+            "log_loss": 0.7018295714001545,
+            "n": 12
+          }
+        }
+      },
+      "3D": {
+        "base": {
+          "calibration": {
+            "intercept": -0.3121685736174283,
+            "slope": 0.35194952726398243
+          },
+          "p": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.26874342720211564,
+            "log_loss": 0.7300332713393365,
+            "n": 6
+          },
+          "p50": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453,
+            "n": 6
+          },
+          "pfreq": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25659053050145825,
+            "log_loss": 0.7065057841461783,
+            "n": 6
+          }
+        },
+        "brier_gain": -0.006059731619580122,
+        "trial": {
+          "calibration": {
+            "intercept": -0.44526671906918247,
+            "slope": 0.440833781312071
+          },
+          "p": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.27480315882169576,
+            "log_loss": 0.741553556932756,
+            "n": 6
+          },
+          "p50": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453,
+            "n": 6
+          },
+          "pfreq": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25659053050145825,
+            "log_loss": 0.7065057841461783,
+            "n": 6
+          }
+        }
+      },
+      "decision": "REDUNDANT_NOT_PROVEN"
+    },
+    "B2": {
+      "1D": {
+        "base": {
+          "calibration": {
+            "intercept": -0.3273692093515639,
+            "slope": -0.034488466144438824
+          },
+          "p": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.2671440824016153,
+            "log_loss": 0.7278973819442083,
+            "n": 12
+          },
+          "p50": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453,
+            "n": 12
+          },
+          "pfreq": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.2543380769062027,
+            "log_loss": 0.7018295714001545,
+            "n": 12
+          }
+        },
+        "brier_gain": null,
+        "trial": {
+          "n": 0,
+          "status": "BLOCKED_INSUFFICIENT_COMPLETE_CASE"
+        }
+      },
+      "3D": {
+        "base": {
+          "calibration": {
+            "intercept": -0.3121685736174283,
+            "slope": 0.35194952726398243
+          },
+          "p": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.26874342720211564,
+            "log_loss": 0.7300332713393365,
+            "n": 6
+          },
+          "p50": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453,
+            "n": 6
+          },
+          "pfreq": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25659053050145825,
+            "log_loss": 0.7065057841461783,
+            "n": 6
+          }
+        },
+        "brier_gain": null,
+        "trial": {
+          "n": 0,
+          "status": "BLOCKED_INSUFFICIENT_COMPLETE_CASE"
+        }
+      },
+      "decision": "REDUNDANT_NOT_PROVEN"
+    },
+    "B3": {
+      "1D": {
+        "base": {
+          "calibration": {
+            "intercept": -0.3273692093515639,
+            "slope": -0.034488466144438824
+          },
+          "p": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.2671440824016153,
+            "log_loss": 0.7278973819442083,
+            "n": 12
+          },
+          "p50": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453,
+            "n": 12
+          },
+          "pfreq": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.2543380769062027,
+            "log_loss": 0.7018295714001545,
+            "n": 12
+          }
+        },
+        "brier_gain": null,
+        "trial": {
+          "n": 0,
+          "status": "BLOCKED_INSUFFICIENT_COMPLETE_CASE"
+        }
+      },
+      "3D": {
+        "base": {
+          "calibration": {
+            "intercept": -0.3121685736174283,
+            "slope": 0.35194952726398243
+          },
+          "p": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.26874342720211564,
+            "log_loss": 0.7300332713393365,
+            "n": 6
+          },
+          "p50": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453,
+            "n": 6
+          },
+          "pfreq": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25659053050145825,
+            "log_loss": 0.7065057841461783,
+            "n": 6
+          }
+        },
+        "brier_gain": null,
+        "trial": {
+          "n": 0,
+          "status": "BLOCKED_INSUFFICIENT_COMPLETE_CASE"
+        }
+      },
+      "decision": "REDUNDANT_NOT_PROVEN"
+    },
+    "B6": {
+      "1D": {
+        "base": {
+          "calibration": {
+            "intercept": -0.3273692093515639,
+            "slope": -0.034488466144438824
+          },
+          "p": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.2671440824016153,
+            "log_loss": 0.7278973819442083,
+            "n": 12
+          },
+          "p50": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453,
+            "n": 12
+          },
+          "pfreq": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.2543380769062027,
+            "log_loss": 0.7018295714001545,
+            "n": 12
+          }
+        },
+        "brier_gain": 0.013876543270153752,
+        "trial": {
+          "calibration": {
+            "intercept": -0.4539676286740658,
+            "slope": 0.38221684054938176
+          },
+          "p": {
+            "balanced_accuracy": 0.5714285714285714,
+            "brier": 0.25326753913146155,
+            "log_loss": 0.6993790560003079,
+            "n": 12
+          },
+          "p50": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453,
+            "n": 12
+          },
+          "pfreq": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.2543380769062027,
+            "log_loss": 0.7018295714001545,
+            "n": 12
+          }
+        }
+      },
+      "3D": {
+        "base": {
+          "calibration": {
+            "intercept": -0.3121685736174283,
+            "slope": 0.35194952726398243
+          },
+          "p": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.26874342720211564,
+            "log_loss": 0.7300332713393365,
+            "n": 6
+          },
+          "p50": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453,
+            "n": 6
+          },
+          "pfreq": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25659053050145825,
+            "log_loss": 0.7065057841461783,
+            "n": 6
+          }
+        },
+        "brier_gain": 0.010584391066479626,
+        "trial": {
+          "calibration": {
+            "intercept": -0.051895288012116916,
+            "slope": 0.1019812977335573
+          },
+          "p": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.258159036135636,
+            "log_loss": 0.7095512233294183,
+            "n": 6
+          },
+          "p50": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453,
+            "n": 6
+          },
+          "pfreq": {
+            "balanced_accuracy": 0.5,
+            "brier": 0.25659053050145825,
+            "log_loss": 0.7065057841461783,
+            "n": 6
+          }
+        }
+      },
+      "decision": "RETAIN"
+    }
+  },
+  "origins": 585,
+  "outer": {
+    "NEXT_NY17_1D": {
+      "calibration": {
+        "intercept": 0.07903728366952638,
+        "slope": 0.04898714234540004
+      },
+      "p": {
+        "balanced_accuracy": 0.4899382608189178,
+        "brier": 0.25262464015543884,
+        "log_loss": 0.6984243323504126,
+        "n": 371
+      },
+      "p50": {
+        "balanced_accuracy": 0.5,
+        "brier": 0.25,
+        "log_loss": 0.6931471805599453,
+        "n": 371
+      },
+      "pfreq": {
+        "balanced_accuracy": 0.5,
+        "brier": 0.2501652875719623,
+        "log_loss": 0.6934849515047476,
+        "n": 371
+      },
+      "promotion": "NOT_PROVEN"
+    },
+    "NEXT_NY17_3D": {
+      "calibration": {
+        "intercept": 0.24901104628233178,
+        "slope": 0.19456866696040262
+      },
+      "p": {
+        "balanced_accuracy": 0.5,
+        "brier": 0.2441998046190364,
+        "log_loss": 0.682114177018294,
+        "n": 369
+      },
+      "p50": {
+        "balanced_accuracy": 0.5,
+        "brier": 0.25,
+        "log_loss": 0.6931471805599453,
+        "n": 369
+      },
+      "pfreq": {
+        "balanced_accuracy": 0.5,
+        "brier": 0.24428876172428218,
+        "log_loss": 0.6817739312936067,
+        "n": 369
+      },
+      "promotion": "NOT_PROVEN"
+    }
+  },
+  "output_hashes": {
+    "1": "52e3d79aec2ded4542f7515ef21aed2086de69ffecd0b1850e094ed5908b4de2",
+    "3": "27fd7911de41d8895b8360102f1274a035cd75e4eaa4c234ef95325fd3d24fcf"
+  },
+  "panel_hash": "464dc40dfcf2633113b44967b02b6c704da7b18997d120b48b9cd1ae71a95a3b",
+  "production_authority": false,
+  "production_writes": "NONE",
+  "retained_blocks": [
+    "B0",
+    "B6"
+  ]
+}

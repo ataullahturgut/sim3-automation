@@ -1237,3 +1237,19 @@ This execution-state section does not alter the frozen Section 19 architecture a
 - Evidence remains retrospective, `AUTO_SELECTOR = OFF`, `AUTO_ENSEMBLE = OFF`, and production authority remains closed.
 
 Binding checkpoint evidence is `GOLD_CONTROL_V149_PHASE2_DIRECTION_AND_ACTION_CHECKPOINT_2026-09-11.md` and `data_pipeline/audits/v149_phase2/`.
+
+---
+
+## 23. V1.49 rich short-horizon thesis checkpoint — 2026-09-11
+
+This execution-state section records a new immutable retrospective diagnostic under Section 19. It does not change the frozen architecture, tune against outer outcomes, or create production authority.
+
+- Historical branch recovery corrected the scope of Section 22's `NOT_FOUND_CANONICAL`: Market Shock V3 and the Macro Event joint audit existed as noncanonical research evidence. They remain **not promoted**. The joint audit's 5/21 event-window shocks versus 1/84 matched controls (one-sided Fisher p=0.00109584), 5/5 initial sign concordance and 2/5 continuation are retained only as event-confirmation evidence.
+- The governed exact Twelve Data 16:59 NY-origin inventory contains 585 unique origins. The rich panel has 565 complete Block-0 origins; cross-metals 585; rates/FX 223; equity/risk 97; Macro Event employment/inflation 585 after explicit zero-event semantics.
+- A frozen expanding-window challenger evaluated regularized logistic and depth-2 histogram gradient boosting candidates with prior-only Platt calibration. Chronology, 3D maturity, prefix-invariance and determinism tests pass.
+- Development candidate selection had only 12 mature 1D and 6 mature 3D calibrated predictions. This is insufficient for a defensible block-retention claim. The apparent Macro Event retention is therefore `BLOCKED_INSUFFICIENT_SAMPLE`, not proven incremental content.
+- In the immutable 2025-2026 retrospective diagnostic, the B0+B6 challenger produced 371 1D and 369 3D predictions. 1D Brier was 0.252625 and log loss 0.698424, worse than P50 (0.250000; 0.693147). 3D Brier was 0.244200 and log loss 0.682114, essentially tied with the expanding-frequency benchmark (0.244289; 0.681774). Calibration slopes were 0.04899 and 0.19457. Both horizons remain `NOT_PROVEN`.
+- Because the outer outcomes are now researcher-visible, no new feature, threshold, block-selection rule or model family may be added and rescored on the same outer window. The next legitimate performance evidence is a newly frozen prospective shadow.
+- `AUTO_SELECTOR = OFF`; `AUTO_ENSEMBLE = OFF`; production forecast/decision authority remains closed; production database writes were NONE.
+
+Binding evidence is `GOLD_CONTROL_V149_THESIS_RICH_MODEL_REPORT_2026-09-11.md` and `data_pipeline/audits/v149_thesis/`.
