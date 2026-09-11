@@ -1,0 +1,25 @@
+{
+  "audit_version": "V1.49",
+  "canonical_branch": "gold-r4-direction-engine",
+  "canonical_head": "e4bd899c3ee3e23e12ceb469e6e2e378da0e57f9",
+  "manifest_path": "gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md",
+  "manifest_version": "1.49",
+  "manifest_sha256": "442a975f8c9ddb2a658aba8bbe961d371e0007119821cf294e3de747c27da613",
+  "section_19_status": "VERIFIED_BINDING",
+  "production_snapshot_at": "2026-09-11T09:55:00.411610Z",
+  "production_neon": {
+    "project_id": "winter-art-94880101",
+    "branch_id": "br-gentle-mouse-b22dzkr1",
+    "database": "neondb",
+    "engine_count": 12,
+    "monthly_forecast_contracts": 0,
+    "decision_signal_snapshots": 0,
+    "decision_runs": 0,
+    "decision_events": 0,
+    "auto_selector_nonoff": 0,
+    "auto_ensemble_nonoff": 0,
+    "canonical_authority_true": 0
+  },
+  "production_writes": "NONE",
+  "status": "PASS"
+}
