@@ -22,6 +22,7 @@
   "block_selection": "development origins only; retain only if Brier improves by >=0.002 and log loss does not worsen",
   "calibration": "Platt fit only on matured prior-origin predictions; minimum 60",
   "outer_change_rule": "no feature, threshold, family or calibration change after 2025/2026 scoring",
+  "minimum_exact_ny17_origins": 500,
   "three_day_inference": "circular block resampling with block >=4",
   "mandatory_baselines": ["P50", "EXPANDING_UP_FREQUENCY", "B0_LOGISTIC"],
   "auto_selector": "OFF",
