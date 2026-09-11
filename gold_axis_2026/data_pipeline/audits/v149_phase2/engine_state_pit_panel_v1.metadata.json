@@ -1,0 +1,31 @@
+{
+  "artifact_id": "GOLD_CONTROL_V149_PHASE2_ENGINE_STATE_PIT_PANEL_V1",
+  "auto_ensemble": "OFF",
+  "auto_selector": "OFF",
+  "blocked_lanes": {
+    "BOCPD_RETURN_SUCCESSOR_V1": "BLOCKED_DATA_DAILY_ORIGIN_STATE_NOT_FOUND",
+    "GVZ_RISK": "BLOCKED_PIT_EXACT_RELEASE_CLOCK_NOT_PROVEN",
+    "MACRO_EVENT_SUCCESSOR_V2": "BLOCKED_PANEL_DAILY_ASOF_JOIN_NOT_CANONICAL",
+    "MARKET_SHOCK_V3": "NOT_FOUND_CANONICAL"
+  },
+  "decision": "DO_NOT_SCORE_PHASE2_UNTIL_AN_INCREMENTAL_LANE_IS_PIT_PROVEN",
+  "evidence_class": "RETROSPECTIVE_HISTORICAL_RECONSTRUCTION_NOT_PROSPECTIVE",
+  "matured_targets": {
+    "NEXT_NY17_1D": 399,
+    "NEXT_NY17_3D": 397
+  },
+  "output_sha256": "98dab4b8d2d4da8980150d0596e49cf490fc89053df16c9cf56f3ddf291ec4ee",
+  "production_authority": false,
+  "production_writes": "NONE",
+  "purpose": "SOURCE_CLOCK_AND_TARGET_MATURITY_INVENTORY_NOT_MODEL_SCORING",
+  "ready_lanes": [
+    "B0_GOLD_OWN_HISTORY",
+    "B4_DIRECTION_STATES"
+  ],
+  "rows": 400,
+  "source_hashes": {
+    "gvz": "4bb22bd756c7441d35dd4640a0951af6ce49a667ea8769e4dfa5f03bb7d1cc6b",
+    "ny17": "bce430057ce543f73c6bb5526264fce412da1297755fe3aa4deb2575c4f324b3"
+  },
+  "status": "PARTIAL_FAIL_CLOSED"
+}
