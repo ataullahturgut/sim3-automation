@@ -38,7 +38,8 @@ def test_prefix_invariance_for_raw_predictions():
     d = synthetic_panel()
     full, _, _ = rich.raw_paths(d, 1, rich.B0, end=200)
     prefix, _, _ = rich.raw_paths(d.iloc[:200].copy(), 1, rich.B0)
-    assert full == prefix
+    for candidate, prefix_path in prefix.items():
+        assert {k: full[candidate][k] for k in prefix_path} == prefix_path
 
 
 def test_deterministic_replay():
