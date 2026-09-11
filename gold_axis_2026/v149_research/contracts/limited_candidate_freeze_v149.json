@@ -1,0 +1,54 @@
+{
+  "auto_ensemble": "OFF",
+  "auto_selector": "OFF",
+  "calibration": "expanding prior-only Platt; minimum 40 predictions",
+  "contract": "GOLD_CONTROL_V149_LIMITED_CANDIDATE_FREEZE",
+  "frozen_before_outer_scoring": true,
+  "monthly": {
+    "candidates": [
+      "RW",
+      "SIMPLE_EQUAL_4"
+    ],
+    "complex_integration": "BLOCKED_PIT",
+    "outer_start": "2025-01"
+  },
+  "production_authority": false,
+  "promotion": {
+    "calibration_intercept_abs_max": 0.25,
+    "calibration_slope_range": [
+      0.5,
+      1.5
+    ],
+    "second_half_brier_tolerance": 0.02,
+    "short_brier_gain_vs_p50": 0.005
+  },
+  "random_seed": 20260911,
+  "selection": "prior matured origins only; lexicographic ties",
+  "short_horizon": {
+    "NEXT_NY17_1D": {
+      "block4_development_decision": "RETAIN",
+      "outer_start_index": 240,
+      "retained_blocks": [
+        0,
+        4
+      ]
+    },
+    "NEXT_NY17_3D": {
+      "block4_development_decision": "RETAIN",
+      "outer_start_index": 240,
+      "retained_blocks": [
+        0,
+        4
+      ]
+    }
+  },
+  "short_model_configs": [
+    "LOGISTIC_C0.1",
+    "LOGISTIC_C1",
+    "LOGISTIC_C10",
+    "GBRT_D1",
+    "GBRT_D2",
+    "HISTGB_D2",
+    "HISTGB_D3"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "all_seven_common_pit_origins": 0,
+  "all_seven_status": "BLOCKED_PIT",
+  "coverage": {
+    "DMA": {
+      "pit_rows": 0,
+      "rows": 43
+    },
+    "DMS": {
+      "pit_rows": 0,
+      "rows": 43
+    },
+    "IDMA": {
+      "pit_rows": 0,
+      "rows": 43
+    },
+    "MOMENTUM": {
+      "pit_rows": 43,
+      "rows": 43
+    },
+    "PATCH": {
+      "pit_rows": 43,
+      "rows": 43
+    },
+    "RW": {
+      "pit_rows": 43,
+      "rows": 43
+    },
+    "VW": {
+      "pit_rows": 43,
+      "rows": 43
+    }
+  },
+  "panel_sha256": "bca5ecdb584dc5401c39b80555b203c71329ea4ecdf76c343c0ba629b187822c",
+  "rows": 301,
+  "targets": 43
+}

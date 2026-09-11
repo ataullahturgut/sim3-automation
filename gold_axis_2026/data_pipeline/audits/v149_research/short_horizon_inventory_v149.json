@@ -1,0 +1,50 @@
+{
+  "blocks": {
+    "0": {
+      "clock": "completed NY17 anchors only",
+      "features": [
+        "ret_1",
+        "ret_2",
+        "ret_3",
+        "mom_3",
+        "mom_5",
+        "mom_10",
+        "rv_5",
+        "rv_10",
+        "rv_20"
+      ],
+      "status": "READY_TO_REPLAY"
+    },
+    "1": {
+      "reason": "cross-metal daily timestamps are not proven at the exact NY17 origin clock",
+      "status": "BLOCKED_CONTRACT"
+    },
+    "2": {
+      "reason": "FX/rate month-end PIT snapshots do not supply daily NY17-origin history",
+      "status": "BLOCKED_PIT"
+    },
+    "3": {
+      "reason": "risk/equity histories in production were retrieved after historical origins or lack NY17 parity",
+      "status": "BLOCKED_PIT"
+    },
+    "4": {
+      "reason": "frozen chronological context replay; context semantics retained, not votes",
+      "status": "READY_TO_REPLAY"
+    },
+    "5": {
+      "reason": "no governed historical positioning/flow/news timestamp panel",
+      "status": "BLOCKED_PIT"
+    }
+  },
+  "evidence_class": "RETROSPECTIVE_HISTORICAL_RECONSTRUCTION_NOT_PROSPECTIVE",
+  "first_origin": "2025-01-03",
+  "last_origin": "2026-08-30",
+  "origins": 400,
+  "source": "data_pipeline/audits/component_role_replays_v145/ny17_context_role_replay_v145.csv",
+  "source_sha256": "bce430057ce543f73c6bb5526264fce412da1297755fe3aa4deb2575c4f324b3",
+  "targets": {
+    "NEXT_NY17_1D": 399,
+    "NEXT_NY17_3D": 397,
+    "TODAY_TO_NY17": "BLOCKED_CONTRACT"
+  }
+}
