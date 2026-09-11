@@ -102,6 +102,8 @@ def replay(d,h,cols,start):
     return pd.DataFrame(out)
 
 def metrics(f):
+    if f.empty:
+        return {"status":"BLOCKED_INSUFFICIENT_COMPLETE_CASE","n":0}
     out={}
     for k in ["p","p50","pfreq"]:
         p=f[k].to_numpy(); y=f.y.to_numpy(); out[k]={"n":len(f),"brier":brier_score_loss(y,p),"log_loss":log_loss(y,p),"balanced_accuracy":balanced_accuracy_score(y,p>=.5)}
@@ -115,17 +117,21 @@ def main():
     OUT.mkdir(parents=True,exist_ok=True)
     with psycopg.connect(os.environ["NEON_DATABASE_URL"]) as conn: d=load_panel(conn)
     dev_end=int(np.searchsorted(d.date.values,np.datetime64("2025-01-01")))
+    coverage={b:int(d[cols].notna().all(axis=1).sum()) for b,cols in BLOCKS.items()}
+    print(json.dumps({"origin_rows":len(d),"development_end_index":dev_end,"complete_case_coverage":coverage},sort_keys=True))
     audit={}; retained=["B0"]
     base_cols=B0
     for b in ["B1","B2","B3","B6"]:
         trial=base_cols+BLOCKS[b]; row={}
         for h in [1,3]:
             a=replay(d.iloc[:dev_end].copy(),h,base_cols,180); z=replay(d.iloc[:dev_end].copy(),h,trial,180)
-            row[f"{h}D"]={"base":metrics(a),"trial":metrics(z),"brier_gain":metrics(a)["p"]["brier"]-metrics(z)["p"]["brier"]}
-        keep=all(row[f"{h}D"]["brier_gain"]>=.002 and row[f"{h}D"]["trial"]["p"]["log_loss"]<=row[f"{h}D"]["base"]["p"]["log_loss"] for h in [1,3])
+            ma,mz=metrics(a),metrics(z)
+            gain=None if "p" not in ma or "p" not in mz else ma["p"]["brier"]-mz["p"]["brier"]
+            row[f"{h}D"]={"base":ma,"trial":mz,"brier_gain":gain}
+        keep=all(row[f"{h}D"]["brier_gain"] is not None and row[f"{h}D"]["brier_gain"]>=.002 and row[f"{h}D"]["trial"]["p"]["log_loss"]<=row[f"{h}D"]["base"]["p"]["log_loss"] for h in [1,3])
         row["decision"]="RETAIN" if keep else "REDUNDANT_NOT_PROVEN"; audit[b]=row
         if keep: retained.append(b); base_cols=trial
-    summary={"contract":freeze["contract_id"],"evidence_class":freeze["evidence_class"],"origins":len(d),"development_end_index":dev_end,"retained_blocks":retained,"incremental_audit":audit,"outer":{},"auto_selector":"OFF","auto_ensemble":"OFF","production_authority":False,"production_writes":"NONE"}
+    summary={"contract":freeze["contract_id"],"evidence_class":freeze["evidence_class"],"origins":len(d),"development_end_index":dev_end,"complete_case_coverage":coverage,"retained_blocks":retained,"incremental_audit":audit,"outer":{},"auto_selector":"OFF","auto_ensemble":"OFF","production_authority":False,"production_writes":"NONE"}
     for h in [1,3]:
         f=replay(d,h,base_cols,dev_end); f.to_csv(OUT/f"rich_{h}d_outer.csv",index=False)
         mm=metrics(f); gain=mm["p50"]["brier"]-mm["p"]["brier"]
