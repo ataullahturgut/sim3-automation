@@ -1,9 +1,13 @@
 # Gold Control V1.49 Research Execution Report
 
-**Run date:** 2026-09-11  
-**Starting canonical HEAD:** `e4bd899c3ee3e23e12ceb469e6e2e378da0e57f9`  
-**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.49, SHA-256 `442a975f8c9ddb2a658aba8bbe961d371e0007119821cf294e3de747c27da613`  
-**Evidence class:** `RETROSPECTIVE_RESEARCH_DIAGNOSTIC_NOT_PROSPECTIVE`  
+**Run date:** 2026-09-11
+
+**Starting canonical HEAD:** `e4bd899c3ee3e23e12ceb469e6e2e378da0e57f9`
+
+**Manifest:** `GOLD_CONTROL_PROJECT_MANIFEST.md` v1.49, SHA-256 `442a975f8c9ddb2a658aba8bbe961d371e0007119821cf294e3de747c27da613`
+
+**Evidence class:** `RETROSPECTIVE_RESEARCH_DIAGNOSTIC_NOT_PROSPECTIVE`
+
 **Production writes:** `NONE`
 
 ## 1. Executive conclusion
@@ -156,6 +160,8 @@ Three full outer runs returned identical frame hashes:
 - 3D `ec0729a57c10e4738083e929b1f2297c5218613dfe26e8c2bab1877051c4ebc9`.
 
 Tests cover PIT fail-closed handling, exact common-origin alignment, prefix invariance, deterministic rerun, no-future-target logic, 3D maturity, calibration isolation, candidate-freeze enforcement and closed authority. No leakage or PIT violation was accepted; missing PIT proof remains a blocker rather than an imputed input.
+
+The V1.49 suite passed 9/9 tests. The wider repository suite initially exposed a pre-existing v1.45 auditor compatibility defect: it required the project manifest to equal v1.45 even though the sole canonical manifest is now v1.49, causing the frozen 2025-10 Macro contractual exclusion test to fail closed. The auditor was corrected to accept an observed project manifest version at or above its v1.45 minimum only when the binding v1.45 contract remains referenced. After correction, 76/76 collectable wider tests passed. One legacy component-role test requires PyTorch, which was not installed in the execution environment and was therefore not represented as a passing test.
 
 ## 12. Remaining blockers before genuine prospective shadow
 
