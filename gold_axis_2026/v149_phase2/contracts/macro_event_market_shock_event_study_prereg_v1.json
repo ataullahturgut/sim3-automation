@@ -1,0 +1,35 @@
+{
+  "contract_id": "GOLD_CONTROL_MACRO_EVENT_MARKET_SHOCK_EVENT_STUDY_PREREG_V1",
+  "status": "FROZEN_DESIGN_BLOCKED_MARKET_SHOCK_INVENTORY",
+  "authority": "GOLD_CONTROL_PROJECT_MANIFEST.md_V1.49_SECTION_19",
+  "evidence_class": "RETROSPECTIVE_EVENT_STUDY_DESIGN_NOT_PROSPECTIVE",
+  "separate_from_general_daily_model": true,
+  "event_origin": "governed release timestamp",
+  "eligible_macro_family": "MACRO_EVENT_SUCCESSOR_V2_EMPLOYMENT_ONLY_UNTIL_SEPARATE_FAMILIES_FROZEN",
+  "features": [
+    "MACRO_STATE",
+    "MACRO_SCORE",
+    "ADVERSE_BREADTH",
+    "SUPPORTIVE_BREADTH",
+    "EVENT_TYPE",
+    "FAST_PRE_EVENT",
+    "SLOW_PRE_EVENT",
+    "GVZ_PRE_EVENT",
+    "BOCPD_PRE_EVENT",
+    "MARKET_SHOCK_5M_CONFIRMATION",
+    "MARKET_SHOCK_30M_CONFIRMATION"
+  ],
+  "targets": ["R_15M", "R_1H", "R_TO_SAME_DAY_NY17", "R_NEXT_NY17", "R_THIRD_NY17"],
+  "estimands": [
+    "MACRO_SIGN_DIRECTIONAL_ASSOCIATION_BY_HORIZON",
+    "SHOCK_CONFIRMATION_INCREMENTAL_EFFECT",
+    "CONTINUATION_VERSUS_REVERSAL_BY_HORIZON"
+  ],
+  "controls": "PREDEFINED_MATCHED_NON_EVENT_WINDOWS_WITHOUT_OUTCOME_DRIVEN_MATCHING",
+  "inference": "EXACT_OR_SMALL_SAMPLE_SHRINKAGE_PLUS_BLOCK_RESAMPLING_WHERE_APPLICABLE",
+  "critical_clock_rule": "actual surprise and shock confirmation are unavailable before their timestamps",
+  "market_shock_artifact_status": "NOT_FOUND_CANONICAL",
+  "market_shock_claims_from_addendum": "NOT_ADMITTED_UNTIL_SOURCE_ARTIFACT_AND_FINGERPRINT_RECOVERED",
+  "promotion_from_15m_to_1d_or_3d": "FORBIDDEN",
+  "production_authority": false
+}
