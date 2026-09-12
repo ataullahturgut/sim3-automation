@@ -28,7 +28,7 @@ jobs:
       - name: Test V1.50 chronology and governance invariants
         run: python -m pytest -q gold_axis_2026/tests/test_v150_role_hierarchy.py
       - name: Run V1.50 development-only role hierarchy
-        run: python -m gold_axis_2026.v150_thesis.run_v150_development
+        run: python -m gold_axis_2026.v150_thesis.run_v150_development_ci
       - uses: actions/upload-artifact@v4
         with:
           name: gold-v150-role-hierarchy-${{ github.sha }}
