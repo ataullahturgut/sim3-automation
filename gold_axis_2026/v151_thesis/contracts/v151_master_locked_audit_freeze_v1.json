@@ -1,0 +1,93 @@
+{
+  "contract_id": "GOLD_CONTROL_V151_MASTER_LOCKED_AUDIT_FREEZE_V1",
+  "frozen_on": "2026-09-12",
+  "status": "FROZEN_BEFORE_V151_2025_VALIDATION_AND_2026_TEST_RUN",
+  "evidence_class": "RETROSPECTIVE_LOCKED_VALIDATION_TEST_NOT_PROSPECTIVE",
+  "windows": {
+    "development_start": "2023-01-01",
+    "development_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-12-31",
+    "test_start": "2026-01-01",
+    "test_end": "2026-09-11"
+  },
+  "xau_origin_contract": {
+    "historical_reconstruction": "xau_intraday_research_cache_1m exact 16:59 America/New_York close",
+    "current_extension": "XAU_EOD_TWELVE_NY17 exact governed current rows, preferred on overlapping dates",
+    "no_interpolation": true,
+    "no_forward_fill_missing_origin": true
+  },
+  "general_direction": {
+    "horizons": [1, 3],
+    "minimum_training_origins": 80,
+    "rolling_window": 126,
+    "strict_primary_feature_sets": ["G0", "G0_G1", "G0_G1_G2"],
+    "research_sensitivity_feature_sets": ["G0_G1_G3", "G0_G1_G4", "G0_G1_G2_G3_G4"],
+    "base_candidates": [
+      {"id": "EXP_LOGIT_C01", "fit": "expanding", "kind": "logit", "param": 0.1},
+      {"id": "EXP_LOGIT_C1", "fit": "expanding", "kind": "logit", "param": 1.0},
+      {"id": "ROLL126_LOGIT_C01", "fit": "rolling", "kind": "logit", "param": 0.1},
+      {"id": "ROLL126_LOGIT_C1", "fit": "rolling", "kind": "logit", "param": 1.0},
+      {"id": "EXP_HGB_D2", "fit": "expanding", "kind": "hgb", "param": 2}
+    ],
+    "adaptive_candidates": {
+      "fixed_pair_average": {
+        "id": "AVG_EXP_ROLL_CORE",
+        "members": ["G0_G1_G2::EXP_LOGIT_C01", "G0_G1_G2::ROLL126_LOGIT_C01"]
+      },
+      "mature_error_weighted": {
+        "id": "EW_LOGLOSS_40_CORE",
+        "members": ["G0::EXP_LOGIT_C01", "G0_G1::EXP_LOGIT_C01", "G0_G1_G2::EXP_LOGIT_C01", "G0_G1_G2::ROLL126_LOGIT_C01"],
+        "lookback_mature_predictions": 40,
+        "eta": 3.0,
+        "minimum_mature_per_member": 20
+      },
+      "dma_style": [
+        {"id": "DMA097_CORE", "forgetting_factor": 0.97},
+        {"id": "DMA099_CORE", "forgetting_factor": 0.99}
+      ],
+      "role_logit_tilt": [
+        {"id": "ROLE_TILT_025", "base": "G0_G1_G2::EXP_LOGIT_C01", "beta": 0.25},
+        {"id": "ROLE_TILT_050", "base": "G0_G1_G2::EXP_LOGIT_C01", "beta": 0.50}
+      ]
+    },
+    "validation_selection_rule": "Among STRICT-primary base/adaptive candidates only, choose lowest 2025 Brier; tie by log loss then candidate id. Research-sensitivity candidates may be reported but cannot win the thesis-primary selection.",
+    "selective_thresholds_abs_p_minus_half": [0.00, 0.03, 0.05, 0.075, 0.10, 0.125, 0.15],
+    "selective_threshold_selection_rule": "For the selected model only, choose on 2025 validation the threshold with maximum directional accuracy subject to accepted_n>=30 and coverage>=0.30; tie by coverage then lower threshold. Apply unchanged to 2026 test.",
+    "benchmarks": ["P50", "EXPANDING_FREQUENCY", "G0::EXP_LOGIT_C01"]
+  },
+  "event_direction": {
+    "families": ["EMPLOYMENT", "INFLATION", "FOMC"],
+    "score_series": ["MACRO_EVENT_V3_EMPLOYMENT_SCORE", "MACRO_EVENT_V3_INFLATION_SCORE", "MACRO_EVENT_V3_FOMC_SCORE"],
+    "horizons": ["R5", "R15", "R30", "EVENT_TO_NEXT_NY17"],
+    "primary_reaction_endpoint": "R15",
+    "strong_states": ["GOLD_ADVERSE_MACRO_SHOCK", "GOLD_SUPPORTIVE_MACRO_SHOCK"],
+    "no_pool_initial_reaction_with_continuation": true
+  },
+  "master_orchestrator": {
+    "baseline_id": "MASTER_ORCHESTRATOR_BASELINE_V1",
+    "role_precedence": {
+      "monthly_price": ["VW_MIDAS_MSVR_SUCCESSOR_V1", "CAUSAL_PATCH", "MOMENTUM_3M", "RANDOM_WALK"],
+      "strategic_direction": ["MONTHLY_DIRECTION_3M"],
+      "tactical_context": ["FAST", "SLOW"],
+      "event_specialist": ["MACRO_EVENT_SUCCESSOR_V2"],
+      "regime": ["BOCPD_RETURN_SUCCESSOR_V1"],
+      "emergency": ["EMERGENCY_LEVEL", "EMERGENCY_REVERSAL"],
+      "risk": ["GVZ_RISK"],
+      "research_confirmation": ["MARKET_SHOCK_CHALLENGER_V3"]
+    },
+    "missing_policy": "NOT_APPLICABLE_OR_BLOCKED_NEVER_NEUTRAL_VOTE",
+    "event_policy": "Event direction is separate from unconditional daily direction; Market Shock may confirm only after observable.",
+    "no_equal_vote_across_roles": true
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "no_2026_driven_tuning": true,
+    "no_random_split": true,
+    "no_hindsight_threshold_search_after_test": true,
+    "test_run_once_per_frozen_identity": true
+  }
+}
