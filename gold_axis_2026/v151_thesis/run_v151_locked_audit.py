@@ -352,8 +352,8 @@ def mature_error_weighted(frames: dict[str, pd.DataFrame], members: list[str], c
         return z
     history = {m: frames[m].set_index("origin_index") for m in members}
     rows = []
-    for r in z.itertuples(index=False):
-        t = int(r.origin_index)
+    for _, r in z.iterrows():
+        t = int(r["origin_index"])
         ws = []
         ps = []
         valid = True
@@ -367,15 +367,14 @@ def mature_error_weighted(frames: dict[str, pd.DataFrame], members: list[str], c
             yy = prior["y"].to_numpy(int)
             ll = float(np.mean(-(yy * np.log(pp) + (1 - yy) * np.log(1 - pp))))
             ws.append(math.exp(-eta * ll))
-            ps.append(float(getattr(r, f"p__{m}")))
+            ps.append(float(r[f"p__{m}"]))
         if not valid or sum(ws) <= 0:
             continue
         p = float(np.dot(np.asarray(ws), np.asarray(ps)) / sum(ws))
-        target_return = float(z.loc[z["origin_index"].eq(t), "return"].iloc[0])
         rows.append({
-            "origin_index": t, "origin_date": r.origin_date, "target_date": r.target_date,
-            "horizon": h, "candidate": candidate_id, "y": int(r.y), "return": target_return,
-            "p": p, "p50": float(r.p50), "pfreq": float(r.pfreq), "role_score": float(r.role_score)
+            "origin_index": t, "origin_date": r["origin_date"], "target_date": r["target_date"],
+            "horizon": h, "candidate": candidate_id, "y": int(r["y"]), "return": float(r["return"]),
+            "p": p, "p50": float(r["p50"]), "pfreq": float(r["pfreq"]), "role_score": float(r["role_score"])
         })
     return pd.DataFrame(rows)
 
@@ -387,8 +386,8 @@ def dma_style(frames: dict[str, pd.DataFrame], members: list[str], candidate_id:
     by_member = {m: frames[m].set_index("origin_index") for m in members}
     logw = {m: 0.0 for m in members}
     rows = []
-    for r in z.sort_values("origin_index").itertuples(index=False):
-        t = int(r.origin_index)
+    for _, r in z.sort_values("origin_index").iterrows():
+        t = int(r["origin_index"])
         matured_index = t - h
         for m in members:
             hm = by_member[m]
@@ -403,12 +402,11 @@ def dma_style(frames: dict[str, pd.DataFrame], members: list[str], candidate_id:
         mx = max(logw.values())
         w = {m: math.exp(logw[m] - mx) for m in members}
         den = sum(w.values())
-        p = sum(w[m] * float(getattr(r, f"p__{m}")) for m in members) / den
-        target_return = float(z.loc[z["origin_index"].eq(t), "return"].iloc[0])
+        p = sum(w[m] * float(r[f"p__{m}"]) for m in members) / den
         rows.append({
-            "origin_index": t, "origin_date": r.origin_date, "target_date": r.target_date,
-            "horizon": h, "candidate": candidate_id, "y": int(r.y), "return": target_return,
-            "p": float(p), "p50": float(r.p50), "pfreq": float(r.pfreq), "role_score": float(r.role_score)
+            "origin_index": t, "origin_date": r["origin_date"], "target_date": r["target_date"],
+            "horizon": h, "candidate": candidate_id, "y": int(r["y"]), "return": float(r["return"]),
+            "p": float(p), "p50": float(r["p50"]), "pfreq": float(r["pfreq"]), "role_score": float(r["role_score"])
         })
     return pd.DataFrame(rows)
 
