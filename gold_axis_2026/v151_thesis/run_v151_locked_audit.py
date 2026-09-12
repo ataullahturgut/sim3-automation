@@ -330,7 +330,6 @@ def _join_member_rows(frames: dict[str, pd.DataFrame], members: list[str]) -> pd
     for k in members:
         f = frames[k][["origin_index", "origin_date", "target_date", "horizon", "y", "return", "p", "p50", "pfreq", "role_score"]].copy()
         f = f.rename(columns={"p": f"p__{k}"})
-        keycols = ["origin_index", "origin_date", "target_date", "horizon", "y", "return", "p50", "pfreq", "role_score"]
         if base is None:
             base = f
         else:
@@ -372,9 +371,10 @@ def mature_error_weighted(frames: dict[str, pd.DataFrame], members: list[str], c
         if not valid or sum(ws) <= 0:
             continue
         p = float(np.dot(np.asarray(ws), np.asarray(ps)) / sum(ws))
+        target_return = float(z.loc[z["origin_index"].eq(t), "return"].iloc[0])
         rows.append({
             "origin_index": t, "origin_date": r.origin_date, "target_date": r.target_date,
-            "horizon": h, "candidate": candidate_id, "y": int(r.y), "return": float(r.return_),
+            "horizon": h, "candidate": candidate_id, "y": int(r.y), "return": target_return,
             "p": p, "p50": float(r.p50), "pfreq": float(r.pfreq), "role_score": float(r.role_score)
         })
     return pd.DataFrame(rows)
@@ -389,7 +389,6 @@ def dma_style(frames: dict[str, pd.DataFrame], members: list[str], candidate_id:
     rows = []
     for r in z.sort_values("origin_index").itertuples(index=False):
         t = int(r.origin_index)
-        # Update only with outcomes whose horizon has matured by this origin.
         matured_index = t - h
         for m in members:
             hm = by_member[m]
@@ -405,9 +404,10 @@ def dma_style(frames: dict[str, pd.DataFrame], members: list[str], candidate_id:
         w = {m: math.exp(logw[m] - mx) for m in members}
         den = sum(w.values())
         p = sum(w[m] * float(getattr(r, f"p__{m}")) for m in members) / den
+        target_return = float(z.loc[z["origin_index"].eq(t), "return"].iloc[0])
         rows.append({
             "origin_index": t, "origin_date": r.origin_date, "target_date": r.target_date,
-            "horizon": h, "candidate": candidate_id, "y": int(r.y), "return": float(r.return_),
+            "horizon": h, "candidate": candidate_id, "y": int(r.y), "return": target_return,
             "p": float(p), "p50": float(r.p50), "pfreq": float(r.pfreq), "role_score": float(r.role_score)
         })
     return pd.DataFrame(rows)
