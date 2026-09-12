@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import hashlib
-import io
+import html
+import re
 from datetime import datetime, timezone
 
 import numpy as np
@@ -11,77 +12,81 @@ import requests
 from gold_axis_2026.v159_thesis import run_v159_driver_corrected_meta_trust as core
 
 
-def segmented_fred_fetch(series_id: str, start: str, end: str):
-    """Same frozen FRED source and date range, retrieved in annual chunks.
+_DATE_VALUE = re.compile(r"(\d{4}-\d{2}-\d{2})\s*(?:\||\s)\s*([+-]?\d+(?:\.\d+)?)")
 
-    The first V1.59 run timed out before any model scoring while reading one
-    multi-year fredgraph response. This wrapper changes transport only: no
-    series, feature, target, threshold, candidate or date rule is changed.
+
+def fred_table_fetch(series_id: str, start: str, end: str):
+    """Read the same frozen FRED series from FRED's lightweight table endpoint.
+
+    Earlier CI attempts timed out on fredgraph CSV before any model scoring.
+    This is transport-only hardening: provider, series identity, historical
+    date window, transformation, strict previous-date join, models, thresholds
+    and evaluation contract are unchanged.
     """
-    start_ts = pd.Timestamp(start)
-    end_ts = pd.Timestamp(end)
-    frames = []
-    payload_hashes = []
-    retrieved = []
-    year = start_ts.year
-    while year <= end_ts.year:
-        a = max(start_ts, pd.Timestamp(f"{year}-01-01"))
-        b = min(end_ts, pd.Timestamp(f"{year}-12-31"))
-        last_exc = None
-        response = None
-        for _ in range(3):
-            try:
-                response = requests.get(
-                    core.FRED_CSV,
-                    params={"id": series_id, "cosd": a.date().isoformat(), "coed": b.date().isoformat()},
-                    headers={"User-Agent": "Gold-Control-V159-Research/1.0"},
-                    timeout=(15, 45),
-                )
-                if response.status_code == 200:
-                    break
-                last_exc = RuntimeError(f"HTTP_{response.status_code}")
-            except requests.RequestException as exc:
-                last_exc = exc
-                response = None
-        if response is None or response.status_code != 200:
-            raise RuntimeError(f"V159_FRED_SEGMENT_FETCH_FAIL:{series_id}:{year}:{last_exc}")
-        payload_hashes.append(hashlib.sha256(response.content).hexdigest())
-        retrieved.append(datetime.now(timezone.utc).isoformat())
-        d = pd.read_csv(io.BytesIO(response.content))
-        if d.shape[1] < 2:
-            raise RuntimeError(f"V159_FRED_SCHEMA_{series_id}_{year}")
-        date_col = d.columns[0]
-        value_col = series_id if series_id in d.columns else d.columns[1]
-        d = d[[date_col, value_col]].rename(columns={date_col: "source_date", value_col: "value"})
-        d["source_date"] = pd.to_datetime(d["source_date"], errors="coerce").dt.normalize()
-        d["value"] = pd.to_numeric(d["value"], errors="coerce")
-        d = d.dropna(subset=["source_date", "value"])
-        frames.append(d)
-        year += 1
-    out = pd.concat(frames, ignore_index=True).sort_values("source_date").drop_duplicates("source_date", keep="last")
-    out = out[np.isfinite(out["value"])].reset_index(drop=True)
-    if out.empty:
+    url = f"https://fred.stlouisfed.org/data/{series_id}"
+    last_exc = None
+    response = None
+    for _ in range(3):
+        try:
+            response = requests.get(
+                url,
+                headers={"User-Agent": "Gold-Control-V159-Research/1.0"},
+                timeout=(15, 45),
+            )
+            if response.status_code == 200:
+                break
+            last_exc = RuntimeError(f"HTTP_{response.status_code}")
+        except requests.RequestException as exc:
+            last_exc = exc
+            response = None
+    if response is None or response.status_code != 200:
+        raise RuntimeError(f"V159_FRED_TABLE_FETCH_FAIL:{series_id}:{last_exc}")
+
+    text = html.unescape(response.text)
+    # Preserve whitespace while removing tags so the server-rendered DATE/VALUE
+    # table is parseable without executing browser JavaScript.
+    plain = re.sub(r"<[^>]+>", " ", text)
+    plain = re.sub(r"[\t\r\n]+", " ", plain)
+    pairs = _DATE_VALUE.findall(plain)
+    if not pairs:
+        # FRED currently also renders old rows in compact '#date|value' text.
+        pairs = re.findall(r"#?(\d{4}-\d{2}-\d{2})\s*\|\s*([+-]?\d+(?:\.\d+)?)", text)
+    if not pairs:
+        raise RuntimeError(f"V159_FRED_TABLE_PARSE_FAIL:{series_id}")
+
+    d = pd.DataFrame(pairs, columns=["source_date", "value"])
+    d["source_date"] = pd.to_datetime(d["source_date"], errors="coerce").dt.normalize()
+    d["value"] = pd.to_numeric(d["value"], errors="coerce")
+    d = d.dropna(subset=["source_date", "value"])
+    # Duplicate renderings are acceptable only when they agree exactly.
+    conflicts = d.groupby("source_date")["value"].nunique(dropna=True)
+    if (conflicts > 1).any():
+        bad = conflicts[conflicts > 1].index.min()
+        raise RuntimeError(f"V159_FRED_TABLE_CONFLICT:{series_id}:{bad.date().isoformat()}")
+    d = d.drop_duplicates("source_date", keep="last")
+    a, b = pd.Timestamp(start), pd.Timestamp(end)
+    d = d[(d["source_date"] >= a) & (d["source_date"] <= b)].copy()
+    d = d[np.isfinite(d["value"])].sort_values("source_date").reset_index(drop=True)
+    if d.empty:
         raise RuntimeError(f"V159_FRED_EMPTY_{series_id}")
-    combined = hashlib.sha256("|".join(payload_hashes).encode()).hexdigest()
+
     evidence = {
         "provider": "FRED",
         "series_id": series_id,
-        "retrieved_at": max(retrieved),
-        "payload_sha256": combined,
-        "payload_segments": len(payload_hashes),
-        "segment_sha256": payload_hashes,
-        "rows": int(len(out)),
-        "first_source_date": out["source_date"].min().date().isoformat(),
-        "last_source_date": out["source_date"].max().date().isoformat(),
+        "retrieved_at": datetime.now(timezone.utc).isoformat(),
+        "payload_sha256": hashlib.sha256(response.content).hexdigest(),
+        "rows": int(len(d)),
+        "first_source_date": d["source_date"].min().date().isoformat(),
+        "last_source_date": d["source_date"].max().date().isoformat(),
         "evidence_class": "HISTORICAL_ECONOMIC_DATE_RECONSTRUCTION_NOT_PROSPECTIVE_PIT",
         "same_date_join_forbidden": True,
-        "transport_note": "annual segmented fredgraph retrieval; scientific source and date contract unchanged",
+        "transport_note": "FRED server-rendered table endpoint used after pre-score fredgraph timeouts; scientific source/date contract unchanged",
     }
-    return out, evidence
+    return d, evidence
 
 
 def main() -> int:
-    core.fetch_fred_series = segmented_fred_fetch
+    core.fetch_fred_series = fred_table_fetch
     return core.main()
 
 
