@@ -1,0 +1,53 @@
+{
+  "contract_id": "GOLD_CONTROL_V152_SELECTIVE_EVENT_ROUTER_FREEZE_V1",
+  "status": "FROZEN_BEFORE_V152_SUCCESSOR_SCORING",
+  "frozen_at": "2026-09-12T15:45:00Z",
+  "evidence_class": "RETROSPECTIVE_SUCCESSOR_RESEARCH_REQUIRES_FUTURE_PROSPECTIVE_CONFIRMATION",
+  "research_basis": {
+    "principle": "role_horizon_alignment_plus_selective_prediction",
+    "hypothesis_formation_window": "2023-01-01/2024-12-31",
+    "note": "2025-2026 outcomes were already researcher-visible in predecessor work; successor diagnostics on those years are not fresh confirmatory evidence."
+  },
+  "master_policy": {
+    "general_1d_3d": "NO_SIGNAL_UNLESS_SEPARATELY_PROVEN",
+    "monthly_price": "KEEP_SEPARATE_MONTHLY_EXPERT_LAYER",
+    "strategic_context": ["MONTHLY_DIRECTION_3M", "FAST", "SLOW"],
+    "regime_risk_context": ["BOCPD_RETURN_SUCCESSOR_V1", "EMERGENCY_LEVEL", "EMERGENCY_REVERSAL", "GVZ_RISK"],
+    "short_horizon_event_authority": "MACRO_EVENT_SUCCESSOR_V2_LINEAGE",
+    "market_shock_role": "POST_RELEASE_CONFIRMATION_ONLY_NO_BACKDATING"
+  },
+  "event_router": {
+    "primary_families": ["EMPLOYMENT", "INFLATION"],
+    "separate_diagnostic_family": ["FOMC"],
+    "primary_horizon": "R15",
+    "secondary_horizons": ["R5", "R30"],
+    "direction_rule": "sign(macro_event_score)",
+    "no_signal_if_score_zero": true,
+    "confidence_tiers": {
+      "HIGH": "family in primary_families AND state in {GOLD_ADVERSE_MACRO_SHOCK,GOLD_SUPPORTIVE_MACRO_SHOCK}",
+      "MEDIUM": "family in primary_families AND nonzero score AND not HIGH",
+      "DIAGNOSTIC_ONLY": "family == FOMC"
+    }
+  },
+  "success_gates": {
+    "primary_router_r15": {
+      "minimum_n": 20,
+      "minimum_hit_rate": 0.65,
+      "maximum_one_sided_binomial_p": 0.05,
+      "median_signed_log_return_must_be_positive": true
+    },
+    "high_confidence_tier": {
+      "minimum_n": 5,
+      "minimum_hit_rate": 0.75,
+      "median_signed_log_return_must_be_positive": true
+    }
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "no_hindsight_family_or_threshold_changes_after_scoring": true,
+    "future_prospective_shadow_required_for_promotion": true
+  }
+}
