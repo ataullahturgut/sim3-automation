@@ -1,0 +1,32 @@
+{
+  "contract_id": "GOLD_CONTROL_V152_PRIMARY_EVENT_PROSPECTIVE_SHADOW_FREEZE_V1",
+  "status": "FROZEN_BEFORE_FUTURE_UNSEEN_EVENTS",
+  "frozen_at": "2026-09-12T15:52:00Z",
+  "eligible_families": ["EMPLOYMENT", "INFLATION"],
+  "required_score": "NONZERO_MACRO_EVENT_SCORE_AVAILABLE_AT_GOVERNED_EVENT_TIME",
+  "primary_endpoint": "POST_SCORE_R15_DIRECTION",
+  "secondary_endpoints": ["POST_SCORE_R5_DIRECTION", "POST_SCORE_R30_DIRECTION"],
+  "direction_rule": "sign(macro_event_score)",
+  "minimum_prospective_primary_events": 20,
+  "promotion_gate": {
+    "minimum_hits": 15,
+    "minimum_hit_rate": 0.75,
+    "maximum_exact_one_sided_binomial_p": 0.05,
+    "median_signed_log_return_must_be_positive": true,
+    "minimum_target_coverage": 0.90
+  },
+  "market_shock": {
+    "role": "POST_RELEASE_CONFIRMATION_CONTEXT_ONLY",
+    "cannot_change_or_backdate_primary_direction": true
+  },
+  "fomc": {
+    "status": "SEPARATE_SPECIALIST_DIAGNOSTIC_NOT_PART_OF_PRIMARY_POOL"
+  },
+  "governance": {
+    "no_threshold_or_family_changes_after_first_future_event": true,
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE"
+  }
+}

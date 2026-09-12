@@ -1,0 +1,36 @@
+name: Gold Control V1.52 selective event router thesis research
+
+on:
+  pull_request:
+    paths:
+      - "gold_axis_2026/v152_thesis/**"
+      - "gold_axis_2026/tests/test_v152_selective_event_router.py"
+      - "gold_axis_2026/GOLD_CONTROL_V152_LITERATURE_AND_METHOD_MEMO_2026-09-12.md"
+      - ".github/workflows/gold-control-v152-selective-event-router.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  selective-event-router:
+    runs-on: ubuntu-latest
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install frozen research dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 psycopg[binary]==3.2.10 pytest==8.4.2
+      - name: Test V1.52 frozen router governance
+        run: python -m pytest -q gold_axis_2026/tests/test_v152_selective_event_router.py
+      - name: Run V1.52 selective event router retrospective diagnostics
+        run: python -m gold_axis_2026.v152_thesis.run_v152_selective_router
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-v152-selective-event-router-${{ github.sha }}
+          path: gold_axis_2026/data_pipeline/audits/v152_thesis/
