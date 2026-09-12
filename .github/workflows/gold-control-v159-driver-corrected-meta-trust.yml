@@ -30,7 +30,7 @@ jobs:
       - name: Test V1.59 chronology, driver ontology and meta-trust semantics
         run: python -m pytest -q gold_axis_2026/tests/test_v159_driver_corrected_meta_trust.py
       - name: Run V1.59 frozen retrospective successor audit
-        run: python -m gold_axis_2026.v159_thesis.run_v159_driver_corrected_meta_trust
+        run: python -m gold_axis_2026.v159_thesis.run_v159_entry
       - uses: actions/upload-artifact@v4
         with:
           name: gold-v159-driver-corrected-meta-trust-${{ github.sha }}
