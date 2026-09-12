@@ -1,0 +1,96 @@
+{
+  "contract_id": "GOLD_CONTROL_V160_FINAL_REGIME_SELECTOR_FREEZE_V1",
+  "status": "FROZEN_BEFORE_V160_RETROSPECTIVE_SCORING",
+  "evidence_class": "RETROSPECTIVE_FINAL_ARCHITECTURE_DIAGNOSTIC",
+  "frozen_on": "2026-09-12",
+  "research_question": "Can a transparent causal regime-conditioned selector decide when to use one of the two already-frozen H20 RTQ experts, while rejecting unsupported states instead of training another universal direction model?",
+  "stopping_rule": "FINAL_NORMAL_DAY_RETROSPECTIVE_ARCHITECTURE_EXPERIMENT_V151_V160_SEQUENCE",
+  "parent_research_branch": "gold-v159-driver-corrected-meta-trust-thesis",
+  "parent_head_sha": "4618ce0f2fc0525d0b9be3b7458846acecd3f02e",
+  "target": {
+    "primary_horizon_sessions": 20,
+    "normal_day_direction_only": true,
+    "no_h1_reopening": true,
+    "event_and_monthly_targets_excluded_from_direction_vote": true
+  },
+  "experts": [
+    "LEGACY_RTQ_R126",
+    "DRIVER_RTQ_R126"
+  ],
+  "regime": {
+    "origin_observable_only": true,
+    "lookback_for_state_thresholds": 126,
+    "minimum_state_history": 60,
+    "volatility_state": "HIGH if current vol20 is strictly above the median of prior 126 origin-observable vol20 values; otherwise LOW",
+    "structural_risk_state": "RISK if current bocpd_reset_fraction is strictly above the prior-126 75th percentile OR emergency_alert_onset==1 OR emergency_reversal is nonzero; otherwise CALM",
+    "role_consensus_state": "CONSENSUS if at least two nonzero signs among fast_role, slow_role and monthly_direction_3m agree; otherwise MIXED",
+    "regime_key": "VOL_{LOW|HIGH}|STRUCT_{CALM|RISK}|ROLE_{CONSENSUS|MIXED}",
+    "no_future_state_thresholds": true
+  },
+  "selector": {
+    "reliability_target": "expert direction correct on matured H20 target",
+    "same_regime_only": true,
+    "maturity_rule": "historical expert row j may be used at origin t only if origin_index[j]+20<=origin_index[t]",
+    "rolling_cap": 126,
+    "minimum_signal_history": 24,
+    "minimum_realized_up": 5,
+    "minimum_realized_down": 5,
+    "minimum_predicted_up": 3,
+    "minimum_predicted_down": 3,
+    "reliability_metric": "balanced_accuracy",
+    "minimum_balanced_reliability": 0.55,
+    "selection_rule": "among experts with a nonzero current signal and eligible causal same-regime history, choose the highest past balanced accuracy; ties go to LEGACY_RTQ_R126; if none is eligible return NO_SIGNAL",
+    "no_direction_model": true,
+    "no_probability_meta_model": true,
+    "no_reversal_flip": true,
+    "NO_SIGNAL_IS_NOT_NEUTRAL": true
+  },
+  "windows": {
+    "formation_start": "2024-01-01",
+    "formation_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-12-31",
+    "test_start": "2026-01-01",
+    "test_end": "2026-06-30"
+  },
+  "evaluation": {
+    "primary_metrics": [
+      "coverage",
+      "selective_accuracy",
+      "selective_balanced_accuracy",
+      "mcc",
+      "up_signals",
+      "down_signals"
+    ],
+    "support_gate": {
+      "validation_2025_coverage_min": 0.15,
+      "validation_2025_balanced_strictly_above_legacy": true,
+      "validation_2025_mcc_positive": true,
+      "validation_2025_both_directions": true,
+      "test_2026_coverage_min": 0.20,
+      "test_2026_balanced_min": 0.65,
+      "test_2026_not_more_than_0_03_below_legacy": true,
+      "test_2026_mcc_positive": true,
+      "test_2026_both_directions": true
+    },
+    "2025_and_2026_are_researcher_visible": true,
+    "fresh_confirmation": false,
+    "promotion_requires_future_prospective_shadow": true
+  },
+  "forbidden_after_scoring": [
+    "threshold_change",
+    "regime_definition_change",
+    "expert_addition_or_removal",
+    "horizon_change",
+    "feature_search",
+    "model_search",
+    "same_period_repair"
+  ],
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "canonical_merge_without_explicit_user_authority": "FORBIDDEN"
+  }
+}
