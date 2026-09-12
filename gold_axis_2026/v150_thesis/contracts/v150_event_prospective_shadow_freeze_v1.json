@@ -1,0 +1,103 @@
+{
+  "contract_id": "GOLD_CONTROL_V150_EVENT_DIRECTION_PROSPECTIVE_SHADOW_FREEZE_V1",
+  "frozen_on": "2026-09-12",
+  "status": "FROZEN_BEFORE_FUTURE_EVENT_OUTCOMES",
+  "evidence_class": "PROSPECTIVE_OBSERVATION_ONLY_NO_PRODUCTION_AUTHORITY",
+  "motivation": {
+    "development_contract": "GOLD_CONTROL_V150_ROLE_HIERARCHY_DEVELOPMENT_FREEZE_V1",
+    "development_period": ["2023-01-01", "2024-12-31"],
+    "primary_continuity_reason": "R15 is retained as the continuity endpoint because the earlier Macro Event V2 preregistration froze a 15-minute reaction window before its results were observed. V1.50 development also shows positive R15 direction without changing that historical window.",
+    "no_2025_2026_tuning": true
+  },
+  "eligible_families": ["EMPLOYMENT", "INFLATION", "FOMC"],
+  "score_sources": [
+    "MACRO_EVENT_V3_EMPLOYMENT_SCORE",
+    "MACRO_EVENT_V3_INFLATION_SCORE",
+    "MACRO_EVENT_V3_FOMC_SCORE"
+  ],
+  "direction_rule": "sign(gold_oriented_macro_score); score==0 => NO_SIGNAL",
+  "eligibility": {
+    "rule": "Every future governed event in an eligible family is logged. A directional trial is eligible only when a non-zero Macro Event score is successfully frozen after the release and before the corresponding prospective target matures.",
+    "no_event_deletion_after_outcome": true,
+    "source_failure_is_not_a_miss_or_hit": "Source/clock failures are reported separately and count against coverage; they may not be silently dropped."
+  },
+  "prediction_clock": {
+    "score_origin": "First immutable Macro Event score snapshot whose retrieved_at/available_as_of is at or after the official release time. No timestamp may be backdated.",
+    "historical_first_print_labels_are_not_live_clock_proof": true,
+    "prediction_must_be_frozen_before_target": true
+  },
+  "targets": {
+    "PRIMARY_POST_SCORE_15M": {
+      "role": "prospective predictive endpoint",
+      "p0": "Close of the first completed contiguous Twelve Data XAU/USD 1-minute bar completed after the frozen score_origin timestamp.",
+      "p15": "Close after 15 further completed contiguous 1-minute bars from p0.",
+      "return": "log(p15/p0)",
+      "hit": "sign(score) * return > 0"
+    },
+    "SECONDARY_EVENT_R5": {
+      "role": "announcement-reaction continuity diagnostic only",
+      "window": "official release: pre-release completed minute to first 5 completed minutes"
+    },
+    "SECONDARY_EVENT_R15": {
+      "role": "announcement-reaction continuity diagnostic only; not relabelled as live pre-release forecast",
+      "window": "official release: pre-release completed minute to first 15 completed minutes"
+    },
+    "SECONDARY_EVENT_R30": {
+      "role": "announcement-reaction continuity diagnostic only",
+      "window": "official release: pre-release completed minute to first 30 completed minutes"
+    },
+    "SEPARATE_CONTINUATION_NEXT_NY17": {
+      "role": "separate continuation endpoint; never pooled with initial reaction",
+      "target": "first governed NY17 observation after the event date"
+    }
+  },
+  "strong_state_subgroup": {
+    "states": ["GOLD_ADVERSE_MACRO_SHOCK", "GOLD_SUPPORTIVE_MACRO_SHOCK"],
+    "threshold_rule": "Existing frozen state definition only. No threshold may be selected or lowered from 2023-2026 observed outcomes.",
+    "role": "secondary high-confidence subgroup"
+  },
+  "market_shock_confirmation": {
+    "identity": "MARKET_SHOCK_CHALLENGER_V3",
+    "role": "post-release confirmation/context only",
+    "rule": "A Market Shock state may be attached only after its required price bars are observable. It cannot be back-propagated to the release-time Macro Event prediction.",
+    "continuation_authority": false,
+    "standalone_direction_authority": false
+  },
+  "primary_evaluation": {
+    "endpoint": "PRIMARY_POST_SCORE_15M",
+    "first_formal_checkpoint_n": 30,
+    "interim_promotion_looks_before_n30": false,
+    "benchmark": "Binomial directional null p=0.5",
+    "pass_gates_all_required": {
+      "directional_hits_min_at_n30": 20,
+      "hit_rate_min": 0.6666666667,
+      "one_sided_exact_binomial_p_max": 0.05,
+      "median_signed_return_strictly_positive": true,
+      "eligible_event_source_coverage_min": 0.90,
+      "prediction_before_target_maturity_rate": 1.0
+    },
+    "failure_rule": "Failure at the frozen n=30 checkpoint closes this identity for promotion. Any substantive redesign requires a new successor identity frozen before new outcomes."
+  },
+  "secondary_reporting": {
+    "required": [
+      "R5/R15/R30 announcement-reaction hit rate and signed return",
+      "family-specific results",
+      "strong-state subgroup results",
+      "Market Shock overlap and sign concordance",
+      "next-NY17 continuation results",
+      "source failures and coverage",
+      "prediction latency distribution"
+    ],
+    "secondary_results_cannot_override_primary_failure": true
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "action_mapping": "NONE",
+    "production_writes": "NONE",
+    "shadow_observation_only": true,
+    "no_hindsight_threshold_search": true,
+    "no_random_split": true
+  }
+}
