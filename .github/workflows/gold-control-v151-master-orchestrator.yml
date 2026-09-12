@@ -1,0 +1,37 @@
+name: Gold Control V1.51 master orchestrator thesis research
+
+on:
+  pull_request:
+    paths:
+      - "gold_axis_2026/v151_thesis/**"
+      - "gold_axis_2026/tests/test_v151_master_orchestrator.py"
+      - ".github/workflows/gold-control-v151-master-orchestrator.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  locked-validation-test-audit:
+    runs-on: ubuntu-latest
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install frozen research dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 psycopg[binary]==3.2.10 pytest==8.4.2
+      - name: Test V1.51 chronology, adaptive maturity and governance invariants
+        run: python -m pytest -q gold_axis_2026/tests/test_v151_master_orchestrator.py
+      - name: Run V1.51 frozen 2025 validation and one-pass 2026 locked test
+        run: python -m gold_axis_2026.v151_thesis.run_v151_locked_audit
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-v151-master-orchestrator-${{ github.sha }}
+          path: gold_axis_2026/data_pipeline/audits/v151_thesis/
+          if-no-files-found: warn
