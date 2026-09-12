@@ -37,7 +37,9 @@ def test_target_geometry_uses_future_h_endpoint_only_as_label():
 
 def test_validation_training_labels_end_before_2025():
     dates = pd.date_range("2023-01-01", periods=900, freq="D")
-    close = 1900 * np.exp(np.cumsum(np.resize(np.array([0.002, -0.001, 0.003, -0.002]), len(dates))))
+    rng = np.random.default_rng(20260912)
+    synthetic_returns = rng.normal(0.0, 0.012, len(dates))
+    close = 1900 * np.exp(np.cumsum(synthetic_returns))
     d = pd.DataFrame({"date": dates, "observation_ts": pd.to_datetime(dates, utc=True), "close": close})
     d, features = v.add_features(d)
     z = v.add_target(d, 20)
