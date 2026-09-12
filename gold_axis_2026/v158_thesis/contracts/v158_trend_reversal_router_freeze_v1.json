@@ -1,0 +1,125 @@
+{
+  "contract_id": "GOLD_CONTROL_V158_TREND_REVERSAL_ROUTER_FREEZE_V1",
+  "status": "FROZEN_BEFORE_V158_RETROSPECTIVE_SCORING",
+  "evidence_class": "RETROSPECTIVE_SUCCESSOR_DIAGNOSTIC",
+  "frozen_on": "2026-09-12",
+  "research_question": "Does decomposing medium-horizon gold direction into trend continuation versus momentum reversal, and routing between role-consistent specialists, improve two-sided directional quality over the existing H20 selective quantile baseline?",
+  "correction_motivating_hypothesis": [
+    "Earlier general models treated heterogeneous engines as interchangeable direction features or votes; roles are not interchangeable.",
+    "V1.56 showed raw accuracy can be inflated by one-sided UP predictions; balanced accuracy, MCC and both-direction support are mandatory.",
+    "V1.57 injected realized semivariance into a generic return-quantile model, although the commodity literature motivates realized semivariance specifically as information about momentum reversal.",
+    "EMERGENCY_REVERSAL is an alert/context engine, not a persistent daily direction vote; V1.58 uses frozen emergency geometry only as reversal-router context.",
+    "The H20 lane has repeatedly shown stronger two-sided structure than H1/H10, so V1.58 tests H20 as the sole primary lane rather than continuing to force short-horizon direction."
+  ],
+  "literature_anchors": [
+    "Liu_Lu_Li_Wang_2023_Journal_of_Empirical_Finance_10.1016/j.jempfin.2023.03.001",
+    "Jacobs_Jordan_Nowlan_Hinton_1991_Neural_Computation_10.1162/neco.1991.3.1.79",
+    "Giacomini_White_2006_Econometrica_10.1111/j.1468-0262.2006.00718.x",
+    "Dichtl_2020_Journal_of_Commodity_Markets_10.1016/j.jcomm.2019.100106"
+  ],
+  "source": {
+    "base_panel_builder": "gold_axis_2026.v157_thesis.run_v157_breakaware_realized_moments.build_panel",
+    "research_endpoint": "XAU/USD exact 13:29 America/New_York research cache bar",
+    "monthly_reference_file": "gold_axis_2026/patch_repro_v1/locked_replay_v7_daily_feature_pit_43.csv",
+    "monthly_reference_field": "patch_v7",
+    "monthly_reference_allowed_fields": ["month", "patch_v7"],
+    "emergency_geometry_source": "gold_axis_2026/r4_1/src/gold_r4/emergency.py",
+    "emergency_geometry_semantic": "research-clock reconstruction of frozen 4-percent level/reversal geometry; NOT canonical NY17 EMERGENCY engine output",
+    "canonical_replay_evidence": "gold_axis_2026/data_pipeline/audits/component_role_replays_v145/component_role_replays_v145.json",
+    "historical_reconstruction_warning": "2023-2026 research panels and cross-market histories are retrospective reconstructions; this contract creates no prospective or production claim"
+  },
+  "windows": {
+    "data_start": "2023-01-01",
+    "formation_score_start": "2024-01-01",
+    "formation_score_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-12-31",
+    "test_start": "2026-01-01",
+    "test_end": "2026-06-30"
+  },
+  "target": {
+    "primary_horizon_sessions": 20,
+    "trend_definition": "sign of origin-observable trailing 20-session cumulative log return (mom20); zero or missing trend => NO_SIGNAL",
+    "reversal_label": "1 iff sign(future H20 log return) is opposite to trend_definition; otherwise 0",
+    "direction_mapping": "reversal => opposite trend sign; continuation => trend sign",
+    "overlap_warning": "H20 targets overlap; observations are not independent"
+  },
+  "emergency_research_context": {
+    "level_threshold_abs": 0.04,
+    "reversal_threshold_abs": 0.04,
+    "monthly_reset": true,
+    "alert_is_context_not_direction_vote": true,
+    "features": ["emergency_displacement", "emergency_level", "emergency_reversal", "emergency_alert_onset", "emergency_alert_age"]
+  },
+  "router_features": [
+    "mom20", "vol20", "rsi14", "bollinger_z20",
+    "rm_vol", "rm_downside_share", "rm_skew", "rm_jump_fraction", "rm_max_abs",
+    "fast_role", "slow_role", "monthly_direction_3m",
+    "emergency_displacement", "emergency_level", "emergency_reversal", "emergency_alert_onset", "emergency_alert_age",
+    "trend_fast_agree", "trend_slow_agree", "trend_monthly_agree", "role_disagreement_count"
+  ],
+  "models": {
+    "primary": {
+      "id": "REV_HGB_D2_R252",
+      "family": "HistGradientBoostingClassifier",
+      "max_depth": 2,
+      "max_iter": 80,
+      "learning_rate": 0.05,
+      "l2_regularization": 1.0,
+      "random_state": 20260912
+    },
+    "diagnostic": {
+      "id": "REV_LOGIT_R252",
+      "family": "LogisticRegression",
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "random_state": 20260912,
+      "training_only_standardization": true
+    },
+    "training": {
+      "rolling_cap": 252,
+      "minimum_mature_targets": 180,
+      "maturity_rule": "only rows j with j+20 <= current origin index may enter training"
+    }
+  },
+  "router": {
+    "reversal_probability_high": 0.60,
+    "reversal_probability_low": 0.40,
+    "primary_rule": "p_reversal>=0.60 => opposite trend; p_reversal<=0.40 => trend; otherwise NO_SIGNAL",
+    "confirmed_rule": "p_reversal>=0.60 => opposite trend; p_reversal<=0.40 only emits continuation when frozen H20 RTQ selective baseline agrees with trend; otherwise NO_SIGNAL",
+    "no_signal_is_not_neutral": true,
+    "no_emergency_override": true
+  },
+  "benchmark": {
+    "id": "H20_BASE_RTQ_R126",
+    "source_contract": "gold_axis_2026/v157_thesis/contracts/v157_breakaware_realized_moments_freeze_v1.json",
+    "semantic": "existing selective quantile H20 baseline, recomputed without modification"
+  },
+  "evaluation": {
+    "primary_metrics": ["coverage", "selective_accuracy", "selective_balanced_accuracy", "mcc", "up_signals", "down_signals"],
+    "reversal_probability_metrics": ["brier", "log_loss", "balanced_accuracy_at_0.5", "reversal_rate"],
+    "benchmark_comparison": "compare final routed direction to H20_BASE_RTQ_R126 by period; no claim from raw accuracy alone",
+    "support_rule": {
+      "coverage_each_2025_2026_min": 0.20,
+      "balanced_accuracy_each_2025_2026_strictly_above": 0.50,
+      "mcc_each_2025_2026_strictly_above": 0.0,
+      "both_direction_signals_each_2025_2026": true,
+      "validation_2025_balanced_accuracy_strictly_above_baseline": true,
+      "test_2026_balanced_accuracy_not_below_baseline": true,
+      "reversal_brier_and_logloss_vs_expanding_frequency_each_2025_2026": "BOTH_NONWORSE_AND_AT_LEAST_ONE_STRICTLY_BETTER"
+    },
+    "conditional_predictive_ability": "report regime/context slices descriptively; no post-score threshold changes",
+    "multiple_search_warning": "V1.51-V1.58 reused researcher-visible historical outcomes; no specification-search superiority claim without future prospective evidence and search-adjusted inference",
+    "fresh_confirmation": false,
+    "promotion_requires_future_prospective_shadow": true
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "action_mapping": "NONE",
+    "post_score_feature_threshold_horizon_or_router_changes": "FORBIDDEN"
+  }
+}
