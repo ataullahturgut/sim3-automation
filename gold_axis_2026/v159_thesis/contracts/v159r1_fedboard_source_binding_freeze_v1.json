@@ -1,0 +1,47 @@
+{
+  "contract_id": "GOLD_CONTROL_V159R1_FEDBOARD_SOURCE_BINDING_FREEZE_V1",
+  "status": "FROZEN_BEFORE_V159R1_RETROSPECTIVE_SCORING",
+  "frozen_on": "2026-09-12",
+  "parent_contract": "GOLD_CONTROL_V159_DRIVER_CORRECTED_META_TRUST_FREEZE_V1",
+  "parent_scoring_status": "NO_PERFORMANCE_SCORE_PRODUCED",
+  "parent_blocker": "GitHub Actions could not retrieve FRED endpoints; both transport attempts timed out before panel construction or model scoring",
+  "scientific_method_diff": "SOURCE_BINDING_ONLY: corrected broad-dollar and real-yield observations are read directly from their original Board of Governors H.10/H.15 Data Download Program instead of FRED. Target, windows, transformations, strict previous-date join, parent RTQ, meta target, model universe, training geometry, trust threshold and evaluation gates are inherited unchanged from the parent contract.",
+  "source_binding": {
+    "provider": "Board of Governors of the Federal Reserve System",
+    "program": "Data Download Program",
+    "historical_reconstruction_warning": "2026-retrieved historical economic-date reconstruction; not contemporaneously archived prospective PIT evidence",
+    "strict_previous_source_date_only": true,
+    "same_date_forbidden": true,
+    "no_interpolation": true,
+    "no_provider_fallback": true,
+    "series": {
+      "DTWEXBGS": {
+        "semantic_alias": "Nominal Broad U.S. Dollar Index",
+        "release": "H.10 Foreign Exchange Rates",
+        "unique_id": "H10/H10/JRXWTFB_N.B",
+        "package_hash": "122e3bcb627e8e53f1bf72a1a09cfb81",
+        "package_column": "JRXWTFB_N.B"
+      },
+      "DFII10": {
+        "semantic_alias": "10-Year Treasury inflation-indexed constant maturity real yield",
+        "release": "H.15 Selected Interest Rates",
+        "unique_id": "H15/H15/RIFLGFCY10_XII_N.B",
+        "package_hash": "0b98a66d3ff5e1ea0fbf88adc59b387f",
+        "package_column": "RIFLGFCY10_XII_N.B"
+      }
+    }
+  },
+  "inheritance_lock": {
+    "all_non_source_fields_from_parent_are_unchanged": true,
+    "trust_probability_min": 0.60,
+    "primary_horizon_sessions": 20,
+    "meta_primary": "META_DRIVER_LOGIT",
+    "routing": "veto_or_abstain_only_no_direction_flip",
+    "post_score_changes_inside_v159r1": "FORBIDDEN",
+    "promotion_requires_future_prospective_shadow": true,
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE"
+  }
+}

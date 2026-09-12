@@ -1,0 +1,168 @@
+{
+  "contract_id": "GOLD_CONTROL_V159_DRIVER_CORRECTED_META_TRUST_FREEZE_V1",
+  "status": "FROZEN_BEFORE_V159_RETROSPECTIVE_SCORING",
+  "evidence_class": "RETROSPECTIVE_SUCCESSOR_DIAGNOSTIC",
+  "frozen_on": "2026-09-12",
+  "research_question": "Can correcting the gold opportunity-cost driver ontology and using a causal meta-trust veto improve the H20 RTQ signal without converting weak evidence into forced UP/DOWN calls?",
+  "literature_anchors": [
+    "Aye_Gupta_Hammoudeh_Kim_2015_IRFA_10.1016/j.irfa.2015.03.010",
+    "World_Gold_Council_GRAM_Opportunity_Cost_FX_Rates_Risk_Momentum",
+    "Giacomini_White_2006_Econometrica_Conditional_Predictive_Ability",
+    "Raftery_Karny_Ettler_2010_Technometrics_Dynamic_Model_Averaging",
+    "ElYaniv_Wiener_2010_JMLR_Selective_Classification"
+  ],
+  "source": {
+    "gold_endpoint": "XAU/USD exact 13:29 America/New_York research cache bar",
+    "gold_table": "xau_intraday_research_cache_1m",
+    "inherits_context_builder": "gold_axis_2026.v157_thesis.run_v157_breakaware_realized_moments.build_panel",
+    "inherits_emergency_context": "gold_axis_2026.v158_thesis.run_v158_trend_reversal_router.emergency_research_context",
+    "legacy_fx_correction": {
+      "legacy_series_id": "DEXCHUS_ALFRED_PIT_ME",
+      "actual_semantics": "Chinese Yuan Renminbi to U.S. Dollar exchange rate; it must not be interpreted as a broad U.S. dollar factor",
+      "policy": "legacy RTQ remains an exact benchmark only; the driver-corrected parent excludes legacy fx_level/fx_logdiff from its feature surface"
+    },
+    "corrected_public_driver_reconstruction": {
+      "provider": "FRED, Federal Reserve Bank of St. Louis",
+      "series": {
+        "DTWEXBGS": "Nominal Broad U.S. Dollar Index",
+        "DFII10": "10-Year Treasury Inflation-Indexed Security Constant Maturity real yield"
+      },
+      "retrieval": "fredgraph CSV downloaded during the research run with payload SHA256 and retrieval timestamp recorded",
+      "join_rule": "strict previous economic source date only; same-date driver observation is forbidden",
+      "evidence_warning": "historical economic-date reconstruction retrieved in 2026; not contemporaneously archived prospective PIT evidence"
+    },
+    "no_fallback": true,
+    "no_interpolation": true
+  },
+  "windows": {
+    "data_start": "2023-01-01",
+    "formation_score_start": "2024-01-01",
+    "formation_score_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-12-31",
+    "test_start": "2026-01-01",
+    "test_end": "2026-06-30"
+  },
+  "target": {
+    "primary_horizon_sessions": 20,
+    "direction": "sign(log(close[t+20]/close[t]))",
+    "no_h1_primary_claim": true
+  },
+  "parent_experts": {
+    "LEGACY_RTQ_R126": {
+      "role": "BENCHMARK_ONLY",
+      "definition": "exact H20 rolling-126 RTQ baseline inherited from V1.56/V1.58"
+    },
+    "DRIVER_RTQ_R126": {
+      "role": "PRIMARY_PARENT_CHALLENGER",
+      "definition": "same RTQ model and maturity geometry as LEGACY_RTQ_R126, but remove legacy generic fx_level/fx_logdiff and add strictly lagged broad USD and 10Y real-yield features"
+    }
+  },
+  "rtq_model": {
+    "training_mode": "ROLLING",
+    "window": 126,
+    "minimum_mature_targets": 100,
+    "quantiles": [0.25, 0.50, 0.75],
+    "regressor": "HistGradientBoostingRegressor",
+    "max_depth": 2,
+    "max_iter": 80,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "random_state": 20260912,
+    "direction_rule": "q25>0 => UP; q75<0 => DOWN; otherwise NO_SIGNAL",
+    "quantile_rearrangement": "sort independently estimated q25/q50/q75 before applying the direction rule"
+  },
+  "corrected_driver_features": [
+    "broad_usd_level",
+    "broad_usd_logdiff1",
+    "broad_usd_logdiff5",
+    "real10_level",
+    "real10_delta1",
+    "real10_delta5"
+  ],
+  "meta_target": {
+    "definition": "for a parent RTQ origin that emitted UP or DOWN, 1 if that parent direction equals the matured H20 direction, else 0",
+    "maturity_rule": "at meta origin t, a prior parent prediction j may enter training only if j+20<=t; no unmatured parent correctness label may be consumed",
+    "no_signal_parent_rows": "excluded from meta-target training"
+  },
+  "meta_features": {
+    "BASE": [
+      "rtq_q25", "rtq_q50", "rtq_q75", "rtq_iqr_width", "rtq_zero_distance", "rtq_direction",
+      "mom20", "vol20", "fast_role", "slow_role", "monthly_direction_3m",
+      "bocpd_reset_fraction", "bocpd_map_run", "bocpd_entropy",
+      "emergency_displacement", "emergency_level", "emergency_reversal", "emergency_alert_onset", "emergency_alert_age",
+      "rm_vol", "rm_downside_share", "rm_skew", "rm_jump_fraction",
+      "role_disagreement_count"
+    ],
+    "DRIVER_CORRECTED": "BASE plus corrected_driver_features"
+  },
+  "meta_candidates": {
+    "META_BASE_LOGIT": {
+      "role": "ONTOLOGY_ABLATION_BENCHMARK",
+      "feature_set": "BASE",
+      "model": "LOGIT",
+      "rolling_window": 126,
+      "minimum_mature_parent_signals": 60,
+      "C": 0.5,
+      "class_weight": "balanced",
+      "max_iter": 3000,
+      "random_state": 20260912
+    },
+    "META_DRIVER_LOGIT": {
+      "role": "PRIMARY_META_TRUST",
+      "feature_set": "DRIVER_CORRECTED",
+      "model": "LOGIT",
+      "rolling_window": 126,
+      "minimum_mature_parent_signals": 60,
+      "C": 0.5,
+      "class_weight": "balanced",
+      "max_iter": 3000,
+      "random_state": 20260912
+    },
+    "META_DRIVER_HGB": {
+      "role": "NONLINEAR_DIAGNOSTIC",
+      "feature_set": "DRIVER_CORRECTED",
+      "model": "HGB",
+      "rolling_window": 126,
+      "minimum_mature_parent_signals": 60,
+      "max_depth": 2,
+      "max_iter": 80,
+      "learning_rate": 0.05,
+      "l2_regularization": 1.0,
+      "random_state": 20260912
+    }
+  },
+  "routing": {
+    "trust_probability_min": 0.60,
+    "rule": "if parent RTQ has a direction and p(parent_correct)>=0.60, keep parent direction; otherwise NO_SIGNAL",
+    "reversal_policy": "V1.59 may veto/abstain only; it may not flip an RTQ direction",
+    "NO_SIGNAL_IS_NOT_NEUTRAL": true
+  },
+  "evaluation": {
+    "direction_primary_metrics": ["selective_balanced_accuracy", "mcc", "coverage", "selective_accuracy", "up_signals", "down_signals"],
+    "meta_proper_scores": ["brier", "log_loss"],
+    "support_rule_primary": {
+      "validation_2025_balanced_strictly_above_legacy_rtq": true,
+      "validation_2025_mcc_strictly_above_zero": true,
+      "validation_2025_both_directions": true,
+      "test_2026_balanced_min": 0.65,
+      "test_2026_mcc_strictly_above_zero": true,
+      "test_2026_not_more_than_0_03_below_legacy_rtq_balanced": true,
+      "test_2026_both_directions": true,
+      "coverage_each_2025_2026_min": 0.20,
+      "meta_brier_and_logloss_nonworse_than_prior_frequency_each_period_with_one_strict": true
+    },
+    "ontology_ablation_question": "Does META_DRIVER_LOGIT outperform META_BASE_LOGIT on proper trust scores and/or final direction quality without sacrificing the 2026 preservation gate?",
+    "2025_and_2026_are_researcher_visible": true,
+    "fresh_confirmation": false,
+    "promotion_requires_future_prospective_shadow": true
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "post_score_candidate_threshold_or_feature_changes": "FORBIDDEN",
+    "canonical_merge_without_explicit_user_authority": "FORBIDDEN"
+  }
+}
