@@ -1,0 +1,37 @@
+name: Gold Control V1.55 dynamic cross-market direction thesis research
+
+on:
+  pull_request:
+    paths:
+      - "gold_axis_2026/v155_thesis/**"
+      - "gold_axis_2026/tests/test_v155_dynamic_crossmarket_direction.py"
+      - "gold_axis_2026/GOLD_CONTROL_V155_DYNAMIC_CROSSMARKET_METHOD_MEMO_2026-09-12.md"
+      - ".github/workflows/gold-control-v155-dynamic-crossmarket-direction.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dynamic-crossmarket-direction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install frozen research dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 psycopg[binary]==3.2.10 pytest==8.4.2
+      - name: Test V1.55 causal chronology and governance invariants
+        run: python -m pytest -q gold_axis_2026/tests/test_v155_dynamic_crossmarket_direction.py
+      - name: Run V1.55 frozen dynamic cross-market 2025/2026 retrospective audit
+        run: python -m gold_axis_2026.v155_thesis.run_v155_dynamic_crossmarket_direction
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-v155-dynamic-crossmarket-direction-${{ github.sha }}
+          path: gold_axis_2026/data_pipeline/audits/v155_thesis/

@@ -1,0 +1,80 @@
+{
+  "contract_id": "GOLD_CONTROL_V155_DYNAMIC_CROSSMARKET_DIRECTION_FREEZE_V1",
+  "status": "FROZEN_BEFORE_V155_2025_2026_SCORING",
+  "evidence_class": "RETROSPECTIVE_SUCCESSOR_DIAGNOSTIC",
+  "frozen_on": "2026-09-12",
+  "research_question": "Can rolling/recency-weighted estimation and causal dynamic model averaging stabilize gold direction across the 2025-to-2026 regime break, using existing Gold Control role context plus cross-market information?",
+  "source": {
+    "gold_endpoint": "XAU/USD exact 13:29 America/New_York research cache bar",
+    "gold_table": "xau_intraday_research_cache_1m",
+    "endpoint_time": "13:29:00",
+    "endpoint_semantics": "spot proxy aligned to the beginning of the CME GC settlement window; not the CME futures settlement price",
+    "pit_rates_fx": ["DGS10_ALFRED_PIT_ME", "DFF_ALFRED_PIT_ME", "DEXCHUS_ALFRED_PIT_ME"],
+    "lagged_equity_reconstruction": ["NASDAQ100_FRED", "SP500_FRED", "DJIA_FRED"],
+    "lagged_precious_reconstruction": ["XAG_STAKTRAKR_RESEARCH_DAILY_R1", "XPT_STAKTRAKR_RESEARCH_DAILY_R1", "XPD_STAKTRAKR_RESEARCH_DAILY_R1"],
+    "external_daily_rule": "strict previous-source-date only; same-date external close forbidden",
+    "historical_reconstruction_warning": "equity and precious-metal rows are economic-date historical reconstructions and are not claimed as contemporaneously archived prospective PIT evidence",
+    "no_fallback": true,
+    "no_interpolation": true
+  },
+  "windows": {
+    "data_start": "2023-01-01",
+    "formation_score_start": "2024-01-01",
+    "formation_score_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-12-31",
+    "test_start": "2026-01-01",
+    "test_end": "2026-06-30"
+  },
+  "horizons": {
+    "TACTICAL_H1": 1,
+    "STRATEGIC_H20": 20
+  },
+  "feature_sets": {
+    "BASE": "gold return/momentum/volatility/technical features + same-day observable gold session returns + reconstructed FAST/SLOW/MONTHLY_DIRECTION_3M",
+    "FULL": "BASE + PIT rates/FX + strictly lagged equity-index returns + strictly lagged XAG/XPT/XPD returns"
+  },
+  "base_candidates": {
+    "BASE_R126_LOGIT": {"feature_set": "BASE", "model": "LOGIT", "fit_mode": "ROLLING", "window": 126},
+    "FULL_R126_LOGIT": {"feature_set": "FULL", "model": "LOGIT", "fit_mode": "ROLLING", "window": 126},
+    "FULL_EW_LOGIT_HL63": {"feature_set": "FULL", "model": "LOGIT", "fit_mode": "EXP_WEIGHTED", "half_life": 63},
+    "FULL_R126_HGB": {"feature_set": "FULL", "model": "HGB", "fit_mode": "ROLLING", "window": 126},
+    "FULL_R252_MLP16": {"feature_set": "FULL", "model": "MLP16", "fit_mode": "ROLLING", "window": 252}
+  },
+  "model_parameters": {
+    "LOGIT": {"C": 1.0, "max_iter": 3000, "random_state": 20260912},
+    "HGB": {"max_depth": 3, "max_iter": 100, "learning_rate": 0.05, "l2_regularization": 1.0, "random_state": 20260912},
+    "MLP16": {"hidden_layer_sizes": [16], "alpha": 0.01, "max_iter": 300, "early_stopping": true, "random_state": 20260912}
+  },
+  "sequential_training": {
+    "minimum_mature_labels": 100,
+    "prediction_start": "2024-01-01",
+    "target_maturity_rule": "only origins j with j+h <= current origin index may enter training or dynamic weight estimation",
+    "within_period_refit": true,
+    "future_labels_forbidden": true
+  },
+  "dynamic_layer": {
+    "DMA_LOGLOSS63": {"role": "PRIMARY_DYNAMIC_COMBINATION", "lookback_mature_predictions": 63, "minimum_mature_per_member": 40, "eta": 5.0, "rule": "weight candidate probabilities by exp(-eta * prior-only mean log loss)"},
+    "DMS_LOGLOSS63": {"role": "SENSITIVITY_DYNAMIC_SELECTION", "lookback_mature_predictions": 63, "minimum_mature_per_member": 40, "rule": "choose the candidate with lowest prior-only mean log loss"},
+    "DMA_SELECT60": {"role": "SELECTIVE_SENSITIVITY", "parent": "DMA_LOGLOSS63", "probability_distance_from_half_min": 0.10, "rule": "emit direction only when p<=0.40 or p>=0.60; otherwise NO_SIGNAL"}
+  },
+  "evaluation": {
+    "primary_metric": "balanced_accuracy",
+    "secondary_metrics": ["accuracy", "brier", "log_loss", "mcc", "coverage", "selective_accuracy", "training_history_frequency_benchmark"],
+    "research_interest_gates": {
+      "TACTICAL_H1_DMA": {"accuracy_each_period_min": 0.58, "balanced_accuracy_each_period_min": 0.58},
+      "STRATEGIC_H20_DMA": {"accuracy_each_period_min": 0.60, "balanced_accuracy_each_period_min": 0.60},
+      "SELECTIVE": {"selective_accuracy_each_period_min": 0.65, "coverage_each_period_min": 0.20}
+    },
+    "periods_are_researcher_visible": true,
+    "fresh_confirmation": false
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "post_score_candidate_or_threshold_changes": "FORBIDDEN",
+    "promotion_requires_future_prospective_shadow": true
+  }
+}
