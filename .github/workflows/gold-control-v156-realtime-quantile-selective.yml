@@ -1,0 +1,37 @@
+name: Gold Control V1.56 real-time quantile selective thesis research
+
+on:
+  pull_request:
+    paths:
+      - "gold_axis_2026/v156_thesis/**"
+      - "gold_axis_2026/tests/test_v156_realtime_quantile_selective.py"
+      - "gold_axis_2026/GOLD_CONTROL_V156_REALTIME_QUANTILE_METHOD_MEMO_2026-09-12.md"
+      - ".github/workflows/gold-control-v156-realtime-quantile-selective.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  realtime-quantile-selective:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install frozen research dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 psycopg[binary]==3.2.10 pytest==8.4.2
+      - name: Test V1.56 causal quantile chronology and governance
+        run: python -m pytest -q gold_axis_2026/tests/test_v156_realtime_quantile_selective.py
+      - name: Run V1.56 frozen 2025/2026 retrospective quantile audit
+        run: python -m gold_axis_2026.v156_thesis.run_v156_realtime_quantile_selective
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-v156-realtime-quantile-selective-${{ github.sha }}
+          path: gold_axis_2026/data_pipeline/audits/v156_thesis/

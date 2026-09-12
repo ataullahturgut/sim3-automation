@@ -1,0 +1,92 @@
+{
+  "contract_id": "GOLD_CONTROL_V156_REALTIME_QUANTILE_SELECTIVE_FREEZE_V1",
+  "status": "FROZEN_BEFORE_V156_2025_2026_SCORING",
+  "evidence_class": "RETROSPECTIVE_SUCCESSOR_DIAGNOSTIC",
+  "frozen_on": "2026-09-12",
+  "research_question": "Can a real-time rolling quantile forecast of future gold returns convert the unresolved unconditional direction problem into a calibrated selective direction problem that remains useful across the visible 2025-to-2026 regime break?",
+  "literature_anchors": [
+    "Pierdzioch_Risse_Rohloff_2015_Resource_Policy_10.1016/j.resourpol.2015.07.002",
+    "Pierdzioch_Risse_Rohloff_2015_Applied_Economics_Letters_10.1080/13504851.2014.925040",
+    "Aye_Gupta_Hammoudeh_Kim_2015_IRFA_10.1016/j.irfa.2015.03.010",
+    "ElYaniv_Wiener_2010_JMLR_selective_classification"
+  ],
+  "source": {
+    "inherits_panel_builder": "gold_axis_2026.v155_thesis.run_v155_dynamic_crossmarket_direction.build_panel",
+    "gold_endpoint": "XAU/USD exact 13:29 America/New_York research cache bar",
+    "gold_table": "xau_intraday_research_cache_1m",
+    "endpoint_time": "13:29:00",
+    "external_daily_rule": "strict previous-source-date only; same-date external close forbidden",
+    "historical_reconstruction_warning": "equity and precious-metal rows are economic-date historical reconstructions and are not claimed as contemporaneously archived prospective PIT evidence",
+    "no_fallback": true,
+    "no_interpolation": true
+  },
+  "windows": {
+    "data_start": "2023-01-01",
+    "formation_score_start": "2024-01-01",
+    "formation_score_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-12-31",
+    "test_start": "2026-01-01",
+    "test_end": "2026-06-30"
+  },
+  "horizons": {
+    "TACTICAL_H1": 1,
+    "STRATEGIC_H20": 20
+  },
+  "feature_set": "FULL V1.55 feature surface: gold technical/session/FAST/SLOW/MONTHLY_DIRECTION_3M plus PIT rates/FX and strictly lagged equity/precious-metal returns",
+  "models": {
+    "RTQ_R126": {
+      "role": "PRIMARY_REALTIME_QUANTILE",
+      "training_mode": "ROLLING",
+      "window": 126,
+      "minimum_mature_targets": 100,
+      "quantiles": [0.25, 0.50, 0.75],
+      "regressor": "HistGradientBoostingRegressor",
+      "max_depth": 2,
+      "max_iter": 80,
+      "learning_rate": 0.05,
+      "l2_regularization": 1.0,
+      "random_state": 20260912
+    },
+    "RTQ_EW_HL63": {
+      "role": "RECENCY_WEIGHTED_SENSITIVITY",
+      "training_mode": "EXP_WEIGHTED",
+      "half_life": 63,
+      "minimum_mature_targets": 100,
+      "quantiles": [0.25, 0.50, 0.75],
+      "regressor": "HistGradientBoostingRegressor",
+      "max_depth": 2,
+      "max_iter": 80,
+      "learning_rate": 0.05,
+      "l2_regularization": 1.0,
+      "random_state": 20260912
+    }
+  },
+  "target_maturity_rule": "At origin index t, a historical target j may enter training only if j+h <= t. Current or future target returns are forbidden.",
+  "quantile_rearrangement": "Sort the three independently estimated quantiles at each origin to enforce q25<=q50<=q75 before applying any direction rule.",
+  "direction_rules": {
+    "MEDIAN_DIRECTION": "q50>0 => UP, else DOWN; diagnostic only",
+    "IQR_EXCLUDES_ZERO": "q25>0 => UP; q75<0 => DOWN; otherwise NO_SIGNAL",
+    "NO_SIGNAL_IS_NOT_NEUTRAL": true
+  },
+  "evaluation": {
+    "primary_selective_metrics": ["selective_accuracy", "selective_balanced_accuracy", "coverage", "mcc"],
+    "median_direction_metrics": ["accuracy", "balanced_accuracy", "brier_from_empirical_quantile_score_not_applicable", "mcc"],
+    "research_interest_gates": {
+      "TACTICAL_H1_SELECTIVE": {"selective_accuracy_each_period_min": 0.65, "coverage_each_period_min": 0.15},
+      "STRATEGIC_H20_SELECTIVE": {"selective_accuracy_each_period_min": 0.70, "coverage_each_period_min": 0.20},
+      "TACTICAL_H1_MEDIAN": {"accuracy_each_period_min": 0.58, "balanced_accuracy_each_period_min": 0.58},
+      "STRATEGIC_H20_MEDIAN": {"accuracy_each_period_min": 0.60, "balanced_accuracy_each_period_min": 0.60}
+    },
+    "2025_and_2026_are_researcher_visible": true,
+    "fresh_confirmation": false,
+    "promotion_requires_future_prospective_shadow": true
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "post_score_threshold_or_model_changes": "FORBIDDEN"
+  }
+}
