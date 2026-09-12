@@ -1,0 +1,39 @@
+name: Gold Control V1.60 final regime selector thesis research
+
+on:
+  pull_request:
+    paths:
+      - "gold_axis_2026/v160_thesis/**"
+      - "gold_axis_2026/tests/test_v160_final_regime_selector.py"
+      - "gold_axis_2026/GOLD_CONTROL_MASTER_FAILURE_AUDIT_V151_V159_2026-09-12.md"
+      - "gold_axis_2026/GOLD_CONTROL_FINAL_ROLE_MAP_PRE_V160_2026-09-12.md"
+      - "gold_axis_2026/GOLD_CONTROL_V160_FINAL_REGIME_SELECTOR_METHOD_MEMO_2026-09-12.md"
+      - ".github/workflows/gold-control-v160-final-regime-selector.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  final-regime-selector:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install frozen research dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 psycopg[binary]==3.2.10 requests==2.32.5 pytest==8.4.2
+      - name: Test V1.60 chronology, regime and stopping-rule locks
+        run: python -m pytest -q gold_axis_2026/tests/test_v160_final_regime_selector.py
+      - name: Run V1.60 frozen final retrospective architecture audit
+        run: python -m gold_axis_2026.v160_thesis.run_v160_final_regime_selector
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-v160-final-regime-selector-${{ github.sha }}
+          path: gold_axis_2026/data_pipeline/audits/v160_thesis/
