@@ -1,0 +1,67 @@
+{
+  "contract_id": "GOLD_CONTROL_V153_INTRADAY_REGIME_SPECIALISTS_FREEZE_V1",
+  "status": "FROZEN_BEFORE_V153_2025_2026_SUCCESSOR_SCORING",
+  "evidence_class": "RETROSPECTIVE_SUCCESSOR_DIAGNOSTIC",
+  "frozen_on": "2026-09-12",
+  "windows": {
+    "source_start": "2023-01-01",
+    "formation_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-12-31",
+    "test_start": "2026-01-01",
+    "test_end": "2026-06-30"
+  },
+  "source": {
+    "table": "xau_intraday_research_cache_1m",
+    "time_zone": "America/New_York",
+    "origin": "exact 16:59 NY bar only",
+    "trade_day_boundary": "17:00 previous calendar day through 16:59 current calendar day",
+    "intraday_sampling": "5-minute last-close bars derived only from cached 1-minute observations",
+    "no_fallback": true,
+    "no_interpolation": true
+  },
+  "specialists": {
+    "RSV_TTSM_S2_1D": {
+      "role": "SELECTIVE_NEXT_NY17_1D_DIRECTION",
+      "primary": true,
+      "literature_anchor": "Liu_Lu_Li_Wang_2023_Journal_of_Empirical_Finance",
+      "momentum_lookback_exact_origins": 20,
+      "semivariance_window_trade_days": 5,
+      "semivariance_reference_window_trade_days": 250,
+      "semivariance_percentile": 0.80,
+      "minimum_5min_returns_per_trade_day": 180,
+      "rule": "TTSM-S2 adapted as a direction-only reject-option specialist: both semivariances high => NO_SIGNAL; both low => keep 20-origin momentum sign; RSminus high only => reverse UP momentum to DOWN and abstain on DOWN momentum; RSplus high only => reverse DOWN momentum to UP and abstain on UP momentum."
+    },
+    "MODERATE_DOWNSHOCK_REVERSAL_1D": {
+      "role": "SELECTIVE_NEXT_NY17_1D_DIRECTION",
+      "primary": false,
+      "formation_basis": "pre-2025 Gold Control formation-only diagnostic plus short-horizon reversal literature",
+      "lookback_exact_origin_returns": 126,
+      "minimum_history": 80,
+      "lower_quantile": 0.50,
+      "upper_quantile": 0.75,
+      "rule": "If current exact-origin log return is negative and its absolute magnitude lies strictly above the trailing median and at or below the trailing 75th percentile, predict UP; otherwise NO_SIGNAL."
+    },
+    "EUROPE_SESSION_CONTINUATION_1D": {
+      "role": "SELECTIVE_NEXT_NY17_1D_DIRECTION_DIAGNOSTIC",
+      "primary": false,
+      "session": "03:29 to 07:59 America/New_York",
+      "rule": "Predict the next exact NY17 direction equal to the sign of the same-day Europe-session return when both endpoint bars exist; zero return => NO_SIGNAL."
+    }
+  },
+  "evaluation": {
+    "primary_metric": "selective_accuracy",
+    "secondary_metrics": ["coverage", "balanced_accuracy", "exact_binomial_one_sided_p", "median_signed_next_log_return"],
+    "formation_is_not_confirmation": true,
+    "2025_and_2026_are_not_fresh_blind": true,
+    "promotion_requires_future_prospective_shadow": true
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "hindsight_rule_changes_after_scoring": "FORBIDDEN",
+    "missing_data": "NO_SIGNAL_NOT_NEUTRAL"
+  }
+}
