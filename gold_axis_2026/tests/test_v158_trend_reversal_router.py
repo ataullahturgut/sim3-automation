@@ -45,9 +45,11 @@ def test_emergency_research_geometry_is_context_and_month_resets():
 
 
 def test_reversal_target_is_relative_to_trailing_trend():
+    # index 19 -> 20 is a fall (reversal against positive trend), while
+    # index 20 -> 21 is a rise (continuation of the still-positive trend).
     d = pd.DataFrame({
         "date": pd.date_range("2024-01-01", periods=23, freq="D"),
-        "close": np.r_[np.repeat(100.0, 20), [100.0, 90.0, 110.0]],
+        "close": np.r_[np.repeat(100.0, 20), [90.0, 110.0, 110.0]],
         "mom20": np.r_[np.repeat(0.10, 21), [-0.10, -0.10]],
         "fast_role": np.zeros(23),
         "slow_role": np.zeros(23),
