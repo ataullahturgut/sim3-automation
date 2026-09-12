@@ -1,0 +1,153 @@
+{
+  "contract_id": "GOLD_CONTROL_V157_BREAKAWARE_REALIZED_MOMENTS_FREEZE_V1",
+  "status": "FROZEN_BEFORE_V157_2025_2026_SCORING",
+  "evidence_class": "RETROSPECTIVE_SUCCESSOR_DIAGNOSTIC",
+  "frozen_on": "2026-09-12",
+  "research_question": "Can origin-observable intraday realized moments plus a completed-month BOCPD structural-break context improve selective quantile forecasts of medium-horizon gold returns without hindsight tuning?",
+  "literature_anchors": [
+    "Bonato_Demirer_Gupta_Pierdzioch_2018_Resource_Policy_10.1016/j.resourpol.2018.03.004",
+    "Pesaran_Timmermann_2004_IJF_10.1016/S0169-2070(03)00068-2",
+    "Pesaran_Timmermann_1992_JBES_10.1080/07350015.1992.10509922",
+    "ElYaniv_Wiener_2010_JMLR_selective_classification",
+    "White_2000_Econometrica_10.1111/1468-0262.00152",
+    "Hansen_2005_JBES_10.1198/073500105000000063"
+  ],
+  "source": {
+    "base_panel_builder": "gold_axis_2026.v155_thesis.run_v155_dynamic_crossmarket_direction.build_panel",
+    "gold_endpoint": "XAU/USD exact 13:29 America/New_York research cache bar",
+    "intraday_table": "xau_intraday_research_cache_1m",
+    "intraday_fields": ["observation_ts", "close"],
+    "realized_moment_session": {
+      "timezone": "America/New_York",
+      "start": "03:30:00",
+      "end": "13:29:00",
+      "return_clock": "consecutive close-to-close one-minute log returns within the frozen same-day session only",
+      "maximum_gap_seconds": 90,
+      "minimum_valid_returns": 500,
+      "no_fallback": true,
+      "no_interpolation": true
+    },
+    "bocpd_contract": "gold_axis_2026/bocpd_successor_v1/frozen_contract_v1.json",
+    "bocpd_runner": "gold_axis_2026.tools.bocpd_return_successor_v1",
+    "bocpd_availability": "a completed BOCPD month becomes observable on the first calendar day of the following month; current-month state is forbidden",
+    "external_daily_rule": "inherits V1.55 strict previous-source-date rule for equities and precious metals",
+    "historical_reconstruction_warning": "equity/precious daily histories and the intraday research cache are retrospective research reconstructions, not contemporaneously archived prospective PIT evidence"
+  },
+  "windows": {
+    "data_start": "2023-01-01",
+    "formation_score_start": "2024-01-01",
+    "formation_score_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-12-31",
+    "test_start": "2026-01-01",
+    "test_end": "2026-06-30"
+  },
+  "horizons": {
+    "PRIMARY_H10": 10,
+    "SECONDARY_H5": 5,
+    "SECONDARY_H20": 20
+  },
+  "h1_policy": "NOT_RESCORED_PRIMARY; V1.56 already established insufficient robust H1 evidence",
+  "realized_moment_features": [
+    "rm_vol",
+    "rm_rsv_neg",
+    "rm_rsv_pos",
+    "rm_downside_share",
+    "rm_skew",
+    "rm_kurt",
+    "rm_jump_fraction",
+    "rm_max_abs"
+  ],
+  "bocpd_context_features": [
+    "bocpd_map_reset",
+    "bocpd_reset_fraction",
+    "bocpd_map_run",
+    "bocpd_segment_mean",
+    "bocpd_entropy",
+    "bocpd_p_run0"
+  ],
+  "candidate_universe": {
+    "PRIMARY_H10": [
+      {"candidate": "H10_BASE_RTQ_R126", "feature_set": "BASE_FULL", "training": "ROLLING126"},
+      {"candidate": "H10_MOM_R126", "feature_set": "FULL_PLUS_MOMENTS_BOCPD", "training": "ROLLING126"},
+      {"candidate": "H10_MOM_BREAK", "feature_set": "FULL_PLUS_MOMENTS_BOCPD", "training": "BREAK_AWARE"}
+    ],
+    "SECONDARY_H5": [
+      {"candidate": "H5_MOM_BREAK", "feature_set": "FULL_PLUS_MOMENTS_BOCPD", "training": "BREAK_AWARE"}
+    ],
+    "SECONDARY_H20": [
+      {"candidate": "H20_BASE_RTQ_R126", "feature_set": "BASE_FULL", "training": "ROLLING126"},
+      {"candidate": "H20_MOM_BREAK", "feature_set": "FULL_PLUS_MOMENTS_BOCPD", "training": "BREAK_AWARE"}
+    ]
+  },
+  "break_aware_training": {
+    "rolling_cap": 126,
+    "minimum_mature_targets": 100,
+    "minimum_post_break_mature_targets": 63,
+    "rule": "at origin t use only mature rows on or after the latest origin-observable BOCPD map-reset availability date when at least 63 such rows exist; otherwise use the latest 126 mature rows",
+    "bocpd_is_context_not_direction_vote": true
+  },
+  "model": {
+    "quantiles": [0.25, 0.50, 0.75],
+    "regressor": "HistGradientBoostingRegressor",
+    "loss": "quantile",
+    "max_depth": 2,
+    "max_iter": 80,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "random_state": 20260912,
+    "quantile_rearrangement": "sort independently estimated q25/q50/q75 at each origin"
+  },
+  "direction_rule": {
+    "selective": "q25>0 => UP; q75<0 => DOWN; otherwise NO_SIGNAL",
+    "median_diagnostic": "q50>0 => UP; otherwise DOWN",
+    "no_signal_is_not_neutral": true
+  },
+  "evaluation": {
+    "primary_lane": "PRIMARY_H10",
+    "primary_metrics": [
+      "selective_accuracy",
+      "selective_balanced_accuracy",
+      "coverage",
+      "mcc",
+      "up_signals",
+      "down_signals",
+      "mean_pinball",
+      "q25_pinball",
+      "q50_pinball",
+      "q75_pinball",
+      "pesaran_timmermann_pvalue"
+    ],
+    "overlap_adjustment": "HAC/Newey-West style loss-differential variance with lag h-1; report HLN-adjusted Diebold-Mariano diagnostic where defined",
+    "multiple_search_diagnostic": {
+      "method": "WHITE_REALITY_CHECK_MOVING_BLOCK_BOOTSTRAP",
+      "scope": "the two frozen H10 challengers versus H10_BASE_RTQ_R126 within each reported period",
+      "loss": "per-origin mean pinball loss across q25/q50/q75",
+      "block_length": 10,
+      "bootstrap_replications": 2000,
+      "random_seed": 20260912,
+      "interpretation": "diagnostic only because the broader V1.51-V1.57 research history is already researcher-visible; it does not restore fresh OOS status"
+    },
+    "primary_support_rule": {
+      "coverage_each_period_min": 0.20,
+      "selective_balanced_accuracy_each_period_strictly_above": 0.50,
+      "mcc_each_period_strictly_above": 0.0,
+      "both_direction_signals_each_period": true,
+      "mean_pinball_vs_H10_BASE_RTQ_R126_each_period": "STRICTLY_LOWER",
+      "inferential_rule": "DM/HAC, PT and White Reality Check p-values are diagnostics under overlapping horizons and researcher-visible periods; no isolated p-value promotes a model"
+    },
+    "secondary_lanes_are_diagnostic_not_selectors": true,
+    "2025_and_2026_are_researcher_visible": true,
+    "fresh_confirmation": false,
+    "promotion_requires_future_prospective_shadow": true,
+    "data_snooping_warning": "V1.51 through V1.57 reused the same historical outcomes for successor research; broader White Reality Check/Hansen SPA remains required before thesis claims about the full specification-search history"
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "post_score_candidate_threshold_or_horizon_changes": "FORBIDDEN",
+    "action_mapping": "NONE"
+  }
+}
