@@ -1,0 +1,36 @@
+name: Gold Control V1.54 settlement-window multi-horizon thesis research
+
+on:
+  pull_request:
+    paths:
+      - "gold_axis_2026/v154_thesis/**"
+      - "gold_axis_2026/tests/test_v154_settlement_horizon_tree.py"
+      - "gold_axis_2026/GOLD_CONTROL_V154_SETTLEMENT_HORIZON_TREE_METHOD_MEMO_2026-09-12.md"
+      - ".github/workflows/gold-control-v154-settlement-horizon-tree.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  settlement-horizon-tree:
+    runs-on: ubuntu-latest
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install frozen research dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 psycopg[binary]==3.2.10 pytest==8.4.2
+      - name: Test V1.54 governance and target chronology
+        run: python -m pytest -q gold_axis_2026/tests/test_v154_settlement_horizon_tree.py
+      - name: Run V1.54 frozen 2025 validation and 2026 retrospective test
+        run: python -m gold_axis_2026.v154_thesis.run_v154_settlement_horizon_tree
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-v154-settlement-horizon-tree-${{ github.sha }}
+          path: gold_axis_2026/data_pipeline/audits/v154_thesis/

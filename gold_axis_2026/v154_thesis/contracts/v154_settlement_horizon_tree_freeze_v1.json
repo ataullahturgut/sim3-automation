@@ -1,0 +1,67 @@
+{
+  "contract_id": "GOLD_CONTROL_V154_SETTLEMENT_WINDOW_MULTI_HORIZON_TREE_FREEZE_V1",
+  "status": "FROZEN_BEFORE_V154_2025_2026_SCORING",
+  "evidence_class": "RETROSPECTIVE_SUCCESSOR_DIAGNOSTIC",
+  "frozen_on": "2026-09-12",
+  "research_question": "Does the unresolved general-direction problem become materially more predictable when the target clock is aligned to the COMEX gold settlement window and the direction horizon is expanded from 1/3 days to 5/10/20 settlement sessions?",
+  "source": {
+    "table": "xau_intraday_research_cache_1m",
+    "series": "XAU/USD spot research cache",
+    "time_zone": "America/New_York",
+    "endpoint_time": "13:29:00",
+    "endpoint_label": "XAU_SPOT_1329_CME_SETTLEMENT_WINDOW_PROXY",
+    "important_note": "This is an exact XAU/USD spot bar aligned to the start of CME GC's 13:29-13:30 ET settlement window; it is not the CME futures settlement price.",
+    "no_fallback": true,
+    "no_interpolation": true
+  },
+  "windows": {
+    "formation_start": "2023-01-01",
+    "formation_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-12-31",
+    "test_start": "2026-01-01",
+    "test_end": "2026-06-30"
+  },
+  "horizons_settlement_sessions": [5, 10, 20],
+  "primary_horizon": 20,
+  "secondary_horizons": [10, 5],
+  "feature_set": {
+    "price_return_lags": [1, 2, 3, 4, 5],
+    "momentum_windows": [3, 5, 10, 20, 50],
+    "volatility_windows": [5, 10, 20],
+    "technical_indicators": ["RSI14", "MACD_12_26", "SMA5_OVER_SMA20", "SMA20_OVER_SMA50", "BOLLINGER_Z20"],
+    "existing_gold_control_roles": ["FAST_RECONSTRUCTED", "SLOW_RECONSTRUCTED", "MONTHLY_DIRECTION_3M_RECONSTRUCTED"],
+    "future_information": "FORBIDDEN"
+  },
+  "models": {
+    "RF500": {"family": "RandomForestClassifier", "n_estimators": 500, "max_features": "sqrt", "min_samples_leaf": 5, "class_weight": "balanced_subsample", "random_state": 20260912},
+    "BAG300": {"family": "BaggingClassifier", "n_estimators": 300, "tree_min_samples_leaf": 5, "random_state": 20260912},
+    "SGB300": {"family": "GradientBoostingClassifier", "n_estimators": 300, "learning_rate": 0.05, "max_depth": 3, "subsample": 0.8, "random_state": 20260912},
+    "LOGIT": {"family": "LogisticRegression", "C": 1.0, "max_iter": 3000, "random_state": 20260912}
+  },
+  "primary_model": "RF500",
+  "benchmark_models": ["LOGIT", "TRAINING_MAJORITY", "P50"],
+  "annual_refresh": {
+    "validation_2025_fit": "formation labels whose target endpoint is <= 2024-12-31",
+    "test_2026_fit": "all labels whose target endpoint is <= 2025-12-31",
+    "within_period_refit": false
+  },
+  "evaluation": {
+    "primary_metric": "balanced_accuracy",
+    "secondary_metrics": ["accuracy", "brier", "log_loss", "mcc", "coverage", "fixed_grid_nonoverlap_accuracy", "training_majority_accuracy"],
+    "research_interest_gate": {
+      "balanced_accuracy_each_of_2025_and_2026_min": 0.60,
+      "accuracy_each_of_2025_and_2026_min": 0.60,
+      "balanced_accuracy_gain_vs_training_majority_each_period_min": 0.05
+    },
+    "note": "2025 and 2026 are already researcher-visible from predecessor work; the gate is diagnostic only and cannot establish fresh confirmation."
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "post_score_threshold_or_feature_changes": "FORBIDDEN",
+    "promotion_requires_future_prospective_shadow": true
+  }
+}
