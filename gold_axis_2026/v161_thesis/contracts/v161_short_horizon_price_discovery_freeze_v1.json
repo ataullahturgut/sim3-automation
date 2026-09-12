@@ -1,0 +1,108 @@
+{
+  "contract_id": "GOLD_CONTROL_V161_SHORT_HORIZON_PRICE_DISCOVERY_FREEZE_V1",
+  "status": "FROZEN_BEFORE_V161_RETROSPECTIVE_SCORING",
+  "evidence_class": "RETROSPECTIVE_SUCCESSOR_DIAGNOSTIC",
+  "frozen_on": "2026-09-13",
+  "research_question": "Can strictly lagged gold-futures/ETF price-discovery information plus origin-observable realized moments improve selective H3/H5 XAU direction forecasts without hindsight tuning?",
+  "literature_anchors": [
+    "Pierdzioch_Risse_Rohloff_2015_NAJEF_10.1016/j.najef.2015.10.015",
+    "Bonato_Demirer_Gupta_Pierdzioch_2018_ResourcePolicy_10.1016/j.resourpol.2018.03.004",
+    "Hauptfleisch_Putnins_Lucey_2016_JFuturesMarkets_10.1002/fut.21775",
+    "Sehgal_Sobti_Diesting_2021_JFuturesMarkets_10.1002/fut.22208",
+    "ElYaniv_Wiener_2010_JMLR_selective_classification"
+  ],
+  "source": {
+    "gold_endpoint": "XAU/USD exact 13:29 America/New_York research cache bar",
+    "intraday_realized_moments": "V1.57 03:30-13:29 one-minute realized-moment channel",
+    "macro_driver_binding": "V1.59R1 Federal Reserve Board broad USD + 10Y real yield, strict previous-date",
+    "price_discovery_proxies": {
+      "GC=F": "Yahoo Finance daily Gold Futures continuous/front-month proxy; research-only; not official CME settlement",
+      "GLD": "Yahoo Finance daily SPDR Gold Shares proxy"
+    },
+    "price_discovery_join": "strict previous source date only; same-date daily bar is forbidden because its close may occur after the 13:29 XAU forecast origin",
+    "historical_reconstruction_warning": "all Yahoo/Fed daily histories are retrieved retrospectively in 2026 and are not prospective PIT archives",
+    "no_interpolation": true,
+    "no_same_day_daily_bar": true
+  },
+  "windows": {
+    "data_start": "2023-01-01",
+    "formation_start": "2024-01-01",
+    "formation_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-12-31",
+    "test_start": "2026-01-01",
+    "test_end": "2026-06-30"
+  },
+  "horizons": {
+    "PRIMARY_H5": 5,
+    "SECONDARY_H3": 3
+  },
+  "feature_sets": {
+    "BASE": [
+      "ret_lag1", "ret_lag2", "ret_lag3", "mom3", "mom5", "mom10", "mom20",
+      "vol5", "vol10", "vol20", "rsi14", "macd_12_26", "sma5_over_sma20", "sma20_over_sma50", "bollinger_z20",
+      "europe_session_ret", "us_morning_ret", "post_0829_ret",
+      "fast_role", "slow_role", "monthly_direction_3m",
+      "nasdaq_ret", "sp500_ret", "xag_ret", "xpt_ret", "xpd_ret",
+      "broad_usd_level", "broad_usd_logdiff1", "broad_usd_logdiff5",
+      "real10_level", "real10_delta1", "real10_delta5"
+    ],
+    "REALIZED_MOMENTS": [
+      "rm_vol", "rm_rsv_neg", "rm_rsv_pos", "rm_downside_share", "rm_skew", "rm_kurt", "rm_jump_fraction", "rm_max_abs"
+    ],
+    "PRICE_DISCOVERY": [
+      "gc_ret1", "gc_ret3", "gc_ret5", "gc_range1", "gc_oc1", "gc_vol5", "gc_vol20", "gc_volume_z20", "gc_basis_prev",
+      "gld_ret1", "gld_ret3", "gld_ret5", "gld_range1", "gld_oc1", "gld_vol5", "gld_vol20", "gld_volume_z20"
+    ]
+  },
+  "candidate_universe": {
+    "PRIMARY_H5": [
+      {"candidate": "H5_BASE_QB", "feature_set": "BASE"},
+      {"candidate": "H5_RM_QB", "feature_set": "BASE_PLUS_RM"},
+      {"candidate": "H5_PD_RM_QB", "feature_set": "BASE_PLUS_RM_PLUS_PD", "role": "PRIMARY_CHALLENGER"}
+    ],
+    "SECONDARY_H3": [
+      {"candidate": "H3_PD_RM_QB", "feature_set": "BASE_PLUS_RM_PLUS_PD", "role": "SECONDARY_DIAGNOSTIC"}
+    ]
+  },
+  "model": {
+    "method": "recursive selective quantile boosting proxy implemented with HistGradientBoostingRegressor quantile loss",
+    "quantiles": [0.25, 0.50, 0.75],
+    "training": "ROLLING",
+    "rolling_window": 252,
+    "minimum_mature_targets": 180,
+    "max_depth": 2,
+    "max_iter": 100,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "random_state": 20260913,
+    "direction_rule": "q25>0 => UP; q75<0 => DOWN; otherwise NO_SIGNAL"
+  },
+  "evaluation": {
+    "primary_metrics": ["coverage", "selective_accuracy", "selective_balanced_accuracy", "mcc", "up_signals", "down_signals", "mean_pinball"],
+    "primary_support_gate_H5_PD_RM_QB": {
+      "validation_2025_coverage_min": 0.20,
+      "validation_2025_balanced_min": 0.55,
+      "validation_2025_mcc_positive": true,
+      "validation_2025_both_directions": true,
+      "test_2026_coverage_min": 0.20,
+      "test_2026_balanced_min": 0.55,
+      "test_2026_mcc_positive": true,
+      "test_2026_both_directions": true,
+      "mean_pinball_each_period_strictly_below_H5_BASE_QB": true
+    },
+    "formation_is_diagnostic_only": true,
+    "2025_and_2026_are_researcher_visible": true,
+    "fresh_confirmation": false,
+    "promotion_requires_future_prospective_shadow": true,
+    "no_post_score_threshold_or_feature_search": true
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "action_mapping": "NONE",
+    "canonical_merge_without_explicit_user_authority": "FORBIDDEN"
+  }
+}
