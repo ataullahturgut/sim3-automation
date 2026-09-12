@@ -119,19 +119,28 @@
       "pesaran_timmermann_pvalue"
     ],
     "overlap_adjustment": "HAC/Newey-West style loss-differential variance with lag h-1; report HLN-adjusted Diebold-Mariano diagnostic where defined",
+    "multiple_search_diagnostic": {
+      "method": "WHITE_REALITY_CHECK_MOVING_BLOCK_BOOTSTRAP",
+      "scope": "the two frozen H10 challengers versus H10_BASE_RTQ_R126 within each reported period",
+      "loss": "per-origin mean pinball loss across q25/q50/q75",
+      "block_length": 10,
+      "bootstrap_replications": 2000,
+      "random_seed": 20260912,
+      "interpretation": "diagnostic only because the broader V1.51-V1.57 research history is already researcher-visible; it does not restore fresh OOS status"
+    },
     "primary_support_rule": {
       "coverage_each_period_min": 0.20,
       "selective_balanced_accuracy_each_period_strictly_above": 0.50,
       "mcc_each_period_strictly_above": 0.0,
       "both_direction_signals_each_period": true,
       "mean_pinball_vs_H10_BASE_RTQ_R126_each_period": "STRICTLY_LOWER",
-      "inferential_rule": "DM/HAC and PT p-values are diagnostics under overlapping horizons and researcher-visible periods; no isolated p-value promotes a model"
+      "inferential_rule": "DM/HAC, PT and White Reality Check p-values are diagnostics under overlapping horizons and researcher-visible periods; no isolated p-value promotes a model"
     },
     "secondary_lanes_are_diagnostic_not_selectors": true,
     "2025_and_2026_are_researcher_visible": true,
     "fresh_confirmation": false,
     "promotion_requires_future_prospective_shadow": true,
-    "data_snooping_warning": "V1.51 through V1.57 reused the same historical outcomes for successor research; White Reality Check/Hansen SPA is required before thesis claims of specification-search superiority"
+    "data_snooping_warning": "V1.51 through V1.57 reused the same historical outcomes for successor research; broader White Reality Check/Hansen SPA remains required before thesis claims about the full specification-search history"
   },
   "governance": {
     "AUTO_SELECTOR": "OFF",
