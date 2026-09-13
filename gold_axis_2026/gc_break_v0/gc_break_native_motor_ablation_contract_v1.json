@@ -1,0 +1,42 @@
+{
+  "contract_id": "GC_BREAK_NATIVE_MOTOR_ABLATION_CONTRACT_V1",
+  "status": "FROZEN_BEFORE_NATIVE_MOTOR_ABLATION_SCORING",
+  "created_date": "2026-09-13",
+  "event_contract": "GC_BREAK_EVENT_CONTRACT_V1",
+  "production_authority": false,
+  "prospective_claim": false,
+  "purpose": "measure each governed native motor/state in its own role before any learned weighting or opaque integration",
+  "signals": [
+    {"id":"FAST_CONFLICT","column":"fast_conflict","role":"tactical weakening","event_scope":"ALL"},
+    {"id":"FAST_OPPOSITE","column":"fast_opposite","role":"higher-specificity tactical weakening","event_scope":"ALL"},
+    {"id":"SLOW_CONFLICT","column":"slow_conflict","role":"slow conflict/transition context","event_scope":"ALL"},
+    {"id":"SLOW_OPPOSITE","column":"slow_opposite","role":"new-regime confirmation context","event_scope":"ALL"},
+    {"id":"EMERGENCY_LEVEL_OPPOSITE","column":"emergency_level_opposite","role":"abnormal level deviation context","event_scope":"ALL"},
+    {"id":"EMERGENCY_REVERSAL_OPPOSITE","column":"emergency_reversal_opposite","role":"reversal alert context","event_scope":"ALL"},
+    {"id":"EMERGENCY_ANY_OPPOSITE","column":"emergency_any_opposite","role":"abnormality/reversal union","event_scope":"ALL"},
+    {"id":"MONTHLY_DIRECTION_CONFLICT","column":"monthly_direction_conflict","role":"strategic prior conflict; descriptive only","event_scope":"ALL"},
+    {"id":"BOCPD_ADVERSE_NATIVE_MONTHLY","column":"bocpd_adverse_candidate","role":"downside regime-break context only; direction vote forbidden","event_scope":"NEW_REGIME_DOWN"},
+    {"id":"GVZ_PANIC","column":"gvz_panic","role":"risk severity context only; descriptive/sensitivity","event_scope":"ALL"}
+  ],
+  "metrics": [
+    "prebreak_event_recall",
+    "at_or_before_event_recall",
+    "false_alarm_episodes_per_100_origins",
+    "episode_conversion_rate",
+    "median_lead_observations",
+    "median_lead_calendar_days"
+  ],
+  "interpretation": {
+    "no_single_winner_selection": true,
+    "slow_opposite_is_confirmation_not_expected_early_warning": true,
+    "monthly_direction_and_gvz_may_not_be_promoted_to_trigger_from_this_result": true,
+    "bocpd_must_be_scored_on_downside_break_scope_as_well_as_reported_descriptively_on_all_origins": true
+  },
+  "governance": {
+    "no_post_score_threshold_tuning": true,
+    "no_equal_weight_voting": true,
+    "no_database_writes": true,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF"
+  }
+}
