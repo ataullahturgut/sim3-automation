@@ -72,6 +72,6 @@ def test_state_local_weights_use_only_supplied_prior_rows():
 
 def test_source_keeps_selector_and_abstention_out_of_v164():
     source = (ROOT / "v164_research/run_v164_adaptive_error_memory.py").read_text(encoding="utf-8")
-    assert "selector_scoring_performed\": False" in source
-    assert "abstention_tuning_performed\": False" in source
-    assert "j + h <= t" in source
+    assert '"selector_scoring_performed": False' in source
+    assert '"abstention_tuning_performed": False' in source
+    assert '+ h <= t' in source
