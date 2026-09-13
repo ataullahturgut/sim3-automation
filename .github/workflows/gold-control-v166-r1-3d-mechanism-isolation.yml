@@ -1,0 +1,44 @@
+name: Gold Control V1.66 R1 3D mechanism isolation research
+
+on:
+  pull_request:
+    paths:
+      - "gold_axis_2026/v166_research/**"
+      - "gold_axis_2026/tests/test_v166_3d_mechanism_isolation.py"
+      - ".github/workflows/gold-control-v166-r1-3d-mechanism-isolation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  mechanism-isolation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+      GH_TOKEN: ${{ github.token }}
+      V164_ARTIFACT_DIR: /tmp/v164_artifact
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install frozen V1.66 R1 dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 pytest==8.4.2
+      - name: Test V1.66 R1 mechanism and governance locks
+        run: python -m pytest -q gold_axis_2026/tests/test_v166_3d_mechanism_isolation.py
+      - name: Download and verify immutable V1.64 source artifact
+        run: |
+          mkdir -p /tmp/v164_artifact
+          gh api repos/ataullahturgut/sim3-automation/actions/artifacts/10316352769/zip > /tmp/v164_artifact.zip
+          echo "23901808b5b8db4b2065797865f7ac4269bf544953fe1ce38b37964e19ab78da  /tmp/v164_artifact.zip" | sha256sum -c -
+          unzip -q /tmp/v164_artifact.zip -d /tmp/v164_artifact
+      - name: Run frozen V1.66 R1 3D mechanism isolation
+        run: python -m gold_axis_2026.v166_research.run_v166_3d_mechanism_isolation
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-v166-r1-3d-mechanism-isolation-${{ github.sha }}
+          path: gold_axis_2026/data_pipeline/audits/v166_research/
