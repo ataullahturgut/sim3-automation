@@ -54,7 +54,6 @@ jobs:
           params = {'$limit': '5000', '$where': "cftc_contract_market_code='088691'", '$order': 'report_date_as_yyyy_mm_dd'}
           r = requests.get(url, params=params, headers=headers, timeout=60)
           if r.status_code != 200 or len(r.content) < 1000:
-              # Public bulk-export fallback; filter locally.
               bulk = 'https://publicreporting.cftc.gov/api/views/72hh-3qpy/rows.csv?accessType=DOWNLOAD'
               r = requests.get(bulk, headers=headers, timeout=120)
               r.raise_for_status()
@@ -71,17 +70,34 @@ jobs:
           gvz_url = 'https://cdn-api.cboe.com/api/global/us_indices/daily_prices/GVZ_History.csv'
           g = requests.get(gvz_url, headers=headers, timeout=60)
           g.raise_for_status()
-          (out / 'GVZ_History.csv').write_bytes(g.content)
-          gvz = pd.read_csv(io.BytesIO(g.content))
+          raw_gvz = g.content
+          gvz = pd.read_csv(io.BytesIO(raw_gvz))
           if len(gvz) < 500:
               raise RuntimeError(f'GVZ_ROWS_TOO_SMALL:{len(gvz)}')
+          norm = {''.join(ch.lower() if ch.isalnum() else '_' for ch in str(c)).strip('_'): c for c in gvz.columns}
+          date_col = norm.get('date')
+          value_col = norm.get('close') or norm.get('gvz') or norm.get('value')
+          if date_col is None:
+              raise RuntimeError(f'GVZ_DATE_COLUMN_NOT_FOUND:{list(gvz.columns)}')
+          if value_col is None:
+              candidates = [c for c in gvz.columns if c != date_col and pd.to_numeric(gvz[c], errors='coerce').notna().sum() > max(100, len(gvz)//2)]
+              if len(candidates) != 1:
+                  raise RuntimeError(f'GVZ_VALUE_COLUMN_AMBIGUOUS:{list(gvz.columns)}:{candidates}')
+              value_col = candidates[0]
+          gvz_std = pd.DataFrame({'DATE': gvz[date_col], 'CLOSE': pd.to_numeric(gvz[value_col], errors='coerce')}).dropna()
+          gvz_std.to_csv(out / 'GVZ_History.csv', index=False)
 
-          def sha(p):
+          def sha_bytes(b):
+              return hashlib.sha256(b).hexdigest()
+          def sha_file(p):
               return hashlib.sha256(Path(p).read_bytes()).hexdigest()
           manifest = {
-              'cftc_rows': int(len(x)), 'gvz_rows': int(len(gvz)),
-              'cftc_sha256': sha(out / 'cftc_gold_088691.csv'),
-              'gvz_sha256': sha(out / 'GVZ_History.csv'),
+              'cftc_rows': int(len(x)), 'gvz_rows': int(len(gvz_std)),
+              'cftc_sha256': sha_file(out / 'cftc_gold_088691.csv'),
+              'gvz_raw_sha256': sha_bytes(raw_gvz),
+              'gvz_normalized_sha256': sha_file(out / 'GVZ_History.csv'),
+              'gvz_source_columns': list(gvz.columns),
+              'gvz_value_column_used': value_col,
               'cftc_endpoint': url, 'gvz_endpoint': gvz_url,
           }
           (out / 'v170_public_source_manifest.json').write_text(json.dumps(manifest, indent=2), encoding='utf-8')
@@ -90,8 +106,12 @@ jobs:
       - name: Run frozen V1.70 public positioning context experiment
         run: python -m gold_axis_2026.v170_research.run_v170_public_positioning_context
       - name: Copy public source manifest into audit artifact
-        run: cp /tmp/v170_sources/v170_public_source_manifest.json gold_axis_2026/data_pipeline/audits/v170_research/
+        if: always()
+        run: |
+          mkdir -p gold_axis_2026/data_pipeline/audits/v170_research
+          if [ -f /tmp/v170_sources/v170_public_source_manifest.json ]; then cp /tmp/v170_sources/v170_public_source_manifest.json gold_axis_2026/data_pipeline/audits/v170_research/; fi
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: gold-v170-public-positioning-context-${{ github.sha }}
           path: gold_axis_2026/data_pipeline/audits/v170_research/
