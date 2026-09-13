@@ -1,0 +1,96 @@
+{
+  "audit_id": "GC_BREAK_WP4_RESEARCH_SEQUENTIAL_PROTOTYPE_V1",
+  "status": "RESEARCH_ONLY_EXPLORATORY_NOT_CANONICAL",
+  "source_series": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+  "source_evidence_class": "RETROSPECTIVE_RESEARCH_ONLY_NOT_CANONICAL_NY17",
+  "train_window": {
+    "origin_start": "2024-01-02",
+    "target_end": "2024-05-31",
+    "origins": 92,
+    "break_targets": 7
+  },
+  "test_window": {
+    "origin_start": "2024-06-03",
+    "target_end": "2024-08-30",
+    "origins": 59,
+    "break_targets": 3
+  },
+  "test_break_dates": ["2024-07-05", "2024-07-25", "2024-07-31"],
+  "model": {
+    "family": "balanced ridge logistic discrete-time transition hazard",
+    "intercept": -1.333837653969546,
+    "coefficients": {
+      "adverse_fraction_clipped_0_1": 2.010799753196628,
+      "fast_conflict": 1.1341389127569526,
+      "slow_conflict": -0.6664265878528187,
+      "emergency_reversal_opposite": 0.0
+    },
+    "training_q75_weakening_threshold": 0.4603736098008353,
+    "state_mapping": "one exceedance=WEAKENING; second consecutive exceedance=BREAK_ALERT; below threshold=STABLE"
+  },
+  "feature_support": {
+    "train_fast_conflict": 25,
+    "train_slow_conflict": 33,
+    "train_emergency_reversal_opposite": 0,
+    "test_fast_conflict": 14,
+    "test_slow_conflict": 22,
+    "test_emergency_reversal_opposite": 0
+  },
+  "ranking_scores": {
+    "train_auc": 0.838655462184874,
+    "train_average_precision": 0.4729596681977634,
+    "train_brier": 0.15649904410168528,
+    "test_auc": 0.9166666666666667,
+    "test_average_precision": 0.28888888888888886,
+    "test_brier": 0.1343863945881929
+  },
+  "sequential_metrics": {
+    "WEAKENING_OR_HIGHER": {
+      "episodes": 7,
+      "converted_episodes": 3,
+      "false_episodes": 4,
+      "episode_conversion_rate": 0.42857142857142855,
+      "event_recall": 1.0,
+      "false_episodes_per_100_origins": 6.779661016949152,
+      "median_lead_observations": 3.0,
+      "mean_lead_observations": 2.6666666666666665
+    },
+    "BREAK_ALERT": {
+      "episodes": 3,
+      "converted_episodes": 2,
+      "false_episodes": 1,
+      "episode_conversion_rate": 0.6666666666666666,
+      "event_recall": 0.6666666666666666,
+      "false_episodes_per_100_origins": 1.694915254237288,
+      "median_lead_observations": 2.5,
+      "mean_lead_observations": 2.5
+    }
+  },
+  "baseline_same_predictive_semantic": {
+    "PATH_HALF": {
+      "event_recall": 1.0,
+      "episode_conversion_rate": 0.5,
+      "false_episodes_per_100_origins": 5.084745762711864,
+      "median_lead_observations": 1.0
+    },
+    "FAST_CONFLICT": {
+      "event_recall": 0.6666666666666666,
+      "episode_conversion_rate": 0.4,
+      "false_episodes_per_100_origins": 5.084745762711864,
+      "median_lead_observations": 2.0
+    },
+    "CORE_NATIVE": {
+      "event_recall": 0.6666666666666666,
+      "episode_conversion_rate": 0.4,
+      "false_episodes_per_100_origins": 5.084745762711864,
+      "median_lead_observations": 2.0
+    }
+  },
+  "governance": {
+    "production_authority": false,
+    "prospective_claim": false,
+    "canonical_validation_required": true,
+    "database_write": "NONE",
+    "interpretation": "Small-sample research-only feasibility. Do not promote before canonical exact-NY17 rerun."
+  }
+}
