@@ -1,0 +1,55 @@
+{
+  "candidate_id": "GC_BREAK_WP4_ROLE_PRESERVING_RESEARCH_V2",
+  "status": "RESEARCH_ONLY_NOT_CANONICAL",
+  "source_series": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+  "train": {"origins": 92, "break_targets": 7},
+  "test": {"origins": 59, "break_targets": 3, "break_dates": ["2024-07-05", "2024-07-25", "2024-07-31"]},
+  "hazard_core": {
+    "features": ["adverse_fraction_clipped_0_1", "FAST_CONFLICT"],
+    "intercept": -1.4575860858771448,
+    "coefficients": {
+      "adverse_fraction_clipped_0_1": 2.0191926530714523,
+      "FAST_CONFLICT": 0.8296661326927185
+    },
+    "training_q75_weakening_threshold": 0.45358244947096144,
+    "train_auc": 0.8310924369747898,
+    "train_average_precision": 0.5183525584146702,
+    "train_brier": 0.1606568458108967,
+    "test_auc": 0.9404761904761905,
+    "test_average_precision": 0.3595238095238096,
+    "test_brier": 0.1408756707720705
+  },
+  "sequential_test_metrics": {
+    "WEAKENING_OR_HIGHER": {
+      "event_recall": 1.0,
+      "episode_conversion_rate": 0.5,
+      "false_episodes_per_100_origins": 5.084745762711864,
+      "median_lead_observations": 3.0,
+      "episodes": 6
+    },
+    "BREAK_ALERT": {
+      "event_recall": 0.6666666666666666,
+      "episode_conversion_rate": 0.5,
+      "false_episodes_per_100_origins": 3.389830508474576,
+      "median_lead_observations": 2.5,
+      "episodes": 4
+    }
+  },
+  "SLOW_confirmation_role": {
+    "break_events": 3,
+    "confirmed_before_next_break": 2,
+    "confirmation_rate": 0.6666666666666666,
+    "confirmation_delays_observations": [1, 7],
+    "median_confirmation_delay_observations": 4.0,
+    "note": "SLOW is not used as a hazard-core feature in V2."
+  },
+  "EMERGENCY_role": {
+    "opposite_reversal_support_train": 0,
+    "opposite_reversal_support_test": 0,
+    "decision": "DO_NOT_FORCE_INTO_HAZARD_CORE"
+  },
+  "interpretation": "Price+FAST gave the best ranking performance in this tiny ablation. SLOW is retained as post-break confirmation/new-regime evidence. Emergency remains an optional modifier because it had zero opposite-reversal support in this slice. Small sample; canonical rerun required.",
+  "production_authority": false,
+  "prospective_claim": false,
+  "database_write": "NONE"
+}
