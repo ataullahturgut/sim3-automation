@@ -1,0 +1,94 @@
+{
+  "contract_id": "GOLD_CONTROL_V170_PUBLIC_POSITIONING_CONTEXT_FREEZE_V1",
+  "status": "FROZEN_BEFORE_ANY_V170_SCORING",
+  "evidence_class": "RETROSPECTIVE_METHOD_DEVELOPMENT_DIAGNOSTIC_NOT_FRESH_OOS",
+  "frozen_on": "2026-09-13",
+  "research_question": "Do freely accessible point-in-time public positioning and volatility-context data add incremental short-horizon directional skill beyond the existing Gold Control information set?",
+  "parent_version": "V1.69",
+  "source_panel": {
+    "artifact_id": 10316352769,
+    "zip_sha256": "23901808b5b8db4b2065797865f7ac4269bf544953fe1ce38b37964e19ab78da",
+    "required_file": "v164_panel.csv"
+  },
+  "public_sources": {
+    "CFTC_COT": {
+      "dataset": "Disaggregated Futures Only",
+      "dataset_id": "72hh-3qpy",
+      "contract_market_code": "088691",
+      "role": "weekly positioning",
+      "pit_rule": "Use only reports whose conservative available_date is strictly before origin_date. Default available_date = report_date + 7 calendar days. Known 2025-2026 federal shutdown catch-up reports use the CFTC-published actual catch-up dates."
+    },
+    "CBOE_GVZ": {
+      "url": "https://cdn-api.cboe.com/api/global/us_indices/daily_prices/GVZ_History.csv",
+      "role": "gold option-implied volatility context",
+      "pit_rule": "Use only the latest GVZ close with gvz_date strictly before origin_date; never same-day GVZ."
+    }
+  },
+  "horizons": [1, 3],
+  "target": "y_h = 1[log(close_{t+h}/close_t) > 0]",
+  "maturity_rule": "Training rows at origin t require target_date < origin_date_t.",
+  "base_features": [
+    "europe_session_ret", "us_morning_ret", "post_0829_ret", "rm_vol", "rm_rsv_neg", "rm_rsv_pos", "rm_downside_share", "rm_skew", "rm_kurt", "rm_jump_fraction", "rm_max_abs",
+    "nasdaq_ret", "sp500_ret", "xag_ret", "xpt_ret", "xpd_ret", "broad_usd_level", "broad_usd_logdiff1", "broad_usd_logdiff5", "real10_level", "real10_delta1", "real10_delta5"
+  ],
+  "public_features": [
+    "pub_gvz_level_lag", "pub_gvz_ret1_lag", "pub_gvz_chg5_lag", "pub_gvz_z20_lag",
+    "pub_cot_mm_net_oi", "pub_cot_prod_net_oi", "pub_cot_swap_net_oi",
+    "pub_cot_mm_net_change_1w_oi", "pub_cot_oi_change_1w", "pub_cot_age_days"
+  ],
+  "candidate_sets": {
+    "BASE_CORE": "base_features",
+    "PUBLIC_ONLY": "public_features",
+    "BASE_PLUS_PUBLIC": "base_features + public_features"
+  },
+  "model_lock": {
+    "model": "training-only median imputation -> StandardScaler -> LogisticRegression L2",
+    "C": 1.0,
+    "solver": "lbfgs",
+    "hyperparameter_search": "FORBIDDEN"
+  },
+  "temporal_design": {
+    "formation": {
+      "E1_2023H2": ["2023-07-01", "2023-12-31"],
+      "E2_2024H1": ["2024-01-01", "2024-06-30"],
+      "E3_2024Q3": ["2024-07-01", "2024-09-25"]
+    },
+    "bridge_2024Q4": ["2024-09-26", "2024-12-31"],
+    "visible_diagnostics": {
+      "2025": ["2025-01-01", "2025-12-31"],
+      "2026_available": ["2026-01-01", "2026-06-30"]
+    }
+  },
+  "benchmarks": {
+    "binary": "causal expanding matured UP frequency; fallback 0.5 if fewer than 20 matured labels"
+  },
+  "formation_gate": {
+    "augmented_brier_better_than_base_environments_min": 2,
+    "median_brier_improvement_vs_base_min": 0.002,
+    "augmented_positive_brier_skill_vs_frequency_environments_min": 2,
+    "augmented_median_auc_min": 0.53,
+    "augmented_minimum_auc_min": 0.47
+  },
+  "bridge_gate": {
+    "augmented_brier_improvement_vs_base_min": 0.001,
+    "augmented_brier_not_worse_than_frequency": true,
+    "augmented_logloss_not_worse_than_base": true,
+    "augmented_logloss_not_worse_than_frequency": true,
+    "augmented_auc_not_worse_than_base": true,
+    "augmented_auc_min": 0.52,
+    "both_predicted_directions": true
+  },
+  "decision_lock": {
+    "pass": "Public information shows pre-2025 incremental skill; 2025/2026 remain diagnostic only. A separately frozen next study may refine public positioning or justify paid option-surface/order-flow acquisition.",
+    "fail": "Do not tune features, COT lags, GVZ transformations, thresholds, or model families after scoring. Treat current free public context as insufficient under this hypothesis and reassess paid forward-looking data or horizon/information redesign."
+  },
+  "forbidden_in_v170": [
+    "same_day_GVZ", "COT_report_date_as_if_publication_date", "post_score_feature_addition", "hyperparameter_search", "2025_2026_based_selection", "selector_or_CRASE", "drift_detector", "residual_correction", "abstention_tuning", "paid_data", "production_writes", "action_mapping"
+  ],
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "canonical_merge_without_explicit_user_authority": "FORBIDDEN"
+  }
+}
