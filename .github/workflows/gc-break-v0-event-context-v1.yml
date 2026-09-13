@@ -28,13 +28,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Restore exact frozen V2 dependency used by Market Shock V3
+        run: |
+          git fetch --no-tags --depth=1 origin gold-control-market-shock-challenger-v3
+          git show origin/gold-control-market-shock-challenger-v3:gold_axis_2026/tools/market_shock_challenger_v2.py > gold_axis_2026/tools/market_shock_challenger_v2.py
+          actual="$(git hash-object gold_axis_2026/tools/market_shock_challenger_v2.py)"
+          test "$actual" = "287c3a4829483515c7bb7d3c540486263245ab4d"
+          echo "MARKET_SHOCK_V2_DEPENDENCY_BLOB=$actual"
       - name: Install research-only dependencies
-        run: python -m pip install --quiet numpy pandas scipy 'psycopg[binary]>=3.2,<4'
+        run: python -m pip install --quiet numpy pandas scipy requests 'psycopg[binary]>=3.2,<4'
       - name: Require read source secret and compile
         run: |
           test -n "$NEON_DATABASE_URL"
           python -m py_compile gold_axis_2026/tools/gc_break_v0_governed_diagnostic_v1.py
           python -m py_compile gold_axis_2026/tools/gc_break_v0_event_context_v1.py
+          python -m py_compile gold_axis_2026/tools/market_shock_challenger_v2.py
           python -m py_compile gold_axis_2026/tools/market_shock_challenger_v3.py
       - name: Rebuild governed diagnostic inputs locally
         run: python gold_axis_2026/tools/gc_break_v0_governed_diagnostic_v1.py
