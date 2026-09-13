@@ -1,0 +1,76 @@
+{
+  "contract_id": "GC_BREAK_THREE_MONTH_INTEGRATED_PROTOTYPE_V2",
+  "status": "RESEARCH_ONLY_IDENTITY_CORRECTED_FROZEN_BEFORE_ACCEPTED_SCORING",
+  "supersedes": "GC_BREAK_THREE_MONTH_INTEGRATED_PROTOTYPE_V1",
+  "supersession_reason": "V1 incorrectly mapped Neon MACRO_EVENT_SUCCESSOR_V3 replay series into the governed MACRO_EVENT_SUCCESSOR_V2 runtime slot. V1 results are not accepted as 12-identity evidence. V2 changes identity lineage only; the coverage-selected test window, learned core, training window, ridge penalty and thresholds are unchanged.",
+  "selection_rule": {
+    "basis": "coverage_only_not_outcome_performance",
+    "selected_start": "2026-04-01",
+    "selected_end": "2026-06-30",
+    "minimum_common_xau_gvz_vix_origins": 55
+  },
+  "source": {
+    "xau_daily_series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+    "xau_evidence_class": "HISTORICAL_RESEARCH_RETRIEVAL_NOT_CANONICAL_NY17",
+    "gvz_series_id": "GVZ_CBOE",
+    "vix_series_id": "VIX_CBOE",
+    "intraday_cache": "xau_intraday_research_cache_5m",
+    "macro_event_v2_replay_code": "data_pipeline/macro_event_successor_v2_score_replay.py",
+    "macro_event_v2_source_run_id": "6a18db17-6fb2-4bf8-a20b-f3b6d529ca8a",
+    "macro_event_v2_source_pipeline": "MACRO_EVENT_SUCCESSOR_V1_RESEARCH_DATA_PLANE_R1",
+    "monthly_h1_replay": "patch_repro_v1/locked_replay_v7_daily_feature_pit_43.csv",
+    "canonical_exact_ny17": false
+  },
+  "governed_runtime_identities_required": [
+    "CAUSAL_PATCH",
+    "VW_MIDAS_MSVR_SUCCESSOR_V1",
+    "MOMENTUM_3M",
+    "RANDOM_WALK",
+    "MONTHLY_DIRECTION_3M",
+    "FAST",
+    "SLOW",
+    "MACRO_EVENT_SUCCESSOR_V2",
+    "BOCPD_RETURN_SUCCESSOR_V1",
+    "EMERGENCY_LEVEL",
+    "EMERGENCY_REVERSAL",
+    "GVZ_RISK"
+  ],
+  "role_locks": {
+    "monthly_h1": "strategic_context_only_independent_primary_line",
+    "monthly_direction_3m": "strategic_prior_only",
+    "fast": "tactical_weakening_core",
+    "slow": "confirmation_new_regime_only",
+    "macro_event_successor_v2": "event_clock_modifier_only_no_direction_vote",
+    "bocpd": "completed_month_regime_context_only_no_direction_vote",
+    "emergency_level": "stress_context_only",
+    "emergency_reversal": "selective_reversal_modifier",
+    "gvz_risk": "risk_severity_abstention_context_never_equal_direction_vote"
+  },
+  "model": {
+    "learned_core": "balanced_ridge_logit_price_path_plus_fast_only",
+    "training_start": "2025-01-02",
+    "training_end": "2026-03-31",
+    "features": ["adverse_fraction_clipped_0_1", "fast_conflict"],
+    "ridge_lambda": 1.0,
+    "weakening_threshold": "training_probability_q75",
+    "break_alert_escalation": "two_consecutive_weakening_or_weakening_plus_strong_role_preserving_modifier",
+    "strong_modifiers": ["fast_opposite", "emergency_reversal_opposite", "macro_event_v2_opposite"],
+    "slow_not_in_hazard": true
+  },
+  "event_label": {
+    "authority": "gc_break_event_contract_v1.json",
+    "primary_k_sigma": 3.0,
+    "engine_independent": true
+  },
+  "governance": {
+    "no_database_writes": true,
+    "no_provider_substitution": true,
+    "no_post_test_threshold_tuning": true,
+    "no_random_split": true,
+    "no_buy_sell_mapping": true,
+    "no_prospective_claim": true,
+    "official_wp4_completion_claim": false,
+    "canonical_validation_required": true,
+    "v1_results_accepted": false
+  }
+}
