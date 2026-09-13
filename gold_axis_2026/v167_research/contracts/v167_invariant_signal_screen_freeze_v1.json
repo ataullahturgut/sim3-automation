@@ -1,0 +1,116 @@
+{
+  "contract_id": "GOLD_CONTROL_V167_INVARIANT_SIGNAL_SCREEN_FREEZE_V1",
+  "status": "FROZEN_BEFORE_ANY_V167_SCORING",
+  "evidence_class": "RETROSPECTIVE_METHOD_DEVELOPMENT_DIAGNOSTIC_NOT_FRESH_OOS",
+  "frozen_on": "2026-09-13",
+  "research_question": "Does the existing 3-day Gold Control information universe contain any causal-chronology-preserving feature block whose discriminative skill is stable across multiple pre-2025 temporal environments and transports into a 2024Q4 bridge period before 2025/2026 are inspected diagnostically?",
+  "literature_basis": [
+    "Invariant prediction / causal transfer: stable conditional predictive relationships across environments may generalize better under distribution shift.",
+    "Maximin/stable effects: shared effects across heterogeneous environments are preferable to effects dominated by one regime.",
+    "Time-series OOD generalization: environment construction and temporal adjacency matter; invariant learning can fail when core variables are unobserved or environments are poorly specified.",
+    "Structural-break forecasting: hard break detection is not automatically optimal; robust weighting and stable predictors should be evaluated before escalating adaptation."
+  ],
+  "parent_version": "V1.66-R1",
+  "horizon": 3,
+  "source_artifact": {
+    "workflow_run_id": 34752686111,
+    "artifact_id": 10316352769,
+    "zip_sha256": "23901808b5b8db4b2065797865f7ac4269bf544953fe1ce38b37964e19ab78da",
+    "required_file": "v164_panel.csv",
+    "immutability": "Use the frozen V1.64 panel only. No external data fetch and no post-score feature creation are allowed."
+  },
+  "target": {
+    "definition": "y_t = 1[close_{t+3} > close_t] using the next three rows of the frozen NY17 panel",
+    "target_date": "date at row t+3",
+    "maturity_rule": "A target is usable for training/benchmark history only after its target_date is strictly earlier than the current forecast origin_date.",
+    "boundary_rule": "For an environment score, target_date must lie inside that same environment."
+  },
+  "feature_blocks": {
+    "GOLD": ["gold_ret_lag1", "gold_ret_lag2", "gold_ret_lag3", "gold_mom3", "gold_mom5", "gold_mom10", "gold_mom20", "gold_rv5", "gold_rv10", "gold_rv20"],
+    "SESSION_RM": ["europe_session_ret", "us_morning_ret", "post_0829_ret", "rm_vol", "rm_rsv_neg", "rm_rsv_pos", "rm_downside_share", "rm_skew", "rm_kurt", "rm_jump_fraction", "rm_max_abs"],
+    "PRICE_DISCOVERY": ["gc_ret1", "gc_ret3", "gc_ret5", "gc_range1", "gc_oc1", "gc_vol5", "gc_vol20", "gc_volume_z20", "gc_basis_prev", "gld_ret1", "gld_ret3", "gld_ret5", "gld_range1", "gld_oc1", "gld_vol5", "gld_vol20", "gld_volume_z20"],
+    "MACRO_CROSS": ["nasdaq_ret", "sp500_ret", "xag_ret", "xpt_ret", "xpd_ret", "broad_usd_level", "broad_usd_logdiff1", "broad_usd_logdiff5", "real10_level", "real10_delta1", "real10_delta5"],
+    "ROLE_CONTEXT": ["fast_state_encoded", "slow_state_encoded", "monthly_direction_3m_encoded"]
+  },
+  "model_lock": {
+    "family": "L2-regularized logistic regression",
+    "pipeline": "training-only median imputation -> StandardScaler -> LogisticRegression",
+    "C": 1.0,
+    "solver": "lbfgs",
+    "max_iter": 5000,
+    "class_weight": null,
+    "hyperparameter_search": "FORBIDDEN"
+  },
+  "chronological_environment_design": {
+    "initial_train": ["2023-01-04", "2023-06-30"],
+    "forward_tests": {
+      "E1_2023H2": ["2023-07-01", "2023-12-31"],
+      "E2_2024H1": ["2024-01-01", "2024-06-30"],
+      "E3_2024Q3": ["2024-07-01", "2024-09-25"]
+    },
+    "bridge_2024Q4": ["2024-09-26", "2024-12-31"],
+    "visible_diagnostic_periods": {
+      "2025": ["2025-01-01", "2025-12-31"],
+      "2026_available": ["2026-01-01", "2026-06-30"]
+    },
+    "forward_rule": "For E1/E2/E3, fit each block using all valid rows strictly before the test environment start and score only the next environment. No future-environment training is allowed."
+  },
+  "benchmark": {
+    "name": "CAUSAL_EXPANDING_FREQUENCY",
+    "definition": "At each origin, probability equals the mean y among all prior rows whose target_date is strictly earlier than that origin; fallback 0.5 if fewer than 20 matured outcomes exist."
+  },
+  "block_eligibility_gate": {
+    "positive_brier_skill_environments_min": 2,
+    "forward_environment_count": 3,
+    "worst_environment_brier_skill_min": -0.03,
+    "median_auc_min": 0.53,
+    "minimum_environment_auc": 0.47,
+    "both_classes_required_per_environment": true,
+    "selection_rule": "Eligible blocks are determined only from E1/E2/E3 forward scores. No 2024Q4/2025/2026 information may influence eligibility."
+  },
+  "candidate_construction": {
+    "best_stable_block": "Among eligible blocks, choose the block with the highest worst-environment Brier skill; ties broken by median AUC, then alphabetical block name. Fit once on all valid data through 2024-09-25.",
+    "stable_equal_average": "If at least two blocks are eligible, fit each eligible block once on all valid data through 2024-09-25 and average their probabilities equally. If exactly one block is eligible, this equals BEST_STABLE_BLOCK.",
+    "if_no_eligible_blocks": "NO_CANDIDATE; do not invent a new feature set or fit FOIL/IRM/anchor-regression after seeing scores."
+  },
+  "bridge_gate": {
+    "period": "2024Q4",
+    "requirements_for_promising_candidate": {
+      "brier_not_worse_than_causal_frequency": true,
+      "log_loss_not_worse_than_causal_frequency": true,
+      "roc_auc_min": 0.52,
+      "both_predicted_directions": true
+    },
+    "interpretation": "2024Q4 is the pre-2025 bridge check. 2025/2026 are reported only as retrospective diagnostics and cannot rescue a bridge failure."
+  },
+  "visible_period_success_gate": {
+    "2025_and_2026_brier_not_worse_than_causal_frequency": true,
+    "2025_and_2026_auc_min": 0.52,
+    "both_predicted_directions_each_period": true,
+    "use": "Diagnostic persistence evidence only; not a fresh-OOS claim."
+  },
+  "decision_lock": {
+    "if_no_eligible_block": "Reject current invariant-signal hypothesis and move to a separately justified information/target redesign or regime-similarity hypothesis.",
+    "if_eligible_but_bridge_fails": "Do not escalate to invariant deep learning. Investigate regime-similarity weighting or new information under a new frozen contract.",
+    "if_bridge_passes_but_visible_persistence_fails": "Treat temporal invariance as insufficient; next study may test similar-regime weighting using only predeclared state distance and causal history.",
+    "if_bridge_and_visible_persistence_pass": "Candidate may enter a separately frozen prospective-shadow design; no production promotion from V1.67."
+  },
+  "forbidden_in_v167": [
+    "FOIL_or_other_deep_invariant_learning",
+    "IRM_or_anchor_regression_parameter_search",
+    "drift_detector",
+    "gated_residual_correction",
+    "selector_or_CRASE",
+    "abstention_threshold_tuning",
+    "feature_addition_after_scoring",
+    "2025_2026_based_block_selection",
+    "production_writes",
+    "action_mapping"
+  ],
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "canonical_merge_without_explicit_user_authority": "FORBIDDEN"
+  }
+}
