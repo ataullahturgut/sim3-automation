@@ -1,0 +1,100 @@
+{
+  "contract_id": "GOLD_CONTROL_V163_HETEROGENEOUS_FORECASTERS_FREEZE_V1",
+  "status": "FROZEN_BEFORE_ANY_V163_SCORING",
+  "frozen_on": "2026-09-13",
+  "evidence_class": "RETROSPECTIVE_METHOD_DEVELOPMENT_DIAGNOSTIC_NOT_FRESH_OOS",
+  "parent_negative_result": "GOLD_CONTROL_V162_CONTEXT_AWARE_META_FORECAST",
+  "research_question": "Can genuinely heterogeneous information-block forecasters create stable 1D/3D predictive skill and complementary errors before any new dynamic selector is attempted?",
+  "literature_anchors": [
+    "Raftery_Karny_Ettler_2010_Technometrics_10.1198/TECH.2009.08104",
+    "Giacomini_White_2006_Econometrica_10.1111/j.1468-0262.2006.00718.x",
+    "Hansen_Lunde_Nason_2011_Econometrica_10.3982/ECTA5771",
+    "Gneiting_Raftery_2007_JRSSB_10.1111/j.1467-9868.2007.00587.x"
+  ],
+  "origin": {
+    "target_clock": "exact XAU/USD 16:59:00 America/New_York bar stored as NY17 semantic",
+    "rich_feature_clock": "same-date V1.61/V1.57 feature state available no later than 13:29 America/New_York plus strict-previous-date daily price-discovery and macro drivers",
+    "merge_rule": "rich features may join NY17 only by identical calendar date after all source clocks are proven <= 17:00; target close remains NY17 and is never imported into feature construction",
+    "historical_reconstruction_warning": "Yahoo/Fed histories remain retrospective 2026 reconstructions, not prospective PIT archives"
+  },
+  "horizons": {
+    "PRIMARY_1D": 1,
+    "SECONDARY_3D": 3,
+    "maturity_rule": "training origin j is eligible at t only if j+h<=t"
+  },
+  "windows": {
+    "formation_start": "2024-01-01",
+    "formation_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-12-31",
+    "test_start": "2026-01-01",
+    "test_end": "2026-06-30"
+  },
+  "expert_pool": {
+    "GOLD_RIDGE": {
+      "model": "logistic_ridge_C1",
+      "features": ["gold_ret_lag1", "gold_ret_lag2", "gold_ret_lag3", "gold_mom3", "gold_mom5", "gold_mom10", "gold_mom20", "gold_rv5", "gold_rv10", "gold_rv20"]
+    },
+    "SESSION_RM_RIDGE": {
+      "model": "logistic_ridge_C1",
+      "features": ["europe_session_ret", "us_morning_ret", "post_0829_ret", "rm_vol", "rm_rsv_neg", "rm_rsv_pos", "rm_downside_share", "rm_skew", "rm_kurt", "rm_jump_fraction", "rm_max_abs"]
+    },
+    "PRICE_DISCOVERY_HGB": {
+      "model": "hist_gradient_boosting_depth2",
+      "features": ["gc_ret1", "gc_ret3", "gc_ret5", "gc_range1", "gc_oc1", "gc_vol5", "gc_vol20", "gc_volume_z20", "gc_basis_prev", "gld_ret1", "gld_ret3", "gld_ret5", "gld_range1", "gld_oc1", "gld_vol5", "gld_vol20", "gld_volume_z20"]
+    },
+    "MACRO_CROSS_RIDGE": {
+      "model": "logistic_ridge_C1",
+      "features": ["nasdaq_ret", "sp500_ret", "xag_ret", "xpt_ret", "xpd_ret", "broad_usd_level", "broad_usd_logdiff1", "broad_usd_logdiff5", "real10_level", "real10_delta1", "real10_delta5"]
+    },
+    "FULL_HGB": {
+      "model": "hist_gradient_boosting_depth2",
+      "features": "UNION_OF_ALL_ABOVE_PLUS_ROLE_PRESERVING_FAST_SLOW_MONTHLY_CONTEXT"
+    }
+  },
+  "role_semantics": {
+    "FAST": "context feature only, never unconditional direction vote",
+    "SLOW": "context feature only, never unconditional direction vote",
+    "MONTHLY_DIRECTION_3M": "strategic/context feature only",
+    "EMERGENCY": "not an expert vote",
+    "legacy_equal_vote": "FORBIDDEN"
+  },
+  "training": {
+    "scheme": "recursive rolling-origin",
+    "rolling_window": 252,
+    "minimum_mature_targets": 180,
+    "whole_sample_scaling": "FORBIDDEN",
+    "preprocessing": "fit on matured training origins only",
+    "random_split": "FORBIDDEN",
+    "random_state": 20260913
+  },
+  "evaluation": {
+    "probability_metrics": ["BRIER", "LOG_LOSS"],
+    "direction_metrics": ["BALANCED_ACCURACY", "MCC"],
+    "mandatory_anchors": ["P50", "EXPANDING_UP_FREQUENCY"],
+    "expert_skill_gate_each_of_validation_and_test": {
+      "brier_improvement_vs_frequency_min": 0.002,
+      "log_loss_not_worse_than_frequency": true,
+      "balanced_accuracy_min": 0.53,
+      "mcc_positive": true,
+      "both_predicted_directions": true
+    },
+    "diversity_gate": {
+      "minimum_skill_passing_experts": 2,
+      "pair_probability_correlation_max": 0.85,
+      "pair_brier_residual_correlation_max": 0.85,
+      "minimum_each_expert_unique_win_share": 0.15
+    },
+    "selector_eligibility": "ONLY_IF_SKILL_AND_DIVERSITY_GATES_PASS",
+    "meta_selector_scoring_in_v163": "FORBIDDEN",
+    "post_score_threshold_or_feature_search": "FORBIDDEN"
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "action_mapping": "NONE",
+    "canonical_merge_without_explicit_user_authority": "FORBIDDEN"
+  }
+}
