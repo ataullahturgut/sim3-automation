@@ -1,0 +1,38 @@
+{
+  "contract_id": "GC_BREAK_SPLIT_PREREGISTRATION_V1",
+  "status": "PRECOMMITTED_AWAITING_WP2_EVENT_SUPPORT_COUNTS",
+  "created_date": "2026-09-13",
+  "production_authority": false,
+  "prospective_claim": false,
+  "calendar_windows": {
+    "formation_development": ["2022-01-01", "2024-12-31"],
+    "retrospective_challenge": ["2025-01-01", "2025-12-31"],
+    "retrospective_stress": ["2026-01-01", "2026-08-31"],
+    "true_out_of_sample": "FIRST_UNSEEN_ORIGINS_AFTER_FINAL_ARCHITECTURE_FREEZE"
+  },
+  "interpretation": {
+    "2025_is_blind_test": false,
+    "2026_is_blind_test": false,
+    "formation_model_selection_permitted": true,
+    "challenge_threshold_retuning_permitted": false,
+    "stress_threshold_retuning_permitted": false,
+    "random_split_permitted": false
+  },
+  "wp2_support_gate": {
+    "purpose": "event counts determine estimability/model complexity, not a performance-selected date boundary",
+    "zero_total_events": "BLOCK_MODEL_FIT",
+    "zero_events_in_either_new_regime_direction": "BLOCK_DIRECTION_CONDITIONAL_COMPONENT",
+    "sparse_support": "REDUCE_MODEL_COMPLEXITY_OR_USE_ABSTENTION; DO_NOT MOVE DATE BOUNDARIES FROM MODEL SCORE",
+    "event_counts_may_change_label_threshold": false,
+    "downstream_model_scores_may_change_split": false
+  },
+  "governance": {
+    "no_random_split": true,
+    "no_post_score_boundary_selection": true,
+    "no_post_score_label_reselection": true,
+    "no_database_writes": true,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF"
+  },
+  "finalization_rule": "After WP2 primary k=3 event inventory is produced, record support counts and change only status/evidence fields to FROZEN or INSUFFICIENT_SUPPORT; calendar boundaries remain as preregistered unless a source-coverage failure makes a boundary literally unavailable, in which case the reason must be data-availability-only and recorded before WP3 interpretation."
+}
