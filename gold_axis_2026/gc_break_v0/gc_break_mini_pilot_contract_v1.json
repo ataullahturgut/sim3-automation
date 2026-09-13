@@ -1,0 +1,47 @@
+{
+  "contract_id": "GC_BREAK_MINI_PILOT_V1",
+  "status": "FROZEN_BEFORE_MINI_PILOT_SCORING",
+  "purpose": "Small-scope smoke/research pilot before committing to the full 2022-2024 formation reconstruction.",
+  "data_window": {
+    "prehistory_start": "2024-01-01",
+    "end": "2024-08-31",
+    "source_semantic": "Twelve Data XAU/USD 1min exact 16:59:00 America/New_York -> 17:00 ET",
+    "fallback_or_interpolation": false
+  },
+  "state_window": {
+    "start": "2024-04-01",
+    "end": "2024-08-31"
+  },
+  "warmup_window": {
+    "start": "2024-04-01",
+    "end": "2024-05-31",
+    "scored": false
+  },
+  "score_window": {
+    "start": "2024-06-01",
+    "end": "2024-08-31"
+  },
+  "event_rule": {
+    "k_sigma": 3.0,
+    "sigma_lookback_observations": 20,
+    "engine_inputs_used_for_label": []
+  },
+  "engines": {
+    "core": ["PRICE_PATH", "FAST", "SLOW", "EMERGENCY_LEVEL", "EMERGENCY_REVERSAL"],
+    "context": ["MONTHLY_DIRECTION_3M"],
+    "learned_model": false
+  },
+  "governance": {
+    "no_random_split": true,
+    "no_post_score_threshold_tuning": true,
+    "no_database_writes": true,
+    "no_buy_sell_mapping": true,
+    "prospective_claim": false,
+    "pilot_results_cannot_redefine_full_formation_label_contract": true
+  },
+  "decision_after_pilot": [
+    "EXPAND_IF_SIGNAL_IS_COHERENT",
+    "REVISE_IF_PIPELINE_OR_STATE_LOGIC_FAILS",
+    "STOP_FULL_BACKFILL_IF_NO_USEFUL_SIGNAL"
+  ]
+}
