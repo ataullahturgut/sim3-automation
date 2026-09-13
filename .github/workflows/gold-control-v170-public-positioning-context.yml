@@ -1,0 +1,97 @@
+name: Gold Control V1.70 public positioning context research
+
+on:
+  pull_request:
+    paths:
+      - "gold_axis_2026/v170_research/**"
+      - "gold_axis_2026/tests/test_v170_public_positioning_context.py"
+      - ".github/workflows/gold-control-v170-public-positioning-context.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  public-positioning-context:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+      GH_TOKEN: ${{ github.token }}
+      V164_ARTIFACT_DIR: /tmp/v164_artifact
+      V170_PUBLIC_SOURCE_DIR: /tmp/v170_sources
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install frozen V1.70 dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scikit-learn==1.8.0 pytest==8.4.2 requests==2.32.5
+      - name: Test V1.70 governance and PIT locks
+        run: python -m pytest -q gold_axis_2026/tests/test_v170_public_positioning_context.py
+      - name: Download and verify immutable V1.64 source artifact
+        run: |
+          mkdir -p /tmp/v164_artifact
+          gh api repos/ataullahturgut/sim3-automation/actions/artifacts/10316352769/zip > /tmp/v164_artifact.zip
+          echo "23901808b5b8db4b2065797865f7ac4269bf544953fe1ce38b37964e19ab78da  /tmp/v164_artifact.zip" | sha256sum -c -
+          unzip -q /tmp/v164_artifact.zip -d /tmp/v164_artifact
+      - name: Fetch free public CFTC Gold COT and Cboe GVZ sources
+        run: |
+          mkdir -p /tmp/v170_sources
+          python - <<'PY'
+          import hashlib, io, json
+          from pathlib import Path
+          import pandas as pd
+          import requests
+
+          out = Path('/tmp/v170_sources')
+          headers = {'User-Agent': 'Gold-Control-research/1.0 contact=research'}
+
+          # CFTC PRE / Socrata: request only COMEX Gold contract market code 088691 first.
+          url = 'https://publicreporting.cftc.gov/resource/72hh-3qpy.csv'
+          params = {'$limit': '5000', '$where': "cftc_contract_market_code='088691'", '$order': 'report_date_as_yyyy_mm_dd'}
+          r = requests.get(url, params=params, headers=headers, timeout=60)
+          if r.status_code != 200 or len(r.content) < 1000:
+              # Public bulk-export fallback; filter locally.
+              bulk = 'https://publicreporting.cftc.gov/api/views/72hh-3qpy/rows.csv?accessType=DOWNLOAD'
+              r = requests.get(bulk, headers=headers, timeout=120)
+              r.raise_for_status()
+              d = pd.read_csv(io.BytesIO(r.content), low_memory=False)
+              code = next(c for c in d.columns if c.lower().replace(' ', '_') in {'cftc_contract_market_code', 'cftc_contract_market_code_'})
+              x = d[d[code].astype(str).str.replace('.0','',regex=False).eq('088691')].copy()
+          else:
+              d = pd.read_csv(io.BytesIO(r.content), low_memory=False)
+              x = d.copy()
+          if len(x) < 100:
+              raise RuntimeError(f'CFTC_GOLD_ROWS_TOO_SMALL:{len(x)}')
+          x.to_csv(out / 'cftc_gold_088691.csv', index=False)
+
+          gvz_url = 'https://cdn-api.cboe.com/api/global/us_indices/daily_prices/GVZ_History.csv'
+          g = requests.get(gvz_url, headers=headers, timeout=60)
+          g.raise_for_status()
+          (out / 'GVZ_History.csv').write_bytes(g.content)
+          gvz = pd.read_csv(io.BytesIO(g.content))
+          if len(gvz) < 500:
+              raise RuntimeError(f'GVZ_ROWS_TOO_SMALL:{len(gvz)}')
+
+          def sha(p):
+              return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+          manifest = {
+              'cftc_rows': int(len(x)), 'gvz_rows': int(len(gvz)),
+              'cftc_sha256': sha(out / 'cftc_gold_088691.csv'),
+              'gvz_sha256': sha(out / 'GVZ_History.csv'),
+              'cftc_endpoint': url, 'gvz_endpoint': gvz_url,
+          }
+          (out / 'v170_public_source_manifest.json').write_text(json.dumps(manifest, indent=2), encoding='utf-8')
+          print(json.dumps(manifest, indent=2))
+          PY
+      - name: Run frozen V1.70 public positioning context experiment
+        run: python -m gold_axis_2026.v170_research.run_v170_public_positioning_context
+      - name: Copy public source manifest into audit artifact
+        run: cp /tmp/v170_sources/v170_public_source_manifest.json gold_axis_2026/data_pipeline/audits/v170_research/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-v170-public-positioning-context-${{ github.sha }}
+          path: gold_axis_2026/data_pipeline/audits/v170_research/
