@@ -1,0 +1,123 @@
+{
+  "contract_id": "GOLD_CONTROL_V165DIAG_FAILURE_ATTRIBUTION_FREEZE_V1",
+  "status": "FROZEN_BEFORE_ANY_V165DIAG_SCORING",
+  "evidence_class": "RETROSPECTIVE_METHOD_DEVELOPMENT_DIAGNOSTIC_NOT_FRESH_OOS",
+  "frozen_on": "2026-09-13",
+  "research_question": "Why did short-horizon probabilistic forecast error remain high or temporally unstable: weak discrimination, calibration failure, covariate/target shift, state-dependent skill instability, estimation uncertainty, or insufficient expert-pool signal?",
+  "parent_version": "V1.64",
+  "source_artifact": {
+    "workflow_run": 34752686111,
+    "artifact_id": 10316352769,
+    "artifact_digest": "sha256:23901808b5b8db4b2065797865f7ac4269bf544953fe1ce38b37964e19ab78da",
+    "required_files": [
+      "v164_panel.csv",
+      "v164_1d_gold_ridge_predictions.csv",
+      "v164_1d_session_rm_ridge_predictions.csv",
+      "v164_1d_price_discovery_hgb_predictions.csv",
+      "v164_1d_macro_cross_ridge_predictions.csv",
+      "v164_1d_full_hgb_predictions.csv",
+      "v164_3d_gold_ridge_predictions.csv",
+      "v164_3d_session_rm_ridge_predictions.csv",
+      "v164_3d_price_discovery_hgb_predictions.csv",
+      "v164_3d_macro_cross_ridge_predictions.csv",
+      "v164_3d_full_hgb_predictions.csv"
+    ]
+  },
+  "horizons": [1, 3],
+  "periods": {
+    "VALIDATION_2025": ["2025-01-01", "2025-12-31"],
+    "TEST_2026_AVAILABLE": ["2026-01-01", "2026-06-30"]
+  },
+  "parents": [
+    "GOLD_RIDGE",
+    "SESSION_RM_RIDGE",
+    "PRICE_DISCOVERY_HGB",
+    "MACRO_CROSS_RIDGE",
+    "FULL_HGB"
+  ],
+  "audit_modules": {
+    "performance_and_uncertainty": {
+      "probability_metrics": ["brier", "log_loss", "brier_skill_vs_frequency"],
+      "direction_metrics": ["balanced_accuracy", "mcc", "roc_auc", "up_predictions", "down_predictions"],
+      "block_bootstrap_replicates": 1500,
+      "block_length": "max(5,horizon)",
+      "bootstrap_seed": 20260913,
+      "robust_skill_rule": "mean_excess_brier<0 and upper_95_block_bootstrap_ci<0"
+    },
+    "calibration_discrimination": {
+      "fixed_probability_bins": 10,
+      "metrics": ["ece", "murphy_reliability", "murphy_resolution", "murphy_uncertainty", "roc_auc"],
+      "discrimination_signal_auc_min": 0.55,
+      "material_ece_min": 0.05,
+      "calibration_problem_rule": "roc_auc>=0.55 and brier_skill_vs_frequency<=0 and ece>=0.05",
+      "discrimination_problem_rule": "roc_auc<0.55 and brier_skill_vs_frequency<=0"
+    },
+    "covariate_and_target_shift": {
+      "feature_scope": "Each parent's own frozen V1.63 input features, joined by origin_index to immutable v164_panel.csv",
+      "univariate_metrics": ["standardized_mean_difference", "ks_statistic", "missing_rate_difference"],
+      "moderate_abs_smd": 0.5,
+      "large_abs_smd": 1.0,
+      "material_feature_share_abs_smd_ge_0_5": 0.25,
+      "material_median_abs_smd": 0.25,
+      "material_target_up_rate_difference": 0.10
+    },
+    "state_dependent_skill": {
+      "state_definitions": {
+        "gold_rv20": "LOW/MID/HIGH using 2024 full-panel 33rd/67th percentiles",
+        "gold_mom20": "DOWN if <0 else UP",
+        "broad_usd_logdiff5": "DOWN if <0 else UP",
+        "real10_delta5": "DOWN if <0 else UP",
+        "fast_state_encoded": "-1/0/+1",
+        "slow_state_encoded": "-1/0/+1",
+        "monthly_direction_3m_encoded": "-1/0/+1"
+      },
+      "minimum_state_support_each_period": 20,
+      "skill_measure": "brier_skill_vs_frequency",
+      "material_sign_flip_share": 0.30,
+      "interpretation": "Exploratory failure attribution only; no state is promoted to a forecasting rule in V1.65-DIAG"
+    },
+    "oracle_headroom": {
+      "definitions": ["best_single_parent_ex_post_per_period", "equal_probability_average", "per_origin_hindsight_oracle_min_squared_error"],
+      "material_oracle_headroom_brier": 0.02,
+      "interpretation": "The per-origin oracle is unattainable retrospective upper-bound evidence only and never a deployable selector"
+    }
+  },
+  "failure_labels": {
+    "ROBUST_BENCHMARK_SKILL": "Frozen static parent beats frequency anchor with upper 95% block-bootstrap CI below zero excess Brier.",
+    "CALIBRATION_PROBLEM_PLAUSIBLE": "AUC shows discrimination but proper-score skill is non-positive and ECE is material.",
+    "DISCRIMINATION_PROBLEM_PLAUSIBLE": "AUC below frozen discrimination threshold while proper-score skill is non-positive.",
+    "COVARIATE_SHIFT_MATERIAL": "Median or share of parent-input SMDs crosses frozen effect-size threshold.",
+    "TARGET_BASE_RATE_SHIFT_MATERIAL": "Absolute UP-rate difference between 2025 and 2026 is at least 0.10.",
+    "STATE_DEPENDENT_INSTABILITY": "At least 30% of comparable predeclared state strata flip the sign of Brier skill between 2025 and 2026.",
+    "ESTIMATION_UNCERTAINTY_MATERIAL": "95% block-bootstrap interval for excess Brier includes zero.",
+    "ORACLE_HEADROOM_MATERIAL": "Unattainable per-origin oracle improves Brier over frequency by at least 0.02."
+  },
+  "decision_lock": {
+    "no_single_forced_cause": true,
+    "rank_multiple_supported_failure_mechanisms": true,
+    "if_no_parent_has_robust_skill_and_oracle_headroom_is_not_material": "Prioritize signal discovery and/or horizon redesign before detector, selector or stronger adaptation.",
+    "if_discrimination_exists_but_calibration_failure_dominates": "Test recalibration in a new frozen version before retraining the classifier.",
+    "if_covariate_shift_and_state_instability_are_material": "Drift/adaptation research is eligible, but detector/adaptation parameters require a new pre-score contract.",
+    "if_oracle_headroom_is_material_and_state_instability_is_material": "State-dependent selection/gating research is eligible in a new frozen version.",
+    "if_uncertainty_is_material": "Do not over-interpret point estimates; retain MORE_DATA_REQUIRED where appropriate."
+  },
+  "evaluation_lock": {
+    "model_refitting_in_v165diag": "FORBIDDEN",
+    "recalibration_in_v165diag": "FORBIDDEN",
+    "drift_detector_scoring_in_v165diag": "FORBIDDEN",
+    "triggered_adaptation_in_v165diag": "FORBIDDEN",
+    "selector_scoring_in_v165diag": "FORBIDDEN",
+    "abstention_tuning_in_v165diag": "FORBIDDEN",
+    "post_score_threshold_or_feature_search": "FORBIDDEN",
+    "2025_and_2026_are_researcher_visible": true,
+    "prospective_claim": false
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "action_mapping": "NONE",
+    "canonical_merge_without_explicit_user_authority": "FORBIDDEN"
+  }
+}
