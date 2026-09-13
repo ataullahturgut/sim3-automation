@@ -1,8 +1,10 @@
 {
   "contract_id": "GOLD_CONTROL_V165A_DRIFT_DETECTOR_VALIDATION_FREEZE_V1",
-  "status": "FROZEN_BEFORE_ANY_V165A_DETECTOR_SCORING",
+  "status": "SUPERSEDED_BEFORE_DETECTOR_SCORING_INSUFFICIENT_FORMATION_SUPPORT",
   "evidence_class": "RETROSPECTIVE_METHOD_DEVELOPMENT_DIAGNOSTIC_NOT_FRESH_OOS",
   "frozen_on": "2026-09-13",
+  "superseded_before_detector_scoring": true,
+  "superseded_reason": "The frozen V1.64 pointwise formation streams contain only 32 matured 1D losses and 28 matured 3D losses per parent before 2025. This is too little support for a defensible moving-block calibration of detector false-alarm and delay properties. No ADWIN/Page-Hinkley detector score from this contract was produced before supersession.",
   "research_question": "Which predeclared loss-drift detector can detect a material deterioration in short-horizon probabilistic forecast skill with acceptably low false alarms and delay, using only pre-2025 formation loss streams and synthetic injected drift, before any 2025/2026 adaptive forecasting test?",
   "parent_version": "V1.64",
   "horizons": [1, 3],
@@ -12,60 +14,10 @@
     "secondary": "RAW_BRIER = (y-p_static)^2",
     "future_2025_2026_detector_selection": "FORBIDDEN"
   },
-  "forecasters": ["GOLD_RIDGE", "SESSION_RM_RIDGE", "PRICE_DISCOVERY_HGB", "MACRO_CROSS_RIDGE", "FULL_HGB"],
   "detectors": {
-    "ADWIN": {
-      "implementation": "river.drift.ADWIN",
-      "delta_grid": [0.001, 0.002, 0.005],
-      "clock": 1,
-      "max_buckets": 5,
-      "min_window_length": 10,
-      "grace_period": 30
-    },
-    "PAGE_HINKLEY": {
-      "implementation": "river.drift.PageHinkley",
-      "min_instances": 30,
-      "delta_grid_standardized": [0.0, 0.1],
-      "threshold_grid_standardized": [5.0, 7.5, 10.0],
-      "alpha": 0.999,
-      "mode": "up"
-    }
+    "ADWIN": {"delta_grid": [0.001, 0.002, 0.005]},
+    "PAGE_HINKLEY": {"delta_grid_standardized": [0.0, 0.1], "threshold_grid_standardized": [5.0, 7.5, 10.0]}
   },
-  "synthetic_validation": {
-    "seed": 20260913,
-    "replicates_per_scenario": 150,
-    "stream_length": 240,
-    "pre_drift_length": 120,
-    "block_bootstrap": true,
-    "block_length_rule": "max(5,horizon)",
-    "drift_shapes": ["ABRUPT", "GRADUAL_20"],
-    "shift_sizes_in_formation_sd": [0.5, 1.0, 1.5],
-    "clip_excess_brier": [-1.0, 1.0],
-    "null_scenario": "same moving-block bootstrap with no injected shift",
-    "evaluation": ["false_alarm_rate", "detection_rate", "median_detection_delay", "p90_detection_delay"],
-    "scoring_priority": ["false_alarm_rate<=0.10", "detection_rate_at_shift_1sd>=0.70", "lowest_median_delay_at_shift_1sd", "lowest_average_delay_across_detected_scenarios"]
-  },
-  "detector_selection": {
-    "scope": "One detector family/configuration may be selected per horizon using only formation bootstrap results aggregated across all five parents.",
-    "minimum_null_false_alarm_requirement": 0.10,
-    "minimum_detection_rate_at_1sd": 0.70,
-    "selection_order_after_gates": ["lower_median_delay_at_1sd", "lower_false_alarm_rate", "lower_average_detected_delay", "simpler_configuration"],
-    "if_none_pass": "STOP. Do not run triggered adaptation. Open a new detector hypothesis/version without using 2025/2026 to tune detector parameters."
-  },
-  "evaluation_lock": {
-    "2025_2026_loss_streams_used_for_detector_selection": false,
-    "triggered_adaptation_in_v165a": "FORBIDDEN",
-    "selector_scoring_in_v165a": "FORBIDDEN",
-    "abstention_tuning_in_v165a": "FORBIDDEN",
-    "no_post_score_grid_expansion": true,
-    "prospective_claim": false
-  },
-  "literature_basis": [
-    "Bifet and Gavalda 2007 ADWIN, DOI 10.1137/1.9781611972771.42",
-    "Page 1954 Continuous Inspection Schemes, Biometrika 41(1/2):100-115",
-    "Detector evaluation must jointly consider false alarms, missed detections and detection delay",
-    "Forecast-monitoring revision should be triggered by predictive degradation, not permanent adaptation"
-  ],
   "governance": {
     "AUTO_SELECTOR": "OFF",
     "AUTO_ENSEMBLE": "OFF",
