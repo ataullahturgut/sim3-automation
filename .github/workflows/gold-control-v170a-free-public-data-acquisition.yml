@@ -1,0 +1,35 @@
+name: Gold Control V1.70A free public data acquisition research
+
+on:
+  pull_request:
+    paths:
+      - "gold_axis_2026/v170_research/**"
+      - "gold_axis_2026/tests/test_v170a_free_public_data_acquisition.py"
+      - ".github/workflows/gold-control-v170a-free-public-data-acquisition.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-data-acquisition:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install frozen V1.70A dependencies
+        run: python -m pip install pandas==2.2.3 requests==2.32.5 pytest==8.4.2
+      - name: Test V1.70A data-only governance locks
+        run: python -m pytest -q gold_axis_2026/tests/test_v170a_free_public_data_acquisition.py
+      - name: Capture frozen free public CFTC datasets without forecast scoring
+        run: python -m gold_axis_2026.v170_research.capture_v170a_free_public_cftc
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-v170a-free-public-cftc-${{ github.sha }}
+          path: gold_axis_2026/data_pipeline/audits/v170a_research/
