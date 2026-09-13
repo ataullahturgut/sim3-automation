@@ -1,0 +1,102 @@
+{
+  "contract_id": "GOLD_CONTROL_V162_CONTEXT_AWARE_META_FORECAST_FREEZE_V1",
+  "status": "FROZEN_BEFORE_ANY_V162_SCORING",
+  "created_date": "2026-09-13",
+  "parent_research_head": "1dfbc77a3aebdc96cf6b28af188aac04776f3262",
+  "evidence_class": "RETROSPECTIVE_METHOD_DEVELOPMENT_DIAGNOSTIC_NOT_FRESH_OOS",
+  "scientific_question": "Can a small set of horizon-specific probabilistic forecasters be improved by soft state-dependent competence weighting, while preserving legacy Gold Control engines as context rather than flat direction votes?",
+  "targets": {
+    "NEXT_NY17_1D": "sign of log return from governed NY17 origin to next governed NY17 observation",
+    "NEXT_NY17_3D": "sign of log return from governed NY17 origin to third subsequent governed NY17 observation"
+  },
+  "origin": "exact governed XAU/USD NY17 observation; no random split",
+  "maturity_rule": "expert/meta learning at origin t may use forecast j only when j+h<=t",
+  "base_forecast_feature_block": [
+    "gold_ret_lag1",
+    "gold_ret_lag2",
+    "gold_ret_lag3",
+    "gold_mom3",
+    "gold_mom5",
+    "gold_mom10",
+    "gold_mom20",
+    "gold_rv5",
+    "gold_rv10",
+    "gold_rv20",
+    "macro_score",
+    "macro_event_count"
+  ],
+  "legacy_engine_role_rule": "Legacy engines are frozen information channels. FAST/SLOW/MONTHLY_DIRECTION are trend-state context; Emergency is stress/reversal context. They are not equal votes and are not retuned in V1.62.",
+  "state_vector": [
+    "gold_mom5",
+    "gold_mom20",
+    "gold_rv20",
+    "monthly_direction_3m_encoded",
+    "fast_state_encoded",
+    "slow_state_encoded",
+    "emergency_level_encoded",
+    "emergency_reversal_encoded",
+    "legacy_state_available"
+  ],
+  "expert_pool": [
+    {"id": "LOGIT_C01", "family": "logistic_ridge", "C": 0.1},
+    {"id": "LOGIT_C1", "family": "logistic_ridge", "C": 1.0},
+    {"id": "HGB_D2", "family": "hist_gradient_boosting", "max_depth": 2, "max_iter": 80, "learning_rate": 0.05, "l2_regularization": 1.0}
+  ],
+  "meta_methods": {
+    "BEST_SINGLE_PRIOR": "select expert with lowest matured cumulative Brier loss; minimum 60 matured forecasts",
+    "EQUAL_MEAN": "equal mean of available expert probabilities",
+    "RECENT_EXP": {
+      "description": "exponential expert weighting by matured Brier loss",
+      "half_life_origins": 60,
+      "eta": 12.0,
+      "minimum_matured_predictions": 60
+    },
+    "LOCAL_SOFT": {
+      "description": "RBF state-local matured Brier competence with recency weighting",
+      "half_life_origins": 120,
+      "eta": 12.0,
+      "minimum_matured_predictions": 60,
+      "minimum_local_effective_n": 25,
+      "bandwidth": "median positive prior-only distance from current state; fallback 1.0"
+    },
+    "CRASE_V0": {
+      "description": "LOCAL_SOFT plus predicted-class degeneracy penalty and selective abstention",
+      "half_life_origins": 120,
+      "eta": 12.0,
+      "degeneracy_penalty_lambda": 0.05,
+      "minimum_matured_predictions": 60,
+      "minimum_local_effective_n": 25,
+      "minimum_weight_confidence": 0.10,
+      "minimum_probability_edge": 0.03,
+      "no_signal_if_gate_fails": true
+    }
+  },
+  "categorical_state_encoding": {
+    "monthly_direction_3m": {"UP": 1.0, "DOWN": -1.0, "NEUTRAL": 0.0},
+    "fast_state": {"ROBUST_UP": 1.0, "ROBUST_DOWN": -1.0, "MIXED": 0.0, "NOT_YET_ROBUST": 0.0},
+    "slow_state": {"ROBUST_UP": 1.0, "ROBUST_DOWN": -1.0, "MIXED": 0.0, "NOT_YET_ROBUST": 0.0},
+    "emergency_level": {"UP": 1.0, "DOWN": -1.0, "NEUTRAL": 0.0},
+    "emergency_reversal": {"OFF": 0.0, "ON": 1.0}
+  },
+  "evaluation": {
+    "full_coverage_metrics": ["BRIER", "LOG_LOSS", "BALANCED_ACCURACY", "MCC", "UP_PREDICTIONS", "DOWN_PREDICTIONS"],
+    "selective_metrics": ["COVERAGE", "SELECTIVE_BRier", "SELECTIVE_LOG_LOSS", "SELECTIVE_BALANCED_ACCURACY", "SELECTIVE_MCC", "UP_PREDICTIONS", "DOWN_PREDICTIONS"],
+    "mandatory_benchmarks": ["P50", "EXPANDING_UP_FREQUENCY", "EQUAL_MEAN", "BEST_SINGLE_PRIOR"],
+    "report_periods": ["ALL_AVAILABLE", "2025", "2026"],
+    "three_day_dependence": "overlap acknowledged; no IID significance claim; block/HAC inference required before promotion"
+  },
+  "interpretation_rule": "This run is a method-development diagnostic. A positive result is a lead, not prospective proof or production authority. No V1.62 threshold, feature, expert or horizon may be changed after seeing V1.62 scores; any change requires V1.63/new frozen hypothesis.",
+  "forbidden": [
+    "RANDOM_SPLIT",
+    "FUTURE_TARGET_USE",
+    "WHOLE_SAMPLE_STATE_SCALING",
+    "FLAT_LEGACY_ENGINE_VOTE",
+    "POST_SCORE_V162_TUNING",
+    "FRESH_OOS_LABEL_FOR_2025_OR_2026",
+    "PRODUCTION_FORECAST_WRITE",
+    "BUY_SELL_MAPPING"
+  ],
+  "auto_selector": "OFF",
+  "auto_ensemble": "OFF",
+  "production_authority": false
+}
