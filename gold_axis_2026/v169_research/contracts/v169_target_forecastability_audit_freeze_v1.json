@@ -1,0 +1,121 @@
+{
+  "contract_id": "GOLD_CONTROL_V169_TARGET_FORECASTABILITY_AUDIT_FREEZE_V1",
+  "status": "FROZEN_BEFORE_ANY_V169_SCORING",
+  "evidence_class": "RETROSPECTIVE_METHOD_DEVELOPMENT_DIAGNOSTIC_NOT_FRESH_OOS",
+  "frozen_on": "2026-09-13",
+  "research_question": "Are the weak 1D/3D direction results primarily consistent with information loss from binary UP/DOWN target representation, such that a continuous-return model shows more stable causal predictive content, or do both binary and continuous representations fail under the current information set?",
+  "literature_basis": [
+    "Dichotomizing a continuous outcome discards information and can materially reduce statistical efficiency; the audit therefore compares direct binary direction prediction with continuous-return prediction under the same information blocks.",
+    "Probabilistic forecasting should characterize uncertainty and be evaluated with proper scores; a future distributional model is justified only if continuous predictive content exists first.",
+    "Selective classification can trade coverage for lower risk, but abstention is not introduced until base predictive information is demonstrated.",
+    "Information-theoretic predictability literature motivates asking how much forecastable structure exists before adding model complexity; V1.69 does not claim to estimate a true information-theoretic upper bound."
+  ],
+  "parent_version": "V1.68",
+  "source_artifact": {
+    "workflow_run_id": 34752686111,
+    "artifact_id": 10316352769,
+    "zip_sha256": "23901808b5b8db4b2065797865f7ac4269bf544953fe1ce38b37964e19ab78da",
+    "required_file": "v164_panel.csv",
+    "immutability": "Use frozen V1.64 panel only. No external data fetch or post-score feature creation."
+  },
+  "horizons": [1, 3],
+  "targets": {
+    "continuous": "r_h = log(close_{t+h}/close_t)",
+    "binary": "y_h = 1[r_h > 0]",
+    "maturity_rule": "Training rows at origin t require target_date < origin_date_t.",
+    "boundary_rule": "Evaluation target_date must remain inside the evaluation period."
+  },
+  "feature_blocks": {
+    "GOLD": ["gold_ret_lag1", "gold_ret_lag2", "gold_ret_lag3", "gold_mom3", "gold_mom5", "gold_mom10", "gold_mom20", "gold_rv5", "gold_rv10", "gold_rv20"],
+    "SESSION_RM": ["europe_session_ret", "us_morning_ret", "post_0829_ret", "rm_vol", "rm_rsv_neg", "rm_rsv_pos", "rm_downside_share", "rm_skew", "rm_kurt", "rm_jump_fraction", "rm_max_abs"],
+    "PRICE_DISCOVERY": ["gc_ret1", "gc_ret3", "gc_ret5", "gc_range1", "gc_oc1", "gc_vol5", "gc_vol20", "gc_volume_z20", "gc_basis_prev", "gld_ret1", "gld_ret3", "gld_ret5", "gld_range1", "gld_oc1", "gld_vol5", "gld_vol20", "gld_volume_z20"],
+    "MACRO_CROSS": ["nasdaq_ret", "sp500_ret", "xag_ret", "xpt_ret", "xpd_ret", "broad_usd_level", "broad_usd_logdiff1", "broad_usd_logdiff5", "real10_level", "real10_delta1", "real10_delta5"]
+  },
+  "model_lock": {
+    "binary_model": "training-only median imputation -> StandardScaler -> LogisticRegression L2",
+    "continuous_model": "training-only median imputation -> StandardScaler -> Ridge",
+    "logistic_C": 1.0,
+    "ridge_alpha": 1.0,
+    "hyperparameter_search": "FORBIDDEN"
+  },
+  "temporal_design": {
+    "forward_tests": {
+      "E1_2023H2": ["2023-07-01", "2023-12-31"],
+      "E2_2024H1": ["2024-01-01", "2024-06-30"],
+      "E3_2024Q3": ["2024-07-01", "2024-09-25"]
+    },
+    "bridge_2024Q4": ["2024-09-26", "2024-12-31"],
+    "visible_diagnostics": {
+      "2025": ["2025-01-01", "2025-12-31"],
+      "2026_available": ["2026-01-01", "2026-06-30"]
+    },
+    "forward_rule": "For every origin, fit using all target-matured rows strictly before that origin. No future-period training."
+  },
+  "benchmarks": {
+    "binary": "Causal expanding matured UP frequency; fallback 0.5 if fewer than 20 matured labels.",
+    "continuous_mae": "Causal expanding matured historical median return; fallback 0.0 if fewer than 20 matured returns.",
+    "continuous_mse": "Causal expanding matured historical mean return; fallback 0.0 if fewer than 20 matured returns."
+  },
+  "formation_diagnostics": {
+    "binary_metrics": ["brier_skill_vs_frequency", "log_loss_improvement_vs_frequency", "roc_auc", "balanced_accuracy", "mcc"],
+    "continuous_metrics": ["mae_skill_vs_causal_median", "mse_skill_vs_causal_mean", "pearson_r", "spearman_r", "direction_roc_auc_from_predicted_return", "direction_balanced_accuracy_from_sign"],
+    "continuous_signal_gate": {
+      "positive_mae_skill_environments_min": 2,
+      "median_spearman_min": 0.05,
+      "minimum_spearman_min": -0.10,
+      "median_direction_auc_min": 0.53
+    },
+    "binary_signal_gate": {
+      "positive_brier_skill_environments_min": 2,
+      "median_direction_auc_min": 0.53,
+      "minimum_direction_auc_min": 0.47
+    }
+  },
+  "bridge_gate": {
+    "continuous": {
+      "mae_not_worse_than_causal_median": true,
+      "mse_not_worse_than_causal_mean": true,
+      "spearman_positive": true,
+      "direction_auc_min": 0.52,
+      "both_predicted_directions": true
+    },
+    "binary": {
+      "brier_not_worse_than_frequency": true,
+      "log_loss_not_worse_than_frequency": true,
+      "direction_auc_min": 0.52,
+      "both_predicted_directions": true
+    },
+    "rule": "2025/2026 cannot rescue a 2024Q4 bridge failure."
+  },
+  "magnitude_diagnostic": {
+    "threshold_source": "Absolute continuous returns from rows target-matured by 2024-09-25, separately for each horizon.",
+    "thresholds": "33rd and 67th percentiles, frozen before bridge/visible-period scoring.",
+    "bands": ["SMALL", "MEDIUM", "LARGE"],
+    "use": "Ex-post failure attribution only. Realized magnitude is never an origin-time predictor and cannot be used for deployment or selection in V1.69."
+  },
+  "decision_lock": {
+    "continuous_bridge_pass_binary_bridge_fail": "Support target-representation redesign: next study may model continuous/distributional return and derive direction/NO_SIGNAL under a separately frozen contract.",
+    "both_bridge_pass": "Prefer the simpler/stabler representation only under a separately frozen comparison; no hybrid in V1.69.",
+    "both_bridge_fail": "Current information set does not show sufficient transportable signal under either target representation; prioritize new information or horizon redesign rather than more adaptation complexity.",
+    "large_move_only_signal": "If strong performance appears only in ex-post LARGE moves, this may motivate a separately frozen material-move/selective target study, but V1.69 may not tune a deadband threshold."
+  },
+  "forbidden_in_v169": [
+    "model_family_search",
+    "hyperparameter_search",
+    "deadband_or_material_move_threshold_tuning",
+    "abstention_threshold_tuning",
+    "2025_2026_based_feature_or_horizon_selection",
+    "drift_detector",
+    "selector_or_CRASE",
+    "residual_correction",
+    "feature_addition_after_scoring",
+    "production_writes",
+    "action_mapping"
+  ],
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "canonical_merge_without_explicit_user_authority": "FORBIDDEN"
+  }
+}
