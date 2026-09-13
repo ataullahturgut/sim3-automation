@@ -1,0 +1,101 @@
+{
+  "contract_id": "GOLD_CONTROL_V162_CRASE_GOLD_FREEZE_V1",
+  "status": "FROZEN_BEFORE_V162_RETROSPECTIVE_SCORING",
+  "evidence_class": "RETROSPECTIVE_METHOD_DEVELOPMENT_DIAGNOSTIC",
+  "frozen_on": "2026-09-13",
+  "research_question": "Can a causal regime-similarity expert selector using only matured H5 outcomes, local class-balanced reliability, degeneracy control and selective abstention improve short-horizon gold direction robustness without same-period tuning?",
+  "method_name": "CRASE-Gold",
+  "method_expansion": "Causal Regime-Adaptive Selective Expert Forecasting for Gold",
+  "novelty_status": "PROTOTYPE_METHOD_NOT_YET_CLAIMED_NOVEL_PENDING_FORMAL_NOVELTY_AUDIT",
+  "horizon": 5,
+  "origin_clock": "XAU/USD exact 13:29 America/New_York research-cache origin inherited from V1.61",
+  "windows": {
+    "data_start": "2023-01-01",
+    "formation_start": "2024-01-01",
+    "formation_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-12-31",
+    "test_start": "2026-01-01",
+    "test_end": "2026-06-30"
+  },
+  "experts": [
+    "H5_BASE_QB",
+    "H5_PD_RM_QB",
+    "TREND20",
+    "GC_TREND3"
+  ],
+  "regime_features": [
+    "mom20",
+    "vol20",
+    "rm_downside_share",
+    "rm_jump_fraction",
+    "gc_ret3",
+    "gc_vol20",
+    "broad_usd_logdiff5",
+    "real10_delta5",
+    "bocpd_p_run0",
+    "fast_role",
+    "slow_role"
+  ],
+  "similarity": {
+    "history_cap": 504,
+    "nearest_mature_neighbors": 63,
+    "minimum_shared_features": 7,
+    "robust_scale": "origin-local median and IQR using prior rows only; IQR floor 1e-8",
+    "distance": "root-mean-square robust standardized difference over shared finite regime features",
+    "kernel": "exp(-0.5*d^2)",
+    "recency_half_life_trading_rows": 126
+  },
+  "maturity": {
+    "rule": "expert reliability at origin t may use only predictions whose H5 target is already matured by t",
+    "minimum_effective_support": 10,
+    "support_full_strength_ess": 30
+  },
+  "local_reliability": {
+    "metric": "similarity-and-recency weighted balanced accuracy",
+    "requires_both_realized_classes": true,
+    "degeneracy_penalty": "2*min(weighted predicted UP share, weighted predicted DOWN share)",
+    "support_factor": "min(1, effective_sample_size/30)",
+    "score": "max(0, 2*weighted_balanced_accuracy-1) * degeneracy_penalty * support_factor"
+  },
+  "aggregation": {
+    "expert_weight": "local_reliability_score",
+    "direction_score": "sum(weight_k * current_direction_k) / sum(weight_k)",
+    "minimum_total_reliability": 0.10,
+    "minimum_absolute_direction_score": 0.25,
+    "otherwise": "NO_SIGNAL",
+    "no_post_score_threshold_change": true
+  },
+  "evaluation": {
+    "primary_metrics": [
+      "coverage",
+      "accuracy",
+      "balanced_accuracy",
+      "mcc",
+      "up_signals",
+      "down_signals",
+      "median_signed_return"
+    ],
+    "support_gate": {
+      "validation_coverage_min": 0.15,
+      "validation_balanced_accuracy_min": 0.55,
+      "validation_mcc_strictly_above": 0.0,
+      "validation_both_directions": true,
+      "test_coverage_min": 0.15,
+      "test_balanced_accuracy_min": 0.55,
+      "test_mcc_strictly_above": 0.0,
+      "test_both_directions": true
+    },
+    "2025_and_2026_are_researcher_visible": true,
+    "fresh_confirmation": false,
+    "promotion_requires_future_prospective_shadow": true
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "action_mapping": "NONE",
+    "post_score_repair_inside_v162": "FORBIDDEN"
+  }
+}
