@@ -1,0 +1,44 @@
+{
+  "contract_id": "GC_BREAK_SPLIT_CONTRACT_V1",
+  "status": "FROZEN_BEFORE_FORMATION_BACKFILL_RESULTS_AND_BEFORE_FULL_WP3_WP4_SCORING",
+  "created_date": "2026-09-13",
+  "purpose": "time-ordered sequential-break research split; never a random split",
+  "windows": {
+    "formation": {
+      "start": "2022-01-01",
+      "end": "2024-12-31",
+      "use": "label-quality inspection, baseline development, any learned calibration or reliability estimation"
+    },
+    "retrospective_challenge": {
+      "start": "2025-01-01",
+      "end": "2025-12-31",
+      "use": "locked retrospective challenge; no refitting or threshold selection from challenge outcomes"
+    },
+    "retrospective_stress": {
+      "start": "2026-01-01",
+      "end": "2026-08-31",
+      "use": "locked retrospective stress/transport check; heavily inspected historically and never described as fresh blind evidence"
+    },
+    "prospective_shadow": {
+      "start": "AFTER_ARCHITECTURE_FREEZE",
+      "end": null,
+      "use": "strongest future evidence; outcomes unknown at issuance"
+    }
+  },
+  "data_rule": {
+    "formation_ny17": "exact governed historical reconstruction under the same Twelve Data XAU/USD 1min 16:59 America/New_York semantics; no alternate daily substitute",
+    "late_retrieval": "HISTORICAL_REPLAY_RECONSTRUCTION only; never relabel prospective",
+    "blocked_rows": "fail closed; no interpolation, forward-fill or silent provider substitution"
+  },
+  "selection_rule": {
+    "all thresholds_and_rule_choices_for_challenge": "must be determined from formation evidence or frozen literature/contracts only",
+    "2025_2026_seen_results": "may diagnose failure modes but may not be used to claim unseen validation or to retune the locked challenge/stress result",
+    "random_split": false
+  },
+  "governance": {
+    "production_authority": false,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF",
+    "no_buy_sell_mapping": true
+  }
+}
