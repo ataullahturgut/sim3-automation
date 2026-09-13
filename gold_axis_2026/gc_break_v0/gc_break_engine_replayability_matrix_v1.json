@@ -1,0 +1,38 @@
+{
+  "matrix_id": "GC_BREAK_ENGINE_REPLAYABILITY_MATRIX_V1",
+  "created_date": "2026-09-13",
+  "purpose": "prevent silent omission or fabricated history while building the role-preserving sequential system",
+  "formation_window_target": ["2022-01-01", "2024-12-31"],
+  "engines": [
+    {"engine":"XAU_EXACT_NY17_PRICE","role":"price/trend backbone","status":"IN_PROGRESS_RATE_LIMIT_SAFE_RESUME","coverage_note":"exact Twelve Data XAU/USD 1min 16:59 America/New_York; no fallback"},
+    {"engine":"FAST","role":"tactical weakening","status":"REPLAYABLE_AFTER_EXACT_NY17_COMPLETES"},
+    {"engine":"SLOW","role":"new-regime confirmation","status":"REPLAYABLE_AFTER_EXACT_NY17_COMPLETES"},
+    {"engine":"MONTHLY_DIRECTION_3M","role":"strategic direction context","status":"REPLAYABLE_AFTER_EXACT_NY17_COMPLETES"},
+    {"engine":"EMERGENCY_LEVEL","role":"abnormal level context","status":"PARTIAL_FORMATION_SUPPORT","coverage_note":"frozen monthly reference available 2023-01 through 2024-12; 2022 NOT_TESTABLE_REFERENCE_NOT_FOUND"},
+    {"engine":"EMERGENCY_REVERSAL","role":"high-specificity reversal confirmation","status":"PARTIAL_FORMATION_SUPPORT","coverage_note":"frozen monthly reference available 2023-01 through 2024-12; no 2022 imputation"},
+    {"engine":"BOCPD_RETURN_SUCCESSOR_V1","role":"completed-month regime-break context","status":"REPLAYABLE_NATIVE_MONTHLY_CLOCK","direction_vote_permitted":false},
+    {"engine":"MACRO_EVENT_V3","role":"event hazard context","status":"REPLAYABLE_2022_2024_FROM_NEON_READ_ONLY"},
+    {"engine":"MARKET_SHOCK_V3","role":"realized event shock confirmation/intensity","status":"REPLAYABLE_2022_2024_FROM_5M_RESEARCH_CACHE","standalone_promotion":false},
+    {"engine":"CAUSAL_PATCH","role":"monthly H1 independent forecast plus strategic context","status":"HISTORICAL_REPLAY_CONTEXT_AVAILABLE_2023_2024"},
+    {"engine":"VW_MIDAS_MSVR_SUCCESSOR_V1","role":"monthly H1 independent forecast plus strategic context","status":"HISTORICAL_REPLAY_CONTEXT_AVAILABLE_2023_2024"},
+    {"engine":"MOMENTUM_3M","role":"monthly H1 independent forecast plus strategic context","status":"HISTORICAL_REPLAY_CONTEXT_AVAILABLE_2023_2024"},
+    {"engine":"RANDOM_WALK","role":"monthly H1 independent forecast plus strategic context","status":"HISTORICAL_REPLAY_CONTEXT_AVAILABLE_2023_2024"},
+    {"engine":"GVZ_RISK","role":"risk/severity context","status":"NOT_FORMATION_PIT_PROVEN","coverage_note":"current canonical history is too short; do not shorten core window"},
+    {"engine":"H20_RTQ","role":"distribution/expert evidence","status":"NOT_TESTABLE_CANONICAL_HISTORY_MISSING"},
+    {"engine":"GOLD_RIDGE","role":"expert evidence","status":"NOT_TESTABLE_CANONICAL_HISTORY_MISSING"},
+    {"engine":"SESSION_RM_RIDGE","role":"expert evidence","status":"NOT_TESTABLE_CANONICAL_HISTORY_MISSING"},
+    {"engine":"PRICE_DISCOVERY_HGB","role":"expert evidence","status":"NOT_TESTABLE_CANONICAL_HISTORY_MISSING"},
+    {"engine":"MACRO_CROSS_RIDGE","role":"expert evidence","status":"NOT_TESTABLE_CANONICAL_HISTORY_MISSING"},
+    {"engine":"FULL_HGB","role":"nonlinear expert evidence","status":"NOT_TESTABLE_CANONICAL_HISTORY_MISSING"},
+    {"engine":"LOCAL_ERRMEM_V164","role":"adaptive expert evidence","status":"NOT_TESTABLE_CANONICAL_HISTORY_MISSING"},
+    {"engine":"CROSS_MARKET_DAILY","role":"cross-market context","status":"EXTENSION_ONLY_MIXED_PIT_COVERAGE"},
+    {"engine":"CFTC_COT","role":"slow positioning context","status":"NOT_FOUND_CANONICAL_HISTORY"}
+  ],
+  "governance": {
+    "missing_history_imputation": "FORBIDDEN",
+    "short_history_may_shorten_core_window": false,
+    "extension_comparison": "SAME_ORIGIN_COMMON_SUPPORT_ONLY",
+    "monthly_h1_remains_independent_output": true,
+    "fixed_1d_3d_short_term_target": "RETIRED"
+  }
+}
