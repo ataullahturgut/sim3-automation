@@ -1,0 +1,101 @@
+{
+  "result_id": "GC_BREAK_THREE_MONTH_INTEGRATED_PROTOTYPE_V2_ACCEPTED_RESEARCH_RESULT",
+  "status": "PASS_RESEARCH_ONLY_NOT_CANONICAL_NOT_WP4_COMPLETE",
+  "workflow_run_id": 34788732603,
+  "workflow_head_sha": "79db52a8aaa84d53e2ea177fbc0aababb7323142",
+  "artifact_id": 10327581822,
+  "artifact_digest": "sha256:7ce2b2f1be93c4012e4f821323b4d4bbd7b62a3407a5e785d24bb6bece0b4a32",
+  "contract_id": "GC_BREAK_THREE_MONTH_INTEGRATED_PROTOTYPE_V2",
+  "window": {
+    "start": "2026-04-01",
+    "end": "2026-06-30",
+    "selection_basis": "coverage_only_not_outcome_performance",
+    "common_xau_gvz_vix_origins": 62,
+    "scored_non_break_origins": 57,
+    "break_events": 5,
+    "missing_required_context_rows": 0
+  },
+  "runtime_identity_count": 12,
+  "runtime_identity_representation": {
+    "CAUSAL_PATCH": true,
+    "VW_MIDAS_MSVR_SUCCESSOR_V1": true,
+    "MOMENTUM_3M": true,
+    "RANDOM_WALK": true,
+    "MONTHLY_DIRECTION_3M": true,
+    "FAST": true,
+    "SLOW": true,
+    "MACRO_EVENT_SUCCESSOR_V2": true,
+    "BOCPD_RETURN_SUCCESSOR_V1": true,
+    "EMERGENCY_LEVEL": true,
+    "EMERGENCY_REVERSAL": true,
+    "GVZ_RISK": true
+  },
+  "learned_core": {
+    "family": "balanced_ridge_logit_price_path_plus_fast",
+    "training_start": "2025-01-02",
+    "training_end": "2026-03-31",
+    "train_origins": 299,
+    "train_break_targets": 20,
+    "features": ["adverse_fraction_clipped_0_1", "fast_conflict"],
+    "ridge_lambda": 1.0,
+    "weakening_threshold_training_q75": 0.5724856395251294,
+    "train_auc": 0.7863799283154121,
+    "test_auc": 0.8884615384615384
+  },
+  "sequential_test": {
+    "break_dates": ["2026-04-28", "2026-05-06", "2026-05-15", "2026-06-15", "2026-06-24"],
+    "weakening": {
+      "episodes": 5,
+      "converted_episodes": 3,
+      "false_episodes": 2,
+      "event_recall": 0.6,
+      "false_episodes_per_100_scored_origins": 3.508771929824561,
+      "median_lead_origins": 2.0
+    },
+    "break_alert": {
+      "episodes": 3,
+      "converted_episodes": 3,
+      "false_episodes": 0,
+      "event_recall": 0.6,
+      "false_episodes_per_100_scored_origins": 0.0,
+      "median_lead_origins": 2.0
+    },
+    "slow_confirmation": [
+      {"break_date": "2026-04-28", "new_regime": "DOWN", "confirmation_date": "2026-05-01", "delay_origins": 3},
+      {"break_date": "2026-05-06", "new_regime": "UP", "confirmation_date": null, "delay_origins": null},
+      {"break_date": "2026-05-15", "new_regime": "DOWN", "confirmation_date": "2026-05-15", "delay_origins": 0},
+      {"break_date": "2026-06-15", "new_regime": "UP", "confirmation_date": null, "delay_origins": null},
+      {"break_date": "2026-06-24", "new_regime": "DOWN", "confirmation_date": "2026-06-24", "delay_origins": 0}
+    ]
+  },
+  "macro_event_v2": {
+    "source_run_id": "6a18db17-6fb2-4bf8-a20b-f3b6d529ca8a",
+    "source_pipeline": "MACRO_EVENT_SUCCESSOR_V1_RESEARCH_DATA_PLANE_R1",
+    "preregistration_blob_sha": "3584e8e89307971405a439fba9f8229f571e7852",
+    "test_event_count": 3,
+    "strong_event_count": 0
+  },
+  "channel_activity": {
+    "fast_conflict_origins": 19,
+    "fast_opposite_origins": 15,
+    "emergency_level_non_neutral": 34,
+    "emergency_reversal_origins": 7,
+    "gvz_elevated_or_panic_origins": 47,
+    "gvz_panic_origins": 9,
+    "strategic_prior_conflict_origins": 15,
+    "bocpd_adverse_break_candidate_origins": 20,
+    "bocpd_no_adverse_break_candidate_origins": 42
+  },
+  "governance": {
+    "xau_canonical_exact_ny17": false,
+    "evidence_class": "HISTORICAL_RESEARCH_REPLAY_NOT_CANONICAL_NY17",
+    "database_write": "NONE",
+    "post_test_threshold_tuning": false,
+    "flat_equal_vote": false,
+    "buy_sell_mapping": false,
+    "prospective_claim": false,
+    "official_wp4_completion": false,
+    "v1_identity_mismatch_result_rejected": true
+  },
+  "interpretation": "The three-month prototype demonstrates end-to-end role-preserving integration and mechanically useful early-warning behavior on a small retrospective stress window. It is not canonical validation, is based on five break events, and does not complete manifest WP4."
+}
