@@ -1,0 +1,47 @@
+name: GC-BREAK V0 Governed Diagnostic V1
+
+on:
+  push:
+    branches:
+      - gc-break-wp1-formation-backfill
+    paths:
+      - 'gold_axis_2026/gc_break_v0/gc_break_event_contract_v1.json'
+      - 'gold_axis_2026/tools/gc_break_v0_governed_diagnostic_v1.py'
+      - '.github/workflows/gc-break-v0-governed-diagnostic-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  diagnostic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install research-only dependencies
+        run: python -m pip install --quiet numpy pandas scipy
+      - name: Compile
+        run: |
+          python -m py_compile gold_axis_2026/tools/gc_break_v0_governed_diagnostic_v1.py
+          python -m py_compile gold_axis_2026/tools/bocpd_return_successor_v1.py
+      - name: Run governed diagnostic
+        run: python gold_axis_2026/tools/gc_break_v0_governed_diagnostic_v1.py
+      - name: Assert read-only / no authority path
+        run: |
+          ! grep -Ei 'psycopg|NEON_DATABASE_URL|insert[[:space:]]+into|delete[[:space:]]+from|update[[:space:]]+observations' \
+            gold_axis_2026/tools/gc_break_v0_governed_diagnostic_v1.py
+          echo 'GC_BREAK_V0_DIAGNOSTIC_READ_ONLY_PASS'
+      - name: Upload diagnostic artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-v0-governed-diagnostic-v1
+          if-no-files-found: error
+          path: gold_axis_2026/data_pipeline/audits/gc_break_v0_diagnostic_v1/
