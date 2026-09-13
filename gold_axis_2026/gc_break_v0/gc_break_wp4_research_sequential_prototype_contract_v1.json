@@ -1,0 +1,55 @@
+{
+  "contract_id": "GC_BREAK_WP4_RESEARCH_SEQUENTIAL_PROTOTYPE_V1",
+  "status": "RESEARCH_ONLY_EXPLORATORY_NOT_CANONICAL",
+  "created_date": "2026-09-13",
+  "purpose": "Small-sample research-only sequential transition prototype while canonical exact-NY17 history is quota-blocked.",
+  "source": {
+    "series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+    "source": "Twelve Data",
+    "frequency": "daily_derived_from_1h",
+    "evidence_class": "RETROSPECTIVE_RESEARCH_ONLY_NOT_CANONICAL_NY17",
+    "canonical_replacement_required": true
+  },
+  "event_label": {
+    "contract_id": "GC_BREAK_EVENT_CONTRACT_V1",
+    "k_sigma": 3.0,
+    "sigma_window_observations": 20,
+    "sigma_lag": 1,
+    "engine_inputs_used_for_label": []
+  },
+  "features": [
+    "adverse_fraction_clipped_0_1",
+    "FAST_CONFLICT",
+    "SLOW_CONFLICT",
+    "EMERGENCY_REVERSAL_OPPOSITE"
+  ],
+  "model": {
+    "family": "RIDGE_LOGISTIC_DISCRETE_TIME_TRANSITION_HAZARD",
+    "target": "break on next governed observation conditional on current non-break origin",
+    "class_weight": "balanced_from_training_only",
+    "ridge_lambda_equivalent": 1.0,
+    "random_split": false
+  },
+  "windows": {
+    "prehistory_start": "2023-11-01",
+    "train_start": "2024-01-02",
+    "train_target_end": "2024-05-31",
+    "test_origin_start": "2024-06-03",
+    "test_target_end": "2024-08-30"
+  },
+  "state_mapping": {
+    "weakening_threshold": "75th percentile of training fitted hazard probabilities; no test labels used",
+    "BREAK_ALERT": "second consecutive governed origin at or above weakening threshold",
+    "recovery": "first governed origin below weakening threshold returns to STABLE",
+    "note": "State mapping is exploratory and was created after the research smoke phase; it is not eligible for canonical or prospective claims without re-freeze and canonical rerun."
+  },
+  "governance": {
+    "production_authority": false,
+    "prospective_claim": false,
+    "no_database_writes": true,
+    "no_buy_sell_mapping": true,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF",
+    "canonical_validation_required": true
+  }
+}
