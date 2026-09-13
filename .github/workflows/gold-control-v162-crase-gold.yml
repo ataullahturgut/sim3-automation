@@ -1,0 +1,36 @@
+name: Gold Control V1.62 CRASE-Gold method research
+
+on:
+  pull_request:
+    paths:
+      - "gold_axis_2026/v162_thesis/**"
+      - "gold_axis_2026/tests/test_v162_crase_gold.py"
+      - ".github/workflows/gold-control-v162-crase-gold.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  crase-gold:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install frozen research dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 scikit-learn==1.8.0 psycopg[binary]==3.2.10 requests==2.32.5 pytest==8.4.2
+      - name: Test V1.62 method and governance locks
+        run: python -m pytest -q gold_axis_2026/tests/test_v162_crase_gold.py
+      - name: Run V1.62 frozen CRASE-Gold retrospective diagnostic
+        run: python -m gold_axis_2026.v162_thesis.run_v162_crase_gold
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-v162-crase-gold-${{ github.sha }}
+          path: gold_axis_2026/data_pipeline/audits/v162_thesis/
