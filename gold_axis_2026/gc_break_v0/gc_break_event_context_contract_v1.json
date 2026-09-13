@@ -1,0 +1,61 @@
+{
+  "contract_id": "GC_BREAK_EVENT_CONTEXT_CONTRACT_V1",
+  "status": "FROZEN_BEFORE_EVENT_CONTEXT_SCORING",
+  "created_date": "2026-09-13",
+  "production_authority": false,
+  "prospective_claim": false,
+  "database_write_permitted": false,
+  "macro_event": {
+    "series_ids": [
+      "MACRO_EVENT_V3_EMPLOYMENT_SCORE",
+      "MACRO_EVENT_V3_INFLATION_SCORE",
+      "MACRO_EVENT_V3_FOMC_SCORE"
+    ],
+    "strong_states": [
+      "GOLD_ADVERSE_MACRO_SHOCK",
+      "GOLD_SUPPORTIVE_MACRO_SHOCK"
+    ],
+    "direction": "sign(score); positive is gold-supportive/up context and negative is gold-adverse/down context",
+    "role": "event-triggered directional hazard modifier; not continuous daily direction vote"
+  },
+  "market_shock": {
+    "identity": "MARKET_SHOCK_CHALLENGER_V3",
+    "role": "realized event shock/intensity confirmation only",
+    "standalone_promotion": false,
+    "event_overlap_window_minutes": 10,
+    "concordance": "market shock direction sign must equal strong macro score sign",
+    "frozen_method_reused_without_threshold_change": true
+  },
+  "daily_mapping": {
+    "rule": "event released on a governed NY17 role-replay calendar date is available as context for that date's completed daily origin; events outside available role-replay dates map to the first role-replay date on or after release calendar date only if the release precedes that origin",
+    "same_day_lead": "lead 0 if event context first appears on the objective break date"
+  },
+  "role_preserving_integration": {
+    "event_opposite_regime": "strong macro direction is opposite the current pre-break regime",
+    "event_concordant_opposite_regime": "event_opposite_regime AND concordant Market Shock V3 within 0-10 minutes",
+    "core_weakening_event": "core_weakening OR event_opposite_regime",
+    "core_break_alert_event": "core_break_alert OR (core_weakening AND event_opposite_regime) OR event_concordant_opposite_regime",
+    "market_shock_alone_may_trigger": false,
+    "macro_event_weak_or_neutral_may_trigger": false,
+    "monthly_direction_may_trigger": false,
+    "gvz_may_trigger_primary": false
+  },
+  "evaluation": {
+    "uses": "GC_BREAK_EVENT_CONTRACT_V1 objective break inventory",
+    "metrics": [
+      "prebreak_event_recall",
+      "at_or_before_event_recall",
+      "false_alarm_episodes_per_100_origins",
+      "episode_conversion_rate",
+      "lead_time_observations",
+      "lead_time_calendar_days"
+    ],
+    "no_threshold_reselection_from_score": true
+  },
+  "governance": {
+    "neon_access": "READ_ONLY",
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF",
+    "no_buy_sell_mapping": true
+  }
+}
