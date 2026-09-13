@@ -1,0 +1,47 @@
+{
+  "audit_id": "GC_BREAK_MINI_PILOT_SMOKE_OVERLAP_AUDIT_V1",
+  "created_date": "2026-09-13",
+  "purpose": "Research-only support check while canonical exact-NY17 mini-pilot is waiting on provider quota.",
+  "window": {
+    "start": "2024-06-01",
+    "end": "2024-08-31"
+  },
+  "sources": {
+    "research_daily_series": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+    "research_1m_cache": "xau_intraday_research_cache_1m",
+    "cache_semantic": "exact 16:59:00 America/New_York rows where present",
+    "canonical_authority": false
+  },
+  "overlap_check": {
+    "exact_1659_days": 38,
+    "overlap_days": 38,
+    "mean_absolute_close_difference": 0.0,
+    "max_absolute_close_difference": 0.0,
+    "level_correlation": 1.0
+  },
+  "smoke_break_dates_checked": [
+    {
+      "date": "2024-07-05",
+      "exact_1659_close": 2391.62012,
+      "present_in_research_1m_cache": true
+    },
+    {
+      "date": "2024-07-25",
+      "exact_1659_close": 2364.71997,
+      "present_in_research_1m_cache": true
+    },
+    {
+      "date": "2024-07-31",
+      "exact_1659_close": 2447.51001,
+      "present_in_research_1m_cache": true
+    }
+  ],
+  "interpretation": {
+    "supports": "The research daily series matches the exact 16:59 ET research cache on every overlapping day in the pilot score window, including all three smoke break dates.",
+    "does_not_support": "This does not establish canonical Twelve Data provenance or replace the exact-NY17 provider reconstruction.",
+    "use": "Research smoke validation only; canonical mini-pilot remains the decision authority."
+  },
+  "production_database_write": "NONE",
+  "performance_tuning_used": false,
+  "prospective_claim": false
+}
