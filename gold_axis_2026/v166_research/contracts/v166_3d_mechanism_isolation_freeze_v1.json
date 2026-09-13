@@ -3,6 +3,7 @@
   "status": "FROZEN_BEFORE_ANY_V166_SCORING",
   "evidence_class": "RETROSPECTIVE_METHOD_DEVELOPMENT_DIAGNOSTIC_NOT_FRESH_OOS",
   "frozen_on": "2026-09-13",
+  "implementation_restore_note": "Recommitted unchanged scientific parameters after parent-branch cleanup; the prior workflow stopped at contract-file lookup and no V1.66 scoring occurred.",
   "research_question": "For the 3-day horizon, is temporal weakness better explained and repaired by probability recalibration alone or by recency-weighted refitting alone, relative to the unchanged static parent, before any gated adaptation, selector, or drift detector is introduced?",
   "parent_version": "V1.65-DIAG",
   "horizon": 3,
