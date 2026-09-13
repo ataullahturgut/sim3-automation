@@ -1,0 +1,101 @@
+{
+  "contract_id": "GOLD_CONTROL_V165A_R1_SYNTHETIC_DRIFT_DETECTOR_FREEZE_V1",
+  "status": "FROZEN_BEFORE_ANY_V165A_R1_DETECTOR_SCORING",
+  "evidence_class": "RETROSPECTIVE_METHOD_DEVELOPMENT_DIAGNOSTIC_NOT_FRESH_OOS",
+  "frozen_on": "2026-09-13",
+  "parent_version": "V1.64",
+  "supersedes": "GOLD_CONTROL_V165A_DRIFT_DETECTOR_VALIDATION_FREEZE_V1",
+  "supersession_reason": "R0 had only 32 matured 1D and 28 matured 3D pre-2025 loss points per parent, insufficient for defensible empirical bootstrap calibration. R1 selects detector parameters only on generic bounded synthetic loss processes, then applies the frozen winner descriptively to the immutable V1.64 pointwise loss artifact without retuning.",
+  "research_question": "Can a compact predeclared drift detector be selected on synthetic bounded autocorrelated loss processes with low false-alarm and acceptable detection-delay properties, before looking at V1.64 2025/2026 drift timing?",
+  "monitor_target": "One-sided deterioration in probabilistic forecast loss; actual diagnostic stream is EXCESS_BRIER=(y-p_static)^2-(y-p_frequency)^2.",
+  "detectors": {
+    "ADWIN": {
+      "implementation": "river.drift.ADWIN",
+      "delta_grid": [0.001, 0.002, 0.005],
+      "clock": 1,
+      "max_buckets": 5,
+      "min_window_length": 10,
+      "grace_period": 30,
+      "input": "latent standardized loss clipped to [-4,4] then mapped to [0,1]"
+    },
+    "PAGE_HINKLEY": {
+      "implementation": "river.drift.PageHinkley",
+      "min_instances": 30,
+      "delta_grid_standardized": [0.0, 0.1],
+      "threshold_grid_standardized": [5.0, 7.5, 10.0],
+      "alpha": 0.999,
+      "mode": "up",
+      "input": "standardized latent loss"
+    }
+  },
+  "synthetic_benchmark": {
+    "seed": 20260913,
+    "replicates_per_scenario": 200,
+    "stream_length": 300,
+    "pre_drift_length": 150,
+    "innovation_families": ["NORMAL", "STUDENT_T5"],
+    "ar1_rho": [0.0, 0.3, 0.6],
+    "latent_clip": [-4.0, 4.0],
+    "drift_shapes": ["ABRUPT", "GRADUAL_30"],
+    "shift_sizes_sd": [0.5, 1.0, 1.5],
+    "null_scenario": true,
+    "early_alarm_policy": "An alarm before the injected drift is a false alarm and does not count as a successful detection in that replicate."
+  },
+  "selection_gate": {
+    "mean_null_false_alarm_rate_max": 0.10,
+    "worst_archetype_null_false_alarm_rate_max": 0.20,
+    "mean_detection_rate_at_1sd_min": 0.70,
+    "worst_archetype_detection_rate_at_1sd_min": 0.50,
+    "selection_order_after_gates": ["lower_median_detection_delay_at_1sd", "lower_mean_null_false_alarm_rate", "higher_mean_detection_rate_at_1sd", "lower_mean_detected_delay_all_nonnull", "simpler_candidate_id"],
+    "if_none_pass": "STOP. Do not use 2025/2026 to relax or tune detector parameters. Triggered adaptation remains blocked."
+  },
+  "frozen_v164_artifact": {
+    "workflow_run": 34752686111,
+    "artifact_id": 10316352769,
+    "artifact_name": "gold-v164-adaptive-error-memory-4bf06627b53da3e6549587f7f7ce2d9e19b6d7aa",
+    "artifact_digest": "sha256:23901808b5b8db4b2065797865f7ac4269bf544953fe1ce38b37964e19ab78da",
+    "prediction_file_sha256": {
+      "v164_1d_full_hgb_predictions.csv": "d39609087cfa4423525e0dba599c3c5aec96eb3487fc6aab5f2d8112e23596ef",
+      "v164_1d_gold_ridge_predictions.csv": "1a057dc1e032e9698000fe31333089a80443136578d8f2105166be4df5005efe",
+      "v164_1d_macro_cross_ridge_predictions.csv": "5996b47a09c04fccc82f64707df9216f3daad89406a2e68e917528d2a1633e58",
+      "v164_1d_price_discovery_hgb_predictions.csv": "c34fd9c0836a4f4e8335edd0137a87e94ff24805de57ccbca435e5e15ae6db34",
+      "v164_1d_session_rm_ridge_predictions.csv": "d19a8d5a50e1148c46940196876bdd3d0b3e9bc720489b349c7f02b033428af4",
+      "v164_3d_full_hgb_predictions.csv": "4cbfd8f8403f9f65a9cd7f82a60b22f7a18ef8bf0b4746ef57252fa7b6001e26",
+      "v164_3d_gold_ridge_predictions.csv": "a05178217d8ca4368b78f6888c662aaaad16a01fa9f6678414f3ba0e03ff74c9",
+      "v164_3d_macro_cross_ridge_predictions.csv": "74b611b1583fe45c0513006cc2904799c2002fcb48333017e0b285c9a0159f84",
+      "v164_3d_price_discovery_hgb_predictions.csv": "d0c191e5e61a158d476f4ff66eb737f346ec3595e132f7d3dc6c25b6c297e9ae",
+      "v164_3d_session_rm_ridge_predictions.csv": "d6c5c3bf52021ac9d34c5a61f336722ff95bd9cb39c92e901b25bd978f6d7bcf"
+    }
+  },
+  "actual_timeline_diagnostic": {
+    "performed_only_after_synthetic_detector_selection": true,
+    "can_change_selected_detector": false,
+    "can_change_detector_parameters": false,
+    "page_hinkley_standardization_baseline_n": 30,
+    "adwin_mapping": "actual excess Brier is bounded [-1,1] and is mapped to [0,1]",
+    "report": ["alarm_dates", "first_alarm_date", "alarms_by_calendar_year", "pre_2025_alarm_flag"],
+    "interpretation": "descriptive only; 2025/2026 are researcher-visible and cannot be used to retune R1"
+  },
+  "evaluation_lock": {
+    "2025_2026_used_for_detector_selection": false,
+    "triggered_adaptation_in_v165a_r1": "FORBIDDEN",
+    "selector_scoring_in_v165a_r1": "FORBIDDEN",
+    "abstention_tuning_in_v165a_r1": "FORBIDDEN",
+    "no_post_score_grid_expansion": true,
+    "prospective_claim": false
+  },
+  "literature_basis": [
+    "Bifet and Gavalda 2007: ADWIN monitors changing streams with adaptive windows and controls false positives/negatives, DOI 10.1137/1.9781611972771.42",
+    "Page 1954: sequential CUSUM-style change monitoring, Biometrika 41(1/2):100-115",
+    "Concept-drift detector comparisons evaluate false alarm, missed detection and detection delay jointly",
+    "Forecast monitoring should trigger revision after predictive degradation rather than modify the model continuously"
+  ],
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "action_mapping": "NONE",
+    "canonical_merge_without_explicit_user_authority": "FORBIDDEN"
+  }
+}
