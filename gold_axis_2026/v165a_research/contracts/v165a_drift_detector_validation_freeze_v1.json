@@ -1,0 +1,29 @@
+{
+  "contract_id": "GOLD_CONTROL_V165A_DRIFT_DETECTOR_VALIDATION_FREEZE_V1",
+  "status": "SUPERSEDED_BEFORE_DETECTOR_SCORING_INSUFFICIENT_FORMATION_SUPPORT",
+  "evidence_class": "RETROSPECTIVE_METHOD_DEVELOPMENT_DIAGNOSTIC_NOT_FRESH_OOS",
+  "frozen_on": "2026-09-13",
+  "superseded_before_detector_scoring": true,
+  "superseded_reason": "The frozen V1.64 pointwise formation streams contain only 32 matured 1D losses and 28 matured 3D losses per parent before 2025. This is too little support for a defensible moving-block calibration of detector false-alarm and delay properties. No ADWIN/Page-Hinkley detector score from this contract was produced before supersession.",
+  "research_question": "Which predeclared loss-drift detector can detect a material deterioration in short-horizon probabilistic forecast skill with acceptably low false alarms and delay, using only pre-2025 formation loss streams and synthetic injected drift, before any 2025/2026 adaptive forecasting test?",
+  "parent_version": "V1.64",
+  "horizons": [1, 3],
+  "formation_only_end": "2024-12-31",
+  "monitor_stream": {
+    "primary": "EXCESS_BRIER = (y-p_static)^2 - (y-p_frequency)^2",
+    "secondary": "RAW_BRIER = (y-p_static)^2",
+    "future_2025_2026_detector_selection": "FORBIDDEN"
+  },
+  "detectors": {
+    "ADWIN": {"delta_grid": [0.001, 0.002, 0.005]},
+    "PAGE_HINKLEY": {"delta_grid_standardized": [0.0, 0.1], "threshold_grid_standardized": [5.0, 7.5, 10.0]}
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "action_mapping": "NONE",
+    "canonical_merge_without_explicit_user_authority": "FORBIDDEN"
+  }
+}

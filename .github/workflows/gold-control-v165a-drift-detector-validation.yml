@@ -1,0 +1,46 @@
+name: Gold Control V1.65A drift detector validation research
+
+on:
+  pull_request:
+    paths:
+      - "gold_axis_2026/v165a_research/**"
+      - "gold_axis_2026/tests/test_v165a_drift_detector_validation.py"
+      - ".github/workflows/gold-control-v165a-drift-detector-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  drift-detector-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install frozen research dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 pytest==8.4.2 river==0.26.1
+      - name: Test V1.65A R1 detector and governance locks
+        run: python -m pytest -q gold_axis_2026/tests/test_v165a_drift_detector_validation.py
+      - name: Download immutable V1.64 pointwise-loss source artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 34752686111 \
+            --repo ataullahturgut/sim3-automation \
+            --name gold-v164-adaptive-error-memory-4bf06627b53da3e6549587f7f7ce2d9e19b6d7aa \
+            --dir /tmp/v164_artifact
+      - name: Run V1.65A R1 synthetic-first detector validation
+        env:
+          V164_ARTIFACT_DIR: /tmp/v164_artifact
+        run: python -m gold_axis_2026.v165a_research.run_v165a_drift_detector_validation
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-v165a-r1-drift-detector-validation-${{ github.sha }}
+          path: gold_axis_2026/data_pipeline/audits/v165a_research/
