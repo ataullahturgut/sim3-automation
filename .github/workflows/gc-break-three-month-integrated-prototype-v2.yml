@@ -1,0 +1,55 @@
+name: GC-BREAK Three Month Integrated Prototype V2
+
+on:
+  push:
+    branches:
+      - gc-break-wp1-formation-backfill
+    paths:
+      - '.github/workflows/gc-break-three-month-integrated-prototype-v2.yml'
+      - 'gold_axis_2026/tools/gc_break_three_month_integrated_prototype_v2.py'
+      - 'gold_axis_2026/gc_break_v0/gc_break_three_month_integrated_prototype_contract_v2.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integrated-prototype-v2:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install research-only dependencies
+        run: python -m pip install --quiet numpy pandas scipy 'psycopg[binary]'
+      - name: Compile exact-identity prototype
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python -m py_compile gold_axis_2026/tools/gc_break_three_month_integrated_prototype_v1.py
+          python -m py_compile gold_axis_2026/tools/gc_break_three_month_integrated_prototype_v2.py
+          python -m py_compile gold_axis_2026/data_pipeline/macro_event_successor_v2_score_replay.py
+      - name: Run coverage-selected exact-identity prototype
+        run: |
+          rm -rf /tmp/gc_break_three_month_integrated_v2
+          python gold_axis_2026/tools/gc_break_three_month_integrated_prototype_v2.py \
+            --output-dir /tmp/gc_break_three_month_integrated_v2
+      - name: Assert research-only no database mutation boundary
+        run: |
+          ! grep -Eiq '\b(insert|update|delete|truncate|alter|drop|create)[[:space:]]' \
+            gold_axis_2026/tools/gc_break_three_month_integrated_prototype_v2.py
+          echo 'GC_BREAK_THREE_MONTH_V2_RESEARCH_READ_ONLY_PASS'
+      - name: Upload immutable V2 prototype evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-three-month-integrated-prototype-v2
+          if-no-files-found: warn
+          retention-days: 90
+          path: /tmp/gc_break_three_month_integrated_v2/
