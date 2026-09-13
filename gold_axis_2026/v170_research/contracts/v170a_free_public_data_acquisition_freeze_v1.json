@@ -1,0 +1,40 @@
+{
+  "contract_id": "GOLD_CONTROL_V170A_FREE_PUBLIC_DATA_ACQUISITION_FREEZE_V1",
+  "status": "FROZEN_BEFORE_ANY_V170_FORECAST_SCORING",
+  "frozen_on": "2026-09-13",
+  "evidence_class": "PUBLIC_DATA_FEASIBILITY_AND_SNAPSHOT_CAPTURE_ONLY",
+  "research_question": "Can genuinely new, free, point-in-time reconstructable public positioning information for COMEX Gold be acquired reproducibly before any forecast model is scored?",
+  "parent_version": "V1.69",
+  "sources": {
+    "legacy_futures_only": {
+      "provider": "U.S. Commodity Futures Trading Commission Public Reporting Environment",
+      "dataset_id": "6dca-aqww",
+      "endpoint": "https://publicreporting.cftc.gov/resource/6dca-aqww.json",
+      "contract_market_code": "088691"
+    },
+    "disaggregated_futures_only": {
+      "provider": "U.S. Commodity Futures Trading Commission Public Reporting Environment",
+      "dataset_id": "72hh-3qpy",
+      "endpoint": "https://publicreporting.cftc.gov/resource/72hh-3qpy.json",
+      "contract_market_code": "088691"
+    }
+  },
+  "capture_window": ["2023-01-01", "2026-06-30"],
+  "capture_rule": "Fetch every weekly row for CFTC contract market code 088691 within the frozen window. Save raw API fields without outcome-based filtering.",
+  "pit_clock_rule_for_later_modeling": "COT positions are Tuesday snapshots. To avoid same-Friday release timing ambiguity, a row may first be used from report_date + 6 calendar days (the following Monday or the next panel observation thereafter). This is intentionally conservative.",
+  "forbidden_in_v170a": [
+    "forecast_target_join",
+    "forecast_model_fit",
+    "forecast_scoring",
+    "feature_selection_using_outcomes",
+    "2025_2026_performance_inspection",
+    "production_writes",
+    "action_mapping"
+  ],
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "canonical_merge_without_explicit_user_authority": "FORBIDDEN"
+  }
+}
