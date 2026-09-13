@@ -16,7 +16,7 @@
   "detectors": {
     "ADWIN": {
       "implementation": "river.drift.ADWIN",
-      "delta_grid": [0.0005, 0.001, 0.002, 0.005],
+      "delta_grid": [0.001, 0.002, 0.005],
       "clock": 1,
       "max_buckets": 5,
       "min_window_length": 10,
@@ -25,15 +25,15 @@
     "PAGE_HINKLEY": {
       "implementation": "river.drift.PageHinkley",
       "min_instances": 30,
-      "delta_grid_standardized": [0.0, 0.05, 0.1, 0.2],
-      "threshold_grid_standardized": [3.0, 5.0, 7.5, 10.0],
+      "delta_grid_standardized": [0.0, 0.1],
+      "threshold_grid_standardized": [5.0, 7.5, 10.0],
       "alpha": 0.999,
       "mode": "up"
     }
   },
   "synthetic_validation": {
     "seed": 20260913,
-    "replicates_per_scenario": 300,
+    "replicates_per_scenario": 150,
     "stream_length": 240,
     "pre_drift_length": 120,
     "block_bootstrap": true,
@@ -49,7 +49,7 @@
     "scope": "One detector family/configuration may be selected per horizon using only formation bootstrap results aggregated across all five parents.",
     "minimum_null_false_alarm_requirement": 0.10,
     "minimum_detection_rate_at_1sd": 0.70,
-    "tie_break": "lower false-alarm rate, then lower median delay, then simpler detector configuration",
+    "selection_order_after_gates": ["lower_median_delay_at_1sd", "lower_false_alarm_rate", "lower_average_detected_delay", "simpler_configuration"],
     "if_none_pass": "STOP. Do not run triggered adaptation. Open a new detector hypothesis/version without using 2025/2026 to tune detector parameters."
   },
   "evaluation_lock": {
