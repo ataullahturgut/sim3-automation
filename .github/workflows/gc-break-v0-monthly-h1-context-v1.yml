@@ -1,0 +1,49 @@
+name: GC-BREAK V0 Monthly H1 Context V1
+
+on:
+  push:
+    branches:
+      - gc-break-wp1-formation-backfill
+    paths:
+      - 'gold_axis_2026/gc_break_v0/gc_break_monthly_h1_context_contract_v1.json'
+      - 'gold_axis_2026/tools/gc_break_v0_monthly_h1_context_v1.py'
+      - '.github/workflows/gc-break-v0-monthly-h1-context-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  monthly-context:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install research-only dependencies
+        run: python -m pip install --quiet numpy pandas scipy
+      - name: Compile and rebuild governed diagnostic
+        run: |
+          python -m py_compile gold_axis_2026/tools/gc_break_v0_governed_diagnostic_v1.py
+          python -m py_compile gold_axis_2026/tools/gc_break_v0_monthly_h1_context_v1.py
+          python gold_axis_2026/tools/gc_break_v0_governed_diagnostic_v1.py
+      - name: Run monthly H1 strategic-context diagnostic
+        run: python gold_axis_2026/tools/gc_break_v0_monthly_h1_context_v1.py
+      - name: Assert no production-write dependency
+        run: |
+          ! grep -Eiq 'psycopg|NEON_DATABASE_URL|\b(insert|update|delete|truncate|alter|drop|create)[[:space:]]' gold_axis_2026/tools/gc_break_v0_monthly_h1_context_v1.py
+          echo 'GC_BREAK_MONTHLY_H1_CONTEXT_READ_ONLY_PASS'
+      - name: Upload strategic-context evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-v0-monthly-h1-context-v1
+          if-no-files-found: error
+          path: |
+            gold_axis_2026/data_pipeline/audits/gc_break_v0_monthly_h1_context_v1/
+            gold_axis_2026/data_pipeline/audits/gc_break_v0_diagnostic_v1/
