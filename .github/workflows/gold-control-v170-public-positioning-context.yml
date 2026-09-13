@@ -48,8 +48,6 @@ jobs:
 
           out = Path('/tmp/v170_sources')
           headers = {'User-Agent': 'Gold-Control-research/1.0 contact=research'}
-
-          # CFTC PRE / Socrata: request only COMEX Gold contract market code 088691 first.
           url = 'https://publicreporting.cftc.gov/resource/72hh-3qpy.csv'
           params = {'$limit': '5000', '$where': "cftc_contract_market_code='088691'", '$order': 'report_date_as_yyyy_mm_dd'}
           r = requests.get(url, params=params, headers=headers, timeout=60)
@@ -59,7 +57,7 @@ jobs:
               r.raise_for_status()
               d = pd.read_csv(io.BytesIO(r.content), low_memory=False)
               code = next(c for c in d.columns if c.lower().replace(' ', '_') in {'cftc_contract_market_code', 'cftc_contract_market_code_'})
-              x = d[d[code].astype(str).str.replace('.0','',regex=False).eq('088691')].copy()
+              x = d[d[code].astype(str).str.replace('.0','',regex=False).isin(['088691','88691'])].copy()
           else:
               d = pd.read_csv(io.BytesIO(r.content), low_memory=False)
               x = d.copy()
@@ -87,24 +85,21 @@ jobs:
           gvz_std = pd.DataFrame({'DATE': gvz[date_col], 'CLOSE': pd.to_numeric(gvz[value_col], errors='coerce')}).dropna()
           gvz_std.to_csv(out / 'GVZ_History.csv', index=False)
 
-          def sha_bytes(b):
-              return hashlib.sha256(b).hexdigest()
-          def sha_file(p):
-              return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+          def sha_bytes(b): return hashlib.sha256(b).hexdigest()
+          def sha_file(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
           manifest = {
               'cftc_rows': int(len(x)), 'gvz_rows': int(len(gvz_std)),
               'cftc_sha256': sha_file(out / 'cftc_gold_088691.csv'),
               'gvz_raw_sha256': sha_bytes(raw_gvz),
               'gvz_normalized_sha256': sha_file(out / 'GVZ_History.csv'),
-              'gvz_source_columns': list(gvz.columns),
-              'gvz_value_column_used': value_col,
+              'gvz_source_columns': list(gvz.columns), 'gvz_value_column_used': value_col,
               'cftc_endpoint': url, 'gvz_endpoint': gvz_url,
           }
           (out / 'v170_public_source_manifest.json').write_text(json.dumps(manifest, indent=2), encoding='utf-8')
           print(json.dumps(manifest, indent=2))
           PY
       - name: Run frozen V1.70 public positioning context experiment
-        run: python -m gold_axis_2026.v170_research.run_v170_public_positioning_context
+        run: python -m gold_axis_2026.v170_research.run_v170_public_positioning_context_r1
       - name: Copy public source manifest into audit artifact
         if: always()
         run: |
