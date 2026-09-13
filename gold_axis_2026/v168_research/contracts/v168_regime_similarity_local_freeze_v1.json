@@ -1,0 +1,122 @@
+{
+  "contract_id": "GOLD_CONTROL_V168_REGIME_SIMILARITY_LOCAL_FREEZE_V1",
+  "status": "FROZEN_BEFORE_ANY_V168_SCORING",
+  "evidence_class": "RETROSPECTIVE_METHOD_DEVELOPMENT_DIAGNOSTIC_NOT_FRESH_OOS",
+  "frozen_on": "2026-09-13",
+  "research_question": "For 3-day direction, can causal local training on historically similar market states recover more stable predictive skill than using all matured history or the equally sized most-recent history window?",
+  "literature_basis": [
+    "Similarity-based forecasting and nearest-neighbour/local regression: historical observations similar to the current state may be more informative than merely recent observations.",
+    "Flexible rolling-window forecasting: weighting observations by similarity to the current regime can outperform fixed or purely recent windows under structural breaks and nonlinear misspecification.",
+    "Conditional/state-dependent predictive ability: useful predictors may have pockets of predictability rather than constant global skill.",
+    "V1.67 empirical trigger: SESSION_RM and MACRO_CROSS each showed positive skill in 2 of 3 pre-2025 environments but failed global invariance, motivating local-regime rather than global-invariant learning."
+  ],
+  "parent_version": "V1.67",
+  "horizon": 3,
+  "source_artifact": {
+    "workflow_run_id": 34752686111,
+    "artifact_id": 10316352769,
+    "zip_sha256": "23901808b5b8db4b2065797865f7ac4269bf544953fe1ce38b37964e19ab78da",
+    "required_file": "v164_panel.csv",
+    "immutability": "Use the frozen V1.64 panel only. No external data fetch or post-score feature creation."
+  },
+  "target": {
+    "definition": "y_t = 1[close_{t+3} > close_t] using the next three rows of the frozen NY17 panel",
+    "maturity_rule": "Training rows at origin t require target_date < origin_date_t.",
+    "probability_threshold": 0.5
+  },
+  "candidate_predictor_blocks": {
+    "SESSION_RM": ["europe_session_ret", "us_morning_ret", "post_0829_ret", "rm_vol", "rm_rsv_neg", "rm_rsv_pos", "rm_downside_share", "rm_skew", "rm_kurt", "rm_jump_fraction", "rm_max_abs"],
+    "MACRO_CROSS": ["nasdaq_ret", "sp500_ret", "xag_ret", "xpt_ret", "xpd_ret", "broad_usd_level", "broad_usd_logdiff1", "broad_usd_logdiff5", "real10_level", "real10_delta1", "real10_delta5"]
+  },
+  "state_vector": [
+    "gold_mom20",
+    "gold_rv20",
+    "rm_vol",
+    "broad_usd_logdiff5",
+    "real10_delta5",
+    "fast_state_encoded",
+    "slow_state_encoded"
+  ],
+  "state_distance": {
+    "imputation": "At each origin, fill state missing values using medians from matured historical rows only.",
+    "scaling": "At each origin, z-score state variables using means and standard deviations from matured historical rows only; zero-variance columns receive unit scale.",
+    "metric": "Euclidean distance on the frozen standardized state vector.",
+    "neighbour_weighting": "Equal weight among the K nearest matured historical states; no distance-kernel tuning in V1.68."
+  },
+  "forecast_models": {
+    "GLOBAL": "L2 logistic regression on all matured history.",
+    "RECENT_K": "Same L2 logistic regression on the K most recent matured rows.",
+    "SIMILAR_K": "Same L2 logistic regression on the K nearest matured rows in frozen state space."
+  },
+  "model_lock": {
+    "pipeline": "training-only median imputation -> StandardScaler -> LogisticRegression",
+    "C": 1.0,
+    "solver": "lbfgs",
+    "max_iter": 5000,
+    "class_weight": null,
+    "minimum_training_rows": 40,
+    "one_class_fallback": "GLOBAL if local subset has one realized class; 0.5 only if GLOBAL also has one class.",
+    "hyperparameter_search": "Only K may be selected from the frozen pre-2025 grid. All other model parameters are fixed."
+  },
+  "k_selection": {
+    "grid": [40, 60, 80],
+    "selection_periods": {
+      "S1_2023H2": ["2023-07-01", "2023-12-31"],
+      "S2_2024H1": ["2024-01-01", "2024-06-30"],
+      "S3_2024Q3": ["2024-07-01", "2024-09-25"]
+    },
+    "scored_models": ["SIMILAR_K", "RECENT_K"],
+    "selection_rule": "Choose one K shared by both predictor blocks. Minimize mean Brier loss of SIMILAR_K over all causal origins in S1/S2/S3 and both blocks. Ties: lower log loss, then larger K. 2024Q4/2025/2026 cannot influence K.",
+    "causal_origin_rule": "Every prediction at every selection origin may use only target-matured history before that origin."
+  },
+  "evaluation_periods": {
+    "bridge_2024Q4": ["2024-09-26", "2024-12-31"],
+    "diagnostic_2025": ["2025-01-01", "2025-12-31"],
+    "diagnostic_2026_available": ["2026-01-01", "2026-06-30"]
+  },
+  "benchmark": {
+    "CAUSAL_FREQUENCY": "Expanding prior matured UP frequency; fallback 0.5 if fewer than 20 matured labels.",
+    "GLOBAL": "Same predictor block and logistic family using all matured history.",
+    "RECENT_K": "Same predictor block and logistic family using the K most recent matured rows."
+  },
+  "bridge_success_gate_per_block": {
+    "SIMILAR_K_brier_not_worse_than_GLOBAL": true,
+    "SIMILAR_K_brier_not_worse_than_RECENT_K": true,
+    "SIMILAR_K_brier_not_worse_than_CAUSAL_FREQUENCY": true,
+    "SIMILAR_K_log_loss_not_worse_than_GLOBAL": true,
+    "SIMILAR_K_roc_auc_min": 0.52,
+    "SIMILAR_K_both_predicted_directions": true
+  },
+  "visible_persistence_gate_per_block": {
+    "2025_and_2026_SIMILAR_K_brier_not_worse_than_GLOBAL": true,
+    "2025_and_2026_SIMILAR_K_brier_not_worse_than_CAUSAL_FREQUENCY": true,
+    "2025_and_2026_SIMILAR_K_auc_min": 0.52,
+    "both_predicted_directions_each_period": true,
+    "use": "Retrospective diagnostic persistence only; not fresh OOS."
+  },
+  "decision_lock": {
+    "if_bridge_and_visible_persistence_pass": "Candidate may proceed only to a separately frozen prospective-shadow study.",
+    "if_bridge_pass_visible_fail": "Local similarity is not persistent enough; return to new-information or target/horizon redesign.",
+    "if_bridge_fail": "Reject regime-similarity escalation for this information set; do not tune state variables or K after seeing bridge/visible results.",
+    "if_similarity_beats_recent_but_not_frequency": "Record evidence that state similarity helps adaptation but not enough for forecast skill; do not promote."
+  },
+  "forbidden_in_v168": [
+    "2024Q4_2025_2026_based_K_selection",
+    "state_vector_changes_after_scoring",
+    "kernel_shape_search",
+    "feature_addition_after_scoring",
+    "selector_or_CRASE",
+    "forecast_combination_between_blocks",
+    "drift_detector",
+    "gated_residual_correction",
+    "abstention_threshold_tuning",
+    "production_writes",
+    "action_mapping"
+  ],
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "canonical_merge_without_explicit_user_authority": "FORBIDDEN"
+  }
+}
