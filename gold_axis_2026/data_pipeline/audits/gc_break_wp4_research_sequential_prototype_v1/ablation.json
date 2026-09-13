@@ -1,0 +1,43 @@
+{
+  "audit_id": "GC_BREAK_WP4_RESEARCH_SEQUENTIAL_PROTOTYPE_V1_ABLATION",
+  "status": "RESEARCH_ONLY_POST_SMOKE_ABLATION",
+  "same_train_test_origins": true,
+  "train_origins": 92,
+  "train_break_targets": 7,
+  "test_origins": 59,
+  "test_break_targets": 3,
+  "models": {
+    "PRICE": {
+      "test_auc": 0.9285714285714286,
+      "test_average_precision": 0.5277777777777778,
+      "weakening": {"event_recall": 1.0, "episode_conversion_rate": 0.5, "false_episodes_per_100_origins": 5.084745762711864, "median_lead_observations": 1.0},
+      "break_alert": {"event_recall": 0.3333333333333333, "episode_conversion_rate": 0.5, "false_episodes_per_100_origins": 1.694915254237288, "median_lead_observations": 3.0}
+    },
+    "PRICE_FAST": {
+      "test_auc": 0.9404761904761905,
+      "test_average_precision": 0.3595238095238096,
+      "weakening": {"event_recall": 1.0, "episode_conversion_rate": 0.5, "false_episodes_per_100_origins": 5.084745762711864, "median_lead_observations": 3.0},
+      "break_alert": {"event_recall": 0.6666666666666666, "episode_conversion_rate": 0.5, "false_episodes_per_100_origins": 3.389830508474576, "median_lead_observations": 2.5}
+    },
+    "PRICE_FAST_SLOW": {
+      "test_auc": 0.9166666666666667,
+      "test_average_precision": 0.28888888888888886,
+      "weakening": {"event_recall": 1.0, "episode_conversion_rate": 0.42857142857142855, "false_episodes_per_100_origins": 6.779661016949152, "median_lead_observations": 3.0},
+      "break_alert": {"event_recall": 0.6666666666666666, "episode_conversion_rate": 0.6666666666666666, "false_episodes_per_100_origins": 1.694915254237288, "median_lead_observations": 2.5}
+    },
+    "PRICE_FAST_SLOW_EMERGENCY": {
+      "test_auc": 0.9166666666666667,
+      "test_average_precision": 0.28888888888888886,
+      "weakening": {"event_recall": 1.0, "episode_conversion_rate": 0.42857142857142855, "false_episodes_per_100_origins": 6.779661016949152, "median_lead_observations": 3.0},
+      "break_alert": {"event_recall": 0.6666666666666666, "episode_conversion_rate": 0.6666666666666666, "false_episodes_per_100_origins": 1.694915254237288, "median_lead_observations": 2.5}
+    }
+  },
+  "role_interpretation": {
+    "hazard_core_candidate": "PRICE_FAST",
+    "SLOW": "reserve for confirmation/new-regime role; adding it directly to the hazard score reduced ranking performance in this tiny sample",
+    "EMERGENCY": "no active opposite-reversal support in this train/test slice; do not force a learned coefficient",
+    "selection_warning": "This is research-only post-smoke ablation on three test breaks. It is not an OOS model-selection claim."
+  },
+  "database_write": "NONE",
+  "canonical_validation_required": true
+}
