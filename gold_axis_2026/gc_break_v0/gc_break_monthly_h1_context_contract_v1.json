@@ -1,0 +1,45 @@
+{
+  "contract_id": "GC_BREAK_MONTHLY_H1_CONTEXT_CONTRACT_V1",
+  "status": "FROZEN_BEFORE_MONTHLY_CONTEXT_DIAGNOSTIC",
+  "created_date": "2026-09-13",
+  "production_authority": false,
+  "prospective_claim": false,
+  "source": {
+    "artifact": "gold_axis_2026/data_pipeline/audits/pilot_validation_v145/pilot_h1_monthly_evidence_v145.csv",
+    "engines": [
+      "CAUSAL_PATCH",
+      "VW_MIDAS_MSVR_SUCCESSOR_V1",
+      "MOMENTUM_3M",
+      "RANDOM_WALK"
+    ],
+    "timing_rule": "target-month context uses only forecasts whose origin_month is the immediately prior completed month"
+  },
+  "derived_context": {
+    "rw_anchor": "RANDOM_WALK forecast for the target month",
+    "expert_signed_gap_vs_rw": "(forecast-rw_anchor)/rw_anchor for each non-RW expert",
+    "up_votes": "count of the three non-RW expert forecasts strictly above rw_anchor",
+    "down_votes": "count of the three non-RW expert forecasts strictly below rw_anchor",
+    "consensus_direction": "UP if up_votes>=2; DOWN if down_votes>=2; otherwise MIXED",
+    "dispersion": "population standard deviation of all four forecasts divided by their mean",
+    "range_dispersion": "(max forecast-min forecast)/rw_anchor"
+  },
+  "role_lock": {
+    "monthly_h1_remains_standalone_output": true,
+    "may_trigger_weakening": false,
+    "may_trigger_break_alert": false,
+    "may_confirm_break": false,
+    "use_in_gc_break": "strategic anchor/context and diagnostic conditioning only"
+  },
+  "diagnostic_questions": [
+    "At objective break origins, is monthly H1 consensus aligned with, opposite to, or mixed relative to the pre-break regime?",
+    "How does expert dispersion at break origins compare descriptively with non-break origins?",
+    "Does monthly context materially explain episodes that FAST/Emergency detect late, without being promoted to a trigger?"
+  ],
+  "governance": {
+    "no_post_score_threshold_tuning": true,
+    "no_equal_weight_motor_vote": true,
+    "no_database_writes": true,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF"
+  }
+}
