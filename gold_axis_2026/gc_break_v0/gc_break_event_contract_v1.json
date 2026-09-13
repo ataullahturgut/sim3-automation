@@ -1,0 +1,63 @@
+{
+  "contract_id": "GC_BREAK_EVENT_CONTRACT_V1",
+  "status": "FROZEN_BEFORE_GC_BREAK_V0_DIAGNOSTIC_SCORING",
+  "created_date": "2026-09-13",
+  "purpose": "engine-independent sequential structural-break event inventory for retrospective GC-BREAK research",
+  "production_authority": false,
+  "prospective_claim": false,
+  "performance_tuning_used_to_choose_label": false,
+  "source": {
+    "artifact": "gold_axis_2026/data_pipeline/audits/component_role_replays_v145/ny17_context_role_replay_v145.csv",
+    "price_field": "close",
+    "date_field": "date",
+    "evidence_class": "RETROSPECTIVE_HISTORICAL_RECONSTRUCTION_NOT_PROSPECTIVE",
+    "semantic": "governed NY17-context historical role replay; no target-engine state is used to construct the event label"
+  },
+  "primary_event_rule": {
+    "family": "VOLATILITY_NORMALIZED_DIRECTIONAL_CHANGE",
+    "return_transform": "log(P_t/P_t-1)",
+    "sigma_window_observations": 20,
+    "sigma_lag": 1,
+    "sigma_ddof": 1,
+    "k_sigma": 3.0,
+    "initial_trend_rule": "after sufficient history, sign of log(P_t/P_t-20); zero remains uninitialized until nonzero",
+    "extreme_rule": "in UP regime retain running maximum close; in DOWN regime retain running minimum close",
+    "break_rule": "first adverse log move from current regime extreme with magnitude >= k_sigma * lagged_sigma20",
+    "event_timestamp": "first governed observation date satisfying the break rule",
+    "post_event_rule": "flip regime direction and reset regime extreme to event close",
+    "persistence_filter": "NONE; persistence is an evaluation property, not a future-looking label filter",
+    "engine_inputs_forbidden": [
+      "FAST",
+      "SLOW",
+      "MONTHLY_DIRECTION_3M",
+      "EMERGENCY_LEVEL",
+      "EMERGENCY_REVERSAL",
+      "BOCPD_RETURN_SUCCESSOR_V1",
+      "GVZ_RISK",
+      "MACRO_EVENT",
+      "MARKET_SHOCK"
+    ]
+  },
+  "sensitivity_only": {
+    "k_sigma": [2.5],
+    "selection_rule": "must not replace the primary k=3.0 result because of downstream engine score"
+  },
+  "warning_evaluation": {
+    "event_matching": "one warning episode may convert to at most the next break event; one break event is counted once per warning definition",
+    "prebreak_recall": "break has signal on at least one prior governed origin after the previous break and strictly before the break date",
+    "at_or_before_recall": "break has signal on a prior origin or on the break origin",
+    "lead_time_observations": "number of governed origin steps from first matched warning to break",
+    "lead_time_calendar_days": "calendar-day difference from first matched warning date to break date",
+    "false_alarm_episode": "a contiguous warning episode that ends before the next break without reaching that break",
+    "false_alarm_rate": "false warning episodes per 100 governed origins",
+    "same_day_warning": "lead=0 and is excluded from prebreak recall but included in at_or_before recall"
+  },
+  "governance": {
+    "no_random_split": true,
+    "no_label_reselection_from_2025_2026_engine_scores": true,
+    "no_database_writes": true,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF"
+  },
+  "rationale_lock": "k=3.0 is frozen from prior label-quality/anatomy inspection for stronger structural persistence and adequate event count; it was not selected from downstream engine performance."
+}
