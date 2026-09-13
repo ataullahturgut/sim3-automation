@@ -1,0 +1,45 @@
+{
+  "contract_id": "GC_BREAK_WP3_BASELINE_CONTRACT_V1",
+  "status": "FROZEN_BEFORE_FORMATION_BASELINE_SCORING",
+  "created_date": "2026-09-13",
+  "event_contract": "GC_BREAK_EVENT_CONTRACT_V1",
+  "formation_window": ["2022-01-01", "2024-12-31"],
+  "production_authority": false,
+  "prospective_claim": false,
+  "purpose": "compare simple sequential warning/confirmation baselines on formation data before learned integration",
+  "warning_baselines": [
+    {"id": "NO_WARNING", "role": "persistence/no-change null baseline"},
+    {"id": "PATH_HALF", "role": "mechanical price-path precursor baseline; not independent prediction"},
+    {"id": "FAST_CONFLICT", "role": "tactical weakening baseline"},
+    {"id": "FAST_OPPOSITE", "role": "higher-specificity tactical weakening baseline"},
+    {"id": "SLOW_CONFLICT", "role": "slow transition context; not expected primary precursor"},
+    {"id": "EMERGENCY_REVERSAL_OPPOSITE", "role": "high-specificity reversal confirmation; support-limited where frozen monthly reference is unavailable"},
+    {"id": "CORE_WEAKENING_NATIVE", "role": "FAST conflict OR Emergency reversal; no learned weights"}
+  ],
+  "confirmation_baseline": "SLOW_OPPOSITE_AFTER_BREAK",
+  "metrics": [
+    "prebreak_event_recall",
+    "at_or_before_event_recall",
+    "false_alarm_episodes_per_100_origins",
+    "episode_conversion_rate",
+    "median_lead_observations",
+    "median_lead_calendar_days",
+    "confirmation_rate_before_next_break",
+    "median_confirmation_delay_observations"
+  ],
+  "governance": {
+    "no_random_split": true,
+    "no_post_score_threshold_tuning": true,
+    "no_equal_weight_voting": true,
+    "no_winner_promotion_from_2025_2026": true,
+    "no_database_writes": true,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF"
+  },
+  "interpretation": {
+    "path_half_is_anatomy_baseline_not_predictive_evidence": true,
+    "slow_is_confirmation_role": true,
+    "emergency_2022_missing_reference_must_not_be_imputed": true,
+    "wp4_learned_or_role_fusion_requires_wp3_results_first": true
+  }
+}
