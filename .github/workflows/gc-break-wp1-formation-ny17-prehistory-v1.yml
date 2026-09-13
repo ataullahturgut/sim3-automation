@@ -1,0 +1,69 @@
+name: GC-BREAK WP1 Formation NY17 Prehistory Supplement V1
+
+on:
+  push:
+    branches:
+      - gc-break-wp1-formation-backfill
+    paths:
+      - '.github/workflows/gc-break-wp1-formation-ny17-prehistory-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  prehistory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build exact-date inventory
+        run: |
+          mkdir -p formation_ny17_prehistory_v1
+          python - <<'PY'
+          import csv, json
+          from datetime import date,timedelta
+          start=date(2021,9,1); end=date(2021,10,31)
+          rows=[]; d=start
+          while d<=end:
+              rows.append({'trade_date':d.isoformat(),'gap_action':'EXACT_DATE_PROVIDER_PROBE_REQUIRED','impacted_readiness_cells':json.dumps(['GC_BREAK_WP1_FORMATION_PREHISTORY'],separators=(',',':'))})
+              d+=timedelta(days=1)
+          with open('formation_ny17_prehistory_v1/inventory.csv','w',encoding='utf-8',newline='') as f:
+              w=csv.DictWriter(f,fieldnames=['trade_date','gap_action','impacted_readiness_cells']);w.writeheader();w.writerows(rows)
+          print({'candidate_dates':len(rows),'start':start.isoformat(),'end':end.isoformat()})
+          PY
+      - name: Probe exact frozen NY17 semantic
+        run: |
+          python gold_axis_2026/tools/probe_historical_ny17_gaps_v145.py \
+            --inventory formation_ny17_prehistory_v1/inventory.csv \
+            --pacing-seconds 8.5 \
+            --out-json formation_ny17_prehistory_v1/probe.json \
+            --out-csv formation_ny17_prehistory_v1/probe.csv
+      - name: Verify read-only boundary and summarize
+        run: |
+          python - <<'PY'
+          import json
+          from collections import Counter
+          p=json.load(open('formation_ny17_prehistory_v1/probe.json',encoding='utf-8'))
+          c=Counter(r['acquisition_status'] for r in p['rows'])
+          s={'audit_id':'GC_BREAK_WP1_FORMATION_PREHISTORY_V1','row_count':p['row_count'],'status_counts':dict(c),'production_write':'NONE','performance_scoring':False,'prospective_claim':False}
+          open('formation_ny17_prehistory_v1/summary.json','w',encoding='utf-8').write(json.dumps(s,indent=2,sort_keys=True)+'\n')
+          print(s)
+          PY
+          ! grep -Ei 'psycopg|NEON_DATABASE_URL|insert[[:space:]]+into|delete[[:space:]]+from|update[[:space:]]+observations' gold_axis_2026/tools/probe_historical_ny17_gaps_v145.py
+      - name: Upload immutable prehistory evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp1-formation-ny17-prehistory-v1
+          if-no-files-found: error
+          path: formation_ny17_prehistory_v1/
