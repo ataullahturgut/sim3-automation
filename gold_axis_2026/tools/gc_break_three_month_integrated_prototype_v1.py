@@ -214,8 +214,22 @@ def main() -> int:
     full=full.merge(score[["date","hazard_next_observation","weakening","sequential_state","break_alert"]],on="date",how="left",validate="one_to_one")
     full.loc[full["is_break"],["weakening","break_alert"]]=False; full.loc[full["is_break"],"sequential_state"]="GROUND_TRUTH_BREAK_NOT_SCORED"
     weakening_metrics=episode_metrics(full,"weakening"); alert_metrics=episode_metrics(full,"break_alert")
-    break_rows=full[full["is_break"]].copy(); slow_conf=[]
-    for idx,ev in break_rows.iterrows():
+
+    event_meta=events[["break_date","new_regime"]].copy()
+    event_meta["break_date"]=pd.to_datetime(event_meta["break_date"]).dt.normalize()
+    if event_meta["break_date"].duplicated().any():
+        raise RuntimeError("DUPLICATE_BREAK_DATE_IN_EVENT_META")
+    break_rows=full[full["is_break"]].copy().merge(
+        event_meta,
+        left_on="date",
+        right_on="break_date",
+        how="left",
+        validate="one_to_one",
+    )
+    if break_rows["new_regime"].isna().any():
+        raise RuntimeError("BREAK_EVENT_REGIME_JOIN_FAIL")
+    slow_conf=[]
+    for _,ev in break_rows.iterrows():
         bd=pd.Timestamp(ev["date"]); new_regime=str(ev["new_regime"]); nxt=break_rows.loc[break_rows["date"]>bd,"date"].min(); after=full[full["date"]>=bd].copy()
         if pd.notna(nxt): after=after[after["date"]<nxt]
         target="ROBUST_UP" if new_regime=="UP" else "ROBUST_DOWN"; hit=after[after["slow_state"].eq(target)]; confirm=None if hit.empty else pd.Timestamp(hit.iloc[0]["date"])
