@@ -1,0 +1,134 @@
+{
+  "contract_id": "GOLD_CONTROL_V170B_FREE_PUBLIC_POSITIONING_PILOT_FREEZE_V1",
+  "status": "FROZEN_BEFORE_ANY_V170B_FORECAST_SCORING",
+  "frozen_on": "2026-09-13",
+  "evidence_class": "RETROSPECTIVE_METHOD_DEVELOPMENT_DIAGNOSTIC_NOT_FRESH_OOS",
+  "research_question": "Does genuinely new, free, PIT-safe public CFTC trader-positioning information add incremental 1D/3D directional predictive content beyond a small fixed public-market baseline, strongly enough to justify escalating data acquisition toward paid forward-looking options or microstructure data?",
+  "parent_version": "V1.69",
+  "source_panel": {
+    "workflow_run_id": 34752686111,
+    "artifact_id": 10316352769,
+    "zip_sha256": "23901808b5b8db4b2065797865f7ac4269bf544953fe1ce38b37964e19ab78da",
+    "required_file": "v164_panel.csv",
+    "immutability": "Frozen V1.64 panel only."
+  },
+  "new_public_data": {
+    "acquisition_workflow_run_id": 34757463624,
+    "acquisition_artifact_id": 10317743683,
+    "acquisition_artifact_digest": "sha256:4fb1af3f15bdc79513bdfc4b533b4da08fdf92b1a24c32e36b9ddc1ffcea35bd",
+    "compact_snapshot_file": "gold_axis_2026/v170_research/data/v170a_cftc_gold_weekly_compact.csv",
+    "compact_snapshot_sha256": "9b999818ea05ff2d038feafe259f0971abc52116aea677cdbb8582ff276adb1b",
+    "rows": 183,
+    "report_window": ["2023-01-03", "2026-06-30"],
+    "market": "GOLD - COMMODITY EXCHANGE INC.",
+    "cftc_contract_market_code": "088691",
+    "datasets": ["Legacy Futures Only 6dca-aqww", "Disaggregated Futures Only 72hh-3qpy"],
+    "pit_available_rule": "Tuesday report positions become eligible only from report_date + 6 calendar days; merge backward-asof requires available_date <= origin_date."
+  },
+  "horizons": [1, 3],
+  "target": "y_h = 1[log(close_{t+h}/close_t) > 0]",
+  "maturity_rule": "For a forecast at origin t, training rows require target_date < origin_date_t.",
+  "boundary_rule": "Evaluation target_date must remain inside the evaluation period.",
+  "base_features": [
+    "gold_mom5",
+    "gold_mom20",
+    "gold_rv20",
+    "gvz_level",
+    "gvz_ret",
+    "gc_volume_z20",
+    "broad_usd_logdiff5",
+    "real10_delta5"
+  ],
+  "positioning_features": {
+    "LEGACY5": {
+      "legacy_nc_net_share": "(legacy_nc_long - legacy_nc_short) / legacy_oi",
+      "legacy_nc_net_change": "weekly first difference of legacy_nc_net_share",
+      "legacy_nc_z52": "current legacy_nc_net_share standardized by the previous up-to-52 weekly values, excluding current; require at least 26 previous values else NaN",
+      "legacy_comm_net_share": "(legacy_comm_long - legacy_comm_short) / legacy_oi",
+      "legacy_oi_log_change": "log(legacy_oi_t / legacy_oi_{t-1})"
+    },
+    "DISAGG5": {
+      "mm_net_share": "(mm_long - mm_short) / disagg_oi",
+      "mm_net_change": "weekly first difference of mm_net_share",
+      "mm_z52": "current mm_net_share standardized by the previous up-to-52 weekly values, excluding current; require at least 26 previous values else NaN",
+      "prodmerc_net_share": "(prodmerc_long - prodmerc_short) / disagg_oi",
+      "disagg_oi_log_change": "log(disagg_oi_t / disagg_oi_{t-1})"
+    }
+  },
+  "candidate_models": {
+    "BASE": "base_features only",
+    "BASE_PLUS_LEGACY": "base_features + LEGACY5",
+    "BASE_PLUS_DISAGG": "base_features + DISAGG5",
+    "LEGACY_ONLY": "LEGACY5 only; diagnostic only and cannot win the primary incremental gate",
+    "DISAGG_ONLY": "DISAGG5 only; diagnostic only and cannot win the primary incremental gate"
+  },
+  "model_lock": {
+    "family": "training-only median imputation -> StandardScaler -> LogisticRegression L2",
+    "C": 1.0,
+    "solver": "lbfgs",
+    "minimum_mature_training_rows": 120,
+    "hyperparameter_search": "FORBIDDEN"
+  },
+  "temporal_design": {
+    "formation": {
+      "E1_2023H2": ["2023-07-01", "2023-12-31"],
+      "E2_2024H1": ["2024-01-01", "2024-06-30"],
+      "E3_2024Q3": ["2024-07-01", "2024-09-25"]
+    },
+    "bridge_2024Q4": ["2024-09-26", "2024-12-31"],
+    "visible_diagnostics": {
+      "2025": ["2025-01-01", "2025-12-31"],
+      "2026_available": ["2026-01-01", "2026-06-30"]
+    },
+    "forward_rule": "At every origin fit only on target-matured historical rows. 2025/2026 cannot select a COT representation, feature, model, or threshold."
+  },
+  "benchmark": "Causal expanding matured UP frequency; fallback 0.5 if fewer than 20 matured labels.",
+  "metrics": ["brier", "log_loss", "roc_auc", "balanced_accuracy", "mcc", "up_predictions", "down_predictions"],
+  "incremental_hope_gate": {
+    "eligible_candidates": ["BASE_PLUS_LEGACY", "BASE_PLUS_DISAGG"],
+    "formation": {
+      "positive_absolute_brier_improvement_vs_BASE_environments_min": 2,
+      "median_absolute_brier_improvement_vs_BASE_min": 0.001,
+      "median_roc_auc_min": 0.52
+    },
+    "bridge": {
+      "absolute_brier_improvement_vs_BASE_min": 0.002,
+      "brier_not_worse_than_frequency": true,
+      "log_loss_not_worse_than_BASE": true,
+      "log_loss_not_worse_than_frequency": true,
+      "roc_auc_min": 0.52,
+      "both_predicted_directions": true
+    },
+    "visible_persistence_classification": {
+      "ROBUST_HOPE": "Formation+bridge gate pass and BASE-relative Brier improvement is positive in both 2025 and available-2026.",
+      "WEAK_HOPE": "Formation+bridge gate pass and BASE-relative Brier improvement is positive in exactly one of 2025 or available-2026.",
+      "NO_HOPE": "Formation or bridge gate fails, or both visible periods are non-positive. Visible periods cannot rescue a pre-2025 failure."
+    }
+  },
+  "decision_lock": {
+    "ROBUST_HOPE": "Paid option-surface and/or futures microstructure feasibility receives high priority under a separate PIT contract; V1.70B itself authorizes no paid purchase.",
+    "WEAK_HOPE": "Paid forward-looking data may be evaluated as a research acquisition, but the free COT signal is not production evidence.",
+    "NO_HOPE": "Do not tune COT features, clocks, z-window, model family, or thresholds after score. COT failure does not falsify paid option/microstructure information because those are different information classes."
+  },
+  "forbidden_in_v170b": [
+    "post_score_COT_feature_addition",
+    "z_window_search",
+    "availability_clock_search",
+    "model_family_search",
+    "hyperparameter_search",
+    "2025_2026_based_candidate_selection",
+    "COT_block_combination_after_score",
+    "drift_detector",
+    "selector_or_CRASE",
+    "residual_correction",
+    "abstention_tuning",
+    "production_writes",
+    "action_mapping"
+  ],
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "canonical_merge_without_explicit_user_authority": "FORBIDDEN"
+  }
+}
