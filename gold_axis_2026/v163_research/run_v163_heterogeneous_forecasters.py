@@ -79,12 +79,9 @@ def _encode_roles(d: pd.DataFrame) -> pd.DataFrame:
 
 
 def build_panel(conn, contract: dict) -> tuple[pd.DataFrame, dict]:
-    # Target/clock authority remains the exact NY17 panel.
     ny17 = _encode_roles(load_panel(conn))
     ny17["date"] = pd.to_datetime(ny17["date"]).dt.tz_localize(None).dt.normalize()
 
-    # Rich information is reconstructed exactly as V1.61/V1.57, whose same-day
-    # intraday information ends at 13:29 NY and whose daily GC/GLD/macro joins are strict previous-date.
     v157_contract = json.loads(V157_CONTRACT.read_text(encoding="utf-8"))
     rich, _, _, _ = v157.build_panel(conn, v157_contract)
     rich, fed_evidence = v161.add_corrected_macro(rich, contract)
@@ -98,6 +95,12 @@ def build_panel(conn, contract: dict) -> tuple[pd.DataFrame, dict]:
     if missing:
         raise RuntimeError(f"V163_RICH_FEATURES_MISSING:{missing}")
     r = rich[["date"] + needed].drop_duplicates("date", keep="last")
+
+    # Some V1.49 NY17 research columns use the same names as the richer V1.61
+    # reconstruction. The frozen V1.63 contract requires the V1.61 versions, so
+    # remove only those colliding feature columns before the identical-date merge.
+    overlap = [c for c in needed if c in ny17.columns]
+    ny17 = ny17.drop(columns=overlap)
     z = ny17.merge(r, on="date", how="left", validate="one_to_one")
     evidence = {
         "GC=F": gc_evidence,
@@ -106,6 +109,7 @@ def build_panel(conn, contract: dict) -> tuple[pd.DataFrame, dict]:
         "rich_rows": int(len(rich)),
         "ny17_rows": int(len(ny17)),
         "merged_rows": int(len(z)),
+        "replaced_ny17_name_collisions_with_v161_rich_features": overlap,
     }
     return z.sort_values("date").reset_index(drop=True), evidence
 
