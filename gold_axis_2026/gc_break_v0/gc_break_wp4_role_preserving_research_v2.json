@@ -1,0 +1,41 @@
+{
+  "candidate_id": "GC_BREAK_WP4_ROLE_PRESERVING_RESEARCH_V2",
+  "status": "FROZEN_FOR_CANONICAL_SOURCE_RERUN_NOT_FOR_PROSPECTIVE_CLAIM",
+  "created_date": "2026-09-13",
+  "selection_basis": "research-only 2024 mini-pilot post-smoke ablation; not blind OOS",
+  "hazard_core": {
+    "model_family": "RIDGE_LOGISTIC_DISCRETE_TIME_TRANSITION_HAZARD",
+    "features": ["adverse_fraction_clipped_0_1", "FAST_CONFLICT"],
+    "target": "break on next governed observation conditional on current non-break origin",
+    "class_weight": "balanced_from_training_only",
+    "ridge_lambda_equivalent": 1.0,
+    "weakening_threshold": "75th percentile of training fitted hazard probabilities",
+    "state_rule": {
+      "one_consecutive_exceedance": "WEAKENING",
+      "two_consecutive_exceedances": "BREAK_ALERT",
+      "below_threshold": "STABLE"
+    }
+  },
+  "role_preservation": {
+    "SLOW": "POST_BREAK_CONFIRMATION_AND_NEW_REGIME_ONLY",
+    "EMERGENCY_REVERSAL": "OPTIONAL_SHOCK_MODIFIER_ONLY_WHEN_SUPPORT_EXISTS",
+    "equal_vote": false,
+    "SLOW_direct_hazard_feature": false,
+    "EMERGENCY_forced_hazard_feature": false
+  },
+  "research_windows": {
+    "train_origin_start": "2024-01-02",
+    "train_target_end": "2024-05-31",
+    "test_origin_start": "2024-06-03",
+    "test_target_end": "2024-08-30"
+  },
+  "next_required_test": "Rerun unchanged candidate on canonical exact-NY17 mini-pilot source when quota allows. Do not alter features, threshold rule, or state persistence based on canonical score.",
+  "governance": {
+    "production_authority": false,
+    "prospective_claim": false,
+    "no_database_writes": true,
+    "no_buy_sell_mapping": true,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF"
+  }
+}
