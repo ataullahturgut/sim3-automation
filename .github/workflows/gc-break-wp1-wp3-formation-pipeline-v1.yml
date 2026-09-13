@@ -1,0 +1,94 @@
+name: GC-BREAK WP1-WP3 Formation Pipeline V1
+
+on:
+  push:
+    branches:
+      - gc-break-wp1-formation-backfill
+    paths:
+      - '.github/workflows/gc-break-wp1-wp3-formation-pipeline-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  formation-pipeline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install research-only dependencies
+        run: python -m pip install --quiet numpy pandas scipy
+      - name: Compile frozen and formation tools
+        run: |
+          test -n "$TWELVE_DATA_API_KEY"
+          python -m py_compile gold_axis_2026/tools/probe_historical_ny17_gaps_v145.py
+          python -m py_compile gold_axis_2026/tools/gc_break_wp1_resume_exact_ny17_v2.py
+          python -m py_compile gold_axis_2026/tools/gc_break_wp1_build_formation_panel_v1.py
+          python -m py_compile gold_axis_2026/tools/gc_break_wp2_formation_event_inventory_v1.py
+          python -m py_compile gold_axis_2026/tools/gc_break_wp3_formation_baselines_v1.py
+      - name: Download immutable prior WP1 evidence
+        run: |
+          mkdir -p /tmp/backfill /tmp/prehistory
+          gh run download 34772568656 --repo "$GITHUB_REPOSITORY" --name gc-break-wp1-formation-ny17-v1 --dir /tmp/backfill
+          gh run download 34773555087 --repo "$GITHUB_REPOSITORY" --name gc-break-wp1-formation-ny17-prehistory-v1 --dir /tmp/prehistory
+          test -f /tmp/backfill/2024_JAN_AUG_probe.csv
+          test -f /tmp/backfill/2023_FULL_probe.csv
+          test -f /tmp/backfill/2022_FULL_probe.csv
+          test -f /tmp/backfill/2021_NOV_DEC_probe.csv
+          test -f /tmp/prehistory/probe.csv
+      - name: WP1 resume exact NY17 without contract change
+        run: |
+          python gold_axis_2026/tools/gc_break_wp1_resume_exact_ny17_v2.py \
+            --probe-csv /tmp/prehistory/probe.csv \
+            --probe-csv /tmp/backfill/2021_NOV_DEC_probe.csv \
+            --probe-csv /tmp/backfill/2022_FULL_probe.csv \
+            --probe-csv /tmp/backfill/2023_FULL_probe.csv \
+            --probe-csv /tmp/backfill/2024_JAN_AUG_probe.csv \
+            --pacing-seconds 8.5 \
+            --backoff-seconds 70 \
+            --max-rate-limit-retries 8 \
+            --output-dir /tmp/gc_break_formation/wp1_resume
+      - name: WP1 build exact formation state panel
+        run: |
+          python gold_axis_2026/tools/gc_break_wp1_build_formation_panel_v1.py \
+            --probe-csv /tmp/gc_break_formation/wp1_resume/gc_break_wp1_exact_ny17_consolidated_v2.csv \
+            --output-dir /tmp/gc_break_formation/wp1_panel
+      - name: WP2 build frozen k3 break-event inventory
+        run: |
+          python gold_axis_2026/tools/gc_break_wp2_formation_event_inventory_v1.py \
+            --panel /tmp/gc_break_formation/wp1_panel/gc_break_wp1_formation_state_panel_v1.csv \
+            --output-dir /tmp/gc_break_formation/wp2_events
+      - name: WP3 run preregistered formation baselines
+        run: |
+          python gold_axis_2026/tools/gc_break_wp3_formation_baselines_v1.py \
+            --panel /tmp/gc_break_formation/wp1_panel/gc_break_wp1_formation_state_panel_v1.csv \
+            --origin-rule /tmp/gc_break_formation/wp2_events/gc_break_wp2_primary_k3_origin_rule.csv \
+            --events /tmp/gc_break_formation/wp2_events/gc_break_wp2_primary_k3_events.csv \
+            --output-dir /tmp/gc_break_formation/wp3_baselines
+      - name: Assert research-only no database-write boundary
+        run: |
+          ! grep -Eiq 'psycopg|NEON_DATABASE_URL|\b(insert|update|delete|truncate|alter|drop|create)[[:space:]]' \
+            gold_axis_2026/tools/gc_break_wp1_resume_exact_ny17_v2.py \
+            gold_axis_2026/tools/gc_break_wp1_build_formation_panel_v1.py \
+            gold_axis_2026/tools/gc_break_wp2_formation_event_inventory_v1.py \
+            gold_axis_2026/tools/gc_break_wp3_formation_baselines_v1.py
+          echo 'GC_BREAK_WP1_WP3_FORMATION_PIPELINE_READ_ONLY_PASS'
+      - name: Upload immutable WP1-WP3 formation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp1-wp3-formation-pipeline-v1
+          if-no-files-found: warn
+          retention-days: 90
+          path: /tmp/gc_break_formation/
