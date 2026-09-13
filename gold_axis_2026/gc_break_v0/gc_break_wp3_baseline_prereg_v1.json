@@ -1,0 +1,55 @@
+{
+  "prereg_id": "GC_BREAK_WP3_BASELINE_PREREG_V1",
+  "status": "FROZEN_BEFORE_FULL_FORMATION_CHALLENGE_SCORING",
+  "created_date": "2026-09-13",
+  "event_contract": "GC_BREAK_EVENT_CONTRACT_V1",
+  "split_contract": "GC_BREAK_SPLIT_CONTRACT_V1",
+  "purpose": "simple sequential baselines that complex role-preserving models must beat on the lead-time/false-alarm frontier",
+  "baselines": [
+    {
+      "id": "B0_NO_WARNING",
+      "definition": "never issue WEAKENING or BREAK_ALERT",
+      "role": "null false-alarm reference"
+    },
+    {
+      "id": "B1_PATH_HALF",
+      "definition": "adverse move from current regime extreme reaches 0.50 of the frozen k=3.0 volatility-normalized break threshold before confirmation",
+      "role": "mechanical price-path early-warning baseline; shares the price path with the event label and is not independent predictive evidence"
+    },
+    {
+      "id": "B2_FAST_CONFLICT",
+      "definition": "frozen FAST state no longer robustly supports the current sequential regime",
+      "role": "minimal engine-based weakening baseline"
+    },
+    {
+      "id": "B3_FAST_OPPOSITE",
+      "definition": "frozen FAST state is robustly opposite the current sequential regime",
+      "role": "higher-specificity tactical baseline"
+    },
+    {
+      "id": "B4_SLOW_OPPOSITE_CONFIRM",
+      "definition": "frozen SLOW state is robustly opposite the pre-break regime/new-regime direction",
+      "role": "confirmation-delay baseline; not expected to maximize pre-break lead"
+    },
+    {
+      "id": "B5_BOCPD_NATIVE_MONTHLY",
+      "definition": "frozen BOCPD_RETURN_SUCCESSOR_V1 ADVERSE_BREAK_CANDIDATE from the previous completed month only",
+      "role": "slow downside regime-break context; direction vote remains forbidden"
+    }
+  ],
+  "primary_metrics": [
+    "prebreak_event_recall",
+    "false_alarm_episodes_per_100_origins",
+    "median_lead_observations",
+    "median_lead_calendar_days",
+    "episode_conversion_rate",
+    "confirmation_delay"
+  ],
+  "comparison_rule": "no single accuracy metric; compare the Pareto frontier of recall, false alarms and lead time. A more complex model must improve at least one primary dimension without materially degrading the others, then survive the locked retrospective challenge/stress and later prospective shadow.",
+  "governance": {
+    "no_post_score_threshold_tuning": true,
+    "no_equal_weight_motor_vote": true,
+    "no_random_split": true,
+    "production_authority": false
+  }
+}
