@@ -1,0 +1,196 @@
+name: GC-BREAK WP1 Closure Resume V1
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: gc-break-wp1-closure-resume-v1
+  cancel-in-progress: false
+
+jobs:
+  wp1-closure-resume:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install WP1 research-only dependencies
+        run: python -m pip install --quiet numpy pandas scipy 'psycopg[binary]'
+
+      - name: Compile WP1 closure tools
+        run: |
+          test -n "$TWELVE_DATA_API_KEY"
+          python -m py_compile gold_axis_2026/tools/gc_break_wp1_make_full_formation_seed_v1.py
+          python -m py_compile gold_axis_2026/tools/gc_break_wp1_resume_exact_ny17_batch_v3.py
+          python -m py_compile gold_axis_2026/tools/gc_break_wp1_build_formation_panel_v1.py
+          python -m py_compile gold_axis_2026/tools/gc_break_wp1_add_bocpd_native_context_v1.py
+          python -m py_compile gold_axis_2026/tools/gc_break_wp1_add_monthly_h1_context_v1.py
+          python -m py_compile gold_axis_2026/tools/gc_break_wp1_formation_event_context_v1.py
+          python -m py_compile gold_axis_2026/tools/gc_break_wp1_closure_audit_v1.py
+
+      - name: Download immutable original WP1 probes
+        run: |
+          mkdir -p /tmp/source/backfill /tmp/source/prehistory /tmp/gc_break_wp1_closure/seed
+          gh run download 34772568656 --repo "$GITHUB_REPOSITORY" --name gc-break-wp1-formation-ny17-v1 --dir /tmp/source/backfill
+          gh run download 34773555087 --repo "$GITHUB_REPOSITORY" --name gc-break-wp1-formation-ny17-prehistory-v1 --dir /tmp/source/prehistory
+          test -f /tmp/source/prehistory/probe.csv
+          test -f /tmp/source/backfill/2021_NOV_DEC_probe.csv
+          test -f /tmp/source/backfill/2022_FULL_probe.csv
+          test -f /tmp/source/backfill/2023_FULL_probe.csv
+          test -f /tmp/source/backfill/2024_JAN_AUG_probe.csv
+
+      - name: Build full manifest formation seed through 2024-12-31
+        run: |
+          python gold_axis_2026/tools/gc_break_wp1_make_full_formation_seed_v1.py \
+            --probe-csv /tmp/source/prehistory/probe.csv \
+            --probe-csv /tmp/source/backfill/2021_NOV_DEC_probe.csv \
+            --probe-csv /tmp/source/backfill/2022_FULL_probe.csv \
+            --probe-csv /tmp/source/backfill/2023_FULL_probe.csv \
+            --probe-csv /tmp/source/backfill/2024_JAN_AUG_probe.csv \
+            --output-dir /tmp/gc_break_wp1_closure/seed
+
+      - name: Recover latest immutable WP1 checkpoint if available
+        id: previous
+        shell: bash
+        run: |
+          mkdir -p /tmp/previous
+          PREV_RUN="$(gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts?name=gc-break-wp1-closure-resume-v1&per_page=100" --jq '[.artifacts[] | select(.expired==false)] | sort_by(.created_at) | reverse | .[0].workflow_run.id // empty')"
+          if [ -n "$PREV_RUN" ]; then
+            echo "previous_run=$PREV_RUN" >> "$GITHUB_OUTPUT"
+            gh run download "$PREV_RUN" --repo "$GITHUB_REPOSITORY" --name gc-break-wp1-closure-resume-v1 --dir /tmp/previous || true
+          fi
+          if [ -f /tmp/previous/wp1_exact/gc_break_wp1_exact_ny17_consolidated_batch_v3.csv ]; then
+            echo "input_csv=/tmp/previous/wp1_exact/gc_break_wp1_exact_ny17_consolidated_batch_v3.csv" >> "$GITHUB_OUTPUT"
+            echo "checkpoint_reused=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "input_csv=/tmp/gc_break_wp1_closure/seed/gc_break_wp1_full_formation_seed_v1.csv" >> "$GITHUB_OUTPUT"
+            echo "checkpoint_reused=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Resume exact NY17 with quota-aware checkpoints
+        id: resume
+        shell: bash
+        run: |
+          mkdir -p /tmp/gc_break_wp1_closure/wp1_exact
+          set +e
+          python gold_axis_2026/tools/gc_break_wp1_resume_exact_ny17_batch_v3.py \
+            --probe-csv "${{ steps.previous.outputs.input_csv }}" \
+            --window-days 3 \
+            --pacing-seconds 8.5 \
+            --backoff-seconds 70 \
+            --checkpoint-every-windows 5 \
+            --output-dir /tmp/gc_break_wp1_closure/wp1_exact
+          RC=$?
+          set -e
+          echo "resume_rc=$RC" >> "$GITHUB_OUTPUT"
+          test -f /tmp/gc_break_wp1_closure/wp1_exact/gc_break_wp1_exact_ny17_batch_resume_v3_summary.json
+
+      - name: Read WP1 unresolved count
+        id: state
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          p=Path('/tmp/gc_break_wp1_closure/wp1_exact/gc_break_wp1_exact_ny17_batch_resume_v3_summary.json')
+          d=json.loads(p.read_text())
+          print(f"unresolved={int(d['unresolved_count'])}")
+          print(f"quota_scope={d.get('quota_scope') or 'NONE'}")
+          print(f"quota_abort={str(bool(d.get('quota_abort'))).lower()}")
+          PY
+
+      - name: WP1 build exact formation state panel
+        if: steps.state.outputs.unresolved == '0'
+        run: |
+          mkdir -p /tmp/gc_break_wp1_closure/base_panel
+          python gold_axis_2026/tools/gc_break_wp1_build_formation_panel_v1.py \
+            --probe-csv /tmp/gc_break_wp1_closure/wp1_exact/gc_break_wp1_exact_ny17_consolidated_batch_v3.csv \
+            --output-dir /tmp/gc_break_wp1_closure/base_panel
+
+      - name: WP1 add native completed-month BOCPD context
+        if: steps.state.outputs.unresolved == '0'
+        run: |
+          mkdir -p /tmp/gc_break_wp1_closure/bocpd
+          python gold_axis_2026/tools/gc_break_wp1_add_bocpd_native_context_v1.py \
+            --panel /tmp/gc_break_wp1_closure/base_panel/gc_break_wp1_formation_state_panel_v1.csv \
+            --output-dir /tmp/gc_break_wp1_closure/bocpd
+
+      - name: WP1 add monthly H1 strategic context
+        if: steps.state.outputs.unresolved == '0'
+        run: |
+          mkdir -p /tmp/gc_break_wp1_closure/h1
+          python gold_axis_2026/tools/gc_break_wp1_add_monthly_h1_context_v1.py \
+            --panel /tmp/gc_break_wp1_closure/bocpd/gc_break_wp1_formation_panel_with_bocpd_v1.csv \
+            --output-dir /tmp/gc_break_wp1_closure/h1
+
+      - name: WP1 add formation event context read-only
+        if: steps.state.outputs.unresolved == '0'
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          mkdir -p /tmp/gc_break_wp1_closure/event
+          python gold_axis_2026/tools/gc_break_wp1_formation_event_context_v1.py \
+            --panel /tmp/gc_break_wp1_closure/h1/gc_break_wp1_formation_panel_with_monthly_h1_v1.csv \
+            --output-dir /tmp/gc_break_wp1_closure/event
+
+      - name: WP1 manifest closure audit
+        if: steps.state.outputs.unresolved == '0'
+        run: |
+          mkdir -p /tmp/gc_break_wp1_closure/closure
+          python gold_axis_2026/tools/gc_break_wp1_closure_audit_v1.py \
+            --exact-csv /tmp/gc_break_wp1_closure/wp1_exact/gc_break_wp1_exact_ny17_consolidated_batch_v3.csv \
+            --base-panel /tmp/gc_break_wp1_closure/base_panel/gc_break_wp1_formation_state_panel_v1.csv \
+            --bocpd-panel /tmp/gc_break_wp1_closure/bocpd/gc_break_wp1_formation_panel_with_bocpd_v1.csv \
+            --h1-panel /tmp/gc_break_wp1_closure/h1/gc_break_wp1_formation_panel_with_monthly_h1_v1.csv \
+            --event-panel /tmp/gc_break_wp1_closure/event/gc_break_wp1_formation_panel_with_event_context.csv \
+            --output-dir /tmp/gc_break_wp1_closure/closure
+
+      - name: Write resumable WP1 run status
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('/tmp/gc_break_wp1_closure')
+          s=root/'wp1_exact/gc_break_wp1_exact_ny17_batch_resume_v3_summary.json'
+          d=json.loads(s.read_text()) if s.exists() else {}
+          closure=root/'closure/gc_break_wp1_manifest_closure_audit_v1.json'
+          out={
+            'audit_id':'GC_BREAK_WP1_CLOSURE_RESUME_RUN_V1',
+            'wp1_manifest_status':'COMPLETE_CANDIDATE' if closure.exists() else 'IN_PROGRESS',
+            'unresolved_count':d.get('unresolved_count'),
+            'quota_abort':d.get('quota_abort'),
+            'quota_scope':d.get('quota_scope'),
+            'closure_audit_present':closure.exists(),
+            'production_database_write':'NONE',
+            'wp2_started':False,
+          }
+          (root/'gc_break_wp1_closure_resume_run_v1_status.json').write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
+          print(json.dumps(out,indent=2,sort_keys=True))
+          PY
+
+      - name: Upload immutable WP1 checkpoint and closure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp1-closure-resume-v1
+          if-no-files-found: error
+          retention-days: 90
+          path: /tmp/gc_break_wp1_closure/
