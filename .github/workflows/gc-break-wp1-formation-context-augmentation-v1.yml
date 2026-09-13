@@ -1,0 +1,87 @@
+name: GC-BREAK WP1 Formation Context Augmentation V1
+
+on:
+  workflow_run:
+    workflows: ["GC-BREAK WP1-WP3 Formation Pipeline V1"]
+    types: [completed]
+    branches: [gc-break-wp1-formation-backfill]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  augment-context:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install research-only dependencies
+        run: python -m pip install --quiet numpy pandas scipy requests 'psycopg[binary]>=3.2,<4'
+      - name: Restore exact frozen Market Shock V2 dependency used by V3
+        run: |
+          git fetch --no-tags --depth=1 origin gold-control-market-shock-challenger-v3
+          git show origin/gold-control-market-shock-challenger-v3:gold_axis_2026/tools/market_shock_challenger_v2.py > gold_axis_2026/tools/market_shock_challenger_v2.py
+          actual="$(git hash-object gold_axis_2026/tools/market_shock_challenger_v2.py)"
+          test "$actual" = "287c3a4829483515c7bb7d3c540486263245ab4d"
+      - name: Download successful formation pipeline artifact
+        run: |
+          mkdir -p /tmp/formation
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            run_id="${{ github.event.workflow_run.id }}"
+          else
+            run_id="$(gh run list --repo "$GITHUB_REPOSITORY" --workflow 'GC-BREAK WP1-WP3 Formation Pipeline V1' --branch gc-break-wp1-formation-backfill --status success --limit 1 --json databaseId --jq '.[0].databaseId')"
+          fi
+          test -n "$run_id"
+          gh run download "$run_id" --repo "$GITHUB_REPOSITORY" --name gc-break-wp1-wp3-formation-pipeline-v1 --dir /tmp/formation
+          test -f /tmp/formation/wp1_panel/gc_break_wp1_formation_state_panel_v1.csv
+      - name: Compile context builders
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python -m py_compile gold_axis_2026/tools/gc_break_wp1_add_bocpd_native_context_v1.py
+          python -m py_compile gold_axis_2026/tools/gc_break_wp1_add_monthly_h1_context_v1.py
+          python -m py_compile gold_axis_2026/tools/gc_break_wp1_formation_event_context_v1.py
+          python -m py_compile gold_axis_2026/tools/bocpd_return_successor_v1.py
+          python -m py_compile gold_axis_2026/tools/market_shock_challenger_v3.py
+      - name: Add BOCPD on native completed-month clock
+        run: |
+          python gold_axis_2026/tools/gc_break_wp1_add_bocpd_native_context_v1.py \
+            --panel /tmp/formation/wp1_panel/gc_break_wp1_formation_state_panel_v1.csv \
+            --output-dir /tmp/context/bocpd
+      - name: Add Monthly H1 strategic context without changing independent forecast line
+        run: |
+          python gold_axis_2026/tools/gc_break_wp1_add_monthly_h1_context_v1.py \
+            --panel /tmp/context/bocpd/gc_break_wp1_formation_panel_with_bocpd_v1.csv \
+            --output-dir /tmp/context/h1
+      - name: Add read-only Macro Event and Market Shock context
+        run: |
+          python gold_axis_2026/tools/gc_break_wp1_formation_event_context_v1.py \
+            --panel /tmp/context/h1/gc_break_wp1_formation_panel_with_monthly_h1_v1.csv \
+            --output-dir /tmp/context/event_shock
+      - name: Assert no production DML in context builders
+        run: |
+          ! grep -Eiq '\b(insert|update|delete|truncate|alter|drop|create)[[:space:]]' \
+            gold_axis_2026/tools/gc_break_wp1_add_bocpd_native_context_v1.py \
+            gold_axis_2026/tools/gc_break_wp1_add_monthly_h1_context_v1.py \
+            gold_axis_2026/tools/gc_break_wp1_formation_event_context_v1.py
+          grep -q 'SET TRANSACTION READ ONLY' gold_axis_2026/tools/gc_break_wp1_formation_event_context_v1.py
+          echo 'GC_BREAK_WP1_FORMATION_CONTEXT_READ_ONLY_PASS'
+      - name: Upload immutable context evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp1-formation-context-augmentation-v1
+          if-no-files-found: warn
+          retention-days: 90
+          path: /tmp/context/
