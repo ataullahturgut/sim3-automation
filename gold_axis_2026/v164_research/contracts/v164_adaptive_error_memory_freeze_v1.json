@@ -1,0 +1,93 @@
+{
+  "contract_id": "GOLD_CONTROL_V164_ADAPTIVE_ERROR_MEMORY_FREEZE_V1",
+  "status": "FROZEN_BEFORE_ANY_V164_SCORING",
+  "evidence_class": "RETROSPECTIVE_METHOD_DEVELOPMENT_DIAGNOSTIC_NOT_FRESH_OOS",
+  "frozen_on": "2026-09-13",
+  "research_question": "Can a short-horizon forecaster improve temporal robustness by causally learning from only matured prior errors, using exponential forgetting and state-local residual correction, while preserving heterogeneous information blocks and legacy engine roles?",
+  "parent_version": "V1.63",
+  "horizons": [1, 3],
+  "windows": {
+    "formation_start": "2024-01-01",
+    "formation_end": "2024-12-31",
+    "validation_start": "2025-01-01",
+    "validation_end": "2025-12-31",
+    "test_start": "2026-01-01",
+    "test_end": "2026-06-30"
+  },
+  "forecasters": [
+    "GOLD_RIDGE",
+    "SESSION_RM_RIDGE",
+    "PRICE_DISCOVERY_HGB",
+    "MACRO_CROSS_RIDGE",
+    "FULL_HGB"
+  ],
+  "variants": {
+    "STATIC": "Exact V1.63-style rolling parent with equal training weight.",
+    "FORGET": "Same parent with exponentially decaying sample weights.",
+    "ERRMEM": "FORGET raw probability plus a shrunken causal residual-bias correction from matured prior forecast errors.",
+    "LOCAL_ERRMEM": "FORGET raw probability plus a shrunken residual correction weighted by recency and similarity of a compact current-state vector to matured prior origins."
+  },
+  "training": {
+    "rolling_window": 252,
+    "minimum_mature_targets": 180,
+    "maturity_rule": "j+h<=t",
+    "random_split": false,
+    "whole_sample_preprocessing": false,
+    "forgetting_half_life_origins": 60.0,
+    "residual_memory_half_life_origins": 60.0,
+    "minimum_error_memory_points": 30,
+    "error_memory_shrink_kappa": 30.0,
+    "error_correction_rho": 0.5,
+    "probability_clip": [0.01, 0.99]
+  },
+  "state_local": {
+    "state_features": [
+      "gold_mom5",
+      "gold_mom20",
+      "gold_rv20",
+      "fast_state_encoded",
+      "slow_state_encoded",
+      "monthly_direction_3m_encoded",
+      "broad_usd_logdiff5",
+      "real10_delta5"
+    ],
+    "scaling": "prior-only mean/std from matured error-memory origins",
+    "missing": "prior-only median fill; zero only if a column has no finite prior support",
+    "kernel": "Gaussian",
+    "bandwidth": "median positive prior-only state distance; fallback 1.0",
+    "minimum_local_effective_n": 20.0
+  },
+  "evaluation": {
+    "probability_metrics": ["brier", "log_loss"],
+    "direction_metrics": ["balanced_accuracy", "mcc", "up_predictions", "down_predictions"],
+    "anchors": ["P50", "EXPANDING_FREQUENCY", "STATIC_PARENT"],
+    "primary_success_gate_each_variant": {
+      "validation_and_test_brier_not_worse_than_frequency": true,
+      "validation_and_test_brier_strictly_better_than_static_parent": true,
+      "test_brier_improvement_vs_static_parent_min": 0.005,
+      "validation_and_test_log_loss_not_worse_than_static_parent": true,
+      "validation_and_test_balanced_accuracy_min": 0.52,
+      "validation_and_test_mcc_positive": true,
+      "validation_and_test_both_predicted_directions": true
+    },
+    "selector_scoring_in_v164": "FORBIDDEN",
+    "abstention_tuning_in_v164": "FORBIDDEN",
+    "no_post_score_parameter_or_feature_search": true,
+    "2025_and_2026_are_researcher_visible": true,
+    "prospective_claim": false
+  },
+  "interpretation_lock": {
+    "purpose": "Test causal self-correction and temporal robustness inside the forecaster, not model selection.",
+    "legacy_engines": "Context only; never flat direction votes.",
+    "if_all_variants_fail": "Do not weaken the frozen gate or retune V1.64 after observing results; open a new hypothesis/version.",
+    "if_any_variant_passes": "Require a future prospective shadow before any production or trading claim."
+  },
+  "governance": {
+    "AUTO_SELECTOR": "OFF",
+    "AUTO_ENSEMBLE": "OFF",
+    "production_authority": false,
+    "production_writes": "NONE",
+    "action_mapping": "NONE",
+    "canonical_merge_without_explicit_user_authority": "FORBIDDEN"
+  }
+}
