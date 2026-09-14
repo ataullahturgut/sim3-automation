@@ -1,0 +1,60 @@
+name: GC-BREAK WP4 Phase A Closure Review V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - 'gold_axis_2026/tools/gc_break_wp4_phase_a_closure_review_v1.py'
+      - '.github/workflows/gc-break-wp4-phase-a-closure-review-v1.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: gc-break-wp4-phase-a-closure-review-v1
+  cancel-in-progress: false
+
+jobs:
+  close-wp4-phase-a-under-frozen-rule:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      WP4_PHASE_A_RUN_ID: '34830376294'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Download frozen WP4 Phase A evidence
+        run: |
+          mkdir -p /tmp/wp4_phase_a
+          gh run download "$WP4_PHASE_A_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name gc-break-wp4-prequential-hazard-phase-a-v1 --dir /tmp/wp4_phase_a
+
+      - name: Compile closure review
+        run: python -m py_compile gold_axis_2026/tools/gc_break_wp4_phase_a_closure_review_v1.py
+
+      - name: Apply frozen Phase A closure rule
+        run: |
+          mkdir -p /tmp/wp4_closure
+          python gold_axis_2026/tools/gc_break_wp4_phase_a_closure_review_v1.py \
+            --phase-a-summary /tmp/wp4_phase_a/gc_break_wp4_prequential_hazard_phase_a_v1_summary.json \
+            --output-dir /tmp/wp4_closure | tee /tmp/wp4_closure.log
+          grep -q 'WP4_PHASE_A_REJECTED_NO_PHASE_B' /tmp/wp4_closure.log
+          grep -q 'REJECT_LEARNED_HAZARD' /tmp/wp4_closure.log
+
+      - name: Upload WP4 Phase A closure evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp4-phase-a-closure-review-v1
+          path: /tmp/wp4_closure/
+          if-no-files-found: error
+          retention-days: 90
