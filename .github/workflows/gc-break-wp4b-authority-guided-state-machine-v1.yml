@@ -47,6 +47,7 @@ jobs:
           assert c['status']=='FROZEN_BEFORE_FORMATION_SCORING'
           assert c['manifest_min_version']=='1.52'
           PY
+          git fetch --no-tags --depth=1 origin gold-r4-direction-engine:refs/remotes/origin/gold-r4-direction-engine
           git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md | grep -q 'Manifest version:.*1.52'
           git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md | grep -q 'RESEARCH REDIRECTION REQUIRED'
 
