@@ -42,7 +42,7 @@ jobs:
 
       - name: Fetch one exact NY17 day
         run: |
-          python gold_axis_2026/gc_break_v0/gc_break_wp1_resume_exact_ny17_batch_v3.py \
+          python gold_axis_2026/tools/gc_break_wp1_resume_exact_ny17_batch_v3.py \
             --probe-csv one_day_seed.csv \
             --output-dir one_day_out \
             --window-days 1 \
