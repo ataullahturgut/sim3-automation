@@ -1,0 +1,113 @@
+name: GC-BREAK WP4D 2025 Challenge V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - 'gold_axis_2026/tools/gc_break_wp4d_2025_challenge_v1.py'
+      - '.github/workflows/gc-break-wp4d-2025-challenge-v1.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: gc-break-wp4d-2025-challenge-v1
+  cancel-in-progress: false
+
+jobs:
+  frozen-2025-challenge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      WP1_RUN_ID: '34792800170'
+      CHALLENGE_INPUT_RUN_ID: '34834056691'
+      MODEL_FREEZE_RUN_ID: '34838889066'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install fixed research dependencies
+        run: python -m pip install --quiet numpy pandas scikit-learn 'psycopg[binary]'
+
+      - name: Require canonical manifest, frozen protocol, and read-only challenge governance
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          git fetch --no-tags --depth=1 origin gold-r4-direction-engine:refs/remotes/origin/gold-r4-direction-engine
+          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md | grep -q 'Manifest version:.*1.53'
+          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md | grep -q 'episode-conditioned competing transitions'
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path('gold_axis_2026/gc_break_v0/gc_break_wp4d_2025_challenge_protocol_v1.json').read_text())
+          assert p['status']=='FROZEN_BEFORE_2025_CHALLENGE_SCORING'
+          assert p['governance']['single_challenge_score'] is True
+          assert p['governance']['no_post_challenge_tuning'] is True
+          assert p['governance']['no_2026_selection'] is True
+          assert p['governance']['no_database_writes'] is True
+          assert p['episode_definition']['left_censored_challenge_carry_in'].startswith('if opener/FAST warning')
+          PY
+
+      - name: Download immutable canonical history, exact 2025 input, and formation-only model freeze
+        run: |
+          mkdir -p /tmp/wp1 /tmp/ch2025 /tmp/freeze
+          gh run download "$WP1_RUN_ID" --repo "$GITHUB_REPOSITORY" --name gc-break-wp1-closure-resume-v1 --dir /tmp/wp1
+          gh run download "$CHALLENGE_INPUT_RUN_ID" --repo "$GITHUB_REPOSITORY" --name gc-break-wp4c-2025-exact-ny17-challenge-input-v1 --dir /tmp/ch2025
+          gh run download "$MODEL_FREEZE_RUN_ID" --repo "$GITHUB_REPOSITORY" --name gc-break-wp4d-challenge-model-freeze-v1 --dir /tmp/freeze
+          HIST=$(find /tmp/wp1 -type f -name 'gc_break_wp1_exact_ny17_consolidated_batch_v3.csv' | head -n1)
+          CH=$(find /tmp/ch2025 -type f -name 'gc_break_wp1_exact_ny17_consolidated_batch_v3.csv' | head -n1)
+          FREEZE=$(find /tmp/freeze -type f -name 'gc_break_wp4d_challenge_model_freeze_v1.json' | head -n1)
+          test -n "$HIST" && test -f "$HIST"
+          test -n "$CH" && test -f "$CH"
+          test -n "$FREEZE" && test -f "$FREEZE"
+          echo "HIST=$HIST" >> "$GITHUB_ENV"
+          echo "CH=$CH" >> "$GITHUB_ENV"
+          echo "FREEZE=$FREEZE" >> "$GITHUB_ENV"
+
+      - name: Compile frozen 2025 challenge evaluator
+        run: python -m py_compile gold_axis_2026/tools/gc_break_wp4d_2025_challenge_v1.py
+
+      - name: Score the frozen 2025 challenge exactly once
+        run: |
+          mkdir -p /tmp/wp4d_challenge
+          python gold_axis_2026/tools/gc_break_wp4d_2025_challenge_v1.py \
+            --historical-exact "$HIST" \
+            --challenge-exact "$CH" \
+            --model-freeze "$FREEZE" \
+            --output-dir /tmp/wp4d_challenge | tee /tmp/wp4d_challenge/run.log
+          test -f /tmp/wp4d_challenge/gc_break_wp4d_2025_challenge_summary_v1.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('/tmp/wp4d_challenge/gc_break_wp4d_2025_challenge_summary_v1.json').read_text())
+          assert d['status'] in {
+            'ACCEPT_INTEGRATED_MONITORING_CORE_SUPPORTED',
+            'REJECT_CHALLENGE_TRANSPORT_FAILURE',
+            'CHALLENGE_INSUFFICIENT_SUPPORT'
+          }
+          assert d['challenge_refit'] is False
+          assert d['hyperparameter_search'] is False
+          assert d['threshold_search'] is False
+          assert d['post_challenge_tuning'] is False
+          assert d['stress_2026_accessed'] is False
+          assert d['database_write']=='NONE'
+          assert d['all_12_governed_identities_accounted_for'] is True
+          print('WP4D_2025_FINAL_DECISION=' + d['status'])
+          PY
+
+      - name: Upload immutable single-score 2025 challenge evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp4d-2025-challenge-v1
+          path: /tmp/wp4d_challenge/
+          if-no-files-found: error
+          retention-days: 90
