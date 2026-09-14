@@ -1,4 +1,4 @@
-name: GC-BREAK Monthly XAU Block 2021-09
+name: GC-BREAK Monthly XAU Block 2021-10
 
 on:
   push:
@@ -9,9 +9,9 @@ permissions:
   contents: read
 
 env:
-  BLOCK_MONTH: '2021-09'
-  BLOCK_START: '2021-09-01'
-  BLOCK_END: '2021-09-30'
+  BLOCK_MONTH: '2021-10'
+  BLOCK_START: '2021-10-01'
+  BLOCK_END: '2021-10-31'
 
 jobs:
   monthly-block:
@@ -41,7 +41,7 @@ jobs:
         run: |
           python - <<'PY'
           import pandas as pd
-          dates = pd.date_range('2021-09-01','2021-09-30',freq='D')
+          dates = pd.date_range('2021-10-01','2021-10-31',freq='D')
           pd.DataFrame({'trade_date': dates.strftime('%Y-%m-%d'), 'acquisition_status':'NOT_ATTEMPTED'}).to_csv('monthly_seed.csv', index=False)
           PY
           mkdir -p monthly_out
@@ -79,6 +79,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gc-break-xau-ny17-2021-09
+          name: gc-break-xau-ny17-2021-10
           path: monthly_out/
           if-no-files-found: warn
