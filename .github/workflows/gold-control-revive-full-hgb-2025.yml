@@ -1,0 +1,131 @@
+name: Gold Control Revive FULL_HGB 2025
+
+on:
+  push:
+    branches: [gold-control-revive-full-hgb-2025]
+    paths:
+      - 'gold_axis_2026/research_revival/full_hgb_reconstruction_v1_recovered_blocks_2025_contract.json'
+      - 'gold_axis_2026/tools/full_hgb_reconstruction_v1_recovered_blocks_2025.py'
+      - '.github/workflows/gold-control-revive-full-hgb-2025.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  replay-2025:
+    runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ github.token }}
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      FORMATION_ARTIFACT_ID: '10338387444'
+      CHALLENGE_ARTIFACT_ID: '10343971259'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install fixed dependencies
+        run: python -m pip install --quiet numpy pandas scikit-learn 'psycopg[binary]'
+      - name: Require frozen contract
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('gold_axis_2026/research_revival/full_hgb_reconstruction_v1_recovered_blocks_2025_contract.json')
+          c=json.loads(p.read_text())
+          assert c['status']=='FROZEN_BEFORE_2025_REPLAY'
+          assert c['original_identity_recovered'] is False
+          assert c['current_gc_break_primary_target'] is False
+          assert c['split']['challenge_refit'] is False
+          assert c['split']['challenge_hyperparameter_search'] is False
+          assert c['split']['challenge_threshold_search'] is False
+          print('CONTRACT_FREEZE_OK')
+          PY
+      - name: Download exact NY17 and formation artifacts
+        run: |
+          mkdir -p /tmp/full/wp1 /tmp/full/ch /tmp/full/out
+          gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/${FORMATION_ARTIFACT_ID}/zip" > /tmp/full/wp1.zip
+          gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/${CHALLENGE_ARTIFACT_ID}/zip" > /tmp/full/ch.zip
+          unzip -q /tmp/full/wp1.zip -d /tmp/full/wp1
+          unzip -q /tmp/full/ch.zip -d /tmp/full/ch
+          HIST=$(find /tmp/full/wp1 -type f -name 'gc_break_wp1_exact_ny17_consolidated_batch_v3.csv' | head -n1)
+          FORM=$(find /tmp/full/wp1 -type f -name 'gc_break_wp1_formation_state_panel_v1.csv' | head -n1)
+          CH=$(find /tmp/full/ch -type f -name 'gc_break_wp1_exact_ny17_consolidated_batch_v3.csv' | head -n1)
+          test -f "$HIST" && test -f "$FORM" && test -f "$CH"
+          echo "HIST=$HIST" >> "$GITHUB_ENV"
+          echo "FORM=$FORM" >> "$GITHUB_ENV"
+          echo "CH=$CH" >> "$GITHUB_ENV"
+      - name: Fetch frozen 2025 role context
+        run: |
+          gh api "repos/${GITHUB_REPOSITORY}/contents/gold_axis_2026/data_pipeline/audits/component_role_replays_v145/ny17_context_role_replay_v145.csv?ref=gold-r4-direction-engine" -H 'Accept: application/vnd.github.raw+json' > /tmp/full/challenge_context.csv
+          python - <<'PY'
+          import pandas as pd
+          p='/tmp/full/challenge_context.csv'
+          d=pd.read_csv(p)
+          req={'date','monthly_direction_3m','fast_state','slow_state','emergency_level','emergency_reversal'}
+          assert req <= set(d.columns)
+          assert len(d) >= 180
+          print({'challenge_context_rows':len(d)})
+          PY
+          echo "CONTEXT_SHA256=$(sha256sum /tmp/full/challenge_context.csv | awk '{print $1}')" >> "$GITHUB_ENV"
+      - name: Extract retrospective external research series
+        run: |
+          python - <<'PY'
+          import csv, os, psycopg
+          sids=['XAG_STAKTRAKR_RESEARCH_DAILY_R1','XPT_STAKTRAKR_RESEARCH_DAILY_R1','XPD_STAKTRAKR_RESEARCH_DAILY_R1','NASDAQ100_FRED','SP500_FRED','DJIA_FRED','DGS10_ALFRED_PIT_ME','DFF_ALFRED_PIT_ME','DEXCHUS_ALFRED_PIT_ME','MACRO_EVENT_V3_EMPLOYMENT_SCORE','MACRO_EVENT_V3_INFLATION_SCORE']
+          out='/tmp/full/external.csv'
+          with psycopg.connect(os.environ['NEON_DATABASE_URL']) as conn:
+              with conn.cursor() as cur, open(out,'w',newline='',encoding='utf-8') as f:
+                  w=csv.writer(f); w.writerow(['series_id','observation_ts','value','available_as_of'])
+                  cur.execute("SELECT series_id,observation_ts,value,available_as_of FROM public.observations WHERE series_id=ANY(%s) AND observation_ts >= %s AND observation_ts < %s ORDER BY series_id,observation_ts",(sids,'2021-01-01','2026-01-02'))
+                  n=0
+                  while True:
+                      rows=cur.fetchmany(10000)
+                      if not rows: break
+                      w.writerows(rows); n += len(rows)
+          print({'external_rows':n,'path':out})
+          assert n > 5000
+          PY
+          echo "EXTERNAL_SHA256=$(sha256sum /tmp/full/external.csv | awk '{print $1}')" >> "$GITHUB_ENV"
+      - name: Compile runner
+        run: python -m py_compile gold_axis_2026/tools/full_hgb_reconstruction_v1_recovered_blocks_2025.py
+      - name: Fit 2022-2024 and score 2025
+        run: |
+          python gold_axis_2026/tools/full_hgb_reconstruction_v1_recovered_blocks_2025.py \
+            --historical-exact "$HIST" \
+            --challenge-exact "$CH" \
+            --formation-context "$FORM" \
+            --challenge-context /tmp/full/challenge_context.csv \
+            --external-csv /tmp/full/external.csv \
+            --contract gold_axis_2026/research_revival/full_hgb_reconstruction_v1_recovered_blocks_2025_contract.json \
+            --output-dir /tmp/full/out | tee /tmp/full/out/run.log
+      - name: Audit output
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path('/tmp/full/out/full_hgb_reconstruction_v1_recovered_blocks_2025_summary.json')
+          d=json.loads(p.read_text())
+          assert d['status']=='PASS'
+          assert d['original_identity_recovered'] is False
+          assert d['current_gc_break_primary_target'] is False
+          assert d['challenge_refit'] is False
+          assert d['hyperparameter_search'] is False
+          assert d['threshold_search'] is False
+          assert d['post_challenge_tuning'] is False
+          assert d['challenge_feature_complete_rows'] >= 180
+          d['external_input_sha256']=os.environ['EXTERNAL_SHA256']
+          d['challenge_context_sha256']=os.environ['CONTEXT_SHA256']
+          p.write_text(json.dumps(d,indent=2,sort_keys=True)+'\n')
+          print('FULL_HGB_RECONSTRUCTION_2025_PASS')
+          print(json.dumps(d,indent=2,sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: full-hgb-reconstruction-v1-recovered-blocks-2025
+          path: /tmp/full/out/
+          if-no-files-found: error
+          retention-days: 90
