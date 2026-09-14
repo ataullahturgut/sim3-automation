@@ -1,0 +1,73 @@
+name: Gold Control Manifest v1.52 WP4 Phase A Closure
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - '.github/workflows/gold-control-manifest-v152-wp4-phase-a-closure.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-manifest-v152-wp4-phase-a-closure
+  cancel-in-progress: false
+
+jobs:
+  update-canonical-manifest:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+
+      - name: Apply guarded v1.52 manifest change control
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md')
+          s=p.read_text(encoding='utf-8')
+          assert s.count('**Manifest version:** 1.51') == 1
+          assert s.count('**Issue date:** 2026-09-14') == 1
+          s=s.replace('**Manifest version:** 1.51', '**Manifest version:** 1.52', 1)
+
+          old='''6. **WP3 — preregistered formation baselines — COMPLETE WITH LIMITATIONS / WP4 ENTRY SUPPORTED**\n7. **WP4 — main role-preserving sequential model — READY TO START / SIMPLE LOW-DIMENSIONAL FAMILY FIRST**\n8. **Ablation / extensions — PENDING WP4**\n9. **Architecture/parameter freeze — PENDING**\n10. **Prospective shadow — PENDING FINAL FREEZE**'''
+          new='''6. **WP3 — preregistered formation baselines — COMPLETE WITH LIMITATIONS / WP4 ENTRY SUPPORTED**\n7. **WP4 — main role-preserving sequential model — PHASE A LEARNED-HAZARD FAMILY REJECTED / RESEARCH REDIRECTION REQUIRED**\n8. **Ablation / extensions — BLOCKED PENDING ACCEPTED WP4 CORE**\n9. **Architecture/parameter freeze — PENDING**\n10. **Prospective shadow — PENDING FINAL FREEZE**'''
+          assert s.count(old) == 1
+          s=s.replace(old,new,1)
+
+          anchor='''- Optional or short-history blocks remain subject to the same-origin comparison rule; the full-window Core score may not be compared directly with a shorter optional-block score.\n'''
+          assert s.count(anchor) == 1
+          insert=anchor+'''\n### WP4 Phase A evidence-backed closure — 2026-09-14\n\nThe first learned WP4 family was preregistered before scoring as `GC_BREAK_WP4_HAZARD_PREREG_V1` and executed only on the 2022-2024 formation window. Run `34830376294` completed successfully and the independent closure review run `34831293583` completed successfully.\n\nBinding interpretation of the frozen Phase A evidence:\n\n- Common prequential evaluation support was 241 governed origins containing 15 break events.\n- `M1_FAST_DURATION_RIDGE` improved log loss versus the empirical-hazard null but did not improve Brier score.\n- `M2_ROLE_CORE_RIDGE` also improved log loss but did not improve Brier score.\n- The preregistered primary gate required improvement in both Brier score and log loss; therefore the family closes as `REJECT_LEARNED_HAZARD`.\n- `M3_PATH_AUGMENTED_SENSITIVITY` improved both primary probability scores, but it uses `adverse_fraction` derived from the same price path as the frozen event label. It remains sensitivity/anatomy evidence and cannot rescue or promote the learned-hazard family.\n- Phase-B probability thresholds / `WEAKENING` / `BREAK_ALERT` mappings are **not authorized** from this family.\n- High-capacity escalation, hyperparameter search and post-score tuning of M1/M2/M3 are **not authorized**.\n- The 2025 challenge remains locked and 2026 Jan-Aug remains nonselection retrospective stress.\n- Any next WP4 architecture must be a separately named, preregistered, simple role-preserving challenger before scoring.\n'''
+          s=s.replace(anchor,insert,1)
+
+          old_wp4='''WP4 may begin only after WP1, WP2 and WP3 provide adequate support. **As of manifest v1.51 this entry gate is satisfied only for the simple low-dimensional, role-preserving first challenger described below; it is not authorization for high-capacity modeling or production promotion.**\n'''
+          new_wp4='''WP4 may begin only after WP1, WP2 and WP3 provide adequate support. The first preregistered low-dimensional discrete-time hazard family has now been executed and rejected under its frozen Phase A gate. WP4 therefore remains open only as a research-redirection problem: any replacement architecture must be separately named and preregistered before scoring, remain simple and role-preserving, and may not be tuned from the rejected M1/M2/M3 scores.\n'''
+          assert s.count(old_wp4) == 1
+          s=s.replace(old_wp4,new_wp4,1)
+
+          old21='''Manifest v1.51 carries forward all v1.50 architecture, evidence and governance locks, and updates only the evidence-backed WP1/WP2/WP3 closure status plus the constrained WP4 entry gate.\n'''
+          new21='''Manifest v1.52 carries forward all v1.51 architecture, evidence and governance locks, and additionally records the evidence-backed rejection and closure of the first WP4 learned-hazard Phase A family.\n'''
+          assert s.count(old21) == 1
+          s=s.replace(old21,new21,1)
+
+          p.write_text(s,encoding='utf-8')
+          PY
+
+      - name: Verify v1.52 closure state
+        run: |
+          test "$(find gold_axis_2026 -maxdepth 1 -name 'GOLD_CONTROL_PROJECT_MANIFEST.md' | wc -l)" -eq 1
+          grep -q 'Manifest version:.*1.52' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'WP4 — main role-preserving sequential model — PHASE A LEARNED-HAZARD FAMILY REJECTED' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'REJECT_LEARNED_HAZARD' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'run `34831293583` completed successfully' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+
+      - name: Commit and push canonical manifest
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          git commit -m 'Gold Control v1.52: close rejected WP4 Phase A hazard family'
+          git push origin HEAD:gold-r4-direction-engine
