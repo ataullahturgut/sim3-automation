@@ -39,7 +39,7 @@ def gold_features(d):
 def attach_external(d,p):
  o=pd.read_csv(p); req={'series_id','observation_ts','value','available_as_of'}
  if not req<=set(o): raise RuntimeError('EXTERNAL_SCHEMA_FAIL')
- o['observation_ts']=pd.to_datetime(o.observation_ts,utc=True); o['available_as_of']=pd.to_datetime(o.available_as_of,utc=True); o['value']=pd.to_numeric(o.value,errors='coerce'); o=o.dropna(subset=['value'])
+ o['observation_ts']=pd.to_datetime(o.observation_ts,utc=True,format='mixed'); o['available_as_of']=pd.to_datetime(o.available_as_of,utc=True,format='mixed'); o['value']=pd.to_numeric(o.value,errors='coerce'); o=o.dropna(subset=['value'])
  out=d.sort_values('date').copy(); out['origin_utc']=(out.date.dt.tz_localize(NY)+pd.Timedelta(hours=17)).dt.tz_convert('UTC')
  for name,sid in DAILY_MAP.items():
   z=o[o.series_id.eq(sid)][['observation_ts','value']].copy(); z['source_date']=z.observation_ts.dt.tz_localize(None).dt.normalize(); z=z.sort_values('source_date').drop_duplicates('source_date',keep='last'); z[f'{name}_ret']=np.log(z.value).diff(); z=z[['source_date',f'{name}_ret']].rename(columns={'source_date':f'{name}_source_date'})
