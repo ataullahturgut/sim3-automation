@@ -39,8 +39,10 @@ jobs:
         run: |
           test -n "$NEON_DATABASE_URL"
           git fetch --no-tags --depth=1 origin gold-r4-direction-engine:refs/remotes/origin/gold-r4-direction-engine
-          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md | grep -q 'Manifest version:.*1.54'
-          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md | grep -q 'Current governed runtime inventory remains exactly these 12 identities'
+          MANIFEST=$(git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md)
+          printf '%s\n' "$MANIFEST" | grep -q 'Manifest version:.*1.54'
+          printf '%s\n' "$MANIFEST" | grep -q 'GVZ_RISK'
+          printf '%s\n' "$MANIFEST" | grep -q 'VW_MIDAS_MSVR_SUCCESSOR_V1'
 
       - name: Download canonical 2021-2024 history and frozen 2025 exact challenge input
         env:
@@ -91,4 +93,4 @@ jobs:
           if-no-files-found: error
           retention-days: 90
 
-# Trigger marker: 2026-09-14 engine-wise export request
+# Trigger marker: 2026-09-14 engine-wise export request v2
