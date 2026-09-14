@@ -1,0 +1,64 @@
+name: GC-BREAK WP3 Closure Review V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - 'gold_axis_2026/tools/gc_break_wp3_closure_review_v1.py'
+      - '.github/workflows/gc-break-wp3-closure-review-v1.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: gc-break-wp3-closure-review-v1
+  cancel-in-progress: false
+
+jobs:
+  review-wp3-under-manifest:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      WP3_RUN_ID: '34829522473'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install review dependencies
+        run: pip install --quiet numpy pandas
+
+      - name: Download WP3 evidence
+        run: |
+          mkdir -p /tmp/wp3_source
+          gh run download "$WP3_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name gc-break-wp3-current-formation-baselines-v1 --dir /tmp/wp3_source
+
+      - name: Compile WP3 closure review
+        run: python -m py_compile gold_axis_2026/tools/gc_break_wp3_closure_review_v1.py
+
+      - name: Perform same-origin and closure review
+        run: |
+          mkdir -p /tmp/wp3_review
+          python gold_axis_2026/tools/gc_break_wp3_closure_review_v1.py \
+            --wp3-panel /tmp/wp3_source/gc_break_wp3_current_formation_baseline_panel_v1.csv \
+            --wp3-summary /tmp/wp3_source/gc_break_wp3_current_formation_baselines_v1_summary.json \
+            --wp3-metrics /tmp/wp3_source/gc_break_wp3_current_formation_baseline_metrics_v1.csv \
+            --output-dir /tmp/wp3_review | tee /tmp/wp3_review.log
+          grep -q 'COMPLETE_WITH_LIMITATIONS_READY_FOR_WP4' /tmp/wp3_review.log
+
+      - name: Upload WP3 closure evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp3-closure-review-v1
+          path: /tmp/wp3_review/
+          if-no-files-found: error
+          retention-days: 90
