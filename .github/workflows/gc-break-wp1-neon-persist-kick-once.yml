@@ -1,0 +1,24 @@
+name: GC-BREAK WP1 Neon Persist Kick Once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gc-break-wp1-neon-persist-kick-once.yml'
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  kick:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Dispatch audited WP1 Neon persist
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --method POST \
+            "/repos/${GITHUB_REPOSITORY}/actions/workflows/gc-break-wp1-neon-persist-after-closure-v1.yml/dispatches" \
+            -f ref=main \
+            -f 'inputs[source_run_id]=34792800170'
