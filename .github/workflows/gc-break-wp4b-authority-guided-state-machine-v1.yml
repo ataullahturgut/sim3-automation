@@ -1,0 +1,81 @@
+name: GC-BREAK WP4B Authority-Guided State Machine V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - 'gold_axis_2026/gc_break_v0/gc_break_wp4b_authority_guided_state_machine_prereg_v1.json'
+      - 'gold_axis_2026/tools/gc_break_wp4b_authority_guided_state_machine_v1.py'
+      - '.github/workflows/gc-break-wp4b-authority-guided-state-machine-v1.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: gc-break-wp4b-authority-guided-state-machine-v1
+  cancel-in-progress: false
+
+jobs:
+  formation-score:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      WP2_RUN_ID: '34828001360'
+      WP3_RUN_ID: '34829522473'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install frozen WP4B dependencies
+        run: pip install --quiet numpy pandas
+
+      - name: Require frozen preregistration and canonical manifest gate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          c=json.loads(Path('gold_axis_2026/gc_break_v0/gc_break_wp4b_authority_guided_state_machine_prereg_v1.json').read_text())
+          assert c['status']=='FROZEN_BEFORE_FORMATION_SCORING'
+          assert c['manifest_min_version']=='1.52'
+          PY
+          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md | grep -q 'Manifest version:.*1.52'
+          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md | grep -q 'RESEARCH REDIRECTION REQUIRED'
+
+      - name: Download frozen WP2 ground truth
+        run: |
+          mkdir -p /tmp/wp2
+          gh run download "$WP2_RUN_ID" --repo "$GITHUB_REPOSITORY" --name gc-break-wp2-ground-truth-v1 --dir /tmp/wp2
+
+      - name: Download frozen WP3 formation evidence
+        run: |
+          mkdir -p /tmp/wp3
+          gh run download "$WP3_RUN_ID" --repo "$GITHUB_REPOSITORY" --name gc-break-wp3-current-formation-baselines-v1 --dir /tmp/wp3
+
+      - name: Compile frozen WP4B implementation
+        run: python -m py_compile gold_axis_2026/tools/gc_break_wp4b_authority_guided_state_machine_v1.py
+
+      - name: Score formation only
+        run: |
+          mkdir -p /tmp/wp4b
+          python gold_axis_2026/tools/gc_break_wp4b_authority_guided_state_machine_v1.py \
+            --panel /tmp/wp3/gc_break_wp3_current_formation_baseline_panel_v1.csv \
+            --events /tmp/wp2/gc_break_wp2_break_events_k3_v1.csv \
+            --output-dir /tmp/wp4b | tee /tmp/wp4b/run.log
+          grep -q 'GC_BREAK_WP4B_AUTHORITY_GUIDED_STATE_MACHINE_V1' /tmp/wp4b/run.log
+
+      - name: Upload WP4B evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp4b-authority-guided-state-machine-v1
+          path: /tmp/wp4b/
+          if-no-files-found: error
+          retention-days: 90
