@@ -1,0 +1,121 @@
+{
+  "contract_id": "GC_BREAK_WP4_HAZARD_PREREG_V1",
+  "status": "FROZEN_BEFORE_WP4_FORMATION_SCORING",
+  "created_date": "2026-09-14",
+  "manifest_min_version": "1.51",
+  "purpose": "first learned low-dimensional role-preserving GC-BREAK challenger after WP3 closure",
+  "production_authority": false,
+  "prospective_claim": false,
+  "research_phase": "WP4_A_PREQUENTIAL_TRANSITION_HAZARD",
+  "conceptual_model": "discrete-time transition hazard on governed-origin intervals; not fixed-horizon XAU direction forecasting",
+  "literature_basis": [
+    {
+      "reference": "Singer and Willett (1993), It's About Time: Using Discrete-Time Survival Analysis to Study Duration and the Timing of Events",
+      "doi": "10.3102/10769986018002155",
+      "use": "logistic discrete-time hazard formulation"
+    },
+    {
+      "reference": "Survival prediction models: an introduction to discrete-time modeling (2022)",
+      "pmcid": "PMC9316420",
+      "use": "discrete-time binary hazard prediction and Brier/discrimination evaluation"
+    }
+  ],
+  "formation_window": ["2022-01-01", "2024-12-31"],
+  "risk_interval": {
+    "unit": "governed origin t -> next governed origin t+1",
+    "target": "WP2 primary k=3.0 break occurs at t+1",
+    "calendar_day_claim": false,
+    "note": "Sparse canonical NY17 dates remain sparse; the hazard is per governed-origin interval, not per one-calendar-day horizon."
+  },
+  "causal_origin_rule": {
+    "features": "known by completed origin t only",
+    "current_regime": "WP2 regime_after at origin t",
+    "sojourn_age": "governed origins since the most recent observed WP2 break; reset to zero on a break origin",
+    "left_censor_guard": "risk-set/model rows begin only after the first observed formation break so sojourn age is known",
+    "outcome_availability": "for prediction at t, training outcomes may use intervals ending no later than t",
+    "no_future_gap_feature": true
+  },
+  "models": [
+    {
+      "id": "M0_EMPIRICAL_HAZARD",
+      "role": "prequential null probability baseline",
+      "formula": "(past_breaks + 0.5) / (past_intervals + 1.0)",
+      "learned_coefficients": false
+    },
+    {
+      "id": "M1_FAST_DURATION_RIDGE",
+      "role": "minimal learned tactical weakening hazard",
+      "features": ["log1p_sojourn_age", "fast_conflict_post", "fast_opposite_post", "log1p_fast_state_age"],
+      "estimator": "L2 logistic regression",
+      "C": 1.0,
+      "solver": "liblinear",
+      "class_weight": null,
+      "standardize_from_past_training_only": true
+    },
+    {
+      "id": "M2_ROLE_CORE_RIDGE",
+      "role": "primary role-preserving low-dimensional challenger",
+      "features": ["log1p_sojourn_age", "fast_conflict_post", "fast_opposite_post", "log1p_fast_state_age", "slow_conflict_post", "log1p_slow_state_age"],
+      "estimator": "L2 logistic regression",
+      "C": 1.0,
+      "solver": "liblinear",
+      "class_weight": null,
+      "standardize_from_past_training_only": true
+    },
+    {
+      "id": "M3_PATH_AUGMENTED_SENSITIVITY",
+      "role": "sensitivity only because price-path anatomy shares the event-label construction",
+      "features": ["log1p_sojourn_age", "fast_conflict_post", "fast_opposite_post", "log1p_fast_state_age", "slow_conflict_post", "log1p_slow_state_age", "adverse_fraction_post"],
+      "estimator": "L2 logistic regression",
+      "C": 1.0,
+      "solver": "liblinear",
+      "class_weight": null,
+      "standardize_from_past_training_only": true,
+      "primary_promotion_evidence": false
+    }
+  ],
+  "excluded_from_primary_phase_a": {
+    "EMERGENCY_REVERSAL": "WP3 same-origin review found no incremental early-warning recall/detection gain over FAST and a higher false-warning burden; retain as confirmation/context only",
+    "BOCPD_RETURN_SUCCESSOR_V1": "slow native-month regime context; not a daily break trigger",
+    "MONTHLY_H1": "independent strategic price-level forecast, not short-term trigger",
+    "GVZ_MACRO_MARKET_SHOCK_EXPERT_CHANNELS": "optional/partial blocks deferred to later same-origin ablation after WP4 primary"
+  },
+  "prequential_protocol": {
+    "expanding_history_only": true,
+    "random_split": false,
+    "minimum_past_intervals": 60,
+    "minimum_past_break_events": 5,
+    "refit_each_origin": true,
+    "hyperparameter_search": false,
+    "threshold_search": false,
+    "all_models_share_the_same_evaluation_origins": true
+  },
+  "primary_probability_metrics": [
+    "brier_score",
+    "log_loss",
+    "average_precision",
+    "roc_auc",
+    "mean_predicted_hazard",
+    "observed_break_rate"
+  ],
+  "phase_a_decision_rule": {
+    "state_threshold_mapping_in_phase_a": false,
+    "primary_model": "M2_ROLE_CORE_RIDGE",
+    "positive_signal": "M2 improves both Brier score and log loss versus M0 on the common prequential evaluation origins; ranking metrics are descriptive because event count is small",
+    "fallback_signal": "M1 may remain a simpler challenger if M2 does not improve on M1; no model is promoted from sensitivity M3 alone",
+    "negative_signal": "if neither M1 nor M2 improves probability scoring versus M0, stop learned-hazard escalation and return REJECT_LEARNED_HAZARD",
+    "phase_b_gate": "state mapping/WEAKENING/BREAK_ALERT thresholds may be preregistered only after Phase A evidence is inspected"
+  },
+  "governance": {
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF",
+    "no_random_split": true,
+    "no_hindsight_threshold_tuning": true,
+    "no_2025_challenge_access": true,
+    "no_2026_stress_access": true,
+    "no_database_writes": true,
+    "no_position_mapping": true,
+    "no_production_promotion": true,
+    "retain_wp2_data_density_warning": true
+  }
+}
