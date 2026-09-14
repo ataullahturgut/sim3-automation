@@ -1,0 +1,54 @@
+name: Gold Control Market Shock V3 2025 Replay
+
+on:
+  push:
+    branches:
+      - gold-control-market-shock-2025-replay
+    paths:
+      - '.github/workflows/gold-control-market-shock-2025-replay.yml'
+      - 'gold_axis_2026/tools/market_shock_v3_2025_replay.py'
+      - 'gold_axis_2026/tools/market_shock_challenger_v3.py'
+      - 'gold_axis_2026/tools/market_shock_challenger_v2.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-market-shock-2025-replay
+  cancel-in-progress: false
+
+jobs:
+  replay-2025:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      TWELVE_MIN_REQUEST_INTERVAL_SECONDS: '9.0'
+      GOLD_CODE_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-control-market-shock-2025-replay
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install replay runtime
+        run: pip install -q pandas numpy scipy requests
+      - name: Require protected Twelve credential
+        run: test -n "$TWELVE_DATA_API_KEY"
+      - name: Compile V2 V3 and replay exporter
+        run: |
+          python -m py_compile gold_axis_2026/tools/market_shock_challenger_v2.py
+          python -m py_compile gold_axis_2026/tools/market_shock_challenger_v3.py
+          python -m py_compile gold_axis_2026/tools/market_shock_v3_2025_replay.py
+      - name: Run detailed 2025 replay
+        run: python gold_axis_2026/tools/market_shock_v3_2025_replay.py
+      - name: Upload detailed 2025 replay evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-market-shock-v3-2025-replay
+          path: market_shock_v3_2025_replay/
+          if-no-files-found: error
