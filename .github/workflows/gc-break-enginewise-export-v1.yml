@@ -1,0 +1,92 @@
+name: GC-BREAK Enginewise Export V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - 'gold_axis_2026/tools/gc_break_enginewise_export_v1.py'
+      - '.github/workflows/gc-break-enginewise-export-v1.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  WP1_RUN_ID: '34792800170'
+  CHALLENGE_INPUT_RUN_ID: '34834056691'
+
+jobs:
+  export-engines-one-by-one:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install fixed export dependencies
+        run: python -m pip install --quiet numpy pandas 'psycopg[binary]'
+
+      - name: Enforce canonical v1.54 governance and read-only database use
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          git fetch --no-tags --depth=1 origin gold-r4-direction-engine:refs/remotes/origin/gold-r4-direction-engine
+          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md | grep -q 'Manifest version:.*1.54'
+          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md | grep -q 'Current governed runtime inventory remains exactly these 12 identities'
+
+      - name: Download canonical 2021-2024 history and frozen 2025 exact challenge input
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/wp1 /tmp/ch2025
+          gh run download "$WP1_RUN_ID" --repo "$GITHUB_REPOSITORY" --name gc-break-wp1-closure-resume-v1 --dir /tmp/wp1
+          gh run download "$CHALLENGE_INPUT_RUN_ID" --repo "$GITHUB_REPOSITORY" --name gc-break-wp4c-2025-exact-ny17-challenge-input-v1 --dir /tmp/ch2025
+          HIST=$(find /tmp/wp1 -type f -name 'gc_break_wp1_exact_ny17_consolidated_batch_v3.csv' | head -n1)
+          CH=$(find /tmp/ch2025 -type f -name 'gc_break_wp1_exact_ny17_consolidated_batch_v3.csv' | head -n1)
+          test -n "$HIST" && test -f "$HIST"
+          test -n "$CH" && test -f "$CH"
+          echo "HIST=$HIST" >> "$GITHUB_ENV"
+          echo "CH=$CH" >> "$GITHUB_ENV"
+
+      - name: Compile engine-wise exporter
+        run: python -m py_compile gold_axis_2026/tools/gc_break_enginewise_export_v1.py
+
+      - name: Run all 12 engines separately over governed 2022-2026 origins
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          mkdir -p /tmp/enginewise
+          python gold_axis_2026/tools/gc_break_enginewise_export_v1.py \
+            --historical-exact "$HIST" \
+            --challenge-exact "$CH" \
+            --output-dir /tmp/enginewise | tee /tmp/enginewise/run.log
+          test -f /tmp/enginewise/ENGINEWISE_EXPORT_SUMMARY.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('/tmp/enginewise/ENGINEWISE_EXPORT_SUMMARY.json')
+          d=json.loads(p.read_text())
+          assert d['status']=='PASS_ENGINEWISE_EXPORT'
+          assert d['engine_count']==12
+          assert d['governance']['each_engine_exported_separately'] is True
+          assert d['governance']['no_main_model_fit'] is True
+          assert d['governance']['database_write']=='NONE'
+          print('ENGINEWISE_EXPORT_STATUS=' + d['status'])
+          print('ENGINEWISE_ORIGINS=' + str(d['governed_origins_total_export_window']))
+          PY
+
+      - name: Upload immutable engine-wise CSV evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-enginewise-export-v1
+          path: /tmp/enginewise/
+          if-no-files-found: error
+          retention-days: 90
