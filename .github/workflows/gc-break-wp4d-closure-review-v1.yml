@@ -1,0 +1,65 @@
+name: GC-BREAK WP4D Closure Review V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - 'gold_axis_2026/tools/gc_break_wp4d_closure_review_v1.py'
+      - '.github/workflows/gc-break-wp4d-closure-review-v1.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  closure-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      GH_TOKEN: ${{ github.token }}
+      CHALLENGE_RUN_ID: '34839157458'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Require canonical manifest and immutable challenge evidence
+        run: |
+          git fetch --no-tags --depth=1 origin gold-r4-direction-engine:refs/remotes/origin/gold-r4-direction-engine
+          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md | grep -q 'Manifest version:.*1.53'
+          mkdir -p /tmp/challenge
+          gh run download "$CHALLENGE_RUN_ID" --repo "$GITHUB_REPOSITORY" --name gc-break-wp4d-2025-challenge-v1 --dir /tmp/challenge
+          test -f /tmp/challenge/gc_break_wp4d_2025_challenge_summary_v1.json
+
+      - name: Compile closure review
+        run: python -m py_compile gold_axis_2026/tools/gc_break_wp4d_closure_review_v1.py
+
+      - name: Close WP4D without rescue tuning
+        run: |
+          mkdir -p /tmp/closure
+          python gold_axis_2026/tools/gc_break_wp4d_closure_review_v1.py \
+            --challenge-summary /tmp/challenge/gc_break_wp4d_2025_challenge_summary_v1.json \
+            --output-dir /tmp/closure | tee /tmp/closure/run.log
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('/tmp/closure/gc_break_wp4d_closure_review_v1.json').read_text())
+          assert d['status']=='WP4D_REJECTED_CHALLENGE_TRANSPORT_FAILURE'
+          assert d['database_write']=='NONE'
+          assert d['production_authority'] is False
+          assert d['prospective_claim'] is False
+          PY
+
+      - name: Upload immutable closure evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp4d-closure-review-v1
+          path: /tmp/closure/
+          if-no-files-found: error
+          retention-days: 90
