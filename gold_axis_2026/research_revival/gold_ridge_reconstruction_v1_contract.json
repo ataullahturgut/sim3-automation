@@ -1,0 +1,83 @@
+{
+  "contract_id": "GOLD_RIDGE_RECONSTRUCTION_V1_2025",
+  "status": "FROZEN_BEFORE_2025_REPLAY",
+  "research_identity": "GOLD_RIDGE_RECONSTRUCTION_V1",
+  "manifest_channel_being_reconstructed": "GOLD_RIDGE",
+  "identity_note": "The exact historical standalone GOLD_RIDGE implementation was not recovered. This is a separately named project-native reconstruction and must not be relabelled as the original GOLD_RIDGE identity.",
+  "role": "RESEARCH_ONLY_GOLD_OWN_HISTORY_AUXILIARY_EXPERT",
+  "production_authority": false,
+  "auto_selector": "OFF",
+  "auto_ensemble": "OFF",
+  "current_gc_break_primary_target": false,
+  "auxiliary_target": "NEXT_GOVERNED_NY17_1STEP_DIRECTION",
+  "target_interpretation": "Historical auxiliary expert evidence only. It does not replace the current sequential GC-BREAK trend-health/break objective.",
+  "source": {
+    "provider": "Twelve Data",
+    "symbol": "XAU/USD",
+    "interval": "1min",
+    "timezone": "America/New_York",
+    "accepted_source_time": "16:59:00",
+    "stored_semantic": "17:00 ET governed NY17 boundary",
+    "fallback": "NONE",
+    "interpolation": "FORBIDDEN",
+    "forward_fill": "FORBIDDEN",
+    "provider_substitution": "FORBIDDEN"
+  },
+  "split": {
+    "prehistory_allowed": "2021-09-01..2021-12-31 for lag construction only",
+    "development_train": "2022-01-01..2024-12-31",
+    "retrospective_challenge": "2025-01-01..2025-12-31",
+    "challenge_refit": false,
+    "challenge_hyperparameter_search": false,
+    "challenge_threshold_search": false
+  },
+  "project_native_precedent": {
+    "source_file": "gold_axis_2026/v149_research/short_horizon.py",
+    "feature_block": "BLOCK0",
+    "candidate": "LOGISTIC_C1",
+    "note": "Feature definitions and fixed logistic configuration are reused as internal precedent; the old fixed-horizon V1.49 model is not being promoted or renamed."
+  },
+  "features": [
+    "ret_1",
+    "ret_2",
+    "ret_3",
+    "mom_3",
+    "mom_5",
+    "mom_10",
+    "rv_5",
+    "rv_10",
+    "rv_20"
+  ],
+  "feature_definitions": {
+    "ret_1": "log(close_t)-log(close_t-1)",
+    "ret_2": "ret_1 shifted one governed observation",
+    "ret_3": "ret_1 shifted two governed observations",
+    "mom_k": "log(close_t/close_t-k)",
+    "rv_k": "population standard deviation of ret_1 over trailing k governed observations"
+  },
+  "model": {
+    "pipeline": "StandardScaler + LogisticRegression",
+    "C": 1.0,
+    "solver": "lbfgs",
+    "max_iter": 500,
+    "random_state": 20260911,
+    "probability_output": "p_up_next_governed_origin",
+    "implied_direction_rule": "UP if p>=0.5 else DOWN",
+    "calibration": "NONE",
+    "hyperparameter_search": "NONE"
+  },
+  "training_rule": "Single fit on eligible development rows only; each training label uses the immediately next governed exact-NY17 observation and must mature no later than 2024-12-31.",
+  "challenge_rule": "2025 features are scored using the frozen development fit. 2025 labels are used only for retrospective reporting after probabilities are produced.",
+  "forbidden": [
+    "using any 2025 outcome for feature choice",
+    "using any 2025 outcome for hyperparameter choice",
+    "using any 2025 outcome for model refit",
+    "post-score threshold optimization",
+    "calling this reconstruction the recovered original GOLD_RIDGE"
+  ],
+  "expected_outputs": [
+    "gold_ridge_reconstruction_v1_2025_daily.csv",
+    "gold_ridge_reconstruction_v1_2025_summary.json",
+    "gold_ridge_reconstruction_v1_coefficients.csv"
+  ]
+}
