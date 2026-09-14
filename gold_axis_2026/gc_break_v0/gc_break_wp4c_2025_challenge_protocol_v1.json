@@ -1,0 +1,46 @@
+{
+  "protocol_id": "GC_BREAK_WP4C_2025_CHALLENGE_PROTOCOL_V1",
+  "status": "FROZEN_BEFORE_2025_CHALLENGE_SCORING",
+  "created_date": "2026-09-14",
+  "architecture_contract": "GC_BREAK_WP4C_STRUCTURAL_HEALTH_DUAL_LANE_FREEZE_V1",
+  "manifest_min_version": "1.53",
+  "challenge_window": ["2025-01-01", "2025-12-31"],
+  "prehistory_rule": "use canonical exact-NY17 historical replay from 2021-09-01 through 2024-12-31 only to initialize lagged volatility, frozen event regime/extreme, FAST/SLOW states, and any warning state entering 2025",
+  "boundary_rule": "if a warning is active at the first governed 2025 origin because of pre-2025 history, clip its episode start to that first governed 2025 origin; grant no pre-2025 lead-time credit but otherwise score it normally",
+  "ground_truth": {
+    "contract": "GC_BREAK_EVENT_CONTRACT_V1",
+    "primary_k": 3.0,
+    "sensitivity_k_2_5_used_for_selection": false,
+    "challenge_events_defined_only_after_architecture_lock": true
+  },
+  "role_replay": {
+    "FAST": "recompute from the exact canonical close history using the frozen R4 FAST implementation",
+    "SLOW": "recompute from completed W-FRI weekly closes using the frozen R4 SLOW implementation",
+    "legacy_hourly_17ET_replay_as_primary_input": false
+  },
+  "comparators": ["FAST_CONFLICT", "PATH_HALF_ANATOMY_REFERENCE", "WP4C_DUAL_LANE"],
+  "primary_gate": {
+    "dual_lane_recall_at_least_fast": true,
+    "dual_lane_median_lead_observations_strictly_greater_than_fast": true,
+    "dual_lane_false_warning_episodes_per_100_max": 5.698005698005698,
+    "all_comparisons_same_challenge_origins": true,
+    "if_pass": "CHALLENGE_MONITORING_SIGNAL_SUPPORTED",
+    "if_fail": "CHALLENGE_NOT_SUPPORTED"
+  },
+  "claim_separation": {
+    "structural_health_path_half": "current condition/anatomy monitoring, not independent predictive evidence",
+    "fast": "independent tactical evidence",
+    "slow": "confirmation/new-regime evidence",
+    "challenge_success_claim": "supports the integrated monitoring state machine only; does not establish an independent forecast gain attributable to PATH_HALF"
+  },
+  "governance": {
+    "no_post_challenge_tuning": true,
+    "no_threshold_search": true,
+    "no_random_split": true,
+    "no_2026_stress_selection": true,
+    "no_database_writes": true,
+    "no_position_mapping": true,
+    "production_authority": false,
+    "prospective_claim": false
+  }
+}
