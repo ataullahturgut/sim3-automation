@@ -6,6 +6,7 @@ on:
     branches: [gc-break-wp1-formation-backfill]
     paths:
       - 'gold_axis_2026/tools/gc_break_enginewise_export_v1.py'
+      - 'gold_axis_2026/tools/gc_break_enginewise_export_v1_fixed.py'
       - '.github/workflows/gc-break-enginewise-export-v1.yml'
 
 permissions:
@@ -59,14 +60,16 @@ jobs:
           echo "CH=$CH" >> "$GITHUB_ENV"
 
       - name: Compile engine-wise exporter
-        run: python -m py_compile gold_axis_2026/tools/gc_break_enginewise_export_v1.py
+        run: |
+          python -m py_compile gold_axis_2026/tools/gc_break_enginewise_export_v1.py
+          python -m py_compile gold_axis_2026/tools/gc_break_enginewise_export_v1_fixed.py
 
       - name: Run all 12 engines separately over governed 2022-2026 origins
         env:
           NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
         run: |
           mkdir -p /tmp/enginewise
-          python gold_axis_2026/tools/gc_break_enginewise_export_v1.py \
+          python gold_axis_2026/tools/gc_break_enginewise_export_v1_fixed.py \
             --historical-exact "$HIST" \
             --challenge-exact "$CH" \
             --output-dir /tmp/enginewise | tee /tmp/enginewise/run.log
@@ -93,4 +96,4 @@ jobs:
           if-no-files-found: error
           retention-days: 90
 
-# Trigger marker: 2026-09-14 engine-wise export request v2
+# Trigger marker: 2026-09-14 engine-wise export request v3
