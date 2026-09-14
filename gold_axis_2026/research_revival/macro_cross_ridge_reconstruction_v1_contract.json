@@ -1,0 +1,33 @@
+{
+  "contract_id": "MACRO_CROSS_RIDGE_RECONSTRUCTION_V1_2025",
+  "status": "FROZEN_BEFORE_2025_REPLAY",
+  "research_identity": "MACRO_CROSS_RIDGE_RECONSTRUCTION_V1",
+  "manifest_channel_being_reconstructed": "MACRO_CROSS_RIDGE",
+  "identity_note": "The exact historical standalone MACRO_CROSS_RIDGE implementation was not recovered. This is a separately named reconstruction and must not be relabelled as the original identity.",
+  "role": "RESEARCH_ONLY_MACRO_CROSS_MARKET_AUXILIARY_EXPERT",
+  "production_authority": false,
+  "current_gc_break_primary_target": false,
+  "auxiliary_target": "NEXT_GOVERNED_NY17_1STEP_DIRECTION",
+  "split": {"development_train":"2022-01-01..2024-12-31","retrospective_challenge":"2025-01-01..2025-12-31","challenge_refit":false,"challenge_hyperparameter_search":false,"challenge_threshold_search":false},
+  "project_native_precedent": {"source_file":"gold_axis_2026/v149_thesis/run_rich_short_horizon.py","blocks":["B0","B1","B2","B6"],"candidate":"LOGIT_C1"},
+  "sources": {
+    "gold":"exact Twelve Data XAU/USD 1min 16:59 America/New_York governed NY17 artifacts",
+    "cross_metals":["XAG_STAKTRAKR_RESEARCH_DAILY_R1","XPT_STAKTRAKR_RESEARCH_DAILY_R1","XPD_STAKTRAKR_RESEARCH_DAILY_R1"],
+    "equity_cross":["NASDAQ100_FRED","SP500_FRED","DJIA_FRED"],
+    "macro_monthly_pit":["DGS10_ALFRED_PIT_ME","DFF_ALFRED_PIT_ME","DEXCHUS_ALFRED_PIT_ME"],
+    "macro_event":["MACRO_EVENT_V3_EMPLOYMENT_SCORE","MACRO_EVENT_V3_INFLATION_SCORE"]
+  },
+  "features": ["gold_ret_lag1","gold_ret_lag2","gold_ret_lag3","gold_mom3","gold_mom5","gold_mom10","gold_mom20","gold_rv5","gold_rv10","gold_rv20","xag_ret","xpt_ret","xpd_ret","nasdaq_ret","sp500_ret","djia_ret","dgs10_level","dff_level","fx_ret","macro_score","macro_event_count"],
+  "chronology": {
+    "cross_market_daily":"strictly prior source-date observation; same-date values forbidden",
+    "macro_monthly":"latest observation with available_as_of <= governed NY17 origin timestamp",
+    "macro_event":"same-day event score allowed only when available_as_of <= governed NY17 origin; no eligible event = score 0/count 0"
+  },
+  "model": {"pipeline":"StandardScaler + LogisticRegression","C":1.0,"solver":"lbfgs","max_iter":1000,"random_state":20260911,"calibration":"NONE","hyperparameter_search":"NONE"},
+  "literature_rationale": [
+    {"citation":"Christie-David, Chaudhry & Koch (2000), Journal of Economics and Business 52(5):405-421","doi":"10.1016/S0148-6195(00)00029-1","finding_used":"gold responds to macroeconomic news including CPI, unemployment, GDP and PPI"},
+    {"citation":"Awartani, Hussain & Virk (2024), International Review of Financial Analysis","doi":"10.1016/j.irfa.2024.103486","finding_used":"gold returns and volatility react asymmetrically to monetary-policy shocks"},
+    {"citation":"Mensi et al. (2023), International Review of Economics & Finance 83:219-232","finding_used":"precious metals and financial markets exhibit connectedness and spillovers"}
+  ],
+  "forbidden": ["2025-driven feature selection","2025-driven hyperparameter selection","challenge refit","post-score threshold optimization","silent source substitution","calling this reconstruction the recovered original MACRO_CROSS_RIDGE"]
+}
