@@ -1,6 +1,6 @@
 block_no,month,status,valid_exact_bar,provider_no_bar,unresolved,audit
 1,2021-09,PASS,17,13,0,PASS
-2,2021-10,PENDING,,,,
+2,2021-10,RUNNING,,,,
 3,2021-11,PENDING,,,,
 4,2021-12,PENDING,,,,
 5,2022-01,PENDING,,,,
