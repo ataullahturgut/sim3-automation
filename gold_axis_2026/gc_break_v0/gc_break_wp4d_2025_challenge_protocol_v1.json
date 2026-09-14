@@ -55,7 +55,9 @@
     "same_origin_break_open": "exclude from predictive conversion scoring",
     "BREAK_terminal": "first later primary k=3 break while episode remains open",
     "RECOVERY_terminal": "first governed origin where opener clears before a break",
-    "right_censored": "exclude from binary probability scoring but report"
+    "right_censored": "exclude from binary probability scoring but report",
+    "left_censored_challenge_carry_in": "if opener/FAST warning was already active before the first governed 2025 origin, do not credit or probability-score that carry-in episode; ignore it until the relevant signal clears, then score only newly opened 2025 episodes",
+    "boundary_reason": "a warning first issued in 2024 is not a 2025 challenge-origin prediction and receives no pre-challenge lead credit"
   },
   "frozen_final_fit": {
     "fit_data": "all 35 core-eligible completed predictive formation episodes only",
