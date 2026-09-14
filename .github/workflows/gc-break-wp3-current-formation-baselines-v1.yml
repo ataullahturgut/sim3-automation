@@ -1,0 +1,90 @@
+name: GC-BREAK WP3 Current Formation Baselines V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - 'gold_axis_2026/tools/gc_break_wp3_formation_baselines_current_v1.py'
+      - '.github/workflows/gc-break-wp3-current-formation-baselines-v1.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: gc-break-wp3-current-formation-baselines-v1
+  cancel-in-progress: false
+
+jobs:
+  score-frozen-formation-baselines:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      WP1_RUN_ID: '34792800170'
+      WP2_RUN_ID: '34828001360'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install WP3 dependencies
+        run: pip install --quiet numpy pandas
+
+      - name: Download inspected WP1 closure evidence
+        run: |
+          mkdir -p /tmp/wp1
+          gh run download "$WP1_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name gc-break-wp1-closure-resume-v1 --dir /tmp/wp1
+
+      - name: Download inspected WP2 ground-truth evidence
+        run: |
+          mkdir -p /tmp/wp2
+          gh run download "$WP2_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name gc-break-wp2-ground-truth-v1 --dir /tmp/wp2
+
+      - name: Gate on WP1 and WP2 evidence
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path('/tmp/wp1/closure/gc_break_wp1_manifest_closure_audit_v1.json').read_text())
+          b=json.loads(Path('/tmp/wp2/gc_break_wp2_label_audit_v1.json').read_text())
+          assert a['audit_id']=='GC_BREAK_WP1_MANIFEST_CLOSURE_AUDIT_V1'
+          assert a['status']=='PASS' and int(a['unresolved_rows'])==0
+          assert b['audit_id']=='GC_BREAK_WP2_LABEL_AUDIT_V1'
+          assert b['status'] in {'PASS','PASS_WITH_DATA_DENSITY_WARNING'}
+          assert b['engine_independence_test']['passed'] is True
+          assert float(b['primary_contract']['k_sigma'])==3.0
+          assert int(b['primary_events']['count'])==21
+          print('WP1_WP2_GATE_PASS')
+          PY
+
+      - name: Compile current WP3 runner
+        run: python -m py_compile gold_axis_2026/tools/gc_break_wp3_formation_baselines_current_v1.py
+
+      - name: Score frozen formation baselines without challenge or stress access
+        run: |
+          mkdir -p /tmp/wp3
+          python gold_axis_2026/tools/gc_break_wp3_formation_baselines_current_v1.py \
+            --panel /tmp/wp1/event/gc_break_wp1_formation_panel_with_event_context.csv \
+            --wp1-closure-audit /tmp/wp1/closure/gc_break_wp1_manifest_closure_audit_v1.json \
+            --wp2-origin-labels /tmp/wp2/gc_break_wp2_origin_labels_k3_v1.csv \
+            --wp2-events /tmp/wp2/gc_break_wp2_break_events_k3_v1.csv \
+            --wp2-audit /tmp/wp2/gc_break_wp2_label_audit_v1.json \
+            --output-dir /tmp/wp3 | tee /tmp/wp3_run.log
+          grep -q 'EVIDENCE_GENERATED_NOT_YET_CLOSED' /tmp/wp3_run.log
+
+      - name: Upload WP3 evidence for inspection
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp3-current-formation-baselines-v1
+          path: /tmp/wp3/
+          if-no-files-found: error
+          retention-days: 90
