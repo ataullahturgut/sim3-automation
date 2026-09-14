@@ -1,0 +1,90 @@
+name: GC-BREAK WP1 Neon Persist After Closure V1
+
+on:
+  workflow_run:
+    workflows: ["GC-BREAK WP1 Closure Resume V1"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: gc-break-wp1-neon-persist-after-closure-v1
+  cancel-in-progress: false
+
+jobs:
+  persist-audited-canonical-ny17:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install audited persistence dependencies
+        run: |
+          pip install --quiet -r gold_axis_2026/data_pipeline/requirements.txt
+          pip install --quiet numpy pandas 'psycopg[binary]'
+
+      - name: Require Neon credential
+        run: test -n "$NEON_DATABASE_URL"
+
+      - name: Download exact source run artifact
+        run: |
+          mkdir -p /tmp/wp1_source
+          gh run download "$SOURCE_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name gc-break-wp1-closure-resume-v1 --dir /tmp/wp1_source
+
+      - name: Gate on inspected WP1 closure PASS
+        id: gate
+        shell: bash
+        run: |
+          AUDIT=/tmp/wp1_source/closure/gc_break_wp1_manifest_closure_audit_v1.json
+          EXACT=/tmp/wp1_source/wp1_exact/gc_break_wp1_exact_ny17_consolidated_batch_v3.csv
+          if [ ! -f "$AUDIT" ] || [ ! -f "$EXACT" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "WP1_NOT_READY_NO_DATABASE_WRITE"
+            exit 0
+          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('/tmp/wp1_source/closure/gc_break_wp1_manifest_closure_audit_v1.json')
+          d=json.loads(p.read_text())
+          assert d.get('audit_id') == 'GC_BREAK_WP1_MANIFEST_CLOSURE_AUDIT_V1'
+          assert d.get('status') == 'PASS'
+          assert int(d.get('unresolved_rows', -1)) == 0
+          print(json.dumps(d, indent=2, sort_keys=True))
+          PY
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+
+      - name: Compile audited Neon writer
+        if: steps.gate.outputs.ready == 'true'
+        run: python -m py_compile gold_axis_2026/tools/gc_break_wp1_persist_exact_ny17_to_neon_v1.py
+
+      - name: Preflight audited historical exact NY17 bundle
+        if: steps.gate.outputs.ready == 'true'
+        run: |
+          python gold_axis_2026/tools/gc_break_wp1_persist_exact_ny17_to_neon_v1.py \
+            --exact-csv /tmp/wp1_source/wp1_exact/gc_break_wp1_exact_ny17_consolidated_batch_v3.csv \
+            --closure-audit /tmp/wp1_source/closure/gc_break_wp1_manifest_closure_audit_v1.json
+
+      - name: Persist audited canonical NY17 to Neon and verify
+        if: steps.gate.outputs.ready == 'true'
+        run: |
+          python gold_axis_2026/tools/gc_break_wp1_persist_exact_ny17_to_neon_v1.py \
+            --exact-csv /tmp/wp1_source/wp1_exact/gc_break_wp1_exact_ny17_consolidated_batch_v3.csv \
+            --closure-audit /tmp/wp1_source/closure/gc_break_wp1_manifest_closure_audit_v1.json \
+            --persist | tee /tmp/wp1_neon_persist.log
+          grep -q 'GC_BREAK_WP1_EXACT_NY17_NEON_PERSIST_SUCCESS' /tmp/wp1_neon_persist.log
