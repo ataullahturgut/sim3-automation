@@ -1,0 +1,70 @@
+name: GC-BREAK One Day XAU Test
+
+on:
+  push:
+    paths:
+      - '.github/workflows/gc-break-one-day-xau-test.yml'
+
+permissions:
+  contents: read
+
+env:
+  TEST_DATE: '2022-01-03'
+
+jobs:
+  one-day-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - name: Checkout WP1 branch
+        uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install minimal dependencies
+        run: pip install pandas
+
+      - name: Require Twelve Data key
+        run: test -n "$TWELVE_DATA_API_KEY"
+
+      - name: Build one-day unresolved seed
+        run: |
+          mkdir -p one_day_out
+          printf 'trade_date,acquisition_status\n%s,NOT_ATTEMPTED\n' "$TEST_DATE" > one_day_seed.csv
+
+      - name: Fetch one exact NY17 day
+        run: |
+          python gold_axis_2026/gc_break_v0/gc_break_wp1_resume_exact_ny17_batch_v3.py \
+            --probe-csv one_day_seed.csv \
+            --output-dir one_day_out \
+            --window-days 1 \
+            --pacing-seconds 0 \
+            --backoff-seconds 5 \
+            --max-minute-rate-limit-retries 1 \
+            --max-unknown-rate-limit-retries 0 \
+            --max-transient-retries 1 \
+            --checkpoint-every-windows 1
+
+      - name: Show one-day result
+        if: always()
+        run: |
+          echo '=== SUMMARY ==='
+          test -f one_day_out/gc_break_wp1_exact_ny17_batch_resume_v3_summary.json && cat one_day_out/gc_break_wp1_exact_ny17_batch_resume_v3_summary.json || true
+          echo '=== ROW ==='
+          test -f one_day_out/gc_break_wp1_exact_ny17_consolidated_batch_v3.csv && cat one_day_out/gc_break_wp1_exact_ny17_consolidated_batch_v3.csv || true
+
+      - name: Upload one-day evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-one-day-xau-test-2022-01-03
+          path: one_day_out/
+          if-no-files-found: warn
