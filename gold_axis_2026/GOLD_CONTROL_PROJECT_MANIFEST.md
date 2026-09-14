@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.51  
+**Manifest version:** 1.52  
 **Issue date:** 2026-09-14  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -366,8 +366,8 @@ The binding order is:
 4. **WP2 — independent break-event inventory — COMPLETE WITH DATA-DENSITY WARNING**
 5. **Split Freeze — COMPLETE / PRE-SCORE FROZEN**
 6. **WP3 — preregistered formation baselines — COMPLETE WITH LIMITATIONS / WP4 ENTRY SUPPORTED**
-7. **WP4 — main role-preserving sequential model — READY TO START / SIMPLE LOW-DIMENSIONAL FAMILY FIRST**
-8. **Ablation / extensions — PENDING WP4**
+7. **WP4 — main role-preserving sequential model — PHASE A LEARNED-HAZARD FAMILY REJECTED / RESEARCH REDIRECTION REQUIRED**
+8. **Ablation / extensions — BLOCKED PENDING ACCEPTED WP4 CORE**
 9. **Architecture/parameter freeze — PENDING**
 10. **Prospective shadow — PENDING FINAL FREEZE**
 
@@ -401,6 +401,22 @@ Binding WP4 entry implications from the inspected WP3 evidence:
 - On the 213 Emergency-eligible origins containing 13 breaks, adding `EMERGENCY_REVERSAL` to FAST via `CORE_WEAKENING_NATIVE` produced no detected-break or recall gain and increased false-warning burden. Emergency therefore remains selective confirmation/context at WP4 entry, not an automatically promoted early-warning OR trigger.
 - `PATH_HALF` remains anatomy-only because it shares the event-label price path. BOCPD remains slow regime context and is not promoted as a daily direction/break trigger.
 - Optional or short-history blocks remain subject to the same-origin comparison rule; the full-window Core score may not be compared directly with a shorter optional-block score.
+
+### WP4 Phase A evidence-backed closure — 2026-09-14
+
+The first learned WP4 family was preregistered before scoring as `GC_BREAK_WP4_HAZARD_PREREG_V1` and executed only on the 2022-2024 formation window. Run `34830376294` completed successfully and the independent closure review run `34831293583` completed successfully.
+
+Binding interpretation of the frozen Phase A evidence:
+
+- Common prequential evaluation support was 241 governed origins containing 15 break events.
+- `M1_FAST_DURATION_RIDGE` improved log loss versus the empirical-hazard null but did not improve Brier score.
+- `M2_ROLE_CORE_RIDGE` also improved log loss but did not improve Brier score.
+- The preregistered primary gate required improvement in both Brier score and log loss; therefore the family closes as `REJECT_LEARNED_HAZARD`.
+- `M3_PATH_AUGMENTED_SENSITIVITY` improved both primary probability scores, but it uses `adverse_fraction` derived from the same price path as the frozen event label. It remains sensitivity/anatomy evidence and cannot rescue or promote the learned-hazard family.
+- Phase-B probability thresholds / `WEAKENING` / `BREAK_ALERT` mappings are **not authorized** from this family.
+- High-capacity escalation, hyperparameter search and post-score tuning of M1/M2/M3 are **not authorized**.
+- The 2025 challenge remains locked and 2026 Jan-Aug remains nonselection retrospective stress.
+- Any next WP4 architecture must be a separately named, preregistered, simple role-preserving challenger before scoring.
 
 ---
 
@@ -467,7 +483,7 @@ Standalone direction accuracy is not the primary metric for GC-BREAK.
 
 ## 14. WP4 model-development rule
 
-WP4 may begin only after WP1, WP2 and WP3 provide adequate support. **As of manifest v1.51 this entry gate is satisfied only for the simple low-dimensional, role-preserving first challenger described below; it is not authorization for high-capacity modeling or production promotion.**
+WP4 may begin only after WP1, WP2 and WP3 provide adequate support. The first preregistered low-dimensional discrete-time hazard family has now been executed and rejected under its frozen Phase A gate. WP4 therefore remains open only as a research-redirection problem: any replacement architecture must be separately named and preregistered before scoring, remain simple and role-preserving, and may not be tuned from the rejected M1/M2/M3 scores.
 
 The preferred first learned family is a **simple role-preserving sequential state-transition / hazard model**, conceptually of the form:
 
@@ -603,7 +619,7 @@ The strongest future claim comes only from outcomes first observed after the fin
 
 ## 21. Supersession and historical terminology
 
-Manifest v1.51 carries forward all v1.50 architecture, evidence and governance locks, and updates only the evidence-backed WP1/WP2/WP3 closure status plus the constrained WP4 entry gate.
+Manifest v1.52 carries forward all v1.51 architecture, evidence and governance locks, and additionally records the evidence-backed rejection and closure of the first WP4 learned-hazard Phase A family.
 
 Manifest v1.50 supersedes the current-authority portions of v1.49 that defined the short-term programme as fixed `NEXT_NY17_1D` / `NEXT_NY17_3D` forecasting or treated those horizons as the primary current research objective.
 
