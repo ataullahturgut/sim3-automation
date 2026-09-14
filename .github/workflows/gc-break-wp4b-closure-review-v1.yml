@@ -1,0 +1,53 @@
+name: GC-BREAK WP4B Closure Review V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - 'gold_axis_2026/tools/gc_break_wp4b_closure_review_v1.py'
+      - '.github/workflows/gc-break-wp4b-closure-review-v1.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: gc-break-wp4b-closure-review-v1
+  cancel-in-progress: false
+
+jobs:
+  close-wp4b:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      WP4B_RUN_ID: '34833180741'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download frozen WP4B evidence
+        run: |
+          mkdir -p /tmp/wp4b_source
+          gh run download "$WP4B_RUN_ID" --repo "$GITHUB_REPOSITORY" --name gc-break-wp4b-authority-guided-state-machine-v1 --dir /tmp/wp4b_source
+      - name: Compile closure review
+        run: python -m py_compile gold_axis_2026/tools/gc_break_wp4b_closure_review_v1.py
+      - name: Apply frozen closure
+        run: |
+          mkdir -p /tmp/wp4b_closure
+          python gold_axis_2026/tools/gc_break_wp4b_closure_review_v1.py \
+            --summary /tmp/wp4b_source/gc_break_wp4b_authority_guided_state_machine_v1_summary.json \
+            --output-dir /tmp/wp4b_closure | tee /tmp/wp4b_closure/run.log
+          grep -q 'WP4B_REJECTED_NO_INCREMENTAL_VALUE' /tmp/wp4b_closure/run.log
+      - name: Upload closure evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp4b-closure-review-v1
+          path: /tmp/wp4b_closure/
+          if-no-files-found: error
+          retention-days: 90
