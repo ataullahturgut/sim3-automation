@@ -1,0 +1,71 @@
+name: Gold Control Manifest v1.51 WP1-WP3 Closure
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - '.github/workflows/gold-control-manifest-v151-wp1-wp3-closure.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-manifest-v151-wp1-wp3-closure
+  cancel-in-progress: false
+
+jobs:
+  update-canonical-manifest:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+
+      - name: Apply guarded v1.51 manifest change control
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md')
+          s=p.read_text(encoding='utf-8')
+          assert s.count('**Manifest version:** 1.50') == 1
+          assert s.count('**Issue date:** 2026-09-13') == 1
+          s=s.replace('**Manifest version:** 1.50', '**Manifest version:** 1.51', 1)
+          s=s.replace('**Issue date:** 2026-09-13', '**Issue date:** 2026-09-14', 1)
+
+          old='''1. **Coverage / PIT audit — COMPLETE**\n2. **WP0 — State / break-label contract — COMPLETE / FROZEN**\n3. **WP1 — PIT-safe formation panel — IN PROGRESS**\n4. **WP2 — independent break-event inventory — PENDING WP1**\n5. **Split Freeze — COMPLETE / PRE-SCORE FROZEN**\n6. **WP3 — preregistered formation baselines — PENDING WP2**\n7. **WP4 — main role-preserving sequential model — PENDING WP3**\n8. **Ablation / extensions — PENDING WP4**\n9. **Architecture/parameter freeze — PENDING**\n10. **Prospective shadow — PENDING FINAL FREEZE**'''
+          new='''1. **Coverage / PIT audit — COMPLETE**\n2. **WP0 — State / break-label contract — COMPLETE / FROZEN**\n3. **WP1 — PIT-safe formation panel — COMPLETE / CLOSURE PASS / CANONICAL PERSISTENCE VERIFIED**\n4. **WP2 — independent break-event inventory — COMPLETE WITH DATA-DENSITY WARNING**\n5. **Split Freeze — COMPLETE / PRE-SCORE FROZEN**\n6. **WP3 — preregistered formation baselines — COMPLETE WITH LIMITATIONS / WP4 ENTRY SUPPORTED**\n7. **WP4 — main role-preserving sequential model — READY TO START / SIMPLE LOW-DIMENSIONAL FAMILY FIRST**\n8. **Ablation / extensions — PENDING WP4**\n9. **Architecture/parameter freeze — PENDING**\n10. **Prospective shadow — PENDING FINAL FREEZE**'''
+          assert s.count(old) == 1
+          s=s.replace(old,new,1)
+
+          anchor='No later WP may be claimed complete merely because its code exists.\n'
+          assert s.count(anchor) == 1
+          insert='''No later WP may be claimed complete merely because its code exists.\n\n### Evidence-backed closure update — 2026-09-14\n\nThe following work-package status changes are supported by executed and inspected evidence, not code existence alone:\n\n- **WP1:** closure run `34792800170` completed successfully; exact-NY17 canonical persistence/verification run `34822912320` completed successfully. The formation panel contains 351 governed origins for 2022-2024 and retains explicit missingness rather than interpolation/forward-fill.\n- **WP2:** ground-truth run `34828001360` completed successfully under the frozen engine-independent `k=3.0` event contract. The formation inventory contains 21 primary break events. The inherited sparse-calendar/data-density warning remains binding.\n- **WP3:** preregistered formation baseline run `34829522473` and manifest closure review run `34829777783` completed successfully. WP3 closes as `COMPLETE_WITH_LIMITATIONS_READY_FOR_WP4`.\n\nBinding WP4 entry implications from the inspected WP3 evidence:\n\n- 21 formation break events justify only a **simple low-dimensional, time-ordered** first learned challenger; they do not justify high-capacity model search or broad interaction mining.\n- FAST has usable tactical weakening signal but retains a recall/lead-time trade-off; it is not a standalone authority.\n- SLOW's confirmation role is supported: 17/21 formation breaks were confirmed before the next break, with median delay 3 governed origins / 9 calendar days.\n- On the 213 Emergency-eligible origins containing 13 breaks, adding `EMERGENCY_REVERSAL` to FAST via `CORE_WEAKENING_NATIVE` produced no detected-break or recall gain and increased false-warning burden. Emergency therefore remains selective confirmation/context at WP4 entry, not an automatically promoted early-warning OR trigger.\n- `PATH_HALF` remains anatomy-only because it shares the event-label price path. BOCPD remains slow regime context and is not promoted as a daily direction/break trigger.\n- Optional or short-history blocks remain subject to the same-origin comparison rule; the full-window Core score may not be compared directly with a shorter optional-block score.\n'''
+          s=s.replace(anchor,insert,1)
+
+          old_wp4='WP4 may begin only after WP1, WP2 and WP3 provide adequate support.\n'
+          new_wp4='WP4 may begin only after WP1, WP2 and WP3 provide adequate support. **As of manifest v1.51 this entry gate is satisfied only for the simple low-dimensional, role-preserving first challenger described below; it is not authorization for high-capacity modeling or production promotion.**\n'
+          assert s.count(old_wp4) == 1
+          s=s.replace(old_wp4,new_wp4,1)
+
+          anchor21='Manifest v1.50 supersedes the current-authority portions of v1.49 that defined the short-term programme as fixed `NEXT_NY17_1D` / `NEXT_NY17_3D` forecasting or treated those horizons as the primary current research objective.\n'
+          assert s.count(anchor21) == 1
+          repl21='Manifest v1.51 carries forward all v1.50 architecture, evidence and governance locks, and updates only the evidence-backed WP1/WP2/WP3 closure status plus the constrained WP4 entry gate.\n\n'+anchor21
+          s=s.replace(anchor21,repl21,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+
+      - name: Verify no second manifest was created
+        run: |
+          test "$(find gold_axis_2026 -maxdepth 1 -name 'GOLD_CONTROL_PROJECT_MANIFEST.md' | wc -l)" -eq 1
+          grep -q 'Manifest version:.*1.51' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'WP4 — main role-preserving sequential model — READY TO START' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+
+      - name: Commit and push canonical manifest
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          git commit -m 'Gold Control v1.51: close WP1-WP3 evidence gates and open constrained WP4'
+          git push origin HEAD:gold-r4-direction-engine
