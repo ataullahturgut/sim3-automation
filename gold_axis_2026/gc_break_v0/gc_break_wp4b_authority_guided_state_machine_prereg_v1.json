@@ -1,0 +1,161 @@
+{
+  "contract_id": "GC_BREAK_WP4B_AUTHORITY_GUIDED_STATE_MACHINE_PREREG_V1",
+  "status": "FROZEN_BEFORE_FORMATION_SCORING",
+  "created_date": "2026-09-14",
+  "manifest_min_version": "1.52",
+  "production_authority": false,
+  "prospective_claim": false,
+  "purpose": "authority-guided research redirection after rejection of the global next-origin learned hazard: test a simple role-preserving sequential multi-state detector with explicit recovery and a classical one-sided CUSUM structural monitor",
+  "upper_problem_definition": "online health-state monitoring with sparse structural-break events, heterogeneous multi-clock evidence, nuisance-alarm control, recovery from aborted warnings, and transition-specific roles rather than homogeneous next-horizon voting",
+  "authority_basis": [
+    {
+      "reference": "Putter, Fiocco and Geskus (2007), Tutorial in biostatistics: competing risks and multi-state models",
+      "doi": "10.1002/sim.2712",
+      "use": "intermediate states and transition-specific modeling rather than one global binary outcome"
+    },
+    {
+      "reference": "Jackson (2011), Multi-State Models for Panel Data: The msm Package for R",
+      "doi": "10.18637/jss.v038.i08",
+      "use": "multi-state transition structure with time-varying covariates"
+    },
+    {
+      "reference": "Yu (2010), Hidden semi-Markov models",
+      "doi": "10.1016/j.artint.2009.11.011",
+      "use": "explicit state-duration concept; in this V1 duration is tracked but not statistically fitted because event support is sparse"
+    },
+    {
+      "reference": "Page (1954), Continuous Inspection Schemes",
+      "doi": "10.1093/biomet/41.1-2.100",
+      "use": "classical cumulative-sum sequential change detection"
+    },
+    {
+      "reference": "Xie, Zou, Xie and Veeravalli (2021), Sequential (Quickest) Change Detection: Classical Results and New Directions",
+      "doi": "10.1109/JSAIT.2021.3072962",
+      "use": "online change detection framing and delay-versus-false-alarm trade-off"
+    },
+    {
+      "reference": "NIST/SEMATECH e-Handbook, CUSUM Control Charts",
+      "use": "tabular CUSUM design guidance: k approximately half a 1-sigma target shift and h around 4 or 5; V1 freezes k=0.5 and h=5 primary, h=4 sensitivity-only before scoring"
+    },
+    {
+      "reference": "ISA-18.2 alarm-management guidance as summarized by ISA InTech",
+      "use": "avoid nuisance/chattering alarms through explicit alarm logic; V1 adds no new tuned persistence because FAST already has frozen two-observation persistence and the state machine has explicit recovery/de-escalation"
+    },
+    {
+      "reference": "Riley et al. (2019), Minimum sample size for developing a multivariable prediction model: Part II",
+      "doi": "10.1002/sim.7992",
+      "use": "sparse event support argues against high-dimensional fitted probability models after the 15-event Phase-A evaluation window"
+    }
+  ],
+  "formation_window": ["2022-01-01", "2024-12-31"],
+  "required_support": {
+    "governed_origins": 351,
+    "primary_break_events": 21,
+    "wp2_event_contract": "GC_BREAK_EVENT_CONTRACT_V1",
+    "wp3_reference_run": 34829522473,
+    "wp4a_rejected_run": 34830376294,
+    "wp4a_closure_run": 34831293583
+  },
+  "primary_model": {
+    "id": "WP4B_RP_CUSUM_FSM_H5",
+    "type": "deterministic role-preserving sequential finite-state detector with causal one-sided adverse CUSUM",
+    "states": ["STABLE", "WEAKENING", "BREAK_ALERT", "CONFIRMED_BREAK", "NEW_REGIME"],
+    "recovery_transitions": ["WEAKENING_TO_STABLE", "BREAK_ALERT_TO_WEAKENING", "BREAK_ALERT_TO_STABLE", "NEW_REGIME_TO_STABLE"],
+    "inputs": {
+      "FAST": "tactical weakening/alert evidence on its frozen daily rule",
+      "SLOW": "confirmation/new-regime evidence on its frozen completed-week rule",
+      "XAU_CLOSE": "canonical NY17 close only",
+      "LAGGED_SIGMA20": "lagged 20-governed-observation return volatility from the frozen event contract, used only to standardize current return for CUSUM; adverse_fraction and threshold progress are forbidden as predictors",
+      "CURRENT_REGIME": "causally maintained regime direction after confirmed breaks"
+    },
+    "excluded_primary_inputs": {
+      "EMERGENCY_REVERSAL": "WP3 same-origin review found no incremental early-warning detection/recall gain over FAST and higher false-warning burden",
+      "BOCPD_RETURN_SUCCESSOR_V1": "native completed-month regime context; not a daily trigger",
+      "MONTHLY_H1_AND_MONTHLY_DIRECTION": "strategic context only, independent of short-term trigger",
+      "GVZ_MACRO_MARKET_SHOCK_EXPERT_CHANNELS": "optional/partial blocks deferred until an accepted WP4 core exists",
+      "ADVERSE_FRACTION": "direct anatomy/progress measure derived from the same price path as the event label; forbidden from primary predictive evidence"
+    }
+  },
+  "cusum_rule": {
+    "return": "r_t = log(close_t / close_{t-1})",
+    "standardized_return": "z_t = r_t / lagged_sigma20_t",
+    "adverse_evidence": "a_t = -z_t in current UP regime; a_t = z_t in current DOWN regime",
+    "recursion": "G_t = max(0, G_{t-1} + a_t - 0.5)",
+    "reference_allowance_k": 0.5,
+    "primary_decision_limit_h": 5.0,
+    "sensitivity_decision_limit_h": 4.0,
+    "sensitivity_promotion_permitted": false,
+    "reset": "G_t resets to 0 on a confirmed frozen WP2 break; favorable evidence naturally drives the one-sided statistic toward zero",
+    "calendar_day_claim": false
+  },
+  "transition_rules_primary_h5": {
+    "global_priority": "if the frozen current-origin break condition is met, emit CONFIRMED_BREAK immediately, update current regime to the event new regime, reset CUSUM, and count any missing pre-break warning honestly",
+    "STABLE": {
+      "to_WEAKENING": "FAST conflicts with the current regime OR adverse CUSUM G_t >= 5",
+      "else": "STABLE"
+    },
+    "WEAKENING": {
+      "to_BREAK_ALERT": "FAST is robustly opposite the current regime OR (FAST conflicts with current regime AND adverse CUSUM G_t >= 5)",
+      "to_STABLE": "FAST robustly supports the current regime AND adverse CUSUM G_t < 5",
+      "else": "WEAKENING"
+    },
+    "BREAK_ALERT": {
+      "to_STABLE": "FAST robustly supports current regime AND adverse CUSUM G_t < 5",
+      "to_WEAKENING": "strong alert condition no longer holds but at least one weakening condition remains",
+      "else": "BREAK_ALERT"
+    },
+    "CONFIRMED_BREAK": {
+      "to_NEW_REGIME": "SLOW robustly supports the new current regime on its completed-week clock",
+      "else": "CONFIRMED_BREAK"
+    },
+    "NEW_REGIME": {
+      "to_STABLE": "FAST and SLOW both robustly support the current new regime",
+      "else": "NEW_REGIME"
+    }
+  },
+  "ablation_and_sensitivity": {
+    "WP4B_ROLE_FSM_NO_CUSUM": "same state machine but CUSUM conditions disabled; scored as a preregistered structural ablation, not selected after results",
+    "WP4B_RP_CUSUM_FSM_H4_SENSITIVITY": "identical to primary but h=4; sensitivity-only and cannot replace h=5 based on formation results"
+  },
+  "primary_event_metrics": [
+    "prebreak_WEAKENING_event_recall",
+    "false_WEAKENING_episodes_per_100_origins",
+    "median_first_WEAKENING_lead_observations",
+    "median_first_WEAKENING_lead_calendar_days",
+    "WEAKENING_episode_conversion_rate",
+    "prebreak_BREAK_ALERT_event_recall",
+    "false_BREAK_ALERT_episodes_per_100_origins",
+    "median_first_BREAK_ALERT_lead_observations",
+    "recovery_episode_count",
+    "recovery_rate_before_break",
+    "confirmation_rate_before_next_break",
+    "median_confirmation_delay_observations",
+    "time_fraction_in_warning_states",
+    "spurious_state_flip_count"
+  ],
+  "formation_interpretation_rule": {
+    "primary_comparator": "WP3 FAST_CONFLICT baseline",
+    "reference_fast_conflict_prebreak_recall": 0.3333333333333333,
+    "reference_fast_conflict_false_episodes_per_100": 2.5641025641025643,
+    "reference_fast_conflict_median_lead_observations": 0.0,
+    "anatomy_false_alarm_ceiling_reference": "WP3 PATH_HALF false episodes per 100 origins = 5.698005698005698; this is an operational burden ceiling only, not predictive evidence",
+    "positive_signal": "primary h=5 candidate must have prebreak WEAKENING recall >= FAST_CONFLICT, median WEAKENING lead observations >= FAST_CONFLICT, false WEAKENING episodes per 100 <= 5.698005698005698, and must strictly improve at least one of recall or median lead; this is formation research support only, not promotion",
+    "stronger_signal": "if recall >= 0.50, median lead >= 1 governed origin and false warning burden stays <= 5.698005698005698, label FORMATION_STRONGER_SIGNAL",
+    "negative_signal": "if the primary h=5 candidate fails the positive_signal rule, close WP4B primary as NO_INCREMENTAL_VALUE; h=4 sensitivity cannot rescue it",
+    "challenge_gate": "2025 remains locked until formation results are inspected and a separate manifest-authorized challenge step is created"
+  },
+  "governance": {
+    "no_random_split": true,
+    "no_post_score_tuning": true,
+    "no_threshold_search": true,
+    "no_hyperparameter_search": true,
+    "no_equal_weight_motor_vote": true,
+    "no_2025_challenge_access": true,
+    "no_2026_stress_access": true,
+    "no_database_writes": true,
+    "no_position_mapping": true,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF",
+    "retain_wp2_data_density_warning": true
+  }
+}
