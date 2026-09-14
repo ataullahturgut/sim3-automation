@@ -1,0 +1,119 @@
+{
+  "protocol_id": "GC_BREAK_WP4D_2025_CHALLENGE_PROTOCOL_V1",
+  "status": "FROZEN_BEFORE_2025_CHALLENGE_SCORING",
+  "created_date": "2026-09-14",
+  "manifest_min_version": "1.53",
+  "architecture_contract": "GC_BREAK_WP4D_INTEGRATED_ROLE_TRANSITION_PREREG_V1",
+  "formation_evidence": {
+    "workflow_run_id": 34838395381,
+    "artifact_name": "gc-break-wp4d-integrated-role-transition-formation-v1",
+    "artifact_id": 10345156373,
+    "artifact_digest": "sha256:a0a6a4fcd851e323a4cfa3ebbe0c6c6a2cae0ded3c75585895ef1e596ac78ef3",
+    "formation_status": "FORMATION_SUPPORT_CHALLENGE_REQUIRED",
+    "core_terminal_episodes": 35,
+    "core_break_conversions": 13,
+    "core_recoveries": 22,
+    "primary_prequential_common_scored_episodes": 26
+  },
+  "frozen_formation_decision": {
+    "primary_probability_model": "M2_INTEGRATED_ROLE_CORE_RIDGE",
+    "M2_vs_M0": "passed both Brier and log loss gate",
+    "M2_vs_M1": "passed no-worse-both plus strict-improvement-at-least-one gate",
+    "E1_MONTHLY_H1_STRATEGIC_CONTEXT": "NOT_SUPPORTED_AS_INCREMENTAL_MODIFIER; retain as strategic context only, exclude from challenge conversion probability",
+    "E2_EMERGENCY_CONTEXT": "NOT_SUPPORTED_AS_INCREMENTAL_MODIFIER; retain selective context/confirmation role only, exclude from challenge conversion probability",
+    "E3_GVZ_RISK": "NOT_TESTABLE_FORMATION_PIT_NOT_PROVEN; no imputation and no core-window shortening",
+    "SLOW": "retain post-break confirmation/new-regime role; do not force into early conversion probability"
+  },
+  "challenge_window": ["2025-01-01", "2025-12-31"],
+  "challenge_input": {
+    "workflow_run_id": 34834056691,
+    "artifact_name": "gc-break-wp4c-2025-exact-ny17-challenge-input-v1",
+    "artifact_id": 10343971259,
+    "artifact_digest": "sha256:be07cec1a4f904ae9c1123192ac49822353051ea0c9c20862e8ace7d873dfcf5",
+    "rows": 365,
+    "valid_exact_bar": 204,
+    "provider_no_bar": 161,
+    "unresolved": 0,
+    "source_semantic": "Twelve Data XAU/USD 1min exact 16:59 America/New_York; no fallback/interpolation",
+    "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION"
+  },
+  "challenge_panel_rules": {
+    "xau_history": "concatenate canonical exact 2021-09..2024-12 prehistory/formation with frozen exact 2025 challenge rows; only VALID_EXACT_BAR observations become governed origins",
+    "event_label": "recompute the frozen engine-independent k=3.0 directional-change label continuously from prehistory through 2025; no reset at Jan 1",
+    "FAST": "recompute from exact governed history using frozen R4 implementation",
+    "SLOW": "recompute from completed W-FRI history using frozen R4 implementation",
+    "MONTHLY_DIRECTION_3M": "recompute from prior completed monthly levels only using frozen R4 implementation",
+    "BOCPD_RETURN_SUCCESSOR_V1": "map only the prior completed-month native BOCPD state from the frozen successor implementation; no daily replacement",
+    "MACRO_EVENT_SUCCESSOR_V2": "read only frozen Macro Event V3 score-series evidence for 2025 and map strong release context to the first governed origin on/after release date under the already frozen event-context mapping; no weak/neutral trigger and no Market Shock requirement for the WP4D probability model",
+    "H1_EXPERTS": "available strategic context may be recorded but cannot enter M2 challenge probability because E1 failed formation incremental gate",
+    "EMERGENCY": "may be recorded but cannot enter M2 challenge probability because E2 failed formation incremental gate",
+    "GVZ_RISK": "NOT_TESTABLE for this frozen model unless already PIT-proven under the formation contract; no new 2025-only promotion"
+  },
+  "episode_definition": {
+    "opener": "PATH_HALF OR FAST_CONFLICT",
+    "PATH_HALF_role": "structural health/anatomy monitoring only; not a probability feature",
+    "same_origin_break_open": "exclude from predictive conversion scoring",
+    "BREAK_terminal": "first later primary k=3 break while episode remains open",
+    "RECOVERY_terminal": "first governed origin where opener clears before a break",
+    "right_censored": "exclude from binary probability scoring but report"
+  },
+  "frozen_final_fit": {
+    "fit_data": "all 35 core-eligible completed predictive formation episodes only",
+    "M0": "Jeffreys-smoothed empirical conversion prior (breaks+0.5)/(episodes+1)",
+    "M1_features": ["log1p_regime_sojourn_age", "fast_opposite_at_episode_start"],
+    "M2_features": [
+      "log1p_regime_sojourn_age",
+      "fast_opposite_at_episode_start",
+      "monthly_direction_conflict_at_episode_start",
+      "bocpd_downside_adverse_context_at_episode_start",
+      "macro_break_pressure_at_episode_start"
+    ],
+    "estimator": "L2 logistic regression",
+    "C": 0.25,
+    "solver": "liblinear",
+    "class_weight": null,
+    "standardization": "formation-only mean/scale frozen before challenge",
+    "challenge_refit": false,
+    "hyperparameter_search": false,
+    "threshold_search": false
+  },
+  "challenge_support_gate": {
+    "minimum_terminal_predictive_episodes": 6,
+    "minimum_break_conversions": 2,
+    "minimum_recoveries": 2,
+    "failure_status": "CHALLENGE_INSUFFICIENT_SUPPORT"
+  },
+  "probability_gate": {
+    "M2_vs_M0": "M2 must strictly improve both Brier score and log loss versus frozen M0 on the exact same challenge episodes",
+    "M2_vs_M1": "M2 must be no worse than frozen M1 on both Brier score and log loss and strictly improve at least one",
+    "AUC_AP": "descriptive only and cannot rescue a proper-score failure"
+  },
+  "monitoring_gate": {
+    "baseline": "FAST_CONFLICT",
+    "dual_lane": "PATH_HALF OR FAST_CONFLICT",
+    "prebreak_recall": "dual lane >= FAST_CONFLICT",
+    "median_lead_observations": "dual lane strictly greater than FAST_CONFLICT",
+    "false_warning_episodes_per_100_max": 5.698005698005698,
+    "note": "This reuses the already frozen WP4C challenge burden ceiling and keeps PATH_HALF claim-separated as structural health."
+  },
+  "final_decision_rule": {
+    "support_gate_first": true,
+    "accept_if": "challenge support passes AND probability gate passes AND monitoring gate passes",
+    "accept_status": "ACCEPT_INTEGRATED_MONITORING_CORE_SUPPORTED",
+    "reject_status": "REJECT_CHALLENGE_TRANSPORT_FAILURE",
+    "insufficient_status": "CHALLENGE_INSUFFICIENT_SUPPORT",
+    "accepted_claim": "retrospective 2025 challenge support for an integrated monitoring core; not production authority and not prospective validation"
+  },
+  "governance": {
+    "single_challenge_score": true,
+    "no_post_challenge_tuning": true,
+    "no_2026_selection": true,
+    "no_random_split": true,
+    "no_database_writes": true,
+    "database_context_access": "READ_ONLY",
+    "no_equal_weight_voting": true,
+    "no_position_mapping": true,
+    "production_authority": false,
+    "prospective_claim": false
+  }
+}
