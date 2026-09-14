@@ -1,0 +1,72 @@
+{
+  "contract_id": "SESSION_RM_RIDGE_RECONSTRUCTION_V1_2025",
+  "status": "FROZEN_BEFORE_2025_REPLAY",
+  "research_identity": "SESSION_RM_RIDGE_RECONSTRUCTION_V1",
+  "manifest_channel_being_reconstructed": "SESSION_RM_RIDGE",
+  "identity_note": "The exact historical standalone SESSION_RM_RIDGE implementation was not recovered. This is a separately named reconstruction and must not be relabelled as the original identity.",
+  "role": "RESEARCH_ONLY_INTRADAY_SESSION_STRUCTURE_AUXILIARY_EXPERT",
+  "production_authority": false,
+  "current_gc_break_primary_target": false,
+  "auxiliary_target": "NEXT_GOVERNED_NY17_1STEP_DIRECTION",
+  "split": {
+    "development_train": "2022-01-01..2024-12-31",
+    "retrospective_challenge": "2025-01-01..2025-12-31",
+    "challenge_refit": false,
+    "challenge_hyperparameter_search": false,
+    "challenge_threshold_search": false
+  },
+  "daily_target_source": "exact Twelve Data XAU/USD 1min 16:59 America/New_York governed NY17 artifacts",
+  "intraday_feature_source": {
+    "table": "public.xau_intraday_research_cache_5m",
+    "fields": ["observation_ts", "close"],
+    "evidence_class": "RETROSPECTIVE_RESEARCH_CACHE_NOT_PROSPECTIVE",
+    "interpolation": "FORBIDDEN",
+    "forward_fill": "FORBIDDEN"
+  },
+  "literature_rationale": [
+    {
+      "citation": "Hauptfleisch, Putnins & Lucey (2016), Journal of Futures Markets 36:564-586",
+      "doi": "10.1002/fut.21775",
+      "finding_used": "gold price discovery varies intraday and between London/New York"
+    },
+    {
+      "citation": "Iwatsubo, Watkins & Xu (2018), Journal of Commodity Markets 11:59-71",
+      "doi": "10.1016/j.jcomm.2018.05.001",
+      "finding_used": "gold return volatility and informational efficiency exhibit session-specific intraday structure"
+    },
+    {
+      "citation": "Macroeconomic news and round-the-clock gold price discovery study (2021)",
+      "reference": "ScienceDirect S1057521921002209",
+      "finding_used": "sequential gold price discovery differs across Asia, Europe, New York/London and US time zones"
+    }
+  ],
+  "session_windows_america_new_york": {
+    "PRE_ASIA": "previous calendar day 17:00 <= t < 21:00",
+    "ASIA_AM": "previous calendar day 21:00 <= t < 23:30",
+    "ASIA_PM": "current calendar day 01:30 <= t < 03:30",
+    "EUROPE": "current calendar day 03:30 <= t < 08:00",
+    "NYLON": "current calendar day 08:00 <= t < 14:30",
+    "US_PRE_NY17": "current calendar day 14:30 <= t < 17:00"
+  },
+  "features_per_session": ["log_return_first_to_last", "realized_volatility_std_5m_log_returns"],
+  "minimum_bars_per_session": 6,
+  "model": {
+    "pipeline": "StandardScaler + LogisticRegression",
+    "C": 1.0,
+    "solver": "lbfgs",
+    "max_iter": 500,
+    "random_state": 20260911,
+    "probability_output": "p_up_next_governed_origin",
+    "implied_direction_rule": "UP if p>=0.5 else DOWN",
+    "calibration": "NONE",
+    "hyperparameter_search": "NONE"
+  },
+  "forbidden": [
+    "using 2025 outcomes to choose session windows",
+    "using 2025 outcomes to choose features or hyperparameters",
+    "using bars at or after the NY17 origin in same-origin features",
+    "challenge refit",
+    "post-score threshold optimization",
+    "calling this reconstruction the recovered original SESSION_RM_RIDGE"
+  ]
+}
