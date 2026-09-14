@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.53  
+**Manifest version:** 1.54  
 **Issue date:** 2026-09-14  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -366,7 +366,7 @@ The binding order is:
 4. **WP2 — independent break-event inventory — COMPLETE WITH DATA-DENSITY WARNING**
 5. **Split Freeze — COMPLETE / PRE-SCORE FROZEN**
 6. **WP3 — preregistered formation baselines — COMPLETE WITH LIMITATIONS / WP4 ENTRY SUPPORTED**
-7. **WP4 — main role-preserving sequential model — PHASE A AND AUTHORITY-GUIDED WP4B REJECTED / RESEARCH REDIRECTION CONTINUES**
+7. **WP4 — main role-preserving sequential model — WP4A, WP4B AND INTEGRATED WP4D REJECTED UNDER FROZEN GATES / NEXT CHALLENGER MUST BE SEPARATELY GOVERNED**
 8. **Ablation / extensions — BLOCKED PENDING ACCEPTED WP4 CORE**
 9. **Architecture/parameter freeze — PENDING**
 10. **Prospective shadow — PENDING FINAL FREEZE**
@@ -439,6 +439,39 @@ Binding interpretation:
 - Any use of current price-path progress (`adverse_fraction` / `PATH_HALF`) must remain explicitly labeled **structural health/anatomy monitoring**, not independent predictive evidence. A future architecture may use such a lane only if this evidentiary distinction is preserved.
 - 2025 remains locked for a later architecture-frozen challenge; 2026 Jan-Aug remains nonselection retrospective stress.
 
+### WP4D integrated role-transition closure — 2026-09-14
+
+After the WP4A and WP4B rejections, `GC_BREAK_WP4D_INTEGRATED_ROLE_TRANSITION_PREREG_V1` was separately frozen before formation scoring to test the project objective more faithfully: all 12 governed identities were explicitly accounted for under role-preserving integration, but only chronology-safe low-dimensional evidence was allowed into the episode-conditioned `BREAK` versus `RECOVERY` probability model. `PATH_HALF` remained structural-health/anatomy monitoring only and was not an independent probability feature.
+
+Formation evidence:
+
+- formation run `34838395381`: SUCCESS; 351 origins / 21 frozen breaks; 35 terminal predictive episodes, comprising 13 break conversions and 22 recoveries.
+- common prequential scoring support: 26 episodes (10 break conversions / 16 recoveries).
+- `M2_INTEGRATED_ROLE_CORE_RIDGE` passed its frozen formation gate: Brier `0.245299` and log loss `0.688204`, improving the empirical-prior null (`0.249558`, `0.692993`) and the minimal tactical-duration model (`0.254085`, `0.704500`) on the common prequential support.
+- the four Monthly H=1 experts were tested as a same-origin strategic-context modifier and **did not** improve the core on their eligible support; they therefore remain strategic context only and were excluded from challenge conversion probability.
+- Emergency Level/Reversal similarly did not add same-origin probability value and remain selective context/confirmation only.
+- `GVZ_RISK` remained `NOT_TESTABLE_FORMATION_PIT_NOT_PROVEN`; no imputation or core-window shortening was performed.
+- SLOW remained the post-break confirmation/new-regime lane.
+
+The final model was then frozen from formation only in run `34838889066` before challenge scoring. The 2025 exact-NY17 challenge was scored once in run `34839157458` using 204 governed origins and 12 primary break events, with no challenge refit, threshold search, hyperparameter search, 2026 selection or database write.
+
+Challenge evidence:
+
+- predictive support was adequate: 20 terminal episodes = 10 break conversions + 10 recoveries.
+- `M2` still improved the empirical-prior null on both proper scores: Brier `0.265320` vs `0.265625`, log loss `0.724786` vs `0.725416`.
+- however the simpler frozen `M1_TACTICAL_DURATION_RIDGE` transported better: Brier `0.258289`, log loss `0.709881`. Therefore the preregistered requirement that integrated M2 be no worse than M1 on both proper scores failed.
+- FAST_CONFLICT warned 8/12 breaks (`0.666667` recall), false burden `1.9608/100`, median lead `2` governed origins. The structural-health dual lane warned 10/12 (`0.833333` recall) and stayed under the frozen false-warning ceiling at `4.9020/100`, but its median lead was also `2` governed origins rather than strictly greater than FAST. The frozen monitoring lead gate therefore failed.
+- SLOW confirmed 7/12 challenge breaks before the next break, median delay `3` governed origins / `4` calendar days.
+- challenge status: `REJECT_CHALLENGE_TRANSPORT_FAILURE`; independent closure run `34839291404` confirmed `WP4D_REJECTED_CHALLENGE_TRANSPORT_FAILURE`.
+
+Binding interpretation:
+
+- WP4D is **rejected**, despite a genuine formation signal, because the integrated probability advantage did not transport versus the simpler tactical-duration comparator and the dual-lane monitoring lead improvement did not survive the frozen 2025 gate.
+- The result does **not** authorize deleting or flat-voting the governed engines. Monthly H1, Emergency, SLOW, BOCPD, Macro Event and GVZ retain their manifest roles; unsupported modifiers simply may not be promoted into the rejected WP4D conversion probability.
+- No post-challenge rescue tuning of WP4D is authorized. 2025 challenge outcomes may not be used to refit its feature set, coefficients, regularization or thresholds.
+- 2026 Jan-Aug remains nonselection retrospective stress and is not needed to decide WP4D.
+- A next challenger, if pursued, must be separately named and preregistered. Because the simple explicit-state/episode-conditioned families have now been tested, an HMM/HSMM-style latent-state/state-duration challenger is scientifically eligible for investigation, but is **not** pre-approved and must remain low-capacity relative to the available event support. Boosting, mixture-of-experts and deep learning remain blocked until simpler challengers justify escalation.
+
 ---
 
 ## 12. Research replayability / eligibility matrix
@@ -504,7 +537,7 @@ Standalone direction accuracy is not the primary metric for GC-BREAK.
 
 ## 14. WP4 model-development rule
 
-WP4 may begin only after WP1, WP2 and WP3 provide adequate support. The first preregistered low-dimensional discrete-time hazard family and the subsequent authority-guided deterministic FSM/CUSUM challenger have both been executed and rejected under frozen gates. WP4 therefore remains open only as a research-redirection problem. The next preferred upper-problem framing is episode-conditioned competing transitions (break conversion versus recovery) and/or an explicitly separated structural-health monitoring lane; any replacement architecture must be separately named and governed, remain simple and role-preserving, and may not be post-score tuned from rejected families.
+WP4 may begin only after WP1, WP2 and WP3 provide adequate support. The initial low-dimensional next-origin hazard family (WP4A), the authority-guided deterministic FSM/CUSUM challenger (WP4B), and the separately preregistered integrated episode-conditioned role-transition challenger (WP4D) have now all been executed under frozen gates and rejected for their stated reasons. WP4 therefore remains open only for a separately named research challenger; no rejected family may be rescued by post-score tuning. Because a simple episode-conditioned competing-transition formulation has now been tested through a frozen 2025 challenge, an explicit latent-state/state-duration HMM/HSMM challenger may be investigated next under a new preregistration, but complexity must remain proportional to support and must beat simple benchmarks before any further escalation to boosting, mixture-of-experts or deep learning.
 
 The preferred first learned family is a **simple role-preserving sequential state-transition / hazard model**, conceptually of the form:
 
