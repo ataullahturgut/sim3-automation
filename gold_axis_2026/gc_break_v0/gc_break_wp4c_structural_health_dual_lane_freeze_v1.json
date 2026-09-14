@@ -1,0 +1,112 @@
+{
+  "contract_id": "GC_BREAK_WP4C_STRUCTURAL_HEALTH_DUAL_LANE_FREEZE_V1",
+  "status": "FORMATION_INFORMED_DEVELOPMENT_LOCK_BEFORE_CHALLENGE",
+  "created_date": "2026-09-14",
+  "manifest_min_version": "1.53",
+  "production_authority": false,
+  "prospective_claim": false,
+  "evidentiary_note": "The dual-lane architecture was selected during the 2022-2024 development phase after authority research and a formation feasibility check. Formation reproduction is development evidence, not untouched validation. The architecture and all thresholds are locked here before any 2025 challenge evaluation.",
+  "upper_problem": "online condition/health monitoring with degradation progression, alarm escalation, structural failure/break confirmation, recovery from aborted warnings, and post-break regime stabilization",
+  "authority_basis": [
+    {
+      "reference": "Kothamasu, Huang and VerDuin (2006), System health monitoring and prognostics — a review of current paradigms and practices",
+      "doi": "10.1007/s00170-004-2131-6",
+      "use": "condition monitoring may use current system-state measurements directly and augment them with prognosis; this supports a structural-health lane distinct from independent predictive evidence"
+    },
+    {
+      "reference": "Putter, Fiocco and Geskus (2007), Tutorial in biostatistics: competing risks and multi-state models",
+      "doi": "10.1002/sim.2712",
+      "use": "intermediate states and transition-specific interpretation rather than a single binary endpoint"
+    },
+    {
+      "reference": "Jackson (2011), Multi-State Models for Panel Data: The msm Package for R",
+      "doi": "10.18637/jss.v038.i08",
+      "use": "multi-state transition structure with time-varying state evidence"
+    },
+    {
+      "reference": "NIST (2025), Comprehensive evaluations of condition monitoring-based technologies in industrial maintenance: A systematic review",
+      "doi": "10.1016/j.jmsy.2025.06.015",
+      "use": "condition-monitoring evaluation should separate monitoring performance, validation design and operational false-alarm burden"
+    },
+    {
+      "reference": "Xie, Zou, Xie and Veeravalli (2021), Sequential (Quickest) Change Detection: Classical Results and New Directions",
+      "doi": "10.1109/JSAIT.2021.3072962",
+      "use": "online monitoring must balance detection delay and false alarms; motivates event/episode metrics rather than standalone direction accuracy"
+    }
+  ],
+  "role_separation": {
+    "STRUCTURAL_HEALTH_LANE": {
+      "signal": "PATH_HALF = adverse_fraction >= 0.50 under the already frozen WP3 anatomy baseline",
+      "interpretation": "causal current health/degradation proximity to the frozen structural-break boundary; not independent predictive evidence",
+      "new_threshold_introduced": false
+    },
+    "TACTICAL_EVIDENCE_LANE": {
+      "signal": "FAST conflict/opposite under the frozen FAST identity",
+      "interpretation": "independent tactical trend support/conflict evidence"
+    },
+    "CONFIRMATION_LANE": {
+      "signal": "SLOW robust support of the new regime under its completed-week clock",
+      "interpretation": "confirmation/new-regime evidence, not early trigger"
+    }
+  },
+  "states": ["STABLE", "WEAKENING", "BREAK_ALERT", "CONFIRMED_BREAK", "NEW_REGIME"],
+  "transition_rules": {
+    "global_priority": "frozen current-origin k=3.0 break condition -> CONFIRMED_BREAK immediately, flip regime, preserve whether a pre-break warning existed",
+    "STABLE_TO_WEAKENING": "PATH_HALF OR FAST_CONFLICT",
+    "WEAKENING_TO_BREAK_ALERT": "FAST_OPPOSITE OR (PATH_HALF AND FAST_CONFLICT)",
+    "WEAKENING_TO_STABLE": "neither PATH_HALF nor FAST_CONFLICT remains active",
+    "BREAK_ALERT_TO_WEAKENING": "strong alert condition clears but PATH_HALF or FAST_CONFLICT remains",
+    "BREAK_ALERT_TO_STABLE": "both PATH_HALF and FAST_CONFLICT clear",
+    "CONFIRMED_BREAK_TO_NEW_REGIME": "SLOW robustly supports the new current regime",
+    "NEW_REGIME_TO_STABLE": "FAST and SLOW both robustly support the new current regime"
+  },
+  "excluded_primary_inputs": {
+    "CUSUM": "WP4B authority-default h=5 and h=4 sensitivity had no incremental state-transition value; no threshold lowering is permitted",
+    "EMERGENCY_REVERSAL": "WP3 same-origin review found no incremental early-warning recall gain over FAST and higher false-warning burden",
+    "BOCPD": "slow regime context only; not promoted to daily trigger",
+    "MONTHLY_H1_MONTHLY_DIRECTION": "strategic independent monthly context, not short-term trigger",
+    "GVZ_MACRO_MARKET_SHOCK_OPTIONAL_EXPERTS": "deferred until an accepted core exists"
+  },
+  "formation_development_reference": {
+    "origins": 351,
+    "break_events": 21,
+    "FAST_CONFLICT": {
+      "prebreak_event_recall": 0.3333333333333333,
+      "false_episodes_per_100_origins": 2.5641025641025643,
+      "median_lead_observations": 0.0
+    },
+    "PATH_HALF_ANATOMY": {
+      "prebreak_event_recall": 0.42857142857142855,
+      "false_episodes_per_100_origins": 5.698005698005698,
+      "interpretation": "anatomy/monitoring reference only"
+    },
+    "dual_lane_feasibility_check": {
+      "status": "DEVELOPMENT_ONLY_NOT_UNTOUCHED",
+      "prebreak_event_recall": 0.3333333333333333,
+      "false_episodes_per_100_origins": 4.843304843304844,
+      "median_lead_observations": 2.0,
+      "reason_for_lock": "same recall as FAST_CONFLICT with materially earlier warning while staying below the already frozen PATH_HALF burden ceiling; requires locked 2025 challenge before any promotion"
+    }
+  },
+  "challenge_gate": {
+    "period": ["2025-01-01", "2025-12-31"],
+    "architecture_or_threshold_change_after_opening_challenge": false,
+    "required_data": "canonical exact NY17 semantics plus PIT-safe FAST/SLOW; historical hourly 17:00 ET replay is not an acceptable substitute for exact 16:59 one-minute canonical XAU unless equivalence is separately proven",
+    "primary_comparator": "FAST_CONFLICT on the same challenge origins and frozen break inventory",
+    "accept_monitoring_signal_if": "dual-lane prebreak recall >= FAST_CONFLICT, dual-lane median lead observations > FAST_CONFLICT, and dual-lane false warning episodes per 100 origins <= 5.698005698005698",
+    "independent_prediction_claim_permitted": false,
+    "monitoring_system_claim_permitted_if_gate_passes": true
+  },
+  "governance": {
+    "no_random_split": true,
+    "no_post_challenge_tuning": true,
+    "no_new_threshold_search": true,
+    "no_equal_weight_motor_vote": true,
+    "no_2026_stress_selection": true,
+    "no_database_writes": true,
+    "no_position_mapping": true,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF",
+    "retain_wp2_data_density_warning": true
+  }
+}
