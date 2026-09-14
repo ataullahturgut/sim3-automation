@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.52  
+**Manifest version:** 1.53  
 **Issue date:** 2026-09-14  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -366,7 +366,7 @@ The binding order is:
 4. **WP2 — independent break-event inventory — COMPLETE WITH DATA-DENSITY WARNING**
 5. **Split Freeze — COMPLETE / PRE-SCORE FROZEN**
 6. **WP3 — preregistered formation baselines — COMPLETE WITH LIMITATIONS / WP4 ENTRY SUPPORTED**
-7. **WP4 — main role-preserving sequential model — PHASE A LEARNED-HAZARD FAMILY REJECTED / RESEARCH REDIRECTION REQUIRED**
+7. **WP4 — main role-preserving sequential model — PHASE A AND AUTHORITY-GUIDED WP4B REJECTED / RESEARCH REDIRECTION CONTINUES**
 8. **Ablation / extensions — BLOCKED PENDING ACCEPTED WP4 CORE**
 9. **Architecture/parameter freeze — PENDING**
 10. **Prospective shadow — PENDING FINAL FREEZE**
@@ -417,6 +417,27 @@ Binding interpretation of the frozen Phase A evidence:
 - High-capacity escalation, hyperparameter search and post-score tuning of M1/M2/M3 are **not authorized**.
 - The 2025 challenge remains locked and 2026 Jan-Aug remains nonselection retrospective stress.
 - Any next WP4 architecture must be a separately named, preregistered, simple role-preserving challenger before scoring.
+
+### WP4B authority-guided state-machine closure — 2026-09-14
+
+Following explicit external-authority research in multi-state modeling, system health monitoring/prognostics and sequential change detection, `GC_BREAK_WP4B_AUTHORITY_GUIDED_STATE_MACHINE_PREREG_V1` was frozen before its governed GitHub formation run. It tested the manifest ontology as a deterministic role-preserving state machine using FAST for tactical weakening/alert, SLOW for confirmation/new-regime evidence, and a classical one-sided standardized CUSUM with NIST-style `k=0.5`, primary `h=5`, sensitivity-only `h=4`.
+
+Executed evidence:
+
+- governed run `34833180741`: SUCCESS; 351 formation origins / 21 frozen break events; no 2025 challenge or 2026 stress access; no DB write; no post-score tuning.
+- closure run `34833481295`: SUCCESS; status `WP4B_REJECTED_NO_INCREMENTAL_VALUE`.
+- primary `WP4B_RP_CUSUM_FSM_H5` produced 11 weakening-or-higher episodes, 4 converted and 7 false; pre-break event recall `4/21 = 0.190476`, false-warning burden `1.9943/100 origins`, median lead `2.5 governed origins / 2.5 calendar days` for converted episodes.
+- `BREAK_ALERT` produced 6 episodes, 2 converted and 4 false; pre-break recall `2/21 = 0.095238`, median lead `1.5 governed origins / 2 calendar days`.
+- SLOW-based new-regime confirmation retained `17/21` confirmation before the next break with median delay `3 governed origins / 9 calendar days`.
+- the no-CUSUM, `h=5`, and sensitivity-only `h=4` variants had identical warning metrics; therefore classical CUSUM at the frozen authority defaults added **no incremental state-transition value** on this formation evidence.
+
+Binding interpretation:
+
+- WP4B is rejected for insufficient pre-break coverage despite low false-alarm burden and clean recovery behavior.
+- Lowering the CUSUM threshold, adding persistence, or rewriting state transitions after seeing these results is prohibited post-score tuning.
+- The result shifts the research problem from another global next-origin hazard or threshold tweak toward **episode-conditioned competing transitions**: once a weakening episode opens, the relevant outcomes are conversion to structural break versus recovery to stable.
+- Any use of current price-path progress (`adverse_fraction` / `PATH_HALF`) must remain explicitly labeled **structural health/anatomy monitoring**, not independent predictive evidence. A future architecture may use such a lane only if this evidentiary distinction is preserved.
+- 2025 remains locked for a later architecture-frozen challenge; 2026 Jan-Aug remains nonselection retrospective stress.
 
 ---
 
@@ -483,7 +504,7 @@ Standalone direction accuracy is not the primary metric for GC-BREAK.
 
 ## 14. WP4 model-development rule
 
-WP4 may begin only after WP1, WP2 and WP3 provide adequate support. The first preregistered low-dimensional discrete-time hazard family has now been executed and rejected under its frozen Phase A gate. WP4 therefore remains open only as a research-redirection problem: any replacement architecture must be separately named and preregistered before scoring, remain simple and role-preserving, and may not be tuned from the rejected M1/M2/M3 scores.
+WP4 may begin only after WP1, WP2 and WP3 provide adequate support. The first preregistered low-dimensional discrete-time hazard family and the subsequent authority-guided deterministic FSM/CUSUM challenger have both been executed and rejected under frozen gates. WP4 therefore remains open only as a research-redirection problem. The next preferred upper-problem framing is episode-conditioned competing transitions (break conversion versus recovery) and/or an explicitly separated structural-health monitoring lane; any replacement architecture must be separately named and governed, remain simple and role-preserving, and may not be post-score tuned from rejected families.
 
 The preferred first learned family is a **simple role-preserving sequential state-transition / hazard model**, conceptually of the form:
 
