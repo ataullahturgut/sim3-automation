@@ -1,0 +1,101 @@
+name: GC-BREAK WP4 Prequential Hazard Phase A V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - 'gold_axis_2026/gc_break_v0/gc_break_wp4_hazard_prereg_v1.json'
+      - 'gold_axis_2026/tools/gc_break_wp4_prequential_hazard_v1.py'
+      - '.github/workflows/gc-break-wp4-prequential-hazard-v1.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: gc-break-wp4-prequential-hazard-v1
+  cancel-in-progress: false
+
+jobs:
+  prequential-hazard-phase-a:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      WP3_RUN_ID: '34829522473'
+      WP3_CLOSURE_RUN_ID: '34829777783'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install frozen Phase A dependencies
+        run: pip install --quiet numpy pandas scikit-learn
+
+      - name: Require canonical manifest v1.51 WP4 entry gate
+        run: |
+          git fetch --quiet origin gold-r4-direction-engine
+          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md > /tmp/canonical_manifest.md
+          grep -q '\*\*Manifest version:\*\* 1.51' /tmp/canonical_manifest.md
+          grep -q 'WP4 — main role-preserving sequential model — READY TO START / SIMPLE LOW-DIMENSIONAL FAMILY FIRST' /tmp/canonical_manifest.md
+          grep -q 'BEGIN_SIMPLE_ROLE_PRESERVING_SEQUENTIAL_HAZARD_OR_STATE_TRANSITION_ONLY' gold_axis_2026/tools/gc_break_wp3_closure_review_v1.py
+
+      - name: Download inspected WP3 baseline evidence
+        run: |
+          mkdir -p /tmp/wp3
+          gh run download "$WP3_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name gc-break-wp3-current-formation-baselines-v1 --dir /tmp/wp3
+
+      - name: Download inspected WP3 closure evidence
+        run: |
+          mkdir -p /tmp/wp3_closure
+          gh run download "$WP3_CLOSURE_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name gc-break-wp3-closure-review-v1 --dir /tmp/wp3_closure
+
+      - name: Gate on frozen WP4 contract and WP3 closure
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          c=json.loads(Path('gold_axis_2026/gc_break_v0/gc_break_wp4_hazard_prereg_v1.json').read_text())
+          w=json.loads(Path('/tmp/wp3_closure/gc_break_wp3_closure_review_v1.json').read_text())
+          assert c['contract_id']=='GC_BREAK_WP4_HAZARD_PREREG_V1'
+          assert c['status']=='FROZEN_BEFORE_WP4_FORMATION_SCORING'
+          assert c['manifest_min_version']=='1.51'
+          assert c['prequential_protocol']['hyperparameter_search'] is False
+          assert c['prequential_protocol']['threshold_search'] is False
+          assert c['governance']['no_2025_challenge_access'] is True
+          assert c['governance']['no_2026_stress_access'] is True
+          assert w['audit_id']=='GC_BREAK_WP3_CLOSURE_REVIEW_V1'
+          assert w['status']=='COMPLETE_WITH_LIMITATIONS_READY_FOR_WP4'
+          assert w['wp4_entry_guard']=='BEGIN_SIMPLE_ROLE_PRESERVING_SEQUENTIAL_HAZARD_OR_STATE_TRANSITION_ONLY'
+          print('WP4_PHASE_A_GATE_PASS')
+          PY
+
+      - name: Compile frozen Phase A implementation
+        run: python -m py_compile gold_axis_2026/tools/gc_break_wp4_prequential_hazard_v1.py
+
+      - name: Run formation-only prequential hazard scoring
+        run: |
+          mkdir -p /tmp/wp4
+          python gold_axis_2026/tools/gc_break_wp4_prequential_hazard_v1.py \
+            --wp3-panel /tmp/wp3/gc_break_wp3_current_formation_baseline_panel_v1.csv \
+            --wp3-summary /tmp/wp3/gc_break_wp3_current_formation_baselines_v1_summary.json \
+            --wp3-closure /tmp/wp3_closure/gc_break_wp3_closure_review_v1.json \
+            --output-dir /tmp/wp4 | tee /tmp/wp4_phase_a.log
+          grep -q 'EVIDENCE_GENERATED_NOT_YET_CLOSED' /tmp/wp4_phase_a.log
+          grep -q 'FORMATION_DEVELOPMENT_PREQUENTIAL_NOT_CHALLENGE' /tmp/wp4_phase_a.log
+
+      - name: Upload Phase A evidence for inspection
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp4-prequential-hazard-phase-a-v1
+          path: /tmp/wp4/
+          if-no-files-found: error
+          retention-days: 90
