@@ -1,0 +1,59 @@
+name: Gold Control Manifest v1.53 WP4B Closure
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - '.github/workflows/gold-control-manifest-v153-wp4b-closure.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-manifest-v153-wp4b-closure
+  cancel-in-progress: false
+
+jobs:
+  update-canonical-manifest:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+      - name: Apply guarded v1.53 WP4B closure change control
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md')
+          s=p.read_text(encoding='utf-8')
+          assert s.count('**Manifest version:** 1.52') == 1
+          s=s.replace('**Manifest version:** 1.52','**Manifest version:** 1.53',1)
+          old='7. **WP4 — main role-preserving sequential model — PHASE A LEARNED-HAZARD FAMILY REJECTED / RESEARCH REDIRECTION REQUIRED**'
+          new='7. **WP4 — main role-preserving sequential model — PHASE A AND AUTHORITY-GUIDED WP4B REJECTED / RESEARCH REDIRECTION CONTINUES**'
+          assert s.count(old)==1
+          s=s.replace(old,new,1)
+          anchor='- Any next WP4 architecture must be a separately named, preregistered, simple role-preserving challenger before scoring.\n'
+          assert s.count(anchor)==1
+          insert=anchor+'''\n### WP4B authority-guided state-machine closure — 2026-09-14\n\nFollowing explicit external-authority research in multi-state modeling, system health monitoring/prognostics and sequential change detection, `GC_BREAK_WP4B_AUTHORITY_GUIDED_STATE_MACHINE_PREREG_V1` was frozen before its governed GitHub formation run. It tested the manifest ontology as a deterministic role-preserving state machine using FAST for tactical weakening/alert, SLOW for confirmation/new-regime evidence, and a classical one-sided standardized CUSUM with NIST-style `k=0.5`, primary `h=5`, sensitivity-only `h=4`.\n\nExecuted evidence:\n\n- governed run `34833180741`: SUCCESS; 351 formation origins / 21 frozen break events; no 2025 challenge or 2026 stress access; no DB write; no post-score tuning.\n- closure run `34833481295`: SUCCESS; status `WP4B_REJECTED_NO_INCREMENTAL_VALUE`.\n- primary `WP4B_RP_CUSUM_FSM_H5` produced 11 weakening-or-higher episodes, 4 converted and 7 false; pre-break event recall `4/21 = 0.190476`, false-warning burden `1.9943/100 origins`, median lead `2.5 governed origins / 2.5 calendar days` for converted episodes.\n- `BREAK_ALERT` produced 6 episodes, 2 converted and 4 false; pre-break recall `2/21 = 0.095238`, median lead `1.5 governed origins / 2 calendar days`.\n- SLOW-based new-regime confirmation retained `17/21` confirmation before the next break with median delay `3 governed origins / 9 calendar days`.\n- the no-CUSUM, `h=5`, and sensitivity-only `h=4` variants had identical warning metrics; therefore classical CUSUM at the frozen authority defaults added **no incremental state-transition value** on this formation evidence.\n\nBinding interpretation:\n\n- WP4B is rejected for insufficient pre-break coverage despite low false-alarm burden and clean recovery behavior.\n- Lowering the CUSUM threshold, adding persistence, or rewriting state transitions after seeing these results is prohibited post-score tuning.\n- The result shifts the research problem from another global next-origin hazard or threshold tweak toward **episode-conditioned competing transitions**: once a weakening episode opens, the relevant outcomes are conversion to structural break versus recovery to stable.\n- Any use of current price-path progress (`adverse_fraction` / `PATH_HALF`) must remain explicitly labeled **structural health/anatomy monitoring**, not independent predictive evidence. A future architecture may use such a lane only if this evidentiary distinction is preserved.\n- 2025 remains locked for a later architecture-frozen challenge; 2026 Jan-Aug remains nonselection retrospective stress.\n'''
+          s=s.replace(anchor,insert,1)
+          old_wp4='WP4 may begin only after WP1, WP2 and WP3 provide adequate support. The first preregistered low-dimensional discrete-time hazard family has now been executed and rejected under its frozen Phase A gate. WP4 therefore remains open only as a research-redirection problem: any replacement architecture must be separately named and preregistered before scoring, remain simple and role-preserving, and may not be tuned from the rejected M1/M2/M3 scores.'
+          new_wp4='WP4 may begin only after WP1, WP2 and WP3 provide adequate support. The first preregistered low-dimensional discrete-time hazard family and the subsequent authority-guided deterministic FSM/CUSUM challenger have both been executed and rejected under frozen gates. WP4 therefore remains open only as a research-redirection problem. The next preferred upper-problem framing is episode-conditioned competing transitions (break conversion versus recovery) and/or an explicitly separated structural-health monitoring lane; any replacement architecture must be separately named and governed, remain simple and role-preserving, and may not be post-score tuned from rejected families.'
+          assert s.count(old_wp4)==1
+          s=s.replace(old_wp4,new_wp4,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Verify single manifest and v1.53 markers
+        run: |
+          test "$(find gold_axis_2026 -maxdepth 1 -name 'GOLD_CONTROL_PROJECT_MANIFEST.md' | wc -l)" -eq 1
+          grep -q 'Manifest version:.*1.53' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'WP4B_REJECTED_NO_INCREMENTAL_VALUE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'episode-conditioned competing transitions' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+      - name: Commit and push canonical manifest
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          git commit -m 'Gold Control v1.53: close authority-guided WP4B and redirect to competing transitions'
+          git push origin HEAD:gold-r4-direction-engine
