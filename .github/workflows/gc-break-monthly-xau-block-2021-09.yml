@@ -1,0 +1,84 @@
+name: GC-BREAK Monthly XAU Block 2021-09
+
+on:
+  push:
+    paths:
+      - '.github/workflows/gc-break-monthly-xau-block-2021-09.yml'
+
+permissions:
+  contents: read
+
+env:
+  BLOCK_MONTH: '2021-09'
+  BLOCK_START: '2021-09-01'
+  BLOCK_END: '2021-09-30'
+
+jobs:
+  monthly-block:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - name: Checkout WP1 branch
+        uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install minimal dependencies
+        run: pip install pandas
+
+      - name: Require Twelve Data key
+        run: test -n "$TWELVE_DATA_API_KEY"
+
+      - name: Build monthly unresolved seed
+        run: |
+          python - <<'PY'
+          import pandas as pd
+          dates = pd.date_range('2021-09-01','2021-09-30',freq='D')
+          pd.DataFrame({'trade_date': dates.strftime('%Y-%m-%d'), 'acquisition_status':'NOT_ATTEMPTED'}).to_csv('monthly_seed.csv', index=False)
+          PY
+          mkdir -p monthly_out
+
+      - name: Fetch exact NY17 monthly block
+        run: |
+          python gold_axis_2026/tools/gc_break_wp1_resume_exact_ny17_batch_v3.py \
+            --probe-csv monthly_seed.csv \
+            --output-dir monthly_out \
+            --window-days 3 \
+            --pacing-seconds 8 \
+            --backoff-seconds 15 \
+            --max-minute-rate-limit-retries 3 \
+            --max-unknown-rate-limit-retries 1 \
+            --max-transient-retries 2 \
+            --checkpoint-every-windows 1
+
+      - name: Show monthly result
+        if: always()
+        run: |
+          echo '=== SUMMARY ==='
+          test -f monthly_out/gc_break_wp1_exact_ny17_batch_resume_v3_summary.json && cat monthly_out/gc_break_wp1_exact_ny17_batch_resume_v3_summary.json || true
+          echo '=== FINAL COUNTS ==='
+          if test -f monthly_out/gc_break_wp1_exact_ny17_consolidated_batch_v3.csv; then
+            python - <<'PY'
+          import pandas as pd
+          p='monthly_out/gc_break_wp1_exact_ny17_consolidated_batch_v3.csv'
+          df=pd.read_csv(p)
+          print(df['acquisition_status'].value_counts(dropna=False).to_dict())
+          print('rows=',len(df))
+          PY
+          fi
+
+      - name: Upload monthly evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-xau-ny17-2021-09
+          path: monthly_out/
+          if-no-files-found: warn
