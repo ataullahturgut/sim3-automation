@@ -1,0 +1,60 @@
+{
+  "contract_id": "FULL_HGB_RECONSTRUCTION_V1_RECOVERED_BLOCKS_2025",
+  "status": "FROZEN_BEFORE_2025_REPLAY",
+  "research_identity": "FULL_HGB_RECONSTRUCTION_V1_RECOVERED_BLOCKS",
+  "manifest_channel_being_reconstructed": "FULL_HGB",
+  "identity_claim": "SEPARATELY_NAMED_PROJECT_NATIVE_RECONSTRUCTION_FROM_RECOVERED_BLOCKS",
+  "original_identity_recovered": false,
+  "current_gc_break_primary_target": false,
+  "auxiliary_target": "NEXT_GOVERNED_NY17_DIRECTION_RESEARCH_ONLY",
+  "split": {
+    "train_start": "2022-01-01",
+    "train_end": "2024-12-31",
+    "challenge_start": "2025-01-01",
+    "challenge_end": "2025-12-31",
+    "challenge_refit": false,
+    "challenge_hyperparameter_search": false,
+    "challenge_threshold_search": false
+  },
+  "numeric_features": [
+    "gold_ret_lag1", "gold_ret_lag2", "gold_ret_lag3",
+    "gold_mom3", "gold_mom5", "gold_mom10", "gold_mom20",
+    "gold_rv5", "gold_rv10", "gold_rv20",
+    "xag_ret", "xpt_ret", "xpd_ret",
+    "nasdaq_ret", "sp500_ret", "djia_ret",
+    "dgs10_level", "dff_level", "fx_ret",
+    "macro_score", "macro_event_count"
+  ],
+  "categorical_features": [
+    "monthly_direction_3m", "fast_state", "slow_state",
+    "emergency_level", "emergency_reversal"
+  ],
+  "categorical_missing_token": "MISSING_NOT_TESTABLE",
+  "excluded_blocks": {
+    "MONTHLY_H1_EXPERTS": "EXCLUDED_V1_INCOMPLETE_FORMATION_COVERAGE_AND_CHALLENGE_SYMMETRY_NOT_ESTABLISHED",
+    "BOCPD": "EXCLUDED_V1_NO_CHALLENGE_SYMMETRIC_REPLAY_LOCATED_AT_FREEZE",
+    "GVZ": "EXCLUDED_V1_INSUFFICIENT_FULL_HISTORY_PIT_SAFE_COVERAGE"
+  },
+  "external_evidence": {
+    "cross_metals_and_equities": "RETROSPECTIVE_RESEARCH_RECONSTRUCTION_ONE_ORIGIN_LAG_NO_PROSPECTIVE_PIT_CLAIM",
+    "monthly_macro": "AVAILABLE_AS_OF_JOIN",
+    "macro_events": "RELEASE_TIMESTAMP_AVAILABLE_AS_OF_JOIN"
+  },
+  "model": {
+    "family": "HistGradientBoostingClassifier",
+    "max_depth": 2,
+    "max_iter": 80,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "random_state": 20260911,
+    "categorical_encoding": "OneHotEncoder(handle_unknown=ignore,sparse_output=false)"
+  },
+  "governance": {
+    "no_interpolation": true,
+    "no_forward_fill": true,
+    "no_provider_substitution": true,
+    "post_challenge_tuning": false,
+    "production_database_write": "NONE",
+    "production_authority": false
+  }
+}
