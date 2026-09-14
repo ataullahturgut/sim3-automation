@@ -1,0 +1,86 @@
+name: Gold Control Manifest v1.54 WP4D Closure
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - '.github/workflows/gold-control-manifest-v154-wp4d-closure.yml'
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: gold-control-manifest-v154-wp4d-closure
+  cancel-in-progress: false
+
+jobs:
+  update-canonical-manifest:
+    runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ github.token }}
+      CLOSURE_RUN_ID: '34839291404'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-r4-direction-engine
+          fetch-depth: 1
+
+      - name: Verify immutable WP4D closure evidence
+        run: |
+          mkdir -p /tmp/wp4d_closure
+          gh run download "$CLOSURE_RUN_ID" --repo "$GITHUB_REPOSITORY" --name gc-break-wp4d-closure-review-v1 --dir /tmp/wp4d_closure
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('/tmp/wp4d_closure/gc_break_wp4d_closure_review_v1.json').read_text())
+          assert d['status']=='WP4D_REJECTED_CHALLENGE_TRANSPORT_FAILURE'
+          assert d['challenge_status']=='REJECT_CHALLENGE_TRANSPORT_FAILURE'
+          assert d['database_write']=='NONE'
+          assert d['production_authority'] is False
+          assert d['prospective_claim'] is False
+          PY
+
+      - name: Apply guarded v1.54 WP4D closure change control
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md')
+          s=p.read_text(encoding='utf-8')
+          assert s.count('**Manifest version:** 1.53') == 1
+          s=s.replace('**Manifest version:** 1.53','**Manifest version:** 1.54',1)
+
+          old='7. **WP4 — main role-preserving sequential model — PHASE A AND AUTHORITY-GUIDED WP4B REJECTED / RESEARCH REDIRECTION CONTINUES**'
+          new='7. **WP4 — main role-preserving sequential model — WP4A, WP4B AND INTEGRATED WP4D REJECTED UNDER FROZEN GATES / NEXT CHALLENGER MUST BE SEPARATELY GOVERNED**'
+          assert s.count(old)==1
+          s=s.replace(old,new,1)
+
+          anchor='- 2025 remains locked for a later architecture-frozen challenge; 2026 Jan-Aug remains nonselection retrospective stress.\n\n---\n\n## 12. Research replayability / eligibility matrix'
+          assert s.count(anchor)==1
+          insert='''- 2025 remains locked for a later architecture-frozen challenge; 2026 Jan-Aug remains nonselection retrospective stress.\n\n### WP4D integrated role-transition closure — 2026-09-14\n\nAfter the WP4A and WP4B rejections, `GC_BREAK_WP4D_INTEGRATED_ROLE_TRANSITION_PREREG_V1` was separately frozen before formation scoring to test the project objective more faithfully: all 12 governed identities were explicitly accounted for under role-preserving integration, but only chronology-safe low-dimensional evidence was allowed into the episode-conditioned `BREAK` versus `RECOVERY` probability model. `PATH_HALF` remained structural-health/anatomy monitoring only and was not an independent probability feature.\n\nFormation evidence:\n\n- formation run `34838395381`: SUCCESS; 351 origins / 21 frozen breaks; 35 terminal predictive episodes, comprising 13 break conversions and 22 recoveries.\n- common prequential scoring support: 26 episodes (10 break conversions / 16 recoveries).\n- `M2_INTEGRATED_ROLE_CORE_RIDGE` passed its frozen formation gate: Brier `0.245299` and log loss `0.688204`, improving the empirical-prior null (`0.249558`, `0.692993`) and the minimal tactical-duration model (`0.254085`, `0.704500`) on the common prequential support.\n- the four Monthly H=1 experts were tested as a same-origin strategic-context modifier and **did not** improve the core on their eligible support; they therefore remain strategic context only and were excluded from challenge conversion probability.\n- Emergency Level/Reversal similarly did not add same-origin probability value and remain selective context/confirmation only.\n- `GVZ_RISK` remained `NOT_TESTABLE_FORMATION_PIT_NOT_PROVEN`; no imputation or core-window shortening was performed.\n- SLOW remained the post-break confirmation/new-regime lane.\n\nThe final model was then frozen from formation only in run `34838889066` before challenge scoring. The 2025 exact-NY17 challenge was scored once in run `34839157458` using 204 governed origins and 12 primary break events, with no challenge refit, threshold search, hyperparameter search, 2026 selection or database write.\n\nChallenge evidence:\n\n- predictive support was adequate: 20 terminal episodes = 10 break conversions + 10 recoveries.\n- `M2` still improved the empirical-prior null on both proper scores: Brier `0.265320` vs `0.265625`, log loss `0.724786` vs `0.725416`.\n- however the simpler frozen `M1_TACTICAL_DURATION_RIDGE` transported better: Brier `0.258289`, log loss `0.709881`. Therefore the preregistered requirement that integrated M2 be no worse than M1 on both proper scores failed.\n- FAST_CONFLICT warned 8/12 breaks (`0.666667` recall), false burden `1.9608/100`, median lead `2` governed origins. The structural-health dual lane warned 10/12 (`0.833333` recall) and stayed under the frozen false-warning ceiling at `4.9020/100`, but its median lead was also `2` governed origins rather than strictly greater than FAST. The frozen monitoring lead gate therefore failed.\n- SLOW confirmed 7/12 challenge breaks before the next break, median delay `3` governed origins / `4` calendar days.\n- challenge status: `REJECT_CHALLENGE_TRANSPORT_FAILURE`; independent closure run `34839291404` confirmed `WP4D_REJECTED_CHALLENGE_TRANSPORT_FAILURE`.\n\nBinding interpretation:\n\n- WP4D is **rejected**, despite a genuine formation signal, because the integrated probability advantage did not transport versus the simpler tactical-duration comparator and the dual-lane monitoring lead improvement did not survive the frozen 2025 gate.\n- The result does **not** authorize deleting or flat-voting the governed engines. Monthly H1, Emergency, SLOW, BOCPD, Macro Event and GVZ retain their manifest roles; unsupported modifiers simply may not be promoted into the rejected WP4D conversion probability.\n- No post-challenge rescue tuning of WP4D is authorized. 2025 challenge outcomes may not be used to refit its feature set, coefficients, regularization or thresholds.\n- 2026 Jan-Aug remains nonselection retrospective stress and is not needed to decide WP4D.\n- A next challenger, if pursued, must be separately named and preregistered. Because the simple explicit-state/episode-conditioned families have now been tested, an HMM/HSMM-style latent-state/state-duration challenger is scientifically eligible for investigation, but is **not** pre-approved and must remain low-capacity relative to the available event support. Boosting, mixture-of-experts and deep learning remain blocked until simpler challengers justify escalation.\n\n---\n\n## 12. Research replayability / eligibility matrix'''
+          s=s.replace(anchor,insert,1)
+
+          old_wp4='WP4 may begin only after WP1, WP2 and WP3 provide adequate support. The first preregistered low-dimensional discrete-time hazard family and the subsequent authority-guided deterministic FSM/CUSUM challenger have both been executed and rejected under frozen gates. WP4 therefore remains open only as a research-redirection problem. The next preferred upper-problem framing is episode-conditioned competing transitions (break conversion versus recovery) and/or an explicitly separated structural-health monitoring lane; any replacement architecture must be separately named and governed, remain simple and role-preserving, and may not be post-score tuned from rejected families.'
+          new_wp4='WP4 may begin only after WP1, WP2 and WP3 provide adequate support. The initial low-dimensional next-origin hazard family (WP4A), the authority-guided deterministic FSM/CUSUM challenger (WP4B), and the separately preregistered integrated episode-conditioned role-transition challenger (WP4D) have now all been executed under frozen gates and rejected for their stated reasons. WP4 therefore remains open only for a separately named research challenger; no rejected family may be rescued by post-score tuning. Because a simple episode-conditioned competing-transition formulation has now been tested through a frozen 2025 challenge, an explicit latent-state/state-duration HMM/HSMM challenger may be investigated next under a new preregistration, but complexity must remain proportional to support and must beat simple benchmarks before any further escalation to boosting, mixture-of-experts or deep learning.'
+          assert s.count(old_wp4)==1
+          s=s.replace(old_wp4,new_wp4,1)
+
+          p.write_text(s,encoding='utf-8')
+          PY
+
+      - name: Verify single manifest and v1.54 markers
+        run: |
+          test "$(find gold_axis_2026 -maxdepth 1 -name 'GOLD_CONTROL_PROJECT_MANIFEST.md' | wc -l)" -eq 1
+          grep -q 'Manifest version:.*1.54' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'WP4D_REJECTED_CHALLENGE_TRANSPORT_FAILURE' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q '34839157458' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -q 'HMM/HSMM' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+
+      - name: Commit and push canonical manifest
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          git commit -m 'Gold Control v1.54: close integrated WP4D after frozen 2025 challenge'
+          git push origin HEAD:gold-r4-direction-engine
