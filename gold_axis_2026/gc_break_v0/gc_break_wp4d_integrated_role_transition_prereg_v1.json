@@ -1,0 +1,198 @@
+{
+  "contract_id": "GC_BREAK_WP4D_INTEGRATED_ROLE_TRANSITION_PREREG_V1",
+  "status": "FROZEN_BEFORE_WP4D_FORMATION_SCORING",
+  "created_date": "2026-09-14",
+  "manifest_min_version": "1.53",
+  "purpose": "test a properly role-integrated, episode-conditioned competing-transition challenger after rejected WP4A global hazard and WP4B FSM/CUSUM, without rewriting either historical result",
+  "production_authority": false,
+  "prospective_claim": false,
+  "research_phase": "WP4D_EPISODE_CONDITIONED_BREAK_VS_RECOVERY",
+  "prior_results_preserved": {
+    "WP4A": "REJECT_LEARNED_HAZARD",
+    "WP4B": "WP4B_REJECTED_NO_INCREMENTAL_VALUE",
+    "WP4C": "FORMATION_MONITORING_SIGNAL_REPRODUCED_CHALLENGE_REQUIRED; structural-health/anatomy lane remains separate from independent prediction"
+  },
+  "authority_basis": [
+    {
+      "reference": "Putter, Fiocco & Geskus (2007), Tutorial in biostatistics: competing risks and multi-state models",
+      "doi": "10.1002/sim.2712",
+      "use": "model intermediate states and competing transitions rather than collapsing all behavior into one undifferentiated next-origin event"
+    },
+    {
+      "reference": "Jackson (2011), Multi-State Models for Panel Data: The msm Package for R",
+      "doi": "10.18637/jss.v038.i08",
+      "use": "time-varying covariates may modify state-transition intensities while retaining an explicit state process"
+    },
+    {
+      "reference": "Riley et al. (2019), Minimum sample size for developing a multivariable prediction model: PART II",
+      "doi": "10.1002/sim.7992",
+      "use": "small event support constrains predictor complexity; therefore the primary learned model is deliberately low-dimensional and strongly regularized"
+    },
+    {
+      "reference": "Heinze & Schemper (2002), A solution to the problem of separation in logistic regression",
+      "doi": "10.1002/sim.1047",
+      "use": "small-sample/separation risk is acknowledged; this preregistration uses strong fixed shrinkage and permits INSUFFICIENT_SUPPORT rather than rescue tuning"
+    }
+  ],
+  "formation_window": ["2022-01-01", "2024-12-31"],
+  "challenge_window": ["2025-01-01", "2025-12-31"],
+  "primary_event_contract": "GC_BREAK_EVENT_CONTRACT_V1_k3.0",
+  "episode_definition": {
+    "opener": "WP4C structural-health/tactical monitoring opener: PATH_HALF OR FAST_CONFLICT",
+    "structural_health_interpretation": "PATH_HALF is current-condition/anatomy monitoring only and is not an independent predictor in the BREAK-vs-RECOVERY probability model",
+    "start_rule": "an episode starts at the first governed origin where opener is true and no primary break is already occurring on that same origin",
+    "break_terminal": "first later governed origin inside the open episode carrying the frozen primary k=3 break label",
+    "recovery_terminal": "first governed origin after episode start where opener is false before a break occurs",
+    "same_origin_break_at_episode_open": "excluded from predictive episode scoring because the outcome is already contemporaneously observable",
+    "right_censoring": "an episode still open at formation end is censored and excluded from binary proper-score evaluation",
+    "no_future_feature": true
+  },
+  "governed_identity_role_ledger": {
+    "CAUSAL_PATCH": "monthly H1 expert; strategic context extension only, never a daily trigger",
+    "VW_MIDAS_MSVR_SUCCESSOR_V1": "monthly H1 expert; strategic context extension only, never a daily trigger",
+    "MOMENTUM_3M": "monthly H1 expert; strategic context extension only, never a daily trigger",
+    "RANDOM_WALK": "monthly H1 benchmark/anchor for strategic context, never a daily trigger",
+    "MONTHLY_DIRECTION_3M": "core strategic-prior conflict feature",
+    "FAST": "episode tactical evidence and severity; FAST_OPPOSITE is a learned core feature",
+    "SLOW": "confirmation/new-regime lane; not forced into early BREAK-vs-RECOVERY probability merely to make all engines vote",
+    "MACRO_EVENT_SUCCESSOR_V2": "event-clock modifier represented by chronology-safe mapped strong macro event context; not a continuous daily vote",
+    "BOCPD_RETURN_SUCCESSOR_V1": "native completed-month regime context; no direction vote",
+    "EMERGENCY_LEVEL": "same-origin extension on AVAILABLE_FROZEN_REFERENCE support only",
+    "EMERGENCY_REVERSAL": "same-origin high-specificity extension on AVAILABLE_FROZEN_REFERENCE support only",
+    "GVZ_RISK": "architecture slot retained but primary 2022-2024 formation use is NOT_TESTABLE until PIT history is proven; no imputation and no core-window shortening"
+  },
+  "primary_models": [
+    {
+      "id": "M0_EPISODE_EMPIRICAL_PRIOR",
+      "role": "prequential null comparator",
+      "formula": "(past_break_conversions + 0.5) / (past_completed_episodes + 1.0)",
+      "learned_coefficients": false
+    },
+    {
+      "id": "M1_TACTICAL_DURATION_RIDGE",
+      "role": "minimal episode-conditioned comparator",
+      "features": ["log1p_regime_sojourn_age", "fast_opposite_at_episode_start"],
+      "estimator": "L2 logistic regression",
+      "C": 0.25,
+      "solver": "liblinear",
+      "class_weight": null,
+      "standardize_from_past_training_only": true
+    },
+    {
+      "id": "M2_INTEGRATED_ROLE_CORE_RIDGE",
+      "role": "primary low-dimensional integrated competing-transition challenger",
+      "features": [
+        "log1p_regime_sojourn_age",
+        "fast_opposite_at_episode_start",
+        "monthly_direction_conflict_at_episode_start",
+        "bocpd_downside_adverse_context_at_episode_start",
+        "macro_break_pressure_at_episode_start"
+      ],
+      "estimator": "L2 logistic regression",
+      "C": 0.25,
+      "solver": "liblinear",
+      "class_weight": null,
+      "standardize_from_past_training_only": true,
+      "note": "No adverse_fraction/PATH_HALF value enters this probability model. Structural health opens the monitored episode but cannot rescue predictive probability scoring."
+    }
+  ],
+  "same_origin_extensions": [
+    {
+      "id": "E1_MONTHLY_H1_STRATEGIC_CONTEXT",
+      "engines": ["CAUSAL_PATCH", "VW_MIDAS_MSVR_SUCCESSOR_V1", "MOMENTUM_3M", "RANDOM_WALK"],
+      "feature": "h1_consensus_conflict_at_episode_start",
+      "eligibility": "all four frozen historical-replay H1 experts available at the episode start",
+      "comparison": "M2 core refit and evaluated on the exact same eligible episodes versus M2 plus this one feature",
+      "promotion_role": "context extension only; cannot become daily trigger"
+    },
+    {
+      "id": "E2_EMERGENCY_CONTEXT",
+      "engines": ["EMERGENCY_LEVEL", "EMERGENCY_REVERSAL"],
+      "features": ["emergency_level_opposite_at_episode_start", "emergency_reversal_opposite_at_episode_start"],
+      "eligibility": "AVAILABLE_FROZEN_REFERENCE at episode start",
+      "comparison": "M2 core refit and evaluated on the exact same eligible episodes versus M2 plus the emergency features",
+      "promotion_role": "selective context/confirmation extension only; not an OR trigger"
+    },
+    {
+      "id": "E3_GVZ_RISK",
+      "engines": ["GVZ_RISK"],
+      "eligibility": "PIT-proven 2022-2024 formation history required",
+      "current_preregistered_action_if_unproven": "NOT_TESTABLE; do not impute, do not shorten the core window, do not block the core study"
+    }
+  ],
+  "slow_confirmation_lane": {
+    "engine": "SLOW",
+    "role": "post-break CONFIRMED_BREAK -> NEW_REGIME confirmation",
+    "primary_conversion_probability_feature": false,
+    "reason": "forcing a completed-week confirmation engine into an early episode-conversion vote would violate the manifest role lock",
+    "report": "carry forward the governed formation confirmation statistic and verify it from frozen evidence; do not optimize it inside WP4D"
+  },
+  "prequential_protocol": {
+    "unit": "completed predictive episode",
+    "training_episode_rule": "only episodes whose terminal transition occurred strictly before the current episode start may train the current prediction",
+    "expanding_history_only": true,
+    "random_split": false,
+    "minimum_past_completed_episodes": 8,
+    "minimum_past_break_conversions": 3,
+    "minimum_past_recoveries": 3,
+    "refit_each_scored_episode": true,
+    "hyperparameter_search": false,
+    "threshold_search": false,
+    "post_score_feature_search": false
+  },
+  "formation_support_gate": {
+    "minimum_terminal_predictive_episodes": 20,
+    "minimum_break_conversions": 5,
+    "minimum_recoveries": 8,
+    "minimum_common_prequential_scored_episodes": 8,
+    "minimum_common_scored_break_conversions": 2,
+    "minimum_common_scored_recoveries": 2,
+    "failure_status": "FORMATION_INSUFFICIENT_SUPPORT"
+  },
+  "primary_probability_metrics": [
+    "brier_score",
+    "log_loss",
+    "average_precision_descriptive",
+    "roc_auc_descriptive"
+  ],
+  "formation_decision_rule": {
+    "support_gate_first": true,
+    "primary_model": "M2_INTEGRATED_ROLE_CORE_RIDGE",
+    "required_vs_null": "M2 must strictly improve both Brier score and log loss versus M0 on the exact same common prequential scored episodes",
+    "required_vs_minimal": "M2 must be no worse than M1 on both Brier score and log loss and strictly improve at least one of the two",
+    "ranking_metrics_decide_promotion": false,
+    "structural_health_can_rescue_probability_failure": false,
+    "extension_can_rescue_primary_failure": false,
+    "pass_status": "FORMATION_SUPPORT_CHALLENGE_REQUIRED",
+    "fail_status": "FORMATION_REJECT_INTEGRATED_ROLE_TRANSITION",
+    "insufficient_status": "FORMATION_INSUFFICIENT_SUPPORT"
+  },
+  "extension_retention_rule": {
+    "same_origin_only": true,
+    "retain_as_empirically_supported_modifier": "extension must be no worse than same-support M2 core on both Brier and log loss and strictly improve at least one",
+    "otherwise": "retain architecture role as context-only or NOT_TESTABLE; do not delete the governed identity and do not use the extension to rescue M2"
+  },
+  "challenge_rule_if_formation_passes": {
+    "architecture_and_parameters_freeze_before_challenge": true,
+    "2025_scored_once": true,
+    "no_retune_after_challenge": true,
+    "2026_used_for_selection": false,
+    "final_accept_requires_challenge_support": true,
+    "challenge_failure_interpretation": "REJECT_TRANSPORT_FAILURE",
+    "challenge_success_interpretation": "ACCEPT_INTEGRATED_MONITORING_CORE_SUPPORTED; not production authority and not prospective validation"
+  },
+  "governance": {
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF",
+    "no_equal_weight_voting": true,
+    "no_random_split": true,
+    "no_hindsight_threshold_tuning": true,
+    "no_2025_challenge_access_during_formation": true,
+    "no_2026_stress_access_during_selection": true,
+    "no_database_writes": true,
+    "no_position_mapping": true,
+    "no_production_promotion": true,
+    "missing_history_imputation": "FORBIDDEN",
+    "same_origin_optional_comparison": true
+  }
+}
