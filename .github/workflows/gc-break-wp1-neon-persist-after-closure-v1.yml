@@ -4,6 +4,12 @@ on:
   workflow_run:
     workflows: ["GC-BREAK WP1 Closure Resume V1"]
     types: [completed]
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: Successful WP1 closure run id to persist
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -15,13 +21,13 @@ concurrency:
 
 jobs:
   persist-audited-canonical-ny17:
-    if: github.event.workflow_run.conclusion == 'success'
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
       GH_TOKEN: ${{ github.token }}
       NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
-      SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
+      SOURCE_RUN_ID: ${{ github.event_name == 'workflow_dispatch' && inputs.source_run_id || github.event.workflow_run.id }}
     steps:
       - uses: actions/checkout@v4
         with:
