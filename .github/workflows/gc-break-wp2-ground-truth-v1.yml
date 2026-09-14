@@ -1,0 +1,57 @@
+name: GC-BREAK WP2 Ground Truth V1
+
+on:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - 'gold_axis_2026/tools/gc_break_wp2_ground_truth_v1.py'
+      - 'gold_axis_2026/gc_break_v0/gc_break_event_contract_v1.json'
+      - '.github/workflows/gc-break-wp2-ground-truth-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gc-break-wp2-ground-truth-v1
+  cancel-in-progress: false
+
+jobs:
+  build-engine-independent-break-inventory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install WP2 dependencies
+        run: pip install --quiet numpy pandas 'psycopg[binary]'
+
+      - name: Require Neon credential
+        run: test -n "$NEON_DATABASE_URL"
+
+      - name: Compile WP2 generator
+        run: python -m py_compile gold_axis_2026/tools/gc_break_wp2_ground_truth_v1.py
+
+      - name: Generate frozen-contract break inventory
+        run: |
+          mkdir -p /tmp/gc_break_wp2
+          python gold_axis_2026/tools/gc_break_wp2_ground_truth_v1.py \
+            --output-dir /tmp/gc_break_wp2 | tee /tmp/gc_break_wp2/run.log
+          grep -q 'GC_BREAK_WP2_GROUND_TRUTH_SUCCESS' /tmp/gc_break_wp2/run.log
+
+      - name: Upload WP2 evidence artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp2-ground-truth-v1
+          path: /tmp/gc_break_wp2/
+          if-no-files-found: error
+          retention-days: 90
