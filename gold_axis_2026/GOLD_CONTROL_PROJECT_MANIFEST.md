@@ -1,7 +1,7 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.50  
-**Issue date:** 2026-09-13  
+**Manifest version:** 1.51  
+**Issue date:** 2026-09-14  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
 **Active GC-BREAK research branch:** `gc-break-wp1-formation-backfill`  
@@ -362,11 +362,11 @@ The binding order is:
 
 1. **Coverage / PIT audit — COMPLETE**
 2. **WP0 — State / break-label contract — COMPLETE / FROZEN**
-3. **WP1 — PIT-safe formation panel — IN PROGRESS**
-4. **WP2 — independent break-event inventory — PENDING WP1**
+3. **WP1 — PIT-safe formation panel — COMPLETE / CLOSURE PASS / CANONICAL PERSISTENCE VERIFIED**
+4. **WP2 — independent break-event inventory — COMPLETE WITH DATA-DENSITY WARNING**
 5. **Split Freeze — COMPLETE / PRE-SCORE FROZEN**
-6. **WP3 — preregistered formation baselines — PENDING WP2**
-7. **WP4 — main role-preserving sequential model — PENDING WP3**
+6. **WP3 — preregistered formation baselines — COMPLETE WITH LIMITATIONS / WP4 ENTRY SUPPORTED**
+7. **WP4 — main role-preserving sequential model — READY TO START / SIMPLE LOW-DIMENSIONAL FAMILY FIRST**
 8. **Ablation / extensions — PENDING WP4**
 9. **Architecture/parameter freeze — PENDING**
 10. **Prospective shadow — PENDING FINAL FREEZE**
@@ -384,6 +384,23 @@ Current WP1 research tooling includes:
 - `tools/gc_break_wp1_formation_event_context_v1.py`
 
 No later WP may be claimed complete merely because its code exists.
+
+### Evidence-backed closure update — 2026-09-14
+
+The following work-package status changes are supported by executed and inspected evidence, not code existence alone:
+
+- **WP1:** closure run `34792800170` completed successfully; exact-NY17 canonical persistence/verification run `34822912320` completed successfully. The formation panel contains 351 governed origins for 2022-2024 and retains explicit missingness rather than interpolation/forward-fill.
+- **WP2:** ground-truth run `34828001360` completed successfully under the frozen engine-independent `k=3.0` event contract. The formation inventory contains 21 primary break events. The inherited sparse-calendar/data-density warning remains binding.
+- **WP3:** preregistered formation baseline run `34829522473` and manifest closure review run `34829777783` completed successfully. WP3 closes as `COMPLETE_WITH_LIMITATIONS_READY_FOR_WP4`.
+
+Binding WP4 entry implications from the inspected WP3 evidence:
+
+- 21 formation break events justify only a **simple low-dimensional, time-ordered** first learned challenger; they do not justify high-capacity model search or broad interaction mining.
+- FAST has usable tactical weakening signal but retains a recall/lead-time trade-off; it is not a standalone authority.
+- SLOW's confirmation role is supported: 17/21 formation breaks were confirmed before the next break, with median delay 3 governed origins / 9 calendar days.
+- On the 213 Emergency-eligible origins containing 13 breaks, adding `EMERGENCY_REVERSAL` to FAST via `CORE_WEAKENING_NATIVE` produced no detected-break or recall gain and increased false-warning burden. Emergency therefore remains selective confirmation/context at WP4 entry, not an automatically promoted early-warning OR trigger.
+- `PATH_HALF` remains anatomy-only because it shares the event-label price path. BOCPD remains slow regime context and is not promoted as a daily direction/break trigger.
+- Optional or short-history blocks remain subject to the same-origin comparison rule; the full-window Core score may not be compared directly with a shorter optional-block score.
 
 ---
 
@@ -450,7 +467,7 @@ Standalone direction accuracy is not the primary metric for GC-BREAK.
 
 ## 14. WP4 model-development rule
 
-WP4 may begin only after WP1, WP2 and WP3 provide adequate support.
+WP4 may begin only after WP1, WP2 and WP3 provide adequate support. **As of manifest v1.51 this entry gate is satisfied only for the simple low-dimensional, role-preserving first challenger described below; it is not authorization for high-capacity modeling or production promotion.**
 
 The preferred first learned family is a **simple role-preserving sequential state-transition / hazard model**, conceptually of the form:
 
@@ -585,6 +602,8 @@ The strongest future claim comes only from outcomes first observed after the fin
 ---
 
 ## 21. Supersession and historical terminology
+
+Manifest v1.51 carries forward all v1.50 architecture, evidence and governance locks, and updates only the evidence-backed WP1/WP2/WP3 closure status plus the constrained WP4 entry gate.
 
 Manifest v1.50 supersedes the current-authority portions of v1.49 that defined the short-term programme as fixed `NEXT_NY17_1D` / `NEXT_NY17_3D` forecasting or treated those horizons as the primary current research objective.
 
