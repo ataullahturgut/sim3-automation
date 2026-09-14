@@ -1,0 +1,100 @@
+name: GC-BREAK WP4D Integrated Role Transition Formation V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - 'gold_axis_2026/gc_break_v0/gc_break_wp4d_integrated_role_transition_prereg_v1.json'
+      - 'gold_axis_2026/tools/gc_break_wp4d_integrated_role_transition_v1.py'
+      - '.github/workflows/gc-break-wp4d-integrated-role-transition-formation-v1.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: gc-break-wp4d-integrated-role-transition-formation-v1
+  cancel-in-progress: false
+
+jobs:
+  formation-competing-transition:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      GH_TOKEN: ${{ github.token }}
+      WP2_RUN_ID: '34828001360'
+      WP3_RUN_ID: '34829522473'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install fixed research dependencies
+        run: python -m pip install --quiet numpy pandas scikit-learn
+
+      - name: Require canonical manifest v1.53 and frozen WP4D preregistration
+        run: |
+          git fetch --no-tags --depth=1 origin gold-r4-direction-engine:refs/remotes/origin/gold-r4-direction-engine
+          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md | grep -q 'Manifest version:.*1.53'
+          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md | grep -q 'episode-conditioned competing transitions'
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('gold_axis_2026/gc_break_v0/gc_break_wp4d_integrated_role_transition_prereg_v1.json')
+          c=json.loads(p.read_text())
+          assert c['status']=='FROZEN_BEFORE_WP4D_FORMATION_SCORING'
+          assert c['governance']['no_2025_challenge_access_during_formation'] is True
+          assert c['governance']['no_2026_stress_access_during_selection'] is True
+          assert c['governance']['no_equal_weight_voting'] is True
+          assert c['governance']['no_random_split'] is True
+          assert len(c['governed_identity_role_ledger']) == 12
+          PY
+
+      - name: Download immutable WP2 and WP3 formation evidence only
+        run: |
+          mkdir -p /tmp/wp2 /tmp/wp3
+          gh run download "$WP2_RUN_ID" --repo "$GITHUB_REPOSITORY" --name gc-break-wp2-ground-truth-v1 --dir /tmp/wp2
+          gh run download "$WP3_RUN_ID" --repo "$GITHUB_REPOSITORY" --name gc-break-wp3-current-formation-baselines-v1 --dir /tmp/wp3
+          test -f /tmp/wp2/gc_break_wp2_break_events_k3_v1.csv
+          test -f /tmp/wp3/gc_break_wp3_current_formation_baseline_panel_v1.csv
+
+      - name: Compile WP4D formation tool
+        run: python -m py_compile gold_axis_2026/tools/gc_break_wp4d_integrated_role_transition_v1.py
+
+      - name: Run frozen WP4D formation evaluation exactly as preregistered
+        run: |
+          mkdir -p /tmp/wp4d
+          python gold_axis_2026/tools/gc_break_wp4d_integrated_role_transition_v1.py \
+            --panel /tmp/wp3/gc_break_wp3_current_formation_baseline_panel_v1.csv \
+            --events /tmp/wp2/gc_break_wp2_break_events_k3_v1.csv \
+            --output-dir /tmp/wp4d | tee /tmp/wp4d/run.log
+          test -f /tmp/wp4d/gc_break_wp4d_formation_summary_v1.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('/tmp/wp4d/gc_break_wp4d_formation_summary_v1.json').read_text())
+          assert d['status'] in {
+            'FORMATION_SUPPORT_CHALLENGE_REQUIRED',
+            'FORMATION_REJECT_INTEGRATED_ROLE_TRANSITION',
+            'FORMATION_INSUFFICIENT_SUPPORT'
+          }
+          assert d['challenge_2025_accessed'] is False
+          assert d['stress_2026_accessed'] is False
+          assert d['production_database_write'] == 'NONE'
+          assert d['all_12_governed_identities_accounted_for'] is True
+          print('WP4D_FORMATION_DECISION=' + d['status'])
+          PY
+
+      - name: Upload immutable WP4D formation evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp4d-integrated-role-transition-formation-v1
+          path: /tmp/wp4d/
+          if-no-files-found: error
+          retention-days: 90
