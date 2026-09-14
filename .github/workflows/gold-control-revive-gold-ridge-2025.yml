@@ -1,0 +1,110 @@
+name: Gold Control Revive GOLD_RIDGE 2025
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-control-revive-gold-ridge-2025]
+    paths:
+      - 'gold_axis_2026/research_revival/gold_ridge_reconstruction_v1_contract.json'
+      - 'gold_axis_2026/tools/gold_ridge_reconstruction_v1_2025.py'
+      - '.github/workflows/gold-control-revive-gold-ridge-2025.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: gold-control-revive-gold-ridge-2025
+  cancel-in-progress: false
+
+jobs:
+  replay-2025:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      FORMATION_ARTIFACT_ID: '10338387444'
+      CHALLENGE_ARTIFACT_ID: '10343971259'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install fixed research dependencies
+        run: python -m pip install --quiet numpy pandas scikit-learn
+
+      - name: Require frozen reconstruction contract before opening 2025 outcomes
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('gold_axis_2026/research_revival/gold_ridge_reconstruction_v1_contract.json')
+          c=json.loads(p.read_text())
+          assert c['status']=='FROZEN_BEFORE_2025_REPLAY'
+          assert c['research_identity']=='GOLD_RIDGE_RECONSTRUCTION_V1'
+          assert c['split']['challenge_refit'] is False
+          assert c['split']['challenge_hyperparameter_search'] is False
+          assert c['split']['challenge_threshold_search'] is False
+          assert c['current_gc_break_primary_target'] is False
+          print('CONTRACT_FREEZE_OK')
+          PY
+
+      - name: Download immutable exact-NY17 formation and 2025 challenge artifacts
+        run: |
+          mkdir -p /tmp/gold_ridge/wp1 /tmp/gold_ridge/ch2025
+          gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/${FORMATION_ARTIFACT_ID}/zip" > /tmp/gold_ridge/wp1.zip
+          gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/${CHALLENGE_ARTIFACT_ID}/zip" > /tmp/gold_ridge/ch2025.zip
+          unzip -q /tmp/gold_ridge/wp1.zip -d /tmp/gold_ridge/wp1
+          unzip -q /tmp/gold_ridge/ch2025.zip -d /tmp/gold_ridge/ch2025
+          HIST=$(find /tmp/gold_ridge/wp1 -type f -name 'gc_break_wp1_exact_ny17_consolidated_batch_v3.csv' | head -n1)
+          CH=$(find /tmp/gold_ridge/ch2025 -type f -name 'gc_break_wp1_exact_ny17_consolidated_batch_v3.csv' | head -n1)
+          test -n "$HIST" && test -f "$HIST"
+          test -n "$CH" && test -f "$CH"
+          echo "HIST=$HIST" >> "$GITHUB_ENV"
+          echo "CH=$CH" >> "$GITHUB_ENV"
+          echo "FORMATION_SHA256=$(sha256sum "$HIST" | awk '{print $1}')" >> "$GITHUB_ENV"
+          echo "CHALLENGE_SHA256=$(sha256sum "$CH" | awk '{print $1}')" >> "$GITHUB_ENV"
+
+      - name: Compile reconstruction runner
+        run: python -m py_compile gold_axis_2026/tools/gold_ridge_reconstruction_v1_2025.py
+
+      - name: Fit on 2022-2024 only and score frozen 2025 replay
+        run: |
+          mkdir -p /tmp/gold_ridge/out
+          python gold_axis_2026/tools/gold_ridge_reconstruction_v1_2025.py \
+            --historical-exact "$HIST" \
+            --challenge-exact "$CH" \
+            --contract gold_axis_2026/research_revival/gold_ridge_reconstruction_v1_contract.json \
+            --output-dir /tmp/gold_ridge/out | tee /tmp/gold_ridge/out/run.log
+
+      - name: Audit no-refit/no-tuning output
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path('/tmp/gold_ridge/out/gold_ridge_reconstruction_v1_2025_summary.json')
+          d=json.loads(p.read_text())
+          assert d['status']=='PASS'
+          assert d['original_identity_recovered'] is False
+          assert d['challenge_refit'] is False
+          assert d['hyperparameter_search'] is False
+          assert d['threshold_search'] is False
+          assert d['post_challenge_tuning'] is False
+          assert d['production_database_write']=='NONE'
+          assert d['challenge_scored_rows'] >= 180
+          d['formation_artifact_sha256']=os.environ['FORMATION_SHA256']
+          d['challenge_artifact_sha256']=os.environ['CHALLENGE_SHA256']
+          p.write_text(json.dumps(d,indent=2,sort_keys=True)+'\n')
+          print('GOLD_RIDGE_RECONSTRUCTION_2025_PASS')
+          print(json.dumps(d,indent=2,sort_keys=True))
+          PY
+
+      - name: Upload immutable reconstruction evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-ridge-reconstruction-v1-2025
+          path: /tmp/gold_ridge/out/
+          if-no-files-found: error
+          retention-days: 90
