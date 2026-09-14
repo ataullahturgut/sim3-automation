@@ -1,0 +1,113 @@
+name: GC-BREAK WP4C 2025 Exact NY17 Challenge Input V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gc-break-wp1-formation-backfill]
+    paths:
+      - '.github/workflows/gc-break-wp4c-2025-exact-ny17-challenge-input-v1.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: gc-break-wp4c-2025-exact-ny17-challenge-input-v1
+  cancel-in-progress: false
+
+jobs:
+  reconstruct-2025-exact-ny17:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gc-break-wp1-formation-backfill
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies and require locked WP4C architecture
+        run: |
+          pip install --quiet pandas
+          test -n "$TWELVE_DATA_API_KEY"
+          git fetch --no-tags --depth=1 origin gold-r4-direction-engine:refs/remotes/origin/gold-r4-direction-engine
+          git show origin/gold-r4-direction-engine:gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md | grep -q 'Manifest version:.*1.53'
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          c=json.loads(Path('gold_axis_2026/gc_break_v0/gc_break_wp4c_structural_health_dual_lane_freeze_v1.json').read_text())
+          assert c['status']=='FORMATION_INFORMED_DEVELOPMENT_LOCK_BEFORE_CHALLENGE'
+          assert c['challenge_gate']['architecture_or_threshold_change_after_opening_challenge'] is False
+          PY
+      - name: Create full 2025 calendar seed with unresolved status
+        run: |
+          mkdir -p /tmp/wp4c_2025/seed /tmp/wp4c_2025/exact
+          python - <<'PY'
+          import pandas as pd
+          d=pd.DataFrame({'trade_date':pd.date_range('2025-01-01','2025-12-31',freq='D').strftime('%Y-%m-%d'),'acquisition_status':'UNRESOLVED'})
+          d.to_csv('/tmp/wp4c_2025/seed/wp4c_2025_calendar_seed.csv',index=False)
+          print({'rows':len(d),'min':d.trade_date.min(),'max':d.trade_date.max()})
+          PY
+      - name: Compile exact-NY17 acquisition tool
+        run: python -m py_compile gold_axis_2026/tools/gc_break_wp1_resume_exact_ny17_batch_v3.py
+      - name: Reconstruct exact 16:59 one-minute 2025 challenge inputs
+        id: acquire
+        shell: bash
+        run: |
+          set +e
+          python gold_axis_2026/tools/gc_break_wp1_resume_exact_ny17_batch_v3.py \
+            --probe-csv /tmp/wp4c_2025/seed/wp4c_2025_calendar_seed.csv \
+            --window-days 3 \
+            --pacing-seconds 8.5 \
+            --backoff-seconds 70 \
+            --checkpoint-every-windows 10 \
+            --output-dir /tmp/wp4c_2025/exact
+          RC=$?
+          set -e
+          echo "rc=$RC" >> "$GITHUB_OUTPUT"
+          test -f /tmp/wp4c_2025/exact/gc_break_wp1_exact_ny17_batch_resume_v3_summary.json
+      - name: Write challenge-input readiness audit
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('/tmp/wp4c_2025')
+          p=root/'exact/gc_break_wp1_exact_ny17_batch_resume_v3_summary.json'
+          d=json.loads(p.read_text()) if p.exists() else {}
+          out={
+            'audit_id':'GC_BREAK_WP4C_2025_EXACT_NY17_CHALLENGE_INPUT_V1',
+            'status':'READY_FOR_PANEL_BUILD' if d.get('unresolved_count')==0 else 'BLOCKED_DATA',
+            'rows':d.get('rows'),
+            'final_status_counts':d.get('final_status_counts'),
+            'unresolved_count':d.get('unresolved_count'),
+            'quota_abort':d.get('quota_abort'),
+            'quota_scope':d.get('quota_scope'),
+            'source_semantic':'Twelve Data XAU/USD 1min exact 16:59 America/New_York; no fallback/interpolation',
+            'evidence_class':'HISTORICAL_REPLAY_RECONSTRUCTION',
+            'challenge_scoring_performed':False,
+            'production_database_write':'NONE',
+            'prospective_claim':False
+          }
+          (root/'gc_break_wp4c_2025_challenge_input_readiness_v1.json').write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
+          print(json.dumps(out,indent=2,sort_keys=True))
+          PY
+      - name: Upload immutable 2025 exact challenge-input checkpoint
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gc-break-wp4c-2025-exact-ny17-challenge-input-v1
+          path: /tmp/wp4c_2025/
+          if-no-files-found: error
+          retention-days: 90
+      - name: Fail closed if unresolved input remains
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('/tmp/wp4c_2025/gc_break_wp4c_2025_challenge_input_readiness_v1.json').read_text())
+          assert d['status']=='READY_FOR_PANEL_BUILD', d
+          PY
