@@ -1,0 +1,81 @@
+{
+  "decision_id": "GC_BREAK_WP4_REDIRECTION_DECISION_V1",
+  "status": "EVALUATED_NOT_YET_PREREGISTERED_OR_SCORED",
+  "created_date": "2026-09-14",
+  "manifest_min_version": "1.52",
+  "closed_family": "GC_BREAK_WP4_HAZARD_PREREG_V1",
+  "closed_family_result": "REJECT_LEARNED_HAZARD",
+  "evidence_basis": {
+    "phase_a_run_id": 34830376294,
+    "closure_run_id": 34831293583,
+    "evaluation_origins": 241,
+    "evaluation_break_events": 15,
+    "M1": {
+      "brier_score": 0.058761042840996536,
+      "log_loss": 0.2310625399095748,
+      "average_precision": 0.12765930207968024,
+      "roc_auc": 0.5914454277286135
+    },
+    "M2": {
+      "brier_score": 0.05963188001006388,
+      "log_loss": 0.22960075044439804,
+      "average_precision": 0.14050919943997253,
+      "roc_auc": 0.6407079646017699
+    },
+    "M0": {
+      "brier_score": 0.05870101248269167,
+      "log_loss": 0.23597063049442266
+    },
+    "M3_sensitivity_only": {
+      "brier_score": 0.056593030994826106,
+      "log_loss": 0.21806204176876806,
+      "promotion_permitted": false,
+      "reason": "adverse_fraction shares the frozen event-label price path and is anatomy/sensitivity evidence, not independent predictive evidence"
+    },
+    "wp3_role_evidence": {
+      "fast_conflict_episodes": 25,
+      "fast_conflict_converted_episodes": 16,
+      "fast_conflict_false_episodes": 9,
+      "fast_conflict_prebreak_event_recall": 0.3333333333333333,
+      "fast_opposite_episodes": 14,
+      "fast_opposite_converted_episodes": 8,
+      "slow_confirmation_breaks": 17,
+      "slow_confirmation_total_breaks": 21,
+      "slow_confirmation_median_delay_governed_origins": 3,
+      "slow_confirmation_median_delay_calendar_days": 9
+    }
+  },
+  "interpretation": {
+    "primary": "The rejected global next-governed-origin hazard family contains some ranking/discrimination signal but does not meet the frozen proper-probability scoring gate. The project should not rescue it with post-score calibration, threshold search, hyperparameter search or higher-capacity models.",
+    "structural": "WP3 evidence is more naturally organized as role-specific state transitions: FAST as weakening/alert evidence, SLOW as confirmation/new-regime evidence, and explicit recovery when tactical evidence normalizes.",
+    "data_support": "With only 21 formation break events and 15 events in the common prequential Phase-A evaluation window, another broad learned probability model is not the preferred immediate next step."
+  },
+  "recommended_next_architecture": {
+    "working_name": "WP4B_ROLE_PRESERVING_FINITE_STATE_MACHINE_V1",
+    "type": "deterministic role-preserving sequential finite-state challenger",
+    "reason": "directly matches the manifest ontology while avoiding unsupported calibrated-probability claims under sparse break-event support",
+    "candidate_role_map_for_preregistration_review_only": {
+      "STABLE_TO_WEAKENING": "FAST conflict with current regime",
+      "WEAKENING_TO_BREAK_ALERT": "FAST robustly opposite current regime",
+      "BREAK_ALERT_TO_CONFIRMED_BREAK": "current-origin frozen price-break condition is met; no future information",
+      "CONFIRMED_BREAK_TO_NEW_REGIME": "SLOW confirms the new regime on its completed-week clock",
+      "WEAKENING_OR_ALERT_TO_STABLE_RECOVERY": "FAST returns to robust support of the current regime before a break"
+    },
+    "important_limit": "These transition rules are a research recommendation only. They must be frozen in a separately named preregistration before any formation scoring. No thresholds or persistence parameters may be chosen after observing the resulting scores."
+  },
+  "possible_later_learned_extension": {
+    "name": "episode-conditioned weakening-to-break conversion model",
+    "gate": "only after the deterministic WP4B state-machine challenger is frozen and scored",
+    "scope": "model conversion/recovery within already-open weakening episodes rather than global next-origin break probability",
+    "capacity": "very low-dimensional only"
+  },
+  "governance": {
+    "challenge_2025_accessed_for_selection": false,
+    "stress_2026_accessed_for_selection": false,
+    "production_authority": false,
+    "database_write": "NONE",
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF",
+    "new_architecture_scoring_performed": false
+  }
+}
