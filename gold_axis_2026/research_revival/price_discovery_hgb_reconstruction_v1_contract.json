@@ -1,0 +1,70 @@
+{
+  "contract_id": "PRICE_DISCOVERY_HGB_RECONSTRUCTION_V1_2025",
+  "status": "FROZEN_BEFORE_2025_REPLAY",
+  "research_identity": "PRICE_DISCOVERY_HGB_RECONSTRUCTION_V1",
+  "manifest_channel_being_reconstructed": "PRICE_DISCOVERY_HGB",
+  "identity_note": "The exact historical standalone PRICE_DISCOVERY_HGB implementation was not recovered. This is a separately named project-native/literature-informed reconstruction and must not be relabelled as the original identity.",
+  "role": "RESEARCH_ONLY_CROSS_PRECIOUS_METAL_PRICE_DISCOVERY_AUXILIARY_EXPERT",
+  "production_authority": false,
+  "current_gc_break_primary_target": false,
+  "auxiliary_target": "NEXT_GOVERNED_NY17_1STEP_DIRECTION",
+  "split": {
+    "development_train": "2022-01-01..2024-12-31",
+    "retrospective_challenge": "2025-01-01..2025-12-31",
+    "challenge_refit": false,
+    "challenge_hyperparameter_search": false,
+    "challenge_threshold_search": false
+  },
+  "gold_source": "exact Twelve Data XAU/USD 1min 16:59 America/New_York governed NY17 artifacts",
+  "cross_metal_sources": {
+    "XAG": "XAG_STAKTRAKR_RESEARCH_DAILY_R1",
+    "XPT": "XPT_STAKTRAKR_RESEARCH_DAILY_R1",
+    "XPD": "XPD_STAKTRAKR_RESEARCH_DAILY_R1",
+    "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+    "join_rule": "strictly previous source observation relative to governed NY17 origin; same-date cross-metal observation is not used"
+  },
+  "project_native_precedent": {
+    "source_file": "gold_axis_2026/v149_thesis/run_rich_short_horizon.py",
+    "gold_block": "B0",
+    "cross_metal_block": "B1",
+    "candidate": "HGB_D2",
+    "note": "Reuses the old project feature transforms and fixed HGB configuration as precedent without reviving the old 1D/3D programme as the current primary target."
+  },
+  "features": [
+    "gold_ret_lag1", "gold_ret_lag2", "gold_ret_lag3",
+    "gold_mom3", "gold_mom5", "gold_mom10", "gold_mom20",
+    "gold_rv5", "gold_rv10", "gold_rv20",
+    "xag_ret", "xpt_ret", "xpd_ret"
+  ],
+  "model": {
+    "family": "HistGradientBoostingClassifier",
+    "max_depth": 2,
+    "max_iter": 80,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0,
+    "random_state": 20260911,
+    "probability_output": "p_up_next_governed_origin",
+    "implied_direction_rule": "UP if p>=0.5 else DOWN",
+    "calibration": "NONE",
+    "hyperparameter_search": "NONE"
+  },
+  "literature_rationale": [
+    {
+      "citation": "Adrangi, Chatrath & David (2000), Applied Financial Economics 10(3):227-234",
+      "doi": "10.1080/096031000331644",
+      "finding_used": "gold and silver are strategically linked and exhibit intermarket price-discovery/volatility-spillover dynamics"
+    },
+    {
+      "citation": "Mensi et al. (2023), International Review of Economics & Finance 83:219-232",
+      "finding_used": "precious metals exhibit time-frequency spillovers and connectedness, motivating cross-metal evidence as an auxiliary channel"
+    }
+  ],
+  "forbidden": [
+    "using 2025 outcomes for feature selection",
+    "using 2025 outcomes for hyperparameter selection",
+    "using same-date cross-metal observations at the NY17 origin",
+    "challenge refit",
+    "post-score threshold optimization",
+    "calling this reconstruction the recovered original PRICE_DISCOVERY_HGB"
+  ]
+}
