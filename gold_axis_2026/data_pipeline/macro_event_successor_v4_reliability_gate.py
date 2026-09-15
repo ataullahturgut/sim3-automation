@@ -8,9 +8,6 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from typing import Iterable
 
-import psycopg
-from psycopg.rows import dict_row
-
 ENGINE_ID = "MACRO_EVENT_SUCCESSOR_V4_RELIABILITY_GATE"
 STRONG_STATES = {"GOLD_ADVERSE_MACRO_SHOCK", "GOLD_SUPPORTIVE_MACRO_SHOCK"}
 ROLE_BY_FAMILY = {
@@ -83,6 +80,8 @@ def binom_one_sided_p(hits: int, n: int) -> float:
 
 
 def load_parent_events(conn, start_utc: datetime, end_utc: datetime) -> list[V4Event]:
+    from psycopg.rows import dict_row
+
     series_ids = list(SERIES_TO_FAMILY)
     with conn.cursor(row_factory=dict_row) as cur:
         cur.execute(
@@ -120,6 +119,8 @@ def load_parent_events(conn, start_utc: datetime, end_utc: datetime) -> list[V4E
 
 
 def exact_close(conn, ts: datetime) -> float | None:
+    from psycopg.rows import dict_row
+
     with conn.cursor(row_factory=dict_row) as cur:
         cur.execute(
             """
@@ -240,6 +241,8 @@ def parse_utc(value: str) -> datetime:
 
 
 def main() -> int:
+    import psycopg
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--start-utc", required=True)
     parser.add_argument("--end-utc", required=True)
