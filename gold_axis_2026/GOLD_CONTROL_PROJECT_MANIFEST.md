@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.55  
+**Manifest version:** 1.56  
 **Issue date:** 2026-09-15  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -12,9 +12,9 @@
 
 This file is the **only current Gold Control project manifest**.
 
-`gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md` is the sole project-level authority for Gold Control architecture, model roles, data chronology, validation governance, research sequencing and promotion rules. No second Gold Control project manifest may be created.
+`gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md` is the sole project-level authority for Gold Control architecture, model roles, data chronology, validation governance, research sequencing, frozen challenge definitions and promotion rules. No second Gold Control project manifest may be created.
 
-Contracts, preregistrations, design notes, checkpoints, reports, run artifacts, historical handovers and audit outputs are subordinate to this manifest. If a subordinate artifact conflicts with this manifest, the copy of this file at the current canonical `gold-r4-direction-engine` HEAD wins.
+Contracts, preregistrations, design notes, checkpoints, reports, event inventories, run artifacts, historical handovers and audit outputs are subordinate to this manifest. If any subordinate artifact conflicts with this manifest, the copy at the current canonical `gold-r4-direction-engine` HEAD wins.
 
 Every new Gold Control session must first read the current canonical branch HEAD and this manifest before interpreting historical material.
 
@@ -23,9 +23,9 @@ Authority split:
 - **GitHub:** current code, frozen model/feature/source contracts, reproducibility and this manifest.
 - **Production Neon:** mutable source observations, point-in-time lineage, append-only runtime/context state and legitimately issued forecast/decision records.
 
-Historical implementation detail may remain in Git history or immutable audit storage, but historical results do not define current project authority.
+Historical implementation detail may remain in Git history or immutable audit storage, but historical model scores do not define current project authority.
 
-This manifest intentionally stores **architecture and governance, not application-result narratives or score tables**.
+This manifest stores **architecture, governance and frozen event/challenge definitions**; detailed model-result narratives and score tables belong outside the manifest.
 
 Gold Control is a **decision-support and research system, not an autonomous trading system**.
 
@@ -48,7 +48,7 @@ Current monthly H=1 expert identities:
 
 `MONTHLY_DIRECTION_3M` remains a strategic monthly direction/prior context.
 
-The monthly H=1 line remains a standalone forecast output regardless of the outcome of GC-BREAK research. Monthly forecasts may provide strategic context only when the derived features are origin-safe and empirically justified.
+The monthly H=1 line remains a standalone forecast output regardless of the outcome of GC-BREAK research. Monthly forecasts may provide strategic context only when derived features are origin-safe and empirically justified.
 
 ### 2.2 Short-term GC-BREAK — SEQUENTIAL TREND-HEALTH / BREAK EARLY WARNING
 
@@ -113,12 +113,12 @@ Research-only channels may be evaluated without becoming runtime identities.
 
 Heterogeneous engines must not be flat-voted or ranked as though they solve the same task.
 
-### 4.1 Strategic block
+### Strategic block
 
 - Monthly H=1 experts: independent price-level forecast plus strategic anchor/context.
 - `MONTHLY_DIRECTION_3M`: slow strategic prior; not a daily trigger.
 
-### 4.2 Trend-structure block
+### Trend-structure block
 
 - **FAST:** tactical daily trend state, flip, age and persistence; candidate early weakening evidence.
 - **SLOW:** completed-week trend confirmation, alignment/conflict and state age; primarily confirmation/new-regime evidence.
@@ -141,7 +141,7 @@ Frozen SLOW rule:
 - otherwise `NOT_YET_ROBUST`;
 - exactly two completed-week persistence.
 
-### 4.3 Regime / stress / risk block
+### Regime / stress / risk block
 
 - `BOCPD_RETURN_SUCCESSOR_V1`: change-point/regime context only; no equal direction vote.
 - `EMERGENCY_LEVEL`: abnormal displacement context.
@@ -151,24 +151,16 @@ Frozen SLOW rule:
 
 The frozen BOCPD identity remains on its native completed-month clock. A daily BOCPD requires a separately named research challenger.
 
-### 4.4 Event / shock block
+### Event / shock block
 
 - `MACRO_EVENT_SUCCESSOR_V2`: release-aware event-surprise context at event time.
 - `MARKET_SHOCK_V3`: research-only realized intraday shock intensity/concordance around eligible events.
 
 Macro-event and Market-Shock evidence lives on an event-triggered intraday clock. Event windows or rules may not be changed after seeing challenge outcomes and then represented as frozen evidence.
 
-### 4.5 Reliability / meta block
+### Reliability / meta block
 
-Permitted reliability evidence includes:
-
-- matured-only reliability/Brier evidence where applicable;
-- support count;
-- evidence age;
-- missingness and missing reason;
-- class-degeneracy flag;
-- regime similarity where justified;
-- event/regime-conditional reliability only when support is adequate.
+Permitted evidence includes matured reliability, support count, evidence age, explicit missingness, missing reason, class-degeneracy flags and justified regime/event-conditional reliability.
 
 `NO_SIGNAL` / abstention is a valid outcome when evidence support is insufficient.
 
@@ -189,19 +181,13 @@ A slower state may be carried forward only under its native-clock semantics and 
 
 Missing channels may not be silently imputed as neutral or zero.
 
-Historical evidence should carry, where applicable:
-
-- `available_at`;
-- source identity;
-- lineage/fingerprint;
-- state/evidence age;
-- `missing_reason`.
+Historical evidence should carry, where applicable: `available_at`, source identity, lineage/fingerprint, state/evidence age and `missing_reason`.
 
 ---
 
 ## 6. Governance locks
 
-The following are binding:
+Binding rules:
 
 - `AUTO_SELECTOR = OFF`
 - `AUTO_ENSEMBLE = OFF`
@@ -217,7 +203,6 @@ The following are binding:
 - no historical reconstruction relabelled as prospective evidence
 - no target/future observation inserted into an earlier origin
 - no challenge/stress result used to retune that locked challenge/stress evaluation
-- no fixed 1D/3D short-term target reintroduced without explicit architecture change
 - no production forecast/decision authority write without explicit later authorization
 - no stale context labelled fresh merely because an engine is `ACTIVE`
 - no fabricated state or feature when a historical channel is unavailable
@@ -266,9 +251,11 @@ The Twelve Data value is Gold Control's internal NY17 reference, not an official
 
 Historical reconstruction must preserve the same source/bar semantics and may not be backdated or relabelled prospective.
 
+Exact historical provider gaps remain gaps; a different bar may not be inserted into the canonical series merely to improve coverage.
+
 ---
 
-## 9. Frozen GC-BREAK event-label rule
+## 9. Frozen GC-BREAK structural event-label rule
 
 The primary GC-BREAK ground-truth event definition is engine-independent.
 
@@ -285,35 +272,114 @@ Binding rule:
 
 `k = 2.5` is sensitivity-only and may not replace `k = 3.0` because a downstream model scores better.
 
-The following may not define the ground-truth label:
+FAST, SLOW, Monthly Direction, Emergency, BOCPD, GVZ, Macro Event, Market Shock and learned models may not define this structural ground truth.
 
-- FAST;
-- SLOW;
-- Monthly Direction;
-- Emergency;
-- BOCPD;
-- GVZ;
-- Macro Event;
-- Market Shock;
-- any learned GC-BREAK model.
-
-Future price may be used only to date the ground-truth event itself, never to construct pre-origin predictors.
+This structural event universe is separate from the 2025 volatility challenge below.
 
 ---
 
-## 10. Frozen research split
+## 10. Frozen 2025 volatility challenge
+
+Authority file:
+
+`gold_axis_2026/GOLD_CONTROL_2025_VOLATILITY_CHALLENGE_CONTRACT_V1_2026-09-15.md`
+
+Purpose: evaluate how the 12 governed engines behave around materially abnormal **daily XAU/USD moves**, independently of the GC-BREAK structural-break labels.
+
+### 10.1 Research source
+
+Research event source:
+
+`XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1`
+
+Metadata:
+
+- provider: Twelve Data;
+- symbol: `XAU/USD`;
+- transform: `SELECT_16_00_AMERICA_NEW_YORK_HOURLY_CLOSE`;
+- quality: `APPROVED_HISTORICAL_RESEARCH_RETRIEVAL_NOT_CANONICAL_NY17`;
+- 2025 weekday research observations: **255**.
+
+This source is **research-only** and does not replace the canonical exact-16:59 NY17 runtime series.
+
+The exact 1-minute historical provider probe contains many dates with `PROVIDER_NO_BAR`; those gaps remain unfilled in the canonical series.
+
+On the 168 directly comparable 2025 daily-return pairs where both research and exact-16:59 series shared the same previous close date:
+
+- return correlation = **1.000000**;
+- mean absolute return difference = **0.000000 percentage points**;
+- sign agreement = **168/168**.
+
+### 10.2 Frozen event formula
+
+`r_t = 100 * ln(P_t / P_{t-1})`
+
+`sigma20_t = sample standard deviation of the 20 immediately preceding governed daily log returns`
+
+`z_t = r_t / sigma20_t`
+
+The current return is excluded from its own volatility estimate.
+
+Frozen tiers:
+
+- **MAJOR:** `|z_t| >= 2.0`
+- **EXTREME:** `|z_t| >= 3.0`
+
+EXTREME is a subset of MAJOR. Raw percentage return is descriptive only; a fixed raw `%2` rule is not the event definition.
+
+Consecutive qualifying dates remain separate directional event-days in the primary evaluation.
+
+### 10.3 Frozen 2025 event inventory
+
+The frozen primary inventory contains **19 event-days**, of which **5 are EXTREME**:
+
+1. `2025-02-10` UP — z `+2.3407`
+2. `2025-02-14` DOWN — z `-2.2468`
+3. `2025-02-18` UP — z `+2.1885`
+4. `2025-03-13` UP — z `+2.1237`
+5. `2025-04-04` DOWN — z `-3.3930` — EXTREME
+6. `2025-04-09` UP — z `+3.2185` — EXTREME
+7. `2025-04-10` UP — z `+2.3440`
+8. `2025-07-21` UP — z `+2.0611`
+9. `2025-08-01` UP — z `+2.5481`
+10. `2025-09-02` UP — z `+2.6673`
+11. `2025-09-22` UP — z `+2.6254`
+12. `2025-09-29` UP — z `+2.3040`
+13. `2025-10-06` UP — z `+2.7911`
+14. `2025-10-13` UP — z `+2.5043`
+15. `2025-10-16` UP — z `+2.9074`
+16. `2025-10-17` DOWN — z `-2.0589`
+17. `2025-10-21` DOWN — z `-4.1054` — EXTREME
+18. `2025-12-22` UP — z `+4.0174` — EXTREME
+19. `2025-12-29` DOWN — z `-6.6415` — EXTREME
+
+Direction totals: **14 UP / 5 DOWN**.
+
+### 10.4 Motor-evaluation lock
+
+The event inventory is frozen **before** the new 12-engine replay. After engine results are inspected, the following may not be changed under this challenge identity:
+
+- 2σ / 3σ thresholds;
+- trailing-20 scale window;
+- provider/source identity;
+- event-day inclusion/exclusion;
+- episode splitting/consolidation used for primary counts.
+
+The same 19 event-days must be presented to all 12 governed identities, but each engine must be judged according to its native role. Permitted statuses include `EARLY_HIT`, `SAME_EVENT_HIT`, `CONFIRM`, `WRONG_DIRECTION`, `MISS`, `NO_SIGNAL`, `NOT_APPLICABLE`, `BLOCKED` and `NOT_TESTABLE`.
+
+Macro Event non-event dates are not automatic misses; BOCPD/GVZ/Emergency/Monthly engines are not to be converted into flat daily direction voters.
+
+This volatility challenge is `HISTORICAL_REPLAY / RETROSPECTIVE_DIAGNOSTIC` evidence. It may be used to judge complementarity and model feasibility, but a model tuned after viewing 2025 may not claim the same 2025 period as untouched OOS validation.
+
+---
+
+## 11. Frozen research split
 
 ### Formation / development
 
 `2022-01-01 .. 2024-12-31`
 
-Permitted use:
-
-- label-quality inspection;
-- baseline development;
-- rolling/prequential internal validation;
-- learned calibration/reliability estimation;
-- architecture development under frozen governance.
+Permitted use: label-quality inspection, baseline development, rolling/prequential internal validation, calibration/reliability estimation and architecture development under frozen governance.
 
 ### Retrospective Challenge
 
@@ -335,9 +401,7 @@ Random splitting is forbidden.
 
 ---
 
-## 11. Current work-package status
-
-The binding sequence is:
+## 12. Current work-package status
 
 1. **Coverage / PIT audit — COMPLETE**
 2. **WP0 — State / break-label contract — COMPLETE / FROZEN**
@@ -346,19 +410,18 @@ The binding sequence is:
 5. **Split Freeze — COMPLETE / PRE-SCORE FROZEN**
 6. **WP3 — preregistered simple formation baselines — COMPLETE WITH LIMITATIONS**
 7. **WP4 — role-preserving sequential model — OPEN FOR A NEW SEPARATELY GOVERNED CHALLENGER**
-8. **Ablation / optional extensions — BLOCKED PENDING ACCEPTED WP4 CORE**
-9. **Architecture/parameter freeze — PENDING**
-10. **Prospective shadow — PENDING FINAL FREEZE**
+8. **2025 volatility-challenge inventory — FROZEN; 12-engine role-preserving replay NEXT**
+9. **Ablation / optional extensions — BLOCKED PENDING ACCEPTED CORE**
+10. **Architecture/parameter freeze — PENDING**
+11. **Prospective shadow — PENDING FINAL FREEZE**
 
-Historical WP4A, WP4B and WP4D families have already been evaluated under frozen rules and are **rejected**. Their detailed scores, run IDs and application-result narratives are intentionally not stored in this manifest.
+Historical WP4A, WP4B and WP4D are rejected. Their detailed application scores and run IDs are intentionally not stored in this manifest.
 
 A rejected family may not be retuned on challenge outcomes and reintroduced under the same identity.
 
 ---
 
-## 12. Research eligibility by role
-
-Eligibility is role- and origin-specific. A short-history channel may not shrink the entire core study window.
+## 13. Research eligibility by role
 
 | Channel | Current eligibility | Binding interpretation |
 |---|---|---|
@@ -374,34 +437,25 @@ Eligibility is role- and origin-specific. A short-history channel may not shrink
 | GVZ_RISK historical extension | PARTIAL | same-origin extension only unless PIT proof is complete |
 | Other research experts | RESEARCH-ONLY UNTIL PIT PROVEN | no runtime authority without promotion |
 
-Optional or short-history blocks must be compared against Core on the **same eligible origins**.
+Optional/short-history blocks must be compared against Core on the same eligible origins.
 
 ---
 
-## 13. Evaluation principles
+## 14. Evaluation principles
 
 Simple preregistered baselines must precede complex learned promotion.
 
-Primary GC-BREAK metrics:
+For GC-BREAK, primary metrics include break recall/miss rate, false-warning burden, warning lead time, confirmation delay, persistence, spurious flips, recovery behavior and proper scores where probabilities are emitted.
 
-- break-event recall / miss rate;
-- false warning episodes per 100 governed origins;
-- first `WEAKENING -> break` lead time;
-- first `BREAK_ALERT -> break` lead time;
-- confirmation delay after a true break;
-- warning duration/persistence;
-- spurious state flips;
-- time spent in warning states;
-- recovery behaviour;
-- proper score/calibration when a transition probability is emitted.
+For the 2025 volatility challenge, each engine must additionally report role-appropriate event coverage, lead/lag, direction correctness where direction is actually emitted, abstention/NO_SIGNAL and PIT/missing limitations.
 
-Standalone direction accuracy is not the primary metric for GC-BREAK.
+Standalone direction accuracy is not the universal metric for heterogeneous engines.
 
 Comparisons must be time-ordered, point-in-time safe and same-origin where eligibility differs.
 
 ---
 
-## 14. WP4 development rule
+## 15. WP4 / future model-development rule
 
 WP4 remains open only for a **separately named and preregistered challenger**.
 
@@ -411,37 +465,27 @@ A conceptual transition model may be expressed as:
 
 `P(S_t = j | S_{t-1} = i, D_t, X_t)`
 
-where:
+where `S_{t-1}` is prior state, `D_t` is duration/sojourn information and `X_t` contains role-preserving origin-safe evidence.
 
-- `S_{t-1}` is the prior state;
-- `D_t` is state duration/sojourn information;
-- `X_t` contains role-preserving, origin-safe evidence.
-
-An explicit latent-state/state-duration HMM/HSMM challenger is scientifically eligible for investigation under a new preregistration, but is **not pre-approved**.
+An explicit latent-state/state-duration HMM/HSMM challenger is scientifically eligible under a new preregistration, but is **not pre-approved**.
 
 Boosting, mixture-of-experts and deep-learning escalation remain blocked until simpler challengers justify additional complexity under time-ordered evidence with adequate support.
 
-No next challenger may be selected or tuned from 2025 challenge outcomes.
+The 2025 volatility replay may determine whether the 12 engines show useful complementarity. It may not be used to tune a combined model and then relabel the same 2025 evidence as untouched validation.
 
 ---
 
-## 15. Historical research interpretation
+## 16. Historical research interpretation
 
 Historical fixed-horizon, 1D/3D, V1.48/V1.49, HS-SDL-DMA and related studies remain historical/auxiliary research only.
 
-They may inform scientific understanding where chronology-safe, but they do not override:
+They may inform scientific understanding where chronology-safe, but they do not override the GC-BREAK state ontology, current event-label rules, frozen split, native engine roles or current promotion governance.
 
-- the GC-BREAK state ontology;
-- the current event-label rule;
-- the frozen research split;
-- native engine roles;
-- current promotion governance.
-
-Old result files or artifact names are not current project authority. Historical traceability belongs in Git history and/or immutable evidence storage, not in this manifest.
+Old result files or artifact names are not current project authority. Historical traceability belongs in Git history and/or immutable evidence storage.
 
 ---
 
-## 16. Neon / write authority
+## 17. Neon / write authority
 
 GC-BREAK currently has **no production forecast, decision or trading authority**.
 
@@ -457,13 +501,15 @@ Research panels, labels, predictions and evaluations must remain logically separ
 
 ---
 
-## 17. Promotion and prospective-evidence rule
+## 18. Promotion and prospective-evidence rule
 
 Binding scientific order:
 
 `PIT-safe formation`
 
--> `independent break-event inventory`
+-> `independent event inventories`
+
+-> `role-preserving engine evaluation`
 
 -> `simple preregistered baselines`
 
@@ -481,21 +527,17 @@ The strongest future claim comes only from outcomes first observed after final a
 
 ---
 
-## 18. Final binding summary
+## 19. Final binding summary
 
 Gold Control is a **role-preserving, multi-clock sequential early-warning / regime-transition research programme** running in parallel with an independent monthly H=1 price-level forecasting programme.
 
-The short-term objective is not to predict tomorrow or three days ahead. It is to detect trend deterioration early, escalate warning only when evidence accumulates, confirm structural breaks, recognize new regimes and recover cleanly from aborted warnings.
+Two distinct retrospective event universes are now explicit:
 
-All future work must preserve:
+1. the frozen GC-BREAK structural-break labels;
+2. the frozen 2025 volatility challenge of 19 abnormal daily moves.
 
-- point-in-time integrity;
-- native engine clocks;
-- role semantics;
-- engine-independent ground-truth labels;
-- time-ordered validation;
-- explicit missingness;
-- separation of historical replay, retrospective challenge/stress and genuine prospective evidence;
-- strict distinction between architecture/governance and application-result artifacts.
+The next governed task is to replay the 12 existing identities against the same 19-event volatility universe under their native roles, without changing the event definition after seeing engine performance.
 
-This manifest is intentionally concise. Detailed experimental results must live outside the manifest and may not become project authority by accumulation.
+Only after that replay may the project judge whether the engines provide enough complementary information to justify a new combined model research programme.
+
+All future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
