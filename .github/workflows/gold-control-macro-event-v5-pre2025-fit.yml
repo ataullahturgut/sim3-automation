@@ -1,0 +1,55 @@
+name: Gold Control Macro Event V5 Pre2025 Fit
+
+on:
+  push:
+    branches: [gold-macro-event-v5-pre2025-clean-20260915]
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_MACRO_EVENT_SUCCESSOR_V5_PRE2025_PREREG_2026-09-15.md'
+      - 'gold_axis_2026/tools/macro_event_v5_core.py'
+      - 'gold_axis_2026/tools/run_macro_event_v5_fit_pre2025.py'
+      - 'gold_axis_2026/tests/test_macro_event_v5_core.py'
+      - '.github/workflows/gold-control-macro-event-v5-pre2025-fit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fit-pre2025:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install 'psycopg[binary]>=3.2,<4' 'numpy>=2.0,<3' pytest
+      - name: Unit tests
+        run: pytest -q gold_axis_2026/tests/test_macro_event_v5_core.py
+      - name: Fit strictly pre-2025 V5
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/tools/run_macro_event_v5_fit_pre2025.py \
+            --database-url "$NEON_DATABASE_URL" \
+            --output-dir /tmp/macro-v5-pre2025
+      - name: Fail closed on cutoff and support
+        run: |
+          python - <<'PY'
+          import json
+          s=json.load(open('/tmp/macro-v5-pre2025/macro_event_v5_pre2025_fit_summary.json'))
+          assert s['status']=='PASS_PRE2025_ONLY'
+          assert s['max_training_release_ts'] < '2025-01-01T00:00:00+00:00'
+          assert s['family_event_counts']=={'EMPLOYMENT':106,'INFLATION':107,'FOMC':71}
+          assert s['reaction_support']=={'EMPLOYMENT':23,'INFLATION':24,'FOMC':16}
+          assert s['production_write']=='NONE'
+          print(s)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macro-event-v5-pre2025-fit
+          retention-days: 90
+          if-no-files-found: error
+          path: /tmp/macro-v5-pre2025/
