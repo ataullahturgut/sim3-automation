@@ -1,0 +1,70 @@
+name: Gold Control FAST 2025 Volatility V1
+
+on:
+  push:
+    branches: [gold-fast-2025-volatility-audit-v1]
+    paths:
+      - 'gold_axis_2026/tools/run_fast_2025_volatility_challenge_v1.py'
+      - 'gold_axis_2026/tests/test_fast_2025_volatility_challenge_v1.py'
+      - '.github/workflows/gold-control-fast-2025-volatility-v1.yml'
+      - 'gold_axis_2026/GOLD_CONTROL_2025_FAST_FULL_TIMELINE_RESULT_2026-09-15.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fast-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install targeted dependencies
+        run: pip install pandas 'psycopg[binary]>=3.2,<4' pytest
+      - name: Run FAST unit tests
+        run: |
+          pip install -e gold_axis_2026/r4_1
+          pytest -q gold_axis_2026/r4_1/tests/test_frozen_rules.py gold_axis_2026/tests/test_fast_2025_volatility_challenge_v1.py
+      - name: Run guarded FAST 2025 full-timeline replay
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/tools/run_fast_2025_volatility_challenge_v1.py \
+            --database-url "$NEON_DATABASE_URL" \
+            --out-json /tmp/fast_2025_full_timeline_v1.json \
+            --out-daily-csv /tmp/fast_2025_daily_states_v1.csv \
+            --out-onsets-csv /tmp/fast_2025_robust_onsets_v1.csv
+      - name: Verify full-year accounting
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/fast_2025_full_timeline_v1.json'))
+          s=p['summary']
+          assert s['daily_fast_rows_2025']==255
+          assert s['frozen_volatility_event_days']==19
+          assert s['new_robust_episode_onsets']==22
+          assert s['event_day_same_direction_onsets']==1
+          assert s['early_warning_sensitivity_not_frozen_window']=={
+              'within_1_governed_day':1,
+              'within_3_governed_days':2,
+              'within_5_governed_days':3,
+              'within_10_governed_days':5,
+          }
+          assert 'segments' not in s
+          assert s['false_alarm_rate'].startswith('NOT_FROZEN')
+          print(s)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fast-2025-full-timeline-v1
+          if-no-files-found: error
+          retention-days: 90
+          path: |
+            /tmp/fast_2025_full_timeline_v1.json
+            /tmp/fast_2025_daily_states_v1.csv
+            /tmp/fast_2025_robust_onsets_v1.csv
