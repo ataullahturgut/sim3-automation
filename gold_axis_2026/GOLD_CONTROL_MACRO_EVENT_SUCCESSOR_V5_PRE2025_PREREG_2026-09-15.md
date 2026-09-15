@@ -28,11 +28,17 @@ The design follows the event-study literature in these respects:
 
 Key authority references include Andersen, Bollerslev, Diebold & Vega (2003), Christie-David, Chaudhry & Koch (2000), Elder, Miao & Ramchander (2012), Smales & Yang (2015), and Gürkaynak, Sack & Swanson (2005).
 
-## 3. Clean-design cutoff
+## 3. Clean-design cutoff and formation history
 
 All V5 design, scale estimation, severity calibration and direction fitting must use observations with release timestamp strictly before:
 
 `2025-01-01T00:00:00Z`
+
+The common event-history start for all three families is:
+
+`2016-01-01T00:00:00Z`
+
+Thus V5 scale/severity history is **2016-01-01 through 2024-12-31** for Employment, Inflation and scheduled FOMC alike. Earlier FOMC factor observations remain source evidence but are not used in V5 calibration.
 
 The fit runner must fail closed if a training/design query returns any release timestamp in 2025 or later.
 
@@ -88,7 +94,7 @@ Target and path remain separate components. V5 does not collapse the FOMC event 
 
 ## 5. Prior-only robust standardization
 
-For each family/component at event `t`, scale is estimated from **strictly prior** same-component events only.
+For each family/component at event `t`, scale is estimated from **strictly prior** same-component events only within the common 2016-2024 event history.
 
 Minimum prior events: **24**.
 
@@ -118,11 +124,11 @@ For a scored event with `k` standardized surprise components:
 
 This is intentionally unsigned. Opposite-signed large surprises do not cancel.
 
-Severity thresholds are calibrated only from each family's pre-2025 scored `shock_intensity` distribution:
+Severity thresholds are calibrated only from each family's scored 2016-2024 `shock_intensity` distribution:
 
-- `NORMAL`: below pre-2025 family Q75;
+- `NORMAL`: below family Q75;
 - `ELEVATED`: Q75 <= intensity < Q90;
-- `HIGH`: intensity >= pre-2025 family Q90.
+- `HIGH`: intensity >= family Q90.
 
 Primary Macro Event warning onset is `HIGH`. `ELEVATED` is retained as a secondary watch state and may not be relabelled a primary warning after viewing 2025.
 
@@ -140,7 +146,7 @@ where:
 
 `R15 = 100 * ln(XAU_{release+14min} / XAU_{release-1min})`
 
-The currently available pre-2025 reaction cache is expected to cover 2023-2024 and must be audited by the fit runner. No 2025 reaction is eligible for fitting.
+The available clean reaction-cache window for this fit is **2023-01-01 through 2024-12-31**. No 2025 reaction is eligible for fitting.
 
 Family feature dimensions:
 
