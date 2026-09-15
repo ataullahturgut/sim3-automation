@@ -255,6 +255,10 @@ def main():
             ]
             for family in sorted(raw_by_family)
         }
+        max_ts = max(e.release_ts for events in raw_by_family.values() for e in events)
+        if max_ts >= CUTOFF:
+            raise RuntimeError("V5_FIT_CUTOFF_VIOLATION")
+
         model = {
             "engine_id": ENGINE_ID,
             "status": "FROZEN_PRE2025_MODEL_PARAMETERS",
@@ -263,6 +267,7 @@ def main():
             "formation_start": FORMATION_START.isoformat(),
             "cutoff_exclusive": CUTOFF.isoformat(),
             "reaction_fit_window": [REACTION_START.isoformat(), CUTOFF.isoformat()],
+            "max_training_release_ts": max_ts.isoformat(),
             "preregistration_blob_sha": PREREG_BLOB_SHA,
             "source_input_fingerprint_sha256": canonical_hash(fingerprint_payload),
             "method": {
@@ -276,11 +281,6 @@ def main():
             "families": families,
         }
         model["model_payload_sha256"] = canonical_hash(model)
-
-        max_ts = max(e.release_ts for events in raw_by_family.values() for e in events)
-        if max_ts >= CUTOFF:
-            raise RuntimeError("V5_FIT_CUTOFF_VIOLATION")
-        model["max_training_release_ts"] = max_ts.isoformat()
 
         model_path = outdir / "macro_event_v5_pre2025_model.json"
         model_path.write_text(json.dumps(model, indent=2, sort_keys=True), encoding="utf-8")
