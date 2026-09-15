@@ -36,13 +36,15 @@ All V5 design, scale estimation, severity calibration and direction fitting must
 
 The fit runner must fail closed if a training/design query returns any release timestamp in 2025 or later.
 
-2025 derived Macro Event scores from earlier research are not eligible inputs.
+2025 derived Macro Event scores from earlier research are not eligible inputs. In fact, **no derived `MACRO_EVENT_V3_*`, V4 or V2 score series may be used as a V5 predictor or training target**.
 
-## 4. Event families
+## 4. Frozen source lineage and event families
 
-V5 uses only source families already available with governed pre-2025 lineage.
+V5 uses only governed raw/reconstructed source channels and fixed source runs already available before the new V5 challenge replay.
 
 ### Employment
+
+Frozen source run: `6a18db17-6fb2-4bf8-a20b-f3b6d529ca8a`
 
 - `MACRO_NFP_ACTUAL_FIRST_PRINT`
 - `MACRO_NFP_CONSENSUS_PIT`
@@ -59,6 +61,8 @@ Raw surprises:
 
 ### Inflation
 
+Frozen source run: `1e96b5ac-3d44-472b-b6fd-d5d6558181a6`
+
 - `MACRO_CPI_ACTUAL_FIRST_PRINT`
 - `MACRO_CPI_CONSENSUS_PIT`
 - `MACRO_CORE_CPI_ACTUAL_FIRST_PRINT`
@@ -71,12 +75,16 @@ Raw surprises:
 
 ### FOMC
 
+Frozen source run: `2f86f5d7-9800-4fe2-880c-48d6b84ff755`
+
 Use the governed pre-existing high-frequency monetary-policy surprise channels:
 
 - `MACRO_FOMC_GSS_TARGET_FROZEN2015`
 - `MACRO_FOMC_GSS_PATH_FROZEN2015`
 
 Target and path remain separate components. V5 does not collapse the FOMC event into a target-only shock.
+
+**Only scheduled FOMC observations (`metadata.unscheduled = 0`) are eligible in V5 formation and challenge.** Emergency/unscheduled actions are a different event class and may not be mixed into the scheduled-event calibration.
 
 ## 5. Prior-only robust standardization
 
@@ -175,7 +183,7 @@ Only after the V5 pre-2025 model parameters and severity thresholds are frozen m
 
 The 2025 engine replay must:
 
-1. run on **all eligible 2025 Employment, Inflation and FOMC origins**;
+1. run on **all eligible 2025 Employment, Inflation and scheduled-FOMC origins**;
 2. retain every event output, including NORMAL/ELEVATED/HIGH;
 3. freeze that complete event timeline;
 4. only then overlay the independent 19-day Gold Control volatility inventory;
