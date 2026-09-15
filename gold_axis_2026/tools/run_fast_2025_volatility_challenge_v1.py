@@ -20,8 +20,9 @@ from gold_r4 import FastState, fast_state  # noqa: E402
 
 CHALLENGE_ID = "GOLD_CONTROL_2025_VOLATILITY_CHALLENGE_V1"
 RESEARCH_SERIES_ID = "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1"
+ROBUST_STATES = {FastState.ROBUST_UP.value, FastState.ROBUST_DOWN.value}
 
-# Frozen before this replay. EXTREME is a subset of MAJOR.
+# Frozen before FAST replay. EXTREME is a subset of MAJOR.
 EVENTS: tuple[tuple[str, str, str], ...] = (
     ("2025-02-10", "UP", "MAJOR"),
     ("2025-02-14", "DOWN", "MAJOR"),
@@ -43,15 +44,6 @@ EVENTS: tuple[tuple[str, str, str], ...] = (
     ("2025-12-22", "UP", "EXTREME"),
     ("2025-12-29", "DOWN", "EXTREME"),
 )
-
-
-def score_primary(previous_fast: str, event_direction: str) -> str:
-    expected = f"ROBUST_{event_direction}"
-    if previous_fast == expected:
-        return "EARLY_HIT"
-    if previous_fast in {FastState.ROBUST_UP.value, FastState.ROBUST_DOWN.value}:
-        return "WRONG_DIRECTION"
-    return "NO_SIGNAL"
 
 
 def validate_daily(frame: pd.DataFrame) -> pd.DataFrame:
@@ -142,94 +134,141 @@ def load_and_validate(database_url: str) -> tuple[pd.DataFrame, dict[str, Any]]:
     return daily, evidence
 
 
-def state_through(daily: pd.DataFrame, day: pd.Timestamp) -> str:
-    history = daily.loc[daily["date"] <= day, "close"].tolist()
-    return fast_state(history).value
+def compute_states(daily: pd.DataFrame) -> pd.DataFrame:
+    x = daily.copy().reset_index(drop=True)
+    states: list[str] = []
+    history: list[float] = []
+    for close in x["close"].tolist():
+        history.append(float(close))
+        states.append(fast_state(history).value)
+    x["fast_state"] = states
+    return x
 
 
-def replay(daily: pd.DataFrame) -> list[dict[str, Any]]:
-    dates = daily["date"].tolist()
+def build_2025_timeline(daily: pd.DataFrame) -> pd.DataFrame:
+    states = compute_states(daily)
+    event_map = {pd.Timestamp(d): (direction, tier) for d, direction, tier in EVENTS}
     rows: list[dict[str, Any]] = []
-    for event_date_text, direction, tier in EVENTS:
-        event_date = pd.Timestamp(event_date_text)
-        pos = dates.index(event_date)
-        if pos == 0 or pos + 1 >= len(dates):
-            raise RuntimeError(f"FAST_REPLAY_EVENT_BOUNDARY_FAIL:{event_date_text}")
-        prev_date, next_date = dates[pos - 1], dates[pos + 1]
-        prev_state = state_through(daily, prev_date)
-        event_state = state_through(daily, event_date)
-        next_state = state_through(daily, next_date)
-        expected = f"ROBUST_{direction}"
+    for i, row in states.iterrows():
+        day = row["date"]
+        if not (pd.Timestamp("2025-01-01") <= day <= pd.Timestamp("2025-12-31")):
+            continue
+        state = str(row["fast_state"])
+        previous_state = str(states.iloc[i - 1]["fast_state"]) if i > 0 else FastState.INSUFFICIENT_DATA.value
+        is_onset = state in ROBUST_STATES and previous_state != state
+        event_direction, event_tier = event_map.get(day, (None, None))
         rows.append(
             {
-                "event_date": event_date_text,
-                "direction": direction,
-                "tier": tier,
-                "previous_governed_date": prev_date.date().isoformat(),
-                "previous_fast_state": prev_state,
-                "primary_status": score_primary(prev_state, direction),
-                "event_fast_state": event_state,
-                "same_event_confirm": event_state == expected,
-                "next_governed_date": next_date.date().isoformat(),
-                "next_fast_state": next_state,
-                "next_day_confirm": next_state == expected,
+                "date": day.date().isoformat(),
+                "close": float(row["close"]),
+                "fast_state": state,
+                "previous_fast_state": previous_state,
+                "new_robust_episode": bool(is_onset),
+                "volatility_event": event_direction is not None,
+                "event_direction": event_direction,
+                "event_tier": event_tier,
             }
         )
-    return rows
+    out = pd.DataFrame(rows)
+    if len(out) != 255:
+        raise RuntimeError(f"FAST_TIMELINE_2025_CARDINALITY_MISMATCH:{len(out)}")
+    return out
 
 
-def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    def one(label: str, subset: list[dict[str, Any]]) -> dict[str, Any]:
-        n = len(subset)
-        return {
-            "segment": label,
-            "n": n,
-            "early_hit": sum(r["primary_status"] == "EARLY_HIT" for r in subset),
-            "wrong_direction": sum(r["primary_status"] == "WRONG_DIRECTION" for r in subset),
-            "no_signal": sum(r["primary_status"] == "NO_SIGNAL" for r in subset),
-            "same_event_confirm": sum(bool(r["same_event_confirm"]) for r in subset),
-            "next_day_confirm": sum(bool(r["next_day_confirm"]) for r in subset),
-        }
+def governed_lead(index_by_date: dict[pd.Timestamp, int], start: pd.Timestamp, end: pd.Timestamp) -> int:
+    return int(index_by_date[end] - index_by_date[start])
 
+
+def build_onsets(timeline: pd.DataFrame) -> pd.DataFrame:
+    event_rows = [(pd.Timestamp(d), direction, tier) for d, direction, tier in EVENTS]
+    timeline_dates = [pd.Timestamp(d) for d in timeline["date"]]
+    index_by_date = {d: i for i, d in enumerate(timeline_dates)}
+    onsets: list[dict[str, Any]] = []
+    for _, row in timeline[timeline["new_robust_episode"]].iterrows():
+        signal_date = pd.Timestamp(row["date"])
+        signal_direction = "UP" if row["fast_state"] == FastState.ROBUST_UP.value else "DOWN"
+        future_any = [e for e in event_rows if e[0] >= signal_date]
+        future_same = [e for e in future_any if e[1] == signal_direction]
+        next_any = future_any[0] if future_any else None
+        next_same = future_same[0] if future_same else None
+        same_lead = governed_lead(index_by_date, signal_date, next_same[0]) if next_same else None
+        any_lead = governed_lead(index_by_date, signal_date, next_any[0]) if next_any else None
+        onsets.append(
+            {
+                "signal_date": signal_date.date().isoformat(),
+                "fast_state": row["fast_state"],
+                "signal_direction": signal_direction,
+                "close": float(row["close"]),
+                "next_volatility_event": next_any[0].date().isoformat() if next_any else None,
+                "next_event_direction": next_any[1] if next_any else None,
+                "next_event_tier": next_any[2] if next_any else None,
+                "days_to_next_event": any_lead,
+                "next_same_direction_event": next_same[0].date().isoformat() if next_same else None,
+                "next_same_direction_tier": next_same[2] if next_same else None,
+                "days_to_next_same_direction_event": same_lead,
+                "same_direction_event_day": same_lead == 0 if same_lead is not None else False,
+                "same_direction_early_within_1d": 1 <= same_lead <= 1 if same_lead is not None else False,
+                "same_direction_early_within_3d": 1 <= same_lead <= 3 if same_lead is not None else False,
+                "same_direction_early_within_5d": 1 <= same_lead <= 5 if same_lead is not None else False,
+                "same_direction_early_within_10d": 1 <= same_lead <= 10 if same_lead is not None else False,
+            }
+        )
+    out = pd.DataFrame(onsets)
+    return out
+
+
+def summarize(timeline: pd.DataFrame, onsets: pd.DataFrame) -> dict[str, Any]:
     return {
         "challenge_id": CHALLENGE_ID,
         "engine_id": "FAST",
-        "primary_rule": "previous governed day ROBUST state must match event direction",
-        "segments": [
-            one("ALL", rows),
-            one("UP", [r for r in rows if r["direction"] == "UP"]),
-            one("DOWN", [r for r in rows if r["direction"] == "DOWN"]),
-            one("EXTREME", [r for r in rows if r["tier"] == "EXTREME"]),
-        ],
+        "evaluation_direction": "FULL_FAST_TIMELINE_THEN_OVERLAY_FROZEN_VOLATILITY_EVENTS",
+        "withdrawn_metric": "EVENT_CONDITIONED_11_OF_19_DIRECTION_ALIGNMENT_IS_NOT_FAST_ALARM_PERFORMANCE",
+        "daily_fast_rows_2025": int(len(timeline)),
+        "frozen_volatility_event_days": len(EVENTS),
+        "new_robust_episode_onsets": int(len(onsets)),
+        "event_day_same_direction_onsets": int(onsets["same_direction_event_day"].sum()),
+        "early_warning_sensitivity_not_frozen_window": {
+            "within_1_governed_day": int(onsets["same_direction_early_within_1d"].sum()),
+            "within_3_governed_days": int(onsets["same_direction_early_within_3d"].sum()),
+            "within_5_governed_days": int(onsets["same_direction_early_within_5d"].sum()),
+            "within_10_governed_days": int(onsets["same_direction_early_within_10d"].sum()),
+        },
+        "false_alarm_rate": "NOT_FROZEN_UNTIL_WARNING_WINDOW_IS_PREREGISTERED",
+        "production_write": "NONE",
     }
 
 
-def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
-    with path.open("w", encoding="utf-8", newline="") as fh:
-        writer = csv.DictWriter(fh, fieldnames=list(rows[0]))
-        writer.writeheader()
-        writer.writerows(rows)
+def write_csv(path: Path, frame: pd.DataFrame) -> None:
+    frame.to_csv(path, index=False, quoting=csv.QUOTE_MINIMAL)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--database-url", default=os.environ.get("NEON_DATABASE_URL", ""))
     parser.add_argument("--out-json", type=Path)
-    parser.add_argument("--out-csv", type=Path)
+    parser.add_argument("--out-daily-csv", type=Path)
+    parser.add_argument("--out-onsets-csv", type=Path)
     args = parser.parse_args()
     if not args.database_url:
         raise SystemExit("BLOCKED_DATA:NEON_DATABASE_URL_REQUIRED")
 
     daily, evidence = load_and_validate(args.database_url)
-    rows = replay(daily)
-    summary = summarize(rows)
-    payload = {"evidence": evidence, "summary": summary, "rows": rows}
+    timeline = build_2025_timeline(daily)
+    onsets = build_onsets(timeline)
+    summary = summarize(timeline, onsets)
+    payload = {
+        "evidence": evidence,
+        "summary": summary,
+        "onsets": onsets.where(pd.notna(onsets), None).to_dict(orient="records"),
+    }
 
     if args.out_json:
         args.out_json.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    if args.out_csv:
-        write_csv(args.out_csv, rows)
-    print(json.dumps(payload, sort_keys=True))
+    if args.out_daily_csv:
+        write_csv(args.out_daily_csv, timeline)
+    if args.out_onsets_csv:
+        write_csv(args.out_onsets_csv, onsets)
+    print(json.dumps(summary, sort_keys=True))
     return 0
 
 
