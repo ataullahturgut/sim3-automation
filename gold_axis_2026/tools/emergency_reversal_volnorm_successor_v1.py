@@ -293,7 +293,10 @@ def run_detector(closes: pd.Series, config: Config = Config()) -> pd.DataFrame:
 
 
 def timeline_hash(timeline: pd.DataFrame) -> str:
-    records = timeline.where(pd.notna(timeline), None).to_dict(orient="records")
+    # Convert to object first so missing floating values become real JSON nulls
+    # instead of being coerced back to NaN by numeric dtypes.
+    clean = timeline.astype(object).where(pd.notna(timeline), None)
+    records = clean.to_dict(orient="records")
     return stable_sha(records)
 
 
