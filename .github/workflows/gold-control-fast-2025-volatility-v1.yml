@@ -1,0 +1,62 @@
+name: Gold Control FAST 2025 Volatility V1
+
+on:
+  push:
+    branches: [gold-fast-2025-volatility-audit-v1]
+    paths:
+      - 'gold_axis_2026/tools/run_fast_2025_volatility_challenge_v1.py'
+      - 'gold_axis_2026/tests/test_fast_2025_volatility_challenge_v1.py'
+      - '.github/workflows/gold-control-fast-2025-volatility-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fast-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install targeted dependencies
+        run: pip install pandas 'psycopg[binary]>=3.2,<4' pytest
+      - name: Run FAST unit tests
+        run: |
+          pip install -e gold_axis_2026/r4_1
+          pytest -q gold_axis_2026/r4_1/tests/test_frozen_rules.py gold_axis_2026/tests/test_fast_2025_volatility_challenge_v1.py
+      - name: Run guarded FAST 2025 volatility replay
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/tools/run_fast_2025_volatility_challenge_v1.py \
+            --database-url "$NEON_DATABASE_URL" \
+            --out-json /tmp/fast_2025_volatility_v1.json \
+            --out-csv /tmp/fast_2025_volatility_v1.csv
+      - name: Verify frozen summary
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/fast_2025_volatility_v1.json'))
+          seg={x['segment']:x for x in p['summary']['segments']}
+          assert seg['ALL']['n']==19
+          assert seg['ALL']['early_hit']==11
+          assert seg['ALL']['wrong_direction']==7
+          assert seg['ALL']['no_signal']==1
+          assert seg['UP']['early_hit']==11
+          assert seg['DOWN']['early_hit']==0
+          assert seg['EXTREME']['early_hit']==1
+          print(seg)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fast-2025-volatility-v1
+          if-no-files-found: error
+          retention-days: 90
+          path: |
+            /tmp/fast_2025_volatility_v1.json
+            /tmp/fast_2025_volatility_v1.csv
