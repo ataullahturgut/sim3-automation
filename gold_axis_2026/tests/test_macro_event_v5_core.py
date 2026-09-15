@@ -1,6 +1,11 @@
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
+import sys
 
-from gold_axis_2026.tools.macro_event_v5_core import (
+TOOLS_DIR = Path(__file__).resolve().parents[1] / "tools"
+sys.path.insert(0, str(TOOLS_DIR))
+
+from macro_event_v5_core import (
     RawEvent,
     fit_ols,
     linear_quantile,
