@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.56  
+**Manifest version:** 1.57  
 **Issue date:** 2026-09-15  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -371,6 +371,24 @@ Macro Event non-event dates are not automatic misses; BOCPD/GVZ/Emergency/Monthl
 
 This volatility challenge is `HISTORICAL_REPLAY / RETROSPECTIVE_DIAGNOSTIC` evidence. It may be used to judge complementarity and model feasibility, but a model tuned after viewing 2025 may not claim the same 2025 period as untouched OOS validation.
 
+### 10.5 Engine-first full-timeline evaluation lock
+
+The binding 2025 motor-evaluation direction is **engine first, challenge overlay second**.
+
+For every governed engine:
+
+1. the independently frozen volatility inventory must not be passed into the engine as an input, scoring feature, threshold-selection target or origin filter;
+2. first run/replay the engine over its **complete eligible 2025 origin set on its native clock**;
+3. retain every output required to reconstruct what would have been observable at those origins, including signals, non-signals/abstentions, state transitions, new episode onsets, persistence/state age, missingness, `BLOCKED`, `NOT_TESTABLE` and `NOT_APPLICABLE` where role-appropriate;
+4. for stateful engines, a continued state is not a new warning: new warning/episode onset and state persistence must be represented separately;
+5. freeze the complete engine-output table before the 19 volatility event-days are overlaid for scoring;
+6. only after that freeze may event-to-engine coverage, engine-to-event false-warning burden, lead/lag, same-event confirmation, direction relation and role-specific support be computed;
+7. a calculation that starts only from realized volatility dates and looks backward at the engine is **event-conditioned diagnostics only** and may not by itself be reported as alarm precision, warning accuracy or false-warning performance;
+8. non-native origins are not fabricated. For event-clock engines such as Macro Event, non-event dates are `NOT_APPLICABLE`; an event-time signal may not be silently carried forward across later days unless such persistence was separately preregistered before outcomes were inspected;
+9. no warning-validity horizon, carry-forward window, threshold, score mapping or episode rule may be selected after 2025 outcomes to improve the same challenge result. A scientifically desired revision requires a separately named successor evaluation.
+
+This rule applies to all remaining 2025 replays and supersedes any earlier challenge result that evaluated only the realized event dates while hiding the engine's full-year signal/output history.
+
 ---
 
 ## 11. Frozen research split
@@ -410,7 +428,7 @@ Random splitting is forbidden.
 5. **Split Freeze — COMPLETE / PRE-SCORE FROZEN**
 6. **WP3 — preregistered simple formation baselines — COMPLETE WITH LIMITATIONS**
 7. **WP4 — role-preserving sequential model — OPEN FOR A NEW SEPARATELY GOVERNED CHALLENGER**
-8. **2025 volatility-challenge inventory — FROZEN; 12-engine role-preserving replay NEXT**
+8. **2025 volatility-challenge inventory — FROZEN; engine-first full-timeline role-preserving replay ACTIVE**
 9. **Ablation / optional extensions — BLOCKED PENDING ACCEPTED CORE**
 10. **Architecture/parameter freeze — PENDING**
 11. **Prospective shadow — PENDING FINAL FREEZE**
@@ -448,6 +466,8 @@ Simple preregistered baselines must precede complex learned promotion.
 For GC-BREAK, primary metrics include break recall/miss rate, false-warning burden, warning lead time, confirmation delay, persistence, spurious flips, recovery behavior and proper scores where probabilities are emitted.
 
 For the 2025 volatility challenge, each engine must additionally report role-appropriate event coverage, lead/lag, direction correctness where direction is actually emitted, abstention/NO_SIGNAL and PIT/missing limitations.
+
+For the 2025 volatility challenge, both directions of accounting are required where the engine role permits them: **event -> engine** for coverage/miss/lead-lag and **engine -> event** for false-warning/selectivity burden. The complete engine-origin output table is the primary replay record; event-conditioned extracts are secondary views of that record.
 
 Standalone direction accuracy is not the universal metric for heterogeneous engines.
 
@@ -536,8 +556,8 @@ Two distinct retrospective event universes are now explicit:
 1. the frozen GC-BREAK structural-break labels;
 2. the frozen 2025 volatility challenge of 19 abnormal daily moves.
 
-The next governed task is to replay the 12 existing identities against the same 19-event volatility universe under their native roles, without changing the event definition after seeing engine performance.
+The governed 2025 motor procedure is engine-first: each of the 12 identities must first be replayed over its complete eligible 2025 native-clock origin set and its complete output history frozen; only then may the independent 19-event volatility inventory be overlaid. Event-conditioned backward lookup alone is not alarm-performance evidence.
 
-Only after that replay may the project judge whether the engines provide enough complementary information to justify a new combined model research programme.
+Only after those role-preserving full-timeline replays may the project judge whether the engines provide enough complementary information to justify a new combined model research programme.
 
 All future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
