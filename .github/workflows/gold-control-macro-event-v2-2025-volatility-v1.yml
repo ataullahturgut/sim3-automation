@@ -1,0 +1,61 @@
+name: Gold Control Macro Event V2 2025 Volatility V1
+
+on:
+  push:
+    branches: [gold-macro-event-audit-20250915]
+    paths:
+      - 'gold_axis_2026/tools/run_macro_event_v2_2025_volatility_challenge_v1.py'
+      - 'gold_axis_2026/tests/test_macro_event_v2_2025_volatility_challenge_v1.py'
+      - 'gold_axis_2026/GOLD_CONTROL_2025_MACRO_EVENT_V2_FULL_TIMELINE_PREREG_2026-09-15.md'
+      - '.github/workflows/gold-control-macro-event-v2-2025-volatility-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  macro-event-v2-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install targeted dependencies
+        run: pip install 'psycopg[binary]>=3.2,<4' pytest
+      - name: Run V2 core and 2025 replay unit tests
+        run: |
+          pytest -q \
+            gold_axis_2026/tests/test_macro_event_successor_v2_score_replay.py \
+            gold_axis_2026/tests/test_macro_event_v2_2025_volatility_challenge_v1.py
+      - name: Run guarded Macro Event V2 2025 full-event timeline
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/tools/run_macro_event_v2_2025_volatility_challenge_v1.py \
+            --database-url "$NEON_DATABASE_URL" \
+            --output-dir /tmp/macro-event-v2-2025
+      - name: Verify accounting only
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/macro-event-v2-2025/macro_event_v2_2025_summary_v1.json'))
+          s=p['summary']
+          assert s['calendar_2025_eligible_release_origins'] == 11
+          assert s['volatility_event_days'] == 19
+          assert s['r15_complete_origins'] == 11
+          assert s['consensus_exact_pre_release_timestamp_proven_origins'] == 0
+          assert s['production_write'] == 'NONE'
+          assert len(p['engine_timeline']) == 11
+          assert len(p['event_overlay']) == 19
+          print(s)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: macro-event-v2-2025-volatility-v1
+          if-no-files-found: error
+          retention-days: 90
+          path: /tmp/macro-event-v2-2025/
