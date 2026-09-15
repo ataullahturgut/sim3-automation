@@ -1,0 +1,93 @@
+name: Gold Control Emergency Reversal Volnorm V2 2025
+
+on:
+  push:
+    branches: [gold-emergency-reversal-volnorm-v1]
+    paths:
+      - 'gold_axis_2026/tools/run_emergency_reversal_volnorm_v2_2025_engine.py'
+      - 'gold_axis_2026/tools/overlay_emergency_reversal_volnorm_v2_2025_volatility.py'
+      - '.github/workflows/gold-control-emergency-reversal-volnorm-v2-2025.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  frozen-2025-challenge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install targeted dependencies
+        run: pip install numpy pandas requests pytest
+      - name: Re-run frozen core tests
+        run: |
+          pytest -q \
+            gold_axis_2026/tests/test_emergency_reversal_volnorm_successor_v1.py \
+            gold_axis_2026/tests/test_emergency_reversal_volnorm_successor_v2.py
+      - name: Verify frozen implementation and challenge separation
+        run: |
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'gold_axis_2026/tools')
+          import emergency_reversal_volnorm_successor_v2 as m
+          assert m.config_sha() == '0419bd741d08f92c755e7ae8e26ebd6c1caf2619ed7518fda72b555bc7bdebdc'
+          assert m.implementation_hash() == 'a35aeeed794ecd72e41036ce51178c38e8d29bc4ea1833e7dbfe3c0f03330a4e'
+          engine=Path('gold_axis_2026/tools/run_emergency_reversal_volnorm_v2_2025_engine.py').read_text()
+          assert '2025-02-10' not in engine
+          assert 'EVENTS =' not in engine
+          overlay=Path('gold_axis_2026/tools/overlay_emergency_reversal_volnorm_v2_2025_volatility.py').read_text()
+          assert overlay.count('(\"2025-') == 19
+          print('frozen hash + engine/overlay separation PASS')
+          PY
+      - name: Stage 1 — run complete 2025 engine timeline without volatility inventory
+        run: |
+          test -n "$TWELVE_DATA_API_KEY"
+          python gold_axis_2026/tools/run_emergency_reversal_volnorm_v2_2025_engine.py \
+            --output-dir /tmp/emergency-reversal-volnorm-v2-2025
+      - name: Freeze and verify engine-first output
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/emergency-reversal-volnorm-v2-2025/engine_2025_summary.json'))
+          assert p['model_id'] == 'EMERGENCY_REVERSAL_VOLNORM_SUCCESSOR_V2'
+          assert p['stage'] == 'ENGINE_FIRST_2025_FULL_TIMELINE'
+          assert p['volatility_inventory_loaded'] is False
+          assert p['config_sha256'] == '0419bd741d08f92c755e7ae8e26ebd6c1caf2619ed7518fda72b555bc7bdebdc'
+          assert p['implementation_sha256'] == 'a35aeeed794ecd72e41036ce51178c38e8d29bc4ea1833e7dbfe3c0f03330a4e'
+          assert p['source_2025_coverage']['ratio'] >= 0.95
+          assert p['engine_rows_2025'] >= 240
+          assert p['production_write'] == 'NONE'
+          print(p)
+          PY
+      - name: Stage 2 — overlay frozen 19-event volatility inventory
+        run: |
+          python gold_axis_2026/tools/overlay_emergency_reversal_volnorm_v2_2025_volatility.py \
+            --input-dir /tmp/emergency-reversal-volnorm-v2-2025
+      - name: Verify overlay preserves engine hash
+        run: |
+          python - <<'PY'
+          import json
+          e=json.load(open('/tmp/emergency-reversal-volnorm-v2-2025/engine_2025_summary.json'))
+          o=json.load(open('/tmp/emergency-reversal-volnorm-v2-2025/volatility_overlay.json'))
+          s=o['summary']
+          assert s['frozen_volatility_events'] == 19
+          assert s['engine_timeline_sha256'] == e['timeline_sha256']
+          assert s['production_write'] == 'NONE'
+          assert len(o['event_overlay']) == 19
+          assert s['engine_alerts_2025'] == len(o['alert_overlay'])
+          print(s)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: emergency-reversal-volnorm-v2-2025
+          retention-days: 90
+          if-no-files-found: error
+          path: /tmp/emergency-reversal-volnorm-v2-2025/
