@@ -1,0 +1,43 @@
+name: Gold BOCPD B2 successors pre-2025
+
+on:
+  push:
+    branches:
+      - gold-bocpd-hourly-b2-selective-20260916
+    paths:
+      - 'gold_axis_2026/tools/bocpd_hourly_b2_successor_pre2025.py'
+      - '.github/workflows/gold-bocpd-b2-successors-pre2025-20260916.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare-successors:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OUTPUT_DIR: b2_successor_output
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install -r gold_axis_2026/data_pipeline/requirements.txt
+          pip install 'scipy>=1.13,<2'
+      - name: Require protected secret
+        run: test -n "$NEON_DATABASE_URL" || { echo "NEON_DATABASE_URL missing"; exit 1; }
+      - name: Compile successor comparison
+        run: python -m py_compile gold_axis_2026/tools/bocpd_hourly_b2_successor_pre2025.py
+      - name: Run 2022 fit 2023 development 2024 validation
+        run: python gold_axis_2026/tools/bocpd_hourly_b2_successor_pre2025.py
+      - name: Upload comparison outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: bocpd-b2-successors-pre2025
+          path: b2_successor_output/
+          if-no-files-found: error
+          retention-days: 90
