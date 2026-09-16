@@ -1,0 +1,60 @@
+name: Gold Control Macro Event V5 2025 Challenge
+
+on:
+  push:
+    branches: [gold-macro-event-v5-pre2025-clean-20260915]
+    paths:
+      - 'gold_axis_2026/contracts/macro_event_v5_pre2025_model.json'
+      - 'gold_axis_2026/tools/macro_event_v5_core.py'
+      - 'gold_axis_2026/tools/run_macro_event_v5_2025_challenge.py'
+      - 'gold_axis_2026/tests/test_macro_event_v5_core.py'
+      - '.github/workflows/gold-control-macro-event-v5-2025-challenge.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  challenge-2025:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      MODEL_SHA: 651b2261823c358617fd752aa3458681b20cc2fb7dabdd3929852e9dc547f600
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install 'psycopg[binary]>=3.2,<4' 'numpy>=2.0,<3' pytest
+      - name: Core tests
+        run: pytest -q gold_axis_2026/tests/test_macro_event_v5_core.py
+      - name: Run frozen V5 on complete 2025 native event timeline
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          python gold_axis_2026/tools/run_macro_event_v5_2025_challenge.py \
+            --database-url "$NEON_DATABASE_URL" \
+            --model-json gold_axis_2026/contracts/macro_event_v5_pre2025_model.json \
+            --expected-model-sha "$MODEL_SHA" \
+            --output-dir /tmp/macro-v5-2025
+      - name: Verify governance and cardinality only
+        run: |
+          python - <<'PY'
+          import json, os
+          s=json.load(open('/tmp/macro-v5-2025/macro_event_v5_2025_summary.json'))
+          assert s['status']=='PASS_V5_2025_ENGINE_FIRST_REPLAY'
+          assert s['model_payload_sha256']==os.environ['MODEL_SHA']
+          assert s['eligible_macro_events_2025']==29
+          assert s['family_counts']=={'EMPLOYMENT':11,'INFLATION':10,'FOMC':8}
+          assert s['volatility_event_days']==19
+          assert s['production_write']=='NONE'
+          print(s)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: macro-event-v5-2025-challenge
+          retention-days: 90
+          if-no-files-found: error
+          path: /tmp/macro-v5-2025/
