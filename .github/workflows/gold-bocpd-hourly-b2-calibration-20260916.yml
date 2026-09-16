@@ -35,12 +35,13 @@ jobs:
         run: |
           python -m py_compile gold_axis_2026/tools/bocpd_hourly_candidate_b_v1_r1.py
           python -m py_compile gold_axis_2026/tools/bocpd_hourly_candidate_b2_calibration_v1.py
+          python -m py_compile gold_axis_2026/tools/bocpd_hourly_candidate_b2_calibration_v1_r1.py
       - name: Run pre-2025 calibration only
-        run: python gold_axis_2026/tools/bocpd_hourly_candidate_b2_calibration_v1.py
+        run: python gold_axis_2026/tools/bocpd_hourly_candidate_b2_calibration_v1_r1.py
       - name: Upload calibration outputs
         uses: actions/upload-artifact@v4
         with:
-          name: bocpd-hourly-b2-pre2025-calibration
+          name: bocpd-hourly-b2-pre2025-calibration-r1
           path: candidate_b2_calibration_output/
           if-no-files-found: error
           retention-days: 90
