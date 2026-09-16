@@ -34,14 +34,14 @@ jobs:
         run: |
           test -n "$NEON_DATABASE_URL" || { echo "NEON_DATABASE_URL missing"; exit 1; }
           test -n "$TWELVE_DATA_API_KEY" || { echo "TWELVE_DATA_API_KEY missing"; exit 1; }
-      - name: Compile Candidate B
-        run: python -m py_compile gold_axis_2026/tools/bocpd_hourly_candidate_b_v1.py
-      - name: Run Candidate B frozen formation and 2025 challenge
-        run: python gold_axis_2026/tools/bocpd_hourly_candidate_b_v1.py
+      - name: Compile Candidate B R1
+        run: python -m py_compile gold_axis_2026/tools/bocpd_hourly_candidate_b_v1_r1.py
+      - name: Run Candidate B frozen formation and 2025 challenge R1
+        run: python gold_axis_2026/tools/bocpd_hourly_candidate_b_v1_r1.py
       - name: Upload Candidate B research outputs
         uses: actions/upload-artifact@v4
         with:
-          name: bocpd-hourly-candidate-b-2025
+          name: bocpd-hourly-candidate-b-2025-r1
           path: candidate_b_output/
           if-no-files-found: error
           retention-days: 90
