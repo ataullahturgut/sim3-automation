@@ -1,0 +1,114 @@
+{
+  "identity": "BOCPD_HOURLY_POSTERIOR_MASS_CANDIDATE_B2_V1_RESEARCH",
+  "freeze_date": "2026-09-16",
+  "status": "FROZEN_RESEARCH_ONLY_NOT_GOVERNED_RUNTIME",
+  "parent": "BOCPD_HOURLY_SEASONAL_RETURN_CANDIDATE_B_V1_RESEARCH",
+  "project_authority": "gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md v1.58",
+  "role": "REGIME_CHANGE_EARLY_WARNING_CONTEXT_ONLY",
+  "direction_vote_permitted": false,
+  "production_mapping_permitted": false,
+  "database_model_output_writes_permitted": false,
+  "evidence_policy": {
+    "2025_class": "HISTORICAL_REPLAY_VISIBLE_REUSED_CHALLENGE",
+    "2025_is_pristine_holdout": false,
+    "reason": "Candidate B 2025 results were already visible before Candidate B2 was designed; B2 parameters are nevertheless calibrated entirely on pre-2025 data",
+    "prospective_claim_permitted": false,
+    "runtime_promotion": "NOT_PROVEN"
+  },
+  "chronology": {
+    "hour_adjustment_and_prior_fit": "2023-01-01/2023-12-31",
+    "hazard_and_alarm_threshold_calibration": "2024-01-01/2024-12-31",
+    "retrospective_visible_reused_challenge": "2025-01-01/2025-12-31",
+    "2025_outcomes_used_for_calibration": false
+  },
+  "source_and_clock": {
+    "formation_series_id": "XAU_USD_TWELVE_1H_RESEARCH_V1",
+    "provider": "Twelve Data",
+    "symbol": "XAU/USD",
+    "interval": "1h",
+    "timezone": "America/New_York",
+    "session_gate": "Sunday 18:00-23:00; Monday-Thursday 00:00-16:00 and 18:00-23:00; Friday 00:00-16:00; Saturday none",
+    "raw_return": "ln(P_t/P_t_minus_1)",
+    "eligible_return": "exactly one hour elapsed after session gate",
+    "bar_timestamp_semantics": "bar start",
+    "signal_available_at": "bar start plus one hour",
+    "interpolation": "FORBIDDEN",
+    "forward_fill": "FORBIDDEN",
+    "source_substitution": "FORBIDDEN"
+  },
+  "intraday_adjustment": {
+    "fit_period": "2023 only",
+    "location_per_bar_start_hour": "sample_mean",
+    "scale_per_bar_start_hour": "sample_standard_deviation_ddof_1",
+    "minimum_support_per_hour": 150,
+    "adjusted_observation": "x_t=(r_t-mu_hour)/sigma_hour",
+    "parameters_frozen_after_2023": true
+  },
+  "bocpd": {
+    "algorithm": "ADAMS_MACKAY_RUN_LENGTH_RECURSION",
+    "observation_model": "GAUSSIAN_UNKNOWN_MEAN_VARIANCE",
+    "conjugate_prior": "NORMAL_INVERSE_GAMMA",
+    "posterior_predictive": "STUDENT_T",
+    "kappa0": 1.0,
+    "alpha0": 2.0,
+    "beta0": 0.9962352097525995,
+    "mu0": -1.910403483850422e-18,
+    "robust_bocpd_beta_divergence_claim": false
+  },
+  "hazard": {
+    "candidate_expected_run_days": [20, 40, 60, 120],
+    "candidate_expected_run_observations": [440, 880, 1320, 2640],
+    "selection_period": "2024 only",
+    "selection_metric": "PREQUENTIAL_LOG_PREDICTIVE_EVIDENCE",
+    "selected_expected_run_days": 20,
+    "selected_expected_run_observations": 440,
+    "selected_hazard": 0.0022727272727272726,
+    "selected_before_2025_replay": true
+  },
+  "alarm_score": {
+    "short_run_k_observations": 22,
+    "semantic_meaning": "approximately one full XAU trading day of eligible hourly returns",
+    "score": "sum_{r=0}^{22} P(run_length_t=r | x_1:t)",
+    "selected_threshold": 0.8,
+    "threshold_grid_calibrated_on_2024": [0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.975, 0.99],
+    "threshold_selection_rule": "smallest q with empirical 2024 alarm-onset spacing proxy >= selected expected run observations",
+    "2024_selected_threshold_alarm_onsets": 12,
+    "2024_selected_threshold_unique_alarm_dates": 12,
+    "2024_selected_threshold_spacing_proxy_observations": 470.8333333333333,
+    "spacing_proxy_is_formal_null_arl0": false
+  },
+  "alarm_onset_rule": {
+    "condition_1": "short_run_mass_t >= 0.80",
+    "condition_2": "short_run_mass_t_minus_1 < 0.80",
+    "condition_3": "previous MAP run length >= 22",
+    "continued_above_threshold_state": "SAME_EPISODE_NOT_NEW_ALARM",
+    "sign_filter": "NONE",
+    "posthoc_debounce": "NONE",
+    "posthoc_event_filter": "NONE"
+  },
+  "calibration_evidence": {
+    "workflow_run_id": 35104431047,
+    "workflow_job_id": 104821834958,
+    "artifact_name": "bocpd-hourly-b2-pre2025-calibration-r1",
+    "artifact_id": 10449636487,
+    "artifact_zip_sha256": "cb6d7f2d21b1f109b6ba9614d3e9c5afd0b31d09fb4e4eebc3ce1433f6760d84",
+    "challenge_2025_accessed": false
+  },
+  "2025_replay_requirements": {
+    "engine_first_full_timeline": true,
+    "freeze_engine_outputs_before_event_overlay": true,
+    "retain_all_alarm_onsets": true,
+    "retain_all_above_threshold_episode_states": true,
+    "event_inventory_is_not_engine_input": true,
+    "descriptive_event_lookback_hours": [24, 72, 120, 240],
+    "no_winning_horizon_selection": true,
+    "warning_validity_horizon_frozen": false,
+    "precision_recall_false_alarm_claim_permitted": false,
+    "required_event_categories": [
+      "STRICT_PRE_EVENT_WINDOW",
+      "INTRADAY_PRE_EVENT_CLOSE",
+      "SAME_OR_POST_EVENT_CONFIRM",
+      "NO_ALARM_WITHIN_240H"
+    ]
+  }
+}
