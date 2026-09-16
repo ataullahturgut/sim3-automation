@@ -1,0 +1,65 @@
+{
+  "identity": "BOCPD_HOURLY_SELECTIVE_CANDIDATE_B2_V1_RESEARCH",
+  "status": "RETROSPECTIVE_RESEARCH_ONLY_NOT_GOVERNED_RUNTIME",
+  "parent": "BOCPD_HOURLY_SEASONAL_RETURN_CANDIDATE_B_V1_RESEARCH",
+  "role": "SELECTIVE_REGIME_CHANGE_EARLY_WARNING_CONTEXT_ONLY",
+  "direction_vote_permitted": false,
+  "database_model_output_writes_permitted": false,
+  "chronology": {
+    "hour_profile_and_prior_fit": "2023-01-01/2023-12-31",
+    "selection_period": "2024-01-01/2024-10-31",
+    "warm_start_only": "2024-11-01/2024-12-31",
+    "retrospective_challenge": "2025-01-01/2025-12-31",
+    "challenge_used_for_selection": false
+  },
+  "input": {
+    "series_id": "XAU_USD_TWELVE_1H_RESEARCH_V1",
+    "provider": "Twelve Data",
+    "frequency": "1h",
+    "return": "ln(P_t/P_t_minus_1) only when elapsed time is exactly one hour after XAU session gate",
+    "hour_adjustment": "(r_t - 2023 mean by NY bar-start hour) / 2023 sample sd by NY bar-start hour"
+  },
+  "bocpd": {
+    "family": "Adams-MacKay Gaussian unknown mean/variance with NIG prior and Student-t predictive",
+    "hazard_expected_run_days_grid": [20, 40, 60, 120],
+    "hazard_expected_run_observations_grid": [440, 880, 1320, 2640],
+    "base_signal": "MAP run-length reset",
+    "reset_strength": "max(0,(expected_uninterrupted_run-current_map)/expected_uninterrupted_run)"
+  },
+  "selectivity_grid": {
+    "reset_fraction_thresholds": [0.5, 0.7, 0.8, 0.9, 0.95, 0.98],
+    "episode_cooldown_hours": 24,
+    "episode_rule": "retain first reset meeting threshold, then suppress further qualifying resets for 24 elapsed hours",
+    "candidate_count": 24
+  },
+  "selection_target_2024": {
+    "event_definition": "same frozen daily volatility-event construction: r_t=100*ln(P_t/P_t-1); lagged trailing20 sample sigma; event iff abs(z)>=2",
+    "event_inventory_period": "2024-01-01/2024-10-31 only",
+    "warning_rule": "episode must be available no later than the previous governed daily close availability and no more than 120 calendar hours before event close availability",
+    "warning_horizon_hours": 120,
+    "precision": "share of selected episodes matched to a next 2024 event under the frozen warning rule",
+    "recall": "share of 2024 events captured by at least one selected episode under the frozen warning rule",
+    "objective": "maximize F0.5, emphasizing precision/selectivity over recall",
+    "tie_breaks": ["fewer_episodes", "higher_reset_fraction_threshold", "longer_expected_run_days"],
+    "f_beta": 0.5
+  },
+  "warm_start": {
+    "start": "2024-11-01",
+    "rule": "initialize BOCPD from the frozen prior at the first eligible November observation, process November-December continuously, then continue into 2025 without reset",
+    "selection_or_tuning_in_warm_start": false
+  },
+  "challenge_reporting": {
+    "formal_metrics_allowed": true,
+    "reason": "the 120h strict warning rule, threshold grid, episode rule and selection objective are frozen using pre-2025 information",
+    "report": ["2025 episode count", "captured events", "precision", "recall", "F0.5", "false episode count", "lead times", "full episode timeline"],
+    "intraday_same_event_close_signal": "not eligible under formal warning rule",
+    "production_promotion": "NOT_AUTOMATIC"
+  },
+  "governance": {
+    "no_2025_retuning": true,
+    "no_posthoc_threshold_change": true,
+    "no_posthoc_horizon_change": true,
+    "no_direction_vote": true,
+    "no_runtime_promotion_without_separate_decision": true
+  }
+}
