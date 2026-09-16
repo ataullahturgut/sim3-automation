@@ -1,0 +1,50 @@
+name: Gold BOCPD Hourly B2 2025 Reused Challenge
+
+on:
+  push:
+    branches: [gold-bocpd-hourly-b2-authority-20260916]
+    paths:
+      - '.github/workflows/gold-bocpd-hourly-b2-2025-replay-20260916.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: gold-bocpd-hourly-b2-2025-replay-20260916
+  cancel-in-progress: true
+
+jobs:
+  replay-b2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      OUTPUT_DIR: candidate_b2_2025_output
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install -r gold_axis_2026/data_pipeline/requirements.txt
+          pip install 'scipy>=1.13,<2'
+      - name: Require protected secrets
+        run: |
+          test -n "$NEON_DATABASE_URL" || { echo "NEON_DATABASE_URL missing"; exit 1; }
+          test -n "$TWELVE_DATA_API_KEY" || { echo "TWELVE_DATA_API_KEY missing"; exit 1; }
+      - name: Compile frozen B2 replay
+        run: |
+          python -m py_compile gold_axis_2026/tools/bocpd_hourly_candidate_b_v1_r1.py
+          python -m py_compile gold_axis_2026/tools/bocpd_hourly_candidate_b2_calibration_v1.py
+          python -m py_compile gold_axis_2026/tools/bocpd_hourly_candidate_b2_2025_replay_v1.py
+      - name: Run frozen B2 engine-first 2025 replay
+        run: python gold_axis_2026/tools/bocpd_hourly_candidate_b2_2025_replay_v1.py
+      - name: Upload frozen B2 research outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: bocpd-hourly-b2-2025-visible-reused-challenge
+          path: candidate_b2_2025_output/
+          if-no-files-found: error
+          retention-days: 90
