@@ -24,6 +24,8 @@ jobs:
           python-version: '3.11'
       - name: Apply BOCPD authority cleanup
         run: python gold_axis_2026/tools/_cleanup_bocpd_authority_20260917.py
+      - name: Keep workflow tree unchanged for Actions-token push
+        run: git checkout HEAD -- .github/workflows
       - name: Verify retained source surface
         run: |
           test -f gold_axis_2026/tools/bocpd_hourly_b2_baseline_r2_pre2025.py
@@ -35,7 +37,7 @@ jobs:
           test ! -f gold_axis_2026/tools/bocpd_return_successor_v1.py
           python -m py_compile gold_axis_2026/tools/bocpd_hourly_b2_baseline_r2_pre2025.py
           python -m py_compile gold_axis_2026/tools/bocpd_hourly_b2_adaptive_hazard_pre2025.py
-      - name: Commit cleaned authority surface
+      - name: Commit cleaned code result and manifest authority surface
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
