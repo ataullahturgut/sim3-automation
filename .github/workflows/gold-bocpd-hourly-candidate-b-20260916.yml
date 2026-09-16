@@ -1,0 +1,47 @@
+name: Gold BOCPD Hourly Candidate B 2025 Challenge
+
+on:
+  push:
+    branches: [gold-bocpd-hourly-data-backfill-20260916]
+    paths:
+      - '.github/workflows/gold-bocpd-hourly-candidate-b-20260916.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: gold-bocpd-hourly-candidate-b-20260916
+  cancel-in-progress: true
+
+jobs:
+  candidate-b:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      OUTPUT_DIR: candidate_b_output
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install -r gold_axis_2026/data_pipeline/requirements.txt
+          pip install 'scipy>=1.13,<2'
+      - name: Require protected secrets
+        run: |
+          test -n "$NEON_DATABASE_URL" || { echo "NEON_DATABASE_URL missing"; exit 1; }
+          test -n "$TWELVE_DATA_API_KEY" || { echo "TWELVE_DATA_API_KEY missing"; exit 1; }
+      - name: Compile Candidate B
+        run: python -m py_compile gold_axis_2026/tools/bocpd_hourly_candidate_b_v1.py
+      - name: Run Candidate B frozen formation and 2025 challenge
+        run: python gold_axis_2026/tools/bocpd_hourly_candidate_b_v1.py
+      - name: Upload Candidate B research outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: bocpd-hourly-candidate-b-2025
+          path: candidate_b_output/
+          if-no-files-found: error
+          retention-days: 90
