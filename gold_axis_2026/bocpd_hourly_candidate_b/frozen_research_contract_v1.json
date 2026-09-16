@@ -23,9 +23,23 @@
     "retrospective_challenge": "2025-01-01/2025-12-31",
     "challenge_outcomes_used_for_tuning": false
   },
+  "session_gate": {
+    "basis": "2023-2024 governed source support and XAU weekly trading-session clock; frozen before any 2025 model score",
+    "america_new_york_allowed_bar_starts": {
+      "Sunday": "18:00-23:00",
+      "Monday": "00:00-16:00 and 18:00-23:00",
+      "Tuesday": "00:00-16:00 and 18:00-23:00",
+      "Wednesday": "00:00-16:00 and 18:00-23:00",
+      "Thursday": "00:00-16:00 and 18:00-23:00",
+      "Friday": "00:00-16:00",
+      "Saturday": "none"
+    },
+    "provider_out_of_session_rows": "excluded before return construction",
+    "corrective_history": "first 2025 fetch returned 6802 raw rows and fail-closed before model scoring; this calendar gate is a data-quality correction only and changes no BOCPD parameter, hazard candidate, alarm rule or event window"
+  },
   "return_clock": {
     "raw_return": "ln(P_t/P_t_minus_1)",
-    "eligible_only_if_bar_start_elapsed_time": "exactly_1_hour",
+    "eligible_only_if_bar_start_elapsed_time": "exactly_1_hour after session gate",
     "reason": "exclude weekend reopen, daily maintenance break and other multi-hour gaps from the hourly-return process",
     "bar_timestamp_semantics": "Twelve Data 1h datetime is treated as bar start; the bar close is available one hour later",
     "bar_start_hour": "America/New_York local hour of P_t row timestamp",
