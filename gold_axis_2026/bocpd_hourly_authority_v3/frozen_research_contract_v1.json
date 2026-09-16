@@ -1,0 +1,108 @@
+{
+  "identity": "BOCPD_HOURLY_VARIANCE_BMA_SUCCESSOR_V3_RESEARCH",
+  "status": "RESEARCH_ONLY_NOT_GOVERNED_RUNTIME",
+  "purpose": "GC-BREAK regime/volatility-break early-warning context; not direction forecasting",
+  "parent_findings": {
+    "candidate_a_daily": "selective but often late",
+    "candidate_b_hourly": "finer timing but too nonselective when every MAP contraction is treated as a signal"
+  },
+  "authority_rationale": {
+    "adams_mackay_2007": "use posterior run-length filtering; their finance example models daily returns with zero mean and piecewise-constant variance",
+    "wilson_nassar_gold_2010": "treating changepoint hazard as fixed and known is a practical limitation; hazard uncertainty should be learned rather than selected from one challenge-like year",
+    "andersen_bollerslev_intraday": "high-frequency financial volatility has strong intraday periodicity and should be adjusted before modelling",
+    "altamirano_briol_knoblauch_2023": "standard BOCPD can create spurious changepoints under model misspecification/outliers; do not equate every MAP run-length drop with an alert"
+  },
+  "chronology": {
+    "seasonality_and_prior_fit": "2022-01-01/2022-12-31",
+    "alarm_rule_development": "2023-01-01/2023-12-31",
+    "pre2025_locked_validation": "2024-01-01/2024-12-31",
+    "reused_retrospective_diagnostic": "2025-01-01/2025-12-31",
+    "note": "2025 was already viewed in earlier Candidate A/B research, so V3 cannot claim pristine independent challenge evidence"
+  },
+  "source": {
+    "series_id": "XAU_USD_TWELVE_1H_RESEARCH_V1",
+    "provider": "Twelve Data",
+    "symbol": "XAU/USD",
+    "frequency": "1h",
+    "timezone": "America/New_York",
+    "evidence": "HISTORICAL_RESEARCH_BACKFILL",
+    "not_runtime_canonical": true
+  },
+  "clock": {
+    "bar_timestamp_semantics": "1h bar start",
+    "signal_available_at": "bar start plus one hour",
+    "session_gate": "Sunday 18-23; Monday-Thursday 00-16 and 18-23; Friday 00-16 America/New_York; Saturday none",
+    "return_eligibility": "exactly one elapsed hour only",
+    "daily_event_close": "16:00 America/New_York research bar start, available after bar completion"
+  },
+  "intraday_adjustment": {
+    "fit_year": 2022,
+    "location": "fixed_zero_for_model",
+    "scale": "sample_standard_deviation_by_local_bar_start_hour",
+    "minimum_support_per_hour": 150,
+    "standardized_return": "raw_log_return / sigma_hour_2022",
+    "frozen_after_2022": true
+  },
+  "observation_model": {
+    "family": "ZERO_MEAN_GAUSSIAN_UNKNOWN_VARIANCE",
+    "variance_prior": "INVERSE_GAMMA",
+    "predictive": "STUDENT_T",
+    "alpha0": 2.0,
+    "beta0": "2022 pooled standardized-return sample variance times alpha0_minus_1",
+    "reason": "align detector with volatility-regime changes rather than directional mean changes"
+  },
+  "hazard": {
+    "method": "CAUSAL_BAYESIAN_MODEL_AVERAGING_OVER_CONSTANT_HAZARDS",
+    "candidate_expected_regime_days": [10,20,40,60,120],
+    "eligible_hourly_returns_per_day": 22,
+    "expected_regime_observations": [220,440,880,1320,2640],
+    "initial_model_weights": "equal",
+    "weight_update": "one-step predictive evidence only",
+    "outcome_labels_used": false,
+    "note": "discrete hazard model averaging is an auditable approximation to hazard uncertainty; it is not claimed to reproduce the full Wilson-Nassar-Gold hierarchy"
+  },
+  "change_score": {
+    "definition": "posterior mass that current run length is at most K eligible hourly observations after hazard-model averaging",
+    "candidate_recent_run_K": [6,12,22],
+    "candidate_thresholds": [0.5,0.7,0.85,0.95],
+    "candidate_persistence_hours": [1,2,3],
+    "episode_rule": "onset after P consecutive scores >= threshold; episode clears after P consecutive scores < threshold",
+    "map_reset_alone_is_alert": false
+  },
+  "development_event_target": {
+    "daily_return": "100*ln(P_t/P_t_minus_1)",
+    "sigma20": "sample standard deviation of immediately preceding 20 governed daily returns, current excluded",
+    "event": "abs(return/sigma20) >= 2",
+    "source": "governed weekday XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+    "direction_used": false
+  },
+  "alarm_rule_selection_2023": {
+    "candidate_warning_horizons_calendar_hours": [48,72,120],
+    "clean_hit_requirement": "alert onset strictly before the previous governed daily close availability of the event and no more than H calendar hours before event close availability",
+    "episode_precision": "alert onsets whose next event satisfies clean_hit_requirement divided by all alert onsets",
+    "event_recall": "events with at least one qualifying onset divided by all events",
+    "objective": "maximize F1(episode_precision,event_recall)",
+    "tie_break_order": ["higher_precision","fewer_alert_episodes","shorter_warning_horizon","higher_threshold","longer_persistence"]
+  },
+  "validation_2024": {
+    "selected_2023_rule_frozen": true,
+    "no_reselection": true,
+    "report": ["episode_count","precision","event_recall","F1","median_clean_lead_hours","hazard_weights_end"]
+  },
+  "replay_2025": {
+    "only_after_2023_selection_and_2024_validation_are_frozen": true,
+    "state_continuity": "continuous online state from 2023 through 2024 into 2025; no calendar-year reset",
+    "event_inventory_not_model_input": true,
+    "report_full_timeline_before_event_overlay": true,
+    "same_event_or_intraday_move_warning": "not counted as clean early warning under strict metric",
+    "evidence_class": "HISTORICAL_REPLAY_REUSED_CHALLENGE_DIAGNOSTIC"
+  },
+  "governance": {
+    "direction_vote_permitted": false,
+    "production_mapping_permitted": false,
+    "database_model_output_write_permitted": false,
+    "runtime_promotion": "NOT_AUTHORIZED",
+    "post_2025_retuning": "PROHIBITED",
+    "future_robust_DSM_successor": "allowed only as separately named identity if V3 remains too sensitive"
+  }
+}
