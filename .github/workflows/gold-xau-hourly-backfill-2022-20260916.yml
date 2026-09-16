@@ -1,0 +1,37 @@
+name: Gold XAU Hourly Research Backfill 2022
+
+on:
+  push:
+    branches: [gold-bocpd-authority-successor-v3-20260916]
+    paths:
+      - '.github/workflows/gold-xau-hourly-backfill-2022-20260916.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: gold-xau-hourly-backfill-2022-20260916
+  cancel-in-progress: true
+
+jobs:
+  backfill-2022:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r gold_axis_2026/data_pipeline/requirements.txt
+      - name: Require protected secrets
+        run: |
+          test -n "$NEON_DATABASE_URL" || { echo "NEON_DATABASE_URL missing"; exit 1; }
+          test -n "$TWELVE_DATA_API_KEY" || { echo "TWELVE_DATA_API_KEY missing"; exit 1; }
+      - name: Compile 2022 backfill
+        run: python -m py_compile gold_axis_2026/data_pipeline/twelve_xau_hourly_research_backfill_2022.py
+      - name: Run 2022 backfill
+        run: python gold_axis_2026/data_pipeline/twelve_xau_hourly_research_backfill_2022.py
