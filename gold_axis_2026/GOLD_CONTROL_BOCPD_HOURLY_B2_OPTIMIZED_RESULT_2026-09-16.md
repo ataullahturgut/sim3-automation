@@ -1,8 +1,9 @@
-# GOLD CONTROL — BOCPD HOURLY CANDIDATE B2 OPTIMIZED RESULT
+# GOLD CONTROL — BOCPD HOURLY B2 OPTIMIZED RESULT
 
 **Date:** 2026-09-16  
 **Identity:** `BOCPD_HOURLY_SELECTIVE_CANDIDATE_B2_V1_RESEARCH`  
-**Status:** `PROMISING_SELECTIVE_REGIME_CONTEXT / NOT_READY_FOR_RUNTIME_PROMOTION`  
+**Research-line status:** `ACTIVE_BOCPD_RESEARCH_REFERENCE`  
+**Promotion status:** `PROMISING_SELECTIVE_REGIME_CONTEXT / NOT_READY_FOR_RUNTIME_PROMOTION`  
 **Evidence:** retrospective challenge; 2025 not used for parameter selection.  
 **Direction vote:** NOT PERMITTED.
 
@@ -12,12 +13,12 @@
 - 2024-01-01..2024-10-31: select hazard and reset-strength threshold only.
 - 2024-11-01..2024-12-31: warm-start/state building only; no selection.
 - 2025: locked retrospective challenge.
-- Base hourly return and Adams-MacKay/NIG/Student-t BOCPD unchanged from Candidate B.
+- Core model: hourly Adams-MacKay BOCPD with NIG/Student-t predictive structure.
 - Candidate hazard grid: expected regime 20/40/60/120 days = 440/880/1320/2640 eligible hourly observations.
 - Reset-fraction threshold grid: 0.50/0.70/0.80/0.90/0.95/0.98.
 - Episode rule frozen before challenge: first qualifying reset retained, subsequent qualifying resets suppressed for 24 elapsed hours.
 - 2024 optimization event definition: the same daily volatility construction (`abs(z)>=2`, lagged trailing-20 sample volatility).
-- Frozen warning validity rule: signal must be available no later than the previous governed daily close and no more than 120 calendar hours before event-close availability.
+- Frozen warning-validity rule: signal must be available no later than the previous governed daily close and no more than 120 calendar hours before event-close availability.
 - Selection objective: maximize F0.5 so selectivity/precision is weighted more heavily than recall.
 
 ## 2024 selection
@@ -40,7 +41,7 @@ The 24 predeclared hazard/threshold combinations were evaluated before 2025 chal
 - recall: **0.428571**;
 - F0.5: **0.326087**.
 
-This differs materially from Candidate B V1, where prequential predictive evidence alone selected a 20-day expected regime. The selectivity-aware objective preferred a much slower 120-day hazard plus a reset-strength filter.
+The selectivity-aware objective therefore chose a slow 120-day expected-regime prior together with an explicit reset-strength filter.
 
 ## Warm start
 
@@ -55,7 +56,7 @@ Source checks passed:
 - 255/255 governed 2025 daily research closes matched the hourly source exactly;
 - 5,645 eligible exact-one-hour returns in 2025.
 
-Candidate B2 produced:
+B2 produced:
 
 - **46** 2025 warning episodes;
 - **46** unique episode days;
@@ -92,29 +93,28 @@ Not captured under the frozen formal rule:
 - 2025-09-29
 - 2025-10-06
 
-## Comparison with Candidate B V1
-
-Candidate B V1 emitted **177 hourly MAP resets across 114 days** in 2025. Candidate B2 emits **46 episodes across 46 days**, a large reduction in signal burden.
-
-Candidate B V1's event-overlay table contained only **8/19** events with a latest reset both in `STRICT_PRE_EVENT_WINDOW` and within 120 hours. Candidate B2's frozen formal rule captures **12/19** while emitting far fewer signals.
-
-This is an important improvement in both selectivity and clean pre-event coverage, but it is not prospective evidence.
-
 ## Interpretation
 
-Candidate B2 is materially better behaved than Candidate B V1. The original hourly BOCPD was too sensitive because every MAP run-length reset was treated as a signal. Pre-2025 optimization showed that the useful regime-context signal is better represented by:
+The useful B2 regime-context signal is represented by:
 
-1. a slower **120-day** expected regime prior,
-2. only relatively strong resets (`reset_fraction >= 0.80`), and
-3. a 24-hour episode onset rule rather than repeated hourly reset counting.
+1. a slow **120-day** expected-regime prior,
+2. relatively strong resets (`reset_fraction >= 0.80`), and
+3. a 24-hour episode-onset rule rather than repeated hourly reset counting.
 
-The 2025 challenge generalizes reasonably relative to 2024 selection: F0.5 falls from 0.326 to 0.273 rather than collapsing, and event recall rises from 6/14 to 12/19. Nevertheless, 35/46 2025 episodes are unmatched under the frozen 120h rule, so standalone alert precision remains limited.
+The 2025 challenge is consistent enough with the 2024 development result to justify retaining B2 as the **active BOCPD research reference**, but not to grant runtime or production authority. F0.5 moves from 0.326 in 2024 development to 0.273 in 2025 retrospective challenge; event recall is 12/19. At the same time, 35/46 2025 episodes are unmatched under the frozen 120h rule, so standalone warning precision remains limited.
 
 Current classification:
 
-`PROMISING_SELECTIVE_REGIME_CONTEXT / NOT_READY_FOR_RUNTIME_PROMOTION`
+`ACTIVE_BOCPD_RESEARCH_REFERENCE / PROMISING_SELECTIVE_REGIME_CONTEXT / NOT_READY_FOR_RUNTIME_PROMOTION`
 
-Do not retune threshold, hazard, cooldown or 120h horizon using these visible 2025 results. A further successor would require additional pre-2025 robustness evidence (preferably an earlier time block such as 2022) or prospective shadow evidence.
+Do not retune threshold, hazard, cooldown or 120h horizon using visible 2025 results. Any scientific development must use a separately named successor and pre-2025 chronology and/or genuinely prospective evidence.
+
+Priority development questions for the successor line are:
+
+- whether a learned or non-constant hazard improves regime-duration calibration;
+- whether a robust/heavy-tail observation model reduces false episode burden from isolated XAU return shocks;
+- whether residual-time / explicit-duration inference can estimate proximity to the next regime change rather than only detecting current regime change;
+- whether these changes improve pre-2025 time-ordered evidence without sacrificing selectivity.
 
 ## Reproducibility
 
