@@ -1,0 +1,42 @@
+name: BOCPD manifest v1.60 patch
+
+on:
+  push:
+    branches:
+      - gold-bocpd-hourly-b2-selective-20260916
+    paths:
+      - '.github/workflows/_bocpd-manifest-v160-patch.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-manifest:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Patch manifest
+        run: python gold_axis_2026/tools/_patch_bocpd_manifest_v160_20260917.py
+      - name: Verify BOCPD authority text
+        run: |
+          grep -F '**Manifest version:** 1.60' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'BOCPD_HOURLY_B2_ADAPTIVE_HAZARD_V5_RESEARCH' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'BOCPD_HOURLY_B2_PRE2025_BASELINE_R2_RESEARCH' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'auxiliary abnormal-daily-volatility comparison metrics' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F 'sufficient high-coverage research formation data' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+          grep -F '.github/workflows/gold-bocpd-b2-baseline-r2-pre2025.yml' gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md
+      - name: Remove temporary patch script and commit manifest
+        run: |
+          rm gold_axis_2026/tools/_patch_bocpd_manifest_v160_20260917.py
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md gold_axis_2026/tools/_patch_bocpd_manifest_v160_20260917.py
+          git commit -m 'Clean BOCPD authority manifest v1.60'
+          git push origin HEAD:gold-bocpd-hourly-b2-selective-20260916
