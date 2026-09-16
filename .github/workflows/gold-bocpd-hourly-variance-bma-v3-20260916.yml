@@ -34,14 +34,16 @@ jobs:
         run: |
           test -n "$NEON_DATABASE_URL" || { echo "NEON_DATABASE_URL missing"; exit 1; }
           test -n "$TWELVE_DATA_API_KEY" || { echo "TWELVE_DATA_API_KEY missing"; exit 1; }
-      - name: Compile V3
-        run: python -m py_compile gold_axis_2026/tools/bocpd_hourly_variance_bma_v3.py
-      - name: Run frozen V3 protocol
-        run: python gold_axis_2026/tools/bocpd_hourly_variance_bma_v3.py
-      - name: Upload V3 outputs
+      - name: Compile V3 R2
+        run: |
+          python -m py_compile gold_axis_2026/tools/bocpd_hourly_variance_bma_v3.py
+          python -m py_compile gold_axis_2026/tools/bocpd_hourly_variance_bma_v3_r2.py
+      - name: Run frozen V3 protocol R2 availability-safe
+        run: python gold_axis_2026/tools/bocpd_hourly_variance_bma_v3_r2.py
+      - name: Upload V3 R2 outputs
         uses: actions/upload-artifact@v4
         with:
-          name: bocpd-hourly-variance-bma-v3-2025
+          name: bocpd-hourly-variance-bma-v3-2025-r2
           path: bocpd_v3_output/
           if-no-files-found: error
           retention-days: 90
