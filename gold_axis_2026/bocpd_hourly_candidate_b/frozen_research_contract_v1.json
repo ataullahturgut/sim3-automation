@@ -25,16 +25,17 @@
   },
   "return_clock": {
     "raw_return": "ln(P_t/P_t_minus_1)",
-    "eligible_only_if_elapsed_time": "exactly_1_hour",
+    "eligible_only_if_bar_start_elapsed_time": "exactly_1_hour",
     "reason": "exclude weekend reopen, daily maintenance break and other multi-hour gaps from the hourly-return process",
-    "endpoint_hour": "America/New_York local hour of P_t",
-    "expected_eligible_endpoint_hours": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,19,20,21,22,23],
+    "bar_timestamp_semantics": "Twelve Data 1h datetime is treated as bar start; the bar close is available one hour later",
+    "bar_start_hour": "America/New_York local hour of P_t row timestamp",
+    "expected_eligible_bar_start_hours": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,19,20,21,22,23],
     "expected_eligible_returns_per_full_session": 22
   },
   "hour_effect_adjustment": {
     "fit_period": "2023 only",
-    "per_endpoint_hour_location": "sample_mean",
-    "per_endpoint_hour_scale": "sample_standard_deviation_ddof_1",
+    "per_bar_start_hour_location": "sample_mean",
+    "per_bar_start_hour_scale": "sample_standard_deviation_ddof_1",
     "minimum_2023_support_per_hour": 150,
     "adjusted_return": "x_t=(r_t-mu_hour)/sigma_hour",
     "parameters_frozen_after_2023": true
@@ -67,11 +68,12 @@
     "all_reset_timestamps_must_be_retained": true
   },
   "availability": {
-    "signal_available": "after completion of the triggering hourly bar",
-    "daily_event_close": "16:00 America/New_York research close",
-    "same_event_date_before_16": "INTRADAY_PRE_CLOSE_EARLY_CONTEXT; may already be inside the daily move accumulation window",
-    "at_or_after_event_16": "NOT_EARLY_WARNING",
-    "strict_pre_event_window": "signal timestamp earlier than the previous governed daily 16:00 close"
+    "signal_available_at": "hourly bar start timestamp plus 1 hour",
+    "supporting_clock_check": "the 16:00 America/New_York 1h bar close matched the exact 16:59 one-minute close on the audited overlap",
+    "daily_event_available_at": "the event date 16:00 America/New_York research bar start plus 1 hour, approximately 17:00 local / exact minute close 16:59",
+    "intraday_pre_event_close": "signal available after the previous daily close but strictly before event availability; early to final event realization but may already be inside the daily move accumulation window",
+    "same_or_after_event_availability": "NOT_EARLY_WARNING",
+    "strict_pre_event_window": "signal available strictly before the previous governed daily research close becomes available"
   },
   "evaluation": {
     "engine_first_full_2025_timeline": true,
@@ -79,8 +81,10 @@
     "event_overlay_after_engine_output_freeze": true,
     "warning_horizon_frozen": false,
     "precision_recall_false_alarm_claims_without_frozen_horizon": false,
+    "descriptive_event_lookback_hours": [24,72,120,240],
+    "no_single_lookback_selected_as_winner": true,
     "report_all_reset_hours_and_unique_reset_days": true,
-    "report_event_overlay_categories": ["STRICT_PRE_EVENT_WINDOW","INTRADAY_PRE_CLOSE","SAME_OR_POST_CLOSE_CONFIRM","NO_RECENT_RESET"]
+    "report_event_overlay_categories": ["STRICT_PRE_EVENT_WINDOW","INTRADAY_PRE_EVENT_CLOSE","SAME_OR_POST_EVENT_CONFIRM","NO_RESET_WITHIN_240H"]
   },
   "evidence": {
     "class": "HISTORICAL_REPLAY_RETROSPECTIVE_DIAGNOSTIC",
