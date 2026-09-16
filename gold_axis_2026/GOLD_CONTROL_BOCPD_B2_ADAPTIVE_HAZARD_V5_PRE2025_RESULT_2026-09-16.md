@@ -1,38 +1,55 @@
 # GOLD CONTROL — BOCPD B2 ADAPTIVE HAZARD V5 PRE-2025 RESULT
 
 **Date:** 2026-09-16  
-**Branch:** `gold-bocpd-hourly-b2-selective-20260916`  
-**Workflow:** `Gold BOCPD B2 adaptive hazard pre-2025`  
-**Workflow run:** `35150900487`  
-**Artifact:** `bocpd-b2-adaptive-hazard-pre2025` / ID `10469570027`  
-**Artifact SHA-256:** `f23f94696e3773815327571e1c9e6f56e5117e94717960aa32ea1fb43fd7fc0f`  
+**Authority status:** primary BOCPD research model  
+**Identity:** `BOCPD_HOURLY_B2_ADAPTIVE_HAZARD_V5_RESEARCH`  
 **Evidence class:** `PRE2025_RETROSPECTIVE_TIME_ORDERED_COMPARISON_NOT_PRISTINE`  
 **2025 accessed by model script:** **NO**  
+**Runtime/production promotion:** **NONE**  
+**Direction vote:** **NONE**  
 **Database model-output writes:** **NONE**
 
-## 1. Chronology and governance
+## 1. Authority surface
+
+Authoritative implementation:
+
+`gold_axis_2026/tools/bocpd_hourly_b2_adaptive_hazard_pre2025.py`
+
+Authoritative reproducibility workflow:
+
+`.github/workflows/gold-bocpd-b2-adaptive-hazard-pre2025-20260916.yml`
+
+Frozen comparison baseline:
+
+`BOCPD_HOURLY_B2_PRE2025_BASELINE_R2_RESEARCH`
+
+No earlier Candidate B, optimized B2, daily/monthly BOCPD, duration/residual, clipped-robust or combined BOCPD identity is active authority.
+
+## 2. Chronology and governance
 
 - 2022: hour-of-day normalization and NIG prior formation.
-- 2023: challenger parameter development/selection only.
-- 2024: pre-2025 chronological validation comparison.
-- 2025: not queried or used.
+- 2023: V5 parameter development/selection only.
+- 2024: pre-2025 chronological retrospective comparison.
+- 2025: not queried or used by this model script.
 - Random split: none.
-- Runtime/production promotion: none.
+- Automatic selector/ensemble authority: none.
 
-2024 is not represented as a pristine untouched holdout because earlier BOCPD research had already exposed 2024 evidence. It is used only as a time-ordered pre-2025 comparison period in this phase.
+2024 is **not** represented as a pristine untouched holdout because earlier BOCPD program-level research had already exposed 2024 evidence. The result is therefore a time-ordered pre-2025 retrospective comparison, not prospective proof.
 
-## 2. Challenger
+The 2022 hourly history is accepted as sufficient high-coverage research formation data for this phase. This result does **not** claim that every theoretically expected 2022 market-hour slot has been independently certified complete.
 
-Identity: `BOCPD_HOURLY_B2_ADAPTIVE_HAZARD_V5_RESEARCH`
+## 3. Model definition
 
-The BOCPD hazard is no longer constant. At each hourly observation it is updated causally from:
+V5 uses hourly Adams-MacKay-style BOCPD with a Gaussian unknown-mean/variance segment model and NIG/Student-t predictive distribution. Its changepoint hazard is causal and adaptive rather than constant.
+
+At each eligible completed hourly observation, hazard depends only on:
 
 1. current BOCPD run length; and
-2. lagged EWMA volatility calculated only from information available before the current observation.
+2. lagged EWMA volatility calculated from information available before the current observation.
 
-The hazard is logistic and bounded. No future observation, 2024 selection, or 2025 information is used to select challenger parameters.
+The hazard is logistic and bounded. No future observation, 2024 score or 2025 information is used to select V5 parameters.
 
-## 3. 2023 development-selected configuration
+## 4. 2023 development-selected configuration
 
 - base expected regime: 20 days / 440 eligible hourly observations;
 - run-length coefficient (`gamma_run`): 0.75;
@@ -47,30 +64,23 @@ The hazard is logistic and bounded. No future observation, 2024 selection, or 20
 - recall: 0.4118;
 - F0.5: 0.15525.
 
-For comparison, the frozen pre-2025 baseline selected on the same 2023 development period had 61 episodes, captured 6/17 events, precision 0.1148, recall 0.3529 and F0.5 0.13266.
+For comparison, Baseline R2 selected on the same 2023 development period had 61 episodes, captured 6/17 events, precision 0.1148, recall 0.3529 and F0.5 0.13266.
 
-## 4. 2024 validation comparison
+## 5. 2024 auxiliary abnormal-volatility comparison
 
 | Model | Episodes | Matched episodes | False episodes | Events captured | Precision | Recall | F0.5 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| B2 baseline R2 | 57 | 12 | 45 | 11/17 | 0.2105 | 0.6471 | 0.24336 |
-| Adaptive-hazard V5 | 65 | 15 | 50 | 14/17 | 0.2308 | 0.8235 | **0.26958** |
+| Baseline R2 | 57 | 12 | 45 | 11/17 | 0.210526 | 0.647059 | 0.243363 |
+| Adaptive Hazard V5 | 65 | 15 | 50 | 14/17 | 0.230769 | 0.823529 | 0.269576 |
 
-Adaptive-hazard V5 lead times for the 14 captured validation events were 102, 32, 104, 69, 25, 91, 93, 66, 42, 77, 34, 40, 102 and 72 hours.
+V5 lead times for the 14 captured events were 102, 32, 104, 69, 25, 91, 93, 66, 42, 77, 34, 40, 102 and 72 hours.
 
-## 5. Interpretation
+These metrics are based on the auxiliary abnormal-daily-volatility event construction used in the pre-2025 BOCPD comparison. They **do not establish performance against the primary structural GC-BREAK break-label universe** and must not be presented as such.
 
-Adaptive-hazard V5 improves the pre-2025 comparison relative to the constant-hazard baseline on all three primary event metrics: precision, recall and F0.5. It captures three additional 2024 abnormal-volatility events (14/17 versus 11/17), while the number of warning episodes rises from 57 to 65 and unmatched episodes rise from 45 to 50.
+## 6. Binding interpretation
 
-The improvement is therefore meaningful but not sufficient for production/runtime promotion. False-warning burden remains material. The result supports continuing the adaptive-hazard research line rather than the earlier Weibull residual-risk or simple clipping variants, which did not beat baseline in the same pre-2025 comparison.
+V5 is retained because it improves the time-ordered 2024 auxiliary comparison over Baseline R2 on precision, recall and F0.5, while preserving causal information flow. However, 50 of 65 2024 warning episodes are unmatched under the frozen auxiliary rule, so false-warning burden remains material.
 
-## 6. Next research step
+Therefore V5 is **research authority only**. It is not a runtime engine, production engine, trading signal, equal-weight direction voter or proof of structural GC-BREAK early-warning performance.
 
-Keep V5 frozen as the current pre-2025 research reference and test narrowly defined successors without using 2025 for tuning. Priority candidates are:
-
-- a richer but still causal hazard using separate short/medium lagged volatility states;
-- empirical/learned duration structure combined with the adaptive hazard;
-- principled generalized-Bayes or heavy-tail robustness rather than return clipping;
-- warning episode consolidation aimed specifically at reducing the 50 unmatched 2024 episodes without sacrificing the 14/17 event coverage.
-
-No automatic promotion is authorized by this result.
+Any future BOCPD successor requires a separately named preregistration/change-control step. This result file authorizes no additional BOCPD variant and contains no active successor recommendation.
