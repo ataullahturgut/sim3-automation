@@ -1,7 +1,7 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.58  
-**Issue date:** 2026-09-16  
+**Manifest version:** 1.59  
+**Issue date:** 2026-09-17  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
 **Project root:** `gold_axis_2026/`
@@ -83,7 +83,7 @@ Primary performance questions:
 
 ## 3. Governed runtime inventory
 
-The governed runtime inventory contains exactly **12 identities**.
+The governed runtime inventory contains exactly **11 identities**. BOCPD is currently research-only and is governed separately below.
 
 ### Monthly H=1 price experts
 
@@ -98,14 +98,24 @@ The governed runtime inventory contains exactly **12 identities**.
 6. `FAST`
 7. `SLOW`
 8. `MACRO_EVENT_SUCCESSOR_V2`
-9. `BOCPD_RETURN_SUCCESSOR_V1`
-10. `EMERGENCY_LEVEL`
-11. `EMERGENCY_REVERSAL`
-12. `GVZ_RISK`
+9. `EMERGENCY_LEVEL`
+10. `EMERGENCY_REVERSAL`
+11. `GVZ_RISK`
 
 No additional research channel becomes a governed runtime identity without explicit promotion and manifest change control.
 
 Research-only successors may be evaluated without becoming runtime identities.
+
+### 3.1 BOCPD research authority — exactly two retained identities
+
+The active BOCPD research authority contains exactly **two** identities:
+
+1. `BOCPD_HOURLY_B2_ADAPTIVE_HAZARD_V5_RESEARCH` — **primary BOCPD research model**.
+2. `BOCPD_HOURLY_B2_PRE2025_BASELINE_R2_RESEARCH` — **frozen comparison baseline only**.
+
+No other BOCPD identity is active authority. Raw hourly Candidate B, earlier optimized B2 identities, daily Candidate A, monthly `BOCPD_RETURN_SUCCESSOR_V1`, duration/residual V2, robust-clipped V3, duration+robust V4 and other superseded BOCPD experiments are historical only. Their active code/result surfaces are removed from the current research branch; Git history may retain them solely for audit traceability.
+
+Neither retained BOCPD identity is a governed runtime or production engine at this stage. V5 is the active research reference; R2 is a benchmark. Neither emits an equal-weight direction vote.
 
 ---
 
@@ -143,14 +153,15 @@ Frozen SLOW rule:
 
 ### Regime / stress / risk block
 
-- `BOCPD_RETURN_SUCCESSOR_V1`: change-point/regime context only; no equal direction vote.
+- `BOCPD_HOURLY_B2_ADAPTIVE_HAZARD_V5_RESEARCH`: primary hourly BOCPD research context; causal adaptive hazard from run length and lagged volatility; no equal direction vote.
+- `BOCPD_HOURLY_B2_PRE2025_BASELINE_R2_RESEARCH`: frozen constant-hazard benchmark only; no runtime vote and no production authority.
 - `EMERGENCY_LEVEL`: abnormal displacement context.
 - `EMERGENCY_REVERSAL`: selective abnormal reversal/confirmation context.
 - realized volatility: retrospective uncertainty/severity/event context; never a predictor of the same realized event.
 - `GVZ_RISK`: options-implied gold-market risk/severity context only; never an equal direction vote and never silently converted into UP/DOWN.
 - chronology-safe optional VIX: risk context only.
 
-The frozen BOCPD identity remains on its native completed-month clock. A daily BOCPD requires a separately named research challenger.
+The retained BOCPD research line is hourly. V5 is the only active BOCPD challenger; R2 is retained solely as its frozen benchmark. No superseded BOCPD identity may silently re-enter the architecture.
 
 ### Event / shock block
 
@@ -174,7 +185,7 @@ The architecture is multi-clock by design:
 - **GC-BREAK main origin:** daily completed reference origin;
 - **FAST:** tactical completed-daily clock;
 - **SLOW:** completed weekly clock;
-- **BOCPD:** completed-month clock;
+- **BOCPD research (V5/R2):** eligible completed-hour XAU clock; an output is usable only after the corresponding one-hour bar is complete;
 - **Monthly H=1 / Monthly Direction:** strategic monthly clock;
 - **Macro Event / Market Shock:** event-triggered intraday clock;
 - **GVZ_RISK:** completed GVZ daily-close clock under the frozen R4.1 implementation.
@@ -555,6 +566,41 @@ Those `16/19`, `1/19`, `2/19` counts are **event-conditioned descriptive diagnos
 
 Current interpretation: GVZ_RISK is retained as a **selective market-stress / risk-context motor**. It is **not proven as a general volatility-day prediction engine**. The small PANIC sample is `INSUFFICIENT_SUPPORT` for promotion claims.
 
+### 10.8 BOCPD — retained research authority and pre-2025 evidence
+
+Evidence class: `PRE2025_RETROSPECTIVE_TIME_ORDERED_COMPARISON_NOT_PRISTINE`.
+
+Binding chronology for both retained BOCPD identities:
+
+- 2022: research formation / hour-of-day normalization / prior formation;
+- 2023: development and parameter selection;
+- 2024: pre-2025 chronological retrospective comparison; not described as a pristine untouched holdout;
+- 2025: prohibited for BOCPD tuning/model selection in this retained line and not accessed by the V5/R2 pre-2025 evaluation scripts.
+
+`BOCPD_HOURLY_B2_PRE2025_BASELINE_R2_RESEARCH` — frozen benchmark, 2024 comparison:
+
+- 57 episodes;
+- 12 matched episodes;
+- 45 unmatched episodes;
+- 11 / 17 abnormal-volatility events captured;
+- precision `0.210526`;
+- recall `0.647059`;
+- F0.5 `0.243363`.
+
+`BOCPD_HOURLY_B2_ADAPTIVE_HAZARD_V5_RESEARCH` — primary BOCPD research model, same 2024 comparison:
+
+- 65 episodes;
+- 15 matched episodes;
+- 50 unmatched episodes;
+- 14 / 17 abnormal-volatility events captured;
+- precision `0.230769`;
+- recall `0.823529`;
+- F0.5 `0.269576`.
+
+V5 improves event coverage, precision, recall and F0.5 relative to R2 under the same pre-2025 comparison. False-warning burden remains material, therefore the result does **not** authorize runtime or production promotion.
+
+No BOCPD identity other than V5 and R2 may be used as current research authority.
+
 ---
 
 ## 11. Frozen research split
@@ -614,7 +660,8 @@ A rejected family may not be retuned on challenge outcomes and reintroduced unde
 | SLOW | REPLAYABLE | confirmation/new-regime evidence |
 | MONTHLY_DIRECTION_3M | REPLAYABLE | strategic context only |
 | Emergency Level/Reversal | CONDITIONAL BY ORIGIN | selective context/confirmation; unavailable origin -> NOT_TESTABLE |
-| BOCPD_RETURN_SUCCESSOR_V1 | NATIVE MONTHLY CLOCK | regime/change context only |
+| BOCPD_HOURLY_B2_ADAPTIVE_HAZARD_V5_RESEARCH | PRIMARY BOCPD RESEARCH / NON-RUNTIME | hourly adaptive-hazard regime/break context; current BOCPD research authority |
+| BOCPD_HOURLY_B2_PRE2025_BASELINE_R2_RESEARCH | FROZEN BENCHMARK / NON-RUNTIME | constant-hazard hourly benchmark only; comparison authority |
 | Monthly H=1 experts | REPLAYABLE/PARTIAL BY ORIGIN | independent forecast + strategic context, not short-term trigger |
 | Macro Event | ELIGIBLE EVENT ORIGINS | event-time surprise/context |
 | Market Shock V3 | PARTIAL / RESEARCH-ONLY | realized event-shock extension |
@@ -752,6 +799,8 @@ Current validated 2025 facts preserved in this manifest are:
 - volatility challenge: 255 governed research weekdays, 19 frozen abnormal-move event-days, 5 EXTREME, 14 UP / 5 DOWN;
 - FAST: 255-row complete timeline, 22 new robust episode onsets, tactical trend-state role retained, standalone volatility-warning performance not proven;
 - GVZ_RISK: 250 historical daily-close observations/scored rows, 237 NORMAL / 10 ELEVATED / 3 PANIC, risk-only role, no FAST linkage, general volatility-warning performance not proven.
+
+Current BOCPD research authority is restricted to Adaptive Hazard V5 plus the frozen R2 benchmark; all other BOCPD models are superseded and removed from the active research surface.
 
 Event-conditioned backward lookup alone is not alarm-performance evidence. Same-day completed-close overlap alone is not early-warning evidence. Full engine timelines, exact signal dates and native availability timestamps must remain visible for all future motors so the project does not repeat the same methodological error.
 

@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-import bocpd_hourly_b2_successor_pre2025 as base
+import bocpd_hourly_b2_baseline_r2_pre2025 as base
 
 IDENTITY = "BOCPD_HOURLY_B2_ADAPTIVE_HAZARD_V5_RESEARCH"
 EXPECTED_DAYS = [20, 40]
