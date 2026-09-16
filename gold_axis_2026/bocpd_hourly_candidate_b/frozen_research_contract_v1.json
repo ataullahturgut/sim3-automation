@@ -1,0 +1,90 @@
+{
+  "identity": "BOCPD_HOURLY_SEASONAL_RETURN_CANDIDATE_B_V1_RESEARCH",
+  "status": "RETROSPECTIVE_RESEARCH_ONLY_NOT_GOVERNED_RUNTIME",
+  "parent_family": "BOCPD_DAILY_RETURN_SUCCESSOR_V2_RESEARCH",
+  "role": "REGIME_CHANGE_EARLY_WARNING_CONTEXT_ONLY",
+  "direction_vote_permitted": false,
+  "position_mapping_permitted": false,
+  "database_model_output_writes_permitted": false,
+  "source": {
+    "formation_series_id": "XAU_USD_TWELVE_1H_RESEARCH_V1",
+    "provider": "Twelve Data",
+    "symbol": "XAU/USD",
+    "frequency": "1h",
+    "timezone": "America/New_York",
+    "quality": "APPROVED_HISTORICAL_RESEARCH_ONLY_NOT_RUNTIME",
+    "challenge_2025_policy": "same-provider 1h historical fetch in workflow; no model-result database write",
+    "raw_vendor_values_logged": false
+  },
+  "chronology": {
+    "hour_seasonality_fit": "2023-01-01/2023-12-31",
+    "prior_fit": "2023-01-01/2023-12-31",
+    "hazard_selection": "2024-01-01/2024-12-31",
+    "retrospective_challenge": "2025-01-01/2025-12-31",
+    "challenge_outcomes_used_for_tuning": false
+  },
+  "return_clock": {
+    "raw_return": "ln(P_t/P_t_minus_1)",
+    "eligible_only_if_elapsed_time": "exactly_1_hour",
+    "reason": "exclude weekend reopen, daily maintenance break and other multi-hour gaps from the hourly-return process",
+    "endpoint_hour": "America/New_York local hour of P_t",
+    "expected_eligible_endpoint_hours": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,19,20,21,22,23],
+    "expected_eligible_returns_per_full_session": 22
+  },
+  "hour_effect_adjustment": {
+    "fit_period": "2023 only",
+    "per_endpoint_hour_location": "sample_mean",
+    "per_endpoint_hour_scale": "sample_standard_deviation_ddof_1",
+    "minimum_2023_support_per_hour": 150,
+    "adjusted_return": "x_t=(r_t-mu_hour)/sigma_hour",
+    "parameters_frozen_after_2023": true
+  },
+  "observation_model": {
+    "family": "GAUSSIAN_UNKNOWN_MEAN_VARIANCE",
+    "conjugate_prior": "NORMAL_INVERSE_GAMMA",
+    "predictive": "STUDENT_T",
+    "mu0": "2023_mean_of_hour_adjusted_returns",
+    "kappa0": 1.0,
+    "alpha0": 2.0,
+    "beta0": "2023_sample_variance_of_hour_adjusted_returns_times_alpha0_minus_1"
+  },
+  "hazard_selection": {
+    "candidate_expected_run_days": [20,40,60,120],
+    "eligible_hourly_returns_per_day": 22,
+    "candidate_expected_run_observations": [440,880,1320,2640],
+    "selection_metric": "2024_PREQUENTIAL_LOG_PREDICTIVE_EVIDENCE",
+    "challenge_outcomes_used": false
+  },
+  "state_rule": {
+    "previous_map": "argmax R_t_minus_1",
+    "expected_uninterrupted_run": "previous_map_plus_1",
+    "current_map": "argmax R_t",
+    "regime_change_candidate": "current_map_less_than_expected_uninterrupted_run",
+    "reset_fraction": "max(0,(expected_uninterrupted_run-current_map)/expected_uninterrupted_run)",
+    "return_sign_filter": "NONE",
+    "numeric_alarm_threshold": null,
+    "debounce_or_episode_filter": "NONE",
+    "all_reset_timestamps_must_be_retained": true
+  },
+  "availability": {
+    "signal_available": "after completion of the triggering hourly bar",
+    "daily_event_close": "16:00 America/New_York research close",
+    "same_event_date_before_16": "INTRADAY_PRE_CLOSE_EARLY_CONTEXT; may already be inside the daily move accumulation window",
+    "at_or_after_event_16": "NOT_EARLY_WARNING",
+    "strict_pre_event_window": "signal timestamp earlier than the previous governed daily 16:00 close"
+  },
+  "evaluation": {
+    "engine_first_full_2025_timeline": true,
+    "volatility_event_inventory_is_not_engine_input": true,
+    "event_overlay_after_engine_output_freeze": true,
+    "warning_horizon_frozen": false,
+    "precision_recall_false_alarm_claims_without_frozen_horizon": false,
+    "report_all_reset_hours_and_unique_reset_days": true,
+    "report_event_overlay_categories": ["STRICT_PRE_EVENT_WINDOW","INTRADAY_PRE_CLOSE","SAME_OR_POST_CLOSE_CONFIRM","NO_RECENT_RESET"]
+  },
+  "evidence": {
+    "class": "HISTORICAL_REPLAY_RETROSPECTIVE_DIAGNOSTIC",
+    "prospective_claim_permitted": false,
+    "promotion_status": "NOT_PROVEN"
+  }
+}
