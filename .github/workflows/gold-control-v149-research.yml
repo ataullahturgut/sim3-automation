@@ -3,8 +3,11 @@ name: Gold Control V1.49 research governance
 on:
   pull_request:
     paths:
-      - "gold_axis_2026/**"
-      - ".github/workflows/gold-control-v149-research.yml"
+      - "gold_axis_2026/v149_research/**"
+      - "gold_axis_2026/tests/test_v149_research_governance.py"
+      - "gold_axis_2026/data_pipeline/audits/v149_research/**"
+      - "gold_axis_2026/data_pipeline/audits/component_role_replays_v145/**"
+      - "gold_axis_2026/production_closure/**"
   workflow_dispatch:
 
 permissions:
