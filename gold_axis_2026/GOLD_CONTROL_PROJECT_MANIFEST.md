@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.62  
+**Manifest version:** 1.63  
 **Issue date:** 2026-09-17  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -92,6 +92,10 @@ The current research-status layer is binding for work sequencing and must not be
 | `FAST` | `EVALUATED / RETAINED_TACTICAL_CONTEXT` | 2025 full-timeline replay complete; not proven standalone volatility-warning engine |
 | `GVZ_RISK` | `EVALUATED / RETAINED_RISK_CONTEXT` | 2025 full-timeline historical replay complete; risk/severity only, no direction vote |
 | `BOCPD` research lane | `EVALUATED / RETAINED_RESEARCH_REFERENCE` | only V5 + R2 remain authoritative; BOCPD is retained as regime/change context, not as the next standalone future-change-time predictor |
+| `DIRECTION_RSM_V1_RESEARCH` | `PLANNED_RESEARCH / NOT_IMPLEMENTED / NOT_RUNTIME` | Return Signal Momentum direction-probability challenger; literature-source replication first |
+| `DIRECTION_VLMC_BS_V1_RESEARCH` | `PLANNED_RESEARCH / NOT_IMPLEMENTED / NOT_RUNTIME` | bootstrapped Variable-Length Markov Chain direction challenger; literature-source replication first |
+| `DIRECTION_BCT_CTW_V1_RESEARCH` | `PLANNED_RESEARCH / NOT_IMPLEMENTED / NOT_RUNTIME` | Bayesian Context Tree / exact CTW posterior-predictive direction challenger |
+| `DIRECTION_BCARS_V1_RESEARCH` | `PLANNED_RESEARCH / NOT_IMPLEMENTED / NOT_RUNTIME` | Beta Conditional Autoregressive Shape direction challenger from price-extreme decomposition |
 | Post-BOCPD future-change-time lane | `NEXT_RESEARCH_LANE / PREREGISTRATION_REQUIRED` | separately named residual-time / explicit-duration / Bayesian online changepoint-prediction challenger; exact identity and parameters must be frozen before implementation |
 | `MACRO_EVENT_SUCCESSOR_V2` | `SUSPENDED_FOR_CURRENT_GC_BREAK_RESEARCH_SEQUENCE` | governed runtime identity remains registered, but it is **not the next motor** and no new Macro Event tuning/evaluation is authorized in the current sequence |
 | `MACRO_EVENT_SUCCESSOR_V4_RELIABILITY_GATE` | `FROZEN_RESEARCH_CHALLENGER / NOT_RUNTIME_AUTHORITY` | historical preregistration remains audit lineage; not promoted and not the current workstream |
@@ -166,6 +170,128 @@ The 2022 hourly history is accepted as **sufficient high-coverage research forma
 These are **auxiliary abnormal-daily-volatility metrics**, not structural GC-BREAK precision/recall. V5 improves event coverage, precision, recall and F0.5 relative to R2 under the same comparison, but false-warning burden remains material. No runtime/production promotion is authorized.
 
 Any future BOCPD successor requires a separately named preregistration/change-control step. The next future-change-time lane is a **separate model identity**, not a silent V6 retune of V5.
+
+
+### 4.3 Planned direction-forecast research motors — four authorized identities
+
+The following four identities are authorized as new research motors to be tried later. They are not implemented, not runtime identities, not production authorities, and may not silently replace the GC-BREAK state ontology. Their first implementation must preserve the mathematical method identity documented below and must use time-ordered, point-in-time-safe evaluation.
+
+The previously discussed higher-moment direction-probability method is NOT SELECTED for this planned motor set.
+
+#### 4.3.1 DIRECTION_RSM_V1_RESEARCH — Return Signal Momentum
+
+Primary literature basis: Liu, Papailias & Quinn (2021), International Review of Financial Analysis, DOI 10.1016/j.irfa.2021.101677; related RSM basis: Papailias, Liu & Thomakos (2021), Journal of Banking & Finance, DOI 10.1016/j.jbankfin.2021.106063.
+
+For return r_t, define x_t = 1[r_t > 0]. For a look-back window k, the native RSM forecast is
+
+p_RSM(t+1;k) = (1/k) * sum(i=t-k+1..t) x_i.
+
+RSM is non-parametric: return magnitudes are discarded and only sign persistence enters the forecast. A native binary direction forecast follows from p_RSM > 0.5, while the probability itself must be retained for Brier score, log-loss and calibration evaluation.
+
+The commodity-direction study identifies the 52-week RSM as one of its two strongest out-of-sample specifications. Therefore k=52 weeks is the SOURCE-REPLICATION DEFAULT, not a post-2025 Gold-tuned parameter. Alternative Gold windows/horizons require separate preregistration.
+
+#### 4.3.2 DIRECTION_VLMC_BS_V1_RESEARCH — bootstrapped Variable-Length Markov Chain
+
+Primary literature basis: Liu, Papailias & Quinn (2021), with the VLMC/context-algorithm lineage of Buehlmann & Wyner and the sieve-bootstrap lineage of Buehlmann.
+
+Input is the binary sign sequence x_t in {0,1}. A VLMC assumes that the conditional law of the next symbol depends on a suffix/context of the observed past, but the required suffix length may differ by pattern. For active context w,
+
+p(a | w) = N(wa) / N(w),  a in {0,1},
+
+where N(w) counts occurrences of w and N(wa) counts occurrences followed by a.
+
+A maximal context tree is built and pruned using the gain in conditional likelihood from keeping child-specific transitions instead of merging them to the parent. The pruning statistic is a likelihood-ratio / Kullback-Leibler-type quantity controlled by cutoff K; larger K means more pruning and a smaller tree.
+
+For the bootstrapped version, the source study starts with K0=0.3, simulates bootstrap sequences from the fitted large VLMC, evaluates candidate K values and chooses K by minimizing mean one-step zero-one loss:
+
+L(K) = E_boot[ 1( Xhat*_(n+1)(K) != X*_(n+1) ) ].
+
+The published implementation searches K approximately over 0.4..2.5 in 0.02 steps. The 52-week bootstrapped VLMC is the second strongest out-of-sample commodity-direction specification in the source study. These are SOURCE-REPLICATION DEFAULTS, not Gold-tuned values.
+
+Every future implementation must retain selected context, context depth, tree size, transition probability and cutoff provenance at each origin.
+
+#### 4.3.3 DIRECTION_BCT_CTW_V1_RESEARCH — Bayesian Context Tree / Context Tree Weighting
+
+Primary literature basis: Kontoyiannis, Mertzanis, Panotopoulou, Papageorgiou & Skoularidou (2022), JRSS Series B, DOI 10.1111/rssb.12511.
+
+Let T(D) be the set of proper context trees with maximal depth D over alphabet size m. The BCT model prior is
+
+pi_D(T;beta) = alpha^(|T|-1) * beta^(|T|-L_D(T)),
+
+where alpha = (1-beta)^(1/(m-1)), |T| is the number of leaves and L_D(T) is the number of leaves at depth D. For the planned binary direction motor, m=2.
+
+At each leaf/context s, the transition vector has independent Jeffreys-Dirichlet prior
+
+theta_s ~ Dirichlet(1/2,1/2).
+
+With context counts a_s(j), the posterior becomes
+
+theta_s | x,T ~ Dirichlet(a_s(0)+1/2, a_s(1)+1/2).
+
+Unlike a single selected VLMC, BCT/CTW averages over tree-model and parameter uncertainty. The exact prior predictive likelihood is
+
+P*_D(x) = sum_T pi_D(T;beta) * integral P(x|theta,T) pi(theta|T) dtheta.
+
+CTW computes it recursively. At a leaf, P_w,s = P_e,s. At an internal node,
+
+P_w,s = beta*P_e,s + (1-beta)*product_j P_w,sj.
+
+The exact next-symbol posterior predictive distribution is
+
+P*_D(x_(n+1)|x_1^n) = P*_D(x_1^(n+1)) / P*_D(x_1^n).
+
+For binary UP/DOWN data, the native output is therefore the exact posterior predictive P(UP next | sign history), not merely a MAP-tree class. The source framework suggests beta near 1-2^(-m+1); for m=2 this is about 0.5. Maximal depth D, Gold sampling frequency and any richer discretisation remain NOT_FROZEN until implementation preregistration.
+
+#### 4.3.4 DIRECTION_BCARS_V1_RESEARCH — Beta Conditional Autoregressive Shape
+
+Primary literature basis: Xie, Sun & Fan (2023), Financial Innovation, DOI 10.1186/s40854-023-00489-z.
+
+Let p_t be log close and h_t the maximum log price over interval [t-1,t]. Define
+
+u_t = h_t - p_(t-1),
+d_t = h_t - p_t,
+R_t = u_t + d_t,
+ur_t = u_t / R_t.
+
+Then
+
+r_t = p_t - p_(t-1) = R_t * (2*ur_t - 1).
+
+Since R_t > 0, r_t > 0 if and only if ur_t > 0.5. Thus direction forecasting is transformed into forecasting a continuous up-ratio in [0,1].
+
+B-CARS assumes
+
+ur_t ~ Beta(alpha_t,beta),
+
+with conditional mean
+
+k_t = E(ur_t | Omega_t) = alpha_t/(alpha_t+beta).
+
+The source benchmark B-CARS(1,1) uses
+
+k_t = omega + gamma*k_(t-1) + tau*ur_(t-1),
+
+subject to omega>0, gamma>=0, tau>=0 and omega+gamma+tau<=1, ensuring k_t in [0,1]. The time-varying shape parameter is
+
+alpha_t = k_t*beta/(1-k_t).
+
+Parameters are estimated by maximum likelihood from the Beta conditional likelihood. The native direction rule follows from whether the forecasted up-ratio is above or below 0.5.
+
+A Gold adaptation may additionally report a probabilistic output P(UP | Omega_t) = 1 - F_Beta(0.5;alpha_t,beta), but that probability must be labelled as a Gold-derived extension rather than silently attributed to the source paper.
+
+The original study adjusts interval highs so that the previous close is not excluded from the price extreme. A Gold implementation must freeze OHLC/high construction, frequency and missing-bar semantics before testing. P=Q=1 is the SOURCE-REPLICATION DEFAULT; other orders or exogenous variables require separate preregistration.
+
+### 4.4 Common governance for the four new direction motors
+
+These four motors form a parallel research-only direction lane. They do not reactivate the historical fixed NEXT_NY17_1D/3D programme and do not alter the primary GC-BREAK sequential state output.
+
+Before implementation, a common preregistration must freeze target horizon/frequency, exact XAU source and close/OHLC semantics, rolling versus expanding formation, permitted training window(s), probability-to-direction mapping, abstention rule if any, evaluation metrics, and tie/missing handling.
+
+Initial evaluation must report at minimum success rate, balanced accuracy where applicable, Brier score, log-loss, calibration and coverage. A model may not be selected solely because it has the highest raw hit rate.
+
+The first implementation stage must reproduce each method's native mathematical identity WITHOUT FAST, GVZ, BOCPD, Macro or Emergency inputs. Only after standalone evidence is frozen may existing Gold Control motors be added one at a time through role-preserving ablation. Flat equal voting remains forbidden.
+
+Current status for all four identities: PLANNED_RESEARCH / NOT_IMPLEMENTED / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY. Their addition to this manifest implies no performance result.
 
 ---
 
@@ -542,10 +668,11 @@ Random splitting is forbidden.
 11. **Macro Event — SUSPENDED FOR CURRENT SEQUENCE**
 12. **Emergency Level/Reversal — SUSPENDED; Level requires redesign**
 13. **SLOW — LOW PRIORITY / NOT NEXT**
-14. **Post-BOCPD future change-time challenger — NEXT RESEARCH LANE; exact identity/parameters require preregistration**
-15. **WP4 role-preserving integration/state-transition work — AFTER the new challenger has a frozen design/evidence checkpoint**
-16. **Architecture/parameter freeze — PENDING**
-17. **Prospective shadow — PENDING FINAL FREEZE**
+14. **Post-BOCPD future change-time challenger — NEXT GC-BREAK RESEARCH LANE; exact identity/parameters require preregistration**
+15. **Parallel direction-research lane — FOUR PLANNED MOTORS: RSM, bootstrapped VLMC, BCT/CTW, B-CARS; NOT IMPLEMENTED; common preregistration required before coding/testing**
+16. **WP4 role-preserving integration/state-transition work — AFTER the new challenger has a frozen design/evidence checkpoint**
+17. **Architecture/parameter freeze — PENDING**
+18. **Prospective shadow — PENDING FINAL FREEZE**
 
 The next research lane is therefore **not inferred from runtime-registry order**. It is the separately governed future-change-time challenger defined in Section 12.6. Macro Event, Emergency and SLOW remain outside the immediate next step unless explicitly reactivated.
 
@@ -665,6 +792,8 @@ Current validated motor checkpoint:
 - Emergency Level/Reversal: suspended, with Level requiring redesign;
 - SLOW: low priority, not next.
 
-The **next research motor/lane** is a new separately named **future-change-time prediction challenger** based on residual-time / explicit-duration / Bayesian online changepoint-prediction principles (or a causally equivalent preregistered duration-hazard formulation). Exact model identity and parameters are not yet frozen; the scientific lane is frozen. It must be designed with pre-2025 chronology and may not use visible 2025 outcomes for tuning.
+The **next GC-BREAK research motor/lane** is a new separately named **future-change-time prediction challenger** based on residual-time / explicit-duration / Bayesian online changepoint-prediction principles (or a causally equivalent preregistered duration-hazard formulation). Exact model identity and parameters are not yet frozen; the scientific lane is frozen. It must be designed with pre-2025 chronology and may not use visible 2025 outcomes for tuning.
+
+In parallel, four new direction-research motors are authorized for later implementation: DIRECTION_RSM_V1_RESEARCH, DIRECTION_VLMC_BS_V1_RESEARCH, DIRECTION_BCT_CTW_V1_RESEARCH and DIRECTION_BCARS_V1_RESEARCH. They are planned research identities only; none is implemented, promoted or allowed to override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
 
 All future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
