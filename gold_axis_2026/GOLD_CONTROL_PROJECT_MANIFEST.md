@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.61  
+**Manifest version:** 1.62  
 **Issue date:** 2026-09-17  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -91,7 +91,8 @@ The current research-status layer is binding for work sequencing and must not be
 |---|---|---|
 | `FAST` | `EVALUATED / RETAINED_TACTICAL_CONTEXT` | 2025 full-timeline replay complete; not proven standalone volatility-warning engine |
 | `GVZ_RISK` | `EVALUATED / RETAINED_RISK_CONTEXT` | 2025 full-timeline historical replay complete; risk/severity only, no direction vote |
-| `BOCPD` research lane | `EVALUATED / RETAINED_RESEARCH_REFERENCE` | only V5 + R2 remain authoritative; non-runtime |
+| `BOCPD` research lane | `EVALUATED / RETAINED_RESEARCH_REFERENCE` | only V5 + R2 remain authoritative; BOCPD is retained as regime/change context, not as the next standalone future-change-time predictor |
+| Post-BOCPD future-change-time lane | `NEXT_RESEARCH_LANE / PREREGISTRATION_REQUIRED` | separately named residual-time / explicit-duration / Bayesian online changepoint-prediction challenger; exact identity and parameters must be frozen before implementation |
 | `MACRO_EVENT_SUCCESSOR_V2` | `SUSPENDED_FOR_CURRENT_GC_BREAK_RESEARCH_SEQUENCE` | governed runtime identity remains registered, but it is **not the next motor** and no new Macro Event tuning/evaluation is authorized in the current sequence |
 | `MACRO_EVENT_SUCCESSOR_V4_RELIABILITY_GATE` | `FROZEN_RESEARCH_CHALLENGER / NOT_RUNTIME_AUTHORITY` | historical preregistration remains audit lineage; not promoted and not the current workstream |
 | `EMERGENCY_LEVEL` | `SUSPENDED / REDESIGN_REQUIRED` | do not treat as next motor until separately redesigned/preregistered |
@@ -101,7 +102,7 @@ The current research-status layer is binding for work sequencing and must not be
 
 **Important:** suspension here is a research-sequencing status. It does not erase historical runtime identities, old contracts or Git history, and it does not promote a replacement automatically.
 
-At the current checkpoint, **no post-BOCPD next motor is frozen by manifest authority**. A future next motor/challenger must be selected explicitly under role-preserving architecture and preregistered before new outcome inspection. Macro Event must not be assumed to be next merely because it remains in the runtime registry.
+The binding post-BOCPD scientific direction is **not another ordinary BOCPD threshold/hazard retune** and is not Macro Event, GVZ, Emergency or SLOW. The next research lane is a separately named **future change-time prediction** motor in the residual-time / explicit-duration / Bayesian online prediction of changepoints family. Its exact implementation is not pre-approved; it requires preregistration using pre-2025 chronology before any new outcome inspection.
 
 ---
 
@@ -164,7 +165,7 @@ The 2022 hourly history is accepted as **sufficient high-coverage research forma
 
 These are **auxiliary abnormal-daily-volatility metrics**, not structural GC-BREAK precision/recall. V5 improves event coverage, precision, recall and F0.5 relative to R2 under the same comparison, but false-warning burden remains material. No runtime/production promotion is authorized.
 
-Any future BOCPD successor requires a separately named preregistration/change-control step.
+Any future BOCPD successor requires a separately named preregistration/change-control step. The next future-change-time lane is a **separate model identity**, not a silent V6 retune of V5.
 
 ---
 
@@ -205,6 +206,7 @@ Frozen SLOW rule:
 - `BOCPD_HOURLY_B2_ADAPTIVE_HAZARD_V5_RESEARCH`: primary hourly BOCPD research context; causal adaptive hazard from run length and lagged volatility; no equal direction vote.
 - `BOCPD_HOURLY_B2_PRE2025_BASELINE_R2_RESEARCH`: frozen constant-hazard benchmark only.
 - `GVZ_RISK`: retained options-implied gold-market risk/severity context only; never an equal direction vote and never silently converted into UP/DOWN.
+- post-BOCPD future-change-time challenger: next research lane; must model prospective time-to-change / residual-time or equivalent explicit-duration hazard without reusing 2025 for tuning.
 - `EMERGENCY_LEVEL`: **suspended / redesign required**.
 - `EMERGENCY_REVERSAL`: **suspended**.
 - realized volatility: retrospective uncertainty/severity/event context; never a predictor of the same realized event.
@@ -233,6 +235,7 @@ The architecture is multi-clock by design:
 - **FAST:** tactical completed-daily clock;
 - **SLOW:** completed weekly clock;
 - **BOCPD research (V5/R2):** eligible completed-hour XAU clock; output usable only after the corresponding one-hour bar is complete;
+- **future change-time challenger:** native clock must be explicitly preregistered; no output may be credited before all inputs required at that origin are complete;
 - **Monthly H=1 / Monthly Direction:** strategic monthly clock;
 - **Macro Event / Market Shock:** event-triggered intraday clock when that research lane is active;
 - **GVZ_RISK:** completed GVZ daily-close clock under the frozen R4.1 implementation.
@@ -283,6 +286,7 @@ Binding rules:
 - no event-conditioned backward search presented as alarm precision, warning accuracy or false-warning performance
 - no post-hoc warning horizon chosen because it makes 2025 results look better
 - no suspended motor silently reactivated merely because historical code/contracts remain in GitHub
+- no ordinary BOCPD retuning represented as future-change-time prediction without a separately named identity and preregistration
 
 When evidence is absent or unproven, use `NOT_FOUND`, `NOT_PROVEN`, `UNRESOLVED`, `BLOCKED`, `NOT_TESTABLE` or `INSUFFICIENT_SUPPORT` as appropriate.
 
@@ -466,7 +470,7 @@ GVZ_RISK is retained as a **selective market-stress / risk-context motor**. Gene
 
 ### 12.3 BOCPD
 
-See Section 4. The retained BOCPD research authority is V5 + R2 only.
+See Section 4. The retained BOCPD research authority is V5 + R2 only. BOCPD is retained as regime/change context; it is not to be further tuned on visible 2025 outcomes as the project’s future-change-time predictor.
 
 ### 12.4 Macro Event
 
@@ -479,6 +483,19 @@ Do not interpret old Macro Event preregistrations, workflows or runtime registra
 - `EMERGENCY_LEVEL`: suspended / redesign required.
 - `EMERGENCY_REVERSAL`: suspended.
 - `SLOW`: low-priority confirmation/new-regime context; not the immediate next motor.
+
+### 12.6 Next motor / future-change-time challenger
+
+The next research motor is a **new, separately named future-change-time prediction challenger**. Its scientific family is residual-time / explicit-duration / Bayesian online prediction of changepoints or a closely equivalent causally valid duration-hazard formulation.
+
+Binding design boundary:
+
+- objective: estimate whether / when a break or changepoint is approaching, rather than only detect that a regime change may already have occurred;
+- BOCPD V5 remains complementary regime/change context and is not silently renamed into this motor;
+- formation/development must use pre-2025 chronology; 2025 is not available for parameter tuning or model selection;
+- no random split;
+- native clock, warning horizon, episode formation, output semantics and evaluation rule must be preregistered before outcome overlay;
+- exact model identity and parameterization remain `NOT_FROZEN` until that preregistration is created.
 
 ---
 
@@ -525,31 +542,39 @@ Random splitting is forbidden.
 11. **Macro Event — SUSPENDED FOR CURRENT SEQUENCE**
 12. **Emergency Level/Reversal — SUSPENDED; Level requires redesign**
 13. **SLOW — LOW PRIORITY / NOT NEXT**
-14. **WP4 role-preserving sequential challenger — OPEN FOR A NEW SEPARATELY GOVERNED CHALLENGER**
-15. **Architecture/parameter freeze — PENDING**
-16. **Prospective shadow — PENDING FINAL FREEZE**
+14. **Post-BOCPD future change-time challenger — NEXT RESEARCH LANE; exact identity/parameters require preregistration**
+15. **WP4 role-preserving integration/state-transition work — AFTER the new challenger has a frozen design/evidence checkpoint**
+16. **Architecture/parameter freeze — PENDING**
+17. **Prospective shadow — PENDING FINAL FREEZE**
 
-**No automatic next-motor rule is currently frozen.** The next research step must be chosen explicitly from the remaining scientific need, not inferred from registry order.
+The next research lane is therefore **not inferred from runtime-registry order**. It is the separately governed future-change-time challenger defined in Section 12.6. Macro Event, Emergency and SLOW remain outside the immediate next step unless explicitly reactivated.
 
 ---
 
-## 15. Future model-development rule
+## 15. Post-BOCPD future model-development rule
 
-WP4 remains open only for a **separately named and preregistered challenger**.
+Ordinary BOCPD is primarily an online **change-detection / regime-context** mechanism: after new evidence arrives, it updates belief that a change may have occurred. The next scientific question is different: whether the system can estimate **time-to-change / residual time / approaching-break hazard before the break**.
 
-The project should prefer low-dimensional, role-preserving sequential transition/state-duration models before high-capacity alternatives.
+Accordingly, the next motor must be a separately named and preregistered future-change-time challenger. Preferred research families include:
 
-A conceptual transition model may be expressed as:
+- residual-time prediction under non-geometric duration models;
+- explicit-duration / semi-Markov or duration-hazard formulations;
+- Bayesian online prediction of changepoints / learned or structured time-to-change models;
+- another low-dimensional causal duration-hazard formulation only if its role and timing semantics are explicitly frozen.
 
-`P(S_t = j | S_{t-1} = i, D_t, X_t)`
+An HMM/HSMM may be used as an implementation family **only if it serves this frozen future-change-time objective**; `HSMM` by itself is not the binding motor identity and is not automatically selected.
 
-where `S_{t-1}` is prior state, `D_t` is duration/sojourn information and `X_t` contains role-preserving origin-safe evidence.
+The exact identity, features, native clock, duration state, horizon/output definition, loss/objective, episode rule and evaluation metrics must be preregistered before the model is run against outcomes used for evaluation.
 
-An explicit latent-state/state-duration HMM/HSMM challenger is scientifically eligible under a new preregistration, but is **not pre-approved**.
+Chronology lock for the new challenger:
 
-Boosting, mixture-of-experts and deep-learning escalation remain blocked until simpler challengers justify additional complexity under time-ordered evidence with adequate support.
+- use 2022–2024 as the pre-2025 research/design universe under time ordering;
+- do not use 2025 to choose thresholds, duration family, features, warning horizon or parameterization;
+- 2025 is researcher-visible and cannot be relabelled as pristine holdout after design choices informed by it;
+- no random split;
+- BOCPD V5/R2, FAST and GVZ may contribute only in role-preserving origin-safe form; no flat equal vote.
 
-The 2025 volatility replay may determine whether engines show useful complementarity. It may not be used to tune a combined model and then relabel the same 2025 evidence as untouched validation.
+High-capacity boosting, mixture-of-experts and deep-learning escalation remain blocked until a simpler duration/hazard challenger justifies additional complexity under time-ordered evidence.
 
 ---
 
@@ -565,7 +590,8 @@ Specific superseded interpretation locks:
 - same-date GVZ daily-close overlap is not early-warning evidence;
 - any result that hides full-year engine outputs by starting only from realized event dates is invalid for alarm-performance claims;
 - old Macro Event research artifacts do not override the current Macro research suspension;
-- superseded BOCPD identities do not re-enter because historical files or commits exist.
+- superseded BOCPD identities do not re-enter because historical files or commits exist;
+- an ordinary BOCPD retune is not the approved substitute for the new future-change-time challenger.
 
 ---
 
@@ -603,9 +629,11 @@ Binding scientific order:
 
 -> `role-preserving evaluation`
 
--> `simple preregistered baselines`
+-> `BOCPD context freeze`
 
--> `role-preserving sequential challenger`
+-> `separately preregistered future-change-time challenger`
+
+-> `role-preserving integration / state-transition work`
 
 -> `same-origin ablation / optional extensions`
 
@@ -632,11 +660,11 @@ Current validated motor checkpoint:
 
 - FAST: replay complete, retained tactical context, standalone volatility warning not proven;
 - GVZ_RISK: replay complete, retained risk context, no direction vote;
-- BOCPD: V5 primary research reference + R2 frozen benchmark only;
+- BOCPD: V5 primary research reference + R2 frozen benchmark only; retained as regime/change context;
 - Macro Event: runtime registry identity retained but **current research lane suspended**;
 - Emergency Level/Reversal: suspended, with Level requiring redesign;
 - SLOW: low priority, not next.
 
-Therefore **BOCPD is not followed automatically by Macro Event or GVZ**. GVZ has already been evaluated; Macro Event is suspended for the current sequence. No next motor is currently frozen by manifest authority.
+The **next research motor/lane** is a new separately named **future-change-time prediction challenger** based on residual-time / explicit-duration / Bayesian online changepoint-prediction principles (or a causally equivalent preregistered duration-hazard formulation). Exact model identity and parameters are not yet frozen; the scientific lane is frozen. It must be designed with pre-2025 chronology and may not use visible 2025 outcomes for tuning.
 
 All future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
