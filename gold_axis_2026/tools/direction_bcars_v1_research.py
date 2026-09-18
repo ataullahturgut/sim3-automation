@@ -442,7 +442,7 @@ B-CARS is a weekly direction model, not a volatility-event detector. This overla
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--input-csv",type=Path,required=True)
-    ap.add_argument("--stage",choices=["pre2025","full2025"],required=True)
+    ap.add_argument("--stage",choices=["pre2025","2025","overlay"],required=True)
     ap.add_argument("--output-dir",type=Path,required=True)
     ap.add_argument("--event-contract",type=Path)
     args=ap.parse_args()
@@ -465,16 +465,33 @@ def main():
         print(json.dumps({"stage":"pre2025","2023":m23,"2024":m24,"combined":mall},sort_keys=True))
         return
 
-    y25=[r for r in fc if r["target_week"].startswith("2025-")]
-    m25=metric_block(y25)
-    write_forecast_csv(args.output_dir/"GOLD_CONTROL_DIRECTION_BCARS_V1_2025_WEEKLY_FORECASTS_2026-09-18.csv",y25)
-    (args.output_dir/"GOLD_CONTROL_DIRECTION_BCARS_V1_2025_RESULT_2026-09-18.md").write_text(
-        full2025_markdown(data_sha,m25),encoding="utf-8")
-    (args.output_dir/"bcars_2025_metrics.json").write_text(json.dumps(m25,indent=2)+"\n",encoding="utf-8")
+    if args.stage=="2025":
+        y25=[r for r in fc if r["target_week"].startswith("2025-")]
+        m25=metric_block(y25)
+        write_forecast_csv(args.output_dir/"GOLD_CONTROL_DIRECTION_BCARS_V1_2025_WEEKLY_FORECASTS_2026-09-18.csv",y25)
+        (args.output_dir/"GOLD_CONTROL_DIRECTION_BCARS_V1_2025_RESULT_2026-09-18.md").write_text(
+            full2025_markdown(data_sha,m25),encoding="utf-8")
+        (args.output_dir/"bcars_2025_metrics.json").write_text(json.dumps(m25,indent=2)+"\n",encoding="utf-8")
+        print(json.dumps({"stage":"2025","2025":m25},sort_keys=True))
+        return
+
     if args.event_contract is None:
-        raise RuntimeError("EVENT_CONTRACT_REQUIRED_FOR_FULL2025")
-    write_overlay(args.output_dir,y25,args.event_contract)
-    print(json.dumps({"stage":"full2025","2025":m25},sort_keys=True))
+        raise RuntimeError("EVENT_CONTRACT_REQUIRED_FOR_OVERLAY")
+    frozen_path=args.output_dir/"GOLD_CONTROL_DIRECTION_BCARS_V1_2025_WEEKLY_FORECASTS_2026-09-18.csv"
+    if not frozen_path.exists():
+        raise RuntimeError("FROZEN_2025_FORECAST_TABLE_MISSING")
+    frozen=[]
+    with frozen_path.open(encoding="utf-8",newline="") as fh:
+        rd=csv.DictReader(fh)
+        for r in rd:
+            frozen.append({
+                "target_week":r["target_week"],
+                "k_forecast":float(r["k_forecast"]),
+                "p_ext_up":float(r["p_ext_up"]),
+                "forecast_direction":r["forecast_direction"],
+            })
+    write_overlay(args.output_dir,frozen,args.event_contract)
+    print(json.dumps({"stage":"overlay","frozen_forecast_rows":len(frozen)},sort_keys=True))
 
 
 if __name__=="__main__":
