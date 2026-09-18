@@ -35,7 +35,7 @@ jobs:
 
       - name: Install pinned VLMC reference package
         run: |
-          Rscript -e 'install.packages("https://cran.r-project.org/src/contrib/VLMC_1.4-4.tar.gz", repos=NULL, type="source")'
+          Rscript -e 'install.packages("https://cran.r-project.org/src/contrib/Archive/VLMC/VLMC_1.4-4.tar.gz", repos=NULL, type="source")'
           Rscript -e 'stopifnot(as.character(packageVersion("VLMC")) == "1.4.4"); sessionInfo()'
 
       - name: Run corrected pre-2025 source-family checkpoint
