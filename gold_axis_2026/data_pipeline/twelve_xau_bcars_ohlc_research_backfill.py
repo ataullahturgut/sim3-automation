@@ -7,7 +7,7 @@ import math
 import os
 import time
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -26,26 +26,24 @@ MAX_ATTEMPTS = 4
 OUT_DIR = Path("bcars_ohlc_research_artifact_v1")
 
 
-def month_iter(start, end):
-    y, m = start
-    ey, em = end
-    while (y, m) <= (ey, em):
-        yield y, m
-        if m == 12:
-            y += 1
-            m = 1
-        else:
-            m += 1
+def add_months(dt: datetime, months: int) -> datetime:
+    idx = (dt.year * 12 + (dt.month - 1)) + months
+    y, m0 = divmod(idx, 12)
+    m = m0 + 1
+    return dt.replace(year=y, month=m)
 
 
-def next_month(y, m):
-    return (y + 1, 1) if m == 12 else (y, m + 1)
+def chunk_iter():
+    start = START_LOCAL
+    while start < END_EXCLUSIVE_LOCAL:
+        end = min(add_months(start, CHUNK_MONTHS), END_EXCLUSIVE_LOCAL)
+        yield start, end
+        start = end
 
 
-def request_month(session: requests.Session, api_key: str, y: int, m: int):
-    ny, nm = next_month(y, m)
-    start = f"{y:04d}-{m:02d}-01 00:00:00"
-    end = f"{ny:04d}-{nm:02d}-01 00:00:00"
+def request_chunk(session: requests.Session, api_key: str, start_dt: datetime, end_dt: datetime):
+    start = start_dt.strftime("%Y-%m-%d %H:%M:%S")
+    end = (end_dt - timedelta(seconds=1)).strftime("%Y-%m-%d %H:%M:%S")
     params = {
         "symbol": SYMBOL,
         "interval": INTERVAL,
@@ -155,7 +153,7 @@ def main():
             accepted += 1
 
         month_audit.append({
-            "month": f"{y:04d}-{m:02d}",
+            "chunk_start": chunk_start.isoformat(),\n            "chunk_end_exclusive": chunk_end.isoformat(),
             "provider_rows": len(values),
             "accepted_rows": accepted,
             "payload_sha256": payload_hash,
@@ -167,7 +165,7 @@ def main():
             "payload_sha256": payload_hash,
             "raw_market_values_logged": False,
         }, sort_keys=True))
-        if idx + 1 < len(months):
+        if idx + 1 < len(chunks):
             time.sleep(PACING_SECONDS)
 
     parsed = []
@@ -266,7 +264,7 @@ def main():
         "production_database_write": "NONE",
         "raw_hourly_payload_persisted": False,
         "weekly_derived_vendor_values_artifact": True,
-        "month_payload_audit": month_audit,
+        "chunk_payload_audit": month_audit,
     }
     (OUT_DIR / "bcars_ohlc_backfill_summary.json").write_text(
         json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8"
