@@ -7,6 +7,13 @@ on:
     paths:
       - 'gold_axis_2026/data_pipeline/twelve_xau_bcars_ohlc_research_backfill.py'
       - '.github/workflows/gold-control-bcars-ohlc-research-v1.yml'
+  pull_request:
+    branches:
+      - gold-direction-bct-ctw-v1-20260918
+    paths:
+      - 'gold_axis_2026/data_pipeline/twelve_xau_bcars_ohlc_research_backfill.py'
+      - '.github/workflows/gold-control-bcars-ohlc-research-v1.yml'
+      - 'gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_V1_PREREG_2026-09-18.md'
   workflow_dispatch:
 
 permissions:
