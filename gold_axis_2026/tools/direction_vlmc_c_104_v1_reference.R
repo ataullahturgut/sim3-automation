@@ -204,7 +204,7 @@ for(target_idx in seq.int(WINDOW+1L,nrow(d))){
 fc <- do.call(rbind,rows)
 if(is.null(fc)||nrow(fc)==0L) stop("NO_FORECASTS")
 
-par <- merge(fc,parent[,c("target_week","p_up","forecast_up","actual_up","previous_sign")],
+par <- merge(fc,parent[,c("target_week","p_up","forecast_up","actual_up","previous_up")],
              by="target_week",suffixes=c("_vlmcc","_vlmc104"),all.x=TRUE)
 if(any(is.na(par$p_up_vlmc104))) stop("PARENT_SUPPORT_MISMATCH")
 if(any(par$actual_up_vlmcc!=par$actual_up_vlmc104)) stop("ACTUAL_MISMATCH")
@@ -215,7 +215,7 @@ m_c <- metrics(data.frame(
 ))
 m_b <- metrics(data.frame(
   p_up=par$p_up_vlmc104,forecast_up=par$forecast_up_vlmc104,
-  actual_up=par$actual_up_vlmc104,previous_up=par$previous_sign
+  actual_up=par$actual_up_vlmc104,previous_up=par$previous_up
 ))
 comp <- cbind(data.frame(identity=c("VLMC_C_104","VLMC_BS_104")),rbind(m_c,m_b))
 comp$delta_accuracy_vs_vlmc104 <- comp$accuracy-m_b$accuracy[[1]]
