@@ -204,19 +204,58 @@ def fit_vlmc(seq, cutoff):
     return model.prune_to(cutoff)
 
 
-def simulate_bootstrap(model, replications=BOOTSTRAPS, n=WINDOW + 1):
-    """Simulate B sequences after a 10,000-step burn-in.
+class MT19937:
+    """Bit-exact MT19937 stream used by the frozen V1 bootstrap contract."""
 
-    The source tutorial uses n.start=10000. A fixed seed is reset per real
-    forecast origin so each origin is exactly reproducible and independent of
-    execution ordering/parallelism.
+    def __init__(self, seed):
+        self.mt = [0] * 624
+        self.index = 624
+        self.mt[0] = seed & 0xFFFFFFFF
+        for i in range(1, 624):
+            self.mt[i] = (
+                1812433253 * (self.mt[i - 1] ^ (self.mt[i - 1] >> 30)) + i
+            ) & 0xFFFFFFFF
+
+    def _twist(self):
+        for i in range(624):
+            y = (self.mt[i] & 0x80000000) | (self.mt[(i + 1) % 624] & 0x7FFFFFFF)
+            self.mt[i] = self.mt[(i + 397) % 624] ^ (y >> 1)
+            if y & 1:
+                self.mt[i] ^= 0x9908B0DF
+        self.index = 0
+
+    def uint32(self):
+        if self.index >= 624:
+            self._twist()
+        y = self.mt[self.index]
+        self.index += 1
+        y ^= y >> 11
+        y ^= (y << 7) & 0x9D2C5680
+        y ^= (y << 15) & 0xEFC60000
+        y ^= y >> 18
+        return y & 0xFFFFFFFF
+
+    def uniform(self):
+        return (self.uint32() + 0.5) / 4294967296.0
+
+
+def simulate_bootstrap(model, replications=BOOTSTRAPS, n=WINDOW + 1):
+    """Simulate B sequences after the frozen 10,000-step burn-in.
+
+    MT19937, seed 1521, and the uint32-to-uniform conversion are explicit
+    governance so different library RNG defaults cannot change K selection.
+    The stream is reset independently at every real forecast origin.
     """
-    rng = np.random.default_rng(SEED)
+    rng = MT19937(SEED)
     order = model.max_order()
 
     if order == 0:
         p_up = model._probabilities(model.root)[1]
-        return (rng.random((replications, n)) < p_up).astype(np.int8)
+        out = np.empty((replications, n), dtype=np.int8)
+        for b in range(replications):
+            for j in range(n):
+                out[b, j] = 1 if rng.uniform() < p_up else 0
+        return out
 
     nstates = 1 << order
     mask = nstates - 1
@@ -228,16 +267,17 @@ def simulate_bootstrap(model, replications=BOOTSTRAPS, n=WINDOW + 1):
 
     states = np.zeros(replications, dtype=np.int64)
     for _ in range(BURN_IN):
-        bits = (rng.random(replications) < p_table[states]).astype(np.int64)
-        states = ((states << 1) | bits) & mask
+        for b in range(replications):
+            bit = 1 if rng.uniform() < p_table[states[b]] else 0
+            states[b] = ((states[b] << 1) | bit) & mask
 
     out = np.empty((replications, n), dtype=np.int8)
     for j in range(n):
-        bits = (rng.random(replications) < p_table[states]).astype(np.int8)
-        out[:, j] = bits
-        states = ((states << 1) | bits.astype(np.int64)) & mask
+        for b in range(replications):
+            bit = 1 if rng.uniform() < p_table[states[b]] else 0
+            out[b, j] = bit
+            states[b] = ((states[b] << 1) | bit) & mask
     return out
-
 
 def tune_cutoff(seq52):
     initial_model = fit_vlmc(seq52, K0)
