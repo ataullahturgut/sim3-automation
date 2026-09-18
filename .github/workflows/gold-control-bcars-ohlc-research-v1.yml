@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: gold-control-bcars-ohlc-research-v1
@@ -42,11 +42,13 @@ jobs:
       - name: Require protected Twelve Data credential
         run: test -n "$TWELVE_DATA_API_KEY"
 
-      - name: Install research-only dependency
-        run: python -m pip install 'requests>=2.31,<3'
+      - name: Install research-only dependencies
+        run: python -m pip install 'requests>=2.31,<3' 'numpy>=2.0,<3' 'scipy>=1.13,<2'
 
-      - name: Compile backfill
-        run: python -m py_compile gold_axis_2026/data_pipeline/twelve_xau_bcars_ohlc_research_backfill.py
+      - name: Compile research code
+        run: |
+          python -m py_compile gold_axis_2026/data_pipeline/twelve_xau_bcars_ohlc_research_backfill.py
+          python -m py_compile gold_axis_2026/tools/direction_bcars_v1_research.py
 
       - name: Fetch true hourly OHLC and derive weekly B-CARS inputs
         run: python gold_axis_2026/data_pipeline/twelve_xau_bcars_ohlc_research_backfill.py
@@ -58,6 +60,77 @@ jobs:
           test -s bcars_ohlc_research_artifact_v1/bcars_ohlc_backfill_summary.json
           echo 'BCARS_RESEARCH_ONLY_NO_DB_WRITE_PASS'
 
+      - name: Stamp immutable run provenance
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path('bcars_ohlc_research_artifact_v1/bcars_ohlc_backfill_summary.json')
+          x=json.loads(p.read_text())
+          x['github_run_id']=os.environ['GITHUB_RUN_ID']
+          x['github_sha']=os.environ['GITHUB_SHA']
+          x['github_ref_name']=os.environ['GITHUB_REF_NAME']
+          p.write_text(json.dumps(x,indent=2,sort_keys=True)+'\n')
+          PY
+
+      - name: Run pre-2025 B-CARS checkpoint only
+        run: |
+          rm -rf bcars_results_v1
+          mkdir -p bcars_results_v1
+          python gold_axis_2026/tools/direction_bcars_v1_research.py \
+            --input-csv bcars_ohlc_research_artifact_v1/xau_weekly_high_close_up_ratio_2022_2025.csv \
+            --stage pre2025 \
+            --output-dir bcars_results_v1
+
+      - name: Freeze pre-2025 checkpoint on research branch
+        if: github.event_name == 'push'
+        run: |
+          cp bcars_results_v1/GOLD_CONTROL_DIRECTION_BCARS_V1_PRE2025_RESULT_2026-09-18.md gold_axis_2026/
+          cp bcars_results_v1/GOLD_CONTROL_DIRECTION_BCARS_V1_PRE2025_FORECASTS_2026-09-18.csv gold_axis_2026/
+          cp bcars_ohlc_research_artifact_v1/bcars_ohlc_backfill_summary.json gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_V1_DATA_AUDIT_2026-09-18.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_V1_PRE2025_RESULT_2026-09-18.md \
+                  gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_V1_PRE2025_FORECASTS_2026-09-18.csv \
+                  gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_V1_DATA_AUDIT_2026-09-18.json
+          git commit -m 'Freeze B-CARS V1 pre-2025 checkpoint before 2025 replay'
+          git push origin HEAD:gold-direction-bcars-v1-20260918
+
+      - name: Run unchanged locked 2025 B-CARS replay
+        run: |
+          python gold_axis_2026/tools/direction_bcars_v1_research.py \
+            --input-csv bcars_ohlc_research_artifact_v1/xau_weekly_high_close_up_ratio_2022_2025.csv \
+            --stage 2025 \
+            --output-dir bcars_results_v1
+
+      - name: Freeze complete 2025 forecast table before event overlay
+        if: github.event_name == 'push'
+        run: |
+          cp bcars_results_v1/GOLD_CONTROL_DIRECTION_BCARS_V1_2025_WEEKLY_FORECASTS_2026-09-18.csv gold_axis_2026/
+          cp bcars_results_v1/GOLD_CONTROL_DIRECTION_BCARS_V1_2025_RESULT_2026-09-18.md gold_axis_2026/
+          git add gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_V1_2025_WEEKLY_FORECASTS_2026-09-18.csv \
+                  gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_V1_2025_RESULT_2026-09-18.md
+          git commit -m 'Freeze B-CARS V1 2025 forecasts before event overlay'
+          git push origin HEAD:gold-direction-bcars-v1-20260918
+
+      - name: Apply frozen 19-event overlay without refit
+        run: |
+          python gold_axis_2026/tools/direction_bcars_v1_research.py \
+            --input-csv bcars_ohlc_research_artifact_v1/xau_weekly_high_close_up_ratio_2022_2025.csv \
+            --stage overlay \
+            --output-dir bcars_results_v1 \
+            --event-contract gold_axis_2026/GOLD_CONTROL_2025_VOLATILITY_CHALLENGE_CONTRACT_V1_2026-09-15.md
+
+      - name: Record frozen volatility overlay
+        if: github.event_name == 'push'
+        run: |
+          cp bcars_results_v1/GOLD_CONTROL_DIRECTION_BCARS_V1_2025_VOLATILITY_OVERLAY_2026-09-18.csv gold_axis_2026/
+          cp bcars_results_v1/GOLD_CONTROL_DIRECTION_BCARS_V1_2025_VOLATILITY_RESULT_2026-09-18.md gold_axis_2026/
+          git add gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_V1_2025_VOLATILITY_OVERLAY_2026-09-18.csv \
+                  gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_V1_2025_VOLATILITY_RESULT_2026-09-18.md
+          git commit -m 'Record B-CARS V1 frozen 2025 volatility overlay'
+          git push origin HEAD:gold-direction-bcars-v1-20260918
+
       - name: Upload immutable weekly B-CARS research input
         uses: actions/upload-artifact@v4
         with:
@@ -67,3 +140,4 @@ jobs:
           path: |
             bcars_ohlc_research_artifact_v1/xau_weekly_high_close_up_ratio_2022_2025.csv
             bcars_ohlc_research_artifact_v1/bcars_ohlc_backfill_summary.json
+            bcars_results_v1/
