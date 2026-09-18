@@ -34,7 +34,7 @@ Reason:
 
 ## 4. VLMC-C tree construction and pruning
 
-Implementation follows the published algorithm and the authors' public reference code semantics for binary alphabet X={0,1}.
+Implementation follows the published algorithm and the authors' public reference code semantics for binary alphabet X={0,1}. The external reference code is pinned to GitHub commit `8195ee16dedbb3a89c288869ee9c0b856ea2ed4f`; the branch-test function `pruning_fun.R` is sourced from that immutable revision.
 
 For n=104 and |X|=2:
 
