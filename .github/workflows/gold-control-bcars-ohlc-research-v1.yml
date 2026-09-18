@@ -1,0 +1,62 @@
+name: Gold Control B-CARS OHLC Research V1
+
+on:
+  push:
+    branches:
+      - gold-direction-bcars-v1-20260918
+    paths:
+      - 'gold_axis_2026/data_pipeline/twelve_xau_bcars_ohlc_research_backfill.py'
+      - '.github/workflows/gold-control-bcars-ohlc-research-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-control-bcars-ohlc-research-v1
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-direction-bcars-v1-20260918
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Require protected Twelve Data credential
+        run: test -n "$TWELVE_DATA_API_KEY"
+
+      - name: Install research-only dependency
+        run: python -m pip install 'requests>=2.31,<3'
+
+      - name: Compile backfill
+        run: python -m py_compile gold_axis_2026/data_pipeline/twelve_xau_bcars_ohlc_research_backfill.py
+
+      - name: Fetch true hourly OHLC and derive weekly B-CARS inputs
+        run: python gold_axis_2026/data_pipeline/twelve_xau_bcars_ohlc_research_backfill.py
+
+      - name: Assert no production database write dependency
+        run: |
+          ! grep -Ei 'psycopg|NEON_DATABASE_URL|persist_bundle|insert[[:space:]]+into|update[[:space:]]+observations|delete[[:space:]]+from'             gold_axis_2026/data_pipeline/twelve_xau_bcars_ohlc_research_backfill.py
+          test -s bcars_ohlc_research_artifact_v1/xau_weekly_high_close_up_ratio_2022_2025.csv
+          test -s bcars_ohlc_research_artifact_v1/bcars_ohlc_backfill_summary.json
+          echo 'BCARS_RESEARCH_ONLY_NO_DB_WRITE_PASS'
+
+      - name: Upload immutable weekly B-CARS research input
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-bcars-ohlc-research-v1
+          if-no-files-found: error
+          retention-days: 30
+          path: |
+            bcars_ohlc_research_artifact_v1/xau_weekly_high_close_up_ratio_2022_2025.csv
+            bcars_ohlc_research_artifact_v1/bcars_ohlc_backfill_summary.json
