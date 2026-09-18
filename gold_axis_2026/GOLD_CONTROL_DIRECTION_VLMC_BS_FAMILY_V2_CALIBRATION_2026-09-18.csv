@@ -1,0 +1,4 @@
+"k","k0","k_star","bootstrap_matches","bootstrap_loss","k_tie_count","initial_order","initial_context","initial_leaves","B","burn_in","seed"
+26,0.3,0.4,696,0.304,4,4,7,5,1000,10000,1521
+52,0.3,0.54,713,0.287,2,5,21,14,1000,10000,1521
+104,0.3,0.4,757,0.243,4,8,48,23,1000,10000,1521
