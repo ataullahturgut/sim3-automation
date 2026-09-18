@@ -74,13 +74,16 @@ Bootstrap replications:
 Simulation burn-in:
 `n_start = 10000`.
 
-Reproducibility seed:
-`seed = 1521`.
+Reproducibility RNG contract:
+- RNG family: MT19937 (32-bit Mersenne Twister);
+- seed: `1521`;
+- raw-uniform conversion: `u = (uint32 + 0.5) / 2^32`;
+- the RNG is reset to this exact initial state independently at every real forecast origin.
 
 Rationale:
 - `K0=0.3` and the `0.4..2.5` grid with `0.02` spacing are taken from Liu, Papailias & Quinn (2021).
 - `B=1000` and `n_start=10000` follow the explicit Mächler-Bühlmann bootstrap example.
-- seed 1521 is used as a reproducibility control consistent with that tutorial example; the commodity paper does not claim this seed.
+- seed 1521 is used as a reproducibility control consistent with that tutorial example; the commodity paper does not claim this seed. The explicit MT19937/uniform rule is a Gold Control reproducibility lock added before the 2025 test so that different software RNG defaults cannot alter bootstrap K selection.
 
 At each real forecast origin:
 1. fit the large VLMC on the 52 observed symbols using `K0`;
