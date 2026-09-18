@@ -1,10 +1,10 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.67  
+**Manifest version:** 1.68  
 **Issue date:** 2026-09-18  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
-**Current research branch:** `gold-direction-vlmc-bs-v1-20260918`  
+**Current research branch:** `gold-direction-bct-ctw-v1-20260918`  
 **Project root:** `gold_axis_2026/`
 
 ---
@@ -94,7 +94,7 @@ The current research-status layer is binding for work sequencing and must not be
 | `BOCPD` research lane | `EVALUATED / RETAINED_RESEARCH_REFERENCE` | only V5 + R2 remain authoritative; BOCPD is retained as regime/change context, not as the next standalone future-change-time predictor |
 | `DIRECTION_RSM_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION` | frozen RSM-52 historical replay complete through 2025; 2025 raw accuracy 69.23% is non-discriminative because all 52 weekly forecasts were UP; balanced accuracy 50% |
 | `DIRECTION_VLMC_BS_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED` | frozen VLMC-BS-52 replay complete through 2025; 2025 shows two-sided discrimination (balanced accuracy 59.03%, DOWN sensitivity 37.5%) but 2024 validation failed and volatility-event direction balanced accuracy is 45.71% |
-| `DIRECTION_BCT_CTW_V1_RESEARCH` | `PLANNED_RESEARCH / NOT_IMPLEMENTED / NOT_RUNTIME` | Bayesian Context Tree / exact CTW posterior-predictive direction challenger |
+| `DIRECTION_BCT_CTW_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION` | exact BCT/CTW-52 replay complete through 2025; probability quality improved materially versus VLMC-BS but 2025 produced 52/52 UP forecasts, balanced accuracy 50%, and 0/5 DOWN volatility-event agreement |
 | `DIRECTION_BCARS_V1_RESEARCH` | `PLANNED_RESEARCH / NOT_IMPLEMENTED / NOT_RUNTIME` | Beta Conditional Autoregressive Shape direction challenger from price-extreme decomposition |
 | Post-BOCPD future-change-time lane | `NEXT_RESEARCH_LANE / PREREGISTRATION_REQUIRED` | separately named residual-time / explicit-duration / Bayesian online changepoint-prediction challenger; exact identity and parameters must be frozen before implementation |
 | `MACRO_EVENT_SUCCESSOR_V2` | `SUSPENDED_FOR_CURRENT_GC_BREAK_RESEARCH_SEQUENCE` | governed runtime identity remains registered, but it is **not the next motor** and no new Macro Event tuning/evaluation is authorized in the current sequence |
@@ -268,7 +268,41 @@ The exact next-symbol posterior predictive distribution is
 
 P*_D(x_(n+1)|x_1^n) = P*_D(x_1^(n+1)) / P*_D(x_1^n).
 
-For binary UP/DOWN data, the native output is therefore the exact posterior predictive P(UP next | sign history), not merely a MAP-tree class. The source framework suggests beta near 1-2^(-m+1); for m=2 this is about 0.5. Maximal depth D, Gold sampling frequency and any richer discretisation remain NOT_FROZEN until implementation preregistration.
+For binary UP/DOWN data, the native output is therefore the exact posterior predictive P(UP next | sign history), not merely a MAP-tree class. The source framework suggests beta near 1-2^(-m+1); for m=2 this is about 0.5.
+
+**Current BCT/CTW V1 evaluation checkpoint (2026-09-18):** V1 froze `D=10`, `beta=0.5`, `Dirichlet(1/2,1/2)`, a rolling 52-week binary window, first 10 signs as the fixed initial context, and the exact CTW posterior predictive with UP iff `P(UP)>=0.5`. No depth grid, threshold tuning or randomization was used.
+
+Pre-2025:
+- 2023 accuracy 0.5581395, balanced accuracy 0.5877193;
+- 2024 fixed validation accuracy 0.4905660, balanced accuracy 0.4829060;
+- combined pre-2025 Brier 0.2628675 and log loss 0.7224324;
+- pre-2025 P(UP) range 0.4250141..0.8670874 with no exact 0/1 probabilities.
+
+The probability layer is materially better behaved than VLMC-BS, whose pre-2025 replay produced exact 0/1 probabilities at 70/96 origins. This confirms the intended Bayesian smoothing/model-averaging benefit but does not establish a direction edge.
+
+Locked 2025 historical replay:
+- accuracy 0.6923077;
+- balanced accuracy 0.5000000;
+- actual UP/DOWN 36/16;
+- forecast UP/DOWN 52/0;
+- UP sensitivity 1.0;
+- DOWN sensitivity 0.0;
+- Brier 0.2320852;
+- log loss 0.6578098;
+- P(UP) range 0.5195496..0.7344673.
+
+Thus the 69.23% raw accuracy exactly equals the always-UP baseline and is non-discriminative. On the frozen 19-event volatility overlay, raw direction agreement is 14/19 but event-direction balanced accuracy is 0.50, DOWN-event agreement 0/5 and EXTREME-event agreement 2/5.
+
+Binding status: `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`. No post-2025 threshold shift, alternate D, NO_SIGNAL band or context augmentation is authorized under V1.
+
+**Authoritative BCT/CTW V1 research surfaces on the current branch:**
+- preregistration: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCT_CTW_V1_PREREG_2026-09-18.md`;
+- implementation: `gold_axis_2026/tools/direction_bct_ctw_v1_research.py`;
+- pre-2025 checkpoint: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCT_CTW_V1_PRE2025_RESULT_2026-09-18.md`;
+- frozen 2025 weekly forecast table: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCT_CTW_V1_2025_WEEKLY_FORECASTS_2026-09-18.csv`;
+- locked 2025 result: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCT_CTW_V1_2025_RESULT_2026-09-18.md`;
+- frozen 19-event overlay table: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCT_CTW_V1_2025_VOLATILITY_OVERLAY_2026-09-18.csv`;
+- volatility-overlay result: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCT_CTW_V1_2025_VOLATILITY_RESULT_2026-09-18.md`.
 
 #### 4.3.4 DIRECTION_BCARS_V1_RESEARCH — Beta Conditional Autoregressive Shape
 
@@ -319,7 +353,7 @@ Initial evaluation must report at minimum success rate, balanced accuracy where 
 
 The first implementation stage must reproduce each method's native mathematical identity WITHOUT FAST, GVZ, BOCPD, Macro or Emergency inputs. Only after standalone evidence is frozen may existing Gold Control motors be added one at a time through role-preserving ablation. Flat equal voting remains forbidden.
 
-Current status is identity-specific: RSM V1 is `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; VLMC-BS V1 is `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; BCT/CTW V1 and B-CARS V1 remain `PLANNED_RESEARCH / NOT_IMPLEMENTED / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
+Current status is identity-specific: RSM V1 is `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; VLMC-BS V1 is `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; BCT/CTW V1 is `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; B-CARS V1 remains `PLANNED_RESEARCH / NOT_IMPLEMENTED / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
 
 ---
 
@@ -697,7 +731,7 @@ Random splitting is forbidden.
 12. **Emergency Level/Reversal — SUSPENDED; Level requires redesign**
 13. **SLOW — LOW PRIORITY / NOT NEXT**
 14. **Post-BOCPD future change-time challenger — NEXT GC-BREAK RESEARCH LANE; exact identity/parameters require preregistration**
-15. **Parallel direction-research lane — RSM-52 EVALUATED / NO_PROMOTION; VLMC-BS-52 EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED; BCT/CTW and B-CARS remain PLANNED_RESEARCH / NOT_IMPLEMENTED**
+15. **Parallel direction-research lane — RSM-52 NO_PROMOTION; VLMC-BS-52 NO_PROMOTION / PRE2025_VALIDATION_FAILED; BCT/CTW-52 NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION; B-CARS remains PLANNED_RESEARCH / NOT_IMPLEMENTED**
 16. **WP4 role-preserving integration/state-transition work — AFTER the new challenger has a frozen design/evidence checkpoint**
 17. **Architecture/parameter freeze — PENDING**
 18. **Prospective shadow — PENDING FINAL FREEZE**
@@ -822,6 +856,6 @@ Current validated motor checkpoint:
 
 The **next GC-BREAK research motor/lane** is a new separately named **future-change-time prediction challenger** based on residual-time / explicit-duration / Bayesian online changepoint-prediction principles (or a causally equivalent preregistered duration-hazard formulation). Exact model identity and parameters are not yet frozen; the scientific lane is frozen. It must be designed with pre-2025 chronology and may not use visible 2025 outcomes for tuning.
 
-In parallel, four direction-research identities are governed: `DIRECTION_RSM_V1_RESEARCH`, `DIRECTION_VLMC_BS_V1_RESEARCH`, `DIRECTION_BCT_CTW_V1_RESEARCH` and `DIRECTION_BCARS_V1_RESEARCH`. RSM-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`. VLMC-BS-52 is also `NO_PROMOTION / PRE2025_VALIDATION_FAILED`; its 2025 replay showed more two-sided behavior than RSM but did not beat the always-UP raw-accuracy baseline and performed weakly on the frozen volatility-event direction overlay. BCT/CTW and B-CARS remain planned and not implemented. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
+In parallel, four direction-research identities are governed: `DIRECTION_RSM_V1_RESEARCH`, `DIRECTION_VLMC_BS_V1_RESEARCH`, `DIRECTION_BCT_CTW_V1_RESEARCH` and `DIRECTION_BCARS_V1_RESEARCH`. RSM-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`. VLMC-BS-52 is `NO_PROMOTION / PRE2025_VALIDATION_FAILED`; its 2025 replay showed more two-sided behavior but poor validation/calibration. BCT/CTW-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`; it materially improves probability stability versus VLMC-BS but collapses to 52/52 UP forecasts in the 2025 replay. B-CARS remains planned and not implemented. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
 
 All future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
