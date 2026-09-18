@@ -1,10 +1,10 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.68  
+**Manifest version:** 1.69  
 **Issue date:** 2026-09-18  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
-**Current research branch:** `gold-direction-bct-ctw-v1-20260918`  
+**Current research branch:** `gold-direction-bcars-v1-20260918`  
 **Project root:** `gold_axis_2026/`
 
 ---
@@ -95,7 +95,7 @@ The current research-status layer is binding for work sequencing and must not be
 | `DIRECTION_RSM_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION` | frozen RSM-52 historical replay complete through 2025; 2025 raw accuracy 69.23% is non-discriminative because all 52 weekly forecasts were UP; balanced accuracy 50% |
 | `DIRECTION_VLMC_BS_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED` | frozen VLMC-BS-52 replay complete through 2025; 2025 shows two-sided discrimination (balanced accuracy 59.03%, DOWN sensitivity 37.5%) but 2024 validation failed and volatility-event direction balanced accuracy is 45.71% |
 | `DIRECTION_BCT_CTW_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION` | exact BCT/CTW-52 replay complete through 2025; probability quality improved materially versus VLMC-BS but 2025 produced 52/52 UP forecasts, balanced accuracy 50%, and 0/5 DOWN volatility-event agreement |
-| `DIRECTION_BCARS_V1_RESEARCH` | `PLANNED_RESEARCH / NOT_IMPLEMENTED / NOT_RUNTIME` | Beta Conditional Autoregressive Shape direction challenger from price-extreme decomposition |
+| `DIRECTION_BCARS_V1_RESEARCH` | `BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED / NOT_RUNTIME` | source-form ordinary-Beta B-CARS(1,1) is blocked by genuine pre-2025 weekly up-ratios equal to 0; no silent clipping permitted |\n| `DIRECTION_BCARS_SV_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION` | separately preregistered Smithson-Verkuilen boundary-safe B-CARS(1,1) successor; 2024 validation failed and 2025 produced 51 UP / 1 DOWN with 0% DOWN sensitivity |
 | Post-BOCPD future-change-time lane | `NEXT_RESEARCH_LANE / PREREGISTRATION_REQUIRED` | separately named residual-time / explicit-duration / Bayesian online changepoint-prediction challenger; exact identity and parameters must be frozen before implementation |
 | `MACRO_EVENT_SUCCESSOR_V2` | `SUSPENDED_FOR_CURRENT_GC_BREAK_RESEARCH_SEQUENCE` | governed runtime identity remains registered, but it is **not the next motor** and no new Macro Event tuning/evaluation is authorized in the current sequence |
 | `MACRO_EVENT_SUCCESSOR_V4_RELIABILITY_GATE` | `FROZEN_RESEARCH_CHALLENGER / NOT_RUNTIME_AUTHORITY` | historical preregistration remains audit lineage; not promoted and not the current workstream |
@@ -333,15 +333,106 @@ The source benchmark B-CARS(1,1) uses
 
 k_t = omega + gamma*k_(t-1) + tau*ur_(t-1),
 
-subject to omega>0, gamma>=0, tau>=0 and omega+gamma+tau<=1, ensuring k_t in [0,1]. The time-varying shape parameter is
+subject to omega>0, gamma>=0, tau>=0 and omega+gamma+tau<=1. The time-varying shape parameter is
 
 alpha_t = k_t*beta/(1-k_t).
 
-Parameters are estimated by maximum likelihood from the Beta conditional likelihood. The native direction rule follows from whether the forecasted up-ratio is above or below 0.5.
+Parameters are estimated by maximum likelihood from the Beta conditional likelihood. The native direction rule follows from whether the forecasted up-ratio is above or below 0.5. A Gold adaptation may additionally report `1-F_Beta(0.5;alpha_t,beta)` only as a derived probability diagnostic, not as the source paper's native direction rule.
 
-A Gold adaptation may additionally report a probabilistic output P(UP | Omega_t) = 1 - F_Beta(0.5;alpha_t,beta), but that probability must be labelled as a Gold-derived extension rather than silently attributed to the source paper.
+The source high adjustment is preserved as `H_t^a=max(H_t,C_(t-1))`.
 
-The original study adjusts interval highs so that the previous close is not excluded from the price extreme. A Gold implementation must freeze OHLC/high construction, frequency and missing-bar semantics before testing. P=Q=1 is the SOURCE-REPLICATION DEFAULT; other orders or exogenous variables require separate preregistration.
+**True-OHLC data audit (2026-09-18):** a research-only Twelve Data `XAU/USD` 1h OHLC artifact was retrieved with no production database write. It contains 23,965 validated hourly bars, 205 weekly close anchors and 204 weekly up-ratio rows. Weekly HIGH is the maximum provider `high` field between consecutive governed weekly close anchors; it is not the maximum hourly close. Weekly close-axis checks against `XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1` passed at the investigated boundary dates. The weekly decomposition identity holds to machine precision (maximum absolute error approximately 6.94e-18).
+
+The ordinary-Beta parent V1 is **blocked before 2025 scoring** because the true pre-2025 sample contains exact `ur=0` observations at target weeks 2022-08-15 and 2024-04-22. These are genuine gap/down interval geometries rather than extraction errors. Ordinary Beta density has open support `(0,1)`; the parent preregistration prohibited silent clipping. Therefore:
+
+`DIRECTION_BCARS_V1_RESEARCH = BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED / NOT_PROMOTED`.
+
+No 2025 score exists for the unmodified parent identity.
+
+#### 4.3.4a DIRECTION_BCARS_SV_V1_RESEARCH — boundary-safe preregistered successor
+
+Because the support blocker was discovered using pre-2025 data only, a separately named successor was frozen before 2025 replay.
+
+The successor preserves B-CARS(1,1), source/high semantics, expanding-window OOS, initial 52 modeled weekly up-ratios, deterministic five-start constrained L-BFGS-B fitting and the native 0.5 direction boundary, but applies the standard Smithson-Verkuilen transformation at each origin with n training observations:
+
+`y_i^* = (y_i*(n-1)+0.5)/n`.
+
+The transform maps [0,1] into (0,1) while leaving the 0.5 classification boundary invariant. Continuous forecast diagnostics are mapped back to raw up-ratio scale via
+
+`k_raw=(n*k^*-0.5)/(n-1)`.
+
+No epsilon/clipping parameter is tuned.
+
+**Pre-2025 frozen evidence:**
+
+2023 development/audit:
+- n=43;
+- accuracy 0.4418605;
+- balanced accuracy 0.5000000;
+- forecasts 0 UP / 43 DOWN;
+- UP sensitivity 0.0000; DOWN sensitivity 1.0000;
+- source-style up-ratio R2_oos = -0.0032779.
+
+2024 fixed validation:
+- n=53;
+- accuracy 0.4716981;
+- balanced accuracy 0.4729345;
+- forecasts 23 UP / 30 DOWN;
+- UP sensitivity 0.4074074; DOWN sensitivity 0.5384615;
+- source-style up-ratio R2_oos = -0.0325649.
+
+Combined 2023-2024:
+- n=96;
+- accuracy 0.4583333;
+- balanced accuracy 0.4745098;
+- forecasts 23 UP / 73 DOWN;
+- source-style up-ratio R2_oos = -0.0208597.
+
+This is a failed pre-2025 validation checkpoint; the model was nevertheless carried unchanged into 2025 to preserve the preregistered test sequence.
+
+**Locked 2025 historical replay:**
+- n=52;
+- accuracy 0.6730769 versus always-UP 0.6923077;
+- balanced accuracy 0.4861111;
+- actual UP/DOWN 36/16;
+- forecasts 51 UP / 1 DOWN;
+- UP sensitivity 0.9722222;
+- DOWN sensitivity 0.0000000;
+- TP/TN/FP/FN = 35/0/16/1;
+- the only DOWN forecast targeted 2025-03-03 and was wrong;
+- up-ratio MSE 0.0807706 versus expanding historical-mean MSE 0.0819350;
+- source-style up-ratio R2_oos = +0.0142111;
+- derived Beta-tail Brier 0.2367432 and log loss 0.6669116.
+
+Thus the small positive 2025 continuous up-ratio R2_oos does not translate into two-sided direction discrimination.
+
+**Frozen 19-event volatility overlay:**
+- raw event-direction agreement 14/19 = 73.68%;
+- balanced event-direction accuracy 0.5000;
+- UP event agreement 14/14;
+- DOWN event agreement 0/5;
+- EXTREME event agreement 2/5;
+- MAJOR-only agreement 12/14.
+
+The raw event hit rate is class-balance driven because B-CARS-SV forecasts UP on every event week.
+
+Binding successor status:
+
+`DIRECTION_BCARS_SV_V1_RESEARCH = EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
+
+**Authoritative B-CARS research surfaces on the current branch:**
+- parent preregistration: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_V1_PREREG_2026-09-18.md`;
+- true-OHLC data audit: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_V1_DATA_AUDIT_2026-09-18.md`;
+- parent pre-2025 blocker: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_V1_PRE2025_BLOCKER_2026-09-18.md`;
+- boundary-safe successor preregistration: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_SV_V1_PREREG_2026-09-18.md`;
+- successor implementation: `gold_axis_2026/tools/direction_bcars_sv_v1_research.py`;
+- successor pre-2025 checkpoint: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_SV_V1_PRE2025_RESULT_2026-09-18.md`;
+- frozen 2025 forecast table: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_SV_V1_2025_WEEKLY_FORECASTS_2026-09-18.csv`;
+- locked 2025 result: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_SV_V1_2025_RESULT_2026-09-18.md`;
+- frozen 19-event overlay: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_SV_V1_2025_VOLATILITY_OVERLAY_2026-09-18.csv`;
+- volatility-overlay result: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCARS_SV_V1_2025_VOLATILITY_RESULT_2026-09-18.md`.
+
+No post-2025 threshold, model-order, boundary treatment, frequency, optimizer or feature rescue is authorized under either B-CARS identity.
 
 ### 4.4 Common governance for the four new direction motors
 
@@ -353,7 +444,7 @@ Initial evaluation must report at minimum success rate, balanced accuracy where 
 
 The first implementation stage must reproduce each method's native mathematical identity WITHOUT FAST, GVZ, BOCPD, Macro or Emergency inputs. Only after standalone evidence is frozen may existing Gold Control motors be added one at a time through role-preserving ablation. Flat equal voting remains forbidden.
 
-Current status is identity-specific: RSM V1 is `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; VLMC-BS V1 is `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; BCT/CTW V1 is `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; B-CARS V1 remains `PLANNED_RESEARCH / NOT_IMPLEMENTED / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
+Current status is identity-specific: RSM V1 is `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; VLMC-BS V1 is `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; BCT/CTW V1 is `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; source-form B-CARS V1 is `BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; its separately preregistered boundary-safe `DIRECTION_BCARS_SV_V1_RESEARCH` successor is `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
 
 ---
 
@@ -731,7 +822,7 @@ Random splitting is forbidden.
 12. **Emergency Level/Reversal — SUSPENDED; Level requires redesign**
 13. **SLOW — LOW PRIORITY / NOT NEXT**
 14. **Post-BOCPD future change-time challenger — NEXT GC-BREAK RESEARCH LANE; exact identity/parameters require preregistration**
-15. **Parallel direction-research lane — RSM-52 NO_PROMOTION; VLMC-BS-52 NO_PROMOTION / PRE2025_VALIDATION_FAILED; BCT/CTW-52 NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION; B-CARS remains PLANNED_RESEARCH / NOT_IMPLEMENTED**
+15. **Parallel direction-research lane — RSM-52 NO_PROMOTION; VLMC-BS-52 NO_PROMOTION / PRE2025_VALIDATION_FAILED; BCT/CTW-52 NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION; source B-CARS V1 BLOCKED_PRE2025_BOUNDARY_SUPPORT; boundary-safe B-CARS-SV V1 EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED**
 16. **WP4 role-preserving integration/state-transition work — AFTER the new challenger has a frozen design/evidence checkpoint**
 17. **Architecture/parameter freeze — PENDING**
 18. **Prospective shadow — PENDING FINAL FREEZE**
@@ -856,6 +947,6 @@ Current validated motor checkpoint:
 
 The **next GC-BREAK research motor/lane** is a new separately named **future-change-time prediction challenger** based on residual-time / explicit-duration / Bayesian online changepoint-prediction principles (or a causally equivalent preregistered duration-hazard formulation). Exact model identity and parameters are not yet frozen; the scientific lane is frozen. It must be designed with pre-2025 chronology and may not use visible 2025 outcomes for tuning.
 
-In parallel, four direction-research identities are governed: `DIRECTION_RSM_V1_RESEARCH`, `DIRECTION_VLMC_BS_V1_RESEARCH`, `DIRECTION_BCT_CTW_V1_RESEARCH` and `DIRECTION_BCARS_V1_RESEARCH`. RSM-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`. VLMC-BS-52 is `NO_PROMOTION / PRE2025_VALIDATION_FAILED`; its 2025 replay showed more two-sided behavior but poor validation/calibration. BCT/CTW-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`; it materially improves probability stability versus VLMC-BS but collapses to 52/52 UP forecasts in the 2025 replay. B-CARS remains planned and not implemented. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
+In parallel, the four originally selected direction-research families remain governed: RSM, bootstrapped VLMC, BCT/CTW and B-CARS. RSM-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`. VLMC-BS-52 is `NO_PROMOTION / PRE2025_VALIDATION_FAILED`; its 2025 replay showed more two-sided behavior but poor validation/calibration. BCT/CTW-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`; it materially improves probability stability versus VLMC-BS but collapses to 52/52 UP forecasts in the 2025 replay. Source-form B-CARS V1 is blocked by genuine pre-2025 boundary up-ratios and was not scored. Its separately preregistered Smithson-Verkuilen boundary-safe successor, `DIRECTION_BCARS_SV_V1_RESEARCH`, is `NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION`; in 2025 it forecast 51 UP / 1 DOWN with 0% DOWN sensitivity, while the frozen event overlay had 50% balanced direction accuracy. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
 
 All future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
