@@ -115,8 +115,10 @@ Choose the converged solution with the highest in-sample log likelihood. If no s
 
 The source paper uses an extending-window out-of-sample procedure. V1 preserves that structure.
 
+Modeled up-ratio sample begins with target week `2022-03-07`; the earlier February retrieval is prehistory used only to provide the preceding weekly close anchor.
+
 Initial estimation window:
-exactly the first **52 valid weekly up-ratios**.
+exactly the first **52 valid modeled weekly up-ratios**.
 
 At each subsequent origin:
 1. estimate B-CARS(1,1) using every up-ratio available through that origin;
