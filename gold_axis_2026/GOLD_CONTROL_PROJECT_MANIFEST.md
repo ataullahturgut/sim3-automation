@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.70  
+**Manifest version:** 1.71  
 **Issue date:** 2026-09-18  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -93,7 +93,7 @@ The current research-status layer is binding for work sequencing and must not be
 | `GVZ_RISK` | `EVALUATED / RETAINED_RISK_CONTEXT` | 2025 full-timeline historical replay complete; risk/severity only, no direction vote |
 | `BOCPD` research lane | `EVALUATED / RETAINED_RESEARCH_REFERENCE` | only V5 + R2 remain authoritative; BOCPD is retained as regime/change context, not as the next standalone future-change-time predictor |
 | `DIRECTION_RSM_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / NARROW_BASELINE / SUPERSEDED_FOR_FAMILY_SCOPE` | historical rolling RSM-52 baseline retained for audit; it did not reproduce the full source-feasible RSM/ERSM family and its weekly-return construction is superseded for family-level interpretation by V2 |
-| `DIRECTION_RSM_FAMILY_V2_RESEARCH` | `EVALUATED / NO_PROMOTION / SOURCE_FAMILY_REPLICATION_COMPLETE / WEAK_DIRECTIONAL_DISCRIMINATION` | corrected source-family replication covers RSM/ERSM at k=26,52,104; 2025 all six variants have 0% DOWN sensitivity; longer k are not pre-2025 evaluable on the same-source history |
+| `DIRECTION_RSM_FAMILY_V2_RESEARCH` | `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT / NOT_RUNTIME` | corrected source-family replication covers RSM/ERSM at k=26,52,104; 2025 all six variants have 0% DOWN sensitivity. User decision 2026-09-18: this method family is closed permanently for the current project; no further windows, ERSM variants, Gold-context additions, threshold rescue, feature augmentation or successor work may be proposed or executed unless the user explicitly reverses this decision. Historical files remain audit-only. |
 | `DIRECTION_VLMC_BS_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED` | frozen VLMC-BS-52 replay complete through 2025; 2025 shows two-sided discrimination (balanced accuracy 59.03%, DOWN sensitivity 37.5%) but 2024 validation failed and volatility-event direction balanced accuracy is 45.71% |
 | `DIRECTION_BCT_CTW_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION` | exact BCT/CTW-52 replay complete through 2025; probability quality improved materially versus VLMC-BS but 2025 produced 52/52 UP forecasts, balanced accuracy 50%, and 0/5 DOWN volatility-event agreement |
 | `DIRECTION_BCARS_V1_RESEARCH` | `BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED / NOT_RUNTIME` | source-form ordinary-Beta B-CARS(1,1) is blocked by genuine pre-2025 weekly up-ratios equal to 0; no silent clipping permitted |
@@ -251,7 +251,9 @@ No Gold-specific family winner was selected from pre-2025 results. All six sourc
 
 Binding family status:
 
-`DIRECTION_RSM_FAMILY_V2_RESEARCH = EVALUATED / NO_PROMOTION / SOURCE_FAMILY_REPLICATION_COMPLETE / WEAK_DIRECTIONAL_DISCRIMINATION / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
+`DIRECTION_RSM_FAMILY_V2_RESEARCH = TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
+
+**Binding user closure decision (2026-09-18):** the RSM/ERSM method family is permanently closed for the current Gold Control project. Do not return to RSM, ERSM, alternative lookback windows, threshold changes, probability recalibration, FAST/BOCPD/GVZ/Monthly-H1 context augmentation, ensemble rescue, or any other derivative of this family. Do not recommend reopening it in future research sequencing. Existing artifacts are retained only for auditability. This closure may be reversed only by a new explicit user instruction.
 
 The corrected family result supersedes V1 for claims about whether the source-feasible RSM/ERSM family has been tested. V1 remains historical audit evidence only.
 
@@ -882,7 +884,7 @@ Random splitting is forbidden.
 12. **Emergency Level/Reversal — SUSPENDED; Level requires redesign**
 13. **SLOW — LOW PRIORITY / NOT NEXT**
 14. **Post-BOCPD future change-time challenger — NEXT GC-BREAK RESEARCH LANE; exact identity/parameters require preregistration**
-15. **Parallel direction-research lane — corrected RSM/ERSM family V2 SOURCE_FAMILY_REPLICATION_COMPLETE / NO_PROMOTION; VLMC-BS-52 NO_PROMOTION / PRE2025_VALIDATION_FAILED; BCT/CTW-52 NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION; source B-CARS V1 BLOCKED_PRE2025_BOUNDARY_SUPPORT; boundary-safe B-CARS-SV V1 EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED**
+15. **Parallel direction-research lane — RSM/ERSM family V2 TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT; VLMC-BS-52 NO_PROMOTION / PRE2025_VALIDATION_FAILED; BCT/CTW-52 NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION; source B-CARS V1 BLOCKED_PRE2025_BOUNDARY_SUPPORT; boundary-safe B-CARS-SV V1 EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED**
 16. **WP4 role-preserving integration/state-transition work — AFTER the new challenger has a frozen design/evidence checkpoint**
 17. **Architecture/parameter freeze — PENDING**
 18. **Prospective shadow — PENDING FINAL FREEZE**
@@ -1007,6 +1009,6 @@ Current validated motor checkpoint:
 
 The **next GC-BREAK research motor/lane** is a new separately named **future-change-time prediction challenger** based on residual-time / explicit-duration / Bayesian online changepoint-prediction principles (or a causally equivalent preregistered duration-hazard formulation). Exact model identity and parameters are not yet frozen; the scientific lane is frozen. It must be designed with pre-2025 chronology and may not use visible 2025 outcomes for tuning.
 
-In parallel, the four originally selected direction-research families remain governed: RSM, bootstrapped VLMC, BCT/CTW and B-CARS. The earlier RSM-52 V1 is a narrow historical baseline only; corrected `DIRECTION_RSM_FAMILY_V2_RESEARCH` now governs the RSM-family conclusion after source-feasible RSM/ERSM variants at k=26,52,104 were evaluated. V2 is `NO_PROMOTION / SOURCE_FAMILY_REPLICATION_COMPLETE / WEAK_DIRECTIONAL_DISCRIMINATION`; all six 2025 variants had 0% weekly DOWN sensitivity. VLMC-BS-52 is `NO_PROMOTION / PRE2025_VALIDATION_FAILED`; its 2025 replay showed more two-sided behavior but poor validation/calibration. BCT/CTW-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`; it materially improves probability stability versus VLMC-BS but collapses to 52/52 UP forecasts in the 2025 replay. Source-form B-CARS V1 is blocked by genuine pre-2025 boundary up-ratios and was not scored. Its separately preregistered Smithson-Verkuilen boundary-safe successor, `DIRECTION_BCARS_SV_V1_RESEARCH`, is `NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION`; in 2025 it forecast 51 UP / 1 DOWN with 0% DOWN sensitivity, while the frozen event overlay had 50% balanced direction accuracy. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
+In parallel, the four originally selected direction-research families remain governed: RSM, bootstrapped VLMC, BCT/CTW and B-CARS. The earlier RSM-52 V1 is a narrow historical baseline only; corrected `DIRECTION_RSM_FAMILY_V2_RESEARCH` governs the final RSM-family conclusion after source-feasible RSM/ERSM variants at k=26,52,104 were evaluated. All six 2025 variants had 0% weekly DOWN sensitivity. By explicit user decision dated 2026-09-18, the whole RSM/ERSM family is now `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`; no further RSM-family experimentation, context augmentation or rescue work is authorized unless the user explicitly reverses that decision. VLMC-BS-52 is `NO_PROMOTION / PRE2025_VALIDATION_FAILED`; its 2025 replay showed more two-sided behavior but poor validation/calibration. BCT/CTW-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`; it materially improves probability stability versus VLMC-BS but collapses to 52/52 UP forecasts in the 2025 replay. Source-form B-CARS V1 is blocked by genuine pre-2025 boundary up-ratios and was not scored. Its separately preregistered Smithson-Verkuilen boundary-safe successor, `DIRECTION_BCARS_SV_V1_RESEARCH`, is `NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION`; in 2025 it forecast 51 UP / 1 DOWN with 0% DOWN sensitivity, while the frozen event overlay had 50% balanced direction accuracy. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
 
 All future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
