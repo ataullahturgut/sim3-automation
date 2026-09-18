@@ -1,10 +1,10 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.63  
+**Manifest version:** 1.64  
 **Issue date:** 2026-09-17  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
-**Current research branch:** `gold-bocpd-hourly-b2-selective-20260916`  
+**Current research branch:** `gold-direction-rsm-v1-20260918`  
 **Project root:** `gold_axis_2026/`
 
 ---
@@ -186,9 +186,11 @@ For return r_t, define x_t = 1[r_t > 0]. For a look-back window k, the native RS
 
 p_RSM(t+1;k) = (1/k) * sum(i=t-k+1..t) x_i.
 
-RSM is non-parametric: return magnitudes are discarded and only sign persistence enters the forecast. A native binary direction forecast follows from p_RSM > 0.5, while the probability itself must be retained for Brier score, log-loss and calibration evaluation.
+RSM is non-parametric: return magnitudes are discarded and only sign persistence enters the forecast. For the source-replication classifier, a buying/UP signal is generated when p_RSM >= 0.5; otherwise the signal is DOWN, matching Liu, Papailias & Quinn (2021). The probability itself must also be retained for Brier score, log-loss and calibration evaluation.
 
 The commodity-direction study identifies the 52-week RSM as one of its two strongest out-of-sample specifications. Therefore k=52 weeks is the SOURCE-REPLICATION DEFAULT, not a post-2025 Gold-tuned parameter. Alternative Gold windows/horizons require separate preregistration.
+
+For the first Gold implementation, the following preregistration is binding before any 2025 price/return outcome inspection: source `XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1`; Monday-Friday New York-local observations only; weekly close = last available governed observation in each Monday-Friday calendar week with no forward-fill/provider substitution; weekly return = log(C_w/C_(w-1)); rolling window exactly 52 prior weekly return signs; forecast made at week-w close for week w+1; UP iff p_RSM >= 0.5; 2023 = implementation/development audit after sufficient warm-up; 2024 = fixed-rule pre-2025 validation; 2025 = locked historical test only after preregistration/code freeze. No alternative window, threshold, source or weekly-close rule may be chosen from 2025 outcomes.
 
 #### 4.3.2 DIRECTION_VLMC_BS_V1_RESEARCH — bootstrapped Variable-Length Markov Chain
 
