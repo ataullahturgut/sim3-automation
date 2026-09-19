@@ -1,0 +1,54 @@
+{
+  "D": 10,
+  "Sigma0": "identity",
+  "beta": 0.75,
+  "development_end": "2023-12-25",
+  "development_n": 95,
+  "development_start": "2022-03-07",
+  "direction_rule": "UP iff predicted original-scale weekly_return > 0",
+  "identity": "DIRECTION_BCTX_AR_V1_RESEARCH",
+  "lambda": 1.0,
+  "m": 3,
+  "method": "BCT-AR / BCT-X",
+  "mu0": "zero vector",
+  "mu_train": 0.0006893523555213233,
+  "p_candidates": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "quantile_levels": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9
+  ],
+  "reference_commit": "8e34c5fe74797bfaad7583dae1aa46c5d01bf21d",
+  "reference_repo": "IoannisPapageorgiou/Replication_BCTX",
+  "sd_train": 0.019718573811018783,
+  "selected": {
+    "c1_z": -0.8267251397441705,
+    "c2_z": 1.0789919159472794,
+    "log_evidence": -124.95204968124622,
+    "p": 1
+  },
+  "tau": 1.0,
+  "threshold_candidate_values_z": [
+    -1.0917576635308108,
+    -0.8267251397441705,
+    -0.4576194723109601,
+    -0.2456593085899069,
+    -0.007316223542630062,
+    0.17627601103032461,
+    0.46525928951068574,
+    0.6424906385377123,
+    1.0789919159472794
+  ]
+}
