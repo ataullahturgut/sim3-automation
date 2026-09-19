@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.73  
+**Manifest version:** 1.74  
 **Issue date:** 2026-09-18  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -95,6 +95,7 @@ The current research-status layer is binding for work sequencing and must not be
 | RSM / ERSM family | `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT` | closed by explicit user decision on 2026-09-18; historical artifacts are audit-only and the family must not re-enter research sequencing unless the user explicitly reverses the closure. |
 | `DIRECTION_VLMC_BS_V1_RESEARCH` | `AUDIT_ONLY / SUPERSEDED_FOR_FAMILY_SCOPE` | original custom-Python rolling-52 experiment is retained only for lineage; corrected V2 uses source weekly-return construction and pinned R VLMC reference semantics. |
 | `DIRECTION_VLMC_BS_FAMILY_V2_RESEARCH` | `EVALUATED / NO_PROMOTION / SOURCE_FAITHFUL_REFERENCE_REPLICATION_COMPLETE / 2025_GENERALIZATION_WEAK` | rolling 26/52/104 reference-family replay complete; k=52 validated strongly in 2024 but failed to generalize in 2025, while k=104 was more balanced in 2025 but had weaker pre-2025 evidence. |
+| `DIRECTION_VLMC_BS_FIXED_SHARE_V1_RESEARCH` | `REJECTED / NO_PROMOTION / 2025_GENERALIZATION_FAILED` | literature-grounded adaptive expert weighting of VLMC-26/52 improved 2023-2024 but collapsed in locked 2025; do not rescue by retuning this same grid against 2025. |
 | `DIRECTION_BCT_CTW_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION` | exact BCT/CTW-52 replay complete through 2025; probability quality improved materially versus VLMC-BS but 2025 produced 52/52 UP forecasts, balanced accuracy 50%, and 0/5 DOWN volatility-event agreement |
 | `DIRECTION_BCARS_V1_RESEARCH` | `BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED / NOT_RUNTIME` | source-form ordinary-Beta B-CARS(1,1) is blocked by genuine pre-2025 weekly up-ratios equal to 0; no silent clipping permitted |
 | `DIRECTION_BCARS_SV_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION` | separately preregistered Smithson-Verkuilen boundary-safe B-CARS(1,1) successor; 2024 validation failed and 2025 produced 51 UP / 1 DOWN with 0% DOWN sensitivity |
@@ -240,6 +241,8 @@ The event overlay is diagnostic only. k=104's event-subset result does not overr
 Binding status:
 
 `DIRECTION_VLMC_BS_FAMILY_V2_RESEARCH = EVALUATED / NO_PROMOTION / SOURCE_FAITHFUL_REFERENCE_REPLICATION_COMPLETE / 2025_GENERALIZATION_WEAK / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
+
+Fixed-Share adaptive weighting was subsequently tested as `DIRECTION_VLMC_BS_FIXED_SHARE_V1_RESEARCH`; it is `REJECTED / NO_PROMOTION / 2025_GENERALIZATION_FAILED`. Detailed evidence remains in `GOLD_CONTROL_DIRECTION_VLMC_BS_FIXED_SHARE_V1_RESULT_2026-09-19.md`.
 
 Authoritative V2 audit surfaces:
 - `GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_PREREG_2026-09-18.md`;
