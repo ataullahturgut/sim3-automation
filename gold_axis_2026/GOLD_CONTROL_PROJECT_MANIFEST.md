@@ -1,7 +1,7 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.74  
-**Issue date:** 2026-09-18  
+**Manifest version:** 1.75  
+**Issue date:** 2026-09-19  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
 **Current research branch:** `gold-direction-vlmc-bs-family-v2-20260918`  
@@ -96,6 +96,8 @@ The current research-status layer is binding for work sequencing and must not be
 | `DIRECTION_VLMC_BS_V1_RESEARCH` | `AUDIT_ONLY / SUPERSEDED_FOR_FAMILY_SCOPE` | original custom-Python rolling-52 experiment is retained only for lineage; corrected V2 uses source weekly-return construction and pinned R VLMC reference semantics. |
 | `DIRECTION_VLMC_BS_FAMILY_V2_RESEARCH` | `EVALUATED / NO_PROMOTION / SOURCE_FAITHFUL_REFERENCE_REPLICATION_COMPLETE / 2025_GENERALIZATION_WEAK` | rolling 26/52/104 reference-family replay complete; k=52 validated strongly in 2024 but failed to generalize in 2025, while k=104 was more balanced in 2025 but had weaker pre-2025 evidence. |
 | `DIRECTION_VLMC_BS_FIXED_SHARE_V1_RESEARCH` | `REJECTED / NO_PROMOTION / 2025_GENERALIZATION_FAILED` | literature-grounded adaptive expert weighting of VLMC-26/52 improved 2023-2024 but collapsed in locked 2025; do not rescue by retuning this same grid against 2025. |
+| `DIRECTION_COVLMC_X3_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_COLLAPSE_TO_NEUTRAL / NOT_RUNTIME` | direct VLMCX exogenous-covariate successor using rolling 104-week Gold signs plus PIT DGS10, USD/CNY and GPR; 2024 produced P(UP)=0.5 at all 44 origins and 44/44 UP forecasts, and unchanged 2025 replay produced 52/52 UP; do not rescue by post-result parameter tuning. |
+| `DIRECTION_VLMC_C_104_V1_RESEARCH` | `PREREGISTERED / IMPLEMENTED / EXECUTION_RESULT_NOT_FOUND / NOT_PROVEN / NOT_RUNTIME` | branch-specific consistent-pruning successor was preregistered and implementation/workflow surfaces exist, but no completed pre-2025 or 2025 result artifact is present at the handover authority checkpoint; do not infer success or failure until a governed execution result is frozen. |
 | `DIRECTION_BCT_CTW_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION` | exact BCT/CTW-52 replay complete through 2025; probability quality improved materially versus VLMC-BS but 2025 produced 52/52 UP forecasts, balanced accuracy 50%, and 0/5 DOWN volatility-event agreement |
 | `DIRECTION_BCARS_V1_RESEARCH` | `BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED / NOT_RUNTIME` | source-form ordinary-Beta B-CARS(1,1) is blocked by genuine pre-2025 weekly up-ratios equal to 0; no silent clipping permitted |
 | `DIRECTION_BCARS_SV_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION` | separately preregistered Smithson-Verkuilen boundary-safe B-CARS(1,1) successor; 2024 validation failed and 2025 produced 51 UP / 1 DOWN with 0% DOWN sensitivity |
@@ -175,11 +177,13 @@ These are **auxiliary abnormal-daily-volatility metrics**, not structural GC-BRE
 Any future BOCPD successor requires a separately named preregistration/change-control step. The next future-change-time lane is a **separate model identity**, not a silent V6 retune of V5.
 
 
-### 4.3 Planned direction-forecast research motors — four authorized identities
+### 4.3 Direction-forecast research authority — evaluated four-motor set and VLMC successors
 
-The following four identities are authorized as new research motors to be tried later. They are not implemented, not runtime identities, not production authorities, and may not silently replace the GC-BREAK state ontology. Their first implementation must preserve the mathematical method identity documented below and must use time-ordered, point-in-time-safe evaluation.
+The original four-motor direction-research set has now been evaluated, blocked, or closed as documented below; it is no longer a merely planned set. None of these research identities is a governed runtime or production authority, and none may silently replace the GC-BREAK state ontology.
 
-The previously discussed higher-moment direction-probability method is NOT SELECTED for this planned motor set.
+Subsequent VLMC-family successors are also governed in this section so that completed, rejected, blocked and incomplete VLMC work cannot be mistaken for untried ideas. All evaluations must remain time-ordered and point-in-time safe.
+
+The previously discussed higher-moment direction-probability method remains NOT SELECTED for this research set.
 
 #### 4.3.1 RSM / ERSM family — CLOSED
 
@@ -244,6 +248,13 @@ Binding status:
 
 Fixed-Share adaptive weighting was subsequently tested as `DIRECTION_VLMC_BS_FIXED_SHARE_V1_RESEARCH`; it is `REJECTED / NO_PROMOTION / 2025_GENERALIZATION_FAILED`. Detailed evidence remains in `GOLD_CONTROL_DIRECTION_VLMC_BS_FIXED_SHARE_V1_RESULT_2026-09-19.md`.
 
+Two additional VLMC-family successors must also remain explicit in project authority:
+
+- `DIRECTION_COVLMC_X3_V1_RESEARCH`: direct exogenous-covariate extension using R `VLMCX` 1.0, rolling 104 weeks and exactly PIT DGS10, USD/CNY and GPR. On the identical 44-week 2024 VLMC-104 support it collapsed to `P(UP)=0.5` at every origin, forecast 44/44 UP, balanced accuracy 0.50 and DOWN sensitivity 0. The unchanged post-diagnostic 2025 replay forecast 52/52 UP with balanced accuracy 0.50. Binding status: `EVALUATED / NO_PROMOTION / PRE2025_COLLAPSE_TO_NEUTRAL / NOT_RUNTIME`. No parameter rescue is authorized under this identity.
+- `DIRECTION_VLMC_C_104_V1_RESEARCH`: branch-specific consistent-pruning successor following the An et al. VLMC-C approach. The preregistration, R implementation and GitHub Actions workflow exist and are frozen around a 104-week window, `alpha0=0.05`, reference branch-test code pinned to commit `8195ee16dedbb3a89c288869ee9c0b856ea2ed4f`, and 100000 Gaussian Monte Carlo draws per branch test. However, no completed pre-2025 or 2025 result artifact was found at the authoritative handover checkpoint. Binding status: `PREREGISTERED / IMPLEMENTED / EXECUTION_RESULT_NOT_FOUND / NOT_PROVEN / NOT_RUNTIME`. Do not represent VLMC-C as successful, failed or completed until governed result artifacts are frozen.
+
+As of manifest v1.75, no separately named discounted/forgetting VLMC successor and no VLMC-specific KT/Jeffreys transition-smoothing successor is registered as completed project work. A future proposal in either family would require a new identity and preregistration; discussion alone does not authorize implementation.
+
 Authoritative V2 audit surfaces:
 - `GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_PREREG_2026-09-18.md`;
 - `tools/direction_vlmc_bs_family_v2_reference.R`;
@@ -251,6 +262,16 @@ Authoritative V2 audit surfaces:
 - `GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_PRE2025_RESULT_2026-09-18.md`;
 - `GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_2025_RESULT_2026-09-18.md`;
 - `GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_2025_VOLATILITY_RESULT_2026-09-18.md`.
+
+Additional VLMC successor authority surfaces:
+- Fixed-Share result: `GOLD_CONTROL_DIRECTION_VLMC_BS_FIXED_SHARE_V1_RESULT_2026-09-19.md`;
+- COVLMC preregistration: `GOLD_CONTROL_DIRECTION_COVLMC_X3_V1_PREREG_2026-09-18.md`;
+- COVLMC result: `GOLD_CONTROL_DIRECTION_COVLMC_X3_V1_RESULT_2026-09-18.md`;
+- COVLMC implementation: `tools/direction_covlmc_x3_v1_reference.R`;
+- COVLMC workflow: `.github/workflows/gold-control-covlmc-x3-v1.yml`;
+- VLMC-C preregistration: `GOLD_CONTROL_DIRECTION_VLMC_C_104_V1_PREREG_2026-09-18.md`;
+- VLMC-C implementation: `tools/direction_vlmc_c_104_v1_reference.R`;
+- VLMC-C workflow: `.github/workflows/gold-control-vlmc-c-104-v1.yml`.
 
 #### 4.3.3 DIRECTION_BCT_CTW_V1_RESEARCH — Bayesian Context Tree / Context Tree Weighting
 
@@ -836,7 +857,7 @@ Random splitting is forbidden.
 12. **Emergency Level/Reversal — SUSPENDED; Level requires redesign**
 13. **SLOW — LOW PRIORITY / NOT NEXT**
 14. **Post-BOCPD future change-time challenger — NEXT GC-BREAK RESEARCH LANE; exact identity/parameters require preregistration**
-15. **Parallel direction-research lane — RSM/ERSM CLOSED / DO_NOT_REVISIT; corrected VLMC-BS family V2 NO_PROMOTION / 2025_GENERALIZATION_WEAK; BCT/CTW-52 NO_PROMOTION; B-CARS source-form BLOCKED and boundary-safe successor NO_PROMOTION**
+15. **Parallel direction-research lane — RSM/ERSM CLOSED / DO_NOT_REVISIT; corrected VLMC-BS family V2 NO_PROMOTION / 2025_GENERALIZATION_WEAK; Fixed-Share REJECTED; COVLMC-X3 NO_PROMOTION / PRE2025_COLLAPSE_TO_NEUTRAL; VLMC-C 104 PREREGISTERED + IMPLEMENTED but RESULT_NOT_FOUND / NOT_PROVEN; BCT/CTW-52 NO_PROMOTION; B-CARS source-form BLOCKED and boundary-safe successor NO_PROMOTION**
 16. **WP4 role-preserving integration/state-transition work — AFTER the new challenger has a frozen design/evidence checkpoint**
 17. **Architecture/parameter freeze — PENDING**
 18. **Prospective shadow — PENDING FINAL FREEZE**
@@ -961,6 +982,6 @@ Current validated motor checkpoint:
 
 The **next GC-BREAK research motor/lane** is a new separately named **future-change-time prediction challenger** based on residual-time / explicit-duration / Bayesian online changepoint-prediction principles (or a causally equivalent preregistered duration-hazard formulation). Exact model identity and parameters are not yet frozen; the scientific lane is frozen. It must be designed with pre-2025 chronology and may not use visible 2025 outcomes for tuning.
 
-In parallel, the direction-research families remain governed. RSM/ERSM is permanently closed as `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`; detailed history is audit-only and intentionally omitted from the manifest. The old VLMC-BS-52 V1 is audit-only. Corrected VLMC-BS family V2 is `NO_PROMOTION / SOURCE_FAITHFUL_REFERENCE_REPLICATION_COMPLETE / 2025_GENERALIZATION_WEAK`: k=52 validated strongly in 2024 but did not generalize in 2025; k=104 was more balanced in 2025 but had weaker pre-2025 evidence. BCT/CTW-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`; it materially improves probability stability versus VLMC-BS but collapses to 52/52 UP forecasts in the 2025 replay. Source-form B-CARS V1 is blocked by genuine pre-2025 boundary up-ratios and was not scored. Its separately preregistered Smithson-Verkuilen boundary-safe successor, `DIRECTION_BCARS_SV_V1_RESEARCH`, is `NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION`; in 2025 it forecast 51 UP / 1 DOWN with 0% DOWN sensitivity, while the frozen event overlay had 50% balanced direction accuracy. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
+In parallel, the direction-research families remain governed. RSM/ERSM is permanently closed as `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`; detailed history is audit-only and intentionally omitted from the manifest. The old VLMC-BS-52 V1 is audit-only. Corrected VLMC-BS family V2 is `NO_PROMOTION / SOURCE_FAITHFUL_REFERENCE_REPLICATION_COMPLETE / 2025_GENERALIZATION_WEAK`: k=52 validated strongly in 2024 but did not generalize in 2025; k=104 was more balanced in 2025 but had weaker pre-2025 evidence. Fixed-Share adaptation is `REJECTED / NO_PROMOTION / 2025_GENERALIZATION_FAILED`. COVLMC-X3 was evaluated and is `NO_PROMOTION / PRE2025_COLLAPSE_TO_NEUTRAL`. VLMC-C 104 is not an untried idea: it is preregistered and implemented with a reproducibility workflow, but its governed execution result is `NOT_FOUND / NOT_PROVEN` at this checkpoint and therefore no success/failure claim is authorized. BCT/CTW-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`; it materially improves probability stability versus VLMC-BS but collapses to 52/52 UP forecasts in the 2025 replay. Source-form B-CARS V1 is blocked by genuine pre-2025 boundary up-ratios and was not scored. Its separately preregistered Smithson-Verkuilen boundary-safe successor, `DIRECTION_BCARS_SV_V1_RESEARCH`, is `NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION`; in 2025 it forecast 51 UP / 1 DOWN with 0% DOWN sensitivity, while the frozen event overlay had 50% balanced direction accuracy. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
 
 All future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
