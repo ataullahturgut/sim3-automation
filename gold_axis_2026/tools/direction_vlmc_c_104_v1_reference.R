@@ -215,7 +215,7 @@ m_c <- metrics(data.frame(
 ))
 m_b <- metrics(data.frame(
   p_up=par$p_up_vlmc104,forecast_up=par$forecast_up_vlmc104,
-  actual_up=par$actual_up_vlmc104,previous_up=par$previous_up
+  actual_up=par$actual_up_vlmc104,previous_up=par$previous_up_vlmc104
 ))
 comp <- cbind(data.frame(identity=c("VLMC_C_104","VLMC_BS_104")),rbind(m_c,m_b))
 comp$delta_accuracy_vs_vlmc104 <- comp$accuracy-m_b$accuracy[[1]]
