@@ -1,10 +1,10 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.73  
+**Manifest version:** 1.74  
 **Issue date:** 2026-09-18  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
-**Current research branch:** `gold-direction-vlmc-bs-family-v2-20260918`  
+**Current research branch:** `gold-direction-vlmc-adaptive-meta-v1-20260919`  
 **Project root:** `gold_axis_2026/`
 
 ---
@@ -240,6 +240,8 @@ The event overlay is diagnostic only. k=104's event-subset result does not overr
 Binding status:
 
 `DIRECTION_VLMC_BS_FAMILY_V2_RESEARCH = EVALUATED / NO_PROMOTION / SOURCE_FAITHFUL_REFERENCE_REPLICATION_COMPLETE / 2025_GENERALIZATION_WEAK / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
+
+Adaptive meta-layer follow-up (2026-09-19): Fixed-Share expert tracking and fading recent-best expert selection were evaluated over the frozen k=26/52/104 VLMC outputs using pre-2025-only parameter selection logic. Neither improved 2024 validation or 2025 generalization; `DIRECTION_VLMC_ADAPTIVE_META_V1_RESEARCH` is `NO_PROMOTION / ADAPTIVE_META_LAYER_FAILED_TO_IMPROVE_GENERALIZATION`. Detailed metrics are audit-only in `GOLD_CONTROL_DIRECTION_VLMC_ADAPTIVE_META_V1_RESULT_2026-09-19.md`.
 
 Authoritative V2 audit surfaces:
 - `GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_PREREG_2026-09-18.md`;
