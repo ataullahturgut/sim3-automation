@@ -1,0 +1,51 @@
+List of 10
+ $ identity                 : chr "DIRECTION_VLMC_C_104_V1_RESEARCH"
+ $ stage                    : chr "2025"
+ $ window                   : int 104
+ $ alpha0                   : num 0.05
+ $ num_simu                 : int 100000
+ $ reference_seed_per_branch: int 1
+ $ threshold_gen_formula    : chr "max(2, round(sqrt(n)/|X|))"
+ $ external_reference_commit: chr "8195ee16dedbb3a89c288869ee9c0b856ea2ed4f"
+ $ vlmc_c                   :List of 20
+  ..$ n                     : int 52
+  ..$ accuracy              : num 0.712
+  ..$ balanced_accuracy     : num 0.5
+  ..$ brier                 : num 0.228
+  ..$ log_loss              : num 1.13
+  ..$ actual_up             : int 37
+  ..$ actual_down           : int 15
+  ..$ forecast_up           : int 52
+  ..$ forecast_down         : int 0
+  ..$ up_sensitivity        : num 1
+  ..$ down_sensitivity      : num 0
+  ..$ tp                    : int 37
+  ..$ tn                    : int 0
+  ..$ fp                    : int 15
+  ..$ fn                    : int 0
+  ..$ always_up_accuracy    : num 0.712
+  ..$ previous_sign_accuracy: num 0.558
+  ..$ mean_p_up             : num 0.621
+  ..$ min_p_up              : num 0.519
+  ..$ max_p_up              : num 1
+ $ vlmc_bs_104              :List of 20
+  ..$ n                     : int 52
+  ..$ accuracy              : num 0.615
+  ..$ balanced_accuracy     : num 0.551
+  ..$ brier                 : num 0.313
+  ..$ log_loss              : num 4.69
+  ..$ actual_up             : int 37
+  ..$ actual_down           : int 15
+  ..$ forecast_up           : int 35
+  ..$ forecast_down         : int 17
+  ..$ up_sensitivity        : num 0.703
+  ..$ down_sensitivity      : num 0.4
+  ..$ tp                    : int 26
+  ..$ tn                    : int 6
+  ..$ fp                    : int 9
+  ..$ fn                    : int 11
+  ..$ always_up_accuracy    : num 0.712
+  ..$ previous_sign_accuracy: num 0.558
+  ..$ mean_p_up             : num 0.616
+  ..$ min_p_up              : num 0
+  ..$ max_p_up              : num 1

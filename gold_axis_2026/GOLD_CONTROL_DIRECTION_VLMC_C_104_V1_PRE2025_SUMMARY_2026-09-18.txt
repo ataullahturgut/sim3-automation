@@ -1,0 +1,51 @@
+List of 10
+ $ identity                 : chr "DIRECTION_VLMC_C_104_V1_RESEARCH"
+ $ stage                    : chr "pre2025"
+ $ window                   : int 104
+ $ alpha0                   : num 0.05
+ $ num_simu                 : int 100000
+ $ reference_seed_per_branch: int 1
+ $ threshold_gen_formula    : chr "max(2, round(sqrt(n)/|X|))"
+ $ external_reference_commit: chr "8195ee16dedbb3a89c288869ee9c0b856ea2ed4f"
+ $ vlmc_c                   :List of 20
+  ..$ n                     : int 44
+  ..$ accuracy              : num 0.477
+  ..$ balanced_accuracy     : num 0.442
+  ..$ brier                 : num 0.271
+  ..$ log_loss              : num 1.31
+  ..$ actual_up             : int 24
+  ..$ actual_down           : int 20
+  ..$ forecast_up           : int 39
+  ..$ forecast_down         : int 5
+  ..$ up_sensitivity        : num 0.833
+  ..$ down_sensitivity      : num 0.05
+  ..$ tp                    : int 20
+  ..$ tn                    : int 1
+  ..$ fp                    : int 19
+  ..$ fn                    : int 4
+  ..$ always_up_accuracy    : num 0.545
+  ..$ previous_sign_accuracy: num 0.5
+  ..$ mean_p_up             : num 0.509
+  ..$ min_p_up              : num 0
+  ..$ max_p_up              : num 0.548
+ $ vlmc_bs_104              :List of 20
+  ..$ n                     : int 44
+  ..$ accuracy              : num 0.568
+  ..$ balanced_accuracy     : num 0.558
+  ..$ brier                 : num 0.338
+  ..$ log_loss              : num 6.02
+  ..$ actual_up             : int 24
+  ..$ actual_down           : int 20
+  ..$ forecast_up           : int 27
+  ..$ forecast_down         : int 17
+  ..$ up_sensitivity        : num 0.667
+  ..$ down_sensitivity      : num 0.45
+  ..$ tp                    : int 16
+  ..$ tn                    : int 9
+  ..$ fp                    : int 11
+  ..$ fn                    : int 8
+  ..$ always_up_accuracy    : num 0.545
+  ..$ previous_sign_accuracy: num 0.5
+  ..$ mean_p_up             : num 0.571
+  ..$ min_p_up              : num 0
+  ..$ max_p_up              : num 1

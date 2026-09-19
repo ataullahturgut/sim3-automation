@@ -1,0 +1,77 @@
+name: Gold Control VLMC-BS Fixed-Share V1
+
+on:
+  push:
+    branches:
+      - gold-direction-vlmc-bs-family-v2-20260918
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FIXED_SHARE_V1_PREREG_2026-09-18.md'
+      - 'gold_axis_2026/tools/direction_vlmc_bs_fixed_share_v1.py'
+      - '.github/workflows/gold-control-vlmc-bs-fixed-share-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-vlmc-bs-fixed-share-v1
+  cancel-in-progress: false
+
+jobs:
+  fixed-share:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-direction-vlmc-bs-family-v2-20260918
+          fetch-depth: 0
+
+      - name: Run pre-2025 development and validation
+        run: |
+          rm -rf vlmc_fixed_share_pre2025
+          mkdir -p vlmc_fixed_share_pre2025
+          python gold_axis_2026/tools/direction_vlmc_bs_fixed_share_v1.py \
+            --stage pre2025 \
+            --pre2025-parent gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_PRE2025_FORECASTS_2026-09-18.csv \
+            --outdir vlmc_fixed_share_pre2025
+
+      - name: Freeze pre-2025 successor checkpoint
+        run: |
+          cp vlmc_fixed_share_pre2025/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FIXED_SHARE_V1_GRID_2023_2026-09-18.csv \
+                  gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FIXED_SHARE_V1_PRE2025_FORECASTS_2026-09-18.csv \
+                  gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FIXED_SHARE_V1_PRE2025_STATE_2026-09-18.json
+          git commit -m 'Freeze VLMC-BS Fixed-Share pre-2025 checkpoint'
+          git push origin HEAD:gold-direction-vlmc-bs-family-v2-20260918
+
+      - name: Run unchanged 2025 successor replay
+        run: |
+          rm -rf vlmc_fixed_share_2025
+          mkdir -p vlmc_fixed_share_2025
+          python gold_axis_2026/tools/direction_vlmc_bs_fixed_share_v1.py \
+            --stage 2025 \
+            --pre2025-parent gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_PRE2025_FORECASTS_2026-09-18.csv \
+            --parent-2025 gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_2025_FORECASTS_2026-09-18.csv \
+            --state gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FIXED_SHARE_V1_PRE2025_STATE_2026-09-18.json \
+            --outdir vlmc_fixed_share_2025
+
+      - name: Freeze 2025 forecasts before event overlay
+        run: |
+          cp vlmc_fixed_share_2025/* gold_axis_2026/
+          git add gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FIXED_SHARE_V1_2025_FORECASTS_2026-09-18.csv \
+                  gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FIXED_SHARE_V1_2025_RESULT_2026-09-18.json
+          git commit -m 'Freeze VLMC-BS Fixed-Share 2025 forecasts before overlay'
+          git push origin HEAD:gold-direction-vlmc-bs-family-v2-20260918
+
+      - name: Upload reproducibility outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-vlmc-bs-fixed-share-v1
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            vlmc_fixed_share_pre2025/
+            vlmc_fixed_share_2025/

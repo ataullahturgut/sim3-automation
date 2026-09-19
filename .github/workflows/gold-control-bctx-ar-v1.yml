@@ -1,0 +1,88 @@
+name: Gold Control BCT-X AR V1
+
+on:
+  push:
+    branches:
+      - gold-direction-vlmc-bs-family-v2-20260918
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_DIRECTION_BCTX_AR_V1_PREREG_2026-09-19.md'
+      - 'gold_axis_2026/tools/direction_bctx_ar_v1_research.py'
+      - '.github/workflows/gold-control-bctx-ar-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-bctx-ar-v1
+  cancel-in-progress: false
+
+jobs:
+  bctx-ar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-direction-vlmc-bs-family-v2-20260918
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install frozen runtime dependency
+        run: python -m pip install 'numpy==2.1.3'
+
+      - name: Run pre-2025 evidence selection and fixed 2024 validation
+        run: |
+          rm -rf bctx_pre2025
+          mkdir -p bctx_pre2025
+          python gold_axis_2026/tools/direction_bctx_ar_v1_research.py \
+            gold_axis_2026/research_inputs/XAU_WEEKLY_SIGN_SOURCE_METHOD_V2_2022_2025.csv \
+            --stage pre2025 \
+            --outdir bctx_pre2025
+
+      - name: Freeze pre-2025 BCT-X AR evidence before 2025
+        run: |
+          cp bctx_pre2025/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_BCTX_AR_V1_EVIDENCE_GRID_2026-09-19.csv \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_BCTX_AR_V1_FROZEN_CONFIG_2026-09-19.json \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_BCTX_AR_V1_PRE2025_FORECASTS_2026-09-19.csv \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_BCTX_AR_V1_PRE2025_RESULT_2026-09-19.json
+          git commit -m 'Freeze BCT-X AR V1 pre-2025 evidence'
+          git push origin HEAD:gold-direction-vlmc-bs-family-v2-20260918
+
+      - name: Run unchanged 2025 post-diagnostic replay
+        run: |
+          rm -rf bctx_2025
+          mkdir -p bctx_2025
+          python gold_axis_2026/tools/direction_bctx_ar_v1_research.py \
+            gold_axis_2026/research_inputs/XAU_WEEKLY_SIGN_SOURCE_METHOD_V2_2022_2025.csv \
+            --stage 2025 \
+            --outdir bctx_2025 \
+            --config gold_axis_2026/GOLD_CONTROL_DIRECTION_BCTX_AR_V1_FROZEN_CONFIG_2026-09-19.json \
+            --pre-result gold_axis_2026/GOLD_CONTROL_DIRECTION_BCTX_AR_V1_PRE2025_RESULT_2026-09-19.json
+
+      - name: Freeze 2025 replay and final BCT-X AR result
+        run: |
+          cp bctx_2025/* gold_axis_2026/
+          git add \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_BCTX_AR_V1_2025_FORECASTS_2026-09-19.csv \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_BCTX_AR_V1_2025_RESULT_2026-09-19.json \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_BCTX_AR_V1_RESULT_2026-09-19.md
+          git commit -m 'Freeze BCT-X AR V1 2025 replay and result'
+          git push origin HEAD:gold-direction-vlmc-bs-family-v2-20260918
+
+      - name: Upload reproducibility outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-bctx-ar-v1
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            bctx_pre2025/
+            bctx_2025/
