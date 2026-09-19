@@ -1,0 +1,17 @@
+list(identity = "DIRECTION_VLMC_C_104_V1_RESEARCH", stage = "2025", 
+    window = 104L, alpha0 = 0.05, num_simu = 100000L, reference_seed_per_branch = 1L, 
+    threshold_gen_formula = "max(2, round(sqrt(n)/|X|))", external_reference_commit = "8195ee16dedbb3a89c288869ee9c0b856ea2ed4f", 
+    vlmc_c = list(n = 52L, accuracy = 0.711538461538462, balanced_accuracy = 0.5, 
+        brier = 0.228466730200273, log_loss = 1.12768962274636, 
+        actual_up = 37L, actual_down = 15L, forecast_up = 52L, 
+        forecast_down = 0L, up_sensitivity = 1, down_sensitivity = 0, 
+        tp = 37L, tn = 0L, fp = 15L, fn = 0L, always_up_accuracy = 0.711538461538462, 
+        previous_sign_accuracy = 0.557692307692308, mean_p_up = 0.620747041420118, 
+        min_p_up = 0.519230769230769, max_p_up = 1), vlmc_bs_104 = list(
+        n = 52L, accuracy = 0.615384615384615, balanced_accuracy = 0.551351351351351, 
+        brier = 0.313487326749727, log_loss = 4.69079543340747, 
+        actual_up = 37L, actual_down = 15L, forecast_up = 35L, 
+        forecast_down = 17L, up_sensitivity = 0.702702702702703, 
+        down_sensitivity = 0.4, tp = 26L, tn = 6L, fp = 9L, fn = 11L, 
+        always_up_accuracy = 0.711538461538462, previous_sign_accuracy = 0.557692307692308, 
+        mean_p_up = 0.615535355894668, min_p_up = 0, max_p_up = 1))
