@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.77  
+**Manifest version:** 1.78  
 **Issue date:** 2026-09-19  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -99,7 +99,7 @@ The current research-status layer is binding for work sequencing and must not be
 | `DIRECTION_COVLMC_X3_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_COLLAPSE_TO_NEUTRAL / NOT_RUNTIME` | direct VLMCX exogenous-covariate successor using rolling 104-week Gold signs plus PIT DGS10, USD/CNY and GPR; 2024 produced P(UP)=0.5 at all 44 origins and 44/44 UP forecasts, and unchanged 2025 replay produced 52/52 UP; do not rescue by post-result parameter tuning. |
 | `DIRECTION_VLMC_C_104_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / 2025_COLLAPSE_TO_ALWAYS_UP / NOT_RUNTIME` | governed run 35453387137 completed after a comparison-only column-reference bug fix that did not change model semantics. On identical 2024 support, balanced accuracy fell to 0.4417 versus parent VLMC-BS-104 at 0.5583 and DOWN sensitivity fell to 0.05 versus 0.45. Unchanged 2025 replay forecast 52/52 UP, balanced accuracy 0.50 and DOWN sensitivity 0. |
 | `DIRECTION_BCT_CTW_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION` | exact BCT/CTW-52 replay complete through 2025; probability quality improved materially versus VLMC-BS but 2025 produced 52/52 UP forecasts, balanced accuracy 50%, and 0/5 DOWN volatility-event agreement |
-| `DIRECTION_BCTX_AR_V1_RESEARCH` | `PREREGISTERED / FROZEN_BEFORE_REPLAY / NOT_RUNTIME` | one final BCT-family successor using real-valued corrected weekly returns, ternary BCT-X states and state-specific AR models; D=10, beta=0.75 and priors frozen; quantiser thresholds and p=1..5 selected only by pre-2024 Bayesian evidence; 2024 direction gate frozen before execution. |
+| `DIRECTION_BCTX_AR_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / BCT_FAMILY_CLOSED_CURRENT_SEQUENCE / NOT_RUNTIME` | frozen BCT-X/AR successor selected p=1 and ternary thresholds only by 2022-2023 GCTW evidence. 2024 accuracy 0.5660 and balanced accuracy 0.5584 beat trivial raw baselines, but DOWN sensitivity was only 0.1538 so the preregistered gate failed. Unchanged 2025 replay fell to balanced accuracy 0.4865 with DOWN sensitivity 0 and 51/52 UP forecasts. |
 | `DIRECTION_BCARS_V1_RESEARCH` | `BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED / NOT_RUNTIME` | source-form ordinary-Beta B-CARS(1,1) is blocked by genuine pre-2025 weekly up-ratios equal to 0; no silent clipping permitted |
 | `DIRECTION_BCARS_SV_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION` | separately preregistered Smithson-Verkuilen boundary-safe B-CARS(1,1) successor; 2024 validation failed and 2025 produced 51 UP / 1 DOWN with 0% DOWN sensitivity |
 | Post-BOCPD future-change-time lane | `NEXT_RESEARCH_LANE / PREREGISTRATION_REQUIRED` | separately named residual-time / explicit-duration / Bayesian online changepoint-prediction challenger; exact identity and parameters must be frozen before implementation |
@@ -340,6 +340,64 @@ Binding status: `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`. No
 - locked 2025 result: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCT_CTW_V1_2025_RESULT_2026-09-18.md`;
 - frozen 19-event overlay table: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCT_CTW_V1_2025_VOLATILITY_OVERLAY_2026-09-18.csv`;
 - volatility-overlay result: `gold_axis_2026/GOLD_CONTROL_DIRECTION_BCT_CTW_V1_2025_VOLATILITY_RESULT_2026-09-18.md`.
+
+##### 4.3.3.1 DIRECTION_BCTX_AR_V1_RESEARCH — final BCT-family successor
+
+A final literature-grounded successor tested the published BCT-X/BCT-AR extension on the corrected real-valued weekly-return surface rather than a binary-only sign sequence.
+
+Frozen before replay:
+- source: `XAU_WEEKLY_SIGN_SOURCE_METHOD_V2_2022_2025.csv` continuous `weekly_return`;
+- development selection sample: 2022-03-07 through 2023-12-25 only;
+- m=3, D=10, beta=0.75;
+- source-default priors mu0=0, Sigma0=I, tau=lambda=1;
+- p in {1,2,3,4,5};
+- ternary quantiser candidate thresholds from development-sample q10..q90 values;
+- quantiser pair and p selected only by exact GCTW evidence;
+- fixed 2024 validation gate required balanced accuracy >=0.55, both class sensitivities >=0.40, and raw accuracy strictly above always-UP and previous-sign baselines.
+
+Frozen selected configuration:
+- p=1;
+- c1_z=-0.8267251397;
+- c2_z=1.0789919159;
+- development log evidence=-124.9520496812.
+
+2024 fixed validation:
+- n=53;
+- accuracy=0.5660377;
+- balanced accuracy=0.5584046;
+- UP sensitivity=0.9629630;
+- DOWN sensitivity=0.1538462;
+- TP/TN/FP/FN=26/4/22/1;
+- forecast UP/DOWN=48/5;
+- always-UP accuracy=0.5094340;
+- previous-sign accuracy=0.5094340.
+
+The pre-registered gate failed because DOWN sensitivity was below 0.40. This failure was established before 2025 replay and cannot be rescued by 2025.
+
+Unchanged 2025 post-diagnostic replay:
+- n=52;
+- accuracy=0.6923077;
+- balanced accuracy=0.4864865;
+- UP sensitivity=0.9729730;
+- DOWN sensitivity=0.0;
+- forecast UP/DOWN=51/1;
+- always-UP accuracy=0.7115385.
+
+Binding status:
+`EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / BCT_FAMILY_CLOSED_CURRENT_SEQUENCE / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
+
+The BCT direction family is closed for the current research sequence after binary BCT/CTW V1 and the real-valued BCT-X/AR successor. No D/beta/window/direction-threshold/quantiser rescue, ACTW extension or additional BCT-family tuning is authorized unless the user explicitly reopens the family.
+
+Authoritative BCT-X/AR surfaces:
+- preregistration: `GOLD_CONTROL_DIRECTION_BCTX_AR_V1_PREREG_2026-09-19.md`;
+- implementation: `tools/direction_bctx_ar_v1_research.py`;
+- frozen evidence grid: `GOLD_CONTROL_DIRECTION_BCTX_AR_V1_EVIDENCE_GRID_2026-09-19.csv`;
+- frozen selected configuration: `GOLD_CONTROL_DIRECTION_BCTX_AR_V1_FROZEN_CONFIG_2026-09-19.json`;
+- frozen 2024 forecasts: `GOLD_CONTROL_DIRECTION_BCTX_AR_V1_PRE2025_FORECASTS_2026-09-19.csv`;
+- pre-2025 result: `GOLD_CONTROL_DIRECTION_BCTX_AR_V1_PRE2025_RESULT_2026-09-19.json`;
+- unchanged 2025 forecasts: `GOLD_CONTROL_DIRECTION_BCTX_AR_V1_2025_FORECASTS_2026-09-19.csv`;
+- 2025 result: `GOLD_CONTROL_DIRECTION_BCTX_AR_V1_2025_RESULT_2026-09-19.json`;
+- final result: `GOLD_CONTROL_DIRECTION_BCTX_AR_V1_RESULT_2026-09-19.md`.
 
 #### 4.3.4 DIRECTION_BCARS_V1_RESEARCH — Beta Conditional Autoregressive Shape
 
@@ -859,7 +917,7 @@ Random splitting is forbidden.
 12. **Emergency Level/Reversal — SUSPENDED; Level requires redesign**
 13. **SLOW — LOW PRIORITY / NOT NEXT**
 14. **Post-BOCPD future change-time challenger — NEXT GC-BREAK RESEARCH LANE; exact identity/parameters require preregistration**
-15. **Parallel direction-research lane — RSM/ERSM CLOSED / DO_NOT_REVISIT; VLMC family CLOSED FOR CURRENT SEQUENCE / NO_PROMOTION after V2 + Fixed-Share + COVLMC-X3 + VLMC-C 104; BCT/CTW-52 NO_PROMOTION with one frozen final BCT-X/AR successor `DIRECTION_BCTX_AR_V1_RESEARCH` preregistered before replay; B-CARS source-form BLOCKED and boundary-safe successor NO_PROMOTION**
+15. **Parallel direction-research lane — RSM/ERSM CLOSED / DO_NOT_REVISIT; VLMC family CLOSED FOR CURRENT SEQUENCE / NO_PROMOTION; BCT family CLOSED FOR CURRENT SEQUENCE / NO_PROMOTION after BCT/CTW V1 + BCT-X/AR V1; B-CARS source-form BLOCKED and boundary-safe successor NO_PROMOTION**
 16. **WP4 role-preserving integration/state-transition work — AFTER the new challenger has a frozen design/evidence checkpoint**
 17. **Architecture/parameter freeze — PENDING**
 18. **Prospective shadow — PENDING FINAL FREEZE**
@@ -984,6 +1042,6 @@ Current validated motor checkpoint:
 
 The **next GC-BREAK research motor/lane** is a new separately named **future-change-time prediction challenger** based on residual-time / explicit-duration / Bayesian online changepoint-prediction principles (or a causally equivalent preregistered duration-hazard formulation). Exact model identity and parameters are not yet frozen; the scientific lane is frozen. It must be designed with pre-2025 chronology and may not use visible 2025 outcomes for tuning.
 
-In parallel, the direction-research families remain governed. RSM/ERSM is permanently closed as `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`. The VLMC family is now `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION`: corrected VLMC-BS V2 found a real but unstable signal; Fixed-Share failed 2025 generalization; COVLMC-X3 collapsed to neutral; and the governed VLMC-C 104 successor failed pre-2025 direction validation (balanced 0.4417, DOWN sensitivity 0.05 versus parent 0.5583 / 0.45) and then forecast 52/52 UP in the unchanged 2025 replay. No further VLMC rescue/tuning is authorized unless the user explicitly reopens the family. BCT/CTW-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`; it materially improves probability stability versus VLMC-BS but collapses to 52/52 UP forecasts in the 2025 replay. One final separately named successor, `DIRECTION_BCTX_AR_V1_RESEARCH`, is preregistered before replay to test the published BCT-X/BCT-AR real-valued extension on corrected weekly returns. It may select only ternary quantiser thresholds and AR order by development-sample Bayesian evidence; its 2024 direction gate is frozen and 2025 cannot rescue a failed pre-2025 validation. Source-form B-CARS V1 is blocked by genuine pre-2025 boundary up-ratios and was not scored. Its separately preregistered Smithson-Verkuilen boundary-safe successor, `DIRECTION_BCARS_SV_V1_RESEARCH`, is `NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION`; in 2025 it forecast 51 UP / 1 DOWN with 0% DOWN sensitivity, while the frozen event overlay had 50% balanced direction accuracy. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
+In parallel, the direction-research families remain governed. RSM/ERSM is permanently closed as `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`. The VLMC family is now `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION`: corrected VLMC-BS V2 found a real but unstable signal; Fixed-Share failed 2025 generalization; COVLMC-X3 collapsed to neutral; and the governed VLMC-C 104 successor failed pre-2025 direction validation (balanced 0.4417, DOWN sensitivity 0.05 versus parent 0.5583 / 0.45) and then forecast 52/52 UP in the unchanged 2025 replay. No further VLMC rescue/tuning is authorized unless the user explicitly reopens the family. BCT/CTW-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`; it materially improves probability stability versus VLMC-BS but collapses to 52/52 UP forecasts in the 2025 replay. Its final published real-valued successor `DIRECTION_BCTX_AR_V1_RESEARCH` was evaluated under frozen pre-2024 evidence selection: 2024 balanced accuracy reached 0.5584 but DOWN sensitivity was only 0.1538, failing the preregistered gate; unchanged 2025 replay had balanced accuracy 0.4865, DOWN sensitivity 0 and 51/52 UP forecasts. The BCT direction family is therefore `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION` unless explicitly reopened by the user. Source-form B-CARS V1 is blocked by genuine pre-2025 boundary up-ratios and was not scored. Its separately preregistered Smithson-Verkuilen boundary-safe successor, `DIRECTION_BCARS_SV_V1_RESEARCH`, is `NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION`; in 2025 it forecast 51 UP / 1 DOWN with 0% DOWN sensitivity, while the frozen event overlay had 50% balanced direction accuracy. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
 
 All future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
