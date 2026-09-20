@@ -1,0 +1,351 @@
+{
+  "artifact_id": "GOLD_CONTROL_REALP_TRUE_HOURLY_CLOSE_RESEARCH_V1",
+  "chunk_payload_audit": [
+    {
+      "accepted_rows": 573,
+      "byte_count": 66088,
+      "chunk_end_exclusive": "2022-03-28T00:00:00-04:00",
+      "chunk_start": "2022-02-21T00:00:00-05:00",
+      "payload_sha256": "6b8a0e87c7d588fe94394935786a7da9f08a9700678b52081fb6a1b767ad6a76",
+      "provider_rows": 573
+    },
+    {
+      "accepted_rows": 552,
+      "byte_count": 63673,
+      "chunk_end_exclusive": "2022-05-02T00:00:00-04:00",
+      "chunk_start": "2022-03-28T00:00:00-04:00",
+      "payload_sha256": "dd18a9ba76669bab8de404cf26a4ff41fb9b30ad63f3aa128490958da1008682",
+      "provider_rows": 552
+    },
+    {
+      "accepted_rows": 573,
+      "byte_count": 66139,
+      "chunk_end_exclusive": "2022-06-06T00:00:00-04:00",
+      "chunk_start": "2022-05-02T00:00:00-04:00",
+      "payload_sha256": "365dfe5f19783a85ae3dc30ed924e7a39ca5759bcc841a3d507b41fa0ba4ac4a",
+      "provider_rows": 573
+    },
+    {
+      "accepted_rows": 571,
+      "byte_count": 65950,
+      "chunk_end_exclusive": "2022-07-11T00:00:00-04:00",
+      "chunk_start": "2022-06-06T00:00:00-04:00",
+      "payload_sha256": "3170c5cbb538e39e8e313004449022f22a05b0cf2cf18e5714471d80d3d11079",
+      "provider_rows": 571
+    },
+    {
+      "accepted_rows": 575,
+      "byte_count": 66431,
+      "chunk_end_exclusive": "2022-08-15T00:00:00-04:00",
+      "chunk_start": "2022-07-11T00:00:00-04:00",
+      "payload_sha256": "05889ffba8f6265611fc31f0c576077e17e8e013c6ad9eb33524dcc48393be28",
+      "provider_rows": 575
+    },
+    {
+      "accepted_rows": 573,
+      "byte_count": 66192,
+      "chunk_end_exclusive": "2022-09-19T00:00:00-04:00",
+      "chunk_start": "2022-08-15T00:00:00-04:00",
+      "payload_sha256": "1ea8b3432bdb2aa3b1971ba26c5e0a62e02ae2507b2a4098e4287402e9fb3161",
+      "provider_rows": 573
+    },
+    {
+      "accepted_rows": 572,
+      "byte_count": 66064,
+      "chunk_end_exclusive": "2022-10-24T00:00:00-04:00",
+      "chunk_start": "2022-09-19T00:00:00-04:00",
+      "payload_sha256": "3e8f49f9aa59e8a7f6509b1a6d44219c86fc773375fc196c34a8990cca11e798",
+      "provider_rows": 572
+    },
+    {
+      "accepted_rows": 559,
+      "byte_count": 64554,
+      "chunk_end_exclusive": "2022-11-28T00:00:00-05:00",
+      "chunk_start": "2022-10-24T00:00:00-04:00",
+      "payload_sha256": "8725e99daad7c4c4c8efbab1140c62b64049265068d808047b97f93c513a4992",
+      "provider_rows": 559
+    },
+    {
+      "accepted_rows": 536,
+      "byte_count": 61945,
+      "chunk_end_exclusive": "2023-01-02T00:00:00-05:00",
+      "chunk_start": "2022-11-28T00:00:00-05:00",
+      "payload_sha256": "a3081ef991e78bbe52be299164fab1411c96306a023b372f4ebd937a50136a41",
+      "provider_rows": 536
+    },
+    {
+      "accepted_rows": 546,
+      "byte_count": 63056,
+      "chunk_end_exclusive": "2023-02-06T00:00:00-05:00",
+      "chunk_start": "2023-01-02T00:00:00-05:00",
+      "payload_sha256": "9a1f43f840a2438c6d849efbc15b40513f09ffe1c2043b1d5881eb94d07e64c8",
+      "provider_rows": 546
+    },
+    {
+      "accepted_rows": 563,
+      "byte_count": 65126,
+      "chunk_end_exclusive": "2023-03-13T00:00:00-04:00",
+      "chunk_start": "2023-02-06T00:00:00-05:00",
+      "payload_sha256": "cd459b8c1c9ac4a43a98cf5cc20f0c700cca6406c2a27ff3ed0c7117a00ebea5",
+      "provider_rows": 563
+    },
+    {
+      "accepted_rows": 550,
+      "byte_count": 63607,
+      "chunk_end_exclusive": "2023-04-17T00:00:00-04:00",
+      "chunk_start": "2023-03-13T00:00:00-04:00",
+      "payload_sha256": "347375708375d48d8f13081fdf7c2dd92ebb842c43979046f1db67576e3017ef",
+      "provider_rows": 550
+    },
+    {
+      "accepted_rows": 565,
+      "byte_count": 65343,
+      "chunk_end_exclusive": "2023-05-22T00:00:00-04:00",
+      "chunk_start": "2023-04-17T00:00:00-04:00",
+      "payload_sha256": "f46d95f07ee9866e06a87f08381ba609ad149694c34ebde817c45c16153f7cfe",
+      "provider_rows": 565
+    },
+    {
+      "accepted_rows": 570,
+      "byte_count": 65946,
+      "chunk_end_exclusive": "2023-06-26T00:00:00-04:00",
+      "chunk_start": "2023-05-22T00:00:00-04:00",
+      "payload_sha256": "db0ea8f96ed325a1242078e5b233adbfa3f27227feb96d3b5c8272104672f511",
+      "provider_rows": 570
+    },
+    {
+      "accepted_rows": 572,
+      "byte_count": 66150,
+      "chunk_end_exclusive": "2023-07-31T00:00:00-04:00",
+      "chunk_start": "2023-06-26T00:00:00-04:00",
+      "payload_sha256": "ed43535fac85b91f9b8169553221da40d2136ef9d893c47ab0583ae72a0a3935",
+      "provider_rows": 572
+    },
+    {
+      "accepted_rows": 575,
+      "byte_count": 66476,
+      "chunk_end_exclusive": "2023-09-04T00:00:00-04:00",
+      "chunk_start": "2023-07-31T00:00:00-04:00",
+      "payload_sha256": "7356709424c7c2dd8feff3572543ebe36376163c30bb495cac88cefbe8fad28a",
+      "provider_rows": 575
+    },
+    {
+      "accepted_rows": 572,
+      "byte_count": 66134,
+      "chunk_end_exclusive": "2023-10-09T00:00:00-04:00",
+      "chunk_start": "2023-09-04T00:00:00-04:00",
+      "payload_sha256": "7ec872b4b522aacd7eec25f5f47770ffa6e70ba621b7c5037afd1e34451e8ff5",
+      "provider_rows": 572
+    },
+    {
+      "accepted_rows": 569,
+      "byte_count": 65785,
+      "chunk_end_exclusive": "2023-11-13T00:00:00-05:00",
+      "chunk_start": "2023-10-09T00:00:00-04:00",
+      "payload_sha256": "d753c1d1c8c7b6acdb2d9386299eaa59abb9791893c1225e4ffa6f3a23e68023",
+      "provider_rows": 569
+    },
+    {
+      "accepted_rows": 562,
+      "byte_count": 64929,
+      "chunk_end_exclusive": "2023-12-18T00:00:00-05:00",
+      "chunk_start": "2023-11-13T00:00:00-05:00",
+      "payload_sha256": "c07301d23a23e0eaf77ba2834bc083fad21239cff095080bf332a4058e97e9d7",
+      "provider_rows": 562
+    },
+    {
+      "accepted_rows": 514,
+      "byte_count": 59493,
+      "chunk_end_exclusive": "2024-01-22T00:00:00-05:00",
+      "chunk_start": "2023-12-18T00:00:00-05:00",
+      "payload_sha256": "d20a56e19b34eab320e253671e57b2421cbc9717da4da514ed0b3086fa4f2b32",
+      "provider_rows": 514
+    },
+    {
+      "accepted_rows": 567,
+      "byte_count": 65568,
+      "chunk_end_exclusive": "2024-02-26T00:00:00-05:00",
+      "chunk_start": "2024-01-22T00:00:00-05:00",
+      "payload_sha256": "573060fb1721fb669837b5a9ee8fe18ea0bb682f193369efaac296cbb948406f",
+      "provider_rows": 567
+    },
+    {
+      "accepted_rows": 552,
+      "byte_count": 63741,
+      "chunk_end_exclusive": "2024-04-01T00:00:00-04:00",
+      "chunk_start": "2024-02-26T00:00:00-05:00",
+      "payload_sha256": "458773b2fcb7cd1adc8fe115697d51492bd373f055308c5d33701bb2d807a28a",
+      "provider_rows": 552
+    },
+    {
+      "accepted_rows": 570,
+      "byte_count": 65912,
+      "chunk_end_exclusive": "2024-05-06T00:00:00-04:00",
+      "chunk_start": "2024-04-01T00:00:00-04:00",
+      "payload_sha256": "10af9b126a555aa020b790095150aebf27a7b062427696f7d11e82cd46b922e4",
+      "provider_rows": 570
+    },
+    {
+      "accepted_rows": 568,
+      "byte_count": 65663,
+      "chunk_end_exclusive": "2024-06-10T00:00:00-04:00",
+      "chunk_start": "2024-05-06T00:00:00-04:00",
+      "payload_sha256": "9386eb5e8350e5d78594b3aed85ed2281bdcfb0117ffe9759de12d233f252315",
+      "provider_rows": 568
+    },
+    {
+      "accepted_rows": 568,
+      "byte_count": 65649,
+      "chunk_end_exclusive": "2024-07-15T00:00:00-04:00",
+      "chunk_start": "2024-06-10T00:00:00-04:00",
+      "payload_sha256": "71efab834933407ffa185c2d13fdcb61ee5bc616741fe26a9933832464c5a5f4",
+      "provider_rows": 568
+    },
+    {
+      "accepted_rows": 575,
+      "byte_count": 66465,
+      "chunk_end_exclusive": "2024-08-19T00:00:00-04:00",
+      "chunk_start": "2024-07-15T00:00:00-04:00",
+      "payload_sha256": "12103a72256f3aeccac611c490326353acf1c51763912e1eee8a291ed3fa9677",
+      "provider_rows": 575
+    },
+    {
+      "accepted_rows": 573,
+      "byte_count": 66247,
+      "chunk_end_exclusive": "2024-09-23T00:00:00-04:00",
+      "chunk_start": "2024-08-19T00:00:00-04:00",
+      "payload_sha256": "5be2ebc3e8c529538d1dfe82dfe0bfe40ce2dd3683e1f36f556f8606f92c4c83",
+      "provider_rows": 573
+    },
+    {
+      "accepted_rows": 575,
+      "byte_count": 66483,
+      "chunk_end_exclusive": "2024-10-28T00:00:00-04:00",
+      "chunk_start": "2024-09-23T00:00:00-04:00",
+      "payload_sha256": "03a2224b8bb724772c804d22990685f7f67f03024a7758fd62249a3c2daa4b64",
+      "provider_rows": 575
+    },
+    {
+      "accepted_rows": 571,
+      "byte_count": 66037,
+      "chunk_end_exclusive": "2024-12-02T00:00:00-05:00",
+      "chunk_start": "2024-10-28T00:00:00-04:00",
+      "payload_sha256": "17d2ff791ff860c00ed1566eb4c8077411cf870a2fa4871b472a2f05dc4a3b99",
+      "provider_rows": 571
+    },
+    {
+      "accepted_rows": 526,
+      "byte_count": 60788,
+      "chunk_end_exclusive": "2025-01-06T00:00:00-05:00",
+      "chunk_start": "2024-12-02T00:00:00-05:00",
+      "payload_sha256": "34c4741362ab5b38bdf11b902e71b80b5cafe88b23c0b02befd1564b84ba9a0b",
+      "provider_rows": 526
+    },
+    {
+      "accepted_rows": 573,
+      "byte_count": 65923,
+      "chunk_end_exclusive": "2025-02-10T00:00:00-05:00",
+      "chunk_start": "2025-01-06T00:00:00-05:00",
+      "payload_sha256": "93cc39d312ae033c8c420455dcfb53b59c830064f3adecafa098b945b19eeae4",
+      "provider_rows": 573
+    },
+    {
+      "accepted_rows": 573,
+      "byte_count": 65903,
+      "chunk_end_exclusive": "2025-03-17T00:00:00-04:00",
+      "chunk_start": "2025-02-10T00:00:00-05:00",
+      "payload_sha256": "7b29131b84fc08cfa3c4c0ffbbd9f8ce43db5e115583bcbe9f7168bac85ef0d8",
+      "provider_rows": 573
+    },
+    {
+      "accepted_rows": 511,
+      "byte_count": 58233,
+      "chunk_end_exclusive": "2025-04-21T00:00:00-04:00",
+      "chunk_start": "2025-03-17T00:00:00-04:00",
+      "payload_sha256": "f21677cdf293d992e660850f4d4c7768071aeed977abe0f5bba59c6b8cf9bb88",
+      "provider_rows": 511
+    },
+    {
+      "accepted_rows": 706,
+      "byte_count": 71145,
+      "chunk_end_exclusive": "2025-05-26T00:00:00-04:00",
+      "chunk_start": "2025-04-21T00:00:00-04:00",
+      "payload_sha256": "245d3ae072320b6b917b8d178790abecf4a16595e290351c311c783b1f3134f4",
+      "provider_rows": 706
+    },
+    {
+      "accepted_rows": 701,
+      "byte_count": 72229,
+      "chunk_end_exclusive": "2025-06-30T00:00:00-04:00",
+      "chunk_start": "2025-05-26T00:00:00-04:00",
+      "payload_sha256": "a98367ac6b0ea66a2d013a18dbea01745276238230676f115ed5c78d9c641232",
+      "provider_rows": 701
+    },
+    {
+      "accepted_rows": 699,
+      "byte_count": 72592,
+      "chunk_end_exclusive": "2025-08-04T00:00:00-04:00",
+      "chunk_start": "2025-06-30T00:00:00-04:00",
+      "payload_sha256": "4d75566772cadec7fcf49259557687186b1d0c12ab34241472f22677e6fb45a3",
+      "provider_rows": 699
+    },
+    {
+      "accepted_rows": 685,
+      "byte_count": 69801,
+      "chunk_end_exclusive": "2025-09-08T00:00:00-04:00",
+      "chunk_start": "2025-08-04T00:00:00-04:00",
+      "payload_sha256": "c6563df31265c2c7a1e1b936e0125eb862b2e391e5e3714466b803ea3d07529f",
+      "provider_rows": 685
+    },
+    {
+      "accepted_rows": 684,
+      "byte_count": 69889,
+      "chunk_end_exclusive": "2025-10-13T00:00:00-04:00",
+      "chunk_start": "2025-09-08T00:00:00-04:00",
+      "payload_sha256": "fba3119c3518326d4b530936cab20adcfab972a46d3ad0eabfb24313d2d70c3e",
+      "provider_rows": 684
+    },
+    {
+      "accepted_rows": 687,
+      "byte_count": 71530,
+      "chunk_end_exclusive": "2025-11-17T00:00:00-05:00",
+      "chunk_start": "2025-10-13T00:00:00-04:00",
+      "payload_sha256": "ce123a64808ae2fbce6e50367bf64411344556debeccea7731abd530e84eba33",
+      "provider_rows": 687
+    },
+    {
+      "accepted_rows": 720,
+      "byte_count": 82603,
+      "chunk_end_exclusive": "2025-12-22T00:00:00-05:00",
+      "chunk_start": "2025-11-17T00:00:00-05:00",
+      "payload_sha256": "3c25ff3171b1b945e7418c9b41b33d061addbdd2b33f1b0e2030f525a5fa028a",
+      "provider_rows": 720
+    },
+    {
+      "accepted_rows": 216,
+      "byte_count": 24894,
+      "chunk_end_exclusive": "2026-01-01T00:00:00-05:00",
+      "chunk_start": "2025-12-22T00:00:00-05:00",
+      "payload_sha256": "301cb91e2b05919cb105b19f788191a0c6585812db70175a023252ac273eda04",
+      "provider_rows": 216
+    }
+  ],
+  "first_week": "2022-02-28",
+  "interval": "1h",
+  "last_week": "2025-12-29",
+  "max_identity_abs_error": 1.3912482277333993e-15,
+  "max_telescoping_abs_error": 1.3877787807814457e-15,
+  "production_database_write": "NONE",
+  "provider": "Twelve Data",
+  "raw_hourly_payload_persisted": false,
+  "realp_boundary_count": 0,
+  "realp_max": 0.722533792560302,
+  "realp_min": 0.296931002936719,
+  "symbol": "XAU/USD",
+  "timezone": "America/New_York",
+  "unique_validated_hourly_bars": 23642,
+  "weekly_close_anchors": 202,
+  "weekly_csv_sha256": "3c9abbcc33e3bfba14404b6f9393bf7ed2ace663157b2b4322bd778bc9a1c941",
+  "weekly_derived_vendor_values_artifact": true,
+  "weekly_realp_rows": 201
+}
