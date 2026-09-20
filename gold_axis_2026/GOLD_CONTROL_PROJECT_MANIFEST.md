@@ -1,7 +1,7 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.78  
-**Issue date:** 2026-09-19  
+**Manifest version:** 1.79  
+**Issue date:** 2026-09-20  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
 **Current research branch:** `gold-direction-vlmc-bs-family-v2-20260918`  
@@ -102,6 +102,7 @@ The current research-status layer is binding for work sequencing and must not be
 | `DIRECTION_BCTX_AR_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / BCT_FAMILY_CLOSED_CURRENT_SEQUENCE / NOT_RUNTIME` | frozen BCT-X/AR successor selected p=1 and ternary thresholds only by 2022-2023 GCTW evidence. 2024 accuracy 0.5660 and balanced accuracy 0.5584 beat trivial raw baselines, but DOWN sensitivity was only 0.1538 so the preregistered gate failed. Unchanged 2025 replay fell to balanced accuracy 0.4865 with DOWN sensitivity 0 and 51/52 UP forecasts. |
 | `DIRECTION_BCARS_V1_RESEARCH` | `BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED / NOT_RUNTIME` | source-form ordinary-Beta B-CARS(1,1) is blocked by genuine pre-2025 weekly up-ratios equal to 0; no silent clipping permitted |
 | `DIRECTION_BCARS_SV_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION` | separately preregistered Smithson-Verkuilen boundary-safe B-CARS(1,1) successor; 2024 validation failed and 2025 produced 51 UP / 1 DOWN with 0% DOWN sensitivity |
+| `DIRECTION_REALP_CARR_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / REALP_BCARS_FAMILY_CLOSED_CURRENT_SEQUENCE / NOT_RUNTIME` | exact CARB specification was not proven and was not invented. Source-verifiable Realized Probability + asymmetric CARR/QMLE + linear RealP forecasting was preregistered and executed. 2024 balanced accuracy 0.4651, DOWN sensitivity 0.1154 and accuracy 0.4717 failed the frozen gate; unchanged 2025 balanced accuracy 0.4444 with 0 DOWN sensitivity. |
 | Post-BOCPD future-change-time lane | `NEXT_RESEARCH_LANE / PREREGISTRATION_REQUIRED` | separately named residual-time / explicit-duration / Bayesian online changepoint-prediction challenger; exact identity and parameters must be frozen before implementation |
 | `MACRO_EVENT_SUCCESSOR_V2` | `SUSPENDED_FOR_CURRENT_GC_BREAK_RESEARCH_SEQUENCE` | governed runtime identity remains registered, but it is **not the next motor** and no new Macro Event tuning/evaluation is authorized in the current sequence |
 | `MACRO_EVENT_SUCCESSOR_V4_RELIABILITY_GATE` | `FROZEN_RESEARCH_CHALLENGER / NOT_RUNTIME_AUTHORITY` | historical preregistration remains audit lineage; not promoted and not the current workstream |
@@ -529,6 +530,79 @@ Binding successor status:
 
 No post-2025 threshold, model-order, boundary treatment, frequency, optimizer or feature rescue is authorized under either B-CARS identity.
 
+#### 4.3.4b DIRECTION_REALP_CARR_V1_RESEARCH — source-verifiable Realized Probability successor
+
+A final Realized-Probability successor was opened only after an authority scan.
+
+Authority boundary:
+- a 2022 Academy of Mathematics and Systems Science seminar describes a CARB (Conditional AutoRegressive Beta-distribution) model for Realized Probability direction forecasting;
+- however, the exact CARB recursion, likelihood, initialization and reproducible implementation were not found in an accessible primary source;
+- therefore `CARB_EXACT_SPECIFICATION = NOT_PROVEN / DO_NOT_IMPLEMENT_BY_GUESSING`.
+
+The experiment instead uses only source-verifiable components from Xie, Wu, Sun & Wang, *Realized Probability Index is a Better Market Timing Indicator*:
+- hourly log-price changes between consecutive governed weekly close anchors;
+- `CPR=sum positive intraperiod log returns`;
+- `CNR=sum negative intraperiod log returns`;
+- `CAR=CPR-CNR=sum |r_i|`;
+- `RealP=CPR/CAR`;
+- exact direction identity `return>0 <=> RealP>0.5`;
+- asymmetric CARR conditional-mean filter `lambda_(t+1)=omega+a*lambda_t+b*CAR_t+g*CAR_t*I(r_t<0)`;
+- exponential-density QMLE;
+- linear historical relation `RealP_t=theta+psi*lambda_t+e_t`;
+- next-week direction UP iff forecast RealP exceeds 0.5.
+
+This is a weekly Gold adaptation of the published daily-to-monthly empirical design, not CARB and not an exact frequency replication.
+
+Data audit:
+- provider Twelve Data, XAU/USD, 1h, America/New_York;
+- 23,642 validated hourly bars;
+- 202 governed weekly close anchors;
+- 201 weekly RealP rows from 2022-02-28 through 2025-12-29;
+- no RealP boundary values at 0 or 1;
+- maximum RealP decomposition identity error about 1.39e-15;
+- weekly derived-input SHA-256 `3c9abbcc33e3bfba14404b6f9393bf7ed2ace663157b2b4322bd778bc9a1c941`;
+- raw hourly payload not persisted;
+- production database writes NONE.
+
+Frozen 2024 validation:
+- n=53;
+- accuracy 0.4716981;
+- balanced accuracy 0.4650997;
+- UP sensitivity 0.8148148;
+- DOWN sensitivity 0.1153846;
+- TP/TN/FP/FN = 22/3/23/5;
+- forecasts 45 UP / 8 DOWN;
+- always-UP = previous-sign = historical-mean-RealP direction accuracy = 0.5094340;
+- continuous RealP R2_oos versus expanding historical mean = +0.0078421.
+
+The preregistered gate failed before 2025 replay because balanced accuracy, DOWN sensitivity and raw-baseline conditions failed.
+
+Unchanged 2025 post-diagnostic replay:
+- n=52;
+- accuracy 0.6153846;
+- balanced accuracy 0.4444444;
+- UP sensitivity 0.8888889;
+- DOWN sensitivity 0.0000000;
+- forecasts 48 UP / 4 DOWN;
+- always-UP accuracy 0.6923077;
+- RealP R2_oos = -0.0559187.
+
+Binding status:
+`DIRECTION_REALP_CARR_V1_RESEARCH = EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / REALP_BCARS_FAMILY_CLOSED_CURRENT_SEQUENCE / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
+
+The B-CARS / Realized-Probability direction family is closed for the current research sequence. No CARB invention, threshold rescue, alternate CARR order, exogenous augmentation or 2025-driven tuning is authorized unless the user explicitly reopens the family.
+
+Authoritative RealP-CARR surfaces:
+- preregistration: `GOLD_CONTROL_DIRECTION_REALP_CARR_V1_PREREG_2026-09-20.md`;
+- hourly derivation: `data_pipeline/twelve_xau_realp_research_v1.py`;
+- model implementation: `tools/direction_realp_carr_v1_research.py`;
+- data audit: `GOLD_CONTROL_DIRECTION_REALP_CARR_V1_DATA_AUDIT_2026-09-20.json`;
+- pre-2025 forecasts: `GOLD_CONTROL_DIRECTION_REALP_CARR_V1_PRE2025_FORECASTS_2026-09-20.csv`;
+- pre-2025 result: `GOLD_CONTROL_DIRECTION_REALP_CARR_V1_PRE2025_RESULT_2026-09-20.json`;
+- 2025 forecasts: `GOLD_CONTROL_DIRECTION_REALP_CARR_V1_2025_FORECASTS_2026-09-20.csv`;
+- 2025 result: `GOLD_CONTROL_DIRECTION_REALP_CARR_V1_2025_RESULT_2026-09-20.json`;
+- final result: `GOLD_CONTROL_DIRECTION_REALP_CARR_V1_RESULT_2026-09-20.md`.
+
 ### 4.4 Common governance for the four new direction motors
 
 These four motors form a parallel research-only direction lane. They do not reactivate the historical fixed NEXT_NY17_1D/3D programme and do not alter the primary GC-BREAK sequential state output.
@@ -539,7 +613,7 @@ Initial evaluation must report at minimum success rate, balanced accuracy where 
 
 The first implementation stage must reproduce each method's native mathematical identity WITHOUT FAST, GVZ, BOCPD, Macro or Emergency inputs. Only after standalone evidence is frozen may existing Gold Control motors be added one at a time through role-preserving ablation. Flat equal voting remains forbidden.
 
-Current status is identity-specific: the RSM/ERSM family is `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`; VLMC-BS V1 is audit-only and superseded, while `DIRECTION_VLMC_BS_FAMILY_V2_RESEARCH` is `EVALUATED / NO_PROMOTION / SOURCE_FAITHFUL_REFERENCE_REPLICATION_COMPLETE / 2025_GENERALIZATION_WEAK / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; BCT/CTW V1 is `EVALUATED / NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; source-form B-CARS V1 is `BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`; its separately preregistered boundary-safe `DIRECTION_BCARS_SV_V1_RESEARCH` successor is `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
+Current status is identity-specific: the RSM/ERSM family is `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`; the VLMC family is closed for the current sequence after its governed successors; the BCT family is closed for the current sequence after BCT/CTW V1 and BCT-X/AR V1; source-form B-CARS V1 is `BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED`; `DIRECTION_BCARS_SV_V1_RESEARCH` is `NO_PROMOTION / PRE2025_VALIDATION_FAILED`; and the final source-verifiable Realized-Probability successor `DIRECTION_REALP_CARR_V1_RESEARCH` is `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / REALP_BCARS_FAMILY_CLOSED_CURRENT_SEQUENCE / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`. Exact CARB remains `NOT_PROVEN / DO_NOT_IMPLEMENT_BY_GUESSING`.
 
 ---
 
@@ -917,7 +991,7 @@ Random splitting is forbidden.
 12. **Emergency Level/Reversal — SUSPENDED; Level requires redesign**
 13. **SLOW — LOW PRIORITY / NOT NEXT**
 14. **Post-BOCPD future change-time challenger — NEXT GC-BREAK RESEARCH LANE; exact identity/parameters require preregistration**
-15. **Parallel direction-research lane — RSM/ERSM CLOSED / DO_NOT_REVISIT; VLMC family CLOSED FOR CURRENT SEQUENCE / NO_PROMOTION; BCT family CLOSED FOR CURRENT SEQUENCE / NO_PROMOTION after BCT/CTW V1 + BCT-X/AR V1; B-CARS source-form BLOCKED and boundary-safe successor NO_PROMOTION**
+15. **Parallel direction-research lane — RSM/ERSM CLOSED / DO_NOT_REVISIT; VLMC family CLOSED / NO_PROMOTION; BCT family CLOSED / NO_PROMOTION; B-CARS / Realized-Probability family CLOSED / NO_PROMOTION after source-form blocker + B-CARS-SV + source-verifiable RealP-CARR; exact CARB NOT_PROVEN and not implemented**
 16. **WP4 role-preserving integration/state-transition work — AFTER the new challenger has a frozen design/evidence checkpoint**
 17. **Architecture/parameter freeze — PENDING**
 18. **Prospective shadow — PENDING FINAL FREEZE**
@@ -1042,6 +1116,6 @@ Current validated motor checkpoint:
 
 The **next GC-BREAK research motor/lane** is a new separately named **future-change-time prediction challenger** based on residual-time / explicit-duration / Bayesian online changepoint-prediction principles (or a causally equivalent preregistered duration-hazard formulation). Exact model identity and parameters are not yet frozen; the scientific lane is frozen. It must be designed with pre-2025 chronology and may not use visible 2025 outcomes for tuning.
 
-In parallel, the direction-research families remain governed. RSM/ERSM is permanently closed as `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`. The VLMC family is now `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION`: corrected VLMC-BS V2 found a real but unstable signal; Fixed-Share failed 2025 generalization; COVLMC-X3 collapsed to neutral; and the governed VLMC-C 104 successor failed pre-2025 direction validation (balanced 0.4417, DOWN sensitivity 0.05 versus parent 0.5583 / 0.45) and then forecast 52/52 UP in the unchanged 2025 replay. No further VLMC rescue/tuning is authorized unless the user explicitly reopens the family. BCT/CTW-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`; it materially improves probability stability versus VLMC-BS but collapses to 52/52 UP forecasts in the 2025 replay. Its final published real-valued successor `DIRECTION_BCTX_AR_V1_RESEARCH` was evaluated under frozen pre-2024 evidence selection: 2024 balanced accuracy reached 0.5584 but DOWN sensitivity was only 0.1538, failing the preregistered gate; unchanged 2025 replay had balanced accuracy 0.4865, DOWN sensitivity 0 and 51/52 UP forecasts. The BCT direction family is therefore `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION` unless explicitly reopened by the user. Source-form B-CARS V1 is blocked by genuine pre-2025 boundary up-ratios and was not scored. Its separately preregistered Smithson-Verkuilen boundary-safe successor, `DIRECTION_BCARS_SV_V1_RESEARCH`, is `NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION`; in 2025 it forecast 51 UP / 1 DOWN with 0% DOWN sensitivity, while the frozen event overlay had 50% balanced direction accuracy. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
+In parallel, the direction-research families remain governed. RSM/ERSM is permanently closed as `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`. The VLMC family is now `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION`: corrected VLMC-BS V2 found a real but unstable signal; Fixed-Share failed 2025 generalization; COVLMC-X3 collapsed to neutral; and the governed VLMC-C 104 successor failed pre-2025 direction validation (balanced 0.4417, DOWN sensitivity 0.05 versus parent 0.5583 / 0.45) and then forecast 52/52 UP in the unchanged 2025 replay. No further VLMC rescue/tuning is authorized unless the user explicitly reopens the family. BCT/CTW-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`; it materially improves probability stability versus VLMC-BS but collapses to 52/52 UP forecasts in the 2025 replay. Its final published real-valued successor `DIRECTION_BCTX_AR_V1_RESEARCH` was evaluated under frozen pre-2024 evidence selection: 2024 balanced accuracy reached 0.5584 but DOWN sensitivity was only 0.1538, failing the preregistered gate; unchanged 2025 replay had balanced accuracy 0.4865, DOWN sensitivity 0 and 51/52 UP forecasts. The BCT direction family is therefore `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION` unless explicitly reopened by the user. Source-form B-CARS V1 is blocked by genuine pre-2025 boundary up-ratios and was not scored. Its Smithson-Verkuilen successor failed pre-2025 direction validation. A final authority scan found the Realized Probability research line; exact CARB mathematics remained `NOT_PROVEN`, so no CARB was invented. The source-verifiable `DIRECTION_REALP_CARR_V1_RESEARCH` successor used hourly RealP plus the published asymmetric CARR/QMLE and RealP-on-lambda regression. It failed the frozen 2024 gate (balanced 0.4651, DOWN sensitivity 0.1154, accuracy 0.4717) and unchanged 2025 replay deteriorated to balanced 0.4444 with 0 DOWN sensitivity. The B-CARS / Realized-Probability direction family is therefore `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION` unless explicitly reopened. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
 
 All future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
