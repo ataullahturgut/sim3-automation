@@ -245,8 +245,11 @@ def main():
         wr.writerows(rows)
 
     rp = [float(r["realp"]) for r in rows]
+    weekly_csv_sha256 = hashlib.sha256(csv_path.read_bytes()).hexdigest()
+
     summary = {
         "artifact_id": "GOLD_CONTROL_REALP_TRUE_HOURLY_CLOSE_RESEARCH_V1",
+        "weekly_csv_sha256": weekly_csv_sha256,
         "provider": "Twelve Data",
         "symbol": SYMBOL,
         "interval": INTERVAL,
