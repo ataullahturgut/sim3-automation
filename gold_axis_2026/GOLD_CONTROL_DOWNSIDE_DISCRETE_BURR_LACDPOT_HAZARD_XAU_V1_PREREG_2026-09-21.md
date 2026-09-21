@@ -119,6 +119,12 @@ Research-interest gate on 2024:
 
 2025 cannot rescue a failed 2024 gate.
 
+If and only if the 2024 gate passes, 2025 transport is supported when the unchanged model also has:
+- Brier skill > 0;
+- ROC AUC >= 0.50;
+- alert recall >= 0.10;
+- alert precision strictly above the 2025 unconditional extreme-event rate.
+
 ## 8. Interpretation lock
 
 This experiment evaluates **extreme negative-event timing**, not ordinary DOWN-day direction.
