@@ -1,0 +1,27 @@
+{
+  "identity": "DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1R2_RESEARCH",
+  "series": "TWELVE_DATA_XAUUSD_DAILY_R2",
+  "provider": "Twelve Data",
+  "symbol": "XAU/USD",
+  "interval": "1day",
+  "formation_end": "2023-12-31",
+  "threshold_u": 0.015310797482135808,
+  "threshold_quantile": 0.95,
+  "constant_event_rate": 0.049958825144112,
+  "alert_threshold": 0.10023410205587857,
+  "params": {
+    "omega": 0.1364208892087168,
+    "beta": 0.5805806549474817,
+    "alpha": 0.20951051604519674,
+    "zeta": -0.10500335369489414,
+    "kappa": 0.9501255952287787,
+    "eta": 0.10534612958502858
+  },
+  "fit_nll": 695.0163163088179,
+  "optimizer_success": true,
+  "optimizer_message": "CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH",
+  "formation_event_count": 182,
+  "formation_duration_count": 181,
+  "panel_sha256_through_2024": "da814f01a1d00523859473fc81cbe0611c49d3f52969b2305f3d2dea13b96b56",
+  "frozen_before_2025": true
+}
