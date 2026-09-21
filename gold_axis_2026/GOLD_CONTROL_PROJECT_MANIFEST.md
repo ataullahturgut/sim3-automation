@@ -1,10 +1,10 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.90  
+**Manifest version:** 1.91  
 **Issue date:** 2026-09-21  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
-**Current research branch:** `gold-direction-vlmc-bs-family-v2-20260918`  
+**Current research branch:** `gold-direction-downside-rm-logit-v2-20260921`  
 **Project root:** `gold_axis_2026/`
 
 ---
@@ -105,7 +105,7 @@ The current research-status layer is binding for work sequencing and must not be
 | `DIRECTION_REALP_CARR_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / REALP_BCARS_FAMILY_CLOSED_CURRENT_SEQUENCE / NOT_RUNTIME` | exact CARB specification was not proven and was not invented. Source-verifiable Realized Probability + asymmetric CARR/QMLE + linear RealP forecasting was preregistered and executed. 2024 balanced accuracy 0.4651, DOWN sensitivity 0.1154 and accuracy 0.4717 failed the frozen gate; unchanged 2025 balanced accuracy 0.4444 with 0 DOWN sensitivity. |
 | `DIRECTION_SADORSKY_TREE_TECH_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_GLD_OHLCV / NOT_IMPLEMENTED` | Sadorsky (2021) GLD/SLV direction classification with logit, 500-tree bagging, 3000-tree stochastic gradient boosting and 500-tree RF over 1..20 trading-day horizons using 13 technical indicators. Exact source-faithful test needs GLD ETF OHLCV, including volume-dependent OBV/MFI; current Gold Control does not hold that source panel. |
 | `DIRECTION_BASHER_SADORSKY_RF_MACRO_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_INPUT_PANEL / NOT_IMPLEMENTED` | Basher & Sadorsky (2022) RF/bagging/logit direction family over 1..20 trading-day horizons with technical indicators plus rates, inflation/term structure, VIX/OVX, EPU/EMU and EMV inputs. Current project lacks the complete pre-2025 source-faithful predictor panel and GLD-volume inputs. |
-| `DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_SPOT_XAU_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_GATE_FAILED / SOURCE_CONSTRAINED_SPOT_XAU_ADAPTATION / NOT_RUNTIME` | Bonato et al. (2018) quantile-boosting core was reconstructed with source step size 0.1, 17 quantiles 0.10..0.90, h=1/5/10, expanding OOS estimation, 5m spot-XAU realized variance/skewness and boosted AR(1) comparator. No 2024 horizon/model passed the frozen promotion gate. Locked 2025 replay showed some raw-accuracy gains at h=5/10 but weak DOWN discrimination; 2025 cannot rescue the failed pre-2025 validation. Exact futures+full-control replication remains blocked. |
+| `DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_SPOT_XAU_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_GATE_FAILED / SOURCE_CONSTRAINED_SPOT_XAU_ADAPTATION / NOT_RUNTIME` | Bonato et al. (2018) quantile-boosting core was reconstructed with source step size 0.1, 17 quantiles 0.10..0.90, h=1/5/10, expanding OOS estimation, 5m spot-XAU realized variance/skewness and boosted AR(1) comparator. No 2024 horizon/model passed the frozen promotion gate. Locked 2025 replay showed some raw-accuracy gains at h=5/10 but weak DOWN discrimination; 2025 cannot rescue the failed pre-2025 validation. Exact futures+full-control replication remains blocked. |\n| `DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_FEATURE_SIGNAL_NOT_SUPPORTED / STRONG_DIRECTION_GATE_FAILED / NOT_RUNTIME` | separately preregistered h=1 cross-model confirmation of the Bonato RV/RSK observation using deterministic expanding logistic regression and fixed ablations. 2024 AR1+RM raised DOWN sensitivity from 0.0465 to 0.2558 (+0.2093) but BA was unchanged/slightly worse (0.4938 -> 0.4935) and Brier worsened; locked 2025 DOWN sensitivity fell to 0.0412 with BA 0.4992. Realized moments therefore do not establish a transportable standalone downside signal under this alternate model family. |
 | `DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH` | `LITERATURE_AUTHORITY / EXACT_PROPRIETARY_SOFTWARE_DETAILS_PARTLY_NOT_PROVEN / RECON_V2_AUTHORIZED` | Parisi, Parisi & Díaz (2008): weekly one-step-ahead Gold first-difference/sign forecasting from four Gold and four DJIA first-difference lags; rolling/recursive neural networks; period-by-period retraining; source reports a Ward specification with two hidden layers / 21 neurons and optimized activation/scaling combination, rolling-Ward superiority, block-bootstrap mean sign prediction 60.68% (sd 2.82%), and ARIMA(4,1,2) benchmark. Exact neuron allocation, winning activation/scaling pair, rolling-size grid and proprietary training internals are not exposed in accessible primary material. |
 | `DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_WEAK / 2025_NO_TWO_SIDED_EDGE / NOT_RUNTIME` | Corrected source-constrained reconstruction completed. Window 100 selected on 2023 (accuracy 0.5769, balanced 0.5704); unchanged 2024 validation only matched always-UP raw accuracy (0.5577) with balanced 0.5180 and DOWN sensitivity 0.1739. Locked 2025 replay reached raw accuracy 0.6346 but remained below always-UP 0.6731 and only slightly above previous-sign 0.6154; balanced accuracy 0.5017, DOWN sensitivity 0.1176 and PT p=0.9716 show no two-sided direction edge. Exact 2008 proprietary software replication is still not claimed. |
 | `DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / 2025_TEST_REQUIRES_DAILY_OHLC_COMPLETION / NOT_IMPLEMENTED` | Altuntaş, Okumuş & Kocamaz (2022): next-day UP/DOWN from 11-day candlestick images with SMA7, SMA50 and Bollinger(20,2), fine-tuned AlexNet at 227x227x3; source uses chronological 9y/3y/3y train/validation/test, max 100 epochs and mini-batch 32. Current long XAU history is not stored as a complete governed daily OHLC panel, so image construction is not yet input-complete. |
@@ -760,6 +760,51 @@ Authoritative surfaces:
 - 2023/2024 forecast tables: `GOLD_CONTROL_DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_SPOT_XAU_V1_2023_FORECASTS_2026-09-21.csv`, `..._2024_FORECASTS_2026-09-21.csv`;
 - locked 2025 forecasts/result: `GOLD_CONTROL_DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_SPOT_XAU_V1_2025_FORECASTS_2026-09-21.csv`, `GOLD_CONTROL_DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_SPOT_XAU_V1_2025_RESULT_2026-09-21.json`;
 - final result: `GOLD_CONTROL_DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_SPOT_XAU_V1_RESULT_2026-09-21.md`.
+
+#### 4.3.5.3A DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_RESEARCH — cross-model feature confirmation
+
+This separately preregistered experiment was created **after** the Bonato V1 result to test whether the apparent RV/RSK downside contribution transports to a deliberately simple alternate model family. It is not a Bonato retune and does not alter the frozen Bonato V1 identity.
+
+Frozen contract:
+- target: next retained trading-day sign only (h=1);
+- same governed 5m Spot-XAU daily construction as Bonato V1;
+- expanding, target-matured chronology with minimum 250 training rows;
+- deterministic logistic MLE / IRLS, training-origin standardization only, numerical L2 stabilizer 1e-6;
+- fixed direction threshold P(UP)>=0.5;
+- primary model: lagged one-day return + log(RV) + RSK;
+- attribution controls: AR1 only, RV only, RSK only, RV+RSK;
+- 2023 development/audit, 2024 fixed validation, 2025 locked retrospective challenge;
+- no random split, class weighting, threshold search, feature clipping, nonlinear interaction creation or post-result rescue.
+
+Primary AR1+RM result:
+- 2023: BA 0.5271, UP sensitivity 0.5347, DOWN sensitivity 0.5196; AR1 DOWN sensitivity was 0.0392, so delta DOWN = +0.4804 and delta BA = +0.0323;
+- 2024: BA 0.4935, UP sensitivity 0.7311, DOWN sensitivity 0.2558; AR1 DOWN sensitivity was 0.0465, so delta DOWN = +0.2093, but delta BA = -0.0004 and delta Brier = +0.0024;
+- 2025 locked challenge: BA 0.4992, UP sensitivity 0.9571, DOWN sensitivity 0.0412; delta DOWN versus AR1 = 0 and delta BA = -0.0143.
+
+Ablation context:
+- 2023 RV-only reached BA 0.5671 and DOWN sensitivity 0.4510, while RV+RSK reached DOWN sensitivity 0.5196;
+- these effects did not transport: 2024 RV-only BA 0.4948 / DOWN 0.1744, and 2025 RV-only collapsed to 237/237 UP forecasts with DOWN sensitivity 0.
+
+Frozen decisions:
+- `PRE2025_FEATURE_SIGNAL_NOT_SUPPORTED`;
+- `STRONG_DIRECTION_GATE_FAILED`;
+- no promotion and no runtime authority.
+
+Scientific interpretation:
+the Bonato QBoost realized-moment DOWN improvement is a genuine observation inside that frozen model, but this V2 does **not** confirm it as a stable, model-family-independent downside predictor. The 2024 logistic result shows that RV/RSK can move forecasts toward DOWN without improving balanced discrimination, and the effect disappears in 2025. Therefore:
+
+`REALIZED_MOMENTS_CROSS_MODEL_DOWNSIDE_STABILITY = NOT_PROVEN`.
+
+Do not rescue this V2 by threshold tuning, class weighting, interactions or 2025-driven model changes under the same identity.
+
+Authoritative surfaces:
+- preregistration: `GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_PREREG_2026-09-21.md`;
+- implementation: `tools/direction_downside_realized_moments_logit_v2.py`;
+- workflow: `.github/workflows/gold-control-downside-realized-moments-logit-v2.yml`;
+- source audit: `GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_SOURCE_AUDIT_2026-09-21.json`;
+- frozen config: `GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_FROZEN_CONFIG_2026-09-21.json`;
+- pre-2025 result: `GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_PRE2025_RESULT_2026-09-21.json`;
+- final result: `GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_RESULT_2026-09-21.md`.
 
 #### 4.3.5.4 DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH — primary literature authority
 
