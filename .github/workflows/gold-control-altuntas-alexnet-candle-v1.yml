@@ -1,0 +1,101 @@
+name: Gold Control Altuntas AlexNet Candle V1
+
+on:
+  push:
+    branches:
+      - gold-direction-altuntas-alexnet-candle-v1-20260921
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_PREREG_2026-09-21.md'
+      - 'gold_axis_2026/tools/direction_altuntas_alexnet_candle_v1.py'
+      - '.github/workflows/gold-control-altuntas-alexnet-candle-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-altuntas-alexnet-candle-v1
+  cancel-in-progress: false
+
+jobs:
+  train-and-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-direction-altuntas-alexnet-candle-v1-20260921
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Require provider credential
+        run: test -n "$TWELVE_DATA_API_KEY"
+
+      - name: Install frozen dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'numpy==2.1.3' 'requests>=2.31,<3' 'pillow>=10,<12'             'torch==2.5.1' 'torchvision==0.20.1'
+
+      - name: Compile implementation
+        run: python -m py_compile gold_axis_2026/tools/direction_altuntas_alexnet_candle_v1.py
+
+      - name: Assert no production write path
+        run: |
+          ! grep -Eini 'psycopg|NEON_DATABASE_URL|insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from'             gold_axis_2026/tools/direction_altuntas_alexnet_candle_v1.py
+          echo 'ALTUNTAS_NO_PRODUCTION_WRITE_PASS'
+
+      - name: Train and freeze pre-2025 model
+        run: |
+          rm -rf altuntas_pre2025
+          mkdir -p altuntas_pre2025
+          python gold_axis_2026/tools/direction_altuntas_alexnet_candle_v1.py             --stage pre2025             --outdir altuntas_pre2025
+
+      - name: Freeze pre-2025 config and 2024 validation before 2025 replay
+        run: |
+          cp altuntas_pre2025/GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_FROZEN_CONFIG_2026-09-21.json gold_axis_2026/
+          cp altuntas_pre2025/GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_PRE2025_RESULT_2026-09-21.json gold_axis_2026/
+          cp altuntas_pre2025/GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_2024_FORECASTS_2026-09-21.csv gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add             gold_axis_2026/GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_FROZEN_CONFIG_2026-09-21.json             gold_axis_2026/GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_PRE2025_RESULT_2026-09-21.json             gold_axis_2026/GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_2024_FORECASTS_2026-09-21.csv
+          git commit -m 'Freeze Altuntas AlexNet V1 pre-2025 evidence'
+          git push origin HEAD:gold-direction-altuntas-alexnet-candle-v1-20260921
+
+      - name: Upload frozen pre-2025 checkpoint before challenge
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-altuntas-alexnet-v1-pre2025-checkpoint
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            altuntas_pre2025/altuntas_alexnet_v1_pre2025_checkpoint.pt
+            altuntas_pre2025/GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_FROZEN_CONFIG_2026-09-21.json
+            altuntas_pre2025/GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_PRE2025_RESULT_2026-09-21.json
+
+      - name: Run unchanged locked 2025 challenge
+        run: |
+          rm -rf altuntas_2025
+          mkdir -p altuntas_2025
+          python gold_axis_2026/tools/direction_altuntas_alexnet_candle_v1.py             --stage 2025             --outdir altuntas_2025             --config gold_axis_2026/GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_FROZEN_CONFIG_2026-09-21.json             --pre-result gold_axis_2026/GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_PRE2025_RESULT_2026-09-21.json             --checkpoint altuntas_pre2025/altuntas_alexnet_v1_pre2025_checkpoint.pt
+
+      - name: Freeze 2025 challenge and final result
+        run: |
+          cp altuntas_2025/* gold_axis_2026/
+          git add             gold_axis_2026/GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_2025_RESULT_2026-09-21.json             gold_axis_2026/GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_2025_FORECASTS_2026-09-21.csv             gold_axis_2026/GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESULT_2026-09-21.md
+          git commit -m 'Freeze Altuntas AlexNet V1 2025 challenge'
+          git push origin HEAD:gold-direction-altuntas-alexnet-candle-v1-20260921
+
+      - name: Upload final reproducibility outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-altuntas-alexnet-candle-v1
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            altuntas_pre2025/
+            altuntas_2025/
