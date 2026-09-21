@@ -1,0 +1,51 @@
+{
+  "architecture": {
+    "hidden_total": 21,
+    "inputs": 8,
+    "output": "logistic_inverse_scaled_to_delta_gold",
+    "ward_hidden_slabs": [
+      {
+        "activation": "gaussian",
+        "neurons": 10
+      },
+      {
+        "activation": "gaussian_complement",
+        "neurons": 11
+      }
+    ]
+  },
+  "candidate_windows": [
+    50,
+    75,
+    100,
+    125,
+    150,
+    175,
+    200,
+    225,
+    250
+  ],
+  "direction_rule": "UP_IFF_PREDICTED_DELTA_GOLD_GT_0",
+  "exact_parisi_2008_replication_claim": false,
+  "frozen_before_2025": true,
+  "identity": "DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH",
+  "panel_sha256": "d2f48ae6265f8adae273d95211f3f795710459d1ab920a6fa80b564f3a585efa",
+  "scaling": {
+    "inputs": "rolling_minmax_-1_1",
+    "target": "rolling_minmax_0.1_0.9"
+  },
+  "selected_window": 100,
+  "selection_rule": "MAX_PPS_THEN_BALANCED_THEN_PT_STAT_THEN_SMALLER_WINDOW",
+  "selection_year": 2023,
+  "training": {
+    "algorithm": "full_batch_backprop_gradient_descent_with_momentum",
+    "learning_rate": 0.05,
+    "max_epochs": 1500,
+    "min_delta": 1e-10,
+    "momentum": 0.5,
+    "patience": 200,
+    "seed": 2008,
+    "weight_init": "uniform[-0.3,0.3]"
+  },
+  "validation_year": 2024
+}

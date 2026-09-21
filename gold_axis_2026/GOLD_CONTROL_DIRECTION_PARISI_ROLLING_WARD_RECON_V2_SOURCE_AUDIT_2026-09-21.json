@@ -1,0 +1,21 @@
+{
+  "database_write": "NONE",
+  "decision_store_write": "NONE",
+  "djia_series": "DJIA_FRED",
+  "evidence_class": "RETROSPECTIVE_RECONSTRUCTION",
+  "first_week_end": "2016-09-02",
+  "forecast_ledger_write": "NONE",
+  "identity": "DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH",
+  "last_week_end": "2026-01-02",
+  "panel_sha256": "d2f48ae6265f8adae273d95211f3f795710459d1ab920a6fa80b564f3a585efa",
+  "pre2025_samples": 430,
+  "sample_rows": 483,
+  "target_year_semantic": "NOMINAL_FRIDAY_WEEK_END_YEAR",
+  "weekly_bridge": "LATEST_COMMON_COMPLETED_DATE_IN_MONDAY_START_FRIDAY_ENDING_WEEK",
+  "weekly_rows": 488,
+  "xau_data_class": "APPROVED_RESEARCH_ONLY_NOT_PIT",
+  "xau_series": "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+  "y2023_samples": 52,
+  "y2024_samples": 52,
+  "y2025_samples": 52
+}
