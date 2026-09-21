@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.88  
+**Manifest version:** 1.89  
 **Issue date:** 2026-09-21  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -105,7 +105,8 @@ The current research-status layer is binding for work sequencing and must not be
 | `DIRECTION_REALP_CARR_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / REALP_BCARS_FAMILY_CLOSED_CURRENT_SEQUENCE / NOT_RUNTIME` | exact CARB specification was not proven and was not invented. Source-verifiable Realized Probability + asymmetric CARR/QMLE + linear RealP forecasting was preregistered and executed. 2024 balanced accuracy 0.4651, DOWN sensitivity 0.1154 and accuracy 0.4717 failed the frozen gate; unchanged 2025 balanced accuracy 0.4444 with 0 DOWN sensitivity. |
 | `DIRECTION_SADORSKY_TREE_TECH_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_GLD_OHLCV / NOT_IMPLEMENTED` | Sadorsky (2021) GLD/SLV direction classification with logit, 500-tree bagging, 3000-tree stochastic gradient boosting and 500-tree RF over 1..20 trading-day horizons using 13 technical indicators. Exact source-faithful test needs GLD ETF OHLCV, including volume-dependent OBV/MFI; current Gold Control does not hold that source panel. |
 | `DIRECTION_BASHER_SADORSKY_RF_MACRO_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_INPUT_PANEL / NOT_IMPLEMENTED` | Basher & Sadorsky (2022) RF/bagging/logit direction family over 1..20 trading-day horizons with technical indicators plus rates, inflation/term structure, VIX/OVX, EPU/EMU and EMV inputs. Current project lacks the complete pre-2025 source-faithful predictor panel and GLD-volume inputs. |
-| `DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_SPOT_XAU_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_GATE_FAILED / SOURCE_CONSTRAINED_SPOT_XAU_ADAPTATION / NOT_RUNTIME` | Bonato et al. (2018) quantile-boosting core was reconstructed with source step size 0.1, 17 quantiles 0.10..0.90, h=1/5/10, expanding OOS estimation, 5m spot-XAU realized variance/skewness and boosted AR(1) comparator. No 2024 horizon/model passed the frozen promotion gate. Locked 2025 replay showed some raw-accuracy gains at h=5/10 but weak DOWN discrimination; 2025 cannot rescue the failed pre-2025 validation. Exact futures+full-control replication remains blocked. |\n| `DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH` | `LITERATURE_AUTHORITY / EXACT_PROPRIETARY_SOFTWARE_DETAILS_PARTLY_NOT_PROVEN / RECON_V2_AUTHORIZED` | Parisi, Parisi & Díaz (2008): weekly one-step-ahead Gold first-difference/sign forecasting from four Gold and four DJIA first-difference lags; rolling/recursive neural networks; period-by-period retraining; source reports a Ward specification with two hidden layers / 21 neurons and optimized activation/scaling combination, rolling-Ward superiority, block-bootstrap mean sign prediction 60.68% (sd 2.82%), and ARIMA(4,1,2) benchmark. Exact neuron allocation, winning activation/scaling pair, rolling-size grid and proprietary training internals are not exposed in accessible primary material. |
+| `DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_SPOT_XAU_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_GATE_FAILED / SOURCE_CONSTRAINED_SPOT_XAU_ADAPTATION / NOT_RUNTIME` | Bonato et al. (2018) quantile-boosting core was reconstructed with source step size 0.1, 17 quantiles 0.10..0.90, h=1/5/10, expanding OOS estimation, 5m spot-XAU realized variance/skewness and boosted AR(1) comparator. No 2024 horizon/model passed the frozen promotion gate. Locked 2025 replay showed some raw-accuracy gains at h=5/10 but weak DOWN discrimination; 2025 cannot rescue the failed pre-2025 validation. Exact futures+full-control replication remains blocked. |
+| `DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH` | `LITERATURE_AUTHORITY / EXACT_PROPRIETARY_SOFTWARE_DETAILS_PARTLY_NOT_PROVEN / RECON_V2_AUTHORIZED` | Parisi, Parisi & Díaz (2008): weekly one-step-ahead Gold first-difference/sign forecasting from four Gold and four DJIA first-difference lags; rolling/recursive neural networks; period-by-period retraining; source reports a Ward specification with two hidden layers / 21 neurons and optimized activation/scaling combination, rolling-Ward superiority, block-bootstrap mean sign prediction 60.68% (sd 2.82%), and ARIMA(4,1,2) benchmark. Exact neuron allocation, winning activation/scaling pair, rolling-size grid and proprietary training internals are not exposed in accessible primary material. |
 | `DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_WEAK / 2025_NO_TWO_SIDED_EDGE / NOT_RUNTIME` | Corrected source-constrained reconstruction completed. Window 100 selected on 2023 (accuracy 0.5769, balanced 0.5704); unchanged 2024 validation only matched always-UP raw accuracy (0.5577) with balanced 0.5180 and DOWN sensitivity 0.1739. Locked 2025 replay reached raw accuracy 0.6346 but remained below always-UP 0.6731 and only slightly above previous-sign 0.6154; balanced accuracy 0.5017, DOWN sensitivity 0.1176 and PT p=0.9716 show no two-sided direction edge. Exact 2008 proprietary software replication is still not claimed. |
 | `DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / 2025_TEST_REQUIRES_DAILY_OHLC_COMPLETION / NOT_IMPLEMENTED` | Altuntaş, Okumuş & Kocamaz (2022): next-day UP/DOWN from 11-day candlestick images with SMA7, SMA50 and Bollinger(20,2), fine-tuned AlexNet at 227x227x3; source uses chronological 9y/3y/3y train/validation/test, max 100 epochs and mini-batch 32. Current long XAU history is not stored as a complete governed daily OHLC panel, so image construction is not yet input-complete. |
 | `DIRECTION_YADAV_TECH_ML_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / WORKING_PAPER / 2025_TEST_REQUIRES_DAILY_OHLC_COMPLETION / EXTERNAL_2025_EXPOSURE / NOT_IMPLEMENTED` | Yadav (2026 working paper): next-day XAU/USD binary direction with technical indicators and logistic regression, decision tree, RF, gradient boosting and SVM under time-series OOS evaluation. Indicators include RSI, ATR, MACD, moving averages and Bollinger features; ATR requires OHLC. Because the source study itself uses data through 2025, any 2025 replay here is transport/reproduction evidence, not an independent blind holdout. |
@@ -1450,10 +1451,10 @@ Random splitting is forbidden.
 13. **SLOW — LOW PRIORITY / NOT NEXT**
 14. **Post-BOCPD future change-time challenger — NEXT GC-BREAK RESEARCH LANE; exact identity/parameters require preregistration**
 15. **Legacy parallel direction-research lane — RSM/ERSM CLOSED / DO_NOT_REVISIT; VLMC family CLOSED / NO_PROMOTION; BCT family CLOSED / NO_PROMOTION; B-CARS / Realized-Probability family CLOSED / NO_PROMOTION; exact CARB NOT_PROVEN and not implemented**
-16. **Literature-backed direction-engine queue — superseded Parisi executable artifacts removed; corrected `DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH` completed and is `NO_PROMOTION / PRE2025_VALIDATION_WEAK / 2025_NO_TWO_SIDED_EDGE`. Bonato QBoost Realized-Moments Spot-XAU V1 is now EVALUATED / NO_PROMOTION after a frozen pre-2025 gate failure. Remaining candidates REGISTERED / RESEARCHED / DATA-READINESS CLASSIFIED / NOT IMPLEMENTED: Sadorsky Tree-Tech; Basher-Sadorsky RF-Macro; Altuntaş AlexNet-Candle; Yadav Tech-ML; Sulman DL-Ensemble; Mahato-Attar Ensemble; Zhang Return-ML. 2025 remains a locked retrospective challenge under Section 4.3.5.10.**
-17. **WP4 role-preserving integration/state-transition work — AFTER the new GC-BREAK challenger has a frozen design/evidence checkpoint**
-18. **Architecture/parameter freeze — PENDING**
-19. **Prospective shadow — PENDING FINAL FREEZE**
+16. **Historical direction-memory inventory — RECOVERED / AUDIT-ONLY:** V1.49, HS-SDL-DMA, V1.51-V1.70, R15 event and H20 RTQ historical identities are explicitly indexed in Section 16 and the subordinate historical inventory; they are not reactivated.\n17. **Literature-backed direction-engine queue — superseded Parisi executable artifacts removed; corrected `DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH` completed and is `NO_PROMOTION / PRE2025_VALIDATION_WEAK / 2025_NO_TWO_SIDED_EDGE`. Bonato QBoost Realized-Moments Spot-XAU V1 is now EVALUATED / NO_PROMOTION after a frozen pre-2025 gate failure. Remaining candidates REGISTERED / RESEARCHED / DATA-READINESS CLASSIFIED / NOT IMPLEMENTED: Sadorsky Tree-Tech; Basher-Sadorsky RF-Macro; Altuntaş AlexNet-Candle; Yadav Tech-ML; Sulman DL-Ensemble; Mahato-Attar Ensemble; Zhang Return-ML. 2025 remains a locked retrospective challenge under Section 4.3.5.10.**
+18. **WP4 role-preserving integration/state-transition work — AFTER the new GC-BREAK challenger has a frozen design/evidence checkpoint**
+19. **Architecture/parameter freeze — PENDING**
+20. **Prospective shadow — PENDING FINAL FREEZE**
 
 The next **GC-BREAK** research lane is therefore not inferred from runtime-registry order: it remains the separately governed future-change-time challenger defined in Section 12.6. In parallel, the Section 4.3.5 direction-engine queue is evaluated one candidate at a time. Corrected Parisi Ward reconstruction V2 is complete with NO_PROMOTION; exact proprietary Parisi-2008 replication remains NOT_PROVEN because several implementation details are not published in accessible primary material. Bonato Spot-XAU V1 is now completed with NO_PROMOTION; the other literature candidates stay registered but unimplemented until explicit user authorization. Macro Event, Emergency and SLOW remain outside the immediate GC-BREAK next step unless explicitly reactivated.
 
@@ -1486,19 +1487,119 @@ High-capacity boosting, mixture-of-experts and deep-learning escalation remain b
 
 ---
 
-## 16. Historical research interpretation
+## 16. Historical direction / short-horizon research memory — AUDIT-ONLY
 
-Historical fixed-horizon, 1D/3D, V1.48/V1.49, HS-SDL-DMA and related studies remain historical/auxiliary research only.
+Historical fixed-horizon and specialist direction research is **not erased when it leaves the active architecture**.
 
-Old result files or artifact names are not current project authority. Historical traceability belongs in Git history and/or immutable evidence storage.
+Binding historical inventory:
 
-Specific superseded interpretation locks:
+`gold_axis_2026/GOLD_CONTROL_HISTORICAL_DIRECTION_RESEARCH_INVENTORY_2026-09-21.md`
+
+The inventory is subordinate evidence; this manifest remains sole authority. Its purpose is to preserve research memory and prevent later statements such as “all models were compared” from silently excluding older experiments.
+
+### 16.1 Three distinct research inventories
+
+Future project interpretation must keep three separate surfaces:
+
+1. **Current GC-BREAK/runtime research:** sequential trend-health / break-warning architecture and its role-preserving motors.
+2. **Current literature-direction sequence:** RSM/ERSM, VLMC, BCT, B-CARS/RealP, Parisi, Bonato and registered literature candidates.
+3. **Historical fixed-horizon / specialist direction sequence:** V1.49, HS-SDL-DMA, V1.51-V1.70, event-time R15, H20 RTQ and related specialist experiments.
+
+A model may be historical/audit-only without being forgotten.
+
+### 16.2 Cross-clock comparison lock
+
+The following are not one homogeneous leaderboard:
+
+- NY17 `NEXT_NY17_1D` / `NEXT_NY17_3D`;
+- H3/H5/H10/H20 selective short-horizon studies;
+- R15 event-time reaction;
+- weekly direction studies;
+- Bonato retained-trading-day h={1,5,10};
+- GC-BREAK sequential state/break-warning outputs.
+
+Therefore a claim such as **“best DOWN model in all Gold Control history”** is prohibited unless a separate audit proves:
+- target-clock parity;
+- horizon parity;
+- evidence-window parity;
+- class-definition parity;
+- complete class-specific metrics.
+
+Without that audit the correct state is `NOT_PROVEN_GLOBAL_RANK`.
+
+### 16.3 Recovered historical fixed-horizon sequence
+
+| Historical identity / version | Main target / clock | Retained finding | Current interpretation |
+|---|---|---|---|
+| V1.49 | NY17 1D/3D | rich-panel 1D BA 0.4899; 3D BA 0.5000; proper-score promotion failed | `HISTORICAL / NOT_PROVEN` |
+| `HS_SDL_DMA_DIRECTION_FUSION_V1` | NY17 1D/3D | full replay 1D BA 0.5098, 3D BA 0.5000; P50/simple anchors not beaten | `HISTORICAL / NOT_PROVEN_RETAINED_BASELINE` |
+| V1.51 | general 1D/3D + event audit | direct direction unstable; event lane separated | `FAIL_GENERAL_DIRECTION` |
+| V1.52 | Employment+Inflation event router | R15 event reaction retained | `KEEP_EVENT_LANE` |
+| V1.53 | intraday regime specialists | regime pockets, no universal 1D proof | `NOT_PROVEN_GENERAL_1D` |
+| V1.54 | settlement RF/BAG/SGB/LOGIT H5/H10/H20 | class skew / regime flip | `FAIL` |
+| V1.55 | cross-market LOGIT/HGB/MLP + DMA/DMS | regime instability plus DEXCHUS ontology/input issue | `FAIL_INPUT_AUDIT` |
+| V1.56 | H20 RTQ | 2025 one-class collapse; 2026 strong retrospective pocket | `RESEARCH_LEAD_NOT_ROBUST` |
+| V1.57 | realized moments + BOCPD H10/H20 | no incremental primary gain in that architecture | `FAIL` |
+| V1.58 | trend-reversal router | reversal information existed; forced routing hurt | `FAIL / REVERSAL_CONTEXT_ONLY` |
+| V1.59/R1 | corrected USD/real-yield meta-trust | 2025 one-class behavior; strong 2026 pocket did not transport | `FAIL` |
+| V1.60 | causal regime selector | 0% coverage / NO_SIGNAL | `FAIL_SUPPORT_GATE` |
+| V1.61 | H3/H5 price discovery + realized moments + QBoost | distributional gain without robust two-sided direction | `FAIL` |
+| V1.62 | context-aware meta forecast / CRASE | weak/similar experts; CRASE 0 coverage | `FAIL` |
+| V1.63 | five heterogeneous forecasters | diversity solved; no stable 2025+2026 expert skill | `FAIL_SKILL_GATE` |
+| V1.64 | forgetting + error memory | 3D Session/RM local 2026 BA 0.57; 2025/proper-score transport weak | `NOT_PROMOTED` |
+| V1.65A | ADWIN / Page-Hinkley | low power / high false-alarm trade-off | `FAIL` |
+| V1.65-DIAG | failure attribution | 1D discrimination ceiling; 3D structured instability | `DIAGNOSTIC` |
+| V1.66 | recalibration vs forgetting | no robust benchmark pass | `STOP_ADAPTATION_ESCALATION` |
+| V1.67 | invariant-signal screening | no pre-2025 stable block | `REJECT_INVARIANT_HYPOTHESIS` |
+| V1.68 | regime-similarity local | 2024Q4 bridge failed | `REJECT_SIMILARITY_ESCALATION` |
+| V1.69 | target representation | continuous return did not rescue; weak 1D bridge pocket | `INFO_HORIZON_REDESIGN` |
+| V1.70 | PIT-safe COT + lagged GVZ | pre-2025 incremental gate failed; 2025 pocket reversed in 2026 | `FREE_CONTEXT_FAIL` |
+
+### 16.4 Important specialist historical evidence
+
+**Employment + Inflation R15 event specialist** is a different event-time clock:
+- 2023-2024: 31/41 = 75.61%;
+- 2025: 15/20 = 75%;
+- available 2026: 7/9 = 77.78%, small-N.
+It may not be ranked directly against next-day, weekly or H20 direction models.
+
+**LEGACY_RTQ_R126 H20** is a different normal-day selective clock:
+- 2025: accuracy 77.46%, BA 50%, MCC 0, 142 UP / 0 DOWN -> one-class collapse;
+- available 2026: coverage 72.97%, accuracy 70.37%, BA 69.23%, MCC 0.4947, 88 UP / 20 DOWN -> meaningful retrospective pocket but no cross-regime proof.
+
+**V1.59 nonlinear meta-trust**:
+- available 2026 direction accuracy approximately 74%, BA approximately 70.65%;
+- 2025 accepted signals collapsed to UP with BA 50%;
+- no promotion.
+
+### 16.5 Bonato historical-placement lock
+
+`DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_SPOT_XAU_V1_RESEARCH` remains `NO_PROMOTION`.
+
+Its 1D realized-moments surface:
+- 2024: BA 0.5293; UP sensitivity 0.6050; DOWN sensitivity 0.4535;
+- 2025: BA 0.5090; UP sensitivity 0.6571; DOWN sensitivity 0.3608.
+
+Within Bonato, RV/RSK materially improve DOWN sensitivity versus AR1:
+- 2024: 0.2209 -> 0.4535;
+- 2025: 0.1134 -> 0.3608.
+
+However, many historical V1.49-V1.70 checkpoints preserve BA/Brier/AUC but not class-specific DOWN sensitivity, and several use different clocks. Therefore:
+
+`BONATO_ALL_HISTORY_DOWN_RANK = NOT_PROVEN`.
+
+Permitted interpretation:
+
+`BONATO_1D_RM = ONE_OF_THE_STRONGER_EXPLICITLY_PRESERVED_TWO_SIDED_DOWN_SIGNALS, BUT NO_GLOBAL_RANKING`.
+
+### 16.6 Historical interpretation locks
 
 - old event-conditioned FAST `11/19` is not current alarm performance;
 - same-date GVZ daily-close overlap is not early-warning evidence;
 - any result that hides full-year engine outputs by starting only from realized event dates is invalid for alarm-performance claims;
-- old Macro Event research artifacts do not override the current Macro research suspension;
+- old Macro Event research artifacts do not override current Macro research suspension;
 - superseded BOCPD identities do not re-enter because historical files or commits exist;
+- V1.49-V1.70 and HS-SDL-DMA do not silently restore fixed 1D/3D direction as the primary GC-BREAK objective;
 - an ordinary BOCPD retune is not the approved substitute for the new future-change-time challenger.
 
 ---
@@ -1579,4 +1680,4 @@ In parallel, the direction-research families remain governed. RSM/ERSM is perman
 
 A literature-backed direction-engine queue was registered on 2026-09-21 without reopening the previously closed RSM/VLMC/BCT/B-CARS families. For Parisi, superseded executable/result surfaces were removed by explicit user instruction; only the primary literature authority and corrected `DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH` remain active. The primary paper's published 4-Gold-lag + 4-DJIA-lag weekly first-difference signal and rolling Ward family were reconstructed with long Gold/DJIA history and a two-slab 21-neuron Ward-1 form. Window 100 was selected on 2023 only (accuracy 0.5769, balanced 0.5704), then frozen. Unchanged 2024 validation was weak: accuracy 0.5577 equalled always-UP, balanced accuracy 0.5180 and DOWN sensitivity 0.1739. Unchanged 2025 replay reached accuracy 0.6346 but remained below always-UP 0.6731; balanced accuracy was 0.5017, DOWN sensitivity 0.1176 and PT p=0.9716. V2 is therefore `NO_PROMOTION / PRE2025_VALIDATION_WEAK / 2025_NO_TWO_SIDED_EDGE`, with no post-result retuning. Exact proprietary Parisi-2008 neuron allocation, winning activation/scaling pair, source rolling-size grid and training internals remain NOT_PROVEN, so this is not presented as an exact software replication. Bonato's source-constrained Spot-XAU QBoost V1 has now been executed and is NO_PROMOTION after all 2024 promotion gates failed; Altuntaş and Yadav require daily OHLC completion; Sadorsky, Basher-Sadorsky, Sulman and Zhang have source-input gaps; Mahato-Attar remains blocked by incomplete method specification. No candidate may use 2025 for feature, horizon, threshold, architecture or hyperparameter selection. For Yadav and Sulman, source papers themselves used 2025, so later 2025 replay is transport/reproduction evidence rather than independent confirmatory OOS evidence.
 
-All future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
+Historical fixed-horizon research memory is now explicitly preserved in Section 16 and `GOLD_CONTROL_HISTORICAL_DIRECTION_RESEARCH_INVENTORY_2026-09-21.md`. V1.49, HS-SDL-DMA and V1.51-V1.70 remain audit-only rather than erased. Cross-clock global rankings are forbidden unless target/horizon/evidence/class metrics are proven comparable; Bonato's all-history DOWN rank is therefore `NOT_PROVEN`, while its 1D realized-moments DOWN improvement remains a valid within-model finding.\n\nAll future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
