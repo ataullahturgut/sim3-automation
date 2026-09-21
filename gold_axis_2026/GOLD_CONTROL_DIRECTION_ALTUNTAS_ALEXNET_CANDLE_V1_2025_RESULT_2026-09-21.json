@@ -1,0 +1,28 @@
+{
+  "identity": "DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH",
+  "status": "LOCKED_2025_REPLAY_COMPLETE",
+  "pre2025_gate_passed": false,
+  "2025_challenge": {
+    "n": 257,
+    "accuracy": 0.5486381322957199,
+    "balanced_accuracy": 0.5044130626654899,
+    "up_sensitivity": 0.7272727272727273,
+    "down_sensitivity": 0.2815533980582524,
+    "precision_up": 0.6021505376344086,
+    "f1_up": 0.6588235294117646,
+    "precision_down": 0.4084507042253521,
+    "f1_down": 0.3333333333333333,
+    "tp": 112,
+    "tn": 29,
+    "fp": 74,
+    "fn": 42,
+    "actual_up": 154,
+    "actual_down": 103,
+    "forecast_up": 186,
+    "forecast_down": 71,
+    "brier": 0.25123146809705416,
+    "log_loss": 0.6962106989546986,
+    "always_up_accuracy": 0.5992217898832685,
+    "always_down_accuracy": 0.40077821011673154
+  }
+}
