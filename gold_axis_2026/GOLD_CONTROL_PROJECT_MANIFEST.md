@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.81  
+**Manifest version:** 1.82  
 **Issue date:** 2026-09-21  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -107,6 +107,7 @@ The current research-status layer is binding for work sequencing and must not be
 | `DIRECTION_BASHER_SADORSKY_RF_MACRO_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_INPUT_PANEL / NOT_IMPLEMENTED` | Basher & Sadorsky (2022) RF/bagging/logit direction family over 1..20 trading-day horizons with technical indicators plus rates, inflation/term structure, VIX/OVX, EPU/EMU and EMV inputs. Current project lacks the complete pre-2025 source-faithful predictor panel and GLD-volume inputs. |
 | `DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SPOT_XAU_2025_ADAPTATION_READY_CURRENT_INTRADAY / EXACT_FUTURES_REPLICATION_BLOCKED / NOT_IMPLEMENTED` | Bonato et al. (2018) recursively estimated quantile boosting with intraday realized volatility/skewness and market/sentiment controls. Gold Control has 5-minute XAU/USD cache from 2020-04-06 through 2026-08-31, sufficient for a pre-2025 spot-XAU adaptation and locked 2025 challenge; exact paper replication remains blocked because the paper targets gold futures and a broader control panel. |
 | `DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH` | `METHOD_RECOVERY_AND_DATA_AUDIT_STARTED / CURRENT_DATA_SUFFICIENT / NO_MODEL_FIT / NO_2025_SCORE` | First literature-backed candidate opened after explicit user authorization. Read-only audit confirms 436 pre-2025 and 52 2025 common XAU/DJIA weekly buckets, with 431 pre-2025 eligible four-lag origins. Core source inputs are available. Exact rolling-window sizes, Ward layer allocation, activation/scaling and training/stopping details remain to be proven before fitting; do not guess them. Start checkpoint: `GOLD_CONTROL_DIRECTION_PARISI_ROLLING_WARD_V1_START_2026-09-21.md`. |
+| `DIRECTION_PARISI_ROLLING_WARD_GC_V1_RESEARCH` | `PREREGISTERED / SOURCE_GROUNDED_GOLD_CONTROL_ADAPTATION / FROZEN_BEFORE_2025_SCORE / NOT_RUNTIME` | Executable adaptation separated from the literature identity because the exact 2008 proprietary Ward layer allocation/training settings are not fully recoverable. Preserves ΔGold/ΔDJIA four-lag core, period-by-period rolling retraining, 21 hidden neurons and same-author Ward activation family. XAU/DJIA are synchronized on latest common date in each Monday-start week. Rolling window is selected only from {50,75,100} on common 2024 support, then frozen before 2025. Exact source replication is NOT claimed. |
 | `DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / 2025_TEST_REQUIRES_DAILY_OHLC_COMPLETION / NOT_IMPLEMENTED` | Altuntaş, Okumuş & Kocamaz (2022): next-day UP/DOWN from 11-day candlestick images with SMA7, SMA50 and Bollinger(20,2), fine-tuned AlexNet at 227x227x3; source uses chronological 9y/3y/3y train/validation/test, max 100 epochs and mini-batch 32. Current long XAU history is not stored as a complete governed daily OHLC panel, so image construction is not yet input-complete. |
 | `DIRECTION_YADAV_TECH_ML_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / WORKING_PAPER / 2025_TEST_REQUIRES_DAILY_OHLC_COMPLETION / EXTERNAL_2025_EXPOSURE / NOT_IMPLEMENTED` | Yadav (2026 working paper): next-day XAU/USD binary direction with technical indicators and logistic regression, decision tree, RF, gradient boosting and SVM under time-series OOS evaluation. Indicators include RSI, ATR, MACD, moving averages and Bollinger features; ATR requires OHLC. Because the source study itself uses data through 2025, any 2025 replay here is transport/reproduction evidence, not an independent blind holdout. |
 | `DIRECTION_SULMAN_DL_ENSEMBLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_OHLCV_DATASET / EXTERNAL_2025_EXPOSURE / NOT_IMPLEMENTED` | Sulman et al. (2026): next-day gold return forecasting from daily OHLCV plus lagged price/return features using RF, XGBoost, tuned RBF-SVR, LSTM, BiLSTM, GRU, CNN-LSTM, ML ensemble and CNN-LSTM/GRU DL ensemble. Source deep-learning setup uses Adam 0.001, MSE, batch 32, <=100 epochs, early-stopping patience 12 and ReduceLROnPlateau patience 6/factor 0.5. Current project lacks a source-equivalent governed daily gold volume series; source study itself uses 2020-2025, so 2025 cannot be called independent blind OOS. |
@@ -716,6 +717,58 @@ Gold Control implementation rule:
 - `READY_CURRENT_DATA_FOR_GOLD_ADAPTATION`;
 - current Gold Control holds DJIA daily closes from 2016-08-29 onward and long XAU daily research history, sufficient to construct several years of pre-2025 lagged weekly inputs and a locked 2025 retrospective challenge;
 - source price/weekly semantics still require a preregistered bridge before scoring.
+
+#### 4.3.5.4a DIRECTION_PARISI_ROLLING_WARD_GC_V1_RESEARCH — executable Gold-Control adaptation
+
+The 2008 Parisi gold paper is sufficiently clear about the scientific core but not sufficiently transparent to support a claim of exact software replication. The primary source proves one-step-ahead `ΔG_t` forecasting from four lags of gold first differences plus four lags of DJIA first differences, repeated retraining, rolling recent-information updating, a best reported Ward architecture with two hidden layers / 21 neurons, exploration of activation/scaling/sample-size combinations, and superior rolling-Ward direction performance. It does **not** expose enough accessible detail to recover the exact 21-neuron layer allocation, winning activation/scaling assignment, tested rolling sample sizes or proprietary optimizer/stopping settings.
+
+Accordingly, the executable identity is separately named `DIRECTION_PARISI_ROLLING_WARD_GC_V1_RESEARCH` and may not be described as an exact replication.
+
+Frozen source-grounded adaptation:
+- XAU: `XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1`;
+- DJIA: `DJIA_FRED`;
+- weekly anchor: latest completed date in each Monday-start week on which both XAU and DJIA exist;
+- no interpolation / forward fill / asynchronous weekly endpoint;
+- first differences in levels, not log returns;
+- inputs exactly `ΔG[t-1..t-4]` and `ΔDJI[t-1..t-4]`;
+- target exactly next `ΔG_t`;
+- UP iff predicted `ΔG_t>0`.
+
+Ward mechanism where the gold paper is silent is taken only from the same authors' explicit 2006 Ward implementation:
+- supervised back-propagation;
+- input min/max scaling to [-1,1];
+- Ward activation families Gaussian / Gaussian-complement / tanh;
+- logistic output with inverse target scaling.
+
+GC_V1 hidden bank:
+- 21 hidden neurons total from the gold-paper count;
+- 7 Gaussian + 7 Gaussian-complement + 7 tanh neurons;
+- this equal-slab allocation is an explicit adaptation and is **not** represented as the unrecovered 2008 two-hidden-layer allocation.
+
+Frozen numerical training:
+- target scaled to [0.1,0.9];
+- full-batch Adam lr=0.01;
+- <=2000 epochs;
+- training-MSE patience 200, min improvement 1e-10;
+- starts 11/29/47/71/101;
+- choose the single lowest-training-MSE start at each origin; no seed vote or ensemble.
+
+Frozen pre-2025 window selection:
+- candidate fixed rolling windows {50,75,100} weeks;
+- compare on identical common 2024 forecast support only;
+- select by balanced accuracy, then raw accuracy, then ΔG RMSE, then smaller window;
+- freeze selected window before any 2025 model score.
+
+2025 evidence class:
+- `LOCKED_RETROSPECTIVE_CHALLENGE`, not pristine/prospective;
+- full 2025 replay only after pre-2025 configuration is persisted;
+- no 2025 rescue tuning.
+
+Authority surface:
+- `GOLD_CONTROL_DIRECTION_PARISI_ROLLING_WARD_GC_V1_PREREG_2026-09-21.md`.
+
+Current status:
+`PREREGISTERED / FROZEN_BEFORE_2025_SCORE / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
 
 #### 4.3.5.5 DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH
 
