@@ -140,3 +140,30 @@ Possible statuses:
 - `EVALUATED / NO_PROMOTION / PRE2025_GATE_FAILED`.
 
 No runtime, trading or production authority is created by this experiment.
+
+## 10. Executable reconstruction choices frozen before scoring
+
+The primary paper does not state the optimizer name or every plotting/rendering primitive. The executable V1 therefore freezes the following as **Gold Control reconstruction choices**, not source-paper claims:
+
+- framework: PyTorch / torchvision pretrained `alexnet`, `AlexNet_Weights.IMAGENET1K_V1`;
+- all AlexNet layers remain trainable (full fine-tuning);
+- optimizer: SGD, learning rate `1e-4`, momentum `0.9`, weight decay `0`;
+- loss: ordinary unweighted cross entropy;
+- seed: `20260921`;
+- no data augmentation;
+- ImageNet RGB normalization after deterministic resize to 227x227;
+- early stopping monitor: 2023 development-set accuracy; checkpoint only on strict accuracy improvement; ties retain the earlier epoch;
+- patience: 10 completed development evaluations without strict accuracy improvement;
+- maximum epochs: 100; batch size: 32;
+- class threshold: UP iff softmax P(UP)>=0.5.
+
+Deterministic chart reconstruction:
+- white background, no axes/ticks/text;
+- 11 candles ending at the origin;
+- UP candle: white body with black outline; DOWN candle: black body; grey wick;
+- SMA7: cyan; SMA50: red;
+- Bollinger upper: green; middle SMA20: yellow; lower: magenta;
+- price limits are computed only from the plotted origin-safe candle/indicator values with fixed 5% vertical padding;
+- fixed raster geometry followed by deterministic resize to 227x227 RGB.
+
+These choices are frozen before any 2024 fixed-validation or 2025 challenge score is produced. A negative result may not be rescued by changing optimizer, momentum, renderer, colours, checkpoint rule, augmentation, threshold or history span under this identity.
