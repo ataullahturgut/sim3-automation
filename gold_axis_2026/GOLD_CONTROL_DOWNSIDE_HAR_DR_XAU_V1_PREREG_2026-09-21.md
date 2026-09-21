@@ -85,6 +85,12 @@ Research-interest gate on 2024:
 
 2025 cannot rescue failed 2024 evidence.
 
+If and only if the 2024 gate passes, 2025 transport is supported when the unchanged model also has:
+- OOS R2 versus the frozen historical-mean benchmark > 0;
+- HAR-DR MSE < persistence MSE;
+- high-risk ROC AUC >= 0.50;
+- high-risk alert precision > the 2025 unconditional high-risk event rate.
+
 ## 6. Interpretation lock
 
 Possible conclusions:
