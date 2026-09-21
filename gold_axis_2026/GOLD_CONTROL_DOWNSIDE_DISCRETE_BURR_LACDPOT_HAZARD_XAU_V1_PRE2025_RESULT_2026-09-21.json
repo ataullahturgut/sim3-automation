@@ -1,0 +1,33 @@
+{
+  "identity": "DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1_RESEARCH",
+  "status": "PRE2025_FROZEN",
+  "2024_validation": {
+    "n": 254,
+    "events": 16,
+    "event_rate": 0.06299212598425197,
+    "mean_hazard": 0.056265955534614866,
+    "brier": 0.059631300860925024,
+    "constant_brier": 0.05919772780714944,
+    "brier_skill": -0.007324150264483853,
+    "log_loss": 0.24089790832135363,
+    "constant_log_loss": 0.2368205323911974,
+    "roc_auc": 0.4792542016806723,
+    "average_precision": 0.07012464269335349,
+    "alert_threshold": 0.1074874529641906,
+    "alert_coverage": 0.027559055118110236,
+    "alert_recall": 0.0,
+    "alert_precision": 0.0,
+    "false_alert_rate": 0.029411764705882353,
+    "tp": 0,
+    "fp": 7,
+    "fn": 16,
+    "tn": 231,
+    "event_mean_hazard": 0.055017030404541305,
+    "event_median_hazard": 0.054305864321296804,
+    "nonevent_mean_hazard": 0.056349916887897124,
+    "top_decile_event_rate": 0.07692307692307693,
+    "top_decile_event_concentration_vs_base": 1.2211538461538463
+  },
+  "pre2025_gate_passed": false,
+  "decision": "PRE2025_EXTREME_DOWN_HAZARD_NOT_SUPPORTED"
+}

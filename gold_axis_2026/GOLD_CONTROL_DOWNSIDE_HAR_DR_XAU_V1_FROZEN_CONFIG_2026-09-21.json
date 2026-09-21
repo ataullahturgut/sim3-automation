@@ -1,0 +1,18 @@
+{
+  "identity": "DOWNSIDE_HAR_DR_XAU_V1_RESEARCH",
+  "source_table": "public.xau_intraday_research_cache_5m",
+  "timezone": "America/New_York",
+  "beta": [
+    1.0239320776185558e-05,
+    0.26098490398511026,
+    0.3689383535952931,
+    0.12205750547118996
+  ],
+  "condition_number": 78935.73205256682,
+  "formation_n": 731,
+  "formation_mean_dr": 4.203262469048263e-05,
+  "high_risk_threshold_q80": 5.513863621481717e-05,
+  "extreme_negative_return_threshold_q05": -0.016492754977755916,
+  "panel_sha256_through_2024": "b27077f2e8bcece6154fb0a61a135a00f75465ab9d06a079e38f4d5fade0056b",
+  "frozen_before_2025": true
+}

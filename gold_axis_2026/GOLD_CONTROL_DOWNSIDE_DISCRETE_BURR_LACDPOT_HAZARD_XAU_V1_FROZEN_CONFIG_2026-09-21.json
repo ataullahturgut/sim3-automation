@@ -1,0 +1,24 @@
+{
+  "identity": "DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1_RESEARCH",
+  "series": "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+  "formation_end": "2023-12-31",
+  "threshold_u": 0.014524583590882028,
+  "threshold_quantile": 0.95,
+  "constant_event_rate": 0.04981602037928107,
+  "alert_threshold": 0.1074874529641906,
+  "params": {
+    "omega": 0.38341374306687975,
+    "beta": 0.37272312995629864,
+    "alpha": 0.22354038794611053,
+    "zeta": -0.16255895962133016,
+    "kappa": 0.8106255270135663,
+    "eta": 0.01621251895453528
+  },
+  "fit_nll": 666.01893009961,
+  "optimizer_success": true,
+  "optimizer_message": "CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH",
+  "formation_event_count": 176,
+  "formation_duration_count": 175,
+  "panel_sha256_through_2024": "9ef8884ad80cffe9fb8b6dafa81e4dbf66b2cd7b1fe346ed56a53942e717e758",
+  "frozen_before_2025": true
+}
