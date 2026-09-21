@@ -1,0 +1,19 @@
+{
+  "identity": "DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH",
+  "seed": 20260921,
+  "batch_size": 32,
+  "learning_rate": 0.0001,
+  "optimizer_reconstruction": "SGD",
+  "momentum": 0.9,
+  "weight_decay": 0.0,
+  "max_epochs": 100,
+  "patience": 10,
+  "best_epoch": 11,
+  "checkpoint_sha256": "51349e4915c44a5982bca04176454465cd3c8e5897ce0817f51d98accfe8a584",
+  "pre2025_panel_sha256": "440447d2e960486048a52c14ec140bf3639b6e88f557cfe4692d4e10725c7da1",
+  "pre2025_image_sha256": "7489199cfb98cb9f5b15f7ff27b59eaed35e8c85252c83a05ffa3c87e6e00ba1",
+  "train_n": 1298,
+  "dev_n": 259,
+  "validation_n": 258,
+  "frozen_before_2025": true
+}
