@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.85  
+**Manifest version:** 1.86  
 **Issue date:** 2026-09-21  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -106,8 +106,8 @@ The current research-status layer is binding for work sequencing and must not be
 | `DIRECTION_SADORSKY_TREE_TECH_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_GLD_OHLCV / NOT_IMPLEMENTED` | Sadorsky (2021) GLD/SLV direction classification with logit, 500-tree bagging, 3000-tree stochastic gradient boosting and 500-tree RF over 1..20 trading-day horizons using 13 technical indicators. Exact source-faithful test needs GLD ETF OHLCV, including volume-dependent OBV/MFI; current Gold Control does not hold that source panel. |
 | `DIRECTION_BASHER_SADORSKY_RF_MACRO_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_INPUT_PANEL / NOT_IMPLEMENTED` | Basher & Sadorsky (2022) RF/bagging/logit direction family over 1..20 trading-day horizons with technical indicators plus rates, inflation/term structure, VIX/OVX, EPU/EMU and EMV inputs. Current project lacks the complete pre-2025 source-faithful predictor panel and GLD-volume inputs. |
 | `DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SPOT_XAU_2025_ADAPTATION_READY_CURRENT_INTRADAY / EXACT_FUTURES_REPLICATION_BLOCKED / NOT_IMPLEMENTED` | Bonato et al. (2018) recursively estimated quantile boosting with intraday realized volatility/skewness and market/sentiment controls. Gold Control has 5-minute XAU/USD cache from 2020-04-06 through 2026-08-31, sufficient for a pre-2025 spot-XAU adaptation and locked 2025 challenge; exact paper replication remains blocked because the paper targets gold futures and a broader control panel. |
-| `DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH` | `SOURCE_METHOD_REOPENED / EXACT_REPLICATION_NOT_YET_PROVEN / 2025_FAITHFUL_TEST_PENDING` | User-triggered method audit found that GC_V1 was not source-faithful enough to judge the 2008 Parisi method. The paper explicitly reports a two-hidden-layer / 21-neuron Ward architecture and optimized activation/scaling combination; GC_V1 used a one-hidden-bank adaptation and project-invented rolling-window/training settings. Full-method recovery is required before any faithful 2025 claim. |
-| `DIRECTION_PARISI_ROLLING_WARD_GC_V1_RESEARCH` | `DIAGNOSTIC_ONLY / NO_PROMOTION_FOR_GC_V1 / NOT_SOURCE_FAITHFUL_ENOUGH_TO_JUDGE_PARISI / NOT_RUNTIME` | The numerical replay is valid for GC_V1 as implemented, but a post-run method audit found material departures from the published Parisi method: one hidden bank instead of the paper's two hidden layers, activation/scaling borrowed from a related 2006 three-layer Ward model, project-invented {50,75,100} rolling grid, Adam/stopping substitutions, and unnecessarily short 2022–2025 XAU history. Do not use this result to conclude that Parisi (2008) fails. |
+| `DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH` | `LITERATURE_AUTHORITY / EXACT_PROPRIETARY_SOFTWARE_DETAILS_PARTLY_NOT_PROVEN / RECON_V2_AUTHORIZED` | Parisi, Parisi & Díaz (2008): weekly one-step-ahead Gold first-difference/sign forecasting from four Gold and four DJIA first-difference lags; rolling/recursive neural networks; period-by-period retraining; source reports a Ward specification with two hidden layers / 21 neurons and optimized activation/scaling combination, rolling-Ward superiority, block-bootstrap mean sign prediction 60.68% (sd 2.82%), and ARIMA(4,1,2) benchmark. Exact neuron allocation, winning activation/scaling pair, rolling-size grid and proprietary training internals are not exposed in accessible primary material. |
+| `DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH` | `PREREGISTERED / SOURCE_CONSTRAINED_RECONSTRUCTION / LONG_HISTORY / FROZEN_BEFORE_2025_SCORE / NOT_RUNTIME` | Corrected executable identity after explicit removal of superseded Parisi artifacts. Uses long XAU/DJIA common-date weekly history, exact 4+4 first-difference predictor equation, two parallel Ward hidden slabs with 21 total neurons, Gaussian/Gaussian-complement Ward-1 reconstruction, supervised back-propagation, pre-2025 rolling-size selection on 2023 only, unchanged 2024 validation and only then unchanged 2025 retrospective challenge. Exact 2008 software replication is not claimed. |
 | `DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / 2025_TEST_REQUIRES_DAILY_OHLC_COMPLETION / NOT_IMPLEMENTED` | Altuntaş, Okumuş & Kocamaz (2022): next-day UP/DOWN from 11-day candlestick images with SMA7, SMA50 and Bollinger(20,2), fine-tuned AlexNet at 227x227x3; source uses chronological 9y/3y/3y train/validation/test, max 100 epochs and mini-batch 32. Current long XAU history is not stored as a complete governed daily OHLC panel, so image construction is not yet input-complete. |
 | `DIRECTION_YADAV_TECH_ML_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / WORKING_PAPER / 2025_TEST_REQUIRES_DAILY_OHLC_COMPLETION / EXTERNAL_2025_EXPOSURE / NOT_IMPLEMENTED` | Yadav (2026 working paper): next-day XAU/USD binary direction with technical indicators and logistic regression, decision tree, RF, gradient boosting and SVM under time-series OOS evaluation. Indicators include RSI, ATR, MACD, moving averages and Bollinger features; ATR requires OHLC. Because the source study itself uses data through 2025, any 2025 replay here is transport/reproduction evidence, not an independent blind holdout. |
 | `DIRECTION_SULMAN_DL_ENSEMBLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_OHLCV_DATASET / EXTERNAL_2025_EXPOSURE / NOT_IMPLEMENTED` | Sulman et al. (2026): next-day gold return forecasting from daily OHLCV plus lagged price/return features using RF, XGBoost, tuned RBF-SVR, LSTM, BiLSTM, GRU, CNN-LSTM, ML ensemble and CNN-LSTM/GRU DL ensemble. Source deep-learning setup uses Adam 0.001, MSE, batch 32, <=100 epochs, early-stopping patience 12 and ReduceLROnPlateau patience 6/factor 0.5. Current project lacks a source-equivalent governed daily gold volume series; source study itself uses 2020-2025, so 2025 cannot be called independent blind OOS. |
@@ -695,132 +695,104 @@ Gold Control implementation rule:
 - `EXACT_FUTURES_REPLICATION_BLOCKED` because the paper uses gold futures and a broader control panel not currently complete;
 - no 2025 score is authorized yet.
 
-#### 4.3.5.4 DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH
+#### 4.3.5.4 DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH — primary literature authority
 
-Primary authority: Parisi, Parisi & Díaz (2008), *Forecasting gold price changes: Rolling and recursive neural network models*, Journal of Multinational Financial Management 18(5):477-487, DOI 10.1016/j.mulfin.2007.12.002.
+Primary authority: Parisi, A., Parisi, F. & Díaz, D. (2008), *Forecasting gold price changes: Rolling and recursive neural network models*, Journal of Multinational Financial Management 18(5):477-487, DOI 10.1016/j.mulfin.2007.12.002.
 
-Source method:
-- one-step-ahead sign variation in gold price;
-- predictors are four lags of gold first differences and four lags of DJIA first differences;
-- feed-forward and Ward neural networks are compared under recursive and rolling updating;
-- rolling networks recalculate weights period-by-period; rolling Ward is the source's strongest family;
-- source reports block-bootstrap validation and mean rolling-Ward sign prediction 60.68% (sd 2.82%);
-- a Ward specification with two hidden layers / 21 neurons is reported among the best architectural combinations.
+The source establishes:
+- native clock: weekly;
+- objective: one-step-ahead Gold sign variation;
+- continuous target: `ΔG_t`, the Gold-price first difference;
+- exact input equation: four lags of Gold first differences plus four lags of DJIA first differences;
+- feed-forward and Ward neural networks are evaluated under recursive and rolling updating;
+- networks are retrained period-by-period;
+- rolling operation preserves a fixed recent-information sample and drops less-recent observations as new information arrives;
+- multiple techniques and sample sizes are investigated;
+- a Ward network with **two hidden layers and 21 neurons** reaches the best activation/scaling combination and 57.94% Gold sign hits at the architecture-selection stage;
+- the rolling Ward family is reported as the strongest dynamic family;
+- block-bootstrap validation reports mean rolling-Ward sign prediction **60.68%**, standard deviation **2.82%**;
+- directional success is assessed with the Pesaran–Timmermann directional-accuracy framework;
+- an **ARIMA(4,1,2)** selected by AIC is used as a source benchmark and is reported as inferior to the rolling Ward network.
 
-Gold Control implementation rule:
-- exact weekly/period aggregation and rolling sample-size rule must be recovered/frozen from the paper before execution; where the source detail is not recoverable, do not invent it;
-- Gold and DJIA first differences must be synchronized to the same completed-period clock;
-- network training at every origin must use only prior observations;
-- architecture/sample-size alternatives may be compared only inside pre-2025 chronology, never on 2025.
+Accessible primary material does **not** establish with enough precision:
+- how the 21 neurons are allocated across the two hidden slabs/layers;
+- the exact winning activation-function pair and scaling functions;
+- the exact rolling sample-size candidate grid / selected source window;
+- exact learning-rate, momentum, initialization and stopping settings;
+- exact historical Gold source and weekly quote convention.
 
-2025 testability audit:
-- `READY_CURRENT_DATA_FOR_GOLD_ADAPTATION`;
-- current Gold Control holds DJIA daily closes from 2016-08-29 onward and long XAU daily research history, sufficient to construct several years of pre-2025 lagged weekly inputs and a locked 2025 retrospective challenge;
-- source price/weekly semantics still require a preregistered bridge before scoring.
+Therefore:
+`PARISI_2008_EXACT_PROPRIETARY_SOFTWARE_REPLICATION = NOT_PROVEN`.
 
-#### 4.3.5.4a DIRECTION_PARISI_ROLLING_WARD_GC_V1_RESEARCH — executable Gold-Control adaptation
+Do not fill these gaps silently or claim an exact replication.
 
-The 2008 Parisi gold paper is sufficiently clear about the scientific core but not sufficiently transparent to support a claim of exact software replication. The primary source proves one-step-ahead `ΔG_t` forecasting from four lags of gold first differences plus four lags of DJIA first differences, repeated retraining, rolling recent-information updating, a best reported Ward architecture with two hidden layers / 21 neurons, exploration of activation/scaling/sample-size combinations, and superior rolling-Ward direction performance. It does **not** expose enough accessible detail to recover the exact 21-neuron layer allocation, winning activation/scaling assignment, tested rolling sample sizes or proprietary optimizer/stopping settings.
+Same-author method support:
+- Parisi, Parisi & Díaz (2006), DOI 10.4067/S0717-68212006000200002, explicitly documents supervised back-propagation, linear input scaling to [-1,1] to preserve first-difference sign, Ward Gaussian / Gaussian-complement / tanh hidden functions, logistic output with de-scaling, fixed-window time-ordered forecasting, and four-week / 500-series block bootstrap;
+- canonical Ward/NeuroShell descriptions identify a two-hidden-slab Ward-1 architecture as Gaussian plus Gaussian-complement.
 
-Accordingly, the executable identity is separately named `DIRECTION_PARISI_ROLLING_WARD_GC_V1_RESEARCH` and may not be described as an exact replication.
+#### 4.3.5.4a DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH — corrected executable reconstruction
 
-Frozen source-grounded adaptation:
-- XAU: `XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1`;
-- DJIA: `DJIA_FRED`;
-- weekly anchor: latest common completed date within each Monday-start / Friday-ending week; target-year assignment uses the nominal Friday `week_end`, not the Monday label;
-- no interpolation / forward fill / asynchronous weekly endpoint;
+The previous Parisi executable method/results were removed from the active branch by explicit user instruction. They are not current project evidence. Git history alone preserves audit traceability.
+
+V2 is a separately named **source-constrained reconstruction**, not a claim of exact proprietary 2008 reproduction.
+
+Frozen V2 scientific identity:
+- Gold source: `XAU_STAKTRAKR_RESEARCH_DAILY_R1`, using the longer research history instead of the removed short-history implementation;
+- DJIA source: `DJIA_FRED`;
+- inner-join by completed calendar date;
+- Monday-start / Friday-ending weeks;
+- weekly level for both series = latest Monday-Friday date in that week on which both series exist;
+- no interpolation, forward-fill, asynchronous endpoint or proxy;
+- target year determined from nominal Friday `week_end`;
 - first differences in levels, not log returns;
-- inputs exactly `ΔG[t-1..t-4]` and `ΔDJI[t-1..t-4]`;
-- target exactly next `ΔG_t`;
-- UP iff predicted `ΔG_t>0`.
+- eight inputs exactly `ΔG[t-1..t-4]` plus `ΔDJI[t-1..t-4]`;
+- target `ΔG_t`;
+- UP iff predicted inverse-scaled `ΔG_t > 0`, otherwise DOWN.
 
-Ward mechanism where the gold paper is silent is taken only from the same authors' explicit 2006 Ward implementation:
-- supervised back-propagation;
-- input min/max scaling to [-1,1];
-- Ward activation families Gaussian / Gaussian-complement / tanh;
-- logistic output with inverse target scaling.
+Frozen Ward reconstruction:
+- 8 inputs;
+- two parallel hidden Ward slabs;
+- 21 hidden neurons total;
+- Gaussian slab 10 neurons;
+- Gaussian-complement slab 11 neurons;
+- logistic output;
+- input min-max scaling to [-1,1];
+- target scaling to [0.1,0.9] and inverse scaling before scoring;
+- supervised full-batch back-propagation;
+- learning rate 0.05, momentum 0.50;
+- max 1500 epochs;
+- early-stop patience 200 with minimum training-MSE improvement 1e-10;
+- initial weights uniform [-0.3,0.3];
+- deterministic seed 2008;
+- no seed ensemble.
 
-GC_V1 hidden bank:
-- 21 hidden neurons total from the gold-paper count;
-- 7 Gaussian + 7 Gaussian-complement + 7 tanh neurons;
-- this equal-slab allocation is an explicit adaptation and is **not** represented as the unrecovered 2008 two-hidden-layer allocation.
+The 10/11 hidden allocation and numerical training settings are reconstruction choices frozen before 2025 because exact 2008 proprietary settings are not recoverable. They must not be retroactively attributed to the paper.
 
-Frozen numerical training:
-- target scaled to [0.1,0.9];
-- full-batch Adam lr=0.01;
-- <=2000 epochs;
-- training-MSE patience 200, min improvement 1e-10;
-- starts 11/29/47/71/101;
-- choose the single lowest-training-MSE start at each origin; no seed vote or ensemble.
+Rolling-size reconstruction:
+- candidate windows fixed before scoring: `{50,75,100,125,150,175,200,225,250}` weeks;
+- only rolling-window size is searched; architecture/training/scaling are not;
+- choose window on common **2023** rolling OOS support using source-native sign accuracy;
+- tie-break: balanced accuracy, then PT statistic, then smaller window;
+- freeze selected window;
+- replay **2024 unchanged** as independent pre-2025 validation;
+- persist selected configuration and 2024 result before any V2 2025 model score;
+- replay all complete Friday-ending 2025 target weeks unchanged;
+- 2025 cannot rescue or retune V2.
 
-Frozen pre-2025 window selection:
-- candidate fixed rolling windows {50,75,100} weeks;
-- compare on identical common 2024 forecast support only;
-- select by balanced accuracy, then raw accuracy, then ΔG RMSE, then smaller window;
-- freeze selected window before any 2025 model score.
+Benchmarks/metrics:
+- always-UP / always-DOWN / previous-sign;
+- rolling ARIMA(4,1,2) benchmark on Gold levels using the same selected window where estimable;
+- PPS/accuracy, balanced accuracy, UP/DOWN sensitivity, confusion matrix, forecast class counts, RMSE, MAE and Pesaran–Timmermann DA;
+- 500-replication four-week paired block bootstrap, seed 2008, as robustness evidence only.
 
-2025 evidence class:
-- `LOCKED_RETROSPECTIVE_CHALLENGE`, not pristine/prospective;
-- full set of complete Friday-ending 2025 target weeks is replayed only after pre-2025 configuration is persisted;
-- no 2025 rescue tuning.
+Evidence class:
+`SOURCE_CONSTRAINED_RECONSTRUCTION / LOCKED_RETROSPECTIVE_RESEARCH / NOT_EXACT_PROPRIETARY_REPLICATION`.
 
 Authority surface:
-- `GOLD_CONTROL_DIRECTION_PARISI_ROLLING_WARD_GC_V1_PREREG_2026-09-21.md`.
+- `GOLD_CONTROL_DIRECTION_PARISI_ROLLING_WARD_RECON_V2_PREREG_2026-09-21.md`.
 
-Current status after user-triggered method audit:
-`DIAGNOSTIC_ONLY / NO_PROMOTION_FOR_GC_V1 / NOT_SOURCE_FAITHFUL_ENOUGH_TO_JUDGE_PARISI / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
-
-The earlier numerical replay remains an auditable GC_V1 result, but its interpretation is corrected. A 2026-09-21 method audit identified material mismatches versus the 2008 paper:
-- paper: Ward network with **two hidden layers and 21 neurons**; GC_V1: one 21-neuron hidden bank;
-- paper: best activation/scaling combination selected within the gold experiment; GC_V1: Gaussian / Gaussian-complement / tanh mechanism borrowed from a separate same-author 2006 three-hidden-layer 5/5/5 Ward implementation;
-- paper: multiple sample sizes studied; GC_V1: project-invented `{50,75,100}` rolling candidate set;
-- paper training internals not recovered; GC_V1 substituted Adam / project stopping / project seed rules;
-- GC_V1 used only 201 weekly panel rows / 143 pre-2025 eligible samples even though a substantially longer XAU/DJIA research history exists.
-
-Therefore the result below is retained only as a diagnostic for the transparent GC_V1 adaptation. It must **not** be cited as a faithful falsification of Parisi (2008).
-
-Method-audit authority:
-- `GOLD_CONTROL_DIRECTION_PARISI_GC_V1_METHOD_AUDIT_2026-09-21.md`.
-
-Final evidence checkpoint:
-- governed weekly panel hash: `73fb8d57b00424aaea3e690b10807f392d82735b8a0e8c0c558d3dbdc56e6ec8`;
-- selected rolling window: 75 weeks, chosen before 2025 on identical common 2024 support;
-- 2024 common-support n=43;
-- 2024 accuracy 0.4651163;
-- 2024 balanced accuracy 0.4543478;
-- 2024 UP sensitivity 0.6086957;
-- 2024 DOWN sensitivity 0.3000000;
-- 2024 always-UP 0.5348837 and previous-sign 0.5116279;
-- 2025 n=52;
-- 2025 actual UP/DOWN 37/15;
-- 2025 forecast UP/DOWN 28/24;
-- 2025 accuracy 0.5192308;
-- 2025 balanced accuracy 0.5036036;
-- 2025 UP sensitivity 0.5405405;
-- 2025 DOWN sensitivity 0.4666667;
-- 2025 TP/TN/FP/FN 20/7/8/17;
-- 2025 always-UP 0.7115385;
-- 2025 previous-sign 0.5576923;
-- 2025 Pesaran-Timmermann statistic 0.0472314, two-sided p=0.9623288;
-- no post-result retuning; database/forecast-ledger/decision-store writes NONE.
-
-Binding interpretation after method audit:
-- GC_V1 itself does not show useful stable one-week directional edge;
-- however, GC_V1 is not source-faithful enough to test the published Parisi architecture, so the Parisi literature identity is reopened for method recovery rather than closed;
-- the 2025 GC_V1 outcome may not be used to tune a corrected Parisi implementation;
-- any corrected V2 requires a separately preregistered identity based on recovered source details and must preserve pre-2025 selection governance;
-- this does **not** prove that the 2008 Parisi method fails, and it does not close unrelated neural-network candidates in Section 4.3.5.
-
-Authoritative result surfaces:
-- preregistration: `GOLD_CONTROL_DIRECTION_PARISI_ROLLING_WARD_GC_V1_PREREG_2026-09-21.md`;
-- implementation: `tools/direction_parisi_rolling_ward_gc_v1.py`;
-- source audit: `GOLD_CONTROL_DIRECTION_PARISI_ROLLING_WARD_GC_V1_SOURCE_AUDIT_2026-09-21.json`;
-- frozen pre-2025 result: `GOLD_CONTROL_DIRECTION_PARISI_ROLLING_WARD_GC_V1_PRE2025_RESULT_2026-09-21.json`;
-- frozen config: `GOLD_CONTROL_DIRECTION_PARISI_ROLLING_WARD_GC_V1_FROZEN_CONFIG_2026-09-21.json`;
-- selected pre-2025 forecasts: `GOLD_CONTROL_DIRECTION_PARISI_ROLLING_WARD_GC_V1_PRE2025_SELECTED_FORECASTS_2026-09-21.csv`;
-- locked 2025 forecasts: `GOLD_CONTROL_DIRECTION_PARISI_ROLLING_WARD_GC_V1_2025_FORECASTS_2026-09-21.csv`;
-- locked 2025 result: `GOLD_CONTROL_DIRECTION_PARISI_ROLLING_WARD_GC_V1_2025_RESULT_2026-09-21.json`;
-- final result: `GOLD_CONTROL_DIRECTION_PARISI_ROLLING_WARD_GC_V1_RESULT_2026-09-21.md`.
+Current status:
+`FROZEN_BEFORE_ANY_V2_2025_SCORE / AUTHORIZED_TO_EXECUTE / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
 
 #### 4.3.5.5 DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH
 
@@ -1351,12 +1323,12 @@ Random splitting is forbidden.
 13. **SLOW — LOW PRIORITY / NOT NEXT**
 14. **Post-BOCPD future change-time challenger — NEXT GC-BREAK RESEARCH LANE; exact identity/parameters require preregistration**
 15. **Legacy parallel direction-research lane — RSM/ERSM CLOSED / DO_NOT_REVISIT; VLMC family CLOSED / NO_PROMOTION; BCT family CLOSED / NO_PROMOTION; B-CARS / Realized-Probability family CLOSED / NO_PROMOTION; exact CARB NOT_PROVEN and not implemented**
-16. **Literature-backed direction-engine queue — Parisi GC_V1 retained as DIAGNOSTIC_ONLY after a source-faithfulness audit; Parisi source method REOPENED / exact faithful 2025 test pending method recovery. Remaining candidates REGISTERED / RESEARCHED / DATA-READINESS CLASSIFIED / NOT IMPLEMENTED: Sadorsky Tree-Tech; Basher-Sadorsky RF-Macro; Bonato QBoost Realized-Moments; Altuntaş AlexNet-Candle; Yadav Tech-ML; Sulman DL-Ensemble; Mahato-Attar Ensemble; Zhang Return-ML. Any next implementation requires explicit user authorization; 2025 remains a locked retrospective challenge under Section 4.3.5.10.**
+16. **Literature-backed direction-engine queue — superseded Parisi executable artifacts removed by explicit user instruction; corrected `DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH` source-constrained reconstruction is preregistered and authorized for execution. Remaining candidates REGISTERED / RESEARCHED / DATA-READINESS CLASSIFIED / NOT IMPLEMENTED: Sadorsky Tree-Tech; Basher-Sadorsky RF-Macro; Bonato QBoost Realized-Moments; Altuntaş AlexNet-Candle; Yadav Tech-ML; Sulman DL-Ensemble; Mahato-Attar Ensemble; Zhang Return-ML. 2025 remains a locked retrospective challenge under Section 4.3.5.10.**
 17. **WP4 role-preserving integration/state-transition work — AFTER the new GC-BREAK challenger has a frozen design/evidence checkpoint**
 18. **Architecture/parameter freeze — PENDING**
 19. **Prospective shadow — PENDING FINAL FREEZE**
 
-The next **GC-BREAK** research lane is therefore not inferred from runtime-registry order: it remains the separately governed future-change-time challenger defined in Section 12.6. In parallel, the Section 4.3.5 direction-engine queue is evaluated one candidate at a time. Parisi GC_V1 is retained only as a diagnostic adaptation after the source-faithfulness audit; the published Parisi method remains pending exact method recovery. The other literature candidates stay registered but unimplemented until explicit user authorization. Macro Event, Emergency and SLOW remain outside the immediate GC-BREAK next step unless explicitly reactivated.
+The next **GC-BREAK** research lane is therefore not inferred from runtime-registry order: it remains the separately governed future-change-time challenger defined in Section 12.6. In parallel, the Section 4.3.5 direction-engine queue is evaluated one candidate at a time. The corrected Parisi Ward reconstruction V2 is frozen for execution under explicit user authorization; exact proprietary Parisi-2008 replication remains NOT_PROVEN because several implementation details are not published in accessible primary material. The other literature candidates stay registered but unimplemented until explicit user authorization. Macro Event, Emergency and SLOW remain outside the immediate GC-BREAK next step unless explicitly reactivated.
 
 ---
 
@@ -1478,6 +1450,6 @@ The **next GC-BREAK research motor/lane** is a new separately named **future-cha
 
 In parallel, the direction-research families remain governed. RSM/ERSM is permanently closed as `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`. The VLMC family is now `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION`: corrected VLMC-BS V2 found a real but unstable signal; Fixed-Share failed 2025 generalization; COVLMC-X3 collapsed to neutral; and the governed VLMC-C 104 successor failed pre-2025 direction validation (balanced 0.4417, DOWN sensitivity 0.05 versus parent 0.5583 / 0.45) and then forecast 52/52 UP in the unchanged 2025 replay. No further VLMC rescue/tuning is authorized unless the user explicitly reopens the family. BCT/CTW-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`; it materially improves probability stability versus VLMC-BS but collapses to 52/52 UP forecasts in the 2025 replay. Its final published real-valued successor `DIRECTION_BCTX_AR_V1_RESEARCH` was evaluated under frozen pre-2024 evidence selection: 2024 balanced accuracy reached 0.5584 but DOWN sensitivity was only 0.1538, failing the preregistered gate; unchanged 2025 replay had balanced accuracy 0.4865, DOWN sensitivity 0 and 51/52 UP forecasts. The BCT direction family is therefore `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION` unless explicitly reopened by the user. Source-form B-CARS V1 is blocked by genuine pre-2025 boundary up-ratios and was not scored. Its Smithson-Verkuilen successor failed pre-2025 direction validation. A final authority scan found the Realized Probability research line; exact CARB mathematics remained `NOT_PROVEN`, so no CARB was invented. The source-verifiable `DIRECTION_REALP_CARR_V1_RESEARCH` successor used hourly RealP plus the published asymmetric CARR/QMLE and RealP-on-lambda regression. It failed the frozen 2024 gate (balanced 0.4651, DOWN sensitivity 0.1154, accuracy 0.4717) and unchanged 2025 replay deteriorated to balanced 0.4444 with 0 DOWN sensitivity. The B-CARS / Realized-Probability direction family is therefore `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION` unless explicitly reopened. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
 
-A new literature-backed direction-engine queue was registered on 2026-09-21 without reopening those closed families: `DIRECTION_SADORSKY_TREE_TECH_V1_RESEARCH`, `DIRECTION_BASHER_SADORSKY_RF_MACRO_V1_RESEARCH`, `DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_V1_RESEARCH`, `DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH`, `DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH`, `DIRECTION_YADAV_TECH_ML_V1_RESEARCH`, `DIRECTION_SULMAN_DL_ENSEMBLE_V1_RESEARCH`, `DIRECTION_MAHATO_ATTAR_ENSEMBLE_V1_RESEARCH` and `DIRECTION_ZHANG_RETURN_ML_V1_RESEARCH`. The first executable candidate, `DIRECTION_PARISI_ROLLING_WARD_GC_V1_RESEARCH`, completed a frozen 2025 retrospective replay, but a subsequent user-triggered method audit found that it was not source-faithful enough to judge Parisi (2008): GC_V1 used one hidden bank rather than the paper's two hidden layers, borrowed Ward activation slabs from a separate same-author 2006 three-layer model, used a project-invented rolling-window grid and training algorithm, and unnecessarily restricted the XAU history to 2022–2025 despite longer available history. Its numerical result (2025 accuracy 0.5192, balanced 0.5036) is retained only as `DIAGNOSTIC_ONLY / NO_PROMOTION_FOR_GC_V1`; the Parisi source identity is `REOPENED / EXACT_REPLICATION_NOT_YET_PROVEN / 2025_FAITHFUL_TEST_PENDING`. Do not cite GC_V1 as evidence that the published Parisi method fails. The remaining literature identities stay registered but unimplemented: Bonato is currently the clearest data-ready spot-XAU adaptation candidate; Altuntaş and Yadav require daily OHLC completion; Sadorsky, Basher-Sadorsky, Sulman and Zhang have source-input gaps; Mahato-Attar remains blocked by incomplete method specification. No candidate may use 2025 for feature, horizon, threshold, architecture or hyperparameter selection. For Yadav and Sulman, the source papers themselves used 2025, so a Gold Control 2025 replay is external-literature-informed transport evidence rather than independent confirmatory OOS evidence.
+A literature-backed direction-engine queue was registered on 2026-09-21 without reopening the previously closed RSM/VLMC/BCT/B-CARS families. For Parisi, only the primary literature facts and the corrected `DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH` remain active on the branch; superseded executable/result surfaces were removed by explicit user instruction. The primary 2008 paper establishes the weekly 4-Gold-lag + 4-DJIA-lag first-difference signal, rolling period-by-period retraining, a two-hidden-layer / 21-neuron Ward specification, rolling-Ward superiority, block-bootstrap mean sign prediction 60.68% (sd 2.82%) and an ARIMA(4,1,2) benchmark. Exact proprietary neuron allocation, winning activation/scaling pair, rolling-size grid and training internals remain NOT_PROVEN. V2 is therefore explicitly a source-constrained reconstruction using long Gold/DJIA history, canonical two-slab Ward-1 Gaussian/Gaussian-complement structure, supervised back-propagation and a pre-2025-only rolling-size search; configuration must be persisted before any 2025 score. The remaining literature identities stay registered but unimplemented: Bonato is currently data-ready for a spot-XAU adaptation; Altuntaş and Yadav require daily OHLC completion; Sadorsky, Basher-Sadorsky, Sulman and Zhang have source-input gaps; Mahato-Attar remains blocked by incomplete method specification. No candidate may use 2025 for feature, horizon, threshold, architecture or hyperparameter selection. For Yadav and Sulman, source papers themselves used 2025, so later 2025 replay is transport/reproduction evidence rather than independent confirmatory OOS evidence.
 
 All future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
