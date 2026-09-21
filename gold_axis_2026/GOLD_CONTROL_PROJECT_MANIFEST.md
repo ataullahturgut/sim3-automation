@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.89  
+**Manifest version:** 1.90  
 **Issue date:** 2026-09-21  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -1451,7 +1451,8 @@ Random splitting is forbidden.
 13. **SLOW — LOW PRIORITY / NOT NEXT**
 14. **Post-BOCPD future change-time challenger — NEXT GC-BREAK RESEARCH LANE; exact identity/parameters require preregistration**
 15. **Legacy parallel direction-research lane — RSM/ERSM CLOSED / DO_NOT_REVISIT; VLMC family CLOSED / NO_PROMOTION; BCT family CLOSED / NO_PROMOTION; B-CARS / Realized-Probability family CLOSED / NO_PROMOTION; exact CARB NOT_PROVEN and not implemented**
-16. **Historical direction-memory inventory — RECOVERED / AUDIT-ONLY:** V1.49, HS-SDL-DMA, V1.51-V1.70, R15 event and H20 RTQ historical identities are explicitly indexed in Section 16 and the subordinate historical inventory; they are not reactivated.\n17. **Literature-backed direction-engine queue — superseded Parisi executable artifacts removed; corrected `DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH` completed and is `NO_PROMOTION / PRE2025_VALIDATION_WEAK / 2025_NO_TWO_SIDED_EDGE`. Bonato QBoost Realized-Moments Spot-XAU V1 is now EVALUATED / NO_PROMOTION after a frozen pre-2025 gate failure. Remaining candidates REGISTERED / RESEARCHED / DATA-READINESS CLASSIFIED / NOT IMPLEMENTED: Sadorsky Tree-Tech; Basher-Sadorsky RF-Macro; Altuntaş AlexNet-Candle; Yadav Tech-ML; Sulman DL-Ensemble; Mahato-Attar Ensemble; Zhang Return-ML. 2025 remains a locked retrospective challenge under Section 4.3.5.10.**
+16. **Historical direction-memory inventory — RECOVERED / AUDIT-ONLY:** V1.49, HS-SDL-DMA, V1.51-V1.70, R15 event and H20 RTQ historical identities are explicitly indexed in Section 16 and the subordinate historical inventory; they are not reactivated.
+17. **Literature-backed direction-engine queue — superseded Parisi executable artifacts removed; corrected `DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH` completed and is `NO_PROMOTION / PRE2025_VALIDATION_WEAK / 2025_NO_TWO_SIDED_EDGE`. Bonato QBoost Realized-Moments Spot-XAU V1 is now EVALUATED / NO_PROMOTION after a frozen pre-2025 gate failure. Remaining candidates REGISTERED / RESEARCHED / DATA-READINESS CLASSIFIED / NOT IMPLEMENTED: Sadorsky Tree-Tech; Basher-Sadorsky RF-Macro; Altuntaş AlexNet-Candle; Yadav Tech-ML; Sulman DL-Ensemble; Mahato-Attar Ensemble; Zhang Return-ML. 2025 remains a locked retrospective challenge under Section 4.3.5.10.**
 18. **WP4 role-preserving integration/state-transition work — AFTER the new GC-BREAK challenger has a frozen design/evidence checkpoint**
 19. **Architecture/parameter freeze — PENDING**
 20. **Prospective shadow — PENDING FINAL FREEZE**
