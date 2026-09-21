@@ -62,10 +62,12 @@ DJIA source:
 
 Weekly bridge:
 1. inner-join XAU and DJIA by completed calendar date;
-2. group into Monday-start calendar weeks;
-3. use the **latest date in each week on which both series have an observation**;
+2. group into Monday-start / Friday-ending calendar weeks;
+3. use the **latest date from Monday through that Friday on which both series have an observation**;
 4. take both XAU and DJIA levels from that same date;
-5. compute simple first differences in levels, not log returns:
+5. label the target by the nominal Friday `week_end`, not by Monday `week_start`;
+6. a 2025 target means `week_end` is in calendar year 2025, preventing the 2024-12-30→2025-01-03 week from being lost and preventing the incomplete 2025-12-29→2026-01-02 week from being misclassified as a 2025 target;
+7. compute simple first differences in levels, not log returns:
    `ΔG_t = G_t - G_(t-1)`;
    `ΔDJI_t = DJI_t - DJI_(t-1)`.
 
@@ -151,7 +153,7 @@ No architecture, scaling, optimizer, seed set, lag set or sign threshold is sele
 2025 is a **locked retrospective challenge**, not a pristine prospective holdout.
 
 After pre-2025 selection is frozen:
-- run the selected rolling Ward adaptation for all available 2025 weekly origins;
+- run the selected rolling Ward adaptation for all complete Friday-ending 2025 target weeks;
 - every 2025 forecast uses only the immediately preceding selected-window training samples;
 - retrain the network period-by-period as required by the rolling methodology;
 - 2025 results cannot trigger rescue tuning under this identity.
