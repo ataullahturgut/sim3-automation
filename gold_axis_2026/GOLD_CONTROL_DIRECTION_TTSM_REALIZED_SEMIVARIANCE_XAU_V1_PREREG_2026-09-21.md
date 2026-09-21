@@ -116,10 +116,18 @@ The primary scientific question is whether TTSM improves DOWN and UP->DOWN rever
 
 TTSM-S1 is the primary source rule. TTSM-S2 is a conservative source comparator.
 
-A model is retained as a promising standalone DOWN/reversal signal only if on 2024:
+Each TTSM source variant is scored separately on 2024. TTSM-S1 remains the primary identity; S2 is a conservative comparator and cannot silently replace S1.
+
+A variant is retained as a promising standalone DOWN/reversal signal only if on 2024:
 - full-timeline DOWN sensitivity >= TSM DOWN sensitivity + 0.10;
 - UP->DOWN reversal sensitivity >= TSM + 0.10;
 - active-signal balanced accuracy >= 0.52;
+- DOWN precision >= 0.45;
+- active coverage >= 0.50.
+
+If and only if that same variant passes 2024, 2025 transport is considered supported when unchanged 2025 also satisfies:
+- full-timeline DOWN sensitivity >= TSM DOWN sensitivity + 0.05;
+- active-signal balanced accuracy >= 0.50;
 - DOWN precision >= 0.45;
 - active coverage >= 0.50.
 
