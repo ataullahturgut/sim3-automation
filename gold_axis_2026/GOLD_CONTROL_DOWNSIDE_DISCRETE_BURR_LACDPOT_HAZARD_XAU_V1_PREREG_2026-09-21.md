@@ -91,7 +91,7 @@ Estimation:
 ## 6. Binary alert reconstruction
 
 The source-native output is probability/hazard. For event-detection diagnostics only:
-- alert threshold = 95th percentile of fitted formation daily hazard probabilities;
+- alert threshold = empirical nearest-rank 95th percentile of fitted formation daily hazard probabilities;
 - frozen before 2024;
 - no validation/challenge threshold search.
 
