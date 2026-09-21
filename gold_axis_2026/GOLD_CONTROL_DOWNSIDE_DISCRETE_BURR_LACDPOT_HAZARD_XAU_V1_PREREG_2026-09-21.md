@@ -38,7 +38,7 @@ Following the source POT convention, an extreme loss event occurs when:
 `L_t > u`.
 
 Threshold:
-- `u` = empirical 95th percentile of formation-sample negated log returns;
+- `u` = empirical nearest-rank 95th percentile of formation-sample negated log returns (`rank=ceil(0.95*n)`);
 - threshold is frozen before 2024 and never recomputed using 2024/2025.
 
 Event excess magnitude:
