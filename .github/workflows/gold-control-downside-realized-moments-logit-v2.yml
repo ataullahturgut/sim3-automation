@@ -1,0 +1,101 @@
+name: Gold Control Downside Realized Moments Logit V2
+
+on:
+  push:
+    branches:
+      - gold-direction-downside-rm-logit-v2-20260921
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_PREREG_2026-09-21.md'
+      - 'gold_axis_2026/tools/direction_downside_realized_moments_logit_v2.py'
+      - '.github/workflows/gold-control-downside-realized-moments-logit-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-downside-realized-moments-logit-v2
+  cancel-in-progress: false
+
+jobs:
+  downside-rm-logit-v2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-direction-downside-rm-logit-v2-20260921
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Require protected research DB credential
+        run: test -n "$NEON_DATABASE_URL"
+
+      - name: Install frozen dependencies
+        run: python -m pip install 'numpy==2.1.3' 'psycopg[binary]>=3.2,<4'
+
+      - name: Compile implementation
+        run: python -m py_compile gold_axis_2026/tools/direction_downside_realized_moments_logit_v2.py
+
+      - name: Assert read-only research implementation
+        run: |
+          ! grep -Eini 'insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from|create[[:space:]]+table|drop[[:space:]]+table|alter[[:space:]]+table' gold_axis_2026/tools/direction_downside_realized_moments_logit_v2.py
+          grep -n 'default_transaction_read_only' gold_axis_2026/tools/direction_downside_realized_moments_logit_v2.py
+          echo 'DOWNSIDE_RM_LOGIT_V2_READ_ONLY_PASS'
+
+      - name: Run pre-2025 freeze
+        run: |
+          rm -rf downside_rm_pre2025
+          mkdir -p downside_rm_pre2025
+          python gold_axis_2026/tools/direction_downside_realized_moments_logit_v2.py \
+            --stage pre2025 \
+            --outdir downside_rm_pre2025
+
+      - name: Freeze pre-2025 evidence before 2025 scoring
+        run: |
+          cp downside_rm_pre2025/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_SOURCE_AUDIT_2026-09-21.json \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_FROZEN_CONFIG_2026-09-21.json \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_PRE2025_RESULT_2026-09-21.json \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_2023_FORECASTS_2026-09-21.csv \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_2024_FORECASTS_2026-09-21.csv
+          git commit -m 'Freeze downside RM Logit V2 pre-2025 evidence'
+          git push origin HEAD:gold-direction-downside-rm-logit-v2-20260921
+
+      - name: Run unchanged locked 2025 replay
+        run: |
+          rm -rf downside_rm_2025
+          mkdir -p downside_rm_2025
+          python gold_axis_2026/tools/direction_downside_realized_moments_logit_v2.py \
+            --stage 2025 \
+            --outdir downside_rm_2025 \
+            --config gold_axis_2026/GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_FROZEN_CONFIG_2026-09-21.json \
+            --pre-result gold_axis_2026/GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_PRE2025_RESULT_2026-09-21.json
+
+      - name: Freeze 2025 replay and final result
+        run: |
+          cp downside_rm_2025/* gold_axis_2026/
+          git add \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_2025_FORECASTS_2026-09-21.csv \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_2025_RESULT_2026-09-21.json \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_RESULT_2026-09-21.md
+          git commit -m 'Freeze downside RM Logit V2 2025 challenge'
+          git push origin HEAD:gold-direction-downside-rm-logit-v2-20260921
+
+      - name: Upload reproducibility outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-downside-realized-moments-logit-v2
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            downside_rm_pre2025/
+            downside_rm_2025/
