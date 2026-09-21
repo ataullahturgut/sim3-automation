@@ -65,7 +65,7 @@ Mandatory continuous metrics:
 ## 5. High-downside-risk diagnostic
 
 For interpretability only:
-- high-risk target threshold = formation 80th percentile of realized next-day DR;
+- high-risk target threshold = formation empirical nearest-rank 80th percentile of realized next-day DR;
 - high-risk forecast alert = HAR-DR forecast above that same frozen DR threshold.
 
 Report:
