@@ -1,0 +1,92 @@
+name: Gold Control VLMC-BS Family V2 Reference
+
+on:
+  push:
+    branches:
+      - gold-direction-vlmc-bs-family-v2-20260918
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_PREREG_2026-09-18.md'
+      - 'gold_axis_2026/research_inputs/XAU_WEEKLY_SIGN_SOURCE_METHOD_V2_2022_2025.csv'
+      - 'gold_axis_2026/tools/direction_vlmc_bs_family_v2_reference.R'
+      - '.github/workflows/gold-control-vlmc-bs-family-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-vlmc-bs-family-v2
+  cancel-in-progress: false
+
+jobs:
+  reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-direction-vlmc-bs-family-v2-20260918
+          fetch-depth: 0
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.4.1'
+          use-public-rspm: false
+
+      - name: Install pinned VLMC reference package
+        run: |
+          Rscript -e 'install.packages("https://cran.r-project.org/src/contrib/Archive/VLMC/VLMC_1.4-4.tar.gz", repos=NULL, type="source")'
+          Rscript -e 'stopifnot(as.character(packageVersion("VLMC")) == "1.4.4"); sessionInfo()'
+
+      - name: Run corrected pre-2025 source-family checkpoint
+        run: |
+          rm -rf vlmc_bs_v2_pre2025
+          mkdir -p vlmc_bs_v2_pre2025
+          Rscript gold_axis_2026/tools/direction_vlmc_bs_family_v2_reference.R \
+            gold_axis_2026/research_inputs/XAU_WEEKLY_SIGN_SOURCE_METHOD_V2_2022_2025.csv \
+            pre2025 \
+            vlmc_bs_v2_pre2025 \
+            AUTO
+
+      - name: Freeze calibration and pre-2025 outputs before 2025 replay
+        run: |
+          cp vlmc_bs_v2_pre2025/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_CALIBRATION_2026-09-18.csv \
+                  gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_PRE2025_FORECASTS_2026-09-18.csv \
+                  gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_PRE2025_METRICS_2026-09-18.csv \
+                  gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_PRE2025_SUMMARY_2026-09-18.R \
+                  gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_PRE2025_SUMMARY_2026-09-18.txt
+          git commit -m 'Freeze source-faithful VLMC-BS V2 pre-2025 checkpoint'
+          git push origin HEAD:gold-direction-vlmc-bs-family-v2-20260918
+
+      - name: Run unchanged corrected 2025 replay
+        run: |
+          rm -rf vlmc_bs_v2_2025
+          mkdir -p vlmc_bs_v2_2025
+          Rscript gold_axis_2026/tools/direction_vlmc_bs_family_v2_reference.R \
+            gold_axis_2026/research_inputs/XAU_WEEKLY_SIGN_SOURCE_METHOD_V2_2022_2025.csv \
+            2025 \
+            vlmc_bs_v2_2025 \
+            gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_CALIBRATION_2026-09-18.csv
+
+      - name: Freeze complete 2025 outputs before event overlay
+        run: |
+          cp vlmc_bs_v2_2025/* gold_axis_2026/
+          git add gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_2025_FORECASTS_2026-09-18.csv \
+                  gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_2025_METRICS_2026-09-18.csv \
+                  gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_2025_SUMMARY_2026-09-18.R \
+                  gold_axis_2026/GOLD_CONTROL_DIRECTION_VLMC_BS_FAMILY_V2_2025_SUMMARY_2026-09-18.txt
+          git commit -m 'Freeze source-faithful VLMC-BS V2 2025 forecasts before overlay'
+          git push origin HEAD:gold-direction-vlmc-bs-family-v2-20260918
+
+      - name: Upload reproducibility outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-vlmc-bs-family-v2-reference
+          retention-days: 30
+          if-no-files-found: error
+          path: |
+            vlmc_bs_v2_pre2025/
+            vlmc_bs_v2_2025/

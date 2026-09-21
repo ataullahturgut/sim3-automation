@@ -1,0 +1,44 @@
+{
+  "gate": {
+    "criteria": {
+      "accuracy_gt_always_up": true,
+      "accuracy_gt_previous_sign": true,
+      "balanced_accuracy_gte_0_55": true,
+      "down_sensitivity_gte_0_40": false,
+      "up_sensitivity_gte_0_40": true
+    },
+    "passed": false
+  },
+  "identity": "DIRECTION_BCTX_AR_V1_RESEARCH",
+  "metrics": {
+    "accuracy": 0.5660377358490566,
+    "actual_down": 26,
+    "actual_up": 27,
+    "always_up_accuracy": 0.5094339622641509,
+    "balanced_accuracy": 0.5584045584045584,
+    "down_sensitivity": 0.15384615384615385,
+    "fn": 1,
+    "forecast_down": 5,
+    "forecast_up": 48,
+    "fp": 22,
+    "mae_return": 0.015481294337618842,
+    "max_tree_leaves": 7,
+    "max_tree_max_depth": 3,
+    "mean_pred_return": 0.002668882855037594,
+    "median_tree_leaves": 1.0,
+    "median_tree_max_depth": 0.0,
+    "n": 53,
+    "previous_sign_accuracy": 0.5094339622641509,
+    "rmse_return": 0.020409116995450324,
+    "tn": 4,
+    "tp": 26,
+    "up_sensitivity": 0.9629629629629629
+  },
+  "selected": {
+    "c1_z": -0.8267251397441705,
+    "c2_z": 1.0789919159472794,
+    "log_evidence": -124.95204968124622,
+    "p": 1
+  },
+  "stage": "pre2025_2024_fixed_validation"
+}

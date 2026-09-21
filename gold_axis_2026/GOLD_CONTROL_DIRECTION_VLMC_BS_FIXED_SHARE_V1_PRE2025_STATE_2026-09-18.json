@@ -1,0 +1,60 @@
+{
+  "identity": "DIRECTION_VLMC_BS_FIXED_SHARE_V1_RESEARCH",
+  "loss_type": "ZERO_ONE",
+  "eta": 1.0,
+  "alpha": 0.05,
+  "experts": [
+    26,
+    52
+  ],
+  "end_2023_weights": {
+    "26": 0.7125705378138859,
+    "52": 0.28742946218611404
+  },
+  "end_2024_weights": {
+    "26": 0.4519604850813519,
+    "52": 0.5480395149186482
+  },
+  "development_2023": {
+    "n": 43,
+    "accuracy": 0.6046511627906976,
+    "balanced_accuracy": 0.618421052631579,
+    "brier": 0.2955613945886296,
+    "log_loss": 2.588400717039103,
+    "actual_up": 24,
+    "actual_down": 19,
+    "forecast_up": 17,
+    "forecast_down": 26,
+    "up_sensitivity": 0.5,
+    "down_sensitivity": 0.7368421052631579,
+    "tp": 12,
+    "tn": 14,
+    "fp": 5,
+    "fn": 12,
+    "always_up_accuracy": 0.5581395348837209,
+    "mean_p_up": 0.43292143734558675,
+    "min_p_up": 0.0,
+    "max_p_up": 1.0
+  },
+  "validation_2024": {
+    "n": 53,
+    "accuracy": 0.6792452830188679,
+    "balanced_accuracy": 0.6780626780626781,
+    "brier": 0.250926281843713,
+    "log_loss": 1.1797718096971979,
+    "actual_up": 27,
+    "actual_down": 26,
+    "forecast_up": 30,
+    "forecast_down": 23,
+    "up_sensitivity": 0.7407407407407407,
+    "down_sensitivity": 0.6153846153846154,
+    "tp": 20,
+    "tn": 16,
+    "fp": 10,
+    "fn": 7,
+    "always_up_accuracy": 0.5094339622641509,
+    "mean_p_up": 0.5574913549740228,
+    "min_p_up": 0.0,
+    "max_p_up": 1.0
+  }
+}

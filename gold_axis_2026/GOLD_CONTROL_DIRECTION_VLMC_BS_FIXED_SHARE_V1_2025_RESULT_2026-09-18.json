@@ -1,0 +1,37 @@
+{
+  "identity": "DIRECTION_VLMC_BS_FIXED_SHARE_V1_RESEARCH",
+  "frozen_parameters": {
+    "loss_type": "ZERO_ONE",
+    "eta": 1.0,
+    "alpha": 0.05
+  },
+  "start_2025_weights": {
+    "26": 0.4519604850813519,
+    "52": 0.5480395149186482
+  },
+  "end_2025_weights": {
+    "26": 0.5303166385572811,
+    "52": 0.46968336144271894
+  },
+  "metrics_2025": {
+    "n": 52,
+    "accuracy": 0.4807692307692308,
+    "balanced_accuracy": 0.39729729729729735,
+    "brier": 0.3514877618534649,
+    "log_loss": 3.354304019335889,
+    "actual_up": 37,
+    "actual_down": 15,
+    "forecast_up": 34,
+    "forecast_down": 18,
+    "up_sensitivity": 0.5945945945945946,
+    "down_sensitivity": 0.2,
+    "tp": 22,
+    "tn": 3,
+    "fp": 12,
+    "fn": 15,
+    "always_up_accuracy": 0.7115384615384616,
+    "mean_p_up": 0.5976375244308848,
+    "min_p_up": 0.0,
+    "max_p_up": 1.0
+  }
+}

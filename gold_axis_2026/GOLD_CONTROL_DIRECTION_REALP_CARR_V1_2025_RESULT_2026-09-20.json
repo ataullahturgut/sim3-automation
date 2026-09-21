@@ -1,0 +1,46 @@
+{
+  "2025": {
+    "accuracy": 0.6153846153846154,
+    "actual_down": 16,
+    "actual_up": 36,
+    "all_origins_converged": true,
+    "always_up_accuracy": 0.6923076923076923,
+    "balanced_accuracy": 0.4444444444444444,
+    "down_sensitivity": 0.0,
+    "fn": 4,
+    "forecast_down": 4,
+    "forecast_up": 48,
+    "fp": 16,
+    "historical_mean_realp_direction_accuracy": 0.6923076923076923,
+    "max_lambda_forecast": 0.3452871289699138,
+    "max_psi": 0.02670870638377227,
+    "max_realp_forecast": 0.5155125926313371,
+    "mean_psi": -0.12226361944354441,
+    "mean_realp_forecast": 0.5085350609083744,
+    "min_lambda_forecast": 0.1039020943232701,
+    "min_psi": -0.3057993235105349,
+    "min_realp_forecast": 0.4886575922765946,
+    "mse_realp_historical_mean": 0.003965042682373033,
+    "mse_realp_model": 0.004186762729392553,
+    "n": 52,
+    "previous_realp_direction_accuracy": 0.5576923076923077,
+    "previous_sign_accuracy": 0.5576923076923077,
+    "r2_oos_realp": -0.05591870372674612,
+    "tn": 0,
+    "tp": 32,
+    "up_sensitivity": 0.8888888888888888
+  },
+  "identity": "DIRECTION_REALP_CARR_V1_RESEARCH",
+  "pre2025_gate": {
+    "criteria": {
+      "accuracy_gt_always_up": false,
+      "accuracy_gt_previous_sign": false,
+      "balanced_accuracy_gte_0_55": false,
+      "down_sensitivity_gte_0_40": false,
+      "r2_oos_realp_gt_0": true,
+      "up_sensitivity_gte_0_40": true
+    },
+    "passed": false
+  },
+  "stage": "2025_post_diagnostic_unchanged"
+}
