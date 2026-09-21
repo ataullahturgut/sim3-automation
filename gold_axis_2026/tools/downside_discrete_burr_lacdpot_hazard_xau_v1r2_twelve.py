@@ -312,9 +312,9 @@ def main():
         res={"identity":IDENTITY,"status":"PRE2025_FROZEN","2024_validation":m24,
              "pre2025_gate_passed":passed,
              "decision":"PRE2025_EXTREME_DOWN_HAZARD_SUPPORTED" if passed else "PRE2025_EXTREME_DOWN_HAZARD_NOT_SUPPORTED"}
-        (out/"GOLD_CONTROL_DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1_FROZEN_CONFIG_2026-09-21.json").write_text(json.dumps(cfg,indent=2),encoding="utf-8")
-        (out/"GOLD_CONTROL_DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1_PRE2025_RESULT_2026-09-21.json").write_text(json.dumps(res,indent=2),encoding="utf-8")
-        write_csv(out/"GOLD_CONTROL_DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1_2024_FORECASTS_2026-09-21.csv",rows24)
+        (out/"GOLD_CONTROL_DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1R2_FROZEN_CONFIG_2026-09-21.json").write_text(json.dumps(cfg,indent=2),encoding="utf-8")
+        (out/"GOLD_CONTROL_DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1R2_PRE2025_RESULT_2026-09-21.json").write_text(json.dumps(res,indent=2),encoding="utf-8")
+        write_csv(out/"GOLD_CONTROL_DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1R2_2024_FORECASTS_2026-09-21.csv",rows24)
         print("ACDPOT_PRE2025_SUCCESS")
     else:
         if not a.config or not a.pre_result: raise RuntimeError("CONFIG_PRE_RESULT_REQUIRED")
@@ -328,8 +328,8 @@ def main():
         res={"identity":IDENTITY,"status":"LOCKED_2025_REPLAY_COMPLETE","2025_challenge":m25,
              "pre2025_gate_passed":pre["pre2025_gate_passed"],"2025_transport_passed":trans,
              "decision":"2025_HAZARD_TRANSPORT_SUPPORTED" if trans else "2025_HAZARD_TRANSPORT_NOT_SUPPORTED"}
-        (out/"GOLD_CONTROL_DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1_2025_RESULT_2026-09-21.json").write_text(json.dumps(res,indent=2),encoding="utf-8")
-        write_csv(out/"GOLD_CONTROL_DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1_2025_FORECASTS_2026-09-21.csv",rows25)
+        (out/"GOLD_CONTROL_DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1R2_2025_RESULT_2026-09-21.json").write_text(json.dumps(res,indent=2),encoding="utf-8")
+        write_csv(out/"GOLD_CONTROL_DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1R2_2025_FORECASTS_2026-09-21.csv",rows25)
         print("ACDPOT_2025_SUCCESS")
 
 if __name__=="__main__":
