@@ -1,7 +1,7 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.79  
-**Issue date:** 2026-09-20  
+**Manifest version:** 1.80  
+**Issue date:** 2026-09-21  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
 **Current research branch:** `gold-direction-vlmc-bs-family-v2-20260918`  
@@ -103,6 +103,15 @@ The current research-status layer is binding for work sequencing and must not be
 | `DIRECTION_BCARS_V1_RESEARCH` | `BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED / NOT_RUNTIME` | source-form ordinary-Beta B-CARS(1,1) is blocked by genuine pre-2025 weekly up-ratios equal to 0; no silent clipping permitted |
 | `DIRECTION_BCARS_SV_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / WEAK_DIRECTIONAL_DISCRIMINATION` | separately preregistered Smithson-Verkuilen boundary-safe B-CARS(1,1) successor; 2024 validation failed and 2025 produced 51 UP / 1 DOWN with 0% DOWN sensitivity |
 | `DIRECTION_REALP_CARR_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / REALP_BCARS_FAMILY_CLOSED_CURRENT_SEQUENCE / NOT_RUNTIME` | exact CARB specification was not proven and was not invented. Source-verifiable Realized Probability + asymmetric CARR/QMLE + linear RealP forecasting was preregistered and executed. 2024 balanced accuracy 0.4651, DOWN sensitivity 0.1154 and accuracy 0.4717 failed the frozen gate; unchanged 2025 balanced accuracy 0.4444 with 0 DOWN sensitivity. |
+| `DIRECTION_SADORSKY_TREE_TECH_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_GLD_OHLCV / NOT_IMPLEMENTED` | Sadorsky (2021) GLD/SLV direction classification with logit, 500-tree bagging, 3000-tree stochastic gradient boosting and 500-tree RF over 1..20 trading-day horizons using 13 technical indicators. Exact source-faithful test needs GLD ETF OHLCV, including volume-dependent OBV/MFI; current Gold Control does not hold that source panel. |
+| `DIRECTION_BASHER_SADORSKY_RF_MACRO_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_INPUT_PANEL / NOT_IMPLEMENTED` | Basher & Sadorsky (2022) RF/bagging/logit direction family over 1..20 trading-day horizons with technical indicators plus rates, inflation/term structure, VIX/OVX, EPU/EMU and EMV inputs. Current project lacks the complete pre-2025 source-faithful predictor panel and GLD-volume inputs. |
+| `DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SPOT_XAU_2025_ADAPTATION_READY_CURRENT_INTRADAY / EXACT_FUTURES_REPLICATION_BLOCKED / NOT_IMPLEMENTED` | Bonato et al. (2018) recursively estimated quantile boosting with intraday realized volatility/skewness and market/sentiment controls. Gold Control has 5-minute XAU/USD cache from 2020-04-06 through 2026-08-31, sufficient for a pre-2025 spot-XAU adaptation and locked 2025 challenge; exact paper replication remains blocked because the paper targets gold futures and a broader control panel. |
+| `DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / 2025_GOLD_ADAPTATION_READY_CURRENT_DATA / NOT_IMPLEMENTED` | Parisi, Parisi & Díaz (2008): rolling/recursive feed-forward and Ward neural nets for one-step-ahead gold sign using four lags of gold first differences and four lags of DJIA first differences, with weights recalculated period-by-period in the rolling design and block-bootstrap validation. Current Gold Control has daily XAU research history and DJIA daily closes spanning the full pre-2025 formation period. |
+| `DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / 2025_TEST_REQUIRES_DAILY_OHLC_COMPLETION / NOT_IMPLEMENTED` | Altuntaş, Okumuş & Kocamaz (2022): next-day UP/DOWN from 11-day candlestick images with SMA7, SMA50 and Bollinger(20,2), fine-tuned AlexNet at 227x227x3; source uses chronological 9y/3y/3y train/validation/test, max 100 epochs and mini-batch 32. Current long XAU history is not stored as a complete governed daily OHLC panel, so image construction is not yet input-complete. |
+| `DIRECTION_YADAV_TECH_ML_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / WORKING_PAPER / 2025_TEST_REQUIRES_DAILY_OHLC_COMPLETION / EXTERNAL_2025_EXPOSURE / NOT_IMPLEMENTED` | Yadav (2026 working paper): next-day XAU/USD binary direction with technical indicators and logistic regression, decision tree, RF, gradient boosting and SVM under time-series OOS evaluation. Indicators include RSI, ATR, MACD, moving averages and Bollinger features; ATR requires OHLC. Because the source study itself uses data through 2025, any 2025 replay here is transport/reproduction evidence, not an independent blind holdout. |
+| `DIRECTION_SULMAN_DL_ENSEMBLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_OHLCV_DATASET / EXTERNAL_2025_EXPOSURE / NOT_IMPLEMENTED` | Sulman et al. (2026): next-day gold return forecasting from daily OHLCV plus lagged price/return features using RF, XGBoost, tuned RBF-SVR, LSTM, BiLSTM, GRU, CNN-LSTM, ML ensemble and CNN-LSTM/GRU DL ensemble. Source deep-learning setup uses Adam 0.001, MSE, batch 32, <=100 epochs, early-stopping patience 12 and ReduceLROnPlateau patience 6/factor 0.5. Current project lacks a source-equivalent governed daily gold volume series; source study itself uses 2020-2025, so 2025 cannot be called independent blind OOS. |
+| `DIRECTION_MAHATO_ATTAR_ENSEMBLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / METHOD_SPEC_NOT_PROVEN / 2025_TEST_BLOCKED / NOT_IMPLEMENTED` | Mahato & Attar (2014) reports next-day increase/decrease prediction with ensemble methods and 85% gold accuracy from stacking, but accessible authoritative material does not expose enough exact feature, base-learner and split details for a source-faithful implementation. Do not reconstruct the method by guesswork; obtain the full method specification first. |
+| `DIRECTION_ZHANG_RETURN_ML_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / 2025_TEST_BLOCKED_EXTERNAL_PREDICTORS / NOT_IMPLEMENTED` | Zhang (DAML 2024 proceedings): relative-return regression with XGBoost, SVR and RF using oil, VIX, S&P 500, USD index plus MACD difference, RSI and Bollinger %B; grid search and trend accuracy are reported. Current Gold Control does not hold a complete pre-2025 governed panel for the exact oil/VIX/S&P500/USD-index predictors. |
 | Post-BOCPD future-change-time lane | `NEXT_RESEARCH_LANE / PREREGISTRATION_REQUIRED` | separately named residual-time / explicit-duration / Bayesian online changepoint-prediction challenger; exact identity and parameters must be frozen before implementation |
 | `MACRO_EVENT_SUCCESSOR_V2` | `SUSPENDED_FOR_CURRENT_GC_BREAK_RESEARCH_SEQUENCE` | governed runtime identity remains registered, but it is **not the next motor** and no new Macro Event tuning/evaluation is authorized in the current sequence |
 | `MACRO_EVENT_SUCCESSOR_V4_RELIABILITY_GATE` | `FROZEN_RESEARCH_CHALLENGER / NOT_RUNTIME_AUTHORITY` | historical preregistration remains audit lineage; not promoted and not the current workstream |
@@ -603,9 +612,254 @@ Authoritative RealP-CARR surfaces:
 - 2025 result: `GOLD_CONTROL_DIRECTION_REALP_CARR_V1_2025_RESULT_2026-09-20.json`;
 - final result: `GOLD_CONTROL_DIRECTION_REALP_CARR_V1_RESULT_2026-09-20.md`.
 
-### 4.4 Common governance for the four new direction motors
+### 4.3.5 Literature-backed direction-engine queue registered 2026-09-21
 
-These four motors form a parallel research-only direction lane. They do not reactivate the historical fixed NEXT_NY17_1D/3D programme and do not alter the primary GC-BREAK sequential state output.
+The earlier RSM/ERSM, VLMC, BCT and B-CARS/Realized-Probability families remain closed under their existing decisions. The following literature-backed candidates are **new research identities**, not rescues or retunes of those closed families.
+
+Registration in this manifest is **not implementation authorization**. No code, workflow, model fitting, 2025 scoring or result selection is authorized until the user explicitly instructs the project to proceed with a named candidate. Missing inputs are to be collected only after that instruction and source semantics are frozen.
+
+#### 4.3.5.1 DIRECTION_SADORSKY_TREE_TECH_V1_RESEARCH
+
+Primary authority: Perry Sadorsky (2021), *Predicting Gold and Silver Price Direction Using Tree-Based Classifiers*, Journal of Risk and Financial Management 14(5):198, DOI 10.3390/jrfm14050198.
+
+Source method:
+- target asset is GLD (and separately SLV), not spot XAU/USD;
+- binary target at horizons h=1..20 trading days: UP if future ETF price change is positive, DOWN otherwise;
+- 13 technical-indicator feature space including RSI, stochastic slow/fast components, ADX, MACD/MACD signal, ROC, OBV, MFI, WAD, MA50 and MA200;
+- comparison models: logit, decision-tree bagging, stochastic gradient boosting and random forests;
+- bagging: 500 trees;
+- RF: 500 trees and mtry=3 (=floor(sqrt(13)));
+- stochastic gradient boosting: 3000 trees, shrinkage 0.20, interaction depth 8, minimum node size 10, bag fraction 0.5;
+- paper reports 80/20 testing plus sensitivity analysis with repeated 10-fold CV, and additionally a time-series CV experiment in which the training sample is refit sequentially.
+
+Gold Control implementation rule:
+- random splitting/repeated random CV is **not** permitted for the project decision surface even though reported in the source;
+- source model identities/hyperparameters may be replicated, but all project selection/tuning must be time-ordered and frozen before 2025;
+- h=1..20 may be reproduced, with h=5/10/20 explicitly reported; overlapping-horizon metrics must be accompanied by non-overlapping-origin robustness;
+- exact GLD replication and any spot-XAU adaptation must be reported as different evidence classes and may not be silently conflated.
+
+2025 testability audit:
+- exact source-faithful status: `BLOCKED_GLD_OHLCV`;
+- Gold Control currently has no governed GLD ETF series;
+- volume-dependent OBV and MFI prevent exact substitution with the current close-centric XAU history;
+- a spot-XAU technical-indicator adaptation is possible only under a separately frozen adaptation contract after OHLC/volume semantics are resolved.
+
+#### 4.3.5.2 DIRECTION_BASHER_SADORSKY_RF_MACRO_V1_RESEARCH
+
+Primary authority: Syed A. Basher & Perry Sadorsky (2022), *Forecasting Bitcoin price direction with random forests: How important are interest rates, inflation, and market volatility?*, Machine Learning with Applications 9:100355, DOI 10.1016/j.mlwa.2022.100355. The paper contains a parallel gold/GLD direction experiment.
+
+Source method:
+- multistep direction horizons h=1..20 trading days;
+- logit, tree bagging and random forests, with tuned-RF comparisons;
+- technical-indicator block overlaps the Sadorsky family (RSI, stochastic indicators, ADX, MACD/MACD signal, ROC, OBV, MFI, WAD, MA50, MA200);
+- macro/market block includes EPU, EMU, 10-year Treasury yield, 3-month T-bill, term spread, break-even inflation, 5-year inflation expectations, VIX, OVX and EMV_IDT;
+- RF/tree bagging use 500 trees; paper's RF feature count implies mtry=floor(sqrt(p));
+- paper reports both ordinary CV and time-series CV; for gold, reported tsCV accuracy is 0.8189 at h=10 and 0.8778 at h=20.
+
+Gold Control implementation rule:
+- only time-ordered formation/validation is authorized; no random CV may determine project promotion;
+- all feature release lags/PIT semantics must be origin-safe;
+- 2025 may not determine horizon, feature subset, mtry, threshold or any tuned parameter;
+- h=10 and h=20 must receive non-overlapping-origin robustness checks because overlapping multiday targets can inflate apparent sample size.
+
+2025 testability audit:
+- status `BLOCKED_INPUT_PANEL`;
+- current project has some relevant rates/macro context but not the complete source-faithful pre-2025 daily/availability-aware EPU/EMU/EMV_IDT/VIX/OVX/3m-T-bill/break-even/5y-inflation panel;
+- current VIX registry coverage begins in 2026, so it does not support a 2025 source-faithful challenge;
+- GLD and volume-dependent indicators are also not currently input-complete.
+
+#### 4.3.5.3 DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_V1_RESEARCH
+
+Primary authority: Bonato, Demirer, Gupta & Pierdzioch (2018), *Gold futures returns and realized moments: A forecasting experiment using a quantile-boosting approach*, Resources Policy 57:196-212, DOI 10.1016/j.resourpol.2018.03.004.
+
+Source method:
+- target is gold futures return, not spot XAU/USD;
+- realized volatility and realized skewness are computed from intraday gold-futures returns;
+- recursively expanding quantile boosting jointly performs iterative model building and predictor selection;
+- forecasting models compare: boosted AR(1), boosted market/sentiment controls without realized moments, and boosted controls plus realized volatility/skewness;
+- source control set includes 3m T-bill, 10y-minus-3m term spread, USD/GBP and JPY/USD returns, S&P 500 return, VXO, WTI return, daily EPU and EMU, plus lagged gold-futures return;
+- baseline experiment uses 75% (1222 observations) to initialize and then recursively produces OOS forecasts;
+- source evidence emphasizes incremental predictive value at intermediate horizons/lower quantiles and reports directional-accuracy tests.
+
+Gold Control implementation rule:
+- first executable identity is explicitly a **spot-XAU adaptation**, not a claim of exact futures replication;
+- realized moments must be built only from intraday bars completed by the forecast origin;
+- the source's recursive quantile-boosting procedure and comparator structure must be reproduced as closely as source details permit;
+- all quantile set, boosting stopping rule, predictor list and horizon set must be frozen from pre-2025 information before 2025 scoring;
+- direction metrics are mandatory in addition to quantile-loss/return-forecast metrics.
+
+2025 testability audit:
+- `SPOT_XAU_ADAPTATION_READY_CURRENT_INTRADAY`;
+- Gold Control Neon read-only audit on 2026-09-21 shows XAU 5m cache 2020-04-06..2026-08-31 (482,734 rows) and XAU 1m cache 2023-01-02..2026-06-30 (1,330,943 rows), so 2023-2024 formation and all 2025 realized-moment construction are available;
+- `EXACT_FUTURES_REPLICATION_BLOCKED` because the paper uses gold futures and a broader control panel not currently complete;
+- no 2025 score is authorized yet.
+
+#### 4.3.5.4 DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH
+
+Primary authority: Parisi, Parisi & Díaz (2008), *Forecasting gold price changes: Rolling and recursive neural network models*, Journal of Multinational Financial Management 18(5):477-487, DOI 10.1016/j.mulfin.2007.12.002.
+
+Source method:
+- one-step-ahead sign variation in gold price;
+- predictors are four lags of gold first differences and four lags of DJIA first differences;
+- feed-forward and Ward neural networks are compared under recursive and rolling updating;
+- rolling networks recalculate weights period-by-period; rolling Ward is the source's strongest family;
+- source reports block-bootstrap validation and mean rolling-Ward sign prediction 60.68% (sd 2.82%);
+- a Ward specification with two hidden layers / 21 neurons is reported among the best architectural combinations.
+
+Gold Control implementation rule:
+- exact weekly/period aggregation and rolling sample-size rule must be recovered/frozen from the paper before execution; where the source detail is not recoverable, do not invent it;
+- Gold and DJIA first differences must be synchronized to the same completed-period clock;
+- network training at every origin must use only prior observations;
+- architecture/sample-size alternatives may be compared only inside pre-2025 chronology, never on 2025.
+
+2025 testability audit:
+- `READY_CURRENT_DATA_FOR_GOLD_ADAPTATION`;
+- current Gold Control holds DJIA daily closes from 2016-08-29 onward and long XAU daily research history, sufficient to construct several years of pre-2025 lagged weekly inputs and a locked 2025 retrospective challenge;
+- source price/weekly semantics still require a preregistered bridge before scoring.
+
+#### 4.3.5.5 DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH
+
+Primary authority: Altuntaş, Okumuş & Kocamaz (2022), *Evrişimsel Sinir Ağları ve Transfer Öğrenme Yaklaşımı Kullanılarak Altın Fiyat Yönünün Tahmini*, Computer Science 7(2):124-131, DOI 10.53070/bbd.1205299.
+
+Source method:
+- daily ounce-gold OHLC;
+- label at day T is UP if Close(T+1)>Close(T), DOWN if Close(T+1)<Close(T);
+- each sample image contains an 11-day candlestick chart plus SMA7, SMA50 and Bollinger bands with SMA20 +/- 2*20-day standard deviation;
+- PNG chart images are classified by fine-tuning pretrained AlexNet at 227x227x3;
+- source split is chronological 3:1:1 by years (9 years train, 3 validation, 3 test);
+- last fully connected layer is replaced by two outputs; max epochs 100; mini-batch 32;
+- source reports 53.8% classification accuracy.
+
+Gold Control implementation rule:
+- preserve chronological train/validation/test; no shuffled image split;
+- chart rendering must be deterministic and frozen (axis/scale/image geometry/indicator styling);
+- ImageNet pretrained weights may be used as external prior, but all fine-tuning/early stopping must use <=2024 data;
+- 2025 images/labels must be generated only after image pipeline and training choices are frozen.
+
+2025 testability audit:
+- `REQUIRES_DAILY_OHLC_COMPLETION`;
+- current long-lived Gold Control XAU history is not stored as a complete governed daily OHLC panel for source-faithful candlestick generation;
+- existing Twelve Data infrastructure can later be used to acquire/validate OHLC, but that collection is not authorized by this registration alone.
+
+#### 4.3.5.6 DIRECTION_YADAV_TECH_ML_V1_RESEARCH
+
+Primary authority: Kartikey Yadav (2026), *Comparative Evaluation of Machine Learning Classifiers for Short-Term Gold Price Direction: Statistical and Economic Evidence*, SSRN 6323238, DOI 10.2139/ssrn.6323238. This is a working paper, not a peer-reviewed journal result.
+
+Source method:
+- daily XAU/USD, next-day binary direction;
+- classifier family: logistic regression, decision tree, random forest, gradient boosting and SVM;
+- technical indicators include RSI, ATR, MACD, moving averages and Bollinger-band features;
+- evaluation is time-series out-of-sample rather than ordinary random splitting;
+- paper reports only modest near-chance accuracy and no statistically significant superiority to a naive benchmark.
+
+Gold Control implementation rule:
+- use a fully specified source-faithful indicator list only after the exact working-paper version is frozen;
+- OHLC-dependent indicators such as ATR must use completed daily OHLC bars;
+- preprocessing/scaling/model hyperparameters must be fit only on pre-2025 data;
+- include confidence intervals and paired forecast-significance testing in addition to raw classification metrics.
+
+2025 testability audit:
+- `REQUIRES_DAILY_OHLC_COMPLETION`;
+- importantly, the source paper itself uses 2000-2025 data. Therefore its architecture/feature choices are externally exposed to 2025;
+- any Gold Control 2025 run is `EXTERNAL_LITERATURE_INFORMED_RETROSPECTIVE_TRANSPORT`, not a pristine independent holdout.
+
+#### 4.3.5.7 DIRECTION_SULMAN_DL_ENSEMBLE_V1_RESEARCH
+
+Primary authority: Sulman et al. (2026), *Forecasting Next-Day Gold Returns under Market Volatility: A Comparative Study of Machine Learning and Hybrid Deep Learning Ensembles*, IEEE ICMI 2026, DOI 10.1109/ICMI68585.2026.11539848.
+
+Source method:
+- daily gold OHLCV, 2020-2025, with lagged price/return features;
+- target is next-day return; direction is evaluated from forecast-return sign;
+- models include RF, XGBoost, tuned RBF-SVR, LSTM, BiLSTM, GRU, CNN-LSTM, equal-weight ML ensemble and CNN-LSTM/GRU deep ensemble;
+- source uses chronological 80% train / 20% test and z-score scaling;
+- deep-learning training: Adam lr=0.001, MSE loss, batch 32, <=100 epochs, early stopping patience 12 with best-weight restore, ReduceLROnPlateau patience 6/factor 0.5;
+- source deep ensemble averages CNN-LSTM and GRU outputs and reports 60.45% directional accuracy.
+
+Gold Control implementation rule:
+- instrument/volume semantics for the source dataset must be identified before source-faithful replication;
+- scaling must be fit on training data only;
+- the paper's architecture/configuration may be treated as an external literature prior, but project tuning must use <=2024 chronology only;
+- 2025 may not select architecture, SVR C/gamma, lag schema, ensemble weights or stopping rules.
+
+2025 testability audit:
+- `BLOCKED_SOURCE_EQUIVALENT_DAILY_OHLCV`;
+- Gold Control does not currently hold a governed source-equivalent traded-volume series for spot XAU;
+- the source study itself uses 2025; therefore a later 2025 run is transport/reproduction evidence, not independent blind OOS.
+
+#### 4.3.5.8 DIRECTION_MAHATO_ATTAR_ENSEMBLE_V1_RESEARCH
+
+Primary authority: Mahato & Attar (2014), *Prediction of gold and silver stock price using ensemble models*, ICAETR 2014, DOI 10.1109/ICAETR.2014.7012821.
+
+Source-supported facts:
+- next-day increase/decrease classification for gold and silver;
+- ensemble-model comparison;
+- abstract reports 85% gold accuracy with stacking and 79% silver accuracy with hybrid bagging.
+
+Authority limitation:
+- the accessible authoritative record does not expose enough exact feature definitions, base-learner composition, training/test chronology or hyperparameter details to reproduce the 85% result faithfully.
+
+2025 testability audit:
+- `METHOD_SPEC_NOT_PROVEN / BLOCKED`;
+- do not invent missing method details;
+- obtain the full paper/method specification before preregistration or implementation.
+
+#### 4.3.5.9 DIRECTION_ZHANG_RETURN_ML_V1_RESEARCH
+
+Primary authority: Runjie Zhang (DAML 2024 proceedings), *Gold Price Relative Return Prediction with Machine Learning Models*.
+
+Source method:
+- gold relative-return regression using XGBoost, SVR and Random Forest;
+- market predictors: oil price, volatility index, S&P 500 index and USD index;
+- technical predictors: MACD difference, RSI and Bollinger %B;
+- grid search is used for model parameters;
+- evaluation reports MSE, RMSE, MAE, R2 and trend accuracy; source reports RF/SVR R2 about 0.79 and XGBoost about 0.72.
+
+Gold Control implementation rule:
+- because the project objective here is direction, source return forecasts must first be generated exactly, then mapped to direction by sign; do not train a different classifier under the same identity;
+- source grid-search ranges and training chronology must be recovered/frozen before execution;
+- any grid search must occur entirely pre-2025 under time ordering;
+- no Nasdaq/DJIA proxy may silently replace S&P 500, and no broad-dollar proxy may silently replace the source USD index without a separately named adaptation.
+
+2025 testability audit:
+- `BLOCKED_EXTERNAL_PREDICTORS`;
+- current Gold Control does not hold the complete pre-2025 source-faithful oil/VIX/S&P500/USD-index daily panel; current governed VIX history begins in 2026;
+- exact input gaps must be filled and source semantics frozen before a 2025 challenge.
+
+#### 4.3.5.10 Common 2025 challenge contract for the registered literature queue
+
+For every candidate above:
+
+- **2025 is a locked retrospective challenge, not a fresh/pristine blind holdout.** Project researchers have already observed 2025 in prior work; no claim may relabel it as prospectively unseen evidence.
+- all feature definitions, source semantics, model identity, horizon(s), hyperparameters, threshold/direction mapping, preprocessing, training-window policy and selection rule must be frozen using information available no later than 2024-12-31 before candidate-specific 2025 scoring;
+- source papers that used random train/test splits do not override Gold Control governance: project evaluation is chronological only;
+- source papers published in 2026 that themselves use 2025 (Yadav; Sulman et al.) carry explicit `EXTERNAL_2025_EXPOSURE`; their 2025 Gold Control replay can test transport/reproducibility but cannot be treated as independent confirmatory evidence;
+- exact replication and Gold/XAU adaptation are separate evidence classes and must be labelled separately;
+- no missing source may be silently replaced by a proxy. Any proxy/adaptation requires a separately named identity or an explicit preregistered adaptation surface;
+- for h>1 overlapping targets, report standard origin-by-origin metrics **and** non-overlapping-origin robustness;
+- mandatory direction metrics: accuracy, balanced accuracy, UP sensitivity, DOWN sensitivity, TP/TN/FP/FN, forecast UP/DOWN counts, always-UP, always-DOWN and previous-sign baselines; report probability calibration/Brier/log-loss whenever the native model emits probabilities;
+- regression-native methods must also report their source-native regression/quantile metrics before forecast sign is scored;
+- no candidate is promoted solely for raw accuracy; class balance, two-sided discrimination, stability across pre-2025 validation blocks and baseline improvement are required;
+- no implementation begins until explicit user authorization after reviewing input gaps.
+
+#### 4.3.5.11 Current data-readiness snapshot (read-only audit, 2026-09-21)
+
+Available current project surfaces relevant to this queue:
+- XAU intraday 1m cache: 2023-01-02 through 2026-06-30, 1,330,943 rows;
+- XAU intraday 5m cache: 2020-04-06 through 2026-08-31, 482,734 rows;
+- XAU daily research history: 2010-01-04 through 2026-07-31;
+- DJIA daily close: 2016-08-29 through 2026-09-18;
+- NASDAQ-100 daily close is available, but it is not an authorized substitute for S&P 500;
+- existing XAU pipelines can retrieve daily Twelve Data OHLC later, but a complete governed long-history OHLC dataset is not yet frozen for this queue;
+- no governed GLD ETF panel is currently registered;
+- no source-equivalent traded-volume panel is currently registered for the GLD/OHLCV-dependent candidates;
+- current VIX_CBOE registered history begins in 2026, so it cannot support pre-2025 formation;
+- complete source-faithful OVX/EPU/EMU/EMV_IDT/3m-T-bill/break-even inflation/5y-inflation and Zhang oil/S&P500/USD-index panels are not currently complete for this queue.
+
+**Binding implementation state:** `REGISTERED_ONLY / RESEARCHED / DATA_READINESS_CLASSIFIED / DO_NOT_IMPLEMENT_UNTIL_USER_AUTHORIZATION`.
+
+### 4.4 Common governance for direction research motors
+
+The original four direction motors and the literature-backed queue in Section 4.3.5 form a parallel research-only direction programme. Closed families remain closed; newly registered literature candidates do not alter the primary GC-BREAK sequential state output and do not reactivate the historical fixed NEXT_NY17_1D/3D programme.
 
 Before implementation, a common preregistration must freeze target horizon/frequency, exact XAU source and close/OHLC semantics, rolling versus expanding formation, permitted training window(s), probability-to-direction mapping, abstention rule if any, evaluation metrics, and tie/missing handling.
 
@@ -613,7 +867,7 @@ Initial evaluation must report at minimum success rate, balanced accuracy where 
 
 The first implementation stage must reproduce each method's native mathematical identity WITHOUT FAST, GVZ, BOCPD, Macro or Emergency inputs. Only after standalone evidence is frozen may existing Gold Control motors be added one at a time through role-preserving ablation. Flat equal voting remains forbidden.
 
-Current status is identity-specific: the RSM/ERSM family is `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`; the VLMC family is closed for the current sequence after its governed successors; the BCT family is closed for the current sequence after BCT/CTW V1 and BCT-X/AR V1; source-form B-CARS V1 is `BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED`; `DIRECTION_BCARS_SV_V1_RESEARCH` is `NO_PROMOTION / PRE2025_VALIDATION_FAILED`; and the final source-verifiable Realized-Probability successor `DIRECTION_REALP_CARR_V1_RESEARCH` is `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_FAILED / REALP_BCARS_FAMILY_CLOSED_CURRENT_SEQUENCE / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`. Exact CARB remains `NOT_PROVEN / DO_NOT_IMPLEMENT_BY_GUESSING`.
+Current status is identity-specific: the RSM/ERSM family is `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`; the VLMC family is closed for the current sequence after its governed successors; the BCT family is closed for the current sequence after BCT/CTW V1 and BCT-X/AR V1; source-form B-CARS V1 is `BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED`; `DIRECTION_BCARS_SV_V1_RESEARCH` is `NO_PROMOTION / PRE2025_VALIDATION_FAILED`; and `DIRECTION_REALP_CARR_V1_RESEARCH` closed the B-CARS/Realized-Probability family for the current sequence. Exact CARB remains `NOT_PROVEN / DO_NOT_IMPLEMENT_BY_GUESSING`. Separately, the nine Section 4.3.5 literature identities are `REGISTERED_ONLY / NOT_IMPLEMENTED`; their per-identity 2025-readiness/blocker status is binding until source/input gaps are resolved and the user authorizes implementation.
 
 ---
 
@@ -991,12 +1245,13 @@ Random splitting is forbidden.
 12. **Emergency Level/Reversal — SUSPENDED; Level requires redesign**
 13. **SLOW — LOW PRIORITY / NOT NEXT**
 14. **Post-BOCPD future change-time challenger — NEXT GC-BREAK RESEARCH LANE; exact identity/parameters require preregistration**
-15. **Parallel direction-research lane — RSM/ERSM CLOSED / DO_NOT_REVISIT; VLMC family CLOSED / NO_PROMOTION; BCT family CLOSED / NO_PROMOTION; B-CARS / Realized-Probability family CLOSED / NO_PROMOTION after source-form blocker + B-CARS-SV + source-verifiable RealP-CARR; exact CARB NOT_PROVEN and not implemented**
-16. **WP4 role-preserving integration/state-transition work — AFTER the new challenger has a frozen design/evidence checkpoint**
-17. **Architecture/parameter freeze — PENDING**
-18. **Prospective shadow — PENDING FINAL FREEZE**
+15. **Legacy parallel direction-research lane — RSM/ERSM CLOSED / DO_NOT_REVISIT; VLMC family CLOSED / NO_PROMOTION; BCT family CLOSED / NO_PROMOTION; B-CARS / Realized-Probability family CLOSED / NO_PROMOTION; exact CARB NOT_PROVEN and not implemented**
+16. **Literature-backed direction-engine queue — REGISTERED / RESEARCHED / DATA-READINESS CLASSIFIED / NOT IMPLEMENTED: Sadorsky Tree-Tech; Basher-Sadorsky RF-Macro; Bonato QBoost Realized-Moments; Parisi Rolling-Ward; Altuntaş AlexNet-Candle; Yadav Tech-ML; Sulman DL-Ensemble; Mahato-Attar Ensemble; Zhang Return-ML. Implementation requires explicit user authorization; 2025 remains a locked retrospective challenge under Section 4.3.5.10.**
+17. **WP4 role-preserving integration/state-transition work — AFTER the new GC-BREAK challenger has a frozen design/evidence checkpoint**
+18. **Architecture/parameter freeze — PENDING**
+19. **Prospective shadow — PENDING FINAL FREEZE**
 
-The next research lane is therefore **not inferred from runtime-registry order**. It is the separately governed future-change-time challenger defined in Section 12.6. Macro Event, Emergency and SLOW remain outside the immediate next step unless explicitly reactivated.
+The next **GC-BREAK** research lane is therefore not inferred from runtime-registry order: it remains the separately governed future-change-time challenger defined in Section 12.6. In parallel, the Section 4.3.5 direction-engine queue is registered for later standalone testing but is not yet authorized for implementation. Macro Event, Emergency and SLOW remain outside the immediate GC-BREAK next step unless explicitly reactivated.
 
 ---
 
@@ -1117,5 +1372,7 @@ Current validated motor checkpoint:
 The **next GC-BREAK research motor/lane** is a new separately named **future-change-time prediction challenger** based on residual-time / explicit-duration / Bayesian online changepoint-prediction principles (or a causally equivalent preregistered duration-hazard formulation). Exact model identity and parameters are not yet frozen; the scientific lane is frozen. It must be designed with pre-2025 chronology and may not use visible 2025 outcomes for tuning.
 
 In parallel, the direction-research families remain governed. RSM/ERSM is permanently closed as `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`. The VLMC family is now `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION`: corrected VLMC-BS V2 found a real but unstable signal; Fixed-Share failed 2025 generalization; COVLMC-X3 collapsed to neutral; and the governed VLMC-C 104 successor failed pre-2025 direction validation (balanced 0.4417, DOWN sensitivity 0.05 versus parent 0.5583 / 0.45) and then forecast 52/52 UP in the unchanged 2025 replay. No further VLMC rescue/tuning is authorized unless the user explicitly reopens the family. BCT/CTW-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`; it materially improves probability stability versus VLMC-BS but collapses to 52/52 UP forecasts in the 2025 replay. Its final published real-valued successor `DIRECTION_BCTX_AR_V1_RESEARCH` was evaluated under frozen pre-2024 evidence selection: 2024 balanced accuracy reached 0.5584 but DOWN sensitivity was only 0.1538, failing the preregistered gate; unchanged 2025 replay had balanced accuracy 0.4865, DOWN sensitivity 0 and 51/52 UP forecasts. The BCT direction family is therefore `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION` unless explicitly reopened by the user. Source-form B-CARS V1 is blocked by genuine pre-2025 boundary up-ratios and was not scored. Its Smithson-Verkuilen successor failed pre-2025 direction validation. A final authority scan found the Realized Probability research line; exact CARB mathematics remained `NOT_PROVEN`, so no CARB was invented. The source-verifiable `DIRECTION_REALP_CARR_V1_RESEARCH` successor used hourly RealP plus the published asymmetric CARR/QMLE and RealP-on-lambda regression. It failed the frozen 2024 gate (balanced 0.4651, DOWN sensitivity 0.1154, accuracy 0.4717) and unchanged 2025 replay deteriorated to balanced 0.4444 with 0 DOWN sensitivity. The B-CARS / Realized-Probability direction family is therefore `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION` unless explicitly reopened. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
+
+A new literature-backed direction-engine queue was registered on 2026-09-21 without reopening those closed families: `DIRECTION_SADORSKY_TREE_TECH_V1_RESEARCH`, `DIRECTION_BASHER_SADORSKY_RF_MACRO_V1_RESEARCH`, `DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_V1_RESEARCH`, `DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH`, `DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH`, `DIRECTION_YADAV_TECH_ML_V1_RESEARCH`, `DIRECTION_SULMAN_DL_ENSEMBLE_V1_RESEARCH`, `DIRECTION_MAHATO_ATTAR_ENSEMBLE_V1_RESEARCH` and `DIRECTION_ZHANG_RETURN_ML_V1_RESEARCH`. These identities are `REGISTERED_ONLY / NOT_IMPLEMENTED`. Bonato's spot-XAU realized-moment adaptation and Parisi's Gold/DJIA adaptation have current data sufficient for a preregistered 2025 retrospective challenge; Altuntaş and Yadav require daily OHLC completion; Sadorsky, Basher-Sadorsky, Sulman and Zhang have source-input gaps; Mahato-Attar remains blocked by incomplete method specification. No candidate may use 2025 for feature, horizon, threshold, architecture or hyperparameter selection. For Yadav and Sulman, the source papers themselves used 2025, so a Gold Control 2025 replay is external-literature-informed transport evidence rather than independent confirmatory OOS evidence. No implementation is authorized until the user explicitly selects the next candidate and missing inputs are reviewed.
 
 All future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
