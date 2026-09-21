@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.92  
+**Manifest version:** 1.93  
 **Issue date:** 2026-09-21  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -109,7 +109,7 @@ The current research-status layer is binding for work sequencing and must not be
 | `DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_FEATURE_SIGNAL_NOT_SUPPORTED / STRONG_DIRECTION_GATE_FAILED / NOT_RUNTIME` | separately preregistered h=1 cross-model confirmation of the Bonato RV/RSK observation using deterministic expanding logistic regression and fixed ablations. 2024 AR1+RM raised DOWN sensitivity from 0.0465 to 0.2558 (+0.2093) but BA was unchanged/slightly worse (0.4938 -> 0.4935) and Brier worsened; locked 2025 DOWN sensitivity fell to 0.0412 with BA 0.4992. Realized moments therefore do not establish a transportable standalone downside signal under this alternate model family. |
 | `DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH` | `LITERATURE_AUTHORITY / EXACT_PROPRIETARY_SOFTWARE_DETAILS_PARTLY_NOT_PROVEN / RECON_V2_AUTHORIZED` | Parisi, Parisi & Díaz (2008): weekly one-step-ahead Gold first-difference/sign forecasting from four Gold and four DJIA first-difference lags; rolling/recursive neural networks; period-by-period retraining; source reports a Ward specification with two hidden layers / 21 neurons and optimized activation/scaling combination, rolling-Ward superiority, block-bootstrap mean sign prediction 60.68% (sd 2.82%), and ARIMA(4,1,2) benchmark. Exact neuron allocation, winning activation/scaling pair, rolling-size grid and proprietary training internals are not exposed in accessible primary material. |
 | `DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_WEAK / 2025_NO_TWO_SIDED_EDGE / NOT_RUNTIME` | Corrected source-constrained reconstruction completed. Window 100 selected on 2023 (accuracy 0.5769, balanced 0.5704); unchanged 2024 validation only matched always-UP raw accuracy (0.5577) with balanced 0.5180 and DOWN sensitivity 0.1739. Locked 2025 replay reached raw accuracy 0.6346 but remained below always-UP 0.6731 and only slightly above previous-sign 0.6154; balanced accuracy 0.5017, DOWN sensitivity 0.1176 and PT p=0.9716 show no two-sided direction edge. Exact 2008 proprietary software replication is still not claimed. |
-| `DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH` | `PREREGISTERED / SOURCE_AUDIT_READY / SHORTER_RECENT_HISTORY_FROZEN / NOT_IMPLEMENTED` | Altuntaş et al. (2022) next-day UP/DOWN from 11-day candlestick images with SMA7, SMA50 and Bollinger(20,2), fine-tuned AlexNet 227x227x3. Source 15-year span is not treated as a method requirement: Gold Control froze 2018-2022 train, 2023 development/early-stopping, 2024 fixed validation and locked 2025 challenge. Twelve Data true daily XAU/USD OHLC audit passed with 1298/259/259/257 eligible labelled images respectively, so daily-OHLC availability is no longer blocking. Exact source optimizer/rendering internals remain partly NOT_PROVEN and must be frozen explicitly before scoring. |
+| `DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_GATE_FAILED / TWO_SIDED_BUT_NO_DIRECTION_EDGE / NOT_RUNTIME` | Source-constrained shorter-history AlexNet reconstruction completed with true Twelve Data daily XAU/USD OHLC, 2018-2022 train, 2023 development/early-stopping, fixed 2024 validation and locked 2025 challenge. Best 2023 checkpoint was epoch 11. 2024: n=258, accuracy 0.5194, BA 0.4984, UP sensitivity 0.6575, DOWN sensitivity 0.3393, below always-UP 0.5659. Locked 2025: n=257, accuracy 0.5486, BA 0.5044, UP 0.7273, DOWN 0.2816, below always-UP 0.5992. Model remained two-sided but established no directional edge. |
 | `DIRECTION_YADAV_TECH_ML_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / WORKING_PAPER / 2025_TEST_REQUIRES_DAILY_OHLC_COMPLETION / EXTERNAL_2025_EXPOSURE / NOT_IMPLEMENTED` | Yadav (2026 working paper): next-day XAU/USD binary direction with technical indicators and logistic regression, decision tree, RF, gradient boosting and SVM under time-series OOS evaluation. Indicators include RSI, ATR, MACD, moving averages and Bollinger features; ATR requires OHLC. Because the source study itself uses data through 2025, any 2025 replay here is transport/reproduction evidence, not an independent blind holdout. |
 | `DIRECTION_SULMAN_DL_ENSEMBLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_OHLCV_DATASET / EXTERNAL_2025_EXPOSURE / NOT_IMPLEMENTED` | Sulman et al. (2026): next-day gold return forecasting from daily OHLCV plus lagged price/return features using RF, XGBoost, tuned RBF-SVR, LSTM, BiLSTM, GRU, CNN-LSTM, ML ensemble and CNN-LSTM/GRU DL ensemble. Source deep-learning setup uses Adam 0.001, MSE, batch 32, <=100 epochs, early-stopping patience 12 and ReduceLROnPlateau patience 6/factor 0.5. Current project lacks a source-equivalent governed daily gold volume series; source study itself uses 2020-2025, so 2025 cannot be called independent blind OOS. |
 | `DIRECTION_MAHATO_ATTAR_ENSEMBLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / METHOD_SPEC_NOT_PROVEN / 2025_TEST_BLOCKED / NOT_IMPLEMENTED` | Mahato & Attar (2014) reports next-day increase/decrease prediction with ensemble methods and 85% gold accuracy from stacking, but accessible authoritative material does not expose enough exact feature, base-learner and split details for a source-faithful implementation. Do not reconstruct the method by guesswork; obtain the full method specification first. |
@@ -1005,11 +1005,34 @@ Daily OHLC source audit completed successfully on Twelve Data `XAU/USD`, interva
 - raw vendor values were not persisted to production or committed as a raw market table;
 - production database writes: NONE.
 
+Evaluation completed under the frozen reconstruction:
+
+- training images: 1298 (2018-2022);
+- 2023 development images: 259;
+- best frozen checkpoint: epoch 11 with development accuracy 0.5212;
+- 2024 fixed validation: n=258, accuracy 0.5194, balanced accuracy 0.4984, UP sensitivity 0.6575, DOWN sensitivity 0.3393, forecast UP/DOWN 170/88, Brier 0.2478, always-UP accuracy 0.5659;
+- locked 2025 challenge: n=257, accuracy 0.5486, balanced accuracy 0.5044, UP sensitivity 0.7273, DOWN sensitivity 0.2816, forecast UP/DOWN 186/71, Brier 0.2512, always-UP accuracy 0.5992;
+- pre-2025 research-interest gate: FAIL;
+- 2025 does not rescue the failed 2024 gate.
+
+Interpretation:
+the image/CNN representation did not collapse to a single direction, so the negative result is not merely a class-prior artifact. However, two-sided forecasts remained near chance in balanced accuracy and raw accuracy stayed below the simple always-UP baseline in both 2024 and 2025. Therefore:
+
+`ALTUNTAS_ALEXNET_CANDLE_V1 = EVALUATED / NO_PROMOTION / TWO_SIDED_BUT_NO_DIRECTION_EDGE`.
+
+Do not rescue this identity with post-result renderer changes, class weighting, augmentation, optimizer replacement, threshold tuning, longer history, different pretrained backbone or 2025-driven hyperparameter changes.
+
 Authoritative surfaces:
 - preregistration: `GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_PREREG_2026-09-21.md`;
 - source audit: `GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_SOURCE_AUDIT_2026-09-21.json`;
 - audit implementation: `data_pipeline/twelve_xau_altuntas_daily_ohlc_audit.py`;
-- audit workflow: `.github/workflows/gold-control-altuntas-daily-ohlc-audit.yml`.
+- audit workflow: `.github/workflows/gold-control-altuntas-daily-ohlc-audit.yml`;
+- executable implementation: `tools/direction_altuntas_alexnet_candle_v1.py`;
+- executable workflow: `.github/workflows/gold-control-altuntas-alexnet-candle-v1.yml`;
+- frozen config: `GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_FROZEN_CONFIG_2026-09-21.json`;
+- pre-2025 result: `GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_PRE2025_RESULT_2026-09-21.json`;
+- locked 2025 result: `GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_2025_RESULT_2026-09-21.json`;
+- final result: `GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESULT_2026-09-21.md`.
 
 #### 4.3.5.6 DIRECTION_YADAV_TECH_ML_V1_RESEARCH
 
