@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.82  
+**Manifest version:** 1.83  
 **Issue date:** 2026-09-21  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
@@ -727,7 +727,7 @@ Accordingly, the executable identity is separately named `DIRECTION_PARISI_ROLLI
 Frozen source-grounded adaptation:
 - XAU: `XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1`;
 - DJIA: `DJIA_FRED`;
-- weekly anchor: latest completed date in each Monday-start week on which both XAU and DJIA exist;
+- weekly anchor: latest common completed date within each Monday-start / Friday-ending week; target-year assignment uses the nominal Friday `week_end`, not the Monday label;
 - no interpolation / forward fill / asynchronous weekly endpoint;
 - first differences in levels, not log returns;
 - inputs exactly `ΔG[t-1..t-4]` and `ΔDJI[t-1..t-4]`;
@@ -761,7 +761,7 @@ Frozen pre-2025 window selection:
 
 2025 evidence class:
 - `LOCKED_RETROSPECTIVE_CHALLENGE`, not pristine/prospective;
-- full 2025 replay only after pre-2025 configuration is persisted;
+- full set of complete Friday-ending 2025 target weeks is replayed only after pre-2025 configuration is persisted;
 - no 2025 rescue tuning.
 
 Authority surface:
