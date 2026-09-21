@@ -1,0 +1,92 @@
+{
+  "2025_arima_412_metrics": {
+    "accuracy": 0.5384615384615384,
+    "actual_down": 17,
+    "actual_up": 35,
+    "always_down_accuracy": 0.3269230769230769,
+    "always_up_accuracy": 0.6730769230769231,
+    "balanced_accuracy": 0.4,
+    "down_sensitivity": 0.0,
+    "fn": 7,
+    "forecast_down": 7,
+    "forecast_up": 45,
+    "fp": 17,
+    "n": 52,
+    "previous_sign_accuracy": 0.6153846153846154,
+    "pt_test": {
+      "expected_accuracy": 0.6264792899408285,
+      "pvalue_two_sided": 0.047463294059956314,
+      "statistic": -1.9821424996424695
+    },
+    "tn": 0,
+    "tp": 28,
+    "up_sensitivity": 0.8
+  },
+  "2025_block_bootstrap": {
+    "block_length_weeks": 4,
+    "mean_accuracy": 0.6132692307692307,
+    "p05_accuracy": 0.4807692307692308,
+    "p95_accuracy": 0.75,
+    "reps": 500,
+    "seed": 2008,
+    "std_accuracy": 0.08136616276652252
+  },
+  "2025_metrics": {
+    "accuracy": 0.6346153846153846,
+    "actual_down": 17,
+    "actual_up": 35,
+    "always_down_accuracy": 0.3269230769230769,
+    "always_up_accuracy": 0.6730769230769231,
+    "balanced_accuracy": 0.5016806722689076,
+    "down_sensitivity": 0.11764705882352941,
+    "fn": 4,
+    "forecast_down": 6,
+    "forecast_up": 46,
+    "fp": 15,
+    "mae_delta_gold": 72.67324792763796,
+    "mean_predicted_delta_gold": 14.675101948346974,
+    "n": 52,
+    "previous_sign_accuracy": 0.6153846153846154,
+    "pt_test": {
+      "expected_accuracy": 0.6331360946745563,
+      "pvalue_two_sided": 0.9716098927150164,
+      "statistic": 0.0355892342423808
+    },
+    "rmse_delta_gold": 100.82773932792288,
+    "tn": 2,
+    "tp": 31,
+    "up_sensitivity": 0.8857142857142857
+  },
+  "exact_parisi_2008_replication_claim": false,
+  "identity": "DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH",
+  "panel_sha256_verified": true,
+  "post_result_retune": false,
+  "selected_window_pre2025": 100,
+  "stage": "LOCKED_2025_RETROSPECTIVE_CHALLENGE",
+  "unchanged_2024_metrics": {
+    "accuracy": 0.5576923076923077,
+    "actual_down": 23,
+    "actual_up": 29,
+    "always_down_accuracy": 0.4423076923076923,
+    "always_up_accuracy": 0.5576923076923077,
+    "balanced_accuracy": 0.5179910044977512,
+    "down_sensitivity": 0.17391304347826086,
+    "fn": 4,
+    "forecast_down": 8,
+    "forecast_up": 44,
+    "fp": 19,
+    "mae_delta_gold": 38.83440366879892,
+    "mean_predicted_delta_gold": 6.036071874693311,
+    "n": 52,
+    "previous_sign_accuracy": 0.4230769230769231,
+    "pt_test": {
+      "expected_accuracy": 0.5399408284023669,
+      "pvalue_two_sided": 0.7209622708130391,
+      "statistic": 0.3571730355831603
+    },
+    "rmse_delta_gold": 49.43588395101035,
+    "tn": 4,
+    "tp": 25,
+    "up_sensitivity": 0.8620689655172413
+  }
+}
