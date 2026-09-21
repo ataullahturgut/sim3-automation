@@ -1,0 +1,90 @@
+{
+  "eligible_labelled_images": {
+    "challenge": 257,
+    "dev": 259,
+    "train": 1298,
+    "validation": 259
+  },
+  "equal_close_labels_omitted": {
+    "challenge": 0,
+    "dev": 0,
+    "train": 0,
+    "validation": 0
+  },
+  "first_accepted_date": "2017-10-02",
+  "identity": "DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH",
+  "interval": "1day",
+  "last_accepted_date": "2025-12-30",
+  "minimum_support": {
+    "challenge": 200,
+    "dev": 200,
+    "train": 1000,
+    "validation": 200
+  },
+  "normalized_panel_sha256": "8b157d953ff435c4c549041bb3727b17bc18658aa7c669414dbd260940b2b782",
+  "production_database_write": "NONE",
+  "provider": "Twelve Data",
+  "raw_vendor_values_persisted": false,
+  "requested_end": "2025-12-31",
+  "requested_start": "2017-10-01",
+  "status": "SOURCE_AUDIT_READY",
+  "support_gate_passed": true,
+  "symbol": "XAU/USD",
+  "unique_weekday_daily_ohlc_rows": 2139,
+  "year_audit": [
+    {
+      "accepted_weekdays": 65,
+      "payload_sha256": "7afbf1a371ae3cdc44427aafb10b2810f6b08fd7000a5fef526d22a9ab7e3923",
+      "provider_rows": 65,
+      "year": 2017
+    },
+    {
+      "accepted_weekdays": 258,
+      "payload_sha256": "60eb38b1aa53eb53d61b5101106e699ef8de732d5c6d370df100f820c2deef98",
+      "provider_rows": 258,
+      "year": 2018
+    },
+    {
+      "accepted_weekdays": 259,
+      "payload_sha256": "a043efcb8d37bc44c2184b504184352f1d0554eb8c9ad8bae436ca47b6c623a9",
+      "provider_rows": 259,
+      "year": 2019
+    },
+    {
+      "accepted_weekdays": 261,
+      "payload_sha256": "19ff8cac507660bf746cb28ac8619cb595951fc8dfeef7c72431aa5c5d5ef324",
+      "provider_rows": 261,
+      "year": 2020
+    },
+    {
+      "accepted_weekdays": 260,
+      "payload_sha256": "30f571e0377e67ec829f7f6d579288ab8623dcfc4cc64d8aedf73ad85ab54f9a",
+      "provider_rows": 260,
+      "year": 2021
+    },
+    {
+      "accepted_weekdays": 260,
+      "payload_sha256": "0a003da44125b7a09548d93c009eea289c940ad99a0af1b4aa4fe8682f0cf3a4",
+      "provider_rows": 260,
+      "year": 2022
+    },
+    {
+      "accepted_weekdays": 259,
+      "payload_sha256": "7cf07f193b06d22edee51ef94a4bc62ee742e4eb2380dfee61daf296b83f5b83",
+      "provider_rows": 259,
+      "year": 2023
+    },
+    {
+      "accepted_weekdays": 259,
+      "payload_sha256": "1063f3b1a4cd20793aa727346babdee0701c274abb78277abe2fb946b1875ba3",
+      "provider_rows": 270,
+      "year": 2024
+    },
+    {
+      "accepted_weekdays": 258,
+      "payload_sha256": "84fd158d8801801c40fd06a8e585cfcfa7c2630d81c2213de886a56e11bea077",
+      "provider_rows": 328,
+      "year": 2025
+    }
+  ]
+}
