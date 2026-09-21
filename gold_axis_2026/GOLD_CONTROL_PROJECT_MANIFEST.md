@@ -1,10 +1,10 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.91  
+**Manifest version:** 1.92  
 **Issue date:** 2026-09-21  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
-**Current research branch:** `gold-direction-downside-rm-logit-v2-20260921`  
+**Current research branch:** `gold-direction-altuntas-alexnet-candle-v1-20260921`  
 **Project root:** `gold_axis_2026/`
 
 ---
@@ -109,7 +109,7 @@ The current research-status layer is binding for work sequencing and must not be
 | `DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_FEATURE_SIGNAL_NOT_SUPPORTED / STRONG_DIRECTION_GATE_FAILED / NOT_RUNTIME` | separately preregistered h=1 cross-model confirmation of the Bonato RV/RSK observation using deterministic expanding logistic regression and fixed ablations. 2024 AR1+RM raised DOWN sensitivity from 0.0465 to 0.2558 (+0.2093) but BA was unchanged/slightly worse (0.4938 -> 0.4935) and Brier worsened; locked 2025 DOWN sensitivity fell to 0.0412 with BA 0.4992. Realized moments therefore do not establish a transportable standalone downside signal under this alternate model family. |
 | `DIRECTION_PARISI_ROLLING_WARD_V1_RESEARCH` | `LITERATURE_AUTHORITY / EXACT_PROPRIETARY_SOFTWARE_DETAILS_PARTLY_NOT_PROVEN / RECON_V2_AUTHORIZED` | Parisi, Parisi & Díaz (2008): weekly one-step-ahead Gold first-difference/sign forecasting from four Gold and four DJIA first-difference lags; rolling/recursive neural networks; period-by-period retraining; source reports a Ward specification with two hidden layers / 21 neurons and optimized activation/scaling combination, rolling-Ward superiority, block-bootstrap mean sign prediction 60.68% (sd 2.82%), and ARIMA(4,1,2) benchmark. Exact neuron allocation, winning activation/scaling pair, rolling-size grid and proprietary training internals are not exposed in accessible primary material. |
 | `DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_VALIDATION_WEAK / 2025_NO_TWO_SIDED_EDGE / NOT_RUNTIME` | Corrected source-constrained reconstruction completed. Window 100 selected on 2023 (accuracy 0.5769, balanced 0.5704); unchanged 2024 validation only matched always-UP raw accuracy (0.5577) with balanced 0.5180 and DOWN sensitivity 0.1739. Locked 2025 replay reached raw accuracy 0.6346 but remained below always-UP 0.6731 and only slightly above previous-sign 0.6154; balanced accuracy 0.5017, DOWN sensitivity 0.1176 and PT p=0.9716 show no two-sided direction edge. Exact 2008 proprietary software replication is still not claimed. |
-| `DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / 2025_TEST_REQUIRES_DAILY_OHLC_COMPLETION / NOT_IMPLEMENTED` | Altuntaş, Okumuş & Kocamaz (2022): next-day UP/DOWN from 11-day candlestick images with SMA7, SMA50 and Bollinger(20,2), fine-tuned AlexNet at 227x227x3; source uses chronological 9y/3y/3y train/validation/test, max 100 epochs and mini-batch 32. Current long XAU history is not stored as a complete governed daily OHLC panel, so image construction is not yet input-complete. |
+| `DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_RESEARCH` | `PREREGISTERED / SOURCE_AUDIT_READY / SHORTER_RECENT_HISTORY_FROZEN / NOT_IMPLEMENTED` | Altuntaş et al. (2022) next-day UP/DOWN from 11-day candlestick images with SMA7, SMA50 and Bollinger(20,2), fine-tuned AlexNet 227x227x3. Source 15-year span is not treated as a method requirement: Gold Control froze 2018-2022 train, 2023 development/early-stopping, 2024 fixed validation and locked 2025 challenge. Twelve Data true daily XAU/USD OHLC audit passed with 1298/259/259/257 eligible labelled images respectively, so daily-OHLC availability is no longer blocking. Exact source optimizer/rendering internals remain partly NOT_PROVEN and must be frozen explicitly before scoring. |
 | `DIRECTION_YADAV_TECH_ML_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / WORKING_PAPER / 2025_TEST_REQUIRES_DAILY_OHLC_COMPLETION / EXTERNAL_2025_EXPOSURE / NOT_IMPLEMENTED` | Yadav (2026 working paper): next-day XAU/USD binary direction with technical indicators and logistic regression, decision tree, RF, gradient boosting and SVM under time-series OOS evaluation. Indicators include RSI, ATR, MACD, moving averages and Bollinger features; ATR requires OHLC. Because the source study itself uses data through 2025, any 2025 replay here is transport/reproduction evidence, not an independent blind holdout. |
 | `DIRECTION_SULMAN_DL_ENSEMBLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_OHLCV_DATASET / EXTERNAL_2025_EXPOSURE / NOT_IMPLEMENTED` | Sulman et al. (2026): next-day gold return forecasting from daily OHLCV plus lagged price/return features using RF, XGBoost, tuned RBF-SVR, LSTM, BiLSTM, GRU, CNN-LSTM, ML ensemble and CNN-LSTM/GRU DL ensemble. Source deep-learning setup uses Adam 0.001, MSE, batch 32, <=100 epochs, early-stopping patience 12 and ReduceLROnPlateau patience 6/factor 0.5. Current project lacks a source-equivalent governed daily gold volume series; source study itself uses 2020-2025, so 2025 cannot be called independent blind OOS. |
 | `DIRECTION_MAHATO_ATTAR_ENSEMBLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / METHOD_SPEC_NOT_PROVEN / 2025_TEST_BLOCKED / NOT_IMPLEMENTED` | Mahato & Attar (2014) reports next-day increase/decrease prediction with ensemble methods and 85% gold accuracy from stacking, but accessible authoritative material does not expose enough exact feature, base-learner and split details for a source-faithful implementation. Do not reconstruct the method by guesswork; obtain the full method specification first. |
@@ -981,16 +981,35 @@ Source method:
 - last fully connected layer is replaced by two outputs; max epochs 100; mini-batch 32;
 - source reports 53.8% classification accuracy.
 
-Gold Control implementation rule:
-- preserve chronological train/validation/test; no shuffled image split;
-- chart rendering must be deterministic and frozen (axis/scale/image geometry/indicator styling);
-- ImageNet pretrained weights may be used as external prior, but all fine-tuning/early stopping must use <=2024 data;
-- 2025 images/labels must be generated only after image pipeline and training choices are frozen.
+Gold Control frozen adaptation:
+- the source's 15-year span is a dataset choice, not a demonstrated necessary history length; no source ablation establishes 15 years as optimal;
+- training targets: 2018-2022;
+- development / early-stopping set: 2023;
+- fixed pre-2025 validation: 2024;
+- locked retrospective challenge: 2025;
+- warm-up may begin before 2018 only for SMA50/image history;
+- preserve chronology; no shuffled image split;
+- chart rendering must be deterministic and frozen before any 2024/2025 score;
+- ImageNet pretrained AlexNet weights may be used as external prior;
+- source reports max epochs 100, mini-batch 32, learning rate 1e-4 and early stopping after 10 validations without improvement;
+- the accessible paper does not prove the exact optimizer or every MATLAB rendering primitive, so those details remain `NOT_PROVEN_SOURCE_INTERNALS` and any executable choice must be named as a reconstruction rather than silently attributed to the paper;
+- 2025 may not change history span, rendering, optimizer, threshold, architecture or training rule.
 
-2025 testability audit:
-- `REQUIRES_DAILY_OHLC_COMPLETION`;
-- current long-lived Gold Control XAU history is not stored as a complete governed daily OHLC panel for source-faithful candlestick generation;
-- existing Twelve Data infrastructure can later be used to acquire/validate OHLC, but that collection is not authorized by this registration alone.
+Daily OHLC source audit completed successfully on Twelve Data `XAU/USD`, interval `1day`:
+- accepted weekday OHLC span: 2017-10-02 through 2025-12-30;
+- unique validated weekday daily OHLC rows: 2139;
+- eligible labelled images: train 1298, 2023 dev 259, 2024 validation 259, 2025 challenge 257;
+- frozen minimum support floors: 1000 / 200 / 200 / 200;
+- support gate: `PASS / SOURCE_AUDIT_READY`;
+- normalized panel SHA-256: `8b157d953ff435c4c549041bb3727b17bc18658aa7c669414dbd260940b2b782`;
+- raw vendor values were not persisted to production or committed as a raw market table;
+- production database writes: NONE.
+
+Authoritative surfaces:
+- preregistration: `GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_PREREG_2026-09-21.md`;
+- source audit: `GOLD_CONTROL_DIRECTION_ALTUNTAS_ALEXNET_CANDLE_V1_SOURCE_AUDIT_2026-09-21.json`;
+- audit implementation: `data_pipeline/twelve_xau_altuntas_daily_ohlc_audit.py`;
+- audit workflow: `.github/workflows/gold-control-altuntas-daily-ohlc-audit.yml`.
 
 #### 4.3.5.6 DIRECTION_YADAV_TECH_ML_V1_RESEARCH
 
