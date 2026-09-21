@@ -1,0 +1,33 @@
+{
+  "identity": "DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_RESEARCH",
+  "primary_model": "AR1_RM_LOGIT",
+  "baseline_model": "AR1_LOGIT",
+  "models": {
+    "AR1_LOGIT": [
+      "lag1_return"
+    ],
+    "RV_LOGIT": [
+      "log_rv"
+    ],
+    "RSK_LOGIT": [
+      "rsk"
+    ],
+    "RM_LOGIT": [
+      "log_rv",
+      "rsk"
+    ],
+    "AR1_RM_LOGIT": [
+      "lag1_return",
+      "log_rv",
+      "rsk"
+    ]
+  },
+  "horizon": 1,
+  "minimum_training_rows": 250,
+  "ridge_numerical_stabilizer": 1e-06,
+  "max_iter": 100,
+  "tolerance": 1e-10,
+  "direction_threshold": 0.5,
+  "panel_sha256": "4c361a4e3f30c6db9e74b26b2e8cf5874db2c0cd5ec5f690c6c031d0399d5955",
+  "frozen_before_2025": true
+}

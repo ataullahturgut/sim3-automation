@@ -1,0 +1,12 @@
+{
+  "identity": "DIRECTION_DOWNSIDE_REALIZED_MOMENTS_LOGIT_V2_RESEARCH",
+  "parent_observation": "DIRECTION_BONATO_QBOOST_REALIZED_MOMENTS_SPOT_XAU_V1_RESEARCH",
+  "source_table": "public.xau_intraday_research_cache_5m",
+  "timezone": "America/New_York",
+  "minimum_bars_per_retained_day": 240,
+  "retained_days": 1204,
+  "first_day": "2020-04-06",
+  "last_day": "2026-01-13",
+  "panel_sha256": "4c361a4e3f30c6db9e74b26b2e8cf5874db2c0cd5ec5f690c6c031d0399d5955",
+  "production_database_write": "NONE"
+}
