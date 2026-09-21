@@ -1,0 +1,420 @@
+{
+  "identity": "DIRECTION_TTSM_REALIZED_SEMIVARIANCE_XAU_V1_RESEARCH",
+  "status": "PRE2025_FROZEN",
+  "2022_audit": {
+    "period": "2022",
+    "n": 205,
+    "TSM": {
+      "metrics": {
+        "n": 205,
+        "coverage": 1.0,
+        "active_n": 205,
+        "active_accuracy": 0.4682926829268293,
+        "active_balanced_accuracy": 0.4687678809841693,
+        "active_up_sensitivity": 0.45794392523364486,
+        "active_down_sensitivity": 0.47959183673469385,
+        "full_timeline_hit_rate_neutral_as_miss": 0.4682926829268293,
+        "full_timeline_up_sensitivity": 0.45794392523364486,
+        "full_timeline_down_sensitivity": 0.47959183673469385,
+        "up_precision": 0.49,
+        "down_precision": 0.44761904761904764,
+        "down_f1_full_timeline": 0.4630541871921182,
+        "false_down_rate_among_actual_up": 0.5420560747663551,
+        "forecast_up": 100,
+        "forecast_down": 105,
+        "forecast_neutral": 0,
+        "actual_up": 107,
+        "actual_down": 98,
+        "always_up_accuracy": 0.5219512195121951,
+        "always_down_accuracy": 0.47804878048780486
+      },
+      "reversal": {
+        "up_momentum_actual_down_n": 51,
+        "up_to_down_reversal_sensitivity": 0.0,
+        "down_alerts_while_up_momentum_n": 0,
+        "down_alert_precision_while_up_momentum": null,
+        "false_down_alerts_while_up_momentum_n": 0,
+        "false_down_alert_burden_while_up_momentum": null
+      }
+    },
+    "TTSM_S1": {
+      "metrics": {
+        "n": 205,
+        "coverage": 0.8,
+        "active_n": 164,
+        "active_accuracy": 0.5304878048780488,
+        "active_balanced_accuracy": 0.5284734645199761,
+        "active_up_sensitivity": 0.5697674418604651,
+        "active_down_sensitivity": 0.48717948717948717,
+        "full_timeline_hit_rate_neutral_as_miss": 0.424390243902439,
+        "full_timeline_up_sensitivity": 0.45794392523364486,
+        "full_timeline_down_sensitivity": 0.3877551020408163,
+        "up_precision": 0.550561797752809,
+        "down_precision": 0.5066666666666667,
+        "down_f1_full_timeline": 0.4393063583815029,
+        "false_down_rate_among_actual_up": 0.34579439252336447,
+        "forecast_up": 89,
+        "forecast_down": 75,
+        "forecast_neutral": 41,
+        "actual_up": 107,
+        "actual_down": 98,
+        "always_up_accuracy": 0.5219512195121951,
+        "always_down_accuracy": 0.47804878048780486
+      },
+      "reversal": {
+        "up_momentum_actual_down_n": 51,
+        "up_to_down_reversal_sensitivity": 0.0,
+        "down_alerts_while_up_momentum_n": 0,
+        "down_alert_precision_while_up_momentum": null,
+        "false_down_alerts_while_up_momentum_n": 0,
+        "false_down_alert_burden_while_up_momentum": null
+      }
+    },
+    "TTSM_S2": {
+      "metrics": {
+        "n": 205,
+        "coverage": 0.6487804878048781,
+        "active_n": 133,
+        "active_accuracy": 0.5263157894736842,
+        "active_balanced_accuracy": 0.5155172413793103,
+        "active_up_sensitivity": 0.6,
+        "active_down_sensitivity": 0.43103448275862066,
+        "full_timeline_hit_rate_neutral_as_miss": 0.34146341463414637,
+        "full_timeline_up_sensitivity": 0.4205607476635514,
+        "full_timeline_down_sensitivity": 0.25510204081632654,
+        "up_precision": 0.5769230769230769,
+        "down_precision": 0.45454545454545453,
+        "down_f1_full_timeline": 0.32679738562091504,
+        "false_down_rate_among_actual_up": 0.2803738317757009,
+        "forecast_up": 78,
+        "forecast_down": 55,
+        "forecast_neutral": 72,
+        "actual_up": 107,
+        "actual_down": 98,
+        "always_up_accuracy": 0.5219512195121951,
+        "always_down_accuracy": 0.47804878048780486
+      },
+      "reversal": {
+        "up_momentum_actual_down_n": 51,
+        "up_to_down_reversal_sensitivity": 0.0,
+        "down_alerts_while_up_momentum_n": 0,
+        "down_alert_precision_while_up_momentum": null,
+        "false_down_alerts_while_up_momentum_n": 0,
+        "false_down_alert_burden_while_up_momentum": null
+      }
+    },
+    "regions": {
+      "1": {
+        "n": 41,
+        "share": 0.2,
+        "next_day_down_rate": 0.4878048780487805,
+        "next_day_up_rate": 0.5121951219512195,
+        "up_momentum_n": 19,
+        "next_day_down_rate_given_up_momentum": 0.5789473684210527
+      },
+      "2": {
+        "n": 20,
+        "share": 0.0975609756097561,
+        "next_day_down_rate": 0.65,
+        "next_day_up_rate": 0.35,
+        "up_momentum_n": 0,
+        "next_day_down_rate_given_up_momentum": null
+      },
+      "3": {
+        "n": 125,
+        "share": 0.6097560975609756,
+        "next_day_down_rate": 0.464,
+        "next_day_up_rate": 0.536,
+        "up_momentum_n": 70,
+        "next_day_down_rate_given_up_momentum": 0.4714285714285714
+      },
+      "4": {
+        "n": 19,
+        "share": 0.09268292682926829,
+        "next_day_down_rate": 0.3684210526315789,
+        "next_day_up_rate": 0.631578947368421,
+        "up_momentum_n": 11,
+        "next_day_down_rate_given_up_momentum": 0.6363636363636364
+      }
+    }
+  },
+  "2023_audit": {
+    "period": "2023",
+    "n": 203,
+    "TSM": {
+      "metrics": {
+        "n": 203,
+        "coverage": 1.0,
+        "active_n": 203,
+        "active_accuracy": 0.5221674876847291,
+        "active_balanced_accuracy": 0.5226169675791108,
+        "active_up_sensitivity": 0.6138613861386139,
+        "active_down_sensitivity": 0.43137254901960786,
+        "full_timeline_hit_rate_neutral_as_miss": 0.5221674876847291,
+        "full_timeline_up_sensitivity": 0.6138613861386139,
+        "full_timeline_down_sensitivity": 0.43137254901960786,
+        "up_precision": 0.5166666666666667,
+        "down_precision": 0.5301204819277109,
+        "down_f1_full_timeline": 0.4756756756756757,
+        "false_down_rate_among_actual_up": 0.38613861386138615,
+        "forecast_up": 120,
+        "forecast_down": 83,
+        "forecast_neutral": 0,
+        "actual_up": 101,
+        "actual_down": 102,
+        "always_up_accuracy": 0.4975369458128079,
+        "always_down_accuracy": 0.5024630541871922
+      },
+      "reversal": {
+        "up_momentum_actual_down_n": 58,
+        "up_to_down_reversal_sensitivity": 0.0,
+        "down_alerts_while_up_momentum_n": 0,
+        "down_alert_precision_while_up_momentum": null,
+        "false_down_alerts_while_up_momentum_n": 0,
+        "false_down_alert_burden_while_up_momentum": null
+      }
+    },
+    "TTSM_S1": {
+      "metrics": {
+        "n": 203,
+        "coverage": 0.9655172413793104,
+        "active_n": 196,
+        "active_accuracy": 0.5255102040816326,
+        "active_balanced_accuracy": 0.5260335311881703,
+        "active_up_sensitivity": 0.5773195876288659,
+        "active_down_sensitivity": 0.47474747474747475,
+        "full_timeline_hit_rate_neutral_as_miss": 0.5073891625615764,
+        "full_timeline_up_sensitivity": 0.5544554455445545,
+        "full_timeline_down_sensitivity": 0.46078431372549017,
+        "up_precision": 0.5185185185185185,
+        "down_precision": 0.5340909090909091,
+        "down_f1_full_timeline": 0.4947368421052631,
+        "false_down_rate_among_actual_up": 0.40594059405940597,
+        "forecast_up": 108,
+        "forecast_down": 88,
+        "forecast_neutral": 7,
+        "actual_up": 101,
+        "actual_down": 102,
+        "always_up_accuracy": 0.4975369458128079,
+        "always_down_accuracy": 0.5024630541871922
+      },
+      "reversal": {
+        "up_momentum_actual_down_n": 58,
+        "up_to_down_reversal_sensitivity": 0.05172413793103448,
+        "down_alerts_while_up_momentum_n": 5,
+        "down_alert_precision_while_up_momentum": 0.6,
+        "false_down_alerts_while_up_momentum_n": 2,
+        "false_down_alert_burden_while_up_momentum": 0.4
+      }
+    },
+    "TTSM_S2": {
+      "metrics": {
+        "n": 203,
+        "coverage": 0.9310344827586207,
+        "active_n": 189,
+        "active_accuracy": 0.5238095238095238,
+        "active_balanced_accuracy": 0.5243615591397849,
+        "active_up_sensitivity": 0.5591397849462365,
+        "active_down_sensitivity": 0.4895833333333333,
+        "full_timeline_hit_rate_neutral_as_miss": 0.4876847290640394,
+        "full_timeline_up_sensitivity": 0.5148514851485149,
+        "full_timeline_down_sensitivity": 0.46078431372549017,
+        "up_precision": 0.5148514851485149,
+        "down_precision": 0.5340909090909091,
+        "down_f1_full_timeline": 0.4947368421052631,
+        "false_down_rate_among_actual_up": 0.40594059405940597,
+        "forecast_up": 101,
+        "forecast_down": 88,
+        "forecast_neutral": 14,
+        "actual_up": 101,
+        "actual_down": 102,
+        "always_up_accuracy": 0.4975369458128079,
+        "always_down_accuracy": 0.5024630541871922
+      },
+      "reversal": {
+        "up_momentum_actual_down_n": 58,
+        "up_to_down_reversal_sensitivity": 0.05172413793103448,
+        "down_alerts_while_up_momentum_n": 5,
+        "down_alert_precision_while_up_momentum": 0.6,
+        "false_down_alerts_while_up_momentum_n": 2,
+        "false_down_alert_burden_while_up_momentum": 0.4
+      }
+    },
+    "regions": {
+      "1": {
+        "n": 7,
+        "share": 0.034482758620689655,
+        "next_day_down_rate": 0.42857142857142855,
+        "next_day_up_rate": 0.5714285714285714,
+        "up_momentum_n": 7,
+        "next_day_down_rate_given_up_momentum": 0.42857142857142855
+      },
+      "2": {
+        "n": 5,
+        "share": 0.024630541871921183,
+        "next_day_down_rate": 0.6,
+        "next_day_up_rate": 0.4,
+        "up_momentum_n": 5,
+        "next_day_down_rate_given_up_momentum": 0.6
+      },
+      "3": {
+        "n": 184,
+        "share": 0.9064039408866995,
+        "next_day_down_rate": 0.5054347826086957,
+        "next_day_up_rate": 0.4945652173913043,
+        "up_momentum_n": 101,
+        "next_day_down_rate_given_up_momentum": 0.48514851485148514
+      },
+      "4": {
+        "n": 7,
+        "share": 0.034482758620689655,
+        "next_day_down_rate": 0.42857142857142855,
+        "next_day_up_rate": 0.5714285714285714,
+        "up_momentum_n": 7,
+        "next_day_down_rate_given_up_momentum": 0.42857142857142855
+      }
+    }
+  },
+  "2024_validation": {
+    "period": "2024",
+    "n": 205,
+    "TSM": {
+      "metrics": {
+        "n": 205,
+        "coverage": 1.0,
+        "active_n": 205,
+        "active_accuracy": 0.5073170731707317,
+        "active_balanced_accuracy": 0.4740570646863397,
+        "active_up_sensitivity": 0.680672268907563,
+        "active_down_sensitivity": 0.26744186046511625,
+        "full_timeline_hit_rate_neutral_as_miss": 0.5073170731707317,
+        "full_timeline_up_sensitivity": 0.680672268907563,
+        "full_timeline_down_sensitivity": 0.26744186046511625,
+        "up_precision": 0.5625,
+        "down_precision": 0.3770491803278688,
+        "down_f1_full_timeline": 0.31292517006802717,
+        "false_down_rate_among_actual_up": 0.31932773109243695,
+        "forecast_up": 144,
+        "forecast_down": 61,
+        "forecast_neutral": 0,
+        "actual_up": 119,
+        "actual_down": 86,
+        "always_up_accuracy": 0.5804878048780487,
+        "always_down_accuracy": 0.4195121951219512
+      },
+      "reversal": {
+        "up_momentum_actual_down_n": 63,
+        "up_to_down_reversal_sensitivity": 0.0,
+        "down_alerts_while_up_momentum_n": 0,
+        "down_alert_precision_while_up_momentum": null,
+        "false_down_alerts_while_up_momentum_n": 0,
+        "false_down_alert_burden_while_up_momentum": null
+      }
+    },
+    "TTSM_S1": {
+      "metrics": {
+        "n": 205,
+        "coverage": 0.7609756097560976,
+        "active_n": 156,
+        "active_accuracy": 0.48717948717948717,
+        "active_balanced_accuracy": 0.4725274725274725,
+        "active_up_sensitivity": 0.5604395604395604,
+        "active_down_sensitivity": 0.38461538461538464,
+        "full_timeline_hit_rate_neutral_as_miss": 0.37073170731707317,
+        "full_timeline_up_sensitivity": 0.42857142857142855,
+        "full_timeline_down_sensitivity": 0.29069767441860467,
+        "up_precision": 0.5604395604395604,
+        "down_precision": 0.38461538461538464,
+        "down_f1_full_timeline": 0.33112582781456956,
+        "false_down_rate_among_actual_up": 0.33613445378151263,
+        "forecast_up": 91,
+        "forecast_down": 65,
+        "forecast_neutral": 49,
+        "actual_up": 119,
+        "actual_down": 86,
+        "always_up_accuracy": 0.5804878048780487,
+        "always_down_accuracy": 0.4195121951219512
+      },
+      "reversal": {
+        "up_momentum_actual_down_n": 63,
+        "up_to_down_reversal_sensitivity": 0.1111111111111111,
+        "down_alerts_while_up_momentum_n": 17,
+        "down_alert_precision_while_up_momentum": 0.4117647058823529,
+        "false_down_alerts_while_up_momentum_n": 10,
+        "false_down_alert_burden_while_up_momentum": 0.5882352941176471
+      }
+    },
+    "TTSM_S2": {
+      "metrics": {
+        "n": 205,
+        "coverage": 0.7024390243902439,
+        "active_n": 144,
+        "active_accuracy": 0.4930555555555556,
+        "active_balanced_accuracy": 0.482026466521825,
+        "active_up_sensitivity": 0.5542168674698795,
+        "active_down_sensitivity": 0.4098360655737705,
+        "full_timeline_hit_rate_neutral_as_miss": 0.3463414634146341,
+        "full_timeline_up_sensitivity": 0.3865546218487395,
+        "full_timeline_down_sensitivity": 0.29069767441860467,
+        "up_precision": 0.5609756097560976,
+        "down_precision": 0.4032258064516129,
+        "down_f1_full_timeline": 0.3378378378378379,
+        "false_down_rate_among_actual_up": 0.31092436974789917,
+        "forecast_up": 82,
+        "forecast_down": 62,
+        "forecast_neutral": 61,
+        "actual_up": 119,
+        "actual_down": 86,
+        "always_up_accuracy": 0.5804878048780487,
+        "always_down_accuracy": 0.4195121951219512
+      },
+      "reversal": {
+        "up_momentum_actual_down_n": 63,
+        "up_to_down_reversal_sensitivity": 0.1111111111111111,
+        "down_alerts_while_up_momentum_n": 17,
+        "down_alert_precision_while_up_momentum": 0.4117647058823529,
+        "false_down_alerts_while_up_momentum_n": 10,
+        "false_down_alert_burden_while_up_momentum": 0.5882352941176471
+      }
+    },
+    "regions": {
+      "1": {
+        "n": 49,
+        "share": 0.23902439024390243,
+        "next_day_down_rate": 0.42857142857142855,
+        "next_day_up_rate": 0.5714285714285714,
+        "up_momentum_n": 36,
+        "next_day_down_rate_given_up_momentum": 0.4444444444444444
+      },
+      "2": {
+        "n": 20,
+        "share": 0.0975609756097561,
+        "next_day_down_rate": 0.35,
+        "next_day_up_rate": 0.65,
+        "up_momentum_n": 17,
+        "next_day_down_rate_given_up_momentum": 0.4117647058823529
+      },
+      "3": {
+        "n": 127,
+        "share": 0.6195121951219512,
+        "next_day_down_rate": 0.4251968503937008,
+        "next_day_up_rate": 0.5748031496062992,
+        "up_momentum_n": 82,
+        "next_day_down_rate_given_up_momentum": 0.43902439024390244
+      },
+      "4": {
+        "n": 9,
+        "share": 0.04390243902439024,
+        "next_day_down_rate": 0.4444444444444444,
+        "next_day_up_rate": 0.5555555555555556,
+        "up_momentum_n": 9,
+        "next_day_down_rate_given_up_momentum": 0.4444444444444444
+      }
+    }
+  },
+  "2024_gate": {
+    "TTSM_S1": false,
+    "TTSM_S2": false
+  },
+  "primary_pre2025_decision": "PRE2025_DOWN_REVERSAL_SIGNAL_NOT_SUPPORTED"
+}

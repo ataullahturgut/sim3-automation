@@ -1,0 +1,11 @@
+{
+  "identity": "DIRECTION_TTSM_REALIZED_SEMIVARIANCE_XAU_V1_RESEARCH",
+  "source_table": "public.xau_intraday_research_cache_5m",
+  "timezone": "America/New_York",
+  "minimum_bars_per_day": 240,
+  "retained_daily_rows_pre2025": 958,
+  "first_retained_day": "2020-04-06",
+  "last_retained_day": "2024-12-30",
+  "panel_sha256_through_2024": "9c3e1e6fbf87c7c48072b3e5d2611b718f6af3b4608ee9e0e3ee7339af184ff9",
+  "production_database_write": "NONE"
+}

@@ -1,0 +1,28 @@
+{
+  "identity": "DIRECTION_TTSM_REALIZED_SEMIVARIANCE_XAU_V1_RESEARCH",
+  "momentum_days": 20,
+  "semivariance_days": 5,
+  "reference_days": 250,
+  "quantile": 0.8,
+  "quantile_method": "empirical_nearest_rank_ceil_qn",
+  "source_mapping": {
+    "region1": {
+      "S1": 0,
+      "S2": 0
+    },
+    "region2": {
+      "S1": "DOWN_ALWAYS",
+      "S2": "DOWN_IF_TSM_UP_ELSE_NEUTRAL"
+    },
+    "region3": {
+      "S1": "TSM",
+      "S2": "TSM"
+    },
+    "region4": {
+      "S1": "UP_ALWAYS",
+      "S2": "UP_IF_TSM_DOWN_ELSE_NEUTRAL"
+    }
+  },
+  "panel_sha256_through_2024": "9c3e1e6fbf87c7c48072b3e5d2611b718f6af3b4608ee9e0e3ee7339af184ff9",
+  "frozen_before_2025": true
+}
