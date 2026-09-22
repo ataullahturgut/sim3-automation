@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.04  
+**Manifest version:** 2.05  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -509,6 +509,94 @@ The original 12-engine work is therefore **not obsolete**. In role-preserving fo
 
 ---
 
+## 6D. FROZEN UP VERIFIER BASELINE — do not drift
+
+**Frozen identity:** `UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH`  
+**Frozen result commit:** `f4c661731c8888985b82b4bf16eab401184fa76f`  
+**Status:** `FROZEN_RESEARCH_BASELINE / PROMISING / NOT_RUNTIME / NOT_PRODUCTION_AUTHORITY`.
+
+This is now the authoritative UP-verifier baseline. It must not be silently modified while downstream downside/suppression research continues.
+
+### 6D.1 Frozen direct UP experts
+
+The direct daily expert pool is fixed as:
+
+1. TTSM-S2
+2. TTSM-S1
+3. Bonato AR1_RM QBoost h=1
+4. AR1_RM_LOGIT
+5. RM_LOGIT
+
+No expert may be removed, replaced, threshold-shifted or redefined inside this frozen V2 identity.
+
+### 6D.2 Frozen legacy competence context
+
+The original Gold Control layer is fixed in role-preserving form:
+
+- FAST_UP = FAST `ROBUST_UP`;
+- SLOW_UP = SLOW `ROBUST_UP`;
+- MONTHLY_UP = `MONTHLY_DIRECTION_3M == UP`;
+- `CONSENSUS_UP` iff at least 2 of the 3 are UP;
+- otherwise `NON_CONSENSUS_UP`.
+
+These legacy states are **context for competence**, not equal votes.
+
+The remaining original engines retain their roles:
+- CAUSAL_PATCH / VW_MIDAS_MSVR_SUCCESSOR_V1 / MOMENTUM_3M = slower strategic priors;
+- MACRO_EVENT_SUCCESSOR_V2 = event-time specialist;
+- GVZ_RISK = risk context only;
+- RANDOM_WALK = benchmark;
+- BOCPD_RETURN_SUCCESSOR_V1 = blocked where historical daily state is unavailable;
+- EMERGENCY_LEVEL / EMERGENCY_REVERSAL = NOT_PROVEN as independent next-day UP predictors.
+
+### 6D.3 Frozen competence rule
+
+For each active direct UP expert:
+
+1. use only matured prior outcomes;
+2. use same legacy-context bucket history when that expert has at least 30 historical UP calls in the bucket;
+3. otherwise use the frozen global-history fallback;
+4. require historical UP calls >=30;
+5. require historical UP precision >50%;
+6. require historical false-UP FPR <50%;
+7. rank eligible active experts by one-sided 90% Wilson lower bound on UP precision;
+8. tie-break by lower false-UP FPR, then higher raw UP precision, then fixed identity order:
+   TTSM-S2 > TTSM-S1 > Bonato AR1_RM > AR1_RM_LOGIT > RM_LOGIT;
+9. if none is eligible, output `ABSTAIN`.
+
+Outputs are only:
+- `UP`
+- `ABSTAIN`
+
+### 6D.4 Frozen performance reference
+
+Standalone:
+- 2024: UP precision **61.90%**, false-UP FPR **18.60%**, coverage **20.49%**;
+- locked 2025 transport: UP precision **72.97%**, false-UP FPR **10.31%**, coverage **15.61%**.
+
+SQRT countersign intersection:
+- 2024: 4 vetoes = 3 good / 1 bad; veto precision **75.00%**; false-alarm reduction **30.00%**; true-DOWN retention **85.71%**;
+- 2025 locked stress: 16 vetoes = 10 good / 6 bad; veto precision **62.50%**; true-DOWN retention **86.67%**.
+
+The 2024 SQRT intersection remains a formal near miss because remaining forced-DOWN precision improved by **+4.98 pp** versus the preregistered **+5.00 pp** requirement. That does not unfreeze or invalidate the UP verifier itself; it means only that the current hard-veto coupling is not promoted.
+
+### 6D.5 Change-control rule
+
+Any future modification to:
+- direct expert membership;
+- legacy-context definition;
+- support threshold;
+- precision/FPR eligibility threshold;
+- Wilson confidence level;
+- ranking/tie-break rule;
+- output semantics;
+
+requires a **new router identity (V3 or later), preregistration, and side-by-side comparison against this frozen V2 baseline**.
+
+V2 remains permanently reproducible as the reference UP verifier even if a successor later performs better.
+
+---
+
 ## 7. DOWN / downside-risk research ledger
 
 This is the canonical record for the 21–22 September 2026 downside sequence. Each entry records method, source, data, result and decision once.
@@ -998,18 +1086,32 @@ However the formal pre-2025 gate fails by a very small margin and the primary sa
 The correct next step is to preserve the frozen verifier and obtain more independent same-clock historical evidence / longer parent-alarm support rather than changing the threshold post hoc.
 
 
-## 11. Direction-resolving verifier priority — current next lane
+## 11. Current next lane — SQRT dampener / suppression controller
 
-Priority acquisition/testing order:
+The UP-verifier architecture is now frozen in section 6D and must not be redesigned merely because the hard-veto coupling narrowly missed its 2024 gate.
 
-1. Gold options skew / volatility surface / put-call asymmetry;
-2. Gold futures positioning, volume, open interest or order-flow imbalance;
-3. daily origin-safe US real yield;
-4. long-history daily DXY / broad USD;
-5. liquidity/spread or futures basis;
-6. macro-surprise direction at event time.
+The next research problem is **not primarily “find another UP model.”** It is:
 
-Procedure: first preserve the V2 finding that generic historical UP states are unsafe or inactive on SQRT alarm days. Next, authority/coverage scan new direction-resolving information or preregister a dedicated high-specificity UP/rebound verifier. Only after a pre-2025 safety gate passes may a primary-risk + verifier architecture be reconsidered.
+> how should a strong but selective UP verifier attenuate an SQRT downside-risk alarm without unnecessarily deleting true DOWN alarms?
+
+The current hard veto is binary:
+- Router V2 UP -> suppress SQRT DOWN;
+- Router V2 ABSTAIN -> retain SQRT DOWN.
+
+That binary coupling is likely too coarse. The next successor should be a separately preregistered **dampener / suppression controller** that preserves the frozen Router V2 output and decides the *degree* of attenuation.
+
+Priority designs to research, in order:
+
+1. confidence-weighted attenuation using only predeclared SQRT alarm strength + frozen Router V2 competence/confidence;
+2. calibrated reject/suppress/retain controller with three actions rather than a binary veto;
+3. Bayesian or conformal lower-bound gate that suppresses only when the UP-verifier evidence is sufficiently strong;
+4. only if those fail, new direction-resolving information: Gold options skew/vol surface, futures positioning/order flow, origin-safe real yield, DXY/broad USD, liquidity/basis, macro-surprise direction.
+
+Binding constraint:
+- Router V2 remains frozen;
+- no 2025 tuning;
+- the dampener may not retrain the UP experts or change their context definitions;
+- the first dampener design must be preregistered before any new SQRT-alarm intersection is scored.
 
 ---
 
