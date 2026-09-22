@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.03  
+**Manifest version:** 2.04  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -913,6 +913,91 @@ The original FAST clock audit matched parent next target date on only 14/19 prim
 **Binding interpretation:** no active existing historical UP engine passes the predeclared safety rule of at least 80% true-DOWN retention with useful veto support. Generic UP classifiers/states are not sufficient as a SQRT false-alarm cleaner. The counter-model architecture remains open, but it now requires a deliberately high-specificity UP/rebound verifier or genuinely new direction-resolving information.
 
 
+### 10.7 SQRT × frozen UP Router V2 countersign veto — executed
+
+**Identity:** `SQRT_UP_ROUTER_V2_COUNTERSIGN_VETO_V1_RESEARCH`  
+**Research branch:** `gold-downside-router-v2-countersign-v1-20260922`  
+**Preregistration:** `375ceaa0d6a84ecb7a4da6f7dacc72c7a9b66693`  
+**Frozen result:** `6d875ca9840eb6f00411e1398a71160d83508bd3`  
+**Final status:** `NEAR_MISS_PRE2025_GATE_FAILED_BY_PRECISION_DELTA`.
+
+The already-frozen legacy-context Router V2 was intersected with SQRT alarms without changing any verifier rule.
+
+Exact alignment:
+- 2024: 17/17 SQRT alarms matched exact Router target date and next-direction sign;
+- 2025: 90/90 matched;
+- no target-date or sign mismatches.
+
+#### 10.7.1 Primary 2024
+
+Baseline:
+- 17 SQRT alarms;
+- 7 true next-day DOWN;
+- 10 false forced-DOWN / actual UP;
+- forced-DOWN precision = **41.18%**.
+
+Router V2 veto:
+- vetoes = **4**;
+- good vetoes = **3**;
+- bad vetoes = **1**;
+- veto precision = **75.00%**;
+- false-alarm reduction = **30.00%**;
+- true-DOWN retention = **85.71%**;
+- remaining forced-DOWN precision = **46.15%**;
+- precision improvement = **+4.98 percentage points**;
+- net veto benefit = **+2**.
+
+Veto origins:
+- 2024-08-06 → actual UP → good veto;
+- 2024-11-12 → actual DOWN → bad veto;
+- 2024-11-13 → actual UP → good veto;
+- 2024-11-25 → actual UP → good veto.
+
+All four were emitted through RM_LOGIT competence inside the frozen NON_CONSENSUS_UP legacy bucket.
+
+Frozen gate:
+
+| Requirement | Observed | Result |
+|---|---:|---|
+| veto count >=3 | 4 | PASS |
+| veto precision >=65% | 75.00% | PASS |
+| false-alarm reduction >=25% | 30.00% | PASS |
+| true-DOWN retention >=80% | 85.71% | PASS |
+| remaining precision gain >=+5.00 pp | **+4.98 pp** | **FAIL** |
+
+The final criterion misses by about **0.02 percentage point**. The preregistered gate is binding and is not relaxed after the result.
+
+#### 10.7.2 Locked 2025 stress
+
+Baseline:
+- 90 alarms = 45 true DOWN + 45 false forced-DOWN;
+- precision 50.00%.
+
+Unchanged Router V2:
+- 16 vetoes;
+- 10 good / 6 bad;
+- veto precision = **62.50%**;
+- false-alarm reduction = **22.22%**;
+- true-DOWN retention = **86.67%**;
+- remaining forced-DOWN precision = **52.70%**;
+- precision gain = **+2.70 pp**;
+- net veto benefit = **+4**.
+
+2025 is directionally supportive but cannot rescue the failed 2024 gate.
+
+#### 10.7.3 Binding interpretation
+
+This is the strongest SQRT countersign result in the current sequence. It is the first tested architecture to simultaneously show:
+- veto precision materially above chance;
+- meaningful false-alarm removal;
+- >80% true-DOWN retention;
+- improved remaining forced-DOWN precision.
+
+However the formal pre-2025 gate fails by a very small margin and the primary sample is only 17 alarms / 4 vetoes. Therefore the result is **NEAR MISS, NOT PROMOTED**.
+
+The correct next step is to preserve the frozen verifier and obtain more independent same-clock historical evidence / longer parent-alarm support rather than changing the threshold post hoc.
+
+
 ## 11. Direction-resolving verifier priority — current next lane
 
 Priority acquisition/testing order:
@@ -968,4 +1053,4 @@ Gold Control currently has a useful downside-risk sensor but no proven general n
 
 SQRT-HAR-DR is the current recent downside-risk research reference. RAW HAR-DR is the mandatory comparator. ME-SQRT shows a small coherent mechanism signal but did not pass its calibration gate. HARK-SD, cross-domain direction classifiers, scalar meta-veto, standalone DTW path veto and standalone SP500 veto did not pass their frozen pre-2025 gates. Heterogeneous consensus produced one exploratory 2024 pocket but did not transport.
 
-The time-to-event V1 diagnostic is closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. UP-countersign V1 is retained as the narrow TTSM/Bonato/Altuntaş test. V2 then expanded the test to FAST, RV_LOGIT, RM_LOGIT, AR1_RM_LOGIT and TTSM S1/S2 and found NO_EXISTING_HISTORICAL_UP_ENGINE_SAFELY_CLEANS_SQRT_FALSE_ALARMS_UNDER_V2. Section 6 remains the authoritative year-by-year UP inventory. UP Expert Router V1 reduced false-UP burden but failed its 2024 precision-lift gate. The original 12-engine omission was then corrected. Legacy-context Router V2 passed its frozen 2024 gate with 61.90% UP precision and 18.60% false-UP FPR, and transported descriptively to 72.97% precision / 10.31% FPR in 2025 at much lower coverage. The next lane is a separately preregistered SQRT countersign-veto test using frozen Router V2 outputs. Preferred evidence is new information—beginning with Gold options/futures structure if authoritative long-history data can be obtained—or a newly preregistered daily-horizon UP/rebound expert with sufficient historical support. Do not continue adding unconstrained complexity to the same Gold history or tune on 2025.
+The time-to-event V1 diagnostic is closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. UP-countersign V1 is retained as the narrow TTSM/Bonato/Altuntaş test. V2 then expanded the test to FAST, RV_LOGIT, RM_LOGIT, AR1_RM_LOGIT and TTSM S1/S2 and found NO_EXISTING_HISTORICAL_UP_ENGINE_SAFELY_CLEANS_SQRT_FALSE_ALARMS_UNDER_V2. Section 6 remains the authoritative year-by-year UP inventory. UP Expert Router V1 reduced false-UP burden but failed its 2024 precision-lift gate. The original 12-engine omission was then corrected. Legacy-context Router V2 passed its frozen standalone 2024 gate and transported strongly in 2025 at lower coverage. Its separately preregistered SQRT countersign test is now complete: 2024 produced 4 vetoes, 3 good / 1 bad, 75% veto precision, 30% false-alarm reduction and 85.71% true-DOWN retention. Remaining forced-DOWN precision improved by +4.98 pp, narrowly missing the frozen +5.00 pp gate. Status: NEAR_MISS_PRE2025_GATE_FAILED_BY_PRECISION_DELTA. The next lane is more independent same-clock evidence / longer parent-alarm support, not post-hoc threshold relaxation. Preferred evidence is new information—beginning with Gold options/futures structure if authoritative long-history data can be obtained—or a newly preregistered daily-horizon UP/rebound expert with sufficient historical support. Do not continue adding unconstrained complexity to the same Gold history or tune on 2025.
