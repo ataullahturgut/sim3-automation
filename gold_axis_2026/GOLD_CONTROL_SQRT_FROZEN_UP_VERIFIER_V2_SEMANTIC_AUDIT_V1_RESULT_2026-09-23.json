@@ -1,0 +1,116 @@
+{
+  "identity": "SQRT_FROZEN_UP_VERIFIER_V2_SEMANTIC_AUDIT_V1_RESEARCH",
+  "date": "2026-09-23",
+  "status": "RETROSPECTIVE_SEMANTIC_AUDIT_COMPLETE_NOT_CERTIFIED",
+  "frozen_inputs": {
+    "up_verifier_identity": "UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH",
+    "up_verifier_result_commit": "f4c661731c8888985b82b4bf16eab401184fa76f",
+    "sqrt_router_intersection_identity": "SQRT_UP_ROUTER_V2_COUNTERSIGN_VETO_V1_RESEARCH",
+    "sqrt_semantic_identity": "SQRT_ALARM_SEMANTIC_AUDIT_V1_RESEARCH"
+  },
+  "primary_2024": {
+    "sqrt_alarms": 17,
+    "actual_up": 10,
+    "actual_down": 7,
+    "router_up": {
+      "n": 4,
+      "actual_up": 3,
+      "actual_down": 1,
+      "conditional_up_precision": 0.75,
+      "actual_up_recall": 0.3,
+      "false_up_fpr": 0.14285714285714285
+    },
+    "router_abstain": {
+      "n": 13,
+      "actual_up": 7,
+      "actual_down": 6,
+      "conditional_down_share": 0.46153846153846156,
+      "conditional_up_share": 0.5384615384615384
+    },
+    "complement_rule_up_else_down": {
+      "tp_up": 3,
+      "fp_up": 1,
+      "tn_down": 6,
+      "fn_up": 7,
+      "accuracy": 0.5294117647058824,
+      "balanced_accuracy": 0.5785714285714285
+    },
+    "semantic_crosswalk_router_up": {
+      "RISK_HIT_DOWN_CLOSE": 1,
+      "RISK_HIT_UP_CLOSE": 0,
+      "RISK_MISS_DOWN_CLOSE": 0,
+      "RISK_MISS_UP_CLOSE": 3,
+      "realized_risk_hit": 1,
+      "realized_risk_miss": 3,
+      "risk_miss_share": 0.75,
+      "interpretation": "All three correct UP-verifier calls were also genuine SQRT realized-risk misses; the single wrong UP-verifier call was a realized-risk-hit DOWN day."
+    },
+    "semantic_crosswalk_router_abstain": {
+      "RISK_HIT_DOWN_CLOSE": 5,
+      "RISK_HIT_UP_CLOSE": 2,
+      "RISK_MISS_DOWN_CLOSE": 1,
+      "RISK_MISS_UP_CLOSE": 5,
+      "realized_risk_hit": 7,
+      "realized_risk_miss": 6
+    }
+  },
+  "secondary_2022_2024": {
+    "sqrt_alarms": 30,
+    "actual_up": 16,
+    "actual_down": 14,
+    "router_up_n": 4,
+    "router_up_actual_up": 3,
+    "router_up_actual_down": 1,
+    "router_abstain_n": 26,
+    "router_abstain_actual_up": 13,
+    "router_abstain_actual_down": 13,
+    "complement_accuracy": 0.5333333333333333,
+    "complement_balanced_accuracy": 0.5580357142857143
+  },
+  "locked_2025_stress": {
+    "sqrt_alarms": 90,
+    "actual_up": 45,
+    "actual_down": 45,
+    "router_up": {
+      "n": 16,
+      "actual_up": 10,
+      "actual_down": 6,
+      "conditional_up_precision": 0.625,
+      "actual_up_recall": 0.2222222222222222,
+      "false_up_fpr": 0.13333333333333333
+    },
+    "router_abstain": {
+      "n": 74,
+      "actual_up": 35,
+      "actual_down": 39,
+      "conditional_down_share": 0.527027027027027,
+      "conditional_up_share": 0.47297297297297297
+    },
+    "complement_rule_up_else_down": {
+      "tp_up": 10,
+      "fp_up": 6,
+      "tn_down": 39,
+      "fn_up": 35,
+      "accuracy": 0.5444444444444444,
+      "balanced_accuracy": 0.5444444444444445
+    },
+    "realized_risk_semantic_crosswalk": "NOT_PROVEN",
+    "blocker": "The retained frozen 2025 intersection result stores aggregate counts but not the 16 individual Router-UP dates; row-level risk-hit/miss crosswalk is therefore not reconstructed."
+  },
+  "interpretation": {
+    "up_verifier": "SUPPORTED_AS_SELECTIVE_UP_SIGNAL_IN_2024_AND_WEAKER_BUT_POSITIVE_IN_2025_LOCKED_STRESS",
+    "abstain_as_down": "NOT_SUPPORTED",
+    "full_complement_rule": "WEAK_ONLY_NOT_A_SOLVED_DIRECTION_ENGINE",
+    "risk_cleaning_2024": "STRONG_DESCRIPTIVE_DIAGNOSTIC_3_OF_4_ROUTER_UP_CALLS_WERE_TRUE_REALIZED_RISK_MISSES",
+    "key_point": "The frozen UP verifier is useful as a selective positive UP signal, but its abstention is not a negative DOWN signal."
+  },
+  "governance": {
+    "random_split": false,
+    "retraining": false,
+    "threshold_tuning": false,
+    "tuning_on_2025": false,
+    "used_2026": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
