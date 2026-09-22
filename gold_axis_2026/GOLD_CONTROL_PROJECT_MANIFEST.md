@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.16  
+**Manifest version:** 2.17  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -2039,6 +2039,99 @@ This limitation is mitigated for research by the near-exact overlap with the gov
 ---
 
 
+
+## 11K. Regime-gated selective dampener V1 — preregistered Q80/Q90 reject gate
+
+**Identity:** `REGIME_GATED_SELECTIVE_DAMPENER_V1_RESEARCH`  
+**Research branch:** `gold-regime-gated-dampener-v1-20260922`  
+**Preregistration:** `19973bd4ecc9a752b869990a6fe78f0f8ca11f73`  
+**Frozen result:** `b1f501804c33cf01dc14bb0eebfea2d719911c3e`  
+**Status:** `REJECTED_SAFETY`.
+
+### 11K.1 Motivation and frozen rule
+
+The V2 audit confirmed that the universal Router-UP hard veto fails in the 2020 crisis regime and that this failure is not a data/session implementation artifact. The first successor therefore tested a deliberately low-flexibility regime-aware reject option rather than another unconstrained classifier.
+
+For each evaluation year, using only formation rows available by 31 December Y-1:
+
+- `Q80` = the existing frozen nearest-rank 80th-percentile downside-RV threshold;
+- `Q90` = a preregistered nearest-rank 90th-percentile downside-RV boundary;
+- SQRT alarm with forecast in `[Q80,Q90)` = `HIGH_NON_EXTREME`;
+- SQRT alarm with forecast `>=Q90` = `EXTREME`.
+
+Controller:
+- Router V2 ABSTAIN -> retain DOWN;
+- Router V2 UP + EXTREME -> WATCH and retain DOWN;
+- Router V2 UP + HIGH_NON_EXTREME -> suppress DOWN.
+
+No percentile grid search, Router retuning or 2025/2026 policy selection was allowed.
+
+### 11K.2 Integrity reproduction
+
+The first implementation exposed a one-day SLOW completed-week clock discrepancy around Friday-holiday weeks. The audit correctly blocked scoring.
+
+The implementation was corrected to preserve the frozen completed-week availability semantics: a shortened holiday week becomes available at its calendar Friday boundary, not one day early on Thursday.
+
+After correction:
+- 2023 FAST/SLOW/MONTHLY UP counts = 106 / 79 / 133 exactly;
+- 2024 FAST/SLOW/MONTHLY UP counts = 124 / 111 / 205 exactly;
+- 2020 Router UP=185, SQRT overlap=140, good/bad=80/60 exactly;
+- 2021 Router UP=33, overlap=2, good/bad=1/1 exactly;
+- 2022 Router UP=22, overlap=0 exactly;
+- 2023 Router UP=19, overlap=0 exactly;
+- 2024 Router UP=42, overlap=4, good/bad=3/1 exactly.
+
+Final integrity errors=0.
+
+### 11K.3 Preregistered V1 result
+
+Year-by-year controller anatomy:
+
+| year | SQRT alarms | suppress | WATCH | good suppress | bad suppress | false-alarm reduction | true-DOWN retention |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 2020 | 212 | 51 | 89 | 26 | 25 | 22.61% | 74.23% |
+| 2021 | 28 | 2 | 0 | 1 | 1 | 8.33% | 93.75% |
+| 2022 | 11 | 0 | 0 | 0 | 0 | 0.00% | 100.00% |
+| 2023 | 2 | 0 | 0 | 0 | 0 | 0.00% | 100.00% |
+| 2024 | 17 | 4 | 0 | 3 | 1 | 30.00% | 85.71% |
+
+Pooled 2020–2024:
+- alarms=270;
+- actual DOWN=127;
+- actual UP=143;
+- RETAIN=124;
+- WATCH=89;
+- SUPPRESS=57;
+- good suppressions=30;
+- bad suppressions=27;
+- suppression precision=52.63%;
+- false-alarm reduction=20.98%;
+- true-DOWN retention=78.74%;
+- baseline forced-DOWN precision=47.04%;
+- remaining forced-DOWN precision=46.95%;
+- precision change=**-0.09 pp**.
+
+Primary safety diagnostic:
+- alpha=0.20;
+- delta=0.10;
+- bad suppressions=27 of 127 actual-DOWN SQRT alarms;
+- exact lower-tail binomial p=**0.68545**;
+- exact 90% upper Clopper-Pearson bad-suppression bound=**26.64%**.
+
+Therefore the preregistered safety diagnostic fails.
+
+### 11K.4 Binding interpretation
+
+The individual-risk magnitude gate materially improves true-DOWN retention relative to the rejected universal hard veto (78.74% versus 51.18%), but it does not make suppression safe and it destroys the precision benefit: remaining forced-DOWN precision is slightly below the parent baseline.
+
+The 2020 failure is not confined to only the most extreme SQRT forecasts. Even after the >=Q90 cases are converted to WATCH, the Q80-Q90 band still contains 51 Router-UP suppression opportunities, including 25 actual DOWN cases.
+
+This falsifies the simple hypothesis that one fixed upper SQRT-risk percentile boundary is sufficient to make Router veto authority safe.
+
+Do not tune Q90 post hoc under this identity. The next controller, if pursued, must model **state/regime persistence or conditional competence** rather than only the instantaneous SQRT forecast magnitude. Candidate successor families remain causal crisis-state reject options, Mondrian/hierarchical alarm-conditional risk control, discounted competence with explicit regime conditioning, or non-exchangeable conformal risk control. Any successor requires a new preregistration.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -2079,4 +2172,4 @@ Gold Control currently has a useful downside-risk sensor but no proven general n
 
 SQRT-HAR-DR is the current recent downside-risk research reference. RAW HAR-DR is the mandatory comparator. ME-SQRT shows a small coherent mechanism signal but did not pass its calibration gate. HARK-SD, cross-domain direction classifiers, scalar meta-veto, standalone DTW path veto and standalone SP500 veto did not pass their frozen pre-2025 gates. Heterogeneous consensus produced one exploratory 2024 pocket but did not transport.
 
-The time-to-event V1 diagnostic is closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. UP-countersign V1 is retained as the narrow TTSM/Bonato/Altuntaş test. V2 then expanded the test to FAST, RV_LOGIT, RM_LOGIT, AR1_RM_LOGIT and TTSM S1/S2 and found NO_EXISTING_HISTORICAL_UP_ENGINE_SAFELY_CLEANS_SQRT_FALSE_ALARMS_UNDER_V2. Section 6 remains the authoritative year-by-year UP inventory. UP Expert Router V1 reduced false-UP burden but failed its 2024 precision-lift gate. The original 12-engine omission was then corrected. Legacy-context Router V2 passed its frozen standalone 2024 gate and transported strongly in 2025 at lower coverage. Its separately preregistered SQRT countersign test is now complete: 2024 produced 4 vetoes, 3 good / 1 bad, 75% veto precision, 30% false-alarm reduction and 85.71% true-DOWN retention. Remaining forced-DOWN precision improved by +4.98 pp, narrowly missing the frozen +5.00 pp gate. Status: NEAR_MISS_PRE2025_GATE_FAILED_BY_PRECISION_DELTA. The next lane is more independent same-clock evidence / longer parent-alarm support, not post-hoc threshold relaxation. Preferred evidence is new information—beginning with Gold options/futures structure if authoritative long-history data can be obtained—or a newly preregistered daily-horizon UP/rebound expert with sufficient historical support. Do not continue adding unconstrained complexity to the same Gold history or tune on 2025.
+The time-to-event V1 diagnostic is closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. UP-countersign V1 is retained as the narrow TTSM/Bonato/Altuntaş test. V2 then expanded the test to FAST, RV_LOGIT, RM_LOGIT, AR1_RM_LOGIT and TTSM S1/S2 and found NO_EXISTING_HISTORICAL_UP_ENGINE_SAFELY_CLEANS_SQRT_FALSE_ALARMS_UNDER_V2. Section 6 remains the authoritative year-by-year UP inventory. UP Expert Router V1 reduced false-UP burden but failed its 2024 precision-lift gate. The original 12-engine omission was then corrected. Legacy-context Router V2 passed its frozen standalone 2024 gate and transported strongly in 2025 at lower coverage. The universal SQRT hard-veto coupling is now decisively rejected on audited 2020–2024 history: 62 of 127 actual-DOWN alarms would be suppressed and true-DOWN retention falls to 51.18%. The first preregistered regime-aware successor, REGIME_GATED_SELECTIVE_DAMPENER_V1, also fails: converting >=Q90 Router-UP alarms to WATCH raises true-DOWN retention to 78.74% but leaves 27 bad suppressions, fails the alpha=0.20/delta=0.10 diagnostic (p=0.68545), and changes remaining forced-DOWN precision by -0.09 pp. Therefore a single instantaneous SQRT-risk percentile gate is not sufficient. Router V2 remains frozen as a verifier baseline; the next lane is a newly preregistered state/regime-persistence or conditional-risk controller, not post-hoc Q90 tuning, and 2025 remains unavailable for policy selection.
