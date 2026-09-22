@@ -1,0 +1,207 @@
+{
+  "identity": "LEGACY12_UP_INCLUSION_AUDIT_V1_RESEARCH",
+  "date": "2026-09-22",
+  "preregistration_commit": "3a3f1344bc7240271d9f7369af91664147b39883",
+  "original_12": [
+    "CAUSAL_PATCH",
+    "VW_MIDAS_MSVR_SUCCESSOR_V1",
+    "MOMENTUM_3M",
+    "RANDOM_WALK",
+    "MONTHLY_DIRECTION_3M",
+    "FAST",
+    "SLOW",
+    "MACRO_EVENT_SUCCESSOR_V2",
+    "BOCPD_RETURN_SUCCESSOR_V1",
+    "EMERGENCY_LEVEL",
+    "EMERGENCY_REVERSAL",
+    "GVZ_RISK"
+  ],
+  "same_clock_reconstruction": {
+    "note": "Frozen FAST/SLOW/MONTHLY_DIRECTION rules reconstructed on exact TTSM/Bonato/logit daily target axis; descriptive research identity only.",
+    "metrics": {
+      "2023": {
+        "FAST_ROBUST_UP": {
+          "n": 203,
+          "up_calls": 106,
+          "true_up": 55,
+          "false_up": 51,
+          "up_precision": 0.5188679245283019,
+          "false_up_fpr": 0.5,
+          "coverage": 0.5221674876847291,
+          "actual_up_recall": 0.5445544554455446
+        },
+        "SLOW_ROBUST_UP": {
+          "n": 203,
+          "up_calls": 79,
+          "true_up": 43,
+          "false_up": 36,
+          "up_precision": 0.5443037974683544,
+          "false_up_fpr": 0.35294117647058826,
+          "coverage": 0.3891625615763547,
+          "actual_up_recall": 0.42574257425742573
+        },
+        "MONTHLY_DIRECTION_3M_UP": {
+          "n": 203,
+          "up_calls": 133,
+          "true_up": 69,
+          "false_up": 64,
+          "up_precision": 0.518796992481203,
+          "false_up_fpr": 0.6274509803921569,
+          "coverage": 0.6551724137931034,
+          "actual_up_recall": 0.6831683168316832
+        }
+      },
+      "2024": {
+        "FAST_ROBUST_UP": {
+          "n": 205,
+          "up_calls": 124,
+          "true_up": 68,
+          "false_up": 56,
+          "up_precision": 0.5483870967741935,
+          "false_up_fpr": 0.6511627906976745,
+          "coverage": 0.6048780487804878,
+          "actual_up_recall": 0.5714285714285714
+        },
+        "SLOW_ROBUST_UP": {
+          "n": 205,
+          "up_calls": 111,
+          "true_up": 58,
+          "false_up": 53,
+          "up_precision": 0.5225225225225225,
+          "false_up_fpr": 0.6162790697674418,
+          "coverage": 0.5414634146341464,
+          "actual_up_recall": 0.48739495798319327
+        },
+        "MONTHLY_DIRECTION_3M_UP": {
+          "n": 205,
+          "up_calls": 205,
+          "true_up": 119,
+          "false_up": 86,
+          "up_precision": 0.5804878048780487,
+          "false_up_fpr": 1,
+          "coverage": 1,
+          "actual_up_recall": 1
+        }
+      },
+      "2025": {
+        "FAST_ROBUST_UP": {
+          "n": 237,
+          "up_calls": 173,
+          "true_up": 100,
+          "false_up": 73,
+          "up_precision": 0.5780346820809249,
+          "false_up_fpr": 0.7525773195876289,
+          "coverage": 0.729957805907173,
+          "actual_up_recall": 0.7142857142857143
+        },
+        "SLOW_ROBUST_UP": {
+          "n": 237,
+          "up_calls": 170,
+          "true_up": 97,
+          "false_up": 73,
+          "up_precision": 0.5705882352941176,
+          "false_up_fpr": 0.7525773195876289,
+          "coverage": 0.7172995780590717,
+          "actual_up_recall": 0.6928571428571428
+        },
+        "MONTHLY_DIRECTION_3M_UP": {
+          "n": 237,
+          "up_calls": 220,
+          "true_up": 127,
+          "false_up": 93,
+          "up_precision": 0.5772727272727273,
+          "false_up_fpr": 0.9587628865979382,
+          "coverage": 0.9282700421940928,
+          "actual_up_recall": 0.9071428571428571
+        }
+      }
+    }
+  },
+  "retained_monthly_results": {
+    "CAUSAL_PATCH": {
+      "2025_direction_accuracy": 0.8333333333333334,
+      "2026_available_direction_accuracy": 0.2857142857142857,
+      "role": "MONTHLY_H1_PRIOR_ONLY"
+    },
+    "VW_MIDAS_MSVR_SUCCESSOR_V1": {
+      "2025_direction_accuracy": 0.75,
+      "2026_available_direction_accuracy": 0.42857142857142855,
+      "role": "MONTHLY_H1_PRIOR_ONLY"
+    },
+    "MOMENTUM_3M": {
+      "2025_direction_accuracy": 0.9166666666666666,
+      "2026_available_direction_accuracy": 0.7142857142857143,
+      "role": "MONTHLY_H1_PRIOR_ONLY"
+    },
+    "RANDOM_WALK": {
+      "role": "BENCHMARK_ONLY"
+    }
+  },
+  "retained_specialist_roles": {
+    "MACRO_EVENT_SUCCESSOR_V2": {
+      "role": "SPECIAL_CLOCK_ELIGIBLE",
+      "note": "event-time direction specialist only; not unconditional daily vote"
+    },
+    "GVZ_RISK": {
+      "role": "CONTEXT_ONLY_ELIGIBLE",
+      "note": "risk governor; never direction vote"
+    },
+    "BOCPD_RETURN_SUCCESSOR_V1": {
+      "role": "BLOCKED_PRE2025_HISTORY",
+      "note": "daily origin state not found in retained PIT panel"
+    },
+    "EMERGENCY_LEVEL": {
+      "role": "NOT_PROVEN",
+      "note": "context state; no independent pre2025 next-day direction proof"
+    },
+    "EMERGENCY_REVERSAL": {
+      "role": "NOT_PROVEN",
+      "note": "reversal context; no independent pre2025 next-day direction proof"
+    }
+  },
+  "router_v2_eligibility": {
+    "FAST": {
+      "classification": "CONTEXT_ONLY_ELIGIBLE",
+      "reason": "explicit UP state but role contract says not unconditional vote; same-clock reconstruction available"
+    },
+    "SLOW": {
+      "classification": "CONTEXT_ONLY_ELIGIBLE",
+      "reason": "explicit slower UP state; strong 2023 false-UP behavior but degrades later"
+    },
+    "MONTHLY_DIRECTION_3M": {
+      "classification": "CONTEXT_ONLY_ELIGIBLE",
+      "reason": "strategic monthly prior; cannot be flat daily expert"
+    },
+    "CAUSAL_PATCH": {
+      "classification": "CONTEXT_ONLY_ELIGIBLE",
+      "reason": "monthly H1 prior only"
+    },
+    "VW_MIDAS_MSVR_SUCCESSOR_V1": {
+      "classification": "CONTEXT_ONLY_ELIGIBLE",
+      "reason": "monthly H1 prior only"
+    },
+    "MOMENTUM_3M": {
+      "classification": "CONTEXT_ONLY_ELIGIBLE",
+      "reason": "monthly H1 prior only"
+    },
+    "RANDOM_WALK": {
+      "classification": "BENCHMARK_ONLY"
+    },
+    "MACRO_EVENT_SUCCESSOR_V2": {
+      "classification": "SPECIAL_CLOCK_ELIGIBLE"
+    },
+    "BOCPD_RETURN_SUCCESSOR_V1": {
+      "classification": "BLOCKED_PRE2025_HISTORY"
+    },
+    "EMERGENCY_LEVEL": {
+      "classification": "NOT_PROVEN"
+    },
+    "EMERGENCY_REVERSAL": {
+      "classification": "NOT_PROVEN"
+    },
+    "GVZ_RISK": {
+      "classification": "CONTEXT_ONLY_ELIGIBLE"
+    }
+  },
+  "conclusion": "The original 12-engine stack must not be discarded. It should re-enter successor UP routing in role-preserving form."
+}
