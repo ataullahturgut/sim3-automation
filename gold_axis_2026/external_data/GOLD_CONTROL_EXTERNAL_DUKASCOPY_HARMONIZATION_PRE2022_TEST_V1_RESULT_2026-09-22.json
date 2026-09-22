@@ -1,0 +1,58 @@
+{
+  "identity": "EXTERNAL_DUKASCOPY_HARMONIZATION_PRE2022_TEST_V1_RESEARCH",
+  "preregistration_commit": "039960e98489bd098e5e47344cb333b811bfe97c",
+  "overlap_window": "2020-04-06..2021-12-31",
+  "pooled": {
+    "governed_days": 345,
+    "external_days_in_window": 450,
+    "exact_common_days": 345,
+    "exact_overlap_vs_governed": 1,
+    "close_return_n": 344,
+    "close_return_pearson": 0.9999746209080898,
+    "close_return_sign_agreement": 0.9941860465116279,
+    "rv_pearson": 0.9985380699285329,
+    "rv_spearman": 0.9975288871225094,
+    "dr_pearson": 0.9986318444123484,
+    "dr_spearman": 0.9969850435717751,
+    "rp_pearson": 0.9979150256123778,
+    "rp_spearman": 0.9964788979350895,
+    "rm_pearson": 0.9986318444123484,
+    "rm_spearman": 0.9969850435717751,
+    "rv_scale_ratio_external_over_governed": 0.9966389432424667,
+    "dr_scale_ratio_external_over_governed": 0.9960754688774694,
+    "top_quintile_dr_event_agreement": 0.9942028985507246,
+    "top_quintile_dr_jaccard": 0.971830985915493
+  },
+  "by_year": {
+    "2020": {
+      "governed_days": 148,
+      "common": 148,
+      "overlap": 1,
+      "ret_corr": 0.9999576256406728,
+      "sign_agree": 0.9863945578231292,
+      "rv_spearman": 0.9943325053583922,
+      "dr_spearman": 0.995021044877229,
+      "dr_scale": 0.9953371364928649
+    },
+    "2021": {
+      "governed_days": 197,
+      "common": 197,
+      "overlap": 1,
+      "ret_corr": 0.9999927909405975,
+      "sign_agree": 1,
+      "rv_spearman": 0.9982640033401454,
+      "dr_spearman": 0.9967979808443913,
+      "dr_scale": 0.9970984403267203
+    }
+  },
+  "gate": {
+    "overlap_gte_090": true,
+    "sign_agreement_gte_090": true,
+    "return_corr_gte_095": true,
+    "dr_spearman_gte_080": true,
+    "rv_spearman_gte_080": true,
+    "dr_event_agreement_gte_075": true,
+    "passed": true
+  },
+  "status": "HARMONIZED_FOR_RESEARCH_EXTENSION_NOT_PRODUCTION_AUTHORITY"
+}
