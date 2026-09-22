@@ -1,0 +1,38 @@
+{
+  "identity": "EXTERNAL_DUKASCOPY_XAUUSD_SOURCE_HARMONIZATION_V1_RESEARCH",
+  "overlap": {
+    "external_days": 450,
+    "internal_days": 345,
+    "common_days": 345,
+    "first_common": "2020-04-06",
+    "last_common": "2021-12-30"
+  },
+  "common_date_returns": {
+    "n": 344,
+    "pearson_corr": 0.9999746209080898,
+    "sign_agreement": 0.9941860465116279,
+    "mean_abs_diff": 0.00004325598873536373,
+    "external_sd": 0.0105555000010398,
+    "internal_sd": 0.010552831818598257
+  },
+  "levels": {
+    "close_corr": 0.9999990720647512,
+    "median_external_internal_ratio": 0.9999972480105797
+  },
+  "realized_risk": {
+    "log_rv_corr": 0.9981285887256259,
+    "log_dr_corr": 0.9979376657331434,
+    "median_rv_ratio": 0.997724104870169,
+    "median_dr_ratio": 0.9955378653103143
+  },
+  "overlap_top20_downside": {
+    "external_q80": 0.00006588521963311273,
+    "internal_q80": 0.00006573063267293898,
+    "both_high": 69,
+    "external_only_high": 1,
+    "internal_only_high": 1,
+    "neither_high": 274,
+    "high_state_agreement": 0.9942028985507246
+  },
+  "authority": "DIAGNOSTIC_ONLY"
+}
