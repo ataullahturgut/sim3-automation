@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.98  
+**Manifest version:** 1.99  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -646,6 +646,50 @@ The verifier requirement remains:
 A successor dedicated UP/rebound verifier requires a new identity and preregistration. Given only 30 pre-2025 parent alarms, fitting a flexible verifier directly on the alarm subset is support-limited; new direction-resolving information or a longer same-clock history is preferred over unconstrained model fitting.
 
 
+### 10.6 V2 expanded historical-UP veto — executed
+
+**Identity:** DOWNSIDE_UP_COUNTERSIGN_VETO_V2_FULLHISTORY_RESEARCH  
+**Branch:** gold-downside-up-counterveto-v2-fullhistory-20260922  
+**Preregistration commit:** 06276faa56483465eeed135cfdd4fcdbb6ffee99  
+**FAST SQRT-clock reconstruction preregistration:** 100feec892d2b23c5d6bdf648eeb5e1210103b40  
+**Frozen result commit:** a87ee586a804cee85e3ba6688f2fe74cb764a2d1  
+**Final status:** NO_EXISTING_HISTORICAL_UP_ENGINE_SAFELY_CLEANS_SQRT_FALSE_ALARMS_UNDER_V2.
+
+V2 explicitly tested the historical candidates requested after the V1 scope correction:
+- FAST ROBUST_UP;
+- RV_LOGIT UP;
+- RM_LOGIT UP;
+- AR1_RM_LOGIT UP;
+- TTSM-S1 UP;
+- TTSM-S2 UP.
+
+Primary common support is 2023–2024 because all logit/TTSM candidates exist there. The parent baseline on those exact origins is 19 SQRT alarms = 8 true next-day DOWN + 11 false forced-DOWN, baseline forced-DOWN precision 42.11%.
+
+| Candidate | Vetoes | Good / bad veto | False DOWN removed | True DOWN retained | Remaining forced-DOWN precision | Decision |
+|---|---:|---:|---:|---:|---:|---|
+| TTSM-S1 | 0 | 0 / 0 | 0% | 100% | 42.11% | INSUFFICIENT_ACTION_SUPPORT |
+| TTSM-S2 | 0 | 0 / 0 | 0% | 100% | 42.11% | INSUFFICIENT_ACTION_SUPPORT |
+| RV_LOGIT | 19 | 11 / 8 | 100% | 0% | none remain | UNSAFE_VETO |
+| RM_LOGIT | 19 | 11 / 8 | 100% | 0% | none remain | UNSAFE_VETO |
+| AR1_RM_LOGIT | 18 | 10 / 8 | 90.91% | 0% | 0% | UNSAFE_VETO |
+| FAST original | 10 | 5 / 5 | 45.45% | 37.50% | 33.33% | BLOCKED_TARGET_CLOCK_MISMATCH |
+| FAST SQRT-clock recon | 13 | 6 / 7 | 54.55% | 12.50% | 16.67% | UNSAFE_VETO |
+
+The original FAST clock audit matched parent next target date on only 14/19 primary alarm origins and next-direction sign on 13/19. A separately preregistered reconstruction applied the unchanged SMA20 + two-day persistence FAST rule to the exact SQRT daily-close panel; clock integrity then passed 19/19, but veto performance remained unsafe.
+
+2025 stress, unchanged:
+- TTSM-S1: 20 vetoes, 11 good / 9 bad, false-alarm reduction 24.44%, true-DOWN retention 80.00%;
+- TTSM-S2: 15 vetoes, 8 good / 7 bad, false-alarm reduction 17.78%, retention 84.44%;
+- RV_LOGIT: 90/90 alarms vetoed, retention 0%;
+- RM_LOGIT: 88/90 vetoed, retention 4.44%;
+- AR1_RM_LOGIT: 86/90 vetoed, retention 6.67%;
+- FAST SQRT-clock recon: 59/90 vetoed, retention 31.11%.
+
+2025 cannot retroactively select TTSM because both TTSM variants issued zero UP vetoes on the pre-2025 primary parent-alarm subset.
+
+**Binding interpretation:** no active existing historical UP engine passes the predeclared safety rule of at least 80% true-DOWN retention with useful veto support. Generic UP classifiers/states are not sufficient as a SQRT false-alarm cleaner. The counter-model architecture remains open, but it now requires a deliberately high-specificity UP/rebound verifier or genuinely new direction-resolving information.
+
+
 ## 11. Direction-resolving verifier priority — current next lane
 
 Priority acquisition/testing order:
@@ -657,7 +701,7 @@ Priority acquisition/testing order:
 5. liquidity/spread or futures basis;
 6. macro-surprise direction at event time.
 
-Procedure: authority/coverage scan first, then a minimum single-sensor falsification test, then only if supported reintroduce a primary-risk + verifier architecture.
+Procedure: first preserve the V2 finding that generic historical UP states are unsafe or inactive on SQRT alarm days. Next, authority/coverage scan new direction-resolving information or preregister a dedicated high-specificity UP/rebound verifier. Only after a pre-2025 safety gate passes may a primary-risk + verifier architecture be reconsidered.
 
 ---
 
@@ -701,4 +745,4 @@ Gold Control currently has a useful downside-risk sensor but no proven general n
 
 SQRT-HAR-DR is the current recent downside-risk research reference. RAW HAR-DR is the mandatory comparator. ME-SQRT shows a small coherent mechanism signal but did not pass its calibration gate. HARK-SD, cross-domain direction classifiers, scalar meta-veto, standalone DTW path veto and standalone SP500 veto did not pass their frozen pre-2025 gates. Heterogeneous consensus produced one exploratory 2024 pocket but did not transport.
 
-The time-to-event V1 diagnostic is closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. The first narrow UP-countersign veto is closed as UP_COUNTERSIGN_VETO_NOT_SUPPORTED_WITH_CURRENT_ELIGIBLE_MODELS, but v1.98 explicitly limits that conclusion to its preregistered TTSM/Bonato/Altuntaş candidate set. Section 6 is now the authoritative year-by-year inventory of historical UP-capable models and context engines for successor verifier work. The next lane is to obtain or construct a genuinely same-clock direction-resolving verifier. Preferred evidence is new information—beginning with Gold options/futures structure if authoritative long-history data can be obtained—or a newly preregistered daily-horizon UP/rebound expert with sufficient historical support. Do not continue adding unconstrained complexity to the same Gold history or tune on 2025.
+The time-to-event V1 diagnostic is closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. UP-countersign V1 is retained as the narrow TTSM/Bonato/Altuntaş test. V2 then expanded the test to FAST, RV_LOGIT, RM_LOGIT, AR1_RM_LOGIT and TTSM S1/S2 and found NO_EXISTING_HISTORICAL_UP_ENGINE_SAFELY_CLEANS_SQRT_FALSE_ALARMS_UNDER_V2. Section 6 remains the authoritative year-by-year UP inventory. The next lane is a genuinely high-specificity same-clock UP/rebound verifier or new direction-resolving information. Preferred evidence is new information—beginning with Gold options/futures structure if authoritative long-history data can be obtained—or a newly preregistered daily-horizon UP/rebound expert with sufficient historical support. Do not continue adding unconstrained complexity to the same Gold history or tune on 2025.
