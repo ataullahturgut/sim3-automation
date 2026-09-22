@@ -326,6 +326,89 @@ The labels BYZD / BZYD / BYDZ were searched in the retained GitHub project histo
 Literature candidates whose source-faithful input panel or exact method remained incomplete stay NOT_IMPLEMENTED/BLOCKED rather than being treated as tested successes.
 
 ---
+## 6A. UP Expert Router V1 — dynamic class-specific selector
+
+**Identity:** `UP_EXPERT_ROUTER_V1_RESEARCH`  
+**Research branch:** `gold-up-expert-router-v1-20260922`  
+**Preregistration commit:** `aaad05b7773b021a7485e07aec48332596cca8cb`  
+**Frozen result commit:** `c2996600ecafef0d31d708e94536f8f0afb597cf`  
+**Status:** `ROUTER_V1_NOT_PROMOTED_2024_PRECISION_GAIN_GATE_FAILED`.
+
+### 6A.1 Purpose and pool
+
+The router implements class-specific dynamic expert selection rather than majority voting. On each daily origin it chooses the most credible currently-active UP expert or abstains.
+
+Frozen same-clock pool:
+- TTSM-S2;
+- TTSM-S1;
+- Bonato AR1_RM QBoost h=1;
+- AR1_RM_LOGIT;
+- RM_LOGIT.
+
+The competence state uses only matured prior outcomes. Eligibility requires >=30 historical UP calls, historical UP precision >50%, and historical false-UP FPR <50%. Eligible active experts are ranked by a one-sided 90% Wilson lower bound on UP precision; no eligible expert means ABSTAIN.
+
+Alignment across TTSM, Bonato h=1 and realized-moment-logit artifacts is exact on 645 rows: 203 in 2023, 205 in 2024 and 237 in 2025; target-date mismatches=0, actual-sign mismatches=0.
+
+### 6A.2 2023 development benchmark
+
+The 2023-only fixed benchmark selected before 2024 scoring is `RM_LOGIT`.
+
+| Expert | 2023 UP precision | 2023 false-UP FPR |
+|---|---:|---:|
+| TTSM-S2 | 51.49% | 48.04% |
+| TTSM-S1 | 51.85% | 50.98% |
+| Bonato AR1_RM h=1 | 48.74% | 59.80% |
+| AR1_RM_LOGIT | 52.43% | 48.04% |
+| RM_LOGIT | **54.21%** | **48.04%** |
+
+### 6A.3 Frozen 2024 validation
+
+| Metric | Router | Fixed RM_LOGIT |
+|---|---:|---:|
+| UP outputs | 135 | 149 |
+| Coverage | 65.85% | 72.68% |
+| True UP / false UP | 77 / 58 | 84 / 65 |
+| **UP precision** | **57.04%** | 56.38% |
+| **False-UP FPR** | **67.44%** | 75.58% |
+| Actual-UP recall | 64.71% | 70.59% |
+
+2024 selected-expert counts:
+- RM_LOGIT 64;
+- TTSM-S1 55;
+- TTSM-S2 14;
+- AR1_RM_LOGIT 2;
+- Bonato 0.
+
+The router reduced false-UP FPR by **8.14 pp**, but UP precision improved by only **+0.66 pp**. The preregistered promising gate required at least +3 pp precision lift as well as at least -5 pp FPR. Therefore V1 failed the frozen 2024 gate.
+
+### 6A.4 Locked 2025 challenge
+
+Rules remained unchanged and updated only causally from matured prior outcomes.
+
+| Metric | Router | Fixed RM_LOGIT |
+|---|---:|---:|
+| UP outputs | 137 | 229 |
+| Coverage | 57.81% | 96.62% |
+| True UP / false UP | 87 / 50 | 135 / 94 |
+| **UP precision** | **63.50%** | 58.95% |
+| **False-UP FPR** | **51.55%** | 96.91% |
+| Actual-UP recall | 62.14% | 96.43% |
+
+2025 router selections:
+- TTSM-S2: **109**;
+- TTSM-S1: **28**;
+- all other experts: **0**.
+
+This is strong descriptive transport evidence that the causal competence layer learned to distrust the broad logit UP states. However 2025 cannot rescue the failed 2024 gate or be used to retune V1.
+
+### 6A.5 Interpretation
+
+V1 is not promoted, but the architecture is not rejected. The selector materially reduced false-UP burden in both 2024 and 2025 and by 2025 routed all UP decisions through TTSM-S1/S2. The missing requirement is a sufficient pre-2025 UP-precision lift.
+
+A successor may investigate a preregistered recency-aware competence or conservative probability-combination layer, but it must not use 2025 to tune thresholds or candidate rules.
+
+---
+
 ## 7. DOWN / downside-risk research ledger
 
 This is the canonical record for the 21–22 September 2026 downside sequence. Each entry records method, source, data, result and decision once.
@@ -785,4 +868,4 @@ Gold Control currently has a useful downside-risk sensor but no proven general n
 
 SQRT-HAR-DR is the current recent downside-risk research reference. RAW HAR-DR is the mandatory comparator. ME-SQRT shows a small coherent mechanism signal but did not pass its calibration gate. HARK-SD, cross-domain direction classifiers, scalar meta-veto, standalone DTW path veto and standalone SP500 veto did not pass their frozen pre-2025 gates. Heterogeneous consensus produced one exploratory 2024 pocket but did not transport.
 
-The time-to-event V1 diagnostic is closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. UP-countersign V1 is retained as the narrow TTSM/Bonato/Altuntaş test. V2 then expanded the test to FAST, RV_LOGIT, RM_LOGIT, AR1_RM_LOGIT and TTSM S1/S2 and found NO_EXISTING_HISTORICAL_UP_ENGINE_SAFELY_CLEANS_SQRT_FALSE_ALARMS_UNDER_V2. Section 6 remains the authoritative year-by-year UP inventory. The next lane is a genuinely high-specificity same-clock UP/rebound verifier or new direction-resolving information. Preferred evidence is new information—beginning with Gold options/futures structure if authoritative long-history data can be obtained—or a newly preregistered daily-horizon UP/rebound expert with sufficient historical support. Do not continue adding unconstrained complexity to the same Gold history or tune on 2025.
+The time-to-event V1 diagnostic is closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. UP-countersign V1 is retained as the narrow TTSM/Bonato/Altuntaş test. V2 then expanded the test to FAST, RV_LOGIT, RM_LOGIT, AR1_RM_LOGIT and TTSM S1/S2 and found NO_EXISTING_HISTORICAL_UP_ENGINE_SAFELY_CLEANS_SQRT_FALSE_ALARMS_UNDER_V2. Section 6 remains the authoritative year-by-year UP inventory. The UP Expert Router V1 has now tested dynamic class-specific selection: it reduced false-UP burden but failed the frozen 2024 precision-lift gate. The next lane is either a preregistered recency-aware/conservative router successor or genuinely new direction-resolving information. Preferred evidence is new information—beginning with Gold options/futures structure if authoritative long-history data can be obtained—or a newly preregistered daily-horizon UP/rebound expert with sufficient historical support. Do not continue adding unconstrained complexity to the same Gold history or tune on 2025.
