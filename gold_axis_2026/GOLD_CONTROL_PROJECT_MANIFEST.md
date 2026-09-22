@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.21  
+**Manifest version:** 2.22  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -2620,6 +2620,105 @@ Any successor must remain chronological and preregistered. 2025 remains unavaila
 
 ---
 
+
+## 11P. SQRT + pure-UP detector conditional audit — test the manifest UP leader directly
+
+**Identity:** `SQRT_PURE_UP_DETECTOR_CONDITIONAL_AUDIT_V1_RESEARCH`  
+**Research branch:** `gold-sqrt-pure-up-detector-audit-v1-20260922`  
+**Preregistration commit:** `de9b472265104e8d71f9dc5ba2a6eebf987619ee`  
+**Implementation commit:** `dd62f7f5ae78881c111d6ed89b5c727c84f009e7`  
+**Workflow commit:** `d8c892e94b6369cc4b9f029eb6800d4163299ffc`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_SQRT_PURE_UP_DETECTOR_CONDITIONAL_AUDIT_V1_RESULT_2026-09-22.json` (Git blob SHA `f48ae6a1441858ae2ca0db26470e0d15f50ebd2a`)  
+**Status:** descriptive audit; no promotion.
+
+### 11P.1 Why this audit was required
+
+The project had tested Router-based couplings, but the manifest already contains a direct pure-UP ranking. The binding UP-detector conclusions are:
+
+- **pre-2025 pooled 2023–2024 pure-UP leader:** `RV_LOGIT`;
+- **best 2025 transport trade-off among the frozen daily pure-UP models:** `TTSM-S2`.
+
+Therefore the user's proposed simple composition was tested directly, without Router:
+
+> if SQRT high-risk alarm and pure-UP detector says UP -> predict UP; otherwise -> predict DOWN.
+
+No threshold tuning was performed:
+- RV_LOGIT uses frozen p>=0.50;
+- TTSM-S2 uses its frozen UP signal.
+
+### 11P.2 Integrity
+
+The audit reproduced exactly:
+- SQRT alarms: 2020=212, 2021=28, 2022=11, 2023=2, 2024=17, pooled=270;
+- joint alarm anatomy: HIT_DOWN=115, HIT_UP=103, MISS=52;
+- integrity errors=0.
+
+### 11P.3 Pooled 2020–2024 — all SQRT alarms
+
+**RV_LOGIT**:
+- UP calls=263/270;
+- UP precision=52.85%;
+- UP recall=97.20%;
+- false-UP FPR=97.64%;
+- DOWN recall=2.36%;
+- binary accuracy under `UP else DOWN`=52.59%;
+- balanced accuracy=49.78%.
+
+**TTSM-S2**:
+- UP calls=68/270;
+- UP precision=52.94%;
+- UP recall=25.17%;
+- false-UP FPR=25.20%;
+- DOWN recall=74.80%;
+- binary accuracy=48.52%;
+- balanced accuracy=49.99%.
+
+Thus the two models fail in opposite directions on SQRT alarm days:
+- RV_LOGIT becomes almost-always-UP;
+- TTSM-S2 becomes mostly-not-UP / effectively mostly-DOWN under the user's complement rule.
+
+Neither provides useful balanced discrimination on the SQRT-alarm subpopulation.
+
+### 11P.4 Realized-high-risk subset only
+
+Among the 218 SQRT alarms that truly realized high downside risk:
+- actual HIT_UP=103;
+- actual HIT_DOWN=115.
+
+RV_LOGIT:
+- UP calls=211/218;
+- UP precision=46.92%;
+- UP recall=96.12%;
+- false-UP FPR=97.39%;
+- DOWN recall=2.61%;
+- accuracy=46.79%;
+- balanced accuracy=49.36%.
+
+TTSM-S2:
+- UP calls=52/218;
+- UP precision=46.15%;
+- UP recall=23.30%;
+- false-UP FPR=24.35%;
+- DOWN recall=75.65%;
+- accuracy=50.92%;
+- balanced accuracy=49.48%.
+
+The simple rule `UP signal => UP; otherwise => DOWN` therefore does not solve HIT_DOWN versus HIT_UP even when restricted to days where the downside-risk event actually materializes.
+
+### 11P.5 Binding interpretation
+
+The user correction was valid: Router is not the same thing as the manifest's best pure-UP detector, and the pure-UP leader had to be tested directly.
+
+However the direct audit shows an important conditional-distribution shift. A model that looks useful on the general next-day population can lose discrimination inside the special subset selected by SQRT high-risk alarms.
+
+RV_LOGIT's previously strong UP capture comes largely from very broad UP calling; on SQRT-high-risk days it calls virtually everything UP. TTSM-S2 is much more selective but misses most HIT_UP cases in this subset.
+
+Therefore the simple two-model composition is not sufficient in its frozen form. The next Stage-B research must condition explicitly on the high-risk state rather than assume that general-population UP performance transports unchanged into the SQRT-alarm population.
+
+Chronology warning: RV_LOGIT was designated the pre-2025 pure-UP leader using pooled 2023–2024 evidence, so 2020–2022 numbers in this audit are retrospective characterization, not prospective model-selection evidence. 2023–2024 themselves contain only 19 SQRT alarms, so they are too sparse for strong conditional validation.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -2660,13 +2759,15 @@ Gold Control now has a clearer short-term architecture but still no proven next-
 
 The semantic audit established that SQRT-HAR-DR must be treated as a downside-risk motor, not a close-direction predictor: 218 of 270 historical alarms were genuine realized high-risk hits, and 103 of 143 UP-close alarm days still realized high downside risk. Therefore "UP close = SQRT false alarm" is no longer an authorized project interpretation.
 
-The short-term architecture is now explicitly two-stage:
+The short-term architecture is explicitly two-stage:
 
 1. **Risk-state motor:** SQRT-HAR-DR estimates whether next-day downside realized risk is elevated.
 2. **Conditional-resolution motor:** after a high-risk alarm, estimate whether the outcome resolves as HIT_DOWN, HIT_UP, MISS, or remains UNCERTAIN.
 
-The first preregistered conditional-resolution probe, HIGH_RISK_HURDLE_RESOLUTION_V1, used separate logistic models for risk realization and direction conditional on a realized risk hit, with a 0.50 selective-abstention rule and no Router features. After an integrity-gate correction to reproduce the frozen SQRT-HAR parent exactly, the final sample is the expected 270 alarms / 115 HIT_DOWN / 103 HIT_UP / 52 MISS.
+The first generic hurdle Stage-B probe showed only weak conditional direction signal: on realized-risk-hit alarms, direction AUC was 0.556 and 0.5-threshold accuracy 50.9%.
 
-V1 technically shows a weak selective signal: 50.37% coverage and 47.06% selective accuracy versus a 42.59% largest-class share. But this is not strong directional evidence. On the 218 realized-risk-hit alarms, the conditional direction AUC is only 0.556 and direction accuracy is 50.9%; HIT_DOWN recall is only 3.5%. The model therefore does not solve high-risk direction resolution.
+The direct pure-UP audit then tested the user's simpler proposal using the actual manifest UP leaders rather than Router. The pre-2025 pure-UP leader RV_LOGIT collapses toward almost-always-UP on SQRT alarm days (263 UP calls out of 270; balanced accuracy 49.78%). TTSM-S2, the 2025 transport leader, behaves in the opposite direction and is too selective (68 UP calls; balanced accuracy 49.99%). On the 218 realized-high-risk alarms, their balanced accuracies remain approximately chance at 49.36% and 49.48% respectively.
 
-The earlier hard-veto, Q80/Q90, persistence and conditional-competence experiments remain preserved as useful diagnostics, but no further post-hoc suppressor tuning is authorized. The active question is now what **genuinely directional/state information** can distinguish HIT_DOWN from HIT_UP once a high-risk state is forecast. A successor may add frozen Router/direct-expert/context information or move to a hidden-state/selective-risk formulation, but it must be a new preregistered identity. 2025 remains unavailable for model selection and genuine certification still requires new prospective or otherwise independent same-clock evidence.
+Therefore the general-population UP models do not transport mechanically into the SQRT-high-risk conditional population. The unresolved task is still to find genuinely conditional directional/state information that distinguishes HIT_DOWN from HIT_UP after a high-risk state is forecast. Existing Router/direct-expert outputs may still be useful as features inside a model trained specifically on that conditional state, but neither Router nor the frozen pure-UP leaders are sufficient as standalone complement rules.
+
+No further post-hoc suppressor threshold tuning is authorized. Any successor must be a new preregistered conditional-direction/state model. 2025 remains unavailable for model selection and genuine certification still requires new prospective or otherwise independent same-clock evidence.
