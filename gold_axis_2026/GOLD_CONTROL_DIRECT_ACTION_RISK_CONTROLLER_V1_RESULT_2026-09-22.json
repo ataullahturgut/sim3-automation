@@ -1,0 +1,147 @@
+{
+  "identity": "DIRECT_ACTION_RISK_CONTROLLER_V1_RESEARCH",
+  "date": "2026-09-22",
+  "preregistration_commit": "d5529a3364176de16b61fd79b99ec91b04c8f469",
+  "frozen_verifier": "UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH",
+  "development_2024": {
+    "router_up_daily_n": 42,
+    "bad_down": 16,
+    "good_up": 26,
+    "model_F30": {
+      "features": [
+        "sqrt_normalized_risk_score",
+        "1-fixed30_precision"
+      ],
+      "ridge_lambda": 1,
+      "beta": [
+        -0.49207074449054267,
+        -0.23413970645756307,
+        -0.09787077299331318
+      ],
+      "training_mean": [
+        0.677710610957607,
+        0.4063492063492067
+      ],
+      "training_sd": [
+        0.18052654177586538,
+        0.06715617714700371
+      ],
+      "converged": true,
+      "iterations": 5,
+      "brier": 0.2321967628297467
+    },
+    "model_D30": {
+      "features": [
+        "sqrt_normalized_risk_score",
+        "1-discounted_precision"
+      ],
+      "ridge_lambda": 1,
+      "beta": [
+        -0.49744095095176083,
+        -0.2842965908119775,
+        -0.25531943210735275
+      ],
+      "training_mean": [
+        0.677710610957607,
+        0.43750163978097995
+      ],
+      "training_sd": [
+        0.18052654177586538,
+        0.04194435989527444
+      ],
+      "converged": true,
+      "iterations": 5,
+      "brier": 0.22864498912464254
+    },
+    "conservative_aggregation": "p_bad=max(p_bad_F30,p_bad_D30)",
+    "action_thresholds": {
+      "suppress_lte": 0.2,
+      "watch_lte": 0.35
+    },
+    "sqrt_alarm_diagnostics": {
+      "alarms": 17,
+      "retain": {
+        "n": 13,
+        "actual_up": 7,
+        "actual_down": 6
+      },
+      "watch": {
+        "n": 4,
+        "actual_up": 3,
+        "actual_down": 1
+      },
+      "suppress": {
+        "n": 0,
+        "actual_up": 0,
+        "actual_down": 0
+      }
+    }
+  },
+  "locked_2025": {
+    "sqrt_alarms": 90,
+    "baseline": {
+      "true_down": 45,
+      "false_forced_down": 45,
+      "forced_down_precision": 0.5
+    },
+    "actions": {
+      "RETAIN_DOWN": {
+        "n": 77,
+        "actual_up": 35,
+        "actual_down": 42
+      },
+      "WATCH_DOWN": {
+        "n": 8,
+        "actual_up": 7,
+        "actual_down": 1,
+        "up_rate": 0.875
+      },
+      "SUPPRESS_DOWN": {
+        "n": 5,
+        "actual_up": 3,
+        "actual_down": 2,
+        "suppression_precision": 0.6
+      }
+    },
+    "false_alarm_reduction": 0.06666666666666667,
+    "true_down_retention": 0.9555555555555556,
+    "remaining_forced_down_precision": 0.5058823529411764,
+    "precision_change_absolute": 0.00588235294117645,
+    "net_suppression_benefit": 1,
+    "watch_note": "WATCH was highly selective descriptively: 7 of 8 were actual UP. This cannot be converted post hoc into SUPPRESS."
+  },
+  "benchmark_hard_veto_2025": {
+    "suppressions": 16,
+    "good": 10,
+    "bad": 6,
+    "suppression_precision": 0.625,
+    "true_down_retention": 0.8666666666666667,
+    "remaining_forced_down_precision": 0.527027027027027
+  },
+  "decision": {
+    "status": "NOT_SUPPORTED_AS_ACTION_RISK_SUCCESSOR",
+    "gate_results": {
+      "suppressions_gte3": true,
+      "suppress_precision_gt_0625": false,
+      "true_down_retention_gte090": true,
+      "remaining_precision_gte_05270": false,
+      "watch_gte3": true,
+      "false_alarm_reduction_gt0": true
+    },
+    "interpretation": [
+      "The time-stable competence constructions prevented the WATCH region from collapsing: 8 WATCH actions remained in 2025.",
+      "Safety improved materially versus hard veto: true-DOWN retention rose from 86.67% to 95.56%.",
+      "However suppression precision fell to 60.00% and remaining forced-DOWN precision fell to 50.59%, so the preregistered successor gate failed.",
+      "The WATCH region was descriptively strong at 7 UP / 1 DOWN, indicating the learned risk ordering was not aligned with the fixed action cutpoints in 2025.",
+      "Post-hoc promotion of WATCH cases to SUPPRESS is forbidden.",
+      "The fitted 2024 models learned a negative coefficient on SQRT normalized risk score; that relation was not sufficiently reliable out of sample and contributed to some high-SQRT-risk bad suppressions."
+    ],
+    "next_step": "Proceed to a separately preregistered Learn-Then-Test / risk-control calibration of the action decision itself, or a monotonicity-constrained action-risk model that does not allow stronger SQRT downside risk to mechanically lower estimated bad-suppression risk."
+  },
+  "governance": {
+    "random_split": false,
+    "tuning_on_2025": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
