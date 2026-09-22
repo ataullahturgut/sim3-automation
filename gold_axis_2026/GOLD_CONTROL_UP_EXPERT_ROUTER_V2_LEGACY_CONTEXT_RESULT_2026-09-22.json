@@ -1,0 +1,105 @@
+{
+  "identity": "UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH",
+  "date": "2026-09-22",
+  "preregistration_commit": "f97dd635664db4506d6f8a622ced762249d3cdfc",
+  "parent_router": "UP_EXPERT_ROUTER_V1_RESEARCH",
+  "legacy_audit": "LEGACY12_UP_INCLUSION_AUDIT_V1_RESEARCH",
+  "direct_experts": [
+    "TTSM_S2",
+    "TTSM_S1",
+    "BONATO_AR1_RM_QBOOST_H1",
+    "AR1_RM_LOGIT",
+    "RM_LOGIT"
+  ],
+  "legacy_context": [
+    "FAST_UP",
+    "SLOW_UP",
+    "MONTHLY_DIRECTION_3M_UP"
+  ],
+  "context_rule": "CONSENSUS_UP iff at least 2 of 3 legacy directional contexts are UP; otherwise NON_CONSENSUS_UP.",
+  "competence_rule": "Use same-bucket matured history if expert has >=30 historical UP calls; otherwise global matured fallback. Same V1 eligibility and Wilson-LCB ranking.",
+  "validation_2024": {
+    "n": 205,
+    "up_outputs": 42,
+    "coverage": 0.2048780487804878,
+    "true_up": 26,
+    "false_up": 16,
+    "up_precision": 0.6190476190476191,
+    "up_alarm_error": 0.38095238095238093,
+    "false_up_fpr": 0.18604651162790697,
+    "actual_up_recall": 0.2184873949579832,
+    "abstain": 163,
+    "selected_counts": {
+      "TTSM_S2": 4,
+      "RM_LOGIT": 37,
+      "AR1_RM_LOGIT": 1
+    },
+    "output_bucket_counts": {
+      "NON_CONSENSUS_UP": 42,
+      "CONSENSUS_UP": 0
+    },
+    "versus_router_v1": {
+      "router_v1_precision": 0.5703703703703704,
+      "router_v1_false_up_fpr": 0.6744186046511628,
+      "precision_change_pp": 4.867724867724865,
+      "false_up_fpr_change_pp": -48.837209302325576,
+      "coverage_change_pp": -45.365853658536594
+    },
+    "versus_fixed_rm_logit": {
+      "fixed_precision": 0.5637583892617449,
+      "fixed_false_up_fpr": 0.7558139534883721
+    },
+    "promising_gate": {
+      "outputs_gte20": true,
+      "coverage_gte010": true,
+      "precision_gte_fixed_plus_003": true,
+      "fpr_lte_fixed_minus_005": true,
+      "precision_gte_router_v1": true,
+      "fpr_lte_router_v1": true,
+      "passed": true
+    }
+  },
+  "locked_2025_challenge": {
+    "n": 237,
+    "up_outputs": 37,
+    "coverage": 0.15611814345991562,
+    "true_up": 27,
+    "false_up": 10,
+    "up_precision": 0.7297297297297297,
+    "up_alarm_error": 0.2702702702702703,
+    "false_up_fpr": 0.10309278350515463,
+    "actual_up_recall": 0.19285714285714287,
+    "abstain": 200,
+    "selected_counts": {
+      "RM_LOGIT": 37
+    },
+    "output_bucket_counts": {
+      "NON_CONSENSUS_UP": 37,
+      "CONSENSUS_UP": 0
+    },
+    "descriptive_comparison_to_router_v1": {
+      "router_v1_precision": 0.635036496350365,
+      "router_v1_false_up_fpr": 0.5154639175257731,
+      "precision_change_pp": 9.469323337936475,
+      "false_up_fpr_change_pp": -41.23711340206185
+    }
+  },
+  "frozen_decision": {
+    "status": "PROMISING_LEGACY_CONTEXT_ROUTER_V2_PRE2025_GATE_PASSED",
+    "interpretation": [
+      "Reintroducing the original legacy direction layer as role-preserving competence context materially improves false-UP control.",
+      "2024 UP precision rises to 61.90% while false-UP FPR falls to 18.60%, at 20.49% coverage.",
+      "All 2024 emitted UP signals occur in NON_CONSENSUS_UP legacy context; the router abstains in legacy bullish-consensus states under its causal competence rules.",
+      "2025 unchanged transport strengthens the pattern: 72.97% UP precision and 10.31% false-UP FPR at 15.61% coverage.",
+      "The gain comes with much lower coverage and actual-UP recall; this is a selective high-specificity UP verifier, not a general direction forecaster.",
+      "The 2025 result is locked transport evidence and was not used to tune V2."
+    ],
+    "next_step": "Freeze standalone V2 first; only then test it as a SQRT countersign veto in a separately preregistered intersection study."
+  },
+  "governance": {
+    "random_split": false,
+    "tuning_on_2025": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
