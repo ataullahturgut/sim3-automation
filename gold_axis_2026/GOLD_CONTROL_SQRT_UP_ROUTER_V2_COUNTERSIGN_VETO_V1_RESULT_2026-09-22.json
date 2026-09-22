@@ -1,0 +1,124 @@
+{
+  "identity": "SQRT_UP_ROUTER_V2_COUNTERSIGN_VETO_V1_RESEARCH",
+  "date": "2026-09-22",
+  "preregistration_commit": "375ceaa0d6a84ecb7a4da6f7dacc72c7a9b66693",
+  "verifier_identity": "UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH",
+  "verifier_frozen_result_commit": "f4c661731c8888985b82b4bf16eab401184fa76f",
+  "alignment": {
+    "primary_2024": {
+      "sqrt_alarms": 17,
+      "exact_overlap": 17,
+      "target_mismatch": 0,
+      "sign_mismatch": 0
+    },
+    "stress_2025": {
+      "sqrt_alarms": 90,
+      "exact_overlap": 90,
+      "target_mismatch": 0,
+      "sign_mismatch": 0
+    }
+  },
+  "primary_2024": {
+    "baseline": {
+      "alarms": 17,
+      "true_down": 7,
+      "false_forced_down": 10,
+      "forced_down_precision": 0.4117647058823529
+    },
+    "veto": {
+      "count": 4,
+      "good_veto": 3,
+      "bad_veto": 1,
+      "veto_precision": 0.75,
+      "false_alarm_reduction": 0.3,
+      "true_down_retention": 0.8571428571428571,
+      "remaining_forced_down_calls": 13,
+      "remaining_forced_down_precision": 0.46153846153846156,
+      "precision_change_absolute": 0.04977375565610864,
+      "net_veto_benefit": 2
+    },
+    "veto_origins": [
+      {
+        "origin_date": "2024-08-06",
+        "target_date": "2024-08-07",
+        "actual": "UP",
+        "selected_expert": "RM_LOGIT",
+        "legacy_bucket": "NON_CONSENSUS_UP"
+      },
+      {
+        "origin_date": "2024-11-12",
+        "target_date": "2024-11-13",
+        "actual": "DOWN",
+        "selected_expert": "RM_LOGIT",
+        "legacy_bucket": "NON_CONSENSUS_UP"
+      },
+      {
+        "origin_date": "2024-11-13",
+        "target_date": "2024-11-14",
+        "actual": "UP",
+        "selected_expert": "RM_LOGIT",
+        "legacy_bucket": "NON_CONSENSUS_UP"
+      },
+      {
+        "origin_date": "2024-11-25",
+        "target_date": "2024-11-26",
+        "actual": "UP",
+        "selected_expert": "RM_LOGIT",
+        "legacy_bucket": "NON_CONSENSUS_UP"
+      }
+    ],
+    "promising_gate": {
+      "veto_count_gte3": true,
+      "veto_precision_gte065": true,
+      "false_alarm_reduction_gte025": true,
+      "true_down_retention_gte080": true,
+      "remaining_precision_gain_gte005": false,
+      "passed": false
+    },
+    "gate_shortfall": {
+      "required_precision_gain": 0.05,
+      "observed_precision_gain": 0.04977375565610864,
+      "shortfall_absolute": 0.00022624434389136028,
+      "shortfall_percentage_points": 0.022624434389136028
+    }
+  },
+  "locked_2025_stress": {
+    "baseline": {
+      "alarms": 90,
+      "true_down": 45,
+      "false_forced_down": 45,
+      "forced_down_precision": 0.5
+    },
+    "veto": {
+      "count": 16,
+      "good_veto": 10,
+      "bad_veto": 6,
+      "veto_precision": 0.625,
+      "false_alarm_reduction": 0.2222222222222222,
+      "true_down_retention": 0.8666666666666667,
+      "remaining_forced_down_calls": 74,
+      "remaining_forced_down_precision": 0.527027027027027,
+      "precision_change_absolute": 0.027027027027026973,
+      "net_veto_benefit": 4
+    },
+    "note": "Diagnostic locked stress only. It cannot rescue the failed primary 2024 gate."
+  },
+  "frozen_decision": {
+    "status": "NEAR_MISS_PRE2025_GATE_FAILED_BY_PRECISION_DELTA",
+    "interpretation": [
+      "Router V2 is the strongest SQRT countersign result so far: in 2024 it makes four vetoes, three good and one bad.",
+      "It removes 30% of false forced-DOWN alarms while retaining 85.71% of true DOWN alarms.",
+      "Remaining forced-DOWN precision improves from 41.18% to 46.15%, a +4.98 percentage-point gain.",
+      "The preregistered threshold was +5.00 percentage points, so the study fails the frozen gate by about 0.02 percentage point and is not promoted.",
+      "2025 unchanged stress remains directionally supportive: 16 vetoes, 10 good / 6 bad, 62.5% veto precision, 86.67% true-DOWN retention, and remaining precision 52.70% versus 50% baseline.",
+      "Because the primary sample has only 17 parent alarms and 4 vetoes, no post-hoc threshold relaxation is allowed."
+    ],
+    "next_step": "Preserve Router V2 and seek more predeclared same-clock evidence / longer historical parent-alarm support rather than changing the gate after seeing this near miss."
+  },
+  "governance": {
+    "random_split": false,
+    "tuning_on_2025": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
