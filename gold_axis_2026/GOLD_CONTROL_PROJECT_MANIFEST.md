@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.00  
+**Manifest version:** 2.01  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -256,34 +256,45 @@ V1.48 HS-SDL-DMA, V1.51 locked-audit general-direction models, V1.55 DMA/DMS, V1
 
 RSM V1 and VLMC-BS V1 remain audit history only because the corrected V2 source constructions supersede their family-level conclusions.
 
-### 6.6 False-UP-clean ranking for next-day UP models
+### 6.6 Pure next-day UP-detector ranking — catch UP while minimizing false UP alarms
 
-For the intended counter-model role, raw UP sensitivity is not enough. The important quantities are:
+This ranking is **not** a SQRT-veto ranking. It answers the pure UP-model question:
 
-- **UP precision:** among UP alarms, how often UP actually occurred.
-- **UP-alarm error:** 1 - UP precision; among emitted UP alarms, how often the alarm was wrong.
-- **False-UP rate on actual DOWN days (FPR):** FP / actual DOWN. This is the safety-critical measure for a DOWN-veto architecture because every false UP can suppress a real DOWN.
+> Which same-clock next-day model catches actual UP moves well while generating as few false UP alarms as possible?
 
-The ranking below uses the common pre-2025 years **2023–2024** and orders primarily by lower false-UP FPR, then by UP precision. 2025 is shown only as unchanged transport evidence.
+Primary pre-2025 comparison uses pooled 2023–2024 evidence. The principal trade-off metric is **Youden J = UP recall - false-positive rate (FPR)**, equivalently balanced accuracy after accounting for both actual UP and actual DOWN classes. UP precision is shown separately so a model cannot look good merely by predicting UP almost every day.
 
-| Rank | Daily next-day model | 2023–24 UP precision | 2023–24 UP-alarm error | 2023–24 false-UP FPR | 2025 UP precision | 2025 false-UP FPR | Interpretation |
-|---:|---|---:|---:|---:|---:|---:|---|
-| **1** | **TTSM-S2** | **53.55%** | 46.45% | **45.21%** | **64.62%** | **47.42%** | lowest false-UP burden among same-clock tested daily models; selective/abstaining behavior |
-| **2** | **TTSM-S1** | **53.77%** | 46.23% | **48.94%** | **62.86%** | **53.61%** | second-lowest false-UP burden; selective |
-| **3** | **Bonato AR1_RM_QBOOST h=1** | 54.62% | 45.38% | **57.45%** | 59.74% | 63.92% | cleaner than generic logit UP surfaces, but still many false UPs |
-| **4** | **AR1_RM_LOGIT** | 55.51% | 44.49% | 60.11% | 59.03% | **95.88%** | reasonable pre-2025 precision but 2025 collapses into broad UP behavior |
-| **5** | **RM_LOGIT** | 55.47% | 44.53% | 60.64% | 58.95% | **96.91%** | same issue; unsafe as high-specificity UP verifier |
-| **6** | **TSM** | 54.17% | 45.83% | 64.36% | 59.79% | 78.35% | broad/non-selective relative to TTSM variants |
-| **7** | **RV_LOGIT** | **56.66%** | **43.34%** | 67.55% | 59.07% | **100%** | highest pre-2025 UP precision in this same-clock group, but false-UP FPR is too high for a veto role |
-| **8** | **Bonato AR1_QBOOST h=1** | 52.62% | 47.38% | 81.91% | 60.19% | 88.66% | strongly UP-biased; poor safety |
-| **9** | **RSK_LOGIT** | 52.69% | 47.31% | 88.83% | 59.29% | 94.85% | strongly UP-biased |
-| **10** | **AR1_LOGIT** | 53.61% | 46.39% | **95.74%** | 59.74% | **95.88%** | almost every actual DOWN becomes a false UP; unsuitable |
+| Rank | Model | UP recall | UP precision | False-UP among UP calls | FPR on actual DOWN | Youden J | Balanced acc. | Interpretation |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| **1** | **RV_LOGIT** | **75.45%** | **56.66%** | **43.34%** | 67.55% | **+7.90 pp** | **53.95%** | best pooled 2023–24 catch-vs-false-alarm trade-off in the same-clock daily set |
+| **2** | **AR1_RM_LOGIT** | 64.09% | 55.51% | 44.49% | **60.11%** | +3.98 pp | 51.99% | lower recall than RV, somewhat lower FPR |
+| **3** | **RM_LOGIT** | 64.55% | 55.47% | 44.53% | 60.64% | +3.91 pp | 51.95% | nearly tied with AR1_RM |
+| **4** | **Bonato AR1_RM QBoost h=1** | 59.09% | 54.62% | 45.38% | **57.45%** | +1.64 pp | 50.82% | cleaner/conservative, but misses more UP moves |
+| **5** | **TSM** | 65.00% | 54.17% | 45.83% | 64.36% | +0.64 pp | 50.32% | broad UP detector with little net discrimination |
+| **6** | **TTSM-S1** | 48.64% | 53.77% | 46.23% | 48.94% | -0.30 pp | 49.85% | selective and lower FPR, but misses too many actual UPs pre-2025 |
+| **7** | **TTSM-S2** | 44.55% | 53.55% | 46.45% | **45.21%** | -0.66 pp | 49.67% | lowest FPR among this set, but pre-2025 UP capture is too low to be the best pure UP detector |
+| **8** | **AR1_LOGIT** | **94.55%** | 53.61% | 46.39% | **95.74%** | -1.20 pp | 49.40% | catches almost every UP only by calling almost everything UP; not a useful detector |
+| **9** | **Bonato AR1 QBoost h=1** | 77.73% | 52.62% | 47.38% | 81.91% | -4.19 pp | UP-biased; false-alarm burden outweighs catch rate |
+| **10** | **RSK_LOGIT** | 84.55% | 52.69% | 47.31% | 88.83% | -4.28 pp | strongly UP-biased |
 
-**Altuntaş AlexNet** is not included in the same-clock ranking because its provider-day target axis is not sufficiently aligned with the SQRT next-day axis. Descriptively, its 2024 UP precision is 56.47% with false-UP FPR 66.07%; 2025 UP precision is 60.22% with FPR 71.84%.
+**Altuntaş AlexNet** is excluded from the same-clock ranking because its provider-day target axis is not sufficiently aligned with the governed SQRT/NY daily axis. Its 2024 descriptive metrics are UP recall 65.75%, UP precision 56.47%, FPR 66.07%, BA 49.84%.
 
-**FAST** is also not ranked as a next-day UP classifier because ROBUST_UP is a tactical trend state rather than a frozen next-day direction target, and its original daily axis is materially misaligned with SQRT. The separate SQRT-clock reconstruction in section 10 confirms that using ROBUST_UP as a veto is unsafe.
+### 6.6.1 2025 transport check
 
-**Binding interpretation for UP-model quality:** if the objective is specifically "emit UP with the smallest burden of false UP alarms while preserving a usable number of signals", the current same-clock daily evidence points first to **TTSM-S2**, then **TTSM-S1**. RV_LOGIT has higher nominal UP precision pre-2025, but its much larger false-UP FPR makes it a poor high-specificity UP expert.
+The pre-2025 leader **RV_LOGIT does not transport as a selective UP detector**: in 2025 it predicts UP on every evaluated day, producing UP recall 100% but FPR 100% and BA 50%.
+
+TTSM becomes more selective in 2025:
+- TTSM-S1: full-timeline UP recall 62.86%, UP precision 62.86%, FPR 53.61%, Youden J +9.25 pp;
+- TTSM-S2: full-timeline UP recall 60.00%, UP precision 64.62%, FPR 47.42%, Youden J +12.58 pp.
+
+Bonato AR1_RM in 2025: UP recall 65.71%, UP precision 59.74%, FPR 63.92%, Youden J +1.79 pp.
+
+Therefore the binding conclusion is two-part:
+
+1. **Best pre-2025 pooled pure-UP detector:** RV_LOGIT.
+2. **Best 2025 pure-UP trade-off among these frozen daily models:** TTSM-S2.
+
+No single model is yet proven to be the stable best UP detector across 2023–2025. A future UP-engine decision must therefore distinguish **formation leader** from **transport leader** rather than selecting on 2025 alone.
 
 ### 6.7 Source and artifact anchors for this ledger
 
