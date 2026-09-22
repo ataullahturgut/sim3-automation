@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.14  
+**Manifest version:** 2.15  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -1793,6 +1793,117 @@ The overlap is strong enough to classify this spine as a **credible pre-2022 res
 Any use for 2020/2021 SQRT + Router extension requires a new preregistered research identity, source-boundary sensitivity reporting, and reproduction checks on the overlap period.
 
 Production DB remains unchanged and read-only for this work.
+
+---
+
+
+## 11I. External Dukascopy pre-2022 SQRT + Router test — executed
+
+**Research branch:** `gold-external-dukascopy-spine-v1-20260922`  
+**Harmonization preregistration:** `039960e98489bd098e5e47344cb333b811bfe97c`  
+**Single-policy LTT V2 preregistration:** `9a0c98861b6d26890d52dab576038a666492c25a`  
+**Harmonization result:** `0cb9a445da28cea5a0f739e2154a31b7d8577d67`  
+**Pre-2022 extension result:** `691de95745bf77a96e5b59e0c5ed410839c2f5f8`  
+**Single-policy LTT result:** `d513c5672e83923330e67248579cb37645a1b553`  
+**Report:** `5ba455da183982bddb07dbce68d8db5fb64a5eeb`.
+
+### 11I.1 Harmonization gate
+
+The external Dukascopy-derived spine passed every preregistered source-harmonization gate against the governed 5-minute cache.
+
+Pooled exact overlap 2020-04-06..2021-12-31:
+- governed retained days=345;
+- exact common days=345;
+- overlap=100%;
+- close-return Pearson=**0.9999746**;
+- close-return sign agreement=**99.42%**;
+- RV Spearman=**0.99753**;
+- downside-RV Spearman=**0.99699**;
+- mean external/governed RV ratio=**0.99664**;
+- mean external/governed downside-RV ratio=**0.99608**;
+- top-quintile downside-risk event agreement=**99.42%**.
+
+Year-specific checks remain equally strong:
+- 2020 return correlation 0.999958; sign agreement 98.64%; DR Spearman 0.9950;
+- 2021 return correlation 0.999993; sign agreement 100%; DR Spearman 0.9968.
+
+Status: `HARMONIZED_FOR_RESEARCH_EXTENSION_NOT_PRODUCTION_AUTHORITY`.
+
+### 11I.2 External SQRT parent
+
+Using the exact frozen SQRT-HAR-DR annual-origin equations:
+
+| year | formation n | test n | SQRT alarms | actual DOWN | actual UP |
+|---|---:|---:|---:|---:|---:|
+| 2020 | 498 | 260 | **212** | 97 | 115 |
+| 2021 | 758 | 258 | **28** | 16 | 12 |
+
+2020 is a severe crisis-regime stress case: the source-specific annual threshold makes SQRT active on **81.5%** of the year.
+
+### 11I.3 External Router reconstruction
+
+Frozen direct experts and legacy-context Router semantics were reconstructed origin-safely:
+
+| year | n | Router UP | TP | FP | UP precision | false-UP FPR |
+|---|---:|---:|---:|---:|---:|---:|
+| 2020 | 260 | **185** | 111 | 74 | **60.00%** | **66.07%** |
+| 2021 | 258 | **33** | 19 | 14 | **57.58%** | **11.20%** |
+
+### 11I.4 SQRT × Router intersection
+
+| year | SQRT alarms | Router-UP overlap | good suppress | bad suppress | veto precision | true-DOWN retention |
+|---|---:|---:|---:|---:|---:|---:|
+| 2020 | 212 | **140** | 80 | **60** | 57.14% | **38.14%** |
+| 2021 | 28 | **2** | 1 | 1 | 50.00% | **93.75%** |
+
+The 2020 hard-veto coupling is therefore a clear crisis-regime safety failure.
+
+Because source harmonization is near-exact on the governed overlap, this behavior must not be dismissed as a simple external-feed artifact.
+
+### 11I.5 Single-policy LTT V2, pooled 2020–2024
+
+Predeclared fixed policy:
+- suppress SQRT forced-DOWN iff frozen Router V2 emits UP.
+
+Pooled:
+- SQRT alarms=**270**;
+- actual DOWN=**127**;
+- actual UP=**143**;
+- suppressions=**146**;
+- good suppressions=**84**;
+- bad suppressions=**62**;
+- suppression precision=**57.53%**;
+- false-alarm reduction=**58.74%**;
+- true-DOWN retention=**51.18%**;
+- baseline forced-DOWN precision=**47.04%**;
+- remaining forced-DOWN precision=**52.42%**;
+- precision gain=**+5.38 pp**.
+
+Exact safety test:
+- alpha=0.20;
+- delta=0.10;
+- n=127 actual-DOWN alarms;
+- x=62 bad suppressions;
+- exact lower-tail binomial p≈**1.0000**.
+
+Status:
+`HARD_ROUTER_POLICY_DECISIVELY_NOT_RISK_CERTIFIED_ON_2020_2024_EXTENSION`.
+
+### 11I.6 Binding interpretation
+
+The larger historical sample resolves the earlier small-n ambiguity.
+
+The frozen Router V2 may still be retained as an UP-verifier research baseline, because its standalone role is not the same as a universal suppression policy.
+
+However the coupling:
+
+`Router V2 UP => delete SQRT DOWN`
+
+is now **rejected as a generally safe controller** across regimes.
+
+The failure is strongly concentrated in 2020, where Router-UP is permissive during an extreme-risk environment and suppresses 60 of 97 true DOWN SQRT alarms.
+
+**Current next lane:** preserve Router V2, but any future dampener must be explicitly regime/risk aware and must prevent extreme/high-SQRT-risk states from inheriting the same suppression semantics as calm regimes. No hard-veto runtime promotion is allowed.
 
 ---
 
