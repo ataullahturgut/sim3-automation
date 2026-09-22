@@ -1,0 +1,71 @@
+{
+  "identity": "EXTERNAL_DUKASCOPY_XAUUSD_FEATURE_SPINE_V1_RESEARCH",
+  "year": 2021,
+  "part": "H1",
+  "date_filter": [
+    "2021-01-01",
+    "2021-06-30"
+  ],
+  "retained_days": 129,
+  "first_day": "2021-01-01",
+  "last_day": "2021-06-30",
+  "provenance": [
+    {
+      "month": "2021-01",
+      "ask_blob_sha": "683d8fe93488dc70822d8090ed2559a835be4cd9",
+      "bid_blob_sha": "a06ca6ad013300d2be0157f15c47e390ec419db1",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2021-02",
+      "ask_blob_sha": "81d016a1c194482b6709d2bcdfd9cd6183743856",
+      "bid_blob_sha": "2a5db9a90f1761af2565f99b10f7fc56d564259f",
+      "ask_rows": 40320,
+      "bid_rows": 40320,
+      "joined_rows": 40320
+    },
+    {
+      "month": "2021-03",
+      "ask_blob_sha": "692e56863ed545161c5f30fe1586c00dd10aff4c",
+      "bid_blob_sha": "671a41241129057eae1ee810d4032be41d179c6c",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2021-04",
+      "ask_blob_sha": "379952f2623a4dd058b0ea8b50a4d2d666e78ea4",
+      "bid_blob_sha": "09be3c7a0862561c142de105fca76b8208a91145",
+      "ask_rows": 43200,
+      "bid_rows": 43200,
+      "joined_rows": 43200
+    },
+    {
+      "month": "2021-05",
+      "ask_blob_sha": "91f6ef77e7def1f2f6055b049ed49cada720ecef",
+      "bid_blob_sha": "52c1bd644d4d96a9f78020c84af56b7342b52d64",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2021-06",
+      "ask_blob_sha": "b29cd674fbada50b4ad553f12d7837e316a43622",
+      "bid_blob_sha": "cd2a381a799b105ea9852dff0b2db4cffffa4182",
+      "ask_rows": 43200,
+      "bid_rows": 43200,
+      "joined_rows": 43200
+    },
+    {
+      "month": "2021-07",
+      "ask_blob_sha": "04c66de36356bf83403ab2db3266c28b503ae4db",
+      "bid_blob_sha": "9272950dbb061c6740b61d528003cd1e8b308896",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    }
+  ],
+  "authority": "RESEARCH_STAGING_ONLY"
+}
