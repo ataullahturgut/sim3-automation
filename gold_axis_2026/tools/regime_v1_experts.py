@@ -112,7 +112,11 @@ def legacy_context(days: list[Daily]) -> dict[str, dict]:
             week_pos[key] = len(weekly_last)
             weekly_last.append((x.d, x.close))
 
-    wdates = [x[0] for x in weekly_last]
+    # Availability is the calendar Friday ending the ISO week, not merely the
+    # last observed trading date. This preserves the frozen "completed week"
+    # semantics across Good Friday / other Friday holidays: a Thursday close
+    # is not treated as a completed-week close one day early.
+    wdates = [d + __import__("datetime").timedelta(days=(4 - d.weekday())) for d,_ in weekly_last]
     wcl = np.array([x[1] for x in weekly_last], dtype=float)
     wsma4 = np.full(len(wcl), np.nan)
     for k in range(3, len(wcl)):
