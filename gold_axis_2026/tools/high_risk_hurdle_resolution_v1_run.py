@@ -67,13 +67,22 @@ def fit_parent_and_build(days: list[Daily], year: int) -> tuple[list[dict], list
     q80 = nearest_rank(np.array([r["target_dr"] for r in formation], dtype=float), 0.80)
 
     # Frozen parent fit, identical SQRT-HAR-DR annual semantics.
+    # IMPORTANT: frozen parent uses mean(sqrt(DR)) for weekly/monthly
+    # SQRT-HAR features, not sqrt(mean(DR)). Keep this numerically identical
+    # to regime_v1_router_sqrt.sqrt_rows.
+    dr_all = np.array([x.dr for x in days], dtype=float)
+    sd_all = np.sqrt(dr_all)
+    parent_feature_by_target = {}
+    for i in range(21, len(days) - 1):
+        td = days[i + 1].d.isoformat()
+        parent_feature_by_target[td] = (
+            float(sd_all[i]),
+            float(np.mean(sd_all[i - 4:i + 1])),
+            float(np.mean(sd_all[i - 21:i + 1])),
+        )
+
     Xp = np.array([
-        [
-            1.0,
-            math.sqrt(max(r["dr_d"], 0.0)),
-            math.sqrt(max(r["dr_w"], 0.0)),
-            math.sqrt(max(r["dr_m"], 0.0)),
-        ]
+        [1.0, *parent_feature_by_target[r["target_date"]]]
         for r in formation
     ], dtype=float)
     yp = np.array([math.sqrt(max(r["target_dr"], 0.0)) for r in formation], dtype=float)
@@ -106,12 +115,8 @@ def fit_parent_and_build(days: list[Daily], year: int) -> tuple[list[dict], list
         rr["down_given_hit"] = int(rr["target_return"] < 0) if hit else None
 
         if is_test:
-            xn = np.array([
-                1.0,
-                math.sqrt(max(rr["dr_d"], 0.0)),
-                math.sqrt(max(rr["dr_w"], 0.0)),
-                math.sqrt(max(rr["dr_m"], 0.0)),
-            ], dtype=float)
+            sd_d, sd_w, sd_m = parent_feature_by_target[rr["target_date"]]
+            xn = np.array([1.0, sd_d, sd_w, sd_m], dtype=float)
             sp = float(xn @ beta)
             if not math.isfinite(sp) or sp <= 0:
                 raise RuntimeError(f"PARENT_NONPOSITIVE:{year}:{rr['target_date']}:{sp}")
