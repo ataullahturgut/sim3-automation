@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.19  
+**Manifest version:** 2.20  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -2363,6 +2363,127 @@ The next lane should explicitly address competence non-stationarity while preser
 
 ---
 
+
+## 11N. SQRT alarm semantic audit V1 — risk versus direction disentanglement
+
+**Identity:** `SQRT_ALARM_SEMANTIC_AUDIT_V1_RESEARCH`  
+**Research branch:** `gold-sqrt-semantic-audit-v1-20260922`  
+**Preregistration commit:** `3fdc15cde48b8392d21b3de469c6f03b2d50bb57`  
+**Implementation commit:** `ad0fc4dcbe1687833bd9a153cd4bc6a754523464`  
+**Workflow commit:** `b9695d7d16dc5cc593b03b6862e8f39f81b41c6e`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_SQRT_ALARM_SEMANTIC_AUDIT_V1_RESULT_2026-09-22.json` (Git blob SHA `15a8365baa6be905bdc06e6b7768281e2d246fc7`)  
+**Status:** `DIRECTION_FALSE_ALARM_LABEL_CONFOUNDS_RISK_AND_DIRECTION`.
+
+### 11N.1 Audit question and frozen semantics
+
+The audit tested whether the project had been incorrectly calling an SQRT alarm "false" merely because the next-day close direction ended UP.
+
+The parent SQRT-HAR-DR target is next-day downside realized variance, not next-day close direction.
+
+For each evaluation year Y:
+- forecast high risk = frozen SQRT forecast `>= Q80_Y`;
+- realized high risk = realized target-day downside realized variance `>= Q80_Y`;
+- direction = sign of next-day close-to-close log return.
+
+The same already-frozen annual Q80 boundary was used for forecast and realized risk. No alternative threshold was searched.
+
+Alarm rows were partitioned into:
+- `RISK_HIT_DOWN_CLOSE`;
+- `RISK_HIT_UP_CLOSE`;
+- `RISK_MISS_DOWN_CLOSE`;
+- `RISK_MISS_UP_CLOSE`.
+
+The audit does not claim chronological intraday "rebound" timing because that path ordering was not separately proven; `RISK_HIT_UP_CLOSE` means high downside-risk realized even though the day closed UP.
+
+### 11N.2 Integrity
+
+Frozen alarm counts reproduced exactly:
+- 2020=212;
+- 2021=28;
+- 2022=11;
+- 2023=2;
+- 2024=17;
+- pooled=270.
+
+Frozen pooled alarm direction counts reproduced exactly:
+- actual DOWN=127;
+- actual UP=143.
+
+Integrity errors=0.
+
+### 11N.3 Four-way alarm anatomy
+
+| year | alarms | risk hit + DOWN close | risk hit + UP close | risk miss + DOWN close | risk miss + UP close | risk-hit rate among alarms | share of UP-close alarms that were risk hits |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 2020 | 212 | 89 | 91 | 8 | 24 | 84.91% | 79.13% |
+| 2021 | 28 | 15 | 5 | 1 | 7 | 71.43% | 41.67% |
+| 2022 | 11 | 4 | 5 | 2 | 0 | 81.82% | 100.00% |
+| 2023 | 2 | 1 | 0 | 0 | 1 | 50.00% | 0.00% |
+| 2024 | 17 | 6 | 2 | 1 | 8 | 47.06% | 20.00% |
+
+Pooled 2020–2024:
+- alarms=270;
+- `RISK_HIT_DOWN_CLOSE`=115;
+- `RISK_HIT_UP_CLOSE`=103;
+- `RISK_MISS_DOWN_CLOSE`=12;
+- `RISK_MISS_UP_CLOSE`=40;
+- realized-risk hits among alarms=218/270=**80.74%**;
+- realized-risk misses among alarms=52/270=19.26%.
+
+Critically, among the 143 SQRT alarm days whose next-day close direction was UP:
+- 103 were nevertheless realized high downside-risk days;
+- only 40 were realized-risk misses;
+- therefore **72.03% of the UP-close alarms were actual risk hits**.
+
+Among the 127 DOWN-close alarm days:
+- 115 were realized-risk hits;
+- 12 were realized-risk misses;
+- risk-hit share=90.55%.
+
+### 11N.4 Full-parent risk-state diagnostics
+
+Across all 1,131 evaluated parent rows from 2020–2024:
+- realized high-risk targets=319;
+- SQRT risk alarms=270;
+- true high-risk positives=218;
+- false high-risk positives=52;
+- false negatives=101;
+- true negatives=760;
+- risk precision=**80.74%**;
+- risk recall=**68.34%**;
+- risk specificity=**93.60%**.
+
+Year heterogeneity is material:
+- 2020: risk precision 84.91%, recall 93.26%;
+- 2021: precision 71.43%, recall 40.82%;
+- 2022: precision 81.82%, recall 25.71%;
+- 2023: precision 50.00%, recall 11.11% (only two alarms);
+- 2024: precision 47.06%, recall 24.24%.
+
+Thus the parent risk sensor is not uniformly calibrated across regimes, but the pooled semantic result is unequivocal: close-direction disagreement does not imply risk-forecast failure.
+
+### 11N.5 Binding architecture correction
+
+The prior phrase "SQRT false alarm" must no longer mean "SQRT alarm followed by an UP close."
+
+That label confounds two separate tasks:
+1. downside-risk-state forecasting;
+2. next-day close-direction / resolution forecasting.
+
+Of 143 historical UP-close SQRT alarms, 103 (72.03%) were genuine realized high-risk hits under the parent model's own frozen Q80 semantics. Any suppressor that deletes these alarms merely because direction later closes UP is deleting many correct risk warnings.
+
+Therefore the completed hard-veto, persistence and conditional-competence experiments remain valuable diagnostic evidence about direction-resolution logic, but their "false-alarm cleaning" interpretation must be narrowed. They should not be treated as attempts to improve SQRT risk precision by deleting all UP-close cases.
+
+The architecture must now separate:
+- **risk state:** normal risk versus high downside risk;
+- **conditional resolution:** within high-risk forecasts, DOWN-close / UP-close / uncertain.
+
+The next research lane should not continue threshold tuning on suppression. It should first define and preregister a conditional outcome model for the high-risk subset, with an explicit abstain/uncertain state. Router V2 becomes one candidate feature or benchmark for that second-stage conditional-resolution problem, not a universal alarm deletion authority.
+
+No production/runtime promotion is authorized.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -2401,12 +2522,13 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 Gold Control currently has a useful downside-risk sensor but no proven general next-day DOWN-direction engine.
 
-SQRT-HAR-DR remains the current recent downside-risk research reference. RAW HAR-DR remains the mandatory comparator. ME-SQRT shows a small coherent mechanism signal but did not pass its calibration gate. HARK-SD, cross-domain direction classifiers, scalar meta-veto, standalone DTW path veto and standalone SP500 veto did not pass their frozen pre-2025 gates. Heterogeneous consensus produced one exploratory 2024 pocket but did not transport.
+SQRT-HAR-DR remains the recent downside-risk research reference. The semantic audit materially changes how its historical "false alarms" must be interpreted. Across 2020–2024, 218 of 270 SQRT alarms (80.74%) were followed by realized target-day downside risk at or above the same frozen Q80 boundary. Among the 143 alarm days that later closed UP, **103 (72.03%) were still genuine realized high-risk hits**. Therefore an UP close is not a valid definition of SQRT risk-sensor failure.
 
-UP Expert Router V2 remains frozen as an UP-verifier baseline, but its universal coupling to SQRT remains rejected. The audited hard veto suppresses 62 of 127 actual-DOWN alarms and retains only 51.18% of true DOWN events. The instantaneous Q80/Q90 successor also fails safety, with 27 bad suppressions and 78.74% true-DOWN retention.
+The previous Router hard-veto, Q80/Q90 regime gate, persistence gate and conditional-competence controller remain useful experiments about conditional direction resolution and deletion safety, but they must no longer be framed as general SQRT risk false-alarm cleaners. In particular, a suppressor that deletes an alarm because the day eventually closes UP can remove a correct downside-risk warning.
 
-PERSISTENT_RISK_STATE_DAMPENER_V1 then established that regime persistence is a critical safety variable. It passes the frozen retrospective safety diagnostic with only 2 bad suppressions, a 4.14% exact 90% upper risk bound and 98.43% true-DOWN retention, but removes only 4.20% of false alarms. It is the current high-safety reference.
+The project architecture is therefore corrected to two stages:
 
-PERSISTENT_CONDITIONAL_COMPETENCE_DAMPENER_V1 restores some suppression authority inside persistent regimes using causal same-cell competence. It raises false-alarm reduction to 16.78% and good suppressions from 6 to 24 while still passing the frozen alpha=0.20/delta=0.10 retrospective diagnostic. However it also raises bad suppressions to 18, lowers true-DOWN retention to 85.83%, and pushes the exact 90% upper bad-suppression bound to 18.97%, close to the 20% limit. The utility gain is therefore real but the safety margin becomes thin.
+1. **Risk-state motor:** SQRT-HAR-DR estimates whether next-day downside realized risk is elevated.
+2. **Conditional-resolution motor:** only when risk is high, estimate whether the high-risk day resolves as DOWN-close, UP-close, or remains uncertain/abstain.
 
-The active research question is now **competence non-stationarity**, not whether persistence matters. The Bonato/non-consensus persistent cell gains authority during a favorable 2020 run and loses quality faster than expanding-history confidence reacts. The next successor, if pursued, must be newly preregistered and explicitly time-adaptive—discounted/recency-weighted competence, sequential change detection, or non-exchangeable/hierarchical risk control—while keeping the frozen persistence insight as the safety backbone. No post-hoc threshold tuning is allowed under the completed identities. 2025 remains unavailable for parameter selection and may only be used as locked retrospective transport; genuine certification requires new prospective or otherwise independent same-clock evidence.
+Router V2 remains a candidate verifier/feature for the conditional-resolution stage, not a universal alarm-deletion authority. The next research identity should be a preregistered selective conditional-resolution model on the SQRT-high-risk subset, with explicit abstention and strict chronology. No further post-hoc suppressor threshold tuning is authorized under the completed identities. 2025 remains unavailable for policy tuning and may only be used as locked retrospective transport; genuine certification requires new prospective or otherwise independent same-clock evidence.
