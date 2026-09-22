@@ -1,0 +1,33 @@
+{
+  "identity": "EXTERNAL_DUKASCOPY_XAUUSD_FEATURE_SPINE_V1_RESEARCH",
+  "period": [
+    "2018-01-01",
+    "2021-12-31"
+  ],
+  "segments": [
+    "gold_axis_2026/external_data/dukascopy_xauusd_mid_5m_daily_features_2018_H1.csv",
+    "gold_axis_2026/external_data/dukascopy_xauusd_mid_5m_daily_features_2018_H2.csv",
+    "gold_axis_2026/external_data/dukascopy_xauusd_mid_5m_daily_features_2019_H1.csv",
+    "gold_axis_2026/external_data/dukascopy_xauusd_mid_5m_daily_features_2019_H2.csv",
+    "gold_axis_2026/external_data/dukascopy_xauusd_mid_5m_daily_features_2020_H1.csv",
+    "gold_axis_2026/external_data/dukascopy_xauusd_mid_5m_daily_features_2020_H2.csv",
+    "gold_axis_2026/external_data/dukascopy_xauusd_mid_5m_daily_features_2021_H1.csv",
+    "gold_axis_2026/external_data/dukascopy_xauusd_mid_5m_daily_features_2021_H2.csv"
+  ],
+  "raw_rows": 1045,
+  "duplicate_dates": [],
+  "zero_variance_dates_dropped": [
+    "2018-03-30",
+    "2019-04-19",
+    "2020-04-10",
+    "2020-12-25",
+    "2021-01-01",
+    "2021-04-02",
+    "2021-12-24"
+  ],
+  "retained_rows": 1038,
+  "first_day": "2018-01-01",
+  "last_day": "2021-12-31",
+  "authority": "RESEARCH_STAGING_ONLY",
+  "note": "Consolidated derived feature spine; source harmonization against governed cache still required before model use."
+}
