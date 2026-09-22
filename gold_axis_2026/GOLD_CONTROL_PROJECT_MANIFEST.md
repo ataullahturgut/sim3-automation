@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.06  
+**Manifest version:** 2.07  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -1193,6 +1193,83 @@ Current priority is:
 4. only after controller methods are exhausted return to new direction-resolving sensors such as options skew, futures flow, real yields, DXY, basis/liquidity and macro-surprise data.
 
 ---
+
+## 11A. NP-constrained suppressor V1 — executed
+
+**Identity:** `NP_CONSTRAINED_SUPPRESSOR_V1_RESEARCH`  
+**Research branch:** `gold-np-constrained-suppressor-v1-20260922`  
+**Preregistration:** `db782e19fa38fefb1fcace1366fa1d9b937991cf`  
+**Frozen result:** `5c2646edcaf18bd386903397594e5efee78b9a2e`  
+**Status:** `FORMAL_PASS_BUT_NP_GATE_NON_DISCRIMINATING / NO_INCREMENTAL_OPERATIONAL_GAIN`.
+
+### 11A.1 Design
+
+The frozen Router V2 remains unchanged.
+
+Suppression score:
+- selected Router-V2 expert's one-sided 90% Wilson lower bound on historical UP precision;
+- Router ABSTAIN = no suppression.
+
+Neyman-Pearson safety target:
+- prioritized error = suppress an actual DOWN;
+- alpha = **0.20**;
+- delta = **0.10**.
+
+2024 daily actual-DOWN calibration support:
+- n0 = **86**;
+- NP order-statistic index k = **74**;
+- binomial tail = **0.098998**;
+- threshold `tau = 0.4302662741`.
+
+Operational rule:
+- suppress only if SQRT alarms, Router V2 says UP and score > tau.
+
+### 11A.2 2024 calibration diagnostics
+
+All 2024 daily rows:
+- actual DOWN = 86;
+- suppressed DOWN = 12;
+- daily DOWN suppression rate = **13.95%**;
+- suppressed UP = 22;
+- suppression precision = **64.71%**.
+
+On 17 SQRT alarms:
+- suppressions = 4;
+- good / bad = 3 / 1;
+- suppression precision = **75.00%**;
+- false-alarm reduction = **30.00%**;
+- true-DOWN retention = **85.71%**;
+- remaining forced-DOWN precision = **46.15%**.
+
+These are calibration diagnostics, not independent validation.
+
+### 11A.3 Locked 2025 challenge
+
+Frozen 2024 tau applied unchanged:
+
+- SQRT alarms = 90;
+- suppressions = **16**;
+- good / bad = **10 / 6**;
+- suppression precision = **62.50%**;
+- false-alarm reduction = **22.22%**;
+- true-DOWN retention = **86.67%**;
+- remaining forced-DOWN precision = **52.70%**;
+- precision change = **+2.70 pp**.
+
+The full 2025 daily actual-DOWN suppression rate is **10.31%**, descriptively below alpha=20%.
+
+### 11A.4 Binding interpretation
+
+The NP threshold is below every frozen Router-V2 UP score that intersects SQRT alarms in 2024 and 2025. Therefore:
+
+**NP V1 reproduces the existing hard Router-V2 veto exactly.**
+
+It adds the correct asymmetric-risk framing and a formal safety-calibration layer, but it does **not** reduce any additional bad veto or false alarm relative to the hard veto.
+
+Thus NP V1 is not a better operational dampener. The next method should change the action structure, not retrain the UP verifier: a separately preregistered `RETAIN / WATCH / SUPPRESS` selective controller is the preferred next experiment.
+
+---
+
 
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
