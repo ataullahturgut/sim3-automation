@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.10  
+**Manifest version:** 2.11  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -1488,6 +1488,75 @@ That sign is not safety-coherent and did not transport reliably. Some strong-SQR
 **Binding implication:** direct action-risk modeling remains open, but the next formulation should either:
 - calibrate the action directly using Learn-Then-Test / risk-control logic, or
 - impose monotonicity so stronger SQRT downside-risk evidence cannot reduce estimated BAD_SUPPRESSION risk.
+
+Router V2 remains frozen.
+
+---
+
+
+## 11E. Monotonic action-risk controller V1 — executed
+
+**Identity:** `MONOTONIC_ACTION_RISK_CONTROLLER_V1_RESEARCH`  
+**Research branch:** `gold-monotone-action-risk-controller-v1-20260922`  
+**Preregistration:** `a696308de6cc646fc9925ddb34f1299c21ab6609`  
+**2024 fit freeze:** `194d9a1fb25f08379c1645089fdd55d079fcdc19`  
+**Frozen result:** `3f3fe007da5a563fbedd002abae205152ec36f6c`  
+**Status:** `TOO_CONSERVATIVE_INSUFFICIENT_SUPPRESS_SUPPORT`.
+
+### 11E.1 Design
+
+Frozen Router V2, F30 and D30 competence constructions were retained.
+
+Two BAD_SUPPRESSION ridge-logistic models were refit on 2024 Router-UP daily origins with hard monotonicity:
+
+- `beta_sqrt >= 0`;
+- `beta_competence_error >= 0`.
+
+The constrained optimum was selected by exact active-set comparison with no hyperparameter search.
+
+### 11E.2 2024 fit result
+
+Development support:
+- Router-UP n=42;
+- actual DOWN=16;
+- actual UP=26.
+
+For both F30 and D30 formulations:
+- the unconstrained solution required negative SQRT and negative competence-error slopes;
+- fixing either one slope at zero still left the other negative;
+- the only feasible monotone solution fixed **both slopes at zero**.
+
+Therefore both models collapsed to the same intercept-only risk:
+
+`p_bad = 16/42 = 0.380952`.
+
+The fit was frozen before reading 2025 challenge outcomes.
+
+### 11E.3 Locked 2025 challenge
+
+Frozen action thresholds:
+- p_bad<=0.20 -> SUPPRESS;
+- 0.20<p_bad<=0.35 -> WATCH;
+- p_bad>0.35 -> RETAIN.
+
+Since 0.380952>0.35, every SQRT alarm is retained.
+
+2025:
+- SQRT alarms=90;
+- RETAIN=90;
+- WATCH=0;
+- SUPPRESS=0;
+- true-DOWN retention=100%;
+- false-alarm reduction=0%;
+- remaining forced-DOWN precision=50.00%.
+
+### 11E.4 Binding interpretation
+
+The monotonic constraint correctly removes the safety-incoherent negative-risk slope found in the unconstrained controller, but it reveals that the chosen two-feature 2024 development surface contains no usable monotone signal strong enough to justify suppression.
+
+This is not score drift and should not be repaired by retuning thresholds around the same fit.
+
+**Next clean lane:** Learn-Then-Test / direct risk-control calibration of the suppression action itself rather than another parametric BAD-risk probability model.
 
 Router V2 remains frozen.
 
