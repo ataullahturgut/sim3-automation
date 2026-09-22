@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.12  
+**Manifest version:** 2.13  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -1617,6 +1617,97 @@ Per preregistration:
 This is a **data-support limitation**, not a negative model-performance result.
 
 **Next clean step:** extend same-clock pre-2025 SQRT + frozen-verifier history until there are at least 11 actual-DOWN calibration alarms; more support is preferable if multiple candidate policies will be tested with multiplicity control.
+
+Router V2 remains frozen.
+
+---
+
+
+## 11G. Router V2 historical extension V1 — validated
+
+**Identity:** `ROUTER_V2_HISTORICAL_EXTENSION_V1_RESEARCH`  
+**Research branch:** `gold-router-v2-historical-extension-v1-20260922`  
+**Preregistration:** `2368e8856d12505eff705ebe9556d5fdf5444e55`  
+**Frozen result:** `b1570d4abb816a14e62253882c2215b954effb08`  
+**Status:** `HISTORICAL_EXTENSION_VALIDATED_SUPPORT_INCREASED_BUT_LTT_NOT_YET_CERTIFIABLE`.
+
+### 11G.1 Reconstruction integrity
+
+Frozen expert definitions were reconstructed directly from the governed 5-minute panel without using 2025.
+
+Source:
+- 958 retained weekdays;
+- 2020-04-06 through 2024-12-30;
+- >=240 five-minute bars/day.
+
+Common expert rows:
+- 2021=91;
+- 2022=205;
+- 2023=203;
+- 2024=205.
+
+Reconstruction validation against frozen 2023/2024 artifacts:
+- target-date mismatches=0;
+- actual-direction mismatches=0;
+- TTSM UP-state mismatches=0;
+- Bonato AR1_RM h=1 median-UP mismatches=0;
+- RM_LOGIT UP mismatches=0;
+- AR1_RM_LOGIT UP mismatches=0.
+
+The 2024 Router V2 result is reproduced exactly:
+- n=205;
+- Router UP=42;
+- TP=26;
+- FP=16;
+- UP precision=61.90%;
+- false-UP FPR=18.60%;
+- SQRT alarm overlap=4 = 3 actual UP + 1 actual DOWN.
+
+### 11G.2 Historical yearly Router
+
+Using only Y-1 common rows as formation and matured within-year outcomes:
+
+| year | n | Router UP | TP | FP | UP precision | false-UP FPR |
+|---|---:|---:|---:|---:|---:|---:|
+| 2022 | 205 | 22 | 12 | 10 | 54.55% | 10.20% |
+| 2023 | 203 | 19 | 5 | 14 | 26.32% | 13.73% |
+| 2024 | 205 | 42 | 26 | 16 | 61.90% | 18.60% |
+
+The weak 2023 result is retained; it is not removed post hoc.
+
+### 11G.3 SQRT alarm support
+
+| year | SQRT alarms | actual DOWN | actual UP | Router-UP overlap | good/bad hard veto |
+|---|---:|---:|---:|---:|---:|
+| 2022 | 11 | 6 | 5 | 0 | 0/0 |
+| 2023 | 2 | 1 | 1 | 0 | 0/0 |
+| 2024 | 17 | 7 | 10 | 4 | 3/1 |
+| **pooled** | **30** | **14** | **16** | **4** | **3/1** |
+
+Thus alarm-conditional actual-DOWN support increases from 7 to **14**.
+
+### 11G.4 LTT implication
+
+The earlier single-policy zero-bad feasibility floor was 11 cases, so raw support now exceeds that floor.
+
+But the frozen hard Router policy has **1 bad suppression among 14 actual-DOWN alarms**.
+
+At alpha=0.20:
+- exact one-sided lower-tail p-value = **0.1979121**;
+- required delta = 0.10;
+- therefore the policy is **not risk-certified**.
+
+With one bad suppression:
+- a single-policy test needs at least **18** actual-DOWN alarm cases at alpha=0.20, delta=0.10.
+
+For the previously proposed five-policy Bonferroni family:
+- delta per policy=0.02;
+- zero bad suppressions require at least **18** actual-DOWN alarms;
+- one bad suppression requires at least **27**.
+
+The governed SQRT multi-origin parent begins at 2022 because yearly fitting requires at least 250 formation rows; 2021 does not provide a methodologically equivalent earlier parent origin from the retained 2020 source. Therefore 2022 is the earliest currently defensible same-clock parent year under the frozen construction.
+
+**Binding next step:** do not weaken alpha/delta. Either obtain additional valid historical parent/verifier support from a genuinely longer source, or define one single suppression policy under a new preregistration without selecting it from pooled SQRT outcomes.
 
 Router V2 remains frozen.
 
