@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.05  
+**Manifest version:** 2.06  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -1086,32 +1086,111 @@ However the formal pre-2025 gate fails by a very small margin and the primary sa
 The correct next step is to preserve the frozen verifier and obtain more independent same-clock historical evidence / longer parent-alarm support rather than changing the threshold post hoc.
 
 
-## 11. Current next lane — SQRT dampener / suppression controller
+## 11. Current next lane — cross-domain risk-controlled dampener
 
-The UP-verifier architecture is now frozen in section 6D and must not be redesigned merely because the hard-veto coupling narrowly missed its 2024 gate.
+The UP-verifier architecture is frozen in section 6D. The next problem is not restricted to Gold forecasting literature. It is treated as a broader **false-alarm suppression / selective-decision / asymmetric-risk-control** problem.
 
-The next research problem is **not primarily “find another UP model.”** It is:
+### 11.1 Cross-domain research scan
 
-> how should a strong but selective UP verifier attenuate an SQRT downside-risk alarm without unnecessarily deleting true DOWN alarms?
+The following fields were explicitly scanned because they solve structurally similar problems:
 
-The current hard veto is binary:
-- Router V2 UP -> suppress SQRT DOWN;
-- Router V2 ABSTAIN -> retain SQRT DOWN.
+1. **Clinical alarm suppression / ICU monitoring**
+   - PhysioNet/CinC Challenge 2015 framed the task as reducing false alarms with minimal or no loss of true vital alarms.
+   - Multimodal confirmation and signal-quality fusion are directly analogous to using independent verifier/context evidence against a primary alarm.
 
-That binary coupling is likely too coarse. The next successor should be a separately preregistered **dampener / suppression controller** that preserves the frozen Router V2 output and decides the *degree* of attenuation.
+2. **Selective classification / reject option**
+   - Geifman & El-Yaniv (NeurIPS 2017) and SelectiveNet (ICML 2019) formalize prediction with abstention and the risk-coverage trade-off.
+   - This maps naturally to RETAIN / SUPPRESS / ABSTAIN-WATCH rather than forcing a binary veto.
 
-Priority designs to research, in order:
+3. **Neyman-Pearson classification**
+   - Tong, Feng & Li (Science Advances 2018) formalize minimizing the non-prioritized error while controlling a prioritized error below a user-specified bound.
+   - Gold mapping: prioritize BAD_VETO / loss of true DOWN control, then maximize removal of false SQRT DOWN alarms.
 
-1. confidence-weighted attenuation using only predeclared SQRT alarm strength + frozen Router V2 competence/confidence;
-2. calibrated reject/suppress/retain controller with three actions rather than a binary veto;
-3. Bayesian or conformal lower-bound gate that suppresses only when the UP-verifier evidence is sufficiently strong;
-4. only if those fail, new direction-resolving information: Gold options skew/vol surface, futures positioning/order flow, origin-safe real yield, DXY/broad USD, liquidity/basis, macro-surprise direction.
+4. **Risk-controlling / conformal decision calibration**
+   - Bates et al. (JACM 2021) provide distribution-free risk-controlling prediction sets.
+   - Angelopoulos et al. (ICLR 2024) extend conformal methods to control expected monotone losses.
+   - Angelopoulos et al. (Annals of Applied Statistics 2025) provide Learn-Then-Test calibration for finite-sample risk control without retraining the base predictor.
+   - Non-exchangeable conformal risk control (ICLR 2024) explicitly allows relevance weighting under time-series/change-point/distribution-shift settings.
 
-Binding constraint:
-- Router V2 remains frozen;
-- no 2025 tuning;
-- the dampener may not retrain the UP experts or change their context definitions;
-- the first dampener design must be preregistered before any new SQRT-alarm intersection is scored.
+5. **Online distribution-shift adaptation**
+   - Gibbs & Candès (NeurIPS 2021) Adaptive Conformal Inference updates reliability under changing distributions.
+   - This is relevant only as a later successor because the current project forbids 2025-driven tuning and requires a frozen pre-2025 design.
+
+6. **Learning to defer**
+   - Mozannar & Sontag (ICML 2020) and later work formalize a rejector that decides whether the model or another expert should make the decision.
+   - Gold mapping: decide whether SQRT or the frozen UP verifier should dominate, rather than averaging them blindly.
+
+7. **Industrial/statistical process monitoring**
+   - Control-chart literature emphasizes jointly tracking detection, delay and false alarms rather than accuracy alone.
+   - Gold mapping: evaluation must retain false-alarm reduction, true-DOWN retention, decision coverage and latency/availability together.
+
+### 11.2 Selected research abstraction
+
+The strongest cross-domain abstraction for Gold Control is:
+
+**RISK-CONTROLLED SELECTIVE SUPPRESSION CONTROLLER (RCSSC)**
+
+The controller does not retrain SQRT and does not modify frozen UP Router V2.
+
+Inputs may only come from already-frozen evidence surfaces, such as:
+- SQRT alarm/risk strength;
+- frozen Router V2 UP/ABSTAIN state;
+- frozen Router V2 competence/confidence quantities already computed by its selector;
+- frozen legacy context state.
+
+Actions should be triaged rather than binary:
+- `RETAIN_DOWN`
+- `DOWN_WATCH / ATTENUATE`
+- `SUPPRESS_DOWN`
+
+Primary design objective:
+
+> maximize removal of false forced-DOWN alarms subject to an explicit upper bound on BAD_VETO / loss of true DOWN alarms.
+
+This is structurally closer to Neyman-Pearson / risk-control / selective-prediction methods than to ordinary classification accuracy optimization.
+
+### 11.3 First successor families to test
+
+The first dampener study should compare, under separate preregistered identities:
+
+1. **NP-constrained suppression**
+   - choose suppression only under an explicit true-DOWN-loss constraint;
+   - objective is false-alarm removal, not total accuracy.
+
+2. **Risk-controlled selective suppression**
+   - calibrate a suppression threshold from frozen SQRT + Router evidence using risk-control / Learn-Then-Test logic;
+   - abstain or downgrade when evidence is insufficient.
+
+3. **Non-exchangeable / recency-weighted risk control**
+   - only if the static risk-control version is supportable;
+   - intended to address regime drift without converting 2025 into a tuning set.
+
+4. **Learning-to-defer style controller**
+   - only after transparent constrained methods;
+   - learns whether to trust SQRT, Router V2, or abstain, with asymmetric costs.
+
+Deep RL, unconstrained neural gating, fuzzy/Dempster-Shafer fusion and unrestricted ensemble search are lower priority because the current SQRT-alarm sample is small and they add flexibility before the safety constraint is solved.
+
+### 11.4 Critical support limitation
+
+The frozen 2024 SQRT intersection contains only 17 alarms and 4 Router-V2 vetoes. Therefore a statistically sophisticated controller can still be invalid if it is fit directly to those 17 rows.
+
+Binding methodological requirement:
+- first prefer transparent threshold/risk-control methods with minimal degrees of freedom;
+- preserve chronological / matured-only evidence;
+- do not relax the existing 2024 gate after seeing its +4.98 pp near miss;
+- seek longer same-clock historical parent-alarm support before fitting a flexible dampener;
+- 2025 remains retrospective stress and cannot be used to choose the controller.
+
+### 11.5 Current priority
+
+The next methodological target is **not a new UP predictor**. The frozen Router V2 remains the UP baseline.
+
+Current priority is:
+1. establish whether an NP/risk-controlled selective suppressor can be identified without overfitting the small parent-alarm sample;
+2. if support is insufficient, extend independent same-clock historical evidence;
+3. only then test adaptive/conformal or learning-to-defer successors;
+4. only after controller methods are exhausted return to new direction-resolving sensors such as options skew, futures flow, real yields, DXY, basis/liquidity and macro-surprise data.
 
 ---
 
