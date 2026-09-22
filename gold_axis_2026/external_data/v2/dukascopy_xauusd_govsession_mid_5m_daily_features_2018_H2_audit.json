@@ -1,0 +1,70 @@
+{
+  "identity": "EXTERNAL_DUKASCOPY_SESSIONMASK_V2_RESEARCH",
+  "segment": "2018_H2",
+  "excluded_local_hour": "17:00-17:55 America/New_York",
+  "retained_days": 131,
+  "first_day": "2018-07-02",
+  "last_day": "2018-12-31",
+  "dropped_zero_variance_dates": [],
+  "bar_count_distribution": [
+    276
+  ],
+  "source_provenance": [
+    {
+      "month": "2018-07",
+      "ask_blob_sha": "62bc3a9dd90597524e51018fc359af1b3fe16504",
+      "bid_blob_sha": "9323396cf1a832f5c4ec81a489d940060a512515",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2018-08",
+      "ask_blob_sha": "5c61feeab5bcdd3fdd4c7caaf87d1ec85d1b82d5",
+      "bid_blob_sha": "11d6ada53f04697def475c224f69dda89e32bfb2",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2018-09",
+      "ask_blob_sha": "9b9d9b1688aaabc131147dadd1adf3e522c5579f",
+      "bid_blob_sha": "db1ea5c6aa4ba89630c7b04cea8f398e45b8ae9b",
+      "ask_rows": 43200,
+      "bid_rows": 43200,
+      "joined_rows": 43200
+    },
+    {
+      "month": "2018-10",
+      "ask_blob_sha": "f299254b9a70c56f9ec294bf83c769c2f08dc436",
+      "bid_blob_sha": "e173ff707c460f85164acfa526193a94c5a6abe1",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2018-11",
+      "ask_blob_sha": "fefe992ba958d84b01571debaf10d0b0d477fadb",
+      "bid_blob_sha": "fa252bda09753e14931a2d11f669ea4291c05458",
+      "ask_rows": 43200,
+      "bid_rows": 43200,
+      "joined_rows": 43200
+    },
+    {
+      "month": "2018-12",
+      "ask_blob_sha": "d2acb349d4d3316fdfaacb60698d3cec85db6cc5",
+      "bid_blob_sha": "31291ec1568f819eaf8a9fd2d2ffc5b3dea2704a",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2019-01",
+      "ask_blob_sha": "1bf6c2dcb0495a1140a2dc9afac9b429fef454a0",
+      "bid_blob_sha": "d788e642972c098bf28be41e0e1c86f054651e10",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    }
+  ]
+}
