@@ -320,7 +320,7 @@ def pooled(rows,a,b):
     return {
       "n":len(y),"a_mse":float(np.mean((pa-y)**2)),"b_mse":float(np.mean((pb-y)**2)),
       "a_qlike":float(np.mean([qloss(yy,aa) for yy,aa in zip(y,pa)])),
-      "b_qlike":float(np.mean([qloss(yy,bb) for yy,bb in zip(y,pb])),
+      "b_qlike":float(np.mean([qloss(yy,bb) for yy,bb in zip(y,pb)])),
       "mse_a_minus_b_nw5":nw(dm,5),"mse_a_minus_b_nw10":nw(dm,10),
       "qlike_a_minus_b_nw5":nw(dq,5),"qlike_a_minus_b_nw10":nw(dq,10)
     }
