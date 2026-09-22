@@ -1,0 +1,80 @@
+{
+  "identity": "EXTERNAL_DUKASCOPY_PRE2022_SQRT_ROUTER_EXTENSION_V1_RESEARCH",
+  "source_identity": "EXTERNAL_DUKASCOPY_XAUUSD_FEATURE_SPINE_V1_RESEARCH",
+  "harmonization_status": "PASSED",
+  "source_rows_2018_2021": 1038,
+  "common_expert_rows": {
+    "2019": 260,
+    "2020": 260,
+    "2021": 258
+  },
+  "parent": {
+    "2020": {
+      "formation_n": 498,
+      "test_n": 260,
+      "sqrt_alarms": 212,
+      "actual_down": 97,
+      "actual_up": 115,
+      "alarm_coverage": 0.8153846153846154
+    },
+    "2021": {
+      "formation_n": 758,
+      "test_n": 258,
+      "sqrt_alarms": 28,
+      "actual_down": 16,
+      "actual_up": 12,
+      "alarm_coverage": 0.10852713178294573
+    }
+  },
+  "router": {
+    "2020": {
+      "n": 260,
+      "router_up": 185,
+      "tp": 111,
+      "fp": 74,
+      "precision": 0.6,
+      "false_up_fpr": 0.6607142857142857,
+      "up_recall": 0.75
+    },
+    "2021": {
+      "n": 258,
+      "router_up": 33,
+      "tp": 19,
+      "fp": 14,
+      "precision": 0.5757575757575758,
+      "false_up_fpr": 0.112,
+      "up_recall": 0.14285714285714285
+    }
+  },
+  "sqrt_router_intersection": {
+    "2020": {
+      "sqrt_alarms": 212,
+      "actual_down": 97,
+      "actual_up": 115,
+      "router_up_overlap": 140,
+      "good_suppressions": 80,
+      "bad_suppressions": 60,
+      "veto_precision": 0.5714285714285714,
+      "true_down_retention": 0.38144329896907214,
+      "false_alarm_reduction": 0.6956521739130435
+    },
+    "2021": {
+      "sqrt_alarms": 28,
+      "actual_down": 16,
+      "actual_up": 12,
+      "router_up_overlap": 2,
+      "good_suppressions": 1,
+      "bad_suppressions": 1,
+      "veto_precision": 0.5,
+      "true_down_retention": 0.9375,
+      "false_alarm_reduction": 0.08333333333333333
+    }
+  },
+  "interpretation": [
+    "Source harmonization is extremely strong, so the extreme 2020 behavior is not plausibly explained by a simple feed mismatch.",
+    "2020 is a crisis-regime stress failure for the hard Router countersign policy: Router UP is highly permissive and removes many true DOWN alarms.",
+    "2021 is much more selective, but only two SQRT alarm overlaps occur.",
+    "The external extension is valid research evidence but does not strengthen the safety case for the hard veto."
+  ],
+  "status": "VALID_EXTERNAL_EXTENSION_REVEALS_2020_REGIME_FAILURE"
+}
