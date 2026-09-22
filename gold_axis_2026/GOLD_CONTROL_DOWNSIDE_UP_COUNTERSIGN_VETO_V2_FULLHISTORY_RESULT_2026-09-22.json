@@ -1,0 +1,279 @@
+{
+  "identity": "DOWNSIDE_UP_COUNTERSIGN_VETO_V2_FULLHISTORY_RESEARCH",
+  "date": "2026-09-22",
+  "preregistration_commit": "06276faa56483465eeed135cfdd4fcdbb6ffee99",
+  "fast_recon_preregistration_commit": "100feec892d2b23c5d6bdf648eeb5e1210103b40",
+  "parent": "SQRT-HAR-DR frozen annual-origin downside-risk alerts",
+  "primary_period": "2023-2024 common exact-origin support",
+  "primary_parent_alarm_baseline": {
+    "n": 19,
+    "true_down": 8,
+    "false_forced_down": 11,
+    "precision": 0.42105263157894735
+  },
+  "global_pre2025_up_precision_descriptive": {
+    "RV_LOGIT_UP": {
+      "n": 394,
+      "up_calls": 291,
+      "true_up": 166,
+      "false_up": 125,
+      "up_precision": 0.570446735395189,
+      "false_up_rate": 0.42955326460481097
+    },
+    "RM_LOGIT_UP": {
+      "n": 394,
+      "up_calls": 254,
+      "true_up": 141,
+      "false_up": 113,
+      "up_precision": 0.5551181102362205,
+      "false_up_rate": 0.4448818897637795
+    },
+    "AR1_RM_LOGIT_UP": {
+      "n": 394,
+      "up_calls": 252,
+      "true_up": 140,
+      "false_up": 112,
+      "up_precision": 0.5555555555555556,
+      "false_up_rate": 0.4444444444444444
+    },
+    "TTSM_S1_UP": {
+      "n": 394,
+      "up_calls": 194,
+      "true_up": 104,
+      "false_up": 90,
+      "up_precision": 0.5360824742268041,
+      "false_up_rate": 0.4639175257731959
+    },
+    "TTSM_S2_UP": {
+      "n": 394,
+      "up_calls": 178,
+      "true_up": 95,
+      "false_up": 83,
+      "up_precision": 0.5337078651685393,
+      "false_up_rate": 0.46629213483146065
+    },
+    "FAST_ORIGINAL_UP": {
+      "n": 394,
+      "up_calls": 216,
+      "true_up": 116,
+      "false_up": 100,
+      "up_precision": 0.5370370370370371,
+      "false_up_rate": 0.46296296296296297,
+      "warning": "descriptive only; source/target clock differs from parent on material subset"
+    }
+  },
+  "primary_sqrd_alarm_intersection": {
+    "TTSM_S1_UP": {
+      "vetoed": 0,
+      "good_veto": 0,
+      "bad_veto": 0,
+      "veto_precision": null,
+      "false_alarm_reduction": 0,
+      "true_down_retention": 1,
+      "remaining_down_precision": 0.42105263157894735,
+      "status": "INSUFFICIENT_ACTION_SUPPORT"
+    },
+    "TTSM_S2_UP": {
+      "vetoed": 0,
+      "good_veto": 0,
+      "bad_veto": 0,
+      "veto_precision": null,
+      "false_alarm_reduction": 0,
+      "true_down_retention": 1,
+      "remaining_down_precision": 0.42105263157894735,
+      "status": "INSUFFICIENT_ACTION_SUPPORT"
+    },
+    "RV_LOGIT_UP": {
+      "vetoed": 19,
+      "good_veto": 11,
+      "bad_veto": 8,
+      "veto_precision": 0.5789473684210527,
+      "false_alarm_reduction": 1,
+      "true_down_retention": 0,
+      "remaining_down_precision": null,
+      "status": "UNSAFE_VETO_ALL_PARENT_ALARMS_SUPPRESSED"
+    },
+    "RM_LOGIT_UP": {
+      "vetoed": 19,
+      "good_veto": 11,
+      "bad_veto": 8,
+      "veto_precision": 0.5789473684210527,
+      "false_alarm_reduction": 1,
+      "true_down_retention": 0,
+      "remaining_down_precision": null,
+      "status": "UNSAFE_VETO_ALL_PARENT_ALARMS_SUPPRESSED"
+    },
+    "AR1_RM_LOGIT_UP": {
+      "vetoed": 18,
+      "good_veto": 10,
+      "bad_veto": 8,
+      "veto_precision": 0.5555555555555556,
+      "false_alarm_reduction": 0.9090909090909091,
+      "true_down_retention": 0,
+      "remaining_down_precision": 0,
+      "status": "UNSAFE_VETO"
+    },
+    "FAST_ORIGINAL_UP": {
+      "vetoed": 10,
+      "good_veto": 5,
+      "bad_veto": 5,
+      "veto_precision": 0.5,
+      "false_alarm_reduction": 0.45454545454545453,
+      "true_down_retention": 0.375,
+      "remaining_down_precision": 0.3333333333333333,
+      "clock_audit": {
+        "n": 19,
+        "target_date_match": 14,
+        "actual_sign_match": 13,
+        "max_abs_return_diff": 0.04347284891685106
+      },
+      "status": "BLOCKED_TARGET_CLOCK_MISMATCH"
+    },
+    "FAST_SQRT_CLOCK_RECON_V1": {
+      "vetoed": 13,
+      "good_veto": 6,
+      "bad_veto": 7,
+      "veto_precision": 0.46153846153846156,
+      "false_alarm_reduction": 0.5454545454545454,
+      "true_down_retention": 0.125,
+      "remaining_down_precision": 0.16666666666666666,
+      "net_veto_benefit": -1,
+      "clock_audit": {
+        "n": 19,
+        "target_date_match": 19,
+        "actual_sign_match": 19,
+        "max_abs_return_diff": 0
+      },
+      "status": "UNSAFE_VETO_RECONSTRUCTION_FAILED"
+    }
+  },
+  "primary_ranking_under_preregistered_rule": [
+    {
+      "rank": "1T",
+      "model": "TTSM_S1_UP",
+      "class": "INSUFFICIENT_ACTION_SUPPORT",
+      "note": "safe only because it issued zero vetoes; no false-alarm cleaning"
+    },
+    {
+      "rank": "1T",
+      "model": "TTSM_S2_UP",
+      "class": "INSUFFICIENT_ACTION_SUPPORT",
+      "note": "safe only because it issued zero vetoes; no false-alarm cleaning"
+    },
+    {
+      "rank": 3,
+      "model": "RV_LOGIT_UP",
+      "class": "UNSAFE_VETO",
+      "net_veto_benefit": 3,
+      "true_down_retention": 0
+    },
+    {
+      "rank": 4,
+      "model": "RM_LOGIT_UP",
+      "class": "UNSAFE_VETO",
+      "net_veto_benefit": 3,
+      "true_down_retention": 0
+    },
+    {
+      "rank": 5,
+      "model": "AR1_RM_LOGIT_UP",
+      "class": "UNSAFE_VETO",
+      "net_veto_benefit": 2,
+      "true_down_retention": 0
+    },
+    {
+      "rank": 6,
+      "model": "FAST_SQRT_CLOCK_RECON_V1",
+      "class": "UNSAFE_VETO",
+      "net_veto_benefit": -1,
+      "true_down_retention": 0.125
+    },
+    {
+      "rank": "BLOCKED",
+      "model": "FAST_ORIGINAL_UP",
+      "class": "BLOCKED_TARGET_CLOCK_MISMATCH"
+    }
+  ],
+  "stress_2025": {
+    "baseline": {
+      "n": 90,
+      "true_down": 45,
+      "false_forced_down": 45,
+      "precision": 0.5
+    },
+    "RV_LOGIT_UP": {
+      "vetoed": 90,
+      "good": 45,
+      "bad": 45,
+      "veto_precision": 0.5,
+      "false_alarm_reduction": 1,
+      "true_down_retention": 0,
+      "status": "UNSAFE"
+    },
+    "RM_LOGIT_UP": {
+      "vetoed": 88,
+      "good": 45,
+      "bad": 43,
+      "veto_precision": 0.5113636363636364,
+      "false_alarm_reduction": 1,
+      "true_down_retention": 0.044444444444444446,
+      "status": "UNSAFE"
+    },
+    "AR1_RM_LOGIT_UP": {
+      "vetoed": 86,
+      "good": 44,
+      "bad": 42,
+      "veto_precision": 0.5116279069767442,
+      "false_alarm_reduction": 0.9777777777777777,
+      "true_down_retention": 0.06666666666666667,
+      "status": "UNSAFE"
+    },
+    "TTSM_S1_UP": {
+      "vetoed": 20,
+      "good": 11,
+      "bad": 9,
+      "veto_precision": 0.55,
+      "false_alarm_reduction": 0.24444444444444444,
+      "true_down_retention": 0.8,
+      "remaining_down_precision": 0.5142857142857142,
+      "status": "DESCRIPTIVE_2025_ONLY"
+    },
+    "TTSM_S2_UP": {
+      "vetoed": 15,
+      "good": 8,
+      "bad": 7,
+      "veto_precision": 0.5333333333333333,
+      "false_alarm_reduction": 0.17777777777777778,
+      "true_down_retention": 0.8444444444444444,
+      "remaining_down_precision": 0.5066666666666667,
+      "status": "DESCRIPTIVE_2025_ONLY"
+    },
+    "FAST_SQRT_CLOCK_RECON_V1": {
+      "vetoed": 59,
+      "good": 28,
+      "bad": 31,
+      "veto_precision": 0.4745762711864407,
+      "false_alarm_reduction": 0.6222222222222222,
+      "true_down_retention": 0.3111111111111111,
+      "remaining_down_precision": 0.45161290322580644,
+      "status": "UNSAFE"
+    }
+  },
+  "frozen_decision": {
+    "label": "NO_EXISTING_HISTORICAL_UP_ENGINE_SAFELY_CLEANS_SQRT_FALSE_ALARMS_UNDER_V2",
+    "interpretation": [
+      "No active candidate passes the preregistered safety rule on 2023-2024.",
+      "TTSM S1/S2 preserve true DOWN alarms only because they issue no pre-2025 UP veto on the SQRT alarm subset.",
+      "RV/RM/AR1_RM logit UP surfaces are too broad and suppress nearly/all SQRT alarms, destroying true DOWN retention.",
+      "Original FAST is target-clock-misaligned relative to SQRT on a material subset.",
+      "Clock-normalized FAST retains only 1/8 true DOWN alarms pre-2025 and reduces remaining forced-DOWN precision."
+    ],
+    "successor_requirement": "A dedicated high-specificity UP/rebound verifier is still required; existing generic UP states are not sufficient."
+  },
+  "governance": {
+    "random_split": false,
+    "tuning_on_2025": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
