@@ -1,0 +1,166 @@
+{
+  "identity": "UP_EXPERT_ROUTER_V1_RESEARCH",
+  "date": "2026-09-22",
+  "preregistration_commit": "aaad05b7773b021a7485e07aec48332596cca8cb",
+  "alignment": {
+    "common_rows": 645,
+    "mismatched_rows": 0,
+    "by_year": {
+      "2023": {
+        "n": 203,
+        "actual_up": 101,
+        "actual_down": 102
+      },
+      "2024": {
+        "n": 205,
+        "actual_up": 119,
+        "actual_down": 86
+      },
+      "2025": {
+        "n": 237,
+        "actual_up": 140,
+        "actual_down": 97
+      }
+    },
+    "target_date_match": "645/645",
+    "actual_sign_match": "645/645",
+    "max_abs_return_diff": 0
+  },
+  "candidate_pool": [
+    "TTSM_S2",
+    "TTSM_S1",
+    "BONATO_AR1_RM_QBOOST_H1",
+    "AR1_RM_LOGIT",
+    "RM_LOGIT"
+  ],
+  "development_2023": {
+    "TTSM_S2": {
+      "up_calls": 101,
+      "true_up": 52,
+      "false_up": 49,
+      "up_precision": 0.5148514851485149,
+      "false_up_fpr": 0.4803921568627451
+    },
+    "TTSM_S1": {
+      "up_calls": 108,
+      "true_up": 56,
+      "false_up": 52,
+      "up_precision": 0.5185185185185185,
+      "false_up_fpr": 0.5098039215686274
+    },
+    "BONATO_AR1_RM_QBOOST_H1": {
+      "up_calls": 119,
+      "true_up": 58,
+      "false_up": 61,
+      "up_precision": 0.48739495798319327,
+      "false_up_fpr": 0.5980392156862745
+    },
+    "AR1_RM_LOGIT": {
+      "up_calls": 103,
+      "true_up": 54,
+      "false_up": 49,
+      "up_precision": 0.5242718446601942,
+      "false_up_fpr": 0.4803921568627451
+    },
+    "RM_LOGIT": {
+      "up_calls": 107,
+      "true_up": 58,
+      "false_up": 49,
+      "up_precision": 0.5420560747663551,
+      "false_up_fpr": 0.4803921568627451
+    }
+  },
+  "fixed_2023_benchmark": "RM_LOGIT",
+  "validation_2024": {
+    "router": {
+      "n": 205,
+      "up_outputs": 135,
+      "coverage": 0.6585365853658537,
+      "true_up": 77,
+      "false_up": 58,
+      "up_precision": 0.5703703703703704,
+      "up_alarm_error": 0.42962962962962964,
+      "false_up_fpr": 0.6744186046511628,
+      "actual_up_recall": 0.6470588235294118,
+      "abstain": 70,
+      "selected_counts": {
+        "TTSM_S2": 14,
+        "RM_LOGIT": 64,
+        "TTSM_S1": 55,
+        "AR1_RM_LOGIT": 2
+      }
+    },
+    "fixed_RM_LOGIT": {
+      "n": 205,
+      "up_outputs": 149,
+      "coverage": 0.7268292682926829,
+      "true_up": 84,
+      "false_up": 65,
+      "up_precision": 0.5637583892617449,
+      "false_up_fpr": 0.7558139534883721,
+      "actual_up_recall": 0.7058823529411765
+    },
+    "deltas": {
+      "up_precision_pp": 0.6611981108625486,
+      "false_up_fpr_pp": -8.139534883720934,
+      "coverage_pp": -6.829268292682922
+    },
+    "promising_gate": {
+      "outputs_gte_20": true,
+      "coverage_gte_010": true,
+      "precision_gain_gte_003": false,
+      "fpr_reduction_gte_005": true,
+      "passed": false
+    }
+  },
+  "locked_2025_challenge": {
+    "router": {
+      "n": 237,
+      "up_outputs": 137,
+      "coverage": 0.5780590717299579,
+      "true_up": 87,
+      "false_up": 50,
+      "up_precision": 0.635036496350365,
+      "up_alarm_error": 0.36496350364963503,
+      "false_up_fpr": 0.5154639175257731,
+      "actual_up_recall": 0.6214285714285714,
+      "abstain": 100,
+      "selected_counts": {
+        "TTSM_S1": 28,
+        "TTSM_S2": 109
+      }
+    },
+    "fixed_RM_LOGIT": {
+      "n": 237,
+      "up_outputs": 229,
+      "coverage": 0.9662447257383966,
+      "true_up": 135,
+      "false_up": 94,
+      "up_precision": 0.5895196506550219,
+      "false_up_fpr": 0.9690721649484536,
+      "actual_up_recall": 0.9642857142857143
+    },
+    "descriptive_deltas": {
+      "up_precision_pp": 4.551684569534309,
+      "false_up_fpr_pp": -45.36082474226804,
+      "coverage_pp": -38.81856540084387
+    },
+    "interpretation": "2025 shows large descriptive false-UP reduction and higher UP precision, but cannot rescue the failed frozen 2024 gate."
+  },
+  "frozen_decision": {
+    "status": "ROUTER_V1_NOT_PROMOTED_2024_PRECISION_GAIN_GATE_FAILED",
+    "interpretation": [
+      "The router materially reduced false-UP FPR in 2024 versus the 2023-selected fixed RM_LOGIT benchmark.",
+      "The 2024 UP-precision gain was only about 0.66 percentage point, below the preregistered +3 pp requirement.",
+      "In 2025 the router selected only TTSM-S1/S2 and descriptively improved UP precision while cutting false-UP FPR sharply, but 2025 is locked challenge evidence and cannot rescue V1.",
+      "The architecture is not disproven; V1 indicates that competence selection can reduce false-UP burden, but the first expanding-history eligibility/ranking rule did not deliver enough pre-2025 precision lift."
+    ],
+    "next_research_question": "Can a preregistered recency-aware or probability-combination successor improve pre-2025 precision without sacrificing the V1 false-UP reduction?"
+  },
+  "governance": {
+    "random_split": false,
+    "tuning_on_2025": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
