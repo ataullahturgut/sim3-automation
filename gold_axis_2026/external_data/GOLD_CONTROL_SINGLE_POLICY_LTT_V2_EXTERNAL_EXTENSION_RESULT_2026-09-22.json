@@ -1,0 +1,44 @@
+{
+  "identity": "SINGLE_POLICY_LTT_V2_EXTERNAL_EXTENSION_RESEARCH",
+  "preregistration_commit": "9a0c98861b6d26890d52dab576038a666492c25a",
+  "policy": "Frozen hard Router-V2 UP countersign",
+  "calibration_years": "2020-2024",
+  "source_tags": {
+    "2020": "EXTERNAL_SOURCE_EXTENSION",
+    "2021": "EXTERNAL_SOURCE_EXTENSION",
+    "2022": "GOVERNED",
+    "2023": "GOVERNED",
+    "2024": "GOVERNED"
+  },
+  "pooled": {
+    "sqrt_alarms": 270,
+    "actual_down": 127,
+    "actual_up": 143,
+    "suppressions": 146,
+    "good_suppressions": 84,
+    "bad_suppressions": 62,
+    "suppression_precision": 0.5753424657534246,
+    "false_alarm_reduction": 0.5874125874125874,
+    "true_down_retention": 0.5118110236220472,
+    "baseline_forced_down_precision": 0.4703703703703704,
+    "remaining_forced_down_calls": 124,
+    "remaining_forced_down_precision": 0.5241935483870968,
+    "precision_gain_absolute": 0.05382317801672637
+  },
+  "exact_safety_test": {
+    "alpha": 0.2,
+    "delta": 0.1,
+    "n_actual_down_alarms": 127,
+    "x_bad_suppressions": 62,
+    "lower_tail_binomial_p_value": 0.9999999999999144,
+    "certified": false
+  },
+  "status": "HARD_ROUTER_POLICY_DECISIVELY_NOT_RISK_CERTIFIED_ON_2020_2024_EXTENSION",
+  "interpretation": [
+    "The larger sample removes the earlier small-n ambiguity.",
+    "The hard Router veto removes 58.74% of false forced-DOWN alarms, but also removes 48.82% of true DOWN alarms.",
+    "True-DOWN retention is only 51.18%, far below the 80% safety target.",
+    "The remaining forced-DOWN precision improves by about 5.38 percentage points, but that gain is achieved by an unacceptable loss of true DOWN alarms.",
+    "The 2020 crisis regime dominates the safety failure."
+  ]
+}
