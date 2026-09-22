@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.20  
+**Manifest version:** 2.21  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -2484,6 +2484,142 @@ No production/runtime promotion is authorized.
 
 ---
 
+
+## 11O. High-risk hurdle resolution V1 — first selective conditional-resolution probe
+
+**Identity:** `HIGH_RISK_HURDLE_RESOLUTION_V1_RESEARCH`  
+**Research branch:** `gold-high-risk-hurdle-resolution-v1-20260922`  
+**Preregistration commit:** `00109f5c40c0161f72fd70de5ddfea0eb149cf7c`  
+**Initial implementation commit:** `6b2fe6ab537ffd626a98aedbb765bfdc8d24223f`  
+**Integrity correction commit:** `71589ca74b90fe08b6b4574094d4447bd32f7ae4`  
+**Workflow commit:** `404f62e1ed69931cbf19b5e7dba00175619d066c`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_HIGH_RISK_HURDLE_RESOLUTION_V1_RESULT_2026-09-22.json` (Git blob SHA `8257916a44f16809c5e2f1e62d5a8d422ce4b7c8`)  
+**Status:** `SELECTIVE_SIGNAL_PRESENT_NOT_CERTIFIED`.
+
+### 11O.1 Problem definition
+
+Following the semantic audit, this study no longer treats every UP-close after an SQRT alarm as a false risk alarm.
+
+For each frozen SQRT alarm the joint outcome is one of:
+- `HIT_DOWN`: realized target downside-RV >= frozen yearly Q80 and the day closes DOWN;
+- `HIT_UP`: realized target downside-RV >= Q80 and the day closes UP;
+- `MISS`: realized target downside-RV < Q80, regardless of close direction.
+
+The model is therefore a conditional-resolution architecture, not a suppressor.
+
+### 11O.2 Frozen two-stage hurdle architecture
+
+Stage A:
+- L2 logistic regression for realized risk hit versus miss.
+
+Stage B:
+- L2 logistic regression for DOWN versus UP, fitted only on formation rows that are realized risk hits.
+
+Joint probabilities:
+- P(HIT_DOWN)=P(hit)*P(DOWN|hit);
+- P(HIT_UP)=P(hit)*(1-P(DOWN|hit));
+- P(MISS)=1-P(hit).
+
+Seven preregistered origin-safe features:
+- daily / weekly / monthly downside-RV relative to Q80;
+- daily realized variance relative to Q80;
+- realized skewness;
+- one-day origin return;
+- recent 20-day high-risk share.
+
+Router and legacy direction votes were intentionally excluded from V1.
+
+Selective rule:
+- emit the joint argmax only if max joint probability > 0.50;
+- otherwise `UNCERTAIN`.
+
+No hyperparameter, threshold, feature-list or class-weight tuning was allowed.
+
+### 11O.3 Integrity correction
+
+The first workflow run was correctly blocked by the mandatory integrity gate:
+- 2020 alarms reproduced as 215 rather than 212;
+- 2023 as 3 rather than 2;
+- pooled n=274 rather than 270.
+
+The cause was isolated to the parent SQRT-HAR reconstruction:
+- incorrect implementation used `sqrt(mean(DR))` for weekly/monthly parent features;
+- frozen SQRT-HAR-DR semantics use `mean(sqrt(DR))`.
+
+This was corrected without changing the preregistered conditional model, feature list, decision threshold or scoring rule.
+
+After correction:
+- 2020=212;
+- 2021=28;
+- 2022=11;
+- 2023=2;
+- 2024=17;
+- pooled=270;
+- HIT_DOWN=115;
+- HIT_UP=103;
+- MISS=52;
+- integrity errors=0.
+
+### 11O.4 Final results
+
+Pooled 2020–2024:
+- n=270 SQRT alarms;
+- observed HIT_DOWN=115;
+- observed HIT_UP=103;
+- observed MISS=52;
+- emitted HIT_DOWN=11;
+- emitted HIT_UP=68;
+- emitted MISS=57;
+- UNCERTAIN=134;
+- selective coverage=**50.37%**;
+- selective accuracy among emitted rows=**47.06%**;
+- non-selective argmax accuracy=**39.26%**;
+- largest observed class share=**42.59%**;
+- multiclass Brier=**0.64869**;
+- multiclass log loss=**1.03160**.
+
+The preregistered selective-signal criterion technically passes because selective accuracy 47.06% exceeds the pooled largest-class share 42.59% with nonzero coverage.
+
+However the class anatomy is weak:
+- HIT_DOWN precision=36.36%, recall=3.48%;
+- HIT_UP precision=50.00%, recall=33.01%;
+- MISS precision=45.61%, recall=50.00%.
+
+Conditional direction discrimination on the 218 alarms that actually realized high risk:
+- AUC of P(DOWN|hit)=**0.5558**;
+- 0.5-threshold direction accuracy=**50.92%**.
+
+Year behavior is heterogeneous:
+- 2020 selective accuracy 45.61% at 53.77% coverage; conditional direction AUC 0.533;
+- 2021 selective accuracy 37.50% at 28.57% coverage; direction AUC 0.573 on only 20 hit rows;
+- 2022 selective accuracy 42.86% at 63.64% coverage; direction AUC 0.350 on 9 hit rows;
+- 2023 only two alarms;
+- 2024 selective accuracy 83.33% at 35.29% coverage, but all six emitted decisions were MISS and there were only 17 alarms.
+
+### 11O.5 Binding interpretation
+
+The new semantic architecture is more coherent than suppressor tuning: risk realization and conditional direction are now explicitly separated, and an abstain state is part of the model contract. This is consistent with selective-classification methodology, where coverage is deliberately traded for lower error rather than forcing a label on every case.
+
+But the first simple risk-geometry hurdle model does **not** solve conditional direction. The pooled Stage-B direction AUC of 0.556 and accuracy of 50.9% are only weakly above chance, while HIT_DOWN recall is essentially absent.
+
+Therefore the technically positive selective-signal status must not be overstated. The main evidence is:
+
+1. the architecture correction is justified;
+2. origin-side realized-risk geometry contains some information about risk-hit versus miss;
+3. the same feature set contains little stable information about DOWN versus UP resolution after a risk hit.
+
+Do not tune C, the 0.50 abstain threshold, class weights or the seven-feature list under V1.
+
+The next research identity should add genuinely directional or state information rather than another logistic variation. Candidate lanes are:
+- Router/direct-expert/context features as an explicit Stage-B input;
+- hidden-state / regime-state resolution models;
+- selective/conformal direction classification on realized-risk-like states;
+- competing-risk / cause-specific formulations if timing is modeled explicitly.
+
+Any successor must remain chronological and preregistered. 2025 remains unavailable for tuning.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -2520,15 +2656,17 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 ## 14. Final binding summary
 
-Gold Control currently has a useful downside-risk sensor but no proven general next-day DOWN-direction engine.
+Gold Control now has a clearer short-term architecture but still no proven next-day DOWN-direction engine.
 
-SQRT-HAR-DR remains the recent downside-risk research reference. The semantic audit materially changes how its historical "false alarms" must be interpreted. Across 2020–2024, 218 of 270 SQRT alarms (80.74%) were followed by realized target-day downside risk at or above the same frozen Q80 boundary. Among the 143 alarm days that later closed UP, **103 (72.03%) were still genuine realized high-risk hits**. Therefore an UP close is not a valid definition of SQRT risk-sensor failure.
+The semantic audit established that SQRT-HAR-DR must be treated as a downside-risk motor, not a close-direction predictor: 218 of 270 historical alarms were genuine realized high-risk hits, and 103 of 143 UP-close alarm days still realized high downside risk. Therefore "UP close = SQRT false alarm" is no longer an authorized project interpretation.
 
-The previous Router hard-veto, Q80/Q90 regime gate, persistence gate and conditional-competence controller remain useful experiments about conditional direction resolution and deletion safety, but they must no longer be framed as general SQRT risk false-alarm cleaners. In particular, a suppressor that deletes an alarm because the day eventually closes UP can remove a correct downside-risk warning.
-
-The project architecture is therefore corrected to two stages:
+The short-term architecture is now explicitly two-stage:
 
 1. **Risk-state motor:** SQRT-HAR-DR estimates whether next-day downside realized risk is elevated.
-2. **Conditional-resolution motor:** only when risk is high, estimate whether the high-risk day resolves as DOWN-close, UP-close, or remains uncertain/abstain.
+2. **Conditional-resolution motor:** after a high-risk alarm, estimate whether the outcome resolves as HIT_DOWN, HIT_UP, MISS, or remains UNCERTAIN.
 
-Router V2 remains a candidate verifier/feature for the conditional-resolution stage, not a universal alarm-deletion authority. The next research identity should be a preregistered selective conditional-resolution model on the SQRT-high-risk subset, with explicit abstention and strict chronology. No further post-hoc suppressor threshold tuning is authorized under the completed identities. 2025 remains unavailable for policy tuning and may only be used as locked retrospective transport; genuine certification requires new prospective or otherwise independent same-clock evidence.
+The first preregistered conditional-resolution probe, HIGH_RISK_HURDLE_RESOLUTION_V1, used separate logistic models for risk realization and direction conditional on a realized risk hit, with a 0.50 selective-abstention rule and no Router features. After an integrity-gate correction to reproduce the frozen SQRT-HAR parent exactly, the final sample is the expected 270 alarms / 115 HIT_DOWN / 103 HIT_UP / 52 MISS.
+
+V1 technically shows a weak selective signal: 50.37% coverage and 47.06% selective accuracy versus a 42.59% largest-class share. But this is not strong directional evidence. On the 218 realized-risk-hit alarms, the conditional direction AUC is only 0.556 and direction accuracy is 50.9%; HIT_DOWN recall is only 3.5%. The model therefore does not solve high-risk direction resolution.
+
+The earlier hard-veto, Q80/Q90, persistence and conditional-competence experiments remain preserved as useful diagnostics, but no further post-hoc suppressor tuning is authorized. The active question is now what **genuinely directional/state information** can distinguish HIT_DOWN from HIT_UP once a high-risk state is forecast. A successor may add frozen Router/direct-expert/context information or move to a hidden-state/selective-risk formulation, but it must be a new preregistered identity. 2025 remains unavailable for model selection and genuine certification still requires new prospective or otherwise independent same-clock evidence.
