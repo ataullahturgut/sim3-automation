@@ -1,0 +1,88 @@
+{
+  "identity": "NP_CONSTRAINED_SUPPRESSOR_V1_RESEARCH",
+  "date": "2026-09-22",
+  "preregistration_commit": "db782e19fa38fefb1fcace1366fa1d9b937991cf",
+  "frozen_verifier": "UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH",
+  "np_calibration": {
+    "calibration_year": 2024,
+    "prioritized_error": "suppress actual DOWN",
+    "alpha": 0.2,
+    "delta": 0.1,
+    "actual_down_calibration_n": 86,
+    "order_statistic_k": 74,
+    "binomial_tail_probability": 0.09899782408146317,
+    "threshold_tau": 0.43026627414796137,
+    "operational_rule": "SUPPRESS iff SQRT alarm AND Router V2 UP AND selected-expert Wilson-LCB > tau"
+  },
+  "calibration_2024_daily": {
+    "n": 205,
+    "actual_down": 86,
+    "actual_up": 119,
+    "suppressed_down": 12,
+    "suppressed_up": 22,
+    "down_suppression_rate": 0.13953488372093023,
+    "up_capture_rate": 0.18487394957983194,
+    "total_suppressions": 34,
+    "suppression_precision": 0.6470588235294118
+  },
+  "calibration_2024_sqrt": {
+    "alarms": 17,
+    "baseline_tp": 7,
+    "baseline_fp": 10,
+    "baseline_precision": 0.4117647058823529,
+    "suppressions": 4,
+    "good": 3,
+    "bad": 1,
+    "suppression_precision": 0.75,
+    "false_alarm_reduction": 0.3,
+    "true_down_retention": 0.8571428571428571,
+    "remaining_precision": 0.46153846153846156,
+    "precision_change": 0.04977375565610864,
+    "note": "Calibration diagnostic only; not independent validation."
+  },
+  "researcher_visible_locked_2025": {
+    "alarms": 90,
+    "baseline_tp": 45,
+    "baseline_fp": 45,
+    "baseline_precision": 0.5,
+    "suppressions": 16,
+    "good": 10,
+    "bad": 6,
+    "suppression_precision": 0.625,
+    "false_alarm_reduction": 0.2222222222222222,
+    "true_down_retention": 0.8666666666666667,
+    "remaining_precision": 0.527027027027027,
+    "precision_change": 0.027027027027026973,
+    "net_suppression_benefit": 4
+  },
+  "comparison_to_frozen_hard_veto_2025": {
+    "identical_suppressions": true,
+    "hard_veto_suppressions": 16,
+    "hard_veto_good": 10,
+    "hard_veto_bad": 6,
+    "hard_veto_suppression_precision": 0.625,
+    "hard_veto_true_down_retention": 0.8666666666666667,
+    "hard_veto_remaining_precision": 0.527027027027027,
+    "incremental_false_alarm_reduction": 0,
+    "incremental_bad_suppression_reduction": 0
+  },
+  "decision": {
+    "preregistered_gate": "FORMALLY_PASSED",
+    "scientific_status": "FORMAL_PASS_BUT_NP_GATE_NON_DISCRIMINATING",
+    "interpretation": [
+      "The NP order-statistic calibration produced tau=0.430266 with the intended alpha=0.20 / delta=0.10 safety target.",
+      "The calibrated threshold was below every frozen Router V2 UP score that intersected SQRT alarms in 2024 and 2025.",
+      "Therefore NP V1 reproduces the existing hard Router-V2 veto exactly on the SQRT alarm subset.",
+      "It adds a formal asymmetric-risk calibration interpretation but does not improve suppression selectivity, false-alarm removal, or true-DOWN preservation.",
+      "The 2025 actual-DOWN suppression rate on the full daily panel was 10.31%, and on SQRT alarm actual-DOWN cases was 13.33%, both below alpha=20% descriptively.",
+      "Because the operational action set is unchanged, NP V1 is not an incremental dampener improvement."
+    ],
+    "next_step": "Move to the second cross-domain method: a preregistered selective three-action RETAIN/WATCH/SUPPRESS controller, while keeping Router V2 frozen."
+  },
+  "governance": {
+    "random_split": false,
+    "tuning_on_2025": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
