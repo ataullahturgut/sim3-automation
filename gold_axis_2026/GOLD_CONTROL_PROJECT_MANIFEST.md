@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.11  
+**Manifest version:** 2.12  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -1557,6 +1557,66 @@ The monotonic constraint correctly removes the safety-incoherent negative-risk s
 This is not score drift and should not be repaired by retuning thresholds around the same fit.
 
 **Next clean lane:** Learn-Then-Test / direct risk-control calibration of the suppression action itself rather than another parametric BAD-risk probability model.
+
+Router V2 remains frozen.
+
+---
+
+
+## 11F. Learn-Then-Test action-risk V1 — support-blocked
+
+**Identity:** `LEARN_THEN_TEST_ACTION_RISK_V1_RESEARCH`  
+**Research branch:** `gold-ltt-action-risk-v1-20260922`  
+**Preregistration:** `8de202f3cfe2c33eb6abffb7df3d4d656666fb88`  
+**Frozen result:** `afb1a4d3d18980d68322d46f3df3393fece70a50`  
+**Status:** `BLOCKED_INSUFFICIENT_ALARM_CONDITIONAL_CALIBRATION_SUPPORT`.
+
+### 11F.1 Correct operational risk target
+
+Unlike earlier all-daily safety wrappers, LTT V1 targeted exactly:
+
+`P(SUPPRESS_DOWN | actual DOWN AND SQRT alarm)`
+
+with:
+- alpha=0.20;
+- delta=0.10;
+- equivalent project safety target: true-DOWN retention >=80%.
+
+### 11F.2 Mandatory support feasibility
+
+Before scoring any policy, the preregistered protocol required enough 2024 actual-DOWN SQRT alarms to certify the target even under zero observed bad suppressions.
+
+2024:
+- SQRT alarms=17;
+- actual-DOWN SQRT alarms=7;
+- actual-UP/false forced-DOWN alarms=10.
+
+Best-case exact requirement:
+
+`(1-alpha)^n <= delta`
+
+therefore:
+
+`n_min = ceil(log(0.10)/log(0.80)) = 11`.
+
+Available:
+- n=7;
+- best possible zero-error tail = `0.8^7 = 0.2097152` >0.10.
+
+Thus no suppression policy can be honestly risk-certified from the available 2024 alarm-conditional support at the frozen alpha/delta levels.
+
+### 11F.3 Binding consequence
+
+Per preregistration:
+- no candidate policy was scored;
+- no threshold family was selected;
+- 2025 was not scored under this identity;
+- alpha/delta were not relaxed;
+- all-daily risk was not substituted for alarm-conditional risk.
+
+This is a **data-support limitation**, not a negative model-performance result.
+
+**Next clean step:** extend same-clock pre-2025 SQRT + frozen-verifier history until there are at least 11 actual-DOWN calibration alarms; more support is preferable if multiple candidate policies will be tested with multiplicity control.
 
 Router V2 remains frozen.
 
