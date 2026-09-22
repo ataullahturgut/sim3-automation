@@ -1,0 +1,62 @@
+name: Gold Control SQRT Pure-UP Detector Audit V1
+
+on:
+  push:
+    branches:
+      - gold-sqrt-pure-up-detector-audit-v1-20260922
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_SQRT_PURE_UP_DETECTOR_CONDITIONAL_AUDIT_V1_2026-09-22.md'
+      - 'gold_axis_2026/tools/sqrt_pure_up_detector_audit_v1_run.py'
+      - 'gold_axis_2026/tools/regime_v1_*.py'
+      - 'gold_axis_2026/regime_dampener_v1/**'
+      - '.github/workflows/gold-control-sqrt-pure-up-detector-audit-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-sqrt-pure-up-detector-audit-v1-20260922
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Require research DB credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Install dependencies
+        run: python -m pip install 'numpy==2.1.3' 'scipy==1.14.1' 'psycopg[binary]>=3.2,<4'
+      - name: Compile
+        run: |
+          python -m py_compile gold_axis_2026/tools/regime_v1_data.py
+          python -m py_compile gold_axis_2026/tools/regime_v1_router_sqrt.py
+          python -m py_compile gold_axis_2026/tools/sqrt_pure_up_detector_audit_v1_run.py
+      - name: Assert read only
+        run: |
+          ! grep -Eini 'insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from|create[[:space:]]+table|drop[[:space:]]+table|alter[[:space:]]+table' gold_axis_2026/tools/regime_v1_*.py gold_axis_2026/tools/sqrt_pure_up_detector_audit_v1_run.py
+          grep -n 'default_transaction_read_only' gold_axis_2026/tools/regime_v1_data.py
+      - name: Run audit
+        run: |
+          rm -rf sqrt_pure_up_audit_out
+          python gold_axis_2026/tools/sqrt_pure_up_detector_audit_v1_run.py
+      - name: Freeze
+        run: |
+          cp sqrt_pure_up_audit_out/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_SQRT_PURE_UP_DETECTOR_CONDITIONAL_AUDIT_V1_*
+          git commit -m 'Freeze SQRT pure-UP detector conditional audit V1'
+          git push origin HEAD:gold-sqrt-pure-up-detector-audit-v1-20260922
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-sqrt-pure-up-detector-audit-v1
+          retention-days: 30
+          if-no-files-found: error
+          path: sqrt_pure_up_audit_out/
