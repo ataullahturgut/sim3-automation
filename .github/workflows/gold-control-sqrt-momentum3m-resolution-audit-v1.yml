@@ -1,0 +1,69 @@
+name: Gold Control SQRT x MOMENTUM3M Resolution Audit V1
+
+on:
+  push:
+    branches:
+      - gold-sqrt-momentum3m-resolution-audit-v1-20260922
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_SQRT_MOMENTUM3M_CONDITIONAL_RESOLUTION_AUDIT_V1_PREREG_2026-09-23.md'
+      - 'gold_axis_2026/tools/sqrt_momentum3m_resolution_audit_v1_run.py'
+      - 'gold_axis_2026/patch_repro_v1/locked_replay_v7_daily_feature_pit_43.csv'
+      - '.github/workflows/gold-control-sqrt-momentum3m-resolution-audit-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-sqrt-momentum3m-resolution-audit-v1
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-sqrt-momentum3m-resolution-audit-v1-20260922
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Materialize pinned SQRT parent artifact
+        run: |
+          git fetch origin gold-downside-sqrt-hardr-multiorigin-v1-20260922
+          git show 2926796b6a7e9048d2c091c9c571cb928b773e02:gold_axis_2026/GOLD_CONTROL_DOWNSIDE_RAW_VS_SQRT_HAR_DR_MULTIORIGIN_V1_FORECASTS_2026-09-22.csv > /tmp/sqrt_parent.csv
+          test -s /tmp/sqrt_parent.csv
+
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/sqrt_momentum3m_resolution_audit_v1_run.py
+
+      - name: Run preregistered audit
+        run: |
+          rm -rf sqrt_momentum3m_audit_out
+          python gold_axis_2026/tools/sqrt_momentum3m_resolution_audit_v1_run.py \
+            --parent /tmp/sqrt_parent.csv \
+            --momentum gold_axis_2026/patch_repro_v1/locked_replay_v7_daily_feature_pit_43.csv \
+            --out sqrt_momentum3m_audit_out
+
+      - name: Freeze results
+        run: |
+          cp sqrt_momentum3m_audit_out/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            gold_axis_2026/GOLD_CONTROL_SQRT_MOMENTUM3M_CONDITIONAL_RESOLUTION_AUDIT_V1_LEDGER_2026-09-23.csv \
+            gold_axis_2026/GOLD_CONTROL_SQRT_MOMENTUM3M_CONDITIONAL_RESOLUTION_AUDIT_V1_RESULT_2026-09-23.json \
+            gold_axis_2026/GOLD_CONTROL_SQRT_MOMENTUM3M_CONDITIONAL_RESOLUTION_AUDIT_V1_RESULT_2026-09-23.md
+          git commit -m 'Freeze SQRT x MOMENTUM_3M conditional-resolution audit V1'
+          git push origin HEAD:gold-sqrt-momentum3m-resolution-audit-v1-20260922
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-sqrt-momentum3m-resolution-audit-v1
+          retention-days: 30
+          if-no-files-found: error
+          path: sqrt_momentum3m_audit_out/
