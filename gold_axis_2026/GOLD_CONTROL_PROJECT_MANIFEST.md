@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.23  
+**Manifest version:** 2.24  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -2834,6 +2834,133 @@ Daily alarm rows inside a month are clustered because they share the same monthl
 
 ---
 
+
+## 11R. SQRT × frozen UP Verifier V2 semantic audit — correct UP motor re-tested under corrected semantics
+
+**Identity:** `SQRT_FROZEN_UP_VERIFIER_V2_SEMANTIC_AUDIT_V1_RESEARCH`  
+**Research branch:** `gold-sqrt-frozen-up-verifier-semantic-audit-v1-20260923`  
+**Preregistration commit:** `47c94d3ea6c9d60cfd5bec3c47ae8ff156e737a0`  
+**Frozen result JSON commit:** `9382cb74fe0d5a342b128f2c754a51101e316d51`  
+**Frozen report commit:** `b82ff4e4a815fd1a93cb1fe8a76eb264f0dbb163`  
+**Status:** `RETROSPECTIVE_SEMANTIC_AUDIT_COMPLETE_NOT_CERTIFIED`.
+
+### 11R.1 Why this audit was necessary
+
+The authoritative frozen UP verifier is **not** RV_LOGIT, TTSM-S2 or MOMENTUM_3M in isolation.
+
+The binding verifier baseline is:
+
+`UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH`
+
+It passed the frozen standalone 2024 UP-verifier gate and transported descriptively to 2025:
+- 2024 UP precision=61.90%, false-UP FPR=18.60%, coverage=20.49%;
+- locked 2025 UP precision=72.97%, false-UP FPR=10.31%, coverage=15.61%.
+
+The earlier direct RV_LOGIT/TTSM and MOMENTUM_3M conditional audits remain useful diagnostics, but they are not substitutes for testing the authoritative frozen UP verifier.
+
+### 11R.2 Primary 2024 conditional result
+
+Among 17 frozen SQRT alarms:
+- actual UP=10;
+- actual DOWN=7.
+
+Router V2 emitted UP on 4:
+- 3 actual UP;
+- 1 actual DOWN;
+- conditional UP precision = **75.00%**.
+
+Router V2 abstained on 13:
+- 7 actual UP;
+- 6 actual DOWN;
+- P(DOWN | ABSTAIN, SQRT alarm) = **46.15%**.
+
+Thus the positive UP signal is selective and useful, but abstention does not imply DOWN.
+
+If one forcibly applies the complement rule:
+- Router UP -> UP;
+- Router ABSTAIN -> DOWN;
+
+then 2024 accuracy is only **52.94%** and balanced accuracy **57.86%**.
+
+### 11R.3 Corrected risk-semantic crosswalk
+
+The four 2024 Router-UP/SQRT-overlap rows are:
+
+| target | actual close | realized risk semantics |
+|---|---|---|
+| 2024-08-07 | UP | RISK_MISS_UP_CLOSE |
+| 2024-11-13 | DOWN | RISK_HIT_DOWN_CLOSE |
+| 2024-11-14 | UP | RISK_MISS_UP_CLOSE |
+| 2024-11-26 | UP | RISK_MISS_UP_CLOSE |
+
+Therefore:
+- 3/4 Router-UP calls were genuine realized-risk misses;
+- all three correct UP calls were true SQRT risk misses, not merely days that happened to close UP;
+- the single wrong Router-UP call was a genuine high-risk DOWN day.
+
+This is important because it shows that the strongest 2024 UP-verifier overlap survives the later semantic correction: its three "good vetoes" were also genuine risk-cleaning successes.
+
+Among the 13 Router-ABSTAIN alarms:
+- RISK_HIT_DOWN_CLOSE=5;
+- RISK_HIT_UP_CLOSE=2;
+- RISK_MISS_DOWN_CLOSE=1;
+- RISK_MISS_UP_CLOSE=5.
+
+Abstention is therefore mixed in both risk realization and direction.
+
+### 11R.4 Secondary 2022–2024 support
+
+Across 30 frozen SQRT alarms:
+- actual UP=16;
+- actual DOWN=14;
+- Router UP=4 = 3 UP / 1 DOWN;
+- Router ABSTAIN=26 = 13 UP / 13 DOWN.
+
+Forced complement-rule accuracy=53.33%, balanced accuracy=55.80%.
+
+Again, the UP signal contains useful selective evidence; the complement does not.
+
+### 11R.5 Locked 2025 stress
+
+Among 90 frozen SQRT alarms:
+- actual UP=45;
+- actual DOWN=45.
+
+Router V2 emitted UP on 16:
+- 10 actual UP;
+- 6 actual DOWN;
+- conditional UP precision=**62.50%**.
+
+Router abstained on 74:
+- 35 actual UP;
+- 39 actual DOWN;
+- P(DOWN | ABSTAIN)=**52.70%**.
+
+Forced complement-rule accuracy=54.44%, balanced accuracy=54.44%.
+
+The retained frozen 2025 intersection artifact does not preserve the 16 individual Router-UP dates. Therefore the 2025 realized-risk semantic crosswalk is **NOT_PROVEN** and is not reconstructed from memory.
+
+### 11R.6 Binding architecture consequence
+
+The correct use of the frozen UP verifier is asymmetric:
+
+- **Router V2 UP = positive evidence for UP / rebound resolution**;
+- **Router V2 ABSTAIN ≠ DOWN**.
+
+Therefore the project must not convert the verifier's silence into a DOWN label.
+
+The active architecture becomes:
+
+1. SQRT estimates whether downside risk is elevated.
+2. Frozen UP Verifier V2 may identify a selective subset with strong UP evidence.
+3. If the verifier abstains, the state remains **UNRESOLVED / UNCERTAIN** unless a separately validated DOWN-confirmation motor fires.
+
+This narrows the unresolved problem substantially. We do not need another general UP model first; the missing component is a **positive DOWN-confirmation motor for the Router-abstain high-risk subset**.
+
+No runtime promotion is authorized.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -2870,21 +2997,24 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 ## 14. Final binding summary
 
-Gold Control now has a clearer short-term architecture but still no proven next-day DOWN-direction engine.
+Gold Control now has a more sharply separated short-term architecture.
 
-The semantic audit established that SQRT-HAR-DR must be treated as a downside-risk motor, not a close-direction predictor: 218 of 270 historical alarms were genuine realized high-risk hits, and 103 of 143 UP-close alarm days still realized high downside risk. Therefore "UP close = SQRT false alarm" is no longer an authorized project interpretation.
+The semantic audit established that SQRT-HAR-DR is a downside-risk motor, not a close-direction predictor. Across 2020–2024, 218 of 270 historical alarms were genuine realized high-risk hits, and many UP-close days were still valid risk alarms.
 
-The short-term architecture is explicitly two-stage:
+The authoritative frozen UP verifier is `UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH`, not an individual RV_LOGIT/TTSM/MOMENTUM model. It remains the reference selective UP signal.
 
-1. **Risk-state motor:** SQRT-HAR-DR estimates whether next-day downside realized risk is elevated.
-2. **Conditional-resolution motor:** after a high-risk alarm, estimate whether the outcome resolves as HIT_DOWN, HIT_UP, MISS, or remains UNCERTAIN.
+When intersected with SQRT in the primary 2024 sample, the frozen UP verifier emitted only 4 signals, but 3 were actual UP. Under the corrected risk semantics, those same three correct UP calls were also genuine SQRT realized-risk misses. Thus the positive UP-verifier signal is meaningful both directionally and as a risk-cleaning diagnostic in that small sample.
 
-The first generic hurdle Stage-B probe showed only weak conditional direction signal: on realized-risk-hit alarms, direction AUC was 0.556 and 0.5-threshold accuracy 50.9%.
+However verifier abstention is not a DOWN signal. In 2024, the 13 abstentions split 7 UP / 6 DOWN; in locked 2025 stress, 74 abstentions split 35 UP / 39 DOWN. Treating every abstention as DOWN produces only 52.94% accuracy in 2024 and 54.44% in 2025.
 
-Direct use of the general-population daily UP leaders also failed to solve the conditional problem. RV_LOGIT collapsed toward almost-always-UP on SQRT alarm days, while TTSM-S2 became too selective; both were near chance in balanced accuracy on the realized-high-risk subset.
+The active architecture is therefore:
 
-The frozen monthly MOMENTUM_3M prior was then tested directly because it had a strong monthly direction record. That hypothesis also fails as a standalone daily resolver for a simple structural reason: on every alarm-bearing target month in the retained 2023–2025 replay, MOMENTUM_3M is UP. The rule therefore collapses to always-UP on SQRT alarm days. In locked 2025 stress it predicts UP on all 90 alarms, where actual daily direction is exactly 45 UP / 45 DOWN; among the 66 realized-risk-hit alarms, only 29 close UP and 37 close DOWN.
+1. **Risk motor:** SQRT-HAR-DR -> HIGH RISK / NORMAL RISK.
+2. **Positive UP verifier:** frozen Router V2 -> VERIFIED UP or ABSTAIN.
+3. **Unresolved branch:** if HIGH RISK + Router ABSTAIN, direction remains UNCERTAIN unless a separately validated positive DOWN-confirmation motor fires.
 
-This does **not** invalidate MOMENTUM_3M's monthly role. It shows that a strong monthly trend prior cannot by itself answer the different question "which way will this particular high-risk day close?"
+This means the project no longer needs to search first for another broad UP detector. The missing component is specifically a **DOWN-confirmation motor for the high-risk, UP-verifier-abstain subset**.
 
-The unresolved task is therefore specific: find **daily, high-risk-conditional directional/state information** that separates HIT_DOWN from HIT_UP. Monthly priors may remain context features, but the next Stage-B candidate must contain genuinely daily or event/state-sensitive evidence. Existing direct experts, Router outputs, regime-state variables and event-time specialists may be tested as conditional features under a new preregistered identity, but no further post-hoc suppressor or monthly-threshold tuning is authorized. 2025 remains unavailable for model selection and genuine certification still requires new prospective or otherwise independent same-clock evidence.
+Earlier RV_LOGIT/TTSM and MOMENTUM_3M conditional audits remain preserved as diagnostic evidence showing that general-population or slower-direction models do not substitute for the frozen UP verifier in this role. No further post-hoc suppressor tuning or `ABSTAIN => DOWN` shortcut is authorized.
+
+2025 remains unavailable for tuning, 2026 is excluded from model selection, and no runtime or production promotion is authorized. Genuine certification still requires new prospective or otherwise independent same-clock evidence.
