@@ -1,0 +1,67 @@
+{
+  "identity": "MONOTONIC_ACTION_RISK_CONTROLLER_V1_FIT_2024",
+  "date": "2026-09-22",
+  "preregistration_commit": "a696308de6cc646fc9925ddb34f1299c21ab6609",
+  "training_rows": 42,
+  "bad_count": 16,
+  "good_count": 26,
+  "MF30": {
+    "beta": [
+      -0.48550781578170094,
+      0,
+      0
+    ],
+    "mean": [
+      0.677710610957607,
+      0.4063492063492067
+    ],
+    "sd": [
+      0.18052654177586538,
+      0.06715617714700371
+    ],
+    "objective": 27.91019442350644,
+    "fixed_zero": [
+      1,
+      2
+    ],
+    "converged": true,
+    "iterations": 3,
+    "brier": 0.23582766439909295
+  },
+  "MD30": {
+    "beta": [
+      -0.48550781578170094,
+      0,
+      0
+    ],
+    "mean": [
+      0.677710610957607,
+      0.43750163978097995
+    ],
+    "sd": [
+      0.18052654177586538,
+      0.04194435989527444
+    ],
+    "objective": 27.91019442350644,
+    "fixed_zero": [
+      1,
+      2
+    ],
+    "converged": true,
+    "iterations": 3,
+    "brier": 0.23582766439909295
+  },
+  "constrained_fit_interpretation": [
+    "All active-set candidates with either free slope produced at least one negative constrained coefficient.",
+    "The only feasible optimum under beta_sqrt>=0 and beta_error>=0 fixed both slopes at zero.",
+    "Thus both monotonic models reduce to the 2024 Router-UP base BAD rate: 16/42 = 0.38095238095."
+  ],
+  "aggregation": "max(p_bad_MF30,p_bad_MD30)",
+  "frozen_p_bad_for_any_router_up": 0.38095238095238093,
+  "action_thresholds": {
+    "suppress_lte": 0.2,
+    "watch_lte": 0.35
+  },
+  "frozen_action_for_any_router_up": "RETAIN_DOWN",
+  "note": "Parameters frozen before reading any 2025 candidate outcomes."
+}
