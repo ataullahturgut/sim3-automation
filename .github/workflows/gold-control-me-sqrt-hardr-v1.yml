@@ -1,0 +1,71 @@
+name: Gold Control ME-SQRT-HAR-DR V1
+
+on:
+  push:
+    branches:
+      - gold-downside-me-sqrt-hardr-v1-20260922
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_DOWNSIDE_ME_SQRT_HAR_DR_XAU_V1_PREREG_2026-09-22.md'
+      - 'gold_axis_2026/tools/downside_me_sqrt_har_dr_xau_v1.py'
+      - '.github/workflows/gold-control-me-sqrt-hardr-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-me-sqrt-hardr-v1
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-downside-me-sqrt-hardr-v1-20260922
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Require research DB credential
+        run: test -n "$NEON_DATABASE_URL"
+
+      - name: Install dependencies
+        run: python -m pip install 'numpy==2.1.3' 'scipy==1.14.1' 'psycopg[binary]>=3.2,<4'
+
+      - name: Compile implementation
+        run: python -m py_compile gold_axis_2026/tools/downside_me_sqrt_har_dr_xau_v1.py
+
+      - name: Assert read-only implementation
+        run: |
+          ! grep -Eini 'insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from|create[[:space:]]+table|drop[[:space:]]+table|alter[[:space:]]+table'             gold_axis_2026/tools/downside_me_sqrt_har_dr_xau_v1.py
+          grep -n 'default_transaction_read_only' gold_axis_2026/tools/downside_me_sqrt_har_dr_xau_v1.py
+
+      - name: Run ME-SQRT experiment
+        run: |
+          rm -rf me_sqrt_out
+          python gold_axis_2026/tools/downside_me_sqrt_har_dr_xau_v1.py
+
+      - name: Freeze results
+        run: |
+          cp me_sqrt_out/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add             gold_axis_2026/GOLD_CONTROL_DOWNSIDE_ME_SQRT_HAR_DR_XAU_V1_RESULT_2026-09-22.json             gold_axis_2026/GOLD_CONTROL_DOWNSIDE_ME_SQRT_HAR_DR_XAU_V1_FORECASTS_2026-09-22.csv             gold_axis_2026/GOLD_CONTROL_DOWNSIDE_ME_SQRT_HAR_DR_XAU_V1_RESULT_2026-09-22.md
+          git commit -m 'Freeze ME-SQRT-HAR-DR V1 results'
+          git push origin HEAD:gold-downside-me-sqrt-hardr-v1-20260922
+
+      - name: Upload reproducibility outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-me-sqrt-hardr-v1
+          retention-days: 30
+          if-no-files-found: error
+          path: me_sqrt_out/
