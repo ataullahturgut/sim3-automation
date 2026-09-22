@@ -1,0 +1,47 @@
+{
+  "identity": "DOWNSIDE_QHAR_DR_XAU_V1_RESEARCH",
+  "parent": "DOWNSIDE_HAR_DR_XAU_V1_RESEARCH",
+  "source_table": "public.xau_intraday_research_cache_5m",
+  "timezone": "America/New_York",
+  "formation_n": 731,
+  "formation_mean_dr": 4.203262469048263e-05,
+  "high_risk_threshold_q80": 5.513863621481717e-05,
+  "extreme_negative_return_threshold_q05": -0.016492754977755916,
+  "ols_beta": [
+    1.0239320776185558e-05,
+    0.26098490398511026,
+    0.3689383535952931,
+    0.12205750547118996
+  ],
+  "ols_condition_number": 78935.73205256682,
+  "qhar_beta": [
+    2.2882861266333184e-05,
+    -0.16998150523297267,
+    0.11415590926076681,
+    3.093589041093481
+  ],
+  "qhar_theta_scaled": [
+    0.0001527537493185244,
+    -6.870873133792092e-06,
+    3.230367464221908e-06,
+    6.72418477981492e-05
+  ],
+  "qhar_scaler_mu": [
+    4.215406479640933e-05,
+    4.221601246231157e-05,
+    4.273906145699292e-05
+  ],
+  "qhar_scaler_sd": [
+    4.042129833110393e-05,
+    2.829785584592705e-05,
+    2.1735869536950985e-05
+  ],
+  "qhar_formation_objective": -8.579565984926123,
+  "qhar_iterations": 22,
+  "qhar_optimizer_message": "Optimization terminated successfully",
+  "qhar_min_formation_forecast": 6.109709515514247e-05,
+  "qhar_reparameterization_max_error": 1.0842021724855044e-19,
+  "qlike_domain_epsilon": 1e-14,
+  "panel_sha256_through_2024": "b27077f2e8bcece6154fb0a61a135a00f75465ab9d06a079e38f4d5fade0056b",
+  "frozen_before_2025": true
+}
