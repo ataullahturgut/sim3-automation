@@ -1,10 +1,10 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.93  
-**Issue date:** 2026-09-21  
+**Manifest version:** 1.94  
+**Issue date:** 2026-09-22  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Canonical branch:** `gold-r4-direction-engine`  
-**Current research branch:** `gold-direction-altuntas-alexnet-candle-v1-20260921`  
+**Current research branch:** `gold-downside-sqrt-hardr-multiorigin-v1-20260922`  
 **Project root:** `gold_axis_2026/`
 
 ---
@@ -114,6 +114,12 @@ The current research-status layer is binding for work sequencing and must not be
 | `DIRECTION_SULMAN_DL_ENSEMBLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / SOURCE_FAITHFUL_2025_TEST_BLOCKED_OHLCV_DATASET / EXTERNAL_2025_EXPOSURE / NOT_IMPLEMENTED` | Sulman et al. (2026): next-day gold return forecasting from daily OHLCV plus lagged price/return features using RF, XGBoost, tuned RBF-SVR, LSTM, BiLSTM, GRU, CNN-LSTM, ML ensemble and CNN-LSTM/GRU DL ensemble. Source deep-learning setup uses Adam 0.001, MSE, batch 32, <=100 epochs, early-stopping patience 12 and ReduceLROnPlateau patience 6/factor 0.5. Current project lacks a source-equivalent governed daily gold volume series; source study itself uses 2020-2025, so 2025 cannot be called independent blind OOS. |
 | `DIRECTION_MAHATO_ATTAR_ENSEMBLE_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / METHOD_SPEC_NOT_PROVEN / 2025_TEST_BLOCKED / NOT_IMPLEMENTED` | Mahato & Attar (2014) reports next-day increase/decrease prediction with ensemble methods and 85% gold accuracy from stacking, but accessible authoritative material does not expose enough exact feature, base-learner and split details for a source-faithful implementation. Do not reconstruct the method by guesswork; obtain the full method specification first. |
 | `DIRECTION_ZHANG_RETURN_ML_V1_RESEARCH` | `REGISTERED_LITERATURE_CANDIDATE / 2025_TEST_BLOCKED_EXTERNAL_PREDICTORS / NOT_IMPLEMENTED` | Zhang (DAML 2024 proceedings): relative-return regression with XGBoost, SVR and RF using oil, VIX, S&P 500, USD index plus MACD difference, RSI and Bollinger %B; grid search and trend accuracy are reported. Current Gold Control does not hold a complete pre-2025 governed panel for the exact oil/VIX/S&P500/USD-index predictors. |
+| `DIRECTION_TTSM_REALIZED_SEMIVARIANCE_XAU_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_DOWN_REVERSAL_GATE_FAILED / 2025_TRANSPORT_FAILED / NOT_RUNTIME` | Source TTSM rule with 20D momentum, 5D signed realized semivariance, 250D empirical Q80 thresholds and source Region 1-4 mapping. 2024 S1 DOWN sensitivity 0.2907, active BA 0.4725 and UP->DOWN reversal sensitivity 0.1111; unchanged 2025 DOWN sensitivity 0.1753 and reversal sensitivity 0.0395. The source rule did not establish a transportable standalone DOWN/reversal edge. |
+| `DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1R2_RESEARCH` | `EVALUATED / NO_PROMOTION / PRE2025_EXTREME_DOWN_HAZARD_NOT_SUPPORTED / 2025_TRANSPORT_FAILED / NOT_RUNTIME` | Input-corrected Twelve Data XAU/USD daily extreme-loss hazard reconstruction. 2024 ROC AUC 0.5933 but frozen alert coverage/recall were 0; 2025 AUC 0.5649 with 4/17 events captured, 40 false alerts and precision 0.0909. Retain only as audit/reference for extreme-event hazard; do not use as current DOWN alarm. |
+| `DOWNSIDE_HAR_DR_XAU_V1_RESEARCH` | `EVALUATED / RETAINED_DOWNSIDE_RISK_BASELINE / PRE2025_GATE_PASSED / 2025_LEVEL_TRANSPORT_GATE_FAILED / NOT_RUNTIME` | Plain OLS HAR-DR on 5m negative realized semivariance with daily/5D/22D components. Fixed-through-2023 2024 validation: OOS R2 0.1891, high-risk AUC 0.7283, precision 0.50, recall 0.3030. Unchanged 2025: AUC 0.8444, precision 0.7065, recall 0.6842 but OOS R2 -0.0094; strong risk ranking survived while level calibration weakened. Retained as the mandatory raw-risk benchmark. |
+| `DOWNSIDE_QHAR_DR_XAU_V1_RESEARCH` | `EVALUATED / REJECTED / RAW_QLIKE_ESTIMATION_FAILED / NOT_RUNTIME` | Same raw HAR-DR linear form estimated directly by QLIKE. 2024 QLIKE worsened from raw OLS 0.1565 to 0.7361 and high-risk alerts collapsed to 100% coverage. No rescue under the same identity. |
+| `DOWNSIDE_SQRT_QHAR_DR_XAU_V1_RESEARCH` | `EVALUATED / NO_PROMOTION / SOURCE_CONSISTENT_QLIKE_HYPOTHESIS_FAILED / NOT_RUNTIME` | Source-consistent square-root/semideviation QLIKE HAR test. QLIKE optimization did not beat the same transformed OLS comparator in 2024 or 2025. The QLIKE-estimation hypothesis is closed; its frozen SQRT-OLS comparator generated the separate representation hypothesis below. |
+| `DOWNSIDE_RAW_VS_SQRT_HAR_DR_MULTIORIGIN_V1_RESEARCH` | `EVALUATED / PRE2025_REPRESENTATION_GATE_PASSED / 2025_STRESS_SUPPORTED / 2026YTD_MIXED / CURRENT_BEST_RECENT_DOWNSIDE_RISK_RESEARCH / NOT_RUNTIME` | Annual expanding-origin comparison of raw HAR-DR versus OLS HAR on downside semideviation sqrt(DR), squared back to DR. Primary 2022-2024 representation gate passed: SQRT won MSE and calibration error in 2/3 years, pooled MSE and QLIKE were modestly better, and AUC was preserved. 2025 annual-origin stress: R2 -0.0014 -> +0.0611, calibration slope 0.4003 -> 0.7991, precision 0.7083 -> 0.7333, similar AUC. 2026 YTD improved MSE/R2/QLIKE/AUC but not calibration error, so full stress support failed. Research-only; external/prospective confirmation still required. |
 | Post-BOCPD future-change-time lane | `NEXT_RESEARCH_LANE / PREREGISTRATION_REQUIRED` | separately named residual-time / explicit-duration / Bayesian online changepoint-prediction challenger; exact identity and parameters must be frozen before implementation |
 | `MACRO_EVENT_SUCCESSOR_V2` | `SUSPENDED_FOR_CURRENT_GC_BREAK_RESEARCH_SEQUENCE` | governed runtime identity remains registered, but it is **not the next motor** and no new Macro Event tuning/evaluation is authorized in the current sequence |
 | `MACRO_EVENT_SUCCESSOR_V4_RELIABILITY_GATE` | `FROZEN_RESEARCH_CHALLENGER / NOT_RUNTIME_AUTHORITY` | historical preregistration remains audit lineage; not promoted and not the current workstream |
@@ -1150,6 +1156,354 @@ Available current project surfaces relevant to this queue:
 
 **Binding implementation state:** `REGISTERED_ONLY / RESEARCHED / DATA_READINESS_CLASSIFIED / DO_NOT_IMPLEMENT_UNTIL_USER_AUTHORIZATION`.
 
+#### 4.3.5.12 Recent DOWN / downside-risk research sequence — ranked project status and frozen methods
+
+This subsection is the binding memory for the TTSM -> extreme-down hazard -> HAR-DR -> QLIKE -> semideviation-representation research sequence executed on 2026-09-21/22.
+
+The ranking below is a **role-aware project-utility ranking of these recent experiments only**. It is not a global all-history leaderboard and it does not compare unlike clocks as though they were identical. Direction/reversal, extreme-event hazard and downside-risk-intensity outputs remain distinct roles.
+
+##### 4.3.5.12.1 Current recent-model success order
+
+1. **`DOWNSIDE_RAW_VS_SQRT_HAR_DR_MULTIORIGIN_V1_RESEARCH` — strongest current recent evidence.**  
+   Binding interpretation: `PRE2025_SEMIDEVIATION_REPRESENTATION_SUPPORTED / RESEARCH_ONLY / NOT_RUNTIME`.  
+   The useful candidate inside this comparison is **`SQRT_HAR_DR`**, not QLIKE-estimated QHAR. It predicts downside semideviation with ordinary OLS and squares the forecast back to downside realized semivariance.
+
+2. **`DOWNSIDE_HAR_DR_XAU_V1_RESEARCH` — retained mandatory raw-risk benchmark.**  
+   Binding interpretation: `PRE2025_GATE_PASSED / STRONG_HIGH_RISK_DISCRIMINATION / LEVEL_CALIBRATION_TRANSPORT_WEAK / NOT_RUNTIME`.  
+   It remains valuable because it established that the 5m downside-risk signal itself is real enough to separate high-risk days; its main weakness is scale/calibration under regime shift.
+
+3. **`DIRECTION_TTSM_REALIZED_SEMIVARIANCE_XAU_V1_RESEARCH` — limited reversal information but failed standalone DOWN role.**  
+   Binding interpretation: `NO_PROMOTION / PRE2025_GATE_FAILED / 2025_TRANSPORT_FAILED`.  
+   It may remain an audit reference for signed-semivariance reversal mechanics but is not a current candidate motor.
+
+4. **`DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1R2_RESEARCH` — modest probability ranking, operational alarm failure.**  
+   Binding interpretation: `NO_PROMOTION / EXTREME_DOWN_HAZARD_NOT_SUPPORTED`.  
+   The original StakTrakr R1 input run is non-authoritative for model conclusion because a post-run authority audit found poor return-axis agreement with governed NY17 semantics. Only the input-corrected Twelve Data R2 is retained for the scientific conclusion.
+
+5. **`DOWNSIDE_SQRT_QHAR_DR_XAU_V1_RESEARCH` — QLIKE-estimation ablation failed.**  
+   Binding interpretation: `NO_PROMOTION / SOURCE_CONSISTENT_QLIKE_HYPOTHESIS_FAILED`.  
+   The frozen SQRT-OLS comparator is useful lineage because it motivated the separate multi-origin representation study; QHAR itself is not retained as a candidate.
+
+6. **`DOWNSIDE_QHAR_DR_XAU_V1_RESEARCH` — strongest failure in this sequence.**  
+   Binding interpretation: `REJECTED / RAW_QLIKE_ESTIMATION_FAILED`.  
+   Direct raw-DR QLIKE optimization badly degraded 2024 performance and must not be rescued under the same identity.
+
+This ranking is based on time-ordered pre-2025 evidence first, then transport/stress behavior, then practical downside-risk discrimination and calibration. It is **not** based on one 2025 headline metric.
+
+##### 4.3.5.12.2 TTSM signed-semivariance reversal — exact reconstruction contract
+
+Identity: `DIRECTION_TTSM_REALIZED_SEMIVARIANCE_XAU_V1_RESEARCH`.
+
+Data:
+- source `public.xau_intraday_research_cache_5m`;
+- America/New_York;
+- weekdays only;
+- retain day when >=240 5m closes;
+- within-date 5m log returns only.
+
+Frozen rule:
+- original momentum = sign of 20-trading-day close log return;
+- `RS+_t` = 5-day sum of squared positive 5m returns;
+- `RS-_t` = 5-day sum of squared negative 5m returns;
+- rolling reference = exactly 250 TTSM daily observations;
+- threshold = empirical nearest-rank Q80 separately for RS+ and RS-;
+- Region 1: both above threshold -> neutral;
+- Region 2: only RS- above threshold -> S1 DOWN always; S2 DOWN only when original momentum is UP, otherwise neutral;
+- Region 3: neither above threshold -> retain original momentum;
+- Region 4: only RS+ above threshold -> S1 UP always; S2 UP only when original momentum is DOWN, otherwise neutral;
+- target = next retained trading-day close sign.
+
+Chronology:
+- 2021 and earlier warm-up;
+- 2022-2023 audit/development reporting;
+- 2024 fixed validation;
+- unchanged 2025 challenge.
+
+Retained results:
+- 2024 TTSM-S1: coverage 0.7610, active BA 0.4725, full DOWN sensitivity 0.2907, DOWN precision 0.3846, UP->DOWN reversal sensitivity 0.1111;
+- 2025 TTSM-S1: coverage 0.7426, active BA 0.5344, full DOWN sensitivity 0.1753, DOWN precision 0.4722, UP->DOWN reversal sensitivity 0.0395;
+- pre-2025 gate failed; unchanged 2025 did not rescue it.
+
+Authoritative surfaces:
+- preregistration: `GOLD_CONTROL_DIRECTION_TTSM_REALIZED_SEMIVARIANCE_XAU_V1_PREREG_2026-09-21.md`;
+- implementation: `tools/direction_ttsm_realized_semivariance_xau_v1.py`;
+- workflow: `.github/workflows/gold-control-ttsm-realized-semivariance-xau-v1.yml`;
+- pre-2025 result: `GOLD_CONTROL_DIRECTION_TTSM_REALIZED_SEMIVARIANCE_XAU_V1_PRE2025_RESULT_2026-09-21.json`;
+- 2025 result: `GOLD_CONTROL_DIRECTION_TTSM_REALIZED_SEMIVARIANCE_XAU_V1_2025_RESULT_2026-09-21.json`.
+
+##### 4.3.5.12.3 Discrete-Burr LACD-POT extreme-DOWN hazard — authoritative R2 contract
+
+Identity: `DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1R2_RESEARCH`.
+
+Role:
+- one-day probability of an **extreme negative return**;
+- not an ordinary DOWN-day classifier.
+
+Authoritative data:
+- true Twelve Data `XAU/USD`, interval `1day`, requested America/New_York;
+- R1 StakTrakr result is audit lineage only and not the accepted scientific test.
+
+Frozen event/model:
+- daily loss `L_t=-log(C_t/C_(t-1))`;
+- formation through 2023-12-31;
+- extreme event threshold = formation empirical nearest-rank 95th percentile of loss;
+- inter-event duration `x_i=t_i-t_(i-1)`;
+- excess `e_i=L_i-u`;
+- LACD state:
+  `log(Psi_i)=omega + beta log(Psi_(i-1)) + alpha log(x_(i-1)) + zeta log(e_(i-1))`;
+- right-shifted discrete Burr duration likelihood;
+- one-day hazard obtained from Burr survival ratio;
+- parameters by deterministic maximum likelihood on formation completed durations;
+- frozen alert threshold = formation nearest-rank 95th percentile of fitted daily hazard.
+
+Retained R2 result:
+- 2024: n=260, events=11, AUC=0.5933, Brier skill=+0.00436, alert coverage=0, recall=0 -> gate failed;
+- 2025: n=259, events=17, AUC=0.5649, 44 alerts, TP=4, FP=40, recall=0.2353, precision=0.0909;
+- conclusion: probability ordering slightly exceeded chance but operational extreme-DOWN alarm evidence was insufficient.
+
+Authoritative surfaces:
+- preregistration: `GOLD_CONTROL_DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1R2_PREREG_2026-09-21.md`;
+- implementation: `tools/downside_discrete_burr_lacdpot_hazard_xau_v1r2_twelve.py`;
+- workflow: `.github/workflows/gold-control-acdpot-twelve-r2.yml`;
+- pre-2025 result: `GOLD_CONTROL_DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1R2_PRE2025_RESULT_2026-09-21.json`;
+- 2025 result: `GOLD_CONTROL_DOWNSIDE_DISCRETE_BURR_LACDPOT_HAZARD_XAU_V1R2_2025_RESULT_2026-09-21.json`.
+
+##### 4.3.5.12.4 RAW HAR-DR — mandatory downside-risk benchmark
+
+Identity: `DOWNSIDE_HAR_DR_XAU_V1_RESEARCH`.
+
+Role:
+- forecast next-day **downside realized semivariance / downside-risk intensity**;
+- not a direct UP/DOWN classifier.
+
+Data and target:
+- source `public.xau_intraday_research_cache_5m`;
+- America/New_York weekdays;
+- retain day with >=240 5m closes;
+- `DR_t=sum r_(t,i)^2 I(r_(t,i)<=0)`.
+
+Frozen HAR predictors:
+- daily: `DR_t`;
+- weekly: mean `DR_{t-4:t}`;
+- monthly: mean `DR_{t-21:t}`.
+
+Model:
+`DR_(t+1)=c + beta_d DR_t + beta_w mean5(DR) + beta_m mean22(DR) + epsilon`.
+
+Estimation:
+- ordinary least squares;
+- no regularization;
+- no log/sqrt transform;
+- no jumps, macro inputs, class weights or nonlinear terms.
+
+Original V1 chronology:
+- formation through 2023-12-31;
+- 2024 fixed validation;
+- unchanged 2025 challenge.
+
+Original retained result:
+- 2024: OOS R2=0.1891, MSE=6.0385e-10, QLIKE=0.15646, high-risk AUC=0.7283, precision=0.50, recall=0.3030 -> pre-2025 gate PASS;
+- unchanged 2025: OOS R2=-0.0094, QLIKE=0.30965, high-risk AUC=0.8444, precision=0.7065, recall=0.6842, F1=0.6952 -> level-transport gate FAIL despite strong discrimination.
+
+Interpretation lock:
+- RAW HAR-DR is a **risk sensor**, not a DOWN-direction engine;
+- if its high-risk alert is forced into a DOWN-direction interpretation, that is only an auxiliary analysis and must not be reported as the model's native task;
+- the raw model remains the mandatory benchmark for all semideviation successors.
+
+Authoritative surfaces:
+- preregistration: `GOLD_CONTROL_DOWNSIDE_HAR_DR_XAU_V1_PREREG_2026-09-21.md`;
+- implementation: `tools/downside_har_dr_xau_v1.py`;
+- workflow: `.github/workflows/gold-control-downside-acdpot-hardr-v1.yml`;
+- pre-2025 result: `GOLD_CONTROL_DOWNSIDE_HAR_DR_XAU_V1_PRE2025_RESULT_2026-09-21.json`;
+- 2025 result: `GOLD_CONTROL_DOWNSIDE_HAR_DR_XAU_V1_2025_RESULT_2026-09-21.json`.
+
+##### 4.3.5.12.5 QLIKE estimation ablations — both closed
+
+**Raw QHAR-DR**
+
+Identity: `DOWNSIDE_QHAR_DR_XAU_V1_RESEARCH`.
+
+Only change from RAW HAR-DR:
+- identical linear daily/5D/22D structure;
+- coefficients estimated by direct QLIKE minimization rather than OLS/MSE;
+- QLIKE domain requires positive fitted risk;
+- no adaptive state or new feature.
+
+Result:
+- 2024 QLIKE=0.7361 versus raw OLS HAR-DR=0.1565;
+- 2024 high-risk coverage collapsed to 1.0 with precision equal to the base event rate;
+- 2025 remained worse;
+- status `REJECTED / RAW_QLIKE_ESTIMATION_FAILED`.
+
+Surfaces:
+- preregistration: `GOLD_CONTROL_DOWNSIDE_QHAR_DR_XAU_V1_PREREG_2026-09-22.md`;
+- implementation: `tools/downside_qhar_dr_xau_v1.py`;
+- workflow: `.github/workflows/gold-control-qhardr-v1.yml`.
+
+**Source-consistent SQRT-QHAR-DR**
+
+Identity: `DOWNSIDE_SQRT_QHAR_DR_XAU_V1_RESEARCH`.
+
+Frozen transformed construction:
+- `SD_t=sqrt(DR_t)`;
+- predictors = daily SD, mean5(SD), mean22(SD);
+- linear next-day SD forecast;
+- QLIKE estimation on SD scale;
+- final DR forecast = squared SD forecast;
+- same transformed OLS comparator and raw OLS HAR-DR comparator frozen before scoring.
+
+Result:
+- 2024 SD-QLIKE QHAR=0.037432 versus transformed OLS=0.037306 -> QHAR worse;
+- 2024 DR-QLIKE QHAR=0.157983 versus raw HAR-DR=0.156463;
+- 2025 DR-QLIKE QHAR=0.335471 versus raw HAR-DR=0.309654;
+- source-consistent QLIKE hypothesis failed and is closed.
+
+Surfaces:
+- preregistration: `GOLD_CONTROL_DOWNSIDE_SQRT_QHAR_DR_XAU_V1_PREREG_2026-09-22.md`;
+- implementation: `tools/downside_sqrt_qhar_dr_xau_v1.py`;
+- workflow: `.github/workflows/gold-control-sqrt-qhardr-v1.yml`.
+
+##### 4.3.5.12.6 SQRT-HAR-DR representation study — current strongest recent research result
+
+Identity: `DOWNSIDE_RAW_VS_SQRT_HAR_DR_MULTIORIGIN_V1_RESEARCH`.
+
+Scientific hypothesis:
+- raw downside variance representation and downside semideviation representation may transport differently across regimes;
+- the candidate does **not** add features or complexity;
+- it changes only the representation used by the same OLS HAR daily/weekly/monthly memory structure.
+
+**RAW model**
+
+`DR_t=sum r_i^2 I(r_i<=0)`.
+
+Predictors:
+- `DR_t`;
+- mean5(DR);
+- mean22(DR).
+
+Target:
+- `DR_(t+1)`.
+
+OLS with intercept.
+
+**SQRT model**
+
+`SD_t=sqrt(DR_t)`.
+
+Predictors:
+- `SD_t`;
+- mean5(SD);
+- mean22(SD).
+
+Target:
+- `SD_(t+1)`.
+
+OLS with intercept.
+
+Final risk forecast:
+`DRhat_(t+1)=SDhat_(t+1)^2`.
+
+Binding restrictions:
+- no Jensen/bias correction;
+- no clipping;
+- no log transform;
+- no QLIKE optimization;
+- no adaptive calibration state;
+- no macro/FAST/GVZ/BOCPD inputs;
+- no window search;
+- any nonpositive OOS SD forecast is a model-domain failure rather than silently repaired.
+
+Annual expanding-origin reconstruction:
+- for each evaluation year Y, fit only on supervised targets completed by 31 December Y-1;
+- refit exactly once at the annual origin;
+- evaluate target dates inside Y only;
+- minimum 250 formation rows;
+- high-risk threshold for each year = formation nearest-rank Q80 of target DR;
+- extreme-negative-return threshold for each year = formation nearest-rank Q05 of next-day close returns;
+- same thresholds shared by RAW and SQRT models.
+
+Evidence classification:
+- 2022, 2023, 2024 = primary retrospective falsification panel;
+- 2025 = hypothesis-generating/discovery stress, **not pristine confirmation**;
+- 2026 YTD through 2026-08-31 = retrospective stress, **not pristine blind evidence**.
+
+Annual results:
+
+| Year | RAW R2 | SQRT R2 | RAW cal. slope | SQRT cal. slope | RAW high-risk AUC | SQRT high-risk AUC | Binding read |
+|---|---:|---:|---:|---:|---:|---:|---|
+| 2022 | 0.2791 | 0.2640 | 1.0675 | 1.1680 | 0.7146 | 0.7153 | RAW better MSE/calibration; SQRT AUC essentially equal |
+| 2023 | 0.5308 | 0.5698 | 0.8171 | 0.8213 | 0.6821 | 0.6896 | SQRT better MSE/R2, slightly better calibration and AUC |
+| 2024 | 0.1891 | 0.2025 | 0.8450 | 0.9214 | 0.7283 | 0.7320 | SQRT better MSE/R2/calibration, AUC preserved |
+| 2025* | -0.0014 | 0.0611 | 0.4003 | 0.7991 | 0.8395 | 0.8401 | SQRT strong stress improvement; not confirmatory because hypothesis arose from 2025 |
+| 2026 YTD* | 0.2474 | 0.2841 | 1.0889 | 1.1592 | 0.6198 | 0.6434 | SQRT better MSE/R2/QLIKE/AUC; RAW calibration closer to 1 |
+
+`* retrospective stress, not fresh blind confirmation.`
+
+Pooled 2022-2024:
+- n=613;
+- RAW MSE=6.92193e-10;
+- SQRT MSE=6.87546e-10;
+- SQRT pooled MSE improvement approximately 0.67%;
+- RAW QLIKE=0.152029;
+- SQRT QLIKE=0.148497, approximately 2.32% lower;
+- normalized high-risk AUC RAW=0.74394, SQRT=0.74629;
+- SQRT high-risk correctness-only wins=7 versus RAW-only wins=3;
+- paired Newey-West loss differences are **not statistically strong**: MSE NW5 t=0.320, p~0.749; QLIKE NW5 t=1.103, p~0.270.
+
+Frozen pre-2025 gate:
+- SQRT MSE better in 2/3 years;
+- pooled SQRT MSE < RAW;
+- SQRT absolute calibration-slope error better in 2/3 years;
+- no pre-2025 annual AUC degradation beyond 0.02;
+- pooled normalized AUC preserved;
+- no nonpositive SQRT SD forecasts;
+- **PASS** -> `PRE2025_SEMIDEVIATION_REPRESENTATION_SUPPORTED`.
+
+Stress:
+- 2025 = `REPRESENTATION_STRESS_SUPPORT`;
+- 2026 YTD = `REPRESENTATION_STRESS_NOT_SUPPORTED` because SQRT calibration error was worse even though MSE/R2/QLIKE/AUC improved.
+
+Direction-interpretation lock for 2025 annual-origin SQRT model:
+- total 2025 evaluated days=237;
+- actual DOWN days=97;
+- high-risk alerts=90;
+- if, only for auxiliary interpretation, each high-risk alert is treated as a DOWN call: 45 actual DOWN hits, 45 false DOWN alarms, 52 DOWN misses, direction precision=0.50, direction recall~0.464;
+- this **must not replace the native high-risk task**;
+- native high-risk target in the same annual-origin run: actual high-risk days=98, TP=66, FP=24, precision=0.7333, recall=0.6735, F1=0.7021.
+
+Binding conclusion:
+- SQRT-HAR-DR is currently the strongest **recent downside-risk research candidate**, not a proven DOWN-direction engine;
+- it is not runtime, not production authority and not a BUY/SELL mapping;
+- no CA-HAR-DR/dynamic-calibration escalation is authorized merely because 2025 improved;
+- the next scientific requirement is genuinely new confirmation evidence or an explicitly authorized new robustness dataset/period, not post-result feature soup.
+
+Authoritative surfaces:
+- preregistration: `GOLD_CONTROL_DOWNSIDE_RAW_VS_SQRT_HAR_DR_MULTIORIGIN_V1_PREREG_2026-09-22.md`;
+- implementation: `tools/downside_raw_vs_sqrt_har_dr_multiorigin_v1.py`;
+- workflow: `.github/workflows/gold-control-raw-vs-sqrt-hardr-multiorigin-v1.yml`;
+- result JSON: `GOLD_CONTROL_DOWNSIDE_RAW_VS_SQRT_HAR_DR_MULTIORIGIN_V1_RESULT_2026-09-22.json`;
+- forecast panel: `GOLD_CONTROL_DOWNSIDE_RAW_VS_SQRT_HAR_DR_MULTIORIGIN_V1_FORECASTS_2026-09-22.csv`;
+- result summary: `GOLD_CONTROL_DOWNSIDE_RAW_VS_SQRT_HAR_DR_MULTIORIGIN_V1_RESULT_2026-09-22.md`.
+
+##### 4.3.5.12.7 Binding recent-research decision
+
+The recent DOWN/downside sequence is **not** interpreted as a successful general next-day DOWN classifier programme.
+
+Current retained knowledge:
+- TTSM: signed-semivariance reversal mechanics did not transport as a standalone DOWN classifier;
+- ACD-POT: extreme-negative-event duration hazard did not produce a sufficiently useful alarm;
+- RAW HAR-DR: establishes a meaningful downside-risk-intensity baseline with strong high-risk discrimination but level-calibration weakness under shift;
+- direct QLIKE estimation: rejected in both raw and source-consistent sqrt variants;
+- SQRT-HAR-DR: representation-only successor has the strongest current recent evidence and passes the frozen 2022-2024 multi-origin gate, but effect size is modest and paired-loss significance is weak.
+
+Therefore:
+- `CURRENT_RECENT_DOWNSIDE_RISK_RESEARCH_REFERENCE = SQRT_HAR_DR`;
+- `MANDATORY_COMPARATOR = RAW_HAR_DR`;
+- `CURRENT_GENERAL_DOWN_DIRECTION_ENGINE = NOT_PROVEN`;
+- `AUTO_SELECTOR = OFF`;
+- `AUTO_ENSEMBLE = OFF`;
+- `RUNTIME_PROMOTION = NOT_AUTHORIZED`.
+
 ### 4.4 Common governance for direction research motors
 
 The original four direction motors and the literature-backed queue in Section 4.3.5 form a parallel research-only direction programme. Closed families remain closed; newly registered literature candidates do not alter the primary GC-BREAK sequential state output and do not reactivate the historical fixed NEXT_NY17_1D/3D programme.
@@ -1160,7 +1514,7 @@ Initial evaluation must report at minimum success rate, balanced accuracy where 
 
 The first implementation stage must reproduce each method's native mathematical identity WITHOUT FAST, GVZ, BOCPD, Macro or Emergency inputs. Only after standalone evidence is frozen may existing Gold Control motors be added one at a time through role-preserving ablation. Flat equal voting remains forbidden.
 
-Current status is identity-specific: the RSM/ERSM family is `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`; the VLMC family is closed for the current sequence after its governed successors; the BCT family is closed for the current sequence after BCT/CTW V1 and BCT-X/AR V1; source-form B-CARS V1 is `BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED`; `DIRECTION_BCARS_SV_V1_RESEARCH` is `NO_PROMOTION / PRE2025_VALIDATION_FAILED`; and `DIRECTION_REALP_CARR_V1_RESEARCH` closed the B-CARS/Realized-Probability family for the current sequence. Exact CARB remains `NOT_PROVEN / DO_NOT_IMPLEMENT_BY_GUESSING`. Separately, the nine Section 4.3.5 literature identities are `REGISTERED_ONLY / NOT_IMPLEMENTED`; their per-identity 2025-readiness/blocker status is binding until source/input gaps are resolved and the user authorizes implementation.
+Current status is identity-specific: the RSM/ERSM family is `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`; the VLMC family is closed for the current sequence after its governed successors; the BCT family is closed for the current sequence after BCT/CTW V1 and BCT-X/AR V1; source-form B-CARS V1 is `BLOCKED_PRE2025_BOUNDARY_SUPPORT / NOT_SCORED`; `DIRECTION_BCARS_SV_V1_RESEARCH` is `NO_PROMOTION / PRE2025_VALIDATION_FAILED`; and `DIRECTION_REALP_CARR_V1_RESEARCH` closed the B-CARS/Realized-Probability family for the current sequence. Exact CARB remains `NOT_PROVEN / DO_NOT_IMPLEMENT_BY_GUESSING`. Section 4.3.5 is now mixed-status rather than registered-only: Bonato, Parisi V2, Altuntaş, TTSM, ACD-POT, HAR-DR, QHAR-DR, SQRT-QHAR-DR and the RAW-vs-SQRT multi-origin study have governed results; the remaining literature candidates retain their identity-specific registered/blocker status. The recent downside-risk sequence is governed by Section 4.3.5.12 and may not be flattened into the ordinary direction-classifier queue.
 
 ---
 
@@ -1540,10 +1894,11 @@ Random splitting is forbidden.
 14. **Post-BOCPD future change-time challenger — NEXT GC-BREAK RESEARCH LANE; exact identity/parameters require preregistration**
 15. **Legacy parallel direction-research lane — RSM/ERSM CLOSED / DO_NOT_REVISIT; VLMC family CLOSED / NO_PROMOTION; BCT family CLOSED / NO_PROMOTION; B-CARS / Realized-Probability family CLOSED / NO_PROMOTION; exact CARB NOT_PROVEN and not implemented**
 16. **Historical direction-memory inventory — RECOVERED / AUDIT-ONLY:** V1.49, HS-SDL-DMA, V1.51-V1.70, R15 event and H20 RTQ historical identities are explicitly indexed in Section 16 and the subordinate historical inventory; they are not reactivated.
-17. **Literature-backed direction-engine queue — superseded Parisi executable artifacts removed; corrected `DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH` completed and is `NO_PROMOTION / PRE2025_VALIDATION_WEAK / 2025_NO_TWO_SIDED_EDGE`. Bonato QBoost Realized-Moments Spot-XAU V1 is now EVALUATED / NO_PROMOTION after a frozen pre-2025 gate failure. Remaining candidates REGISTERED / RESEARCHED / DATA-READINESS CLASSIFIED / NOT IMPLEMENTED: Sadorsky Tree-Tech; Basher-Sadorsky RF-Macro; Altuntaş AlexNet-Candle; Yadav Tech-ML; Sulman DL-Ensemble; Mahato-Attar Ensemble; Zhang Return-ML. 2025 remains a locked retrospective challenge under Section 4.3.5.10.**
-18. **WP4 role-preserving integration/state-transition work — AFTER the new GC-BREAK challenger has a frozen design/evidence checkpoint**
-19. **Architecture/parameter freeze — PENDING**
-20. **Prospective shadow — PENDING FINAL FREEZE**
+17. **Literature-backed direction/downside research — Parisi V2, Bonato, Altuntaş, TTSM and the recent downside-risk sequence now have governed results. TTSM and ACD-POT are NO_PROMOTION; RAW HAR-DR is the retained downside-risk benchmark; direct QLIKE successors failed; the RAW-vs-SQRT multi-origin study passed its frozen 2022-2024 representation gate and retains SQRT-HAR-DR as the strongest recent downside-risk research candidate. Remaining unimplemented literature candidates keep their identity-specific blocker status.**
+18. **Recent downside-risk research checkpoint — COMPLETE THROUGH RAW-vs-SQRT MULTI-ORIGIN V1; SQRT-HAR-DR retained as research reference only; RAW HAR-DR mandatory comparator; no runtime/integration authorization.**
+19. **WP4 role-preserving integration/state-transition work — AFTER the new GC-BREAK challenger has a frozen design/evidence checkpoint**
+20. **Architecture/parameter freeze — PENDING**
+21. **Prospective shadow — PENDING FINAL FREEZE**
 
 The next **GC-BREAK** research lane is therefore not inferred from runtime-registry order: it remains the separately governed future-change-time challenger defined in Section 12.6. In parallel, the Section 4.3.5 direction-engine queue is evaluated one candidate at a time. Corrected Parisi Ward reconstruction V2 is complete with NO_PROMOTION; exact proprietary Parisi-2008 replication remains NOT_PROVEN because several implementation details are not published in accessible primary material. Bonato Spot-XAU V1 is now completed with NO_PROMOTION; the other literature candidates stay registered but unimplemented until explicit user authorization. Macro Event, Emergency and SLOW remain outside the immediate GC-BREAK next step unless explicitly reactivated.
 
@@ -1768,5 +2123,7 @@ The **next GC-BREAK research motor/lane** is a new separately named **future-cha
 In parallel, the direction-research families remain governed. RSM/ERSM is permanently closed as `TERMINATED / FAILED_METHOD_FAMILY / DO_NOT_REVISIT`. The VLMC family is now `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION`: corrected VLMC-BS V2 found a real but unstable signal; Fixed-Share failed 2025 generalization; COVLMC-X3 collapsed to neutral; and the governed VLMC-C 104 successor failed pre-2025 direction validation (balanced 0.4417, DOWN sensitivity 0.05 versus parent 0.5583 / 0.45) and then forecast 52/52 UP in the unchanged 2025 replay. No further VLMC rescue/tuning is authorized unless the user explicitly reopens the family. BCT/CTW-52 is `NO_PROMOTION / WEAK_DIRECTIONAL_DISCRIMINATION`; it materially improves probability stability versus VLMC-BS but collapses to 52/52 UP forecasts in the 2025 replay. Its final published real-valued successor `DIRECTION_BCTX_AR_V1_RESEARCH` was evaluated under frozen pre-2024 evidence selection: 2024 balanced accuracy reached 0.5584 but DOWN sensitivity was only 0.1538, failing the preregistered gate; unchanged 2025 replay had balanced accuracy 0.4865, DOWN sensitivity 0 and 51/52 UP forecasts. The BCT direction family is therefore `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION` unless explicitly reopened by the user. Source-form B-CARS V1 is blocked by genuine pre-2025 boundary up-ratios and was not scored. Its Smithson-Verkuilen successor failed pre-2025 direction validation. A final authority scan found the Realized Probability research line; exact CARB mathematics remained `NOT_PROVEN`, so no CARB was invented. The source-verifiable `DIRECTION_REALP_CARR_V1_RESEARCH` successor used hourly RealP plus the published asymmetric CARR/QMLE and RealP-on-lambda regression. It failed the frozen 2024 gate (balanced 0.4651, DOWN sensitivity 0.1154, accuracy 0.4717) and unchanged 2025 replay deteriorated to balanced 0.4444 with 0 DOWN sensitivity. The B-CARS / Realized-Probability direction family is therefore `CLOSED_FOR_CURRENT_DIRECTION_RESEARCH_SEQUENCE / NO_PROMOTION` unless explicitly reopened. None may override GC-BREAK. The higher-moment direction-probability method is not selected for this set.
 
 A literature-backed direction-engine queue was registered on 2026-09-21 without reopening the previously closed RSM/VLMC/BCT/B-CARS families. For Parisi, superseded executable/result surfaces were removed by explicit user instruction; only the primary literature authority and corrected `DIRECTION_PARISI_ROLLING_WARD_RECON_V2_RESEARCH` remain active. The primary paper's published 4-Gold-lag + 4-DJIA-lag weekly first-difference signal and rolling Ward family were reconstructed with long Gold/DJIA history and a two-slab 21-neuron Ward-1 form. Window 100 was selected on 2023 only (accuracy 0.5769, balanced 0.5704), then frozen. Unchanged 2024 validation was weak: accuracy 0.5577 equalled always-UP, balanced accuracy 0.5180 and DOWN sensitivity 0.1739. Unchanged 2025 replay reached accuracy 0.6346 but remained below always-UP 0.6731; balanced accuracy was 0.5017, DOWN sensitivity 0.1176 and PT p=0.9716. V2 is therefore `NO_PROMOTION / PRE2025_VALIDATION_WEAK / 2025_NO_TWO_SIDED_EDGE`, with no post-result retuning. Exact proprietary Parisi-2008 neuron allocation, winning activation/scaling pair, source rolling-size grid and training internals remain NOT_PROVEN, so this is not presented as an exact software replication. Bonato's source-constrained Spot-XAU QBoost V1 has now been executed and is NO_PROMOTION after all 2024 promotion gates failed; Altuntaş and Yadav require daily OHLC completion; Sadorsky, Basher-Sadorsky, Sulman and Zhang have source-input gaps; Mahato-Attar remains blocked by incomplete method specification. No candidate may use 2025 for feature, horizon, threshold, architecture or hyperparameter selection. For Yadav and Sulman, source papers themselves used 2025, so later 2025 replay is transport/reproduction evidence rather than independent confirmatory OOS evidence.
+
+A separate recent downside-risk research sequence is now governed by Section 4.3.5.12. Its current result is not a new general DOWN-direction engine. TTSM and discrete-duration ACD-POT failed their frozen standalone gates. Plain OLS HAR-DR is retained as the mandatory downside-risk benchmark because 2024 high-risk discrimination was meaningful and unchanged 2025 discrimination remained strong despite level-calibration weakness. Direct QLIKE estimation failed in both raw and source-consistent square-root forms. The strongest recent research result is the representation-only `SQRT_HAR_DR` successor: in annual expanding-origin tests it passed the frozen 2022-2024 representation gate, improved 2025 stress MSE/R2/calibration with nearly unchanged high-risk AUC, and improved 2026 YTD MSE/R2/QLIKE/AUC while losing the calibration-error comparison. Effect sizes are modest and pooled paired-loss tests are not statistically strong, so `SQRT_HAR_DR` remains `RESEARCH_ONLY / NOT_RUNTIME / NOT_PROVEN_GENERAL_DOWN_DIRECTION_ENGINE`; RAW HAR-DR remains its required comparator. High-risk alerts may not be silently relabelled as DOWN forecasts.
 
 Historical fixed-horizon research memory is now explicitly preserved in Section 16 and `GOLD_CONTROL_HISTORICAL_DIRECTION_RESEARCH_INVENTORY_2026-09-21.md`. V1.49, HS-SDL-DMA and V1.51-V1.70 remain audit-only rather than erased. Cross-clock global rankings are forbidden unless target/horizon/evidence/class metrics are proven comparable; Bonato's all-history DOWN rank is therefore `NOT_PROVEN`, while its 1D realized-moments DOWN improvement remains a valid within-model finding.\n\nAll future work must preserve point-in-time integrity, native engine clocks, role semantics, engine-independent event definitions, time-ordered validation, explicit missingness and strict separation of retrospective diagnostics from genuine prospective evidence.
