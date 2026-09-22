@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.96  
+**Manifest version:** 1.97  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -78,7 +78,7 @@ The short-term project must not collapse unlike tasks into one score. Current co
 
 1. **Structural early-warning / GC-BREAK:** trend weakening, break alert, confirmation and new-regime recognition.
 2. **Downside-risk motor:** estimate whether next-day downside risk intensity is high.
-3. **Verifier / confirmation motor:** when the risk motor fires, determine whether the alarm is likely to resolve as true next-day DOWN or rebound/UP.
+3. **Verifier / confirmation motor:** when the risk motor fires, determine whether the alarm is likely to resolve as true next-day DOWN or rebound/UP. The first frozen UP-countersign veto using existing direction models has been executed and did not produce a safe verifier; this role remains unresolved.
 4. **Timing motor:** determine whether an apparent t+1 false alarm is actually an early warning for a downside event at t+2/t+3/t+5.
 
 The currently strongest downside-risk research reference is SQRT_HAR_DR. It is not a proven general DOWN-direction engine.
@@ -419,7 +419,101 @@ Therefore:
 - return to genuinely new direction-resolving information channels.
 
 
-## 10. External direction-resolving sensor priority — current next lane
+## 10. UP countersign veto V1 — executed and closed for current candidates
+
+**Identity:** DOWNSIDE_UP_COUNTERSIGN_VETO_V1_RESEARCH  
+**Role:** test the user's counter-model architecture: when SQRT-HAR-DR raises a downside-risk alarm, suppress the forced-DOWN interpretation if an independently frozen same-horizon direction model says UP. A veto is NO-DOWN/SUPPRESSED, not an UP trading signal.  
+**Preregistration branch:** gold-downside-up-counterveto-v1-20260922.  
+**Preregistration commit:** 34d69dbee2fc816e2def72ee2033abcd22a839b0.  
+**Frozen result commit:** 3c95cc325db5167c386872f42214499f1f688a35.  
+**Final status:** UP_COUNTERSIGN_VETO_NOT_SUPPORTED_WITH_CURRENT_ELIGIBLE_MODELS.
+
+### 10.1 Parent baseline
+
+Across 2022–2024 the frozen SQRT-HAR-DR parent issued 30 alarms:
+- true next-day DOWN: 14;
+- false forced-DOWN / actual UP: 16;
+- forced-DOWN precision: 46.67%.
+
+The verifier objective was to remove false forced-DOWN calls while retaining most true DOWN calls.
+
+### 10.2 Eligible candidates and source
+
+**TTSM S1/S2**
+- source: Liu, Lu, Li & Wang (2023), Journal of Empirical Finance 72, 54–77, DOI 10.1016/j.jempfin.2023.03.001;
+- data/clock: same governed Gold 5-minute panel and same next-trading-day target axis as SQRT;
+- veto: TTSM S1 or S2 signal = +1.
+
+**Bonato QBoost**
+- source: Bonato, Demirer, Gupta & Pierdzioch (2018), Resources Policy 57:196–212, DOI 10.1016/j.resourpol.2018.03.004;
+- data/clock: same governed Gold 5-minute panel and same next-trading-day target axis;
+- veto surfaces: h=1 AR1_QBOOST median > 0 and h=1 AR1_RM_QBOOST median > 0.
+
+**Altuntaş AlexNet candle model**
+- source: Altuntaş, Okumuş & Kocamaz (2022), DOI 10.53070/bbd.1205299;
+- data: Twelve Data provider-day daily OHLC;
+- intended veto: frozen pred_up = 1;
+- target-axis check failed sufficiently strong equivalence with the SQRT NY-grouped 5-minute daily axis.
+
+Weekly BCTX-AR, VLMC-BS, COVLMC, RealP-CARR and Parisi Rolling-Ward were excluded from V1 because a weekly UP target cannot be carried into a next-trading-day SQRT origin as if it were the same forecast horizon.
+
+### 10.3 Results
+
+**TTSM S1/S2 — clean target axis**
+- pre-2025 SQRT alarm overlap: 30;
+- both S1 and S2 issued zero UP vetoes on those 30 alarms;
+- therefore false-alarm reduction = 0 and precision unchanged;
+- 2025 stress: S1 veto precision 55.0%, false-alarm reduction 24.44%, true-DOWN retention 80.0%, remaining precision 51.43%; S2 veto precision 53.33%, false-alarm reduction 17.78%, retention 84.44%, remaining precision 50.67%.
+- decision: INSUFFICIENT_VETO_SUPPORT / NOT_PROMISING.
+
+**Bonato AR1 h=1 — clean target axis**
+- pre-2025 overlap 19, baseline 8 TP / 11 FP;
+- vetoed 7: only 1 good veto and 6 bad vetoes;
+- veto precision 14.29%;
+- false-alarm reduction 9.09%;
+- true-DOWN retention 25.0%;
+- remaining DOWN precision fell from 42.11% to 16.67%.
+- decision: COUNTERSIGN_VETO_NOT_SUPPORTED.
+
+**Bonato AR1+realized-moments h=1 — clean target axis**
+- pre-2025 overlap 19;
+- vetoed 6: 1 good, 5 bad;
+- veto precision 16.67%;
+- false-alarm reduction 9.09%;
+- true-DOWN retention 37.5%;
+- remaining precision fell from 42.11% to 23.08%.
+- decision: COUNTERSIGN_VETO_NOT_SUPPORTED.
+
+**Altuntaş AlexNet**
+- parent/candidate recorded next-day actual sign matched only 10/17 = 58.82% on 2024 SQRT-alarm overlap and 69/89 = 77.53% on 2025 stress overlap;
+- therefore BLOCKED_TARGET_CLOCK_MISMATCH / NOT_VALID_AS_PARENT_VETO;
+- even descriptive 2024 exact-date anatomy retained only 42.86% of true DOWNs after veto.
+
+**Preregistered 2-of-3 family consensus**
+- not admissible as decision evidence because it contains the target-clock-misaligned Altuntaş family;
+- raw 2024 anatomy had only two vetoes, one good and one bad, and reduced remaining DOWN precision;
+- status: INVALID_TARGET_CLOCK_MIX / INSUFFICIENT_VETO_SUPPORT.
+
+### 10.4 Execution integrity note
+
+An interim in-memory Bonato check initially allowed multiple Bonato horizons to share an origin key, so a later h=10 row could overwrite h=1. This was detected before any result artifact was frozen. The final evidence filters horizon==1 before joining, as preregistered, and its actual_return reproduces the SQRT parent target_close_return exactly on overlap. No preregistered rule changed.
+
+### 10.5 Decision and implication
+
+**UP_COUNTERSIGN_VETO_NOT_SUPPORTED_WITH_CURRENT_ELIGIBLE_MODELS**
+
+This does not reject the counter-model architecture itself. It rejects the currently available frozen candidate set as a safe next-day verifier.
+
+The verifier requirement remains:
+- same target clock as SQRT;
+- genuinely selective UP/rebound information on SQRT alarm days;
+- strong false-alarm removal without sacrificing true DOWN alarms;
+- no 2025-based tuning.
+
+A successor dedicated UP/rebound verifier requires a new identity and preregistration. Given only 30 pre-2025 parent alarms, fitting a flexible verifier directly on the alarm subset is support-limited; new direction-resolving information or a longer same-clock history is preferred over unconstrained model fitting.
+
+
+## 11. Direction-resolving verifier priority — current next lane
 
 Priority acquisition/testing order:
 
@@ -434,7 +528,7 @@ Procedure: authority/coverage scan first, then a minimum single-sensor falsifica
 
 ---
 
-## 11. Reproducibility and branch lineage for the 22 September sequence
+## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
 
@@ -453,7 +547,7 @@ The canonical branch does not need duplicate model-summary markdown files when t
 
 ---
 
-## 12. Retained canonical support documents
+## 13. Retained canonical support documents
 
 The canonical project root should stay lean. These support documents are retained because they serve ongoing data/runtime operations rather than duplicate model conclusions:
 
@@ -468,10 +562,10 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 ---
 
-## 13. Final binding summary
+## 14. Final binding summary
 
 Gold Control currently has a useful downside-risk sensor but no proven general next-day DOWN-direction engine.
 
 SQRT-HAR-DR is the current recent downside-risk research reference. RAW HAR-DR is the mandatory comparator. ME-SQRT shows a small coherent mechanism signal but did not pass its calibration gate. HARK-SD, cross-domain direction classifiers, scalar meta-veto, standalone DTW path veto and standalone SP500 veto did not pass their frozen pre-2025 gates. Heterogeneous consensus produced one exploratory 2024 pocket but did not transport.
 
-The time-to-event V1 diagnostic has now been executed and closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. The current next lane is external direction-resolving information acquisition and minimum single-sensor falsification, beginning with Gold options/futures structure if authoritative long-history data can be obtained. The project should not continue adding complexity to the same Gold history without new evidence.
+The time-to-event V1 diagnostic is closed as EARLY_ALARM_TIMING_NOT_SUPPORTED, and the existing-model UP-countersign veto is also closed as UP_COUNTERSIGN_VETO_NOT_SUPPORTED_WITH_CURRENT_ELIGIBLE_MODELS. The next lane is to obtain or construct a genuinely same-clock direction-resolving verifier. Preferred evidence is new information—beginning with Gold options/futures structure if authoritative long-history data can be obtained—or a newly preregistered daily-horizon UP/rebound expert with sufficient historical support. Do not continue adding unconstrained complexity to the same Gold history or tune on 2025.
