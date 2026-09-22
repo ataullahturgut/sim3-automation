@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 1.95  
+**Manifest version:** 1.96  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -335,27 +335,91 @@ RUNTIME_PROMOTION = NOT_AUTHORIZED
 
 ---
 
-## 9. Next research step — time-to-event diagnostic
+## 9. Time-to-event / early-alarm diagnostic V1 — executed and closed
 
-**Status: NOT_EXECUTED as of this manifest.**
+**Identity:** DOWNSIDE_TIME_TO_EVENT_EARLY_ALARM_DIAGNOSTIC_V1_RESEARCH  
+**Role:** diagnostic test of whether t+1 false direction interpretations are actually early warnings for downside at t+2/t+3/t+5.  
+**Methodological source:** discrete-time survival/time-to-event framing from Suresh, Severn & Ghosh (2022), DOI 10.1186/s12874-022-01679-6; multi-day financial early-warning-window precedent from Gresnigt, Kole & Franses (2015), DOI 10.1016/j.jbankfin.2015.03.003; early-warning prediction-horizon logic from event-level alarm evaluation literature.  
+**Data:** frozen annual-origin SQRT-HAR-DR parent forecast panel plus read-only public.xau_intraday_research_cache_5m daily closes reconstructed under the same America/New_York, weekday and >=240-bar retention contract.  
+**Preregistration branch:** gold-downside-time-to-event-diagnostic-v1-20260922.  
+**Preregistration commit:** 6d7d3394f6edb40d78e66d7892af95fe23311e6f.  
+**Frozen result commit:** c5e9f2dd456d2bc66812bc4915fa248d0aee64b0.
 
-Before acquiring a new data source or building another classifier, test whether apparent t+1 false alarms are actually early warnings.
+### 9.1 Construction
 
-Frozen first diagnostic concept:
+A t+1 false direction interpretation is:
+- frozen SQRT high-risk alarm == 1;
+- origin-to-t+1 cumulative close return >= 0.
 
-1. take historical primary SQRT high-risk alarms;
-2. label whether a DOWN or predefined extreme-negative event occurs at t+1, t+2, t+3 and optionally t+5;
-3. use 2022–2024 as the pre-2025 historical diagnostic panel;
-4. use 2025/2026 only as retrospective stress description;
-5. first report event-delay distribution without fitting a new predictive model;
-6. if a material share of t+1 false alarms become near-horizon events, reformulate the problem as time-to-event / hazard timing;
-7. if not, close the timing hypothesis and move to new direction-resolving sensors.
+Primary event:
+- first origin-anchored cumulative close return < 0 within t+2/t+3/t+5;
+- primary diagnostic horizon = t+3.
 
-This diagnostic requires a new preregistration before execution. It is not yet a result.
+Severity diagnostics:
+- formation-only supervised-history Q25 and Q05 one-day close-return thresholds;
+- report whether the minimum origin-anchored cumulative return through the horizon crosses Q25 or Q05.
 
----
+Primary comparator:
+- CONTEXT_CONTROL: non-alarm origins with sqrt_normalized_risk_score >= 0.80 and t+1 return >= 0.
 
-## 10. External direction-resolving sensor priority if timing fails
+Fallback comparator:
+- BROAD_CONTROL: all non-alarm origins with t+1 return >= 0.
+
+No predictive model was fitted.
+
+### 9.2 Integrity checks
+
+- parent panel rows: 1,023;
+- retained daily Gold rows: 1,368, 2020-04-06 through 2026-08-31;
+- parent target-return versus independently reconstructed daily-return max absolute difference: 3.47e-18;
+- supervised formation counts reproduced exactly: 323 / 528 / 731 / 936 / 1173 for 2022–2026;
+- independently reconstructed formation Q05 thresholds matched the frozen parent extreme-return thresholds exactly in every year.
+
+### 9.3 Primary 2022–2024 result
+
+Pooled false-t+1 alarm sample:
+- ALARM_FALSE_T1 n=16;
+- t+2 conversion 31.25%;
+- t+3 conversion 37.50%;
+- t+5 conversion 43.75%;
+- Q25 excursion by t+3 31.25%;
+- Q05 excursion by t+3 18.75%.
+
+CONTEXT_CONTROL:
+- n=26;
+- t+3 conversion 23.08%;
+- t+3 absolute conversion lift for alarms +14.42 pp;
+- t+3 risk ratio 1.625;
+- Q25 excursion lift +15.87 pp;
+- Q05 excursion lift +11.06 pp.
+
+However the preregistered minimum pooled CONTEXT_CONTROL support was 30. Actual support was only 26, so the frozen rule required fallback to BROAD_CONTROL.
+
+BROAD_CONTROL:
+- n=311;
+- t+3 conversion 37.62%;
+- alarm-versus-broad t+3 lift -0.12 pp;
+- risk ratio 0.997;
+- Q25 excursion lift +9.06 pp;
+- Q05 excursion lift +14.25 pp.
+
+Annual t+3 context lift was positive in 2022 and 2024, but 2023 had only one false-t+1 alarm and four context controls. Stress results were unstable: 2025 alarm conversion 42.22% versus context 50.0%; 2026 40.54% versus 20.0%.
+
+### 9.4 Decision
+
+**EARLY_ALARM_TIMING_NOT_SUPPORTED**
+
+The V1 gate failed because the intended context comparator was under-supported and the preregistered fallback broad comparator showed essentially identical t+3 sign-conversion probability.
+
+A descriptive severity difference remains: false-t+1 alarms showed more Q25/Q05 adverse excursions than broad controls even though their t+3 sign-conversion rate was not higher. This is retained as anatomy only and does not authorize a result-dependent timing-model rescue.
+
+Therefore:
+- do not promote a survival/hazard timing model from V1;
+- do not retune horizons, event labels or context thresholds after the result;
+- return to genuinely new direction-resolving information channels.
+
+
+## 10. External direction-resolving sensor priority — current next lane
 
 Priority acquisition/testing order:
 
@@ -410,4 +474,4 @@ Gold Control currently has a useful downside-risk sensor but no proven general n
 
 SQRT-HAR-DR is the current recent downside-risk research reference. RAW HAR-DR is the mandatory comparator. ME-SQRT shows a small coherent mechanism signal but did not pass its calibration gate. HARK-SD, cross-domain direction classifiers, scalar meta-veto, standalone DTW path veto and standalone SP500 veto did not pass their frozen pre-2025 gates. Heterogeneous consensus produced one exploratory 2024 pocket but did not transport.
 
-The next authorized research question is whether the primary risk model is sometimes early rather than wrong. No timing model has yet been executed. If the timing hypothesis fails, the project should acquire genuinely new direction-resolving information rather than continue adding complexity to the same Gold history.
+The time-to-event V1 diagnostic has now been executed and closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. The current next lane is external direction-resolving information acquisition and minimum single-sensor falsification, beginning with Gold options/futures structure if authoritative long-history data can be obtained. The project should not continue adding complexity to the same Gold history without new evidence.
