@@ -1,0 +1,56 @@
+{
+  "identity": "DOWNSIDE_SQRT_QHAR_DR_XAU_V1_RESEARCH",
+  "parent": "DOWNSIDE_HAR_DR_XAU_V1_RESEARCH",
+  "failed_precursor": "DOWNSIDE_QHAR_DR_XAU_V1_RESEARCH",
+  "source_table": "public.xau_intraday_research_cache_5m",
+  "timezone": "America/New_York",
+  "formation_n": 731,
+  "formation_mean_dr": 4.203262469048263e-05,
+  "high_risk_threshold_q80": 5.513863621481717e-05,
+  "extreme_negative_return_threshold_q05": -0.016492754977755916,
+  "sqrt_ols_beta": [
+    0.001190898459066848,
+    0.2482254943891723,
+    0.417539460385295,
+    0.1359958689078763
+  ],
+  "sqrt_ols_condition_number": 1424.7342750602436,
+  "raw_ols_beta": [
+    1.0239320776185558e-05,
+    0.26098490398511026,
+    0.3689383535952931,
+    0.12205750547118996
+  ],
+  "raw_ols_condition_number": 78935.73205256682,
+  "sqrt_qhar_beta": [
+    0.0010681638394699731,
+    0.22634130885846526,
+    0.3965304222624566,
+    0.19856769781141528
+  ],
+  "sqrt_qhar_theta_scaled": [
+    0.0060800156868864915,
+    0.0005106632555058547,
+    0.0006638160989267167,
+    0.00026669043232834444
+  ],
+  "sqrt_qhar_scaler_mu": [
+    0.006088003445771561,
+    0.006093719440431933,
+    0.006131611786417796
+  ],
+  "sqrt_qhar_scaler_scale": [
+    0.0022561646306692535,
+    0.0016740609589025385,
+    0.0013430705762708043
+  ],
+  "sqrt_qhar_formation_objective": -4.122865619011248,
+  "sqrt_qhar_iterations": 8,
+  "sqrt_qhar_optimizer_message": "Optimization terminated successfully",
+  "sqrt_qhar_min_formation_forecast": 0.0034494904478197287,
+  "sqrt_qhar_initial_intercept_shifted_for_domain": false,
+  "sqrt_qhar_reparameterization_max_error": 3.469446951953614e-18,
+  "qlike_domain_epsilon": 1e-14,
+  "panel_sha256_through_2024": "b27077f2e8bcece6154fb0a61a135a00f75465ab9d06a079e38f4d5fade0056b",
+  "frozen_before_2025": true
+}
