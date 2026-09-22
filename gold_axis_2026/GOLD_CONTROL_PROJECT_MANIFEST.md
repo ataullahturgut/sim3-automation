@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.22  
+**Manifest version:** 2.23  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -2719,6 +2719,121 @@ Chronology warning: RV_LOGIT was designated the pre-2025 pure-UP leader using po
 
 ---
 
+
+## 11Q. SQRT × MOMENTUM_3M conditional-resolution audit — monthly prior tested directly
+
+**Identity:** `SQRT_MOMENTUM3M_CONDITIONAL_RESOLUTION_AUDIT_V1_RESEARCH`  
+**Research branch:** `gold-sqrt-momentum3m-resolution-audit-v1-20260922`  
+**Preregistration commit:** `59ef9a34411f9f74b181f1665ccafb9fdef70e3d`  
+**Implementation commit:** `57bbc02d7a0f241eaeb44411d6c378c70a62afe8`  
+**Workflow commit:** `c1b6ba57f0328eb8685fe30301ac61b23649a4fd`  
+**Frozen result commit:** `127286b68c3ef56c1b98ad955abcfaab7628f6fa`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_SQRT_MOMENTUM3M_CONDITIONAL_RESOLUTION_AUDIT_V1_RESULT_2026-09-23.json` (Git blob SHA `8c96ff6ec5786aa77c55f317d2fdbf7f479af4ff`)  
+**Status:** `DESCRIPTIVE_AUDIT_COMPLETE / NO_DAILY_RESOLUTION_DISCRIMINATION`.
+
+### 11Q.1 Why this audit was required
+
+The manifest already records `MOMENTUM_3M` as a strong **monthly H=1 price/momentum direction** expert, including 2025 direction accuracy 11/12 = 91.67%.
+
+The user proposed the simple composition:
+
+> if SQRT says next-day downside risk is high and MOMENTUM_3M says the target month is UP, interpret the alarm as UP; if MOMENTUM_3M says DOWN, interpret it as DOWN.
+
+This was tested directly. MOMENTUM_3M was not converted into a next-day model; it remained a slower prior whose target-month forecast is formed in the previous month and is therefore available before each daily SQRT origin inside that month.
+
+Frozen daily composition:
+- monthly MOMENTUM_3M UP -> daily UP;
+- monthly MOMENTUM_3M DOWN -> daily DOWN;
+- NEUTRAL -> ABSTAIN.
+
+No Router, RV_LOGIT, TTSM, threshold search, persistence gate or post-result rescue entered the rule.
+
+### 11Q.2 Inputs and integrity
+
+SQRT input:
+- exact frozen forecast ledger from `2926796b6a7e9048d2c091c9c571cb928b773e02`.
+
+MOMENTUM_3M input:
+- `gold_axis_2026/patch_repro_v1/locked_replay_v7_daily_feature_pit_43.csv`;
+- monthly direction = sign(`mom - rw`).
+
+Integrity passed:
+- 2023 SQRT alarms=2;
+- 2024=17;
+- 2025=90;
+- 2023–2024 pooled=19;
+- 2025 realized-high-risk alarms=66;
+- no zero target returns;
+- no missing MOMENTUM target month;
+- integrity errors=0.
+
+2025 remained locked retrospective stress only. 2026 was not used.
+
+### 11Q.3 Primary 2023–2024 result
+
+Across the 19 SQRT alarms:
+- unique target months=5;
+- MOMENTUM_3M UP on **19/19** alarm rows;
+- MOMENTUM_3M DOWN on **0/19**;
+- actual UP=11;
+- actual DOWN=8;
+- ordinary accuracy=57.89%;
+- balanced accuracy=**50.00%**.
+
+On the 9 alarms that truly realized high downside risk:
+- MOMENTUM_3M UP=9/9;
+- actual HIT_UP=2;
+- actual HIT_DOWN=7;
+- daily direction accuracy=22.22%;
+- there was no DOWN call, so no two-sided daily discrimination was present.
+
+The five alarm-bearing target months were:
+- 2023-03;
+- 2024-04;
+- 2024-05;
+- 2024-08;
+- 2024-11.
+
+MOMENTUM_3M was UP in all five.
+
+### 11Q.4 Locked 2025 stress
+
+Across 90 frozen SQRT alarms:
+- unique target months=7;
+- MOMENTUM_3M UP=**90/90**;
+- DOWN=0;
+- actual UP=45;
+- actual DOWN=45;
+- accuracy=50.00%;
+- balanced accuracy=**50.00%**.
+
+On the 66 alarms where high downside risk actually materialized:
+- MOMENTUM_3M UP=66/66;
+- HIT_UP=29;
+- HIT_DOWN=37;
+- accuracy=43.94%;
+- balanced accuracy=50.00%.
+
+The seven 2025 alarm-bearing months were April, May, June, July, October, November and December. MOMENTUM_3M was UP in every one of them.
+
+### 11Q.5 Binding interpretation
+
+The user's architecture idea was methodologically valid to test, but the frozen monthly MOMENTUM_3M prior does not resolve the daily high-risk direction problem.
+
+The reason is structural rather than a threshold failure: **on every SQRT-alarm month available in the retained 2023–2025 replay, MOMENTUM_3M is UP.** Therefore the composition collapses to an always-UP daily rule on the very subset where discrimination is needed.
+
+This does not contradict MOMENTUM_3M's strong monthly record. A month can finish above its previous-month reference while containing many individual high-risk days that close DOWN. Monthly direction accuracy and next-day conditional resolution are different targets.
+
+Accordingly:
+- keep MOMENTUM_3M as a strategic monthly prior;
+- do not use its binary monthly sign alone as the Stage-B HIT_UP/HIT_DOWN resolver;
+- do not retune MOMENTUM_3M to force daily variation;
+- if retained in a future Stage-B model, use it only as one slow context feature alongside genuinely daily directional/state evidence.
+
+Daily alarm rows inside a month are clustered because they share the same monthly prior, so they are not independent statistical trials.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -2766,8 +2881,10 @@ The short-term architecture is explicitly two-stage:
 
 The first generic hurdle Stage-B probe showed only weak conditional direction signal: on realized-risk-hit alarms, direction AUC was 0.556 and 0.5-threshold accuracy 50.9%.
 
-The direct pure-UP audit then tested the user's simpler proposal using the actual manifest UP leaders rather than Router. The pre-2025 pure-UP leader RV_LOGIT collapses toward almost-always-UP on SQRT alarm days (263 UP calls out of 270; balanced accuracy 49.78%). TTSM-S2, the 2025 transport leader, behaves in the opposite direction and is too selective (68 UP calls; balanced accuracy 49.99%). On the 218 realized-high-risk alarms, their balanced accuracies remain approximately chance at 49.36% and 49.48% respectively.
+Direct use of the general-population daily UP leaders also failed to solve the conditional problem. RV_LOGIT collapsed toward almost-always-UP on SQRT alarm days, while TTSM-S2 became too selective; both were near chance in balanced accuracy on the realized-high-risk subset.
 
-Therefore the general-population UP models do not transport mechanically into the SQRT-high-risk conditional population. The unresolved task is still to find genuinely conditional directional/state information that distinguishes HIT_DOWN from HIT_UP after a high-risk state is forecast. Existing Router/direct-expert outputs may still be useful as features inside a model trained specifically on that conditional state, but neither Router nor the frozen pure-UP leaders are sufficient as standalone complement rules.
+The frozen monthly MOMENTUM_3M prior was then tested directly because it had a strong monthly direction record. That hypothesis also fails as a standalone daily resolver for a simple structural reason: on every alarm-bearing target month in the retained 2023–2025 replay, MOMENTUM_3M is UP. The rule therefore collapses to always-UP on SQRT alarm days. In locked 2025 stress it predicts UP on all 90 alarms, where actual daily direction is exactly 45 UP / 45 DOWN; among the 66 realized-risk-hit alarms, only 29 close UP and 37 close DOWN.
 
-No further post-hoc suppressor threshold tuning is authorized. Any successor must be a new preregistered conditional-direction/state model. 2025 remains unavailable for model selection and genuine certification still requires new prospective or otherwise independent same-clock evidence.
+This does **not** invalidate MOMENTUM_3M's monthly role. It shows that a strong monthly trend prior cannot by itself answer the different question "which way will this particular high-risk day close?"
+
+The unresolved task is therefore specific: find **daily, high-risk-conditional directional/state information** that separates HIT_DOWN from HIT_UP. Monthly priors may remain context features, but the next Stage-B candidate must contain genuinely daily or event/state-sensitive evidence. Existing direct experts, Router outputs, regime-state variables and event-time specialists may be tested as conditional features under a new preregistered identity, but no further post-hoc suppressor or monthly-threshold tuning is authorized. 2025 remains unavailable for model selection and genuine certification still requires new prospective or otherwise independent same-clock evidence.
