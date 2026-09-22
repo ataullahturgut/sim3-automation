@@ -1,0 +1,149 @@
+{
+  "identity": "ROUTER_V2_HISTORICAL_EXTENSION_V1_RESEARCH",
+  "date": "2026-09-22",
+  "preregistration_commit": "2368e8856d12505eff705ebe9556d5fdf5444e55",
+  "source": {
+    "table": "public.xau_intraday_research_cache_5m",
+    "timezone": "America/New_York",
+    "minimum_bars_per_day": 240,
+    "retained_days_2020_to_2024": 958,
+    "first_retained_day": "2020-04-06",
+    "last_retained_day": "2024-12-30"
+  },
+  "direct_expert_reconstruction_validation": {
+    "2023": {
+      "common_n": 203,
+      "target_mismatch": 0,
+      "actual_mismatch": 0,
+      "ttsm_up_mismatch": 0,
+      "bonato_up_mismatch": 0,
+      "rm_logit_up_mismatch": 0,
+      "ar1_rm_logit_up_mismatch": 0
+    },
+    "2024": {
+      "common_n": 205,
+      "target_mismatch": 0,
+      "actual_mismatch": 0,
+      "ttsm_up_mismatch": 0,
+      "bonato_up_mismatch": 0,
+      "rm_logit_up_mismatch": 0,
+      "ar1_rm_logit_up_mismatch": 0
+    }
+  },
+  "common_rows": {
+    "2021": 91,
+    "2022": 205,
+    "2023": 203,
+    "2024": 205
+  },
+  "yearly_router": {
+    "2022": {
+      "n": 205,
+      "router_up": 22,
+      "abstain": 183,
+      "tp": 12,
+      "fp": 10,
+      "up_precision": 0.5454545454545454,
+      "false_up_fpr": 0.10204081632653061,
+      "up_recall": 0.11214953271028037
+    },
+    "2023": {
+      "n": 203,
+      "router_up": 19,
+      "abstain": 184,
+      "tp": 5,
+      "fp": 14,
+      "up_precision": 0.2631578947368421,
+      "false_up_fpr": 0.13725490196078433,
+      "up_recall": 0.04950495049504951
+    },
+    "2024": {
+      "n": 205,
+      "router_up": 42,
+      "abstain": 163,
+      "tp": 26,
+      "fp": 16,
+      "up_precision": 0.6190476190476191,
+      "false_up_fpr": 0.18604651162790697,
+      "up_recall": 0.2184873949579832
+    }
+  },
+  "frozen_2024_reproduction": {
+    "expected": {
+      "n": 205,
+      "router_up": 42,
+      "tp": 26,
+      "fp": 16,
+      "precision": 0.6190476190476191,
+      "false_up_fpr": 0.18604651162790697,
+      "sqrt_alarm_router_up": 4,
+      "sqrt_alarm_router_up_actual_up": 3,
+      "sqrt_alarm_router_up_actual_down": 1
+    },
+    "reproduced_exactly": true
+  },
+  "sqrt_alarm_support": {
+    "2022": {
+      "alarms": 11,
+      "actual_down": 6,
+      "actual_up": 5,
+      "router_up_overlap": 0,
+      "router_up_actual_up": 0,
+      "router_up_actual_down": 0
+    },
+    "2023": {
+      "alarms": 2,
+      "actual_down": 1,
+      "actual_up": 1,
+      "router_up_overlap": 0,
+      "router_up_actual_up": 0,
+      "router_up_actual_down": 0
+    },
+    "2024": {
+      "alarms": 17,
+      "actual_down": 7,
+      "actual_up": 10,
+      "router_up_overlap": 4,
+      "router_up_actual_up": 3,
+      "router_up_actual_down": 1
+    },
+    "pooled_2022_2024": {
+      "alarms": 30,
+      "actual_down": 14,
+      "actual_up": 16,
+      "router_up_overlap": 4,
+      "good_suppressions_if_hard_veto": 3,
+      "bad_suppressions_if_hard_veto": 1
+    }
+  },
+  "ltt_support_implication": {
+    "prior_minimum_for_zero_bad_single_policy": 11,
+    "pooled_actual_down_alarm_n": 14,
+    "raw_support_floor_passed": true,
+    "hard_router_observed_bad_suppressions": 1,
+    "exact_lower_tail_p_at_alpha_020": 0.19791209299968016,
+    "single_policy_minimum_n_with_one_bad_at_delta_010": 18,
+    "five_policy_bonferroni_delta_per_policy": 0.02,
+    "five_policy_minimum_n_zero_bad": 18,
+    "five_policy_minimum_n_one_bad": 27,
+    "risk_certified_now": false
+  },
+  "decision": {
+    "status": "HISTORICAL_EXTENSION_VALIDATED_SUPPORT_INCREASED_BUT_LTT_NOT_YET_CERTIFIABLE",
+    "interpretation": [
+      "2021 formation support was successfully reconstructed, enabling origin-safe Router-V2-style evaluation in 2022 and 2023.",
+      "All relevant 2023/2024 direct expert UP states were reproduced exactly against frozen artifacts, and the frozen 2024 Router result was reproduced exactly.",
+      "Pooled pre-2025 SQRT actual-DOWN calibration support rises from 7 to 14 cases, exceeding the simple zero-error single-policy minimum of 11.",
+      "However the frozen hard Router policy has one bad suppression among the 14 actual-DOWN alarm cases. Its exact one-sided p-value at alpha=0.20 is 0.1979, so it is not certified at delta=0.10.",
+      "With one bad suppression, a single-policy test needs 18 actual-DOWN alarm cases at the same alpha/delta.",
+      "A five-policy Bonferroni LTT family is even more support-hungry: at least 18 actual-DOWN alarms even with zero bad suppressions, and 27 with one bad suppression."
+    ],
+    "next_step": "Do not weaken risk targets. Either extend the same-clock parent/verifier history further if methodologically possible, or preregister a single fixed policy only after selecting it without using pooled alarm outcomes."
+  },
+  "governance": {
+    "used_2025": false,
+    "random_split": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
