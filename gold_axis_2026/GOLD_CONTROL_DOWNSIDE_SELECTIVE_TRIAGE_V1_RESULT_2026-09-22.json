@@ -1,0 +1,97 @@
+{
+  "identity": "DOWNSIDE_SELECTIVE_TRIAGE_V1_RESEARCH",
+  "manifest_modified": false,
+  "production_write": "NONE",
+  "status_class": "EXPLORATORY_POST_RESULT_DESIGNED_NOT_CONFIRMATORY",
+  "aligned_rows": 1023,
+  "stale_exclusions": 0,
+  "years": {
+    "2024": {
+      "test_alarm_n": 17,
+      "actual_down_n": 7,
+      "path_train_n": 13,
+      "sp_context_train_n": 39,
+      "groups": {
+        "CONFIRM_DOWN": {
+          "n": 3,
+          "down_n": 1,
+          "down_rate": 0.3333333333333333,
+          "coverage": 0.17647058823529413
+        },
+        "VETO_SUSPECT": {
+          "n": 4,
+          "down_n": 1,
+          "down_rate": 0.25,
+          "coverage": 0.23529411764705882
+        },
+        "UNCERTAIN": {
+          "n": 10,
+          "down_n": 5,
+          "down_rate": 0.5,
+          "coverage": 0.5882352941176471
+        }
+      },
+      "confirm_minus_veto_down_rate": 0.08333333333333331,
+      "decided_coverage": 0.4117647058823529,
+      "decided_accuracy": 0.5714285714285714
+    },
+    "2025": {
+      "test_alarm_n": 90,
+      "actual_down_n": 45,
+      "path_train_n": 30,
+      "sp_context_train_n": 75,
+      "groups": {
+        "CONFIRM_DOWN": {
+          "n": 25,
+          "down_n": 15,
+          "down_rate": 0.6,
+          "coverage": 0.2777777777777778
+        },
+        "VETO_SUSPECT": {
+          "n": 18,
+          "down_n": 8,
+          "down_rate": 0.4444444444444444,
+          "coverage": 0.2
+        },
+        "UNCERTAIN": {
+          "n": 47,
+          "down_n": 22,
+          "down_rate": 0.46808510638297873,
+          "coverage": 0.5222222222222223
+        }
+      },
+      "confirm_minus_veto_down_rate": 0.15555555555555556,
+      "decided_coverage": 0.4777777777777778,
+      "decided_accuracy": 0.5813953488372093
+    },
+    "2026": {
+      "test_alarm_n": 148,
+      "actual_down_n": 74,
+      "path_train_n": 120,
+      "sp_context_train_n": 198,
+      "groups": {
+        "CONFIRM_DOWN": {
+          "n": 19,
+          "down_n": 7,
+          "down_rate": 0.3684210526315789,
+          "coverage": 0.12837837837837837
+        },
+        "VETO_SUSPECT": {
+          "n": 50,
+          "down_n": 23,
+          "down_rate": 0.46,
+          "coverage": 0.33783783783783783
+        },
+        "UNCERTAIN": {
+          "n": 79,
+          "down_n": 44,
+          "down_rate": 0.5569620253164557,
+          "coverage": 0.5337837837837838
+        }
+      },
+      "confirm_minus_veto_down_rate": -0.0915789473684211,
+      "decided_coverage": 0.46621621621621623,
+      "decided_accuracy": 0.4927536231884058
+    }
+  }
+}
