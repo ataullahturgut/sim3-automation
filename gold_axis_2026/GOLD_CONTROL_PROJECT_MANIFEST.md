@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.13  
+**Manifest version:** 2.14  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -1710,6 +1710,89 @@ The governed SQRT multi-origin parent begins at 2022 because yearly fitting requ
 **Binding next step:** do not weaken alpha/delta. Either obtain additional valid historical parent/verifier support from a genuinely longer source, or define one single suppression policy under a new preregistration without selecting it from pooled SQRT outcomes.
 
 Router V2 remains frozen.
+
+---
+
+
+## 11H. External Dukascopy-derived XAUUSD feature spine — staged
+
+**Identity:** `EXTERNAL_DUKASCOPY_XAUUSD_FEATURE_SPINE_V1_RESEARCH`  
+**Research branch:** `gold-external-dukascopy-spine-v1-20260922`  
+**Staging/result commit:** `eea308e7099f3aaff810b6e0a62512b119cc0056`  
+**Status:** `STAGED_AND_SOURCE_HARMONIZATION_DIAGNOSTIC_PASSED / RESEARCH_ONLY`.
+
+To investigate methodologically valid pre-2022 support, older XAUUSD intraday evidence was staged from a public one-minute bid/ask history mirror whose README identifies Dukascopy as the historical source.
+
+Raw third-party minute files were **not** copied into Gold Control. Only derived daily research features were retained.
+
+### 11H.1 Staged derived data
+
+Construction:
+- exact bid/ask timestamp inner join;
+- mid close = (bid+ask)/2;
+- last close per UTC 5-minute bin;
+- America/New_York daily grouping;
+- weekday retention with >=240 five-minute bars.
+
+Derived daily fields:
+- last mid close;
+- 5m bar count;
+- realized variance;
+- realized third moment;
+- downside realized variance;
+- positive/negative realized semivariance;
+- average/max spread.
+
+Consolidated period:
+- 2018-01-01 through 2021-12-31.
+
+Consolidated artifact:
+- `gold_axis_2026/external_data/dukascopy_xauusd_mid_5m_daily_features_2018_2021.csv`
+
+Consolidated audit:
+- `gold_axis_2026/external_data/dukascopy_xauusd_mid_5m_daily_features_2018_2021_audit.json`
+
+After dropping seven zero-variance holiday rows:
+- retained daily rows = **1038**.
+
+Per-segment provenance stores exact source ask/bid blob SHAs and row counts.
+
+### 11H.2 Source harmonization against governed cache
+
+Overlap with `public.xau_intraday_research_cache_5m`:
+- common days = **345**;
+- 2020-04-06 through 2021-12-30.
+
+Close returns:
+- n=344;
+- Pearson correlation = **0.9999746**;
+- sign agreement = **99.4186%**;
+- mean absolute return difference = **0.00004326**.
+
+Levels:
+- close correlation = **0.9999991**;
+- median external/internal ratio = **0.99999725**.
+
+Realized risk:
+- log RV correlation = **0.9981286**;
+- log downside-RV correlation = **0.9979377**;
+- median RV ratio = **0.9977241**;
+- median downside-RV ratio = **0.9955379**.
+
+Top-20% downside-risk state:
+- both high = 69;
+- external-only high = 1;
+- internal-only high = 1;
+- neither high = 274;
+- state agreement = **99.4203%**.
+
+### 11H.3 Binding authority
+
+The overlap is strong enough to classify this spine as a **credible pre-2022 research-extension candidate**, but it is not silently merged into any frozen governed model.
+
+Any use for 2020/2021 SQRT + Router extension requires a new preregistered research identity, source-boundary sensitivity reporting, and reproduction checks on the overlap period.
+
+Production DB remains unchanged and read-only for this work.
 
 ---
 
