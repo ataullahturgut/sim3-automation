@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.07  
+**Manifest version:** 2.08  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -1267,6 +1267,81 @@ The NP threshold is below every frozen Router-V2 UP score that intersects SQRT a
 It adds the correct asymmetric-risk framing and a formal safety-calibration layer, but it does **not** reduce any additional bad veto or false alarm relative to the hard veto.
 
 Thus NP V1 is not a better operational dampener. The next method should change the action structure, not retrain the UP verifier: a separately preregistered `RETAIN / WATCH / SUPPRESS` selective controller is the preferred next experiment.
+
+---
+
+
+## 11B. Selective three-action controller V1 — executed
+
+**Identity:** `SELECTIVE_THREE_ACTION_CONTROLLER_V1_RESEARCH`  
+**Research branch:** `gold-selective-3action-controller-v1-20260922`  
+**Preregistration:** `4d30b9b00b20d8edd14e61c999b2737570c0caf0`  
+**Frozen result:** `7e40962c91ca0b7a76650a4deb583bf8d99bbf8f`  
+**Status:** `SUPPRESS_SAFETY_FAILED_AND_THREE_ACTION_COLLAPSED`.
+
+### 11B.1 Design
+
+The frozen Router V2 was left unchanged.
+
+The controller used two preregistered NP-style thresholds on the Router selected-expert Wilson lower-bound score:
+
+- WATCH safety target: alpha=0.20, delta=0.10;
+- SUPPRESS safety target: alpha=0.10, delta=0.10.
+
+From 2024 actual-DOWN daily calibration rows (n0=86):
+
+- `tau_watch = 0.4302662741`;
+- `tau_suppress = 0.4948452868`.
+
+Frozen actions:
+- Router ABSTAIN or score <= tau_watch -> RETAIN_DOWN;
+- tau_watch < score <= tau_suppress -> WATCH_DOWN;
+- score > tau_suppress -> SUPPRESS_DOWN.
+
+### 11B.2 2024 calibration diagnostics
+
+All 205 daily rows:
+- RETAIN: 171 = 97 UP / 74 DOWN;
+- WATCH: 25 = 17 UP / 8 DOWN;
+- SUPPRESS: 9 = 5 UP / 4 DOWN.
+
+On 17 SQRT alarms:
+- RETAIN: 13 = 7 UP / 6 DOWN;
+- WATCH: 3 = 2 UP / 1 DOWN;
+- SUPPRESS: 1 = 1 UP / 0 DOWN.
+
+These are calibration diagnostics only.
+
+### 11B.3 Locked 2025 challenge
+
+All 237 daily rows:
+- RETAIN: 200 = 113 UP / 87 DOWN;
+- WATCH: **0**;
+- SUPPRESS: **37 = 27 UP / 10 DOWN**.
+
+On 90 SQRT alarms:
+- RETAIN = 74;
+- WATCH = **0**;
+- SUPPRESS = **16**;
+- good / bad suppressions = **10 / 6**;
+- suppression precision = **62.50%**;
+- false-alarm reduction = **22.22%**;
+- true-DOWN retention = **86.67%**;
+- remaining forced-DOWN precision = **52.70%**.
+
+The 16 SUPPRESS actions are exactly the same 16 actions as the frozen hard Router-V2 veto.
+
+### 11B.4 Binding interpretation
+
+The intended middle WATCH region vanished in 2025 because every Router-V2 UP score exceeded the frozen 2024 `tau_suppress`.
+
+The selected expert's Wilson lower confidence bound is **not stable on an absolute scale through time**. Its value can rise as matured support grows, empirical precision changes, or the selected expert changes.
+
+Therefore fixed absolute Wilson-LCB thresholds are not a reliable way to maintain stable RETAIN / WATCH / SUPPRESS semantics across years.
+
+The preregistered SUPPRESS safety gate required true-DOWN retention >=90%; observed 2025 retention was **86.67%**, so the safety gate failed.
+
+**Conclusion:** the three-action idea remains conceptually open, but this static-score implementation is rejected. A successor should calibrate the action/loss risk itself, or use a time-normalized/rank-based confidence measure, rather than thresholding the raw Router Wilson-LCB.
 
 ---
 
