@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.08  
+**Manifest version:** 2.09  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -1342,6 +1342,54 @@ Therefore fixed absolute Wilson-LCB thresholds are not a reliable way to maintai
 The preregistered SUPPRESS safety gate required true-DOWN retention >=90%; observed 2025 retention was **86.67%**, so the safety gate failed.
 
 **Conclusion:** the three-action idea remains conceptually open, but this static-score implementation is rejected. A successor should calibrate the action/loss risk itself, or use a time-normalized/rank-based confidence measure, rather than thresholding the raw Router Wilson-LCB.
+
+---
+
+
+## 11C. Selective-controller method audit — correction and parameter-learning scope
+
+**Identity:** `SELECTIVE_CONTROLLER_METHOD_AUDIT_V1`  
+**Audit branch:** `gold-selective-controller-method-audit-v1-20260922`  
+**Audit commit:** `86e998f49feece984f55b814bd5f347fe46ad123`.
+
+The NP order-statistic arithmetic used in NP Suppressor V1 and Three-Action V1 was independently rechecked and is correct:
+
+- alpha=0.20, delta=0.10, n0=86 -> k=74; tail=0.0989978241; k=73 tail=0.1590683295;
+- alpha=0.10, delta=0.10, n0=86 -> k=82; tail=0.0603435146; k=81 tail=0.1288214450.
+
+However two methodological limitations are now binding:
+
+1. **Risk-conditioning mismatch.** V1 thresholds were calibrated on all daily actual-DOWN rows, whereas the operational project safety target is retention conditional on `actual DOWN AND SQRT alarm`. Full-daily NP calibration does not directly guarantee the alarm-conditional error rate.
+
+2. **Absolute Wilson-score drift.** The selected expert's cumulative Wilson lower confidence bound is not a time-stable absolute action score. 2024 Router-UP SQRT-alarm scores were roughly 0.474–0.504; 2025 Router-UP SQRT-alarm scores were all above the frozen 0.494845 SUPPRESS threshold, so WATCH collapsed to zero.
+
+Direct 2024 alarm-conditional NP calibration is support-infeasible:
+- only 7 actual-DOWN SQRT alarms exist;
+- with delta=0.10, alpha=0.20 requires at least 11 class-0 calibration cases;
+- alpha=0.10 requires at least 22;
+- with n=7 even the most conservative possible tails are 0.8^7=0.2097152 and 0.9^7=0.4782969, both above 0.10.
+
+Therefore:
+- NP Suppressor V1 remains a correct unconditional-risk wrapper but adds no operational gain over hard Router V2;
+- Three-Action V1 rejects only the **fixed absolute cumulative-Wilson-threshold implementation**, not the broader RETAIN/WATCH/SUPPRESS concept.
+
+Legitimate successor parameter-learning formulations include:
+- fixed-effective-sample / rolling competence;
+- exponentially discounted Beta-Binomial competence;
+- causal time-normalized confidence percentile/rank;
+- direct BAD_SUPPRESSION action-risk calibration;
+- alarm-conditional/Mondrian risk control when support is sufficient;
+- importance-weighted risk control;
+- hierarchical Bayesian partial pooling;
+- adaptive/non-exchangeable conformal control.
+
+Any successor requires a new identity and must state explicitly:
+- the risk conditioning set;
+- how parameters are learned;
+- whether memory is cumulative, fixed-window, discounted, ranked, Bayesian or conformal;
+- why its confidence/risk scale is transport-stable.
+
+**Current preferred lane:** direct action-risk calibration with a time-stable confidence construction, while keeping frozen Router V2 unchanged and keeping 2025 out of parameter selection.
 
 ---
 
