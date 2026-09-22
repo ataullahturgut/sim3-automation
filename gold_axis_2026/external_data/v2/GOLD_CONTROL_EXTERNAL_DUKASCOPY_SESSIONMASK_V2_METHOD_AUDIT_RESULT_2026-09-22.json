@@ -1,0 +1,201 @@
+{
+  "identity": "EXTERNAL_DUKASCOPY_SESSIONMASK_V2_METHOD_AUDIT",
+  "date": "2026-09-22",
+  "preregistration_commit": "77f6fe1856a3e2349bbf8f8f6e1dfbead7e50202",
+  "finding": {
+    "v1_session_mismatch": true,
+    "v1_external_bars_per_normal_day": 288,
+    "governed_recurring_local_bins": 276,
+    "governed_missing_local_times": [
+      "17:00",
+      "17:05",
+      "17:10",
+      "17:15",
+      "17:20",
+      "17:25",
+      "17:30",
+      "17:35",
+      "17:40",
+      "17:45",
+      "17:50",
+      "17:55"
+    ],
+    "correction": "Exclude 17:00-17:55 America/New_York from external 5m bins before daily aggregation.",
+    "outcome_dependency": false,
+    "note": "Correction is dictated by governed session structure, not by model outcomes."
+  },
+  "corrected_spine": {
+    "artifact": "gold_axis_2026/external_data/v2/dukascopy_xauusd_govsession_mid_5m_daily_features_2018_2021.csv",
+    "commit": "509c5ffa762f4ea49644b8ffe723ed2591ba52bf",
+    "rows": 1038,
+    "by_year": {
+      "2018": 260,
+      "2019": 260,
+      "2020": 260,
+      "2021": 258
+    },
+    "first_day": "2018-01-01",
+    "last_day": "2021-12-31",
+    "duplicates": 0,
+    "unsorted": 0,
+    "bad_rows": 0,
+    "zero_rv_rows": 0,
+    "min_bars": 276,
+    "max_bars": 276,
+    "dropped_zero_variance_dates": [
+      "2018-03-30",
+      "2019-04-19",
+      "2020-04-10",
+      "2020-12-25",
+      "2021-01-01",
+      "2021-04-02",
+      "2021-12-24"
+    ],
+    "raw_bid_ask_timestamp_join": "complete within staged source provenance; segment audit minimum join ratio = 1.0"
+  },
+  "corrected_overlap_vs_governed": {
+    "common_days": 345,
+    "governed_days": 345,
+    "overlap": 1,
+    "close_return_pearson": 0.9999746209080898,
+    "close_return_sign_agreement": 0.9941860465116279,
+    "rv_pearson": 0.9985380699285329,
+    "rv_spearman": 0.9975288871225094,
+    "dr_pearson": 0.9986318444123484,
+    "dr_spearman": 0.9969850435717751,
+    "rv_scale_external_over_governed": 0.9966389432424667,
+    "dr_scale_external_over_governed": 0.9960754688774694,
+    "top_quintile_dr_event_agreement": 0.9942028985507246,
+    "top_quintile_dr_jaccard": 0.971830985915493,
+    "gate_passed": true
+  },
+  "governed_parent_method_reproduction": {
+    "years": [
+      2022,
+      2023,
+      2024
+    ],
+    "rows": 613,
+    "target_date_mismatches": 0,
+    "alert_mismatches": 0,
+    "return_sign_mismatches": 0,
+    "max_abs_sqrt_dr_forecast_diff": 4.933119884809045e-18,
+    "max_abs_normalized_score_diff": 7.815970093361102e-14,
+    "max_abs_threshold_diff": 0,
+    "max_abs_target_return_diff": 1.734723475976807e-18,
+    "conclusion": "External-extension SQRT implementation reproduces the frozen governed parent numerically."
+  },
+  "direct_expert_method_reproduction": {
+    "previously_frozen_audit": true,
+    "years": [
+      2023,
+      2024
+    ],
+    "target_date_mismatches": 0,
+    "actual_direction_mismatches": 0,
+    "ttsm_up_state_mismatches": 0,
+    "bonato_h1_up_mismatches": 0,
+    "rm_logit_up_mismatches": 0,
+    "ar1_rm_logit_up_mismatches": 0,
+    "router_2024_reproduced": {
+      "n": 205,
+      "router_up": 42,
+      "tp": 26,
+      "fp": 16,
+      "precision": 0.6190476190476191,
+      "false_up_fpr": 0.18604651162790697
+    }
+  },
+  "corrected_pre2022_rerun": {
+    "common_rows": {
+      "2019": 260,
+      "2020": 260,
+      "2021": 258
+    },
+    "parent": {
+      "2020": {
+        "formation_n": 498,
+        "test_n": 260,
+        "sqrt_alarms": 212,
+        "actual_down": 97,
+        "actual_up": 115
+      },
+      "2021": {
+        "formation_n": 758,
+        "test_n": 258,
+        "sqrt_alarms": 28,
+        "actual_down": 16,
+        "actual_up": 12
+      }
+    },
+    "router": {
+      "2020": {
+        "n": 260,
+        "router_up": 185,
+        "tp": 111,
+        "fp": 74,
+        "precision": 0.6,
+        "false_up_fpr": 0.6607142857142857
+      },
+      "2021": {
+        "n": 258,
+        "router_up": 33,
+        "tp": 19,
+        "fp": 14,
+        "precision": 0.5757575757575758,
+        "false_up_fpr": 0.112
+      }
+    },
+    "intersection": {
+      "2020": {
+        "alarms": 212,
+        "actual_down": 97,
+        "actual_up": 115,
+        "router_up_overlap": 140,
+        "good": 80,
+        "bad": 60,
+        "veto_precision": 0.5714285714285714,
+        "true_down_retention": 0.38144329896907214,
+        "false_alarm_reduction": 0.6956521739130435
+      },
+      "2021": {
+        "alarms": 28,
+        "actual_down": 16,
+        "actual_up": 12,
+        "router_up_overlap": 2,
+        "good": 1,
+        "bad": 1,
+        "veto_precision": 0.5,
+        "true_down_retention": 0.9375,
+        "false_alarm_reduction": 0.08333333333333333
+      }
+    },
+    "changed_vs_v1_external_result": false,
+    "conclusion": "The discovered 288-vs-276 session mismatch does not explain the 2020 crisis-regime failure; corrected results are identical."
+  },
+  "pooled_hard_veto_2020_2024": {
+    "sqrt_alarms": 270,
+    "actual_down": 127,
+    "actual_up": 143,
+    "suppressions": 146,
+    "good": 84,
+    "bad": 62,
+    "suppression_precision": 0.5753424657534246,
+    "empirical_bad_suppression_rate": 0.4881889763779528,
+    "false_alarm_reduction": 0.5874125874125874,
+    "true_down_retention": 0.5118110236220472,
+    "baseline_forced_down_precision": 0.4703703703703704,
+    "remaining_forced_down_precision": 0.5241935483870968,
+    "exact_ltt_alpha": 0.2,
+    "exact_ltt_delta": 0.1,
+    "exact_lower_tail_p_value": 0.9999999999999144,
+    "risk_certified": false
+  },
+  "provenance_limitations": [
+    "Older raw minute files are from a public GitHub mirror whose README states Dukascopy/dukascopy-node provenance; this audit did not independently re-download every minute from Dukascopy directly.",
+    "Only derived daily research features are retained in Gold Control; raw third-party files are not copied.",
+    "External data remain research-only and do not become production/governed authority."
+  ],
+  "status": "METHOD_AND_DATA_AUDIT_PASSED_AFTER_SESSION_CORRECTION; HARD_VETO_FAILURE_CONFIRMED",
+  "next_step": "Proceed only with a regime/risk-aware controller. Treat the V1 288-bar external spine as superseded for model use by session-masked V2."
+}
