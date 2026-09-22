@@ -1,0 +1,80 @@
+{
+  "identity": "MONOTONIC_ACTION_RISK_CONTROLLER_V1_RESEARCH",
+  "date": "2026-09-22",
+  "preregistration_commit": "a696308de6cc646fc9925ddb34f1299c21ab6609",
+  "fit_freeze_commit": "194d9a1fb25f08379c1645089fdd55d079fcdc19",
+  "frozen_verifier": "UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH",
+  "development_2024": {
+    "router_up_daily_n": 42,
+    "bad_down": 16,
+    "good_up": 26,
+    "MF30": {
+      "beta": [
+        -0.48550781578170094,
+        0,
+        0
+      ],
+      "fixed_zero": [
+        1,
+        2
+      ],
+      "brier": 0.23582766439909295
+    },
+    "MD30": {
+      "beta": [
+        -0.48550781578170094,
+        0,
+        0
+      ],
+      "fixed_zero": [
+        1,
+        2
+      ],
+      "brier": 0.23582766439909295
+    },
+    "p_bad_constant": 0.38095238095238093,
+    "interpretation": "Under beta_sqrt>=0 and beta_error>=0, every candidate with a free slope was infeasible because at least one fitted slope was negative. The only feasible active set fixed both slopes to zero."
+  },
+  "locked_2025": {
+    "sqrt_alarms": 90,
+    "baseline_true_down": 45,
+    "baseline_false_forced_down": 45,
+    "baseline_precision": 0.5,
+    "RETAIN_DOWN": {
+      "n": 90,
+      "actual_down": 45,
+      "actual_up": 45
+    },
+    "WATCH_DOWN": {
+      "n": 0,
+      "actual_down": 0,
+      "actual_up": 0
+    },
+    "SUPPRESS_DOWN": {
+      "n": 0,
+      "actual_down": 0,
+      "actual_up": 0
+    },
+    "true_down_retention": 1,
+    "remaining_forced_down_precision": 0.5,
+    "false_alarm_reduction": 0
+  },
+  "decision": {
+    "status": "TOO_CONSERVATIVE_INSUFFICIENT_SUPPRESS_SUPPORT",
+    "interpretation": [
+      "The monotonicity constraints corrected the unsafe sign behavior found in the unconstrained controller.",
+      "But the 2024 data contained no positive monotone slope signal in either SQRT risk or competence-error feature.",
+      "The constrained optimum therefore collapsed to an intercept-only BAD risk of 16/42 = 38.10%.",
+      "Because 38.10% exceeds the frozen WATCH upper threshold of 35%, every 2025 SQRT alarm was retained.",
+      "This is maximally safe for true DOWN retention but provides zero false-alarm reduction.",
+      "The failure is not due to score drift; it shows that the chosen two-feature monotone logistic surface cannot justify suppression from 2024 evidence."
+    ],
+    "next_step": "Proceed to a separately preregistered Learn-Then-Test / risk-control action calibration, which can control action risk without requiring a parametric monotone probability surface to discover a stable slope."
+  },
+  "governance": {
+    "random_split": false,
+    "tuning_on_2025": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
