@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.09  
+**Manifest version:** 2.10  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -1390,6 +1390,106 @@ Any successor requires a new identity and must state explicitly:
 - why its confidence/risk scale is transport-stable.
 
 **Current preferred lane:** direct action-risk calibration with a time-stable confidence construction, while keeping frozen Router V2 unchanged and keeping 2025 out of parameter selection.
+
+---
+
+
+## 11D. Direct action-risk controller V1 — executed
+
+**Identity:** `DIRECT_ACTION_RISK_CONTROLLER_V1_RESEARCH`  
+**Research branch:** `gold-direct-action-risk-controller-v1-20260922`  
+**Preregistration:** `d5529a3364176de16b61fd79b99ec91b04c8f469`  
+**Frozen result:** `94542297ee1e83b2dc75bc6888e6b5b14ce4a8a1`  
+**Status:** `NOT_SUPPORTED_AS_ACTION_RISK_SUCCESSOR`.
+
+### 11D.1 Design
+
+Frozen Router V2 remained unchanged.
+
+Two time-stable competence constructions were added downstream:
+
+- **F30:** most recent 30 selected-expert UP calls;
+- **D30:** exponentially discounted Beta-Binomial competence with 30-call half-life.
+
+Two separate ridge-logistic BAD_SUPPRESSION models were fit on 2024 daily Router-UP cases using:
+- SQRT normalized risk score;
+- competence error `1 - competence`;
+- L2 lambda=1.0;
+- intercept unpenalized;
+- no hyperparameter search.
+
+Conservative action risk:
+- `p_bad = max(p_bad_F30, p_bad_D30)`.
+
+Actions:
+- p_bad <=0.20 -> SUPPRESS
+- 0.20<p_bad<=0.35 -> WATCH
+- p_bad>0.35 -> RETAIN.
+
+### 11D.2 2024 development
+
+Router-UP daily n=42:
+- actual UP=26;
+- actual DOWN=16.
+
+Both logistic models converged in 5 Newton iterations.
+
+Training Brier:
+- F30=0.2322;
+- D30=0.2286.
+
+On 17 SQRT alarms:
+- RETAIN=13;
+- WATCH=4 = 3 UP / 1 DOWN;
+- SUPPRESS=0.
+
+Development only; no independent validation claim.
+
+### 11D.3 Locked 2025 challenge
+
+| Action | Count | Actual UP | Actual DOWN |
+|---|---:|---:|---:|
+| RETAIN | 77 | 35 | 42 |
+| **WATCH** | **8** | **7** | **1** |
+| **SUPPRESS** | **5** | **3** | **2** |
+
+SUPPRESS:
+- precision **60.00%**;
+- false-alarm reduction **6.67%**;
+- true-DOWN retention **95.56%**;
+- remaining forced-DOWN precision **50.59%**;
+- net benefit +1.
+
+Frozen hard-veto benchmark:
+- precision 62.50%;
+- true-DOWN retention 86.67%;
+- remaining precision 52.70%.
+
+The successor gate failed because suppression precision and remaining forced-DOWN precision did not beat the hard-veto benchmark.
+
+### 11D.4 Important positive diagnostic
+
+Unlike Three-Action V1, the WATCH region survived transport:
+- WATCH n=8;
+- actual UP=7;
+- actual DOWN=1;
+- descriptive UP rate=87.5%.
+
+This shows that fixed-window / discounted competence solves the raw confidence-scale drift problem and creates a stable middle action.
+
+However WATCH may not be promoted to SUPPRESS post hoc.
+
+### 11D.5 Failure mechanism
+
+Both 2024 ridge-logit models learned a **negative** coefficient on `sqrt_normalized_risk_score`: stronger SQRT risk was associated in development with lower predicted BAD_SUPPRESSION risk.
+
+That sign is not safety-coherent and did not transport reliably. Some strong-SQRT-risk 2025 Router-UP cases were therefore suppressed despite actual DOWN.
+
+**Binding implication:** direct action-risk modeling remains open, but the next formulation should either:
+- calibrate the action directly using Learn-Then-Test / risk-control logic, or
+- impose monotonicity so stronger SQRT downside-risk evidence cannot reduce estimated BAD_SUPPRESSION risk.
+
+Router V2 remains frozen.
 
 ---
 
