@@ -1,0 +1,227 @@
+{
+  "identity": "SQRT_ALARM_SEMANTIC_AUDIT_V1_RESEARCH",
+  "date": "2026-09-22",
+  "definition": {
+    "forecast_high_risk": "sqrt_forecast >= frozen yearly Q80",
+    "realized_high_risk": "target_dr >= same frozen yearly Q80",
+    "direction": "next-day close-to-close log return sign",
+    "intraday_rebound_timing_claim": "NOT_PROVEN_BY_THIS_AUDIT"
+  },
+  "governance": {
+    "random_split": false,
+    "2025_used": false,
+    "2026_used": false,
+    "production_writes": false,
+    "runtime_promotion": false,
+    "external_2020_2021_authority": "RESEARCH_ONLY_SESSIONMASK_V2"
+  },
+  "integrity_errors": [],
+  "by_year": {
+    "2020": {
+      "risk_confusion_full_parent": {
+        "n": 260,
+        "risk_alarms": 212,
+        "realized_high_risk_targets": 193,
+        "tp_high_risk": 180,
+        "fp_high_risk": 32,
+        "fn_high_risk": 13,
+        "tn_low_risk": 35,
+        "risk_precision": 0.8490566037735849,
+        "risk_recall": 0.9326424870466321,
+        "risk_specificity": 0.5223880597014925,
+        "risk_alarm_rate": 0.8153846153846154,
+        "realized_high_risk_rate": 0.7423076923076923
+      },
+      "alarm_anatomy": {
+        "alarms": 212,
+        "actual_up": 115,
+        "actual_down": 97,
+        "RISK_HIT_DOWN_CLOSE": 89,
+        "RISK_HIT_UP_CLOSE": 91,
+        "RISK_MISS_DOWN_CLOSE": 8,
+        "RISK_MISS_UP_CLOSE": 24,
+        "risk_hit_total": 180,
+        "risk_miss_total": 32,
+        "risk_hit_rate_among_alarms": 0.8490566037735849,
+        "up_close_risk_hit_count": 91,
+        "up_close_risk_miss_count": 24,
+        "share_up_close_alarms_that_are_realized_high_risk": 0.7913043478260869,
+        "down_close_risk_hit_count": 89,
+        "down_close_risk_miss_count": 8,
+        "share_down_close_alarms_that_are_realized_high_risk": 0.9175257731958762
+      }
+    },
+    "2021": {
+      "risk_confusion_full_parent": {
+        "n": 258,
+        "risk_alarms": 28,
+        "realized_high_risk_targets": 49,
+        "tp_high_risk": 20,
+        "fp_high_risk": 8,
+        "fn_high_risk": 29,
+        "tn_low_risk": 201,
+        "risk_precision": 0.7142857142857143,
+        "risk_recall": 0.40816326530612246,
+        "risk_specificity": 0.9617224880382775,
+        "risk_alarm_rate": 0.10852713178294573,
+        "realized_high_risk_rate": 0.18992248062015504
+      },
+      "alarm_anatomy": {
+        "alarms": 28,
+        "actual_up": 12,
+        "actual_down": 16,
+        "RISK_HIT_DOWN_CLOSE": 15,
+        "RISK_HIT_UP_CLOSE": 5,
+        "RISK_MISS_DOWN_CLOSE": 1,
+        "RISK_MISS_UP_CLOSE": 7,
+        "risk_hit_total": 20,
+        "risk_miss_total": 8,
+        "risk_hit_rate_among_alarms": 0.7142857142857143,
+        "up_close_risk_hit_count": 5,
+        "up_close_risk_miss_count": 7,
+        "share_up_close_alarms_that_are_realized_high_risk": 0.4166666666666667,
+        "down_close_risk_hit_count": 15,
+        "down_close_risk_miss_count": 1,
+        "share_down_close_alarms_that_are_realized_high_risk": 0.9375
+      }
+    },
+    "2022": {
+      "risk_confusion_full_parent": {
+        "n": 205,
+        "risk_alarms": 11,
+        "realized_high_risk_targets": 35,
+        "tp_high_risk": 9,
+        "fp_high_risk": 2,
+        "fn_high_risk": 26,
+        "tn_low_risk": 168,
+        "risk_precision": 0.8181818181818182,
+        "risk_recall": 0.2571428571428571,
+        "risk_specificity": 0.9882352941176471,
+        "risk_alarm_rate": 0.05365853658536585,
+        "realized_high_risk_rate": 0.17073170731707318
+      },
+      "alarm_anatomy": {
+        "alarms": 11,
+        "actual_up": 5,
+        "actual_down": 6,
+        "RISK_HIT_DOWN_CLOSE": 4,
+        "RISK_HIT_UP_CLOSE": 5,
+        "RISK_MISS_DOWN_CLOSE": 2,
+        "RISK_MISS_UP_CLOSE": 0,
+        "risk_hit_total": 9,
+        "risk_miss_total": 2,
+        "risk_hit_rate_among_alarms": 0.8181818181818182,
+        "up_close_risk_hit_count": 5,
+        "up_close_risk_miss_count": 0,
+        "share_up_close_alarms_that_are_realized_high_risk": 1.0,
+        "down_close_risk_hit_count": 4,
+        "down_close_risk_miss_count": 2,
+        "share_down_close_alarms_that_are_realized_high_risk": 0.6666666666666666
+      }
+    },
+    "2023": {
+      "risk_confusion_full_parent": {
+        "n": 203,
+        "risk_alarms": 2,
+        "realized_high_risk_targets": 9,
+        "tp_high_risk": 1,
+        "fp_high_risk": 1,
+        "fn_high_risk": 8,
+        "tn_low_risk": 193,
+        "risk_precision": 0.5,
+        "risk_recall": 0.1111111111111111,
+        "risk_specificity": 0.9948453608247423,
+        "risk_alarm_rate": 0.009852216748768473,
+        "realized_high_risk_rate": 0.04433497536945813
+      },
+      "alarm_anatomy": {
+        "alarms": 2,
+        "actual_up": 1,
+        "actual_down": 1,
+        "RISK_HIT_DOWN_CLOSE": 1,
+        "RISK_HIT_UP_CLOSE": 0,
+        "RISK_MISS_DOWN_CLOSE": 0,
+        "RISK_MISS_UP_CLOSE": 1,
+        "risk_hit_total": 1,
+        "risk_miss_total": 1,
+        "risk_hit_rate_among_alarms": 0.5,
+        "up_close_risk_hit_count": 0,
+        "up_close_risk_miss_count": 1,
+        "share_up_close_alarms_that_are_realized_high_risk": 0.0,
+        "down_close_risk_hit_count": 1,
+        "down_close_risk_miss_count": 0,
+        "share_down_close_alarms_that_are_realized_high_risk": 1.0
+      }
+    },
+    "2024": {
+      "risk_confusion_full_parent": {
+        "n": 205,
+        "risk_alarms": 17,
+        "realized_high_risk_targets": 33,
+        "tp_high_risk": 8,
+        "fp_high_risk": 9,
+        "fn_high_risk": 25,
+        "tn_low_risk": 163,
+        "risk_precision": 0.47058823529411764,
+        "risk_recall": 0.24242424242424243,
+        "risk_specificity": 0.9476744186046512,
+        "risk_alarm_rate": 0.08292682926829269,
+        "realized_high_risk_rate": 0.16097560975609757
+      },
+      "alarm_anatomy": {
+        "alarms": 17,
+        "actual_up": 10,
+        "actual_down": 7,
+        "RISK_HIT_DOWN_CLOSE": 6,
+        "RISK_HIT_UP_CLOSE": 2,
+        "RISK_MISS_DOWN_CLOSE": 1,
+        "RISK_MISS_UP_CLOSE": 8,
+        "risk_hit_total": 8,
+        "risk_miss_total": 9,
+        "risk_hit_rate_among_alarms": 0.47058823529411764,
+        "up_close_risk_hit_count": 2,
+        "up_close_risk_miss_count": 8,
+        "share_up_close_alarms_that_are_realized_high_risk": 0.2,
+        "down_close_risk_hit_count": 6,
+        "down_close_risk_miss_count": 1,
+        "share_down_close_alarms_that_are_realized_high_risk": 0.8571428571428571
+      }
+    }
+  },
+  "pooled_2020_2024": {
+    "risk_confusion_full_parent": {
+      "n": 1131,
+      "risk_alarms": 270,
+      "realized_high_risk_targets": 319,
+      "tp_high_risk": 218,
+      "fp_high_risk": 52,
+      "fn_high_risk": 101,
+      "tn_low_risk": 760,
+      "risk_precision": 0.8074074074074075,
+      "risk_recall": 0.6833855799373041,
+      "risk_specificity": 0.9359605911330049,
+      "risk_alarm_rate": 0.23872679045092837,
+      "realized_high_risk_rate": 0.28205128205128205
+    },
+    "alarm_anatomy": {
+      "alarms": 270,
+      "actual_up": 143,
+      "actual_down": 127,
+      "RISK_HIT_DOWN_CLOSE": 115,
+      "RISK_HIT_UP_CLOSE": 103,
+      "RISK_MISS_DOWN_CLOSE": 12,
+      "RISK_MISS_UP_CLOSE": 40,
+      "risk_hit_total": 218,
+      "risk_miss_total": 52,
+      "risk_hit_rate_among_alarms": 0.8074074074074075,
+      "up_close_risk_hit_count": 103,
+      "up_close_risk_miss_count": 40,
+      "share_up_close_alarms_that_are_realized_high_risk": 0.7202797202797203,
+      "down_close_risk_hit_count": 115,
+      "down_close_risk_miss_count": 12,
+      "share_down_close_alarms_that_are_realized_high_risk": 0.905511811023622
+    }
+  },
+  "semantic_conclusion": "DIRECTION_FALSE_ALARM_LABEL_CONFOUNDS_RISK_AND_DIRECTION",
+  "interpretation": "An SQRT alarm is a downside-risk forecast, not a DOWN-close forecast. Any alarm with realized target DR >= Q80 is a realized high-risk hit even if the target close-to-close direction is UP. UP-close alone therefore cannot define a SQRT risk-sensor false alarm."
+}
