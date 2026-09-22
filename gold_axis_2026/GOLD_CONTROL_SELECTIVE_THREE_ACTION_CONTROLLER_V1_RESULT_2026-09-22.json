@@ -1,0 +1,134 @@
+{
+  "identity": "SELECTIVE_THREE_ACTION_CONTROLLER_V1_RESEARCH",
+  "date": "2026-09-22",
+  "preregistration_commit": "4d30b9b00b20d8edd14e61c999b2737570c0caf0",
+  "frozen_verifier": "UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH",
+  "thresholds": {
+    "delta": 0.1,
+    "watch": {
+      "alpha": 0.2,
+      "n0": 86,
+      "k": 74,
+      "tail_probability": 0.09899782408146317,
+      "tau": 0.43026627414796137
+    },
+    "suppress": {
+      "alpha": 0.1,
+      "n0": 86,
+      "k": 82,
+      "tail_probability": 0.06034351455835708,
+      "tau": 0.4948452867785962
+    }
+  },
+  "calibration_2024": {
+    "daily": {
+      "RETAIN_DOWN": {
+        "n": 171,
+        "actual_up": 97,
+        "actual_down": 74
+      },
+      "WATCH_DOWN": {
+        "n": 25,
+        "actual_up": 17,
+        "actual_down": 8,
+        "up_rate": 0.68
+      },
+      "SUPPRESS_DOWN": {
+        "n": 9,
+        "actual_up": 5,
+        "actual_down": 4,
+        "up_rate": 0.5555555555555556
+      }
+    },
+    "sqrt": {
+      "alarms": 17,
+      "baseline_tp": 7,
+      "baseline_fp": 10,
+      "baseline_precision": 0.4117647058823529,
+      "RETAIN_DOWN": {
+        "n": 13,
+        "actual_up": 7,
+        "actual_down": 6
+      },
+      "WATCH_DOWN": {
+        "n": 3,
+        "actual_up": 2,
+        "actual_down": 1,
+        "up_rate": 0.6666666666666666
+      },
+      "SUPPRESS_DOWN": {
+        "n": 1,
+        "actual_up": 1,
+        "actual_down": 0,
+        "suppression_precision": 1
+      },
+      "false_alarm_reduction": 0.1,
+      "true_down_retention": 1,
+      "remaining_precision": 0.4375,
+      "note": "Calibration diagnostics only."
+    }
+  },
+  "researcher_visible_locked_2025": {
+    "daily": {
+      "RETAIN_DOWN": {
+        "n": 200,
+        "actual_up": 113,
+        "actual_down": 87
+      },
+      "WATCH_DOWN": {
+        "n": 0,
+        "actual_up": 0,
+        "actual_down": 0
+      },
+      "SUPPRESS_DOWN": {
+        "n": 37,
+        "actual_up": 27,
+        "actual_down": 10,
+        "suppression_precision": 0.7297297297297297
+      }
+    },
+    "sqrt": {
+      "alarms": 90,
+      "baseline_tp": 45,
+      "baseline_fp": 45,
+      "baseline_precision": 0.5,
+      "RETAIN_DOWN": {
+        "n": 74,
+        "actual_up": 35,
+        "actual_down": 39
+      },
+      "WATCH_DOWN": {
+        "n": 0,
+        "actual_up": 0,
+        "actual_down": 0
+      },
+      "SUPPRESS_DOWN": {
+        "n": 16,
+        "actual_up": 10,
+        "actual_down": 6
+      },
+      "suppression_precision": 0.625,
+      "false_alarm_reduction": 0.2222222222222222,
+      "true_down_retention": 0.8666666666666667,
+      "remaining_precision": 0.527027027027027,
+      "precision_change": 0.027027027027026973
+    }
+  },
+  "frozen_decision": {
+    "status": "SUPPRESS_SAFETY_FAILED_AND_THREE_ACTION_COLLAPSED",
+    "reasons": [
+      "2025 true-DOWN retention under SUPPRESS is 86.67%, below the preregistered 90% suppress-safety requirement.",
+      "WATCH count is 0 in 2025, so the three-action controller collapses back to the binary hard-veto behavior.",
+      "All 2025 Router-V2 UP scores exceeded the frozen 2024 tau_suppress=0.494845 threshold.",
+      "The selected-expert Wilson lower-bound score is not stationary across time; it can rise as competence history grows and/or estimated precision changes, so a fixed absolute score threshold can lose its intended middle region.",
+      "Operationally, 2025 SUPPRESS actions are identical to the frozen hard Router-V2 veto: 16 suppressions, 10 good / 6 bad."
+    ],
+    "next_step": "The next controller should not use a static absolute Router Wilson-LCB threshold. Prefer risk-control calibration on an action/loss criterion or a time-normalized/rank-based confidence quantity under a separately preregistered method."
+  },
+  "governance": {
+    "random_split": false,
+    "tuning_on_2025": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
