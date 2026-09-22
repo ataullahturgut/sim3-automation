@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.18  
+**Manifest version:** 2.19  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -2237,6 +2237,132 @@ Do not tune N=20, K=9 or the 0.01 persistence boundary post hoc under this ident
 
 ---
 
+
+## 11M. Persistent conditional-competence dampener V1 — causal within-cell authority recovery
+
+**Identity:** `PERSISTENT_CONDITIONAL_COMPETENCE_DAMPENER_V1_RESEARCH`  
+**Research branch:** `gold-conditional-competence-dampener-v1-20260922`  
+**Preregistration commit:** `968959dcfa645581c9454877f05791c312c05b66`  
+**Implementation commit:** `4b23ca1fcec2764711ef011feb6155307de4b5c9`  
+**Workflow commit:** `19fdfb1fcaca65ce763da887b8d40a822fb8d8e4`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_PERSISTENT_CONDITIONAL_COMPETENCE_DAMPENER_V1_RESULT_2026-09-22.json` (Git blob SHA `3d8dc00fc32ec8fe733689da81973c9624c1b503`)  
+**Status:** `RETROSPECTIVE_UTILITY_GAIN_NOT_CERTIFIED`.
+
+### 11M.1 Motivation and frozen rule
+
+The N20/K9 persistence gate created a strong safety reference but was too conservative: only 8 suppressions, 6 good / 2 bad, 4.20% false-alarm reduction and 98.43% true-DOWN retention.
+
+This successor kept that persistence definition unchanged and tested whether suppression authority could be restored inside `PERSISTENT_HIGH` only when the exact Router cell demonstrated sufficient causal competence.
+
+Frozen cell:
+`(selected_expert, legacy_bucket)`.
+
+For a persistent SQRT alarm where Router V2 emits UP, the cell history contains only earlier matured rows that are:
+- SQRT alarms;
+- Router-UP;
+- `PERSISTENT_HIGH`;
+- same selected expert;
+- same legacy bucket;
+- target outcome matured by the current forecast origin.
+
+No global fallback or neighboring-cell pooling was allowed.
+
+Persistent-state suppression authority required:
+- same-cell matured n >= 30, reusing frozen Router V2's competence floor;
+- one-sided 90% Wilson lower confidence bound for UP precision > 0.50, using the same z=1.2815515655446004 convention.
+
+Non-persistent Router-UP behavior remained unchanged from the safety reference: suppress.
+
+### 11M.2 Integrity gate
+
+All frozen parent, Router, common-row and legacy-context reconstruction checks passed with zero integrity errors.
+
+The frozen persistence reference was also reproduced exactly:
+- alarms=270;
+- suppressions=8;
+- good=6;
+- bad=2.
+
+No 2025/2026 data entered policy definition or scoring; governed DB access remained read-only.
+
+### 11M.3 Preregistered result
+
+| year | alarms | suppress | WATCH | good suppress | bad suppress | false-alarm reduction | true-DOWN retention |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 2020 | 212 | 37 | 103 | 21 | 16 | 18.26% | 83.51% |
+| 2021 | 28 | 1 | 1 | 0 | 1 | 0.00% | 93.75% |
+| 2022 | 11 | 0 | 0 | 0 | 0 | 0.00% | 100.00% |
+| 2023 | 2 | 0 | 0 | 0 | 0 | 0.00% | 100.00% |
+| 2024 | 17 | 4 | 0 | 3 | 1 | 30.00% | 85.71% |
+
+Pooled 2020–2024:
+- alarms=270;
+- actual DOWN=127;
+- actual UP=143;
+- RETAIN=124;
+- WATCH=104;
+- SUPPRESS=42;
+- good suppressions=24;
+- bad suppressions=18;
+- empirical bad-suppression rate among actual DOWN alarms=**14.17%**;
+- suppression precision=**57.14%**;
+- false-alarm reduction=**16.78%**;
+- true-DOWN retention=**85.83%**;
+- baseline forced-DOWN precision=47.04%;
+- remaining forced-DOWN precision=47.81%;
+- precision change=**+0.77 pp**.
+
+Relative to the frozen persistence safety reference:
+- +34 additional suppressions;
+- +18 additional good suppressions;
+- +16 additional bad suppressions;
+- no previously permitted non-persistent suppression was removed.
+
+Primary exact safety diagnostic:
+- alpha=0.20;
+- delta=0.10;
+- n=127 actual-DOWN alarms;
+- x=18 bad suppressions;
+- exact lower-tail p=**0.05864**;
+- exact 90% Clopper-Pearson upper bad-suppression bound=**18.97%**;
+- retrospective safety diagnostic=**PASS**, but with materially less safety margin than the persistence-only reference.
+
+### 11M.4 Competence anatomy
+
+Only one persistent cell obtained suppression authority:
+
+`BONATO_AR1_RM_QBOOST_H1 | NON_CONSENSUS_UP`.
+
+Across the full persistent sample this cell contains:
+- 77 Router-UP cases;
+- 44 actual UP;
+- 33 actual DOWN;
+- 34 causally authorized suppressions;
+- 18 authorized good;
+- 16 authorized bad.
+
+Authority first becomes available after enough matured evidence accumulates and the Wilson LCB rises above 0.50. The rule remains active through a late-2020 interval while cumulative cell precision deteriorates, then loses authority once the confidence bound falls back below the threshold.
+
+Other persistent cells never qualified:
+- TTSM_S2 | CONSENSUS_UP: 50 cases; max decision-time LCB < 0.50;
+- RM_LOGIT | NON_CONSENSUS_UP: only 7 cases;
+- TTSM_S2 | NON_CONSENSUS_UP: only 3 cases;
+- AR1_RM_LOGIT | NON_CONSENSUS_UP: only 1 case.
+
+### 11M.5 Binding interpretation
+
+Conditional competence recovers a meaningful amount of utility relative to the persistence-only safety reference: false-alarm reduction rises from 4.20% to 16.78% and good suppressions rise from 6 to 24.
+
+However the recovered utility is expensive. True-DOWN retention falls from 98.43% to 85.83%, 18 true DOWN alarms are suppressed, and the exact 90% upper bad-suppression bound rises to 18.97%, only narrowly below the frozen 20% risk limit. The +0.77 pp remaining-precision gain is small relative to the added safety burden.
+
+The central methodological finding is therefore not that a static competence threshold solves the controller. Rather, the persistent Bonato/non-consensus cell shows **time-varying competence**: expanding-history confidence can authorize the cell during a favorable run and react too slowly when its error rate worsens.
+
+Freeze this V1 result. Do not tune n=30, the 90% Wilson level, the 0.50 threshold, cell definition, or persistence N/K post hoc under the same identity.
+
+The next lane should explicitly address competence non-stationarity while preserving causal safety: a newly preregistered discounted/recency-weighted competence controller, sequential change-detection reject gate, or non-exchangeable/hierarchical risk-control method. The objective is to retain more of the 16.78% false-alarm reduction without allowing the risk bound to drift toward the 20% ceiling. 2025 remains unavailable for parameter selection; genuine certification still requires independent/prospective same-clock evidence.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -2277,8 +2403,10 @@ Gold Control currently has a useful downside-risk sensor but no proven general n
 
 SQRT-HAR-DR remains the current recent downside-risk research reference. RAW HAR-DR remains the mandatory comparator. ME-SQRT shows a small coherent mechanism signal but did not pass its calibration gate. HARK-SD, cross-domain direction classifiers, scalar meta-veto, standalone DTW path veto and standalone SP500 veto did not pass their frozen pre-2025 gates. Heterogeneous consensus produced one exploratory 2024 pocket but did not transport.
 
-The time-to-event V1 diagnostic is closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. UP-countersign V1 and V2 established that existing direction engines cannot safely act as a universal SQRT false-alarm delete switch. UP Expert Router V2 remains frozen as an UP-verifier baseline. The audited universal Router hard veto is decisively rejected: 62 of 127 actual-DOWN alarms would be suppressed and true-DOWN retention falls to 51.18%. The first instantaneous regime-aware Q80/Q90 successor also fails safety, with 27 bad suppressions and 78.74% true-DOWN retention.
+UP Expert Router V2 remains frozen as an UP-verifier baseline, but its universal coupling to SQRT remains rejected. The audited hard veto suppresses 62 of 127 actual-DOWN alarms and retains only 51.18% of true DOWN events. The instantaneous Q80/Q90 successor also fails safety, with 27 bad suppressions and 78.74% true-DOWN retention.
 
-The newly preregistered PERSISTENT_RISK_STATE_DAMPENER_V1 is the first successor to pass the frozen pooled retrospective safety diagnostic: only 2 of 127 actual-DOWN alarms are suppressed, the exact alpha=0.20/delta=0.10 diagnostic gives p=2.624e-10, the 90% upper bad-suppression bound is 4.14%, and true-DOWN retention rises to 98.43%. This supports the hypothesis that persistent downside-risk state is a critical conditioning variable. But the controller is highly conservative: it suppresses only 8 alarms, removes only 6 of 143 false alarms (4.20%), and improves remaining forced-DOWN precision by only +0.67 pp. Therefore it is frozen as a **retrospectively promising safety reference, not a finished false-alarm controller and not a runtime model**.
+PERSISTENT_RISK_STATE_DAMPENER_V1 then established that regime persistence is a critical safety variable. It passes the frozen retrospective safety diagnostic with only 2 bad suppressions, a 4.14% exact 90% upper risk bound and 98.43% true-DOWN retention, but removes only 4.20% of false alarms. It is the current high-safety reference.
 
-The next development lane, if continued, is a newly preregistered alarm-conditional / within-regime competence or hierarchical/non-exchangeable risk controller designed to recover suppression utility without sacrificing the newly demonstrated persistence-state safety. Do not tune the 20-day / 9-exceedance persistence gate under its current identity. 2025 remains unavailable for parameter selection and can only be used as locked retrospective transport; genuine certification requires new prospective or otherwise independent same-clock evidence.
+PERSISTENT_CONDITIONAL_COMPETENCE_DAMPENER_V1 restores some suppression authority inside persistent regimes using causal same-cell competence. It raises false-alarm reduction to 16.78% and good suppressions from 6 to 24 while still passing the frozen alpha=0.20/delta=0.10 retrospective diagnostic. However it also raises bad suppressions to 18, lowers true-DOWN retention to 85.83%, and pushes the exact 90% upper bad-suppression bound to 18.97%, close to the 20% limit. The utility gain is therefore real but the safety margin becomes thin.
+
+The active research question is now **competence non-stationarity**, not whether persistence matters. The Bonato/non-consensus persistent cell gains authority during a favorable 2020 run and loses quality faster than expanding-history confidence reacts. The next successor, if pursued, must be newly preregistered and explicitly time-adaptive—discounted/recency-weighted competence, sequential change detection, or non-exchangeable/hierarchical risk control—while keeping the frozen persistence insight as the safety backbone. No post-hoc threshold tuning is allowed under the completed identities. 2025 remains unavailable for parameter selection and may only be used as locked retrospective transport; genuine certification requires new prospective or otherwise independent same-clock evidence.
