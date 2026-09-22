@@ -145,6 +145,7 @@ For the pooled 2022–2024 annual-origin predictions:
 - paired MSE loss difference = RAW squared error minus SQRT squared error;
 - paired QLIKE loss difference = RAW QLIKE loss minus SQRT QLIKE loss;
 - Newey-West/HAC mean-loss t statistics with lag 5 and lag 10;
+- pooled high-risk AUC uses the normalized score `forecast_DR / year-specific formation high-risk threshold`, so annual threshold-level changes do not mechanically dominate the pooled ranking;
 - high-risk binary correctness discordance:
   - SQRT-only correct;
   - RAW-only correct;
