@@ -1,0 +1,71 @@
+name: Gold Control Selective Triage V1
+
+on:
+  push:
+    branches:
+      - gold-downside-selective-triage-v1-20260922
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_DOWNSIDE_SELECTIVE_TRIAGE_V1_PREREG_2026-09-22.md'
+      - 'gold_axis_2026/tools/downside_selective_triage_v1.py'
+      - '.github/workflows/gold-control-selective-triage-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-selective-triage-v1
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-downside-selective-triage-v1-20260922
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Require DB credential
+        run: test -n "$NEON_DATABASE_URL"
+
+      - name: Install dependencies
+        run: python -m pip install 'numpy==2.1.3' 'scipy==1.14.1' 'scikit-learn==1.5.2' 'psycopg[binary]>=3.2,<4'
+
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/downside_selective_triage_v1.py
+
+      - name: Assert read-only
+        run: |
+          ! grep -Eini 'insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from|create[[:space:]]+table|drop[[:space:]]+table|alter[[:space:]]+table'             gold_axis_2026/tools/downside_selective_triage_v1.py
+          grep -n 'default_transaction_read_only'             gold_axis_2026/tools/downside_cbr_dtw_path_v1.py             gold_axis_2026/tools/downside_sp500_crossmarket_veto_v1.py
+
+      - name: Run experiment
+        run: |
+          rm -rf selective_triage_out
+          python gold_axis_2026/tools/downside_selective_triage_v1.py
+
+      - name: Freeze results
+        run: |
+          cp selective_triage_out/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add             gold_axis_2026/GOLD_CONTROL_DOWNSIDE_SELECTIVE_TRIAGE_V1_RESULT_2026-09-22.json             gold_axis_2026/GOLD_CONTROL_DOWNSIDE_SELECTIVE_TRIAGE_V1_RESULT_2026-09-22.md
+          git commit -m 'Freeze selective triage V1 results'
+          git push origin HEAD:gold-downside-selective-triage-v1-20260922
+
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-selective-triage-v1
+          retention-days: 30
+          if-no-files-found: error
+          path: selective_triage_out/
