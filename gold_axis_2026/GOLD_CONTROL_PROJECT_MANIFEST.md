@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.15  
+**Manifest version:** 2.16  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -1904,6 +1904,137 @@ is now **rejected as a generally safe controller** across regimes.
 The failure is strongly concentrated in 2020, where Router-UP is permissive during an extreme-risk environment and suppresses 60 of 97 true DOWN SQRT alarms.
 
 **Current next lane:** preserve Router V2, but any future dampener must be explicitly regime/risk aware and must prevent extreme/high-SQRT-risk states from inheriting the same suppression semantics as calm regimes. No hard-veto runtime promotion is allowed.
+
+---
+
+
+## 11J. External-data full method audit V2 — session correction and confirmation
+
+**Identity:** `EXTERNAL_DUKASCOPY_SESSIONMASK_V2_METHOD_AUDIT`  
+**Audit branch:** `gold-external-dukascopy-sessionmask-v2-20260922`  
+**Preregistration:** `77f6fe1856a3e2349bbf8f8f6e1dfbead7e50202`  
+**Corrected consolidated spine commit:** `509c5ffa762f4ea49644b8ffe723ed2591ba52bf`  
+**Audit result:** `f28bef02860dcc9f84acaf84d070a033e64aab40`  
+**Status:** `METHOD_AND_DATA_AUDIT_PASSED_AFTER_SESSION_CORRECTION; HARD_VETO_FAILURE_CONFIRMED`.
+
+### 11J.1 Audit correction
+
+A real construction mismatch was found after the first external extension:
+
+- external V1 normal days retained 288 five-minute bars;
+- the governed internal source has 276 recurring local-time bins;
+- the governed source consistently excludes **17:00–17:55 America/New_York**.
+
+This mismatch was corrected from the governed source clock before any further model interpretation.
+
+The correction is methodological, not outcome-tuned.
+
+**Binding authority:** the V1 288-bar external spine is now **SUPERSEDED FOR MODEL USE**. It remains only as an audit/history artifact.
+
+### 11J.2 Corrected V2 spine
+
+The external raw mirrored one-minute bid/ask files were rebuilt as:
+
+- exact bid/ask timestamp inner join;
+- mid close;
+- last close per 5-minute bin;
+- America/New_York conversion;
+- local 17:00–17:55 maintenance hour removed;
+- weekday daily aggregation;
+- zero-variance synthetic holiday rows removed.
+
+Corrected retained panel:
+- 2018=260;
+- 2019=260;
+- 2020=260;
+- 2021=258;
+- total=**1038**;
+- duplicates=0;
+- unsorted=0;
+- nonfinite/bad rows=0;
+- retained zero-RV rows=0;
+- bars per retained day=**276 exactly**.
+
+Corrected artifact:
+`gold_axis_2026/external_data/v2/dukascopy_xauusd_govsession_mid_5m_daily_features_2018_2021.csv`.
+
+### 11J.3 Corrected source harmonization
+
+Against governed 2020-04-06..2021-12-31:
+- exact overlap=345/345=100%;
+- close-return Pearson=**0.9999746**;
+- return-sign agreement=**99.42%**;
+- RV Spearman=**0.99753**;
+- downside-RV Spearman=**0.99699**;
+- mean RV scale ratio external/governed=**0.99664**;
+- mean downside-RV scale ratio=**0.99608**;
+- top-quintile downside-risk state agreement=**99.42%**.
+
+The harmonization gate passes after correction.
+
+### 11J.4 Frozen SQRT implementation audit
+
+The exact extension implementation was rerun on the governed source and compared to the frozen parent artifact for 2022–2024.
+
+Across **613 rows**:
+- target-date mismatches=0;
+- SQRT alert mismatches=0;
+- next-return sign mismatches=0;
+- max absolute SQRT-DR forecast difference=`4.93e-18`;
+- max normalized-score difference=`7.82e-14`;
+- high-risk-threshold difference=0.
+
+Thus the SQRT parent extension code is numerically equivalent to the frozen governed method.
+
+### 11J.5 Direct-expert / Router method audit
+
+The prior exact reproduction remains binding:
+- 2023/2024 TTSM mismatch=0;
+- Bonato h=1 median-UP mismatch=0;
+- RM_LOGIT mismatch=0;
+- AR1_RM_LOGIT mismatch=0;
+- target/date and actual-direction mismatches=0;
+- frozen 2024 Router n=205 / UP=42 / TP=26 / FP=16 reproduced exactly.
+
+### 11J.6 Corrected pre-2022 rerun
+
+After rebuilding the external spine to the governed 276-bar session, the full 2020/2021 SQRT + Router reconstruction was rerun.
+
+The result is **unchanged**:
+
+| year | SQRT alarms | Router-UP overlap | good suppress | bad suppress | true-DOWN retention |
+|---|---:|---:|---:|---:|---:|
+| 2020 | 212 | 140 | 80 | **60** | **38.14%** |
+| 2021 | 28 | 2 | 1 | 1 | **93.75%** |
+
+Therefore the 2020 crisis-regime failure is **not caused by the discovered session-loading mismatch**.
+
+### 11J.7 Hard-veto safety conclusion after full audit
+
+Pooled 2020–2024 fixed hard-veto policy:
+- SQRT alarms=270;
+- actual DOWN=127;
+- actual UP=143;
+- suppressions=146;
+- good=84;
+- bad=62;
+- suppression precision=57.53%;
+- empirical BAD_SUPPRESSION rate among true DOWN alarms=**48.82%**;
+- true-DOWN retention=**51.18%**;
+- false-alarm reduction=58.74%;
+- remaining forced-DOWN precision=52.42%.
+
+At alpha=0.20 / delta=0.10, exact one-sided safety p-value≈1.0000.
+
+**Binding conclusion:** after correcting and re-auditing data loading, clock/session construction, SQRT formula implementation and expert/Router reconstruction, there is no current evidence that the 2020 failure is an implementation artifact. The universal hard veto remains rejected.
+
+The frozen UP Router V2 itself remains preserved as an UP-verifier baseline. Any next controller must be explicitly regime/risk aware.
+
+### 11J.8 Provenance limitation
+
+The older raw minute data come from a public GitHub mirror whose README states Dukascopy/`dukascopy-node` provenance. The audit did not independently redownload every minute directly from Dukascopy.
+
+This limitation is mitigated for research by the near-exact overlap with the governed internal source, but external history remains research-only and never production authority.
 
 ---
 
