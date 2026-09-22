@@ -1,0 +1,49 @@
+{
+  "identity": "LEARN_THEN_TEST_ACTION_RISK_V1_RESEARCH",
+  "date": "2026-09-22",
+  "preregistration_commit": "8de202f3cfe2c33eb6abffb7df3d4d656666fb88",
+  "frozen_parent": "SQRT-HAR-DR",
+  "frozen_verifier": "UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH",
+  "risk_target": {
+    "conditioning": "actual DOWN AND SQRT alarm",
+    "alpha": 0.2,
+    "delta": 0.1,
+    "required_true_down_retention": 0.8
+  },
+  "support_gate": {
+    "calibration_year": 2024,
+    "sqrt_alarm_n": 17,
+    "actual_down_alarm_n": 7,
+    "actual_up_alarm_n": 10,
+    "minimum_required_actual_down_alarms": 11,
+    "derivation": "ceil(log(delta)/log(1-alpha))",
+    "best_possible_zero_bad_tail": 0.20971520000000007,
+    "pass": false
+  },
+  "candidate_policy_scoring": {
+    "executed": false,
+    "reason": "Mandatory support gate failed before policy scoring."
+  },
+  "challenge_2025": {
+    "read_or_scored": false,
+    "reason": "Preregistered protocol forbids 2025 scoring when no 2024 policy can be risk-certified."
+  },
+  "decision": {
+    "status": "BLOCKED_INSUFFICIENT_ALARM_CONDITIONAL_CALIBRATION_SUPPORT",
+    "interpretation": [
+      "The requested Learn-Then-Test formulation was set up on the exact operational risk target: suppressing a true DOWN conditional on an SQRT alarm.",
+      "2024 provides only 7 actual-DOWN SQRT alarms.",
+      "At alpha=20% and 90% confidence, at least 11 actual-DOWN calibration alarms are required even if a candidate policy makes zero bad suppressions.",
+      "With n=7, the best-case exact tail is 0.8^7 = 0.2097152, which is larger than delta=0.10.",
+      "Therefore no policy can be honestly certified under the frozen risk target from the available 2024 support.",
+      "This is a data-support limitation, not a model-performance failure."
+    ],
+    "next_step": "Extend same-clock pre-2025 SQRT+Router support to obtain at least 11 actual-DOWN alarm calibration cases; ideally more because Bonferroni testing of a multi-policy family requires stronger support. Do not weaken alpha/delta or substitute all-daily risk."
+  },
+  "governance": {
+    "random_split": false,
+    "tuning_on_2025": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
