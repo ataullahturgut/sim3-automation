@@ -1,0 +1,237 @@
+{
+  "identity": "DOWNSIDE_UP_COUNTERSIGN_VETO_V1_RESEARCH",
+  "date": "2026-09-22",
+  "preregistration_commit": "34d69dbee2fc816e2def72ee2033abcd22a839b0",
+  "parent_identity": "DOWNSIDE_RAW_VS_SQRT_HAR_DR_MULTIORIGIN_V1_RESEARCH / SQRT_HAR_DR",
+  "status": "UP_COUNTERSIGN_VETO_NOT_SUPPORTED_WITH_CURRENT_ELIGIBLE_MODELS",
+  "execution_note": {
+    "bonato_join_correction": "An interim in-memory evaluation mistakenly keyed all Bonato horizons by origin, allowing later h=10 rows to overwrite h=1. This was detected before any result artifact was frozen. Final evidence filters horizon==1 before the exact-date join, exactly as preregistered. No preregistered rule changed."
+  },
+  "parent_pre2025": {
+    "years": [
+      2022,
+      2023,
+      2024
+    ],
+    "alarms": 30,
+    "true_down": 14,
+    "false_down": 16,
+    "forced_down_precision": 0.4666666666666667
+  },
+  "candidates": {
+    "TTSM_S1": {
+      "target_clock": "CLEAN_SAME_DAILY_AXIS",
+      "pre2025": {
+        "years": [
+          2022,
+          2023,
+          2024
+        ],
+        "overlap": 30,
+        "baseline_tp": 14,
+        "baseline_fp": 16,
+        "vetoed": 0,
+        "good_veto": 0,
+        "bad_veto": 0,
+        "veto_precision": null,
+        "false_alarm_reduction": 0,
+        "true_positive_retention": 1,
+        "remaining_down_precision": 0.4666666666666667,
+        "precision_change": 0,
+        "status": "INSUFFICIENT_VETO_SUPPORT"
+      },
+      "stress_2025": {
+        "overlap": 90,
+        "baseline_tp": 45,
+        "baseline_fp": 45,
+        "vetoed": 20,
+        "good_veto": 11,
+        "bad_veto": 9,
+        "veto_precision": 0.55,
+        "false_alarm_reduction": 0.24444444444444444,
+        "true_positive_retention": 0.8,
+        "remaining_down_precision": 0.5142857142857142,
+        "precision_change": 0.014285714285714235
+      }
+    },
+    "TTSM_S2": {
+      "target_clock": "CLEAN_SAME_DAILY_AXIS",
+      "pre2025": {
+        "years": [
+          2022,
+          2023,
+          2024
+        ],
+        "overlap": 30,
+        "baseline_tp": 14,
+        "baseline_fp": 16,
+        "vetoed": 0,
+        "good_veto": 0,
+        "bad_veto": 0,
+        "veto_precision": null,
+        "false_alarm_reduction": 0,
+        "true_positive_retention": 1,
+        "remaining_down_precision": 0.4666666666666667,
+        "precision_change": 0,
+        "status": "INSUFFICIENT_VETO_SUPPORT"
+      },
+      "stress_2025": {
+        "overlap": 90,
+        "baseline_tp": 45,
+        "baseline_fp": 45,
+        "vetoed": 15,
+        "good_veto": 8,
+        "bad_veto": 7,
+        "veto_precision": 0.5333333333333333,
+        "false_alarm_reduction": 0.17777777777777778,
+        "true_positive_retention": 0.8444444444444444,
+        "remaining_down_precision": 0.5066666666666667,
+        "precision_change": 0.00666666666666671
+      }
+    },
+    "BONATO_AR1_H1_MEDIAN": {
+      "target_clock": "CLEAN_SAME_DAILY_AXIS",
+      "pre2025": {
+        "years": [
+          2023,
+          2024
+        ],
+        "overlap": 19,
+        "baseline_tp": 8,
+        "baseline_fp": 11,
+        "vetoed": 7,
+        "good_veto": 1,
+        "bad_veto": 6,
+        "veto_precision": 0.14285714285714285,
+        "false_alarm_reduction": 0.09090909090909091,
+        "true_positive_retention": 0.25,
+        "remaining_down_precision": 0.16666666666666666,
+        "precision_change": -0.2543859649122807,
+        "status": "COUNTERSIGN_VETO_NOT_SUPPORTED"
+      },
+      "stress_2025": {
+        "overlap": 90,
+        "baseline_tp": 45,
+        "baseline_fp": 45,
+        "vetoed": 73,
+        "good_veto": 37,
+        "bad_veto": 36,
+        "veto_precision": 0.5068493150684932,
+        "false_alarm_reduction": 0.8222222222222222,
+        "true_positive_retention": 0.2,
+        "remaining_down_precision": 0.5294117647058824,
+        "precision_change": 0.02941176470588236
+      }
+    },
+    "BONATO_AR1_RM_H1_MEDIAN": {
+      "target_clock": "CLEAN_SAME_DAILY_AXIS",
+      "pre2025": {
+        "years": [
+          2023,
+          2024
+        ],
+        "overlap": 19,
+        "baseline_tp": 8,
+        "baseline_fp": 11,
+        "vetoed": 6,
+        "good_veto": 1,
+        "bad_veto": 5,
+        "veto_precision": 0.16666666666666666,
+        "false_alarm_reduction": 0.09090909090909091,
+        "true_positive_retention": 0.375,
+        "remaining_down_precision": 0.23076923076923078,
+        "precision_change": -0.19028340080971656,
+        "status": "COUNTERSIGN_VETO_NOT_SUPPORTED"
+      },
+      "stress_2025": {
+        "overlap": 90,
+        "baseline_tp": 45,
+        "baseline_fp": 45,
+        "vetoed": 54,
+        "good_veto": 26,
+        "bad_veto": 28,
+        "veto_precision": 0.48148148148148145,
+        "false_alarm_reduction": 0.5777777777777777,
+        "true_positive_retention": 0.37777777777777777,
+        "remaining_down_precision": 0.4722222222222222,
+        "precision_change": -0.02777777777777779
+      }
+    },
+    "ALTUNTAS_ALEXNET": {
+      "target_clock": "BLOCKED_TARGET_CLOCK_MISMATCH",
+      "clock_evidence": {
+        "alarm_overlap_2024": 17,
+        "parent_vs_candidate_actual_sign_match_2024": 0.5882352941176471,
+        "alarm_overlap_2025": 89,
+        "parent_vs_candidate_actual_sign_match_2025": 0.7752808988764045
+      },
+      "descriptive_only": {
+        "pre2025_2024": {
+          "overlap": 17,
+          "baseline_tp": 7,
+          "baseline_fp": 10,
+          "vetoed": 11,
+          "good_veto": 7,
+          "bad_veto": 4,
+          "veto_precision": 0.6363636363636364,
+          "false_alarm_reduction": 0.7,
+          "true_positive_retention": 0.42857142857142855,
+          "remaining_down_precision": 0.5,
+          "precision_change": 0.08823529411764708
+        },
+        "stress_2025": {
+          "overlap": 89,
+          "baseline_tp": 44,
+          "baseline_fp": 45,
+          "vetoed": 69,
+          "good_veto": 35,
+          "bad_veto": 34,
+          "veto_precision": 0.5072463768115942,
+          "false_alarm_reduction": 0.7777777777777778,
+          "true_positive_retention": 0.22727272727272727,
+          "remaining_down_precision": 0.5,
+          "precision_change": 0.005617977528089901
+        }
+      },
+      "status": "BLOCKED_TARGET_CLOCK_MISMATCH / NOT_VALID_AS_PARENT_VETO"
+    },
+    "FAMILY_CONSENSUS_2OF3": {
+      "status": "INVALID_TARGET_CLOCK_MIX / INSUFFICIENT_VETO_SUPPORT",
+      "reason": "The preregistered three-family consensus contains Altuntas, whose next-day actual axis is not sufficiently aligned with the SQRT parent axis; therefore the consensus is not admissible as decision evidence.",
+      "descriptive_only_2024": {
+        "overlap": 17,
+        "vetoed": 2,
+        "good_veto": 1,
+        "bad_veto": 1,
+        "veto_precision": 0.5,
+        "false_alarm_reduction": 0.1,
+        "true_positive_retention": 0.8571428571428571,
+        "remaining_down_precision": 0.4,
+        "precision_change": -0.0117647058823529
+      }
+    }
+  },
+  "excluded_weekly_models": {
+    "reason": "HORIZON_MISMATCH_WITH_PARENT_NEXT_TRADING_DAY_CLOCK",
+    "families": [
+      "BCTX_AR",
+      "VLMC_BS",
+      "COVLMC",
+      "REALP_CARR",
+      "PARISI_ROLLING_WARD"
+    ]
+  },
+  "final_decision": {
+    "label": "UP_COUNTERSIGN_VETO_NOT_SUPPORTED_WITH_CURRENT_ELIGIBLE_MODELS",
+    "interpretation": "The user's counter-model architecture remains scientifically plausible, but the currently available frozen UP-capable models do not safely veto SQRT forced-DOWN calls. TTSM produces no pre-2025 UP vetoes on SQRT alarm days; Bonato destroys too many true DOWN calls; Altuntas is not on a sufficiently aligned daily target clock and also has poor true-DOWN retention descriptively.",
+    "next_requirement": "A dedicated same-clock UP/rebound verifier or genuinely new direction-resolving information is required. Do not tune a new verifier on 2025."
+  },
+  "governance": {
+    "random_split": false,
+    "production_db_writes": false,
+    "auto_selector": "OFF",
+    "auto_ensemble": "OFF",
+    "runtime_promotion": false,
+    "trading_mapping": false
+  }
+}
