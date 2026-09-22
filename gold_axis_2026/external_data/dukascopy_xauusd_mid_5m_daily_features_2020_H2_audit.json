@@ -1,0 +1,73 @@
+{
+  "identity": "EXTERNAL_DUKASCOPY_XAUUSD_FEATURE_SPINE_V1_RESEARCH",
+  "year": 2020,
+  "segment": "H2",
+  "period": [
+    "2020-07-01",
+    "2020-12-31"
+  ],
+  "retained_days": 132,
+  "first_day": "2020-07-01",
+  "last_day": "2020-12-31",
+  "construction": "bid/ask inner join -> mid close -> 5m last -> NY daily features",
+  "min_bars": 240,
+  "provenance": [
+    {
+      "month": "2020-07",
+      "ask_blob_sha": "2b4c7994ca3194581e457ebf8a40468d2fd547e8",
+      "bid_blob_sha": "847bb9026de6624c1b18e75f9cc704a7ebe71ac0",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2020-08",
+      "ask_blob_sha": "f6c615682f1b57f4ac791c4310c319fbbad32706",
+      "bid_blob_sha": "98703dd42a9cc7d82cb5b4960e494c2ccba67c0d",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2020-09",
+      "ask_blob_sha": "e68fa0ca0db1f48caeefb0c64f43e5c518a8c857",
+      "bid_blob_sha": "8ff0755ce89874f1dbfc205c8d201932474abbdd",
+      "ask_rows": 43200,
+      "bid_rows": 43200,
+      "joined_rows": 43200
+    },
+    {
+      "month": "2020-10",
+      "ask_blob_sha": "0c42f8e81779462b80d082c38dda2fe972db2464",
+      "bid_blob_sha": "745a2f19294717f2789b444c9c9c3228fc650e97",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2020-11",
+      "ask_blob_sha": "e748b7c1db70a60de97a29cf88c1b6358ab2495d",
+      "bid_blob_sha": "25c64bb5b5cfd768bbcefc8d8cac859419cfe575",
+      "ask_rows": 43200,
+      "bid_rows": 43200,
+      "joined_rows": 43200
+    },
+    {
+      "month": "2020-12",
+      "ask_blob_sha": "bfe1c9041a12d789b7618eed940cfd725833395a",
+      "bid_blob_sha": "3fa27e05d6d0f2a1ed719f06a5159f4ad383e94f",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2021-01",
+      "ask_blob_sha": "683d8fe93488dc70822d8090ed2559a835be4cd9",
+      "bid_blob_sha": "a06ca6ad013300d2be0157f15c47e390ec419db1",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    }
+  ],
+  "authority": "RESEARCH_STAGING_ONLY"
+}
