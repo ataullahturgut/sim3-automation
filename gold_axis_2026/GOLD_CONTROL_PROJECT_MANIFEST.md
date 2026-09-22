@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.17  
+**Manifest version:** 2.18  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -2132,6 +2132,111 @@ Do not tune Q90 post hoc under this identity. The next controller, if pursued, m
 
 ---
 
+
+## 11L. Persistent risk-state dampener V1 — preregistered causal persistence reject gate
+
+**Identity:** `PERSISTENT_RISK_STATE_DAMPENER_V1_RESEARCH`  
+**Research branch:** `gold-persistent-risk-state-dampener-v1-20260922`  
+**Preregistration commit:** `58e9eafa6d46952f17861786b6e58abe12b217ce`  
+**Implementation commit:** `d5655c28262fcf8e132e0e6c3dac641c92a21a07`  
+**Workflow commit:** `ad6c52b32876436dad912db2445343a8d05df13b`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_PERSISTENT_RISK_STATE_DAMPENER_V1_RESULT_2026-09-22.json` (Git blob SHA `6c569b138c59f7e59042a72b3fab78767c6b149a`)  
+**Status:** `RETROSPECTIVELY_PROMISING_NOT_CERTIFIED`.
+
+### 11L.1 Motivation and frozen state rule
+
+The Q80/Q90 instantaneous-magnitude gate failed, so this successor did not retune Q90 or search another forecast-magnitude boundary. It tested whether Router-UP suppression should lose authority when downside risk has remained abnormally elevated across recent completed days.
+
+For each evaluation year, the existing parent `Q80_Y` downside-RV threshold remains frozen from formation data available by 31 December Y-1.
+
+At each forecast origin:
+- take the latest 20 completed daily downside-realized-variance observations, ending at and including the origin day;
+- count how many satisfy `DR >= Q80_Y`;
+- `PERSISTENT_HIGH` iff that count is at least 9;
+- otherwise `NON_PERSISTENT`;
+- insufficient 20-day history would deny suppression authority.
+
+The cutoff is analytical, not outcome-searched. Under the Q80 nominal exceedance probability p0=0.20, K=9 is the smallest integer with `P[Binomial(20,0.20)>=K] <= 0.01`:
+- tail at K=9 = **0.0099817863**;
+- tail at K=8 = **0.0321426631**.
+
+Controller:
+- Router ABSTAIN -> retain DOWN;
+- Router UP + PERSISTENT_HIGH -> WATCH and retain DOWN;
+- Router UP + NON_PERSISTENT -> suppress DOWN.
+
+No 2025/2026 tuning, no alternate lookback/cutoff search and no production writes were allowed.
+
+### 11L.2 Integrity gate
+
+All predecessor reconstruction checks passed with zero integrity errors.
+
+Frozen parent/Router intersections reproduced exactly:
+- 2020: 212 SQRT alarms; Router UP total=185; overlap=140; good/bad universal-veto cases=80/60;
+- 2021: 28 alarms; Router UP=33; overlap=2; good/bad=1/1;
+- 2022: 11 alarms; Router UP=22; overlap=0;
+- 2023: 2 alarms; Router UP=19; overlap=0;
+- 2024: 17 alarms; Router UP=42; overlap=4; good/bad=3/1.
+
+The corrected legacy-context counts also reproduced exactly:
+- 2023 FAST/SLOW/MONTHLY=106/79/133;
+- 2024 FAST/SLOW/MONTHLY=124/111/205.
+
+### 11L.3 Preregistered result
+
+| year | alarms | persistent alarms | suppress | WATCH | good suppress | bad suppress | false-alarm reduction | true-DOWN retention |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| 2020 | 212 | 199 | 3 | 137 | 3 | 0 | 2.61% | 100.00% |
+| 2021 | 28 | 18 | 1 | 1 | 0 | 1 | 0.00% | 93.75% |
+| 2022 | 11 | 4 | 0 | 0 | 0 | 0 | 0.00% | 100.00% |
+| 2023 | 2 | 0 | 0 | 0 | 0 | 0 | 0.00% | 100.00% |
+| 2024 | 17 | 8 | 4 | 0 | 3 | 1 | 30.00% | 85.71% |
+
+Pooled 2020–2024:
+- SQRT alarms=270;
+- actual DOWN=127;
+- actual UP=143;
+- persistent alarms=229;
+- non-persistent alarms=41;
+- RETAIN=124;
+- WATCH=138;
+- SUPPRESS=8;
+- good suppressions=6;
+- bad suppressions=2;
+- bad-suppression rate among actual DOWN alarms=**1.57%**;
+- suppression precision=**75.00%**;
+- false-alarm reduction=**4.20%**;
+- true-DOWN retention=**98.43%**;
+- baseline forced-DOWN precision=47.04%;
+- remaining forced-DOWN precision=47.71%;
+- precision change=**+0.67 pp**.
+
+Primary exact safety diagnostic:
+- alpha=0.20;
+- delta=0.10;
+- n=127 actual-DOWN alarms;
+- x=2 bad suppressions;
+- exact lower-tail binomial p=**2.624e-10**;
+- exact 90% Clopper-Pearson upper bad-suppression bound=**4.14%**;
+- retrospective safety diagnostic=**PASS**.
+
+For comparison:
+- rejected universal Router veto suppressed 146 alarms, including 62 true DOWN; true-DOWN retention=51.18%;
+- rejected Q80/Q90 gate suppressed 57 alarms, including 27 true DOWN; true-DOWN retention=78.74%;
+- persistent-state V1 suppresses only 8 alarms, including 2 true DOWN; true-DOWN retention=98.43%.
+
+### 11L.4 Binding interpretation
+
+This is the first preregistered successor in this sequence to pass the frozen pooled historical safety diagnostic. The main scientific finding is that **risk persistence is materially informative for veto safety**: 229 of 270 SQRT alarms are classified persistent, and 138 of the 146 Router-UP/SQRT overlaps occur inside that persistent state. In 2020 specifically, 199 of 212 SQRT alarms are persistent; the gate converts 137 Router-UP conflicts to WATCH and permits only three suppressions, all three of which are false alarms.
+
+However the controller is deliberately very conservative. It removes only 6 of 143 false parent alarms (4.20%) and improves remaining forced-DOWN precision by only +0.67 pp. Therefore the historical safety problem is substantially controlled, but the practical false-alarm-cleaning problem is **not yet solved**.
+
+The preregistered status remains `RETROSPECTIVELY_PROMISING_NOT_CERTIFIED`, not a promotion decision. The hypothesis was created after prior historical failures were visible, so the tiny p-value is a retrospective diagnostic and must not be interpreted as prospective certification.
+
+Do not tune N=20, K=9 or the 0.01 persistence boundary post hoc under this identity. Freeze this model as the current **safety-reference dampener**. Any successor intended to recover useful suppression coverage must use a new preregistration, preferably alarm-conditional / within-regime Router competence or hierarchical/non-exchangeable risk control. 2025 may only serve as retrospective locked transport and may not be used for parameter selection; genuine certification requires new prospective or otherwise independent same-clock evidence.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -2170,6 +2275,10 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 Gold Control currently has a useful downside-risk sensor but no proven general next-day DOWN-direction engine.
 
-SQRT-HAR-DR is the current recent downside-risk research reference. RAW HAR-DR is the mandatory comparator. ME-SQRT shows a small coherent mechanism signal but did not pass its calibration gate. HARK-SD, cross-domain direction classifiers, scalar meta-veto, standalone DTW path veto and standalone SP500 veto did not pass their frozen pre-2025 gates. Heterogeneous consensus produced one exploratory 2024 pocket but did not transport.
+SQRT-HAR-DR remains the current recent downside-risk research reference. RAW HAR-DR remains the mandatory comparator. ME-SQRT shows a small coherent mechanism signal but did not pass its calibration gate. HARK-SD, cross-domain direction classifiers, scalar meta-veto, standalone DTW path veto and standalone SP500 veto did not pass their frozen pre-2025 gates. Heterogeneous consensus produced one exploratory 2024 pocket but did not transport.
 
-The time-to-event V1 diagnostic is closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. UP-countersign V1 is retained as the narrow TTSM/Bonato/Altuntaş test. V2 then expanded the test to FAST, RV_LOGIT, RM_LOGIT, AR1_RM_LOGIT and TTSM S1/S2 and found NO_EXISTING_HISTORICAL_UP_ENGINE_SAFELY_CLEANS_SQRT_FALSE_ALARMS_UNDER_V2. Section 6 remains the authoritative year-by-year UP inventory. UP Expert Router V1 reduced false-UP burden but failed its 2024 precision-lift gate. The original 12-engine omission was then corrected. Legacy-context Router V2 passed its frozen standalone 2024 gate and transported strongly in 2025 at lower coverage. The universal SQRT hard-veto coupling is now decisively rejected on audited 2020–2024 history: 62 of 127 actual-DOWN alarms would be suppressed and true-DOWN retention falls to 51.18%. The first preregistered regime-aware successor, REGIME_GATED_SELECTIVE_DAMPENER_V1, also fails: converting >=Q90 Router-UP alarms to WATCH raises true-DOWN retention to 78.74% but leaves 27 bad suppressions, fails the alpha=0.20/delta=0.10 diagnostic (p=0.68545), and changes remaining forced-DOWN precision by -0.09 pp. Therefore a single instantaneous SQRT-risk percentile gate is not sufficient. Router V2 remains frozen as a verifier baseline; the next lane is a newly preregistered state/regime-persistence or conditional-risk controller, not post-hoc Q90 tuning, and 2025 remains unavailable for policy selection.
+The time-to-event V1 diagnostic is closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. UP-countersign V1 and V2 established that existing direction engines cannot safely act as a universal SQRT false-alarm delete switch. UP Expert Router V2 remains frozen as an UP-verifier baseline. The audited universal Router hard veto is decisively rejected: 62 of 127 actual-DOWN alarms would be suppressed and true-DOWN retention falls to 51.18%. The first instantaneous regime-aware Q80/Q90 successor also fails safety, with 27 bad suppressions and 78.74% true-DOWN retention.
+
+The newly preregistered PERSISTENT_RISK_STATE_DAMPENER_V1 is the first successor to pass the frozen pooled retrospective safety diagnostic: only 2 of 127 actual-DOWN alarms are suppressed, the exact alpha=0.20/delta=0.10 diagnostic gives p=2.624e-10, the 90% upper bad-suppression bound is 4.14%, and true-DOWN retention rises to 98.43%. This supports the hypothesis that persistent downside-risk state is a critical conditioning variable. But the controller is highly conservative: it suppresses only 8 alarms, removes only 6 of 143 false alarms (4.20%), and improves remaining forced-DOWN precision by only +0.67 pp. Therefore it is frozen as a **retrospectively promising safety reference, not a finished false-alarm controller and not a runtime model**.
+
+The next development lane, if continued, is a newly preregistered alarm-conditional / within-regime competence or hierarchical/non-exchangeable risk controller designed to recover suppression utility without sacrificing the newly demonstrated persistence-state safety. Do not tune the 20-day / 9-exceedance persistence gate under its current identity. 2025 remains unavailable for parameter selection and can only be used as locked retrospective transport; genuine certification requires new prospective or otherwise independent same-clock evidence.
