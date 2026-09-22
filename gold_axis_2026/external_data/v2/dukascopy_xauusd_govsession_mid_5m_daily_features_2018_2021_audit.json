@@ -1,0 +1,66 @@
+{
+  "identity": "EXTERNAL_DUKASCOPY_SESSIONMASK_V2_RESEARCH",
+  "period": [
+    "2018-01-01",
+    "2021-12-31"
+  ],
+  "segments": [
+    {
+      "segment": "2018_H1",
+      "rows": 129,
+      "sha": "b6ee4f846f2d849f261c74aeb2b74994288e8dad"
+    },
+    {
+      "segment": "2018_H2",
+      "rows": 131,
+      "sha": "ce46c94c6eba42b32168f7dc79f832580cd7d019"
+    },
+    {
+      "segment": "2019_H1",
+      "rows": 128,
+      "sha": "b70d4cc818728304c6fd7848223b795ec9b9169d"
+    },
+    {
+      "segment": "2019_H2",
+      "rows": 132,
+      "sha": "3c33103daaee6bcd36138ffc01b415e870d9ab5b"
+    },
+    {
+      "segment": "2020_H1",
+      "rows": 129,
+      "sha": "b45ec2619e183856b1c73ab9ddb2b6921cca1757"
+    },
+    {
+      "segment": "2020_H2",
+      "rows": 131,
+      "sha": "afc5d4de8329db54a924257a360a49ce8e1e682a"
+    },
+    {
+      "segment": "2021_H1",
+      "rows": 127,
+      "sha": "adeabaeaa2e421b125c4ffb0801ad278deaf285f"
+    },
+    {
+      "segment": "2021_H2",
+      "rows": 131,
+      "sha": "6b4d65b19498f7e75daea13f1e12a47e260fac2e"
+    }
+  ],
+  "retained_rows": 1038,
+  "years": {
+    "2018": 260,
+    "2019": 260,
+    "2020": 260,
+    "2021": 258
+  },
+  "duplicate_dates": [],
+  "unsorted_count": 0,
+  "bad_rows": 0,
+  "zero_rv_rows": 0,
+  "min_bars": 276,
+  "max_bars": 276,
+  "first_day": "2018-01-01",
+  "last_day": "2021-12-31",
+  "excluded_local_hour": "17:00-17:55 America/New_York",
+  "authority": "RESEARCH_STAGING_ONLY"
+}
