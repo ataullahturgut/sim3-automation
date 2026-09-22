@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.02  
+**Manifest version:** 2.03  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -444,6 +444,68 @@ SLOW has a genuine 2023 low-false-UP pocket, but it does not transport. FAST gai
 - **EMERGENCY_LEVEL / EMERGENCY_REVERSAL:** context/reversal roles remain NOT_PROVEN as independent next-day UP predictors.
 
 **Binding implication:** Router V1 remains a valid narrow same-clock experiment, but it is incomplete as the full Gold Control UP architecture. A successor router must reintegrate the original 12 in role-preserving form.
+
+---
+
+## 6C. UP Expert Router V2 — original legacy context reintegrated
+
+**Identity:** `UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH`  
+**Research branch:** `gold-up-expert-router-v2-legacy-context-20260922`  
+**Preregistration:** `f97dd635664db4506d6f8a622ced762249d3cdfc`  
+**Frozen result:** `f4c661731c8888985b82b4bf16eab401184fa76f`  
+**Status:** `PROMISING_LEGACY_CONTEXT_ROUTER_V2_PRE2025_GATE_PASSED`.
+
+V2 corrects Router V1's omission of the original legacy layer. Direct daily UP experts remain TTSM-S2, TTSM-S1, Bonato AR1_RM h=1, AR1_RM_LOGIT and RM_LOGIT. The original FAST, SLOW and MONTHLY_DIRECTION_3M states are reintegrated **as competence context, not equal votes**.
+
+Frozen legacy context:
+- FAST_UP = ROBUST_UP;
+- SLOW_UP = ROBUST_UP;
+- MONTHLY_UP = MONTHLY_DIRECTION_3M UP;
+- CONSENSUS_UP iff at least 2 of 3 are UP;
+- otherwise NON_CONSENSUS_UP.
+
+Each modern expert is ranked from matured historical UP performance in the current legacy context bucket, with frozen global fallback if bucket support is below 30 UP calls.
+
+### 6C.1 Frozen 2024 validation
+
+| Metric | Router V2 | Router V1 | Fixed RM_LOGIT |
+|---|---:|---:|---:|
+| UP outputs | 42 | 135 | 149 |
+| Coverage | **20.49%** | 65.85% | 72.68% |
+| True UP / false UP | **26 / 16** | 77 / 58 | 84 / 65 |
+| **UP precision** | **61.90%** | 57.04% | 56.38% |
+| **False-UP FPR** | **18.60%** | 67.44% | 75.58% |
+| Actual-UP recall | 21.85% | 64.71% | 70.59% |
+
+Relative to Router V1:
+- UP precision: **+4.87 pp**;
+- false-UP FPR: **-48.84 pp**;
+- coverage: **-45.37 pp**.
+
+All preregistered 2024 promising-gate conditions passed.
+
+### 6C.2 Locked 2025 transport
+
+| Metric | Router V2 | Router V1 |
+|---|---:|---:|
+| UP outputs | 37 | 137 |
+| Coverage | **15.61%** | 57.81% |
+| True UP / false UP | **27 / 10** | 87 / 50 |
+| **UP precision** | **72.97%** | 63.50% |
+| **False-UP FPR** | **10.31%** | 51.55% |
+| Actual-UP recall | 19.29% | 62.14% |
+
+2025 did not tune V2 and cannot alter the pre-2025 decision.
+
+### 6C.3 Interpretation
+
+Reintroducing the original 12-engine legacy direction layer materially changes the UP-verifier result. The gain comes from **selectivity**, not broad direction coverage: Router V2 abstains on most days and emits only a small subset of high-specificity UP calls.
+
+All emitted V2 signals in both 2024 and 2025 occur in the frozen `NON_CONSENSUS_UP` legacy context. This is an empirical routing result, not a causal economic claim.
+
+The original 12-engine work is therefore **not obsolete**. In role-preserving form it materially improves the modern UP router. CAUSAL_PATCH/VW-MIDAS/MOMENTUM remain slower priors, Macro Event remains event-time, GVZ remains risk context, and BOCPD/Emergency retain their blocked/not-proven statuses.
+
+**Next allowed step:** freeze V2 as-is and test its emitted UP calls against SQRT downside alarms in a new preregistered countersign-veto study. No V2 threshold or context rule may change in that intersection test.
 
 ---
 
@@ -906,4 +968,4 @@ Gold Control currently has a useful downside-risk sensor but no proven general n
 
 SQRT-HAR-DR is the current recent downside-risk research reference. RAW HAR-DR is the mandatory comparator. ME-SQRT shows a small coherent mechanism signal but did not pass its calibration gate. HARK-SD, cross-domain direction classifiers, scalar meta-veto, standalone DTW path veto and standalone SP500 veto did not pass their frozen pre-2025 gates. Heterogeneous consensus produced one exploratory 2024 pocket but did not transport.
 
-The time-to-event V1 diagnostic is closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. UP-countersign V1 is retained as the narrow TTSM/Bonato/Altuntaş test. V2 then expanded the test to FAST, RV_LOGIT, RM_LOGIT, AR1_RM_LOGIT and TTSM S1/S2 and found NO_EXISTING_HISTORICAL_UP_ENGINE_SAFELY_CLEANS_SQRT_FALSE_ALARMS_UNDER_V2. Section 6 remains the authoritative year-by-year UP inventory. The UP Expert Router V1 has now tested dynamic class-specific selection: it reduced false-UP burden but failed the frozen 2024 precision-lift gate. The next lane is either a preregistered recency-aware/conservative router successor or genuinely new direction-resolving information. Preferred evidence is new information—beginning with Gold options/futures structure if authoritative long-history data can be obtained—or a newly preregistered daily-horizon UP/rebound expert with sufficient historical support. Do not continue adding unconstrained complexity to the same Gold history or tune on 2025.
+The time-to-event V1 diagnostic is closed as EARLY_ALARM_TIMING_NOT_SUPPORTED. UP-countersign V1 is retained as the narrow TTSM/Bonato/Altuntaş test. V2 then expanded the test to FAST, RV_LOGIT, RM_LOGIT, AR1_RM_LOGIT and TTSM S1/S2 and found NO_EXISTING_HISTORICAL_UP_ENGINE_SAFELY_CLEANS_SQRT_FALSE_ALARMS_UNDER_V2. Section 6 remains the authoritative year-by-year UP inventory. UP Expert Router V1 reduced false-UP burden but failed its 2024 precision-lift gate. The original 12-engine omission was then corrected. Legacy-context Router V2 passed its frozen 2024 gate with 61.90% UP precision and 18.60% false-UP FPR, and transported descriptively to 72.97% precision / 10.31% FPR in 2025 at much lower coverage. The next lane is a separately preregistered SQRT countersign-veto test using frozen Router V2 outputs. Preferred evidence is new information—beginning with Gold options/futures structure if authoritative long-history data can be obtained—or a newly preregistered daily-horizon UP/rebound expert with sufficient historical support. Do not continue adding unconstrained complexity to the same Gold history or tune on 2025.
