@@ -1,0 +1,138 @@
+{
+  "identity": "EXTERNAL_DUKASCOPY_XAUUSD_FEATURE_SPINE_V1_RESEARCH",
+  "year": 2019,
+  "source_repository": "kevingtlin/Market-Data-Lab",
+  "source_claimed_provider": "Dukascopy",
+  "source_timeframe": "m1 bid+ask",
+  "construction": "inner join bid/ask timestamp -> mid close -> last close per UTC 5m bin -> America/New_York daily realized features",
+  "min_5m_bars_per_retained_weekday": 240,
+  "retained_days": 261,
+  "first_day": "2019-01-01",
+  "last_day": "2019-12-31",
+  "provenance": [
+    {
+      "month": "2019-01",
+      "ask_blob_sha": "1bf6c2dcb0495a1140a2dc9afac9b429fef454a0",
+      "bid_blob_sha": "d788e642972c098bf28be41e0e1c86f054651e10",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2019-02",
+      "ask_blob_sha": "071de40c1e0e4eaea3252d47e83b60cb3adf236e",
+      "bid_blob_sha": "6562e7554bb56d7c13be0a3146363ad9aa04aab8",
+      "ask_rows": 40320,
+      "bid_rows": 40320,
+      "joined_rows": 40320
+    },
+    {
+      "month": "2019-03",
+      "ask_blob_sha": "82bf81848c45cb8a643410a11e441d83f6c14fc0",
+      "bid_blob_sha": "62072846bbb665dbe8578a5a5a65a9b16c141dea",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2019-04",
+      "ask_blob_sha": "1be7ab251d5b665aee1c58aa1aeab243b2f7ac8f",
+      "bid_blob_sha": "dfc56f160adc586a5151234d425e7a67f752d2d9",
+      "ask_rows": 43200,
+      "bid_rows": 43200,
+      "joined_rows": 43200
+    },
+    {
+      "month": "2019-05",
+      "ask_blob_sha": "3f5514d09aad40cb5a1ae5f909be638a4b253196",
+      "bid_blob_sha": "b5d38db0e04c364ccdafa4e26403ac22e12ed075",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2019-06",
+      "ask_blob_sha": "3ef6423830833404c9d40584bd5d9df36a7d485e",
+      "bid_blob_sha": "44e2d764624e35e144f392c96a671e707282362d",
+      "ask_rows": 43200,
+      "bid_rows": 43200,
+      "joined_rows": 43200
+    },
+    {
+      "month": "2019-07",
+      "ask_blob_sha": "17078245bfdd7babd8ba221b49536d49467b77a0",
+      "bid_blob_sha": "ed8084994fc9b9c4c4f17b59811cff1a61c356ae",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2019-07",
+      "ask_blob_sha": "17078245bfdd7babd8ba221b49536d49467b77a0",
+      "bid_blob_sha": "ed8084994fc9b9c4c4f17b59811cff1a61c356ae",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2019-08",
+      "ask_blob_sha": "ae8ec0a6eb88d1b34c3c86e019613a6fb3d79e9d",
+      "bid_blob_sha": "99ab6205c9be8fd3160bd13bd5a75e7396f8766b",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2019-09",
+      "ask_blob_sha": "3b7e02e7338931b80c8fc80d0a33bc50bc1363bc",
+      "bid_blob_sha": "ebb2ea6aef8bbb802f6075317e823e4ccfe0ee9b",
+      "ask_rows": 43200,
+      "bid_rows": 43200,
+      "joined_rows": 43200
+    },
+    {
+      "month": "2019-10",
+      "ask_blob_sha": "70ae47215728f07423ef6fd8b5288dc0735de5b1",
+      "bid_blob_sha": "5efe9770e704341b4936710f046a8d28f98e99dd",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2019-11",
+      "ask_blob_sha": "bd82cd2def290171e2999e86bad7586e156413b3",
+      "bid_blob_sha": "833f70d205407abbda51a5bcc6ce57be8668a307",
+      "ask_rows": 43200,
+      "bid_rows": 43200,
+      "joined_rows": 43200
+    },
+    {
+      "month": "2019-12",
+      "ask_blob_sha": "b37401c8b84b235b081c46d425e7a9c6ad9086a9",
+      "bid_blob_sha": "3c0faff068c98924e59ca229634d03ffae6567b0",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    },
+    {
+      "month": "2020-01",
+      "ask_blob_sha": "a6fb77e4ed232b0eddacdc6a21ced6f0d28cb607",
+      "bid_blob_sha": "bd06beef870f2ba508d630a4482d841c119576e1",
+      "ask_rows": 44640,
+      "bid_rows": 44640,
+      "joined_rows": 44640
+    }
+  ],
+  "source_parts": [
+    {
+      "path": "staging/..._2019_H1.csv",
+      "commit_hint": "007a76a4f98e739d6027fff0f6faeb23352a4c44"
+    },
+    {
+      "path": "staging/..._2019_H2.csv",
+      "commit_hint": "78a113806f5ba3eee840800b871a8b1ea988dd3a"
+    }
+  ],
+  "raw_third_party_files_copied": false,
+  "authority": "RESEARCH_STAGING_ONLY"
+}
