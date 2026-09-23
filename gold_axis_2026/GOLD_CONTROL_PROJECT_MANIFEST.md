@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.38  
+**Manifest version:** 2.39  
 **Issue date:** 2026-09-23  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -4674,6 +4674,134 @@ No shapelet model is authorized by this section itself.
 
 ---
 
+
+## 11ZE. Residual sequence-shapelet UP V1 — sequence subsequences do not rescue the hard residual lane
+
+**Identity:** `RESIDUAL_SEQUENCE_SHAPELET_UP_V1_RESEARCH`  
+**Research branch:** `gold-residual-shapelet-sequence-v1-20260923`  
+**Preregistration commit:** `cc9082cea1f1684ad2d299886c61a26fd91c5cd7`  
+**Implementation clarification:** `e65b5bfd0a6866b8b31f7ab18a5650caab49689e`  
+**Implementation commit:** `81ade0323986518e1064ca1717957fbe80484d20`  
+**Workflow commit:** `2b924e0545f3f80cd6c9a83e981e15334a46d9f2`  
+**Frozen result commit:** `ecf28b0aa7aa9352b8304ffa07510992b60d10af`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_RESIDUAL_SEQUENCE_SHAPELET_UP_V1_RESULT_2026-09-23.json` (Git blob SHA `4c659d721c9a886a979bec072e7a435a696da3bc`)  
+**Status:** `SHAPELET_UP_V1_NOT_SUPPORTED / RESEARCH_ONLY / NOT_RUNTIME`.
+
+### 11ZE.1 Design
+
+This V1 was a deliberately different family from the completed aggregate-feature models.
+
+Chronology:
+- external 2020 residual n=72 =35 UP +37 DOWN: shapelet discovery and model fitting only;
+- external 2021 residual n=26 =11 UP +15 DOWN: one-sided threshold calibration only;
+- governed 2022–2024 residual n=26 =13 UP +13 DOWN: untouched pre-2025 evaluation;
+- locked 2025 residual n=74 =35 UP +39 DOWN: descriptive transport only.
+
+Sequence representation:
+- completed origin-day 5-minute path;
+- final 96 returns / 97 cumulative-path points;
+- full-day RV normalization and local rebasing;
+- shapelet lengths 13, 25 and 49 points, approximately 1h/2h/4h;
+- candidate start grid every 6 points;
+- z-normalized RMS subsequence distance.
+
+Candidate generation/selection used 2020 only:
+- 2,239 total candidates;
+- one UP-associated shapelet chosen by most-negative Cliff delta;
+- one DOWN-associated shapelet chosen by most-positive Cliff delta.
+
+A two-distance L2 logistic model was fit on 2020 only. The 2021 threshold was:
+`tau=max(0.50, q80 of 2021 realized-DOWN p(UP))`.
+
+No random split, target-year fitting, 2025 tuning or result-dependent candidate sweep.
+
+### 11ZE.2 Source-transfer integrity
+
+Selected shapelet distance features transferred adequately across providers on n=345 exact-date overlap:
+
+- UP-shapelet distance Pearson=0.94247; median absolute difference=0.00996;
+- DOWN-shapelet distance Pearson=0.99513; median absolute difference=0.00365.
+
+Therefore the negative result is not explained by external/governed sequence-source mismatch.
+
+### 11ZE.3 Calibration warning
+
+The external 2021 calibration set already showed poor directional transfer:
+
+- calls=3;
+- true UP=0;
+- false UP=3;
+- precision=0%;
+- AUC=0.3152;
+- frozen tau=0.58311.
+
+The preregistered design nevertheless kept the model and threshold fixed for governed evaluation.
+
+### 11ZE.4 Governed pre-2025 result
+
+Pooled 2022–2024:
+
+- n=26 =13 UP +13 DOWN;
+- shapelet calls=8;
+- true UP=3;
+- false UP=5;
+- precision=**37.50%**;
+- missed-UP recall=23.08%;
+- false-UP FPR=38.46%;
+- coverage=30.77%;
+- Wilson90 LCB precision=19.54%;
+- AUC=**0.2663**;
+- Brier=0.2797.
+
+The frozen pre-2025 gate fails decisively.
+
+By year:
+- 2022: 5 calls =2 true +3 false, precision40%, AUC0.3667;
+- 2023: 1 call, false, AUC0;
+- 2024: 2 calls =1 true +1 false, precision50%, AUC0.2619.
+
+### 11ZE.5 Locked 2025 transport
+
+- n=74;
+- calls=17;
+- true UP=7;
+- false UP=10;
+- precision=41.18%;
+- recall=20.0%;
+- FPR=25.64%;
+- AUC=0.5260.
+
+Locked transport is also not supportive.
+
+### 11ZE.6 Comparison to supported One-Sided UP-2
+
+Pre-2025:
+
+- **One-Sided UP-2 Logit V1:** 11 calls, 8 true /3 false, precision72.73%, recall61.54%, FPR23.08%, AUC0.7870.
+- **Sequence-Shapelet V1:** 8 calls, 3 true /5 false, precision37.50%, recall23.08%, FPR38.46%, AUC0.2663.
+
+Thus this controlled sequence-shapelet implementation does not improve the residual UP lane.
+
+### 11ZE.7 Binding interpretation
+
+The project has now tested three increasingly different attempts to exploit the error anatomy:
+
+1. scalar/morphology summaries;
+2. a targeted scalar continuation-mimic veto;
+3. local discriminative subsequence/shapelet representation.
+
+None improves on the supported One-Sided UP-2 Logit V1.
+
+This does **not** prove that all sequence models are useless. It does show that a low-capacity, chronology-safe shapelet representation selected only from earlier history does not recover the desired stable separation.
+
+The remaining evidence increasingly favors a **conditional/non-stationary residual boundary** rather than a missing static pattern representation.
+
+The next defensible family is therefore **regime-conditioned / learning-to-defer resolution**, where the model is allowed to recognize that the hard residual mapping changes across states and to abstain when a stable local authority cannot be established.
+
+No regime-conditioned model is authorized by this section itself.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -4710,7 +4838,7 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 ## 14. Final binding summary
 
-The project boundary remains explicit: the **main forecast model is separate**, while this stack provides direction / directional-confirmation information only.
+The project boundary remains explicit: the **main forecast model is separate**. This stack provides direction / directional-confirmation information only.
 
 Current direction research state:
 
@@ -4718,19 +4846,28 @@ Current direction research state:
 2. **Frozen UP Verifier V2** — primary selective positive-UP authority.
 3. **One-Sided UP-2 Logit V1** — the only currently supported second-stage missed-UP method; research-only.
 4. **Residual Local-DES V1** — unsupported.
-5. **Residual Trajectory/Rebound Morphology V1** — unsupported under its pre-2025 gate.
-6. **Continuation-mimic scalar veto V1** — unsupported; the stable-looking final-hour R² anatomy did not generalize as a useful standalone earlier-history discriminator.
-7. **Route-consistent CBR-DTW DOWN candidate** — unsupported as VERIFIED-DOWN authority.
-8. **Positive DOWN resolver** — still not proven.
-9. **UNCERTAIN** — binding fallback where no validated positive direction evidence exists.
+5. **Residual Trajectory/Rebound Morphology V1** — unsupported.
+6. **Continuation-mimic scalar veto V1** — unsupported; zero governed vetoes.
+7. **Residual Sequence-Shapelet UP V1** — unsupported; pooled 2022–2024 precision37.5% and AUC0.266.
+8. **Route-consistent CBR-DTW DOWN candidate** — unsupported as VERIFIED-DOWN authority.
+9. **Positive DOWN resolver** — still not proven.
+10. **UNCERTAIN** — binding fallback where no validated positive direction evidence exists.
 
-The error-anatomy work remains informative. One-Sided UP-2 captures a late-stress/incomplete-recovery rebound archetype, while some false-UP actual-DOWN cases mimic that state. However:
-- the strict 2020–2021 prequential reconstruction produced only two historical UP-2 calls, insufficient for a dedicated failure-detector training pool;
-- 2019 cannot be prepended under the frozen SQRT method because formation support is 238, below the frozen minimum 250;
-- a one-feature continuation veto based on final-hour trend R² made zero vetoes in governed 2022–2024 and locked 2025.
+The failure-anatomy work remains scientifically useful. It established that One-Sided UP-2 captures a repeatable late-stress/incomplete-recovery rebound archetype and that some false-UP actual-DOWN cases mimic that state. But follow-up attempts show that the hard errors are not repaired by:
+- a single final-hour persistence statistic;
+- a low-capacity local shapelet representation;
+- the existing expert pool;
+- the earlier CBR route.
 
-This narrows the scientific search space. The next clean research family is **sequence-level discriminative subsequence / shapelet analysis**, because aggregate scalar/morphology patches have not resolved the hard residual errors. Such work must select/train sequence patterns only from earlier external history and evaluate them chronologically on governed pre-2025 data; locked 2025 remains descriptive only.
+The strict historical error-pool extension was also sample-limited: only 17 external rows became fully scorable and only two historical UP-2 calls were reconstructed. A 2019 extension was blocked rather than relaxed because frozen SQRT formation support was 238 <250.
 
-If sequence-level evidence is also weak or unstable, the project should move to **regime-conditioned / learning-to-defer** resolution rather than repeatedly forcing a static residual UP/DOWN classifier.
+The strongest current positive evidence therefore remains the original One-Sided UP-2 Logit V1. The next clean research family is **regime-conditioned / learning-to-defer resolution**, because the missed-UP versus rejected-DOWN boundary changes materially between pre-2025 and locked 2025 and has resisted static scalar, morphology, expert-selection and sequence-shape patches.
+
+Any regime-conditioned study must:
+- define regimes using origin-safe information only;
+- learn competence chronologically;
+- allow ABSTAIN/UNCERTAIN rather than forcing binary direction;
+- keep 2025 out of regime design/tuning;
+- keep 2026 out of model selection.
 
 No automatic ensemble, forced binary direction, BUY/SELL mapping, runtime promotion, 2025 retuning or 2026 model selection is authorized.
