@@ -1,0 +1,234 @@
+{
+  "identity": "UP2_IMPORTANCE_WEIGHTED_SOURCE_ADAPTATION_V1_RESEARCH",
+  "date": "2026-09-23",
+  "status": "IMPORTANCE_WEIGHTED_SIGNAL_SAMPLE_LIMITED_NOT_CERTIFIED",
+  "integrity_errors": [],
+  "scientific_role": "covariate-shift/sample-selection correction; source rows remain ordinary residual rows, not fabricated UP2 calls",
+  "features": [
+    "last_hour_trend_r2",
+    "sqrt_score",
+    "late_downside_intensity"
+  ],
+  "external_reconstruction": {
+    "passed": true,
+    "raw_n": 518,
+    "spine_n": 518,
+    "common_n": 518,
+    "missing_dates": [],
+    "extra_dates": [],
+    "bad_276_bar_dates": [],
+    "max_abs_close_diff": 4.547473508864641e-13,
+    "max_abs_rv_diff": 3.548051609458813e-17,
+    "max_abs_dr_diff": 3.247185506594086e-17
+  },
+  "source_sqrt_summary": {
+    "2020": {
+      "alarms": 212,
+      "down": 97,
+      "up": 115
+    },
+    "2021": {
+      "alarms": 28,
+      "down": 16,
+      "up": 12
+    }
+  },
+  "source_router_summary": {
+    "2020": {
+      "n": 260,
+      "router_up": 185,
+      "tp": 111,
+      "fp": 74
+    },
+    "2021": {
+      "n": 258,
+      "router_up": 33,
+      "tp": 19,
+      "fp": 14
+    }
+  },
+  "source_route_summary": {
+    "2020": {
+      "sqrt_alarms": 212,
+      "router_up_overlap": 140,
+      "overlap_actual_up": 80,
+      "overlap_actual_down": 60,
+      "router_abstain": 72,
+      "abstain_actual_down": 37,
+      "abstain_actual_up": 35
+    },
+    "2021": {
+      "sqrt_alarms": 28,
+      "router_up_overlap": 2,
+      "overlap_actual_up": 1,
+      "overlap_actual_down": 1,
+      "router_abstain": 26,
+      "abstain_actual_down": 15,
+      "abstain_actual_up": 11
+    }
+  },
+  "feature_transfer": {
+    "overlap_n": 345,
+    "features": {
+      "last_hour_trend_r2": {
+        "pearson": 0.9928230313331109,
+        "median_abs_diff": 0.009717180964282646
+      },
+      "late_downside_intensity": {
+        "pearson": 0.996374326409898,
+        "median_abs_diff": 0.0013617638015450337
+      }
+    },
+    "passed": true
+  },
+  "source_counts": {
+    "n": 98,
+    "actual_up": 46,
+    "actual_down": 52
+  },
+  "target_2022_covariate_n": 7,
+  "importance_weighting": {
+    "method": "logistic domain classifier density ratio",
+    "raw_ratio_cap": 10.0,
+    "normalized_weight_mean": 1.0,
+    "normalized_weight_min": 0.0095051972707556,
+    "normalized_weight_median": 0.5643564225128676,
+    "normalized_weight_max": 4.472047464248097,
+    "raw_ratio_min": 0.009426462113051906,
+    "raw_ratio_median": 0.5596816440036035,
+    "raw_ratio_max": 4.435003797259796,
+    "capped_ratio_max": 4.435003797259796,
+    "ess": 46.08670129030898,
+    "ess_gate": 20.0,
+    "ess_gate_passed": true,
+    "domain_classifier_auc_training_descriptive": 0.8163265306122448,
+    "domain_coefficients": {
+      "last_hour_trend_r2": 0.7582946270284939,
+      "sqrt_score": -0.8588929711156933,
+      "late_downside_intensity": 0.14120442307326783
+    },
+    "domain_intercept": -3.148548115725198
+  },
+  "evaluations": {
+    "UNWEIGHTED_SOURCE": {
+      "target_2022_diagnostic": {
+        "n": 7,
+        "captured_up": 4,
+        "false_up_actual_down": 3,
+        "vetoes": 6,
+        "false_up_removed": 3,
+        "captured_up_lost": 3,
+        "captured_up_retained": 1,
+        "false_up_removal_rate": 1.0,
+        "captured_up_retention_rate": 0.25,
+        "precision_before": 0.5714285714285714,
+        "precision_after": 1.0,
+        "remaining_calls": 1
+      },
+      "forward_guard_2023_2024": {
+        "n": 4,
+        "captured_up": 4,
+        "false_up_actual_down": 0,
+        "vetoes": 2,
+        "false_up_removed": 0,
+        "captured_up_lost": 2,
+        "captured_up_retained": 2,
+        "false_up_removal_rate": null,
+        "captured_up_retention_rate": 0.5,
+        "precision_before": 1.0,
+        "precision_after": 1.0,
+        "remaining_calls": 2
+      },
+      "locked_2025": {
+        "n": 25,
+        "captured_up": 13,
+        "false_up_actual_down": 12,
+        "vetoes": 9,
+        "false_up_removed": 6,
+        "captured_up_lost": 3,
+        "captured_up_retained": 10,
+        "false_up_removal_rate": 0.5,
+        "captured_up_retention_rate": 0.7692307692307693,
+        "precision_before": 0.52,
+        "precision_after": 0.625,
+        "remaining_calls": 16
+      },
+      "model": {
+        "standardized_coefficients": {
+          "last_hour_trend_r2": 0.04939471929752703,
+          "sqrt_score": -0.13047736663600984,
+          "late_downside_intensity": -0.25353953847600974
+        },
+        "intercept": 0.12120700663338548
+      }
+    },
+    "IMPORTANCE_WEIGHTED_SOURCE": {
+      "target_2022_diagnostic": {
+        "n": 7,
+        "captured_up": 4,
+        "false_up_actual_down": 3,
+        "vetoes": 6,
+        "false_up_removed": 3,
+        "captured_up_lost": 3,
+        "captured_up_retained": 1,
+        "false_up_removal_rate": 1.0,
+        "captured_up_retention_rate": 0.25,
+        "precision_before": 0.5714285714285714,
+        "precision_after": 1.0,
+        "remaining_calls": 1
+      },
+      "forward_guard_2023_2024": {
+        "n": 4,
+        "captured_up": 4,
+        "false_up_actual_down": 0,
+        "vetoes": 1,
+        "false_up_removed": 0,
+        "captured_up_lost": 1,
+        "captured_up_retained": 3,
+        "false_up_removal_rate": null,
+        "captured_up_retention_rate": 0.75,
+        "precision_before": 1.0,
+        "precision_after": 1.0,
+        "remaining_calls": 3
+      },
+      "locked_2025": {
+        "n": 25,
+        "captured_up": 13,
+        "false_up_actual_down": 12,
+        "vetoes": 8,
+        "false_up_removed": 6,
+        "captured_up_lost": 2,
+        "captured_up_retained": 11,
+        "false_up_removal_rate": 0.5,
+        "captured_up_retention_rate": 0.8461538461538461,
+        "precision_before": 0.52,
+        "precision_after": 0.6470588235294118,
+        "remaining_calls": 17
+      },
+      "model": {
+        "standardized_coefficients": {
+          "last_hour_trend_r2": 0.33994168156391147,
+          "sqrt_score": -0.24820825969430305,
+          "late_downside_intensity": -0.34346380101042756
+        },
+        "intercept": -0.016656779200262033
+      }
+    }
+  },
+  "forward_guard_passed": true,
+  "locked_2025_transport_supportive": true,
+  "weighted_not_worse_than_unweighted_on_both_2025_components": true,
+  "adaptation_supportive": true,
+  "governance": {
+    "random_split": false,
+    "fabricated_historical_up2_calls": false,
+    "2022_outcomes_used_for_weight_estimation": false,
+    "weight_cap_sweep": false,
+    "feature_hyperparameter_threshold_sweep": false,
+    "2025_used_for_tuning": false,
+    "2026_used": false,
+    "veto_means_down": false,
+    "runtime_promotion": false,
+    "certified": false
+  }
+}
