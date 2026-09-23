@@ -1,0 +1,128 @@
+name: Gold Control CBR DOWN Historical Extension V1
+
+on:
+  push:
+    branches:
+      - gold-cbr-down-historical-extension-v1-20260923
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_CBR_DOWN_VERIFIER_HISTORICAL_EXTENSION_V1_PREREG_2026-09-23.md'
+      - 'gold_axis_2026/tools/cbr_down_verifier_historical_extension_v1_run.py'
+      - '.github/workflows/gold-control-cbr-down-historical-extension-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-cbr-down-historical-extension-v1
+  cancel-in-progress: false
+
+jobs:
+  extension:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONPATH: /tmp/frozen/gold_axis_2026:/tmp/frozen/gold_axis_2026/tools
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-cbr-down-historical-extension-v1-20260923
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Require research DB credential
+        run: test -n "$NEON_DATABASE_URL"
+
+      - name: Install frozen dependencies
+        run: python -m pip install 'numpy==2.1.3' 'pandas==2.2.3' 'scipy==1.14.1' 'psycopg[binary]>=3.2,<4'
+
+      - name: Materialize pinned Gold Control authorities
+        run: |
+          mkdir -p /tmp/frozen/gold_axis_2026/tools /tmp/frozen/gold_axis_2026/regime_dampener_v1
+
+          # Integrity-passing Router reconstruction used only to recover locked 2025 ABSTAIN rows.
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py > /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/regime_v1_data.py > /tmp/frozen/gold_axis_2026/tools/regime_v1_data.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/regime_v1_experts.py > /tmp/frozen/gold_axis_2026/tools/regime_v1_experts.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/regime_dampener_v1/frozen_direction_ttsm_realized_semivariance_xau_v1.py > /tmp/frozen/gold_axis_2026/regime_dampener_v1/frozen_direction_ttsm_realized_semivariance_xau_v1.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/regime_dampener_v1/frozen_direction_bonato_qboost_realized_moments_spot_xau_v1.py > /tmp/frozen/gold_axis_2026/regime_dampener_v1/frozen_direction_bonato_qboost_realized_moments_spot_xau_v1.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/regime_dampener_v1/frozen_direction_downside_realized_moments_logit_v2.py > /tmp/frozen/gold_axis_2026/regime_dampener_v1/frozen_direction_downside_realized_moments_logit_v2.py
+
+          # Exact frozen unresolved pre-2025 rows and SQRT parent.
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/GOLD_CONTROL_DOWN_VERIFIER_CANDIDATE_AUDIT_V1_PRE2025_LEDGER_2026-09-23.csv > /tmp/pre_unresolved.csv
+          git show 2926796b6a7e9048d2c091c9c571cb928b773e02:gold_axis_2026/GOLD_CONTROL_DOWNSIDE_RAW_VS_SQRT_HAR_DR_MULTIORIGIN_V1_FORECASTS_2026-09-22.csv > /tmp/sqrt_parent.csv
+
+          # Exact original CBR and SQRT implementations.
+          git show f187f89c166a75cefa8cf60709dcd4ce1027663d:gold_axis_2026/tools/downside_cbr_dtw_path_v1.py > /tmp/frozen/downside_cbr_dtw_path_v1.py
+          git show ad0fc4dcbe1687833bd9a153cd4bc6a754523464:gold_axis_2026/tools/regime_v1_router_sqrt.py > /tmp/frozen/regime_v1_router_sqrt.py
+
+          # Corrected session-masked external daily spine.
+          git show 509c5ffa762f4ea49644b8ffe723ed2591ba52bf:gold_axis_2026/external_data/v2/dukascopy_xauusd_govsession_mid_5m_daily_features_2018_2021.csv > /tmp/external_daily.csv
+
+          test -s /tmp/pre_unresolved.csv
+          test -s /tmp/sqrt_parent.csv
+          test -s /tmp/external_daily.csv
+
+      - name: Fetch pinned transient Dukascopy minute mirror
+        run: |
+          rm -rf /tmp/mdl
+          git clone --filter=blob:none --no-checkout https://github.com/kevingtlin/Market-Data-Lab.git /tmp/mdl
+          git -C /tmp/mdl sparse-checkout init --no-cone
+          cat > /tmp/mdl/.git/info/sparse-checkout <<'EOF'
+/xauusd/ask/m1/xauusd_ask_m1_2020_*.csv
+/xauusd/ask/m1/xauusd_ask_m1_2021_*.csv
+/xauusd/ask/m1/xauusd_ask_m1_2022_01.csv
+/xauusd/bid/m1/xauusd_bid_m1_2020_*.csv
+/xauusd/bid/m1/xauusd_bid_m1_2021_*.csv
+/xauusd/bid/m1/xauusd_bid_m1_2022_01.csv
+EOF
+          git -C /tmp/mdl checkout 922f83a60cc574e7395fb27397077288055a1ef6
+          test "$(find /tmp/mdl/xauusd/ask/m1 -name 'xauusd_ask_m1_*.csv' | wc -l)" -eq 25
+          test "$(find /tmp/mdl/xauusd/bid/m1 -name 'xauusd_bid_m1_*.csv' | wc -l)" -eq 25
+
+      - name: Compile
+        run: |
+          python -m py_compile gold_axis_2026/tools/cbr_down_verifier_historical_extension_v1_run.py
+          python -m py_compile /tmp/frozen/downside_cbr_dtw_path_v1.py
+          python -m py_compile /tmp/frozen/regime_v1_router_sqrt.py
+          python -m py_compile /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py
+
+      - name: Assert no production writes
+        run: |
+          ! grep -Eini 'insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from|create[[:space:]]+table|drop[[:space:]]+table|alter[[:space:]]+table' gold_axis_2026/tools/cbr_down_verifier_historical_extension_v1_run.py /tmp/frozen/downside_cbr_dtw_path_v1.py /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py
+          grep -n 'default_transaction_read_only' /tmp/frozen/downside_cbr_dtw_path_v1.py
+          grep -n 'default_transaction_read_only' /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py
+
+      - name: Run preregistered historical extension
+        run: |
+          rm -rf cbr_down_historical_extension_out
+          python gold_axis_2026/tools/cbr_down_verifier_historical_extension_v1_run.py \
+            --raw-root /tmp/mdl \
+            --external-spine /tmp/external_daily.csv \
+            --sqrt-code /tmp/frozen/regime_v1_router_sqrt.py \
+            --cbr-code /tmp/frozen/downside_cbr_dtw_path_v1.py \
+            --base-module /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py \
+            --sqrt-parent /tmp/sqrt_parent.csv \
+            --pre-ledger /tmp/pre_unresolved.csv \
+            --out cbr_down_historical_extension_out
+
+      - name: Freeze results
+        run: |
+          cp cbr_down_historical_extension_out/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_CBR_DOWN_VERIFIER_HISTORICAL_EXTENSION_V1_*
+          git commit -m 'Freeze CBR DOWN verifier historical extension V1'
+          git push origin HEAD:gold-cbr-down-historical-extension-v1-20260923
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-cbr-down-historical-extension-v1
+          retention-days: 30
+          if-no-files-found: error
+          path: cbr_down_historical_extension_out/
