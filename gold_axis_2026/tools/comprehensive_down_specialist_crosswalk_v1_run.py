@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 import psycopg
 
-IDENTITY = "COMPREHENSIVE_DOWN_SPECIALIST_CROSSWALK_V1_RESEARCH"
+IDENTITY = "COMPREHENSIVE_DOWN_SPECIALIST_CROSSWALK_V1R2_RESEARCH"
 Z90 = 1.2815515655446004
 
 CROSSDOMAIN = {
@@ -410,11 +410,17 @@ def main():
     if sum(r["selected_expert"]=="RM_LOGIT" for r in r25)!=37:
         integrity.append("ROUTER_2025_RM_COUNT_MISMATCH")
 
-    # V1.53
-    v153=load_mod("v153_frozen",args.v153_module)
-    v153m,downshock_diag,v153_mismatch=v153_maps(v153,args.v153_contract,primary,stress25)
-    if v153_mismatch:
-        integrity.append(f"V153_TARGET_SIGN_MISMATCH:{v153_mismatch[:5]}")
+    # V1.53 was removed from R2 candidate scoring after the V1 integrity
+    # gate proved that its exact-NY17 target clock does not map one-to-one
+    # to the SQRT parent target-day sign by a simple target_date join.
+    # No V1.53 output is used below.
+    v153_clock_audit = {
+        "status": "NOT_PROVEN_TARGET_CLOCK_ALIGNMENT",
+        "v1_first_mismatches": [
+            "2024-04-16", "2025-05-01", "2025-05-02", "2025-05-07", "2025-05-13"
+        ],
+        "candidate_scoring_authority": False
+    }
 
     # Cross-domain retained exact rows.
     xdm,xd_mismatch=load_crossdomain(args.crossdomain,primary+stress25)
@@ -438,7 +444,7 @@ def main():
     integrity.extend(cons_integrity)
 
     predmaps={}
-    predmaps.update(v153m);predmaps.update(xdm);predmaps.update(cbrm);predmaps.update(spm);predmaps.update(conm)
+    predmaps.update(xdm);predmaps.update(cbrm);predmaps.update(spm);predmaps.update(conm)
 
     primary_results={}
     positive=[]
@@ -475,8 +481,7 @@ def main():
         }
 
     diag={
-        "V153_MODERATE_DOWNSHOCK_REVERSAL_UP_PRE2025":up_diag_metrics(primary,downshock_diag),
-        "V153_MODERATE_DOWNSHOCK_REVERSAL_UP_LOCKED2025":up_diag_metrics(stress25,downshock_diag),
+        "V153_CLOCK_ALIGNMENT": v153_clock_audit
     }
 
     if integrity:
@@ -507,7 +512,7 @@ def main():
         "up_only_diagnostics":diag,
         "authority_exclusions":[
             "Market Shock / Macro Event: event/minute clock mismatch",
-            "V1.53 moderate-downshock reversal: UP-only, no positive DOWN call",
+            "V1.53 family: NOT_PROVEN target-clock alignment with SQRT parent under simple date join; removed from R2 scoring",
             "weekly/H5/H10/H20/3D: horizon mismatch",
             "MONTHLY_DIRECTION_3M and MOMENTUM_3M: slow-clock priors",
             "Altuntas AlexNet: target clock unresolved",
@@ -524,13 +529,13 @@ def main():
             "runtime_promotion":False,
         }
     }
-    (args.out/"GOLD_CONTROL_COMPREHENSIVE_DOWN_SPECIALIST_CROSSWALK_V1_RESULT_2026-09-23.json").write_text(json.dumps(result,indent=2),encoding="utf-8")
+    (args.out/"GOLD_CONTROL_COMPREHENSIVE_DOWN_SPECIALIST_CROSSWALK_V1R2_RESULT_2026-09-23.json").write_text(json.dumps(result,indent=2),encoding="utf-8")
 
     # Long-form row ledger, only exact subset rows and frozen candidate calls.
     fields=["evaluation_year","origin_date","target_date","actual_up","actual_high_risk","sqrt_score"]
     for name in predmaps:
         fields += [f"{name}_available",f"{name}_down",f"{name}_score"]
-    with (args.out/"GOLD_CONTROL_COMPREHENSIVE_DOWN_SPECIALIST_CROSSWALK_V1_LEDGER_2026-09-23.csv").open("w",newline="",encoding="utf-8") as f:
+    with (args.out/"GOLD_CONTROL_COMPREHENSIVE_DOWN_SPECIALIST_CROSSWALK_V1R2_LEDGER_2026-09-23.csv").open("w",newline="",encoding="utf-8") as f:
         w=csv.DictWriter(f,fieldnames=fields);w.writeheader()
         for r in primary:
             z={k:r.get(k,"") for k in fields[:6]}
@@ -564,7 +569,7 @@ def main():
                 f"supportive={m['transport_supportive']}."
             )
     lines += ["","No threshold was changed; 2025 did not select or redesign candidates; 2026 was not used."]
-    (args.out/"GOLD_CONTROL_COMPREHENSIVE_DOWN_SPECIALIST_CROSSWALK_V1_RESULT_2026-09-23.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
+    (args.out/"GOLD_CONTROL_COMPREHENSIVE_DOWN_SPECIALIST_CROSSWALK_V1R2_RESULT_2026-09-23.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
 
     print(json.dumps({
         "status":status,
