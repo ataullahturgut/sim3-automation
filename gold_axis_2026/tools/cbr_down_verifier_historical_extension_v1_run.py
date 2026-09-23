@@ -289,10 +289,26 @@ def corr(a,b):
 
 
 def path_harmonization(cbr, ext_raw: dict[str,dict], governed_raw: dict[str,list[float]]) -> dict:
-    common=sorted(set(ext_raw) & set(governed_raw))
+    calendar_common=sorted(set(ext_raw) & set(governed_raw))
+    common=[]
+    skipped_short=[]
+    skipped_bad_rv=[]
+    ext_paths={}
+    gov_paths={}
+    for d in calendar_common:
+        er=np.asarray(ext_raw[d]["rets"],float)
+        gr=np.asarray(governed_raw[d],float)
+        if len(er)<239 or len(gr)<239:
+            skipped_short.append({"date":d,"external_returns":len(er),"governed_returns":len(gr)})
+            continue
+        if not (float(np.sum(er*er))>0 and float(np.sum(gr*gr))>0):
+            skipped_bad_rv.append(d)
+            continue
+        ext_paths[d]=cbr.path_repr(er)
+        gov_paths[d]=cbr.path_repr(gr)
+        common.append(d)
+
     same_d=[];shift_d=[];cors=[]
-    ext_paths={d:cbr.path_repr(ext_raw[d]["rets"]) for d in common}
-    gov_paths={d:cbr.path_repr(governed_raw[d]) for d in common}
     for d in common:
         same_d.append(cbr.dtw(ext_paths[d],gov_paths[d]))
         cors.append(corr(ext_paths[d],gov_paths[d]))
@@ -313,7 +329,11 @@ def path_harmonization(cbr, ext_raw: dict[str,dict], governed_raw: dict[str,list
     )
     return {
         "passed":passed,
+        "calendar_overlap_n":len(calendar_common),
         "overlap_n":len(common),
+        "skipped_short_n":len(skipped_short),
+        "skipped_short_examples":skipped_short[:20],
+        "skipped_nonpositive_rv_n":len(skipped_bad_rv),
         "median_same_date_flat_corr":med_corr,
         "median_same_date_dtw":med_same,
         "median_shifted_date_dtw":med_shift,
