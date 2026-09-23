@@ -43,7 +43,7 @@ jobs:
 
       - name: Materialize pinned frozen authorities
         run: |
-          mkdir -p /tmp/frozen/gold_axis_2026/tools /tmp/frozen/gold_axis_2026/regime_dampener_v1 /tmp/frozen/v153
+          mkdir -p /tmp/frozen/gold_axis_2026/tools /tmp/frozen/gold_axis_2026/regime_dampener_v1 /tmp/v153
           git fetch --all --prune
 
           # Final integrity-passing Router/baseline audit and its frozen dependencies.
