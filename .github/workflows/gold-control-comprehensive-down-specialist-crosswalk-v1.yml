@@ -105,8 +105,8 @@ jobs:
           cp comprehensive_down_crosswalk_out/* gold_axis_2026/
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add gold_axis_2026/GOLD_CONTROL_COMPREHENSIVE_DOWN_SPECIALIST_CROSSWALK_V1_*
-          git commit -m 'Freeze comprehensive retained DOWN-specialist crosswalk V1'
+          git add gold_axis_2026/GOLD_CONTROL_COMPREHENSIVE_DOWN_SPECIALIST_CROSSWALK_V1R2_*
+          git commit -m 'Freeze comprehensive retained DOWN-specialist crosswalk V1R2'
           git push origin HEAD:gold-comprehensive-down-specialist-crosswalk-v1-20260923
 
       - uses: actions/upload-artifact@v4
