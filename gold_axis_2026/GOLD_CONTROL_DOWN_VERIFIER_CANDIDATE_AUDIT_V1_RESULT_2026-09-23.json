@@ -1,0 +1,239 @@
+{
+  "identity": "DOWN_VERIFIER_CANDIDATE_AUDIT_V1_RESEARCH",
+  "date": "2026-09-23",
+  "status": "NO_EXISTING_DOWN_CANDIDATE_ELIGIBLE",
+  "candidate_pool": [
+    "TTSM_S2",
+    "TTSM_S1",
+    "TSM",
+    "BONATO_AR1_RM_QBOOST_H1",
+    "BONATO_AR1_QBOOST_H1",
+    "AR1_RM_LOGIT",
+    "RM_LOGIT",
+    "RV_LOGIT",
+    "RSK_LOGIT",
+    "AR1_LOGIT"
+  ],
+  "candidate_selection_rule": {
+    "min_down_calls": 5,
+    "down_precision_gt": 0.5,
+    "false_down_fpr_lt": 0.5,
+    "rank": [
+      "higher one-sided 90% Wilson LCB DOWN precision",
+      "lower false-DOWN FPR",
+      "higher raw DOWN precision",
+      "higher DOWN recall",
+      "fixed candidate order"
+    ]
+  },
+  "integrity_errors": [],
+  "router_reconstruction": {
+    "2022": {
+      "n": 205,
+      "router_up": 22,
+      "tp": 12,
+      "fp": 10,
+      "selected_counts": {
+        "TTSM_S1": 7,
+        "TTSM_S2": 15
+      }
+    },
+    "2023": {
+      "n": 203,
+      "router_up": 19,
+      "tp": 5,
+      "fp": 14,
+      "selected_counts": {
+        "TTSM_S2": 19
+      }
+    },
+    "2024": {
+      "n": 205,
+      "router_up": 42,
+      "tp": 26,
+      "fp": 16,
+      "selected_counts": {
+        "TTSM_S2": 4,
+        "RM_LOGIT": 37,
+        "AR1_RM_LOGIT": 1
+      }
+    },
+    "2025": {
+      "n": 237,
+      "router_up": 37,
+      "tp": 27,
+      "fp": 10,
+      "selected_counts": {
+        "RM_LOGIT": 37
+      }
+    }
+  },
+  "primary_2022_2024_abstain_subset": {
+    "n": 26,
+    "actual_down": 13,
+    "actual_up": 13,
+    "baseline_down_prevalence": 0.5,
+    "candidate_metrics": [
+      {
+        "candidate": "TTSM_S2",
+        "available_n": 26,
+        "subset_n": 26,
+        "actual_down": 13,
+        "actual_up": 13,
+        "down_calls": 0,
+        "correct_down": 0,
+        "false_down": 0,
+        "down_precision": null,
+        "down_recall": 0.0,
+        "false_down_fpr": 0.0,
+        "down_call_coverage": 0.0,
+        "wilson90_lcb_down_precision": null
+      },
+      {
+        "candidate": "TTSM_S1",
+        "available_n": 26,
+        "subset_n": 26,
+        "actual_down": 13,
+        "actual_up": 13,
+        "down_calls": 2,
+        "correct_down": 1,
+        "false_down": 1,
+        "down_precision": 0.5,
+        "down_recall": 0.07692307692307693,
+        "false_down_fpr": 0.07692307692307693,
+        "down_call_coverage": 0.07692307692307693,
+        "wilson90_lcb_down_precision": 0.1642517200298993
+      },
+      {
+        "candidate": "TSM",
+        "available_n": 26,
+        "subset_n": 26,
+        "actual_down": 13,
+        "actual_up": 13,
+        "down_calls": 3,
+        "correct_down": 1,
+        "false_down": 2,
+        "down_precision": 0.3333333333333333,
+        "down_recall": 0.07692307692307693,
+        "false_down_fpr": 0.15384615384615385,
+        "down_call_coverage": 0.11538461538461539,
+        "wilson90_lcb_down_precision": 0.10577563612172289
+      },
+      {
+        "candidate": "BONATO_AR1_RM_QBOOST_H1",
+        "available_n": 26,
+        "subset_n": 26,
+        "actual_down": 13,
+        "actual_up": 13,
+        "down_calls": 16,
+        "correct_down": 6,
+        "false_down": 10,
+        "down_precision": 0.375,
+        "down_recall": 0.46153846153846156,
+        "false_down_fpr": 0.7692307692307693,
+        "down_call_coverage": 0.6153846153846154,
+        "wilson90_lcb_down_precision": 0.23846779627509276
+      },
+      {
+        "candidate": "BONATO_AR1_QBOOST_H1",
+        "available_n": 26,
+        "subset_n": 26,
+        "actual_down": 13,
+        "actual_up": 13,
+        "down_calls": 14,
+        "correct_down": 4,
+        "false_down": 10,
+        "down_precision": 0.2857142857142857,
+        "down_recall": 0.3076923076923077,
+        "false_down_fpr": 0.7692307692307693,
+        "down_call_coverage": 0.5384615384615384,
+        "wilson90_lcb_down_precision": 0.16011262470440246
+      },
+      {
+        "candidate": "AR1_RM_LOGIT",
+        "available_n": 26,
+        "subset_n": 26,
+        "actual_down": 13,
+        "actual_up": 13,
+        "down_calls": 3,
+        "correct_down": 1,
+        "false_down": 2,
+        "down_precision": 0.3333333333333333,
+        "down_recall": 0.07692307692307693,
+        "false_down_fpr": 0.15384615384615385,
+        "down_call_coverage": 0.11538461538461539,
+        "wilson90_lcb_down_precision": 0.10577563612172289
+      },
+      {
+        "candidate": "RM_LOGIT",
+        "available_n": 26,
+        "subset_n": 26,
+        "actual_down": 13,
+        "actual_up": 13,
+        "down_calls": 1,
+        "correct_down": 1,
+        "false_down": 0,
+        "down_precision": 1.0,
+        "down_recall": 0.07692307692307693,
+        "false_down_fpr": 0.0,
+        "down_call_coverage": 0.038461538461538464,
+        "wilson90_lcb_down_precision": 0.3784475032253529
+      },
+      {
+        "candidate": "RV_LOGIT",
+        "available_n": 26,
+        "subset_n": 26,
+        "actual_down": 13,
+        "actual_up": 13,
+        "down_calls": 0,
+        "correct_down": 0,
+        "false_down": 0,
+        "down_precision": null,
+        "down_recall": 0.0,
+        "false_down_fpr": 0.0,
+        "down_call_coverage": 0.0,
+        "wilson90_lcb_down_precision": null
+      },
+      {
+        "candidate": "RSK_LOGIT",
+        "available_n": 26,
+        "subset_n": 26,
+        "actual_down": 13,
+        "actual_up": 13,
+        "down_calls": 7,
+        "correct_down": 1,
+        "false_down": 6,
+        "down_precision": 0.14285714285714285,
+        "down_recall": 0.07692307692307693,
+        "false_down_fpr": 0.46153846153846156,
+        "down_call_coverage": 0.2692307692307692,
+        "wilson90_lcb_down_precision": 0.043765698713442554
+      },
+      {
+        "candidate": "AR1_LOGIT",
+        "available_n": 26,
+        "subset_n": 26,
+        "actual_down": 13,
+        "actual_up": 13,
+        "down_calls": 7,
+        "correct_down": 2,
+        "false_down": 5,
+        "down_precision": 0.2857142857142857,
+        "down_recall": 0.15384615384615385,
+        "false_down_fpr": 0.38461538461538464,
+        "down_call_coverage": 0.2692307692307692,
+        "wilson90_lcb_down_precision": 0.12533599053745428
+      }
+    ],
+    "selected_candidate": null
+  },
+  "locked_2025_selected_candidate_transport": null,
+  "governance": {
+    "random_split": false,
+    "threshold_tuning": false,
+    "2025_used_for_selection": false,
+    "2026_used": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}

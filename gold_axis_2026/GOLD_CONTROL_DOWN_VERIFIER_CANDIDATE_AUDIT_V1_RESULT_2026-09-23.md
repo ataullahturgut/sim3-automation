@@ -1,0 +1,26 @@
+# GOLD CONTROL — DOWN VERIFIER CANDIDATE AUDIT V1 RESULT
+
+**Status:** `NO_EXISTING_DOWN_CANDIDATE_ELIGIBLE`
+**Integrity errors:** none
+
+## Primary 2022–2024 SQRT alarm + Router V2 ABSTAIN subset
+
+- n=26; actual DOWN=13; actual UP=13.
+
+| Candidate | DOWN calls | Correct | False | Precision | DOWN recall | False-DOWN FPR | Wilson90 LCB | Eligible |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| TTSM_S2 | 0 | 0 | 0 | None | 0.0 | 0.0 | None | False |
+| TTSM_S1 | 2 | 1 | 1 | 0.5 | 0.07692307692307693 | 0.07692307692307693 | 0.1642517200298993 | False |
+| TSM | 3 | 1 | 2 | 0.3333333333333333 | 0.07692307692307693 | 0.15384615384615385 | 0.10577563612172289 | False |
+| BONATO_AR1_RM_QBOOST_H1 | 16 | 6 | 10 | 0.375 | 0.46153846153846156 | 0.7692307692307693 | 0.23846779627509276 | False |
+| BONATO_AR1_QBOOST_H1 | 14 | 4 | 10 | 0.2857142857142857 | 0.3076923076923077 | 0.7692307692307693 | 0.16011262470440246 | False |
+| AR1_RM_LOGIT | 3 | 1 | 2 | 0.3333333333333333 | 0.07692307692307693 | 0.15384615384615385 | 0.10577563612172289 | False |
+| RM_LOGIT | 1 | 1 | 0 | 1.0 | 0.07692307692307693 | 0.0 | 0.3784475032253529 | False |
+| RV_LOGIT | 0 | 0 | 0 | None | 0.0 | 0.0 | None | False |
+| RSK_LOGIT | 7 | 1 | 6 | 0.14285714285714285 | 0.07692307692307693 | 0.46153846153846156 | 0.043765698713442554 | False |
+| AR1_LOGIT | 7 | 2 | 5 | 0.2857142857142857 | 0.15384615384615385 | 0.38461538461538464 | 0.12533599053745428 | False |
+
+**Selected pre-2025 candidate:** NONE
+
+No threshold was changed and 2025 did not participate in candidate selection.
+No runtime or production authority is created.
