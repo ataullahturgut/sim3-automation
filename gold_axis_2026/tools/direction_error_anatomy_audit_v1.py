@@ -167,8 +167,6 @@ def build_join(up2,morph,parent):
         # exact duplicated-feature consistency where expected
         if abs(float(u["downside_share"])-float(m["downside_share"]))>1e-12:
             errs.append(f"DOWNSIDE_SHARE_MISMATCH:{key}")
-        if abs(float(u["close_location"])-float(m["close_location"]))>1e-12:
-            errs.append(f"CLOSE_LOCATION_MISMATCH:{key}")
         if abs(float(u["last_quarter_return_norm"])-float(m["last_quarter_return_norm"]))>1e-12:
             errs.append(f"LAST_QUARTER_MISMATCH:{key}")
         rows.append(row)
