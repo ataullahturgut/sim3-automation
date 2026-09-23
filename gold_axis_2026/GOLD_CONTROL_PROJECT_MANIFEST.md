@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.39  
+**Manifest version:** 2.40  
 **Issue date:** 2026-09-23  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -4799,6 +4799,114 @@ The remaining evidence increasingly favors a **conditional/non-stationary residu
 The next defensible family is therefore **regime-conditioned / learning-to-defer resolution**, where the model is allowed to recognize that the hard residual mapping changes across states and to abstain when a stable local authority cannot be established.
 
 No regime-conditioned model is authorized by this section itself.
+
+---
+
+
+## 11ZF. UP-2 last-hour trend-R2 threshold anatomy — retrospective scalar separation exists, but no rule is authorized
+
+**Identity:** `UP2_LAST_HOUR_TREND_R2_THRESHOLD_ANATOMY_V1_RESEARCH`  
+**Research branch:** `gold-up2-r2-threshold-anatomy-v1-20260923`  
+**Preregistration commit:** `d88bba2ddd2f5c02ffaae297c52f8b6617cf678e`  
+**Implementation commits:** `0ee4edf49dd296bb87948a4ece43f6724c20a11d`, `5c4c11f72e3e7ced234164531519496e08f8a572`  
+**Workflow commit:** `effcb8f71a0c062cc364f6c8c36a321d08e38b23`  
+**Frozen result commit:** `bdae5bab49de5729810d8f29732e8c3093fa21c8`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_UP2_LAST_HOUR_TREND_R2_THRESHOLD_ANATOMY_V1_RESULT_2026-09-23.json` (Git blob SHA `2279cffe98286f25608dbbbdf18778d8612bbb19`)  
+**Status:** `STABLE_DIAGNOSTIC_SCALAR_VETO_ZONE_EXISTS / DIAGNOSTIC_ONLY / NOT_RUNTIME`.
+
+### 11ZF.1 Exact question
+
+This was the intentionally small Stage-2 diagnostic requested after the error-anatomy work.
+
+No model was fit.
+
+The only tested rule family was:
+
+`veto an existing UP-2 call if last_hour_trend_r2 >= t`
+
+for a fixed preregistered threshold grid `t = 0.00, 0.05, ..., 1.00`.
+
+Primary sample:
+- governed 2022–2024 frozen UP-2 calls n=11 =8 captured UP +3 false-UP actual-DOWN.
+
+Locked transport:
+- 2025 UP-2 calls n=25 =13 captured UP +12 false-UP actual-DOWN.
+
+### 11ZF.2 Pre-2025 threshold anatomy
+
+Frozen diagnostic usefulness required:
+- remove at least 2/3 false-UP cases; and
+- retain at least 6/8 true captured-UP cases.
+
+Useful pre-2025 grid region:
+
+`t = 0.45 ... 0.75`.
+
+A stricter pre-2025 region:
+
+`t = 0.45, 0.50, 0.55`
+
+removed all 3 false-UP cases while retaining 6/8 true-UP cases, producing 100% precision among the remaining calls in this tiny retrospective sample.
+
+Examples:
+
+- `t=0.45`: remove 3/3 false-UP, retain 6/8 true-UP;
+- `t=0.60`: remove 2/3 false-UP, retain 6/8 true-UP; remaining precision 85.7%;
+- `t=0.75`: remove 2/3 false-UP, retain 7/8 true-UP; remaining precision 87.5%.
+
+### 11ZF.3 Locked-2025 transport anatomy
+
+The preregistered transport-consistency rule required:
+- remove at least 25% of locked-2025 false-UP cases; and
+- retain at least 75% of locked-2025 true-UP cases.
+
+Thresholds satisfying both pre-2025 usefulness and locked-2025 transport were:
+
+`t = 0.60, 0.65, 0.70, 0.75`.
+
+Examples:
+
+- `t=0.60`: locked 2025 removes 4/12 false-UP and retains 10/13 true-UP; remaining precision 55.6%;
+- `t=0.75`: locked 2025 removes 3/12 false-UP and retains 11/13 true-UP; remaining precision 55.0%.
+
+The stricter pre-2025 thresholds 0.45–0.55 did **not** satisfy the locked-2025 true-UP retention requirement.
+
+### 11ZF.4 Reconciliation with the earlier learned scalar-veto failure
+
+This diagnostic result does not contradict section 11ZD.
+
+The earlier `UP2_CONTINUATION_MIMIC_VETO_V1_RESEARCH` asked a harder question:
+
+> can a scalar veto be **learned chronologically from earlier external history** and then transported forward?
+
+That answer was no: the historical pool was too small and the learned scalar model emitted zero governed vetoes.
+
+The present Stage-2 anatomy asks a different, weaker question:
+
+> does a useful retrospective threshold region exist inside the already-observed governed UP-2 errors?
+
+That answer is yes.
+
+Therefore:
+- the feature contains retrospective discriminative structure;
+- the structure has some same-direction locked-2025 stability;
+- but there is still no chronology-safe evidence that a threshold can be learned prospectively from earlier history.
+
+No threshold is selected or authorized by this audit.
+
+### 11ZF.5 Binding interpretation
+
+The result is scientifically useful but not a model update.
+
+It supports retaining `last_hour_trend_r2` as a serious failure-mode variable for future work.
+
+It does **not** authorize:
+- choosing 0.60, 0.65, 0.70 or 0.75 as a runtime veto;
+- modifying frozen UP-2;
+- using locked 2025 to tune a threshold;
+- treating the retrospective 100% precision region as validated performance.
+
+The next step, if explicitly requested, should be a separately preregistered method for learning or calibrating a veto without using governed target-period outcomes for threshold choice.
 
 ---
 
