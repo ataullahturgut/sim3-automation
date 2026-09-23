@@ -168,13 +168,13 @@ def main():
     ]
     for p in pre_scan:
         q=y25_by_t[p["threshold"]]
+        pprec="" if p["remaining_precision"] is None else f"{100*p['remaining_precision']:.1f}%"
+        qprec="" if q["remaining_precision"] is None else f"{100*q['remaining_precision']:.1f}%"
         lines.append(
             f"| {p['threshold']:.2f} | {p['false_up_removed']}/{p['false_up_total']} | "
-            f"{p['captured_up_retained']}/{p['captured_up_total']} | "
-            f"{'' if p['remaining_precision'] is None else f'{100*p['remaining_precision']:.1f}%'} | "
+            f"{p['captured_up_retained']}/{p['captured_up_total']} | {pprec} | "
             f"{q['false_up_removed']}/{q['false_up_total']} | "
-            f"{q['captured_up_retained']}/{q['captured_up_total']} | "
-            f"{'' if q['remaining_precision'] is None else f'{100*q['remaining_precision']:.1f}%'} |"
+            f"{q['captured_up_retained']}/{q['captured_up_total']} | {qprec} |"
         )
     lines += ["","Diagnostic only. No veto rule is authorized by this scan."]
     (a.out/"GOLD_CONTROL_UP2_LAST_HOUR_TREND_R2_THRESHOLD_ANATOMY_V1_RESULT_2026-09-23.md").write_text(
