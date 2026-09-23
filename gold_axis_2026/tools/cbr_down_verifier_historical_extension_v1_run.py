@@ -485,7 +485,14 @@ def main() -> int:
 
     frozen_parent=load_frozen_parent(args.sqrt_parent)
     gov_alarm_22_24=[r for r in frozen_parent if r["evaluation_year"] in (2022,2023,2024)]
-    gov_path_map={d:cbr.path_repr(rets) for d,rets in governed_raw.items()}
+    # Materialize only CBR-representable governed days.  Any origin actually
+    # required by a frozen training/test row must still exist; attach_paths()
+    # below fails hard rather than silently skipping a required model row.
+    gov_path_map={
+        d:cbr.path_repr(rets)
+        for d,rets in governed_raw.items()
+        if len(rets)>=239 and float(np.sum(np.asarray(rets,float)**2))>0
+    }
     gov_cases=attach_paths(gov_alarm_22_24,gov_path_map,"GOVERNED_INTERNAL")
 
     primary=load_pre_unresolved(args.pre_ledger)
