@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.24  
+**Manifest version:** 2.25  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -2961,6 +2961,146 @@ No runtime promotion is authorized.
 
 ---
 
+
+## 11S. DOWN verifier candidate audit — existing same-clock motors do not solve the unresolved branch
+
+**Identity:** `DOWN_VERIFIER_CANDIDATE_AUDIT_V1_RESEARCH`  
+**Research branch:** `gold-down-verifier-candidate-audit-v1-20260923`  
+**Preregistration commit:** `f358f88b6fdc356ed8fd300f92d3034e38567b26`  
+**Initial implementation commit:** `af1a29fabbf6036acbfc033e5dc44aa05746aae0`  
+**Router chronology corrections:** `7300df8223c44b89658482335b35380d8ca0b3ea`, `b5e714f23311b8470bbc40fdc549516e987284c7`  
+**Frozen result commit:** `7982b422476df61eb0339b74265afd553414f2d2`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_DOWN_VERIFIER_CANDIDATE_AUDIT_V1_RESULT_2026-09-23.json` (Git blob SHA `181c06ad524520f6cdf96ab9ff16823b9c84b133`)  
+**Status:** `NO_EXISTING_DOWN_CANDIDATE_ELIGIBLE`.
+
+### 11S.1 Target subset
+
+The audit did not re-open the solved positive-UP lane.
+
+It examined only:
+
+> `SQRT high-risk alarm AND frozen UP Verifier V2 ABSTAIN`
+
+because section 11R showed:
+- Router V2 UP contains useful positive-UP evidence;
+- Router V2 ABSTAIN is not itself a DOWN label.
+
+Primary candidate-selection period:
+- 2022–2024 only.
+
+Locked 2025 could be used only for unchanged transport of a candidate selected pre-2025. Since no candidate qualified, no 2025 candidate was selected or rescued.
+
+### 11S.2 Frozen candidate pool
+
+Ten existing same-clock next-day outputs were tested without changing their thresholds:
+
+1. TTSM-S2 DOWN;
+2. TTSM-S1 DOWN;
+3. TSM DOWN;
+4. Bonato AR1_RM QBoost h=1 median DOWN;
+5. Bonato AR1 QBoost h=1 median DOWN;
+6. AR1_RM_LOGIT p(UP)<0.50;
+7. RM_LOGIT p(UP)<0.50;
+8. RV_LOGIT p(UP)<0.50;
+9. RSK_LOGIT p(UP)<0.50;
+10. AR1_LOGIT p(UP)<0.50.
+
+FAST/SLOW/monthly priors were not converted into flat next-day DOWN votes. Altuntaş and non-H1 horizons remained excluded for clock/horizon reasons.
+
+### 11S.3 Integrity and Router reconstruction
+
+The mandatory integrity gate exposed two implementation mistakes before any result was accepted.
+
+First attempt incorrectly accumulated competence across all historical years.  
+Second attempt correctly used Y-1 formation for the backward historical extension, but incorrectly reset the original locked 2025 challenge at the start of 2025.
+
+The final implementation reproduces the two frozen chronology contracts exactly:
+
+- historical extension:
+  - 2022 initialized from 2021;
+  - 2023 initialized from 2022;
+- original frozen path:
+  - 2024 initialized from 2023;
+  - competence then continued causally through 2024 into locked 2025 without reset.
+
+Final exact Router reproduction:
+- 2022: n=205, Router UP=22, TP=12, FP=10;
+- 2023: n=203, Router UP=19, TP=5, FP=14;
+- 2024: n=205, Router UP=42, TP=26, FP=16;
+- 2025: n=237, Router UP=37, TP=27, FP=10, all 37 selected through RM_LOGIT.
+
+SQRT alarm counts also reproduced:
+- 2022=11;
+- 2023=2;
+- 2024=17;
+- 2025=90.
+
+Pre-2025 SQRT/Router overlap reproduced exactly:
+- 2022=0;
+- 2023=0;
+- 2024=4 = 3 actual UP / 1 actual DOWN.
+
+Final integrity errors: **none**.
+
+### 11S.4 Primary 2022–2024 unresolved subset
+
+After removing the four Router-UP alarms, the exact unresolved pre-2025 subset is:
+
+- n=26;
+- actual DOWN=13;
+- actual UP=13;
+- baseline DOWN prevalence=50%.
+
+Results:
+
+| Candidate | DOWN calls | Correct DOWN | False DOWN | DOWN precision | DOWN recall | False-DOWN FPR |
+|---|---:|---:|---:|---:|---:|---:|
+| TTSM-S2 | 0 | 0 | 0 | — | 0.00% | 0.00% |
+| TTSM-S1 | 2 | 1 | 1 | 50.00% | 7.69% | 7.69% |
+| TSM | 3 | 1 | 2 | 33.33% | 7.69% | 15.38% |
+| Bonato AR1_RM QBoost h=1 | 16 | 6 | 10 | 37.50% | 46.15% | 76.92% |
+| Bonato AR1 QBoost h=1 | 14 | 4 | 10 | 28.57% | 30.77% | 76.92% |
+| AR1_RM_LOGIT | 3 | 1 | 2 | 33.33% | 7.69% | 15.38% |
+| RM_LOGIT | 1 | 1 | 0 | 100.00% | 7.69% | 0.00% |
+| RV_LOGIT | 0 | 0 | 0 | — | 0.00% | 0.00% |
+| RSK_LOGIT | 7 | 1 | 6 | 14.29% | 7.69% | 46.15% |
+| AR1_LOGIT | 7 | 2 | 5 | 28.57% | 15.38% | 38.46% |
+
+The preregistered exploratory eligibility rule required:
+- at least 5 DOWN calls;
+- DOWN precision >50%;
+- false-DOWN FPR <50%.
+
+**No candidate qualified.**
+
+RM_LOGIT's single 1/1 DOWN call is not sufficient support and is explicitly not promoted.
+
+### 11S.5 Binding interpretation
+
+This closes the simplest reuse path.
+
+The existing same-clock daily motors that were already available for Gold Control do not provide a supported positive DOWN verifier inside the exact state where one is needed:
+
+> `SQRT high risk + frozen UP Verifier V2 abstain`.
+
+The failure is not because the system lacks DOWN calls. Bonato variants emit many DOWN calls, but in this subset they are mostly false. Conversely, RM_LOGIT produces one clean DOWN call but has essentially no coverage.
+
+Therefore:
+- do not convert Router abstention into DOWN;
+- do not reuse a weak existing DOWN complement merely because it emits often;
+- do not tune thresholds on these 26 cases;
+- do not use 2025 to choose a candidate after the pre-2025 failure.
+
+The next research lane must seek **new information or a genuinely DOWN-specific state model**, trained/evaluated for the conditional unresolved state rather than repurposing the existing general-direction outputs.
+
+The intended role is narrow:
+
+> given SQRT high risk and no verified UP signal, is there positive evidence strong enough to confirm DOWN; otherwise remain UNCERTAIN?
+
+No runtime or production promotion is authorized.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -2997,24 +3137,29 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 ## 14. Final binding summary
 
-Gold Control now has a more sharply separated short-term architecture.
+Gold Control now has a sharply separated short-term architecture, and the remaining technical gap is localized.
 
-The semantic audit established that SQRT-HAR-DR is a downside-risk motor, not a close-direction predictor. Across 2020–2024, 218 of 270 historical alarms were genuine realized high-risk hits, and many UP-close days were still valid risk alarms.
+The semantic audit established that SQRT-HAR-DR is a downside-risk motor, not a close-direction predictor.
 
-The authoritative frozen UP verifier is `UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH`, not an individual RV_LOGIT/TTSM/MOMENTUM model. It remains the reference selective UP signal.
+The authoritative frozen positive-UP verifier is `UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH`. When it emits UP inside SQRT alarm days, it provides useful selective evidence. In the primary 2024 intersection, 3 of 4 Router-UP calls were actual UP and those same three were genuine SQRT realized-risk misses. However Router ABSTAIN is not a DOWN signal.
 
-When intersected with SQRT in the primary 2024 sample, the frozen UP verifier emitted only 4 signals, but 3 were actual UP. Under the corrected risk semantics, those same three correct UP calls were also genuine SQRT realized-risk misses. Thus the positive UP-verifier signal is meaningful both directionally and as a risk-cleaning diagnostic in that small sample.
+The project therefore tested whether any already-existing same-clock daily motor could fill the missing DOWN-confirmation role specifically inside:
 
-However verifier abstention is not a DOWN signal. In 2024, the 13 abstentions split 7 UP / 6 DOWN; in locked 2025 stress, 74 abstentions split 35 UP / 39 DOWN. Treating every abstention as DOWN produces only 52.94% accuracy in 2024 and 54.44% in 2025.
+`SQRT high risk + Router V2 ABSTAIN`.
 
-The active architecture is therefore:
+On the exact 2022–2024 unresolved subset there are 26 cases, evenly split 13 DOWN / 13 UP. Ten frozen daily candidates were audited without threshold tuning. None met the preregistered exploratory eligibility rule of at least five DOWN calls, DOWN precision above 50%, and false-DOWN FPR below 50%.
 
-1. **Risk motor:** SQRT-HAR-DR -> HIGH RISK / NORMAL RISK.
-2. **Positive UP verifier:** frozen Router V2 -> VERIFIED UP or ABSTAIN.
-3. **Unresolved branch:** if HIGH RISK + Router ABSTAIN, direction remains UNCERTAIN unless a separately validated positive DOWN-confirmation motor fires.
+The highest-coverage DOWN candidates were actively harmful in this conditional subset: Bonato AR1_RM made 16 DOWN calls but only 6 were correct; Bonato AR1 made 14 with only 4 correct. The lone clean RM_LOGIT DOWN call was 1/1 but provides only 7.69% DOWN recall and fails the support requirement.
 
-This means the project no longer needs to search first for another broad UP detector. The missing component is specifically a **DOWN-confirmation motor for the high-risk, UP-verifier-abstain subset**.
+Thus the simplest reuse path is closed. Existing general-direction motors do not solve the missing branch.
 
-Earlier RV_LOGIT/TTSM and MOMENTUM_3M conditional audits remain preserved as diagnostic evidence showing that general-population or slower-direction models do not substitute for the frozen UP verifier in this role. No further post-hoc suppressor tuning or `ABSTAIN => DOWN` shortcut is authorized.
+The active architecture is:
 
-2025 remains unavailable for tuning, 2026 is excluded from model selection, and no runtime or production promotion is authorized. Genuine certification still requires new prospective or otherwise independent same-clock evidence.
+1. **SQRT risk motor** -> HIGH RISK / NORMAL RISK.
+2. **Frozen UP Verifier V2** -> VERIFIED UP or ABSTAIN.
+3. **DOWN-confirmation lane** -> still unresolved.
+4. If no positive DOWN confirmation exists -> **UNCERTAIN**, not forced DOWN.
+
+The next research task is not another broad UP model and not another suppressor threshold. It is to obtain **new DOWN-specific information or a new conditional state model** for the high-risk / UP-abstain subset. Candidate families should be chosen from mechanisms that can distinguish downside continuation from rebound—e.g. intraday path asymmetry, jump/close-location structure, volatility-direction coupling, event/order-flow/futures/options state, or hidden/regime-state formulations—while preserving same-clock chronology and the existing frozen risk/UP components.
+
+No post-hoc threshold tuning on the 26 historical cases is authorized. 2025 remains unavailable for candidate selection, 2026 remains excluded, and no runtime or production promotion is authorized.
