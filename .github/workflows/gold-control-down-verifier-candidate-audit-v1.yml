@@ -1,0 +1,85 @@
+name: Gold Control DOWN Verifier Candidate Audit V1
+
+on:
+  push:
+    branches:
+      - gold-down-verifier-candidate-audit-v1-20260923
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_DOWN_VERIFIER_CANDIDATE_AUDIT_V1_PREREG_2026-09-23.md'
+      - 'gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py'
+      - '.github/workflows/gold-control-down-verifier-candidate-audit-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-down-verifier-candidate-audit-v1
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONPATH: gold_axis_2026
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-down-verifier-candidate-audit-v1-20260923
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Require research DB credential
+        run: test -n "$NEON_DATABASE_URL"
+
+      - name: Install frozen dependencies
+        run: python -m pip install 'numpy==2.1.3' 'psycopg[binary]>=3.2,<4'
+
+      - name: Materialize pinned SQRT parent artifact
+        run: |
+          git fetch origin gold-downside-sqrt-hardr-multiorigin-v1-20260922
+          git show 2926796b6a7e9048d2c091c9c571cb928b773e02:gold_axis_2026/GOLD_CONTROL_DOWNSIDE_RAW_VS_SQRT_HAR_DR_MULTIORIGIN_V1_FORECASTS_2026-09-22.csv > /tmp/sqrt_parent.csv
+          test -s /tmp/sqrt_parent.csv
+
+      - name: Compile audit and frozen sources
+        run: |
+          python -m py_compile gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py
+          python -m py_compile gold_axis_2026/tools/regime_v1_data.py
+          python -m py_compile gold_axis_2026/tools/regime_v1_experts.py
+          python -m py_compile gold_axis_2026/regime_dampener_v1/frozen_direction_ttsm_realized_semivariance_xau_v1.py
+          python -m py_compile gold_axis_2026/regime_dampener_v1/frozen_direction_bonato_qboost_realized_moments_spot_xau_v1.py
+          python -m py_compile gold_axis_2026/regime_dampener_v1/frozen_direction_downside_realized_moments_logit_v2.py
+
+      - name: Assert research DB read-only
+        run: |
+          ! grep -Eini 'insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from|create[[:space:]]+table|drop[[:space:]]+table|alter[[:space:]]+table' gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py gold_axis_2026/tools/regime_v1_data.py gold_axis_2026/tools/regime_v1_experts.py gold_axis_2026/regime_dampener_v1/frozen_direction_*.py
+          grep -n 'default_transaction_read_only' gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py
+
+      - name: Run preregistered audit
+        run: |
+          rm -rf down_verifier_candidate_out
+          python gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py \
+            --sqrt-parent /tmp/sqrt_parent.csv \
+            --out down_verifier_candidate_out
+
+      - name: Freeze results
+        run: |
+          cp down_verifier_candidate_out/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_DOWN_VERIFIER_CANDIDATE_AUDIT_V1_*
+          git commit -m 'Freeze DOWN verifier candidate audit V1 results'
+          git push origin HEAD:gold-down-verifier-candidate-audit-v1-20260923
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-down-verifier-candidate-audit-v1
+          retention-days: 30
+          if-no-files-found: error
+          path: down_verifier_candidate_out/
