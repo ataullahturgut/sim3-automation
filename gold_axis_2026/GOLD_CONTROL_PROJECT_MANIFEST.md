@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.36  
+**Manifest version:** 2.37  
 **Issue date:** 2026-09-23  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -4466,6 +4466,99 @@ No new model was trained, no feature was selected for production, and no 2025 ou
 
 ---
 
+
+## 11ZC. Direction mechanism-gap audit — actionable failure-mode features identified
+
+**Identity:** `DIRECTION_MECHANISM_GAP_AUDIT_V1_RESEARCH`  
+**Research branch:** `gold-direction-mechanism-gap-v1-20260923`  
+**Preregistration commit:** `2ca2e4094f5480a0d515761e14d3f7eb504bb306`  
+**Implementation clarification commit:** `d2b5a9b7f6cc325244de3e51f1c2402a7d10272b`  
+**Implementation commit:** `0760d7e6200a6de096de1d0e2580113a68785605`  
+**Workflow dependency fix:** `22716fc20d2ce6ca98e304858c384254f7544603`  
+**Frozen result commit:** `12c0e7d9cb0adb65e43064592a29617c887e4675`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_DIRECTION_MECHANISM_GAP_AUDIT_V1_RESULT_2026-09-23.json` (Git blob SHA `3bd90025df3d743b26ccd75f4f6449024073e054`)  
+**Status:** `AUDIT_COMPLETE / DESCRIPTIVE / ACTIONABLE_HYPOTHESIS_GENERATION / NO_MODEL_CHANGE`.
+
+### 11ZC.1 Purpose
+
+This audit extended the earlier error anatomy with 18 preregistered path-dynamic features designed to test:
+- selling-pressure persistence;
+- post-trough recovery quality;
+- terminal trend / acceleration;
+- negative-shock concentration.
+
+Primary evidence remains governed 2022–2024. Locked 2025 is used only for sign/effect stability.
+
+No classifier was trained.
+
+### 11ZC.2 Captured UP versus missed UP
+
+Only one newly engineered path-dynamic feature met the frozen cross-period stability rule:
+
+- **late_downside_intensity** — `MODERATE_STABLE`;
+  - pre-2025 Cliff delta = +0.450;
+  - locked-2025 delta = +0.336;
+  - pre-2025 median 0.0544 captured-UP versus 0.0352 missed-UP;
+  - locked-2025 median 0.1258 versus 0.0804.
+
+Interpretation:
+- the current UP-2's captured rebound archetype has stronger downside variance concentrated late in the origin session;
+- missed UPs generally have less late downside intensity and appear closer to an already-started recovery/continuation-UP mechanism.
+
+However the audit did **not** find a broad set of new stable path-dynamic features that cleanly separates missed UP from the downstream DOWN population. Therefore a second static UP specialist is not yet strongly supported by the new feature-gap evidence alone.
+
+### 11ZC.3 True rebound versus continuation-mimic hard negatives
+
+The most useful new result is:
+
+- **last_hour_trend_r2** — `MODERATE_STABLE` for `CAPTURED_UP vs FALSE_UP_ACTUAL_DOWN`;
+  - pre-2025 Cliff delta = -0.667;
+  - locked-2025 delta = -0.231;
+  - pre-2025 median R² = **0.189** for captured UP versus **0.768** for false-UP actual-DOWN;
+  - locked-2025 median R² = **0.085** versus **0.526**.
+
+Thus the UP-2 false positives tend to have a much more **smooth / linearly persistent final-hour path**, while true rebound cases tend to have a lower-R², more irregular terminal path.
+
+This supports a concrete hypothesis:
+- the current UP-2 rebound prototype confuses some **persistent terminal continuation** paths with exhausted-selling / rebound paths;
+- a future **continuation-mimic veto / failure detector** should test terminal persistence explicitly before accepting an UP-2 rebound signal.
+
+Other terminal features showed pre-2025 differences but did not satisfy locked-2025 stability and therefore are not promoted as primary mechanisms under V1.
+
+### 11ZC.4 Missed UP versus rejected DOWN
+
+No newly engineered path-dynamic feature met MODERATE_STABLE or STRONG_STABLE for `MISSED_UP vs REJECTED_DOWN`.
+
+Several features had pre-2025 effects but collapsed or reversed in locked 2025, including:
+- final-hour trend R²;
+- near-trough revisit rate;
+- final-hour return;
+- final-hour slope;
+- time near the session low.
+
+Therefore the earlier conclusion is strengthened:
+- the remaining abstained UP/DOWN population is not cleanly separable by a static set of simple origin-day path descriptors;
+- forcing a conventional residual binary classifier remains poorly supported;
+- regime-conditioned/defer-type research is more defensible if this lane is revisited.
+
+### 11ZC.5 Research priority after the audit
+
+The evidence does **not** support indiscriminately adding many new features or trying another broad model family.
+
+The clean next research priority is:
+
+1. keep Frozen Primary UP Verifier V2 unchanged;
+2. keep One-Sided UP-2 Logit V1 unchanged as the current rebound specialist;
+3. investigate a narrowly targeted **continuation-mimic veto / UP-2 failure detector** using terminal persistence information, with `last_hour_trend_r2` as the leading mechanism candidate;
+4. expand the historical route-consistent/prequential UP-2 error pool before fitting that veto whenever possible;
+5. do not yet build a static DOWN resolver from the current abstained hard residual set.
+
+The `Recovery/Continuation-UP specialist` idea remains a secondary research hypothesis, but the new path-dynamic audit provides weaker evidence for it than for the continuation-mimic veto.
+
+No threshold or veto is authorized by this audit itself.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -4502,31 +4595,28 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 ## 14. Final binding summary
 
-The project boundary is now explicit: **the main forecast model is separate; the stack below exists only to provide direction / directional-confirmation information.** This manifest update does not redefine or replace the main forecast model.
+The project boundary remains explicit: the **main forecast model is separate**, while this stack provides direction / directional-confirmation information only.
 
-The current direction-only research cascade is:
+Current direction research architecture:
 
-1. **SQRT-HAR-DR** — frozen downside-risk state motor; HIGH RISK/NORMAL RISK only, not direction.
-2. **Frozen UP Verifier V2** — primary selective positive-UP research authority; UP or ABSTAIN.
-3. **Residual One-Sided UP-2 Logit V1** — promising research-only second-stage missed-UP specialist; UP2 or ABSTAIN; it is the only residual-UP method that passed its frozen pre-2025 gate.
-4. **Residual Local-DES V1** — unsupported.
-5. **Residual Trajectory/Rebound Morphology V1** — unsupported under its pre-2025 gate.
-6. **Positive DOWN resolver** — not yet validated. Route-consistent CBR-DTW is research baseline only, not VERIFIED-DOWN authority.
-7. **UNCERTAIN** — required fallback when neither positive UP nor positive DOWN evidence is validated.
+1. **SQRT-HAR-DR** — frozen downside-risk state motor.
+2. **Frozen UP Verifier V2** — primary selective positive-UP authority.
+3. **One-Sided UP-2 Logit V1** — promising research-only rebound-type missed-UP specialist.
+4. **Continuation-mimic veto / UP-2 failure detector** — now the leading next research hypothesis, not yet built or authorized.
+5. **Residual Local-DES V1** — unsupported.
+6. **Residual Trajectory/Rebound Morphology V1** — unsupported under its frozen pre-2025 gate.
+7. **Positive DOWN resolver** — not proven.
+8. **UNCERTAIN** — binding fallback when neither side has validated positive evidence.
 
-The strongest pre-2025 residual-UP evidence remains One-Sided Logit UP-2 V1:
-- pooled 2022–2024: 26 residual cases =13 UP +13 DOWN;
-- UP2 calls=11 =8 true UP +3 false UP;
-- precision=72.73%;
-- missed-UP recall=61.54%;
-- false-UP FPR=23.08%;
-- AUC=0.787;
-- Wilson90 LCB precision=53.45%.
+The direction-error anatomy showed that current UP-2 captures a stable late-stress/incomplete-recovery rebound archetype. False-UP actual-DOWN cases mimic this archetype rather than looking random.
 
-After those UP2 calls, the pre-2025 downstream residual population is 15 cases = **5 UP +10 DOWN**, so the DOWN share rises from 50.0% to 66.7%. Locked 2025 remains materially weaker and is descriptive transport only.
+The mechanism-gap audit adds a new actionable distinction: false-UP actual-DOWN cases have substantially more linearly persistent final-hour paths than captured UPs. The leading candidate, final-hour trend R², has:
+- pre-2025 medians 0.768 false-UP actual-DOWN versus 0.189 captured-UP;
+- locked-2025 medians 0.526 versus 0.085;
+- same-direction cross-period effect, labeled MODERATE_STABLE.
 
-The independent UP-2 integrity/economic arithmetic audit passed with no integrity errors. That audit validates labels, call-rule reconstruction and arithmetic; it does **not** turn UP-2 into a standalone investment model. P&L figures for direction modules are diagnostic only because the user's separate main forecast model remains the primary forecasting system.
+This motivates a narrow continuation-mimic veto behind UP-2, but does not itself authorize a rule or threshold.
+
+For missed-UP versus rejected-DOWN, no new path-dynamic feature was cross-period stable. Therefore a broad static residual UP/DOWN classifier remains weakly motivated. The clean research order is to increase the route-consistent historical UP-2 error sample if possible, then test a preregistered continuation-mimic failure detector before revisiting downstream DOWN resolution.
 
 No automatic ensemble, forced binary direction, BUY/SELL mapping, runtime promotion, 2025 retuning or 2026 model selection is authorized.
-
-**Architecture freeze:** no further direction-research path is selected in this version. Await explicit user direction before changing the cascade, promoting a model, or starting a new downstream study.
