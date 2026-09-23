@@ -1,0 +1,457 @@
+{
+  "identity": "CBR_CASCADE_ROUTE_CONSISTENT_EXTENSION_V1_RESEARCH",
+  "date": "2026-09-23",
+  "status": "CASCADE_ROUTE_CONSISTENT_NOT_SUPPORTED",
+  "integrity_errors": [],
+  "pins": {
+    "mirror_commit": "922f83a60cc574e7395fb27397077288055a1ef6",
+    "external_spine_commit": "509c5ffa762f4ea49644b8ffe723ed2591ba52bf",
+    "sqrt_code_commit": "ad0fc4dcbe1687833bd9a153cd4bc6a754523464",
+    "cbr_code_commit": "f187f89c166a75cefa8cf60709dcd4ce1027663d",
+    "base_audit_commit": "7982b422476df61eb0339b74265afd553414f2d2"
+  },
+  "frozen_method": {
+    "npts": 48,
+    "dtw_band": 6,
+    "k": 3,
+    "eps": 1e-08,
+    "threshold": 0.5,
+    "strict_pool": "historical SQRT HIGH RISK + frozen UP Verifier ABSTAIN only"
+  },
+  "external_reconstruction": {
+    "passed": true,
+    "raw_n": 518,
+    "spine_n": 518,
+    "common_n": 518,
+    "missing_dates": [],
+    "extra_dates": [],
+    "bad_276_bar_dates": [],
+    "max_abs_close_diff": 4.547473508864641e-13,
+    "max_abs_rv_diff": 3.548051609458813e-17,
+    "max_abs_dr_diff": 3.247185506594086e-17
+  },
+  "path_harmonization": {
+    "passed": true,
+    "calendar_overlap_n": 450,
+    "overlap_n": 345,
+    "skipped_short_n": 105,
+    "skipped_short_examples": [
+      {
+        "date": "2020-04-09",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-04-17",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-04-22",
+        "external_returns": 275,
+        "governed_returns": 227
+      },
+      {
+        "date": "2020-04-23",
+        "external_returns": 275,
+        "governed_returns": 185
+      },
+      {
+        "date": "2020-04-24",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-05-01",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-05-08",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-05-15",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-05-22",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-05-25",
+        "external_returns": 275,
+        "governed_returns": 227
+      },
+      {
+        "date": "2020-05-29",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-06-05",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-06-12",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-06-19",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-06-26",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-07-03",
+        "external_returns": 275,
+        "governed_returns": 156
+      },
+      {
+        "date": "2020-07-10",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-07-17",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-07-24",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-07-31",
+        "external_returns": 275,
+        "governed_returns": 203
+      }
+    ],
+    "skipped_nonpositive_rv_n": 0,
+    "median_same_date_flat_corr": 0.9999137678740709,
+    "median_same_date_dtw": 0.005832392620340573,
+    "median_shifted_date_dtw": 0.44090019132811153,
+    "median_same_to_shifted_dtw_ratio": 0.013228373983626128,
+    "fraction_same_below_shifted_median": 1.0,
+    "p90_same_date_dtw": 0.021576579677700703
+  },
+  "external_sqrt_summary": {
+    "2020": {
+      "alarms": 212,
+      "down": 97,
+      "up": 115
+    },
+    "2021": {
+      "alarms": 28,
+      "down": 16,
+      "up": 12
+    }
+  },
+  "external_router_summary": {
+    "2020": {
+      "n": 260,
+      "router_up": 185,
+      "tp": 111,
+      "fp": 74
+    },
+    "2021": {
+      "n": 258,
+      "router_up": 33,
+      "tp": 19,
+      "fp": 14
+    }
+  },
+  "external_route_summary": {
+    "2020": {
+      "sqrt_alarms": 212,
+      "router_up_overlap": 140,
+      "overlap_actual_up": 80,
+      "overlap_actual_down": 60,
+      "router_abstain": 72,
+      "abstain_actual_down": 37,
+      "abstain_actual_up": 35
+    },
+    "2021": {
+      "sqrt_alarms": 28,
+      "router_up_overlap": 2,
+      "overlap_actual_up": 1,
+      "overlap_actual_down": 1,
+      "router_abstain": 26,
+      "abstain_actual_down": 15,
+      "abstain_actual_up": 11
+    }
+  },
+  "external_route_consistent_training_cases": {
+    "n": 98,
+    "down": 52,
+    "up": 46
+  },
+  "by_year_2022_2024": {
+    "2022": {
+      "n": 11,
+      "actual_down": 6,
+      "actual_up": 5,
+      "down_calls": 10,
+      "correct_down": 6,
+      "false_down": 4,
+      "down_precision": 0.6,
+      "down_recall": 1.0,
+      "false_down_fpr": 0.8,
+      "call_coverage": 0.9090909090909091,
+      "wilson90_lcb_down_precision": 0.40135184255626694,
+      "mean_p_down": 0.6519852405630908,
+      "mean_neighbor_distance": 0.1275335389542046,
+      "train_n": 98,
+      "train_down": 52,
+      "train_up": 46,
+      "train_by_year": {
+        "2020": {
+          "n": 72,
+          "down": 37,
+          "up": 35,
+          "source_counts": {
+            "EXTERNAL_DUKASCOPY_V2_ROUTER_ABSTAIN": 72
+          }
+        },
+        "2021": {
+          "n": 26,
+          "down": 15,
+          "up": 11,
+          "source_counts": {
+            "EXTERNAL_DUKASCOPY_V2_ROUTER_ABSTAIN": 26
+          }
+        }
+      }
+    },
+    "2023": {
+      "n": 2,
+      "actual_down": 1,
+      "actual_up": 1,
+      "down_calls": 1,
+      "correct_down": 1,
+      "false_down": 0,
+      "down_precision": 1.0,
+      "down_recall": 1.0,
+      "false_down_fpr": 0.0,
+      "call_coverage": 0.5,
+      "wilson90_lcb_down_precision": 0.3784475032253529,
+      "mean_p_down": 0.47453982653681503,
+      "mean_neighbor_distance": 0.14499571224516328,
+      "train_n": 109,
+      "train_down": 58,
+      "train_up": 51,
+      "train_by_year": {
+        "2020": {
+          "n": 72,
+          "down": 37,
+          "up": 35,
+          "source_counts": {
+            "EXTERNAL_DUKASCOPY_V2_ROUTER_ABSTAIN": 72
+          }
+        },
+        "2021": {
+          "n": 26,
+          "down": 15,
+          "up": 11,
+          "source_counts": {
+            "EXTERNAL_DUKASCOPY_V2_ROUTER_ABSTAIN": 26
+          }
+        },
+        "2022": {
+          "n": 11,
+          "down": 6,
+          "up": 5,
+          "source_counts": {
+            "GOVERNED_ROUTER_ABSTAIN": 11
+          }
+        }
+      }
+    },
+    "2024": {
+      "n": 13,
+      "actual_down": 6,
+      "actual_up": 7,
+      "down_calls": 5,
+      "correct_down": 2,
+      "false_down": 3,
+      "down_precision": 0.4,
+      "down_recall": 0.3333333333333333,
+      "false_down_fpr": 0.42857142857142855,
+      "call_coverage": 0.38461538461538464,
+      "wilson90_lcb_down_precision": 0.17987254982034234,
+      "mean_p_down": 0.42597294449903583,
+      "mean_neighbor_distance": 0.13919527735772538,
+      "train_n": 111,
+      "train_down": 59,
+      "train_up": 52,
+      "train_by_year": {
+        "2020": {
+          "n": 72,
+          "down": 37,
+          "up": 35,
+          "source_counts": {
+            "EXTERNAL_DUKASCOPY_V2_ROUTER_ABSTAIN": 72
+          }
+        },
+        "2021": {
+          "n": 26,
+          "down": 15,
+          "up": 11,
+          "source_counts": {
+            "EXTERNAL_DUKASCOPY_V2_ROUTER_ABSTAIN": 26
+          }
+        },
+        "2022": {
+          "n": 11,
+          "down": 6,
+          "up": 5,
+          "source_counts": {
+            "GOVERNED_ROUTER_ABSTAIN": 11
+          }
+        },
+        "2023": {
+          "n": 2,
+          "down": 1,
+          "up": 1,
+          "source_counts": {
+            "GOVERNED_ROUTER_ABSTAIN": 2
+          }
+        }
+      }
+    }
+  },
+  "pooled_2022_2024": {
+    "n": 26,
+    "actual_down": 13,
+    "actual_up": 13,
+    "down_calls": 16,
+    "correct_down": 9,
+    "false_down": 7,
+    "down_precision": 0.5625,
+    "down_recall": 0.6923076923076923,
+    "false_down_fpr": 0.5384615384615384,
+    "call_coverage": 0.6153846153846154,
+    "wilson90_lcb_down_precision": 0.40521106136564305,
+    "mean_p_down": 0.5253294452982729,
+    "mean_neighbor_distance": 0.1347076522552695
+  },
+  "pre2025_extension_supportive": false,
+  "locked_2025": {
+    "n": 74,
+    "actual_down": 39,
+    "actual_up": 35,
+    "down_calls": 36,
+    "correct_down": 20,
+    "false_down": 16,
+    "down_precision": 0.5555555555555556,
+    "down_recall": 0.5128205128205128,
+    "false_down_fpr": 0.45714285714285713,
+    "call_coverage": 0.4864864864864865,
+    "wilson90_lcb_down_precision": 0.44930983223676435,
+    "mean_p_down": 0.5066461538648063,
+    "mean_neighbor_distance": 0.1295226286656317,
+    "train_n": 124,
+    "train_down": 65,
+    "train_up": 59,
+    "train_by_year": {
+      "2020": {
+        "n": 72,
+        "down": 37,
+        "up": 35,
+        "source_counts": {
+          "EXTERNAL_DUKASCOPY_V2_ROUTER_ABSTAIN": 72
+        }
+      },
+      "2021": {
+        "n": 26,
+        "down": 15,
+        "up": 11,
+        "source_counts": {
+          "EXTERNAL_DUKASCOPY_V2_ROUTER_ABSTAIN": 26
+        }
+      },
+      "2022": {
+        "n": 11,
+        "down": 6,
+        "up": 5,
+        "source_counts": {
+          "GOVERNED_ROUTER_ABSTAIN": 11
+        }
+      },
+      "2023": {
+        "n": 2,
+        "down": 1,
+        "up": 1,
+        "source_counts": {
+          "GOVERNED_ROUTER_ABSTAIN": 2
+        }
+      },
+      "2024": {
+        "n": 13,
+        "down": 6,
+        "up": 7,
+        "source_counts": {
+          "GOVERNED_ROUTER_ABSTAIN": 13
+        }
+      }
+    },
+    "baseline_down_prevalence": 0.527027027027027,
+    "precision_lift_vs_baseline": 0.028528528528528607,
+    "transport_supportive": true
+  },
+  "neighbor_provenance_counts": {
+    "pre2025": {
+      "EXTERNAL_DUKASCOPY_V2_ROUTER_ABSTAIN:2020": 50,
+      "EXTERNAL_DUKASCOPY_V2_ROUTER_ABSTAIN:2021": 21,
+      "GOVERNED_ROUTER_ABSTAIN:2022": 6,
+      "GOVERNED_ROUTER_ABSTAIN:2023": 1
+    },
+    "locked2025": {
+      "GOVERNED_ROUTER_ABSTAIN:2022": 21,
+      "EXTERNAL_DUKASCOPY_V2_ROUTER_ABSTAIN:2020": 144,
+      "EXTERNAL_DUKASCOPY_V2_ROUTER_ABSTAIN:2021": 35,
+      "GOVERNED_ROUTER_ABSTAIN:2024": 18,
+      "GOVERNED_ROUTER_ABSTAIN:2023": 4
+    }
+  },
+  "original_comparators": {
+    "2024_unresolved_original_cbr": {
+      "n": 13,
+      "down_calls": 5,
+      "correct_down": 3,
+      "false_down": 2,
+      "precision": 0.6,
+      "recall": 0.5,
+      "false_down_fpr": 0.2857142857142857
+    },
+    "2025_unresolved_original_cbr": {
+      "n": 74,
+      "down_calls": 33,
+      "correct_down": 21,
+      "false_down": 12,
+      "precision": 0.6363636363636364,
+      "recall": 0.5384615384615384,
+      "false_down_fpr": 0.34285714285714286
+    }
+  },
+  "governance": {
+    "random_split": false,
+    "threshold_tuning": false,
+    "k_band_representation_tuning": false,
+    "2025_used_for_selection": false,
+    "2026_used": false,
+    "raw_third_party_committed": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
