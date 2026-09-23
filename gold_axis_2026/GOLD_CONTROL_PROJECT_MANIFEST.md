@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.40  
+**Manifest version:** 2.41  
 **Issue date:** 2026-09-23  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -4907,6 +4907,98 @@ It does **not** authorize:
 - treating the retrospective 100% precision region as validated performance.
 
 The next step, if explicitly requested, should be a separately preregistered method for learning or calibrating a veto without using governed target-period outcomes for threshold choice.
+
+---
+
+
+## 11ZG. UP-2 regime-conditioned R2 anatomy — origin-state conditioning materially improves the retrospective veto pattern
+
+**Identity:** `UP2_REGIME_CONDITIONED_R2_ANATOMY_V1_RESEARCH`  
+**Research branch:** `gold-up2-regime-conditioned-r2-anatomy-v1-20260923`  
+**Preregistration commit:** `3a76ffc89fb704305e1cda4aa63e4e3f5e3c28f2`  
+**Implementation commit:** `3a1538c35c60bebb3a69f98b15bfb8498a468b4d`  
+**Workflow commit:** `650559da68ca9938689b46a23ae48b13331d071e`  
+**Frozen result commit:** `9ca12315809aab28aff9233385ff734852c1df70`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_UP2_REGIME_CONDITIONED_R2_ANATOMY_V1_RESULT_2026-09-23.json` (Git blob SHA `2bbc7f0b6e4540915f298efe15bf820bbaa37216`)  
+**Status:** `REGIME_CONDITIONED_DIAGNOSTIC_SIGNAL_EXISTS / DIAGNOSTIC_ONLY / NOT_RUNTIME`.
+
+### 11ZG.1 Design
+
+Stage 3 kept the Stage-2 scalar failure marker fixed:
+
+`last_hour_trend_r2 >= 0.50`.
+
+No model was fitted and the R² threshold was not re-searched.
+
+The question was whether this veto becomes more reliable when applied only inside a specific origin-safe state.
+
+Five preregistered regime axes were tested:
+- normalized SQRT risk intensity;
+- origin-day RV / previous-60-day median RV;
+- downside semivariance share;
+- late downside intensity;
+- lag-1 close return.
+
+Each regime split used only the **pre-2025 UP-2-call median** for that axis. Both HIGH and LOW sides were then transported unchanged to locked 2025.
+
+### 11ZG.2 Transport-consistent regime conditions
+
+Four regime conditions passed both the pre-2025 diagnostic criterion and the locked-2025 transport criterion:
+
+1. **High SQRT risk intensity**
+   - pre cutpoint: `sqrt_score >= 1.29989`;
+   - pre-2025: removed 3/3 false-UPs while retaining 7/8 captured-UPs;
+   - locked 2025: removed 5/12 false-UPs while retaining 10/13 captured-UPs.
+
+2. **Low downside-share state**
+   - pre cutpoint: `downside_share < 0.618005`;
+   - pre-2025: removed 2/3 false-UPs while retaining 7/8 captured-UPs;
+   - locked 2025: removed 5/12 false-UPs while retaining 10/13 captured-UPs.
+
+3. **High late-downside intensity**
+   - pre cutpoint: `late_downside_intensity >= 0.0540692`;
+   - pre-2025: removed 2/3 false-UPs while retaining 7/8 captured-UPs;
+   - locked 2025: removed 7/12 false-UPs while retaining 10/13 captured-UPs.
+
+4. **Higher lag-1 close return**
+   - pre cutpoint: `lag1_close_return >= -0.0122661`;
+   - pre-2025: removed 2/3 false-UPs while retaining 6/8 captured-UPs;
+   - locked 2025: removed 4/12 false-UPs while retaining 11/13 captured-UPs.
+
+The high-RV60 regime was useful pre-2025 but failed the frozen locked-2025 transport criterion.
+
+### 11ZG.3 Interpretation
+
+The R² failure pattern is not purely unconditional. It is materially more informative inside certain origin-state regimes.
+
+The strongest mechanistic candidate is **high late-downside intensity**:
+- it preserves 7/8 true UPs pre-2025 and 10/13 in 2025;
+- it removes 2/3 false-UPs pre-2025 and 7/12 in locked 2025.
+
+High SQRT risk intensity is also notable because it removes all three pre-2025 false-UPs while retaining 7/8 true-UPs, and keeps the same-direction trade-off in locked 2025.
+
+This supports a **regime-conditioned failure-detector** hypothesis more strongly than an unconditional scalar veto.
+
+However the rules are still retrospective mechanism findings. No condition, cutpoint, or conjunction is authorized for runtime use.
+
+### 11ZG.4 Binding next-step implication
+
+A future Stage-4 study, if explicitly authorized, should test a **small regime-conditioned veto model** rather than another broad residual classifier.
+
+The clean candidate inputs are:
+- `last_hour_trend_r2`;
+- SQRT risk intensity;
+- late-downside intensity;
+- optionally downside-share / lag-1 close return as secondary context.
+
+The study must:
+- freeze the feature set and model family before scoring;
+- learn chronology-safely;
+- keep 2025 out of design/tuning;
+- preserve ABSTAIN rather than convert vetoes to DOWN;
+- not alter the primary UP verifier or base UP-2 model.
+
+No Stage-4 model is authorized by this section.
 
 ---
 
