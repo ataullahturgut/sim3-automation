@@ -1,0 +1,117 @@
+name: Gold Control Comprehensive DOWN Specialist Crosswalk V1
+
+on:
+  push:
+    branches:
+      - gold-comprehensive-down-specialist-crosswalk-v1-20260923
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_COMPREHENSIVE_DOWN_SPECIALIST_CROSSWALK_V1_PREREG_2026-09-23.md'
+      - 'gold_axis_2026/tools/comprehensive_down_specialist_crosswalk_v1_run.py'
+      - '.github/workflows/gold-control-comprehensive-down-specialist-crosswalk-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-comprehensive-down-specialist-crosswalk-v1
+  cancel-in-progress: false
+
+jobs:
+  crosswalk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONPATH: /tmp/frozen/gold_axis_2026:/tmp/frozen/gold_axis_2026/tools
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-comprehensive-down-specialist-crosswalk-v1-20260923
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Require research DB credential
+        run: test -n "$NEON_DATABASE_URL"
+
+      - name: Install frozen dependencies
+        run: python -m pip install 'numpy==2.1.3' 'pandas==2.2.3' 'scipy==1.14.1' 'scikit-learn==1.5.2' 'psycopg[binary]>=3.2,<4'
+
+      - name: Materialize pinned frozen authorities
+        run: |
+          mkdir -p /tmp/frozen/gold_axis_2026/tools /tmp/frozen/gold_axis_2026/regime_dampener_v1 /tmp/frozen/v153
+          git fetch --all --prune
+
+          # Final integrity-passing Router/baseline audit and its frozen dependencies.
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py > /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/regime_v1_data.py > /tmp/frozen/gold_axis_2026/tools/regime_v1_data.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/regime_v1_experts.py > /tmp/frozen/gold_axis_2026/tools/regime_v1_experts.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/regime_dampener_v1/frozen_direction_ttsm_realized_semivariance_xau_v1.py > /tmp/frozen/gold_axis_2026/regime_dampener_v1/frozen_direction_ttsm_realized_semivariance_xau_v1.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/regime_dampener_v1/frozen_direction_bonato_qboost_realized_moments_spot_xau_v1.py > /tmp/frozen/gold_axis_2026/regime_dampener_v1/frozen_direction_bonato_qboost_realized_moments_spot_xau_v1.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/regime_dampener_v1/frozen_direction_downside_realized_moments_logit_v2.py > /tmp/frozen/gold_axis_2026/regime_dampener_v1/frozen_direction_downside_realized_moments_logit_v2.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/GOLD_CONTROL_DOWN_VERIFIER_CANDIDATE_AUDIT_V1_PRE2025_LEDGER_2026-09-23.csv > /tmp/pre26.csv
+
+          # Frozen SQRT parent.
+          git show 2926796b6a7e9048d2c091c9c571cb928b773e02:gold_axis_2026/GOLD_CONTROL_DOWNSIDE_RAW_VS_SQRT_HAR_DR_MULTIORIGIN_V1_FORECASTS_2026-09-22.csv > /tmp/sqrt_parent.csv
+
+          # V1.53 frozen specialist implementation and contract.
+          git show 98e593ac68c67f789bb664f4ffee5517a052ab7d:gold_axis_2026/v153_thesis/run_v153_intraday_regime_specialists.py > /tmp/v153/run_v153_intraday_regime_specialists.py
+          git show 98e593ac68c67f789bb664f4ffee5517a052ab7d:gold_axis_2026/v153_thesis/contracts/v153_intraday_regime_specialists_freeze_v1.json > /tmp/v153_contract.json
+
+          # Cross-domain exact retained rows.
+          git show 8c7a3b7f4b9c580fc599aa41a50b768358488609:gold_axis_2026/GOLD_CONTROL_DOWNSIDE_CROSSDOMAIN_DIRECTION_V1_FORECASTS_2026-09-22.csv > /tmp/crossdomain.csv
+
+          # Frozen path and cross-market specialist code.
+          git show f187f89c166a75cefa8cf60709dcd4ce1027663d:gold_axis_2026/tools/downside_cbr_dtw_path_v1.py > /tmp/frozen/downside_cbr_dtw_path_v1.py
+          git show 1af5d5eb37d3c34881c206ff11b295d9099e2b0d:gold_axis_2026/tools/downside_sp500_crossmarket_veto_v1.py > /tmp/frozen/downside_sp500_crossmarket_veto_v1.py
+
+          test -s /tmp/pre26.csv
+          test -s /tmp/sqrt_parent.csv
+          test -s /tmp/crossdomain.csv
+
+      - name: Compile
+        run: |
+          python -m py_compile gold_axis_2026/tools/comprehensive_down_specialist_crosswalk_v1_run.py
+          python -m py_compile /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py
+          python -m py_compile /tmp/v153/run_v153_intraday_regime_specialists.py
+          python -m py_compile /tmp/frozen/downside_cbr_dtw_path_v1.py
+          python -m py_compile /tmp/frozen/downside_sp500_crossmarket_veto_v1.py
+
+      - name: Assert no production writes
+        run: |
+          ! grep -Eini 'insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from|create[[:space:]]+table|drop[[:space:]]+table|alter[[:space:]]+table' gold_axis_2026/tools/comprehensive_down_specialist_crosswalk_v1_run.py
+          grep -n 'default_transaction_read_only' gold_axis_2026/tools/comprehensive_down_specialist_crosswalk_v1_run.py
+
+      - name: Run preregistered crosswalk
+        run: |
+          rm -rf comprehensive_down_crosswalk_out
+          python gold_axis_2026/tools/comprehensive_down_specialist_crosswalk_v1_run.py \
+            --base-module /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py \
+            --sqrt-parent /tmp/sqrt_parent.csv \
+            --pre-ledger /tmp/pre26.csv \
+            --crossdomain /tmp/crossdomain.csv \
+            --v153-module /tmp/v153/run_v153_intraday_regime_specialists.py \
+            --v153-contract /tmp/v153_contract.json \
+            --cbr-module /tmp/frozen/downside_cbr_dtw_path_v1.py \
+            --sp500-module /tmp/frozen/downside_sp500_crossmarket_veto_v1.py \
+            --out comprehensive_down_crosswalk_out
+
+      - name: Freeze results
+        run: |
+          cp comprehensive_down_crosswalk_out/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_COMPREHENSIVE_DOWN_SPECIALIST_CROSSWALK_V1_*
+          git commit -m 'Freeze comprehensive retained DOWN-specialist crosswalk V1'
+          git push origin HEAD:gold-comprehensive-down-specialist-crosswalk-v1-20260923
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-comprehensive-down-specialist-crosswalk-v1
+          retention-days: 30
+          if-no-files-found: error
+          path: comprehensive_down_crosswalk_out/
