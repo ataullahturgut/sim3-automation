@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.25  
+**Manifest version:** 2.26  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -2962,7 +2962,7 @@ No runtime promotion is authorized.
 ---
 
 
-## 11S. DOWN verifier candidate audit — existing same-clock motors do not solve the unresolved branch
+## 11S. DOWN verifier candidate audit — narrow baseline screen only
 
 **Identity:** `DOWN_VERIFIER_CANDIDATE_AUDIT_V1_RESEARCH`  
 **Research branch:** `gold-down-verifier-candidate-audit-v1-20260923`  
@@ -2971,7 +2971,7 @@ No runtime promotion is authorized.
 **Router chronology corrections:** `7300df8223c44b89658482335b35380d8ca0b3ea`, `b5e714f23311b8470bbc40fdc549516e987284c7`  
 **Frozen result commit:** `7982b422476df61eb0339b74265afd553414f2d2`  
 **Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_DOWN_VERIFIER_CANDIDATE_AUDIT_V1_RESULT_2026-09-23.json` (Git blob SHA `181c06ad524520f6cdf96ab9ff16823b9c84b133`)  
-**Status:** `NO_EXISTING_DOWN_CANDIDATE_ELIGIBLE`.
+**Status:** `NARROW_BASELINE_SCREEN_NO_ELIGIBLE_CANDIDATE / NOT_A_COMPREHENSIVE_EXISTING_MODEL_AUDIT`.
 
 ### 11S.1 Target subset
 
@@ -3075,11 +3075,22 @@ The preregistered exploratory eligibility rule required:
 
 RM_LOGIT's single 1/1 DOWN call is not sufficient support and is explicitly not promoted.
 
-### 11S.5 Binding interpretation
+### 11S.5 Corrected interpretation
 
-This closes the simplest reuse path.
+**Correction entered 2026-09-23:** the original v2.25 wording overreached. This audit screened only ten baseline same-clock outputs drawn mainly from the Router/direct-expert and realized-moment families. It did **not** include all previously developed DOWN-specific / reversal / conditional-confirmation engines already recorded elsewhere in this manifest.
 
-The existing same-clock daily motors that were already available for Gold Control do not provide a supported positive DOWN verifier inside the exact state where one is needed:
+In particular it did not screen, among others:
+- V1.53 moderate-downshock reversal specialist;
+- DOWNSIDE_CROSSDOMAIN_DIRECTION_V1 variants;
+- DOWNSIDE_CBR_DTW_PATH_V1;
+- DOWNSIDE_SP500_CROSSMARKET_VETO_V1;
+- DOWNSIDE_HETEROGENEOUS_CONSENSUS_VETO_V1;
+- market-shock / macro-event conditional direction evidence;
+- other previously frozen specialist outputs whose target clock and row-level artifacts must be verified before reuse.
+
+Therefore this audit **does not establish that no existing Gold Control DOWN-capable model can help**. It establishes only that the ten preregistered baseline candidates in section 11S.2 did not provide an eligible DOWN verifier on the exact Router-abstain subset.
+
+The ten screened baseline motors do not provide a supported positive DOWN verifier inside the exact state where one is needed:
 
 > `SQRT high risk + frozen UP Verifier V2 abstain`.
 
@@ -3091,7 +3102,7 @@ Therefore:
 - do not tune thresholds on these 26 cases;
 - do not use 2025 to choose a candidate after the pre-2025 failure.
 
-The next research lane must seek **new information or a genuinely DOWN-specific state model**, trained/evaluated for the conditional unresolved state rather than repurposing the existing general-direction outputs.
+The next clean step is first a **comprehensive authority scan and conditional crosswalk of the already-developed DOWN-specific/specialist engines** against the exact `SQRT high risk + Router V2 ABSTAIN` subset. Only if that comprehensive screen also fails should the project move to genuinely new information or a new DOWN-specific state model.
 
 The intended role is narrow:
 
@@ -3151,7 +3162,7 @@ On the exact 2022–2024 unresolved subset there are 26 cases, evenly split 13 D
 
 The highest-coverage DOWN candidates were actively harmful in this conditional subset: Bonato AR1_RM made 16 DOWN calls but only 6 were correct; Bonato AR1 made 14 with only 4 correct. The lone clean RM_LOGIT DOWN call was 1/1 but provides only 7.69% DOWN recall and fails the support requirement.
 
-Thus the simplest reuse path is closed. Existing general-direction motors do not solve the missing branch.
+Thus only the narrow baseline reuse path tested in 11S is closed. A comprehensive existing-model DOWN screen is still required before concluding that the missing branch needs a new model.
 
 The active architecture is:
 
@@ -3160,6 +3171,6 @@ The active architecture is:
 3. **DOWN-confirmation lane** -> still unresolved.
 4. If no positive DOWN confirmation exists -> **UNCERTAIN**, not forced DOWN.
 
-The next research task is not another broad UP model and not another suppressor threshold. It is to obtain **new DOWN-specific information or a new conditional state model** for the high-risk / UP-abstain subset. Candidate families should be chosen from mechanisms that can distinguish downside continuation from rebound—e.g. intraday path asymmetry, jump/close-location structure, volatility-direction coupling, event/order-flow/futures/options state, or hidden/regime-state formulations—while preserving same-clock chronology and the existing frozen risk/UP components.
+The next research task is not another broad UP model and not another suppressor threshold. It is first to **crosswalk the already-frozen DOWN-specific and reversal specialists** against the high-risk / UP-abstain subset, preserving their original clocks and rules. Only after that authority-complete screen may a new model family be justified.
 
 No post-hoc threshold tuning on the 26 historical cases is authorized. 2025 remains unavailable for candidate selection, 2026 remains excluded, and no runtime or production promotion is authorized.
