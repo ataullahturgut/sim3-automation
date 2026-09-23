@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.30  
+**Manifest version:** 2.31  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -3773,6 +3773,219 @@ No model tuning is authorized from this audit.
 
 ---
 
+
+## 11X. Residual one-sided UP-2 — first dedicated missed-UP specialist passes the pre-2025 gate
+
+**Identity:** `RESIDUAL_ONE_SIDED_UP2_LOGIT_V1_RESEARCH`  
+**Research branch:** `gold-residual-up2-onesided-logit-v1-20260923`  
+**Preregistration commit:** `2c2805adf232d8d2eae35c41db387cb540263898`  
+**Integrity amendment commits:** `5361178290d59cad39c5982c92b8cd0fa3378f85`, `031703f65a8fe080d9fbdc3488f1e1cac2ac93c6`  
+**Implementation commit:** `e7db0333b1a7b13635e5df4142c0be9c11bd6558`  
+**Workflow commit:** `f11b2ee6dfca41398db2b44ac5c5226d9be3b5cc`  
+**Frozen result commit:** `eb928b2d5be6250227d8e14dea2d58abe494f762`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_RESIDUAL_ONE_SIDED_UP2_LOGIT_V1_RESULT_2026-09-23.json` (Git blob SHA `76633b00586dcc6854b3845f737fdcf22bf61f0a`)  
+**Status:** `RESIDUAL_UP2_SIGNAL_WITH_SUPPORTIVE_LOCKED2025_TRANSPORT / RESEARCH_ONLY / NOT_RUNTIME`.
+
+### 11X.1 Role
+
+This is the first model built specifically for the residual state:
+
+`SQRT HIGH RISK + Frozen UP Verifier V2 ABSTAIN`.
+
+It is not a general UP model and it never emits DOWN.
+
+Its outputs are:
+
+- `UP2`: second-stage positive UP evidence;
+- `ABSTAIN`: no second-stage UP confirmation.
+
+The intended cascade is now:
+
+```
+SQRT HIGH RISK
+      |
+Frozen UP Verifier V2
+   /             \
+ UP              ABSTAIN
+ |                  |
+VERIFIED UP      UP-2 specialist
+                /             \
+              UP2              ABSTAIN
+              |                  |
+      VERIFIED UP-2        downstream resolver
+```
+
+### 11X.2 Frozen model
+
+Base classifier:
+- L2 logistic regression;
+- C=1.0;
+- lbfgs;
+- no hyperparameter sweep.
+
+Nine origin-safe features:
+1. SQRT normalized risk score;
+2. lag-1 close return;
+3. downside semivariance share;
+4. normalized intraday end position;
+5. close location inside the origin-day intraday range;
+6. normalized recovery from the intraday trough;
+7. normalized final-quarter intraday return;
+8. fraction of five frozen direct UP experts voting UP;
+9. frozen legacy-context UP fraction.
+
+The one-sided threshold is not ordinary 0.50 classification. For each target year, strictly prequential historical residual probabilities are generated after 40 matured prior cases. The threshold is:
+
+`tau = max(0.50, nearest-rank q80 of historical prequential DOWN scores)`.
+
+At least 20 historical DOWN calibration scores are required.
+
+### 11X.3 Source and route integrity
+
+External 2020–2021 route reconstruction reproduced exactly:
+- 2020 residual CBR/UP2 population: 72 =37 DOWN +35 UP;
+- 2021 residual: 26 =15 DOWN +11 UP;
+- pooled external residual formation: 98 =52 DOWN +46 UP.
+
+Governed evaluation:
+- 2022: 11 =6 DOWN +5 UP;
+- 2023: 2 =1/1;
+- 2024: 13 =6 DOWN +7 UP;
+- locked 2025: 74 =39 DOWN +35 UP.
+
+Source-derived feature harmonization passed:
+- exact representable overlap n=344;
+- lag-1 return sign agreement=90.99%;
+- all six raw/source-derived feature Pearson correlations >=0.90;
+- five of six path-state features were >=0.994 correlation; lag-1 close return correlation=0.9014.
+
+Final integrity errors: **none**.
+
+### 11X.4 Pre-2025 chronological result
+
+#### 2022
+- residual n=11;
+- UP2 calls=7;
+- true UP=4;
+- false UP=3;
+- precision=57.14%;
+- missed-UP recall=80.00%;
+- false-UP FPR=50.00%;
+- AUC=0.700;
+- tau=0.5000.
+
+This year is useful for recall but insufficiently selective on its own.
+
+#### 2023
+Only two residual rows:
+- UP2 calls=1;
+- true UP=1;
+- false UP=0.
+
+Too small to carry independent authority.
+
+#### 2024
+- residual n=13;
+- UP2 calls=3;
+- true UP=3;
+- false UP=0;
+- precision=100%;
+- missed-UP recall=42.86%;
+- false-UP FPR=0%;
+- AUC=0.8571;
+- tau=0.5346.
+
+#### Pooled 2022–2024
+- residual n=26 =13 UP +13 DOWN;
+- UP2 calls=11;
+- true UP=8;
+- false UP=3;
+- precision=**72.73%**;
+- missed-UP recall=**61.54%**;
+- false-UP FPR=**23.08%**;
+- coverage=42.31%;
+- one-sided 90% Wilson LCB precision=**53.45%**;
+- AUC=**0.7870**;
+- Brier=0.2272.
+
+The frozen pre-2025 gate required:
+- n=26;
+- calls >=4;
+- precision >50%;
+- Wilson90 LCB precision >50%;
+- false-UP FPR <=25%.
+
+All conditions passed.
+
+Therefore:
+
+`PRE2025_RESIDUAL_UP2_SIGNAL = TRUE`.
+
+### 11X.5 Locked 2025 transport
+
+Unchanged V1 on exact locked residual rows:
+
+- n=74 =35 UP +39 DOWN;
+- UP2 calls=25;
+- true UP=13;
+- false UP=12;
+- precision=**52.00%**;
+- missed-UP recall=**37.14%**;
+- false-UP FPR=**30.77%**;
+- coverage=33.78%;
+- Wilson90 LCB precision=39.47%;
+- AUC=**0.5165**;
+- tau=0.5312.
+
+Residual UP base rate is 35/74 = 47.30%, so raw precision is +4.70 percentage points above base. This meets the preregistered descriptive locked-2025 transport criterion, but the discrimination is materially weaker than pre-2025 and the AUC is close to 0.50.
+
+Therefore 2025 is **supportive only in the narrow preregistered descriptive sense**; it is not strong confirmation and does not authorize runtime use.
+
+### 11X.6 Architectural implication
+
+This experiment materially changes the residual problem.
+
+Before UP-2, pooled 2022–2024 residual state was:
+- 13 UP / 13 DOWN.
+
+UP-2 removes:
+- 8 UP;
+- 3 DOWN.
+
+The remaining downstream unresolved state becomes:
+- **5 UP / 10 DOWN**, n=15.
+
+So the DOWN share rises from 50.0% to **66.7%** before any DOWN specialist is applied.
+
+Locked 2025:
+- original residual: 35 UP / 39 DOWN;
+- UP-2 removes 13 UP / 12 DOWN;
+- remaining: **22 UP / 27 DOWN**, n=49;
+- DOWN share rises from 52.70% to **55.10%**.
+
+Thus the first missed-UP specialist does make the downstream direction problem cleaner pre-2025, although the 2025 improvement is modest.
+
+### 11X.7 Binding interpretation
+
+The first residual UP-2 experiment is **promising research evidence**, not production authority.
+
+What is now supported:
+- the residual state contains a recoverable missed-UP subpopulation;
+- a one-sided specialist can identify a selective portion of it;
+- pre-2025 evidence is materially stronger than the earlier route-consistent CBR DOWN evidence.
+
+What is not yet supported:
+- runtime promotion;
+- treating every UP2 as production VERIFIED UP without further validation;
+- assuming 2025 discrimination is strong;
+- replacing the frozen primary UP Verifier V2.
+
+The next research lane should preserve this exact role separation. A second method may now be tested against the same residual UP-2 task, or the downstream resolver may be reevaluated **only after** a separately preregistered cascade study that inserts this frozen UP-2 stage.
+
+No result-dependent retuning of V1 is authorized.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -3809,30 +4022,23 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 ## 14. Final binding summary
 
-Gold Control now has the correct cascade semantics, and the economic behavior of the unresolved DOWN lane is clearer.
+Gold Control now has a clearer four-stage research architecture.
 
-The binding risk layer is frozen SQRT-HAR-DR. The binding selective UP layer is frozen `UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH`. Router ABSTAIN is not a DOWN label.
+1. **SQRT-HAR-DR** is the frozen downside-risk motor. It identifies HIGH RISK versus NORMAL RISK and is not itself a close-direction classifier.
+2. **Frozen UP Verifier V2** is the primary selective positive-UP authority. Router ABSTAIN is not DOWN.
+3. **Residual One-Sided UP-2 V1** is the first dedicated missed-UP specialist for `HIGH RISK + primary UP ABSTAIN`. It is promising research-only evidence, not runtime authority.
+4. A validated positive DOWN resolver is still missing. Remaining unresolved cases stay UNCERTAIN unless a separately validated downstream model emits positive DOWN evidence.
 
-The correct cascade is:
+The first UP-2 experiment passed its frozen pre-2025 gate. On exact pooled 2022–2024 residual cases it emitted 11 UP2 calls: 8 true UP and 3 false UP, for 72.73% precision, 61.54% missed-UP recall, 23.08% false-UP FPR and 0.787 AUC. Its one-sided 90% Wilson lower bound on precision was 53.45%, above the frozen 50% requirement.
 
-1. **SQRT NORMAL RISK** -> normal-risk state.
-2. **SQRT HIGH RISK + Router UP** -> VERIFIED UP.
-3. **SQRT HIGH RISK + Router ABSTAIN** -> conditional direction resolution.
-4. Only a separately validated positive DOWN signal may produce VERIFIED DOWN; otherwise -> UNCERTAIN.
+Locked 2025 transport was weaker: 25 UP2 calls =13 true UP +12 false UP, 52.0% precision, 37.14% recall, 30.77% FPR and 0.5165 AUC. This narrowly satisfies the preregistered descriptive transport rule because the residual UP base rate was 47.30%, but it is not strong confirmation.
 
-The CBR-DTW candidate was retested with route-consistent history. On 26 unresolved 2022–2024 cases it made 16 DOWN calls: 9 correct and 7 false. Precision was 56.25%, recall 69.23%, but false-DOWN FPR was 53.85%, failing the preregistered selectivity gate. Locked 2025 was also only weakly better than the unresolved base rate.
+Architecturally, UP-2 makes the downstream unresolved set more DOWN-heavy pre-2025: from 13 UP /13 DOWN to 5 UP /10 DOWN after UP2 removals. Locked 2025 improves only modestly, from 35/39 to 22/27.
 
-A subsequent trading-path audit tested whether the frozen UP verifier would repair those CBR false-DOWN mistakes at the immediately following origin. It did not. Across all 23 route-consistent CBR false-DOWN cases observed in 2022–2025, standalone Router V2 emitted next-origin UP **zero times**; cascade VERIFIED-UP was also **zero times**.
+The route-consistent CBR-DTW DOWN candidate remains research baseline only and is not VERIFIED-DOWN authority. Its false-DOWN mistakes are not automatically repaired by the frozen primary UP verifier on the immediately following origin.
 
-Therefore the current architecture does not contain an automatic next-day UP rescue for CBR false-DOWNs. The DOWN selectivity problem remains economically relevant rather than self-correcting one decision later.
+The next clean research choices are:
+- test the second prespecified residual-UP method (dynamic/local expert selection) against the same route-consistent task; or
+- preregister a full cascade insertion study with frozen UP-2 first, then reevaluate the downstream DOWN resolver on only the cases UP-2 leaves unresolved.
 
-The active model state is therefore:
-
-- SQRT: frozen risk motor;
-- UP Verifier V2: frozen selective positive-UP authority;
-- route-consistent CBR: research baseline only, not VERIFIED-DOWN authority;
-- unresolved high-risk Router-ABSTAIN cases: UNCERTAIN until a better conditional direction resolver is validated.
-
-A full trading-strategy audit may next measure net economics of VERIFIED-UP, candidate DOWN, and flat/UNCERTAIN decisions together, but such an audit must remain descriptive and cannot tune on 2025.
-
-2025 remains locked retrospective transport only, 2026 remains excluded from model selection, and no runtime or production promotion is authorized.
+No automatic ensemble, BUY/SELL mapping, runtime promotion, 2025 retuning or 2026 model selection is authorized.
