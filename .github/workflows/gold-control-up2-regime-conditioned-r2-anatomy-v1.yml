@@ -1,0 +1,72 @@
+name: Gold Control UP2 Regime Conditioned R2 Anatomy V1
+
+on:
+  push:
+    branches:
+      - gold-up2-regime-conditioned-r2-anatomy-v1-20260923
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_UP2_REGIME_CONDITIONED_R2_ANATOMY_V1_PREREG_2026-09-23.md'
+      - 'gold_axis_2026/tools/up2_regime_conditioned_r2_anatomy_v1.py'
+      - '.github/workflows/gold-control-up2-regime-conditioned-r2-anatomy-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  anatomy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-up2-regime-conditioned-r2-anatomy-v1-20260923
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: python -m pip install 'numpy==2.1.3' 'pandas==2.2.3' 'scipy==1.14.1' 'psycopg[binary]>=3.2,<4'
+
+      - name: Materialize frozen artifacts
+        run: |
+          git show eb928b2d5be6250227d8e14dea2d58abe494f762:gold_axis_2026/GOLD_CONTROL_RESIDUAL_ONE_SIDED_UP2_LOGIT_V1_LEDGER_2026-09-23.csv > /tmp/up2.csv
+          git show f187f89c166a75cefa8cf60709dcd4ce1027663d:gold_axis_2026/tools/downside_cbr_dtw_path_v1.py > /tmp/cbr.py
+          git show 12c0e7d9cb0adb65e43064592a29617c887e4675:gold_axis_2026/tools/direction_mechanism_gap_audit_v1.py > /tmp/mechanism.py
+
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/up2_regime_conditioned_r2_anatomy_v1.py
+
+      - name: Assert read-only
+        run: |
+          ! grep -Eini 'insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from|create[[:space:]]+table|drop[[:space:]]+table|alter[[:space:]]+table' gold_axis_2026/tools/up2_regime_conditioned_r2_anatomy_v1.py /tmp/cbr.py
+          grep -n 'default_transaction_read_only' /tmp/cbr.py
+
+      - name: Run Stage-3 regime anatomy
+        run: |
+          rm -rf regime_out
+          python gold_axis_2026/tools/up2_regime_conditioned_r2_anatomy_v1.py \
+            --up2-ledger /tmp/up2.csv \
+            --cbr-code /tmp/cbr.py \
+            --mechanism-code /tmp/mechanism.py \
+            --out regime_out
+
+      - name: Freeze result
+        run: |
+          cp regime_out/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_UP2_REGIME_CONDITIONED_R2_ANATOMY_V1_RESULT_2026-09-23.*
+          git commit -m 'Freeze UP2 regime-conditioned R2 anatomy V1'
+          git push origin HEAD:gold-up2-regime-conditioned-r2-anatomy-v1-20260923
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-up2-regime-conditioned-r2-anatomy-v1
+          path: regime_out/
+          retention-days: 30
