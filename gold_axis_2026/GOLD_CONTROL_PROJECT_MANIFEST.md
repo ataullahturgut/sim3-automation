@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.32  
+**Manifest version:** 2.33  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -4101,6 +4101,169 @@ Therefore:
 
 ---
 
+
+## 11Z. Residual trajectory/rebound morphology UP-2 — pre-2025 gate fails despite cleaner locked-2025 transport
+
+**Identity:** `RESIDUAL_TRAJECTORY_REBOUND_UP2_V1_RESEARCH`  
+**Research branch:** `gold-residual-up2-trajectory-morph-v1-20260923`  
+**Preregistration commit:** `6ec8051501fcee6ea9a6f38b5bab434824f31bab`  
+**Implementation commit:** `57ad11ff6e358122c620f99632c6e53377da6220`  
+**Workflow commit:** `2ca759c80fd33bdcb0da9bbe906bec950db5fd2e`  
+**Frozen result commit:** `cee7fadff9490a667716520ed0c9479932e5c41e`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_RESIDUAL_TRAJECTORY_REBOUND_UP2_V1_RESULT_2026-09-23.json` (Git blob SHA `f44e005221b55682d5ab0705f28173232de09b4b`)  
+**Status:** `RESIDUAL_TRAJECTORY_UP2_V1_NOT_SUPPORTED / RESEARCH_ONLY / NOT_RUNTIME`.
+
+### 11Z.1 Role
+
+This was the third prespecified missed-UP family for the residual state:
+
+`SQRT HIGH RISK + Frozen UP Verifier V2 ABSTAIN`.
+
+Unlike Local-DES, it does not recycle direct-expert votes. Unlike the first One-Sided Logit V1, it deliberately removes SQRT/context/expert-disagreement features and tests only the completed origin-day trajectory geometry.
+
+Eight frozen morphology features were used:
+- downside semivariance share;
+- normalized maximum drawdown;
+- trough position in the session;
+- recovery-to-close ratio;
+- close location;
+- normalized post-trough return;
+- normalized final-quarter return;
+- post-trough positive-return fraction.
+
+Classifier:
+- L2 logistic regression, C=1.0, lbfgs;
+- same chronological one-sided threshold rule:
+  `tau=max(0.50, q80 of strictly prequential historical DOWN scores)`.
+
+No feature or threshold sweep was performed.
+
+### 11Z.2 Integrity
+
+All route and source checks passed.
+
+Exact residual populations reproduced:
+- external 2020–2021: 98 =46 UP +52 DOWN;
+- governed 2022–2024: 26 =13 UP +13 DOWN;
+- locked 2025: 74 =35 UP +39 DOWN.
+
+Morphology source harmonization passed strongly:
+- exact representable overlap n=345;
+- median trough-position difference =0;
+- downside-share correlation=0.9946;
+- max-drawdown correlation=0.9984;
+- trough-position correlation=0.9930;
+- recovery-to-close correlation=0.9992;
+- close-location correlation=0.9997;
+- post-trough-return correlation=0.9993;
+- last-quarter-return correlation=0.9986;
+- post-trough-positive-fraction correlation=0.8729, above its frozen 0.85 gate.
+
+Final integrity errors: **none**.
+
+### 11Z.3 Pre-2025 chronological result
+
+#### 2022
+- n=11;
+- UP2_MORPH calls=1;
+- true UP=0;
+- false UP=1;
+- precision=0%;
+- recall=0%;
+- FPR=16.67%;
+- AUC=0.6667;
+- tau=0.5879.
+
+#### 2023
+Only two rows:
+- one UP call;
+- one true UP;
+- zero false UP.
+
+This sample is too small to carry independent authority.
+
+#### 2024
+- n=13;
+- calls=2;
+- true UP=1;
+- false UP=1;
+- precision=50%;
+- recall=14.29%;
+- FPR=16.67%;
+- AUC=0.5952.
+
+#### Pooled 2022–2024
+- n=26 =13 UP +13 DOWN;
+- calls=4;
+- true UP=2;
+- false UP=2;
+- precision=**50.00%**;
+- missed-UP recall=**15.38%**;
+- false-UP FPR=**15.38%**;
+- coverage=15.38%;
+- Wilson90 LCB precision=23.02%;
+- AUC=0.6095.
+
+The frozen gate required precision >50% and Wilson90 LCB >50%. Both failed.
+
+Therefore:
+
+`PRE2025_RESIDUAL_TRAJECTORY_UP2_SIGNAL = FALSE`.
+
+### 11Z.4 Locked 2025 transport
+
+Unchanged V1 on locked 2025:
+
+- n=74;
+- calls=13;
+- true UP=8;
+- false UP=5;
+- precision=**61.54%**;
+- missed-UP recall=22.86%;
+- false-UP FPR=**12.82%**;
+- coverage=17.57%;
+- Wilson90 LCB precision=43.90%;
+- AUC=0.5648;
+- tau=0.5879.
+
+This is descriptively cleaner than the first One-Sided Logit V1 in 2025:
+- Morphology: 61.54% precision, 12.82% FPR, 17.57% coverage;
+- One-Sided Logit V1: 52.0% precision, 30.77% FPR, 33.78% coverage.
+
+However 2025 is locked transport and cannot rescue the failed pre-2025 gate.
+
+### 11Z.5 Comparison of the three residual-UP methods
+
+Pooled 2022–2024:
+
+- **One-Sided Logit V1:** 11 calls, 8 true /3 false, precision 72.73%, recall 61.54%, FPR 23.08%;
+- **Local-DES V1:** 0 calls;
+- **Trajectory Morphology V1:** 4 calls, 2 true /2 false, precision 50.0%, recall 15.38%, FPR 15.38%.
+
+Locked 2025:
+
+- **One-Sided Logit V1:** 25 calls, 13 true /12 false, precision 52.0%, recall 37.14%, FPR 30.77%;
+- **Local-DES V1:** 0 calls;
+- **Trajectory Morphology V1:** 13 calls, 8 true /5 false, precision 61.54%, recall 22.86%, FPR 12.82%.
+
+### 11Z.6 Binding interpretation
+
+Pure origin-day rebound morphology is **not validated** as the second-stage UP specialist because it fails the pre-2025 gate.
+
+The result nevertheless contains a useful transport clue:
+- in locked 2025, morphology is much more selective than One-Sided Logit V1;
+- but the pre-2025 evidence is too weak to authorize choosing it or combining it post hoc.
+
+Therefore:
+- One-Sided Logit UP-2 V1 remains the only residual-UP method that passed its frozen pre-2025 gate;
+- Local-DES V1 remains unsupported;
+- Trajectory Morphology V1 remains unsupported;
+- no post-result hybrid, OR-rule, AND-rule, threshold change, or feature recombination is authorized under these identities.
+
+A future method may use a new preregistered identity if there is a principled reason to combine stable morphology with the broader state/context information from Logit V1, but the current results themselves cannot be used to tune such a combination.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -4137,20 +4300,39 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 ## 14. Final binding summary
 
-Gold Control currently has the following research architecture:
+Gold Control currently has one promising residual-UP method and two unsupported alternatives.
 
 1. **SQRT-HAR-DR** — frozen downside-risk motor.
 2. **Frozen UP Verifier V2** — primary selective positive-UP authority.
-3. **Residual One-Sided UP-2 Logit V1** — promising second-stage missed-UP specialist, research-only.
-4. **Residual Local-Competence UP-2 DES V1** — tested and not supported; it emits no eligible signal under its preregistered local competence gates.
-5. **Positive DOWN resolver** — still not validated; unresolved cases remain UNCERTAIN.
+3. **Residual One-Sided UP-2 Logit V1** — promising research-only missed-UP specialist; it is the only residual-UP method that passed its frozen pre-2025 gate.
+4. **Residual Local-Competence UP-2 DES V1** — unsupported; zero eligible calls.
+5. **Residual Trajectory/Rebound Morphology UP-2 V1** — unsupported because pooled pre-2025 precision was only 50%, despite a cleaner locked-2025 transport result.
+6. **Positive DOWN resolver** — still not validated; remaining unresolved cases stay UNCERTAIN.
 
-The One-Sided Logit UP-2 result remains the strongest residual-UP evidence so far. Pooled 2022–2024 it produced 11 calls =8 true UP +3 false UP, 72.73% precision, 61.54% missed-UP recall, 23.08% false-UP FPR and 0.787 AUC. Locked 2025 transport was materially weaker at 52.0% precision and 0.5165 AUC, so it remains research-only.
+The strongest pre-2025 residual-UP evidence remains One-Sided Logit V1:
+- pooled 2022–2024: 11 calls =8 true UP +3 false UP;
+- precision 72.73%;
+- missed-UP recall 61.54%;
+- false-UP FPR 23.08%;
+- AUC 0.787;
+- Wilson90 LCB precision 53.45%.
 
-The second prespecified method, local dynamic expert selection, produced zero calls in 2022–2025. This is not because the underlying experts were silent; rather, their UP votes inside local residual neighbourhoods had high false-UP rates and failed the frozen Wilson/FPR competence rules. No post-result relaxation is authorized.
+Its weakness remains locked 2025:
+- precision 52.0%;
+- recall 37.14%;
+- FPR 30.77%;
+- AUC 0.5165.
 
-The next clean residual-UP family is therefore the prespecified **trajectory/rebound morphology specialist**, which should directly model origin-day stress/recovery geometry rather than reuse the same expert votes. Any such model must remain route-consistent, chronological, origin-safe, pre-registered before scoring, and must not use locked 2025 for feature/model selection.
+Trajectory Morphology V1 shows the opposite pattern:
+- weak pre-2025 evidence: 4 calls =2 true +2 false, 50% precision;
+- cleaner locked 2025 transport: 13 calls =8 true +5 false, 61.54% precision, 12.82% FPR.
 
-The route-consistent CBR-DTW remains a DOWN research baseline only, not VERIFIED-DOWN authority. Its false-DOWN mistakes are not automatically repaired by the primary UP verifier on the next origin.
+Because 2025 is locked transport, that later performance cannot be used to select Morphology V1 over the pre-2025-supported Logit V1, nor to create a post-hoc hybrid.
+
+The route-consistent CBR-DTW remains a DOWN research baseline only, not VERIFIED-DOWN authority. Its false-DOWN mistakes are not automatically repaired by the primary UP verifier at the immediately following origin.
+
+The next clean research step should not tune the three completed residual-UP identities. It should either:
+- preregister a genuinely new residual-UP method motivated independently of these outcomes; or
+- freeze the supported One-Sided Logit UP-2 V1 as a research-stage second filter and run a new cascade study that reevaluates the downstream DOWN resolver only on the rows left after UP-2.
 
 No automatic ensemble, BUY/SELL mapping, runtime promotion, 2025 retuning or 2026 model selection is authorized.
