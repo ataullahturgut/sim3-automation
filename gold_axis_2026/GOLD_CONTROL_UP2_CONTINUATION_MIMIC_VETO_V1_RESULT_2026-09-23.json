@@ -1,0 +1,124 @@
+{
+  "identity": "UP2_CONTINUATION_MIMIC_VETO_V1_RESEARCH",
+  "date": "2026-09-23",
+  "status": "VETO_V1_FEASIBILITY_NOT_SUPPORTED",
+  "integrity_errors": [],
+  "method": {
+    "feature": "last_hour_trend_r2",
+    "target": "actual_down",
+    "model": "L2 LogisticRegression C=1.0 lbfgs",
+    "threshold": "max(0.50, nearest-rank q80 of strictly prequential external actual-UP p(DOWN) scores)",
+    "retrospective_feature_selection": true
+  },
+  "external_reconstruction": {
+    "passed": true,
+    "raw_n": 518,
+    "spine_n": 518,
+    "common_n": 518,
+    "missing_dates": [],
+    "extra_dates": [],
+    "bad_276_bar_dates": [],
+    "max_abs_close_diff": 4.547473508864641e-13,
+    "max_abs_rv_diff": 3.548051609458813e-17,
+    "max_abs_dr_diff": 3.247185506594086e-17
+  },
+  "external_sqrt_summary": {
+    "2020": {
+      "alarms": 212,
+      "down": 97,
+      "up": 115
+    },
+    "2021": {
+      "alarms": 28,
+      "down": 16,
+      "up": 12
+    }
+  },
+  "external_router_summary": {
+    "2020": {
+      "n": 260,
+      "router_up": 185,
+      "tp": 111,
+      "fp": 74
+    },
+    "2021": {
+      "n": 258,
+      "router_up": 33,
+      "tp": 19,
+      "fp": 14
+    }
+  },
+  "external_route_summary": {
+    "2020": {
+      "sqrt_alarms": 212,
+      "router_up_overlap": 140,
+      "overlap_actual_up": 80,
+      "overlap_actual_down": 60,
+      "router_abstain": 72,
+      "abstain_actual_down": 37,
+      "abstain_actual_up": 35
+    },
+    "2021": {
+      "sqrt_alarms": 28,
+      "router_up_overlap": 2,
+      "overlap_actual_up": 1,
+      "overlap_actual_down": 1,
+      "router_abstain": 26,
+      "abstain_actual_down": 15,
+      "abstain_actual_up": 11
+    }
+  },
+  "external_train_n": 98,
+  "external_train_up": 46,
+  "external_train_down": 52,
+  "prequential_calibration_n": 58,
+  "prequential_actual_up_calibration_n": 28,
+  "q80_up_pdown": 0.5623126294671983,
+  "tau_veto": 0.5623126294671983,
+  "model_coef_standardized": 0.025742314523230708,
+  "model_intercept": 0.12262352366368151,
+  "feature_transfer": {
+    "n": 345,
+    "pearson": 0.9928230313331109,
+    "median_abs_diff": 0.009717180964282646
+  },
+  "governed_2022_2024": {
+    "original_calls": 11,
+    "original_true_up": 8,
+    "original_false_up": 3,
+    "veto_calls": 0,
+    "false_up_removed": 0,
+    "true_up_incorrectly_vetoed": 0,
+    "false_up_reduction": 0.0,
+    "true_up_retention": 1.0,
+    "remaining_calls": 11,
+    "remaining_true_up": 8,
+    "remaining_false_up": 3,
+    "remaining_precision": 0.7272727272727273,
+    "median_pdown_true_up": 0.5280337903651504,
+    "median_pdown_false_up": 0.5403794842653732
+  },
+  "locked_2025": {
+    "original_calls": 25,
+    "original_true_up": 13,
+    "original_false_up": 12,
+    "veto_calls": 0,
+    "false_up_removed": 0,
+    "true_up_incorrectly_vetoed": 0,
+    "false_up_reduction": 0.0,
+    "true_up_retention": 1.0,
+    "remaining_calls": 25,
+    "remaining_true_up": 13,
+    "remaining_false_up": 12,
+    "remaining_precision": 0.52,
+    "median_pdown_true_up": 0.5258298990195792,
+    "median_pdown_false_up": 0.5352383337677422
+  },
+  "governance": {
+    "random_split": false,
+    "2025_tuning": false,
+    "2026_used": false,
+    "feature_sweep": false,
+    "runtime_promotion": false
+  }
+}
