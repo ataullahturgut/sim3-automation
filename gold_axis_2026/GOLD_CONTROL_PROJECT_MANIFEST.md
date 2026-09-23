@@ -1,7 +1,7 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.34  
-**Issue date:** 2026-09-22  
+**Manifest version:** 2.35  
+**Issue date:** 2026-09-23  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
 **Project root:** gold_axis_2026/  
@@ -58,7 +58,17 @@ Evidence classes must remain explicit: historical replay, retrospective challeng
 
 ## 3. Current project architecture
 
-Gold Control has two parallel primary lines.
+### 3.0 System boundary — main forecast versus direction support
+
+The user has clarified that the **main forecast model already exists separately**. The research stack documented below is **only the direction / directional-confirmation layer**.
+
+Binding consequence:
+
+- this direction stack does **not** replace the main forecast model;
+- this direction stack is not the primary price/return forecast;
+- its role is to add direction-state evidence such as UP confirmation, unresolved direction, and eventually positive DOWN confirmation;
+- P&L calculations performed on individual direction modules are diagnostic only and must not be confused with whole-system forecasting performance or whole-portfolio performance;
+- the exact architecture/identity of the separate main forecast model is **not redefined by this update**.
 
 ### 3.1 Monthly H=1 price-level line
 
@@ -72,16 +82,59 @@ The monthly line remains active and independent. Governed identities:
 
 This manifest update does not alter their previously frozen monthly role or issued reference values.
 
-### 3.2 Short-term structural / downside research
+### 3.2 Current direction-only support cascade
 
-The short-term project must not collapse unlike tasks into one score. Current conceptual separation:
+The current research architecture must preserve the distinction between risk detection and direction confirmation.
 
-1. **Structural early-warning / GC-BREAK:** trend weakening, break alert, confirmation and new-regime recognition.
-2. **Downside-risk motor:** estimate whether next-day downside risk intensity is high.
-3. **Verifier / confirmation motor:** when the risk motor fires, determine whether the alarm is likely to resolve as true next-day DOWN or rebound/UP. The first frozen UP-countersign veto using existing direction models has been executed and did not produce a safe verifier; this role remains unresolved.
-4. **Timing motor:** determine whether an apparent t+1 false alarm is actually an early warning for a downside event at t+2/t+3/t+5.
+```
+SEPARATE MAIN FORECAST MODEL
+        |
+        +---- direction-support information from the cascade below
 
-The currently strongest downside-risk research reference is SQRT_HAR_DR. It is not a proven general DOWN-direction engine.
+SQRT-HAR-DR
+(downside-risk state only)
+        |
+    HIGH RISK
+        |
+Frozen Primary UP Verifier V2
+      /                 \
+     UP                ABSTAIN
+     |                    |
+PRIMARY UP EVIDENCE   Residual One-Sided UP-2 Logit V1
+                      /                         \
+                 UP2 candidate                ABSTAIN
+                      |                          |
+          SECONDARY UP EVIDENCE          downstream direction lane
+                                                |
+                                  positive DOWN resolver = NOT_PROVEN
+                                                |
+                                  no validated DOWN evidence
+                                                |
+                                            UNCERTAIN
+```
+
+Binding component status:
+
+1. **SQRT-HAR-DR** — frozen downside-risk motor. It answers HIGH RISK versus NORMAL RISK. It is not a close-direction classifier and not a SELL signal.
+2. **Frozen UP Verifier V2** — frozen primary selective positive-UP research authority. It emits UP or ABSTAIN; ABSTAIN is not DOWN.
+3. **Residual One-Sided UP-2 Logit V1** — the only second-stage missed-UP specialist that passed its frozen pre-2025 gate. It remains **PROMISING / RESEARCH-ONLY / NOT_RUNTIME**. It emits UP2 or ABSTAIN and never emits DOWN.
+4. **Residual Local-Competence UP-2 DES V1** — tested and unsupported; zero eligible calls.
+5. **Residual Trajectory/Rebound Morphology UP-2 V1** — tested and unsupported because its pre-2025 gate failed; locked-2025 transport was descriptively cleaner but cannot rescue the failed pre-2025 result.
+6. **Positive DOWN resolver** — still **NOT_PROVEN**. Route-consistent CBR-DTW remains a research baseline only and is not VERIFIED-DOWN authority.
+7. **UNCERTAIN** — binding fallback for residual cases not positively resolved by an authorized UP or DOWN direction stage.
+
+### 3.3 Interpretation of the current direction lane
+
+The direction architecture is selective rather than forced binary classification.
+
+- A strong UP result may provide positive UP direction evidence.
+- Lack of UP evidence is not a DOWN decision.
+- A DOWN decision requires its own separately validated positive evidence.
+- If neither side has sufficient evidence, the correct state is UNCERTAIN.
+- The purpose of the residual UP-2 layer is to remove some missed-UP cases before any DOWN resolver sees the residual population.
+- The purpose of any future DOWN resolver is direction confirmation only; its value must be assessed in the context of the separate main forecast model rather than treated as a standalone investment system.
+
+No new downstream research step is selected by this architecture freeze. The next research direction is intentionally left open pending explicit user instruction.
 
 ---
 
@@ -4336,39 +4389,31 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 ## 14. Final binding summary
 
-Gold Control currently has one promising residual-UP method and two unsupported alternatives.
+The project boundary is now explicit: **the main forecast model is separate; the stack below exists only to provide direction / directional-confirmation information.** This manifest update does not redefine or replace the main forecast model.
 
-1. **SQRT-HAR-DR** — frozen downside-risk motor.
-2. **Frozen UP Verifier V2** — primary selective positive-UP authority.
-3. **Residual One-Sided UP-2 Logit V1** — promising research-only missed-UP specialist; it is the only residual-UP method that passed its frozen pre-2025 gate.
-4. **Residual Local-Competence UP-2 DES V1** — unsupported; zero eligible calls.
-5. **Residual Trajectory/Rebound Morphology UP-2 V1** — unsupported because pooled pre-2025 precision was only 50%, despite a cleaner locked-2025 transport result.
-6. **Positive DOWN resolver** — still not validated; remaining unresolved cases stay UNCERTAIN.
+The current direction-only research cascade is:
 
-The strongest pre-2025 residual-UP evidence remains One-Sided Logit V1:
-- pooled 2022–2024: 11 calls =8 true UP +3 false UP;
-- precision 72.73%;
-- missed-UP recall 61.54%;
-- false-UP FPR 23.08%;
-- AUC 0.787;
-- Wilson90 LCB precision 53.45%.
+1. **SQRT-HAR-DR** — frozen downside-risk state motor; HIGH RISK/NORMAL RISK only, not direction.
+2. **Frozen UP Verifier V2** — primary selective positive-UP research authority; UP or ABSTAIN.
+3. **Residual One-Sided UP-2 Logit V1** — promising research-only second-stage missed-UP specialist; UP2 or ABSTAIN; it is the only residual-UP method that passed its frozen pre-2025 gate.
+4. **Residual Local-DES V1** — unsupported.
+5. **Residual Trajectory/Rebound Morphology V1** — unsupported under its pre-2025 gate.
+6. **Positive DOWN resolver** — not yet validated. Route-consistent CBR-DTW is research baseline only, not VERIFIED-DOWN authority.
+7. **UNCERTAIN** — required fallback when neither positive UP nor positive DOWN evidence is validated.
 
-Its weakness remains locked 2025:
-- precision 52.0%;
-- recall 37.14%;
-- FPR 30.77%;
-- AUC 0.5165.
+The strongest pre-2025 residual-UP evidence remains One-Sided Logit UP-2 V1:
+- pooled 2022–2024: 26 residual cases =13 UP +13 DOWN;
+- UP2 calls=11 =8 true UP +3 false UP;
+- precision=72.73%;
+- missed-UP recall=61.54%;
+- false-UP FPR=23.08%;
+- AUC=0.787;
+- Wilson90 LCB precision=53.45%.
 
-Trajectory Morphology V1 shows the opposite pattern:
-- weak pre-2025 evidence: 4 calls =2 true +2 false, 50% precision;
-- cleaner locked 2025 transport: 13 calls =8 true +5 false, 61.54% precision, 12.82% FPR.
+After those UP2 calls, the pre-2025 downstream residual population is 15 cases = **5 UP +10 DOWN**, so the DOWN share rises from 50.0% to 66.7%. Locked 2025 remains materially weaker and is descriptive transport only.
 
-Because 2025 is locked transport, that later performance cannot be used to select Morphology V1 over the pre-2025-supported Logit V1, nor to create a post-hoc hybrid.
+The independent UP-2 integrity/economic arithmetic audit passed with no integrity errors. That audit validates labels, call-rule reconstruction and arithmetic; it does **not** turn UP-2 into a standalone investment model. P&L figures for direction modules are diagnostic only because the user's separate main forecast model remains the primary forecasting system.
 
-The route-consistent CBR-DTW remains a DOWN research baseline only, not VERIFIED-DOWN authority. Its false-DOWN mistakes are not automatically repaired by the primary UP verifier at the immediately following origin.
+No automatic ensemble, forced binary direction, BUY/SELL mapping, runtime promotion, 2025 retuning or 2026 model selection is authorized.
 
-The next clean research step should not tune the three completed residual-UP identities. It should either:
-- preregister a genuinely new residual-UP method motivated independently of these outcomes; or
-- freeze the supported One-Sided Logit UP-2 V1 as a research-stage second filter and run a new cascade study that reevaluates the downstream DOWN resolver only on the rows left after UP-2.
-
-No automatic ensemble, BUY/SELL mapping, runtime promotion, 2025 retuning or 2026 model selection is authorized.
+**Architecture freeze:** no further direction-research path is selected in this version. Await explicit user direction before changing the cascade, promoting a model, or starting a new downstream study.
