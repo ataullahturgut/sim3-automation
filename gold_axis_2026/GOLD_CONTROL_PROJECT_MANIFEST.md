@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.27  
+**Manifest version:** 2.28  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -3290,6 +3290,216 @@ No runtime or production promotion is authorized.
 
 ---
 
+
+## 11U. CBR DOWN verifier historical extension — broader old-history pool does not support the candidate
+
+**Identity:** `CBR_DOWN_VERIFIER_HISTORICAL_EXTENSION_V1_RESEARCH`  
+**Research branch:** `gold-cbr-down-historical-extension-v1-20260923`  
+**Preregistration commit:** `476527a73f351ebb05f0f1b94789dc98f710d5a5`  
+**Initial implementation commit:** `2c1bcac63b1c8d841231ea9a868602ef91fa2ea6`  
+**Workflow commit:** `4e1f7e10567f18a3b764a2e98cfd5ff7ebc46639`  
+**Workflow YAML fix:** `734525b38f16afee4793b08589c6c3cbec86d8d1`  
+**Representable-overlap integrity amendment:** `92434d47ac4a6e1faa7b34eeab0932bcb214d0f9`  
+**Path-harmonization implementation fix:** `e4b68e2da7012506cbfba668b5bd119741e9eac5`  
+**Governed path materialization fix:** `1949c553a41fe420c7baba831522c7137055072f`  
+**Frozen result commit:** `2ad6b1d02783c2e08768669d72a246f9da0d84c1`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_CBR_DOWN_VERIFIER_HISTORICAL_EXTENSION_V1_RESULT_2026-09-23.json` (Git blob SHA `4153d7a2c980131e3a5b789cdb1803c60f488cdb`)  
+**Status:** `HISTORICAL_EXTENSION_NOT_SUPPORTED`.
+
+### 11U.1 Frozen question
+
+Section 11T found `CBR_STRICT_P050_DOWN` as a narrow research candidate in the unresolved state:
+
+> `SQRT HIGH RISK + frozen UP Verifier V2 ABSTAIN`.
+
+Its original pre-2025 candidate evidence was only the 13 unresolved 2024 rows. This successor therefore kept the CBR method completely frozen and extended only its historical case library backward using the corrected external Dukascopy 2020–2021 SQRT-alarm cases.
+
+Frozen CBR method:
+- NPTS=48;
+- two path channels = normalized cumulative intraday return and cumulative signed-variance pressure;
+- DTW band=6;
+- K=3;
+- EPS=1e-8;
+- STRICT pool = prior SQRT high-risk alarms;
+- DOWN iff `p(DOWN) >= 0.50`.
+
+No threshold, K, band or representation was tuned.
+
+### 11U.2 External raw-path reconstruction and harmonization
+
+Pinned public minute source:
+`kevingtlin/Market-Data-Lab@922f83a60cc574e7395fb27397077288055a1ef6`.
+
+Pinned corrected external daily spine:
+`509c5ffa762f4ea49644b8ffe723ed2591ba52bf`.
+
+The raw 2020–2021 bid/ask minute history was downloaded transiently in CI, rebuilt as:
+- exact bid/ask timestamp inner join;
+- mid close;
+- 5-minute last close;
+- America/New_York calendar;
+- 17:00–17:55 maintenance hour excluded.
+
+External daily reconstruction passed exactly enough for method use:
+- reconstructed rows=518;
+- corrected-spine rows=518;
+- missing/extra dates=0;
+- bad 276-bar dates=0;
+- max absolute close difference=4.55e-13;
+- max RV difference=3.55e-17;
+- max downside-RV difference=3.25e-17.
+
+The first path-harmonization implementation exposed governed overlap days with fewer than the frozen CBR minimum of 239 intraday returns. Before scoring, the preregistered integrity amendment restricted path harmonization to dates representable by the frozen CBR contract; no padding or imputation was allowed.
+
+Final cross-source path gate:
+- calendar overlap=450;
+- CBR-representable exact-date overlap=345;
+- short governed overlap days excluded from the gate=105;
+- median same-date flattened path correlation=**0.999914**;
+- median same-date DTW=**0.005832**;
+- median deterministic shifted-date DTW=**0.440900**;
+- same/shifted median DTW ratio=**0.01323**;
+- fraction of same-date DTW below shifted-date median=**100%**.
+
+The path-harmonization gate passed strongly.
+
+### 11U.3 External SQRT parent reproduction
+
+The pinned frozen SQRT implementation reproduced the corrected external historical alarm anatomy exactly:
+
+- 2020: 212 alarms = 97 DOWN + 115 UP;
+- 2021: 28 alarms = 16 DOWN + 12 UP.
+
+Thus the extended CBR formation pool contributed 240 external high-risk historical cases:
+- DOWN=113;
+- UP=127.
+
+### 11U.4 Historical-extension results, 2022–2024
+
+The frozen CBR rule was tested only on the exact unresolved rows:
+`SQRT HIGH RISK + Router V2 ABSTAIN`.
+
+#### 2022
+- test n=11;
+- actual DOWN=6, UP=5;
+- training cases=240 external 2020–2021 alarms;
+- DOWN calls=6;
+- correct DOWN=3;
+- false DOWN=3;
+- precision=**50.00%**;
+- recall=**50.00%**;
+- false-DOWN FPR=**60.00%**.
+
+#### 2023
+- test n=2;
+- actual DOWN=1, UP=1;
+- training cases=251;
+- DOWN calls=1;
+- correct DOWN=0;
+- false DOWN=1;
+- precision=**0.00%**;
+- false-DOWN FPR=**100%**.
+
+#### 2024
+- test n=13;
+- actual DOWN=6, UP=7;
+- training cases=253;
+- DOWN calls=5;
+- correct DOWN=3;
+- false DOWN=2;
+- precision=**60.00%**;
+- recall=**50.00%**;
+- false-DOWN FPR=**28.57%**.
+
+The 2024 unresolved result is numerically the same 3/5 DOWN confirmation pattern that had made CBR promising in section 11T.
+
+#### Pooled 2022–2024
+- n=26;
+- actual DOWN=13, UP=13;
+- DOWN calls=12;
+- correct DOWN=6;
+- false DOWN=6;
+- precision=**50.00%**;
+- recall=**46.15%**;
+- false-DOWN FPR=**46.15%**;
+- coverage=**46.15%**;
+- one-sided 90% Wilson lower bound on precision=32.65%.
+
+The preregistered support gate required DOWN precision strictly above 50%. It therefore **failed**.
+
+### 11U.5 Locked 2025 transport under the extended formation
+
+The unchanged extended CBR pool was then carried to the exact 74 locked 2025 unresolved rows:
+
+- actual DOWN=39, UP=35;
+- training cases=270;
+- DOWN calls=33;
+- correct DOWN=18;
+- false DOWN=15;
+- precision=**54.55%**;
+- recall=**46.15%**;
+- false-DOWN FPR=**42.86%**;
+- coverage=**44.59%**;
+- unresolved-subset DOWN base rate=**52.70%**;
+- precision lift over base rate=**+1.84 pp**.
+
+This narrowly satisfies the preregistered 2025 descriptive transport condition, but the pre-2025 extension gate had already failed. Therefore 2025 cannot rescue the architecture and the final status remains:
+
+`HISTORICAL_EXTENSION_NOT_SUPPORTED`.
+
+For comparison, the original governed-history CBR candidate in section 11T had performed better on the same locked 2025 unresolved subset:
+- 21 correct / 12 false;
+- precision=63.64%;
+- recall=53.85%;
+- false-DOWN FPR=34.29%.
+
+Adding the large 2020–2021 external case library therefore **diluted**, rather than strengthened, the 2025 conditional DOWN signal.
+
+### 11U.6 Neighbor-provenance diagnostic
+
+The extension is heavily dominated by the 2020 external crisis-regime case library.
+
+Across the 26 pre-2025 test rows, the K=3 nearest-neighbour slots were sourced:
+- external 2020: 64;
+- external 2021: 9;
+- governed 2022: 4;
+- governed 2023: 1.
+
+Across locked 2025:
+- external 2020: 182 neighbour slots;
+- external 2021: 17;
+- governed 2022: 10;
+- governed 2023: 3;
+- governed 2024: 10.
+
+This is descriptive diagnosis only; no post-hoc weighting or year filtering is authorized under this identity. It indicates that mechanically enlarging the CBR case library with older high-risk episodes changes the effective neighbour regime substantially.
+
+### 11U.7 Binding interpretation
+
+The historical extension does **not** strengthen the CBR candidate.
+
+What remains valid:
+- external source reconstruction passed;
+- cross-source CBR path morphology harmonizes very strongly;
+- historical SQRT alarm reconstruction passed exactly;
+- original 2024 CBR unresolved result remains 3/5 correct DOWN calls;
+- original locked-2025 governed-history transport remains a real retrospective observation.
+
+What is newly learned:
+- when 240 older 2020–2021 high-risk cases are added without changing CBR, pooled 2022–2024 precision falls to exactly 50%;
+- locked-2025 precision falls from 63.64% to 54.55%;
+- the nearest-neighbour set becomes dominated by 2020 external crisis cases.
+
+Therefore **do not adopt the historical-extension formation pool**.
+
+The original `CBR_STRICT_P050_DOWN` candidate may remain preserved as a narrow retrospective candidate, but confidence in its cross-regime robustness is materially weaker. The project must not solve this by post-hoc year weighting, K changes, distance thresholds or excluding 2020 under the same identity.
+
+The next DOWN-lane research should explicitly address **regime-conditioned case relevance / transportability** under a new preregistered identity, or seek independent prospective same-clock evidence for the original frozen CBR rule.
+
+No runtime or production promotion is authorized.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -3326,27 +3536,27 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 ## 14. Final binding summary
 
-Gold Control now has a sharply separated short-term architecture, and one existing specialist has emerged as a plausible candidate for the previously missing DOWN-confirmation lane.
+Gold Control now has a sharply separated short-term architecture, but the DOWN-confirmation lane is still not robustly solved.
 
 The semantic audit established that SQRT-HAR-DR is a downside-risk motor, not a close-direction predictor.
 
 The authoritative frozen positive-UP verifier is `UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH`. Its positive UP calls contain useful selective evidence, but its ABSTAIN state is not a DOWN label.
 
-The first narrow DOWN audit in section 11S screened only ten baseline outputs and found none eligible. That result remains valid only for that narrow pool.
+The comprehensive retained-specialist crosswalk in section 11T found `CBR-DTW STRICT P050` as the only retained same-clock specialist to pass the narrow pre-2025 exploratory screen. On the 13 unresolved 2024 cases it made 5 DOWN calls, 3 correct / 2 false (60% precision), and on the locked 2025 unresolved set its original governed-history form made 33 calls, 21 correct / 12 false (63.64% precision).
 
-The comprehensive retained-specialist crosswalk in section 11T corrected the scope problem. Its first V1 attempt was blocked when V1.53 exact-NY17 target signs failed same-clock identity against the SQRT parent; V1.53 was therefore removed under a preregistered integrity amendment rather than force-joined.
+Section 11U then tested whether that CBR evidence deepens when its historical case library is extended backward using the corrected external Dukascopy 2020–2021 paths, without changing any CBR parameters.
 
-Among the retained same-clock specialist families, **CBR-DTW STRICT P050** is the only candidate that passes the frozen pre-2025 exploratory DOWN-verifier screen. On the 13 unresolved 2024 cases where it is available, it emits 5 DOWN calls: 3 correct and 2 false, for 60.0% precision, 50.0% DOWN recall and 28.57% false-DOWN FPR.
+The external extension was technically valid: raw external path reconstruction passed, cross-source path correlation/DTW harmonization passed strongly, and 2020/2021 SQRT alarm anatomy reproduced exactly. However the model evidence did **not** improve. Across the exact 26 unresolved 2022–2024 cases, the extended CBR rule made 12 DOWN calls with 6 correct and 6 false, giving exactly 50% precision and failing the preregistered >50% support gate. On locked 2025 it fell to 18 correct / 15 false, 54.55% precision—only +1.84 percentage points above that subset's DOWN base rate and materially below the original governed-history CBR's 63.64%.
 
-The rule was then transported unchanged to the locked 2025 unresolved set. On 74 cases it emits 33 DOWN calls: 21 correct and 12 false, for 63.64% precision, 53.85% recall and 34.29% false-DOWN FPR. The unresolved-state DOWN base rate is 52.70%, so its precision lift is +10.93 percentage points. This is supportive retrospective transport, not certification.
+The extended neighbour library is dominated by external 2020 crisis-regime cases. That explains a plausible mechanism for dilution but does not authorize post-hoc exclusion, reweighting or K/distance tuning.
 
-The active research architecture is therefore:
+The active research architecture therefore remains:
 
 1. **SQRT risk motor** -> HIGH RISK / NORMAL RISK.
 2. **Frozen UP Verifier V2** -> VERIFIED UP or ABSTAIN.
-3. **CBR-DTW STRICT P050 research DOWN candidate** -> when HIGH RISK + UP-ABSTAIN, may emit VERIFIED DOWN.
+3. **CBR-DTW STRICT P050** -> preserved only as a narrow retrospective DOWN candidate in its original frozen governed-history form; not validated as a broadly portable historical-extension engine.
 4. Otherwise -> **UNCERTAIN**.
 
-The main remaining limitation is evidence depth: the pre-2025 CBR selection support is only 13 unresolved 2024 rows. No threshold retuning on these cases or on 2025 is authorized. The next clean step is to obtain stronger independent same-clock support for this exact frozen triage architecture—through additional historical source-compatible years if authority permits, or preferably prospective shadow evidence—before any runtime consideration.
+The next DOWN-lane question is now more specific: can case relevance be conditioned on regime/state *prospectively and preregistered*, rather than pooling all high-risk historical paths equally? A successor may investigate regime-conditioned retrieval or another conditional DOWN architecture, but it must be a new identity and cannot tune against the already-exposed 2022–2025 outcomes.
 
-2025 remains locked retrospective transport only, 2026 remains excluded from model selection, and no production/runtime promotion is authorized.
+2025 remains locked retrospective transport only, 2026 remains excluded from model selection, and no runtime or production promotion is authorized.
