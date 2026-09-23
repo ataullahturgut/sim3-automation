@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.35  
+**Manifest version:** 2.36  
 **Issue date:** 2026-09-23  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -4350,6 +4350,119 @@ Independent DB-close economic arithmetic reproduces:
 Missed UP/DOWN values remain opportunity costs under a flat-on-ABSTAIN assumption, not realized losses. These figures are not whole-cascade or whole-portfolio P&L and exclude fees, spread, slippage and leverage.
 
 This audit supports the correctness of the frozen ledger labels, signal rule and previously reported arithmetic. It does not remove model-risk/generalization uncertainty, especially the weaker locked-2025 discrimination of One-Sided UP-2 Logit V1.
+
+---
+
+
+## 11ZB. Direction error anatomy — missed-UP and missed-DOWN failure modes are not symmetric
+
+**Identity:** `DIRECTION_ERROR_ANATOMY_AUDIT_V1_RESEARCH`  
+**Research branch:** `gold-direction-error-anatomy-v1-20260923`  
+**Preregistration commit:** `22438dcef86cb85283a8a197a1abe8db5d249d72`  
+**First blocked workflow:** integrity assertion incorrectly required two differently defined `close_location` fields to be identical.  
+**Integrity amendment commit:** `eb955f76bd881b54358ed29564da5448ea80741d`  
+**Correction commit:** `0306e0781f6c815fb8bb3ae523e9defe1d2e199e`  
+**Frozen result commit:** `4af4797ae5f72c594b2717c7e1d61d0a859a0420`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_DIRECTION_ERROR_ANATOMY_AUDIT_V1_RESULT_2026-09-23.json` (Git blob SHA `5c4ea69c34bdb9ad45d99fd2b327d56f50c96f61`)  
+**Status:** `AUDIT_COMPLETE / DESCRIPTIVE / NO_MODEL_CHANGE`.
+
+### 11ZB.1 Error-cell semantics
+
+The audit is conditional on the exact residual route:
+
+`SQRT HIGH RISK + Frozen Primary UP Verifier V2 ABSTAIN`.
+
+Four cells were compared:
+
+- `CAPTURED_UP`: One-Sided UP-2 emits UP2 and target closes UP;
+- `MISSED_UP`: UP-2 abstains and target closes UP;
+- `FALSE_UP_ACTUAL_DOWN`: UP-2 emits UP2 and target closes DOWN; this is the missed-DOWN analogue;
+- `REJECTED_DOWN`: UP-2 abstains and target closes DOWN.
+
+`REJECTED_DOWN` is not a validated predicted-DOWN class.
+
+Counts:
+- pre-2025: 8 captured UP, 5 missed UP, 3 false-UP actual-DOWN, 10 rejected DOWN;
+- locked 2025: 13, 22, 12, 27 respectively.
+
+### 11ZB.2 Stable captured-UP versus missed-UP anatomy
+
+Across both pre-2025 and locked-2025, captured UPs differ from missed UPs in a consistent **late-stress / incomplete-recovery** direction.
+
+Stable effect-size patterns:
+- higher downside semivariance share in captured UP;
+- more negative final-quarter return in captured UP;
+- smaller post-trough recovery;
+- lower close location;
+- later intraday trough;
+- fewer direct-UP expert votes on average/rank.
+
+Representative medians:
+
+Pre-2025 captured UP versus missed UP:
+- downside share 0.620 vs 0.564;
+- final-quarter normalized return -0.176 vs +0.215;
+- post-trough normalized return 0.226 vs 0.520;
+- close location 0.158 vs 0.416;
+- trough position 0.765 vs 0.458.
+
+Locked 2025 preserves and generally strengthens the same geometry:
+- downside share 0.615 vs 0.480;
+- final-quarter normalized return -0.156 vs +0.074;
+- post-trough normalized return 0.249 vs 0.810;
+- close location 0.160 vs 0.676;
+- trough position 0.920 vs 0.242.
+
+Interpretation: the supported UP-2 model is not mainly detecting origin-day strength. It is selecting a contrarian/rebound-like state in which downside pressure remains strong and the trough occurs late, with little same-day recovery, followed by next-close UP.
+
+### 11ZB.3 False-UP actual-DOWN cases mimic the rebound prototype
+
+Compared with safely rejected DOWN cases, false-UP actual-DOWN rows also show a stable stress/rebound-mimic geometry:
+
+- lower close location;
+- later trough;
+- higher downside share;
+- weaker recovery-to-close;
+- weaker final-quarter return.
+
+Pre-2025 medians, false-UP actual-DOWN versus rejected DOWN:
+- close location 0.318 vs 0.598;
+- trough position 0.658 vs 0.396;
+- downside share 0.586 vs 0.507;
+- recovery-to-close ratio 0.318 vs 0.994.
+
+Locked 2025:
+- close location 0.239 vs 0.674;
+- trough position 0.565 vs 0.338;
+- downside share 0.585 vs 0.494;
+- recovery-to-close ratio 0.249 vs 0.920.
+
+Therefore the false-UP cases are not random mistakes. They resemble the same late-stress/incomplete-recovery morphology that usually supports next-day rebound, but they instead continue DOWN. They are effectively **hard negatives / continuation mimics** for the current UP-2 rule.
+
+### 11ZB.4 Unresolved UP versus unresolved DOWN is not stably separable by the same univariate features
+
+Inside UP-2 abstentions, the pre-2025 comparison `MISSED_UP vs REJECTED_DOWN` showed moderate-to-large differences in lagged return, recovery, intraday-end state, close location, trough timing and downside share.
+
+However, every such pre-2025 effect either collapsed or reversed in locked 2025.
+
+Thus no frozen origin-state feature met the cross-period stability gate for unresolved UP versus unresolved DOWN.
+
+This is a key result for the future DOWN/conditional resolver:
+- the easy/selectable UP and rejected-DOWN archetypes are strongly separable;
+- the remaining abstained UP and DOWN cases are a harder residual population;
+- the same simple univariate morphology does not provide a temporally stable separator.
+
+This pattern is consistent with a regime-dependent / non-stationary decision boundary hypothesis, but the audit does not establish causality or formally prove concept drift.
+
+### 11ZB.5 Statistical caution
+
+The error-cell samples are small, especially pre-2025 false-UP actual-DOWN n=3.
+
+Effect-size stability across locked 2025 is therefore more informative here than nominal significance. For the key missed-UP and false-UP contrasts, Benjamini-Hochberg-adjusted q-values are generally not small.
+
+Only the easier `CAPTURED_UP vs REJECTED_DOWN` benchmark has several pre-2025 features with q-values below 0.10 while also preserving large 2025 effect sizes.
+
+No new model was trained, no feature was selected for production, and no 2025 outcome was used to tune the completed direction models.
 
 ---
 
