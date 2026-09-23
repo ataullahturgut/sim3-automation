@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.41  
+**Manifest version:** 2.42  
 **Issue date:** 2026-09-23  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -4999,6 +4999,98 @@ The study must:
 - not alter the primary UP verifier or base UP-2 model.
 
 No Stage-4 model is authorized by this section.
+
+---
+
+
+## 11ZH. UP-2 regime-conditioned failure detector V1 — forward retention passes, locked transport fails
+
+**Identity:** `UP2_REGIME_CONDITIONED_FAILURE_DETECTOR_V1_RESEARCH`  
+**Research branch:** `gold-up2-regime-failure-detector-v1-20260923`  
+**Preregistration commit:** `a57c429dbd64a05e19316c93e7742bcec73b7311`  
+**Implementation commit:** `6f7d5b8314037eda7653eb50debbd78b49bd9b9c`  
+**Workflow commit:** `acbaa592ab339676049e28a45d933646998cd1bb`  
+**Frozen result commit:** `b52491f0b841900711a5d0e5c0d07657f59e0d3a`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_UP2_REGIME_CONDITIONED_FAILURE_DETECTOR_V1_RESULT_2026-09-23.json` (Git blob SHA `5213e0f7f622508a6ecff008f100fa4f444fb029`)  
+**Status:** `FORWARD_RETENTION_OK_TRANSPORT_NOT_SUPPORTED / RESEARCH_ONLY / NOT_RUNTIME`.
+
+### 11ZH.1 Design
+
+A deliberately small failure detector was trained only on frozen 2022 UP-2 calls.
+
+Target:
+- 1 = false-UP actual-DOWN;
+- 0 = captured-UP.
+
+Features:
+- `last_hour_trend_r2`;
+- `sqrt_score`;
+- `late_downside_intensity`.
+
+Model:
+- L2 logistic regression;
+- C=1.0;
+- training-only standardization;
+- veto if `p_fail >= 0.50`;
+- veto means ABSTAIN, never DOWN.
+
+No hyperparameter or threshold sweep.
+
+Strict chronology:
+- train = 2022 only;
+- pre-2025 forward guard = 2023–2024;
+- locked transport = 2025.
+
+### 11ZH.2 Result
+
+2022 training fit:
+- 7 UP-2 calls =4 true UP +3 false-UP actual-DOWN;
+- detector removed 1/3 false-UPs;
+- retained 3/4 true-UPs;
+- precision moved from 57.1% to 60.0%.
+
+2023–2024 forward guard:
+- 4 calls, all true UP;
+- detector retained all 4/4;
+- therefore the frozen true-UP retention guard passed.
+
+However this period contains no false-UP cases, so it cannot validate failure-detection ability.
+
+Locked 2025:
+- 25 calls =13 true UP +12 false-UP actual-DOWN;
+- detector removed 4/12 false-UPs;
+- but retained only **6/13** true-UPs;
+- precision fell from **52.0% to 42.9%** after veto.
+
+Thus the locked transport requirement failed because at least 10/13 true-UPs had to be retained.
+
+### 11ZH.3 Interpretation
+
+The learned coefficients have the expected directions:
+- higher `last_hour_trend_r2` -> higher estimated failure risk;
+- higher SQRT risk -> higher estimated failure risk;
+- higher late-downside intensity -> higher estimated failure risk.
+
+But the 2022-only model over-vetoes badly in 2025.
+
+This is consistent with the core limitation already identified:
+- the failure-detector training sample is too small;
+- all pre-2025 false-UP examples are concentrated in 2022;
+- there is no chronology-clean pre-2025 forward period containing both true and false UP-2 calls.
+
+Therefore the Stage-3 regime anatomy remains useful as mechanism evidence, but this first learned detector is **not supported for use**.
+
+No veto is promoted.
+
+### 11ZH.4 Binding implication
+
+Do not retune this V1 on 2025.
+
+The clean next options are:
+- stop this veto branch until more route-consistent historical false-UP examples become available; or
+- pursue a different direction-improvement mechanism that does not depend on fitting a failure detector from only three pre-2025 hard negatives.
+
+Frozen One-Sided UP-2 Logit V1 remains unchanged.
 
 ---
 
