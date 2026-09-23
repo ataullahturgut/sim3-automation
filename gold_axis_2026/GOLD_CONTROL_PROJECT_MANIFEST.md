@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.29  
+**Manifest version:** 2.30  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -3692,6 +3692,87 @@ No post-hoc tuning of CBR p=0.50, K, DTW band, year weights, or 2020 exclusion i
 
 ---
 
+
+## 11W. False-DOWN next-origin UP rescue audit — frozen UP verifier does not immediately rescue CBR mistakes
+
+**Identity:** `CBR_FALSE_DOWN_NEXT_ORIGIN_UP_RESCUE_AUDIT_V1_RESEARCH`  
+**Research branch:** `gold-cbr-falsedown-nextup-rescue-audit-v1-20260923`  
+**Preregistration commit:** `ee14080e93bb627f2e361367ceedf2f4c3f81031`  
+**Implementation commit:** `9609e5cc046412b1ac278109a0964522d855f08d`  
+**Workflow commit:** `c29e18794b483993deb81db0cc10ea8901c14869`  
+**Frozen result commit:** `2b8270fe8d69da666c87f1656871cd2c58f0ad8f`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_CBR_FALSE_DOWN_NEXT_ORIGIN_UP_RESCUE_AUDIT_V1_RESULT_2026-09-23.json` (Git blob SHA `00a78c87c072c51a8bef72e58557cf817c5c623e`)  
+**Status:** `RETROSPECTIVE_NEXT_ORIGIN_RESCUE_AUDIT_COMPLETE`.
+
+### 11W.1 Question
+
+Section 11V showed that route-consistent CBR produces false-DOWN calls. The economic question was whether the frozen UP verifier would emit an UP signal at the close of such a false-DOWN day for the immediately following trading day, potentially allowing a trader to reverse on the next leg and recover some of the loss.
+
+This audit distinguishes:
+
+- **standalone next-origin Router-UP**: Router V2 emits UP at the false-DOWN target day's close;
+- **cascade next-origin VERIFIED-UP**: the next-origin SQRT state is HIGH RISK and Router V2 emits UP.
+
+The T-close signal cannot erase the short loss already realized from the prior origin close to T close. It can only affect the following trade.
+
+### 11W.2 Exact false-DOWN universe
+
+Route-consistent CBR false-DOWN counts reproduced exactly:
+
+- 2022: 4;
+- 2023: 0;
+- 2024: 3;
+- locked 2025: 16.
+
+Total=23.
+
+### 11W.3 Immediate next-origin UP result
+
+Across **all 23** route-consistent CBR false-DOWN cases:
+
+- standalone frozen Router V2 emitted UP at the immediately following origin: **0 / 23**;
+- cascade next-origin VERIFIED-UP: **0 / 23**.
+
+Annual:
+- 2022: 0/4;
+- 2024: 0/3;
+- 2025: 0/16.
+
+Thus the hypothesis that the current frozen UP verifier would immediately reverse these CBR false-DOWN mistakes on the next trading decision is **not supported**.
+
+The exact audit ledger also shows that many next origins remained HIGH RISK, yet Router V2 still abstained. For example, the 2025 false-DOWN sequence around October/November contains several consecutive next origins with SQRT HIGH RISK and Router ABSTAIN.
+
+### 11W.4 Economic implication
+
+Gross false-DOWN move totals, using equal fixed notional, no leverage/fees/slippage:
+
+- 2022: 5.2731%;
+- 2024: 1.9610%;
+- locked 2025: 17.7773%.
+
+Because next-origin Router-UP count is zero, there is no frozen-UP-model following-leg recovery to subtract under this immediate one-step rescue definition.
+
+This does **not** mean the whole trading strategy loses these amounts after accounting for correct DOWN trades or other independent signals. It means only that the specific "the UP verifier will probably flip us long on the very next origin" rescue mechanism does not exist in the current frozen architecture.
+
+### 11W.5 Binding interpretation
+
+The UP verifier and CBR errors are not complementary in the way initially hypothesized.
+
+When CBR falsely calls DOWN inside `SQRT HIGH RISK + Router ABSTAIN`, the frozen Router V2 does not immediately recognize the rebound on the next origin in any observed 2022–2025 false-DOWN case.
+
+Therefore the false-DOWN selectivity problem cannot be dismissed on the assumption that the UP verifier automatically repairs it one trading decision later.
+
+A separate full-strategy P&L audit may still be useful, but it must include:
+- correct DOWN profits;
+- VERIFIED-UP profits/losses;
+- UNCERTAIN/flat treatment;
+- one-day position reset;
+- transaction-cost assumptions.
+
+No model tuning is authorized from this audit.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -3728,31 +3809,30 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 ## 14. Final binding summary
 
-Gold Control now has the correct cascade semantics, but the DOWN-confirmation lane remains unresolved.
+Gold Control now has the correct cascade semantics, and the economic behavior of the unresolved DOWN lane is clearer.
 
-The risk layer is frozen SQRT-HAR-DR. It answers whether next-day downside realized risk is elevated; it is not itself a next-day close-direction classifier.
+The binding risk layer is frozen SQRT-HAR-DR. The binding selective UP layer is frozen `UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH`. Router ABSTAIN is not a DOWN label.
 
-The authoritative positive-UP layer is frozen `UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH`. A positive Router output is useful UP evidence; Router ABSTAIN is not a DOWN label.
-
-The binding cascade is:
+The correct cascade is:
 
 1. **SQRT NORMAL RISK** -> normal-risk state.
 2. **SQRT HIGH RISK + Router UP** -> VERIFIED UP.
-3. **SQRT HIGH RISK + Router ABSTAIN** -> pass to a DOWN-confirmation layer.
+3. **SQRT HIGH RISK + Router ABSTAIN** -> conditional direction resolution.
 4. Only a separately validated positive DOWN signal may produce VERIFIED DOWN; otherwise -> UNCERTAIN.
 
-A methodological correction was required for CBR-DTW. Historical CBR training cases must themselves have traversed the same live route: `SQRT HIGH RISK + Router ABSTAIN`. Earlier CBR experiments used broader SQRT-alarm histories and therefore are not binding evidence for the final cascade.
+The CBR-DTW candidate was retested with route-consistent history. On 26 unresolved 2022–2024 cases it made 16 DOWN calls: 9 correct and 7 false. Precision was 56.25%, recall 69.23%, but false-DOWN FPR was 53.85%, failing the preregistered selectivity gate. Locked 2025 was also only weakly better than the unresolved base rate.
 
-The route-consistent CBR experiment reconstructed the external 2020–2021 Router path exactly and reduced the external historical CBR library from 240 all-SQRT alarms to the correct 98 Router-ABSTAIN high-risk cases. It then used route-consistent governed cases for later years.
+A subsequent trading-path audit tested whether the frozen UP verifier would repair those CBR false-DOWN mistakes at the immediately following origin. It did not. Across all 23 route-consistent CBR false-DOWN cases observed in 2022–2025, standalone Router V2 emitted next-origin UP **zero times**; cascade VERIFIED-UP was also **zero times**.
 
-On the exact unresolved 2022–2024 set, route-consistent CBR made 16 DOWN calls: 9 correct and 7 false. Precision was 56.25% and DOWN recall 69.23%, but false-DOWN FPR was 53.85%, failing the preregistered <50% selectivity gate.
+Therefore the current architecture does not contain an automatic next-day UP rescue for CBR false-DOWNs. The DOWN selectivity problem remains economically relevant rather than self-correcting one decision later.
 
-On locked 2025 it made 36 DOWN calls: 20 correct and 16 false, for 55.56% precision, 51.28% recall and 45.71% false-DOWN FPR. This is only +2.85 percentage points above the unresolved-state DOWN base rate and cannot rescue the pre-2025 failure.
+The active model state is therefore:
 
-Therefore **CBR-DTW STRICT P050 is not validated as the VERIFIED-DOWN motor in the correct cascade**.
+- SQRT: frozen risk motor;
+- UP Verifier V2: frozen selective positive-UP authority;
+- route-consistent CBR: research baseline only, not VERIFIED-DOWN authority;
+- unresolved high-risk Router-ABSTAIN cases: UNCERTAIN until a better conditional direction resolver is validated.
 
-The unresolved research problem is now extremely specific:
+A full trading-strategy audit may next measure net economics of VERIFIED-UP, candidate DOWN, and flat/UNCERTAIN decisions together, but such an audit must remain descriptive and cannot tune on 2025.
 
-> among `SQRT HIGH RISK + Frozen UP Verifier ABSTAIN` rows, find a positive DOWN confirmer that is more selective than the route-consistent CBR baseline without using post-hoc threshold or year filtering.
-
-Any successor must train and evaluate on the route-consistent unresolved population from the outset. 2025 remains unavailable for selection/tuning, 2026 remains excluded, and no runtime or production promotion is authorized.
+2025 remains locked retrospective transport only, 2026 remains excluded from model selection, and no runtime or production promotion is authorized.
