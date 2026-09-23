@@ -1,0 +1,105 @@
+name: Gold Control UP2 Continuation Mimic Veto V1
+
+on:
+  push:
+    branches:
+      - gold-up2-continuation-veto-v1-20260923
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_UP2_CONTINUATION_MIMIC_VETO_V1_PREREG_2026-09-23.md'
+      - 'gold_axis_2026/tools/up2_continuation_mimic_veto_v1.py'
+      - '.github/workflows/gold-control-up2-continuation-veto-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  veto:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONPATH: /tmp/frozen/gold_axis_2026:/tmp/frozen/gold_axis_2026/tools
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-up2-continuation-veto-v1-20260923
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: python -m pip install 'numpy==2.1.3' 'pandas==2.2.3' 'scipy==1.14.1' 'scikit-learn==1.5.2' 'psycopg[binary]>=3.2,<4'
+
+      - name: Materialize pinned authorities
+        run: |
+          mkdir -p /tmp/frozen/gold_axis_2026/tools /tmp/frozen/gold_axis_2026/regime_dampener_v1
+          git show b22235f04dc48b173a93a98cc2ce22081bb0054e:gold_axis_2026/tools/cbr_cascade_route_consistent_extension_v1_run.py > /tmp/frozen/route_authority.py
+          git show f187f89c166a75cefa8cf60709dcd4ce1027663d:gold_axis_2026/tools/downside_cbr_dtw_path_v1.py > /tmp/frozen/cbr.py
+          git show ad0fc4dcbe1687833bd9a153cd4bc6a754523464:gold_axis_2026/tools/regime_v1_router_sqrt.py > /tmp/frozen/regime_v1_router_sqrt.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py > /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/regime_v1_data.py > /tmp/frozen/gold_axis_2026/tools/regime_v1_data.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/regime_v1_experts.py > /tmp/frozen/gold_axis_2026/tools/regime_v1_experts.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/regime_dampener_v1/frozen_direction_ttsm_realized_semivariance_xau_v1.py > /tmp/frozen/gold_axis_2026/regime_dampener_v1/frozen_direction_ttsm_realized_semivariance_xau_v1.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/regime_dampener_v1/frozen_direction_bonato_qboost_realized_moments_spot_xau_v1.py > /tmp/frozen/gold_axis_2026/regime_dampener_v1/frozen_direction_bonato_qboost_realized_moments_spot_xau_v1.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/regime_dampener_v1/frozen_direction_downside_realized_moments_logit_v2.py > /tmp/frozen/gold_axis_2026/regime_dampener_v1/frozen_direction_downside_realized_moments_logit_v2.py
+          git show eb928b2d5be6250227d8e14dea2d58abe494f762:gold_axis_2026/tools/residual_one_sided_up2_logit_v1_run.py > /tmp/frozen/up2.py
+          git show 12c0e7d9cb0adb65e43064592a29617c887e4675:gold_axis_2026/tools/direction_mechanism_gap_audit_v1.py > /tmp/frozen/mechanism.py
+          git show eb928b2d5be6250227d8e14dea2d58abe494f762:gold_axis_2026/GOLD_CONTROL_RESIDUAL_ONE_SIDED_UP2_LOGIT_V1_LEDGER_2026-09-23.csv > /tmp/up2_ledger.csv
+          git show 509c5ffa762f4ea49644b8ffe723ed2591ba52bf:gold_axis_2026/external_data/v2/dukascopy_xauusd_govsession_mid_5m_daily_features_2018_2021.csv > /tmp/external_daily.csv
+
+      - name: Fetch pinned transient Dukascopy minute mirror
+        run: |
+          rm -rf /tmp/mdl
+          git clone --filter=blob:none --no-checkout https://github.com/kevingtlin/Market-Data-Lab.git /tmp/mdl
+          git -C /tmp/mdl sparse-checkout init --no-cone
+          printf '%s\n' \
+            '/xauusd/ask/m1/xauusd_ask_m1_2020_*.csv' \
+            '/xauusd/ask/m1/xauusd_ask_m1_2021_*.csv' \
+            '/xauusd/ask/m1/xauusd_ask_m1_2022_01.csv' \
+            '/xauusd/bid/m1/xauusd_bid_m1_2020_*.csv' \
+            '/xauusd/bid/m1/xauusd_bid_m1_2021_*.csv' \
+            '/xauusd/bid/m1/xauusd_bid_m1_2022_01.csv' \
+            > /tmp/mdl/.git/info/sparse-checkout
+          git -C /tmp/mdl checkout 922f83a60cc574e7395fb27397077288055a1ef6
+
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/up2_continuation_mimic_veto_v1.py
+
+      - name: Assert read-only
+        run: |
+          ! grep -Eini 'insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from|create[[:space:]]+table|drop[[:space:]]+table|alter[[:space:]]+table' gold_axis_2026/tools/up2_continuation_mimic_veto_v1.py /tmp/frozen/cbr.py
+          grep -n 'default_transaction_read_only' /tmp/frozen/cbr.py
+
+      - name: Run veto feasibility
+        run: |
+          rm -rf veto_out
+          python gold_axis_2026/tools/up2_continuation_mimic_veto_v1.py \
+            --raw-root /tmp/mdl \
+            --external-spine /tmp/external_daily.csv \
+            --sqrt-code /tmp/frozen/regime_v1_router_sqrt.py \
+            --route-module /tmp/frozen/route_authority.py \
+            --base-module /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py \
+            --up2-module /tmp/frozen/up2.py \
+            --mechanism-module /tmp/frozen/mechanism.py \
+            --cbr-code /tmp/frozen/cbr.py \
+            --up2-ledger /tmp/up2_ledger.csv \
+            --out veto_out
+
+      - name: Freeze result
+        run: |
+          cp veto_out/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_UP2_CONTINUATION_MIMIC_VETO_V1_*
+          git commit -m 'Freeze UP2 continuation-mimic veto V1'
+          git push origin HEAD:gold-up2-continuation-veto-v1-20260923
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-up2-continuation-veto-v1
+          path: veto_out/
+          retention-days: 30
