@@ -1,0 +1,72 @@
+name: Gold Control UP2 Independent Integrity Econ Audit V1
+
+on:
+  push:
+    branches:
+      - gold-up2-independent-integrity-audit-v1-20260923
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_UP2_INDEPENDENT_INTEGRITY_ECON_AUDIT_V1_PREREG_2026-09-23.md'
+      - 'gold_axis_2026/tools/up2_independent_integrity_econ_audit_v1.py'
+      - '.github/workflows/gold-control-up2-independent-integrity-econ-audit-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-up2-independent-integrity-audit-v1-20260923
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependency
+        run: python -m pip install 'psycopg[binary]>=3.2,<4'
+
+      - name: Materialize frozen artifacts
+        run: |
+          git show eb928b2d5be6250227d8e14dea2d58abe494f762:gold_axis_2026/GOLD_CONTROL_RESIDUAL_ONE_SIDED_UP2_LOGIT_V1_LEDGER_2026-09-23.csv > /tmp/up2_ledger.csv
+          git show eb928b2d5be6250227d8e14dea2d58abe494f762:gold_axis_2026/GOLD_CONTROL_RESIDUAL_ONE_SIDED_UP2_LOGIT_V1_RESULT_2026-09-23.json > /tmp/up2_result.json
+          git show 2926796b6a7e9048d2c091c9c571cb928b773e02:gold_axis_2026/GOLD_CONTROL_DOWNSIDE_RAW_VS_SQRT_HAR_DR_MULTIORIGIN_V1_FORECASTS_2026-09-22.csv > /tmp/sqrt_parent.csv
+
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/up2_independent_integrity_econ_audit_v1.py
+
+      - name: Assert read-only
+        run: |
+          ! grep -Eini 'insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from|create[[:space:]]+table|drop[[:space:]]+table|alter[[:space:]]+table' gold_axis_2026/tools/up2_independent_integrity_econ_audit_v1.py
+          grep -n 'default_transaction_read_only' gold_axis_2026/tools/up2_independent_integrity_econ_audit_v1.py
+
+      - name: Run independent audit
+        run: |
+          rm -rf up2_audit_out
+          python gold_axis_2026/tools/up2_independent_integrity_econ_audit_v1.py \
+            --ledger /tmp/up2_ledger.csv \
+            --parent /tmp/sqrt_parent.csv \
+            --result /tmp/up2_result.json \
+            --out up2_audit_out
+
+      - name: Freeze audit result
+        run: |
+          cp up2_audit_out/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_UP2_INDEPENDENT_INTEGRITY_ECON_AUDIT_V1_RESULT_2026-09-23.json
+          git commit -m 'Freeze independent UP2 integrity and economic audit V1'
+          git push origin HEAD:gold-up2-independent-integrity-audit-v1-20260923
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-up2-independent-integrity-econ-audit-v1
+          path: up2_audit_out/
+          retention-days: 30
