@@ -411,12 +411,12 @@ def main():
     for name in ("UNWEIGHTED_SOURCE","IMPORTANCE_WEIGHTED_SOURCE"):
         g=evaluations[name]["forward_guard_2023_2024"]
         m=evaluations[name]["locked_2025"]
+        after="" if m["precision_after"] is None else f"{100*m['precision_after']:.1f}%"
         lines.append(
             f"| {name} | {g['captured_up_retained']}/{g['captured_up']} | "
             f"{m['false_up_removed']}/{m['false_up_actual_down']} | "
             f"{m['captured_up_retained']}/{m['captured_up']} | "
-            f"{100*m['precision_before']:.1f}% | "
-            f"{'' if m['precision_after'] is None else f'{100*m['precision_after']:.1f}%'} |"
+            f"{100*m['precision_before']:.1f}% | {after} |"
         )
     lines += [
         "",
