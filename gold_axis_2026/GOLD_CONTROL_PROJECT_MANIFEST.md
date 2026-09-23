@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.28  
+**Manifest version:** 2.29  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -3291,7 +3291,7 @@ No runtime or production promotion is authorized.
 ---
 
 
-## 11U. CBR DOWN verifier historical extension — broader old-history pool does not support the candidate
+## 11U. CBR DOWN verifier historical extension — superseded for cascade use because the historical CBR pool was not route-consistent
 
 **Identity:** `CBR_DOWN_VERIFIER_HISTORICAL_EXTENSION_V1_RESEARCH`  
 **Research branch:** `gold-cbr-down-historical-extension-v1-20260923`  
@@ -3304,7 +3304,7 @@ No runtime or production promotion is authorized.
 **Governed path materialization fix:** `1949c553a41fe420c7baba831522c7137055072f`  
 **Frozen result commit:** `2ad6b1d02783c2e08768669d72a246f9da0d84c1`  
 **Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_CBR_DOWN_VERIFIER_HISTORICAL_EXTENSION_V1_RESULT_2026-09-23.json` (Git blob SHA `4153d7a2c980131e3a5b789cdb1803c60f488cdb`)  
-**Status:** `HISTORICAL_EXTENSION_NOT_SUPPORTED`.
+**Status:** `HISTORICAL_EXTENSION_NOT_SUPPORTED / METHODOLOGICALLY_NON_BINDING_FOR_FINAL_CASCADE`.
 
 ### 11U.1 Frozen question
 
@@ -3500,6 +3500,198 @@ No runtime or production promotion is authorized.
 
 ---
 
+
+## 11V. Cascade-route-consistent CBR — intended architecture tested correctly
+
+**Identity:** `CBR_CASCADE_ROUTE_CONSISTENT_EXTENSION_V1_RESEARCH`  
+**Research branch:** `gold-cbr-cascade-route-consistent-v1-20260923`  
+**Preregistration commit:** `17894825ce71af1895cd4e721ce9281843878ab7`  
+**Implementation commit:** `f60b77a75465c04cd42707338cbb90c422b34438`  
+**Generated-source newline fix:** `b7a10307652afca0ea493f4818e322ca161f5ccf`  
+**Workflow commit:** `3e5ed0606b4d3fbedcdb00470a7d035f71cf89ee`  
+**Frozen result commit:** `b22235f04dc48b173a93a98cc2ce22081bb0054e`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_CBR_CASCADE_ROUTE_CONSISTENT_EXTENSION_V1_RESULT_2026-09-23.json` (Git blob SHA `be617fe6d33a3ab846ccf8907cc72097e051a0ec`)  
+**Status:** `CASCADE_ROUTE_CONSISTENT_NOT_SUPPORTED`.
+
+### 11V.1 Correct binding cascade
+
+The intended architecture is:
+
+```
+SQRT
+  |
+HIGH RISK
+  |
+Frozen UP Verifier V2
+ /                  \
+UP                  ABSTAIN
+|                      |
+VERIFIED UP           CBR-DTW
+                     /       \
+                  DOWN        no
+                    |          |
+             VERIFIED DOWN   UNCERTAIN
+```
+
+The critical correction is **route consistency**.
+
+A historical row may enter the CBR case library only if that historical row itself would have reached the CBR node:
+
+`SQRT HIGH RISK + Frozen UP Verifier V2 ABSTAIN`.
+
+Rows where the UP verifier emitted UP terminate at `VERIFIED UP` and are excluded from the CBR library.
+
+Section 11U did not enforce this on the historical training pool and is therefore not binding evidence for the final cascade.
+
+### 11V.2 External route reconstruction — exact integrity
+
+The corrected external 2020–2021 source and frozen Router V2 were reconstructed before CBR scoring.
+
+External SQRT:
+- 2020: 212 alarms = 97 DOWN +115 UP;
+- 2021: 28 alarms =16 DOWN +12 UP.
+
+External Router V2:
+- 2020: n=260, Router UP=185, TP=111, FP=74;
+- 2021: n=258, Router UP=33, TP=19, FP=14.
+
+Exact SQRT × Router intersection:
+- 2020: Router-UP overlap=140 =80 actual UP +60 actual DOWN;
+- 2021: overlap=2 =1 UP +1 DOWN.
+
+Therefore the historical rows that truly route to CBR are:
+
+- 2020: **72 =37 DOWN +35 UP**;
+- 2021: **26 =15 DOWN +11 UP**;
+- pooled external CBR library: **98 =52 DOWN +46 UP**.
+
+This replaces the incorrect section-11U use of all 240 external SQRT alarms as CBR cases.
+
+External raw-path reconstruction and cross-source path harmonization remained valid:
+- 518/518 corrected 2020–2021 daily rows reproduced;
+- CBR-representable overlap n=345;
+- median same-date path correlation=0.999914;
+- same/shifted median DTW ratio=0.01323;
+- 100% of same-date distances below the shifted-date median.
+
+Final integrity errors: **none**.
+
+### 11V.3 Route-consistent chronological training sizes
+
+Only prior matured Router-ABSTAIN high-risk rows were admitted.
+
+- 2022 test: train n=98;
+- 2023 test: train n=109 =98 external +11 governed-2022 unresolved;
+- 2024 test: train n=111 =98 +11 +2;
+- locked 2025 test: train n=124 =98 +11 +2 +13.
+
+The test sets remained:
+- 2022 unresolved n=11 =6 DOWN +5 UP;
+- 2023 n=2 =1/1;
+- 2024 n=13 =6 DOWN +7 UP;
+- pooled 2022–2024 n=26 =13 DOWN +13 UP;
+- locked 2025 n=74 =39 DOWN +35 UP.
+
+No VERIFIED-UP row entered CBR training.
+
+### 11V.4 Correct route-consistent results
+
+#### 2022
+- DOWN calls=10/11;
+- correct DOWN=6;
+- false DOWN=4;
+- precision=**60.00%**;
+- DOWN recall=**100%**;
+- false-DOWN FPR=**80.00%**.
+
+The high recall is therefore achieved with excessive false-DOWN contamination.
+
+#### 2023
+Only two unresolved rows:
+- DOWN calls=1;
+- correct=1;
+- false=0;
+- precision=100%.
+
+This sample is too small to carry independent authority.
+
+#### 2024
+- DOWN calls=5/13;
+- correct DOWN=2;
+- false DOWN=3;
+- precision=**40.00%**;
+- recall=**33.33%**;
+- false-DOWN FPR=**42.86%**.
+
+This differs from the earlier non-route-consistent/original CBR diagnostic (3/5 correct), confirming that cascade-consistent historical case selection materially changes the prediction surface.
+
+#### Pooled 2022–2024
+- n=26;
+- actual DOWN=13, UP=13;
+- DOWN calls=16;
+- correct DOWN=9;
+- false DOWN=7;
+- precision=**56.25%**;
+- recall=**69.23%**;
+- false-DOWN FPR=**53.85%**;
+- coverage=**61.54%**;
+- one-sided 90% Wilson LCB precision=40.52%.
+
+The preregistered support rule required:
+- DOWN calls >=5;
+- precision >50%;
+- false-DOWN FPR <50%.
+
+Precision passed, but false-DOWN FPR failed. Therefore:
+
+`PRE2025 ROUTE-CONSISTENT SUPPORT = FALSE`.
+
+### 11V.5 Locked 2025 transport
+
+The unchanged route-consistent CBR was carried to the exact 74 locked 2025 unresolved rows.
+
+- DOWN calls=36;
+- correct DOWN=20;
+- false DOWN=16;
+- precision=**55.56%**;
+- recall=**51.28%**;
+- false-DOWN FPR=**45.71%**;
+- coverage=**48.65%**;
+- unresolved DOWN base rate=52.70%;
+- precision lift=**+2.85 pp**.
+
+Under the isolated 2025 descriptive gate this is technically supportive, because precision is above the unresolved-state base rate and FPR is below 50%.
+
+However the pre-2025 route-consistent gate had already failed. By preregistration, 2025 cannot rescue the model. Final status therefore remains:
+
+`CASCADE_ROUTE_CONSISTENT_NOT_SUPPORTED`.
+
+### 11V.6 Binding interpretation
+
+The user's cascade definition was correct, and the historical training population must obey that same route.
+
+Once tested correctly, CBR-DTW STRICT P050 does **not** currently qualify as the VERIFIED-DOWN motor.
+
+The result is not a total absence of signal:
+- pooled precision is 56.25%;
+- locked-2025 precision is 55.56%;
+- but the pre-2025 false-DOWN rate among actual UP cases is 53.85%, above the frozen limit.
+
+The principal failure is therefore **insufficient selectivity**, not total inability to find DOWN cases.
+
+The active architecture remains:
+
+1. SQRT -> HIGH RISK / NORMAL RISK.
+2. Frozen UP Verifier V2 -> VERIFIED UP / ABSTAIN.
+3. On ABSTAIN, **no DOWN verifier is yet validated**.
+4. Until a positive DOWN confirmer passes its own gate -> **UNCERTAIN**.
+
+The prior statements that CBR was a current VERIFIED-DOWN candidate based on section 11T are superseded for the final cascade because those CBR histories were not fully route-consistent.
+
+No post-hoc tuning of CBR p=0.50, K, DTW band, year weights, or 2020 exclusion is authorized under this identity.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -3536,27 +3728,31 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 ## 14. Final binding summary
 
-Gold Control now has a sharply separated short-term architecture, but the DOWN-confirmation lane is still not robustly solved.
+Gold Control now has the correct cascade semantics, but the DOWN-confirmation lane remains unresolved.
 
-The semantic audit established that SQRT-HAR-DR is a downside-risk motor, not a close-direction predictor.
+The risk layer is frozen SQRT-HAR-DR. It answers whether next-day downside realized risk is elevated; it is not itself a next-day close-direction classifier.
 
-The authoritative frozen positive-UP verifier is `UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH`. Its positive UP calls contain useful selective evidence, but its ABSTAIN state is not a DOWN label.
+The authoritative positive-UP layer is frozen `UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH`. A positive Router output is useful UP evidence; Router ABSTAIN is not a DOWN label.
 
-The comprehensive retained-specialist crosswalk in section 11T found `CBR-DTW STRICT P050` as the only retained same-clock specialist to pass the narrow pre-2025 exploratory screen. On the 13 unresolved 2024 cases it made 5 DOWN calls, 3 correct / 2 false (60% precision), and on the locked 2025 unresolved set its original governed-history form made 33 calls, 21 correct / 12 false (63.64% precision).
+The binding cascade is:
 
-Section 11U then tested whether that CBR evidence deepens when its historical case library is extended backward using the corrected external Dukascopy 2020–2021 paths, without changing any CBR parameters.
+1. **SQRT NORMAL RISK** -> normal-risk state.
+2. **SQRT HIGH RISK + Router UP** -> VERIFIED UP.
+3. **SQRT HIGH RISK + Router ABSTAIN** -> pass to a DOWN-confirmation layer.
+4. Only a separately validated positive DOWN signal may produce VERIFIED DOWN; otherwise -> UNCERTAIN.
 
-The external extension was technically valid: raw external path reconstruction passed, cross-source path correlation/DTW harmonization passed strongly, and 2020/2021 SQRT alarm anatomy reproduced exactly. However the model evidence did **not** improve. Across the exact 26 unresolved 2022–2024 cases, the extended CBR rule made 12 DOWN calls with 6 correct and 6 false, giving exactly 50% precision and failing the preregistered >50% support gate. On locked 2025 it fell to 18 correct / 15 false, 54.55% precision—only +1.84 percentage points above that subset's DOWN base rate and materially below the original governed-history CBR's 63.64%.
+A methodological correction was required for CBR-DTW. Historical CBR training cases must themselves have traversed the same live route: `SQRT HIGH RISK + Router ABSTAIN`. Earlier CBR experiments used broader SQRT-alarm histories and therefore are not binding evidence for the final cascade.
 
-The extended neighbour library is dominated by external 2020 crisis-regime cases. That explains a plausible mechanism for dilution but does not authorize post-hoc exclusion, reweighting or K/distance tuning.
+The route-consistent CBR experiment reconstructed the external 2020–2021 Router path exactly and reduced the external historical CBR library from 240 all-SQRT alarms to the correct 98 Router-ABSTAIN high-risk cases. It then used route-consistent governed cases for later years.
 
-The active research architecture therefore remains:
+On the exact unresolved 2022–2024 set, route-consistent CBR made 16 DOWN calls: 9 correct and 7 false. Precision was 56.25% and DOWN recall 69.23%, but false-DOWN FPR was 53.85%, failing the preregistered <50% selectivity gate.
 
-1. **SQRT risk motor** -> HIGH RISK / NORMAL RISK.
-2. **Frozen UP Verifier V2** -> VERIFIED UP or ABSTAIN.
-3. **CBR-DTW STRICT P050** -> preserved only as a narrow retrospective DOWN candidate in its original frozen governed-history form; not validated as a broadly portable historical-extension engine.
-4. Otherwise -> **UNCERTAIN**.
+On locked 2025 it made 36 DOWN calls: 20 correct and 16 false, for 55.56% precision, 51.28% recall and 45.71% false-DOWN FPR. This is only +2.85 percentage points above the unresolved-state DOWN base rate and cannot rescue the pre-2025 failure.
 
-The next DOWN-lane question is now more specific: can case relevance be conditioned on regime/state *prospectively and preregistered*, rather than pooling all high-risk historical paths equally? A successor may investigate regime-conditioned retrieval or another conditional DOWN architecture, but it must be a new identity and cannot tune against the already-exposed 2022–2025 outcomes.
+Therefore **CBR-DTW STRICT P050 is not validated as the VERIFIED-DOWN motor in the correct cascade**.
 
-2025 remains locked retrospective transport only, 2026 remains excluded from model selection, and no runtime or production promotion is authorized.
+The unresolved research problem is now extremely specific:
+
+> among `SQRT HIGH RISK + Frozen UP Verifier ABSTAIN` rows, find a positive DOWN confirmer that is more selective than the route-consistent CBR baseline without using post-hoc threshold or year filtering.
+
+Any successor must train and evaluate on the route-consistent unresolved population from the outset. 2025 remains unavailable for selection/tuning, 2026 remains excluded, and no runtime or production promotion is authorized.
