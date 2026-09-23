@@ -1,0 +1,423 @@
+{
+  "identity": "CBR_DOWN_VERIFIER_HISTORICAL_EXTENSION_V1_RESEARCH",
+  "date": "2026-09-23",
+  "status": "HISTORICAL_EXTENSION_NOT_SUPPORTED",
+  "integrity_errors": [],
+  "pins": {
+    "mirror_commit": "922f83a60cc574e7395fb27397077288055a1ef6",
+    "external_spine_commit": "509c5ffa762f4ea49644b8ffe723ed2591ba52bf",
+    "sqrt_code_commit": "ad0fc4dcbe1687833bd9a153cd4bc6a754523464",
+    "cbr_code_commit": "f187f89c166a75cefa8cf60709dcd4ce1027663d",
+    "base_audit_commit": "7982b422476df61eb0339b74265afd553414f2d2"
+  },
+  "frozen_method": {
+    "npts": 48,
+    "dtw_band": 6,
+    "k": 3,
+    "eps": 1e-08,
+    "threshold": 0.5,
+    "strict_pool": "historical frozen SQRT alarms only"
+  },
+  "external_reconstruction": {
+    "passed": true,
+    "raw_n": 518,
+    "spine_n": 518,
+    "common_n": 518,
+    "missing_dates": [],
+    "extra_dates": [],
+    "bad_276_bar_dates": [],
+    "max_abs_close_diff": 4.547473508864641e-13,
+    "max_abs_rv_diff": 3.548051609458813e-17,
+    "max_abs_dr_diff": 3.247185506594086e-17
+  },
+  "path_harmonization": {
+    "passed": true,
+    "calendar_overlap_n": 450,
+    "overlap_n": 345,
+    "skipped_short_n": 105,
+    "skipped_short_examples": [
+      {
+        "date": "2020-04-09",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-04-17",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-04-22",
+        "external_returns": 275,
+        "governed_returns": 227
+      },
+      {
+        "date": "2020-04-23",
+        "external_returns": 275,
+        "governed_returns": 185
+      },
+      {
+        "date": "2020-04-24",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-05-01",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-05-08",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-05-15",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-05-22",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-05-25",
+        "external_returns": 275,
+        "governed_returns": 227
+      },
+      {
+        "date": "2020-05-29",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-06-05",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-06-12",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-06-19",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-06-26",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-07-03",
+        "external_returns": 275,
+        "governed_returns": 156
+      },
+      {
+        "date": "2020-07-10",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-07-17",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-07-24",
+        "external_returns": 275,
+        "governed_returns": 203
+      },
+      {
+        "date": "2020-07-31",
+        "external_returns": 275,
+        "governed_returns": 203
+      }
+    ],
+    "skipped_nonpositive_rv_n": 0,
+    "median_same_date_flat_corr": 0.9999137678740709,
+    "median_same_date_dtw": 0.005832392620340573,
+    "median_shifted_date_dtw": 0.44090019132811153,
+    "median_same_to_shifted_dtw_ratio": 0.013228373983626128,
+    "fraction_same_below_shifted_median": 1.0,
+    "p90_same_date_dtw": 0.021576579677700703
+  },
+  "external_sqrt_summary": {
+    "2020": {
+      "alarms": 212,
+      "down": 97,
+      "up": 115
+    },
+    "2021": {
+      "alarms": 28,
+      "down": 16,
+      "up": 12
+    }
+  },
+  "external_strict_training_cases": {
+    "n": 240,
+    "down": 113,
+    "up": 127
+  },
+  "by_year_2022_2024": {
+    "2022": {
+      "n": 11,
+      "actual_down": 6,
+      "actual_up": 5,
+      "down_calls": 6,
+      "correct_down": 3,
+      "false_down": 3,
+      "down_precision": 0.5,
+      "down_recall": 0.5,
+      "false_down_fpr": 0.6,
+      "call_coverage": 0.5454545454545454,
+      "wilson90_lcb_down_precision": 0.26821147361954895,
+      "mean_p_down": 0.5088329056931178,
+      "mean_neighbor_distance": 0.10825767078991744,
+      "train_n": 240,
+      "train_down": 113,
+      "train_up": 127,
+      "train_by_year": {
+        "2020": {
+          "n": 212,
+          "down": 97,
+          "up": 115,
+          "source_counts": {
+            "EXTERNAL_DUKASCOPY_V2": 212
+          }
+        },
+        "2021": {
+          "n": 28,
+          "down": 16,
+          "up": 12,
+          "source_counts": {
+            "EXTERNAL_DUKASCOPY_V2": 28
+          }
+        }
+      }
+    },
+    "2023": {
+      "n": 2,
+      "actual_down": 1,
+      "actual_up": 1,
+      "down_calls": 1,
+      "correct_down": 0,
+      "false_down": 1,
+      "down_precision": 0.0,
+      "down_recall": 0.0,
+      "false_down_fpr": 1.0,
+      "call_coverage": 0.5,
+      "wilson90_lcb_down_precision": 0.0,
+      "mean_p_down": 0.4650793468643941,
+      "mean_neighbor_distance": 0.1288661401317076,
+      "train_n": 251,
+      "train_down": 119,
+      "train_up": 132,
+      "train_by_year": {
+        "2020": {
+          "n": 212,
+          "down": 97,
+          "up": 115,
+          "source_counts": {
+            "EXTERNAL_DUKASCOPY_V2": 212
+          }
+        },
+        "2021": {
+          "n": 28,
+          "down": 16,
+          "up": 12,
+          "source_counts": {
+            "EXTERNAL_DUKASCOPY_V2": 28
+          }
+        },
+        "2022": {
+          "n": 11,
+          "down": 6,
+          "up": 5,
+          "source_counts": {
+            "GOVERNED_FROZEN": 11
+          }
+        }
+      }
+    },
+    "2024": {
+      "n": 13,
+      "actual_down": 6,
+      "actual_up": 7,
+      "down_calls": 5,
+      "correct_down": 3,
+      "false_down": 2,
+      "down_precision": 0.6,
+      "down_recall": 0.5,
+      "false_down_fpr": 0.2857142857142857,
+      "call_coverage": 0.38461538461538464,
+      "wilson90_lcb_down_precision": 0.33042112439620736,
+      "mean_p_down": 0.4286200761864808,
+      "mean_neighbor_distance": 0.120855598528869,
+      "train_n": 253,
+      "train_down": 120,
+      "train_up": 133,
+      "train_by_year": {
+        "2020": {
+          "n": 212,
+          "down": 97,
+          "up": 115,
+          "source_counts": {
+            "EXTERNAL_DUKASCOPY_V2": 212
+          }
+        },
+        "2021": {
+          "n": 28,
+          "down": 16,
+          "up": 12,
+          "source_counts": {
+            "EXTERNAL_DUKASCOPY_V2": 28
+          }
+        },
+        "2022": {
+          "n": 11,
+          "down": 6,
+          "up": 5,
+          "source_counts": {
+            "GOVERNED_FROZEN": 11
+          }
+        },
+        "2023": {
+          "n": 2,
+          "down": 1,
+          "up": 1,
+          "source_counts": {
+            "GOVERNED_FROZEN": 2
+          }
+        }
+      }
+    }
+  },
+  "pooled_2022_2024": {
+    "n": 26,
+    "actual_down": 13,
+    "actual_up": 13,
+    "down_calls": 12,
+    "correct_down": 6,
+    "false_down": 6,
+    "down_precision": 0.5,
+    "down_recall": 0.46153846153846156,
+    "false_down_fpr": 0.46153846153846156,
+    "call_coverage": 0.46153846153846156,
+    "wilson90_lcb_down_precision": 0.32651532871340977,
+    "mean_p_down": 0.4653608325683591,
+    "mean_neighbor_distance": 0.11614190153183859
+  },
+  "pre2025_extension_supportive": false,
+  "locked_2025": {
+    "n": 74,
+    "actual_down": 39,
+    "actual_up": 35,
+    "down_calls": 33,
+    "correct_down": 18,
+    "false_down": 15,
+    "down_precision": 0.5454545454545454,
+    "down_recall": 0.46153846153846156,
+    "false_down_fpr": 0.42857142857142855,
+    "call_coverage": 0.44594594594594594,
+    "wilson90_lcb_down_precision": 0.4348604547338746,
+    "mean_p_down": 0.4530881744060285,
+    "mean_neighbor_distance": 0.11530860988550883,
+    "train_n": 270,
+    "train_down": 127,
+    "train_up": 143,
+    "train_by_year": {
+      "2020": {
+        "n": 212,
+        "down": 97,
+        "up": 115,
+        "source_counts": {
+          "EXTERNAL_DUKASCOPY_V2": 212
+        }
+      },
+      "2021": {
+        "n": 28,
+        "down": 16,
+        "up": 12,
+        "source_counts": {
+          "EXTERNAL_DUKASCOPY_V2": 28
+        }
+      },
+      "2022": {
+        "n": 11,
+        "down": 6,
+        "up": 5,
+        "source_counts": {
+          "GOVERNED_FROZEN": 11
+        }
+      },
+      "2023": {
+        "n": 2,
+        "down": 1,
+        "up": 1,
+        "source_counts": {
+          "GOVERNED_FROZEN": 2
+        }
+      },
+      "2024": {
+        "n": 17,
+        "down": 7,
+        "up": 10,
+        "source_counts": {
+          "GOVERNED_FROZEN": 17
+        }
+      }
+    },
+    "baseline_down_prevalence": 0.527027027027027,
+    "precision_lift_vs_baseline": 0.01842751842751844,
+    "transport_supportive": true
+  },
+  "neighbor_provenance_counts": {
+    "pre2025": {
+      "EXTERNAL_DUKASCOPY_V2:2020": 64,
+      "EXTERNAL_DUKASCOPY_V2:2021": 9,
+      "GOVERNED_FROZEN:2022": 4,
+      "GOVERNED_FROZEN:2023": 1
+    },
+    "locked2025": {
+      "GOVERNED_FROZEN:2022": 10,
+      "EXTERNAL_DUKASCOPY_V2:2020": 182,
+      "EXTERNAL_DUKASCOPY_V2:2021": 17,
+      "GOVERNED_FROZEN:2024": 10,
+      "GOVERNED_FROZEN:2023": 3
+    }
+  },
+  "original_comparators": {
+    "2024_unresolved_original_cbr": {
+      "n": 13,
+      "down_calls": 5,
+      "correct_down": 3,
+      "false_down": 2,
+      "precision": 0.6,
+      "recall": 0.5,
+      "false_down_fpr": 0.2857142857142857
+    },
+    "2025_unresolved_original_cbr": {
+      "n": 74,
+      "down_calls": 33,
+      "correct_down": 21,
+      "false_down": 12,
+      "precision": 0.6363636363636364,
+      "recall": 0.5384615384615384,
+      "false_down_fpr": 0.34285714285714286
+    }
+  },
+  "governance": {
+    "random_split": false,
+    "threshold_tuning": false,
+    "k_band_representation_tuning": false,
+    "2025_used_for_selection": false,
+    "2026_used": false,
+    "raw_third_party_committed": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
