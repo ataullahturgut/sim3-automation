@@ -73,14 +73,14 @@ jobs:
           rm -rf /tmp/mdl
           git clone --filter=blob:none --no-checkout https://github.com/kevingtlin/Market-Data-Lab.git /tmp/mdl
           git -C /tmp/mdl sparse-checkout init --no-cone
-          cat > /tmp/mdl/.git/info/sparse-checkout <<'EOF'
-/xauusd/ask/m1/xauusd_ask_m1_2020_*.csv
-/xauusd/ask/m1/xauusd_ask_m1_2021_*.csv
-/xauusd/ask/m1/xauusd_ask_m1_2022_01.csv
-/xauusd/bid/m1/xauusd_bid_m1_2020_*.csv
-/xauusd/bid/m1/xauusd_bid_m1_2021_*.csv
-/xauusd/bid/m1/xauusd_bid_m1_2022_01.csv
-EOF
+          printf '%s\n' \
+            '/xauusd/ask/m1/xauusd_ask_m1_2020_*.csv' \
+            '/xauusd/ask/m1/xauusd_ask_m1_2021_*.csv' \
+            '/xauusd/ask/m1/xauusd_ask_m1_2022_01.csv' \
+            '/xauusd/bid/m1/xauusd_bid_m1_2020_*.csv' \
+            '/xauusd/bid/m1/xauusd_bid_m1_2021_*.csv' \
+            '/xauusd/bid/m1/xauusd_bid_m1_2022_01.csv' \
+            > /tmp/mdl/.git/info/sparse-checkout
           git -C /tmp/mdl checkout 922f83a60cc574e7395fb27397077288055a1ef6
           test "$(find /tmp/mdl/xauusd/ask/m1 -name 'xauusd_ask_m1_*.csv' | wc -l)" -eq 25
           test "$(find /tmp/mdl/xauusd/bid/m1 -name 'xauusd_bid_m1_*.csv' | wc -l)" -eq 25
