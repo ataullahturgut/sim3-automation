@@ -34,3 +34,13 @@ The three model/context-state features are validated instead by their own frozen
 No feature, parameter, threshold, target-year outcome, or gate is changed by this amendment.
 
 If raw/source-derived feature harmonization is materially poor, the study is blocked before scoring.
+
+## Raw-feature harmonization gate
+
+Before scoring, require:
+
+- exact CBR-representable overlap >= 300 dates;
+- for each of the six source-derived inputs listed above, external-vs-governed Pearson correlation >= 0.90;
+- lag1 close-return sign agreement >= 90%.
+
+These thresholds are frozen before model scoring.
