@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.33  
+**Manifest version:** 2.34  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -4261,6 +4261,42 @@ Therefore:
 - no post-result hybrid, OR-rule, AND-rule, threshold change, or feature recombination is authorized under these identities.
 
 A future method may use a new preregistered identity if there is a principled reason to combine stable morphology with the broader state/context information from Logit V1, but the current results themselves cannot be used to tune such a combination.
+
+---
+
+
+## 11ZA. Independent UP-2 integrity and economic arithmetic audit — PASS
+
+**Identity:** `UP2_INDEPENDENT_INTEGRITY_ECON_AUDIT_V1_RESEARCH`  
+**Research branch:** `gold-up2-independent-integrity-audit-v1-20260923`  
+**Preregistration commit:** `00e195103d122e9033896ab09b70791ebe44494d`  
+**Implementation commit:** `d31cd9a9a2b77400b0807d469ec6bdd9d14a15ca`  
+**Workflow commit:** `bae723bf6e97e0a22aada01e0f87fdc2135b64bf`  
+**Frozen audit result commit:** `a254f088144343dde8a2184084286f26312c8d6a`  
+**Frozen audit artifact:** `gold_axis_2026/GOLD_CONTROL_UP2_INDEPENDENT_INTEGRITY_ECON_AUDIT_V1_RESULT_2026-09-23.json` (Git blob SHA `af7f09f0a18185917634f2f0a56f9e0d06bdf2e4`)  
+**Status:** `AUDIT_PASS`.
+
+Independent checks did not reuse the prior assistant arithmetic. The audit read the frozen UP-2 ledger, frozen SQRT parent, and independently reconstructed governed daily closes from the read-only 5-minute research table.
+
+Results:
+- ledger rows=100; unique origin/target pairs=100;
+- no chronology, label, call-rule or metric mismatch;
+- maximum absolute difference between frozen parent log return and independently reconstructed DB close-to-close log return = `3.469446951953614e-18`;
+- maximum simple-return difference = exactly `0.0`;
+- every `actual_up` equals the sign of the independently reconstructed return;
+- every `up2_call` equals the frozen rule `p_up > tau`;
+- annual and pooled confusion metrics exactly reproduce the frozen UP-2 result.
+
+Independent DB-close economic arithmetic reproduces:
+- 2022: gross correct-UP gain 7.0022%, false-UP loss 5.1922%, fixed-notional net +1.8100%;
+- 2023: +2.7395% net;
+- 2024: +2.8987% net;
+- pooled 2022–2024: gross correct-UP gain 12.6404%, false-UP loss 5.1922%, fixed-notional net +7.4482%, compounded call-only return +7.5058%;
+- locked 2025: gross correct-UP gain 16.1438%, false-UP loss 7.9752%, fixed-notional net +8.1686%, compounded call-only return +8.2311%.
+
+Missed UP/DOWN values remain opportunity costs under a flat-on-ABSTAIN assumption, not realized losses. These figures are not whole-cascade or whole-portfolio P&L and exclude fees, spread, slippage and leverage.
+
+This audit supports the correctness of the frozen ledger labels, signal rule and previously reported arithmetic. It does not remove model-risk/generalization uncertainty, especially the weaker locked-2025 discrimination of One-Sided UP-2 Logit V1.
 
 ---
 
