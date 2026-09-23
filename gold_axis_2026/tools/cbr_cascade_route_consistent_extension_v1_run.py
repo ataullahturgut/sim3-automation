@@ -781,7 +781,10 @@ def main() -> int:
         },
         "external_reconstruction":ext_audit,
         "path_harmonization":harmon,
-        "external_sqrt_summary":ext_sqrt_summary,\n        "external_router_summary":ext_router_summary,\n        "external_route_summary":ext_route_summary,\n        "external_route_consistent_training_cases":{
+        "external_sqrt_summary":ext_sqrt_summary,
+        "external_router_summary":ext_router_summary,
+        "external_route_summary":ext_route_summary,
+        "external_route_consistent_training_cases":{
             "n":len(ext_cases),
             "down":sum(r["meta_y"] for r in ext_cases),
             "up":sum(1-r["meta_y"] for r in ext_cases),
@@ -875,7 +878,10 @@ def main() -> int:
         "status":status,
         "external_reconstruction":ext_audit,
         "path_harmonization":harmon,
-        "external_sqrt_summary":ext_sqrt_summary,\n        "external_router_summary":ext_router_summary,\n        "external_route_summary":ext_route_summary,\n        "by_year":by_year,
+        "external_sqrt_summary":ext_sqrt_summary,
+        "external_router_summary":ext_router_summary,
+        "external_route_summary":ext_route_summary,
+        "by_year":by_year,
         "pooled_2022_2024":pooled,
         "locked_2025":m25,
         "neighbor_provenance_counts":neighbor_counts,
