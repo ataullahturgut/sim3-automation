@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.26  
+**Manifest version:** 2.27  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -3112,6 +3112,184 @@ No runtime or production promotion is authorized.
 
 ---
 
+
+## 11T. Comprehensive retained DOWN-specialist crosswalk — CBR-DTW emerges as a narrow candidate
+
+**Final identity:** `COMPREHENSIVE_DOWN_SPECIALIST_CROSSWALK_V1R2_RESEARCH`  
+**Research branch:** `gold-comprehensive-down-specialist-crosswalk-v1-20260923`  
+**V1 preregistration commit:** `1a2a445c239f9f4674aa2fd7f303b11fbd43bbe6`  
+**V1R2 integrity amendment:** `ca10e095a2c6e605c22c2bb0ad3895fc3a4c4dd4`  
+**R2 implementation commit:** `8d2e58e978c335a454d4ba94c16eccbc6710ba9f`  
+**Workflow freeze fix:** `25dabba3af6a013262fb0ede20c082cd0ddcb314`  
+**Frozen result commit:** `58f0eadb4840bdc07470058251d89657dca6ad3b`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_COMPREHENSIVE_DOWN_SPECIALIST_CROSSWALK_V1R2_RESULT_2026-09-23.json` (Git blob SHA `c29077a8d4172c8044593cf5435bb78442e3cb56`)  
+**Status:** `PRE2025_SPECIALIST_SIGNAL_WITH_SUPPORTIVE_LOCKED2025_TRANSPORT / NOT_CERTIFIED / NOT_RUNTIME`.
+
+### 11T.1 Purpose and correction of the narrow audit
+
+Section 11S screened only ten baseline same-clock outputs. It did not justify the broader claim that all previously developed DOWN/reversal specialists had failed inside the exact unresolved branch.
+
+This successor performed the broader authority scan and exact conditional crosswalk against:
+
+> `SQRT HIGH RISK + frozen UP Verifier V2 ABSTAIN`.
+
+The frozen primary unresolved set remains:
+- 2022–2024 total n=26;
+- actual DOWN=13;
+- actual UP=13.
+
+The locked 2025 unresolved stress set is:
+- n=74;
+- actual DOWN=39;
+- actual UP=35;
+- baseline DOWN prevalence=52.70%.
+
+No 2025 outcome participated in candidate selection or threshold design.
+
+### 11T.2 Authority scan and target-clock integrity
+
+The preregistered V1 attempted to include:
+- V1.53 intraday specialists;
+- Cross-domain conditional direction V1;
+- CBR-DTW path morphology V1;
+- S&P 500 cross-market V1;
+- heterogeneous CBR + S&P consensus V1.
+
+The V1 integrity gate correctly blocked interpretation because the V1.53 exact-NY17 target sign did **not** map one-to-one to the SQRT parent target-day sign under a simple `target_date` join. First observed mismatches included:
+- 2024-04-16;
+- 2025-05-01;
+- 2025-05-02;
+- 2025-05-07;
+- 2025-05-13.
+
+V1.53 was therefore removed under the preregistered V1R2 integrity amendment and is now:
+
+`NOT_PROVEN_TARGET_CLOCK_ALIGNMENT`
+
+for this SQRT conditional crosswalk. Its blocked V1 numbers have no candidate-selection authority.
+
+The following were also not silently coerced into the daily same-clock task:
+- Market Shock / Macro Event: event/minute target clock mismatch;
+- weekly, H5/H10/H20 and 3D engines: horizon mismatch;
+- MONTHLY_DIRECTION_3M / MOMENTUM_3M: slow-clock priors;
+- Altuntaş AlexNet: target-clock identity unresolved;
+- V1.63: 2024 is training history under that identity;
+- later 1D models without a proven retained pre-scoring exact-row artifact;
+- older internal variants whose exact row-level evidence is NOT_FOUND.
+
+These are evidence-discipline exclusions, not claims that the methods are intrinsically useless.
+
+### 11T.3 Final R2 integrity
+
+Final R2 integrity errors: **none**.
+
+The audit reproduced:
+- primary unresolved set 26 = 13 DOWN + 13 UP;
+- locked 2025 unresolved set 74 = 39 DOWN + 35 UP;
+- frozen Router annual behavior;
+- Cross-domain target signs;
+- the original full-2024 CBR-DTW aggregates;
+- the original full-2024 S&P aggregates;
+- the original full-2024 heterogeneous-consensus aggregate.
+
+No threshold was changed after observing subset outcomes.
+
+### 11T.4 Pre-2025 conditional crosswalk
+
+The screen rule, frozen before scoring, required:
+- available support n >=10;
+- at least 5 DOWN calls;
+- DOWN precision >50%;
+- false-DOWN FPR <50%.
+
+Among the retained same-clock specialist candidates, exactly one passed:
+
+> **`CBR_STRICT_P050_DOWN`**
+
+This is the original CBR-DTW path-morphology model using:
+- origin-day normalized cumulative intraday return path;
+- cumulative signed-variance-pressure path;
+- DTW nearest-neighbour case matching;
+- STRICT historical pool = prior frozen SQRT high-risk alarms;
+- fixed probability threshold = 0.50.
+
+Its pre-2025 usable conditional support is **2024 only**, because the original CBR contract does not provide candidate predictions for the 2022–2023 unresolved rows.
+
+On the 13 unresolved 2024 rows:
+- actual DOWN=6;
+- actual UP=7;
+- DOWN calls=5;
+- correct DOWN=3;
+- false DOWN=2;
+- DOWN precision=**60.00%**;
+- DOWN recall=**50.00%**;
+- false-DOWN FPR=**28.57%**;
+- decision coverage=**38.46%**;
+- one-sided 90% Wilson lower bound on DOWN precision=**33.04%**.
+
+This satisfies the preregistered exploratory screen but is based on a very small retrospective support set. It is a candidate signal, not certification.
+
+Other important retained results:
+- Cross-domain STATIC: 0 DOWN calls;
+- Cross-domain DYNAMIC D99: 2 DOWN calls, 0 correct / 2 false;
+- Cross-domain competing-risk: 1 DOWN call, incorrect;
+- Cross-domain explicit-duration: 17 calls, 7 correct / 10 false, precision 41.18%;
+- CBR STRICT_RECALL75: 9 calls, 5 correct / 4 false, precision 55.56% but false-DOWN FPR 57.14%;
+- CBR CONTEXT_P050: 6 calls, 3 / 3, precision 50%;
+- S&P P050: 8 calls, 4 / 4, precision 50%, false-DOWN FPR 57.14%;
+- heterogeneous consensus: 11 calls, 6 correct / 5 false, precision 54.55%, but false-DOWN FPR 71.43%.
+
+Thus the useful property of CBR STRICT P050 is not merely raw accuracy; it is the combination of selective DOWN calling and lower false-DOWN contamination in the unresolved state.
+
+### 11T.5 Locked 2025 transport of the pre-2025-selected CBR rule
+
+Only the pre-2025 screen-positive candidate was transported to 2025, unchanged.
+
+On the exact 74 locked 2025 unresolved rows:
+
+- actual DOWN=39;
+- actual UP=35;
+- CBR DOWN calls=33;
+- correct DOWN=21;
+- false DOWN=12;
+- DOWN precision=**63.64%**;
+- DOWN recall=**53.85%**;
+- false-DOWN FPR=**34.29%**;
+- decision coverage=**44.59%**;
+- one-sided 90% Wilson lower bound on DOWN precision=**52.50%**.
+
+Baseline DOWN prevalence in the unresolved subset is 39/74 = **52.70%**.
+
+Therefore the unchanged CBR rule's DOWN-call precision exceeds the unresolved-state base rate by **+10.93 percentage points**.
+
+Under the preregistered transport rule this is:
+
+`TRANSPORT_SUPPORTIVE`.
+
+This is locked retrospective transport/stress, not fresh prospective confirmation and not a tuning authority.
+
+### 11T.6 Binding interpretation
+
+The corrected comprehensive screen changes the project state materially:
+
+- the earlier broad statement that no existing DOWN-capable specialist was useful was wrong and remains superseded;
+- one retained specialist, **CBR-DTW STRICT P050**, provides a plausible positive DOWN-confirmation signal specifically in the state where SQRT says high risk and the frozen UP verifier abstains;
+- its pre-2025 selection evidence is only 13 unresolved 2024 rows, so the evidence is too small for certification;
+- its unchanged locked-2025 behavior is directionally supportive rather than collapsing.
+
+The active architecture is now:
+
+1. **SQRT risk motor** -> HIGH RISK / NORMAL RISK.
+2. **Frozen UP Verifier V2** -> VERIFIED UP or ABSTAIN.
+3. On HIGH RISK + UP-ABSTAIN, **CBR-DTW STRICT P050** is the current research candidate for a positive VERIFIED DOWN lane.
+4. If CBR does not confirm DOWN -> remain **UNCERTAIN**.
+
+This is not yet a production model. The next scientific question is no longer "can any existing specialist help?" but whether this narrow CBR signal survives stronger same-clock support / prospective evidence without retuning.
+
+No runtime or production promotion is authorized.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -3148,29 +3326,27 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 ## 14. Final binding summary
 
-Gold Control now has a sharply separated short-term architecture, and the remaining technical gap is localized.
+Gold Control now has a sharply separated short-term architecture, and one existing specialist has emerged as a plausible candidate for the previously missing DOWN-confirmation lane.
 
 The semantic audit established that SQRT-HAR-DR is a downside-risk motor, not a close-direction predictor.
 
-The authoritative frozen positive-UP verifier is `UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH`. When it emits UP inside SQRT alarm days, it provides useful selective evidence. In the primary 2024 intersection, 3 of 4 Router-UP calls were actual UP and those same three were genuine SQRT realized-risk misses. However Router ABSTAIN is not a DOWN signal.
+The authoritative frozen positive-UP verifier is `UP_EXPERT_ROUTER_V2_LEGACY_CONTEXT_RESEARCH`. Its positive UP calls contain useful selective evidence, but its ABSTAIN state is not a DOWN label.
 
-The project therefore tested whether any already-existing same-clock daily motor could fill the missing DOWN-confirmation role specifically inside:
+The first narrow DOWN audit in section 11S screened only ten baseline outputs and found none eligible. That result remains valid only for that narrow pool.
 
-`SQRT high risk + Router V2 ABSTAIN`.
+The comprehensive retained-specialist crosswalk in section 11T corrected the scope problem. Its first V1 attempt was blocked when V1.53 exact-NY17 target signs failed same-clock identity against the SQRT parent; V1.53 was therefore removed under a preregistered integrity amendment rather than force-joined.
 
-On the exact 2022–2024 unresolved subset there are 26 cases, evenly split 13 DOWN / 13 UP. Ten frozen daily candidates were audited without threshold tuning. None met the preregistered exploratory eligibility rule of at least five DOWN calls, DOWN precision above 50%, and false-DOWN FPR below 50%.
+Among the retained same-clock specialist families, **CBR-DTW STRICT P050** is the only candidate that passes the frozen pre-2025 exploratory DOWN-verifier screen. On the 13 unresolved 2024 cases where it is available, it emits 5 DOWN calls: 3 correct and 2 false, for 60.0% precision, 50.0% DOWN recall and 28.57% false-DOWN FPR.
 
-The highest-coverage DOWN candidates were actively harmful in this conditional subset: Bonato AR1_RM made 16 DOWN calls but only 6 were correct; Bonato AR1 made 14 with only 4 correct. The lone clean RM_LOGIT DOWN call was 1/1 but provides only 7.69% DOWN recall and fails the support requirement.
+The rule was then transported unchanged to the locked 2025 unresolved set. On 74 cases it emits 33 DOWN calls: 21 correct and 12 false, for 63.64% precision, 53.85% recall and 34.29% false-DOWN FPR. The unresolved-state DOWN base rate is 52.70%, so its precision lift is +10.93 percentage points. This is supportive retrospective transport, not certification.
 
-Thus only the narrow baseline reuse path tested in 11S is closed. A comprehensive existing-model DOWN screen is still required before concluding that the missing branch needs a new model.
-
-The active architecture is:
+The active research architecture is therefore:
 
 1. **SQRT risk motor** -> HIGH RISK / NORMAL RISK.
 2. **Frozen UP Verifier V2** -> VERIFIED UP or ABSTAIN.
-3. **DOWN-confirmation lane** -> still unresolved.
-4. If no positive DOWN confirmation exists -> **UNCERTAIN**, not forced DOWN.
+3. **CBR-DTW STRICT P050 research DOWN candidate** -> when HIGH RISK + UP-ABSTAIN, may emit VERIFIED DOWN.
+4. Otherwise -> **UNCERTAIN**.
 
-The next research task is not another broad UP model and not another suppressor threshold. It is first to **crosswalk the already-frozen DOWN-specific and reversal specialists** against the high-risk / UP-abstain subset, preserving their original clocks and rules. Only after that authority-complete screen may a new model family be justified.
+The main remaining limitation is evidence depth: the pre-2025 CBR selection support is only 13 unresolved 2024 rows. No threshold retuning on these cases or on 2025 is authorized. The next clean step is to obtain stronger independent same-clock support for this exact frozen triage architecture—through additional historical source-compatible years if authority permits, or preferably prospective shadow evidence—before any runtime consideration.
 
-No post-hoc threshold tuning on the 26 historical cases is authorized. 2025 remains unavailable for candidate selection, 2026 remains excluded, and no runtime or production promotion is authorized.
+2025 remains locked retrospective transport only, 2026 remains excluded from model selection, and no production/runtime promotion is authorized.
