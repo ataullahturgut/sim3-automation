@@ -1,0 +1,874 @@
+{
+  "identity": "UP2_LAST_HOUR_TREND_R2_THRESHOLD_ANATOMY_V1_RESEARCH",
+  "date": "2026-09-23",
+  "status": "STABLE_DIAGNOSTIC_SCALAR_VETO_ZONE_EXISTS",
+  "integrity_errors": [],
+  "semantics": "veto UP2 iff last_hour_trend_r2 >= threshold",
+  "threshold_grid": [
+    0.0,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.35,
+    0.4,
+    0.45,
+    0.5,
+    0.55,
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8,
+    0.85,
+    0.9,
+    0.95,
+    1.0
+  ],
+  "pre2025_counts": {
+    "calls": 11,
+    "captured_up": 8,
+    "false_up_actual_down": 3
+  },
+  "locked2025_counts": {
+    "calls": 25,
+    "captured_up": 13,
+    "false_up_actual_down": 12
+  },
+  "pre2025_scan": [
+    {
+      "threshold": 0.0,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 8,
+      "captured_up_retained": 0,
+      "captured_up_retention_rate": 0.0,
+      "false_up_removed": 3,
+      "false_up_remaining": 0,
+      "false_up_removal_rate": 1.0,
+      "remaining_calls": 0,
+      "remaining_precision": null
+    },
+    {
+      "threshold": 0.05,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 7,
+      "captured_up_retained": 1,
+      "captured_up_retention_rate": 0.125,
+      "false_up_removed": 3,
+      "false_up_remaining": 0,
+      "false_up_removal_rate": 1.0,
+      "remaining_calls": 1,
+      "remaining_precision": 1.0
+    },
+    {
+      "threshold": 0.1,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 6,
+      "captured_up_retained": 2,
+      "captured_up_retention_rate": 0.25,
+      "false_up_removed": 3,
+      "false_up_remaining": 0,
+      "false_up_removal_rate": 1.0,
+      "remaining_calls": 2,
+      "remaining_precision": 1.0
+    },
+    {
+      "threshold": 0.15,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 4,
+      "captured_up_retained": 4,
+      "captured_up_retention_rate": 0.5,
+      "false_up_removed": 3,
+      "false_up_remaining": 0,
+      "false_up_removal_rate": 1.0,
+      "remaining_calls": 4,
+      "remaining_precision": 1.0
+    },
+    {
+      "threshold": 0.2,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 4,
+      "captured_up_retained": 4,
+      "captured_up_retention_rate": 0.5,
+      "false_up_removed": 3,
+      "false_up_remaining": 0,
+      "false_up_removal_rate": 1.0,
+      "remaining_calls": 4,
+      "remaining_precision": 1.0
+    },
+    {
+      "threshold": 0.25,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 3,
+      "captured_up_retained": 5,
+      "captured_up_retention_rate": 0.625,
+      "false_up_removed": 3,
+      "false_up_remaining": 0,
+      "false_up_removal_rate": 1.0,
+      "remaining_calls": 5,
+      "remaining_precision": 1.0
+    },
+    {
+      "threshold": 0.3,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 3,
+      "captured_up_retained": 5,
+      "captured_up_retention_rate": 0.625,
+      "false_up_removed": 3,
+      "false_up_remaining": 0,
+      "false_up_removal_rate": 1.0,
+      "remaining_calls": 5,
+      "remaining_precision": 1.0
+    },
+    {
+      "threshold": 0.35,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 3,
+      "captured_up_retained": 5,
+      "captured_up_retention_rate": 0.625,
+      "false_up_removed": 3,
+      "false_up_remaining": 0,
+      "false_up_removal_rate": 1.0,
+      "remaining_calls": 5,
+      "remaining_precision": 1.0
+    },
+    {
+      "threshold": 0.4,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 3,
+      "captured_up_retained": 5,
+      "captured_up_retention_rate": 0.625,
+      "false_up_removed": 3,
+      "false_up_remaining": 0,
+      "false_up_removal_rate": 1.0,
+      "remaining_calls": 5,
+      "remaining_precision": 1.0
+    },
+    {
+      "threshold": 0.45,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 2,
+      "captured_up_retained": 6,
+      "captured_up_retention_rate": 0.75,
+      "false_up_removed": 3,
+      "false_up_remaining": 0,
+      "false_up_removal_rate": 1.0,
+      "remaining_calls": 6,
+      "remaining_precision": 1.0
+    },
+    {
+      "threshold": 0.5,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 2,
+      "captured_up_retained": 6,
+      "captured_up_retention_rate": 0.75,
+      "false_up_removed": 3,
+      "false_up_remaining": 0,
+      "false_up_removal_rate": 1.0,
+      "remaining_calls": 6,
+      "remaining_precision": 1.0
+    },
+    {
+      "threshold": 0.55,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 2,
+      "captured_up_retained": 6,
+      "captured_up_retention_rate": 0.75,
+      "false_up_removed": 3,
+      "false_up_remaining": 0,
+      "false_up_removal_rate": 1.0,
+      "remaining_calls": 6,
+      "remaining_precision": 1.0
+    },
+    {
+      "threshold": 0.6,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 2,
+      "captured_up_retained": 6,
+      "captured_up_retention_rate": 0.75,
+      "false_up_removed": 2,
+      "false_up_remaining": 1,
+      "false_up_removal_rate": 0.6666666666666666,
+      "remaining_calls": 7,
+      "remaining_precision": 0.8571428571428571
+    },
+    {
+      "threshold": 0.65,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 1,
+      "captured_up_retained": 7,
+      "captured_up_retention_rate": 0.875,
+      "false_up_removed": 2,
+      "false_up_remaining": 1,
+      "false_up_removal_rate": 0.6666666666666666,
+      "remaining_calls": 8,
+      "remaining_precision": 0.875
+    },
+    {
+      "threshold": 0.7,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 1,
+      "captured_up_retained": 7,
+      "captured_up_retention_rate": 0.875,
+      "false_up_removed": 2,
+      "false_up_remaining": 1,
+      "false_up_removal_rate": 0.6666666666666666,
+      "remaining_calls": 8,
+      "remaining_precision": 0.875
+    },
+    {
+      "threshold": 0.75,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 1,
+      "captured_up_retained": 7,
+      "captured_up_retention_rate": 0.875,
+      "false_up_removed": 2,
+      "false_up_remaining": 1,
+      "false_up_removal_rate": 0.6666666666666666,
+      "remaining_calls": 8,
+      "remaining_precision": 0.875
+    },
+    {
+      "threshold": 0.8,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 1,
+      "captured_up_retained": 7,
+      "captured_up_retention_rate": 0.875,
+      "false_up_removed": 1,
+      "false_up_remaining": 2,
+      "false_up_removal_rate": 0.3333333333333333,
+      "remaining_calls": 9,
+      "remaining_precision": 0.7777777777777778
+    },
+    {
+      "threshold": 0.85,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 1,
+      "captured_up_retained": 7,
+      "captured_up_retention_rate": 0.875,
+      "false_up_removed": 1,
+      "false_up_remaining": 2,
+      "false_up_removal_rate": 0.3333333333333333,
+      "remaining_calls": 9,
+      "remaining_precision": 0.7777777777777778
+    },
+    {
+      "threshold": 0.9,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 0,
+      "captured_up_retained": 8,
+      "captured_up_retention_rate": 1.0,
+      "false_up_removed": 0,
+      "false_up_remaining": 3,
+      "false_up_removal_rate": 0.0,
+      "remaining_calls": 11,
+      "remaining_precision": 0.7272727272727273
+    },
+    {
+      "threshold": 0.95,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 0,
+      "captured_up_retained": 8,
+      "captured_up_retention_rate": 1.0,
+      "false_up_removed": 0,
+      "false_up_remaining": 3,
+      "false_up_removal_rate": 0.0,
+      "remaining_calls": 11,
+      "remaining_precision": 0.7272727272727273
+    },
+    {
+      "threshold": 1.0,
+      "captured_up_total": 8,
+      "false_up_total": 3,
+      "captured_up_lost": 0,
+      "captured_up_retained": 8,
+      "captured_up_retention_rate": 1.0,
+      "false_up_removed": 0,
+      "false_up_remaining": 3,
+      "false_up_removal_rate": 0.0,
+      "remaining_calls": 11,
+      "remaining_precision": 0.7272727272727273
+    }
+  ],
+  "locked2025_scan": [
+    {
+      "threshold": 0.0,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 13,
+      "captured_up_retained": 0,
+      "captured_up_retention_rate": 0.0,
+      "false_up_removed": 12,
+      "false_up_remaining": 0,
+      "false_up_removal_rate": 1.0,
+      "remaining_calls": 0,
+      "remaining_precision": null
+    },
+    {
+      "threshold": 0.05,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 8,
+      "captured_up_retained": 5,
+      "captured_up_retention_rate": 0.38461538461538464,
+      "false_up_removed": 10,
+      "false_up_remaining": 2,
+      "false_up_removal_rate": 0.8333333333333334,
+      "remaining_calls": 7,
+      "remaining_precision": 0.7142857142857143
+    },
+    {
+      "threshold": 0.1,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 6,
+      "captured_up_retained": 7,
+      "captured_up_retention_rate": 0.5384615384615384,
+      "false_up_removed": 10,
+      "false_up_remaining": 2,
+      "false_up_removal_rate": 0.8333333333333334,
+      "remaining_calls": 9,
+      "remaining_precision": 0.7777777777777778
+    },
+    {
+      "threshold": 0.15,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 6,
+      "captured_up_retained": 7,
+      "captured_up_retention_rate": 0.5384615384615384,
+      "false_up_removed": 10,
+      "false_up_remaining": 2,
+      "false_up_removal_rate": 0.8333333333333334,
+      "remaining_calls": 9,
+      "remaining_precision": 0.7777777777777778
+    },
+    {
+      "threshold": 0.2,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 6,
+      "captured_up_retained": 7,
+      "captured_up_retention_rate": 0.5384615384615384,
+      "false_up_removed": 8,
+      "false_up_remaining": 4,
+      "false_up_removal_rate": 0.6666666666666666,
+      "remaining_calls": 11,
+      "remaining_precision": 0.6363636363636364
+    },
+    {
+      "threshold": 0.25,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 6,
+      "captured_up_retained": 7,
+      "captured_up_retention_rate": 0.5384615384615384,
+      "false_up_removed": 8,
+      "false_up_remaining": 4,
+      "false_up_removal_rate": 0.6666666666666666,
+      "remaining_calls": 11,
+      "remaining_precision": 0.6363636363636364
+    },
+    {
+      "threshold": 0.3,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 5,
+      "captured_up_retained": 8,
+      "captured_up_retention_rate": 0.6153846153846154,
+      "false_up_removed": 8,
+      "false_up_remaining": 4,
+      "false_up_removal_rate": 0.6666666666666666,
+      "remaining_calls": 12,
+      "remaining_precision": 0.6666666666666666
+    },
+    {
+      "threshold": 0.35,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 5,
+      "captured_up_retained": 8,
+      "captured_up_retention_rate": 0.6153846153846154,
+      "false_up_removed": 8,
+      "false_up_remaining": 4,
+      "false_up_removal_rate": 0.6666666666666666,
+      "remaining_calls": 12,
+      "remaining_precision": 0.6666666666666666
+    },
+    {
+      "threshold": 0.4,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 4,
+      "captured_up_retained": 9,
+      "captured_up_retention_rate": 0.6923076923076923,
+      "false_up_removed": 8,
+      "false_up_remaining": 4,
+      "false_up_removal_rate": 0.6666666666666666,
+      "remaining_calls": 13,
+      "remaining_precision": 0.6923076923076923
+    },
+    {
+      "threshold": 0.45,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 4,
+      "captured_up_retained": 9,
+      "captured_up_retention_rate": 0.6923076923076923,
+      "false_up_removed": 8,
+      "false_up_remaining": 4,
+      "false_up_removal_rate": 0.6666666666666666,
+      "remaining_calls": 13,
+      "remaining_precision": 0.6923076923076923
+    },
+    {
+      "threshold": 0.5,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 4,
+      "captured_up_retained": 9,
+      "captured_up_retention_rate": 0.6923076923076923,
+      "false_up_removed": 8,
+      "false_up_remaining": 4,
+      "false_up_removal_rate": 0.6666666666666666,
+      "remaining_calls": 13,
+      "remaining_precision": 0.6923076923076923
+    },
+    {
+      "threshold": 0.55,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 4,
+      "captured_up_retained": 9,
+      "captured_up_retention_rate": 0.6923076923076923,
+      "false_up_removed": 5,
+      "false_up_remaining": 7,
+      "false_up_removal_rate": 0.4166666666666667,
+      "remaining_calls": 16,
+      "remaining_precision": 0.5625
+    },
+    {
+      "threshold": 0.6,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 3,
+      "captured_up_retained": 10,
+      "captured_up_retention_rate": 0.7692307692307693,
+      "false_up_removed": 4,
+      "false_up_remaining": 8,
+      "false_up_removal_rate": 0.3333333333333333,
+      "remaining_calls": 18,
+      "remaining_precision": 0.5555555555555556
+    },
+    {
+      "threshold": 0.65,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 3,
+      "captured_up_retained": 10,
+      "captured_up_retention_rate": 0.7692307692307693,
+      "false_up_removed": 3,
+      "false_up_remaining": 9,
+      "false_up_removal_rate": 0.25,
+      "remaining_calls": 19,
+      "remaining_precision": 0.5263157894736842
+    },
+    {
+      "threshold": 0.7,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 3,
+      "captured_up_retained": 10,
+      "captured_up_retention_rate": 0.7692307692307693,
+      "false_up_removed": 3,
+      "false_up_remaining": 9,
+      "false_up_removal_rate": 0.25,
+      "remaining_calls": 19,
+      "remaining_precision": 0.5263157894736842
+    },
+    {
+      "threshold": 0.75,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 2,
+      "captured_up_retained": 11,
+      "captured_up_retention_rate": 0.8461538461538461,
+      "false_up_removed": 3,
+      "false_up_remaining": 9,
+      "false_up_removal_rate": 0.25,
+      "remaining_calls": 20,
+      "remaining_precision": 0.55
+    },
+    {
+      "threshold": 0.8,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 2,
+      "captured_up_retained": 11,
+      "captured_up_retention_rate": 0.8461538461538461,
+      "false_up_removed": 2,
+      "false_up_remaining": 10,
+      "false_up_removal_rate": 0.16666666666666666,
+      "remaining_calls": 21,
+      "remaining_precision": 0.5238095238095238
+    },
+    {
+      "threshold": 0.85,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 1,
+      "captured_up_retained": 12,
+      "captured_up_retention_rate": 0.9230769230769231,
+      "false_up_removed": 0,
+      "false_up_remaining": 12,
+      "false_up_removal_rate": 0.0,
+      "remaining_calls": 24,
+      "remaining_precision": 0.5
+    },
+    {
+      "threshold": 0.9,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 1,
+      "captured_up_retained": 12,
+      "captured_up_retention_rate": 0.9230769230769231,
+      "false_up_removed": 0,
+      "false_up_remaining": 12,
+      "false_up_removal_rate": 0.0,
+      "remaining_calls": 24,
+      "remaining_precision": 0.5
+    },
+    {
+      "threshold": 0.95,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 0,
+      "captured_up_retained": 13,
+      "captured_up_retention_rate": 1.0,
+      "false_up_removed": 0,
+      "false_up_remaining": 12,
+      "false_up_removal_rate": 0.0,
+      "remaining_calls": 25,
+      "remaining_precision": 0.52
+    },
+    {
+      "threshold": 1.0,
+      "captured_up_total": 13,
+      "false_up_total": 12,
+      "captured_up_lost": 0,
+      "captured_up_retained": 13,
+      "captured_up_retention_rate": 1.0,
+      "false_up_removed": 0,
+      "false_up_remaining": 12,
+      "false_up_removal_rate": 0.0,
+      "remaining_calls": 25,
+      "remaining_precision": 0.52
+    }
+  ],
+  "useful_pre2025_zone_thresholds": [
+    0.45,
+    0.5,
+    0.55,
+    0.6,
+    0.65,
+    0.7,
+    0.75
+  ],
+  "strict_pre2025_zone_thresholds": [
+    0.45,
+    0.5,
+    0.55
+  ],
+  "transport_consistent_thresholds": [
+    0.6,
+    0.65,
+    0.7,
+    0.75
+  ],
+  "row_values_pre2025": [
+    {
+      "evaluation_year": 2024,
+      "origin_date": "2024-05-23",
+      "target_date": "2024-05-27",
+      "actual_up": 1,
+      "r2": 0.0036659012103676947
+    },
+    {
+      "evaluation_year": 2022,
+      "origin_date": "2022-03-03",
+      "target_date": "2022-03-07",
+      "actual_up": 1,
+      "r2": 0.05386230390296576
+    },
+    {
+      "evaluation_year": 2023,
+      "origin_date": "2023-03-21",
+      "target_date": "2023-03-23",
+      "actual_up": 1,
+      "r2": 0.11163599553775116
+    },
+    {
+      "evaluation_year": 2024,
+      "origin_date": "2024-04-24",
+      "target_date": "2024-04-25",
+      "actual_up": 1,
+      "r2": 0.1475650917563407
+    },
+    {
+      "evaluation_year": 2024,
+      "origin_date": "2024-04-22",
+      "target_date": "2024-04-23",
+      "actual_up": 1,
+      "r2": 0.2297929718132411
+    },
+    {
+      "evaluation_year": 2022,
+      "origin_date": "2022-03-09",
+      "target_date": "2022-03-10",
+      "actual_up": 1,
+      "r2": 0.43202843914255773
+    },
+    {
+      "evaluation_year": 2022,
+      "origin_date": "2022-03-14",
+      "target_date": "2022-03-15",
+      "actual_up": 0,
+      "r2": 0.5694223654477337
+    },
+    {
+      "evaluation_year": 2022,
+      "origin_date": "2022-03-02",
+      "target_date": "2022-03-03",
+      "actual_up": 1,
+      "r2": 0.6087126395000305
+    },
+    {
+      "evaluation_year": 2022,
+      "origin_date": "2022-02-24",
+      "target_date": "2022-02-28",
+      "actual_up": 0,
+      "r2": 0.7678523853234722
+    },
+    {
+      "evaluation_year": 2022,
+      "origin_date": "2022-03-08",
+      "target_date": "2022-03-09",
+      "actual_up": 0,
+      "r2": 0.8539644211210555
+    },
+    {
+      "evaluation_year": 2022,
+      "origin_date": "2022-03-07",
+      "target_date": "2022-03-08",
+      "actual_up": 1,
+      "r2": 0.8596432602779056
+    }
+  ],
+  "row_values_locked2025": [
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-12-05",
+      "target_date": "2025-12-08",
+      "actual_up": 0,
+      "r2": 0.007075016445374005
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-05-14",
+      "target_date": "2025-05-15",
+      "actual_up": 1,
+      "r2": 0.008358465352169442
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-12-01",
+      "target_date": "2025-12-02",
+      "actual_up": 1,
+      "r2": 0.009832752729550198
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-04-22",
+      "target_date": "2025-04-23",
+      "actual_up": 0,
+      "r2": 0.01309662008900958
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-06-16",
+      "target_date": "2025-06-17",
+      "actual_up": 1,
+      "r2": 0.01623300729464372
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-12-15",
+      "target_date": "2025-12-16",
+      "actual_up": 1,
+      "r2": 0.043348769816821675
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-10-10",
+      "target_date": "2025-10-13",
+      "actual_up": 1,
+      "r2": 0.043711963992464575
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-12-03",
+      "target_date": "2025-12-04",
+      "actual_up": 1,
+      "r2": 0.07994010724317213
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-05-08",
+      "target_date": "2025-05-09",
+      "actual_up": 1,
+      "r2": 0.08547280114038736
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-06-23",
+      "target_date": "2025-06-24",
+      "actual_up": 0,
+      "r2": 0.1516384412143844
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-04-29",
+      "target_date": "2025-04-30",
+      "actual_up": 0,
+      "r2": 0.19357957239378565
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-10-17",
+      "target_date": "2025-10-20",
+      "actual_up": 1,
+      "r2": 0.2806586057988011
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-10-29",
+      "target_date": "2025-10-30",
+      "actual_up": 1,
+      "r2": 0.37039010285650464
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-05-27",
+      "target_date": "2025-05-28",
+      "actual_up": 0,
+      "r2": 0.5112832680798793
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-12-30",
+      "target_date": "2025-12-31",
+      "actual_up": 0,
+      "r2": 0.5144742048701392
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-12-29",
+      "target_date": "2025-12-30",
+      "actual_up": 0,
+      "r2": 0.5383719189565652
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-04-24",
+      "target_date": "2025-04-25",
+      "actual_up": 0,
+      "r2": 0.5572207129249145
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-04-30",
+      "target_date": "2025-05-01",
+      "actual_up": 1,
+      "r2": 0.5934007753617856
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-04-23",
+      "target_date": "2025-04-24",
+      "actual_up": 0,
+      "r2": 0.6250192277932213
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-05-06",
+      "target_date": "2025-05-07",
+      "actual_up": 1,
+      "r2": 0.7438791056004961
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-10-21",
+      "target_date": "2025-10-22",
+      "actual_up": 0,
+      "r2": 0.7555009739118103
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-06-26",
+      "target_date": "2025-06-27",
+      "actual_up": 0,
+      "r2": 0.8151724693449263
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-10-14",
+      "target_date": "2025-10-15",
+      "actual_up": 1,
+      "r2": 0.8412414350295738
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-07-03",
+      "target_date": "2025-07-07",
+      "actual_up": 0,
+      "r2": 0.8438261211898547
+    },
+    {
+      "evaluation_year": 2025,
+      "origin_date": "2025-10-09",
+      "target_date": "2025-10-10",
+      "actual_up": 1,
+      "r2": 0.9483580675348422
+    }
+  ],
+  "governance": {
+    "model_fitted": false,
+    "random_split": false,
+    "threshold_grid_frozen_before_scan": true,
+    "2025_used_for_threshold_selection": false,
+    "2026_used": false,
+    "runtime_promotion": false
+  }
+}
