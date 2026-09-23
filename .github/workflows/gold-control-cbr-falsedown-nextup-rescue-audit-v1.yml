@@ -1,0 +1,83 @@
+name: Gold Control CBR False-DOWN Next-Origin UP Rescue Audit V1
+
+on:
+  push:
+    branches:
+      - gold-cbr-falsedown-nextup-rescue-audit-v1-20260923
+    paths:
+      - 'gold_axis_2026/GOLD_CONTROL_CBR_FALSE_DOWN_NEXT_ORIGIN_UP_RESCUE_AUDIT_V1_PREREG_2026-09-23.md'
+      - 'gold_axis_2026/tools/cbr_false_down_next_origin_up_rescue_audit_v1.py'
+      - '.github/workflows/gold-control-cbr-falsedown-nextup-rescue-audit-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONPATH: /tmp/frozen/gold_axis_2026:/tmp/frozen/gold_axis_2026/tools
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-cbr-falsedown-nextup-rescue-audit-v1-20260923
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Require research DB credential
+        run: test -n "$NEON_DATABASE_URL"
+
+      - name: Install frozen dependencies
+        run: python -m pip install 'numpy==2.1.3' 'pandas==2.2.3' 'scipy==1.14.1' 'scikit-learn==1.5.2' 'psycopg[binary]>=3.2,<4'
+
+      - name: Materialize pinned authorities
+        run: |
+          mkdir -p /tmp/frozen/gold_axis_2026/tools /tmp/frozen/gold_axis_2026/regime_dampener_v1
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py > /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/regime_v1_data.py > /tmp/frozen/gold_axis_2026/tools/regime_v1_data.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/regime_v1_experts.py > /tmp/frozen/gold_axis_2026/tools/regime_v1_experts.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/regime_dampener_v1/frozen_direction_ttsm_realized_semivariance_xau_v1.py > /tmp/frozen/gold_axis_2026/regime_dampener_v1/frozen_direction_ttsm_realized_semivariance_xau_v1.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/regime_dampener_v1/frozen_direction_bonato_qboost_realized_moments_spot_xau_v1.py > /tmp/frozen/gold_axis_2026/regime_dampener_v1/frozen_direction_bonato_qboost_realized_moments_spot_xau_v1.py
+          git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/regime_dampener_v1/frozen_direction_downside_realized_moments_logit_v2.py > /tmp/frozen/gold_axis_2026/regime_dampener_v1/frozen_direction_downside_realized_moments_logit_v2.py
+          git show b22235f04dc48b173a93a98cc2ce22081bb0054e:gold_axis_2026/GOLD_CONTROL_CBR_CASCADE_ROUTE_CONSISTENT_EXTENSION_V1_LEDGER_2026-09-23.csv > /tmp/cbr_ledger.csv
+          git show 2926796b6a7e9048d2c091c9c571cb928b773e02:gold_axis_2026/GOLD_CONTROL_DOWNSIDE_RAW_VS_SQRT_HAR_DR_MULTIORIGIN_V1_FORECASTS_2026-09-22.csv > /tmp/sqrt_parent.csv
+
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/cbr_false_down_next_origin_up_rescue_audit_v1.py
+
+      - name: Assert no production writes
+        run: |
+          ! grep -Eini 'insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from|create[[:space:]]+table|drop[[:space:]]+table|alter[[:space:]]+table' gold_axis_2026/tools/cbr_false_down_next_origin_up_rescue_audit_v1.py
+          grep -n 'default_transaction_read_only' /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py
+
+      - name: Run rescue audit
+        run: |
+          rm -rf cbr_false_down_rescue_out
+          python gold_axis_2026/tools/cbr_false_down_next_origin_up_rescue_audit_v1.py \
+            --base-module /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py \
+            --cbr-ledger /tmp/cbr_ledger.csv \
+            --sqrt-parent /tmp/sqrt_parent.csv \
+            --out cbr_false_down_rescue_out
+
+      - name: Freeze results
+        run: |
+          cp cbr_false_down_rescue_out/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_CBR_FALSE_DOWN_NEXT_ORIGIN_UP_RESCUE_AUDIT_V1_*
+          git commit -m 'Freeze CBR false-DOWN next-origin UP rescue audit V1'
+          git push origin HEAD:gold-cbr-falsedown-nextup-rescue-audit-v1-20260923
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-cbr-falsedown-nextup-rescue-audit-v1
+          retention-days: 30
+          if-no-files-found: error
+          path: cbr_false_down_rescue_out/
