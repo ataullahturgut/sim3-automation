@@ -256,11 +256,18 @@ def router_stats(history: list[dict], expert: str, bucket: str) -> dict | None:
 
 
 def build_router_rows(trows, bmaps, lmaps, contexts) -> list[dict]:
-    """Reconstruct frozen Router V2 with the historical-extension protocol.
+    """Reconstruct the two frozen Router-V2 chronology contracts.
 
-    Critical integrity detail: for evaluation year Y, competence is initialized
-    from target-year Y-1 common rows only, then updated causally within Y.
-    It is NOT an all-history expanding pool across years.
+    Historical extension:
+      - 2022 initializes from 2021 and updates within 2022.
+      - 2023 initializes from 2022 and updates within 2023.
+
+    Original frozen validation/challenge:
+      - 2024 initializes from 2023.
+      - the same competence history then continues causally through 2024
+        into the locked 2025 challenge (no reset at 2025-01-01).
+
+    This distinction is required to reproduce both frozen artifacts exactly.
     """
     tmap = {r["target_date"]: r for r in trows}
     common_dates = sorted(
@@ -299,18 +306,16 @@ def build_router_rows(trows, bmaps, lmaps, contexts) -> list[dict]:
     for r in base_rows:
         by_year[int(r["target_date"][:4])].append(r)
 
-    scored = []
-    for year in (2022, 2023, 2024, 2025):
-        # Frozen historical-extension protocol:
-        # target-year Y-1 common rows initialize competence for year Y.
-        history = [dict(r) for r in by_year.get(year - 1, [])]
-        for base in by_year.get(year, []):
+    def score_year(eval_rows: list[dict], history: list[dict]) -> tuple[list[dict], list[dict]]:
+        scored_year = []
+        hist = [dict(r) for r in history]
+        for base in eval_rows:
             row = dict(base)
             eligible_now = []
             for expert in DIRECT_UP_EXPERTS:
                 if row[expert] != 1:
                     continue
-                st = router_stats(history, expert, row["legacy_bucket"])
+                st = router_stats(hist, expert, row["legacy_bucket"])
                 if st is None:
                     continue
                 if st["n_up"] < 30 or st["precision"] <= 0.50 or st["fpr"] >= 0.50:
@@ -341,10 +346,23 @@ def build_router_rows(trows, bmaps, lmaps, contexts) -> list[dict]:
                 row["selected_history_n_up"] = None
                 row["selected_scope"] = ""
 
-            scored.append(row)
-            # Current target is matured before the next origin and can then
-            # update competence within the same evaluation year.
-            history.append(dict(base))
+            scored_year.append(row)
+            hist.append(dict(base))
+        return scored_year, hist
+
+    scored = []
+
+    # Backward historical-extension evaluations are separate yearly studies.
+    for year in (2022, 2023):
+        sy, _ = score_year(by_year.get(year, []), by_year.get(year - 1, []))
+        scored.extend(sy)
+
+    # Frozen original validation -> locked challenge is one continuing path.
+    s24, history_after_2024 = score_year(by_year.get(2024, []), by_year.get(2023, []))
+    scored.extend(s24)
+    s25, _ = score_year(by_year.get(2025, []), history_after_2024)
+    scored.extend(s25)
+
     return scored
 
 def load_sqrt(path: Path) -> list[dict]:
