@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.42  
+**Manifest version:** 2.43  
 **Issue date:** 2026-09-23  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -5094,6 +5094,139 @@ Frozen One-Sided UP-2 Logit V1 remains unchanged.
 
 ---
 
+
+## 11ZI. Importance-weighted historical source adaptation — older residual data becomes useful without fabricating historical UP-2 calls
+
+**Identity:** `UP2_IMPORTANCE_WEIGHTED_SOURCE_ADAPTATION_V1_RESEARCH`  
+**Research branch:** `gold-up2-iw-source-adaptation-v1-20260923`  
+**Preregistration commit:** `7f0c6c8123b7fb408aacb46a89a276583f7a6555`  
+**Implementation commits:** `43165685c8038637bc76fa003de29e09f4d5c1d9`, `a96db900ea53c890383f37aae67c6bfff84305b5`  
+**Workflow commit:** `249404442aea424c2e719c701fd762afa5c04c07`  
+**Frozen result commit:** `b88ef75a2b15e5dd46623b014a7adf06d211e933`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_UP2_IMPORTANCE_WEIGHTED_SOURCE_ADAPTATION_V1_RESULT_2026-09-23.json` (Git blob SHA `9cc8d503cf7814902377fd02834a2a21971143dd`)  
+**Status:** `IMPORTANCE_WEIGHTED_SIGNAL_SAMPLE_LIMITED_NOT_CERTIFIED / RESEARCH_ONLY / NOT_RUNTIME`.
+
+### 11ZI.1 Scientific role
+
+The strict-prequential historical UP-2 error-pool extension could reconstruct only two actual historical UP-2 calls from 2020–2021, which was insufficient for a dedicated failure detector.
+
+V1 therefore used a different, literature-grounded strategy: **covariate-shift / sample-selection correction by importance weighting**.
+
+The older 2020–2021 route-consistent residual rows retain their true next-direction labels and are **not** relabeled as historical UP-2 calls.
+
+Instead:
+- source = all corrected 2020–2021 route-consistent residual rows;
+- target covariate domain = frozen 2022 UP-2-call covariates;
+- density-ratio weights approximate `p_target(x)/p_source(x)`;
+- a weighted failure detector is trained on the older source labels.
+
+Frozen features:
+- `last_hour_trend_r2`;
+- `sqrt_score`;
+- `late_downside_intensity`.
+
+The 2022 call outcomes are not used to estimate the weights or train the source-label failure detector.
+
+### 11ZI.2 Source and transfer integrity
+
+Source population reproduced exactly:
+- n=98;
+- 46 realized UP;
+- 52 realized DOWN.
+
+Route counts remain:
+- 2020 residual n=72 =35 UP +37 DOWN;
+- 2021 residual n=26 =11 UP +15 DOWN.
+
+Feature transfer remains strong on n=345 exact-date external/governed overlap:
+- `last_hour_trend_r2`: Pearson 0.992823; median absolute difference 0.009717;
+- `late_downside_intensity`: Pearson 0.996374; median absolute difference 0.001362.
+
+### 11ZI.3 Importance-weight diagnostics
+
+A three-feature logistic domain classifier estimated source-to-2022-call density ratios.
+
+Frozen stabilization:
+- raw density-ratio cap=10;
+- capped weights normalized to mean 1.
+
+Observed:
+- no source ratio reached the cap; raw maximum=4.435;
+- normalized weight median=0.564;
+- normalized weight maximum=4.472;
+- effective sample size ESS=46.09;
+- frozen ESS gate >=20 passed;
+- descriptive in-sample domain AUC=0.8163.
+
+Thus the adaptation is not driven by a handful of effectively singular source observations.
+
+### 11ZI.4 Comparison with unweighted old-source detector
+
+Both weighted and unweighted comparators used:
+- the same 98 older source labels;
+- the same three features;
+- L2 logistic C=1.0;
+- veto threshold p(failure)>=0.50;
+- veto -> ABSTAIN, never DOWN.
+
+#### Pre-2025 forward retention guard, 2023–2024
+All four UP-2 calls were true UP.
+
+- unweighted source detector retained 2/4;
+- importance-weighted detector retained **3/4**.
+
+The frozen forward-retention gate therefore passed only for the weighted model.
+
+#### Locked 2025 transport
+Original UP-2:
+- 25 calls =13 true UP +12 false-UP actual-DOWN;
+- precision=52.0%.
+
+Unweighted source detector:
+- removed 6/12 false-UPs;
+- retained 10/13 true-UPs;
+- remaining precision=62.5%.
+
+Importance-weighted source detector:
+- removed **6/12** false-UPs;
+- retained **11/13** true-UPs;
+- remaining calls=17;
+- remaining precision=**64.71%**.
+
+The frozen locked-2025 transport criterion passed:
+- >=3/12 false-UPs removed;
+- >=10/13 true-UPs retained.
+
+The weighted method is not worse than the unweighted comparator on either locked-2025 component and improves true-UP retention.
+
+### 11ZI.5 Important limitation
+
+This result does **not** certify a runtime veto.
+
+Reason:
+- the 2022 call covariates are used to define the target density for weighting;
+- 2023–2024 provide a genuine forward retention check but contain no false-UP examples;
+- locked 2025 provides the first forward period containing both true and false UP-2 calls, but 2025 remains locked retrospective transport.
+
+Therefore the result is stronger than the earlier three-hard-negative 2022 failure-detector fit, but still sample-limited.
+
+The key methodological gain is that the project can now use older labeled residual rows **without pretending they were actual historical UP-2 calls**.
+
+### 11ZI.6 Binding implication
+
+Importance-weighted source adaptation is retained as a **promising research mechanism** for the UP-2 failure-detection problem.
+
+Do not:
+- promote the veto to runtime;
+- tune weights/cap/threshold on 2025;
+- relabel all 2020–2021 residual rows as UP-2 calls.
+
+A future validation identity may test this frozen adaptation method on a genuinely later untouched period when available, or compare it within a preregistered regime-conditioned/defer architecture.
+
+Frozen One-Sided UP-2 remains unchanged.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -5137,29 +5270,27 @@ Current direction research state:
 1. **SQRT-HAR-DR** — frozen downside-risk state motor.
 2. **Frozen UP Verifier V2** — primary selective positive-UP authority.
 3. **One-Sided UP-2 Logit V1** — the only currently supported second-stage missed-UP method; research-only.
-4. **Residual Local-DES V1** — unsupported.
-5. **Residual Trajectory/Rebound Morphology V1** — unsupported.
-6. **Continuation-mimic scalar veto V1** — unsupported; zero governed vetoes.
-7. **Residual Sequence-Shapelet UP V1** — unsupported; pooled 2022–2024 precision37.5% and AUC0.266.
-8. **Route-consistent CBR-DTW DOWN candidate** — unsupported as VERIFIED-DOWN authority.
-9. **Positive DOWN resolver** — still not proven.
-10. **UNCERTAIN** — binding fallback where no validated positive direction evidence exists.
+4. **Importance-Weighted Historical Source Adaptation V1** — promising sample-limited failure-detection mechanism. It uses all 98 labeled 2020–2021 route-consistent residual rows through covariate-shift weighting toward the 2022 UP-2-call covariate domain, without fabricating historical UP-2 calls.
+5. **Residual Local-DES V1** — unsupported.
+6. **Residual Trajectory/Rebound Morphology V1** — unsupported.
+7. **Continuation-mimic scalar veto V1** — unsupported.
+8. **Residual Sequence-Shapelet UP V1** — unsupported.
+9. **Route-consistent CBR-DTW DOWN candidate** — unsupported as VERIFIED-DOWN authority.
+10. **Positive DOWN resolver** — still not proven.
+11. **UNCERTAIN** — binding fallback where no validated positive direction evidence exists.
 
-The failure-anatomy work remains scientifically useful. It established that One-Sided UP-2 captures a repeatable late-stress/incomplete-recovery rebound archetype and that some false-UP actual-DOWN cases mimic that state. But follow-up attempts show that the hard errors are not repaired by:
-- a single final-hour persistence statistic;
-- a low-capacity local shapelet representation;
-- the existing expert pool;
-- the earlier CBR route.
+The importance-weighted adaptation is the first method in this branch that makes materially useful use of the full older 2020–2021 residual pool while respecting the fact that most of those rows were never chronology-valid historical UP-2 calls.
 
-The strict historical error-pool extension was also sample-limited: only 17 external rows became fully scorable and only two historical UP-2 calls were reconstructed. A 2019 extension was blocked rather than relaxed because frozen SQRT formation support was 238 <250.
+Its diagnostics:
+- source n=98 =46 UP +52 DOWN;
+- effective weighted sample size=46.09;
+- 2023–2024 forward true-UP retention=3/4;
+- locked 2025 false-UP removal=6/12;
+- locked 2025 true-UP retention=11/13;
+- locked 2025 UP-call precision changes from 52.0% to 64.71%.
 
-The strongest current positive evidence therefore remains the original One-Sided UP-2 Logit V1. The next clean research family is **regime-conditioned / learning-to-defer resolution**, because the missed-UP versus rejected-DOWN boundary changes materially between pre-2025 and locked 2025 and has resisted static scalar, morphology, expert-selection and sequence-shape patches.
+This remains **NOT_CERTIFIED** because pre-2025 forward data contain no false-UP examples and locked 2025 cannot be used to promote or retune the method.
 
-Any regime-conditioned study must:
-- define regimes using origin-safe information only;
-- learn competence chronologically;
-- allow ABSTAIN/UNCERTAIN rather than forcing binary direction;
-- keep 2025 out of regime design/tuning;
-- keep 2026 out of model selection.
+The failure-anatomy conclusion remains: UP-2 errors are regime/selection dependent rather than random. Importance weighting now provides a scientifically defensible way to transfer older labeled residual information toward the UP-2 call population, subject to the covariate-shift assumption.
 
 No automatic ensemble, forced binary direction, BUY/SELL mapping, runtime promotion, 2025 retuning or 2026 model selection is authorized.
