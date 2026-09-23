@@ -1,0 +1,17 @@
+{
+  "identity": "UP2_STRICT_PREQUENTIAL_ERROR_POOL_2019_2021_V1_RESEARCH",
+  "date": "2026-09-23",
+  "status": "BLOCKED_2019_SQRT_FORMATION_TOO_SHORT",
+  "integrity_errors": [
+    "SQRT_FORMATION_TOO_SHORT:2019:238"
+  ],
+  "frozen_sqrt_minimum_formation_n": 250,
+  "observed_2019_formation_n": 238,
+  "interpretation": "2019 cannot be added under the frozen SQRT method without relaxing the preregistered minimum formation support. No relaxation is authorized.",
+  "governance": {
+    "method_relaxed": false,
+    "2025_used": false,
+    "2026_used": false,
+    "runtime_promotion": false
+  }
+}
