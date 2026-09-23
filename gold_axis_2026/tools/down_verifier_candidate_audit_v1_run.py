@@ -256,6 +256,12 @@ def router_stats(history: list[dict], expert: str, bucket: str) -> dict | None:
 
 
 def build_router_rows(trows, bmaps, lmaps, contexts) -> list[dict]:
+    """Reconstruct frozen Router V2 with the historical-extension protocol.
+
+    Critical integrity detail: for evaluation year Y, competence is initialized
+    from target-year Y-1 common rows only, then updated causally within Y.
+    It is NOT an all-history expanding pool across years.
+    """
     tmap = {r["target_date"]: r for r in trows}
     common_dates = sorted(
         set(tmap)
@@ -263,7 +269,8 @@ def build_router_rows(trows, bmaps, lmaps, contexts) -> list[dict]:
         & set(lmaps["AR1_RM_LOGIT"])
         & set(lmaps["RM_LOGIT"])
     )
-    rows = []
+
+    base_rows = []
     for td in common_dates:
         t = tmap[td]
         b = bmaps["BONATO_AR1_RM_QBOOST_H1"][td]
@@ -276,7 +283,7 @@ def build_router_rows(trows, bmaps, lmaps, contexts) -> list[dict]:
         if len(set(vals)) != 1:
             raise RuntimeError(f"ACTUAL_MISMATCH:{td}:{vals}")
         ctx = contexts[od]
-        row = {
+        base_rows.append({
             "origin_date": od,
             "target_date": td,
             "actual_up": vals[0],
@@ -286,46 +293,59 @@ def build_router_rows(trows, bmaps, lmaps, contexts) -> list[dict]:
             "AR1_RM_LOGIT": int(ar["up"]),
             "RM_LOGIT": int(rm["up"]),
             **ctx,
-        }
+        })
 
-        history = rows
-        eligible = []
-        for expert in DIRECT_UP_EXPERTS:
-            if row[expert] != 1:
-                continue
-            st = router_stats(history, expert, row["legacy_bucket"])
-            if st is None:
-                continue
-            if st["n_up"] < 30 or st["precision"] <= 0.50 or st["fpr"] >= 0.50:
-                continue
-            eligible.append((expert, st))
+    by_year = defaultdict(list)
+    for r in base_rows:
+        by_year[int(r["target_date"][:4])].append(r)
 
-        if eligible:
-            eligible.sort(key=lambda x: (
-                -x[1]["lcb"],
-                x[1]["fpr"],
-                -x[1]["precision"],
-                ROUTER_TIE_ORDER[x[0]],
-            ))
-            selected, st = eligible[0]
-            row["router_up"] = 1
-            row["selected_expert"] = selected
-            row["selected_lcb"] = st["lcb"]
-            row["selected_precision"] = st["precision"]
-            row["selected_fpr"] = st["fpr"]
-            row["selected_history_n_up"] = st["n_up"]
-            row["selected_scope"] = st["scope"]
-        else:
-            row["router_up"] = 0
-            row["selected_expert"] = ""
-            row["selected_lcb"] = None
-            row["selected_precision"] = None
-            row["selected_fpr"] = None
-            row["selected_history_n_up"] = None
-            row["selected_scope"] = ""
-        rows.append(row)
-    return rows
+    scored = []
+    for year in (2022, 2023, 2024, 2025):
+        # Frozen historical-extension protocol:
+        # target-year Y-1 common rows initialize competence for year Y.
+        history = [dict(r) for r in by_year.get(year - 1, [])]
+        for base in by_year.get(year, []):
+            row = dict(base)
+            eligible_now = []
+            for expert in DIRECT_UP_EXPERTS:
+                if row[expert] != 1:
+                    continue
+                st = router_stats(history, expert, row["legacy_bucket"])
+                if st is None:
+                    continue
+                if st["n_up"] < 30 or st["precision"] <= 0.50 or st["fpr"] >= 0.50:
+                    continue
+                eligible_now.append((expert, st))
 
+            if eligible_now:
+                eligible_now.sort(key=lambda x: (
+                    -x[1]["lcb"],
+                    x[1]["fpr"],
+                    -x[1]["precision"],
+                    ROUTER_TIE_ORDER[x[0]],
+                ))
+                selected, st = eligible_now[0]
+                row["router_up"] = 1
+                row["selected_expert"] = selected
+                row["selected_lcb"] = st["lcb"]
+                row["selected_precision"] = st["precision"]
+                row["selected_fpr"] = st["fpr"]
+                row["selected_history_n_up"] = st["n_up"]
+                row["selected_scope"] = st["scope"]
+            else:
+                row["router_up"] = 0
+                row["selected_expert"] = ""
+                row["selected_lcb"] = None
+                row["selected_precision"] = None
+                row["selected_fpr"] = None
+                row["selected_history_n_up"] = None
+                row["selected_scope"] = ""
+
+            scored.append(row)
+            # Current target is matured before the next origin and can then
+            # update competence within the same evaluation year.
+            history.append(dict(base))
+    return scored
 
 def load_sqrt(path: Path) -> list[dict]:
     out = []
