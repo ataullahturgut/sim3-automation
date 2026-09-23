@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.37  
+**Manifest version:** 2.38  
 **Issue date:** 2026-09-23  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -4559,6 +4559,121 @@ No threshold or veto is authorized by this audit itself.
 
 ---
 
+
+## 11ZD. UP-2 continuation-mimic follow-up — historical pool insufficient; scalar veto not supported
+
+### 11ZD.1 Strictly prequential 2020–2021 UP-2 error-pool extension
+
+**Identity:** `UP2_STRICT_PREQUENTIAL_ERROR_POOL_EXTENSION_V1_RESEARCH`  
+**Research branch:** `gold-up2-prequential-errorpool-v1-20260923`  
+**Preregistration commit:** `7789b1fd5915eaa48a4757094ebace2fbe74c625`  
+**Implementation commit:** `44dc68629b43934b04110258ff89b80996bd1eca`  
+**Workflow commit:** `726572d9de5a66cca0bef3a5da92b8700ae96da0`  
+**Frozen result commit:** `29ef0b53a8cc00bc0404148ea72fb4ea54b6fcd3`  
+**Status:** `ERROR_POOL_EXTENSION_INSUFFICIENT`.
+
+The exact Frozen One-Sided UP-2 Logit V1 was reconstructed under a strict nested prequential rule inside the corrected external 2020–2021 residual pool.
+
+Source/route integrity reproduced exactly:
+- external residual pool n=98 =46 UP +52 DOWN;
+- 2020 residual n=72 =35 UP +37 DOWN;
+- 2021 residual n=26 =11 UP +15 DOWN.
+
+Mechanism-feature transfer was excellent:
+- `late_downside_intensity`: Pearson 0.99637;
+- `last_hour_trend_r2`: Pearson 0.99282;
+- `last_hour_trend_r2` median absolute external/governed difference 0.00972;
+- overlap n=345.
+
+However strict nested calibration support left only 17 fully scorable historical rows, from 2021-02-03 through 2021-06-21.
+
+Only two historical UP-2 calls were recoverable:
+- 1 captured UP;
+- 1 false-UP actual-DOWN.
+
+The frozen sample-sufficiency gate required at least five UP-2 calls and at least two false-UP hard negatives. Therefore the historical error pool is insufficient for a properly trained UP-2-specific veto.
+
+### 11ZD.2 Attempt to prepend 2019 — blocked by frozen SQRT support rule
+
+**Identity:** `UP2_STRICT_PREQUENTIAL_ERROR_POOL_2019_2021_V1_RESEARCH`  
+**Research branch:** `gold-up2-prequential-errorpool-2019-v1-20260923`  
+**Preregistration commit:** `cbb4aaf034033ecd75f8778a7c9ced09875d3b50`  
+**Implementation commit:** `2c6062cc9a57f5c3344feb81a1093ee998fb984e`  
+**Workflow commit:** `ec9d181db0d63af5738ff78ad5fa7476ac31636e`  
+**Blocked-result commit:** `ced3e1768aa8e1bba437316a280e0a90d364402a`  
+**Status:** `BLOCKED_2019_SQRT_FORMATION_TOO_SHORT`.
+
+The frozen SQRT implementation requires at least 250 formation rows. For a 2019 target-year extension, only 238 eligible formation rows were available.
+
+Exact blocking error:
+`SQRT_FORMATION_TOO_SHORT:2019:238`.
+
+The minimum was not relaxed. Therefore 2019 is not admitted merely to enlarge the downstream error sample.
+
+### 11ZD.3 Continuation-mimic veto V1 — feasibility not supported
+
+**Identity:** `UP2_CONTINUATION_MIMIC_VETO_V1_RESEARCH`  
+**Research branch:** `gold-up2-continuation-veto-v1-20260923`  
+**Preregistration commit:** `a53c6f8bb081b5a55f7c74f992d5d1e8578ee5ef`  
+**Implementation commit:** `069f509e1315c774a64457b0b89889fbe3d8470c`  
+**Workflow commit:** `96e7ab04bedd9d64bdde44d602f9610da6064b52`  
+**Frozen result commit:** `bb2e667759d3c9d26297d897356e8a3ae083bd1b`  
+**Status:** `VETO_V1_FEASIBILITY_NOT_SUPPORTED / RETROSPECTIVE_MECHANISM_RESEARCH / NOT_RUNTIME`.
+
+Because the UP-2-specific historical call pool could not be enlarged sufficiently, V1 deliberately used a very low-capacity feasibility model:
+
+- one predictor only: `last_hour_trend_r2`;
+- target = realized DOWN;
+- L2 logistic regression, C=1.0;
+- trained on all 98 corrected external 2020–2021 residual rows;
+- one-sided veto threshold calibrated from strictly prequential external realized-UP scores;
+- `tau_veto=0.56231`.
+
+The source transfer of the feature was not the problem:
+- n=345 exact-date overlap;
+- Pearson=0.99282;
+- median absolute difference=0.00972.
+
+But the feature did not generalize as a standalone DOWN discriminator in the earlier external residual population:
+- standardized coefficient = only +0.0257.
+
+Governed retrospective feasibility, 2022–2024:
+- original UP-2 calls=11 =8 true UP +3 false UP;
+- veto calls=0;
+- false-UP removed=0/3;
+- true-UP lost=0/8;
+- remaining precision unchanged at 72.73%;
+- median p(DOWN): 0.5280 on true-UP calls versus 0.5404 on false-UP calls.
+
+Locked 2025:
+- original UP-2 calls=25 =13 true +12 false;
+- veto calls=0;
+- remaining precision unchanged at 52.0%;
+- median p(DOWN): 0.5258 true versus 0.5352 false.
+
+Therefore the descriptive `last_hour_trend_r2` error pattern does not support a robust standalone continuation-mimic veto when learned from earlier data.
+
+No threshold relaxation, second feature, or result-dependent rescue is authorized under V1.
+
+### 11ZD.4 Updated interpretation
+
+The anatomy-driven workflow has now produced both a positive and a negative result:
+
+- it successfully identified interpretable failure modes;
+- it then falsified the simplest scalar patch intended to exploit one of those modes.
+
+This is useful evidence against repeatedly adding aggregate scalar features to the current logistic architecture.
+
+The remaining hard residual problem is increasingly consistent with a **sequence-shape / regime-dependent** problem rather than a missing single summary statistic.
+
+The clean next research family is therefore:
+1. **sequence-level discriminative subsequence / shapelet analysis** of the origin-day 5-minute path, trained/selected only on pre-governed external history and evaluated chronologically on governed pre-2025; then
+2. if sequence-level evidence also fails or is unstable, move to **regime-conditioned / defer architecture** research rather than forcing a static binary resolver.
+
+No shapelet model is authorized by this section itself.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -4597,26 +4712,25 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 The project boundary remains explicit: the **main forecast model is separate**, while this stack provides direction / directional-confirmation information only.
 
-Current direction research architecture:
+Current direction research state:
 
 1. **SQRT-HAR-DR** — frozen downside-risk state motor.
 2. **Frozen UP Verifier V2** — primary selective positive-UP authority.
-3. **One-Sided UP-2 Logit V1** — promising research-only rebound-type missed-UP specialist.
-4. **Continuation-mimic veto / UP-2 failure detector** — now the leading next research hypothesis, not yet built or authorized.
-5. **Residual Local-DES V1** — unsupported.
-6. **Residual Trajectory/Rebound Morphology V1** — unsupported under its frozen pre-2025 gate.
-7. **Positive DOWN resolver** — not proven.
-8. **UNCERTAIN** — binding fallback when neither side has validated positive evidence.
+3. **One-Sided UP-2 Logit V1** — the only currently supported second-stage missed-UP method; research-only.
+4. **Residual Local-DES V1** — unsupported.
+5. **Residual Trajectory/Rebound Morphology V1** — unsupported under its pre-2025 gate.
+6. **Continuation-mimic scalar veto V1** — unsupported; the stable-looking final-hour R² anatomy did not generalize as a useful standalone earlier-history discriminator.
+7. **Route-consistent CBR-DTW DOWN candidate** — unsupported as VERIFIED-DOWN authority.
+8. **Positive DOWN resolver** — still not proven.
+9. **UNCERTAIN** — binding fallback where no validated positive direction evidence exists.
 
-The direction-error anatomy showed that current UP-2 captures a stable late-stress/incomplete-recovery rebound archetype. False-UP actual-DOWN cases mimic this archetype rather than looking random.
+The error-anatomy work remains informative. One-Sided UP-2 captures a late-stress/incomplete-recovery rebound archetype, while some false-UP actual-DOWN cases mimic that state. However:
+- the strict 2020–2021 prequential reconstruction produced only two historical UP-2 calls, insufficient for a dedicated failure-detector training pool;
+- 2019 cannot be prepended under the frozen SQRT method because formation support is 238, below the frozen minimum 250;
+- a one-feature continuation veto based on final-hour trend R² made zero vetoes in governed 2022–2024 and locked 2025.
 
-The mechanism-gap audit adds a new actionable distinction: false-UP actual-DOWN cases have substantially more linearly persistent final-hour paths than captured UPs. The leading candidate, final-hour trend R², has:
-- pre-2025 medians 0.768 false-UP actual-DOWN versus 0.189 captured-UP;
-- locked-2025 medians 0.526 versus 0.085;
-- same-direction cross-period effect, labeled MODERATE_STABLE.
+This narrows the scientific search space. The next clean research family is **sequence-level discriminative subsequence / shapelet analysis**, because aggregate scalar/morphology patches have not resolved the hard residual errors. Such work must select/train sequence patterns only from earlier external history and evaluate them chronologically on governed pre-2025 data; locked 2025 remains descriptive only.
 
-This motivates a narrow continuation-mimic veto behind UP-2, but does not itself authorize a rule or threshold.
-
-For missed-UP versus rejected-DOWN, no new path-dynamic feature was cross-period stable. Therefore a broad static residual UP/DOWN classifier remains weakly motivated. The clean research order is to increase the route-consistent historical UP-2 error sample if possible, then test a preregistered continuation-mimic failure detector before revisiting downstream DOWN resolution.
+If sequence-level evidence is also weak or unstable, the project should move to **regime-conditioned / learning-to-defer** resolution rather than repeatedly forcing a static residual UP/DOWN classifier.
 
 No automatic ensemble, forced binary direction, BUY/SELL mapping, runtime promotion, 2025 retuning or 2026 model selection is authorized.
