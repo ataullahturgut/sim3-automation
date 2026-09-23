@@ -1,6 +1,6 @@
 # GOLD CONTROL — PROJECT MANIFEST
 
-**Manifest version:** 2.31  
+**Manifest version:** 2.32  
 **Issue date:** 2026-09-22  
 **Repository:** ataullahturgut/sim3-automation  
 **Canonical branch:** gold-r4-direction-engine  
@@ -3986,6 +3986,121 @@ No result-dependent retuning of V1 is authorized.
 
 ---
 
+
+## 11Y. Residual local-competence UP-2 DES — no eligible local expert signal
+
+**Identity:** `RESIDUAL_LOCAL_COMPETENCE_UP2_DES_V1_RESEARCH`  
+**Research branch:** `gold-residual-up2-local-des-v1-20260923`  
+**Preregistration commit:** `891f8547ea1dec3a6bea2d57d4ae6d5e926fe4af`  
+**Implementation commit:** `54a686e5a25bd4e87a10a546f22eb68f9c119eff`  
+**Workflow commit:** `5ded2d6d02f530b733afe0e986a4ea27734e2a39`  
+**Frozen result commit:** `784772258570b74a439e11cb7351da94b0d5b296`  
+**Frozen result artifact:** `gold_axis_2026/GOLD_CONTROL_RESIDUAL_LOCAL_COMPETENCE_UP2_DES_V1_RESULT_2026-09-23.json` (Git blob SHA `c7e0baaeb80c09660fdadc069219918284ffb477`)  
+**Status:** `RESIDUAL_LOCAL_DES_V1_NOT_SUPPORTED / RESEARCH_ONLY / NOT_RUNTIME`.
+
+### 11Y.1 Role and method
+
+This experiment tested the second prespecified residual-UP idea: dynamic/local expert selection after
+
+`SQRT HIGH RISK + Frozen UP Verifier V2 ABSTAIN`.
+
+Candidate pool was fixed to the same five direct UP experts used by Router V2:
+
+- TTSM-S2;
+- TTSM-S1;
+- Bonato AR1_RM QBoost h=1;
+- AR1_RM_LOGIT;
+- RM_LOGIT.
+
+For each residual target case, the method:
+
+1. standardized the nine frozen residual-state variables on prior matured residual history only;
+2. selected the fixed K=25 nearest historical residual neighbours;
+3. measured each currently-UP expert's competence inside those neighbours;
+4. required at least 5 local UP calls, local precision >50%, local FPR <50%, and one-sided 90% Wilson precision LCB >50%;
+5. emitted UP2_DES only if at least one expert passed all local gates.
+
+No global fallback was allowed.
+
+### 11Y.2 Integrity
+
+All source and route checks passed exactly.
+
+Residual populations reproduced:
+- external 2020–2021: 98 =46 UP +52 DOWN;
+- pooled governed 2022–2024: 26 =13 UP +13 DOWN;
+- locked 2025: 74 =35 UP +39 DOWN.
+
+The same raw-feature harmonization gate from UP-2 Logit V1 passed:
+- representable overlap n=344;
+- lag-1 return sign agreement 90.99%;
+- all six source-derived feature correlations >=0.90.
+
+Final integrity errors: **none**.
+
+### 11Y.3 Result
+
+The local DES emitted **zero** UP2_DES calls in every evaluated year:
+
+- 2022: 0/11;
+- 2023: 0/2;
+- 2024: 0/13;
+- pooled 2022–2024: **0/26**;
+- locked 2025: **0/74**.
+
+Thus:
+- pre-2025 recall =0%;
+- coverage =0%;
+- no precision can be estimated;
+- frozen pre-2025 gate fails immediately because calls <4.
+
+Locked 2025 also produces zero calls and is not supportive.
+
+### 11Y.4 Why the method abstained
+
+The zero-call result is not caused by missing direct-expert UP votes. Many residual rows still have current UP votes from AR1_RM_LOGIT, RM_LOGIT and sometimes Bonato.
+
+The problem is their **local historical competence** inside the residual state.
+
+Representative 2022 rows show:
+- AR1_RM_LOGIT / RM_LOGIT often vote UP on nearly all 25 local neighbours;
+- local precision is commonly around 44–56%;
+- because almost every local DOWN neighbour is also called UP, local false-UP FPR is commonly roughly 0.8–1.0;
+- Wilson lower bounds therefore remain below the frozen eligibility threshold even when raw precision slightly exceeds 50%.
+
+One representative residual case had RM_LOGIT local precision 65.2% with Wilson LCB 51.9%, but local false-UP FPR was still 80%, so it correctly remained ineligible.
+
+Thus the retained direct experts are not locally selective enough in the **post-primary-Router residual population**.
+
+### 11Y.5 Comparison with One-Sided Logit UP-2 V1
+
+Pooled 2022–2024:
+
+- One-Sided Logit V1: 11 calls, 8 true UP / 3 false UP, precision 72.73%, recall 61.54%, FPR 23.08%, coverage 42.31%;
+- Local DES V1: 0 calls, recall 0%, coverage 0%.
+
+Locked 2025:
+
+- One-Sided Logit V1: 25 calls, 13 true UP /12 false UP, precision 52.0%, recall 37.14%, FPR 30.77%;
+- Local DES V1: 0 calls.
+
+This comparison is descriptive only. No automatic combination or result-dependent relaxation of DES gates is authorized.
+
+### 11Y.6 Binding interpretation
+
+Dynamic local selection of the **existing five direct UP experts** does not solve the missed-UP problem under the preregistered support and safety rules.
+
+The result is informative: after the primary Router has abstained, the surviving direct experts still vote UP frequently, but those votes are not sufficiently selective in local residual neighbourhoods.
+
+Therefore:
+
+- do not tune K, local-call minimum, FPR limit or Wilson threshold under the same identity;
+- do not add a global fallback after seeing this result;
+- retain One-Sided Logit UP-2 V1 as the only currently promising second-stage UP specialist;
+- proceed, if desired, to the third prespecified residual-UP family: a **trajectory / rebound morphology specialist** built to distinguish stress-to-rebound from stress-to-continuation directly, rather than recycling the same direct expert votes.
+
+---
+
 ## 12. Reproducibility and branch lineage for the 22 September sequence
 
 Research evidence is preserved in Git history and the following research heads:
@@ -4022,23 +4137,20 @@ Technical README/provenance/runbook files inside implementation subdirectories m
 
 ## 14. Final binding summary
 
-Gold Control now has a clearer four-stage research architecture.
+Gold Control currently has the following research architecture:
 
-1. **SQRT-HAR-DR** is the frozen downside-risk motor. It identifies HIGH RISK versus NORMAL RISK and is not itself a close-direction classifier.
-2. **Frozen UP Verifier V2** is the primary selective positive-UP authority. Router ABSTAIN is not DOWN.
-3. **Residual One-Sided UP-2 V1** is the first dedicated missed-UP specialist for `HIGH RISK + primary UP ABSTAIN`. It is promising research-only evidence, not runtime authority.
-4. A validated positive DOWN resolver is still missing. Remaining unresolved cases stay UNCERTAIN unless a separately validated downstream model emits positive DOWN evidence.
+1. **SQRT-HAR-DR** — frozen downside-risk motor.
+2. **Frozen UP Verifier V2** — primary selective positive-UP authority.
+3. **Residual One-Sided UP-2 Logit V1** — promising second-stage missed-UP specialist, research-only.
+4. **Residual Local-Competence UP-2 DES V1** — tested and not supported; it emits no eligible signal under its preregistered local competence gates.
+5. **Positive DOWN resolver** — still not validated; unresolved cases remain UNCERTAIN.
 
-The first UP-2 experiment passed its frozen pre-2025 gate. On exact pooled 2022–2024 residual cases it emitted 11 UP2 calls: 8 true UP and 3 false UP, for 72.73% precision, 61.54% missed-UP recall, 23.08% false-UP FPR and 0.787 AUC. Its one-sided 90% Wilson lower bound on precision was 53.45%, above the frozen 50% requirement.
+The One-Sided Logit UP-2 result remains the strongest residual-UP evidence so far. Pooled 2022–2024 it produced 11 calls =8 true UP +3 false UP, 72.73% precision, 61.54% missed-UP recall, 23.08% false-UP FPR and 0.787 AUC. Locked 2025 transport was materially weaker at 52.0% precision and 0.5165 AUC, so it remains research-only.
 
-Locked 2025 transport was weaker: 25 UP2 calls =13 true UP +12 false UP, 52.0% precision, 37.14% recall, 30.77% FPR and 0.5165 AUC. This narrowly satisfies the preregistered descriptive transport rule because the residual UP base rate was 47.30%, but it is not strong confirmation.
+The second prespecified method, local dynamic expert selection, produced zero calls in 2022–2025. This is not because the underlying experts were silent; rather, their UP votes inside local residual neighbourhoods had high false-UP rates and failed the frozen Wilson/FPR competence rules. No post-result relaxation is authorized.
 
-Architecturally, UP-2 makes the downstream unresolved set more DOWN-heavy pre-2025: from 13 UP /13 DOWN to 5 UP /10 DOWN after UP2 removals. Locked 2025 improves only modestly, from 35/39 to 22/27.
+The next clean residual-UP family is therefore the prespecified **trajectory/rebound morphology specialist**, which should directly model origin-day stress/recovery geometry rather than reuse the same expert votes. Any such model must remain route-consistent, chronological, origin-safe, pre-registered before scoring, and must not use locked 2025 for feature/model selection.
 
-The route-consistent CBR-DTW DOWN candidate remains research baseline only and is not VERIFIED-DOWN authority. Its false-DOWN mistakes are not automatically repaired by the frozen primary UP verifier on the immediately following origin.
-
-The next clean research choices are:
-- test the second prespecified residual-UP method (dynamic/local expert selection) against the same route-consistent task; or
-- preregister a full cascade insertion study with frozen UP-2 first, then reevaluate the downstream DOWN resolver on only the cases UP-2 leaves unresolved.
+The route-consistent CBR-DTW remains a DOWN research baseline only, not VERIFIED-DOWN authority. Its false-DOWN mistakes are not automatically repaired by the primary UP verifier on the next origin.
 
 No automatic ensemble, BUY/SELL mapping, runtime promotion, 2025 retuning or 2026 model selection is authorized.
