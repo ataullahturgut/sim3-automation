@@ -128,7 +128,12 @@ def load_monthly(cur):
 
 def almon_basis(seq):
     x=np.asarray(seq,float)
-    if len(x)<2 or not np.all(np.isfinite(x)): return [np.nan,np.nan,np.nan]
+    if len(x)<2: return [np.nan,np.nan,np.nan]
+    ok=np.isfinite(x)
+    if ok.mean()<0.50: return [np.nan,np.nan,np.nan]
+    # Missing observations inside an origin-safe lag window are filled only from that same past window.
+    med=float(np.nanmedian(x[ok]))
+    x=np.where(ok,x,med)
     # x[0] is most recent lag. Fixed polynomial MIDAS basis; coefficients are learned by downstream model.
     u=np.linspace(0.0,1.0,len(x))
     b0=np.ones(len(x))
@@ -139,8 +144,7 @@ def almon_basis(seq):
 def seq_from_series(values,i,L):
     # include information observable at origin i; most recent first
     if i-L+1<0: return None
-    z=values[i-L+1:i+1][::-1]
-    return z if np.all(np.isfinite(z)) else None
+    return values[i-L+1:i+1][::-1]
 
 def gpr_sequence(vintages,availability,origin_date,L):
     m=month_key(origin_date); vo=month_shift(m,-1)
@@ -296,6 +300,10 @@ def run(dsn):
 
     pred_fast=predict_walk(pfast,fast,"tail")
     pred_mix=predict_walk(pmix,fast+slow,"tail")
+    if pred_fast.empty:
+        raise RuntimeError(f"FAST_PREDICTIONS_EMPTY panel_n={len(pfast)} first={pfast['origin_date'].min() if len(pfast) else None} last={pfast['origin_date'].max() if len(pfast) else None}")
+    if pred_mix.empty:
+        raise RuntimeError(f"MIXED_PREDICTIONS_EMPTY panel_n={len(pmix)} slow_ready={int(panel['slow_available'].sum()) if len(panel) else 0}")
 
     with psycopg.connect(dsn,autocommit=True) as conn:
       with conn.cursor() as cur:
