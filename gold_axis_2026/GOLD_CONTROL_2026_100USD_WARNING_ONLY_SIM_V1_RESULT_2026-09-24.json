@@ -1,0 +1,34 @@
+{
+  "identity": "GOLD_CONTROL_2026_100USD_WARNING_ONLY_SIM_V1",
+  "last_target_date": "2026-08-31",
+  "n_days": 173,
+  "rule": "Start 100 USD. If policy forecasts HIGH-RISK for target day, hold cash for that day; otherwise hold gold. No short/leverage/costs.",
+  "buy_and_hold": {
+    "final_value": 103.15694772333462,
+    "return_pct": 3.1569477233346355
+  },
+  "EXPANDING": {
+    "formation_n": 1866,
+    "threshold": 5.538159819651228e-05,
+    "final_value": 104.32880259483363,
+    "return_pct": 4.328802594833636,
+    "alerts": 161,
+    "invested_days": 12,
+    "cash_days": 161
+  },
+  "W500": {
+    "formation_n": 500,
+    "threshold": 6.510756945706825e-05,
+    "final_value": 104.8537101697639,
+    "return_pct": 4.853710169763903,
+    "alerts": 136,
+    "invested_days": 37,
+    "cash_days": 136
+  },
+  "governance": {
+    "stress_only": true,
+    "selection": false,
+    "retuning": false,
+    "production_writes": false
+  }
+}
