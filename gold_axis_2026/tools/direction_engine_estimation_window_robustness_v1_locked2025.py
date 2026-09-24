@@ -51,22 +51,8 @@ def write_csv(path: Path, rows: list[dict]):
             w.writerow(z)
 
 
-def router_metrics(base, rows):
-    m = base.router_stats(rows)
-    return {
-        "n": int(m["n"]),
-        "calls": int(m["router_up"]),
-        "tp": int(m["tp"]),
-        "fp": int(m["fp"]),
-        "actual_up": int(m["actual_up"]),
-        "actual_down": int(m["actual_down"]),
-        "precision": m["precision"],
-        "false_up_fpr": m["fpr"],
-        "actual_up_recall": m["recall"],
-        "coverage": m["coverage"],
-        "wilson90_lcb_precision": base.wilson_lcb(int(m["tp"]), int(m["router_up"])),
-        "selected_counts": dict(Counter(r["selected_expert"] for r in rows if int(r["router_up"]) == 1)),
-    }
+def router_metrics(v1, rows):
+    return v1.router_metrics(rows)
 
 
 def build_up2_cases(route, cbr, up2, base, sqrt_mod, ext_spine, raw_root, sqrt_parent, pre_ledger, gov_days):
@@ -202,7 +188,7 @@ def main():
     hist23 = [r for r in gov_router_base if yr(r["target_date"]) == 2023]
     frozen_path = v1.router_score_one(base, ev24 + ev25, hist23, "EXPANDING")
     frozen25 = [r for r in frozen_path if yr(r["target_date"]) == 2025]
-    frozen_m = router_metrics(base, frozen25)
+    frozen_m = router_metrics(v1, frozen25)
     if (frozen_m["calls"], frozen_m["tp"], frozen_m["fp"]) != (37, 27, 10):
         integrity.append(f"ROUTER_LOCKED2025_BASELINE:{frozen_m}")
 
@@ -211,10 +197,10 @@ def main():
 
     router_surface = [{"policy": "FROZEN_V2_CONTINUATION", "window": "FROZEN", **frozen_m}]
     scored = v1.router_score_one(base, ev25, pre_hist, "EXPANDING")
-    router_surface.append({"policy": "EXPANDING", "window": "EXPANDING", **router_metrics(base, scored)})
+    router_surface.append({"policy": "EXPANDING", "window": "EXPANDING", **router_metrics(v1, scored)})
     for w in ROUTER_WINDOWS:
         scored = v1.router_score_one(base, ev25, pre_hist, "ROLLING", w)
-        router_surface.append({"policy": f"ROLLING_{w}", "window": w, **router_metrics(base, scored)})
+        router_surface.append({"policy": f"ROLLING_{w}", "window": w, **router_metrics(v1, scored)})
 
     # UP2 2025 transport on exact frozen residual route.
     cases = build_up2_cases(
