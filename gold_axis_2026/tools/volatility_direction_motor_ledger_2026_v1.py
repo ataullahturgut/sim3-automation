@@ -139,7 +139,32 @@ def main():
         sig=[r for r in s26 if r[ex]==1]
         reasons=defaultdict(int)
         for r in sig: reasons[r["router_audit"][ex]["reason"]]+=1
-        router_2026["experts"][ex]={"raw_up_signals":len(sig),"reasons":dict(reasons)}
+        transitions=[]
+        last_reason=None
+        for r in sig:
+            a=r["router_audit"][ex]
+            if a["reason"]!=last_reason:
+                transitions.append({"target_date":r["target_date"],"reason":a["reason"],
+                  "scope":a.get("scope"),"n_up":a.get("n_up"),"tp":a.get("tp"),"fp":a.get("fp"),
+                  "precision":a.get("precision"),"fpr":a.get("fpr"),"lcb":a.get("lcb")})
+                last_reason=a["reason"]
+        router_2026["experts"][ex]={"raw_up_signals":len(sig),"reasons":dict(reasons),"reason_transitions":transitions}
+    # Capture first 15 RM_LOGIT up-signal competence snapshots and year-boundary context.
+    rm_snap=[]
+    for r in [x for x in s26 if x["RM_LOGIT"]==1][:15]:
+        a=r["router_audit"]["RM_LOGIT"]
+        rm_snap.append({"target_date":r["target_date"],"actual_up":r["actual_up"],"legacy_bucket":r["legacy_bucket"],
+          "reason":a["reason"],"scope":a.get("scope"),"n_up":a.get("n_up"),"tp":a.get("tp"),"fp":a.get("fp"),
+          "precision":a.get("precision"),"fpr":a.get("fpr"),"lcb":a.get("lcb")})
+    router_2026["rm_logit_first15"]=rm_snap
+    # 2025 RM_LOGIT competence at each raw UP call, to see how it arrives at 2026 boundary.
+    rm25=[]
+    for r in [x for x in s25r if x["RM_LOGIT"]==1][-15:]:
+        a=r["router_audit"]["RM_LOGIT"]
+        rm25.append({"target_date":r["target_date"],"actual_up":r["actual_up"],"legacy_bucket":r["legacy_bucket"],
+          "reason":a["reason"],"scope":a.get("scope"),"n_up":a.get("n_up"),"tp":a.get("tp"),"fp":a.get("fp"),
+          "precision":a.get("precision"),"fpr":a.get("fpr"),"lcb":a.get("lcb")})
+    router_2026["rm_logit_last15_2025"]=rm25
     rmap={(r["origin_date"],r["target_date"]):r for r in s26}
 
     # Two memory policies on identical 2026 panel.
@@ -180,6 +205,7 @@ def main():
               "FAST_UP":int(rr["FAST_UP"]),"SLOW_UP":int(rr["SLOW_UP"]),"MONTHLY_UP":int(rr["MONTHLY_UP"]),
               "legacy_up_count":int(rr["legacy_up_count"]),"legacy_bucket":rr["legacy_bucket"],
               "router_up":int(rr["router_up"]),"selected_expert":rr["selected_expert"],
+              "router_audit":rr["router_audit"],
               "up2_p":None if u is None else float(u["p_up"]),
               "up2_tau":None if u is None else float(u["tau"]),
               "up2_call":None if u is None else int(u["up2_call"])})
