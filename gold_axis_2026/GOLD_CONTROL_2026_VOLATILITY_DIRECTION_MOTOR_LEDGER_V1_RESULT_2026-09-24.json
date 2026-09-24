@@ -26,7 +26,121 @@
         "BONATO_AR1_RM_QBOOST_H1": 0,
         "AR1_RM_LOGIT": 0,
         "RM_LOGIT": 37
-      }
+      },
+      "monthly": {
+        "01": {
+          "n": 17,
+          "actual_up": 13,
+          "actual_down": 4,
+          "router_up": 4,
+          "tp": 3,
+          "fp": 1,
+          "abstain": 13
+        },
+        "02": {
+          "n": 16,
+          "actual_up": 9,
+          "actual_down": 7,
+          "router_up": 0,
+          "tp": 0,
+          "fp": 0,
+          "abstain": 16
+        },
+        "03": {
+          "n": 17,
+          "actual_up": 13,
+          "actual_down": 4,
+          "router_up": 3,
+          "tp": 3,
+          "fp": 0,
+          "abstain": 14
+        },
+        "04": {
+          "n": 15,
+          "actual_up": 6,
+          "actual_down": 9,
+          "router_up": 0,
+          "tp": 0,
+          "fp": 0,
+          "abstain": 15
+        },
+        "05": {
+          "n": 21,
+          "actual_up": 11,
+          "actual_down": 10,
+          "router_up": 4,
+          "tp": 4,
+          "fp": 0,
+          "abstain": 17
+        },
+        "06": {
+          "n": 20,
+          "actual_up": 10,
+          "actual_down": 10,
+          "router_up": 2,
+          "tp": 2,
+          "fp": 0,
+          "abstain": 18
+        },
+        "07": {
+          "n": 22,
+          "actual_up": 11,
+          "actual_down": 11,
+          "router_up": 10,
+          "tp": 7,
+          "fp": 3,
+          "abstain": 12
+        },
+        "08": {
+          "n": 21,
+          "actual_up": 14,
+          "actual_down": 7,
+          "router_up": 5,
+          "tp": 3,
+          "fp": 2,
+          "abstain": 16
+        },
+        "09": {
+          "n": 22,
+          "actual_up": 14,
+          "actual_down": 8,
+          "router_up": 0,
+          "tp": 0,
+          "fp": 0,
+          "abstain": 22
+        },
+        "10": {
+          "n": 23,
+          "actual_up": 14,
+          "actual_down": 9,
+          "router_up": 0,
+          "tp": 0,
+          "fp": 0,
+          "abstain": 23
+        },
+        "11": {
+          "n": 20,
+          "actual_up": 11,
+          "actual_down": 9,
+          "router_up": 9,
+          "tp": 5,
+          "fp": 4,
+          "abstain": 11
+        },
+        "12": {
+          "n": 23,
+          "actual_up": 14,
+          "actual_down": 9,
+          "router_up": 0,
+          "tp": 0,
+          "fp": 0,
+          "abstain": 23
+        }
+      },
+      "actual_up": 140,
+      "actual_down": 97,
+      "precision": 0.7297297297297297,
+      "up_recall": 0.19285714285714287
     }
   },
   "router_2026_summary": {
