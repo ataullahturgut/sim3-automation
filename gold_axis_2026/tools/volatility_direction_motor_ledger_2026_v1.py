@@ -99,12 +99,23 @@ def main():
     def score_router(eval_rows,hist):
         out=[]; hist=[dict(x) for x in hist]
         for br in eval_rows:
-            row=dict(br); elig=[]
+            row=dict(br); elig=[]; audit={}
             for ex in base.DIRECT_UP_EXPERTS:
-                if row[ex]!=1: continue
+                if row[ex]!=1:
+                    audit[ex]={"signal":0,"reason":"NO_UP_SIGNAL"}
+                    continue
                 st=base.router_stats(hist,ex,row["legacy_bucket"])
-                if st is None or st["n_up"]<30 or st["precision"]<=.5 or st["fpr"]>=.5: continue
+                if st is None:
+                    audit[ex]={"signal":1,"reason":"NO_STATS"}
+                    continue
+                reason="ELIGIBLE"
+                if st["n_up"]<30: reason="N_UP_LT_30"
+                elif st["precision"]<=.5: reason="PRECISION_LE_0_50"
+                elif st["fpr"]>=.5: reason="FPR_GE_0_50"
+                audit[ex]={"signal":1,"reason":reason,**st}
+                if reason!="ELIGIBLE": continue
                 elig.append((ex,st))
+            row["router_audit"]=audit
             if elig:
                 elig.sort(key=lambda x:(-x[1]["lcb"],x[1]["fpr"],-x[1]["precision"],base.ROUTER_TIE_ORDER[x[0]])); ex,st=elig[0]
                 row["router_up"]=1; row["selected_expert"]=ex
@@ -112,6 +123,23 @@ def main():
             out.append(row); hist.append(dict(br))
         return out,hist
     s24,h24=score_router(by[2024],by[2023]); s25r,h25=score_router(by[2025],h24); s26,_=score_router(by[2026],h25)
+    def router_year_summary(rows):
+        ups=[r for r in rows if r["router_up"]==1]
+        return {"n":len(rows),"router_up":len(ups),"tp":sum(r["actual_up"]==1 for r in ups),
+                "fp":sum(r["actual_up"]==0 for r in ups),
+                "selected":{ex:sum(r["selected_expert"]==ex for r in rows) for ex in base.DIRECT_UP_EXPERTS}}
+    authority_reproduction={"2024":router_year_summary(s24),"2025":router_year_summary(s25r)}
+    if authority_reproduction["2024"]["router_up"]!=42 or authority_reproduction["2024"]["tp"]!=26 or authority_reproduction["2024"]["fp"]!=16:
+        raise RuntimeError("ROUTER_2024_AUTHORITY_MISMATCH:"+json.dumps(authority_reproduction["2024"],sort_keys=True))
+    if authority_reproduction["2025"]["router_up"]!=37 or authority_reproduction["2025"]["tp"]!=27 or authority_reproduction["2025"]["fp"]!=10:
+        raise RuntimeError("ROUTER_2025_AUTHORITY_MISMATCH:"+json.dumps(authority_reproduction["2025"],sort_keys=True))
+    router_2026=router_year_summary(s26)
+    router_2026["experts"]={}
+    for ex in base.DIRECT_UP_EXPERTS:
+        sig=[r for r in s26 if r[ex]==1]
+        reasons=defaultdict(int)
+        for r in sig: reasons[r["router_audit"][ex]["reason"]]+=1
+        router_2026["experts"][ex]={"raw_up_signals":len(sig),"reasons":dict(reasons)}
     rmap={(r["origin_date"],r["target_date"]):r for r in s26}
 
     # Two memory policies on identical 2026 panel.
@@ -182,6 +210,8 @@ def main():
           "ledger":ledger}
     result={"identity":"GOLD_CONTROL_2026_VOLATILITY_DIRECTION_MOTOR_LEDGER_V1",
       "method":"same common realized high-risk definition; native alert thresholds; frozen Router V2 and frozen UP2 training; no retraining by 2026",
+      "router_authority_reproduction":authority_reproduction,
+      "router_2026_summary":router_2026,
       "EXPANDING":evaluate("EXPANDING",exp),"W500":evaluate("W500",w500),
       "governance":{"stress_only":True,"2026_selection":False,"retuning":False,"production_writes":False,"runtime_promotion":False}}
     out=args.out/"GOLD_CONTROL_2026_VOLATILITY_DIRECTION_MOTOR_LEDGER_V1_RESULT_2026-09-24.json"
