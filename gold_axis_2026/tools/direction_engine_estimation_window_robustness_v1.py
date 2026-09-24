@@ -5,6 +5,7 @@ import csv
 import importlib.util
 import json
 import math
+import sys
 from collections import Counter
 from datetime import date
 from pathlib import Path
@@ -25,6 +26,7 @@ def load_mod(name: str, path: Path):
     if spec is None or spec.loader is None:
         raise RuntimeError(f"MODULE_LOAD_FAILED:{name}:{path}")
     mod = importlib.util.module_from_spec(spec)
+    sys.modules[name] = mod
     spec.loader.exec_module(mod)
     return mod
 
