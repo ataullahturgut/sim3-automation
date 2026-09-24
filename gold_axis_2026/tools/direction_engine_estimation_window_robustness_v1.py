@@ -124,7 +124,7 @@ def sqrt_eval(rows, year: int, window: int | None):
         "mse": mse,
         "qlike": qlike,
         "oos_r2_vs_train_mean": float(1 - mse / mean_mse) if mean_mse > 0 else None,
-        "high_risk_auc": auc_sade(high, pred),
+        "high_risk_auc": auc_safe(high, pred),
         "alert_count": int(np.sum(alerts)),
         "alert_coverage": float(np.mean(alerts)),
         "alert_precision": precision,
