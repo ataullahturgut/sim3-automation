@@ -1,0 +1,489 @@
+{
+  "identity": "GOLD_CONTROL_MIDAS_FREQUENCY_AVAILABILITY_AUDIT_V1",
+  "exact_midas_inputs": [
+    {
+      "series_id": "CORE5_GOLD_USD_OZ_RESEARCH_R1",
+      "rows": 390,
+      "unique_dates": 390,
+      "first": "1994-02-01T00:00:00+00:00",
+      "last": "2026-07-01T00:00:00+00:00",
+      "median_calendar_gap_days": 31,
+      "mode_gap_days": 31,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "CORE5_GPR_ROUNDED_RESEARCH_R1",
+      "rows": 390,
+      "unique_dates": 390,
+      "first": "1994-02-01T00:00:00+00:00",
+      "last": "2026-07-01T00:00:00+00:00",
+      "median_calendar_gap_days": 31,
+      "mode_gap_days": 31,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "GPR_OFFICIAL_GIT_PIT",
+      "rows": 25515,
+      "unique_dates": 499,
+      "first": "1985-01-01T00:00:00+00:00",
+      "last": "2026-07-01T00:00:00+00:00",
+      "median_calendar_gap_days": 31.0,
+      "mode_gap_days": 31,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "XAG_STAKTRAKR_RESEARCH_DAILY_R1",
+      "rows": 4230,
+      "unique_dates": 4230,
+      "first": "2010-01-04T00:00:00+00:00",
+      "last": "2026-07-31T00:00:00+00:00",
+      "median_calendar_gap_days": 1,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+      "rows": 4230,
+      "unique_dates": 4230,
+      "first": "2010-01-04T00:00:00+00:00",
+      "last": "2026-07-31T00:00:00+00:00",
+      "median_calendar_gap_days": 1,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XPD_STAKTRAKR_RESEARCH_DAILY_R1",
+      "rows": 4229,
+      "unique_dates": 4229,
+      "first": "2010-01-04T00:00:00+00:00",
+      "last": "2026-07-31T00:00:00+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XPT_STAKTRAKR_RESEARCH_DAILY_R1",
+      "rows": 4229,
+      "unique_dates": 4229,
+      "first": "2010-01-04T00:00:00+00:00",
+      "last": "2026-07-31T00:00:00+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    }
+  ],
+  "other_daily_candidate_series": [
+    {
+      "series_id": "GVZ_CBOE",
+      "rows": 256,
+      "unique_dates": 136,
+      "first": "2026-03-10T00:00:00+00:00",
+      "last": "2026-09-22T00:00:00+00:00",
+      "median_calendar_gap_days": 1,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "GVZ_CBOE_FRED_MIRROR_RESEARCH_V1",
+      "rows": 250,
+      "unique_dates": 250,
+      "first": "2025-01-02T00:00:00+00:00",
+      "last": "2025-12-31T00:00:00+00:00",
+      "median_calendar_gap_days": 1,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "GVZ_RISK_R4_1_HISTORICAL_REPLAY_V1",
+      "rows": 250,
+      "unique_dates": 250,
+      "first": "2025-01-02T00:00:00+00:00",
+      "last": "2025-12-31T00:00:00+00:00",
+      "median_calendar_gap_days": 1,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "SP500_FRED",
+      "rows": 2531,
+      "unique_dates": 2531,
+      "first": "2016-08-29T00:00:00+00:00",
+      "last": "2026-09-23T00:00:00+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "VIX_CBOE",
+      "rows": 257,
+      "unique_dates": 137,
+      "first": "2026-03-13T00:00:00+00:00",
+      "last": "2026-09-22T00:00:00+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XAU_DAILY_XAUS",
+      "rows": 282,
+      "unique_dates": 137,
+      "first": "2026-03-11T00:00:00+00:00",
+      "last": "2026-09-23T00:00:00+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "rows": 492,
+      "unique_dates": 492,
+      "first": "2021-09-01T21:00:00+00:00",
+      "last": "2026-09-23T21:00:00+00:00",
+      "median_calendar_gap_days": 2,
+      "mode_gap_days": 1,
+      "frequency_class": "BUSINESS_DAILY_OR_FEW_DAY"
+    },
+    {
+      "series_id": "XAU_INTRADAY_TWELVE_REST_1M",
+      "rows": 9403,
+      "unique_dates": 7,
+      "first": "2026-09-01T00:00:00+00:00",
+      "last": "2026-09-07T12:42:00+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+      "rows": 1177,
+      "unique_dates": 1177,
+      "first": "2022-03-01T21:00:00+00:00",
+      "last": "2026-08-31T20:00:00+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XAU_SPOT_XAUS",
+      "rows": 318,
+      "unique_dates": 23,
+      "first": "2026-08-31T12:55:06.950000+00:00",
+      "last": "2026-09-23T11:52:45.768000+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XAU_USD_TWELVE_1H_RESEARCH_V1",
+      "rows": 17644,
+      "unique_dates": 930,
+      "first": "2022-01-02T23:00:00+00:00",
+      "last": "2024-12-31T21:00:00+00:00",
+      "median_calendar_gap_days": 1,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    }
+  ],
+  "all_matching": [
+    {
+      "series_id": "CORE5_GOLD_USD_OZ_RESEARCH_R1",
+      "rows": 390,
+      "unique_dates": 390,
+      "first": "1994-02-01T00:00:00+00:00",
+      "last": "2026-07-01T00:00:00+00:00",
+      "median_calendar_gap_days": 31,
+      "mode_gap_days": 31,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "CORE5_GPR_ROUNDED_RESEARCH_R1",
+      "rows": 390,
+      "unique_dates": 390,
+      "first": "1994-02-01T00:00:00+00:00",
+      "last": "2026-07-01T00:00:00+00:00",
+      "median_calendar_gap_days": 31,
+      "mode_gap_days": 31,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "CORE5_USDCNY_AVG_RESEARCH_R1",
+      "rows": 390,
+      "unique_dates": 390,
+      "first": "1994-02-01T00:00:00+00:00",
+      "last": "2026-07-01T00:00:00+00:00",
+      "median_calendar_gap_days": 31,
+      "mode_gap_days": 31,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "GPRA_OFFICIAL",
+      "rows": 48,
+      "unique_dates": 37,
+      "first": "2023-08-01T00:00:00+00:00",
+      "last": "2026-08-01T00:00:00+00:00",
+      "median_calendar_gap_days": 31.0,
+      "mode_gap_days": 31,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "GPRA_OFFICIAL_GIT_PIT",
+      "rows": 25515,
+      "unique_dates": 499,
+      "first": "1985-01-01T00:00:00+00:00",
+      "last": "2026-07-01T00:00:00+00:00",
+      "median_calendar_gap_days": 31.0,
+      "mode_gap_days": 31,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "GPRT_OFFICIAL",
+      "rows": 48,
+      "unique_dates": 37,
+      "first": "2023-08-01T00:00:00+00:00",
+      "last": "2026-08-01T00:00:00+00:00",
+      "median_calendar_gap_days": 31.0,
+      "mode_gap_days": 31,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "GPRT_OFFICIAL_GIT_PIT",
+      "rows": 25515,
+      "unique_dates": 499,
+      "first": "1985-01-01T00:00:00+00:00",
+      "last": "2026-07-01T00:00:00+00:00",
+      "median_calendar_gap_days": 31.0,
+      "mode_gap_days": 31,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "GPR_OFFICIAL",
+      "rows": 49,
+      "unique_dates": 37,
+      "first": "2023-08-01T00:00:00+00:00",
+      "last": "2026-08-01T00:00:00+00:00",
+      "median_calendar_gap_days": 31.0,
+      "mode_gap_days": 31,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "GPR_OFFICIAL_GIT_PIT",
+      "rows": 25515,
+      "unique_dates": 499,
+      "first": "1985-01-01T00:00:00+00:00",
+      "last": "2026-07-01T00:00:00+00:00",
+      "median_calendar_gap_days": 31.0,
+      "mode_gap_days": 31,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "GVZ_CBOE",
+      "rows": 256,
+      "unique_dates": 136,
+      "first": "2026-03-10T00:00:00+00:00",
+      "last": "2026-09-22T00:00:00+00:00",
+      "median_calendar_gap_days": 1,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "GVZ_CBOE_FRED_MIRROR_RESEARCH_V1",
+      "rows": 250,
+      "unique_dates": 250,
+      "first": "2025-01-02T00:00:00+00:00",
+      "last": "2025-12-31T00:00:00+00:00",
+      "median_calendar_gap_days": 1,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "GVZ_RISK_R4_1_HISTORICAL_REPLAY_V1",
+      "rows": 250,
+      "unique_dates": 250,
+      "first": "2025-01-02T00:00:00+00:00",
+      "last": "2025-12-31T00:00:00+00:00",
+      "median_calendar_gap_days": 1,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "MACRO_CORE_CPI_ACTUAL_FIRST_PRINT",
+      "rows": 125,
+      "unique_dates": 125,
+      "first": "2016-02-19T13:30:00+00:00",
+      "last": "2026-08-12T12:30:00+00:00",
+      "median_calendar_gap_days": 30.0,
+      "mode_gap_days": 29,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "MACRO_CORE_CPI_CONSENSUS_PIT",
+      "rows": 126,
+      "unique_dates": 126,
+      "first": "2016-02-19T13:30:00+00:00",
+      "last": "2026-09-11T12:30:00+00:00",
+      "median_calendar_gap_days": 30,
+      "mode_gap_days": 29,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "MACRO_CPI_ACTUAL_FIRST_PRINT",
+      "rows": 125,
+      "unique_dates": 125,
+      "first": "2016-02-19T13:30:00+00:00",
+      "last": "2026-08-12T12:30:00+00:00",
+      "median_calendar_gap_days": 30.0,
+      "mode_gap_days": 29,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "MACRO_CPI_CONSENSUS_PIT",
+      "rows": 126,
+      "unique_dates": 126,
+      "first": "2016-02-19T13:30:00+00:00",
+      "last": "2026-09-11T12:30:00+00:00",
+      "median_calendar_gap_days": 30,
+      "mode_gap_days": 29,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "SP500_FRED",
+      "rows": 2531,
+      "unique_dates": 2531,
+      "first": "2016-08-29T00:00:00+00:00",
+      "last": "2026-09-23T00:00:00+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "VIX_CBOE",
+      "rows": 257,
+      "unique_dates": 137,
+      "first": "2026-03-13T00:00:00+00:00",
+      "last": "2026-09-22T00:00:00+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XAG_STAKTRAKR_RESEARCH_DAILY_R1",
+      "rows": 4230,
+      "unique_dates": 4230,
+      "first": "2010-01-04T00:00:00+00:00",
+      "last": "2026-07-31T00:00:00+00:00",
+      "median_calendar_gap_days": 1,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XAU_DAILY_XAUS",
+      "rows": 282,
+      "unique_dates": 137,
+      "first": "2026-03-11T00:00:00+00:00",
+      "last": "2026-09-23T00:00:00+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XAU_EOD_TWELVE_NY17",
+      "rows": 492,
+      "unique_dates": 492,
+      "first": "2021-09-01T21:00:00+00:00",
+      "last": "2026-09-23T21:00:00+00:00",
+      "median_calendar_gap_days": 2,
+      "mode_gap_days": 1,
+      "frequency_class": "BUSINESS_DAILY_OR_FEW_DAY"
+    },
+    {
+      "series_id": "XAU_INTRADAY_TWELVE_REST_1M",
+      "rows": 9403,
+      "unique_dates": 7,
+      "first": "2026-09-01T00:00:00+00:00",
+      "last": "2026-09-07T12:42:00+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XAU_LIVE_TWELVE_WS_1M",
+      "rows": 2,
+      "unique_dates": 1,
+      "first": "2026-09-07T12:43:00+00:00",
+      "last": "2026-09-07T12:44:00+00:00",
+      "median_calendar_gap_days": null,
+      "mode_gap_days": null,
+      "frequency_class": "SINGLE"
+    },
+    {
+      "series_id": "XAU_MONTHLY_WB_PINKSHEET",
+      "rows": 127,
+      "unique_dates": 127,
+      "first": "2016-01-01T00:00:00+00:00",
+      "last": "2026-07-01T00:00:00+00:00",
+      "median_calendar_gap_days": 31.0,
+      "mode_gap_days": 31,
+      "frequency_class": "MONTHLY"
+    },
+    {
+      "series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+      "rows": 1177,
+      "unique_dates": 1177,
+      "first": "2022-03-01T21:00:00+00:00",
+      "last": "2026-08-31T20:00:00+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XAU_SPOT_XAUS",
+      "rows": 318,
+      "unique_dates": 23,
+      "first": "2026-08-31T12:55:06.950000+00:00",
+      "last": "2026-09-23T11:52:45.768000+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+      "rows": 4230,
+      "unique_dates": 4230,
+      "first": "2010-01-04T00:00:00+00:00",
+      "last": "2026-07-31T00:00:00+00:00",
+      "median_calendar_gap_days": 1,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XAU_USD_TWELVE_1H_RESEARCH_V1",
+      "rows": 17644,
+      "unique_dates": 930,
+      "first": "2022-01-02T23:00:00+00:00",
+      "last": "2024-12-31T21:00:00+00:00",
+      "median_calendar_gap_days": 1,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XPD_STAKTRAKR_RESEARCH_DAILY_R1",
+      "rows": 4229,
+      "unique_dates": 4229,
+      "first": "2010-01-04T00:00:00+00:00",
+      "last": "2026-07-31T00:00:00+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    },
+    {
+      "series_id": "XPT_STAKTRAKR_RESEARCH_DAILY_R1",
+      "rows": 4229,
+      "unique_dates": 4229,
+      "first": "2010-01-04T00:00:00+00:00",
+      "last": "2026-07-31T00:00:00+00:00",
+      "median_calendar_gap_days": 1.0,
+      "mode_gap_days": 1,
+      "frequency_class": "DAILY_OR_INTRADAY"
+    }
+  ]
+}
