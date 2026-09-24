@@ -1,0 +1,1763 @@
+{
+  "identity": "GOLD_CONTROL_2026_LOCAL_UP_OLD_ROUTER_PROTECTION_COMBO_V1",
+  "rule": "Default GOLD. If Local Router V2=UP stay GOLD. Otherwise if SQRT=HIGH-RISK and old Router V2=ABSTAIN move to CASH. All other states GOLD.",
+  "period": "2026-01-01 through 2026-08-31",
+  "n_days": 173,
+  "strategy": {
+    "start_value": 100.0,
+    "final_value": 98.53539133990301,
+    "return_pct": -1.4646086600969888,
+    "cash_days": 39,
+    "gold_days": 134,
+    "down_days_avoided": 17,
+    "false_exits_on_up_days": 22,
+    "down_days_exposed": 71,
+    "up_days_retained": 63
+  },
+  "buy_and_hold": {
+    "final_value": 103.15694772333462,
+    "return_pct": 3.1569477233346355
+  },
+  "oracle_up_down": {
+    "final_value": 330.069931769415,
+    "return_pct": 230.069931769415
+  },
+  "governance": {
+    "2026_stress_only": true,
+    "retuning": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  },
+  "ledger": [
+    {
+      "target_date": "2026-01-01",
+      "return": 0.013161120602658455,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 101.32481093546535
+    },
+    {
+      "target_date": "2026-01-02",
+      "return": -0.009570508390103231,
+      "actual_up": 0,
+      "sqrt_high_risk": false,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 100.3597066182842
+    },
+    {
+      "target_date": "2026-01-05",
+      "return": 0.031147033248389185,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": true,
+      "local_router_up": false,
+      "action": "GOLD",
+      "wealth": 103.53480449059704
+    },
+    {
+      "target_date": "2026-01-06",
+      "return": -0.0006738720801824718,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": true,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 103.46505877900687
+    },
+    {
+      "target_date": "2026-01-07",
+      "return": -0.00730683940737822,
+      "actual_up": 0,
+      "sqrt_high_risk": false,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 102.7118114900346
+    },
+    {
+      "target_date": "2026-01-08",
+      "return": 0.007500066221817735,
+      "actual_up": 1,
+      "sqrt_high_risk": false,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "GOLD",
+      "wealth": 103.4850529343618
+    },
+    {
+      "target_date": "2026-01-09",
+      "return": 0.009882755398063712,
+      "actual_up": 1,
+      "sqrt_high_risk": false,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 104.51284072229807
+    },
+    {
+      "target_date": "2026-01-12",
+      "return": 0.019123811240268337,
+      "actual_up": 1,
+      "sqrt_high_risk": false,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 106.53075819785633
+    },
+    {
+      "target_date": "2026-01-13",
+      "return": 0.0069802063791711425,
+      "actual_up": 1,
+      "sqrt_high_risk": false,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 107.27696618889053
+    },
+    {
+      "target_date": "2026-01-14",
+      "return": -0.0079435912938969,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 106.42817749273999
+    },
+    {
+      "target_date": "2026-01-15",
+      "return": 0.0019521066202744172,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 106.42817749273999
+    },
+    {
+      "target_date": "2026-01-16",
+      "return": -0.0013190533660272382,
+      "actual_up": 0,
+      "sqrt_high_risk": false,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 106.28788559357014
+    },
+    {
+      "target_date": "2026-01-19",
+      "return": 0.02162355732912944,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 106.28788559357014
+    },
+    {
+      "target_date": "2026-01-20",
+      "return": 0.035538630972218474,
+      "actual_up": 1,
+      "sqrt_high_risk": false,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 110.13313427129931
+    },
+    {
+      "target_date": "2026-01-21",
+      "return": -0.014165237840450252,
+      "actual_up": 0,
+      "sqrt_high_risk": false,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 108.58406956729108
+    },
+    {
+      "target_date": "2026-01-22",
+      "return": 0.03267643416419582,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 108.58406956729108
+    },
+    {
+      "target_date": "2026-01-23",
+      "return": 0.005191042609914329,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 108.58406956729108
+    },
+    {
+      "target_date": "2026-01-26",
+      "return": 0.016951261083563905,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 108.58406956729108
+    },
+    {
+      "target_date": "2026-01-27",
+      "return": 0.03472813890222509,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 108.58406956729108
+    },
+    {
+      "target_date": "2026-01-28",
+      "return": 0.058124286755402994,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 108.58406956729108
+    },
+    {
+      "target_date": "2026-01-29",
+      "return": -0.06417482828870616,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 108.58406956729108
+    },
+    {
+      "target_date": "2026-01-30",
+      "return": -0.06939596398415408,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 101.30428836631671
+    },
+    {
+      "target_date": "2026-02-02",
+      "return": -0.01155578622425725,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 100.1403755820261
+    },
+    {
+      "target_date": "2026-02-03",
+      "return": 0.054766688351543746,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 105.77769192440337
+    },
+    {
+      "target_date": "2026-02-04",
+      "return": -0.042321668819924434,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 101.39441157805284
+    },
+    {
+      "target_date": "2026-02-05",
+      "return": -0.01141759365282146,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 100.24331526780487
+    },
+    {
+      "target_date": "2026-02-06",
+      "return": 0.029588768016166157,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 100.24331526780487
+    },
+    {
+      "target_date": "2026-02-09",
+      "return": 0.014523575187124512,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 101.70983033694259
+    },
+    {
+      "target_date": "2026-02-10",
+      "return": 0.003288927167234798,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 101.70983033694259
+    },
+    {
+      "target_date": "2026-02-11",
+      "return": 0.004250730890953083,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 102.14309164090106
+    },
+    {
+      "target_date": "2026-02-12",
+      "return": -0.018772401206803242,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 100.24350621859843
+    },
+    {
+      "target_date": "2026-02-13",
+      "return": 0.01354208860315858,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 100.24350621859843
+    },
+    {
+      "target_date": "2026-02-16",
+      "return": -0.01804172719425103,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 100.24350621859843
+    },
+    {
+      "target_date": "2026-02-17",
+      "return": -0.0038574722498553784,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 99.85756453337292
+    },
+    {
+      "target_date": "2026-02-18",
+      "return": 0.010156943749241518,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 100.8769805107823
+    },
+    {
+      "target_date": "2026-02-19",
+      "return": 0.003054997738340941,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 101.1856306808262
+    },
+    {
+      "target_date": "2026-02-20",
+      "return": 0.019592233720420713,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 103.18763099579942
+    },
+    {
+      "target_date": "2026-02-23",
+      "return": 0.013641517531040247,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 104.60491182512247
+    },
+    {
+      "target_date": "2026-02-24",
+      "return": 0.0028233955498353997,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 104.90067019261842
+    },
+    {
+      "target_date": "2026-02-25",
+      "return": 0.0018775655267662715,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 104.90067019261842
+    },
+    {
+      "target_date": "2026-02-26",
+      "return": -0.0018900253055613363,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 104.70259251625878
+    },
+    {
+      "target_date": "2026-02-27",
+      "return": 0.018156395206929337,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 106.62097693795518
+    },
+    {
+      "target_date": "2026-03-02",
+      "return": 0.016231625614729964,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 108.36573050491246
+    },
+    {
+      "target_date": "2026-03-03",
+      "return": -0.03947056984562722,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 104.17178652326052
+    },
+    {
+      "target_date": "2026-03-04",
+      "return": 0.0027970013464284475,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 104.46356300981962
+    },
+    {
+      "target_date": "2026-03-05",
+      "return": -0.008307127911395141,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 103.59936530000923
+    },
+    {
+      "target_date": "2026-03-06",
+      "return": 0.00829852447659585,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 104.4626642682325
+    },
+    {
+      "target_date": "2026-03-09",
+      "return": -0.002513784964620987,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 104.20039737282784
+    },
+    {
+      "target_date": "2026-03-10",
+      "return": 0.008728787066529475,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 105.11392163287441
+    },
+    {
+      "target_date": "2026-03-11",
+      "return": -0.009697096094885498,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 104.09954802184187
+    },
+    {
+      "target_date": "2026-03-12",
+      "return": -0.007188259158782307,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 103.35393652721885
+    },
+    {
+      "target_date": "2026-03-13",
+      "return": -0.019051207378294372,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 101.40355678381518
+    },
+    {
+      "target_date": "2026-03-16",
+      "return": 0.0015150812477614565,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": true,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 101.55730785442567
+    },
+    {
+      "target_date": "2026-03-17",
+      "return": -0.007172810503218581,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": true,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 100.83146281643513
+    },
+    {
+      "target_date": "2026-03-18",
+      "return": -0.02838842150475487,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 98.0092651496564
+    },
+    {
+      "target_date": "2026-03-19",
+      "return": -0.026404797174848494,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 95.45521831764128
+    },
+    {
+      "target_date": "2026-03-20",
+      "return": -0.04942215011564469,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 90.85229620939187
+    },
+    {
+      "target_date": "2026-03-23",
+      "return": -0.034015290008994316,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 87.81389796132987
+    },
+    {
+      "target_date": "2026-03-24",
+      "return": 0.049868245639231715,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 92.30405052448842
+    },
+    {
+      "target_date": "2026-03-25",
+      "return": -0.01178956159495827,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 91.2222159437377
+    },
+    {
+      "target_date": "2026-03-26",
+      "return": -0.017561452540324797,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 89.63420602052453
+    },
+    {
+      "target_date": "2026-03-27",
+      "return": 0.01580172294551072,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 91.06183066938196
+    },
+    {
+      "target_date": "2026-03-30",
+      "return": 0.010821191327899214,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 92.05257903263862
+    },
+    {
+      "target_date": "2026-03-31",
+      "return": 0.027078478206462298,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.57927798033761
+    },
+    {
+      "target_date": "2026-04-01",
+      "return": -0.0006517191825969101,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.51765893194057
+    },
+    {
+      "target_date": "2026-04-02",
+      "return": -0.0005064796618713566,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.46979978087025
+    },
+    {
+      "target_date": "2026-04-03",
+      "return": 2.8931876712629846e-06,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.47007310012566
+    },
+    {
+      "target_date": "2026-04-06",
+      "return": -0.005827494309625062,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 94.47007310012566
+    },
+    {
+      "target_date": "2026-04-07",
+      "return": 0.03146539827573529,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 97.48987201591883
+    },
+    {
+      "target_date": "2026-04-08",
+      "return": -0.01803566561035496,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 95.74733839547197
+    },
+    {
+      "target_date": "2026-04-09",
+      "return": 0.011350563391259248,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 95.74733839547197
+    },
+    {
+      "target_date": "2026-04-10",
+      "return": -0.003272404757996951,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 95.43452645253527
+    },
+    {
+      "target_date": "2026-04-13",
+      "return": 0.003979703600100014,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 95.81508433254068
+    },
+    {
+      "target_date": "2026-04-14",
+      "return": 0.011566152580008078,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 96.9297298715555
+    },
+    {
+      "target_date": "2026-04-15",
+      "return": -7.853135700852637e-06,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 96.92896867222227
+    },
+    {
+      "target_date": "2026-04-16",
+      "return": -0.0065307957771893466,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 96.29800795333561
+    },
+    {
+      "target_date": "2026-04-17",
+      "return": 0.008441065835577417,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 96.29800795333561
+    },
+    {
+      "target_date": "2026-04-20",
+      "return": -0.007565667498891938,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 95.5721983235859
+    },
+    {
+      "target_date": "2026-04-21",
+      "return": -0.008042499200762433,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.80664161601834
+    },
+    {
+      "target_date": "2026-04-22",
+      "return": -0.011591829509762131,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 93.71400425782441
+    },
+    {
+      "target_date": "2026-04-23",
+      "return": -0.006752700285220145,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 93.08331350392878
+    },
+    {
+      "target_date": "2026-04-24",
+      "return": 0.007643680187607438,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 93.79753876044575
+    },
+    {
+      "target_date": "2026-04-27",
+      "return": -0.007931343752383947,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 93.05654067711306
+    },
+    {
+      "target_date": "2026-04-28",
+      "return": -0.016330648514622625,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 93.05654067711306
+    },
+    {
+      "target_date": "2026-04-29",
+      "return": -0.00856129003266866,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 92.26325725302388
+    },
+    {
+      "target_date": "2026-04-30",
+      "return": 0.015309495898305237,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 93.68662896238443
+    },
+    {
+      "target_date": "2026-05-01",
+      "return": -0.0029320788316701896,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 93.41233470349927
+    },
+    {
+      "target_date": "2026-05-04",
+      "return": -0.017203257764074137,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 91.81908209259986
+    },
+    {
+      "target_date": "2026-05-05",
+      "return": 0.023768139143872435,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.02759293922418
+    },
+    {
+      "target_date": "2026-05-06",
+      "return": 0.012159428135500115,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 95.17789402723434
+    },
+    {
+      "target_date": "2026-05-07",
+      "return": 0.00425765174034439,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 95.58399225232384
+    },
+    {
+      "target_date": "2026-05-08",
+      "return": -0.0010567078513017338,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 95.48304124450708
+    },
+    {
+      "target_date": "2026-05-11",
+      "return": 0.000987229261481601,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 95.48304124450708
+    },
+    {
+      "target_date": "2026-05-12",
+      "return": -0.005242651500907687,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 95.48304124450708
+    },
+    {
+      "target_date": "2026-05-13",
+      "return": -0.004185722970755565,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 95.08421096428626
+    },
+    {
+      "target_date": "2026-05-14",
+      "return": -0.01289765288146113,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 93.8657225283976
+    },
+    {
+      "target_date": "2026-05-15",
+      "return": -0.017080209576371477,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 92.2760905845113
+    },
+    {
+      "target_date": "2026-05-18",
+      "return": 0.001815939065739669,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 92.44381058079418
+    },
+    {
+      "target_date": "2026-05-19",
+      "return": -0.018125558921063045,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 90.78330906519993
+    },
+    {
+      "target_date": "2026-05-20",
+      "return": 0.014452767486098271,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 92.10490648806962
+    },
+    {
+      "target_date": "2026-05-21",
+      "return": -5.6848810442883026e-05,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 92.09967058252873
+    },
+    {
+      "target_date": "2026-05-22",
+      "return": -0.00516342229621015,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 91.62534671102199
+    },
+    {
+      "target_date": "2026-05-25",
+      "return": 0.008049411767837585,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 92.36585317750213
+    },
+    {
+      "target_date": "2026-05-26",
+      "return": -0.009708781640053834,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 91.47343244699289
+    },
+    {
+      "target_date": "2026-05-27",
+      "return": -0.02774326765287942,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 91.47343244699289
+    },
+    {
+      "target_date": "2026-05-28",
+      "return": 0.028297663445743363,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.09888879884961
+    },
+    {
+      "target_date": "2026-05-29",
+      "return": 0.009241087389822671,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.97249517295992
+    },
+    {
+      "target_date": "2026-06-01",
+      "return": -0.009674035298621894,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.05815769958218
+    },
+    {
+      "target_date": "2026-06-02",
+      "return": -0.003315063837748337,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 93.74686516474257
+    },
+    {
+      "target_date": "2026-06-03",
+      "return": -0.00451780469294919,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 93.74686516474257
+    },
+    {
+      "target_date": "2026-06-04",
+      "return": -0.00483628534010217,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 93.74686516474257
+    },
+    {
+      "target_date": "2026-06-05",
+      "return": -0.025533766128476475,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 93.74686516474257
+    },
+    {
+      "target_date": "2026-06-08",
+      "return": 0.0013379383499409728,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 93.87237663541526
+    },
+    {
+      "target_date": "2026-06-09",
+      "return": -0.03555854144650406,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 90.59306120295552
+    },
+    {
+      "target_date": "2026-06-10",
+      "return": -0.02659334870632253,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 88.21564023731091
+    },
+    {
+      "target_date": "2026-06-11",
+      "return": 0.029853971592831013,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 88.21564023731091
+    },
+    {
+      "target_date": "2026-06-12",
+      "return": 0.004088109486262712,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 88.57701359663923
+    },
+    {
+      "target_date": "2026-06-15",
+      "return": 0.02693326783012578,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 90.9950993310913
+    },
+    {
+      "target_date": "2026-06-16",
+      "return": 0.00019761965006503916,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 91.01308352773553
+    },
+    {
+      "target_date": "2026-06-17",
+      "return": -0.0028000527983039363,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 90.75859854049153
+    },
+    {
+      "target_date": "2026-06-18",
+      "return": -0.039435105133079545,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 90.75859854049153
+    },
+    {
+      "target_date": "2026-06-19",
+      "return": 0.0010616278182882996,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 90.85500155645846
+    },
+    {
+      "target_date": "2026-06-22",
+      "return": -0.0030398737106145666,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 90.57923318861569
+    },
+    {
+      "target_date": "2026-06-23",
+      "return": -0.019835976465380194,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 90.57923318861569
+    },
+    {
+      "target_date": "2026-06-24",
+      "return": -0.0163897457640929,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 89.10676225881633
+    },
+    {
+      "target_date": "2026-06-25",
+      "return": 0.0016274932589445945,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 89.10676225881633
+    },
+    {
+      "target_date": "2026-06-26",
+      "return": 0.019257252296149656,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 90.839342485776
+    },
+    {
+      "target_date": "2026-06-29",
+      "return": -0.027380735070854374,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 88.38583718624277
+    },
+    {
+      "target_date": "2026-06-30",
+      "return": 0.0023956956014573386,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 88.5978365892446
+    },
+    {
+      "target_date": "2026-07-01",
+      "return": 0.022473156841434694,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 90.61145105753471
+    },
+    {
+      "target_date": "2026-07-02",
+      "return": 0.025666282235603802,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 92.96721263324186
+    },
+    {
+      "target_date": "2026-07-03",
+      "return": -0.00035858714197240166,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 92.93388176253455
+    },
+    {
+      "target_date": "2026-07-06",
+      "return": -0.010468141221649482,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 92.93388176253455
+    },
+    {
+      "target_date": "2026-07-07",
+      "return": -0.001934209552262084,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 92.93388176253455
+    },
+    {
+      "target_date": "2026-07-08",
+      "return": -0.014842811980608198,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 92.93388176253455
+    },
+    {
+      "target_date": "2026-07-09",
+      "return": 0.014080652063837972,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.25170756675995
+    },
+    {
+      "target_date": "2026-07-10",
+      "return": -0.0021580647830777245,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.04852559470007
+    },
+    {
+      "target_date": "2026-07-13",
+      "return": -0.023763692127562533,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 94.04852559470007
+    },
+    {
+      "target_date": "2026-07-14",
+      "return": 0.004151153358365188,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.43974689558426
+    },
+    {
+      "target_date": "2026-07-15",
+      "return": 0.0010893259430084295,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.54267861484635
+    },
+    {
+      "target_date": "2026-07-16",
+      "return": -0.0110255368976631,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 94.54267861484635
+    },
+    {
+      "target_date": "2026-07-17",
+      "return": 0.004682534655119045,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 94.54267861484635
+    },
+    {
+      "target_date": "2026-07-20",
+      "return": 0.008997405618820972,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 94.54267861484635
+    },
+    {
+      "target_date": "2026-07-21",
+      "return": 0.020683768386112564,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 96.51854118175967
+    },
+    {
+      "target_date": "2026-07-22",
+      "return": -0.0013087543353781218,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 96.39230474680298
+    },
+    {
+      "target_date": "2026-07-23",
+      "return": -0.023680443310595305,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.13650679946588
+    },
+    {
+      "target_date": "2026-07-24",
+      "return": 0.006580288797039529,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.75799474308285
+    },
+    {
+      "target_date": "2026-07-27",
+      "return": -0.001908937339186257,
+      "actual_up": 0,
+      "sqrt_high_risk": false,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "GOLD",
+      "wealth": 94.57728020996896
+    },
+    {
+      "target_date": "2026-07-28",
+      "return": -0.006129394760255746,
+      "actual_up": 0,
+      "sqrt_high_risk": false,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 93.99935170954353
+    },
+    {
+      "target_date": "2026-07-29",
+      "return": 0.008302111219309884,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 93.99935170954353
+    },
+    {
+      "target_date": "2026-07-30",
+      "return": 0.004328867724771154,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 94.40714447296894
+    },
+    {
+      "target_date": "2026-07-31",
+      "return": -0.007887959578820034,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 94.40714447296894
+    },
+    {
+      "target_date": "2026-08-03",
+      "return": 0.0026149338896374855,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 94.40714447296894
+    },
+    {
+      "target_date": "2026-08-04",
+      "return": 0.018483938316978223,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 94.40714447296894
+    },
+    {
+      "target_date": "2026-08-05",
+      "return": 0.03251244745431839,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 97.52699395076324
+    },
+    {
+      "target_date": "2026-08-06",
+      "return": -0.0001670711260745435,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 97.51070136710926
+    },
+    {
+      "target_date": "2026-08-07",
+      "return": 0.018068153154570644,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 99.28855253127496
+    },
+    {
+      "target_date": "2026-08-10",
+      "return": 0.017230833873497362,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 101.01420157603101
+    },
+    {
+      "target_date": "2026-08-11",
+      "return": -0.0035165036070080777,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 100.65960860096978
+    },
+    {
+      "target_date": "2026-08-12",
+      "return": -0.0005712974034222935,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 100.60211845149674
+    },
+    {
+      "target_date": "2026-08-13",
+      "return": -0.017222537049551217,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 98.88432954084622
+    },
+    {
+      "target_date": "2026-08-14",
+      "return": 0.011705214102814998,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 100.04859246982367
+    },
+    {
+      "target_date": "2026-08-17",
+      "return": 0.0037517902242714136,
+      "actual_up": 1,
+      "sqrt_high_risk": false,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 100.42465882091038
+    },
+    {
+      "target_date": "2026-08-18",
+      "return": -0.008414914743548954,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 99.58313950116259
+    },
+    {
+      "target_date": "2026-08-19",
+      "return": 0.03239228895717971,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": false,
+      "action": "CASH",
+      "wealth": 99.58313950116259
+    },
+    {
+      "target_date": "2026-08-20",
+      "return": 0.008072165876387294,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 100.39024428097362
+    },
+    {
+      "target_date": "2026-08-21",
+      "return": 0.0160009626058584,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 102.00950514372245
+    },
+    {
+      "target_date": "2026-08-24",
+      "return": 0.00531232584123421,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 102.55285482140253
+    },
+    {
+      "target_date": "2026-08-25",
+      "return": 0.002427576420372237,
+      "actual_up": 1,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 102.8021121367908
+    },
+    {
+      "target_date": "2026-08-26",
+      "return": -0.004202043041516922,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 102.37103956387898
+    },
+    {
+      "target_date": "2026-08-27",
+      "return": -0.009880026399035059,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 101.36459104647126
+    },
+    {
+      "target_date": "2026-08-28",
+      "return": -0.02663784030613457,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 98.70010291470216
+    },
+    {
+      "target_date": "2026-08-31",
+      "return": -0.001670202553665637,
+      "actual_up": 0,
+      "sqrt_high_risk": true,
+      "old_router_up": false,
+      "local_router_up": true,
+      "action": "GOLD",
+      "wealth": 98.53539133990301
+    }
+  ]
+}
