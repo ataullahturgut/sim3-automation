@@ -1,0 +1,96 @@
+{
+  "identity": "GOLD_CONTROL_2026_JAN30_FULL_CASCADE_STRESS_V1",
+  "up2_2026_metrics": {
+    "status": "OK",
+    "year": 2026,
+    "n": 145,
+    "actual_up": 72,
+    "actual_down": 73,
+    "up2_calls": 7,
+    "true_up": 5,
+    "false_up": 2,
+    "missed_up": 67,
+    "true_down_abstain": 71,
+    "up_precision": 0.7142857142857143,
+    "missed_up_recall": 0.06944444444444445,
+    "false_up_fpr": 0.0273972602739726,
+    "coverage": 0.04827586206896552,
+    "wilson90_lcb_up_precision": 0.47246281655659694,
+    "auc": 0.5224505327245054,
+    "brier": 0.2668354839052269,
+    "tau": 0.5547004994642151,
+    "train_n": 198,
+    "train_up": 94,
+    "train_down": 104,
+    "calibration": {
+      "status": "OK",
+      "calibration_n": 158,
+      "down_calibration_n": 82,
+      "q80_down_prequential": 0.5547004994642151,
+      "tau": 0.5547004994642151
+    },
+    "standardized_coefficients": {
+      "sqrt_score": 0.16295197664818534,
+      "lag1_close_return": 0.2783934606418397,
+      "downside_share": 0.1292738906350305,
+      "intraday_end_norm": -0.3533258738248591,
+      "close_location": -0.1339108989039002,
+      "trough_recovery_norm": 0.13863774384402944,
+      "last_quarter_return_norm": -0.029561031118614824,
+      "direct_up_fraction": 0.018226891835481998,
+      "legacy_up_fraction": 0.22066048583483122
+    },
+    "intercept": -0.1063178259929242
+  },
+  "residual26_n": 145,
+  "jan30_window": [
+    {
+      "origin_date": "2026-01-28",
+      "target_date": "2026-01-29",
+      "return": -0.06417482828870616,
+      "actual": "DOWN",
+      "sqrt_score": 2.2262720791381345,
+      "sqrt_alert": 1,
+      "router_state": "ABSTAIN",
+      "router_expert": "",
+      "up2_p": 0.5312638107241773,
+      "up2_tau": 0.5547004994642151,
+      "up2_call": 0,
+      "final_state": "UNCERTAIN"
+    },
+    {
+      "origin_date": "2026-01-29",
+      "target_date": "2026-01-30",
+      "return": -0.06939596398415408,
+      "actual": "DOWN",
+      "sqrt_score": 6.175810690842147,
+      "sqrt_alert": 1,
+      "router_state": "ABSTAIN",
+      "router_expert": "",
+      "up2_p": 0.5318074780517118,
+      "up2_tau": 0.5547004994642151,
+      "up2_call": 0,
+      "final_state": "UNCERTAIN"
+    },
+    {
+      "origin_date": "2026-01-30",
+      "target_date": "2026-02-02",
+      "return": -0.01155578622425725,
+      "actual": "DOWN",
+      "sqrt_score": 9.19943775178859,
+      "sqrt_alert": 1,
+      "router_state": "ABSTAIN",
+      "router_expert": "",
+      "up2_p": 0.539142333329093,
+      "up2_tau": 0.5547004994642151,
+      "up2_call": 0,
+      "final_state": "UNCERTAIN"
+    }
+  ],
+  "governance": {
+    "stress_only": true,
+    "retuning": false,
+    "selection": false,
+    "production_writes": false
+  }
+}
