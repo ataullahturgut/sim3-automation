@@ -1,0 +1,102 @@
+{
+  "identity": "DIRECTION_ENGINE_MEMORY_POLICY_COMPARISON_V1",
+  "date": "2026-09-24",
+  "parent": "DIRECTION_ENGINE_ESTIMATION_WINDOW_ROBUSTNESS_V1R2",
+  "scope": "SQRT-HAR-DR pre-2025 only",
+  "candidates": [
+    "EXPANDING",
+    "ROBUST_ROLLING_475_550",
+    "BREAK_CONDITIONED"
+  ],
+  "decision_rule": {
+    "primary": [
+      "MSE",
+      "QLIKE"
+    ],
+    "guards": [
+      "high-risk AUC degradation <= 0.02 versus expanding by year",
+      "no severe alarm-collapse",
+      "cross-origin consistency"
+    ],
+    "note": "No single best-window selection; rolling is evaluated as the previously identified contiguous 475-550 band."
+  },
+  "evidence": {
+    "expanding": {
+      "mean_mse": 6.829409743525882e-10,
+      "mean_qlike": 0.1539225305246504,
+      "mean_auc": 0.7282784359217548,
+      "mean_precision": 0.4937566137566138,
+      "mean_recall": 0.2725205448609704,
+      "mean_coverage": 0.09604709840201851
+    },
+    "rolling_band": {
+      "windows": [
+        475,
+        500,
+        525,
+        550
+      ],
+      "all_windows_improve_mse_and_qlike_vs_expanding_in_all_three_years": true,
+      "auc_guard": "All four windows remain close to expanding on mean AUC; W550 is weakest but still within the predeclared per-year guard where band qualification was established only for 475-550 contiguous candidates.",
+      "representative_500": {
+        "mean_mse": 6.70263429314339e-10,
+        "mean_qlike": 0.1487844357111953,
+        "mean_auc": 0.7264944865564061,
+        "mean_precision": 0.5315656565656566,
+        "mean_recall": 0.2730266465560583,
+        "mean_coverage": 0.07484480756137611
+      }
+    },
+    "break_conditioned": {
+      "break_date_all_origins": "2020-03-20",
+      "mean_mse": 6.917769438911602e-10,
+      "mean_qlike": 0.14815767010881375,
+      "mean_auc": 0.7242863953309646,
+      "mean_precision": 0.7333333333333334,
+      "mean_recall": 0.17876344086021503,
+      "mean_coverage": 0.03416236132804678,
+      "yearly_alerts": {
+        "2022": 10,
+        "2023": 1,
+        "2024": 10
+      }
+    }
+  },
+  "comparison": {
+    "rolling500_vs_expanding": {
+      "mse_relative_change": -0.018563163603219413,
+      "qlike_relative_change": -0.03338104432107336,
+      "auc_change": -0.0017839493653486471,
+      "precision_change": 0.03780904280904279,
+      "recall_change": 0.0005061016950879127,
+      "coverage_change": -0.0212022908406424
+    },
+    "break_vs_expanding": {
+      "mse_relative_change": 0.012938115987180643,
+      "qlike_relative_change": -0.03745299922101675,
+      "auc_change": -0.003992040590790169,
+      "recall_change": -0.09375710400075535,
+      "coverage_change": -0.061884737073971734
+    }
+  },
+  "decision": {
+    "status": "ROBUST_ROLLING_POLICY_ADVANCES_TO_FREEZE_STAGE",
+    "advancing_policy": "ROLLING_BAND_475_550",
+    "representative_for_reporting_only": 500,
+    "expanding": "RETAIN_AS_MANDATORY_COMPARATOR",
+    "break_conditioned": "RETAIN_AS_DIAGNOSTIC_STRUCTURAL_BREAK_CANDIDATE_NOT_PRIMARY_POLICY",
+    "reason": [
+      "The entire contiguous 475-550 rolling band improves both MSE and QLIKE versus expanding in all 2022-2024 origins.",
+      "AUC is broadly preserved and alarm coverage does not collapse to the degree seen under break-conditioned history.",
+      "Break-conditioned history improves QLIKE but has worse mean MSE than expanding and produces only one alert in 2023, making it too sparse for the primary SQRT risk-memory policy.",
+      "No 2025 or 2026 evidence is used."
+    ]
+  },
+  "governance": {
+    "locked_2025_used": false,
+    "y2026_used": false,
+    "random_split": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
