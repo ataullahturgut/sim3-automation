@@ -15,7 +15,7 @@ def main():
     ap.add_argument("--route",type=Path,required=True)
     ap.add_argument("--cbr",type=Path,required=True)
     ap.add_argument("--base",type=Path,required=True)
-    ap.add_argument("--sqrt-auth",type=Path,required=True)
+    ap.add_argument("--sqrt-auth",type=Path,required=True)\n    ap.add_argument("--sqrt-route-auth",type=Path,required=True)
     ap.add_argument("--sqrt-parent",type=Path,required=True)
     ap.add_argument("--pre-ledger",type=Path,required=True)
     ap.add_argument("--external-spine",type=Path,required=True)
@@ -42,7 +42,7 @@ def main():
     gov_days=base.load_days()
 
     ext_daily=route.load_external_daily_for_sqrt(ext_spine)
-    sqrt_mod=route.load_sqrt_mod(args.sqrt_auth)
+    sqrt_mod=route.load_sqrt_mod(args.sqrt_route_auth)
     ext_sqrt,ext_sqrt_summary=route.external_sqrt_cases(sqrt_mod,ext_daily)
     ext_router,ext_router_summary=route.external_router_rows(base,ext_spine)
     ext_unresolved,ext_route_summary=route.route_external_sqrt_cases(ext_sqrt,ext_router)
