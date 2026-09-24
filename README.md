@@ -56,3 +56,10 @@ This package was created from the existing SIM3 V4.7 automation without rebuildi
 ## License
 
 No open-source license has been selected yet. Until a license file is added, normal copyright restrictions apply. Do not assume permission to redistribute or modify the project beyond what the repository owner explicitly grants.
+
+## Gold Direction Engine navigation
+
+- Current project authority: [Gold Control manifest](gold_axis_2026/GOLD_CONTROL_PROJECT_MANIFEST.md).
+- Current research implementations and historical results: exact pinned commits in manifest section 9.
+- Data architecture and existing operational code: [data pipeline](gold_axis_2026/data_pipeline/).
+- Retained legacy context engine: [R4.1](gold_axis_2026/r4_1/); tests: `gold_axis_2026/r4_1/tests/`, `gold_axis_2026/tests/` and adjacent `test_*.py` files.

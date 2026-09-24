@@ -1,8 +1,8 @@
 # GOLD CONTROL / GOLD DIRECTION ENGINE — PROJECT MANIFEST
 
-**Manifest version:** 3.00
+**Manifest version:** 3.01
 
-**Issue date:** 2026-09-23
+**Issue date:** 2026-09-24
 
 **Repository:** ataullahturgut/sim3-automation
 
@@ -9817,6 +9817,16 @@ Important remaining gaps:
 
 No missing metric is filled from conversation memory. Historical numbers preserved solely from earlier summary tables are labeled historical; the current best-evidence table is supported by frozen results and critical ledger/code checks.
 
+### 10.1 Retained legacy R4.1 caveats (historical, not new findings)
+
+The removed R4.1 blocker document is preserved at [the pre-cleanup canonical pin](https://github.com/ataullahturgut/sim3-automation/blob/66fe1bac635e6135128d478aab9a6cba74883948/gold_axis_2026/r4_1/KNOWN_BLOCKERS.md). Its legacy-specific caveats are retained here without changing any successor result or current research status:
+
+- Exact original VW-MIDAS-SVR Adapt V2 immutable production runner/raw preprocessing chain was not fully retained; later successor evidence must not be substituted as proof of that original chain.
+- Original Macro Event DOWN scoring, consensus and release-vintage construction was not fully recovered in that legacy record. This is an original-identity limitation, not a reversal of later Macro Event successor findings.
+- Exact final R4 exposure ladder/arbitration was NOT_PROVEN; do not invent a position percentage from direction/risk states or GVZ caps.
+- No exact frozen legacy intraday Emergency rule was recovered; EOD signals default to next-session execution.
+- Legacy >=4% Reversal Emergency remains ALERT_ONLY, not an automatic direction flip; the old document records that the pre-2026 replay did not support that flip.
+
 ## 11. RETAINED SUPPORT DOCUMENTS AND CHANGE CONTROL
 
 The canonical project root remains lean. The following operational contracts remain retained because they govern data/runtime readiness rather than duplicate research conclusions:
@@ -9827,6 +9837,10 @@ The canonical project root remains lean. The following operational contracts rem
 - GOLD_CONTROL_LIVE_INTRAMONTH_RECOMPUTE_CONTRACT_V144_2026-09-07.md
 - GOLD_CONTROL_HISTORICAL_PILOT_READINESS_CONTRACT_V145_2026-09-08.md
 - GOLD_CONTROL_R4_1_EMITTED_STATE_CONTRACT.md
+
+Version 3.01 changes repository hygiene only. The six retained contracts, research registry, metrics, frozen rules and pinned evidence are unchanged. HS-SDL-DMA and V1.49 general/thesis experiment code, dedicated experiment tests and replay workflows are historical-only; their exact pre-cleanup files remain at commit `66fe1bac635e6135128d478aab9a6cba74883948`, with result lineage in H01/H02 and section 9.1. Historical implementation paths in sections 7–9 refer to their pinned research trees, not necessarily the current checkout. Current research implementations are resolved from section 9's commit-qualified links.
+
+Current-tree navigation: `r4_1/src/gold_r4/` is the retained legacy context engine; `apps/` and `data_pipeline/` contain the existing operational surface; tests are in `r4_1/tests/`, `tests/` and adjacent `test_*.py` files. Existing operational code does not confer runtime authority on the research cascade. Current project governance checks are in `tests/test_project_governance.py`. Legacy caveats formerly in a separate blocker file are consolidated in section 10.1.
 
 Technical implementation READMEs/runbooks remain valid for operation within their role. Do not create competing project summaries or repeated prose model conclusions on the canonical branch. Exact research code, JSON/CSV, preregistrations and workflows remain on their pinned research commits.
 
