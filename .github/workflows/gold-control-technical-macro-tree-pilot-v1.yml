@@ -1,0 +1,46 @@
+name: Gold Control Technical Macro Tree Pilot V1
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - gold-direction-history-robustness-v1-20260924
+    paths:
+      - gold_axis_2026/tools/technical_macro_tree_pilot_v1.py
+      - .github/workflows/gold-control-technical-macro-tree-pilot-v1.yml
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-direction-history-robustness-v1-20260924
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Require DB
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Install
+        run: python -m pip install "numpy==2.1.3" "pandas==2.2.3" "scikit-learn==1.5.2" "xgboost==2.1.1" "psycopg[binary]>=3.2,<4"
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/technical_macro_tree_pilot_v1.py
+      - name: Run
+        run: python gold_axis_2026/tools/technical_macro_tree_pilot_v1.py --out GOLD_CONTROL_TECHNICAL_AND_MACRO_TREE_PILOT_V1_RESULT_2026-09-25.json
+      - name: Freeze result
+        run: |
+          cp GOLD_CONTROL_TECHNICAL_AND_MACRO_TREE_PILOT_V1_RESULT_2026-09-25.json gold_axis_2026/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin gold-direction-history-robustness-v1-20260924
+          git add gold_axis_2026/GOLD_CONTROL_TECHNICAL_AND_MACRO_TREE_PILOT_V1_RESULT_2026-09-25.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Freeze technical and macro tree pilot V1 result"
+            git push origin HEAD:gold-direction-history-robustness-v1-20260924
+          fi
