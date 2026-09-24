@@ -164,7 +164,10 @@ def main():
       daily_by_year[y]=all_y
       for r in all_y:
         if r["sqrt_alert"]!=1: continue
-        key=(r["origin_date"],r["target_date"]); rr=grmap[key]
+        key=(r["origin_date"],r["target_date"])
+        rr=grmap.get(key)
+        if rr is None or r["origin_date"] not in glag or r["origin_date"] not in gov_raw:
+          continue
         governed.append(enrich(up2,r,r["sqrt_score"],rr,glag[r["origin_date"]],
           gov_raw[r["origin_date"]],f"GOVERNED_ALL_SQRT_ALERTS_{y}"))
 
@@ -173,13 +176,18 @@ def main():
     y26,saug=sqrt.yearly_fit_eval(srows,2026)
     all26=[]
     gov26=[]
+    feature_unavailable_2026=[]
     for s in saug:
-      rr=grmap[(s["origin_date"],s["target_date"])]
       row={"evaluation_year":2026,"origin_date":s["origin_date"],"target_date":s["target_date"],
            "actual_up":int(float(s["target_close_return"])>0),
            "target_return":float(s["target_close_return"])}
       all26.append(row)
       if int(s["sqrt_high_risk_alert"])==1:
+        key=(s["origin_date"],s["target_date"])
+        rr=grmap.get(key)
+        if rr is None or s["origin_date"] not in glag or s["origin_date"] not in gov_raw:
+          feature_unavailable_2026.append(s["target_date"])
+          continue
         gov26.append(enrich(up2,row,float(s["sqrt_normalized_risk_score"]),rr,
           glag[s["origin_date"]],gov_raw[s["origin_date"]],"GOVERNED_ALL_SQRT_ALERTS_2026"))
     daily_by_year[2026]=all26
@@ -224,6 +232,7 @@ def main():
         "selection_rule":"calls>=5, precision>development DOWN base rate, false-exit FPR<=30%; maximize DOWN recall, tie precision"},
       "selection_status":selection_status,
       "external_sqrt_summary":ext_summary,
+      "feature_unavailable_2026_high_risk_dates":feature_unavailable_2026,
       "governance":{"random_split":False,"2025_used_for_selection":False,"2026_used_for_selection":False,
         "default_position":"GOLD","cash_only_on_positive_down_exit":True,
         "canonical_branch_modified":False,"production_writes":False,"runtime_promotion":False}
