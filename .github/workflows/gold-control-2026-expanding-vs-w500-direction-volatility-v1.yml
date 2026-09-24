@@ -68,7 +68,7 @@ jobs:
       - name: Run
         run: |
           rm -rf dirvol_out
-          python gold_axis_2026/tools/expanding_vs_w500_direction_volatility_2026_v1.py --up2 /tmp/frozen/up2.py --route /tmp/frozen/route.py --cbr /tmp/frozen/cbr.py --base /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py --sqrt-auth /tmp/frozen/sqrt_auth.py --sqrt-route-auth /tmp/frozen/sqrt_route_auth.py --memory /tmp/frozen/memory.py --sqrt-parent /tmp/sqrt_parent.csv --pre-ledger /tmp/pre.csv --external-spine /tmp/external_daily.csv --raw-root /tmp/mdl --out dirvol_out
+          python gold_axis_2026/tools/expanding_vs_w500_direction_volatility_2026_v1.py --up2 /tmp/frozen/up2.py --route /tmp/frozen/route.py --cbr /tmp/frozen/cbr.py --base /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py --sqrt-route-auth /tmp/frozen/sqrt_route_auth.py --memory /tmp/frozen/memory.py --sqrt-parent /tmp/sqrt_parent.csv --pre-ledger /tmp/pre.csv --external-spine /tmp/external_daily.csv --raw-root /tmp/mdl --out dirvol_out
 
       - name: Freeze result
         run: |
