@@ -6,6 +6,7 @@ on:
     paths:
       - 'gold_axis_2026/GOLD_CONTROL_DIRECTION_ENGINE_ESTIMATION_WINDOW_ROBUSTNESS_V1_PREREG_2026-09-24.md'
       - 'gold_axis_2026/tools/direction_engine_estimation_window_robustness_v1.py'
+      - 'gold_axis_2026/tools/direction_engine_estimation_window_robustness_v1r2.py'
       - '.github/workflows/gold-control-direction-history-robustness-v1.yml'
   workflow_dispatch:
 
@@ -34,28 +35,32 @@ jobs:
         run: test -n "$NEON_DATABASE_URL"
       - name: Install frozen dependencies
         run: python -m pip install 'numpy==2.1.3' 'scipy==1.14.1' 'psycopg[binary]>=3.2,<4'
+      - name: Materialize corrected external pre-2022 spine
+        run: |
+          git show 509c5ffa762f4ea49644b8ffe723ed2591ba52bf:gold_axis_2026/external_data/v2/dukascopy_xauusd_govsession_mid_5m_daily_features_2018_2021.csv > /tmp/external_daily.csv
+          test -s /tmp/external_daily.csv
       - name: Compile
-        run: python -m py_compile gold_axis_2026/tools/direction_engine_estimation_window_robustness_v1.py
+        run: python -m py_compile gold_axis_2026/tools/direction_engine_estimation_window_robustness_v1r2.py
       - name: Assert read-only and locked-period exclusion
         run: |
-          ! grep -Eini 'insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from|create[[:space:]]+table|drop[[:space:]]+table|alter[[:space:]]+table' gold_axis_2026/tools/direction_engine_estimation_window_robustness_v1.py
-          grep -n 'default_transaction_read_only' gold_axis_2026/tools/direction_engine_estimation_window_robustness_v1.py
-          grep -n "2025-01-01" gold_axis_2026/tools/direction_engine_estimation_window_robustness_v1.py
-      - name: Run pre-2025 robustness and structural-break analysis
+          ! grep -Eini 'insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from|create[[:space:]]+table|drop[[:space:]]+table|alter[[:space:]]+table' gold_axis_2026/tools/direction_engine_estimation_window_robustness_v1r2.py
+          grep -n 'default_transaction_read_only' gold_axis_2026/tools/direction_engine_estimation_window_robustness_v1r2.py
+          grep -n "2025-01-01" gold_axis_2026/tools/direction_engine_estimation_window_robustness_v1r2.py
+      - name: Run full pre-2025 robustness and structural-break analysis
         run: |
           rm -rf history_robustness_out
-          python gold_axis_2026/tools/direction_engine_estimation_window_robustness_v1.py
+          python gold_axis_2026/tools/direction_engine_estimation_window_robustness_v1r2.py --external-spine /tmp/external_daily.csv
       - name: Freeze research outputs
         run: |
           cp history_robustness_out/* gold_axis_2026/
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add gold_axis_2026/GOLD_CONTROL_DIRECTION_ENGINE_ESTIMATION_WINDOW_ROBUSTNESS_V1_*
-          git commit -m 'Freeze pre-2025 direction history robustness V1 results'
+          git add gold_axis_2026/GOLD_CONTROL_DIRECTION_ENGINE_ESTIMATION_WINDOW_ROBUSTNESS_V1R2_*
+          git commit -m 'Freeze full-history direction robustness V1R2 results'
           git push origin HEAD:gold-direction-history-robustness-v1-20260924
       - uses: actions/upload-artifact@v4
         with:
-          name: gold-control-direction-history-robustness-v1
+          name: gold-control-direction-history-robustness-v1r2
           retention-days: 30
           if-no-files-found: error
           path: history_robustness_out/
