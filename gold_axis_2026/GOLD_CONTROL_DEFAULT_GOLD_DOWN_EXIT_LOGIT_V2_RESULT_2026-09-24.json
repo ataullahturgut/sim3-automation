@@ -1,0 +1,152 @@
+{
+  "identity": "DEFAULT_GOLD_DOWN_EXIT_LOGIT_V2_RESEARCH",
+  "status": "RESEARCH_ONLY_NO_PROMOTION",
+  "objective": "DEFAULT GOLD; CASH only on positive DOWN evidence",
+  "method": {
+    "features": [
+      "sqrt_score",
+      "lag1_close_return",
+      "downside_share",
+      "intraday_end_norm",
+      "close_location",
+      "trough_recovery_norm",
+      "last_quarter_return_norm",
+      "direct_up_fraction",
+      "legacy_up_fraction"
+    ],
+    "model": "L2 LogisticRegression C=1.0",
+    "min_prequential_history": 80,
+    "threshold_grid": [
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75
+    ],
+    "selection": "2020-2023 strictly prequential scores; calls>=10; precision>base rate; false-exit FPR<=30%; maximize DOWN recall"
+  },
+  "development": {
+    "prequential_n": 173,
+    "down_base_rate": 0.4913294797687861,
+    "grid": [
+      {
+        "threshold": 0.55,
+        "eligible": false,
+        "metrics": {
+          "n": 173,
+          "actual_down": 85,
+          "actual_up": 88,
+          "down_calls": 17,
+          "correct_down": 5,
+          "false_exit_on_up": 12,
+          "missed_down": 80,
+          "kept_up": 76,
+          "down_precision": 0.29411764705882354,
+          "down_recall": 0.058823529411764705,
+          "false_exit_fpr": 0.13636363636363635,
+          "up_retention": 0.8636363636363636,
+          "coverage": 0.09826589595375723,
+          "balanced_accuracy": 0.4612299465240642,
+          "auc": 0.39358288770053473
+        }
+      },
+      {
+        "threshold": 0.6,
+        "eligible": false,
+        "metrics": {
+          "n": 173,
+          "actual_down": 85,
+          "actual_up": 88,
+          "down_calls": 5,
+          "correct_down": 2,
+          "false_exit_on_up": 3,
+          "missed_down": 83,
+          "kept_up": 85,
+          "down_precision": 0.4,
+          "down_recall": 0.023529411764705882,
+          "false_exit_fpr": 0.03409090909090909,
+          "up_retention": 0.9659090909090909,
+          "coverage": 0.028901734104046242,
+          "balanced_accuracy": 0.4947192513368984,
+          "auc": 0.39358288770053473
+        }
+      },
+      {
+        "threshold": 0.65,
+        "eligible": false,
+        "metrics": {
+          "n": 173,
+          "actual_down": 85,
+          "actual_up": 88,
+          "down_calls": 1,
+          "correct_down": 0,
+          "false_exit_on_up": 1,
+          "missed_down": 85,
+          "kept_up": 87,
+          "down_precision": 0.0,
+          "down_recall": 0.0,
+          "false_exit_fpr": 0.011363636363636364,
+          "up_retention": 0.9886363636363636,
+          "coverage": 0.005780346820809248,
+          "balanced_accuracy": 0.4943181818181818,
+          "auc": 0.39358288770053473
+        }
+      },
+      {
+        "threshold": 0.7,
+        "eligible": false,
+        "metrics": {
+          "n": 173,
+          "actual_down": 85,
+          "actual_up": 88,
+          "down_calls": 1,
+          "correct_down": 0,
+          "false_exit_on_up": 1,
+          "missed_down": 85,
+          "kept_up": 87,
+          "down_precision": 0.0,
+          "down_recall": 0.0,
+          "false_exit_fpr": 0.011363636363636364,
+          "up_retention": 0.9886363636363636,
+          "coverage": 0.005780346820809248,
+          "balanced_accuracy": 0.4943181818181818,
+          "auc": 0.39358288770053473
+        }
+      },
+      {
+        "threshold": 0.75,
+        "eligible": false,
+        "metrics": {
+          "n": 173,
+          "actual_down": 85,
+          "actual_up": 88,
+          "down_calls": 0,
+          "correct_down": 0,
+          "false_exit_on_up": 0,
+          "missed_down": 85,
+          "kept_up": 88,
+          "down_precision": null,
+          "down_recall": 0.0,
+          "false_exit_fpr": 0.0,
+          "up_retention": 1.0,
+          "coverage": 0.0,
+          "balanced_accuracy": 0.5,
+          "auc": 0.39358288770053473
+        }
+      }
+    ]
+  },
+  "selection_status": "NO_ELIGIBLE_THRESHOLD",
+  "selected_threshold": null,
+  "missing_feature_dates": [],
+  "governance": {
+    "random_split": false,
+    "2025_used_for_selection": false,
+    "2026_used_for_selection": false,
+    "default_position": "GOLD",
+    "cash_only_on_positive_down_exit": true,
+    "canonical_branch_modified": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  }
+}
