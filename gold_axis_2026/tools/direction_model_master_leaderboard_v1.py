@@ -58,7 +58,7 @@ def ternary_metrics(rows,key):
 
 def parse_manifest(path):
     c=path.read_text(encoding="utf-8")
-    pat=re.compile(r"^###\s+(R\d+)\.\s+(.+)$",re.M)
+    pat=re.compile(r"^###\s+([RH]\d+)\.\s+(.+)$",re.M)
     ms=list(pat.finditer(c)); out=[]
     labels=["METHOD / IDENTITY","ROLE","WHY TESTED","DATA / ROUTE","PRE-2025 RESULT","LOCKED 2025 RESULT","FINAL STATUS","WHY ACCEPTED / REJECTED / NOT_PROVEN"]
     for i,m in enumerate(ms):
