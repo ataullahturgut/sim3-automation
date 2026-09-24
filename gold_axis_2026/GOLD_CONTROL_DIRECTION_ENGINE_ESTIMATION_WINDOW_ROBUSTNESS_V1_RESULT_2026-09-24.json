@@ -1,0 +1,215 @@
+{
+  "identity": "DIRECTION_ENGINE_ESTIMATION_WINDOW_ROBUSTNESS_V1_RESEARCH",
+  "status": "ROBUSTNESS_SURFACE_COMPLETE",
+  "integrity_errors": [],
+  "governance": {
+    "2025_used": false,
+    "2026_used": false,
+    "random_split": false,
+    "runtime_write": false,
+    "production_write": false,
+    "model_feature_changes": false
+  },
+  "baseline_reproduction": {
+    "sqrt_alarm_counts": {
+      "2022": 11,
+      "2023": 2,
+      "2024": 17
+    },
+    "router": [
+      {
+        "n": 205,
+        "calls": 22,
+        "tp": 12,
+        "fp": 10,
+        "actual_up": 107,
+        "actual_down": 98,
+        "precision": 0.5454545454545454,
+        "false_up_fpr": 0.10204081632653061,
+        "actual_up_recall": 0.11214953271028037,
+        "coverage": 0.1073170731707317,
+        "wilson90_lcb_precision": 0.411021293948683,
+        "selected_counts": {
+          "TTSM_S1": 7,
+          "TTSM_S2": 15
+        },
+        "year": 2022
+      },
+      {
+        "n": 203,
+        "calls": 19,
+        "tp": 5,
+        "fp": 14,
+        "actual_up": 101,
+        "actual_down": 102,
+        "precision": 0.2631578947368421,
+        "false_up_fpr": 0.13725490196078433,
+        "actual_up_recall": 0.04950495049504951,
+        "coverage": 0.09359605911330049,
+        "wilson90_lcb_precision": 0.15637192644964787,
+        "selected_counts": {
+          "TTSM_S2": 19
+        },
+        "year": 2023
+      },
+      {
+        "n": 205,
+        "calls": 42,
+        "tp": 26,
+        "fp": 16,
+        "actual_up": 119,
+        "actual_down": 86,
+        "precision": 0.6190476190476191,
+        "false_up_fpr": 0.18604651162790697,
+        "actual_up_recall": 0.2184873949579832,
+        "coverage": 0.2048780487804878,
+        "wilson90_lcb_precision": 0.520254930914069,
+        "selected_counts": {
+          "TTSM_S2": 4,
+          "RM_LOGIT": 37,
+          "AR1_RM_LOGIT": 1
+        },
+        "year": 2024
+      }
+    ],
+    "up2_external_n": 98,
+    "up2_external_up": 46,
+    "up2_frozen_pooled": {
+      "n": 26,
+      "actual_up": 13,
+      "actual_down": 13,
+      "up2_calls": 11,
+      "true_up": 8,
+      "false_up": 3,
+      "missed_up": 5,
+      "true_down_abstain": 10,
+      "up_precision": 0.7272727272727273,
+      "missed_up_recall": 0.6153846153846154,
+      "false_up_fpr": 0.23076923076923078,
+      "coverage": 0.4230769230769231,
+      "wilson90_lcb_up_precision": 0.5345329033149758,
+      "auc": 0.78698224852071,
+      "brier": 0.22715763997399374
+    },
+    "up2_frozen_supportive": true
+  },
+  "source": {
+    "external_reconstruction": {
+      "passed": true,
+      "raw_n": 518,
+      "spine_n": 518,
+      "common_n": 518,
+      "missing_dates": [],
+      "extra_dates": [],
+      "bad_276_bar_dates": [],
+      "max_abs_close_diff": 4.547473508864641e-13,
+      "max_abs_rv_diff": 3.548051609458813e-17,
+      "max_abs_dr_diff": 3.247185506594086e-17
+    },
+    "external_sqrt_summary": {
+      "2020": {
+        "alarms": 212,
+        "down": 97,
+        "up": 115
+      },
+      "2021": {
+        "alarms": 28,
+        "down": 16,
+        "up": 12
+      }
+    },
+    "external_router_summary": {
+      "2020": {
+        "n": 260,
+        "router_up": 185,
+        "tp": 111,
+        "fp": 74
+      },
+      "2021": {
+        "n": 258,
+        "router_up": 33,
+        "tp": 19,
+        "fp": 14
+      }
+    },
+    "external_route_summary": {
+      "2020": {
+        "sqrt_alarms": 212,
+        "router_up_overlap": 140,
+        "overlap_actual_up": 80,
+        "overlap_actual_down": 60,
+        "router_abstain": 72,
+        "abstain_actual_down": 37,
+        "abstain_actual_up": 35
+      },
+      "2021": {
+        "sqrt_alarms": 28,
+        "router_up_overlap": 2,
+        "overlap_actual_up": 1,
+        "overlap_actual_down": 1,
+        "router_abstain": 26,
+        "abstain_actual_down": 15,
+        "abstain_actual_up": 11
+      }
+    }
+  },
+  "surface_counts": {
+    "sqrt_rows": 132,
+    "router_rows": 200,
+    "up2_rows": 36
+  },
+  "descriptive_surface_summary": {
+    "sqrt_descriptive_extrema_not_selection": {
+      "lowest_pooled_mse": {
+        "policy": "EXTENDED_ROLLING_500",
+        "window": 500,
+        "pooled_mse": 6.71464173050001e-10
+      },
+      "lowest_pooled_qlike": {
+        "policy": "GOVERNED_FROZEN_EXPANDING",
+        "window": "EXPANDING",
+        "pooled_qlike": 0.1484967070750709
+      },
+      "highest_mean_annual_auc": {
+        "policy": "EXTENDED_ROLLING_1000",
+        "window": 1000,
+        "mean_annual_auc": 0.7288815945198804
+      },
+      "eligible_policy_count": 33
+    },
+    "router_descriptive_extrema_not_selection": {
+      "highest_precision": {
+        "policy": "ROLLING_60",
+        "window": 60,
+        "precision": 0.631578947368421
+      },
+      "lowest_false_up_fpr": {
+        "policy": "ROLLING_30",
+        "window": 30,
+        "false_up_fpr": 0.0
+      },
+      "highest_wilson90_lcb": {
+        "policy": "ROLLING_240",
+        "window": 240,
+        "wilson90_lcb_precision": 0.5306150001908814
+      },
+      "eligible_policy_count": 50
+    },
+    "up2_existing_gate": {
+      "supportive_policy_count": 1,
+      "supportive_policies": [
+        {
+          "policy": "EXPANDING_FROZEN",
+          "window": "EXPANDING",
+          "precision": 0.7272727272727273,
+          "fpr": 0.23076923076923078,
+          "coverage": 0.4230769230769231,
+          "lcb": 0.5345329033149758
+        }
+      ],
+      "eligible_policy_count": 5
+    },
+    "warning": "Extrema are descriptive only. V1 does not promote a history policy or use 2025/2026."
+  },
+  "interpretation_rule": "V1 maps the pre-2025 surface only; it does not select an optimal window or replay 2025."
+}
