@@ -149,13 +149,24 @@ def main():
       successor["LOCAL_COMPETENCE_V2"][str(y)]=l2.metrics([r for r in lc2 if r["year"]==y])
 
     inv=parse_manifest(a.manifest)
-    if len(inv)!=57: raise RuntimeError(f"MANIFEST_INVENTORY_COUNT:{len(inv)}")
+    r_count=sum(x["id"].startswith("R") for x in inv)
+    h_count=sum(x["id"].startswith("H") for x in inv)
+    if (r_count,h_count)!=(57,37): raise RuntimeError(f"MANIFEST_INVENTORY_COUNT:R={r_count}:H={h_count}")
 
     result={
       "identity":"GOLD_CONTROL_DIRECTION_MODEL_MASTER_LEADERBOARD_V1_RESEARCH",
       "date":"2026-09-24",
       "manifest_inventory_count":len(inv),
+      "manifest_r_count":r_count,
+      "manifest_h_count":h_count,
       "manifest_inventory":inv,
+      "post_manifest_research_models":[
+        "GOLD_CONTROL_DYNAMIC_FIXED_SHARE_ROUTER_V1_RESEARCH",
+        "GOLD_CONTROL_DYNAMIC_LOCAL_COMPETENCE_ROUTER_V1_RESEARCH",
+        "GOLD_CONTROL_DYNAMIC_LOCAL_COMPETENCE_ROUTER_V2_RESEARCH",
+        "DEFAULT_GOLD_DOWN_EXIT_LOGIT_V1_RESEARCH",
+        "DEFAULT_GOLD_DOWN_EXIT_LOGIT_V2_RESEARCH"
+      ],
       "same_clock_common_daily":{
         "row_count":len(rows),
         "first_target":rows[0]["target_date"],"last_target":rows[-1]["target_date"],
@@ -172,6 +183,6 @@ def main():
     }
     p=a.out/"GOLD_CONTROL_DIRECTION_MODEL_MASTER_LEADERBOARD_V1_RESULT_2026-09-24.json"
     p.write_text(json.dumps(result,indent=2),encoding="utf-8")
-    print(json.dumps({"identity":result["identity"],"manifest_inventory_count":len(inv),"same_clock_n":len(rows),"annual":annual,"successor_routers":successor},indent=2))
+    print(json.dumps({"identity":result["identity"],"manifest_inventory_count":len(inv),"manifest_r_count":r_count,"manifest_h_count":h_count,"same_clock_n":len(rows),"annual":annual,"successor_routers":successor},indent=2))
 
 if __name__=="__main__": main()
