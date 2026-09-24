@@ -41,7 +41,8 @@ jobs:
           git show eb928b2d5be6250227d8e14dea2d58abe494f762:gold_axis_2026/tools/residual_one_sided_up2_logit_v1_run.py > /tmp/frozen/up2.py
           git show b22235f04dc48b173a93a98cc2ce22081bb0054e:gold_axis_2026/tools/cbr_cascade_route_consistent_extension_v1_run.py > /tmp/frozen/route.py
           git show f187f89c166a75cefa8cf60709dcd4ce1027663d:gold_axis_2026/tools/downside_cbr_dtw_path_v1.py > /tmp/frozen/cbr.py
-          git show 2926796b6a7e9048d2c091c9c571cb928b773e02:gold_axis_2026/tools/downside_raw_vs_sqrt_har_dr_multiorigin_v1.py > /tmp/frozen/sqrt_auth.py\n          git show ad0fc4dcbe1687833bd9a153cd4bc6a754523464:gold_axis_2026/tools/regime_v1_router_sqrt.py > /tmp/frozen/sqrt_route_auth.py
+          git show 2926796b6a7e9048d2c091c9c571cb928b773e02:gold_axis_2026/tools/downside_raw_vs_sqrt_har_dr_multiorigin_v1.py > /tmp/frozen/sqrt_auth.py
+          git show ad0fc4dcbe1687833bd9a153cd4bc6a754523464:gold_axis_2026/tools/regime_v1_router_sqrt.py > /tmp/frozen/sqrt_route_auth.py
           git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py > /tmp/frozen/gold_axis_2026/tools/down_verifier_candidate_audit_v1_run.py
           git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/regime_v1_data.py > /tmp/frozen/gold_axis_2026/tools/regime_v1_data.py
           git show 7982b422476df61eb0339b74265afd553414f2d2:gold_axis_2026/tools/regime_v1_experts.py > /tmp/frozen/gold_axis_2026/tools/regime_v1_experts.py
