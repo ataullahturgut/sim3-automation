@@ -1,0 +1,88 @@
+{
+  "identity": "GOLD_CONTROL_SQRT_MEMORY_POLICY_FREEZE_V1",
+  "date": "2026-09-24",
+  "parent_evidence": [
+    "DIRECTION_ENGINE_ESTIMATION_WINDOW_ROBUSTNESS_V1R2",
+    "DIRECTION_ENGINE_MEMORY_POLICY_COMPARISON_V1"
+  ],
+  "scope": "SQRT-HAR-DR estimation memory only",
+  "authority_basis": {
+    "principle": "Freeze the history-window methodology entirely on pre-2025 evidence; open locked 2025 only after freeze; do not retune after seeing 2025.",
+    "role_specific_metrics": [
+      "MSE",
+      "QLIKE",
+      "HIGH_RISK_AUC",
+      "ALARM_STABILITY"
+    ],
+    "pooling": "NOT_AUTHORIZED under V1 because a robust single memory regime was found"
+  },
+  "frozen_policy": {
+    "family": "ROLLING",
+    "primary_window_matured_observations": 500,
+    "robustness_envelope": [
+      475,
+      500,
+      525,
+      550
+    ],
+    "expanding_comparator": "MANDATORY",
+    "break_conditioned": "DIAGNOSTIC_CHALLENGER_ONLY",
+    "formula_features_threshold_semantics": "UNCHANGED",
+    "rationale": [
+      "Pre-2025 robustness identified one contiguous stable band, 475-550 observations.",
+      "All four band members improved both MSE and QLIKE versus expanding in 2022, 2023 and 2024.",
+      "W=500 is frozen as a deterministic operational representative of the approximately-500-observation plateau, not selected from 2025 and not because a single-point optimum is being claimed.",
+      "The remaining band members are sensitivity checks only and cannot replace W=500 after locked-2025 results are observed."
+    ]
+  },
+  "locked_2025_transport_contract": {
+    "access": "ONE_WAY_AFTER_THIS_FREEZE",
+    "primary_specification": "W=500",
+    "mandatory_comparators": [
+      "EXPANDING",
+      "W=475",
+      "W=525",
+      "W=550",
+      "BREAK_CONDITIONED_DIAGNOSTIC"
+    ],
+    "no_reselection": true,
+    "no_retuning": true,
+    "no_threshold_change": true,
+    "reporting": [
+      "MSE",
+      "QLIKE",
+      "HIGH_RISK_AUC",
+      "ALARM_COVERAGE",
+      "ALARM_PRECISION",
+      "ALARM_RECALL"
+    ],
+    "primary_transport_label_rule": {
+      "supportive": "W500 has MSE <= expanding AND QLIKE <= expanding AND AUC >= expanding - 0.02 AND produces at least one high-risk alarm.",
+      "mixed": "The supportive rule is not fully met, but W500 does not have both MSE and QLIKE worse than expanding and does not collapse to zero alarms.",
+      "not_supportive": "W500 has both MSE > expanding AND QLIKE > expanding, OR produces zero high-risk alarms."
+    },
+    "band_robustness_rule": {
+      "supportive": "At least 3 of 4 frozen band members satisfy the primary supportive rule against expanding.",
+      "mixed": "Exactly 2 of 4 satisfy the primary supportive rule.",
+      "not_supportive": "At most 1 of 4 satisfies the primary supportive rule."
+    },
+    "note": "These transport labels are preregistered now, before any locked-2025 evaluation under this frozen policy."
+  },
+  "forbidden_after_2025_open": [
+    "changing W500",
+    "shrinking or expanding the 475-550 envelope",
+    "choosing the best 2025 band member as the new primary",
+    "changing SQRT features/formula/threshold semantics",
+    "using 2026 for model selection",
+    "silently introducing multi-window pooling"
+  ],
+  "governance": {
+    "locked_2025_used_for_freeze": false,
+    "y2026_used_for_freeze": false,
+    "random_split": false,
+    "production_writes": false,
+    "runtime_promotion": false,
+    "canonical_manifest_change": false
+  },
+  "status": "PRE2025_SQRT_MEMORY_POLICY_FROZEN_READY_FOR_LOCKED_2025_TRANSPORT"
+}
