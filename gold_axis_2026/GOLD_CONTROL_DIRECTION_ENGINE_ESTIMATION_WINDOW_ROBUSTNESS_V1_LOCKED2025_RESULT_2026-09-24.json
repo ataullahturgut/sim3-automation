@@ -1,0 +1,174 @@
+{
+  "baseline_reproduction": {
+    "router_2025": {
+      "actual_down": 97,
+      "actual_up": 140,
+      "actual_up_recall": 0.19285714285714287,
+      "calls": 37,
+      "coverage": 0.15611814345991562,
+      "false_up_fpr": 0.10309278350515463,
+      "fp": 10,
+      "n": 237,
+      "precision": 0.7297297297297297,
+      "selected_counts": {
+        "RM_LOGIT": 37
+      },
+      "tp": 27,
+      "wilson90_lcb_precision": 0.6278911326069802
+    },
+    "sqrt_2025": {
+      "alert_count": 90,
+      "alert_coverage": 0.379746835443038,
+      "alert_precision": 0.7333333333333333,
+      "alert_recall": 0.673469387755102,
+      "beta": [
+        0.0012835500873305174,
+        0.23452300365577167,
+        0.43876587630753205,
+        0.11173996530324909
+      ],
+      "fn": 32,
+      "fp": 24,
+      "high_risk_auc": 0.8401115842020261,
+      "mse": 3.5114104814369556e-08,
+      "oos_r2_vs_train_mean": 0.06111991408799633,
+      "q80": 5.308574220289716e-05,
+      "qlike": 0.3325469565601903,
+      "status": "OK",
+      "test_n": 237,
+      "tn": 115,
+      "tp": 66,
+      "train_available": 936,
+      "train_n": 936,
+      "year": 2025
+    },
+    "up2_2025": {
+      "actual_down": 39,
+      "actual_up": 35,
+      "auc": 0.5164835164835164,
+      "brier": 0.2575417771454507,
+      "calibration": {
+        "calibration_n": 84,
+        "down_calibration_n": 43,
+        "q80_down_prequential": 0.5312265857773989,
+        "status": "OK",
+        "tau": 0.5312265857773989
+      },
+      "coverage": 0.33783783783783783,
+      "eligible_for_any_future_policy_claim": true,
+      "false_up": 12,
+      "false_up_fpr": 0.3076923076923077,
+      "intercept": -0.10593199855530933,
+      "locked2025_transport_gate": true,
+      "missed_up": 22,
+      "missed_up_recall": 0.37142857142857144,
+      "n": 74,
+      "policy": "EXPANDING_FROZEN",
+      "pre2025_supportive": true,
+      "residual_up_base_rate": 0.47297297297297297,
+      "standardized_coefficients": {
+        "close_location": -0.0701743020910761,
+        "direct_up_fraction": -0.10824904781025205,
+        "downside_share": 0.2063103773681705,
+        "intraday_end_norm": -0.3636324769795092,
+        "lag1_close_return": 0.24196301186044772,
+        "last_quarter_return_norm": -0.018566830038213095,
+        "legacy_up_fraction": 0.2569922166797053,
+        "sqrt_score": 0.11738510217657498,
+        "trough_recovery_norm": 0.009800736030676252
+      },
+      "status": "OK",
+      "tau": 0.5312265857773989,
+      "train_down": 65,
+      "train_n": 124,
+      "train_up": 59,
+      "true_down_abstain": 27,
+      "true_up": 13,
+      "up2_calls": 25,
+      "up_precision": 0.52,
+      "wilson90_lcb_up_precision": 0.39471806872404025,
+      "window": "EXPANDING",
+      "year": 2025
+    }
+  },
+  "governance": {
+    "2025_role": "LOCKED_RETROSPECTIVE_TRANSPORT_ONLY",
+    "2025_used_to_change_grid": false,
+    "2025_used_to_tune": false,
+    "2026_used": false,
+    "model_feature_changes": false,
+    "production_write": false,
+    "random_split": false,
+    "runtime_write": false
+  },
+  "identity": "DIRECTION_ENGINE_ESTIMATION_WINDOW_ROBUSTNESS_V1_LOCKED2025_TRANSPORT",
+  "integrity_errors": [],
+  "interpretation_rule": "2025 transports the entire preregistered V1 surface; it cannot select or rescue a history policy.",
+  "parent_v1_result_commit": "19b815289469b0354b6edc502b5831253b4bc162",
+  "status": "LOCKED2025_TRANSPORT_SURFACE_COMPLETE",
+  "surface_counts": {
+    "router": 50,
+    "sqrt": 33,
+    "up2": 9
+  },
+  "up2_source": {
+    "external_reconstruction": {
+      "bad_276_bar_dates": [],
+      "common_n": 518,
+      "extra_dates": [],
+      "max_abs_close_diff": 4.547473508864641e-13,
+      "max_abs_dr_diff": 3.247185506594086e-17,
+      "max_abs_rv_diff": 3.548051609458813e-17,
+      "missing_dates": [],
+      "passed": true,
+      "raw_n": 518,
+      "spine_n": 518
+    },
+    "external_route_summary": {
+      "2020": {
+        "abstain_actual_down": 37,
+        "abstain_actual_up": 35,
+        "overlap_actual_down": 60,
+        "overlap_actual_up": 80,
+        "router_abstain": 72,
+        "router_up_overlap": 140,
+        "sqrt_alarms": 212
+      },
+      "2021": {
+        "abstain_actual_down": 15,
+        "abstain_actual_up": 11,
+        "overlap_actual_down": 1,
+        "overlap_actual_up": 1,
+        "router_abstain": 26,
+        "router_up_overlap": 2,
+        "sqrt_alarms": 28
+      }
+    },
+    "external_router_summary": {
+      "2020": {
+        "fp": 74,
+        "n": 260,
+        "router_up": 185,
+        "tp": 111
+      },
+      "2021": {
+        "fp": 14,
+        "n": 258,
+        "router_up": 33,
+        "tp": 19
+      }
+    },
+    "external_sqrt_summary": {
+      "2020": {
+        "alarms": 212,
+        "down": 97,
+        "up": 115
+      },
+      "2021": {
+        "alarms": 28,
+        "down": 16,
+        "up": 12
+      }
+    }
+  }
+}
