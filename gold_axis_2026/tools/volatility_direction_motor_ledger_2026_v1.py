@@ -129,6 +129,22 @@ def main():
                 "fp":sum(r["actual_up"]==0 for r in ups),
                 "selected":{ex:sum(r["selected_expert"]==ex for r in rows) for ex in base.DIRECT_UP_EXPERTS}}
     authority_reproduction={"2024":router_year_summary(s24),"2025":router_year_summary(s25r)}
+    def monthly_router(rows):
+        out={}
+        for m in range(1,13):
+            rr=[r for r in rows if int(r["target_date"][5:7])==m]
+            if not rr: continue
+            ups=[r for r in rr if r["router_up"]==1]
+            out[f"{m:02d}"]={"n":len(rr),"actual_up":sum(r["actual_up"]==1 for r in rr),
+                "actual_down":sum(r["actual_up"]==0 for r in rr),"router_up":len(ups),
+                "tp":sum(r["actual_up"]==1 for r in ups),"fp":sum(r["actual_up"]==0 for r in ups),
+                "abstain":len(rr)-len(ups)}
+        return out
+    authority_reproduction["2025"]["monthly"]=monthly_router(s25r)
+    authority_reproduction["2025"]["actual_up"]=sum(r["actual_up"]==1 for r in s25r)
+    authority_reproduction["2025"]["actual_down"]=sum(r["actual_up"]==0 for r in s25r)
+    authority_reproduction["2025"]["precision"]=authority_reproduction["2025"]["tp"]/authority_reproduction["2025"]["router_up"]
+    authority_reproduction["2025"]["up_recall"]=authority_reproduction["2025"]["tp"]/authority_reproduction["2025"]["actual_up"]
     if authority_reproduction["2024"]["router_up"]!=42 or authority_reproduction["2024"]["tp"]!=26 or authority_reproduction["2024"]["fp"]!=16:
         raise RuntimeError("ROUTER_2024_AUTHORITY_MISMATCH:"+json.dumps(authority_reproduction["2024"],sort_keys=True))
     if authority_reproduction["2025"]["router_up"]!=37 or authority_reproduction["2025"]["tp"]!=27 or authority_reproduction["2025"]["fp"]!=10:
