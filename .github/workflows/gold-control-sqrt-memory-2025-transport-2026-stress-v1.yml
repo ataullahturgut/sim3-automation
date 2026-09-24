@@ -1,0 +1,65 @@
+name: Gold Control SQRT 2025 Transport 2026 Stress V1
+on:
+  push:
+    branches:
+      - gold-direction-history-robustness-v1-20260924
+    paths:
+      - 'gold_axis_2026/tools/sqrt_memory_policy_2025_transport_2026_stress_v1.py'
+      - '.github/workflows/gold-control-sqrt-memory-2025-transport-2026-stress-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-control-sqrt-memory-2025-transport-2026-stress-v1
+  cancel-in-progress: false
+
+jobs:
+  transport_stress:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-direction-history-robustness-v1-20260924
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Require research DB credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Install frozen dependencies
+        run: python -m pip install 'numpy==2.1.3' 'scipy==1.14.1' 'psycopg[binary]>=3.2,<4'
+      - name: Materialize corrected external pre-2022 spine
+        run: |
+          git show 509c5ffa762f4ea49644b8ffe723ed2591ba52bf:gold_axis_2026/external_data/v2/dukascopy_xauusd_govsession_mid_5m_daily_features_2018_2021.csv > /tmp/external_daily.csv
+          test -s /tmp/external_daily.csv
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/sqrt_memory_policy_2025_transport_2026_stress_v1.py
+      - name: Assert frozen/read-only governance
+        run: |
+          ! grep -Eini 'insert[[:space:]]+into|update[[:space:]]+[a-zA-Z_]|delete[[:space:]]+from|create[[:space:]]+table|drop[[:space:]]+table|alter[[:space:]]+table' gold_axis_2026/tools/sqrt_memory_policy_2025_transport_2026_stress_v1.py
+          grep -n 'PRIMARY_W=500' gold_axis_2026/tools/sqrt_memory_policy_2025_transport_2026_stress_v1.py
+          grep -n 'BAND=(475,500,525,550)' gold_axis_2026/tools/sqrt_memory_policy_2025_transport_2026_stress_v1.py
+          grep -n 'default_transaction_read_only' gold_axis_2026/tools/sqrt_memory_policy_2025_transport_2026_stress_v1.py
+      - name: Run locked 2025 transport and 2026 stress
+        run: |
+          rm -rf memory_transport_out
+          python gold_axis_2026/tools/sqrt_memory_policy_2025_transport_2026_stress_v1.py --external-spine /tmp/external_daily.csv
+      - name: Freeze results
+        run: |
+          cp memory_transport_out/* gold_axis_2026/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_CONTROL_SQRT_MEMORY_POLICY_2025_TRANSPORT_2026_STRESS_V1_RESULT_2026-09-24.json
+          git commit -m 'Freeze SQRT 2025 transport and 2026 stress V1'
+          git push origin HEAD:gold-direction-history-robustness-v1-20260924
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-control-sqrt-memory-2025-transport-2026-stress-v1
+          retention-days: 30
+          if-no-files-found: error
+          path: memory_transport_out/
