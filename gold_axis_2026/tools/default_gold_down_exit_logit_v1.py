@@ -146,7 +146,7 @@ def main():
     for r in ext_sqrt:
       key=(r["origin_date"],r["target_date"]); rr=ermap[key]
       case={"evaluation_year":int(r["target_date"][:4]),"origin_date":r["origin_date"],
-            "target_date":r["target_date"],"actual_up":int(r["actual_up"])}
+            "target_date":r["target_date"],"actual_up":int(float(r["target_return"])>0)}
       external.append(enrich(up2,case,float(r["sqrt_normalized_risk_score"]),rr,
         elag[r["origin_date"]],ext_raw[r["origin_date"]]["rets"],"EXTERNAL_ALL_SQRT_ALERTS"))
 
