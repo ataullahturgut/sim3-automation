@@ -26,7 +26,8 @@ GPR_PIT = "GPR_OFFICIAL_GIT_PIT"
 START = "2020-01-01"
 END = "2026-09-01"
 PRED_START = pd.Timestamp("2022-01-01")
-MIN_TRAIN = 250
+MIN_TRAIN = 120
+MIN_TAIL_TRAIN = 60
 FAST_LAGS = 60
 SLOW_LAGS = 12
 TAIL_Q = 0.67
@@ -213,8 +214,6 @@ def predict_walk(panel,features,label):
         hist=panel.iloc[:i].copy()
         # target of the immediately preceding row is known at this origin; all earlier are matured
         hist=hist[np.isfinite(hist["r_next"])].copy()
-        if label.startswith("tail"):
-            hist=hist[np.isfinite(hist["tail_cutoff"])].copy()
         if len(hist)<MIN_TRAIN: continue
         X=hist[features]; x=panel.loc[[i],features]
         y=hist["y_up"].to_numpy(int)
@@ -222,10 +221,13 @@ def predict_walk(panel,features,label):
         logit=pipe_logit(); logit.fit(X,y); p_up=float(logit.predict_proba(x)[0,1])
         ridge=pipe_ridge(); ridge.fit(X,hist["r_next"].to_numpy(float)); rhat=float(ridge.predict(x)[0])
 
-        # independent material UP/DOWN heads; labels are non-complements because neutral days exist
-        hu=hist["y_tail_up"].to_numpy(int); hd=hist["y_tail_down"].to_numpy(int)
+        # independent material UP/DOWN heads use only rows whose origin-safe tail threshold already existed.
+        th=hist[np.isfinite(hist["tail_cutoff"])].copy()
+        if len(th)<MIN_TAIL_TRAIN: continue
+        TX=th[features]
+        hu=th["y_tail_up"].to_numpy(int); hd=th["y_tail_down"].to_numpy(int)
         if len(np.unique(hu))<2 or len(np.unique(hd))<2: continue
-        lu=pipe_logit(); ld=pipe_logit(); lu.fit(X,hu); ld.fit(X,hd)
+        lu=pipe_logit(); ld=pipe_logit(); lu.fit(TX,hu); ld.fit(TX,hd)
         ptu=float(lu.predict_proba(x)[0,1]); ptd=float(ld.predict_proba(x)[0,1])
         out.append({
             "origin_date":row["origin_date"].strftime("%Y-%m-%d"),
@@ -234,7 +236,7 @@ def predict_walk(panel,features,label):
             "tail_cutoff":None if not np.isfinite(row["tail_cutoff"]) else float(row["tail_cutoff"]),
             "actual_tail_up":int(row["y_tail_up"]),"actual_tail_down":int(row["y_tail_down"]),
             "p_up_logit":p_up,"rhat_ridge":rhat,"p_tail_up":ptu,"p_tail_down":ptd,
-            "tail_margin":ptu-ptd,"train_n":int(len(hist))
+            "tail_margin":ptu-ptd,"train_n":int(len(hist)),"tail_train_n":int(len(th))
         })
     return pd.DataFrame(out)
 
