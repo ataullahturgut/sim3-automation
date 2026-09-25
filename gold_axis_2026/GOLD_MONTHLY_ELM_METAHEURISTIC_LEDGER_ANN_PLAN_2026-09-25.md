@@ -1559,3 +1559,26 @@ DEV-only active-metric results:
 **Progress:** ELMFIS Stage 1 = 28/33 complete.  
 **STOP GATE:** Stage 1.8 has not started.  
 **Next after explicit user confirmation only:** CPA-ELMFIS + Krill Herd-ELMFIS + Crow Search-ELMFIS.
+
+
+## ELMFIS Stage 1 / Batch 1.8 — completed 2026-09-25
+
+**Workflow run:** 36175779813 — SUCCESS / OUTPUT_GATE=PASS  
+**Report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE1_BATCH18_REPORT_2026-09-25.md`
+
+The frozen H=1 monthly target, governed 8-feature VW-MIDAS contract, chronological validation, READ_ONLY database policy, and DEV-only selection authority were retained. CPA/Krill Herd/Crow Search optimized only the 80 ELMFIS antecedent parameters; TSK consequents remained analytic ridge solutions.
+
+DEV-only active-metric results:
+
+| Model | Sum absolute error USD | Direction |
+|---|---:|---:|
+| Crow Search-ELMFIS | **1881.2292** | 20/33 = 60.61% |
+| CPA-ELMFIS | 1925.0323 | 20/33 = 60.61% |
+| Vanilla ELMFIS | 1996.2933 | 20/33 = 60.61% |
+| Krill Herd-ELMFIS | 3043.2306 | 20/33 = 60.61% |
+
+**Interpretation:** Crow Search is the Batch-1.8 DEV leader but does not enter the Pareto frontier. The provisional frontier remains ABC-ELMFIS (1524.8854 / 21/33) and SMA-ELMFIS (1651.4482 / 25/33).
+
+**Progress:** ELMFIS Stage 1 = 31/33 complete.  
+**STOP GATE:** Stage 1.9 has not started.  
+**Next after explicit user confirmation only:** DE-ABC-ELMFIS + Multi-swarm-ELMFIS.
