@@ -935,3 +935,54 @@ All component predictions were loaded directly from their original successful Gi
 ### Stage status
 - **AŞAMA 4/5 — Batch 4.1: COMPLETE**
 - Next: **Batch 4.2 — regularized/shrunk optimized ensemble robustness**.
+
+
+## 22. ANN Stage 4 / Batch 4.2 — shrinkage and reduced-pool robustness completed 2026-09-25
+
+**Initial run:** 36136794458 — technical failure (SLSQP iteration limit); no scientific result accepted.  
+**Corrected run:** 36137025884 — SUCCESS / OUTPUT_GATE=PASS.  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_stage4_batch42_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ANN_STAGE4_BATCH42_SHRINKAGE_ROBUSTNESS_2026-09-25.md`
+
+### Numerical correction
+- Nonsmooth MAPE simplex optimization was replaced by an exact LP formulation.
+- Shrinkage is now explicit:
+  `w_alpha = (1-alpha)*equal + alpha*w_optimized`.
+- Fixed alpha grid: 0, 0.10, 0.25, 0.50, 0.75, 1.00.
+- Alpha selection uses DEV-only expanding prequential MAPE.
+- 2025/2026 remain outside all selection.
+
+### FULL7 prequential shrinkage curve
+- alpha 0.00 -> DEV MAPE **2.10665%**
+- alpha 0.10 -> 2.12971%
+- alpha 0.25 -> 2.16431%
+- alpha 0.50 -> 2.22197%
+- alpha 0.75 -> 2.27963%
+- alpha 1.00 -> 2.33729%
+
+**Chosen alpha = 0.00.**
+
+### REDUCED4 prequential shrinkage curve
+Pool: Vanilla + MPA + SCA + DE-ABC.
+- alpha 0.00 -> DEV MAPE **2.12123%**, direction **72.73%**, RMSE **54.966**
+- alpha 0.10 -> 2.13516%
+- alpha 0.25 -> 2.15605%
+- alpha 0.50 -> 2.19086%
+- alpha 0.75 -> 2.22568%
+- alpha 1.00 -> 2.26049%
+
+**Chosen alpha = 0.00.**
+
+### Decisions
+- Both FULL7 and REDUCED4 reject optimized-weight contribution in favor of pure equal weighting.
+- The monotonic deterioration away from alpha=0 is strong evidence that learned simplex weights are not supported by n=33 DEV meta-history.
+- **FULL7 simple average remains the primary ANN ensemble candidate:** DEV MAPE 2.10665%, direction 66.67%.
+- **REDUCED4 simple average remains a secondary directional/RMSE challenger:** DEV MAPE 2.12123%, direction 72.73%, RMSE 54.966.
+- No further weight fine-tuning, arbitrary subset search, or generic stacking/meta-learner is scientifically justified after the optimized-simplex and shrinkage failures.
+- 2025/2026 remain reporting-only.
+
+### Stage status
+- **AŞAMA 4/5 — Batch 4.2: COMPLETE**
+- Stage 4 modeling search is effectively closed.
+- If one final Stage 4 step is used, it should be robustness/freeze only, not a new ensemble family.
+- Next major phase after freeze: **AŞAMA 5/5 — final ELM vs ANN comparison and family freeze**.
