@@ -211,6 +211,59 @@ def metric_bundle(rows):
 def strip_internal(rec):
     return {k: v for k, v in rec.items() if k != "_spec"}
 
+
+def build_september_2026_pls2_reconstruction(bundle):
+    # Historical-origin reconstruction only. Uses the exact frozen August four-metal
+    # snapshot that underlies the governed VW/MSVR September reference.
+    import csv
+    snap_path = Path("gold_axis_2026/data_pipeline/myfxbook_four_metal_august_2026_reconstruction_snapshot.csv")
+    rows = list(csv.DictReader(snap_path.open(encoding="utf-8")))
+    if not rows:
+        raise RuntimeError("AUGUST_SNAPSHOT_EMPTY")
+    for metal in base.METALS:
+        vals = np.array([float(r[metal]) for r in rows], float)
+        bundle.daily_month_values[metal]["2026-08"] = vals
+        bundle.monthly_metal[metal]["2026-08"] = float(vals.mean())
+
+    # Build all matured training samples through Aug-2026 using the governed
+    # 2026-08 origin vintage. Then construct Sep feature vector without Sep target data.
+    samples = base.all_samples_at_origin(bundle, "2026-08", governed=True)
+    p, pp = "2026-08", "2026-07"
+    hist = bundle.gpr_vintages[p]
+    z = base.gpr_norm(hist, pp)
+    x = []
+    for metal in base.METALS:
+        M = bundle.monthly_metal[metal]
+        x.extend((
+            math.log(M[p] / M[pp]),
+            base.weighted_daily_return(bundle, metal, p, z),
+        ))
+    samples["2026-09"] = (np.array(x, float), np.zeros(4, float))
+
+    pred, train_n = predict_gold(
+        samples,
+        "2026-09",
+        "PLS2",
+        None,
+        {"n_components": 4},
+    )
+    gold_anchor = float(bundle.monthly_metal["Gold"]["2026-08"])
+    return {
+        "target": "2026-09",
+        "origin": "2026-08-31T21:00:00Z",
+        "evidence_class": "HISTORICAL_ORIGIN_RECONSTRUCTION_NOT_PROSPECTIVE",
+        "family": "PLS2",
+        "window": "EXPANDING",
+        "params": {"n_components": 4},
+        "train_rows": int(train_n),
+        "august_common_days": len(rows),
+        "gold_anchor_august_snapshot_mean": gold_anchor,
+        "pred_log_return_gold": float(pred),
+        "forecast_usd_oz": float(gold_anchor * math.exp(float(pred))),
+        "uses_september_observations": False,
+        "source_snapshot": str(snap_path),
+    }
+
 def run():
     dsn = os.environ.get("NEON_DATABASE_URL")
     if not dsn:
@@ -282,6 +335,8 @@ def run():
                 "stress_2026_direction_accuracy_pct": base.metrics(st0)["direction_accuracy_pct"],
             }
 
+    sep_pls2 = build_september_2026_pls2_reconstruction(bundle)
+
     result = {
         "model_id": MODEL_ID,
         "scope": "RESEARCH_ONLY_ESTIMATOR_HEAD_SWAP",
@@ -296,6 +351,7 @@ def run():
             "2026_role": "RETROSPECTIVE_STRESS_DIAGNOSTIC_ONLY",
         },
         "source_checks": bundle.source_checks,
+        "september_2026_pls2_reconstruction": sep_pls2,
         "current_msvr_exact_reproduction": {
             "metrics_2023_01_to_2026_07": current_metrics,
             "yearly": current_yearly,
@@ -339,6 +395,7 @@ def run():
             w.writerow(rr)
 
     print(json.dumps({
+        "september_2026_pls2_forecast": sep_pls2["forecast_usd_oz"],
         "current_msvr_mape": current_metrics["mape_pct"],
         "current_msvr_2026_mape": current_yearly["2026"]["mape_pct"],
         "pre2025_dev_best_family": best_family,
