@@ -1,0 +1,70 @@
+name: Gold MIDAS Estimator Head-Swap V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/vw_midas_estimator_headswap_v1.py
+      - .github/workflows/gold-midas-estimator-headswap-v1.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gold-midas-estimator-headswap-v1-20260925
+  cancel-in-progress: false
+
+jobs:
+  research-headswap:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install research dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.5,<2'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/vw_midas_estimator_headswap_v1.py gold_axis_2026/tools/vw_midas_msvr_successor_v1.py
+      - name: Assert read-only research surface
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('gold_axis_2026/tools/vw_midas_estimator_headswap_v1.py').read_text()
+          forbidden=['INSERT INTO','UPDATE ','DELETE FROM','TRUNCATE ','CREATE TABLE','ALTER TABLE','DROP TABLE']
+          bad=[x for x in forbidden if x.lower() in p.lower()]
+          assert not bad, bad
+          assert '2024-12' in p
+          assert 'LOCKED_RETROSPECTIVE_TRANSPORT' in p
+          assert 'RETROSPECTIVE_STRESS_DIAGNOSTIC_ONLY' in p
+          print('RESEARCH_ONLY_STATIC_GATE=PASS')
+          PY
+      - name: Run estimator head-swap
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_estimator_headswap_v1.py
+      - name: Assert outputs
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('vw_midas_estimator_headswap_v1_result.json'))
+          assert r['authority']['database_access']=='READ_ONLY'
+          assert r['authority']['2025_role']=='LOCKED_RETROSPECTIVE_TRANSPORT'
+          assert r['authority']['2026_role']=='RETROSPECTIVE_STRESS_DIAGNOSTIC_ONLY'
+          assert len(r['family_results'])==6
+          print('OUTPUT_GATE=PASS')
+          print(json.dumps(r['leaderboard_pre2025_only'], sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-midas-estimator-headswap-v1-${{ github.sha }}
+          path: |
+            vw_midas_estimator_headswap_v1_result.json
+            vw_midas_estimator_headswap_v1_leaderboard.csv
+          if-no-files-found: warn
+          retention-days: 30
