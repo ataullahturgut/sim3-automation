@@ -1,0 +1,59 @@
+name: Gold MIDAS ELMFIS Stage3 Batch33 V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/vw_midas_elmfis_stage3_batch33_v1.py
+      - .github/workflows/gold-midas-elmfis-stage3-batch33-v1.yml
+
+permissions:
+  contents: read
+
+jobs:
+  optimize:
+    strategy:
+      fail-fast: false
+      matrix:
+        method: [ADAPTIVE_CROW, PSO_TLBO_HYBRID]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.5,<2'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/vw_midas_elmfis_baseline_v1.py gold_axis_2026/tools/vw_midas_elmfis_meta_batch_1_v1.py gold_axis_2026/tools/vw_midas_elmfis_stage3_batch33_v1.py gold_axis_2026/tools/vw_midas_msvr_successor_v1.py
+      - name: Run ${{ matrix.method }}
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_elmfis_stage3_batch33_v1.py --method '${{ matrix.method }}'
+      - name: Inspect
+        run: |
+          python - <<'PY'
+          import json,glob,os
+          method=os.environ['METHOD']
+          p=glob.glob(f'vw_midas_elmfis_stage3_batch33_v1_{method.lower()}_result.json')[0]
+          r=json.load(open(p))
+          a=r['authority']
+          assert a['database_access']=='READ_ONLY'
+          assert a['random_validation']=='NONE'
+          assert a['target_month_in_fitness'] is False
+          assert a['2025_role']=='LOCKED_TRANSPORT_NOT_SELECTION'
+          assert a['2026_role']=='RETROSPECTIVE_STRESS_NOT_SELECTION'
+          assert a['authority_invariants_before']==a['authority_invariants_after']
+          print('OUTPUT_GATE=PASS')
+          print(json.dumps({'method':r['method'],'dev':r['dev']['metrics'],'transport_2025':r['transport_2025']['metrics'],'stress_2026':r['stress_2026']['metrics']},sort_keys=True))
+          PY
+        env:
+          METHOD: ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-midas-elmfis-stage3-batch33-${{ matrix.method }}-${{ github.sha }}
+          path: vw_midas_elmfis_stage3_batch33_v1_*_result.json
+          if-no-files-found: error
+          retention-days: 30
