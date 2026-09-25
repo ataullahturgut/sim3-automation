@@ -558,3 +558,51 @@ Current DEV direction leader remains **SCA-ANN — 72.73%**.
 - keep 2025/2026 outside selection authority;
 - freeze only a small parent set for adaptive/meta-on-meta/hybrid ANN work;
 - explicitly avoid double-counting FA-FPA, DE-ABC and Multi-swarm as new Phase C inventions.
+
+
+## 14. ANN Stage 2 / Batch 2.1 — DEV-only filtering audit completed 2026-09-25
+
+**Audit source:** GitHub Actions artifacts from ANN Phase A batches 1.1–1.8.  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ANN_STAGE2_BATCH21_DEV_FILTER_2026-09-25.md`
+
+### Authority and evidence
+- Selection authority remained **DEV 2022-04..2024-12 only (n=33)**.
+- 2025 transport and 2026 stress were not used in any filter, retention or exclusion decision.
+- No random split was introduced.
+- Repeat evidence is validation-fitness dispersion only; it is **not** treated as full forecast seed-variance evidence.
+- RW DEV benchmark: MAPE 2.5888209463%, MAE 53.2727272727.
+
+### Filtering result
+1. RW gate (DEV MAPE < RW and relative MAE < 1): **24/33 pass**.
+2. Core price retention: within +10% of Vanilla ANN DEV MAPE while passing RW gate.
+3. Direction rescue: DEV direction >= 66.67% while passing RW gate.
+4. Stability rescue: yearly-MAPE SD <= 0.13 and median repeat-validation CV <= 0.035 while passing RW gate.
+5. Redundancy prune: **WOA-ANN** and **FA-ANN** removed because other retained models dominate them on the principal DEV predictive/stability metrics and they add no unique role.
+6. Pareto cross-check: all nine RW-eligible Pareto-nondominated models on MAPE/RMSE/direction/year-stability are preserved.
+
+### Batch 2.1 retained pool — 12/33
+- Vanilla ANN — baseline / price
+- MPA-ANN — price leader
+- DE-ABC-ANN — price + direction / hybrid-parity
+- CPA-ANN — price
+- FA-FPA-ANN — price / hybrid-parity
+- ACO-ANN — balanced price/RMSE/direction
+- GA-ANN — year-stable balanced
+- SCA-ANN — direction leader
+- Krill Herd-ANN — direction + RW win-rate diversity
+- TLBO-ANN — repeat-stable balanced
+- SSA-ANN — direction + repeat stability
+- HHO-ANN — year + repeat stability
+
+### Excluded at Batch 2.1
+**Fail RW gate (9):** ABC-ANN, Bat-ANN, DE-ANN, FPA-ANN, GOA-ANN, HGSO-ANN, MFO-ANN, Multi-swarm ANN, PSO-ANN.
+
+**Pass RW but no price/direction/stability retention role (10):** ALO-ANN, AOA-ANN, CS-ANN, ChOA-ANN, Crow Search-ANN, GWO-ANN, HGS-ANN, JAYA-ANN, SMA-ANN, Salp-ANN.
+
+**Redundancy-pruned (2):** FA-ANN, WOA-ANN.
+
+### Stage status
+- **AŞAMA 2/5 — Batch 2.1: COMPLETE**
+- Candidate pool: **33 -> 12**
+- No final Stage 3 parent is frozen yet.
+- Next: **Batch 2.2** — prediction-error correlation/redundancy and role-based parent freezing using DEV only.
