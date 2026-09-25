@@ -55,6 +55,6 @@ jobs:
         if: always()
         with:
           name: gold-midas-elmfis-stage3-batch31-${{ matrix.method }}-${{ github.sha }}
-          path: vw_midas_elmfis_stage3_batch31_v1_${{ matrix.method }}_result.json
+          path: vw_midas_elmfis_stage3_batch31_v1_*_result.json
           if-no-files-found: error
           retention-days: 30
