@@ -747,3 +747,48 @@ Boundary finding:
 - 2025/2026 remain reporting-only and were not used for tuning or decision.
 - **AŞAMA 3/5 — Batch 3.2: COMPLETE**
 - Next mandatory parity batch: **Adaptive Crow Search-ANN + PSO-TLBO Hybrid ANN**.
+
+
+## 18. ANN Stage 3 / Batch 3.3 — Adaptive Crow + PSO-TLBO Hybrid completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-stage3-batch33-v1.yml`  
+**Run:** 36133726760 — SUCCESS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_stage3_batch33_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ANN_STAGE3_BATCH33_CROW_PSO_TLBO_2026-09-25.md`
+
+### Results
+| Model | DEV MAPE % | DEV Direction % | 2025 MAPE % | 2026 MAPE % |
+|---|---:|---:|---:|---:|
+| Adaptive Crow Search-ANN | 2.49577 | 60.61 | 2.68521 | 4.54980 |
+| PSO-TLBO Hybrid ANN | 2.34425 | 60.61 | 2.46744 | 4.42872 |
+
+### Decisions
+- Adaptive Crow Search improves base Crow Search-ANN from 2.50491% to 2.49577% DEV MAPE (~0.37% relative); improvement is real but too small for promotion.
+- PSO-TLBO Hybrid improves base PSO-ANN by ~10.25% relative DEV MAPE and base TLBO-ANN by ~1.43%; retain as useful hybrid evidence, but it does not beat the leading Stage 3 refinements.
+- Hybrid parameter audit shows no collapse to pure PSO or pure TLBO: median mix=0.5095 and median TLBO gain=0.9926.
+- Adaptive Crow tuning also does not collapse to one default configuration.
+
+### Mandatory parity-track status
+All six pre-agreed ELM-parity ANN refinements are now complete:
+1. Adaptive PSO-ANN
+2. TLBO-tuned PSO-ANN
+3. DE-tuned PSO-ANN
+4. Adaptive/Improved TLBO-ANN
+5. Adaptive Crow Search-ANN
+6. PSO-TLBO Hybrid ANN
+
+Current parity-track DEV MAPE ordering:
+1. Adaptive TLBO-ANN — 2.24090%
+2. Adaptive PSO-ANN — 2.26567%
+3. TLBO-tuned PSO-ANN — 2.28920%
+4. DE-tuned PSO-ANN — 2.30759%
+5. PSO-TLBO Hybrid ANN — 2.34425%
+6. Adaptive Crow Search-ANN — 2.49577%
+
+### Stage status
+- **AŞAMA 3/5 mandatory parity track: COMPLETE (6/6)**
+- Next evidence-driven ANN-specific hybrid batch:
+  - MPA + SCA
+  - MPA + GA
+- CPA-based alternative only if these fail to add DEV value.
+- 2025/2026 remain reporting-only.
