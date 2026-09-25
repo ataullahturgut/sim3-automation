@@ -1,6 +1,7 @@
 name: Gold MIDAS ELMFIS Meta Batch 9 V1
 
 on:
+  workflow_dispatch:
   push:
     branches: [gold-midas-headswap-v1-20260925]
     paths:
