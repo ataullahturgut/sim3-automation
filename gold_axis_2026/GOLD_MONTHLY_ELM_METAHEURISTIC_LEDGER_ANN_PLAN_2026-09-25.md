@@ -1136,3 +1136,129 @@ Do not reopen without genuinely new unseen data or a new predeclared scientific 
 - **AŞAMA 5/5: COMPLETE AND FROZEN**
 
 **Final primary model: FULL7 equal-weight ANN ensemble.**
+
+
+## 25. ACTIVE EVALUATION CONTRACT — cumulative absolute error + direction
+
+**Effective:** 2026-09-25  
+**Status:** BINDING. This section supersedes the MAPE-centered selection/freeze interpretation in Section 24.
+
+### 25.1 Forecast objective is unchanged
+The scientific task remains:
+- forecast next calendar month's average XAU/USD price at H=1;
+- origin = previous completed month-end;
+- frozen origin-safe VW-MIDAS data contract unless separately reopened by a new research decision.
+
+**The target is NOT changed to return forecasting.**
+
+### 25.2 Why the old evaluation is retired
+The former Stage 5 freeze relied too heavily on average percentage price error (MAPE). That can make repeated monthly misses look acceptably small after averaging and does not jointly reward correct monthly direction.
+
+Therefore:
+- prior MAPE-centered ranking/freeze is retained only as historical research documentation;
+- it is **no longer authoritative for model selection**;
+- the former statement "FULL7 is the final primary model" is **UNFROZEN / UNDER RE-AUDIT**.
+
+### 25.3 New binding primary metrics
+
+For each evaluation window:
+
+**Primary cumulative price-error metric**
+`SUM_ABS_ERROR = Σ |forecast_t - actual_t|`
+
+This is the cumulative absolute USD forecasting error across all months in the window.
+
+**Primary direction metric**
+`DIRECTION_ACCURACY = correct monthly direction forecasts / number of months`
+
+Direction is evaluated from the forecasted next-month price relative to the prior observed monthly price versus the realized next-month direction.
+
+### 25.4 Supporting metrics
+- MAE = SUM_ABS_ERROR / n; valid as an average companion metric.
+- MAPE, WAPE, RMSE, worst-month error and other metrics may still be reported diagnostically.
+- MAPE is **not** the primary ranking authority.
+- No arbitrary scalar score combining error and direction is allowed unless explicitly predeclared before looking at evaluation outcomes.
+- Default comparison is a **two-objective Pareto / trade-off analysis**: lower cumulative absolute error AND higher direction accuracy.
+
+### 25.5 Authority boundaries remain unchanged
+- DEV: 2022-04..2024-12, n=33 — only model-selection/tuning authority.
+- 2025: retrospective transport only.
+- 2026 Jan-Jul: retrospective stress only.
+- 2025/2026 may reveal robustness failures but cannot be used to retroactively tune or select a winner.
+- No random split.
+- No target-month leakage.
+- DB remains READ_ONLY.
+
+### 25.6 Re-audit findings under the new metrics
+
+On DEV, the leading ensemble trade-off remains concentrated in:
+- **FULL7 ANN:** cumulative absolute error **1428.86 USD**, direction **22/33 = 66.67%**.
+- **REDUCED4 ANN:** cumulative absolute error **1431.46 USD**, direction **24/33 = 72.73%**.
+
+Interpretation:
+- FULL7 has only **2.60 USD** less cumulative error over 33 DEV months.
+- REDUCED4 gets **2 additional monthly directions correct**.
+- Therefore the prior claim that FULL7 is unambiguously the best model is withdrawn.
+- Under the active two-objective contract, FULL7 and REDUCED4 form the principal DEV trade-off pair pending the next robustness stage.
+
+Other important DEV references:
+- MPA-ANN: cumulative absolute error **1471.53 USD**, direction **19/33 = 57.58%**.
+- AOA-ELM: cumulative absolute error **1474.10 USD**, direction **20/33 = 60.61%**.
+- Vanilla ELM: cumulative absolute error **1480.08 USD**, direction **21/33 = 63.64%**.
+- MSVR predecessor: cumulative absolute error **1518.65 USD**, direction **21/33 = 63.64%**.
+
+### 25.7 Retrospective 2025/2026 diagnostic — NOT selection authority
+When all attempted families are inspected retrospectively on 2025 + 2026 Jan-Jul, three models illustrate the price-error / direction frontier:
+- TLBO-ELM: total absolute error **2289.07 USD**, direction **14/19 = 73.68%**.
+- MPA-ANN: total absolute error **2341.53 USD**, direction **16/19 = 84.21%**.
+- HHO-ANN: total absolute error **2386.03 USD**, direction **17/19 = 89.47%**.
+
+These three are **diagnostic retrospective profiles only**. They must not be promoted as final winners because 2025/2026 outcomes are already observed.
+
+The key lesson is robustness instability across regimes: the model with the smallest DEV cumulative error is not necessarily the model with the best external price-error/direction balance.
+
+## 26. NEXT STAGE — dual-objective robustness re-audit before any new model search
+
+**Status:** NEXT.
+
+No ANN/ELM family will be retrained yet.
+
+### Stage 26 objective
+Determine whether the existing model universe already contains a robust candidate under the new binding two-objective evaluation, using **DEV-only evidence**.
+
+### Stage 26.1 — Full DEV re-ranking
+For every completed model/family:
+- compute cumulative absolute error on all 33 DEV origins;
+- compute direction accuracy;
+- compute yearly cumulative absolute error and direction for 2022, 2023 and 2024 separately;
+- identify the DEV Pareto frontier;
+- do not use 2025/2026 for ranking.
+
+### Stage 26.2 — Stability / regime robustness
+For each DEV Pareto candidate:
+- inspect year-to-year cumulative-error dispersion;
+- inspect direction stability by year;
+- inspect worst monthly absolute error;
+- inspect leave-one-origin sensitivity;
+- identify whether a model's aggregate result is driven by a small number of unusually favorable months.
+
+### Stage 26.3 — Candidate freeze under the corrected contract
+A model can be frozen only if:
+- it is Pareto-competitive on cumulative error + direction;
+- it is not dependent on one DEV year/origin;
+- its trade-off is explicit (price-error leader vs direction leader vs balanced candidate).
+
+No arbitrary weighted score will be used to force a single winner.
+
+### Stage 26.4 — External diagnostic only
+After the DEV-only candidate set is frozen:
+- report 2025 and 2026 Jan-Jul cumulative error and direction;
+- characterize robustness degradation;
+- do not switch winner based on those periods.
+
+### Decision gate after Stage 26
+Only after this re-audit:
+- **If an existing model is robust:** keep it; do not rerun ANN/ELM.
+- **If all existing candidates are unstable:** reopen modeling with the corrected objective/selection contract.
+- Any reopened modeling must optimize/select with cumulative absolute error + direction considerations on pre-2025 chronological evidence only.
+
