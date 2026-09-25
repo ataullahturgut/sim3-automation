@@ -1,0 +1,57 @@
+name: Gold MIDAS ANN Meta Batch 4 V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/vw_midas_ann_meta_batch_4_v1.py
+      - .github/workflows/gold-midas-ann-meta-batch-4-v1.yml
+
+permissions:
+  contents: read
+
+jobs:
+  ann-meta-batch-4:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.5,<2'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/vw_midas_ann_meta_batch_1_v1.py gold_axis_2026/tools/vw_midas_ann_meta_batch_4_v1.py gold_axis_2026/tools/vw_midas_msvr_successor_v1.py
+      - name: Run FA MFO FPA CS ANN batch
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_ann_meta_batch_4_v1.py
+      - name: Inspect
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('vw_midas_ann_meta_batch_4_v1_result.json'))
+          assert r['authority']['database_access']=='READ_ONLY'
+          assert r['authority']['random_validation']=='NONE'
+          assert r['authority']['2025_role']=='LOCKED_TRANSPORT_NOT_SELECTION'
+          assert r['authority']['2026_role']=='RETROSPECTIVE_STRESS_NOT_SELECTION'
+          assert r['authority']['authority_invariants_before']==r['authority']['authority_invariants_after']
+          assert r['optimization_contract']['target_month_in_fitness'] is False
+          assert set(r['models'])=={'FA','MFO','FPA','CS'}
+          print('OUTPUT_GATE=PASS')
+          print(json.dumps({
+            k:{
+              'dev':r['models'][k]['dev']['metrics'],
+              'transport_2025':r['models'][k]['transport_2025']['metrics'],
+              'stress_2026':r['models'][k]['stress_2026']['metrics']
+            }
+            for k in ('FA','MFO','FPA','CS')
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-midas-ann-meta-batch-4-v1-${{ github.sha }}
+          path: vw_midas_ann_meta_batch_4_v1_result.json
+          retention-days: 30
