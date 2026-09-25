@@ -821,3 +821,64 @@ Current parity-track DEV MAPE ordering:
 ### Stage status
 - **AŞAMA 3/5 — Batch 3.4: COMPLETE**
 - Next: **Batch 3.5 — MPA+CPA Hybrid ANN**, one-model controlled fallback.
+
+
+## 20. ANN Stage 3 / Batch 3.5 — Final MPA+CPA fallback completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-stage3-batch35-v1.yml`  
+**Run:** 36135543119 — SUCCESS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_stage3_batch35_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ANN_STAGE3_BATCH35_MPA_CPA_FINAL_2026-09-25.md`
+
+### Result
+| Model | DEV MAPE % | DEV Direction % | 2025 MAPE % | 2026 MAPE % |
+|---|---:|---:|---:|---:|
+| MPA+CPA Hybrid ANN | 2.56713 | 57.58 | 2.48144 | 4.43815 |
+
+### Learned operator survivor shares
+Selected-repeat mean:
+- CPA: 56.32%
+- MPA: 23.02%
+- incumbent: 20.66%
+
+Refit mean:
+- CPA: 57.83%
+- MPA: 21.39%
+- incumbent: 20.78%
+
+### Decision
+- MPA+CPA is dominated by both MPA and CPA on DEV MAPE and adds no direction benefit.
+- DEV yearly-MAPE SD is ~0.37166, essentially no improvement over MPA's ~0.3698 stability weakness.
+- Reject MPA+CPA from the leading set.
+- No further MPA+X or other combinatorial ANN-specific optimizer hybrid search is permitted.
+
+### Stage 3 final status
+**AŞAMA 3/5: COMPLETE**
+
+Mandatory ELM-parity refinements: 6/6 complete.
+
+ANN-specific evidence-driven hybrids:
+- MPA+SCA — retain as balance/stability evidence
+- MPA+GA — reject
+- MPA+CPA — reject
+
+Important current DEV references:
+- Vanilla ANN — 2.18895%
+- MPA-ANN — 2.19947%
+- MPA+SCA Hybrid — 2.23957%
+- Adaptive TLBO-ANN — 2.24090%
+- DE-ABC-ANN — 2.26109%
+- Adaptive PSO-ANN — 2.26567%
+- CPA-ANN — 2.27985%
+- TLBO-tuned PSO-ANN — 2.28920% / direction 69.70%
+- SCA-ANN — direction leader 72.73%
+
+### Next
+**AŞAMA 4/5 — ANN Ensemble**
+
+Before implementation:
+- recover exact ELM ensemble component set;
+- recover exact ELM ensemble weight-learning protocol;
+- preserve simple-average benchmark;
+- optimized weights must be non-negative, sum to 1, and be learned using pre-2025 chronological evidence only;
+- no fixed arbitrary weights except the simple-average benchmark.
