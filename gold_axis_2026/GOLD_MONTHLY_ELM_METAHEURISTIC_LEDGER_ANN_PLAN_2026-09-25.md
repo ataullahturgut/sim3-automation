@@ -129,11 +129,11 @@ Planned single-method ANN checklist:
 - [x] HHO-ANN
 - [x] ACO-ANN
 - [x] Bat-ANN
-- [ ] FA-ANN
-- [ ] MFO-ANN
-- [ ] FPA-ANN
+- [x] FA-ANN
+- [x] MFO-ANN
+- [x] FPA-ANN
 - [ ] FA-FPA-ANN
-- [ ] CS-ANN
+- [x] CS-ANN
 - [ ] SCA-ANN
 - [ ] Salp-ANN
 - [ ] SMA-ANN
@@ -299,3 +299,50 @@ WOA-ANN, HHO-ANN, ACO-ANN and Bat-ANN use the same canonical 8->4(tanh)->4 linea
   11. DE-ANN — 2.84842%
   12. ABC-ANN — 3.06525%
 - Next: Batch 1.4 single-metaheuristic ANN screen.
+
+
+## 9. ANN Phase A / Batch 1.4 — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-meta-batch-4-v1.yml`  
+**Run:** 36129113648 — SUCCESS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_meta_batch_4_v1.py`
+
+FA-ANN, MFO-ANN, FPA-ANN and CS-ANN retain the frozen canonical 8->4(tanh)->4 linear ANN geometry and the same governed 8-feature VW-MIDAS data contract. Optimization fairness and leakage controls remain unchanged: 3 deterministic repeats per target, chronological last-20% inner validation, top-quartile training candidate validation, full pre-target-history warm-start refit, fixed optimizer budget, no target-month fitness, READ_ONLY DB access, and unchanged authority invariants.
+
+| Method | DEV MAPE % | DEV Direction % | 2025 MAPE % | 2025 Direction % | 2026 MAPE % | 2026 Direction % |
+|---|---:|---:|---:|---:|---:|---:|
+| FA-ANN | 2.39002 | 60.61 | 2.65891 | 75.00 | 4.06486 | 85.71 |
+| MFO-ANN | 2.60702 | 57.58 | 3.70485 | 58.33 | 5.29073 | 57.14 |
+| FPA-ANN | 2.70125 | 42.42 | 2.86750 | 83.33 | 5.63250 | 57.14 |
+| CS-ANN | 2.50128 | 54.55 | 3.06513 | 66.67 | 4.59451 | 71.43 |
+
+### Batch 1.4 interpretation
+
+- **DEV-only MAPE ordering inside Batch 1.4:** FA-ANN, CS-ANN, MFO-ANN, FPA-ANN.
+- FA-ANN enters the upper-middle metaheuristic ANN group but does not beat Vanilla ANN or MPA-ANN.
+- CS-ANN is modest on DEV; it narrowly beats the random-walk DEV MAPE benchmark.
+- MFO-ANN and FPA-ANN are weak on DEV; both have relative MAE above the random-walk benchmark.
+- 2025/2026 evidence remains external only and is not used for ranking authority or parent selection.
+
+### ANN progress after Batch 1.4
+
+- Completed: **16 / 33**
+- Remaining: **17 / 33**
+- Current DEV MAPE ordering across completed models:
+  1. Vanilla ANN — 2.18895%
+  2. MPA-ANN — 2.19947%
+  3. ACO-ANN — 2.35494%
+  4. GA-ANN — 2.36033%
+  5. WOA-ANN — 2.38669%
+  6. FA-ANN — 2.39002%
+  7. SSA-ANN — 2.41896%
+  8. HHO-ANN — 2.49709%
+  9. CS-ANN — 2.50128%
+  10. GWO-ANN — 2.53258%
+  11. MFO-ANN — 2.60702%
+  12. PSO-ANN — 2.61194%
+  13. Bat-ANN — 2.64871%
+  14. FPA-ANN — 2.70125%
+  15. DE-ANN — 2.84842%
+  16. ABC-ANN — 3.06525%
+- Next: Batch 1.5 single-metaheuristic ANN screen.
