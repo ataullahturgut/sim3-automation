@@ -150,9 +150,9 @@ No 2025/2026 result can promote or remove a parent.
 - [x] PSO-TLBO Hybrid ELMFIS
 
 ### 3B. ANN evidence-driven hybrids — run for family parity
-- [ ] MPA+SCA Hybrid ELMFIS
-- [ ] MPA+GA Hybrid ELMFIS
-- [ ] MPA+CPA Hybrid ELMFIS
+- [x] MPA+SCA Hybrid ELMFIS
+- [x] MPA+GA Hybrid ELMFIS
+- [x] MPA+CPA Hybrid ELMFIS
 
 These are run even if the exact same parents are not Stage-2 winners, because the user requires direct method parity across ELM, ANN and ELMFIS. Their interpretation will still be DEV-only.
 
@@ -563,3 +563,30 @@ Stage-2 parent freeze remains unchanged: ABC / SMA / HHO.
 **STOP GATE:** Stage 3B must not start without explicit user confirmation.
 
 **Next planned stage after confirmation:** Stage 3B — MPA+SCA, MPA+GA, MPA+CPA Hybrid ELMFIS.
+
+
+## 23. Stage 3B parity hybrids — completed 2026-09-26
+
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE3B_PARITY_HYBRIDS_2026-09-26.md`
+
+All three predeclared ANN-parity hybrids completed successfully under DEV-only tuning/selection:
+
+| Model | DEV ΣAE USD | Direction |
+|---|---:|---:|
+| MPA+GA Hybrid ELMFIS | 1,675.89 | 21/33 |
+| MPA+SCA Hybrid ELMFIS | 2,549.81 | 21/33 |
+| MPA+CPA Hybrid ELMFIS | 3,546.16 | 17/33 |
+
+Reference frontier remains:
+- **ABC-ELMFIS:** 1,524.89 / 21/33.
+- **SMA-ELMFIS:** 1,651.45 / 25/33.
+
+**Stage-3B new Pareto point: NONE.**
+
+Stage-2 parent freeze remains unchanged: ABC / SMA / HHO.
+
+**STAGE 3B: COMPLETE — 3/3.**
+
+**STOP GATE:** Stage 3C must not start without explicit user confirmation.
+
+**Next planned stage after confirmation:** Stage 3C — CQCSA-ELMFIS.
