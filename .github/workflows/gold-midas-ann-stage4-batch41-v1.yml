@@ -1,0 +1,74 @@
+name: Gold MIDAS ANN Stage4 Batch41 V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/vw_midas_ann_stage4_batch41_v1.py
+      - .github/workflows/gold-midas-ann-stage4-batch41-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  stage4-batch41:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'scipy>=1.13,<2'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/vw_midas_ann_stage4_batch41_v1.py
+      - name: Download frozen source artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p ensemble_artifacts
+          for RUN_ID in 36127630549 36128225062 36129458713 36130538857 36132219383 36132859342 36134549789; do
+            mkdir -p "ensemble_artifacts/$RUN_ID"
+            AID="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/$RUN_ID/artifacts" --jq '.artifacts[0].id')"
+            test -n "$AID"
+            gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/$AID/zip" > "ensemble_artifacts/$RUN_ID.zip"
+            unzip -q -o "ensemble_artifacts/$RUN_ID.zip" -d "ensemble_artifacts/$RUN_ID"
+          done
+      - name: Run ensemble batch
+        run: python gold_axis_2026/tools/vw_midas_ann_stage4_batch41_v1.py --artifact-root ensemble_artifacts
+      - name: Inspect
+        run: |
+          python - <<'PY'
+          import json, math
+          r=json.load(open('vw_midas_ann_stage4_batch41_v1_result.json'))
+          assert r['elm_ensemble_recovery']['status']=='NOT_FOUND'
+          p=r['ensemble_protocol']
+          assert p['database_access']=='NONE_ARTIFACT_ONLY'
+          assert p['random_split']=='NONE'
+          assert p['2025_used_for_weight_learning'] is False
+          assert p['2026_used_for_weight_learning'] is False
+          assert set(r['variants'])=={'SIMPLE_AVERAGE','PERFORMANCE_WEIGHTED','OPTIMIZED_SIMPLEX'}
+          for name,v in r['variants'].items():
+            w=list(v['final_weights'].values())
+            assert min(w)>=-1e-10
+            assert abs(sum(w)-1)<1e-8
+          print('OUTPUT_GATE=PASS')
+          print(json.dumps({
+            k:{
+              'dev':v['dev']['metrics'],
+              'final_weights':v['final_weights'],
+              'transport_2025':v['transport_2025']['metrics'],
+              'stress_2026':v['stress_2026']['metrics']
+            }
+            for k,v in r['variants'].items()
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-midas-ann-stage4-batch41-v1-${{ github.sha }}
+          path: vw_midas_ann_stage4_batch41_v1_result.json
+          retention-days: 30
