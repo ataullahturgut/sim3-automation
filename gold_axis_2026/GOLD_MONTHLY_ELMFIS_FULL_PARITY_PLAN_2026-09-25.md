@@ -67,11 +67,11 @@ This is a project adaptation of published ELM/FIS structures; it is not claimed 
 The full 33-entry ELM/ANN broad screen is repeated for ELMFIS.
 
 ### Baseline + primitive/single optimizers
-- [ ] Vanilla ELMFIS
-- [ ] PSO-ELMFIS
-- [ ] GA-ELMFIS
+- [x] Vanilla ELMFIS
+- [x] PSO-ELMFIS
+- [x] GA-ELMFIS
 - [ ] MPA-ELMFIS
-- [ ] DE-ELMFIS
+- [x] DE-ELMFIS
 - [ ] ABC-ELMFIS
 - [ ] SSA-ELMFIS
 - [ ] GWO-ELMFIS
@@ -228,3 +228,28 @@ Workflow run: **36161681793 — SUCCESS / OUTPUT_GATE=PASS**.
 Baseline is technically valid but weak on DEV. The predeclared Stage-1 broad optimizer screen remains mandatory and is not cancelled by the baseline result.
 
 **NEXT:** Stage 1 Batch 1.1 — PSO-ELMFIS, GA-ELMFIS, DE-ELMFIS; Vanilla baseline retained as anchor.
+
+
+## 12. Stage 1 / Batch 1.1 result — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-elmfis-meta-batch-1-v1.yml`  
+**Run:** **36169448338 — SUCCESS / OUTPUT_GATE=PASS**  
+**Implementation:** `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_1_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE1_BATCH11_REPORT_2026-09-25.md`
+
+DEV-only active-metric results:
+
+| Model | Sum absolute error USD | Direction |
+|---|---:|---:|
+| DE-ELMFIS | **1665.4715** | **21/33 = 63.64%** |
+| GA-ELMFIS | 1980.8994 | 14/33 = 42.42% |
+| Vanilla ELMFIS | 1996.2933 | 20/33 = 60.61% |
+| PSO-ELMFIS | 2358.4962 | 20/33 = 60.61% |
+
+Batch 1.1 finding: DE-ELMFIS is the current batch leader on both active DEV objectives and beats the RW MAE benchmark. This is **not** a family freeze or Stage-2 parent decision; the full Stage-1 screen remains mandatory.
+
+**Progress:** 4/33 Stage-1 entries complete, 29/33 remaining.
+
+**STOP GATE:** Stage 1.2 must not start without explicit user confirmation.
+
+**Next planned batch after confirmation:** MPA-ELMFIS + ABC-ELMFIS + SSA-ELMFIS + GWO-ELMFIS.
