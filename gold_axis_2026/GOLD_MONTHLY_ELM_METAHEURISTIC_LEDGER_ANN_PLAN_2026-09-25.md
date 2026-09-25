@@ -142,10 +142,10 @@ Planned single-method ANN checklist:
 - [x] TLBO-ANN
 - [x] JAYA-ANN
 - [x] HGS-ANN
-- [ ] ChOA-ANN
-- [ ] HGSO-ANN
-- [ ] AOA-ANN
-- [ ] CPA-ANN
+- [x] ChOA-ANN
+- [x] HGSO-ANN
+- [x] AOA-ANN
+- [x] CPA-ANN
 - [ ] Krill Herd-ANN
 - [ ] Crow Search-ANN
 - [ ] DE-ABC-ANN
@@ -455,3 +455,46 @@ ALO-ANN, TLBO-ANN, JAYA-ANN and HGS-ANN retain the frozen canonical 8->4(tanh)->
   24. ABC-ANN — 3.06525%
 - Current DEV direction leader remains **SCA-ANN — 72.73%**.
 - Next: Batch 1.7 single-metaheuristic ANN screen.
+
+
+## 12. ANN Phase A / Batch 1.7 — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-meta-batch-7-v1.yml`  
+**Run:** 36130127593 — SUCCESS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_meta_batch_7_v1.py`
+
+ChOA-ANN, HGSO-ANN, AOA-ANN and CPA-ANN retain the frozen canonical 8->4(tanh)->4 linear ANN geometry, governed 8-feature VW-MIDAS inputs, and the same fair optimization/evaluation contract used in all prior ANN batches: 3 deterministic repeats per target, chronological final-20% validation, validation selection restricted to top-quartile training candidates, fixed optimization budget, warm-start refit on all pre-target history, no target-month fitness, READ_ONLY DB access, and unchanged authority invariants.
+
+| Method | DEV MAPE % | DEV Direction % | 2025 MAPE % | 2025 Direction % | 2026 MAPE % | 2026 Direction % |
+|---|---:|---:|---:|---:|---:|---:|
+| ChOA-ANN | 2.46605 | 60.61 | 2.47875 | 91.67 | 4.47334 | 85.71 |
+| HGSO-ANN | 2.66180 | 54.55 | 3.15876 | 75.00 | 5.40566 | 85.71 |
+| AOA-ANN | 2.51719 | 57.58 | 3.48182 | 83.33 | 4.85791 | 57.14 |
+| CPA-ANN | 2.27985 | 60.61 | 2.66751 | 75.00 | 3.88837 | 71.43 |
+
+### Batch 1.7 interpretation
+
+- **DEV-only MAPE ordering inside Batch 1.7:** CPA-ANN, ChOA-ANN, AOA-ANN, HGSO-ANN.
+- CPA-ANN is the strongest Batch 1.7 model and becomes the **third-best ANN overall on DEV MAPE**, behind Vanilla ANN and MPA-ANN.
+- ChOA-ANN is competitive middle-upper tier but does not challenge the current price-error leaders.
+- AOA-ANN is mid-pack.
+- HGSO-ANN is weak on DEV and has relative MAE above the random-walk benchmark.
+- Strong 2025/2026 external behavior, where present, remains reporting-only and did not affect tuning or rank authority.
+
+### ANN progress after Batch 1.7
+
+- Completed: **28 / 33**
+- Remaining: **5 / 33**
+- Current DEV MAPE top tier:
+  1. Vanilla ANN — 2.18895%
+  2. MPA-ANN — 2.19947%
+  3. CPA-ANN — 2.27985%
+  4. ACO-ANN — 2.35494%
+  5. GA-ANN — 2.36033%
+  6. SCA-ANN — 2.36197%
+  7. TLBO-ANN — 2.37828%
+  8. WOA-ANN — 2.38669%
+  9. FA-ANN — 2.39002%
+  10. SSA-ANN — 2.41896%
+- Current DEV direction leader remains **SCA-ANN — 72.73%**.
+- Next: final Batch 1.8 — Krill Herd, Crow Search, FA-FPA, DE-ABC, Multi-swarm ANN.
