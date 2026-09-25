@@ -1,6 +1,6 @@
 import math
 import numpy as np
-HG=[12,16,24]; AG=[1e-4,1e-3,1e-2]; LO,HI=-2.,2.; PP,PI,TP,TI=14,24,10,10
+HG=[12,16,24]; AG=[1e-4,1e-3,1e-2]; LO,HI=-2.,2.; PP,PI,TP,TI=12,20,6,5
 
 def sig(z): return 1/(1+np.exp(-np.clip(z,-40,40)))
 def dec(z,h):
