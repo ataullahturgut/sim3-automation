@@ -70,11 +70,11 @@ The full 33-entry ELM/ANN broad screen is repeated for ELMFIS.
 - [x] Vanilla ELMFIS
 - [x] PSO-ELMFIS
 - [x] GA-ELMFIS
-- [ ] MPA-ELMFIS
+- [x] MPA-ELMFIS
 - [x] DE-ELMFIS
-- [ ] ABC-ELMFIS
-- [ ] SSA-ELMFIS
-- [ ] GWO-ELMFIS
+- [x] ABC-ELMFIS
+- [x] SSA-ELMFIS
+- [x] GWO-ELMFIS
 - [ ] WOA-ELMFIS
 - [ ] HHO-ELMFIS
 - [ ] ACO-ELMFIS
@@ -253,3 +253,33 @@ Batch 1.1 finding: DE-ELMFIS is the current batch leader on both active DEV obje
 **STOP GATE:** Stage 1.2 must not start without explicit user confirmation.
 
 **Next planned batch after confirmation:** MPA-ELMFIS + ABC-ELMFIS + SSA-ELMFIS + GWO-ELMFIS.
+
+
+## 13. Stage 1 / Batch 1.2 result — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-elmfis-meta-batch-2-v1.yml`  
+**Run:** **36170049225 — SUCCESS / OUTPUT_GATE=PASS**  
+**Implementation:** `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_2_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE1_BATCH12_REPORT_2026-09-25.md`
+
+DEV-only active-metric results:
+
+| Model | Sum absolute error USD | Direction |
+|---|---:|---:|
+| ABC-ELMFIS | **1524.8854** | 21/33 = 63.64% |
+| GWO-ELMFIS | 1943.5595 | **22/33 = 66.67%** |
+| Vanilla ELMFIS | 1996.2933 | 20/33 = 60.61% |
+| SSA-ELMFIS | 2124.4760 | 20/33 = 60.61% |
+| MPA-ELMFIS | 3060.5864 | 19/33 = 57.58% |
+
+Current provisional Stage-1 DEV Pareto set after 8/33 entries:
+- ABC-ELMFIS — price-error side;
+- GWO-ELMFIS — direction side.
+
+No parent or family winner is frozen before the full Stage-1 screen and Stage-2 filtering.
+
+**Progress:** 8/33 Stage-1 entries complete, 25/33 remaining.
+
+**STOP GATE:** Stage 1.3 must not start without explicit user confirmation.
+
+**Next planned batch after confirmation:** WOA-ELMFIS + HHO-ELMFIS + ACO-ELMFIS + Bat-ELMFIS.
