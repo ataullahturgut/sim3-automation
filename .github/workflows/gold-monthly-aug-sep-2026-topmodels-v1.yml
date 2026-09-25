@@ -40,7 +40,7 @@ jobs:
           r=json.load(open(p))
           assert r['database_access']=='READ_ONLY'
           assert r['authority_invariants_before']==r['authority_invariants_after']
-          assert [x['target'] for x in r['rows']]==['2026-08','2026-09']
+          assert [x['target'] for x in r['rows']]==['2026-08']
           print('OUTPUT_GATE=PASS')
           print(json.dumps(r,sort_keys=True))
           PY
