@@ -1,0 +1,79 @@
+name: Gold MIDAS ANN Stage4 Freeze Audit V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/vw_midas_ann_stage4_freeze_audit_v1.py
+      - .github/workflows/gold-midas-ann-stage4-freeze-audit-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  stage4-freeze-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=1.26,<3'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/vw_midas_ann_stage4_freeze_audit_v1.py
+      - name: Download frozen source artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p ensemble_artifacts
+          for RUN_ID in 36127630549 36128225062 36129458713 36130538857 36132219383 36132859342 36134549789; do
+            mkdir -p "ensemble_artifacts/$RUN_ID"
+            AID="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/$RUN_ID/artifacts" --jq '.artifacts[0].id')"
+            test -n "$AID"
+            gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/$AID/zip" > "ensemble_artifacts/$RUN_ID.zip"
+            unzip -q -o "ensemble_artifacts/$RUN_ID.zip" -d "ensemble_artifacts/$RUN_ID"
+          done
+      - name: Run freeze audit
+        run: python gold_axis_2026/tools/vw_midas_ann_stage4_freeze_audit_v1.py --artifact-root ensemble_artifacts
+      - name: Inspect
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('vw_midas_ann_stage4_freeze_audit_v1_result.json'))
+          a=r['authority']
+          assert a['purpose']=='robustness_and_freeze_only_not_new_model_search'
+          assert a['2025_used_for_selection'] is False
+          assert a['2026_used_for_selection'] is False
+          assert a['random_split']=='NONE'
+          assert a['database_access']=='NONE_ARTIFACT_ONLY'
+          assert set(r['full7']['components'])=={'VANILLA','MPA','SCA','DE_ABC','ADAPTIVE_TLBO','TLBO_TUNED_PSO','MPA_SCA'}
+          assert set(r['reduced4']['components'])=={'VANILLA','MPA','SCA','DE_ABC'}
+          print('OUTPUT_GATE=PASS')
+          print(json.dumps({
+            'FULL7':{
+              'dev':r['full7']['dev_metrics'],
+              'yearly_dev':r['full7']['yearly_dev'],
+              'leave_one_origin':{k:v for k,v in r['full7']['leave_one_origin'].items() if k!='rows'},
+              'paired_vs_vanilla':r['full7']['paired_vs_vanilla'],
+              'paired_vs_mpa':r['full7']['paired_vs_mpa'],
+              'leave_one_component_out':r['full7']['leave_one_component_out_diagnostic']
+            },
+            'REDUCED4':{
+              'dev':r['reduced4']['dev_metrics'],
+              'yearly_dev':r['reduced4']['yearly_dev'],
+              'leave_one_origin':{k:v for k,v in r['reduced4']['leave_one_origin'].items() if k!='rows'},
+              'paired_vs_vanilla':r['reduced4']['paired_vs_vanilla'],
+              'paired_vs_mpa':r['reduced4']['paired_vs_mpa']
+            }
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-midas-ann-stage4-freeze-audit-v1-${{ github.sha }}
+          path: vw_midas_ann_stage4_freeze_audit_v1_result.json
+          retention-days: 30
