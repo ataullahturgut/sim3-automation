@@ -134,10 +134,10 @@ Planned single-method ANN checklist:
 - [x] FPA-ANN
 - [ ] FA-FPA-ANN
 - [x] CS-ANN
-- [ ] SCA-ANN
-- [ ] Salp-ANN
-- [ ] SMA-ANN
-- [ ] GOA-ANN
+- [x] SCA-ANN
+- [x] Salp-ANN
+- [x] SMA-ANN
+- [x] GOA-ANN
 - [ ] ALO-ANN
 - [ ] TLBO-ANN
 - [ ] JAYA-ANN
@@ -346,3 +346,56 @@ FA-ANN, MFO-ANN, FPA-ANN and CS-ANN retain the frozen canonical 8->4(tanh)->4 li
   15. DE-ANN — 2.84842%
   16. ABC-ANN — 3.06525%
 - Next: Batch 1.5 single-metaheuristic ANN screen.
+
+
+## 10. ANN Phase A / Batch 1.5 — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-meta-batch-5-v1.yml`  
+**Run:** 36129458713 — SUCCESS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_meta_batch_5_v1.py`
+
+SCA-ANN, Salp-ANN, SMA-ANN and GOA-ANN retain the frozen canonical 8->4(tanh)->4 linear ANN geometry, the same governed 8-feature VW-MIDAS input contract, and the same fair optimization/evaluation protocol: 3 deterministic repeats per target, chronological final-20% inner validation, top-quartile training candidate validation, fixed optimization budget, warm-start refit on all pre-target history, no target-month fitness, READ_ONLY DB, and unchanged authority invariants.
+
+| Method | DEV MAPE % | DEV Direction % | 2025 MAPE % | 2025 Direction % | 2026 MAPE % | 2026 Direction % |
+|---|---:|---:|---:|---:|---:|---:|
+| SCA-ANN | 2.36197 | 72.73 | 3.03650 | 75.00 | 4.70795 | 57.14 |
+| Salp-ANN | 2.43583 | 60.61 | 2.63556 | 75.00 | 4.53777 | 71.43 |
+| SMA-ANN | 2.57631 | 51.52 | 3.62164 | 91.67 | 5.51515 | 28.57 |
+| GOA-ANN | 3.00269 | 51.52 | 2.80686 | 58.33 | 5.25250 | 57.14 |
+
+### Batch 1.5 interpretation
+
+- **DEV-only MAPE ordering inside Batch 1.5:** SCA-ANN, Salp-ANN, SMA-ANN, GOA-ANN.
+- SCA-ANN becomes the strongest DEV direction model so far at **72.73%**, while its DEV MAPE remains behind Vanilla ANN and MPA-ANN.
+- Salp-ANN is competitive middle-tier on DEV and beats the random-walk DEV MAPE benchmark.
+- SMA-ANN narrowly beats RW MAPE on DEV but has weak external 2026 stress behavior; external results are not used for selection.
+- GOA-ANN is weak on DEV and has relative MAE above the random-walk benchmark.
+- No parent optimizer is frozen yet.
+
+### ANN progress after Batch 1.5
+
+- Completed: **20 / 33**
+- Remaining: **13 / 33**
+- Current DEV MAPE ordering across completed models:
+  1. Vanilla ANN — 2.18895%
+  2. MPA-ANN — 2.19947%
+  3. ACO-ANN — 2.35494%
+  4. GA-ANN — 2.36033%
+  5. SCA-ANN — 2.36197%
+  6. WOA-ANN — 2.38669%
+  7. FA-ANN — 2.39002%
+  8. SSA-ANN — 2.41896%
+  9. Salp-ANN — 2.43583%
+  10. HHO-ANN — 2.49709%
+  11. CS-ANN — 2.50128%
+  12. GWO-ANN — 2.53258%
+  13. SMA-ANN — 2.57631%
+  14. MFO-ANN — 2.60702%
+  15. PSO-ANN — 2.61194%
+  16. Bat-ANN — 2.64871%
+  17. FPA-ANN — 2.70125%
+  18. DE-ANN — 2.84842%
+  19. GOA-ANN — 3.00269%
+  20. ABC-ANN — 3.06525%
+- Current DEV direction leader: **SCA-ANN — 72.73%**.
+- Next: Batch 1.6 single-metaheuristic ANN screen.
