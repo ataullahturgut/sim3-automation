@@ -606,3 +606,61 @@ Current DEV direction leader remains **SCA-ANN — 72.73%**.
 - Candidate pool: **33 -> 12**
 - No final Stage 3 parent is frozen yet.
 - Next: **Batch 2.2** — prediction-error correlation/redundancy and role-based parent freezing using DEV only.
+
+
+## 15. ANN Stage 2 / Batch 2.2 — parent freeze completed 2026-09-25
+
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ANN_STAGE2_BATCH22_PARENT_FREEZE_2026-09-25.md`
+
+### DEV-only complementarity audit
+- Pairwise signed-error correlations, direction disagreement, origin-level absolute-error wins, direction-rescue counts and simple 50/50 pair proxies were computed from the 33 DEV origins.
+- 2025 transport and 2026 stress remained completely outside selection authority.
+- Strongest complementarity signal: Vanilla ANN + DE-ABC-ANN, error correlation 0.7703, 50/50 proxy DEV MAPE 2.08507%, direction 69.70%.
+- DE-ABC is not promoted as a new Stage 3 parent because it is already a hybrid carried for ELM parity.
+
+### Frozen Stage 3 entities
+
+**Baseline anchor**
+- Vanilla ANN
+
+**Active evidence-driven parents — 5**
+- MPA-ANN — primary price parent
+- CPA-ANN — complementary price/search-diversity parent
+- SCA-ANN — direction-specialist parent
+- GA-ANN — year-stability parent
+- TLBO-ANN — refinement/meta-tuning parent
+
+**Hybrid-parity benchmarks — benchmark only**
+- DE-ABC-ANN
+- FA-FPA-ANN
+
+**Reserve challengers**
+- SSA-ANN — repeat/direction stability
+- Krill Herd-ANN — diversity / RW win-rate
+- ACO-ANN — balanced reserve
+- HHO-ANN — yearly/repeat stability reserve
+
+### Stage 3 frozen two-track plan
+
+**Track 1 — mandatory ELM-parity refinements**
+1. Adaptive PSO-ANN
+2. TLBO-tuned PSO-ANN
+3. DE-tuned PSO-ANN
+4. Adaptive/Improved TLBO-ANN
+5. Adaptive Crow Search-ANN
+6. PSO-TLBO Hybrid ANN
+
+Base PSO-ANN failed the Batch 2.1 RW gate; this must be disclosed when interpreting PSO-derived refinements.
+
+**Track 2 — evidence-driven ANN-specific additions**
+- Priority 1: MPA + SCA
+- Priority 2: MPA + GA
+- CPA-based alternative only if the first two fail to add DEV value.
+- No combinatorial cross-product search.
+
+### Stage status
+- **AŞAMA 2/5: COMPLETE**
+- Phase A models: 33/33 complete.
+- Batch 2.1 filtering: 33 -> 12.
+- Batch 2.2 active parent freeze: 5 active parents + Vanilla anchor + 2 fixed hybrid benchmarks + 4 reserves.
+- Next: **AŞAMA 3/5 — Adaptive / Meta-on-Meta / Hybrid ANN**, beginning with the mandatory parity track in controlled batches.
