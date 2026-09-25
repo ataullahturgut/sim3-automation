@@ -792,3 +792,32 @@ Current parity-track DEV MAPE ordering:
   - MPA + GA
 - CPA-based alternative only if these fail to add DEV value.
 - 2025/2026 remain reporting-only.
+
+
+## 19. ANN Stage 3 / Batch 3.4 — Evidence-driven MPA hybrids completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-stage3-batch34-v1.yml`  
+**Run:** 36134549789 — SUCCESS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_stage3_batch34_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ANN_STAGE3_BATCH34_MPA_SCA_GA_HYBRIDS_2026-09-25.md`
+
+### Results
+| Model | DEV MAPE % | DEV Direction % | 2025 MAPE % | 2026 MAPE % |
+|---|---:|---:|---:|---:|
+| MPA+SCA Hybrid ANN | 2.23957 | 60.61 | 2.70259 | 4.52720 |
+| MPA+GA Hybrid ANN | 2.48841 | 51.52 | 2.63731 | 4.71151 |
+
+### Learned operator competition
+**MPA+SCA selected-repeat mean survivor shares:** incumbent 44.78%, MPA 45.87%, SCA 9.35%.  
+**MPA+GA selected-repeat mean survivor shares:** incumbent 24.53%, MPA 28.22%, GA 47.25%.
+
+### Decisions
+- MPA+SCA is a useful trade-off hybrid: it does not beat MPA on aggregate DEV MAPE (2.19947% -> 2.23957%) but improves MPA direction (57.58% -> 60.61%) and sharply improves yearly-MAPE stability (SD ~0.3698 -> 0.1470). Retain as balanced/stability evidence, not as price leader.
+- MPA+GA is dominated by both parents on DEV MAPE and direction; reject from leading set.
+- The Stage 2 fallback condition is therefore met for exactly one controlled CPA alternative: **MPA+CPA Hybrid ANN**.
+- No further combinatorial hybrid expansion is permitted.
+- 2025/2026 remain reporting-only.
+
+### Stage status
+- **AŞAMA 3/5 — Batch 3.4: COMPLETE**
+- Next: **Batch 3.5 — MPA+CPA Hybrid ANN**, one-model controlled fallback.
