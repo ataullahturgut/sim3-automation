@@ -882,3 +882,56 @@ Before implementation:
 - preserve simple-average benchmark;
 - optimized weights must be non-negative, sum to 1, and be learned using pre-2025 chronological evidence only;
 - no fixed arbitrary weights except the simple-average benchmark.
+
+
+## 21. ANN Stage 4 / Batch 4.1 — Ensemble baselines completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-stage4-batch41-v1.yml`  
+**Run:** 36136349942 — SUCCESS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_stage4_batch41_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ANN_STAGE4_BATCH41_ENSEMBLE_BASELINES_2026-09-25.md`
+
+### ELM ensemble parity recovery
+- Exact prediction-level ELM ensemble component set / learned weights / ensemble result: **NOT_FOUND** in the original ledger commit or current repo.
+- No ELM ensemble details were invented.
+- Stage 4 is therefore recorded as a new ANN ensemble stage, not exact ELM ensemble parity.
+
+### Frozen 7-model component pool
+- Vanilla ANN
+- MPA-ANN
+- SCA-ANN
+- DE-ABC-ANN
+- Adaptive TLBO-ANN
+- TLBO-tuned PSO-ANN
+- MPA+SCA Hybrid ANN
+
+All component predictions were loaded directly from their original successful GitHub Actions artifacts; no base model was retrained.
+
+### Honest DEV meta-evaluation
+| Variant | DEV MAPE % | DEV Direction % | 2025 MAPE % | 2026 MAPE % |
+|---|---:|---:|---:|---:|
+| SIMPLE_AVERAGE | **2.10665** | **66.67** | 2.46790 | 4.35551 |
+| PERFORMANCE_WEIGHTED | 2.11411 | 66.67 | 2.46539 | **4.35001** |
+| OPTIMIZED_SIMPLEX | 2.33779 | 60.61 | **2.39450** | 4.40192 |
+
+### Main findings
+- Simple average is the strongest honest prequential DEV ensemble and improves on Vanilla ANN 2.18895% and MPA-ANN 2.19947%.
+- Performance-weighted weights remain close to uniform; this supports diversified error averaging as the main source of gain.
+- Unregularized optimized simplex shows clear meta-overfit:
+  - full-DEV in-sample fit MAPE = 2.05363% (not valid as honest DEV evaluation);
+  - expanding prequential DEV MAPE = 2.33779%.
+- Final full-DEV optimized simplex weights collapse onto MPA+SCA 34.14%, Vanilla 25.13%, DE-ABC 21.10%, MPA 19.63%, with near-zero weight on SCA, Adaptive TLBO and TLBO-tuned PSO.
+- 2025/2026 were not used for component selection, weighting or variant selection.
+
+### Decisions
+- **SIMPLE_AVERAGE: retain as current leading ANN ensemble benchmark.**
+- **PERFORMANCE_WEIGHTED: retain as robust challenger.**
+- **OPTIMIZED_SIMPLEX: do not promote in unregularized form.**
+- Next Stage 4 batch should test only controlled remedies for weight overfit:
+  - shrinkage/regularized simplex toward equal weights;
+  - optionally one predeclared reduced role-diverse pool.
+- No combinatorial subset search or arbitrary post-2025 weight fitting.
+
+### Stage status
+- **AŞAMA 4/5 — Batch 4.1: COMPLETE**
+- Next: **Batch 4.2 — regularized/shrunk optimized ensemble robustness**.
