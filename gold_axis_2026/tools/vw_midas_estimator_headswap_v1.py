@@ -404,3 +404,5 @@ def run():
 
 if __name__ == "__main__":
     run()
+
+# Snapshot availability trigger: frozen August reconstruction source copied to research branch.
