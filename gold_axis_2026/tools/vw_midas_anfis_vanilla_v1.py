@@ -105,6 +105,380 @@ def loss_and_grad(X,Y,centers,logspreads,beta):
     return loss,gc,gs,yhat
 
 
+from __future__ import annotations
+
+import json, math, os
+from pathlib import Path
+
+import numpy as np
+import psycopg
+from sklearn.cluster import KMeans
+
+import vw_midas_msvr_successor_v1 as base
+
+DEV_START, DEV_END = "2022-04", "2024-12"
+TR_START, TR_END = "2025-01", "2025-12"
+ST_START, ST_END = "2026-01", "2026-07"
+
+N_RULES = 5
+KMEANS_N_INIT = 20
+KMEANS_SEED = 1701
+SPREAD_FLOOR = 0.20
+SPREAD_CEIL = 5.0
+EPOCHS = 50
+LR_CENTER = 0.01
+LR_LOGSPREAD = 0.005
+GRAD_CLIP = 5.0
+MIN_IMPROVEMENT = 1e-10
+
+
+def arrays(samples, target):
+    keys = sorted(k for k in samples if k < target)
+    if len(keys) < 30:
+        raise RuntimeError(f"TRAIN_TOO_SMALL {target} n={len(keys)}")
+    X = np.stack([samples[k][0] for k in keys])
+    Y = np.stack([samples[k][1] for k in keys])
+    tx = samples[target][0][None, :]
+    xm, xs = X.mean(0), X.std(0)
+    ym, ys = Y.mean(0), Y.std(0)
+    xs = np.where(xs < 1e-9, 1.0, xs)
+    ys = np.where(ys < 1e-9, 1.0, ys)
+    return keys, (X-xm)/xs, (Y-ym)/ys, (tx-xm)/xs, ym, ys
+
+
+def init_premise(X):
+    km=KMeans(n_clusters=N_RULES,n_init=KMEANS_N_INIT,random_state=KMEANS_SEED,algorithm="lloyd")
+    labels=km.fit_predict(X)
+    centers=np.asarray(km.cluster_centers_,float)
+    gs=np.std(X,axis=0); gs=np.where(gs<1e-9,1.0,gs)
+    spreads=np.empty_like(centers)
+    for r in range(N_RULES):
+        pts=X[labels==r]
+        s=np.std(pts,axis=0) if len(pts)>=2 else gs.copy()
+        spreads[r]=np.clip(s,SPREAD_FLOOR,SPREAD_CEIL)
+    return centers, np.log(spreads), labels
+
+
+def firing(X, centers, logspreads):
+    spreads=np.exp(logspreads)
+    z=(X[:,None,:]-centers[None,:,:])/spreads[None,:,:]
+    # Canonical Gaussian: exp(-0.5 z^2), product AND in log space.
+    logw=-0.5*np.sum(z*z,axis=2)
+    logw-=np.max(logw,axis=1,keepdims=True)
+    w=np.exp(logw)
+    den=np.sum(w,axis=1,keepdims=True)
+    den=np.where(den<1e-12,1.0,den)
+    return w/den
+
+
+def design(X, centers, logspreads):
+    q=firing(X,centers,logspreads)
+    basis=np.concatenate([np.ones((len(X),1)),X],axis=1)
+    return (q[:,:,None]*basis[:,None,:]).reshape(len(X),-1)
+
+
+def fit_consequents_lse(X,Y,centers,logspreads):
+    H=design(X,centers,logspreads)
+    beta, *_ = np.linalg.lstsq(H,Y,rcond=None)
+    return beta
+
+
+def consequent_values(X,beta):
+    d=X.shape[1]
+    b=beta.reshape(N_RULES,d+1,YDIM)
+    basis=np.concatenate([np.ones((len(X),1)),X],axis=1)
+    return np.einsum("nd,rdo->nro",basis,b)
+
+
+def loss_and_grad(X,Y,centers,logspreads,beta):
+    q=firing(X,centers,logspreads)
+    fr=consequent_values(X,beta)
+    yhat=np.sum(q[:,:,None]*fr,axis=1)
+    err=yhat-Y
+    loss=float(np.mean(err*err))
+
+    # d yhat_o / d theta_rj = q_r (f_ro-yhat_o) d log(w_r)/d theta_rj
+    delta=q[:,:,None]*(fr-yhat[:,None,:])
+    # aggregate over outputs and observations
+    influence=(2.0/(len(X)*Y.shape[1]))*np.einsum("no,nro->nr",err,delta)
+
+    spreads=np.exp(logspreads)
+    diff=X[:,None,:]-centers[None,:,:]
+    dlogw_dc=diff/(spreads[None,:,:]**2)
+    dlogw_dlogs=(diff*diff)/(spreads[None,:,:]**2)
+
+    gc=np.einsum("nr,nrd->rd",influence,dlogw_dc)
+    gs=np.einsum("nr,nrd->rd",influence,dlogw_dlogs)
+    return loss,gc,gs,yhat
+
+
+def clip_grad(g,limit):
+    n=float(np.linalg.norm(g))
+    return g if n<=limit or n<1e-15 else g*(limit/n)
+
+
+def train_anfis(X,Y):
+    global YDIM
+    YDIM=Y.shape[1]
+    centers,logs,labels=init_premise(X)
+    best=(float("inf"),centers.copy(),logs.copy(),None,0)
+    history=[]
+    step_size=INITIAL_STEP_SIZE
+    step_history=[]
+
+    for epoch in range(EPOCHS):
+        beta=fit_consequents_lse(X,Y,centers,logs)
+        loss,gc,gs,_=loss_and_grad(X,Y,centers,logs,beta)
+        history.append(loss)
+        step_history.append(step_size)
+        if loss+MIN_IMPROVEMENT < best[0]:
+            best=(loss,centers.copy(),logs.copy(),beta.copy(),epoch)
+
+        # Jang (1993) normalized gradient transition:
+        # eta = k / ||grad||, so the premise-parameter step has length k.
+        g=np.concatenate([gc.ravel(),gs.ravel()])
+        gn=float(np.linalg.norm(g))
+        if np.isfinite(gn) and gn>1e-15:
+            eta=step_size/gn
+            centers=centers-eta*gc
+            logs=logs-eta*gs
+            logs=np.clip(logs,math.log(SPREAD_FLOOR),math.log(SPREAD_CEIL))
+
+        # Original ANFIS step-size heuristics:
+        # 4 consecutive error reductions -> +10%.
+        # 2 consecutive combinations of one increase and one reduction
+        # (alternating signs across the last 4 transitions) -> -10%.
+        if len(history)>=5:
+            diffs=np.diff(history[-5:])
+            signs=np.sign(diffs)
+            if np.all(diffs<0):
+                step_size*=STEP_INCREASE
+            elif np.all(signs[:-1]*signs[1:]<0):
+                step_size*=STEP_DECREASE
+
+    loss,bc,bl,_,be=best
+    bb=fit_consequents_lse(X,Y,bc,bl)
+    return bc,bl,bb,labels,{"best_epoch":int(be),"best_train_mse":float(loss),
+                            "first_train_mse":float(history[0]),"last_train_mse":float(history[-1]),
+                            "initial_step_size":INITIAL_STEP_SIZE,
+                            "final_step_size":float(step_history[-1]),
+                            "min_step_size":float(min(step_history)),
+                            "max_step_size":float(max(step_history))}
+
+from __future__ import annotations
+
+import json, math, os
+from pathlib import Path
+
+import numpy as np
+import psycopg
+from sklearn.cluster import KMeans
+
+import vw_midas_msvr_successor_v1 as base
+
+DEV_START, DEV_END = "2022-04", "2024-12"
+TR_START, TR_END = "2025-01", "2025-12"
+ST_START, ST_END = "2026-01", "2026-07"
+
+N_RULES = 5
+KMEANS_N_INIT = 20
+KMEANS_SEED = 1701
+SPREAD_FLOOR = 0.20
+SPREAD_CEIL = 5.0
+EPOCHS = 50
+LR_CENTER = 0.01
+LR_LOGSPREAD = 0.005
+GRAD_CLIP = 5.0
+MIN_IMPROVEMENT = 1e-10
+
+
+def arrays(samples, target):
+    keys = sorted(k for k in samples if k < target)
+    if len(keys) < 30:
+        raise RuntimeError(f"TRAIN_TOO_SMALL {target} n={len(keys)}")
+    X = np.stack([samples[k][0] for k in keys])
+    Y = np.stack([samples[k][1] for k in keys])
+    tx = samples[target][0][None, :]
+    xm, xs = X.mean(0), X.std(0)
+    ym, ys = Y.mean(0), Y.std(0)
+    xs = np.where(xs < 1e-9, 1.0, xs)
+    ys = np.where(ys < 1e-9, 1.0, ys)
+    return keys, (X-xm)/xs, (Y-ym)/ys, (tx-xm)/xs, ym, ys
+
+
+def init_premise(X):
+    km=KMeans(n_clusters=N_RULES,n_init=KMEANS_N_INIT,random_state=KMEANS_SEED,algorithm="lloyd")
+    labels=km.fit_predict(X)
+    centers=np.asarray(km.cluster_centers_,float)
+    gs=np.std(X,axis=0); gs=np.where(gs<1e-9,1.0,gs)
+    spreads=np.empty_like(centers)
+    for r in range(N_RULES):
+        pts=X[labels==r]
+        s=np.std(pts,axis=0) if len(pts)>=2 else gs.copy()
+        spreads[r]=np.clip(s,SPREAD_FLOOR,SPREAD_CEIL)
+    return centers, np.log(spreads), labels
+
+
+def firing(X, centers, logspreads):
+    spreads=np.exp(logspreads)
+    z=(X[:,None,:]-centers[None,:,:])/spreads[None,:,:]
+    # Canonical Gaussian: exp(-0.5 z^2), product AND in log space.
+    logw=-0.5*np.sum(z*z,axis=2)
+    logw-=np.max(logw,axis=1,keepdims=True)
+    w=np.exp(logw)
+    den=np.sum(w,axis=1,keepdims=True)
+    den=np.where(den<1e-12,1.0,den)
+    return w/den
+
+
+def design(X, centers, logspreads):
+    q=firing(X,centers,logspreads)
+    basis=np.concatenate([np.ones((len(X),1)),X],axis=1)
+    return (q[:,:,None]*basis[:,None,:]).reshape(len(X),-1)
+
+
+def fit_consequents_lse(X,Y,centers,logspreads):
+    H=design(X,centers,logspreads)
+    beta, *_ = np.linalg.lstsq(H,Y,rcond=None)
+    return beta
+
+
+def consequent_values(X,beta):
+    d=X.shape[1]
+    b=beta.reshape(N_RULES,d+1,YDIM)
+    basis=np.concatenate([np.ones((len(X),1)),X],axis=1)
+    return np.einsum("nd,rdo->nro",basis,b)
+
+
+def loss_and_grad(X,Y,centers,logspreads,beta):
+    q=firing(X,centers,logspreads)
+    fr=consequent_values(X,beta)
+    yhat=np.sum(q[:,:,None]*fr,axis=1)
+    err=yhat-Y
+    loss=float(np.mean(err*err))
+
+    # d yhat_o / d theta_rj = q_r (f_ro-yhat_o) d log(w_r)/d theta_rj
+    delta=q[:,:,None]*(fr-yhat[:,None,:])
+    # aggregate over outputs and observations
+    influence=(2.0/(len(X)*Y.shape[1]))*np.einsum("no,nro->nr",err,delta)
+
+    spreads=np.exp(logspreads)
+    diff=X[:,None,:]-centers[None,:,:]
+    dlogw_dc=diff/(spreads[None,:,:]**2)
+    dlogw_dlogs=(diff*diff)/(spreads[None,:,:]**2)
+
+    gc=np.einsum("nr,nrd->rd",influence,dlogw_dc)
+    gs=np.einsum("nr,nrd->rd",influence,dlogw_dlogs)
+    return loss,gc,gs,yhat
+
+
+from __future__ import annotations
+
+import json, math, os
+from pathlib import Path
+
+import numpy as np
+import psycopg
+from sklearn.cluster import KMeans
+
+import vw_midas_msvr_successor_v1 as base
+
+DEV_START, DEV_END = "2022-04", "2024-12"
+TR_START, TR_END = "2025-01", "2025-12"
+ST_START, ST_END = "2026-01", "2026-07"
+
+N_RULES = 5
+KMEANS_N_INIT = 20
+KMEANS_SEED = 1701
+SPREAD_FLOOR = 0.20
+SPREAD_CEIL = 5.0
+EPOCHS = 50
+LR_CENTER = 0.01
+LR_LOGSPREAD = 0.005
+GRAD_CLIP = 5.0
+MIN_IMPROVEMENT = 1e-10
+
+
+def arrays(samples, target):
+    keys = sorted(k for k in samples if k < target)
+    if len(keys) < 30:
+        raise RuntimeError(f"TRAIN_TOO_SMALL {target} n={len(keys)}")
+    X = np.stack([samples[k][0] for k in keys])
+    Y = np.stack([samples[k][1] for k in keys])
+    tx = samples[target][0][None, :]
+    xm, xs = X.mean(0), X.std(0)
+    ym, ys = Y.mean(0), Y.std(0)
+    xs = np.where(xs < 1e-9, 1.0, xs)
+    ys = np.where(ys < 1e-9, 1.0, ys)
+    return keys, (X-xm)/xs, (Y-ym)/ys, (tx-xm)/xs, ym, ys
+
+
+def init_premise(X):
+    km=KMeans(n_clusters=N_RULES,n_init=KMEANS_N_INIT,random_state=KMEANS_SEED,algorithm="lloyd")
+    labels=km.fit_predict(X)
+    centers=np.asarray(km.cluster_centers_,float)
+    gs=np.std(X,axis=0); gs=np.where(gs<1e-9,1.0,gs)
+    spreads=np.empty_like(centers)
+    for r in range(N_RULES):
+        pts=X[labels==r]
+        s=np.std(pts,axis=0) if len(pts)>=2 else gs.copy()
+        spreads[r]=np.clip(s,SPREAD_FLOOR,SPREAD_CEIL)
+    return centers, np.log(spreads), labels
+
+
+def firing(X, centers, logspreads):
+    spreads=np.exp(logspreads)
+    z=(X[:,None,:]-centers[None,:,:])/spreads[None,:,:]
+    # Canonical Gaussian: exp(-0.5 z^2), product AND in log space.
+    logw=-0.5*np.sum(z*z,axis=2)
+    logw-=np.max(logw,axis=1,keepdims=True)
+    w=np.exp(logw)
+    den=np.sum(w,axis=1,keepdims=True)
+    den=np.where(den<1e-12,1.0,den)
+    return w/den
+
+
+def design(X, centers, logspreads):
+    q=firing(X,centers,logspreads)
+    basis=np.concatenate([np.ones((len(X),1)),X],axis=1)
+    return (q[:,:,None]*basis[:,None,:]).reshape(len(X),-1)
+
+
+def fit_consequents_lse(X,Y,centers,logspreads):
+    H=design(X,centers,logspreads)
+    beta, *_ = np.linalg.lstsq(H,Y,rcond=None)
+    return beta
+
+
+def consequent_values(X,beta):
+    d=X.shape[1]
+    b=beta.reshape(N_RULES,d+1,YDIM)
+    basis=np.concatenate([np.ones((len(X),1)),X],axis=1)
+    return np.einsum("nd,rdo->nro",basis,b)
+
+
+def loss_and_grad(X,Y,centers,logspreads,beta):
+    q=firing(X,centers,logspreads)
+    fr=consequent_values(X,beta)
+    yhat=np.sum(q[:,:,None]*fr,axis=1)
+    err=yhat-Y
+    loss=float(np.mean(err*err))
+
+    # d yhat_o / d theta_rj = q_r (f_ro-yhat_o) d log(w_r)/d theta_rj
+    delta=q[:,:,None]*(fr-yhat[:,None,:])
+    # aggregate over outputs and observations
+    influence=(2.0/(len(X)*Y.shape[1]))*np.einsum("no,nro->nr",err,delta)
+
+    spreads=np.exp(logspreads)
+    diff=X[:,None,:]-centers[None,:,:]
+    dlogw_dc=diff/(spreads[None,:,:]**2)
+    dlogw_dlogs=(diff*diff)/(spreads[None,:,:]**2)
+
+    gc=np.einsum("nr,nrd->rd",influence,dlogw_dc)
+    gs=np.einsum("nr,nrd->rd",influence,dlogw_dlogs)
+    return loss,gc,gs,yhat
+
+
 def clip_grad(g,limit):
     n=float(np.linalg.norm(g))
     return g if n<=limit or n<1e-15 else g*(limit/n)
