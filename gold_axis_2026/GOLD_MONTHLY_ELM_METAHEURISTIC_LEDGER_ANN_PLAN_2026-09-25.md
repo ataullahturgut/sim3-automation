@@ -117,10 +117,11 @@ Run individual metaheuristics first, one optimizer at a time. Do not begin hybri
 
 Planned single-method ANN checklist:
 
-- [ ] Vanilla ANN baseline
-- [ ] PSO-ANN
-- [ ] GA-ANN
-- [ ] DE-ANN
+- [x] Vanilla ANN baseline
+- [x] PSO-ANN
+- [x] GA-ANN
+- [ ] MPA-ANN
+- [x] DE-ANN
 - [ ] ABC-ANN
 - [ ] SSA-ANN
 - [ ] GWO-ANN
@@ -131,6 +132,7 @@ Planned single-method ANN checklist:
 - [ ] FA-ANN
 - [ ] MFO-ANN
 - [ ] FPA-ANN
+- [ ] FA-FPA-ANN
 - [ ] CS-ANN
 - [ ] SCA-ANN
 - [ ] Salp-ANN
@@ -146,6 +148,8 @@ Planned single-method ANN checklist:
 - [ ] CPA-ANN
 - [ ] Krill Herd-ANN
 - [ ] Crow Search-ANN
+- [ ] DE-ABC-ANN
+- [ ] Multi-swarm ANN
 
 The single-method ANN screen can be pruned only for a documented scientific or implementation reason; it must not be pruned because of 2025/2026 outcomes.
 
@@ -170,3 +174,44 @@ Only after Phase B is complete:
 - Do not silently change the 8-feature VW-MIDAS input contract.
 - Do not mix this monthly-price line with the separate daily direction engine.
 - Every ANN experiment must log method, parameter bounds, inner objective, seed policy, training window, metrics by period, and accept/reject/next decision.
+
+
+## 6. ANN Phase A / Batch 1.1 — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-meta-batch-1-v1.yml`  
+**Run:** 36127630549 — SUCCESS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_meta_batch_1_v1.py`
+
+Canonical Vanilla ANN was re-run in the same workflow. The pre-2025 selected baseline remained one hidden layer with 4 units, tanh activation, alpha 1.0, LBFGS training.
+
+PSO-ANN / GA-ANN / DE-ANN use the same frozen 8-feature VW-MIDAS data contract and a fixed 8->4(tanh)->4 linear ANN geometry. The metaheuristics optimize all 56 ANN weights/biases directly. For every target origin:
+- all data are pre-target and standardized using only available history;
+- the chronological final 20% of training history (minimum 6 rows) is the validation tail;
+- population evolution is driven by 0.7*Gold standardized MAE + 0.3*all-output standardized MAE on inner-training;
+- validation selects only among the top quartile of candidates by training loss;
+- 3 deterministic repeats are used;
+- the validation-selected solution is warm-start refit on all pre-target history;
+- target-month data are never used in fitness;
+- DB access remains READ_ONLY and authority invariants were unchanged.
+
+| Method | DEV MAPE % | DEV Direction % | 2025 MAPE % | 2025 Direction % | 2026 MAPE % | 2026 Direction % |
+|---|---:|---:|---:|---:|---:|---:|
+| Vanilla ANN | 2.18895 | 54.55 | 2.77892 | 83.33 | 4.57914 | 57.14 |
+| PSO-ANN | 2.61194 | 54.55 | 2.59392 | 83.33 | 4.31502 | 85.71 |
+| GA-ANN | 2.36033 | 63.64 | 2.71883 | 75.00 | 4.62219 | 71.43 |
+| DE-ANN | 2.84842 | 51.52 | 2.41362 | 75.00 | 4.31570 | 71.43 |
+
+### Batch 1.1 interpretation
+
+- **DEV-only ordering for this batch:** Vanilla ANN, GA-ANN, PSO-ANN, DE-ANN by MAPE.
+- Vanilla ANN currently remains the strongest Batch 1.1 DEV reference.
+- GA-ANN is the strongest metaheuristic ANN in Batch 1.1 on DEV evidence.
+- PSO-ANN and DE-ANN did not beat Vanilla ANN on DEV.
+- 2025 transport and 2026 stress are recorded strictly as external evidence and were not used for tuning, ranking authority, or parent selection.
+- No parent optimizer is frozen yet; the full single-method ANN screen must finish first.
+
+### ANN progress after Batch 1.1
+
+- Completed: **4 / 33**
+- Remaining: **29 / 33**
+- Next: Batch 1.2 single-metaheuristic ANN screen.
