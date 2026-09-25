@@ -132,7 +132,7 @@ Planned single-method ANN checklist:
 - [x] FA-ANN
 - [x] MFO-ANN
 - [x] FPA-ANN
-- [ ] FA-FPA-ANN
+- [x] FA-FPA-ANN
 - [x] CS-ANN
 - [x] SCA-ANN
 - [x] Salp-ANN
@@ -146,10 +146,10 @@ Planned single-method ANN checklist:
 - [x] HGSO-ANN
 - [x] AOA-ANN
 - [x] CPA-ANN
-- [ ] Krill Herd-ANN
-- [ ] Crow Search-ANN
-- [ ] DE-ABC-ANN
-- [ ] Multi-swarm ANN
+- [x] Krill Herd-ANN
+- [x] Crow Search-ANN
+- [x] DE-ABC-ANN
+- [x] Multi-swarm ANN
 
 The single-method ANN screen can be pruned only for a documented scientific or implementation reason; it must not be pruned because of 2025/2026 outcomes.
 
@@ -498,3 +498,63 @@ ChOA-ANN, HGSO-ANN, AOA-ANN and CPA-ANN retain the frozen canonical 8->4(tanh)->
   10. SSA-ANN — 2.41896%
 - Current DEV direction leader remains **SCA-ANN — 72.73%**.
 - Next: final Batch 1.8 — Krill Herd, Crow Search, FA-FPA, DE-ABC, Multi-swarm ANN.
+
+
+## 13. ANN Phase A / Batch 1.8 — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-meta-batch-8-v1.yml`  
+**Run:** 36130538857 — SUCCESS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_meta_batch_8_v1.py`
+
+Final parity batch completed with Krill Herd-ANN, Crow Search-ANN, FA-FPA-ANN, DE-ABC-ANN and Multi-swarm ANN. The same frozen canonical 8->4(tanh)->4 linear ANN, governed 8-feature VW-MIDAS inputs, 3 deterministic repeats per target, chronological final-20% validation, top-quartile candidate validation selection, fixed optimization budget, full pre-target-history warm-start refit, target-month exclusion, READ_ONLY DB access and authority-invariant checks were retained.
+
+**Important naming control:** CS-ANN completed in Batch 1.4 is Cuckoo Search. Crow Search-ANN in this batch is a distinct optimizer.
+
+| Method | DEV MAPE % | DEV Direction % | 2025 MAPE % | 2025 Direction % | 2026 MAPE % | 2026 Direction % |
+|---|---:|---:|---:|---:|---:|---:|
+| Krill Herd-ANN | 2.37501 | 66.67 | 3.25709 | 66.67 | 4.80715 | 71.43 |
+| Crow Search-ANN | 2.50491 | 60.61 | 2.76303 | 91.67 | 5.34593 | 57.14 |
+| FA-FPA-ANN | 2.28398 | 60.61 | 2.37024 | 75.00 | 4.92916 | 85.71 |
+| DE-ABC-ANN | 2.26109 | 66.67 | 2.81484 | 83.33 | 5.15819 | 71.43 |
+| Multi-swarm ANN | 2.59615 | 54.55 | 2.88801 | 66.67 | 4.66934 | 71.43 |
+
+### Batch 1.8 interpretation
+
+- **DEV-only MAPE ordering inside Batch 1.8:** DE-ABC-ANN, FA-FPA-ANN, Krill Herd-ANN, Crow Search-ANN, Multi-swarm ANN.
+- DE-ABC-ANN becomes the second-best metaheuristic/hybrid-parity ANN on DEV MAPE after MPA-ANN and the third-best ANN overall after Vanilla and MPA.
+- FA-FPA-ANN is also a strong DEV price-error candidate.
+- Krill Herd-ANN combines good DEV MAPE with 66.67% DEV direction accuracy.
+- Crow Search-ANN is middle tier on DEV despite strong 2025 direction; 2025 is external evidence only.
+- Multi-swarm ANN is weak on DEV and has relative MAE slightly worse than the random-walk benchmark.
+- FA-FPA, DE-ABC and Multi-swarm are retained in Phase A only for ELM parity; their hybrid nature is recorded so they will not be double-counted as novel Phase C hybrids.
+
+### ANN Phase A final progress
+
+- **Completed: 33 / 33**
+- **Remaining: 0 / 33**
+- **AŞAMA 1/5: COMPLETE**
+
+### Final DEV MAPE top tier after all 33 entries
+
+1. Vanilla ANN — 2.18895%
+2. MPA-ANN — 2.19947%
+3. DE-ABC-ANN — 2.26109%
+4. CPA-ANN — 2.27985%
+5. FA-FPA-ANN — 2.28398%
+6. ACO-ANN — 2.35494%
+7. GA-ANN — 2.36033%
+8. SCA-ANN — 2.36197%
+9. Krill Herd-ANN — 2.37501%
+10. TLBO-ANN — 2.37828%
+
+Current DEV direction leader remains **SCA-ANN — 72.73%**.
+
+### Next governed phase
+
+**AŞAMA 2/5 — ANN result filtering and parent selection**
+- consolidate all 33 DEV results;
+- analyze price-error, direction, RW-relative performance and origin/year stability using DEV only;
+- use recorded repeat/inner-validation evidence for robustness review where available;
+- keep 2025/2026 outside selection authority;
+- freeze only a small parent set for adaptive/meta-on-meta/hybrid ANN work;
+- explicitly avoid double-counting FA-FPA, DE-ABC and Multi-swarm as new Phase C inventions.
