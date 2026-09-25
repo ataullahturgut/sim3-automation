@@ -138,10 +138,10 @@ Planned single-method ANN checklist:
 - [x] Salp-ANN
 - [x] SMA-ANN
 - [x] GOA-ANN
-- [ ] ALO-ANN
-- [ ] TLBO-ANN
-- [ ] JAYA-ANN
-- [ ] HGS-ANN
+- [x] ALO-ANN
+- [x] TLBO-ANN
+- [x] JAYA-ANN
+- [x] HGS-ANN
 - [ ] ChOA-ANN
 - [ ] HGSO-ANN
 - [ ] AOA-ANN
@@ -399,3 +399,59 @@ SCA-ANN, Salp-ANN, SMA-ANN and GOA-ANN retain the frozen canonical 8->4(tanh)->4
   20. ABC-ANN — 3.06525%
 - Current DEV direction leader: **SCA-ANN — 72.73%**.
 - Next: Batch 1.6 single-metaheuristic ANN screen.
+
+
+## 11. ANN Phase A / Batch 1.6 — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-meta-batch-6-v1.yml`  
+**Run:** 36129773054 — SUCCESS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_meta_batch_6_v1.py`
+
+ALO-ANN, TLBO-ANN, JAYA-ANN and HGS-ANN retain the frozen canonical 8->4(tanh)->4 linear ANN geometry, the same governed 8-feature VW-MIDAS contract, and the same fair optimization/evaluation protocol: 3 deterministic repeats per target, chronological final-20% validation, top-quartile training candidate validation, fixed optimization budget, warm-start refit on all pre-target history, no target-month fitness, READ_ONLY DB access and unchanged authority invariants.
+
+| Method | DEV MAPE % | DEV Direction % | 2025 MAPE % | 2025 Direction % | 2026 MAPE % | 2026 Direction % |
+|---|---:|---:|---:|---:|---:|---:|
+| ALO-ANN | 2.49827 | 60.61 | 2.43691 | 75.00 | 4.53480 | 71.43 |
+| TLBO-ANN | 2.37828 | 60.61 | 2.56347 | 75.00 | 4.35961 | 85.71 |
+| JAYA-ANN | 2.53899 | 63.64 | 3.14153 | 75.00 | 4.18073 | 57.14 |
+| HGS-ANN | 2.48142 | 51.52 | 3.01738 | 66.67 | 3.94597 | 85.71 |
+
+### Batch 1.6 interpretation
+
+- **DEV-only MAPE ordering inside Batch 1.6:** TLBO-ANN, HGS-ANN, ALO-ANN, JAYA-ANN.
+- TLBO-ANN enters the current upper tier of metaheuristic ANN candidates on DEV MAPE.
+- HGS-ANN and ALO-ANN beat the DEV random-walk MAPE benchmark, but remain behind the leading ANN methods.
+- JAYA-ANN is only slightly better than the random-walk DEV MAPE benchmark and is not currently a leading price-error candidate.
+- Strong 2025/2026 external behavior for HGS/TLBO is recorded only as transport/stress evidence; it did not affect selection or tuning.
+
+### ANN progress after Batch 1.6
+
+- Completed: **24 / 33**
+- Remaining: **9 / 33**
+- Current DEV MAPE ordering across completed models:
+  1. Vanilla ANN — 2.18895%
+  2. MPA-ANN — 2.19947%
+  3. ACO-ANN — 2.35494%
+  4. GA-ANN — 2.36033%
+  5. SCA-ANN — 2.36197%
+  6. TLBO-ANN — 2.37828%
+  7. WOA-ANN — 2.38669%
+  8. FA-ANN — 2.39002%
+  9. SSA-ANN — 2.41896%
+  10. Salp-ANN — 2.43583%
+  11. HGS-ANN — 2.48142%
+  12. HHO-ANN — 2.49709%
+  13. ALO-ANN — 2.49827%
+  14. CS-ANN — 2.50128%
+  15. GWO-ANN — 2.53258%
+  16. JAYA-ANN — 2.53899%
+  17. SMA-ANN — 2.57631%
+  18. MFO-ANN — 2.60702%
+  19. PSO-ANN — 2.61194%
+  20. Bat-ANN — 2.64871%
+  21. FPA-ANN — 2.70125%
+  22. DE-ANN — 2.84842%
+  23. GOA-ANN — 3.00269%
+  24. ABC-ANN — 3.06525%
+- Current DEV direction leader remains **SCA-ANN — 72.73%**.
+- Next: Batch 1.7 single-metaheuristic ANN screen.
