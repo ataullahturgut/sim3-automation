@@ -1,0 +1,57 @@
+name: Gold Daily H1 Top Family V2 GPR MIDAS
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_daily_h1_top_family_v2_gpr_midas.py
+      - .github/workflows/gold-daily-h1-top-family-v2-gpr-midas.yml
+
+permissions:
+  contents: read
+
+jobs:
+  backtest:
+    strategy:
+      fail-fast: false
+      matrix:
+        component: [VANILLA, MPA, SCA, DE_ABC, ADAPTIVE_TLBO, TLBO_TUNED_PSO, MPA_SCA, SMA_ELMFIS, AOA_ELM]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_daily_h1_top_family_v2_gpr_midas.py
+      - name: Run ${{ matrix.component }}
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_daily_h1_top_family_v2_gpr_midas.py --component '${{ matrix.component }}'
+      - name: Gate
+        run: |
+          python - <<'PY'
+          import glob,json,os
+          c=os.environ['COMPONENT']
+          p=glob.glob(f'gold_daily_h1_v2_2026_{c.lower()}.json')[0]
+          r=json.load(open(p))
+          assert r['freeze_contract']['2026_used_for_training'] is False
+          assert r['freeze_contract']['2026_used_for_model_selection'] is False
+          assert r['freeze_contract']['random_split']=='NONE'
+          assert r['feature_contract']['lookback_sessions']==21
+          assert r['test_first'].startswith('2026-')
+          print('OUTPUT_GATE=PASS')
+          print(json.dumps({'component':c,'status':r['status'],'metrics':r['metrics']},sort_keys=True))
+          PY
+        env:
+          COMPONENT: ${{ matrix.component }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-daily-h1-v2-${{ matrix.component }}-${{ github.sha }}
+          path: gold_daily_h1_v2_2026_*.json
+          if-no-files-found: error
+          retention-days: 30
