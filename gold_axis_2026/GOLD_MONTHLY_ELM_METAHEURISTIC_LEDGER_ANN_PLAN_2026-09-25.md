@@ -1065,3 +1065,74 @@ Closed:
 **AŞAMA 4/5: COMPLETE AND FROZEN.**
 
 Next: **AŞAMA 5/5 — final ELM vs ANN comparison and research-family freeze.**
+
+
+## 24. FINAL — Stage 5/5 ELM vs ANN comparison and family freeze completed 2026-09-25
+
+**Dedicated final report:** `gold_axis_2026/GOLD_MONTHLY_FINAL_ELM_VS_ANN_FAMILY_FREEZE_2026-09-25.md`
+
+### Final comparison
+
+**Baseline**
+- Vanilla ELM DEV MAPE: 2.19286%
+- Vanilla ANN DEV MAPE: 2.18895%
+- Architecture-only improvement is negligible (~0.18% relative).
+
+**Best single/metaheuristic**
+- AOA-ELM: **2.15854%**
+- MPA-ANN: 2.19947%
+- ELM is stronger at the best-single level (~1.86% relative MAPE advantage).
+
+**Best targeted refinement/hybrid**
+- PSO-TLBO Hybrid ELM: **2.18548%**
+- MPA+SCA Hybrid ANN: 2.23957%
+- ELM is also stronger at the optimizer-hybrid level (~2.47% relative MAPE advantage).
+
+**Final overall**
+- AOA-ELM: 2.15854%
+- FULL7 ANN equal ensemble: **2.10665%**
+- REDUCED4 ANN equal ensemble: 2.12123%
+
+FULL7 improves on the best DEV-selected ELM model by ~2.40% relative MAPE.
+
+### External descriptive comparison against DEV-selected AOA-ELM
+| Candidate | DEV MAPE % | 2025 MAPE % | 2026 MAPE % |
+|---|---:|---:|---:|
+| AOA-ELM | 2.15854 | 2.52849 | 5.13545 |
+| FULL7 ANN | **2.10665** | **2.46790** | **4.35551** |
+| REDUCED4 ANN | 2.12123 | 2.47331 | 4.46679 |
+
+2025/2026 remain reporting-only and did not drive the freeze.
+
+### Scientific interpretation
+- ANN does **not** win because ANN is intrinsically superior: Vanilla ANN ≈ Vanilla ELM.
+- Best ELM singles/refinements are stronger than the analogous ANN singles/refinements.
+- ANN wins only after controlled role-diverse forecast aggregation.
+- Therefore the final gain is attributed primarily to **ensemble diversification**, not architecture superiority.
+
+### Frozen hierarchy
+**PRIMARY:** FULL7 equal-weight ANN ensemble  
+**SECONDARY:** REDUCED4 equal-weight ANN ensemble  
+**ELM benchmark:** AOA-ELM  
+**ELM refinement benchmark:** PSO-TLBO Hybrid ELM  
+**ANN single benchmark:** MPA-ANN  
+**ANN refinement references:** MPA+SCA, Adaptive TLBO, TLBO-tuned PSO, SCA direction specialist.
+
+### Closed
+Do not reopen without genuinely new unseen data or a new predeclared scientific hypothesis:
+- ELM optimizer cross-products;
+- ANN broad optimizer search;
+- MPA+X hybrid enumeration;
+- arbitrary ensemble subset search;
+- optimized/shrunk ensemble weights;
+- stacking/meta-learners;
+- any post-hoc 2025/2026 model switching.
+
+### Program status
+- AŞAMA 1/5: COMPLETE
+- AŞAMA 2/5: COMPLETE
+- AŞAMA 3/5: COMPLETE
+- AŞAMA 4/5: COMPLETE AND FROZEN
+- **AŞAMA 5/5: COMPLETE AND FROZEN**
+
+**Final primary model: FULL7 equal-weight ANN ensemble.**
