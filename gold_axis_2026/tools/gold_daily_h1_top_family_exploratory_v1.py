@@ -52,7 +52,10 @@ def load_daily(dsn):
                     "last":rows[-1][0].isoformat(),"source":rows[-1][2],
                     "source_symbol":rows[-1][3],"quality_status":rows[-1][4]
                 }
+    import datetime as _dt
     dates=sorted(set.intersection(*(set(raw[m]) for m in METALS)))
+    # Market-daily experiment: exclude Saturday/Sunday reconstruction rows.
+    dates=[d for d in dates if _dt.date.fromisoformat(d).weekday()<5]
     return raw,dates,lineage
 
 def make_samples(raw,dates):
