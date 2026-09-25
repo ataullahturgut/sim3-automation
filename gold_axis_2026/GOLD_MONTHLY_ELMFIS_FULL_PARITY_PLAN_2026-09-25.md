@@ -90,10 +90,10 @@ The full 33-entry ELM/ANN broad screen is repeated for ELMFIS.
 - [x] ALO-ELMFIS
 - [x] TLBO-ELMFIS
 - [x] JAYA-ELMFIS
-- [ ] HGS-ELMFIS
-- [ ] ChOA-ELMFIS
-- [ ] HGSO-ELMFIS
-- [ ] AOA-ELMFIS
+- [x] HGS-ELMFIS
+- [x] ChOA-ELMFIS
+- [x] HGSO-ELMFIS
+- [x] AOA-ELMFIS
 - [ ] CPA-ELMFIS
 - [ ] Krill Herd-ELMFIS
 - [ ] Crow Search / CSA-ELMFIS
@@ -403,3 +403,33 @@ JAYA is the Batch-1.6 leader but is dominated by ABC at the same direction count
 **STOP GATE:** Stage 1.7 must not start without explicit user confirmation.
 
 **Next planned batch after confirmation:** HGS-ELMFIS + ChOA-ELMFIS + HGSO-ELMFIS + AOA-ELMFIS.
+
+
+## 18. Stage 1 / Batch 1.7 result — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-elmfis-meta-batch-7-v1.yml`  
+**Run:** **36175116272 — SUCCESS / OUTPUT_GATE=PASS**  
+**Implementation:** `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_7_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE1_BATCH17_REPORT_2026-09-25.md`
+
+DEV-only active-metric results:
+
+| Model | Sum absolute error USD | Direction |
+|---|---:|---:|
+| HGSO-ELMFIS | **1594.6455** | 18/33 = 54.55% |
+| HGS-ELMFIS | 1780.8620 | 20/33 = 60.61% |
+| AOA-ELMFIS | 1873.9154 | **22/33 = 66.67%** |
+| Vanilla ELMFIS | 1996.2933 | 20/33 = 60.61% |
+| ChOA-ELMFIS | 2822.8921 | 20/33 = 60.61% |
+
+Current provisional Stage-1 DEV Pareto set after 28/33 entries remains:
+- ABC-ELMFIS — price-error side: 1524.8854 / 21/33;
+- SMA-ELMFIS — direction/trade-off side: 1651.4482 / 25/33.
+
+HGSO has strong price error but is dominated by ABC; AOA is dominated by SMA. No parent or family winner is frozen.
+
+**Progress:** 28/33 Stage-1 entries complete, 5/33 remaining.
+
+**STOP GATE:** Stage 1.8 must not start without explicit user confirmation.
+
+**Next planned batch after confirmation:** CPA-ELMFIS + Krill Herd-ELMFIS + Crow Search-ELMFIS.
