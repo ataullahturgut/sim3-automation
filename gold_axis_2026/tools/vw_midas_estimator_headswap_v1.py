@@ -262,6 +262,26 @@ def run():
         })
     leaderboard.sort(key=lambda x: (x["dev_logret_mae"], x["family"]))
 
+    # Window sensitivity is diagnostic only. Hyperparameters stay frozen at the
+    # PRE-2025 selected family values; 2025/2026 never choose a window.
+    window_sensitivity = {}
+    for family, rec in selected.items():
+        params = dict(rec["_spec"][2])
+        window_sensitivity[family] = {}
+        for w0 in WINDOWS:
+            spec0 = (family, w0, params)
+            dev0 = evaluate_fixed_spec(bundle, cache, spec0, DEV_START, DEV_END)
+            tr0 = evaluate_fixed_spec(bundle, cache, spec0, TRANSPORT_START, TRANSPORT_END)
+            st0 = evaluate_fixed_spec(bundle, cache, spec0, STRESS_START, STRESS_END)
+            label = "EXPANDING" if w0 is None else f"W{w0}"
+            window_sensitivity[family][label] = {
+                "dev_mape_pct": base.metrics(dev0)["mape_pct"],
+                "transport_2025_mape_pct": base.metrics(tr0)["mape_pct"],
+                "stress_2026_mape_pct": base.metrics(st0)["mape_pct"],
+                "stress_2026_relative_mae_vs_rw": base.metrics(st0)["relative_mae_vs_rw"],
+                "stress_2026_direction_accuracy_pct": base.metrics(st0)["direction_accuracy_pct"],
+            }
+
     result = {
         "model_id": MODEL_ID,
         "scope": "RESEARCH_ONLY_ESTIMATOR_HEAD_SWAP",
@@ -289,6 +309,7 @@ def run():
             "pre2025_dev_best_spec": strip_internal(overall),
         },
         "family_results": families,
+        "window_sensitivity_fixed_pre2025_params": window_sensitivity,
         "leaderboard_pre2025_only": leaderboard,
         "interpretation_guard": [
             "2025 and 2026 results do not select or tune any candidate.",
