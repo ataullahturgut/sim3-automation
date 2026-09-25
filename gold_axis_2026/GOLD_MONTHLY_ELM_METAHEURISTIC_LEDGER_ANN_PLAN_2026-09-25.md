@@ -1511,3 +1511,27 @@ DEV-only active-metric results:
 **Progress:** ELMFIS Stage 1 = 20/33 complete.  
 **STOP GATE:** Stage 1.6 has not started.  
 **Next after explicit user confirmation only:** GOA-ELMFIS + ALO-ELMFIS + TLBO-ELMFIS + JAYA-ELMFIS.
+
+
+## ELMFIS Stage 1 / Batch 1.6 — completed 2026-09-25
+
+**Workflow run:** 36174033508 — SUCCESS / OUTPUT_GATE=PASS  
+**Report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE1_BATCH16_REPORT_2026-09-25.md`
+
+The frozen H=1 monthly target, governed 8-feature VW-MIDAS contract, chronological validation, READ_ONLY database policy, and DEV-only selection authority were retained. GOA/ALO/TLBO/JAYA optimized only the 80 ELMFIS antecedent parameters; TSK consequents remained analytic ridge solutions.
+
+DEV-only active-metric results:
+
+| Model | Sum absolute error USD | Direction |
+|---|---:|---:|
+| JAYA-ELMFIS | **1810.4656** | **21/33 = 63.64%** |
+| Vanilla ELMFIS | 1996.2933 | 20/33 = 60.61% |
+| GOA-ELMFIS | 2322.7589 | 21/33 = 63.64% |
+| ALO-ELMFIS | 2812.5033 | 18/33 = 54.55% |
+| TLBO-ELMFIS | 3240.2851 | 20/33 = 60.61% |
+
+**Interpretation:** JAYA-ELMFIS is the Batch-1.6 DEV leader but does not enter the current Pareto frontier because ABC-ELMFIS has the same 21/33 direction count with lower cumulative error. The provisional frontier remains ABC-ELMFIS (1524.8854 / 21/33) and SMA-ELMFIS (1651.4482 / 25/33). No parent or final winner is frozen before the full 33-entry Stage-1 screen.
+
+**Progress:** ELMFIS Stage 1 = 24/33 complete.  
+**STOP GATE:** Stage 1.7 has not started.  
+**Next after explicit user confirmation only:** HGS-ELMFIS + ChOA-ELMFIS + HGSO-ELMFIS + AOA-ELMFIS.
