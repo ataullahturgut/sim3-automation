@@ -45,8 +45,8 @@ def fitness(theta,X,Y):
     return float(0.7*mae_gold+0.3*mae_all)
 
 def levy(rng,shape,beta=1.5):
-    sigma=(np.math.gamma(1+beta)*np.sin(np.pi*beta/2)/
-           (np.math.gamma((1+beta)/2)*beta*2**((beta-1)/2)))**(1/beta)
+    sigma=(math.gamma(1+beta)*np.sin(np.pi*beta/2)/
+           (math.gamma((1+beta)/2)*beta*2**((beta-1)/2)))**(1/beta)
     u=rng.normal(0,sigma,size=shape)
     v=rng.normal(0,1,size=shape)
     return u/(np.abs(v)**(1/beta)+1e-12)
