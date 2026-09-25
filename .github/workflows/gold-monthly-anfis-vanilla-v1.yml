@@ -34,7 +34,7 @@ jobs:
           r=json.load(open('vw_midas_anfis_vanilla_v1_result.json'))
           assert r['canonical_anfis']['metaheuristic']=='NONE'
           assert r['canonical_anfis']['consequent_learning'].startswith('ordinary_least_squares')
-          assert r['canonical_anfis']['premise_learning'].startswith('analytic_gradient_descent')
+          assert r['canonical_anfis']['premise_learning'].startswith('Jang1993_normalized_gradient_descent')
           assert r['authority']['random_split']=='NONE'
           assert r['authority']['target_month_in_training'] is False
           assert len(r['dev']['rows'])==33
