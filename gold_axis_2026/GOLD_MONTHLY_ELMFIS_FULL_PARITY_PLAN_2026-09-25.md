@@ -86,10 +86,10 @@ The full 33-entry ELM/ANN broad screen is repeated for ELMFIS.
 - [x] SCA-ELMFIS
 - [x] Salp-ELMFIS
 - [x] SMA-ELMFIS
-- [ ] GOA-ELMFIS
-- [ ] ALO-ELMFIS
-- [ ] TLBO-ELMFIS
-- [ ] JAYA-ELMFIS
+- [x] GOA-ELMFIS
+- [x] ALO-ELMFIS
+- [x] TLBO-ELMFIS
+- [x] JAYA-ELMFIS
 - [ ] HGS-ELMFIS
 - [ ] ChOA-ELMFIS
 - [ ] HGSO-ELMFIS
@@ -373,3 +373,33 @@ SMA dominates both FA-FPA and CS at the same 25/33 direction count with lower cu
 **STOP GATE:** Stage 1.6 must not start without explicit user confirmation.
 
 **Next planned batch after confirmation:** GOA-ELMFIS + ALO-ELMFIS + TLBO-ELMFIS + JAYA-ELMFIS.
+
+
+## 17. Stage 1 / Batch 1.6 result — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-elmfis-meta-batch-6-v1.yml`  
+**Run:** **36174033508 — SUCCESS / OUTPUT_GATE=PASS**  
+**Implementation:** `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_6_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE1_BATCH16_REPORT_2026-09-25.md`
+
+DEV-only active-metric results:
+
+| Model | Sum absolute error USD | Direction |
+|---|---:|---:|
+| JAYA-ELMFIS | **1810.4656** | **21/33 = 63.64%** |
+| Vanilla ELMFIS | 1996.2933 | 20/33 = 60.61% |
+| GOA-ELMFIS | 2322.7589 | 21/33 = 63.64% |
+| ALO-ELMFIS | 2812.5033 | 18/33 = 54.55% |
+| TLBO-ELMFIS | 3240.2851 | 20/33 = 60.61% |
+
+Current provisional Stage-1 DEV Pareto set after 24/33 entries remains:
+- ABC-ELMFIS — price-error side: 1524.8854 / 21/33;
+- SMA-ELMFIS — direction/trade-off side: 1651.4482 / 25/33.
+
+JAYA is the Batch-1.6 leader but is dominated by ABC at the same direction count. No parent or family winner is frozen.
+
+**Progress:** 24/33 Stage-1 entries complete, 9/33 remaining.
+
+**STOP GATE:** Stage 1.7 must not start without explicit user confirmation.
+
+**Next planned batch after confirmation:** HGS-ELMFIS + ChOA-ELMFIS + HGSO-ELMFIS + AOA-ELMFIS.
