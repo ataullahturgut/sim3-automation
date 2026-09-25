@@ -16,7 +16,7 @@ import vw_midas_ann_stage3_batch34_v1 as ann34
 import vw_midas_elmfis_meta_batch_5_v1 as ef5
 import vw_midas_elm_meta_batch_21_25_v1 as elm2125
 
-TARGETS=("2026-08","2026-09")
+TARGETS=("2026-08",)
 
 def forward_x(bundle,target,gpr_history):
     p=base.month_shift(target,-1)
