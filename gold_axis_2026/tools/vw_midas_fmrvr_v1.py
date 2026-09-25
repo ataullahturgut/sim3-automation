@@ -38,43 +38,40 @@ class FMRVR:
         iter_num=0
         for it in range(1,self.max_iters+1):
             iter_num=it
-            sPrime=np.full(N+1,np.nan); qPrime=np.full((N+1,V),np.nan)
-            s=np.full(N+1,np.nan); q=np.full((N+1,V),np.nan)
-            all_inf=not mask.any()
-            for i in range(N+1):
-                ph=Phi[:,i]
-                if all_inf:
-                    sp=float(ph@ph); qp=ph@T
-                else:
-                    sp=float(ph@ph - ph@PhiSigmaPhi@ph)
-                    qp=ph@T - ph@PhiSigmaPhi@T
-                sPrime[i]=sp; qPrime[i]=qp
-                if not mask[i]:
-                    s[i]=sp; q[i]=qp
-                else:
-                    den=alpha[i]-sp
-                    if abs(den)<1e-14: den=np.copysign(1e-14,den if den!=0 else 1)
-                    tmp=alpha[i]/den
-                    s[i]=tmp*sp; q[i]=tmp*qp
+            # Vectorized equivalent of the public MATLAB per-basis loop.
+            if not mask.any():
+                sPrime=np.sum(Phi*Phi,axis=0)
+                qPrime=Phi.T@T
+            else:
+                Pphi=PhiSigmaPhi@Phi
+                sPrime=np.sum(Phi*Phi,axis=0)-np.sum(Phi*Pphi,axis=0)
+                qPrime=Phi.T@T-Phi.T@(PhiSigmaPhi@T)
+            s=sPrime.copy(); q=qPrime.copy()
+            if mask.any():
+                den=alpha[mask]-sPrime[mask]
+                den=np.where(np.abs(den)<1e-14,np.sign(den+1e-30)*1e-14,den)
+                temp=alpha[mask]/den
+                s[mask]=temp*sPrime[mask]
+                q[mask]=temp[:,None]*qPrime[mask]
 
             try: invOm=np.linalg.inv(Om)
             except np.linalg.LinAlgError: invOm=np.linalg.pinv(Om)
+            qnorm=np.einsum('ij,jk,ik->i',q,invOm,q)
+            qpnorm=np.einsum('ij,jk,ik->i',qPrime,invOm,qPrime)
+            theta=qnorm/V-s
             delta=np.full(N+1,np.nan)
             task=np.array(["non"]*(N+1),dtype=object)
-            theta=np.zeros(N+1); alpha_new=np.full(N+1,np.nan)
+            alpha_new=np.full(N+1,np.nan)
             for i in range(N+1):
-                qi=q[i][None,:]
-                theta[i]=float(np.trace(invOm@(qi.T@qi))/V - s[i])
-                qpi=qPrime[i][None,:]
-                qpsq=float(np.trace(invOm@(qpi.T@qpi)))
+                qpsq=float(qpnorm[i])
                 if theta[i]>0:
                     if mask[i]:
                         task[i]="est"; alpha_new[i]=(s[i]**2)/theta[i]
                         if alpha_new[i]!=0:
                             temp=1.0/alpha_new[i]-1.0/alpha[i]
-                            den=sPrime[i]+1.0/temp if abs(temp)>1e-14 else np.nan
+                            den2=sPrime[i]+1.0/temp if abs(temp)>1e-14 else np.nan
                             arg=1.0+sPrime[i]*temp
-                            delta[i]=qpsq/den - V*np.log(arg) if den!=0 and arg>0 else -np.inf
+                            delta[i]=qpsq/den2 - V*np.log(arg) if den2!=0 and arg>0 else -np.inf
                         else: delta[i]=-np.inf
                     else:
                         task[i]="add"
@@ -84,8 +81,8 @@ class FMRVR:
                         else: delta[i]=-np.inf
                 elif mask[i]:
                     task[i]="del"
-                    den=sPrime[i]-alpha[i]; arg=1.0-sPrime[i]/alpha[i]
-                    delta[i]=qpsq/den - V*np.log(arg) if abs(den)>1e-14 and arg>0 else -np.inf
+                    den2=sPrime[i]-alpha[i]; arg=1.0-sPrime[i]/alpha[i]
+                    delta[i]=qpsq/den2 - V*np.log(arg) if abs(den2)>1e-14 and arg>0 else -np.inf
 
             valid=np.where(~np.isnan(delta))[0]
             if len(valid)==0: break
