@@ -96,12 +96,12 @@ The full 33-entry ELM/ANN broad screen is repeated for ELMFIS.
 - [x] AOA-ELMFIS
 - [x] CPA-ELMFIS
 - [x] Krill Herd-ELMFIS
-- [ ] Crow Search / CSA-ELMFIS
+- [x] Crow Search / CSA-ELMFIS
 
 ### Broad-screen hybrid/parity entries
 - [x] FA-FPA-ELMFIS
-- [ ] DE-ABC-ELMFIS
-- [ ] Multi-swarm ELMFIS
+- [x] DE-ABC-ELMFIS
+- [x] Multi-swarm ELMFIS
 
 Total Stage-1 parity entries: **33 including Vanilla**.
 
@@ -462,3 +462,33 @@ No Stage-1.8 model changes the frontier. No parent or family winner is frozen.
 **STOP GATE:** Stage 1.9 must not start without explicit user confirmation.
 
 **Next planned batch after confirmation:** DE-ABC-ELMFIS + Multi-swarm-ELMFIS.
+
+
+## 20. Stage 1 / Batch 1.9 result — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-elmfis-meta-batch-9-v1.yml`  
+**Run:** **36177121360 — SUCCESS / OUTPUT_GATE=PASS**  
+**Implementation:** `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_9_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE1_BATCH19_REPORT_2026-09-25.md`
+
+DEV-only active-metric results:
+
+| Model | Sum absolute error USD | Direction |
+|---|---:|---:|
+| Multi-swarm-ELMFIS | **1848.0988** | 18/33 = 54.55% |
+| Vanilla ELMFIS | 1996.2933 | **20/33 = 60.61%** |
+| DE-ABC-ELMFIS | 2317.3396 | 17/33 = 51.52% |
+
+Final Stage-1 DEV Pareto frontier after **33/33** entries:
+- **ABC-ELMFIS** — price-error side: **1524.8854 / 21/33**;
+- **SMA-ELMFIS** — direction/trade-off side: **1651.4482 / 25/33**.
+
+Neither Batch-1.9 model changes the frontier.
+
+**Progress:** **33/33 Stage-1 entries complete, 0 remaining.**
+
+**STAGE 1 BROAD SCREEN: COMPLETE.**
+
+**STOP GATE:** Stage 2 DEV-only filtering / parent freeze must not start without explicit user confirmation.
+
+**Next planned stage after confirmation:** Stage 2 — DEV-only Pareto, stability, complementarity and parent-role freeze.
