@@ -82,10 +82,10 @@ The full 33-entry ELM/ANN broad screen is repeated for ELMFIS.
 - [x] FA-ELMFIS
 - [x] MFO-ELMFIS
 - [x] FPA-ELMFIS
-- [ ] CS-ELMFIS
-- [ ] SCA-ELMFIS
-- [ ] Salp-ELMFIS
-- [ ] SMA-ELMFIS
+- [x] CS-ELMFIS
+- [x] SCA-ELMFIS
+- [x] Salp-ELMFIS
+- [x] SMA-ELMFIS
 - [ ] GOA-ELMFIS
 - [ ] ALO-ELMFIS
 - [ ] TLBO-ELMFIS
@@ -343,3 +343,33 @@ FA-FPA dominates the former HHO direction-side Pareto point on both active objec
 **STOP GATE:** Stage 1.5 must not start without explicit user confirmation.
 
 **Next planned batch after confirmation:** CS-ELMFIS + SCA-ELMFIS + Salp-ELMFIS + SMA-ELMFIS.
+
+
+## 16. Stage 1 / Batch 1.5 result — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-elmfis-meta-batch-5-v1.yml`  
+**Run:** **36173141852 — SUCCESS / OUTPUT_GATE=PASS**  
+**Implementation:** `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_5_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE1_BATCH15_REPORT_2026-09-25.md`
+
+DEV-only active-metric results:
+
+| Model | Sum absolute error USD | Direction |
+|---|---:|---:|
+| SMA-ELMFIS | **1651.4482** | **25/33 = 75.76%** |
+| CS-ELMFIS | 1809.3931 | **25/33 = 75.76%** |
+| Vanilla ELMFIS | 1996.2933 | 20/33 = 60.61% |
+| Salp-ELMFIS | 2273.0187 | 19/33 = 57.58% |
+| SCA-ELMFIS | 3177.3119 | 21/33 = 63.64% |
+
+Current provisional Stage-1 DEV Pareto set after 20/33 entries:
+- ABC-ELMFIS — price-error side: 1524.8854 / 21/33;
+- SMA-ELMFIS — direction/trade-off side: 1651.4482 / 25/33.
+
+SMA dominates both FA-FPA and CS at the same 25/33 direction count with lower cumulative error. No parent or family winner is frozen.
+
+**Progress:** 20/33 Stage-1 entries complete, 13/33 remaining.
+
+**STOP GATE:** Stage 1.6 must not start without explicit user confirmation.
+
+**Next planned batch after confirmation:** GOA-ELMFIS + ALO-ELMFIS + TLBO-ELMFIS + JAYA-ELMFIS.
