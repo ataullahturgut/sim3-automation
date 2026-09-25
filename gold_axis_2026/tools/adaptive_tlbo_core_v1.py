@@ -88,14 +88,14 @@ def tune_outer(X,Y,seed):
     lo=np.array([0.3,0.2,0.0,0.5,0,0])
     hi=np.array([1.8,1.8,1.0,3.0,2,2])
     cand=[]
-    for _ in range(10):
+    for _ in range(6):
         q=r.uniform(lo,hi)
         cand.append((outer_score(q,X,Y,seed+1000+len(cand)),q))
     cand.sort(key=lambda x:x[0])
     best=cand[0][1].copy()
     bestf=float(cand[0][0])
-    for it in range(4):
-        for k in range(6):
+    for it in range(2):
+        for k in range(4):
             scale=(hi-lo)*(0.18/(it+1))
             q=np.clip(best+r.normal(0,1,6)*scale,lo,hi)
             f=outer_score(q,X,Y,seed+10000+it*100+k)
