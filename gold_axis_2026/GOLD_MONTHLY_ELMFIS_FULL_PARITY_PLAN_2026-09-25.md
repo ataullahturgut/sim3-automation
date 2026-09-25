@@ -157,7 +157,7 @@ No 2025/2026 result can promote or remove a parent.
 These are run even if the exact same parents are not Stage-2 winners, because the user requires direct method parity across ELM, ANN and ELMFIS. Their interpretation will still be DEV-only.
 
 ### 3C. ELMFIS-specific authority track
-- [ ] CQCSA-ELMFIS
+- [x] CQCSA-ELMFIS
 
 Rationale: Cluster-based quasi-oppositional Crow Search optimized ELMFIS has been published specifically for oil/gold price prediction. Crow Search/CSA parity is already in Stage 1; CQCSA is the family-specific optimized extension.
 
@@ -590,3 +590,36 @@ Stage-2 parent freeze remains unchanged: ABC / SMA / HHO.
 **STOP GATE:** Stage 3C must not start without explicit user confirmation.
 
 **Next planned stage after confirmation:** Stage 3C — CQCSA-ELMFIS.
+
+
+## 24. Stage 3C CQCSA — completed 2026-09-26
+
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE3C_CQCSA_2026-09-26.md`
+
+CQCSA-ELMFIS completed successfully under the frozen monthly H=1 protocol.
+
+DEV:
+- ΣAE: **1,731.94 USD**
+- Direction: **20/33 = 60.61%**
+
+CQCSA does not improve the ELMFIS frontier:
+- ABC-ELMFIS: 1,524.89 / 21/33.
+- SMA-ELMFIS: 1,651.45 / 25/33.
+
+**Stage 3C new Pareto point: NONE.**
+
+## 25. Corrected cross-family re-audit — completed 2026-09-26
+
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_CROSS_FAMILY_REAUDIT_SIGMAAE_DIRECTION_2026-09-26.md`
+
+Global DEV Pareto set under the binding ΣAE + direction metrics:
+- FULL7 ANN: **1,428.86 / 22/33**.
+- REDUCED4 ANN: **1,431.46 / 24/33**.
+- SMA-ELMFIS: **1,651.45 / 25/33**.
+
+Corrected working roles:
+- ANN ensembles = primary monthly price forecast family.
+- SMA-ELMFIS = auxiliary direction specialist.
+- ELM = single-model benchmark family.
+
+A hard SMA direction override is **not promoted** because its strong DEV gain did not transport consistently to reporting-only 2025/2026.
