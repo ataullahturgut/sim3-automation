@@ -664,3 +664,38 @@ Base PSO-ANN failed the Batch 2.1 RW gate; this must be disclosed when interpret
 - Batch 2.1 filtering: 33 -> 12.
 - Batch 2.2 active parent freeze: 5 active parents + Vanilla anchor + 2 fixed hybrid benchmarks + 4 reserves.
 - Next: **AŞAMA 3/5 — Adaptive / Meta-on-Meta / Hybrid ANN**, beginning with the mandatory parity track in controlled batches.
+
+
+## 16. ANN Stage 3 / Batch 3.1 — Adaptive PSO + Adaptive TLBO completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-stage3-batch31-v1.yml`  
+**Run:** 36132219383 — SUCCESS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_stage3_batch31_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ANN_STAGE3_BATCH31_ADAPTIVE_REFINEMENTS_2026-09-25.md`
+
+### ANN-specific translation control
+ELM ridge alpha was not copied mechanically into ANN. The ANN refinement tunes hidden width and weight decay because all ANN output weights are directly optimized rather than solved by an analytic ridge layer.
+
+### Results
+| Model | DEV MAPE % | DEV Direction % | 2025 MAPE % | 2026 MAPE % |
+|---|---:|---:|---:|---:|
+| Adaptive PSO-ANN | 2.26567 | 57.58 | 3.00291 | 4.69805 |
+| Adaptive TLBO-ANN | 2.24090 | 54.55 | 2.64661 | 4.21136 |
+
+### Decisions
+- Adaptive PSO-ANN improves base PSO-ANN from 2.61194% to 2.26567% DEV MAPE (~13.26% relative reduction). It successfully rescues a base model that failed the Stage 2 RW gate, but it does not beat Vanilla or MPA.
+- Adaptive TLBO-ANN improves base TLBO-ANN from 2.37828% to 2.24090% DEV MAPE (~5.78% relative reduction) and becomes the current third-best DEV MAPE ANN after Vanilla and MPA.
+- Adaptive TLBO DEV RMSE 56.305 is effectively level with MPA-ANN 56.292.
+- 2025/2026 remain reporting-only.
+
+### Hyperparameter audit
+Adaptive PSO DEV hidden selection: h3=17, h4=11, h6=5.  
+Adaptive PSO weight decay: 0=12, 1e-4=9, 1e-3=12.
+
+Adaptive TLBO DEV hidden selection: h3=8, h4=14, h6=11.  
+Adaptive TLBO weight decay: 0=5, 1e-4=21, 1e-3=7.  
+Adaptive TLBO median tuned controls: teach_gain=0.7791, learn_gain=0.9395, TF2 probability=0.4817, decay=1.7299.
+
+### Stage status
+- **AŞAMA 3/5 — Batch 3.1: COMPLETE**
+- Next mandatory parity batch: **TLBO-tuned PSO-ANN + DE-tuned PSO-ANN**.
