@@ -1,3 +1,25 @@
+# SUPERSESSION NOTICE — 2026-09-25
+
+**STATUS: SUPERSEDED FOR MODEL-SELECTION PURPOSES.**
+
+This report is retained as a historical record of the original MAPE-centered family freeze. Its former conclusion that FULL7 Equal-Weight ANN is the final primary model is **no longer binding for this project's forecasting evaluation**.
+
+The project objective remains **monthly price forecasting**. The target is not changed to return forecasting.
+
+The binding evaluation contract is now:
+1. **Primary cumulative price-error criterion:** sum of monthly absolute price errors, `Σ|forecast - actual|`.
+2. **Primary directional criterion:** monthly direction accuracy.
+3. These two criteria must be evaluated jointly; no model is declared best from price error alone.
+4. MAE may be reported as `ΣAE / n`; MAPE/WAPE/RMSE may remain diagnostic/supporting metrics, but **MAPE is no longer the primary model-selection authority**.
+5. No arbitrary composite score is introduced unless predeclared and justified. Prefer Pareto / trade-off analysis between cumulative absolute error and direction.
+6. DEV 2022-04..2024-12 remains the only model-selection/tuning authority.
+7. 2025 and 2026 remain retrospective transport/stress evidence only and must not be used to tune or retroactively choose a winner.
+8. The prior FULL7/REDUCED4/AOA family hierarchy is therefore **UNFROZEN / UNDER RE-AUDIT** under the new binding metrics.
+
+See the main ledger for the active evaluation protocol and next-stage plan.
+
+---
+
 # GOLD MONTHLY FORECAST — FINAL ELM vs ANN COMPARISON & FAMILY FREEZE
 
 Date: 2026-09-25
