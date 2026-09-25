@@ -1535,3 +1535,27 @@ DEV-only active-metric results:
 **Progress:** ELMFIS Stage 1 = 24/33 complete.  
 **STOP GATE:** Stage 1.7 has not started.  
 **Next after explicit user confirmation only:** HGS-ELMFIS + ChOA-ELMFIS + HGSO-ELMFIS + AOA-ELMFIS.
+
+
+## ELMFIS Stage 1 / Batch 1.7 — completed 2026-09-25
+
+**Workflow run:** 36175116272 — SUCCESS / OUTPUT_GATE=PASS  
+**Report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE1_BATCH17_REPORT_2026-09-25.md`
+
+The frozen H=1 monthly target, governed 8-feature VW-MIDAS contract, chronological validation, READ_ONLY database policy, and DEV-only selection authority were retained. HGS/ChOA/HGSO/AOA optimized only the 80 ELMFIS antecedent parameters; TSK consequents remained analytic ridge solutions.
+
+DEV-only active-metric results:
+
+| Model | Sum absolute error USD | Direction |
+|---|---:|---:|
+| HGSO-ELMFIS | **1594.6455** | 18/33 = 54.55% |
+| HGS-ELMFIS | 1780.8620 | 20/33 = 60.61% |
+| AOA-ELMFIS | 1873.9154 | **22/33 = 66.67%** |
+| Vanilla ELMFIS | 1996.2933 | 20/33 = 60.61% |
+| ChOA-ELMFIS | 2822.8921 | 20/33 = 60.61% |
+
+**Interpretation:** HGSO is the Batch-1.7 price-error leader but does not enter the Pareto frontier because ABC-ELMFIS has both lower cumulative error and higher direction. AOA is dominated by SMA-ELMFIS. The provisional frontier therefore remains ABC-ELMFIS (1524.8854 / 21/33) and SMA-ELMFIS (1651.4482 / 25/33).
+
+**Progress:** ELMFIS Stage 1 = 28/33 complete.  
+**STOP GATE:** Stage 1.8 has not started.  
+**Next after explicit user confirmation only:** CPA-ELMFIS + Krill Herd-ELMFIS + Crow Search-ELMFIS.
