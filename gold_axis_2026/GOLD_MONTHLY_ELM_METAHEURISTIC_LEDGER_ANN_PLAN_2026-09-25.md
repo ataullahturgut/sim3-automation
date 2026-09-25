@@ -699,3 +699,51 @@ Adaptive TLBO median tuned controls: teach_gain=0.7791, learn_gain=0.9395, TF2 p
 ### Stage status
 - **AŞAMA 3/5 — Batch 3.1: COMPLETE**
 - Next mandatory parity batch: **TLBO-tuned PSO-ANN + DE-tuned PSO-ANN**.
+
+
+## 17. ANN Stage 3 / Batch 3.2 — TLBO-tuned PSO + DE-tuned PSO completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-stage3-batch32-v1.yml`  
+**Run:** 36132859342 — SUCCESS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_stage3_batch32_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ANN_STAGE3_BATCH32_TUNED_PSO_2026-09-25.md`
+
+### Results
+| Model | DEV MAPE % | DEV Direction % | 2025 MAPE % | 2026 MAPE % |
+|---|---:|---:|---:|---:|
+| TLBO-tuned PSO-ANN | 2.28920 | 69.70 | 2.82828 | 4.17474 |
+| DE-tuned PSO-ANN | 2.30759 | 54.55 | 2.79166 | 4.73900 |
+
+### Base-PSO improvement
+- TLBO-tuned PSO-ANN reduces DEV MAPE from base PSO-ANN 2.61194% to 2.28920% (~12.36% relative reduction).
+- DE-tuned PSO-ANN reduces DEV MAPE to 2.30759% (~11.65% relative reduction).
+- Both therefore confirm that PSO internal parameters materially benefit from external tuning on this problem.
+
+### Hyperparameter audit
+TLBO-tuned PSO DEV medians:
+- w=0.3364
+- c1=1.2770
+- c2=1.5465
+- Vmax fraction=0.05
+- h3 selected 24/33 origins
+- weight decay 1e-4 selected 15/33
+
+DE-tuned PSO DEV medians:
+- w=0.4934
+- c1=1.5489
+- c2=1.8489
+- Vmax fraction=0.05
+- h4 selected 14/33
+- weight decay 1e-3 selected 16/33
+
+Boundary finding:
+- Vmax lower bound 0.05 selected in 17/33 TLBO-tuned origins and 18/33 DE-tuned origins.
+- DE also selects c2 upper bound in 10/33 origins.
+- These are documented sensitivity signals, not silently treated as proof that the current bounds are optimal.
+
+### Decisions
+- **TLBO-tuned PSO-ANN:** retain as strong Stage 3 price+direction refinement; 69.70% DEV direction is especially notable.
+- **DE-tuned PSO-ANN:** successful parity refinement but not a current leading candidate.
+- 2025/2026 remain reporting-only and were not used for tuning or decision.
+- **AŞAMA 3/5 — Batch 3.2: COMPLETE**
+- Next mandatory parity batch: **Adaptive Crow Search-ANN + PSO-TLBO Hybrid ANN**.
