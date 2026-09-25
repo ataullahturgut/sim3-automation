@@ -1463,3 +1463,27 @@ DEV-only active-metric results:
 **Progress:** ELMFIS Stage 1 = 12/33 complete.  
 **STOP GATE:** Stage 1.4 has not started.  
 **Next after explicit user confirmation only:** FA-ELMFIS + MFO-ELMFIS + FPA-ELMFIS + FA-FPA-ELMFIS.
+
+
+## ELMFIS Stage 1 / Batch 1.4 — completed 2026-09-25
+
+**Workflow run:** 36171748270 — SUCCESS / OUTPUT_GATE=PASS  
+**Report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE1_BATCH14_REPORT_2026-09-25.md`
+
+The frozen monthly H=1 target, governed 8-feature VW-MIDAS input contract, chronological validation, READ_ONLY database policy, and DEV-only selection authority were retained. FA/MFO/FPA/FA-FPA optimized only the 80 ELMFIS antecedent parameters; TSK consequents remained analytic ridge solutions.
+
+DEV-only active-metric results:
+
+| Model | Sum absolute error USD | Direction |
+|---|---:|---:|
+| FA-FPA-ELMFIS | **1820.4499** | **25/33 = 75.76%** |
+| Vanilla ELMFIS | 1996.2933 | 20/33 = 60.61% |
+| MFO-ELMFIS | 2244.0539 | 19/33 = 57.58% |
+| FPA-ELMFIS | 2251.8993 | 22/33 = 66.67% |
+| FA-ELMFIS | 2421.4143 | 23/33 = 69.70% |
+
+**Interpretation:** FA-FPA-ELMFIS becomes the current direction-side Pareto point and dominates the former HHO point on both active DEV objectives. ABC-ELMFIS remains the current price-error side at 1524.8854 USD / 21/33. No parent or final winner is frozen before the full 33-entry Stage-1 screen.
+
+**Progress:** ELMFIS Stage 1 = 16/33 complete.  
+**STOP GATE:** Stage 1.5 has not started.  
+**Next after explicit user confirmation only:** CS-ELMFIS + SCA-ELMFIS + Salp-ELMFIS + SMA-ELMFIS.
