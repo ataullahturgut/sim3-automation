@@ -1362,3 +1362,36 @@ After baseline ELMFIS is verified under the common data/evaluation contract:
 
 ### Section 26 status
 Section 26 is retained as a useful **diagnostic robustness audit**, but it is **not the project master next-stage roadmap** and must not block the remaining pre-agreed model families.
+
+
+## 28. ELMFIS FULL PARITY PROGRAM — ACTIVE
+
+**Dedicated checklist:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_FULL_PARITY_PLAN_2026-09-25.md`
+
+ELMFIS is now treated as a complete model family, not a one-off baseline.
+
+Binding order:
+1. Stage 0 — canonical ELMFIS baseline / authority freeze.
+2. Stage 1 — full **33-entry** ELM/ANN broad parity screen.
+3. Stage 2 — DEV-only Pareto filtering using **cumulative absolute price error + direction**.
+4. Stage 3A — six mandatory refinements:
+   - Adaptive PSO
+   - TLBO-tuned PSO
+   - DE-tuned PSO
+   - Adaptive TLBO
+   - Adaptive Crow
+   - PSO-TLBO Hybrid
+5. Stage 3B — three ANN parity hybrids:
+   - MPA+SCA
+   - MPA+GA
+   - MPA+CPA
+6. Stage 3C — ELMFIS-specific **CQCSA-ELMFIS** authority candidate from published gold-price work.
+7. Stage 4 — controlled ensemble / robustness.
+8. Stage 5 — ELMFIS vs ELM vs ANN vs predecessor MSVR.
+
+Stage-1 exact 33-entry set:
+Vanilla, PSO, GA, MPA, DE, ABC, SSA, GWO, WOA, HHO, ACO, Bat, FA, MFO, FPA, FA-FPA, CS, SCA, Salp, SMA, GOA, ALO, TLBO, JAYA, HGS, ChOA, HGSO, AOA, CPA, Krill Herd, Crow Search/CSA, DE-ABC, Multi-swarm.
+
+The target remains monthly H=1 average price. 2025/2026 remain reporting only. No MAPE-centered selection; active primary evaluation is cumulative absolute price error plus direction accuracy.
+
+**NEXT EXECUTION:** Stage 0 canonical ELMFIS baseline.
