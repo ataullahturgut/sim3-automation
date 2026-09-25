@@ -1,0 +1,55 @@
+name: Gold Monthly Aug Sep 2026 Top Models V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_2026_aug_sep_topmodels_v1.py
+      - .github/workflows/gold-monthly-aug-sep-2026-topmodels-v1.yml
+
+permissions:
+  contents: read
+
+jobs:
+  forecast:
+    strategy:
+      fail-fast: false
+      matrix:
+        component: [VANILLA, MPA, SCA, DE_ABC, ADAPTIVE_TLBO, TLBO_TUNED_PSO, MPA_SCA, SMA_ELMFIS, AOA_ELM]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_2026_aug_sep_topmodels_v1.py
+      - name: Forecast ${{ matrix.component }}
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_2026_aug_sep_topmodels_v1.py --component '${{ matrix.component }}'
+      - name: Inspect
+        run: |
+          python - <<'PY'
+          import json,glob,os
+          c=os.environ['COMPONENT']
+          p=glob.glob(f'gold_monthly_2026_aug_sep_{c.lower()}_result.json')[0]
+          r=json.load(open(p))
+          assert r['database_access']=='READ_ONLY'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert [x['target'] for x in r['rows']]==['2026-08','2026-09']
+          print('OUTPUT_GATE=PASS')
+          print(json.dumps(r,sort_keys=True))
+          PY
+        env:
+          COMPONENT: ${{ matrix.component }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-aug-sep-2026-${{ matrix.component }}-${{ github.sha }}
+          path: gold_monthly_2026_aug_sep_*_result.json
+          if-no-files-found: error
+          retention-days: 30
