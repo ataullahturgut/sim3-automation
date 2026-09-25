@@ -48,8 +48,8 @@ def load_daily(dsn):
                 for d,v,source,symbol,q in rows:
                     raw[m][d.isoformat()]=float(v)
                 lineage[m]={
-                    "series_id":sid,"n":len(rows),"first":rows[0][0].date().isoformat(),
-                    "last":rows[-1][0].date().isoformat(),"source":rows[-1][2],
+                    "series_id":sid,"n":len(rows),"first":rows[0][0].isoformat(),
+                    "last":rows[-1][0].isoformat(),"source":rows[-1][2],
                     "source_symbol":rows[-1][3],"quality_status":rows[-1][4]
                 }
     dates=sorted(set.intersection(*(set(raw[m]) for m in METALS)))
