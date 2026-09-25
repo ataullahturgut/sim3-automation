@@ -1395,3 +1395,23 @@ Vanilla, PSO, GA, MPA, DE, ABC, SSA, GWO, WOA, HHO, ACO, Bat, FA, MFO, FPA, FA-F
 The target remains monthly H=1 average price. 2025/2026 remain reporting only. No MAPE-centered selection; active primary evaluation is cumulative absolute price error plus direction accuracy.
 
 **NEXT EXECUTION:** Stage 0 canonical ELMFIS baseline.
+
+
+## ELMFIS Stage 1 / Batch 1.1 — completed 2026-09-25
+
+**Run:** 36169448338 — SUCCESS / OUTPUT_GATE=PASS  
+**Report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE1_BATCH11_REPORT_2026-09-25.md`
+
+Frozen monthly H=1 contract and corrected evaluation authority were retained. Metaheuristics optimized only the 80 ELMFIS antecedent parameters (40 centers + 40 log-spreads); TSK consequents were solved analytically with ridge. DEV 2022-04..2024-12 remained the sole selection authority.
+
+| Model | DEV sum abs error USD | DEV direction |
+|---|---:|---:|
+| DE-ELMFIS | **1665.4715** | **21/33 = 63.64%** |
+| GA-ELMFIS | 1980.8994 | 14/33 = 42.42% |
+| Vanilla ELMFIS | 1996.2933 | 20/33 = 60.61% |
+| PSO-ELMFIS | 2358.4962 | 20/33 = 60.61% |
+
+**Interpretation:** DE-ELMFIS is the provisional Batch-1.1 leader on both active DEV objectives and reduces Vanilla ELMFIS cumulative absolute error by about 330.82 USD while adding one correct direction month. No family winner or refinement parent is frozen; full Stage-1 broad screening remains mandatory.
+
+**Progress:** ELMFIS Stage 1 = 4/33 complete.  
+**Next after explicit user confirmation only:** MPA-ELMFIS + ABC-ELMFIS + SSA-ELMFIS + GWO-ELMFIS.
