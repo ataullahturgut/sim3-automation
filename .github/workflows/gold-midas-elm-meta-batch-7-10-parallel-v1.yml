@@ -1,0 +1,60 @@
+name: Gold MIDAS ELM Meta Batch 7 10 Parallel V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/vw_midas_elm_meta_batch_7_10_v1.py
+      - .github/workflows/gold-midas-elm-meta-batch-7-10-parallel-v1.yml
+
+permissions:
+  contents: read
+
+jobs:
+  optimizer:
+    strategy:
+      fail-fast: false
+      matrix:
+        opt: [ACO, BAT, FA, MFO]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/vw_midas_elm_meta_batch_7_10_v1.py
+      - name: Run optimizer
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+          ELM_OPT: ${{ matrix.opt }}
+        run: python gold_axis_2026/tools/vw_midas_elm_meta_batch_7_10_v1.py
+      - name: Inspect
+        env:
+          ELM_OPT: ${{ matrix.opt }}
+        run: |
+          python - <<'PY'
+          import json, os
+          opt=os.environ['ELM_OPT']
+          p=f"vw_midas_elm_meta_batch_7_10_v1_{opt.lower()}.json"
+          r=json.load(open(p))
+          assert r['authority']['database_access']=='READ_ONLY'
+          assert r['authority']['inner_validation']=='CHRONOLOGICAL_TAIL_ONLY_NO_RANDOM_SPLIT'
+          assert list(r['models'])==[opt]
+          v=r['models'][opt]
+          print('OUTPUT_GATE=PASS')
+          print(opt, json.dumps({
+            'dev':v['dev']['metrics'],
+            'transport_2025':v['transport_2025']['metrics'],
+            'stress_2026':v['stress_2026']['metrics']
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-midas-elm-meta-${{ matrix.opt }}-${{ github.sha }}
+          path: vw_midas_elm_meta_batch_7_10_v1_${{ matrix.opt }}.json
+          retention-days: 30
