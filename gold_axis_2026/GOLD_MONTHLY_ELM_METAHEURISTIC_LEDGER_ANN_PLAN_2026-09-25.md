@@ -986,3 +986,82 @@ Pool: Vanilla + MPA + SCA + DE-ABC.
 - Stage 4 modeling search is effectively closed.
 - If one final Stage 4 step is used, it should be robustness/freeze only, not a new ensemble family.
 - Next major phase after freeze: **AŞAMA 5/5 — final ELM vs ANN comparison and family freeze**.
+
+
+## 23. ANN Stage 4 — final robustness / freeze audit completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-stage4-freeze-audit-v1.yml`  
+**Run:** 36137558490 — SUCCESS / OUTPUT_GATE=PASS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_stage4_freeze_audit_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ANN_STAGE4_FINAL_FREEZE_AUDIT_2026-09-25.md`
+
+### Year robustness
+FULL7 DEV yearly MAPE:
+- 2022: 2.19485%
+- 2023: 1.89276%
+- 2024: 2.25439%
+
+REDUCED4 DEV yearly MAPE:
+- 2022: 2.29902%
+- 2023: 1.88397%
+- 2024: 2.22516%
+
+Both ensembles beat RW on relative MAE in each DEV year.
+
+### Leave-one-origin sensitivity
+FULL7:
+- leave-one-origin MAPE range 1.96114%..2.17153%
+- no single origin causes collapse.
+
+REDUCED4:
+- 1.97434%..2.18489%
+- no single-origin collapse.
+
+### Origin-level anchor comparison
+FULL7 vs Vanilla:
+- FULL7 lower APE in 17/33 origins, worse in 16/33.
+- mean APE delta = -0.0823 percentage points.
+
+FULL7 vs MPA:
+- FULL7 lower APE in 17/33, worse in 16/33.
+- mean APE delta = -0.0928 points.
+
+Interpretation: aggregate gain is driven by error magnitude rather than overwhelming month-by-month win frequency.
+
+### Leave-one-component diagnostic
+Diagnostic only; not used to select a new subset.
+
+Removing components from FULL7 yields:
+- remove Vanilla -> MAPE 2.11284%
+- remove MPA -> 2.11936%
+- remove SCA -> **2.09504%**
+- remove DE-ABC -> 2.13407%
+- remove Adaptive TLBO -> 2.11877%
+- remove TLBO-tuned PSO -> **2.08292%**
+- remove MPA+SCA -> 2.12927%
+
+This shows mild redundancy / negative MAPE contribution from SCA and TLBO-tuned PSO under the post-hoc removal diagnostic. These results are **not** used to promote a FULL6/FULL5 subset because that would reopen DEV subset search after the anti-overfit freeze.
+
+### Final Stage 4 freeze
+**PRIMARY:** FULL7 equal-weight ensemble
+- DEV MAPE 2.10665%
+- DEV direction 66.67%
+- DEV RMSE 55.634
+
+**SECONDARY CHALLENGER:** REDUCED4 equal-weight ensemble
+- DEV MAPE 2.12123%
+- DEV direction 72.73%
+- DEV RMSE 54.966
+
+Closed:
+- learned performance weights as primary;
+- optimized simplex;
+- shrinkage simplex;
+- generic stacking/meta-learner;
+- arbitrary subset search;
+- further optimizer-hybrid expansion.
+
+### Stage status
+**AŞAMA 4/5: COMPLETE AND FROZEN.**
+
+Next: **AŞAMA 5/5 — final ELM vs ANN comparison and research-family freeze.**
