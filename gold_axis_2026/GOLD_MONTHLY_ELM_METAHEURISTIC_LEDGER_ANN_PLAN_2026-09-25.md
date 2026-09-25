@@ -1262,3 +1262,103 @@ Only after this re-audit:
 - **If all existing candidates are unstable:** reopen modeling with the corrected objective/selection contract.
 - Any reopened modeling must optimize/select with cumulative absolute error + direction considerations on pre-2025 chronological evidence only.
 
+
+
+## 27. RESTORED MASTER MODEL-FAMILY CHECKLIST
+
+**Effective:** 2026-09-25  
+**Status:** BINDING MASTER ROADMAP.
+
+### Why this section exists
+The later 5-stage ANN checklist was a **sub-checklist for the ANN family**, not the complete project roadmap.  
+Section 26's proposed robustness re-audit is useful as a diagnostic layer but **must not replace the previously agreed master model-family checklist**.
+
+The project already completed ELM and ANN families, but the earlier roadmap contained additional model families that have not yet been executed.
+
+### Restored master checklist
+
+1. **ELM family**
+   - Vanilla ELM
+   - PSO-ELM
+   - GA-ELM
+   - MPA-ELM
+   - broader single-metaheuristic ELM variants
+   - targeted adaptive/meta-on-meta/hybrid ELM refinements
+   - **STATUS: COMPLETE**
+
+2. **ELMFIS**
+   - baseline ELMFIS
+   - **STATUS: NOT YET RUN**
+
+3. **Optimized ELMFIS**
+   - metaheuristic-optimized ELMFIS variants
+   - **STATUS: NOT YET RUN**
+   - optimizer expansion must be controlled; no blind combinatorial sweep.
+
+4. **ANFIS**
+   - baseline ANFIS
+   - **STATUS: NOT YET RUN**
+
+5. **Metaheuristic ANFIS**
+   - PSO-ANFIS
+   - GWO-ANFIS
+   - HHO-ANFIS
+   - **STATUS: NOT YET RUN**
+
+6. **MLP / ANN family**
+   - original roadmap examples included PSO/GA/WOA/HHO-MLP;
+   - the project subsequently expanded this into the full ANN broad screen, refinements, hybrids and ensembles.
+   - **STATUS: COMPLETE under the expanded ANN program**
+
+7. **RBFNN family**
+   - baseline RBFNN
+   - planned controlled optimized/metaheuristic RBFNN variants
+   - **STATUS: NOT YET RUN**
+
+8. **Multi-output / GOR line**
+   - multi-output / GOR
+   - PSO-GOR-ELM
+   - related controlled multi-output variants
+   - **STATUS: NOT YET RUN**
+
+9. **Metaheuristic SVR**
+   - baseline/supporting SVR plus controlled metaheuristic optimization
+   - **STATUS: NOT YET RUN**
+
+### Active evaluation contract for all remaining families
+The target remains next-month average XAU/USD price.  
+Every new family must use the same governed chronological/origin-safe data contract unless explicitly changed.
+
+Primary evaluation is now:
+- cumulative absolute price error: `Σ|forecast - actual|`
+- monthly direction accuracy
+
+Supporting diagnostics:
+- MAE
+- MAPE/WAPE
+- RMSE
+- worst-month absolute error
+- year-by-year stability
+
+No arbitrary composite score is binding unless predeclared before results are inspected.
+
+### Authority
+- DEV 2022-04..2024-12 remains the only tuning/model-selection authority.
+- 2025 and 2026 Jan-Jul remain retrospective transport/stress reporting only.
+- No post-hoc switching based on 2025/2026.
+
+### Correct next stage
+Because ELM and ANN are already complete, the project resumes at the **first uncompleted family in the restored checklist**:
+
+**NEXT: ELMFIS baseline.**
+
+After baseline ELMFIS is verified under the common data/evaluation contract:
+1. decide whether optimized ELMFIS is warranted;
+2. then ANFIS;
+3. then PSO/GWO/HHO-ANFIS;
+4. then RBFNN;
+5. then multi-output/GOR/PSO-GOR-ELM;
+6. then metaheuristic SVR.
+
+### Section 26 status
+Section 26 is retained as a useful **diagnostic robustness audit**, but it is **not the project master next-stage roadmap** and must not block the remaining pre-agreed model families.
