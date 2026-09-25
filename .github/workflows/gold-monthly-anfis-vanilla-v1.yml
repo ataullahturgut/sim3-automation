@@ -1,0 +1,59 @@
+name: Gold Monthly Vanilla ANFIS V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/vw_midas_anfis_vanilla_v1.py
+      - .github/workflows/gold-monthly-anfis-vanilla-v1.yml
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/vw_midas_anfis_vanilla_v1.py
+      - name: Run canonical vanilla ANFIS
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_anfis_vanilla_v1.py
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json, numpy as np
+          r=json.load(open('vw_midas_anfis_vanilla_v1_result.json'))
+          assert r['canonical_anfis']['metaheuristic']=='NONE'
+          assert r['canonical_anfis']['consequent_learning'].startswith('ordinary_least_squares')
+          assert r['canonical_anfis']['premise_learning'].startswith('analytic_gradient_descent')
+          assert r['authority']['random_split']=='NONE'
+          assert r['authority']['target_month_in_training'] is False
+          assert len(r['dev']['rows'])==33
+          assert len(r['transport_2025']['rows'])==12
+          assert len(r['stress_2026']['rows'])==7
+          for sec in ['dev','transport_2025','stress_2026']:
+              for row in r[sec]['rows']:
+                  assert row['train_rows']>=30
+                  assert sum(row['rule_counts'])==row['train_rows']
+                  d=row['anfis_diag']
+                  assert np.isfinite(d['best_train_mse'])
+                  assert d['best_train_mse'] <= d['first_train_mse'] + 1e-9
+          print('OUTPUT_GATE=PASS')
+          print(json.dumps({'dev':r['dev']['metrics'],'transport_2025':r['transport_2025']['metrics'],'stress_2026':r['stress_2026']['metrics']},sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-anfis-vanilla-v1-${{ github.sha }}
+          path: vw_midas_anfis_vanilla_v1_result.json
+          if-no-files-found: error
+          retention-days: 30
