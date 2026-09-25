@@ -125,10 +125,10 @@ Planned single-method ANN checklist:
 - [x] ABC-ANN
 - [x] SSA-ANN
 - [x] GWO-ANN
-- [ ] WOA-ANN
-- [ ] HHO-ANN
-- [ ] ACO-ANN
-- [ ] Bat-ANN
+- [x] WOA-ANN
+- [x] HHO-ANN
+- [x] ACO-ANN
+- [x] Bat-ANN
 - [ ] FA-ANN
 - [ ] MFO-ANN
 - [ ] FPA-ANN
@@ -255,3 +255,47 @@ MPA-ANN, ABC-ANN, SSA-ANN and GWO-ANN use the same canonical 8->4(tanh)->4 linea
   7. DE-ANN — 2.84842%
   8. ABC-ANN — 3.06525%
 - Next: Batch 1.3 single-metaheuristic ANN screen.
+
+
+## 8. ANN Phase A / Batch 1.3 — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-meta-batch-3-v1.yml`  
+**Run:** 36128772974 — SUCCESS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_meta_batch_3_v1.py`
+
+WOA-ANN, HHO-ANN, ACO-ANN and Bat-ANN use the same canonical 8->4(tanh)->4 linear ANN geometry and the same origin-safe VW-MIDAS data contract as Batches 1.1–1.2. The same 3-repeat chronological inner-validation, top-quartile validation selection, full-history pre-target refit, target-month exclusion, READ_ONLY DB access and authority-invariant checks were retained.
+
+| Method | DEV MAPE % | DEV Direction % | 2025 MAPE % | 2025 Direction % | 2026 MAPE % | 2026 Direction % |
+|---|---:|---:|---:|---:|---:|---:|
+| WOA-ANN | 2.38669 | 63.64 | 3.25858 | 75.00 | 4.25585 | 85.71 |
+| HHO-ANN | 2.49709 | 57.58 | 2.68056 | 91.67 | 3.91070 | 85.71 |
+| ACO-ANN | 2.35494 | 63.64 | 2.95467 | 66.67 | 4.35377 | 71.43 |
+| Bat-ANN | 2.64871 | 54.55 | 2.45347 | 75.00 | 4.97714 | 85.71 |
+
+### Batch 1.3 interpretation
+
+- **DEV-only MAPE ordering inside Batch 1.3:** ACO-ANN, WOA-ANN, HHO-ANN, Bat-ANN.
+- ACO-ANN is the strongest Batch 1.3 model on DEV MAPE and enters the current upper tier of metaheuristic ANN candidates.
+- WOA-ANN also beats the DEV random-walk MAPE benchmark and has 63.64% DEV direction accuracy.
+- HHO-ANN is mid-pack on DEV; its strong 2025/2026 external results are recorded but not used for selection.
+- Bat-ANN is currently weak on DEV and has relative MAE above the random-walk benchmark.
+- No optimizer is frozen as a hybrid parent yet.
+
+### ANN progress after Batch 1.3
+
+- Completed: **12 / 33**
+- Remaining: **21 / 33**
+- Current DEV MAPE ordering across completed models:
+  1. Vanilla ANN — 2.18895%
+  2. MPA-ANN — 2.19947%
+  3. ACO-ANN — 2.35494%
+  4. GA-ANN — 2.36033%
+  5. WOA-ANN — 2.38669%
+  6. SSA-ANN — 2.41896%
+  7. HHO-ANN — 2.49709%
+  8. GWO-ANN — 2.53258%
+  9. PSO-ANN — 2.61194%
+  10. Bat-ANN — 2.64871%
+  11. DE-ANN — 2.84842%
+  12. ABC-ANN — 3.06525%
+- Next: Batch 1.4 single-metaheuristic ANN screen.
