@@ -54,11 +54,11 @@ This is a project adaptation of published ELM/FIS structures; it is not claimed 
 
 ## 3. ELMFIS Stage 0 — baseline / implementation authority
 
-- [ ] Implement canonical 5-rule ELMFIS baseline.
-- [ ] Determinism / compile / READ_ONLY / authority invariant checks.
-- [ ] Report DEV, 2025, 2026 rows and metrics.
-- [ ] Record SUM_ABS_ERROR + direction as primary metrics.
-- [ ] Freeze parameterization interface for metaheuristic parity.
+- [x] Implement canonical 5-rule ELMFIS baseline.
+- [x] Determinism / compile / READ_ONLY / authority invariant checks.
+- [x] Report DEV, 2025, 2026 rows and metrics.
+- [x] Record SUM_ABS_ERROR + direction as primary metrics.
+- [x] Freeze parameterization interface for metaheuristic parity.
 
 **Gate:** no metaheuristic run before baseline/parameter vector is proven valid.
 
@@ -213,3 +213,18 @@ The predeclared coverage is already broad:
 - controlled ensemble layer.
 
 Any additional method requires a new scientific rationale declared before seeing its DEV result.
+
+
+## 11. Stage 0 result
+
+Workflow run: **36161681793 — SUCCESS / OUTPUT_GATE=PASS**.
+
+| Period | Sum absolute error USD | Direction |
+|---|---:|---:|
+| DEV | 1996.2933 | 20/33 = 60.61% |
+| 2025 | 1032.7313 | 9/12 = 75.00% |
+| 2026 Jan-Jul | 1997.7390 | 3/7 = 42.86% |
+
+Baseline is technically valid but weak on DEV. The predeclared Stage-1 broad optimizer screen remains mandatory and is not cancelled by the baseline result.
+
+**NEXT:** Stage 1 Batch 1.1 — PSO-ELMFIS, GA-ELMFIS, DE-ELMFIS; Vanilla baseline retained as anchor.
