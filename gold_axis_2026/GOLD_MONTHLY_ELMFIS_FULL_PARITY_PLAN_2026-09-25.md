@@ -492,3 +492,44 @@ Neither Batch-1.9 model changes the frontier.
 **STOP GATE:** Stage 2 DEV-only filtering / parent freeze must not start without explicit user confirmation.
 
 **Next planned stage after confirmation:** Stage 2 — DEV-only Pareto, stability, complementarity and parent-role freeze.
+
+
+## 21. Stage 2 DEV-only filter / parent freeze — completed 2026-09-26
+
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE2_PARENT_FREEZE_2026-09-26.md`
+
+Stage 2 used only DEV 2022-04..2024-12 (n=33). No Stage-1 model was re-run and no 2025/2026 observation entered selection.
+
+Final DEV Pareto frontier:
+- **ABC-ELMFIS:** 1,524.8854 USD / 21/33.
+- **SMA-ELMFIS:** 1,651.4482 USD / 25/33.
+
+Frozen Stage-3 active evidence-driven parent roles:
+- **ABC-ELMFIS:** primary price parent.
+- **SMA-ELMFIS:** direction + complementarity parent.
+- **HHO-ELMFIS:** year/tail-stability parent.
+
+Baseline anchor:
+- Vanilla ELMFIS.
+
+Existing hybrid/parity benchmarks:
+- FA-FPA-ELMFIS.
+- DE-ABC-ELMFIS.
+
+Reserve challengers:
+- DE-ELMFIS.
+- HGSO-ELMFIS.
+- CS-ELMFIS.
+- ACO-ELMFIS.
+
+Key complementarity evidence:
+- ABC + SMA signed-error correlation = 0.6299.
+- SMA beats ABC absolute error in 17/33 DEV origins.
+- SMA rescues 7 ABC direction misses while losing 3 ABC direction hits.
+- 50/50 pair average is recorded only as a diagnostic proxy: 1,428.49 USD / 26/33; it is **not** an authorized Stage-4 ensemble result.
+
+**STAGE 2: COMPLETE.**
+
+**STOP GATE:** Stage 3A must not start without explicit user confirmation.
+
+**Next planned stage after confirmation:** Stage 3A — six mandatory refinement/parity experiments.
