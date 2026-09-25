@@ -79,9 +79,9 @@ The full 33-entry ELM/ANN broad screen is repeated for ELMFIS.
 - [x] HHO-ELMFIS
 - [x] ACO-ELMFIS
 - [x] Bat-ELMFIS
-- [ ] FA-ELMFIS
-- [ ] MFO-ELMFIS
-- [ ] FPA-ELMFIS
+- [x] FA-ELMFIS
+- [x] MFO-ELMFIS
+- [x] FPA-ELMFIS
 - [ ] CS-ELMFIS
 - [ ] SCA-ELMFIS
 - [ ] Salp-ELMFIS
@@ -99,7 +99,7 @@ The full 33-entry ELM/ANN broad screen is repeated for ELMFIS.
 - [ ] Crow Search / CSA-ELMFIS
 
 ### Broad-screen hybrid/parity entries
-- [ ] FA-FPA-ELMFIS
+- [x] FA-FPA-ELMFIS
 - [ ] DE-ABC-ELMFIS
 - [ ] Multi-swarm ELMFIS
 
@@ -313,3 +313,33 @@ HHO dominates the previous GWO direction-side point at the same direction count 
 **STOP GATE:** Stage 1.4 must not start without explicit user confirmation.
 
 **Next planned batch after confirmation:** FA-ELMFIS + MFO-ELMFIS + FPA-ELMFIS + FA-FPA-ELMFIS.
+
+
+## 15. Stage 1 / Batch 1.4 result — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-elmfis-meta-batch-4-v1.yml`  
+**Run:** **36171748270 — SUCCESS / OUTPUT_GATE=PASS**  
+**Implementation:** `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_4_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE1_BATCH14_REPORT_2026-09-25.md`
+
+DEV-only active-metric results:
+
+| Model | Sum absolute error USD | Direction |
+|---|---:|---:|
+| FA-FPA-ELMFIS | **1820.4499** | **25/33 = 75.76%** |
+| Vanilla ELMFIS | 1996.2933 | 20/33 = 60.61% |
+| MFO-ELMFIS | 2244.0539 | 19/33 = 57.58% |
+| FPA-ELMFIS | 2251.8993 | 22/33 = 66.67% |
+| FA-ELMFIS | 2421.4143 | 23/33 = 69.70% |
+
+Current provisional Stage-1 DEV Pareto set after 16/33 entries:
+- ABC-ELMFIS — price-error side: 1524.8854 / 21/33;
+- FA-FPA-ELMFIS — direction side: 1820.4499 / 25/33.
+
+FA-FPA dominates the former HHO direction-side Pareto point on both active objectives. No parent or family winner is frozen.
+
+**Progress:** 16/33 Stage-1 entries complete, 17/33 remaining.
+
+**STOP GATE:** Stage 1.5 must not start without explicit user confirmation.
+
+**Next planned batch after confirmation:** CS-ELMFIS + SCA-ELMFIS + Salp-ELMFIS + SMA-ELMFIS.
