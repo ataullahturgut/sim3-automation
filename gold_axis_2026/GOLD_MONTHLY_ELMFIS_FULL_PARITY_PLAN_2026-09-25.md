@@ -142,12 +142,12 @@ No 2025/2026 result can promote or remove a parent.
 ## 6. ELMFIS Stage 3 — full refinement / hybrid parity
 
 ### 3A. Mandatory six refinements previously run in both ELM/ANN
-- [ ] Adaptive PSO-ELMFIS
-- [ ] TLBO-tuned PSO-ELMFIS
-- [ ] DE-tuned PSO-ELMFIS
-- [ ] Adaptive / Improved TLBO-ELMFIS
-- [ ] Adaptive Crow Search-ELMFIS
-- [ ] PSO-TLBO Hybrid ELMFIS
+- [x] Adaptive PSO-ELMFIS
+- [x] TLBO-tuned PSO-ELMFIS
+- [x] DE-tuned PSO-ELMFIS
+- [x] Adaptive / Improved TLBO-ELMFIS
+- [x] Adaptive Crow Search-ELMFIS
+- [x] PSO-TLBO Hybrid ELMFIS
 
 ### 3B. ANN evidence-driven hybrids — run for family parity
 - [ ] MPA+SCA Hybrid ELMFIS
@@ -533,3 +533,33 @@ Key complementarity evidence:
 **STOP GATE:** Stage 3A must not start without explicit user confirmation.
 
 **Next planned stage after confirmation:** Stage 3A — six mandatory refinement/parity experiments.
+
+
+## 22. Stage 3A mandatory refinements — completed 2026-09-26
+
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE3A_MANDATORY_REFINEMENTS_2026-09-26.md`
+
+All six mandatory refinement/parity methods completed successfully under DEV-only tuning/selection:
+
+| Model | DEV ΣAE USD | Direction |
+|---|---:|---:|
+| TLBO-tuned PSO-ELMFIS | 1,574.26 | 19/33 |
+| Adaptive Crow Search-ELMFIS | 1,765.35 | 19/33 |
+| DE-tuned PSO-ELMFIS | 1,814.60 | 20/33 |
+| PSO-TLBO Hybrid ELMFIS | 1,920.75 | 21/33 |
+| Adaptive / Improved TLBO-ELMFIS | 2,224.53 | 21/33 |
+| Adaptive PSO-ELMFIS | 2,861.50 | 22/33 |
+
+Reference Stage-1 frontier remains:
+- **ABC-ELMFIS:** 1,524.89 / 21/33.
+- **SMA-ELMFIS:** 1,651.45 / 25/33.
+
+**Stage-3A new Pareto point: NONE.**
+
+Stage-2 parent freeze remains unchanged: ABC / SMA / HHO.
+
+**STAGE 3A: COMPLETE — 6/6.**
+
+**STOP GATE:** Stage 3B must not start without explicit user confirmation.
+
+**Next planned stage after confirmation:** Stage 3B — MPA+SCA, MPA+GA, MPA+CPA Hybrid ELMFIS.
