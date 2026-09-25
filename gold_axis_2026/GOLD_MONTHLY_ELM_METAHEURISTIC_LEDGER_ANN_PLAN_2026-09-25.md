@@ -120,11 +120,11 @@ Planned single-method ANN checklist:
 - [x] Vanilla ANN baseline
 - [x] PSO-ANN
 - [x] GA-ANN
-- [ ] MPA-ANN
+- [x] MPA-ANN
 - [x] DE-ANN
-- [ ] ABC-ANN
-- [ ] SSA-ANN
-- [ ] GWO-ANN
+- [x] ABC-ANN
+- [x] SSA-ANN
+- [x] GWO-ANN
 - [ ] WOA-ANN
 - [ ] HHO-ANN
 - [ ] ACO-ANN
@@ -215,3 +215,43 @@ PSO-ANN / GA-ANN / DE-ANN use the same frozen 8-feature VW-MIDAS data contract a
 - Completed: **4 / 33**
 - Remaining: **29 / 33**
 - Next: Batch 1.2 single-metaheuristic ANN screen.
+
+
+## 7. ANN Phase A / Batch 1.2 — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-ann-meta-batch-2-v1.yml`  
+**Run:** 36128225062 — SUCCESS  
+**Implementation:** `gold_axis_2026/tools/vw_midas_ann_meta_batch_2_v1.py`
+
+MPA-ANN, ABC-ANN, SSA-ANN and GWO-ANN use the same canonical 8->4(tanh)->4 linear ANN geometry and the same origin-safe VW-MIDAS data contract as Batch 1.1. The optimization/validation contract is unchanged: 3 deterministic repeats per target, chronological last-20% validation tail, Gold-weighted four-output standardized MAE objective, validation selection restricted to top-quartile training candidates, full pre-target-history refit, target-month exclusion from all fitness calculations, READ_ONLY DB access, and unchanged authority invariants.
+
+| Method | DEV MAPE % | DEV Direction % | 2025 MAPE % | 2025 Direction % | 2026 MAPE % | 2026 Direction % |
+|---|---:|---:|---:|---:|---:|---:|
+| MPA-ANN | 2.19947 | 57.58 | 2.45524 | 83.33 | 4.05739 | 85.71 |
+| ABC-ANN | 3.06525 | 51.52 | 2.99919 | 83.33 | 4.76730 | 71.43 |
+| SSA-ANN | 2.41896 | 66.67 | 2.71124 | 83.33 | 4.17629 | 85.71 |
+| GWO-ANN | 2.53258 | 54.55 | 2.73568 | 66.67 | 4.89698 | 71.43 |
+
+### Batch 1.2 interpretation
+
+- **DEV-only MAPE ordering inside Batch 1.2:** MPA-ANN, SSA-ANN, GWO-ANN, ABC-ANN.
+- MPA-ANN is very close to the current Vanilla ANN DEV MAPE reference (2.19947% vs 2.18895%).
+- SSA-ANN has the strongest DEV direction accuracy observed so far (66.67%) but does not beat Vanilla/MPA on DEV MAPE.
+- ABC-ANN is currently weak on DEV and also worse than the random-walk benchmark on DEV relative MAE.
+- 2025 transport and 2026 stress are external evidence only and were not used to alter ranking or optimizer configuration.
+- No parent optimizer is frozen yet.
+
+### ANN progress after Batch 1.2
+
+- Completed: **8 / 33**
+- Remaining: **25 / 33**
+- Current DEV MAPE ordering across completed models:
+  1. Vanilla ANN — 2.18895%
+  2. MPA-ANN — 2.19947%
+  3. GA-ANN — 2.36033%
+  4. SSA-ANN — 2.41896%
+  5. GWO-ANN — 2.53258%
+  6. PSO-ANN — 2.61194%
+  7. DE-ANN — 2.84842%
+  8. ABC-ANN — 3.06525%
+- Next: Batch 1.3 single-metaheuristic ANN screen.
