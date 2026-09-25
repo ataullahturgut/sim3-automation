@@ -94,8 +94,8 @@ The full 33-entry ELM/ANN broad screen is repeated for ELMFIS.
 - [x] ChOA-ELMFIS
 - [x] HGSO-ELMFIS
 - [x] AOA-ELMFIS
-- [ ] CPA-ELMFIS
-- [ ] Krill Herd-ELMFIS
+- [x] CPA-ELMFIS
+- [x] Krill Herd-ELMFIS
 - [ ] Crow Search / CSA-ELMFIS
 
 ### Broad-screen hybrid/parity entries
@@ -433,3 +433,32 @@ HGSO has strong price error but is dominated by ABC; AOA is dominated by SMA. No
 **STOP GATE:** Stage 1.8 must not start without explicit user confirmation.
 
 **Next planned batch after confirmation:** CPA-ELMFIS + Krill Herd-ELMFIS + Crow Search-ELMFIS.
+
+
+## 19. Stage 1 / Batch 1.8 result — completed 2026-09-25
+
+**Workflow:** `.github/workflows/gold-midas-elmfis-meta-batch-8-v1.yml`  
+**Run:** **36175779813 — SUCCESS / OUTPUT_GATE=PASS**  
+**Implementation:** `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_8_v1.py`  
+**Dedicated report:** `gold_axis_2026/GOLD_MONTHLY_ELMFIS_STAGE1_BATCH18_REPORT_2026-09-25.md`
+
+DEV-only active-metric results:
+
+| Model | Sum absolute error USD | Direction |
+|---|---:|---:|
+| Crow Search-ELMFIS | **1881.2292** | 20/33 = 60.61% |
+| CPA-ELMFIS | 1925.0323 | 20/33 = 60.61% |
+| Vanilla ELMFIS | 1996.2933 | 20/33 = 60.61% |
+| Krill Herd-ELMFIS | 3043.2306 | 20/33 = 60.61% |
+
+Current provisional Stage-1 DEV Pareto set after 31/33 entries remains:
+- ABC-ELMFIS — price-error side: 1524.8854 / 21/33;
+- SMA-ELMFIS — direction/trade-off side: 1651.4482 / 25/33.
+
+No Stage-1.8 model changes the frontier. No parent or family winner is frozen.
+
+**Progress:** 31/33 Stage-1 entries complete, 2/33 remaining.
+
+**STOP GATE:** Stage 1.9 must not start without explicit user confirmation.
+
+**Next planned batch after confirmation:** DE-ABC-ELMFIS + Multi-swarm-ELMFIS.
