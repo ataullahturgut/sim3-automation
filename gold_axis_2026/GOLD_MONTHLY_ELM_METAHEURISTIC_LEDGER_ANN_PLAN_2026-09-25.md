@@ -2240,3 +2240,8 @@ Stage-1 champion: **DE-ABC-RBFNN: DEV ΣAE 1415.8371, direction 25/33**, MAE 42.
 Stage 2 full audit/freeze: `GOLD_MONTHLY_RBFNN_STAGE2_FREEZE_2026-09-26.md` and companion JSON. Price/direction parent DE-ABC, stability parent Salp, architecture anchor Vanilla, conditional optimizer parent MPA. Stage-3 parent set frozen before any Stage-3 production run. No MPA+SCA/GA/CPA candidate clears the frozen complementarity opening rule. 2025/2026 excluded.
 
 Next: Stage 3A mandatory parity, groups of two: Adaptive PSO + Adaptive TLBO; TLBO-tuned PSO + DE-tuned PSO; Adaptive Crow + PSO-TLBO. Implementation `tools/rbfnn_stage3a_v1.py`; workflow `.github/workflows/rbfnn-stage3a-v1.yml`. Reuses repository refinement mechanics with the frozen 72-parameter RBF interface; exact source hashes, learned outer parameters/bounds/trace are logged per origin. Final population 24, generations 45, repeats 3, analytic output refit, strict pre-2025 external tuning freeze. Technical synthetic interface checks passed for all six. No early N1.3 artifact is promoted or used as parent evidence.
+
+
+### RBFNN Stage 3A.1 — COMPLETE / AUDITED
+
+Run **36258593871**, commit `80acdfeb141b1daaa0eecf893b740143fcac6202`. Adaptive PSO: job 108449967744 / artifact 10911333701, DEV ΣAE 1519.3532 / 18 directions. Adaptive TLBO: job 108449967875 / artifact 10911686683, DEV ΣAE 1552.2502 / 21 directions. Both scientific PASS; neither improves DE-ABC 1415.8371 / 25. Retained as refinement benchmarks, not leaders. Corrected external metrics and lineage in `GOLD_MONTHLY_RBFNN_STAGE3_REPORT_2026-09-26.md`. Parent pool unchanged; 2025/2026 excluded; DB invariants equal. Next: TLBO-tuned PSO + DE-tuned PSO.
