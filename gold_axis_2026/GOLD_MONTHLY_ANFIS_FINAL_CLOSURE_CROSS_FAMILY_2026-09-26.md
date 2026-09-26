@@ -205,3 +205,44 @@ No learned cross-family ensemble is promoted because honest prequential DEV does
 - Honest prequential blend audit completed: PASS.
 - ANFIS family process: COMPLETE.
 - Cross-family active-metric update: COMPLETE.
+
+
+## 10. User-directed stopping point after ANFIS Stage 4.4
+
+On 2026-09-26 the user explicitly decided that further ANFIS robustness/freeze expansion is not necessary at this point.
+
+Completed after the original closure draft:
+- Stage 4.1 ensemble component-pool freeze — COMPLETE.
+- Stage 4.2 ensemble baselines — COMPLETE.
+- Stage 4.3 optimized simplex audit — COMPLETE.
+- Stage 4.4 shrinkage robustness — COMPLETE.
+
+Stage 4.4 result:
+- FULL5 chosen alpha = 0.00.
+- REDUCED4 chosen alpha = 0.00.
+- Learned/shrunk ANFIS weights did not improve honest chronological DEV.
+- No ANFIS ensemble beat ChHHO-ANFIS on honest DEV evidence.
+- ChHHO-ANFIS therefore remains the current ANFIS price leader.
+
+User decision:
+- do not continue to a further Stage 4.5 robustness/freeze expansion now;
+- do not open additional ANFIS optimizer, stacking, or arbitrary ensemble searches;
+- preserve the current result set as the project stopping point unless explicitly reopened later.
+
+### 2026 Jan-Jul reporting table — ChHHO-ANFIS
+
+| Target | Prior-month actual | ChHHO forecast | Actual | Absolute error | Forecast direction | Actual direction | Direction |
+|---|---:|---:|---:|---:|---|---|---|
+| 2026-01 | 4309 | 4294.50 | 4753 | 458.50 | DOWN | UP | WRONG |
+| 2026-02 | 4753 | 5065.37 | 5020 | 45.37 | UP | UP | CORRECT |
+| 2026-03 | 5020 | 4710.38 | 4856 | 145.62 | DOWN | DOWN | CORRECT |
+| 2026-04 | 4856 | 4749.70 | 4721 | 28.70 | DOWN | DOWN | CORRECT |
+| 2026-05 | 4721 | 4642.10 | 4587 | 55.10 | DOWN | DOWN | CORRECT |
+| 2026-06 | 4587 | 4590.17 | 4228 | 362.17 | UP | DOWN | WRONG |
+| 2026-07 | 4228 | 3990.32 | 4073 | 82.68 | DOWN | DOWN | CORRECT |
+
+2026 Jan-Jul reporting metrics:
+- ΣAE = 1178.1395
+- MAE = 168.3056
+- direction = 5/7 = 71.43%
+- this period remains reporting/stress evidence only and was not used for model selection.
