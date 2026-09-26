@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
-> **Current checkpoint — 2026-09-26: N2 GPR Stage0–2 COMPLETE; Stage3A RUNNING, run36266015124; frozen price MULTISWARM1606.7414/23, direction FA_FPA1724.6532/25. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
+> **Current checkpoint — 2026-09-26: N2 GPR Stage0–2 COMPLETE; Stage3A COMPLETE, run36266015124; Stage3B MPA_SCA next; frozen price MULTISWARM1606.7414/23, direction FA_FPA1724.6532/25. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
 
 
 **Date:** 2026-09-25  
@@ -2570,3 +2570,25 @@ Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, posi
 ### Final reporting identity rule — frozen before ensembles
 
 Numerically identical DEV prediction paths (absolute tolerance1e-8 USD, same target months) are aliases, not independent challengers. Cross-family Pareto output deduplicates aliases while recording their mapping; balanced-challenger role excludes aliases of the primary. This prevents e.g. simple-average and alpha0 names from being presented as two independent models. No scores or candidate predictions are changed.
+
+
+### GPR Stage 3A — ADAPTIVE_CROW / AUDITED
+
+Run 36266015124; job 108475710574; artifact 10914557870; execution commit `47480bf7dc77d5e86437ace1f11bce7490baefe5`. Full per-origin parameters, optimizer bounds/source hashes, termination, exact posterior diagnostics and repeat selection remain in raw archive.
+
+| Period | ΣAE | Direction | Gate |
+|---|---:|---:|---|
+| dev | 1724.2888 | 19/33 | PASS |
+| transport_2025 | 1223.9506 | 9/12 | PASS |
+| stress_2026 | 1613.7839 | 4/7 | PASS |
+
+Decision: DEV-only candidate; final role awaits all Stage3 methods. External results reporting only.
+
+Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, positive uncertainty and numerical gates PASS for accepted rows; DB READ_ONLY/invariants equal; no random split; incomplete scientific periods not ranked.
+
+
+### GPR Stage3A closure — COMPLETE / 6 of6 audited
+
+Run36266015124, execution commit47480bf7dc77d5e86437ace1f11bce7490baefe5; all six jobs succeeded and all DEV/external gates PASS. Lowest refinement DEV ΣAE ADAPTIVE_CROW1724.288839, direction19/33. None beats Stage1 MULTISWARM1606.741381/23. Exact monthly evidence and all job/artifact IDs in evidence/gpr_stage3 and Stage3 report. Closure file checks all6 and original parent-freeze hashes.
+
+Kontrol ve Uyum Özeti: DEV-only PASS; chronological inner tuning and external hyperparameter freeze PASS; DB READ_ONLY/invariants equal; no target/future use; no score-driven rescue. Next: admitted MPA_SCA only, after this closure commit.

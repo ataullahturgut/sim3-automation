@@ -28,7 +28,7 @@
   },
   "stage2": "COMPLETE; DEV-only roles frozen before Stage3",
   "stage3": {
-    "status": "RUNNING_STAGE3A",
+    "status": "STAGE3A_COMPLETE_AUDITED; STAGE3B_READY",
     "run": 36266015124,
     "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
     "stage2_freeze_commit": "24be35eb14e9d5b1d8cfab7593bd42fc241541bd",
@@ -39,15 +39,13 @@
       "ADAPTIVE_PSO",
       "ADAPTIVE_TLBO",
       "TLBO_TUNED_PSO",
-      "DE_TUNED_PSO"
-    ],
-    "active_jobs": {
-      "ADAPTIVE_CROW": 108475710574,
-      "PSO_TLBO": 108475710588
-    }
+      "DE_TUNED_PSO",
+      "ADAPTIVE_CROW",
+      "PSO_TLBO"
+    ]
   },
   "stage4_5": "NOT_EXECUTED; templates prepared, outcome-dependent roles not evaluated",
-  "next_action": "Resume run36266015124; download/audit remaining Stage3A artifacts with gold_axis_2026/tools/gpr_archive_stage3_v1.py RUN STAGE --attachments DOWNLOADED_ZIP_DIRECTORY, then commit 3A closure. Only then activate local gpr-stage3b-v1.yml for MPA_SCA. After AB closure verify literature sources, freeze LMC2 authority, activate Stage3C. Finally freeze ensemble pools and run Stage4/5. No renewed user approval needed.",
+  "next_action": "Commit Stage3A closure then launch .github/workflows/gpr-stage3b-v1.yml for admitted MPA_SCA. After its audit, close3AB and verify/freeze literature LMC2 authority before Stage3C.",
   "selection": "DEV_ONLY; 2025/2026 strictly reporting only; no random split; DB READ_ONLY",
   "memory_policy": "This checkpoint and latest GitHub artifact evidence supersede conversational summaries. Authorization persists through stage and context boundaries.",
   "prepared_local_only": [

@@ -1,4 +1,11 @@
 {
+  "ADAPTIVE_CROW": {
+    "artifact_id": 10914557870,
+    "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
+    "job_id": 108475710574,
+    "run_id": 36266015124,
+    "stage": "3A"
+  },
   "ADAPTIVE_PSO": {
     "artifact_id": 10913299773,
     "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
@@ -17,6 +24,13 @@
     "artifact_id": 10914288153,
     "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
     "job_id": 108473163896,
+    "run_id": 36266015124,
+    "stage": "3A"
+  },
+  "PSO_TLBO": {
+    "artifact_id": 10914825981,
+    "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
+    "job_id": 108475710588,
     "run_id": 36266015124,
     "stage": "3A"
   },
