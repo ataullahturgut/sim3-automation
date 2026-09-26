@@ -1,0 +1,28 @@
+{
+  "status": "IN_PROGRESS",
+  "user_authorization": "Complete GPR same Stage0-5 architecture as RBFNN, proceed sequentially without repeated confirmation; primary source verification required",
+  "authority": "GOLD_MONTHLY_GPR_AUTHORITY_AND_STAGE_PLAN_2026-09-26.md",
+  "main_ledger": "GOLD_MONTHLY_ELM_METAHEURISTIC_LEDGER_ANN_PLAN_2026-09-25.md",
+  "stage0": {
+    "status": "COMPLETE_AUDITED",
+    "run": 36263297105,
+    "commit": "b28d63cb5dbf5d0f8290b20dfe8152b40a54623d",
+    "models": 4
+  },
+  "stage1": {
+    "status": "RUNNING",
+    "run": 36263592441,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "audited_batches": [
+      1,
+      2
+    ],
+    "audited_models": 7
+  },
+  "stage2": "NOT_EXECUTED; only implementation prepared",
+  "stage3": "NOT_EXECUTED; all6 refinement and conditional hybrid interfaces synthetic-tested; no parent freeze yet",
+  "stage4_5": "NOT_EXECUTED; templates prepared, outcome-dependent roles not evaluated",
+  "next_action": "Audit remaining Stage1 artifacts and record every completed batch; only after all32 close Stage2 and commit parents before Stage3",
+  "selection": "DEV_ONLY; 2025/2026 strictly reporting only; no random split; DB READ_ONLY",
+  "memory_policy": "This checkpoint and latest GitHub artifact evidence supersede conversational summaries. Authorization persists through stage and context boundaries."
+}
