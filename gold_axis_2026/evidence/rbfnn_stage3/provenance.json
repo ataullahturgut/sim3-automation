@@ -34,5 +34,11 @@
     "job_id": 108451546834,
     "artifact_id": 10911578130,
     "commit": "80acdfeb141b1daaa0eecf893b740143fcac6202"
+  },
+  "MOLS_RBFNN": {
+    "run_id": 36259649017,
+    "job_id": 108452901591,
+    "artifact_id": 10911678043,
+    "commit": "f4561f8eea4c020e8c524910f4c43aff9a2fbb74"
   }
 }

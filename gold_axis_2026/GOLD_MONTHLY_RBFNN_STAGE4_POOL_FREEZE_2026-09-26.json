@@ -1,0 +1,48 @@
+{
+  "FULL": [
+    "VANILLA",
+    "DE_ABC",
+    "SALP",
+    "ADAPTIVE_CROW"
+  ],
+  "REDUCED": [
+    "VANILLA",
+    "DE_ABC"
+  ],
+  "alphas": [
+    0.0,
+    0.1,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "external_weights": "frozen_at_end_of_DEV_no_external_loss_updates",
+  "minimum_meta_history": 6,
+  "removed": {
+    "ADAPTIVE_CROW": {
+      "dominator": "DE_ABC",
+      "signed_error_correlation": 0.9722778673773468
+    },
+    "SALP": {
+      "dominator": "DE_ABC",
+      "signed_error_correlation": 0.957573664706969
+    }
+  },
+  "roles": {
+    "architecture_anchor": "VANILLA",
+    "direction_leader": "DE_ABC",
+    "price_leader": "DE_ABC",
+    "refinement_representative": "ADAPTIVE_CROW",
+    "stability_model": "SALP"
+  },
+  "selection": "DEV_ONLY",
+  "simplex_objective": "prior \u03a3AE",
+  "source_dev_hashes": {
+    "ADAPTIVE_CROW": "dd23ba33a16575d134ce75ab62f3e233e366e1f77fad532f603edabd1b0fa0e2",
+    "DE_ABC": "901d326aeb53f4338a3e61fac585ef55fddd31426cc9c8b2c89c091b2625df30",
+    "SALP": "69f42b2cf4d56507ec29717e9a105a5c53958a1ad215bd705fab29a5175803d0",
+    "VANILLA": "0e14d5dab2116352218934d27a35d3c6c9ac98a60e176f08c497575b066f0ba5"
+  },
+  "status": "FROZEN_BEFORE_ENSEMBLE_EVALUATION"
+}

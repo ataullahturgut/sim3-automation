@@ -1,6 +1,6 @@
 # RBFNN Stage 1 — artifact audit and cumulative results
 
-Selection authority: DEV 2022-04..2024-12 only. 2025/2026 reporting only. No parent frozen.
+Selection authority: DEV 2022-04..2024-12 only. 2025/2026 reporting only. Stage 1 COMPLETE; subsequent parent freeze is recorded in the Stage-2 report.
 Exact optimizer equations/constants: source file, function and SHA256 in each artifact. Population 24, generations 45, repeats 3.
 Script `gold_axis_2026/tools/vw_midas_rbfnn_stage1_v1.py`; workflow `.github/workflows/gold-monthly-rbfnn-stage1-v1.yml`.
 Numerical audit checks all available rows, chronology, full-period coverage, invariant equality, DEV freeze hash and recomputed metrics.
@@ -116,4 +116,4 @@ Only STRICT_FROZEN rows are authoritative. Original expanding-tuning external ro
 Job/artifact IDs are recorded in the main ledger batch entries and evidence provenance JSON.
 
 Completed artifacts audited: 32/32. Scientific failures retained; no missing rows silently dropped.
-Next: finish remaining Stage-1 batches; only then Stage-2 filtering/parent freeze.
+Stage 1 COMPLETE: 32/32. Stage-2 filtering and parent freeze were performed only after all 32 results were audited; see the Stage-2 freeze report and current ledger status.

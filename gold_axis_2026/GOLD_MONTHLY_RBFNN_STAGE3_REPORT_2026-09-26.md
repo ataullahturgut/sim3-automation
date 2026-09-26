@@ -18,3 +18,13 @@ Stage 3A COMPLETE: 6/6. Stage 3B CLOSED_NOT_OPENED: no MPA+SCA/GA/CPA candidate 
 ## Kontrol ve Uyum Özeti
 
 DEV-only selection PASS; 2025/2026 exclusion PASS; random split NONE; chronological leakage checks PASS; DB READ_ONLY and invariants equal; scientific gate PASS; artifact manifest updated.
+
+## Stage 3C — COMPLETE
+
+MOLS-RBFNN: run **36259649017**, job **108452901591**, artifact **10911678043**, commit `f4561f8eea4c020e8c524910f4c43aff9a2fbb74`. DEV ΣAE **1578.5391**, direction **18/33**, MAE 47.8345, RMSE 58.6903. Scientific gate PASS. Dominated by DE-ABC, therefore benchmark only. 2025 report: ΣAE 1042.8290 / 8 of 12 directions. 2026 Jan–Jul stress: ΣAE 1712.6412 / 4 of 7 directions. External tuning/geometry hash identical and cutoff 2024-12.
+
+Source, exact structural adaptation and bounded center-count/width/ridge grid: `GOLD_MONTHLY_RBFNN_STAGE3C_AUTHORITY_2026-09-26.md`; script `tools/rbfnn_mols_literature_v1.py`; workflow `.github/workflows/rbfnn-stage3c-v1.yml`. Raw evidence and provenance under `evidence/rbfnn_stage3`.
+
+Stage 3 COMPLETE: six mandatory refinements plus one structurally distinct literature method; conditional MPA hybrids closed without opening. Stage-3 leader Adaptive Crow 1455.8616 / 21; overall DE-ABC remains 1415.8371 / 25. Next: freeze FULL/REDUCED pools, then evaluate prequential ensembles.
+
+Kontrol ve Uyum Özeti: DEV-only PASS, 2025/2026 excluded, random split NONE, origin/future-label invariance PASS, DB READ_ONLY/invariants equal, scientific gate PASS, manifests updated.

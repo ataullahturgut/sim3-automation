@@ -2259,3 +2259,19 @@ Run **36258593871**, commit `80acdfeb141b1daaa0eecf893b740143fcac6202`. Adaptive
 Stage 3B **CLOSED_NOT_OPENED**: no MPA+SCA/GA/CPA clears the predeclared DEV correlation/rescue/price-win rule. No post-result parent edits. Next Stage 3C: **MOLS-RBFNN**, Chen/Grant/Cowan (1991), verified author-hosted primary full text; exact source, adaptations and structural distinction in Stage-3C authority. No generic optimizer relabeled as a new model.
 
 Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 exclusion PASS; random split NONE; chronology/leakage checks PASS; DB READ_ONLY/invariants equal; scientific gate PASS; run/job/artifact/commit manifest updated.
+
+
+### RBFNN Stage 3C closure — COMPLETE
+
+MOLS-RBFNN run **36259649017**, job **108452901591**, artifact **10911678043**, commit `f4561f8eea4c020e8c524910f4c43aff9a2fbb74`; script `tools/rbfnn_mols_literature_v1.py`, workflow `.github/workflows/rbfnn-stage3c-v1.yml`. DEV ΣAE **1578.5391**, direction **18/33**, scientific PASS; benchmark only, dominated by DE-ABC. External reports 2025 **1042.8290 / 8/12**, 2026 **1712.6412 / 4/7**, excluded from decisions. Exact source/method/parameter mapping in Stage-3C authority; raw artifacts archived with Stage-3 provenance. All Stage 3 work closed; Stage-3 leader Adaptive Crow, overall leader DE-ABC unchanged. Next: Stage-4 FULL/REDUCED pool freeze before computing any ensemble performance.
+
+Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 exclusion PASS; random split NONE; chronology/leakage checks PASS; DB READ_ONLY/invariants equal; scientific gate PASS; manifest updated.
+
+
+### RBFNN Stage 4.1 — POOLS FROZEN BEFORE EVALUATION
+
+FULL = Vanilla, DE-ABC, Salp, Adaptive Crow. REDUCED = Vanilla, DE-ABC. Roles: Vanilla anchor, DE-ABC price/direction, Salp worst-year RW-relative stability, Adaptive Crow refinement representative. Redundancy rule: remove unprotected dominated component when signed-error correlation >0.95. Salp/DE-ABC correlation 0.95757, Adaptive Crow/DE-ABC 0.97228. No ensemble outcomes were calculated before this freeze. Source DEV hashes recorded in `GOLD_MONTHLY_RBFNN_STAGE4_POOL_FREEZE_2026-09-26.json`.
+
+Predeclared evaluation: simple average, median, inverse prior-MAE; simplex ΣAE minimization w>=0/sum=1; equal weights for first six DEV months; alpha [0,.1,.25,.5,.75,1] separately for both pools. Full-DEV simplex DIAGNOSTIC ONLY. External weights frozen at DEV end; no external loss updates. Canonical Vanilla retains fixed non-tuned origin-only k-means; Stage1/3 optimized geometries/tuning freeze 2024-12.
+
+Stage-4/5 script and workflow: `tools/rbfnn_stage4_v1.py`, `tools/rbfnn_final_audit_v1.py`, `.github/workflows/rbfnn-stage4-final-v1.yml`. Technical future-forecast/label invariance and simplex fixture PASS. Next: compute honest prequential ensembles, then cross-family final audit.

@@ -1,0 +1,10 @@
+{
+  "status": "COMPLETE",
+  "stage3a_completed": 6,
+  "stage3b": "CLOSED_NOT_OPENED",
+  "stage3c_completed": 1,
+  "stage3c_result": "BENCHMARK_NOT_PROMOTED",
+  "all_scientific_gates": "PASS",
+  "selection": "DEV_ONLY",
+  "next": "Stage4 pool freeze before ensemble evaluation"
+}
