@@ -17,7 +17,7 @@ def run(root):
     ensm={n:s4.metrics(d['dev']['rows']) for n,d in em.items()}
     single=min(sm,key=lambda n:sm[n]['sum_abs_error']);ens=min(ensm,key=lambda n:ensm[n]['sum_abs_error'])
     refinements=[n for n in valid if n.startswith('ADAPTIVE') or 'TUNED' in n or n=='PSO_TLBO' or n.startswith('MPA_') or n.startswith('LMC')]
-    refine=min(refinements,key=lambda n:sm[n]['sum_abs_error'])
+    refine=min(refinements,key=lambda n:sm[n]['sum_abs_error']) if refinements else 'NONE_SCIENTIFIC_PASS'
     merged={**sm,**ensm}
     def dominates(x,y):return x['sum_abs_error']<=y['sum_abs_error'] and x['direction_correct']>=y['direction_correct'] and (x['sum_abs_error']<y['sum_abs_error'] or x['direction_correct']>y['direction_correct'])
     frontier=[n for n,m in merged.items() if not any(dominates(z,m) for k,z in merged.items() if k!=n)]
@@ -26,12 +26,14 @@ def run(root):
     balanced_candidates=[n for n in merged if n!=primary and merged[n]['direction_correct']>=23]
     balanced=min(balanced_candidates,key=lambda n:merged[n]['sum_abs_error']) if balanced_candidates else 'NOT_SUPPORTED'
     hybrid_names=[n for n in valid if n in ('DE_ABC','FA_FPA','MULTISWARM','PSO_TLBO') or n.startswith('MPA_')]
-    hybrid=min(hybrid_names,key=lambda n:sm[n]['sum_abs_error'])
+    hybrid=min(hybrid_names,key=lambda n:sm[n]['sum_abs_error']) if hybrid_names else 'NONE_SCIENTIFIC_PASS'
     refs=json.loads((root/'evidence/rbfnn_cross_family/reference_rows.json').read_text())
     cross={n:{p:{'rows':rr} for p,rr in d.items()} for n,d in refs['models'].items()}
-    cross['GPR_'+single]=valid[single];cross['GPR_STAGE3_'+refine]=valid[refine];cross['GPR_ENSEMBLE_'+ens]=em[ens]
-    cross['GPR_BEST_HYBRID_'+hybrid]=valid[hybrid]
-    cross['GPR_STAGE3_HYBRID_PSO_TLBO']=valid['PSO_TLBO']
+    cross['GPR_'+single]=valid[single];cross['GPR_ENSEMBLE_'+ens]=em[ens]
+    if refine in valid:cross['GPR_STAGE3_'+refine]=valid[refine]
+    if hybrid in valid:cross['GPR_BEST_HYBRID_'+hybrid]=valid[hybrid]
+    if 'PSO_TLBO' in valid:cross['GPR_STAGE3_HYBRID_PSO_TLBO']=valid['PSO_TLBO']
+    if models['SO_RBF']['dev']['scientific_gate']=='PASS':cross['GPR_AUX_SO_RBF']=models['SO_RBF']
     import gzip
     rb=json.loads(gzip.decompress((root/'evidence/rbfnn_stage1/strict_results.json.gz').read_bytes()))['DE_ABC']
     cross['DE_ABC_RBFNN']=rb
@@ -67,7 +69,7 @@ def run(root):
       'next_action':'GPR family frozen; return to governed monthly roadmap N3 Multi-task RFF-BLR; no automatic N3 execution in this task'}
     (root/'GOLD_MONTHLY_GPR_FINAL_FREEZE_2026-09-26.json').write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
     lines=['# GOLD MONTHLY FORECAST — GPR final family freeze and cross-family audit','','Status: COMPLETE. Selection: DEV 2022-04..2024-12 only (33 months).','',
-      f'GPR primary: **{primary}**. Direction specialist: **{direction}**. Balanced challenger: **{balanced}** (benchmark role). Best hybrid: **{hybrid}**. Ensemble leader: **{ens}**, {out["ensemble_decision"]}.','',
+      f'Joint GPR primary: **{primary}**. Direction specialist: **{direction}**. Balanced challenger: **{balanced}** (benchmark role). Best hybrid: **{hybrid}**. Ensemble leader: **{ens}**, {out["ensemble_decision"]}. Auxiliary SO_RBF is shown separately and is not a four-output parent.','',
       '## Cross-family recomputed DEV evidence','','| Model | ΣAE | Direction | MAE | RMSE | Worst AE | Relative MAE vs RW | LOO lower ΣAE than ChHHO |',
       '|---|---:|---:|---:|---:|---:|---:|---:|']
     for n,z in sorted(summary.items(),key=lambda kv:kv[1]['dev']['sum_abs_error']):

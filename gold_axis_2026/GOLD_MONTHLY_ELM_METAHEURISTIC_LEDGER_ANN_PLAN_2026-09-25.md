@@ -2480,3 +2480,18 @@ Kontrol ve Uyum Özeti: all32 closure PASS; DEV-only filtering PASS; SO_RBF excl
 ### GPR Stage3A — RUNNING after immutable parent freeze
 
 Parent freeze commit24be35eb14e9d5b1d8cfab7593bd42fc241541bd precedes activation commit47480bf7dc77d5e86437ace1f11bce7490baefe5; run36266015124. Three sequential batches of two refinements. Canonical GP prior initialization is retained; frozen parent roles govern comparison/conditional hybrid admission and do not imply unimplemented theta transfer.
+
+
+### GPR Stage 3A — ADAPTIVE_PSO / AUDITED
+
+Run 36266015124; job 108470702244; artifact 10913299773; execution commit `47480bf7dc77d5e86437ace1f11bce7490baefe5`. Full per-origin parameters, optimizer bounds/source hashes, termination, exact posterior diagnostics and repeat selection remain in raw archive.
+
+| Period | ΣAE | Direction | Gate |
+|---|---:|---:|---|
+| dev | 1794.2201 | 20/33 | PASS |
+| transport_2025 | 1195.8734 | 9/12 | PASS |
+| stress_2026 | 1594.1298 | 5/7 | PASS |
+
+Decision: DEV-only candidate; final role awaits all Stage3 methods. External results reporting only.
+
+Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, positive uncertainty and numerical gates PASS for accepted rows; DB READ_ONLY/invariants equal; no random split; incomplete scientific periods not ranked.
