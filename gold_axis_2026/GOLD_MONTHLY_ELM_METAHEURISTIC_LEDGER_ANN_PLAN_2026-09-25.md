@@ -2060,3 +2060,42 @@ The next authoritative step is:
 **RBFNN Stage 1.1 — PSO-RBFNN + GA-RBFNN + DE-RBFNN**.
 
 Proceed sequentially through Stage 1 batches, then Stage 2, then Stage 3A/3B/3C, then Stage 4, then Stage 5.
+
+
+### 16.9 RBFNN takeover audit and Stage-1 protocol freeze — 2026-09-26
+
+Repository head verified at takeover: `41b55dac576c1d06e267b85158f9d3beb3c35e8e`.
+Current GitHub run/job/artifact metadata and downloaded JSONs supersede conversational checkpoints.
+
+| Baseline | Run | Job | Artifact | Commit | DEV ΣAE | Direction |
+|---|---|---|---|---|---:|---:|
+| Vanilla | 36255366631 | 108441010234 | 10910331925 | d9cc92142605c759a600a707b24943c56e3d27e0 | 1666.0440165140133 | 19/33 |
+| Regularized | 36255648854 | 108441813323 | 10911110410 | b72d09a9d4197840ee1a5448973c5b4111176d87 | 1611.9847106804657 | 20/33 |
+
+Baseline artifact copies: `gold_axis_2026/evidence/rbfnn_stage0/`.
+Vanilla maximum DEV design condition 24.3670; Regularized 244.5479.
+Existing baseline workflow/output gates passed. These historical gates did not explicitly enforce every requested collapse/conditioning test; full scientific-gate parity is NOT_PROVEN for Regularized cluster occupancy because its artifact lacks those diagnostics. This is a reporting limitation, not evidence requiring baseline rerun.
+
+Early Adaptive PSO/TLBO run **36255801793**, job **108442235467**, artifact **10910572105**, commit `b0271eb15efa0afa0ac17b06f7b451bc221cfb83`: **EARLY / NON-BINDING STAGE-3 ARTIFACT**. Excluded from Stage-1 ranking and Stage-2 parent selection. No final Stage-3 evidence claimed.
+
+#### Predeclared Stage-1 implementation (before any new DEV outcomes)
+
+- Script: `gold_axis_2026/tools/vw_midas_rbfnn_stage1_v1.py`.
+- Workflow: `.github/workflows/gold-monthly-rbfnn-stage1-v1.yml`.
+- Batch sequence exactly 1.1–1.9 from section 16.8; maximum 4 independent jobs. Each batch depends on successful completion of its predecessor; implementation failures halt progression. Scientific rejection is recorded without disguising it as an implementation failure.
+- Frozen geometry: 8 Gaussian radial bases, 8 inputs, 4 analytic outputs, intercept.
+- Inner chronological last 20%, minimum 6 validation observations; minimum 30 inner training observations.
+- Input/output scaling and deterministic 20-initialization k-means fitted only to inner training. Cluster RMS widths, singleton nearest-center fallback; initial empty clusters rejected.
+- Width reference grid [0.5,1,1.5,2]; ridge [0,0.0001,0.001,0.01,0.1], selected on inner validation. No target-year aggregate selection.
+- Meta-vector 72 parameters: 64 center perturbations in [-1,1] standardized units and 8 log-width multipliers in [log(.5),log(2)]. No output-weight meta-optimization.
+- Population 24, generations 45, 3 deterministic repeats; date SHA256 seed plus recorded optimizer seed and repeat increment 1009.
+- Exact repository optimizer implementations reused from `vw_midas_elmfis_meta_batch_{1..9}_v1.py` PHASE functions with RBF objective adapter; filenames/function names and source hashes recorded. These are repository parity implementations, not a claim of independently verified equivalence to every original paper.
+- Fitness: .7 Gold standardized MAE + .3 four-output standardized MAE. Training drives evolution; validation selects only top-quartile training candidates and repeat.
+- Refit: selected geometry AND inner-training scaler retained; analytic output layer fitted on all pre-target rows. No k-means regeneration or reassignment of learned center perturbations. Augmented least squares for ridge avoids normal-equation condition squaring.
+- Candidate gate: finite parameters/beta, positive bounded widths, center separation >=1e-6, design condition <=1e10. Final forecasts finite for ALL four outputs and absolute predicted log-return <1. Initial cluster occupancy enforced; evolved nearest-region emptiness recorded diagnostically because learned bases need not remain a k-means partition.
+- Fitness evaluation counts and repeat losses retained; equal generations do not imply equal evaluations for all optimizer algorithms.
+- DEV decision/hash persisted BEFORE transport/stress evaluation. Full n=33 required; incomplete scientific results excluded, never ranked on a surviving subset. External scientific failures reported separately and cannot change DEV acceptance.
+- DB loader and invariant reads READ_ONLY; unchanged authority invariants required.
+- 2025/2026 reporting only; no parent selected before full Stage 1.
+
+Status at protocol freeze: **STAGE 1 IMPLEMENTED / EXECUTION PENDING**. Stage 2–5 pending; no performance improvement claimed.

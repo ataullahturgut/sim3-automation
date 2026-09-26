@@ -1,0 +1,239 @@
+name: Gold Monthly RBFNN Stage 1 V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/vw_midas_rbfnn_stage1_v1.py
+      - .github/workflows/gold-monthly-rbfnn-stage1-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+jobs:
+  batch1:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        method: [PSO, GA, DE]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn
+      - name: Run governed RBFNN
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_rbfnn_stage1_v1.py --method ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rbfnn-stage1-${{ matrix.method }}
+          path: rbfnn_stage1_*_result.json
+          if-no-files-found: error
+  batch2:
+    needs: batch1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        method: [MPA, ABC, SSA, GWO]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn
+      - name: Run governed RBFNN
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_rbfnn_stage1_v1.py --method ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rbfnn-stage1-${{ matrix.method }}
+          path: rbfnn_stage1_*_result.json
+          if-no-files-found: error
+  batch3:
+    needs: batch2
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        method: [WOA, HHO, ACO, BAT]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn
+      - name: Run governed RBFNN
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_rbfnn_stage1_v1.py --method ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rbfnn-stage1-${{ matrix.method }}
+          path: rbfnn_stage1_*_result.json
+          if-no-files-found: error
+  batch4:
+    needs: batch3
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        method: [FA, MFO, FPA, FA_FPA]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn
+      - name: Run governed RBFNN
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_rbfnn_stage1_v1.py --method ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rbfnn-stage1-${{ matrix.method }}
+          path: rbfnn_stage1_*_result.json
+          if-no-files-found: error
+  batch5:
+    needs: batch4
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        method: [CS, SCA, SALP, SMA]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn
+      - name: Run governed RBFNN
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_rbfnn_stage1_v1.py --method ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rbfnn-stage1-${{ matrix.method }}
+          path: rbfnn_stage1_*_result.json
+          if-no-files-found: error
+  batch6:
+    needs: batch5
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        method: [GOA, ALO, TLBO, JAYA]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn
+      - name: Run governed RBFNN
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_rbfnn_stage1_v1.py --method ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rbfnn-stage1-${{ matrix.method }}
+          path: rbfnn_stage1_*_result.json
+          if-no-files-found: error
+  batch7:
+    needs: batch6
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        method: [HGS, CHOA, HGSO, AOA]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn
+      - name: Run governed RBFNN
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_rbfnn_stage1_v1.py --method ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rbfnn-stage1-${{ matrix.method }}
+          path: rbfnn_stage1_*_result.json
+          if-no-files-found: error
+  batch8:
+    needs: batch7
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        method: [CPA, KRILL, CROW]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn
+      - name: Run governed RBFNN
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_rbfnn_stage1_v1.py --method ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rbfnn-stage1-${{ matrix.method }}
+          path: rbfnn_stage1_*_result.json
+          if-no-files-found: error
+  batch9:
+    needs: batch8
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        method: [DE_ABC, MULTISWARM]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn
+      - name: Run governed RBFNN
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_rbfnn_stage1_v1.py --method ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rbfnn-stage1-${{ matrix.method }}
+          path: rbfnn_stage1_*_result.json
+          if-no-files-found: error
