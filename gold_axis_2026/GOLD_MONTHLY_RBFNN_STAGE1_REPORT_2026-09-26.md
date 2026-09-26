@@ -16,6 +16,7 @@ Numerical audit checks all available rows, chronology, full-period coverage, inv
 | GA | 1523.4710 | 19/33 | 46.1658 | 59.2889 | 0.86659 | 16/33 | 157.9942 | PASS |
 | FA_FPA | 1524.5325 | 20/33 | 46.1980 | 60.0151 | 0.86720 | 18/33 | 158.5392 | PASS |
 | FPA | 1525.4420 | 21/33 | 46.2255 | 61.6968 | 0.86771 | 19/33 | 170.3735 | PASS |
+| FA | 1530.4171 | 20/33 | 46.3763 | 61.6788 | 0.87054 | 18/33 | 150.5364 | PASS |
 | DE | 1550.2583 | 18/33 | 46.9775 | 60.5498 | 0.88183 | 17/33 | 146.9444 | PASS |
 | ABC | 1558.8168 | 18/33 | 47.2369 | 60.9410 | 0.88670 | 17/33 | 150.7081 | PASS |
 | SSA | 1559.8246 | 18/33 | 47.2674 | 59.4641 | 0.88727 | 15/33 | 153.1977 | PASS |
@@ -27,20 +28,21 @@ Numerical audit checks all available rows, chronology, full-period coverage, inv
 Only STRICT_FROZEN rows are authoritative. Original expanding-tuning external rows are SUPERSEDED pending strict pre-2025 tuning freeze. DEV remains unchanged.
 | Model | 2025 ΣAE | 2025 direction | 2026 Jan–Jul ΣAE | 2026 direction |
 |---|---:|---:|---:|---:|
-| ABC | SUPERSEDED | SUPERSEDED | SUPERSEDED | SUPERSEDED |
-| ACO | SUPERSEDED | SUPERSEDED | SUPERSEDED | SUPERSEDED |
-| BAT | SUPERSEDED | SUPERSEDED | SUPERSEDED | SUPERSEDED |
-| DE | SUPERSEDED | SUPERSEDED | SUPERSEDED | SUPERSEDED |
-| FA_FPA | SUPERSEDED | SUPERSEDED | SUPERSEDED | SUPERSEDED |
-| FPA | SUPERSEDED | SUPERSEDED | SUPERSEDED | SUPERSEDED |
-| GA | SUPERSEDED | SUPERSEDED | SUPERSEDED | SUPERSEDED |
-| GWO | SUPERSEDED | SUPERSEDED | SUPERSEDED | SUPERSEDED |
-| HHO | SUPERSEDED | SUPERSEDED | SUPERSEDED | SUPERSEDED |
-| MFO | SUPERSEDED | SUPERSEDED | SUPERSEDED | SUPERSEDED |
-| MPA | SUPERSEDED | SUPERSEDED | SUPERSEDED | SUPERSEDED |
-| PSO | SUPERSEDED | SUPERSEDED | SUPERSEDED | SUPERSEDED |
-| SSA | SUPERSEDED | SUPERSEDED | SUPERSEDED | SUPERSEDED |
-| WOA | SUPERSEDED | SUPERSEDED | SUPERSEDED | SUPERSEDED |
+| ABC | 1163.3667 | 10/12 | 1724.0050 | 3/7 |
+| ACO | 1078.1735 | 9/12 | 1303.0020 | 6/7 |
+| BAT | 1103.4830 | 9/12 | 1426.7382 | 6/7 |
+| DE | 1027.8448 | 10/12 | 1441.2427 | 5/7 |
+| FA_FPA | 1057.3122 | 10/12 | 1637.0993 | 6/7 |
+| FA | 1179.5730 | 9/12 | 1926.0538 | 4/7 |
+| FPA | 1097.1847 | 9/12 | 1753.2470 | 5/7 |
+| GA | 1015.5576 | 9/12 | 1509.5037 | 5/7 |
+| GWO | 1074.3216 | 10/12 | 1457.2699 | 6/7 |
+| HHO | 1037.4322 | 9/12 | 1588.5282 | 5/7 |
+| MFO | 1045.5957 | 9/12 | 1755.3723 | 5/7 |
+| MPA | 1062.0186 | 9/12 | 1463.0003 | 5/7 |
+| PSO | 1085.9960 | 9/12 | 1559.0378 | 6/7 |
+| SSA | 1195.7422 | 10/12 | 2079.8413 | 4/7 |
+| WOA | 1203.7105 | 10/12 | 1776.8797 | 5/7 |
 
 ## Provenance and decisions
 
@@ -49,6 +51,7 @@ Only STRICT_FROZEN rows are authoritative. Original expanding-tuning external ro
 - BAT: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_3_v1.py` / `bat_phase`.
 - DE: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_1_v1.py` / `de_phase`.
 - FA_FPA: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_4_v1.py` / `fa_fpa_phase`.
+- FA: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_4_v1.py` / `fa_phase`.
 - FPA: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_4_v1.py` / `fpa_phase`.
 - GA: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_1_v1.py` / `ga_phase`.
 - GWO: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_2_v1.py` / `gwo_phase`.
@@ -61,5 +64,5 @@ Only STRICT_FROZEN rows are authoritative. Original expanding-tuning external ro
 
 Job/artifact IDs are recorded in the main ledger batch entries and evidence provenance JSON.
 
-Completed artifacts audited: 14/32. Scientific failures retained; no missing rows silently dropped.
+Completed artifacts audited: 15/32. Scientific failures retained; no missing rows silently dropped.
 Next: finish remaining Stage-1 batches; only then Stage-2 filtering/parent freeze.

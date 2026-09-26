@@ -2148,3 +2148,17 @@ Independent audit: coverage, recomputed metrics, freeze hash, chronology, numeri
 Strict reading of the user contract requires no 2025/2026 observations in hyperparameter selection, including tuning at later external origins. Original Stage-1 per-origin tuning used available earlier external months. Although target-month chronology was preserved and external scores never selected a family/parent, **all original Stage-1 2025/2026 rows and the external columns in prior batch entries are SUPERSEDED** under this stricter constraint. DEV rows, rankings and decisions remain valid and unchanged.
 
 Correction: `rbfnn_external_frozen_reporting_v1.py`, workflow `rbfnn-strict-external-v1.yml` freezes all optimizer/width/ridge/geometry/scaling choices using the 2024-12 origin only. At subsequent origins only the analytic output coefficients are refitted on available pre-target history; external observations never enter tuning. The copied DEV section must retain its identical SHA256. New external run/artifact lineage will be recorded separately; do not treat old external figures as final. No optimizer was rescued or chosen based on external performance.
+
+
+### RBFNN Stage 1.4 — COMPLETE / AUDITED
+
+Run **36256830372**, commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; shared frozen script/workflow/specification in §16.9.
+
+| Model | Job | Artifact | DEV ΣAE | DEV direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Gate / decision |
+|---|---|---|---:|---:|---|---|---|
+| FA | 108446196895 | 10911491233 | 1530.4171 | 20/33 | 1154.3285 / 8/12 | 1476.4276 / 4/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+| MFO | 108446196851 | 10911102079 | 1449.1065 | 20/33 | 1145.3883 / 9/12 | 1590.1962 / 5/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+| FPA | 108446196876 | 10910888723 | 1525.4420 | 21/33 | 1038.6675 / 11/12 | 1626.7086 / 6/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+| FA_FPA | 108446197620 | 10911386249 | 1524.5325 | 20/33 | 1186.9763 / 8/12 | 1444.4187 / 5/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+
+Independent audit: coverage, recomputed metrics, freeze hash, chronology, numerical diagnostics and DB invariant equality. 2025/2026 reporting only. No Stage-2 parent selection yet. Next: Stage 1.5.
