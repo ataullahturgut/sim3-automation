@@ -23,6 +23,24 @@
     "job_id": 108463902811,
     "run_id": 36263592441
   },
+  "FA": {
+    "artifact_id": 10913387613,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108465649928,
+    "run_id": 36263592441
+  },
+  "FA_FPA": {
+    "artifact_id": 10913277531,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108465649964,
+    "run_id": 36263592441
+  },
+  "FPA": {
+    "artifact_id": 10913039667,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108465649974,
+    "run_id": 36263592441
+  },
   "GA": {
     "artifact_id": 10913173273,
     "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
@@ -39,6 +57,12 @@
     "artifact_id": 10913411163,
     "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
     "job_id": 108464925071,
+    "run_id": 36263592441
+  },
+  "MFO": {
+    "artifact_id": 10913425627,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108465650026,
     "run_id": 36263592441
   },
   "MPA": {

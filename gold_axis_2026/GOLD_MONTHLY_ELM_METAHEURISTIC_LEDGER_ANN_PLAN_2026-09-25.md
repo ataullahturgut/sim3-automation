@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
-> **Current checkpoint — 2026-09-26: N2 GPR Stage0 COMPLETE; Stage1 11/32 audited, no parent selected. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
+> **Current checkpoint — 2026-09-26: N2 GPR Stage0 COMPLETE; Stage1 15/32 audited, no parent selected. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
 
 
 **Date:** 2026-09-25  
@@ -2380,3 +2380,17 @@ Source review identified ABC/ALO/DE-ABC roulette quality `1/(1+loss)`. GP NLL is
 Run **36264658833**, commit **356015a4d03988342bdbb575681ed4a830ef6bc1**. ABC job108466913684/artifact10912689533: 111521 finite training calls, minimum1.1495314. ALO job108466913788/artifact10913337530: 115056 calls, minimum1.1479349. DE-ABC job108466913693/artifact10913840808: 224753 calls, minimum1.1534185. No nonfinite training calls. Thus roulette loss-domain assumption is valid for every observed evaluation in these frozen experiments; no score transform/algorithm change is needed.
 
 ABC replay DEV hash exactly matches the original Stage1 artifact. ALO and DE-ABC original batch results are not yet available; final matching remains **WAITING_FOR_ORIGINALS**, and Stage2 is blocked until all3 match. Replay outputs are technical evidence only and excluded from candidate counts/parent selection. Archive `evidence/gpr_score_domain/results.json.gz`, verification `GOLD_MONTHLY_GPR_SCORE_DOMAIN_AUDIT_2026-09-26.json`; finalize script performs exact hash matching. This domain proof is dataset-specific, not a universal positivity claim about GP NLL.
+
+
+### GPR Stage 1.4 — COMPLETE / AUDITED
+
+Run **36263592441**, commit **b5885a50dfbc17474b8f22ac2e8b61f43b7b748d**. Shared script `tools/gpr_experiment_v1.py`, workflow `.github/workflows/gpr-stage1-v1.yml`; frozen22 bounds, population24/generations45/repeats3 and objective/refit in GPR authority.
+
+| Method | Job | Artifact | DEV ΣAE / direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Gate / decision |
+|---|---|---|---|---|---|---|
+| FA | 108465649928 | 10913387613 | 1861.6613 / 19/33 | 1159.5279 / 9/12 | 1648.0344 / 4/7 | PASS; parent selection deferred |
+| MFO | 108465650026 | 10913425627 | 1702.0152 / 19/33 | 1327.6499 / 8/12 | 1718.7822 / 4/7 | PASS; parent selection deferred |
+| FPA | 108465649974 | 10913039667 | 1711.7090 / 20/33 | 1213.2619 / 8/12 | 1634.7762 / 4/7 | PASS; parent selection deferred |
+| FA_FPA | 108465649964 | 10913277531 | 1724.6532 / 25/33 | 1264.0104 / 9/12 | 1711.5714 / 3/7 | PASS; parent selection deferred |
+
+Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 excluded; random split NONE; origin/freeze-hash checks PASS; DB READ_ONLY/invariants equal; gate failures retained; manifest updated. Next: Stage1.5.

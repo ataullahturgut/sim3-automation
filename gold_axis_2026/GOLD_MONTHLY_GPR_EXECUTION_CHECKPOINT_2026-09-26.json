@@ -16,9 +16,10 @@
     "audited_batches": [
       1,
       2,
-      3
+      3,
+      4
     ],
-    "audited_models": 11
+    "audited_models": 15
   },
   "stage2": "NOT_EXECUTED; only implementation prepared",
   "stage3": "NOT_EXECUTED; all6 refinement and conditional hybrid interfaces synthetic-tested; no parent freeze yet",
