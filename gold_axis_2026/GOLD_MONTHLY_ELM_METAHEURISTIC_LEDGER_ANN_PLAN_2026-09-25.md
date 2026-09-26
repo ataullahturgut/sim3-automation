@@ -2099,3 +2099,17 @@ Early Adaptive PSO/TLBO run **36255801793**, job **108442235467**, artifact **10
 - 2025/2026 reporting only; no parent selected before full Stage 1.
 
 Status at protocol freeze: **STAGE 1 IMPLEMENTED / EXECUTION PENDING**. Stage 2–5 pending; no performance improvement claimed.
+
+
+### 16.10 RBFNN Stage 1.1 — COMPLETE / AUDITED
+
+Run **36256830372**, commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`.
+Report: `GOLD_MONTHLY_RBFNN_STAGE1_REPORT_2026-09-26.md` (cumulative, no duplicated batch reports).
+
+| Model | Job | Artifact | DEV ΣAE | DEV direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Decision |
+|---|---|---|---:|---:|---|---|---|
+| PSO | 108445085805 | 10910357737 | 1598.5085 | 20/33 | 1031.3426 / 11/12 | 1475.5659 / 5/7 | SCIENTIFIC PASS; retain for Stage-2 comparison, no parent selected |
+| GA | 108445085897 | 10910513816 | 1523.4710 | 19/33 | 989.9040 / 10/12 | 1560.4409 / 5/7 | SCIENTIFIC PASS; retain for Stage-2 comparison, no parent selected |
+| DE | 108445085946 | 10911201564 | 1550.2583 | 18/33 | 1115.9977 / 9/12 | 1665.7461 / 4/7 | SCIENTIFIC PASS; retain for Stage-2 comparison, no parent selected |
+
+GA is the batch price leader (1523.4710); PSO leads batch direction (20/33). None beats ChHHO-ANFIS 1413.0298 / 23/33. No scientific rejection in this batch. Three artifacts independently audited: complete 33/12/7 coverage, metric recomputation, DEV freeze hash, chronological diagnostics, four-output finite return checks and DB invariant equality. External results did not influence acceptance. Next: Stage 1.2 MPA/ABC/SSA/GWO; total completed 3/32.
