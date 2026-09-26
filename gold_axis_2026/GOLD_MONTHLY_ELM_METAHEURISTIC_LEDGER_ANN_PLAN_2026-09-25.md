@@ -1748,3 +1748,33 @@ The next project action is:
 **Phase N1 — Compact RBFNN benchmark**.
 
 The new roadmap must be followed sequentially unless a phase is scientifically blocked or explicitly closed by the user.
+
+
+### 16.6 N1.1 Vanilla RBFNN — completed 2026-09-26
+
+Status: **COMPLETE / VALID BASELINE / NOT A LEADER**
+
+Canonical specification:
+- 8 Gaussian RBF centers;
+- deterministic training-only k-means;
+- per-cluster RMS width with singleton nearest-center fallback;
+- 4-output OLS linear layer with intercept;
+- no ridge;
+- no metaheuristic;
+- no hyperparameter search.
+
+Execution:
+- run 36255366631 — SUCCESS
+- scientific gate PASS.
+
+DEV:
+- ΣAE 1666.0440
+- direction 19/33 = 57.58%
+- MAE 50.4862
+- RMSE 62.1013
+- relative MAE vs RW 0.94769.
+
+Decision:
+- RBFNN family remains open only for one compact regularized/tuned step.
+- Next: N1.2 regularized RBFNN with a small predeclared center-count / width-scale / ridge grid selected chronologically.
+- Broad optimizer screens remain unauthorized.
