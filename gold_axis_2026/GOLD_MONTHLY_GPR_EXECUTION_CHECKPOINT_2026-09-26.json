@@ -15,9 +15,10 @@
     "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
     "audited_batches": [
       1,
-      2
+      2,
+      3
     ],
-    "audited_models": 7
+    "audited_models": 11
   },
   "stage2": "NOT_EXECUTED; only implementation prepared",
   "stage3": "NOT_EXECUTED; all6 refinement and conditional hybrid interfaces synthetic-tested; no parent freeze yet",

@@ -5,6 +5,18 @@
     "job_id": 108464327155,
     "run_id": 36263592441
   },
+  "ACO": {
+    "artifact_id": 10912159858,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108464925116,
+    "run_id": 36263592441
+  },
+  "BAT": {
+    "artifact_id": 10913795139,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108464925085,
+    "run_id": 36263592441
+  },
   "DE": {
     "artifact_id": 10912349208,
     "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
@@ -23,6 +35,12 @@
     "job_id": 108464326989,
     "run_id": 36263592441
   },
+  "HHO": {
+    "artifact_id": 10913411163,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108464925071,
+    "run_id": 36263592441
+  },
   "MPA": {
     "artifact_id": 10913356064,
     "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
@@ -39,6 +57,12 @@
     "artifact_id": 10913208515,
     "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
     "job_id": 108464326883,
+    "run_id": 36263592441
+  },
+  "WOA": {
+    "artifact_id": 10913094229,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108464925053,
     "run_id": 36263592441
   }
 }
