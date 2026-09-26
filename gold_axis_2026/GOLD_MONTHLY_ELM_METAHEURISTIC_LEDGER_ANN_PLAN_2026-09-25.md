@@ -1844,3 +1844,219 @@ Governance unchanged:
 - no random split;
 - READ_ONLY DB;
 - no target-month leakage.
+
+
+### 16.8 RBFNN governed stage order — CURRENT / BINDING
+
+The RBFNN family must now follow the same stage architecture used for ANN and ANFIS. This section supersedes any earlier ad-hoc RBFNN ordering.
+
+#### STAGE 0 — Canonical baseline
+- Vanilla RBFNN.
+- Frozen 8-feature VW-MIDAS input contract.
+- 4-output Gold/Silver/Platinum/Palladium return target; Gold price primary.
+- Gaussian RBF hidden units.
+- Training-only center estimation.
+- Analytic linear output layer.
+- No random split.
+- No target-month leakage.
+- Scientific/numerical gate.
+
+Status:
+- Vanilla RBFNN COMPLETE.
+- Regularized RBFNN is retained as an additional Stage-0/benchmark refinement, not a substitute for Stage 1 broad screen.
+
+#### STAGE 1 — Broad single-optimizer screen
+
+Stage 1.1
+- PSO-RBFNN
+- GA-RBFNN
+- DE-RBFNN
+
+Stage 1.2
+- MPA-RBFNN
+- ABC-RBFNN
+- SSA-RBFNN
+- GWO-RBFNN
+
+Stage 1.3
+- WOA-RBFNN
+- HHO-RBFNN
+- ACO-RBFNN
+- Bat-RBFNN
+
+Stage 1.4
+- FA-RBFNN
+- MFO-RBFNN
+- FPA-RBFNN
+- FA-FPA-RBFNN
+
+Stage 1.5
+- CS-RBFNN
+- SCA-RBFNN
+- Salp-RBFNN
+- SMA-RBFNN
+
+Stage 1.6
+- GOA-RBFNN
+- ALO-RBFNN
+- TLBO-RBFNN
+- JAYA-RBFNN
+
+Stage 1.7
+- HGS-RBFNN
+- ChOA-RBFNN
+- HGSO-RBFNN
+- AOA-RBFNN
+
+Stage 1.8
+- CPA-RBFNN
+- Krill Herd-RBFNN
+- Crow Search-RBFNN
+
+Stage 1.9
+- DE-ABC-RBFNN
+- Multi-swarm RBFNN
+
+Optimizer scope:
+- RBF centers and/or center perturbations;
+- positive widths in log-space or bounded multipliers;
+- optional compact structural choice only under a predeclared discrete rule;
+- ridge/regularization only within frozen compact bounds;
+- 4-output linear output layer should remain analytically solved whenever possible.
+
+No target-month data may enter optimizer fitness.
+
+#### STAGE 2 — DEV filtering and parent freeze
+
+Stage 2.1 — DEV filtering:
+- RW gate;
+- DEV ΣAE;
+- direction;
+- RMSE;
+- year stability;
+- worst month;
+- numerical/scientific gate;
+- redundancy prune.
+
+Stage 2.2 — complementarity / parent freeze:
+- signed-error correlations;
+- direction disagreements;
+- rescue/loss counts;
+- price leader;
+- direction leader;
+- stability parent;
+- hybrid/complementarity parent;
+- freeze a small Stage-3 parent set.
+
+2025/2026 remain excluded from all parent-selection decisions.
+
+#### STAGE 3A — mandatory parity refinements
+
+Run exactly the same mandatory refinement classes used in ANN/ANFIS:
+1. Adaptive PSO-RBFNN.
+2. Adaptive / Improved TLBO-RBFNN.
+3. TLBO-tuned PSO-RBFNN.
+4. DE-tuned PSO-RBFNN.
+5. Adaptive Crow Search-RBFNN.
+6. PSO-TLBO Hybrid RBFNN.
+
+These six are parity experiments, not an invitation to enumerate arbitrary meta-on-meta crosses.
+
+#### STAGE 3B — evidence-driven hybrids
+
+After Stage 3A and only if parent evidence supports them:
+- MPA + SCA RBFNN.
+- MPA + GA RBFNN.
+- MPA + CPA RBFNN if needed as the fallback hybrid.
+
+Do not automatically enumerate all optimizer pairs.
+
+#### STAGE 3C — literature-specific RBFNN hybrids
+
+Search and test a small number of RBFNN-specific literature-backed hybrids that are structurally distinct from the parity set. Examples may include:
+- adaptive/evolutionary PSO-RBFNN;
+- GA + adaptive-PSO RBFNN;
+- self-learning/adaptive TLBO-RBFNN;
+- other center-width evolutionary RBF methods with clear methodological authority.
+
+Literature-specific methods require:
+- source;
+- exact mechanism;
+- parameterization;
+- data requirements;
+- clear distinction from already-tested parity methods.
+
+#### STAGE 4 — ensemble / robustness / freeze
+
+Stage 4.1 — ensemble pool freeze:
+- vanilla anchor;
+- price leader;
+- direction leader;
+- stability model;
+- hybrid/refinement representative;
+- FULL and REDUCED pools frozen before ensemble evaluation.
+
+Stage 4.2 — baseline ensembles:
+- simple average;
+- median;
+- expanding-prequential inverse-prior-MAE weighting.
+
+Stage 4.3 — learned simplex weights:
+- nonnegative;
+- sum to 1;
+- full-DEV fit diagnostic only;
+- expanding-prequential DEV is the only honest selection evidence.
+
+Stage 4.4 — shrinkage:
+- alpha = 0.00, 0.10, 0.25, 0.50, 0.75, 1.00;
+- FULL and REDUCED pools separately.
+
+Stage 4.5 — final robustness/freeze:
+- year-by-year;
+- leave-one-origin;
+- leave-one-component-out diagnostic;
+- worst-month/tail stability;
+- numerical stability;
+- final RBFNN family roles.
+
+#### STAGE 5 — cross-family comparison
+
+Compare at minimum:
+- ChHHO-ANFIS;
+- REDUCED4 ANN;
+- FULL7 ANN where relevant;
+- SMA-ELMFIS;
+- AOA-ELM;
+- best RBFNN single model;
+- best RBFNN hybrid/refinement;
+- best RBFNN ensemble if any.
+
+Use:
+- DEV ΣAE;
+- direction;
+- MAE;
+- RMSE;
+- worst AE;
+- relative MAE vs RW;
+- year stability;
+- leave-one-origin sensitivity where practical;
+- global Pareto frontier.
+
+2025/2026 remain reporting-only after the DEV decision is frozen.
+
+#### Early Stage-3 artifact handling
+
+Any Adaptive PSO-RBFNN / Adaptive TLBO-RBFNN runs launched before completion of Stage 1 and Stage 2 are classified as:
+**EARLY / NON-BINDING STAGE-3 ARTIFACTS**.
+
+They may be retained for implementation debugging and later reproducibility checks, but:
+- must not be used for Stage-2 parent selection;
+- must not be treated as final Stage-3 evidence unless rerun or formally revalidated after the Stage-2 parent freeze;
+- must not alter Stage-1 ordering.
+
+#### Binding next action
+
+The next authoritative step is:
+**RBFNN Stage 1.1 — PSO-RBFNN + GA-RBFNN + DE-RBFNN**.
+
+Proceed sequentially through Stage 1 batches, then Stage 2, then Stage 3A/3B/3C, then Stage 4, then Stage 5.
