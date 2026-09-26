@@ -1,4 +1,4 @@
-"""Provisional LMC candidate runner; production requires Stage3AB closure.
+"""Frozen LMC candidate runner; production requires Stage3AB closure.
 Formal candidate authority must be committed with activation before execution.
 """
 import hashlib,json,math,os,time

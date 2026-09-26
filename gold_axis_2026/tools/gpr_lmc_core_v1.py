@@ -1,4 +1,4 @@
-"""Provisional two-component LMC algebra; no experiment or activation here.
+"""Exact two-component LMC algebra; activation governed by Stage3C authority.
 K = B1 kron K_RBF + B2 kron K_M32 + noise kron I, exact dense inference.
 Vector-valued kernels authority: Alvarez/Rosasco/Lawrence 2012, section4.2.
 """
