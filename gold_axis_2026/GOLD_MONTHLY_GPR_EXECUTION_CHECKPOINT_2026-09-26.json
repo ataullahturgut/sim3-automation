@@ -51,9 +51,8 @@
   "prepared_local_only": [
     ".github/workflows/gpr-stage3b-v1.yml",
     ".github/workflows/gpr-stage3c-v1.yml",
-    ".github/workflows/gpr-stage4-final-v1.yml",
-    "gold_axis_2026/tools/gpr_lmc_core_v1.py",
-    "gold_axis_2026/tools/gpr_lmc_experiment_v1.py",
-    "gold_axis_2026/tools/test_gpr_lmc_core_v1.py"
-  ]
+    ".github/workflows/gpr-stage4-final-v1.yml"
+  ],
+  "provisional_lmc_code_commit": "009920121815383c1964a811a9883eccc0ae4f7a",
+  "provisional_lmc_validation": "Synthetic exact covariance/posterior and all40 analytic derivatives PASS; target/future label invariance PASS; no production experiment yet"
 }
