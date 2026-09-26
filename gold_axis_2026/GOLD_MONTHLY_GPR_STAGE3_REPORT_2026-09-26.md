@@ -4,6 +4,7 @@ Selection authority DEV only. External metrics reporting only, theta/kernel/scal
 
 | Model | DEV ΣAE | Direction | MAE | RMSE | 95% coverage | Max condition upper bound | Decision |
 |---|---:|---:|---:|---:|---:|---:|---|
+| ADAPTIVE_TLBO | 1740.8877 | 19/33 | 52.7542 | 63.8892 | 0.9091 | 3.571e+04 | ELIGIBLE |
 | ADAPTIVE_PSO | 1794.2201 | 20/33 | 54.3703 | 68.0314 | 0.8485 | 4.64e+04 | ELIGIBLE |
 
 ## Reporting only
@@ -11,10 +12,12 @@ Selection authority DEV only. External metrics reporting only, theta/kernel/scal
 | Model | 2025 ΣAE / direction | 2026 ΣAE / direction |
 |---|---|---|
 | ADAPTIVE_PSO | 1195.8734 / 9/12 | 1594.1298 / 5/7 |
+| ADAPTIVE_TLBO | 1171.3549 / 8/12 | 1599.9542 / 4/7 |
 
 ## Provenance and interpretation
 
 - ADAPTIVE_PSO: run 36266015124, commit `47480bf7dc77d5e86437ace1f11bce7490baefe5`; exact source, bounds and per-origin hyperparameters/optimizer termination retained in artifact. Job/artifact IDs in adjacent provenance and ledger.
+- ADAPTIVE_TLBO: run 36266015124, commit `47480bf7dc77d5e86437ace1f11bce7490baefe5`; exact source, bounds and per-origin hyperparameters/optimizer termination retained in artifact. Job/artifact IDs in adjacent provenance and ledger.
 
 Intervals are uncalibrated predictive-observation intervals. Coverage/NLPD are diagnostics, not new acceptance authority. Finite budget-limited L-BFGS candidates are explicitly recorded and are not claims of converged/global optima.
 

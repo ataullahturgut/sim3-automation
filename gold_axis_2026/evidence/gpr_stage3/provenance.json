@@ -5,5 +5,12 @@
     "job_id": 108470702244,
     "run_id": 36266015124,
     "stage": "3A"
+  },
+  "ADAPTIVE_TLBO": {
+    "artifact_id": 10914585546,
+    "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
+    "job_id": 108470702038,
+    "run_id": 36266015124,
+    "stage": "3A"
   }
 }

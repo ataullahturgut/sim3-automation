@@ -36,11 +36,12 @@
     "conditional_hybrid": "MPA_SCA",
     "literature": "not yet activated; requires Stage3AB closure",
     "audited_methods": [
-      "ADAPTIVE_PSO"
+      "ADAPTIVE_PSO",
+      "ADAPTIVE_TLBO"
     ],
-    "active_job": {
-      "method": "ADAPTIVE_TLBO",
-      "job_id": 108470702038
+    "active_jobs": {
+      "DE_TUNED_PSO": 108473163896,
+      "TLBO_TUNED_PSO": 108473163912
     }
   },
   "stage4_5": "NOT_EXECUTED; templates prepared, outcome-dependent roles not evaluated",

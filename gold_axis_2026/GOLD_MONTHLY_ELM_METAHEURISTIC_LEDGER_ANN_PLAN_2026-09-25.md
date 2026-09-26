@@ -2505,3 +2505,18 @@ The RBFNN DE_ABC comparison uses `strict_results.json.gz`, whose external_lineag
 ### GPR implementation documentation clarification — validation snapshots
 
 Stage1/3B repository mechanisms retain the best chronological validation candidate among top-training-quartile snapshots across generations, not only the last generation. Stage3A validates final training winners plus stated outer q tuning. Frozen code and results unchanged; different validation opportunities/objective call counts explicitly documented in authority and Turkish method report. All target/future and external exclusion gates remain unchanged.
+
+
+### GPR Stage 3A — ADAPTIVE_TLBO / AUDITED
+
+Run 36266015124; job 108470702038; artifact 10914585546; execution commit `47480bf7dc77d5e86437ace1f11bce7490baefe5`. Full per-origin parameters, optimizer bounds/source hashes, termination, exact posterior diagnostics and repeat selection remain in raw archive.
+
+| Period | ΣAE | Direction | Gate |
+|---|---:|---:|---|
+| dev | 1740.8877 | 19/33 | PASS |
+| transport_2025 | 1171.3549 | 8/12 | PASS |
+| stress_2026 | 1599.9542 | 4/7 | PASS |
+
+Decision: DEV-only candidate; final role awaits all Stage3 methods. External results reporting only.
+
+Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, positive uncertainty and numerical gates PASS for accepted rows; DB READ_ONLY/invariants equal; no random split; incomplete scientific periods not ranked.
