@@ -1,0 +1,37 @@
+name: Gold Monthly Vanilla ANFIS V3 Checked
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/vw_midas_anfis_vanilla_v3_checked.py
+      - .github/workflows/gold-monthly-anfis-vanilla-v3.yml
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install numpy psycopg[binary] scikit-learn scipy
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/vw_midas_anfis_vanilla_v2.py gold_axis_2026/tools/vw_midas_anfis_vanilla_v3_checked.py
+      - name: Run
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_anfis_vanilla_v3_checked.py
+      - name: Gate
+        run: python -c "import json; r=json.load(open('vw_midas_anfis_vanilla_v3_result.json')); assert len(r['dev']['rows'])==33 and len(r['transport_2025']['rows'])==12 and len(r['stress_2026']['rows'])==7 and r['authority']['random_split']=='NONE' and not r['authority']['target_month_in_training']; print('OUTPUT_GATE=PASS')"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-anfis-vanilla-v3
+          path: vw_midas_anfis_vanilla_v3_result.json
+          if-no-files-found: error
