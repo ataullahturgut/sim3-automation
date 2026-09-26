@@ -2500,3 +2500,8 @@ Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, posi
 ### GPR reporting clarification — strict RBFNN external reference
 
 The RBFNN DE_ABC comparison uses `strict_results.json.gz`, whose external_lineage records tuning_last2024-12 and expanding analytic output refit only (run36257615727, commit540a138ba1d5f71ed1577be76196c9191f897bb6). GPR uses the same no-external-hyperparameter-learning cutoff. Earlier blanket protocol-difference wording is narrowed to the older pre-RBF family references. External performance remains reporting only for all families; no selection changes.
+
+
+### GPR implementation documentation clarification — validation snapshots
+
+Stage1/3B repository mechanisms retain the best chronological validation candidate among top-training-quartile snapshots across generations, not only the last generation. Stage3A validates final training winners plus stated outer q tuning. Frozen code and results unchanged; different validation opportunities/objective call counts explicitly documented in authority and Turkish method report. All target/future and external exclusion gates remain unchanged.
