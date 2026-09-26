@@ -1,0 +1,65 @@
+name: RBFNN Strict External Reporting V1
+on:
+  workflow_run:
+    workflows: ['Gold Monthly RBFNN Stage 1 V1']
+    types: [completed]
+    branches: [gold-midas-headswap-v1-20260925]
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/rbfnn_external_frozen_reporting_v1.py
+      - .github/workflows/rbfnn-strict-external-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  report:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        method: [PSO, GA, DE, MPA, ABC, SSA, GWO, WOA, HHO, ACO, BAT, FA, MFO, FPA, FA_FPA, CS, SCA, SALP, SMA, GOA, ALO, TLBO, JAYA, HGS, CHOA, HGSO, AOA, CPA, KRILL, CROW, DE_ABC, MULTISWARM]
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn
+      - name: Wait for source artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          METHOD: ${{ matrix.method }}
+        run: |
+          python - <<'PYCODE'
+          import json,os,time,urllib.request
+          url='https://api.github.com/repos/ataullahturgut/sim3-automation/actions/runs/36256830372/artifacts?per_page=100'
+          for _ in range(240):
+              req=urllib.request.Request(url,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN']})
+              data=json.load(urllib.request.urlopen(req))
+              if any(a['name']=='rbfnn-stage1-'+os.environ['METHOD'] for a in data['artifacts']):break
+              time.sleep(15)
+          else:raise RuntimeError('SOURCE_ARTIFACT_NOT_FOUND')
+          PYCODE
+      - uses: actions/download-artifact@v4
+        with:
+          name: rbfnn-stage1-${{ matrix.method }}
+          path: source
+          run-id: 36256830372
+          github-token: ${{ github.token }}
+      - name: Frozen external reporting
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+          METHOD: ${{ matrix.method }}
+        run: python gold_axis_2026/tools/rbfnn_external_frozen_reporting_v1.py --method "$METHOD" --source source/rbfnn_stage1_$(echo "$METHOD" | tr '[:upper:]' '[:lower:]')_result.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rbfnn-strict-${{ matrix.method }}
+          path: rbfnn_stage1_*_result.json
+          if-no-files-found: error

@@ -15,10 +15,14 @@ def audit(d):
         assert len({r['target'] for r in part['rows']})==len(part['rows'])
         for r in part['rows']:
             dg=r['diag']; assert dg['train_last']<r['target']
-            assert dg['inner_train_last']<dg['validation_first']<=dg['validation_last']<r['target']
+            if period!='dev' and 'external_lineage' in d:
+                assert dg['tuning_last']=='2024-12'
+                assert dg['frozen_geometry_sha256']==d['external_lineage']['frozen_geometry_sha256']
+            else:
+                assert dg['inner_train_last']<dg['validation_first']<=dg['validation_last']<r['target']
             assert all(math.isfinite(x) and abs(x)<1 for x in r['pred_returns'])
             assert dg['design_condition']<=d['spec']['condition_limit']
-            assert min(dg['initial_cluster_counts'])>0
+            if 'initial_cluster_counts' in dg:assert min(dg['initial_cluster_counts'])>0
         if part['scientific_gate']=='PASS':
             m=metric.active_metrics(part['rows'])
             for k,v in m.items():assert np.isclose(v,part['metrics'][k],rtol=1e-10,atol=1e-10),(period,k)
@@ -43,11 +47,13 @@ def report(root,out):
     for d in records:
         if d not in valid:lines.append(f"| {d['method']} | NOT_RANKED | — | — | — | — | — | — | SCIENTIFIC_FAIL |")
     lines+=['','## External reporting — excluded from selection','',
+      'Only STRICT_FROZEN rows are authoritative. Original expanding-tuning external rows are SUPERSEDED pending strict pre-2025 tuning freeze. DEV remains unchanged.',
       '| Model | 2025 ΣAE | 2025 direction | 2026 Jan–Jul ΣAE | 2026 direction |','|---|---:|---:|---:|---:|']
     for d in records:
         vals=[]
         for p,n in [('transport_2025',12),('stress_2026',7)]:
             m=d[p]['metrics'];vals.extend([f"{m['sum_abs_error']:.4f}",f"{m['direction_correct']}/{n}"] if m else ['SCIENTIFIC_FAIL','—'])
+        if 'external_lineage' not in d:vals=['SUPERSEDED']*4
         lines.append('| '+d['method']+' | '+' | '.join(vals)+' |')
     lines+=['','## Provenance and decisions','']
     for d in records:

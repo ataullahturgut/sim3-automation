@@ -2141,3 +2141,10 @@ Run **36256830372**, commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; shared f
 | BAT | 108445827586 | 10911445645 | 1501.6410 | 21/33 | 1037.0801 / 8/12 | 1526.1445 / 5/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
 
 Independent audit: coverage, recomputed metrics, freeze hash, chronology, numerical diagnostics and DB invariant equality. 2025/2026 reporting only. No Stage-2 parent selection yet. Next: Stage 1.4.
+
+
+### RBFNN external-exclusion correction — DEV unchanged / external rows SUPERSEDED
+
+Strict reading of the user contract requires no 2025/2026 observations in hyperparameter selection, including tuning at later external origins. Original Stage-1 per-origin tuning used available earlier external months. Although target-month chronology was preserved and external scores never selected a family/parent, **all original Stage-1 2025/2026 rows and the external columns in prior batch entries are SUPERSEDED** under this stricter constraint. DEV rows, rankings and decisions remain valid and unchanged.
+
+Correction: `rbfnn_external_frozen_reporting_v1.py`, workflow `rbfnn-strict-external-v1.yml` freezes all optimizer/width/ridge/geometry/scaling choices using the 2024-12 origin only. At subsequent origins only the analytic output coefficients are refitted on available pre-target history; external observations never enter tuning. The copied DEV section must retain its identical SHA256. New external run/artifact lineage will be recorded separately; do not treat old external figures as final. No optimizer was rescued or chosen based on external performance.
