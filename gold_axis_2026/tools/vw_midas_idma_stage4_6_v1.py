@@ -188,7 +188,7 @@ def outer_row(bundle, target, lane, objective, window, selection, model_id):
         "idma_selection":{
             "objective":objective,
             "window":"EXPANDING" if window is None else f"W{window}",
-            "score":selection["score"],
+            "score":selection.get("score", selection.get("selector_score_at_freeze")),
             "forgetting_tag":selection["forgetting_tag"],
             "alpha":selection["alpha"], "lambda":selection["lambda"],
             "predictors":selection["predictors"],
