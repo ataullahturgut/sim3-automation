@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
-> **Current checkpoint — 2026-09-26: N2 GPR Stage0 COMPLETE; Stage1 32/32 audited, no parent selected. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
+> **Current checkpoint — 2026-09-26: N2 GPR Stage0–2 COMPLETE; Stage3A RUNNING, run36266015124; frozen price MULTISWARM1606.7414/23, direction FA_FPA1724.6532/25. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
 
 
 **Date:** 2026-09-25  
@@ -2475,3 +2475,8 @@ All32 original Stage1 artifacts are audited; no scientific failures. Technical s
 Frozen roles: {"architecture_anchor": "VANILLA_ICM_RBF", "direction_leader": "FA_FPA", "optimizer_hybrid_parent": "MPA", "price_leader": "MULTISWARM", "stability_parent": "ICM_M32"}. Pairwise correlations, bidirectional direction rescue, monthly price wins, yearly/leave-one-origin summaries and validation-repeat dispersion in `GOLD_MONTHLY_GPR_STAGE2_FREEZE_2026-09-26.json`. Independent prediction-repeat robustness NOT_PROVEN. Eligible conditional pair MPA+SCA signed-error correlation0.875656578, below predeclared0.90; remaining rescue/win gates also PASS. Stage3B opens only after six Stage3A refinements close. Full freeze is committed before production Stage3A.
 
 Kontrol ve Uyum Özeti: all32 closure PASS; DEV-only filtering PASS; SO_RBF excluded from four-output parents; 2025/2026 excluded; no random split; DB READ_ONLY; no survivor selection before broad screen closure. Next: Stage3A six refinements, batches<=2.
+
+
+### GPR Stage3A — RUNNING after immutable parent freeze
+
+Parent freeze commit24be35eb14e9d5b1d8cfab7593bd42fc241541bd precedes activation commit47480bf7dc77d5e86437ace1f11bce7490baefe5; run36266015124. Three sequential batches of two refinements. Canonical GP prior initialization is retained; frozen parent roles govern comparison/conditional hybrid admission and do not imply unimplemented theta transfer.
