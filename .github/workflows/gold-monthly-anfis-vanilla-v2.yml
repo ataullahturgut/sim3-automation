@@ -1,12 +1,16 @@
 name: Gold Monthly Vanilla ANFIS V2
+
 on:
   push:
-    branches: [gold-midas-headswap-v1-20260925]
+    branches:
+      - gold-midas-headswap-v1-20260925
     paths:
       - gold_axis_2026/tools/vw_midas_anfis_vanilla_v2.py
       - .github/workflows/gold-monthly-anfis-vanilla-v2.yml
+
 permissions:
   contents: read
+
 jobs:
   run:
     runs-on: ubuntu-24.04
@@ -14,16 +18,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: '3.11'}
-      - run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2'
-      - run: python -m py_compile gold_axis_2026/tools/vw_midas_anfis_vanilla_v2.py
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/vw_midas_anfis_vanilla_v2.py
       - name: Run
-        env: {NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}}
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
         run: python gold_axis_2026/tools/vw_midas_anfis_vanilla_v2.py
       - name: Gate
         run: |
           python - <<'PY'
-          import json,numpy as np
+          import json, numpy as np
           r=json.load(open('vw_midas_anfis_vanilla_v2_result.json'))
           assert r['canonical_anfis']['metaheuristic']=='NONE'
           assert r['canonical_anfis']['premise_learning'].startswith('Jang1993')
@@ -31,10 +39,10 @@ jobs:
           assert r['authority']['target_month_in_training'] is False
           assert [len(r['dev']['rows']),len(r['transport_2025']['rows']),len(r['stress_2026']['rows'])]==[33,12,7]
           for sec in ['dev','transport_2025','stress_2026']:
-            for x in r[sec]['rows']:
-              assert sum(x['rule_counts'])==x['train_rows']
-              assert np.isfinite(x['anfis_diag']['best_train_mse'])
-              assert x['anfis_diag']['best_train_mse']<=x['anfis_diag']['first_train_mse']+1e-10
+              for x in r[sec]['rows']:
+                  assert sum(x['rule_counts'])==x['train_rows']
+                  assert np.isfinite(x['anfis_diag']['best_train_mse'])
+                  assert x['anfis_diag']['best_train_mse'] <= x['anfis_diag']['first_train_mse'] + 1e-10
           print('OUTPUT_GATE=PASS')
           PY
       - uses: actions/upload-artifact@v4
