@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
-> **Current checkpoint — 2026-09-26: N2 GPR Stage0 COMPLETE; Stage1 30/32 audited, no parent selected. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
+> **Current checkpoint — 2026-09-26: N2 GPR Stage0 COMPLETE; Stage1 32/32 audited, no parent selected. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
 
 
 **Date:** 2026-09-25  
@@ -2454,3 +2454,24 @@ Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 excluded; random split NONE; or
 ### GPR technical replay audit amendment — floating-point identity
 
 ALO original and replay have identical discrete decisions, selected repeats, source hashes and call counts, but non-bitwise floating-point arithmetic: maximum price difference DEV4.55e-13, 2025 9.09e-13, 2026 1.82e-12. Exact serialized DEV hash equality therefore failed despite numerical equivalence. The original exact-hash requirement above is superseded transparently: compare every numeric value in DEV/2025/2026 recursively with rtol=1e-10/atol=1e-10, every discrete field exactly; compare actual theta arrays rather than their raw-byte hashes. Original/replay hashes and bitwise status remain separately recorded. This does not change scores, models, seeds, selections or original results. ABC is bitwise identical; ALO passes strict numerical comparison; DE-ABC original pending. Stage2 remains blocked until all3 pass. This is an implementation audit amendment, not a scientific model gate relaxation.
+
+
+### GPR Stage 1.9 — COMPLETE / AUDITED
+
+Run **36263592441**, commit **b5885a50dfbc17474b8f22ac2e8b61f43b7b748d**. Shared script `tools/gpr_experiment_v1.py`, workflow `.github/workflows/gpr-stage1-v1.yml`; frozen22 bounds, population24/generations45/repeats3 and objective/refit in GPR authority.
+
+| Method | Job | Artifact | DEV ΣAE / direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Gate / decision |
+|---|---|---|---|---|---|---|
+| DE_ABC | 108469745401 | 10913986440 | 1709.2591 / 23/33 | 1280.3824 / 9/12 | 1762.8199 / 3/7 | PASS; parent selection deferred |
+| MULTISWARM | 108469745367 | 10914071210 | 1606.7414 / 23/33 | 1204.7296 / 8/12 | 1677.0049 / 4/7 | PASS; parent selection deferred |
+
+Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 excluded; random split NONE; origin/freeze-hash checks PASS; DB READ_ONLY/invariants equal; gate failures retained; manifest updated. Next: Stage2 DEV filtering and parent freeze.
+
+
+### GPR Stage 1 closure and Stage2 parent freeze — COMPLETE
+
+All32 original Stage1 artifacts are audited; no scientific failures. Technical score-domain verification PASS for ABC/ALO/DE-ABC with original/replay bitwise status and strict numerical comparison separately recorded. Stage1 price leader MULTISWARM: DEV ΣAE1606.741381, direction23/33; direction leader FA_FPA:1724.653242,25/33. No external results used.
+
+Frozen roles: {"architecture_anchor": "VANILLA_ICM_RBF", "direction_leader": "FA_FPA", "optimizer_hybrid_parent": "MPA", "price_leader": "MULTISWARM", "stability_parent": "ICM_M32"}. Pairwise correlations, bidirectional direction rescue, monthly price wins, yearly/leave-one-origin summaries and validation-repeat dispersion in `GOLD_MONTHLY_GPR_STAGE2_FREEZE_2026-09-26.json`. Independent prediction-repeat robustness NOT_PROVEN. Eligible conditional pair MPA+SCA signed-error correlation0.875656578, below predeclared0.90; remaining rescue/win gates also PASS. Stage3B opens only after six Stage3A refinements close. Full freeze is committed before production Stage3A.
+
+Kontrol ve Uyum Özeti: all32 closure PASS; DEV-only filtering PASS; SO_RBF excluded from four-output parents; 2025/2026 excluded; no random split; DB READ_ONLY; no survivor selection before broad screen closure. Next: Stage3A six refinements, batches<=2.

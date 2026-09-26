@@ -53,17 +53,17 @@
     "DE_ABC": {
       "artifact_id": 10913840808,
       "commit": "356015a4d03988342bdbb575681ed4a830ef6bc1",
-      "dev_freeze_sha256": null,
+      "dev_freeze_sha256": "f3d7744c7632588ca387ad76a1354bcfe967dc9b1930fd011d2017e1ba1f716b",
       "differing_float_count": 0,
-      "exact_dev_hash_match": false,
+      "exact_dev_hash_match": true,
       "float_tolerance": {
         "atol": 1e-10,
         "rtol": 1e-10
       },
       "job_id": 108466913693,
       "max_absolute_float_difference": 0,
-      "numerically_identical_replay": false,
-      "original_available": false,
+      "numerically_identical_replay": true,
+      "original_available": true,
       "replay_dev_freeze_sha256": "f3d7744c7632588ca387ad76a1354bcfe967dc9b1930fd011d2017e1ba1f716b",
       "run_id": "36264658833",
       "score_domain": {
@@ -79,6 +79,6 @@
   "no_new_candidate": true,
   "no_score_or_algorithm_change": true,
   "scope": "All training evaluations in these frozen DEV and pre-2025 tuning runs; not a universal guarantee for other datasets",
-  "status": "WAITING_FOR_ORIGINALS",
+  "status": "PASS",
   "technical_only": true
 }

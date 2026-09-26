@@ -59,6 +59,12 @@
     "job_id": 108463902811,
     "run_id": 36263592441
   },
+  "DE_ABC": {
+    "artifact_id": 10913986440,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108469745401,
+    "run_id": 36263592441
+  },
   "FA": {
     "artifact_id": 10913387613,
     "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
@@ -135,6 +141,12 @@
     "artifact_id": 10913356064,
     "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
     "job_id": 108464326830,
+    "run_id": 36263592441
+  },
+  "MULTISWARM": {
+    "artifact_id": 10914071210,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108469745367,
     "run_id": 36263592441
   },
   "PSO": {

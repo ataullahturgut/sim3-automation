@@ -10,7 +10,7 @@
     "models": 4
   },
   "stage1": {
-    "status": "RUNNING",
+    "status": "COMPLETE_AUDITED",
     "run": 36263592441,
     "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
     "audited_batches": [
@@ -21,14 +21,15 @@
       5,
       6,
       7,
-      8
+      8,
+      9
     ],
-    "audited_models": 30
+    "audited_models": 32
   },
-  "stage2": "NOT_EXECUTED; only implementation prepared",
-  "stage3": "NOT_EXECUTED; all6 refinement and conditional hybrid interfaces synthetic-tested; no parent freeze yet",
+  "stage2": "COMPLETE; DEV-only roles frozen before Stage3",
+  "stage3": "READY: launch 6 mandatory refinements, then eligible MPA_SCA, then literature candidate",
   "stage4_5": "NOT_EXECUTED; templates prepared, outcome-dependent roles not evaluated",
-  "next_action": "Audit remaining Stage1 artifacts and record every completed batch; only after all32 close Stage2 and commit parents before Stage3",
+  "next_action": "Commit Stage2 freeze, then launch Stage3A workflow",
   "selection": "DEV_ONLY; 2025/2026 strictly reporting only; no random split; DB READ_ONLY",
   "memory_policy": "This checkpoint and latest GitHub artifact evidence supersede conversational summaries. Authorization persists through stage and context boundaries."
 }
