@@ -1,0 +1,41 @@
+{
+  "FULL": [
+    "VANILLA_ICM_RBF",
+    "LMC2_RBF_M32",
+    "FA_FPA",
+    "MPA_SCA"
+  ],
+  "REDUCED": [
+    "VANILLA_ICM_RBF",
+    "LMC2_RBF_M32",
+    "FA_FPA",
+    "MPA_SCA"
+  ],
+  "alphas": [
+    0.0,
+    0.1,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "external_weights": "frozen_at_end_of_DEV_no_external_loss_updates",
+  "minimum_meta_history": 6,
+  "removed": {},
+  "roles": {
+    "architecture_anchor": "VANILLA_ICM_RBF",
+    "direction_leader": "FA_FPA",
+    "price_leader": "LMC2_RBF_M32",
+    "refinement_representative": "MPA_SCA",
+    "stability_model": "LMC2_RBF_M32"
+  },
+  "selection": "DEV_ONLY",
+  "simplex_objective": "prior \u03a3AE",
+  "source_dev_hashes": {
+    "FA_FPA": "8221cbdbfed2fece806ca2e2617d0222de62a1a0d6b068fae3ddf3ef26a09606",
+    "LMC2_RBF_M32": "ee74004fe7f5572dcb3d58fca1ab41905ce158b1b33e777bc547be47104bba9f",
+    "MPA_SCA": "a91d0f7ba4fd8322373b68c68d572a579d60f9a4559f1935ca1400da9b9a7ac5",
+    "VANILLA_ICM_RBF": "c8c26ac69381ac7037564a9b0e54db644f069b278a60f8f64ad0fa5afdb513eb"
+  },
+  "status": "FROZEN_BEFORE_ENSEMBLE_EVALUATION"
+}

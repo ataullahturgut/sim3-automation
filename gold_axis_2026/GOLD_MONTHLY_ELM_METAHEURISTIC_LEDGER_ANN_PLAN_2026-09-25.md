@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
-> **Current checkpoint — 2026-09-26: N2 GPR Stage0–2 COMPLETE; Stage3A COMPLETE, run36266015124; Stage3AB COMPLETE; Stage3C LMC RUNNING, run36269000173; frozen price MULTISWARM1606.7414/23, direction FA_FPA1724.6532/25. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
+> **Current checkpoint — 2026-09-26: N2 GPR Stage0–2 COMPLETE; Stage3A COMPLETE, run36266015124; Stage3AB COMPLETE; Stage3 COMPLETE; Stage4 pools frozen before evaluation; frozen price MULTISWARM1606.7414/23, direction FA_FPA1724.6532/25. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
 
 
 **Date:** 2026-09-25  
@@ -2626,3 +2626,31 @@ Kontrol ve Uyum Özeti: DEV-only PASS; external tuning exclusion PASS; READ_ONLY
 Primary sources rechecked after Stage3AB: Alvarez/Rosasco/Lawrence2012 sections4.2 and6.2, equations10/19–21/31–33; GPML2006 section5.4.1 equations5.8/5.9. One structural LMC candidate, two distinct ARD kernels and full-rank task matrices,40 parameters, exact dense posterior and analytic likelihood gradient. Full bounds/prior/seeds/budget/gates in `GOLD_MONTHLY_GPR_STAGE3C_AUTHORITY_2026-09-26.md`. Synthetic independent covariance, all40 finite-difference derivative checks and future-label invariance PASS; rechecked by workflow.
 
 Authority commitf38cfaa13604f7284c3de13b785d3b663729d910 precedes activation commit3168be9cfc74ff3e6cbbc1ef76fb0c588422fe01; run36269000173. No production outcome used to choose this specification. Next: audit LMC, closeStage3, commit pools before ensemble outcomes.
+
+
+### GPR Stage 3C — LMC2_RBF_M32 / AUDITED
+
+Run 36269000173; job 108479223144; artifact 10915270480; execution commit `3168be9cfc74ff3e6cbbc1ef76fb0c588422fe01`. Full per-origin parameters, optimizer bounds/source hashes, termination, exact posterior diagnostics and repeat selection remain in raw archive.
+
+| Period | ΣAE | Direction | Gate |
+|---|---:|---:|---|
+| dev | 1424.1711 | 19/33 | PASS |
+| transport_2025 | 1022.6730 | 10/12 | PASS |
+| stress_2026 | 1625.2864 | 5/7 | PASS |
+
+Decision: DEV-only candidate; final role awaits all Stage3 methods. External results reporting only.
+
+Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, positive uncertainty and numerical gates PASS for accepted rows; DB READ_ONLY/invariants equal; no random split; incomplete scientific periods not ranked.
+
+
+### GPR Stage3C / all Stage3 closure — COMPLETE
+
+LMC2_RBF_M32 run36269000173, job108479223144, artifact10915270480, commit3168be9cfc74ff3e6cbbc1ef76fb0c588422fe01. DEV ΣAE1424.171081,19/33;2025 ΣAE1022.673030,10/12;2026 ΣAE1625.286417,5/7. All scientific/chronology/freeze gates PASS. LMC is the new four-output price and worst-year-relative stability leader; FA_FPA remains direction leader. RBFNN reference1415.837129/25 still dominates LMC on DEV point estimates. No new kernel/prior variant opened after this outcome.
+
+Kontrol ve Uyum Özeti: Stage3A6 + admittedStage3B1 + genuineStage3C1 all COMPLETE/AUDITED; source/closure hashes match; READ_ONLY invariants equal; no external selection. `GOLD_MONTHLY_GPR_STAGE3_CLOSURE_2026-09-26.json` is terminal Stage3 evidence.
+
+### GPR Stage4 pool freeze — BEFORE ANY ENSEMBLE OUTCOMES
+
+FULL roles: Vanilla ICM architecture, LMC2 price/stability, FA_FPA direction, MPA_SCA mandatory-refinement/hybrid representative. Deduplicated FULL=[VANILLA_ICM_RBF,LMC2_RBF_M32,FA_FPA,MPA_SCA]. No unprotected component satisfies the predefined domination/correlation removal rule within this pool, so REDUCED is the same4 models. This is a valid no-removal outcome, not an omitted reduced-pool stage. Both names will be evaluated; their identical configurations are not independent experiments. No pool changed after ensemble outcomes.
+
+Pool hashes, fixed alpha grid0/.1/.25/.5/.75/1, minimum history6 and frozen external-weight rule in `GOLD_MONTHLY_GPR_STAGE4_POOL_FREEZE_2026-09-26.json`. Next: commit this freeze, activate ensemble/final workflow.

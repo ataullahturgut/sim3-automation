@@ -1,0 +1,68 @@
+{
+  "external_metrics_used": false,
+  "hybrid_status": "EXECUTED",
+  "models": [
+    "ADAPTIVE_PSO",
+    "ADAPTIVE_TLBO",
+    "TLBO_TUNED_PSO",
+    "DE_TUNED_PSO",
+    "ADAPTIVE_CROW",
+    "PSO_TLBO",
+    "MPA_SCA",
+    "LMC2_RBF_M32"
+  ],
+  "models_audited": {
+    "ADAPTIVE_CROW": {
+      "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
+      "dev_gate": "PASS",
+      "dev_hash": "aa945aa1f3bcf9b137bbadb5a98b2e7d40b44b2ffe35e1a9c8ca73ca6f425396",
+      "run_id": "36266015124"
+    },
+    "ADAPTIVE_PSO": {
+      "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
+      "dev_gate": "PASS",
+      "dev_hash": "e8cd0fc00912007bc2b9a161d181f67ed0682fb6e106f8fcb3cf119f78384a5c",
+      "run_id": "36266015124"
+    },
+    "ADAPTIVE_TLBO": {
+      "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
+      "dev_gate": "PASS",
+      "dev_hash": "b070e6bc1462ab4ce7e2f5f8020bbd1951ddab9fb12d747c92827564f86007b0",
+      "run_id": "36266015124"
+    },
+    "DE_TUNED_PSO": {
+      "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
+      "dev_gate": "PASS",
+      "dev_hash": "efa36cba7fa83d0ddd467b947263aa00658914b8ba1e218e2df675a33088de9a",
+      "run_id": "36266015124"
+    },
+    "LMC2_RBF_M32": {
+      "commit": "3168be9cfc74ff3e6cbbc1ef76fb0c588422fe01",
+      "dev_gate": "PASS",
+      "dev_hash": "ee74004fe7f5572dcb3d58fca1ab41905ce158b1b33e777bc547be47104bba9f",
+      "run_id": "36269000173"
+    },
+    "MPA_SCA": {
+      "commit": "0bee31b199a419059bbab9570e3e07e1d27d7af7",
+      "dev_gate": "PASS",
+      "dev_hash": "a91d0f7ba4fd8322373b68c68d572a579d60f9a4559f1935ca1400da9b9a7ac5",
+      "run_id": "36268484542"
+    },
+    "PSO_TLBO": {
+      "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
+      "dev_gate": "PASS",
+      "dev_hash": "7ebed554ccfa6d8149e66801e7b28a8493abc0fa54ff5689a7dced1b39715301",
+      "run_id": "36266015124"
+    },
+    "TLBO_TUNED_PSO": {
+      "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
+      "dev_gate": "PASS",
+      "dev_hash": "e63ac8e8f7c70e74f2c4e02497632551b179281f586cf4879eafb36e5aa319e2",
+      "run_id": "36266015124"
+    }
+  },
+  "parent_freeze_sha256": "253a161f2dd3326ec3157b9303db486ac2fb88b54ef509d839a029f60f741ecc",
+  "selection": "DEV_ONLY",
+  "stage": "3",
+  "status": "COMPLETE"
+}

@@ -27,6 +27,13 @@
     "run_id": 36266015124,
     "stage": "3A"
   },
+  "LMC2_RBF_M32": {
+    "artifact_id": 10915270480,
+    "commit": "3168be9cfc74ff3e6cbbc1ef76fb0c588422fe01",
+    "job_id": 108479223144,
+    "run_id": 36269000173,
+    "stage": "3C"
+  },
   "MPA_SCA": {
     "artifact_id": 10914109472,
     "commit": "0bee31b199a419059bbab9570e3e07e1d27d7af7",

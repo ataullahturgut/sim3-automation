@@ -28,7 +28,7 @@
   },
   "stage2": "COMPLETE; DEV-only roles frozen before Stage3",
   "stage3": {
-    "status": "STAGE3AB_COMPLETE; STAGE3C_RUNNING",
+    "status": "COMPLETE_AUDITED",
     "run": 36266015124,
     "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
     "stage2_freeze_commit": "24be35eb14e9d5b1d8cfab7593bd42fc241541bd",
@@ -42,7 +42,8 @@
       "DE_TUNED_PSO",
       "ADAPTIVE_CROW",
       "PSO_TLBO",
-      "MPA_SCA"
+      "MPA_SCA",
+      "LMC2_RBF_M32"
     ],
     "stage3a_closure_commit": "111899e4ed9e2a55ebe5a94a7a62b4ecf0ecd0a1",
     "stage3b_run": 36268484542,
@@ -52,8 +53,8 @@
     "stage3c_run": 36269000173,
     "stage3c_commit": "3168be9cfc74ff3e6cbbc1ef76fb0c588422fe01"
   },
-  "stage4_5": "NOT_EXECUTED; templates prepared, outcome-dependent roles not evaluated",
-  "next_action": "Audit LMC run36269000173, archive Stage3C, run gpr_stage3_closure_v1.py 3, then freeze/commit Stage4 pools BEFORE activating final ensemble workflow. Independently verify final artifacts and generate Turkish dossier.",
+  "stage4_5": "Stage4 pools frozen locally; must commit before ensemble evaluation",
+  "next_action": "Commit Stage3 closure, raw LMC evidence and Stage4 pool freeze; then activate .github/workflows/gpr-stage4-final-v1.yml. Download final artifact, independent verify, generate Turkish dossier and close ledger.",
   "selection": "DEV_ONLY; 2025/2026 strictly reporting only; no random split; DB READ_ONLY",
   "memory_policy": "This checkpoint and latest GitHub artifact evidence supersede conversational summaries. Authorization persists through stage and context boundaries.",
   "prepared_local_only": [
