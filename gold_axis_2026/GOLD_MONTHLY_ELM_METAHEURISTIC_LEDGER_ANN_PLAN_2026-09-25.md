@@ -2654,3 +2654,83 @@ Kontrol ve Uyum Özeti: Stage3A6 + admittedStage3B1 + genuineStage3C1 all COMPLE
 FULL roles: Vanilla ICM architecture, LMC2 price/stability, FA_FPA direction, MPA_SCA mandatory-refinement/hybrid representative. Deduplicated FULL=[VANILLA_ICM_RBF,LMC2_RBF_M32,FA_FPA,MPA_SCA]. No unprotected component satisfies the predefined domination/correlation removal rule within this pool, so REDUCED is the same4 models. This is a valid no-removal outcome, not an omitted reduced-pool stage. Both names will be evaluated; their identical configurations are not independent experiments. No pool changed after ensemble outcomes.
 
 Pool hashes, fixed alpha grid0/.1/.25/.5/.75/1, minimum history6 and frozen external-weight rule in `GOLD_MONTHLY_GPR_STAGE4_POOL_FREEZE_2026-09-26.json`. Next: commit this freeze, activate ensemble/final workflow.
+
+
+## 17. NEW MODEL DISCOVERY POLICY — GOLD-SPECIFIC AUTHORITY FIRST
+
+Status: BINDING after GPR family closure.
+
+The project will no longer advance automatically through a preselected generic sequence such as RFF-BLR -> GOR-ELM -> generic SVR. New model families must first pass a gold-forecasting authority screen.
+
+### 17.1 Selection criteria
+
+A new family is prioritized using four dimensions:
+
+1. Gold-specific out-of-sample forecasting evidence.
+2. Reported superiority versus meaningful benchmarks, preferably with statistical comparison where available.
+3. Literature maturity / citation evidence, interpreted with publication age.
+4. Compatibility with this project's governed setting:
+   - H=1 next-calendar-month average XAU/USD;
+   - small DEV sample;
+   - origin-safe expanding/rolling evaluation;
+   - frozen 8-feature VW-MIDAS contract unless an approved extension is explicitly opened;
+   - joint Gold/Silver/Platinum/Palladium structure where method supports it;
+   - no random split;
+   - 2025 and 2026 reporting-only.
+
+Citation count is evidence of maturity, not a substitute for forecasting quality. Very recent high-performing methods may enter as FRONTIER candidates even with low citation counts.
+
+### 17.2 New prioritized family queue
+
+Tier 1 / MUST TEST:
+1. DMA / DMS / IDMA family.
+2. Gradient boosting family: GBRT, XGBoost, CatBoost, LightGBM, HistGradientBoosting and controlled regularized/shallow variants.
+3. Wavelet-SVR family: linear/RBF SVR anchor, DWT-SVR and causal rolling wavelet variants.
+4. CNN-BiLSTM family: LSTM/CNN/BiLSTM/CNN-LSTM/ConvLSTM/CNN-BiLSTM with small-sample architecture control.
+
+Tier 2 / HIGH-VALUE FRONTIER:
+5. Attention-GRU / MA-GRUS family.
+6. Transformer family: Transformer, PatchTST, LSTM-Transformer and DPformer subject to sample-size gate.
+
+Tier 3 / DECOMPOSITION-HYBRID, CAUSAL IMPLEMENTATION REQUIRED:
+7. ICEEMDAN-LSTM-CNN-CBAM family.
+8. VMD + BiLSTM/BiGRU + Bayesian-optimization family.
+
+Existing or already-covered families are not to be restarted blindly. ANN/ELM/ANFIS/RBFNN/GPR variants are reopened only for exact literature-specific replication when the prior implementation is materially different from the authoritative mechanism.
+
+RFF-BLR, GOR-ELM, KRR/KELM/Twin-SVR and other cross-domain candidates remain in the reserve research pool; they are no longer the automatic next families.
+
+### 17.3 Family-specific experimentation rule
+
+Do NOT automatically run a 30+ metaheuristic screen for every new family.
+
+For each family:
+Stage 0 — canonical baseline / authoritative reproduction target.
+Stage 1 — the family's own literature-supported variants / ablations.
+Stage 2 — DEV-only filtering and role/parent freeze.
+Stage 3 — literature-specific hybrid/refinement only when supported by authority or Stage-2 evidence.
+Stage 4 — ensemble only if multiple retained models are demonstrably complementary.
+Stage 5 — global cross-family comparison.
+
+Metaheuristic optimization is opened only when the authoritative literature uses it for that family or when a predeclared scientific rationale exists.
+
+### 17.4 Current next family
+
+The next family is:
+**DMA / DMS / IDMA for monthly gold forecasting.**
+
+Before production execution, a dedicated authority document must freeze:
+- original DMA/DMS mechanism;
+- gold-specific forecasting evidence;
+- IDMA mechanism;
+- forgetting-factor design;
+- model-space definition;
+- predictor subset policy;
+- prior/initial probability policy;
+- predictive-density/weight update equations;
+- chronology-safe implementation;
+- exact Stage 0–5 plan;
+- treatment of the project's 4-metal target structure;
+- 2025/2026 exclusion.
+
+No DMA/DMS/IDMA production result may be used before that authority specification is committed.
