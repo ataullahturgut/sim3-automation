@@ -232,7 +232,10 @@ def build_variant(bundle, cache, lane, objective, window, precomputed):
         for target in base.month_range(start,end):
             cand=precomputed[target][lane]
             pred=frozen_outer_prediction(cand,freeze)
-            sel=dict(freeze); sel["pred_log_return_gold"]=pred; sel["top5"]=[]
+            sel=dict(freeze)
+            sel["pred_log_return_gold"]=pred
+            sel["score"]=freeze["selector_score_at_freeze"]
+            sel["top5"]=[]
             dst.append(outer_row(bundle,target,lane,objective,window,sel,model_id))
     return {
         "model_id":model_id,"lane":lane,"objective":objective,"window":tag,
