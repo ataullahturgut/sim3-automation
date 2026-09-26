@@ -2734,3 +2734,30 @@ Before production execution, a dedicated authority document must freeze:
 - 2025/2026 exclusion.
 
 No DMA/DMS/IDMA production result may be used before that authority specification is committed.
+
+
+### 17.5 DMA/DMS/IDMA authority freeze and execution order
+
+Authority document committed:
+`gold_axis_2026/GOLD_MONTHLY_DMA_DMS_IDMA_AUTHORITY_AND_STAGE_PLAN_2026-09-27.md`
+
+Authority commit:
+`9af2868f5390e5778f096531f32ac3f7cf5a276e`
+
+Binding execution order:
+- Stage 0: RW + static anchor + BMA + TVP + canonical DMA + canonical DMS.
+- Stage 1: authority-supported forgetting-factor variants with nested/prequential selection only.
+- Stage 2: DOW-DMA / DOW-DMS.
+- Stage 3: IDMA (log-PL objective, forecast-error objective, predictor-selection ablation, forgetting-factor-calibration ablation).
+- Stage 4: DEV-only family freeze.
+- Stage 5: 2025/2026 reporting-only and global cross-family comparison.
+
+Canonical gold-DMA settings:
+- alpha=0.99;
+- lambda=0.99;
+- equal/non-informative initial model probabilities;
+- diffuse initial state;
+- 256 subset models from the frozen 8 origin-safe predictors;
+- Gold-only canonical target in the first pass.
+
+No production DMA-family result is authoritative before Stage 0 chronology/probability/scientific gates pass.
