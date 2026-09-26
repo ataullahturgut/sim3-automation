@@ -49,6 +49,10 @@ def run(root):
  '| Ay | Gerçek | Tahmin | Mutlak hata | Gerçek yön | Tahmin yön |','|---|---:|---:|---:|---|---|']
  direction=lambda x:'↑' if x>0 else '↓' if x<0 else '→'
  for r in d['stress_2026']['rows']:lines.append(f"| {r['target']} | {r['actual']:.4f} | {r['forecast']:.4f} | {abs(r['actual']-r['forecast']):.4f} | {direction(r['actual']-r['rw'])} | {direction(r['forecast']-r['rw'])} |")
+ import gzip
+ rb=json.loads(gzip.decompress((root/'evidence/rbfnn_stage1/strict_results.json.gz').read_bytes()))['DE_ABC']
+ lines+=['','## Önceki RBFNN liderinin 2026 gerçek ve tahminleri','','DEV ile seçilmiş DE–ABC–RBFNN. Aynı gerçekleşen değerler üzerinde referans olarak sunulur; dış dönem protokolü farkı geçerlidir.','','| Ay | Gerçek | Tahmin | Mutlak hata |','|---|---:|---:|---:|']
+ for r in rb['stress_2026']['rows']:lines.append(f"| {r['target']} | {r['actual']:.4f} | {r['forecast']:.4f} | {abs(r['forecast']-r['actual']):.4f} |")
  lines+=['','## Kontrol ve Uyum Özeti','',
  f"Bağımsız son aritmetik denetim **PASS**: {verification['model_specifications']} model, {verification['model_period_checks']} model-dönem ve {verification['ensemble_period_checks']} ensemble-dönem kontrolü. Her modelin hedef/gerçek/RW değerleri RBFNN referansıyla eşleşti. Model özetleri ham aylık tahminlerden yeniden hesaplandı.",'',
  'Yoğun kovaryans oraklıyla posterior ortalama/varyans/olabilirlik, gerçek çıktılar arası etkileşim, bağımsız çıktı limiti, hedef/gelecek etiketlerine değişmezlik ve ensemble geçmişe bağlılığı sınandı. Bilimsel kapılar: sonlu getiri ve varyans, |log getiri|<1, pozitif gözlem varyansı, Cholesky başarısı ve koşul sayısı üst sınırı≤1e12. Başarısız aylar gizlenerek alt küme sıralaması yapılmaz. Veritabanı salt okunur tutuldu, önce/sonra değişmezleri eşleşti.','',
