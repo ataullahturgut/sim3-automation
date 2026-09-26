@@ -1,0 +1,37 @@
+name: Gold Monthly ANFIS Stage 3 Refinements
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/vw_midas_anfis_stage3_refinements_v1.py
+      - .github/workflows/gold-monthly-anfis-stage3-refinements.yml
+permissions:
+  contents: read
+jobs:
+  refinement:
+    strategy:
+      fail-fast: false
+      max-parallel: 9
+      matrix:
+        method: [ADAPTIVE_PSO, ADAPTIVE_TLBO, TLBO_TUNED_PSO, DE_TUNED_PSO, ADAPTIVE_CROW, PSO_TLBO_HYBRID, MPA_SCA, MPA_GA, MPA_CPA]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn scipy
+      - run: python -m py_compile gold_axis_2026/tools/vw_midas_anfis_stage3_refinements_v1.py
+      - name: Run
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_anfis_stage3_refinements_v1.py --method ${{ matrix.method }}
+      - name: Scientific gate
+        run: python -c "import json,glob,math; r=json.load(open(glob.glob('anfis_stage3_*_result.json')[0])); z=r['dev']['rows']+r['transport_2025']['rows']+r['stress_2026']['rows']; assert len(z)==52 and all(math.isfinite(x['forecast']) and abs(x['pred_log_return_gold'])<1 for x in z); print('SCIENTIFIC_GATE=PASS')"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: anfis-stage3-${{ matrix.method }}
+          path: anfis_stage3_*_result.json
+          if-no-files-found: error
