@@ -40,7 +40,7 @@ def run():
  authority=root/'GOLD_MONTHLY_GPR_STAGE3C_AUTHORITY_2026-09-26.md';assert authority.exists()
  e.tune=tune;e.forecast=forecast;b=e.r.base.load_data(os.environ['NEON_DATABASE_URL']);start=time.time()
  d={'method':METHOD,'stage':'3C','model_id':'GPR_LMC2_V1','run_id':os.getenv('GITHUB_RUN_ID'),'commit':os.getenv('GITHUB_SHA'),
- 'authority_document_sha256':hashlib.sha256(authority.read_bytes()).hexdigest(),
+ 'authority_document_sha256':hashlib.sha256(authority.read_bytes()).hexdigest(),'stage3ab_closure_sha256':hashlib.sha256(closure.read_bytes()).hexdigest(),
  'spec':{'outputs':4,'bounds':[l.LOW.tolist(),l.HIGH.tolist()],'posterior':'exact dense LMC sum of two separable kernels','kernels':['ARD_RBF','ARD_M32'],'task_covariances':'two learned full-rank PSD Cholesky factors','parameters':40,'optimizer':'L-BFGS-B with exact analytic NLL gradient','repeats':3,'maxiter':60,'maxfun':1600,'prior_strength':1.,'condition_upper_bound_limit':1e12,'jitter':e.gp.JITTER},
  'authority':{'selection':'DEV_ONLY','database':'READ_ONLY','2025':'REPORT_ONLY','2026':'REPORT_ONLY','random_split':False,'source_checks':b.source_checks,'invariants_before':b.invariants_before}}
  path=Path('gpr_lmc2_rbf_m32_result.json');d['dev']=e.evaluate(b,METHOD,'2022-04','2024-12');d['dev_decision_frozen_before_external']='ELIGIBLE' if d['dev']['scientific_gate']=='PASS' else 'REJECTED_SCIENTIFIC_FAILURE'
