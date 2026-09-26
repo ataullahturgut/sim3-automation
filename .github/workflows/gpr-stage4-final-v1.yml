@@ -1,0 +1,37 @@
+name: GPR Frozen Ensembles and Final Audit V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/GOLD_MONTHLY_GPR_STAGE4_POOL_FREEZE_2026-09-26.json
+      - .github/workflows/gpr-stage4-final-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+jobs:
+  final-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy==2.3.5 scipy==1.17.0 psycopg[binary] scikit-learn
+      - name: Technical chronology and numerical contract checks
+        run: python gold_axis_2026/tools/test_gpr_prequential_v1.py
+      - name: Evaluate previously frozen pools
+        run: python gold_axis_2026/tools/gpr_stage4_v1.py evaluate gold_axis_2026 gold_axis_2026/GOLD_MONTHLY_GPR_STAGE4_POOL_FREEZE_2026-09-26.json --out gold_axis_2026/GOLD_MONTHLY_GPR_STAGE4_RESULT_2026-09-26.json
+      - name: Recompute and freeze cross-family evidence
+        run: python gold_axis_2026/tools/gpr_final_audit_v1.py gold_axis_2026
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gpr-stage4-final-audit
+          path: |
+            gold_axis_2026/GOLD_MONTHLY_GPR_STAGE4_RESULT_2026-09-26.json
+            gold_axis_2026/GOLD_MONTHLY_GPR_FINAL_FREEZE_2026-09-26.*
+          if-no-files-found: error
