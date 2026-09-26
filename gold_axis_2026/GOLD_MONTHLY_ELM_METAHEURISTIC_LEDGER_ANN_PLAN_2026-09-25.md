@@ -2176,3 +2176,17 @@ Run **36256830372**, commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; shared f
 | SMA | 108447551196 | 10911516015 | 1568.1653 | 19/33 | 1061.1819 / 9/12 | 1741.0975 / 4/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
 
 Independent audit: coverage, recomputed metrics, freeze hash, chronology, numerical diagnostics and DB invariant equality. 2025/2026 reporting only. No Stage-2 parent selection yet. Next: Stage 1.6.
+
+
+### RBFNN Stage 1.6 — COMPLETE / AUDITED
+
+Run **36256830372**, commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; shared frozen script/workflow/specification in §16.9.
+
+| Model | Job | Artifact | DEV ΣAE | DEV direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Gate / decision |
+|---|---|---|---:|---:|---|---|---|
+| GOA | 108447881974 | 10911147860 | 1492.8771 | 20/33 | 1001.7465 / 10/12 | 1509.2009 / 5/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+| ALO | 108447881981 | 10911590599 | 1597.3649 | 19/33 | 1125.6221 / 9/12 | 1695.0873 / 6/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+| TLBO | 108447881998 | 10911427101 | 1525.7861 | 19/33 | 1219.1781 / 8/12 | 1849.1663 / 3/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+| JAYA | 108447881948 | 10910813059 | 1460.7401 | 21/33 | 1189.3143 / 9/12 | 1703.0444 / 5/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+
+Independent audit: coverage, recomputed metrics, freeze hash, chronology, numerical diagnostics and DB invariant equality. 2025/2026 reporting only. No Stage-2 parent selection yet. Next: Stage 1.7.
