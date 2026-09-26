@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
-> **Current checkpoint — 2026-09-26: N2 GPR Stage0–2 COMPLETE; Stage3A COMPLETE, run36266015124; Stage3B MPA_SCA next; frozen price MULTISWARM1606.7414/23, direction FA_FPA1724.6532/25. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
+> **Current checkpoint — 2026-09-26: N2 GPR Stage0–2 COMPLETE; Stage3A COMPLETE, run36266015124; Stage3B MPA_SCA RUNNING, run36268484542; frozen price MULTISWARM1606.7414/23, direction FA_FPA1724.6532/25. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
 
 
 **Date:** 2026-09-25  
@@ -2592,3 +2592,8 @@ Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, posi
 Run36266015124, execution commit47480bf7dc77d5e86437ace1f11bce7490baefe5; all six jobs succeeded and all DEV/external gates PASS. Lowest refinement DEV ΣAE ADAPTIVE_CROW1724.288839, direction19/33. None beats Stage1 MULTISWARM1606.741381/23. Exact monthly evidence and all job/artifact IDs in evidence/gpr_stage3 and Stage3 report. Closure file checks all6 and original parent-freeze hashes.
 
 Kontrol ve Uyum Özeti: DEV-only PASS; chronological inner tuning and external hyperparameter freeze PASS; DB READ_ONLY/invariants equal; no target/future use; no score-driven rescue. Next: admitted MPA_SCA only, after this closure commit.
+
+
+### GPR Stage3B MPA_SCA — RUNNING
+
+Run36268484542, activation commit0bee31b199a419059bbab9570e3e07e1d27d7af7 follows Stage3A closure commit111899e4ed9e2a55ebe5a94a7a62b4ecf0ecd0a1. Single eligible pair from Stage2; same22-dimensional ICM objective, pop24, generations45, repeats3. Incumbent/MPA/SCA proposals compete by training NLL; chronological top-quartile validation retention and survivor shares recorded. No new pair selected from external results.
