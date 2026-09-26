@@ -2550,3 +2550,23 @@ Run 36266015124; job 108473163912; artifact 10914384584; execution commit `47480
 Decision: DEV-only candidate; final role awaits all Stage3 methods. External results reporting only.
 
 Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, positive uncertainty and numerical gates PASS for accepted rows; DB READ_ONLY/invariants equal; no random split; incomplete scientific periods not ranked.
+
+
+### GPR Stage 3A — PSO_TLBO / AUDITED
+
+Run 36266015124; job 108475710588; artifact 10914825981; execution commit `47480bf7dc77d5e86437ace1f11bce7490baefe5`. Full per-origin parameters, optimizer bounds/source hashes, termination, exact posterior diagnostics and repeat selection remain in raw archive.
+
+| Period | ΣAE | Direction | Gate |
+|---|---:|---:|---|
+| dev | 1815.3287 | 21/33 | PASS |
+| transport_2025 | 1240.6596 | 9/12 | PASS |
+| stress_2026 | 1564.8887 | 5/7 | PASS |
+
+Decision: DEV-only candidate; final role awaits all Stage3 methods. External results reporting only.
+
+Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, positive uncertainty and numerical gates PASS for accepted rows; DB READ_ONLY/invariants equal; no random split; incomplete scientific periods not ranked.
+
+
+### Final reporting identity rule — frozen before ensembles
+
+Numerically identical DEV prediction paths (absolute tolerance1e-8 USD, same target months) are aliases, not independent challengers. Cross-family Pareto output deduplicates aliases while recording their mapping; balanced-challenger role excludes aliases of the primary. This prevents e.g. simple-average and alpha0 names from being presented as two independent models. No scores or candidate predictions are changed.

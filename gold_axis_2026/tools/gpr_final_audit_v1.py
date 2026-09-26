@@ -23,7 +23,11 @@ def run(root):
     frontier=[n for n,m in merged.items() if not any(dominates(z,m) for k,z in merged.items() if k!=n)]
     primary=ens if dominates(ensm[ens],sm[single]) else single
     direction=min(merged,key=lambda n:(-merged[n]['direction_correct'],merged[n]['sum_abs_error']))
-    balanced_candidates=[n for n in merged if n!=primary and merged[n]['direction_correct']>=23]
+    def same_predictions(d,e):
+        x,y=d['dev']['rows'],e['dev']['rows']
+        return [r['target'] for r in x]==[r['target'] for r in y] and np.allclose([r['forecast'] for r in x],[r['forecast'] for r in y],rtol=0,atol=1e-8)
+    combined_models={**valid,**em}
+    balanced_candidates=[n for n in merged if not same_predictions(combined_models[n],combined_models[primary]) and merged[n]['direction_correct']>=23]
     balanced=min(balanced_candidates,key=lambda n:merged[n]['sum_abs_error']) if balanced_candidates else 'NOT_SUPPORTED'
     hybrid_names=[n for n in valid if n in ('DE_ABC','FA_FPA','MULTISWARM','PSO_TLBO') or n.startswith('MPA_')]
     hybrid=min(hybrid_names,key=lambda n:sm[n]['sum_abs_error']) if hybrid_names else 'NONE_SCIENTIFIC_PASS'
@@ -51,15 +55,19 @@ def run(root):
         for p in ['transport_2025','stress_2026']:
             summary[n][p]=s4.metrics(d[p]['rows']) if len(d[p]['rows'])==({'transport_2025':12,'stress_2026':7}[p]) else {'status':'INCOMPLETE_SCIENTIFIC_FAILURE'}
     global_frontier=[n for n,z in summary.items() if not any(dominates(v['dev'],z['dev']) for k,v in summary.items() if k!=n)]
-    if hybrid==single:
-        global_frontier=[n for n in global_frontier if n!='GPR_BEST_HYBRID_'+hybrid]
+    aliases={};unique=[]
+    for n in global_frontier:
+        same=next((k for k in unique if same_predictions(cross[n],cross[k])),None)
+        if same:aliases[n]=same
+        else:unique.append(n)
+    global_frontier=unique
     out={'status':'COMPLETE','selection':'DEV_ONLY','primary':primary,'single_leader':single,'stage3_leader':refine,
       'run_id':ensemble['run_id'],'commit':ensemble['commit'],'pool_freeze_sha256':ensemble['pool_freeze_sha256'],
       'direction_specialist':direction,'ensemble_leader':ens,
-      'balanced_challenger':balanced,'balanced_policy':'lowest DEV ΣAE excluding primary, requiring at least 23/33 directions; benchmark role, not automatic promotion',
+      'balanced_challenger':balanced,'balanced_policy':'lowest DEV ΣAE excluding the primary prediction path and identical aliases, requiring at least 23/33 directions; benchmark role, not automatic promotion',
       'hybrid_leader':hybrid,
       'ensemble_decision':'PROMOTED_DEV_DOMINANCE' if primary==ens else 'BENCHMARK_NOT_PRIMARY',
-      'gpr_frontier':frontier,'cross_family_frontier':global_frontier,'cross_family_metrics':summary,
+      'gpr_frontier':frontier,'cross_family_frontier':global_frontier,'cross_family_frontier_aliases':aliases,'cross_family_metrics':summary,
       'refinement_metrics':{n:sm[n] for n in refinements},'ensemble_metrics':ensm,
       'limitations':['n=33 DEV and many model comparisons: point-estimate selection, not statistical superiority',
         'GP posterior intervals ignore hyperparameter uncertainty; coverage and NLPD reported without external calibration',
