@@ -1,5 +1,8 @@
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
+> **Current checkpoint — 2026-09-26: RBFNN Stage 0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
+
+
 **Date:** 2026-09-25  
 **Repository:** ataullahturgut/sim3-automation  
 **Research branch:** gold-midas-headswap-v1-20260925  
@@ -2054,9 +2057,9 @@ They may be retained for implementation debugging and later reproducibility chec
 - must not be treated as final Stage-3 evidence unless rerun or formally revalidated after the Stage-2 parent freeze;
 - must not alter Stage-1 ordering.
 
-#### Binding next action
+#### Historical binding next action — completed
 
-The next authoritative step is:
+This architecture-freeze instruction is superseded by the completed RBFNN Stage 0–5 entries below. Its first step was:
 **RBFNN Stage 1.1 — PSO-RBFNN + GA-RBFNN + DE-RBFNN**.
 
 Proceed sequentially through Stage 1 batches, then Stage 2, then Stage 3A/3B/3C, then Stage 4, then Stage 5.
@@ -2275,3 +2278,21 @@ FULL = Vanilla, DE-ABC, Salp, Adaptive Crow. REDUCED = Vanilla, DE-ABC. Roles: V
 Predeclared evaluation: simple average, median, inverse prior-MAE; simplex ΣAE minimization w>=0/sum=1; equal weights for first six DEV months; alpha [0,.1,.25,.5,.75,1] separately for both pools. Full-DEV simplex DIAGNOSTIC ONLY. External weights frozen at DEV end; no external loss updates. Canonical Vanilla retains fixed non-tuned origin-only k-means; Stage1/3 optimized geometries/tuning freeze 2024-12.
 
 Stage-4/5 script and workflow: `tools/rbfnn_stage4_v1.py`, `tools/rbfnn_final_audit_v1.py`, `.github/workflows/rbfnn-stage4-final-v1.yml`. Technical future-forecast/label invariance and simplex fixture PASS. Next: compute honest prequential ensembles, then cross-family final audit.
+
+
+### RBFNN Stage 4/5 — COMPLETE / FINAL FAMILY FREEZE
+
+Run **36259902967**, job **108453610546**, artifact **10911484644**, commit **77083ec589ce6e8e9626cd20ae72ed4d95543913**. The commit froze FULL/REDUCED pools before any ensemble outcomes. Workflow `.github/workflows/rbfnn-stage4-final-v1.yml`; scripts `tools/rbfnn_stage4_v1.py`, `tools/rbfnn_final_audit_v1.py`; independent verification `tools/rbfnn_independent_final_verification.py`. All 18 ensemble variants evaluated on prequential DEV, plus reporting-only external periods.
+
+- FULL Median leads ensembles: **ΣAE 1444.3008 / 22 directions**; BENCHMARK_NOT_PRIMARY.
+- FULL shrinkage alpha **0.75**: **1449.3304 / 21**. REDUCED alpha **1.00**: **1450.6011 / 23**. Both selected only on prequential DEV.
+- Full-DEV fitted FULL simplex **1402.2173** is **DIAGNOSTIC ONLY**. Honest prequential FULL simplex is **1450.5469 / 22**; no in-sample promotion.
+- RBFNN primary / direction specialist / best hybrid: **DE-ABC**, **1415.8371 / 25**. Balanced challenger: **Salp**, **1426.6878 / 23**, benchmark role. Best mandatory refinement: Adaptive Crow **1455.8616 / 21**.
+- ChHHO-ANFIS remains price leader **1413.0298 / 23**. DE-ABC adds two correct directions at +2.80735 cumulative price error. Distinct global Pareto: **ChHHO-ANFIS and DE-ABC-RBFNN**. Other-family references recomputed from their original monthly artifacts with run/job/artifact/commit provenance.
+- DE-ABC external reports: 2025 **1145.3733 / 9 of 12**; 2026 Jan–Jul **1932.7022 / 4 of 7**. These never controlled selection. Historical family external protocols differ, so their displayed results are not a controlled external ranking.
+
+Final report: `GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md` and artifact JSON. Stage-4 JSON retains all monthly forecasts, yearly metrics, fitted/prequential weights, shrinkage alternatives and leave-one-component-out diagnostics. Final verification JSON audits 41 specifications and 54 ensemble-period predictions/metrics, plus source hashes and numerical diagnostics. DE-ABC max DEV condition 312.8473; worst AE 155.5631; leave-one-origin comparison reverses the ChHHO price ranking in 15/33 omissions. Small n=33 and many comparisons do not establish statistical superiority. Independent full-prediction repeat robustness and historical Regularized occupancy proof remain **NOT_PROVEN**.
+
+**KONTROL VE UYUM ÖZETİ:** DEV-only selection PASS; 2025 exclusion PASS; 2026 exclusion PASS; random split NONE; origin/target/future-label leakage checks PASS; DB READ_ONLY and unchanged invariants PASS; scientific gates PASS for all 39 new specifications; historical limitations explicitly NOT_PROVEN; manifest/ledger updated. The Stage-1 external-tuning correction remains explicit: superseded external values are not authoritative, DEV hashes unchanged.
+
+RBFNN Stage 0–5 **COMPLETE/FROZEN**. No automatic expansion to another family. Next monthly roadmap action is governed **N2 Gaussian Processes**, outside this RBFNN task.

@@ -1,0 +1,304 @@
+{
+  "artifact_id": 10911484644,
+  "ensemble_period_metric_prediction_checks": 54,
+  "execution_commit": "77083ec589ce6e8e9626cd20ae72ed4d95543913",
+  "job_id": 108453610546,
+  "models_audited": 41,
+  "new_model_artifacts_fully_audited": 39,
+  "notes": [
+    "DE_ABC and BEST_HYBRID_DE_ABC are the same model under two reporting roles; distinct global frontier has two models",
+    "Regularized baseline full occupancy evidence NOT_PROVEN; no unnecessary baseline rerun",
+    "41 specifications include two historical baseline audits, not two new baseline runs"
+  ],
+  "numerical_diagnostics": {
+    "ABC": {
+      "dev_condition_max": 186.1862709352947,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 11.437504018901336,
+      "dev_width_min": 0.7669435380486561,
+      "initial_occupancy": "PASS"
+    },
+    "ACO": {
+      "dev_condition_max": 219.22754476429046,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 12.456623450041977,
+      "dev_width_min": 0.7213835309282374,
+      "initial_occupancy": "PASS"
+    },
+    "ADAPTIVE_CROW": {
+      "dev_condition_max": 316.44142992351095,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 11.016776333387014,
+      "dev_width_min": 0.7166196580300708,
+      "initial_occupancy": "PASS"
+    },
+    "ADAPTIVE_PSO": {
+      "dev_condition_max": 307.3120602461655,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 10.613906975543092,
+      "dev_width_min": 0.7285695527843287,
+      "initial_occupancy": "PASS"
+    },
+    "ADAPTIVE_TLBO": {
+      "dev_condition_max": 6092.147509056818,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 15.512584377877193,
+      "dev_width_min": 0.8423243735048884,
+      "initial_occupancy": "PASS"
+    },
+    "ALO": {
+      "dev_condition_max": 387.9640620673254,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 20.038103059740436,
+      "dev_width_min": 0.7285916295510089,
+      "initial_occupancy": "PASS"
+    },
+    "AOA": {
+      "dev_condition_max": 872.9365338783582,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 15.623071923118458,
+      "dev_width_min": 0.8383360418145125,
+      "initial_occupancy": "PASS"
+    },
+    "BAT": {
+      "dev_condition_max": 230.92998501322074,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 19.73315832113954,
+      "dev_width_min": 0.8045804691349967,
+      "initial_occupancy": "PASS"
+    },
+    "CHOA": {
+      "dev_condition_max": 479.48271514119494,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 10.613906975543092,
+      "dev_width_min": 0.8603859153752899,
+      "initial_occupancy": "PASS"
+    },
+    "CPA": {
+      "dev_condition_max": 1031.9577575190692,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 13.247823964085812,
+      "dev_width_min": 0.8431588950315214,
+      "initial_occupancy": "PASS"
+    },
+    "CROW": {
+      "dev_condition_max": 220.56904568884678,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 10.238693839686478,
+      "dev_width_min": 0.7627537567035961,
+      "initial_occupancy": "PASS"
+    },
+    "CS": {
+      "dev_condition_max": 247.41431969977137,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 13.376359492803893,
+      "dev_width_min": 0.7519785730827335,
+      "initial_occupancy": "PASS"
+    },
+    "DE": {
+      "dev_condition_max": 260.29194361911783,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 20.58717842266988,
+      "dev_width_min": 0.7535535148734168,
+      "initial_occupancy": "PASS"
+    },
+    "DE_ABC": {
+      "dev_condition_max": 312.8473129604579,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 20.20094547936882,
+      "dev_width_min": 0.6548173729708879,
+      "initial_occupancy": "PASS"
+    },
+    "DE_TUNED_PSO": {
+      "dev_condition_max": 1523.4375127626138,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 13.099209397571444,
+      "dev_width_min": 0.7263726478814841,
+      "initial_occupancy": "PASS"
+    },
+    "FA": {
+      "dev_condition_max": 245.9112524435225,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 14.606753922871514,
+      "dev_width_min": 0.8069457483061366,
+      "initial_occupancy": "PASS"
+    },
+    "FA_FPA": {
+      "dev_condition_max": 278.7572402971226,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 20.58717842266988,
+      "dev_width_min": 0.7689034127428298,
+      "initial_occupancy": "PASS"
+    },
+    "FPA": {
+      "dev_condition_max": 409.9618593336984,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 20.58717842266988,
+      "dev_width_min": 0.7346411083878941,
+      "initial_occupancy": "PASS"
+    },
+    "GA": {
+      "dev_condition_max": 190.6171576762907,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 13.642231424314295,
+      "dev_width_min": 0.798138376760953,
+      "initial_occupancy": "PASS"
+    },
+    "GOA": {
+      "dev_condition_max": 358.2590400605346,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 17.591685719417637,
+      "dev_width_min": 0.6553512183917275,
+      "initial_occupancy": "PASS"
+    },
+    "GWO": {
+      "dev_condition_max": 304.23489035159656,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 20.58717842266988,
+      "dev_width_min": 0.8348692140720365,
+      "initial_occupancy": "PASS"
+    },
+    "HGS": {
+      "dev_condition_max": 488.07477876883195,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 20.11132062239962,
+      "dev_width_min": 0.7263726478814841,
+      "initial_occupancy": "PASS"
+    },
+    "HGSO": {
+      "dev_condition_max": 299.08765415346124,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 17.842289606425688,
+      "dev_width_min": 0.8097576736777675,
+      "initial_occupancy": "PASS"
+    },
+    "HHO": {
+      "dev_condition_max": 405.6285403992762,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 15.70691502936711,
+      "dev_width_min": 0.733096334057754,
+      "initial_occupancy": "PASS"
+    },
+    "JAYA": {
+      "dev_condition_max": 268.02536350434434,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 13.298707004567616,
+      "dev_width_min": 0.7210275915324803,
+      "initial_occupancy": "PASS"
+    },
+    "KRILL": {
+      "dev_condition_max": 514.6800226255617,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 13.46079291504849,
+      "dev_width_min": 0.8031621033869045,
+      "initial_occupancy": "PASS"
+    },
+    "MFO": {
+      "dev_condition_max": 2463.6273176835384,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 18.286799159034206,
+      "dev_width_min": 0.7213835309282375,
+      "initial_occupancy": "PASS"
+    },
+    "MOLS_RBFNN": {
+      "dev_condition_max": 2761.6481401879423,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 6.929984641881055,
+      "dev_width_min": 1.712349307929194,
+      "initial_occupancy": "PASS"
+    },
+    "MPA": {
+      "dev_condition_max": 4963.855858879686,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 20.038103059740436,
+      "dev_width_min": 0.753923425771671,
+      "initial_occupancy": "PASS"
+    },
+    "MULTISWARM": {
+      "dev_condition_max": 309.1737661894199,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 11.989473504091976,
+      "dev_width_min": 0.67441525049035,
+      "initial_occupancy": "PASS"
+    },
+    "PSO": {
+      "dev_condition_max": 198.13909196905675,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 14.632154968632056,
+      "dev_width_min": 0.7263726478814841,
+      "initial_occupancy": "PASS"
+    },
+    "PSO_TLBO": {
+      "dev_condition_max": 878.8907669406622,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 20.4891464851002,
+      "dev_width_min": 0.7297244596543104,
+      "initial_occupancy": "PASS"
+    },
+    "REGULARIZED": {
+      "dev_condition_max": "NOT_PROVEN",
+      "dev_scientific_gate": "HISTORICAL_GATE_SEE_STAGE0",
+      "dev_width_max": "NOT_PROVEN",
+      "dev_width_min": "NOT_PROVEN",
+      "initial_occupancy": "NOT_PROVEN"
+    },
+    "SALP": {
+      "dev_condition_max": 241.0406205289224,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 9.45384238195635,
+      "dev_width_min": 0.8354971751631362,
+      "initial_occupancy": "PASS"
+    },
+    "SCA": {
+      "dev_condition_max": 401.3722407084712,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 20.20094547936882,
+      "dev_width_min": 0.7728902780450136,
+      "initial_occupancy": "PASS"
+    },
+    "SMA": {
+      "dev_condition_max": 223.92481549812115,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 12.554730885464352,
+      "dev_width_min": 0.8216693999926149,
+      "initial_occupancy": "PASS"
+    },
+    "SSA": {
+      "dev_condition_max": 184.35629662864537,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 14.148613858412142,
+      "dev_width_min": 0.7747733052741489,
+      "initial_occupancy": "PASS"
+    },
+    "TLBO": {
+      "dev_condition_max": 328.51227283410503,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 17.45638444052127,
+      "dev_width_min": 0.7999253360776506,
+      "initial_occupancy": "PASS"
+    },
+    "TLBO_TUNED_PSO": {
+      "dev_condition_max": 2917.345378519734,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 16.023999175474614,
+      "dev_width_min": 0.7068968356674472,
+      "initial_occupancy": "PASS"
+    },
+    "VANILLA": {
+      "dev_condition_max": 24.367006806982502,
+      "dev_scientific_gate": "HISTORICAL_GATE_SEE_STAGE0",
+      "dev_width_max": 5.0026213858938196,
+      "dev_width_min": 1.341910593463231,
+      "initial_occupancy": "PASS"
+    },
+    "WOA": {
+      "dev_condition_max": 600.3393013812147,
+      "dev_scientific_gate": "PASS",
+      "dev_width_max": 17.570471919028122,
+      "dev_width_min": 0.7973913083696635,
+      "initial_occupancy": "PASS"
+    }
+  },
+  "run_id": "36259902967",
+  "status": "PASS"
+}

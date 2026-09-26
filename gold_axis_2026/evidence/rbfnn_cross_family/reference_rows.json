@@ -3997,18 +3997,26 @@
   "provenance": {
     "ANN": {
       "artifact": 10865332283,
+      "commit": "e3f70658dddd0fda3d4fbfaa3f48a68e6699c4ce",
+      "job": 108077439583,
       "run": 36137025884
     },
     "AOA_ELM": {
       "artifact": 10852588518,
+      "commit": "1b42cb5cb2ab7cd4933127f64ad531d8fb6e9548",
+      "job": 107992641543,
       "run": 36110496580
     },
     "ChHHO_ANFIS": {
       "artifact": 10909726528,
+      "commit": "04b77587b0cf079dbe1286673d7d0859b3cdd00a",
+      "job": 108431053726,
       "run": 36251783712
     },
     "SMA_ELMFIS": {
       "artifact": 10880198251,
+      "commit": "76cb6e745844246a6a11041554c05679abfaa005",
+      "job": 108197288393,
       "run": 36173141852
     }
   }
