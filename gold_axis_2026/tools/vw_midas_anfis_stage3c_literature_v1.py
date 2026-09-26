@@ -57,7 +57,7 @@ def mvo_phase(X,Y,seed,generations,center,Xv,Yv):
                 if rng.random()<norm[i]:
                     donor=int(rng.choice(POP,p=(norm+1e-9)/(norm.sum()+1e-9*POP))); NP[i,j]=P[donor,j]
                 if rng.random()<WEP:
-                    step=TDR*((HI-LO)*rng.random()+LO)
+                    step=TDR*((HI[j]-LO[j])*rng.random()+LO[j])
                     NP[i,j]=best[j]+step if rng.random()<.5 else best[j]-step
         NP=np.clip(NP,LO,HI); NF=av6.pop_fit(NP,X,Y)
         imp=NF<F; P[imp]=NP[imp]; F[imp]=NF[imp]
