@@ -13,7 +13,7 @@ GPR şu ana kadar DEV üzerinde RBFNN referansını geçemedi. Model seçimi yal
 
 ## 2026 verideki gerçekler ve tahminler
 
-USD/ons aylık ortalama; mevcut Ocak–Temmuz dönemi. Dış dönem sonuçları model seçimine dahil değildir. Ailelerin dış dönem protokolleri farklıdır; tablo kontrollü üstünlük sıralaması değildir.
+USD/ons aylık ortalama; mevcut Ocak–Temmuz dönemi. Dış dönem sonuçları model seçimine dahil değildir. Bu RBFNN düzeltilmiş sürümü ve GPR, 2024-12 sonrası hiperparametre öğrenmeme kuralına uyar. Dış dönem model seçmez ve istatistiksel üstünlük kanıtlamaz. Daha eski ailelere genişletilen toplu karşılaştırmada protokol uyumsuzlukları ayrıca geçerlidir.
 
 | Ay | Gerçek | DE–ABC–RBFNN | MULTISWARM–GPR |
 |---|---:|---:|---:|

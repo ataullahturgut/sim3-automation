@@ -2495,3 +2495,8 @@ Run 36266015124; job 108470702244; artifact 10913299773; execution commit `47480
 Decision: DEV-only candidate; final role awaits all Stage3 methods. External results reporting only.
 
 Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, positive uncertainty and numerical gates PASS for accepted rows; DB READ_ONLY/invariants equal; no random split; incomplete scientific periods not ranked.
+
+
+### GPR reporting clarification — strict RBFNN external reference
+
+The RBFNN DE_ABC comparison uses `strict_results.json.gz`, whose external_lineage records tuning_last2024-12 and expanding analytic output refit only (run36257615727, commit540a138ba1d5f71ed1577be76196c9191f897bb6). GPR uses the same no-external-hyperparameter-learning cutoff. Earlier blanket protocol-difference wording is narrowed to the older pre-RBF family references. External performance remains reporting only for all families; no selection changes.

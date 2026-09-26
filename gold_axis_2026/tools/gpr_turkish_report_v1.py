@@ -43,7 +43,7 @@ def run(root):
  lines+=['','## Önceki ailelerle DEV karşılaştırması','','| Model | ΣAE | Yön | MAE | RMSE |','|---|---:|---:|---:|---:|']
  for n,z in sorted(final['cross_family_metrics'].items(),key=lambda kv:kv[1]['dev']['sum_abs_error']):
   mm=z['dev'];lines.append(f"| {n} | {mm['sum_abs_error']:.4f} | {mm['direction_correct']}/33 | {mm['mae']:.4f} | {mm['rmse']:.4f} |")
- lines+=['','İki amaçlı DEV Pareto kümesi: '+', '.join(final['cross_family_frontier'])+'. Farklar nokta tahminleridir; 33 aylık ve çok sayıda model denenmiş bir DEV üzerinde istatistiksel üstünlük kanıtı değildir. Önceki ailelerin dış dönem protokolleri farklı olduğundan dış dönem tablosu kontrollü bir üstünlük sıralaması olarak yorumlanmaz.','',
+ lines+=['','İki amaçlı DEV Pareto kümesi: '+', '.join(final['cross_family_frontier'])+'. Farklar nokta tahminleridir; 33 aylık ve çok sayıda model denenmiş bir DEV üzerinde istatistiksel üstünlük kanıtı değildir. Düzeltilmiş RBFNN ve GPR, 2024-12 sonrası hiperparametre öğrenmeme kuralına uyar. Daha eski ailelerin dış dönem protokolleri eşitlenmiş değildir; bütün ailelerin dış dönem tablosu kontrollü bir üstünlük sıralaması olarak yorumlanmaz.','',
  '## Seçilen GPR modelinin 2026 gerçek ve tahminleri','',
  'Birim USD/troy ons; aylık ortalama XAU/USD. Yalnızca mevcut Ocak–Temmuz dönemi gösterilir. Gerçekleşmesi/verisi bulunmayan aylar doldurulmadı. Model 2026 sonuçlarıyla seçilmedi.','',
  '| Ay | Gerçek | Tahmin | Mutlak hata | Gerçek yön | Tahmin yön |','|---|---:|---:|---:|---|---|']
@@ -51,7 +51,7 @@ def run(root):
  for r in d['stress_2026']['rows']:lines.append(f"| {r['target']} | {r['actual']:.4f} | {r['forecast']:.4f} | {abs(r['actual']-r['forecast']):.4f} | {direction(r['actual']-r['rw'])} | {direction(r['forecast']-r['rw'])} |")
  import gzip
  rb=json.loads(gzip.decompress((root/'evidence/rbfnn_stage1/strict_results.json.gz').read_bytes()))['DE_ABC']
- lines+=['','## Önceki RBFNN liderinin 2026 gerçek ve tahminleri','','DEV ile seçilmiş DE–ABC–RBFNN. Aynı gerçekleşen değerler üzerinde referans olarak sunulur; dış dönem protokolü farkı geçerlidir.','','| Ay | Gerçek | Tahmin | Mutlak hata |','|---|---:|---:|---:|']
+ lines+=['','## Önceki RBFNN liderinin 2026 gerçek ve tahminleri','','DEV ile seçilmiş DE–ABC–RBFNN. Aynı gerçekleşen değerler üzerinde, 2024-12 sonrası nonlinear ayar öğrenmeyen düzeltilmiş sürüm referans alınmıştır.','','| Ay | Gerçek | Tahmin | Mutlak hata |','|---|---:|---:|---:|']
  for r in rb['stress_2026']['rows']:lines.append(f"| {r['target']} | {r['actual']:.4f} | {r['forecast']:.4f} | {abs(r['forecast']-r['actual']):.4f} |")
  lines+=['','## Kontrol ve Uyum Özeti','',
  f"Bağımsız son aritmetik denetim **PASS**: {verification['model_specifications']} model, {verification['model_period_checks']} model-dönem ve {verification['ensemble_period_checks']} ensemble-dönem kontrolü. Her modelin hedef/gerçek/RW değerleri RBFNN referansıyla eşleşti. Model özetleri ham aylık tahminlerden yeniden hesaplandı.",'',

@@ -65,7 +65,7 @@ def run(root):
         'GP posterior intervals ignore hyperparameter uncertainty; coverage and NLPD reported without external calibration',
         'optimizer repeat-validation dispersion is available; independent full-prediction repeat robustness is NOT_PROVEN',
         'prequential weighting conditional on a DEV-selected frozen pool; not a nested-independent holdout',
-        'historical cross-family external protocols differ; no external tuning/acceptance or ranking authority'],
+        'Earlier pre-RBF family external protocols are not harmonized; strict RBFNN replay and GPR both freeze nonlinear tuning through2024-12. External results remain reporting only, without selection authority'],
       'next_action':'GPR family frozen; return to governed monthly roadmap N3 Multi-task RFF-BLR; no automatic N3 execution in this task'}
     (root/'GOLD_MONTHLY_GPR_FINAL_FREEZE_2026-09-26.json').write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
     lines=['# GOLD MONTHLY FORECAST — GPR final family freeze and cross-family audit','','Status: COMPLETE. Selection: DEV 2022-04..2024-12 only (33 months).','',
@@ -80,7 +80,7 @@ def run(root):
         for a in s4.ALPHAS:
             m=d['variants'][f'SHRINK_{a:.2f}']['dev']['metrics'];lines.append(f"  - alpha {a:.2f}: prequential ΣAE {m['sum_abs_error']:.4f}, direction {m['direction_correct']}/33.")
     lines+=['','Full monthly forecasts, prequential weight trajectories, all year blocks, worst-month errors and leave-one-component-out diagnostics are in the Stage-4 JSON. No component/pool changed after ensemble evaluation.','',
-      '## Reporting only — no acceptance authority','','Historical family external protocols differ from the strict GPR 2024-12 tuning freeze. These are reported values, not a controlled cross-family external ranking.','',
+      '## Reporting only — no acceptance authority','','Strict RBFNN replay and GPR both freeze nonlinear tuning through2024-12, with expanding analytic conditioning/refit. Earlier pre-RBF family external protocols are not harmonized; the complete table is not a controlled cross-family external ranking. No external result selects a model.','',
       '| Model | 2025 ΣAE | Direction | 2026 Jan–Jul ΣAE | Direction |','|---|---:|---:|---:|---:|']
     for n,z in summary.items():
         t,v=z['transport_2025'],z['stress_2026']
