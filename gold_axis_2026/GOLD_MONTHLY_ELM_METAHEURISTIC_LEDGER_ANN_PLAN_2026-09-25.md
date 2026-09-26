@@ -2217,3 +2217,26 @@ Run **36256830372**, commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; shared f
 | CROW | 108448532720 | 10911875102 | 1538.2158 | 19/33 | 1080.5612 / 8/12 | 1486.2783 / 5/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
 
 Independent audit: coverage, recomputed metrics, freeze hash, chronology, numerical diagnostics and DB invariant equality. 2025/2026 reporting only. No Stage-2 parent selection yet. Next: Stage 1.9.
+
+
+### RBFNN Stage 1.9 — COMPLETE / AUDITED
+
+Run **36256830372**, commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; shared frozen script/workflow/specification in §16.9.
+
+| Model | Job | Artifact | DEV ΣAE | DEV direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Gate / decision |
+|---|---|---|---:|---:|---|---|---|
+| DE_ABC | 108448841547 | 10911447422 | 1415.8371 | 25/33 | 1145.3733 / 9/12 | 1932.7022 / 4/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+| MULTISWARM | 108448841513 | 10911840511 | 1525.8563 | 21/33 | 997.9950 / 9/12 | 1550.5971 / 4/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+
+Independent audit: coverage, recomputed metrics, freeze hash, chronology, numerical diagnostics and DB invariant equality. 2025/2026 reporting only. No Stage-2 parent selection yet. Next: Stage 2 DEV filtering and parent freeze.
+
+
+### RBFNN Stage 1 closure and Stage 2 freeze — COMPLETE
+
+Stage 1: **32/32** complete, scientific gates PASS on DEV. Canonical corrected raw artifacts archived in `evidence/rbfnn_stage1/strict_results.json.gz`; original/strict run and job/artifact provenance in the adjacent JSONs. Strict external run **36257615727**, commit `540a138ba1d5f71ed1577be76196c9191f897bb6`. All 32 corrected artifacts preserve the exact original DEV hash. Original external columns remain SUPERSEDED; the cumulative Stage-1 report contains the authoritative corrected external metrics.
+
+Stage-1 champion: **DE-ABC-RBFNN: DEV ΣAE 1415.8371, direction 25/33**, MAE 42.9042, RMSE 57.9188, relative MAE vs RW 0.80537, monthly wins 22/33. Against ChHHO reference 1413.0298 / 23/33: +2.8073 price loss, +2 correct directions. No claim of statistical superiority.
+
+Stage 2 full audit/freeze: `GOLD_MONTHLY_RBFNN_STAGE2_FREEZE_2026-09-26.md` and companion JSON. Price/direction parent DE-ABC, stability parent Salp, architecture anchor Vanilla, conditional optimizer parent MPA. Stage-3 parent set frozen before any Stage-3 production run. No MPA+SCA/GA/CPA candidate clears the frozen complementarity opening rule. 2025/2026 excluded.
+
+Next: Stage 3A mandatory parity, groups of two: Adaptive PSO + Adaptive TLBO; TLBO-tuned PSO + DE-tuned PSO; Adaptive Crow + PSO-TLBO. Implementation `tools/rbfnn_stage3a_v1.py`; workflow `.github/workflows/rbfnn-stage3a-v1.yml`. Reuses repository refinement mechanics with the frozen 72-parameter RBF interface; exact source hashes, learned outer parameters/bounds/trace are logged per origin. Final population 24, generations 45, repeats 3, analytic output refit, strict pre-2025 external tuning freeze. Technical synthetic interface checks passed for all six. No early N1.3 artifact is promoted or used as parent evidence.

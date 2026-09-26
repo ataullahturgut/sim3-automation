@@ -1,0 +1,839 @@
+{
+  "run": 36257615727,
+  "jobs": [
+    {
+      "id": 108447276517,
+      "name": "report (PSO)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447276642,
+      "name": "report (ABC)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447276681,
+      "name": "report (GWO)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447276701,
+      "name": "report (ACO)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447276722,
+      "name": "report (GA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447276725,
+      "name": "report (HHO)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447276738,
+      "name": "report (WOA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447276742,
+      "name": "report (FA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447276744,
+      "name": "report (MFO)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447276747,
+      "name": "report (SSA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447276760,
+      "name": "report (DE)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447276770,
+      "name": "report (BAT)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447276807,
+      "name": "report (MPA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447276837,
+      "name": "report (FPA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447277667,
+      "name": "report (SMA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447277681,
+      "name": "report (GOA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447277688,
+      "name": "report (ALO)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447277725,
+      "name": "report (FA_FPA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447277755,
+      "name": "report (JAYA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447277757,
+      "name": "report (SCA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447277763,
+      "name": "report (CS)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447277773,
+      "name": "report (SALP)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447277780,
+      "name": "report (TLBO)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447277782,
+      "name": "report (HGS)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447278337,
+      "name": "report (CHOA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447278363,
+      "name": "report (HGSO)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447278439,
+      "name": "report (AOA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447278452,
+      "name": "report (CPA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447278473,
+      "name": "report (CROW)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447278476,
+      "name": "report (KRILL)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447278560,
+      "name": "report (MULTISWARM)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447278588,
+      "name": "report (DE_ABC)",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 10911670618,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTY3MDYxOA==",
+      "name": "rbfnn-strict-HGS",
+      "size_in_bytes": 15219,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911670618",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911670618/zip",
+      "expired": false,
+      "digest": "sha256:d35aba4edb0aa214194ee0524a4fa29b568f7c56f2a9ba5274c7f34e98ae70fc",
+      "created_at": "2026-09-26T17:10:39Z",
+      "updated_at": "2026-09-26T17:10:39Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911635313,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTYzNTMxMw==",
+      "name": "rbfnn-strict-SALP",
+      "size_in_bytes": 15182,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911635313",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911635313/zip",
+      "expired": false,
+      "digest": "sha256:d4fd5e55519bfa645d93bc990bc8a9d2191b74bde2379d0e6ddc59b84a14d725",
+      "created_at": "2026-09-26T17:06:24Z",
+      "updated_at": "2026-09-26T17:06:24Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911576352,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTU3NjM1Mg==",
+      "name": "rbfnn-strict-MULTISWARM",
+      "size_in_bytes": 15204,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911576352",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911576352/zip",
+      "expired": false,
+      "digest": "sha256:75b2fc901f7a17b186c78da8e8469a887aa56ae5c08d5cf8a5b7fa127f972c8c",
+      "created_at": "2026-09-26T17:14:57Z",
+      "updated_at": "2026-09-26T17:14:57Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911575342,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTU3NTM0Mg==",
+      "name": "rbfnn-strict-GWO",
+      "size_in_bytes": 15156,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911575342",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911575342/zip",
+      "expired": false,
+      "digest": "sha256:c820bf4b79784fe6e3854302b308b7c5cd154bfce2b64ba8e1af62c4968e2d5d",
+      "created_at": "2026-09-26T17:03:41Z",
+      "updated_at": "2026-09-26T17:03:41Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911530569,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTUzMDU2OQ==",
+      "name": "rbfnn-strict-WOA",
+      "size_in_bytes": 15203,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911530569",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911530569/zip",
+      "expired": false,
+      "digest": "sha256:08d584060b9c2c2706dd1d35bfe82179897f8081404753c957d537e3ed2a28b1",
+      "created_at": "2026-09-26T17:03:51Z",
+      "updated_at": "2026-09-26T17:03:51Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911451742,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTQ1MTc0Mg==",
+      "name": "rbfnn-strict-ALO",
+      "size_in_bytes": 15247,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911451742",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911451742/zip",
+      "expired": false,
+      "digest": "sha256:e192277f3704114acfb0ad218bd03ade1dba43ab0ae05f0f679ed4bc9d6e469e",
+      "created_at": "2026-09-26T17:07:39Z",
+      "updated_at": "2026-09-26T17:07:39Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911392262,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTM5MjI2Mg==",
+      "name": "rbfnn-strict-TLBO",
+      "size_in_bytes": 15193,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911392262",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911392262/zip",
+      "expired": false,
+      "digest": "sha256:d6967e96390ff9fe18f8a7f749674e710019a629dd10cba1957cbefc60fafc23",
+      "created_at": "2026-09-26T17:08:35Z",
+      "updated_at": "2026-09-26T17:08:35Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911381739,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTM4MTczOQ==",
+      "name": "rbfnn-strict-DE",
+      "size_in_bytes": 15174,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911381739",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911381739/zip",
+      "expired": false,
+      "digest": "sha256:8d5f7b70e64d2b51a6c0de4e6bcb5b45122d6ea3718901fc188fb2509c7c9007",
+      "created_at": "2026-09-26T17:03:14Z",
+      "updated_at": "2026-09-26T17:03:14Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911337338,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTMzNzMzOA==",
+      "name": "rbfnn-strict-SMA",
+      "size_in_bytes": 15225,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911337338",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911337338/zip",
+      "expired": false,
+      "digest": "sha256:eae3177c38729111af73939101e9085af2be79f3c7b4a2d81a5735d51e9d423c",
+      "created_at": "2026-09-26T17:05:39Z",
+      "updated_at": "2026-09-26T17:05:39Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911332162,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTMzMjE2Mg==",
+      "name": "rbfnn-strict-MPA",
+      "size_in_bytes": 15236,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911332162",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911332162/zip",
+      "expired": false,
+      "digest": "sha256:789b6477303a76e8e53853b4a0d43cbfda1d013333dffdb86065af6fbfaeabd6",
+      "created_at": "2026-09-26T17:03:16Z",
+      "updated_at": "2026-09-26T17:03:16Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911282893,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTI4Mjg5Mw==",
+      "name": "rbfnn-strict-DE_ABC",
+      "size_in_bytes": 15314,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911282893",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911282893/zip",
+      "expired": false,
+      "digest": "sha256:150cbed4c5769353d0bdf67ab2426fef9b2e18a06fecf545a096aec8768ff076",
+      "created_at": "2026-09-26T17:14:41Z",
+      "updated_at": "2026-09-26T17:14:41Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911278999,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTI3ODk5OQ==",
+      "name": "rbfnn-strict-AOA",
+      "size_in_bytes": 15157,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911278999",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911278999/zip",
+      "expired": false,
+      "digest": "sha256:85e82b2745d2fd7fd5ee5317ff649072c82089686e6b5897eab0c3ea9804605d",
+      "created_at": "2026-09-26T17:09:57Z",
+      "updated_at": "2026-09-26T17:09:57Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911247377,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTI0NzM3Nw==",
+      "name": "rbfnn-strict-SSA",
+      "size_in_bytes": 15185,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911247377",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911247377/zip",
+      "expired": false,
+      "digest": "sha256:6043c9393ea6542b0e7fb78bd6a6f15eb25ba9c0c1ee290e739a68acad1af657",
+      "created_at": "2026-09-26T17:03:44Z",
+      "updated_at": "2026-09-26T17:03:44Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911233610,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTIzMzYxMA==",
+      "name": "rbfnn-strict-PSO",
+      "size_in_bytes": 15218,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911233610",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911233610/zip",
+      "expired": false,
+      "digest": "sha256:06ecf02089e9ae0d1fcc738e260d40a5608eeac0ae86c82c6dc27f44a43cfa4e",
+      "created_at": "2026-09-26T17:03:14Z",
+      "updated_at": "2026-09-26T17:03:14Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911227582,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTIyNzU4Mg==",
+      "name": "rbfnn-strict-GOA",
+      "size_in_bytes": 15210,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911227582",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911227582/zip",
+      "expired": false,
+      "digest": "sha256:e56d18987aa1f08570ef834244710643173fbafe324db648d557be8a90a947b7",
+      "created_at": "2026-09-26T17:08:46Z",
+      "updated_at": "2026-09-26T17:08:46Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911218831,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTIxODgzMQ==",
+      "name": "rbfnn-strict-CS",
+      "size_in_bytes": 15303,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911218831",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911218831/zip",
+      "expired": false,
+      "digest": "sha256:9dffe049e8de5fe2a158a31757bd7e1e498f907e6b264c0c4121bf1ed0ebcb93",
+      "created_at": "2026-09-26T17:06:37Z",
+      "updated_at": "2026-09-26T17:06:37Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10911002905,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTAwMjkwNQ==",
+      "name": "rbfnn-strict-JAYA",
+      "size_in_bytes": 15240,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911002905",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911002905/zip",
+      "expired": false,
+      "digest": "sha256:d34b2c667f9161dc06ef2d3543341962dc3bb26c8e9a399b090862e3e10c4f59",
+      "created_at": "2026-09-26T17:08:33Z",
+      "updated_at": "2026-09-26T17:08:33Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910874374,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDg3NDM3NA==",
+      "name": "rbfnn-strict-ACO",
+      "size_in_bytes": 15181,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910874374",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910874374/zip",
+      "expired": false,
+      "digest": "sha256:e3bfa5544a3b3b74484ae2b0c98f90fa6151c94f1762f7b7efaa2c6bd9b60b6d",
+      "created_at": "2026-09-26T17:04:09Z",
+      "updated_at": "2026-09-26T17:04:09Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910764574,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDc2NDU3NA==",
+      "name": "rbfnn-strict-FA_FPA",
+      "size_in_bytes": 15196,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910764574",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910764574/zip",
+      "expired": false,
+      "digest": "sha256:2cbff24fe034a50079618158ccd57cffe25ff59a492b333adefbcbb8d4c0509f",
+      "created_at": "2026-09-26T17:04:39Z",
+      "updated_at": "2026-09-26T17:04:39Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910734631,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDczNDYzMQ==",
+      "name": "rbfnn-strict-MFO",
+      "size_in_bytes": 15198,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910734631",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910734631/zip",
+      "expired": false,
+      "digest": "sha256:a3a5c947275c0b638a2f51de97db4ee990388b35565bcebaf82321b9261543c8",
+      "created_at": "2026-09-26T17:04:34Z",
+      "updated_at": "2026-09-26T17:04:34Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910682970,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDY4Mjk3MA==",
+      "name": "rbfnn-strict-HHO",
+      "size_in_bytes": 15313,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910682970",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910682970/zip",
+      "expired": false,
+      "digest": "sha256:4f8b76222b2be28ded3772cf1ebb6bae9ca07632f09b1d24b91772e9b72055ea",
+      "created_at": "2026-09-26T17:04:07Z",
+      "updated_at": "2026-09-26T17:04:07Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910653643,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDY1MzY0Mw==",
+      "name": "rbfnn-strict-CPA",
+      "size_in_bytes": 15264,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910653643",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910653643/zip",
+      "expired": false,
+      "digest": "sha256:361b18f3a011f6bd64a1bc58121fc50d28b743424d2667bad02315a7fa0209a6",
+      "created_at": "2026-09-26T17:12:38Z",
+      "updated_at": "2026-09-26T17:12:38Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910618638,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDYxODYzOA==",
+      "name": "rbfnn-strict-CHOA",
+      "size_in_bytes": 15144,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910618638",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910618638/zip",
+      "expired": false,
+      "digest": "sha256:152221de4904d5f52038a6a3c1c7a6e3deefcd0370ffa306c04f50cbac3790e8",
+      "created_at": "2026-09-26T17:10:50Z",
+      "updated_at": "2026-09-26T17:10:50Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910614860,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDYxNDg2MA==",
+      "name": "rbfnn-strict-FA",
+      "size_in_bytes": 15363,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910614860",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910614860/zip",
+      "expired": false,
+      "digest": "sha256:d6ba469735e06e9ea633443d45aad0320ecea32a2c48ec05d671eabed1961e8e",
+      "created_at": "2026-09-26T17:04:42Z",
+      "updated_at": "2026-09-26T17:04:42Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910594829,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDU5NDgyOQ==",
+      "name": "rbfnn-strict-SCA",
+      "size_in_bytes": 15164,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910594829",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910594829/zip",
+      "expired": false,
+      "digest": "sha256:83b02f793b8de08856fffe7e76824cbe38b7aa2fade3179708ff513428553d42",
+      "created_at": "2026-09-26T17:05:34Z",
+      "updated_at": "2026-09-26T17:05:34Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910539847,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDUzOTg0Nw==",
+      "name": "rbfnn-strict-GA",
+      "size_in_bytes": 15175,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910539847",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910539847/zip",
+      "expired": false,
+      "digest": "sha256:e5217da02562aae4a13b13b09a554d38686047ac6555efddb09a6d100b8bfb04",
+      "created_at": "2026-09-26T17:03:16Z",
+      "updated_at": "2026-09-26T17:03:16Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910533364,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDUzMzM2NA==",
+      "name": "rbfnn-strict-FPA",
+      "size_in_bytes": 15199,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910533364",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910533364/zip",
+      "expired": false,
+      "digest": "sha256:87bcb8c5f63a5a67775121b148a18ac2a467de32c0d73febe7673bfe8be29834",
+      "created_at": "2026-09-26T17:04:35Z",
+      "updated_at": "2026-09-26T17:04:35Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910528687,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDUyODY4Nw==",
+      "name": "rbfnn-strict-HGSO",
+      "size_in_bytes": 15201,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910528687",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910528687/zip",
+      "expired": false,
+      "digest": "sha256:e449a9f6188469040fa315b11159a16070a2914d8c3517e7e1e84f8e6b2df211",
+      "created_at": "2026-09-26T17:10:33Z",
+      "updated_at": "2026-09-26T17:10:33Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910524884,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDUyNDg4NA==",
+      "name": "rbfnn-strict-BAT",
+      "size_in_bytes": 15165,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910524884",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910524884/zip",
+      "expired": false,
+      "digest": "sha256:d14cf73f8ef67768ee9ad495a6ccdbfd20f5d07d395f973dabe516c45a36066a",
+      "created_at": "2026-09-26T17:04:11Z",
+      "updated_at": "2026-09-26T17:04:11Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910483730,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDQ4MzczMA==",
+      "name": "rbfnn-strict-CROW",
+      "size_in_bytes": 15178,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910483730",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910483730/zip",
+      "expired": false,
+      "digest": "sha256:5d36234b8a0f3e083c592d27e3fabf14431d65b70ab383e067d5e97199cd9803",
+      "created_at": "2026-09-26T17:11:54Z",
+      "updated_at": "2026-09-26T17:11:54Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910453835,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDQ1MzgzNQ==",
+      "name": "rbfnn-strict-KRILL",
+      "size_in_bytes": 15239,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910453835",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910453835/zip",
+      "expired": false,
+      "digest": "sha256:0d2f87d888d4fb0212e9546c3a4267f48b584008dabc106ed4cabe9bf9419603",
+      "created_at": "2026-09-26T17:12:18Z",
+      "updated_at": "2026-09-26T17:12:18Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    },
+    {
+      "id": 10910358538,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDM1ODUzOA==",
+      "name": "rbfnn-strict-ABC",
+      "size_in_bytes": 15221,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910358538",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910358538/zip",
+      "expired": false,
+      "digest": "sha256:ce8916eaf068d91674d4b45a5ff09402f3a1998d46970c175d265b7b4b7b8ca9",
+      "created_at": "2026-09-26T17:03:44Z",
+      "updated_at": "2026-09-26T17:03:44Z",
+      "expires_at": "2026-12-25T17:02:45Z",
+      "workflow_run": {
+        "id": 36257615727,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "540a138ba1d5f71ed1577be76196c9191f897bb6"
+      }
+    }
+  ]
+}

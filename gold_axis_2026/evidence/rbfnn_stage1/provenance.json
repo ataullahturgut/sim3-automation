@@ -184,14 +184,14 @@
     {
       "id": 108448841513,
       "name": "batch9 (MULTISWARM)",
-      "status": "in_progress",
-      "conclusion": null
+      "status": "completed",
+      "conclusion": "success"
     },
     {
       "id": 108448841547,
       "name": "batch9 (DE_ABC)",
-      "status": "in_progress",
-      "conclusion": null
+      "status": "completed",
+      "conclusion": "success"
     }
   ],
   "artifacts": [
@@ -206,6 +206,26 @@
       "digest": "sha256:868873df0f9076c1627df8dcb5df3da01d4b74baff39c0f0438b500493f26fd5",
       "created_at": "2026-09-26T17:11:40Z",
       "updated_at": "2026-09-26T17:11:40Z",
+      "expires_at": "2026-12-25T16:49:22Z",
+      "workflow_run": {
+        "id": 36256830372,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "a09559f84075e53f0a38b408bcd6977c99b6e12c"
+      }
+    },
+    {
+      "id": 10911840511,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTg0MDUxMQ==",
+      "name": "rbfnn-stage1-MULTISWARM",
+      "size_in_bytes": 17966,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911840511",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911840511/zip",
+      "expired": false,
+      "digest": "sha256:f7fb47ff449429f8b747a4e51ebe7311e7a4397a92e00dea2b6be64ec1b1b7dd",
+      "created_at": "2026-09-26T17:14:41Z",
+      "updated_at": "2026-09-26T17:14:41Z",
       "expires_at": "2026-12-25T16:49:22Z",
       "workflow_run": {
         "id": 36256830372,
@@ -306,6 +326,26 @@
       "digest": "sha256:b9e6afcd1432de03b499b8d93a20cd2bc14b36b9289db53d131daf5fb306f120",
       "created_at": "2026-09-26T16:52:14Z",
       "updated_at": "2026-09-26T16:52:14Z",
+      "expires_at": "2026-12-25T16:49:22Z",
+      "workflow_run": {
+        "id": 36256830372,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "a09559f84075e53f0a38b408bcd6977c99b6e12c"
+      }
+    },
+    {
+      "id": 10911447422,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTQ0NzQyMg==",
+      "name": "rbfnn-stage1-DE_ABC",
+      "size_in_bytes": 18069,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911447422",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911447422/zip",
+      "expired": false,
+      "digest": "sha256:d1d51434c9ad31f42589886c940ddf0126952ee8a670f32cdf123bcbb9d0863b",
+      "created_at": "2026-09-26T17:14:24Z",
+      "updated_at": "2026-09-26T17:14:24Z",
       "expires_at": "2026-12-25T16:49:22Z",
       "workflow_run": {
         "id": 36256830372,

@@ -1,0 +1,88 @@
+name: RBFNN Stage 3A Parity V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/rbfnn_stage3a_v1.py
+      - .github/workflows/rbfnn-stage3a-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+jobs:
+  refinements1:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        method: [ADAPTIVE_PSO, ADAPTIVE_TLBO]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn
+      - name: Run mandatory refinement with frozen parents
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/rbfnn_stage3a_v1.py --method ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rbfnn-stage3a-${{ matrix.method }}
+          path: rbfnn_stage3a_*_result.json
+          if-no-files-found: error
+  refinements2:
+    needs: refinements1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        method: [TLBO_TUNED_PSO, DE_TUNED_PSO]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn
+      - name: Run mandatory refinement with frozen parents
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/rbfnn_stage3a_v1.py --method ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rbfnn-stage3a-${{ matrix.method }}
+          path: rbfnn_stage3a_*_result.json
+          if-no-files-found: error
+  refinements3:
+    needs: refinements2
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        method: [ADAPTIVE_CROW, PSO_TLBO]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn
+      - name: Run mandatory refinement with frozen parents
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/rbfnn_stage3a_v1.py --method ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rbfnn-stage3a-${{ matrix.method }}
+          path: rbfnn_stage3a_*_result.json
+          if-no-files-found: error
