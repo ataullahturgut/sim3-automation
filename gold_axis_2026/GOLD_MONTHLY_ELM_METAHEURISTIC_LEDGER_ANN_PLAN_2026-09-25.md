@@ -2113,3 +2113,17 @@ Report: `GOLD_MONTHLY_RBFNN_STAGE1_REPORT_2026-09-26.md` (cumulative, no duplica
 | DE | 108445085946 | 10911201564 | 1550.2583 | 18/33 | 1115.9977 / 9/12 | 1665.7461 / 4/7 | SCIENTIFIC PASS; retain for Stage-2 comparison, no parent selected |
 
 GA is the batch price leader (1523.4710); PSO leads batch direction (20/33). None beats ChHHO-ANFIS 1413.0298 / 23/33. No scientific rejection in this batch. Three artifacts independently audited: complete 33/12/7 coverage, metric recomputation, DEV freeze hash, chronological diagnostics, four-output finite return checks and DB invariant equality. External results did not influence acceptance. Next: Stage 1.2 MPA/ABC/SSA/GWO; total completed 3/32.
+
+
+### RBFNN Stage 1.2 — COMPLETE / AUDITED
+
+Run **36256830372**, commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; shared frozen script/workflow/specification in §16.9.
+
+| Model | Job | Artifact | DEV ΣAE | DEV direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Gate / decision |
+|---|---|---|---:|---:|---|---|---|
+| MPA | 108445391910 | 10911490096 | 1510.5118 | 20/33 | 1103.2103 / 8/12 | 1490.3723 / 5/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+| ABC | 108445391970 | 10911316182 | 1558.8168 | 18/33 | 1168.1027 / 8/12 | 1554.4114 / 5/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+| SSA | 108445391918 | 10911116879 | 1559.8246 | 18/33 | 999.5913 / 9/12 | 1561.0808 / 5/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+| GWO | 108445392044 | 10911365910 | 1511.6245 | 22/33 | 1203.3243 / 8/12 | 1661.8822 / 5/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+
+Independent audit: coverage, recomputed metrics, freeze hash, chronology, numerical diagnostics and DB invariant equality. 2025/2026 reporting only. No Stage-2 parent selection yet. Next: Stage 1.3.
