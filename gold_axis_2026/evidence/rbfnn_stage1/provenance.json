@@ -172,12 +172,24 @@
     {
       "id": 108448532738,
       "name": "batch8 (KRILL)",
-      "status": "in_progress",
-      "conclusion": null
+      "status": "completed",
+      "conclusion": "success"
     },
     {
       "id": 108448532745,
       "name": "batch8 (CPA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108448841513,
+      "name": "batch9 (MULTISWARM)",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 108448841547,
+      "name": "batch9 (DE_ABC)",
       "status": "in_progress",
       "conclusion": null
     }

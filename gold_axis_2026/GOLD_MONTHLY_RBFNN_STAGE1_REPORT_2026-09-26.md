@@ -29,12 +29,14 @@ Numerical audit checks all available rows, chronology, full-period coverage, inv
 | DE | 1550.2583 | 18/33 | 46.9775 | 60.5498 | 0.88183 | 17/33 | 146.9444 | PASS |
 | ABC | 1558.8168 | 18/33 | 47.2369 | 60.9410 | 0.88670 | 17/33 | 150.7081 | PASS |
 | SSA | 1559.8246 | 18/33 | 47.2674 | 59.4641 | 0.88727 | 15/33 | 153.1977 | PASS |
+| KRILL | 1560.4829 | 17/33 | 47.2874 | 60.2197 | 0.88765 | 14/33 | 157.6193 | PASS |
 | HGSO | 1564.9802 | 20/33 | 47.4236 | 61.0783 | 0.89020 | 19/33 | 154.1318 | PASS |
 | SMA | 1568.1653 | 19/33 | 47.5202 | 59.9730 | 0.89202 | 16/33 | 144.6313 | PASS |
 | CHOA | 1571.0927 | 20/33 | 47.6089 | 61.2654 | 0.89368 | 18/33 | 148.6535 | PASS |
 | HHO | 1586.1569 | 20/33 | 48.0654 | 60.9390 | 0.90225 | 18/33 | 141.8358 | PASS |
 | ALO | 1597.3649 | 19/33 | 48.4050 | 63.5329 | 0.90863 | 17/33 | 153.4569 | PASS |
 | PSO | 1598.5085 | 20/33 | 48.4397 | 65.2068 | 0.90928 | 18/33 | 167.8131 | PASS |
+| CPA | 1608.6437 | 17/33 | 48.7468 | 60.9102 | 0.91504 | 14/33 | 158.4264 | PASS |
 
 ## External reporting — excluded from selection
 
@@ -47,6 +49,7 @@ Only STRICT_FROZEN rows are authoritative. Original expanding-tuning external ro
 | AOA | 1112.8490 | 10/12 | 1157.9096 | 5/7 |
 | BAT | 1103.4830 | 9/12 | 1426.7382 | 6/7 |
 | CHOA | 1076.1496 | 10/12 | 1578.1525 | 5/7 |
+| CPA | 1006.6045 | 10/12 | 1604.2304 | 5/7 |
 | CROW | 1080.5612 | 8/12 | 1486.2783 | 5/7 |
 | CS | 1026.6605 | 10/12 | 1597.2074 | 5/7 |
 | DE | 1027.8448 | 10/12 | 1441.2427 | 5/7 |
@@ -60,6 +63,7 @@ Only STRICT_FROZEN rows are authoritative. Original expanding-tuning external ro
 | HGSO | 1050.0976 | 9/12 | 1427.1983 | 6/7 |
 | HHO | 1037.4322 | 9/12 | 1588.5282 | 5/7 |
 | JAYA | 1189.3143 | 9/12 | 1703.0444 | 5/7 |
+| KRILL | 1131.2027 | 11/12 | 2052.6335 | 4/7 |
 | MFO | 1045.5957 | 9/12 | 1755.3723 | 5/7 |
 | MPA | 1062.0186 | 9/12 | 1463.0003 | 5/7 |
 | PSO | 1085.9960 | 9/12 | 1559.0378 | 6/7 |
@@ -78,6 +82,7 @@ Only STRICT_FROZEN rows are authoritative. Original expanding-tuning external ro
 - AOA: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_7_v1.py` / `aoa_phase`.
 - BAT: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_3_v1.py` / `bat_phase`.
 - CHOA: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_7_v1.py` / `choa_phase`.
+- CPA: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_8_v1.py` / `cpa_phase`.
 - CROW: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_8_v1.py` / `crow_phase`.
 - CS: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_5_v1.py` / `cs_phase`.
 - DE: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_1_v1.py` / `de_phase`.
@@ -91,6 +96,7 @@ Only STRICT_FROZEN rows are authoritative. Original expanding-tuning external ro
 - HGSO: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_7_v1.py` / `hgso_phase`.
 - HHO: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_3_v1.py` / `hho_phase`.
 - JAYA: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_6_v1.py` / `jaya_phase`.
+- KRILL: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_8_v1.py` / `krill_phase`.
 - MFO: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_4_v1.py` / `mfo_phase`.
 - MPA: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_2_v1.py` / `mpa_phase`.
 - PSO: run 36256830372; commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; decision ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED. Source `gold_axis_2026/tools/vw_midas_elmfis_meta_batch_1_v1.py` / `pso_phase`.
@@ -103,5 +109,5 @@ Only STRICT_FROZEN rows are authoritative. Original expanding-tuning external ro
 
 Job/artifact IDs are recorded in the main ledger batch entries and evidence provenance JSON.
 
-Completed artifacts audited: 28/32. Scientific failures retained; no missing rows silently dropped.
+Completed artifacts audited: 30/32. Scientific failures retained; no missing rows silently dropped.
 Next: finish remaining Stage-1 batches; only then Stage-2 filtering/parent freeze.
