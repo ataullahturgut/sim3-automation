@@ -2245,3 +2245,8 @@ Next: Stage 3A mandatory parity, groups of two: Adaptive PSO + Adaptive TLBO; TL
 ### RBFNN Stage 3A.1 — COMPLETE / AUDITED
 
 Run **36258593871**, commit `80acdfeb141b1daaa0eecf893b740143fcac6202`. Adaptive PSO: job 108449967744 / artifact 10911333701, DEV ΣAE 1519.3532 / 18 directions. Adaptive TLBO: job 108449967875 / artifact 10911686683, DEV ΣAE 1552.2502 / 21 directions. Both scientific PASS; neither improves DE-ABC 1415.8371 / 25. Retained as refinement benchmarks, not leaders. Corrected external metrics and lineage in `GOLD_MONTHLY_RBFNN_STAGE3_REPORT_2026-09-26.md`. Parent pool unchanged; 2025/2026 excluded; DB invariants equal. Next: TLBO-tuned PSO + DE-tuned PSO.
+
+
+### RBFNN Stage 3A.2 — COMPLETE / AUDITED
+
+Run **36258593871**, commit `80acdfeb141b1daaa0eecf893b740143fcac6202`. TLBO-tuned PSO: job 108450632348 / artifact 10911547589, DEV ΣAE 1610.0497 / 19 directions. DE-tuned PSO: job 108450632407 / artifact 10911677231, DEV ΣAE 1524.1595 / 20 directions. Both scientific PASS, dominated by DE-ABC 1415.8371 / 25 and retained as benchmarks. Full specification, bounds and corrected external metrics in Stage-3 report/artifacts. Frozen parents unchanged, DEV-only selection, 2025/2026 excluded, chronology PASS, DB READ_ONLY/invariants equal. Next: Adaptive Crow + PSO-TLBO.
