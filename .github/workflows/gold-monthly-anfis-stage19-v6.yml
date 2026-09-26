@@ -1,0 +1,33 @@
+name: Gold Monthly ANFIS Stage 1.9 V6
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-anfis-stage19-v6.yml
+permissions:
+  contents: read
+jobs:
+  hybrid:
+    strategy:
+      fail-fast: false
+      matrix:
+        method: [DE_ABC, MULTISWARM]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn scipy
+      - run: python -m py_compile gold_axis_2026/tools/vw_midas_anfis_meta_screen_v6.py
+      - name: Run
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_anfis_meta_screen_v6.py --method ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: anfis-stage19-v6-${{ matrix.method }}
+          path: anfis_hybrid_*_result.json
+          if-no-files-found: error
