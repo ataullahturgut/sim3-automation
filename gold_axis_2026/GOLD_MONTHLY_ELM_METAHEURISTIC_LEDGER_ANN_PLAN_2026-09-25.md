@@ -2520,3 +2520,33 @@ Run 36266015124; job 108470702038; artifact 10914585546; execution commit `47480
 Decision: DEV-only candidate; final role awaits all Stage3 methods. External results reporting only.
 
 Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, positive uncertainty and numerical gates PASS for accepted rows; DB READ_ONLY/invariants equal; no random split; incomplete scientific periods not ranked.
+
+
+### GPR Stage 3A — DE_TUNED_PSO / AUDITED
+
+Run 36266015124; job 108473163896; artifact 10914288153; execution commit `47480bf7dc77d5e86437ace1f11bce7490baefe5`. Full per-origin parameters, optimizer bounds/source hashes, termination, exact posterior diagnostics and repeat selection remain in raw archive.
+
+| Period | ΣAE | Direction | Gate |
+|---|---:|---:|---|
+| dev | 1939.8588 | 16/33 | PASS |
+| transport_2025 | 1165.2957 | 9/12 | PASS |
+| stress_2026 | 1620.3487 | 4/7 | PASS |
+
+Decision: DEV-only candidate; final role awaits all Stage3 methods. External results reporting only.
+
+Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, positive uncertainty and numerical gates PASS for accepted rows; DB READ_ONLY/invariants equal; no random split; incomplete scientific periods not ranked.
+
+
+### GPR Stage 3A — TLBO_TUNED_PSO / AUDITED
+
+Run 36266015124; job 108473163912; artifact 10914384584; execution commit `47480bf7dc77d5e86437ace1f11bce7490baefe5`. Full per-origin parameters, optimizer bounds/source hashes, termination, exact posterior diagnostics and repeat selection remain in raw archive.
+
+| Period | ΣAE | Direction | Gate |
+|---|---:|---:|---|
+| dev | 1863.6677 | 19/33 | PASS |
+| transport_2025 | 1400.8577 | 9/12 | PASS |
+| stress_2026 | 1894.1223 | 3/7 | PASS |
+
+Decision: DEV-only candidate; final role awaits all Stage3 methods. External results reporting only.
+
+Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, positive uncertainty and numerical gates PASS for accepted rows; DB READ_ONLY/invariants equal; no random split; incomplete scientific periods not ranked.

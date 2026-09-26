@@ -37,11 +37,13 @@
     "literature": "not yet activated; requires Stage3AB closure",
     "audited_methods": [
       "ADAPTIVE_PSO",
-      "ADAPTIVE_TLBO"
+      "ADAPTIVE_TLBO",
+      "TLBO_TUNED_PSO",
+      "DE_TUNED_PSO"
     ],
     "active_jobs": {
-      "DE_TUNED_PSO": 108473163896,
-      "TLBO_TUNED_PSO": 108473163912
+      "ADAPTIVE_CROW": 108475710574,
+      "PSO_TLBO": 108475710588
     }
   },
   "stage4_5": "NOT_EXECUTED; templates prepared, outcome-dependent roles not evaluated",

@@ -12,5 +12,19 @@
     "job_id": 108470702038,
     "run_id": 36266015124,
     "stage": "3A"
+  },
+  "DE_TUNED_PSO": {
+    "artifact_id": 10914288153,
+    "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
+    "job_id": 108473163896,
+    "run_id": 36266015124,
+    "stage": "3A"
+  },
+  "TLBO_TUNED_PSO": {
+    "artifact_id": 10914384584,
+    "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
+    "job_id": 108473163912,
+    "run_id": 36266015124,
+    "stage": "3A"
   }
 }
