@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
-> **Current checkpoint — 2026-09-26: RBFNN Stage 0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
+> **Current checkpoint — 2026-09-26: N2 GPR authority/protocol frozen; Stage0 execution next. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
 
 
 **Date:** 2026-09-25  
@@ -2296,3 +2296,16 @@ Final report: `GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md` and artifact JSON.
 **KONTROL VE UYUM ÖZETİ:** DEV-only selection PASS; 2025 exclusion PASS; 2026 exclusion PASS; random split NONE; origin/target/future-label leakage checks PASS; DB READ_ONLY and unchanged invariants PASS; scientific gates PASS for all 39 new specifications; historical limitations explicitly NOT_PROVEN; manifest/ledger updated. The Stage-1 external-tuning correction remains explicit: superseded external values are not authoritative, DEV hashes unchanged.
 
 RBFNN Stage 0–5 **COMPLETE/FROZEN**. No automatic expansion to another family. Next monthly roadmap action is governed **N2 Gaussian Processes**, outside this RBFNN task.
+
+
+### N2 GPR — full parity architecture authorized / authority freeze — 2026-09-26
+
+User explicitly authorized the same Stage0–5 architecture as RBFNN and continued sequential execution without repeated approvals. This supersedes a compact-only GPR interpretation. Binding method/source/parameter/checklist document: **GOLD_MONTHLY_GPR_AUTHORITY_AND_STAGE_PLAN_2026-09-26.md**. Same32 optimizers in batches1.1–1.9; Stage2 DEV parent freeze; six mandatory Stage3A refinements; evidence-gated MPA hybrids; 1–3 genuinely GP-specific literature candidates; frozen pools/prequential ensembles; cross-family final.
+
+Verified authority: GPML chapters2/4/5; Bonilla/Chai/Williams2007 multitask GP; Álvarez/Rosasco/Lawrence2012 vector-valued kernel review. Main model is real four-output ICM, not four independent regressors. Canonical covariance B⊗K+D⊗I, B=LLᵀ, 22 bounded parameters, exact analytic posterior; training objective marginal likelihood (plus explicit parameter prior for MAP), chronological validation Gold-weighted MAE. Noise is distinguished from fixed numerical jitter. Exact parameterization/bounds, validation/refit, gates and external freeze are recorded before outcomes.
+
+Stage0 methods: SO_RBF (explicit auxiliary single-output benchmark), VANILLA_ICM_RBF (joint canonical anchor), ICM_M32 (kernel comparison), REGULARIZED_ICM_RBF (lambda1 MAP prior). L-BFGS-B three deterministic starts; budget/convergence recorded. Stage1 retains common ICM-RBF MAP objective regardless of baseline performance.
+
+Implementation: `tools/gpr_core_v1.py`, `tools/gpr_experiment_v1.py`; workflow `.github/workflows/gpr-stage0-v1.yml`. Dense Kronecker oracle verified mean/variance/NLL, condition upper bound and genuine cross-output transfer. All32 optimizer adapters passed synthetic interface checks. Next: Stage0 production and artifact audit, then Stage1.1. No GP performance result claimed yet.
+
+Kontrol ve Uyum Özeti: DEV-only selection and 2025/2026 exclusion specified; no random split; origin-safe preprocessing/fitness/refit; READ_ONLY loader and invariant equality required; GP scientific gates explicit; ledger/protocol updated. External parameters/scaler freeze at 2024-12; only posterior conditioning expands. Authorization persists across checkpoints.
