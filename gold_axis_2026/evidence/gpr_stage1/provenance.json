@@ -1,0 +1,38 @@
+{
+  "ABC": {
+    "artifact_id": 10912909413,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108464327155,
+    "run_id": 36263592441
+  },
+  "DE": {
+    "artifact_id": 10912349208,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108463902811,
+    "run_id": 36263592441
+  },
+  "GA": {
+    "artifact_id": 10913173273,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108463903324,
+    "run_id": 36263592441
+  },
+  "GWO": {
+    "artifact_id": 10913365971,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108464326989,
+    "run_id": 36263592441
+  },
+  "MPA": {
+    "artifact_id": 10913356064,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108464326830,
+    "run_id": 36263592441
+  },
+  "PSO": {
+    "artifact_id": 10912874314,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108463902930,
+    "run_id": 36263592441
+  }
+}

@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
-> **Current checkpoint — 2026-09-26: N2 GPR Stage0 COMPLETE/AUDITED; Stage1 broad screen next. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
+> **Current checkpoint — 2026-09-26: N2 GPR Stage0 COMPLETE; Stage1 6/32 audited, no parent selected. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
 
 
 **Date:** 2026-09-25  
@@ -2327,3 +2327,16 @@ None improves ChHHO1413.0298/23 or DE-ABC-RBFNN1415.8371/25. No evidence that jo
 Next: Stage1.1 PSO/GA/DE, then batches1.2–1.9. Workflow `.github/workflows/gpr-stage1-v1.yml`, common runner `tools/gpr_experiment_v1.py`, population24/generations45/repeats3, lambda1 MAP objective, exact22 bounds in authority. All Stage1 batches share the same frozen protocol. No parents selected yet.
 
 Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 exclusion PASS; random split NONE; chronology/hash/invariant checks PASS; DB READ_ONLY; all GP scientific gates PASS; manifest and checkpoint updated.
+
+
+### GPR Stage 1.1 — COMPLETE / AUDITED
+
+Run **36263592441**, commit **b5885a50dfbc17474b8f22ac2e8b61f43b7b748d**. Shared script `tools/gpr_experiment_v1.py`, workflow `.github/workflows/gpr-stage1-v1.yml`; frozen22 bounds, population24/generations45/repeats3 and objective/refit in GPR authority.
+
+| Method | Job | Artifact | DEV ΣAE / direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Gate / decision |
+|---|---|---|---|---|---|---|
+| PSO | 108463902930 | 10912874314 | 1780.2169 / 19/33 | 1377.4255 / 8/12 | 1448.8102 / 4/7 | PASS; parent selection deferred |
+| GA | 108463903324 | 10913173273 | 1723.5877 / 21/33 | 1232.3520 / 9/12 | 1675.1882 / 4/7 | PASS; parent selection deferred |
+| DE | 108463902811 | 10912349208 | 1924.6270 / 21/33 | 1193.9617 / 9/12 | 1500.4802 / 5/7 | PASS; parent selection deferred |
+
+Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 excluded; random split NONE; origin/freeze-hash checks PASS; DB READ_ONLY/invariants equal; gate failures retained; manifest updated. Next: Stage1.2.
