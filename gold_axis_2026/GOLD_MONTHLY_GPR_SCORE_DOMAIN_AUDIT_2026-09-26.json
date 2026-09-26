@@ -1,0 +1,60 @@
+{
+  "models": {
+    "ABC": {
+      "artifact_id": 10912689533,
+      "commit": "356015a4d03988342bdbb575681ed4a830ef6bc1",
+      "dev_freeze_sha256": "98a1602720b767d872b31bee199227e75f22b18d12f8d884af4146e826019a51",
+      "exact_dev_hash_match": true,
+      "job_id": 108466913684,
+      "original_available": true,
+      "run_id": "36264658833",
+      "score_domain": {
+        "finite_calls": 111521,
+        "maximum": 874.1926679034993,
+        "minimum": 1.1495314008627324,
+        "nonfinite_calls": 0,
+        "purpose": "Technical replay, not an additional selection candidate; no score transform",
+        "status": "PASS"
+      }
+    },
+    "ALO": {
+      "artifact_id": 10913337530,
+      "commit": "356015a4d03988342bdbb575681ed4a830ef6bc1",
+      "dev_freeze_sha256": "2b82e2e43954be971063f26299a5318ae99a51990f2bd05039e5294b242404f8",
+      "exact_dev_hash_match": false,
+      "job_id": 108466913788,
+      "original_available": false,
+      "run_id": "36264658833",
+      "score_domain": {
+        "finite_calls": 115056,
+        "maximum": 2019.944546983153,
+        "minimum": 1.1479349286852454,
+        "nonfinite_calls": 0,
+        "purpose": "Technical replay, not an additional selection candidate; no score transform",
+        "status": "PASS"
+      }
+    },
+    "DE_ABC": {
+      "artifact_id": 10913840808,
+      "commit": "356015a4d03988342bdbb575681ed4a830ef6bc1",
+      "dev_freeze_sha256": "f3d7744c7632588ca387ad76a1354bcfe967dc9b1930fd011d2017e1ba1f716b",
+      "exact_dev_hash_match": false,
+      "job_id": 108466913693,
+      "original_available": false,
+      "run_id": "36264658833",
+      "score_domain": {
+        "finite_calls": 224753,
+        "maximum": 1135.8534397198305,
+        "minimum": 1.153418504537733,
+        "nonfinite_calls": 0,
+        "purpose": "Technical replay, not an additional selection candidate; no score transform",
+        "status": "PASS"
+      }
+    }
+  },
+  "no_new_candidate": true,
+  "no_score_or_algorithm_change": true,
+  "scope": "All training evaluations in these frozen DEV and pre-2025 tuning runs; not a universal guarantee for other datasets",
+  "status": "WAITING_FOR_ORIGINALS",
+  "technical_only": true
+}
