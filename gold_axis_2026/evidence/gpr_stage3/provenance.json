@@ -27,6 +27,13 @@
     "run_id": 36266015124,
     "stage": "3A"
   },
+  "MPA_SCA": {
+    "artifact_id": 10914109472,
+    "commit": "0bee31b199a419059bbab9570e3e07e1d27d7af7",
+    "job_id": 108477773189,
+    "run_id": 36268484542,
+    "stage": "3B"
+  },
   "PSO_TLBO": {
     "artifact_id": 10914825981,
     "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",

@@ -28,7 +28,7 @@
   },
   "stage2": "COMPLETE; DEV-only roles frozen before Stage3",
   "stage3": {
-    "status": "STAGE3A_COMPLETE; STAGE3B_RUNNING",
+    "status": "STAGE3AB_COMPLETE_AUDITED; STAGE3C_AUTHORITY_NEXT",
     "run": 36266015124,
     "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
     "stage2_freeze_commit": "24be35eb14e9d5b1d8cfab7593bd42fc241541bd",
@@ -41,14 +41,15 @@
       "TLBO_TUNED_PSO",
       "DE_TUNED_PSO",
       "ADAPTIVE_CROW",
-      "PSO_TLBO"
+      "PSO_TLBO",
+      "MPA_SCA"
     ],
     "stage3a_closure_commit": "111899e4ed9e2a55ebe5a94a7a62b4ecf0ecd0a1",
     "stage3b_run": 36268484542,
     "stage3b_commit": "0bee31b199a419059bbab9570e3e07e1d27d7af7"
   },
   "stage4_5": "NOT_EXECUTED; templates prepared, outcome-dependent roles not evaluated",
-  "next_action": "Audit run36268484542 MPA_SCA, close3AB, then verify primary LMC/gradient sources and freeze Stage3C authority before activating .github/workflows/gpr-stage3c-v1.yml",
+  "next_action": "Verify primary LMC and GP likelihood-gradient sources, freeze one LMC2_RBF_M32 candidate authority, then activate Stage3C. Stage4 pools may freeze only after all Stage3 closes.",
   "selection": "DEV_ONLY; 2025/2026 strictly reporting only; no random split; DB READ_ONLY",
   "memory_policy": "This checkpoint and latest GitHub artifact evidence supersede conversational summaries. Authorization persists through stage and context boundaries.",
   "prepared_local_only": [

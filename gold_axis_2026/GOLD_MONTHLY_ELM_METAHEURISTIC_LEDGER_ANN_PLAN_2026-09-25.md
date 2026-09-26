@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
-> **Current checkpoint — 2026-09-26: N2 GPR Stage0–2 COMPLETE; Stage3A COMPLETE, run36266015124; Stage3B MPA_SCA RUNNING, run36268484542; frozen price MULTISWARM1606.7414/23, direction FA_FPA1724.6532/25. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
+> **Current checkpoint — 2026-09-26: N2 GPR Stage0–2 COMPLETE; Stage3A COMPLETE, run36266015124; Stage3AB COMPLETE; Stage3C authority next; frozen price MULTISWARM1606.7414/23, direction FA_FPA1724.6532/25. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
 
 
 **Date:** 2026-09-25  
@@ -2597,3 +2597,25 @@ Kontrol ve Uyum Özeti: DEV-only PASS; chronological inner tuning and external h
 ### GPR Stage3B MPA_SCA — RUNNING
 
 Run36268484542, activation commit0bee31b199a419059bbab9570e3e07e1d27d7af7 follows Stage3A closure commit111899e4ed9e2a55ebe5a94a7a62b4ecf0ecd0a1. Single eligible pair from Stage2; same22-dimensional ICM objective, pop24, generations45, repeats3. Incumbent/MPA/SCA proposals compete by training NLL; chronological top-quartile validation retention and survivor shares recorded. No new pair selected from external results.
+
+
+### GPR Stage 3B — MPA_SCA / AUDITED
+
+Run 36268484542; job 108477773189; artifact 10914109472; execution commit `0bee31b199a419059bbab9570e3e07e1d27d7af7`. Full per-origin parameters, optimizer bounds/source hashes, termination, exact posterior diagnostics and repeat selection remain in raw archive.
+
+| Period | ΣAE | Direction | Gate |
+|---|---:|---:|---|
+| dev | 1709.2943 | 22/33 | PASS |
+| transport_2025 | 1211.6084 | 10/12 | PASS |
+| stress_2026 | 1749.1495 | 4/7 | PASS |
+
+Decision: DEV-only candidate; final role awaits all Stage3 methods. External results reporting only.
+
+Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, positive uncertainty and numerical gates PASS for accepted rows; DB READ_ONLY/invariants equal; no random split; incomplete scientific periods not ranked.
+
+
+### GPR Stage3AB closure — COMPLETE / AUDITED
+
+MPA_SCA run36268484542, job108477773189, artifact10914109472, commit0bee31b199a419059bbab9570e3e07e1d27d7af7: DEV ΣAE1709.294302,22/33. All52 monthly scientific gates PASS. No Stage1 leader improvement. All6 mandatory methods plus admitted hybrid are now closed. `GOLD_MONTHLY_GPR_STAGE3AB_CLOSURE_2026-09-26.json` checks Stage3A closure, exact parent hashes, and hybrid opening evidence.
+
+Kontrol ve Uyum Özeti: DEV-only PASS; external tuning exclusion PASS; READ_ONLY/invariant equality PASS; no random split; full provenance retained. Next: primary-source verification and pre-outcome authority freeze for one genuine GP-specific LMC candidate.
