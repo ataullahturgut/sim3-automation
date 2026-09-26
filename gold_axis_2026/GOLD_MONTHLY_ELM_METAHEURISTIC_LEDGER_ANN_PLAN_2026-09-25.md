@@ -1778,3 +1778,69 @@ Decision:
 - RBFNN family remains open only for one compact regularized/tuned step.
 - Next: N1.2 regularized RBFNN with a small predeclared center-count / width-scale / ridge grid selected chronologically.
 - Broad optimizer screens remain unauthorized.
+
+
+### 16.7 RBFNN roadmap extension — hybrid/refinement parity authorized 2026-09-26
+
+User directive:
+RBFNN must not stop at vanilla/regularized baselines. After the compact regularized RBFNN is established, execute a controlled hybrid/refinement package analogous to the successful scientific structure used for ELM/ANN/ANFIS.
+
+This supersedes the earlier wording that RBFNN should be closed immediately after one compact regularized step if it is not a leader.
+
+#### N1.2 — Regularized RBFNN baseline
+Required before hybrids:
+- compact center-count grid;
+- compact global width-scale grid;
+- ridge output regularization;
+- chronological inner validation;
+- no metaheuristic.
+
+Purpose:
+freeze a defensible regularized RBFNN reference and parameter bounds before optimizer-driven experiments.
+
+#### N1.3 — RBFNN controlled hybrid/refinement parity track
+Authorized methods:
+1. Adaptive PSO-RBFNN.
+2. TLBO-tuned PSO-RBFNN.
+3. DE-tuned PSO-RBFNN.
+4. Adaptive/Improved TLBO-RBFNN.
+5. Adaptive Crow Search-RBFNN.
+6. PSO-TLBO Hybrid RBFNN.
+
+The optimizer may act only on scientifically meaningful RBFNN parameters:
+- RBF centers and/or center perturbations;
+- positive widths in log-space or bounded width multipliers;
+- optional compact structural choice (center count) only if encoded with a predeclared discrete rule;
+- ridge/regularization only within the frozen compact bounds.
+The 4-output linear consequent layer should remain analytically solved whenever possible rather than being unnecessarily meta-optimized.
+
+#### N1.4 — Evidence-driven RBFNN optimizer hybrids
+Only after N1.3:
+- identify parent optimizers using DEV only;
+- allow at most a small, predeclared hybrid set motivated by observed complementarity;
+- candidate parity mechanisms may include MPA+SCA, MPA+GA, MPA+CPA only if corresponding parent evidence exists;
+- do not automatically enumerate all optimizer cross-products.
+
+#### N1.5 — Literature-specific RBFNN hybrid challengers
+Permitted if directly supported by literature and structurally distinct:
+- PSO/adaptive-PSO RBFNN;
+- GA+adaptive-PSO / evolutionary-architecture RBFNN;
+- hard-ridge + DE/CS RBF-type forecasting;
+- adaptive/self-learning TLBO-trained RBFNN.
+These are literature-guided challengers, not permission for broad blind optimizer enumeration.
+
+#### N1.6 — RBFNN family freeze
+After hybrid/refinement completion:
+- DEV Pareto on ΣAE + direction;
+- year stability;
+- scientific/numerical gate;
+- optional ensemble only if component complementarity justifies it;
+- 2025/2026 reporting only;
+- freeze RBFNN family champion before proceeding to N2 Gaussian Processes.
+
+Governance unchanged:
+- DEV 2022-04..2024-12 only for selection;
+- 2025/2026 excluded from selection;
+- no random split;
+- READ_ONLY DB;
+- no target-month leakage.
