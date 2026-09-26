@@ -47,7 +47,7 @@
     }
   },
   "stage4_5": "NOT_EXECUTED; templates prepared, outcome-dependent roles not evaluated",
-  "next_action": "Resume run36266015124; download/audit remaining Stage3A artifacts with update_gpr_stage3.py, then commit 3A closure. Only then activate local gpr-stage3b-v1.yml for MPA_SCA. After AB closure verify literature sources, freeze LMC2 authority, activate Stage3C. Finally freeze ensemble pools and run Stage4/5. No renewed user approval needed.",
+  "next_action": "Resume run36266015124; download/audit remaining Stage3A artifacts with gold_axis_2026/tools/gpr_archive_stage3_v1.py RUN STAGE --attachments DOWNLOADED_ZIP_DIRECTORY, then commit 3A closure. Only then activate local gpr-stage3b-v1.yml for MPA_SCA. After AB closure verify literature sources, freeze LMC2 authority, activate Stage3C. Finally freeze ensemble pools and run Stage4/5. No renewed user approval needed.",
   "selection": "DEV_ONLY; 2025/2026 strictly reporting only; no random split; DB READ_ONLY",
   "memory_policy": "This checkpoint and latest GitHub artifact evidence supersede conversational summaries. Authorization persists through stage and context boundaries.",
   "prepared_local_only": [
