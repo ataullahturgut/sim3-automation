@@ -15,6 +15,9 @@ def load(root):
 
 def run(root):
  models=load(root);assert set(sum(BATCHES,[]))<=models.keys()
+ domain=json.loads((root/'GOLD_MONTHLY_GPR_SCORE_DOMAIN_AUDIT_2026-09-26.json').read_text())
+ assert domain['status']=='PASS'
+ for n in ['ABC','ALO','DE_ABC']:assert domain['models'][n]['dev_freeze_sha256']==models[n]['dev_freeze_sha256']
  evidence={n:audit(d)['dev'] for n,d in models.items()}
  valid={n:d for n,d in models.items() if d['dev']['scientific_gate']=='PASS' and d['spec']['outputs']==4}
  ms={n:evidence[n] for n in valid};retained=[n for n in valid if ms[n]['relative_mae_vs_rw']<1 or n=='VANILLA_ICM_RBF']

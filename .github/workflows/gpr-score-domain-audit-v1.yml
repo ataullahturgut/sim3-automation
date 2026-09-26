@@ -1,0 +1,38 @@
+name: GPR Score Domain Technical Replay V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gpr-score-domain-audit-v1.yml
+      - gold_axis_2026/tools/gpr_score_domain_audit_v1.py
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+jobs:
+  score-domain:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        method: [ABC, ALO, DE_ABC]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy==2.3.5 scipy==1.17.0 psycopg[binary] scikit-learn
+      - name: Track all objective evaluations without changing algorithm or scores
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gpr_score_domain_audit_v1.py --method ${{ matrix.method }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gpr-score-domain-${{ matrix.method }}
+          path: gpr_*_result.json
+          if-no-files-found: error

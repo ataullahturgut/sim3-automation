@@ -2368,3 +2368,8 @@ Run **36263592441**, commit **b5885a50dfbc17474b8f22ac2e8b61f43b7b748d**. Shared
 | BAT | 108464925085 | 10913795139 | 1746.6720 / 21/33 | 1144.6360 / 10/12 | 1797.0547 / 4/7 | PASS; parent selection deferred |
 
 Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 excluded; random split NONE; origin/freeze-hash checks PASS; DB READ_ONLY/invariants equal; gate failures retained; manifest updated. Next: Stage1.4.
+
+
+### GPR Stage1 technical score-domain verification — REQUIRED BEFORE STAGE2
+
+Source review identified ABC/ALO/DE-ABC roulette quality `1/(1+loss)`. GP NLL is not universally positive, so interface equivalence must not be assumed solely from synthetic independent outputs. Existing fitted baseline NLLs are positive, but that does not prove every metaheuristic candidate. A technical replay of these three methods records every training score without changing scores, seeds, algorithms or candidate identity. Require strictly positive observed scores and exact original DEV hash/prediction equality before Stage2 freeze. This is an implementation-domain verification, not outcome-driven tuning or an extra candidate. Script `tools/gpr_score_domain_audit_v1.py`; workflow `.github/workflows/gpr-score-domain-audit-v1.yml`. Any failure blocks Stage2 and requires explicit implementation correction/lineage. Main Stage1 batches continue unchanged.
