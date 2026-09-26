@@ -5,7 +5,6 @@ from pathlib import Path
 import numpy as np
 import psycopg
 import vw_midas_msvr_successor_v1 as base
-import vw_midas_elmfis_baseline_v1 as metrics_mod
 
 DEV_START, DEV_END = "2022-04", "2024-12"
 TR_START, TR_END = "2025-01", "2025-12"
@@ -130,8 +129,19 @@ def row_from_pred(bundle,target,pred_ret,model,extra):
             "forecast":float(bundle.core_gold[origin]*math.exp(float(pred_ret))),
             "actual":float(bundle.core_gold[target]),"rw":float(bundle.core_gold[origin]),**extra}
 
-def active_metrics(rows): return metrics_mod.active_metrics(rows)
-def yearly(rows): return metrics_mod.yearly(rows)
+def active_metrics(rows):
+    m=dict(base.metrics(rows))
+    actual=np.array([r["actual"] for r in rows],float)
+    forecast=np.array([r["forecast"] for r in rows],float)
+    ae=np.abs(forecast-actual)
+    m["sum_abs_error"]=float(np.sum(ae))
+    m["wape_pct"]=float(np.sum(ae)/np.sum(np.abs(actual))*100.0)
+    m["direction_correct"]=int(sum(np.sign(r["forecast"]-r["rw"])==np.sign(r["actual"]-r["rw"]) for r in rows))
+    return m
+
+def yearly(rows):
+    years=sorted({r["target"][:4] for r in rows})
+    return {y:active_metrics([r for r in rows if r["target"].startswith(y)]) for y in years}
 
 def evaluate_lane(bundle,cache,targets,lane):
     variants={}
