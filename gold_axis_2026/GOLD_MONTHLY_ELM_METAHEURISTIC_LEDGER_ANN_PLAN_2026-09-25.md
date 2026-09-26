@@ -2127,3 +2127,17 @@ Run **36256830372**, commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; shared f
 | GWO | 108445392044 | 10911365910 | 1511.6245 | 22/33 | 1203.3243 / 8/12 | 1661.8822 / 5/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
 
 Independent audit: coverage, recomputed metrics, freeze hash, chronology, numerical diagnostics and DB invariant equality. 2025/2026 reporting only. No Stage-2 parent selection yet. Next: Stage 1.3.
+
+
+### RBFNN Stage 1.3 — COMPLETE / AUDITED
+
+Run **36256830372**, commit `a09559f84075e53f0a38b408bcd6977c99b6e12c`; shared frozen script/workflow/specification in §16.9.
+
+| Model | Job | Artifact | DEV ΣAE | DEV direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Gate / decision |
+|---|---|---|---:|---:|---|---|---|
+| WOA | 108445827612 | 10910504177 | 1499.2639 | 19/33 | 1157.8414 / 10/12 | 1526.8745 / 5/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+| HHO | 108445827611 | 10911193159 | 1586.1569 | 20/33 | 1109.8340 / 10/12 | 1404.7751 / 6/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+| ACO | 108445827582 | 10910439350 | 1481.9468 | 19/33 | 1175.0249 / 9/12 | 1684.5221 / 5/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+| BAT | 108445827586 | 10911445645 | 1501.6410 | 21/33 | 1037.0801 / 8/12 | 1526.1445 / 5/7 | PASS; ELIGIBLE_FOR_STAGE2_NOT_PARENT_SELECTED |
+
+Independent audit: coverage, recomputed metrics, freeze hash, chronology, numerical diagnostics and DB invariant equality. 2025/2026 reporting only. No Stage-2 parent selection yet. Next: Stage 1.4.

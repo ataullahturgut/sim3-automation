@@ -46,8 +46,8 @@
     {
       "id": 108445827582,
       "name": "batch3 (ACO)",
-      "status": "in_progress",
-      "conclusion": null
+      "status": "completed",
+      "conclusion": "success"
     },
     {
       "id": 108445827586,
@@ -58,14 +58,38 @@
     {
       "id": 108445827611,
       "name": "batch3 (HHO)",
-      "status": "in_progress",
-      "conclusion": null
+      "status": "completed",
+      "conclusion": "success"
     },
     {
       "id": 108445827612,
       "name": "batch3 (WOA)",
       "status": "completed",
       "conclusion": "success"
+    },
+    {
+      "id": 108446196851,
+      "name": "batch4 (MFO)",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 108446196876,
+      "name": "batch4 (FPA)",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 108446196895,
+      "name": "batch4 (FA)",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 108446197620,
+      "name": "batch4 (FA_FPA)",
+      "status": "in_progress",
+      "conclusion": null
     }
   ],
   "artifacts": [
@@ -160,6 +184,26 @@
       "digest": "sha256:d30e3bab7753288e81fd14788a03a536781af2cf61538e08ca4580b600c6382e",
       "created_at": "2026-09-26T16:50:30Z",
       "updated_at": "2026-09-26T16:50:30Z",
+      "expires_at": "2026-12-25T16:49:22Z",
+      "workflow_run": {
+        "id": 36256830372,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "a09559f84075e53f0a38b408bcd6977c99b6e12c"
+      }
+    },
+    {
+      "id": 10911193159,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTE5MzE1OQ==",
+      "name": "rbfnn-stage1-HHO",
+      "size_in_bytes": 18067,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911193159",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911193159/zip",
+      "expired": false,
+      "digest": "sha256:a1f71322f37ac85617e1b531965e150faf699447c9bdb4df2f14ffec1ce5cefb",
+      "created_at": "2026-09-26T16:56:04Z",
+      "updated_at": "2026-09-26T16:56:04Z",
       "expires_at": "2026-12-25T16:49:22Z",
       "workflow_run": {
         "id": 36256830372,
