@@ -1,0 +1,13 @@
+{
+  "status": "COMPLETE",
+  "models": [
+    "VANILLA_ICM_RBF",
+    "ICM_M32",
+    "REGULARIZED_ICM_RBF",
+    "SO_RBF"
+  ],
+  "all_scientific_gates": "PASS",
+  "next": "Stage1 common ICM_RBF MAP lambda1 unchanged",
+  "single_output": "auxiliary benchmark; not joint-family parent",
+  "run_id": 36263297105
+}

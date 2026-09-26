@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
-> **Current checkpoint — 2026-09-26: N2 GPR authority/protocol frozen; Stage0 execution next. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
+> **Current checkpoint — 2026-09-26: N2 GPR Stage0 COMPLETE/AUDITED; Stage1 broad screen next. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
 
 
 **Date:** 2026-09-25  
@@ -2309,3 +2309,21 @@ Stage0 methods: SO_RBF (explicit auxiliary single-output benchmark), VANILLA_ICM
 Implementation: `tools/gpr_core_v1.py`, `tools/gpr_experiment_v1.py`; workflow `.github/workflows/gpr-stage0-v1.yml`. Dense Kronecker oracle verified mean/variance/NLL, condition upper bound and genuine cross-output transfer. All32 optimizer adapters passed synthetic interface checks. Next: Stage0 production and artifact audit, then Stage1.1. No GP performance result claimed yet.
 
 Kontrol ve Uyum Özeti: DEV-only selection and 2025/2026 exclusion specified; no random split; origin-safe preprocessing/fitness/refit; READ_ONLY loader and invariant equality required; GP scientific gates explicit; ledger/protocol updated. External parameters/scaler freeze at 2024-12; only posterior conditioning expands. Authorization persists across checkpoints.
+
+
+### GPR Stage 0 — COMPLETE / AUDITED
+
+Run **36263297105**, commit **b28d63cb5dbf5d0f8290b20dfe8152b40a54623d**. Scientific gates PASS for all4; source-level dense oracle and production future-label invariance tests PASS. Full raw archive/provenance `evidence/gpr_stage0/`; report `GOLD_MONTHLY_GPR_STAGE0_REPORT_2026-09-26.md`.
+
+| Model | Job | Artifact | DEV ΣAE / direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Decision |
+|---|---|---|---|---|---|---|
+| SO_RBF | 108463083454 | 10913008323 | 1519.4443 / 19/33 | 1064.1439 / 10/12 | 1608.0868 / 4/7 | Auxiliary single-output benchmark only |
+| VANILLA_ICM_RBF | 108463083386 | 10913335491 | 1726.6205 / 15/33 | 1175.6207 / 9/12 | 1561.4442 / 3/7 | Canonical anchor, not leader |
+| ICM_M32 | 108463083203 | 10912764354 | 1640.0091 / 17/33 | 966.7238 / 9/12 | 1566.2865 / 5/7 | Best joint baseline, benchmark |
+| REGULARIZED_ICM_RBF | 108463083413 | 10912109099 | 1842.2361 / 16/33 | 1086.4234 / 9/12 | 1548.0149 / 4/7 | Valid but weaker than RW, benchmark |
+
+None improves ChHHO1413.0298/23 or DE-ABC-RBFNN1415.8371/25. No evidence that joint modeling is automatically superior. The already-frozen common Stage1 ICM-RBF MAP contract is unchanged; kernel/regularization are not switched in response to these outcomes. L-BFGS termination and interval coverage are recorded in raw diagnostics.
+
+Next: Stage1.1 PSO/GA/DE, then batches1.2–1.9. Workflow `.github/workflows/gpr-stage1-v1.yml`, common runner `tools/gpr_experiment_v1.py`, population24/generations45/repeats3, lambda1 MAP objective, exact22 bounds in authority. All Stage1 batches share the same frozen protocol. No parents selected yet.
+
+Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 exclusion PASS; random split NONE; chronology/hash/invariant checks PASS; DB READ_ONLY; all GP scientific gates PASS; manifest and checkpoint updated.

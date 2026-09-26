@@ -1,0 +1,26 @@
+{
+  "SO_RBF": {
+    "run_id": 36263297105,
+    "job_id": 108463083454,
+    "artifact_id": 10913008323,
+    "commit": "b28d63cb5dbf5d0f8290b20dfe8152b40a54623d"
+  },
+  "VANILLA_ICM_RBF": {
+    "run_id": 36263297105,
+    "job_id": 108463083386,
+    "artifact_id": 10913335491,
+    "commit": "b28d63cb5dbf5d0f8290b20dfe8152b40a54623d"
+  },
+  "ICM_M32": {
+    "run_id": 36263297105,
+    "job_id": 108463083203,
+    "artifact_id": 10912764354,
+    "commit": "b28d63cb5dbf5d0f8290b20dfe8152b40a54623d"
+  },
+  "REGULARIZED_ICM_RBF": {
+    "run_id": 36263297105,
+    "job_id": 108463083413,
+    "artifact_id": 10912109099,
+    "commit": "b28d63cb5dbf5d0f8290b20dfe8152b40a54623d"
+  }
+}
