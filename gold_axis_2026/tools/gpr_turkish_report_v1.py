@@ -58,7 +58,7 @@ def run(root):
  lines+=['','## Önceki ailelerle DEV karşılaştırması','','| Model | ΣAE | Yön | MAE | RMSE |','|---|---:|---:|---:|---:|']
  for n,z in sorted(final['cross_family_metrics'].items(),key=lambda kv:kv[1]['dev']['sum_abs_error']):
   mm=z['dev'];lines.append(f"| {n} | {mm['sum_abs_error']:.4f} | {mm['direction_correct']}/33 | {mm['mae']:.4f} | {mm['rmse']:.4f} |")
- lines+=['','İki amaçlı DEV Pareto kümesi: '+', '.join(final['cross_family_frontier'])+'. Farklar nokta tahminleridir; 33 aylık ve çok sayıda model denenmiş bir DEV üzerinde istatistiksel üstünlük kanıtı değildir. Düzeltilmiş RBFNN ve GPR, 2024-12 sonrası hiperparametre öğrenmeme kuralına uyar. Daha eski ailelerin dış dönem protokolleri eşitlenmiş değildir; bütün ailelerin dış dönem tablosu kontrollü bir üstünlük sıralaması olarak yorumlanmaz.','',
+ lines+=['','İki amaçlı DEV Pareto kümesi: '+', '.join(final['cross_family_frontier'])+'. Bir ayı dışarıda bırakma duyarlılığı, sabit tahminlerden bir ayın puanını çıkarmaktır; model yeniden eğitilmez. Farklar nokta tahminleridir; 33 aylık ve çok sayıda model denenmiş bir DEV üzerinde istatistiksel üstünlük kanıtı değildir. Düzeltilmiş RBFNN ve GPR, 2024-12 sonrası hiperparametre öğrenmeme kuralına uyar. Daha eski ailelerin dış dönem protokolleri eşitlenmiş değildir; bütün ailelerin dış dönem tablosu kontrollü bir üstünlük sıralaması olarak yorumlanmaz.','',
  '## Seçilen GPR modelinin 2026 gerçek ve tahminleri','',
  'Birim USD/troy ons; aylık ortalama XAU/USD. Yalnızca mevcut Ocak–Temmuz dönemi gösterilir. Gerçekleşmesi/verisi bulunmayan aylar doldurulmadı. Model 2026 sonuçlarıyla seçilmedi.','',
  '| Ay | Gerçek | Tahmin | Mutlak hata | Gerçek yön | Tahmin yön |','|---|---:|---:|---:|---|---|']

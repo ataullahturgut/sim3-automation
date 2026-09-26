@@ -72,6 +72,7 @@ def run(root):
       'limitations':['n=33 DEV and many model comparisons: point-estimate selection, not statistical superiority',
         'GP posterior intervals ignore hyperparameter uncertainty; coverage and NLPD reported without external calibration',
         'optimizer repeat-validation dispersion is available; independent full-prediction repeat robustness is NOT_PROVEN',
+        'leave-one-origin sensitivity removes one scored month from frozen predictions; it does not retrain the models',
         'prequential weighting conditional on a DEV-selected frozen pool; not a nested-independent holdout',
         'Earlier pre-RBF family external protocols are not harmonized; strict RBFNN replay and GPR both freeze nonlinear tuning through2024-12. External results remain reporting only, without selection authority'],
       'next_action':'GPR family frozen; return to governed monthly roadmap N3 Multi-task RFF-BLR; no automatic N3 execution in this task'}

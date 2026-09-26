@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
-> **Current checkpoint — 2026-09-26: N2 GPR Stage0–2 COMPLETE; Stage3A COMPLETE, run36266015124; Stage3AB COMPLETE; Stage3C authority next; frozen price MULTISWARM1606.7414/23, direction FA_FPA1724.6532/25. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
+> **Current checkpoint — 2026-09-26: N2 GPR Stage0–2 COMPLETE; Stage3A COMPLETE, run36266015124; Stage3AB COMPLETE; Stage3C LMC RUNNING, run36269000173; frozen price MULTISWARM1606.7414/23, direction FA_FPA1724.6532/25. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
 
 
 **Date:** 2026-09-25  
@@ -2619,3 +2619,10 @@ Kontrol ve Uyum Özeti: chronology, DEV hash, strict external theta freeze, posi
 MPA_SCA run36268484542, job108477773189, artifact10914109472, commit0bee31b199a419059bbab9570e3e07e1d27d7af7: DEV ΣAE1709.294302,22/33. All52 monthly scientific gates PASS. No Stage1 leader improvement. All6 mandatory methods plus admitted hybrid are now closed. `GOLD_MONTHLY_GPR_STAGE3AB_CLOSURE_2026-09-26.json` checks Stage3A closure, exact parent hashes, and hybrid opening evidence.
 
 Kontrol ve Uyum Özeti: DEV-only PASS; external tuning exclusion PASS; READ_ONLY/invariant equality PASS; no random split; full provenance retained. Next: primary-source verification and pre-outcome authority freeze for one genuine GP-specific LMC candidate.
+
+
+### GPR Stage3C LMC2_RBF_M32 — AUTHORITY FROZEN / RUNNING
+
+Primary sources rechecked after Stage3AB: Alvarez/Rosasco/Lawrence2012 sections4.2 and6.2, equations10/19–21/31–33; GPML2006 section5.4.1 equations5.8/5.9. One structural LMC candidate, two distinct ARD kernels and full-rank task matrices,40 parameters, exact dense posterior and analytic likelihood gradient. Full bounds/prior/seeds/budget/gates in `GOLD_MONTHLY_GPR_STAGE3C_AUTHORITY_2026-09-26.md`. Synthetic independent covariance, all40 finite-difference derivative checks and future-label invariance PASS; rechecked by workflow.
+
+Authority commitf38cfaa13604f7284c3de13b785d3b663729d910 precedes activation commit3168be9cfc74ff3e6cbbc1ef76fb0c588422fe01; run36269000173. No production outcome used to choose this specification. Next: audit LMC, closeStage3, commit pools before ensemble outcomes.

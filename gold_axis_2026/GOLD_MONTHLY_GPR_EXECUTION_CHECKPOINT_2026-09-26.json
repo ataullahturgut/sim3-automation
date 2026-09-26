@@ -28,7 +28,7 @@
   },
   "stage2": "COMPLETE; DEV-only roles frozen before Stage3",
   "stage3": {
-    "status": "STAGE3AB_COMPLETE_AUDITED; STAGE3C_AUTHORITY_NEXT",
+    "status": "STAGE3AB_COMPLETE; STAGE3C_RUNNING",
     "run": 36266015124,
     "commit": "47480bf7dc77d5e86437ace1f11bce7490baefe5",
     "stage2_freeze_commit": "24be35eb14e9d5b1d8cfab7593bd42fc241541bd",
@@ -46,14 +46,17 @@
     ],
     "stage3a_closure_commit": "111899e4ed9e2a55ebe5a94a7a62b4ecf0ecd0a1",
     "stage3b_run": 36268484542,
-    "stage3b_commit": "0bee31b199a419059bbab9570e3e07e1d27d7af7"
+    "stage3b_commit": "0bee31b199a419059bbab9570e3e07e1d27d7af7",
+    "stage3ab_closure_commit": "e5f3ad9d6ca59fbe4696d80a4040566e710ccdc9",
+    "stage3c_authority_commit": "f38cfaa13604f7284c3de13b785d3b663729d910",
+    "stage3c_run": 36269000173,
+    "stage3c_commit": "3168be9cfc74ff3e6cbbc1ef76fb0c588422fe01"
   },
   "stage4_5": "NOT_EXECUTED; templates prepared, outcome-dependent roles not evaluated",
-  "next_action": "Verify primary LMC and GP likelihood-gradient sources, freeze one LMC2_RBF_M32 candidate authority, then activate Stage3C. Stage4 pools may freeze only after all Stage3 closes.",
+  "next_action": "Audit LMC run36269000173, archive Stage3C, run gpr_stage3_closure_v1.py 3, then freeze/commit Stage4 pools BEFORE activating final ensemble workflow. Independently verify final artifacts and generate Turkish dossier.",
   "selection": "DEV_ONLY; 2025/2026 strictly reporting only; no random split; DB READ_ONLY",
   "memory_policy": "This checkpoint and latest GitHub artifact evidence supersede conversational summaries. Authorization persists through stage and context boundaries.",
   "prepared_local_only": [
-    ".github/workflows/gpr-stage3c-v1.yml",
     ".github/workflows/gpr-stage4-final-v1.yml"
   ],
   "provisional_lmc_code_commit": "009920121815383c1964a811a9883eccc0ae4f7a",
