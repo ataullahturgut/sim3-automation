@@ -94,29 +94,93 @@
     {
       "id": 108447551125,
       "name": "batch5 (SCA)",
-      "status": "in_progress",
-      "conclusion": null
+      "status": "completed",
+      "conclusion": "success"
     },
     {
       "id": 108447551133,
       "name": "batch5 (CS)",
-      "status": "in_progress",
-      "conclusion": null
+      "status": "completed",
+      "conclusion": "success"
     },
     {
       "id": 108447551136,
       "name": "batch5 (SALP)",
-      "status": "in_progress",
-      "conclusion": null
+      "status": "completed",
+      "conclusion": "success"
     },
     {
       "id": 108447551196,
       "name": "batch5 (SMA)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447881948,
+      "name": "batch6 (JAYA)",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 108447881974,
+      "name": "batch6 (GOA)",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 108447881981,
+      "name": "batch6 (ALO)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 108447881998,
+      "name": "batch6 (TLBO)",
       "status": "in_progress",
       "conclusion": null
     }
   ],
   "artifacts": [
+    {
+      "id": 10911590599,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTU5MDU5OQ==",
+      "name": "rbfnn-stage1-ALO",
+      "size_in_bytes": 17932,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911590599",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911590599/zip",
+      "expired": false,
+      "digest": "sha256:01af16d75cfdd699849d1bf156361383f4648eb15b8c204b73dfbc3f4684ee63",
+      "created_at": "2026-09-26T17:07:15Z",
+      "updated_at": "2026-09-26T17:07:15Z",
+      "expires_at": "2026-12-25T16:49:22Z",
+      "workflow_run": {
+        "id": 36256830372,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "a09559f84075e53f0a38b408bcd6977c99b6e12c"
+      }
+    },
+    {
+      "id": 10911516015,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTUxNjAxNQ==",
+      "name": "rbfnn-stage1-SMA",
+      "size_in_bytes": 17868,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911516015",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911516015/zip",
+      "expired": false,
+      "digest": "sha256:bec47951c99d0b9af4b2a89fa900be87745731ac070704d764ca05bc75085981",
+      "created_at": "2026-09-26T17:05:22Z",
+      "updated_at": "2026-09-26T17:05:22Z",
+      "expires_at": "2026-12-25T16:49:22Z",
+      "workflow_run": {
+        "id": 36256830372,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "a09559f84075e53f0a38b408bcd6977c99b6e12c"
+      }
+    },
     {
       "id": 10911491233,
       "node_id": "MDg6QXJ0aWZhY3QxMDkxMTQ5MTIzMw==",
@@ -238,6 +302,26 @@
       }
     },
     {
+      "id": 10911311967,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMTMxMTk2Nw==",
+      "name": "rbfnn-stage1-SALP",
+      "size_in_bytes": 17881,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911311967",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10911311967/zip",
+      "expired": false,
+      "digest": "sha256:2e31e615e7603b37b33a4930108ae18ac3ee1b7933d28fe6bdb03d61d13f23b6",
+      "created_at": "2026-09-26T17:06:04Z",
+      "updated_at": "2026-09-26T17:06:04Z",
+      "expires_at": "2026-12-25T16:49:22Z",
+      "workflow_run": {
+        "id": 36256830372,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "a09559f84075e53f0a38b408bcd6977c99b6e12c"
+      }
+    },
+    {
       "id": 10911201564,
       "node_id": "MDg6QXJ0aWZhY3QxMDkxMTIwMTU2NA==",
       "name": "rbfnn-stage1-DE",
@@ -338,6 +422,26 @@
       }
     },
     {
+      "id": 10910693139,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDY5MzEzOQ==",
+      "name": "rbfnn-stage1-CS",
+      "size_in_bytes": 18059,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910693139",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910693139/zip",
+      "expired": false,
+      "digest": "sha256:2dd347278682f25b6f3034dd197c981215807abb06f94a40ff99fd33137027a0",
+      "created_at": "2026-09-26T17:06:24Z",
+      "updated_at": "2026-09-26T17:06:24Z",
+      "expires_at": "2026-12-25T16:49:22Z",
+      "workflow_run": {
+        "id": 36256830372,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "a09559f84075e53f0a38b408bcd6977c99b6e12c"
+      }
+    },
+    {
       "id": 10910513816,
       "node_id": "MDg6QXJ0aWZhY3QxMDkxMDUxMzgxNg==",
       "name": "rbfnn-stage1-GA",
@@ -388,6 +492,26 @@
       "digest": "sha256:e0331141e043a5d79fed56e935d889013ad12a6601e61b0ee7de8fb593b7415b",
       "created_at": "2026-09-26T16:55:37Z",
       "updated_at": "2026-09-26T16:55:37Z",
+      "expires_at": "2026-12-25T16:49:22Z",
+      "workflow_run": {
+        "id": 36256830372,
+        "repository_id": 1308067490,
+        "head_repository_id": 1308067490,
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "head_sha": "a09559f84075e53f0a38b408bcd6977c99b6e12c"
+      }
+    },
+    {
+      "id": 10910383641,
+      "node_id": "MDg6QXJ0aWZhY3QxMDkxMDM4MzY0MQ==",
+      "name": "rbfnn-stage1-SCA",
+      "size_in_bytes": 17877,
+      "url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910383641",
+      "archive_download_url": "https://api.github.com/repos/ataullahturgut/sim3-automation/actions/artifacts/10910383641/zip",
+      "expired": false,
+      "digest": "sha256:93713a1c01820f0b687ae98cbf533ef02135097575ed5757a35fd430c36124fa",
+      "created_at": "2026-09-26T17:05:19Z",
+      "updated_at": "2026-09-26T17:05:19Z",
       "expires_at": "2026-12-25T16:49:22Z",
       "workflow_run": {
         "id": 36256830372,
