@@ -2250,3 +2250,12 @@ Run **36258593871**, commit `80acdfeb141b1daaa0eecf893b740143fcac6202`. Adaptive
 ### RBFNN Stage 3A.2 — COMPLETE / AUDITED
 
 Run **36258593871**, commit `80acdfeb141b1daaa0eecf893b740143fcac6202`. TLBO-tuned PSO: job 108450632348 / artifact 10911547589, DEV ΣAE 1610.0497 / 19 directions. DE-tuned PSO: job 108450632407 / artifact 10911677231, DEV ΣAE 1524.1595 / 20 directions. Both scientific PASS, dominated by DE-ABC 1415.8371 / 25 and retained as benchmarks. Full specification, bounds and corrected external metrics in Stage-3 report/artifacts. Frozen parents unchanged, DEV-only selection, 2025/2026 excluded, chronology PASS, DB READ_ONLY/invariants equal. Next: Adaptive Crow + PSO-TLBO.
+
+
+### RBFNN Stage 3A closure / Stage 3B — COMPLETE
+
+Run **36258593871**, commit `80acdfeb141b1daaa0eecf893b740143fcac6202`. Adaptive Crow: job 108451546851 / artifact 10911986536, DEV ΣAE 1455.8616 / 21 directions. PSO-TLBO: job 108451546834 / artifact 10911578130, DEV ΣAE 1489.6671 / 21 directions. Both scientific PASS. All **6/6** mandatory refinements audited; Adaptive Crow leads Stage 3A but is dominated by DE-ABC 1415.8371 / 25. Corrected external reports and full specifications/bounds are in Stage-3 report and compressed raw evidence.
+
+Stage 3B **CLOSED_NOT_OPENED**: no MPA+SCA/GA/CPA clears the predeclared DEV correlation/rescue/price-win rule. No post-result parent edits. Next Stage 3C: **MOLS-RBFNN**, Chen/Grant/Cowan (1991), verified author-hosted primary full text; exact source, adaptations and structural distinction in Stage-3C authority. No generic optimizer relabeled as a new model.
+
+Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 exclusion PASS; random split NONE; chronology/leakage checks PASS; DB READ_ONLY/invariants equal; scientific gate PASS; run/job/artifact/commit manifest updated.

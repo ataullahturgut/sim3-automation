@@ -1,0 +1,33 @@
+name: RBFNN Stage 3C Multi-output OLS V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/rbfnn_mols_literature_v1.py
+      - .github/workflows/rbfnn-stage3c-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+jobs:
+  mols:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary] scikit-learn
+      - name: Run literature-specific RBF after Stage 3AB closure
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/rbfnn_mols_literature_v1.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rbfnn-stage3c-MOLS
+          path: rbfnn_stage3c_mols_result.json
+          if-no-files-found: error

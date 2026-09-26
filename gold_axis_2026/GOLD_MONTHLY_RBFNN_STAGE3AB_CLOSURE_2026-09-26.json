@@ -1,0 +1,9 @@
+{
+  "status": "COMPLETE",
+  "stage3a_completed": 6,
+  "stage3b": "CLOSED_NOT_OPENED",
+  "hybrid_eligible": [],
+  "hybrid_rule": "at most one of MPA+SCA/GA/CPA; both retained, correlation<.90, bidirectional direction rescues>=2, each price wins>=8; minimum correlation then price tie-break",
+  "selection": "DEV_ONLY",
+  "next": "MOLS_RBFNN"
+}

@@ -1,0 +1,38 @@
+{
+  "ADAPTIVE_PSO": {
+    "run_id": 36258593871,
+    "job_id": 108449967744,
+    "artifact_id": 10911333701,
+    "commit": "80acdfeb141b1daaa0eecf893b740143fcac6202"
+  },
+  "ADAPTIVE_TLBO": {
+    "run_id": 36258593871,
+    "job_id": 108449967875,
+    "artifact_id": 10911686683,
+    "commit": "80acdfeb141b1daaa0eecf893b740143fcac6202"
+  },
+  "TLBO_TUNED_PSO": {
+    "run_id": 36258593871,
+    "job_id": 108450632348,
+    "artifact_id": 10911547589,
+    "commit": "80acdfeb141b1daaa0eecf893b740143fcac6202"
+  },
+  "DE_TUNED_PSO": {
+    "run_id": 36258593871,
+    "job_id": 108450632407,
+    "artifact_id": 10911677231,
+    "commit": "80acdfeb141b1daaa0eecf893b740143fcac6202"
+  },
+  "ADAPTIVE_CROW": {
+    "run_id": 36258593871,
+    "job_id": 108451546851,
+    "artifact_id": 10911986536,
+    "commit": "80acdfeb141b1daaa0eecf893b740143fcac6202"
+  },
+  "PSO_TLBO": {
+    "run_id": 36258593871,
+    "job_id": 108451546834,
+    "artifact_id": 10911578130,
+    "commit": "80acdfeb141b1daaa0eecf893b740143fcac6202"
+  }
+}
