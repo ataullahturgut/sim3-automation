@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
-> **Current checkpoint — 2026-09-26: N2 GPR Stage0 COMPLETE; Stage1 6/32 audited, no parent selected. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
+> **Current checkpoint — 2026-09-26: N2 GPR Stage0 COMPLETE; Stage1 7/32 audited, no parent selected. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
 
 
 **Date:** 2026-09-25  
@@ -2340,3 +2340,17 @@ Run **36263592441**, commit **b5885a50dfbc17474b8f22ac2e8b61f43b7b748d**. Shared
 | DE | 108463902811 | 10912349208 | 1924.6270 / 21/33 | 1193.9617 / 9/12 | 1500.4802 / 5/7 | PASS; parent selection deferred |
 
 Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 excluded; random split NONE; origin/freeze-hash checks PASS; DB READ_ONLY/invariants equal; gate failures retained; manifest updated. Next: Stage1.2.
+
+
+### GPR Stage 1.2 — COMPLETE / AUDITED
+
+Run **36263592441**, commit **b5885a50dfbc17474b8f22ac2e8b61f43b7b748d**. Shared script `tools/gpr_experiment_v1.py`, workflow `.github/workflows/gpr-stage1-v1.yml`; frozen22 bounds, population24/generations45/repeats3 and objective/refit in GPR authority.
+
+| Method | Job | Artifact | DEV ΣAE / direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Gate / decision |
+|---|---|---|---|---|---|---|
+| MPA | 108464326830 | 10913356064 | 1701.5802 / 23/33 | 1310.8517 / 10/12 | 1627.5845 / 4/7 | PASS; parent selection deferred |
+| ABC | 108464327155 | 10912909413 | 1672.2945 / 22/33 | 1270.7420 / 9/12 | 1733.8828 / 3/7 | PASS; parent selection deferred |
+| SSA | 108464326883 | 10913208515 | 1798.1173 / 21/33 | 1073.4934 / 9/12 | 1822.8569 / 4/7 | PASS; parent selection deferred |
+| GWO | 108464326989 | 10913365971 | 1650.2596 / 21/33 | 1309.3998 / 7/12 | 1714.9181 / 3/7 | PASS; parent selection deferred |
+
+Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 excluded; random split NONE; origin/freeze-hash checks PASS; DB READ_ONLY/invariants equal; gate failures retained; manifest updated. Next: Stage1.3.

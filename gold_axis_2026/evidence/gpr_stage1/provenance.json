@@ -34,5 +34,11 @@
     "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
     "job_id": 108463902930,
     "run_id": 36263592441
+  },
+  "SSA": {
+    "artifact_id": 10913208515,
+    "commit": "b5885a50dfbc17474b8f22ac2e8b61f43b7b748d",
+    "job_id": 108464326883,
+    "run_id": 36263592441
   }
 }

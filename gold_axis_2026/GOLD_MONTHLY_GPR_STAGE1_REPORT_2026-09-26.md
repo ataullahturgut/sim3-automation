@@ -9,6 +9,7 @@ Selection authority DEV only. External metrics reporting only, theta/kernel/scal
 | MPA | 1701.5802 | 23/33 | 51.5630 | 64.8893 | 0.9091 | 1.408e+07 | ELIGIBLE |
 | GA | 1723.5877 | 21/33 | 52.2299 | 63.4427 | 0.8788 | 9.282e+04 | ELIGIBLE |
 | PSO | 1780.2169 | 19/33 | 53.9460 | 65.0889 | 0.8485 | 1.682e+06 | ELIGIBLE |
+| SSA | 1798.1173 | 21/33 | 54.4884 | 68.4977 | 0.8788 | 1.816e+05 | ELIGIBLE |
 | DE | 1924.6270 | 21/33 | 58.3220 | 71.5043 | 0.9091 | 6.502e+07 | ELIGIBLE |
 
 ## Reporting only
@@ -21,6 +22,7 @@ Selection authority DEV only. External metrics reporting only, theta/kernel/scal
 | GWO | 1309.3998 / 7/12 | 1714.9181 / 3/7 |
 | MPA | 1310.8517 / 10/12 | 1627.5845 / 4/7 |
 | PSO | 1377.4255 / 8/12 | 1448.8102 / 4/7 |
+| SSA | 1073.4934 / 9/12 | 1822.8569 / 4/7 |
 
 ## Provenance and interpretation
 
@@ -30,6 +32,7 @@ Selection authority DEV only. External metrics reporting only, theta/kernel/scal
 - GWO: run 36263592441, commit `b5885a50dfbc17474b8f22ac2e8b61f43b7b748d`; exact source, bounds and per-origin hyperparameters/optimizer termination retained in artifact. Job/artifact IDs in adjacent provenance and ledger.
 - MPA: run 36263592441, commit `b5885a50dfbc17474b8f22ac2e8b61f43b7b748d`; exact source, bounds and per-origin hyperparameters/optimizer termination retained in artifact. Job/artifact IDs in adjacent provenance and ledger.
 - PSO: run 36263592441, commit `b5885a50dfbc17474b8f22ac2e8b61f43b7b748d`; exact source, bounds and per-origin hyperparameters/optimizer termination retained in artifact. Job/artifact IDs in adjacent provenance and ledger.
+- SSA: run 36263592441, commit `b5885a50dfbc17474b8f22ac2e8b61f43b7b748d`; exact source, bounds and per-origin hyperparameters/optimizer termination retained in artifact. Job/artifact IDs in adjacent provenance and ledger.
 
 Intervals are uncalibrated predictive-observation intervals. Coverage/NLPD are diagnostics, not new acceptance authority. Finite budget-limited L-BFGS candidates are explicitly recorded and are not claims of converged/global optima.
 
