@@ -1,4 +1,4 @@
-name: Gold Monthly ANFIS Stage 3C Literature
+name: Gold Monthly ANFIS Stage 3C Literature V2
 on:
   push:
     branches: [gold-midas-headswap-v1-20260925]
