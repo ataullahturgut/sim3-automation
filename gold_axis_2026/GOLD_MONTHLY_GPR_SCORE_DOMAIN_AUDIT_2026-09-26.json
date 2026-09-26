@@ -4,9 +4,17 @@
       "artifact_id": 10912689533,
       "commit": "356015a4d03988342bdbb575681ed4a830ef6bc1",
       "dev_freeze_sha256": "98a1602720b767d872b31bee199227e75f22b18d12f8d884af4146e826019a51",
+      "differing_float_count": 0,
       "exact_dev_hash_match": true,
+      "float_tolerance": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      },
       "job_id": 108466913684,
+      "max_absolute_float_difference": 0,
+      "numerically_identical_replay": true,
       "original_available": true,
+      "replay_dev_freeze_sha256": "98a1602720b767d872b31bee199227e75f22b18d12f8d884af4146e826019a51",
       "run_id": "36264658833",
       "score_domain": {
         "finite_calls": 111521,
@@ -20,10 +28,18 @@
     "ALO": {
       "artifact_id": 10913337530,
       "commit": "356015a4d03988342bdbb575681ed4a830ef6bc1",
-      "dev_freeze_sha256": "2b82e2e43954be971063f26299a5318ae99a51990f2bd05039e5294b242404f8",
+      "dev_freeze_sha256": "5d296ebe29d65eb3d3310954ba82eb64844a733bf06c05d5a5ef5e11f8a8be99",
+      "differing_float_count": 661,
       "exact_dev_hash_match": false,
+      "float_tolerance": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      },
       "job_id": 108466913788,
-      "original_available": false,
+      "max_absolute_float_difference": 1.2223608791828156e-09,
+      "numerically_identical_replay": true,
+      "original_available": true,
+      "replay_dev_freeze_sha256": "2b82e2e43954be971063f26299a5318ae99a51990f2bd05039e5294b242404f8",
       "run_id": "36264658833",
       "score_domain": {
         "finite_calls": 115056,
@@ -37,10 +53,18 @@
     "DE_ABC": {
       "artifact_id": 10913840808,
       "commit": "356015a4d03988342bdbb575681ed4a830ef6bc1",
-      "dev_freeze_sha256": "f3d7744c7632588ca387ad76a1354bcfe967dc9b1930fd011d2017e1ba1f716b",
+      "dev_freeze_sha256": null,
+      "differing_float_count": 0,
       "exact_dev_hash_match": false,
+      "float_tolerance": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      },
       "job_id": 108466913693,
+      "max_absolute_float_difference": 0,
+      "numerically_identical_replay": false,
       "original_available": false,
+      "replay_dev_freeze_sha256": "f3d7744c7632588ca387ad76a1354bcfe967dc9b1930fd011d2017e1ba1f716b",
       "run_id": "36264658833",
       "score_domain": {
         "finite_calls": 224753,

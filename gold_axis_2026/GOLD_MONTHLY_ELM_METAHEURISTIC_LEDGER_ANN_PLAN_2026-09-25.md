@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
-> **Current checkpoint — 2026-09-26: N2 GPR Stage0 COMPLETE; Stage1 15/32 audited, no parent selected. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
+> **Current checkpoint — 2026-09-26: N2 GPR Stage0 COMPLETE; Stage1 30/32 audited, no parent selected. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
 
 
 **Date:** 2026-09-25  
@@ -2394,3 +2394,63 @@ Run **36263592441**, commit **b5885a50dfbc17474b8f22ac2e8b61f43b7b748d**. Shared
 | FA_FPA | 108465649964 | 10913277531 | 1724.6532 / 25/33 | 1264.0104 / 9/12 | 1711.5714 / 3/7 | PASS; parent selection deferred |
 
 Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 excluded; random split NONE; origin/freeze-hash checks PASS; DB READ_ONLY/invariants equal; gate failures retained; manifest updated. Next: Stage1.5.
+
+
+### GPR Stage 1.5 — COMPLETE / AUDITED
+
+Run **36263592441**, commit **b5885a50dfbc17474b8f22ac2e8b61f43b7b748d**. Shared script `tools/gpr_experiment_v1.py`, workflow `.github/workflows/gpr-stage1-v1.yml`; frozen22 bounds, population24/generations45/repeats3 and objective/refit in GPR authority.
+
+| Method | Job | Artifact | DEV ΣAE / direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Gate / decision |
+|---|---|---|---|---|---|---|
+| CS | 108467841107 | 10913716533 | 1835.2043 / 22/33 | 1342.7277 / 10/12 | 1698.3633 / 3/7 | PASS; parent selection deferred |
+| SCA | 108467841117 | 10913686573 | 1713.8379 / 23/33 | 1020.1019 / 9/12 | 1602.2326 / 4/7 | PASS; parent selection deferred |
+| SALP | 108467841122 | 10913816298 | 1841.6043 / 20/33 | 1281.1444 / 10/12 | 1726.2159 / 3/7 | PASS; parent selection deferred |
+| SMA | 108467841086 | 10914185898 | 1701.0740 / 22/33 | 1123.6182 / 9/12 | 1650.1670 / 4/7 | PASS; parent selection deferred |
+
+Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 excluded; random split NONE; origin/freeze-hash checks PASS; DB READ_ONLY/invariants equal; gate failures retained; manifest updated. Next: Stage1.6.
+
+
+### GPR Stage 1.6 — COMPLETE / AUDITED
+
+Run **36263592441**, commit **b5885a50dfbc17474b8f22ac2e8b61f43b7b748d**. Shared script `tools/gpr_experiment_v1.py`, workflow `.github/workflows/gpr-stage1-v1.yml`; frozen22 bounds, population24/generations45/repeats3 and objective/refit in GPR authority.
+
+| Method | Job | Artifact | DEV ΣAE / direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Gate / decision |
+|---|---|---|---|---|---|---|
+| GOA | 108468283985 | 10913288541 | 1850.3608 / 22/33 | 1345.6494 / 9/12 | 1748.7540 / 3/7 | PASS; parent selection deferred |
+| ALO | 108468283980 | 10914116270 | 1704.0561 / 21/33 | 1127.1573 / 9/12 | 1617.5643 / 4/7 | PASS; parent selection deferred |
+| TLBO | 108468284010 | 10913656152 | 1736.5717 / 19/33 | 1229.3699 / 10/12 | 1817.4760 / 3/7 | PASS; parent selection deferred |
+| JAYA | 108468284040 | 10914065648 | 1760.9248 / 22/33 | 1364.4745 / 7/12 | 1814.9369 / 3/7 | PASS; parent selection deferred |
+
+Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 excluded; random split NONE; origin/freeze-hash checks PASS; DB READ_ONLY/invariants equal; gate failures retained; manifest updated. Next: Stage1.7.
+
+
+### GPR Stage 1.7 — COMPLETE / AUDITED
+
+Run **36263592441**, commit **b5885a50dfbc17474b8f22ac2e8b61f43b7b748d**. Shared script `tools/gpr_experiment_v1.py`, workflow `.github/workflows/gpr-stage1-v1.yml`; frozen22 bounds, population24/generations45/repeats3 and objective/refit in GPR authority.
+
+| Method | Job | Artifact | DEV ΣAE / direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Gate / decision |
+|---|---|---|---|---|---|---|
+| HGS | 108468774112 | 10913941795 | 1814.9260 / 20/33 | 1165.3952 / 9/12 | 1718.6267 / 4/7 | PASS; parent selection deferred |
+| CHOA | 108468774107 | 10914291094 | 1822.1087 / 17/33 | 1124.4099 / 10/12 | 1746.6646 / 4/7 | PASS; parent selection deferred |
+| HGSO | 108468774044 | 10913466849 | 1677.9024 / 19/33 | 1243.9984 / 10/12 | 1704.9450 / 4/7 | PASS; parent selection deferred |
+| AOA | 108468774129 | 10913482813 | 1611.8839 / 22/33 | 1089.9437 / 8/12 | 1492.7431 / 5/7 | PASS; parent selection deferred |
+
+Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 excluded; random split NONE; origin/freeze-hash checks PASS; DB READ_ONLY/invariants equal; gate failures retained; manifest updated. Next: Stage1.8.
+
+
+### GPR Stage 1.8 — COMPLETE / AUDITED
+
+Run **36263592441**, commit **b5885a50dfbc17474b8f22ac2e8b61f43b7b748d**. Shared script `tools/gpr_experiment_v1.py`, workflow `.github/workflows/gpr-stage1-v1.yml`; frozen22 bounds, population24/generations45/repeats3 and objective/refit in GPR authority.
+
+| Method | Job | Artifact | DEV ΣAE / direction | 2025 ΣAE / direction | 2026 ΣAE / direction | Gate / decision |
+|---|---|---|---|---|---|---|
+| CPA | 108469283872 | 10914186822 | 1778.4226 / 22/33 | 1174.2591 / 8/12 | 1856.1890 / 3/7 | PASS; parent selection deferred |
+| KRILL | 108469283903 | 10913299086 | 1769.3329 / 22/33 | 1285.7184 / 9/12 | 1856.1225 / 3/7 | PASS; parent selection deferred |
+| CROW | 108469283941 | 10914450763 | 1736.9995 / 22/33 | 1237.0919 / 9/12 | 1777.8806 / 2/7 | PASS; parent selection deferred |
+
+Kontrol ve Uyum Özeti: DEV-only PASS; 2025/2026 excluded; random split NONE; origin/freeze-hash checks PASS; DB READ_ONLY/invariants equal; gate failures retained; manifest updated. Next: Stage1.9.
+
+
+### GPR technical replay audit amendment — floating-point identity
+
+ALO original and replay have identical discrete decisions, selected repeats, source hashes and call counts, but non-bitwise floating-point arithmetic: maximum price difference DEV4.55e-13, 2025 9.09e-13, 2026 1.82e-12. Exact serialized DEV hash equality therefore failed despite numerical equivalence. The original exact-hash requirement above is superseded transparently: compare every numeric value in DEV/2025/2026 recursively with rtol=1e-10/atol=1e-10, every discrete field exactly; compare actual theta arrays rather than their raw-byte hashes. Original/replay hashes and bitwise status remain separately recorded. This does not change scores, models, seeds, selections or original results. ABC is bitwise identical; ALO passes strict numerical comparison; DE-ABC original pending. Stage2 remains blocked until all3 pass. This is an implementation audit amendment, not a scientific model gate relaxation.
