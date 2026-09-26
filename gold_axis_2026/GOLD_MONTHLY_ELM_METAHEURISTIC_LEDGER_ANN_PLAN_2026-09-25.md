@@ -1582,3 +1582,169 @@ DEV-only active-metric results:
 **Progress:** ELMFIS Stage 1 = 31/33 complete.  
 **STOP GATE:** Stage 1.9 has not started.  
 **Next after explicit user confirmation only:** DE-ABC-ELMFIS + Multi-swarm-ELMFIS.
+
+
+---
+
+## 16. POST-ANFIS ROADMAP REVISION — CURRENT / BINDING (2026-09-26)
+
+### 16.1 Why the roadmap is changed
+
+The prior post-ANFIS sequence:
+- RBFNN
+- Multi-output / GOR / PSO-GOR-ELM
+- Metaheuristic SVR
+
+is now **SUPERSEDED as a mandatory execution order**.
+
+Reason: completed ELM, ANN, ELMFIS and ANFIS experiments show that repeatedly changing only the optimizer often produces:
+- small or inconsistent DEV gains;
+- severe meta-overfit in learned weights;
+- pathological forecasts in some adaptive/meta-on-meta variants;
+- weak transport/stress stability despite apparently attractive in-sample or same-DEV results.
+
+The next research phase must therefore prioritize **new model geometry / inductive bias** rather than blind metaheuristic enumeration.
+
+### 16.2 Current reference hierarchy before the next families
+
+Active DEV selection authority remains:
+- DEV = 2022-04..2024-12, n=33.
+- Primary criteria: cumulative absolute price error (ΣAE) + monthly direction accuracy.
+- 2025 and 2026 remain reporting/stress only and must not influence model selection.
+
+Current principal references:
+- ChHHO-ANFIS — current price leader.
+- REDUCED4 ANN — balanced price/direction challenger.
+- SMA-ELMFIS — direction specialist.
+- AOA-ELM — single-model ELM benchmark.
+
+### 16.3 New governed roadmap
+
+#### Phase N1 — Compact RBFNN benchmark
+Purpose:
+- test RBFNN as a genuinely different nonlinear basis model;
+- avoid building a large optimizer program around it unless the baseline itself is competitive.
+
+Required experiments:
+1. Vanilla RBFNN.
+2. Regularized RBFNN.
+3. Chronology-safe center / spread / ridge tuning.
+4. DEV-only comparison against current reference set.
+
+Decision rule:
+- if RBFNN is not competitive on DEV, close the family;
+- do not launch large PSO/GA/DE/... RBFNN screens without a new scientific reason.
+
+#### Phase N2 — Gaussian Process family — HIGH PRIORITY
+Purpose:
+- exploit strong small-sample regularization;
+- add uncertainty-aware nonlinear modeling;
+- exploit the four related metal outputs where possible.
+
+Required experiments:
+1. Single-output GPR benchmark.
+2. Kernel comparison: ARD-RBF and Matérn at minimum.
+3. 4-output / multi-output Gaussian Process using LMC/coregionalization if computationally feasible.
+4. DEV-only hyperparameter selection.
+5. Numerical/conditioning and uncertainty calibration diagnostics.
+
+This is a priority family because it provides a new model geometry rather than another optimizer wrapper.
+
+#### Phase N3 — Multi-task RFF-BLR
+Purpose:
+- test random Fourier feature nonlinear representation plus Bayesian shrinkage/sparsity;
+- exploit the 4-output structure;
+- target the small-sample multi-task setting directly.
+
+Required experiments:
+1. shared RFF feature map;
+2. Bayesian linear multi-task output layer;
+3. chronology-safe feature-scale/kernel-width selection;
+4. sparsity/regularization diagnostics;
+5. DEV-only comparison.
+
+#### Phase N4 — Robust Multi-output ELM
+Purpose:
+- preserve the efficient ELM family while changing the loss/regularization geometry;
+- address outlier sensitivity and multi-target coupling.
+
+Required experiments:
+1. GOR-ELM baseline.
+2. If available and well-specified, improved/regularized GOR variant.
+3. Only if the plain robust model is competitive, authorize one controlled tuner/refinement.
+4. PSO-GOR-ELM is no longer automatic; it requires evidence from the untuned GOR result.
+
+No broad metaheuristic GOR screen is authorized by default.
+
+#### Phase N5 — Kernel Regression Block — replaces blind metaheuristic SVR
+Required candidate set:
+1. Kernel Ridge Regression (KRR).
+2. RBF-SVR.
+3. Least-Squares SVR / LS-SVM regression analogue where implementation is verified.
+4. Twin SVR / Twin Support Vector Regression.
+5. Kernel ELM / multi-task KELM where technically well-defined.
+
+Governance:
+- use one common chronology-safe hyperparameter protocol;
+- prefer convex/regularized fitting and small controlled hyperparameter search;
+- do not attach a separate metaheuristic optimizer to every kernel model by default.
+
+#### Phase N6 — Tree Boosting challenger
+Purpose:
+- add a structurally different nonlinear partitioning family.
+
+Candidate set:
+1. HistGradientBoosting / regularized GBM.
+2. LightGBM if implementation/dependencies are stable.
+3. XGBoost if implementation/dependencies are stable.
+
+Governance:
+- shallow trees;
+- strong regularization;
+- compact, predeclared search;
+- no broad optimizer-on-optimizer layer initially.
+
+#### Phase N7 — Final cross-family tournament
+Only after N1-N6 are completed or explicitly closed.
+
+Minimum comparison set:
+- ChHHO-ANFIS.
+- REDUCED4 ANN.
+- SMA-ELMFIS.
+- best GP/MOGP.
+- best RFF-BLR.
+- best robust multi-output ELM.
+- best kernel model.
+- best boosting model.
+
+Compare under:
+- DEV ΣAE;
+- DEV direction;
+- MAE;
+- RMSE;
+- worst-month AE;
+- year stability;
+- relative MAE vs RW;
+- leave-one-origin sensitivity where practical.
+
+Then report 2025/2026 transport/stress without using them to alter the frozen DEV decision.
+
+### 16.4 Explicitly parked / not automatically authorized
+
+Do not automatically reopen:
+- broad metaheuristic SVR screens;
+- 20+ optimizer RBFNN screens;
+- broad PSO/GA/DE/ABC/... GOR enumeration;
+- new ANFIS optimizer crosses;
+- new ensemble-weight optimization;
+- generic stacking after the demonstrated small-sample meta-overfit;
+- LSTM/GRU/Transformer as the next primary family.
+
+These may be reopened only with a new, independently justified scientific hypothesis.
+
+### 16.5 Binding next action
+
+The next project action is:
+**Phase N1 — Compact RBFNN benchmark**.
+
+The new roadmap must be followed sequentially unless a phase is scientifically blocked or explicitly closed by the user.
