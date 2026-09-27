@@ -1,0 +1,84 @@
+name: Gold Monthly Boosting Stage 6C-A CMAES GBRT Chunks V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-boosting-stage6c-a-cmaes-gbrt-chunks-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  chunk:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {start: '2022-04', end: '2022-06', tag: '2022a'}
+          - {start: '2022-07', end: '2022-09', tag: '2022b'}
+          - {start: '2022-10', end: '2022-12', tag: '2022c'}
+          - {start: '2023-01', end: '2023-03', tag: '2023a'}
+          - {start: '2023-04', end: '2023-06', tag: '2023b'}
+          - {start: '2023-07', end: '2023-09', tag: '2023c'}
+          - {start: '2023-10', end: '2023-12', tag: '2023d'}
+          - {start: '2024-01', end: '2024-03', tag: '2024a'}
+          - {start: '2024-04', end: '2024-06', tag: '2024b'}
+          - {start: '2024-07', end: '2024-09', tag: '2024c'}
+          - {start: '2024-10', end: '2024-12', tag: '2024d'}
+    name: cmaes-gbrt-${{ matrix.tag }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install frozen packages
+        run: >
+          python -m pip install
+          'numpy==2.4.6'
+          'psycopg[binary]==3.3.6'
+          'scikit-learn==1.9.1'
+          'xgboost==3.4.1'
+          'lightgbm==4.7.0'
+          'catboost==1.2.10'
+          'cma==4.5.0'
+      - name: Compile
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_monthly_boosting_stage6c_a_cmaes_gbrt_v1.py
+          python -m py_compile gold_axis_2026/tools/gold_monthly_boosting_stage6c_a_cmaes_gbrt_chunk_v1.py
+      - name: Run frozen chunk
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: >
+          python gold_axis_2026/tools/gold_monthly_boosting_stage6c_a_cmaes_gbrt_chunk_v1.py
+          --start "${{ matrix.start }}" --end "${{ matrix.end }}"
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import glob,json
+          fs=glob.glob('gold_monthly_boosting_stage6c_a_cmaes_gbrt_*.json')
+          assert len(fs)==1, fs
+          r=json.load(open(fs[0]))
+          assert r['scope']=='BOOSTING_STAGE6C_A_CMAES_GBRT_DEV_CHUNK_V1'
+          assert r['contract']['random_split']=='NONE'
+          assert r['contract']['database']=='READ_ONLY'
+          assert r['contract']['2025_role']=='NOT_OPENED_NOT_EVALUATED'
+          assert r['contract']['2026_role']=='QUARANTINED_NOT_USED_IN_DEVELOPMENT'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert all(x['cma_objective_calls']==80 for x in r['rows'])
+          print('BOOSTING_STAGE6C_A_CHUNK_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-boosting-stage6c-a-${{ matrix.tag }}
+          path: gold_monthly_boosting_stage6c_a_cmaes_gbrt_*.json
+          if-no-files-found: error
