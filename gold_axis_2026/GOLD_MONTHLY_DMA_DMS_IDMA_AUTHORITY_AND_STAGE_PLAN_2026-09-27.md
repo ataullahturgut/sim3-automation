@@ -291,3 +291,28 @@ Only after Stage 0 audit may Stage 1 begin.
 - DOW: authority-backed Stage 2.
 - IDMA: authority-backed Stage 3.
 - Multi-output DMA: NOT YET AUTHORIZED.
+
+
+---
+
+## 8. Execution checkpoint — 2026-09-27
+
+**Current family status: DEFERRED_REVISIT_LAST — NOT REJECTED.**
+
+The current frozen 8-feature VW-MIDAS information set did not allow DMA/DMS/IDMA to beat the strongest nonlinear GOLD MONTHLY families. A canonical Gold-only 256-subset audit corrected the family reference to:
+
+- Canonical DMA (alpha=0.99, lambda=0.99): DEV SigmaAE **1486.2561**, direction **19/33**.
+- Canonical DMS (alpha=0.99, lambda=0.99): DEV SigmaAE **1489.8247**, direction **20/33**.
+- Best sample-size diagnostic point: 108-month DMS, DEV SigmaAE **1483.8794**, direction **20/33**.
+
+The 60/84/108/132/MAX learning curve was non-monotonic, so simple sample shortage is not supported as the dominant cause. A diagnostic addition of Fed funds + Nasdaq + USD/CNY also did not rescue performance. Full-DEV PIT GPR coverage is not proven and was not backfilled with final-vintage data.
+
+Published gold DMA/IDMA studies use a broader heterogeneous macro-financial information set. Therefore, the family is parked for a later **Literature Replication Track**, requiring an exact predictor/lag/transformation matrix, full origin-safe PIT provenance, paper-faithful return-domain replication, a separate project H=1 average-price lane, and a true iterative-IDMA audit.
+
+Do not spend further compute on small alpha/lambda/window tweaks under the current frozen 8-feature information set.
+
+Binding deferred checkpoint:
+- `GOLD_MONTHLY_DMA_DMS_IDMA_DEFERRED_CHECKPOINT_2026-09-27.md`
+- `GOLD_MONTHLY_DMA_DMS_IDMA_DEFERRED_CHECKPOINT_2026-09-27.json`
+
+Reopen only after the other planned model families are tested, or when a substantially more literature-faithful origin-safe predictor panel exists.
