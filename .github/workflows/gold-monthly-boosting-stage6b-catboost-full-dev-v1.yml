@@ -1,0 +1,77 @@
+name: Gold Monthly Boosting Stage 6B CatBoost Full DEV V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-boosting-stage6b-catboost-full-dev-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  finalist:
+    name: catboost6b-${{ matrix.method }}
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        method: [VANILLA, PSO, MFO, DE_ABC, HHO, TLBO]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install frozen packages
+        run: >
+          python -m pip install
+          'numpy==2.4.6'
+          'psycopg[binary]==3.3.6'
+          'scikit-learn==1.9.1'
+          'xgboost==3.4.1'
+          'lightgbm==4.7.0'
+          'catboost==1.2.10'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_boosting_stage6b_catboost_full_dev_v1.py
+      - name: Run Stage 6B finalist
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_boosting_stage6b_catboost_full_dev_v1.py --method ${{ matrix.method }}
+      - name: Scientific gate
+        env:
+          METHOD: ${{ matrix.method }}
+        run: |
+          python - <<'PY'
+          import json, os
+          m=os.environ['METHOD']
+          p=f'gold_monthly_boosting_stage6b_catboost_{m.lower()}_result.json'
+          r=json.load(open(p))
+          assert r['scope']=='BOOSTING_STAGE6B_CATBOOST_FULL_DEV_NESTED_V1'
+          assert r['method']==m
+          assert r['contract']['dev']=='2022-04..2024-12'
+          assert r['contract']['dev_n']==33
+          assert r['contract']['random_split']=='NONE'
+          assert r['contract']['database']=='READ_ONLY'
+          assert r['contract']['2025_role']=='NOT_OPENED_NOT_EVALUATED'
+          assert r['contract']['2026_role']=='NOT_OPENED_NOT_EVALUATED'
+          assert len(r['rows'])==33
+          assert r['summary']['n']==33
+          assert all('2022-04' <= x['target'] <= '2024-12' for x in r['rows'])
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          if m!='VANILLA':
+              assert all(x['objective_calls'] <= 80 for x in r['rows'])
+          print('CATBOOST_STAGE6B_GATE=PASS',m)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-boosting-stage6b-catboost-${{ matrix.method }}
+          path: gold_monthly_boosting_stage6b_catboost_*_result.json
+          if-no-files-found: warn
