@@ -7,7 +7,8 @@ import psycopg
 import vw_midas_msvr_successor_v1 as base
 import gold_monthly_boosting_stage1_canonical_v1 as s1
 
-DEV_START, DEV_END = "2022-04", "2024-12"\nCOMMON_TRAIN_START = "2010-05"
+DEV_START, DEV_END = "2022-04", "2024-12"
+COMMON_TRAIN_START = "2010-05"
 METALS = ("Gold","Silver","Platinum","Palladium")
 REPS = ("CURRENT8","RAW_LEVEL_LAGS8","SIMPLE_RETURNS8","DAILY_SUMMARY12","MIXED20")
 EXPECTED_DIMS = {"CURRENT8":8,"RAW_LEVEL_LAGS8":8,"SIMPLE_RETURNS8":8,"DAILY_SUMMARY12":12,"MIXED20":20}
