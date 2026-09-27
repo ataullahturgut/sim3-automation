@@ -324,3 +324,11 @@ Rationale:
 - Primary comparison: DEV SigmaAE; direction is secondary.
 - Report every model × representation combination, then identify the best representation within each model for promotion to Stage 3.
 - Stage 2 does not authorize changing the project-wide frozen input contract for other model families.
+
+
+### Stage 2 engineering correction before any valid outcome
+The first Stage-2 execution failed before producing results because R2 3-month momentum is not buildable for historical targets 2010-03 and 2010-04. No model evidence was produced.
+
+To avoid unequal training-history confounding, the valid Stage-2 comparison uses a **common historical training start of 2010-05** for every representation and every estimator. This is the earliest target for which all five frozen representations are simultaneously buildable from the common metal history.
+
+CURRENT8 Stage-1 exact reproduction remains a separate reconciliation check using the original Stage-1 history. The Stage-2 comparative CURRENT8 score uses the common 2010-05 history, like all other representations.
