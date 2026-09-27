@@ -1,0 +1,86 @@
+{
+  "project": "GOLD MONTHLY FORECAST",
+  "family": "BOOSTING",
+  "date": "2026-09-27",
+  "status": "STAGE_0_COMPLETE",
+  "next_stage": "STAGE_1_CANONICAL_BASELINES",
+  "contract": {
+    "horizon": "H=1 next-calendar-month average XAU/USD",
+    "dev": "2022-04..2024-12",
+    "dev_n": 33,
+    "transport_2025": "LOCKED_UNTIL_STAGE_8",
+    "stress_2026": "LOCKED_UNTIL_STAGE_8",
+    "database": "READ_ONLY",
+    "random_split": "PROHIBITED",
+    "features": [
+      "GOLD_MR",
+      "GOLD_VW",
+      "SILVER_MR",
+      "SILVER_VW",
+      "PLATINUM_MR",
+      "PLATINUM_VW",
+      "PALLADIUM_MR",
+      "PALLADIUM_VW"
+    ],
+    "stage1_target": "next-month Gold log return -> origin previous Gold price * exp(pred)",
+    "primary_metric": "DEV_PRICE_SUM_ABS_ERROR"
+  },
+  "stage1_models": [
+    "GBRT",
+    "XGBOOST",
+    "CATBOOST_ORDERED",
+    "LIGHTGBM",
+    "RANDOM_FOREST_ANCHOR"
+  ],
+  "stage1_batch_size": 5,
+  "software": {
+    "python": "3.12",
+    "scikit_learn": "1.9.1",
+    "xgboost": "3.4.1",
+    "lightgbm": "4.7.0",
+    "catboost": "1.2.10"
+  },
+  "legacy_audit": {
+    "run_id": 36105855475,
+    "job_id": 107978083624,
+    "artifact_id": 10850784265,
+    "status": "EXPLORATORY_ONLY_NOT_CANONICAL",
+    "catboost": {
+      "dev_mae": 44.378077096365864,
+      "implied_sum_abs_error": 1464.4765441800735,
+      "direction_accuracy_pct": 57.57575757575758
+    },
+    "lightgbm": {
+      "dev_mae": 44.69493876103835,
+      "implied_sum_abs_error": 1474.9329791142657,
+      "direction_accuracy_pct": 60.60606060606061
+    },
+    "invalid_for_selection_reasons": [
+      "full DEV used both for hyperparameter selection and reported DEV score",
+      "selection objective was log-return MAE instead of primary price SigmaAE",
+      "four-metal multioutput target rather than canonical Gold-only",
+      "incomplete family comparison"
+    ]
+  },
+  "checklist": [
+    "Stage 0 Authority & Protocol Freeze COMPLETE",
+    "Stage 1 Canonical Baselines",
+    "Stage 2 Target & Loss Ablation",
+    "Stage 3 Capacity Scan",
+    "Stage 4 Regularization & Subsampling",
+    "Stage 5 Nested Optimization",
+    "Stage 6 Stability & Feature Audit",
+    "Stage 7 DEV-only Final Selection",
+    "Stage 8 Freeze + External Reporting",
+    "Stage H Hybrid only if justified"
+  ],
+  "authority": [
+    "Friedman 2001 DOI 10.1214/aos/1013203451",
+    "Chen & Guestrin 2016 DOI 10.1145/2939672.2939785",
+    "Ke et al. 2017 NeurIPS LightGBM",
+    "Prokhorenkova et al. 2018 NeurIPS CatBoost",
+    "Ben Jabeur et al. DOI 10.1007/s10479-021-04187-w",
+    "Cohen & Aiche 2023 DOI 10.1016/j.chaos.2023.114079",
+    "Suan et al. 2026 DOI 10.28991/ESJ-2026-010-03-016"
+  ]
+}
