@@ -811,3 +811,63 @@ Supporting:
 - DB read-only.
 - Stage 6A selects optimizer finalists only. It does not select the final forecasting model.
 - Stage 6B will run finalists on the full DEV nested chronology only after Stage 6A is reviewed.
+
+
+---
+
+## 19. Stage 6C-A pre-outcome amendment — CMA-ES–GBRT literature challenger
+
+Status at freeze: AUTHORIZED / OUTCOME NOT YET OBSERVED.
+
+Direct gold-specific authority:
+- Suan, Anbananthen & Kanan (2026), Emerging Science Journal 10(3), DOI 10.28991/ESJ-2026-010-03-016.
+- The source compares Grid Search, TPE and CMA-ES for monthly gold forecasting and reports CMA-ES-optimized Gradient Boosting as its strongest model.
+- Project implementation is an origin-safe adaptation, not an exact reproduction.
+
+Frozen lane:
+- GradientBoostingRegressor
+- DAILY_SUMMARY12
+- Gold next-month LOGRET -> price reconstruction
+- absolute_error loss
+- history start 2010-03
+
+Nested protocol:
+- outer DEV 2022-04..2024-12, n=33;
+- for every outer origin, last 12 available pre-target months are inner validation;
+- all earlier history is inner training;
+- optimizer objective = inner reconstructed-price SigmaAE / RW SigmaAE;
+- selected hyperparameters are refit on all pre-target history before the outer forecast;
+- outer target actual is not available to the optimizer.
+
+CMA-ES:
+- package cma 4.5.0;
+- 6-dimensional bounded search;
+- popsize 8;
+- 10 generations;
+- hard budget 80 calls/origin;
+- fixed deterministic per-origin seed;
+- no outcome-driven restart/rescue.
+
+Frozen search bounds:
+- max_depth 1..5;
+- n_estimators 50..500;
+- learning_rate log 0.01..0.20;
+- min_samples_leaf 1..10;
+- subsample 0.60..1.00;
+- max_features 0.60..1.00.
+
+Primary decision metric:
+- full 33-month DEV price SigmaAE.
+
+Comparator:
+- frozen Stage-5 GBRT DAILY_SUMMARY12 baseline, SigmaAE 1500.42946858865, direction 22/33.
+
+Governance:
+- 2025 remains NOT_OPENED.
+- previously viewed 2026 CatBoost stress evidence is QUARANTINED and may not influence Stage 6C-A.
+- random split NONE.
+- DB READ_ONLY.
+- Stage 6C-A does not authorize TPE, decomposition, VMD/CEEMDAN or ensemble stages.
+
+Exact freeze:
+`GOLD_MONTHLY_BOOSTING_STAGE6C_A_CMAES_GBRT_FREEZE_2026-09-27.md`
