@@ -332,3 +332,23 @@ The first Stage-2 execution failed before producing results because R2 3-month m
 To avoid unequal training-history confounding, the valid Stage-2 comparison uses a **common historical training start of 2010-05** for every representation and every estimator. This is the earliest target for which all five frozen representations are simultaneously buildable from the common metal history.
 
 CURRENT8 Stage-1 exact reproduction remains a separate reconciliation check using the original Stage-1 history. The Stage-2 comparative CURRENT8 score uses the common 2010-05 history, like all other representations.
+
+
+## 11. Stage 2 closure — 2026-09-27
+
+**Stage 2 Feature Representation Ablation: COMPLETE / PASS.**
+
+Binding conclusion:
+- CatBoost Ordered → CURRENT8 remains the primary lane.
+- XGBoost → RAW_LEVEL_LAGS8 is the price-error lane; CURRENT8 retained as direction challenger.
+- GBRT → DAILY_SUMMARY12.
+- LightGBM → RAW_LEVEL_LAGS8; MIXED20 retained as balanced challenger.
+- Random Forest anchor → DAILY_SUMMARY12.
+
+The feature-representation hypothesis is supported but algorithm-specific. No alternative representation beats the absolute Stage-1 CatBoost CURRENT8 SigmaAE of 1460.4339.
+
+Full report:
+`GOLD_MONTHLY_BOOSTING_STAGE2_FEATURE_REPRESENTATION_REPORT_2026-09-27.md`
+
+Next authorized stage after user approval:
+**Stage 3 — Target & Loss Ablation only.**
