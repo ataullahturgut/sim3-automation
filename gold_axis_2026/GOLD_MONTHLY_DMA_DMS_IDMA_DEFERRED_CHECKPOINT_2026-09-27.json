@@ -1,0 +1,122 @@
+{
+  "project": "GOLD MONTHLY FORECAST",
+  "family": "DMA_DMS_IDMA",
+  "date": "2026-09-27",
+  "status": "DEFERRED_REVISIT_LAST",
+  "decision": "NOT_REJECTED",
+  "reason": [
+    "Current frozen 8-feature information set does not beat strongest nonlinear families.",
+    "Sample-size learning curve does not support simple data shortage as dominant cause.",
+    "Fed funds + Nasdaq + USD/CNY diagnostic does not rescue performance.",
+    "Published gold DMA/IDMA studies use broader heterogeneous macro-financial information sets."
+  ],
+  "corrected_canonical": {
+    "contract": "Gold-only; all 2^8=256 frozen predictor subsets; alpha=0.99; lambda=0.99",
+    "dma": {
+      "dev_sum_abs_error": 1486.2560942107245,
+      "direction_correct": 19,
+      "direction_n": 33
+    },
+    "dms": {
+      "dev_sum_abs_error": 1489.8247189719323,
+      "direction_correct": 20,
+      "direction_n": 33
+    }
+  },
+  "sample_size_diagnostic": {
+    "N60": {
+      "sum_abs_error": 1489.096454053794,
+      "direction_correct": 19
+    },
+    "N84": {
+      "sum_abs_error": 1497.7097792925829,
+      "direction_correct": 19
+    },
+    "N108": {
+      "sum_abs_error": 1483.879387718499,
+      "direction_correct": 20
+    },
+    "N132": {
+      "sum_abs_error": 1488.016348795097,
+      "direction_correct": 20
+    },
+    "MAX": {
+      "sum_abs_error": 1489.8247189719323,
+      "direction_correct": 20
+    },
+    "monotone_error_decline": false,
+    "conclusion": "SIMPLE_DATA_SHORTAGE_NOT_SUPPORTED_AS_DOMINANT_CAUSE"
+  },
+  "information_set_diagnostic": {
+    "gpr": "EXCLUDED_NOT_FULL_DEV_PIT_PROVEN",
+    "gold2_dms": {
+      "sum_abs_error": 1489.8247189719323,
+      "direction_correct": 20
+    },
+    "market3_dms": {
+      "sum_abs_error": 1757.1889646937618,
+      "direction_correct": 17
+    },
+    "gold2_plus_market3_dms": {
+      "sum_abs_error": 1489.8247189719323,
+      "direction_correct": 20
+    },
+    "market3": [
+      "fedfunds_month_change",
+      "nasdaq_month_log_return",
+      "usdcny_month_log_return"
+    ],
+    "conclusion": "THREE_VARIABLE_MARKET_AUGMENTATION_DID_NOT_RESCUE"
+  },
+  "exploratory_idma": {
+    "authority_note": "Earlier IDMA used GOLD_MR-mandatory 128-subset space and custom Multi4 lane; retain as exploratory, not canonical replacement.",
+    "stage4": {
+      "best_sum_abs_error": 1495.6720769039769,
+      "direction_correct": 20
+    },
+    "stage5": {
+      "expanding_sum_abs_error": 1495.6720769039775,
+      "expanding_direction_correct": 20,
+      "w12_sum_abs_error": 1537.3871631040868,
+      "w12_direction_correct": 21
+    },
+    "stage6": {
+      "best_sum_abs_error": 1495.52682396319,
+      "direction_correct": 20
+    }
+  },
+  "reopen_requirements": [
+    "Exact Aye 2015 and Chen 2026 predictor/transformation/lag matrix",
+    "Origin-safe PIT availability classification for every predictor",
+    "Broader macro-financial panel",
+    "Full-DEV PIT GPR coverage or explicit NOT_PROVEN",
+    "Separate paper-faithful return-domain replication lane",
+    "Separate project H=1 average-price lane",
+    "Canonical Gold-only model-space governance",
+    "Paper-faithful iterative IDMA audit including Stepsize, Thres, ThresPara, TrainWin, TestWin, MaxIter",
+    "DEV-only nested selection; no 2025/2026 tuning"
+  ],
+  "reopen_when": "AFTER_OTHER_PLANNED_FAMILIES_OR_WHEN_LITERATURE_FAITHFUL_PIT_PANEL_EXISTS",
+  "provenance": {
+    "stage4": {
+      "run_id": 36277936108,
+      "artifact_id": 10918640413
+    },
+    "stage5": {
+      "run_id": 36303383254,
+      "artifact_id": 10926108909
+    },
+    "stage6": {
+      "run_id": 36306335110,
+      "artifact_id": 10927618455
+    },
+    "diagnostics": {
+      "run_id": 36308156035,
+      "artifact_id": 10928147352
+    },
+    "exploratory_batch1": {
+      "run_id": 36274932872,
+      "artifact_id": 10917351143
+    }
+  }
+}
