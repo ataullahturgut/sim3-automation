@@ -1,0 +1,65 @@
+name: Gold Monthly Boosting Stage 3 Target Loss V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_boosting_stage3_target_loss_v1.py
+      - .github/workflows/gold-monthly-boosting-stage3-target-loss-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  stage3:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install frozen packages
+        run: >
+          python -m pip install
+          'numpy==2.4.6'
+          'psycopg[binary]==3.3.6'
+          'scikit-learn==1.9.1'
+          'xgboost==3.4.1'
+          'lightgbm==4.7.0'
+          'catboost==1.2.10'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_boosting_stage3_target_loss_v1.py
+      - name: Run Stage 3 target-loss ablation
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_boosting_stage3_target_loss_v1.py
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('gold_monthly_boosting_stage3_target_loss_v1_result.json'))
+          assert r['scope']=='BOOSTING_STAGE3_TARGET_LOSS_ABLATION_V1'
+          assert r['contract']['feature_lanes']=='FROZEN_FROM_STAGE2'
+          assert r['contract']['capacity']=='UNCHANGED_FROM_STAGE1'
+          assert r['contract']['hyperparameter_search']=='NONE'
+          assert r['contract']['random_split']=='NONE'
+          assert r['contract']['2025_role']=='NOT_OPENED_NOT_EVALUATED'
+          assert r['contract']['2026_role']=='NOT_OPENED_NOT_EVALUATED'
+          assert r['determinism']['status']=='PASS'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert len(r['comparison'])==32
+          assert all(x['abs_diff'] <= 1e-8 for x in r['stage2_baseline_reconciliation'].values())
+          print('STAGE3_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-boosting-stage3-target-loss-v1
+          path: gold_monthly_boosting_stage3_target_loss_v1_result.json
+          if-no-files-found: error
