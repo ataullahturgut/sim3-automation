@@ -1,0 +1,73 @@
+name: Gold Monthly Boosting Stage 6A CatBoost Batch V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_boosting_stage6a_catboost_batch_v1.py
+      - .github/workflows/gold-monthly-boosting-stage6a-catboost-batch-v1.yml
+  workflow_dispatch:
+    inputs:
+      batch:
+        description: CatBoost Stage 6A batch number
+        required: true
+        default: '1'
+
+permissions:
+  contents: read
+
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  catboost-batch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install frozen packages
+        run: >
+          python -m pip install
+          'numpy==2.4.6'
+          'psycopg[binary]==3.3.6'
+          'scikit-learn==1.9.1'
+          'xgboost==3.4.1'
+          'lightgbm==4.7.0'
+          'catboost==1.2.10'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_boosting_stage6a_catboost_batch_v1.py
+      - name: Run CatBoost Stage 6A batch
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+          BATCH: ${{ github.event.inputs.batch || '1' }}
+        run: python gold_axis_2026/tools/gold_monthly_boosting_stage6a_catboost_batch_v1.py --batch "$BATCH"
+      - name: Scientific gate
+        env:
+          BATCH: ${{ github.event.inputs.batch || '1' }}
+        run: |
+          python - <<'PY'
+          import json, os
+          b=int(os.environ['BATCH'])
+          p=f'gold_monthly_boosting_stage6a_catboost_batch{b}_result.json'
+          r=json.load(open(p))
+          assert r['scope']=='BOOSTING_STAGE6A_CATBOOST_BATCH_V1'
+          assert r['lane']=='CATBOOST'
+          assert r['batch']==b
+          assert r['status']=='PASS'
+          assert r['authority']['random_split']=='NONE'
+          assert r['authority']['2025_role']=='NOT_OPENED_NOT_EVALUATED'
+          assert r['authority']['2026_role']=='NOT_OPENED_NOT_EVALUATED'
+          expected=6*len(r['methods'])
+          assert len(r['rows'])==expected
+          print('CATBOOST_BATCH_GATE=PASS', b)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-boosting-stage6a-catboost-batch-${{ github.event.inputs.batch || '1' }}
+          path: gold_monthly_boosting_stage6a_catboost_batch${{ github.event.inputs.batch || '1' }}_result.json
+          if-no-files-found: warn
