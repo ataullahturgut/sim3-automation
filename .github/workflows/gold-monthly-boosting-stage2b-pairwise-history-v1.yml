@@ -1,0 +1,59 @@
+name: Gold Monthly Boosting Stage 2B Pairwise History V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_boosting_stage2b_pairwise_history_v1.py
+      - .github/workflows/gold-monthly-boosting-stage2b-pairwise-history-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  stage2b:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install frozen packages
+        run: >
+          python -m pip install
+          'numpy==2.4.6'
+          'psycopg[binary]==3.3.6'
+          'scikit-learn==1.9.1'
+          'xgboost==3.4.1'
+          'lightgbm==4.7.0'
+          'catboost==1.2.10'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_boosting_stage2b_pairwise_history_v1.py
+      - name: Run Stage 2B pairwise history audit
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_boosting_stage2b_pairwise_history_v1.py
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('gold_monthly_boosting_stage2b_pairwise_history_v1_result.json'))
+          assert r['scope']=='BOOSTING_STAGE2B_PAIRWISE_HISTORY_CONTROL_V1'
+          assert r['random_split']=='NONE'
+          assert r['2025_2026']=='NOT_OPENED_NOT_EVALUATED'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert len(r['comparisons'])==20
+          print('STAGE2B_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-boosting-stage2b-pairwise-history-v1
+          path: gold_monthly_boosting_stage2b_pairwise_history_v1_result.json
+          if-no-files-found: error
