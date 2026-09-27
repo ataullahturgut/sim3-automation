@@ -1,0 +1,32 @@
+{
+  "project": "GOLD MONTHLY FORECAST",
+  "family": "BOOSTING",
+  "model": "CATBOOST_VANILLA_FROZEN",
+  "date": "2026-09-27",
+  "selection_basis": "Stage 6B full DEV 2022-04..2024-12 only",
+  "dev_result": {
+    "sum_abs_error": 1460.433935309605,
+    "direction_correct": 20,
+    "n": 33
+  },
+  "configuration": {
+    "representation": "CURRENT8",
+    "target": "next-month Gold log return",
+    "forecast_reconstruction": "previous completed month Gold average * exp(predicted log return)",
+    "loss_function": "RMSE",
+    "boosting_type": "Ordered",
+    "iterations": 100,
+    "depth": 6,
+    "learning_rate": 0.03,
+    "l2_leaf_reg": 3.0,
+    "random_strength": 1.0,
+    "random_seed": 1701
+  },
+  "governance": {
+    "model_frozen_before_2026_open": true,
+    "2026_role": "RETROSPECTIVE_STRESS_REPORT_ONLY",
+    "2026_may_not_change_model": true,
+    "database": "READ_ONLY",
+    "random_split": "NONE"
+  }
+}
