@@ -53,7 +53,7 @@ jobs:
           assert r['determinism']['status']=='PASS'
           assert r['authority_invariants_before']==r['authority_invariants_after']
           assert len(r['comparison'])==25
-          assert all(x['abs_diff'] <= 1e-8 for x in r['stage1_current8_reproduction'].values())
+          assert all(x['abs_diff'] <= 1e-8 for x in r['stage1_exact_reconciliation'].values())
           print('STAGE2_GATE=PASS')
           PY
       - uses: actions/upload-artifact@v4
