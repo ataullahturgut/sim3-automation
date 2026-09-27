@@ -527,3 +527,90 @@ Full report:
 
 Next authorized stage after user approval:
 **Stage 5 — Regularization & Subsampling only.**
+
+
+## 16. Stage 5 pre-outcome freeze — Regularization & Subsampling
+
+**Stage 5 is authorized.**
+
+All Stage-4 promoted feature/target/loss/capacity choices are frozen. Stage 5 may change only regularization and/or sampling controls listed below.
+
+Authority basis:
+- XGBoost: reg_alpha/reg_lambda, gamma, subsample and colsample_bytree are native regularization/sampling controls.
+- CatBoost: l2_leaf_reg, random_strength and bootstrap/subsample controls are native overfit controls.
+- LightGBM: lambda_l1/lambda_l2 plus bagging_fraction / feature_fraction (sklearn aliases subsample / colsample_bytree) are native controls.
+- GBRT: subsample and max_features are the controlled stochastic-regularization levers.
+- Random Forest remains comparator only.
+
+### Frozen Stage-5 lanes
+
+1. CATBOOST_PRICE
+   - CURRENT8 / LOGRET / RMSE
+   - depth=6, iterations=100, learning_rate=0.03
+2. CATBOOST_BALANCED
+   - CURRENT8 / LOGRET / RMSE
+   - depth=8, iterations=300, learning_rate=0.02
+3. GBRT_PRICE_BALANCED
+   - DAILY_SUMMARY12 / LOGRET / absolute_error
+   - depth=2, n_estimators=100, learning_rate=0.10, min_samples_leaf=2
+4. XGBOOST_PRICE
+   - RAW_LEVEL_LAGS8 / LOGRET / reg:squarederror
+   - depth=2, n_estimators=300, learning_rate=0.03, min_child_weight=3
+5. XGBOOST_DIRECTION
+   - CURRENT8 / LOGRET / reg:squarederror
+   - depth=4, n_estimators=200, learning_rate=0.05, min_child_weight=1
+6. LIGHTGBM_PRICE_BALANCED
+   - MIXED20 / LOGRET / regression_l1
+   - num_leaves=31, max_depth=6, min_child_samples=10, n_estimators=300, learning_rate=0.03
+7. RF_COMPARATOR
+   - DAILY_SUMMARY12 / LOGRET
+   - Stage-4 R0 baseline only; no Stage-5 search.
+
+### CatBoost regularization profiles
+Applied separately to CATBOOST_PRICE and CATBOOST_BALANCED:
+- CB_R0_BASELINE: Stage-4 settings unchanged (l2_leaf_reg=3; implicit library bootstrap/random_strength behavior).
+- CB_R1_L2_10: l2_leaf_reg=10.
+- CB_R2_RANDOM2: random_strength=2.
+- CB_R3_BERNOULLI80: bootstrap_type=Bernoulli, subsample=0.8.
+- CB_R4_COMBO: l2_leaf_reg=10, random_strength=2, bootstrap_type=Bernoulli, subsample=0.8.
+
+No use_best_model / early stopping; no validation-set peeking.
+
+### GBRT regularization profiles
+Capacity remains G0:
+- G_R0_BASELINE: subsample=1.0, max_features=None.
+- G_R1_ROW90: subsample=0.90.
+- G_R2_ROW80: subsample=0.80.
+- G_R3_FEATURE80: max_features=0.80.
+- G_R4_COMBO80: subsample=0.80, max_features=0.80.
+
+### XGBoost regularization profiles
+Applied separately to PRICE and DIRECTION lanes:
+- X_R0_BASELINE: reg_alpha=0, reg_lambda=1, gamma=0, subsample=1, colsample_bytree=1.
+- X_R1_L2_5: reg_lambda=5.
+- X_R2_L1_001: reg_alpha=0.01.
+- X_R3_SAMPLE80: subsample=0.80, colsample_bytree=0.80.
+- X_R4_COMBO: reg_alpha=0.01, reg_lambda=5, gamma=0.001, subsample=0.80, colsample_bytree=0.80.
+
+Gamma is tested only inside the pre-frozen combo profile; no adaptive gamma search occurs in Stage 5.
+
+### LightGBM regularization profiles
+Capacity remains L4:
+- L_R0_BASELINE: reg_alpha=0, reg_lambda=0, subsample=1, subsample_freq=0, colsample_bytree=1.
+- L_R1_L2_1: reg_lambda=1.
+- L_R2_L1_01: reg_alpha=0.1.
+- L_R3_BAG80: subsample=0.80, subsample_freq=1.
+- L_R4_FEATURE80: colsample_bytree=0.80.
+- L_R5_COMBO: reg_alpha=0.1, reg_lambda=1, subsample=0.80, subsample_freq=1, colsample_bytree=0.80.
+
+### Governance
+- DEV only: 2022-04..2024-12.
+- 2025/2026 remain unopened.
+- No random split.
+- No feature/target/loss/capacity changes.
+- No optimizer / TPE / CMA-ES.
+- No early stopping against DEV.
+- Exact Stage-4 baseline replay is mandatory for every promoted lane.
+- Primary metric: DEV price SigmaAE.
+- Secondary: direction, MAE, RMSE.
+- Stage 5 stops after regularization/subsampling selection; Stage 6 nested optimization requires separate approval.
