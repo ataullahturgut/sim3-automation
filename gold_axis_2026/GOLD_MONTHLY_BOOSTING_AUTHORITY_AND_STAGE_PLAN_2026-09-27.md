@@ -658,3 +658,156 @@ Full report:
 
 Next authorized stage after user approval:
 **Stage 6 — Nested Chronological Optimization only.**
+
+
+## 18. Stage 6A pre-outcome freeze — 34-entry Metaheuristic Broad Screen
+
+**Stage 6A is authorized. Stage 6B/C are NOT yet authorized.**
+
+### Purpose
+Screen optimizer families before expensive full-DEV nested refinement. This stage compares optimizer behavior under a common chronological inner-validation contract and a common objective-evaluation budget.
+
+### 34 entries
+Reference:
+1. VANILLA
+
+Prior parity optimizers:
+2. PSO
+3. GA
+4. DE
+5. MPA
+6. ABC
+7. SSA
+8. GWO
+9. WOA
+10. HHO
+11. ACO
+12. BAT
+13. FA
+14. MFO
+15. FPA
+16. FA_FPA
+17. CS
+18. SCA
+19. SALP
+20. SMA
+21. GOA
+22. ALO
+23. TLBO
+24. JAYA
+25. HGS
+26. CHOA
+27. HGSO
+28. AOA
+29. CPA
+30. KRILL
+31. CROW
+32. DE_ABC
+33. MULTISWARM
+
+New authority-corrected entry:
+34. **CHHHO_PW_PM4** — Harris Hawks Optimization using Piecewise chaotic map C6 (P=0.4) with PM4-style chaotic replacement of the HHO random-control variables. The literature reports Piecewise C6 as the best chaotic map by aggregate Friedman rank and PM4 as the strongest modification family. This is intentionally NOT the earlier project logistic-initialization approximation.
+
+Primary authority:
+- Heidari et al. (2019), HHO, Future Generation Computer Systems, DOI 10.1016/j.future.2019.02.028.
+- Gezici & Livatyalı (2022), Chaotic Harris hawks optimization algorithm, Journal of Computational Design and Engineering, DOI 10.1093/jcde/qwab082.
+
+### Stage-6A model lanes
+Only the four promoted Boosting algorithms are broad-screened:
+- CATBOOST: CURRENT8 / LOGRET / RMSE, Stage-5 price baseline center.
+- GBRT: DAILY_SUMMARY12 / LOGRET / absolute_error, Stage-5 baseline center.
+- XGBOOST: CURRENT8 / LOGRET / reg:squarederror, Stage-5 X_R4_COMBO price/balance center.
+- LIGHTGBM: MIXED20 / LOGRET / regression_l1, Stage-5 baseline center.
+
+Held out from meta-screen:
+- RF remains comparator only.
+- CatBoost balanced and XGBoost L2 direction challengers remain frozen evidence and are not discarded.
+- XGBoost RAW lane remains frozen evidence; CURRENT8 combo is used for Stage-6A because it has the lower Stage-5 price SigmaAE.
+
+### Broad-screen anchor origins
+To control compute and avoid pretending Stage 6A is final nested evaluation, optimizer screening is performed only at six pre-frozen DEV anchors:
+- 2022-06
+- 2022-12
+- 2023-06
+- 2023-12
+- 2024-06
+- 2024-12
+
+These are screening anchors only. Stage 6A does not report a full-DEV final model score.
+
+### Nested chronological objective at each anchor
+For each anchor target:
+1. Use only rows strictly before the anchor.
+2. Reserve the last 12 pre-anchor months as chronological inner validation.
+3. Fit each candidate once on the preceding inner-training history.
+4. Predict the 12-month validation tail.
+5. Candidate objective = validation price SigmaAE / random-walk validation SigmaAE.
+6. The anchor target itself is never in optimizer fitness.
+7. After an optimizer selects parameters, refit on all pre-anchor history and generate one anchor forecast for diagnostic reporting only.
+
+### Fair optimizer budget
+- Population reference: 10.
+- One deterministic broad-screen repeat per anchor.
+- Hard objective-evaluation budget: **80 calls per optimizer × lane × anchor**.
+- All optimizer calls, including duplicate candidates, count toward the budget; duplicate decoded parameter sets may be computationally cached but do not restore budget.
+- Ranking is therefore by equal objective-call budget, not equal generation count.
+- VANILLA receives no search budget and is the frozen Stage-5 center reference.
+
+### Search spaces
+Search variables are normalized to [0,1] for all metaheuristics and decoded into model-specific domains.
+
+CatBoost (5D):
+- depth 4..9 integer
+- iterations 60..400 integer
+- learning_rate 0.01..0.12 log scale
+- l2_leaf_reg 1..20 log scale
+- random_strength 0..3
+
+GBRT (6D):
+- max_depth 1..4 integer
+- n_estimators 60..350 integer
+- learning_rate 0.02..0.18 log scale
+- min_samples_leaf 1..8 integer
+- subsample 0.70..1.00
+- max_features 0.60..1.00
+
+XGBoost (9D):
+- max_depth 1..6 integer
+- n_estimators 80..400 integer
+- learning_rate 0.01..0.15 log scale
+- min_child_weight 1..8
+- reg_alpha 0..1
+- reg_lambda 0.5..10 log scale
+- gamma 0..0.10
+- subsample 0.70..1.00
+- colsample_bytree 0.70..1.00
+
+LightGBM (9D):
+- num_leaves 7..48 integer
+- max_depth 3..8 integer
+- min_child_samples 5..30 integer
+- n_estimators 100..450 integer
+- learning_rate 0.01..0.10 log scale
+- reg_alpha 0..1
+- reg_lambda 0..5
+- subsample 0.70..1.00 (subsample_freq=1 when <1)
+- colsample_bytree 0.70..1.00
+
+### Stage-6A ranking
+Primary optimizer-screen score within each model lane:
+- mean of (optimized inner-validation relative SigmaAE / VANILLA inner-validation relative SigmaAE) over the six anchors.
+Lower is better.
+
+Supporting:
+- median ratio,
+- worst-anchor ratio,
+- diagnostic outer-anchor SigmaAE and direction (not used as primary optimizer ranking).
+
+### Governance
+- No 2025/2026 access.
+- No random split.
+- No target-anchor leakage into fitness.
+- No cross-lane shared objective values.
+- DB read-only.
+- Stage 6A selects optimizer finalists only. It does not select the final forecasting model.
+- Stage 6B will run finalists on the full DEV nested chronology only after Stage 6A is reviewed.
