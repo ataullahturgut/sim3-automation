@@ -1,0 +1,37 @@
+name: Gold Monthly DMA Cause Diagnostics V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/dma_cause_diagnostics_v1.py
+      - .github/workflows/gold-monthly-dma-cause-diagnostics-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+jobs:
+  diagnostics:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary]
+      - run: python -m py_compile gold_axis_2026/tools/dma_cause_diagnostics_v1.py
+      - name: Run canonical DMA cause diagnostics
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/dma_cause_diagnostics_v1.py
+      - name: Diagnostic scientific gate
+        run: python -c "import json; r=json.load(open('dma_cause_diagnostics_v1_result.json')); assert r['scope']=='DMA_CAUSE_DIAGNOSTICS_V1'; assert r['authority_contract_audit']['canonical_requirement'].startswith('Gold-only'); assert len(r['sample_size_diagnostic']['curve'])==5; assert r['authority_invariants_before']==r['authority_invariants_after']; print('DIAGNOSTIC_GATE=PASS')"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-dma-cause-diagnostics-v1
+          path: dma_cause_diagnostics_v1_result.json
+          if-no-files-found: error
