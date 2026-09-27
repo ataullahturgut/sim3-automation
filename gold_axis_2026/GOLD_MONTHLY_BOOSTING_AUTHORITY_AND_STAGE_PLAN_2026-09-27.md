@@ -871,3 +871,45 @@ Governance:
 
 Exact freeze:
 `GOLD_MONTHLY_BOOSTING_STAGE6C_A_CMAES_GBRT_FREEZE_2026-09-27.md`
+
+
+---
+
+## 20. Stage 6C-A closure — CMA-ES–GBRT
+
+Status: **COMPLETE / PASS / NOT PROMOTED**.
+
+Canonical parallel run:
+- workflow run 36346760813;
+- 11 independent deterministic DEV chunks;
+- all jobs SUCCESS;
+- total outer origins 33;
+- 80 CMA-ES objective calls per origin; 2640 total.
+
+Full DEV:
+- frozen GBRT baseline: SigmaAE **1500.42946858865**, direction **22/33**;
+- CMA-ES–GBRT: SigmaAE **1650.1984960672642**, direction **18/33**;
+- CMA-ES deterioration: +149.7690275 SigmaAE, +9.9817%.
+
+Yearly SigmaAE:
+- 2022 Apr-Dec: baseline 415.9404 vs CMA-ES 392.7446;
+- 2023: baseline 428.1815 vs CMA-ES 543.0934;
+- 2024: baseline 656.3076 vs CMA-ES 714.3605.
+
+Inner validation diagnostic:
+- mean CMA/baseline ratio 0.8722166;
+- median 0.8633923;
+- CMA-ES inner score better in 32/33 origins;
+- nevertheless outer next-month DEV performance is worse.
+
+Decision:
+- CMA-ES–GBRT NOT PROMOTED;
+- no post-hoc CMA rescue or restricted retuning is authorized;
+- 2025 remained unopened;
+- quarantined 2026 evidence was not used.
+
+Exact report:
+`GOLD_MONTHLY_BOOSTING_STAGE6C_A_CMAES_GBRT_REPORT_2026-09-27.md`
+
+Next literature challenger, only after authorization:
+**Stage 6C-B TPE/Optuna–GBRT control.**
