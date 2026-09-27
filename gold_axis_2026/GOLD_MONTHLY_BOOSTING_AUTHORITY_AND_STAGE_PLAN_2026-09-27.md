@@ -250,3 +250,77 @@ Next action after user approval:
 - Legacy LightGBM/CatBoost run: AUDITED, EXPLORATORY_ONLY.
 - Stage 0: **COMPLETE**.
 - Next stage: **Stage 1 only**.
+
+
+---
+
+## 10. Pre-outcome Stage-plan amendment — 2026-09-27
+
+User-approved methodological correction: before target/loss ablation, test whether the Boosting family is being handicapped by the current preprocessed 8-feature representation.
+
+Revised order:
+- Stage 0 — Authority & Protocol Freeze: COMPLETE
+- Stage 1 — Canonical Baselines: COMPLETE
+- **Stage 2 — Feature Representation Ablation: ACTIVE NEXT**
+- Stage 3 — Target & Loss Ablation
+- Stage 4 — Capacity Scan
+- Stage 5 — Regularization & Subsampling
+- Stage 6 — Nested Optimization
+- Stage 7 — Stability & Feature Audit
+- Stage 8 — DEV-only Final Selection
+- Stage 9 — Freeze + 2025 transport + 2026 stress
+- Stage H — Hybrid only if justified
+
+### Stage 2 frozen representation set
+
+All representations are constructed strictly from information available by the previous completed month (origin). The model target remains next-month Gold log return and all Stage-1 model hyperparameters remain fixed.
+
+**R0 CURRENT8**
+- Existing 8 origin-safe VW-MIDAS predictors:
+  GOLD_MR, GOLD_VW, SILVER_MR, SILVER_VW, PLATINUM_MR, PLATINUM_VW, PALLADIUM_MR, PALLADIUM_VW.
+- This is the Stage-1 reference.
+
+**R1 RAW_LEVEL_LAGS8**
+For each of Gold, Silver, Platinum, Palladium:
+- previous completed month average level;
+- one additional lagged monthly average level.
+Total = 8 raw level features.
+
+**R2 SIMPLE_RETURNS8**
+For each metal:
+- 1-month log return;
+- 3-month log momentum.
+Total = 8 simple return/momentum features.
+
+**R3 DAILY_SUMMARY12**
+For each metal, using daily values only from the completed origin month:
+- origin-month open-to-close log return;
+- realized volatility = sqrt(sum(daily log-return^2));
+- log high/low range.
+Total = 12 daily-summary features.
+
+**R4 MIXED20**
+- CURRENT8 (8);
+- current origin-month raw level for each metal (4);
+- 3-month log momentum for each metal (4);
+- realized volatility for each metal (4).
+Total = 20 features.
+
+Rationale:
+- R1 tests whether absolute regime/level information was lost.
+- R2 tests whether the GPR-weighted VW transform is unnecessary relative to simple temporal derivatives.
+- R3 tests whether compressing the complete daily path into one VW statistic discards useful within-month structure.
+- R4 tests a controlled combination without opening a large feature-engineering search.
+
+### Stage 2 execution rules
+- Same five Stage-1 estimators and exactly the same canonical hyperparameters.
+- Gold-only target.
+- No target/loss changes.
+- No hyperparameter tuning.
+- No feature subset search inside a representation.
+- No random split.
+- DEV only: 2022-04..2024-12.
+- 2025/2026 are not opened.
+- Primary comparison: DEV SigmaAE; direction is secondary.
+- Report every model × representation combination, then identify the best representation within each model for promotion to Stage 3.
+- Stage 2 does not authorize changing the project-wide frozen input contract for other model families.
