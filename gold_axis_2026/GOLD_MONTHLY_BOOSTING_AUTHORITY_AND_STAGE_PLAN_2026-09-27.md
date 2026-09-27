@@ -501,3 +501,29 @@ Limited capacity audit only:
 - Secondary: direction, MAE, RMSE.
 - Exact Stage-3 baseline reproduction is mandatory.
 - Stage 4 stops after selecting capacity profile(s); Stage 5 requires separate approval.
+
+
+## 15. Stage 4 closure — 2026-09-27
+
+**Stage 4 Capacity Scan: COMPLETE / PASS.**
+
+Promoted primary capacity profiles:
+- CatBoost -> C2_BASELINE: depth6, iterations100, learning_rate0.03.
+- GBRT -> G0_SHALLOW: depth2, n_estimators100, learning_rate0.10, min_samples_leaf2.
+- XGBoost RAW -> X0_SHALLOW_CONSERVATIVE: depth2, n_estimators300, learning_rate0.03, min_child_weight3.
+- LightGBM MIXED20 L1 -> L4_HIGHER_CAPACITY: num_leaves31, max_depth6, min_child_samples10, n_estimators300, learning_rate0.03.
+- RF comparator -> R0_BASELINE.
+
+Retained challengers:
+- CatBoost C4_DEEP_LOWLR: SigmaAE 1481.2619, direction 22/33.
+- XGBoost CURRENT8 X2_MEDIUM: direction 22/33.
+
+Family price leader remains CatBoost C2 at SigmaAE 1460.4339.
+GBRT improved to 1500.4295 / 22 directions.
+LightGBM improved to 1534.6087 / 22 directions.
+
+Full report:
+`GOLD_MONTHLY_BOOSTING_STAGE4_CAPACITY_REPORT_2026-09-27.md`
+
+Next authorized stage after user approval:
+**Stage 5 — Regularization & Subsampling only.**
