@@ -635,3 +635,26 @@ Full report:
 
 Next authorized stage after user approval:
 **Stage 6 — Nested chronological optimization only.**
+
+
+## 17. Stage 5 closure — 2026-09-27
+
+**Stage 5 Regularization & Subsampling: COMPLETE / PASS.**
+
+Binding conclusions:
+- CatBoost price: retain Stage-4 baseline regularization.
+- CatBoost balanced: retain Stage-4 baseline regularization.
+- GBRT: retain full-sample Stage-4 baseline; row/feature subsampling degraded performance.
+- XGBoost RAW price: retain Stage-4 baseline regularization.
+- LightGBM MIXED20 L1: retain Stage-4 baseline regularization.
+- XGBoost CURRENT8 direction challenger: promote **reg_lambda=5**, yielding direction 23/33 and SigmaAE 1679.8372.
+- RF remains comparator only.
+
+Primary family price leader remains CatBoost at SigmaAE 1460.4339.
+No Stage-5 price regularization profile beats the Stage-4 price leaders.
+
+Full report:
+`GOLD_MONTHLY_BOOSTING_STAGE5_REGULARIZATION_REPORT_2026-09-27.md`
+
+Next authorized stage after user approval:
+**Stage 6 — Nested Chronological Optimization only.**
