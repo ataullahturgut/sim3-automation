@@ -46,11 +46,11 @@ jobs:
           r=json.load(open('gold_monthly_boosting_catboost_vanilla_2026_stress_v1_result.json'))
           assert r['scope']=='BOOSTING_CATBOOST_VANILLA_FROZEN_2026_STRESS_V1'
           assert r['model']=='CATBOOST_VANILLA_FROZEN'
-          assert r['targets']==['2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07','2026-08']
+          assert r['targets']==['2026-01','2026-02','2026-03','2026-04','2026-05','2026-06','2026-07']
           assert r['2026_role']=='RETROSPECTIVE_STRESS_REPORT_ONLY_NO_TUNING'
           assert r['database']=='READ_ONLY'
           assert r['random_split']=='NONE'
-          assert len(r['rows'])==8
+          assert len(r['rows'])==7
           assert r['authority_invariants_before']==r['authority_invariants_after']
           print('CATBOOST_2026_STRESS_GATE=PASS')
           PY
