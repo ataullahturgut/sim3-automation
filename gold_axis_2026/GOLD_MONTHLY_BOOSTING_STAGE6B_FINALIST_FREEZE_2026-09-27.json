@@ -1,0 +1,41 @@
+{
+  "project": "GOLD MONTHLY FORECAST",
+  "family": "BOOSTING_CATBOOST_META",
+  "date": "2026-09-27",
+  "stage": "STAGE_6B",
+  "status": "PRE_OUTCOME_FINALIST_RULE_FROZEN",
+  "selection_rule": {
+    "eligible": "Stage6A CatBoost method jobs with scientific gate PASS and anchors_better_than_vanilla == 6/6",
+    "primary_arm": "top 2 by ascending mean_ratio_vs_vanilla; ties -> median_ratio, worst_ratio, method",
+    "generalization_arm": "top 3 by ascending 6-anchor outer_anchor_sum_abs_error_diagnostic; ties -> higher direction_correct, then method",
+    "finalists": "union(primary_arm, generalization_arm) plus VANILLA comparator",
+    "stage6b_outcomes_seen_before_freeze": false
+  },
+  "stage6a_evidence_used_for_rule": {
+    "primary_top2": [
+      {"method":"PSO","mean_ratio_vs_vanilla":0.9059001094638447},
+      {"method":"MFO","mean_ratio_vs_vanilla":0.9118922932012502}
+    ],
+    "outer_top3": [
+      {"method":"DE_ABC","outer_anchor_sum_abs_error_diagnostic":147.82965765668837,"direction_correct":6},
+      {"method":"HHO","outer_anchor_sum_abs_error_diagnostic":150.8370712520407,"direction_correct":5},
+      {"method":"TLBO","outer_anchor_sum_abs_error_diagnostic":152.62444012870196,"direction_correct":5}
+    ]
+  },
+  "finalists": ["VANILLA","PSO","MFO","DE_ABC","HHO","TLBO"],
+  "stage6b_contract": {
+    "dev_targets": "2022-04..2024-12",
+    "n": 33,
+    "forecast_horizon": "H=1 next-calendar-month average XAU/USD",
+    "lane": "CATBOOST CURRENT8 LOGRET RMSE",
+    "optimization": "per-origin nested chronological, last 12 pre-target months inner validation",
+    "objective": "inner validation reconstructed-price SigmaAE / RW SigmaAE",
+    "hard_objective_calls_per_origin": 80,
+    "random_split": "NONE",
+    "database": "READ_ONLY",
+    "2025_role": "NOT_OPENED_NOT_EVALUATED",
+    "2026_role": "NOT_OPENED_NOT_EVALUATED",
+    "primary_metric": "33-month DEV price SigmaAE",
+    "secondary_metrics": ["direction_correct","MAE","RMSE","MAPE","WAPE","relative_MAE_vs_RW","yearly_stability","worst_month_AE"]
+  }
+}
