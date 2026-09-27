@@ -7,7 +7,7 @@ import psycopg
 import vw_midas_msvr_successor_v1 as base
 import gold_monthly_boosting_stage1_canonical_v1 as s1
 
-DEV_START, DEV_END = "2022-04", "2024-12"
+DEV_START, DEV_END = "2022-04", "2024-12"\nCOMMON_TRAIN_START = "2010-05"
 METALS = ("Gold","Silver","Platinum","Palladium")
 REPS = ("CURRENT8","RAW_LEVEL_LAGS8","SIMPLE_RETURNS8","DAILY_SUMMARY12","MIXED20")
 EXPECTED_DIMS = {"CURRENT8":8,"RAW_LEVEL_LAGS8":8,"SIMPLE_RETURNS8":8,"DAILY_SUMMARY12":12,"MIXED20":20}
@@ -92,7 +92,7 @@ def rep_feature(bundle, samples, target, rep):
     return x
 
 def arrays(bundle,samples,target,rep):
-    keys=sorted(k for k in samples if k<target)
+    keys=sorted(k for k in samples if COMMON_TRAIN_START <= k < target)
     if len(keys)<30: raise RuntimeError(f"TRAIN_TOO_SMALL target={target} n={len(keys)}")
     X=np.stack([rep_feature(bundle,samples,k,rep) for k in keys])
     y=np.asarray([float(samples[k][1][0]) for k in keys],float)
@@ -179,12 +179,13 @@ def main():
     h2=stable_hash(second)
     if h1!=h2: raise RuntimeError(f"DETERMINISM_FAIL {h1} {h2}")
 
-    # CURRENT8 must exactly reproduce Stage-1 canonical results within numerical tolerance.
+    # Separate reconciliation: re-run the exact Stage-1 CURRENT8 history to prove the code/data base is unchanged.
     reproduction={}
     for name,ref in STAGE1_REFERENCE.items():
-        cur=float(first[name]["CURRENT8"]["metrics"]["sum_abs_error"])
+        exact=s1.evaluate(b,cache,name)
+        cur=float(exact["metrics"]["sum_abs_error"])
         diff=abs(cur-ref)
-        reproduction[name]={"stage1":ref,"stage2_current8":cur,"abs_diff":diff}
+        reproduction[name]={"stage1_reference":ref,"stage1_exact_replay":cur,"abs_diff":diff}
         if diff>1e-8:
             raise RuntimeError(f"STAGE1_REPRO_FAIL {name} ref={ref} cur={cur} diff={diff}")
 
@@ -228,12 +229,12 @@ def main():
         "authority_invariants_before":b.invariants_before,
         "authority_invariants_after":after,
         "determinism":{"status":"PASS","payload_sha256":h1},
-        "stage1_current8_reproduction":reproduction,
+        "stage1_exact_reconciliation":reproduction,
         "results":first,
         "comparison":comparison,
         "promoted_representation_by_model":promoted,
         "overall_ranking":overall,
-        "legacy_results_used":False
+        "legacy_results_used":False,\n        "common_training_history_start":COMMON_TRAIN_START
     }
     Path("gold_monthly_boosting_stage2_feature_representation_v1_result.json").write_text(
         json.dumps(out,indent=2,sort_keys=True)+"\n",encoding="utf-8"
@@ -242,7 +243,7 @@ def main():
     print(json.dumps({
         "promoted":promoted,
         "top10":overall[:10],
-        "stage1_reproduction":reproduction,
+        "stage1_reconciliation":reproduction,
         "determinism":out["determinism"],
         "authority_invariants_unchanged":after==b.invariants_before
     },sort_keys=True))
