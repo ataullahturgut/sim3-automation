@@ -1,0 +1,37 @@
+name: Gold Monthly IDMA Stage 6 H1 Project Loss V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/vw_midas_idma_stage6_h1_project_loss_v1.py
+      - .github/workflows/gold-monthly-idma-stage6-h1-project-loss-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+jobs:
+  stage6:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy psycopg[binary]
+      - run: python -m py_compile gold_axis_2026/tools/vw_midas_idma_stage6_h1_project_loss_v1.py
+      - name: Run Stage 6 H1 project-specific IDMA loss alignment only
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/vw_midas_idma_stage6_h1_project_loss_v1.py
+      - name: Stage 6 scientific gate
+        run: python -c "import json; r=json.load(open('vw_midas_idma_stage6_h1_project_loss_v1_result.json')); assert r['scope']=='STAGE_6_ONLY'; assert len(r['models'])==4; assert r['authority']['stage7_not_run'] is True; assert r['authority']['direction_not_optimized'] is True; assert r['authority_invariants_before']==r['authority_invariants_after']; print('STAGE6_GATE=PASS')"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-idma-stage6-h1-project-loss-v1
+          path: vw_midas_idma_stage6_h1_project_loss_v1_result.json
+          if-no-files-found: error
