@@ -403,3 +403,29 @@ No capacity, regularization, sampling or feature changes are allowed.
 - No optimizer / hyperparameter search.
 - Every candidate uses its Stage-2 frozen feature lane and compatible maximum history.
 - Stage 3 stops after target/loss selection; Stage 4 capacity scan requires separate approval.
+
+
+## 13. Stage 3 closure — 2026-09-27
+
+**Stage 3 Target & Loss Ablation: COMPLETE / PASS.**
+
+Binding target decision:
+- **LOGRET -> price reconstruction remains the only promoted target.**
+- DIRECT_PRICE was dramatically worse across all tested lanes and is closed for Stage 4+.
+
+Promoted configurations:
+- CatBoost Ordered -> CURRENT8 -> LOGRET -> RMSE.
+- GBRT -> DAILY_SUMMARY12 -> LOGRET -> absolute_error.
+- XGBoost primary price lane -> RAW_LEVEL_LAGS8 -> LOGRET -> reg:squarederror.
+- LightGBM primary lane -> MIXED20 -> LOGRET -> regression_l1.
+- RF comparator -> DAILY_SUMMARY12 -> LOGRET.
+
+Retained XGBoost challengers:
+- CURRENT8 + reg:squarederror for direction.
+- CURRENT8 + reg:absoluteerror as price/balance challenger.
+
+Full report:
+`GOLD_MONTHLY_BOOSTING_STAGE3_TARGET_LOSS_REPORT_2026-09-27.md`
+
+Next authorized stage after user approval:
+**Stage 4 — Capacity Scan only.**
