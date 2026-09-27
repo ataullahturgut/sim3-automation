@@ -235,7 +235,8 @@ def main():
         "comparison":comparison,
         "promoted_representation_by_model":promoted,
         "overall_ranking":overall,
-        "legacy_results_used":False,\n        "common_training_history_start":COMMON_TRAIN_START
+        "legacy_results_used":False,
+        "common_training_history_start":COMMON_TRAIN_START
     }
     Path("gold_monthly_boosting_stage2_feature_representation_v1_result.json").write_text(
         json.dumps(out,indent=2,sort_keys=True)+"\n",encoding="utf-8"
