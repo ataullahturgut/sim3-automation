@@ -352,3 +352,54 @@ Full report:
 
 Next authorized stage after user approval:
 **Stage 3 — Target & Loss Ablation only.**
+
+
+## 12. Stage 3 pre-outcome freeze — Target & Loss Ablation
+
+**Stage 3 is authorized.**
+
+Promoted Stage-2 lanes are frozen:
+- CATBOOST_ORDERED__CURRENT8, history start 2010-03.
+- XGBOOST__RAW_LEVEL_LAGS8, history start 2010-03.
+- XGBOOST__CURRENT8 direction challenger, history start 2010-03.
+- GBRT__DAILY_SUMMARY12, history start 2010-03.
+- LIGHTGBM__RAW_LEVEL_LAGS8, history start 2010-03.
+- LIGHTGBM__MIXED20 balanced challenger, history start 2010-05.
+- RANDOM_FOREST_ANCHOR__DAILY_SUMMARY12, history start 2010-03.
+
+### Targets
+Each lane is tested with exactly two targets:
+1. LOGRET: next-month Gold log return; reconstruct price as previous origin-known Gold price × exp(prediction).
+2. DIRECT_PRICE: next-month average XAU/USD price directly.
+
+### Losses
+No capacity, regularization, sampling or feature changes are allowed.
+
+- GBRT:
+  - squared_error
+  - absolute_error
+  - huber with canonical alpha=0.9
+- XGBoost:
+  - reg:squarederror
+  - reg:absoluteerror
+  - Pseudo-Huber is explicitly deferred because huber_slope is target-scale sensitive and choosing it here would open an additional tuning dimension.
+- CatBoost:
+  - RMSE
+  - MAE
+  - Huber is deferred because delta is obligatory and scale-dependent.
+- LightGBM:
+  - regression (L2)
+  - regression_l1 (L1)
+  - huber with canonical alpha=0.9
+- Random Forest anchor:
+  - no loss variants; target ablation only.
+
+### Selection
+- DEV 2022-04..2024-12 only.
+- Primary: price SigmaAE.
+- Secondary: direction correct, RMSE/MAE.
+- 2025/2026 remain unopened.
+- No random split.
+- No optimizer / hyperparameter search.
+- Every candidate uses its Stage-2 frozen feature lane and compatible maximum history.
+- Stage 3 stops after target/loss selection; Stage 4 capacity scan requires separate approval.
