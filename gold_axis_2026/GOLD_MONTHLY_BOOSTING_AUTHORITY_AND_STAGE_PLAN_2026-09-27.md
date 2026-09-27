@@ -614,3 +614,24 @@ Capacity remains L4:
 - Primary metric: DEV price SigmaAE.
 - Secondary: direction, MAE, RMSE.
 - Stage 5 stops after regularization/subsampling selection; Stage 6 nested optimization requires separate approval.
+
+
+## 17. Stage 5 closure — 2026-09-27
+
+**Stage 5 Regularization & Subsampling: COMPLETE / PASS.**
+
+Binding results:
+- CatBoost PRICE: keep baseline, 1460.4339 / 20 directions.
+- CatBoost BALANCED: keep baseline, 1481.2619 / 22.
+- GBRT: keep baseline, 1500.4295 / 22.
+- LightGBM: keep baseline, 1534.6087 / 22.
+- XGBoost RAW price: keep baseline, 1673.0823 / 19.
+- XGBoost CURRENT8 combo: 1583.8535 / 20; retained as price/balance challenger.
+- XGBoost CURRENT8 L2=5: 1679.8372 / **23**; retained as direction challenger.
+- RF comparator unchanged.
+
+Full report:
+`GOLD_MONTHLY_BOOSTING_STAGE5_REGULARIZATION_REPORT_2026-09-27.md`
+
+Next authorized stage after user approval:
+**Stage 6 — Nested chronological optimization only.**
