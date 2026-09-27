@@ -7,7 +7,7 @@ from catboost import CatBoostRegressor
 
 import vw_midas_msvr_successor_v1 as base
 
-TARGETS = tuple(base.month_range("2026-01","2026-08"))
+TARGETS = tuple(base.month_range("2026-01","2026-07"))
 PARAMS = {
     "loss_function":"RMSE",
     "iterations":100,
@@ -130,7 +130,7 @@ def run():
         "freeze_file":"GOLD_MONTHLY_BOOSTING_CATBOOST_VANILLA_FREEZE_BEFORE_2026_2026-09-27.json",
         "model":"CATBOOST_VANILLA_FROZEN",
         "targets":list(TARGETS),
-        "target_window":"2026-01..2026-08 completed months only",
+        "target_window":"2026-01..2026-07 authoritative actuals available; 2026-08 actual missing in core_gold at run time",
         "2026_role":"RETROSPECTIVE_STRESS_REPORT_ONLY_NO_TUNING",
         "forecast_feature_contract":"target X uses origin month p and p-1 only; target actual read only after forecast generation",
         "database":"READ_ONLY",
