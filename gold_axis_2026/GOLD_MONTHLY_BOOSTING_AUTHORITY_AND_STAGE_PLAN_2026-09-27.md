@@ -429,3 +429,75 @@ Full report:
 
 Next authorized stage after user approval:
 **Stage 4 — Capacity Scan only.**
+
+
+## 14. Stage 4 pre-outcome freeze — Capacity Scan
+
+**Stage 4 is authorized.**
+
+Everything frozen from Stage 3 remains fixed:
+- Target: LOGRET only.
+- CatBoost Ordered: CURRENT8 + RMSE.
+- GBRT: DAILY_SUMMARY12 + absolute_error.
+- XGBoost primary: RAW_LEVEL_LAGS8 + reg:squarederror.
+- XGBoost direction challenger: CURRENT8 + reg:squarederror.
+- LightGBM: MIXED20 + regression_l1.
+- RF comparator: DAILY_SUMMARY12 + native squared-error forest.
+
+No regularization/subsampling tuning is allowed in Stage 4 beyond capacity-related minimum leaf/child constraints explicitly listed below.
+
+### Capacity profiles
+
+#### CatBoost Ordered
+- C0_SHALLOW_100: depth=4, iterations=100, learning_rate=0.03
+- C1_SHALLOW_300: depth=4, iterations=300, learning_rate=0.03
+- C2_BASELINE: depth=6, iterations=100, learning_rate=0.03
+- C3_MEDIUM_300: depth=6, iterations=300, learning_rate=0.03
+- C4_DEEP_LOWLR: depth=8, iterations=300, learning_rate=0.02
+
+Other CatBoost parameters remain Stage-3 frozen, including l2_leaf_reg=3 and Ordered boosting.
+
+#### GBRT
+- G0_SHALLOW: max_depth=2, n_estimators=100, learning_rate=0.10, min_samples_leaf=2
+- G1_SHALLOW_SLOW: max_depth=2, n_estimators=300, learning_rate=0.03, min_samples_leaf=2
+- G2_BASELINE: max_depth=3, n_estimators=100, learning_rate=0.10, min_samples_leaf=1
+- G3_MEDIUM_SLOW: max_depth=3, n_estimators=300, learning_rate=0.03, min_samples_leaf=2
+- G4_HIGHER_CAPACITY: max_depth=4, n_estimators=300, learning_rate=0.03, min_samples_leaf=2
+
+Loss remains absolute_error.
+
+#### XGBoost
+The same five capacity profiles are evaluated on both RAW_LEVEL_LAGS8 price lane and CURRENT8 direction lane:
+- X0_SHALLOW_CONSERVATIVE: max_depth=2, n_estimators=300, learning_rate=0.03, min_child_weight=3
+- X1_SHALLOW_MEDIUM: max_depth=3, n_estimators=300, learning_rate=0.05, min_child_weight=2
+- X2_MEDIUM: max_depth=4, n_estimators=200, learning_rate=0.05, min_child_weight=1
+- X3_BASELINE: max_depth=6, n_estimators=100, learning_rate=0.30, min_child_weight=1
+- X4_DEEP_SLOW: max_depth=6, n_estimators=300, learning_rate=0.03, min_child_weight=2
+
+Other Stage-3 XGBoost parameters remain fixed: gamma=0, subsample=1, colsample_bytree=1, reg_alpha=0, reg_lambda=1.
+
+#### LightGBM
+- L0_SMALL: num_leaves=7, max_depth=3, min_child_samples=15, n_estimators=300, learning_rate=0.03
+- L1_SHALLOW: num_leaves=15, max_depth=4, min_child_samples=15, n_estimators=300, learning_rate=0.03
+- L2_MEDIUM: num_leaves=15, max_depth=5, min_child_samples=10, n_estimators=200, learning_rate=0.05
+- L3_BASELINE: num_leaves=31, max_depth=-1, min_child_samples=20, n_estimators=100, learning_rate=0.10
+- L4_HIGHER_CAPACITY: num_leaves=31, max_depth=6, min_child_samples=10, n_estimators=300, learning_rate=0.03
+
+Objective remains regression_l1. No subsampling or L1/L2 regularization changes yet.
+
+#### Random Forest comparator
+Limited capacity audit only:
+- R0_BASELINE: max_depth=None, min_samples_leaf=1, n_estimators=500
+- R1_SHALLOW: max_depth=4, min_samples_leaf=3, n_estimators=500
+- R2_MEDIUM: max_depth=6, min_samples_leaf=2, n_estimators=500
+
+### Governance
+- DEV only: 2022-04..2024-12.
+- 2025/2026 remain unopened.
+- No random split.
+- No feature, target or loss changes.
+- No gamma, subsample, colsample, L1/L2, bagging or other Stage-5 regularization search.
+- Primary metric: DEV price SigmaAE.
+- Secondary: direction, MAE, RMSE.
+- Exact Stage-3 baseline reproduction is mandatory.
+- Stage 4 stops after selecting capacity profile(s); Stage 5 requires separate approval.
