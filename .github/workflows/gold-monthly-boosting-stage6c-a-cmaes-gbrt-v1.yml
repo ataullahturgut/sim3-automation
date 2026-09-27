@@ -1,0 +1,69 @@
+name: Gold Monthly Boosting Stage 6C-A CMAES GBRT V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-boosting-stage6c-a-cmaes-gbrt-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  cmaes-gbrt:
+    name: cmaes-gbrt-full-dev
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install frozen packages
+        run: >
+          python -m pip install
+          'numpy==2.4.6'
+          'psycopg[binary]==3.3.6'
+          'scikit-learn==1.9.1'
+          'xgboost==3.4.1'
+          'lightgbm==4.7.0'
+          'catboost==1.2.10'
+          'cma==4.5.0'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_boosting_stage6c_a_cmaes_gbrt_v1.py
+      - name: Run Stage 6C-A
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_boosting_stage6c_a_cmaes_gbrt_v1.py
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          p='gold_monthly_boosting_stage6c_a_cmaes_gbrt_result.json'
+          r=json.load(open(p))
+          assert r['scope']=='BOOSTING_STAGE6C_A_CMAES_GBRT_FULL_DEV_NESTED_V1'
+          assert r['contract']['dev']=='2022-04..2024-12'
+          assert r['contract']['dev_n']==33
+          assert r['contract']['random_split']=='NONE'
+          assert r['contract']['database']=='READ_ONLY'
+          assert r['contract']['2025_role']=='NOT_OPENED_NOT_EVALUATED'
+          assert r['contract']['2026_role']=='QUARANTINED_NOT_USED_IN_DEVELOPMENT'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert len(r['rows'])==33
+          assert all(x['cma_objective_calls']==80 for x in r['rows'])
+          assert abs(r['baseline']['metrics']['sum_abs_error']-1500.42946858865)<1e-8
+          assert r['baseline']['metrics']['direction_correct']==22
+          print('BOOSTING_STAGE6C_A_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-boosting-stage6c-a-cmaes-gbrt-v1
+          path: gold_monthly_boosting_stage6c_a_cmaes_gbrt_result.json
+          if-no-files-found: error
