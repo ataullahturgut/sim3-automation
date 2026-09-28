@@ -1,0 +1,103 @@
+{
+  "date": "2026-09-28",
+  "status": "STAGE_1B_COMPLETE_ALL_GATES_PASS",
+  "workflow_run_id": 36444509542,
+  "workflow_commit": "24d2597e3af21088044c4d63c3e775705bd030f2",
+  "factor": "width_only",
+  "candidates": {
+    "LSTM": {
+      "16": {
+        "sum_abs_error": 1781.5068685053977,
+        "direction_correct": 18,
+        "relative_mae_vs_rw": 1.0133713700258236,
+        "gate": "PASS"
+      },
+      "32": {
+        "sum_abs_error": 1589.9827200167367,
+        "direction_correct": 19,
+        "relative_mae_vs_rw": 0.9044270307262439,
+        "gate": "PASS"
+      },
+      "64": {
+        "sum_abs_error": 1622.2685916897428,
+        "direction_correct": 20,
+        "relative_mae_vs_rw": 0.9227921454435397,
+        "gate": "PASS"
+      },
+      "lookback": 3
+    },
+    "CNN": {
+      "16": {
+        "sum_abs_error": 1641.5065293447249,
+        "direction_correct": 20,
+        "relative_mae_vs_rw": 0.9337352271585466,
+        "gate": "PASS"
+      },
+      "32": {
+        "sum_abs_error": 1641.8274994443448,
+        "direction_correct": 21,
+        "relative_mae_vs_rw": 0.9339178040070221,
+        "gate": "PASS"
+      },
+      "64": {
+        "sum_abs_error": 1650.2747539155814,
+        "direction_correct": 18,
+        "relative_mae_vs_rw": 0.9387228406800805,
+        "gate": "PASS"
+      },
+      "lookback": 3
+    },
+    "CNN_LSTM": {
+      "16": {
+        "sum_abs_error": 1536.9534467803776,
+        "direction_correct": 18,
+        "relative_mae_vs_rw": 0.8742624839478826,
+        "gate": "PASS"
+      },
+      "32": {
+        "sum_abs_error": 1528.5698506560245,
+        "direction_correct": 20,
+        "relative_mae_vs_rw": 0.8694936579385805,
+        "gate": "PASS"
+      },
+      "64": {
+        "sum_abs_error": 1532.6283305224024,
+        "direction_correct": 18,
+        "relative_mae_vs_rw": 0.8718022357920377,
+        "gate": "PASS"
+      },
+      "lookback": 6
+    }
+  },
+  "architecture_leaders": {
+    "LSTM": {
+      "lookback": 3,
+      "width": 32
+    },
+    "CNN": {
+      "lookback": 3,
+      "width": 16,
+      "note": "technical primary-metric win; near-tie with W32 which has better direction"
+    },
+    "CNN_LSTM": {
+      "lookback": 6,
+      "width": 32
+    }
+  },
+  "family_leader": {
+    "model": "CNN_LSTM",
+    "lookback": 6,
+    "width": 32,
+    "sum_abs_error": 1528.5698506560245,
+    "direction_correct": 20,
+    "relative_mae_vs_rw": 0.8694936579385805
+  },
+  "next_stage": "1C_DROPOUT",
+  "governance": {
+    "dev_only": true,
+    "random_split": false,
+    "db_read_only": true,
+    "opened_2025": false,
+    "used_2026_for_selection": false
+  }
+}
