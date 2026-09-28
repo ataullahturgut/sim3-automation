@@ -90,7 +90,7 @@ This produces a fixed 4-dimensional CAUSAL_CEEMDAN_IMF4_ENDPOINT representation.
 
 ## CEEMDAN parameters
 
-Implementation package: EMD-signal==1.6.4 / PyEMD.
+Implementation package: EMD-signal==1.10.0 / PyEMD.
 
 - trials = 100
 - epsilon = 0.005
