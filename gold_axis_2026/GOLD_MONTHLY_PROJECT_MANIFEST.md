@@ -106,23 +106,25 @@ This table uses the active DEV SigmaAE + direction contract. It is not a claim o
 | CATBOOST_PRICE | Boosting | 1460.4339 | 20/33 | COMPLETE_CLOSED family price leader |
 | AOA-ELM | ELM | 1474.1021 | 20/33 | COMPLETE_CLOSED benchmark |
 | FULL5_MEDIAN | Boosting ensemble | 1484.7313 | 23/33 | COMPLETE_CLOSED direction/balance |
+| 108-month DMS diagnostic | DMA/DMS/IDMA | 1483.8794 | 20/33 | diagnostic only; family deferred |
 | Canonical DMA | DMA/DMS/IDMA | 1486.2561 | 19/33 | DEFERRED_REVISIT_LAST |
 | PLS2 V1 | Challenger B | 1489.3300 | 23/33 | RETAIN_PARETO secondary |
+| Canonical DMS | DMA/DMS/IDMA | 1489.8247 | 20/33 | DEFERRED_REVISIT_LAST |
 | Random Forest reference | Historical Gold Monthly | 1491.5507 | 20/33 | RETAIN_BENCHMARK; not rerun in Challenger B |
-| ABC-ELMFIS | ELMFIS | 1524.89 | 21/33 | COMPLETE_CLOSED price benchmark |
-| CNN-LSTM LB6/W32/D0.10 | CNN/LSTM | 1528.5699 | 20/33 | ACTIVE family leader |
 | Ridge V1 | Challenger B | 1520.9926 | 21/33 | NOT_PROMOTED |
+| ABC-ELMFIS | ELMFIS | 1524.8900 | 21/33 | COMPLETE_CLOSED price benchmark |
+| CNN-LSTM LB6/W32/D0.10 | CNN/LSTM | 1528.5699 | 20/33 | ACTIVE family leader |
 | Huber V1 | Challenger B | 1530.1300 | 20/33 | NOT_PROMOTED |
 | Extra Trees V1 | Challenger B | 1539.9221 | 20/33 | NOT_PROMOTED |
 | Elastic Net V1 | Challenger B | 1590.3571 | 16/33 | NOT_PROMOTED |
-| BiLSTM vanilla | CNN/LSTM structural | 1638.0968 | 19/33 | NOT_PROMOTED |
 | GPReg-Matérn V1 | Challenger B | 1637.9165 | 19/33 | NOT_PROMOTED |
+| BiLSTM vanilla | CNN/LSTM structural | 1638.0968 | 19/33 | NOT_PROMOTED |
 | SMA-ELMFIS | ELMFIS | 1651.4482 | **25/33** | RETAIN_PARETO direction specialist |
 | GPReg-RBF V1 | Challenger B | 1696.3365 | 16/33 | NOT_PROMOTED |
 | SARIMA | Challenger B classical | 1751.5242 | 19/33 | NOT_PROMOTED |
 | ARIMA | Challenger B classical | 1781.7822 | 15/33 | NOT_PROMOTED |
-| TimesFM-3 zero-shot V1 | Foundation model | 1850.4113 | 19/33 | NOT_PROMOTED / V1 closed |
 | HGB V1 | Challenger B | 1840.2678 | 20/33 | NOT_PROMOTED |
+| TimesFM-3 zero-shot V1 | Foundation model | 1850.4113 | 19/33 | NOT_PROMOTED / V1 closed |
 | Vanilla ANFIS | ANFIS | 1852.0465 | 21/33 | architecture anchor only |
 | Vanilla ELMFIS | ELMFIS | 1996.2933 | 20/33 | architecture anchor only |
 | TimeMixer++ V1 | Deep time series | 4232.5931 | 13/33 | REJECTED / V1 closed |
@@ -130,6 +132,7 @@ This table uses the active DEV SigmaAE + direction contract. It is not a claim o
 
 Notes:
 - PLS1 and PLS2 are Challenger-B results and are now part of the same canonical monthly registry.
+- The 108-month DMS row is a diagnostic window result, not the canonical family model.
 - GPR Stage 3 is complete, but no final Stage-4/5 family closure is present in the repository; do not falsely mark the whole GPR family frozen.
 - SVR is intentionally paused before completing the later structural DWT line.
 - The current CNN/LSTM structural program is still active.
