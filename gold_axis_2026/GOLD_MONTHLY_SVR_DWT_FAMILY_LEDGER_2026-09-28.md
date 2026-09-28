@@ -1,7 +1,7 @@
 # GOLD MONTHLY FORECAST — SVR / DWT-SVR FAMILY LEDGER
 
 Date: 2026-09-28  
-Status: **ACTIVE — STAGE 2 COMPLETE / STAGE 3 NEXT**  
+Status: **ACTIVE — STAGE 3 COMPLETE / STAGE 4.1 NEXT**  
 Branch: `gold-midas-headswap-v1-20260925`
 
 Canonical authority:
@@ -143,13 +143,33 @@ Payload: `5a85e126c827740e04914c4eba3cd4afaf45b67e89c0a9bc361b64fef66d9b29`.
 No Stage-2 result used 2025 or 2026.
 
 ### Stage 3 — deterministic hyperparameter refinement
-**NEXT / NOT YET RUN**
-- Stage 3A coarse nested chronological grid.
-- Stage 3B local refinement.
-- then freeze continuous metaheuristic bounds.
+**COMPLETE / SCIENTIFIC GATES PASS / TUNING NOT PROMOTED**
+
+Stage 3A coarse nested grid:
+- 150 frozen combinations.
+- Stage-2 parent: **1449.187363 / 19/33**.
+- Stage-3A coarse tuned: **1580.901050 / 20/33**.
+- Delta vs parent: +131.713687 SigmaAE.
+- Decision: not promoted.
+
+Stage 3B local refinement:
+- local neighborhoods frozen around Stage-3A per-origin centers before execution.
+- Stage-3B local tuned: **1615.913256 / 22/33**.
+- promotion threshold: SigmaAE < 1449.187363.
+- Decision: **NOT PROMOTED**.
+
+Final deterministic SVR reference remains:
+**EPSILON_RBF_DAILY12_STAGE2_PARENT**
+- DEV SigmaAE 1449.187363
+- direction 19/33
+
+Stage-3A run: 36395013531; payload `289535fc26a3e12f8b2a2e4da8c86c0dd4c1a565aee30965239432bd6010bfc2`.  
+Stage-3B run: 36395363215; payload `8ae88568da68a451d667ef53110888cd0ffe76bbf029003b71cfe37c9e938c9e`.
+
+Deterministic hyperparameter tuning line is CLOSED / NOT PROMOTED.
 
 ### Stage 4 — 32/32 metaheuristic SVR broad screen
-**MANDATORY / NOT YET RUN**
+**MANDATORY / BOUNDS FREEZE NEXT / 0 OF 32 RUN**
 
 Batch 4.1:
 - [ ] PSO
@@ -226,7 +246,7 @@ Open after all 32 methods audited.
 **LOCKED / NOT YET OPENED**
 
 ## Current next authorized action
-**Stage 3A — commit exact coarse nested grid and chronology rules before any tuning outcome.**
+**Freeze Stage-4 continuous bounds/budget/objective, then execute Batch 4.1: PSO, GA, DE, MPA.**
 
 ## Kontrol ve Uyum Özeti
 - Stage 0 authority freeze: PASS.
