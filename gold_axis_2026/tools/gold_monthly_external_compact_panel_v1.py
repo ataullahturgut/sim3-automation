@@ -4,7 +4,7 @@ from pathlib import Path
 import gold_monthly_external_driver_residual_v1 as core
 import gold_monthly_fx_h10_residual_v1 as h10
 
-CANDIDATES={
+# X5 compact candidate set; promotion remains DEV-only.\nCANDIDATES={
   "CNY_CPI":["usdcny_logret","cpi_surprise_last"],
   "CNY_RATES_CPI":["usdcny_logret","dgs10_change","dff_change","curve_proxy_change","cpi_surprise_last"],
   "H10_BROAD_CPI":["broad_usd_ret","cpi_surprise_last"],
