@@ -1,0 +1,11 @@
+{
+  "schema_version": "GOLD_MONTHLY_DEV_SNAPSHOT_V1_2026-09-28",
+  "authorized": true,
+  "workflow_run_id": 36456042954,
+  "artifact_id": 10985453248,
+  "artifact_name": "gold-monthly-dev-snapshot-v1-be98365d25e2e81b0f70fb724940e09d0191eb6c",
+  "payload_sha256": "2111e394f60d131995273789fc014dc339db4e1b7672095c89117c133879a3eb",
+  "loader": "gold_axis_2026/tools/gold_monthly_dev_snapshot_v1.py",
+  "holdout_2025_included": false,
+  "quarantine_2026_included": false
+}
