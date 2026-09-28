@@ -1,0 +1,75 @@
+{
+  "date": "2026-09-28",
+  "status": "COMPLETE_NOT_PROMOTED",
+  "workflow_run_id": 36458681241,
+  "workflow_commit": "f912e9a31e5342f4db9663837e8d5dac1be71c97",
+  "artifact_id": 10987310997,
+  "snapshot_payload_sha256": "2111e394f60d131995273789fc014dc339db4e1b7672095c89117c133879a3eb",
+  "architecture": {
+    "model": "BiLSTM",
+    "lookback": 3,
+    "width_per_direction": 32,
+    "merge_mode": "concat",
+    "dropout": 0.1,
+    "learning_rate": 0.001,
+    "batch": 16,
+    "seeds": [
+      1701,
+      2903,
+      4111
+    ]
+  },
+  "metrics": {
+    "sum_abs_error": 1638.0967950069746,
+    "direction_correct": 19,
+    "relative_mae_vs_rw": 0.9317956740654008,
+    "mae": 49.63929681839317,
+    "rmse": 61.26234861228702
+  },
+  "yearly": {
+    "2022": {
+      "sum_abs_error": 483.1305445655739,
+      "direction_correct": 5,
+      "relative_mae_vs_rw": 1.0023455281443443
+    },
+    "2023": {
+      "sum_abs_error": 531.2748970391663,
+      "direction_correct": 5,
+      "relative_mae_vs_rw": 1.0668170623276432
+    },
+    "2024": {
+      "sum_abs_error": 623.6913534022344,
+      "direction_correct": 9,
+      "relative_mae_vs_rw": 0.8016598372779363
+    }
+  },
+  "comparison": {
+    "versus_lstm_parent": {
+      "sum_abs_error_delta": 48.114074990237896,
+      "pct_worse": 3.026075339342782,
+      "direction_delta": 0
+    },
+    "versus_cnn_lstm_leader": {
+      "sum_abs_error_delta": 109.52694435095009,
+      "pct_worse": 7.165321513043299,
+      "direction_delta": -1
+    }
+  },
+  "seed_counts": {
+    "1701": 13,
+    "2903": 0,
+    "4111": 20
+  },
+  "scientific_gate": "PASS",
+  "decision": {
+    "promote": false,
+    "open_micro_grid": false,
+    "next": "CNN-BiLSTM"
+  },
+  "governance": {
+    "neon_queried": false,
+    "random_split": false,
+    "opened_2025": false,
+    "used_2026": false
+  }
+}
