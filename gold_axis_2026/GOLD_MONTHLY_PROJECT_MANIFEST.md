@@ -975,6 +975,200 @@ Explicit reopen olmadan açılmayacak:
 
 ---
 
+# 20A. Veri çalıştırma mimarisi — Neon otorite, snapshot execution
+
+**Durum: ACTIVE INFRASTRUCTURE POLICY / BINDING**
+
+Neon üretim verisinin otorite kaynağı olarak kalır; fakat model deneylerinde aynı tarihsel veri tekrar tekrar Neon'dan taşınmayacaktır. Mevcut data-transfer/egress kotasını korumak ve deneyleri yeniden üretilebilir yapmak için varsayılan çalışma yolu artık:
+
+`NEON READ_ONLY → governed canonical snapshot → hash/parity gate → GitHub Actions/model execution`
+
+## 20A.1 Ana kural
+
+- Neon = authoritative source.
+- Canonical snapshot = immutable execution cache; ikinci veri otoritesi değildir.
+- Normal model run'ları snapshot üzerinden çalışır.
+- Neon'a doğrudan historical full reload yalnız `REFRESH_DATASET=true` benzeri explicit refresh/audit modunda yapılır.
+- Snapshot üretildiğinde schema/version/hash kaydedilir.
+- Snapshot, en az bir canonical model üzerinde Neon-source sonuçlarıyla parity göstermeden yetkilendirilmez.
+- Artifact expiry veya source refresh sonrası yeniden export + parity zorunludur.
+- Model family'leri kendi snapshot kopyalarını üretmez; mümkün olduğunca tek governed dataset contract paylaşılır.
+- DB write: YOK / READ_ONLY.
+
+## 20A.2 Execution akışı
+
+1. **Source inventory:** model için gereken raw/derived alanları belirle.
+2. **One-shot Neon export:** yalnız gerekli kolon/tarih aralığını READ_ONLY çek.
+3. **Canonical serialization:** Parquet tercih edilir; gerekirse sıkıştırılmış CSV/JSON.
+4. **Data dictionary:** kolon, kaynak, unit, timezone, release/availability ve derivation kuralı.
+5. **Hash freeze:** payload SHA-256 + schema/version.
+6. **Parity audit:** en az bir frozen reference modelde Neon-direct vs snapshot sonuçları birebir/izin verilen toleransta karşılaştır.
+7. **Authorize:** parity PASS ise snapshot MODEL_EXECUTION_AUTHORIZED.
+8. **Default runs:** sonraki ANN/ANFIS/RBFNN/GPR/CNN-LSTM/challenger denemeleri snapshot'tan.
+9. **Refresh:** yalnız yeni ay/veri gerekiyorsa incremental veya explicit snapshot refresh.
+10. **Re-audit:** refresh sonrası hash, coverage, chronology, leakage ve parity yeniden kontrol edilir.
+
+## 20A.3 Kota koruma kuralları
+
+- Aynı tarihsel dataset her job'da Neon'dan yeniden indirilmez.
+- `SELECT *` tipi gereksiz geniş sorgular kullanılmaz.
+- Tarih ve kolon projection zorunludur.
+- Bir batch'teki bağımsız modeller aynı snapshot'ı paylaşır.
+- Büyük dışsal datasetler mümkünse Neon'a yazılmadan ayrı governed external snapshot olarak tutulur.
+- Neon kullanımının amacı model compute değil, source-of-truth refresh/audit'tir.
+
+---
+
+# 20B. Yeni araştırma konusu — External Driver / Error-Regime Augmentation
+
+**Durum: PLANNED / PRE-OUTCOME FREEZE REQUIRED**
+
+Amaç mevcut en güçlü modellerin büyük hata yaptığı ayları sonradan açıklamak değil; tahmin anında bilinebilen dışsal bilgilerin **önceden** model hatasını veya fiyat hareketini açıklayıp açıklamadığını bilimsel olarak test etmektir.
+
+Bu konu mevcut model ailelerini yeniden açmaz. Ayrı bir **feature-information research track**'tir.
+
+## 20B.1 Ana araştırma sorusu
+
+> Frozen CURRENT8 / mevcut metal-temelli bilgi setine eklenen origin-safe dışsal veri, ChHHO-ANFIS ve DE-ABC-RBFNN gibi güçlü modellerin out-of-sample fiyat hatasını sistematik ve chronology-safe biçimde azaltıyor mu?
+
+İki ayrı gate vardır:
+
+1. **Diagnostic gate:** dışsal bilgi, gelecekteki model hata büyüklüğünü/signed error'ı origin anında öngörebiliyor mu?
+2. **Forecast-value gate:** aynı bilgi modele eklendiğinde honest rolling/expanding DEV forecast hatasını gerçekten azaltıyor mu?
+
+Yalnız diagnostic ilişki bulmak model augmentation için yeterli değildir.
+
+## 20B.2 Körlük / hindsight yasağı
+
+- Büyük hata aylarına bakıp sonra uygun değişken seçmek YASAK.
+- 2025 outcome'ları feature selection/tuning için YASAK.
+- External candidate list, transform, lag ve publication/availability kuralı sonuç görülmeden freeze edilir.
+- Tüm tarama 2022-04..2024-12 DEV içinde chronology-safe yapılır.
+- 2025 ancak final frozen external specification sonrası transport/reporting olarak açılır.
+
+## 20B.3 Stage akışı
+
+### X0 — External-driver authority + hypothesis freeze
+Literatüre ve ekonomik mekanizmaya göre candidate family'leri önceden belirle; exact variable/transform/lag rules yaz.
+
+### X1 — Availability / vintage audit
+Her seri için:
+- source,
+- frequency,
+- timezone,
+- release lag,
+- revision/vintage riski,
+- origin tarihinde gerçekten observable olup olmadığı,
+- missingness/coverage
+kaydedilir.
+
+### X2 — Residual predictability screen
+ChHHO-ANFIS ve DE-ABC-RBFNN için tüm DEV originlerinde:
+- signed error,
+- absolute error,
+- large-error flag
+üzerinde yalnız origin-safe external predictors test edilir.
+Tek tek en kötü aylara göre feature seçilmez.
+
+### X3 — Block-by-block augmentation
+Aynı frozen model/protokol altında:
+- BASE
+- BASE + FX
+- BASE + RATES
+- BASE + RISK
+- BASE + INFLATION
+- BASE + COMMODITY
+- diğer pre-frozen bloklar
+ayrı ayrı çalıştırılır.
+
+### X4 — Ablation
+Kazanan blok içindeki değişkenlerin marjinal katkısı leave-one-block/leave-one-feature veya compact predeclared ablation ile test edilir.
+
+### X5 — Compact combined panel
+Yalnız DEV'de tutarlı marjinal bilgi taşıyan küçük panel kurulur. Small-n nedeniyle geniş feature soup yasaktır.
+
+### X6 — Frozen 2025 transport
+Model + external panel tamamen freeze edildikten sonra 2025 bir kez reporting/transport için kullanılır. Geriye dönük feature/lag rescue yoktur.
+
+### X7 — Error-warning model (opsiyonel ayrı çıktı)
+Fiyatı değiştirmeyen, yalnız `P(large forecast error)` veya beklenen `|error|` üreten ayrı reliability layer denenebilir. Bu katman da yalnız origin-safe girdilerle eğitilir.
+
+## 20B.4 İlk external family havuzu
+
+Pre-outcome authority araştırmasında değerlendirilecek ana bloklar:
+- USD / global FX
+- nominal ve real rates
+- yield curve / monetary-policy expectations
+- inflation / breakevens
+- market volatility / risk (örn. VIX/MOVE türü)
+- economic-policy / geopolitical uncertainty
+- oil / broad commodities
+- equity risk appetite
+- yatırımcı flow proxy'leri, yalnız real-time availability kanıtlanırsa
+- official demand / central-bank data, yalnız publication-lag ve vintage güvenli ise
+
+Bu liste nihai feature list değildir; X0 authority scan ile exact değişkenlere daraltılacaktır.
+
+---
+
+# 20C. Ayrı hipotez — Global FX / International Capital-Flow Proxy
+
+**Durum: PLANNED / HIGH-INTEREST EXTERNAL BLOCK**
+
+Kullanıcı hipotezi: yalnız DXY değil, majör döviz paritelerinin ortak davranışı uluslararası yatırımcı yönünü ve güvenli-liman rotasyonunu yansıtabilir; mevcut 4-metal/CURRENT8 yapısında bu kanal doğrudan temsil edilmiyor olabilir.
+
+Bu nedenle FX bloğu tek bir DXY kolonu olarak değil, ayrı bir bilgi ailesi olarak test edilecektir.
+
+## 20C.1 Başlangıç candidate seti
+
+Exact source/availability doğrulamasından sonra değerlendirilecekler:
+- DXY veya broad USD index
+- EUR/USD
+- USD/JPY
+- GBP/USD
+- USD/CHF
+- USD/CNH veya CNY, real-time/market availability uygunsa
+- FX volatility proxy
+- cross-FX dispersion
+- USD breadth: doların kaç majör para birimine karşı aynı anda güçlendiği/zayıfladığı
+- safe-haven rotation proxy: Gold / USD / JPY / CHF göreli yön veya standardized relative-strength yapısı
+
+## 20C.2 Bilimsel hipotezler
+
+- H0: FX/global-capital-flow bilgisi CURRENT8 üzerine ilave out-of-sample bilgi sağlamaz.
+- H1: origin-safe FX bilgisi sonraki ay Gold price move veya base-model forecast error üzerinde ilave bilgi sağlar.
+- H2: breadth/dispersion/rotation gibi türetilmiş FX-state göstergeleri tek DXY seviyesinden daha fazla incremental bilgi taşıyabilir.
+
+## 20C.3 Test sırası
+
+1. DXY-only benchmark.
+2. Majör-parite raw-return block.
+3. Breadth/dispersion block.
+4. Safe-haven rotation block.
+5. Compact FX combined panel.
+6. ChHHO ve DE-ABC üzerinde ayrı augmentation.
+7. Base vs augmented rolling-origin comparison.
+8. Frozen 2025 transport only after DEV freeze.
+
+## 20C.4 Promotion kuralı
+
+FX bloğu ancak:
+- availability/vintage PASS,
+- leakage PASS,
+- DEV rolling-origin improvement,
+- year stability,
+- worst-month/tail behavior,
+- small-n robustness,
+- ablation ile gerçek marjinal katkı
+gösterirse ana modele aday olur.
+
+2025'te iyi çalışması tek başına promotion gerekçesi değildir.
+
+Ayrıntılı çalışma dosyası:
+`gold_axis_2026/GOLD_MONTHLY_EXTERNAL_DRIVERS_AND_OFFLINE_SNAPSHOT_PLAN_2026-09-28.md`
+
+---
+
 # 21. Bundan sonra manifest nasıl güncellenecek
 
 Her yeni deney bittiğinde **aynı commit zincirinde** bu ana manifest güncellenecek.
