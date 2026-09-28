@@ -1,0 +1,77 @@
+name: Gold Monthly BiLSTM Structural V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_bilstm_structural_v1.py
+      - .github/workflows/gold-monthly-bilstm-structural-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  TF_DETERMINISTIC_OPS: '1'
+  TF_ENABLE_ONEDNN_OPTS: '0'
+  CUDA_VISIBLE_DEVICES: ''
+  OMP_NUM_THREADS: '1'
+  TF_NUM_INTRAOP_THREADS: '1'
+  TF_NUM_INTEROP_THREADS: '1'
+  PYTHONHASHSEED: '0'
+  NEON_DATABASE_URL: ''
+jobs:
+  bilstm:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    name: BiLSTM-Offline-Snapshot
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: gold-monthly-dev-snapshot-v1-be98365d25e2e81b0f70fb724940e09d0191eb6c
+          path: snapshot_artifact
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: 36456042954
+      - name: Install frozen dependencies
+        run: python -m pip install "tensorflow-cpu==2.20.0" "numpy>=2.0,<3" "psycopg[binary]>=3.2,<4" "scikit-learn>=1.5,<2"
+      - name: Compile BiLSTM runner
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_bilstm_structural_v1.py gold_axis_2026/tools/gold_monthly_dev_snapshot_v1.py gold_axis_2026/tools/gold_monthly_cnn_lstm_stage0_v1.py
+      - name: Run offline BiLSTM DEV challenger
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_monthly_bilstm_structural_v1.py \
+            --snapshot snapshot_artifact/gold_monthly_dev_snapshot_v1.json \
+            --output gold_monthly_bilstm_structural_v1_result.json
+      - name: Scientific output gate
+        run: |
+          python - <<'PY'
+          import json, math
+          r=json.load(open("gold_monthly_bilstm_structural_v1_result.json"))
+          assert r["scientific_gate"]["status"]=="PASS"
+          assert r["authority"]["database_access"]=="NONE_OFFLINE_SNAPSHOT"
+          assert r["authority"]["2025_role"]=="LOCKED_NOT_PRESENT"
+          assert r["authority"]["2026_role"]=="QUARANTINED_NOT_PRESENT"
+          assert r["snapshot"]["payload_sha256"]=="2111e394f60d131995273789fc014dc339db4e1b7672095c89117c133879a3eb"
+          assert r["dev"]["metrics"]["n"]==33
+          assert len(r["dev"]["rows"])==33
+          assert all(len(x["seed_runs"])==3 for x in r["dev"]["rows"])
+          assert all(math.isfinite(x["forecast"]) and abs(x["pred_log_return_gold"])<1 for x in r["dev"]["rows"])
+          print("SCIENTIFIC_OUTPUT_GATE=PASS")
+          print(json.dumps({
+            "metrics":r["dev"]["metrics"],
+            "yearly":r["dev"]["yearly"],
+            "worst_month":r["dev"]["worst_month"],
+            "seed_dispersion":r["dev"]["seed_dispersion"],
+            "gate_checks":r["scientific_gate"]["checks"]
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-bilstm-structural-v1-${{ github.sha }}
+          path: gold_monthly_bilstm_structural_v1_result.json
+          if-no-files-found: error
+          retention-days: 90
