@@ -1,0 +1,88 @@
+name: Gold Monthly CNN LSTM Stage 1A Lookback V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_cnn_lstm_stage1a_v1.py
+      - .github/workflows/gold-monthly-cnn-lstm-stage1a-lookback-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  TF_DETERMINISTIC_OPS: '1'
+  TF_ENABLE_ONEDNN_OPTS: '0'
+  CUDA_VISIBLE_DEVICES: ''
+  OMP_NUM_THREADS: '1'
+  TF_NUM_INTRAOP_THREADS: '1'
+  TF_NUM_INTEROP_THREADS: '1'
+  PYTHONHASHSEED: '0'
+jobs:
+  lookback:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        include:
+          - model: LSTM
+            lookback: 3
+          - model: LSTM
+            lookback: 6
+          - model: CNN
+            lookback: 3
+          - model: CNN
+            lookback: 6
+          - model: CNN_LSTM
+            lookback: 3
+          - model: CNN_LSTM
+            lookback: 6
+    name: ${{ matrix.model }}-LB${{ matrix.lookback }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install frozen dependencies
+        run: python -m pip install "tensorflow-cpu==2.20.0" "psycopg[binary]>=3.2,<4" "scikit-learn>=1.5,<2"
+      - name: Compile Stage 1A runner
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_cnn_lstm_stage1a_v1.py gold_axis_2026/tools/vw_midas_msvr_successor_v1.py gold_axis_2026/tools/vw_midas_elmfis_baseline_v1.py
+      - name: Run DEV-only lookback challenger
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_cnn_lstm_stage1a_v1.py --model ${{ matrix.model }} --lookback ${{ matrix.lookback }} --output gold_monthly_cnn_lstm_stage1a_${{ matrix.model }}_lb${{ matrix.lookback }}_v1_result.json
+      - name: Scientific output gate
+        run: |
+          MODEL="${{ matrix.model }}" LB="${{ matrix.lookback }}" python - <<'PY'
+          import json, math, os
+          model=os.environ["MODEL"]; lb=os.environ["LB"]
+          p=f"gold_monthly_cnn_lstm_stage1a_{model}_lb{lb}_v1_result.json"
+          r=json.load(open(p))
+          assert r["scientific_gate"]["status"]=="PASS"
+          assert r["stage"]["stage"]=="1A"
+          assert r["stage"]["factor"]=="LOOKBACK_ONLY"
+          assert int(r["stage"]["lookback"])==int(lb)
+          assert r["authority"]["2025_role"]=="LOCKED_NOT_QUERIED_NOT_LOADED"
+          assert r["authority"]["2026_role"]=="QUARANTINED_NOT_QUERIED_NOT_LOADED"
+          assert len(r["dev"]["rows"])==33
+          assert r["dev"]["metrics"]["n"]==33
+          assert all(len(x["seed_runs"])==3 for x in r["dev"]["rows"])
+          assert all(math.isfinite(x["forecast"]) and abs(x["pred_log_return_gold"])<1 for x in r["dev"]["rows"])
+          print("SCIENTIFIC_OUTPUT_GATE=PASS")
+          print(json.dumps({
+            "model":model,
+            "lookback":int(lb),
+            "metrics":r["dev"]["metrics"],
+            "yearly":r["dev"]["yearly"],
+            "worst_month":r["dev"]["worst_month"],
+            "seed_dispersion":r["dev"]["seed_dispersion"],
+            "gate_checks":r["scientific_gate"]["checks"]
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cnn-lstm-stage1a-${{ matrix.model }}-lb${{ matrix.lookback }}-${{ github.sha }}
+          path: gold_monthly_cnn_lstm_stage1a_${{ matrix.model }}_lb${{ matrix.lookback }}_v1_result.json
+          if-no-files-found: error
+          retention-days: 30
