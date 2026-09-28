@@ -24,7 +24,8 @@ jobs:
       - name: Compile
         run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py
       - name: Run SALP
-        env: {NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}}
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
         run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py --method SALP
       - name: Scientific gate
         run: |
@@ -73,7 +74,8 @@ jobs:
       - name: Compile
         run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py
       - name: Run SMA
-        env: {NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}}
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
         run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py --method SMA
       - name: Scientific gate
         run: |
@@ -120,7 +122,8 @@ jobs:
       - name: Compile
         run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py
       - name: Run GOA
-        env: {NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}}
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
         run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py --method GOA
       - name: Scientific gate
         run: |
@@ -162,7 +165,8 @@ jobs:
       - name: Compile
         run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py
       - name: Run ALO
-        env: {NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}}
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
         run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py --method ALO
       - name: Scientific gate
         run: |
@@ -204,7 +208,8 @@ jobs:
       - name: Compile
         run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py
       - name: Run TLBO
-        env: {NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}}
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
         run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py --method TLBO
       - name: Scientific gate
         run: |
