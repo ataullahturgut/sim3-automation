@@ -61,14 +61,19 @@ Seed policy:
 No outcome-based budget extension is allowed.
 
 ## Mandatory 32 methods / batches
-4.1: PSO, GA, DE, MPA  
-4.2: ABC, SSA, GWO, WOA  
-4.3: HHO, ACO, BAT, FA  
-4.4: MFO, FPA, FA_FPA, CS  
-4.5: SCA, SALP, SMA, GOA  
-4.6: ALO, TLBO, JAYA, HGS  
-4.7: CHOA, HGSO, AOA, CPA  
-4.8: KRILL, CROW, DE_ABC, MULTISWARM
+
+Execution-batch amendment (user directive, 2026-09-28):
+- Batch 4.1 had already completed with 4 methods before this amendment and remains valid.
+- From Batch 4.2 onward, run at most 5 methods per batch.
+- This changes execution packaging only; candidate set, method order, bounds, objective, budget, seed policy and scientific gates are unchanged.
+
+4.1 COMPLETE: PSO, GA, DE, MPA  
+4.2: ABC, SSA, GWO, WOA, HHO  
+4.3: ACO, BAT, FA, MFO, FPA  
+4.4: FA_FPA, CS, SCA, SALP, SMA  
+4.5: GOA, ALO, TLBO, JAYA, HGS  
+4.6: CHOA, HGSO, AOA, CPA, KRILL  
+4.7: CROW, DE_ABC, MULTISWARM
 
 No parent selection before all 32 are complete/audited unless a method is formally BLOCKED by a documented scientific/technical failure.
 
