@@ -36,15 +36,18 @@ jobs:
           python gold_axis_2026/tools/gold_monthly_svr_dwt_stage42_meta_v1.py --method SSA > ssa.log 2>&1 & p2=$!
           python gold_axis_2026/tools/gold_monthly_svr_dwt_stage42_meta_v1.py --method GWO > gwo.log 2>&1 & p3=$!
           python gold_axis_2026/tools/gold_monthly_svr_dwt_stage42_meta_v1.py --method WOA > woa.log 2>&1 & p4=$!
+          python gold_axis_2026/tools/gold_monthly_svr_dwt_stage42_meta_v1.py --method HHO > hho.log 2>&1 & p5=$!
           status=0
           wait $p1 || status=1
           wait $p2 || status=1
           wait $p3 || status=1
           wait $p4 || status=1
+          wait $p5 || status=1
           cat abc.log
           cat ssa.log
           cat gwo.log
           cat woa.log
+          cat hho.log
           exit $status
       - name: Aggregate
         run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage42_meta_v1.py --aggregate
@@ -52,7 +55,7 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          methods=['ABC','SSA','GWO','WOA']
+          methods=['ABC','SSA','GWO','WOA','HHO']
           for method in methods:
               r=json.load(open(f'gold_monthly_svr_dwt_stage42_{method.lower()}_result.json'))
               assert r['scope']=='STAGE42_METAHEURISTIC_DEV_ONLY_V1'
@@ -80,7 +83,7 @@ jobs:
                   assert -12-1e-12 <= p['log2_gamma'] <= 4+1e-12
                   assert 0.01-1e-12 <= p['epsilon'] <= 0.50+1e-12
           a=json.load(open('gold_monthly_svr_dwt_stage42_aggregate.json'))
-          assert len(a['ranking'])==4
+          assert len(a['ranking'])==5
           print('SVR_DWT_STAGE42_GATE=PASS')
           PY
       - uses: actions/upload-artifact@v4
