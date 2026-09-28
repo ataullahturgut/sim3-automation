@@ -190,6 +190,21 @@ Batch 4.1 DEV ranking:
 Frozen Stage-2 parent remains better: 1449.187363 / 19/33.
 Run: 36396937495.
 
+#### Batch 4.2 — ABC / SSA / GWO / WOA
+**COMPLETE / SCIENTIFIC GATE PASS**
+
+| Method | DEV SigmaAE | Direction |
+|---|---:|---:|
+| ABC | **1563.258913** | 16/33 |
+| GWO | 1590.104631 | 18/33 |
+| WOA | 1635.345256 | 17/33 |
+| SSA | 1659.670617 | **19/33** |
+
+None beats frozen parent 1449.187363 / 19/33.
+Run: 36398195330.
+Artifact: 10959831017.
+Final workflow conclusion failure was push-conflict only; compute/scientific gate passed and report was recovered manually.
+
 Batch 4.2 NEXT:
 - [ ] ABC
 - [ ] SSA
@@ -230,7 +245,7 @@ Batch 4.7 FINAL REMAINDER:
 - [ ] DE_ABC
 - [ ] MULTISWARM
 
-Progress: **4/32**
+Progress: **8/32**
 No Stage-4 parent selection until all 32 are complete/audited.
 Vanilla/deterministic parent remains reference identity #33.
 
