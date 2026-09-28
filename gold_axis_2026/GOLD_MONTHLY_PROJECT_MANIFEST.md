@@ -1,147 +1,152 @@
 # GOLD MONTHLY FORECAST — CANONICAL PROJECT MANIFEST
 
-**Manifest version:** 1.0  
+**Manifest version:** 1.1  
 **Date:** 2026-09-28  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Branch:** `gold-midas-headswap-v1-20260925`  
 **Canonical path:** `gold_axis_2026/GOLD_MONTHLY_PROJECT_MANIFEST.md`  
-**Machine-readable registry:** `gold_axis_2026/GOLD_MONTHLY_MODEL_REGISTRY.json`  
-**Status:** **CURRENT / BINDING FOR GOLD MONTHLY MODEL-RESEARCH STATE**
+**Status:** **CURRENT / BINDING / SELF-CONTAINED PROJECT STATE**
+
+> **Single-source rule:** Bu dosya GOLD MONTHLY FORECAST projesini anlamak, daha önce neyin denendiğini görmek, hangi sonuçların elde edildiğini bilmek ve sıradaki işi belirlemek için yeterli olmalıdır. Eski ledger, result, freeze ve Challenger-B dosyaları yalnızca denetim/provenance kanıtıdır; mevcut proje durumunu anlamak için onlara gitmek gerekmez.
 
 ---
 
-## 0. Manifest authority and anti-duplication rule
+# 1. Projenin amacı ve değişmeyen kontrat
 
-This file is the single project-state authority for the **GOLD MONTHLY FORECAST** research program.
+## 1.1 Hedef
 
-It consolidates the previously fragmented family ledgers, closure files, Challenger-B manifest, stage reports and handoff documents into one operational registry.
+Proje, bir sonraki takvim ayının ortalama **XAU/USD** fiyatını tahmin eder.
 
-### What this manifest controls
-Before any new Gold Monthly model is proposed or run, the researcher must check:
-1. whether the model/family has already been executed;
-2. its exact representation/target/protocol;
-3. its canonical DEV result;
-4. whether the line is CLOSED, RETAINED, PAUSED, DEFERRED or NOT_RUN;
-5. whether reopening requires a genuinely new mechanism, data representation, untouched validation authority or explicit user instruction.
+- Hedef ufuk: **H=1 ay**
+- Forecast origin: önceki tamamlanmış takvim ayının sonu
+- Ana modelleme hedefi: çoğu CURRENT8/neural/nonlinear hatta bir sonraki ay Gold log-return
+- Fiyat rekonstrüksiyonu: önceki tamamlanmış ay ortalaması × exp(tahmin edilen log-return)
 
-### What old files become
-Older family ledgers and result documents are **evidence/provenance records**, not competing project-state manifests. They are not deleted. If an older "next action" conflicts with this file, this manifest controls the current project state.
+## 1.2 Seçim ve değerlendirme otoritesi
 
-### Re-run policy
-A completed model must **not** be rerun merely because a later conversation forgot it.
+- DEV / model seçimi: **2022-04..2024-12, n=33**
+- 2025: kilitli transport/final-holdout rolü; family freeze sonrasında kullanılabilir, geriye dönük tuning için kullanılamaz
+- 2026: karantina / reporting-only
+- Random split: **YOK**
+- Chronological rolling/expanding origin: **ZORUNLU**
+- Target-month leakage: **YASAK**
+- DB: **READ_ONLY**
+- Ana skor: **DEV ΣAE = aylık mutlak fiyat hatalarının toplamı**
+- İkinci ana kriter: **aylık yön doğruluğu**
+- Destek metrikleri: MAE, RMSE, MAPE/WAPE, RW-relative MAE, worst month, yearly stability
 
-A rerun is authorized only when at least one of the following is explicitly true:
-- corrected implementation after a documented bug;
-- materially different input representation;
-- materially different target or horizon;
-- new causal/decomposition mechanism;
-- new untouched validation authority;
-- independent reproducibility audit;
-- explicit user instruction to reopen the line.
+## 1.3 Mevcut veri çalıştırma altyapısı
 
-Changing only a seed, tiny parameter range or cosmetic naming does not create a new model identity.
-
----
-
-## 1. Binding forecasting contract
-
-- Target: **H=1 next-calendar-month average XAU/USD price**.
-- Forecast origin: previous completed calendar month end.
-- Main modeled target for CURRENT8 neural/nonlinear lines: next-month Gold log return, reconstructed to price.
-- DEV/model selection authority: **2022-04..2024-12, n=33**.
-- 2025: locked external/final transport according to family-specific freeze; never used retroactively for tuning.
-- 2026: quarantined/reporting-only; never used for model selection.
-- Random split: **FORBIDDEN**.
-- Target-month leakage: **FORBIDDEN**.
-- DB access for research: **READ_ONLY**.
-- Active primary metric: **DEV cumulative absolute price error, SigmaAE**.
-- Direction: principal complementary criterion.
-- Supporting metrics: MAE, RMSE, MAPE/WAPE, relative MAE vs Random Walk, worst month, yearly stability.
-- No post-hoc rescue on 2025/2026.
-
-### Current execution cache
-Authorized DEV Snapshot V1:
+Yetkilendirilmiş DEV Snapshot V1:
 - schema: `GOLD_MONTHLY_DEV_SNAPSHOT_V1_2026-09-28`
 - payload SHA-256: `2111e394f60d131995273789fc014dc339db4e1b7672095c89117c133879a3eb`
-- exact offline CNN-LSTM parity: **PASS with zero metric difference**
-- 2025 rows: 0
-- 2026 rows: 0
+- 2025 modeling rows: **0**
+- 2026 modeling rows: **0**
+- offline CNN-LSTM parity: **tam eşleşme / fark 0.0**
 
-Compatible future DEV runs should use this snapshot instead of repeated Neon reads.
-
----
-
-## 2. Status vocabulary
-
-| Status | Meaning |
-|---|---|
-| RETAIN_PRIMARY | Completed; current primary role |
-| RETAIN_PARETO | Completed; retained nondominated / trade-off role |
-| RETAIN_BENCHMARK | Completed; important comparator |
-| COMPLETE_CLOSED | Family/model line complete; do not reopen without new rationale |
-| NOT_PROMOTED | Valid completed experiment; keep result, do not repeat |
-| REJECTED | Valid result clearly unsuitable under frozen design |
-| SCIENTIFIC_FAIL | Execution completed but scientific/numerical gate failed; ineligible |
-| PAUSED_RESUME_AT | Work intentionally paused; exact resume point recorded |
-| DEFERRED_REVISIT_LAST | Not rejected; revisit only under specified new evidence |
-| FROZEN_NOT_RUN | Method design frozen but no valid result yet |
-| NOT_RUN | Explicitly not executed |
-| SUPERSEDED | Earlier implementation/result replaced by corrected authority |
+Yeni uyumlu DEV modelleri, tekrar tekrar Neon’a bağlanmak yerine bu snapshot’ı kullanmalıdır. Neon veri otoritesi olarak kalır; snapshot yalnız immutable execution cache’dir.
 
 ---
 
-## 3. Current cross-family canonical DEV table
+# 2. Bugünkü durum — tek bakışta
 
-This table uses the active DEV SigmaAE + direction contract. It is not a claim of statistical superiority; n=33 remains small.
+## 2.1 Güncel Pareto çekirdeği
 
-| Model | Family / path | DEV SigmaAE | Direction | Current role |
+Aktif DEV ΣAE + direction kontratı altında en önemli mevcut referanslar:
+
+| Model | Aile | DEV ΣAE | Direction | Rol |
 |---|---|---:|---:|---|
-| **ChHHO-ANFIS** | ANFIS | **1413.0298** | 23/33 | RETAIN_PRIMARY price anchor |
-| **DE-ABC-RBFNN** | RBFNN | **1415.8371** | **25/33** | RETAIN_PARETO |
-| **PLS1 V1 All-4** | Challenger B | **1420.0291** | 20/33 | RETAIN_PARETO / Challenger-B price leader |
-| **LMC2_RBF_M32** | GPR/MOGP | **1424.1711** | 19/33 | RETAIN_BENCHMARK; GPR family not fully closed |
-| FULL7 equal-weight ANN | ANN | 1428.8590 | 22/33 | RETAIN_BENCHMARK |
-| REDUCED4 equal-weight ANN | ANN | 1431.4587 | 24/33 | RETAIN_PARETO balanced |
-| EPSILON_RBF_DAILY12 | SVR | 1449.1874 | 19/33 | PAUSED family leader |
-| CATBOOST_PRICE | Boosting | 1460.4339 | 20/33 | COMPLETE_CLOSED family price leader |
-| AOA-ELM | ELM | 1474.1021 | 20/33 | COMPLETE_CLOSED benchmark |
-| 108-month DMS diagnostic | DMA/DMS/IDMA | 1483.8794 | 20/33 | diagnostic only; family deferred |
-| FULL5_MEDIAN | Boosting ensemble | 1484.7313 | 23/33 | COMPLETE_CLOSED direction/balance |
-| Canonical DMA | DMA/DMS/IDMA | 1486.2561 | 19/33 | DEFERRED_REVISIT_LAST |
-| PLS2 V1 | Challenger B | 1489.3300 | 23/33 | RETAIN_PARETO secondary |
-| Canonical DMS | DMA/DMS/IDMA | 1489.8247 | 20/33 | DEFERRED_REVISIT_LAST |
-| Random Forest reference | Historical Gold Monthly | 1491.5507 | 20/33 | RETAIN_BENCHMARK; not rerun in Challenger B |
-| Ridge V1 | Challenger B | 1520.9926 | 21/33 | NOT_PROMOTED |
-| ABC-ELMFIS | ELMFIS | 1524.8900 | 21/33 | COMPLETE_CLOSED price benchmark |
-| CNN-LSTM LB6/W32/D0.10 | CNN/LSTM | 1528.5699 | 20/33 | ACTIVE family leader |
-| Huber V1 | Challenger B | 1530.1300 | 20/33 | NOT_PROMOTED |
-| Extra Trees V1 | Challenger B | 1539.9221 | 20/33 | NOT_PROMOTED |
-| Elastic Net V1 | Challenger B | 1590.3571 | 16/33 | NOT_PROMOTED |
-| GPReg-Matérn V1 | Challenger B | 1637.9165 | 19/33 | NOT_PROMOTED |
-| BiLSTM vanilla | CNN/LSTM structural | 1638.0968 | 19/33 | NOT_PROMOTED |
-| SMA-ELMFIS | ELMFIS | 1651.4482 | **25/33** | RETAIN_PARETO direction specialist |
-| GPReg-RBF V1 | Challenger B | 1696.3365 | 16/33 | NOT_PROMOTED |
-| SARIMA | Challenger B classical | 1751.5242 | 19/33 | NOT_PROMOTED |
-| ARIMA | Challenger B classical | 1781.7822 | 15/33 | NOT_PROMOTED |
-| HGB V1 | Challenger B | 1840.2678 | 20/33 | NOT_PROMOTED |
-| TimesFM-3 zero-shot V1 | Foundation model | 1850.4113 | 19/33 | NOT_PROMOTED / V1 closed |
-| Vanilla ANFIS | ANFIS | 1852.0465 | 21/33 | architecture anchor only |
-| Vanilla ELMFIS | ELMFIS | 1996.2933 | 20/33 | architecture anchor only |
-| TimeMixer++ V1 | Deep time series | 4232.5931 | 13/33 | REJECTED / V1 closed |
-| Prophet | Challenger B classical | 7521.1360 | 14/33 | REJECTED |
+| **ChHHO-ANFIS** | ANFIS | **1413.0298** | 23/33 | fiyat anchor |
+| **DE-ABC-RBFNN** | RBFNN | **1415.8371** | **25/33** | güçlü Pareto model |
+| **PLS1 V1 All-4** | Challenger B | **1420.0291** | 20/33 | Challenger-B fiyat lideri |
+| **LMC2_RBF_M32** | GPR/MOGP | **1424.1711** | 19/33 | güçlü GPR benchmark |
+| FULL7 ANN | ANN ensemble | 1428.8590 | 22/33 | benchmark |
+| REDUCED4 ANN | ANN ensemble | 1431.4587 | 24/33 | dengeli Pareto |
+| EPSILON_RBF_DAILY12 | SVR | 1449.1874 | 19/33 | SVR family leader |
+| CATBOOST_PRICE | Boosting | 1460.4339 | 20/33 | Boosting price leader |
 
-Notes:
-- PLS1 and PLS2 are Challenger-B results and are now part of the same canonical monthly registry.
-- The 108-month DMS row is a diagnostic window result, not the canonical family model.
-- GPR Stage 3 is complete, but no final Stage-4/5 family closure is present in the repository; do not falsely mark the whole GPR family frozen.
-- SVR is intentionally paused before completing the later structural DWT line.
-- The current CNN/LSTM structural program is still active.
+Bu tablo istatistiksel evrensel üstünlük iddiası değildir; DEV n=33’tür.
+
+## 2.2 Aktif açık iş
+
+**Şu an sıradaki model: CNN-BiLSTM.**
+
+Mevcut CNN/LSTM family leader:
+- CNN-LSTM
+- lookback 6
+- width 32
+- dropout 0.10
+- Adam LR 0.001
+- DEV ΣAE **1528.569850656**
+- direction **20/33**
+
+BiLSTM:
+- DEV ΣAE **1638.096795007**
+- direction **19/33**
+- scientific gate PASS
+- **NOT PROMOTED**
+- rescue tuning kapalı
+
+CNN-BiLSTM henüz çalıştırılmadı.
+
+## 2.3 Açık / kapalı aile özeti
+
+| Aile | Durum | Tekrar nereden açılır? |
+|---|---|---|
+| ELM | COMPLETE_CLOSED | yalnız yeni yapısal gerekçe |
+| ANN | COMPLETE_CLOSED | broad screen tekrarlanmaz |
+| ELMFIS | COMPLETE_CLOSED | yalnız yeni yapısal gerekçe |
+| ANFIS | COMPLETE_CLOSED | explicit reopen olmadan açılmaz |
+| RBFNN | COMPLETE_CLOSED | broad/refinement tekrar yok |
+| GPR/MOGP | Stage 3 complete, final closure eksik | frozen Stage-4 pool’dan |
+| Boosting | COMPLETE_CLOSED | yeni mekanizma olmadan açılmaz |
+| SVR/DWT-SVR | PAUSED | Stage 5A.3 DE-tuned PSO-SVR |
+| DMA/DMS/IDMA | DEFERRED_REVISIT_LAST | daha geniş PIT predictor panel ile |
+| Challenger B | COMPLETE_CLOSED | yeni explicit scope ile |
+| CNN/LSTM | ACTIVE | CNN-BiLSTM |
+| Modern sequence/foundation | MIXED | TimeXer frozen-not-run; diğerleri aşağıda |
 
 ---
 
-## 4. Common optimizer parity set already explored
+# 3. Araştırma akışı — tarihsel sıra
 
-The following optimizer identities have been executed repeatedly across ELM/ANN/ELMFIS/ANFIS/RBFNN/GPR, and broadly across SVR. They are **not novel methods** for this project merely because they are attached to another familiar base learner:
+Bu bölüm projenin neden bugünkü noktaya geldiğini tek akışta gösterir.
+
+## 2026-09-25 — ELM → ANN → ELMFIS
+
+İlk geniş optimizer araştırma hattı ELM’de kuruldu. Ardından aynı parity mantığı ANN’e ve ELMFIS’e taşındı. Bu dönemde ortak metaheuristic havuz, mandatory refinement ve kontrollü ensemble yaklaşımı şekillendi.
+
+Ana sonuçlar:
+- AOA-ELM güçlü ELM fiyat benchmark’ı oldu.
+- ANN’de FULL7 ve REDUCED4 equal-weight ensemble’lar oluştu.
+- ELMFIS fiyat lideri ABC, direction specialist’i SMA oldu.
+- optimizer’ı tekrar tekrar değiştirmek tek başına kalıcı iyileşme sağlamadığı için daha yapısal ailelere geçildi.
+
+## 2026-09-26 — ANFIS → RBFNN → GPR
+
+ANFIS’te geniş metaheuristic screen sonrası ChHHO-ANFIS güçlü fiyat modeli olarak öne çıktı. RBFNN’de DE-ABC hem fiyat hem yön açısından güçlü Pareto sonuç verdi. GPR/MOGP’de LMC2_RBF_M32 Stage-3 lideri oldu.
+
+Bu aşamadan sonra proje “aynı optimizer’ı başka base learner üzerinde yüzlerce kez dönme” yaklaşımından uzaklaştırıldı ve yapısal farklılık aranmaya başlandı.
+
+## 2026-09-27 — DMA/DMS/IDMA → Boosting
+
+DMA/DMS/IDMA canonical 256-subset Gold-only olarak düzeltildi. Sonuçlar kötü değildi fakat daha geniş macro-financial predictor setine ihtiyaç olduğu anlaşıldı; aile “revisit last” olarak park edildi.
+
+Boosting hattında CatBoost, GBRT, LightGBM, XGBoost, metaheuristics, decomposition, ensemble ve robustness tamamlandı. Family kapandı.
+
+## 2026-09-28 — SVR → Challenger B → modern sequence → CNN/LSTM
+
+SVR’de canonical/deterministic/metaheuristic hat büyük ölçüde tamamlandı fakat DWT/MODWT yapısal hattına geçmeden family bilinçli olarak pause edildi.
+
+Paralel Challenger-B hattında Grup-ARGE’de daha önce kullanılan klasik/ileri modeller Gold Monthly kontratına taşındı. PLS1 güçlü sonuç verdi.
+
+Daha sonra TimesFM-3, TimeMixer++ gibi modern sequence/foundation modelleri test edildi. Ardından CNN/LSTM ailesine geçildi. Local micro-tuning stop-rule tetiklenince yapısal challenger aşamasına geçildi. BiLSTM başarısız oldu; sıradaki yapı CNN-BiLSTM oldu.
+
+---
+
+# 4. Ortak optimizer / metaheuristic havuzu — daha önce denendi
+
+Aşağıdaki optimizer isimleri proje boyunca ELM, ANN, ELMFIS, ANFIS, RBFNN, GPR ve büyük ölçüde SVR’de zaten denenmiştir. Başka bir base architecture üzerinde kullanılması mümkün olabilir; fakat bunlar artık “yeni keşfedilmiş yöntem” değildir.
 
 1. Vanilla
 2. PSO
@@ -159,7 +164,7 @@ The following optimizer identities have been executed repeatedly across ELM/ANN/
 14. MFO
 15. FPA
 16. FA-FPA
-17. CS (Cuckoo Search)
+17. CS / Cuckoo Search
 18. SCA
 19. Salp
 20. SMA
@@ -177,347 +182,427 @@ The following optimizer identities have been executed repeatedly across ELM/ANN/
 32. DE-ABC
 33. Multi-swarm
 
-This common parity roster is a duplicate-prevention registry. A future use on a genuinely new base architecture may still be valid, but must be justified as a new architecture-specific experiment rather than described as a new optimizer discovery.
+Ayrıca birçok ailede şu refinement/hybrid sınıfları da denenmiştir:
+- Adaptive PSO
+- Adaptive TLBO
+- TLBO-tuned PSO
+- DE-tuned PSO
+- Adaptive Crow
+- PSO-TLBO hybrid
+- MPA+SCA
+- MPA+GA
+- MPA+CPA
+
+Bunların başka bir mimaride kullanılması ancak o mimarinin kendi scientific rationale’ı ile yeni bir deney olarak açılabilir.
 
 ---
 
-## 5. Family ledger — ELM
+# 5. ELM ailesi
 
-**Status: COMPLETE_CLOSED.**
+**Durum: COMPLETE_CLOSED**
 
-### Executed scope
-- Vanilla ELM.
-- Broad parity screen covering the common optimizer set.
-- Targeted refinements:
-  - Adaptive PSO-ELM
-  - TLBO-tuned PSO-ELM
-  - DE-tuned PSO-ELM
-  - Adaptive/Improved TLBO-ELM
-  - Adaptive Crow Search-ELM
-  - PSO-TLBO Hybrid ELM
+## Denenen yapı
 
-### Active-metric references
-- AOA-ELM: **1474.1021 / 20/33** — price benchmark.
-- SCA-ELM: **1508.71 / 21/33**.
-- PSO-TLBO Hybrid ELM: **1487.55 / 20/33**.
-- TLBO-ELM: **1758.75 / 23/33** — direction benchmark within ELM.
-- Vanilla ELM: about **1480.08 / 21/33**.
+- Vanilla ELM
+- 32 civarı geniş optimizer/metaheuristic ekranı
+- Adaptive PSO-ELM
+- TLBO-tuned PSO-ELM
+- DE-tuned PSO-ELM
+- Adaptive/Improved TLBO-ELM
+- Adaptive Crow Search-ELM
+- PSO-TLBO Hybrid ELM
 
-### Decision
-- AOA-ELM retained as ELM price benchmark.
-- No additional arbitrary ELM optimizer cross-products.
-- Reopen only for a structurally different ELM mechanism or new untouched authority.
+## Aktif-metrik sonuçları
 
-Detailed evidence:
-- `GOLD_MONTHLY_ELM_METAHEURISTIC_LEDGER_ANN_PLAN_2026-09-25.md`
-- `GOLD_MONTHLY_CROSS_FAMILY_REAUDIT_SIGMAAE_DIRECTION_2026-09-26.md`
+- **AOA-ELM:** 1474.1021 / 20/33 — price benchmark
+- SCA-ELM: 1508.71 / 21/33
+- PSO-TLBO Hybrid ELM: yaklaşık 1487.55 / 20/33
+- TLBO-ELM: 1758.75 / 23/33 — direction benchmark
+- Vanilla ELM: yaklaşık 1480.08 / 21/33
+
+## Karar
+
+- AOA-ELM korunur.
+- arbitrary optimizer cross-product genişletmesi kapalıdır.
+- ELM ancak yapısal olarak farklı yeni mekanizma ile yeniden açılır.
 
 ---
 
-## 6. Family ledger — ANN
+# 6. ANN ailesi
 
-**Status: COMPLETE / FROZEN.**
+**Durum: COMPLETE_CLOSED / FROZEN**
 
-### Broad screen
-33/33 canonical ANN identities completed:
-- Vanilla ANN plus the full common optimizer parity set.
+## Broad screen
 
-### Mandatory refinements completed
+33/33 ANN kimliği tamamlandı:
+- Vanilla ANN
+- ortak optimizer parity setinin tamamı
+
+## Refinement
+
+Tamamlanan önemli refinement’lar:
 - Adaptive PSO-ANN
 - Adaptive TLBO-ANN
 - TLBO-tuned PSO-ANN
 - DE-tuned PSO-ANN
 - Adaptive Crow Search-ANN
 - PSO-TLBO Hybrid ANN
-
-### Evidence-driven hybrids completed
 - MPA+SCA Hybrid ANN
 - MPA+GA Hybrid ANN
 - MPA+CPA fallback
 
-### Frozen ensembles
-- FULL7 equal-weight ANN: **1428.8590 / 22/33**
-- REDUCED4 equal-weight ANN: **1431.4587 / 24/33**
+## Frozen ensemble’lar
 
-Relevant single-model references:
-- MPA-ANN: about **1471.53 / 19/33**
-- SCA-ANN: direction specialist in the original ANN screen
-- DE-ABC-ANN: retained component
-- TLBO-tuned PSO-ANN: strong direction refinement
+### FULL7 equal-weight
+Bileşenler:
+- Vanilla ANN
+- MPA-ANN
+- SCA-ANN
+- DE-ABC-ANN
+- Adaptive TLBO-ANN
+- TLBO-tuned PSO-ANN
+- MPA+SCA Hybrid ANN
 
-### Decision
-- FULL7 retained benchmark.
-- REDUCED4 retained balanced Pareto challenger.
-- No post-hoc subset fishing; Stage 4 freeze remains binding.
-- Do not repeat the 33-model broad ANN screen.
+DEV:
+- ΣAE **1428.8590**
+- direction **22/33**
 
-Evidence:
-- `GOLD_MONTHLY_ANN_STAGE4_FINAL_FREEZE_AUDIT_2026-09-25.md`
-- `GOLD_MONTHLY_CROSS_FAMILY_REAUDIT_SIGMAAE_DIRECTION_2026-09-26.md`
+### REDUCED4 equal-weight
+Bileşenler:
+- Vanilla ANN
+- MPA-ANN
+- SCA-ANN
+- DE-ABC-ANN
+
+DEV:
+- ΣAE **1431.4587**
+- direction **24/33**
+
+Diğer referans:
+- MPA-ANN: yaklaşık **1471.53 / 19/33**
+
+## Karar
+
+- FULL7 benchmark.
+- REDUCED4 dengeli Pareto challenger.
+- full broad ANN screen tekrar edilmeyecek.
+- post-hoc subset fishing kapalı.
 
 ---
 
-## 7. Family ledger — ELMFIS
+# 7. ELMFIS ailesi
 
-**Status: COMPLETE_CLOSED.**
+**Durum: COMPLETE_CLOSED**
 
-### Executed scope
-- Vanilla ELMFIS.
-- 33-entry broad parity screen.
-- Six mandatory refinements.
-- ANN-parity hybrids including MPA+SCA / related admitted hybrids.
-- CQCSA-ELMFIS literature-specific experiment.
+## Denenen kapsam
 
-### Canonical results
+- Vanilla ELMFIS
+- 33-entry optimizer parity screen
+- mandatory adaptive/meta-on-meta refinements
+- MPA temelli hybrid’ler
+- CQCSA-ELMFIS literature-specific model
+
+## Sonuçlar
+
 - Vanilla ELMFIS: **1996.2933 / 20/33**
-- ABC-ELMFIS: **1524.89 / 21/33** — price benchmark.
-- SMA-ELMFIS: **1651.4482 / 25/33** — direction specialist.
-- CQCSA-ELMFIS: **1731.94 / 20/33** — NOT_PROMOTED.
+- **ABC-ELMFIS: 1524.89 / 21/33** — price benchmark
+- **SMA-ELMFIS: 1651.4482 / 25/33** — direction specialist
+- CQCSA-ELMFIS: **1731.94 / 20/33** — not promoted
 
-### Decision
-- ABC = internal price benchmark.
-- SMA = auxiliary direction / confirmation specialist.
-- Hard SMA direction override not promoted.
-- CQCSA adds no Pareto point.
-- No repeat of the full optimizer parity program.
+## Karar
 
-Evidence:
-- `GOLD_MONTHLY_ELMFIS_STAGE3C_CQCSA_2026-09-26.md`
-- `GOLD_MONTHLY_CROSS_FAMILY_REAUDIT_SIGMAAE_DIRECTION_2026-09-26.md`
+- ABC internal price benchmark.
+- SMA auxiliary direction/confirmation specialist.
+- hard SMA override promote edilmedi.
+- CQCSA Pareto noktası eklemedi.
+- broad optimizer program tekrar edilmeyecek.
 
 ---
 
-## 8. Family ledger — ANFIS
+# 8. ANFIS ailesi
 
-**Status: COMPLETE_CLOSED.**
+**Durum: COMPLETE_CLOSED**
 
-### Executed
-- checked canonical Vanilla ANFIS.
-- 32/32 metaheuristic ANFIS broad screen.
-- 27/32 passed scientific forecast gate.
-- broad-screen scientific rejects: **ABC, WOA, FPA, HGS, AOA** due pathological forecast magnitude.
-- Stage-2 benchmarks:
-  - MFO-ANFIS: **1630.3325 / 20/33**
-  - HHO-ANFIS: **1646.1336 / 23/33**
-- Stage-3 parity refinements:
-  - MPA-CPA: 1918.5637 / 18
-  - PSO-TLBO Hybrid: 3156.9979 / 19
-  - TLBO-tuned PSO: 3465.1623 / 20
-  - Adaptive PSO, Adaptive TLBO, Adaptive Crow, DE-tuned PSO, MPA-SCA, MPA-GA: scientific-gate fail
-- literature-specific:
-  - **ChHHO-ANFIS: 1413.0298 / 23/33**
-  - MVO-ANFIS: 2057.3973 / 17/33 after implementation bug correction
-- controlled ensemble diagnostics completed; learned/prequential blends not promoted.
+## Vanilla anchor
+- Vanilla ANFIS: **1852.0465 / 21/33**
 
-### Decision
-- ChHHO-ANFIS = primary ANFIS champion and current price anchor.
-- No further ANFIS optimizer/stacking expansion without explicit reopening.
+## Broad screen
+- 32/32 metaheuristic ANFIS denendi.
+- 27 scientific gate PASS.
+- ABC, WOA, FPA, HGS, AOA en az bir origin’de patolojik forecast büyüklüğü nedeniyle scientific reject.
 
-Evidence:
-- `GOLD_MONTHLY_ANFIS_FAMILY_FINAL_CLOSURE_2026-09-26.md`
-- `GOLD_MONTHLY_ANFIS_FINAL_CLOSURE_CROSS_FAMILY_2026-09-26.md`
+Stage-2 valid benchmarks:
+- MFO-ANFIS: **1630.3325 / 20/33**
+- HHO-ANFIS: **1646.1336 / 23/33**
 
----
+## Refinement
+Valid fakat frontier geliştirmeyen:
+- MPA-CPA: 1918.5637 / 18
+- PSO-TLBO Hybrid: 3156.9979 / 19
+- TLBO-tuned PSO: 3465.1623 / 20
 
-## 9. Family ledger — RBFNN
+Scientific-gate fail:
+- Adaptive PSO
+- Adaptive TLBO
+- Adaptive Crow
+- DE-tuned PSO
+- MPA-SCA
+- MPA-GA
 
-**Status: COMPLETE / FROZEN.**
+## Literature-specific
 
-### Executed
-- Vanilla RBFNN.
-- Regularized RBFNN benchmark.
-- 32/32 broad optimizer screen.
-- six mandatory refinements:
-  - Adaptive PSO
-  - Adaptive TLBO
-  - TLBO-tuned PSO
-  - DE-tuned PSO
-  - Adaptive Crow
-  - PSO-TLBO Hybrid
-- Stage 3B evidence-driven hybrids: CLOSED_NOT_OPENED by predeclared complementarity gate.
-- MOLS-RBFNN literature-specific structural experiment.
-- controlled ensembles + shrinkage/prequential audit.
+### ChHHO-ANFIS
+- DEV ΣAE **1413.029779**
+- direction **23/33**
+- rel.MAE/RW ≈ 0.80377
+- current ANFIS champion
 
-### Canonical results
-- **DE-ABC-RBFNN: 1415.8371 / 25/33** — family champion and global Pareto point.
-- Adaptive Crow: 1455.8616 / 21.
-- PSO-TLBO: 1489.6671 / 21.
-- MOLS-RBFNN: 1578.5391 / 18.
-- FULL_MEDIAN ensemble: 1444.3008 / 22 — benchmark, not primary.
+### MVO-ANFIS
+İlk kod bug’ı düzeltildikten sonra valid rerun:
+- DEV **2057.3973 / 17/33**
+- not promoted
 
-### Decision
-- DE-ABC retained.
-- Family frozen.
-- Do not repeat broad/meta refinement search.
+## Ensemble denetimi
+Same-DEV optimized blend’ler diagnostik olarak iyi görünse de honest expanding-prequential weighting ChHHO’yu geçmedi.
 
-Evidence:
-- `GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md`
+## Karar
+- ChHHO-ANFIS primary price anchor.
+- ANFIS optimizer/stacking genişletmesi kapalı.
 
 ---
 
-## 10. Family ledger — GPR / MOGP
+# 9. RBFNN ailesi
 
-**Status: STAGE 3 COMPLETE / FAMILY FINAL CLOSURE NOT PROVEN.**
+**Durum: COMPLETE_CLOSED / FROZEN**
 
-### Completed
-- Stage 0 audited.
-- Stage 1 broad screen: 32 models audited.
-- Stage 2 parent freeze.
-- Stage 3A six refinements:
-  - Adaptive PSO
-  - Adaptive TLBO
-  - TLBO-tuned PSO
-  - DE-tuned PSO
-  - Adaptive Crow
-  - PSO-TLBO
-- Stage 3B MPA-SCA.
-- Stage 3C genuine structural model LMC2_RBF_M32.
+## Denenen kapsam
+- Vanilla RBFNN
+- Regularized RBFNN
+- 32/32 optimizer broad screen
+- Adaptive PSO
+- Adaptive TLBO
+- TLBO-tuned PSO
+- DE-tuned PSO
+- Adaptive Crow
+- PSO-TLBO
+- MOLS-RBFNN
+- controlled ensemble + shrinkage/prequential audit
 
-### Stage-3 canonical results
-| Model | DEV SigmaAE | Direction |
+## Sonuçlar
+- **DE-ABC-RBFNN: 1415.8371 / 25/33**
+- Adaptive Crow: 1455.8616 / 21
+- PSO-TLBO: 1489.6671 / 21
+- MOLS-RBFNN: 1578.5391 / 18
+- FULL_MEDIAN ensemble: 1444.3008 / 22
+
+## Karar
+- DE-ABC family champion.
+- global Pareto model.
+- broad/refinement araştırması tekrar edilmeyecek.
+
+---
+
+# 10. GPR / MOGP ailesi
+
+**Durum: STAGE 3 COMPLETE; FAMILY FINAL CLOSURE HENÜZ TAM DEĞİL**
+
+## Tamamlananlar
+- Stage 0 audited
+- Stage 1 geniş screen
+- Stage 2 parent freeze
+- Stage 3A six refinements
+- Stage 3B MPA-SCA
+- Stage 3C LMC2_RBF_M32
+
+## Stage-3 sonuçları
+
+| Model | DEV ΣAE | Direction |
 |---|---:|---:|
 | **LMC2_RBF_M32** | **1424.1711** | 19/33 |
-| MPA_SCA | 1709.2943 | 22/33 |
+| MPA-SCA | 1709.2943 | 22/33 |
 | Adaptive Crow | 1724.2888 | 19/33 |
 | Adaptive TLBO | 1740.8877 | 19/33 |
 | Adaptive PSO | 1794.2201 | 20/33 |
-| PSO_TLBO | 1815.3287 | 21/33 |
+| PSO-TLBO | 1815.3287 | 21/33 |
 | TLBO-tuned PSO | 1863.6677 | 19/33 |
 | DE-tuned PSO | 1939.8588 | 16/33 |
 
-### Decision
-- LMC2_RBF_M32 retained as eligible GPR benchmark.
-- Do **not** rerun Stages 0-3.
-- Repository evidence shows Stage-4 pool freeze but no final Stage-4/5 family closure. If GPR is resumed, resume from the frozen Stage-4 state; do not restart broad search.
-
-Evidence:
-- `GOLD_MONTHLY_GPR_STAGE3_REPORT_2026-09-26.md`
-- `GOLD_MONTHLY_GPR_STAGE3_CLOSURE_2026-09-26.json`
-- `GOLD_MONTHLY_GPR_STAGE4_POOL_FREEZE_2026-09-26.json`
+## Karar
+- LMC2_RBF_M32 retained benchmark.
+- Stage 0-3 yeniden başlamaz.
+- Repo’da Stage-4 pool freeze var.
+- GPR yeniden açılırsa **Stage 4 frozen pool’dan** devam eder.
 
 ---
 
-## 11. Family ledger — Boosting / Trees
+# 11. DMA / DMS / IDMA
 
-**Status: COMPLETE_CLOSED.**
+**Durum: DEFERRED_REVISIT_LAST / REJECTED DEĞİL**
 
-### Completed model lines
-- CatBoost PRICE / BALANCED.
-- GBRT.
-- LightGBM.
-- XGBoost direction component.
-- CatBoost metaheuristic finalists: DE-ABC, PSO, MFO, HHO, TLBO.
-- CMA-ES-GBRT.
-- TPE/Optuna-GBRT.
-- causal CEEMDAN-XGB.
-- causal VMD-XGB.
-- controlled median/equal/inverse-MAE ensembles.
-- expanding-prequential simplex.
-- shrinkage robustness.
-- 2025 one-shot final holdout after freeze.
+## Canonical düzeltme
+Gold-only:
+- 2^8 = 256 subset
+- intercept dahil
+- alpha=.99
+- lambda=.99
 
-### Canonical DEV results
-- CATBOOST_PRICE: **1460.4339 / 20/33**
-- FULL5_MEDIAN: **1484.7313 / 23/33**
-- frozen GBRT comparator: 1500.4295 / 22
+## Sonuçlar
+- Canonical DMA: **1486.2561 / 19/33**
+- Canonical DMS: **1489.8247 / 20/33**
+- 60m DMS: 1489.0965 / 19
+- 84m DMS: 1497.7098 / 19
+- **108m DMS: 1483.8794 / 20**
+- 132m DMS: 1488.0163 / 20
+- max-history DMS: 1489.8247 / 20
+- exploratory IDMA MSFE selector: 1495.6721 / 20
+- exploratory IDMA AE-price selector: 1495.5268 / 20
+
+Fed + Nasdaq + USD/CNY küçük augmentation hattı aileyi kurtarmadı.
+
+## Karar
+Problem yalnız örneklem uzunluğu gibi görünmüyor. Literatürdeki geniş macro-financial predictor setiyle bizim CURRENT8 bilgi seti arasında fark var.
+
+Reopen ancak:
+- daha geniş origin-safe PIT macro-financial panel bulunursa, veya
+- diğer yüksek öncelikli aileler bittikten sonra.
+
+Küçük alpha/lambda/window oynamaları yapılmayacak.
+
+---
+
+# 12. Boosting / Trees ailesi
+
+**Durum: COMPLETE_CLOSED**
+
+## Denenen model hatları
+- CatBoost PRICE
+- CatBoost BALANCED
+- GBRT
+- LightGBM
+- XGBoost direction component
+- CatBoost metaheuristics: DE-ABC, PSO, MFO, HHO, TLBO
+- CMA-ES–GBRT
+- TPE/Optuna–GBRT
+- causal CEEMDAN–XGB
+- causal VMD–XGB
+- median/equal/inverse-MAE ensemble
+- expanding-prequential simplex
+- shrinkage robustness
+- 2025 one-shot final holdout
+
+## Ana DEV sonuçları
+- **CATBOOST_PRICE: 1460.4339 / 20/33**
+- **FULL5_MEDIAN: 1484.7313 / 23/33**
+- frozen GBRT: 1500.4295 / 22
 - TPE-GBRT: 1576.9729 / 18
 - CMA-ES-GBRT: 1650.1985 / 18
 - CEEMDAN-XGB: 1820.4746 / 17
 - VMD-XGB: 2019.0624 / 15
 
-### Decision
-- PRICE = CATBOOST_PRICE.
-- BALANCE/DIRECTION = FULL5_MEDIAN.
-- CatBoost optimizer enumeration, same GBRT optimization, decomposition branch, learned weights and arbitrary subset search are CLOSED.
+CatBoost metaheuristic finalistleri Vanilla CatBoost’u geçmedi.
 
-Evidence:
-- `GOLD_MONTHLY_BOOSTING_FAMILY_FINAL_CLOSURE_2026-09-28.md`
+## 2025 one-shot
+Freeze sonrasında:
+- CATBOOST_PRICE: 1020.6861 / 11/12
+- FULL5_MEDIAN: 993.9803 / 11/12
+
+2025 sonucu frozen rolleri geriye dönük değiştirmedi.
+
+## Karar
+- PRICE = CATBOOST_PRICE
+- BALANCE/DIRECTION = FULL5_MEDIAN
+- boosting family kapalı
 
 ---
 
-## 12. Family ledger — SVR / DWT-SVR
+# 13. SVR / DWT-SVR
 
-**Status: PAUSED_RESUME_AT Stage 5A.3.**
+**Durum: PAUSED — restart yok**
 
-### Completed
-- canonical Linear/RBF SVR.
-- kernel ablation: RBF, Linear, Poly2, Poly3, Sigmoid.
-- representation ablation:
-  - CURRENT8
-  - DAILY_SUMMARY12
-  - MIXED20
-  - RAW_LEVEL_LAGS8
-  - SIMPLE_RETURNS8
-- epsilon-SVR vs NuSVR.
-- deterministic coarse + local tuning.
-- 32/32 metaheuristics technically executed; FA technically completed but user-excluded from authoritative ranking.
-- Stage 5A.1 Adaptive PSO.
-- Stage 5A.2 TLBO-tuned PSO.
+## Stage 1
+- RBF CURRENT8: **1524.5006 / 21**
+- Linear: 1535.1160 / 19
 
-### Key results
-- **EPSILON_RBF_DAILY12: 1449.1874 / 19/33** — current family leader.
-- RBF CURRENT8: 1524.5006 / 21.
-- deterministic coarse: 1580.9011 / 20.
-- deterministic local: 1592.5905 / 22.
-- best authoritative metaheuristic ALO: 1494.8081 / 20.
-- Adaptive PSO: 1748.6557 / 16.
-- TLBO-tuned PSO: 1871.8062 / 17.
-- FA technical: 1583.8106 / 19, user-excluded.
+## Kernel ablation
+- RBF: 1524.5006 / 21
+- Linear: 1535.1160 / 19
+- Poly2: 1793.2474 / 17
+- Poly3: 1810.3496 / 17
+- Sigmoid: 2784.3324 / 15
 
-### Exact resume point
-If this family is explicitly reopened:
-1. DE-tuned PSO-SVR
+## Representation ablation
+- **DAILY_SUMMARY12: 1449.1874 / 19**
+- CURRENT8: 1518.8970 / 21
+- MIXED20: 1579.3083 / 17
+- RAW_LEVEL_LAGS8: 1800.4286 / 18
+- SIMPLE_RETURNS8: 1850.5436 / 17
+
+## Formulation
+- epsilon-SVR: **1449.1874 / 19**
+- NuSVR: 1525.4334 / 18
+
+## Deterministic tuning
+- coarse: 1580.9011 / 20
+- local: 1592.5905 / 22
+- ikisi de parent’ı geçmedi
+
+## Metaheuristic broad screen
+32/32 teknik execution tamamlandı.
+Best authoritative metaheuristic:
+- **ALO: 1494.8081 / 20**
+
+FA:
+- technical PASS 1583.8106 / 19
+- fakat kullanıcı stop kararı nedeniyle authoritative ranking dışında tutuldu
+
+## Stage 5 refinements
+- Adaptive PSO-SVR: 1748.6557 / 16
+- TLBO-tuned PSO-SVR: 1871.8062 / 17
+
+## Exact resume point
+SVR’ye dönülürse:
+1. **DE-tuned PSO-SVR**
 2. Adaptive/Improved TLBO-SVR
 3. Adaptive Crow Search-SVR
 4. PSO-TLBO Hybrid SVR
-5. conditional Stage 5B only if evidence justifies
-6. causal DWT/MODWT-SVR structural line
+5. conditional Stage 5B
+6. causal DWT/MODWT-SVR
 7. controlled ensemble
 8. robustness
 9. family freeze
 10. 2025 one-shot
 
-Do not restart Stages 1-4.
-
-Evidence:
-- `GOLD_MONTHLY_SVR_DWT_FAMILY_LEDGER_2026-09-28.md`
+Stage 1-4 tekrarlanmayacak.
 
 ---
 
-## 13. Family ledger — DMA / DMS / IDMA
+# 14. Challenger B — Grup-ARGE modellerinin Gold Monthly portu
 
-**Status: DEFERRED_REVISIT_LAST / NOT REJECTED.**
+**Durum: USER-AUTHORIZED SCOPE COMPLETE**
 
-Canonical corrected results:
-- DMA alpha=.99/lambda=.99: **1486.2561 / 19/33**
-- DMS: **1489.8247 / 20/33**
-- 108-month DMS diagnostic: **1483.8794 / 20/33**
-- exploratory IDMA expanding MSFE selector: 1495.6721 / 20
-- exploratory IDMA price-AE selector: 1495.5268 / 20
+Bu hat ana yolu bozmak için değil, Grup-ARGE’de daha önce kullanılan modelleri aynı Gold Monthly governance altında challenger olarak test etmek için açıldı.
 
-Small market augmentation did not rescue the family.
+## Representation
 
-### Reopen condition
-Only revisit with a substantially broader, literature-faithful, origin-safe macro-financial predictor panel or after higher-priority families are complete.
+### CURRENT8 kullananlar
+- Gold_MR, Gold_VW
+- Silver_MR, Silver_VW
+- Platinum_MR, Platinum_VW
+- Palladium_MR, Palladium_VW
 
-Do not spend compute on small alpha/lambda/window tweaks under CURRENT8.
+### Raw monthly Gold kullananlar
+- ARIMA
+- SARIMA
+- Prophet
 
-Evidence:
-- `GOLD_MONTHLY_DMA_DMS_IDMA_DEFERRED_CHECKPOINT_2026-09-27.md`
+Bu modeller CURRENT8’e zorlanmadı; family logic korundu.
 
----
+## Tüm Challenger-B DEV sonuçları
 
-## 14. Challenger B — full completed scope
-
-**Status: COMPLETE for user-authorized Challenger-B scope.**
-
-Challenger B is now part of this master registry; its separate manifest is a detailed evidence document, not a separate current-state authority.
-
-### DEV results
-| Model | Representation | DEV SigmaAE | Direction | rel.MAE/RW | Decision |
+| Model | Input | DEV ΣAE | Direction | rel.MAE/RW | Karar |
 |---|---|---:|---:|---:|---|
 | **PLS1 V1** | CURRENT8 | **1420.0291** | 20/33 | 0.8078 | RETAIN |
-| PLS2 V1 | CURRENT8 multi-output | 1489.3300 | **23/33** | 0.8472 | RETAIN secondary |
+| **PLS2 V1** | CURRENT8 multi-output | 1489.3300 | **23/33** | 0.8472 | RETAIN secondary |
 | Ridge V1 | CURRENT8 | 1520.9926 | 21/33 | 0.8652 | NOT_PROMOTED |
 | Huber V1 | CURRENT8 | 1530.1300 | 20/33 | 0.8704 | NOT_PROMOTED |
 | Extra Trees V1 | CURRENT8 | 1539.9221 | 20/33 | 0.8760 | NOT_PROMOTED |
@@ -529,21 +614,26 @@ Challenger B is now part of this master registry; its separate manifest is a det
 | HGB V1 | CURRENT8 | 1840.2678 | 20/33 | 1.0468 | NOT_PROMOTED |
 | Prophet | raw monthly Gold | 7521.1360 | 14/33 | 4.2782 | REJECTED |
 
-### PLS1 metal ablation
-| Variant | Metals | DEV SigmaAE | Direction |
+## PLS1 metal ablation
+
+All-4 tekrar üretildi ve reproduction gate PASS.
+
+| Variant | Metals | DEV ΣAE | Direction |
 |---|---|---:|---:|
-| ALL4 reference | Au+Ag+Pt+Pd | **1420.0291** | 20/33 |
+| **ALL4** | Au+Ag+Pt+Pd | **1420.0291** | 20/33 |
 | No Silver | Au+Pt+Pd | 1454.3225 | **22/33** |
 | No Palladium | Au+Ag+Pt | 1461.6772 | 19/33 |
-| Gold+Silver | Au+Ag | 1491.2346 | 20/33 |
+| Gold + Silver | Au+Ag | 1491.2346 | 20/33 |
 | Gold only | Au | 1519.4727 | 21/33 |
 | No Platinum | Au+Ag+Pd | 1519.6757 | 20/33 |
 
-Binding representation:
-- primary PLS1 remains **all four metals**.
-- No-Silver retained only as direction-heavy Pareto diagnostic.
+Karar:
+- primary PLS1 representation = **4 metal**
+- No-Silver yalnız direction-heavy trade-off reference
 
-### Explicitly not run in Challenger B
+## Challenger B’de özellikle çalıştırılmayanlar
+
+Bunlar yapılmış sayılmayacak:
 - Seasonal Naive
 - Drift
 - Theta
@@ -552,178 +642,259 @@ Binding representation:
 - Dynamic Ridge
 - exact Grup-ARGE Linear SVR port
 
-These are **NOT_RUN**, not completed experiments.
-
-Evidence:
-- `GOLD_MONTHLY_CHALLENGER_B_MANIFEST_2026-09-28.md`
+Status: **NOT_RUN**
 
 ---
 
-## 15. CNN / LSTM structural family
+# 15. CNN / LSTM family
 
-**Status: ACTIVE STRUCTURAL PROGRAM.**
+**Durum: ACTIVE**
 
-### Stage 0 canonical
+## Stage 0 canonical
 - LSTM LB12: 1738.0595 / 15
 - CNN LB12: 1906.9426 / 13
 - CNN-LSTM LB12: 1554.3082 / 18
 
-### Stage 1A lookback
-Winners:
+## Stage 1A — lookback
 - LSTM LB3: **1589.9827 / 19**
 - CNN LB3: **1641.8275 / 21**
 - CNN-LSTM LB6: **1528.5699 / 20**
 
-Lookback was the only local tuning dimension that produced a meaningful family-level gain.
+Lookback meaningful improvement sağladı.
 
-### Stage 1B width
-- LSTM winner W32: 1589.9827 / 19
-- CNN W16 technical price near-tie: 1641.5065 / 20; W32 direction 21
-- CNN-LSTM winner W32: 1528.5699 / 20
+## Stage 1B — width
+- LSTM W32 retained
+- CNN W16 fiyat açısından çok küçük near-tie sağladı; W32 direction daha iyi
+- CNN-LSTM W32 retained
 
-### Stage 1C dropout
-- LSTM D0.10: **1589.9827 / 19**
-- CNN-LSTM D0.10: **1528.5699 / 20**
-- D0 and D0.20 did not improve the parents.
+## Stage 1C — dropout
+- LSTM D0.10 retained
+- CNN-LSTM D0.10 retained
+- D0 ve D0.20 anlamlı üstünlük sağlamadı
 
-### Stage 1D learning rate
-- LSTM LR0.0003: 1648.5032 / 20 — no meaningful gain
-- CNN LR0.0003: 1637.1770 / 21 — only ~0.264% price gain, below pre-frozen meaningful threshold
-- CNN-LSTM LR0.0003: 1583.4676 / 18 — worse
+## Stage 1D — learning rate
+- LSTM LR .0003: 1648.5032 / 20
+- CNN LR .0003: 1637.1770 / 21; yalnız ~0.264% local price win
+- CNN-LSTM LR .0003: 1583.4676 / 18
 
-Pre-frozen stop rule triggered:
-- batch-size sweep skipped
-- kernel micro-sweep skipped
-- local Cartesian micro-tuning closed
+Pre-frozen stop rule tetiklendi:
+- batch sweep iptal
+- kernel sweep iptal
+- local Cartesian micro-tuning kapalı
 
-### BiLSTM structural challenger
-Vanilla BiLSTM LB3/W32/D0.10:
-- **1638.0968 / 19/33**
+## BiLSTM
+Frozen:
+- lookback 3
+- Bidirectional LSTM 32+32
+- dropout .10
+- Adam .001
+
+DEV:
+- ΣAE **1638.0968**
+- direction **19/33**
+- rel.MAE/RW 0.9318
 - scientific gate PASS
-- snapshot-only execution
-- not promoted
-- no rescue tuning authorized
+- snapshot-only
 
-### Current family leader
-**CNN-LSTM LB6 / W32 / dropout .10 / Adam .001**
-- DEV SigmaAE **1528.569850656**
-- direction **20/33**
-- rel.MAE/RW **0.869493658**
+Karar:
+- NOT_PROMOTED
+- BiLSTM micro-grid açılmayacak
 
-### Exact next model
-**CNN-BiLSTM structural challenger — NOT YET RUN at this manifest version.**
+## Current leader
+CNN-LSTM:
+- LB6
+- W32
+- D0.10
+- LR .001
+- **1528.5699 / 20/33**
 
-Evidence:
+## Next
+**CNN-BiLSTM — NOT_RUN / sıradaki model**
+
+---
+
+# 16. Modern sequence / foundation modeller
+
+## TimesFM-3 zero-shot V1
+
+Representation:
+- raw monthly Gold/Silver/Platinum/Palladium
+- multivariate context
+- no fine-tuning
+- no covariates
+
+DEV:
+- **1850.4113 / 19/33**
+- rel.MAE/RW 1.0526
+
+Karar:
+- NOT_PROMOTED
+- frozen V1 kapalı
+- aynı V1 tekrar edilmez
+
+## TimeMixer++ V1
+
+Representation:
+- raw 4-metal monthly levels
+- 48-month lookback
+- reference-style architecture
+
+DEV:
+- **4232.5931 / 13/33**
+- rel.MAE/RW 2.4076
+
+Karar:
+- REJECTED V1
+- post-result architecture fishing yapılmaz
+
+## TimeXer V1
+
+Durum:
+- **FROZEN_NOT_RUN**
+- pre-run method freeze var
+- seq_len 48
+- patch_len 6
+- Silver/Platinum/Palladium exogenous, Gold endogenous target
+- henüz valid result yok
+
+TimeXer test edilmiş gibi yazılmayacak.
+
+---
+
+# 17. Historical / external reference modeller
+
+Aşağıdaki modeller ayrı yeni challenger olarak yeniden açılmamalı:
+
+- Random Forest reference: **1491.550694 / 20/33**
+- CatBoost: Boosting ailesinde tamamlandı
+- XGBoost CURRENT8/decomposition: Boosting ailesinde işlendi
+- SVR: dedicated family mevcut
+- PLS/Ridge/ElasticNet/Huber: Challenger B’de işlendi
+- GPR-family regressors: GPR/MOGP + Challenger B içinde işlendi
+- ARIMA/SARIMA/Prophet: Challenger B’de tamamlandı
+
+---
+
+# 18. Duplicate-prevention / yeniden çalışma kuralı
+
+Bir model yalnız konuşma değiştiği veya geçmiş unutulduğu için yeniden çalıştırılmayacak.
+
+Completed bir model şu koşullardan biri olmadan yeniden açılmaz:
+- doğrulanmış implementasyon bug’ı
+- materially farklı representation
+- farklı target/horizon
+- yeni structural mechanism
+- yeni untouched validation authority
+- independent reproducibility audit
+- explicit user instruction
+
+Sadece:
+- seed değiştirmek,
+- küçük parameter interval oynatmak,
+- aynı modeli başka adla yazmak
+
+yeni model kimliği değildir.
+
+---
+
+# 19. Şu anda kapalı araştırma yolları
+
+Explicit reopen olmadan açılmayacak:
+- ELM broad/refinement
+- ANN broad/refinement
+- ELMFIS broad/refinement
+- ANFIS broad/refinement/ensemble
+- RBFNN broad/refinement/ensemble
+- Boosting family
+- Challenger-B completed scope
+- BiLSTM rescue tuning
+- CNN/LSTM batch/kernel micro-tuning
+- TimesFM-3 zero-shot V1
+- TimeMixer++ V1
+- SVR Stage 1-4 restart
+- DMA/DMS small alpha/lambda/window tinkering
+
+---
+
+# 20. Açık roadmap
+
+## Immediate
+1. **CNN-BiLSTM**
+2. Yalnız umut verirse predeclared structural refinement
+
+## Sonraki ayrı yapısal aileler
+- ICEEMDAN-LSTM-CNN-CBAM
+- GRU
+- Attention-GRU
+- MA-GRUS
+- Transformer
+- PatchTST
+- DPformer
+- LSTM-Transformer
+- TimeXer V1 frozen design
+
+## Park edilmiş hatlar
+- SVR: Stage 5A.3’ten
+- GPR: frozen Stage 4’ten
+- DMA/DMS/IDMA: en son, broader PIT panel ile
+
+---
+
+# 21. Bundan sonra manifest nasıl güncellenecek
+
+Her yeni deney bittiğinde **aynı commit zincirinde** bu ana manifest güncellenecek.
+
+Yeni model kaydı şu bilgileri burada içermeli:
+- model adı ve family
+- neden açıldı
+- exact representation
+- target
+- chronology
+- frozen parameters
+- DEV ΣAE
+- DEV direction
+- scientific gate
+- 2025/2026 rolü
+- karar
+- tekrar açılma kuralı
+- sıradaki adım
+
+Machine-readable JSON registry yalnız bu manifestin aynasıdır; ikinci bir proje otoritesi değildir.
+
+---
+
+# 22. Provenance — sadece denetim için
+
+Aşağıdaki dosyalar ayrıntılı run/job/artifact ve ham deney kanıtlarını tutar. Proje akışını anlamak için zorunlu değildir:
+
+- `GOLD_MONTHLY_ELM_METAHEURISTIC_LEDGER_ANN_PLAN_2026-09-25.md`
+- `GOLD_MONTHLY_CROSS_FAMILY_REAUDIT_SIGMAAE_DIRECTION_2026-09-26.md`
+- `GOLD_MONTHLY_ANFIS_FINAL_CLOSURE_CROSS_FAMILY_2026-09-26.md`
+- `GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md`
+- `GOLD_MONTHLY_GPR_STAGE3_REPORT_2026-09-26.md`
+- `GOLD_MONTHLY_DMA_DMS_IDMA_DEFERRED_CHECKPOINT_2026-09-27.md`
+- `GOLD_MONTHLY_BOOSTING_FAMILY_FINAL_CLOSURE_2026-09-28.md`
+- `GOLD_MONTHLY_SVR_DWT_FAMILY_LEDGER_2026-09-28.md`
+- `GOLD_MONTHLY_CHALLENGER_B_MANIFEST_2026-09-28.md`
 - `GOLD_MONTHLY_CNN_LSTM_STAGE1D_LR_RESULT_2026-09-28.md`
 - `GOLD_MONTHLY_BILSTM_STRUCTURAL_RESULT_2026-09-28.md`
+- `GOLD_MONTHLY_TIMESFM3_ZERO_SHOT_V1_RESULT_2026-09-28.md`
+- `GOLD_MONTHLY_TIMEMIXERPP_V1_RESULT_2026-09-28.md`
+- `GOLD_MONTHLY_TIMEXER_V1_FREEZE_2026-09-28.md`
 
 ---
 
-## 16. Foundation / modern sequence challengers
+# 23. Kontrol ve Uyum Özeti
 
-### TimesFM-3 zero-shot V1
-Status: COMPLETE / NOT_PROMOTED.
-- raw 4-metal monthly multivariate context
-- no fine-tuning
-- DEV **1850.4113 / 19/33**
-- rel.MAE/RW 1.0526
-- V1 closed
-- research-only checkpoint licensing noted in result document
-
-### TimeMixer++ V1
-Status: COMPLETE / REJECTED V1.
-- raw 4-metal levels, 48-month context
-- DEV **4232.5931 / 13/33**
-- rel.MAE/RW 2.4076
-- V1 closed; no architecture fishing
-
-### TimeXer V1
-Status: **FROZEN_NOT_RUN**.
-- pre-run freeze exists
-- seq_len 48, patch_len 6, MS exogenous/endogenous formulation
-- no valid result file exists at this manifest version
-
-Do not describe TimeXer as tested until a successful result artifact exists.
-
----
-
-## 17. Existing references not to duplicate casually
-
-- Random Forest reference: **1491.550694 / 20/33**.
-- CatBoost PRICE already completed under Boosting.
-- XGBoost CURRENT8 / direction and decomposition variants already covered in Boosting.
-- SVR already has a dedicated governed family; do not create a duplicate “new SVR” line outside that ledger.
-- PLS/Ridge/ElasticNet/Huber/GPR-style regressors are already covered by Challenger B and/or GPR family.
-- ARIMA/SARIMA/Prophet have valid Challenger-B results; do not rerun them under a new label without a materially different frozen representation.
-
----
-
-## 18. Current open roadmap
-
-### Immediate
-1. **CNN-BiLSTM** structural challenger using authorized Snapshot V1.
-2. Only if CNN-BiLSTM is promising: small, predeclared structural refinement.
-
-### Later planned distinct families
-- ICEEMDAN-LSTM-CNN-CBAM.
-- GRU / Attention-GRU / MA-GRUS.
-- Transformer / PatchTST / DPformer.
-- LSTM-Transformer.
-- TimeXer V1 remains frozen-but-unrun and may be executed separately.
-- SVR resumes only from Stage 5A.3 if explicitly reopened.
-- DMA/DMS/IDMA revisited last with broader literature-faithful predictor panel.
-
-### Closed paths that must not silently reopen
-- ANN broad 33-model screen.
-- ELM broad/refinement screen.
-- ELMFIS broad/refinement screen.
-- ANFIS broad/refinement/ensemble line.
-- RBFNN broad/refinement/ensemble line.
-- Boosting family.
-- Challenger-B completed scope.
-- BiLSTM rescue tuning.
-- CNN/LSTM batch/kernel micro-tuning.
-- TimesFM-3 zero-shot V1.
-- TimeMixer++ V1.
-
----
-
-## 19. Corporate experiment-entry standard
-
-Every future model added to this project must append one registry entry with:
-
-- unique model_id;
-- family;
-- source/authority;
-- exact input representation;
-- target;
-- origin clock;
-- train/validation protocol;
-- parameters frozen before outcome;
-- workflow run/job/artifact/commit;
-- DEV SigmaAE;
-- DEV direction;
-- scientific gate;
-- 2025 role;
-- 2026 role;
-- decision;
-- reopen policy;
-- predecessor/parent;
-- whether snapshot or DB was used.
-
-A model without this entry is not considered properly closed.
-
----
-
-## 20. Kontrol ve Uyum Özeti
-
-- Challenger B integrated into main monthly manifest: **YES**.
-- Fragmented family state replaced by one canonical current-state manifest: **YES**.
-- Old detailed ledgers retained as evidence/provenance: **YES**.
-- Duplicate-prevention method registry established: **YES**.
-- Completed vs not-run methods explicitly separated: **YES**.
-- Active metric contract SigmaAE + direction preserved: **YES**.
-- Random split: **NONE**.
-- 2025/2026 selection contamination: **NONE**.
-- Current execution cache: Snapshot V1 authorized.
-- Current active next model: **CNN-BiLSTM**.
+- Tek canonical monthly manifest: **YES**
+- Projeyi anlamak için eski ledger zorunluluğu: **NO**
+- Challenger B ana akışa entegre: **YES**
+- Completed / paused / deferred / not-run ayrımı: **YES**
+- Duplicate-prevention: **BINDING**
+- DEV authority: **2022-04..2024-12**
+- Random split: **NONE**
+- 2025 retrospective tuning: **NONE**
+- 2026 selection: **NONE**
+- DB write: **NONE**
+- Snapshot V1 authorized: **YES**
+- Current exact next model: **CNN-BiLSTM**
