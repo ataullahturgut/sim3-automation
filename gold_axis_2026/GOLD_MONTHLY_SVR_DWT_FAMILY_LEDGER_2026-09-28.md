@@ -1,7 +1,7 @@
 # GOLD MONTHLY FORECAST — SVR / DWT-SVR FAMILY LEDGER
 
 Date: 2026-09-28  
-Status: **ACTIVE — STAGE 4 SINGLE-METHOD SCREEN / 15 OF 32 COMPLETE; FA DEFERRED**  
+Status: **ACTIVE — STAGE 4 SINGLE-METHOD SCREEN / 21 OF 32 COMPLETE; FA DEFERRED**  
 Branch: `gold-midas-headswap-v1-20260925`
 
 Canonical authority:
@@ -186,7 +186,7 @@ Effective 2026-09-28 after Batch 4.2 observability failure:
 Current Batch 4.2 run was launched before this binding rule and may be used for its final scientific results if it completes cleanly, but it is **NOT an acceptable template for later batches**.
 
 ### Stage 4 — 32/32 metaheuristic SVR broad screen
-**MANDATORY / ACTIVE / 16 OF 32 COMPLETE; FA DEFERRED**
+**MANDATORY / ACTIVE / 21 OF 32 COMPLETE; FA DEFERRED**
 
 Batching amendment:
 - Batch 4.1 completed as a 4-method batch before the user batching amendment.
@@ -240,11 +240,11 @@ User instruction at 2026-09-28 09:30Z: defer FA and evaluate completed models no
 FA is not counted as complete until explicitly resumed/accepted.
 
 Remaining single-method order (effective 09:33Z):
-- [~] FA_FPA — RUNNING as single-method run 36404444819
+- [x] FA_FPA — 1572.041237 / 20/33 — run 36404444819 — gate PASS
 - [x] CS — 1564.515299 / 19/33
 - [x] SCA — 1843.705276 / 14/33
-- [ ] SALP
-- [ ] SMA
+- [x] SALP — 1543.355326 / 19/33
+- [x] SMA — 1517.362987 / 18/33
 
 
 CS single-method run:
@@ -271,11 +271,33 @@ SCA single-method run:
 - Decision: recorded; not promoted.
 
 Batch 4.5:
-- [ ] GOA
-- [ ] ALO
-- [ ] TLBO
+- [x] GOA — 1617.200714 / 17/33
+- [x] ALO — **1494.808085 / 20/33**
+- [x] TLBO — 1574.826138 / 20/33
 - [ ] JAYA
 - [ ] HGS
+
+
+FA_FPA single-method result:
+- Run: **36404444819**
+- Job: **108869684865**
+- Scientific gate: **PASS**
+- DEV SigmaAE: **1572.041237**
+- Direction: **20/33**
+- Decision: recorded; not promoted.
+
+Sequential five-method run:
+- Run: **36409153139**
+- Execution order: **SALP -> SMA -> GOA -> ALO -> TLBO**
+- All five jobs: **SUCCESS**
+- All five scientific gates: **PASS**
+- SALP — SigmaAE **1543.355326**, direction **19/33**
+- SMA — SigmaAE **1517.362987**, direction **18/33**
+- GOA — SigmaAE **1617.200714**, direction **17/33**
+- ALO — SigmaAE **1494.808085**, direction **20/33**
+- TLBO — SigmaAE **1574.826138**, direction **20/33**
+- Best of this five = **ALO**, but frozen Stage-2 parent remains better: **1449.187363 / 19/33**.
+- No method promoted yet; Stage-4 broad screen remains incomplete.
 
 Batch 4.6:
 - [ ] CHOA
@@ -289,7 +311,7 @@ Batch 4.7 FINAL REMAINDER:
 - [ ] DE_ABC
 - [ ] MULTISWARM
 
-Progress: **16/32 accepted complete; FA deferred**.
+Progress: **21/32 accepted complete; FA deferred**.
 No Stage-4 parent selection until all 32 are complete/audited.
 Vanilla/deterministic parent remains reference identity #33.
 
@@ -317,7 +339,7 @@ Open after all 32 methods audited.
 **LOCKED / NOT YET OPENED**
 
 ## Current next authorized action
-**Run remaining metaheuristics one-by-one. FA stays deferred until the end. Current active single method: FA_FPA, run 36404444819.**
+**Run remaining metaheuristics one-by-one/sequentially in five-method groups. FA stays deferred until the end. Next planned methods begin with JAYA, then HGS.**
 
 ## Kontrol ve Uyum Özeti
 - Stage 0 authority freeze: PASS.
