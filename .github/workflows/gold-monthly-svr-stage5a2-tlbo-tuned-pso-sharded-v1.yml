@@ -1,0 +1,248 @@
+name: Gold Monthly SVR Stage5A2 TLBO Tuned PSO Sharded V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-svr-stage5a2-tlbo-tuned-pso-sharded-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  s1:
+    name: TLBO_TUNED_PSO_S1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage5a2_tlbo_tuned_pso_sharded_v1.py
+      - name: Run shard s1
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage5a2_tlbo_tuned_pso_sharded_v1.py --start 2022-04 --end 2022-10 --tag s1
+      - name: Shard scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('stage5a2_tlbo_tuned_pso_shard_s1.json'))
+          assert d['scope']=='STAGE5A2_TLBO_TUNED_PSO_SHARD_V1'
+          assert d['method']=='TLBO_TUNED_PSO'
+          assert d['start']=='2022-04' and d['end']=='2022-10'
+          assert d['2025_role']=='LOCKED_NOT_OPENED'
+          assert d['2026_role']=='QUARANTINED_NOT_USED'
+          assert d['authority_invariants_before']==d['authority_invariants_after']
+          for x in d['rows']:
+              assert x['train_last'] < x['target']
+              assert x['inner_valid_n'] >= 12
+              assert len(x['repeat_records'])==3
+          print('SHARD_S1_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: svr-stage5a2-s1
+          path: stage5a2_tlbo_tuned_pso_shard_s1.json
+          if-no-files-found: error
+
+  s2:
+    name: TLBO_TUNED_PSO_S2
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage5a2_tlbo_tuned_pso_sharded_v1.py
+      - name: Run shard s2
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage5a2_tlbo_tuned_pso_sharded_v1.py --start 2022-11 --end 2023-05 --tag s2
+      - name: Shard scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('stage5a2_tlbo_tuned_pso_shard_s2.json'))
+          assert d['scope']=='STAGE5A2_TLBO_TUNED_PSO_SHARD_V1'
+          assert d['method']=='TLBO_TUNED_PSO'
+          assert d['start']=='2022-11' and d['end']=='2023-05'
+          assert d['2025_role']=='LOCKED_NOT_OPENED'
+          assert d['2026_role']=='QUARANTINED_NOT_USED'
+          assert d['authority_invariants_before']==d['authority_invariants_after']
+          for x in d['rows']:
+              assert x['train_last'] < x['target']
+              assert x['inner_valid_n'] >= 12
+              assert len(x['repeat_records'])==3
+          print('SHARD_S2_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: svr-stage5a2-s2
+          path: stage5a2_tlbo_tuned_pso_shard_s2.json
+          if-no-files-found: error
+
+  s3:
+    name: TLBO_TUNED_PSO_S3
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage5a2_tlbo_tuned_pso_sharded_v1.py
+      - name: Run shard s3
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage5a2_tlbo_tuned_pso_sharded_v1.py --start 2023-06 --end 2023-12 --tag s3
+      - name: Shard scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('stage5a2_tlbo_tuned_pso_shard_s3.json'))
+          assert d['scope']=='STAGE5A2_TLBO_TUNED_PSO_SHARD_V1'
+          assert d['method']=='TLBO_TUNED_PSO'
+          assert d['start']=='2023-06' and d['end']=='2023-12'
+          assert d['2025_role']=='LOCKED_NOT_OPENED'
+          assert d['2026_role']=='QUARANTINED_NOT_USED'
+          assert d['authority_invariants_before']==d['authority_invariants_after']
+          for x in d['rows']:
+              assert x['train_last'] < x['target']
+              assert x['inner_valid_n'] >= 12
+              assert len(x['repeat_records'])==3
+          print('SHARD_S3_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: svr-stage5a2-s3
+          path: stage5a2_tlbo_tuned_pso_shard_s3.json
+          if-no-files-found: error
+
+  s4:
+    name: TLBO_TUNED_PSO_S4
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage5a2_tlbo_tuned_pso_sharded_v1.py
+      - name: Run shard s4
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage5a2_tlbo_tuned_pso_sharded_v1.py --start 2024-01 --end 2024-06 --tag s4
+      - name: Shard scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('stage5a2_tlbo_tuned_pso_shard_s4.json'))
+          assert d['scope']=='STAGE5A2_TLBO_TUNED_PSO_SHARD_V1'
+          assert d['method']=='TLBO_TUNED_PSO'
+          assert d['start']=='2024-01' and d['end']=='2024-06'
+          assert d['2025_role']=='LOCKED_NOT_OPENED'
+          assert d['2026_role']=='QUARANTINED_NOT_USED'
+          assert d['authority_invariants_before']==d['authority_invariants_after']
+          for x in d['rows']:
+              assert x['train_last'] < x['target']
+              assert x['inner_valid_n'] >= 12
+              assert len(x['repeat_records'])==3
+          print('SHARD_S4_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: svr-stage5a2-s4
+          path: stage5a2_tlbo_tuned_pso_shard_s4.json
+          if-no-files-found: error
+
+  s5:
+    name: TLBO_TUNED_PSO_S5
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage5a2_tlbo_tuned_pso_sharded_v1.py
+      - name: Run shard s5
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage5a2_tlbo_tuned_pso_sharded_v1.py --start 2024-07 --end 2024-12 --tag s5
+      - name: Shard scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('stage5a2_tlbo_tuned_pso_shard_s5.json'))
+          assert d['scope']=='STAGE5A2_TLBO_TUNED_PSO_SHARD_V1'
+          assert d['method']=='TLBO_TUNED_PSO'
+          assert d['start']=='2024-07' and d['end']=='2024-12'
+          assert d['2025_role']=='LOCKED_NOT_OPENED'
+          assert d['2026_role']=='QUARANTINED_NOT_USED'
+          assert d['authority_invariants_before']==d['authority_invariants_after']
+          for x in d['rows']:
+              assert x['train_last'] < x['target']
+              assert x['inner_valid_n'] >= 12
+              assert len(x['repeat_records'])==3
+          print('SHARD_S5_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: svr-stage5a2-s5
+          path: stage5a2_tlbo_tuned_pso_shard_s5.json
+          if-no-files-found: error
+
+  aggregate:
+    name: TLBO_TUNED_PSO_AGGREGATE
+    needs: [s1, s2, s3, s4, s5]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - uses: actions/download-artifact@v4
+        with:
+          path: results
+      - name: Aggregate and scientific gate
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage5a2_tlbo_tuned_pso_sharded_v1.py --aggregate --input-dir results
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-svr-stage5a2-tlbo-tuned-pso-sharded-v1
+          path: |
+            gold_monthly_svr_dwt_stage5a2_tlbo_tuned_pso_result.json
+            gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE5A2_TLBO_TUNED_PSO_RESULT_2026-09-28.md
+          if-no-files-found: error
+      - name: Commit result report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git add gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE5A2_TLBO_TUNED_PSO_RESULT_2026-09-28.md
+          if git diff --cached --quiet; then
+            echo "No report change"
+          else
+            git commit -m "Record sharded SVR Stage 5A.2 TLBO-tuned PSO result"
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
