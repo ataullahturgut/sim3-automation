@@ -1021,7 +1021,7 @@ Neon üretim verisinin otorite kaynağı olarak kalır; fakat model deneylerinde
 
 # 20B. Yeni araştırma konusu — External Driver / Error-Regime Augmentation
 
-**Durum: PLANNED / PRE-OUTCOME FREEZE REQUIRED**
+**Durum: COMPLETED X0-X6 / X7 OPTIONAL-DEFERRED**
 
 Amaç mevcut en güçlü modellerin büyük hata yaptığı ayları sonradan açıklamak değil; tahmin anında bilinebilen dışsal bilgilerin **önceden** model hatasını veya fiyat hareketini açıklayıp açıklamadığını bilimsel olarak test etmektir.
 
@@ -1113,7 +1113,7 @@ Bu liste nihai feature list değildir; X0 authority scan ile exact değişkenler
 
 # 20C. Ayrı hipotez — Global FX / International Capital-Flow Proxy
 
-**Durum: PLANNED / HIGH-INTEREST EXTERNAL BLOCK**
+**Durum: VALIDATED SECONDARY CHANNEL FOR ChHHO / NOT PRIMARY FOR DE-ABC**
 
 Kullanıcı hipotezi: yalnız DXY değil, majör döviz paritelerinin ortak davranışı uluslararası yatırımcı yönünü ve güvenli-liman rotasyonunu yansıtabilir; mevcut 4-metal/CURRENT8 yapısında bu kanal doğrudan temsil edilmiyor olabilir.
 
@@ -1166,6 +1166,118 @@ gösterirse ana modele aday olur.
 
 Ayrıntılı çalışma dosyası:
 `gold_axis_2026/GOLD_MONTHLY_EXTERNAL_DRIVERS_AND_OFFLINE_SNAPSHOT_PLAN_2026-09-28.md`
+
+---
+
+# 20D. External Driver research — final result
+
+**Status: COMPLETED / GOVERNED RESULT**
+
+Research file:
+`gold_axis_2026/GOLD_MONTHLY_EXTERNAL_DRIVER_FINAL_RESULT_2026-09-28.md`
+
+## 20D.1 Main conclusion
+
+The external-information hypothesis is **SUPPORTED**.
+
+Frozen base-model residuals contain incremental information that can be reduced using origin-safe external data. The winning external channel is model-specific.
+
+### ChHHO-ANFIS
+Base:
+- DEV ΣAE **1413.0299 / 23/33**
+- 2025 ΣAE **1252.0542 / 9/12**
+
+DEV-authorized winner:
+- **Headline CPI surprise residual layer**
+- corrected DEV ΣAE **1343.6354 / 23/33**
+- DEV improvement **69.3945 / 4.91%**
+- frozen 2025 ΣAE **1095.5792 / 9/12**
+- 2025 improvement **156.4749 / 12.50%**
+
+FX is a validated secondary channel for ChHHO:
+- PIT CNY/USD DEV ΔΣAE **-57.2741**, 2025 **1083.4280**
+- H.10 major-FX DEV ΔΣAE **-49.2814**, 2025 **1084.9928**, direction **10/12**
+
+These FX alternatives are not allowed to replace the CPI DEV winner merely because their 2025 error is lower.
+
+### DE-ABC-RBFNN
+Base:
+- DEV ΣAE **1415.8371 / 25/33**
+- 2025 ΣAE **1145.3733 / 9/12**
+
+DEV-authorized winner:
+- **PIT rates residual layer**
+- features: DGS10 change + DFF change + Δ(DGS10-DFF) curve proxy
+- corrected DEV ΣAE **1373.5811 / 25/33**
+- DEV improvement **42.2560 / 2.98%**
+- frozen 2025 ΣAE **1012.7415 / 9/12**
+- 2025 improvement **132.6318 / 11.58%**
+
+FX is not promoted as DE-ABC's primary external channel.
+
+## 20D.2 Compact-panel result
+
+Feature stacking did not beat the best simple external block on DEV.
+
+ChHHO:
+- CNY+CPI corrected DEV **1359.6012**
+- CPI-only corrected DEV **1343.6354**
+- decision: **CPI-only**
+
+DE-ABC:
+- CNY+rates+CPI corrected DEV **1375.4340**
+- rates-only corrected DEV **1373.5811**
+- decision: **rates-only**
+
+Small-n rule:
+**more external variables are not automatically better; prefer the smallest DEV-authorized block.**
+
+## 20D.3 Risk / commodity status
+
+Risk/equity-history block:
+- encouraging diagnostic signal;
+- historical values were later-ingested and do not have sufficient original PIT-storage proof;
+- status: **DIAGNOSTIC_ONLY / NOT PROMOTABLE**.
+
+Commodity/oil:
+- no governed usable WTI/Brent/commodity series found in current inventory;
+- status: **DATA_NOT_READY / NOT_TESTED**.
+
+## 20D.4 Architecture status
+
+Quota-safe execution path validated:
+
+`Neon READ_ONLY authority → compact governed snapshot → offline GitHub Actions model test`
+
+Normal external-driver jobs must not full-read Neon historical data repeatedly.
+
+## 20D.5 Interpretation boundary
+
+These results prove **incremental external information value** through a chronology-safe residual-correction layer.
+
+They do **not** yet prove that a natively retrained ChHHO/DE-ABC with the external features embedded internally will have the same performance.
+
+Therefore:
+- ChHHO+CPI residual layer: **PROMOTE_TO_NATIVE-INTEGRATION_CHALLENGE**
+- DE-ABC+Rates residual layer: **PROMOTE_TO_NATIVE-INTEGRATION_CHALLENGE**
+- neither replaces the current frozen base champion yet.
+
+## 20D.6 Stage closure
+
+- X0 hypothesis freeze: DONE
+- X1 availability/vintage audit: DONE
+- X2 residual screen: DONE
+- X3 block tests: DONE
+- X4 ablation: DONE
+- X5 compact combined panel: DONE
+- X6 frozen 2025 transport: DONE
+- X7 error-warning layer: OPTIONAL / DEFERRED
+
+Evidence:
+- strict PIT run **36472278469**, artifact **10992755818**
+- H.10 FX run **36472823372**, artifact **10992736653**
+- inflation/risk run **36473442704**, artifact **10991394856**
+- compact-panel run **36474415541**, artifact **10992940914**
 
 ---
 
