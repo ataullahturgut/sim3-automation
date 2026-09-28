@@ -1,0 +1,82 @@
+{
+  "date": "2026-09-28",
+  "status": "STAGE_1C_COMPLETE_ALL_GATES_PASS",
+  "workflow_run_id": 36449230158,
+  "workflow_commit": "c598b0362248807d148c0e9e6259e797abb36068",
+  "factor": "dropout_only",
+  "candidates": {
+    "LSTM": {
+      "lookback": 3,
+      "width": 32,
+      "0.00": {
+        "sum_abs_error": 1642.2608290642816,
+        "direction_correct": 19,
+        "relative_mae_vs_rw": 0.9341642941207517,
+        "gate": "PASS"
+      },
+      "0.10": {
+        "sum_abs_error": 1589.9827200167367,
+        "direction_correct": 19,
+        "relative_mae_vs_rw": 0.9044270307262439,
+        "gate": "PASS"
+      },
+      "0.20": {
+        "sum_abs_error": 1591.5715538416448,
+        "direction_correct": 18,
+        "relative_mae_vs_rw": 0.9053308042330175,
+        "gate": "PASS"
+      }
+    },
+    "CNN_LSTM": {
+      "lookback": 6,
+      "width": 32,
+      "0.00": {
+        "sum_abs_error": 1664.0493637937498,
+        "direction_correct": 15,
+        "relative_mae_vs_rw": 0.9465582274139646,
+        "gate": "PASS"
+      },
+      "0.10": {
+        "sum_abs_error": 1528.5698506560245,
+        "direction_correct": 20,
+        "relative_mae_vs_rw": 0.8694936579385805,
+        "gate": "PASS"
+      },
+      "0.20": {
+        "sum_abs_error": 1607.029670180023,
+        "direction_correct": 19,
+        "relative_mae_vs_rw": 0.9141238169397173,
+        "gate": "PASS"
+      }
+    }
+  },
+  "architecture_leaders": {
+    "LSTM": {
+      "lookback": 3,
+      "width": 32,
+      "dropout": 0.1
+    },
+    "CNN_LSTM": {
+      "lookback": 6,
+      "width": 32,
+      "dropout": 0.1
+    }
+  },
+  "family_leader": {
+    "model": "CNN_LSTM",
+    "lookback": 6,
+    "width": 32,
+    "dropout": 0.1,
+    "sum_abs_error": 1528.5698506560245,
+    "direction_correct": 20,
+    "relative_mae_vs_rw": 0.8694936579385805
+  },
+  "next_stage": "1D_LEARNING_RATE",
+  "governance": {
+    "dev_only": true,
+    "random_split": false,
+    "db_read_only": true,
+    "opened_2025": false,
+    "used_2026_for_selection": false
+  }
+}
