@@ -1,0 +1,50 @@
+name: Gold Monthly Challenger B Classical Trio V2
+
+on:
+  push:
+    branches:
+      - gold-midas-headswap-v1-20260925
+    paths:
+      - gold_axis_2026/tools/gold_monthly_challenger_b_classical_trio_v2.py
+  workflow_dispatch:
+
+jobs:
+  classical-trio-v2:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install frozen packages
+        run: python -m pip install 'numpy==2.4.6' 'pandas==2.3.3' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1' 'statsmodels==0.14.5' 'cmdstanpy==1.2.5' 'prophet==1.1.7'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_challenger_b_classical_trio_v2.py
+      - name: Run ARIMA SARIMA Prophet V2
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_challenger_b_classical_trio_v2.py
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open("gold_monthly_challenger_b_classical_trio_v2_result.json"))
+          assert p["scientific_gate"] == "PASS"
+          assert p["authority_invariants_unchanged"] is True
+          assert p["contract"]["random_split"] == "NONE"
+          assert p["contract"]["2025_role"] == "LOCKED_REPORT_ONLY"
+          assert p["contract"]["2026_role"] == "QUARANTINED_REPORT_ONLY"
+          assert set(p["models"]) == {"ARIMA","SARIMA","PROPHET"}
+          for m in p["models"].values():
+              assert m["dev"]["metrics"]["n"] == 33
+          print("CLASSICAL_TRIO_V2_GATE=PASS")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-challenger-b-classical-trio-v2
+          path: gold_monthly_challenger_b_classical_trio_v2_result.json
