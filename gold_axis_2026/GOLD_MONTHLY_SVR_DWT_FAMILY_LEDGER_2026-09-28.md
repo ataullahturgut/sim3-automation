@@ -1,7 +1,7 @@
 # GOLD MONTHLY FORECAST — SVR / DWT-SVR FAMILY LEDGER
 
 Date: 2026-09-28  
-Status: **STAGE 4 CLOSED BY USER AMENDMENT — 31/32 SCORED; FA UNSCORED / STOPPED**  
+Status: **STAGE 5A ACTIVE — 1/6 REFINEMENTS COMPLETE; STAGE 4 CLOSED AT 31/32 SCORED, FA UNSCORED**  
 Branch: `gold-midas-headswap-v1-20260925`
 
 Canonical authority:
@@ -361,8 +361,35 @@ After Stage 5:
 - Stage 10 2025 one-shot holdout
 
 ### Stage 5 — targeted refinement / hybrids
-**PLANNED / NOT YET RUN**
-Open after all 32 methods audited.
+**ACTIVE — STAGE 5A 1/6 COMPLETE**
+
+Stage 5A parity refinement set:
+- [x] Adaptive PSO-SVR — **1748.655741 / 16/33**
+- [ ] TLBO-tuned PSO-SVR
+- [ ] DE-tuned PSO-SVR
+- [ ] Adaptive / Improved TLBO-SVR
+- [ ] Adaptive Crow Search-SVR
+- [ ] PSO-TLBO Hybrid SVR
+
+Adaptive PSO-SVR:
+- Freeze commit: `ad4b0e2660dd753dcc85a05db1ead8f9dbf2382a`
+- Runner commit: `ea6d9f5964e20d7a704441ffa359cd23355dc5ff`
+- Workflow commit: `cc38159b03202de2946d976db3c479958056534d`
+- Run: **36421221191**
+- Job: **108924144043**
+- Scientific gate: **PASS**
+- DEV SigmaAE: **1748.655741**
+- Direction: **16/33**
+- MAE: **52.989568**
+- RMSE: **65.091441**
+- MAPE: **2.5830%**
+- Relative MAE vs RW: **0.994685**
+- Worst month: **2024-11**
+- Payload SHA256: `49b6f5bd6d0f5537b8a59abca529de46376cbf58ce5f5a449720616ef51dafac`
+- Frozen Stage-2 parent remains clearly better: **1449.187363 / 19/33**.
+- Decision: **NOT PROMOTED**; retain as refinement benchmark evidence.
+
+Stage 5B optimizer hybrids remain CONDITIONAL after all six Stage 5A refinements.
 
 ### Stage 6 — causal DWT/MODWT-SVR
 **PLANNED / NOT YET RUN**
@@ -384,7 +411,7 @@ Open after all 32 methods audited.
 **LOCKED / NOT YET OPENED**
 
 ## Current next authorized action
-**Stage 4 is closed by explicit user amendment at 31/32 scored; FA remains unscored. Next authorized stage: Stage 5 targeted refinement / hybrid SVR.**
+**Stage 5A is active. Adaptive PSO-SVR is complete and not promoted. Next authorized refinement: TLBO-tuned PSO-SVR.**
 
 ## Kontrol ve Uyum Özeti
 - Stage 0 authority freeze: PASS.
@@ -392,7 +419,7 @@ Open after all 32 methods audited.
 - Stage 1 determinism: PASS.
 - Stage 1 scientific gate: PASS.
 - Stage 1 result recorded: PASS.
-- 32/32 metaheuristic methods recorded: PASS.
+- Stage 4 scored methods: 31/32; FA unscored by user stop.
 - 2025 opened: NO.
 - 2026 used: NO.
 - Random split: NONE.
