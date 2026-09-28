@@ -1,0 +1,54 @@
+name: Gold Monthly External Driver V1
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_external_driver_residual_v1.py
+      - .github/workflows/gold-monthly-external-driver-v1.yml
+permissions:
+  contents: read
+  actions: read
+env:
+  PYTHONHASHSEED: '0'
+jobs:
+  external-driver:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    name: Offline-External-Driver-Research
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install research dependencies
+        run: python -m pip install "numpy>=2.0,<3" "pandas>=2.2,<3" "scikit-learn>=1.5,<2"
+      - name: Download frozen ChHHO and strict DE-ABC artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/chhho inputs/deabc
+          gh api /repos/${GITHUB_REPOSITORY}/actions/artifacts/10989389723/zip > chhho.zip
+          unzip -q chhho.zip -d inputs/chhho
+          gh api /repos/${GITHUB_REPOSITORY}/actions/artifacts/10911282893/zip > deabc.zip
+          unzip -q deabc.zip -d inputs/deabc
+          test -f inputs/chhho/anfis_stage3c_chhho_result.json
+          test -f inputs/deabc/rbfnn_stage1_de_abc_result.json
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_external_driver_residual_v1.py
+      - name: Run X0-X6 offline external-driver research
+        env:
+          NEON_DATABASE_URL: ''
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_monthly_external_driver_residual_v1.py \
+            --chhho inputs/chhho/anfis_stage3c_chhho_result.json \
+            --deabc inputs/deabc/rbfnn_stage1_de_abc_result.json \
+            --outdir external_driver_out
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-external-driver-v1-${{ github.sha }}
+          path: external_driver_out/
+          if-no-files-found: error
+          retention-days: 90
