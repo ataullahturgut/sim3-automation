@@ -1,7 +1,7 @@
 # GOLD MONTHLY FORECAST — SVR / DWT-SVR FAMILY LEDGER
 
 Date: 2026-09-28  
-Status: **ACTIVE — STAGE 4.3 PARTIAL (4/5 COMPLETE; FA DEFERRED BY USER)**  
+Status: **ACTIVE — STAGE 4 SINGLE-METHOD SCREEN / 15 OF 32 COMPLETE; FA DEFERRED**  
 Branch: `gold-midas-headswap-v1-20260925`
 
 Canonical authority:
@@ -186,7 +186,7 @@ Effective 2026-09-28 after Batch 4.2 observability failure:
 Current Batch 4.2 run was launched before this binding rule and may be used for its final scientific results if it completes cleanly, but it is **NOT an acceptable template for later batches**.
 
 ### Stage 4 — 32/32 metaheuristic SVR broad screen
-**MANDATORY / ACTIVE / 14 OF 32 COMPLETE; FA DEFERRED**
+**MANDATORY / ACTIVE / 15 OF 32 COMPLETE; FA DEFERRED**
 
 Batching amendment:
 - Batch 4.1 completed as a 4-method batch before the user batching amendment.
@@ -241,10 +241,21 @@ FA is not counted as complete until explicitly resumed/accepted.
 
 Remaining single-method order (effective 09:33Z):
 - [~] FA_FPA — RUNNING as single-method run 36404444819
-- [ ] CS
+- [x] CS — 1564.515299 / 19/33
 - [ ] SCA
 - [ ] SALP
 - [ ] SMA
+
+
+CS single-method run:
+- Run: **36406075410**
+- Job: **108875011525**
+- Scientific gate: **PASS**
+- DEV SigmaAE: **1564.515299**
+- Direction: **19/33**
+- Payload SHA256: `17d33e6a929dd4cad55bf62b5b768bc681e582da8767e46079351ac2fd029d31`
+- Frozen Stage-2 parent remains better on primary DEV SigmaAE: 1449.187363 vs 1564.515299.
+- Decision: recorded; not promoted while Stage 4 broad screen remains incomplete.
 
 Batch 4.5:
 - [ ] GOA
@@ -265,7 +276,7 @@ Batch 4.7 FINAL REMAINDER:
 - [ ] DE_ABC
 - [ ] MULTISWARM
 
-Progress: **14/32 accepted complete; FA deferred**.
+Progress: **15/32 accepted complete; FA deferred**.
 No Stage-4 parent selection until all 32 are complete/audited.
 Vanilla/deterministic parent remains reference identity #33.
 
