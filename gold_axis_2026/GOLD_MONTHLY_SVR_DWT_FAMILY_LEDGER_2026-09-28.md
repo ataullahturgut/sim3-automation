@@ -1,7 +1,7 @@
 # GOLD MONTHLY FORECAST — SVR / DWT-SVR FAMILY LEDGER
 
 Date: 2026-09-28  
-Status: **ACTIVE — STAGE 0 COMPLETE / STAGE 1 NEXT**  
+Status: **ACTIVE — STAGE 1 COMPLETE / STAGE 2 NEXT**  
 Branch: `gold-midas-headswap-v1-20260925`
 
 Canonical authority:
@@ -39,18 +39,52 @@ The new line is single-output Gold epsilon-SVR / causal wavelet-SVR research.
 - no model result used in plan design.
 
 ### Stage 1 — Canonical SVR baseline
-**NEXT / NOT YET RUN**
-Mandatory:
+**COMPLETE / SCIENTIFIC GATE PASS**
+
+Frozen Stage-1 protocol:
 - LINEAR epsilon-SVR
 - RBF epsilon-SVR
 - CURRENT8
-- standardized X/Y from pre-target training only
-- C=1, epsilon=0.1
+- training-only X/Y standardization
+- C=1.0
+- epsilon=0.1
 - RBF gamma=scale
-- DEV only
+- DEV only 2022-04..2024-12
+- target actual read only after forecast construction
+
+DEV results:
+
+| Rank | Model | SigmaAE | MAE | RMSE | MAPE | Rel.MAE/RW | Direction |
+|---:|---|---:|---:|---:|---:|---:|---:|
+| 1 | RBF_SVR | **1524.500568** | 46.196987 | 61.849758 | 2.2348% | 0.867179 | **21/33** |
+| 2 | LINEAR_SVR | 1535.115953 | 46.518665 | **60.039956** | 2.2931% | 0.873217 | 19/33 |
+
+Year blocks — RBF_SVR:
+- 2022 Apr-Dec: 398.120567 / 7 of 9 directions.
+- 2023: 385.317157 / 7 of 12.
+- 2024: 741.062844 / 7 of 12.
+
+Year blocks — LINEAR_SVR:
+- 2022 Apr-Dec: 435.948275 / 6 of 9.
+- 2023: 473.710626 / 5 of 12.
+- 2024: 625.457051 / 8 of 12.
+
+Decision:
+- Stage-1 canonical price leader = **RBF_SVR**.
+- No META_PARENT_SVR frozen yet.
+- Stage 2 remains mandatory before any parent freeze.
+- 2025 remains locked.
+
+Provenance:
+- workflow run: **36393188008**
+- job: **108833417796**
+- artifact: **10957126183**
+- runner commit: `d05717d6e7d525c7ea4c001646e2623b18488168`
+- workflow commit: `3b99e57d70f9cac6a3265b97a886f286c4bc8c60`
+- payload SHA256: `8178e76be47d2e5c3151a1f39c6061082b0a8fdce862d53f1e9b869dd3c3d3a2`
 
 ### Stage 2 — Controlled ablations
-**PLANNED / NOT YET RUN**
+**NEXT / NOT YET RUN**
 - 2A kernel
 - 2B representation
 - 2C formulation
@@ -140,12 +174,16 @@ Open after all 32 methods audited.
 **LOCKED / NOT YET OPENED**
 
 ## Current next authorized action
-**Stage 1 — canonical LINEAR + RBF epsilon-SVR baselines.**
+**Stage 2 — controlled SVR ablations (kernel -> representation -> formulation), then META_PARENT_SVR freeze.**
 
 ## Kontrol ve Uyum Özeti
-- Stage 0 authority freeze committed: PASS.
+- Stage 0 authority freeze: PASS.
+- Stage 1 canonical run: PASS.
+- Stage 1 determinism: PASS.
+- Stage 1 scientific gate: PASS.
+- Stage 1 result recorded: PASS.
 - 32/32 metaheuristic methods recorded: PASS.
 - 2025 opened: NO.
 - 2026 used: NO.
 - Random split: NONE.
-- DB writes: NONE.
+- DB writes: NONE / READ_ONLY.
