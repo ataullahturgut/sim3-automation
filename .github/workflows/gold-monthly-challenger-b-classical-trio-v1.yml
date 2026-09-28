@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install frozen packages
-        run: python -m pip install 'numpy==2.4.6' 'pandas==2.3.3' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1' 'statsmodels==0.14.5' 'prophet==1.1.7'
+        run: python -m pip install 'numpy==2.4.6' 'pandas==2.3.3' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1' 'statsmodels==0.14.5' 'cmdstanpy==1.2.5' 'prophet==1.1.7'
       - name: Compile
         run: python -m py_compile gold_axis_2026/tools/gold_monthly_challenger_b_classical_trio_v1.py
       - name: Run ARIMA SARIMA Prophet
