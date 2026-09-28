@@ -1,0 +1,77 @@
+name: Gold Monthly SVR Stage44 FA-FPA V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-svr-stage44-fa-fpa-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stage44_fa_fpa:
+    name: FA-FPA
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage44_fa_fpa_v1.py
+      - name: Run FA-FPA
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage44_fa_fpa_v1.py
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('gold_monthly_svr_dwt_stage44_fa_fpa_result.json'))
+          assert r['scope']=='STAGE44_FA_FPA_DEV_ONLY_V1'
+          assert r['method']=='FA_FPA'
+          c=r['contract']
+          assert c['population']==24
+          assert c['generations']==45
+          assert c['repeats']==3
+          assert c['2025_role']=='LOCKED_NOT_OPENED'
+          assert c['2026_role']=='QUARANTINED_NOT_USED'
+          assert c['random_split']=='NONE'
+          assert c['database']=='READ_ONLY'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert r['metrics']['n']==33
+          assert len(r['rows'])==33
+          for x in r['rows']:
+              assert x['train_last'] < x['target']
+              assert x['inner_valid_n'] >= 12
+              assert len(x['repeat_records'])==3
+              p=x['selected_params']
+              assert -8-1e-12 <= p['log2_C'] <= 12+1e-12
+              assert -12-1e-12 <= p['log2_gamma'] <= 4+1e-12
+              assert 0.01-1e-12 <= p['epsilon'] <= 0.50+1e-12
+          print('SVR_STAGE44_FA_FPA_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-svr-stage44-fa-fpa-v1
+          path: |
+            gold_monthly_svr_dwt_stage44_fa_fpa_result.json
+            gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE44_FA_FPA_RESULT_2026-09-28.md
+          if-no-files-found: error
+      - name: Commit result report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git add gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE44_FA_FPA_RESULT_2026-09-28.md
+          if git diff --cached --quiet; then
+            echo "No report change"
+          else
+            git commit -m "Record SVR FA-FPA result"
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
