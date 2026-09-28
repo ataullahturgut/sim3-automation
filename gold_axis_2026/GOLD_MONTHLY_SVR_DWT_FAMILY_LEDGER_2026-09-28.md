@@ -1,7 +1,7 @@
 # GOLD MONTHLY FORECAST — SVR / DWT-SVR FAMILY LEDGER
 
 Date: 2026-09-28  
-Status: **ACTIVE — STAGE 1 COMPLETE / STAGE 2 NEXT**  
+Status: **ACTIVE — STAGE 2 COMPLETE / STAGE 3 NEXT**  
 Branch: `gold-midas-headswap-v1-20260925`
 
 Canonical authority:
@@ -84,17 +84,69 @@ Provenance:
 - payload SHA256: `8178e76be47d2e5c3151a1f39c6061082b0a8fdce862d53f1e9b869dd3c3d3a2`
 
 ### Stage 2 — Controlled ablations
-**NEXT / NOT YET RUN**
-- 2A kernel
-- 2B representation
-- 2C formulation
-- output: frozen META_PARENT_SVR
+**COMPLETE / SCIENTIFIC GATES PASS / META_PARENT_SVR FROZEN**
+
+#### Stage 2A — kernel ablation
+Fixed CURRENT8, C=1, epsilon=0.1, training-only scaling.
+
+| Model | DEV SigmaAE | Direction | Decision |
+|---|---:|---:|---|
+| RBF_SVR | **1524.500568** | **21/33** | kernel leader |
+| LINEAR_SVR | 1535.115953 | 19/33 | retained comparator |
+| POLY2_SVR | 1793.247438 | 17/33 | not promoted |
+| POLY3_SVR | 1810.349586 | 17/33 | not promoted |
+| SIGMOID_SVR | 2784.332441 | 15/33 | not promoted |
+
+Run: 36394248901.  
+Payload: `009344e607f5e509c33cee79aee3ffc4d8aba31c1434b675490d6b0a11ffdb58`.
+
+#### Stage 2B — representation ablation
+Frozen RBF epsilon-SVR; common training-history start 2010-05.
+
+| Representation | DEV SigmaAE | Direction |
+|---|---:|---:|
+| DAILY_SUMMARY12 | **1449.187363** | 19/33 |
+| CURRENT8 | 1518.897044 | **21/33** |
+| MIXED20 | 1579.308304 | 17/33 |
+| RAW_LEVEL_LAGS8 | 1800.428613 | 18/33 |
+| SIMPLE_RETURNS8 | 1850.543554 | 17/33 |
+
+Decision: **DAILY_SUMMARY12** frozen as Stage-2 representation leader.
+
+Run: 36394425649.  
+Payload: `4430712c7284e2978b496429528116f61e1fda4f217ca2f399dbf68bc049303b`.
+
+#### Stage 2C — formulation check / parent freeze
+Frozen RBF + DAILY_SUMMARY12.
+
+| Formulation | DEV SigmaAE | Direction |
+|---|---:|---:|
+| epsilon-SVR | **1449.187363** | **19/33** |
+| NuSVR | 1525.433400 | 18/33 |
+
+**META_PARENT_SVR = EPSILON_RBF_DAILY12**
+
+Frozen parent identity:
+- formulation: epsilon-SVR
+- kernel: RBF
+- representation: DAILY_SUMMARY12
+- feature dimension: 12
+- canonical C=1.0
+- canonical epsilon=0.1
+- canonical gamma=scale
+- training-only X/Y standardization
+- common training-history start: 2010-05
+
+Run: 36394635849.  
+Payload: `5a85e126c827740e04914c4eba3cd4afaf45b67e89c0a9bc361b64fef66d9b29`.
+
+No Stage-2 result used 2025 or 2026.
 
 ### Stage 3 — deterministic hyperparameter refinement
-**PLANNED / NOT YET RUN**
-- coarse nested grid
-- local refinement
-- freeze continuous metaheuristic bounds
+**NEXT / NOT YET RUN**
+- Stage 3A coarse nested chronological grid.
+- Stage 3B local refinement.
+- then freeze continuous metaheuristic bounds.
 
 ### Stage 4 — 32/32 metaheuristic SVR broad screen
 **MANDATORY / NOT YET RUN**
@@ -174,7 +226,7 @@ Open after all 32 methods audited.
 **LOCKED / NOT YET OPENED**
 
 ## Current next authorized action
-**Stage 2 — controlled SVR ablations (kernel -> representation -> formulation), then META_PARENT_SVR freeze.**
+**Stage 3A — commit exact coarse nested grid and chronology rules before any tuning outcome.**
 
 ## Kontrol ve Uyum Özeti
 - Stage 0 authority freeze: PASS.
