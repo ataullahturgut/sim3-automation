@@ -84,13 +84,14 @@ Input signal:
 For target t:
 1. origin = t-1.
 2. Build the Gold level prefix 2010-01..origin only.
-3. Run VMD on this prefix only.
-4. Recover K=3 modes.
-5. Define residual = original signal - sum(three VMD modes).
-6. Feature vector for t:
+3. vmdpy 0.2 drops the final sample of odd-length inputs. To preserve the origin endpoint, if the prefix length is odd, drop the OLDEST month before VMD; never drop the origin month. Record this parity adjustment for every feature.
+4. Run VMD on this adjusted prefix only.
+5. Recover K=3 modes.
+6. Define residual = adjusted original signal - sum(three VMD modes).
+7. Feature vector for t:
    [mode1_endpoint, mode2_endpoint, mode3_endpoint, residual_endpoint].
-7. Every historical training row k must be generated from its own independent prefix ending at k-1.
-8. A later outer-origin decomposition may never be reused for an earlier training row.
+8. Every historical training row k must be generated from its own independent prefix ending at k-1.
+9. A later outer-origin decomposition may never be reused for an earlier training row.
 
 Representation name:
 CAUSAL_VMD_K3_MODES_PLUS_RESIDUAL_ENDPOINT
