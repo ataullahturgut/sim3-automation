@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — CANONICAL PROJECT MANIFEST
 
-**Manifest version:** 1.1  
+**Manifest version:** 1.2  
 **Date:** 2026-09-28  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Branch:** `gold-midas-headswap-v1-20260925`  
@@ -45,6 +45,109 @@ Yetkilendirilmiş DEV Snapshot V1:
 - offline CNN-LSTM parity: **tam eşleşme / fark 0.0**
 
 Yeni uyumlu DEV modelleri, tekrar tekrar Neon’a bağlanmak yerine bu snapshot’ı kullanmalıdır. Neon veri otoritesi olarak kalır; snapshot yalnız immutable execution cache’dir.
+
+Snapshot execution identity:
+- source workflow run: `36456042954`
+- snapshot artifact id: `10985453248`
+- artifact name: `gold-monthly-dev-snapshot-v1-be98365d25e2e81b0f70fb724940e09d0191eb6c`
+- loader: `gold_axis_2026/tools/gold_monthly_dev_snapshot_v1.py`
+- parity result: CNN-LSTM canonical parent için aggregate/yearly SigmaAE ve direction farkı **0**
+- artifact expire olursa: aynı governed schema ile yeniden export + parity yapılmadan kullanılmaz
+
+## 1.4 Proje sözlüğü ve veri representation’ları
+
+### Main path / Challenger A
+Bu manifestte "main path" veya geçmiş konuşmalardaki "Challenger A", tek bir model adı değildir. ELM→ANN→ELMFIS→ANFIS→RBFNN→GPR→DMA/Boosting/SVR/CNN-LSTM boyunca gelişen ana Gold Monthly research hattını ifade eder.
+
+### Challenger B
+Grup-ARGE’de daha önce kullanılan seçili klasik/ileri modellerin Gold Monthly governance altında paralel portudur. Ana hattı değiştirmez; sonuçları artık bu manifestin aynı cross-family havuzundadır.
+
+### CURRENT8
+Dört metal için ikişer origin-safe predictor:
+- Gold: MR + VW
+- Silver: MR + VW
+- Platinum: MR + VW
+- Palladium: MR + VW
+
+Tanımlar:
+- **MR:** önceki tamamlanmış ayın log-return’u.
+- **VW:** forecast origin ayında mevcut günlük verilerden, official point-in-time GPR vintage ile causal ağırlıklandırılmış günlük log-return özeti.
+- GPR kullanımı exact-origin PIT vintage / publication-lag / causal normalization kurallarına tabidir.
+
+Toplam boyut = **8**.
+
+### DAILY_SUMMARY12
+Her metal için forecast-origin ayının günlük seviyelerinden üç causal özet:
+1. open-to-close log change,
+2. realized-volatility özeti = sqrt(sum of squared daily log returns),
+3. log range = log(max/min).
+
+4 metal × 3 = **12 predictor**.
+
+### RAW_LEVEL_LAGS8
+Her metal için son iki tamamlanmış aylık seviye:
+4 × 2 = **8 predictor**.
+
+### SIMPLE_RETURNS8
+Her metal için:
+- 1-month log return
+- 3-month log return
+
+4 × 2 = **8 predictor**.
+
+### MIXED20
+- CURRENT8 = 8
+- dört metal current monthly level = 4
+- dört metal 3-month momentum = 4
+- dört metal realized-volatility summary = 4
+
+Toplam = **20**.
+
+### Raw monthly 4-metal sequence
+TimesFM-3 / TimeMixer++ / TimeXer gibi modern sequence hatlarında Gold, Silver, Platinum ve Palladium’un tamamlanmış aylık seviyeleri kullanılır. Bu hatlar CURRENT8 ile aynı representation değildir.
+
+## 1.5 Metric authority ve supersession
+
+Projenin erken ELM/ANN aşamalarında birçok screen **MAPE-merkezli** raporlandı. Bu tarihsel tablolar silinmez; fakat aktif seçim otoritesi değildir.
+
+2026-09-26 cross-family re-audit sonrası bağlayıcı aktif değerlendirme:
+1. DEV cumulative price error **ΣAE**
+2. DEV monthly direction
+3. diğer metrikler supporting/diagnostic
+
+Sonuç:
+- eski MAPE-merkezli "final winner" ifadeleri tarihsel/superseded olabilir;
+- aynı model için aktif karar aranırken bu manifestteki ΣAE + direction kayıtları kullanılır;
+- MAPE yalnız destekleyici olarak kalır.
+
+## 1.6 2025 / 2026 bilgi durumu — önemli nüans
+
+**2025 tüm proje için artık tamamen görülmemiş bir global blind holdout değildir.** Bazı tamamlanmış eski ailelerde 2025 report-only/transport olarak daha önce hesaplanmıştır; Boosting’de family freeze sonrasında one-shot olarak açılmıştır; Challenger B’de de report-only sonuçlar vardır.
+
+Bağlayıcı kural:
+- 2025 hiçbir mevcut sonucu geriye dönük tune/promote/rescue etmek için kullanılamaz.
+- Bir family kendi protocolünde 2025’i henüz açmadıysa o family için kilitli kalır.
+- **CNN/LSTM aktif family için 2025 hâlâ açılmamıştır.**
+- SVR family için 2025 family freeze öncesinde açılmayacaktır.
+- 2026 yalnız retrospective/quarantine evidence’dir; seçim otoritesi değildir.
+
+Bu yüzden gelecekte "2025 blind holdout" ifadesi family-specific kullanılmalıdır; global proje için koşulsuz söylenmemelidir.
+
+## 1.7 Yeni sohbet onboarding protokolü
+
+Yeni bir sohbet bu projeyi devralırken yalnız şu sırayı izlemelidir:
+
+1. Önce **yalnız bu manifesti** oku.
+2. Bu dosyadaki current status / closed paths / next action satırlarını bağlayıcı kabul et.
+3. Yeni model önermeden önce Section 4 ve family bölümlerinde duplicate kontrolü yap.
+4. Ayrıntılı run/job/artifact doğrulaması gerekiyorsa ancak o zaman Section 22 provenance dosyalarına git.
+5. Eski dosyalardaki "next action" satırlarını bu manifestten daha yeni otorite sayma.
+6. Current checkpoint: **BiLSTM tamamlandı ve promote edilmedi; CNN-BiLSTM henüz çalıştırılmadı.**
+
+Ayrı proje uyarısı:
+- `GOLD_CONTROL_PROJECT_MANIFEST.md` = Gold **Direction Engine**
+- bu dosya = Gold **Monthly Price Forecast**
+- iki proje birbirinin model registry’si değildir.
 
 ---
 
@@ -194,6 +297,23 @@ Ayrıca birçok ailede şu refinement/hybrid sınıfları da denenmiştir:
 - MPA+CPA
 
 Bunların başka bir mimaride kullanılması ancak o mimarinin kendi scientific rationale’ı ile yeni bir deney olarak açılabilir.
+
+## 4.1 Duplicate-prevention family coverage matrix
+
+| Family | Vanilla / base | Full common optimizer screen | Adaptive/meta refinements | Structural/literature-specific | Current state |
+|---|---|---|---|---|---|
+| ELM | YES | YES — 33 identities total | YES | no further structural line retained | CLOSED |
+| ANN | YES | YES — 33 identities total | YES | ensemble/refinement program complete | CLOSED |
+| ELMFIS | YES | YES — 33 identities total | YES | CQCSA | CLOSED |
+| ANFIS | YES | YES — 32 meta + vanilla | YES | ChHHO, MVO | CLOSED |
+| RBFNN | YES | YES — 32 meta + anchors | YES | MOLS | CLOSED |
+| GPR/MOGP | YES | Stage-1 broad screen complete | YES | LMC2_RBF_M32 | Stage 3 complete; Stage 4 frozen |
+| SVR | YES | 32/32 technically executed | partial Stage 5A | causal DWT/MODWT not yet run | PAUSED |
+| Boosting | YES | architecture-specific, not common-32 parity | YES | CEEMDAN-XGB, VMD-XGB | CLOSED |
+| CNN/LSTM | YES | common-32 meta screen intentionally NOT opened | local ablations closed | BiLSTM run; CNN-BiLSTM next | ACTIVE |
+| Challenger B | model-specific | not applicable | model-specific | PLS metal ablation | CLOSED SCOPE |
+
+Bu tablo "bir optimizer adı daha gördük, bunu da yeni model diye deneyelim" tekrarını önlemek içindir.
 
 ---
 
@@ -763,9 +883,24 @@ TimeXer test edilmiş gibi yazılmayacak.
 
 # 17. Historical / external reference modeller
 
-Aşağıdaki modeller ayrı yeni challenger olarak yeniden açılmamalı:
+Aşağıdaki modeller ayrı yeni challenger olarak yeniden açılmamalı.
 
-- Random Forest reference: **1491.550694 / 20/33**
+## Random Forest identity disambiguation
+
+Repo’da iki farklı Random Forest referansı vardır ve **aynı model sonucu gibi birleştirilmemelidir**:
+
+1. **Historical Random Forest reference:** **1491.550694 / 20/33**  
+   - Challenger-B contextual reference olarak taşınmıştır.
+   - Challenger B içinde yeniden koşturulmamıştır.
+   - exact relation to the later Boosting canonical RF anchor is **NOT_PROVEN**.
+
+2. **Boosting Stage-1 Random Forest anchor:** **1614.4908 / 20/33**  
+   - frozen CURRENT8, Gold-log-return target, raw tree input, expanding-origin canonical Boosting Stage-1 protocolunda yeniden hesaplanmıştır.
+   - provenance: `GOLD_MONTHLY_BOOSTING_STAGE1_CANONICAL_REPORT_2026-09-27.md`.
+
+Bu iki değer bundan sonra yalnız kendi identity/protocol adıyla kullanılacaktır.
+
+Diğer duplicate-sensitive references:
 - CatBoost: Boosting ailesinde tamamlandı
 - XGBoost CURRENT8/decomposition: Boosting ailesinde işlendi
 - SVR: dedicated family mevcut
@@ -865,7 +1000,21 @@ Machine-readable JSON registry yalnız bu manifestin aynasıdır; ikinci bir pro
 
 # 22. Provenance — sadece denetim için
 
-Aşağıdaki dosyalar ayrıntılı run/job/artifact ve ham deney kanıtlarını tutar. Proje akışını anlamak için zorunlu değildir:
+Aşağıdaki dosyalar ayrıntılı run/job/artifact ve ham deney kanıtlarını tutar. Proje akışını anlamak için zorunlu değildir.
+
+## Supersession kuralı
+
+Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru olan fakat artık eski kalmış "next action", "primary model", "final winner" veya "stage status" ifadeleri bulunabilir.
+
+Özellikle:
+- eski ELM-vs-ANN MAPE-centered family freeze aktif metric açısından superseded;
+- CNN/LSTM authority planındaki "Stage 0 next" satırı tarihsel; Stage 0-1D ve BiLSTM artık tamamlandı;
+- SVR authority planının başlangıç "Stage 1 next" satırı tarihsel; family Stage 5A.3’e kadar ilerledi;
+- Challenger-B ayrı manifesti artık project-state authority değil;
+- eski ELM/ANN mega-ledger’daki historical next-action satırları binding değildir.
+
+**Current state için daima bu master manifest kullanılır.**
+
 
 - `GOLD_MONTHLY_ELM_METAHEURISTIC_LEDGER_ANN_PLAN_2026-09-25.md`
 - `GOLD_MONTHLY_CROSS_FAMILY_REAUDIT_SIGMAAE_DIRECTION_2026-09-26.md`
