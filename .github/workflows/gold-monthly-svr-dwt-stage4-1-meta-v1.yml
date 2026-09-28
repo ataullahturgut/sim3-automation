@@ -1,0 +1,86 @@
+name: Gold Monthly SVR DWT Stage4.1 Meta V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-svr-dwt-stage4-1-meta-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stage4-1:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: >
+          python -m pip install
+          'numpy==2.4.6'
+          'psycopg[binary]==3.3.6'
+          'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_1_meta_v1.py
+      - name: Run Stage 4.1
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_1_meta_v1.py
+      - name: Scientific integrity gate
+        run: |
+          python - <<'PY'
+          import json, math
+          r=json.load(open('gold_monthly_svr_dwt_stage4_1_meta_v1_result.json'))
+          assert r['scope']=='STAGE4_1_METAHEURISTIC_BATCH_DEV_ONLY_V1'
+          c=r['contract']
+          assert c['model']=='epsilon-SVR'
+          assert c['kernel']=='rbf'
+          assert c['representation']=='DAILY_SUMMARY12'
+          assert c['bounds']=={'epsilon':[0.01,0.5],'log2_C':[-8,12],'log2_gamma':[-12,4]}
+          assert c['population']==24 and c['generations']==45 and c['repeats']==3
+          assert c['2025_role']=='LOCKED_NOT_OPENED'
+          assert c['2026_role']=='QUARANTINED_NOT_USED'
+          assert c['random_split']=='NONE'
+          assert c['database']=='READ_ONLY'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert set(r['methods'])=={'PSO','GA','DE','MPA'}
+          assert r['progress']['completed_or_audited']==4
+          for method,v in r['methods'].items():
+              assert v['scientific_gate'] in {'PASS','FAIL'}
+              assert len(v['rows'])+len(v['failures'])==33
+              if v['scientific_gate']=='PASS':
+                  assert len(v['rows'])==33
+                  for x in v['rows']:
+                      assert x['train_last'] < x['target']
+                      p=x['selected']
+                      assert -8 <= p['log2_C'] <= 12
+                      assert -12 <= p['log2_gamma'] <= 4
+                      assert 0.01 <= p['epsilon'] <= 0.50
+                      assert len(x['repeat_records'])==3
+          print('SVR_DWT_STAGE4_1_INTEGRITY_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-svr-dwt-stage4-1-meta-v1
+          path: |
+            gold_monthly_svr_dwt_stage4_1_meta_v1_result.json
+            gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE4_1_META_RESULT_2026-09-28.md
+          if-no-files-found: error
+      - name: Commit Stage 4.1 report
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE4_1_META_RESULT_2026-09-28.md
+          if git diff --cached --quiet; then
+            echo "No report change"
+          else
+            git commit -m "Record SVR Stage 4.1 metaheuristic result"
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
