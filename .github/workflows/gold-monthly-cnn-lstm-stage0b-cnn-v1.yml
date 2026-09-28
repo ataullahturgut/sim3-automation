@@ -1,0 +1,64 @@
+name: Gold Monthly CNN LSTM Stage 0B CNN V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_cnn_lstm_stage0_v1.py
+      - .github/workflows/gold-monthly-cnn-lstm-stage0b-cnn-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  TF_DETERMINISTIC_OPS: '1'
+  TF_ENABLE_ONEDNN_OPTS: '0'
+  CUDA_VISIBLE_DEVICES: ''
+  OMP_NUM_THREADS: '1'
+  TF_NUM_INTRAOP_THREADS: '1'
+  TF_NUM_INTEROP_THREADS: '1'
+  PYTHONHASHSEED: '0'
+jobs:
+  model:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install frozen dependencies
+        run: python -m pip install "tensorflow-cpu==2.20.0" "psycopg[binary]>=3.2,<4"
+      - name: Compile Stage 0 runner
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_cnn_lstm_stage0_v1.py gold_axis_2026/tools/vw_midas_msvr_successor_v1.py gold_axis_2026/tools/vw_midas_elmfis_baseline_v1.py
+      - name: Run CNN DEV-only Stage 0
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_cnn_lstm_stage0_v1.py --model CNN --output gold_monthly_cnn_lstm_stage0_cnn_v1_result.json
+      - name: Scientific output gate
+        run: |
+          python - <<'PY'
+          import json, math
+          p="gold_monthly_cnn_lstm_stage0_cnn_v1_result.json"
+          r=json.load(open(p))
+          assert r["scientific_gate"]["status"]=="PASS"
+          assert r["authority"]["2025_role"]=="LOCKED_NOT_QUERIED_NOT_LOADED"
+          assert r["authority"]["2026_role"]=="QUARANTINED_NOT_QUERIED_NOT_LOADED"
+          assert len(r["dev"]["rows"])==33
+          assert r["dev"]["metrics"]["n"]==33
+          assert all(math.isfinite(x["forecast"]) and abs(x["pred_log_return_gold"]) < 1 for x in r["dev"]["rows"])
+          assert all(len(x["seed_runs"])==3 for x in r["dev"]["rows"])
+          print("SCIENTIFIC_OUTPUT_GATE=PASS")
+          print(json.dumps({
+            "sum_abs_error":r["dev"]["metrics"]["sum_abs_error"],
+            "direction_correct":r["dev"]["metrics"]["direction_correct"],
+            "relative_mae_vs_rw":r["dev"]["metrics"]["relative_mae_vs_rw"],
+            "worst_month":r["dev"]["worst_month"],
+            "seed_dispersion":r["dev"]["seed_dispersion"]
+          }, sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-cnn-lstm-stage0b-cnn-v1-${{ github.sha }}
+          path: gold_monthly_cnn_lstm_stage0_cnn_v1_result.json
+          if-no-files-found: error
+          retention-days: 30
