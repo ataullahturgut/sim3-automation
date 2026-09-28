@@ -37,6 +37,7 @@ jobs:
           import json
           r=json.load(open('gold_monthly_svr_dwt_stage3b_local_v1_result.json'))
           assert r['scope']=='STAGE3B_LOCAL_REFINEMENT_DEV_ONLY_V1'
+          assert r['local_grid']['candidate_count']==136
           assert r['contract']['parent']=='EPSILON_RBF_DAILY12'
           assert r['contract']['representation']=='DAILY_SUMMARY12'
           assert r['contract']['kernel']=='rbf'
@@ -50,9 +51,9 @@ jobs:
           assert r['coarse']['metrics']['n']==33
           assert r['local']['metrics']['n']==33
           assert len(r['local']['rows'])==33
-          assert r['decision']['final_deterministic_reference'] in {
-              'STAGE3B_LOCAL_TUNED','EPSILON_RBF_DAILY12_STAGE2_PARENT'
-          }
+          assert r['decision']['deterministic_tuning_promoted'] in {'YES','NO'}
+          assert r['decision']['carried_forward'] in {'STAGE2_PARENT','STAGE3A_COARSE','STAGE3B_LOCAL'}
+          assert r['decision']['further_deterministic_rescue_tuning']=='CLOSED_NOT_AUTHORIZED'
           for x in r['local']['rows']:
               assert x['train_last'] < x['target']
               assert x['selected']['inner_valid_n'] >= 12
