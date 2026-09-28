@@ -1,3 +1,11 @@
+> **SEPARATE MONTHLY-PRICE MANIFEST — 2026-09-28**
+>
+> This `GOLD_CONTROL_PROJECT_MANIFEST.md` governs the Gold Direction Engine research program. The separate H=1 monthly XAU/USD price-forecast research program is governed by:
+> - `gold_axis_2026/GOLD_MONTHLY_PROJECT_MANIFEST.md`
+> - `gold_axis_2026/GOLD_MONTHLY_MODEL_REGISTRY.json`
+>
+> Do not use direction-engine model registries as a substitute for the monthly-price model registry, or vice versa.
+
 # GOLD CONTROL / GOLD DIRECTION ENGINE — PROJECT MANIFEST
 
 **Manifest version:** 3.00
