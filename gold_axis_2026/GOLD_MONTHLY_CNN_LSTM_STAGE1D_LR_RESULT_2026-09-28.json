@@ -1,0 +1,74 @@
+{
+  "date": "2026-09-28",
+  "status": "STAGE_1D_COMPLETE_MICRO_TUNING_CLOSED",
+  "workflow_run_id": 36453143598,
+  "workflow_commit": "ac220c4ff642d921bc1e7486f2a1bf0fc2aadab5",
+  "stop_rule": {
+    "sigma_ae_improvement_pct_min": 1,
+    "direction_gain_min": 2,
+    "max_sigma_ae_deterioration_pct_for_direction_route": 0.5,
+    "triggered": true
+  },
+  "candidates": {
+    "LSTM": {
+      "parent": {
+        "lr": 0.001,
+        "sum_abs_error": 1589.9827200167367,
+        "direction_correct": 19
+      },
+      "challenger": {
+        "lr": 0.0003,
+        "sum_abs_error": 1648.503201199895,
+        "direction_correct": 20,
+        "relative_mae_vs_rw": 0.9377151315130233
+      },
+      "meaningful": false
+    },
+    "CNN": {
+      "parent": {
+        "lr": 0.001,
+        "sum_abs_error": 1641.5065293447249,
+        "direction_correct": 20
+      },
+      "challenger": {
+        "lr": 0.0003,
+        "sum_abs_error": 1637.1769650470712,
+        "direction_correct": 21,
+        "relative_mae_vs_rw": 0.9312724488322361
+      },
+      "meaningful": false
+    },
+    "CNN_LSTM": {
+      "parent": {
+        "lr": 0.001,
+        "sum_abs_error": 1528.5698506560245,
+        "direction_correct": 20
+      },
+      "challenger": {
+        "lr": 0.0003,
+        "sum_abs_error": 1583.4675703245125,
+        "direction_correct": 18,
+        "relative_mae_vs_rw": 0.900721029763659
+      },
+      "meaningful": false
+    }
+  },
+  "decision": {
+    "stage_1e_batch": "SKIPPED",
+    "stage_1f_kernel": "SKIPPED",
+    "local_cartesian_tuning": "CLOSED",
+    "next": [
+      "BiLSTM",
+      "CNN-BiLSTM"
+    ]
+  },
+  "family_leader": {
+    "model": "CNN_LSTM",
+    "lookback": 6,
+    "width": 32,
+    "dropout": 0.1,
+    "learning_rate": 0.001,
+    "sum_abs_error": 1528.5698506560245,
+    "direction_correct": 20
+  }
+}
