@@ -1,0 +1,90 @@
+name: Gold Monthly Boosting Stage 6C-D0 Causal VMD XGB V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-boosting-stage6c-d0-causal-vmd-xgb-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  causal-vmd-xgb:
+    name: causal-vmd-xgb-full-dev
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install frozen packages
+        run: >
+          python -m pip install
+          'numpy==2.4.6'
+          'psycopg[binary]==3.3.6'
+          'scikit-learn==1.9.1'
+          'xgboost==3.4.1'
+          'lightgbm==4.7.0'
+          'catboost==1.2.10'
+          'vmdpy==0.2'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_boosting_stage6c_d0_causal_vmd_xgb_v1.py
+      - name: VMD smoke and determinism gate
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_boosting_stage6c_d0_causal_vmd_xgb_v1.py --smoke
+      - name: Run Stage 6C-D0
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_boosting_stage6c_d0_causal_vmd_xgb_v1.py
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          p='gold_monthly_boosting_stage6c_d0_causal_vmd_xgb_result.json'
+          r=json.load(open(p))
+          assert r['scope']=='BOOSTING_STAGE6C_D0_CAUSAL_VMD_XGBOOST_V1'
+          c=r['contract']
+          assert c['dev']=='2022-04..2024-12'
+          assert c['dev_n']==33
+          assert c['random_split']=='NONE'
+          assert c['database']=='READ_ONLY'
+          assert c['2025_role']=='NOT_OPENED_NOT_EVALUATED'
+          assert c['2026_role']=='QUARANTINED_NOT_USED_IN_DEVELOPMENT'
+          assert c['xgboost_tuning']=='NONE'
+          assert c['vmd_tuning']=='NONE'
+          assert c['global_decomposition']=='BLOCKED'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert len(r['rows'])==33
+          assert all(x['feature_dim']==4 for x in r['rows'])
+          assert all(x['feature_history_end']==x['origin'] for x in r['rows'])
+          assert all(x['train_last'] < x['target'] for x in r['rows'])
+          b=r['stage5_current8_comparator']['metrics']
+          assert abs(b['sum_abs_error']-1583.8534958594905)<1e-8
+          assert b['direction_correct']==20
+          v=r['vmd']
+          assert v['K']==3
+          assert v['alpha']==2000.0
+          assert v['tau']==0.0
+          assert v['DC']==0
+          assert v['init']==1
+          assert abs(v['tol']-1e-7)<1e-20
+          assert v['max_reconstruction_relative_error'] <= 1e-12
+          m=r['vmd_xgboost']['metrics']
+          assert m['n']==33
+          print('BOOSTING_STAGE6C_D0_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-boosting-stage6c-d0-causal-vmd-xgb-v1
+          path: gold_monthly_boosting_stage6c_d0_causal_vmd_xgb_result.json
+          if-no-files-found: error
