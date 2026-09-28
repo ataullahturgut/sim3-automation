@@ -172,10 +172,10 @@ Deterministic hyperparameter tuning line is CLOSED / NOT PROMOTED.
 **MANDATORY / BOUNDS FREEZE NEXT / 0 OF 32 RUN**
 
 Batch 4.1:
-- [ ] PSO
-- [ ] GA
-- [ ] DE
-- [ ] MPA
+- [x] PSO
+- [x] GA
+- [x] DE
+- [x] MPA
 
 Batch 4.2:
 - [ ] ABC
@@ -219,7 +219,7 @@ Batch 4.8:
 - [ ] DE-ABC
 - [ ] Multi-swarm
 
-Progress: **0/32**
+Progress: **4/32**
 Vanilla/deterministic tuned SVR will remain reference identity #33.
 
 ### Stage 5 — targeted refinement / hybrids
