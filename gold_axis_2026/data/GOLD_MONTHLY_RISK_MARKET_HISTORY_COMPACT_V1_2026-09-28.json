@@ -1,0 +1,290 @@
+{
+  "schema": "GOLD_MONTHLY_RISK_MARKET_HISTORY_COMPACT_V1_2026-09-28",
+  "role": "SECONDARY_DIAGNOSTIC_EXTERNAL_SNAPSHOT",
+  "database_access": "READ_ONLY",
+  "evidence_class": "MARKET_HISTORY_RECONSTRUCTION_BY_OBSERVATION_DATE_NOT_PIT_STORAGE_PROOF",
+  "source_series": [
+    "SP500_FRED",
+    "NASDAQ100_FRED",
+    "DJIA_FRED"
+  ],
+  "limitation": "Historical market observations are timestamped by trading date but were ingested later; no original retrieval/PIT storage proof. Use as secondary diagnostic, not strict-PIT promotion evidence.",
+  "rows": [
+    {
+      "origin_month": "2022-02",
+      "sp500_logret": null,
+      "nasdaq100_logret": null,
+      "djia_logret": null
+    },
+    {
+      "origin_month": "2022-03",
+      "sp500_logret": 0.035148238386268404,
+      "nasdaq100_logret": 0.041323378518807775,
+      "djia_logret": 0.022918871453479178
+    },
+    {
+      "origin_month": "2022-04",
+      "sp500_logret": -0.09206783296043518,
+      "nasdaq100_logret": -0.1435071980923397,
+      "djia_logret": -0.05029885609814783
+    },
+    {
+      "origin_month": "2022-05",
+      "sp500_logret": 0.000053242466203463356,
+      "nasdaq100_logret": -0.016684768288620644,
+      "djia_logret": 0.0003914058721132865
+    },
+    {
+      "origin_month": "2022-06",
+      "sp500_logret": -0.0876515744801734,
+      "nasdaq100_logret": -0.09436205283736132,
+      "djia_logret": -0.06949147834669014
+    },
+    {
+      "origin_month": "2022-07",
+      "sp500_logret": 0.08720134427422459,
+      "nasdaq100_logret": 0.11826855777890422,
+      "djia_logret": 0.0650868399679928
+    },
+    {
+      "origin_month": "2022-08",
+      "sp500_logret": -0.04336702120583717,
+      "nasdaq100_logret": -0.05361632988994396,
+      "djia_logret": -0.04148488218356394
+    },
+    {
+      "origin_month": "2022-09",
+      "sp500_logret": -0.09804919930362435,
+      "nasdaq100_logret": -0.11204720871027525,
+      "djia_logret": -0.09253302399111252
+    },
+    {
+      "origin_month": "2022-10",
+      "sp500_logret": 0.07683460219574133,
+      "nasdaq100_logret": 0.03882635206633214,
+      "djia_logret": 0.13059663768304183
+    },
+    {
+      "origin_month": "2022-11",
+      "sp500_logret": 0.052357944725214406,
+      "nasdaq100_logret": 0.05330668493804355,
+      "djia_logret": 0.0551757577769163
+    },
+    {
+      "origin_month": "2022-12",
+      "sp500_logret": -0.060781799048487496,
+      "nasdaq100_logret": -0.09500465859490347,
+      "djia_logret": -0.04259821667497371
+    },
+    {
+      "origin_month": "2023-01",
+      "sp500_logret": 0.05992115787903165,
+      "nasdaq100_logret": 0.10096108510507684,
+      "djia_logret": 0.027928159373290077
+    },
+    {
+      "origin_month": "2023-02",
+      "sp500_logret": -0.02645943030685264,
+      "nasdaq100_logret": -0.0049544399008178835,
+      "djia_logret": -0.04283787489612492
+    },
+    {
+      "origin_month": "2023-03",
+      "sp500_logret": 0.03445125384186044,
+      "nasdaq100_logret": 0.090392447635395,
+      "djia_logret": 0.018730777843124158
+    },
+    {
+      "origin_month": "2023-04",
+      "sp500_logret": 0.014536196592679839,
+      "nasdaq100_logret": 0.004891913367541171,
+      "djia_logret": 0.02446260463768029
+    },
+    {
+      "origin_month": "2023-05",
+      "sp500_logret": 0.002479248057984054,
+      "nasdaq100_logret": 0.07334901795924999,
+      "djia_logret": -0.035519429924459764
+    },
+    {
+      "origin_month": "2023-06",
+      "sp500_logret": 0.06271890993761445,
+      "nasdaq100_logret": 0.0628828453756421,
+      "djia_logret": 0.04455347624552719
+    },
+    {
+      "origin_month": "2023-07",
+      "sp500_logret": 0.030663933087959953,
+      "nasdaq100_logret": 0.037357982527402696,
+      "djia_logret": 0.03293072325007347
+    },
+    {
+      "origin_month": "2023-08",
+      "sp500_logret": -0.01787524701848843,
+      "nasdaq100_logret": -0.016375657179259772,
+      "djia_logret": -0.023837293660685807
+    },
+    {
+      "origin_month": "2023-09",
+      "sp500_logret": -0.04994608771197091,
+      "nasdaq100_logret": -0.05202536236034798,
+      "djia_logret": -0.035601605429293935
+    },
+    {
+      "origin_month": "2023-10",
+      "sp500_logret": -0.02222483997777142,
+      "nasdaq100_logret": -0.020976548720987143,
+      "djia_logret": -0.013660893718976452
+    },
+    {
+      "origin_month": "2023-11",
+      "sp500_logret": 0.08542444438757674,
+      "nasdaq100_logret": 0.10141813527422122,
+      "djia_logret": 0.08404543981547549
+    },
+    {
+      "origin_month": "2023-12",
+      "sp500_logret": 0.04327897629406807,
+      "nasdaq100_logret": 0.05359587089821501,
+      "djia_logret": 0.04722876190868368
+    },
+    {
+      "origin_month": "2024-01",
+      "sp500_logret": 0.01577073041880103,
+      "nasdaq100_logret": 0.018332724473864533,
+      "djia_logret": 0.012151019019786928
+    },
+    {
+      "origin_month": "2024-02",
+      "sp500_logret": 0.05042750432692709,
+      "nasdaq100_logret": 0.05155103313334607,
+      "djia_logret": 0.021935456347276887
+    },
+    {
+      "origin_month": "2024-03",
+      "sp500_logret": 0.030547405358412088,
+      "nasdaq100_logret": 0.011617126815586564,
+      "djia_logret": 0.020582993284090776
+    },
+    {
+      "origin_month": "2024-04",
+      "sp500_logret": -0.04250574745999363,
+      "nasdaq100_logret": -0.04561605139617313,
+      "djia_logret": -0.05132189304481856
+    },
+    {
+      "origin_month": "2024-05",
+      "sp500_logret": 0.046903838078814306,
+      "nasdaq100_logret": 0.06094387149372136,
+      "djia_logret": 0.022755871189867594
+    },
+    {
+      "origin_month": "2024-06",
+      "sp500_logret": 0.03408230240557078,
+      "nasdaq100_logret": 0.05999886091269854,
+      "djia_logret": 0.011118654465810535
+    },
+    {
+      "origin_month": "2024-07",
+      "sp500_logret": 0.011257742193535576,
+      "nasdaq100_logret": -0.016414123823977646,
+      "djia_logret": 0.04312560270244502
+    },
+    {
+      "origin_month": "2024-08",
+      "sp500_logret": 0.022577879038739614,
+      "nasdaq100_logret": 0.010900260402339886,
+      "djia_logret": 0.017481966865765496
+    },
+    {
+      "origin_month": "2024-09",
+      "sp500_logret": 0.01999561838794891,
+      "nasdaq100_logret": 0.02452732784864788,
+      "djia_logret": 0.018287324906740475
+    },
+    {
+      "origin_month": "2024-10",
+      "sp500_logret": -0.009946079220551969,
+      "nasdaq100_logret": -0.008523969970102597,
+      "djia_logret": -0.013477803564386198
+    },
+    {
+      "origin_month": "2024-11",
+      "sp500_logret": 0.055719767688528744,
+      "nasdaq100_logret": 0.05096300549415316,
+      "djia_logret": 0.07265316583785832
+    },
+    {
+      "origin_month": "2024-12",
+      "sp500_logret": -0.025307691689834075,
+      "nasdaq100_logret": 0.0039005793980183296,
+      "djia_logret": -0.054130954781879945
+    },
+    {
+      "origin_month": "2025-01",
+      "sp500_logret": 0.026657822062382253,
+      "nasdaq100_logret": 0.021929689722939544,
+      "djia_logret": 0.04594827580827636
+    },
+    {
+      "origin_month": "2025-02",
+      "sp500_logret": -0.014344520215520212,
+      "nasdaq100_logret": -0.028028535786859446,
+      "djia_logret": -0.015924881688930987
+    },
+    {
+      "origin_month": "2025-03",
+      "sp500_logret": -0.05926680278196916,
+      "nasdaq100_logret": -0.0800150558502111,
+      "djia_logret": -0.042855877556307334
+    },
+    {
+      "origin_month": "2025-04",
+      "sp500_logret": -0.007654154967354604,
+      "nasdaq100_logret": 0.015062008882755839,
+      "djia_logret": -0.03223653878702652
+    },
+    {
+      "origin_month": "2025-05",
+      "sp500_logret": 0.059705468070558924,
+      "nasdaq100_logret": 0.08657973590762272,
+      "djia_logret": 0.03860428721787926
+    },
+    {
+      "origin_month": "2025-06",
+      "sp500_logret": 0.048415614059228305,
+      "nasdaq100_logret": 0.06081019056305616,
+      "djia_logret": 0.04226191071750918
+    },
+    {
+      "origin_month": "2025-07",
+      "sp500_logret": 0.021435188702803743,
+      "nasdaq100_logret": 0.02349318119313563,
+      "djia_logret": 0.000820848834567612
+    },
+    {
+      "origin_month": "2025-08",
+      "sp500_logret": 0.0188870153534324,
+      "nasdaq100_logret": 0.008461771388053539,
+      "djia_logret": 0.03153618328624564
+    },
+    {
+      "origin_month": "2025-09",
+      "sp500_logret": 0.03471408865886453,
+      "nasdaq100_logret": 0.052598014156353345,
+      "djia_logret": 0.018555770623830417
+    },
+    {
+      "origin_month": "2025-10",
+      "sp500_logret": 0.022433317651589665,
+      "nasdaq100_logret": 0.04663226442665807,
+      "djia_logret": 0.024798430769192813
+    },
+    {
+      "origin_month": "2025-11",
+      "sp500_logret": 0.001298825760831596,
+      "nasdaq100_logret": -0.01650320476136181,
+      "djia_logret": 0.0032231586304369516
+    }
+  ]
+}
