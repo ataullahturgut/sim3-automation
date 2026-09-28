@@ -56,7 +56,7 @@ The smaller hidden width is frozen before results because the governed Gold samp
 
 ## Training
 - seed=20260928 reset per origin
-- AdamW
+- Adam
 - learning_rate=1e-4
 - batch_size=16
 - max_epochs=20
