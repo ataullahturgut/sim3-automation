@@ -1,0 +1,89 @@
+{
+  "date": "2026-09-28",
+  "status": "STAGE_1A_COMPLETE_ALL_GATES_PASS",
+  "workflow_run_id": 36439589026,
+  "workflow_commit": "2733449eadab0c17f0b87af6c3804b635182412d",
+  "factor": "lookback_only",
+  "candidates": {
+    "LSTM": {
+      "3": {
+        "sum_abs_error": 1589.9827200167367,
+        "direction_correct": 19,
+        "relative_mae_vs_rw": 0.9044270307262439,
+        "gate": "PASS"
+      },
+      "6": {
+        "sum_abs_error": 1594.1668279115972,
+        "direction_correct": 15,
+        "relative_mae_vs_rw": 0.9068070693467561,
+        "gate": "PASS"
+      },
+      "12": {
+        "sum_abs_error": 1738.0595196681936,
+        "direction_correct": 15,
+        "relative_mae_vs_rw": 0.9886572921889611,
+        "gate": "PASS"
+      }
+    },
+    "CNN": {
+      "3": {
+        "sum_abs_error": 1641.8274994443448,
+        "direction_correct": 21,
+        "relative_mae_vs_rw": 0.9339178040070221,
+        "gate": "PASS"
+      },
+      "6": {
+        "sum_abs_error": 1735.7297851062044,
+        "direction_correct": 16,
+        "relative_mae_vs_rw": 0.9873320734392517,
+        "gate": "PASS"
+      },
+      "12": {
+        "sum_abs_error": 1906.9425616103224,
+        "direction_correct": 13,
+        "relative_mae_vs_rw": 1.0847227312914234,
+        "gate": "PASS"
+      }
+    },
+    "CNN_LSTM": {
+      "3": {
+        "sum_abs_error": 1588.1078576068173,
+        "direction_correct": 19,
+        "relative_mae_vs_rw": 0.9033605560903398,
+        "gate": "PASS"
+      },
+      "6": {
+        "sum_abs_error": 1528.5698506560245,
+        "direction_correct": 20,
+        "relative_mae_vs_rw": 0.8694936579385805,
+        "gate": "PASS"
+      },
+      "12": {
+        "sum_abs_error": 1554.3082078115099,
+        "direction_correct": 18,
+        "relative_mae_vs_rw": 0.8841343616675256,
+        "gate": "PASS"
+      }
+    }
+  },
+  "architecture_leaders": {
+    "LSTM": 3,
+    "CNN": 3,
+    "CNN_LSTM": 6
+  },
+  "family_leader": {
+    "model": "CNN_LSTM",
+    "lookback": 6,
+    "sum_abs_error": 1528.5698506560245,
+    "direction_correct": 20,
+    "relative_mae_vs_rw": 0.8694936579385805
+  },
+  "next_stage": "1B_CAPACITY_WIDTH",
+  "governance": {
+    "dev_only": true,
+    "random_split": false,
+    "db_read_only": true,
+    "opened_2025": false,
+    "used_2026_for_selection": false
+  }
+}
