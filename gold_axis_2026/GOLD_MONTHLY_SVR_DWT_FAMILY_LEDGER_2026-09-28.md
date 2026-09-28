@@ -186,7 +186,7 @@ Effective 2026-09-28 after Batch 4.2 observability failure:
 Current Batch 4.2 run was launched before this binding rule and may be used for its final scientific results if it completes cleanly, but it is **NOT an acceptable template for later batches**.
 
 ### Stage 4 — 32/32 metaheuristic SVR broad screen
-**MANDATORY / ACTIVE / 15 OF 32 COMPLETE; FA DEFERRED**
+**MANDATORY / ACTIVE / 16 OF 32 COMPLETE; FA DEFERRED**
 
 Batching amendment:
 - Batch 4.1 completed as a 4-method batch before the user batching amendment.
@@ -242,7 +242,7 @@ FA is not counted as complete until explicitly resumed/accepted.
 Remaining single-method order (effective 09:33Z):
 - [~] FA_FPA — RUNNING as single-method run 36404444819
 - [x] CS — 1564.515299 / 19/33
-- [ ] SCA
+- [x] SCA — 1843.705276 / 14/33
 - [ ] SALP
 - [ ] SMA
 
@@ -256,6 +256,19 @@ CS single-method run:
 - Payload SHA256: `17d33e6a929dd4cad55bf62b5b768bc681e582da8767e46079351ac2fd029d31`
 - Frozen Stage-2 parent remains better on primary DEV SigmaAE: 1449.187363 vs 1564.515299.
 - Decision: recorded; not promoted while Stage 4 broad screen remains incomplete.
+
+
+SCA single-method run:
+- Run: **36407501882**
+- Job: **108879646812**
+- Scientific gate: **PASS**
+- DEV SigmaAE: **1843.705276**
+- Direction: **14/33**
+- Relative MAE vs RW: **1.048752**
+- Payload SHA256: `a83b7bce58d0fd6869330897f18a578ddf34a465d299cf095da1014ecd2bfeaa`
+- Frozen Stage-2 parent is materially better on primary DEV SigmaAE: 1449.187363 vs 1843.705276.
+- SCA is also worse than random-walk reference on relative MAE (>1.0).
+- Decision: recorded; not promoted.
 
 Batch 4.5:
 - [ ] GOA
@@ -276,7 +289,7 @@ Batch 4.7 FINAL REMAINDER:
 - [ ] DE_ABC
 - [ ] MULTISWARM
 
-Progress: **15/32 accepted complete; FA deferred**.
+Progress: **16/32 accepted complete; FA deferred**.
 No Stage-4 parent selection until all 32 are complete/audited.
 Vanilla/deterministic parent remains reference identity #33.
 
