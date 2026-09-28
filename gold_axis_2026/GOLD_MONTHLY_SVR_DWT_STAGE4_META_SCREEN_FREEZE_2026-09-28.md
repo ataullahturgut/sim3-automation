@@ -52,6 +52,15 @@ Canonical initialization center:
 
 The gamma center approximates canonical `gamma=scale` after 12-feature training standardization. It is an initialization anchor only, not a result claim.
 
+Common initial-population rule:
+- candidate 0 = canonical center exactly;
+- local half of the remaining population = Gaussian perturbation around the canonical center;
+- per-dimension local sigma = **10% of the frozen bound span**;
+- remaining candidates = uniform over the full frozen bounds;
+- clip every candidate to bounds.
+
+This initialization rule is common across methods wherever the reused repository optimizer implementation accepts the shared initializer.
+
 ## Common budget
 
 For every method where population/generation semantics apply:
