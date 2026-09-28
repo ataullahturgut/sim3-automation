@@ -190,7 +190,10 @@ Current Batch 4.2 run was launched before this binding rule and may be used for 
 
 Batching amendment:
 - Batch 4.1 completed as a 4-method batch before the user batching amendment.
-- All subsequent batches use **5 methods at a time**, except the final 3-method remainder.
+- Batch 4.2 completed as a 5-method batch.
+- Batch 4.3 was launched as a 5-method batch; FA was deferred by user after four methods completed.
+- Effective 2026-09-28 09:33Z, **all remaining metaheuristics are run one-by-one**.
+- FA remains deferred and will be revisited last.
 - Candidate set, order, bounds, budget, objective, seeds and scientific gates are unchanged.
 
 Batch 4.1 COMPLETE:
@@ -236,8 +239,8 @@ Run: **36401901203**.
 User instruction at 2026-09-28 09:30Z: defer FA and evaluate completed models now.
 FA is not counted as complete until explicitly resumed/accepted.
 
-Batch 4.4:
-- [ ] FA_FPA
+Remaining single-method order (effective 09:33Z):
+- [~] FA_FPA — RUNNING as single-method run 36404444819
 - [ ] CS
 - [ ] SCA
 - [ ] SALP
@@ -290,7 +293,7 @@ Open after all 32 methods audited.
 **LOCKED / NOT YET OPENED**
 
 ## Current next authorized action
-**FA is deferred by user instruction. Current accepted Stage-4 progress is 13/32; resume FA only when explicitly requested, then continue Batch 4.4.**
+**Run remaining metaheuristics one-by-one. FA stays deferred until the end. Current active single method: FA_FPA, run 36404444819.**
 
 ## Kontrol ve Uyum Özeti
 - Stage 0 authority freeze: PASS.
