@@ -5,7 +5,8 @@ import numpy as np
 import pandas as pd
 import gold_monthly_external_driver_residual_v1 as core
 
-# Official H.10-only path; no FRED or Neon read in model execution.\nRATE_PACKAGE="60f32914ab61dfab590e0e470153e3ae"
+# Official H.10-only path; no FRED or Neon read in model execution.
+RATE_PACKAGE="60f32914ab61dfab590e0e470153e3ae"
 INDEX_PACKAGE="122e3bcb627e8e53f1bf72a1a09cfb81"
 BASE="https://www.federalreserve.gov/datadownload/Output.aspx"
 START="01/01/2020"; END="12/31/2025"; LAG_DAYS=7
