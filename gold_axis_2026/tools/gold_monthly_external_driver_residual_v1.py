@@ -72,8 +72,15 @@ def safe_logret(a,b):
 
 def build_external():
     series={}; source_hash={}
-    for name,sid in FRED.items():
-        df,h=fred_csv(sid); series[name]=df; source_hash[name]=h
+    # Independent public series: fetch concurrently to avoid one slow endpoint
+    # turning a compact research pull into a long serial job.
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    with ThreadPoolExecutor(max_workers=7) as ex:
+        fut={ex.submit(fred_csv,sid):name for name,sid in FRED.items()}
+        for z in as_completed(fut):
+            name=fut[z]
+            df,h=z.result()
+            series[name]=df; source_hash[name]=h
     origins=[f"{y:04d}-{m:02d}" for y in range(2010,2026) for m in range(1,13)]
     rows={}
     for o in origins:
