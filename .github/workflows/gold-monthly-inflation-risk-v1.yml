@@ -1,0 +1,55 @@
+name: Gold Monthly Inflation Risk V1
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_inflation_risk_residual_v1.py
+      - gold_axis_2026/data/GOLD_MONTHLY_INFLATION_PIT_COMPACT_V1_2026-09-28.json
+      - gold_axis_2026/data/GOLD_MONTHLY_RISK_MARKET_HISTORY_COMPACT_V1_2026-09-28.json
+      - .github/workflows/gold-monthly-inflation-risk-v1.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  PYTHONHASHSEED: '0'
+jobs:
+  inflation-risk:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    name: Inflation-Risk-External-Audit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install "numpy>=2.0,<3" "pandas>=2.2,<3" "scikit-learn>=1.5,<2"
+      - name: Download frozen model artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/chhho inputs/deabc
+          gh api /repos/${GITHUB_REPOSITORY}/actions/artifacts/10989389723/zip > chhho.zip
+          unzip -q chhho.zip -d inputs/chhho
+          gh api /repos/${GITHUB_REPOSITORY}/actions/artifacts/10911282893/zip > deabc.zip
+          unzip -q deabc.zip -d inputs/deabc
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_external_driver_residual_v1.py gold_axis_2026/tools/gold_monthly_inflation_risk_residual_v1.py
+      - name: Run inflation/risk X2-X6
+        env:
+          NEON_DATABASE_URL: ''
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_monthly_inflation_risk_residual_v1.py \
+            --chhho inputs/chhho/anfis_stage3c_chhho_result.json \
+            --deabc inputs/deabc/rbfnn_stage1_de_abc_result.json \
+            --inflation gold_axis_2026/data/GOLD_MONTHLY_INFLATION_PIT_COMPACT_V1_2026-09-28.json \
+            --risk gold_axis_2026/data/GOLD_MONTHLY_RISK_MARKET_HISTORY_COMPACT_V1_2026-09-28.json \
+            --outdir inflation_risk_out
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-inflation-risk-v1-${{ github.sha }}
+          path: inflation_risk_out/
+          if-no-files-found: error
+          retention-days: 90
