@@ -1,3 +1,11 @@
+> **CANONICAL CONSOLIDATION NOTICE — 2026-09-28**
+>
+> Challenger-B is now integrated into the project-wide canonical monthly registry:
+> - `gold_axis_2026/GOLD_MONTHLY_PROJECT_MANIFEST.md`
+> - `gold_axis_2026/GOLD_MONTHLY_MODEL_REGISTRY.json`
+>
+> This file remains the detailed Challenger-B evidence/provenance ledger. It is **not a separate current-state authority**. For duplicate-prevention, current family status and next action, consult the canonical monthly manifest first.
+
 # GOLD MONTHLY FORECAST — CHALLENGER B MANIFEST
 
 **Manifest version:** 1.0  
