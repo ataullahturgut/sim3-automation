@@ -1,7 +1,7 @@
 # GOLD MONTHLY FORECAST — SVR / DWT-SVR FAMILY LEDGER
 
 Date: 2026-09-28  
-Status: **ACTIVE — STAGE 4 SINGLE-METHOD SCREEN / 21 OF 32 COMPLETE; FA DEFERRED**  
+Status: **STAGE 4 CLOSED BY USER AMENDMENT — 31/32 SCORED; FA UNSCORED / STOPPED**  
 Branch: `gold-midas-headswap-v1-20260925`
 
 Canonical authority:
@@ -186,7 +186,7 @@ Effective 2026-09-28 after Batch 4.2 observability failure:
 Current Batch 4.2 run was launched before this binding rule and may be used for its final scientific results if it completes cleanly, but it is **NOT an acceptable template for later batches**.
 
 ### Stage 4 — 32/32 metaheuristic SVR broad screen
-**MANDATORY / ACTIVE / 21 OF 32 COMPLETE; FA DEFERRED**
+**CLOSED BY USER AMENDMENT / 31 OF 32 SCORED; FA UNSCORED**
 
 Batching amendment:
 - Batch 4.1 completed as a 4-method batch before the user batching amendment.
@@ -222,7 +222,7 @@ Frozen Stage-2 parent remains better than every completed metaheuristic:
 Batch 4.3 PARTIAL — user requested FA deferment:
 - [x] ACO — 1600.397350 / 18/33
 - [x] BAT — **1540.482107 / 14/33**
-- [ ] FA — DEFERRED / do not use for current comparison
+- [!] FA — UNSCORED / STOPPED BY USER; do not rank as pass/fail on performance
 - [x] MFO — 1690.484321 / **20/33**
 - [x] FPA — 1605.813991 / 15/33
 
@@ -311,9 +311,54 @@ Batch 4.7 FINAL REMAINDER:
 - [ ] DE_ABC
 - [ ] MULTISWARM
 
-Progress: **21/32 accepted complete; FA deferred**.
+Progress: **31/32 scored; FA unscored by explicit user stop.**
 No Stage-4 parent selection until all 32 are complete/audited.
 Vanilla/deterministic parent remains reference identity #33.
+
+
+### Stage 4 late parallel completion — reconciled 2026-09-28
+
+Parallel5A run **36414795465** — all jobs + aggregate SUCCESS:
+- JAYA — 1529.754239 / 18/33
+- HGS — 1664.428496 / 18/33
+- CHOA — 1560.301510 / 17/33
+- HGSO — 1508.944115 / 18/33
+- AOA — 1508.677155 / 20/33
+
+Parallel5B run **36415649045** — all jobs + aggregate SUCCESS:
+- CPA — 1737.873104 / 16/33
+- KRILL — 1770.446584 / 15/33
+- CROW — 1541.791658 / 18/33
+- DE_ABC — 1514.213571 / 19/33
+- MULTISWARM — 1697.478100 / 13/33
+
+Best scored Stage-4 meta remains **ALO = 1494.808085 / 20/33**.
+Frozen Stage-2 parent remains better on primary DEV SigmaAE:
+**EPSILON_RBF_DAILY12 = 1449.187363 / 19/33**.
+
+FA final run **36416459911** was still running when the user explicitly instructed to leave FA.
+FA result is therefore **UNSCORED / NOT ACCEPTED / NOT PERFORMANCE-REJECTED**.
+This is a user governance amendment, not an optimizer performance conclusion.
+
+### Stage 5 opening rule after user amendment
+
+ANN/ELMFIS/RBFNN parity review confirms the next governed phase is targeted refinement before ensembles.
+Predeclared parity refinement set:
+1. Adaptive PSO-SVR
+2. TLBO-tuned PSO-SVR
+3. DE-tuned PSO-SVR
+4. Adaptive / Improved TLBO-SVR
+5. Adaptive Crow Search-SVR
+6. PSO-TLBO Hybrid SVR
+
+After those six, evidence-driven optimizer hybrids are CONDITIONAL only; they may be closed without opening if no complementarity gate is met, as in RBFNN.
+
+After Stage 5:
+- Stage 6 causal DWT/MODWT-SVR structural line
+- Stage 7 controlled ensemble
+- Stage 8 final robustness
+- Stage 9 family freeze
+- Stage 10 2025 one-shot holdout
 
 ### Stage 5 — targeted refinement / hybrids
 **PLANNED / NOT YET RUN**
@@ -339,7 +384,7 @@ Open after all 32 methods audited.
 **LOCKED / NOT YET OPENED**
 
 ## Current next authorized action
-**Run remaining metaheuristics one-by-one/sequentially in five-method groups. FA stays deferred until the end. Next planned methods begin with JAYA, then HGS.**
+**Stage 4 is closed by explicit user amendment at 31/32 scored; FA remains unscored. Next authorized stage: Stage 5 targeted refinement / hybrid SVR.**
 
 ## Kontrol ve Uyum Özeti
 - Stage 0 authority freeze: PASS.
