@@ -1,0 +1,97 @@
+name: Gold Monthly SVR DWT Stage1 Canonical V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-svr-dwt-stage1-canonical-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  svr-stage1:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install packages
+        run: >
+          python -m pip install
+          'numpy==2.4.6'
+          'psycopg[binary]==3.3.6'
+          'scikit-learn==1.9.1'
+
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage1_canonical_v1.py
+
+      - name: Run Stage 1
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage1_canonical_v1.py
+
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('gold_monthly_svr_dwt_stage1_canonical_v1_result.json'))
+          c=r['contract']
+          assert r['scope']=='STAGE1_CANONICAL_SVR_DEV_ONLY_V1'
+          assert c['representation']=='CURRENT8'
+          assert c['feature_count']==8
+          assert c['x_scaling']=='TRAIN_ONLY_STANDARDIZATION'
+          assert c['y_scaling']=='TRAIN_ONLY_STANDARDIZATION'
+          assert c['model']=='epsilon-SVR'
+          assert c['dev_selection']=='2022-04..2024-12'
+          assert c['2025_role']=='LOCKED_NOT_OPENED'
+          assert c['2026_role']=='QUARANTINED_NOT_USED'
+          assert c['random_split']=='NONE'
+          assert c['database']=='READ_ONLY'
+          assert c['target_actual_used_in_feature_or_fit'] is False
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert r['determinism']['status']=='PASS'
+          assert set(r['models'])=={'LINEAR_SVR','RBF_SVR'}
+          expected=[f'2022-{m:02d}' for m in range(4,13)] + [f'2023-{m:02d}' for m in range(1,13)] + [f'2024-{m:02d}' for m in range(1,13)]
+          for name,v in r['models'].items():
+              assert v['metrics']['n']==33
+              assert len(v['rows'])==33
+              assert [x['target'] for x in v['rows']]==expected
+              assert all(x['train_last'] < x['target'] for x in v['rows'])
+              assert all(abs(x['pred_log_return_gold']) < 1.0 for x in v['rows'])
+          assert r['models']['LINEAR_SVR']['spec']['C']==1.0
+          assert r['models']['LINEAR_SVR']['spec']['epsilon']==0.1
+          assert r['models']['LINEAR_SVR']['spec']['kernel']=='linear'
+          assert r['models']['RBF_SVR']['spec']['C']==1.0
+          assert r['models']['RBF_SVR']['spec']['epsilon']==0.1
+          assert r['models']['RBF_SVR']['spec']['kernel']=='rbf'
+          assert r['models']['RBF_SVR']['spec']['gamma']=='scale'
+          print('SVR_DWT_STAGE1_CANONICAL_GATE=PASS')
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-svr-dwt-stage1-canonical-v1
+          path: |
+            gold_monthly_svr_dwt_stage1_canonical_v1_result.json
+            gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE1_CANONICAL_RESULT_2026-09-28.md
+          if-no-files-found: error
+
+      - name: Commit Stage 1 report
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE1_CANONICAL_RESULT_2026-09-28.md
+          if git diff --cached --quiet; then
+            echo "No Stage 1 report change to commit"
+          else
+            git commit -m "Record SVR DWT Stage 1 canonical result"
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
