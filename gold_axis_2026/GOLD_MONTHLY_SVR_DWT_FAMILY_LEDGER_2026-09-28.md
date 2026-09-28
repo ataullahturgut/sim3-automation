@@ -168,6 +168,21 @@ Stage-3B run: 36395363215; payload `8ae88568da68a451d667ef53110888cd0ffe76bbf029
 
 Deterministic hyperparameter tuning line is CLOSED / NOT PROMOTED.
 
+### Stage 4 execution observability rule — BINDING
+
+Effective 2026-09-28 after Batch 4.2 observability failure:
+
+- A batch of 5 methods means **5 separate GitHub jobs in one workflow**, not 5 background processes inside one shell step.
+- Each optimizer must expose its own `queued / in_progress / completed / failure` job status.
+- Per-model logs must be directly fetchable while that model is running.
+- Aggregation must be a separate downstream job with explicit `needs` on all optimizer jobs.
+- Scientific gate and report commit occur only after all optimizer jobs complete.
+- Shell background execution using `&` for multiple optimizers in one job is **PROHIBITED**.
+- If a model fails, the workflow must preserve the statuses of the other methods; no silent batch-level masking.
+- This is an observability/execution rule only; it does not alter model definitions, optimizer budgets, bounds, seeds, or scientific evaluation.
+
+Current Batch 4.2 run was launched before this binding rule and may be used for its final scientific results if it completes cleanly, but it is **NOT an acceptable template for later batches**.
+
 ### Stage 4 — 32/32 metaheuristic SVR broad screen
 **MANDATORY / ACTIVE / 4 OF 32 COMPLETE**
 
