@@ -3,6 +3,7 @@ import argparse, json
 from pathlib import Path
 import gold_monthly_external_driver_residual_v1 as core
 
+# Strict subset: only series with origin-dated replay evidence are promoted.
 BLOCKS={
  "PIT_FX_CNY":["usdcny_logret"],
  "PIT_RATES":["dgs10_change","dff_change","curve_proxy_change"],
