@@ -14,7 +14,7 @@ import vw_midas_elmfis_meta_batch_1_v1 as meta1
 import vw_midas_elmfis_meta_batch_2_v1 as meta2
 import vw_midas_elmfis_meta_batch_3_v1 as meta3
 
-METHODS=("ABC","SSA","GWO","WOA")
+METHODS=("ABC","SSA","GWO","WOA","HHO")
 DEV_START,DEV_END="2022-04","2024-12"
 
 
@@ -30,7 +30,7 @@ def configure_optimizer(method,obj):
 
     if method in ("ABC","SSA","GWO"):
         mod=meta2
-    elif method=="WOA":
+    elif method in ("WOA","HHO"):
         mod=meta3
     else:
         raise KeyError(method)
@@ -124,7 +124,7 @@ def run_method(method):
     if after!=bundle.invariants_before: raise RuntimeError("AUTHORITY_INVARIANTS_CHANGED")
     out={
         "family":"SVR_DWT_SVR","scope":"STAGE42_METAHEURISTIC_DEV_ONLY_V1","method":method,
-        "freeze":"GOLD_MONTHLY_SVR_DWT_STAGE4_METAHEURISTIC_FREEZE_2026-09-28.md",
+        "freeze":"GOLD_MONTHLY_SVR_DWT_STAGE42_IMPLEMENTATION_FREEZE_2026-09-28.md",
         "contract":{
             "parent":"EPSILON_RBF_DAILY12","representation":"DAILY_SUMMARY12","kernel":"rbf",
             "parameter_vector":["log2_C","log2_gamma","epsilon"],
@@ -153,7 +153,7 @@ def aggregate():
         "# GOLD MONTHLY FORECAST — SVR / DWT-SVR STAGE 4.2 METAHEURISTIC RESULT","",
         "Date: 2026-09-28",
         "Status: **COMPLETE / BATCH 4.2 SCIENTIFIC GATE PASS**","",
-        "Methods: ABC, SSA, GWO, WOA.",
+        "Methods: ABC, SSA, GWO, WOA, HHO.",
         "Frozen parent reference: EPSILON_RBF_DAILY12 = SigmaAE 1449.187363 / 19 of 33 directions.","",
         "## DEV ranking","",
         "| Rank | Method | SigmaAE | MAE | RMSE | MAPE | Rel.MAE/RW | Direction | Worst month |",
@@ -163,8 +163,8 @@ def aggregate():
         lines.append(f"| {i} | {z['method']} | {z['sum_abs_error']:.6f} | {z['mae']:.6f} | {z['rmse']:.6f} | {z['mape_pct']:.4f}% | {z['relative_mae_vs_rw']:.6f} | {z['direction_correct']}/33 | {z['worst_month']} |")
     lines += ["","## Decision",
               "- Batch 4.2 recorded only; no Stage-4 parent selected yet.",
-              "- Mandatory broad-screen progress after this batch: 8/32.",
-              "- Remaining 24 methods must complete before Stage-4 filtering.","",
+              "- Mandatory broad-screen progress after this batch: 9/32.",
+              "- Remaining 23 methods must complete before Stage-4 filtering.","",
               "## Kontrol ve Uyum Özeti",
               "- Common frozen bounds/budget: PASS.",
               "- Prior-only chronology: PASS.",
