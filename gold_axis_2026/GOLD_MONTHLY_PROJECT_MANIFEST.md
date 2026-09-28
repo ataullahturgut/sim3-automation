@@ -1,6 +1,6 @@
 # GOLD MONTHLY FORECAST — CANONICAL PROJECT MANIFEST
 
-**Manifest version:** 1.2  
+**Manifest version:** 1.3  
 **Date:** 2026-09-28  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Branch:** `gold-midas-headswap-v1-20260925`  
@@ -1047,3 +1047,366 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
 - Current exact next model: **CNN-BiLSTM**
+
+
+---
+
+# APPENDIX A — ELM tam broad-screen envanteri
+
+Bu tablo **historical DEV MAPE** ile raporlanan ELM screen’idir. Aktif cross-family seçim otoritesi ΣAE+direction’dır; bu tablo duplicate-prevention ve tarihsel sonuç kaydı içindir.
+
+| Model | Historical DEV MAPE % |
+|---|---:|
+| Vanilla ELM | 2.19286 |
+| PSO-ELM | 2.73492 |
+| GA-ELM | 2.55877 |
+| DE-ELM | 2.58768 |
+| MPA-ELM | 2.44941 |
+| ABC-ELM | 2.48251 |
+| SSA-ELM | 2.47446 |
+| GWO-ELM | 2.45696 |
+| WOA-ELM | 2.23961 |
+| HHO-ELM | 2.60822 |
+| ACO-ELM | 2.69993 |
+| Bat-ELM | 2.79911 |
+| FA-ELM | 3.03251 |
+| MFO-ELM | 2.77548 |
+| FPA-ELM | 2.34201 |
+| FA-FPA-ELM | 2.63753 |
+| CS-ELM | 2.73091 |
+| SCA-ELM | 2.19271 |
+| Salp-ELM | 2.45982 |
+| SMA-ELM | 2.53462 |
+| GOA-ELM | 2.42952 |
+| ALO-ELM | 2.47135 |
+| TLBO-ELM | 2.55127 |
+| JAYA-ELM | 2.49871 |
+| HGS-ELM | 2.45196 |
+| ChOA-ELM | 2.64419 |
+| HGSO-ELM | 2.26442 |
+| AOA-ELM | **2.15854** |
+| CPA-ELM | 2.69050 |
+| Krill Herd-ELM | 2.64209 |
+| Crow Search-ELM | 2.61964 |
+| DE-ABC-ELM | 2.53226 |
+| Multi-swarm ELM | 2.41470 |
+
+Targeted ELM refinements:
+- Adaptive PSO-ELM: DEV MAPE 2.60499
+- TLBO-tuned PSO-ELM: 2.32298
+- DE-tuned PSO-ELM: 2.56288
+- Adaptive/Improved TLBO-ELM: 2.46807
+- Adaptive Crow Search-ELM: 2.35034
+- PSO-TLBO Hybrid ELM: **2.18548**
+
+Active-metric re-audit references:
+- AOA-ELM: **ΣAE 1474.10 / 20/33**
+- SCA-ELM: **1508.71 / 21/33**
+- TLBO-ELM: **1758.75 / 23/33**
+- PSO-TLBO Hybrid ELM: **1487.55 / 20/33**
+
+---
+
+# APPENDIX B — ANN tam broad-screen ve refinement envanteri
+
+Broad-screen tabloda DEV MAPE + DEV direction tarihsel screen metriğidir. Aktif cross-family karar için frozen ensemble ΣAE+direction sonuçları kullanılır.
+
+| Model | DEV MAPE % | DEV Direction |
+|---|---:|---:|
+| Vanilla ANN | 2.18895 | 54.55% |
+| PSO-ANN | 2.61194 | 54.55% |
+| GA-ANN | 2.36033 | 63.64% |
+| DE-ANN | 2.84842 | 51.52% |
+| MPA-ANN | 2.19947 | 57.58% |
+| ABC-ANN | 3.06525 | 51.52% |
+| SSA-ANN | 2.41896 | 66.67% |
+| GWO-ANN | 2.53258 | 54.55% |
+| WOA-ANN | 2.38669 | 63.64% |
+| HHO-ANN | 2.49709 | 57.58% |
+| ACO-ANN | 2.35494 | 63.64% |
+| Bat-ANN | 2.64871 | 54.55% |
+| FA-ANN | 2.39002 | 60.61% |
+| MFO-ANN | 2.60702 | 57.58% |
+| FPA-ANN | 2.70125 | 42.42% |
+| FA-FPA-ANN | 2.28398 | 60.61% |
+| CS-ANN | 2.50128 | 54.55% |
+| SCA-ANN | 2.36197 | **72.73%** |
+| Salp-ANN | 2.43583 | 60.61% |
+| SMA-ANN | 2.57631 | 51.52% |
+| GOA-ANN | 3.00269 | 51.52% |
+| ALO-ANN | 2.49827 | 60.61% |
+| TLBO-ANN | 2.37828 | 60.61% |
+| JAYA-ANN | 2.53899 | 63.64% |
+| HGS-ANN | 2.48142 | 51.52% |
+| ChOA-ANN | 2.46605 | 60.61% |
+| HGSO-ANN | 2.66180 | 54.55% |
+| AOA-ANN | 2.51719 | 57.58% |
+| CPA-ANN | 2.27985 | 60.61% |
+| Krill Herd-ANN | 2.37501 | 66.67% |
+| Crow Search-ANN | 2.50491 | 60.61% |
+| DE-ABC-ANN | 2.26109 | 66.67% |
+| Multi-swarm ANN | 2.59615 | 54.55% |
+
+Refinements/hybrids:
+
+| Model | DEV MAPE % | DEV Direction |
+|---|---:|---:|
+| Adaptive PSO-ANN | 2.26567 | 57.58% |
+| Adaptive TLBO-ANN | 2.24090 | 54.55% |
+| TLBO-tuned PSO-ANN | 2.28920 | **69.70%** |
+| DE-tuned PSO-ANN | 2.30759 | 54.55% |
+| Adaptive Crow Search-ANN | 2.49577 | 60.61% |
+| PSO-TLBO Hybrid ANN | 2.34425 | 60.61% |
+| MPA+SCA Hybrid ANN | 2.23957 | 60.61% |
+| MPA+GA Hybrid ANN | 2.48841 | 51.52% |
+| MPA+CPA Hybrid ANN | 2.56713 | 57.58% |
+
+Frozen active-metric ensembles:
+- FULL7: **ΣAE 1428.8590 / 22/33**
+- REDUCED4: **1431.4587 / 24/33**
+
+---
+
+# APPENDIX C — ELMFIS 33-entry broad-screen envanteri
+
+| Model | DEV ΣAE | Direction |
+|---|---:|---:|
+| Vanilla ELMFIS | 1996.2933 | 20/33 |
+| PSO-ELMFIS | 2358.4962 | 20/33 |
+| GA-ELMFIS | 1980.8994 | 14/33 |
+| DE-ELMFIS | 1665.4715 | 21/33 |
+| MPA-ELMFIS | 3060.5864 | 19/33 |
+| ABC-ELMFIS | **1524.8854** | 21/33 |
+| SSA-ELMFIS | 2124.4760 | 20/33 |
+| GWO-ELMFIS | 1943.5595 | 22/33 |
+| WOA-ELMFIS | 2536.5468 | 15/33 |
+| HHO-ELMFIS | 1857.8942 | 22/33 |
+| ACO-ELMFIS | 1942.8695 | 19/33 |
+| Bat-ELMFIS | 2137.8294 | 19/33 |
+| FA-ELMFIS | 2421.4143 | 23/33 |
+| MFO-ELMFIS | 2244.0539 | 19/33 |
+| FPA-ELMFIS | 2251.8993 | 22/33 |
+| FA-FPA-ELMFIS | 1820.4499 | **25/33** |
+| CS-ELMFIS | 1809.3931 | **25/33** |
+| SCA-ELMFIS | 3177.3119 | 21/33 |
+| Salp-ELMFIS | 2273.0187 | 19/33 |
+| SMA-ELMFIS | **1651.4482** | **25/33** |
+| GOA-ELMFIS | 2322.7589 | 21/33 |
+| ALO-ELMFIS | 2812.5033 | 18/33 |
+| TLBO-ELMFIS | 3240.2851 | 20/33 |
+| JAYA-ELMFIS | 1810.4656 | 21/33 |
+| HGS-ELMFIS | 1780.8620 | 20/33 |
+| ChOA-ELMFIS | 2822.8921 | 20/33 |
+| HGSO-ELMFIS | 1594.6455 | 18/33 |
+| AOA-ELMFIS | 1873.9154 | 22/33 |
+| CPA-ELMFIS | 1925.0323 | 20/33 |
+| Krill Herd-ELMFIS | 3043.2306 | 20/33 |
+| Crow Search-ELMFIS | 1881.2292 | 20/33 |
+| DE-ABC-ELMFIS | 2317.34 | 17/33 |
+| Multi-swarm-ELMFIS | 1848.10 | 18/33 |
+
+Literature-specific:
+- CQCSA-ELMFIS: **1731.94 / 20/33**, not promoted.
+
+---
+
+# APPENDIX D — RBFNN 32-meta broad-screen envanteri
+
+All rows below passed the Stage-1 scientific gate on DEV.
+
+| Model | DEV ΣAE | Direction |
+|---|---:|---:|
+| DE-ABC | **1415.8371** | **25/33** |
+| Salp | 1426.6878 | 23/33 |
+| MFO | 1449.1065 | 20/33 |
+| JAYA | 1460.7401 | 21/33 |
+| HGS | 1461.9334 | 20/33 |
+| ACO | 1481.9468 | 19/33 |
+| GOA | 1492.8771 | 20/33 |
+| WOA | 1499.2639 | 19/33 |
+| AOA | 1501.0998 | 19/33 |
+| Bat | 1501.6410 | 21/33 |
+| MPA | 1510.5118 | 20/33 |
+| GWO | 1511.6245 | 22/33 |
+| GA | 1523.4710 | 19/33 |
+| FA-FPA | 1524.5325 | 20/33 |
+| FPA | 1525.4420 | 21/33 |
+| CS | 1525.6645 | 20/33 |
+| TLBO | 1525.7861 | 19/33 |
+| Multi-swarm | 1525.8563 | 21/33 |
+| FA | 1530.4171 | 20/33 |
+| Crow | 1538.2158 | 19/33 |
+| SCA | 1541.6271 | 21/33 |
+| DE | 1550.2583 | 18/33 |
+| ABC | 1558.8168 | 18/33 |
+| SSA | 1559.8246 | 18/33 |
+| Krill | 1560.4829 | 17/33 |
+| HGSO | 1564.9802 | 20/33 |
+| SMA | 1568.1653 | 19/33 |
+| ChOA | 1571.0927 | 20/33 |
+| HHO | 1586.1569 | 20/33 |
+| ALO | 1597.3649 | 19/33 |
+| PSO | 1598.5085 | 20/33 |
+| CPA | 1608.6437 | 17/33 |
+
+Stage-3 refinements:
+- Adaptive PSO 1519.3532 / 18
+- Adaptive TLBO 1552.2502 / 21
+- TLBO-tuned PSO 1610.0497 / 19
+- DE-tuned PSO 1524.1595 / 20
+- Adaptive Crow 1455.8616 / 21
+- PSO-TLBO 1489.6671 / 21
+- MOLS-RBFNN 1578.5391 / 18
+- FULL_MEDIAN ensemble 1444.3008 / 22
+
+---
+
+# APPENDIX E — GPR/MOGP Stage-1 full screen
+
+| Model | DEV ΣAE | Direction |
+|---|---:|---:|
+| Multi-swarm | **1606.7414** | 23/33 |
+| AOA | 1611.8839 | 22/33 |
+| GWO | 1650.2596 | 21/33 |
+| ABC | 1672.2945 | 22/33 |
+| HGSO | 1677.9024 | 19/33 |
+| SMA | 1701.0740 | 22/33 |
+| MPA | 1701.5802 | 23/33 |
+| MFO | 1702.0152 | 19/33 |
+| ALO | 1704.0561 | 21/33 |
+| DE-ABC | 1709.2591 | 23/33 |
+| FPA | 1711.7090 | 20/33 |
+| SCA | 1713.8379 | 23/33 |
+| GA | 1723.5877 | 21/33 |
+| FA-FPA | 1724.6532 | **25/33** |
+| TLBO | 1736.5717 | 19/33 |
+| Crow | 1736.9995 | 22/33 |
+| Bat | 1746.6720 | 21/33 |
+| JAYA | 1760.9248 | 22/33 |
+| Krill | 1769.3329 | 22/33 |
+| CPA | 1778.4226 | 22/33 |
+| PSO | 1780.2169 | 19/33 |
+| SSA | 1798.1173 | 21/33 |
+| HGS | 1814.9260 | 20/33 |
+| ACO | 1815.8271 | 19/33 |
+| ChOA | 1822.1087 | 17/33 |
+| HHO | 1823.3648 | 21/33 |
+| CS | 1835.2043 | 22/33 |
+| WOA | 1836.8353 | 21/33 |
+| Salp | 1841.6043 | 20/33 |
+| GOA | 1850.3608 | 22/33 |
+| FA | 1861.6613 | 19/33 |
+| DE | 1924.6270 | 21/33 |
+
+Stage-3 structural/refinement table remains:
+- LMC2_RBF_M32 **1424.1711 / 19**
+- MPA-SCA 1709.2943 / 22
+- Adaptive Crow 1724.2888 / 19
+- Adaptive TLBO 1740.8877 / 19
+- Adaptive PSO 1794.2201 / 20
+- PSO-TLBO 1815.3287 / 21
+- TLBO-tuned PSO 1863.6677 / 19
+- DE-tuned PSO 1939.8588 / 16
+
+---
+
+# APPENDIX F — SVR Stage-4 metaheuristic broad screen
+
+Frozen Stage-2 parent for comparison:
+- **EPSILON_RBF_DAILY12 = 1449.187363 / 19/33**
+
+| Method | DEV ΣAE | Direction | Authority status |
+|---|---:|---:|---|
+| PSO | 1719.949306 | 17/33 | scored |
+| GA | 1611.632502 | 19/33 | scored |
+| DE | 1590.781952 | 19/33 | scored |
+| MPA | 1696.206317 | 15/33 | scored |
+| ABC | 1563.258913 | 16/33 | scored |
+| SSA | 1659.670617 | 19/33 | scored |
+| GWO | 1590.104631 | 18/33 | scored |
+| WOA | 1635.345256 | 17/33 | scored |
+| HHO | 1549.539823 | 18/33 | scored |
+| ACO | 1600.397350 | 18/33 | scored |
+| Bat | 1540.482107 | 14/33 | scored |
+| FA | 1583.810635 | 19/33 | technical PASS; user-excluded from authoritative ranking |
+| MFO | 1690.484321 | 20/33 | scored |
+| FPA | 1605.813991 | 15/33 | scored |
+| FA-FPA | 1572.041237 | 20/33 | scored |
+| CS | 1564.515299 | 19/33 | scored |
+| SCA | 1843.705276 | 14/33 | scored |
+| Salp | 1543.355326 | 19/33 | scored |
+| SMA | 1517.362987 | 18/33 | scored |
+| GOA | 1617.200714 | 17/33 | scored |
+| ALO | **1494.808085** | 20/33 | best authoritative Stage-4 meta |
+| TLBO | 1574.826138 | 20/33 | scored |
+| JAYA | 1529.754239 | 18/33 | scored |
+| HGS | 1664.428496 | 18/33 | scored |
+| ChOA | 1560.301510 | 17/33 | scored |
+| HGSO | 1508.944115 | 18/33 | scored |
+| AOA | 1508.677155 | 20/33 | scored |
+| CPA | 1737.873104 | 16/33 | scored |
+| Krill | 1770.446584 | 15/33 | scored |
+| Crow | 1541.791658 | 18/33 | scored |
+| DE-ABC | 1514.213571 | 19/33 | scored |
+| Multi-swarm | 1697.478100 | 13/33 | scored |
+
+Sonuç:
+- hiçbir Stage-4 metaheuristic frozen Stage-2 parent 1449.187363’ü geçmedi.
+- optimizer-only SVR tuning’in zayıf görünmesi, later causal DWT/MODWT structural line’ı geçersiz kılmaz.
+
+---
+
+# APPENDIX G — ANFIS broad-screen completeness register
+
+ANFIS’te ortak 32-meta setinin tamamı çalıştırıldı.
+
+Scientific PASS broad screen: **27/32**.  
+Scientific reject: **5/32**:
+- ABC
+- WOA
+- FPA
+- HGS
+- AOA
+
+Reject nedeni:
+- en az bir origin’de pathological forecast magnitude / scientific forecast gate failure.
+
+Broad-screen valid frontier before literature-specific extension:
+- MFO-ANFIS: **1630.3325 / 20**
+- HHO-ANFIS: **1646.1336 / 23**
+
+Vanilla:
+- **1852.0465 / 21**
+
+Stage-3 parity refinement sonuçları:
+- MPA-CPA: 1918.5637 / 18 — PASS
+- PSO-TLBO Hybrid: 3156.9979 / 19 — PASS
+- TLBO-tuned PSO: 3465.1623 / 20 — PASS
+- Adaptive PSO: 363283.4306 / 22 — scientific FAIL
+- Adaptive TLBO: 24830.2156 / 17 — scientific FAIL
+- Adaptive Crow: 3432.3536 / 18 — scientific FAIL
+- DE-tuned PSO: 9166.1914 / 18 — scientific FAIL
+- MPA-SCA: 3275.4131 / 20 — scientific FAIL
+- MPA-GA: 3242.7176 / 20 — scientific FAIL
+
+Literature-specific:
+- **ChHHO-ANFIS: 1413.029779 / 23 — family champion**
+- MVO-ANFIS: 2057.3973 / 17 — valid, not promoted
+
+Per-method numeric metrics for all 27 valid broad-screen ANFIS members are not reproduced here because the consolidated family closure does not expose a single authoritative full 27-row metric table. Their execution identity is nevertheless covered by the 32-meta completeness register. No missing metric is to be guessed.
+
+---
+
+# APPENDIX H — completeness statement
+
+The following families already have their full relevant tested-set tables in the main body and therefore are not duplicated again here:
+- Challenger B
+- CNN/LSTM/BiLSTM
+- Boosting final retained/structural variants
+- DMA/DMS/IDMA
+- TimesFM-3 / TimeMixer++ / TimeXer status
+
+For any future model:
+- if its identity appears anywhere in Sections 4–20 or Appendices A–G, it is **already known to the project**;
+- if marked completed/rejected/not-promoted, do not rerun without a valid reopen condition;
+- if marked NOT_RUN/FROZEN_NOT_RUN, it remains eligible for first execution under a new pre-outcome freeze.
