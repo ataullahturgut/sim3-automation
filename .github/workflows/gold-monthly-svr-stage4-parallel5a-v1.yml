@@ -1,0 +1,269 @@
+name: Gold Monthly SVR Stage4 Parallel5A V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-svr-stage4-parallel5a-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  jaya:
+    name: JAYA
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_parallel5a_v1.py
+      - name: Run JAYA
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_parallel5a_v1.py --method JAYA
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          m='JAYA'
+          r=json.load(open(f'gold_monthly_svr_dwt_stage4_parallel5a_{m.lower()}_result.json'))
+          assert r['scope']=='STAGE4_PARALLEL5A_DEV_ONLY_V1'
+          assert r['method']==m
+          c=r['contract']
+          assert c['population']==24 and c['generations']==45 and c['repeats']==3
+          assert c['2025_role']=='LOCKED_NOT_OPENED' and c['2026_role']=='QUARANTINED_NOT_USED'
+          assert c['random_split']=='NONE' and c['database']=='READ_ONLY'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert r['metrics']['n']==33 and len(r['rows'])==33
+          for x in r['rows']:
+              assert x['train_last'] < x['target']
+              assert x['inner_valid_n'] >= 12
+              assert len(x['repeat_records'])==3
+              p=x['selected_params']
+              assert -8-1e-12 <= p['log2_C'] <= 12+1e-12
+              assert -12-1e-12 <= p['log2_gamma'] <= 4+1e-12
+              assert 0.01-1e-12 <= p['epsilon'] <= 0.50+1e-12
+          print('SVR_JAYA_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: svr-stage4-parallel5a-jaya
+          path: gold_monthly_svr_dwt_stage4_parallel5a_jaya_result.json
+          if-no-files-found: error
+
+  hgs:
+    name: HGS
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_parallel5a_v1.py
+      - name: Run HGS
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_parallel5a_v1.py --method HGS
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          m='HGS'
+          r=json.load(open(f'gold_monthly_svr_dwt_stage4_parallel5a_{m.lower()}_result.json'))
+          assert r['scope']=='STAGE4_PARALLEL5A_DEV_ONLY_V1'
+          assert r['method']==m
+          c=r['contract']
+          assert c['population']==24 and c['generations']==45 and c['repeats']==3
+          assert c['2025_role']=='LOCKED_NOT_OPENED' and c['2026_role']=='QUARANTINED_NOT_USED'
+          assert c['random_split']=='NONE' and c['database']=='READ_ONLY'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert r['metrics']['n']==33 and len(r['rows'])==33
+          for x in r['rows']:
+              assert x['train_last'] < x['target']
+              assert x['inner_valid_n'] >= 12
+              assert len(x['repeat_records'])==3
+              p=x['selected_params']
+              assert -8-1e-12 <= p['log2_C'] <= 12+1e-12
+              assert -12-1e-12 <= p['log2_gamma'] <= 4+1e-12
+              assert 0.01-1e-12 <= p['epsilon'] <= 0.50+1e-12
+          print('SVR_HGS_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: svr-stage4-parallel5a-hgs
+          path: gold_monthly_svr_dwt_stage4_parallel5a_hgs_result.json
+          if-no-files-found: error
+
+  choa:
+    name: CHOA
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_parallel5a_v1.py
+      - name: Run CHOA
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_parallel5a_v1.py --method CHOA
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          m='CHOA'
+          r=json.load(open(f'gold_monthly_svr_dwt_stage4_parallel5a_{m.lower()}_result.json'))
+          assert r['scope']=='STAGE4_PARALLEL5A_DEV_ONLY_V1'
+          assert r['method']==m
+          c=r['contract']
+          assert c['population']==24 and c['generations']==45 and c['repeats']==3
+          assert c['2025_role']=='LOCKED_NOT_OPENED' and c['2026_role']=='QUARANTINED_NOT_USED'
+          assert c['random_split']=='NONE' and c['database']=='READ_ONLY'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert r['metrics']['n']==33 and len(r['rows'])==33
+          for x in r['rows']:
+              assert x['train_last'] < x['target']
+              assert x['inner_valid_n'] >= 12
+              assert len(x['repeat_records'])==3
+              p=x['selected_params']
+              assert -8-1e-12 <= p['log2_C'] <= 12+1e-12
+              assert -12-1e-12 <= p['log2_gamma'] <= 4+1e-12
+              assert 0.01-1e-12 <= p['epsilon'] <= 0.50+1e-12
+          print('SVR_CHOA_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: svr-stage4-parallel5a-choa
+          path: gold_monthly_svr_dwt_stage4_parallel5a_choa_result.json
+          if-no-files-found: error
+
+  hgso:
+    name: HGSO
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_parallel5a_v1.py
+      - name: Run HGSO
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_parallel5a_v1.py --method HGSO
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          m='HGSO'
+          r=json.load(open(f'gold_monthly_svr_dwt_stage4_parallel5a_{m.lower()}_result.json'))
+          assert r['scope']=='STAGE4_PARALLEL5A_DEV_ONLY_V1'
+          assert r['method']==m
+          c=r['contract']
+          assert c['population']==24 and c['generations']==45 and c['repeats']==3
+          assert c['2025_role']=='LOCKED_NOT_OPENED' and c['2026_role']=='QUARANTINED_NOT_USED'
+          assert c['random_split']=='NONE' and c['database']=='READ_ONLY'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert r['metrics']['n']==33 and len(r['rows'])==33
+          for x in r['rows']:
+              assert x['train_last'] < x['target']
+              assert x['inner_valid_n'] >= 12
+              assert len(x['repeat_records'])==3
+              p=x['selected_params']
+              assert -8-1e-12 <= p['log2_C'] <= 12+1e-12
+              assert -12-1e-12 <= p['log2_gamma'] <= 4+1e-12
+              assert 0.01-1e-12 <= p['epsilon'] <= 0.50+1e-12
+          print('SVR_HGSO_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: svr-stage4-parallel5a-hgso
+          path: gold_monthly_svr_dwt_stage4_parallel5a_hgso_result.json
+          if-no-files-found: error
+
+  aoa:
+    name: AOA
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_parallel5a_v1.py
+      - name: Run AOA
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_parallel5a_v1.py --method AOA
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          m='AOA'
+          r=json.load(open(f'gold_monthly_svr_dwt_stage4_parallel5a_{m.lower()}_result.json'))
+          assert r['scope']=='STAGE4_PARALLEL5A_DEV_ONLY_V1'
+          assert r['method']==m
+          c=r['contract']
+          assert c['population']==24 and c['generations']==45 and c['repeats']==3
+          assert c['2025_role']=='LOCKED_NOT_OPENED' and c['2026_role']=='QUARANTINED_NOT_USED'
+          assert c['random_split']=='NONE' and c['database']=='READ_ONLY'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert r['metrics']['n']==33 and len(r['rows'])==33
+          for x in r['rows']:
+              assert x['train_last'] < x['target']
+              assert x['inner_valid_n'] >= 12
+              assert len(x['repeat_records'])==3
+              p=x['selected_params']
+              assert -8-1e-12 <= p['log2_C'] <= 12+1e-12
+              assert -12-1e-12 <= p['log2_gamma'] <= 4+1e-12
+              assert 0.01-1e-12 <= p['epsilon'] <= 0.50+1e-12
+          print('SVR_AOA_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: svr-stage4-parallel5a-aoa
+          path: gold_monthly_svr_dwt_stage4_parallel5a_aoa_result.json
+          if-no-files-found: error
+
+  aggregate:
+    name: Aggregate Parallel5A
+    needs: [jaya, hgs, choa, hgso, aoa]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - uses: actions/download-artifact@v4
+        with:
+          path: results
+      - name: Aggregate
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_parallel5a_v1.py --aggregate --input-dir results
+      - uses: actions/upload-artifact@v4
+        with:
+          name: svr-stage4-parallel5a-aggregate
+          path: gold_monthly_svr_dwt_stage4_parallel5a_aggregate.json
+          if-no-files-found: error
