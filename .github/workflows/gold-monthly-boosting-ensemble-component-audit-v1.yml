@@ -1,0 +1,53 @@
+name: Gold Monthly Boosting Ensemble Component Audit V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-boosting-ensemble-component-audit-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: >
+          python -m pip install
+          'numpy==2.4.6'
+          'psycopg[binary]==3.3.6'
+          'scikit-learn==1.9.1'
+          'xgboost==3.4.1'
+          'lightgbm==4.7.0'
+          'catboost==1.2.10'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_boosting_ensemble_component_audit_v1.py
+      - name: Run audit
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_boosting_ensemble_component_audit_v1.py
+      - name: Gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('gold_monthly_boosting_ensemble_component_audit_v1_result.json'))
+          assert r['contract']['ensemble_predictions_computed'] is False
+          assert r['contract']['2025_role']=='NOT_OPENED_NOT_EVALUATED'
+          assert r['contract']['2026_role']=='QUARANTINED_NOT_USED'
+          assert len(r['component_metrics'])==6
+          print('BOOSTING_ENSEMBLE_COMPONENT_AUDIT_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-boosting-ensemble-component-audit-v1
+          path: gold_monthly_boosting_ensemble_component_audit_v1_result.json
+          if-no-files-found: error
