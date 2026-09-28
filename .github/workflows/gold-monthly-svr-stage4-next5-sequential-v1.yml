@@ -1,0 +1,233 @@
+name: Gold Monthly SVR Stage4 Next5 Sequential V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-svr-stage4-next5-sequential-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  salp:
+    name: SALP
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py
+      - name: Run SALP
+        env: {NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py --method SALP
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          m='SALP'
+          r=json.load(open(f'gold_monthly_svr_dwt_stage4_{m.lower()}_single_result.json'))
+          assert r['scope']=='STAGE4_SINGLE_META_DEV_ONLY_V1' and r['method']==m
+          c=r['contract']; assert c['population']==24 and c['generations']==45 and c['repeats']==3
+          assert c['2025_role']=='LOCKED_NOT_OPENED' and c['2026_role']=='QUARANTINED_NOT_USED'
+          assert c['random_split']=='NONE' and c['database']=='READ_ONLY'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert r['metrics']['n']==33 and len(r['rows'])==33
+          for x in r['rows']:
+              assert x['train_last'] < x['target'] and x['inner_valid_n']>=12 and len(x['repeat_records'])==3
+              p=x['selected_params']
+              assert -8-1e-12<=p['log2_C']<=12+1e-12 and -12-1e-12<=p['log2_gamma']<=4+1e-12 and 0.01-1e-12<=p['epsilon']<=0.50+1e-12
+          print('SVR_SALP_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-svr-salp-single
+          path: |
+            gold_monthly_svr_dwt_stage4_salp_single_result.json
+            gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE4_SALP_SINGLE_RESULT_2026-09-28.md
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git add gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE4_SALP_SINGLE_RESULT_2026-09-28.md
+          git commit -m "Record SVR SALP result" || true
+          git push origin HEAD:gold-midas-headswap-v1-20260925 || true
+
+  sma:
+    name: SMA
+    needs: salp
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py
+      - name: Run SMA
+        env: {NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py --method SMA
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          m='SMA'
+          r=json.load(open(f'gold_monthly_svr_dwt_stage4_{m.lower()}_single_result.json'))
+          assert r['scope']=='STAGE4_SINGLE_META_DEV_ONLY_V1' and r['method']==m
+          c=r['contract']; assert c['population']==24 and c['generations']==45 and c['repeats']==3
+          assert c['2025_role']=='LOCKED_NOT_OPENED' and c['2026_role']=='QUARANTINED_NOT_USED'
+          assert c['random_split']=='NONE' and c['database']=='READ_ONLY'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert r['metrics']['n']==33 and len(r['rows'])==33
+          for x in r['rows']:
+              assert x['train_last'] < x['target'] and x['inner_valid_n']>=12 and len(x['repeat_records'])==3
+          print('SVR_SMA_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-svr-sma-single
+          path: |
+            gold_monthly_svr_dwt_stage4_sma_single_result.json
+            gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE4_SMA_SINGLE_RESULT_2026-09-28.md
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git add gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE4_SMA_SINGLE_RESULT_2026-09-28.md
+          git commit -m "Record SVR SMA result" || true
+          git push origin HEAD:gold-midas-headswap-v1-20260925 || true
+
+  goa:
+    name: GOA
+    needs: sma
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py
+      - name: Run GOA
+        env: {NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py --method GOA
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          m='GOA'
+          r=json.load(open(f'gold_monthly_svr_dwt_stage4_{m.lower()}_single_result.json'))
+          assert r['metrics']['n']==33 and len(r['rows'])==33
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert r['contract']['2025_role']=='LOCKED_NOT_OPENED' and r['contract']['2026_role']=='QUARANTINED_NOT_USED'
+          print('SVR_GOA_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-svr-goa-single
+          path: |
+            gold_monthly_svr_dwt_stage4_goa_single_result.json
+            gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE4_GOA_SINGLE_RESULT_2026-09-28.md
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git add gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE4_GOA_SINGLE_RESULT_2026-09-28.md
+          git commit -m "Record SVR GOA result" || true
+          git push origin HEAD:gold-midas-headswap-v1-20260925 || true
+
+  alo:
+    name: ALO
+    needs: goa
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py
+      - name: Run ALO
+        env: {NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py --method ALO
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          m='ALO'
+          r=json.load(open(f'gold_monthly_svr_dwt_stage4_{m.lower()}_single_result.json'))
+          assert r['metrics']['n']==33 and len(r['rows'])==33
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert r['contract']['2025_role']=='LOCKED_NOT_OPENED' and r['contract']['2026_role']=='QUARANTINED_NOT_USED'
+          print('SVR_ALO_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-svr-alo-single
+          path: |
+            gold_monthly_svr_dwt_stage4_alo_single_result.json
+            gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE4_ALO_SINGLE_RESULT_2026-09-28.md
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git add gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE4_ALO_SINGLE_RESULT_2026-09-28.md
+          git commit -m "Record SVR ALO result" || true
+          git push origin HEAD:gold-midas-headswap-v1-20260925 || true
+
+  tlbo:
+    name: TLBO
+    needs: alo
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Install packages
+        run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py
+      - name: Run TLBO
+        env: {NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage4_next5_sequential_v1.py --method TLBO
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          m='TLBO'
+          r=json.load(open(f'gold_monthly_svr_dwt_stage4_{m.lower()}_single_result.json'))
+          assert r['metrics']['n']==33 and len(r['rows'])==33
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert r['contract']['2025_role']=='LOCKED_NOT_OPENED' and r['contract']['2026_role']=='QUARANTINED_NOT_USED'
+          print('SVR_TLBO_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-svr-tlbo-single
+          path: |
+            gold_monthly_svr_dwt_stage4_tlbo_single_result.json
+            gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE4_TLBO_SINGLE_RESULT_2026-09-28.md
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git add gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE4_TLBO_SINGLE_RESULT_2026-09-28.md
+          git commit -m "Record SVR TLBO result" || true
+          git push origin HEAD:gold-midas-headswap-v1-20260925 || true
