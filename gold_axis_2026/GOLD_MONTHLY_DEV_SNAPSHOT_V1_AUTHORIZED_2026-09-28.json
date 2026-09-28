@@ -1,0 +1,83 @@
+{
+  "date": "2026-09-28",
+  "status": "AUTHORIZED_FOR_COMPATIBLE_DEV_EXECUTION",
+  "workflow": {
+    "run_id": 36456042954,
+    "commit": "be98365d25e2e81b0f70fb724940e09d0191eb6c"
+  },
+  "snapshot_artifact": {
+    "id": 10985453248,
+    "name": "gold-monthly-dev-snapshot-v1-be98365d25e2e81b0f70fb724940e09d0191eb6c",
+    "size_in_bytes": 75668,
+    "retention_days_requested": 90,
+    "expired": false
+  },
+  "parity_artifact": {
+    "id": 10986965324,
+    "name": "gold-monthly-dev-snapshot-v1-parity-be98365d25e2e81b0f70fb724940e09d0191eb6c",
+    "size_in_bytes": 2205,
+    "expired": false
+  },
+  "identity": {
+    "schema_version": "GOLD_MONTHLY_DEV_SNAPSHOT_V1_2026-09-28",
+    "payload_sha256": "2111e394f60d131995273789fc014dc339db4e1b7672095c89117c133879a3eb",
+    "file_sha256": "c771c9ca9ecb85aac808d4d976649e920783545803dcecc6183add2c9981037b"
+  },
+  "counts": {
+    "core_gold_months": 371,
+    "common_daily_rows": 3787,
+    "gpr_origin_vintages": 33,
+    "metal_months_each": 180
+  },
+  "ranges": {
+    "core_gold": [
+      "1994-02",
+      "2024-12"
+    ],
+    "common_daily": [
+      "2010-01-04",
+      "2024-12-31"
+    ],
+    "gpr_origins": [
+      "2022-03",
+      "2024-11"
+    ]
+  },
+  "holdout_gate": {
+    "modeling_rows_2025_loaded": 0,
+    "modeling_rows_2026_loaded": 0
+  },
+  "parity": {
+    "status": "PASS",
+    "neon_database_url_present": false,
+    "sum_abs_error_expected": 1528.5698506560245,
+    "sum_abs_error_actual": 1528.5698506560245,
+    "sum_abs_error_abs_diff": 0,
+    "direction_expected": 20,
+    "direction_actual": 20,
+    "relative_mae_vs_rw_expected": 0.8694936579385805,
+    "relative_mae_vs_rw_actual": 0.8694936579385805,
+    "relative_mae_abs_diff": 0,
+    "yearly_sum_abs_error_abs_diff": {
+      "2022": 0,
+      "2023": 0,
+      "2024": 0
+    },
+    "selected_seed_counts": {
+      "1701": 1,
+      "2903": 23,
+      "4111": 9
+    }
+  },
+  "authorization": {
+    "neon_remains_authority": true,
+    "snapshot_role": "EXECUTION_CACHE_ONLY",
+    "compatible_future_dev_runs_may_skip_neon": true,
+    "next_models": [
+      "BiLSTM",
+      "CNN-BiLSTM"
+    ],
+    "stage_1e_batch": "SKIPPED",
+    "stage_1f_kernel": "SKIPPED"
+  }
+}
