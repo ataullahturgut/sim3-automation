@@ -1,7 +1,7 @@
 # GOLD MONTHLY FORECAST — SVR / DWT-SVR FAMILY LEDGER
 
 Date: 2026-09-28  
-Status: **STAGE 5A ACTIVE — 1/6 REFINEMENTS COMPLETE; STAGE 4 CLOSED AT 31/32 SCORED, FA UNSCORED**  
+Status: **PAUSED / HANDOFF TO NEXT MODEL FAMILY — STAGE 5A 2/6 COMPLETE; STAGE 4 HAS 32/32 TECHNICAL EXECUTIONS, 31/32 AUTHORITATIVE SCORED; FA USER-EXCLUDED**  
 Branch: `gold-midas-headswap-v1-20260925`
 
 Canonical authority:
@@ -186,7 +186,7 @@ Effective 2026-09-28 after Batch 4.2 observability failure:
 Current Batch 4.2 run was launched before this binding rule and may be used for its final scientific results if it completes cleanly, but it is **NOT an acceptable template for later batches**.
 
 ### Stage 4 — 32/32 metaheuristic SVR broad screen
-**CLOSED BY USER AMENDMENT / 31 OF 32 SCORED; FA UNSCORED**
+**CLOSED FOR CURRENT HANDOFF / 32 OF 32 TECHNICALLY EXECUTED; 31 AUTHORITATIVE SCORED; FA USER-EXCLUDED**
 
 Batching amendment:
 - Batch 4.1 completed as a 4-method batch before the user batching amendment.
@@ -336,9 +336,19 @@ Best scored Stage-4 meta remains **ALO = 1494.808085 / 20/33**.
 Frozen Stage-2 parent remains better on primary DEV SigmaAE:
 **EPSILON_RBF_DAILY12 = 1449.187363 / 19/33**.
 
-FA final run **36416459911** was still running when the user explicitly instructed to leave FA.
-FA result is therefore **UNSCORED / NOT ACCEPTED / NOT PERFORMANCE-REJECTED**.
-This is a user governance amendment, not an optimizer performance conclusion.
+FA final run **36416459911**, job **108908663504**, later completed technically with scientific gate PASS:
+- DEV SigmaAE: **1583.810635**
+- Direction: **19/33**
+- MAE: **47.994262**
+- RMSE: **64.466634**
+- MAPE: **2.3380%**
+- Relative MAE vs RW: **0.900916**
+- Worst month: **2024-11**
+- Payload SHA256: `9190c780232f07548fb4b9fe2a278fc0327f16314bd8ab548692d82fdb1d2060`
+
+However, the user had already explicitly instructed to stop/leave FA before completion.
+Therefore the artifact is retained as **TECHNICALLY COMPLETE / SCIENTIFIC GATE PASS / USER-EXCLUDED FROM AUTHORITATIVE STAGE-4 RANKING**.
+Its performance must not be used to rewrite the already-issued user stop decision.
 
 ### Stage 5 opening rule after user amendment
 
@@ -361,11 +371,11 @@ After Stage 5:
 - Stage 10 2025 one-shot holdout
 
 ### Stage 5 — targeted refinement / hybrids
-**ACTIVE — STAGE 5A 1/6 COMPLETE**
+**PAUSED FOR FAMILY HANDOFF — STAGE 5A 2/6 COMPLETE**
 
 Stage 5A parity refinement set:
-- [x] Adaptive PSO-SVR — **1748.655741 / 16/33**
-- [ ] TLBO-tuned PSO-SVR
+- [x] Adaptive PSO-SVR — **1748.655741 / 16/33** — NOT PROMOTED
+- [x] TLBO-tuned PSO-SVR — **1871.806182 / 17/33** — NOT PROMOTED
 - [ ] DE-tuned PSO-SVR
 - [ ] Adaptive / Improved TLBO-SVR
 - [ ] Adaptive Crow Search-SVR
@@ -389,6 +399,25 @@ Adaptive PSO-SVR:
 - Frozen Stage-2 parent remains clearly better: **1449.187363 / 19/33**.
 - Decision: **NOT PROMOTED**; retain as refinement benchmark evidence.
 
+TLBO-tuned PSO-SVR:
+- Freeze commit: `110fde6c4ba45e1eda4907e78f230caadc0327db`
+- Runner commit: `a98cdbd4688be38db1c6ae4ee1fe9e7f9705b9dc`
+- Workflow commit: `eebdbf34416f4896b8a73226613e0970897322b8`
+- Run: **36422290497**
+- Job: **108927694083**
+- Scientific gate: **PASS**
+- DEV SigmaAE: **1871.806182**
+- Direction: **17/33**
+- MAE: **56.721399**
+- RMSE: **67.477952**
+- MAPE: **2.7249%**
+- Relative MAE vs RW: **1.064736**
+- Worst month: **2024-03**
+- Payload SHA256: `22362682b05a22337ca0e8d03816343df32acd31a6272b6ac434f70220d6e283`
+- Frozen Stage-2 parent remains materially better: **1449.187363 / 19/33**.
+- TLBO-tuned PSO is also worse than the RW benchmark on relative MAE (>1).
+- Decision: **NOT PROMOTED**.
+
 Stage 5B optimizer hybrids remain CONDITIONAL after all six Stage 5A refinements.
 
 ### Stage 6 — causal DWT/MODWT-SVR
@@ -410,8 +439,65 @@ Stage 5B optimizer hybrids remain CONDITIONAL after all six Stage 5A refinements
 ### Stage 10 — 2025 one-shot holdout
 **LOCKED / NOT YET OPENED**
 
-## Current next authorized action
-**Stage 5A is active. Adaptive PSO-SVR is complete and not promoted. Next authorized refinement: TLBO-tuned PSO-SVR.**
+## Current resume point / handoff state
+**SVR / DWT-SVR is intentionally PAUSED so the project can move to the next model family.**
+
+When SVR is resumed, the exact next method is:
+**Stage 5A.3 — DE-tuned PSO-SVR.**
+
+Remaining SVR work in order:
+1. Stage 5A.3 — DE-tuned PSO-SVR.
+2. Stage 5A.4 — Adaptive / Improved TLBO-SVR.
+3. Stage 5A.5 — Adaptive Crow Search-SVR.
+4. Stage 5A.6 — PSO-TLBO Hybrid SVR.
+5. Stage 5B — evidence-driven optimizer hybrids only if the six-refinement evidence justifies opening them.
+6. Stage 6 — causal DWT/MODWT-SVR structural line:
+   - causal decomposition engineering gate;
+   - wavelet structure ablation;
+   - frozen SVR on wavelet features;
+   - conditional wavelet refinement.
+7. Stage 7 — controlled ensemble / complementarity.
+8. Stage 8 — final robustness.
+9. Stage 9 — SVR-family freeze.
+10. Stage 10 — 2025 one-shot final holdout, only after Stage 9 freeze.
+
+No remaining stage may use 2025 or 2026 for tuning or selection.
+
+
+## Handoff checkpoint — 2026-09-28
+
+### Best verified SVR evidence so far
+The current family leader remains the **untuned Stage-2 parent**:
+- Model: `EPSILON_RBF_DAILY12`
+- DEV SigmaAE: **1449.187363**
+- Direction: **19/33**
+- Representation: DAILY_SUMMARY12
+- Kernel/formulation: RBF epsilon-SVR
+- C=1.0, epsilon=0.1, gamma=scale
+- Training-only standardization.
+
+No deterministic tuning, scored metaheuristic, or completed Stage-5 refinement has beaten this primary DEV SigmaAE.
+
+### Key completed outcomes
+- Stage 1 RBF CURRENT8: **1524.500568 / 21/33**.
+- Stage 2 parent DAILY_SUMMARY12: **1449.187363 / 19/33** — current family leader.
+- Stage 3A deterministic coarse tuning: **1580.901050 / 20/33** — not promoted.
+- Stage 3B local tuning: **1592.590456 / 22/33** — not promoted.
+- Best authoritative Stage-4 metaheuristic: **ALO 1494.808085 / 20/33** — not promoted.
+- FA technical result: **1583.810635 / 19/33**, gate PASS, but user-excluded from authoritative ranking.
+- Stage 5A.1 Adaptive PSO: **1748.655741 / 16/33** — not promoted.
+- Stage 5A.2 TLBO-tuned PSO: **1871.806182 / 17/33** — not promoted.
+
+### Interpretation frozen for handoff
+The evidence to date does **not** support further confidence that optimizer-only tuning of the plain SVR parent will improve the family leader.
+This does not authorize skipping the remaining four predeclared Stage-5A parity refinements when SVR is resumed.
+The structurally different Stage-6 causal DWT/MODWT-SVR line remains the principal untested SVR-family opportunity.
+
+### Execution state
+- Active GitHub SVR jobs at handoff: **NONE**.
+- TLBO-tuned PSO run: completed.
+- FA run: completed technically; user-excluded from ranking.
+- No new SVR workflow should be launched until the user explicitly returns to this family.
 
 ## Kontrol ve Uyum Özeti
 - Stage 0 authority freeze: PASS.
@@ -419,8 +505,8 @@ Stage 5B optimizer hybrids remain CONDITIONAL after all six Stage 5A refinements
 - Stage 1 determinism: PASS.
 - Stage 1 scientific gate: PASS.
 - Stage 1 result recorded: PASS.
-- Stage 4 scored methods: 31/32; FA unscored by user stop.
-- 2025 opened: NO.
-- 2026 used: NO.
+- Stage 4 technical executions: 32/32; authoritative scored methods: 31/32; FA technically complete but user-excluded.
+- 2025 opened for SVR selection/tuning: NO.
+- 2026 used for SVR selection/tuning: NO.
 - Random split: NONE.
 - DB writes: NONE / READ_ONLY.
