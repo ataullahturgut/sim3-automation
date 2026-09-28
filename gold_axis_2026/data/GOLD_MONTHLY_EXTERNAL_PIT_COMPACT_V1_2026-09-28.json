@@ -1,0 +1,393 @@
+{
+  "schema": "GOLD_MONTHLY_EXTERNAL_PIT_COMPACT_V1_2026-09-28",
+  "role": "STRICT_REPLAY_DIAGNOSTIC_EXTERNAL_SNAPSHOT",
+  "database_access": "READ_ONLY",
+  "project_id": "winter-art-94880101",
+  "branch_id": "br-gentle-mouse-b22dzkr1",
+  "database_name": "neondb",
+  "source_series": [
+    "DEXCHUS_ALFRED_PIT_ME",
+    "DGS10_ALFRED_PIT_ME",
+    "DFF_ALFRED_PIT_ME",
+    "NASDAQ100_ALFRED_PIT_ME"
+  ],
+  "evidence_class": "HISTORICAL_REPLAY_RECONSTRUCTION_PROVIDER_AS_OF_AUTHORITY_NOT_ORIGINAL_RETRIEVAL_PROOF",
+  "availability_rule": "available_as_of <= observation_ts; monthly origin values only",
+  "transformations": {
+    "usdcny_logret": "log(current_month_end/previous_month_end)",
+    "dgs10_change": "current-prev",
+    "dff_change": "current-prev",
+    "curve_proxy_change": "delta(DGS10-DFF)",
+    "nasdaq_logret": "log(current/previous)"
+  },
+  "rows": [
+    {
+      "origin_month": "2022-02",
+      "usdcny_logret": -0.006878409122058383,
+      "dgs10_change": 0.18999999999999995,
+      "dff_change": 0,
+      "curve_proxy_change": 0.18999999999999995,
+      "nasdaq_logret": -0.047474858485537834
+    },
+    {
+      "origin_month": "2022-03",
+      "usdcny_logret": 0.007711329972016152,
+      "dgs10_change": 0.3800000000000001,
+      "dff_change": 0.25,
+      "curve_proxy_change": 0.13000000000000012,
+      "nasdaq_logret": 0.041323378518807775
+    },
+    {
+      "origin_month": "2022-04",
+      "usdcny_logret": 0.021016099758245248,
+      "dgs10_change": 0.5,
+      "dff_change": 0,
+      "curve_proxy_change": 0.5,
+      "nasdaq_logret": -0.1435071980923397
+    },
+    {
+      "origin_month": "2022-05",
+      "usdcny_logret": 0.02985296314968113,
+      "dgs10_change": -0.10999999999999988,
+      "dff_change": 0.49999999999999994,
+      "curve_proxy_change": -0.6099999999999999,
+      "nasdaq_logret": -0.016684768288620644
+    },
+    {
+      "origin_month": "2022-06",
+      "usdcny_logret": -0.0015240033429751141,
+      "dgs10_change": 0.3599999999999999,
+      "dff_change": 0.7500000000000001,
+      "curve_proxy_change": -0.3900000000000001,
+      "nasdaq_logret": -0.09436205283736132
+    },
+    {
+      "origin_month": "2022-07",
+      "usdcny_logret": 0.009257533855400785,
+      "dgs10_change": -0.41999999999999993,
+      "dff_change": 0.75,
+      "curve_proxy_change": -1.17,
+      "nasdaq_logret": 0.11826855777890422
+    },
+    {
+      "origin_month": "2022-08",
+      "usdcny_logret": 0.017839918128331016,
+      "dgs10_change": 0.4299999999999997,
+      "dff_change": 0,
+      "curve_proxy_change": 0.4299999999999997,
+      "nasdaq_logret": -0.05361632988994396
+    },
+    {
+      "origin_month": "2022-09",
+      "usdcny_logret": 0.03645183933531564,
+      "dgs10_change": 0.6499999999999999,
+      "dff_change": 0.75,
+      "curve_proxy_change": -0.10000000000000009,
+      "nasdaq_logret": -0.11204720871027525
+    },
+    {
+      "origin_month": "2022-10",
+      "usdcny_logret": 0.017153413319924357,
+      "dgs10_change": 0.2599999999999998,
+      "dff_change": 0,
+      "curve_proxy_change": 0.2599999999999998,
+      "nasdaq_logret": 0.03882635206633214
+    },
+    {
+      "origin_month": "2022-11",
+      "usdcny_logret": -0.01189127449462572,
+      "dgs10_change": -0.2699999999999996,
+      "dff_change": 0.75,
+      "curve_proxy_change": -1.0199999999999996,
+      "nasdaq_logret": 0.05330668493804355
+    },
+    {
+      "origin_month": "2022-12",
+      "usdcny_logret": -0.024902008901573573,
+      "dgs10_change": 0.08000000000000007,
+      "dff_change": 0.5,
+      "curve_proxy_change": -0.41999999999999993,
+      "nasdaq_logret": -0.09500465859490347
+    },
+    {
+      "origin_month": "2023-01",
+      "usdcny_logret": -0.02875817835015746,
+      "dgs10_change": -0.28000000000000025,
+      "dff_change": 0,
+      "curve_proxy_change": -0.28000000000000025,
+      "nasdaq_logret": 0.10096108510507684
+    },
+    {
+      "origin_month": "2023-02",
+      "usdcny_logret": 0.02395271814339498,
+      "dgs10_change": 0.3700000000000001,
+      "dff_change": 0.2400000000000002,
+      "curve_proxy_change": 0.1299999999999999,
+      "nasdaq_logret": -0.0049544399008178835
+    },
+    {
+      "origin_month": "2023-03",
+      "usdcny_logret": -0.012588793077756026,
+      "dgs10_change": -0.3700000000000001,
+      "dff_change": 0.2599999999999998,
+      "curve_proxy_change": -0.6299999999999999,
+      "nasdaq_logret": 0.090392447635395
+    },
+    {
+      "origin_month": "2023-04",
+      "usdcny_logret": 0.003561179678391513,
+      "dgs10_change": -0.020000000000000018,
+      "dff_change": 0,
+      "curve_proxy_change": -0.020000000000000018,
+      "nasdaq_logret": 0.004891913367541171
+    },
+    {
+      "origin_month": "2023-05",
+      "usdcny_logret": 0.024508571761102035,
+      "dgs10_change": 0.16000000000000014,
+      "dff_change": 0.25,
+      "curve_proxy_change": -0.08999999999999986,
+      "nasdaq_logret": 0.07334901795924999
+    },
+    {
+      "origin_month": "2023-06",
+      "usdcny_logret": 0.01610910705353006,
+      "dgs10_change": 0.16000000000000014,
+      "dff_change": -0.009999999999999787,
+      "curve_proxy_change": 0.16999999999999993,
+      "nasdaq_logret": 0.0628828453756421
+    },
+    {
+      "origin_month": "2023-07",
+      "usdcny_logret": -0.004034487027625304,
+      "dgs10_change": 0.10999999999999988,
+      "dff_change": 0.2599999999999998,
+      "curve_proxy_change": -0.1499999999999999,
+      "nasdaq_logret": 0.037357982527402696
+    },
+    {
+      "origin_month": "2023-08",
+      "usdcny_logret": 0.019421851947386118,
+      "dgs10_change": 0.16000000000000014,
+      "dff_change": 0,
+      "curve_proxy_change": 0.16000000000000014,
+      "nasdaq_logret": -0.016375657179259772
+    },
+    {
+      "origin_month": "2023-09",
+      "usdcny_logret": 0.001233975614180097,
+      "dgs10_change": 0.46999999999999975,
+      "dff_change": 0,
+      "curve_proxy_change": 0.46999999999999975,
+      "nasdaq_logret": -0.04838543531852772
+    },
+    {
+      "origin_month": "2023-10",
+      "usdcny_logret": 0.0026137365975817495,
+      "dgs10_change": 0.29000000000000004,
+      "dff_change": 0,
+      "curve_proxy_change": 0.29000000000000004,
+      "nasdaq_logret": 0
+    },
+    {
+      "origin_month": "2023-11",
+      "usdcny_logret": -0.02326956415914796,
+      "dgs10_change": -0.6100000000000003,
+      "dff_change": 0,
+      "curve_proxy_change": -0.6100000000000003,
+      "nasdaq_logret": 0
+    },
+    {
+      "origin_month": "2023-12",
+      "usdcny_logret": -0.002422919471349854,
+      "dgs10_change": -0.4299999999999997,
+      "dff_change": 0,
+      "curve_proxy_change": -0.4299999999999997,
+      "nasdaq_logret": 0
+    },
+    {
+      "origin_month": "2024-01",
+      "usdcny_logret": 0.006262338921374759,
+      "dgs10_change": 0.21999999999999975,
+      "dff_change": 0,
+      "curve_proxy_change": 0.21999999999999975,
+      "nasdaq_logret": 0.1487302548834933
+    },
+    {
+      "origin_month": "2024-02",
+      "usdcny_logret": 0.002880342622952664,
+      "dgs10_change": 0.20999999999999996,
+      "dff_change": 0,
+      "curve_proxy_change": 0.20999999999999996,
+      "nasdaq_logret": 0.05155103313334607
+    },
+    {
+      "origin_month": "2024-03",
+      "usdcny_logret": 0.004422608224867403,
+      "dgs10_change": -0.0699999999999994,
+      "dff_change": 0,
+      "curve_proxy_change": -0.0699999999999994,
+      "nasdaq_logret": 0.011617126815586564
+    },
+    {
+      "origin_month": "2024-04",
+      "usdcny_logret": 0.002417913069277862,
+      "dgs10_change": 0.4299999999999997,
+      "dff_change": 0,
+      "curve_proxy_change": 0.4299999999999997,
+      "nasdaq_logret": -0.04561605139617313
+    },
+    {
+      "origin_month": "2024-05",
+      "usdcny_logret": -0.0005383431584440262,
+      "dgs10_change": -0.08000000000000007,
+      "dff_change": 0,
+      "curve_proxy_change": -0.08000000000000007,
+      "nasdaq_logret": 0.06094387149372136
+    },
+    {
+      "origin_month": "2024-06",
+      "usdcny_logret": 0.002537337434218735,
+      "dgs10_change": -0.2599999999999998,
+      "dff_change": 0,
+      "curve_proxy_change": -0.2599999999999998,
+      "nasdaq_logret": 0.05999886091269854
+    },
+    {
+      "origin_month": "2024-07",
+      "usdcny_logret": -0.001474733402599566,
+      "dgs10_change": -0.13999999999999968,
+      "dff_change": 0,
+      "curve_proxy_change": -0.13999999999999968,
+      "nasdaq_logret": -0.016414123823977646
+    },
+    {
+      "origin_month": "2024-08",
+      "usdcny_logret": -0.01750354261049469,
+      "dgs10_change": -0.28000000000000025,
+      "dff_change": 0,
+      "curve_proxy_change": -0.28000000000000025,
+      "nasdaq_logret": 0.010900260402339886
+    },
+    {
+      "origin_month": "2024-09",
+      "usdcny_logret": -0.01603090465885451,
+      "dgs10_change": -0.1200000000000001,
+      "dff_change": -0.5,
+      "curve_proxy_change": 0.3799999999999999,
+      "nasdaq_logret": 0.02452732784864788
+    },
+    {
+      "origin_month": "2024-10",
+      "usdcny_logret": 0.015399072957794644,
+      "dgs10_change": 0.54,
+      "dff_change": 0,
+      "curve_proxy_change": 0.54,
+      "nasdaq_logret": -0.008523969970102597
+    },
+    {
+      "origin_month": "2024-11",
+      "usdcny_logret": 0.017486906122408788,
+      "dgs10_change": -0.040000000000000036,
+      "dff_change": -0.25,
+      "curve_proxy_change": 0.20999999999999996,
+      "nasdaq_logret": 0.05096300549415316
+    },
+    {
+      "origin_month": "2024-12",
+      "usdcny_logret": 0.007219751510414241,
+      "dgs10_change": 0.2999999999999998,
+      "dff_change": -0.25,
+      "curve_proxy_change": 0.5499999999999998,
+      "nasdaq_logret": 0.0039005793980183296
+    },
+    {
+      "origin_month": "2025-01",
+      "usdcny_logret": -0.007426797993088934,
+      "dgs10_change": -0.03000000000000025,
+      "dff_change": 0,
+      "curve_proxy_change": -0.03000000000000025,
+      "nasdaq_logret": 0.021929689722939544
+    },
+    {
+      "origin_month": "2025-02",
+      "usdcny_logret": 0.0008417218537408014,
+      "dgs10_change": -0.22999999999999954,
+      "dff_change": 0,
+      "curve_proxy_change": -0.22999999999999954,
+      "nasdaq_logret": -0.028028535786859446
+    },
+    {
+      "origin_month": "2025-03",
+      "usdcny_logret": 0.0017501675394671998,
+      "dgs10_change": -0.020000000000000462,
+      "dff_change": 0,
+      "curve_proxy_change": -0.020000000000000462,
+      "nasdaq_logret": -0.0800150558502111
+    },
+    {
+      "origin_month": "2025-04",
+      "usdcny_logret": 0.003244167472908628,
+      "dgs10_change": -0.07999999999999918,
+      "dff_change": 0,
+      "curve_proxy_change": -0.07999999999999918,
+      "nasdaq_logret": 0.015062008882755839
+    },
+    {
+      "origin_month": "2025-05",
+      "usdcny_logret": -0.014738069368315971,
+      "dgs10_change": 0.23999999999999932,
+      "dff_change": 0,
+      "curve_proxy_change": 0.23999999999999932,
+      "nasdaq_logret": 0.08657973590762272
+    },
+    {
+      "origin_month": "2025-06",
+      "usdcny_logret": -0.0010730287611826475,
+      "dgs10_change": -0.13999999999999968,
+      "dff_change": 0,
+      "curve_proxy_change": -0.13999999999999968,
+      "nasdaq_logret": 0.06081019056305616
+    },
+    {
+      "origin_month": "2025-07",
+      "usdcny_logret": -0.0005857740753271806,
+      "dgs10_change": 0.08999999999999986,
+      "dff_change": 0,
+      "curve_proxy_change": 0.08999999999999986,
+      "nasdaq_logret": 0.02349318119313563
+    },
+    {
+      "origin_month": "2025-08",
+      "usdcny_logret": -0.0003907067655925668,
+      "dgs10_change": -0.16000000000000014,
+      "dff_change": 0,
+      "curve_proxy_change": -0.16000000000000014,
+      "nasdaq_logret": 0.008461771388053539
+    },
+    {
+      "origin_month": "2025-09",
+      "usdcny_logret": -0.004518153707452432,
+      "dgs10_change": -0.0699999999999994,
+      "dff_change": -0.2400000000000002,
+      "curve_proxy_change": 0.17000000000000082,
+      "nasdaq_logret": 0.052598014156353345
+    },
+    {
+      "origin_month": "2025-10",
+      "usdcny_logret": -0.0016416563365337414,
+      "dgs10_change": -0.040000000000000036,
+      "dff_change": -0.21999999999999975,
+      "curve_proxy_change": 0.17999999999999972,
+      "nasdaq_logret": 0.04663226442665807
+    },
+    {
+      "origin_month": "2025-11",
+      "usdcny_logret": -0.002038278150384733,
+      "dgs10_change": -0.11000000000000032,
+      "dff_change": 0.009999999999999787,
+      "curve_proxy_change": -0.1200000000000001,
+      "nasdaq_logret": -0.01650320476136181
+    }
+  ]
+}
