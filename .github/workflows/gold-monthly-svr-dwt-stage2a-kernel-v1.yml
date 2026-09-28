@@ -1,0 +1,75 @@
+name: Gold Monthly SVR DWT Stage2A Kernel V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-svr-dwt-stage2a-kernel-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stage2a:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: >
+          python -m pip install
+          'numpy==2.4.6'
+          'psycopg[binary]==3.3.6'
+          'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage2a_kernel_v1.py
+      - name: Run Stage 2A
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage2a_kernel_v1.py
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('gold_monthly_svr_dwt_stage2a_kernel_v1_result.json'))
+          assert r['scope']=='STAGE2A_KERNEL_ABLATION_DEV_ONLY_V1'
+          assert r['contract']['representation']=='CURRENT8'
+          assert r['contract']['model']=='epsilon-SVR'
+          assert r['contract']['2025_role']=='LOCKED_NOT_OPENED'
+          assert r['contract']['2026_role']=='QUARANTINED_NOT_USED'
+          assert r['contract']['random_split']=='NONE'
+          assert r['contract']['database']=='READ_ONLY'
+          assert r['contract']['hyperparameter_tuning']=='NONE'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert r['determinism']['status']=='PASS'
+          assert set(r['models'])=={'LINEAR_SVR','RBF_SVR','POLY2_SVR','POLY3_SVR','SIGMOID_SVR'}
+          for name,v in r['models'].items():
+              assert v['metrics']['n']==33
+              assert len(v['rows'])==33
+              assert all(x['train_last'] < x['target'] for x in v['rows'])
+          print('SVR_DWT_STAGE2A_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-svr-dwt-stage2a-kernel-v1
+          path: |
+            gold_monthly_svr_dwt_stage2a_kernel_v1_result.json
+            gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE2A_KERNEL_RESULT_2026-09-28.md
+          if-no-files-found: error
+      - name: Commit Stage 2A report
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE2A_KERNEL_RESULT_2026-09-28.md
+          if git diff --cached --quiet; then
+            echo "No report change"
+          else
+            git commit -m "Record SVR Stage 2A kernel result"
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
