@@ -1,3 +1,11 @@
+> **MASTER-MANIFEST NOTICE — 2026-09-28**
+>
+> This large file remains a chronological family evidence ledger for ELM/ANN/ELMFIS/RBFNN/GPR development. Current project state, duplicate-prevention rules, Challenger-B integration and the active next action are now governed by:
+> - `gold_axis_2026/GOLD_MONTHLY_PROJECT_MANIFEST.md`
+> - `gold_axis_2026/GOLD_MONTHLY_MODEL_REGISTRY.json`
+>
+> Historical "next action" lines below must not override the canonical master manifest.
+
 # GOLD MONTHLY FORECAST — ELM METAHEURISTIC LEDGER & ANN NEXT-PHASE PLAN
 
 > **Current checkpoint — 2026-09-26: N2 GPR Stage0–2 COMPLETE; Stage3A COMPLETE, run36266015124; Stage3AB COMPLETE; Stage3 COMPLETE; Stage4 pools frozen before evaluation; frozen price MULTISWARM1606.7414/23, direction FA_FPA1724.6532/25. RBFNN Stage0–5 COMPLETE/FROZEN.** Primary/direction specialist DE-ABC: DEV ΣAE 1415.8371, direction 25/33. ChHHO remains price leader at 1413.0298 / 23. Ensemble benchmark FULL Median 1444.3008 / 22; not promoted. [Final report](GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md). Historical entries below remain chronological; latest closure supersedes earlier pending/next-action statuses.
