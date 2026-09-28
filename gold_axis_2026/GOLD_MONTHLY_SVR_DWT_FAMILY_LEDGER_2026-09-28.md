@@ -1,7 +1,7 @@
 # GOLD MONTHLY FORECAST — SVR / DWT-SVR FAMILY LEDGER
 
 Date: 2026-09-28  
-Status: **ACTIVE — STAGE 3 COMPLETE / STAGE 4.1 NEXT**  
+Status: **ACTIVE — STAGE 4.1 COMPLETE / STAGE 4.2 NEXT**  
 Branch: `gold-midas-headswap-v1-20260925`
 
 Canonical authority:
@@ -169,58 +169,70 @@ Stage-3B run: 36395363215; payload `8ae88568da68a451d667ef53110888cd0ffe76bbf029
 Deterministic hyperparameter tuning line is CLOSED / NOT PROMOTED.
 
 ### Stage 4 — 32/32 metaheuristic SVR broad screen
-**MANDATORY / BOUNDS FREEZE NEXT / 0 OF 32 RUN**
+**MANDATORY / ACTIVE / 4 OF 32 COMPLETE**
 
-Batch 4.1:
+Batching amendment:
+- Batch 4.1 was already completed as a 4-method batch.
+- User directive: all subsequent batches run **5 methods at a time**, except the final remainder.
+- Scientific method set and order are unchanged.
+
+Batch 4.1 COMPLETE:
 - [x] PSO
 - [x] GA
 - [x] DE
 - [x] MPA
 
-Batch 4.2:
+Batch 4.1 DEV ranking:
+1. DE — 1590.781952 / 19/33
+2. GA — 1611.632502 / 19/33
+3. MPA — 1696.206317 / 15/33
+4. PSO — 1719.949306 / 17/33
+Frozen Stage-2 parent remains better: 1449.187363 / 19/33.
+Run: 36396937495.
+
+Batch 4.2 NEXT:
 - [ ] ABC
 - [ ] SSA
 - [ ] GWO
 - [ ] WOA
+- [ ] HHO
 
 Batch 4.3:
-- [ ] HHO
 - [ ] ACO
-- [ ] Bat
+- [ ] BAT
 - [ ] FA
-
-Batch 4.4:
 - [ ] MFO
 - [ ] FPA
-- [ ] FA-FPA
+
+Batch 4.4:
+- [ ] FA_FPA
 - [ ] CS
+- [ ] SCA
+- [ ] SALP
+- [ ] SMA
 
 Batch 4.5:
-- [ ] SCA
-- [ ] Salp
-- [ ] SMA
 - [ ] GOA
-
-Batch 4.6:
 - [ ] ALO
 - [ ] TLBO
 - [ ] JAYA
 - [ ] HGS
 
-Batch 4.7:
-- [ ] ChOA
+Batch 4.6:
+- [ ] CHOA
 - [ ] HGSO
 - [ ] AOA
 - [ ] CPA
+- [ ] KRILL
 
-Batch 4.8:
-- [ ] Krill Herd
-- [ ] Crow Search
-- [ ] DE-ABC
-- [ ] Multi-swarm
+Batch 4.7 FINAL REMAINDER:
+- [ ] CROW
+- [ ] DE_ABC
+- [ ] MULTISWARM
 
 Progress: **4/32**
-Vanilla/deterministic tuned SVR will remain reference identity #33.
+No Stage-4 parent selection until all 32 are complete/audited.
+Vanilla/deterministic parent remains reference identity #33.
 
 ### Stage 5 — targeted refinement / hybrids
 **PLANNED / NOT YET RUN**
@@ -246,7 +258,7 @@ Open after all 32 methods audited.
 **LOCKED / NOT YET OPENED**
 
 ## Current next authorized action
-**Freeze Stage-4 continuous bounds/budget/objective, then execute Batch 4.1: PSO, GA, DE, MPA.**
+**Execute Batch 4.2 as a 5-method batch: ABC, SSA, GWO, WOA, HHO.**
 
 ## Kontrol ve Uyum Özeti
 - Stage 0 authority freeze: PASS.
