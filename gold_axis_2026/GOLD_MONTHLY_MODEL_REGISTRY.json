@@ -815,5 +815,13 @@
     "not_run_is_not_completed": true,
     "corrected_bug_run_may_supersede": true,
     "update_after_every_model": true
-  }
+  },
+  "registry_role": "MACHINE_READABLE_MIRROR_ONLY",
+  "authority": "gold_axis_2026/GOLD_MONTHLY_PROJECT_MANIFEST.md",
+  "authoritative_for_human_project_state": false,
+  "notes": [
+    "This JSON must mirror the canonical Markdown manifest.",
+    "If this JSON conflicts with the Markdown manifest, the Markdown manifest controls.",
+    "Do not create a second project narrative in JSON."
+  ]
 }
