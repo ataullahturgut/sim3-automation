@@ -36,10 +36,24 @@ def sha(obj):
     return hashlib.sha256(json.dumps(obj,sort_keys=True,separators=(",",":"),allow_nan=False).encode()).hexdigest()
 
 def fred_csv(series_id):
-    url=f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
-    req=urllib.request.Request(url,headers={"User-Agent":"gold-monthly-research/1.0"})
-    with urllib.request.urlopen(req,timeout=60) as r:
-        raw=r.read()
+    # Bound retrieval to the research window; downloading decades of daily history
+    # is unnecessary and caused avoidable provider timeouts.
+    url=(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
+         f"&cosd=2020-01-01&coed=2025-12-31")
+    raw=None
+    last=None
+    for attempt in range(4):
+        try:
+            req=urllib.request.Request(url,headers={"User-Agent":"gold-monthly-research/1.0"})
+            with urllib.request.urlopen(req,timeout=45) as r:
+                raw=r.read()
+            break
+        except Exception as e:
+            last=e
+            import time
+            time.sleep(2*(attempt+1))
+    if raw is None:
+        raise RuntimeError(f"FRED_DOWNLOAD_FAILED {series_id}: {type(last).__name__}: {last}")
     df=pd.read_csv(io.BytesIO(raw))
     df.columns=["date","value"]
     df["date"]=pd.to_datetime(df["date"])
@@ -216,7 +230,10 @@ def run(chhho_path,deabc_path,outdir):
       "neon_reads":0,"random_split":False,"target_month_external_data":False,
       "fred_conservative_lag_days":LAG_DAYS,"ridge_alpha_fixed":RIDGE_ALPHA,
       "min_prior_residuals":MIN_HISTORY,"correction_cap_trailing_median_ae_multiple":CAP_MULT},
-      "fred_series":FRED,"fred_source_sha256":source_hash,"blocks":blocks,
+      "fred_series":FRED,"fred_source_sha256":source_hash,
+      "external_evidence_class":"HISTORICAL_MARKET_RECONSTRUCTION_WITH_CONSERVATIVE_AVAILABILITY_LAGS_NOT_ORIGINAL_RETRIEVAL_PIT",
+      "strict_pit_crosscheck_available_in_neon":["DEXCHUS_ALFRED_PIT_ME","DGS10_ALFRED_PIT_ME","DFF_ALFRED_PIT_ME"],
+      "blocks":blocks,
       "models":{}}
     for m in models:
         mr={"artifact_model_id":m["artifact_model_id"],"base_dev":metrics(m["dev"]),"base_2025":metrics(m["tr"]),
