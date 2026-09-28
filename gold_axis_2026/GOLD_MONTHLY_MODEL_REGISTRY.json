@@ -619,13 +619,14 @@
       "rerun": false
     },
     {
-      "id": "RANDOM_FOREST_REFERENCE",
+      "id": "HISTORICAL_RANDOM_FOREST_REFERENCE",
       "family": "HISTORICAL_REFERENCE",
       "dev_sigma_ae": 1491.550694,
       "direction": "20/33",
       "status": "RETAIN_BENCHMARK",
       "source": "GOLD_MONTHLY_CHALLENGER_B_MANIFEST_2026-09-28.md",
-      "rerun": false
+      "rerun": false,
+      "identity_note": "Contextual historical reference carried into Challenger B; distinct from Boosting canonical CURRENT8 RF anchor; exact relation NOT_PROVEN"
     },
     {
       "id": "ABC-ELMFIS",
@@ -806,6 +807,16 @@
       "status": "NOT_RUN",
       "source": null,
       "rerun": null
+    },
+    {
+      "id": "BOOSTING_RF_ANCHOR_CURRENT8",
+      "family": "BOOSTING",
+      "dev_sigma_ae": 1614.490797968875,
+      "direction": "20/33",
+      "status": "RETAIN_BENCHMARK",
+      "source": "GOLD_MONTHLY_BOOSTING_STAGE1_CANONICAL_REPORT_2026-09-27.md",
+      "identity_note": "Distinct from historical Random Forest reference 1491.550694; relation NOT_PROVEN",
+      "rerun": false
     }
   ],
   "current_next_action": "CNN-BiLSTM structural challenger using authorized DEV Snapshot V1",
@@ -823,5 +834,33 @@
     "This JSON must mirror the canonical Markdown manifest.",
     "If this JSON conflicts with the Markdown manifest, the Markdown manifest controls.",
     "Do not create a second project narrative in JSON."
-  ]
+  ],
+  "manifest_version": "1.3",
+  "last_manifest_commit": "58c20f1b0dc9198c174aa35c2381077285916369",
+  "holdout_semantics": {
+    "global_2025_pristine": false,
+    "rule": "2025 may not be used for retrospective tuning/promotion; unopened families keep it locked",
+    "cnn_lstm_2025": "LOCKED_NOT_OPENED",
+    "svr_2025": "LOCKED_UNTIL_FAMILY_FREEZE",
+    "boosting_2025": "OPENED_ONCE_AFTER_FREEZE",
+    "challenger_b_2025": "REPORT_ONLY_ALREADY_OBSERVED",
+    "historical_completed_families": "some have report-only/transport 2025 evidence",
+    "selection_2026": false
+  },
+  "representations": {
+    "CURRENT8": "4 metals x {MR prior-month log return, VW origin-month GPR-adaptive causal daily-return summary}",
+    "DAILY_SUMMARY12": "4 metals x {open-close log change, realized-volatility sqrt(sum daily logret^2), log range}",
+    "RAW_LEVEL_LAGS8": "4 metals x last two completed monthly levels",
+    "SIMPLE_RETURNS8": "4 metals x {1m log return, 3m log return}",
+    "MIXED20": "CURRENT8 + 4 levels + 4 three-month momenta + 4 realized-volatility summaries",
+    "RAW_MONTHLY_4METAL": "Gold/Silver/Platinum/Palladium completed monthly levels"
+  },
+  "current_checkpoint": {
+    "completed_through": "BiLSTM structural challenger",
+    "bilstm_status": "PASS_NOT_PROMOTED",
+    "next_model": "CNN-BiLSTM",
+    "next_model_status": "NOT_RUN",
+    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1",
+    "neon_required": false
+  }
 }
