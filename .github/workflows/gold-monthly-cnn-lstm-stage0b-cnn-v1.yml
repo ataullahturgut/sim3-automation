@@ -26,7 +26,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install frozen dependencies
-        run: python -m pip install "tensorflow-cpu==2.20.0" "psycopg[binary]>=3.2,<4"
+        run: python -m pip install "tensorflow-cpu==2.20.0" "psycopg[binary]>=3.2,<4" "scikit-learn>=1.5,<2"
       - name: Compile Stage 0 runner
         run: python -m py_compile gold_axis_2026/tools/gold_monthly_cnn_lstm_stage0_v1.py gold_axis_2026/tools/vw_midas_msvr_successor_v1.py gold_axis_2026/tools/vw_midas_elmfis_baseline_v1.py
       - name: Run CNN DEV-only Stage 0
@@ -48,11 +48,11 @@ jobs:
           assert all(len(x["seed_runs"])==3 for x in r["dev"]["rows"])
           print("SCIENTIFIC_OUTPUT_GATE=PASS")
           print(json.dumps({
-            "sum_abs_error":r["dev"]["metrics"]["sum_abs_error"],
-            "direction_correct":r["dev"]["metrics"]["direction_correct"],
-            "relative_mae_vs_rw":r["dev"]["metrics"]["relative_mae_vs_rw"],
+            "metrics":r["dev"]["metrics"],
+            "yearly":r["dev"]["yearly"],
             "worst_month":r["dev"]["worst_month"],
-            "seed_dispersion":r["dev"]["seed_dispersion"]
+            "seed_dispersion":r["dev"]["seed_dispersion"],
+            "gate_checks":r["scientific_gate"]["checks"]
           }, sort_keys=True))
           PY
       - uses: actions/upload-artifact@v4
