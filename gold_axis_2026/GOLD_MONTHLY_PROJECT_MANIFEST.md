@@ -105,8 +105,8 @@ This table uses the active DEV SigmaAE + direction contract. It is not a claim o
 | EPSILON_RBF_DAILY12 | SVR | 1449.1874 | 19/33 | PAUSED family leader |
 | CATBOOST_PRICE | Boosting | 1460.4339 | 20/33 | COMPLETE_CLOSED family price leader |
 | AOA-ELM | ELM | 1474.1021 | 20/33 | COMPLETE_CLOSED benchmark |
-| FULL5_MEDIAN | Boosting ensemble | 1484.7313 | 23/33 | COMPLETE_CLOSED direction/balance |
 | 108-month DMS diagnostic | DMA/DMS/IDMA | 1483.8794 | 20/33 | diagnostic only; family deferred |
+| FULL5_MEDIAN | Boosting ensemble | 1484.7313 | 23/33 | COMPLETE_CLOSED direction/balance |
 | Canonical DMA | DMA/DMS/IDMA | 1486.2561 | 19/33 | DEFERRED_REVISIT_LAST |
 | PLS2 V1 | Challenger B | 1489.3300 | 23/33 | RETAIN_PARETO secondary |
 | Canonical DMS | DMA/DMS/IDMA | 1489.8247 | 20/33 | DEFERRED_REVISIT_LAST |
