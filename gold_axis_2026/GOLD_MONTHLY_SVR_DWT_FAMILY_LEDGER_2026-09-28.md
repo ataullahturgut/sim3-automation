@@ -1,7 +1,7 @@
 # GOLD MONTHLY FORECAST — SVR / DWT-SVR FAMILY LEDGER
 
 Date: 2026-09-28  
-Status: **ACTIVE — STAGE 4.2 COMPLETE / STAGE 4.3 NEXT**  
+Status: **ACTIVE — STAGE 4.3 PARTIAL (4/5 COMPLETE; FA DEFERRED BY USER)**  
 Branch: `gold-midas-headswap-v1-20260925`
 
 Canonical authority:
@@ -186,7 +186,7 @@ Effective 2026-09-28 after Batch 4.2 observability failure:
 Current Batch 4.2 run was launched before this binding rule and may be used for its final scientific results if it completes cleanly, but it is **NOT an acceptable template for later batches**.
 
 ### Stage 4 — 32/32 metaheuristic SVR broad screen
-**MANDATORY / ACTIVE / 9 OF 32 COMPLETE**
+**MANDATORY / ACTIVE / 13 OF 32 COMPLETE; FA DEFERRED**
 
 Batching amendment:
 - Batch 4.1 completed as a 4-method batch before the user batching amendment.
@@ -216,12 +216,25 @@ Earlier four-method Batch-4.2 run 36398195330 is **SUPERSEDED** by this five-met
 Frozen Stage-2 parent remains better than every completed metaheuristic:
 **EPSILON_RBF_DAILY12 = 1449.187363 / 19/33.**
 
-Batch 4.3 NEXT:
-- [ ] ACO
-- [ ] BAT
-- [ ] FA
-- [ ] MFO
-- [ ] FPA
+Batch 4.3 PARTIAL — user requested FA deferment:
+- [x] ACO — 1600.397350 / 18/33
+- [x] BAT — **1540.482107 / 14/33**
+- [ ] FA — DEFERRED / do not use for current comparison
+- [x] MFO — 1690.484321 / **20/33**
+- [x] FPA — 1605.813991 / 15/33
+
+Current four-model partial price ranking:
+1. BAT — 1540.482107
+2. ACO — 1600.397350
+3. FPA — 1605.813991
+4. MFO — 1690.484321
+
+Frozen Stage-2 parent remains better on primary DEV SigmaAE:
+EPSILON_RBF_DAILY12 = **1449.187363 / 19/33**.
+
+Run: **36401901203**.
+User instruction at 2026-09-28 09:30Z: defer FA and evaluate completed models now.
+FA is not counted as complete until explicitly resumed/accepted.
 
 Batch 4.4:
 - [ ] FA_FPA
@@ -249,7 +262,7 @@ Batch 4.7 FINAL REMAINDER:
 - [ ] DE_ABC
 - [ ] MULTISWARM
 
-Progress: **9/32**.
+Progress: **13/32 accepted complete; FA deferred**.
 No Stage-4 parent selection until all 32 are complete/audited.
 Vanilla/deterministic parent remains reference identity #33.
 
@@ -277,7 +290,7 @@ Open after all 32 methods audited.
 **LOCKED / NOT YET OPENED**
 
 ## Current next authorized action
-**Execute Batch 4.3 as a five-method batch: ACO, BAT, FA, MFO, FPA.**
+**FA is deferred by user instruction. Current accepted Stage-4 progress is 13/32; resume FA only when explicitly requested, then continue Batch 4.4.**
 
 ## Kontrol ve Uyum Özeti
 - Stage 0 authority freeze: PASS.
