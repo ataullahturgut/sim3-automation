@@ -11,7 +11,8 @@ permissions:
   contents: write
 
 jobs:
-  stage43:
+  stage43_aco:
+    name: ACO
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     steps:
@@ -19,39 +20,130 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install packages
-        run: >
-          python -m pip install
-          'numpy==2.4.6'
-          'psycopg[binary]==3.3.6'
-          'scikit-learn==1.9.1'
-      - name: Compile
-        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py
-      - name: Run Stage 4.3 methods
+      - run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py
+      - name: Run ACO
         env:
           NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
-        run: |
-          set +e
-          python gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py --method HHO > hho.log 2>&1 & p1=$!
-          python gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py --method ACO > aco.log 2>&1 & p2=$!
-          python gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py --method BAT > bat.log 2>&1 & p3=$!
-          python gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py --method FA  > fa.log  2>&1 & p4=$!
-          status=0
-          wait $p1 || status=1
-          wait $p2 || status=1
-          wait $p3 || status=1
-          wait $p4 || status=1
-          cat hho.log; cat aco.log; cat bat.log; cat fa.log
-          exit $status
-      - name: Aggregate
-        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py --aggregate
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py --method ACO
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stage43-aco
+          path: gold_monthly_svr_dwt_stage43_aco_result.json
+          if-no-files-found: error
+
+  stage43_bat:
+    name: BAT
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py
+      - name: Run BAT
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py --method BAT
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stage43-bat
+          path: gold_monthly_svr_dwt_stage43_bat_result.json
+          if-no-files-found: error
+
+  stage43_fa:
+    name: FA
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py
+      - name: Run FA
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py --method FA
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stage43-fa
+          path: gold_monthly_svr_dwt_stage43_fa_result.json
+          if-no-files-found: error
+
+  stage43_mfo:
+    name: MFO
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py
+      - name: Run MFO
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py --method MFO
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stage43-mfo
+          path: gold_monthly_svr_dwt_stage43_mfo_result.json
+          if-no-files-found: error
+
+  stage43_fpa:
+    name: FPA
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py
+      - name: Run FPA
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py --method FPA
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stage43-fpa
+          path: gold_monthly_svr_dwt_stage43_fpa_result.json
+          if-no-files-found: error
+
+  stage43_aggregate:
+    name: Aggregate Stage 4.3
+    needs: [stage43_aco, stage43_bat, stage43_fa, stage43_mfo, stage43_fpa]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'numpy==2.4.6' 'psycopg[binary]==3.3.6' 'scikit-learn==1.9.1'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: stage43-*
+          path: stage43_inputs
+          merge-multiple: true
+      - name: Aggregate five results
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage43_meta_v1.py --aggregate --input-dir stage43_inputs
       - name: Scientific gate
         run: |
           python - <<'PY'
-          import json
-          methods=['HHO','ACO','BAT','FA']
+          import json, pathlib
+          methods=['ACO','BAT','FA','MFO','FPA']
+          root=pathlib.Path('stage43_inputs')
           for method in methods:
-              r=json.load(open(f'gold_monthly_svr_dwt_stage43_{method.lower()}_result.json'))
+              hits=list(root.rglob(f'gold_monthly_svr_dwt_stage43_{method.lower()}_result.json'))
+              assert len(hits)==1, (method,hits)
+              r=json.load(open(hits[0]))
               assert r['scope']=='STAGE43_METAHEURISTIC_DEV_ONLY_V1'
               assert r['method']==method
               c=r['contract']
@@ -66,21 +158,18 @@ jobs:
                   assert x['inner_valid_n'] >= 12
                   assert len(x['repeat_records'])==3
           a=json.load(open('gold_monthly_svr_dwt_stage43_aggregate.json'))
-          assert len(a['ranking'])==4
+          assert len(a['ranking'])==5
+          assert {x['method'] for x in a['ranking']}==set(methods)
           print('SVR_DWT_STAGE43_GATE=PASS')
           PY
       - uses: actions/upload-artifact@v4
-        if: always()
         with:
-          name: gold-monthly-svr-dwt-stage43-meta-v1
+          name: gold-monthly-svr-dwt-stage43-aggregate-v1
           path: |
-            gold_monthly_svr_dwt_stage43_*_result.json
             gold_monthly_svr_dwt_stage43_aggregate.json
             gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE43_META_RESULT_2026-09-28.md
-            *.log
-          if-no-files-found: warn
+          if-no-files-found: error
       - name: Commit Stage 4.3 report
-        if: success()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
