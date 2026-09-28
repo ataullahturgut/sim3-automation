@@ -1,0 +1,108 @@
+name: Gold Monthly SVR DWT Stage41 Meta V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-svr-dwt-stage41-meta-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stage41:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: >
+          python -m pip install
+          'numpy==2.4.6'
+          'psycopg[binary]==3.3.6'
+          'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage41_meta_v1.py
+      - name: Run Stage 4.1 methods
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          set +e
+          python gold_axis_2026/tools/gold_monthly_svr_dwt_stage41_meta_v1.py --method PSO > pso.log 2>&1 & p1=$!
+          python gold_axis_2026/tools/gold_monthly_svr_dwt_stage41_meta_v1.py --method GA  > ga.log  2>&1 & p2=$!
+          python gold_axis_2026/tools/gold_monthly_svr_dwt_stage41_meta_v1.py --method DE  > de.log  2>&1 & p3=$!
+          python gold_axis_2026/tools/gold_monthly_svr_dwt_stage41_meta_v1.py --method MPA > mpa.log 2>&1 & p4=$!
+          status=0
+          wait $p1 || status=1
+          wait $p2 || status=1
+          wait $p3 || status=1
+          wait $p4 || status=1
+          cat pso.log
+          cat ga.log
+          cat de.log
+          cat mpa.log
+          exit $status
+      - name: Aggregate
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage41_meta_v1.py --aggregate
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          methods=['PSO','GA','DE','MPA']
+          for method in methods:
+              r=json.load(open(f'gold_monthly_svr_dwt_stage41_{method.lower()}_result.json'))
+              assert r['scope']=='STAGE41_METAHEURISTIC_DEV_ONLY_V1'
+              assert r['method']==method
+              c=r['contract']
+              assert c['parent']=='EPSILON_RBF_DAILY12'
+              assert c['representation']=='DAILY_SUMMARY12'
+              assert c['kernel']=='rbf'
+              assert c['population']==24
+              assert c['generations']==45
+              assert c['repeats']==3
+              assert c['2025_role']=='LOCKED_NOT_OPENED'
+              assert c['2026_role']=='QUARANTINED_NOT_USED'
+              assert c['random_split']=='NONE'
+              assert c['database']=='READ_ONLY'
+              assert r['authority_invariants_before']==r['authority_invariants_after']
+              assert r['metrics']['n']==33
+              assert len(r['rows'])==33
+              for x in r['rows']:
+                  assert x['train_last'] < x['target']
+                  assert x['inner_valid_n'] >= 12
+                  assert len(x['repeat_records'])==3
+                  p=x['selected_params']
+                  assert -8-1e-12 <= p['log2_C'] <= 12+1e-12
+                  assert -12-1e-12 <= p['log2_gamma'] <= 4+1e-12
+                  assert 0.01-1e-12 <= p['epsilon'] <= 0.50+1e-12
+          a=json.load(open('gold_monthly_svr_dwt_stage41_aggregate.json'))
+          assert len(a['ranking'])==4
+          assert {x['method'] for x in a['ranking']}==set(methods)
+          print('SVR_DWT_STAGE41_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-svr-dwt-stage41-meta-v1
+          path: |
+            gold_monthly_svr_dwt_stage41_*_result.json
+            gold_monthly_svr_dwt_stage41_aggregate.json
+            gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE41_META_RESULT_2026-09-28.md
+            *.log
+          if-no-files-found: warn
+      - name: Commit Stage 4.1 report
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE41_META_RESULT_2026-09-28.md
+          if git diff --cached --quiet; then
+            echo "No report change"
+          else
+            git commit -m "Record SVR Stage 4.1 metaheuristic result"
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
