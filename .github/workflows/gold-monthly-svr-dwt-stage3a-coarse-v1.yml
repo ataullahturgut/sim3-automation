@@ -1,0 +1,80 @@
+name: Gold Monthly SVR DWT Stage3A Coarse V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - .github/workflows/gold-monthly-svr-dwt-stage3a-coarse-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stage3a:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install packages
+        run: >
+          python -m pip install
+          'numpy==2.4.6'
+          'psycopg[binary]==3.3.6'
+          'scikit-learn==1.9.1'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_svr_dwt_stage3a_coarse_v1.py
+      - name: Run Stage 3A
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: python gold_axis_2026/tools/gold_monthly_svr_dwt_stage3a_coarse_v1.py
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('gold_monthly_svr_dwt_stage3a_coarse_v1_result.json'))
+          assert r['scope']=='STAGE3A_COARSE_NESTED_GRID_DEV_ONLY_V1'
+          assert r['grid']['candidate_count']==150
+          assert r['contract']['parent']=='EPSILON_RBF_DAILY12'
+          assert r['contract']['representation']=='DAILY_SUMMARY12'
+          assert r['contract']['kernel']=='rbf'
+          assert r['contract']['2025_role']=='LOCKED_NOT_OPENED'
+          assert r['contract']['2026_role']=='QUARANTINED_NOT_USED'
+          assert r['contract']['random_split']=='NONE'
+          assert r['contract']['database']=='READ_ONLY'
+          assert r['authority_invariants_before']==r['authority_invariants_after']
+          assert r['determinism']['status']=='PASS'
+          assert r['parent']['metrics']['n']==33
+          assert r['tuned']['metrics']['n']==33
+          assert len(r['tuned']['rows'])==33
+          for x in r['tuned']['rows']:
+              assert x['train_last'] < x['target']
+              assert x['selected']['log2_C'] in r['grid']['log2_C']
+              assert x['selected']['log2_gamma'] in r['grid']['log2_gamma']
+              assert x['selected']['epsilon'] in r['grid']['epsilon']
+              assert x['selected']['inner_valid_n'] >= 12
+          print('SVR_DWT_STAGE3A_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-svr-dwt-stage3a-coarse-v1
+          path: |
+            gold_monthly_svr_dwt_stage3a_coarse_v1_result.json
+            gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE3A_COARSE_RESULT_2026-09-28.md
+          if-no-files-found: error
+      - name: Commit Stage 3A report
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_MONTHLY_SVR_DWT_STAGE3A_COARSE_RESULT_2026-09-28.md
+          if git diff --cached --quiet; then
+            echo "No report change"
+          else
+            git commit -m "Record SVR Stage 3A coarse result"
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
