@@ -1,7 +1,7 @@
 # GOLD MONTHLY FORECAST — SVR / DWT-SVR FAMILY LEDGER
 
 Date: 2026-09-28  
-Status: **ACTIVE — STAGE 4.1 COMPLETE / STAGE 4.2 NEXT**  
+Status: **ACTIVE — STAGE 4.2 COMPLETE / STAGE 4.3 NEXT**  
 Branch: `gold-midas-headswap-v1-20260925`
 
 Canonical authority:
@@ -153,8 +153,9 @@ Stage 3A coarse nested grid:
 - Decision: not promoted.
 
 Stage 3B local refinement:
-- local neighborhoods frozen around Stage-3A per-origin centers before execution.
-- Stage-3B local tuned: **1615.913256 / 22/33**.
+- frozen 136-point local union around Stage-3A modal selection regions.
+- Stage-3B local tuned: **1592.590456 / 22/33**.
+- Delta vs parent: **+143.403093 SigmaAE**.
 - promotion threshold: SigmaAE < 1449.187363.
 - Decision: **NOT PROMOTED**.
 
@@ -164,7 +165,8 @@ Final deterministic SVR reference remains:
 - direction 19/33
 
 Stage-3A run: 36395013531; payload `289535fc26a3e12f8b2a2e4da8c86c0dd4c1a565aee30965239432bd6010bfc2`.  
-Stage-3B run: 36395363215; payload `8ae88568da68a451d667ef53110888cd0ffe76bbf029003b71cfe37c9e938c9e`.
+Stage-3B authoritative run: **36396414897**; payload `798f16bf175d010007529ffa0b1c47000fe9e36c66a7739ef33debc93fc3c4ab`.  
+Earlier Stage-3B artifacts are superseded by this later frozen-union run.
 
 Deterministic hyperparameter tuning line is CLOSED / NOT PROMOTED.
 
@@ -184,50 +186,37 @@ Effective 2026-09-28 after Batch 4.2 observability failure:
 Current Batch 4.2 run was launched before this binding rule and may be used for its final scientific results if it completes cleanly, but it is **NOT an acceptable template for later batches**.
 
 ### Stage 4 — 32/32 metaheuristic SVR broad screen
-**MANDATORY / ACTIVE / 4 OF 32 COMPLETE**
+**MANDATORY / ACTIVE / 9 OF 32 COMPLETE**
 
 Batching amendment:
-- Batch 4.1 was already completed as a 4-method batch.
-- User directive: all subsequent batches run **5 methods at a time**, except the final remainder.
-- Scientific method set and order are unchanged.
+- Batch 4.1 completed as a 4-method batch before the user batching amendment.
+- All subsequent batches use **5 methods at a time**, except the final 3-method remainder.
+- Candidate set, order, bounds, budget, objective, seeds and scientific gates are unchanged.
 
 Batch 4.1 COMPLETE:
-- [x] PSO
-- [x] GA
-- [x] DE
-- [x] MPA
-
-Batch 4.1 DEV ranking:
-1. DE — 1590.781952 / 19/33
-2. GA — 1611.632502 / 19/33
-3. MPA — 1696.206317 / 15/33
-4. PSO — 1719.949306 / 17/33
-Frozen Stage-2 parent remains better: 1449.187363 / 19/33.
+- [x] PSO — 1719.949306 / 17/33
+- [x] GA — 1611.632502 / 19/33
+- [x] DE — **1590.781952 / 19/33**
+- [x] MPA — 1696.206317 / 15/33
 Run: 36396937495.
 
-#### Batch 4.2 — ABC / SSA / GWO / WOA
-**COMPLETE / SCIENTIFIC GATE PASS**
+Batch 4.2 COMPLETE — authoritative five-method run:
+- [x] ABC — 1563.258913 / 16/33
+- [x] SSA — 1659.670617 / 19/33
+- [x] GWO — 1590.104631 / 18/33
+- [x] WOA — 1635.345256 / 17/33
+- [x] HHO — **1549.539823 / 18/33**
+Run: **36399323779**.
+Job: 108853166239.
+Artifact: 10959784334.
+Scientific gate: PASS.
+Overall workflow failure = final non-fast-forward report push only; compute, aggregate, gate and artifact upload all succeeded.
+Earlier four-method Batch-4.2 run 36398195330 is **SUPERSEDED** by this five-method result.
 
-| Method | DEV SigmaAE | Direction |
-|---|---:|---:|
-| ABC | **1563.258913** | 16/33 |
-| GWO | 1590.104631 | 18/33 |
-| WOA | 1635.345256 | 17/33 |
-| SSA | 1659.670617 | **19/33** |
+Frozen Stage-2 parent remains better than every completed metaheuristic:
+**EPSILON_RBF_DAILY12 = 1449.187363 / 19/33.**
 
-None beats frozen parent 1449.187363 / 19/33.
-Run: 36398195330.
-Artifact: 10959831017.
-Final workflow conclusion failure was push-conflict only; compute/scientific gate passed and report was recovered manually.
-
-Batch 4.2 NEXT:
-- [ ] ABC
-- [ ] SSA
-- [ ] GWO
-- [ ] WOA
-- [ ] HHO
-
-Batch 4.3:
+Batch 4.3 NEXT:
 - [ ] ACO
 - [ ] BAT
 - [ ] FA
@@ -260,7 +249,7 @@ Batch 4.7 FINAL REMAINDER:
 - [ ] DE_ABC
 - [ ] MULTISWARM
 
-Progress: **8/32**
+Progress: **9/32**.
 No Stage-4 parent selection until all 32 are complete/audited.
 Vanilla/deterministic parent remains reference identity #33.
 
@@ -288,7 +277,7 @@ Open after all 32 methods audited.
 **LOCKED / NOT YET OPENED**
 
 ## Current next authorized action
-**Execute Batch 4.2 as a 5-method batch: ABC, SSA, GWO, WOA, HHO.**
+**Execute Batch 4.3 as a five-method batch: ACO, BAT, FA, MFO, FPA.**
 
 ## Kontrol ve Uyum Özeti
 - Stage 0 authority freeze: PASS.
