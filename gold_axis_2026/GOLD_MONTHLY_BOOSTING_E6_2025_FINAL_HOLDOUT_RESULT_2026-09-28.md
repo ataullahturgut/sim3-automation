@@ -1,0 +1,65 @@
+# GOLD MONTHLY FORECAST — BOOSTING E6 2025 FINAL HOLDOUT RESULT
+
+Date: 2026-09-28
+Status: COMPLETE / ONE-SHOT HOLDOUT / SCIENTIFIC GATE PASS
+
+## Frozen roles
+- PRICE: CATBOOST_PRICE
+- BALANCE / DIRECTION: FULL5_MEDIAN
+- No post-holdout tuning or model reselection is permitted.
+
+## 2025 summary
+
+| Role | SigmaAE | MAE | RMSE | MAPE | WAPE | Rel.MAE vs RW | Direction | Worst month | Worst AE |
+|---|---:|---:|---:|---:|---:|---:|---:|---|---:|
+| PRICE | 1020.686135 | 85.057178 | 116.133793 | 2.4505% | 2.4715% | 0.605030 | 11/12 | 2025-10 | 281.940548 |
+| BALANCE_DIRECTION | 993.980271 | 82.831689 | 111.625270 | 2.3838% | 2.4068% | 0.589200 | 11/12 | 2025-10 | 263.372678 |
+
+## Month-by-month — PRICE
+
+| Month | Actual | Forecast | AE | RW | Direction correct |
+|---|---:|---:|---:|---:|---|
+| 2025-01 | 2710.000000 | 2612.260316 | 97.739684 | 2648.000000 | NO |
+| 2025-02 | 2895.000000 | 2816.843774 | 78.156226 | 2710.000000 | YES |
+| 2025-03 | 2983.000000 | 2914.483646 | 68.516354 | 2895.000000 | YES |
+| 2025-04 | 3218.000000 | 3114.906947 | 103.093053 | 2983.000000 | YES |
+| 2025-05 | 3309.000000 | 3245.310075 | 63.689925 | 3218.000000 | YES |
+| 2025-06 | 3353.000000 | 3336.156902 | 16.843098 | 3309.000000 | YES |
+| 2025-07 | 3340.000000 | 3348.633694 | 8.633694 | 3353.000000 | YES |
+| 2025-08 | 3368.000000 | 3349.823908 | 18.176092 | 3340.000000 | YES |
+| 2025-09 | 3667.680000 | 3463.936640 | 203.743360 | 3368.000000 | YES |
+| 2025-10 | 4058.330000 | 3776.389452 | 281.940548 | 3667.680000 | YES |
+| 2025-11 | 4087.000000 | 4077.756442 | 9.243558 | 4058.330000 | YES |
+| 2025-12 | 4309.000000 | 4238.089458 | 70.910542 | 4087.000000 | YES |
+
+## Month-by-month — BALANCE / DIRECTION
+
+| Month | Actual | Forecast | AE | RW | Direction correct |
+|---|---:|---:|---:|---:|---|
+| 2025-01 | 2710.000000 | 2612.928417 | 97.071583 | 2648.000000 | NO |
+| 2025-02 | 2895.000000 | 2837.273694 | 57.726306 | 2710.000000 | YES |
+| 2025-03 | 2983.000000 | 2914.483646 | 68.516354 | 2895.000000 | YES |
+| 2025-04 | 3218.000000 | 3114.906947 | 103.093053 | 2983.000000 | YES |
+| 2025-05 | 3309.000000 | 3245.310075 | 63.689925 | 3218.000000 | YES |
+| 2025-06 | 3353.000000 | 3319.728668 | 33.271332 | 3309.000000 | YES |
+| 2025-07 | 3340.000000 | 3348.633694 | 8.633694 | 3353.000000 | YES |
+| 2025-08 | 3368.000000 | 3353.292115 | 14.707885 | 3340.000000 | YES |
+| 2025-09 | 3667.680000 | 3463.936640 | 203.743360 | 3368.000000 | YES |
+| 2025-10 | 4058.330000 | 3794.957322 | 263.372678 | 3667.680000 | YES |
+| 2025-11 | 4087.000000 | 4077.756442 | 9.243558 | 4058.330000 | YES |
+| 2025-12 | 4309.000000 | 4238.089458 | 70.910542 | 4087.000000 | YES |
+
+## Final interpretation rule
+These 2025 results are final transport evidence only. They cannot reopen or modify Boosting architecture.
+
+## Reproducibility
+- Payload SHA256: 34193a4d696542e2ec57dbef82ed683b9222eacf28baa630f9c1be763738e5c1
+
+## Kontrol ve Uyum Özeti
+- E5 architecture freeze respected: PASS.
+- 2025 evaluated exactly once under frozen roles: PASS.
+- 2025 used for tuning/selection: NO.
+- 2026 used: NO.
+- Random split: NONE.
+- DB mutation: NONE / READ_ONLY.
+- Boosting family status after E6: CLOSED.
