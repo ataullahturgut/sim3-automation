@@ -231,3 +231,47 @@ The only deliberately unresolved optional feature lanes are:
 2. long-history daily Nasdaq volatility/MIDAS.
 
 Neither blocks the planned first scientific feature-architecture program.
+
+
+---
+
+## V2 supersession — 2026-09-29
+
+The original V1 readiness section above is retained as provenance, but the following V2 authority now supersedes its daily-Nasdaq / monthly-only oil limitations.
+
+**External Authority V2**
+- workflow: Gold Monthly External Authority V2
+- run: **36560331164**
+- head commit: **9f4f53c1a2ddbac5752c24227b94e6ce2d092fca**
+- artifact: **11028494060**
+- artifact digest: `sha256:36e7f723a6c84cfdfd3394950381d112267b59af57e0502986e80d7388b017f6`
+- payload SHA256: `fb779f1f1a3f5689f9f631aadc7e6e6e0c8cf5e50ec7730a233b80e8789438bc`
+- Neon reads: **0**
+- gate: **PASS**
+
+New governed daily authorities:
+- Nasdaq-100: direct Nasdaq historical API, 2010-01-01..2026-09-28, n=4264.
+- WTI: direct U.S. EIA daily XLS, 2010-01-04..2026-09-22, n=4140.
+- Brent: direct U.S. EIA daily XLS, 2010-01-04..2026-09-22, n=4230.
+
+Existing daily authorities retained:
+- Rates: Fed H.15.
+- FX: Fed H.10.
+- VIX: Cboe.
+
+Prehistory repair:
+- CPI extended to 2008 to preserve 2010-era YoY transforms without shortening the canonical training history.
+- World Bank commodity/Copper monthly history extended to 2008 for the same reason.
+
+WTI scientific note:
+- official daily WTI contains **2020-04-20 = -36.98** in the governed history;
+- this is retained as real market data;
+- WTI must **not** use log-level/log-return transforms across that event;
+- authorized representation is signed monthly-mean price difference + GPR-weighted daily first difference;
+- no clipping, deletion, absolute-value rewrite or synthetic fill.
+
+Therefore the earlier statements:
+- `Nasdaq daily long-history = NOT_PROVEN/BLOCKED`
+- `WTI/Brent monthly-only fallback`
+
+are **SUPERSEDED**.
