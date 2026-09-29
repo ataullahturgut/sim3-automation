@@ -819,7 +819,7 @@
       "rerun": false
     }
   ],
-  "current_next_action": "F4 RESET: External Authority V2 completion -> transform parity -> optimizer parity -> ALL6-COMPACT diagnostic challenger",
+  "current_next_action": "ALL6-COMPACT diagnostic challenger after B0/B1/B2 PASS; do not open 2025/2026 for selection",
   "registry_rules": {
     "check_before_run": true,
     "completed_models_default_rerun": false,
@@ -858,13 +858,13 @@
     "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
-    "completed_through": "ChHHO F3 lag architecture; F4 legacy endpoint Rates/FX recorded",
-    "f4_status": "RESET_ACTIVE_DATA_AND_PROCESSING_PARITY",
+    "completed_through": "F4 B0 External Authority V2 + B1 transform parity + B2 processing/preprocessing and optimizer parity",
+    "f4_status": "PARITY_GATES_COMPLETE_ALL6_AUTHORIZED_NOT_RUN",
     "legacy_rates_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
     "legacy_fx_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
-    "next_model": "ALL6-COMPACT after B0/B1/B2 gates",
-    "next_model_status": "BLOCKED_UNTIL_EXTERNAL_AUTHORITY_V2_AND_PARITY_GATES_PASS",
-    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1 + EXTERNAL_AUTHORITY_V2",
+    "next_model": "ALL6-COMPACT diagnostic challenger",
+    "next_model_status": "AUTHORIZED_NOT_RUN",
+    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1 + EXTERNAL_AUTHORITY_V2 + B1/B2 parity artifacts",
     "neon_required": false
   },
   "f4_reset": {
@@ -872,7 +872,7 @@
     "base_contract": "CURRENT8 MR1+VW L1",
     "base_sigma_ae": 1413.0297794085,
     "base_direction": "23/33",
-    "data_stage": "EXTERNAL_AUTHORITY_V2_IN_PROGRESS",
+    "data_stage": "EXTERNAL_AUTHORITY_V2_COMPLETE_PASS",
     "required_gates": [
       "B0_DATA_AUTHORITY_V2",
       "B1_TRANSFORM_PARITY",
@@ -887,6 +887,19 @@
       "Brent"
     ],
     "optimizer_population_rule": "POP(k)=ceil(24*(10*k)/80)",
-    "wti_transform": "SIGNED_MONTHLY_MEAN_DIFFERENCE_PLUS_GPR_WEIGHTED_DAILY_PRICE_DIFFERENCE__NO_CLIP_NO_DROP"
+    "wti_transform": "SIGNED_MONTHLY_MEAN_DIFFERENCE_PLUS_GPR_WEIGHTED_DAILY_PRICE_DIFFERENCE__NO_CLIP_NO_DROP",
+    "processing_stage": "B1_TRANSFORM_PARITY_COMPLETE_PASS",
+    "optimizer_stage": "B2_PROCESSING_AND_OPTIMIZER_PARITY_COMPLETE_PASS",
+    "all6_status": "AUTHORIZED_NOT_RUN",
+    "b0_run": 36560331164,
+    "b1_run": 36560992052,
+    "b2_run": 36564452306,
+    "b2_artifact": 11031577274,
+    "b2_artifact_digest": "sha256:f28c2175a3207b743baa99198e7f80f961366e13b81d89f40adddca58436a331",
+    "all6_inputs": 22,
+    "all6_param_dim": 220,
+    "all6_population": 66,
+    "generations": 45,
+    "repeats": 3
   }
 }
