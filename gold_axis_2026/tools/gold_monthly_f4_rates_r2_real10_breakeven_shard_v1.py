@@ -44,7 +44,7 @@ def monthly_mean(s: dict, month: str, lag: int) -> float:
     vals, _, _ = b1.eligible_month_values(s, month, lag)
     if len(vals) == 0:
         raise RuntimeError(f"NO_MONTHLY_VALUES {month}")
-    return float(np.mean([v for _, v in vals]))
+    return float(np.mean(vals))
 
 
 def r2_features(ss: dict, p: str):
