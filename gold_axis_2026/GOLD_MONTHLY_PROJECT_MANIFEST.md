@@ -2330,6 +2330,48 @@ Decision:
 - VIX execution status: **NOT STARTED**
 - Nasdaq/Energy remain not started.
 
+## 20L.6G Hard raw-data re-audit — COMPLETE / PASS
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_F4_FX_RATES_HARD_DATA_REAUDIT_2026-09-29.md`
+
+Purpose:
+- determine whether the poor native-input Rates/FX results could be explained by bad source rows, date shifts, missing observations, stale frozen data, or transform arithmetic errors.
+
+Authority:
+- fresh direct **Federal Reserve Board DDP** re-fetch
+- workflow **Gold Monthly F4 FX Rates Direct DDP Reaudit V1**
+- run **36580341003**
+- head commit **3d8ca815ede86fd8b7ad694d0a58be0278b13e22**
+- job **109446532518**
+- result artifact **11038493043**
+- digest `sha256:a24c1ed64097eeb4c25055695ff34b8785da1815de8c57093e95e2cd6427be20`
+- overall gate **PASS**
+
+Raw package hashes:
+- H.10 index package SHA256: **EXACT MATCH**
+- H.10 rates package SHA256: **EXACT MATCH**
+- H.15 package SHA256: **EXACT MATCH**
+
+Full daily-series parity:
+- Broad USD: **4167/4167 common**, 0 missing dates, 0 mismatches, max abs diff **0.0**
+- nominal 10Y: **4186/4186 common**, 0 missing dates, 0 mismatches, max abs diff **0.0**
+- real 10Y: **4186/4186 common**, 0 missing dates, 0 mismatches, max abs diff **0.0**
+
+All 33 DEV-origin transforms were independently recomputed from the fresh Board DDP data:
+- Broad USD MR1 max diff **0.0**
+- Broad USD daily RMS volatility max diff **0.0**
+- nominal 10Y monthly difference max diff **0.0**
+- real 10Y monthly difference max diff **0.0**
+- 10Y breakeven monthly difference max diff **0.0**
+
+Conclusion:
+- **NO EVIDENCE OF RAW-DATA OR TRANSFORM ERROR** in the governed Rates/FX inputs.
+- native Rates/FX degradation is therefore classified as **MODEL / REPRESENTATION / GENERALIZATION**, not a demonstrated data-quality failure.
+- B0/B1/B2 and Rates/FX family closures remain valid.
+- earlier FRED-distribution reaudit run 36578797117 failed only on download timeout before comparison; later FRED network attempts are non-authority because the stronger direct Board DDP audit supersedes them.
+- next unopened family remains **VIX**.
+
 ## 20L.7 Workflow hold
 
 Legacy workflows:
@@ -2339,7 +2381,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**F4 FX native family CLOSED after FX3 non-promotion; VIX is next and not yet started.**
+**F4 hard official-data re-audit PASS after Rates/FX closures; VIX is next and not yet started.**
 
 ---
 
@@ -2414,7 +2456,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **F4 VIX family decomposition**. FX native F4 family is closed after FX3 DEV ΣAE **1829.800218 / 20/33** vs BASE **1413.029779 / 23/33**. FX2 remains the best FX native-input price-error variant (**1787.600075 / 17/33**), but no FX variant beats BASE. Rates and FX native F4 families are closed; VIX is next, Nasdaq/Energy remain not started.
+- Current exact next model/research stage: **F4 VIX family decomposition**. Before advancing, a fresh direct Federal Reserve Board DDP hard audit proved exact raw-package hashes, complete daily-row parity, and **0.0** max transform differences for governed Broad USD / nominal 10Y / real 10Y data. Rates and FX native F4 failures are therefore not attributed to data corruption; both families remain closed. VIX is next; Nasdaq/Energy remain not started.
 
 
 ---
