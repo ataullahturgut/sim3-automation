@@ -2574,11 +2574,66 @@ Combination authoritative execution:
 - artifact **11043503614**
 - digest `sha256:d7d457fb82b5f55dedc9d1dbac50ba38271b0436be650424a0b486242ad86f81`
 
-Decision:
-- Brent residual information is **SUPPORTED**
-- **BRENT_R1_MR1 = PROMOTABLE CHALLENGER**
+Decision — superseded by mandatory bias-only attribution control in §20L.6L:
+- Brent improves versus raw BASE but **does not beat BIAS_ONLY on DEV**
+- **BRENT_R1_MR1 is NOT promoted as an independent external residual driver**
 - Rates + Brent stacking is **NOT PROMOTED**
-- next clean action: freeze BRENT_R1_MR1 and transport unchanged to 2025/2026 reporting.
+- frozen Brent transport was completed for diagnosis only; holdout results do not rescue DEV attribution failure.
+
+## 20L.6L Residual attribution bias-only control — COMPLETE / BINDING
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_CHHHO_RESIDUAL_ATTRIBUTION_BIAS_CONTROL_2026-09-29.md`
+
+Reason:
+- every Ridge residual model includes an intercept;
+- frozen ChHHO DEV mean price residual is **+13.690850943418237 USD**;
+- therefore BASE-relative improvement alone can falsely attribute a systematic bias correction to an external variable.
+
+Mandatory control:
+- **BIAS_ONLY** = prior mean residual under the same 12-history minimum and same cap;
+- prequential on DEV;
+- frozen full-DEV mean residual for 2025/2026 transport;
+- no external variables.
+
+Authoritative bias-only execution:
+- workflow **Gold Monthly ChHHO Residual Bias Only Control V1**
+- run **36591365527**
+- head **dfb1f2800bd6e7223e6ba0ecee6ac006ae8b4937**
+- job **109485005513**
+- artifact **11044715151**
+- digest `sha256:ecef7244d7dc3860b0c62da76cefe589eeaba6dad104d24601a3965b96c24300`
+
+BIAS_ONLY:
+- DEV BASE **1413.029855 / 23/33**
+- DEV BIAS_ONLY **1338.893512 / 23/33**
+- improvement **74.136343 USD**
+- robustness gate **PASS**
+- 2025 **1252.054159 → 1095.749344**
+- 2026 Jan-Aug **1526.133212 → 1526.133212** (effectively zero ΣAE change), Direction **5/8 → 6/8**
+
+Corrected external attribution on DEV:
+- **VIX_R1_CHANGE**: **1338.330045**, only **0.563467 USD better than BIAS_ONLY**
+- **BRENT_R1_MR1**: **1346.502415**, **7.608904 USD worse than BIAS_ONLY**
+- **PIT Rates**: **1370.920393**, **32.026881 USD worse than BIAS_ONLY**
+- **Rates + Brent**: **1377.101415**, **38.207903 USD worse than BIAS_ONLY**
+
+Brent frozen transport diagnostic:
+- run **36591080686**
+- artifact **11043592796**
+- 2025 Brent **1096.152741** vs BIAS_ONLY **1095.749344** → Brent **0.403396 USD worse**
+- 2026 Jan-Aug Brent **1521.188957** vs BIAS_ONLY **1526.133212** → Brent **4.944255 USD better**
+- 2026 transport is retrospective only and cannot override DEV attribution failure.
+
+Binding methodological correction:
+- all future residual external-driver screens must pass **two** tests:
+  1. BASE robustness gate;
+  2. **incremental improvement versus BIAS_ONLY**.
+- old BASE-relative language saying Rates/Brent/VIX residual gains are external-variable gains is superseded wherever inconsistent with this control.
+- Brent residual external attribution: **NOT PROMOTED**
+- Rates + Brent: **NOT PROMOTED**
+- VIX_R1: only **marginal DEV incremental value** beyond bias-only.
+- PIT Rates: not a DEV-supported external winner after bias control, despite positive 2026 retrospective behavior.
 
 ## 20L.7 Workflow hold
 
@@ -2589,7 +2644,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**Brent residual screen COMPLETE: BRENT_R1_MR1 selected at 1346.502415 / 23/33 with robustness PASS. Rates + Brent combination is rejected as dominated. Next clean action is frozen BRENT_R1_MR1 transport to 2025/2026; no retuning on holdout years.**
+**Residual attribution re-audit COMPLETE: BIAS_ONLY = 1338.893512 / 23/33 and becomes mandatory control. Brent and Rates do not beat bias-only on DEV; VIX_R1 beats it by only 0.563467 USD. Future Nasdaq/WTI/etc. residual screens must prove incremental value over BIAS_ONLY before promotion.**
 
 ---
 
@@ -2664,7 +2719,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **F4 VIX family decomposition**. Before advancing, a fresh direct Federal Reserve Board DDP hard audit proved exact raw-package hashes, complete daily-row parity, and **0.0** max transform differences for governed Broad USD / nominal 10Y / real 10Y data. Rates and FX native F4 failures are therefore not attributed to data corruption; both families remain closed. VIX is next; Nasdaq/Energy remain not started.
+- Current exact next model/research stage: **Residual external-driver screens with mandatory BIAS_ONLY incremental-value gate; Brent/Rates attribution corrected, Nasdaq/WTI remain candidate next families.** Before advancing, a fresh direct Federal Reserve Board DDP hard audit proved exact raw-package hashes, complete daily-row parity, and **0.0** max transform differences for governed Broad USD / nominal 10Y / real 10Y data. Rates and FX native F4 failures are therefore not attributed to data corruption; both families remain closed. VIX is next; Nasdaq/Energy remain not started.
 
 
 ---
