@@ -11,30 +11,24 @@ END="2026-09-29"
 EXPECTED_V1_PAYLOAD="c52670ccf7bccc75e7c92e6d8261fe25d2d8c62b986300d45d5f264a26142353"
 WB_URL="https://thedocs.worldbank.org/en/doc/74e8be41ceb20fa0da750cda2f6b9e4e-0050012026/related/CMO-Historical-Data-Monthly.xlsx"
 
-FRED_DAILY={
-    "NASDAQ100":"NASDAQ100",
-    "WTI":"DCOILWTICO",
-    "BRENT":"DCOILBRENTEU",
-}
-
 SOURCE_AUTHORITY={
     "NASDAQ100":{
         "upstream_source":"Nasdaq, Inc.",
-        "redistributor":"Federal Reserve Bank of St. Louis FRED",
+        "redistributor":null,
         "frequency":"DAILY_CLOSE",
         "units":"INDEX",
         "availability_lag_days":1,
     },
     "WTI":{
         "upstream_source":"U.S. Energy Information Administration",
-        "redistributor":"Federal Reserve Bank of St. Louis FRED",
+        "redistributor":null,
         "frequency":"DAILY",
         "units":"USD_PER_BARREL",
         "availability_lag_days":7,
     },
     "BRENT":{
         "upstream_source":"U.S. Energy Information Administration",
-        "redistributor":"Federal Reserve Bank of St. Louis FRED",
+        "redistributor":null,
         "frequency":"DAILY",
         "units":"USD_PER_BARREL",
         "availability_lag_days":7,
@@ -58,6 +52,102 @@ def get(url:str, timeout=60)->bytes:
             last=e
             time.sleep(2*(attempt+1))
     raise RuntimeError(f"DOWNLOAD_FAILED {url} {type(last).__name__}:{last}")
+
+def get_with_headers(url:str, headers:dict[str,str], timeout=60)->bytes:
+    last=None
+    for attempt in range(5):
+        try:
+            req=urllib.request.Request(url,headers=headers)
+            with urllib.request.urlopen(req,timeout=timeout) as r:
+                return r.read()
+        except Exception as e:
+            last=e
+            time.sleep(2*(attempt+1))
+    raise RuntimeError(f"DOWNLOAD_FAILED {url} {type(last).__name__}:{last}")
+
+def clean_market_number(v):
+    s=str(v or "").replace("$","").replace(",","").strip()
+    if s in {"","--","N/A","None"}: return None
+    try:
+        x=float(s)
+    except Exception:
+        return None
+    return x if np.isfinite(x) else None
+
+def fetch_nasdaq100_official():
+    headers={
+        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36",
+        "Accept":"application/json,text/plain,*/*",
+        "Accept-Language":"en-US,en;q=0.9",
+        "Referer":"https://www.nasdaq.com/",
+        "Origin":"https://www.nasdaq.com",
+    }
+    out={}; chunks=[]
+    for year in range(2010,2027):
+        a=f"{year}-01-01"
+        b=END if year==2026 else f"{year}-12-31"
+        url=(f"https://api.nasdaq.com/api/quote/NDX/historical?assetclass=index"
+             f"&fromdate={a}&todate={b}&limit=5000")
+        raw=get_with_headers(url,headers,60)
+        d=json.loads(raw)
+        rows=((d.get("data") or {}).get("tradesTable") or {}).get("rows") or []
+        if not isinstance(rows,list) or not rows:
+            raise RuntimeError(f"NASDAQ100_NO_ROWS {year}")
+        before=len(out)
+        for r in rows:
+            ds=str(r.get("date") or "").strip()
+            dt=pd.to_datetime(ds,format="%m/%d/%Y",errors="coerce")
+            v=clean_market_number(r.get("close"))
+            if pd.notna(dt) and v is not None and pd.Timestamp(START)<=dt<=pd.Timestamp(END):
+                out[dt.strftime("%Y-%m-%d")]=float(v)
+        chunks.append({"year":year,"url":url,"sha256":sha_bytes(raw),"rows_received":len(rows),"rows_added":len(out)-before})
+    if not out or min(out)>"2010-01-15":
+        raise RuntimeError(f"NASDAQ100_HISTORY_TOO_SHORT first={min(out) if out else None}")
+    return dict(sorted(out.items())),{
+        "source":"Nasdaq, Inc. public historical quote API",
+        "series":"NDX",
+        "endpoint":"https://api.nasdaq.com/api/quote/NDX/historical",
+        "first":min(out),"last":max(out),"n":len(out),"chunks":chunks,
+    }
+
+def fetch_eia_daily_xls(name:str,url:str):
+    headers={
+        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36",
+        "Accept":"application/vnd.ms-excel,application/octet-stream,*/*",
+        "Referer":"https://www.eia.gov/",
+    }
+    raw=get_with_headers(url,headers,120)
+    book=pd.ExcelFile(io.BytesIO(raw),engine="xlrd")
+    sheet=book.sheet_names[1] if len(book.sheet_names)>1 else book.sheet_names[0]
+    x=pd.read_excel(io.BytesIO(raw),sheet_name=sheet,header=None,engine="xlrd")
+    header_row=None
+    for i in range(min(12,len(x))):
+        row=[str(v).strip().lower() for v in x.iloc[i].tolist()]
+        if any(v=="date" for v in row):
+            header_row=i; break
+    if header_row is None:
+        raise RuntimeError(f"{name}_EIA_HEADER_NOT_FOUND sheets={book.sheet_names}")
+    df=pd.read_excel(io.BytesIO(raw),sheet_name=sheet,header=header_row,engine="xlrd")
+    date_col=df.columns[0]
+    value_cols=[z for z in df.columns[1:] if "unnamed" not in str(z).lower()]
+    if not value_cols:
+        value_cols=list(df.columns[1:])
+    if not value_cols:
+        raise RuntimeError(f"{name}_EIA_VALUE_COLUMN_NOT_FOUND")
+    value_col=value_cols[0]
+    dt=pd.to_datetime(df[date_col],errors="coerce")
+    val=pd.to_numeric(df[value_col],errors="coerce")
+    z=pd.DataFrame({"date":dt,"value":val}).dropna()
+    z=z[(z.date>=pd.Timestamp(START))&(z.date<=pd.Timestamp(END))]
+    out={r.date.strftime("%Y-%m-%d"):float(r.value) for r in z.itertuples(index=False)}
+    if not out or min(out)>"2010-01-15":
+        raise RuntimeError(f"{name}_EIA_HISTORY_TOO_SHORT first={min(out) if out else None}")
+    return dict(sorted(out.items())),{
+        "source":"U.S. Energy Information Administration",
+        "url":url,"sha256":sha_bytes(raw),"sheet":sheet,
+        "date_column":str(date_col),"value_column":str(value_col),
+        "first":min(out),"last":max(out),"n":len(out),
+    }
 
 def fetch_fred_daily(series_id:str):
     chunks=[("2010-01-01","2014-12-31"),("2015-01-01","2019-12-31"),
@@ -244,8 +334,11 @@ def main():
         raise RuntimeError(f"V1_PAYLOAD_MISMATCH {v1.get('payload_sha256')}")
 
     daily={}; meta={}
-    for name,sid in FRED_DAILY.items():
-        daily[name],meta[name]=fetch_fred_daily(sid)
+    daily["NASDAQ100"],meta["NASDAQ100"]=fetch_nasdaq100_official()
+    daily["WTI"],meta["WTI"]=fetch_eia_daily_xls(
+        "WTI","https://www.eia.gov/dnav/pet/hist_xls/RWTCd.xls")
+    daily["BRENT"],meta["BRENT"]=fetch_eia_daily_xls(
+        "BRENT","https://www.eia.gov/dnav/pet/hist_xls/RBRTEd.xls")
 
     diag={
         "NASDAQ100":coverage_diag("NASDAQ100",daily["NASDAQ100"],min_total=3500,min_monthly=10),
@@ -303,9 +396,9 @@ def main():
             "rates_daily":"READY_FED_H15",
             "fx_daily":"READY_FED_H10",
             "vix_daily":"READY_CBOE",
-            "nasdaq100_daily":"READY_FRED_UPSTREAM_NASDAQ",
-            "wti_daily":"READY_FRED_UPSTREAM_EIA",
-            "brent_daily":"READY_FRED_UPSTREAM_EIA",
+            "nasdaq100_daily":"READY_NASDAQ_OFFICIAL",
+            "wti_daily":"READY_EIA_OFFICIAL",
+            "brent_daily":"READY_EIA_OFFICIAL",
             "cpi":"READY_MONTHLY_NATIVE_FREQUENCY_WITH_2008_PREHISTORY",
             "copper":"READY_MONTHLY_WORLD_BANK_WITH_2008_PREHISTORY__DAILY_NOT_PROVEN",
             "cpi_daily":"NOT_APPLICABLE_NATIVE_MONTHLY_STATISTIC",
