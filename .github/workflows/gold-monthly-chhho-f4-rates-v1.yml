@@ -34,7 +34,6 @@ jobs:
           - R_BE10
           - R_NOM_REAL
           - R_REAL_BE
-          - R_REAL_FF
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
