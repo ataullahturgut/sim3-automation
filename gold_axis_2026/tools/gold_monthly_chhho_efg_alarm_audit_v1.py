@@ -75,22 +75,31 @@ def build_chhho(ch,vt):
  return out
 
 def download_gvz():
- urls=['https://fred.stlouisfed.org/data/GVZCLS','https://fred.stlouisfed.org/graph/fredgraph.csv?id=GVZCLS']
+ urls=[
+   'https://cdn-api.cboe.com/api/global/us_indices/daily_prices/GVZ_History.csv',
+   'https://fred.stlouisfed.org/data/GVZCLS',
+   'https://fred.stlouisfed.org/graph/fredgraph.csv?id=GVZCLS'
+ ]
  x=None; used=None; errs=[]
  for url in urls:
   try:
-   r=fetch(url,timeout=(60 if '/data/' in url else 120),tries=1)
-   if 'fredgraph.csv' in url:
+   r=fetch(url,timeout=(45 if 'cboe.com' in url else 60),tries=1)
+   if url.endswith('.csv') or 'fredgraph.csv' in url:
     z=pd.read_csv(io.BytesIO(r.content))
+    # Cboe CSV uses a date column plus one or more price columns; prefer GVZ/CLOSE.
+    dc=next((q for q in z.columns if str(q).strip().lower() in ('date','trade date','trade_date')),z.columns[0])
+    vc=next((q for q in z.columns if str(q).strip().lower() in ('gvz','close','closeprice','close_price')),z.columns[-1])
+    z=z[[dc,vc]].copy(); z.columns=['date','gvz']
    else:
     tabs=pd.read_html(io.StringIO(r.text))
-    z=next(t for t in tabs if {'DATE','VALUE'}.issubset({str(c).upper() for c in t.columns}))
-   z.columns=['date','gvz']; z['date']=pd.to_datetime(z.date,errors='coerce'); z['gvz']=pd.to_numeric(z.gvz,errors='coerce'); z=z.dropna()
-   if len(z)<1000: raise RuntimeError(f'GVZ_ROWS_TOO_FEW {len(z)}')
+    z=next(t for t in tabs if {'DATE','VALUE'}.issubset({str(q).upper() for q in t.columns}))
+    z.columns=['date','gvz']
+   z['date']=pd.to_datetime(z.date,errors='coerce'); z['gvz']=pd.to_numeric(z.gvz,errors='coerce'); z=z.dropna()
+   if len(z)<1000: raise RuntimeError(f'GVZ_ROWS_TOO_FEW {len(z)} cols={list(z.columns)}')
    x=z; used=url; break
   except Exception as e: errs.append(f'{url}: {e}')
  if x is None: raise RuntimeError('GVZ_FETCH_ALL_FAILED '+repr(errs))
- x['month']=x.date.dt.strftime('%Y-%m')
+ x=x.sort_values('date').drop_duplicates('date',keep='last'); x['month']=x.date.dt.strftime('%Y-%m')
  g=x.groupby('month').gvz.agg(['mean','max','last']).rename(columns={'mean':'gvz_mean','max':'gvz_max','last':'gvz_last'}).sort_index()
  g['gvz_mean_chg']=g.gvz_mean.diff(); g['gvz_max_chg']=g.gvz_max.diff()
  g['gvz_med12_prior']=g.gvz_mean.shift(1).rolling(12,min_periods=6).median()
