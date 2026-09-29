@@ -2485,8 +2485,57 @@ Decision:
 - R2 valid but dominated by R1
 - R3 rejected by robustness gate
 - native-input VIX remains **NOT YET TESTED**
-- 2025/2026 transport for VIX_R1 remains **NOT OPENED**
-- next clean action is frozen VIX_R1 transport to 2025/2026 if authorized, or native VIX challenge if residual transport is intentionally deferred.
+- 2025/2026 transport for VIX_R1 is now **COMPLETE**
+- frozen VIX_R1 transport result:
+  - 2025 BASE **1252.054159 / 9/12** → corrected **1082.027319 / 9/12**
+  - 2025 ΣAE improvement **170.026841 USD / 13.58%**
+  - 2026 Jan-Aug BASE **1526.133212 / 5/8** → corrected **1526.048523 / 6/8**
+  - 2026 Jan-Aug ΣAE improvement only **0.084689 USD**, Direction **+1**
+  - September 2026 canonical ChHHO remains **BLOCKED** because August four-metal origin inputs are incomplete
+- transport interpretation: strong 2025 out-of-sample value, effectively zero aggregate 2026 price-error gain, but one additional correct direction in 2026
+- next clean action is **native-input VIX challenge** if authorized; do not retune VIX_R1 on 2025/2026.
+
+## 20L.6J VIX_R1 frozen transport — COMPLETE / 2025 STRONG, 2026 FLAT
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_CHHHO_VIX_R1_FROZEN_TRANSPORT_2025_2026_2026-09-29.md`
+
+Authoritative execution:
+- workflow **Gold Monthly ChHHO VIX R1 Frozen Transport 2025 2026 V1**
+- run **36587033148**
+- head commit **acfee6fdc0c7b41e874e7a166d5376cba74bf9bb**
+- job **109469978233**
+- artifact **11042740289**
+- artifact digest `sha256:5d6966e470412675af649c1fc869b32fadb9b0252be27f6b5fec4307716aa285`
+
+Frozen fit:
+- n **33**
+- Ridge alpha **10**
+- cap **53.266887317887495**
+- standardized VIX_CHANGE coefficient **2.3347459307325407**
+- intercept **13.690850943418237**
+- 2025/2026 residual updating **NONE**
+
+2025:
+- BASE ΣAE **1252.0541594740248**, Direction **9/12**
+- corrected ΣAE **1082.0273188083147**, Direction **9/12**
+- improvement **170.0268406657101 USD / 13.58%**
+
+2026 Jan-Aug:
+- BASE ΣAE **1526.1332118229584**, Direction **5/8**
+- corrected ΣAE **1526.0485229389474**, Direction **6/8**
+- improvement **0.08468888401102959 USD**
+- Direction change **+1**
+- August BASE **4063.0063** → corrected **4076.2610** vs actual **4411.00**; direction flips from wrong to correct
+- September canonical ChHHO **BLOCKED**
+
+Decision:
+- VIX_R1 remains a valid residual challenger
+- 2025 transport is strongly supportive
+- 2026 aggregate price-error gain is effectively zero
+- do not claim universal stability
+- do not retune on 2025/2026
+- native-input VIX remains not yet tested.
 
 ## 20L.7 Workflow hold
 
@@ -2497,7 +2546,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**ChHHO VIX residual screen COMPLETE: VIX_R1_CHANGE selected at 1338.330045 / 23/33 with robustness PASS. Native Rates/FX remain closed; native-input VIX not yet tested; VIX_R1 2025/2026 transport not yet opened.**
+**VIX_R1 residual challenger frozen and transported: DEV PASS, 2025 strong improvement, 2026 Jan-Aug essentially flat ΣAE with +1 Direction. Native-input VIX remains not yet tested; September 2026 canonical ChHHO remains blocked by missing August four-metal inputs.**
 
 ---
 
