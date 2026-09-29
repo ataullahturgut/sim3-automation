@@ -819,7 +819,7 @@
       "rerun": false
     }
   ],
-  "current_next_action": "VIX_R1 frozen transport is complete; if continuing VIX work, run a native-input VIX challenge without retuning the residual layer. Keep 2025/2026 outside selection.",
+  "current_next_action": "Freeze BRENT_R1_MR1 and transport unchanged to 2025/2026. Do not promote Rates+Brent stacking; it is dominated by both isolated controls.",
   "registry_rules": {
     "check_before_run": true,
     "completed_models_default_rerun": false,
@@ -858,11 +858,11 @@
     "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
-    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates/FX native closures + hard data re-audit PASS + PIT Rates residual replication PASS + VIX residual screen PASS + VIX_R1 frozen 2025/2026 transport",
-    "f4_status": "VIX_R1_TRANSPORT_COMPLETE__2025_STRONG__2026_FLAT__NATIVE_VIX_NOT_YET_TESTED",
+    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates/FX native closures + hard data re-audit PASS + PIT Rates residual replication PASS + VIX residual screen/transport + Brent residual screen + Rates+Brent combination screen",
+    "f4_status": "BRENT_R1_SELECTED_PASS__RATES_PLUS_BRENT_REJECTED_DOMINATED",
     "legacy_rates_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
     "legacy_fx_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
-    "next_model": "Native-input VIX challenge",
+    "next_model": "Frozen BRENT_R1_MR1 transport to 2025/2026",
     "next_model_status": "NOT_RUN",
     "execution_source": "Frozen historical ChHHO authority + strict PIT Rates compact snapshot + exact residual replication",
     "neon_required": false
@@ -1162,6 +1162,32 @@
     "vix_2026_jan_aug_direction_base": "5/8",
     "vix_2026_jan_aug_direction_corrected": "6/8",
     "vix_2026_september_status": "BLOCKED_CANONICAL_BASE_MISSING_AUGUST_FOUR_METAL_INPUTS",
-    "vix_transport_interpretation": "2025_STRONG_OOS_SUPPORT__2026_AGGREGATE_PRICE_ERROR_FLAT_WITH_PLUS1_DIRECTION"
+    "vix_transport_interpretation": "2025_STRONG_OOS_SUPPORT__2026_AGGREGATE_PRICE_ERROR_FLAT_WITH_PLUS1_DIRECTION",
+    "brent_residual_screen_status": "COMPLETE_PASS_R1_SELECTED",
+    "brent_residual_screen_run": 36590486319,
+    "brent_residual_screen_head_commit": "f2eb03085e42005a3902dd278d94f17544675e1b",
+    "brent_residual_screen_job": 109481990464,
+    "brent_residual_screen_artifact": 11043268953,
+    "brent_residual_screen_artifact_digest": "sha256:014754f03dc8f754cce60d385f98146c0ef8094a760940d13564633706b77c27",
+    "brent_r1_sum_abs_error": 1346.5024153590207,
+    "brent_r1_direction": "23/33",
+    "brent_r1_improvement": 66.52743917525754,
+    "brent_r1_gate": "PASS",
+    "brent_r2_sum_abs_error": 1349.1809091408556,
+    "brent_r2_direction": "23/33",
+    "brent_r2_gate": "PASS_DOMINATED_BY_R1",
+    "brent_r3_sum_abs_error": 1357.7061801731188,
+    "brent_r3_direction": "23/33",
+    "brent_r3_gate": "PASS_DOMINATED_BY_R1",
+    "brent_selected": "BRENT_R1_MR1",
+    "rates_plus_brent_run": 36590746098,
+    "rates_plus_brent_head_commit": "b67b1dad7c816a3869f96e22661d4b44e50772c3",
+    "rates_plus_brent_job": 109482871506,
+    "rates_plus_brent_artifact": 11043503614,
+    "rates_plus_brent_artifact_digest": "sha256:d7d457fb82b5f55dedc9d1dbac50ba38271b0436be650424a0b486242ad86f81",
+    "rates_plus_brent_sum_abs_error": 1377.101415184695,
+    "rates_plus_brent_direction": "23/33",
+    "rates_plus_brent_gate": "PASS_BUT_DOMINATED",
+    "rates_plus_brent_decision": "REJECTED_NOT_PROMOTED"
   }
 }
