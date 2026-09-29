@@ -1,0 +1,102 @@
+name: Gold Monthly External Multi-Model Screen V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_external_multimodel_screen_v1.py
+      - .github/workflows/gold-monthly-external-multimodel-screen-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  PYTHONHASHSEED: '0'
+  NEON_DATABASE_URL: ''
+
+jobs:
+  external-multimodel:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    name: Zero-Neon-External-MultiModel-Screen
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: python -m pip install "numpy>=2.0,<3" "pandas>=2.2,<3" "scikit-learn>=1.5,<2"
+
+      - name: Assert Neon is disabled
+        run: |
+          test -z "${NEON_DATABASE_URL:-}"
+          echo "NEON_DISABLED_GATE=PASS"
+
+      - name: Download frozen authority artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/{chhho,deabc,pls1,gpr,ann,svr,catboost}
+
+          gh api /repos/${GITHUB_REPOSITORY}/actions/artifacts/10989389723/zip > chhho.zip
+          unzip -q chhho.zip -d artifacts/chhho
+
+          gh api /repos/${GITHUB_REPOSITORY}/actions/artifacts/10911282893/zip > deabc.zip
+          unzip -q deabc.zip -d artifacts/deabc
+
+          gh api /repos/${GITHUB_REPOSITORY}/actions/artifacts/10974037676/zip > pls1.zip
+          unzip -q pls1.zip -d artifacts/pls1
+
+          gh api /repos/${GITHUB_REPOSITORY}/actions/artifacts/10915270480/zip > gpr.zip
+          unzip -q gpr.zip -d artifacts/gpr
+
+          for SPEC in             "36127630549:10860432845"             "36128225062:10860851091"             "36129458713:10861775876"             "36130538857:10861513219"             "36132219383:10862141384"             "36132859342:10862162415"             "36134549789:10862199195"; do
+            RUN_ID="${SPEC%%:*}"
+            AID="${SPEC##*:}"
+            mkdir -p "artifacts/ann/${RUN_ID}"
+            gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/${AID}/zip" > "ann-${RUN_ID}.zip"
+            unzip -q "ann-${RUN_ID}.zip" -d "artifacts/ann/${RUN_ID}"
+          done
+
+          gh api /repos/${GITHUB_REPOSITORY}/actions/artifacts/10958140025/zip > svr.zip
+          unzip -q svr.zip -d artifacts/svr
+
+          gh api /repos/${GITHUB_REPOSITORY}/actions/artifacts/10938495521/zip > catboost.zip
+          unzip -q catboost.zip -d artifacts/catboost
+
+          find artifacts -maxdepth 3 -type f | sort
+
+      - name: Compile
+        run: |
+          python -m py_compile             gold_axis_2026/tools/gold_monthly_external_driver_residual_v1.py             gold_axis_2026/tools/gold_monthly_fx_h10_residual_v1.py             gold_axis_2026/tools/gold_monthly_external_multimodel_screen_v1.py
+
+      - name: Run external information screen
+        run: |
+          unset NEON_DATABASE_URL
+          python gold_axis_2026/tools/gold_monthly_external_multimodel_screen_v1.py             --artifact-root artifacts             --pit gold_axis_2026/data/GOLD_MONTHLY_EXTERNAL_PIT_COMPACT_V1_2026-09-28.json             --inflation gold_axis_2026/data/GOLD_MONTHLY_INFLATION_PIT_COMPACT_V1_2026-09-28.json             --outdir external_multimodel_out
+
+      - name: Inspect scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open("external_multimodel_out/gold_monthly_external_multimodel_screen_v1_result.json"))
+          assert r["authority"]["neon_reads"] == 0
+          assert r["authority"]["neon_connection_required"] is False
+          assert len(r["models"]) == 8
+          assert all(v["base"]["n"] == 33 for v in r["models"].values())
+          print("OUTPUT_GATE=PASS")
+          print(json.dumps(r["summary"], sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-external-multimodel-screen-v1-${{ github.sha }}
+          path: external_multimodel_out/
+          if-no-files-found: error
+          retention-days: 90
