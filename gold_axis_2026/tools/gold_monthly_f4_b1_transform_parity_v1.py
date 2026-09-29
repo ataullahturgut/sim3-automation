@@ -189,9 +189,9 @@ def main():
       "canonical_history_not_shortened":all(r["first_sample"]=="2010-03" for r in outer_reports),
       "all_external_features_finite":all(np.isfinite(list(s.values())).all() for s in feature_stats.values()),
       "minimum_monthly_observations_ge_5":all(v>=5 for v in min_obs.values()),
-      "target_month_external_data":False,
-      "2025_selection_use":False,
-      "2026_selection_use":False,
+      "no_target_month_external_data":True,
+      "no_2025_selection_use":True,
+      "no_2026_selection_use":True,
     }
     gates["pass"]=all(v for k,v in gates.items() if k!="pass")
 
