@@ -25,6 +25,12 @@ VARIANTS = {
     "ALL6": {"inputs": 22, "population": 66},
 }
 
+CURRENT8_FEATURES = [
+    f"{metal}_{rep}"
+    for metal in ("Gold", "Silver", "Platinum", "Palladium")
+    for rep in ("MR1", "VW")
+]
+
 
 def configure(inputs: int, population: int) -> dict:
     c = anfis.common
@@ -205,9 +211,9 @@ def main():
         },
         "optimizer": cfg,
         "feature_names": (
-            list(base.FEATURES)
+            list(CURRENT8_FEATURES)
             if args.variant == "BASE"
-            else list(base.FEATURES) + list(b1.FEATURES)
+            else list(CURRENT8_FEATURES) + list(b1.FEATURES)
         ),
         "dev": {
             "metrics": metrics,
