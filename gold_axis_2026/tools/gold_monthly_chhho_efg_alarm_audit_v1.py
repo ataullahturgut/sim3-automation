@@ -75,11 +75,11 @@ def build_chhho(ch,vt):
  return out
 
 def download_gvz():
- urls=['https://fred.stlouisfed.org/graph/fredgraph.csv?id=GVZCLS','https://fred.stlouisfed.org/data/GVZCLS']
+ urls=['https://fred.stlouisfed.org/data/GVZCLS','https://fred.stlouisfed.org/graph/fredgraph.csv?id=GVZCLS']
  x=None; used=None; errs=[]
  for url in urls:
   try:
-   r=fetch(url,timeout=180,tries=2)
+   r=fetch(url,timeout=(60 if '/data/' in url else 120),tries=1)
    if 'fredgraph.csv' in url:
     z=pd.read_csv(io.BytesIO(r.content))
    else:
