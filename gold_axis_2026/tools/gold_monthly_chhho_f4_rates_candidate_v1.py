@@ -10,7 +10,7 @@ import vw_midas_anfis_stage3c_literature_v1 as anfis
 import vw_midas_elmfis_baseline_v1 as eb
 
 DEV_START,DEV_END="2022-04","2024-12"
-COMMON_START="2010-04"
+BASE_SIGMAAE=1413.0297794085\nBASE_DIRECTION=23
 CANDIDATES={
  "BASE":[],
  "R_NOM10":["nom10_chg"],
