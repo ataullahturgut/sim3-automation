@@ -15,7 +15,7 @@ FEATURES=[
  "BROADUSD_MR1","BROADUSD_VW",
  "VIX_MR1","VIX_VW",
  "NDX_MR1","NDX_VW",
- "WTI_MR1","WTI_VW",
+ "WTI_MR_ANALOG","WTI_VW_ANALOG",
  "BRENT_MR1","BRENT_VW",
 ]
 
@@ -89,13 +89,20 @@ def transform_for_sample(series_map,p,z):
         out[f"{name}_VW_ANALOG"]=generic_weighted_increment(vp,z,log_mode=False)
         obs[name]={"p_n":np_,"pp_n":nq,"p_last":last}
     for name,prefix in [
-      ("BROADUSD","BROADUSD"),("VIX","VIX"),("NDX","NDX"),("WTI","WTI"),("BRENT","BRENT")]:
+      ("BROADUSD","BROADUSD"),("VIX","VIX"),("NDX","NDX"),("BRENT","BRENT")]:
         s=series_map[name]; lag=LAGS[name]
         mr,np_,nq=mean_positive_ratio(s,p,pp,lag)
         vp,last,nv=eligible_month_values(s,p,lag)
         out[f"{prefix}_MR1"]=mr
         out[f"{prefix}_VW"]=generic_weighted_increment(vp,z,log_mode=True)
         obs[name]={"p_n":np_,"pp_n":nq,"p_last":last}
+
+    s=series_map["WTI"]; lag=LAGS["WTI"]
+    mr,np_,nq=mean_difference(s,p,pp,lag)
+    vp,last,nv=eligible_month_values(s,p,lag)
+    out["WTI_MR_ANALOG"]=mr
+    out["WTI_VW_ANALOG"]=generic_weighted_increment(vp,z,log_mode=False)
+    obs["WTI"]={"p_n":np_,"pp_n":nq,"p_last":last}
     return out,obs
 
 def main():
