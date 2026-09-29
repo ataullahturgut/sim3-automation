@@ -163,6 +163,38 @@ def main():
             "is_chhho_top8":t in base_worst,
         })
 
+    # Per-month ranked alternatives for ChHHO difficult months.
+    difficult_months = [t for t in targets if ae[base][t] > 100.0]
+    ranked_by_month = {}
+    for t in base_worst:
+        ranking = sorted(
+            [{"model": n, "ae": float(ae[n][t]), "forecast": float(models[n]["rows"][t]["forecast"])}
+             for n in competitive],
+            key=lambda z: z["ae"]
+        )
+        ranked_by_month[t] = ranking
+
+    def group_fallback(months):
+        rows=[]
+        bsum=sum(ae[base][t] for t in months)
+        for n in competitive:
+            if n==base: continue
+            nsum=sum(ae[n][t] for t in months)
+            wins=sum(ae[n][t] < ae[base][t] for t in months)
+            rows.append({
+                "model":n,
+                "chhho_group_sum_ae":float(bsum),
+                "model_sum_ae_on_same_months":float(nsum),
+                "improvement":float(bsum-nsum),
+                "wins":int(wins),
+                "losses":int(len(months)-wins),
+                "n":len(months),
+            })
+        rows.sort(key=lambda z:(-z["improvement"],-z["wins"]))
+        return rows
+
+    fallback_gt100 = group_fallback(difficult_months)
+
     # Fixed fallback performance restricted to ChHHO top-8 months.
     fallback=[]
     for n in competitive:
@@ -229,6 +261,9 @@ def main():
       "competitive_corr_signed_error_vs_chhho":corr_signed,
       "competitive_corr_abs_error_vs_chhho":corr_abs,
       "chhho_worst8":shared,
+      "ranked_competitive_models_on_chhho_worst8":ranked_by_month,
+      "chhho_gt100_months":difficult_months,
+      "fixed_fallback_on_chhho_gt100":fallback_gt100,
       "fixed_fallback_on_chhho_worst8":fallback,
       "month_analysis":month_rows,
       "hard_month_consensus":consensus,
@@ -269,6 +304,23 @@ def main():
     for z in shared:
         md.append(f"| {z['target']} | {z['chhho_ae']:.2f} | {z['count']}/{len(competitive)} | {z['best_alt_model']} | {z['best_alt_ae']:.2f} | {z['oracle_improvement']:.2f} | {z['alternatives_better']}/{len(competitive)-1} |")
     md.append("")
+    md.append("## Ranked competitive models on each ChHHO worst-8 month")
+    md.append("")
+    for t in base_worst:
+        md.append(f"### {t} — ChHHO AE {ae[base][t]:.2f}")
+        md.append("")
+        md.append("| Rank | Model | Forecast | AE |")
+        md.append("|---:|---|---:|---:|")
+        for rank,z in enumerate(ranked_by_month[t][:6],1):
+            md.append(f"| {rank} | {z['model']} | {z['forecast']:.2f} | {z['ae']:.2f} |")
+        md.append("")
+    md.append("## Fixed single fallback on ChHHO months with AE > 100 USD")
+    md.append("")
+    md.append("| Alternative | Sum AE on >100 group | Improvement vs ChHHO | Wins |")
+    md.append("|---|---:|---:|---:|")
+    for z in fallback_gt100:
+        md.append(f"| {z['model']} | {z['model_sum_ae_on_same_months']:.2f} | {z['improvement']:.2f} | {z['wins']}/{z['n']} |")
+    md.append("")
     md.append("## Fixed single fallback on exactly ChHHO's worst 8 months")
     md.append("")
     md.append("| Alternative | Sum AE on those 8 months | Improvement vs ChHHO | Wins / 8 |")
@@ -303,7 +355,10 @@ def main():
       "competitive_model_count":len(competitive),
       "competitive_models":competitive,
       "chhho_worst8":shared,
+      "gt100_months":difficult_months,
+      "best_fixed_fallback_gt100":fallback_gt100[0] if fallback_gt100 else None,
       "best_fixed_fallback":fallback[0] if fallback else None,
+      "ranked_top5_by_worst8_month":{t:ranked_by_month[t][:5] for t in base_worst},
       "oracle":result["oracle"],
       "top_consensus":[{"target":z["target"],"count":z["competitive_top8_count"],"share":z["competitive_top8_share"]} for z in consensus[:10]],
     },sort_keys=True))
