@@ -63,10 +63,10 @@ def main():
       "authority":{
         "dev":"2022-04..2024-12","2025_used":False,"2026_used":False,
         "random_split":"NONE","external_features_used":False,"lag_search_used":False,
-        "question":"representation only; same feature families/count and same ChHHO architecture",
+        "question":"representation only; same feature families/count and same ChHHO architecture", "common_training_sample_start":"2010-08",
         "robustness_gate":"aggregate improvement + months improved>=worsened + positive median paired AE + >=2 positive DEV years",
       },
-      "baseline_parity":base["f2_baseline_parity"],
+      "matched_history_baseline":base["f2_matched_history_baseline"],
       "ranking_by_dev_sum_abs_error":rows,
       "robustness":robust,
     }
