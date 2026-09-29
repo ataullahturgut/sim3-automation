@@ -40,11 +40,22 @@ SERIES = {
 DEV_START, DEV_END = "2022-04", "2024-12"
 
 
-def fetch_fred_csv(series_id: str):
-    url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
-    req = urllib.request.Request(url, headers={"User-Agent": "gold-monthly-audit/1.0"})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        raw = r.read()
+def fetch_fred_csv(series_id: str, start: str, end: str):
+    url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}&cosd={start}&coed={end}"
+    last_err = None
+    raw = None
+    for attempt in range(4):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "gold-monthly-audit/1.0"})
+            with urllib.request.urlopen(req, timeout=180) as r:
+                raw = r.read()
+            break
+        except Exception as e:
+            last_err = repr(e)
+            import time
+            time.sleep(5 * (attempt + 1))
+    if raw is None:
+        raise RuntimeError(f"OFFICIAL_DOWNLOAD_FAILED series={series_id} err={last_err}")
     df = pd.read_csv(io.BytesIO(raw))
     date_col = df.columns[0]
     val_col = df.columns[1]
@@ -185,7 +196,8 @@ def main():
     series_cmp={}
     for name,spec in SERIES.items():
         ext_s[name]=ext_series(ext,spec)
-        url,off=fetch_fred_csv(spec["fred_id"])
+        ext_dates=sorted(ext_s[name])
+        url,off=fetch_fred_csv(spec["fred_id"], ext_dates[0], ext_dates[-1])
         off_s[name]=off; urls[name]=url
         series_cmp[name]=compare_series(name,ext_s[name],off_s[name])
 
