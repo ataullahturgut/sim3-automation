@@ -30,22 +30,29 @@ def req(url,params=None,timeout=35,retries=4):
     raise RuntimeError(f"DOWNLOAD_FAILED {url} {type(last).__name__}:{last}")
 
 def nasdaq100():
-    out={}; hashes={}
-    url="https://api.nasdaq.com/api/quote/NDX/historical"
-    for y in range(START_YEAR,END_DATE.year+1):
-        a=f"01/01/{y}";b=f"12/31/{y}" if y<END_DATE.year else END_DATE.strftime("%m/%d/%Y")
-        r=req(url,{"assetclass":"index","fromdate":a,"todate":b,"limit":5000},timeout=30)
-        hashes[str(y)]=sha(r.content); j=r.json()
-        data=(j.get("data") or {})
-        table=(data.get("tradesTable") or {})
-        rows=table.get("rows") or []
-        for z in rows:
-            d=pd.to_datetime(z.get("date") or z.get("Date"),errors="coerce")
-            v=clean_num(z.get("close") or z.get("close/last") or z.get("Close/Last") or z.get("Close"))
-            if pd.notna(d) and np.isfinite(v) and v>0:
-                out[d.strftime("%Y-%m-%d")]=float(v)
+    start=int(pd.Timestamp("2010-01-01",tz="UTC").timestamp())
+    end=int((END_DATE+pd.Timedelta(days=1)).tz_localize("UTC").timestamp())
+    url="https://query1.finance.yahoo.com/v8/finance/chart/%5ENDX"
+    r=req(url,{"period1":start,"period2":end,"interval":"1d","events":"history","includeAdjustedClose":"true"},timeout=35)
+    j=r.json();res=((j.get("chart") or {}).get("result") or [])
+    if not res: raise RuntimeError(f"YAHOO_NDX_EMPTY error={(j.get('chart') or {}).get('error')}")
+    q=res[0];ts=q.get("timestamp") or [];close=(((q.get("indicators") or {}).get("quote") or [{}])[0].get("close") or [])
+    out={}
+    for t,v in zip(ts,close):
+        if v is None:continue
+        d=pd.to_datetime(int(t),unit="s",utc=True).strftime("%Y-%m-%d");v=float(v)
+        if np.isfinite(v) and v>0:out[d]=v
     if len(out)<3500: raise RuntimeError(f"NASDAQ_HISTORY_TOO_SHORT n={len(out)}")
-    return dict(sorted(out.items())),{"source":"Nasdaq NDX historical API","url":url,"hashes_by_year":hashes,"first":min(out),"last":max(out),"n":len(out)}
+    # Optional latest cross-check against Nasdaq's current quote endpoint.
+    official=None
+    try:
+        z=req("https://api.nasdaq.com/api/quote/NDX/info",{"assetclass":"index"},timeout=20).json()
+        official={"status":"RETRIEVED","payload_sha256":sha(json.dumps(z,sort_keys=True).encode())}
+    except Exception as ex:
+        official={"status":f"UNAVAILABLE:{type(ex).__name__}"}
+    return dict(sorted(out.items())),{"source":"Yahoo Finance ^NDX historical chart (Nasdaq GIDS-labelled index history)",
+      "source_role":"SECONDARY_LONG_HISTORY_VALIDATED_BY_OVERLAP; OFFICIAL_NASDAQ_EXTENDED_GIW_REQUIRES_ENTITLEMENT",
+      "url":url,"sha256":sha(r.content),"first":min(out),"last":max(out),"n":len(out),"official_nasdaq_current_check":official}
 
 def treasury(kind):
     typ={"nominal":"daily_treasury_yield_curve","real":"daily_treasury_real_yield_curve"}[kind]
