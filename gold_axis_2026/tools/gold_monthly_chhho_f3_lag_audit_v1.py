@@ -148,7 +148,8 @@ def main():
           "abs_diff":diff,"reference_direction_correct":BASE_DIRECTION,"observed_direction_correct":m["direction_correct"],
           "pass":diff<1e-4 and m["direction_correct"]==BASE_DIRECTION}
         if not out["f3_baseline_parity"]["pass"]: raise RuntimeError(f"F3_BASELINE_PARITY_FAIL {out['f3_baseline_parity']}")
-    out=json_safe(out)\n    Path(a.output).write_text(json.dumps(out,indent=2,sort_keys=True,allow_nan=False)+"\n")
+    out=json_safe(out)
+    Path(a.output).write_text(json.dumps(out,indent=2,sort_keys=True,allow_nan=False)+"\n")
     print("CHHHO_F3_LAG_GATE=PASS")
     print(json.dumps({"variant":a.variant,"input_dimension":d,"sum_abs_error":m["sum_abs_error"],
       "direction_correct":m["direction_correct"],"mae":m["mae"],"rmse":m["rmse"],
