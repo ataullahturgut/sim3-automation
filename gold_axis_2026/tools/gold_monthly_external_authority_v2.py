@@ -60,17 +60,24 @@ def get(url:str, timeout=60)->bytes:
     raise RuntimeError(f"DOWNLOAD_FAILED {url} {type(last).__name__}:{last}")
 
 def fetch_fred_daily(series_id:str):
-    url=(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
-         f"&cosd={START}&coed={END}")
-    raw=get(url,90)
-    df=pd.read_csv(io.BytesIO(raw))
-    if len(df.columns)<2:
-        raise RuntimeError(f"BAD_FRED_COLUMNS {series_id} {list(df.columns)}")
-    df=df.iloc[:,:2].copy()
-    df.columns=["date","value"]
-    df["date"]=pd.to_datetime(df["date"],errors="coerce")
-    df["value"]=pd.to_numeric(df["value"],errors="coerce")
-    df=df.dropna(subset=["date","value"]).sort_values("date")
+    chunks=[("2010-01-01","2014-12-31"),("2015-01-01","2019-12-31"),
+            ("2020-01-01","2023-12-31"),("2024-01-01",END)]
+    frames=[]; metas=[]
+    for a,b in chunks:
+        url=(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
+             f"&cosd={a}&coed={b}")
+        raw=get(url,60)
+        df=pd.read_csv(io.BytesIO(raw))
+        if len(df.columns)<2:
+            raise RuntimeError(f"BAD_FRED_COLUMNS {series_id} {list(df.columns)}")
+        df=df.iloc[:,:2].copy()
+        df.columns=["date","value"]
+        df["date"]=pd.to_datetime(df["date"],errors="coerce")
+        df["value"]=pd.to_numeric(df["value"],errors="coerce")
+        df=df.dropna(subset=["date","value"])
+        frames.append(df)
+        metas.append({"start":a,"end":b,"url":url,"sha256":sha_bytes(raw),"rows":int(len(df))})
+    df=pd.concat(frames,ignore_index=True).drop_duplicates("date",keep="last").sort_values("date")
     df=df[(df.date>=pd.Timestamp(START))&(df.date<=pd.Timestamp(END))]
     if df.empty:
         raise RuntimeError(f"NO_FRED_ROWS {series_id}")
@@ -79,8 +86,7 @@ def fetch_fred_daily(series_id:str):
     out={r.date.strftime("%Y-%m-%d"):float(r.value) for r in df.itertuples(index=False)}
     return out,{
         "series_id":series_id,
-        "url":url,
-        "sha256":sha_bytes(raw),
+        "chunks":metas,
         "first":min(out),
         "last":max(out),
         "n":len(out),
