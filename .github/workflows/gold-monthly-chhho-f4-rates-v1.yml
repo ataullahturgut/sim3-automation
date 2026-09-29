@@ -63,7 +63,7 @@ jobs:
           python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_f4_rates_router_v1.py
       - name: Run native rates candidate
         run: |
-          python gold_axis_2026/tools/gold_monthly_chhho_f4_rates_candidate_v1.py             --snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json             --external external_store/gold_monthly_direct_external_store_v1.json             --candidate "${{ matrix.candidate }}"             --output "f4_rates_${{ matrix.candidate }}.json"
+          python gold_axis_2026/tools/gold_monthly_chhho_f4_rates_candidate_v1.py             --snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json             --external external_store/gold_monthly_direct_external_store_v1.json             --core5-full gold_axis_2026/core5_monthly.csv.gz.b64             --candidate "${{ matrix.candidate }}"             --output "f4_rates_${{ matrix.candidate }}.json"
       - uses: actions/upload-artifact@v4
         with:
           name: f4-rates-${{ matrix.candidate }}-${{ github.sha }}
