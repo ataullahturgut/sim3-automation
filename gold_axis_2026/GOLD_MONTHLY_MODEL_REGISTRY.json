@@ -819,7 +819,7 @@
       "rerun": false
     }
   ],
-  "current_next_action": "Run the exact PIT Rates price-residual protocol on the current canonical ChHHO BASE rows before opening VIX; keep native Rates/FX closed and 2025/2026 outside selection",
+  "current_next_action": "Freeze VIX_R1_CHANGE as the VIX residual challenger; next choose frozen 2025/2026 transport or a native-input VIX challenge. Keep native Rates/FX closed.",
   "registry_rules": {
     "check_before_run": true,
     "completed_models_default_rerun": false,
@@ -858,11 +858,11 @@
     "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
-    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates/FX native closures + hard data re-audit PASS + exact ChHHO PIT Rates residual replication PASS",
-    "f4_status": "NATIVE_RATES_FX_CLOSED__PIT_RATES_RESIDUAL_REPRODUCED_PASS__CURRENT_CANONICAL_RESIDUAL_RERUN_NEXT",
+    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates/FX native closures + hard data re-audit PASS + PIT Rates residual replication PASS + ChHHO VIX residual screen PASS",
+    "f4_status": "VIX_RESIDUAL_R1_SELECTED_PASS__NATIVE_VIX_NOT_YET_TESTED",
     "legacy_rates_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
     "legacy_fx_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
-    "next_model": "Current-canonical ChHHO + exact PIT Rates price-residual correction",
+    "next_model": "Frozen VIX_R1_CHANGE residual transport or native VIX challenge",
     "next_model_status": "AUTHORIZED_NOT_RUN",
     "execution_source": "Frozen historical ChHHO authority + strict PIT Rates compact snapshot + exact residual replication",
     "neon_required": false
@@ -1111,6 +1111,35 @@
     "pit_rates_residual_stability_gate": "PASS",
     "native_rates_status": "CLOSED_NOT_PROMOTED",
     "rates_residual_architecture_status": "REOPENED_VALID_REPRODUCED",
-    "next_enhancement_test": "CURRENT_CANONICAL_CHHHO_PLUS_EXACT_PIT_RATES_PRICE_RESIDUAL_PROTOCOL"
+    "next_enhancement_test": "CURRENT_CANONICAL_CHHHO_PLUS_EXACT_PIT_RATES_PRICE_RESIDUAL_PROTOCOL",
+    "vix_residual_screen_status": "COMPLETE_PASS_R1_SELECTED",
+    "vix_residual_screen_run": 36585834751,
+    "vix_residual_screen_head_commit": "3c23d018f3c23b47c36d4ac21327be400c250339",
+    "vix_residual_screen_job": 109465773517,
+    "vix_residual_screen_artifact": 11041975865,
+    "vix_residual_screen_artifact_digest": "sha256:e864e30908658f9edc2e9ece8e8070d2d7c06c0d0a52ea7919f98385a7bf66f2",
+    "vix_residual_features": {
+      "VIX_LEVEL": "mean eligible daily VIX close in origin month",
+      "VIX_CHANGE": "origin-month VIX mean minus previous-month VIX mean",
+      "VIX_VOL": "population std of origin-month daily VIX first differences",
+      "VIX_SPIKE": "origin-month max VIX divided by origin-month mean VIX"
+    },
+    "vix_r1_sum_abs_error": 1338.330045256761,
+    "vix_r1_direction": "23/33",
+    "vix_r1_improvement": 74.69980927751726,
+    "vix_r1_relative_improvement_pct": 5.286499010464123,
+    "vix_r1_robust_excluding_best_month": 53.471601696024436,
+    "vix_r1_2024_improvement": 62.05453990225692,
+    "vix_r1_gate": "PASS",
+    "vix_r2_sum_abs_error": 1345.9091219542236,
+    "vix_r2_direction": "23/33",
+    "vix_r2_gate": "PASS_DOMINATED_BY_R1",
+    "vix_r3_sum_abs_error": 1407.226257760713,
+    "vix_r3_direction": "24/33",
+    "vix_r3_gate": "FAIL",
+    "vix_residual_selected": "VIX_R1_CHANGE",
+    "vix_residual_status": "PROMOTABLE_CHALLENGER",
+    "vix_native_status": "NOT_YET_TESTED",
+    "vix_transport_2025_2026": "NOT_OPENED"
   }
 }
