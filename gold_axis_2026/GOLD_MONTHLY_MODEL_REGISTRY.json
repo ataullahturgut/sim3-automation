@@ -1263,6 +1263,30 @@
       "2023-01": "12/16; 14/15 alternatives beat ChHHO; best AE 29.59 vs 100.74"
     },
     "conclusion": "NOT_ALL_MODELS_FAIL_SAME_MONTHS__EX_POST_COMPLEMENTARITY_EXISTS__EX_ANTE_GATE_NOT_YET_PROVEN",
-    "next_stage": "ERROR_RISK_RESCUEABILITY_GATE_V1_NO_PRICE_SWITCHING"
+    "next_stage": "NEW_MECHANISM_DISCOVERY_ON_UNFLAGGED_2026_LARGE_ERRORS__DO_NOT_RETUNE_FROZEN_RULES",
+    "origin_signal_diagnostic_status": "COMPLETE_DEV_DIAGNOSTIC",
+    "origin_signal_diagnostic_commit": "7f2faa7cb1119e0f6bd67036465f8edfd21f1c30",
+    "origin_signal_transport_status": "COMPLETE_FROZEN_TRANSPORT_HARD_SWITCH_NOT_VALIDATED",
+    "origin_signal_transport_report": "GOLD_MONTHLY_CHHHO_ORIGIN_SIGNAL_FROZEN_TRANSPORT_2025_2026_2026-09-29.md",
+    "frozen_mechanisms": [
+      "CROSS_METAL_FRAGILITY",
+      "SUPPORTED_MOMENTUM_UNDERREACTION",
+      "DELAYED_RATES_CATCHUP",
+      "MACRO_GOLD_CONFLICT"
+    ],
+    "transport_2025_alarm_count": 3,
+    "transport_2025_q3_high_precision": 1,
+    "transport_2025_q3_high_recall": 0.375,
+    "transport_2026_jan_aug_alarm_count": 1,
+    "transport_2026_jan_aug_q3_high_precision": 0,
+    "transport_2026_jan_aug_q3_high_recall": 0,
+    "transport_combined_alarm_count": 4,
+    "transport_combined_q3_high_precision": 0.75,
+    "transport_combined_q3_high_recall": 0.23076923076923078,
+    "diagnostic_reduced4_switch_19m_improvement_usd": 111.93038774638762,
+    "diagnostic_reduced4_switch_2025_improvement_usd": 131.05910195598926,
+    "diagnostic_reduced4_switch_2026_janjul_improvement_usd": -19.12871420960164,
+    "hard_switch_promotion": "NO",
+    "retained_role": "CONFIDENCE_RISK_ANNOTATION_ONLY"
   }
 }
