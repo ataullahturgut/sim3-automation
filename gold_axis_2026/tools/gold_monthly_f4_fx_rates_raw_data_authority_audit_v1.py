@@ -41,28 +41,39 @@ DEV_START, DEV_END = "2022-04", "2024-12"
 
 
 def fetch_fred_csv(series_id: str, start: str, end: str):
-    url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}&cosd={start}&coed={end}"
-    last_err = None
-    raw = None
-    for attempt in range(4):
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": "gold-monthly-audit/1.0"})
-            with urllib.request.urlopen(req, timeout=180) as r:
-                raw = r.read()
-            break
-        except Exception as e:
-            last_err = repr(e)
-            import time
-            time.sleep(5 * (attempt + 1))
-    if raw is None:
-        raise RuntimeError(f"OFFICIAL_DOWNLOAD_FAILED series={series_id} err={last_err}")
-    df = pd.read_csv(io.BytesIO(raw))
-    date_col = df.columns[0]
-    val_col = df.columns[1]
-    df[date_col] = pd.to_datetime(df[date_col])
-    df[val_col] = pd.to_numeric(df[val_col], errors="coerce")
-    df = df.dropna(subset=[val_col])
-    return url, {d.date().isoformat(): float(v) for d, v in zip(df[date_col], df[val_col])}
+    start_ts=pd.Timestamp(start); end_ts=pd.Timestamp(end)
+    chunks=[]
+    cur=start_ts
+    while cur<=end_ts:
+        ce=min(end_ts, cur + pd.DateOffset(years=4) - pd.Timedelta(days=1))
+        chunks.append((cur.strftime("%Y-%m-%d"),ce.strftime("%Y-%m-%d")))
+        cur=ce+pd.Timedelta(days=1)
+
+    frames=[]; urls=[]
+    import time
+    for a,b in chunks:
+        url=f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}&cosd={a}&coed={b}"
+        last_err=None; raw=None
+        for attempt in range(5):
+            try:
+                req=urllib.request.Request(url,headers={"User-Agent":"gold-monthly-audit/1.0"})
+                with urllib.request.urlopen(req,timeout=90) as r:
+                    raw=r.read()
+                break
+            except Exception as e:
+                last_err=repr(e); time.sleep(3*(attempt+1))
+        if raw is None:
+            raise RuntimeError(f"OFFICIAL_DOWNLOAD_FAILED series={series_id} chunk={a}:{b} err={last_err}")
+        df=pd.read_csv(io.BytesIO(raw))
+        date_col=df.columns[0]; val_col=df.columns[1]
+        df[date_col]=pd.to_datetime(df[date_col])
+        df[val_col]=pd.to_numeric(df[val_col],errors="coerce")
+        df=df.dropna(subset=[val_col])
+        frames.append(df[[date_col,val_col]].copy()); urls.append(url)
+
+    df=pd.concat(frames,ignore_index=True).drop_duplicates(subset=[df.columns[0]],keep="last")
+    date_col=df.columns[0]; val_col=df.columns[1]
+    return urls, {d.date().isoformat():float(v) for d,v in zip(df[date_col],df[val_col])}
 
 
 def ext_series(ext: dict, spec: dict):
@@ -197,8 +208,8 @@ def main():
     for name,spec in SERIES.items():
         ext_s[name]=ext_series(ext,spec)
         ext_dates=sorted(ext_s[name])
-        url,off=fetch_fred_csv(spec["fred_id"], ext_dates[0], ext_dates[-1])
-        off_s[name]=off; urls[name]=url
+        url_list,off=fetch_fred_csv(spec["fred_id"], ext_dates[0], ext_dates[-1])
+        off_s[name]=off; urls[name]=url_list
         series_cmp[name]=compare_series(name,ext_s[name],off_s[name])
 
     parity=transform_parity(ext_s,off_s)
