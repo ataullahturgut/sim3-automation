@@ -35,24 +35,24 @@ jobs:
           - RANGE_ALL
           - ABSRET_ALL
           - GOLD_MR3
-          - SILVER_MR3
-          - PLATINUM_MR3
-          - PALLADIUM_MR3
           - GOLD_MR6
-          - SILVER_MR6
-          - PLATINUM_MR6
-          - PALLADIUM_MR6
           - GOLD_RV
-          - SILVER_RV
-          - PLATINUM_RV
-          - PALLADIUM_RV
           - GOLD_RANGE
-          - SILVER_RANGE
-          - PLATINUM_RANGE
-          - PALLADIUM_RANGE
           - GOLD_ABSRET
+          - SILVER_MR3
+          - SILVER_MR6
+          - SILVER_RV
+          - SILVER_RANGE
           - SILVER_ABSRET
+          - PLATINUM_MR3
+          - PLATINUM_MR6
+          - PLATINUM_RV
+          - PLATINUM_RANGE
           - PLATINUM_ABSRET
+          - PALLADIUM_MR3
+          - PALLADIUM_MR6
+          - PALLADIUM_RV
+          - PALLADIUM_RANGE
           - PALLADIUM_ABSRET
     steps:
       - uses: actions/checkout@v4
@@ -69,24 +69,13 @@ jobs:
           gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > dev-snapshot.zip
           unzip -q dev-snapshot.zip -d dev_snapshot
           test -s dev_snapshot/gold_monthly_dev_snapshot_v1.json
-      - name: Download governed 2009 metal prehistory
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11020520415/zip" > prehistory.zip
-          unzip -q prehistory.zip -d prehistory
-          test -s prehistory/gold_monthly_metal_prehistory_v1.json
       - name: Compile
         run: |
           python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_f2_representation_v1.py
           python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_f2_summarize_v1.py
-      - name: Run F2 representation
-        run: >
-          python gold_axis_2026/tools/gold_monthly_chhho_f2_representation_v1.py
-          --snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json
-          --prehistory prehistory/gold_monthly_metal_prehistory_v1.json
-          --variant "${{ matrix.variant }}"
-          --output "chhho_f2_${{ matrix.variant }}.json"
+      - name: Run representation variant
+        run: |
+          python gold_axis_2026/tools/gold_monthly_chhho_f2_representation_v1.py             --snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json             --variant "${{ matrix.variant }}"             --output "chhho_f2_${{ matrix.variant }}.json"
       - uses: actions/upload-artifact@v4
         with:
           name: chhho-f2-${{ matrix.variant }}-${{ github.sha }}
@@ -110,11 +99,9 @@ jobs:
           pattern: chhho-f2-*-${{ github.sha }}
           path: f2_results
           merge-multiple: true
-      - name: Summarize paired representation audit
-        run: >
-          python gold_axis_2026/tools/gold_monthly_chhho_f2_summarize_v1.py
-          --dir f2_results
-          --output GOLD_MONTHLY_CHHHO_F2_REPRESENTATION_RESULT_2026-09-29.json
+      - name: Summarize representation audit
+        run: |
+          python gold_axis_2026/tools/gold_monthly_chhho_f2_summarize_v1.py             --dir f2_results             --output GOLD_MONTHLY_CHHHO_F2_REPRESENTATION_RESULT_2026-09-29.json
       - uses: actions/upload-artifact@v4
         with:
           name: gold-monthly-chhho-f2-summary-${{ github.sha }}
