@@ -46,8 +46,8 @@ Canonical family representative: Broad USD index.
 10. NDX_VW = GPR-conditioned weighted intramonth daily NDX log returns
 
 ### WTI — 2 inputs
-11. WTI_MR1 = log(mean WTI[p] / mean WTI[p-1])
-12. WTI_VW = GPR-conditioned weighted intramonth daily WTI log returns
+11. WTI_MR_ANALOG = mean WTI[p] - mean WTI[p-1]
+12. WTI_VW_ANALOG = GPR-conditioned weighted intramonth daily WTI price differences
 
 ### Brent — 2 inputs
 13. BRENT_MR1 = log(mean Brent[p] / mean Brent[p-1])
