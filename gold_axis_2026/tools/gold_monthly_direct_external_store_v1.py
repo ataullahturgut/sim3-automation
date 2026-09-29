@@ -10,7 +10,7 @@ START="2010-01-01"
 END="2026-09-29"
 WB_URL="https://thedocs.worldbank.org/en/doc/74e8be41ceb20fa0da750cda2f6b9e4e-0050012026/related/CMO-Historical-Data-Monthly.xlsx"
 VIX_URL="https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv"
-NASDAQ_URL="https://indexes.nasdaqomx.com/reports/history.ashx"
+NASDAQ_URL="https://indexes.nasdaqomx.com/reports2/history.ashx"
 H15_PACKAGE="0b98a66d3ff5e1ea0fbf88adc59b387f"
 
 def sha(b:bytes): return hashlib.sha256(b).hexdigest()
@@ -52,7 +52,7 @@ def load_core5(path:Path):
 
 def fetch_nasdaq():
     params=urllib.parse.urlencode({
-      "IndexSymbol":"NDX","StartDate":START,"EndDate":END,"Type":"csv"
+      "IndexSymbol":"NDX","StartDate":START,"EndDate":END,"Type":"CSV","FileType":"EOD"
     })
     url=NASDAQ_URL+"?"+params
     raw,h=get(url,120)
