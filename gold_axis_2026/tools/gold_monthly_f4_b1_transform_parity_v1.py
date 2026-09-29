@@ -112,9 +112,9 @@ def main():
       "rates_daily":"READY_FED_H15",
       "fx_daily":"READY_FED_H10",
       "vix_daily":"READY_CBOE",
-      "nasdaq100_daily":"READY_FRED_UPSTREAM_NASDAQ",
-      "wti_daily":"READY_FRED_UPSTREAM_EIA",
-      "brent_daily":"READY_FRED_UPSTREAM_EIA",
+      "nasdaq100_daily":"READY_NASDAQ_OFFICIAL",
+      "wti_daily":"READY_EIA_OFFICIAL",
+      "brent_daily":"READY_EIA_OFFICIAL",
     }
     readiness_checks={k:(ext["readiness"].get(k)==v) for k,v in required_ready.items()}
 
