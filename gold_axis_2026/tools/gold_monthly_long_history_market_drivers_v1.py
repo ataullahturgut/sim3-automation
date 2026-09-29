@@ -105,7 +105,7 @@ def main():
     ap.add_argument("--output",default="gold_monthly_long_history_market_drivers_v1.json")
     a=ap.parse_args()
     series={};source={}
-    with ThreadPoolExecutor(max_workers=len(FRED_SERIES)) as ex:
+    with ThreadPoolExecutor(max_workers=min(4,len(FRED_SERIES))) as ex:
         fut={ex.submit(fred,sid):sid for sid in FRED_SERIES}
         for ftr in as_completed(fut):
             sid=fut[ftr]
