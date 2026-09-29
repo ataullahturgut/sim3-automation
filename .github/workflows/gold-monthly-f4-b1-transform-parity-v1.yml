@@ -45,7 +45,7 @@ jobs:
         run: python -m py_compile gold_axis_2026/tools/gold_monthly_f4_b1_transform_parity_v1.py
       - name: Run B1 transform parity audit
         run: |
-          SNAP=$(find dev -type f | head -n1)
+          SNAP=dev/gold_monthly_dev_snapshot_v1.json
           python gold_axis_2026/tools/gold_monthly_f4_b1_transform_parity_v1.py             --snapshot "$SNAP"             --external-v2 ext/gold_monthly_external_authority_v2.json             --output gold_monthly_f4_b1_transform_parity_v1.json
       - uses: actions/upload-artifact@v4
         with:
