@@ -2033,6 +2033,67 @@ Decision:
   each with dimension-adjusted optimizer parity.
 - **FX is not started yet**, consistent with one-family-at-a-time execution.
 
+## 20L.6B Rates R1 compact real-yield redesign — COMPLETE / NOT PROMOTED
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_F4_RATES_R1_REAL_YIELD_RESULT_2026-09-29.md`
+
+R1 representation:
+- one Rates feature only: `REAL10_MONTHLY_MEAN_DIFF = mean(REAL10[p]) - mean(REAL10[p-1])`
+- nominal yield **NOT USED**
+- Rates daily VW **NOT USED**
+- GPR weighting on Rates **NOT USED**
+- total inputs **9**
+- antecedent parameter dimension **90**
+- POP **27**
+- generations **45**
+- repeats **3**
+- downstream chronological scaling / ANFIS / local-refit unchanged
+
+Authoritative execution:
+- workflow **Gold Monthly F4 Rates R1 Real Yield V1**
+- run **36570943295**
+- head commit **472db002a6f6fb6fb3700623386416179ca76aa0**
+- 6/6 DEV shards **SUCCESS**
+- summarize **SUCCESS**
+- summary artifact **11033588984**
+- summary digest `sha256:050e47f0c94711c7a73c8c5204e2c7734327de6301589607bf407a167c95842e`
+
+DEV:
+- BASE **1413.0297794084559 / 23/33**
+- R1 **1837.6351578352678 / 19/33**
+- ΣAE deterioration vs BASE **+424.605378426812 USD**
+- relative deterioration **+30.05%**
+- direction change **-4**
+- paired wins/losses/ties **14 / 19 / 0**
+- median paired improvement (BASE − R1) **-7.2854732528**
+- worst R1 month **2024-03**, AE **154.8141711720**
+- signed mean bias **-8.3247270751**
+
+Yearly:
+- 2022: BASE **397.8794** vs R1 **509.7708**
+- 2023: BASE **395.7140** vs R1 **635.9704**
+- 2024: BASE **619.4364** vs R1 **691.8939**
+
+Representation diagnosis:
+- earlier Rates(4) block: **6102.555639186698 / 16/33**
+- R1: **1837.6351578352678 / 19/33**
+- compacting Rates(4) → R1 reduces ΣAE by **4264.92048135143 USD**
+- relative improvement versus Rates(4): **69.89%**
+- direction recovers **+3 correct months**
+
+Decision:
+- R1 **VALID / NOT PROMOTED**
+- Rates-no-signal conclusion **NOT AUTHORIZED**
+- hypothesis that prior Rates failure was materially driven by representation/dimensionality **SUPPORTED**
+- 2025/2026 remain closed
+- next pre-outcome Rates redesign is **R2 orthogonal pair**:
+  1. monthly real-yield change,
+  2. monthly breakeven-inflation change = nominal10 − real10,
+  with **10 total inputs / D100 / POP30 / 45 generations / 3 repeats**.
+- R2 **NOT RUN YET**.
+- FX remains **NOT STARTED**.
+
 ## 20L.7 Workflow hold
 
 Legacy workflows:
@@ -2042,7 +2103,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**F4 Rates internal sub-decomposition after parity-correct combined Rates block non-promotion; FX not started.**
+**F4 Rates representation redesign: R1 complete/not promoted; R2 orthogonal real-yield + breakeven pair next; FX not started.**
 
 ---
 
@@ -2117,7 +2178,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **F4 Rates internal sub-decomposition** after parity-correct Rates(4) DEV ΣAE **6102.555639 / 16/33** vs BASE **1413.029779 / 23/33**. Rates family-wide rejection is not yet authorized because nominal/real MR/VW pairs show strong internal redundancy; FX/VIX/Nasdaq/Energy remain not started in the one-family-at-a-time sequence.
+- Current exact next model/research stage: **F4 Rates R2 orthogonal monetary pair** after R1 real-yield-only DEV ΣAE **1837.635158 / 19/33** vs BASE **1413.029779 / 23/33**. R1 materially improved over the failed four-variable Rates block (**6102.555639 / 16/33**), supporting a representation/dimensionality diagnosis, but did not beat BASE. FX/VIX/Nasdaq/Energy remain not started.
 
 
 ---
