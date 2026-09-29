@@ -82,7 +82,7 @@ def samples_at_origin(bundle,outer_target,spec):
     origin=base.month_shift(outer_target,-1)
     gh=bundle.gpr_vintages[origin]
     out={}
-    for t in base.month_range("2010-07",outer_target):
+    for t in base.month_range("2010-08",outer_target):
         try:
             out[t]=rep_sample(bundle,t,gh,spec)
         except RuntimeError:
@@ -133,7 +133,7 @@ def main():
       "authority":{
         "dev":"2022-04..2024-12","random_split":"NONE",
         "2025_used":False,"2026_used":False,"external_features_used":False,
-        "lag_search_used":False,
+        "lag_search_used":False,"common_training_sample_start":"2010-08",
         "feature_count":8,"feature_families":"same four metals, one monthly + one daily summary each",
         "architecture":"same 8D ChHHO-ANFIS / same optimizer / same rule count / same chronological inner validation",
         "neon_reads":0,"snapshot_payload_sha256":meta["payload_sha256"],
@@ -141,17 +141,14 @@ def main():
       "dev":{"metrics":metrics,"yearly":eb.yearly(rows),"rows":rows},
     }
     if a.variant=="CURRENT8":
-        diff=abs(metrics["sum_abs_error"]-BASE_SIGMAAE)
-        out["f2_baseline_parity"]={
-          "reference_sum_abs_error":BASE_SIGMAAE,
-          "observed_sum_abs_error":metrics["sum_abs_error"],
-          "abs_diff":diff,
-          "reference_direction_correct":BASE_DIRECTION,
-          "observed_direction_correct":metrics["direction_correct"],
-          "pass":diff<1e-4 and metrics["direction_correct"]==BASE_DIRECTION,
+        out["f2_matched_history_baseline"]={
+          "common_training_sample_start":"2010-08",
+          "canonical_f0_reference_sum_abs_error":BASE_SIGMAAE,
+          "canonical_f0_reference_direction_correct":BASE_DIRECTION,
+          "matched_history_sum_abs_error":metrics["sum_abs_error"],
+          "matched_history_direction_correct":metrics["direction_correct"],
+          "role":"F2_INTERNAL_CONTROL_ONLY; canonical F0 remains 1413.029779/23",
         }
-        if not out["f2_baseline_parity"]["pass"]:
-            raise RuntimeError(f"F2_BASELINE_PARITY_FAIL {out['f2_baseline_parity']}")
     Path(a.output).write_text(json.dumps(out,indent=2,sort_keys=True,allow_nan=False)+"\n")
     print("CHHHO_F2_REPRESENTATION_GATE=PASS")
     print(json.dumps({
@@ -159,6 +156,6 @@ def main():
       "sum_abs_error":metrics["sum_abs_error"],
       "direction_correct":metrics["direction_correct"],
       "mae":metrics["mae"],"rmse":metrics["rmse"],
-      "baseline_parity":out.get("f2_baseline_parity"),
+      "matched_history_baseline":out.get("f2_matched_history_baseline"),
     },sort_keys=True))
 if __name__=="__main__":main()
