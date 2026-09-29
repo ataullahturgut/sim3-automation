@@ -1650,6 +1650,49 @@ Binding decision:
 
 ---
 
+
+# 20J. ChHHO F3 lag architecture audit
+
+**Status: COMPLETE / DEV-ONLY / ZERO NEON**
+
+Detailed report:
+`gold_axis_2026/GOLD_MONTHLY_CHHHO_F3_LAG_AUDIT_2026-09-29.md`
+
+Authority:
+- primary run **36544008921**
+- authoritative L1+L2 recovery run **36545472948**
+- L1 artifact **11021516711**
+- L1+L2 recovery artifact **11021484607**
+- Neon reads: **0**
+- 2025/2026 selection use: **NONE**
+
+F3 baseline:
+- L1 CURRENT8: **1413.0299 / 23/33**
+- parity: **PASS**
+
+Lag challengers:
+- DL3_DECAY: **1727.8880 / 17**
+- DL3_EQUAL: **1912.0261 / 14**
+- L1+L2+L3: **1971.3237 / 16**
+- L1/L3/L6: **7587.4515 / 16**
+- L1+L2: **9109.1640 / 19**
+- DL6_BETA13_FIXED: **34407.8023 / 19**
+
+Binding decision:
+- **L1 CURRENT8 retained**
+- no concatenated lag package promoted
+- no fixed distributed-lag compression promoted
+- internal ChHHO contract after F3:
+  - CURRENT8
+  - MR1 + GPR-conditioned VW
+  - L1 only
+- next active stage: **F4 external-family native integration**
+
+L1+L2 early JSON failures:
+**SUPERSEDED_TECHNICAL / NOT MODEL EVIDENCE**.
+
+---
+
 # 21. Bundan sonra manifest nasıl güncellenecek
 
 Her yeni deney bittiğinde **aynı commit zincirinde** bu ana manifest güncellenecek.
@@ -1721,7 +1764,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **ChHHO-ANFIS F3 lag architecture audit**; F0/F1/F2 complete, CURRENT8 MR1+VW retained (CNN-BiLSTM deferred during this priority)
+- Current exact next model/research stage: **ChHHO-ANFIS F4 external-family native integration**; F0/F1/F2/F3 complete, CURRENT8 MR1+VW+L1 retained (CNN-BiLSTM deferred during this priority)
 
 
 ---
