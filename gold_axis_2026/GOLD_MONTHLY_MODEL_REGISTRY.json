@@ -819,7 +819,7 @@
       "rerun": false
     }
   ],
-  "current_next_action": "ALL6-COMPACT diagnostic challenger after B0/B1/B2 PASS; do not open 2025/2026 for selection",
+  "current_next_action": "F4 family decomposition + dimensionality/redundancy diagnosis after valid ALL6-COMPACT non-promotion; keep 2025/2026 closed for selection",
   "registry_rules": {
     "check_before_run": true,
     "completed_models_default_rerun": false,
@@ -858,13 +858,13 @@
     "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
-    "completed_through": "F4 B0 External Authority V2 + B1 transform parity + B2 processing/preprocessing and optimizer parity",
-    "f4_status": "PARITY_GATES_COMPLETE_ALL6_AUTHORIZED_NOT_RUN",
+    "completed_through": "F4 B0/B1/B2 parity gates + ALL6-COMPACT diagnostic",
+    "f4_status": "ALL6_VALID_DIAGNOSTIC_NOT_PROMOTED__FAMILY_DECOMPOSITION_NEXT",
     "legacy_rates_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
     "legacy_fx_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
-    "next_model": "ALL6-COMPACT diagnostic challenger",
+    "next_model": "F4 family decomposition / redundancy diagnosis",
     "next_model_status": "AUTHORIZED_NOT_RUN",
-    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1 + EXTERNAL_AUTHORITY_V2 + B1/B2 parity artifacts",
+    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1 + EXTERNAL_AUTHORITY_V2 + B1/B2 parity artifacts + ALL6 sharded summary",
     "neon_required": false
   },
   "f4_reset": {
@@ -890,7 +890,7 @@
     "wti_transform": "SIGNED_MONTHLY_MEAN_DIFFERENCE_PLUS_GPR_WEIGHTED_DAILY_PRICE_DIFFERENCE__NO_CLIP_NO_DROP",
     "processing_stage": "B1_TRANSFORM_PARITY_COMPLETE_PASS",
     "optimizer_stage": "B2_PROCESSING_AND_OPTIMIZER_PARITY_COMPLETE_PASS",
-    "all6_status": "AUTHORIZED_NOT_RUN",
+    "all6_status": "COMPLETE_VALID_NOT_PROMOTED",
     "b0_run": 36560331164,
     "b1_run": 36560992052,
     "b2_run": 36564452306,
@@ -900,6 +900,24 @@
     "all6_param_dim": 220,
     "all6_population": 66,
     "generations": 45,
-    "repeats": 3
+    "repeats": 3,
+    "all6_run": 36567473694,
+    "all6_head_commit": "59fff6bba43eda027884af0088919a5c25d4d96c",
+    "all6_summary_artifact": 11032667656,
+    "all6_summary_artifact_digest": "sha256:c743f4e06185e6a64574cb78f5b35451123a2ea0ca9458a41c900a4118903c27",
+    "all6_base_sum_abs_error": 1413.0297794084559,
+    "all6_base_direction": "23/33",
+    "all6_sum_abs_error": 2870.961742339026,
+    "all6_direction": "19/33",
+    "all6_delta_sum_abs_error_vs_base": 1457.93196293057,
+    "all6_relative_deterioration_pct": 103.17772379439249,
+    "all6_paired_wins": 10,
+    "all6_paired_losses": 23,
+    "all6_paired_ties": 0,
+    "all6_promotion": "REJECTED",
+    "external_family_wide_rejection": "NOT_AUTHORIZED",
+    "next_stage": "FAMILY_DECOMPOSITION_AND_DIMENSIONALITY_REDUNDANCY_DIAGNOSIS",
+    "transport_2025_for_all6": "NOT_OPENED",
+    "stress_2026_for_all6": "NOT_OPENED"
   }
 }
