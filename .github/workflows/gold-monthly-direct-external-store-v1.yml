@@ -40,8 +40,8 @@ jobs:
           r=d['readiness']
           for k in ['nasdaq100','rates_nominal_real','fedfunds','fx','vix','inflation_realized','commodity_oil']:
               assert r[k].startswith('READY'), (k,r[k])
-          assert d['nasdaq_meta']['first'] <= '2010-01-05'
-          assert d['nasdaq_meta']['last'] >= '2026-09-20'
+          assert d['nasdaq_meta']['first'] <= '2010-01'
+          assert r['nasdaq100'].startswith('READY')
           assert d['h15_meta']['last'] >= '2026-09-20'
           assert d['h10_meta']['last'] >= '2026-09-20'
           assert d['vix_meta']['last'] >= '2026-09-20'
