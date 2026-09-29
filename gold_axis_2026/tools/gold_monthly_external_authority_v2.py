@@ -85,6 +85,61 @@ def fetch_fred_daily(series_id:str):
         "n":len(out),
     }
 
+
+def post_json(url:str, payload:dict, timeout=60)->bytes:
+    raw=json.dumps(payload).encode()
+    last=None
+    for attempt in range(5):
+        try:
+            req=urllib.request.Request(url,data=raw,headers={
+                "User-Agent":"gold-monthly-research/2.0",
+                "Content-Type":"application/json",
+                "Accept":"application/json",
+            },method="POST")
+            with urllib.request.urlopen(req,timeout=timeout) as r:
+                return r.read()
+        except Exception as e:
+            last=e
+            time.sleep(2*(attempt+1))
+    raise RuntimeError(f"POST_FAILED {url} {type(last).__name__}:{last}")
+
+def fetch_cpi_prehistory():
+    endpoint="https://api.bls.gov/publicAPI/v2/timeseries/data/"
+    out={}; chunks=[]
+    for start,end in ((2008,2017),(2018,2026)):
+        payload={"seriesid":["CUUR0000SA0","CUUR0000SA0L1E"],
+                 "startyear":str(start),"endyear":str(end)}
+        raw=post_json(endpoint,payload,90)
+        d=json.loads(raw)
+        if str(d.get("status"))!="REQUEST_SUCCEEDED":
+            raise RuntimeError(f"BLS_FAIL {start}-{end} {d.get('message')}")
+        chunks.append({"start":start,"end":end,"sha256":sha_bytes(raw)})
+        for s in d["Results"]["series"]:
+            sid=s["seriesID"]
+            key="CPI_ALL_NSA" if sid=="CUUR0000SA0" else "CPI_CORE_NSA"
+            for r in s["data"]:
+                per=str(r["period"])
+                if not per.startswith("M") or per=="M13": continue
+                m=f"{int(r['year']):04d}-{int(per[1:]):02d}"
+                v=pd.to_numeric(r.get("value"),errors="coerce")
+                if pd.notna(v):
+                    out.setdefault(m,{})[key]=float(v)
+    if min(out)>"2008-01" or max(out)<"2026-08":
+        raise RuntimeError(f"CPI_PREHISTORY_COVERAGE {min(out)} {max(out)}")
+    required=pd.period_range("2009-01","2024-12",freq="M")
+    missing=[str(m) for m in required if str(m) not in out or
+             not {"CPI_ALL_NSA","CPI_CORE_NSA"}<=set(out[str(m)])]
+    if missing:
+        raise RuntimeError(f"CPI_PREHISTORY_MISSING {missing[:12]}")
+    return out,{
+        "endpoint":endpoint,
+        "source":"U.S. Bureau of Labor Statistics",
+        "series":["CUUR0000SA0","CUUR0000SA0L1E"],
+        "first":min(out),"last":max(out),"n":len(out),
+        "chunks":chunks,
+        "purpose":"preserve canonical 2010-03 training start for YoY CPI features",
+    }
+
 def month_avg(daily:dict[str,float]):
     s=pd.Series(daily,dtype=float)
     s.index=pd.to_datetime(s.index)
@@ -157,6 +212,8 @@ def main():
     wb_wti={m:float(z["WTI"]) for m,z in wb.items() if z.get("WTI") is not None}
     wb_brent={m:float(z["BRENT"]) for m,z in wb.items() if z.get("BRENT") is not None}
 
+    cpi_long,cpi_long_meta=fetch_cpi_prehistory()
+
     diagnostics={
         "coverage":diag,
         "nasdaq_daily_monthly_avg_vs_core5":parity(ndx_m,core_ndx),
@@ -188,8 +245,8 @@ def main():
         "h10_meta":v1["h10_meta"],
         "vix_daily":v1["vix_daily"],
         "vix_meta":v1["vix_meta"],
-        "cpi_monthly":v1["cpi_monthly"],
-        "cpi_meta":v1["cpi_meta"],
+        "cpi_monthly":cpi_long,
+        "cpi_meta":cpi_long_meta,
         "commodity_monthly":v1["commodity_monthly"],
         "commodity_meta":v1["commodity_meta"],
         "core5_monthly":v1["core5_monthly"],
@@ -201,7 +258,7 @@ def main():
             "nasdaq100_daily":"READY_FRED_UPSTREAM_NASDAQ",
             "wti_daily":"READY_FRED_UPSTREAM_EIA",
             "brent_daily":"READY_FRED_UPSTREAM_EIA",
-            "cpi":"READY_MONTHLY_NATIVE_FREQUENCY",
+            "cpi":"READY_MONTHLY_NATIVE_FREQUENCY_WITH_2008_PREHISTORY",
             "copper":"READY_MONTHLY_WORLD_BANK__DAILY_NOT_PROVEN",
             "cpi_daily":"NOT_APPLICABLE_NATIVE_MONTHLY_STATISTIC",
         },
