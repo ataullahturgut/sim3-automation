@@ -2372,6 +2372,62 @@ Conclusion:
 - earlier FRED-distribution reaudit run 36578797117 failed only on download timeout before comparison; later FRED network attempts are non-authority because the stronger direct Board DDP audit supersedes them.
 - next unopened family remains **VIX**.
 
+## 20L.6H ChHHO PIT Rates residual exact replication — COMPLETE / PASS
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_CHHHO_PIT_RATES_RESIDUAL_REPLICATION_2026-09-29.md`
+
+Purpose:
+- re-run the previously successful Rates residual-correction method **without redesigning it**;
+- distinguish native-input failure from residual-layer usefulness.
+
+Exact historical method:
+- frozen ChHHO-ANFIS authority artifact **10989389723**
+- strict-PIT Rates block:
+  - `dgs10_change`
+  - `dff_change`
+  - `curve_proxy_change = delta(DGS10-DFF)`
+- correction target: **price residual = actual price − BASE forecast price**
+- learner: **Ridge(alpha=10)**
+- StandardScaler fit on prior eligible residual rows only
+- minimum prior residuals **12**
+- correction cap **±1.5 × median(abs(prior residual))**
+- prequential chronology: prior DEV residuals only
+- random split **NONE**
+- 2025 selection/tuning **NONE**
+- Neon reads **0**
+
+Authoritative replication:
+- workflow **Gold Monthly ChHHO PIT Rates Residual Replication V1**
+- run **36581036837**
+- head commit **46fa4d92cc3b72efb87f2d1624758884e48defb0**
+- job **109448965788**
+- result artifact **11038844070**
+- artifact digest `sha256:3db616642fc285fff2c0357994bc8ab8390e6f65c24dc87380e2a5ac2cebf34b`
+- replication gate **PASS**
+
+Exact reproduced DEV:
+- frozen historical BASE **1413.0298545342782 / 23/33**
+- PIT Rates residual corrected **1370.9203928352813 / 23/33**
+- full DEV improvement **42.10946169899694 USD**
+- relative improvement **2.98%**
+- first eligible corrected target **2023-04**
+- eligible-period BASE ΣAE **843.2884386436745**
+- eligible-period corrected ΣAE **801.1789769446775**
+- improvement excluding single best month **17.922324074458402 USD**
+- 2024 improvement **62.622909991857114 USD**
+- stability gate **PASS**
+
+The historical frozen BASE differs from the current canonical BASE by only about **0.000075 USD** in ΣAE; the old result reproduces exactly within the frozen tolerance.
+
+Interpretation:
+- **native-input Rates remains CLOSED / NOT PROMOTED**
+- **Rates residual correction is REPRODUCED / VALID**
+- therefore Rates contains architecture-specific incremental information, but direct expansion of the ChHHO native input space is the wrong tested integration path
+- direct Board DDP hard-data audit remains PASS with max daily/transform diff **0.0**
+- next clean enhancement test, if pursued, is the **same frozen PIT Rates price-residual protocol applied to the current canonical ChHHO BASE rows**, with no hyperparameter redesign
+- VIX native family remains unopened.
+
 ## 20L.7 Workflow hold
 
 Legacy workflows:
@@ -2381,7 +2437,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**F4 hard official-data re-audit PASS after Rates/FX closures; VIX is next and not yet started.**
+**ChHHO PIT Rates residual method exactly reproduced and PASS; native Rates/FX remain closed. Current-canonical residual re-run is the clean enhancement candidate; VIX native family is still unopened.**
 
 ---
 
