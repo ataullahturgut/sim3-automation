@@ -1,6 +1,6 @@
 {
   "schema_version": "GOLD_MONTHLY_MODEL_REGISTRY_V1",
-  "date": "2026-09-28",
+  "date": "2026-09-29",
   "canonical_manifest": "gold_axis_2026/GOLD_MONTHLY_PROJECT_MANIFEST.md",
   "branch": "gold-midas-headswap-v1-20260925",
   "binding_contract": {
@@ -819,7 +819,7 @@
       "rerun": false
     }
   ],
-  "current_next_action": "CNN-BiLSTM structural challenger using authorized DEV Snapshot V1",
+  "current_next_action": "F4 RESET: External Authority V2 completion -> transform parity -> optimizer parity -> ALL6-COMPACT diagnostic challenger",
   "registry_rules": {
     "check_before_run": true,
     "completed_models_default_rerun": false,
@@ -835,8 +835,8 @@
     "If this JSON conflicts with the Markdown manifest, the Markdown manifest controls.",
     "Do not create a second project narrative in JSON."
   ],
-  "manifest_version": "1.3",
-  "last_manifest_commit": "58c20f1b0dc9198c174aa35c2381077285916369",
+  "manifest_version": "1.4",
+  "last_manifest_commit": "27e10c97f2588148398b52a2cec271ed0f8212cb",
   "holdout_semantics": {
     "global_2025_pristine": false,
     "rule": "2025 may not be used for retrospective tuning/promotion; unopened families keep it locked",
@@ -853,14 +853,39 @@
     "RAW_LEVEL_LAGS8": "4 metals x last two completed monthly levels",
     "SIMPLE_RETURNS8": "4 metals x {1m log return, 3m log return}",
     "MIXED20": "CURRENT8 + 4 levels + 4 three-month momenta + 4 realized-volatility summaries",
-    "RAW_MONTHLY_4METAL": "Gold/Silver/Platinum/Palladium completed monthly levels"
+    "RAW_MONTHLY_4METAL": "Gold/Silver/Platinum/Palladium completed monthly levels",
+    "F4_DAILY_EXTERNAL_PAIR": "Daily family x {monthly-mean MR1 analogue, GPR-conditioned intramonth VW analogue}; family-specific release cutoff; L1 only",
+    "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
-    "completed_through": "BiLSTM structural challenger",
-    "bilstm_status": "PASS_NOT_PROMOTED",
-    "next_model": "CNN-BiLSTM",
-    "next_model_status": "NOT_RUN",
-    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1",
+    "completed_through": "ChHHO F3 lag architecture; F4 legacy endpoint Rates/FX recorded",
+    "f4_status": "RESET_ACTIVE_DATA_AND_PROCESSING_PARITY",
+    "legacy_rates_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
+    "legacy_fx_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
+    "next_model": "ALL6-COMPACT after B0/B1/B2 gates",
+    "next_model_status": "BLOCKED_UNTIL_EXTERNAL_AUTHORITY_V2_AND_PARITY_GATES_PASS",
+    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1 + EXTERNAL_AUTHORITY_V2",
     "neon_required": false
+  },
+  "f4_reset": {
+    "authority": "gold_axis_2026/GOLD_MONTHLY_F4_RESET_PROCESSING_PARITY_AUDIT_2026-09-29.md",
+    "base_contract": "CURRENT8 MR1+VW L1",
+    "base_sigma_ae": 1413.0297794085,
+    "base_direction": "23/33",
+    "data_stage": "EXTERNAL_AUTHORITY_V2_IN_PROGRESS",
+    "required_gates": [
+      "B0_DATA_AUTHORITY_V2",
+      "B1_TRANSFORM_PARITY",
+      "B2_OPTIMIZER_PARITY"
+    ],
+    "all6_daily_families": [
+      "Rates",
+      "FX",
+      "VIX",
+      "Nasdaq-100",
+      "WTI",
+      "Brent"
+    ],
+    "optimizer_population_rule": "POP(k)=ceil(24*(10*k)/80)"
   }
 }
