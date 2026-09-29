@@ -2635,6 +2635,50 @@ Binding methodological correction:
 - VIX_R1: only **marginal DEV incremental value** beyond bias-only.
 - PIT Rates: not a DEV-supported external winner after bias control, despite positive 2026 retrospective behavior.
 
+## 20L.6M Brent expanded residual screen — COMPLETE / NO ROBUST PROMOTION
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_CHHHO_BRENT_EXPANDED_RESIDUAL_SCREEN_2026-09-29.md`
+
+Frozen variables:
+- `BRENT_MR1`
+- `BRENT_VW`
+- `BRENT_RVOL`
+- `BRENT_DOWNSIDE_VOL`
+- `BRENT_MAX_DD`
+
+No raw Brent price level was used.
+
+Mandatory benchmark:
+- BIAS_ONLY **1338.893512 / 23/33**
+
+DEV results:
+- B1 MR1 **1346.502415 / 23/33**, incremental vs bias **-7.608904**, FAIL
+- B2 MR1+RVOL **1332.365899 / 23/33**, incremental **+6.527612** but excl-best-month **-1.219005**, FAIL
+- B3 MR1+DOWNSIDE **1330.832804 / 23/33**, incremental **+8.060708** but excl-best-month **-1.265988**, FAIL
+- B4 MR1+MAXDD **1359.785146 / 23/33**, FAIL
+- B5 MR1+RVOL+DOWNSIDE+MAXDD **1347.836087 / 23/33**, FAIL
+- B6 ALL5 **1354.323041 / 23/33**, FAIL
+
+Important:
+- all six blocks pass the old BASE-relative gate;
+- **none** passes the binding incremental-vs-BIAS_ONLY robustness gate;
+- best numerical block B3 depends too heavily on one favorable DEV month.
+
+Decision:
+- **no Brent residual block promoted**
+- Brent simple feature expansion is exhausted under the current residual Ridge protocol
+- do not transport B3 as a selected challenger
+- next residual family should be WTI or Nasdaq, using the same mandatory BIAS_ONLY gate.
+
+Authoritative execution:
+- workflow **Gold Monthly ChHHO Brent Expanded Residual Screen V1**
+- run **36593458061**
+- head **b00e410dadcf24fb5c8a1ba2f4d05240be5ad8b8**
+- job **109492222857**
+- artifact **11045435477**
+- digest `sha256:c3af6e6e550f849bcc2c6e63db4e7d943ae829999c80176d26347891e5fcbfff`
+
 ## 20L.7 Workflow hold
 
 Legacy workflows:
@@ -2644,7 +2688,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**Residual attribution re-audit COMPLETE: BIAS_ONLY = 1338.893512 / 23/33 and becomes mandatory control. Brent and Rates do not beat bias-only on DEV; VIX_R1 beats it by only 0.563467 USD. Future Nasdaq/WTI/etc. residual screens must prove incremental value over BIAS_ONLY before promotion.**
+**Brent expanded residual screen COMPLETE with no robust promotion. Best Brent pack MR1+DOWNSIDE reaches 1330.832804 / 23/33 but fails the incremental robustness gate after the best month is removed. BIAS_ONLY remains binding; WTI or Nasdaq is the next clean residual family.**
 
 ---
 
