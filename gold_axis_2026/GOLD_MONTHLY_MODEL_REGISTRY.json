@@ -819,7 +819,7 @@
       "rerun": false
     }
   ],
-  "current_next_action": "Brent expanded residual screen is closed with no robust promotion. Apply the same BIAS_ONLY incremental gate to the next residual family (WTI or Nasdaq).",
+  "current_next_action": "Cross-model error overlap audit supports a viable router hypothesis. Next stage: build an origin-safe error-risk/rescueability gate with no price switching; only if prequential gate works may fallback routing be tested.",
   "registry_rules": {
     "check_before_run": true,
     "completed_models_default_rerun": false,
@@ -858,14 +858,14 @@
     "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
-    "completed_through": "F4 external residual attribution re-audit + Brent expanded residual feature screen under mandatory bias-only gate",
-    "f4_status": "BRENT_EXPANDED_RESIDUAL_CLOSED_NO_ROBUST_PROMOTION",
+    "completed_through": "F4 residual attribution + Brent expanded residual closure + cross-model 33-month error-overlap/router viability audit",
+    "f4_status": "CROSS_MODEL_ERROR_OVERLAP_COMPLETE__ROUTER_HYPOTHESIS_VIABLE",
     "legacy_rates_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
     "legacy_fx_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
-    "next_model": "WTI or Nasdaq residual screen with BIAS_ONLY incremental gate",
+    "next_model": "Error-risk / rescueability gate V1 (no price switching)",
     "next_model_status": "NOT_RUN",
     "execution_source": "Frozen historical ChHHO authority + strict PIT Rates compact snapshot + exact residual replication",
-    "neon_required": "depends_on_feature transform"
+    "neon_required": "likely read-only for origin-safe features"
   },
   "f4_reset": {
     "authority": "gold_axis_2026/GOLD_MONTHLY_F4_RESET_PROCESSING_PARITY_AUDIT_2026-09-29.md",
@@ -1230,5 +1230,39 @@
     "brent_expanded_best_2024_incremental": 27.898246911520573,
     "brent_expanded_best_gate": "FAIL",
     "brent_residual_family_status": "CLOSED_SIMPLE_FEATURE_EXPANSION_EXHAUSTED_UNDER_CURRENT_PROTOCOL"
+  },
+  "router_research": {
+    "status": "VIABILITY_AUDIT_COMPLETE",
+    "run_id": 36600141673,
+    "head": "ee82eb25cb4017e9f59d38affeee27304f32ea7a",
+    "job_id": 109515089218,
+    "artifact_id": 11049132605,
+    "artifact_digest": "sha256:baa25ab1ee06130bdf188cde96be00ee9a8344b5e7a6c609ada996dfd8bec414",
+    "broad_exact_row_models": 24,
+    "competitive_models": 16,
+    "competitive_rule": "DEV sum_abs_error <= 1.15 * ChHHO sum_abs_error",
+    "chhho_dev_sum_abs_error": 1413.0297794084559,
+    "chhho_worst8_sum_abs_error": 747.0861372270795,
+    "chhho_worst8_share_of_total": 0.528714,
+    "oracle_switch_worst8_total_sum_abs_error": 1120.8385660239198,
+    "oracle_switch_worst8_improvement": 292.191213384536,
+    "best_fixed_fallback_diagnostic": {
+      "model": "CNN-LSTM LB6",
+      "sum_abs_error_on_chhho_worst8": 588.8926663189288,
+      "improvement_vs_chhho_on_same_months": 158.19347090815063,
+      "wins": 6,
+      "n": 8
+    },
+    "notable_shared_hard_months": {
+      "2024-03": "16/16 competitive top-8; best rescue only 5.47 USD",
+      "2022-07": "14/16 competitive top-8; best rescue only 1.76 USD"
+    },
+    "notable_model_specific_rescue_months": {
+      "2023-08": "3/16 competitive top-8; 14/15 alternatives beat ChHHO; best AE 22.36 vs 77.53",
+      "2022-11": "10/16; 15/15 alternatives beat ChHHO; best AE 43.74 vs 102.20",
+      "2023-01": "12/16; 14/15 alternatives beat ChHHO; best AE 29.59 vs 100.74"
+    },
+    "conclusion": "NOT_ALL_MODELS_FAIL_SAME_MONTHS__EX_POST_COMPLEMENTARITY_EXISTS__EX_ANTE_GATE_NOT_YET_PROVEN",
+    "next_stage": "ERROR_RISK_RESCUEABILITY_GATE_V1_NO_PRICE_SWITCHING"
   }
 }
