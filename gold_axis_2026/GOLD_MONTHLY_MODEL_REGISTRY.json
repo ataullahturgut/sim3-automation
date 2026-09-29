@@ -819,7 +819,7 @@
       "rerun": false
     }
   ],
-  "current_next_action": "F4 family decomposition + dimensionality/redundancy diagnosis after valid ALL6-COMPACT non-promotion; keep 2025/2026 closed for selection",
+  "current_next_action": "Resolve Rates internal redundancy first: nominal-only, real-only, MR-only, VW-only parity-correct variants; do not start FX yet; keep 2025/2026 closed",
   "registry_rules": {
     "check_before_run": true,
     "completed_models_default_rerun": false,
@@ -858,13 +858,13 @@
     "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
-    "completed_through": "F4 B0/B1/B2 parity gates + ALL6-COMPACT diagnostic",
-    "f4_status": "ALL6_VALID_DIAGNOSTIC_NOT_PROMOTED__FAMILY_DECOMPOSITION_NEXT",
+    "completed_through": "F4 B0/B1/B2 + ALL6 diagnostic + parity-correct combined Rates family lane",
+    "f4_status": "RATES_COMBINED_BLOCK_VALID_NOT_PROMOTED__RATES_INTERNAL_DECOMPOSITION_NEXT",
     "legacy_rates_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
     "legacy_fx_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
-    "next_model": "F4 family decomposition / redundancy diagnosis",
+    "next_model": "Rates internal sub-decomposition",
     "next_model_status": "AUTHORIZED_NOT_RUN",
-    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1 + EXTERNAL_AUTHORITY_V2 + B1/B2 parity artifacts + ALL6 sharded summary",
+    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1 + EXTERNAL_AUTHORITY_V2 + B2 parity + Rates parity summary",
     "neon_required": false
   },
   "f4_reset": {
@@ -918,6 +918,34 @@
     "external_family_wide_rejection": "NOT_AUTHORIZED",
     "next_stage": "FAMILY_DECOMPOSITION_AND_DIMENSIONALITY_REDUNDANCY_DIAGNOSIS",
     "transport_2025_for_all6": "NOT_OPENED",
-    "stress_2026_for_all6": "NOT_OPENED"
+    "stress_2026_for_all6": "NOT_OPENED",
+    "rates_status": "COMBINED_BLOCK_COMPLETE_VALID_NOT_PROMOTED__FAMILY_STILL_OPEN",
+    "rates_run": 36569188686,
+    "rates_head_commit": "c2d1e2148725ff9cae481ea28e724056617220a2",
+    "rates_summary_artifact": 11033071845,
+    "rates_summary_artifact_digest": "sha256:d8abaeae0fd2c90f605d7c4beca4763ea2106f0bf475caefd00d9e054506850d",
+    "rates_total_inputs": 12,
+    "rates_param_dim": 120,
+    "rates_population": 36,
+    "rates_sum_abs_error": 6102.555639186698,
+    "rates_direction": "16/33",
+    "rates_delta_sum_abs_error_vs_base": 4689.525859778241,
+    "rates_relative_deterioration_pct": 331.87735517799507,
+    "rates_paired_wins": 12,
+    "rates_paired_losses": 21,
+    "rates_paired_ties": 0,
+    "rates_max_within_corr": 0.8265661458302779,
+    "rates_condition_number_ratio": 1.3364288529427701,
+    "rates_combined_promotion": "REJECTED",
+    "rates_family_wide_rejection": "NOT_AUTHORIZED",
+    "rates_next_subvariants": [
+      "NOMINAL_ONLY_PAIR",
+      "REAL_ONLY_PAIR",
+      "MR_ONLY_PAIR",
+      "VW_ONLY_PAIR"
+    ],
+    "fx_status": "NOT_STARTED_AFTER_USER_ONE_FAMILY_AT_A_TIME_RULE",
+    "transport_2025_for_rates_combined": "NOT_OPENED",
+    "stress_2026_for_rates_combined": "NOT_OPENED"
   }
 }
