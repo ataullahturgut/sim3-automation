@@ -1,8 +1,11 @@
 # GOLD MONTHLY — ChHHO Origin-Signal Frozen Transport 2025/2026
 
 **Date:** 2026-09-29  
-**Status:** FROZEN TRANSPORT COMPLETE / HARD SWITCH NOT VALIDATED  
-**Purpose:** Transport the DEV-derived origin-signal mechanisms unchanged into reporting-only 2025 and 2026 without retuning.
+**Status:** FROZEN ALARM-DETECTION TRANSPORT COMPLETE / GENERAL ALARM DETECTOR NOT YET VALIDATED  
+**Purpose:** Test one question only: whether the DEV-derived origin-visible warning mechanisms can identify future ChHHO high-error months before the target month begins.
+
+> **This report does NOT test model switching, fallback selection, routing, blending, or alternative-model choice.**
+> Those are separate later questions and are intentionally excluded here.
 
 ## 1. Frozen rule set
 
@@ -38,194 +41,195 @@ At the forecast origin:
 - real 10Y monthly-mean change > 0;
 - ChHHO predicts UP.
 
-Strong switch-type set = A + C + D.  
-Four-mechanism warning set = A + B + C + D.
+The alarm system is simply A OR B OR C OR D.
 
 ## 2. Frozen transport data
 
 - ChHHO 2025 forecasts: frozen ANFIS authority artifact 10989389723.
-- ChHHO 2026 Jan-Aug forecasts/actuals: frozen VIX transport authority artifact 11042740289; August 2026 ChHHO BASE is unchanged frozen base forecast.
+- ChHHO 2026 Jan-Aug forecasts/actuals: frozen transport authority artifact 11042740289.
 - Four-metal origin data: governed DEV snapshot through 2024-12 plus public StakTrakr extension from 2025-01-02 through 2026-09-28.
 - Broad USD / nominal 10Y / real 10Y: External Authority V2 artifact 11028494060.
 - Release cutoffs retained: H.10 Broad USD = 7 calendar days; H.15 rates = 2 calendar days.
-- 2025/2026 are reporting-only. No rule or threshold was changed after seeing transport outcomes.
+- 2025/2026 are reporting-only.
+- No threshold or rule was altered after observing transport outcomes.
 
-## 3. Alarm months
+## 3. What counts as a high-error month?
 
-| Target | Mechanism | ChHHO AE | ChHHO direction | FULL7 AE | REDUCED4 AE | Transport reading |
-|---|---|---:|---|---:|---:|---|
-| **2025-03** | B Momentum underreaction | **119.06** | WRONG | 76.73 | **73.29** | successful warning; both ANN challengers rescue |
-| **2025-09** | A Cross-metal fragility | **288.42** | CORRECT | 230.51 | **215.79** | successful magnitude-risk warning |
-| **2025-12** | A Cross-metal fragility | **93.32** | CORRECT | 95.99 | **80.65** | partial rescue; REDUCED4 helps, FULL7 slightly worse |
-| **2026-05** | A Cross-metal fragility | **55.10** | CORRECT | 70.63 | 74.23 | false switch alarm; ChHHO is better |
+The frozen DEV ChHHO absolute-error third quartile is:
+
+- **Q3 = 63.06 USD**
+
+For this transport audit:
+
+- **HIGH ERROR = ChHHO absolute error > 63.06 USD**
+- **ALARM HIT = alarm fires and the target month is HIGH ERROR**
+- **FALSE ALARM = alarm fires but error is <= 63.06 USD**
+- **MISS = HIGH ERROR occurs but no alarm fires**
+
+This definition is frozen from DEV and is not retuned on 2025/2026.
+
+## 4. Alarm months only
+
+| Target | Alarm mechanism | ChHHO AE | High error? | Detection result |
+|---|---|---:|---|---|
+| **2025-03** | B — Momentum underreaction | **119.06** | YES | **HIT** |
+| **2025-09** | A — Cross-metal fragility | **288.42** | YES | **HIT** |
+| **2025-12** | A — Cross-metal fragility | **93.32** | YES | **HIT** |
+| **2026-05** | A — Cross-metal fragility | **55.10** | NO | **FALSE ALARM** |
 
 No C or D alarm fires in 2025 or 2026 Jan-Aug.
 
-## 4. Error-risk transport
+## 5. 2025 alarm-detection result
 
-Frozen DEV Q3 ChHHO absolute-error threshold = **63.06 USD**.
+2025 contains 12 target months.
 
-### 2025
-- months: 12
-- ChHHO ΣAE: **1252.05**
-- warning alarms: **3**
-- alarms above frozen DEV-Q3: **3/3**
-- total months above frozen DEV-Q3: **8**
-- precision for Q3-high error: **100%**
-- recall for Q3-high error: **37.5%**
-- ChHHO direction: **9/12**
+- alarms fired: **3**
+- high-error months: **8**
+- alarm hits: **3**
+- false alarms: **0**
+- high-error misses: **5**
 
-Interpretation: 2025 transport is selective and useful, but incomplete. It identifies three genuine high-error months and produces no low-error alarm.
+Metrics:
+- **precision = 3 / 3 = 100%**
+- **recall = 3 / 8 = 37.5%**
+- false-alarm rate among alarms = **0%**
 
-### 2026 Jan-Aug
-- months: 8
-- ChHHO ΣAE: **1526.13**
-- warning alarms: **1** (2026-05)
-- alarm above frozen DEV-Q3: **0/1**
-- total months above frozen DEV-Q3: **5**
-- precision for Q3-high error: **0%**
-- recall for Q3-high error: **0%**
-- ChHHO direction: **5/8**
+Interpretation:
 
-Major unflagged misses include:
-- **2026-01: 458.50 USD**
-- **2026-06: 362.17 USD**
-- **2026-08: 347.99 USD**
-- **2026-03: 145.62 USD**
-- **2026-07: 82.68 USD**
+The frozen alarm system is **highly selective but incomplete** in 2025.  
+When it raises an alarm, the alarm is correct in all three cases.  
+However it detects only 3 of 8 high-error months.
 
-Interpretation: the frozen DEV mechanisms do not cover the dominant 2026 failure regime.
+Therefore 2025 supports the statement:
 
-### Combined 2025 + 2026 Jan-Aug
-- months: 20
-- alarms: 4
-- alarms above frozen DEV-Q3: 3
-- Q3-high months: 13
-- precision: **75.0%**
-- recall: **23.1%**
-- flagged mean AE: **138.97 USD**
-- unflagged mean AE: **138.89 USD**
+> “Some ChHHO danger states are visible ex ante.”
 
-Thus the warning set is not a general high-error detector.
+It does **not** support:
 
-## 5. Rescueability diagnostic against frozen ANN challengers
+> “Most ChHHO high-error months can already be detected.”
 
-ANN rows exist for 2025 and 2026 Jan-Jul (19 months).
+## 6. 2026 Jan-Aug alarm-detection result
 
-Define a descriptive ANN-rescueable month as one where at least one of frozen FULL7 or REDUCED4 has lower AE than ChHHO.
+2026 Jan-Aug contains 8 target months.
 
-Across 19 months:
-- ANN-rescueable by either challenger: **11/19**
-- four-mechanism alarm catches: **3/11**
-- alarm precision for “either ANN better”: **3/4 = 75%**
-- alarm recall: **3/11 = 27.3%**
+- alarms fired: **1**
+- high-error months: **5**
+- alarm hits: **0**
+- false alarms: **1**
+- high-error misses: **5**
 
-For the stricter definition “both ANN challengers beat ChHHO”:
-- months: **9/19**
-- alarm precision: **2/4 = 50%**
-- alarm recall: **2/9 = 22.2%**
+Metrics:
+- **precision = 0 / 1 = 0%**
+- **recall = 0 / 5 = 0%**
 
-This confirms the central limitation: the frozen gate is selective but misses many genuinely rescueable months.
+Large unflagged ChHHO errors:
 
-## 6. Fixed-challenger switch diagnostics — NOT promotion evidence
+- **2026-01: 458.50 USD — MISS**
+- **2026-03: 145.62 USD — MISS**
+- **2026-06: 362.17 USD — MISS**
+- **2026-07: 82.68 USD — MISS**
+- **2026-08: 347.99 USD — MISS**
 
-The gate was frozen before this transport, but choosing FULL7 or REDUCED4 as fallback is evaluated here only as a diagnostic. No fallback is promoted from this test.
+The only alarm:
+- **2026-05: 55.10 USD — FALSE ALARM**
 
-### Warning set (A+B+C+D) -> FULL7 on alarm
-2025:
-- ChHHO ΣAE 1252.05 -> hybrid **1154.49**
-- improvement **97.56 USD**
-- direction **9/12 -> 10/12**
+Interpretation:
 
-2026 Jan-Jul:
-- ChHHO ΣAE 1178.14 -> hybrid **1193.67**
-- deterioration **15.53 USD**
-- direction **5/7 -> 5/7**
+The DEV-derived alarm mechanisms **do not identify the dominant 2026 high-error regime**.
 
-Combined 19 months:
-- 2430.19 -> **2348.16**
-- improvement **82.03 USD**
-- direction **14/19 -> 15/19**
+## 7. Combined frozen transport result
 
-### Warning set (A+B+C+D) -> REDUCED4 on alarm
-2025:
-- ChHHO ΣAE 1252.05 -> hybrid **1121.00**
-- improvement **131.06 USD**
-- direction **9/12 -> 10/12**
+Across 2025 + 2026 Jan-Aug:
 
-2026 Jan-Jul:
-- ChHHO ΣAE 1178.14 -> hybrid **1197.27**
-- deterioration **19.13 USD**
-- direction **5/7 -> 5/7**
+- months: **20**
+- alarms: **4**
+- high-error months: **13**
+- hits: **3**
+- false alarms: **1**
+- misses: **10**
 
-Combined 19 months:
-- 2430.19 -> **2318.26**
-- improvement **111.93 USD**
-- direction **14/19 -> 15/19**
+Metrics:
+- **precision = 75.0%**
+- **recall = 23.1%**
+- false alarms among alarms = **25.0%**
 
-Including 2026-08 (no alarm; ANN fallback row unavailable and no switch is made):
-- ChHHO 20-month ΣAE: **2778.19**
-- diagnostic REDUCED4-switch total: **2666.26**
-- nominal improvement: **111.93 USD = 4.03%**
-- direction: **14/20 -> 15/20**
+This is not sufficient for a general-purpose high-error warning system.
 
-The combined gain is driven by 2025. The rule loses value in 2026 and therefore cannot be called transport-stable.
+The important distinction is:
 
-## 7. Mechanism-level transport reading
+- **Precision is reasonably high overall because the system rarely raises an alarm.**
+- **Recall is too low because most high-error months are not detected.**
+
+So the present mechanism set is better described as:
+
+> **specific warning signatures for a subset of failure modes**
+
+rather than:
+
+> **a general ChHHO error alarm.**
+
+## 8. Mechanism-level transport reading
 
 ### A — Cross-metal fragility
 Transport alarms:
-- 2025-09: strong useful warning
-- 2025-12: useful only against REDUCED4
-- 2026-05: false switch warning
+- 2025-09 — HIT
+- 2025-12 — HIT
+- 2026-05 — FALSE ALARM
 
-Verdict: **PARTIAL TRANSPORT / NOT STABLE ENOUGH FOR HARD SWITCH**.
+Result:
+- 2 true high-error detections
+- 1 false alarm
+
+**Status: PARTIAL TRANSPORT.**
 
 ### B — Supported momentum underreaction
 Transport alarm:
-- 2025-03: large ChHHO error, wrong direction, both frozen ANN challengers better.
+- 2025-03 — HIT
 
-Verdict: **PROMISING BUT n=1 TRANSPORT EVENT**.
+**Status: PROMISING, BUT ONLY ONE OUT-OF-DEV EVENT.**
 
 ### C — Delayed rates catch-up
 No transport event.
 
-Verdict: **NOT TESTED OUT OF DEV BY AVAILABLE EVENT COUNT**.
+**Status: NOT TESTED BY EVENT COUNT.**
 
 ### D — Macro-Gold conflict
 No transport event.
 
-Verdict: **NOT TESTED OUT OF DEV BY AVAILABLE EVENT COUNT**.
+**Status: NOT TESTED BY EVENT COUNT.**
 
-## 8. Scientific conclusion
+## 9. Scientific conclusion
 
-The DEV finding was not pure noise: the frozen rules generate several meaningful 2025 warnings, especially 2025-03 and 2025-09.
+The alarm hypothesis is **partially supported, but not validated as a complete detector**.
 
-However the hypothesis **does not validate as a general router**:
-- recall is low;
-- 2026 precision/recall collapses;
-- very large 2026 misses are unflagged;
-- the cross-metal rule produces a false switch warning in 2026-05;
-- fixed fallback gains are regime-dependent.
+What is supported:
+- the DEV mechanisms were not pure retrospective storytelling;
+- three frozen alarms in 2025 correctly identify three genuinely high-error ChHHO months;
+- cross-metal fragility and momentum-underreaction can carry real ex-ante warning information.
 
-Therefore:
+What is not supported:
+- the current four mechanisms do not detect most high-error months;
+- they completely fail on the dominant 2026 failure regime;
+- therefore the alarm layer is not yet complete enough for operational use.
 
-**HARD SWITCH ROUTER: NOT PROMOTED.**
+## 10. Correct next question
 
-The evidence supports a narrower role:
-- mechanism flags may be retained as **confidence/risk annotations**;
-- automatic model replacement is not justified yet;
-- 2026 introduces at least one missing failure mechanism not represented by the DEV-derived rule set.
+The next stage remains **alarm discovery**, not routing.
 
-## 9. Next research boundary
+Do NOT ask:
+- which alternative model should replace ChHHO;
+- whether FULL7/REDUCED4 should be used;
+- what switching rule should be applied.
 
-Do not retune the four rules on 2025/2026.
+Ask only:
 
-The scientifically clean next step is to study the **unflagged 2026 large-error months** (especially 2026-01, 2026-06, 2026-08) as a new, explicitly separate mechanism-discovery stage, using origin-visible variables not already exhausted. Candidate information families remain:
+> **What origin-visible state was present before the unflagged 2026 high-error months, especially 2026-01, 2026-06 and 2026-08, that is absent from the current four mechanisms?**
+
+Candidate information families for that separate mechanism-discovery stage:
 - COMEX positioning;
 - gold ETF flows;
 - GVZ / gold implied volatility;
 - central-bank / gold-specific flow proxies;
 - event-risk state.
 
-Any new mechanism must then be frozen and tested separately; it must not be retrofitted into the existing DEV rule performance.
+The frozen A/B/C/D rules must not be retuned using 2025/2026 outcomes.
