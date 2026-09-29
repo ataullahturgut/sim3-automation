@@ -13,6 +13,15 @@ METALS=base.METALS
 BASE_SIGMAAE=1413.0297794085
 BASE_DIRECTION=23
 
+def json_safe(x):
+    if isinstance(x,dict): return {k:json_safe(v) for k,v in x.items()}
+    if isinstance(x,list): return [json_safe(v) for v in x]
+    if isinstance(x,tuple): return [json_safe(v) for v in x]
+    if isinstance(x,(float,np.floating)):
+        return float(x) if np.isfinite(x) else ("+INF" if x>0 else "-INF")
+    if isinstance(x,(int,np.integer)): return int(x)
+    return x
+
 VARIANTS={
   "L1":{"mode":"concat","lags":[1]},
   "L1_L2":{"mode":"concat","lags":[1,2]},
