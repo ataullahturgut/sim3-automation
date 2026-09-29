@@ -25,6 +25,7 @@ SOURCE_AUTHORITY={
         "frequency":"DAILY",
         "units":"USD_PER_BARREL",
         "availability_lag_days":7,
+        "transform_class":"SIGNED_LEVEL_DIFFERENCE__NEGATIVE_PRICES_EXIST",
     },
     "BRENT":{
         "upstream_source":"U.S. Energy Information Administration",
@@ -282,15 +283,16 @@ def month_avg(daily:dict[str,float]):
     s.index=pd.to_datetime(s.index)
     return {str(k):float(v) for k,v in s.groupby(s.index.to_period("M")).mean().items()}
 
-def coverage_diag(name,daily, min_total, min_monthly=10):
+def coverage_diag(name,daily, min_total, min_monthly=10, require_positive=True):
     idx=pd.to_datetime(list(daily))
     vals=np.array(list(daily.values()),float)
     if len(daily)<min_total:
         raise RuntimeError(f"{name}_TOO_FEW total={len(daily)} min={min_total}")
     if not np.all(np.isfinite(vals)):
         raise RuntimeError(f"{name}_NONFINITE")
-    if np.any(vals<=0):
-        raise RuntimeError(f"{name}_NONPOSITIVE")
+    nonpositive={k:float(v) for k,v in daily.items() if float(v)<=0}
+    if require_positive and nonpositive:
+        raise RuntimeError(f"{name}_NONPOSITIVE {list(nonpositive.items())[:8]}")
     months=pd.Series(1,index=idx).groupby(idx.to_period("M")).sum()
     required=pd.period_range("2010-01","2024-12",freq="M")
     missing=[str(m) for m in required if m not in months.index]
@@ -300,6 +302,8 @@ def coverage_diag(name,daily, min_total, min_monthly=10):
     return {
         "n":len(daily),"first":min(daily),"last":max(daily),
         "min_value":float(vals.min()),"max_value":float(vals.max()),
+        "nonpositive_count":len(nonpositive),
+        "nonpositive_examples":list(nonpositive.items())[:12],
         "required_months":len(required),"thin_months":thin,
         "min_required_monthly_observations":min_monthly,
     }
@@ -342,7 +346,7 @@ def main():
 
     diag={
         "NASDAQ100":coverage_diag("NASDAQ100",daily["NASDAQ100"],min_total=3500,min_monthly=10),
-        "WTI":coverage_diag("WTI",daily["WTI"],min_total=3500,min_monthly=10),
+        "WTI":coverage_diag("WTI",daily["WTI"],min_total=3500,min_monthly=10,require_positive=False),
         "BRENT":coverage_diag("BRENT",daily["BRENT"],min_total=3500,min_monthly=10),
     }
 
