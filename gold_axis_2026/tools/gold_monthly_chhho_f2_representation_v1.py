@@ -1,5 +1,5 @@
 from __future__ import annotations
-import argparse,json,math
+import argparse,json,math\nfrom collections import defaultdict
 from pathlib import Path
 import numpy as np
 
@@ -78,11 +78,11 @@ def rep_sample(bundle,target,gpr_history,spec):
         y.append(math.log(M[target]/M[p]))
     return np.asarray(x,float),np.asarray(y,float)
 
-def samples_at_origin(bundle,outer_target,spec):
+def merge_prehistory(bundle,path):\n    d=json.loads(Path(path).read_text())\n    dd={m:{k:list(v) for k,v in bundle.daily_month_values[m].items()} for m in METALS}\n    for r in d["daily_2009"]:\n        mk=r["date"][:7]\n        for m in METALS: dd[m].setdefault(mk,[]).append(float(r[m]))\n    bundle.daily_month_values={m:{k:np.asarray(v,float) for k,v in q.items()} for m,q in dd.items()}\n    bundle.monthly_metal={m:{k:float(v.mean()) for k,v in bundle.daily_month_values[m].items()} for m in METALS}\n    return d\n\ndef samples_at_origin(bundle,outer_target,spec):
     origin=base.month_shift(outer_target,-1)
     gh=bundle.gpr_vintages[origin]
     out={}
-    for t in base.month_range("2010-08",outer_target):
+    for t in base.month_range("2010-03",outer_target):
         try:
             out[t]=rep_sample(bundle,t,gh,spec)
         except RuntimeError:
@@ -133,7 +133,7 @@ def main():
       "authority":{
         "dev":"2022-04..2024-12","random_split":"NONE",
         "2025_used":False,"2026_used":False,"external_features_used":False,
-        "lag_search_used":False,"common_training_sample_start":"2010-08",
+        "lag_search_used":False,"canonical_training_sample_start":"2010-03",\n        "prehistory_payload_sha256":pre["payload_sha256"],
         "feature_count":8,"feature_families":"same four metals, one monthly + one daily summary each",
         "architecture":"same 8D ChHHO-ANFIS / same optimizer / same rule count / same chronological inner validation",
         "neon_reads":0,"snapshot_payload_sha256":meta["payload_sha256"],
@@ -141,14 +141,19 @@ def main():
       "dev":{"metrics":metrics,"yearly":eb.yearly(rows),"rows":rows},
     }
     if a.variant=="CURRENT8":
-        out["f2_matched_history_baseline"]={
-          "common_training_sample_start":"2010-08",
-          "canonical_f0_reference_sum_abs_error":BASE_SIGMAAE,
-          "canonical_f0_reference_direction_correct":BASE_DIRECTION,
-          "matched_history_sum_abs_error":metrics["sum_abs_error"],
-          "matched_history_direction_correct":metrics["direction_correct"],
-          "role":"F2_INTERNAL_CONTROL_ONLY; canonical F0 remains 1413.029779/23",
+        diff=abs(metrics["sum_abs_error"]-BASE_SIGMAAE)
+        out["f2_baseline_parity"]={
+          "canonical_training_sample_start":"2010-03",
+          "reference_sum_abs_error":BASE_SIGMAAE,
+          "observed_sum_abs_error":metrics["sum_abs_error"],
+          "abs_diff":diff,
+          "reference_direction_correct":BASE_DIRECTION,
+          "observed_direction_correct":metrics["direction_correct"],
+          "prehistory_should_not_affect_current8":True,
+          "pass":diff<1e-4 and metrics["direction_correct"]==BASE_DIRECTION,
         }
+        if not out["f2_baseline_parity"]["pass"]:
+            raise RuntimeError(f"F2_BASELINE_PARITY_FAIL {out['f2_baseline_parity']}")
     Path(a.output).write_text(json.dumps(out,indent=2,sort_keys=True,allow_nan=False)+"\n")
     print("CHHHO_F2_REPRESENTATION_GATE=PASS")
     print(json.dumps({
@@ -156,6 +161,6 @@ def main():
       "sum_abs_error":metrics["sum_abs_error"],
       "direction_correct":metrics["direction_correct"],
       "mae":metrics["mae"],"rmse":metrics["rmse"],
-      "matched_history_baseline":out.get("f2_matched_history_baseline"),
+      "baseline_parity":out.get("f2_baseline_parity"),
     },sort_keys=True))
 if __name__=="__main__":main()
