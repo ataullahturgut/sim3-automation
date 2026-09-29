@@ -78,7 +78,6 @@ Predeclared native candidates:
 - R_BE10 = [be10_chg]
 - R_NOM_REAL = [nom10_chg, real10_chg]
 - R_REAL_BE = [real10_chg, be10_chg]
-- R_REAL_FF = [real10_chg, ff_lagged_chg]
 
 No other rates combination may be added after results without reopening F4A.
 
@@ -266,6 +265,17 @@ Family challenges will run:
 6. Commodity
 
 This order is operational only; cross-family promotion is based on the same frozen protocol, not on sequence.
+
+## F4A revision note — baseline parity correction
+
+The first Rates implementation run **36549022859** is **SUPERSEDED_METHODOLOGY / NOT SCIENTIFIC RESULT** because its BASE training window began at 2010-04 instead of the canonical 2010-03 and therefore failed baseline parity (2511.48 vs canonical 1413.03).
+
+Correction:
+- canonical training start restored to **2010-03**;
+- BASE parity is now a hard fail-closed gate;
+- `R_REAL_FF` was removed from the frozen Rates candidate set because the governed external store does not contain the 2009-12 Fed Funds observation required to preserve the canonical 2010-03 common history. No imputation or shortened-history comparison is allowed.
+
+This revision occurred before any valid F4 Rates result was accepted.
 
 ## Kontrol ve Uyum Özeti
 
