@@ -1,0 +1,44 @@
+name: Gold Monthly F4 FX Rates Raw Data Audit V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_f4_fx_rates_raw_data_authority_audit_v1.py
+      - .github/workflows/gold-monthly-f4-fx-rates-raw-data-audit-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'pandas>=2.2,<3' 'scipy==1.17.0' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Download External Authority V2
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11028494060/zip" > ext.zip
+          unzip -q ext.zip -d ext
+          test -s ext/gold_monthly_external_authority_v2.json
+      - name: Compile audit
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_f4_fx_rates_raw_data_authority_audit_v1.py
+      - name: Run official-source audit
+        run: |
+          python gold_axis_2026/tools/gold_monthly_f4_fx_rates_raw_data_authority_audit_v1.py \
+            --external-v2 ext/gold_monthly_external_authority_v2.json \
+            --output GOLD_MONTHLY_F4_FX_RATES_RAW_DATA_AUTHORITY_AUDIT_2026-09-29.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-f4-fx-rates-raw-data-audit-${{ github.sha }}
+          path: GOLD_MONTHLY_F4_FX_RATES_RAW_DATA_AUTHORITY_AUDIT_2026-09-29.json
+          if-no-files-found: error
+          retention-days: 90
