@@ -1912,36 +1912,63 @@ Earlier run **36564354047** failed before the scientific audit because of a work
 
 Conclusion: the new external inputs are proven to pass through the same downstream chronological scaling / ANFIS / local-refit pipeline as CURRENT8, and optimizer search density is not below BASE.
 
-## 20L.6 Restart sequence
+## 20L.6 ALL6-COMPACT diagnostic — COMPLETE / NOT PROMOTED
 
-Required pre-model gates are now complete:
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_F4_ALL6_COMPACT_RESULT_2026-09-29.md`
 
-1. **F4-B0 Data Authority V2 — PASS**
-2. **F4-B1 transform-parity audit — PASS**
-3. **F4-B2 processing/preprocessing + optimizer parity audit — PASS**
+Authoritative execution:
+- workflow **Gold Monthly F4 ALL6 Compact Sharded Diagnostic V1**
+- run **36567473694**
+- head commit **59fff6bba43eda027884af0088919a5c25d4d96c**
+- 6/6 independent DEV shards **SUCCESS**
+- merge/summary **SUCCESS**
+- summary artifact **11032667656**
+- summary artifact digest `sha256:c743f4e06185e6a64574cb78f5b35451123a2ea0ca9458a41c900a4118903c27`
+- 2025 selection use **NO**
+- 2026 selection use **NO**
 
-The next authorized experiment is the **ALL6-COMPACT diagnostic challenger**, requested to answer whether the combined external information helps when processed on the same footing as CURRENT8. ALL6 has not yet been run.
+Frozen BASE companion:
+- DEV ΣAE **1413.0297794084559**
+- Direction **23/33**
+- MAE **42.8190842245**
+- parity **PASS**
 
-ALL6-COMPACT daily families:
-1. Rates
-2. FX
-3. VIX
-4. Nasdaq-100
-5. WTI
-6. Brent
+ALL6-COMPACT:
+- CURRENT8 8 + external 14 = **22 inputs**
+- Rates + Broad USD + VIX + Nasdaq-100 + WTI + Brent
+- antecedent parameter dimension **220**
+- POP **66**
+- generations **45**
+- repeats **3**
+- DEV ΣAE **2870.961742339026**
+- MAE **86.9988406769**
+- Direction **19/33**
+- paired wins/losses/ties **10 / 23 / 0**
+- median paired AE improvement (BASE − ALL6) **-10.4520781833**
+- worst month **2022-05**
+- worst ALL6 absolute error **920.8863163163**
+- signed mean bias **+23.8535037779**
 
-Design:
-- CURRENT8 retained;
-- each daily family enters only through a compact **monthly-representation + GPR-VW representation** pair;
-- same **L1** origin architecture as the retained ChHHO baseline;
-- no raw-level stuffing;
-- no endpoint-only shortcut;
-- dimension-adjusted ChHHO population;
-- hard BASE parity gate;
-- DEV 2022-04..2024-12 only;
-- 2025/2026 not used for selection.
+Relative to BASE:
+- ΣAE deterioration **+1457.93196293057 USD**
+- relative ΣAE deterioration **+103.18%**
+- direction **-4 correct months**
 
-The ALL6 run is a **system-level diagnostic challenger**, not an automatic final promotion. If useful, family decomposition follows; if not useful, the cause is investigated before family-wide rejection.
+Yearly DEV:
+- 2022: BASE **397.8794** vs ALL6 **1416.8928**
+- 2023: BASE **395.7140** vs ALL6 **629.5865**
+- 2024: BASE **619.4364** vs ALL6 **824.4825**
+
+Decision:
+- ALL6 diagnostic execution **VALID**
+- ALL6 final promotion **REJECTED**
+- rejection of all external families individually **NOT AUTHORIZED**
+- 2025 transport for the 22-input ALL6 form **NOT OPENED**
+- 2026 stress for the 22-input ALL6 form **NOT OPENED**
+- next scientific stage: **family decomposition + dimensionality/redundancy diagnosis**, then constrained compact selection.
+
+The system-level degradation may reflect harmful families, redundant/correlated blocks, interaction effects, weak-signal dilution, high-dimensional premise search difficulty, or isolated pathological origins. Therefore the six families must be decomposed before any family-wide conclusion.
 
 ## 20L.7 Workflow hold
 
@@ -1952,7 +1979,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**F4-B2 optimizer parity → ALL6-COMPACT diagnostic challenger.**
+**F4 family decomposition + dimensionality/redundancy diagnosis after valid ALL6-COMPACT non-promotion.**
 
 ---
 
@@ -2027,7 +2054,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **F4 RESET — External Authority V2 completion → transform parity → optimizer parity → ALL6-COMPACT diagnostic challenger**; F0/F1/F2/F3 remain valid, legacy Rates/FX family-wide rejection claims are superseded.
+- Current exact next model/research stage: **F4 family decomposition + dimensionality/redundancy diagnosis** after ALL6-COMPACT DEV ΣAE **2870.961742 / 19/33** vs BASE **1413.029779 / 23/33**; all external families are still open to individual testing, and legacy Rates/FX family-wide rejection claims remain superseded.
 
 
 ---
