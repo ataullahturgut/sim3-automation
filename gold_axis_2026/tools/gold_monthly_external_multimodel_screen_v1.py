@@ -20,10 +20,12 @@ EXPECTED = {
 }
 TOL_SUMAE = 0.05
 
-BLOCKS = {
+OFFLINE_BLOCKS = {
     "INFLATION_HEADLINE": ["cpi_surprise_last"],
     "RATES_PIT": ["dgs10_change", "dff_change", "curve_proxy_change"],
     "FX_CNY_PIT": ["usdcny_logret"],
+}
+OPTIONAL_H10_BLOCKS = {
     "FX_H10_BROAD": ["broad_usd_ret"],
     "FX_H10_MAJORS": [
         "eur_usdstrength_ret", "jpy_usdstrength_ret",
@@ -219,8 +221,19 @@ def run(args):
 
     pit_doc, pit = load_snapshot(Path(args.pit))
     inf_doc, inf = load_snapshot(Path(args.inflation))
-    h10_ext, _, h10_src = h10.build()
+    h10_status = "AVAILABLE"
+    h10_error = None
+    h10_src = None
+    try:
+        h10_ext, _, h10_src = h10.build()
+    except Exception as e:
+        h10_status = "SOURCE_UNAVAILABLE"
+        h10_error = f"{type(e).__name__}: {e}"
+        h10_ext = {}
     ext = merge_ext(pit, inf, h10_ext)
+    active_blocks = dict(OFFLINE_BLOCKS)
+    if h10_status == "AVAILABLE":
+        active_blocks.update(OPTIONAL_H10_BLOCKS)
 
     result = {
         "schema": "GOLD_MONTHLY_EXTERNAL_MULTIMODEL_SCREEN_V1_2026-09-29",
@@ -243,9 +256,13 @@ def run(args):
             "inflation_schema": inf_doc["schema"],
             "h10_source": "Federal Reserve Board H.10 DDP",
             "h10_release_lag_days": h10.LAG_DAYS,
+            "h10_status": h10_status,
+            "h10_error": h10_error,
             "h10_source_hashes": h10_src,
         },
-        "blocks": BLOCKS,
+        "blocks": active_blocks,
+        "offline_required_blocks": OFFLINE_BLOCKS,
+        "optional_h10_blocks": OPTIONAL_H10_BLOCKS,
         "models": {},
     }
 
@@ -254,7 +271,7 @@ def run(args):
         base = validate_base(name, rows)
         rec = {"base": base, "blocks": {}}
         candidates = []
-        for b, cols in BLOCKS.items():
+        for b, cols in active_blocks.items():
             br = block_result(rows, ext, cols)
             rec["blocks"][b] = br
             if br["gate"].get("pass"):
@@ -313,7 +330,7 @@ def run(args):
             "| Block | Corrected ΣAE | ΔΣAE | Δ% | Direction | Improved months | Worsened months | Gate |",
             "|---|---:|---:|---:|---:|---:|---:|---|",
         ]
-        for b in BLOCKS:
+        for b in active_blocks:
             x = rec["blocks"][b]
             lines.append(
                 f"| {b} | {x['full_metrics']['sum_ae']:.4f} | "
