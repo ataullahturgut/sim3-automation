@@ -1836,6 +1836,30 @@ V2 must preserve the existing official H.10/H.15/VIX/CPI/World-Bank evidence and
 
 Technical provider failures during V2 construction are **NOT MODEL RESULTS**.
 
+## 20L.5A External Authority V2 — COMPLETE
+
+- run **36560331164**
+- head commit **9f4f53c1a2ddbac5752c24227b94e6ce2d092fca**
+- artifact **11028494060**
+- artifact digest `sha256:36e7f723a6c84cfdfd3394950381d112267b59af57e0502986e80d7388b017f6`
+- payload SHA256 `fb779f1f1a3f5689f9f631aadc7e6e6e0c8cf5e50ec7730a233b80e8789438bc`
+- Neon reads **0**
+- gate **PASS**
+
+Daily authority now frozen:
+- Nasdaq-100 direct Nasdaq API: 2010-01-01..2026-09-28, n=4264
+- WTI direct U.S. EIA: 2010-01-04..2026-09-22, n=4140
+- Brent direct U.S. EIA: 2010-01-04..2026-09-22, n=4230
+- Rates/FX/VIX retained from governed V1 authority
+- CPI prehistory extended to 2008
+- World Bank commodity/Copper prehistory extended to 2008
+
+Audit discovery:
+- official WTI contains one non-positive observation in the governed span: **2020-04-20 = -36.98**;
+- therefore WTI log-return transformation is forbidden;
+- WTI uses signed monthly-mean difference + GPR-weighted daily first difference;
+- no clipping/deletion/synthetic correction.
+
 ## 20L.6 Restart sequence
 
 No new F4 promotion run is authorized before:
@@ -1876,7 +1900,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**F4-B0 External Authority V2 completion → B1 transform parity → B2 optimizer parity → ALL6-COMPACT diagnostic challenger.**
+**F4-B1 transform parity → B2 optimizer parity → ALL6-COMPACT diagnostic challenger.**
 
 ---
 
