@@ -15,6 +15,10 @@ FRED_SERIES={
  "DFF":"Federal Reserve Board / FRED",
  "T10YIE":"Federal Reserve Bank of St. Louis / FRED",
  "VIXCLS":"Cboe / FRED",
+ "DCOILWTICO":"U.S. EIA / FRED WTI spot",
+ "DCOILBRENTEU":"U.S. EIA / FRED Brent spot",
+ "CPIAUCNS":"U.S. BLS / FRED CPI All Urban Consumers NSA",
+ "CPILFENS":"U.S. BLS / FRED Core CPI NSA",
 }
 
 def sha(raw):return hashlib.sha256(raw).hexdigest()
@@ -117,11 +121,11 @@ def main():
         if abs(new)<1e-6:raise RuntimeError(f"NASDAQ_ANOMALY_NOT_CORRECTED {m}")
 
     # Ensure enough history for native-model training.
-    full_history_required={"NASDAQ100","DGS10","DFII10","DFF","T10YIE","VIXCLS"}
+    full_history_required={"NASDAQ100","DGS10","DFII10","DFF","T10YIE","VIXCLS","DCOILWTICO","DCOILBRENTEU","CPIAUCNS","CPILFENS"}
     for sid,z in source.items():
         if sid in full_history_required and z["first"]>"2010-01-05":
             raise RuntimeError(f"LONG_HISTORY_START_FAIL {sid} {z}")
-        if sid in ("NASDAQ100","DGS10","DFF","DFII10","T10YIE","VIXCLS") and z["last"]<"2026-09-20":
+        if sid in ("NASDAQ100","DGS10","DFF","DFII10","T10YIE","VIXCLS","DCOILWTICO","DCOILBRENTEU") and z["last"]<"2026-09-20":
             raise RuntimeError(f"CURRENT_COVERAGE_FAIL {sid} {z}")
 
     out={
@@ -131,7 +135,7 @@ def main():
         "role":"RAW_DAILY_FEATURE_RESEARCH_STORE",
         "selection_use":"DERIVE_TRANSFORMS_AND_LAGS_INSIDE_CHRONOLOGICAL_EXPERIMENTS_ONLY",
         "historical_claim":"CURRENT_HISTORICAL_MARKET_OBSERVATION_RECONSTRUCTION_NOT_ORIGINAL_RETRIEVAL_VINTAGE",
-        "macro_release_warning":"Do not treat revised macro releases as first-print vintages. CPI surprise remains separate/not supplied here.",
+        "macro_release_warning":"CPIAUCNS/CPILFENS are NSA historical index candidates for YoY/change features. They are not survey-consensus surprises. Exact CPI-surprise history remains a separate evidence lane.",
       },
       "fred_series":series,
       "fred_source":source,
@@ -149,6 +153,8 @@ def main():
         "inflation_expectations":["T10YIE_level_change","daily_midas"],
         "equity_risk":["NASDAQ100_return","VIXCLS_level_change","realized_volatility","drawdown"],
         "fx":["broad_usd_return","cny_usdstrength_return","major_fx_returns","breadth","dispersion","daily_midas"],
+        "inflation_realized":["CPIAUCNS_yoy","CPILFENS_yoy","inflation_momentum"],
+        "commodity":["WTI_return","Brent_return","WTI_volatility","Brent_volatility","oil_spread","daily_midas"],
       },
     }
     raw=json.dumps(out,sort_keys=True,separators=(",",":"),allow_nan=False).encode()
