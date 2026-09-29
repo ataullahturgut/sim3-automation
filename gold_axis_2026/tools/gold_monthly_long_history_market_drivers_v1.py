@@ -19,7 +19,7 @@ FRED_SERIES={
 
 def sha(raw):return hashlib.sha256(raw).hexdigest()
 
-def get(url,timeout=90,retries=5):
+def get(url,timeout=25,retries=3):
     last=None
     for i in range(retries):
         try:
@@ -98,10 +98,13 @@ def main():
         if abs(new)<1e-6:raise RuntimeError(f"NASDAQ_ANOMALY_NOT_CORRECTED {m}")
 
     # Ensure enough history for native-model training.
+    full_history_required={"NASDAQ100","DGS10","DFII10","DFF","T10YIE","VIXCLS"}
     for sid,z in source.items():
-        if z["first"]>"2010-01-05":raise RuntimeError(f"LONG_HISTORY_START_FAIL {sid} {z}")
-        if sid in ("NASDAQ100","SP500","DGS10","DFF") and z["last"]<"2026-09-20":
+        if sid in full_history_required and z["first"]>"2010-01-05":
+            raise RuntimeError(f"LONG_HISTORY_START_FAIL {sid} {z}")
+        if sid in ("NASDAQ100","SP500","DGS10","DFF","DFII10","T10YIE","VIXCLS") and z["last"]<"2026-09-20":
             raise RuntimeError(f"CURRENT_COVERAGE_FAIL {sid} {z}")
+    source["SP500"]["coverage_role"]="PARTIAL_COMPARATOR_FRED_10Y_LICENSE_WINDOW"
 
     out={
       "schema":"GOLD_MONTHLY_LONG_HISTORY_MARKET_DRIVERS_V1_2026-09-29",
