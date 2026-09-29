@@ -819,7 +819,7 @@
       "rerun": false
     }
   ],
-  "current_next_action": "Start F4 VIX family decomposition next; native F4 Rates and FX families are closed; keep 2025/2026 closed for selection",
+  "current_next_action": "Start F4 VIX family decomposition next; hard official-data re-audit for closed Rates/FX families is PASS; keep 2025/2026 closed for selection",
   "registry_rules": {
     "check_before_run": true,
     "completed_models_default_rerun": false,
@@ -858,13 +858,13 @@
     "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
-    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates family closure + FX1/FX2/FX3 family closure",
-    "f4_status": "RATES_AND_FX_NATIVE_FAMILIES_CLOSED__VIX_NEXT",
+    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates closure + FX closure + direct Board DDP hard data re-audit PASS",
+    "f4_status": "RATES_FX_CLOSED_AND_HARD_DATA_AUDIT_PASS__VIX_NEXT",
     "legacy_rates_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
     "legacy_fx_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
     "next_model": "F4 VIX family decomposition",
     "next_model_status": "AUTHORIZED_NOT_RUN",
-    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1 + EXTERNAL_AUTHORITY_V2 + B2 parity + FX3 summary",
+    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1 + EXTERNAL_AUTHORITY_V2 + B2 parity + direct Board DDP hard re-audit",
     "neon_required": false
   },
   "f4_reset": {
@@ -1069,6 +1069,21 @@
     "fx_native_family_reopen_rule": "Only explicit new evidence or a materially different architecture; do not rerun native-input FX variants by default",
     "prior_fx_residual_evidence": "PRESERVED_HISTORICAL_OTHER_ARCHITECTURE",
     "transport_2025_for_fx3": "NOT_OPENED",
-    "stress_2026_for_fx3": "NOT_OPENED"
+    "stress_2026_for_fx3": "NOT_OPENED",
+    "hard_data_reaudit_status": "COMPLETE_PASS",
+    "hard_data_reaudit_run": 36580341003,
+    "hard_data_reaudit_head_commit": "3d8ca815ede86fd8b7ad694d0a58be0278b13e22",
+    "hard_data_reaudit_job": 109446532518,
+    "hard_data_reaudit_artifact": 11038493043,
+    "hard_data_reaudit_artifact_digest": "sha256:a24c1ed64097eeb4c25055695ff34b8785da1815de8c57093e95e2cd6427be20",
+    "hard_data_reaudit_source": "Federal Reserve Board DDP direct re-fetch",
+    "hard_data_reaudit_raw_hashes_all_equal": true,
+    "hard_data_reaudit_broadusd_rows": "4167/4167",
+    "hard_data_reaudit_nom10_rows": "4186/4186",
+    "hard_data_reaudit_real10_rows": "4186/4186",
+    "hard_data_reaudit_daily_value_max_abs_diff": 0,
+    "hard_data_reaudit_transform_max_abs_diff": 0,
+    "rates_fx_data_error_classification": "NO_EVIDENCE_OF_RAW_DATA_OR_TRANSFORM_ERROR",
+    "rates_fx_failure_classification": "MODEL_REPRESENTATION_GENERALIZATION"
   }
 }
