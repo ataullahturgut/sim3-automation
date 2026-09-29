@@ -1,8 +1,8 @@
 # GOLD MONTHLY — ChHHO F4 Rates Native Family Result
 
 **Date:** 2026-09-29  
-**Status:** COMPLETE / VALID / DEV-ONLY / ZERO NEON  
-**Decision:** RATES FAMILY NOT PROMOTED
+**Status:** COMPLETE / VALID FOR LEGACY ENDPOINT REPRESENTATION ONLY / SUPERSEDED FOR FAMILY DECISION  
+**Decision:** DO NOT INTERPRET AS FAMILY-WIDE RATES REJECTION
 
 ## Authority
 - corrected run: **36550570628**
@@ -56,11 +56,22 @@ Rates contained incremental information in earlier residual-correction screens, 
 
 The two-feature nominal+real candidate is pathologically unstable and is treated as an architecture-stability diagnostic, not as a literal economic statement.
 
-## Binding decision
-- Rates family: **NOT_PROMOTED**
-- Do not include Rates in later F4 compact combinations.
-- Do not reopen Rates transforms from this DEV result.
-- Next family: **FX**.
+## Supersession decision
+
+This result remains valid for the exact endpoint-change native implementation tested in run 36550570628.
+
+It is **superseded for family-level inference** because the later F4 reset found:
+- processing-parity mismatch versus CURRENT8 MR1+VW;
+- frequency under-use of daily rate paths;
+- optimizer search-density reduction as input dimension increased.
+
+Therefore:
+- do not label Rates economically useless;
+- do not use this result to block the redesigned Rates restart;
+- retain it only as negative evidence for the legacy endpoint-change implementation.
+
+Current authority:
+`GOLD_MONTHLY_F4_RESET_PROCESSING_PARITY_AUDIT_2026-09-29.md`.
 
 ## Superseded run
 Run **36549022859** is **SUPERSEDED_METHODOLOGY / NOT SCIENTIFIC RESULT** because its BASE began at 2010-04 and failed canonical baseline parity.
