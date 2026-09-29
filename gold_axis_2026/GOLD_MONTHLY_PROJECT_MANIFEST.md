@@ -1534,6 +1534,67 @@ CNN-BiLSTM remains structurally eligible/deferred and does not override the user
 
 ---
 
+
+# 20H. ChHHO F0/F1 feature necessity audit
+
+**Status: COMPLETE / DEV-ONLY / ZERO NEON**
+
+Detailed report:
+`gold_axis_2026/GOLD_MONTHLY_CHHHO_F0_F1_FEATURE_AUDIT_2026-09-29.md`
+
+Authority:
+- F0/F1 broad run **36534691218**
+- broad summary artifact **11018091595**
+- broad runner commit **cf44dc1925b28132590d254db098382d7442fe67**
+- F1 single-feature run **36535476553**
+- single-feature summary artifact **11018880667**
+- single-feature runner commit **023ffef8567ae309e5ca83cff8a812808d2f6e9b**
+- Neon reads: **0**
+- 2025/2026 selection use: **NONE**
+
+F0 parity:
+- CURRENT8 DEV ΣAE **1413.029779**
+- direction **23/33**
+- parity: **PASS**
+
+Broad F1:
+- Gold+Silver: **1402.8244 / 23/33**, aggregate ΔΣAE +10.2054 (0.72%) but only 15/33 months improved, 18/33 worsened, median paired AE improvement **-0.7379**.
+- MR-only: **2187.2832 / 15/33**
+- VW-only: **2304.5555 / 20/33**
+- Gold-only: **1583.7389 / 22/33**
+- No Gold: **1795.9566 / 18/33**
+- No Silver: **1589.9368 / 20/33**
+- No Platinum: **2680.1790 / 21/33**
+- No Palladium / Gold+Silver+Platinum: **1736.2615 / 21/33**
+
+Single-feature F1:
+- No Palladium MR: **1582.1095 / 21**
+- No Gold VW: **1764.6486 / 19**
+- No Silver VW: **1808.1832 / 22**
+- No Palladium VW: **1920.7006 / 17**
+- No Gold MR: **4017.9842 / 21**
+- No Silver MR: **4337.6786 / 24**
+- No Platinum MR: **10723.7857 / 18**
+- No Platinum VW: **30823.7420 / 19**
+
+Interpretation boundary:
+- every one-feature deletion worsens DEV ΣAE;
+- MR-only and VW-only both fail materially, so MR and VW are complementary;
+- pathological reduced-input explosions are treated as **architectural stability diagnostics**, not literal causal feature-importance magnitudes;
+- Gold+Silver is an interesting compact challenger but is **NOT_PROMOTED** because its small aggregate gain is not month-wise robust.
+
+Binding decision:
+- **CURRENT8 RETAINED**
+- no CURRENT8 feature removed at F1;
+- no combinatorial subset mining beyond the predeclared F1 screen;
+- next stage is **F2 representation audit** using CURRENT8 as the retained reference;
+- Gold+Silver may remain a compact control only.
+
+Earlier mean-masking run **36534304610**:
+**SUPERSEDED_TECHNICAL / NOT MODEL EVIDENCE**.
+
+---
+
 # 21. Bundan sonra manifest nasıl güncellenecek
 
 Her yeni deney bittiğinde **aynı commit zincirinde** bu ana manifest güncellenecek.
@@ -1605,7 +1666,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **ChHHO-ANFIS F0→F4 feature-architecture audit** (CNN-BiLSTM deferred during this priority)
+- Current exact next model/research stage: **ChHHO-ANFIS F2 representation audit**; F0/F1 complete, CURRENT8 retained (CNN-BiLSTM deferred during this priority)
 
 
 ---
