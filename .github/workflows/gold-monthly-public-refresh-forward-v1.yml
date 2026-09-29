@@ -53,7 +53,7 @@ jobs:
           echo "STAK=$STAK_REF"
           echo "STAK_API=$STAK_API_REF"
       - name: Clone official GPR archive
-        run: git clone --quiet https://github.com/iacoviel/iacoviel.github.io.git /tmp/iacoviel-gpr
+        run: git clone --quiet --depth 1 https://github.com/iacoviel/iacoviel.github.io.git /tmp/iacoviel-gpr
       - name: Build public current bundle
         run: |
           python gold_axis_2026/tools/gold_monthly_public_current_bundle_v1.py             --dev-snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json             --gpr-repo /tmp/iacoviel-gpr             --stak-ref "${{ steps.refs.outputs.stak_ref }}"             --stak-api-ref "${{ steps.refs.outputs.stak_api_ref }}"             --cutoff 2026-09-29             --output gold_monthly_public_current_bundle_v1.json
