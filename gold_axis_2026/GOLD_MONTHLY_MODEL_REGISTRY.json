@@ -854,7 +854,7 @@
     "SIMPLE_RETURNS8": "4 metals x {1m log return, 3m log return}",
     "MIXED20": "CURRENT8 + 4 levels + 4 three-month momenta + 4 realized-volatility summaries",
     "RAW_MONTHLY_4METAL": "Gold/Silver/Platinum/Palladium completed monthly levels",
-    "F4_DAILY_EXTERNAL_PAIR": "Daily family x {monthly-mean MR1 analogue, GPR-conditioned intramonth VW analogue}; family-specific release cutoff; L1 only",
+    "F4_DAILY_EXTERNAL_PAIR": "Daily family x {monthly-mean transform, GPR-conditioned intramonth transform}; positive price/index families use log-return analogues; yields and WTI use signed first-difference analogues; family-specific release cutoff; L1 only",
     "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
@@ -886,6 +886,7 @@
       "WTI",
       "Brent"
     ],
-    "optimizer_population_rule": "POP(k)=ceil(24*(10*k)/80)"
+    "optimizer_population_rule": "POP(k)=ceil(24*(10*k)/80)",
+    "wti_transform": "SIGNED_MONTHLY_MEAN_DIFFERENCE_PLUS_GPR_WEIGHTED_DAILY_PRICE_DIFFERENCE__NO_CLIP_NO_DROP"
   }
 }
