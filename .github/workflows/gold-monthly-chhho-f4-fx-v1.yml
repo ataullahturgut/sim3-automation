@@ -1,12 +1,8 @@
+# LEGACY HOLD: endpoint-change F4 design superseded by processing/frequency/optimizer parity reset.
+# Manual dispatch only; do not use for scientific promotion.
 name: Gold Monthly ChHHO F4 FX V1
 
 on:
-  push:
-    branches: [gold-midas-headswap-v1-20260925]
-    paths:
-      - gold_axis_2026/tools/gold_monthly_chhho_f4_fx_candidate_v1.py
-      - gold_axis_2026/tools/gold_monthly_chhho_f4_fx_router_v1.py
-      - .github/workflows/gold-monthly-chhho-f4-fx-v1.yml
   workflow_dispatch:
 
 permissions:
