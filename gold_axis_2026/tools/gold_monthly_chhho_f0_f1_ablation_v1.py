@@ -8,6 +8,27 @@ import vw_midas_msvr_successor_v1 as base
 import vw_midas_anfis_stage3c_literature_v1 as anfis
 import vw_midas_elmfis_baseline_v1 as eb
 
+def configure_input_dimension(d):
+    common=anfis.common
+    rules=common.RULES
+    n_ant=rules*d
+    common.INPUTS=d
+    common.N_ANT=n_ant
+    common.PARAM_DIM=2*n_ant
+    common.LOWER=np.concatenate([
+        np.full(n_ant,common.CENTER_LOW),
+        np.full(n_ant,math.log(common.SPREAD_LOW)),
+    ])
+    common.UPPER=np.concatenate([
+        np.full(n_ant,common.CENTER_HIGH),
+        np.full(n_ant,math.log(common.SPREAD_HIGH)),
+    ])
+    common.LOCAL_SIGMA=np.concatenate([np.full(n_ant,.45),np.full(n_ant,.30)])
+    common.REFIT_SIGMA=np.concatenate([np.full(n_ant,.16),np.full(n_ant,.12)])
+    anfis.D=common.PARAM_DIM
+    anfis.LO=common.LOWER
+    anfis.HI=common.UPPER
+
 DEV_START, DEV_END = "2022-04","2024-12"
 FEATURES = [
     "Gold_MR","Gold_VW","Silver_MR","Silver_VW",
@@ -28,34 +49,28 @@ VARIANTS = {
 BASE_SIGMAAE=1413.0297794085
 BASE_DIRECTION=23
 
-def masked_samples(samples,target,keep):
-    keep=set(keep)
-    keys=sorted(k for k in samples if k<target)
-    X=np.stack([samples[k][0] for k in keys])
-    means=X.mean(axis=0)
+def subset_samples(samples,keep):
     out={}
+    idx=np.asarray(keep,dtype=int)
     for k,(x,y) in samples.items():
-        z=np.asarray(x,float).copy()
-        for j in range(8):
-            if j not in keep:
-                z[j]=means[j]
-        out[k]=(z,np.asarray(y,float).copy())
+        out[k]=(np.asarray(x,float)[idx].copy(),np.asarray(y,float).copy())
     return out
 
 def eval_variant(bundle,variant):
     keep=VARIANTS[variant]
+    configure_input_dimension(len(keep))
     rows=[]
     for target in base.month_range(DEV_START,DEV_END):
         samples=base.all_samples_at_origin(bundle,target,governed=True)
         if variant!="CURRENT8":
-            samples=masked_samples(samples,target,keep)
+            samples=subset_samples(samples,keep)
         p,n,d=anfis.select(samples,target,"CHHHO")
         origin=base.month_shift(target,-1)
         rows.append({
           "target":target,"origin":origin,"variant":variant,
           "kept_features":[FEATURES[i] for i in keep],
           "masked_features":[FEATURES[i] for i in range(8) if i not in keep],
-          "mask_semantics":"OMITTED_COLUMNS_SET_TO_PRE_TARGET_TRAINING_MEAN; standardized value=0; no target info",
+          "ablation_semantics":"OMITTED_COLUMNS_REMOVED_FROM_INPUT_SPACE; same rule count/optimizer/chronology",
           "train_rows":n,"diag":d,
           "pred_log_return_gold":float(p[0]),
           "forecast":float(bundle.core_gold[origin]*math.exp(float(p[0]))),
@@ -90,9 +105,9 @@ def main():
         "external_features_used":False,
         "representation_changed":False,
         "lag_changed":False,
-        "architecture":"ChHHO-ANFIS frozen algorithm; 8D architecture retained",
-        "ablation_method":"training-mean masking of omitted raw CURRENT8 columns at each outer target",
-        "mask_mean_scope":"strictly pre-target rows within each outer-origin sample set",
+        "architecture":"ChHHO-ANFIS algorithm/rule count frozen; input dimension equals retained feature count",
+        "ablation_method":"true reduced-input ablation; omitted CURRENT8 columns removed",
+        "capacity_note":"consequent/premise parameter count changes mechanically with input dimension; optimizer settings and rule count unchanged",
         "neon_reads":0,
         "snapshot_payload_sha256":meta["payload_sha256"],
       },
