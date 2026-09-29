@@ -201,20 +201,30 @@ def main():
     ap.add_argument("--output",default="gold_monthly_direct_external_store_v1.json")
     a=ap.parse_args()
     core,coremeta=load_core5(Path(a.core5))
-    ndx,ndxmeta=fetch_nasdaq()
+    try:
+        ndx,ndxmeta=fetch_nasdaq()
+        nasdaq_status="READY_DIRECT_GIW_DAILY"
+    except Exception as exc:
+        ndx={}
+        ndxmeta={"status":"NOT_PROVEN_DAILY","reason":f"{type(exc).__name__}:{exc}",
+                 "fallback":"CORE5_NASDAQ_AVG_MONTHLY","first":coremeta["first"],"last":coremeta["last"],"n":coremeta["n"]}
+        nasdaq_status="READY_MONTHLY_CORE5__DAILY_NOT_PROVEN"
     h15,h15meta=fetch_h15()
     fx,fxmeta=fetch_fx()
     vix,vixmeta=fetch_vix()
     cpi,cpimeta=fetch_cpi()
     wb,wbmeta=fetch_wb()
 
-    # parity: official NDX daily month averages vs locked CORE5 NASDAQ monthly averages.
-    s=pd.Series(ndx,dtype=float);s.index=pd.to_datetime(s.index)
-    ndx_avg={str(k):float(v) for k,v in s.groupby(s.index.to_period("M")).mean().items()}
-    overlap=sorted(set(ndx_avg)&set(core))
-    diffs=[abs(ndx_avg[m]-core[m]["NASDAQ_AVG_MONTHLY"]) for m in overlap if m<="2026-07"]
-    parity={"n":len(diffs),"median_abs_diff":float(np.median(diffs)),"p95_abs_diff":float(np.quantile(diffs,.95)),
-            "max_abs_diff":float(np.max(diffs))}
+    # parity only when credential-free daily GIW history is available.
+    if ndx:
+        s=pd.Series(ndx,dtype=float);s.index=pd.to_datetime(s.index)
+        ndx_avg={str(k):float(v) for k,v in s.groupby(s.index.to_period("M")).mean().items()}
+        overlap=sorted(set(ndx_avg)&set(core))
+        diffs=[abs(ndx_avg[m]-core[m]["NASDAQ_AVG_MONTHLY"]) for m in overlap if m<="2026-07"]
+        parity={"status":"AVAILABLE","n":len(diffs),"median_abs_diff":float(np.median(diffs)),
+                "p95_abs_diff":float(np.quantile(diffs,.95)),"max_abs_diff":float(np.max(diffs))}
+    else:
+        parity={"status":"NOT_RUN_DAILY_GIW_REQUIRES_CREDENTIALS","monthly_fallback":"CORE5_NASDAQ_AVG_MONTHLY"}
     out={
       "schema":"GOLD_MONTHLY_DIRECT_EXTERNAL_STORE_V1_2026-09-29",
       "authority":{"neon_reads":0,"role":"RAW_AND_LOW_TRANSFORM_FEATURE_RESEARCH_STORE",
@@ -231,7 +241,7 @@ def main():
         "metals":"READY_SEPARATE_CANONICAL_SNAPSHOT",
         "gpr":"READY_THROUGH_2026_09_VINTAGE",
         "target_gold":"READY_THROUGH_2026_08_WORLD_BANK_FINAL",
-        "nasdaq100":"READY_DIRECT_GIW",
+        "nasdaq100":nasdaq_status,
         "rates_nominal_real":"READY_FED_H15",
         "fedfunds":"READY_CORE5_MONTHLY",
         "fx":"READY_FED_H10",
