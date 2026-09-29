@@ -6,8 +6,6 @@ import numpy as np
 
 import gold_monthly_dev_snapshot_v1 as snap
 import vw_midas_msvr_successor_v1 as base
-import vw_midas_anfis_stage3c_literature_v1 as anfis
-import vw_midas_rbfnn_stage1_v1 as rbfnn
 
 def merge_bundle(dev_snapshot,current_bundle):
     b,meta=snap.load_snapshot(dev_snapshot)
@@ -56,10 +54,15 @@ def forward_samples(bundle,target,train_end):
     return out
 
 def predict(model,samples,target):
+    # Import only the selected family inside its own process. ANFIS modules patch
+    # shared metaheuristic globals at import time; importing both families in one
+    # interpreter contaminates RBFNN parameter dimensions.
     if model=="CHHHO":
+        import vw_midas_anfis_stage3c_literature_v1 as anfis
         p,n,diag=anfis.select(samples,target,"CHHHO")
         return np.asarray(p,float),{"train_rows":n,**diag}
     if model=="DE_ABC":
+        import vw_midas_rbfnn_stage1_v1 as rbfnn
         p,diag=rbfnn.predict(samples,target,"DE_ABC")
         return np.asarray(p,float),diag
     raise KeyError(model)
