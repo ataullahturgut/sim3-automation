@@ -81,8 +81,12 @@ jobs:
           python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_f2_representation_v1.py
           python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_f2_summarize_v1.py
       - name: Run F2 representation
-        run: |
-          python gold_axis_2026/tools/gold_monthly_chhho_f2_representation_v1.py             --snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json             --variant "${{ matrix.variant }}"             --output "chhho_f2_${{ matrix.variant }}.json"
+        run: >
+          python gold_axis_2026/tools/gold_monthly_chhho_f2_representation_v1.py
+          --snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json
+          --prehistory prehistory/gold_monthly_metal_prehistory_v1.json
+          --variant "${{ matrix.variant }}"
+          --output "chhho_f2_${{ matrix.variant }}.json"
       - uses: actions/upload-artifact@v4
         with:
           name: chhho-f2-${{ matrix.variant }}-${{ github.sha }}
@@ -107,8 +111,10 @@ jobs:
           path: f2_results
           merge-multiple: true
       - name: Summarize paired representation audit
-        run: |
-          python gold_axis_2026/tools/gold_monthly_chhho_f2_summarize_v1.py             --dir f2_results             --output GOLD_MONTHLY_CHHHO_F2_REPRESENTATION_RESULT_2026-09-29.json
+        run: >
+          python gold_axis_2026/tools/gold_monthly_chhho_f2_summarize_v1.py
+          --dir f2_results
+          --output GOLD_MONTHLY_CHHHO_F2_REPRESENTATION_RESULT_2026-09-29.json
       - uses: actions/upload-artifact@v4
         with:
           name: gold-monthly-chhho-f2-summary-${{ github.sha }}
