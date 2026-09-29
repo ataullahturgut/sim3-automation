@@ -120,6 +120,14 @@ def main():
           "pass":diff<1e-4 and m["direction_correct"]==BASE_DIRECTION}
         if not out["baseline_parity"]["pass"]:
             raise RuntimeError(f"F4_RATES_BASE_PARITY_FAIL {out['baseline_parity']}")
+    if a.candidate=="BASE":
+        ref_ae=1413.0297794085; ref_dir=23
+        parity={"reference_sum_abs_error":ref_ae,"observed_sum_abs_error":m["sum_abs_error"],
+                "abs_diff":abs(m["sum_abs_error"]-ref_ae),
+                "reference_direction":ref_dir,"observed_direction":m["direction_correct"],
+                "pass":abs(m["sum_abs_error"]-ref_ae)<1e-4 and m["direction_correct"]==ref_dir}
+        out["baseline_parity"]=parity
+        if not parity["pass"]: raise RuntimeError(f"F4_BASELINE_PARITY_FAIL {parity}")
     Path(a.output).write_text(json.dumps(out,indent=2,sort_keys=True,allow_nan=False)+"\n")
     print("F4_RATES_CANDIDATE_GATE=PASS")
     print(json.dumps({"candidate":a.candidate,"columns":cols,"sum_abs_error":m["sum_abs_error"],
