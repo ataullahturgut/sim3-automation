@@ -1263,7 +1263,7 @@
       "2023-01": "12/16; 14/15 alternatives beat ChHHO; best AE 29.59 vs 100.74"
     },
     "conclusion": "NOT_ALL_MODELS_FAIL_SAME_MONTHS__EX_POST_COMPLEMENTARITY_EXISTS__EX_ANTE_GATE_NOT_YET_PROVEN",
-    "next_stage": "DISCOVER_MISSING_ORIGIN_VISIBLE_ALARM_MECHANISM_FOR_UNFLAGGED_2026_HIGH_ERRORS__NO_ROUTING",
+    "next_stage": "BUILD_ORIGIN_SAFE_E_F_G_DIAGNOSTICS_WITH_GVZ_CFTC_ETF_FLOW_HISTORY__TEST_ALARM_DETECTION_ONLY__NO_ROUTING",
     "origin_signal_diagnostic_status": "COMPLETE_DEV_DIAGNOSTIC",
     "origin_signal_diagnostic_commit": "7f2faa7cb1119e0f6bd67036465f8edfd21f1c30",
     "origin_signal_transport_status": "COMPLETE_FROZEN_ALARM_DETECTION_TRANSPORT__GENERAL_DETECTOR_NOT_VALIDATED",
@@ -1294,6 +1294,16 @@
     "transport_combined_false_alarms": 1,
     "transport_combined_high_error_misses": 10,
     "current_alarm_layer_role": "PARTIAL_FAILURE_MODE_WARNING_ONLY",
-    "routing_stage_status": "NOT_EVALUATED_IN_THIS_STAGE"
+    "routing_stage_status": "NOT_EVALUATED_IN_THIS_STAGE",
+    "missed_alarm_root_cause_status": "COMPLETE_EXPLORATORY_MECHANISM_DISCOVERY",
+    "missed_alarm_root_cause_report": "GOLD_MONTHLY_CHHHO_MISSED_ALARM_ROOT_CAUSE_2026-09-29.md",
+    "missed_alarm_root_cause_commit": "2e23ea666712b858559ec151f01d7f61b4afd528",
+    "missing_alarm_hypotheses": [
+      "E_TREND_LEVEL_OOD_MODEL_DISAGREEMENT",
+      "F_GOLD_FLOW_DERIVATIVES_LIQUIDITY",
+      "G_POST_LIQUIDATION_HIGH_UNCERTAINTY"
+    ],
+    "secondary_hypothesis": "H_EVENT_RISK_STATE",
+    "key_warning": "NEW_E_F_G_ARE_POST_HOC_DISCOVERY__NOT_VALIDATED_ALARMS"
   }
 }
