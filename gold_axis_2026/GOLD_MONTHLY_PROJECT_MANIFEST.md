@@ -2679,6 +2679,62 @@ Authoritative execution:
 - artifact **11045435477**
 - digest `sha256:c3af6e6e550f849bcc2c6e63db4e7d943ae829999c80176d26347891e5fcbfff`
 
+## 20L.6N Cross-model error overlap / router viability — COMPLETE
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_CROSS_MODEL_ERROR_OVERLAP_ROUTER_VIABILITY_2026-09-29.md`
+
+Purpose:
+- determine whether ChHHO's large-error DEV months are also large-error months for essentially all other models;
+- quantify whether a side-model/router has any ex-post rescue capacity before opening a new gate model.
+
+Evidence:
+- exact per-origin DEV rows from **24 models**
+- competitive pool **16 models**, frozen rule: DEV ΣAE <= 1.15 × ChHHO
+- DEV only 2022-04..2024-12
+- no 2025/2026 selection.
+
+ChHHO:
+- DEV ΣAE **1413.029779**
+- worst 8 months contribute **747.086 USD ≈ 52.9%** of total error.
+
+Key overlap:
+- 2024-03: **16/16** competitive models also top-8; best rescue only **5.47 USD**
+- 2022-07: **14/16**; best rescue only **1.76 USD**
+- 2024-11: **15/16**, but CNN-LSTM LB6 still reduces AE **119.13 → 62.99**
+- 2023-01: 12/16; best AE **29.59** vs ChHHO **100.74**
+- 2022-11: 10/16; **15/15 alternatives beat ChHHO**, best AE **43.74** vs **102.20**
+- 2023-08: only **3/16** top-8; **14/15 alternatives beat ChHHO**, best AE **22.36** vs **77.53**
+- 2024-07: 10/16; best AE **44.75** vs **71.01**
+
+Fixed fallback diagnostic on exactly ChHHO's known worst 8 months:
+- CNN-LSTM LB6: **588.89**, improvement **158.19**, wins **6/8**
+- LMC2-RBF M32: **626.30**, improvement **120.79**, wins **7/8**
+- REDUCED4 ANN: **639.09**, improvement **108.00**, wins **6/8**
+- PLS1: **654.80**, improvement **92.28**, wins **7/8**
+
+Diversity:
+- CNN-LSTM LB6 has the lowest AE correlation with ChHHO in the competitive pool, about **0.588**; signed-error correlation about **0.767**.
+
+Oracle ceiling — diagnostic only, not deployable:
+- perfect hindsight best competitive model each month: **704.522 ΣAE**
+- if hindsight switching only on ChHHO worst 8: total **1120.839**, theoretical gain **292.191**.
+
+Binding interpretation:
+- the claim “all strong models fail on the same months” is **NOT supported**;
+- failure structure is mixed: some shared-hard months, plus meaningful ChHHO-specific / model-specific failure months;
+- router hypothesis remains **VIABLE**, but complementarity shown here is strictly **ex-post**;
+- no side model is promoted from this table alone;
+- next valid stage is an **origin-safe error-risk / rescueability gate**, initially with **no price switching**. Only if prequential risk/rescue prediction works may a fallback router be tested.
+
+Authority:
+- workflow **Gold Monthly Cross Model Error Overlap V1**
+- run **36600141673**
+- head **ee82eb25cb4017e9f59d38affeee27304f32ea7a**
+- job **109515089218**
+- artifact **11049132605**
+- digest `sha256:baa25ab1ee06130bdf188cde96be00ee9a8344b5e7a6c609ada996dfd8bec414`
+
 ## 20L.7 Workflow hold
 
 Legacy workflows:
@@ -2688,7 +2744,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**Brent expanded residual screen COMPLETE with no robust promotion. Best Brent pack MR1+DOWNSIDE reaches 1330.832804 / 23/33 but fails the incremental robustness gate after the best month is removed. BIAS_ONLY remains binding; WTI or Nasdaq is the next clean residual family.**
+**Cross-model error-overlap audit COMPLETE. Large-error months are not universally shared: some are common-hard, while several ChHHO failures are materially rescued by frozen alternatives. Router hypothesis remains viable. Next valid stage is an origin-safe error-risk / rescueability gate with no price switching in Stage 1.**
 
 ---
 
