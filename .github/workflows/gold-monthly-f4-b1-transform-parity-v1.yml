@@ -2,6 +2,11 @@ name: Gold Monthly F4 B1 Transform Parity V1
 
 on:
   workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_f4_b1_transform_parity_v1.py
+      - .github/workflows/gold-monthly-f4-b1-transform-parity-v1.yml
 
 permissions:
   contents: read
