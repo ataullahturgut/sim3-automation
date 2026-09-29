@@ -1,0 +1,60 @@
+name: Gold Monthly ChHHO VIX Residual Screen V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_chhho_vix_residual_screen_v1.py
+      - .github/workflows/gold-monthly-chhho-vix-residual-screen-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  PYTHONHASHSEED: '0'
+  NEON_DATABASE_URL: ''
+
+jobs:
+  screen:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=2.0,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2'
+      - name: Assert Neon disabled
+        run: test -z "${NEON_DATABASE_URL:-}"
+      - name: Download frozen authorities
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/chhho inputs/ext
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10989389723/zip" > chhho.zip
+          unzip -q chhho.zip -d inputs/chhho
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11028494060/zip" > ext.zip
+          unzip -q ext.zip -d inputs/ext
+          test -s inputs/chhho/anfis_stage3c_chhho_result.json
+          test -s inputs/ext/gold_monthly_external_authority_v2.json
+      - name: Compile
+        run: |
+          python -m py_compile \
+            gold_axis_2026/tools/gold_monthly_external_driver_residual_v1.py \
+            gold_axis_2026/tools/gold_monthly_f4_b1_transform_parity_v1.py \
+            gold_axis_2026/tools/gold_monthly_chhho_vix_residual_screen_v1.py
+      - name: Run predeclared VIX residual screen
+        run: |
+          python gold_axis_2026/tools/gold_monthly_chhho_vix_residual_screen_v1.py \
+            --chhho inputs/chhho/anfis_stage3c_chhho_result.json \
+            --external-v2 inputs/ext/gold_monthly_external_authority_v2.json \
+            --output GOLD_MONTHLY_CHHHO_VIX_RESIDUAL_SCREEN_2026-09-29.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-chhho-vix-residual-screen-${{ github.sha }}
+          path: GOLD_MONTHLY_CHHHO_VIX_RESIDUAL_SCREEN_2026-09-29.json
+          if-no-files-found: error
+          retention-days: 90
