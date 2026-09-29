@@ -1,0 +1,134 @@
+name: Gold Monthly F4 Rates Parity Family V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_f4_rates_parity_shard_v1.py
+      - gold_axis_2026/tools/gold_monthly_f4_rates_parity_merge_v1.py
+      - .github/workflows/gold-monthly-f4-rates-parity-family-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  NEON_DATABASE_URL: ''
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  shard:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        include:
+          - {label: S1, start: '2022-04', end: '2022-09'}
+          - {label: S2, start: '2022-10', end: '2023-03'}
+          - {label: S3, start: '2023-04', end: '2023-09'}
+          - {label: S4, start: '2023-10', end: '2024-03'}
+          - {label: S5, start: '2024-04', end: '2024-09'}
+          - {label: S6, start: '2024-10', end: '2024-12'}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn>=1.5,<2' 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Assert Neon disabled
+        run: test -z "${NEON_DATABASE_URL:-}"
+      - name: Download frozen DEV snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > dev.zip
+          unzip -q dev.zip -d dev
+          test -s dev/gold_monthly_dev_snapshot_v1.json
+      - name: Download External Authority V2
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11028494060/zip" > ext.zip
+          unzip -q ext.zip -d ext
+          test -s ext/gold_monthly_external_authority_v2.json
+      - name: Download B2 authority
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11031577274/zip" > b2.zip
+          unzip -q b2.zip -d b2
+          test -s b2/gold_monthly_f4_b2_processing_optimizer_parity_v1.json
+      - name: Compile Rates runner
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_f4_rates_parity_shard_v1.py
+      - name: Run Rates shard
+        run: |
+          python gold_axis_2026/tools/gold_monthly_f4_rates_parity_shard_v1.py \
+            --snapshot dev/gold_monthly_dev_snapshot_v1.json \
+            --external-v2 ext/gold_monthly_external_authority_v2.json \
+            --b2-audit b2/gold_monthly_f4_b2_processing_optimizer_parity_v1.json \
+            --start "${{ matrix.start }}" \
+            --end "${{ matrix.end }}" \
+            --label "${{ matrix.label }}" \
+            --output "rates_shard_${{ matrix.label }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-f4-rates-shard-${{ matrix.label }}-${{ github.sha }}
+          path: rates_shard_${{ matrix.label }}.json
+          if-no-files-found: error
+          retention-days: 90
+
+  summarize:
+    needs: shard
+    if: always() && needs.shard.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn>=1.5,<2' 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: gold-monthly-f4-rates-shard-*-${{ github.sha }}
+          path: shards
+      - name: Download successful BASE companion
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11032345750/zip" > base.zip
+          unzip -q base.zip -d base
+          test -s base/all6_BASE.json
+      - name: Download frozen DEV snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > dev.zip
+          unzip -q dev.zip -d dev
+      - name: Download External Authority V2
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11028494060/zip" > ext.zip
+          unzip -q ext.zip -d ext
+      - name: Compile summary
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_f4_rates_parity_merge_v1.py
+      - name: Merge and summarize Rates
+        run: |
+          python gold_axis_2026/tools/gold_monthly_f4_rates_parity_merge_v1.py \
+            --dir shards \
+            --base base/all6_BASE.json \
+            --snapshot dev/gold_monthly_dev_snapshot_v1.json \
+            --external-v2 ext/gold_monthly_external_authority_v2.json \
+            --output GOLD_MONTHLY_F4_RATES_PARITY_RESULT_2026-09-29.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-f4-rates-parity-summary-${{ github.sha }}
+          path: GOLD_MONTHLY_F4_RATES_PARITY_RESULT_2026-09-29.json
+          if-no-files-found: error
+          retention-days: 90
