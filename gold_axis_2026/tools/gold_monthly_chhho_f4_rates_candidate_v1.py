@@ -1,5 +1,5 @@
 from __future__ import annotations
-import argparse, calendar, json, math
+import argparse, base64, calendar, gzip, io, json, math
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -40,8 +40,16 @@ def load_ext(path):
     d=json.loads(Path(path).read_text())
     h15={pd.Timestamp(k):v for k,v in d["h15_daily"].items()}
     dates=sorted(h15)
-    core=d["core5_monthly"]
-    return d,h15,dates,core
+    return d,h15,dates
+
+def load_full_core5(path):
+    raw=gzip.decompress(base64.b64decode(Path(path).read_bytes().strip(),validate=True))
+    df=pd.read_csv(io.BytesIO(raw))
+    df["date"]=pd.to_datetime(df["date"],errors="raise")
+    if "fedfunds" not in df.columns: raise RuntimeError("CORE5_FEDFUNDS_MISSING")
+    out={r.date.strftime("%Y-%m"):float(r.fedfunds) for r in df[["date","fedfunds"]].itertuples(index=False)}
+    if "2009-12" not in out: raise RuntimeError(f"CORE5_PREHISTORY_MISSING first={min(out)}")
+    return out
 
 def last_known(h15,dates,month,key,lag=2):
     cut=mend(month)-pd.Timedelta(days=lag)
@@ -58,14 +66,13 @@ def feat_for_origin(h15,dates,core,p):
     be=last_known(h15,dates,p,"BREAKEVEN10_PROXY"); pbe=last_known(h15,dates,pp,"BREAKEVEN10_PROXY")
     p1=mshift(p,-1);p2=mshift(p,-2)
     if p1 not in core or p2 not in core: raise RuntimeError(f"NO_FF {p}")
-    ff=float(core[p1]["FEDFUNDS_MONTHLY"])-float(core[p2]["FEDFUNDS_MONTHLY"])
+    ff=float(core[p1])-float(core[p2])
     return {"nom10_chg":nom-pnom,"real10_chg":real-preal,"be10_chg":be-pbe,"ff_lagged_chg":ff}
 
 def candidate_samples(bundle,outer_target,cols,h15,dates,core):
     raw=base.all_samples_at_origin(bundle,outer_target,governed=True)
     out={}
     for t,(x,y) in raw.items():
-        if t<COMMON_START: continue
         p=mshift(t,-1)
         f=feat_for_origin(h15,dates,core,p)
         ext=np.asarray([f[c] for c in cols],float)
@@ -77,11 +84,13 @@ def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--snapshot",required=True)
     ap.add_argument("--external",required=True)
+    ap.add_argument("--core5-full",required=True)
     ap.add_argument("--candidate",choices=sorted(CANDIDATES),required=True)
     ap.add_argument("--output",required=True)
     a=ap.parse_args()
     b,meta=snap.load_snapshot(a.snapshot)
-    extdoc,h15,dates,core=load_ext(a.external)
+    extdoc,h15,dates=load_ext(a.external)
+    core=load_full_core5(a.core5_full)
     cols=CANDIDATES[a.candidate]
     configure_dim(8+len(cols))
     rows=[]
@@ -96,13 +105,20 @@ def main():
     m=eb.active_metrics(rows)
     out={"schema":"GOLD_MONTHLY_CHHHO_F4_RATES_CANDIDATE_V1_2026-09-29",
       "candidate":a.candidate,"columns":cols,
-      "authority":{"dev":"2022-04..2024-12","common_training_start":COMMON_START,
+      "authority":{"dev":"2022-04..2024-12","training_history":"CANONICAL_UNCHANGED",
         "random_split":"NONE","2025_used":False,"2026_used":False,
         "internal_contract":"CURRENT8_MR1_VW_L1_FROZEN","native_external":True,
         "rates_h15_cutoff_days":2,"fedfunds_rule":"p-1 minus p-2 monthly",
         "neon_reads":0,"snapshot_payload_sha256":meta["payload_sha256"],
         "external_payload_sha256":extdoc["payload_sha256"]},
       "dev":{"metrics":m,"yearly":eb.yearly(rows),"rows":rows}}
+    if a.candidate=="BASE":
+        diff=abs(m["sum_abs_error"]-BASE_SIGMAAE)
+        out["baseline_parity"]={"reference_sum_abs_error":BASE_SIGMAAE,"observed_sum_abs_error":m["sum_abs_error"],
+          "abs_diff":diff,"reference_direction_correct":BASE_DIRECTION,"observed_direction_correct":m["direction_correct"],
+          "pass":diff<1e-4 and m["direction_correct"]==BASE_DIRECTION}
+        if not out["baseline_parity"]["pass"]:
+            raise RuntimeError(f"F4_RATES_BASE_PARITY_FAIL {out['baseline_parity']}")
     Path(a.output).write_text(json.dumps(out,indent=2,sort_keys=True,allow_nan=False)+"\n")
     print("F4_RATES_CANDIDATE_GATE=PASS")
     print(json.dumps({"candidate":a.candidate,"columns":cols,"sum_abs_error":m["sum_abs_error"],
