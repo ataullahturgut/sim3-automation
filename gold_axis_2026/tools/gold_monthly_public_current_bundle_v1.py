@@ -131,7 +131,9 @@ def load_worldbank():
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--dev-snapshot",required=True)
-    ap.add_argument("--gpr-repo",required=True)
+    ap.add_argument("--gpr-202608",required=True)
+    ap.add_argument("--gpr-202609",required=True)
+    ap.add_argument("--gpr-ref",required=True)
     ap.add_argument("--stak-ref",required=True)
     ap.add_argument("--stak-api-ref",required=True)
     ap.add_argument("--cutoff",default="2026-09-29")
