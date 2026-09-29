@@ -1470,6 +1470,20 @@ Final runner fixed an import-state collision by isolating ANFIS and RBFNN family
 
 # 20G. Data readiness for scientific feature architecture — direct authority store
 
+## 20G.0 F4 reset supersession note
+
+**The original V1 readiness remains valid as source evidence but is no longer sufficient as the binding F4 modeling contract.**
+
+Later audit found that:
+- daily external families must be processed with CURRENT8-compatible temporal representations;
+- daily Nasdaq/WTI/Brent should be governed instead of defaulting to monthly-only fallback;
+- CPI/Copper need prehistory sufficient to preserve the canonical 2010-03 training start;
+- external-feature ChHHO runs require optimizer-dimension parity.
+
+Binding current authority is Section **20L — F4 processing/frequency/optimizer reset** and the forthcoming **External Authority V2**.
+
+
+
 **Status: COMPLETE FOR F0–F4 CORE PROGRAM / ZERO NEON**
 
 Detailed record:
@@ -1694,9 +1708,9 @@ L1+L2 early JSON failures:
 ---
 
 
-# 20K. ChHHO F4 Rates native family
+# 20K. ChHHO F4 Rates native family — legacy endpoint representation
 
-**Status: COMPLETE / VALID / NOT_PROMOTED**
+**Status: COMPLETE / VALID FOR TESTED LEGACY IMPLEMENTATION / SUPERSEDED FOR FAMILY-WIDE DECISION**
 
 Detailed report:
 `gold_axis_2026/GOLD_MONTHLY_CHHHO_F4_RATES_NATIVE_RESULT_2026-09-29.md`
@@ -1725,11 +1739,144 @@ Chronological routed Rates family:
 Static candidate best:
 - R_BE10 **1691.8333 / 19/33**, still worse than BASE.
 
-Binding decision:
-- **Rates NOT_PROMOTED**
-- do not include Rates in later F4 compact combinations
-- earlier run **36549022859** is SUPERSEDED_METHODOLOGY / NOT SCIENTIFIC RESULT
-- next active family: **F4-FX**
+Binding interpretation after F4 reset:
+- run **36550570628** remains valid for the exact endpoint-change implementation tested;
+- it **does not establish that Rates as an information family is useless**;
+- Rates is reopened under the new processing-parity / optimizer-parity contract;
+- earlier run **36549022859** remains SUPERSEDED_METHODOLOGY / NOT SCIENTIFIC RESULT.
+
+---
+
+# 20L. F4 processing / frequency / optimizer reset
+
+**Status: ACTIVE / BINDING / MODEL RUNS PAUSED UNTIL DATA+TRANSFORM GATES PASS**
+
+Detailed authority:
+`gold_axis_2026/GOLD_MONTHLY_F4_RESET_PROCESSING_PARITY_AUDIT_2026-09-29.md`
+
+## 20L.1 Why F4 was reset
+
+The first F4 native Rates/FX lane was computationally valid for its exact implementation, but later audit identified three design mismatches:
+
+1. **Processing parity defect:** daily external series were mostly compressed to endpoint-to-endpoint monthly changes rather than CURRENT8-style monthly representation + GPR-conditioned daily-path summary.
+2. **Frequency under-use:** daily Nasdaq-100 and daily WTI/Brent were not yet governed even though daily source histories can be obtained; VIX/Rates/FX already had daily authority.
+3. **Optimizer-dimension parity defect:** ChHHO kept POP=24 while antecedent dimension increased from 80 to 90/100+, reducing search effort per optimized parameter.
+
+Standardization itself was present and is **not** the main defect.
+
+## 20L.2 Legacy evidence status
+
+### Rates legacy native
+- run **36550570628**
+- BASE parity **1413.029779 / 23/33 PASS**
+- routed result **1657.1153 / 21/33**
+- status: **VALID_FOR_LEGACY_ENDPOINT_REPRESENTATION_ONLY / SUPERSEDED_FOR_FAMILY_DECISION**
+
+### FX legacy native
+- run **36552598677**
+- artifact **11026195076**
+- digest `sha256:db389252b953b252a3a0b33fefbbc00c8e2df757ef53f25c64fcf254442d1a56`
+- BASE parity **1413.029779 / 23/33 PASS**
+- routed result **1811.986846 / 18/33**
+- status: **VALID_FOR_LEGACY_ENDPOINT_REPRESENTATION_ONLY / SUPERSEDED_FOR_FAMILY_DECISION**
+
+Detailed FX record:
+`gold_axis_2026/GOLD_MONTHLY_CHHHO_F4_FX_LEGACY_RESULT_2026-09-29.md`
+
+Earlier residual-correction screens remain valid for the separate residual-correction architecture and are not native-input evidence.
+
+## 20L.3 New apple-to-apple external feature contract
+
+For daily positive price/index series:
+- monthly representation = `log(mean_level[p]/mean_level[p-1])`;
+- daily representation = **same GPR-conditioned age-weighted daily log-return logic as CURRENT8**.
+
+For daily yields/rates:
+- monthly representation = `mean_yield[p]-mean_yield[p-1]`;
+- daily representation = **same GPR-conditioned weighting applied to intramonth daily yield differences**.
+
+For native monthly statistics:
+- do not synthesize daily values;
+- use economically appropriate monthly transforms while preserving full canonical training history.
+
+FX quote sign is normalized so **positive = USD strengthening** before aggregation.
+
+## 20L.4 Optimizer parity
+
+Frozen base:
+- 8 inputs
+- 5 rules
+- antecedent parameter dimension **80**
+- POP **24**
+- generations **45**
+- repeats **3**
+
+New rule:
+`D(k)=10k`
+and
+`POP(k)=ceil(24 × D(k)/80)`.
+
+Examples:
+- 8 inputs → 24
+- 9 → 27
+- 10 → 30
+- 20 → 60
+
+Generations/repeats stay 45/3 unless a dedicated optimizer audit changes them.
+
+## 20L.5 External Authority V2
+
+V2 must preserve the existing official H.10/H.15/VIX/CPI/World-Bank evidence and close these gaps:
+
+- daily Nasdaq-100 authority;
+- daily WTI authority;
+- daily Brent authority;
+- CPI prehistory sufficient for 2010-era YoY transforms;
+- World Bank prehistory sufficient for canonical 2010-03 training parity.
+
+Technical provider failures during V2 construction are **NOT MODEL RESULTS**.
+
+## 20L.6 Restart sequence
+
+No new F4 promotion run is authorized before:
+
+1. **F4-B0 Data Authority V2 PASS**
+2. **F4-B1 transform-parity audit PASS**
+3. **F4-B2 optimizer-parity audit PASS**
+
+Then the first restart experiment will be an **ALL6-COMPACT diagnostic challenger**, requested to answer whether the combined external information helps when processed on the same footing as CURRENT8.
+
+ALL6-COMPACT daily families:
+1. Rates
+2. FX
+3. VIX
+4. Nasdaq-100
+5. WTI
+6. Brent
+
+Design:
+- CURRENT8 retained;
+- each daily family enters only through a compact **monthly-representation + GPR-VW representation** pair;
+- same **L1** origin architecture as the retained ChHHO baseline;
+- no raw-level stuffing;
+- no endpoint-only shortcut;
+- dimension-adjusted ChHHO population;
+- hard BASE parity gate;
+- DEV 2022-04..2024-12 only;
+- 2025/2026 not used for selection.
+
+The ALL6 run is a **system-level diagnostic challenger**, not an automatic final promotion. If useful, family decomposition follows; if not useful, the cause is investigated before family-wide rejection.
+
+## 20L.7 Workflow hold
+
+Legacy workflows:
+- `.github/workflows/gold-monthly-chhho-f4-rates-v1.yml`
+- `.github/workflows/gold-monthly-chhho-f4-fx-v1.yml`
+
+are on **MANUAL LEGACY HOLD**.
+
+Current exact active stage:
+**F4-B0 External Authority V2 completion → B1 transform parity → B2 optimizer parity → ALL6-COMPACT diagnostic challenger.**
 
 ---
 
@@ -1804,7 +1951,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **ChHHO-ANFIS F4 external-family native integration — next family FX; Rates completed NOT_PROMOTED**; F0/F1/F2/F3 complete, CURRENT8 MR1+VW+L1 retained (CNN-BiLSTM deferred during this priority)
+- Current exact next model/research stage: **F4 RESET — External Authority V2 completion → transform parity → optimizer parity → ALL6-COMPACT diagnostic challenger**; F0/F1/F2/F3 remain valid, legacy Rates/FX family-wide rejection claims are superseded.
 
 
 ---
