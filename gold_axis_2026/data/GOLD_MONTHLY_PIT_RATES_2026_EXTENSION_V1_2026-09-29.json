@@ -1,0 +1,59 @@
+{
+  "schema": "GOLD_MONTHLY_PIT_RATES_2026_EXTENSION_V1_2026-09-29",
+  "role": "STRICT_PIT_MONTH_END_EXTENSION_FOR_FROZEN_RESIDUAL_REPORTING",
+  "source_series": [
+    "DGS10_ALFRED_PIT_ME",
+    "DFF_ALFRED_PIT_ME"
+  ],
+  "source": "Neon governed observations / ALFRED month-end-as-of reconstruction",
+  "availability_rule": "available_as_of <= observation_ts; monthly origin values only",
+  "retrieved_from_neon_on": "2026-09-29",
+  "database_access": "READ_ONLY",
+  "rows": [
+    {
+      "origin_month": "2025-11",
+      "dgs10": 4,
+      "dff": 3.88
+    },
+    {
+      "origin_month": "2025-12",
+      "dgs10": 4.14,
+      "dff": 3.64
+    },
+    {
+      "origin_month": "2026-01",
+      "dgs10": 4.24,
+      "dff": 3.64
+    },
+    {
+      "origin_month": "2026-02",
+      "dgs10": 4.02,
+      "dff": 3.64
+    },
+    {
+      "origin_month": "2026-03",
+      "dgs10": 4.35,
+      "dff": 3.64
+    },
+    {
+      "origin_month": "2026-04",
+      "dgs10": 4.42,
+      "dff": 3.64
+    },
+    {
+      "origin_month": "2026-05",
+      "dgs10": 4.45,
+      "dff": 3.62
+    },
+    {
+      "origin_month": "2026-06",
+      "dgs10": 4.38,
+      "dff": 3.63
+    },
+    {
+      "origin_month": "2026-07",
+      "dgs10": 4.68,
+      "dff": 3.63
+    }
+  ]
+}
