@@ -1,0 +1,93 @@
+name: Gold Monthly ChHHO F1 Single-Feature V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_chhho_f1_feature_ablation_v1.py
+      - .github/workflows/gold-monthly-chhho-f1-single-feature-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  NEON_DATABASE_URL: ''
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  ablation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        variant:
+          - NO_GOLD_MR
+          - NO_GOLD_VW
+          - NO_SILVER_MR
+          - NO_SILVER_VW
+          - NO_PLATINUM_MR
+          - NO_PLATINUM_VW
+          - NO_PALLADIUM_MR
+          - NO_PALLADIUM_VW
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn>=1.5,<2' 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Assert Neon disabled
+        run: test -z "${NEON_DATABASE_URL:-}"
+      - name: Download frozen DEV snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > dev-snapshot.zip
+          unzip -q dev-snapshot.zip -d dev_snapshot
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_f1_feature_ablation_v1.py
+      - name: Run single-feature ablation
+        run: |
+          python gold_axis_2026/tools/gold_monthly_chhho_f1_feature_ablation_v1.py             --snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json             --variant "${{ matrix.variant }}"             --output "chhho_f1_${{ matrix.variant }}.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chhho-f1-single-${{ matrix.variant }}-${{ github.sha }}
+          path: chhho_f1_${{ matrix.variant }}.json
+          retention-days: 90
+
+  summarize:
+    needs: ablation
+    if: always() && needs.ablation.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: chhho-f1-single-*-${{ github.sha }}
+          path: f1_results
+          merge-multiple: true
+      - name: Download authoritative CURRENT8 baseline artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11017234054/zip" > current8.zip
+          unzip -q current8.zip -d f1_results
+          test -s f1_results/chhho_f1_CURRENT8.json
+      - name: Summarize paired single-feature ablations
+        run: |
+          python gold_axis_2026/tools/gold_monthly_chhho_f1_summarize_v1.py             --dir f1_results             --output GOLD_MONTHLY_CHHHO_F1_SINGLE_FEATURE_RESULT_2026-09-29.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-chhho-f1-single-summary-${{ github.sha }}
+          path: GOLD_MONTHLY_CHHHO_F1_SINGLE_FEATURE_RESULT_2026-09-29.json
+          retention-days: 90
