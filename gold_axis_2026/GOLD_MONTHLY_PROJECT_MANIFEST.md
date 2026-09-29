@@ -1404,6 +1404,69 @@ Native integration requires a new long-history origin-safe external snapshot bef
 
 ---
 
+# 20F. Public current-data refresh and Sep/Oct 2026 forward
+
+**Status: CURRENT-DATE REFRESH COMPLETE / ZERO NEON / OCTOBER PROVISIONAL**
+
+Detailed evidence:
+`gold_axis_2026/GOLD_MONTHLY_PUBLIC_DATA_FORWARD_RESULT_2026-09-29.md`
+
+Authoritative successful workflow:
+- run **36531420723**
+- runner commit **225e4f1e24534efce67399efd81668339cb92159**
+- report commit **00cfcdd6172dc4506887e9fe686fb9e933b30551**
+
+Current public bundle:
+- artifact **11015874673**
+- Neon reads **0**
+- four-metal data through last fully completed common day **2026-09-28**
+- World Bank Gold monthly through **2026-08**
+- August 2026 World Bank Gold monthly average **4411.0**
+- exact GPR vintages loaded: **202608** and **202609**
+- StakTrakr annual history extended with StakTrakrApi 12:00 observations.
+
+### September 2026 — completed August origin
+
+| Model | Predicted log return | Monthly-average forecast | Direction |
+|---|---:|---:|---|
+| ChHHO-ANFIS | +0.0402280 | **4592.06** | UP |
+| DE-ABC-RBFNN | +0.0353930 | **4569.91** | UP |
+
+September role:
+**FROZEN FORWARD FORECAST FROM FINAL 2026-08 ORIGIN**.
+
+### October 2026 — provisional partial-September nowcast
+
+September partial Gold average proxy through 2026-09-28:
+**4348.9496**.
+
+| Model | Predicted log return | Provisional monthly-average nowcast | Direction |
+|---|---:|---:|---|
+| ChHHO-ANFIS | -0.0212929 | **4257.33** | DOWN |
+| DE-ABC-RBFNN | -0.0231670 | **4249.36** | DOWN |
+
+October role:
+**PROVISIONAL_NOWCAST_ONLY**.
+
+Reason:
+- September month-end is not complete on 2026-09-29;
+- World Bank September monthly Gold target is not yet available;
+- partial September target is not used as training Y;
+- final October forecast must be regenerated after complete September origin inputs without retuning.
+
+Artifacts:
+- ChHHO Sep **11015679869**
+- DE-ABC Sep **11016920015**
+- ChHHO Oct provisional **11016204637**
+- DE-ABC Oct provisional **11017025301**
+
+Earlier runs 36530729337..36531229734:
+**SUPERSEDED_TECHNICAL_RUNS / NOT MODEL RESULTS**.
+
+Final runner fixed an import-state collision by isolating ANFIS and RBFNN family imports. Do not reuse the failed mixed-import results.
+
+---
+
 # 21. Bundan sonra manifest nasıl güncellenecek
 
 Her yeni deney bittiğinde **aynı commit zincirinde** bu ana manifest güncellenecek.
