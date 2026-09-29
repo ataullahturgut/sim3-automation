@@ -1693,6 +1693,46 @@ L1+L2 early JSON failures:
 
 ---
 
+
+# 20K. ChHHO F4 Rates native family
+
+**Status: COMPLETE / VALID / NOT_PROMOTED**
+
+Detailed report:
+`gold_axis_2026/GOLD_MONTHLY_CHHHO_F4_RATES_NATIVE_RESULT_2026-09-29.md`
+
+Authority:
+- corrected run **36550570628**
+- summary artifact **11025216884**
+- summary digest `sha256:640ab422603e81c7ea420ab9f9349ab6358882ce6cc784dcada0f52c52c4269f`
+- BASE artifact **11023949755**
+- Neon reads **0**
+
+Baseline parity:
+- **1413.029779 / 23/33**
+- **PASS**
+
+Chronological routed Rates family:
+- ΣAE **1657.1153**
+- direction **21/33**
+- ΔΣAE vs BASE **-244.0855**
+- months improved/tied/worsened **9/9/15**
+- 2022 ΔΣAE **-89.5792**
+- 2023 ΔΣAE **-141.5176**
+- 2024 ΔΣAE **-12.9887**
+- promotion gate **FAIL**
+
+Static candidate best:
+- R_BE10 **1691.8333 / 19/33**, still worse than BASE.
+
+Binding decision:
+- **Rates NOT_PROMOTED**
+- do not include Rates in later F4 compact combinations
+- earlier run **36549022859** is SUPERSEDED_METHODOLOGY / NOT SCIENTIFIC RESULT
+- next active family: **F4-FX**
+
+---
+
 # 21. Bundan sonra manifest nasıl güncellenecek
 
 Her yeni deney bittiğinde **aynı commit zincirinde** bu ana manifest güncellenecek.
@@ -1764,7 +1804,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **ChHHO-ANFIS F4 external-family native integration**; F0/F1/F2/F3 complete, CURRENT8 MR1+VW+L1 retained (CNN-BiLSTM deferred during this priority)
+- Current exact next model/research stage: **ChHHO-ANFIS F4 external-family native integration — next family FX; Rates completed NOT_PROMOTED**; F0/F1/F2/F3 complete, CURRENT8 MR1+VW+L1 retained (CNN-BiLSTM deferred during this priority)
 
 
 ---
