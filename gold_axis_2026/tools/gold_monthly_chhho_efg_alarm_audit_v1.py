@@ -22,9 +22,16 @@ def mshift(m,d):
 def eom(m):
  return pd.Period(m,freq='M').end_time.normalize()
 
-def fetch(url, timeout=60):
+def fetch(url, timeout=120, tries=3):
  h={'User-Agent':'Mozilla/5.0 GOLD_MONTHLY_RESEARCH/1.0'}
- r=requests.get(url,headers=h,timeout=timeout); r.raise_for_status(); return r
+ last=None
+ for i in range(tries):
+  try:
+   r=requests.get(url,headers=h,timeout=timeout); r.raise_for_status(); return r
+  except Exception as e:
+   last=e
+ if last: raise last
+ raise RuntimeError('FETCH_FAILED')
 
 def load_inputs(a):
  snap=json.loads(Path(a.snapshot).read_text())['payload']
@@ -68,15 +75,27 @@ def build_chhho(ch,vt):
  return out
 
 def download_gvz():
- url='https://fred.stlouisfed.org/graph/fredgraph.csv?id=GVZCLS'
- r=fetch(url)
- x=pd.read_csv(io.BytesIO(r.content)); x.columns=['date','gvz']; x['date']=pd.to_datetime(x.date); x['gvz']=pd.to_numeric(x.gvz,errors='coerce'); x=x.dropna()
+ urls=['https://fred.stlouisfed.org/graph/fredgraph.csv?id=GVZCLS','https://fred.stlouisfed.org/data/GVZCLS']
+ x=None; used=None; errs=[]
+ for url in urls:
+  try:
+   r=fetch(url,timeout=180,tries=2)
+   if 'fredgraph.csv' in url:
+    z=pd.read_csv(io.BytesIO(r.content))
+   else:
+    tabs=pd.read_html(io.StringIO(r.text))
+    z=next(t for t in tabs if {'DATE','VALUE'}.issubset({str(c).upper() for c in t.columns}))
+   z.columns=['date','gvz']; z['date']=pd.to_datetime(z.date,errors='coerce'); z['gvz']=pd.to_numeric(z.gvz,errors='coerce'); z=z.dropna()
+   if len(z)<1000: raise RuntimeError(f'GVZ_ROWS_TOO_FEW {len(z)}')
+   x=z; used=url; break
+  except Exception as e: errs.append(f'{url}: {e}')
+ if x is None: raise RuntimeError('GVZ_FETCH_ALL_FAILED '+repr(errs))
  x['month']=x.date.dt.strftime('%Y-%m')
  g=x.groupby('month').gvz.agg(['mean','max','last']).rename(columns={'mean':'gvz_mean','max':'gvz_max','last':'gvz_last'}).sort_index()
  g['gvz_mean_chg']=g.gvz_mean.diff(); g['gvz_max_chg']=g.gvz_max.diff()
  g['gvz_med12_prior']=g.gvz_mean.shift(1).rolling(12,min_periods=6).median()
  g['gvz_ratio12']=g.gvz_mean/g.gvz_med12_prior
- return g,{'url':url,'rows':len(x),'first':str(x.date.min().date()),'last':str(x.date.max().date())}
+ return g,{'url':used,'fallback_errors':errs,'rows':len(x),'first':str(x.date.min().date()),'last':str(x.date.max().date())}
 
 def ccol(cols,*needles):
  low={c.lower():c for c in cols}
