@@ -1,0 +1,57 @@
+name: Gold Monthly Long-History Market Drivers V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_long_history_market_drivers_v1.py
+      - .github/workflows/gold-monthly-long-history-market-drivers-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  NEON_DATABASE_URL: ''
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2'
+      - name: Assert Neon disabled
+        run: test -z "${NEON_DATABASE_URL:-}"
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_long_history_market_drivers_v1.py
+      - name: Build long-history market drivers
+        run: |
+          python gold_axis_2026/tools/gold_monthly_long_history_market_drivers_v1.py             --risk-snapshot gold_axis_2026/data/GOLD_MONTHLY_RISK_MARKET_HISTORY_COMPACT_V1_2026-09-28.json             --output gold_monthly_long_history_market_drivers_v1.json
+      - name: Scientific/data gate
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('gold_monthly_long_history_market_drivers_v1.json'))
+          assert d['authority']['neon_reads']==0
+          assert d['nasdaq_reconciliation']['old_external_pit_nasdaq_field_status']=='SUPERSEDED_FOR_NASDAQ_ONLY'
+          assert d['fred_source']['NASDAQ100']['first'] <= '2010-01-05'
+          assert d['fred_source']['NASDAQ100']['last'] >= '2026-09-20'
+          assert len(d['h10_daily']) > 3000
+          print('LONG_HISTORY_DATA_GATE=PASS')
+          print(json.dumps({
+            'fred_source':d['fred_source'],
+            'h10_days':len(d['h10_daily']),
+            'nasdaq_reconciliation':d['nasdaq_reconciliation'],
+            'payload_sha256':d['payload_sha256']
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-long-history-market-drivers-v1-${{ github.sha }}
+          path: gold_monthly_long_history_market_drivers_v1.json
+          if-no-files-found: error
+          retention-days: 90
