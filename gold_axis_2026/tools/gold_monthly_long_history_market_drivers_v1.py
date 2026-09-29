@@ -34,31 +34,35 @@ def get(url,timeout=15,retries=2):
     raise RuntimeError(f"DOWNLOAD_FAILED {url} {type(last).__name__}:{last}")
 
 def fred(series):
-    csv_url=f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}&cosd={START}&coed={END}"
-    raw=None; mode=None; last_error=None
-    try:
-        raw=get(csv_url,timeout=15,retries=2)
-        df=pd.read_csv(io.BytesIO(raw))
-        mode="FREDGRAPH_CSV"
-    except Exception as e:
-        last_error=e
-        table_url=f"https://fred.stlouisfed.org/data/{series}"
-        raw=get(table_url,timeout=20,retries=3)
-        tables=pd.read_html(io.BytesIO(raw))
-        df=None
-        for q in tables:
-            cols=[str(x).strip().upper() for x in q.columns]
-            if "DATE" in cols and "VALUE" in cols:
-                q=q.copy();q.columns=cols;df=q[["DATE","VALUE"]].copy();break
-        if df is None: raise RuntimeError(f"FRED_TABLE_NOT_FOUND {series} fallback_after={type(last_error).__name__}")
-        mode="FRED_TABLE_DATA_HTML"
-    date_col=df.columns[0];val_col=df.columns[-1]
-    df["date"]=pd.to_datetime(df[date_col],errors="coerce")
-    df["value"]=pd.to_numeric(df[val_col],errors="coerce")
-    df=df.dropna(subset=["date","value"]).sort_values("date").drop_duplicates("date",keep="last")
+    # Long FRED graph downloads can time out. Use deterministic 3-year chunks,
+    # keep every provider payload hash, and merge/deduplicate locally.
+    frames=[]; chunks=[]
+    y0=pd.Timestamp(START).year; y1=pd.Timestamp(END).year
+    for y in range(y0,y1+1,3):
+        a=f"{y:04d}-01-01"
+        b=f"{min(y+2,y1):04d}-12-31"
+        if b>END: b=END
+        url=f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}&cosd={a}&coed={b}"
+        raw=get(url,timeout=35,retries=3)
+        q=pd.read_csv(io.BytesIO(raw))
+        date_col=q.columns[0]; val_col=q.columns[-1]
+        q["date"]=pd.to_datetime(q[date_col],errors="coerce")
+        q["value"]=pd.to_numeric(q[val_col],errors="coerce")
+        q=q.dropna(subset=["date","value"])[["date","value"]]
+        if len(q): frames.append(q)
+        chunks.append({"start":a,"end":b,"url":url,"sha256":sha(raw),"rows":int(len(q))})
+    if not frames: raise RuntimeError(f"FRED_EMPTY {series}")
+    df=pd.concat(frames,ignore_index=True).sort_values("date").drop_duplicates("date",keep="last")
     df=df[(df["date"]>=pd.Timestamp(START))&(df["date"]<=pd.Timestamp(END))]
-    if df.empty:raise RuntimeError(f"FRED_EMPTY {series}")
-    return {r.date.strftime("%Y-%m-%d"):float(r.value) for r in df[["date","value"]].itertuples(index=False)},{"url":csv_url,"fetch_mode":mode,"sha256":sha(raw),"first":df.date.iloc[0].strftime("%Y-%m-%d"),"last":df.date.iloc[-1].strftime("%Y-%m-%d"),"n":len(df)}
+    if df.empty: raise RuntimeError(f"FRED_EMPTY_AFTER_RANGE {series}")
+    return {r.date.strftime("%Y-%m-%d"):float(r.value) for r in df.itertuples(index=False)},{
+      "fetch_mode":"FREDGRAPH_CSV_CHUNKED_3Y",
+      "chunks":chunks,
+      "combined_chunk_manifest_sha256":sha(json.dumps(chunks,sort_keys=True).encode()),
+      "first":df.date.iloc[0].strftime("%Y-%m-%d"),
+      "last":df.date.iloc[-1].strftime("%Y-%m-%d"),
+      "n":int(len(df))
+    }
 
 def monthly_last_return(series):
     s=pd.Series(series,dtype=float)
