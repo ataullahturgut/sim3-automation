@@ -254,9 +254,9 @@ Required V2 authority:
 - Rates daily: Fed H.15 — READY
 - FX daily: Fed H.10 — READY
 - VIX daily: Cboe — READY
-- Nasdaq-100 daily: FRED, upstream Nasdaq, Inc. — TO BE GOVERNED IN V2
-- WTI daily: FRED, upstream U.S. EIA — TO BE GOVERNED IN V2
-- Brent daily: FRED, upstream U.S. EIA — TO BE GOVERNED IN V2
+- Nasdaq-100 daily: Nasdaq direct historical API. — TO BE GOVERNED IN V2
+- WTI daily: U.S. EIA direct daily history — TO BE GOVERNED IN V2
+- Brent daily: U.S. EIA direct daily history — TO BE GOVERNED IN V2
 - CPI: BLS monthly native frequency — READY
 - Copper: World Bank monthly — READY_MONTHLY / DAILY_NOT_PROVEN
 
