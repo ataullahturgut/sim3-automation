@@ -9,6 +9,7 @@ import pandas as pd
 START="2010-01-01"
 END="2026-09-29"
 EXPECTED_V1_PAYLOAD="c52670ccf7bccc75e7c92e6d8261fe25d2d8c62b986300d45d5f264a26142353"
+WB_URL="https://thedocs.worldbank.org/en/doc/74e8be41ceb20fa0da750cda2f6b9e4e-0050012026/related/CMO-Historical-Data-Monthly.xlsx"
 
 FRED_DAILY={
     "NASDAQ100":"NASDAQ100",
@@ -140,6 +141,46 @@ def fetch_cpi_prehistory():
         "purpose":"preserve canonical 2010-03 training start for YoY CPI features",
     }
 
+def fetch_world_bank_prehistory():
+    raw=get(WB_URL,180)
+    x=pd.read_excel(io.BytesIO(raw),sheet_name="Monthly Prices",header=None,engine="openpyxl")
+    header_row=None
+    for rr in range(min(12,len(x))):
+        vals=[str(v).strip().lower() for v in x.iloc[rr].tolist()]
+        if any("crude oil" in v for v in vals) and any(v=="gold" or v.startswith("gold ") for v in vals):
+            header_row=rr; break
+    if header_row is None: raise RuntimeError("WB_HEADER_NOT_FOUND")
+    headers=[str(v).strip() for v in x.iloc[header_row].tolist()]
+    targets={}
+    for i,name in enumerate(headers):
+        lo=name.lower()
+        if "crude oil" in lo and "brent" in lo: targets["BRENT"]=i
+        elif "crude oil" in lo and ("wti" in lo or "west texas" in lo): targets["WTI"]=i
+        elif lo=="copper" or lo.startswith("copper "): targets["COPPER"]=i
+        elif "crude oil" in lo and "average" in lo: targets["CRUDE_AVG"]=i
+    if not {"BRENT","WTI","COPPER"}<=set(targets):
+        raise RuntimeError(f"WB_REQUIRED_COLUMNS_MISSING {targets}")
+    out={}
+    for _,row in x.iterrows():
+        import re
+        m=re.match(r"^(\d{4})M(\d{1,2})$",str(row.iloc[0]).strip(),re.I)
+        if not m: continue
+        mk=f"{int(m.group(1)):04d}-{int(m.group(2)):02d}"
+        if mk<"2008-01" or mk>"2026-08": continue
+        z={}
+        for k,i in targets.items():
+            v=pd.to_numeric(row.iloc[i],errors="coerce")
+            if pd.notna(v): z[k]=float(v)
+        if z: out[mk]=z
+    if min(out)>"2008-01" or "2009-12" not in out or max(out)<"2026-08":
+        raise RuntimeError(f"WB_PREHISTORY_COVERAGE {min(out)} {max(out)}")
+    return out,{
+        "url":WB_URL,"sha256":sha_bytes(raw),"columns":targets,
+        "first":min(out),"last":max(out),"n":len(out),
+        "source":"World Bank Pink Sheet",
+        "purpose":"preserve canonical 2010-03 history for monthly Copper and commodity controls",
+    }
+
 def month_avg(daily:dict[str,float]):
     s=pd.Series(daily,dtype=float)
     s.index=pd.to_datetime(s.index)
@@ -213,6 +254,7 @@ def main():
     wb_brent={m:float(z["BRENT"]) for m,z in wb.items() if z.get("BRENT") is not None}
 
     cpi_long,cpi_long_meta=fetch_cpi_prehistory()
+    wb_long,wb_long_meta=fetch_world_bank_prehistory()
 
     diagnostics={
         "coverage":diag,
@@ -247,8 +289,8 @@ def main():
         "vix_meta":v1["vix_meta"],
         "cpi_monthly":cpi_long,
         "cpi_meta":cpi_long_meta,
-        "commodity_monthly":v1["commodity_monthly"],
-        "commodity_meta":v1["commodity_meta"],
+        "commodity_monthly":wb_long,
+        "commodity_meta":wb_long_meta,
         "core5_monthly":v1["core5_monthly"],
         "core5_meta":v1["core5_meta"],
         "readiness":{
@@ -259,7 +301,7 @@ def main():
             "wti_daily":"READY_FRED_UPSTREAM_EIA",
             "brent_daily":"READY_FRED_UPSTREAM_EIA",
             "cpi":"READY_MONTHLY_NATIVE_FREQUENCY_WITH_2008_PREHISTORY",
-            "copper":"READY_MONTHLY_WORLD_BANK__DAILY_NOT_PROVEN",
+            "copper":"READY_MONTHLY_WORLD_BANK_WITH_2008_PREHISTORY__DAILY_NOT_PROVEN",
             "cpi_daily":"NOT_APPLICABLE_NATIVE_MONTHLY_STATISTIC",
         },
         "diagnostics":diagnostics,
