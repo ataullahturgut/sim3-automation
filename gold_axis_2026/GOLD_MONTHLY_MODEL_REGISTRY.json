@@ -819,7 +819,7 @@
       "rerun": false
     }
   ],
-  "current_next_action": "Run compact FX daily-path test next: Broad USD monthly mean log change + one daily-path scalar; keep 2025/2026 closed; do not start VIX yet",
+  "current_next_action": "Run FX3 true directional MIDAS daily-path test next: Broad USD MR1 + parsimonious training-only MIDAS-weighted daily return scalar; keep 2025/2026 closed; do not start VIX",
   "registry_rules": {
     "check_before_run": true,
     "completed_models_default_rerun": false,
@@ -858,13 +858,13 @@
     "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
-    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates family closure + FX1 compact monthly Broad USD",
-    "f4_status": "FX1_COMPLETE_VALID_NOT_PROMOTED__FX_DAILY_PATH_NEXT",
+    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates family closure + FX1 + FX2 compact Broad USD",
+    "f4_status": "FX2_COMPLETE_VALID_NOT_PROMOTED__FX3_DIRECTIONAL_MIDAS_NEXT",
     "legacy_rates_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
     "legacy_fx_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
-    "next_model": "FX daily-path compact test",
+    "next_model": "FX3 Broad USD MR1 + directional MIDAS daily-return scalar",
     "next_model_status": "AUTHORIZED_NOT_RUN",
-    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1 + EXTERNAL_AUTHORITY_V2 + B2 parity + FX1 summary",
+    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1 + EXTERNAL_AUTHORITY_V2 + B2 parity + FX2 summary",
     "neon_required": false
   },
   "f4_reset": {
@@ -944,7 +944,7 @@
       "MR_ONLY_PAIR",
       "VW_ONLY_PAIR"
     ],
-    "fx_status": "FX1_COMPLETE_VALID_NOT_PROMOTED__FAMILY_STILL_OPEN",
+    "fx_status": "FX2_COMPLETE_VALID_NOT_PROMOTED__FAMILY_STILL_OPEN",
     "transport_2025_for_rates_combined": "NOT_OPENED",
     "stress_2026_for_rates_combined": "NOT_OPENED",
     "rates_r1_status": "COMPLETE_VALID_NOT_PROMOTED",
@@ -1012,9 +1012,31 @@
     "fx1_paired_ties": 0,
     "fx1_promotion": "REJECTED",
     "fx_family_wide_rejection": "NOT_AUTHORIZED",
-    "fx_next_model": "BROADUSD_MR1_PLUS_DAILY_PATH_COMPACT",
+    "fx_next_model": "FX3_BROADUSD_MR1_PLUS_DIRECTIONAL_MIDAS_DAILY_RETURN_SCALAR",
     "vix_status": "NOT_STARTED",
     "transport_2025_for_fx1": "NOT_OPENED",
-    "stress_2026_for_fx1": "NOT_OPENED"
+    "stress_2026_for_fx1": "NOT_OPENED",
+    "fx2_run": 36575331412,
+    "fx2_head_commit": "d6f1fe245587bbcd82cf4d4ffdbaf4f53378b182",
+    "fx2_summary_artifact": 11037330894,
+    "fx2_summary_artifact_digest": "sha256:a14e70151f71d3ed1561b5f85f0d4d0c0a976317f919f746032436a1dd14da36",
+    "fx2_features": [
+      "BROADUSD_MR1",
+      "BROADUSD_DAILY_RMS_VOL"
+    ],
+    "fx2_total_inputs": 10,
+    "fx2_param_dim": 100,
+    "fx2_population": 30,
+    "fx2_sum_abs_error": 1787.6000747067567,
+    "fx2_direction": "17/33",
+    "fx2_delta_sum_abs_error_vs_base": 374.57029529830083,
+    "fx2_relative_deterioration_pct": 26.508308653983864,
+    "fx2_paired_wins": 14,
+    "fx2_paired_losses": 19,
+    "fx2_paired_ties": 0,
+    "fx2_vs_fx1_sum_abs_error_reduction": 744.9934843068532,
+    "fx2_promotion": "REJECTED",
+    "transport_2025_for_fx2": "NOT_OPENED",
+    "stress_2026_for_fx2": "NOT_OPENED"
   }
 }
