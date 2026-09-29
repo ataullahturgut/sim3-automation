@@ -2152,6 +2152,59 @@ Decision:
 - next external family: **FX**
 - FX execution status: **NOT STARTED**
 
+## 20L.6D FX1 Broad USD compact monthly representation — COMPLETE / NOT PROMOTED
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_F4_FX1_BROADUSD_RESULT_2026-09-29.md`
+
+FX1 representation:
+- one FX feature only: `log(mean(BROADUSD[p]) / mean(BROADUSD[p-1]))`
+- source: Fed H.10 Broad USD index
+- sign: positive = USD strengthening
+- H.10 release cutoff **7 calendar days**
+- daily FX VW **NOT USED**
+- GPR weighting on FX **NOT USED**
+- total inputs **9**
+- antecedent parameter dimension **90**
+- POP **27**
+- generations **45**
+- repeats **3**
+- same chronological training-only scaling / ChHHO-ANFIS / local-refit path as BASE
+
+Authoritative execution:
+- workflow **Gold Monthly F4 FX1 Broad USD V1**
+- run **36573963802**
+- head commit **d89713432f54877c551b2b120ab63a655de26b37**
+- 6/6 DEV shards **SUCCESS**
+- summarize **SUCCESS**
+- summary artifact **11036118411**
+- summary digest `sha256:e8b222298bb25b49140cf2f3b77369641c1c9aba2b1e351a26948a0e8950d33f`
+
+DEV:
+- BASE **1413.0297794084559 / 23/33**
+- FX1 **2532.59355901361 / 20/33**
+- ΣAE deterioration vs BASE **+1119.5637796051542 USD**
+- relative deterioration **+79.23%**
+- direction change **-3**
+- paired wins/losses/ties **13 / 20 / 0**
+- median paired improvement (BASE − FX1) **-12.2449977274**
+- worst month **2022-04**, AE **769.8660852655**
+- signed mean bias **-34.9539510109**
+
+Yearly:
+- 2022: BASE **397.8794** vs FX1 **1278.0632**
+- 2023: BASE **395.7140** vs FX1 **568.4122**
+- 2024: BASE **619.4364** vs FX1 **686.1182**
+
+Decision:
+- FX1 **VALID / NOT PROMOTED**
+- FX family-wide rejection **NOT AUTHORIZED**
+- monthly Broad USD level-change alone does not add DEV value
+- daily FX path remains untested in this compact family lane
+- 2025/2026 remain closed
+- next FX-only test should use **BROADUSD_MR1 + one daily-path scalar**, with total inputs **10 / D100 / POP30**, before any family closure.
+- VIX/Nasdaq/Energy remain not started.
+
 ## 20L.7 Workflow hold
 
 Legacy workflows:
@@ -2161,7 +2214,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**F4 Rates native family CLOSED after R2 non-promotion; FX is next and not yet started.**
+**F4 FX family open: FX1 monthly Broad USD representation complete/not promoted; daily-path FX test next.**
 
 ---
 
@@ -2236,7 +2289,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **F4 FX family decomposition**. Rates native F4 family is closed after R2 DEV ΣAE **1716.957037 / 19/33** vs BASE **1413.029779 / 23/33**. Compact redesign materially repaired the original Rates(4) dimensionality failure but did not add net DEV value. FX is next; VIX/Nasdaq/Energy remain not started.
+- Current exact next model/research stage: **F4 FX daily-path compact test** after FX1 monthly Broad USD DEV ΣAE **2532.593559 / 20/33** vs BASE **1413.029779 / 23/33**. FX family-wide rejection is not authorized because the daily FX path has not yet been tested. Rates native F4 family is closed; VIX/Nasdaq/Energy remain not started.
 
 
 ---
