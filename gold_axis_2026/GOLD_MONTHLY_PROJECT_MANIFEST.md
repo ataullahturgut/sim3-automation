@@ -1281,6 +1281,129 @@ Evidence:
 
 ---
 
+# 20E. Cross-family external information screen — zero Neon
+
+**Status: COMPLETE / ARTIFACT-ONLY / ZERO NEON READS**
+
+Detailed result:
+`gold_axis_2026/GOLD_MONTHLY_EXTERNAL_MULTIMODEL_SCREEN_V1_2026-09-29.md`
+
+Purpose:
+extend the external-information screen from the two Pareto leaders to the broader strong cross-family set, while preserving each model's frozen forecast rows and using the same chronology-safe prequential residual-correction protocol.
+
+Run / provenance:
+- workflow run **36527575572**
+- artifact **11015042783**
+- runner commit **529dc3739673a8ff4787b803fc6e1446ae7355d7**
+- report commit **fcd476699c91080bfb32d8563ebe2d6d667ce951**
+- Neon reads: **0**
+- eight base-model parity gates: **PASS**
+
+## 20E.1 Models screened
+
+1. ChHHO-ANFIS
+2. DE-ABC-RBFNN
+3. PLS1 V1 All-4
+4. LMC2_RBF_M32
+5. FULL7 ANN
+6. REDUCED4 ANN
+7. EPSILON_RBF_DAILY12
+8. CATBOOST_PRICE
+
+Predeclared external blocks:
+- headline CPI surprise
+- PIT rates: ΔDGS10 + ΔDFF + Δ(DGS10-DFF)
+- PIT USD/CNY
+- official Federal Reserve H.10 broad USD
+- official Federal Reserve H.10 major FX
+
+Selection authority remains DEV 2022-04..2024-12 only.
+
+## 20E.2 Cross-family result
+
+| Model | Base DEV ΣAE | Direction | Best robust external block | Corrected DEV ΣAE | Direction | ΔΣAE |
+|---|---:|---:|---|---:|---:|---:|
+| **ChHHO-ANFIS** | 1413.0299 | 23/33 | **Headline CPI surprise** | **1343.6354** | 23/33 | **69.3945** |
+| **DE-ABC-RBFNN** | 1415.8371 | 25/33 | **PIT Rates** | **1373.5811** | 25/33 | **42.2560** |
+| **PLS1 V1 All-4** | 1420.0291 | 20/33 | **PIT Rates** | **1379.3835** | 19/33 | **40.6456** |
+| **FULL7 ANN** | 1428.8590 | 22/33 | **PIT USD/CNY** | **1391.1359** | 23/33 | **37.7231** |
+| **REDUCED4 ANN** | 1431.4587 | 24/33 | **PIT USD/CNY** | **1398.7775** | 24/33 | **32.6812** |
+| LMC2_RBF_M32 | 1424.1711 | 19/33 | BASE | 1424.1711 | 19/33 | 0 |
+| **CATBOOST_PRICE** | 1460.4339 | 20/33 | **PIT USD/CNY** | **1428.4187** | 20/33 | **32.0153** |
+| EPSILON_RBF_DAILY12 | 1449.1874 | 19/33 | BASE | 1449.1874 | 19/33 | 0 |
+
+Main result:
+- **6/8** strong models have at least one external block passing the robustness gate.
+- LMC2_RBF_M32 and EPSILON_RBF_DAILY12 have **no robust winning external block** under this screen.
+- The useful missing information channel is model-specific rather than universal.
+
+## 20E.3 Model-specific interpretation
+
+### ChHHO-ANFIS
+Robust PASS:
+- CPI: ΔΣAE **+69.3945 / +4.91%**
+- PIT USD/CNY: +57.2741 / +4.05%
+- H.10 major FX: +49.2814 / +3.49%
+- H.10 broad USD: +42.4555 / +3.00%
+- Rates: +42.1095 / +2.98%
+
+Governed winner: **headline CPI surprise**.
+
+### DE-ABC-RBFNN
+Governed winner: **PIT rates**, ΔΣAE **+42.2560 / +2.98%**.
+Headline CPI and PIT USD/CNY also pass, but are weaker.
+H.10 broad/major FX do not pass.
+
+### PLS1 V1 All-4
+Only robust winner among tested blocks: **PIT rates**.
+- ΔΣAE **+40.6456 / +2.86%**
+- direction trade-off: **20/33 → 19/33**
+
+### ANN ensembles
+FULL7:
+- winner **PIT USD/CNY**
+- ΔΣAE **+37.7231 / +2.64%**
+- direction **22/33 → 23/33**
+
+REDUCED4:
+- winner **PIT USD/CNY**
+- ΔΣAE **+32.6812 / +2.28%**
+- direction remains **24/33**
+
+### CATBOOST_PRICE
+Winner **PIT USD/CNY**:
+- ΔΣAE **+32.0153 / +2.19%**
+- direction remains 20/33.
+Rates and CPI also pass.
+
+### LMC2_RBF_M32 / EPSILON_RBF_DAILY12
+No tested external block passes the robustness gate.
+These stay as **BASE controls** for the current external-information family.
+
+## 20E.4 Interpretation boundary
+
+This section proves **incremental external-information value on frozen model forecast residuals**.
+
+It does **not** establish native architecture augmentation.
+
+Reason native integration is not yet authorized:
+- current governed CPI/rates/FX compact snapshots do not cover the full historical training span used by the base models;
+- zero-filling early history or using unreconstructed revised history would violate the causal comparison.
+
+Native integration requires a new long-history origin-safe external snapshot before retraining.
+
+## 20E.5 Native-integration priority after long-history backfill
+
+1. **ChHHO + headline CPI surprise**
+2. **DE-ABC + PIT rates**
+3. **PLS1 + PIT rates**
+4. **FULL7 ANN + PIT USD/CNY**
+5. **REDUCED4 ANN + PIT USD/CNY**
+6. **CATBOOST_PRICE + PIT USD/CNY**
+7. LMC2 and DAILY12-SVR remain BASE controls unless a new external family supplies a pre-outcome rationale.
+
+---
+
 # 21. Bundan sonra manifest nasıl güncellenecek
 
 Her yeni deney bittiğinde **aynı commit zincirinde** bu ana manifest güncellenecek.
