@@ -1860,6 +1860,31 @@ Audit discovery:
 - WTI uses signed monthly-mean difference + GPR-weighted daily first difference;
 - no clipping/deletion/synthetic correction.
 
+## 20L.5B B1 transform parity — COMPLETE
+
+- run **36560992052**
+- head commit **7edea63450ce993be1c8686ea20d1c0c2c502931**
+- artifact **11028839840**
+- artifact digest `sha256:36cd3d69c4510fa527e8eedad6bcdf08a7a73b42a6c2267399366b5044e195ea`
+- External Authority V2 payload `fb779f1f1a3f5689f9f631aadc7e6e6e0c8cf5e50ec7730a233b80e8789438bc`
+- gate **PASS**
+- rows checked **5346**
+- Gold VW formula max absolute parity difference **0.0**
+- canonical history shortened **NO**
+- all external features finite **YES**
+- target-month external data **NO**
+- 2025/2026 selection use **NO**
+- minimum eligible monthly observations:
+  - Brent 13
+  - Broad USD 10
+  - Nasdaq-100 18
+  - Nominal10Y 17
+  - Real10Y 17
+  - VIX 18
+  - WTI 7
+
+Conclusion: external daily transforms are now processing-parity compatible with the retained CURRENT8 MR/VW architecture.
+
 ## 20L.6 Restart sequence
 
 No new F4 promotion run is authorized before:
@@ -1900,7 +1925,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**F4-B1 transform parity → B2 optimizer parity → ALL6-COMPACT diagnostic challenger.**
+**F4-B2 optimizer parity → ALL6-COMPACT diagnostic challenger.**
 
 ---
 
