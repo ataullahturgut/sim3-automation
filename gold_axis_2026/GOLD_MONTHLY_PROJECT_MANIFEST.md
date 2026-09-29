@@ -1467,6 +1467,73 @@ Final runner fixed an import-state collision by isolating ANFIS and RBFNN family
 
 ---
 
+
+# 20G. Data readiness for scientific feature architecture — direct authority store
+
+**Status: COMPLETE FOR F0–F4 CORE PROGRAM / ZERO NEON**
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_DATA_READINESS_2026-09-29.md`
+
+Successful external-store authority:
+- workflow: **Gold Monthly Direct External Store V1**
+- run **36533719167**
+- commit **6909edb79386c56e4a33bf614deb244117c5a988**
+- artifact **11018030682**
+- artifact digest: `sha256:9181d4a8a346d9594ec5105ae23ed9c7251b463cfd60064a55fbda0fc819af48`
+- payload SHA256: `c52670ccf7bccc75e7c92e6d8261fe25d2d8c62b986300d45d5f264a26142353`
+- Neon reads: **0**
+- scientific/data gate: **PASS**
+
+## 20G.1 Ready data families
+
+| Family | Coverage / authority | Status |
+|---|---|---|
+| Four metals | canonical daily snapshot + public extension | **READY** |
+| GPR | governed PIT + 2026-08/09 vintages | **READY** |
+| Gold target | canonical history + World Bank through 2026-08 | **READY** |
+| Nominal/real 10Y | Fed H.15, 2010-01-04..2026-09-25 | **READY** |
+| Fed Funds | CORE5 monthly history | **READY** |
+| FX | Fed H.10, 2010-01-04..2026-09-25 | **READY** |
+| VIX | Cboe, 2010-01-04..2026-09-28 | **READY** |
+| Headline/Core CPI NSA | BLS, 2010-01..2026-08 | **READY** |
+| Brent/WTI/Crude/Copper | World Bank, 2010-01..2026-08 | **READY** |
+| Nasdaq monthly | CORE5, research span from 2010 | **READY** |
+| Nasdaq daily long-history | GIW credential-required | **NOT_PROVEN / BLOCKED** |
+| CPI survey-consensus surprise long-history | no governed 2010+ consensus history | **NOT_PROVEN / DO NOT SYNTHESIZE** |
+
+Important update:
+- prior `commodity/oil = DATA_NOT_READY` statements are **SUPERSEDED**;
+- prior `native integration blocked pending long-history external data` statements are **SUPERSEDED FOR THE CORE F0–F4 PROGRAM**;
+- old FRED-heavy long-history workflow failures are **SUPERSEDED_TECHNICAL_PROVIDER_FAILURE / NOT MODEL RESULTS**.
+
+## 20G.2 Scientific use boundary
+
+Ready now:
+- F0 CURRENT8 parity;
+- F1 CURRENT8 necessity/ablation;
+- F2 metal representation;
+- F3 lag/distributed-lag/MIDAS research;
+- F4 external-family tests using rates, FX, VIX, realized CPI, monthly Nasdaq and commodity/oil.
+
+Nasdaq:
+- monthly level / return / 3M / 6M momentum are authorized;
+- daily realized-volatility / daily drawdown / daily-MIDAS variants are not authorized until a governed credential-free or retained daily history is proven.
+
+Inflation:
+- BLS headline/core realized CPI transformations are authorized;
+- survey-consensus surprise remains a separate optional lane and may not be synthetically backfilled.
+
+## 20G.3 Active next stage
+
+The current active model-development task is no longer a new structural family.
+
+**Active next: ChHHO-ANFIS feature-architecture audit, beginning F0 → F1, then F2 → F3 → F4.**
+
+CNN-BiLSTM remains structurally eligible/deferred and does not override the user's current feature/data research priority.
+
+---
+
 # 21. Bundan sonra manifest nasıl güncellenecek
 
 Her yeni deney bittiğinde **aynı commit zincirinde** bu ana manifest güncellenecek.
@@ -1538,7 +1605,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model: **CNN-BiLSTM**
+- Current exact next model/research stage: **ChHHO-ANFIS F0→F4 feature-architecture audit** (CNN-BiLSTM deferred during this priority)
 
 
 ---
