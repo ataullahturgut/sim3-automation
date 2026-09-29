@@ -96,23 +96,19 @@ def workbook_series(raw:bytes,series:str):
     if not cand:raise RuntimeError(f"GPR_SERIES_NOT_FOUND {series}")
     return max(cand,key=len)
 
-def load_gpr_vintage(repo_path:Path,origin:str):
-    compact=origin.replace("-","")
-    rel=f"gpr_archive_files/data_gpr_export_{compact}.xls"
-    import subprocess
-    raw=subprocess.run(["git","show",f"HEAD:{rel}"],cwd=repo_path,check=True,capture_output=True).stdout
+def load_gpr_vintage_file(path:Path,origin:str,source_ref:str):
+    raw=path.read_bytes()
     q=workbook_series(raw,"GPR")
     hist={pd.Timestamp(r.date).strftime("%Y-%m"):float(r.value) for r in q.itertuples()}
     if base.month_shift(origin,-1) not in hist:
         raise RuntimeError(f"GPR_REQUIRED_LAG_MISSING {origin}")
-    head=subprocess.run(["git","rev-parse","HEAD"],cwd=repo_path,check=True,capture_output=True,text=True).stdout.strip()
     if origin=="2026-08":
         evidence="PREVIOUS_AUDIT_CONTINUOUS_PIT_PROVEN_THROUGH_2026_08"
     elif origin=="2026-09":
         evidence="DIRECT_EXACT_VINTAGE_PRESENT_ON_2026_09_29_BEFORE_MONTH_END_ORIGIN"
     else:
         evidence="CURRENT_EXACT_VINTAGE_RETRIEVAL"
-    return hist,{"origin":origin,"archive_path":rel,"retrieval_commit":head,"evidence_class":evidence,"payload_sha256":sha(raw)}
+    return hist,{"origin":origin,"source_ref":source_ref,"evidence_class":evidence,"payload_sha256":sha(raw)}
 
 def load_worldbank():
     raw=get_bytes(WB_URL,180)
@@ -148,8 +144,8 @@ def main():
     wb,wbmeta=load_worldbank()
     gpr={}
     gmeta={}
-    for origin in ("2026-08","2026-09"):
-        gpr[origin],gmeta[origin]=load_gpr_vintage(Path(a.gpr_repo),origin)
+    gpr["2026-08"],gmeta["2026-08"]=load_gpr_vintage_file(Path(a.gpr_202608),"2026-08",a.gpr_ref)
+    gpr["2026-09"],gmeta["2026-09"]=load_gpr_vintage_file(Path(a.gpr_202609),"2026-09",a.gpr_ref)
 
     # Quality gates
     if wbmeta["last"] < "2026-08": raise RuntimeError(f"WORLD_BANK_AUGUST_NOT_AVAILABLE {wbmeta}")
