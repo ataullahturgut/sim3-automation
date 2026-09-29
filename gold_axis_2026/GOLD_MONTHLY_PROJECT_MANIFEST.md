@@ -2205,6 +2205,63 @@ Decision:
 - next FX-only test should use **BROADUSD_MR1 + one daily-path scalar**, with total inputs **10 / D100 / POP30**, before any family closure.
 - VIX/Nasdaq/Energy remain not started.
 
+## 20L.6E FX2 Broad USD daily-path volatility — COMPLETE / NOT PROMOTED
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_F4_FX2_BROADUSD_DAILY_PATH_RESULT_2026-09-29.md`
+
+FX2 representation:
+- Broad USD monthly mean log change
+- Broad USD intramonth daily RMS log-return volatility
+- source: Fed H.10 Broad USD index
+- H.10 release cutoff **7 calendar days**
+- GPR weighting on FX **NOT USED**
+- total inputs **10**
+- antecedent parameter dimension **100**
+- POP **30**
+- generations **45**
+- repeats **3**
+- same chronological training-only scaling / ChHHO-ANFIS / local-refit path as BASE
+
+Authoritative execution:
+- workflow **Gold Monthly F4 FX2 Broad USD Daily Path V1**
+- run **36575331412**
+- head commit **d6f1fe245587bbcd82cf4d4ffdbaf4f53378b182**
+- 6/6 DEV shards **SUCCESS**
+- summarize **SUCCESS**
+- summary artifact **11037330894**
+- summary digest `sha256:a14e70151f71d3ed1561b5f85f0d4d0c0a976317f919f746032436a1dd14da36`
+
+DEV:
+- BASE **1413.0297794084559 / 23/33**
+- FX2 **1787.6000747067567 / 17/33**
+- ΣAE deterioration vs BASE **+374.57029529830083 USD**
+- relative deterioration **+26.51%**
+- direction change **-6**
+- paired wins/losses/ties **14 / 19 / 0**
+- median paired improvement (BASE − FX2) **-10.0237615596**
+- worst month **2023-10**, AE **147.5005218662**
+- signed mean bias **-12.6547936971**
+
+Yearly:
+- 2022: BASE **397.8794** vs FX2 **497.9771**
+- 2023: BASE **395.7140** vs FX2 **668.6240**
+- 2024: BASE **619.4364** vs FX2 **620.9990**
+
+FX sequence:
+- FX1 monthly Broad USD only **2532.593559 / 20/33**
+- FX2 monthly Broad USD + daily RMS volatility **1787.600075 / 17/33**
+- FX2 improves ΣAE over FX1 by **744.993484 USD**, but still does not beat BASE.
+
+Decision:
+- FX2 **VALID / NOT PROMOTED**
+- FX family-wide rejection **NOT YET AUTHORIZED**
+- daily volatility path materially repairs FX1 price error, especially by 2024, but direction degrades
+- a true compact daily directional MIDAS path remains untested
+- next FX-only test: **FX3 Broad USD MR1 + training-only parsimonious MIDAS-weighted daily return scalar**, no GPR weighting and no extra currency pairs
+- 2025/2026 remain closed
+- VIX/Nasdaq/Energy remain not started.
+
 ## 20L.7 Workflow hold
 
 Legacy workflows:
@@ -2214,7 +2271,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**F4 FX family open: FX1 monthly Broad USD representation complete/not promoted; daily-path FX test next.**
+**F4 FX family open: FX2 daily-volatility path complete/not promoted; FX3 true directional MIDAS daily path next.**
 
 ---
 
@@ -2289,7 +2346,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **F4 FX daily-path compact test** after FX1 monthly Broad USD DEV ΣAE **2532.593559 / 20/33** vs BASE **1413.029779 / 23/33**. FX family-wide rejection is not authorized because the daily FX path has not yet been tested. Rates native F4 family is closed; VIX/Nasdaq/Energy remain not started.
+- Current exact next model/research stage: **F4 FX3 true directional MIDAS daily-path test** after FX2 DEV ΣAE **1787.600075 / 17/33** vs BASE **1413.029779 / 23/33**. FX2 materially improves price error over FX1 (**2532.593559 / 20/33**) but does not beat BASE and direction worsens. FX family-wide rejection is not authorized until the compact directional MIDAS path is tested. Rates native F4 family is closed; VIX/Nasdaq/Energy remain not started.
 
 
 ---
