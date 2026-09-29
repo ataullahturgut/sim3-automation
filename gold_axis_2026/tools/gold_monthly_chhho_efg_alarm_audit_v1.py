@@ -115,7 +115,7 @@ def download_cftc():
  d['mm_net']=d.mm_long-d.mm_short; d['mm_net_oi']=d.mm_net/d.oi; d['mm_gross_oi']=(d.mm_long+d.mm_short+d.mm_spread)/d.oi; d['other_net_oi']=(d.other_long-d.other_short)/d.oi
  def release(dt):
   k=dt.strftime('%Y-%m-%d')
-  return pd.Timestamp(CFTC_SHUTDOWN_RELEASE[k]) if k in CFTC_SHUTDOWN_RELEASE else dt+pd.Timedelta(days=3)
+  return pd.Timestamp(CFTC_SHUTDOWN_RELEASE[k]) if k in CFTC_SHUTDOWN_RELEASE else dt+pd.Timedelta(days=7)
  d['release_date']=d.report_date.map(release)
  return d[['report_date','release_date','oi','mm_net','mm_net_oi','mm_gross_oi','other_net_oi']], {'source':source,'rows':len(d),'first':str(d.report_date.min().date()),'last':str(d.report_date.max().date()),'url':url}
 
@@ -201,7 +201,7 @@ def main():
     v=f.loc[o,c] if c in f.columns else np.nan; z[c]=None if pd.isna(v) else (bool(v) if isinstance(v,(bool,np.bool_)) else float(v))
   rows.append(z)
  wgc=try_wgc()
- out={'schema':'GOLD_MONTHLY_CHHHO_EFG_ALARM_AUDIT_V1_2026-09-29','scope':'ALARM_DETECTION_ONLY_NO_ROUTING_NO_SWITCHING','high_error_threshold_usd':HIGH_AE,'calibration_reference':f'{CAL_START}..{CAL_END}_MARKET_STATE_ONLY','thresholds':th,'sources':{'gvz':gvzmeta,'cftc':cotmeta,'wgc_etf':wgc},'governance':{'A_D_frozen_untouched':True,'2025_2026_used_to_fit_thresholds':False,'E_chhho_disagree_5pp_posthoc_not_validated':True,'cftc_release_timing':'NORMAL report Tuesday +3d; explicit official 2025 shutdown catch-up overrides','routing_tested':False},'scores':scores,'historical_analogs_2010_2021':analogs,'chhho_rows':rows}
+ out={'schema':'GOLD_MONTHLY_CHHHO_EFG_ALARM_AUDIT_V1_2026-09-29','scope':'ALARM_DETECTION_ONLY_NO_ROUTING_NO_SWITCHING','high_error_threshold_usd':HIGH_AE,'calibration_reference':f'{CAL_START}..{CAL_END}_MARKET_STATE_ONLY','thresholds':th,'sources':{'gvz':gvzmeta,'cftc':cotmeta,'wgc_etf':wgc},'governance':{'A_D_frozen_untouched':True,'2025_2026_used_to_fit_thresholds':False,'E_chhho_disagree_5pp_posthoc_not_validated':True,'cftc_release_timing':'CONSERVATIVE 7-calendar-day safety lag after report date; explicit official 2025 shutdown catch-up overrides','routing_tested':False},'scores':scores,'historical_analogs_2010_2021':analogs,'chhho_rows':rows}
  Path(a.output).write_text(json.dumps(out,indent=2,sort_keys=True,allow_nan=False)+'\n')
  print('OUTPUT_GATE=PASS'); print(json.dumps({'thresholds':th,'POST':{k:v['POST'] for k,v in scores.items()},'DEV':{k:v['DEV'] for k,v in scores.items()},'wgc':wgc,'gvz':gvzmeta,'cftc':cotmeta},sort_keys=True))
 if __name__=='__main__': main()
