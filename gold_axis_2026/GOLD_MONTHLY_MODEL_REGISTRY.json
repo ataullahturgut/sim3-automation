@@ -819,7 +819,7 @@
       "rerun": false
     }
   ],
-  "current_next_action": "Freeze BRENT_R1_MR1 and transport unchanged to 2025/2026. Do not promote Rates+Brent stacking; it is dominated by both isolated controls.",
+  "current_next_action": "Apply mandatory BIAS_ONLY incremental-value gate to all future residual external-driver screens. Brent and Rates do not beat bias-only on DEV; VIX_R1 only marginally does. Next residual family may be Nasdaq or WTI.",
   "registry_rules": {
     "check_before_run": true,
     "completed_models_default_rerun": false,
@@ -858,14 +858,14 @@
     "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
-    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates/FX native closures + hard data re-audit PASS + PIT Rates residual replication PASS + VIX residual screen/transport + Brent residual screen + Rates+Brent combination screen",
-    "f4_status": "BRENT_R1_SELECTED_PASS__RATES_PLUS_BRENT_REJECTED_DOMINATED",
+    "completed_through": "F4 B0/B1/B2 + native Rates/FX closures + residual Rates/VIX/Brent screens + Rates+Brent combination + frozen transports + mandatory bias-only attribution re-audit",
+    "f4_status": "RESIDUAL_ATTRIBUTION_REAUDIT_COMPLETE__BIAS_ONLY_BINDING",
     "legacy_rates_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
     "legacy_fx_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
-    "next_model": "Frozen BRENT_R1_MR1 transport to 2025/2026",
+    "next_model": "Residual external family with bias-only incremental gate (Nasdaq or WTI)",
     "next_model_status": "NOT_RUN",
     "execution_source": "Frozen historical ChHHO authority + strict PIT Rates compact snapshot + exact residual replication",
-    "neon_required": false
+    "neon_required": "depends_on_feature_transform"
   },
   "f4_reset": {
     "authority": "gold_axis_2026/GOLD_MONTHLY_F4_RESET_PROCESSING_PARITY_AUDIT_2026-09-29.md",
@@ -1138,7 +1138,7 @@
     "vix_r3_direction": "24/33",
     "vix_r3_gate": "FAIL",
     "vix_residual_selected": "VIX_R1_CHANGE",
-    "vix_residual_status": "PROMOTABLE_CHALLENGER",
+    "vix_residual_status": "MARGINAL_INCREMENTAL_DEV_VALUE_AFTER_BIAS_CONTROL",
     "vix_native_status": "NOT_YET_TESTED",
     "vix_transport_2025_2026": "NOT_OPENED",
     "vix_transport_status": "COMPLETE",
@@ -1188,6 +1188,32 @@
     "rates_plus_brent_sum_abs_error": 1377.101415184695,
     "rates_plus_brent_direction": "23/33",
     "rates_plus_brent_gate": "PASS_BUT_DOMINATED",
-    "rates_plus_brent_decision": "REJECTED_NOT_PROMOTED"
+    "rates_plus_brent_decision": "REJECTED_NOT_PROMOTED",
+    "residual_bias_only_status": "COMPLETE_BINDING",
+    "residual_bias_only_run": 36591365527,
+    "residual_bias_only_job": 109485005513,
+    "residual_bias_only_artifact": 11044715151,
+    "residual_bias_only_digest": "sha256:ecef7244d7dc3860b0c62da76cefe589eeaba6dad104d24601a3965b96c24300",
+    "residual_bias_only_dev_sum_abs_error": 1338.8935117711515,
+    "residual_bias_only_dev_direction": "23/33",
+    "residual_bias_only_dev_improvement_vs_base": 74.13634276312678,
+    "residual_bias_only_2025_sum_abs_error": 1095.7493443344565,
+    "residual_bias_only_2026_jan_aug_sum_abs_error": 1526.1332118229575,
+    "residual_bias_only_frozen_correction": 13.690850943418237,
+    "residual_attribution_rule": "External residual driver must beat BASE robustness gate AND BIAS_ONLY incremental gate",
+    "vix_r1_incremental_vs_bias_dev": 0.563466514390484,
+    "brent_r1_incremental_vs_bias_dev": -7.608903587869236,
+    "rates_incremental_vs_bias_dev": -32.02688106412984,
+    "rates_plus_brent_incremental_vs_bias_dev": -38.20790341354359,
+    "brent_residual_status": "NOT_PROMOTED_AFTER_BIAS_CONTROL",
+    "rates_residual_status": "NOT_DEV_SUPPORTED_AFTER_BIAS_CONTROL",
+    "brent_screen_run": 36590486319,
+    "brent_screen_artifact": 11043268953,
+    "brent_combo_run": 36590746098,
+    "brent_combo_artifact": 11043503614,
+    "brent_transport_run": 36591080686,
+    "brent_transport_artifact": 11043592796,
+    "brent_2025_corrected_sum_abs_error": 1096.15274057644,
+    "brent_2026_jan_aug_corrected_sum_abs_error": 1521.1889568506967
   }
 }
