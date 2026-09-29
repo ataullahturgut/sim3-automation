@@ -1595,6 +1595,61 @@ Earlier mean-masking run **36534304610**:
 
 ---
 
+
+# 20I. ChHHO F2 representation audit
+
+**Status: COMPLETE / DEV-ONLY / ZERO NEON**
+
+Detailed report:
+`gold_axis_2026/GOLD_MONTHLY_CHHHO_F2_REPRESENTATION_AUDIT_2026-09-29.md`
+
+Authority:
+- run **36540846993**
+- head commit **bbb7765dfa2eccd33995b6fd2a1bf64821d20597**
+- summary artifact **11020404994**
+- summary digest `sha256:999d51afd3f235c3a43918cf2aa977b55544c72f3a3a4b7626b846a537002b33`
+- Neon reads: **0**
+- 2025/2026 selection use: **NONE**
+
+F2 baseline:
+- CURRENT8 MR1+VW: **1413.029779 / 23/33**
+- parity: **PASS**
+
+Best non-baseline challenger:
+- Palladium MR3: **1418.9295 / 19/33**
+- aggregate ΔΣAE vs CURRENT8: **-5.8997**
+- months improved/worsened: **18/15**
+- median paired AE improvement: **+0.3007**
+- yearly ΔΣAE: 2022 **+94.47**, 2023 **-93.37**, 2024 **-7.00**
+- status: **NOT_PROMOTED**
+
+Other notable challengers:
+- Gold MR6: **1486.7031 / 21**
+- MR6 all: **1498.2281 / 22**
+- Palladium RV: **1614.9330 / 17**
+- Gold MR3: **1619.2379 / 23**
+- Platinum RV: **1644.9810 / 18**
+- Palladium MR6: **1658.3514 / 19**
+- Gold RV: **1662.2175 / 18**
+- Palladium Range: **1662.4286 / 18**
+- ABSRET all: **2021.0769 / 17**
+- RANGE all: **2165.1015 / 15**
+- RV all: **4003.8097 / 14**
+- Silver MR6, MR3-all and Platinum Range show pathological instability and are not interpreted as literal feature-importance magnitudes.
+
+Predeclared robustness result:
+- **ROBUST_PASS = []**
+
+Binding decision:
+- **CURRENT8 representation retained**
+- MR remains **MR1**
+- daily summary remains **GPR-conditioned VW**
+- no F2 representation challenger promoted
+- no feature-space expansion by adding F2 transforms
+- next active stage: **F3 lag architecture audit**
+
+---
+
 # 21. Bundan sonra manifest nasıl güncellenecek
 
 Her yeni deney bittiğinde **aynı commit zincirinde** bu ana manifest güncellenecek.
@@ -1666,7 +1721,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **ChHHO-ANFIS F2 representation audit**; F0/F1 complete, CURRENT8 retained (CNN-BiLSTM deferred during this priority)
+- Current exact next model/research stage: **ChHHO-ANFIS F3 lag architecture audit**; F0/F1/F2 complete, CURRENT8 MR1+VW retained (CNN-BiLSTM deferred during this priority)
 
 
 ---
