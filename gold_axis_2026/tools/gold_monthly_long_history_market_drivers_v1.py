@@ -54,27 +54,36 @@ def nasdaq100():
       "source_role":"SECONDARY_LONG_HISTORY_VALIDATED_BY_OVERLAP; OFFICIAL_NASDAQ_EXTENDED_GIW_REQUIRES_ENTITLEMENT",
       "url":url,"sha256":sha(r.content),"first":min(out),"last":max(out),"n":len(out),"official_nasdaq_current_check":official}
 
-def treasury(kind):
-    typ={"nominal":"daily_treasury_yield_curve","real":"daily_treasury_real_yield_curve"}[kind]
-    out={};meta={}
-    for y in range(START_YEAR,END_DATE.year+1):
-        url="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView"
-        r=req(url,{"type":typ,"field_tdr_date_value":str(y)},timeout=35)
-        tabs=pd.read_html(io.StringIO(r.text))
-        chosen=None
-        for q in tabs:
-            cols=[str(c).strip().upper() for c in q.columns]
-            if "DATE" in cols and "10 YR" in cols:
-                q=q.copy();q.columns=cols;chosen=q;break
-        if chosen is None: raise RuntimeError(f"TREASURY_TABLE_NOT_FOUND {kind} {y}")
-        for z in chosen.itertuples(index=False,name=None):
-            row=dict(zip(chosen.columns,z))
-            d=pd.to_datetime(row.get("DATE"),errors="coerce");v=clean_num(row.get("10 YR"))
-            if pd.notna(d) and np.isfinite(v):
-                out[d.strftime("%Y-%m-%d")]=float(v)
-        meta[str(y)]=sha(r.content)
-    if len(out)<3500: raise RuntimeError(f"TREASURY_{kind.upper()}_TOO_SHORT n={len(out)}")
-    return dict(sorted(out.items())),{"source":"U.S. Treasury Daily Treasury Rates","type":typ,"hashes_by_year":meta,"first":min(out),"last":max(out),"n":len(out)}
+def h15_tenyear():
+    from urllib.parse import urlencode
+    package="0b98a66d3ff5e1ea0fbf88adc59b387f"
+    q=urlencode({"filetype":"csv","from":"01/01/2010","label":"include","layout":"seriescolumn",
+                 "rel":"H15","series":package,"to":"09/29/2026","type":"package"})
+    url="https://www.federalreserve.gov/datadownload/Output.aspx?"+q
+    r=req(url,timeout=60,retries=4)
+    rows=list(csv.reader(io.StringIO(r.content.decode("utf-8-sig"))))
+    hdr=None
+    for i,row in enumerate(rows):
+        if row and row[0].strip().lower().replace(":","") in ("time period","date"):
+            hdr=i;break
+    if hdr is None:raise RuntimeError(f"H15_HEADER_NOT_FOUND {rows[:8]}")
+    cols=[x.strip() for x in rows[hdr]]
+    nom_col=next((x for x in cols if "RIFLGFCY10_N.B" in x and "XII" not in x),None)
+    real_col=next((x for x in cols if "RIFLGFCY10_XII_N.B" in x),None)
+    if not nom_col or not real_col:raise RuntimeError(f"H15_10Y_COLS_MISSING {cols}")
+    nom={};real={}
+    ni=cols.index(nom_col);ri=cols.index(real_col)
+    for row in rows[hdr+1:]:
+        if not row:continue
+        d=pd.to_datetime(row[0].strip(),errors="coerce")
+        if pd.isna(d):continue
+        for idx,out in ((ni,nom),(ri,real)):
+            if idx>=len(row):continue
+            v=clean_num(row[idx])
+            if np.isfinite(v):out[d.strftime("%Y-%m-%d")]=float(v)
+    if len(nom)<3500 or len(real)<3500:raise RuntimeError(f"H15_10Y_TOO_SHORT nominal={len(nom)} real={len(real)}")
+    meta={"source":"Federal Reserve Board H.15 DDP","url":url,"package":package,"sha256":sha(r.content)}
+    return dict(sorted(nom.items())),dict(sorted(real.items())),{**meta,"nominal_first":min(nom),"nominal_last":max(nom),"nominal_n":len(nom),"real_first":min(real),"real_last":max(real),"real_n":len(real)}
 
 def effr():
     out={};hashes={}
@@ -134,8 +143,9 @@ def load_risk(path):
 def main():
     ap=argparse.ArgumentParser();ap.add_argument("--risk-snapshot",required=True);ap.add_argument("--output",required=True);a=ap.parse_args()
     ndx,ndxm=nasdaq100()
-    nom,nomm=treasury("nominal")
-    real,realm=treasury("real")
+    nom,real,h15m=h15_tenyear()
+    nomm={"source":h15m["source"],"url":h15m["url"],"sha256":h15m["sha256"],"first":h15m["nominal_first"],"last":h15m["nominal_last"],"n":h15m["nominal_n"]}
+    realm={"source":h15m["source"],"url":h15m["url"],"sha256":h15m["sha256"],"first":h15m["real_first"],"last":h15m["real_last"],"n":h15m["real_n"]}
     ff,ffm=effr()
     vix,vixm=cboe("VIX")
     gvz,gvzm=cboe("GVZ")
