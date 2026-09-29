@@ -819,7 +819,7 @@
       "rerun": false
     }
   ],
-  "current_next_action": "Freeze VIX_R1_CHANGE as the VIX residual challenger; next choose frozen 2025/2026 transport or a native-input VIX challenge. Keep native Rates/FX closed.",
+  "current_next_action": "VIX_R1 frozen transport is complete; if continuing VIX work, run a native-input VIX challenge without retuning the residual layer. Keep 2025/2026 outside selection.",
   "registry_rules": {
     "check_before_run": true,
     "completed_models_default_rerun": false,
@@ -858,12 +858,12 @@
     "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
-    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates/FX native closures + hard data re-audit PASS + PIT Rates residual replication PASS + ChHHO VIX residual screen PASS",
-    "f4_status": "VIX_RESIDUAL_R1_SELECTED_PASS__NATIVE_VIX_NOT_YET_TESTED",
+    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates/FX native closures + hard data re-audit PASS + PIT Rates residual replication PASS + VIX residual screen PASS + VIX_R1 frozen 2025/2026 transport",
+    "f4_status": "VIX_R1_TRANSPORT_COMPLETE__2025_STRONG__2026_FLAT__NATIVE_VIX_NOT_YET_TESTED",
     "legacy_rates_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
     "legacy_fx_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
-    "next_model": "Frozen VIX_R1_CHANGE residual transport or native VIX challenge",
-    "next_model_status": "AUTHORIZED_NOT_RUN",
+    "next_model": "Native-input VIX challenge",
+    "next_model_status": "NOT_RUN",
     "execution_source": "Frozen historical ChHHO authority + strict PIT Rates compact snapshot + exact residual replication",
     "neon_required": false
   },
@@ -1140,6 +1140,28 @@
     "vix_residual_selected": "VIX_R1_CHANGE",
     "vix_residual_status": "PROMOTABLE_CHALLENGER",
     "vix_native_status": "NOT_YET_TESTED",
-    "vix_transport_2025_2026": "NOT_OPENED"
+    "vix_transport_2025_2026": "NOT_OPENED",
+    "vix_transport_status": "COMPLETE",
+    "vix_transport_run": 36587033148,
+    "vix_transport_head_commit": "acfee6fdc0c7b41e874e7a166d5376cba74bf9bb",
+    "vix_transport_job": 109469978233,
+    "vix_transport_artifact": 11042740289,
+    "vix_transport_artifact_digest": "sha256:5d6966e470412675af649c1fc869b32fadb9b0252be27f6b5fec4307716aa285",
+    "vix_transport_frozen_fit_n": 33,
+    "vix_transport_cap": 53.266887317887495,
+    "vix_transport_coef_standardized": 2.3347459307325407,
+    "vix_transport_intercept": 13.690850943418237,
+    "vix_2025_base_sum_abs_error": 1252.0541594740248,
+    "vix_2025_corrected_sum_abs_error": 1082.0273188083147,
+    "vix_2025_sum_abs_error_improvement": 170.0268406657101,
+    "vix_2025_direction_base": "9/12",
+    "vix_2025_direction_corrected": "9/12",
+    "vix_2026_jan_aug_base_sum_abs_error": 1526.1332118229584,
+    "vix_2026_jan_aug_corrected_sum_abs_error": 1526.0485229389474,
+    "vix_2026_jan_aug_sum_abs_error_improvement": 0.08468888401102959,
+    "vix_2026_jan_aug_direction_base": "5/8",
+    "vix_2026_jan_aug_direction_corrected": "6/8",
+    "vix_2026_september_status": "BLOCKED_CANONICAL_BASE_MISSING_AUGUST_FOUR_METAL_INPUTS",
+    "vix_transport_interpretation": "2025_STRONG_OOS_SUPPORT__2026_AGGREGATE_PRICE_ERROR_FLAT_WITH_PLUS1_DIRECTION"
   }
 }
