@@ -1,0 +1,51 @@
+name: Gold Monthly ChHHO Residual Bias Only Control V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_chhho_residual_bias_only_control_v1.py
+      - .github/workflows/gold-monthly-chhho-residual-bias-only-control-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  PYTHONHASHSEED: '0'
+
+jobs:
+  control:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=2.0,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Download frozen authorities
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/chhho inputs/augsep
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10989389723/zip" > chhho.zip
+          unzip -q chhho.zip -d inputs/chhho
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11039779355/zip" > augsep.zip
+          unzip -q augsep.zip -d inputs/augsep
+          test -s inputs/chhho/anfis_stage3c_chhho_result.json
+          test -s inputs/augsep/GOLD_MONTHLY_CHHHO_RATES_RESIDUAL_AUG_SEP_2026_2026-09-29.json
+      - name: Run bias-only control
+        run: |
+          python gold_axis_2026/tools/gold_monthly_chhho_residual_bias_only_control_v1.py \
+            --chhho inputs/chhho/anfis_stage3c_chhho_result.json \
+            --augsep inputs/augsep/GOLD_MONTHLY_CHHHO_RATES_RESIDUAL_AUG_SEP_2026_2026-09-29.json \
+            --output GOLD_MONTHLY_CHHHO_RESIDUAL_BIAS_ONLY_CONTROL_2026-09-29.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-chhho-residual-bias-only-control-${{ github.sha }}
+          path: GOLD_MONTHLY_CHHHO_RESIDUAL_BIAS_ONLY_CONTROL_2026-09-29.json
+          if-no-files-found: error
+          retention-days: 90
