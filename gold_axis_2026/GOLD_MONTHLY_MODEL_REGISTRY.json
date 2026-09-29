@@ -819,7 +819,7 @@
       "rerun": false
     }
   ],
-  "current_next_action": "Apply mandatory BIAS_ONLY incremental-value gate to all future residual external-driver screens. Brent and Rates do not beat bias-only on DEV; VIX_R1 only marginally does. Next residual family may be Nasdaq or WTI.",
+  "current_next_action": "Brent expanded residual screen is closed with no robust promotion. Apply the same BIAS_ONLY incremental gate to the next residual family (WTI or Nasdaq).",
   "registry_rules": {
     "check_before_run": true,
     "completed_models_default_rerun": false,
@@ -858,14 +858,14 @@
     "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
-    "completed_through": "F4 B0/B1/B2 + native Rates/FX closures + residual Rates/VIX/Brent screens + Rates+Brent combination + frozen transports + mandatory bias-only attribution re-audit",
-    "f4_status": "RESIDUAL_ATTRIBUTION_REAUDIT_COMPLETE__BIAS_ONLY_BINDING",
+    "completed_through": "F4 external residual attribution re-audit + Brent expanded residual feature screen under mandatory bias-only gate",
+    "f4_status": "BRENT_EXPANDED_RESIDUAL_CLOSED_NO_ROBUST_PROMOTION",
     "legacy_rates_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
     "legacy_fx_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
-    "next_model": "Residual external family with bias-only incremental gate (Nasdaq or WTI)",
+    "next_model": "WTI or Nasdaq residual screen with BIAS_ONLY incremental gate",
     "next_model_status": "NOT_RUN",
     "execution_source": "Frozen historical ChHHO authority + strict PIT Rates compact snapshot + exact residual replication",
-    "neon_required": "depends_on_feature_transform"
+    "neon_required": "depends_on_feature transform"
   },
   "f4_reset": {
     "authority": "gold_axis_2026/GOLD_MONTHLY_F4_RESET_PROCESSING_PARITY_AUDIT_2026-09-29.md",
@@ -1214,6 +1214,21 @@
     "brent_transport_run": 36591080686,
     "brent_transport_artifact": 11043592796,
     "brent_2025_corrected_sum_abs_error": 1096.15274057644,
-    "brent_2026_jan_aug_corrected_sum_abs_error": 1521.1889568506967
+    "brent_2026_jan_aug_corrected_sum_abs_error": 1521.1889568506967,
+    "brent_expanded_residual_status": "COMPLETE_NO_ROBUST_PROMOTION",
+    "brent_expanded_residual_run": 36593458061,
+    "brent_expanded_residual_head": "b00e410dadcf24fb5c8a1ba2f4d05240be5ad8b8",
+    "brent_expanded_residual_job": 109492222857,
+    "brent_expanded_residual_artifact": 11045435477,
+    "brent_expanded_residual_digest": "sha256:c3af6e6e550f849bcc2c6e63db4e7d943ae829999c80176d26347891e5fcbfff",
+    "brent_expanded_bias_only_sum_abs_error": 1338.8935117711515,
+    "brent_expanded_best_block": "B3_MR1_DOWNSIDE",
+    "brent_expanded_best_sum_abs_error": 1330.8328038471775,
+    "brent_expanded_best_direction": "23/33",
+    "brent_expanded_best_incremental_vs_bias": 8.06070792397395,
+    "brent_expanded_best_excluding_single_best_month": -1.2659884829772636,
+    "brent_expanded_best_2024_incremental": 27.898246911520573,
+    "brent_expanded_best_gate": "FAIL",
+    "brent_residual_family_status": "CLOSED_SIMPLE_FEATURE_EXPANSION_EXHAUSTED_UNDER_CURRENT_PROTOCOL"
   }
 }
