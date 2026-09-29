@@ -205,3 +205,5 @@ def main():
  Path(a.output).write_text(json.dumps(out,indent=2,sort_keys=True,allow_nan=False)+'\n')
  print('OUTPUT_GATE=PASS'); print(json.dumps({'thresholds':th,'POST':{k:v['POST'] for k,v in scores.items()},'DEV':{k:v['DEV'] for k,v in scores.items()},'wgc':wgc,'gvz':gvzmeta,'cftc':cotmeta},sort_keys=True))
 if __name__=='__main__': main()
+
+# workflow trigger checkpoint 2026-09-29
