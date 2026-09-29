@@ -1885,15 +1885,42 @@ Audit discovery:
 
 Conclusion: external daily transforms are now processing-parity compatible with the retained CURRENT8 MR/VW architecture.
 
+## 20L.5C B2 processing + optimizer parity — COMPLETE
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_F4_B2_PROCESSING_OPTIMIZER_PARITY_2026-09-29.md`
+
+- run **36564452306**
+- head commit **78ca76a51e5a44050eaa5600fec7213758e6e1c3**
+- artifact **11031577274**
+- artifact digest `sha256:f28c2175a3207b743baa99198e7f80f961366e13b81d89f40adddca58436a331`
+- Neon reads **0**
+- B1 revalidation **PASS**
+- B2-A processing/preprocessing parity **PASS**
+- B2-B optimizer + BASE parity **PASS**
+- BASE rerun DEV ΣAE **1413.0297794084559**
+- BASE direction **23/33**
+- ALL6 inputs **22**
+- antecedent parameter dimension **220**
+- ALL6 population **66**
+- generations **45**
+- repeats **3**
+- ALL6 model outcome produced **NO**
+- 2025/2026 selection use **NO**
+
+Earlier run **36564354047** failed before the scientific audit because of a workflow shell-variable escaping error and is **TECHNICAL_WORKFLOW_FAILURE / NOT_SCIENTIFIC_RESULT**.
+
+Conclusion: the new external inputs are proven to pass through the same downstream chronological scaling / ANFIS / local-refit pipeline as CURRENT8, and optimizer search density is not below BASE.
+
 ## 20L.6 Restart sequence
 
-No new F4 promotion run is authorized before:
+Required pre-model gates are now complete:
 
-1. **F4-B0 Data Authority V2 PASS**
-2. **F4-B1 transform-parity audit PASS**
-3. **F4-B2 optimizer-parity audit PASS**
+1. **F4-B0 Data Authority V2 — PASS**
+2. **F4-B1 transform-parity audit — PASS**
+3. **F4-B2 processing/preprocessing + optimizer parity audit — PASS**
 
-Then the first restart experiment will be an **ALL6-COMPACT diagnostic challenger**, requested to answer whether the combined external information helps when processed on the same footing as CURRENT8.
+The next authorized experiment is the **ALL6-COMPACT diagnostic challenger**, requested to answer whether the combined external information helps when processed on the same footing as CURRENT8. ALL6 has not yet been run.
 
 ALL6-COMPACT daily families:
 1. Rates
