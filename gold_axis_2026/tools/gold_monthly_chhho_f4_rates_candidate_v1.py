@@ -19,7 +19,6 @@ CANDIDATES={
  "R_BE10":["be10_chg"],
  "R_NOM_REAL":["nom10_chg","real10_chg"],
  "R_REAL_BE":["real10_chg","be10_chg"],
- "R_REAL_FF":["real10_chg","ff_lagged_chg"],
 }
 
 def configure_dim(d):
