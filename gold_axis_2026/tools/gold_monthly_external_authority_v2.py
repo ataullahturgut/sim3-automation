@@ -14,21 +14,21 @@ WB_URL="https://thedocs.worldbank.org/en/doc/74e8be41ceb20fa0da750cda2f6b9e4e-00
 SOURCE_AUTHORITY={
     "NASDAQ100":{
         "upstream_source":"Nasdaq, Inc.",
-        "redistributor":null,
+        "redistributor":None,
         "frequency":"DAILY_CLOSE",
         "units":"INDEX",
         "availability_lag_days":1,
     },
     "WTI":{
         "upstream_source":"U.S. Energy Information Administration",
-        "redistributor":null,
+        "redistributor":None,
         "frequency":"DAILY",
         "units":"USD_PER_BARREL",
         "availability_lag_days":7,
     },
     "BRENT":{
         "upstream_source":"U.S. Energy Information Administration",
-        "redistributor":null,
+        "redistributor":None,
         "frequency":"DAILY",
         "units":"USD_PER_BARREL",
         "availability_lag_days":7,
