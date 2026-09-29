@@ -1970,6 +1970,69 @@ Decision:
 
 The system-level degradation may reflect harmful families, redundant/correlated blocks, interaction effects, weak-signal dilution, high-dimensional premise search difficulty, or isolated pathological origins. Therefore the six families must be decomposed before any family-wide conclusion.
 
+## 20L.6A Rates parity family decomposition — COMPLETE / COMBINED BLOCK NOT PROMOTED
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_F4_RATES_PARITY_RESULT_2026-09-29.md`
+
+Authoritative execution:
+- workflow **Gold Monthly F4 Rates Parity Family V1**
+- run **36569188686**
+- head commit **c2d1e2148725ff9cae481ea28e724056617220a2**
+- 6/6 DEV shards **SUCCESS**
+- summarize **SUCCESS**
+- summary artifact **11033071845**
+- summary digest `sha256:d8abaeae0fd2c90f605d7c4beca4763ea2106f0bf475caefd00d9e054506850d`
+
+Parity-correct Rates block:
+- NOM10_MR_ANALOG
+- NOM10_VW_ANALOG
+- REAL10_MR_ANALOG
+- REAL10_VW_ANALOG
+- total inputs **12**
+- antecedent parameter dimension **120**
+- POP **36**
+- generations **45**
+- repeats **3**
+- same chronological training-only scaling / ANFIS / local-refit path as CURRENT8
+
+DEV result:
+- BASE **1413.0297794084559 / 23/33**
+- CURRENT8 + Rates(4) **6102.555639186698 / 16/33**
+- ΣAE deterioration **+4689.525859778241 USD**
+- relative deterioration **+331.88%**
+- direction change **-7**
+- paired wins/losses/ties **12 / 21 / 0**
+- median paired AE improvement (BASE − Rates) **-11.9534526814**
+- worst month **2022-04**, AE **1905.4333029326**
+- signed mean bias **-131.7716439599**
+
+Yearly DEV:
+- 2022: BASE **397.8794** vs Rates **4276.9230**
+- 2023: BASE **395.7140** vs Rates **659.9945**
+- 2024: BASE **619.4364** vs Rates **1165.6381**
+
+Redundancy diagnosis:
+- BASE rank **8/8**, Rates-augmented rank **12/12**
+- BASE condition number **6.8807**
+- Rates-augmented condition number **9.1956**
+- condition-number ratio **1.3364**
+- NOM10_VW vs REAL10_VW correlation **+0.8266**
+- NOM10_MR vs REAL10_MR correlation **+0.8194**
+- max Rates-vs-CURRENT8 correlation: Gold_MR1 vs REAL10_MR **-0.5240**
+
+Decision:
+- combined four-input Rates block **NOT PROMOTED**
+- Rates family-wide rejection **NOT YET AUTHORIZED**
+- 2025/2026 remain closed
+- because the block remains full-rank but has strong nominal-vs-real redundancy, the clean next Rates-only resolution is pre-outcome sub-decomposition:
+  1. nominal-only pair,
+  2. real-only pair,
+  3. MR-only pair,
+  4. VW-only pair,
+  each with dimension-adjusted optimizer parity.
+- **FX is not started yet**, consistent with one-family-at-a-time execution.
+
 ## 20L.7 Workflow hold
 
 Legacy workflows:
@@ -1979,7 +2042,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**F4 family decomposition + dimensionality/redundancy diagnosis after valid ALL6-COMPACT non-promotion.**
+**F4 Rates internal sub-decomposition after parity-correct combined Rates block non-promotion; FX not started.**
 
 ---
 
@@ -2054,7 +2117,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **F4 family decomposition + dimensionality/redundancy diagnosis** after ALL6-COMPACT DEV ΣAE **2870.961742 / 19/33** vs BASE **1413.029779 / 23/33**; all external families are still open to individual testing, and legacy Rates/FX family-wide rejection claims remain superseded.
+- Current exact next model/research stage: **F4 Rates internal sub-decomposition** after parity-correct Rates(4) DEV ΣAE **6102.555639 / 16/33** vs BASE **1413.029779 / 23/33**. Rates family-wide rejection is not yet authorized because nominal/real MR/VW pairs show strong internal redundancy; FX/VIX/Nasdaq/Energy remain not started in the one-family-at-a-time sequence.
 
 
 ---
