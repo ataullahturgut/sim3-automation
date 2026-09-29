@@ -819,7 +819,7 @@
       "rerun": false
     }
   ],
-  "current_next_action": "Start F4 VIX family decomposition next; hard official-data re-audit for closed Rates/FX families is PASS; keep 2025/2026 closed for selection",
+  "current_next_action": "Run the exact PIT Rates price-residual protocol on the current canonical ChHHO BASE rows before opening VIX; keep native Rates/FX closed and 2025/2026 outside selection",
   "registry_rules": {
     "check_before_run": true,
     "completed_models_default_rerun": false,
@@ -858,13 +858,13 @@
     "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
-    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates closure + FX closure + direct Board DDP hard data re-audit PASS",
-    "f4_status": "RATES_FX_CLOSED_AND_HARD_DATA_AUDIT_PASS__VIX_NEXT",
+    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates/FX native closures + hard data re-audit PASS + exact ChHHO PIT Rates residual replication PASS",
+    "f4_status": "NATIVE_RATES_FX_CLOSED__PIT_RATES_RESIDUAL_REPRODUCED_PASS__CURRENT_CANONICAL_RESIDUAL_RERUN_NEXT",
     "legacy_rates_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
     "legacy_fx_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
-    "next_model": "F4 VIX family decomposition",
+    "next_model": "Current-canonical ChHHO + exact PIT Rates price-residual correction",
     "next_model_status": "AUTHORIZED_NOT_RUN",
-    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1 + EXTERNAL_AUTHORITY_V2 + B2 parity + direct Board DDP hard re-audit",
+    "execution_source": "Frozen historical ChHHO authority + strict PIT Rates compact snapshot + exact residual replication",
     "neon_required": false
   },
   "f4_reset": {
@@ -1013,7 +1013,7 @@
     "fx1_promotion": "REJECTED",
     "fx_family_wide_rejection": "NOT_AUTHORIZED",
     "fx_next_model": "FX3_BROADUSD_MR1_PLUS_DIRECTIONAL_MIDAS_DAILY_RETURN_SCALAR",
-    "vix_status": "NEXT_AUTHORIZED_NOT_RUN",
+    "vix_status": "UNOPENED_PENDING_CURRENT_CANONICAL_RESIDUAL_RERUN",
     "transport_2025_for_fx1": "NOT_OPENED",
     "stress_2026_for_fx1": "NOT_OPENED",
     "fx2_run": 36575331412,
@@ -1084,6 +1084,33 @@
     "hard_data_reaudit_daily_value_max_abs_diff": 0,
     "hard_data_reaudit_transform_max_abs_diff": 0,
     "rates_fx_data_error_classification": "NO_EVIDENCE_OF_RAW_DATA_OR_TRANSFORM_ERROR",
-    "rates_fx_failure_classification": "MODEL_REPRESENTATION_GENERALIZATION"
+    "rates_fx_failure_classification": "MODEL_REPRESENTATION_GENERALIZATION",
+    "pit_rates_residual_replication_status": "COMPLETE_EXACT_PASS",
+    "pit_rates_residual_replication_run": 36581036837,
+    "pit_rates_residual_replication_head_commit": "46fa4d92cc3b72efb87f2d1624758884e48defb0",
+    "pit_rates_residual_replication_job": 109448965788,
+    "pit_rates_residual_replication_artifact": 11038844070,
+    "pit_rates_residual_replication_artifact_digest": "sha256:3db616642fc285fff2c0357994bc8ab8390e6f65c24dc87380e2a5ac2cebf34b",
+    "pit_rates_residual_features": [
+      "dgs10_change",
+      "dff_change",
+      "curve_proxy_change"
+    ],
+    "pit_rates_residual_target": "actual_price_minus_frozen_base_forecast_price",
+    "pit_rates_residual_model": "Ridge",
+    "pit_rates_residual_alpha": 10,
+    "pit_rates_residual_min_prior": 12,
+    "pit_rates_residual_cap_multiple": 1.5,
+    "pit_rates_residual_base_sum_abs_error": 1413.0298545342782,
+    "pit_rates_residual_corrected_sum_abs_error": 1370.9203928352813,
+    "pit_rates_residual_improvement": 42.10946169899694,
+    "pit_rates_residual_direction": "23/33",
+    "pit_rates_residual_first_eligible_target": "2023-04",
+    "pit_rates_residual_robust_excluding_best_month": 17.922324074458402,
+    "pit_rates_residual_2024_improvement": 62.622909991857114,
+    "pit_rates_residual_stability_gate": "PASS",
+    "native_rates_status": "CLOSED_NOT_PROMOTED",
+    "rates_residual_architecture_status": "REOPENED_VALID_REPRODUCED",
+    "next_enhancement_test": "CURRENT_CANONICAL_CHHHO_PLUS_EXACT_PIT_RATES_PRICE_RESIDUAL_PROTOCOL"
   }
 }
