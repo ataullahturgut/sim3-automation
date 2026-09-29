@@ -48,12 +48,20 @@ jobs:
         run: |
           STAK_REF="$(gh api repos/lbruton/StakTrakr/commits/main --jq .sha)"
           STAK_API_REF="$(gh api repos/lbruton/StakTrakrApi/commits/api --jq .sha)"
+          GPR_BRANCH="$(gh api repos/iacoviel/iacoviel.github.io --jq .default_branch)"
+          GPR_REF="$(gh api "repos/iacoviel/iacoviel.github.io/commits/$GPR_BRANCH" --jq .sha)"
           echo "stak_ref=$STAK_REF" >> "$GITHUB_OUTPUT"
           echo "stak_api_ref=$STAK_API_REF" >> "$GITHUB_OUTPUT"
+          echo "gpr_ref=$GPR_REF" >> "$GITHUB_OUTPUT"
           echo "STAK=$STAK_REF"
           echo "STAK_API=$STAK_API_REF"
-      - name: Clone official GPR archive
-        run: git clone --quiet --depth 1 https://github.com/iacoviel/iacoviel.github.io.git /tmp/iacoviel-gpr
+          echo "GPR=$GPR_REF"
+      - name: Download exact official GPR vintages
+        run: |
+          curl -fsSL "https://raw.githubusercontent.com/iacoviel/iacoviel.github.io/${{ steps.refs.outputs.gpr_ref }}/gpr_archive_files/data_gpr_export_202608.xls" -o gpr_202608.xls
+          curl -fsSL "https://raw.githubusercontent.com/iacoviel/iacoviel.github.io/${{ steps.refs.outputs.gpr_ref }}/gpr_archive_files/data_gpr_export_202609.xls" -o gpr_202609.xls
+          test -s gpr_202608.xls
+          test -s gpr_202609.xls
       - name: Build public current bundle
         run: |
           python gold_axis_2026/tools/gold_monthly_public_current_bundle_v1.py             --dev-snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json             --gpr-repo /tmp/iacoviel-gpr             --stak-ref "${{ steps.refs.outputs.stak_ref }}"             --stak-api-ref "${{ steps.refs.outputs.stak_api_ref }}"             --cutoff 2026-09-29             --output gold_monthly_public_current_bundle_v1.json
