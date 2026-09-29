@@ -24,7 +24,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install 'numpy==2.3.5' 'pandas>=2.2,<3'
+      - run: python -m pip install 'numpy==2.3.5' 'pandas>=2.2,<3' 'openpyxl>=3.1,<4'
       - name: Assert Neon disabled
         run: test -z "${NEON_DATABASE_URL:-}"
       - name: Download V1 external store
