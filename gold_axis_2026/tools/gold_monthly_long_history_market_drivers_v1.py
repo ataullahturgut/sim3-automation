@@ -1,5 +1,6 @@
 from __future__ import annotations
 import argparse, csv, hashlib, io, json, math, time, urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -9,7 +10,6 @@ START="2010-01-01"
 END="2026-09-29"
 FRED_SERIES={
  "NASDAQ100":"Nasdaq, Inc. / FRED daily close",
- "SP500":"S&P Dow Jones Indices LLC / FRED daily close",
  "DGS10":"Federal Reserve Board H.15 / FRED",
  "DFII10":"Federal Reserve Board H.15 / FRED",
  "DFF":"Federal Reserve Board / FRED",
@@ -19,7 +19,7 @@ FRED_SERIES={
 
 def sha(raw):return hashlib.sha256(raw).hexdigest()
 
-def get(url,timeout=25,retries=3):
+def get(url,timeout=15,retries=2):
     last=None
     for i in range(retries):
         try:
@@ -30,15 +30,31 @@ def get(url,timeout=25,retries=3):
     raise RuntimeError(f"DOWNLOAD_FAILED {url} {type(last).__name__}:{last}")
 
 def fred(series):
-    url=f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}&cosd={START}&coed={END}"
-    raw=get(url)
-    df=pd.read_csv(io.BytesIO(raw))
+    csv_url=f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}&cosd={START}&coed={END}"
+    raw=None; mode=None; last_error=None
+    try:
+        raw=get(csv_url,timeout=15,retries=2)
+        df=pd.read_csv(io.BytesIO(raw))
+        mode="FREDGRAPH_CSV"
+    except Exception as e:
+        last_error=e
+        table_url=f"https://fred.stlouisfed.org/data/{series}"
+        raw=get(table_url,timeout=20,retries=3)
+        tables=pd.read_html(io.BytesIO(raw))
+        df=None
+        for q in tables:
+            cols=[str(x).strip().upper() for x in q.columns]
+            if "DATE" in cols and "VALUE" in cols:
+                q=q.copy();q.columns=cols;df=q[["DATE","VALUE"]].copy();break
+        if df is None: raise RuntimeError(f"FRED_TABLE_NOT_FOUND {series} fallback_after={type(last_error).__name__}")
+        mode="FRED_TABLE_DATA_HTML"
     date_col=df.columns[0];val_col=df.columns[-1]
     df["date"]=pd.to_datetime(df[date_col],errors="coerce")
     df["value"]=pd.to_numeric(df[val_col],errors="coerce")
     df=df.dropna(subset=["date","value"]).sort_values("date").drop_duplicates("date",keep="last")
+    df=df[(df["date"]>=pd.Timestamp(START))&(df["date"]<=pd.Timestamp(END))]
     if df.empty:raise RuntimeError(f"FRED_EMPTY {series}")
-    return {r.date.strftime("%Y-%m-%d"):float(r.value) for r in df[["date","value"]].itertuples(index=False)},{"url":url,"sha256":sha(raw),"first":df.date.iloc[0].strftime("%Y-%m-%d"),"last":df.date.iloc[-1].strftime("%Y-%m-%d"),"n":len(df)}
+    return {r.date.strftime("%Y-%m-%d"):float(r.value) for r in df[["date","value"]].itertuples(index=False)},{"url":csv_url,"fetch_mode":mode,"sha256":sha(raw),"first":df.date.iloc[0].strftime("%Y-%m-%d"),"last":df.date.iloc[-1].strftime("%Y-%m-%d"),"n":len(df)}
 
 def monthly_last_return(series):
     s=pd.Series(series,dtype=float)
@@ -81,8 +97,11 @@ def main():
     ap.add_argument("--output",default="gold_monthly_long_history_market_drivers_v1.json")
     a=ap.parse_args()
     series={};source={}
-    for sid in FRED_SERIES:
-        series[sid],source[sid]=fred(sid)
+    with ThreadPoolExecutor(max_workers=len(FRED_SERIES)) as ex:
+        fut={ex.submit(fred,sid):sid for sid in FRED_SERIES}
+        for ftr in as_completed(fut):
+            sid=fut[ftr]
+            series[sid],source[sid]=ftr.result()
     h10_rows,h10_source=build_h10()
 
     # Reconcile the known NASDAQ compact anomaly against independently retained
@@ -102,9 +121,8 @@ def main():
     for sid,z in source.items():
         if sid in full_history_required and z["first"]>"2010-01-05":
             raise RuntimeError(f"LONG_HISTORY_START_FAIL {sid} {z}")
-        if sid in ("NASDAQ100","SP500","DGS10","DFF","DFII10","T10YIE","VIXCLS") and z["last"]<"2026-09-20":
+        if sid in ("NASDAQ100","DGS10","DFF","DFII10","T10YIE","VIXCLS") and z["last"]<"2026-09-20":
             raise RuntimeError(f"CURRENT_COVERAGE_FAIL {sid} {z}")
-    source["SP500"]["coverage_role"]="PARTIAL_COMPARATOR_FRED_10Y_LICENSE_WINDOW"
 
     out={
       "schema":"GOLD_MONTHLY_LONG_HISTORY_MARKET_DRIVERS_V1_2026-09-29",
@@ -129,7 +147,7 @@ def main():
         "NASDAQ100":["level_control","1m_log_return","3m_momentum","6m_momentum","realized_volatility","drawdown","daily_midas"],
         "rates":["DGS10_level_change","DFII10_real_yield_level_change","DFF_level_change","real_nominal_spread","daily_midas"],
         "inflation_expectations":["T10YIE_level_change","daily_midas"],
-        "equity_risk":["SP500_return","NASDAQ100_return","VIXCLS_level_change","realized_volatility","drawdown"],
+        "equity_risk":["NASDAQ100_return","VIXCLS_level_change","realized_volatility","drawdown"],
         "fx":["broad_usd_return","cny_usdstrength_return","major_fx_returns","breadth","dispersion","daily_midas"],
       },
     }
