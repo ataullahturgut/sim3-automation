@@ -69,6 +69,13 @@ jobs:
           gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > dev-snapshot.zip
           unzip -q dev-snapshot.zip -d dev_snapshot
           test -s dev_snapshot/gold_monthly_dev_snapshot_v1.json
+      - name: Download governed 2009 metal prehistory
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11020520415/zip" > prehistory.zip
+          unzip -q prehistory.zip -d prehistory
+          test -s prehistory/gold_monthly_metal_prehistory_v1.json
       - name: Compile
         run: |
           python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_f2_representation_v1.py
