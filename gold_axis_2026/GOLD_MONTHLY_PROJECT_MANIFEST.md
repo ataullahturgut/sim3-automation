@@ -2428,6 +2428,66 @@ Interpretation:
 - next clean enhancement test, if pursued, is the **same frozen PIT Rates price-residual protocol applied to the current canonical ChHHO BASE rows**, with no hyperparameter redesign
 - VIX native family remains unopened.
 
+## 20L.6I ChHHO VIX residual screen — COMPLETE / VIX_R1 PASS
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_CHHHO_VIX_RESIDUAL_SCREEN_2026-09-29.md`
+
+Frozen design:
+- BASE: frozen ChHHO-ANFIS authority artifact **10989389723**
+- residual target: **actual price − BASE forecast price**
+- learner: **Ridge(alpha=10)**
+- StandardScaler on prior eligible residual rows only
+- minimum prior residuals **12**
+- correction cap **±1.5 × median(abs(prior residual))**
+- chronology **prequential / prior DEV residuals only**
+- VIX daily authority: External Authority V2 / **READY_CBOE**
+- VIX release safety lag: **1 calendar day**
+- 2025/2026 selection: **NONE**
+- Neon reads: **0**
+
+Predeclared VIX variables:
+- `VIX_LEVEL`: origin-month mean daily VIX
+- `VIX_CHANGE`: origin mean minus previous-month mean
+- `VIX_VOL`: std of origin-month daily VIX first differences
+- `VIX_SPIKE`: origin-month max VIX / origin-month mean VIX
+
+Predeclared blocks and DEV results:
+- **VIX_R1_CHANGE**: **1338.330045 / 23/33**, improvement **74.699809 USD / 5.2865%**, gate **PASS**
+- **VIX_R2_LEVEL_CHANGE**: **1345.909122 / 23/33**, improvement **67.120733 USD / 4.7501%**, gate **PASS**
+- **VIX_R3_FULL_STRESS**: **1407.226258 / 24/33**, improvement **5.803597 USD / 0.4107%**, gate **FAIL**
+
+Selected:
+**VIX_R1_CHANGE**
+
+VIX_R1 robustness:
+- eligible BASE ΣAE **843.2884386436745**
+- eligible corrected ΣAE **768.5886293661572**
+- eligible improvement **74.69980927751726 USD**
+- excluding the single best month improvement **53.471601696024436 USD**
+- 2024 improvement **62.05453990225692 USD**
+- eligible Direction **14/21 → 14/21**
+- robustness gate **PASS**
+
+Authoritative execution:
+- workflow **Gold Monthly ChHHO VIX Residual Screen V1**
+- run **36585834751**
+- head commit **3c23d018f3c23b47c36d4ac21327be400c250339**
+- job **109465773517**
+- artifact **11041975865**
+- artifact digest `sha256:e864e30908658f9edc2e9ece8e8070d2d7c06c0d0a52ea7919f98385a7bf66f2`
+
+Earlier run **36585727221** failed before scientific execution only because the runtime lacked `psycopg`; no scientific parameter or feature definition was changed.
+
+Decision:
+- VIX residual information is **SUPPORTED**
+- **VIX_R1_CHANGE = PROMOTABLE CHALLENGER**
+- R2 valid but dominated by R1
+- R3 rejected by robustness gate
+- native-input VIX remains **NOT YET TESTED**
+- 2025/2026 transport for VIX_R1 remains **NOT OPENED**
+- next clean action is frozen VIX_R1 transport to 2025/2026 if authorized, or native VIX challenge if residual transport is intentionally deferred.
+
 ## 20L.7 Workflow hold
 
 Legacy workflows:
@@ -2437,7 +2497,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**ChHHO PIT Rates residual method exactly reproduced and PASS; native Rates/FX remain closed. Current-canonical residual re-run is the clean enhancement candidate; VIX native family is still unopened.**
+**ChHHO VIX residual screen COMPLETE: VIX_R1_CHANGE selected at 1338.330045 / 23/33 with robustness PASS. Native Rates/FX remain closed; native-input VIX not yet tested; VIX_R1 2025/2026 transport not yet opened.**
 
 ---
 
