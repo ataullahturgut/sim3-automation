@@ -157,7 +157,9 @@ def fetch_cpi():
                 p=str(r["period"])
                 if not p.startswith("M") or p=="M13": continue
                 m=f"{int(r['year']):04d}-{int(p[1:]):02d}"
-                out.setdefault(m,{})[key]=float(r["value"])
+                v=pd.to_numeric(r.get("value"),errors="coerce")
+                if pd.notna(v):
+                    out.setdefault(m,{})[key]=float(v)
     if min(out)>"2010-01" or max(out)<"2026-08": raise RuntimeError(f"BLS_CPI_COVERAGE {min(out)} {max(out)}")
     return out,{"endpoint":"BLS Public Data API v2","chunks":hashes,"first":min(out),"last":max(out),"n":len(out),
                 "source":"U.S. Bureau of Labor Statistics","revision_note":"NSA CPI index candidates; not survey-consensus surprise"}
