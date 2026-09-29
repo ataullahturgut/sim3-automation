@@ -819,7 +819,7 @@
       "rerun": false
     }
   ],
-  "current_next_action": "Rates R2 orthogonal pair next: monthly real-yield change + monthly breakeven-inflation change; do not start FX; keep 2025/2026 closed",
+  "current_next_action": "Start F4 FX family decomposition next; Rates native F4 family is closed; keep 2025/2026 closed for selection",
   "registry_rules": {
     "check_before_run": true,
     "completed_models_default_rerun": false,
@@ -858,13 +858,13 @@
     "F4_ALL6_COMPACT": "CURRENT8 + compact pairs for Rates, FX, VIX, Nasdaq-100, WTI, Brent; dimension-adjusted ChHHO population"
   },
   "current_checkpoint": {
-    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates(4) + Rates R1 compact real-yield redesign",
-    "f4_status": "RATES_R1_COMPLETE_VALID_NOT_PROMOTED__R2_NEXT",
+    "completed_through": "F4 B0/B1/B2 + ALL6 + Rates(4) + Rates R1 + Rates R2 family closure",
+    "f4_status": "RATES_NATIVE_FAMILY_CLOSED_NOT_PROMOTED__FX_NEXT",
     "legacy_rates_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
     "legacy_fx_status": "VALID_FOR_LEGACY_ENDPOINT_IMPLEMENTATION_ONLY_SUPERSEDED_FOR_FAMILY_DECISION",
-    "next_model": "Rates R2 orthogonal real-yield + breakeven pair",
+    "next_model": "F4 FX family decomposition",
     "next_model_status": "AUTHORIZED_NOT_RUN",
-    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1 + EXTERNAL_AUTHORITY_V2 + B2 parity + R1 summary",
+    "execution_source": "AUTHORIZED_DEV_SNAPSHOT_V1 + EXTERNAL_AUTHORITY_V2 + B2 parity + Rates R2 summary",
     "neon_required": false
   },
   "f4_reset": {
@@ -944,7 +944,7 @@
       "MR_ONLY_PAIR",
       "VW_ONLY_PAIR"
     ],
-    "fx_status": "NOT_STARTED_AFTER_USER_ONE_FAMILY_AT_A_TIME_RULE",
+    "fx_status": "NEXT_AUTHORIZED_NOT_RUN",
     "transport_2025_for_rates_combined": "NOT_OPENED",
     "stress_2026_for_rates_combined": "NOT_OPENED",
     "rates_r1_status": "COMPLETE_VALID_NOT_PROMOTED",
@@ -969,6 +969,31 @@
     "rates_r1_promotion": "REJECTED",
     "rates_next_model": "R2_REAL10_PLUS_BREAKEVEN_MONTHLY_DIFF",
     "transport_2025_for_rates_r1": "NOT_OPENED",
-    "stress_2026_for_rates_r1": "NOT_OPENED"
+    "stress_2026_for_rates_r1": "NOT_OPENED",
+    "rates_r2_status": "COMPLETE_VALID_NOT_PROMOTED",
+    "rates_r2_run": 36572341391,
+    "rates_r2_head_commit": "17e61eb4819120419f003194a8dd50e039978abc",
+    "rates_r2_summary_artifact": 11036170615,
+    "rates_r2_summary_artifact_digest": "sha256:087b2d6f62ba486d872dc5f1d4f8d8eb5549a6bd778d18aa474c7b9c7757456a",
+    "rates_r2_features": [
+      "REAL10_MONTHLY_MEAN_DIFF",
+      "BREAKEVEN10_MONTHLY_MEAN_DIFF"
+    ],
+    "rates_r2_total_inputs": 10,
+    "rates_r2_param_dim": 100,
+    "rates_r2_population": 30,
+    "rates_r2_sum_abs_error": 1716.9570365398133,
+    "rates_r2_direction": "19/33",
+    "rates_r2_delta_sum_abs_error_vs_base": 303.92725713135746,
+    "rates_r2_relative_deterioration_pct": 21.508906716643448,
+    "rates_r2_paired_wins": 15,
+    "rates_r2_paired_losses": 18,
+    "rates_r2_paired_ties": 0,
+    "rates_r2_promotion": "REJECTED",
+    "rates_native_family_status": "CLOSED_NOT_PROMOTED",
+    "rates_native_family_reopen_rule": "Only explicit new evidence or a materially different architecture; do not rerun native-input Rates variants by default",
+    "prior_pit_rates_residual_evidence": "PRESERVED_HISTORICAL_OTHER_ARCHITECTURE",
+    "transport_2025_for_rates_r2": "NOT_OPENED",
+    "stress_2026_for_rates_r2": "NOT_OPENED"
   }
 }
