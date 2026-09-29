@@ -2537,6 +2537,49 @@ Decision:
 - do not retune on 2025/2026
 - native-input VIX remains not yet tested.
 
+## 20L.6K Brent residual + Rates combination — COMPLETE
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_CHHHO_BRENT_RESIDUAL_AND_RATES_COMBINATION_2026-09-29.md`
+
+Brent isolated residual screen:
+- BASE **1413.029855 / 23/33**
+- **BRENT_R1_MR1** **1346.502415 / 23/33**, improvement **66.527439 USD**, gate **PASS**
+- **BRENT_R2_VW** **1349.180909 / 23/33**, improvement **63.848945 USD**, gate **PASS**
+- **BRENT_R3_MR1_VW** **1357.706180 / 23/33**, improvement **55.323674 USD**, gate **PASS**
+- selected Brent representation: **BRENT_R1_MR1**
+- R1 improvement excluding single best month **49.835209 USD**
+- R1 2024 improvement **60.713525 USD**
+
+Brent authoritative execution:
+- run **36590486319**
+- head **f2eb03085e42005a3902dd278d94f17544675e1b**
+- job **109481990464**
+- artifact **11043268953**
+- digest `sha256:014754f03dc8f754cce60d385f98146c0ef8094a760940d13564633706b77c27`
+
+Rates + Brent combination:
+- Rates control **1370.920393 / 23/33**
+- Brent control **1346.502415 / 23/33**
+- Rates + Brent **1377.101415 / 23/33**
+- combined robustness gate **PASS**
+- combined is worse than Brent alone by **30.599000 USD**
+- combined is worse than Rates alone by **6.181022 USD**
+- combination decision: **REJECTED / DOMINATED**
+
+Combination authoritative execution:
+- run **36590746098**
+- head **b67b1dad7c816a3869f96e22661d4b44e50772c3**
+- job **109482871506**
+- artifact **11043503614**
+- digest `sha256:d7d457fb82b5f55dedc9d1dbac50ba38271b0436be650424a0b486242ad86f81`
+
+Decision:
+- Brent residual information is **SUPPORTED**
+- **BRENT_R1_MR1 = PROMOTABLE CHALLENGER**
+- Rates + Brent stacking is **NOT PROMOTED**
+- next clean action: freeze BRENT_R1_MR1 and transport unchanged to 2025/2026 reporting.
+
 ## 20L.7 Workflow hold
 
 Legacy workflows:
@@ -2546,7 +2589,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**VIX_R1 residual challenger frozen and transported: DEV PASS, 2025 strong improvement, 2026 Jan-Aug essentially flat ΣAE with +1 Direction. Native-input VIX remains not yet tested; September 2026 canonical ChHHO remains blocked by missing August four-metal inputs.**
+**Brent residual screen COMPLETE: BRENT_R1_MR1 selected at 1346.502415 / 23/33 with robustness PASS. Rates + Brent combination is rejected as dominated. Next clean action is frozen BRENT_R1_MR1 transport to 2025/2026; no retuning on holdout years.**
 
 ---
 
