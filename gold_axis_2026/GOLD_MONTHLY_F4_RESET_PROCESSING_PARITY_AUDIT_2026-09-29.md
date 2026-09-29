@@ -287,7 +287,7 @@ Daily MR1 + GPR-VW.
 Daily MR1 + GPR-VW; extra representation only if predeclared before outcomes.
 
 ### F4-B7 — Energy restart
-WTI/Brent daily MR1 + GPR-VW.
+WTI signed-difference pair + Brent MR1/GPR-VW.
 
 ### F4-B8 — native-monthly families
 CPI and Copper under their natural monthly frequencies.
@@ -314,3 +314,7 @@ are placed on **MANUAL LEGACY HOLD** and are not valid promotion workflows.
 - optimizer-dimension parity defect: **YES**
 - daily Nasdaq/WTI/Brent authority gap: **being closed in V2**
 - next authorized action: **F4-B0 data authority completion only**
+
+## WTI signed-transform note
+
+WTI cannot be forced into a log-return representation because the official daily history contains non-positive observations during the 2020 dislocation. This is real market data, not a bad row. Therefore WTI uses monthly-mean price difference + GPR-weighted daily first differences. No clipping, deletion, absolute-value transform, or synthetic repair is allowed.
