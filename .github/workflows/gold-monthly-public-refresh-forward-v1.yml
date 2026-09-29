@@ -1,0 +1,128 @@
+name: Gold Monthly Public Refresh + Sep-Oct Forward V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_public_current_bundle_v1.py
+      - gold_axis_2026/tools/gold_monthly_public_forward_top2_v1.py
+      - .github/workflows/gold-monthly-public-refresh-forward-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  NEON_DATABASE_URL: ''
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+
+jobs:
+  build-public-bundle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    outputs:
+      stak_ref: ${{ steps.refs.outputs.stak_ref }}
+      stak_api_ref: ${{ steps.refs.outputs.stak_api_ref }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'pandas>=2.2,<3' 'openpyxl>=3.1,<4' 'xlrd>=2,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Assert Neon disabled
+        run: test -z "${NEON_DATABASE_URL:-}"
+      - name: Download frozen DEV snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > dev-snapshot.zip
+          unzip -q dev-snapshot.zip -d dev_snapshot
+          test -s dev_snapshot/gold_monthly_dev_snapshot_v1.json
+      - name: Resolve public source commits
+        id: refs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          STAK_REF="$(gh api repos/lbruton/StakTrakr/commits/main --jq .sha)"
+          STAK_API_REF="$(gh api repos/lbruton/StakTrakrApi/commits/api --jq .sha)"
+          echo "stak_ref=$STAK_REF" >> "$GITHUB_OUTPUT"
+          echo "stak_api_ref=$STAK_API_REF" >> "$GITHUB_OUTPUT"
+          echo "STAK=$STAK_REF"
+          echo "STAK_API=$STAK_API_REF"
+      - name: Clone official GPR archive
+        run: git clone --quiet https://github.com/iacoviel/iacoviel.github.io.git /tmp/iacoviel-gpr
+      - name: Build public current bundle
+        run: |
+          python gold_axis_2026/tools/gold_monthly_public_current_bundle_v1.py             --dev-snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json             --gpr-repo /tmp/iacoviel-gpr             --stak-ref "${{ steps.refs.outputs.stak_ref }}"             --stak-api-ref "${{ steps.refs.outputs.stak_api_ref }}"             --cutoff 2026-09-29             --output gold_monthly_public_current_bundle_v1.json
+      - name: Inspect data gate
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('gold_monthly_public_current_bundle_v1.json'))
+          assert d['authority']['neon_reads']==0
+          assert d['daily_extension_last'] >= '2026-09-28'
+          assert d['world_bank']['last'] >= '2026-08'
+          assert d['world_bank']['gold_monthly']['2026-08'] > 0
+          assert {'2026-08','2026-09'} <= set(d['gpr_vintages'])
+          print('PUBLIC_DATA_GATE=PASS')
+          print(json.dumps({
+            'daily_last':d['daily_extension_last'],
+            'daily_rows':len(d['daily_extension_rows']),
+            'wb_last':d['world_bank']['last'],
+            'wb_aug_gold':d['world_bank']['gold_monthly']['2026-08'],
+            'gpr_origins':sorted(d['gpr_vintages']),
+            'stak_parity':d['staktrakr']['parity_hourly_minus_annual'],
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-public-current-bundle-v1-${{ github.sha }}
+          path: gold_monthly_public_current_bundle_v1.json
+          retention-days: 90
+
+  forecast:
+    needs: build-public-bundle
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        model: [CHHHO, DE_ABC]
+        target: ['2026-09','2026-10']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn>=1.5,<2' 'pandas>=2.2,<3' 'openpyxl>=3.1,<4' 'xlrd>=2,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Assert Neon disabled
+        run: test -z "${NEON_DATABASE_URL:-}"
+      - name: Download frozen DEV snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > dev-snapshot.zip
+          unzip -q dev-snapshot.zip -d dev_snapshot
+      - name: Download public bundle from this run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          AID="$(gh api "/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts" --jq '.artifacts[] | select(.name | startswith("gold-monthly-public-current-bundle-v1-")) | .id' | head -1)"
+          test -n "$AID"
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/$AID/zip" > current.zip
+          unzip -q current.zip -d current_bundle
+      - name: Run forward forecast
+        run: |
+          OUT="forward_${{ matrix.model }}_${{ matrix.target }}.json"
+          python gold_axis_2026/tools/gold_monthly_public_forward_top2_v1.py             --dev-snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json             --current-bundle current_bundle/gold_monthly_public_current_bundle_v1.json             --model "${{ matrix.model }}"             --target "${{ matrix.target }}"             --output "$OUT"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-monthly-forward-${{ matrix.model }}-${{ matrix.target }}-${{ github.sha }}
+          path: forward_*.json
+          if-no-files-found: error
+          retention-days: 90
