@@ -2262,6 +2262,74 @@ Decision:
 - 2025/2026 remain closed
 - VIX/Nasdaq/Energy remain not started.
 
+## 20L.6F FX3 directional Almon-MIDAS — COMPLETE / FX FAMILY CLOSED
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_F4_FX3_FAMILY_CLOSURE_2026-09-29.md`
+
+FX3 representation:
+- Broad USD monthly mean log change
+- one directional daily Broad USD return scalar
+- daily scalar uses parsimonious exponential-Almon MIDAS weighting
+- MIDAS weight selection occurs only inside the ANFIS inner-train pool; ANFIS validation remains untouched
+- no GPR weighting
+- no additional currency pairs
+- total inputs **10**
+- antecedent parameter dimension **100**
+- POP **30**
+- generations **45**
+- repeats **3**
+
+Authoritative execution:
+- workflow **Gold Monthly F4 FX3 Directional MIDAS V1**
+- run **36576876579**
+- head commit **ea2bd5c5a119929ef448d6853941b89f5e056337**
+- 6/6 DEV shards **SUCCESS**
+- summarize **SUCCESS**
+- summary artifact **11037952667**
+- summary digest `sha256:d0a553ffa7caaa4119143dacfebb9292338378832722e1537da60c2a5a222842`
+
+DEV:
+- BASE **1413.0297794084559 / 23/33**
+- FX3 **1829.800218215398 / 20/33**
+- ΣAE deterioration vs BASE **+416.77043880694214 USD**
+- relative deterioration **+29.49%**
+- direction change **-3**
+- paired wins/losses/ties **13 / 20 / 0**
+- median paired improvement (BASE − FX3) **-6.7261486840**
+- worst month **2024-04**, AE **170.1781399883**
+- signed mean bias **-13.3699152671**
+
+Yearly:
+- 2022: BASE **397.8794** vs FX3 **474.9862**
+- 2023: BASE **395.7140** vs FX3 **636.4662**
+- 2024: BASE **619.4364** vs FX3 **718.3478**
+
+MIDAS weight-selection diagnostic:
+- (-8, 0): **26/33 origins**
+- (0, 0): **4/33**
+- (-1, 0): **1/33**
+- (1, -2): **1/33**
+- (2, -2): **1/33**
+
+The dominant selection is the strongest recency-decay candidate, so the daily FX path tends to prefer the newest available Broad USD returns. The resulting directional scalar still does not beat BASE.
+
+FX sequence:
+- FX1 monthly Broad USD **2532.593559 / 20/33**
+- FX2 monthly + daily RMS volatility **1787.600075 / 17/33**
+- FX3 monthly + directional Almon-MIDAS **1829.800218 / 20/33**
+- BASE remains **1413.029779 / 23/33**
+
+Decision:
+- FX3 **VALID / NOT PROMOTED**
+- native F4 FX family **CLOSED / NOT PROMOTED**
+- no further native-input FX redesign by default
+- 2025/2026 remain closed for rejected FX variants
+- historical residual-layer/USD-CNY evidence from other architectures remains historical and is not deleted
+- next external family: **VIX**
+- VIX execution status: **NOT STARTED**
+- Nasdaq/Energy remain not started.
+
 ## 20L.7 Workflow hold
 
 Legacy workflows:
@@ -2271,7 +2339,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**F4 FX family open: FX2 daily-volatility path complete/not promoted; FX3 true directional MIDAS daily path next.**
+**F4 FX native family CLOSED after FX3 non-promotion; VIX is next and not yet started.**
 
 ---
 
@@ -2346,7 +2414,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **F4 FX3 true directional MIDAS daily-path test** after FX2 DEV ΣAE **1787.600075 / 17/33** vs BASE **1413.029779 / 23/33**. FX2 materially improves price error over FX1 (**2532.593559 / 20/33**) but does not beat BASE and direction worsens. FX family-wide rejection is not authorized until the compact directional MIDAS path is tested. Rates native F4 family is closed; VIX/Nasdaq/Energy remain not started.
+- Current exact next model/research stage: **F4 VIX family decomposition**. FX native F4 family is closed after FX3 DEV ΣAE **1829.800218 / 20/33** vs BASE **1413.029779 / 23/33**. FX2 remains the best FX native-input price-error variant (**1787.600075 / 17/33**), but no FX variant beats BASE. Rates and FX native F4 families are closed; VIX is next, Nasdaq/Energy remain not started.
 
 
 ---
