@@ -2094,6 +2094,64 @@ Decision:
 - R2 **NOT RUN YET**.
 - FX remains **NOT STARTED**.
 
+## 20L.6C Rates R2 orthogonal pair — COMPLETE / FAMILY CLOSED
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_F4_RATES_R2_FAMILY_CLOSURE_2026-09-29.md`
+
+R2 representation:
+- monthly real-yield mean change
+- monthly 10Y breakeven-inflation change = nominal10 − real10
+- daily Rates VW **NOT USED**
+- GPR weighting on Rates **NOT USED**
+- total inputs **10**
+- antecedent parameter dimension **100**
+- POP **30**
+- generations **45**
+- repeats **3**
+
+Authoritative execution:
+- workflow **Gold Monthly F4 Rates R2 Orthogonal Pair V1**
+- run **36572341391**
+- head commit **17e61eb4819120419f003194a8dd50e039978abc**
+- 6/6 DEV shards **SUCCESS**
+- summarize **SUCCESS**
+- summary artifact **11036170615**
+- summary digest `sha256:087b2d6f62ba486d872dc5f1d4f8d8eb5549a6bd778d18aa474c7b9c7757456a`
+
+Earlier run **36572222708** failed before scientific scoring because of a helper unpack bug; it is **TECHNICAL_IMPLEMENTATION_FAILURE / NOT_SCIENTIFIC_RESULT**.
+
+DEV:
+- BASE **1413.0297794084559 / 23/33**
+- R2 **1716.9570365398133 / 19/33**
+- ΣAE deterioration vs BASE **+303.92725713135746 USD**
+- relative deterioration **+21.51%**
+- direction change **-4**
+- paired wins/losses/ties **15 / 18 / 0**
+- median paired improvement (BASE − R2) **-8.6342994027**
+- worst month **2024-03**, AE **140.2185519019**
+- signed mean bias **-13.6002083193**
+
+Yearly:
+- 2022: BASE **397.8794** vs R2 **509.6601**
+- 2023: BASE **395.7140** vs R2 **521.6554**
+- 2024: BASE **619.4364** vs R2 **685.6415**
+
+Rates redesign sequence:
+- Rates(4) **6102.555639 / 16/33**
+- R1 real-yield only **1837.635158 / 19/33**
+- R2 real-yield + breakeven **1716.957037 / 19/33**
+- R2 improves on R1 by **120.678121 USD**, but remains materially worse than BASE.
+
+Decision:
+- Rates R2 **VALID / NOT PROMOTED**
+- native F4 Rates family **CLOSED / NOT PROMOTED**
+- no further Rates native-input redesign
+- 2025/2026 remain closed for these rejected Rates variants
+- prior PIT Rates residual-layer evidence in other architectures remains historical evidence and is not deleted
+- next external family: **FX**
+- FX execution status: **NOT STARTED**
+
 ## 20L.7 Workflow hold
 
 Legacy workflows:
@@ -2103,7 +2161,7 @@ Legacy workflows:
 are on **MANUAL LEGACY HOLD**.
 
 Current exact active stage:
-**F4 Rates representation redesign: R1 complete/not promoted; R2 orthogonal real-yield + breakeven pair next; FX not started.**
+**F4 Rates native family CLOSED after R2 non-promotion; FX is next and not yet started.**
 
 ---
 
@@ -2178,7 +2236,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **F4 Rates R2 orthogonal monetary pair** after R1 real-yield-only DEV ΣAE **1837.635158 / 19/33** vs BASE **1413.029779 / 23/33**. R1 materially improved over the failed four-variable Rates block (**6102.555639 / 16/33**), supporting a representation/dimensionality diagnosis, but did not beat BASE. FX/VIX/Nasdaq/Energy remain not started.
+- Current exact next model/research stage: **F4 FX family decomposition**. Rates native F4 family is closed after R2 DEV ΣAE **1716.957037 / 19/33** vs BASE **1413.029779 / 23/33**. Compact redesign materially repaired the original Rates(4) dimensionality failure but did not add net DEV value. FX is next; VIX/Nasdaq/Energy remain not started.
 
 
 ---
