@@ -64,7 +64,15 @@ jobs:
           test -s gpr_202609.xls
       - name: Build public current bundle
         run: |
-          python gold_axis_2026/tools/gold_monthly_public_current_bundle_v1.py             --dev-snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json             --gpr-repo /tmp/iacoviel-gpr             --stak-ref "${{ steps.refs.outputs.stak_ref }}"             --stak-api-ref "${{ steps.refs.outputs.stak_api_ref }}"             --cutoff 2026-09-29             --output gold_monthly_public_current_bundle_v1.json
+          python gold_axis_2026/tools/gold_monthly_public_current_bundle_v1.py \
+            --dev-snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json \
+            --gpr-202608 gpr_202608.xls \
+            --gpr-202609 gpr_202609.xls \
+            --gpr-ref "${{ steps.refs.outputs.gpr_ref }}" \
+            --stak-ref "${{ steps.refs.outputs.stak_ref }}" \
+            --stak-api-ref "${{ steps.refs.outputs.stak_api_ref }}" \
+            --cutoff 2026-09-29 \
+            --output gold_monthly_public_current_bundle_v1.json
       - name: Inspect data gate
         run: |
           python - <<'PY'
