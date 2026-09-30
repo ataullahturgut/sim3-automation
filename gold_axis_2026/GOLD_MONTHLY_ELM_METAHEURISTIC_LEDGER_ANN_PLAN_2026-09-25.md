@@ -5215,3 +5215,218 @@ The 2025/2026 transport period is now opened and may not be reused as an untouch
 
 No forecast correction.
 No routing/model switching.
+
+
+### 18.26 Gold Market Regime Discovery V1 — ALARM-INDEPENDENT / STRONG EVIDENCE
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_DISCOVERY_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `f30e7a3b70bee75cc194eb6980f11a38c8d121bf`
+
+Execution:
+- workflow: `Gold Monthly Market Regime Discovery V1`
+- run: **36716979693**
+- artifact: **11097041821**
+- code commit: `5e4a3e32ce1bb1ad718e9e0049fe0ac8e7e093ad`
+- workflow commit: `86917fea4cebaf6ad25623279e96370bcf6b2438`
+- artifact digest: `sha256:6bf8455e93ece5dc42f06dc58930a79be2a94ea70f5f3f9da82bff8da752338e`
+- result report: `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_DISCOVERY_V1_RESULT_2026-09-30.md`
+- result commit: `1191a28627321d000c71fa65d743107f357ca746`
+- scientific gate: **PASS**
+
+#### Governance
+
+Regime model uses only market-state variables.
+
+Explicitly excluded:
+- ChHHO errors
+- A/B/C/D/E/G/H/I1/I2/T1 alarm flags
+- HIGH/MEDIUM/NORMAL forecast-error labels
+- model forecasts
+- router/fallback outcomes
+
+Regime development:
+- effective complete panel **2010-07..2024-12**
+- 174 months
+
+Transport / structural check:
+- **2025-01..2026-08**
+- 20 months
+
+2025/2026 did not choose K, scaling, PCA, HMM or GMM parameters.
+
+#### Features
+
+13 monthly market-state features:
+- Gold r1
+- Gold r3
+- Gold level gap vs prior-12m
+- Gold realized-vol ratio
+- cross-metal dispersion
+- GVZ ratio
+- CFTC MM net/OI
+- CFTC OI ratio
+- broad USD change
+- nominal10 change
+- real10 change
+- GLD/IAU combined flow
+- ETF outflow breadth
+
+#### Regime-existence result
+
+HMM BIC:
+- K1 3405.30
+- K2 3342.75
+- **K3 3334.20**
+- K4 3353.59
+- K5 3380.92
+
+Selected:
+- **3-state HMM**
+
+BIC improvement vs K1:
+- **71.09**
+
+Persistence:
+- weighted self-transition **89.20%**
+- all three states >=12 development months
+
+Primary regime evidence:
+- **STRONG**
+
+GMM robustness:
+- static BIC selects **2 clusters**
+- K2 silhouette **0.258**
+
+Binding interpretation:
+- at least **2 broad regimes** are strongly supported;
+- persistence-aware time-series evidence favors **3 persistent states**;
+- do not claim that the exact state count is uniquely identified.
+
+#### HMM state profiles
+
+**R0 — drawdown / macro-pressure / stress**
+- train occupancy 25.9%
+- Gold r1 ~ -0.59%
+- Gold r3 ~ -3.42%
+- Gold level gap ~ -5.77%
+- RV ratio ~1.223
+- GVZ ratio ~1.122
+- CFTC MM net/OI ~0.087
+- ETF combined flow ~ -0.65%
+- stronger USD / higher real-rate pressure
+
+**R1 — quiet / neutral / low-vol**
+- occupancy 47.1%
+- Gold r1 ~ +0.14%
+- Gold r3 ~ +0.87%
+- Gold level gap ~ +1.67%
+- RV ratio ~0.866
+- GVZ ratio ~0.866
+- CFTC MM net/OI ~0.185
+- ETF combined flow ~ -0.12%
+
+**R2 — bullish / accumulation / elevated-state**
+- occupancy 27.0%
+- Gold r1 ~ +1.95%
+- Gold r3 ~ +6.88%
+- Gold level gap ~ +12.91%
+- RV ratio ~1.257
+- GVZ ratio ~1.212
+- CFTC MM net/OI ~0.314
+- ETF combined flow ~ +2.26%
+- declining nominal/real yield tendency
+
+Self-transition:
+- R0 85.6%
+- R1 88.9%
+- R2 93.2%
+
+Historical median spell:
+- R0 6m
+- R1 4m
+- R2 12m
+
+Historical max spell inside 2010-2024:
+- R0 9m
+- R1 18m
+- R2 16m
+
+#### 2025 regime result
+
+2025:
+- **R2 12/12 months**
+- R0 0
+- R1 0
+
+Historical 2010-2024 R2 occupancy:
+- 27.0%
+
+JS distance 2025 vs 2010-2024 occupancy:
+- **0.604**
+
+2025 is therefore highly unusual in regime composition.
+
+However it is not a new fourth state:
+- R2 already existed historically;
+- current R2 spell began **2024-04**.
+
+R2 continues through **2026-04**:
+- continuous spell **25 months**
+- longer than historical development max R2 spell 16 months.
+
+Binding interpretation:
+**2025 is an unusually persistent occupation of an existing bullish/accumulation regime, not clear evidence of a brand-new categorical regime.**
+
+#### 2026 Jan-Aug
+
+- 2026-01 R2, OOD
+- 2026-02 R2, OOD
+- 2026-03 R2, OOD
+- 2026-04 R2
+- 2026-05 R1
+- 2026-06 R2, low posterior confidence ~36.3%
+- 2026-07 R1
+- 2026-08 R1
+
+Occupancy:
+- R2 62.5%
+- R1 37.5%
+- R0 0%
+
+JS distance vs 2010-2024:
+- **0.359**
+
+OOD below the historical train 5th-percentile emission density:
+- **2026-01**
+- **2026-02**
+- **2026-03**
+
+Interpretation:
+- still assigned to R2;
+- but unusually extreme even relative to historical R2;
+- valid wording = **extreme R2 / historically unusual state intensity**;
+- do not promote to a new R3/fourth regime yet.
+
+2026-05 onward shows movement toward R1.
+2026-06 is state-ambiguous.
+
+#### Change-point robustness
+
+Multivariate PELT/RBF fixed penalties 2log(n), 4log(n), 6log(n):
+- no robust discrete break dates.
+
+Therefore:
+- persistent latent regimes are supported;
+- a single sharp structural break such as “January 2025” is not supported.
+
+#### Binding decision
+
+Regime existence is now established independently enough to justify a later, separate stage asking whether alarm reliability differs by R0/R1/R2.
+
+That later stage is **not yet executed by this checkpoint**.
+
+No alarm selection.
+No alarm weighting.
+No forecast correction.
+No routing/model switching.
