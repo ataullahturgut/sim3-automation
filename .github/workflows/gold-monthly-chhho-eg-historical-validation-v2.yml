@@ -1,0 +1,61 @@
+name: Gold Monthly ChHHO E/G Historical Validation V2
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_chhho_eg_historical_validation_v2.py
+      - .github/workflows/gold-monthly-chhho-eg-historical-validation-v2.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=2.0,<3' 'pandas>=2.2,<3' 'xlrd>=2.0,<3' 'requests>=2.32,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2'
+      - name: Download frozen ChHHO authority
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/chhho
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10989389723/zip" > chhho.zip
+          unzip -q chhho.zip -d inputs/chhho
+          test -s inputs/chhho/anfis_stage3c_chhho_result.json
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_eg_historical_validation_v2.py
+      - name: Run validation
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python gold_axis_2026/tools/gold_monthly_chhho_eg_historical_validation_v2.py \
+            --chhho inputs/chhho/anfis_stage3c_chhho_result.json
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_CHHHO_EG_HISTORICAL_VALIDATION_V2_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['market_state']['signals']['E_level']['events']==4
+          assert r['market_state']['signals']['G']['events']==6
+          assert r['governance']['canonical_2022_2024_forecasts_rerun'] is False
+          assert r['governance']['pre_2022_replay_is_counterfactual_not_pit'] is True
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps(r['model_summary'],sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-chhho-eg-historical-validation-v2-${{ github.sha }}
+          path: GOLD_MONTHLY_CHHHO_EG_HISTORICAL_VALIDATION_V2_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
