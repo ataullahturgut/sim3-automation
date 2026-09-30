@@ -1,0 +1,63 @@
+name: Gold Monthly ChHHO ETF Anomaly Screen V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_chhho_etf_anomaly_screen_v1.py
+      - .github/workflows/gold-monthly-chhho-etf-anomaly-screen-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  screen:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install 'numpy>=2.0,<3' 'pandas>=2.2,<3' 'openpyxl>=3.1,<4' 'requests>=2.32,<3' 'lxml>=5,<7'
+      - name: Download binding severity artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11090497943/zip" > sev3.zip
+          unzip -q sev3.zip -d inputs
+          test -s inputs/GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V3_2026-09-30.json
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_etf_anomaly_screen_v1.py
+      - name: Run origin-safe ETF screen
+        run: |
+          python gold_axis_2026/tools/gold_monthly_chhho_etf_anomaly_screen_v1.py \
+            --severity inputs/GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V3_2026-09-30.json \
+            --output GOLD_MONTHLY_CHHHO_ETF_ANOMALY_SCREEN_V1_2026-09-30.json
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_CHHHO_ETF_ANOMALY_SCREEN_V1_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['governance']['origin_month_only'] is True
+          assert r['governance']['target_month_etf_data_used'] is False
+          assert r['governance']['thresholds_calibrated_pre_2021'] is True
+          assert len(r['core_rows'])==4
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            'core_rows':r['core_rows'],
+            'stress':r['scores']['ETF_STRESS_2PLUS'],
+            'severity_anomaly_summary':r['severity_anomaly_summary']
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-chhho-etf-anomaly-screen-v1-${{ github.sha }}
+          path: GOLD_MONTHLY_CHHHO_ETF_ANOMALY_SCREEN_V1_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
