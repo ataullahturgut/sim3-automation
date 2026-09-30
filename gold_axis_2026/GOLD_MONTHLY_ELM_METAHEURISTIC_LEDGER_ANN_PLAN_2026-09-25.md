@@ -4688,3 +4688,141 @@ Remaining standardized HIGH misses:
 - 2022-05 requires a separately preregistered deterioration/slowdown rule before it can count as a standardized T1 alarm.
 - No forecast correction authorized.
 - No routing/model switching authorized.
+
+
+### 18.22 Unified Alarm Matrix V1 — 58-MONTH CONSOLIDATION COMPLETE
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `195a9e13ae8144ad839c58660b23a22f981a7fce`
+
+Execution:
+- workflow: `Gold Monthly Unified Alarm Matrix V1`
+- run: **36710435526**
+- artifact: **11094306282**
+- code commit: `e09338ba31b68a55f7509dbef920963678cfac07`
+- workflow commit: `e6208e2039080ad36de1350361e3855ed0517265`
+- artifact digest: `sha256:58fe779f3a564073697c109717949170c23ce772342f32ae20f9aff8eea6dac8`
+- result report: `gold_axis_2026/GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V1_RESULT_2026-09-30.md`
+- result commit: `fa867c84cc5fc07404a6b406e0f8c5288cc7e130`
+- scientific gate: **PASS**
+
+Frozen inputs:
+- APE severity V3 artifact 11090497943
+- ETF dynamic regime V2 artifact 11090919621
+- WGC T1 V4 artifact 11093192454
+
+Outputs:
+- JSON complete matrix
+- CSV complete matrix
+- Markdown complete matrix
+
+#### Binding matrix columns
+
+58 targets 2021-11..2026-08:
+- APE + NORMAL/MEDIUM/HIGH
+- A
+- B
+- C
+- D
+- E
+- G
+- H
+- I1
+- I2
+- T1_WGC
+- T1 publication date/timeliness
+- active signal list
+
+Signal statuses remain distinct:
+- A selective T0 alarm candidate
+- B warning-only
+- C medium-error/low-event warning
+- D rare HIGH hit
+- E discovery-period/unvalidated
+- G high-movement regime warning
+- H CFTC positioning warning
+- I1 ETF transition warning candidate
+- I2 historically supported regime warning
+- T1_WGC early-month report warning
+
+No signal is deleted merely because it is not a hard alarm.
+
+#### HIGH-error signal map
+
+17 HIGH APE targets:
+
+- 2021-12 — H
+- 2022-05 — I1
+- 2022-07 — I2 + T1_WGC
+- 2022-09 — I2 + T1_WGC
+- 2022-11 — A + I2 + T1_WGC
+- 2023-01 — B + T1_WGC
+- 2023-08 — A + I2 + T1_WGC
+- 2024-03 — I2 + T1_WGC
+- 2024-11 — D
+- 2025-02 — H
+- 2025-03 — B
+- 2025-09 — A
+- 2025-10 — H
+- 2025-11 — E
+- 2026-01 — E
+- **2026-06 — NO CURRENT SIGNAL**
+- 2026-08 — G
+
+#### Blind spots by evidence layer
+
+Standard T0 A/B/C/D/H misses:
+- 2022-05
+- 2022-07
+- 2022-09
+- 2024-03
+- 2025-11
+- 2026-01
+- 2026-06
+- 2026-08
+
+Standard T0 HIGH coverage:
+- 9/17 = **52.9%**
+
+All visible T0 A/B/C/D/E/G/H/I1/I2:
+- only HIGH month with no signal = **2026-06**
+- descriptive visibility = **16/17 = 94.1%**
+
+This 94.1% is NOT hard-alarm validation because E/G/I have different evidence statuses and include discovery-period/regime warnings.
+
+All visible T0 + T1:
+- still only blind HIGH = **2026-06**
+- T1 confirms/duplicates several I2 regimes and provides official early-month timing evidence.
+
+#### Signal statistics vs HIGH APE
+
+- A: events 5 / HIGH 3 / MEDIUM 0 / normal false 2 / HIGH precision 60.0%
+- B: 4 / 2 / 0 / 2 / 50.0%
+- C: 1 / 0 / 1 / 0 / HIGH precision 0%; medium-warning role
+- D: 1 / 1 / 0 / 0 / 100% single-event
+- E: 4 / 2 / 2 / 0 / 50.0%; discovery-period/unvalidated
+- G: 3 / 1 / 0 / 2 / 33.3%; regime-warning role
+- H: 9 / 3 / 3 / 3 / 33.3%; CFTC positioning warning
+- I1: 2 / 1 / 0 / 1 / 50.0%; transition warning candidate
+- I2: 12 / 5 / 0 / 7 / 41.7%; historically supported regime warning
+- T1_WGC: 23 / 6 / 2 / 15 / 26.1%; noisy standalone, early-month confirmation
+
+#### MEDIUM rows
+
+- 2022-01 — no signal
+- 2022-02 — T1_WGC
+- 2024-04 — H + T1_WGC
+- 2024-07 — C + H
+- 2025-01 — no signal
+- 2025-05 — E
+- 2026-03 — E + H
+
+#### Binding next research priority
+
+**2026-06** is the only HIGH APE month with no currently frozen A/B/C/D/E/G/H/I1/I2/T1_WGC signal.
+
+Do not loosen thresholds merely to catch 2026-06.
+
+No forecast correction authorized.
+No routing/model switching authorized.
