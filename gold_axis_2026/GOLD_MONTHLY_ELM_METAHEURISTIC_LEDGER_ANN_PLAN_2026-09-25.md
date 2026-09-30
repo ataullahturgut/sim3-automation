@@ -6531,3 +6531,113 @@ Next defensible stage:
 - chronology-safe historical/DEV CV only;
 - 2025/2026 remain opened descriptive evidence.
 - No alarm weighting is authorized yet.
+
+
+### 18.38 Alarm × Live Regime × V2 Shrinkage Reliability Model V1 — COMPLETE / CANDIDATE GATE FAIL
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_ALARM_REGIME_V2_SHRINKAGE_RELIABILITY_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `3d1287370d05420d6a0157e32b7109f26dc4bad4`
+
+Execution:
+- workflow: `Gold Monthly Alarm Regime V2 Shrinkage Reliability V1`
+- run: **36767819409**
+- artifact: **11123025744**
+- artifact digest: `sha256:131a6ac30581d7314c51a02b5ab286a13f8a2d38cf46687fc32373651adc68e2`
+- code commit: `7885fa2945b6d6651a52e2c9139dc5c91329e8d1`
+- workflow commit: `9be7f5355d6cd82d313772ed74e672011ee8ef61`
+- result report: `gold_axis_2026/GOLD_MONTHLY_ALARM_REGIME_V2_SHRINKAGE_RELIABILITY_V1_RESULT_2026-09-30.md`
+- result commit: `a7fc3e2501064605bae2f04a1715f2eb45577d73`
+- scientific gate: **PASS**
+- candidate gate: **FAIL**
+
+Frozen design:
+- event target = useful alarm = HIGH_HIT or MEDIUM_HIT; false = FALSE_CALL.
+- M0 signal-only.
+- M1 signal + soft live R0/R1/R2.
+- M2 signal + soft live regime + V2 STABLE/TRANSITION.
+- fixed pseudo-counts: signal4, signal×regime4, signal×status4, cell6.
+- fixed acceptance threshold 0.50.
+- no threshold or pseudo-count tuning.
+
+Chronology-safe DEV 2022-04..2024-12:
+- 33 targets, 45 signal events, 20 useful, 25 false.
+- M0 Brier **0.28727**
+- M1 Brier **0.29521**
+- M2 Brier **0.30317**
+- M2 is **5.54% worse than M0** and **2.70% worse than M1**.
+- mean M2 score useful 0.4220 vs false 0.5066: reversed discrimination.
+
+DEV raw ANY_VISIBLE:
+- 25 events
+- 8 HIGH +2 MEDIUM +15 false
+- HIGH recall 100%
+- false rate 60%.
+
+DEV M2-gated ANY_VISIBLE @0.50:
+- 10 events
+- **3 HIGH +0 MEDIUM +7 false**
+- HIGH recall **37.5%**
+- false calls reduce 15->7 = **53.3% reduction**
+- but HIGH-hit retention only **37.5%**, far below required 90%.
+- useful-call rate falls 40% -> 30%.
+
+DEV raw T0:
+- 11 events; 4 HIGH +2 MEDIUM +5 false.
+DEV M2-gated T0:
+- 4 events; **1 HIGH +0 MEDIUM +3 false**.
+- operationally unacceptable.
+
+Useful DEV alarms suppressed by M2 include:
+- origin 2022-08 -> target Sep HIGH: I2+T1
+- 2022-10 -> Nov HIGH: A+I2+T1
+- 2023-07 -> Aug HIGH: A+I2+T1
+- 2024-02 -> Mar HIGH: I2+T1
+- 2024-03 -> Apr MEDIUM: H+T1
+- 2024-06 -> Jul MEDIUM: C+H
+- 2024-10 -> Nov HIGH: D.
+
+Opened 2025-2026 fixed pre-2025 fit:
+- 15 individual events; 10 useful, 5 false.
+- M0 Brier **0.27200**
+- M1 **0.28429**
+- M2 **0.29145**
+- same ordering: adding regime, then V2, worsens calibration.
+
+Opened raw ANY_VISIBLE:
+- 12 events; 7 HIGH +2 MEDIUM +3 false
+- HIGH recall87.5%, useful75%, false25%.
+
+Opened M2-gated ANY_VISIBLE:
+- 5 events; **2 HIGH +0 MEDIUM +3 false**
+- HIGH recall25%
+- useful40%
+- false60%
+- high-hit retention 2/7=28.6%
+- false calls 3->3: no reduction.
+
+Opened useful events incorrectly suppressed:
+- H -> Feb25 HIGH
+- H -> Oct25 HIGH
+- E -> May25 MEDIUM
+- E -> Nov25 HIGH
+- E -> Jan26 HIGH
+- E+H -> Mar26 MEDIUM
+- G -> Aug26 HIGH.
+
+Critical structural finding:
+- historical pooled alarm reliability is non-stationary/sparse.
+- DEV V2 transition mostly alarm-noise, but opened 2025-26 transition is severe-error context.
+- one stationary numeric multiplier averages incompatible behavior and suppresses useful signals.
+- E illustrates regime-shift failure: pre-2025 history assigns score ~0.451, so 0.50 gate suppresses all later useful E events.
+
+Binding decision:
+- reject M2 shrinkage weights.
+- no 0.50 suppression.
+- no post-hoc threshold/pseudo-count tuning.
+- V2 remains contextually informative, but not as a universal alarm multiplier.
+
+Important role distinction:
+- V2 can flag severe risk when no existing alarm fires.
+- origin 2026-05 V2 R2_TRANSITION -> target Jun HIGH; no frozen alarm fired.
+- if pursued further, test V2 as a separate contextual/risk channel or under a non-stationary/recent-regime architecture, not as pooled alarm weighting.
