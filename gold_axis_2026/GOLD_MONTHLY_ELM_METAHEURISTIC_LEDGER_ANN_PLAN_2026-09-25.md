@@ -3311,3 +3311,136 @@ Therefore:
 - **Combined A/C/D/E/G:** not production-validated; no routing/model switching authorized.
 
 The invalid 21-origin V1 results must never be used in future alarm summaries except as a documented source-audit failure.
+
+
+### 18.12 Canonical alarm audit V3 — COMPLETE / SUPERSEDES V2 ALARM BOOLEANS
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_CHHHO_ALARM_AUDIT_V3_AUTHORITY_2026-09-30.md`
+- authority commit: `194e436855d7eb4a9d78ba5e843d5886693de760`
+
+Execution:
+- workflow: `Gold Monthly ChHHO Alarm Audit V3`
+- run: **36692016381**
+- artifact: **11086181973**
+- audit code commit: `6169f54414fc4da966e793726185fe64a2d31418`
+- workflow commit: `523b19140eab4d9d0a58d984d5cc349e0666705f`
+- result report: `gold_axis_2026/GOLD_MONTHLY_CHHHO_ALARM_AUDIT_V3_RESULT_2026-09-30.md`
+- result report commit: `d5fbbe4c77b361586c60f930551bc9a5451f0f1d`
+- scientific gate: **PASS**
+
+#### Binding correction
+
+V2's same-methodology GPR reconstruction and ChHHO forecasts remain admissible.
+
+However, V2 alarm booleans are superseded because V2 built Gold alarm states from the common-daily four-metal reconstruction instead of the canonical monthly Gold authority.
+
+V3 uses:
+- DEV Gold: frozen snapshot `core_gold`;
+- later Gold: public World Bank monthly Gold extension;
+- Silver/Platinum/Palladium: governed common-daily monthly means;
+- B/C/D macro: External Authority V2 H.10/H.15;
+- frozen ChHHO forecast artifacts; no model rerun;
+- unchanged alarm thresholds.
+
+#### Replay gate
+
+V3 reproduces frozen DEV A/B/C/D event sets exactly:
+- A: 2022-11, 2023-08
+- B warning-only: 2023-01, 2023-02, 2023-05
+- C: 2024-07
+- D: 2024-11
+
+All replay gates passed before pre-DEV interpretation.
+
+#### Gold-source discrepancy
+
+Across 2022-04..2026-08, exactly one A/B/C/D/E/G event changes because of the canonical Gold correction:
+
+**2026-05 / origin 2026-04**
+- legacy common-daily Gold 1m = -0.6383%
+- canonical monthly Gold 1m = -2.8194%
+- ChHHO prediction = -1.6853%
+- A requires |Gold 1m| < 2%
+- legacy A = TRUE
+- corrected A = FALSE
+
+Therefore the previously reported **2026-05 A false alarm is withdrawn** as a source-construction artifact.
+
+No threshold was changed.
+
+#### Corrected 2022-04..2026-08 event lists
+
+- A: 2022-11, 2023-08, 2025-09, 2025-12
+- B warning-only: 2023-01, 2023-02, 2023-05, 2025-03
+- C: 2024-07
+- D: 2024-11
+- E discovery-frozen: 2025-05, 2025-11, 2026-01, 2026-03
+- G discovery-frozen: 2022-08, 2026-07, 2026-08
+
+Hard research alarm remains A OR C OR D OR E OR G.
+
+#### Pre-DEV macro equivalence
+
+For all five valid same-methodology pre-DEV origins, V2 macro reconstruction equals External Authority V2 exactly:
+- Broad USD max absolute difference = **0.0**
+- nominal 10Y max absolute difference = **0.0**
+- real 10Y max absolute difference = **0.0**
+
+Thus the C/D macro-source concern does not create a numerical discrepancy in this window.
+
+#### Corrected valid pre-DEV result
+
+| Target | AE USD | APE | Return-error pp | Hard alarm | Result |
+|---|---:|---:|---:|---|---|
+| 2021-11 | 8.41 | 0.462% | 0.463 | **A** | **FALSE ALARM** |
+| 2021-12 | **85.62** | **4.783%** | **4.672** | none | **MISS** |
+| 2022-01 | 52.16 | 2.872% | 2.914 | none | normal |
+| 2022-02 | 49.67 | 2.676% | 2.713 | none | normal |
+| 2022-03 | 12.46 | 0.639% | 0.642 | none | normal |
+
+The newly visible A event is 2021-11 because canonical Gold at origin 2021-10 is +0.1126%, ChHHO predicts +2.0382%, and two other precious metals move opposite to Gold.
+
+#### Three-label robustness
+
+Frozen labels:
+- AE > 63.06 USD
+- APE > 2.96117%
+- absolute log-return error > 3.00590 pp
+
+All three produce the same five-origin pre-DEV classification:
+- high-error target: 2021-12
+- hard alarm target: 2021-11
+- hits: 0
+- false alarms: 1
+- misses: 1
+
+This sample is too small for stable precision/recall estimation.
+
+#### Corrected HIGH_AE descriptive summaries
+
+- Pre-DEV valid window: 1 high-error / 1 alarm / 0 hit / 1 false alarm / 1 miss.
+- DEV 2022-04..2024-12: 8 high-error / 5 alarms / 4 hits / 1 false alarm / 4 misses.
+- 2025: 8 high-error / 4 alarms / 4 hits / 0 false alarms / 4 misses.
+- 2026 Jan-Aug: 5 high-error / 4 alarms / 4 hits / 0 false alarms / 1 miss (2026-06).
+
+The 2025/2026 counts include discovery-frozen E/G and therefore remain descriptive, not out-of-sample validation.
+
+#### Current binding mechanism status
+
+- **A Cross-metal fragility:** real/selective signature, but the only valid pre-DEV A event (2021-11) is false. Not independently validated as universally reliable.
+- **C Delayed rates:** DEV low-event evidence only; no valid pre-DEV event.
+- **D Macro conflict:** rare DEV evidence only; no valid pre-DEV event.
+- **E Extreme-level/model disagreement:** later discovery-frozen candidate; no valid pre-DEV event.
+- **G Post-liquidation:** uncertainty-regime candidate; no valid pre-DEV event.
+- **Combined hard engine:** not production-validated; routing/model switching remains prohibited.
+
+Binding governance:
+1. V1 21-origin old-method GPR run remains invalid.
+2. V2 ChHHO/GPR forecasts remain valid.
+3. **V2 alarm booleans and its 0-alarm pre-DEV summary are superseded by V3.**
+4. Remove 2026-05 from A false-alarm lists.
+5. Add 2021-11 as the valid pre-DEV A false alarm.
+6. 2021-12 remains a robust uncovered ChHHO high-error month under AE, APE and return-error definitions.
+7. No threshold retuning.
+8. No routing/model switching.
