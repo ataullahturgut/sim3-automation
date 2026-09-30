@@ -1,0 +1,77 @@
+name: Gold Monthly Alarm False Call Suppressor Screen V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_alarm_false_call_suppressor_screen_v1.py
+      - .github/workflows/gold-monthly-alarm-false-call-suppressor-screen-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  screen:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install 'numpy>=2.0,<3'
+      - name: Download frozen inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/matrix inputs/overlap inputs/models
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11093903747/zip" > matrix.zip
+          unzip -q matrix.zip -d inputs/matrix
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11049132605/zip" > overlap.zip
+          unzip -q overlap.zip -d inputs/overlap
+          for id in 10911447422 10915270480 10974037676 10958140025 10929616178 10979300075 10978660065 10978391582 10978271647 10978210827 10977234072; do
+            gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/${id}/zip" > "inputs/models/${id}.zip"
+            mkdir -p "inputs/models/${id}"
+            unzip -q "inputs/models/${id}.zip" -d "inputs/models/${id}"
+          done
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_alarm_false_call_suppressor_screen_v1.py
+      - name: Run screen
+        run: |
+          python gold_axis_2026/tools/gold_monthly_alarm_false_call_suppressor_screen_v1.py \
+            --matrix-v2 inputs/matrix/GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V2_FALSE_CALL_2026-09-30.json \
+            --overlap inputs/overlap/GOLD_MONTHLY_CROSS_MODEL_ERROR_OVERLAP_V1_2026-09-29.json \
+            --reference-rows gold_axis_2026/evidence/rbfnn_cross_family/reference_rows.json \
+            --inputs-dir inputs/models \
+            --output-json GOLD_MONTHLY_ALARM_FALSE_CALL_SUPPRESSOR_SCREEN_V1_2026-09-30.json \
+            --output-md GOLD_MONTHLY_ALARM_FALSE_CALL_SUPPRESSOR_SCREEN_V1_2026-09-30.md
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_ALARM_FALSE_CALL_SUPPRESSOR_SCREEN_V1_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['scope']['n']==33
+          assert r['governance']['actual_used_in_veto_features'] is False
+          assert r['governance']['expanding_prior_only_thresholds'] is True
+          assert r['governance']['thresholds_retuned_from_alarm_outcomes'] is False
+          assert r['governance']['production_veto_authorized'] is False
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            'groups':r['continuous_group_summary'],
+            'T0_STANDARD':r['candidate_veto_results']['T0_STANDARD'],
+            'T0_ALL_VISIBLE':r['candidate_veto_results']['T0_ALL_VISIBLE'],
+            'ANY_VISIBLE':r['candidate_veto_results']['ANY_VISIBLE']
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-alarm-false-call-suppressor-screen-v1-${{ github.sha }}
+          path: |
+            GOLD_MONTHLY_ALARM_FALSE_CALL_SUPPRESSOR_SCREEN_V1_2026-09-30.json
+            GOLD_MONTHLY_ALARM_FALSE_CALL_SUPPRESSOR_SCREEN_V1_2026-09-30.md
+          if-no-files-found: error
+          retention-days: 90
