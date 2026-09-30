@@ -42,8 +42,31 @@ def describe(name, raw, content_type=""):
                 "tail":df.tail(8).fillna("").astype(str).values.tolist(),
             }
         return out
-    # Some BlackRock download endpoints return CSV/text while advertising Excel.
+    # BlackRock endpoint uses SpreadsheetML XML while advertising legacy Excel.
     txt=raw.decode("utf-8",errors="replace")
+    if txt.lstrip().startswith("<?xml"):
+        import xml.etree.ElementTree as ET
+        out["format"]="spreadsheetml_xml"
+        root=ET.fromstring(txt)
+        ns={"ss":"urn:schemas-microsoft-com:office:spreadsheet"}
+        sheets={}
+        for ws in root.findall("ss:Worksheet",ns):
+            name=ws.attrib.get("{urn:schemas-microsoft-com:office:spreadsheet}Name","")
+            rows=[]
+            for rr in ws.findall(".//ss:Row",ns):
+                vals=[]
+                for cell in rr.findall("ss:Cell",ns):
+                    dat=cell.find("ss:Data",ns)
+                    vals.append("" if dat is None or dat.text is None else dat.text)
+                rows.append(vals)
+            sheets[name]={
+                "n_rows":len(rows),
+                "head":rows[:20],
+                "tail":rows[-10:],
+            }
+        out["sheets"]=list(sheets)
+        out["details"]=sheets
+        return out
     out["format"]="text_or_csv"
     out["text_head"]=txt[:4000]
     try:
