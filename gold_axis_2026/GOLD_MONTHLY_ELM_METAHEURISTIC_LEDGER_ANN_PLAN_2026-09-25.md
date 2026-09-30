@@ -6318,3 +6318,119 @@ Next regime-side experiment, if pursued:
 - freeze it on historical market-state data only before any ChHHO reliability audit.
 
 Alarm weighting remains blocked.
+
+
+### 18.36 Transition V3 Duration-Aware / Semi-Markov Hazard — COMPLETE / REJECTED
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_TRANSITION_V3_DURATION_AWARE_AUTHORITY_2026-09-30.md`
+- authority commit: `5fb95b8f8e73cbaf5285c52a14fcf0e5b93de599`
+
+Execution:
+- workflow: `Gold Monthly Market Regime Transition V3 Duration Aware`
+- final valid run: **36759519056**
+- artifact: **11118042872**
+- artifact digest: `sha256:ff1c0dbe03382cf5e360523bda47f51fd98bb270da907a86bfbfec2536f952b2`
+- code commits: initial `51daa1b940b4eb7ea668235e58b4e973378c0539`; comparator-only fix `30888f6e63e21adfe87d2797003e896b38cbb709`
+- workflow commit: `5a8736aadbe72f75a3cc10ec333c63a3571bf877`
+- result report: `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_TRANSITION_V3_DURATION_AWARE_RESULT_2026-09-30.md`
+- result commit: `8ef8e6630bb4e6b56ca68d5fe080568c04f76473`
+- scientific gate: **PASS**
+
+Non-scientific failed run:
+- run **36759215106** failed in the post-detector V2 comparator because comparator rows lacked a V3-only duration field.
+- fix isolated the comparator calculation; no preregistered V3 rule/grid/calibration logic changed.
+
+Method:
+- explicit-duration semi-Markov hazard overlay on frozen HMM/prototype regime engine;
+- completed historical regime spell lengths only;
+- current spell age + empirical age percentile + Jeffreys-smoothed exit hazard;
+- combined with incumbent posterior drop / alternative-regime posterior growth;
+- no ChHHO forecast/error/alarm information.
+
+Frozen search:
+- calibration EXPANDING 2015-07..2021-12 only;
+- **20,736** candidate rules;
+- primary eligibility = non-zone false transition <=15%;
+- **0/20,736** candidates eligible;
+- fallback activated.
+
+Selected fallback:
+- age percentile >=0.60
+- duration hazard >=0.15
+- alt posterior >=0.20
+- alt growth >=0.05 or incumbent drop >=0.10
+- MODERATE persistence = 2 months
+- STRONG alt posterior >=0.70
+- strong margin <=0
+- strong growth >=0.15 or strong drop >=0.20.
+
+Calibration EXPANDING:
+- n78
+- duration pool available 64/78=82.1%
+- flags 13
+- event hits **2/9=22.2%**
+- zone recall **16.7%**
+- false transition **11/66=16.7%**
+- precision **15.4%**.
+
+Validation 2022-01..2024-12 EXPANDING:
+- duration pool available 36/36
+- flags 4
+- event hits **0/3**
+- zone recall **0%**
+- false transition **4/33=12.1%**
+- precision **0%**
+- all three reference transitions missed: 2022-02, 2023-01, 2024-04.
+- promotion gate FAIL.
+
+ANNUAL validation:
+- event hits 0/3
+- false rate 9.1%
+- precision 0%.
+
+2024 explanation:
+- Apr24 had massive incumbent posterior collapse and alt rise, and MODERATE raw condition=true;
+- selected historical rule required 2-month persistence and strong alt posterior>=0.70;
+- therefore Apr24 remained STABLE.
+- lowering these thresholds after seeing the miss is prohibited.
+
+Opened 2025-2026 EXPANDING:
+- flags **0**
+- 2026 R2->R1 event **MISS**
+- false rate 0%.
+- This is unusable: zero false calls by producing zero transition calls.
+
+2026 EXPANDING:
+- Apr R2 STABLE, spell age24, age percentile1.0
+- May R2 STABLE, age25, moderate raw=true but persistence not yet met
+- Jun R2 STABLE, age26, directional evidence recovers
+- Jul BELIRSIZ/R1 STABLE; alt posterior ~0.508 below strong 0.70
+- Aug R1 STABLE.
+
+ANNUAL opened transport:
+- 2 flags
+- 2026 event hit in Jun, one month early
+- false rate 5.9%
+- precision 50%
+- cannot override failed validation.
+
+Binding conclusion:
+- duration is measurable, and 2026 R2 spell is historically very long;
+- but spell age/hazard does not identify the break timing well enough;
+- V3 became more selective by becoming too conservative;
+- V1 too noisy, V2 historically noisy, V3 low-recall;
+- **no Transition detector is operationally promoted**.
+- per authority, threshold-level HMM transition refinement stops here.
+- do not retune V3 on 2024/2026.
+- do not attach Transition to ChHHO/alarm weighting.
+
+Still retained:
+- R0/R1/R2 descriptive regime structure.
+- Extreme V1 frozen descriptive within-regime stress layer.
+- Transition remains research/descriptive only.
+- 2025-2026 V2-transition/ChHHO error association remains interesting but historically unvalidated.
+
+If transition research continues, next method must be structurally different (e.g. dedicated multivariate changepoint model), not another threshold/duration tweak.
+
+Alarm weighting remains unauthorized.
