@@ -187,7 +187,7 @@ The important question is whether persistence/directional evidence reduces false
 V2 may be considered a regime-engine candidate only if the **2022-2024 later validation** shows:
 - event hit rate >= 2/3;
 - non-zone false-transition rate <= 15%;
-- and precision materially above V1's 2022-2024 result.
+- and precision at least **5 percentage points above** V1's 2022-2024 result.
 
 2025/2026 may be described only after this validation decision is frozen.
 
