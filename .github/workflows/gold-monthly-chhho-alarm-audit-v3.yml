@@ -1,0 +1,73 @@
+name: Gold Monthly ChHHO Alarm Audit V3
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_chhho_alarm_audit_v3.py
+      - .github/workflows/gold-monthly-chhho-alarm-audit-v3.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=2.0,<3' 'pandas>=2.2,<3'
+      - name: Download frozen authorities
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/snapshot inputs/public inputs/chhho inputs/transport inputs/external inputs/predev
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > snapshot.zip
+          unzip -q snapshot.zip -d inputs/snapshot
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11015874673/zip" > public.zip
+          unzip -q public.zip -d inputs/public
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10989389723/zip" > chhho.zip
+          unzip -q chhho.zip -d inputs/chhho
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11042740289/zip" > transport.zip
+          unzip -q transport.zip -d inputs/transport
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11028494060/zip" > external.zip
+          unzip -q external.zip -d inputs/external
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11084467079/zip" > predev.zip
+          unzip -q predev.zip -d inputs/predev
+          find inputs -maxdepth 2 -type f -print
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_alarm_audit_v3.py
+      - name: Run V3 audit
+        run: |
+          python gold_axis_2026/tools/gold_monthly_chhho_alarm_audit_v3.py \
+            --snapshot inputs/snapshot/gold_monthly_dev_snapshot_v1.json \
+            --public-bundle inputs/public/gold_monthly_public_current_bundle_v1.json \
+            --chhho inputs/chhho/anfis_stage3c_chhho_result.json \
+            --transport inputs/transport/GOLD_MONTHLY_CHHHO_VIX_R1_FROZEN_TRANSPORT_2025_2026_2026-09-29.json \
+            --external inputs/external/gold_monthly_external_authority_v2.json \
+            --predev inputs/predev/GOLD_MONTHLY_CHHHO_PREDEV_CURRENTGPR_V2_2026-09-30.json \
+            --output GOLD_MONTHLY_CHHHO_ALARM_AUDIT_V3_2026-09-30.json
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_CHHHO_ALARM_AUDIT_V3_2026-09-30.json'))
+          assert r['gate']=='PASS'
+          assert all(r['gates'].values())
+          assert r['predev_corrected_event_lists']['A']==['2021-11']
+          assert r['summaries']['PREDEV_V2_VALID_WINDOW']['HIGH_AE']['miss_targets']==['2021-12']
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps(r['gates'],sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-chhho-alarm-audit-v3-${{ github.sha }}
+          path: GOLD_MONTHLY_CHHHO_ALARM_AUDIT_V3_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
