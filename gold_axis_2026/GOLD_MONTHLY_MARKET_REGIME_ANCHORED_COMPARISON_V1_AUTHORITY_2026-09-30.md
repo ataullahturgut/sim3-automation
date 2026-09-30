@@ -19,6 +19,7 @@ This must reproduce the already-completed Walk-Forward V1 run.
 At the start of each calendar year Y:
 - train StandardScaler, PCA and the 3-state HMM once using data through Y-1 December;
 - freeze those parameters for every month of year Y;
+- technical warm-up exception for the first partial replay year only: because the effective panel begins 2010-07 and the minimum history is 60 months, the 2015 replay is anchored at **2015-06** and covers 2015-07..2015-12. This exception is determined solely by data availability and is fixed before successful execution;
 - only the filtered posterior is updated month by month during Y.
 
 Thus state definitions cannot drift intra-year.
@@ -117,3 +118,10 @@ This study does not:
 - route between forecasting models.
 
 Alarm-conditioned work remains blocked until the regime detector is sufficiently stable.
+
+
+## Technical amendment before successful execution
+
+The first workflow attempt failed before producing any comparison result because a January-2015 annual anchor has only 54 complete months (2010-07..2014-12), below the pre-existing 60-month minimum-history gate. No model-comparison statistics were observed.
+
+The implementation therefore applies the data-availability rule stated above: 2015-07..2015-12 is frozen from a 2015-06 anchor (60 months); 2016 onward uses the normal prior-December annual anchor. All other design and interpretation rules remain unchanged.
