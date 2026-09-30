@@ -3765,3 +3765,192 @@ Do not force a ChHHO-specific alarm to catch these three months. They belong pri
 - GVZ/OI/FLOW — later-regime flow/volatility descriptors, not promoted
 
 No routing/model switching authorized.
+
+
+### 18.16 Alarm error-label revision V1 — PRIMARY LABEL MOVED FROM AE TO RETURN SPACE
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_CHHHO_ERROR_LABEL_REVISION_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `b539f41999656a995b4885d8cbb8d28714e18784`
+
+Execution:
+- workflow: `Gold Monthly ChHHO Error Label Revision V1`
+- successful exact-Q3 run: **36701753769**
+- artifact: **11089679811**
+- exact-Q3 code commit: `b1de501398940701ff3c89dbdb6e45eafc780472`
+- result report: `gold_axis_2026/GOLD_MONTHLY_CHHHO_ERROR_LABEL_REVISION_V1_RESULT_2026-09-30.md`
+- report commit: `39aff1bfd701bae572b40a62c69282e5536e5796`
+- scientific gate: **PASS**
+
+#### Binding correction
+
+A fixed USD AE threshold is no longer the primary model-failure label for alarm research because it is not scale invariant as Gold's nominal price changes.
+
+Project model selection/economic evaluation is **unchanged**:
+- cumulative absolute USD error ΣAE remains primary;
+- direction remains co-primary;
+- MAE/MAPE/WAPE/RMSE remain supporting.
+
+Alarm research primary target is now:
+
+**HIGH_RETURN_ERROR = absolute Gold log-return forecast error > exact DEV Q3.**
+
+Exact authoritative DEV Q3 thresholds:
+- AE Q3 = **63.0550184580 USD**
+- APE Q3 = **2.9611704846%**
+- return-error Q3 = **3.0058983302 percentage points**
+
+HIGH_APE is mandatory robustness.
+HIGH_AE is reporting/economic impact only, not primary alarm classification.
+
+#### Robustness result
+
+Across 58 scientifically usable ChHHO targets:
+- HIGH_AE = **22**
+- HIGH_APE = **18**
+- HIGH_RETURN_ERROR = **18**
+
+HIGH_APE and HIGH_RETURN_ERROR select **exactly the same 18 targets**.
+
+Therefore the normalized error definition is robust across two independent normalizations.
+
+#### AE classification bias
+
+AE-only high-error targets that are NOT high under normalized metrics:
+- 2024-07
+- 2025-01
+- 2025-05
+- 2025-12
+- 2026-07
+
+Normalized-only target missed by fixed AE:
+- **2022-09** — AE 58.98 USD, APE 3.5093%, return error 3.4492pp.
+
+This is binding evidence that fixed-dollar AE distorts alarm classification across changing Gold price levels.
+
+#### New canonical normalized high-error target set
+
+Valid pre-DEV:
+- 2021-12
+
+DEV:
+- 2022-05
+- 2022-07
+- **2022-09**
+- 2022-11
+- 2023-01
+- 2023-08
+- 2024-03
+- 2024-11
+
+2025:
+- 2025-02
+- 2025-03
+- 2025-09
+- 2025-10
+- 2025-11
+
+2026 Jan-Aug:
+- 2026-01
+- 2026-03
+- 2026-06
+- 2026-08
+
+#### Revised alarm interpretations
+
+**A**
+- normalized hits: 2022-11, 2023-08, 2025-09
+- false alarms: 2021-11, 2025-12
+- remains selective/promising, not universally validated.
+
+**B**
+- normalized hits: 2023-01, 2025-03
+- remains warning-only.
+
+**C**
+- only event 2024-07 lies exactly at normalized DEV Q3 boundary and is not above Q3.
+- previous AE-based hit status is withdrawn.
+- status: **MECHANISM DESCRIPTOR / UNVALIDATED WARNING**.
+
+**D**
+- 2024-11 remains a normalized high-error hit.
+- status unchanged: rare/low-event but real normalized hit.
+
+**H — CFTC POSITIONING SHIFT**
+- normalized hits: 2021-12, 2025-02, 2025-10, 2026-03
+- events 9 / hits 4 / false alarms 5
+- precision 44.4%
+- previous AE-based 2024-07 H hit is withdrawn.
+- remains promising repeated warning candidate, not hard alarm.
+
+**E**
+- events: 2025-05, 2025-11, 2026-01, 2026-03
+- normalized hits: 2025-11, 2026-01, 2026-03
+- 2025-05 is not normalized high error.
+- still discovery-period / unvalidated.
+
+**G**
+- events: 2022-08, 2026-07, 2026-08
+- normalized hit only 2026-08.
+- reinforces G as high-movement/uncertainty regime warning, not ChHHO error alarm.
+
+#### A/B/C/D/H normalized coverage
+
+DEV:
+- high errors 8
+- hits 4
+- recall 50%
+- hits: 2022-11, 2023-01, 2023-08, 2024-11
+- misses: 2022-05, 2022-07, **2022-09**, 2024-03
+
+2025:
+- high errors 5
+- hits 4
+- descriptive recall 80%
+- miss: 2025-11
+
+2026 Jan-Aug:
+- high errors 4
+- hit 1
+- descriptive recall 25%
+- misses: 2026-01, 2026-06, 2026-08
+
+All usable:
+- 18 normalized high-error months
+- A/B/C/D/H hits 10
+- misses 8
+- precision 52.6%
+- recall 55.6%
+These are descriptive mechanism-coverage figures, not production alarm performance.
+
+#### Remaining primary normalized-error misses after A/B/C/D/H
+
+- 2022-05
+- 2022-07
+- **2022-09**
+- 2024-03
+- 2025-11
+- 2026-01
+- 2026-06
+- 2026-08
+
+Descriptor coverage:
+- 2025-11: E + GVZ
+- 2026-01: E + GVZ
+- 2026-06: GVZ + OI compression + FLOW_2OF4
+- 2026-08: G + GVZ + OI compression + FLOW_2OF4
+
+No fixed candidate signal:
+- 2022-05
+- 2022-07
+- **2022-09**
+- 2024-03
+
+2022-09 is a newly exposed normalized-error miss and requires separate cross-model/mechanism audit.
+
+#### Supersession rule
+
+Any prior alarm hit/false-alarm statement that depended solely on HIGH_AE is superseded by this section when AE and normalized labels disagree.
+
+No alarm thresholds were retuned.
+No routing/model switching is authorized.
