@@ -1,0 +1,79 @@
+name: Gold Monthly Alarm Fine Tuning V1 Transport 2025 2026
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_alarm_fine_tuning_v1_transport_2025_2026.py
+      - .github/workflows/gold-monthly-alarm-fine-tuning-v1-transport-2025-2026.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  transport:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download frozen matrix and fine-tune config
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/matrix inputs/tune
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11093903747/zip" > matrix.zip
+          unzip -q matrix.zip -d inputs/matrix
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11095407918/zip" > tune.zip
+          unzip -q tune.zip -d inputs/tune
+          test -s inputs/matrix/GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V2_FALSE_CALL_2026-09-30.json
+          test -s inputs/tune/GOLD_MONTHLY_ALARM_FINE_TUNING_V1_2026-09-30.json
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_alarm_fine_tuning_v1_transport_2025_2026.py
+      - name: Run untouched transport
+        run: |
+          python gold_axis_2026/tools/gold_monthly_alarm_fine_tuning_v1_transport_2025_2026.py \
+            --matrix-v2 inputs/matrix/GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V2_FALSE_CALL_2026-09-30.json \
+            --fine-tune inputs/tune/GOLD_MONTHLY_ALARM_FINE_TUNING_V1_2026-09-30.json \
+            --output-json GOLD_MONTHLY_ALARM_FINE_TUNING_V1_TRANSPORT_2025_2026_2026-09-30.json \
+            --output-csv GOLD_MONTHLY_ALARM_FINE_TUNING_V1_TRANSPORT_2025_2026_2026-09-30.csv \
+            --output-md GOLD_MONTHLY_ALARM_FINE_TUNING_V1_TRANSPORT_2025_2026_2026-09-30.md
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_ALARM_FINE_TUNING_V1_TRANSPORT_2025_2026_2026-09-30.json'))
+          assert r['status']=='COMPLETE_UNTOUCHED_TRANSPORT'
+          assert len(r['rows'])==20
+          assert r['governance']['2025_2026_used_for_tuning'] is False
+          assert r['governance']['config_modified_after_opening_test'] is False
+          assert r['frozen_config']['T0_RED_signals']==['A','D','I1','I2']
+          assert r['frozen_config']['T1_confirm_signals']==['B','I2']
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            '2025':r['summaries']['2025']['FINAL_RED'],
+            '2026':r['summaries']['2026_JAN_AUG']['FINAL_RED'],
+            'combined':r['summaries']['COMBINED']['FINAL_RED'],
+            't1_2025':{
+              'incremental_high':r['summaries']['2025']['T1_incremental_high_hits'],
+              'incremental_false':r['summaries']['2025']['T1_incremental_false_calls']
+            },
+            't1_2026':{
+              'incremental_high':r['summaries']['2026_JAN_AUG']['T1_incremental_high_hits'],
+              'incremental_false':r['summaries']['2026_JAN_AUG']['T1_incremental_false_calls']
+            }
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-alarm-fine-tuning-v1-transport-2025-2026-${{ github.sha }}
+          path: |
+            GOLD_MONTHLY_ALARM_FINE_TUNING_V1_TRANSPORT_2025_2026_2026-09-30.json
+            GOLD_MONTHLY_ALARM_FINE_TUNING_V1_TRANSPORT_2025_2026_2026-09-30.csv
+            GOLD_MONTHLY_ALARM_FINE_TUNING_V1_TRANSPORT_2025_2026_2026-09-30.md
+          if-no-files-found: error
+          retention-days: 90
