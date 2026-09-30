@@ -4406,3 +4406,122 @@ Binding interpretation:
 - No target-month ETF data.
 - WGC monthly reports are corroboration only, not predictor inputs.
 - No routing/model switching authorized.
+
+
+### 18.20 ETF I1/I2 historical recurrence — I2 HISTORICALLY SUPPORTED / REGIME-DEPENDENT
+
+Historical recurrence authority:
+- `GOLD_MONTHLY_CHHHO_ETF_I1_I2_HISTORICAL_RECURRENCE_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `4119c164e763680da65b8b6ca477b5eafa7fc89d`
+
+Execution:
+- workflow: `Gold Monthly ETF I1 I2 Historical Recurrence V1`
+- run: **36705282325**
+- artifact: **11091154474**
+- code commit: `e9268fac4d823fbbaf9ad44f0e0c582f7fe6a9f8`
+- workflow commit: `001b329935018456bb566c85df8715876daed61c`
+- scientific gate: **PASS**
+
+#### I1 historical recurrence
+
+2010-2020:
+- events 14
+- next-month mean absolute GLD move 4.03pp vs 3.62pp non-event
+- ratio 1.11x; bootstrap ratio CI 0.75x..1.57x
+- MOVE_3 64.3% vs 50.0%, RR 1.29x, Fisher p 0.234
+- MOVE_5 28.6% vs 29.7%, RR 0.96x, Fisher p 0.641
+
+Binding interpretation:
+**I1 is not historically robust as a general storm/high-movement signal.**
+Keep only as a candidate ETF-demand-transition warning; it specifically explains the 2022-05 origin state.
+
+#### I2 raw historical recurrence
+
+Frozen state:
+- GLD and IAU both contract for >=2 consecutive months.
+
+2010-2020 raw active months:
+- events 21
+- next-month mean absolute GLD move 4.94pp vs 3.43pp non-event
+- ratio 1.44x; bootstrap ratio CI 1.08x..1.88x
+- MOVE_3 76.2% vs 46.8%, RR 1.63x, Fisher p 0.0118
+- MOVE_5 57.1% vs 24.3%, RR 2.35x, Fisher p 0.00383
+
+Because long redemption runs create serial dependence, this raw-month result required a de-clustered episode audit before interpretation.
+
+#### I2 episode-entry robustness
+
+Authority:
+- `GOLD_MONTHLY_ETF_I2_EPISODE_ROBUSTNESS_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `6d432dc1e373697bca3142630346c7b4724164d8`
+
+Execution:
+- workflow: `Gold Monthly ETF I2 Episode Robustness V1`
+- run: **36705483191**
+- artifact: **11091313948**
+- code commit: `7f2b4093812f016a7aa46592276aecc74ae9bafc`
+- workflow commit: `dcd2bb9e3d98d47e37b7eac9da83975c9f8f5fca`
+- scientific gate: **PASS**
+
+2010-2020 independent I2 entries:
+- 8 episodes: 2012-04, 2013-03, 2014-05, 2014-09, 2015-12, 2016-12, 2018-06, 2019-05
+- mean next-month absolute GLD move: **5.52pp**
+- non-entry mean: **3.55pp**
+- mean uplift: **+1.97pp**
+- mean ratio: **1.56x**
+- bootstrap ratio CI: **1.14x..2.01x**
+
+MOVE_3:
+- I2 entry: **7/8 = 87.5%**
+- non-entry: 49.2%
+- RR **1.78x**
+- Fisher p **0.0377**
+
+MOVE_5:
+- I2 entry: **6/8 = 75.0%**
+- non-entry: 26.6%
+- RR **2.82x**
+- Fisher p **0.00839**
+
+Therefore the historical I2 effect survives and strengthens after eliminating pseudo-replication from long streaks.
+
+#### Transport stability
+
+2021-2024 episode entries:
+- 2021-03, 2021-08, 2022-06, 2023-07, 2024-02
+- mean next-month absolute GLD move 3.80pp vs 3.27pp
+- ratio 1.16x; bootstrap CI 0.62x..1.99x
+- MOVE_3 60% vs 39.5%
+- MOVE_5 20% vs 25.6%
+- no stable large-move enrichment.
+
+Thus the very strong 2010-2020 market-magnitude effect is **not stationary**.
+
+However, the three episode entries inside canonical DEV all precede HIGH-APE ChHHO targets:
+- origin 2022-06 -> target 2022-07 HIGH
+- origin 2023-07 -> target 2023-08 HIGH
+- origin 2024-02 -> target 2024-03 HIGH
+
+2025-2026 Aug:
+- only new I2 entry = origin 2026-06
+- next-month GLD move +0.85pp
+- target 2026-07 not HIGH APE
+- explicit counterexample to universal alarm interpretation.
+
+#### Core four relation
+
+- 2022-05 / origin 2022-04 -> I1 deterioration; next GLD move -3.32pp; I1 historical support weak.
+- 2022-07 / origin 2022-06 -> I2 episode entry; ChHHO HIGH APE.
+- 2022-09 / origin 2022-08 -> inside persistent I2 episode, 4-month simultaneous redemption + 3m Q10 flow stress; ChHHO HIGH APE.
+- 2024-03 / origin 2024-02 -> I2 episode entry; next GLD move +8.31pp; ChHHO HIGH APE.
+
+Binding status:
+- **I1 = candidate transition warning only.**
+- **I2 = HISTORICALLY SUPPORTED, REGIME-DEPENDENT ETF RISK WARNING.**
+- I2 is stronger than a purely post-hoc descriptor but is not a universal hard ChHHO-error alarm.
+- No I1 OR I2 composite rule authorized.
+- No routing/model switching authorized.
+
+Full result:
+- `GOLD_MONTHLY_ETF_I1_I2_HISTORICAL_RECURRENCE_RESULT_2026-09-30.md`
+- report commit: `00bc2389b36743113689409ee58164eaaa8f91df`
