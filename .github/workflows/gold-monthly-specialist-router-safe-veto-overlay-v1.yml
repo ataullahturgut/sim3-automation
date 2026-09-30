@@ -1,0 +1,101 @@
+name: Gold Monthly Specialist Router Safe Veto Overlay V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_specialist_router_safe_veto_overlay_v1.py
+      - .github/workflows/gold-monthly-specialist-router-safe-veto-overlay-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install
+        run: python -m pip install 'numpy>=2.0,<3'
+
+      - name: Download frozen inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/router inputs/suppressor inputs/models/deabc inputs/models/gpr inputs/models/pls
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11124892942/zip" > router.zip
+          unzip -q router.zip -d inputs/router
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11095060918/zip" > suppressor.zip
+          unzip -q suppressor.zip -d inputs/suppressor
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10911447422/zip" > deabc.zip
+          unzip -q deabc.zip -d inputs/models/deabc
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10915270480/zip" > gpr.zip
+          unzip -q gpr.zip -d inputs/models/gpr
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10974037676/zip" > pls.zip
+          unzip -q pls.zip -d inputs/models/pls
+
+          test -f inputs/router/GOLD_MONTHLY_SPECIALIST_FIXED_SHARE_ALARM_ROUTER_V1_2026-09-30.json
+          test -f inputs/suppressor/GOLD_MONTHLY_ALARM_FALSE_CALL_SUPPRESSOR_SCREEN_V1_2026-09-30.json
+          test -f inputs/models/deabc/rbfnn_stage1_de_abc_result.json
+          test -f inputs/models/gpr/gpr_lmc2_rbf_m32_result.json
+          test -f inputs/models/pls/gold_monthly_challenger_b_pls1_v1_result.json
+
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_specialist_router_safe_veto_overlay_v1.py
+
+      - name: Run overlay
+        run: |
+          python gold_axis_2026/tools/gold_monthly_specialist_router_safe_veto_overlay_v1.py             --router-json inputs/router/GOLD_MONTHLY_SPECIALIST_FIXED_SHARE_ALARM_ROUTER_V1_2026-09-30.json             --suppressor-json inputs/suppressor/GOLD_MONTHLY_ALARM_FALSE_CALL_SUPPRESSOR_SCREEN_V1_2026-09-30.json             --reference-rows gold_axis_2026/evidence/rbfnn_cross_family/reference_rows.json             --deabc-json inputs/models/deabc/rbfnn_stage1_de_abc_result.json             --gpr-json inputs/models/gpr/gpr_lmc2_rbf_m32_result.json             --pls-json inputs/models/pls/gold_monthly_challenger_b_pls1_v1_result.json             --output GOLD_MONTHLY_SPECIALIST_ROUTER_SAFE_VETO_OVERLAY_V1_2026-09-30.json
+
+      - name: Scientific governance gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_SPECIALIST_ROUTER_SAFE_VETO_OVERLAY_V1_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['scientific_gate']=='PASS'
+          assert r['frozen_router']['id']=='HEDGE_eta0.25_tau0.50'
+          assert r['frozen_dev_veto']['id']=='V2_STRONG_DIRECTION_CONSENSUS'
+          assert r['frozen_dev_veto']['direction_agreement_threshold']==0.80
+          assert r['frozen_dev_veto']['min_prior']==6
+          assert r['transport_pool']['n']==7
+          assert r['dev_primary_16_model_overlay']['n']==33
+          assert r['periods']['OPENED_2025']['n']==12
+          assert r['periods']['OPENED_2026']['n']==8
+          assert r['periods']['OPENED_2025_2026']['n']==20
+          g=r['governance']
+          assert g['router_retuned'] is False
+          assert g['safe_veto_threshold_retuned'] is False
+          assert g['dispersion_rule_changed'] is False
+          assert g['min_history_changed'] is False
+          assert g['transport_model_pool_selected_after_outcomes'] is False
+          assert g['target_actual_used_in_veto_features'] is False
+          assert g['2025_2026_used_for_selection'] is False
+          assert g['production_authorized'] is False
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            'dev_overlay_status':r['dev_overlay_status'],
+            'dev_gate':r['dev_overlay_candidate_gate'],
+            'dev_primary':r['dev_primary_16_model_overlay'],
+            'transport_pool_status':r['transport_pool_status'],
+            'transport_pool_compatibility':r['transport_pool_compatibility'],
+            'opened_2025':r['periods']['OPENED_2025'],
+            'opened_2026':r['periods']['OPENED_2026'],
+            'opened_2025_2026':r['periods']['OPENED_2025_2026'],
+            'critical_opened_checks':r['critical_opened_checks'],
+          },sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-specialist-router-safe-veto-overlay-v1-${{ github.sha }}
+          path: GOLD_MONTHLY_SPECIALIST_ROUTER_SAFE_VETO_OVERLAY_V1_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
