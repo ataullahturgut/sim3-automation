@@ -25,6 +25,12 @@ ORIGIN_START = "2019-12"
 ORIGIN_END = "2022-02"
 HIGH_AE = 63.06
 NY = ZoneInfo("America/New_York")
+MACRO_SOURCE_USED = {}
+FRED_MIRRORS = {
+    "DGS10": "https://raw.githubusercontent.com/Najam0786/risk-aware-stock-forecasting/main/data/raw/fred_dgs10.csv",
+    "DFII10": "https://raw.githubusercontent.com/AsjalAbdullahButt/Gold_Forecast_Results/main/data/raw/fred_DFII10.csv",
+    "DTWEXBGS": "https://raw.githubusercontent.com/Kaenyne/Citadel-ABNB/main/data/raw/fred/DTWEXBGS.csv",
+}
 
 def mshift(m: str, d: int) -> str:
     return base.month_shift(m, d)
@@ -173,6 +179,7 @@ def fetch_fred(series: str, start="2018-01-01", end="2022-03-31"):
             df["value"] = pd.to_numeric(df.value, errors="coerce")
             df = df.dropna().sort_values("date")
             if len(df) >= 100:
+                MACRO_SOURCE_USED[series] = {"class": "FRED_DIRECT_CSV", "url": r.url}
                 return df
             errs.append(f"csv_attempt_{attempt}: too_few_rows={len(df)}")
         except Exception as e:
@@ -201,11 +208,29 @@ def fetch_fred(series: str, start="2018-01-01", end="2022-03-31"):
             df = df.dropna().sort_values("date")
             df = df[(df.date >= pd.Timestamp(start)) & (df.date <= pd.Timestamp(end))]
             if len(df) >= 100:
+                MACRO_SOURCE_USED[series] = {"class": "FRED_DIRECT_STATIC_TXT", "url": txt_url}
                 return df
             errs.append(f"txt_attempt_{attempt}: too_few_rows={len(df)}")
         except Exception as e:
             errs.append(f"txt_attempt_{attempt}: {type(e).__name__}:{e}")
             time.sleep(2 * (attempt + 1))
+    mirror = FRED_MIRRORS.get(series)
+    if mirror:
+        try:
+            r = requests.get(mirror, headers=headers, timeout=45)
+            r.raise_for_status()
+            df = pd.read_csv(io.BytesIO(r.content))
+            df = df.iloc[:, :2].copy(); df.columns = ["date", "value"]
+            df["date"] = pd.to_datetime(df.date, errors="coerce")
+            df["value"] = pd.to_numeric(df.value, errors="coerce")
+            df = df.dropna().sort_values("date")
+            df = df[(df.date >= pd.Timestamp(start)) & (df.date <= pd.Timestamp(end))]
+            if len(df) >= 100:
+                MACRO_SOURCE_USED[series] = {"class": "HISTORICAL_RECONSTRUCTION_MIRROR_FALLBACK", "url": mirror}
+                return df
+            errs.append(f"mirror: too_few_rows={len(df)}")
+        except Exception as e:
+            errs.append(f"mirror: {type(e).__name__}:{e}")
     raise RuntimeError(f"FRED_FETCH_FAILED {series} {errs}")
 
 def month_mean_available(df, month: str, lag_days: int):
@@ -358,11 +383,12 @@ def main():
         "schema": "GOLD_MONTHLY_CHHHO_PREDEV_BACKCAST_V1_2026-09-30",
         "status": "COMPLETE",
         "authority_file": "GOLD_MONTHLY_CHHHO_PREDEV_GPR_WEB_LATEST_AUTHORITY_2026-09-30.md",
-        "authority_commit": "4c607f78d37291fd0c4685efffd03ef060c187a0",
+        "authority_commit": "05b46ad776d7d2915185a9fd3a5918086211b697",
         "scope": "HISTORICAL_PREDEV_ALARM_VALIDATION_ONLY_NO_ROUTING",
         "high_error_threshold_usd": HIGH_AE,
         "source": {"repository": OFFICIAL_REPO, "path": OFFICIAL_PATH,
                    "origin_start": ORIGIN_START, "origin_end": ORIGIN_END},
+        "macro_source_used": MACRO_SOURCE_USED,
         "source_audit": audit,
         "coverage": {"requested_origins": len(audit), "buildable_origins": len(buildable),
                      "first_buildable": buildable[0]["origin"], "last_buildable": buildable[-1]["origin"]},
