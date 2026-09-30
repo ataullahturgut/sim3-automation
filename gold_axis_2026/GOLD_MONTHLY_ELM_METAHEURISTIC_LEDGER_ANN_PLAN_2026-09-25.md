@@ -3024,3 +3024,112 @@ Current alarm-validation evidence stack therefore remains:
 5. 2026-06 remains unresolved.
 
 **Backcast experiment status:** BLOCKED_VALIDLY_BY_SOURCE_COVERAGE, not failed scientifically and not replaced by a leaky approximation.
+
+
+### 18.9 Pre-DEV ChHHO backcast result — COMPLETED 2026-09-30
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_CHHHO_PREDEV_GPR_WEB_LATEST_AUTHORITY_2026-09-30.md`
+- authority commit: `4c607f78d37291fd0c4685efffd03ef060c187a0`
+
+Execution:
+- workflow: `Gold Monthly ChHHO PreDEV Backcast V1`
+- successful run: **36684719608**
+- code commit: `b31e181487c016cad15b7d4c7ce7e9ef80b13633`
+- artifact: **11083172327**
+- result report: `gold_axis_2026/GOLD_MONTHLY_CHHHO_PREDEV_ALARM_BACKCAST_RESULT_2026-09-30.md`
+- result report commit: `2842f80d0afae76c6fcce47568a200c6f5ace13c`
+- scientific gate: **PASS**
+
+Historical PIT source:
+- official repo `iacoviel/iacoviel.github.io`
+- path `gpr_files/gpr_web_latest.xlsx`
+- latest Git commit <= each origin cutoff
+- no current/final-vintage GPR substitution
+
+Coverage:
+- requested origins: 27 (2019-12..2022-02)
+- buildable origins: **21**
+- first buildable: 2019-12
+- last buildable: 2021-10
+- blocked p-1-missing origins: 2020-10, 2021-05, 2021-11, 2021-12, 2022-01, 2022-02
+
+ChHHO backcast on 21 buildable origins:
+- cumulative AE: **922.53 USD**
+- MAE: **43.93 USD**
+- mean APE: **2.518%**
+
+Frozen AE-Q3 high-error definition (AE > 63.06 USD):
+- high-error months: **6**
+- hard alarms A/C/D/E/G: **2**
+- hits: **0**
+- false alarms: **2**
+- misses: **6**
+- precision: **0%**
+- recall: **0%**
+
+High-error targets missed by all hard alarms:
+- 2020-03 — AE 81.87, APE 5.14%
+- 2020-04 — AE 113.65, APE 6.75%
+- 2020-07 — AE 70.42, APE 3.81%
+- 2021-03 — AE 93.31, APE 5.43%
+- 2021-04 — AE 66.64, APE 3.79%
+- 2021-08 — AE 74.79, APE 4.19%
+
+Alarm events:
+- A: 0 events
+- C: 2021-09 — AE 14.32, APE 0.81% — **FALSE ALARM**
+- D: 0 events
+- E: 2020-09 — AE 23.68, APE 1.23% — **FALSE ALARM**
+- G: 0 events
+
+Scale-robustness check:
+- DEV APE Q3 = **2.96117%**
+- DEV absolute log-return-error Q3 = **3.00590 pp**
+- pre-DEV high APE months = **8**
+- pre-DEV high return-error months = **8**
+- for both definitions: **0 hits, 2 false alarms, 8 misses**
+- therefore the negative pre-DEV result is not an artifact of the nominal USD threshold.
+
+#### Binding revision to alarm hierarchy
+
+The prior 18.6 hierarchy is superseded by this evidence.
+
+**A — Cross-metal fragility**
+- retains strong/selective 2022+ descriptive evidence;
+- pre-DEV had no A events;
+- status: **PROMISING / NOT INDEPENDENTLY VALIDATED**.
+
+**C — Delayed rates catch-up**
+- DEV exact hit exists (2024-07);
+- only pre-DEV event was false (2021-09);
+- status: **MIXED / LOW-EVENT / NOT STRONG-FROZEN FOR PRODUCTION**.
+
+**D — Macro-Gold conflict**
+- DEV exact hit exists (2024-11);
+- no pre-DEV event;
+- status: **RARE / UNCONFIRMED OUTSIDE DEV**.
+
+**E — Extreme level + ChHHO disagreement**
+- later discovery-period hits exist;
+- pre-DEV event 2020-09 was a clear false alarm despite extreme state;
+- status downgraded to **MARKET-STATE / MODEL-DISAGREEMENT WARNING CANDIDATE**, not a strong ChHHO error alarm.
+
+**G — Post-liquidation**
+- retains independent market-state evidence for elevated movement/uncertainty;
+- no ChHHO-specific pre-DEV event in the 21 buildable origins;
+- status: **UNCERTAINTY-REGIME WARNING CANDIDATE**, not independently validated ChHHO error alarm.
+
+**Combined A/C/D/E/G hard engine**
+- status: **NOT VALIDATED / NOT PRODUCTION-READY / ROUTING PROHIBITED**.
+- Do not quote 2026 discovery-period 4/5 recall as validated performance.
+- Do not retune thresholds using this backcast to rescue the missed months.
+
+#### Next binding research task
+
+Characterize the six pre-DEV missed high-error months (2020-03, 2020-04, 2020-07, 2021-03, 2021-04, 2021-08) using origin-visible market states, then compare them with:
+- DEV worst/high-error months;
+- 2025 high-error months;
+- 2026 high-error months, especially unresolved 2026-06.
+
+Goal: identify a repeated natural mechanism, not fit a rule to known misses.
