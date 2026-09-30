@@ -3646,3 +3646,122 @@ Later discovery-period G targets:
 - H2/H3 and frozen later transport remain the legitimate model-performance reference blocks.
 - No threshold retuning.
 - No routing/model switching.
+
+
+### 18.15 Miss mechanism screen V2 — COMPLETE / H CANDIDATE ADDED
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_CHHHO_MISS_MECHANISM_SCREEN_V2_AUTHORITY_2026-09-30.md`
+- authority commit: `69ea7d54308573928a1761ae56c246b5fd70266c`
+
+Execution:
+- workflow: `Gold Monthly ChHHO Miss Mechanism Screen V2`
+- run: **36700638160**
+- artifact: **11089099005**
+- code commit: `297202a174940883a06d84b76c70595665742afc`
+- workflow commit: `ec5159fe926123426de3b1ca36709c72670df89f`
+- result report: `gold_axis_2026/GOLD_MONTHLY_CHHHO_MISS_MECHANISM_SCREEN_V2_RESULT_2026-09-30.md`
+- report commit: `35befa9ec6b9185b4be5ebc4873215902488c188`
+- scientific gate: **PASS**
+
+#### Scope correction
+
+The unstable H1 2013-2021 counterfactual ChHHO block is excluded from model-error validation.
+
+Usable model evidence:
+- H2 valid same-method pre-DEV 2021-11..2022-03
+- H3 frozen canonical DEV 2022-04..2024-12
+- frozen 2025 transport
+- frozen 2026 Jan-Aug
+
+For this screen, an already-explained high-error month is any HIGH_AE target with A OR B OR C OR D.
+
+#### Independent calibration
+
+All candidate GVZ/CFTC quantile thresholds were calibrated on **2010-01..2020-12 only**, before the usable evaluation period.
+
+Key frozen thresholds:
+- abs monthly Managed-Money net/OI change Q90 = **0.1499821**
+- abs monthly OI pct change Q90 = **14.9766%**
+- OI / prior-12m median Q10 = **0.865006**
+- Managed-Money net/OI Q10/Q90 = **0.0293005 / 0.363831**
+- GVZ max Q80/Q90 = **24.468 / 28.321**
+- GVZ dynamic ratio Q90 = **1.404916**
+- Gold realized-vol ratio Q95 = **1.861729**
+
+No 2021+ model error was used to select these quantile thresholds.
+
+#### New repeated mechanism candidate H — CFTC POSITIONING SHIFT
+
+Frozen definition:
+- abs monthly change in Managed-Money net position / OI >= 0.1499821
+  OR
+- abs monthly open-interest change >= 14.9766%.
+
+Pre-discovery 2021-11..2024-12:
+- events 6
+- high-error hits 2
+- false alarms 4
+- hits: 2021-12 and 2024-07
+- 2021-12 is the previously unexplained hit; 2024-07 is already C.
+
+Later:
+- 2025: 2025-02 and 2025-10, both HIGH_AE, no false alarms.
+- 2026 Jan-Aug: 2026-03 HIGH_AE, no false alarms.
+
+All usable:
+- events 9
+- high-error hits 5
+- false alarms 4
+- precision 55.6%
+- all-HIGH_AE recall 22.7%
+- previously unexplained hits 4/14 = 28.6%:
+  - 2021-12
+  - 2025-02
+  - 2025-10
+  - 2026-03
+
+Status:
+**H = PROMISING POSITIONING-REPRICING WARNING / NOT HARD ALARM.**
+
+This is the only candidate in the screen with a pre-discovery unexplained high-error hit and repeated later unexplained hits without threshold retuning.
+
+#### Other candidate families
+
+- POSITION_EXTREME: later 2025-01/02 descriptor; no pre-discovery unexplained hit.
+- OI_COMPRESSION: 2026-heavy; no pre-discovery unexplained hit.
+- FLOW_2OF4: later-regime flow warning; no pre-discovery unexplained hit.
+- GVZ Q80/Q90/dynamic: later-regime gold-volatility warnings; no pre-discovery unexplained hit.
+- E frozen: later discovery-period only; no pre-discovery unexplained hit.
+- G frozen: later post-liquidation hits; pre-discovery 2022-08 is false.
+
+No candidate above is promoted to a hard ChHHO error alarm.
+
+#### Remaining no-signal HIGH_AE targets
+
+Exactly three A/B/C/D-unexplained high-error targets have none of the fixed E/G/GVZ/CFTC/volatility candidate states:
+
+- 2022-05 — AE 79.94
+- 2022-07 — AE 64.95
+- 2024-03 — AE 131.58
+
+Cross-model overlap authority:
+- 2024-03: 16/16 competitive models top-8; best alternative improves only 5.47 USD -> **SHARED-HARD**.
+- 2022-07: 14/16; best alternative improves only 1.76 USD -> **SHARED-HARD**.
+- 2022-05: 11/16; best alternative improves 17.77 USD -> **BROADLY HARD / LIMITED RESCUE**.
+
+Binding implication:
+Do not force a ChHHO-specific alarm to catch these three months. They belong primarily to a global hard-month/shock-risk class.
+
+#### Revised alarm/research map
+
+- A — cross-metal fragility
+- B — supported momentum underreaction, warning-only
+- C — delayed rates catch-up
+- D — macro-Gold conflict
+- **H — CFTC positioning shift, new warning-only candidate**
+- E — discovery-period disagreement descriptor, unvalidated
+- G — historical high-movement regime warning, not a validated ChHHO error alarm
+- GVZ/OI/FLOW — later-regime flow/volatility descriptors, not promoted
+
+No routing/model switching authorized.
