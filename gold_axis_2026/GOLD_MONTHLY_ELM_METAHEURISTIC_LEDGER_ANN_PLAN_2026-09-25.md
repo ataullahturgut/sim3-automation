@@ -5071,3 +5071,147 @@ Do not retune:
 No production veto authorized.
 No forecast correction.
 No routing/model switching.
+
+
+### 18.25 Alarm Fine-Tuning V1 — DEV TUNE / 2025-2026 TRANSPORT REJECTED
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_ALARM_FINE_TUNING_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `c7bc33ed6956d6a7af7943d5929aadbe794129de`
+
+DEV fine-tune:
+- workflow: `Gold Monthly Alarm Fine Tuning V1`
+- run: **36714696050**
+- artifact: **11095407918**
+- code commit: `484fc5db9e3564fca0092e53e192d82a63cf4716`
+- workflow commit: `0e403d766668ccd87007d3f508d85adba3783c21`
+- scientific gate: **PASS**
+
+Frozen DEV-selected configuration:
+- T0_RED = **A OR D OR I1 OR I2**
+- T1_RED_CONFIRM = **T1_WGC AND (B OR I2)**
+- FINAL_RED = T0_RED OR T1_RED_CONFIRM
+- AMBER_T0 = B OR C OR H
+- SHADOW_T0 = E OR G
+
+DEV performance:
+- FINAL_RED events 15
+- HIGH hits **8/8**
+- HIGH recall **100%**
+- false calls **7**
+- false-call rate **46.7%**
+- false calls: 2022-08, 2022-10, 2022-12, 2023-02, 2023-09, 2023-10, 2023-11
+
+Untouched transport:
+- workflow: `Gold Monthly Alarm Fine Tuning V1 Transport 2025 2026`
+- run: **36714849672**
+- artifact: **11095058554**
+- code commit: `c59f27c635e3473b923fd12bb894ced5039ca4b9`
+- workflow commit: `5ce20054c79468f4f7f761c289c8014652aa7201`
+- artifact digest: `sha256:a890471a6174fedb29dbafe52e2c03cbab832d12c0f66b6e7631bd75f1a70604`
+- scientific gate: **PASS**
+- result report: `gold_axis_2026/GOLD_MONTHLY_ALARM_FINE_TUNING_V1_TRANSPORT_RESULT_2026-09-30.md`
+- result commit: `3e313bcd574b796e996e9e7c51b3f2d319b5c055`
+
+#### 2025 untouched
+
+FINAL_RED:
+- events 2
+- HIGH hits **1/5**
+- HIGH recall **20.0%**
+- false calls 1
+- false-call rate **50.0%**
+
+True hit:
+- 2025-09 — A — APE 7.864%
+
+False:
+- 2025-12 — A — APE 2.166%
+
+Missed HIGH:
+- 2025-02 — H — 3.947%
+- 2025-03 — B — 3.991%
+- 2025-10 — H — 5.079%
+- 2025-11 — E — 4.011%
+
+T1_RED_CONFIRM:
+- no events / no incremental HIGH hit.
+
+Raw comparison 2025:
+- T0_STANDARD: **4/5 HIGH**, 1 false
+- ANY_VISIBLE: **5/5 HIGH**, 1 MEDIUM, 1 false
+
+#### 2026 Jan-Aug untouched
+
+FINAL_RED:
+- events 2
+- HIGH hits **0/3**
+- HIGH recall **0%**
+- false calls 2
+- false-call rate **100%**
+
+False:
+- 2026-04 — I1 — APE 0.608%
+- 2026-07 — I2 + T1_WGC (G shadow) — APE 2.030%
+
+Missed HIGH:
+- 2026-01 — E — APE 9.647%
+- 2026-06 — no signal — APE 8.566%
+- 2026-08 — G — APE 7.889%
+
+Raw comparison 2026:
+- T0_STANDARD: 0/3 HIGH, 1 MEDIUM, 0 false
+- ANY_VISIBLE: **2/3 HIGH**, 1 MEDIUM, 2 false
+- remaining blind HIGH = 2026-06
+
+#### Combined 2025 + 2026
+
+FINAL_RED:
+- 20 targets
+- HIGH = 8
+- events 4
+- HIGH hits **1/8**
+- HIGH recall **12.5%**
+- false calls **3**
+- false-call rate **75.0%**
+- useful-call rate **25.0%**
+
+False:
+- 2025-12 — 2.166%
+- 2026-04 — 0.608%
+- 2026-07 — 2.030%
+
+RAW_T0_STANDARD:
+- HIGH **4/8**
+- one MEDIUM
+- one false
+- HIGH recall 50.0%
+- false-call rate 16.7%
+
+RAW_ANY_VISIBLE:
+- HIGH **7/8**
+- MEDIUM 2
+- false 3
+- HIGH recall **87.5%**
+- false-call rate **25.0%**
+- only missed HIGH 2026-06
+
+#### Binding decision
+
+**REJECT sparse DEV-tuned RED V1 for operational use.**
+
+Reason:
+- severe regime overfit;
+- DEV made B/H/E/G look redundant/noisy, but these became the only useful mechanisms for several 2025/2026 HIGH months.
+
+Do not replace the current multi-signal architecture with the tuned sparse rule.
+
+Maintain:
+- individual alarm channels;
+- evidence/status tiers;
+- mandatory false-call accounting.
+
+The 2025/2026 transport period is now opened and may not be reused as an untouched validation set for another tuned rule.
+
+No forecast correction.
+No routing/model switching.
