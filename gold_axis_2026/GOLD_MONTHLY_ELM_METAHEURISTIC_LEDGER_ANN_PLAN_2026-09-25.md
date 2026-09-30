@@ -3215,3 +3215,99 @@ Search only for **same-methodology pre-2022 current-GPR vintages**. If none can 
 2. real ChHHO evidence from 2022 onward;
 3. explicit separation between discovery and validation periods.
 
+
+
+### 18.11 Valid same-methodology pre-DEV backcast V2 — COMPLETE
+
+This section supersedes the invalid V1 pre-DEV alarm interpretation.
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_CHHHO_PREDEV_CURRENT_GPR_AUTHORITY_2026-09-30.md`
+- authority commit: `ae009acc67cbf22c3cd6edaa7e934067823db260`
+
+Execution:
+- workflow: `Gold Monthly ChHHO PreDEV CurrentGPR V2`
+- run: **36688284811**
+- artifact: **11084467079**
+- workflow/code commit: `574f82130fe8b8518b2285c1d7798cabf629c836`
+- result report: `gold_axis_2026/GOLD_MONTHLY_CHHHO_PREDEV_CURRENTGPR_V2_RESULT_2026-09-30.md`
+- report commit: `6eb19d91e0a8868cd62bd33495823b62dec3c571`
+- scientific gate: **PASS**
+
+#### Source
+
+Same methodology family as canonical 2022+ project:
+- official repository: `iacoviel/iacoviel.github.io`
+- file: `gpr_files/data_gpr_export.xls`
+- earliest proven Git history: 2021-10-18
+- origin rule: latest commit <= origin month-end cutoff
+- required GPR month = origin p-1
+- no future/current substitution
+- old-method `gpr_web_latest.xlsx` forbidden
+
+Buildable origins:
+- 2021-10
+- 2021-11
+- 2021-12
+- 2022-01
+- 2022-02
+
+Targets:
+- 2021-11
+- 2021-12
+- 2022-01
+- 2022-02
+- 2022-03
+
+#### Results
+
+| Target | AE USD | APE | A | C | D | E | G |
+|---|---:|---:|---|---|---|---|---|
+| 2021-11 | 8.41 | 0.46% | 0 | 0 | 0 | 0 | 0 |
+| 2021-12 | **85.62** | **4.78%** | 0 | 0 | 0 | 0 | 0 |
+| 2022-01 | 52.16 | 2.87% | 0 | 0 | 0 | 0 | 0 |
+| 2022-02 | 49.67 | 2.68% | 0 | 0 | 0 | 0 | 0 |
+| 2022-03 | 12.46 | 0.64% | 0 | 0 | 0 | 0 | 0 |
+
+Frozen HIGH ERROR = AE > 63.06 USD.
+
+Summary:
+- n = **5**
+- high-error months = **1**
+- alarms = **0**
+- hits = **0**
+- false alarms = **0**
+- misses = **1**
+
+Interpretation:
+- the only high-error target, **2021-12**, is not covered by A/C/D/E/G;
+- this proves the current alarm family is **not exhaustive**;
+- the five-origin sample is too small to estimate reliable precision/recall;
+- it does **not** falsify A/C/D/E/G because none of those mechanisms fired in this window.
+
+#### Backcast implementation audit
+
+Reconciliation run **36687542392** / artifact **11084196490**:
+- targets checked: 2022-04, 2023-08, 2024-11;
+- canonical sample arrays vs backcast-helper arrays: exact match;
+- ChHHO predictions: exact to floating-point tolerance;
+- forecast values: canonical match;
+- train-row counts: exact;
+- diagnostics: exact;
+- result: **PASS**.
+
+Therefore:
+- backcast implementation is correct;
+- V1 was invalid because of source-methodology mismatch;
+- V2 is scientifically admissible but very small.
+
+#### Current alarm status after audit
+
+- **A Cross-metal:** promising/selective from 2022+ evidence; no pre-DEV event in valid V2.
+- **C Delayed rates:** DEV evidence only; no pre-DEV event in valid V2.
+- **D Macro conflict:** rare DEV evidence only; no pre-DEV event in valid V2.
+- **E Extreme-level/model disagreement:** discovery candidate + model-free historical market-state support; no pre-DEV event in valid V2.
+- **G Post-liquidation:** uncertainty-regime candidate + model-free historical support; no pre-DEV event in valid V2.
+- **Combined A/C/D/E/G:** not production-validated; no routing/model switching authorized.
+
+The invalid 21-origin V1 results must never be used in future alarm summaries except as a documented source-audit failure.
