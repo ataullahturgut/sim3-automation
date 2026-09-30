@@ -4107,3 +4107,171 @@ No fixed candidate descriptor:
 - 2024-03
 
 No routing/model switching authorized.
+
+
+### 18.18 Error severity V3 — APE 2.5% / 3.0% BANDS BINDING
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V3_AUTHORITY_2026-09-30.md`
+- authority commit: `4b005a86c1dbfdae5f3e6979d097b1a7ffdc650d`
+
+Execution:
+- workflow: `Gold Monthly ChHHO Error Severity V3`
+- run: **36702767607**
+- artifact: **11090497943**
+- code commit: `bcbcc59eedd5f5583dd482916c5c87b600c01a1f`
+- workflow commit: `9f9e7dd903cf1ae0635bec6f6e8e8e09a95162e8`
+- result report: `gold_axis_2026/GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V3_RESULT_2026-09-30.md`
+- report commit: `e7fd49fe522049232d1f96882bb3199c85b9ec18`
+- scientific gate: **PASS**
+
+#### Binding primary severity metric
+
+Because the requested concept is percentage error, the alarm-severity metric is **APE**:
+
+- NORMAL: APE < **2.50%**
+- MEDIUM: **2.50% <= APE < 3.00%**
+- HIGH: APE >= **3.00%**
+
+Absolute log-return error is retained as a robustness check only.
+
+Project model evaluation is unchanged:
+- ΣAE remains the primary economic/model-selection metric;
+- direction remains co-primary;
+- alarm severity is separate.
+
+#### Severity counts — 58 usable targets
+
+- NORMAL: **34**
+- MEDIUM: **7**
+- HIGH: **17**
+
+HIGH:
+- 2021-12
+- 2022-05
+- 2022-07
+- 2022-09
+- 2022-11
+- 2023-01
+- 2023-08
+- 2024-03
+- 2024-11
+- 2025-02
+- 2025-03
+- 2025-09
+- 2025-10
+- 2025-11
+- 2026-01
+- 2026-06
+- 2026-08
+
+MEDIUM:
+- 2022-01
+- 2022-02
+- 2024-04
+- 2024-07
+- 2025-01
+- 2025-05
+- 2026-03
+
+#### APE vs return-error band disagreements
+
+Only two:
+- 2024-07: APE 2.96117% = MEDIUM; return error 3.00590pp = HIGH.
+- 2026-03: APE 2.99874% = MEDIUM; return error 3.04462pp = HIGH.
+
+APE classification is binding.
+
+#### A/B/C/D/H HIGH-error coverage
+
+DEV:
+- HIGH 8
+- hits 4
+- recall 50%
+- hits: 2022-11, 2023-01, 2023-08, 2024-11
+- misses: 2022-05, 2022-07, 2022-09, 2024-03
+
+2025:
+- HIGH 5
+- hits 4
+- descriptive recall 80%
+- miss: 2025-11
+
+2026 Jan-Aug:
+- HIGH 3
+- hits 0
+- descriptive recall 0%
+- misses: 2026-01, 2026-06, 2026-08
+
+All usable:
+- HIGH 17
+- A/B/C/D/H hits 9
+- misses 8
+- false alarms relative to HIGH 10
+- precision 47.4%
+- recall 52.9%
+
+These remain descriptive mechanism-coverage figures, not production alarm performance.
+
+#### Mechanism updates under APE HIGH
+
+- **A:** HIGH hits 2022-11, 2023-08, 2025-09.
+- **B:** HIGH hits 2023-01, 2025-03.
+- **C:** 2024-07 APE 2.96117% -> MEDIUM, therefore C is not a HIGH-error hit.
+- **D:** 2024-11 remains HIGH.
+- **H:** HIGH hits 2021-12, 2025-02, 2025-10. 2024-07 and 2026-03 are MEDIUM under APE. H remains warning-only.
+
+#### MEDIUM coverage
+
+MEDIUM targets:
+- 2022-01
+- 2022-02
+- 2024-04
+- 2024-07
+- 2025-01
+- 2025-05
+- 2026-03
+
+A/B/C/D/H identifies:
+- 2024-04
+- 2024-07
+- 2026-03
+
+MEDIUM misses:
+- 2022-01
+- 2022-02
+- 2025-01
+- 2025-05
+
+#### MEDIUM+HIGH elevated error
+
+All usable:
+- elevated 24
+- A/B/C/D/H hits 12
+- recall 50%
+- precision 63.2%
+
+#### Remaining HIGH misses after A/B/C/D/H
+
+- 2022-05
+- 2022-07
+- 2022-09
+- 2024-03
+- 2025-11
+- 2026-01
+- 2026-06
+- 2026-08
+
+Descriptor coverage:
+- 2025-11: E + GVZ
+- 2026-01: E + GVZ
+- 2026-06: GVZ + OI compression + FLOW_2OF4
+- 2026-08: G + GVZ + OI compression + FLOW_2OF4
+
+No fixed candidate descriptor:
+- 2022-05
+- 2022-07
+- 2022-09
+- 2024-03
+
+No routing/model switching authorized.
