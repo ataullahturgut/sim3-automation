@@ -1,0 +1,68 @@
+name: Gold Monthly R0 R1 R2 Regime Alarm Audit V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_r0_r1_r2_regime_alarm_audit_v1.py
+      - .github/workflows/gold-monthly-r0-r1-r2-regime-alarm-audit-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download frozen inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/matrix inputs/regime
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11093903747/zip" > matrix.zip
+          unzip -q matrix.zip -d inputs/matrix
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11097041821/zip" > regime.zip
+          unzip -q regime.zip -d inputs/regime
+          test -s inputs/matrix/GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V2_FALSE_CALL_2026-09-30.json
+          test -s inputs/regime/GOLD_MONTHLY_MARKET_REGIME_DISCOVERY_V1_2026-09-30.json
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_r0_r1_r2_regime_alarm_audit_v1.py
+      - name: Run regime alarm comparison
+        run: |
+          python gold_axis_2026/tools/gold_monthly_r0_r1_r2_regime_alarm_audit_v1.py \
+            --matrix inputs/matrix/GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V2_FALSE_CALL_2026-09-30.json \
+            --regime inputs/regime/GOLD_MONTHLY_MARKET_REGIME_DISCOVERY_V1_2026-09-30.json \
+            --output GOLD_MONTHLY_R0_R1_R2_REGIME_ALARM_AUDIT_V1_2026-09-30.json
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_R0_R1_R2_REGIME_ALARM_AUDIT_V1_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['governance']['regime_conditioned_on_origin_month'] is True
+          assert r['governance']['posterior_floor']==0.60
+          assert r['governance']['alarm_selection_performed'] is False
+          assert r['governance']['threshold_tuning_performed'] is False
+          assert r['primary_confident_regimes']['R1']['n_targets']==19
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            'comparison':r['comparison'],
+            'per_signal_comparison':r['per_signal_comparison'],
+            'R0':r['primary_confident_regimes']['R0'],
+            'R2':r['primary_confident_regimes']['R2'],
+            'R2_sensitivity':r['sensitivity_raw_regimes']['R2']
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-r0-r1-r2-regime-alarm-audit-v1-${{ github.sha }}
+          path: GOLD_MONTHLY_R0_R1_R2_REGIME_ALARM_AUDIT_V1_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
