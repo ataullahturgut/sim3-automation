@@ -5767,3 +5767,92 @@ Binding decision:
 Keep all alarm channels unchanged.
 Next regime-only step: compare the expanding-refit detector against a frozen/anchored HMM design, without using alarm inputs.
 2025/2026 has now been inspected for this regime-detection problem and must not later be described as untouched for a tuned detector variant.
+
+
+### 18.30 Anchored vs Expanding Regime Detector Comparison V1 — COMPLETE / NO OPERATIONAL WINNER
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_ANCHORED_COMPARISON_V1_AUTHORITY_2026-09-30.md`
+- initial authority commit: `787617afd06c787e06f19f3371dbbc83ce0c624b`
+- technical warm-up amendment: `6dddee2b5e9271c0f6e7df3281d2996e394250b6`
+
+Execution:
+- workflow: `Gold Monthly Market Regime Anchored Comparison V1`
+- successful run: **36731019903**
+- artifact: **11104223104**
+- artifact digest: `sha256:27fab3a8eecdc258c6278e9cd15097df33d6f52cb2d9372943442d1d729bba16`
+- successful code commit: `ad16b6dc1793b5acbae4e3dc8149c190837c7030`
+- workflow commit: `64d27a35c6a66d235d7e4252adade62e5d5c6fa3`
+- result report: `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_ANCHORED_COMPARISON_V1_RESULT_2026-09-30.md`
+- result commit: `6357c5696de398eb2c371e084a2bb8eb44dd382f`
+- scientific gate: **PASS**
+
+Technical first attempt:
+- run **36730775765** failed before any comparison result because 2014-12 gives only 54 complete warm-up months.
+- fixed prospectively by anchoring the first partial replay block 2015-07..12 at 2015-06 (60 complete months). No comparison statistic was available before the fix.
+
+Systems:
+- EXPANDING_REFIT: refit scaler/PCA/HMM each month through t-1.
+- ANNUAL_ANCHORED: fit once at prior December and freeze parameters through the calendar year.
+- STRICT_2024_ANCHOR: fit through 2024-12 and hold fixed through 2025-01..2026-08; sensitivity only.
+
+Primary non-circular metric: one-step-ahead market-state predictive log score.
+
+Core 2022-01..2026-08:
+- EXPANDING mean log score **-9.97372**
+- ANNUAL mean **-9.96133**
+- annual minus expanding **+0.01239/month**
+- annual better 24/56; expanding better 28/56; 4 ties
+- mean difference tiny; no broad predictive-density dominance.
+
+Full replay 2015-07..2026-08:
+- EXPANDING mean **-9.62542**
+- ANNUAL mean **-9.71664**
+- annual minus expanding **-0.09122/month**
+- long replay favors expanding predictive density.
+
+2025-01..2026-08:
+- EXPANDING mean **-10.02083**
+- ANNUAL mean **-9.92912**
+- annual minus expanding **+0.09171**
+- STRICT_2024 mean **-10.13531**
+- strict minus expanding **-0.11448**
+- strict anchor better than expanding only 5/20 months.
+
+Secondary reference diagnostics, core 2022-2026:
+- EXPANDING strict R-state acc **68.6%**, balanced **61.2%**, R0/R1/R2 recall **44.4/47.1/92.0%**
+- ANNUAL strict R-state acc **68.6%**, balanced **53.6%**, R0/R1/R2 recall **0.0/64.7/96.0%**
+- annual anchoring redistributes error and collapses reference-R0 recall.
+
+2024 R1->R2:
+- both expanding and annual anchored output BELIRSIZ in 2024-04 and confident R2 in 2024-05.
+- both detect the transition with **1-month delay**.
+
+2026 transition:
+- EXPANDING: Apr R2 98.4%, May R2 70.9%, Jun R2 79.4%, Jul BELIRSIZ/R1 50.8%, Aug R1 94.8%.
+- ANNUAL: Apr R2 97.8%, May BELIRSIZ/R2 50.8%, Jun **R0 82.4%**, Jul **R0 76.6%**, Aug R1 97.5%.
+- STRICT_2024 sensitivity: Apr R2 98.3%, May BELIRSIZ/R1 52.7%, Jun BELIRSIZ/R2 36.3%, Jul R1 70.1%, Aug R1 98.6%.
+
+Binding interpretation:
+- monthly refit may indeed delay the loss of R2 confidence;
+- annual anchoring recognizes May-2026 uncertainty earlier;
+- but annual anchored produces unstable/spurious-looking R0 behavior in June/July and has R0 recall 0% in the 2022-2026 reference audit;
+- strict freezing preserves the desired ambiguity->R1 chronology but loses predictive density;
+- reference-label metrics for strict 2024 anchor are circular and must not be treated as independent accuracy.
+
+Binding decision:
+**No operational regime winner yet.**
+Do not move to regime-conditioned alarm selection/weighting/suppression.
+
+Likely root issue now separated into:
+1. parameter drift/adaptation speed;
+2. semantic state-label alignment across independently re-fitted HMMs.
+
+Next exact regime-only stage:
+**Prototype-Anchored State Alignment V1**
+- freeze the 2010-2024 multivariate R0/R1/R2 profiles as semantic prototypes;
+- align each newly fitted HMM's three latent states to those prototypes using all 13 market-state variables with one-to-one assignment;
+- stop relying mainly on Gold_r1 ordering for cross-refit naming;
+- then re-run expanding vs annual and the 2024/2026 transition checkpoints.
+
+No alarm change before this alignment audit.
