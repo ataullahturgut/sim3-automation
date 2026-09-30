@@ -38,7 +38,7 @@ def normalize_text(s):
 
 def signed_from_phrase(num, direction):
     clean=re.sub(r"[^0-9.+-]","",str(num))
-    if not re.search(r"\\d",clean):
+    if not re.search(r"\d",clean):
         raise ValueError(("BAD_NUMERIC_TOKEN",num,direction))
     x=float(clean)
     return x if direction.lower().startswith("inflow") else -x
