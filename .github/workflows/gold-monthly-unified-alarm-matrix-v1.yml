@@ -1,0 +1,72 @@
+name: Gold Monthly Unified Alarm Matrix V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_unified_alarm_matrix_v1.py
+      - .github/workflows/gold-monthly-unified-alarm-matrix-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download frozen artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/sev inputs/etf inputs/wgc
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11090497943/zip" > sev.zip
+          unzip -q sev.zip -d inputs/sev
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11090919621/zip" > etf.zip
+          unzip -q etf.zip -d inputs/etf
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11093192454/zip" > wgc.zip
+          unzip -q wgc.zip -d inputs/wgc
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_unified_alarm_matrix_v1.py
+      - name: Build matrix
+        run: |
+          python gold_axis_2026/tools/gold_monthly_unified_alarm_matrix_v1.py \
+            --severity inputs/sev/GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V3_2026-09-30.json \
+            --etf-dynamic inputs/etf/GOLD_MONTHLY_CHHHO_ETF_DYNAMIC_REGIME_V2_2026-09-30.json \
+            --wgc-t1 inputs/wgc/GOLD_MONTHLY_WGC_T1_ETF_ALARM_BACKTEST_V4_2026-09-30.json \
+            --output-json GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V1_2026-09-30.json \
+            --output-csv GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V1_2026-09-30.csv \
+            --output-md GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V1_2026-09-30.md
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V1_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert len(r['rows'])==58
+          assert r['governance']['thresholds_retuned'] is False
+          assert r['governance']['new_alarm_rule_created'] is False
+          assert r['governance']['forecast_modified'] is False
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            'high_no_t0_standard':r['summaries']['high_no_t0_standard'],
+            'high_no_t0_all_visible':r['summaries']['high_no_t0_all_visible'],
+            'high_no_any_visible':r['summaries']['high_no_any_visible'],
+            'signal_stats':r['summaries']['signal_stats']
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-unified-alarm-matrix-v1-${{ github.sha }}
+          path: |
+            GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V1_2026-09-30.json
+            GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V1_2026-09-30.csv
+            GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V1_2026-09-30.md
+          if-no-files-found: error
+          retention-days: 90
