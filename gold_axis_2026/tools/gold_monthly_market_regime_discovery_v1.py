@@ -252,10 +252,14 @@ def main():
     train=panel.loc[START:TRAIN_END].copy()
     test=panel.loc[TEST_START:END].copy()
 
-    if len(train)<175:
-        raise RuntimeError(("TRAIN_COVERAGE_TOO_LOW",len(train)))
+    if len(train)<168:
+        raise RuntimeError(("TRAIN_COVERAGE_TOO_LOW",len(train),sources.get("missing")))
+    first_train=str(train.index.min())
+    expected_train=list(mrange(first_train,TRAIN_END))
+    if list(train.index)!=expected_train:
+        raise RuntimeError(("TRAIN_PANEL_NOT_CONTIGUOUS",first_train,len(train),len(expected_train),sources.get("missing")))
     if list(test.index)!=list(mrange(TEST_START,END)):
-        raise RuntimeError(("TRANSPORT_MONTHS_INCOMPLETE",list(test.index)))
+        raise RuntimeError(("TRANSPORT_MONTHS_INCOMPLETE",list(test.index),sources.get("missing")))
 
     scaler=StandardScaler().fit(train[FEATURES].values)
     Ztrain=scaler.transform(train[FEATURES].values)
@@ -408,7 +412,7 @@ def main():
         "schema":"GOLD_MONTHLY_MARKET_REGIME_DISCOVERY_V1_2026-09-30",
         "status":"COMPLETE",
         "scope":{
-            "panel_start":START,"regime_development_end":TRAIN_END,
+            "requested_panel_start":START,"effective_panel_start":str(panel.index.min()),"regime_development_end":TRAIN_END,
             "transport_start":TEST_START,"panel_end":END,
             "train_rows":len(train),"transport_rows":len(test),
             "feature_count":len(FEATURES),"pca_components":npc,
