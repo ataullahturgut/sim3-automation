@@ -6917,3 +6917,117 @@ Binding conclusion:
 Next defensible options:
 1. confidence-tier/evidence-strength overlay that separates reliability from sample size and does not suppress sparse critical signals;
 2. return to the independent cross-model consensus + low-dispersion false-call suppressor, whose earlier DEV pilot removed false calls without losing HIGH/MEDIUM.
+
+
+### 18.42 Specialist Fixed-Share Alarm Router V1 — COMPLETE / PROMOTION CANDIDATE PASS
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_SPECIALIST_FIXED_SHARE_ALARM_ROUTER_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `001ca60737bd82853fed60972cafdec00ba96c2c`
+
+Execution:
+- workflow: `Gold Monthly Specialist Fixed Share Alarm Router V1`
+- run: **36775933119**
+- artifact: **11124892942**
+- digest: `sha256:06d8b70d61d0358978c46cc41078e57155763f1a0a56ad21ddef92b25e30f13e`
+- code commit: `3a6986fd8bb8712301a64a585e977d0bca51358c`
+- workflow commit: `4038844097e6b6e1b881fbc495bff9f6a22ec4b2`
+- result report: `gold_axis_2026/GOLD_MONTHLY_SPECIALIST_FIXED_SHARE_ALARM_ROUTER_V1_RESULT_2026-09-30.md`
+- result commit: `1daac3f3e92ba44b7cad1ac8b7fbf2b1314a4a0e`
+- scientific gate: **PASS**
+- promotion candidate gate: **PASS**
+
+Architecture:
+- sleeping/specialist experts: A/B/C/D/E/G/H/I1/I2/T1_WGC/V2_TRANSITION.
+- NULL always-awake no-risk expert.
+- HIGH primary task; HIGH+MEDIUM supporting task.
+- only awake alarm experts are loss-updated.
+- specialist Hedge alpha=0 or Fixed-Share alpha>0.
+- 100 frozen pre-registered candidates:
+  eta .25/.50/1/2; FS alpha .01/.05/.10/.20; tau .25/.35/.45/.50/.60.
+- 2025/26 excluded from eta/alpha/tau selection.
+
+Grid:
+- 99/100 candidates retain >=90% DEV HIGH; only HEDGE eta.25 tau.60 fails.
+- selected = **HEDGE_eta0.25_tau0.50**
+- eta=.25, alpha=0, tau=.50.
+- explicit Fixed-Share redistribution does **not** win.
+- best FS with same decision counts = eta.25 alpha.01 tau.60 but worse HIGH Brier (~.3170 vs .2987).
+- interpretation: specialist sleeping behavior helps; share mechanism not required yet.
+
+DEV 2022-04..2024-12:
+Raw ANY_VISIBLE:
+- 25 events
+- 8 HIGH +2 MEDIUM +15 false
+- HIGH/elevated recall100%
+- useful40%, false60%.
+
+Selected Specialist Hedge:
+- **20 events**
+- **8 HIGH +2 MEDIUM +10 false**
+- HIGH recall **100%**
+- elevated recall **100%**
+- useful **50%**
+- false **50%**
+- false calls removed **5/15 =33.3%**
+- HIGH lost0; MEDIUM lost0.
+
+Exact 5 DEV false calls suppressed, all NORMAL:
+- 2023-03 -> target Apr23: T1 only, p_HIGH~.438
+- 2023-11 -> Dec23: T1 only, p~.269
+- 2023-12 -> Jan24: T1 only, p~.223
+- 2024-01 -> Feb24: T1+V2, p~.453
+- 2024-04 -> May24: T1+V2, p~.438
+- no DEV HIGH/MEDIUM suppressed.
+
+DEV promotion:
+- HIGH recall >=90: observed100 PASS
+- raw ANY HIGH retention >=90: observed100 PASS
+- false-call reduction >=20: observed33.3 PASS
+- useful rate router>raw: 50%>40% PASS.
+
+Opened 2025:
+- raw ANY 7 events: 5 HIGH+1 MEDIUM+1 false.
+- router exact same 7 months; no damage.
+- retains H Feb25 HIGH, B Mar25 HIGH, E May25 MEDIUM, A/V2 Sep25 HIGH, H Oct25 HIGH, E Nov25 HIGH.
+
+Opened 2026:
+Raw ANY:
+- 5 events; 2 HIGH+1 MEDIUM+2 false
+- HIGH recall66.7%, elevated75%, useful60%, false40%.
+Router:
+- **6 events; 3 HIGH+1 MEDIUM+same2 false**
+- HIGH recall **100%**
+- elevated **100%**
+- useful66.7%, false33.3%.
+- added event = origin2026-05 V2-only, p_HIGH~.731 -> targetJun26 HIGH.
+- no extra false.
+
+Opened combined 2025-26:
+Raw ANY:
+- 12 events; 7 HIGH+2 MEDIUM+3 false
+- HIGH recall87.5%, elevated81.8%, useful75%, false25%.
+Router:
+- 13 events; **8 HIGH+2 MEDIUM+same3 false**
+- HIGH recall **100%**
+- elevated90.9%
+- useful76.9%, false23.1%.
+- +1 HIGH, +0 false.
+
+Sparse expert behavior:
+- E first late-R2 occurrence at origin2025-04 has no prior awake events (EMERGING) yet router p_HIGH~.94, target May MEDIUM retained.
+- G origin2026-07 remains sparse/EMERGING; G+V2 p_HIGH~.973, target Aug HIGH retained.
+- unlike pooled hard gating, rare/new specialists are not suppressed merely for low historical sample count.
+
+Binding conclusion:
+- first current reliability/router experiment that preserves all DEV HIGH+MEDIUM while materially reducing false calls.
+- also does not damage 2025 and adds the independent Jun26 HIGH via V2.
+- stronger than pooled regime/V2 shrinkage, hard reliability gate, rolling/decay memory, and universal V2 warning.
+- **specialist architecture supported; Fixed-Share redistribution specifically not supported/needed.**
+- freeze selected Specialist Hedge eta=.25/tau=.50 exactly; no 2025/26 retuning.
+
+Next defensible stage:
+- overlay orthogonal cross-model direction-consensus + low-dispersion false-call suppressor on top of frozen router.
+- do not alter router.
+- test whether suppressor can remove additional router false calls while retaining 100% DEV HIGH/MEDIUM and the 2026 V2 incremental catch.
+- router remains promoted research candidate, not production.
