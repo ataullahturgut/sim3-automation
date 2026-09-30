@@ -1,0 +1,68 @@
+name: Gold Monthly Unified Alarm Matrix V2 False Call
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_unified_alarm_matrix_v2_false_call.py
+      - .github/workflows/gold-monthly-unified-alarm-matrix-v2-false-call.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download V1 matrix artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11094306282/zip" > matrix.zip
+          unzip -q matrix.zip -d inputs
+          test -s inputs/GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V1_2026-09-30.json
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_unified_alarm_matrix_v2_false_call.py
+      - name: Build V2
+        run: |
+          python gold_axis_2026/tools/gold_monthly_unified_alarm_matrix_v2_false_call.py \
+            --matrix-v1 inputs/GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V1_2026-09-30.json \
+            --output-json GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V2_FALSE_CALL_2026-09-30.json \
+            --output-csv GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V2_FALSE_CALL_2026-09-30.csv \
+            --output-md GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V2_FALSE_CALL_2026-09-30.md
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V2_FALSE_CALL_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert len(r['rows'])==58
+          assert r['governance']['medium_counted_as_false_call'] is False
+          assert r['governance']['thresholds_retuned'] is False
+          assert r['signal_stats']['T0_STANDARD']['false_calls']==7
+          assert r['signal_stats']['ANY_VISIBLE']['false_calls']==19
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            'T0_STANDARD':r['signal_stats']['T0_STANDARD'],
+            'T0_ALL_VISIBLE':r['signal_stats']['T0_ALL_VISIBLE'],
+            'ANY_VISIBLE':r['signal_stats']['ANY_VISIBLE'],
+            'multi_signal_false_calls':r['multi_signal_false_calls']
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-unified-alarm-matrix-v2-false-call-${{ github.sha }}
+          path: |
+            GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V2_FALSE_CALL_2026-09-30.json
+            GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V2_FALSE_CALL_2026-09-30.csv
+            GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V2_FALSE_CALL_2026-09-30.md
+          if-no-files-found: error
+          retention-days: 90
