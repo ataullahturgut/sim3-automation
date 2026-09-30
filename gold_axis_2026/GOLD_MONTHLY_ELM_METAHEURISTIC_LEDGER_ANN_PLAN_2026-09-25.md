@@ -6137,3 +6137,114 @@ Next exact stage:
 - after Extreme layer, decide whether to test a structurally different transition model (changepoint / duration-aware semi-Markov) or keep transition descriptive only.
 
 Alarm selection/weighting remains blocked.
+
+
+### 18.34 Within-Regime Extreme / Stress Detector V1 — COMPLETE / DESCRIPTIVE CANDIDATE PASS
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_EXTREME_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `6168ded0d04935628072bab2a57bdc60c4dd91a5`
+
+Execution:
+- workflow: `Gold Monthly Market Regime Extreme V1`
+- run: **36752189037**
+- artifact: **11115570221**
+- artifact digest: `sha256:9f691d55da804b821f17e106d3640cc810bece64fd751b550f1176b08a019a8a`
+- code commit: `6469281e37a52573e2cf6b998f197c19852749a6`
+- workflow commit: `3131f1cfcb3ab3f1bb8bf3e8c82b4b6f2a4e49ce`
+- result report: `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_EXTREME_V1_RESULT_2026-09-30.md`
+- result commit: `65eb75d2b4bc860ac5df9c5a843279548a946e04`
+- scientific gate: **PASS**
+
+Frozen rule:
+- eligibility = same raw latent state at t-1 and t, both posterior >=0.60;
+- E1 state emission tail <= training same-state q10;
+- E2 predictive surprise <= training q10;
+- E3 within-state 13D standardized distance >= same-state q90;
+- E4 one-month 13D market-state jump >= training q90;
+- EXTREME = eligible and at least 2 of E1..E4;
+- NORMAL = eligible and fewer than 2 signals;
+- otherwise DEFER.
+- no threshold search.
+- semantic prototypes and Transition V2 are not used in the Extreme decision.
+
+Primary EXPANDING historical 2015-07..2021-12:
+- eligible **60/78**
+- EXTREME **11**
+- extreme rate **18.33%**
+- selectivity 5–30% PASS
+- share of Extreme also Transition V2 **9.1%**.
+
+Later validation 2022-01..2024-12:
+- eligible **26/36**
+- EXTREME **4**
+- extreme rate **15.38%**
+- selectivity PASS
+- Transition V2 overlap **0/4 = 0%**
+- distinctness <50% PASS.
+
+Overall descriptive-candidate gate:
+- **PASS**
+
+Validation EXTREME months, EXPANDING:
+- 2022-07
+- 2022-09
+- 2022-11
+- 2023-12
+- all are Extreme-only, not Transition V2.
+
+2024 transition checkpoint:
+- 2024-03 R1 + NORMAL / Transition STABLE
+- 2024-04 DEFER / Transition TRANSITION
+- 2024-05 R2 + NORMAL / Transition STABLE
+- 2024-06 R2 + NORMAL / Transition STABLE
+This is the intended separation of same-regime extreme from actual transition.
+
+Opened transport 2025-01..2026-08, EXPANDING:
+- eligible **16/20**
+- EXTREME **4**
+- rate **25%**
+- extreme months:
+  - **2026-01**
+  - **2026-02**
+  - **2026-03**
+  - **2026-06**
+- Transition V2 overlap **0%**.
+
+ANNUAL transport:
+- eligible 17/20
+- EXTREME 3
+- rate 17.6%
+- extreme months:
+  - 2026-01
+  - 2026-02
+  - 2026-03
+- Transition V2 overlap 0%.
+
+Critical 2026 EXPANDING decomposition:
+- Jan: R2 + **EXTREME** / Transition STABLE; E1+E2+E3
+- Feb: R2 + **EXTREME** / Transition STABLE; E1+E2+E3
+- Mar: R2 + **EXTREME** / Transition STABLE; E2+E4
+- Apr: R2 + NORMAL / Transition STABLE
+- May: R2 + NORMAL / **Transition TRANSITION**
+- Jun: R2 + **EXTREME** / Transition STABLE; E1+E2+E3
+- Jul: BELIRSIZ/R1 + DEFER / **Transition TRANSITION**
+- Aug: R1 + DEFER / Transition STABLE
+
+Binding interpretation:
+- Transition and Extreme are empirically distinct market-state dimensions.
+- Jan–Mar 2026 is consistently identified by both expanding and annual schedules as a coherent same-R2 EXTREME episode.
+- May 2026 is transition-like rather than extreme under expanding.
+- Extreme V1 is retained as a frozen descriptive layer.
+- It has no independent external "extreme truth"; support is unsupervised selectivity, no tuning, and separation from Transition.
+- no alarm weighting yet.
+
+Next exact stage:
+**Frozen downstream ChHHO reliability audit**
+- compare ChHHO error distributions for NORMAL vs EXTREME, separately from TRANSITION/DEFER;
+- do not change any regime/transition/extreme threshold;
+- report by regime where event counts permit;
+- 2025/2026 remain opened descriptive evidence.
+- only after this audit decide whether market-state status is useful enough for alarm-reliability conditioning.
+
+Alarm selection/weighting remains blocked.
