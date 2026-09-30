@@ -1,0 +1,67 @@
+name: Gold Monthly WGC T1 ETF Alarm Backtest V2
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_wgc_t1_etf_alarm_backtest_v2.py
+      - .github/workflows/gold-monthly-wgc-t1-etf-alarm-backtest-v2.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  backtest:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install 'pandas>=2.2,<3' 'requests>=2.32,<3' 'beautifulsoup4>=4.12,<5'
+      - name: Download severity authority
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11090497943/zip" > sev3.zip
+          unzip -q sev3.zip -d inputs
+          test -s inputs/GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V3_2026-09-30.json
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_wgc_t1_etf_alarm_backtest_v2.py
+      - name: Run V2
+        run: |
+          python gold_axis_2026/tools/gold_monthly_wgc_t1_etf_alarm_backtest_v2.py \
+            --severity inputs/GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V3_2026-09-30.json \
+            --output GOLD_MONTHLY_WGC_T1_ETF_ALARM_BACKTEST_V2_2026-09-30.json
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_WGC_T1_ETF_ALARM_BACKTEST_V2_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['parser_coverage']['coverage'] >= 0.90
+          assert not r['parser_coverage']['missing_eval']
+          assert r['governance']['forecast_modified'] is False
+          assert r['governance']['rolling_pit_r1'] is True
+          assert r['governance']['target_month_market_data_used'] is False
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            'coverage':r['parser_coverage'],
+            'all':r['metrics_all']['T1_ANY'],
+            'timely':r['metrics_timely']['T1_ANY'],
+            'core':r['core_rows'],
+            'rescued':r['t1_detected_previous_T0_high_misses'],
+            'remaining':r['remaining_high_after_T0_ABCDH_and_T1_ANY'],
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-wgc-t1-etf-alarm-backtest-v2-${{ github.sha }}
+          path: GOLD_MONTHLY_WGC_T1_ETF_ALARM_BACKTEST_V2_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
