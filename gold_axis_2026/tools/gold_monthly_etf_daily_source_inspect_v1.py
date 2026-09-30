@@ -45,18 +45,20 @@ def describe(name, raw, content_type=""):
     # BlackRock endpoint uses SpreadsheetML XML while advertising legacy Excel.
     txt=raw.decode("utf-8",errors="replace")
     if txt.lstrip().startswith("<?xml"):
-        import xml.etree.ElementTree as ET
+        from lxml import etree as ET
         out["format"]="spreadsheetml_xml"
-        root=ET.fromstring(txt)
+        parser=ET.XMLParser(recover=True,huge_tree=True)
+        root=ET.fromstring(raw,parser=parser)
         ns={"ss":"urn:schemas-microsoft-com:office:spreadsheet"}
         sheets={}
-        for ws in root.findall("ss:Worksheet",ns):
+        for ws in root.xpath("//ss:Worksheet",namespaces=ns):
             name=ws.attrib.get("{urn:schemas-microsoft-com:office:spreadsheet}Name","")
             rows=[]
-            for rr in ws.findall(".//ss:Row",ns):
+            for rr in ws.xpath(".//ss:Row",namespaces=ns):
                 vals=[]
-                for cell in rr.findall("ss:Cell",ns):
-                    dat=cell.find("ss:Data",ns)
+                for cell in rr.xpath("./ss:Cell",namespaces=ns):
+                    ds=cell.xpath("./ss:Data",namespaces=ns)
+                    dat=ds[0] if ds else None
                     vals.append("" if dat is None or dat.text is None else dat.text)
                 rows.append(vals)
             sheets[name]={
