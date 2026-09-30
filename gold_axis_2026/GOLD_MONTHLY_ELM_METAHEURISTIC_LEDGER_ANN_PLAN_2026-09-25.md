@@ -6641,3 +6641,104 @@ Important role distinction:
 - V2 can flag severe risk when no existing alarm fires.
 - origin 2026-05 V2 R2_TRANSITION -> target Jun HIGH; no frozen alarm fired.
 - if pursued further, test V2 as a separate contextual/risk channel or under a non-stationary/recent-regime architecture, not as pooled alarm weighting.
+
+
+### 18.39 V2 Independent Risk Channel V1 — COMPLETE / DEV CANDIDATE FAIL
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_V2_INDEPENDENT_RISK_CHANNEL_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `9f8e69862c79200740915afa46b5d7d04b9c5830`
+
+Execution:
+- workflow: `Gold Monthly V2 Independent Risk Channel V1`
+- run: **36771008214**
+- artifact: **11123875754**
+- artifact digest: `sha256:40e92901f74566038538c6aa8715f6c4b7642ab76b82602d54e9d211d4d0686c`
+- code commit: `ecd0f9c72fc791d050ee1661885443ffdc1b06d7`
+- workflow commit: `80bf75a4c2c18a717578fb4ea72156d1e4bad6ef`
+- result report: `gold_axis_2026/GOLD_MONTHLY_V2_INDEPENDENT_RISK_CHANNEL_V1_RESULT_2026-09-30.md`
+- result commit: `456d6639cad1f2448a1a85f12cfec53d34692944`
+- scientific gate: **PASS**
+- DEV candidate gate: **FAIL**
+
+Primary chronology:
+- V2 status at origin t only;
+- evaluates target t+1;
+- no target-month V2 leakage.
+
+DEV 2022-04..2024-12:
+- STABLE n24: HIGH 7/24=29.17%, ELEVATED 9/24=37.50%.
+- TRANSITION n9: HIGH 1/9=11.11%, ELEVATED 1/9=11.11%, NORMAL 8/9.
+- HIGH risk ratio TRANSITION/STABLE **0.381**.
+- ELEVATED risk ratio **0.296**.
+- Therefore V2 transition is lower-risk, not higher-risk, in DEV.
+
+DEV independent no-ANY test:
+- V2_TRANSITION + NO_ANY_VISIBLE n3
+- HIGH0, MEDIUM0, NORMAL3.
+- no incremental DEV HIGH beyond ANY_VISIBLE.
+
+DEV union augmentation:
+- ANY_VISIBLE raw: 25 events, 8 HIGH +2 MEDIUM +15 false; HIGH recall100%, false60%.
+- ANY_VISIBLE OR V2: 28 events, same 8 HIGH +2 MEDIUM, false **18**; false64.3%, useful35.7%.
+- V2 adds no coverage and three false calls.
+
+DEV T0 augmentation:
+- T0 raw: 11 events, 4 HIGH +2 MEDIUM +5 false; HIGH recall50%.
+- T0 OR V2: 18 events, 5 HIGH +2 MEDIUM +11 false; HIGH recall62.5%, false61.1%.
+- adds one HIGH at cost of six false.
+
+DEV preregistered candidate conditions:
+1. transition HIGH rate > stable -> FAIL
+2. transition ELEVATED rate > stable -> FAIL
+3. incremental HIGH in V2 transition + no ANY -> FAIL
+- overall FAIL.
+
+Opened 2025-2026:
+- STABLE n17: HIGH5, MEDIUM3, NORMAL9; HIGH rate29.4%, elevated47.1%.
+- TRANSITION n3: **3/3 HIGH**, 100% elevated, 0 normal.
+- HIGH risk ratio **3.4**, elevated risk ratio **2.125**.
+- exact opposite of DEV.
+
+Opened independent no-ANY:
+- one case: origin **2026-05 R2_TRANSITION**
+- no existing alarm
+- target **2026-06 HIGH**, APE~8.57%.
+- genuine incremental HIGH catch.
+
+Opened ANY_VISIBLE augmentation:
+- raw: 12 events, 7 HIGH +2 MEDIUM +3 false; HIGH recall87.5%.
+- ANY OR V2: 13 events, **8 HIGH** +2 MEDIUM +same3 false; HIGH recall **100%**.
+- useful75% ->76.9%; false rate25% ->23.1%.
+- improvement is the 2026-05->Jun independent catch.
+
+Opened T0 augmentation:
+- raw: 6 events, 4 HIGH +1 MEDIUM +1 false; HIGH recall50%.
+- T0 OR V2: 8 events, **6 HIGH** +1 MEDIUM +same1 false; HIGH recall75%.
+- false rate16.7% ->12.5%.
+
+2026 specifically:
+- STABLE n6: 1 HIGH +1 MEDIUM +4 NORMAL.
+- TRANSITION n2: **2/2 HIGH**.
+- HIGH risk ratio transition/stable **6.0**.
+- ANY raw HIGH recall2/3; ANY OR V2 **3/3** with no added false.
+- T0 raw HIGH recall0/3; T0 OR V2 2/3 with no false.
+
+Full 58 rows:
+- STABLE HIGH28.57%, elevated40.48%.
+- TRANSITION HIGH31.25%, elevated43.75%.
+- full difference small.
+- no-ANY stable: 0 HIGH/12; no-ANY transition: 1 HIGH +1 MEDIUM /6.
+- some non-redundant information exists, but materially driven by recent episode.
+
+Binding conclusion:
+- V2 is **not** a stationary universal independent risk channel.
+- DEV rejects it.
+- opened 2025-26 strongly supports a recent-regime/context role.
+- do not deploy ANY OR V2 / T0 OR V2 globally.
+- do not retune V2 on 2025/26.
+- evidence points to **concept drift / market-era dependence**.
+
+Next defensible question:
+- test whether alarm/V2 reliability should condition on persistent market era/regime shift, rather than pooling older R0/R1 history equally with the long R2 era.
+- must be preregistered recency/regime-era validation, not a post-hoc recent-window rule.
