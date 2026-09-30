@@ -1,0 +1,43 @@
+name: Gold Monthly ChHHO PreDEV CurrentGPR V2
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_chhho_predev_currentgpr_v2.py
+      - .github/workflows/gold-monthly-chhho-predev-currentgpr-v2.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  backcast:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=2.0,<3' 'pandas>=2.2,<3' 'xlrd>=2.0,<3' 'requests>=2.32,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2'
+      - run: python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_predev_currentgpr_v2.py
+      - name: Run current-method backcast
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+          GH_TOKEN: ${{ github.token }}
+        run: python gold_axis_2026/tools/gold_monthly_chhho_predev_currentgpr_v2.py
+      - name: Gate
+        run: |
+          python - <<'PY'
+          import json, math
+          r=json.load(open('GOLD_MONTHLY_CHHHO_PREDEV_CURRENTGPR_V2_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['rows']
+          assert r['governance']['same_methodology_current_gpr'] is True
+          assert all(math.isfinite(x['forecast']) and math.isfinite(x['ae']) for x in r['rows'])
+          print('SCIENTIFIC_GATE=PASS', r['summary'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-chhho-predev-currentgpr-${{ github.sha }}
+          path: GOLD_MONTHLY_CHHHO_PREDEV_CURRENTGPR_V2_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
