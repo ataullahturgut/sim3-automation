@@ -132,3 +132,25 @@ It may strengthen or weaken confidence in alarm mechanisms, but it may not:
 - overwrite canonical 2022+ authorities.
 
 If the web-latest source audit cannot prove enough origins, the backcast remains blocked and that negative result is final unless a different official PIT source is pre-registered first.
+
+
+## 10. Macro-source availability amendment — frozen before successful model run
+
+GitHub Actions access to `fred.stlouisfed.org` timed out repeatedly during the first two technical attempts. This is a transport failure, not a data/model result.
+
+For C/D historical-reconstruction flags only, the following static mirrors of the same FRED series are authorized as **fallback after direct FRED attempts fail**:
+
+- DGS10: `Najam0786/risk-aware-stock-forecasting/data/raw/fred_dgs10.csv`
+- DFII10: `AsjalAbdullahButt/Gold_Forecast_Results/data/raw/fred_DFII10.csv`
+- DTWEXBGS: `Kaenyne/Citadel-ABNB/data/raw/fred/DTWEXBGS.csv`
+
+Observed coverage:
+- DGS10 mirror begins 2010-01-04;
+- DFII10 mirror begins 2005-01-03;
+- DTWEXBGS mirror begins 2006-01-02.
+
+Rules:
+- Direct official FRED remains first priority.
+- Mirror fallback does not alter the series ID, transformation, release-safety lag, threshold, or alarm logic.
+- Mirror use is labeled `HISTORICAL_RECONSTRUCTION_MIRROR_FALLBACK`; it is not promoted to vintage/PIT macro evidence.
+- The ChHHO forecast itself does **not** use these macro series, so this fallback cannot affect the model prediction; it only permits retrospective C/D flag classification.
