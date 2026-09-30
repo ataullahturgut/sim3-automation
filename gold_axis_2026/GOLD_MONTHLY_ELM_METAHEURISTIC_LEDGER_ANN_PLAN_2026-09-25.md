@@ -6248,3 +6248,73 @@ Next exact stage:
 - only after this audit decide whether market-state status is useful enough for alarm-reliability conditioning.
 
 Alarm selection/weighting remains blocked.
+
+
+### 18.35 Frozen Market-State × ChHHO Reliability Audit V1 — COMPLETE / NO ALARM-WEIGHTING PROMOTION
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_MARKET_STATE_CHHHO_RELIABILITY_AUDIT_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `49b4c52174f26984b8a273025b76c1decf6e1a65`
+
+Execution:
+- workflow: `Gold Monthly Market-State ChHHO Reliability Audit V1`
+- run: **36754939746**
+- artifact: **11116487006**
+- artifact digest: `sha256:a783ad0d9d8ef94ebfe3cb79644975cab35c57fa7dddaf1fd4f07b7a99dc3d65`
+- code commit: `e9f13ab8b0d5a736e08b765173f4405d212178c8`
+- workflow commit: `e1a8af5592f8481281c1c8e740fbb8a32aaa82aa`
+- result report: `gold_axis_2026/GOLD_MONTHLY_MARKET_STATE_CHHHO_RELIABILITY_AUDIT_V1_RESULT_2026-09-30.md`
+- result commit: `7b87f164fc6e6fabeaf0dbc2e6fbbdca5d0eea9f`
+- scientific gate: **PASS**
+
+Critical chronology:
+- market state is joined by **origin month t** to the ChHHO forecast for target t+1;
+- target-month state is never used.
+- This materially changes the interpretation of 2026: 2026-01 EXTREME status belongs to the forecast for 2026-02, not the forecast for 2026-01.
+
+Primary EXPANDING DEV 2022-04..2024-12, n=33:
+- overall ΣAE 1413.0299; MAE 42.8191; direction 24/33; HIGH 8/33.
+- NORMAL: n=20; MAE **53.0036**; APE 2.5618%; HIGH **35.0%**; direction 80.0%.
+- EXTREME: n=4; MAE **29.8948**; APE 1.5966%; HIGH **0%**; direction 50.0%.
+- TRANSITION: n=9; MAE **25.9310**; APE 1.3256%; HIGH **11.1%**; direction 66.7%.
+- EXTREME/NORMAL MAE ratio **0.564**.
+- TRANSITION/NORMAL MAE ratio **0.489**.
+- EXTREME vs NORMAL Mann-Whitney p=0.2405; bootstrap MAE diff -23.1088 USD, 95% CI [-47.1168,-0.9645], n_extreme=4.
+- TRANSITION vs NORMAL p=0.0942; bootstrap MAE diff -27.0726, 95% CI [-48.1829,-5.1253].
+- tests diagnostic only; small n and no p-value promotion rule.
+
+ANNUAL DEV sensitivity:
+- NORMAL n21 MAE 44.73 HIGH 23.8%.
+- EXTREME n3 MAE 61.78 HIGH 66.7%.
+- TRANSITION n8 MAE 33.86 HIGH 12.5%.
+- Therefore EXTREME reliability relationship is schedule-sensitive and not stable.
+
+Opened 2025-2026 EXPANDING:
+- NORMAL n12 MAE **115.58**, HIGH 41.7%, direction 66.7%.
+- EXTREME n4 MAE **75.59**, HIGH **0%**, direction 100%.
+- TRANSITION n3 MAE **332.86**, HIGH **100%**, direction 33.3%.
+- Transition looks strongly associated with recent failure, but this reverses the DEV pattern and is opened evidence only.
+
+2026 EXPANDING origin->target chronology:
+- origin 2025-12 NORMAL -> target 2026-01 AE **458.50**, HIGH, wrong direction.
+- origin 2026-01 EXTREME -> target 2026-02 AE **45.37**, NORMAL, correct.
+- origin 2026-02 EXTREME -> target 2026-03 AE **145.62**, MEDIUM, correct.
+- origin 2026-03 EXTREME -> target 2026-04 AE **28.70**, NORMAL, correct.
+- origin 2026-04 NORMAL -> target 2026-05 AE **55.10**, NORMAL, correct.
+- origin 2026-05 TRANSITION -> target 2026-06 AE **362.17**, HIGH, wrong.
+- origin 2026-06 EXTREME -> target 2026-07 AE **82.68**, NORMAL, correct.
+- origin 2026-07 TRANSITION -> target 2026-08 AE **347.99**, HIGH, wrong.
+
+Binding interpretation:
+- EXTREME V1 is **not supported as a next-month ChHHO failure-risk flag**.
+- Do not downweight ChHHO because state=EXTREME.
+- Transition V2 relationship is unstable: lower DEV error, but very high opened 2025-2026 error.
+- Transition V2 already failed its historical selectivity promotion gate, so recent performance cannot authorize operational weighting.
+- no alarm weighting, routing or forecast correction.
+- no threshold retuning against ChHHO errors.
+
+Next regime-side experiment, if pursued:
+- structurally different transition model, e.g. duration-aware / semi-Markov regime dynamics and/or dedicated multivariate changepoint detection with persistence;
+- freeze it on historical market-state data only before any ChHHO reliability audit.
+
+Alarm weighting remains blocked.
