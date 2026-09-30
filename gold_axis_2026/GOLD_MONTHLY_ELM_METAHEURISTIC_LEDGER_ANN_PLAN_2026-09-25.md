@@ -5430,3 +5430,66 @@ No alarm selection.
 No alarm weighting.
 No forecast correction.
 No routing/model switching.
+
+
+### 18.27 R1-Regime Alarm Audit V1 — ORIGIN-CONDITIONED / COMPLETE
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_R1_REGIME_ALARM_AUDIT_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `206d55a724a693aa3b1dca230f12e145d5e5fd1e`
+
+Execution:
+- workflow: `Gold Monthly R1 Regime Alarm Audit V1`
+- run: **36718441330**
+- code commit: `adcc0efbf62490248e770ddbba1010ea544ac5e0`
+- workflow commit: `6ae89b7b051bd9a3abf8c5e7bc61396681bfbb50`
+- result report: `gold_axis_2026/GOLD_MONTHLY_R1_REGIME_ALARM_AUDIT_V1_RESULT_2026-09-30.md`
+- result commit: `b938836e08b72a5f2ce746130d55280a45c4c214`
+- scientific gate: **PASS**
+
+Conditioning rule:
+- use the **forecast origin month's** regime;
+- primary R1 requires HMM R1 posterior >=60%;
+- OOD months excluded from primary R1;
+- no alarm selection or threshold tuning.
+
+Primary confident-R1 subset:
+- 19 targets
+- HIGH 4: 2021-12, 2023-08, 2024-03, 2026-08
+- MEDIUM 3: 2022-01, 2022-02, 2024-04
+- NORMAL 12
+
+Individual signal behavior inside confident R1:
+- A: 2 events / 1 HIGH / 1 false / false 50%
+- B: 2 / 0 HIGH / 0 MEDIUM / **2 false / false 100%**
+- C: 0
+- D: 0
+- E: 0
+- G: 1 / 1 HIGH / 0 false; n=1 only
+- H: 4 / 1 HIGH / 1 MEDIUM / 2 false / false 50%
+- I1: 0
+- I2: 4 / 2 HIGH / 0 MEDIUM / 2 false / false 50%
+- T1_WGC: 13 / 2 HIGH / 2 MEDIUM / **9 false / false 69.2%**
+
+T0_STANDARD inside confident R1:
+- events 8
+- HIGH hits 2/4
+- MEDIUM 1
+- false 5
+- false-call rate 62.5%
+
+ANY_VISIBLE inside confident R1:
+- events 16
+- HIGH hits **4/4**
+- MEDIUM 2
+- false **10**
+- false-call rate **62.5%**
+
+Binding descriptive interpretation:
+- R1 is not automatically safe; HIGH forecast errors still occur.
+- B and raw T1_WGC are particularly noisy in R1 in the observed sample.
+- I2 and H are mixed.
+- All 4 confident-R1 HIGH months have at least one visible signal, but all-signals union is too noisy to be treated as one alarm.
+- raw-R1 sensitivity including <60% posterior months adds 2026-06 as the remaining blind HIGH.
+
+No alarm selection/weighting authorized by this audit.
