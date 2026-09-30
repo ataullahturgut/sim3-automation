@@ -1,0 +1,73 @@
+name: Gold Monthly Alarm Regime V2 Shrinkage Reliability V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_alarm_regime_v2_shrinkage_reliability_v1.py
+      - .github/workflows/gold-monthly-alarm-regime-v2-shrinkage-reliability-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  shrinkage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Download frozen audit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/audit
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11120035621/zip" > audit.zip
+          unzip -q audit.zip -d inputs/audit
+          test -f inputs/audit/GOLD_MONTHLY_ALARM_REGIME_V2_RELIABILITY_AUDIT_V1_2026-09-30.json
+
+      - name: Compile
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_monthly_alarm_regime_v2_shrinkage_reliability_v1.py
+
+      - name: Run shrinkage reliability
+        run: |
+          python gold_axis_2026/tools/gold_monthly_alarm_regime_v2_shrinkage_reliability_v1.py             --audit-json inputs/audit/GOLD_MONTHLY_ALARM_REGIME_V2_RELIABILITY_AUDIT_V1_2026-09-30.json             --output GOLD_MONTHLY_ALARM_REGIME_V2_SHRINKAGE_RELIABILITY_V1_2026-09-30.json
+
+      - name: Scientific governance gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_ALARM_REGIME_V2_SHRINKAGE_RELIABILITY_V1_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['scientific_gate']=='PASS'
+          assert r['dev_contract']['rows']==33
+          assert r['opened_contract']['rows']==20
+          assert r['opened_contract']['opened_outcomes_used_for_fit'] is False
+          g=r['governance']
+          assert g['raw_alarm_definitions_changed'] is False
+          assert g['v2_retuned'] is False
+          assert g['regime_model_changed'] is False
+          assert g['pseudo_counts_tuned'] is False
+          assert g['gate_threshold_tuned'] is False
+          assert g['2025_2026_used_for_model_selection'] is False
+          assert g['forecast_modified'] is False
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            'dev_candidate_gate':r['dev_candidate_gate'],
+            'dev':r['dev'],
+            'opened':r['opened_2025_2026'],
+          },sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-alarm-regime-v2-shrinkage-reliability-v1-${{ github.sha }}
+          path: GOLD_MONTHLY_ALARM_REGIME_V2_SHRINKAGE_RELIABILITY_V1_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
