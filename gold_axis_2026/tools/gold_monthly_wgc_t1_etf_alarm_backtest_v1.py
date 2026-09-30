@@ -39,7 +39,7 @@ def normalize_text(s):
 def signed_from_phrase(num, direction):
     clean=re.sub(r"[^0-9.+-]","",str(num))
     if not re.search(r"\d",clean):
-        raise ValueError(("BAD_NUMERIC_TOKEN",num,direction))
+        return None
     x=float(clean)
     return x if direction.lower().startswith("inflow") else -x
 
@@ -71,6 +71,8 @@ def parse_flow(text, expected_data_month):
     for pat in patterns_amount_direction:
         for m in re.finditer(pat,x,re.I):
             val=signed_from_phrase(m.group(1),m.group(2))
+            if val is None:
+                continue
             snip=x[max(0,m.start()-80):min(len(x),m.end()+140)]
             candidates.append((0.96,val,normalize_text(snip),"global_amount_direction"))
 
@@ -83,6 +85,8 @@ def parse_flow(text, expected_data_month):
         for m in re.finditer(pat,x,re.I):
             if len(m.groups())==2:
                 val=signed_from_phrase(m.group(2),m.group(1))
+                if val is None:
+                    continue
                 kind="global_direction_amount"
             else:
                 num=float(m.group(1).replace(",",""))
