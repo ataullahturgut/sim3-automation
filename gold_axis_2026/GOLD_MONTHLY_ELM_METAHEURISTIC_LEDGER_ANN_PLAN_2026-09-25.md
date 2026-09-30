@@ -4525,3 +4525,166 @@ Binding status:
 Full result:
 - `GOLD_MONTHLY_ETF_I1_I2_HISTORICAL_RECURRENCE_RESULT_2026-09-30.md`
 - report commit: `00bc2389b36743113689409ee58164eaaa8f91df`
+
+
+### 18.21 WGC T1 early-month ETF alarm backtest — V4 BINDING / PASS
+
+Objective:
+- Keep the month-end ChHHO forecast unchanged.
+- Test whether the official WGC monthly gold-ETF report, published during the first days of the target month, adds an **alarm-only T1 warning channel**.
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_WGC_T1_ETF_ALARM_BACKTEST_V4_AUTHORITY_2026-09-30.md`
+- authority commit: `b57e602f2717143dd633fdb0300c98d64024eb8a`
+
+Execution:
+- workflow: `Gold Monthly WGC T1 ETF Alarm Backtest V4`
+- run: **36708826992**
+- artifact: **11093192454**
+- code commit: `32489decb6f33bff14b33fd0d9770617da9a0bf5`
+- workflow commit: `75f31ba6cfc1814a80376bb1924ba7c68ec8fa72`
+- artifact digest: `sha256:58f418f5dbb60202810f1da19f9fc79aea31c2db892d566fb9a01dbdb8f1d984`
+- result report: `gold_axis_2026/GOLD_MONTHLY_WGC_T1_ETF_ALARM_BACKTEST_V4_RESULT_2026-09-30.md`
+- result commit: `61e207159a8e2bf5e6856f2d3feb28cff8f28742`
+- scientific gate: **PASS**
+
+#### Supersession / parser governance
+
+- WGC T1 V1-V3 numerical/parser performance claims are **non-binding** because their completeness gates failed.
+- V4 is the first binding T1 performance result.
+- Binding evaluation window: 2021-11..2026-08, **58/58 rows complete**.
+- No missing evaluation month.
+- No publication-month mismatch.
+- No report-data-month mismatch.
+- Exactly one pre-authorized manual official-source override:
+  - target 2021-12 / data month 2021-11
+  - WGC report published 7 Dec 2021
+  - global direction INFLOW
+  - previous Oct 2021 report direction OUTFLOW
+  - therefore R2_WGC FALSE.
+
+#### Standardized T1 rule
+
+**R2_WGC = current WGC monthly report says GLOBAL OUTFLOW AND immediately previous WGC monthly report also says GLOBAL OUTFLOW.**
+
+- No numeric tonnage threshold.
+- No forecast modification.
+- No target-month market data other than the arriving official report itself.
+- No routing/model switching.
+
+TIMELY_T1:
+- publication occurs in target month on calendar day <=10.
+
+All R2_WGC events in the evaluation are timely.
+
+#### R2_WGC standalone performance
+
+Across 58 usable ChHHO targets:
+- R2 events: **23**
+- HIGH APE months: **17**
+- HIGH hits: **6**
+- HIGH precision: **26.1%**
+- HIGH recall: **35.3%**
+
+HIGH hit targets:
+- 2022-07
+- 2022-09
+- 2022-11
+- 2023-01
+- 2023-08
+- 2024-03
+
+MEDIUM hits:
+- 2022-02
+- 2024-04
+
+MEDIUM+HIGH:
+- elevated months 24
+- hits 8
+- precision 34.8%
+- recall 33.3%
+
+Normal false-alarm targets:
+- 2021-11
+- 2022-08
+- 2022-10
+- 2022-12
+- 2023-02
+- 2023-03
+- 2023-04
+- 2023-09
+- 2023-10
+- 2023-11
+- 2023-12
+- 2024-01
+- 2024-02
+- 2024-05
+- 2026-07
+
+Binding interpretation:
+R2_WGC is **too noisy to be a hard alarm alone**, but it has meaningful incremental T0-miss coverage.
+
+#### T0 + T1 HIGH-error coverage
+
+T0 A/B/C/D/H:
+- HIGH hits **9/17**
+- recall **52.9%**
+
+T1 R2_WGC:
+- HIGH hits 6
+- overlaps with T0: 2022-11, 2023-01, 2023-08
+- **incremental T1 hits over T0: 3**
+  - 2022-07
+  - 2022-09
+  - 2024-03
+
+T0 + T1 union:
+- HIGH hits **12/17**
+- recall **70.6%**
+
+Remaining standardized HIGH misses:
+- 2022-05
+- 2025-11
+- 2026-01
+- 2026-06
+- 2026-08
+
+#### Four-core audit
+
+**2022-05**
+- report published 6 May 2022
+- April direction INFLOW; prior March INFLOW
+- R2_WGC FALSE
+- T0 A/B/C/D/H FALSE
+- official report explicitly says April inflows were **77% lower than the previous month**
+- this is visible T1 deterioration information but is **not** counted as a standardized R2 hit.
+
+**2022-07**
+- report 7 Jul 2022
+- June OUTFLOW + May OUTFLOW
+- R2_WGC TRUE
+- T0 false
+- standardized incremental T1 HIGH hit.
+
+**2022-09**
+- report 7 Sep 2022
+- August OUTFLOW + July OUTFLOW
+- R2_WGC TRUE
+- T0 false
+- standardized incremental T1 HIGH hit.
+
+**2024-03**
+- report 7 Mar 2024
+- February OUTFLOW + January OUTFLOW
+- R2_WGC TRUE
+- T0 false
+- standardized incremental T1 HIGH hit.
+
+#### Binding decision
+
+- Maintain **T0 month-end alarm channel** and separate **T1 early-month WGC report warning channel**.
+- R2_WGC role = **warning**, not hard alarm.
+- T1 improves descriptive HIGH-error coverage from 52.9% to 70.6% without modifying the forecast.
+- 2022-05 requires a separately preregistered deterioration/slowdown rule before it can count as a standardized T1 alarm.
+- No forecast correction authorized.
+- No routing/model switching authorized.
