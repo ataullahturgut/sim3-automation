@@ -1,3 +1,28 @@
+# INVALIDATION NOTICE — 2026-09-30
+
+**This historical backcast result is NOT admissible evidence for or against the ChHHO alarm mechanisms.**
+
+Post-run audit found that the pre-DEV source `gpr_files/gpr_web_latest.xlsx` belongs to the **old GPR methodology** documented on the official Caldara–Iacoviello `gpr2019.htm` page. The current canonical project GPR authority is based on the later methodology documented in `gpr.Rmd` / `data_gpr_export.xls`, whose search terms/methodology were changed in 2021.
+
+Therefore the backcast changed not only the vintage date but also the **definition of the GPR feature**. That violates the frozen data contract and makes the 2019-2021 ChHHO predictions non-comparable to the canonical 2022+ ChHHO model.
+
+Observed evidence of non-equivalence includes large level differences, e.g. the old-source January 2020 GPR snapshot value is about 333.03 while the canonical CORE5 GPR value for 2020-01 is 138.42.
+
+The numerical run itself was reproducible and passed its internal gate, but its **scientific source equivalence premise was wrong**. All hit/false-alarm conclusions below are therefore retained only as an audit trail and must not be used to promote or downgrade A/C/D/E/G.
+
+A separate reconciliation test proved that the backcast helper code itself is correct when supplied with the canonical GPR authority:
+- workflow run: 36687542392
+- artifact: 11084196490
+- result: **PASS**
+- targets checked: 2022-04, 2023-08, 2024-11
+- sample arrays: exact match
+- ChHHO predictions: exact match within floating-point tolerance
+- train-row counts and diagnostics: exact match
+
+**Binding status:** `INVALIDATED_GPR_METHODOLOGY_MISMATCH`
+
+---
+
 # GOLD MONTHLY — ChHHO Pre-DEV Alarm Backcast Result
 
 **Date:** 2026-09-30  
