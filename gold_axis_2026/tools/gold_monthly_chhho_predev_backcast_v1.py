@@ -7,6 +7,7 @@ import io
 import json
 import math
 import os
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -158,15 +159,54 @@ def source_audit():
     return rows
 
 def fetch_fred(series: str, start="2018-01-01", end="2022-03-31"):
+    headers = {"User-Agent": "gold-monthly-predev-backcast/1.0"}
+    errs = []
     url = "https://fred.stlouisfed.org/graph/fredgraph.csv"
-    r = requests.get(url, params={"id": series, "cosd": start, "coed": end},
-                     headers={"User-Agent": "gold-monthly-predev-backcast/1.0"}, timeout=60)
-    r.raise_for_status()
-    df = pd.read_csv(io.BytesIO(r.content))
-    df = df.iloc[:, :2].copy(); df.columns = ["date", "value"]
-    df["date"] = pd.to_datetime(df.date, errors="coerce")
-    df["value"] = pd.to_numeric(df.value, errors="coerce")
-    return df.dropna().sort_values("date")
+    for attempt in range(3):
+        try:
+            r = requests.get(url, params={"id": series, "cosd": start, "coed": end},
+                             headers=headers, timeout=45)
+            r.raise_for_status()
+            df = pd.read_csv(io.BytesIO(r.content))
+            df = df.iloc[:, :2].copy(); df.columns = ["date", "value"]
+            df["date"] = pd.to_datetime(df.date, errors="coerce")
+            df["value"] = pd.to_numeric(df.value, errors="coerce")
+            df = df.dropna().sort_values("date")
+            if len(df) >= 100:
+                return df
+            errs.append(f"csv_attempt_{attempt}: too_few_rows={len(df)}")
+        except Exception as e:
+            errs.append(f"csv_attempt_{attempt}: {type(e).__name__}:{e}")
+            time.sleep(2 * (attempt + 1))
+
+    # Official FRED static-text fallback. This remains the same upstream source,
+    # and is used only when the graph CSV endpoint is unavailable.
+    txt_url = f"https://fred.stlouisfed.org/data/{series}.txt"
+    for attempt in range(3):
+        try:
+            r = requests.get(txt_url, headers=headers, timeout=45)
+            r.raise_for_status()
+            rows = []
+            for line in r.text.splitlines():
+                s = line.strip().split()
+                if len(s) < 2 or len(s[0]) != 10 or s[0][4:5] != "-" or s[0][7:8] != "-":
+                    continue
+                try:
+                    v = float(s[1])
+                except Exception:
+                    continue
+                rows.append((s[0], v))
+            df = pd.DataFrame(rows, columns=["date", "value"])
+            df["date"] = pd.to_datetime(df.date, errors="coerce")
+            df = df.dropna().sort_values("date")
+            df = df[(df.date >= pd.Timestamp(start)) & (df.date <= pd.Timestamp(end))]
+            if len(df) >= 100:
+                return df
+            errs.append(f"txt_attempt_{attempt}: too_few_rows={len(df)}")
+        except Exception as e:
+            errs.append(f"txt_attempt_{attempt}: {type(e).__name__}:{e}")
+            time.sleep(2 * (attempt + 1))
+    raise RuntimeError(f"FRED_FETCH_FAILED {series} {errs}")
 
 def month_mean_available(df, month: str, lag_days: int):
     p = pd.Period(month, freq="M")
@@ -259,6 +299,12 @@ def main():
 
     audit = source_audit()
     buildable = [r for r in audit if r.get("buildable")]
+    print("SOURCE_AUDIT", json.dumps({
+        "requested": len(audit),
+        "buildable": len(buildable),
+        "passing_origins": [r["origin"] for r in buildable],
+        "blocked": [{"origin": r["origin"], "status": r["status"]} for r in audit if not r.get("buildable")]
+    }, sort_keys=True))
     if not buildable:
         out = {"schema": "GOLD_MONTHLY_CHHHO_PREDEV_BACKCAST_V1_2026-09-30",
                "status": "SOURCE_BLOCKED_NO_MODEL_RUN", "source_audit": audit}
