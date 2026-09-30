@@ -41,7 +41,7 @@ These three vectors are the semantic prototypes.
 
 For every independently fitted HMM already used in the expanding-refit and annual-anchored detectors:
 
-1. use that fit's own training history only to compute each latent state's 13-feature mean profile;
+1. use that fit's own training history only to compute each latent state's 13-feature mean profile as a **filtered-posterior-weighted mean** over its training months (weights = that latent state's filtered posterior probability);
 2. transform those latent-state profiles with the **frozen 2010-2024 prototype standardization**;
 3. compute Euclidean distance from each latent state to each frozen R0/R1/R2 prototype across all 13 dimensions;
 4. solve the one-to-one minimum-cost assignment with the Hungarian algorithm;
