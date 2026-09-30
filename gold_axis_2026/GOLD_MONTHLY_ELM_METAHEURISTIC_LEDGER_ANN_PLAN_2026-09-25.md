@@ -5684,3 +5684,86 @@ E:
 - R2: 2 HIGH + 1 MEDIUM / 0 false
 
 No regime-conditioned alarm selection or weighting is authorized yet.
+
+
+### 18.29 Market Regime Walk-Forward Detection V1 — COMPLETE / OPERATIONAL FREEZE HOLD
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_WALKFORWARD_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `ea178786adb44ad0506972e051b433b2bf31fb67`
+
+Execution:
+- workflow: `Gold Monthly Market Regime Walk-Forward V1`
+- run: **36723724702**
+- artifact: **11101827380**
+- artifact digest: `sha256:7f411996513c690f5af016be2073a28a66a3a2e509504d7bc9b12ab3f61e8f90`
+- code commit: `ba7cc0772465f0e106e83432abe1700a27efc2dc`
+- workflow commit: `3041a36df6a7840c0368ba0edeb5533df69c901a`
+- result report: `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_WALKFORWARD_V1_RESULT_2026-09-30.md`
+- result commit: `c9ff8aba8feb5294c0c1f503d52eeee59611f755`
+- scientific gate: **PASS**
+
+Design:
+- current-regime detection only; **not** next-month regime forecasting;
+- source panel frozen from Market Regime Discovery V1 artifact 11097041821;
+- 13 market-state features only;
+- each month t: scaler/PCA/HMM fit strictly through t-1;
+- current month excluded from parameter fitting;
+- K=3 frozen architecture;
+- posterior <60% => BELIRSIZ;
+- OOD measured against prior-history 5th-percentile emission density;
+- no ChHHO errors, alarm labels, model forecasts, router outputs, reference labels or future market-state observations in fitting.
+
+Transport 2025-01..2026-08:
+- n=20
+- exact label agreement **80.0%**
+- reference-confident n=18
+- strict R-state accuracy **16/18 = 88.9%**
+- decided-only accuracy **16/16 = 100%**
+- walk-forward BELIRSIZ rate **10.0%**
+- strict balanced accuracy over represented states **71.9%**
+- R2 recall **15/16 = 93.75%**
+- R1 recall **1/2 = 50.0%**
+- no confident R0 reference month in transport.
+
+Core 2022-01..2026-08:
+- n=56
+- exact label agreement **64.3%**
+- strict R-state accuracy **35/51 = 68.6%**
+- decided-only accuracy **35/46 = 76.1%**
+- strict balanced accuracy **61.2%**
+- R0 recall **44.4%**
+- R1 recall **47.1%**
+- R2 recall **92.0%**
+- walk-forward BELIRSIZ rate **10.7%**.
+
+Full replay 2015-07..2026-08:
+- n=134
+- exact label agreement **61.9%**
+- strict R-state accuracy **82/125 = 65.6%**
+- decided-only accuracy **82/118 = 69.5%**
+- strict balanced accuracy **63.0%**
+- R0 recall **45.8%**
+- R1 recall **53.7%**
+- R2 recall **89.4%**.
+
+Mandatory transition checkpoints:
+- 2024-04 reference R1->R2 onset: walk-forward 2024-04 underlying R2 but p=55.5% => BELIRSIZ; confident R2 on 2024-05 => **1-month delay**.
+- 2026-05 reference raw R1 p=52.7% => BELIRSIZ; walk-forward remains R2 p=70.9%.
+- 2026-06 reference raw R2 p=36.3% => BELIRSIZ; walk-forward remains R2 p=79.4%.
+- 2026-07 reference R1 p=70.1%; walk-forward underlying R1 p=50.8% => BELIRSIZ.
+- 2026-08 walk-forward R1 p=94.8%.
+- confident reference R2->R1 transition at 2026-07 is therefore detected with **1-month delay**.
+
+Binding interpretation:
+- sustained R2 detection is strong;
+- R0/R1 discrimination is materially weaker;
+- 2024 R2 onset behavior is acceptable;
+- 2026 May/June ambiguity is detected too late;
+- expanding monthly refit may be inducing state-definition drift.
+
+Binding decision:
+**Do not freeze the regime motor yet for regime-conditioned alarm weighting/suppression.**
+Keep all alarm channels unchanged.
+Next regime-only step: compare the expanding-refit detector against a frozen/anchored HMM design, without using alarm inputs.
+2025/2026 has now been inspected for this regime-detection problem and must not later be described as untouched for a tuned detector variant.
