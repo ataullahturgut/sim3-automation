@@ -3133,3 +3133,85 @@ Characterize the six pre-DEV missed high-error months (2020-03, 2020-04, 2020-07
 - 2026 high-error months, especially unresolved 2026-06.
 
 Goal: identify a repeated natural mechanism, not fit a rule to known misses.
+
+
+### 18.10 Audit correction — pre-DEV backcast INVALIDATED by GPR methodology mismatch
+
+A post-run source-equivalence audit invalidates the interpretation recorded in 18.9.
+
+#### Critical finding
+
+The pre-DEV backcast used:
+
+- official repository: `iacoviel/iacoviel.github.io`
+- historical file: `gpr_files/gpr_web_latest.xlsx`
+
+However, the official repository documents this file under the **older GPR methodology** (`gpr2019.htm`). The current canonical project source is the later GPR methodology documented in `gpr.Rmd` and distributed through `data_gpr_export.xls`.
+
+The official current page states that the index search terms were changed in 2021 and that the current methodology differs from the old GPR index. Therefore `gpr_web_latest.xlsx` is not source-equivalent to the frozen 2022+ ChHHO GPR authority.
+
+Observed numerical non-equivalence is material:
+- old historical snapshot 2020-01 GPR ≈ **333.03**
+- canonical `CORE5_GPR_ROUNDED_RESEARCH_R1` 2020-01 = **138.42**
+
+This is not a normal small vintage revision; it indicates a different data-definition regime.
+
+#### Consequence
+
+The 21-origin pre-DEV run remains a technically reproducible experiment, but it **violates the frozen feature-definition contract**. It must not be used as evidence for alarm precision/recall or to downgrade/promote A/C/D/E/G.
+
+Therefore the following conclusions from 18.9 are **withdrawn**:
+- combined A/C/D/E/G = 0 hits / 2 false alarms as scientific alarm evidence;
+- downgrade of E based on 2020-09;
+- downgrade of C based on 2021-09;
+- any claim that the frozen alarm family failed pre-DEV.
+
+Status of run 36684719608 / artifact 11083172327:
+**INVALIDATED_GPR_METHODOLOGY_MISMATCH — AUDIT TRAIL ONLY**
+
+#### Backcast-code reconciliation
+
+A separate reconciliation test was run to distinguish source error from implementation error.
+
+Workflow:
+- `Gold Monthly ChHHO Backcast Reconcile V1`
+- run: **36687542392**
+- artifact: **11084196490**
+
+Targets checked:
+- 2022-04
+- 2023-08
+- 2024-11
+
+For each target:
+- canonical sample keys = helper sample keys;
+- max sample-array absolute difference = **0.0**;
+- helper ChHHO prediction = canonical ChHHO prediction to floating-point tolerance;
+- forecast = canonical stored forecast;
+- train-row count = exact match;
+- diagnostics = exact match.
+
+Result: **PASS**.
+
+Interpretation:
+- the backcast helper/model implementation is correct;
+- the invalidation is caused by **non-equivalent pre-DEV GPR source methodology**, not by ChHHO code or alarm calculation mechanics.
+
+#### Restored alarm-status governance
+
+Until a **same-methodology, origin-proven pre-2022 GPR source** is found:
+
+- A/C/D retain their existing 2022-2024 DEV evidence only;
+- E remains a discovery-period candidate with independent market-state support, not a validated production alarm;
+- G remains a post-liquidation uncertainty candidate with independent market-state support, not a validated production alarm;
+- no pre-DEV ChHHO-specific validation claim is allowed;
+- no routing/model switching is authorized;
+- thresholds remain frozen and must not be retuned from the invalid backcast.
+
+#### Correct next question
+
+Search only for **same-methodology pre-2022 current-GPR vintages**. If none can be proven, pre-DEV ChHHO backcast is scientifically unavailable and the project must proceed with:
+1. independent model-free historical market-state evidence before 2022;
+2. real ChHHO evidence from 2022 onward;
+3. explicit separation between discovery and validation periods.
+
