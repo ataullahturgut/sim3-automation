@@ -1,0 +1,80 @@
+name: Gold Monthly Contextual High Alarm Rescueability V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_contextual_high_alarm_rescueability_v1.py
+      - .github/workflows/gold-monthly-contextual-high-alarm-rescueability-v1.yml
+      - gold_axis_2026/GOLD_MONTHLY_CONTEXTUAL_HIGH_ALARM_RESCUEABILITY_V1_AUTHORITY_2026-10-01.md
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  rescueability:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install 'numpy>=2.0,<3'
+      - name: Download frozen artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/router inputs/state inputs/exact16 inputs/deabc inputs/gpr inputs/pls inputs/missing9
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11124892942/zip" > router.zip
+          unzip -q router.zip -d inputs/router
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11116487006/zip" > state.zip
+          unzip -q state.zip -d inputs/state
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11128785588/zip" > exact16.zip
+          unzip -q exact16.zip -d inputs/exact16
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10911447422/zip" > deabc.zip
+          unzip -q deabc.zip -d inputs/deabc
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10915270480/zip" > gpr.zip
+          unzip -q gpr.zip -d inputs/gpr
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10974037676/zip" > pls.zip
+          unzip -q pls.zip -d inputs/pls
+          for spec in             "11127052273 missing9_boost_transport_v1.json"             "11126323028 missing9_svr_transport_v1.json"             "11128106474 missing9_seq_CNN_LSTM_lb3_transport_v1.json"             "11128006357 missing9_seq_CNN_LSTM_lb6_transport_v1.json"             "11128136850 missing9_seq_LSTM_lb3_transport_v1.json"             "11128276122 missing9_seq_LSTM_lb6_transport_v1.json"
+          do
+            set -- $spec
+            gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/$1/zip" > tmp.zip
+            unzip -q tmp.zip -d inputs/missing9
+          done
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_contextual_high_alarm_rescueability_v1.py
+      - name: Run analysis
+        run: |
+          python gold_axis_2026/tools/gold_monthly_contextual_high_alarm_rescueability_v1.py             --router-json inputs/router/GOLD_MONTHLY_SPECIALIST_FIXED_SHARE_ALARM_ROUTER_V1_2026-09-30.json             --state-json inputs/state/GOLD_MONTHLY_MARKET_STATE_CHHHO_RELIABILITY_AUDIT_V1_2026-09-30.json             --exact16-json inputs/exact16/GOLD_MONTHLY_EXACT16_SAFE_VETO_TRANSPORT_V1_2026-09-30.json             --reference-rows gold_axis_2026/evidence/rbfnn_cross_family/reference_rows.json             --deabc-json inputs/deabc/rbfnn_stage1_de_abc_result.json             --gpr-json inputs/gpr/gpr_lmc2_rbf_m32_result.json             --pls-json inputs/pls/gold_monthly_challenger_b_pls1_v1_result.json             --boost-json inputs/missing9/missing9_boost_transport_v1.json             --svr-json inputs/missing9/missing9_svr_transport_v1.json             --seq-cnnlstm-lb3 inputs/missing9/missing9_seq_CNN_LSTM_lb3_transport_v1.json             --seq-cnnlstm-lb6 inputs/missing9/missing9_seq_CNN_LSTM_lb6_transport_v1.json             --seq-lstm-lb3 inputs/missing9/missing9_seq_LSTM_lb3_transport_v1.json             --seq-lstm-lb6 inputs/missing9/missing9_seq_LSTM_lb6_transport_v1.json             --output-json GOLD_MONTHLY_CONTEXTUAL_HIGH_ALARM_RESCUEABILITY_V1_2026-10-01.json             --output-md GOLD_MONTHLY_CONTEXTUAL_HIGH_ALARM_RESCUEABILITY_V1_2026-10-01.md
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_CONTEXTUAL_HIGH_ALARM_RESCUEABILITY_V1_2026-10-01.json'))
+          assert r['status']=='COMPLETE'
+          assert r['scientific_gate']=='PASS'
+          assert r['coverage']['2026_08']=='EXCLUDED_FULL16_UNAVAILABLE'
+          assert r['periods']['DEV']['warnings']==20
+          assert r['periods']['DEV']['elevated']==10
+          assert r['periods']['DEV']['false']==10
+          assert r['periods']['OPENED_2025_2026_JUL']['warnings']==12
+          assert r['periods']['OPENED_2025_2026_JUL']['elevated']==9
+          assert r['periods']['OPENED_2025_2026_JUL']['false']==3
+          assert r['governance']['production_authorized'] is False
+          assert r['governance']['2025_2026_used_for_selection'] is False
+          print('RESCUEABILITY_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-contextual-high-alarm-rescueability-v1-${{ github.sha }}
+          path: |
+            GOLD_MONTHLY_CONTEXTUAL_HIGH_ALARM_RESCUEABILITY_V1_2026-10-01.json
+            GOLD_MONTHLY_CONTEXTUAL_HIGH_ALARM_RESCUEABILITY_V1_2026-10-01.md
+          if-no-files-found: error
+          retention-days: 90
