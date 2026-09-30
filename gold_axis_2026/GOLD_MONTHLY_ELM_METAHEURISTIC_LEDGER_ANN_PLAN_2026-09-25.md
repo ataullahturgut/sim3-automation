@@ -4826,3 +4826,141 @@ Do not loosen thresholds merely to catch 2026-06.
 
 No forecast correction authorized.
 No routing/model switching authorized.
+
+
+### 18.23 Unified Alarm Matrix V2 — FALSE-CALL ACCOUNTING BINDING
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V2_FALSE_CALL_AUTHORITY_2026-09-30.md`
+- authority commit: `76beeaaeec3d833e78f8a0df6431ed9369eba66a`
+
+Execution:
+- workflow: `Gold Monthly Unified Alarm Matrix V2 False Call`
+- run: **36711349670**
+- artifact: **11093903747**
+- code commit: `37994b3f08676c6bc20e5d9fd81ac07a16051132`
+- workflow commit: `028ddbd75bf5c19f321d54b4ad9d2bc09d1b1a14`
+- artifact digest: `sha256:995f216b3a44d4903b214cfcb7f64335dda70f73e2f6e56f67e7a821744eb949`
+- result report: `gold_axis_2026/GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V2_FALSE_CALL_RESULT_2026-09-30.md`
+- result commit: `54bcb9a60dd1f74113fec636a84c545d27d60f87`
+- scientific gate: **PASS**
+
+#### Binding outcome accounting
+
+APE severity remains:
+- NORMAL <2.5%
+- MEDIUM 2.5%..<3.0%
+- HIGH >=3.0%
+
+For any active signal:
+- HIGH -> HIGH HIT
+- MEDIUM -> MEDIUM HIT
+- NORMAL -> FALSE CALL
+
+MEDIUM is not a false call.
+
+From this checkpoint onward, every alarm-performance report must show:
+- HIGH hits
+- MEDIUM hits
+- NORMAL false calls
+- useful-call rate
+- false-call rate
+- HIGH recall
+
+Recall alone is insufficient.
+
+#### Individual false-call burden
+
+- A: 5 events / 3 HIGH / 0 MEDIUM / **2 false** / false-call rate **40.0%**
+  - false: 2021-11, 2025-12
+- B: 4 / 2 / 0 / **2 false** / **50.0%**
+  - false: 2023-02, 2023-05
+- C: 1 / 0 / 1 / **0 false**
+- D: 1 / 1 / 0 / **0 false**
+- E: 4 / 2 / 2 / **0 false observed**
+  - caution: discovery-period/unvalidated; zero observed false does not equal independent validation
+- G: 3 / 1 / 0 / **2 false** / **66.7%**
+  - false: 2022-08, 2026-07
+- H: 9 / 3 / 3 / **3 false** / **33.3%**
+  - false: 2023-03, 2023-09, 2024-08
+- I1: 2 / 1 / 0 / **1 false** / **50.0%**
+  - false: 2026-04
+- I2: 12 / 5 / 0 / **7 false** / **58.3%**
+  - false: 2022-08, 2022-10, 2022-12, 2023-09, 2023-10, 2023-11, 2026-07
+- T1_WGC: 23 / 6 / 2 / **15 false** / **65.2%**
+  - false: 2021-11, 2022-08, 2022-10, 2022-12, 2023-02, 2023-03, 2023-04, 2023-09, 2023-10, 2023-11, 2023-12, 2024-01, 2024-02, 2024-05, 2026-07
+
+#### Union quality
+
+**T0_STANDARD = A OR B OR C OR D OR H**
+- events 19
+- HIGH 9
+- MEDIUM 3
+- NORMAL false 7
+- useful-call rate **63.2%**
+- false-call rate **36.8%**
+- HIGH recall **52.9%**
+
+False:
+- 2021-11
+- 2023-02
+- 2023-03
+- 2023-05
+- 2023-09
+- 2024-08
+- 2025-12
+
+**T0_ALL_VISIBLE = A/B/C/D/E/G/H/I1/I2**
+- events 34
+- HIGH 16
+- MEDIUM 4
+- NORMAL false 14
+- useful-call rate **58.8%**
+- false-call rate **41.2%**
+- HIGH recall **94.1%**
+
+The high visibility is not acceptable as a single production alarm because it produces 14 normal-month false calls.
+
+**T0_PLUS_T1_STANDARD**
+- events 34
+- HIGH 12
+- MEDIUM 4
+- NORMAL false 18
+- useful-call rate **47.1%**
+- false-call rate **52.9%**
+- HIGH recall **70.6%**
+
+T1 improves coverage but sharply increases false-call burden when treated as an equal hard alarm.
+
+**ANY_VISIBLE**
+- events 40
+- HIGH 16
+- MEDIUM 5
+- NORMAL false **19**
+- useful-call rate **52.5%**
+- false-call rate **47.5%**
+- HIGH recall **94.1%**
+
+Binding interpretation:
+**ANY_VISIBLE is a research visibility map, not a production alarm.**
+
+#### Multi-signal false calls
+
+Even multiple simultaneous warnings can be false:
+
+- 2021-11 — A + T1_WGC — APE 0.462%
+- 2022-08 — G + I2 + T1_WGC — 2.031%
+- 2022-10 — I2 + T1_WGC — 0.193%
+- 2022-12 — I2 + T1_WGC — 1.755%
+- 2023-02 — B + T1_WGC — 1.566%
+- 2023-03 — H + T1_WGC — 2.199%
+- 2023-09 — H + I2 + T1_WGC — 0.281%
+- 2023-10 — I2 + T1_WGC — 1.853%
+- 2023-11 — I2 + T1_WGC — 0.624%
+- 2026-07 — G + I2 + T1_WGC — 2.030%
+
+Therefore signal-count voting cannot be assumed to improve precision.
+
+No new Boolean selection rule was optimized.
+No thresholds were retuned.
+No forecast correction or routing/model switching authorized.
