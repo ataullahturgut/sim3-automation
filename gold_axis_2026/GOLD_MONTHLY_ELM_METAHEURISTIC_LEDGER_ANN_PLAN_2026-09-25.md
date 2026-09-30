@@ -5856,3 +5856,86 @@ Next exact regime-only stage:
 - then re-run expanding vs annual and the 2024/2026 transition checkpoints.
 
 No alarm change before this alignment audit.
+
+
+### 18.31 Prototype-Anchored State Alignment V1 — COMPLETE / LABEL SWITCHING NOT ROOT CAUSE OF 2025-2026
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_PROTOTYPE_ALIGNMENT_V1_AUTHORITY_2026-09-30.md`
+- authority commits: `c8dd339c809fb28fd34a6b9d24fc93b3a0953a8f`, `6a7ac5ee9880e737b75d4ae4562fdc0b333d04cf`
+
+Execution:
+- workflow: `Gold Monthly Market Regime Prototype Alignment V1`
+- run: **36733309569**
+- artifact: **11106235879**
+- artifact digest: `sha256:d26fbdffcc6e1c3409293e754fac0a8bdc2830f68b236d65e93dc2567b5ad1c4`
+- code commit: `d2f61b77f4beff22e16e562a0d79cd391dee0651`
+- workflow commit: `2d8f068ee98fc96f1e6df8ef449fe748b0e83e13`
+- result report: `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_PROTOTYPE_ALIGNMENT_V1_RESULT_2026-09-30.md`
+- result commit: `ae6b951aaf67829c29e0f05ef8ecb005c6960a38`
+- scientific gate: **PASS**
+
+Method:
+- frozen semantic prototypes from 2010-07..2024-12 Discovery V1 R0/R1/R2;
+- all 13 market-state features;
+- frozen development-period standardization;
+- each refitted latent state represented by posterior-weighted 13D training profile;
+- one-to-one Hungarian minimum-distance alignment;
+- alignment changes semantic labels only; HMM parameters, posterior probabilities, OOD and predictive log scores are invariant.
+
+Core 2022-01..2026-08:
+
+EXPANDING_REFIT old Gold_r1 ordering:
+- strict accuracy **68.6%**
+- balanced accuracy **61.2%**
+- decided-only **76.1%**
+- R0/R1/R2 recall **44.4 / 47.1 / 92.0%**
+
+EXPANDING_REFIT prototype aligned:
+- strict accuracy **76.5%**
+- balanced accuracy **70.8%**
+- decided-only **84.8%**
+- R0/R1/R2 recall **55.6 / 64.7 / 92.0%**
+- semantic changes **7/56 = 12.5%**
+- changed core months: 2022-04, 2022-12, 2023-02, 2023-05..08.
+
+ANNUAL_ANCHORED:
+- old and prototype results **identical**
+- strict accuracy **68.6%**
+- balanced **53.6%**
+- R0/R1/R2 recall **0.0 / 64.7 / 96.0%**
+- semantic changes **0/56**.
+
+Full replay 2015-07..2026-08:
+- EXPANDING prototype strict accuracy **70.4%** vs old 65.6%
+- balanced **67.5%** vs old 63.0%
+- decided-only **74.6%** vs old 69.5%
+- prototype R0/R1/R2 recall **50.0 / 61.1 / 91.5%**
+- semantic changes **9/134 = 6.7%**
+- ANNUAL old/prototype identical across all 134 months.
+
+Critical 2025-01..2026-08 transport:
+- EXPANDING prototype semantic changes **0/20**
+- ANNUAL prototype semantic changes **0/20**
+- therefore the current 2025/2026 problem is **not** caused by state-label switching.
+
+2026 prototype-aligned checkpoint:
+- EXPANDING: Apr R2 98.4%, May R2 70.9%, Jun R2 79.4%, Jul BELIRSIZ/R1 50.8%, Aug R1 94.8%.
+- ANNUAL: Apr R2 97.8%, May BELIRSIZ/R2 50.8%, Jun **R0 82.4%**, Jul **R0 76.6%**, Aug R1 97.5%.
+- 13D prototype matching confirms annual Jun/Jul latent state is closest to historical R0; these R0 calls are not a naming swap.
+
+2024 R1->R2 checkpoint unchanged:
+- 2024-03 R1
+- 2024-04 BELIRSIZ / underlying R2
+- 2024-05 R2
+- 1-month delay.
+
+Binding conclusion:
+- semantic label switching is real in some retrospective expanding-refit months and prototype alignment improves historical semantic consistency;
+- **but it is not the root cause of 2025-2026 transition behavior**;
+- remaining problem is regime dynamics / transition detection.
+
+Binding decision:
+- do not spend another stage only changing state names;
+- do not move to alarm weighting/suppression;
+- next exact regime-only stage = **Transition / Change Detector V1** alongside HMM, using market-state variables only, to detect departure from the incumbent regime before forcing a new R-state.
