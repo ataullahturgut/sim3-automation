@@ -1,0 +1,58 @@
+name: Gold Monthly ETF I2 Episode Robustness V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_etf_i2_episode_robustness_v1.py
+      - .github/workflows/gold-monthly-etf-i2-episode-robustness-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  robust:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install 'numpy>=2.0,<3' 'pandas>=2.2,<3' 'openpyxl>=3.1,<4' 'requests>=2.32,<3' 'lxml>=5,<7'
+      - name: Download recurrence artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11091154474/zip" > rec.zip
+          unzip -q rec.zip -d inputs
+          test -s inputs/GOLD_MONTHLY_ETF_I1_I2_HISTORICAL_RECURRENCE_V1_2026-09-30.json
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_etf_i2_episode_robustness_v1.py
+      - name: Run episode robustness
+        run: |
+          python gold_axis_2026/tools/gold_monthly_etf_i2_episode_robustness_v1.py \
+            --input inputs/GOLD_MONTHLY_ETF_I1_I2_HISTORICAL_RECURRENCE_V1_2026-09-30.json \
+            --output GOLD_MONTHLY_ETF_I2_EPISODE_ROBUSTNESS_V1_2026-09-30.json
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_ETF_I2_EPISODE_ROBUSTNESS_V1_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['governance']['I2_threshold_changed'] is False
+          assert r['governance']['serial_dependence_addressed'] is True
+          assert r['stats']['HISTORICAL_2010_2020']['events'] >= 2
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps(r['stats'],sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-etf-i2-episode-robustness-v1-${{ github.sha }}
+          path: GOLD_MONTHLY_ETF_I2_EPISODE_ROBUSTNESS_V1_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
