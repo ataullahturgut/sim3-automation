@@ -1,0 +1,90 @@
+name: Gold Monthly Market Regime Transition V3 Duration Aware
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_market_regime_transition_v3_duration_aware.py
+      - .github/workflows/gold-monthly-market-regime-transition-v3-duration-aware.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  transition-v3:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install
+        run: |
+          python -m pip install             'numpy>=2.0,<3' 'pandas>=2.2,<3' 'scipy>=1.13,<2'             'scikit-learn>=1.5,<2' 'hmmlearn>=0.3.3,<0.4'             'ruptures>=1.1.9,<2' 'requests>=2.32,<3'             'openpyxl>=3.1,<4' 'lxml>=5,<7'
+
+      - name: Download frozen regime artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/discovery inputs/prototype inputs/v2
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11097041821/zip" > discovery.zip
+          unzip -q discovery.zip -d inputs/discovery
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11106235879/zip" > prototype.zip
+          unzip -q prototype.zip -d inputs/prototype
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11114806383/zip" > v2.zip
+          unzip -q v2.zip -d inputs/v2
+          test -f inputs/discovery/GOLD_MONTHLY_MARKET_REGIME_DISCOVERY_V1_2026-09-30.json
+          test -f inputs/prototype/GOLD_MONTHLY_MARKET_REGIME_PROTOTYPE_ALIGNMENT_V1_2026-09-30.json
+          test -f inputs/v2/GOLD_MONTHLY_MARKET_REGIME_TRANSITION_DETECTOR_V2_2026-09-30.json
+
+      - name: Compile
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_monthly_market_regime_transition_v3_duration_aware.py
+
+      - name: Run V3
+        run: |
+          cd gold_axis_2026/tools
+          python gold_monthly_market_regime_transition_v3_duration_aware.py             --regime-discovery-json ../../inputs/discovery/GOLD_MONTHLY_MARKET_REGIME_DISCOVERY_V1_2026-09-30.json             --prototype-alignment-json ../../inputs/prototype/GOLD_MONTHLY_MARKET_REGIME_PROTOTYPE_ALIGNMENT_V1_2026-09-30.json             --transition-v2-json ../../inputs/v2/GOLD_MONTHLY_MARKET_REGIME_TRANSITION_DETECTOR_V2_2026-09-30.json             --output ../../GOLD_MONTHLY_MARKET_REGIME_TRANSITION_V3_DURATION_AWARE_2026-09-30.json
+
+      - name: Scientific governance gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_MARKET_REGIME_TRANSITION_V3_DURATION_AWARE_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['scientific_gate']=='PASS'
+          assert r['calibration_freeze']['rule_frozen_before_2022_plus_rows'] is True
+          assert r['underlying_regime_reproduction']['EXPANDING_REFIT']['pass'] is True
+          assert r['underlying_regime_reproduction']['ANNUAL_ANCHORED']['pass'] is True
+          assert r['metrics']['calibration_2015_07_2021_12']['EXPANDING_REFIT']['n_months']==78
+          assert r['metrics']['validation_2022_01_2024_12']['EXPANDING_REFIT']['n_months']==36
+          assert r['metrics']['transport_2025_01_2026_08']['EXPANDING_REFIT']['n_months']==20
+          g=r['governance']
+          assert g['forecast_used'] is False
+          assert g['forecast_error_used'] is False
+          assert g['alarm_labels_used'] is False
+          assert g['v3_rule_tuned_on_2022_plus'] is False
+          assert g['alarm_selection_tested'] is False
+          assert g['alarm_weighting_tested'] is False
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            'selected_rule':r['selected_rule'],
+            'selection':r['calibration_freeze']['selection'],
+            'promotion_gate':r['promotion_gate'],
+            'calibration':r['metrics']['calibration_2015_07_2021_12'],
+            'validation':r['metrics']['validation_2022_01_2024_12'],
+            'transport':r['metrics']['transport_2025_01_2026_08'],
+            'key_checkpoints':r['key_checkpoints'],
+          },sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-market-regime-transition-v3-duration-aware-${{ github.sha }}
+          path: GOLD_MONTHLY_MARKET_REGIME_TRANSITION_V3_DURATION_AWARE_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
