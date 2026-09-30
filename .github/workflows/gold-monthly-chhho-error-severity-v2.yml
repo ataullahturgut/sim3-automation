@@ -1,0 +1,75 @@
+name: Gold Monthly ChHHO Error Severity V2
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_chhho_error_severity_v2.py
+      - .github/workflows/gold-monthly-chhho-error-severity-v2.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install 'numpy>=2.0,<3' 'pandas>=2.2,<3' 'requests>=2.32,<3' 'openpyxl>=3.1,<4' 'xlrd>=2.0,<3' 'lxml>=5,<7'
+      - name: Download frozen authorities
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/snapshot inputs/public inputs/chhho inputs/transport inputs/predev inputs/external
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > snapshot.zip
+          unzip -q snapshot.zip -d inputs/snapshot
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11015874673/zip" > public.zip
+          unzip -q public.zip -d inputs/public
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10989389723/zip" > chhho.zip
+          unzip -q chhho.zip -d inputs/chhho
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11042740289/zip" > transport.zip
+          unzip -q transport.zip -d inputs/transport
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11084467079/zip" > predev.zip
+          unzip -q predev.zip -d inputs/predev
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11028494060/zip" > external.zip
+          unzip -q external.zip -d inputs/external
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_error_severity_v2.py
+      - name: Run severity audit
+        run: |
+          python gold_axis_2026/tools/gold_monthly_chhho_error_severity_v2.py \
+            --snapshot inputs/snapshot/gold_monthly_dev_snapshot_v1.json \
+            --public-bundle inputs/public/gold_monthly_public_current_bundle_v1.json \
+            --chhho inputs/chhho/anfis_stage3c_chhho_result.json \
+            --transport inputs/transport/GOLD_MONTHLY_CHHHO_VIX_R1_FROZEN_TRANSPORT_2025_2026_2026-09-29.json \
+            --predev inputs/predev/GOLD_MONTHLY_CHHHO_PREDEV_CURRENTGPR_V2_2026-09-30.json \
+            --external inputs/external/gold_monthly_external_authority_v2.json \
+            --output GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V2_2026-09-30.json
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V2_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['thresholds']['medium_pp']==2.5
+          assert r['thresholds']['high_pp']==3.0
+          assert r['governance']['thresholds_retuned_from_outcomes'] is False
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            'severity_by_period':r['severity_by_period'],
+            'all_high':r['scores']['ALL_USABLE']['HIGH']['ABCDH']
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-chhho-error-severity-v2-${{ github.sha }}
+          path: GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V2_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
