@@ -1,0 +1,84 @@
+name: Gold Monthly Alarm Regime V2 Reliability Audit V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_alarm_regime_v2_reliability_audit_v1.py
+      - .github/workflows/gold-monthly-alarm-regime-v2-reliability-audit-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Download frozen inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/alarm inputs/v2
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11097775756/zip" > alarm.zip
+          unzip -q alarm.zip -d inputs/alarm
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11114806383/zip" > v2.zip
+          unzip -q v2.zip -d inputs/v2
+          test -f inputs/alarm/GOLD_MONTHLY_R0_R1_R2_REGIME_ALARM_AUDIT_V1_2026-09-30.json
+          test -f inputs/v2/GOLD_MONTHLY_MARKET_REGIME_TRANSITION_DETECTOR_V2_2026-09-30.json
+
+      - name: Compile
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_monthly_alarm_regime_v2_reliability_audit_v1.py
+
+      - name: Run audit
+        run: |
+          python gold_axis_2026/tools/gold_monthly_alarm_regime_v2_reliability_audit_v1.py             --alarm-audit-json inputs/alarm/GOLD_MONTHLY_R0_R1_R2_REGIME_ALARM_AUDIT_V1_2026-09-30.json             --transition-v2-json inputs/v2/GOLD_MONTHLY_MARKET_REGIME_TRANSITION_DETECTOR_V2_2026-09-30.json             --output GOLD_MONTHLY_ALARM_REGIME_V2_RELIABILITY_AUDIT_V1_2026-09-30.json
+
+      - name: Scientific governance gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_ALARM_REGIME_V2_RELIABILITY_AUDIT_V1_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['scientific_gate']=='PASS'
+          assert r['primary_schedule']=='EXPANDING_REFIT'
+          assert r['join_contract']['market_state_join_key']=='forecast origin month t'
+          assert r['join_contract']['target_month_v2_state_used'] is False
+          assert r['periods']['DEV_2022_04_2024_12']['n']==33
+          assert r['periods']['OPENED_2025']['n']==12
+          assert r['periods']['OPENED_2026']['n']==8
+          assert r['periods']['OPENED_2025_2026']['n']==20
+          assert r['periods']['FULL_COMMON']['n']==58
+          g=r['governance']
+          assert g['v2_retrained_or_retuned'] is False
+          assert g['alarm_thresholds_changed'] is False
+          assert g['alarm_selection_performed'] is False
+          assert g['alarm_weighting_performed'] is False
+          assert g['target_month_v2_state_used'] is False
+          assert g['2025_2026_used_for_tuning'] is False
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            'primary_union_facts':r['primary_union_facts'],
+            'dev_cells':r['periods']['DEV_2022_04_2024_12']['state_cell_counts'],
+            'opened_cells':r['periods']['OPENED_2025_2026']['state_cell_counts'],
+            'dev_same_regime':r['periods']['DEV_2022_04_2024_12']['stable_vs_transition_by_regime'],
+            'opened_same_regime':r['periods']['OPENED_2025_2026']['stable_vs_transition_by_regime'],
+            'full_transition_context':r['periods']['FULL_COMMON']['transition_reference_context'],
+            'transition_flagged_rows':r['transition_flagged_rows_full_common'],
+          },sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-alarm-regime-v2-reliability-audit-v1-${{ github.sha }}
+          path: GOLD_MONTHLY_ALARM_REGIME_V2_RELIABILITY_AUDIT_V1_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
