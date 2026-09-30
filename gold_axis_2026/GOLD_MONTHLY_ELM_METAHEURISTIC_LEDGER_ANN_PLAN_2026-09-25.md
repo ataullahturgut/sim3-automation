@@ -3524,3 +3524,125 @@ Binding interpretation:
 - E and G must not be counted as independently validated hard alarms when quoting alarm-system performance.
 - No threshold retuning.
 - No routing/model switching from E/G.
+
+
+### 18.14 Historical ChHHO performance audit — COMPLETE / H1 MODEL-SPECIFIC ALARM EVIDENCE DOWNGRADED
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_CHHHO_HISTORICAL_PERFORMANCE_AUDIT_AUTHORITY_2026-09-30.md`
+- authority commit: `9e260efc73b421b79ecea8f0f8217e1f5bf00e81`
+
+Execution:
+- workflow: `Gold Monthly ChHHO Historical Performance Audit V1`
+- run: **36698427012**
+- artifact: **11088508878**
+- code commit: `1ac65d66871f5edacdac4dd108395958bd17e434`
+- workflow commit: `ed43d05a7ae9ff41c50c2eebd0639088d048ce08`
+- result report: `gold_axis_2026/GOLD_MONTHLY_CHHHO_HISTORICAL_PERFORMANCE_AUDIT_RESULT_2026-09-30.md`
+- report commit: `7eef51f8b5f90bfcccc41bc0550b824bbfed8991`
+- scientific gate: **PASS**
+
+#### H1 counterfactual 2013-09..2021-10
+
+The unchanged ChHHO was run for every feasible historical target using the current-method GPR snapshot as a truncated counterfactual history.
+
+Performance:
+- n = **98**
+- ΣAE = **6141.85 USD**
+- MAE = **62.67 USD**
+- MAPE = **4.65%**
+- RMSE = **155.06 USD**
+- direction = **54/98 = 55.1%**
+- relative MAE vs RW = **1.90**
+- HIGH_AE = **25/98**
+- worst target = **2019-03**, AE **1290.22 USD**, APE **99.17%**
+
+Binding interpretation:
+- H1 is **not an effective historical forecast baseline**.
+- H1 is materially worse than random walk and contains catastrophic extrapolation/numerical-instability cases.
+- H1 must not be used as strong ChHHO-specific alarm validation evidence.
+
+Worst-path numerical examples:
+- 2019-03 forecast 10.78 vs actual 1301, predicted log return -4.8077, design condition ≈ 2.32e24.
+- 2015-03 design condition ≈ 5.55e33.
+- 2020-04 design condition ≈ 1.65e18.
+- 2014-02 condition ≈ 5.10e6.
+
+#### H2 valid same-method pre-DEV 2021-11..2022-03
+
+- n = 5
+- ΣAE = **208.32 USD**
+- MAE = **41.66 USD**
+- MAPE = **2.29%**
+- direction = **2/5 = 40%**
+- relative MAE vs RW = **0.886**
+- HIGH_AE = **1/5**
+- worst = 2021-12, AE 85.62
+
+Small sample but not globally pathological.
+
+#### H3 frozen canonical DEV 2022-04..2024-12
+
+- n = 33
+- ΣAE = **1413.03 USD**
+- MAE = **42.82 USD**
+- MAPE = **2.11%**
+- RMSE = **54.83 USD**
+- direction = **23/33 = 69.7%**
+- relative MAE vs RW = **0.804**
+- HIGH_AE = **8/33**
+
+This is the effective/governed model block.
+
+#### H1 HIGH_AE targets
+
+2013-09, 2013-10, 2013-11,
+2014-01, 2014-02, 2014-03, 2014-09,
+2015-01, 2015-03,
+2016-02, 2016-03, 2016-10,
+2019-03, 2019-06, 2019-08, 2019-10, 2019-11,
+2020-03, 2020-04, 2020-07, 2020-12,
+2021-03, 2021-04, 2021-06, 2021-08.
+
+#### H2/H3 HIGH_AE targets
+
+H2:
+- 2021-12.
+
+H3:
+- 2022-05
+- 2022-07
+- 2022-11
+- 2023-01
+- 2023-08
+- 2024-03
+- 2024-07
+- 2024-11
+
+#### E/G model-specific occurrences in usable historical blocks
+
+**E**
+- 2020-09: E-level TRUE, full E TRUE; AE 26.68 — NOT high error.
+- 2024-11: E-level TRUE, full E FALSE; AE 119.13 — high error via D mechanism.
+- 2011-09 and 2011-10 E-level targets are model-unbuildable under unchanged ChHHO.
+
+**G**
+- 2017-01: G TRUE; AE 33.75 — NOT high error.
+- 2022-08: G TRUE; AE 35.85 — NOT high error.
+- 2013-05/06/07/08 G targets are model-unbuildable under unchanged ChHHO.
+
+Later discovery-period full-E targets:
+- 2025-05, 2025-11, 2026-01, 2026-03 — high error.
+
+Later discovery-period G targets:
+- 2026-07, 2026-08 — high error.
+
+#### Revised governance
+
+- H1 counterfactual model-specific E/G results = exploratory diagnostics only.
+- G's independent market-state history remains valid and supports G as a high-movement/uncertainty regime warning.
+- E remains an unvalidated ChHHO-error alarm.
+- G remains unvalidated as a ChHHO-error alarm.
+- H2/H3 and frozen later transport remain the legitimate model-performance reference blocks.
+- No threshold retuning.
+- No routing/model switching.
