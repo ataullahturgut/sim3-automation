@@ -7,9 +7,9 @@ import gold_monthly_chhho_alarm_audit_v3 as v3
 import gold_monthly_chhho_efg_alarm_audit_v1 as efg
 import gold_monthly_chhho_miss_mechanism_screen_v2 as ms
 
-HIGH_AE=63.06
-HIGH_APE=2.96117
-HIGH_RET_PP=3.00590
+APPROX_HIGH_AE=63.06
+APPROX_HIGH_APE=2.96117
+APPROX_HIGH_RET_PP=3.00590
 
 H_MMNET_CHG=0.1499821
 H_OI_PCT=0.149766
@@ -43,10 +43,7 @@ def combine_forecasts(pre,ch,transport,gold_map):
         ape=ae/actual*100.0
         re=abs(pred-ar)*100.0
         z.update({
-            'rw':rw,'ae':ae,'ape_pct':ape,'return_error_pp':re,
-            'high_ae':bool(ae>HIGH_AE),
-            'high_ape':bool(ape>HIGH_APE),
-            'high_return_error':bool(re>HIGH_RET_PP)
+            'rw':rw,'ae':ae,'ape_pct':ape,'return_error_pp':re
         })
         out[z['target']]=z
     return out
@@ -105,8 +102,6 @@ def main():
             'forecast':float(r['forecast']),'actual':float(r['actual']),'rw':float(r['rw']),
             'ae':float(r['ae']),'ape_pct':float(r['ape_pct']),
             'return_error_pp':float(r['return_error_pp']),
-            'high_ae':bool(r['high_ae']),'high_ape':bool(r['high_ape']),
-            'high_return_error':bool(r['high_return_error']),
             'A':fl['A'],'B':fl['B'],'C':fl['C'],'D':fl['D'],'E':fl['E'],'G':fl['G'],
             'H':H,
             'ACD':bool(fl['A'] or fl['C'] or fl['D']),
@@ -118,6 +113,25 @@ def main():
             'FLOW_2OF4':bool(x.FLOW_2OF4),
         }
         rows.append(row)
+
+    # Freeze exact DEV Q3 thresholds from the authoritative 33-row DEV distribution.
+    # This avoids boundary changes caused only by rounded display constants.
+    dev_rows=[r for r in rows if '2022-04'<=r['target']<='2024-12']
+    if len(dev_rows)!=33:
+        raise RuntimeError(('DEV_ROW_COUNT',len(dev_rows)))
+    exact_high_ae=float(pd.Series([r['ae'] for r in dev_rows]).quantile(.75))
+    exact_high_ape=float(pd.Series([r['ape_pct'] for r in dev_rows]).quantile(.75))
+    exact_high_ret=float(pd.Series([r['return_error_pp'] for r in dev_rows]).quantile(.75))
+    if abs(exact_high_ae-APPROX_HIGH_AE)>.05:
+        raise RuntimeError(('AE_Q3_DRIFT',exact_high_ae))
+    if abs(exact_high_ape-APPROX_HIGH_APE)>.001:
+        raise RuntimeError(('APE_Q3_DRIFT',exact_high_ape))
+    if abs(exact_high_ret-APPROX_HIGH_RET_PP)>.001:
+        raise RuntimeError(('RETURN_Q3_DRIFT',exact_high_ret))
+    for r in rows:
+        r['high_ae']=bool(r['ae']>exact_high_ae)
+        r['high_ape']=bool(r['ape_pct']>exact_high_ape)
+        r['high_return_error']=bool(r['return_error_pp']>exact_high_ret)
 
     periods={
         'PREDEV_VALID':('2021-11','2022-03'),
@@ -153,9 +167,12 @@ def main():
         'status':'COMPLETE',
         'primary_alarm_error_label':'HIGH_RETURN_ERROR',
         'thresholds':{
-            'high_return_error_pp_gt':HIGH_RET_PP,
-            'high_ape_pct_gt':HIGH_APE,
-            'high_ae_usd_gt':HIGH_AE,
+            'high_return_error_pp_gt_exact_dev_q3':exact_high_ret,
+            'high_ape_pct_gt_exact_dev_q3':exact_high_ape,
+            'high_ae_usd_gt_exact_dev_q3':exact_high_ae,
+            'display_reference_return_error_pp':APPROX_HIGH_RET_PP,
+            'display_reference_ape_pct':APPROX_HIGH_APE,
+            'display_reference_ae_usd':APPROX_HIGH_AE,
             'H_mmnet_oi_monthly_abs_change_ge':H_MMNET_CHG,
             'H_oi_monthly_abs_pct_change_ge':H_OI_PCT,
         },
