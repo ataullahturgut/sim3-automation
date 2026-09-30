@@ -165,9 +165,14 @@ def annual_anchored_rows(panel: pd.DataFrame, months: list[str]):
 
     rows = []
     for year in sorted(by_year):
-        anchor_end = f"{year-1}-12"
+        if year == 2015:
+            anchor_end = "2015-06"
+            future_start = "2015-07"
+        else:
+            anchor_end = f"{year-1}-12"
+            future_start = f"{year}-01"
         train = panel.loc[panel.index <= anchor_end].copy()
-        year_months = [m for m in panel.index if f"{year}-01" <= m <= min(f"{year}-12", END)]
+        year_months = [m for m in panel.index if future_start <= m <= min(f"{year}-12", END)]
         future = panel.loc[year_months].copy()
         fit = fit_frozen(train)
         scored = score_sequence(fit, train, future)
