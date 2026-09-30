@@ -1,0 +1,81 @@
+name: Gold Monthly Specialist Fixed Share Alarm Router V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_specialist_fixed_share_alarm_router_v1.py
+      - .github/workflows/gold-monthly-specialist-fixed-share-alarm-router-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Download frozen audit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/audit
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11120035621/zip" > audit.zip
+          unzip -q audit.zip -d inputs/audit
+          test -f inputs/audit/GOLD_MONTHLY_ALARM_REGIME_V2_RELIABILITY_AUDIT_V1_2026-09-30.json
+
+      - name: Compile
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_monthly_specialist_fixed_share_alarm_router_v1.py
+
+      - name: Run router
+        run: |
+          python gold_axis_2026/tools/gold_monthly_specialist_fixed_share_alarm_router_v1.py             --audit-json inputs/audit/GOLD_MONTHLY_ALARM_REGIME_V2_RELIABILITY_AUDIT_V1_2026-09-30.json             --output GOLD_MONTHLY_SPECIALIST_FIXED_SHARE_ALARM_ROUTER_V1_2026-09-30.json
+
+      - name: Scientific governance gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_SPECIALIST_FIXED_SHARE_ALARM_ROUTER_V1_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['scientific_gate']=='PASS'
+          assert r['grid']['candidate_count']==100
+          assert r['selection_contract']['uses_2025_2026'] is False
+          assert r['periods']['DEV_2022_04_2024_12']['n']==33
+          assert r['periods']['OPENED_2025']['n']==12
+          assert r['periods']['OPENED_2026']['n']==8
+          assert r['periods']['OPENED_2025_2026']['n']==20
+          g=r['governance']
+          assert g['raw_alarm_definitions_changed'] is False
+          assert g['v2_retuned'] is False
+          assert g['regime_used_in_router'] is False
+          assert g['2025_2026_used_for_eta_alpha_tau_selection'] is False
+          assert g['posthoc_grid_values_added'] is False
+          assert g['forecast_modified'] is False
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            'grid':r['grid'],
+            'selection_status':r['selection_status'],
+            'selected_candidate':r['selected_candidate'],
+            'best_hedge_candidate':r['best_hedge_candidate'],
+            'promotion_gate':r['promotion_gate'],
+            'dev_baselines':r['dev_baselines'],
+            'opened_2025':r['periods']['OPENED_2025'],
+            'opened_2026':r['periods']['OPENED_2026'],
+            'opened_2025_2026':r['periods']['OPENED_2025_2026'],
+          },sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-specialist-fixed-share-alarm-router-v1-${{ github.sha }}
+          path: GOLD_MONTHLY_SPECIALIST_FIXED_SHARE_ALARM_ROUTER_V1_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
