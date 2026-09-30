@@ -2769,3 +2769,225 @@ Canonical gold-DMA settings:
 - Gold-only canonical target in the first pass.
 
 No production DMA-family result is authoritative before Stage 0 chronology/probability/scientific gates pass.
+
+
+---
+
+## 18. ChHHO HIGH-ERROR ALARM RESEARCH — FROZEN CHECKPOINT 2026-09-30
+
+**Status:** ALARM-DETECTION RESEARCH ACTIVE / ROUTING NOT AUTHORIZED  
+**Primary model:** ChHHO-ANFIS  
+**Selection authority:** DEV 2022-04..2024-12 (33 target months)  
+**Transport/reporting only:** 2025 and 2026  
+**Alarm target for current audit:** HIGH ERROR = ChHHO AE > frozen DEV Q3 = **63.06 USD**
+
+### 18.1 Scope and governance
+
+This work answers only:
+
+> Can an origin-visible warning state identify a month in which ChHHO has elevated error risk before the target month begins?
+
+It does **not** authorize:
+- switching to another model;
+- fallback selection;
+- routing/blending;
+- retuning A/C/D on 2025/2026;
+- moving thresholds merely to catch a known miss;
+- claiming post-hoc discovery rules as validated out-of-sample alarms.
+
+A/C/D below remain the DEV-derived frozen mechanisms.  
+B remains warning-only because it produced extra DEV alarms.  
+E/G were discovered after inspecting later misses and are therefore **candidate characterization layers frozen only for historical validation**, not production alarms.
+
+### 18.2 Frozen / candidate alarm definitions
+
+#### A — CROSS_METAL_FRAGILITY — FROZEN STRONG MODEL-INTERACTION ALARM
+At origin:
+- ChHHO forecast direction = current Gold monthly direction;
+- |Gold monthly log return| < 2%;
+- at least 2 of Silver / Platinum / Palladium move opposite to Gold.
+
+DEV exact flags:
+- 2022-11 — AE 102.20
+- 2023-08 — AE 77.53
+
+Transport:
+- 2025-09 — HIT, AE 288.42
+- 2025-12 — HIT, AE 93.32
+- 2026-05 — FALSE ALARM, AE 55.10
+
+Current reading: strong ChHHO-specific relationship alarm; not a universal market-stress alarm.
+
+#### B — SUPPORTED_MOMENTUM_UNDERREACTION — WARNING ONLY
+At origin:
+- Gold monthly log return > +3%;
+- at least 2 other precious metals positive;
+- Broad USD monthly mean log change < 0;
+- nominal 10Y monthly-mean change < 0;
+- real 10Y monthly-mean change < 0;
+- ChHHO predicted Gold move <= +1%.
+
+DEV:
+- intended hit 2023-01 — AE 100.74
+- extra flags 2023-02 — AE 29.06
+- 2023-05 — AE 19.38
+
+Transport:
+- 2025-03 — HIT, AE 119.06
+
+Status: confidence reduction / yellow warning only; not a hard alarm.
+
+#### C — DELAYED_RATES_CATCHUP — FROZEN STRONG BUT LOW-EVENT ALARM
+At origin:
+- Gold monthly log return < 0;
+- nominal 10Y monthly-mean change < 0;
+- real 10Y monthly-mean change < 0;
+- |ChHHO predicted Gold move| < 1%.
+
+DEV exact flag:
+- 2024-07 — AE 71.01
+
+No 2025/2026 transport event yet.
+
+#### D — MACRO_GOLD_CONFLICT — FROZEN STRONG BUT RARE ALARM
+At origin:
+- Gold monthly log return > +3%;
+- Broad USD monthly mean log change > 0;
+- nominal 10Y monthly-mean change > 0;
+- real 10Y monthly-mean change > 0;
+- ChHHO predicts UP.
+
+DEV exact flag:
+- 2024-11 — AE 119.13
+
+No 2025/2026 transport event yet.
+
+#### E — EXTREME_LEVEL_MODEL_DISAGREEMENT — CANDIDATE / DISCOVERY-FROZEN
+For the historical-validation exercise only, freeze:
+- Gold monthly-average price > 20% above trailing 12-month average; and
+- |ChHHO predicted return − current Gold 1m return| > 5 percentage points.
+
+Observed later high-error flags:
+- 2025-05 — AE 90.25
+- 2025-11 — AE 163.94
+- 2026-01 — AE 458.50
+- 2026-03 — AE 145.62
+
+All four observed flags are high-error, but this **is not validated precision** because the rule was discovered after inspecting later misses.
+
+Independent market-state history, 2011-2021:
+- extreme-level >20% events: 3
+- next-month high-severity market states: 3/3
+- interpretation: direction is not fixed; magnitude/extrapolation risk is elevated.
+
+#### G — POST_LIQUIDATION_HIGH_UNCERTAINTY — CANDIDATE / DISCOVERY-FROZEN
+For historical validation only, freeze:
+- trailing 3-month Gold monthly-average log return <= -10%.
+
+Observed ChHHO-period flags:
+- 2022-08 — AE 35.85 — FALSE ALARM
+- 2026-07 — AE 82.68 — HIT
+- 2026-08 — AE 347.99 — HIT
+
+Independent market-state history, 2011-2021:
+- 3m <= -10% events: 5
+- next-month high-severity states: 4/5
+- mean next-month absolute Gold move about 4.53% vs about 2.63% baseline.
+
+**Do not relax to -8% merely to catch 2026-06.** Historical selectivity deteriorates materially when the drawdown threshold is loosened.
+
+### 18.3 Current five-alarm audit, 2022-04..2026-08
+
+Hard/current research set = A OR C OR D OR E OR G.  
+B is excluded from hard-alarm counts and retained as warning-only.
+
+Alarm months:
+
+| Target | Mechanism | ChHHO AE USD | Frozen high-error? | Result |
+|---|---|---:|---|---|
+| 2022-08 | G | 35.85 | NO | FALSE ALARM |
+| 2022-11 | A | 102.20 | YES | HIT |
+| 2023-08 | A | 77.53 | YES | HIT |
+| 2024-07 | C | 71.01 | YES | HIT |
+| 2024-11 | D | 119.13 | YES | HIT |
+| 2025-05 | E | 90.25 | YES | HIT |
+| 2025-09 | A | 288.42 | YES | HIT |
+| 2025-11 | E | 163.94 | YES | HIT |
+| 2025-12 | A | 93.32 | YES | HIT |
+| 2026-01 | E | 458.50 | YES | HIT |
+| 2026-03 | E | 145.62 | YES | HIT |
+| 2026-05 | A | 55.10 | NO | FALSE ALARM |
+| 2026-07 | G | 82.68 | YES | HIT |
+| 2026-08 | G | 347.99 | YES | HIT |
+
+Period summary:
+
+| Period | High-error months | Hard alarms | Hits | False alarms | High-error recall |
+|---|---:|---:|---:|---:|---:|
+| DEV 2022-04..2024-12 | 8 | 5 | 4 | 1 | 4/8 = 50% |
+| 2025 | 8 | 4 | 4 | 0 | 4/8 = 50% |
+| 2026 Jan-Aug | 5 | 5 | 4 | 1 | 4/5 = 80% |
+
+**Governance note:** the 2025/2026 result above is descriptive research evidence only. E and G were discovered after observing later misses; therefore the combined 4/5 2026 recall must **not** be described as an out-of-sample validated alarm-system performance.
+
+### 18.4 Negative / closed alarm branches
+
+Gold-specific ETF flows, CFTC Managed Money positioning and GVZ were already researched.
+
+Broad F-style screens were not selective enough to promote as a general ChHHO high-error alarm:
+- loose OR combinations produced too many alerts;
+- stricter 2-of-3 / 3-of-3 combinations lost recall;
+- historical tests showed general stress/regime information, not a clean ChHHO-specific failure detector.
+
+Status:
+- **ETF/CFTC/GVZ = COMPLETED SECONDARY DESCRIPTORS / NOT PROMOTED AS GENERAL ALARM**
+- do not restart this branch without a new scientific question.
+
+### 18.5 Unresolved case
+
+**2026-06 — ChHHO AE 362.17 USD**
+
+Origin 2026-05:
+- Gold about -2.82% 1m;
+- about -8.88% 3m;
+- ChHHO near flat;
+- not E;
+- not G at the frozen -10% threshold;
+- not A/C/D.
+
+This case remains intentionally unresolved. Existing alarm thresholds must not be distorted to force a hit.
+
+### 18.6 Current alarm hierarchy
+
+**Primary strong/current research alarms**
+1. A — Cross-metal fragility
+2. E — Extreme level + ChHHO disagreement
+3. G — Post-liquidation high uncertainty
+
+**Strong but low-event support alarms**
+4. C — Delayed rates catch-up
+5. D — Macro-Gold conflict
+
+**Warning-only**
+6. B — Supported momentum underreaction
+
+### 18.7 Next binding experiment — historical ChHHO backcast
+
+Before any routing/fallback experiment:
+
+1. Reconstruct ChHHO forecasts for the earliest scientifically feasible pre-DEV history, target **2018-01..2021-12** if minimum training-history constraints permit.
+2. Every historical origin must use only information available by that origin; no future labels, no 2022+ fitting, and no target-month leakage.
+3. Keep A/C/D unchanged.
+4. Keep E/G thresholds exactly at the discovery-frozen values above; no threshold search on backcast results.
+5. Report per mechanism:
+   - alarms,
+   - high-error hits,
+   - false alarms,
+   - misses,
+   - conditional AE / APE,
+   - year-by-year stability.
+6. Compare 2018-2021 backcast vs DEV 2022-2024 vs 2025 vs 2026 without pooling selection authority.
+7. If the original ChHHO algorithm cannot be reconstructed for a pre-DEV origin because the required minimum training history is unavailable, report the earliest feasible origin and **do not fabricate a backcast**.
+8. No router/model-switching stage opens until this alarm-validation checkpoint is closed.
+
+**Next action:** execute the 2018-2021 origin-safe ChHHO backcast and frozen-alarm false-alarm/hit audit.
