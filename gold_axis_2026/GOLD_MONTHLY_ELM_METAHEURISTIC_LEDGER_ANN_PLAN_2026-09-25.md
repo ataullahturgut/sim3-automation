@@ -4275,3 +4275,134 @@ No fixed candidate descriptor:
 - 2024-03
 
 No routing/model switching authorized.
+
+
+### 18.19 ETF anomaly/dynamic regime audit — STATIC REJECTED / DYNAMIC SIGNAL FOUND
+
+Official daily sources:
+- GLD: SPDR Gold Shares Historical Archive (daily Tonnes of Gold + Daily Share Volume)
+- IAU: iShares Gold Trust Historical data (daily Shares Outstanding)
+
+Source-inspection workflow:
+- `Gold Monthly ETF Daily Source Inspect V1`
+- successful source-format run: **36703826210**
+- GLD archive coverage: 2004-11..2026-09
+- IAU historical coverage: 2005-01..2026-09
+- official daily fund data are eligible as origin-known inputs.
+
+#### V1 single-month anomaly screen
+
+Authority:
+- `GOLD_MONTHLY_CHHHO_ETF_ANOMALY_SCREEN_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `c1e440496b60444bbdb3dcf7ddbd86a1cba55388`
+
+Execution:
+- workflow: `Gold Monthly ChHHO ETF Anomaly Screen V1`
+- run: **36704096595**
+- artifact: **11091336563**
+- head: `48098a09a74bfaee22caa93097cb714e390bdf2d`
+- scientific gate: **PASS**
+
+Calibration: 2010-01..2020-12 only.
+
+Single-month Q10/Q90 result:
+- 2022-05 / origin 2022-04: 0 static ETF anomalies
+- 2022-07 / origin 2022-06: 0
+- 2022-09 / origin 2022-08: 0
+- 2024-03 / origin 2024-02: 0
+
+ETF_STRESS_2PLUS across 58 usable targets:
+- events 3
+- HIGH APE hits 0
+- false alarms 3
+
+Binding interpretation:
+**single-month ETF extremity is rejected as the explanation for the four core HIGH-error misses.**
+
+#### V2 dynamic ETF regime screen
+
+Authority:
+- `GOLD_MONTHLY_CHHHO_ETF_DYNAMIC_REGIME_V2_AUTHORITY_2026-09-30.md`
+- authority commit: `e85f36caf84130da833904d18864875e144520fb`
+
+Execution:
+- workflow: `Gold Monthly ChHHO ETF Dynamic Regime V2`
+- run: **36704354365**
+- artifact: **11090919621**
+- code commit: `f7072974ea99f4113d77522aaa33011fcf6ab414`
+- workflow commit: `0bf83b9129674d1db4c991b2220ebf757bf31510`
+- result report: `GOLD_MONTHLY_CHHHO_ETF_ANOMALY_DYNAMIC_RESULT_2026-09-30.md`
+- result commit: `742c9769295511ce63e0b6999e09c45f664bb18b`
+- scientific gate: **PASS**
+
+Frozen 2010-2020 dynamic thresholds:
+- combined-flow month-to-month deterioration Q10 = **-4.2816pp**
+- 3m cumulative combined flow Q10 = **-6.1704%**
+- 6m cumulative combined flow Q10 = **-10.3011%**
+- combined outflow-streak Q90 = **3.9 months** (operationally 4)
+- simultaneous GLD+IAU outflow-streak Q90 = **2 months**
+
+Core HIGH-error findings:
+
+**2022-05 / origin 2022-04**
+- GLD +0.285%, IAU +0.744%, combined +0.514%.
+- FLOW_DELTA1 = -4.3673pp, below historical Q10.
+- **I1 ETF FLOW DETERIORATION = TRUE.**
+- WGC later reported April global inflows +43t, 77% below March's exceptional inflow.
+
+**2022-07 / origin 2022-06**
+- GLD -1.690%, IAU -1.674%.
+- simultaneous outflow streak = 2 months.
+- **I2 ETF REDEMPTION PERSISTENCE = TRUE.**
+- WGC later described June as second consecutive global outflow month.
+
+**2022-09 / origin 2022-08**
+- GLD -3.231%, IAU -1.008%, combined -2.120%.
+- simultaneous GLD+IAU outflow streak = 4 months.
+- combined outflow streak = 4 months.
+- 3m cumulative flow = -6.794%.
+- flags: **I2 TRUE + outflow-streak Q90 + 3m-flow Q10**.
+- WGC later described August as fourth consecutive global outflow month.
+- cross-model authority: only 1/16 competitive models put 2022-09 in own worst-8; 8/15 alternatives beat ChHHO; best alternative AE 41.32 vs ChHHO 58.98. This is not a shared-hard month under the prior rank test.
+
+**2024-03 / origin 2024-02**
+- GLD -3.318%, IAU -1.564%.
+- simultaneous outflow streak = 2 months.
+- **I2 ETF REDEMPTION PERSISTENCE = TRUE.**
+- WGC later described February as ninth consecutive global outflow month.
+- cross-model authority classifies 2024-03 SHARED-HARD (16/16).
+
+Dynamic candidate statistics:
+
+**I1 ETF FLOW DETERIORATION**
+- frozen rule: FLOW_DELTA1 <= 2010-2020 Q10.
+- events 2
+- HIGH APE hits 1 (2022-05)
+- false alarms 1 (2026-04)
+- status: rare candidate warning.
+
+**I2 ETF REDEMPTION PERSISTENCE**
+- frozen rule: GLD and IAU both contract for at least historical Q90 persistence length = 2 months.
+- events 12
+- HIGH APE hits 5
+- false alarms 7
+- precision 41.7%
+- HIGH recall 29.4%
+- HIGH hits: 2022-07, 2022-09, 2022-11, 2023-08, 2024-03.
+- status: promising regime warning, not hard alarm.
+
+Other dynamic ETF signals:
+- 3m combined-flow Q10: events 6, HIGH hits 2 (2022-09, 2022-11), precision 33.3%.
+- 4m combined-outflow streak: events 7, HIGH hits 2 (2022-09, 2022-11), precision 28.6%.
+
+Binding interpretation:
+- Static ETF anomaly hypothesis = rejected.
+- Dynamic ETF transition/persistence hypothesis = **supported as exploratory mechanism**.
+- Descriptively, all four previously unexplained core HIGH-error targets fall into one of two independently frozen dynamic states:
+  - 2022-05 -> I1 deterioration
+  - 2022-07 / 2022-09 / 2024-03 -> I2 redemption persistence.
+- Do **not** combine I1 OR I2 into a post-hoc hard alarm without untouched validation.
+- I1/I2 remain warning candidates.
+- No target-month ETF data.
+- WGC monthly reports are corroboration only, not predictor inputs.
+- No routing/model switching authorized.
