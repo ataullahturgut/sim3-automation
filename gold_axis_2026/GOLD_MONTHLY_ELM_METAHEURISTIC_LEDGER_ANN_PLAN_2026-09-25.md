@@ -6826,3 +6826,94 @@ Next defensible stage:
 - chronology-safe adaptive/rolling reliability or online change-detection;
 - choose window/change mechanism using pre-2025 history only;
 - test whether it would naturally reduce T1/I2 reliance and shift toward E/H before opened outcomes.
+
+
+### 18.41 Adaptive Alarm Reliability V1 — COMPLETE / ADAPTIVE CANDIDATE FAIL
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_ADAPTIVE_ALARM_RELIABILITY_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `cb3b3abd619cc6b797d832464b7770aa4a9e42fb`
+
+Execution:
+- workflow: `Gold Monthly Adaptive Alarm Reliability V1`
+- run: **36773748629**
+- artifact: **11123949742**
+- digest: `sha256:bbace723ed9c75729741ca78f7e6398da7b21809fe3412db4e8f66c77138e78d`
+- code commit: `9056b64517dff18d0d0735e43c08b051b07a82b5`
+- workflow commit: `65c2eba5ce56eca2caf8866778e65b905230dfb9`
+- result report: `gold_axis_2026/GOLD_MONTHLY_ADAPTIVE_ALARM_RELIABILITY_V1_RESULT_2026-09-30.md`
+- result commit: `e61376137a3bb2c0dcc3691818be0a5cd6b89e57`
+- scientific gate: **PASS**
+- adaptive candidate gate: **FAIL**
+
+Frozen candidate set:
+- EXPANDING
+- rolling windows 12/18/24/36 months
+- exponential half-life 6/12/18/24 months
+- fixed Beta-style prior strength4
+- fixed hard gate reliability>=0.50
+- 2025/2026 forbidden from memory selection.
+
+Chronology-safe DEV selection:
+- 45 individual signal events, 20 useful, 25 false.
+- Brier ranking:
+  1. EXPANDING **0.287268**
+  2. ROLL_36 **0.287268** (effective tie because available DEV history fits inside 36m)
+  3. HL_24 0.289101
+  4. HL_18 0.289785
+  5. HL_12 0.291209
+  6. ROLL_18 0.291697
+  7. ROLL_24 0.294164
+  8. HL_6 0.295642
+  9. ROLL_12 0.298660
+- selected mechanism = **EXPANDING**.
+- therefore no explicit recency/forgetting method beats long memory on pre-2025 OOF.
+
+DEV selected event discrimination:
+- mean score useful **0.4603**
+- mean score false **0.5198**
+- reversed; discrimination FAIL.
+
+DEV raw ANY_VISIBLE:
+- 25 events; 8 HIGH +2 MEDIUM +15 false; HIGH recall100%.
+Selected 0.50-gated ANY:
+- 12 events; **5 HIGH +0 MEDIUM +7 false**
+- HIGH-hit retention **62.5%**
+- false-call reduction **53.3%**
+- high-retention requirement80% FAIL.
+
+DEV raw T0:
+- 11 events; 4 HIGH +2 MEDIUM +5 false.
+Gated T0:
+- 5 events; **1 HIGH +0 MEDIUM +4 false**.
+- operationally unusable.
+
+Opened 2025-2026 sequential transport:
+- selected remains EXPANDING.
+- 15 events; 10 useful,5 false.
+- Brier **0.239903**, logloss0.672497.
+- mean useful score **0.5362** > false **0.5040**; ordering improves in recent era.
+- raw ANY 12 events: 7 HIGH +2 MEDIUM +3 false, HIGH recall87.5%.
+- gated ANY 7 events: 4 HIGH +1 MEDIUM +2 false; high-hit retention57.1%.
+- useful rows wrongly suppressed include H->Feb25 HIGH, B->Mar25 HIGH, E->May25 MEDIUM, G->Aug26 HIGH.
+- hard gating rejected.
+
+Important adaptation path:
+- 2024-12: E .451(no events), H .480, I2 .454, T1 .377.
+- 2025-06: E **.585**, H **.539**, I2 .462, T1 .382.
+- 2025-12: E **.667**, H **.583**, I2 .467, T1 .385.
+- 2026-04: E **.758** (4/4 useful), H **.620** (6/9 useful), I2 .471, T1 .387.
+- 2026-08: E **.750**, H **.615**, I2 .438, T1 .370.
+- expanding learning naturally shifts relative confidence toward E/H once new evidence arrives.
+- problem is not failure to adapt; it is sparse-signal uncertainty plus harmful hard thresholding.
+
+Binding conclusion:
+- simple rolling/decay adaptation rejected.
+- do not tune shorter windows/half-lives post hoc.
+- do not use 0.50 suppression.
+- retain expanding reliability as descriptive confidence track only.
+- no alarm suppression/reweighting authorized.
+
+Next defensible options:
+1. confidence-tier/evidence-strength overlay that separates reliability from sample size and does not suppress sparse critical signals;
+2. return to the independent cross-model consensus + low-dispersion false-call suppressor, whose earlier DEV pilot removed false calls without losing HIGH/MEDIUM.
