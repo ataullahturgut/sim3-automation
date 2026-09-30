@@ -37,7 +37,10 @@ def normalize_text(s):
     return re.sub(r"\s+"," ",s.replace("\xa0"," ")).strip()
 
 def signed_from_phrase(num, direction):
-    x=float(num.replace(",",""))
+    clean=re.sub(r"[^0-9.+-]","",str(num))
+    if not re.search(r"\\d",clean):
+        raise ValueError(("BAD_NUMERIC_TOKEN",num,direction))
+    x=float(clean)
     return x if direction.lower().startswith("inflow") else -x
 
 def parse_flow(text, expected_data_month):
