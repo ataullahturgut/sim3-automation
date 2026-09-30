@@ -1,0 +1,89 @@
+name: Gold Monthly Market-State ChHHO Reliability Audit V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_market_state_chhho_reliability_audit_v1.py
+      - .github/workflows/gold-monthly-market-state-chhho-reliability-audit-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install
+        run: |
+          python -m pip install 'numpy>=2.0,<3' 'scipy>=1.13,<2'
+
+      - name: Download frozen inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/chhho inputs/extreme inputs/transition
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11097775756/zip" > chhho.zip
+          unzip -q chhho.zip -d inputs/chhho
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11115570221/zip" > extreme.zip
+          unzip -q extreme.zip -d inputs/extreme
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11114806383/zip" > transition.zip
+          unzip -q transition.zip -d inputs/transition
+          test -f inputs/chhho/GOLD_MONTHLY_R0_R1_R2_REGIME_ALARM_AUDIT_V1_2026-09-30.json
+          test -f inputs/extreme/GOLD_MONTHLY_MARKET_REGIME_EXTREME_V1_2026-09-30.json
+          test -f inputs/transition/GOLD_MONTHLY_MARKET_REGIME_TRANSITION_DETECTOR_V2_2026-09-30.json
+
+      - name: Compile
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_monthly_market_state_chhho_reliability_audit_v1.py
+
+      - name: Run audit
+        run: |
+          python gold_axis_2026/tools/gold_monthly_market_state_chhho_reliability_audit_v1.py             --chhho-audit-json inputs/chhho/GOLD_MONTHLY_R0_R1_R2_REGIME_ALARM_AUDIT_V1_2026-09-30.json             --extreme-v1-json inputs/extreme/GOLD_MONTHLY_MARKET_REGIME_EXTREME_V1_2026-09-30.json             --transition-v2-json inputs/transition/GOLD_MONTHLY_MARKET_REGIME_TRANSITION_DETECTOR_V2_2026-09-30.json             --output GOLD_MONTHLY_MARKET_STATE_CHHHO_RELIABILITY_AUDIT_V1_2026-09-30.json
+
+      - name: Scientific governance gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_MARKET_STATE_CHHHO_RELIABILITY_AUDIT_V1_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['scientific_gate']=='PASS'
+          assert r['join_contract']['market_state_join_key']=='origin month t'
+          assert r['join_contract']['target_month_state_used'] is False
+          assert r['periods']['dev_2022_04_2024_12']['EXPANDING_REFIT']['n']==33
+          assert r['periods']['transport_2025']['EXPANDING_REFIT']['n']==12
+          assert r['periods']['stress_2026_jan_aug']['EXPANDING_REFIT']['n']==8
+          assert r['periods']['opened_2025_2026']['EXPANDING_REFIT']['n']==20
+          g=r['governance']
+          assert g['upstream_thresholds_changed'] is False
+          assert g['extreme_retrained'] is False
+          assert g['transition_retrained'] is False
+          assert g['alarm_selection_performed'] is False
+          assert g['alarm_weighting_performed'] is False
+          assert g['2025_2026_used_for_tuning'] is False
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            'dev_primary_key_facts':r['dev_primary_key_facts'],
+            'dev_primary_statistics':r['dev_primary_statistics'],
+            'dev':r['periods']['dev_2022_04_2024_12']['EXPANDING_REFIT'],
+            'transport_2025':r['periods']['transport_2025']['EXPANDING_REFIT'],
+            'stress_2026':r['periods']['stress_2026_jan_aug']['EXPANDING_REFIT'],
+            'opened_2025_2026':r['periods']['opened_2025_2026']['EXPANDING_REFIT'],
+            'critical_2026':r['critical_2026_origin_to_target']['EXPANDING_REFIT'],
+          },sort_keys=True))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-market-state-chhho-reliability-audit-v1-${{ github.sha }}
+          path: GOLD_MONTHLY_MARKET_STATE_CHHHO_RELIABILITY_AUDIT_V1_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
