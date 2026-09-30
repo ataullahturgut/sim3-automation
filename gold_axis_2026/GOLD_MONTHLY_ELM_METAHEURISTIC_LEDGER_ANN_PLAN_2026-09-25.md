@@ -3444,3 +3444,83 @@ Binding governance:
 6. 2021-12 remains a robust uncovered ChHHO high-error month under AE, APE and return-error definitions.
 7. No threshold retuning.
 8. No routing/model switching.
+
+
+### 18.13 E/G historical validation V2 — COMPLETE / PRE-DISCOVERY CHECK
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_CHHHO_EG_HISTORICAL_VALIDATION_V2_AUTHORITY_2026-09-30.md`
+- authority commit: `f569785f9247c87e0d4fbec5808614ca81ed7a35`
+
+Execution:
+- workflow: `Gold Monthly ChHHO E/G Historical Validation V2`
+- run: **36697319930**
+- artifact: **11087809958**
+- code commit: `31cd6f975a97a5ef62dd9e9d60ec50c0a02346a6`
+- workflow commit: `94d9fc3af6704f9afd42830d2e3db4eb94adac4c`
+- result report: `gold_axis_2026/GOLD_MONTHLY_CHHHO_EG_HISTORICAL_VALIDATION_V2_RESULT_2026-09-30.md`
+- result report commit: `593be754a1489b1e104e332a35e2f21d80a0f373`
+- scientific gate: **PASS**
+
+#### Independent market-state test, 2010-2024
+
+Baseline across 180 monthly origins:
+- mean next-month absolute Gold log return: **2.639%**
+- median: **2.211%**
+- Q3: **3.998%**
+
+**E-level precursor (>20% above prior MA12)**
+- events: **4** — 2011-08, 2011-09, 2020-08, 2024-10
+- next-month absolute-return mean: **2.695%**
+- uplift vs baseline: **1.02x**
+- above baseline Q3: **1/4 = 25%**
+
+Binding interpretation:
+- E's extreme-price-level condition alone is **not** a strong historical next-month risk signal.
+
+**G (Gold 3m log return <= -10%)**
+- events: **6** — 2013-04, 2013-05, 2013-06, 2013-07, 2016-12, 2022-07
+- next-month absolute-return mean: **4.067%**
+- uplift vs baseline: **1.54x**
+- above baseline Q3: **4/6 = 66.7%**
+
+Binding interpretation:
+- G is supported as a recurring **high-movement / uncertainty market-state signal**.
+- G is not directional.
+
+#### ChHHO-specific pre-discovery test
+
+2022-2024 uses the frozen canonical ChHHO artifact directly; no model rerun.
+Pre-2022 uses an unchanged ChHHO counterfactual stress replay with the earliest current-method 2021-10 GPR snapshot, truncated by historical origin. This is **not PIT validation**.
+
+**G buildable pre-discovery model events**
+- 2017-01 counterfactual: AE 33.75, APE 2.83%, return error 2.87pp — NOT high error.
+- 2022-08 canonical: AE 35.85, APE 2.03%, return error 2.05pp — NOT high error.
+- high AE / APE / return-error: **0/2**.
+
+The four 2013 G events are unbuildable under the unchanged ChHHO internal minimum-history gate and are not replaced with another model.
+
+Binding interpretation:
+- G is **historically supported as a market-risk regime signal**.
+- G is **not validated as a ChHHO high-error alarm**; available pre-discovery model-specific evidence is 0/2 high-error.
+
+**E buildable pre-discovery evidence**
+- 2020-09 counterfactual: E-level TRUE and full E TRUE; AE 26.68, APE 1.39%, return error 1.38pp — NOT high error.
+- 2024-11 canonical: E-level TRUE but full E FALSE; ChHHO AE 119.13. This failure is captured by D, not E.
+- two 2011 E-level events are unbuildable under the unchanged main-model history gate.
+
+Full E pre-discovery:
+- buildable events: **1**
+- high AE / APE / return-error: **0/1**.
+
+Binding interpretation:
+- E is **not historically validated as a ChHHO error alarm**.
+- Later 2025/2026 E hits remain discovery-period evidence.
+
+#### Revised E/G governance
+
+- **E:** DISCOVERY-PERIOD CHHHO DISAGREEMENT PATTERN / UNVALIDATED ERROR ALARM.
+- **G:** HISTORICALLY SUPPORTED HIGH-MOVEMENT / UNCERTAINTY REGIME WARNING; NOT A VALIDATED CHHHO ERROR ALARM.
+- E and G must not be counted as independently validated hard alarms when quoting alarm-system performance.
+- No threshold retuning.
+- No routing/model switching from E/G.
