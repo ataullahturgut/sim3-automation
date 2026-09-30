@@ -164,74 +164,17 @@ def source_audit():
                          "commit_sha": sha, "commit_at": c["commit_at_iso"], "error": repr(e)})
     return rows
 
-def fetch_fred(series: str, start="2018-01-01", end="2022-03-31"):
-    headers = {"User-Agent": "gold-monthly-predev-backcast/1.0"}
-    errs = []
-    url = "https://fred.stlouisfed.org/graph/fredgraph.csv"
-    for attempt in range(3):
-        try:
-            r = requests.get(url, params={"id": series, "cosd": start, "coed": end},
-                             headers=headers, timeout=45)
-            r.raise_for_status()
-            df = pd.read_csv(io.BytesIO(r.content))
-            df = df.iloc[:, :2].copy(); df.columns = ["date", "value"]
-            df["date"] = pd.to_datetime(df.date, errors="coerce")
-            df["value"] = pd.to_numeric(df.value, errors="coerce")
-            df = df.dropna().sort_values("date")
-            if len(df) >= 100:
-                MACRO_SOURCE_USED[series] = {"class": "FRED_DIRECT_CSV", "url": r.url}
-                return df
-            errs.append(f"csv_attempt_{attempt}: too_few_rows={len(df)}")
-        except Exception as e:
-            errs.append(f"csv_attempt_{attempt}: {type(e).__name__}:{e}")
-            time.sleep(2 * (attempt + 1))
+MACRO_RECON_PATH = Path(__file__).resolve().parents[1] / "data" / "GOLD_MONTHLY_PREDEV_MACRO_RECON_V1_2026-09-30.json"
 
-    # Official FRED static-text fallback. This remains the same upstream source,
-    # and is used only when the graph CSV endpoint is unavailable.
-    txt_url = f"https://fred.stlouisfed.org/data/{series}.txt"
-    for attempt in range(3):
-        try:
-            r = requests.get(txt_url, headers=headers, timeout=45)
-            r.raise_for_status()
-            rows = []
-            for line in r.text.splitlines():
-                s = line.strip().split()
-                if len(s) < 2 or len(s[0]) != 10 or s[0][4:5] != "-" or s[0][7:8] != "-":
-                    continue
-                try:
-                    v = float(s[1])
-                except Exception:
-                    continue
-                rows.append((s[0], v))
-            df = pd.DataFrame(rows, columns=["date", "value"])
-            df["date"] = pd.to_datetime(df.date, errors="coerce")
-            df = df.dropna().sort_values("date")
-            df = df[(df.date >= pd.Timestamp(start)) & (df.date <= pd.Timestamp(end))]
-            if len(df) >= 100:
-                MACRO_SOURCE_USED[series] = {"class": "FRED_DIRECT_STATIC_TXT", "url": txt_url}
-                return df
-            errs.append(f"txt_attempt_{attempt}: too_few_rows={len(df)}")
-        except Exception as e:
-            errs.append(f"txt_attempt_{attempt}: {type(e).__name__}:{e}")
-            time.sleep(2 * (attempt + 1))
-    mirror = FRED_MIRRORS.get(series)
-    if mirror:
-        try:
-            r = requests.get(mirror, headers=headers, timeout=45)
-            r.raise_for_status()
-            df = pd.read_csv(io.BytesIO(r.content))
-            df = df.iloc[:, :2].copy(); df.columns = ["date", "value"]
-            df["date"] = pd.to_datetime(df.date, errors="coerce")
-            df["value"] = pd.to_numeric(df.value, errors="coerce")
-            df = df.dropna().sort_values("date")
-            df = df[(df.date >= pd.Timestamp(start)) & (df.date <= pd.Timestamp(end))]
-            if len(df) >= 100:
-                MACRO_SOURCE_USED[series] = {"class": "HISTORICAL_RECONSTRUCTION_MIRROR_FALLBACK", "url": mirror}
-                return df
-            errs.append(f"mirror: too_few_rows={len(df)}")
-        except Exception as e:
-            errs.append(f"mirror: {type(e).__name__}:{e}")
-    raise RuntimeError(f"FRED_FETCH_FAILED {series} {errs}")
+def load_macro_recon():
+    p = json.loads(MACRO_RECON_PATH.read_text(encoding="utf-8"))
+    out = {}
+    for series, rows in p["rows"].items():
+        df = pd.DataFrame(rows, columns=["date", "value"])
+        df["date"] = pd.to_datetime(df.date, errors="coerce")
+        df["value"] = pd.to_numeric(df.value, errors="coerce")
+        out[series] = df.dropna().sort_values("date")
+    return out, p
 
 def month_mean_available(df, month: str, lag_days: int):
     p = pd.Period(month, freq="M")
@@ -240,9 +183,10 @@ def month_mean_available(df, month: str, lag_days: int):
     return np.nan if z.empty else float(z.value.mean())
 
 def macro_states():
-    nom = fetch_fred("DGS10")
-    real = fetch_fred("DFII10")
-    usd = fetch_fred("DTWEXBGS")
+    z, meta = load_macro_recon()
+    nom = z["DGS10"]
+    real = z["DFII10"]
+    usd = z["DTWEXBGS"]
     out = {}
     for m in months("2019-11", ORIGIN_END):
         pm = mshift(m, -1)
