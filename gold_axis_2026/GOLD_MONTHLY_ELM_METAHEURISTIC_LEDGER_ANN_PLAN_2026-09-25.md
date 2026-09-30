@@ -5493,3 +5493,194 @@ Binding descriptive interpretation:
 - raw-R1 sensitivity including <60% posterior months adds 2026-06 as the remaining blind HIGH.
 
 No alarm selection/weighting authorized by this audit.
+
+
+### 18.28 R0/R1/R2 Regime Alarm Audit V1 — COMPLETE
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_R0_R2_REGIME_ALARM_AUDIT_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `7ad8fcbfa6551b0016ccd2c517e57c9690f0e46a`
+
+Execution:
+- workflow: `Gold Monthly R0 R1 R2 Regime Alarm Audit V1`
+- run: **36719020701**
+- artifact: **11097775756**
+- code commit: `7ef6834864f4d6766947042254552a93bb2cc4c8`
+- workflow commit: `074e067258b583816c6278f9dba32051b915046a`
+- artifact digest: `sha256:22465de9a9dea579075408b179861c48f825cb7d151e16c4f5d8fc95418f6567`
+- result report: `gold_axis_2026/GOLD_MONTHLY_R0_R1_R2_REGIME_ALARM_AUDIT_V1_RESULT_2026-09-30.md`
+- result commit: `42d620a2b5e654bf8b80b24570c232721343ffab`
+- scientific gate: **PASS**
+
+Primary conditioning:
+- forecast origin-month regime
+- posterior >=60%
+- OOD excluded
+- no alarm selection/weighting/tuning
+
+#### Regime sample sizes
+
+- R0: 9 targets / HIGH 4 / MEDIUM 0 / NORMAL 5
+- R1: 19 / HIGH 4 / MEDIUM 3 / NORMAL 12
+- R2: 22 / HIGH 7 / MEDIUM 3 / NORMAL 12
+
+#### T0_STANDARD by regime
+
+R0:
+- events 2
+- HIGH 2/4
+- HIGH recall 50%
+- false calls 0
+- false-call rate **0%**
+
+R1:
+- events 8
+- HIGH 2/4
+- HIGH recall 50%
+- MEDIUM 1
+- false calls 5
+- false-call rate **62.5%**
+
+R2:
+- events 8
+- HIGH 5/7
+- HIGH recall **71.4%**
+- MEDIUM 1
+- false calls 2
+- false-call rate **25%**
+
+#### ANY_VISIBLE by regime
+
+R0:
+- events 7
+- HIGH **4/4**
+- false 3
+- false-call rate **42.9%**
+- useful-call rate 57.1%
+
+R1:
+- events 16
+- HIGH **4/4**
+- MEDIUM 2
+- false **10**
+- false-call rate **62.5%**
+- useful-call rate 37.5%
+
+R2:
+- events 12
+- HIGH **7/7**
+- MEDIUM 2
+- false 3
+- false-call rate **25%**
+- useful-call rate **75%**
+
+Binding descriptive result:
+**existing alarm behavior is strongly regime-dependent in the observed sample.**
+
+#### R0 signal detail
+
+Confident-R0 HIGH:
+- 2022-05
+- 2022-07
+- 2022-11
+- 2023-01
+
+A:
+- 1 event / 1 HIGH / 0 false
+
+B:
+- 1 / 1 HIGH / 0 false
+
+I1:
+- 1 / 1 HIGH / 0 false
+
+I2:
+- 5 / 2 HIGH / 3 false / false 60%
+
+T1_WGC:
+- 6 / 3 HIGH / 3 false / false 50%
+
+G:
+- 1 / 0 HIGH / 1 false
+
+R0 ANY_VISIBLE false:
+- 2022-08 2.031% — G+I2+T1
+- 2022-10 0.193% — I2+T1
+- 2022-12 1.755% — I2+T1
+
+#### R2 signal detail
+
+Confident-R2 HIGH:
+- 2024-11
+- 2025-02
+- 2025-03
+- 2025-09
+- 2025-10
+- 2025-11
+- 2026-01
+
+MEDIUM:
+- 2024-07
+- 2025-01
+- 2025-05
+
+A:
+- 2 events / 1 HIGH / 1 false (2025-12 2.166%)
+
+B:
+- 1 / 1 HIGH / 0 false
+
+C:
+- 1 / 1 MEDIUM / 0 false
+
+D:
+- 1 / 1 HIGH / 0 false
+
+E:
+- **3 events / 2 HIGH + 1 MEDIUM / 0 false**
+- HIGH 2025-11, 2026-01
+- MEDIUM 2025-05
+- remains discovery-period/unvalidated despite favorable descriptive R2 sample
+
+H:
+- 4 / 2 HIGH + 1 MEDIUM / 1 false
+- false 2024-08 1.796%
+
+I1/I2/G:
+- no confident-R2 events
+
+T1_WGC:
+- 1 event / false 2024-05 1.223%
+
+R2 ANY_VISIBLE false:
+- 2024-05 — T1
+- 2024-08 — H
+- 2025-12 — A
+
+#### Strongest observed regime contrasts
+
+B:
+- R0 1/1 HIGH
+- R1 2/2 false
+- R2 1/1 HIGH
+
+H:
+- R1: 1 HIGH + 1 MEDIUM + 2 false
+- R2: 2 HIGH + 1 MEDIUM + 1 false
+
+I2:
+- R0: 2 HIGH / 3 false
+- R1: 2 HIGH / 2 false
+- R2: no confident events
+
+T1_WGC:
+- R0: 3 HIGH / 3 false
+- R1: 2 HIGH + 2 MEDIUM / 9 false
+- R2: 0 useful / 1 false
+
+E:
+- R0 no events
+- R1 no events
+- R2: 2 HIGH + 1 MEDIUM / 0 false
+
+No regime-conditioned alarm selection or weighting is authorized yet.
