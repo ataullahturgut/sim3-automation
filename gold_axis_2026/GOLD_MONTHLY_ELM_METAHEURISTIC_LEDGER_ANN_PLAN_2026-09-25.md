@@ -6434,3 +6434,100 @@ Still retained:
 If transition research continues, next method must be structurally different (e.g. dedicated multivariate changepoint model), not another threshold/duration tweak.
 
 Alarm weighting remains unauthorized.
+
+
+### 18.37 Alarm × Live Regime × Transition V2 Reliability Audit V1 — COMPLETE / DESCRIPTIVE ONLY
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_ALARM_REGIME_V2_RELIABILITY_AUDIT_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `6535a204e11687bb3eab0de96e81ad24e7120d7c`
+
+Execution:
+- workflow: `Gold Monthly Alarm Regime V2 Reliability Audit V1`
+- run: **36763775587**
+- artifact: **11120035621**
+- artifact digest: `sha256:636f2cffcb98ac35dd2ae7acd194b041bbca0cab2d3d7f8c68795002d20790f9`
+- code commit: `ad7143cde6b4b0e608d752cbcf3d6633658e82c3`
+- workflow commit: `26319045d3ae7aedda19ebfaaa331ff10f524382`
+- result report: `gold_axis_2026/GOLD_MONTHLY_ALARM_REGIME_V2_RELIABILITY_AUDIT_V1_RESULT_2026-09-30.md`
+- result commit: `deed72cc1ab0d887b9a49f8eddc5278c385db089`
+- scientific gate: **PASS**
+
+Primary conditioning:
+- alarm row at origin t is joined to **V2 EXPANDING_REFIT live state at t**;
+- target t+1 outcome only;
+- no target-month state leakage.
+- Primary cells = R0/R1/R2/BELIRSIZ × STABLE/TRANSITION.
+
+DEV 2022-04..2024-12:
+- cells: R0_STABLE 8, R0_TRANSITION 2, R1_STABLE 5, R1_TRANSITION 4, R2_STABLE 11, BELIRSIZ_TRANSITION 3.
+- T0_STANDARD STABLE: 9 events, 4 HIGH +2 MEDIUM +3 false; false rate **33.3%**, useful **66.7%**.
+- T0_STANDARD TRANSITION: 2 events, **0 useful +2 false**; false rate **100%**.
+- ANY_VISIBLE STABLE: 19 events, 7 HIGH +2 MEDIUM +10 false; false rate **52.6%**, useful **47.4%**.
+- ANY_VISIBLE TRANSITION: 6 events, 1 HIGH +0 MEDIUM +5 false; false rate **83.3%**, useful **16.7%**.
+- Thus in DEV, V2 TRANSITION is an alarm-noise/distrust environment.
+
+R1 is the clearest same-regime split:
+- R1_STABLE n5: ANY_VISIBLE 5 events -> 2 HIGH +1 MEDIUM +2 false; useful60%, false40%.
+- R1_TRANSITION n4: all 4 target outcomes NORMAL; ANY_VISIBLE 2/2 false; T0 1/1 false.
+- B and T1 each have one R1_TRANSITION event and each is false.
+- small n caveat.
+
+DEV R2:
+- only R2_STABLE n11, no confident R2_TRANSITION.
+- ANY_VISIBLE: 3 HIGH +1 MEDIUM +2 false; useful66.7%, false33.3%.
+- H within DEV R2_STABLE: 3 events -> 1 MEDIUM +2 false.
+- T1: 3 events -> 2 HIGH +1 false.
+
+Opened 2025:
+- 11 R2_STABLE + 1 BELIRSIZ_TRANSITION.
+- sole transition origin 2025-08 -> target 2025-09 HIGH; A fires and hits under T0/ANY.
+
+Opened 2026:
+- R2_STABLE6, R2_TRANSITION1, BELIRSIZ_TRANSITION1.
+- origin 2026-05 R2_TRANSITION -> target Jun HIGH APE~8.57%; **no frozen alarm fires**.
+- origin 2026-07 BELIRSIZ_TRANSITION -> target Aug HIGH APE~7.89%; G fires and ANY_VISIBLE hits.
+- combined TRANSITION targets 2/2 HIGH.
+- STABLE: 1 HIGH +1 MEDIUM +4 NORMAL; ANY_VISIBLE 4 events -> 1 HIGH +1 MEDIUM +2 false.
+
+Opened 2025-2026:
+- 3 transition origins -> **3/3 HIGH targets**.
+- ANY_VISIBLE: 2 events -> 2 HIGH, 0 false; useful100%, HIGH recall2/3.
+- T0: 1 event -> 1 HIGH, 0 false; HIGH recall1/3.
+- stable origins n17: ANY_VISIBLE 10 events -> 5 HIGH +2 MEDIUM +3 false; useful70%, false30%.
+- Therefore transition effect reverses vs DEV and cannot support one global multiplier.
+
+Opened R2_STABLE individual descriptive results:
+- E 4 events -> 2 HIGH +2 MEDIUM +0 false.
+- H 3 events -> 2 HIGH +1 MEDIUM +0 false.
+- A/G/I1/I2/T1 each have isolated false calls; B has one HIGH hit.
+- opened/small-sample only.
+
+Critical diagnostic on V2 semantic “false transitions”:
+- full common sample has 11 V2 transition flags **outside reference transition zones**.
+- target outcomes = 3 HIGH +2 MEDIUM +6 NORMAL.
+- ANY_VISIBLE within them: 7 events -> 3 HIGH +1 MEDIUM +3 false; useful57.1%, false42.9%.
+- useful examples: 2021-11 H HIGH; 2022-01 T1 MEDIUM; 2022-04 I1 HIGH; 2025-08 A HIGH.
+- noisy examples: 2023-04 B false; 2023-10 I2+T1 false; 2024-01 T1 false.
+- Therefore “semantic false transition = useless for alarms” is incorrect.
+
+Inside-reference-zone transition flags:
+- n5, 2 HIGH +3 NORMAL.
+- ANY_VISIBLE 3 events -> 1 HIGH +2 false; useful33.3%, false66.7%.
+- semantic transition correctness is not equivalent to alarm usefulness.
+
+Binding conclusion:
+- V2 contains alarm-relevant information and should **not be discarded**.
+- But its effect is period/regime dependent.
+- DEV: transition mostly signals alarm distrust/noise.
+- opened 2025-26: transition concentrates on severe HIGH-error origins.
+- a single global V2 boost or suppression multiplier would be wrong.
+
+Next defensible stage:
+**Alarm × live regime × V2-status reliability with shrinkage / partial pooling**
+- unit = signal × live regime × STABLE/TRANSITION;
+- estimate global signal prior, partial-pool regime effects, add V2 effect where supported;
+- use semantic posterior to avoid hard assignment where uncertain;
+- chronology-safe historical/DEV CV only;
+- 2025/2026 remain opened descriptive evidence.
+- No alarm weighting is authorized yet.
