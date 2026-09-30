@@ -61,7 +61,7 @@ def parse_flow(text, expected_data_month):
         for m in re.finditer(pat,x,re.I):
             val=float(m.group(1))
             snip=x[max(0,m.start()-80):min(len(x),m.end()+140)]
-            candidates.append((0.99,val,normalize_text(snip),"global_signed_parenthetical"))
+            candidates.append((0.84,val,normalize_text(snip),"global_signed_parenthetical"))
 
     # Explicit global phrase: amount then direction.
     patterns_amount_direction=[
@@ -74,7 +74,7 @@ def parse_flow(text, expected_data_month):
             if val is None:
                 continue
             snip=x[max(0,m.start()-80):min(len(x),m.end()+140)]
-            candidates.append((0.96,val,normalize_text(snip),"global_amount_direction"))
+            candidates.append((0.999,val,normalize_text(snip),"global_amount_direction"))
 
     # Direction then amount.
     for pat in [
@@ -94,7 +94,21 @@ def parse_flow(text, expected_data_month):
                 val=-num if any(w in low for w in ["lost","shed","fell","decreased","declined"]) else num
                 kind="global_verb_amount"
             snip=x[max(0,m.start()-80):min(len(x),m.end()+140)]
-            candidates.append((0.94,val,normalize_text(snip),kind))
+            candidates.append((0.995,val,normalize_text(snip),kind))
+
+    # Modern WGC style: monthly collective holdings change in Highlights / month review.
+    modern_patterns=[
+        (r"collective(?:\s+global)?\s+holdings[^.]{0,100}?(?:fell|declined|dropped|decreased|lost)[^.]{0,60}?\((-?\d+(?:\.\d+)?)\s*t\)",-1),
+        (r"collective(?:\s+global)?\s+holdings[^.]{0,100}?(?:rose|increased|grew|rebounded|bounced)[^.]{0,60}?\(\+?(\d+(?:\.\d+)?)\s*t\)",1),
+        (r"collective(?:\s+global)?\s+holdings[^.]{0,100}?(?:fell|declined|dropped|decreased|lost)(?:\s+by)?\s+(\d+(?:\.\d+)?)\s*t\b",-1),
+        (r"collective(?:\s+global)?\s+holdings[^.]{0,100}?(?:rose|increased|grew|rebounded|bounced)(?:\s+by)?\s+(\d+(?:\.\d+)?)\s*t\b",1),
+    ]
+    for pat,sgn in modern_patterns:
+        for m in re.finditer(pat,x,re.I):
+            raw=float(m.group(1))
+            val=abs(raw)*sgn
+            snip=x[max(0,m.start()-100):min(len(x),m.end()+140)]
+            candidates.append((0.998,val,normalize_text(snip),"modern_collective_holdings"))
 
     # Older style: current-month intro followed by holdings decreased/increased.
     mon_pat=re.escape(mname)
@@ -105,7 +119,7 @@ def parse_flow(text, expected_data_month):
         for m in re.finditer(pat,x,re.I):
             val=sgn*float(m.group(1).replace(",",""))
             snip=x[max(0,m.start()-80):min(len(x),m.end()+140)]
-            candidates.append((0.90,val,normalize_text(snip),"month_holdings_change"))
+            candidates.append((0.997,val,normalize_text(snip),"month_holdings_change"))
 
     # Modern style signed tonnes anywhere in first relevant global paragraph.
     # Require 'global' and target month name in nearby sentence.
@@ -118,9 +132,17 @@ def parse_flow(text, expected_data_month):
         if sm:
             candidates.append((0.88,float(sm.group(1)),normalize_text(sent),"sentence_signed_t"))
 
+    # Exclude cumulative/YTD evidence from generic candidates.
+    bad_terms=("y-t-d","year-to-date","year to date","q1 ","q2 ","q3 ","q4 ","h1 ","h2 ","quarter")
+    filtered=[]
+    for cand in candidates:
+        low=cand[2].lower()
+        if cand[3] in ("global_signed_parenthetical","sentence_signed_t") and any(term in low for term in bad_terms):
+            continue
+        filtered.append(cand)
+    candidates=filtered
     if not candidates:
         return None,None,None
-    # Highest confidence; tie -> earliest appearance in x approximated by snippet location.
     candidates.sort(key=lambda z:z[0],reverse=True)
     conf,val,snip,kind=candidates[0]
     return val,conf,{"kind":kind,"snippet":snip,"n_candidates":len(candidates)}
