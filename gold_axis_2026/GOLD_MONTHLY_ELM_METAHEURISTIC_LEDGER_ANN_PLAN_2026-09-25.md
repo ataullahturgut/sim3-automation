@@ -2991,3 +2991,36 @@ Before any routing/fallback experiment:
 8. No router/model-switching stage opens until this alarm-validation checkpoint is closed.
 
 **Next action:** execute the 2018-2021 origin-safe ChHHO backcast and frozen-alarm false-alarm/hit audit.
+
+
+### 18.8 Historical ChHHO backcast feasibility gate — BLOCKED BY PIT SOURCE COVERAGE
+
+Attempted next experiment: origin-safe ChHHO backcast for 2018-01..2021-12 using the exact production/research feature contract.
+
+Result: **BLOCKED / DO NOT FABRICATE BACKCAST.**
+
+Evidence:
+- Neon series `GPR_OFFICIAL_GIT_PIT` has first exact origin vintage **2022-03** and continuous proven coverage from 2022-03 onward.
+- Canonical source contract `source_contract_gpr_pit_v2.json` explicitly freezes `continuous_proven_origin_start = 2022-03`.
+- Older archive files such as 2021-10/11/12 and 2022-01 were only added to the official Git archive on **2022-03-01**, i.e. after their own forecast origins, so they cannot be treated as point-in-time evidence for those months.
+- The official monthly Git archive does not provide a proven exact-origin vintage path for 2018-2021 under the current approved source policy.
+- Current/final-vintage GPR substitution remains forbidden.
+
+Scientific consequence:
+- The earliest exact-origin ChHHO target buildable under the frozen GPR PIT contract is **2022-04** (origin 2022-03), which is already the start of the existing DEV period.
+- Therefore there is no independent pre-DEV ChHHO backcast sample available under the current canonical data authority.
+- A/C/D cannot receive a genuine pre-2022 ChHHO-specific false-alarm test without opening and separately validating a new historical PIT GPR authority.
+- E/G retain independent **market-state** historical evidence from 2011-2021, but this is not equivalent to ChHHO-specific error validation.
+
+Binding rule:
+- Do not use final-vintage GPR, retrospectively backfilled current GPR, or any unproven historical GPR series merely to obtain 2018-2021 ChHHO predictions.
+- Any future attempt to extend ChHHO before 2022-04 requires a separately committed historical-GPR source authority with exact origin-time availability proof before model execution.
+
+Current alarm-validation evidence stack therefore remains:
+1. 2011-2021 model-free market-state history for E/G and supporting mechanism context.
+2. 2022-2024 DEV mechanism diagnostics for A/C/D and ChHHO error behavior.
+3. Frozen 2025 transport evidence for A/B.
+4. 2026 stress evidence plus discovery-only E/G characterization.
+5. 2026-06 remains unresolved.
+
+**Backcast experiment status:** BLOCKED_VALIDLY_BY_SOURCE_COVERAGE, not failed scientifically and not replaced by a leaky approximation.
