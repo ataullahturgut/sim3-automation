@@ -7031,3 +7031,117 @@ Next defensible stage:
 - do not alter router.
 - test whether suppressor can remove additional router false calls while retaining 100% DEV HIGH/MEDIUM and the 2026 V2 incremental catch.
 - router remains promoted research candidate, not production.
+
+
+### 18.43 Specialist Router + Cross-Model SAFE-Veto Overlay V1 — DEV PASS / TRANSPORT SHADOW REJECTED
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_SPECIALIST_ROUTER_SAFE_VETO_OVERLAY_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `2833f53701d67426e7306fb1052f4ef485324b33`
+
+Execution:
+- workflow: `Gold Monthly Specialist Router Safe Veto Overlay V1`
+- run: **36777740818**
+- artifact: **11127255544**
+- digest: `sha256:550b16e3ae8852133c31db36a2c79088b0ebfa5a13c9b95d0386bdd0afef8893`
+- code commit: `8ecae4243ceb210f714927f0700a558280a1bc0b`
+- workflow commit: `111ca4c95e49084e311285677871ae304f973baf`
+- result report: `gold_axis_2026/GOLD_MONTHLY_SPECIALIST_ROUTER_SAFE_VETO_OVERLAY_V1_RESULT_2026-09-30.md`
+- result commit: `31183cd2e5272041db82410771a76126a28d1214`
+- scientific gate: **PASS**
+
+Frozen router:
+- Specialist Hedge eta=.25 / alpha=0 / tau=.50.
+- no retune.
+
+Frozen original DEV SAFE-veto:
+- `V2_STRONG_DIRECTION_CONSENSUS`
+- 16 competitive models
+- >=80% ChHHO direction agreement
+- dispersion <= expanding prior median
+- min prior6
+- exact previous veto flags reused on DEV.
+
+Primary DEV overlay:
+Router alone:
+- 20 events
+- 8 HIGH +2 MEDIUM +10 false
+- HIGH/elevated recall100%
+- useful50%, false50%.
+
+Router + original 16-model veto:
+- **18 events**
+- **8 HIGH +2 MEDIUM +8 false**
+- HIGH/elevated recall **100%**
+- useful **55.6%**
+- false **44.4%**.
+- additional false removed **2**
+- HIGH lost0 / MEDIUM lost0.
+- DEV overlay candidate gate PASS.
+
+Additional DEV false rows removed:
+- target2022-12: I2+T1, NORMAL, router p_HIGH~.773, agreement100%, dispersion.794% <= prior median1.058%.
+- target2024-08: H, NORMAL, router p_HIGH~.731, agreement93.75%, dispersion.889% <= prior median.973%.
+
+Combined from raw ANY to Router+veto:
+- raw 25 events / 8H+2M+15 false
+- final DEV 18 events / 8H+2M+8 false
+- false reduction **46.7%**
+- zero H/M loss
+- best DEV stack so far.
+
+Critical transport limitation:
+- original 16-model pool lacks frozen transport predictions for all members.
+- exact competitive transport-capable intersection fixed to 7:
+  AOA_ELM, ChHHO_ANFIS, FULL7_ANN, REDUCED4_ANN, DE_ABC_RBFNN, LMC2_RBF_M32, PLS1_V1.
+- same formula/thresholds were applied as a 7-model shadow only.
+
+7-model DEV compatibility:
+- removes 3 false BUT also **1 HIGH +1 MEDIUM**
+- NOT SAFETY-COMPATIBLE.
+- 16-vs-7 veto overlap among 27 jointly eligible DEV months:
+  intersection only 2023-06,2024-08
+  Jaccard **0.167**.
+- reduced pool materially changes SAFE signal; cannot substitute for original veto.
+
+Opened 2025 with 7-model shadow:
+Router:
+- 7 events / 5H+1M+1 false / HIGH recall100%.
+Shadow overlay:
+- 4 events / **3H+1M+0 false** / HIGH recall60%.
+Wrongly suppresses:
+- Feb25 HIGH H
+- Sep25 HIGH A+V2
+- removes one true false Dec25 A.
+=> rejected.
+
+Opened 2026:
+Router:
+- 6 events / **3H+1M+2 false** / HIGH/elevated recall100%.
+Shadow:
+- 4 events / **2H+1M+1 false** / HIGH recall66.7%.
+Wrongly suppresses critical:
+- origin2026-05 V2-only router warning -> targetJun26 HIGH.
+Also correctly suppresses targetApr26 NORMAL I1.
+=> unacceptable.
+
+Target Aug26:
+- complete 7-model consensus feature unavailable.
+- G+V2 router HIGH passes through; no veto claim.
+
+Opened combined:
+Router:
+- 13 events / **8H+2M+3 false**, HIGH recall100%, useful76.9%.
+7-model shadow:
+- 8 events / **5H+2M+1 false**, HIGH recall62.5%, useful87.5%.
+- apparent precision gain is bought by deleting **3 HIGHs**.
+
+Binding decision:
+- **do not deploy SAFE-veto overlay** with reduced transport pool.
+- keep frozen Specialist Router V1 alone as strongest transport-supported research candidate.
+- keep original 16-model SAFE-veto as DEV-only promising orthogonal component.
+- no threshold/dispersion retune on opened data.
+
+To revisit:
+- recreate/obtain frozen origin-safe 2025/26 predictions for the same original 16 competitive models.
+- only then run apples-to-apples transport validation of exact V2 SAFE-veto.
