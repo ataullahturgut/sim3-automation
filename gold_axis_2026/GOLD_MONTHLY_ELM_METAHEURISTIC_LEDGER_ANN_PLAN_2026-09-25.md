@@ -6029,3 +6029,111 @@ Next exact regime-only stage:
 - freeze V2 before inspecting 2025/2026.
 
 Alarm selection/weighting remains blocked.
+
+
+### 18.33 Transition / Change Detector V2 — COMPLETE / PROMOTION GATE FAIL
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_TRANSITION_DETECTOR_V2_AUTHORITY_2026-09-30.md`
+- authority commits: `84ee7988cb0990781139acb2d310b47771680279`, `7be25bb1e400c32e8d08e6a926b0a6ec7ae62299`
+
+Execution:
+- workflow: `Gold Monthly Market Regime Transition Detector V2`
+- run: **36750689971**
+- artifact: **11114806383**
+- artifact digest: `sha256:b73d78137e79f64d4429d525b1dda5c53b27f951651a7791b2a6e2e17d61f782`
+- code commit: `b98e10a7f66c7ec9964e77466d871f2e2447d04a`
+- workflow commit: `5c01d5152eca243b833f87ccc8605aed2bfaed99`
+- result report: `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_TRANSITION_DETECTOR_V2_RESULT_2026-09-30.md`
+- result commit: `d0aba59b63149866b14406f301573dd5efb4c568`
+- scientific gate: **PASS**
+
+V2 design:
+- removes V1 generic anomaly votes (emission surprise / predictive surprise / raw jump / raw latent switch);
+- uses posterior drop, semantic margin, margin collapse, alternative growth, prototype-advantage deterioration and persistence;
+- threshold search only on **EXPANDING 2015-07..2021-12**;
+- 2022+ not computed before rule freeze;
+- annual schedule uses same selected rule with no separate tuning.
+
+Grid:
+- **12,288** candidate rules.
+- pre-registered eligibility = historical event-hit >= 2/3.
+- **0 candidates eligible**.
+- pre-registered fallback therefore activated.
+
+Selected fallback rule:
+- drop >= **0.10**
+- current margin <= **0.45**
+- margin collapse >= **0.15**
+- alternative growth >= **0.10**
+- prototype-advantage drop >= **0.25**
+- FAST votes >= **2**
+- PERSISTENT votes >= **1**
+- persistent margin <= **0.30**
+
+Historical calibration 2015-07..2021-12, EXPANDING:
+- events 9
+- event hits **4/9 = 44.4%**
+- zone recall **33.3%**
+- false transition **15/66 = 22.7%**
+- precision **21.1%**
+- calibration itself is weak.
+
+Later validation 2022-01..2024-12, EXPANDING:
+- event hits **3/3 = 100%**
+- zone recall **100%**
+- false transition **8/33 = 24.2%**
+- precision **27.3%**
+- V1 same-period precision **16.7%**
+- precision improvement +10.6pp PASS
+- pre-registered false-rate ceiling <=15% FAIL
+- overall promotion **FAIL**.
+
+ANNUAL validation:
+- event hits 3/3
+- false transition 21.2%
+- precision 30.0%
+- also too noisy.
+
+2024 checkpoint:
+- Mar R1+STABLE
+- Apr BELIRSIZ/R2+TRANSITION
+- May R2+STABLE
+- Jun R2+STABLE
+- both schedules cleanly detect 2024 transition.
+
+Opened transport 2025-01..2026-08:
+EXPANDING:
+- 3 flags
+- false transition **1/17 = 5.9%**
+- precision **66.7%**
+- flags: 2025-08 false, 2026-05 true-zone, 2026-07 true-zone
+- 2026 first warning in **May**, 2 months before July R1 confirmation.
+
+ANNUAL:
+- 3 flags
+- false transition **5.9%**
+- precision **66.7%**
+- 2026 first warning also May.
+
+2026 EXPANDING checkpoint:
+- Apr R2+STABLE
+- **May R2+TRANSITION**
+- Jun R2+STABLE
+- **Jul BELIRSIZ/R1+TRANSITION**
+- Aug R1+STABLE
+- May has all four directional evidences active: posterior drop, margin collapse, alternative growth, prototype-advantage deterioration.
+
+Binding interpretation:
+- May-2026 early warning is scientifically interesting and arises without forecast/alarm outcomes;
+- nevertheless V2 cannot be promoted because historical calibration is weak and 2022-2024 false-transition rate violates the frozen <=15% gate;
+- do not retune on 2022-2026;
+- do not connect V2 to alarm weighting.
+
+Next exact stage:
+**Regime-Extreme / Within-Regime Stress Detector V1**
+- separate same-regime extreme/stress from transition;
+- build independently; do not use it to retroactively tune V2;
+- after Extreme layer, decide whether to test a structurally different transition model (changepoint / duration-aware semi-Markov) or keep transition descriptive only.
+
+Alarm selection/weighting remains blocked.
