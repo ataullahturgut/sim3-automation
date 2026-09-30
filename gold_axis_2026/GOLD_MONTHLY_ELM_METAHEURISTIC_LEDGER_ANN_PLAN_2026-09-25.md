@@ -6742,3 +6742,87 @@ Binding conclusion:
 Next defensible question:
 - test whether alarm/V2 reliability should condition on persistent market era/regime shift, rather than pooling older R0/R1 history equally with the long R2 era.
 - must be preregistered recency/regime-era validation, not a post-hoc recent-window rule.
+
+
+### 18.40 Market Era / Concept Drift Audit V1 — COMPLETE / LATE-R2 DRIFT SUGGESTIVE
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_MARKET_ERA_CONCEPT_DRIFT_AUDIT_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `9411d48ebad42344dba298660559f413f03b0971`
+
+Execution:
+- workflow: `Gold Monthly Market Era Concept Drift Audit V1`
+- run: **36772562100**
+- artifact: **11123618480**
+- digest: `sha256:a17b7815df568124146db0bfbe040732e4cbf518db7db54208c2440bb5dd5aeb`
+- code commit: `9ec60909f9c6f6d9d668e5399be25caa5a9cfc67`
+- workflow commit: `6da2f4b76137a306c1ee4480fff3c0e49b00a3f1`
+- result report: `gold_axis_2026/GOLD_MONTHLY_MARKET_ERA_CONCEPT_DRIFT_AUDIT_V1_RESULT_2026-09-30.md`
+- result commit: `c413e29c7aa385045ffac82e7e9491c1d5941889`
+- scientific gate: **PASS**
+
+Frozen eras by origin:
+- PRE_R2_ERA <=2024-03, n30
+- R2_EARLY 2024-04..2024-12, n9
+- R2_LATE 2025-01..2026-04, n16
+- R2_BREAK 2026-05..2026-07, n3
+- boundaries from frozen regime chronology; no error-based change-date search.
+
+Monthly severity:
+- PRE HIGH 26.7%, ELEVATED 36.7%.
+- R2_EARLY HIGH 11.1%, ELEVATED 33.3%.
+- R2_LATE HIGH 37.5%, ELEVATED 50.0%.
+- R2_BREAK HIGH 66.7%.
+- therefore R2 onset itself did not immediately create a high-error era.
+
+ANY_VISIBLE:
+- PRE: 24 events, 10 useful/14 false, useful **41.7%**, false58.3%.
+- R2_EARLY: 4 events, 2/2, useful **50.0%**, false50%.
+- R2_LATE: 10 events, **8 useful/2 false**, useful **80.0%**, false20%, HIGH/elevated recall100%.
+- PRE vs late Fisher useful-vs-false p≈0.063, suggestive not confirmatory.
+
+T0:
+- useful rate PRE50.0% -> R2_EARLY66.7% -> R2_LATE83.3%.
+- event counts small; exact tests non-significant.
+
+Same live-R2 control:
+- PRE live-R2 n5; ANY useful66.7%.
+- R2_EARLY n9; ANY useful50%.
+- R2_LATE n16; ANY useful80%.
+- simple “R2 itself causes change” is weakened; strongest change appears late within R2.
+
+Signal ecology:
+- PRE dominated by T1_WGC 21 events (8 useful/13 false) and I2 11 (5/6).
+- R2_EARLY: H 1/2 useful; T1 0/1; C and D each 1/1 useful; E0.
+- R2_LATE: **E 4/4 useful; H 3/3 useful; B1/1; T1=0 events; I2=0 events**.
+- alarm population itself changes strongly over time.
+- H: PRE50%, early50%, late100%, but small n.
+- E appears only late and is 4/4 useful; do not call universal 100%.
+
+V2 by era:
+- PRE transition n12, HIGH16.7%, elevated33.3%; lower risk than stable.
+- R2_EARLY transition n1 -> NORMAL.
+- R2_LATE transition n1 -> HIGH.
+- R2_BREAK transition n2 -> **2/2 HIGH**.
+- recent 3/3 transition->HIGH pattern is one late-R2 + two break cases, not a pattern beginning at Apr24.
+
+Independent V2 no-ANY:
+- strongest case remains origin2026-05 R2_TRANSITION, no existing alarm -> targetJun26 HIGH APE~8.57%.
+- no analogous HIGH catch in PRE, R2_EARLY or R2_LATE.
+
+Binding structural interpretation:
+- **simple R2-era effect not supported**.
+- best current interpretation = **late-R2 / within-regime concept drift**, but only suggestive.
+- sample sizes small; exact tests mostly non-significant; 2025-26 opened.
+- no operational alarm/routing rule.
+
+Do not:
+- globally reweight all R2 alarms;
+- promote E/H as universal 100%;
+- use V2 as global R2 warning;
+- search post-hoc for a better drift date.
+
+Next defensible stage:
+- chronology-safe adaptive/rolling reliability or online change-detection;
+- choose window/change mechanism using pre-2025 history only;
+- test whether it would naturally reduce T1/I2 reliance and shift toward E/H before opened outcomes.
