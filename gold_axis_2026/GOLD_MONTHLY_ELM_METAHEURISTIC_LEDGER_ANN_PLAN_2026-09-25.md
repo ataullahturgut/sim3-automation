@@ -4964,3 +4964,110 @@ Therefore signal-count voting cannot be assumed to improve precision.
 No new Boolean selection rule was optimized.
 No thresholds were retuned.
 No forecast correction or routing/model switching authorized.
+
+
+### 18.24 False-call suppressor screen — CROSS-MODEL SAFE VETO CANDIDATE
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_ALARM_FALSE_CALL_SUPPRESSOR_SCREEN_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `fc4375f3ff2efef48c7a686c21dfbae57d7d3016`
+
+Execution:
+- workflow: `Gold Monthly Alarm False Call Suppressor Screen V1`
+- run: **36712803237**
+- code commit: `3290b8eb95a3f90277573d614bdd7e2dcd8b5750`
+- workflow commit: `1fbd3cda23e2dcc6233e421d4a7d3c958e6c9ca4`
+- result report: `gold_axis_2026/GOLD_MONTHLY_ALARM_FALSE_CALL_SUPPRESSOR_SCREEN_V1_RESULT_2026-09-30.md`
+- result commit: `95519c954bddbe74fff31d3d6e51c8c242626930`
+- scientific gate: **PASS**
+
+Scope:
+- DEV 2022-04..2024-12 only.
+- frozen 16-model competitive cross-model pool.
+- suppressor features are origin-known forecasts only.
+- no actual target price enters veto features.
+- expanding prior-only feature thresholds, minimum prior history 6 origins.
+
+#### Existing risk alarms cannot act as opposite alarms
+
+A/B/C/D/E/G/H/I1/I2/T1 are all risk-oriented.
+No current channel is a principled SAFE / anti-alarm.
+
+Simple cross-family or signal-count confirmation is not a reliable suppressor:
+- 2022-08: G + I2 + T1, APE 2.031% NORMAL
+- 2023-09: H + I2 + T1, APE 0.281% NORMAL
+- 2026-07: G + I2 + T1, APE 2.030% NORMAL
+
+Therefore veto research moved to origin-known cross-model forecast consensus.
+
+#### Consensus feature separation
+
+Among veto-eligible ANY_VISIBLE alarm rows:
+
+HIGH:
+- median forecast dispersion 1.241%
+- median ChHHO deviation from competitive median 0.999%
+- median direction agreement 75.0%
+
+MEDIUM:
+- dispersion 1.147%
+- ChHHO deviation 0.786%
+- direction agreement 81.25%
+
+NORMAL false calls:
+- dispersion **0.951%**
+- ChHHO deviation **0.537%**
+- direction agreement **81.25%**
+
+False calls tend to occur with tighter forecast clustering and a more consensus-central ChHHO forecast, although distributions overlap.
+
+#### Candidate veto decisions
+
+**V1_TIGHT_CENTRAL**
+- rejected.
+- suppresses true HIGH 2024-03 (APE 6.098%) while removing no false call in ANY_VISIBLE comparison.
+
+**V2_STRONG_DIRECTION_CONSENSUS**
+Frozen exploratory definition:
+- >=80% competitive models agree with ChHHO direction vs RW; AND
+- forecast dispersion <= expanding prior-history median.
+
+ANY_VISIBLE DEV:
+- before: 25 events / 8 HIGH / 2 MEDIUM / 15 false
+- V2 suppresses three NORMAL false calls:
+  - 2022-12, APE 1.755%, I2 + T1
+  - 2024-02, APE 1.546%, T1
+  - 2024-08, APE 1.796%, H
+- incorrectly suppressed HIGH: **0**
+- incorrectly suppressed MEDIUM: **0**
+- after: 22 events / 8 HIGH / 2 MEDIUM / 12 false
+- false-call rate 60.0% -> **54.5%**
+
+T0_ALL_VISIBLE:
+- suppresses 2022-12 and 2024-08, both NORMAL
+- HIGH lost 0 / MEDIUM lost 0
+- false-call rate 50.0% -> **44.4%**
+
+T0_STANDARD:
+- suppresses 2024-08 only
+- HIGH lost 0 / MEDIUM lost 0
+- false-call rate 45.5% -> **40.0%**
+
+Status:
+**PROMISING EXPLORATORY SAFE-VETO CANDIDATE.**
+Not production-authorized.
+
+**V3_CENTRAL_ONLY**
+- rejected.
+- suppresses true HIGH 2024-11 (APE 4.494%) and MEDIUM 2024-07 (APE 2.961%).
+
+#### Binding next requirement
+
+Validate V2 unchanged on 2025/2026 using only models with frozen transport predictions.
+Do not retune:
+- 80% direction agreement;
+- expanding-median dispersion condition.
+
+No production veto authorized.
+No forecast correction.
+No routing/model switching.
