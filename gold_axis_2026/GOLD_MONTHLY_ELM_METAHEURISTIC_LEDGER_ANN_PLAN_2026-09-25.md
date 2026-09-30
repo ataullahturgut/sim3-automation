@@ -5939,3 +5939,93 @@ Binding decision:
 - do not spend another stage only changing state names;
 - do not move to alarm weighting/suppression;
 - next exact regime-only stage = **Transition / Change Detector V1** alongside HMM, using market-state variables only, to detect departure from the incumbent regime before forcing a new R-state.
+
+
+### 18.32 Transition / Change Detector V1 — COMPLETE / NOT OPERATIONALLY PROMOTED
+
+Authority:
+- `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_TRANSITION_DETECTOR_V1_AUTHORITY_2026-09-30.md`
+- authority commit: `749a6063563136f0132698728fd026c11ac3e2fd`
+
+Execution:
+- workflow: `Gold Monthly Market Regime Transition Detector V1`
+- run: **36746942724**
+- artifact: **11112209814**
+- artifact digest: `sha256:424378a92623b6a64b14dd11fd2682794edd62a9a7828dad5d108d78d3e833cb`
+- code commit: `dfcdb8ad79177e3a38200e1bf398cdb5a2d46ec8`
+- workflow commit: `6f2dab9231aa2cd2ef34d1158b31f53f7553a770`
+- result report: `gold_axis_2026/GOLD_MONTHLY_MARKET_REGIME_TRANSITION_DETECTOR_V1_RESULT_2026-09-30.md`
+- result commit: `e1f89669ab007c57e953dfb380819d6a96779855`
+- scientific gate: **PASS**
+
+V1 fixed signals:
+- S1 posterior erosion
+- S2 incumbent emission anomaly
+- S3 predictive surprise
+- S4 13D market-state jump
+- S5 confident raw latent switch
+- TRANSITION = S5 OR at least 2 of S1..S4.
+
+Core 2022-01..2026-08:
+
+EXPANDING_REFIT:
+- 56 months
+- 16 transition flags
+- event hits **3/4 = 75%**
+- transition-zone recall **3/6 = 50%**
+- false-transition rate **13/50 = 26.0%**
+- precision **18.75%**
+- event hits: 2022-02, 2024-04, 2026 transition
+- miss: 2023-01
+- 2026 first flag: **2026-06**, one month before 2026-07 R1 confirmation.
+
+ANNUAL_ANCHORED:
+- 17 flags
+- event hits **3/4 = 75%**
+- transition-zone recall **50%**
+- false-transition rate **28.0%**
+- precision **17.65%**
+- same event hit/miss pattern
+- 2026 first flag also **2026-06**.
+
+Full replay 2015-07..2026-08:
+- EXPANDING event hit **7/13 = 53.8%**, false-transition rate **28.4%**, precision **19.5%**
+- ANNUAL event hit **6/13 = 46.2%**, false-transition rate **34.5%**, precision **14.9%**
+
+2025-01..2026-08:
+- EXPANDING: 4 flags, 2026 event hit in June, false rate **17.6%**, precision **25%**
+- ANNUAL: 5 flags, 2026 event hit in June, false rate **23.5%**, precision **20%**
+
+Mandatory checkpoints:
+- 2024-03 STABLE
+- 2024-04 TRANSITION for both; S1+S2+S3
+- 2024-05 R2+STABLE
+- 2026-04 R2+STABLE
+- 2026-05 both still STABLE (S1 only)
+- 2026-06 TRANSITION for both
+- expanding uses S2+S3 while still semantic R2
+- annual uses S1+S2+S3+S5 and semantic R0
+- 2026-07 expanding BELIRSIZ/R1 but STABLE; annual R0 STABLE
+- 2026-08 expanding R1 STABLE; annual R1 TRANSITION due S1+S5.
+
+Signal decomposition reveals the key root cause:
+- generic anomaly/surprise is not equivalent to transition.
+- Expanding false-transition contributions in core: S1 7, S2 9, S3 7, S4 4, S5 6.
+- core true transition-zone hits: S1 2, S2 3, S3 2, S4 0, S5 0.
+- 2026-01 and 2026-02 false transition flags are S2+S3; 2026-03 is S3+S4. These sit inside the long R2 episode and look like within-regime extreme/stress rather than regime transition.
+
+Binding conclusion:
+- transition detection is feasible in principle: V1 catches 2024-04 and warns in 2026-06 one month before R1 confirmation;
+- V1 is too noisy for operational alarm weighting;
+- do not loosen thresholds to catch 2026-05;
+- do not tune on 2025/2026;
+- S2/S3/S4 should not be allowed to masquerade as transition evidence without persistence/directional evidence.
+
+Next exact regime-only stage:
+**Transition Detector V2 — historical-development calibration + persistence**
+- calibrate only on earlier historical development;
+- emphasize persistent posterior erosion, alternative-regime probability/margin movement, consecutive movement away from incumbent profile, and changepoint persistence;
+- move generic surprise/emission/jump evidence to the later Regime-Extreme / Within-Regime Stress layer or make it support-only;
+- freeze V2 before inspecting 2025/2026.
+
+Alarm selection/weighting remains blocked.
