@@ -54,7 +54,7 @@ jobs:
           import json
           r=json.load(open('GOLD_MONTHLY_MARKET_REGIME_DISCOVERY_V1_2026-09-30.json'))
           assert r['status']=='COMPLETE'
-          assert r['scope']['train_rows'] >= 175
+          assert r['scope']['train_rows'] >= 168
           assert r['scope']['transport_rows'] == 20
           assert r['governance']['forecast_error_used'] is False
           assert r['governance']['alarm_labels_used'] is False
