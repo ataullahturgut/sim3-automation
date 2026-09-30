@@ -547,11 +547,60 @@ def checkpoint_table(expanding, annual):
 
 
 def v2_validation_metrics(v2_rows, events):
-    rows = [
+    rr = [
         {"month": r["month"], "transition_flag": bool(r["transition_flag"])}
         for r in v2_rows
+        if VAL_START <= r["month"] <= VAL_END
     ]
-    return period_metrics(rows, events, VAL_START, VAL_END)
+    months = {r["month"] for r in rr}
+    evs = [e for e in events if VAL_START <= e["confirmation_month"] <= VAL_END]
+
+    zone = set()
+    for e in evs:
+        zone.update(m for m in e["zone_months"] if m in months)
+
+    zone_rows = [r for r in rr if r["month"] in zone]
+    nonzone = [r for r in rr if r["month"] not in zone]
+    flags = [r for r in rr if r["transition_flag"]]
+    tp = int(sum(r["transition_flag"] for r in zone_rows))
+    fp = int(sum(r["transition_flag"] for r in nonzone))
+
+    hits = 0
+    leads = []
+    details = []
+    for e in evs:
+        zset = set(e["zone_months"])
+        flagged = [r for r in rr if r["month"] in zset and r["transition_flag"]]
+        first = flagged[0]["month"] if flagged else None
+        lead = None if first is None else month_diff(first, e["confirmation_month"])
+        if first is not None:
+            hits += 1
+            leads.append(lead)
+        details.append({
+            **e,
+            "first_detector_flag_in_zone": first,
+            "lead_months_before_confirmation": lead,
+            "hit": first is not None,
+        })
+
+    return {
+        "n_months": len(rr),
+        "transition_flags": len(flags),
+        "flag_rate": None if not rr else float(len(flags) / len(rr)),
+        "transition_zone_months": len(zone_rows),
+        "transition_zone_hits": tp,
+        "transition_zone_recall": None if not zone_rows else float(tp / len(zone_rows)),
+        "non_zone_months": len(nonzone),
+        "false_transition_count": fp,
+        "false_transition_rate_non_zone": None if not nonzone else float(fp / len(nonzone)),
+        "precision": None if not flags else float(tp / len(flags)),
+        "reference_transition_events": len(evs),
+        "event_hits": hits,
+        "event_misses": len(evs) - hits,
+        "event_hit_rate": None if not evs else float(hits / len(evs)),
+        "mean_lead_months_before_confirmation": None if not leads else float(np.mean(leads)),
+        "event_details": details,
+    }
 
 
 def main():
