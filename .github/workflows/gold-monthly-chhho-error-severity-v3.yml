@@ -1,0 +1,60 @@
+name: Gold Monthly ChHHO Error Severity V3
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_chhho_error_severity_v3.py
+      - .github/workflows/gold-monthly-chhho-error-severity-v3.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download V2 severity artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11090178105/zip" > sev2.zip
+          unzip -q sev2.zip -d inputs
+          test -s inputs/GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V2_2026-09-30.json
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_chhho_error_severity_v3.py
+      - name: Run APE severity audit
+        run: |
+          python gold_axis_2026/tools/gold_monthly_chhho_error_severity_v3.py \
+            --input inputs/GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V2_2026-09-30.json \
+            --output GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V3_2026-09-30.json
+      - name: Scientific gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V3_2026-09-30.json'))
+          assert r['status']=='COMPLETE'
+          assert r['primary_severity_metric']=='APE'
+          assert r['severity_by_period']['ALL_USABLE']['high_n']==17
+          assert r['severity_by_period']['ALL_USABLE']['medium_n']==7
+          assert r['governance']['alarm_rules_retuned'] is False
+          print('SCIENTIFIC_GATE=PASS')
+          print(json.dumps({
+            'all':r['severity_by_period']['ALL_USABLE'],
+            'disagreements':r['return_vs_ape_disagreements']
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-chhho-error-severity-v3-${{ github.sha }}
+          path: GOLD_MONTHLY_CHHHO_ERROR_SEVERITY_V3_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 90
