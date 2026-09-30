@@ -1,0 +1,32 @@
+name: Gold Monthly ETF Daily Source Inspect V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_etf_daily_source_inspect_v1.py
+      - .github/workflows/gold-monthly-etf-daily-source-inspect-v1.yml
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install 'pandas>=2.2,<3' 'openpyxl>=3.1,<4' 'xlrd>=2.0,<3' 'requests>=2.32,<3'
+      - name: Inspect official ETF sources
+        run: python gold_axis_2026/tools/gold_monthly_etf_daily_source_inspect_v1.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-etf-daily-source-inspect-${{ github.sha }}
+          path: GOLD_MONTHLY_ETF_DAILY_SOURCE_INSPECT_2026-09-30.json
+          if-no-files-found: error
+          retention-days: 30
