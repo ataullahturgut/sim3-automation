@@ -2922,6 +2922,105 @@ Goal:
 No price switch, blend weight, or rescue router is authorized until this analysis supports one.
 
 
+
+## 20M.8 Contextual HIGH-Alarm Rescueability Analysis V1 — COMPLETE
+
+Detailed result:
+`gold_axis_2026/GOLD_MONTHLY_CONTEXTUAL_HIGH_ALARM_RESCUEABILITY_V1_RESULT_2026-10-01.md`
+
+Authority:
+- commit `c9eb9f06eb683591edcc1211fec12850ebaa67e4`
+
+Execution:
+- workflow **Gold Monthly Contextual High Alarm Rescueability V1**
+- run **36790524882**
+- job **110142094485**
+- conclusion **SUCCESS**
+- artifact **11132141035**
+- digest `sha256:6788f6bc1a1992570dc43ee019403e2765669cc749a6d2686613e500fa6d51e4`
+- scientific gate **PASS**.
+
+Frozen exact-16 rescue anatomy:
+
+DEV router warnings:
+- **20** warnings
+- **10** realized HIGH/MEDIUM
+- **10** false/NORMAL
+- elevated rescue pattern counts:
+  - BROAD_MATERIAL_RESCUE **3**
+  - BROAD_RESCUE **2**
+  - NARROW_MATERIAL_RESCUE **1**
+  - SHARED_HARD_OR_SHALLOW **4**.
+
+Best fixed challenger on only the realized elevated DEV warning months:
+- **LMC2_RBF_M32**
+- gain **+101.76 USD**
+- wins **8/10**.
+
+But on the actual ex-ante decision set — all 20 router warnings including false alarms:
+- best fixed fallback remains LMC2_RBF_M32;
+- ChHHO warning-month ΣAE **1127.89**
+- LMC2 warning-month ΣAE **1144.00**
+- net gain **-16.11 USD**.
+
+Binding interpretation:
+**HIGH -> fixed fallback is rejected on DEV.**
+The gains on true elevated-error warnings are erased by false-warning months.
+
+DEV hindsight headroom remains large:
+- best-alternative-every-warning gain **445.76 USD**
+- KEEP-or-best-alternative gain **469.73 USD**.
+
+This shows that rescue capacity exists, but the missing component is an origin-safe selector.
+
+Opened exact16 transport through 2026-07:
+- **12** warnings
+- **9** realized HIGH/MEDIUM
+- **3** false
+- elevated rescue patterns:
+  - BROAD_MATERIAL_RESCUE **5**
+  - BROAD_RESCUE **2**
+  - NARROW_MATERIAL_RESCUE **1**
+  - SHARED_HARD_OR_SHALLOW **1**.
+
+Opened retrospective best fixed challenger:
+- **CNN-LSTM LB6**
+- elevated-warning gain **+440.84 USD**, wins **8/9**
+- all-warning gain **+302.14 USD**, wins **8/12**.
+
+This is descriptive only; 2025/2026 is opened and cannot select a production fallback.
+
+Critical structural cases:
+- **2025-02 HIGH, R2/NORMAL:** 14/15 alternatives beat ChHHO; broad material rescue despite 100% exact16 direction agreement and low dispersion.
+- **2025-09 HIGH, BELIRSIZ/TRANSITION:** 13/15 alternatives beat ChHHO; broad material rescue.
+- **2026-01 HIGH, R2/NORMAL:** 13/15 alternatives beat ChHHO; broad but shallower rescue.
+- **2026-03 MEDIUM, R2/EXTREME/OOD:** **0/15** alternatives beat ChHHO; alarm is useful but correct retrospective action is KEEP MAIN.
+- **2026-06 HIGH, R2/TRANSITION:** 9/15 alternatives beat ChHHO; broad but modest rescue.
+
+Consequences:
+1. alarm truth and rescueability are distinct problems;
+2. regime context is useful but not deterministic;
+3. direction consensus / low dispersion cannot be used as a KEEP veto;
+4. same apparent regime cell can contain broad, narrow and shallow rescue;
+5. a later action layer must predict **relative loss / rescue gain**, not merely whether ChHHO is risky.
+
+No SWITCH, BLEND or abstention rule is promoted by this stage.
+
+### Exact next research step
+
+**Contextual Relative-Loss / Rescue-Gain Predictor V1 — NOT YET RUN**
+
+Target:
+`gain(j,t)=|error_ChHHO,t|-|error_model_j,t|`
+
+Purpose:
+- decide whether a router warning is a KEEP-main case or has credible positive-gain alternatives;
+- use only origin-known alarm + market-state + ensemble-geometry context;
+- retain KEEP MAIN and ABSTAIN as first-class actions;
+- do not fit another gold-price model.
+
+2025/2026 remains descriptive/opened and may not choose predictor architecture, thresholds or fallback identity.
+
 # 21. Bundan sonra manifest nasıl güncellenecek
 
 Her yeni deney bittiğinde **aynı commit zincirinde** bu ana manifest güncellenecek.
@@ -2993,7 +3092,7 @@ Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru
 - 2026 selection: **NONE**
 - DB write: **NONE**
 - Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **Residual external-driver screens with mandatory BIAS_ONLY incremental-value gate; Brent/Rates attribution corrected, Nasdaq/WTI remain candidate next families.** Before advancing, a fresh direct Federal Reserve Board DDP hard audit proved exact raw-package hashes, complete daily-row parity, and **0.0** max transform differences for governed Broad USD / nominal 10Y / real 10Y data. Rates and FX native F4 failures are therefore not attributed to data corruption; both families remain closed. VIX is next; Nasdaq/Energy remain not started.
+- Current exact next model/research stage: **Contextual Relative-Loss / Rescue-Gain Predictor V1 — NOT YET RUN.** The completed rescueability audit shows large ex-post rescue headroom but rejects HIGH -> fixed fallback on DEV. Specialist Hedge remains frozen; Exact16 hard veto remains rejected; regime/transition/extreme/OOD and ensemble geometry are context only. The next model, if opened, must predict challenger relative loss/gain while preserving KEEP MAIN / ABSTAIN. 2025/2026 remains opened and cannot select the rule.
 
 
 ---
