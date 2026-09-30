@@ -2748,6 +2748,180 @@ Current exact active stage:
 
 ---
 
+
+# 20M. Alarm / rejim / rescue decision checkpoint — 2026-09-30
+
+This section supersedes older “next action” lines that proposed continuing generic residual screens or hard alarm-veto development as the immediate research priority.
+
+## 20M.1 Frozen alarm layer — Specialist Hedge
+
+Current strongest alarm/reliability candidate:
+- architecture: **Specialist Router**
+- selected learning rule: **Hedge**, not Fixed-Share
+- eta = **0.25**
+- alpha = **0**
+- HIGH threshold tau = **0.50**
+- experts: A/B/C/D/E/G/H/I1/I2/T1_WGC + V2_TRANSITION + NULL.
+
+DEV 2022-04..2024-12:
+- router events **20**
+- HIGH hits **8/8**
+- MEDIUM hits **2/2**
+- false calls **10**
+- raw ANY false calls **15**
+- false reduction **33.3%**
+- no HIGH/MEDIUM loss.
+
+Opened 2025:
+- 7 warnings
+- 5 HIGH +1 MEDIUM +1 false
+- HIGH recall **100%**.
+
+Opened 2026 Jan-Aug:
+- 6 warnings
+- 3 HIGH +1 MEDIUM +2 false
+- HIGH recall **100%**
+- includes the origin 2026-05 V2-only warning for target 2026-06 HIGH.
+
+Binding:
+- freeze the Specialist Hedge router;
+- do not retune eta/tau on opened 2025/2026;
+- HIGH means **forecast-error risk**, not UP/DOWN direction and not an automatic model switch.
+
+Detailed result:
+`gold_axis_2026/GOLD_MONTHLY_SPECIALIST_FIXED_SHARE_ALARM_ROUTER_V1_RESULT_2026-09-30.md`
+
+## 20M.2 Frozen market-state context
+
+Regime must not be reduced to one hard R-label.
+
+Use the origin-known state as a multi-dimensional context:
+- semantic regime: **R0 / R1 / R2 / BELIRSIZ**
+- soft regime posterior probabilities
+- transition status: **STABLE / TRANSITION** from V2 as research/context information
+- within-regime status: **NORMAL / EXTREME / DEFER**
+- OOD / historically unusual flag
+- regime spell age / persistence context.
+
+Important empirical distinction:
+- 2025 is overwhelmingly/continuously R2 in the primary discovery representation;
+- 2026 contains R2 EXTREME, R2 TRANSITION and BELIRSIZ/R1 TRANSITION states that are not interchangeable.
+
+Do not infer that one regime variant is universally “good” or “bad” for ChHHO:
+- DEV and opened 2025-2026 show non-stationary/reversing relationships for TRANSITION;
+- EXTREME is descriptive and is not an authorized ChHHO risk multiplier.
+
+Therefore regime is retained as **context**, not a hard global switch or multiplier.
+
+## 20M.3 Exact16 SAFE-veto — COMPLETE / REJECTED FOR TRANSPORT
+
+Detailed record:
+`gold_axis_2026/GOLD_MONTHLY_MISSING9_EXACT16_SAFE_VETO_TRANSPORT_V1_RESULT_2026-09-30.md`
+
+Execution:
+- run **36779063580**
+- workflow conclusion **SUCCESS**
+- exact16 artifact **11128785588**
+- digest `sha256:ac7cedf50793d7fe1945f54553efb9e1336962cb8adb298f32db8bd58246a007`.
+
+All missing-nine reconstruction jobs passed their frozen reproduction gates, allowing the exact original 16-model pool to be evaluated.
+
+DEV:
+- frozen router: 20 events = 8 HIGH +2 MEDIUM +10 false
+- Exact16 overlay: 18 = 8 HIGH +2 MEDIUM +8 false
+- removes 2 false, loses 0 HIGH/MEDIUM.
+
+Opened 2025:
+- router: 7 = 5 HIGH +1 MEDIUM +1 false
+- overlay: 6 = 4 HIGH +1 MEDIUM +1 false
+- **false removed 0**
+- **HIGH removed 1**: origin 2025-01 H -> target 2025-02 HIGH.
+
+Opened 2026 Jan-Jul:
+- overlay makes no change;
+- false removed 0;
+- HIGH/MEDIUM removed 0.
+
+Opened 2025 + 2026 Jan-Jul:
+- router: 12 = 7 HIGH +2 MEDIUM +3 false
+- overlay: 11 = 6 HIGH +2 MEDIUM +3 false
+- net: **0 false removed, 1 HIGH removed**.
+
+Binding interpretation:
+- **EXACT16_TRANSPORT_HARMFUL**
+- do not deploy the Exact16 hard veto;
+- do not retune its consensus or dispersion thresholds using opened outcomes;
+- do not revive the seven-model shadow;
+- cross-model consensus/dispersion may remain as origin-safe **context features only**.
+
+## 20M.4 Current research question — HIGH sonrası aksiyon
+
+The immediate project question is no longer “find another alarm” or “predict next month's exact R0/R1/R2 label.”
+
+Current question:
+
+> **When Specialist Hedge says the main ChHHO forecast is HIGH-risk, what should be done with the point forecast?**
+
+The next analysis stage is **HIGH-alarm post-action / rescueability analysis**, not immediate switching.
+
+For every alarm origin, compare:
+- ChHHO point forecast
+- actual
+- ChHHO AE/APE
+- frozen challenger forecasts
+- challenger gain/loss relative to ChHHO
+- active alarm experts and Specialist Hedge score
+- full origin-known regime context
+- cross-model consensus/dispersion.
+
+Candidate actions to be evaluated:
+- **KEEP MAIN**
+- **SWITCH** to a challenger only where there is repeatable origin-safe evidence
+- **BLEND** where multiple challengers provide coherent rescue
+- **KEEP + LOW CONFIDENCE / ABSTAIN** where rescue evidence is weak, contradictory or OOD.
+
+Critical rule:
+**HIGH alarm does not force a forecast change.**
+
+## 20M.5 Historical evidence handling
+
+Do not train a rescue rule by pooling all 2022-2024 alarm months equally:
+- the Specialist router's DEV useful-call rate was only 50%;
+- alarm ecology changes materially in the later R2-heavy period.
+
+Do not discard historical data either.
+
+Preferred analysis:
+- use the frozen origin-known market-state vector to identify **contextually similar historical episodes**;
+- treat regime posterior, transition/extreme/OOD and model-dispersion information as soft/context variables;
+- estimate challenger rescue behavior conditionally rather than by calendar period alone.
+
+Opened 2025/2026:
+- remain diagnostic/opened evidence;
+- must not be used for post-hoc threshold selection or rescue-rule optimization.
+
+## 20M.6 Next-regime prediction decision
+
+A separate next-month R0/R1/R2 forecasting model is **not an immediate prerequisite**.
+
+Reason:
+- the current live regime stack already supplies origin-known state identity, posterior confidence, transition deterioration, EXTREME/OOD and persistence information;
+- the decision problem is forecast reliability/action, not the semantic label of the next month by itself.
+
+Reopen explicit next-regime forecasting only if the rescue analysis demonstrates a concrete bottleneck that cannot be resolved from current origin-state information.
+
+## 20M.7 Exact next stage
+
+**Stage: Contextual HIGH-Alarm Rescueability Analysis V1 — ANALYSIS ONLY / NO SWITCH YET**
+
+Goal:
+- determine whether HIGH-risk months contain repeatable, origin-identifiable rescue structure;
+- test whether challenger advantage is conditionally predictable from the frozen alarm + regime + model-state context;
+- preserve KEEP MAIN / abstention as valid outcomes.
+
+No price switch, blend weight, or rescue router is authorized until this analysis supports one.
+
+
 # 21. Bundan sonra manifest nasıl güncellenecek
 
 Her yeni deney bittiğinde **aynı commit zincirinde** bu ana manifest güncellenecek.
