@@ -3063,6 +3063,36 @@ Important level-source qualification:
 
 No trading/action rule is authorized from this forward forecast alone.
 
+
+## 20M.10 September 2026 regime state — COMPLETE
+
+Detailed result:
+`gold_axis_2026/GOLD_MONTHLY_SEPTEMBER_2026_REGIME_STATE_RESULT_2026-10-01.md`
+
+Execution:
+- run **36832356597**
+- conclusion **SUCCESS**
+- artifact **11147761924**
+- digest `sha256:c6107a38fd80fb0bbaf5c46e02c8707cfd336358a52982af5b90ab3d6ff74ff3`.
+
+September 2026 origin state for the October forecast:
+- semantic regime **R1**
+- posterior **0.9823228737**
+- OOD **NO**
+- Transition V2 **STABLE**, 0 current votes, no active transition flags
+- Extreme V1 **NORMAL**, 0/4 anomaly signals
+- combined context **R1 / STABLE / NORMAL**.
+
+Thus the October 2026 forward forecast origin is not currently flagged as BELIRSIZ, TRANSITION, EXTREME or OOD.
+
+Data qualification:
+- market data through 2026-09-30;
+- regime parameter fit only through 2026-08;
+- no October market data;
+- World Bank September Gold not yet available, so level-sensitive September state uses complete StakTrakr full-month Gold proxy.
+
+No forecast switch/correction is authorized by the regime label alone.
+
 # 21. Bundan sonra manifest nasıl güncellenecek
 
 Her yeni deney bittiğinde **aynı commit zincirinde** bu ana manifest güncellenecek.
