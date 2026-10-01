@@ -31,7 +31,8 @@ Then, only after forecast validation, determine which horizon offers the stronge
 - Stage 4 TFT Multi-Horizon Probabilistic Challenger: **COMPLETE / NO_TFT_PROMOTION**
 - Deep-learning challenger program: **CLOSED**
 - Stage 5 Forecast-Head Reconciliation & Tactical Signal Architecture: **COMPLETE / NO_RECONCILIATION_PASS**
-- **Stage 6 Tactical Allocation / Utility Contract: NEXT**
+- Stage 6 Tactical Allocation / Utility Contract: **COMPLETE / NO_TACTICAL_PASS**
+- **Stage 6B Turnover / Tradable-Instrument Economic Feasibility Audit: NEXT**
 
 Current strongest research horizon: **H3**.
 
@@ -43,12 +44,13 @@ Frozen H3 forecast heads:
 Frozen daily forecast object:
 `F_t = [P_UP3, RET_HAT3, Q10_3, Q50_3, Q90_3]`
 
-Categorical head-reconciliation states are rejected under the preregistered Stage-5 thresholds.
+Stage-6 economic result:
+- no long/cash utility rule passes at frozen 20 bp round-trip cost;
+- best 20 bp candidate = **U2 MEDIAN_CONSENSUS**, CAGR **6.56%**, max DD **-13.79%**, Sortino **0.743**;
+- BUY_AND_HOLD = CAGR **13.54%**, max DD **-19.40%**, Sortino **1.016**;
+- gross 0 bp sensitivity shows the timing edge is economically interesting but turnover-sensitive.
 
-Supporting non-core evidence:
-- H5 TFT Q50 point-return improves Stage-1 H5 classical MAE by **1.47%**, but H5 direction and quantile fail.
-
-No tactical trading champion exists yet.
+2025 tactical transport remains CLOSED.
 
 ## 1.3 Governance
 
@@ -383,6 +385,44 @@ Frozen forecast object:
 
 ---
 
+# 6F. Stage-6 Tactical Utility Result
+
+Authority:
+`GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE6_RESULT_2026-10-01.md`
+
+Run:
+- **36892963306**
+- artifact **11178115214**
+- artifact digest `sha256:3f1b8d5a458521c1c64cda9f3a6df0a30adcad88d9140a966998ca3f14713b5c`.
+
+Result:
+**NO_TACTICAL_PASS**
+
+Primary 20 bp research-cost comparison:
+
+| Strategy | CAGR | Max DD | Sortino |
+|---|---:|---:|---:|
+| BUY_AND_HOLD | **13.54%** | -19.40% | **1.016** |
+| U1 RET_ONLY | 2.64% | **-12.45%** | 0.279 |
+| **U2 MEDIAN_CONSENSUS** | **6.56%** | -13.79% | **0.743** |
+| U3 PROB_TILT | 3.14% | -14.51% | 0.332 |
+| U4 FULL_RISK | 0.00% | 0.00% | — |
+
+No rule clears the frozen tactical gate.
+
+Economic diagnosis:
+- 0 bp U3: CAGR **14.83%**, max DD **-17.13%**, Sortino **1.276**
+- 20 bp: no PASS
+- 50 bp: best U2 CAGR ~2.0%, only 8 trades.
+
+Binding interpretation:
+- predictive timing edge exists in gross sensitivity;
+- current edge is too thin / turnover-sensitive for promotion under generic 20 bp execution friction;
+- do not open 2025 to rescue the strategy;
+- next work is execution-economics / actual tradable-instrument feasibility, not another forecast model search.
+
+---
+
 # 7. Stage Roadmap
 
 | Stage | Purpose | Status |
@@ -394,49 +434,41 @@ Frozen forecast object:
 | 3 | TCN / GRU / BiGRU challengers | **COMPLETE / NO PROMOTION** |
 | 4 | TFT multi-horizon challenger | **COMPLETE / NO PROMOTION** |
 | 5 | Forecast-head reconciliation / tactical signal architecture | **COMPLETE / NO PASS** |
-| 6 | Tactical allocation / utility contract | **NEXT** |
-| 7 | Frozen 2025 transport | BLOCKED |
+| 6 | Tactical allocation / utility contract | **COMPLETE / NO PASS** |
+| 6B | Turnover / tradable-instrument feasibility audit | **NEXT** |
+| 7 | Frozen 2025 transport | **BLOCKED — no tactical champion** |
 | 8 | Prospective daily ledger | NOT STARTED |
 
 ---
 
 # 8. Exact Next Action
 
-**Stage 6 — Tactical Allocation / Utility Contract**
+**Stage 6B — Turnover / Tradable-Instrument Economic Feasibility Audit**
 
-Frozen forecast input:
-`F_t = [P_UP3, RET_HAT3, Q10_3, Q50_3, Q90_3]`
+Do not reopen forecast-model search.
 
-H3 remains the core horizon.
-H1/H5 are supporting context only.
+Using the frozen Stage-6 candidate rules and DEV trade ledgers:
 
-Before any backtest, freeze:
-
-1. tradable instrument / price convention
-2. exact decision timestamp
-3. H3 holding / exit convention
-4. cash / no-position state
-5. transaction cost and spread assumptions
-6. risk penalty using the frozen distribution outputs
-7. position-size policy
-8. benchmark definitions
-9. economic metrics:
-   - net return
-   - Sharpe
-   - Sortino
-   - max drawdown
+1. calculate break-even round-trip cost for each frozen utility rule;
+2. decompose gross edge lost to:
+   - number of trades
    - turnover
-   - hit rate
-   - downside-tail loss
-10. DEV-only candidate utility rules.
+   - transaction-cost hurdle
+   - time spent in cash;
+3. compare 0 / 20 / 50 bp curves without allowing cost to select a different historical rule;
+4. determine which realistic Gold instrument implementation could plausibly operate below the break-even all-in cost;
+5. only after an actual tradable instrument is frozen, define any lower-turnover implementation **ex ante** from instrument mechanics.
 
-Rules:
-- no 2025 threshold tuning
-- no categorical Stage-5 threshold reuse/reopening
-- no new forecast model search
-- no deep-learning reopening.
+Constraints:
+- 2025 remains unopened;
+- no threshold/coefficient/holding-period scan;
+- no stop/take-profit optimization;
+- no deep-learning reopening;
+- no model-zoo expansion.
 
-Only after the complete tactical rule is frozen on 2022-2024 may 2025 transport be opened.
+If no plausible tradable implementation exists below break-even cost:
+- stop tactical allocation research under the current H3 contract;
+- retain the model as a forecast/reporting engine only.
 ---
 
 # 9. Document Hierarchy
@@ -490,6 +522,12 @@ Stage 5:
 - `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE5_RESULT_2026-10-01.md`
 - run **36892132569**
 - artifact **11177455544**.
+
+Stage 6:
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE6_AUTHORITY_2026-10-01.md`
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE6_RESULT_2026-10-01.md`
+- run **36892963306**
+- artifact **11178115214**.
 
 Sibling projects:
 - monthly forecast: `GOLD_MONTHLY_PROJECT_MANIFEST.md`
