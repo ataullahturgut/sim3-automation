@@ -3581,3 +3581,43 @@ Files:
 Binding next stage:
 - **Contextual Relative-Loss / Rescue-Gain Predictor V1 — NEXT / NOT YET RUN**
 - no 2025/2026 post-hoc tuning authority is granted by this checkpoint.
+
+
+# 2026-10-01 — Relative-Loss / Rescue-Gain Matrix Stage 1 V1
+
+**Status:** COMPLETE / SCIENTIFIC_GATE=PASS / DEV-ONLY / NO SWITCH AUTHORIZED
+
+Frozen Exact16 pool was expanded from the prior warning-only rescueability audit into the complete **33-target DEV month × 15-challenger rescue-gain matrix**.
+
+Definition:
+`gain(j,t) = |error_ChHHO,t| - |error_model_j,t|`; positive means challenger j beats ChHHO.
+
+Coverage:
+- DEV 2022-04..2024-12: 33 targets.
+- Specialist Hedge warnings: 20 = 10 realized HIGH/MEDIUM + 10 realized NORMAL false warnings.
+- Non-warning DEV: 13.
+- 2025/2026 not used for selection, fitting, thresholding, or pool reduction.
+
+Key results:
+- No single challenger beats ChHHO on cumulative AE across all 33 DEV targets.
+- Best fixed all-33 challenger: DE_ABC_RBFNN, gain **-2.81 USD** versus ChHHO.
+- Best fixed all-warning challenger: LMC2_RBF_M32, gain **-16.11 USD**; fixed HIGH->fallback remains rejected.
+- On realized elevated warning months only, LMC2 gain **+101.76 USD**, wins **8/10**.
+- Warning-month KEEP-or-best-alternative hindsight ceiling: **+469.73 USD**.
+- All-33 KEEP-or-best-alternative hindsight ceiling: **+708.51 USD**.
+- Simple p_HIGH/regime/consensus/dispersion/ensemble-position diagnostics are heterogeneous and weak; no hard context rule promoted.
+- DEV 2023-03 is an important KEEP/ABSTAIN case: warning occurred, realized severity NORMAL, and **0/15 alternatives beat ChHHO**.
+
+Regression gates reproduce Contextual Rescueability V1 exactly within tolerance:
+- all-warning LMC2 gain ≈ -16.11 USD;
+- elevated-warning LMC2 gain ≈ +101.76 USD;
+- 8/10 elevated-warning wins;
+- warning KEEP-or-best oracle ≈ +469.73 USD.
+
+Files:
+- `GOLD_MONTHLY_RELATIVE_LOSS_RESCUE_GAIN_MATRIX_STAGE1_V1_AUTHORITY_2026-10-01.md`
+- `GOLD_MONTHLY_RELATIVE_LOSS_RESCUE_GAIN_MATRIX_STAGE1_V1_RESULT_2026-10-01.md`
+- `tools/gold_monthly_relative_loss_rescue_gain_matrix_stage1_v1.py`
+- `.github/workflows/gold-monthly-relative-loss-rescue-gain-stage1-v1.yml`
+
+**Next authorized research stage:** low-capacity origin-safe **Contextual Relative-Loss / Rescue-Gain Predictor V1**, evaluated with chronological DEV validation and preserving KEEP MAIN / ABSTAIN. No production switch rule is authorized.
