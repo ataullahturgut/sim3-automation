@@ -1,7 +1,7 @@
 # GOLD SHORT-HORIZON GLOBAL XAU PROJECT MANIFEST
 
 **Date:** 2026-10-01  
-**Status:** ACTIVE — STAGE 3 COMPLETE / H3 DIRECTION ROBUST, CONVICTION GATE FAIL  
+**Status:** ACTIVE — 2025/2026 TRANSPORT COMPLETE / H3 DIRECTION FAILED OUT-OF-SAMPLE TRANSPORT  
 **Supersedes for tactical objective:** BIST-Metal-Price short-horizon mainline.
 
 ## 1. Objective
@@ -216,16 +216,51 @@ Binding interpretation:
 - do not use the complement of weak-UP evidence as a validated DOWN signal;
 - do not open 2025 to rescue the gate.
 
-## 13. Exact next action
+## 13. Frozen 2025 / 2026 transport evidence
 
-The threshold-driven tactical branch is **CLOSED under the current H3 probability engine** because the frozen conviction gate failed.
+Transport:
+- COMPLETE
+- authoritative run **36926432212**
+- binding model: **H3 / CORE3 / Logistic L2 / RAW**
+- primary mode: **STRICT_FROZEN_FIT**
+- no 2025/2026 result used for tuning or selection.
 
-Permitted next research must introduce a materially new, preregistered source of short-horizon information or mechanism while preserving H3 / CORE3 / Logistic L2 as the frozen comparator.
+Primary strict frozen-fit result:
 
-Priority order:
-1. audit genuinely new daily origin-safe information not already rejected by Stage 2 representation tests;
-2. if a new mechanism is justified, preregister it as a challenger against frozen H3 / CORE3 / Logistic L2;
-3. do not reopen BIST target;
-4. do not tune probability thresholds or P&L rules;
-5. keep 2025 closed until a new pre-2025 challenger contract passes.
+| Year | N | Accuracy | Balanced accuracy | Brier | Log loss | UP recall | DOWN recall |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 2025 | 253 | 49.4% | 49.4% | 0.2509 | 0.6949 | 49.4% | 49.5% |
+| 2026 | 142 | 42.3% | 45.2% | 0.2655 | 0.7261 | 75.0% | 15.4% |
 
+Frozen conviction-band transport:
+
+2025:
+- p>=0.55: n=53, realized UP **49.1%**
+- p<=0.45: n=47, realized UP **42.6%**
+
+2026:
+- p>=0.55: n=71, realized UP **47.9%**
+- p<=0.45: n=14, realized UP **71.4%**
+
+Secondary frozen walk-forward diagnostic:
+- 2025 accuracy 52.2%, balanced accuracy 51.3%, Brier 0.2499
+- 2026 accuracy 42.3%, balanced accuracy 45.3%, Brier 0.2685.
+
+Binding interpretation:
+- the pre-2025 H3 direction edge does **not transport** to 2025/2026;
+- Stage-3 high-UP conviction behavior also does not transport;
+- 2026 shows severe directional asymmetry: UP recall is high only because the model over-predicts UP, while DOWN recall collapses to 15.4%;
+- do not tune thresholds on 2025/2026 to rescue this engine;
+- retain all results as frozen out-of-sample evidence.
+
+## 14. Exact next action
+
+Do **not** proceed to tactical/P&L optimization with the current H3 / CORE3 / Logistic L2 engine.
+
+Next research question:
+- diagnose why the signal transports in DEV but breaks in 2025/2026;
+- specifically test regime / distribution shift and feature-sign stability using the already frozen prediction ledgers;
+- this diagnostic must not retune the model on 2025/2026;
+- any future challenger must be preregistered using pre-2025 evidence and evaluated against this frozen transport record.
+
+Do not return to BIST as tactical target.
