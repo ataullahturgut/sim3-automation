@@ -106,7 +106,8 @@ def main():
     q=q.sort_values("row_index").drop_duplicates("row_index").reset_index(drop=True)
     if len(q)!=755: raise RuntimeError(f"CORE3_DEV_N {len(q)} != 755")
     q["origin_date"]=pd.to_datetime(q["origin_date"])
-    if q["origin_date"].dt.year.min()!=2022 or q["origin_date"].dt.year.max()!=2024:
+    q["signal_date"]=pd.to_datetime(q["signal_date"])
+    if q["signal_date"].dt.year.min()!=2022 or q["signal_date"].dt.year.max()!=2024:
         raise RuntimeError("DEV chronology mismatch")
 
     raw=q["prediction"].astype(float).to_numpy()
@@ -149,7 +150,7 @@ def main():
             reliability=etable
         else:
             reliability.extend(etable)
-        for yr,zr in q.groupby(q["origin_date"].dt.year):
+        for yr,zr in q.groupby(q["signal_date"].dt.year):
             mm=metrics(zr["y_up"],zr[col])
             annual.append({"method":method,"year":int(yr),**mm})
 
@@ -196,7 +197,7 @@ def main():
         else:
             band_rows.append({"band":band,"n":0,"brier":None,"logloss":None,"prediction_std":None,"mean_prediction":None,"actual_up_rate":None})
         for yr in [2022,2023,2024]:
-            zy=zb[zb.origin_date.dt.year==yr]
+            zy=zb[zb.signal_date.dt.year==yr]
             band_year.append({"band":band,"year":yr,"n":int(len(zy)),
                               "actual_up_rate":float(zy.y_up.mean()) if len(zy) else None,
                               "mean_prediction":float(zy.selected_probability.mean()) if len(zy) else None})
@@ -207,8 +208,8 @@ def main():
 
     hi=q[q.selected_probability>=0.55]
     lo=q[q.selected_probability<=0.45]
-    hi_years=[int((hi.origin_date.dt.year==yr).sum()) for yr in [2022,2023,2024]]
-    lo_years=[int((lo.origin_date.dt.year==yr).sum()) for yr in [2022,2023,2024]]
+    hi_years=[int((hi.signal_date.dt.year==yr).sum()) for yr in [2022,2023,2024]]
+    lo_years=[int((lo.signal_date.dt.year==yr).sum()) for yr in [2022,2023,2024]]
     hi_rate=float(hi.y_up.mean()) if len(hi) else None
     lo_rate=float(lo.y_up.mean()) if len(lo) else None
     separation=(hi_rate-lo_rate) if (hi_rate is not None and lo_rate is not None) else None
