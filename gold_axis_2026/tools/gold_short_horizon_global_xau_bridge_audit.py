@@ -66,7 +66,11 @@ def main():
 
     meta={}
     for sid,x in [(HIST,hist),(LIVE,live)]:
-        weekdays=int(pd.Series(x["date_ny"]).map(lambda d:d.weekday()<5).sum()) if len(x) else 0
+        # Historical StakTrakr observations are midnight-UTC *date labels*, not
+        # executable timestamps. Do not timezone-shift those labels. NY17 is a
+        # real 17:00 ET timestamp, so its trade date is the NY-local date.
+        date_col="date_utc" if sid==HIST else "date_ny"
+        weekdays=int(pd.Series(x[date_col]).map(lambda d:d.weekday()<5).sum()) if len(x) else 0
         meta[sid]={
             "n":int(len(x)),
             "first_obs":None if len(x)==0 else x.observation_ts.min().isoformat(),
@@ -76,7 +80,8 @@ def main():
             "source_symbols":sorted(set(x.source_symbol.dropna().astype(str))),
             "quality_values":sorted(set(x.quality_status.dropna().astype(str))),
             "nonpositive":int((x.value<=0).sum()) if len(x) else 0,
-            "duplicate_trade_dates_ny":int(x.duplicated("date_ny").sum()) if len(x) else 0,
+            "date_semantic":"UTC_DATE_LABEL" if sid==HIST else "NY17_TRADE_DATE",
+            "duplicate_trade_dates":int(x.duplicated(date_col).sum()) if len(x) else 0,
         }
 
     # Historical chronology counts, target-only.
@@ -84,7 +89,7 @@ def main():
     if len(hist):
         h=hist.copy()
         h=h[h["value"].notna() & (h["value"]>0)].copy()
-        h["date"]=pd.to_datetime(h["date_ny"].astype(str))
+        h["date"]=pd.to_datetime(h["date_utc"].astype(str))
         h=h[h.date.dt.weekday<5]
         h=h.sort_values("date").drop_duplicates("date",keep="last")
         for label,a,b in [
@@ -105,15 +110,16 @@ def main():
                 n=sum((i+H)<len(h) and h.date.iloc[i+H]<=pd.Timestamp(b) for i in zidx)
                 chronology[label+"_eligible"][f"H{H}"]=int(n)
 
-    # Bridge using NY trade date. Historical series is date-labelled; live is exact NY17.
+    # Bridge exact calendar trade labels: historical StakTrakr uses its UTC
+    # date label unchanged; live NY17 uses the NY-local trade date.
     bridge={}
     bridge_df=pd.DataFrame()
     if len(hist) and len(live):
-        hh=hist[["date_ny","value"]].rename(columns={"value":"hist_price"}).copy()
-        ll=live[["date_ny","value"]].rename(columns={"value":"ny17_price"}).copy()
-        hh=hh.groupby("date_ny",as_index=False).last()
-        ll=ll.groupby("date_ny",as_index=False).last()
-        b=hh.merge(ll,on="date_ny",how="inner").sort_values("date_ny").reset_index(drop=True)
+        hh=hist[["date_utc","value"]].rename(columns={"date_utc":"trade_date","value":"hist_price"}).copy()
+        ll=live[["date_ny","value"]].rename(columns={"date_ny":"trade_date","value":"ny17_price"}).copy()
+        hh=hh.groupby("trade_date",as_index=False).last()
+        ll=ll.groupby("trade_date",as_index=False).last()
+        b=hh.merge(ll,on="trade_date",how="inner").sort_values("trade_date").reset_index(drop=True)
         b["hist_r1"]=np.log(b.hist_price).diff()
         b["ny17_r1"]=np.log(b.ny17_price).diff()
         q=b.dropna(subset=["hist_r1","ny17_r1"]).copy()
@@ -126,8 +132,8 @@ def main():
             bridge={
                 "common_level_dates":int(len(b)),
                 "common_return_pairs":int(len(q)),
-                "first_common":str(b.date_ny.min()),
-                "last_common":str(b.date_ny.max()),
+                "first_common":str(b.trade_date.min()),
+                "last_common":str(b.trade_date.max()),
                 "pearson_r1":pear,
                 "spearman_r1":spear,
                 "sign_agreement":sign,
