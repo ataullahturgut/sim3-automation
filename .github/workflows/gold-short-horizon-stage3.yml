@@ -1,0 +1,80 @@
+name: Gold Short Horizon Stage3 Sequence Challengers
+
+on:
+  push:
+    branches:
+      - gold-midas-headswap-v1-20260925
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_stage3_sequence.py'
+      - 'gold_axis_2026/tools/gold_short_horizon_stage3_aggregate.py'
+      - '.github/workflows/gold-short-horizon-stage3.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  sequence:
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [TCN, GRU, BIGRU]
+        lookback: [20, 60]
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install --disable-pip-version-check numpy pandas requests scikit-learn
+          pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch
+      - name: Run compact sequence challenger
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ARCH: ${{ matrix.arch }}
+          LOOKBACK: ${{ matrix.lookback }}
+          OUT_DIR: stage3_${{ matrix.arch }}_l${{ matrix.lookback }}
+        run: python gold_axis_2026/tools/gold_short_horizon_stage3_sequence.py
+      - name: Upload sequence artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-short-horizon-stage3-${{ matrix.arch }}-l${{ matrix.lookback }}
+          path: stage3_${{ matrix.arch }}_l${{ matrix.lookback }}/
+          retention-days: 90
+
+  aggregate:
+    needs: sequence
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: gold-short-horizon-stage3-*
+          path: downloaded
+      - name: Arrange sequence artifacts
+        run: |
+          n=0
+          for d in downloaded/gold-short-horizon-stage3-*; do
+            mkdir -p "seq$n"
+            cp "$d"/* "seq$n"/
+            n=$((n+1))
+          done
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install aggregate dependencies
+        run: pip install --disable-pip-version-check numpy pandas requests
+      - name: Aggregate sequence challengers
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python gold_axis_2026/tools/gold_short_horizon_stage3_aggregate.py
+      - name: Upload aggregate result
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-short-horizon-stage3-aggregate
+          path: stage3_all/
+          retention-days: 90
