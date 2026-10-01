@@ -1,0 +1,1116 @@
+# GOLD MONTHLY — Model Registry V2.1
+
+**Date:** 2026-10-01  
+**Status:** HISTORICAL MODEL REGISTRY / DUPLICATE-PREVENTION EVIDENCE  
+**Canonical project state:** `GOLD_MONTHLY_PROJECT_MANIFEST.md`
+
+This registry preserves the full model-family history, stage-local statuses and broad-screen inventories. Historical “next”, “active” and “current leader” statements in this file describe the state at the time of those experiments and are **not current project-roadmap authority**.
+
+# 3. Price-Model Registry & Historical Benchmark Program
+
+This chapter preserves the full model-family research record and duplicate-prevention evidence.
+
+**Governance note:** local “next”, “active”, or “current leader” statements inside imported historical family records describe the state at the time of that experiment. They do not override Section 1 or Section 9 of this V2 manifest.
+
+## 3.1 Historical model-family research sequence
+
+Bu bölüm projenin neden bugünkü noktaya geldiğini tek akışta gösterir.
+
+### 2026-09-25 — ELM → ANN → ELMFIS
+
+İlk geniş optimizer araştırma hattı ELM’de kuruldu. Ardından aynı parity mantığı ANN’e ve ELMFIS’e taşındı. Bu dönemde ortak metaheuristic havuz, mandatory refinement ve kontrollü ensemble yaklaşımı şekillendi.
+
+Ana sonuçlar:
+- AOA-ELM güçlü ELM fiyat benchmark’ı oldu.
+- ANN’de FULL7 ve REDUCED4 equal-weight ensemble’lar oluştu.
+- ELMFIS fiyat lideri ABC, direction specialist’i SMA oldu.
+- optimizer’ı tekrar tekrar değiştirmek tek başına kalıcı iyileşme sağlamadığı için daha yapısal ailelere geçildi.
+
+### 2026-09-26 — ANFIS → RBFNN → GPR
+
+ANFIS’te geniş metaheuristic screen sonrası ChHHO-ANFIS güçlü fiyat modeli olarak öne çıktı. RBFNN’de DE-ABC hem fiyat hem yön açısından güçlü Pareto sonuç verdi. GPR/MOGP’de LMC2_RBF_M32 Stage-3 lideri oldu.
+
+Bu aşamadan sonra proje “aynı optimizer’ı başka base learner üzerinde yüzlerce kez dönme” yaklaşımından uzaklaştırıldı ve yapısal farklılık aranmaya başlandı.
+
+### 2026-09-27 — DMA/DMS/IDMA → Boosting
+
+DMA/DMS/IDMA canonical 256-subset Gold-only olarak düzeltildi. Sonuçlar kötü değildi fakat daha geniş macro-financial predictor setine ihtiyaç olduğu anlaşıldı; aile “revisit last” olarak park edildi.
+
+Boosting hattında CatBoost, GBRT, LightGBM, XGBoost, metaheuristics, decomposition, ensemble ve robustness tamamlandı. Family kapandı.
+
+### 2026-09-28 — SVR → Challenger B → modern sequence → CNN/LSTM
+
+SVR’de canonical/deterministic/metaheuristic hat büyük ölçüde tamamlandı fakat DWT/MODWT yapısal hattına geçmeden family bilinçli olarak pause edildi.
+
+Paralel Challenger-B hattında Grup-ARGE’de daha önce kullanılan klasik/ileri modeller Gold Monthly kontratına taşındı. PLS1 güçlü sonuç verdi.
+
+Daha sonra TimesFM-3, TimeMixer++ gibi modern sequence/foundation modelleri test edildi. Ardından CNN/LSTM ailesine geçildi. Local micro-tuning stop-rule tetiklenince yapısal challenger aşamasına geçildi. BiLSTM başarısız oldu; sıradaki yapı CNN-BiLSTM oldu.
+
+---
+
+## 3.2 Optimizer / metaheuristic universe and coverage matrix
+
+Aşağıdaki optimizer isimleri proje boyunca ELM, ANN, ELMFIS, ANFIS, RBFNN, GPR ve büyük ölçüde SVR’de zaten denenmiştir. Başka bir base architecture üzerinde kullanılması mümkün olabilir; fakat bunlar artık “yeni keşfedilmiş yöntem” değildir.
+
+1. Vanilla
+2. PSO
+3. GA
+4. DE
+5. MPA
+6. ABC
+7. SSA
+8. GWO
+9. WOA
+10. HHO
+11. ACO
+12. Bat
+13. FA
+14. MFO
+15. FPA
+16. FA-FPA
+17. CS / Cuckoo Search
+18. SCA
+19. Salp
+20. SMA
+21. GOA
+22. ALO
+23. TLBO
+24. JAYA
+25. HGS
+26. ChOA
+27. HGSO
+28. AOA
+29. CPA
+30. Krill Herd
+31. Crow Search
+32. DE-ABC
+33. Multi-swarm
+
+Ayrıca birçok ailede şu refinement/hybrid sınıfları da denenmiştir:
+- Adaptive PSO
+- Adaptive TLBO
+- TLBO-tuned PSO
+- DE-tuned PSO
+- Adaptive Crow
+- PSO-TLBO hybrid
+- MPA+SCA
+- MPA+GA
+- MPA+CPA
+
+Bunların başka bir mimaride kullanılması ancak o mimarinin kendi scientific rationale’ı ile yeni bir deney olarak açılabilir.
+
+### 4.1 Duplicate-prevention family coverage matrix
+
+| Family | Vanilla / base | Full common optimizer screen | Adaptive/meta refinements | Structural/literature-specific | Current state |
+|---|---|---|---|---|---|
+| ELM | YES | YES — 33 identities total | YES | no further structural line retained | CLOSED |
+| ANN | YES | YES — 33 identities total | YES | ensemble/refinement program complete | CLOSED |
+| ELMFIS | YES | YES — 33 identities total | YES | CQCSA | CLOSED |
+| ANFIS | YES | YES — 32 meta + vanilla | YES | ChHHO, MVO | CLOSED |
+| RBFNN | YES | YES — 32 meta + anchors | YES | MOLS | CLOSED |
+| GPR/MOGP | YES | Stage-1 broad screen complete | YES | LMC2_RBF_M32 | Stage 3 complete; Stage 4 frozen |
+| SVR | YES | 32/32 technically executed | partial Stage 5A | causal DWT/MODWT not yet run | PAUSED |
+| Boosting | YES | architecture-specific, not common-32 parity | YES | CEEMDAN-XGB, VMD-XGB | CLOSED |
+| CNN/LSTM | YES | common-32 meta screen intentionally NOT opened | local ablations closed | BiLSTM run; CNN-BiLSTM next | ACTIVE |
+| Challenger B | model-specific | not applicable | model-specific | PLS metal ablation | CLOSED SCOPE |
+
+Bu tablo "bir optimizer adı daha gördük, bunu da yeni model diye deneyelim" tekrarını önlemek içindir.
+
+---
+
+## 3.3 ELM family
+
+**Durum: COMPLETE_CLOSED**
+
+### Denenen yapı
+
+- Vanilla ELM
+- 32 civarı geniş optimizer/metaheuristic ekranı
+- Adaptive PSO-ELM
+- TLBO-tuned PSO-ELM
+- DE-tuned PSO-ELM
+- Adaptive/Improved TLBO-ELM
+- Adaptive Crow Search-ELM
+- PSO-TLBO Hybrid ELM
+
+### Aktif-metrik sonuçları
+
+- **AOA-ELM:** 1474.1021 / 20/33 — price benchmark
+- SCA-ELM: 1508.71 / 21/33
+- PSO-TLBO Hybrid ELM: yaklaşık 1487.55 / 20/33
+- TLBO-ELM: 1758.75 / 23/33 — direction benchmark
+- Vanilla ELM: yaklaşık 1480.08 / 21/33
+
+### Karar
+
+- AOA-ELM korunur.
+- arbitrary optimizer cross-product genişletmesi kapalıdır.
+- ELM ancak yapısal olarak farklı yeni mekanizma ile yeniden açılır.
+
+---
+
+## 3.4 ANN family
+
+**Durum: COMPLETE_CLOSED / FROZEN**
+
+### Broad screen
+
+33/33 ANN kimliği tamamlandı:
+- Vanilla ANN
+- ortak optimizer parity setinin tamamı
+
+### Refinement
+
+Tamamlanan önemli refinement’lar:
+- Adaptive PSO-ANN
+- Adaptive TLBO-ANN
+- TLBO-tuned PSO-ANN
+- DE-tuned PSO-ANN
+- Adaptive Crow Search-ANN
+- PSO-TLBO Hybrid ANN
+- MPA+SCA Hybrid ANN
+- MPA+GA Hybrid ANN
+- MPA+CPA fallback
+
+### Frozen ensemble’lar
+
+#### FULL7 equal-weight
+Bileşenler:
+- Vanilla ANN
+- MPA-ANN
+- SCA-ANN
+- DE-ABC-ANN
+- Adaptive TLBO-ANN
+- TLBO-tuned PSO-ANN
+- MPA+SCA Hybrid ANN
+
+DEV:
+- ΣAE **1428.8590**
+- direction **22/33**
+
+#### REDUCED4 equal-weight
+Bileşenler:
+- Vanilla ANN
+- MPA-ANN
+- SCA-ANN
+- DE-ABC-ANN
+
+DEV:
+- ΣAE **1431.4587**
+- direction **24/33**
+
+Diğer referans:
+- MPA-ANN: yaklaşık **1471.53 / 19/33**
+
+### Karar
+
+- FULL7 benchmark.
+- REDUCED4 dengeli Pareto challenger.
+- full broad ANN screen tekrar edilmeyecek.
+- post-hoc subset fishing kapalı.
+
+---
+
+## 3.5 ELMFIS family
+
+**Durum: COMPLETE_CLOSED**
+
+### Denenen kapsam
+
+- Vanilla ELMFIS
+- 33-entry optimizer parity screen
+- mandatory adaptive/meta-on-meta refinements
+- MPA temelli hybrid’ler
+- CQCSA-ELMFIS literature-specific model
+
+### Sonuçlar
+
+- Vanilla ELMFIS: **1996.2933 / 20/33**
+- **ABC-ELMFIS: 1524.89 / 21/33** — price benchmark
+- **SMA-ELMFIS: 1651.4482 / 25/33** — direction specialist
+- CQCSA-ELMFIS: **1731.94 / 20/33** — not promoted
+
+### Karar
+
+- ABC internal price benchmark.
+- SMA auxiliary direction/confirmation specialist.
+- hard SMA override promote edilmedi.
+- CQCSA Pareto noktası eklemedi.
+- broad optimizer program tekrar edilmeyecek.
+
+---
+
+## 3.6 ANFIS family
+
+**Durum: COMPLETE_CLOSED**
+
+### Vanilla anchor
+- Vanilla ANFIS: **1852.0465 / 21/33**
+
+### Broad screen
+- 32/32 metaheuristic ANFIS denendi.
+- 27 scientific gate PASS.
+- ABC, WOA, FPA, HGS, AOA en az bir origin’de patolojik forecast büyüklüğü nedeniyle scientific reject.
+
+Stage-2 valid benchmarks:
+- MFO-ANFIS: **1630.3325 / 20/33**
+- HHO-ANFIS: **1646.1336 / 23/33**
+
+### Refinement
+Valid fakat frontier geliştirmeyen:
+- MPA-CPA: 1918.5637 / 18
+- PSO-TLBO Hybrid: 3156.9979 / 19
+- TLBO-tuned PSO: 3465.1623 / 20
+
+Scientific-gate fail:
+- Adaptive PSO
+- Adaptive TLBO
+- Adaptive Crow
+- DE-tuned PSO
+- MPA-SCA
+- MPA-GA
+
+### Literature-specific
+
+#### ChHHO-ANFIS
+- DEV ΣAE **1413.029779**
+- direction **23/33**
+- rel.MAE/RW ≈ 0.80377
+- current ANFIS champion
+
+#### MVO-ANFIS
+İlk kod bug’ı düzeltildikten sonra valid rerun:
+- DEV **2057.3973 / 17/33**
+- not promoted
+
+### Ensemble denetimi
+Same-DEV optimized blend’ler diagnostik olarak iyi görünse de honest expanding-prequential weighting ChHHO’yu geçmedi.
+
+### Karar
+- ChHHO-ANFIS primary price anchor.
+- ANFIS optimizer/stacking genişletmesi kapalı.
+
+---
+
+## 3.7 RBFNN family
+
+**Durum: COMPLETE_CLOSED / FROZEN**
+
+### Denenen kapsam
+- Vanilla RBFNN
+- Regularized RBFNN
+- 32/32 optimizer broad screen
+- Adaptive PSO
+- Adaptive TLBO
+- TLBO-tuned PSO
+- DE-tuned PSO
+- Adaptive Crow
+- PSO-TLBO
+- MOLS-RBFNN
+- controlled ensemble + shrinkage/prequential audit
+
+### Sonuçlar
+- **DE-ABC-RBFNN: 1415.8371 / 25/33**
+- Adaptive Crow: 1455.8616 / 21
+- PSO-TLBO: 1489.6671 / 21
+- MOLS-RBFNN: 1578.5391 / 18
+- FULL_MEDIAN ensemble: 1444.3008 / 22
+
+### Karar
+- DE-ABC family champion.
+- global Pareto model.
+- broad/refinement araştırması tekrar edilmeyecek.
+
+---
+
+## 3.8 GPR / MOGP family
+
+**Durum: STAGE 3 COMPLETE; FAMILY FINAL CLOSURE HENÜZ TAM DEĞİL**
+
+### Tamamlananlar
+- Stage 0 audited
+- Stage 1 geniş screen
+- Stage 2 parent freeze
+- Stage 3A six refinements
+- Stage 3B MPA-SCA
+- Stage 3C LMC2_RBF_M32
+
+### Stage-3 sonuçları
+
+| Model | DEV ΣAE | Direction |
+|---|---:|---:|
+| **LMC2_RBF_M32** | **1424.1711** | 19/33 |
+| MPA-SCA | 1709.2943 | 22/33 |
+| Adaptive Crow | 1724.2888 | 19/33 |
+| Adaptive TLBO | 1740.8877 | 19/33 |
+| Adaptive PSO | 1794.2201 | 20/33 |
+| PSO-TLBO | 1815.3287 | 21/33 |
+| TLBO-tuned PSO | 1863.6677 | 19/33 |
+| DE-tuned PSO | 1939.8588 | 16/33 |
+
+### Karar
+- LMC2_RBF_M32 retained benchmark.
+- Stage 0-3 yeniden başlamaz.
+- Repo’da Stage-4 pool freeze var.
+- GPR yeniden açılırsa **Stage 4 frozen pool’dan** devam eder.
+
+---
+
+## 3.9 DMA / DMS / IDMA
+
+**Durum: DEFERRED_REVISIT_LAST / REJECTED DEĞİL**
+
+### Canonical düzeltme
+Gold-only:
+- 2^8 = 256 subset
+- intercept dahil
+- alpha=.99
+- lambda=.99
+
+### Sonuçlar
+- Canonical DMA: **1486.2561 / 19/33**
+- Canonical DMS: **1489.8247 / 20/33**
+- 60m DMS: 1489.0965 / 19
+- 84m DMS: 1497.7098 / 19
+- **108m DMS: 1483.8794 / 20**
+- 132m DMS: 1488.0163 / 20
+- max-history DMS: 1489.8247 / 20
+- exploratory IDMA MSFE selector: 1495.6721 / 20
+- exploratory IDMA AE-price selector: 1495.5268 / 20
+
+Fed + Nasdaq + USD/CNY küçük augmentation hattı aileyi kurtarmadı.
+
+### Karar
+Problem yalnız örneklem uzunluğu gibi görünmüyor. Literatürdeki geniş macro-financial predictor setiyle bizim CURRENT8 bilgi seti arasında fark var.
+
+Reopen ancak:
+- daha geniş origin-safe PIT macro-financial panel bulunursa, veya
+- diğer yüksek öncelikli aileler bittikten sonra.
+
+Küçük alpha/lambda/window oynamaları yapılmayacak.
+
+---
+
+## 3.10 Boosting / Trees
+
+**Durum: COMPLETE_CLOSED**
+
+### Denenen model hatları
+- CatBoost PRICE
+- CatBoost BALANCED
+- GBRT
+- LightGBM
+- XGBoost direction component
+- CatBoost metaheuristics: DE-ABC, PSO, MFO, HHO, TLBO
+- CMA-ES–GBRT
+- TPE/Optuna–GBRT
+- causal CEEMDAN–XGB
+- causal VMD–XGB
+- median/equal/inverse-MAE ensemble
+- expanding-prequential simplex
+- shrinkage robustness
+- 2025 one-shot final holdout
+
+### Ana DEV sonuçları
+- **CATBOOST_PRICE: 1460.4339 / 20/33**
+- **FULL5_MEDIAN: 1484.7313 / 23/33**
+- frozen GBRT: 1500.4295 / 22
+- TPE-GBRT: 1576.9729 / 18
+- CMA-ES-GBRT: 1650.1985 / 18
+- CEEMDAN-XGB: 1820.4746 / 17
+- VMD-XGB: 2019.0624 / 15
+
+CatBoost metaheuristic finalistleri Vanilla CatBoost’u geçmedi.
+
+### 2025 one-shot
+Freeze sonrasında:
+- CATBOOST_PRICE: 1020.6861 / 11/12
+- FULL5_MEDIAN: 993.9803 / 11/12
+
+2025 sonucu frozen rolleri geriye dönük değiştirmedi.
+
+### Karar
+- PRICE = CATBOOST_PRICE
+- BALANCE/DIRECTION = FULL5_MEDIAN
+- boosting family kapalı
+
+---
+
+## 3.11 SVR / DWT-SVR
+
+**Durum: PAUSED — restart yok**
+
+### Stage 1
+- RBF CURRENT8: **1524.5006 / 21**
+- Linear: 1535.1160 / 19
+
+### Kernel ablation
+- RBF: 1524.5006 / 21
+- Linear: 1535.1160 / 19
+- Poly2: 1793.2474 / 17
+- Poly3: 1810.3496 / 17
+- Sigmoid: 2784.3324 / 15
+
+### Representation ablation
+- **DAILY_SUMMARY12: 1449.1874 / 19**
+- CURRENT8: 1518.8970 / 21
+- MIXED20: 1579.3083 / 17
+- RAW_LEVEL_LAGS8: 1800.4286 / 18
+- SIMPLE_RETURNS8: 1850.5436 / 17
+
+### Formulation
+- epsilon-SVR: **1449.1874 / 19**
+- NuSVR: 1525.4334 / 18
+
+### Deterministic tuning
+- coarse: 1580.9011 / 20
+- local: 1592.5905 / 22
+- ikisi de parent’ı geçmedi
+
+### Metaheuristic broad screen
+32/32 teknik execution tamamlandı.
+Best authoritative metaheuristic:
+- **ALO: 1494.8081 / 20**
+
+FA:
+- technical PASS 1583.8106 / 19
+- fakat kullanıcı stop kararı nedeniyle authoritative ranking dışında tutuldu
+
+### Stage 5 refinements
+- Adaptive PSO-SVR: 1748.6557 / 16
+- TLBO-tuned PSO-SVR: 1871.8062 / 17
+
+### Exact resume point
+SVR’ye dönülürse:
+1. **DE-tuned PSO-SVR**
+2. Adaptive/Improved TLBO-SVR
+3. Adaptive Crow Search-SVR
+4. PSO-TLBO Hybrid SVR
+5. conditional Stage 5B
+6. causal DWT/MODWT-SVR
+7. controlled ensemble
+8. robustness
+9. family freeze
+10. 2025 one-shot
+
+Stage 1-4 tekrarlanmayacak.
+
+---
+
+## 3.12 Challenger B — Grup-ARGE ports
+
+**Durum: USER-AUTHORIZED SCOPE COMPLETE**
+
+Bu hat ana yolu bozmak için değil, Grup-ARGE’de daha önce kullanılan modelleri aynı Gold Monthly governance altında challenger olarak test etmek için açıldı.
+
+### Representation
+
+#### CURRENT8 kullananlar
+- Gold_MR, Gold_VW
+- Silver_MR, Silver_VW
+- Platinum_MR, Platinum_VW
+- Palladium_MR, Palladium_VW
+
+#### Raw monthly Gold kullananlar
+- ARIMA
+- SARIMA
+- Prophet
+
+Bu modeller CURRENT8’e zorlanmadı; family logic korundu.
+
+### Tüm Challenger-B DEV sonuçları
+
+| Model | Input | DEV ΣAE | Direction | rel.MAE/RW | Karar |
+|---|---|---:|---:|---:|---|
+| **PLS1 V1** | CURRENT8 | **1420.0291** | 20/33 | 0.8078 | RETAIN |
+| **PLS2 V1** | CURRENT8 multi-output | 1489.3300 | **23/33** | 0.8472 | RETAIN secondary |
+| Ridge V1 | CURRENT8 | 1520.9926 | 21/33 | 0.8652 | NOT_PROMOTED |
+| Huber V1 | CURRENT8 | 1530.1300 | 20/33 | 0.8704 | NOT_PROMOTED |
+| Extra Trees V1 | CURRENT8 | 1539.9221 | 20/33 | 0.8760 | NOT_PROMOTED |
+| Elastic Net V1 | CURRENT8 | 1590.3571 | 16/33 | 0.9046 | NOT_PROMOTED |
+| GPReg-Matérn V1 | CURRENT8 | 1637.9165 | 19/33 | 0.9317 | NOT_PROMOTED |
+| GPReg-RBF V1 | CURRENT8 | 1696.3365 | 16/33 | 0.9649 | NOT_PROMOTED |
+| SARIMA | raw monthly Gold | 1751.5242 | 19/33 | 0.9963 | NOT_PROMOTED |
+| ARIMA | raw monthly Gold | 1781.7822 | 15/33 | 1.0135 | NOT_PROMOTED |
+| HGB V1 | CURRENT8 | 1840.2678 | 20/33 | 1.0468 | NOT_PROMOTED |
+| Prophet | raw monthly Gold | 7521.1360 | 14/33 | 4.2782 | REJECTED |
+
+### PLS1 metal ablation
+
+All-4 tekrar üretildi ve reproduction gate PASS.
+
+| Variant | Metals | DEV ΣAE | Direction |
+|---|---|---:|---:|
+| **ALL4** | Au+Ag+Pt+Pd | **1420.0291** | 20/33 |
+| No Silver | Au+Pt+Pd | 1454.3225 | **22/33** |
+| No Palladium | Au+Ag+Pt | 1461.6772 | 19/33 |
+| Gold + Silver | Au+Ag | 1491.2346 | 20/33 |
+| Gold only | Au | 1519.4727 | 21/33 |
+| No Platinum | Au+Ag+Pd | 1519.6757 | 20/33 |
+
+Karar:
+- primary PLS1 representation = **4 metal**
+- No-Silver yalnız direction-heavy trade-off reference
+
+### Challenger B’de özellikle çalıştırılmayanlar
+
+Bunlar yapılmış sayılmayacak:
+- Seasonal Naive
+- Drift
+- Theta
+- Optimized Theta
+- SARIMAX_SAFE
+- Dynamic Ridge
+- exact Grup-ARGE Linear SVR port
+
+Status: **NOT_RUN**
+
+---
+
+## 3.13 CNN / LSTM / BiLSTM
+
+**Durum: ACTIVE**
+
+### Stage 0 canonical
+- LSTM LB12: 1738.0595 / 15
+- CNN LB12: 1906.9426 / 13
+- CNN-LSTM LB12: 1554.3082 / 18
+
+### Stage 1A — lookback
+- LSTM LB3: **1589.9827 / 19**
+- CNN LB3: **1641.8275 / 21**
+- CNN-LSTM LB6: **1528.5699 / 20**
+
+Lookback meaningful improvement sağladı.
+
+### Stage 1B — width
+- LSTM W32 retained
+- CNN W16 fiyat açısından çok küçük near-tie sağladı; W32 direction daha iyi
+- CNN-LSTM W32 retained
+
+### Stage 1C — dropout
+- LSTM D0.10 retained
+- CNN-LSTM D0.10 retained
+- D0 ve D0.20 anlamlı üstünlük sağlamadı
+
+### Stage 1D — learning rate
+- LSTM LR .0003: 1648.5032 / 20
+- CNN LR .0003: 1637.1770 / 21; yalnız ~0.264% local price win
+- CNN-LSTM LR .0003: 1583.4676 / 18
+
+Pre-frozen stop rule tetiklendi:
+- batch sweep iptal
+- kernel sweep iptal
+- local Cartesian micro-tuning kapalı
+
+### BiLSTM
+Frozen:
+- lookback 3
+- Bidirectional LSTM 32+32
+- dropout .10
+- Adam .001
+
+DEV:
+- ΣAE **1638.0968**
+- direction **19/33**
+- rel.MAE/RW 0.9318
+- scientific gate PASS
+- snapshot-only
+
+Karar:
+- NOT_PROMOTED
+- BiLSTM micro-grid açılmayacak
+
+### Current leader
+CNN-LSTM:
+- LB6
+- W32
+- D0.10
+- LR .001
+- **1528.5699 / 20/33**
+
+### Next
+**CNN-BiLSTM — NOT_RUN / sıradaki model**
+
+---
+
+## 3.14 Modern sequence / foundation models
+
+### TimesFM-3 zero-shot V1
+
+Representation:
+- raw monthly Gold/Silver/Platinum/Palladium
+- multivariate context
+- no fine-tuning
+- no covariates
+
+DEV:
+- **1850.4113 / 19/33**
+- rel.MAE/RW 1.0526
+
+Karar:
+- NOT_PROMOTED
+- frozen V1 kapalı
+- aynı V1 tekrar edilmez
+
+### TimeMixer++ V1
+
+Representation:
+- raw 4-metal monthly levels
+- 48-month lookback
+- reference-style architecture
+
+DEV:
+- **4232.5931 / 13/33**
+- rel.MAE/RW 2.4076
+
+Karar:
+- REJECTED V1
+- post-result architecture fishing yapılmaz
+
+### TimeXer V1
+
+Durum:
+- **FROZEN_NOT_RUN**
+- pre-run method freeze var
+- seq_len 48
+- patch_len 6
+- Silver/Platinum/Palladium exogenous, Gold endogenous target
+- henüz valid result yok
+
+TimeXer test edilmiş gibi yazılmayacak.
+
+---
+
+## 3.15 Historical / external reference models
+
+Aşağıdaki modeller ayrı yeni challenger olarak yeniden açılmamalı.
+
+### Random Forest identity disambiguation
+
+Repo’da iki farklı Random Forest referansı vardır ve **aynı model sonucu gibi birleştirilmemelidir**:
+
+1. **Historical Random Forest reference:** **1491.550694 / 20/33**  
+   - Challenger-B contextual reference olarak taşınmıştır.
+   - Challenger B içinde yeniden koşturulmamıştır.
+   - exact relation to the later Boosting canonical RF anchor is **NOT_PROVEN**.
+
+2. **Boosting Stage-1 Random Forest anchor:** **1614.4908 / 20/33**  
+   - frozen CURRENT8, Gold-log-return target, raw tree input, expanding-origin canonical Boosting Stage-1 protocolunda yeniden hesaplanmıştır.
+   - provenance: `GOLD_MONTHLY_BOOSTING_STAGE1_CANONICAL_REPORT_2026-09-27.md`.
+
+Bu iki değer bundan sonra yalnız kendi identity/protocol adıyla kullanılacaktır.
+
+Diğer duplicate-sensitive references:
+- CatBoost: Boosting ailesinde tamamlandı
+- XGBoost CURRENT8/decomposition: Boosting ailesinde işlendi
+- SVR: dedicated family mevcut
+- PLS/Ridge/ElasticNet/Huber: Challenger B’de işlendi
+- GPR-family regressors: GPR/MOGP + Challenger B içinde işlendi
+- ARIMA/SARIMA/Prophet: Challenger B’de tamamlandı
+
+---
+
+## 3.16 Duplicate-prevention and rerun rule
+
+Bir model yalnız konuşma değiştiği veya geçmiş unutulduğu için yeniden çalıştırılmayacak.
+
+Completed bir model şu koşullardan biri olmadan yeniden açılmaz:
+- doğrulanmış implementasyon bug’ı
+- materially farklı representation
+- farklı target/horizon
+- yeni structural mechanism
+- yeni untouched validation authority
+- independent reproducibility audit
+- explicit user instruction
+
+Sadece:
+- seed değiştirmek,
+- küçük parameter interval oynatmak,
+- aynı modeli başka adla yazmak
+
+yeni model kimliği değildir.
+
+---
+
+## 3.17 Closed / parked research paths
+
+Explicit reopen olmadan açılmayacak:
+- ELM broad/refinement
+- ANN broad/refinement
+- ELMFIS broad/refinement
+- ANFIS broad/refinement/ensemble
+- RBFNN broad/refinement/ensemble
+- Boosting family
+- Challenger-B completed scope
+- BiLSTM rescue tuning
+- CNN/LSTM batch/kernel micro-tuning
+- TimesFM-3 zero-shot V1
+- TimeMixer++ V1
+- SVR Stage 1-4 restart
+- DMA/DMS small alpha/lambda/window tinkering
+
+---
+
+# APPENDIX A — ELM tam broad-screen envanteri
+
+Bu tablo **historical DEV MAPE** ile raporlanan ELM screen’idir. Aktif cross-family seçim otoritesi ΣAE+direction’dır; bu tablo duplicate-prevention ve tarihsel sonuç kaydı içindir.
+
+| Model | Historical DEV MAPE % |
+|---|---:|
+| Vanilla ELM | 2.19286 |
+| PSO-ELM | 2.73492 |
+| GA-ELM | 2.55877 |
+| DE-ELM | 2.58768 |
+| MPA-ELM | 2.44941 |
+| ABC-ELM | 2.48251 |
+| SSA-ELM | 2.47446 |
+| GWO-ELM | 2.45696 |
+| WOA-ELM | 2.23961 |
+| HHO-ELM | 2.60822 |
+| ACO-ELM | 2.69993 |
+| Bat-ELM | 2.79911 |
+| FA-ELM | 3.03251 |
+| MFO-ELM | 2.77548 |
+| FPA-ELM | 2.34201 |
+| FA-FPA-ELM | 2.63753 |
+| CS-ELM | 2.73091 |
+| SCA-ELM | 2.19271 |
+| Salp-ELM | 2.45982 |
+| SMA-ELM | 2.53462 |
+| GOA-ELM | 2.42952 |
+| ALO-ELM | 2.47135 |
+| TLBO-ELM | 2.55127 |
+| JAYA-ELM | 2.49871 |
+| HGS-ELM | 2.45196 |
+| ChOA-ELM | 2.64419 |
+| HGSO-ELM | 2.26442 |
+| AOA-ELM | **2.15854** |
+| CPA-ELM | 2.69050 |
+| Krill Herd-ELM | 2.64209 |
+| Crow Search-ELM | 2.61964 |
+| DE-ABC-ELM | 2.53226 |
+| Multi-swarm ELM | 2.41470 |
+
+Targeted ELM refinements:
+- Adaptive PSO-ELM: DEV MAPE 2.60499
+- TLBO-tuned PSO-ELM: 2.32298
+- DE-tuned PSO-ELM: 2.56288
+- Adaptive/Improved TLBO-ELM: 2.46807
+- Adaptive Crow Search-ELM: 2.35034
+- PSO-TLBO Hybrid ELM: **2.18548**
+
+Active-metric re-audit references:
+- AOA-ELM: **ΣAE 1474.10 / 20/33**
+- SCA-ELM: **1508.71 / 21/33**
+- TLBO-ELM: **1758.75 / 23/33**
+- PSO-TLBO Hybrid ELM: **1487.55 / 20/33**
+
+---
+
+# APPENDIX B — ANN tam broad-screen ve refinement envanteri
+
+Broad-screen tabloda DEV MAPE + DEV direction tarihsel screen metriğidir. Aktif cross-family karar için frozen ensemble ΣAE+direction sonuçları kullanılır.
+
+| Model | DEV MAPE % | DEV Direction |
+|---|---:|---:|
+| Vanilla ANN | 2.18895 | 54.55% |
+| PSO-ANN | 2.61194 | 54.55% |
+| GA-ANN | 2.36033 | 63.64% |
+| DE-ANN | 2.84842 | 51.52% |
+| MPA-ANN | 2.19947 | 57.58% |
+| ABC-ANN | 3.06525 | 51.52% |
+| SSA-ANN | 2.41896 | 66.67% |
+| GWO-ANN | 2.53258 | 54.55% |
+| WOA-ANN | 2.38669 | 63.64% |
+| HHO-ANN | 2.49709 | 57.58% |
+| ACO-ANN | 2.35494 | 63.64% |
+| Bat-ANN | 2.64871 | 54.55% |
+| FA-ANN | 2.39002 | 60.61% |
+| MFO-ANN | 2.60702 | 57.58% |
+| FPA-ANN | 2.70125 | 42.42% |
+| FA-FPA-ANN | 2.28398 | 60.61% |
+| CS-ANN | 2.50128 | 54.55% |
+| SCA-ANN | 2.36197 | **72.73%** |
+| Salp-ANN | 2.43583 | 60.61% |
+| SMA-ANN | 2.57631 | 51.52% |
+| GOA-ANN | 3.00269 | 51.52% |
+| ALO-ANN | 2.49827 | 60.61% |
+| TLBO-ANN | 2.37828 | 60.61% |
+| JAYA-ANN | 2.53899 | 63.64% |
+| HGS-ANN | 2.48142 | 51.52% |
+| ChOA-ANN | 2.46605 | 60.61% |
+| HGSO-ANN | 2.66180 | 54.55% |
+| AOA-ANN | 2.51719 | 57.58% |
+| CPA-ANN | 2.27985 | 60.61% |
+| Krill Herd-ANN | 2.37501 | 66.67% |
+| Crow Search-ANN | 2.50491 | 60.61% |
+| DE-ABC-ANN | 2.26109 | 66.67% |
+| Multi-swarm ANN | 2.59615 | 54.55% |
+
+Refinements/hybrids:
+
+| Model | DEV MAPE % | DEV Direction |
+|---|---:|---:|
+| Adaptive PSO-ANN | 2.26567 | 57.58% |
+| Adaptive TLBO-ANN | 2.24090 | 54.55% |
+| TLBO-tuned PSO-ANN | 2.28920 | **69.70%** |
+| DE-tuned PSO-ANN | 2.30759 | 54.55% |
+| Adaptive Crow Search-ANN | 2.49577 | 60.61% |
+| PSO-TLBO Hybrid ANN | 2.34425 | 60.61% |
+| MPA+SCA Hybrid ANN | 2.23957 | 60.61% |
+| MPA+GA Hybrid ANN | 2.48841 | 51.52% |
+| MPA+CPA Hybrid ANN | 2.56713 | 57.58% |
+
+Frozen active-metric ensembles:
+- FULL7: **ΣAE 1428.8590 / 22/33**
+- REDUCED4: **1431.4587 / 24/33**
+
+---
+
+# APPENDIX C — ELMFIS 33-entry broad-screen envanteri
+
+| Model | DEV ΣAE | Direction |
+|---|---:|---:|
+| Vanilla ELMFIS | 1996.2933 | 20/33 |
+| PSO-ELMFIS | 2358.4962 | 20/33 |
+| GA-ELMFIS | 1980.8994 | 14/33 |
+| DE-ELMFIS | 1665.4715 | 21/33 |
+| MPA-ELMFIS | 3060.5864 | 19/33 |
+| ABC-ELMFIS | **1524.8854** | 21/33 |
+| SSA-ELMFIS | 2124.4760 | 20/33 |
+| GWO-ELMFIS | 1943.5595 | 22/33 |
+| WOA-ELMFIS | 2536.5468 | 15/33 |
+| HHO-ELMFIS | 1857.8942 | 22/33 |
+| ACO-ELMFIS | 1942.8695 | 19/33 |
+| Bat-ELMFIS | 2137.8294 | 19/33 |
+| FA-ELMFIS | 2421.4143 | 23/33 |
+| MFO-ELMFIS | 2244.0539 | 19/33 |
+| FPA-ELMFIS | 2251.8993 | 22/33 |
+| FA-FPA-ELMFIS | 1820.4499 | **25/33** |
+| CS-ELMFIS | 1809.3931 | **25/33** |
+| SCA-ELMFIS | 3177.3119 | 21/33 |
+| Salp-ELMFIS | 2273.0187 | 19/33 |
+| SMA-ELMFIS | **1651.4482** | **25/33** |
+| GOA-ELMFIS | 2322.7589 | 21/33 |
+| ALO-ELMFIS | 2812.5033 | 18/33 |
+| TLBO-ELMFIS | 3240.2851 | 20/33 |
+| JAYA-ELMFIS | 1810.4656 | 21/33 |
+| HGS-ELMFIS | 1780.8620 | 20/33 |
+| ChOA-ELMFIS | 2822.8921 | 20/33 |
+| HGSO-ELMFIS | 1594.6455 | 18/33 |
+| AOA-ELMFIS | 1873.9154 | 22/33 |
+| CPA-ELMFIS | 1925.0323 | 20/33 |
+| Krill Herd-ELMFIS | 3043.2306 | 20/33 |
+| Crow Search-ELMFIS | 1881.2292 | 20/33 |
+| DE-ABC-ELMFIS | 2317.34 | 17/33 |
+| Multi-swarm-ELMFIS | 1848.10 | 18/33 |
+
+Literature-specific:
+- CQCSA-ELMFIS: **1731.94 / 20/33**, not promoted.
+
+---
+
+# APPENDIX D — RBFNN 32-meta broad-screen envanteri
+
+All rows below passed the Stage-1 scientific gate on DEV.
+
+| Model | DEV ΣAE | Direction |
+|---|---:|---:|
+| DE-ABC | **1415.8371** | **25/33** |
+| Salp | 1426.6878 | 23/33 |
+| MFO | 1449.1065 | 20/33 |
+| JAYA | 1460.7401 | 21/33 |
+| HGS | 1461.9334 | 20/33 |
+| ACO | 1481.9468 | 19/33 |
+| GOA | 1492.8771 | 20/33 |
+| WOA | 1499.2639 | 19/33 |
+| AOA | 1501.0998 | 19/33 |
+| Bat | 1501.6410 | 21/33 |
+| MPA | 1510.5118 | 20/33 |
+| GWO | 1511.6245 | 22/33 |
+| GA | 1523.4710 | 19/33 |
+| FA-FPA | 1524.5325 | 20/33 |
+| FPA | 1525.4420 | 21/33 |
+| CS | 1525.6645 | 20/33 |
+| TLBO | 1525.7861 | 19/33 |
+| Multi-swarm | 1525.8563 | 21/33 |
+| FA | 1530.4171 | 20/33 |
+| Crow | 1538.2158 | 19/33 |
+| SCA | 1541.6271 | 21/33 |
+| DE | 1550.2583 | 18/33 |
+| ABC | 1558.8168 | 18/33 |
+| SSA | 1559.8246 | 18/33 |
+| Krill | 1560.4829 | 17/33 |
+| HGSO | 1564.9802 | 20/33 |
+| SMA | 1568.1653 | 19/33 |
+| ChOA | 1571.0927 | 20/33 |
+| HHO | 1586.1569 | 20/33 |
+| ALO | 1597.3649 | 19/33 |
+| PSO | 1598.5085 | 20/33 |
+| CPA | 1608.6437 | 17/33 |
+
+Stage-3 refinements:
+- Adaptive PSO 1519.3532 / 18
+- Adaptive TLBO 1552.2502 / 21
+- TLBO-tuned PSO 1610.0497 / 19
+- DE-tuned PSO 1524.1595 / 20
+- Adaptive Crow 1455.8616 / 21
+- PSO-TLBO 1489.6671 / 21
+- MOLS-RBFNN 1578.5391 / 18
+- FULL_MEDIAN ensemble 1444.3008 / 22
+
+---
+
+# APPENDIX E — GPR/MOGP Stage-1 full screen
+
+| Model | DEV ΣAE | Direction |
+|---|---:|---:|
+| Multi-swarm | **1606.7414** | 23/33 |
+| AOA | 1611.8839 | 22/33 |
+| GWO | 1650.2596 | 21/33 |
+| ABC | 1672.2945 | 22/33 |
+| HGSO | 1677.9024 | 19/33 |
+| SMA | 1701.0740 | 22/33 |
+| MPA | 1701.5802 | 23/33 |
+| MFO | 1702.0152 | 19/33 |
+| ALO | 1704.0561 | 21/33 |
+| DE-ABC | 1709.2591 | 23/33 |
+| FPA | 1711.7090 | 20/33 |
+| SCA | 1713.8379 | 23/33 |
+| GA | 1723.5877 | 21/33 |
+| FA-FPA | 1724.6532 | **25/33** |
+| TLBO | 1736.5717 | 19/33 |
+| Crow | 1736.9995 | 22/33 |
+| Bat | 1746.6720 | 21/33 |
+| JAYA | 1760.9248 | 22/33 |
+| Krill | 1769.3329 | 22/33 |
+| CPA | 1778.4226 | 22/33 |
+| PSO | 1780.2169 | 19/33 |
+| SSA | 1798.1173 | 21/33 |
+| HGS | 1814.9260 | 20/33 |
+| ACO | 1815.8271 | 19/33 |
+| ChOA | 1822.1087 | 17/33 |
+| HHO | 1823.3648 | 21/33 |
+| CS | 1835.2043 | 22/33 |
+| WOA | 1836.8353 | 21/33 |
+| Salp | 1841.6043 | 20/33 |
+| GOA | 1850.3608 | 22/33 |
+| FA | 1861.6613 | 19/33 |
+| DE | 1924.6270 | 21/33 |
+
+Stage-3 structural/refinement table remains:
+- LMC2_RBF_M32 **1424.1711 / 19**
+- MPA-SCA 1709.2943 / 22
+- Adaptive Crow 1724.2888 / 19
+- Adaptive TLBO 1740.8877 / 19
+- Adaptive PSO 1794.2201 / 20
+- PSO-TLBO 1815.3287 / 21
+- TLBO-tuned PSO 1863.6677 / 19
+- DE-tuned PSO 1939.8588 / 16
+
+---
+
+# APPENDIX F — SVR Stage-4 metaheuristic broad screen
+
+Frozen Stage-2 parent for comparison:
+- **EPSILON_RBF_DAILY12 = 1449.187363 / 19/33**
+
+| Method | DEV ΣAE | Direction | Authority status |
+|---|---:|---:|---|
+| PSO | 1719.949306 | 17/33 | scored |
+| GA | 1611.632502 | 19/33 | scored |
+| DE | 1590.781952 | 19/33 | scored |
+| MPA | 1696.206317 | 15/33 | scored |
+| ABC | 1563.258913 | 16/33 | scored |
+| SSA | 1659.670617 | 19/33 | scored |
+| GWO | 1590.104631 | 18/33 | scored |
+| WOA | 1635.345256 | 17/33 | scored |
+| HHO | 1549.539823 | 18/33 | scored |
+| ACO | 1600.397350 | 18/33 | scored |
+| Bat | 1540.482107 | 14/33 | scored |
+| FA | 1583.810635 | 19/33 | technical PASS; user-excluded from authoritative ranking |
+| MFO | 1690.484321 | 20/33 | scored |
+| FPA | 1605.813991 | 15/33 | scored |
+| FA-FPA | 1572.041237 | 20/33 | scored |
+| CS | 1564.515299 | 19/33 | scored |
+| SCA | 1843.705276 | 14/33 | scored |
+| Salp | 1543.355326 | 19/33 | scored |
+| SMA | 1517.362987 | 18/33 | scored |
+| GOA | 1617.200714 | 17/33 | scored |
+| ALO | **1494.808085** | 20/33 | best authoritative Stage-4 meta |
+| TLBO | 1574.826138 | 20/33 | scored |
+| JAYA | 1529.754239 | 18/33 | scored |
+| HGS | 1664.428496 | 18/33 | scored |
+| ChOA | 1560.301510 | 17/33 | scored |
+| HGSO | 1508.944115 | 18/33 | scored |
+| AOA | 1508.677155 | 20/33 | scored |
+| CPA | 1737.873104 | 16/33 | scored |
+| Krill | 1770.446584 | 15/33 | scored |
+| Crow | 1541.791658 | 18/33 | scored |
+| DE-ABC | 1514.213571 | 19/33 | scored |
+| Multi-swarm | 1697.478100 | 13/33 | scored |
+
+Sonuç:
+- hiçbir Stage-4 metaheuristic frozen Stage-2 parent 1449.187363’ü geçmedi.
+- optimizer-only SVR tuning’in zayıf görünmesi, later causal DWT/MODWT structural line’ı geçersiz kılmaz.
+
+---
+
+# APPENDIX G — ANFIS broad-screen completeness register
+
+ANFIS’te ortak 32-meta setinin tamamı çalıştırıldı.
+
+Scientific PASS broad screen: **27/32**.  
+Scientific reject: **5/32**:
+- ABC
+- WOA
+- FPA
+- HGS
+- AOA
+
+Reject nedeni:
+- en az bir origin’de pathological forecast magnitude / scientific forecast gate failure.
+
+Broad-screen valid frontier before literature-specific extension:
+- MFO-ANFIS: **1630.3325 / 20**
+- HHO-ANFIS: **1646.1336 / 23**
+
+Vanilla:
+- **1852.0465 / 21**
+
+Stage-3 parity refinement sonuçları:
+- MPA-CPA: 1918.5637 / 18 — PASS
+- PSO-TLBO Hybrid: 3156.9979 / 19 — PASS
+- TLBO-tuned PSO: 3465.1623 / 20 — PASS
+- Adaptive PSO: 363283.4306 / 22 — scientific FAIL
+- Adaptive TLBO: 24830.2156 / 17 — scientific FAIL
+- Adaptive Crow: 3432.3536 / 18 — scientific FAIL
+- DE-tuned PSO: 9166.1914 / 18 — scientific FAIL
+- MPA-SCA: 3275.4131 / 20 — scientific FAIL
+- MPA-GA: 3242.7176 / 20 — scientific FAIL
+
+Literature-specific:
+- **ChHHO-ANFIS: 1413.029779 / 23 — family champion**
+- MVO-ANFIS: 2057.3973 / 17 — valid, not promoted
+
+Per-method numeric metrics for all 27 valid broad-screen ANFIS members are not reproduced here because the consolidated family closure does not expose a single authoritative full 27-row metric table. Their execution identity is nevertheless covered by the 32-meta completeness register. No missing metric is to be guessed.
+
+---
+
+# APPENDIX H — completeness statement
+
+The following families already have their full relevant tested-set tables in the main body and therefore are not duplicated again here:
+- Challenger B
+- CNN/LSTM/BiLSTM
+- Boosting final retained/structural variants
+- DMA/DMS/IDMA
+- TimesFM-3 / TimeMixer++ / TimeXer status
+
+For any future model:
+- if its identity appears anywhere in Sections 4–20 or Appendices A–G, it is **already known to the project**;
+- if marked completed/rejected/not-promoted, do not rerun without a valid reopen condition;
+- if marked NOT_RUN/FROZEN_NOT_RUN, it remains eligible for first execution under a new pre-outcome freeze.
+
+
+---
