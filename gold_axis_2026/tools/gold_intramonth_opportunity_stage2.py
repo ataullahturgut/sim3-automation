@@ -1,4 +1,5 @@
 import os, io, json, math, time, hashlib, zipfile, requests
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -42,17 +43,24 @@ def fetch_bist(metal, year, retries=4):
 def load_bist():
     rows=[]
     request_log=[]
-    for code,name in METALS.items():
-        for y in range(START_YEAR,END_YEAR+1):
-            data=fetch_bist(code,y)
-            request_log.append({"metal":code,"year":y,"records":len(data)})
-            for r in data:
-                if r.get("priceRef")=="MTL" and r.get("priceCurrency")=="USD" and r.get("priceWeight")=="OZ":
-                    rows.append({
-                        "date":r["priceDate"],"metal":name,"metal_code":code,
-                        "price":float(r["priceValue"]),"source_id":r.get("id")
-                    })
-            time.sleep(0.08)
+    jobs=[(code,name,y) for code,name in METALS.items() for y in range(START_YEAR,END_YEAR+1)]
+    fetched={}
+    with ThreadPoolExecutor(max_workers=4) as ex:
+        futs={ex.submit(fetch_bist,code,y):(code,name,y) for code,name,y in jobs}
+        for fut in as_completed(futs):
+            code,name,y=futs[fut]
+            data=fut.result()
+            fetched[(code,y)]=(name,data)
+            print(f"BIST_FETCH {code} {y} records={len(data)}",flush=True)
+    for code,name,y in jobs:
+        name2,data=fetched[(code,y)]
+        request_log.append({"metal":code,"year":y,"records":len(data)})
+        for r in data:
+            if r.get("priceRef")=="MTL" and r.get("priceCurrency")=="USD" and r.get("priceWeight")=="OZ":
+                rows.append({
+                    "date":r["priceDate"],"metal":name2,"metal_code":code,
+                    "price":float(r["priceValue"]),"source_id":r.get("id")
+                })
     df=pd.DataFrame(rows)
     if df.empty: raise RuntimeError("No governed BIST rows returned")
     df["date"]=pd.to_datetime(df["date"])
