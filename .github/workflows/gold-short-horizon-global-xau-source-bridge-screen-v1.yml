@@ -1,0 +1,67 @@
+name: Gold Short-Horizon Global XAU Source Bridge Screen V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_short_horizon_global_xau_source_bridge_screen_v1.py
+      - .github/workflows/gold-short-horizon-global-xau-source-bridge-screen-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-short-horizon-global-xau-source-bridge-screen-v1
+  cancel-in-progress: false
+
+jobs:
+  source-bridge-screen:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install
+        run: python -m pip install 'numpy>=1.26,<3' 'psycopg[binary]>=3.2,<4'
+
+      - name: Require Neon secret
+        shell: bash
+        run: test -n "$NEON_DATABASE_URL" || (echo "NEON_DATABASE_URL missing" && exit 1)
+
+      - name: Run frozen source bridge screen
+        run: python gold_axis_2026/tools/gold_short_horizon_global_xau_source_bridge_screen_v1.py
+
+      - name: Commit result artifacts
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            gold_axis_2026/results/GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_BRIDGE_SCREEN_2026-10-01.json \
+            gold_axis_2026/results/GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_BRIDGE_SCREEN_2026-10-01.md
+          if git diff --cached --quiet; then
+            echo "Result artifacts unchanged"
+          else
+            git commit -m "Record global XAU source bridge screen result"
+            git push
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-short-horizon-global-xau-source-bridge-screen-v1-${{ github.sha }}
+          path: |
+            gold_axis_2026/results/GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_BRIDGE_SCREEN_2026-10-01.json
+            gold_axis_2026/results/GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_BRIDGE_SCREEN_2026-10-01.md
+          if-no-files-found: warn
+          retention-days: 30
