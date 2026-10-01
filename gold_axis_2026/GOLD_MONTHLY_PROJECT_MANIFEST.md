@@ -529,6 +529,14 @@ Do not:
 
 # 10. Document Hierarchy & Change Control
 
+## 10.0 Sibling project boundary
+
+Daily-frequency forecasting is maintained as a separate canonical project:
+
+- `gold_axis_2026/GOLD_DAILY_FORECAST_PROJECT_MANIFEST.md`
+
+The daily project may reuse governed data, model-family knowledge and scientific lessons, but its target, feature contract, chronology, baselines, model selection and live ledger are independent. Daily results must not be appended to this monthly manifest.
+
 ## 10.1 Canonical hierarchy
 
 **Current state**
