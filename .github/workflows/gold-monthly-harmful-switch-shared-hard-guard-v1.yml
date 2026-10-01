@@ -1,0 +1,59 @@
+name: Gold Monthly Harmful Switch Shared Hard Guard V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_harmful_switch_shared_hard_guard_v1.py
+      - .github/workflows/gold-monthly-harmful-switch-shared-hard-guard-v1.yml
+      - gold_axis_2026/GOLD_MONTHLY_HARMFUL_SWITCH_SHARED_HARD_GUARD_V1_AUTHORITY_2026-10-01.md
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=2.0,<3' 'pandas>=2,<3' 'scikit-learn>=1.5,<2'
+      - name: Download corrected Stage1
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/stage1
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11154006919/zip" > stage1.zip
+          unzip -q stage1.zip -d inputs/stage1
+      - name: Run guard V1
+        run: |
+          python gold_axis_2026/tools/gold_monthly_harmful_switch_shared_hard_guard_v1.py \
+            --stage1-json inputs/stage1/GOLD_MONTHLY_RELATIVE_LOSS_RESCUE_GAIN_MATRIX_STAGE1_V1_2026-10-01.json \
+            --output-json GOLD_MONTHLY_HARMFUL_SWITCH_SHARED_HARD_GUARD_V1_2026-10-01.json \
+            --output-md GOLD_MONTHLY_HARMFUL_SWITCH_SHARED_HARD_GUARD_V1_RESULT_2026-10-01.md
+      - name: Scientific gates
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('GOLD_MONTHLY_HARMFUL_SWITCH_SHARED_HARD_GUARD_V1_2026-10-01.json'))
+          assert d['status']=='COMPLETE'
+          assert d['scientific_gate']=='FAIL'
+          assert abs(d['base_no_guard']['gain_vs_keep']-4.7044298073)<0.02
+          assert d['eligible_final_guards']==[]
+          assert d['opened_transport_authorized'] is False
+          assert d['critical_2023_03']['positive_breadth']>0.90
+          assert d['governance']['2025_2026_used_for_guard_selection'] is False
+          print('GUARD_V1_NEGATIVE_RESULT_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-harmful-switch-shared-hard-guard-v1-${{ github.sha }}
+          path: |
+            GOLD_MONTHLY_HARMFUL_SWITCH_SHARED_HARD_GUARD_V1_2026-10-01.json
+            GOLD_MONTHLY_HARMFUL_SWITCH_SHARED_HARD_GUARD_V1_RESULT_2026-10-01.md
+          retention-days: 90
