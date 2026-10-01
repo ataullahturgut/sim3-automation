@@ -33,9 +33,13 @@ Then, only after forecast validation, determine which horizon offers the stronge
 - Stage 5 Forecast-Head Reconciliation & Tactical Signal Architecture: **COMPLETE / NO_RECONCILIATION_PASS**
 - Stage 6 Tactical Allocation / Utility Contract: **COMPLETE / NO_TACTICAL_PASS**
 - Stage 6B Turnover / Tradable-Instrument Economic Feasibility Audit: **COMPLETE / BORDERLINE IMPLEMENTABILITY**
-- **Stage 6C Cross-Instrument Mapping Audit: NEXT**
+- Stage 6C Cross-Instrument Mapping Audit: **COMPLETE / FAIL**
+- **Stage 6D Tactical Target Authority Redesign: NEXT**
 
-Current strongest research horizon: **H3**.
+Current strongest horizon for the original BIST Metal Price target remains: **H3**.
+
+Important:
+the original target is no longer authorized as a universal proxy for a tradable global Gold instrument.
 
 Frozen H3 forecast heads:
 - direction: **CORE3 / XGB_CLASS**
@@ -468,6 +472,48 @@ Technical shortlist for mapping only:
 
 ---
 
+# 6H. Stage-6C Cross-Instrument Mapping Result
+
+Authority:
+`GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE6C_RESULT_2026-10-01.md`
+
+Primary run:
+- **36895412116**
+- artifact **11178394090**
+- digest `sha256:185a31b3cb01db3a38de22ab86269be8c9afbda0a676e2b0334347d9a3441f3f`.
+
+Post-run timing diagnostic:
+- run **36895839549**
+- artifact **11179492610**.
+
+Result:
+**MAPPING FAIL / NO INSTRUMENT FREEZE**
+
+Frozen H3 mapping:
+
+| Instrument | Pearson | Beta | Sign agreement | TE SD | Severe divergence | Mapping |
+|---|---:|---:|---:|---:|---:|---|
+| GLDM | 0.5796 | 0.5063 | 71.2% | 1.516% | 46.1% | FAIL |
+| MGC | 0.6244 | 0.5454 | 73.7% | 1.435% | 44.2% | FAIL |
+
+Frozen U3 transfer:
+- GLDM 1.25 bp: CAGR 2.19%, max DD -12.22%, Sortino 0.326, 1/3 positive years -> FAIL
+- MGC delayed daily stress 1.00 bp: CAGR 7.95%, max DD -10.49%, Sortino 1.656, 2/3 positive years, but mapping FAIL -> no transfer authorization.
+
+Post-run timing diagnostic:
+- best GLDM daily-return row lag correlation 0.4695
+- best MGC daily-return row lag correlation 0.3938.
+
+Thus the failure is not explained by a trivial one-session shift.
+
+Binding implication:
+- BIST Metal Price USD/oz is a local T+0 weighted transaction statistic, not a universal synchronous international spot proxy;
+- preserve the current H3 engine for original-target research/reporting only;
+- do not transport to GLDM/MGC;
+- redesign the tactical target authority before further tactical modeling.
+
+---
+
 # 7. Stage Roadmap
 
 | Stage | Purpose | Status |
@@ -481,52 +527,56 @@ Technical shortlist for mapping only:
 | 5 | Forecast-head reconciliation / tactical signal architecture | **COMPLETE / NO PASS** |
 | 6 | Tactical allocation / utility contract | **COMPLETE / NO PASS** |
 | 6B | Turnover / tradable-instrument feasibility audit | **COMPLETE / BORDERLINE** |
-| 6C | Cross-instrument mapping audit (GLDM / MGC) | **NEXT** |
-| 7 | Frozen 2025 transport | **BLOCKED — instrument not frozen** |
+| 6C | Cross-instrument mapping audit (GLDM / MGC) | **COMPLETE / FAIL** |
+| 6D | Tactical target authority redesign | **NEXT** |
+| 7 | Frozen 2025 transport | **BLOCKED — target/instrument not frozen** |
 | 8 | Prospective daily ledger | NOT STARTED |
 
 ---
 
 # 8. Exact Next Action
 
-**Stage 6C — Cross-Instrument Mapping Audit**
+**Stage 6D — Tactical Target Authority Redesign**
 
-Candidate implementation families:
-1. GLDM
-2. MGC.
+The tactical research objective is short-horizon investable Gold exposure.
 
-Do not select between them using 2025.
+The current BIST Metal Price target may not be reused automatically.
 
-Preregister before data inspection:
+Before new model fitting, compare target lanes:
 
-- common historical date window
-- BIST Gold USD/oz H3 return alignment
-- GLDM H3 return construction
-- MGC front-contract / continuation rule
-- no look-ahead roll convention
-- treatment of U.S./BIST holiday mismatches.
+### Lane A — international synchronous Gold
+Candidate:
+- BIST Spot Gold Index or another origin-safe international spot representation.
 
-Required diagnostics:
+Purpose:
+- instrument-agnostic Gold direction/return target
+- must demonstrate strong mapping to practical implementation instruments.
 
-1. H3 return correlation to BIST Gold USD/oz
-2. OLS beta/intercept
-3. tracking-error standard deviation
-4. H3 sign agreement
-5. severe divergence frequency
-6. transfer of frozen U3 action decisions into instrument realized returns
-7. economic degradation at instrument-specific frozen cost assumptions.
+### Lane B — GLDM direct
+Target:
+- actual GLDM executable return.
 
-No utility coefficient search.
-No entry-hurdle search.
-No holding-period change.
-No 2025 tactical selection.
+Required:
+- U.S. trading calendar
+- 00:30 Istanbul signal -> same-day U.S. open execution convention
+- ETF cost / FX convention.
 
-If one instrument passes mapping and cost feasibility:
-- freeze instrument/execution contract;
-- then open Stage 7 frozen 2025 transport.
+### Lane C — MGC direct
+Target:
+- actual Micro Gold futures executable return.
 
-If neither passes:
-- close tactical allocation under the current H3 target contract and retain forecast/reporting only.
+Required:
+- official/timestamped CME data
+- explicit contract and roll convention
+- origin-safe intraday execution price.
+
+Rules:
+- no 2025 selection
+- do not mix redesigned-target results with the original BIST-Metal-Price record
+- preserve all Stages 0–6C as historical evidence
+- target authority must be frozen before model search resumes.
+
+Only after one lane is frozen may a new short-horizon forecast program begin.
 ---
 
 # 9. Document Hierarchy
@@ -592,6 +642,14 @@ Stage 6B:
 - `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE6B_RESULT_2026-10-01.md`
 - run **36893955169**
 - artifact **11178542233**.
+
+Stage 6C:
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE6C_AUTHORITY_2026-10-01.md`
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE6C_RESULT_2026-10-01.md`
+- primary run **36895412116**
+- primary artifact **11178394090**
+- timing diagnostic run **36895839549**
+- timing diagnostic artifact **11179492610**.
 
 Sibling projects:
 - monthly forecast: `GOLD_MONTHLY_PROJECT_MANIFEST.md`
