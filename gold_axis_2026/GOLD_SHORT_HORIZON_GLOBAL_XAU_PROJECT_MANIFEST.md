@@ -1,7 +1,7 @@
 # GOLD SHORT-HORIZON GLOBAL XAU PROJECT MANIFEST
 
 **Date:** 2026-10-01  
-**Status:** ACTIVE — STAGE 1 COMPLETE / H3 DIRECTION PARTIAL PASS  
+**Status:** ACTIVE — STAGE 2 COMPLETE / H3 DIRECTION ROBUST PASS  
 **Supersedes for tactical objective:** BIST-Metal-Price short-horizon mainline.
 
 ## 1. Objective
@@ -29,12 +29,12 @@ Historical development target:
 
 This is a **global spot research target**, not Borsa İstanbul Metal Price.
 
-Prospective live fixed-time anchor:
-- `XAU_EOD_TWELVE_NY17`
-- retained separately;
-- historical bridge to StakTrakr daily-average does not pass strict same-target equivalence because time aggregation differs.
+Prospective live extension:
+- existing candidates `XAU_EOD_TWELVE_NY17` and `XAU_DAILY_XAUS` were screened;
+- neither passes strict same-target bridge equivalence to the historical StakTrakr / MetalPriceAPI daily-average target;
+- `XAU_EOD_TWELVE_NY17` is the closer candidate but remains a separate live anchor.
 
-Therefore do not stitch NY17 into the development target series.
+Therefore do not stitch any live series into the development target series.
 
 ## 3. Governance
 
@@ -133,15 +133,76 @@ Binding interpretation:
 - the evidence is direction-only;
 - no return-magnitude, quantile, or tactical engine is yet promoted.
 
-## 10. Exact next action
+## 10. Stage 2 robustness evidence
 
-**Stage 2 — H3 Direction Robustness & Representation Audit**
+Stage 2:
+- COMPLETE / **ROBUST_PASS**
+- run **36911524415**
+- artifact **11186831488**.
 
-1. H3 CORE3 / Logistic L2 by 2022 / 2023 / 2024;
-2. LOW / MID / HIGH volatility diagnostics;
-3. coefficient stability across expanding refits;
-4. GOLD_ONLY / CORE3 / CORE4 / transformed-external Logistic comparisons;
-5. secondary diagnostic of H5 direction;
-6. keep 2025 unopened.
+Frozen H3 direction engine:
+- **CORE3 / Logistic L2**
+- Brier **0.246731**
+- baseline **0.249712**
+- relative improvement **+1.19%**
+- log loss **0.686634**
+- prediction SD **0.0442**.
+
+Annual relative Brier improvement:
+- 2022: **+1.99%**
+- 2023: **+0.15%**
+- 2024: **+1.44%**.
+
+All 3 DEV years remain positive versus baseline.
+
+Representation result:
+- GOLD_ONLY: -0.15%
+- CORE3: **+1.19%**
+- CORE4: +0.70%
+- CORE3 + raw safe external: -0.34%
+- CORE3 + transformed safe external: -0.35%.
+
+Thus:
+- retain CORE3;
+- do not add Palladium;
+- do not add the current rates / FX / VIX / Nasdaq external block to this H3 Logistic engine;
+- H5 remains secondary and fails the >=1% gate.
+
+## 11. Live-source bridge status
+
+Existing-source screen:
+- run **36911112098**
+- artifact **11186955894**.
+
+Bridge to historical target:
+- NY17 Pearson 0.9375, sign agreement 65.3% -> FAIL
+- XAU_DAILY_XAUS Pearson 0.7320, sign agreement 74.5% -> FAIL.
+
+Prospective live source remains unresolved as an exact target-equivalent extension.
+
+This does not affect the retrospective Stage-1/2 DEV evidence because no source stitching occurs there.
+
+## 12. Exact next action
+
+**Stage 3 — Probability Calibration / Conviction Audit**
+
+Using only the frozen H3 / CORE3 / Logistic L2 probabilities:
+
+1. calibration intercept / slope;
+2. ECE / reliability bins;
+3. chronological raw vs Platt vs isotonic calibration;
+4. frozen probability bands:
+   - <=0.40
+   - 0.40–0.45
+   - 0.45–0.50
+   - 0.50–0.55
+   - 0.55–0.60
+   - >=0.60;
+5. realized H3 UP rate by band;
+6. annual support / stability by band;
+7. no P&L threshold optimization;
+8. 2025 remains unopened.
+
+Only if probability confidence separates realized outcomes should a direction-only economic architecture be designed.
 
 Do not return to BIST as the tactical target.
