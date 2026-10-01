@@ -1,0 +1,37 @@
+name: Gold Short Horizon Stage6B Cost Feasibility
+
+on:
+  push:
+    branches:
+      - gold-midas-headswap-v1-20260925
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_stage6b_cost.py'
+      - '.github/workflows/gold-short-horizon-stage6b.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  stage6b:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install --disable-pip-version-check numpy pandas requests
+      - name: Run cost and turnover audit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OUT_DIR: stage6b_feasibility_out
+        run: python gold_axis_2026/tools/gold_short_horizon_stage6b_cost.py
+      - name: Upload Stage6B artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-short-horizon-stage6b-cost
+          path: stage6b_feasibility_out/
+          retention-days: 90
