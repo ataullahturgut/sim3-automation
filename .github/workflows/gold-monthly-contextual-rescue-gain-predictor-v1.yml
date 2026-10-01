@@ -1,0 +1,103 @@
+name: Gold Monthly Contextual Rescue Gain Predictor V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_contextual_relative_loss_rescue_gain_predictor_v1.py
+      - gold_axis_2026/tools/gold_monthly_contextual_relative_loss_rescue_gain_predictor_v1_opened_transport.py
+      - .github/workflows/gold-monthly-contextual-rescue-gain-predictor-v1.yml
+      - gold_axis_2026/GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_AUTHORITY_2026-10-01.md
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  predictor:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install 'numpy>=2.0,<3' 'pandas>=2,<3' 'scikit-learn>=1.5,<2'
+      - name: Download frozen artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/stage1 inputs/state inputs/exact16 inputs/deabc inputs/gpr inputs/pls inputs/missing9
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11152844058/zip" > tmp.zip
+          unzip -q -o tmp.zip -d inputs/stage1
+          for spec in \
+            "11116487006 inputs/state" \
+            "11128785588 inputs/exact16" \
+            "10911447422 inputs/deabc" \
+            "10915270480 inputs/gpr" \
+            "10974037676 inputs/pls" \
+            "11127052273 inputs/missing9" \
+            "11126323028 inputs/missing9" \
+            "11128106474 inputs/missing9" \
+            "11128006357 inputs/missing9" \
+            "11128136850 inputs/missing9" \
+            "11128276122 inputs/missing9"
+          do
+            set -- $spec
+            gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/$1/zip" > tmp.zip
+            unzip -q -o tmp.zip -d "$2"
+          done
+      - name: DEV chronological predictor
+        run: |
+          python gold_axis_2026/tools/gold_monthly_contextual_relative_loss_rescue_gain_predictor_v1.py \
+            --stage1-json inputs/stage1/GOLD_MONTHLY_RELATIVE_LOSS_RESCUE_GAIN_MATRIX_STAGE1_V1_2026-10-01.json \
+            --output-json GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_2026-10-01.json \
+            --output-md GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_RESULT_2026-10-01.md
+      - name: Frozen opened transport
+        run: |
+          python gold_axis_2026/tools/gold_monthly_contextual_relative_loss_rescue_gain_predictOR_v1_opened_transport.py \
+            --stage1-json inputs/stage1/GOLD_MONTHLY_RELATIVE_LOSS_RESCUE_GAIN_MATRIX_STAGE1_V1_2026-10-01.json \
+            --state-json inputs/state/GOLD_MONTHLY_MARKET_STATE_CHHHO_RELIABILITY_AUDIT_V1_2026-09-30.json \
+            --exact16-json inputs/exact16/GOLD_MONTHLY_EXACT16_SAFE_VETO_TRANSPORT_V1_2026-09-30.json \
+            --reference-rows gold_axis_2026/evidence/rbfnn_cross_family/reference_rows.json \
+            --deabc-json inputs/deabc/rbfnn_stage1_de_abc_result.json \
+            --gpr-json inputs/gpr/gpr_lmc2_rbf_m32_result.json \
+            --pls-json inputs/pls/gold_monthly_challenger_b_pls1_v1_result.json \
+            --boost-json inputs/missing9/missing9_boost_transport_v1.json \
+            --svr-json inputs/missing9/missing9_svr_transport_v1.json \
+            --seq-cnnlstm-lb3 inputs/missing9/missing9_seq_CNN_LSTM_lb3_transport_v1.json \
+            --seq-cnnlstm-lb6 inputs/missing9/missing9_seq_CNN_LSTM_lb6_transport_v1.json \
+            --seq-lstm-lb3 inputs/missing9/missing9_seq_LSTM_lb3_transport_v1.json \
+            --seq-lstm-lb6 inputs/missing9/missing9_seq_LSTM_lb6_transport_v1.json \
+            --output-json GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_OPENED_TRANSPORT_2026-10-01.json \
+            --output-md GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_OPENED_TRANSPORT_RESULT_2026-10-01.md
+      - name: Scientific gates
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_2026-10-01.json'))
+          assert d['status']=='COMPLETE'
+          assert d['leader']['predictor']=='RIDGE_CORE_A10'
+          assert d['leader']['policy']=='DIRECT_SWITCH'
+          assert d['leader']['warning_n']==14
+          assert abs(d['leader']['gain_vs_keep']-4.7044298073)<0.02
+          assert d['governance']['production_authorized'] is False
+          t=json.load(open('GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_OPENED_TRANSPORT_2026-10-01.json'))
+          assert t['coverage']['warning_n']==12
+          assert abs(t['gain_vs_keep']-95.2361919958)<0.05
+          assert t['worst_incremental_harm']>200
+          assert t['governance']['retuned_on_opened'] is False
+          assert t['governance']['production_authorized'] is False
+          print('PREDICTOR_AND_TRANSPORT_GATE=PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-contextual-rescue-gain-predictor-v1-${{ github.sha }}
+          path: |
+            GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_2026-10-01.json
+            GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_RESULT_2026-10-01.md
+            GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_OPENED_TRANSPORT_2026-10-01.json
+            GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_OPENED_TRANSPORT_RESULT_2026-10-01.md
+          retention-days: 90
