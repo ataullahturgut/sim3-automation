@@ -2,8 +2,8 @@
 
 **Date:** 2026-10-01  
 **Status:** PASS  
-**Canonical manifest commit:** `8b9999d7975fbc94fe1474435c4fac48572f6b0f`  
-**Canonical blob:** `ab4d9245226ac132a8381b2f18f4eb29f148e9c9`
+**Canonical manifest commit:** `8e08e0019cca0f250e812236ac4fdc905dd37501`  
+**Canonical blob:** `67cd3dd07cf1bde91e32209fa7e096d71c8a3e5b`
 
 ## Structural checks
 
