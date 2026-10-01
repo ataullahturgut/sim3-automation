@@ -1,7 +1,7 @@
 # GOLD SHORT-HORIZON GLOBAL XAU PROJECT MANIFEST
 
 **Date:** 2026-10-01  
-**Status:** ACTIVE — GLOBAL XAU MAINLINE  
+**Status:** ACTIVE — STAGE 1 COMPLETE / H3 DIRECTION PARTIAL PASS  
 **Supersedes for tactical objective:** BIST-Metal-Price short-horizon mainline.
 
 ## 1. Objective
@@ -100,9 +100,48 @@ Stages 0-6C of the prior BIST-target short-horizon project remain archived evide
 
 They must not be merged into global-XAU performance tables.
 
-## 9. Exact next action
+## 9. Current evidence
 
-1. build global-XAU readiness panel;
-2. confirm 2022-2024 DEV H1/H3/H5 counts;
-3. run first classical/boosting multi-horizon screen;
-4. keep 2025 unopened.
+Data readiness:
+- COMPLETE / PASS
+- run **36900860852**
+- artifact **11181284118**
+- pre-DEV safe history: 3,011
+- DEV: 755
+- frozen 2025: 253.
+
+Stage 1 classical / boosting screen:
+- COMPLETE / PARTIAL SIGNAL
+- run **36901409925**
+- aggregate artifact **11181622889**.
+
+| Horizon | Direction | Return | Quantile |
+|---|---|---|---|
+| H1 | FAIL | FAIL | FAIL |
+| **H3** | **PASS** | FAIL | FAIL |
+| H5 | FAIL | FAIL | FAIL |
+
+Frozen first-screen H3 direction leader:
+- **CORE3 / Logistic L2**
+- Brier **0.246731**
+- baseline **0.249712**
+- relative improvement **+1.19%**
+- log loss **0.686634** vs baseline **0.692572**.
+
+Binding interpretation:
+- H3 is the only horizon with pre-2025 predictive evidence;
+- the evidence is direction-only;
+- no return-magnitude, quantile, or tactical engine is yet promoted.
+
+## 10. Exact next action
+
+**Stage 2 — H3 Direction Robustness & Representation Audit**
+
+1. H3 CORE3 / Logistic L2 by 2022 / 2023 / 2024;
+2. LOW / MID / HIGH volatility diagnostics;
+3. coefficient stability across expanding refits;
+4. GOLD_ONLY / CORE3 / CORE4 / transformed-external Logistic comparisons;
+5. secondary diagnostic of H5 direction;
+6. keep 2025 unopened.
+
+Do not return to BIST as the tactical target.
