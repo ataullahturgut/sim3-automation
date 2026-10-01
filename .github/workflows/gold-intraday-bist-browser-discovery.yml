@@ -1,0 +1,26 @@
+name: Gold Intramonth BIST Browser Discovery
+
+on:
+  push:
+    branches:
+      - gold-midas-headswap-v1-20260925
+    paths:
+      - 'gold_axis_2026/tools/gold_intramonth_bist_browser_discovery.py'
+      - '.github/workflows/gold-intraday-bist-browser-discovery.yml'
+  workflow_dispatch:
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install browser tooling
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Discover BIST runtime endpoint
+        run: python gold_axis_2026/tools/gold_intramonth_bist_browser_discovery.py
