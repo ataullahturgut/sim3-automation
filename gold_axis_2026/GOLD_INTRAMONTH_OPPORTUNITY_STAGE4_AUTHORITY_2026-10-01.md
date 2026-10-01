@@ -183,3 +183,55 @@ Forbidden:
 If no context block passes:
 - retain Stage-3 K100 G_ONLY/HGB core;
 - monthly direction remains descriptive context only.
+
+
+## 12. Method amendment — frozen-core overlay design
+
+Before execution, the monthly-context integration mechanism is clarified to avoid contaminating the Stage-3 core with sparse/invalid monthly history.
+
+The Stage-3 HGB core is **not retrained with monthly context columns**.
+
+Instead:
+1. recompute the exact frozen Stage-3 core probability for every eligible context-valid daily origin;
+2. transform the frozen probability to logit scale;
+3. fit a low-capacity L2 logistic **context overlay** using:
+   - frozen core logit;
+   - the preregistered context block only;
+4. train the overlay only on matured prior daily labels;
+5. predict the next 5-origin block.
+
+Overlay:
+- StandardScaler for continuous context terms;
+- LogisticRegression L2, C=1.0;
+- fixed seed;
+- no hyperparameter tuning.
+
+### Valid monthly forecast history
+
+Allowed pre-DEV monthly forecast context:
+- **2021-11..2022-03 H2 valid same-method pre-DEV ChHHO rows**
+- canonical H3/DEV target months 2022-04..2024-12.
+
+Forbidden:
+- 2013-09..2021-10 H1 counterfactual replay, because it contains documented numerical/pathological failures and is not an effective forecasting baseline.
+
+### Reliability history rule
+
+Frozen Specialist Hedge/T0 context is formally available from the canonical DEV target window.
+
+For T0REL blocks:
+- use only rows with an observed frozen router T0 record;
+- until at least **60 matured prior T0-context daily rows** exist, output the unmodified frozen CORE probability for that prediction block;
+- do not impute missing pre-router reliability history as “no alarm”.
+
+### Direction/magnitude/state overlay history
+
+Direction/magnitude may use H2 valid pre-DEV monthly rows.
+
+Previous-month market state may use its frozen walk-forward historical rows because the state engine is market-only and predates DEV.
+
+### Comparison
+
+CORE_ONLY remains the frozen probability itself.
+
+Overlay blocks are evaluated on the common Stage-4 DEV target-month population 2022-04..2024-12. Fallback-to-core rows remain in the score, making the test conservative and directly comparable.
