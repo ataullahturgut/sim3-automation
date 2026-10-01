@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install --disable-pip-version-check numpy pandas "psycopg[binary]"
+        run: pip install --disable-pip-version-check numpy pandas scipy "psycopg[binary]"
       - name: Require Neon credential
         run: test -n "$NEON_DATABASE_URL"
       - name: Run read-only global XAU target bridge audit
