@@ -30,7 +30,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p inputs/stage1 inputs/state inputs/exact16 inputs/deabc inputs/gpr inputs/pls inputs/missing9
-          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11152844058/zip" > tmp.zip
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11154006919/zip" > tmp.zip
           unzip -q -o tmp.zip -d inputs/stage1
           for spec in \
             "11116487006 inputs/state" \
