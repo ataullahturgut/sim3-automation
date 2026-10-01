@@ -46,13 +46,18 @@ Primary path targets:
 - Stage 2A Opportunity Label, Baseline & Core Feature Contract: **COMPLETE / PASS**
 - Stage 3 Origin-Safe Opportunity Predictability Screen: **COMPLETE / PASS**
 - Stage 4 Monthly Context Incremental Test: **COMPLETE / NO_CONTEXT_PASS**
-- **Stage 5 K100 Robustness, Calibration & Decision-Threshold Audit: NEXT**
+- Stage 5 K100 Robustness, Calibration & Decision-Threshold Audit: **COMPLETE / PASS**
+- **Stage 6 Frozen 2025 Transport: NEXT**
 
-Current frozen core opportunity classifier:
+Current frozen opportunity rule:
 - target: **K100**
 - feature block: **G_ONLY**
 - model: **HGB_CLASS**
+- probability: **RAW**
+- alert threshold: **p >= 0.30**
 - Stage-3 DEV Brier improvement vs best matured baseline: **+1.46%**
+- Stage-5 DEV alert precision: **35.6%**
+- Stage-5 DEV alert recall: **24.2%**
 - monthly context augmentation: **REJECTED**
 - monthly direction / magnitude / T0 reliability / prior-month state remain descriptive only.
 
@@ -421,6 +426,63 @@ Do not:
 
 ---
 
+# 5D. Stage-5 Calibration & Alert Result
+
+Authoritative result:
+`GOLD_INTRAMONTH_OPPORTUNITY_STAGE5_RESULT_2026-10-01.md`
+
+Run:
+- **36866945286**
+- artifact **11164696977**
+- artifact digest `sha256:3c3133b79cf40655d9a3f266405547096f275153d4e83a3a71cbdbdc8a3b85be`.
+
+### Calibration
+
+Selected:
+- **RAW probability**
+
+Rejected:
+- Platt
+- Isotonic.
+
+RAW remains best on the frozen primary metrics:
+- Brier **0.18942**
+- log loss **0.56550**.
+
+### Frozen alert
+
+Selected threshold:
+- **p(K100) >= 0.30**
+
+DEV:
+- alerts **132**
+- alert rate **17.6%**
+- precision **35.6%**
+- recall **24.2%**
+- precision lift vs unconditional K100 prevalence: **+9.7 pp**.
+
+Yearly:
+- 2022 precision 30.1%, recall 36.1%
+- 2023 precision 39.6%, recall 27.1%
+- 2024 precision 54.5%, recall 9.5%.
+
+Monthly-DOWN subset:
+- alerts 74
+- precision **25.7%**
+- recall **27.5%**.
+
+Episode-deduplicated diagnostic:
+- 39 alert episodes
+- 19 successful
+- episode precision **48.7%**.
+
+Binding caution:
+- this is still a modest research edge, not a standalone trading instruction;
+- false K100-alert share remains high;
+- 2025 transport is mandatory before any prospective operational use.
+
+---
+
 # 6. Evaluation Contract
 
 ## 6.1 Event prediction
@@ -491,57 +553,45 @@ Interpretation:
 | 2 | Opportunity labels + baselines + core feature contract | **COMPLETE / PASS** |
 | 3 | Origin-safe opportunity predictability screen | **COMPLETE / PASS** |
 | 4 | Monthly-context incremental test | **COMPLETE / NO_CONTEXT_PASS** |
-| 5 | K100 robustness / calibration / decision threshold | **NEXT** |
-| 6 | Frozen 2026 retrospective transport | BLOCKED |
+| 5 | K100 robustness / calibration / decision threshold | **COMPLETE / PASS** |
+| 6 | Frozen 2025 transport | **NEXT** |
+| 7 | Prospective opportunity ledger | BLOCKED BY TRANSPORT |
 | 7 | Prospective opportunity ledger | NOT STARTED |
 
 ---
 
 # 9. Exact Next Action
 
-**Stage 5 — K100 Robustness, Calibration & Decision-Threshold Audit**
+**Stage 6 — Frozen 2025 Transport**
 
-Question:
-
-> The frozen K100 G_ONLY/HGB model has modest predictive signal. Can that probability be calibrated and converted into a stable, usable tactical opportunity alert without overfitting?
-
-Frozen:
-- target = K100
+Frozen without modification:
+- K100 target
 - G_ONLY features
-- HGB architecture/hyperparameters
-- Stage-3 prequential chronology and label-maturity purge
-- monthly context excluded from probability.
+- HGB_CLASS architecture/hyperparameters
+- RAW probability
+- alert threshold **p >= 0.30**
+- 5-origin prequential refit
+- label-maturity purge
+- no monthly context in probability.
 
-Required Stage-5 work:
-
-1. audit raw HGB calibration by:
-   - DEV year
-   - monthly-DOWN / monthly-UP reporting slice
-   - Gold volatility bucket
-   - probability bucket.
-
-2. compare chronology-safe calibration:
-   - raw probability
-   - expanding Platt/logistic calibration
-   - expanding isotonic only if minimum prior sample/support rules are met.
-
-3. pre-register a small probability-alert threshold set from DEV only.
-
-4. for each threshold report:
-   - opportunity precision
-   - opportunity recall/capture
+Stage 6 must:
+1. continue chronology into 2025 using only matured prior labels;
+2. make 2025 predictions without retuning;
+3. report Brier/log loss vs matured prior-history baselines;
+4. report T30:
+   - alerts
+   - precision
+   - recall
    - false-opportunity rate
    - alert frequency
-   - realized MFE5 / MAE5 distributions after alerts
-   - performance inside monthly-DOWN months.
+   - MFE5 / MAE5 after alerts;
+5. report monthly-DOWN 2025 subset separately;
+6. report quarter stability and episode-deduplicated performance;
+7. compare transport qualitatively with DEV without changing the rule.
 
-5. select a threshold only if results are stable enough across DEV years and do not depend on one isolated year.
+If 2025 transport fails, do not rescue the threshold or calibration with 2025 hindsight.
 
-6. freeze the entire rule before any 2025 transport.
-
-No new feature search in Stage 5.
-No monthly context re-entry.
-No 2025/2026 threshold tuning.
+Only after frozen transport may the project decide whether to start the prospective daily opportunity ledger.
 ---
 
 # 10. Document Hierarchy
@@ -575,6 +625,12 @@ Stage 4:
 - `GOLD_INTRAMONTH_OPPORTUNITY_STAGE4_RESULT_2026-10-01.md`
 - authoritative run: **36865648243**
 - authoritative artifact: **11164440527**
+
+Stage 5:
+- `GOLD_INTRAMONTH_OPPORTUNITY_STAGE5_AUTHORITY_2026-10-01.md`
+- `GOLD_INTRAMONTH_OPPORTUNITY_STAGE5_RESULT_2026-10-01.md`
+- authoritative run: **36866945286**
+- authoritative artifact: **11164696977**
 
 Prior daily evidence:
 - `GOLD_DAILY_H1_TOP_FAMILY_EXPLORATORY_V1_AUDIT_INVALIDATION_2026-09-26.md`
