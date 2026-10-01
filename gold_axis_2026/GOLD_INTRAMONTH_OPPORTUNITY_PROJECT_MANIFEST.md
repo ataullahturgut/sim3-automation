@@ -43,9 +43,10 @@ Primary path targets:
 - Stage 0 scientific contract: COMPLETE
 - Stage 0A intramonth-opportunity objective amendment: COMPLETE / FROZEN
 - Stage 1 Daily Data Authority & PIT Audit: COMPLETE / PASS
-- **Stage 2 Opportunity Label, Baseline & Feature Contract: NEXT**
+- Stage 2A Opportunity Label, Baseline & Core Feature Contract: **COMPLETE / PASS**
+- **Stage 3 Origin-Safe Opportunity Predictability Screen: NEXT**
 
-No opportunity-model champion exists yet.
+No opportunity-model champion exists yet. Stage 2 proves that the opportunity phenomenon exists; predictability remains unproven.
 
 ## 1.4 Governance
 
@@ -237,6 +238,56 @@ Monthly context is optional and must earn inclusion on pre-2026 chronology.
 
 ---
 
+# 5A. Stage-2 Empirical Opportunity Result
+
+Authoritative result:
+`GOLD_INTRAMONTH_OPPORTUNITY_STAGE2_RESULT_2026-10-01.md`
+
+Run:
+- **36860536563**
+- artifact **11161358194**
+
+Frozen DEV monthly context:
+- 33 ChHHO target months
+- **19 DOWN**
+- **14 UP**.
+
+Inside the 19 monthly-DOWN months, same-calendar-month five-observation upside excursions occurred at least once in:
+- **18/19 (94.7%)** for >= +1%
+- **15/19 (78.9%)** for >= +2%
+- **7/19 (36.8%)** for >= +3%.
+
+Median month-level maximum same-month MFE5 across monthly-DOWN months:
+- **+2.78%**
+
+Range:
+- minimum **+0.86%**
+- maximum **+7.40%**.
+
+Volatility-scaled DEV event prevalence:
+
+| Candidate | Full DEV | Monthly-DOWN | Monthly-UP | DOWN same-month |
+|---|---:|---:|---:|---:|
+| K050 | 48.6% | 39.0% | 59.4% | 35.2% |
+| K075 | 36.3% | 26.5% | 46.4% | 23.7% |
+| K100 | 25.9% | 17.6% | 33.8% | 15.1% |
+
+Binding interpretation:
+- monthly DOWN lowers opportunity base rate;
+- monthly DOWN does **not** eliminate tactical rallies;
+- monthly direction is a candidate context variable, never a veto;
+- all three event definitions remain viable for model screening;
+- the next scientific question is ex-ante predictability.
+
+2025 frozen transport is consistent descriptively:
+- ChHHO DOWN months = 4
+- all 4 contain >= +2% same-month opportunity
+- 2/4 contain >= +3%.
+
+This transport evidence did not select the label or threshold.
+
+---
+
 # 6. Evaluation Contract
 
 ## 6.1 Event prediction
@@ -304,9 +355,9 @@ Interpretation:
 | 0 | Daily scientific contract | COMPLETE |
 | 0A | Intramonth opportunity objective | **COMPLETE / FROZEN** |
 | 1 | Daily Data Authority & PIT Audit | **COMPLETE / PASS** |
-| 2 | Opportunity labels + baselines + feature contract | **NEXT** |
-| 3 | Opportunity model screen | BLOCKED |
-| 4 | Monthly-context incremental test | BLOCKED |
+| 2 | Opportunity labels + baselines + core feature contract | **COMPLETE / PASS** |
+| 3 | Origin-safe opportunity predictability screen | **NEXT** |
+| 4 | Monthly-context incremental test | BLOCKED BY STAGE 3 |
 | 5 | Robustness / calibration / ensemble | BLOCKED |
 | 6 | Frozen 2026 retrospective transport | BLOCKED |
 | 7 | Prospective opportunity ledger | NOT STARTED |
@@ -315,20 +366,36 @@ Interpretation:
 
 # 9. Exact Next Action
 
-**Stage 2 — Opportunity Label, Baseline & Feature Contract**
+**Stage 3 — Origin-Safe Intramonth Opportunity Predictability Screen**
 
-Required outputs:
-1. official Borsa İstanbul 2011-2025 Gold/Silver/Platinum/Palladium panel
-2. common-calendar audit
-3. MFE/MAE labels for h=1,3,5,10
-4. pre-2026 origin-scaled opportunity-threshold candidate set
-5. baseline opportunity probabilities
-6. baseline MFE/MAE predictors
-7. daily feature blocks
-8. monthly-context as-of join
-9. immutable Stage-2 modeling snapshot.
+Question:
 
-No complex opportunity model before Stage 2 passes.
+> Can information known at the daily origin predict MFE5 / MAE5 or K050/K075/K100 opportunity events better than frozen prior-history baselines?
+
+Required order:
+
+1. **CORE model only — no monthly ChHHO context**
+   - Gold path features
+   - cross-metal causal features
+   - companion staleness controls
+
+2. Low-capacity baselines first:
+   - logistic regression for K050/K075/K100
+   - ridge / robust linear regression for MFE5 and MAE5
+   - one constrained tree/boosting benchmark if justified
+
+3. Chronological / expanding DEV evaluation only.
+
+4. Compare against Stage-2 frozen baselines:
+   - prior prevalence probability
+   - rolling-252 prevalence
+   - prior/rolling median MFE/MAE.
+
+5. Do **not** use 2025 for model/feature/hyperparameter selection.
+
+6. Only after a core signal exists, Stage 4 may add monthly ChHHO direction / return / alarm / regime as an incremental context block.
+
+Promotion requires genuine pre-2026 predictive improvement; mere existence of intramonth rallies is not sufficient.
 
 ---
 
@@ -346,6 +413,11 @@ Stage 0:
 Stage 1:
 - `GOLD_DAILY_FORECAST_STAGE1_DATA_AUTHORITY_PIT_AUDIT_2026-10-01.md`
 - `GOLD_DAILY_FORECAST_STAGE1_DATA_AUTHORITY_PIT_AUDIT_RESULT_2026-10-01.md`
+
+Stage 2:
+- `GOLD_INTRAMONTH_OPPORTUNITY_STAGE2_AUTHORITY_2026-10-01.md`
+- `GOLD_INTRAMONTH_OPPORTUNITY_STAGE2_RESULT_2026-10-01.md`
+- authoritative artifact: **11161358194**
 
 Prior daily evidence:
 - `GOLD_DAILY_H1_TOP_FAMILY_EXPLORATORY_V1_AUDIT_INVALIDATION_2026-09-26.md`
