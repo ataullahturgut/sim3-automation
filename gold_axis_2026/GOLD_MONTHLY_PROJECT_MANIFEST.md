@@ -531,11 +531,11 @@ Do not:
 
 ## 10.0 Sibling project boundary
 
-Daily-frequency forecasting is maintained as a separate canonical project:
+Intramonth tactical opportunity forecasting is maintained as a separate canonical project:
 
-- `gold_axis_2026/GOLD_DAILY_FORECAST_PROJECT_MANIFEST.md`
+- `gold_axis_2026/GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md`
 
-The daily project may reuse governed data, model-family knowledge and scientific lessons, but its target, feature contract, chronology, baselines, model selection and live ledger are independent. Daily results must not be appended to this monthly manifest.
+The intramonth project may reuse governed data, model-family knowledge, monthly forecast context and scientific lessons, but its target, labels, feature contract, model selection and prospective ledger are independent. Intramonth results must not be appended to this monthly manifest.
 
 ## 10.1 Canonical hierarchy
 
