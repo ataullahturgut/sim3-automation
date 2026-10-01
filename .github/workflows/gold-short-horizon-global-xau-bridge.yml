@@ -1,0 +1,38 @@
+name: Gold Short Horizon Global XAU Target Bridge Audit
+
+on:
+  push:
+    branches:
+      - gold-midas-headswap-v1-20260925
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_global_xau_bridge_audit.py'
+      - '.github/workflows/gold-short-horizon-global-xau-bridge.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OUT_DIR: global_xau_bridge_out
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install --disable-pip-version-check numpy pandas "psycopg[binary]"
+      - name: Require Neon credential
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Run read-only global XAU target bridge audit
+        run: python gold_axis_2026/tools/gold_short_horizon_global_xau_bridge_audit.py
+      - name: Upload audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-short-horizon-global-xau-bridge
+          path: global_xau_bridge_out/
+          retention-days: 90
