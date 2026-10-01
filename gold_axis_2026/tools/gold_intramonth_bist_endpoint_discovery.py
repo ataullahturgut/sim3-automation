@@ -83,3 +83,13 @@ for src in p.scripts:
             print(js[a:b])
             urls=sorted(set(re.findall(r'["\']([^"\']*(?:api|metal|kmtp|price|query|xml)[^"\']*)["\']',js[a:b],re.I)))
             print("LOCAL_URL_STRINGS",urls[:80])
+
+
+print("\n=== DIRECT_SAMPLE_ENDPOINT ===")
+sample="https://www.borsaistanbul.com/metal-fiyatlari.php?op=fetchMetalFiyatlari&startDate=2025/01/01&endDate=2025/01/10&priceType=AU"
+try:
+    st,fin,hh,body=get(sample)
+    print("SAMPLE_STATUS",st,"URL",fin,"LEN",len(body),"CTYPE",hh.get("Content-Type"))
+    print("SAMPLE_BODY",body[:12000])
+except Exception as e:
+    print("SAMPLE_ERR",repr(e))
