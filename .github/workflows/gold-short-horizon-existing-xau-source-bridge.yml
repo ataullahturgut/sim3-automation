@@ -1,0 +1,33 @@
+name: Gold Short Horizon Existing XAU Source Bridge
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_existing_xau_source_bridge.py'
+      - '.github/workflows/gold-short-horizon-existing-xau-source-bridge.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OUT_DIR: global_xau_source_bridge_out
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: pip install --disable-pip-version-check numpy pandas scipy "psycopg[binary]"
+      - run: test -n "$NEON_DATABASE_URL"
+      - name: Run existing-XAU bridge screen
+        run: python gold_axis_2026/tools/gold_short_horizon_existing_xau_source_bridge.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-short-horizon-existing-xau-source-bridge
+          path: global_xau_source_bridge_out/
+          retention-days: 90
