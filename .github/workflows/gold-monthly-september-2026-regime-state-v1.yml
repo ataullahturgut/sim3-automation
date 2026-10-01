@@ -1,0 +1,79 @@
+name: Gold Monthly September 2026 Regime State V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_september_2026_regime_state_v1.py
+      - .github/workflows/gold-monthly-september-2026-regime-state-v1.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  regime:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: |
+          python -m pip install             'numpy>=2.0,<3' 'pandas>=2.2,<3' 'requests>=2.32,<3'             'openpyxl>=3.1,<4' 'lxml>=5,<7' 'scipy>=1.13,<2'             'scikit-learn>=1.5,<2' 'hmmlearn>=0.3.3,<0.4' 'ruptures>=1.1.9,<2'
+      - name: Download frozen/current authorities
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p inputs/snapshot inputs/public inputs/external inputs/discovery inputs/v2
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > snapshot.zip
+          unzip -q snapshot.zip -d inputs/snapshot
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11147198912/zip" > public.zip
+          unzip -q public.zip -d inputs/public
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11028494060/zip" > external.zip
+          unzip -q external.zip -d inputs/external
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11097041821/zip" > discovery.zip
+          unzip -q discovery.zip -d inputs/discovery
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11114806383/zip" > v2.zip
+          unzip -q v2.zip -d inputs/v2
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_monthly_september_2026_regime_state_v1.py
+      - name: Run September regime state
+        run: |
+          cd gold_axis_2026/tools
+          python gold_monthly_september_2026_regime_state_v1.py             --snapshot ../../inputs/snapshot/gold_monthly_dev_snapshot_v1.json             --public-bundle ../../inputs/public/gold_monthly_public_current_bundle_sep_complete_v1.json             --external ../../inputs/external/gold_monthly_external_authority_v2.json             --prior-discovery ../../inputs/discovery/GOLD_MONTHLY_MARKET_REGIME_DISCOVERY_V1_2026-09-30.json             --prior-transition-v2 ../../inputs/v2/GOLD_MONTHLY_MARKET_REGIME_TRANSITION_DETECTOR_V2_2026-09-30.json             --output ../../GOLD_MONTHLY_SEPTEMBER_2026_REGIME_STATE_V1_2026-10-01.json
+      - name: Gate
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('GOLD_MONTHLY_SEPTEMBER_2026_REGIME_STATE_V1_2026-10-01.json'))
+          assert d['status']=='COMPLETE'
+          assert d['month']=='2026-09'
+          assert d['training_end']=='2026-08'
+          assert d['data_notes']['public_daily_last']>='2026-09-30'
+          assert d['governance']['regime_architecture_changed'] is False
+          assert d['governance']['transition_rule_changed'] is False
+          assert d['governance']['extreme_rule_changed'] is False
+          assert d['governance']['october_data_used'] is False
+          print('SEPTEMBER_REGIME_GATE=PASS')
+          print(json.dumps({
+            'state':d['semantic_state'],
+            'label':d['semantic_label'],
+            'p':d['semantic_probability'],
+            'ood':d['ood'],
+            'transition':d['transition']['status'],
+            'transition_flags':d['transition']['current_flags'],
+            'extreme':d['extreme']['status'],
+            'extreme_signals':d['extreme']['active_signals'],
+            'combined':d['combined_state_category'],
+            'gold_level_source':d['data_notes']['september_gold_level_source'],
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-september-2026-regime-state-v1-${{ github.sha }}
+          path: GOLD_MONTHLY_SEPTEMBER_2026_REGIME_STATE_V1_2026-10-01.json
+          retention-days: 90
