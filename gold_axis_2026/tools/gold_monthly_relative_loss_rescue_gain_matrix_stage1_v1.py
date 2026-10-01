@@ -80,7 +80,7 @@ def main():
             "p_high":float(xr["p_high"]),"p_elevated":float(xr["p_elevated"]),
             "active_signals":xr["active_signals"],"awake_experts":xr["awake_experts"],
             "actual":actual,"chhho_forecast":ch,"chhho_ae":ch_ae,
-            "semantic_label":sr["semantic_label"],"state_category":sr["state_category"],
+            "semantic_label":sr["semantic_label"],"semantic_probability":float(sr["semantic_probability"]),"state_category":sr["state_category"],
             "transition_v2_status":sr["transition_v2_status"],"extreme_status":sr["extreme_status"],
             "origin_regime_ood":bool(sr["origin_regime_ood"]),
             "direction_agreement":xr.get("exact16_direction_agreement"),
