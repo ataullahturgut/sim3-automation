@@ -151,11 +151,22 @@ def run_block(df,dev,bname,features):
         te=dev.iloc[start_i:start_i+BLOCK].copy()
         start=te["date"].min()
         trmask=mat.notna() & (mat<=start) & df["target_r3"].notna() & (df["signal_date"]<pd.Timestamp("2025-01-01"))
-        tr=df[trmask].dropna(subset=features).copy()
-        te2=te.dropna(subset=features).copy()
-        if len(te2)!=len(te): raise RuntimeError(f"DEV missing in {bname} block {start}")
+        tr=df[trmask].copy()
+        # Preserve frozen Stage-1 preprocessing: early lag-history gaps are
+        # training-median imputed. Palladium is the only exception: CORE4 may
+        # use only rows with genuine observed Palladium history; no backfill.
+        if bname=="CORE4":
+            pall_cols=["palladium_r1","palladium_r5","palladium_r21","palladium_age_days"]
+            tr=tr.dropna(subset=pall_cols).copy()
+        if te[features].isna().any().any():
+            raise RuntimeError(f"DEV missing in {bname} block {start}")
         if len(tr)<500: raise RuntimeError(f"Too little training {bname} {start} {len(tr)}")
-        Xtr=tr[features]; Xte=te[features]
+        Xtr=tr[features].copy(); Xte=te[features].copy()
+        for col in features:
+            med=Xtr[col].median(skipna=True)
+            val=float(med) if pd.notna(med) else 0.0
+            Xtr[col]=Xtr[col].fillna(val)
+            Xte[col]=Xte[col].fillna(val)
         ytr=tr["target_r3"].astype(float)
         yte=te["target_r3"].astype(float).to_numpy()
         uptr=(ytr>0).astype(int); upte=(yte>0).astype(int)
