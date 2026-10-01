@@ -81,7 +81,7 @@ Primary continuous labels:
 
 Origin-known Gold risk scale:
 
-`SIGMA20 = std(last 20 Gold one-observation log returns through origin t)`
+`SIGMA20 = population std (ddof=0) of the last 20 Gold one-observation log returns through origin t`
 
 Five-day scale:
 
@@ -99,7 +99,13 @@ Stage 2 only measures prevalence/base rates. Final primary binary threshold may 
 
 ## 7. Frozen descriptive excursion diagnostics
 
-For business interpretation only, report whether each monthly forecast month contains at least one origin with future 5-observation MFE of:
+For the **monthly-DOWN intramonth** business diagnostic, future observations are truncated at the end of the signal's calendar month. A rise occurring only in the following month is not counted as an opportunity inside the current monthly forecast.
+
+Report both:
+- ordinary MFE_5 over the next five Gold observations;
+- **MFE_5_SAME_MONTH**, using up to the next five Gold observations but stopping before the signal month changes.
+
+For business interpretation only, report whether each monthly forecast month contains at least one origin with **same-month** future MFE of:
 
 - >= 1%
 - >= 2%
@@ -175,8 +181,8 @@ No future labels may enter any baseline.
 4. MFE/MAE distributions
 5. K050/K075/K100 prevalence
 6. monthly ChHHO UP/DOWN join for DEV and 2025
-7. monthly-DOWN opportunity prevalence
-8. percentage excursion diagnostics (1/2/3%)
+7. monthly-DOWN opportunity prevalence, including same-month-truncated diagnostics
+8. same-month percentage excursion diagnostics (1/2/3%)
 9. baseline metrics
 10. immutable artifact hashes.
 
