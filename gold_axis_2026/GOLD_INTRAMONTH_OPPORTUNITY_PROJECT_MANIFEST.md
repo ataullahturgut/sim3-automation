@@ -45,14 +45,16 @@ Primary path targets:
 - Stage 1 Daily Data Authority & PIT Audit: COMPLETE / PASS
 - Stage 2A Opportunity Label, Baseline & Core Feature Contract: **COMPLETE / PASS**
 - Stage 3 Origin-Safe Opportunity Predictability Screen: **COMPLETE / PASS**
-- **Stage 4 Monthly Context Incremental Test: NEXT**
+- Stage 4 Monthly Context Incremental Test: **COMPLETE / NO_CONTEXT_PASS**
+- **Stage 5 K100 Robustness, Calibration & Decision-Threshold Audit: NEXT**
 
 Current frozen core opportunity classifier:
 - target: **K100**
 - feature block: **G_ONLY**
 - model: **HGB_CLASS**
-- DEV Brier improvement vs best matured baseline: **+1.46%**
-- DEV log loss: **0.56550** vs baseline **0.57283**.
+- Stage-3 DEV Brier improvement vs best matured baseline: **+1.46%**
+- monthly context augmentation: **REJECTED**
+- monthly direction / magnitude / T0 reliability / prior-month state remain descriptive only.
 
 Supporting linear comparator:
 - G_ONLY / LOGIT_L2
@@ -375,6 +377,50 @@ The Stage-3 core may not be retuned merely to favor Stage 4.
 
 ---
 
+# 5C. Stage-4 Monthly Context Result
+
+Authoritative result:
+`GOLD_INTRAMONTH_OPPORTUNITY_STAGE4_RESULT_2026-10-01.md`
+
+Run:
+- **36865648243**
+- artifact **11164440527**
+- artifact digest `sha256:ff16d38d3114efa1650e05b250af8c6646d6b1895097a0234511d4acf3965ccb`.
+
+Common Stage-4 DEV population:
+- 685 daily origins
+- 392 monthly-DOWN
+- 293 monthly-UP.
+
+Frozen CORE_ONLY reference:
+- Brier **0.18421**
+- log loss **0.55394**.
+
+Monthly context results:
+
+| Block | Brier relative vs core | DOWN-slice relative vs core | Decision |
+|---|---:|---:|---|
+| CORE_DIR | **-0.81%** | **-7.59%** | FAIL |
+| CORE_MAG | **-5.95%** | **-16.24%** | FAIL |
+| CORE_DIR_MAG | **-6.00%** | **-17.21%** | FAIL |
+| CORE_DIR_MAG_T0REL | **-9.76%** | **-16.55%** | FAIL |
+| CORE_DIR_MAG_STATE | **-15.31%** | **-33.46%** | FAIL |
+| CORE_ALL_SAFE | **-13.55%** | **-12.72%** | FAIL |
+
+Binding interpretation:
+- Stage-3 core performs relatively well inside monthly-DOWN periods, but explicitly feeding monthly DOWN/UP into the model **does not improve it**.
+- Monthly forecast magnitude, T0 reliability, and prior-month state also degrade probability quality.
+- Monthly context therefore remains **display/reporting context only**, not a probability modifier or gate.
+- K100 remains a local daily-path signal.
+
+Do not:
+- suppress opportunity because monthly forecast is DOWN;
+- boost probability because monthly forecast is UP;
+- multiply K100 by monthly p_HIGH;
+- condition K100 on R0/R1/R2/Transition/Extreme.
+
+---
+
 # 6. Evaluation Contract
 
 ## 6.1 Event prediction
@@ -444,8 +490,8 @@ Interpretation:
 | 1 | Daily Data Authority & PIT Audit | **COMPLETE / PASS** |
 | 2 | Opportunity labels + baselines + core feature contract | **COMPLETE / PASS** |
 | 3 | Origin-safe opportunity predictability screen | **COMPLETE / PASS** |
-| 4 | Monthly-context incremental test | **NEXT** |
-| 5 | Robustness / calibration / ensemble | BLOCKED |
+| 4 | Monthly-context incremental test | **COMPLETE / NO_CONTEXT_PASS** |
+| 5 | K100 robustness / calibration / decision threshold | **NEXT** |
 | 6 | Frozen 2026 retrospective transport | BLOCKED |
 | 7 | Prospective opportunity ledger | NOT STARTED |
 
@@ -453,47 +499,49 @@ Interpretation:
 
 # 9. Exact Next Action
 
-**Stage 4 — Monthly Context Incremental Test**
+**Stage 5 — K100 Robustness, Calibration & Decision-Threshold Audit**
 
 Question:
 
-> Does origin-known monthly ChHHO context improve the frozen Stage-3 K100 strong-rally detector, especially in the monthly-DOWN situations that motivate this project?
+> The frozen K100 G_ONLY/HGB model has modest predictive signal. Can that probability be calibrated and converted into a stable, usable tactical opportunity alert without overfitting?
 
-Frozen core that may not be changed:
-- target: **K100**
-- feature block: **G_ONLY**
-- primary model: **HGB_CLASS**
-- supporting model: **LOGIT_L2**
-- Stage-3 chronology/refit/purge rules unchanged.
+Frozen:
+- target = K100
+- G_ONLY features
+- HGB architecture/hyperparameters
+- Stage-3 prequential chronology and label-maturity purge
+- monthly context excluded from probability.
 
-Stage 4 test order:
+Required Stage-5 work:
 
-1. **CORE_ONLY**
-   - exact Stage-3 G_ONLY features.
+1. audit raw HGB calibration by:
+   - DEV year
+   - monthly-DOWN / monthly-UP reporting slice
+   - Gold volatility bucket
+   - probability bucket.
 
-2. **CORE + MONTHLY_DIRECTION**
-   - ChHHO UP/DOWN sign only.
+2. compare chronology-safe calibration:
+   - raw probability
+   - expanding Platt/logistic calibration
+   - expanding isotonic only if minimum prior sample/support rules are met.
 
-3. **CORE + MONTHLY_FORECAST_MAGNITUDE**
-   - predicted monthly log return and/or frozen forecast-distance representation.
+3. pre-register a small probability-alert threshold set from DEV only.
 
-4. **CORE + MONTHLY_RELIABILITY**
-   - only alarm/reliability fields that are causally available at the daily origin.
+4. for each threshold report:
+   - opportunity precision
+   - opportunity recall/capture
+   - false-opportunity rate
+   - alert frequency
+   - realized MFE5 / MAE5 distributions after alerts
+   - performance inside monthly-DOWN months.
 
-5. **CORE + MONTHLY_STATE**
-   - only causally available regime/state fields.
+5. select a threshold only if results are stable enough across DEV years and do not depend on one isolated year.
 
-Each context block must be tested incrementally against the frozen core under the same 2022-2024 prequential DEV protocol.
+6. freeze the entire rule before any 2025 transport.
 
-Promotion requires:
-- lower Brier than frozen Stage-3 core;
-- log loss not worse;
-- no material collapse inside monthly-DOWN origins;
-- no 2025/2026 selection.
-
-Monthly DOWN remains **context, not an automatic veto**.
-
-Secondary MAE5 monthly-context research may follow only after the K100 context test is resolved.
+No new feature search in Stage 5.
+No monthly context re-entry.
+No 2025/2026 threshold tuning.
 ---
 
 # 10. Document Hierarchy
@@ -521,6 +569,12 @@ Stage 3:
 - `GOLD_INTRAMONTH_OPPORTUNITY_STAGE3_RESULT_2026-10-01.md`
 - authoritative run: **36862897415**
 - authoritative artifact: **11163151830**
+
+Stage 4:
+- `GOLD_INTRAMONTH_OPPORTUNITY_STAGE4_AUTHORITY_2026-10-01.md`
+- `GOLD_INTRAMONTH_OPPORTUNITY_STAGE4_RESULT_2026-10-01.md`
+- authoritative run: **36865648243**
+- authoritative artifact: **11164440527**
 
 Prior daily evidence:
 - `GOLD_DAILY_H1_TOP_FAMILY_EXPLORATORY_V1_AUDIT_INVALIDATION_2026-09-26.md`
