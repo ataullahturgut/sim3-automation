@@ -3021,6 +3021,48 @@ Purpose:
 
 2025/2026 remains descriptive/opened and may not choose predictor architecture, thresholds or fallback identity.
 
+
+## 20M.9 October 2026 forward forecast — COMPLETE
+
+Detailed result:
+`gold_axis_2026/GOLD_MONTHLY_OCTOBER_2026_FORWARD_RESULT_2026-10-01.md`
+
+Execution:
+- run **36831538209**
+- conclusion **SUCCESS**
+- September-complete public bundle artifact **11147198912**
+- ChHHO artifact **11147595500**
+- DE-ABC artifact **11147945272**.
+
+Data state:
+- common four-metal daily coverage through **2026-09-30**
+- September common daily rows **30**
+- official GPR 202609 vintage present
+- September training row included
+- no October target/outcome data used.
+
+Main ChHHO forward:
+- September complete StakTrakr Gold monthly-average proxy **4336.8513**
+- predicted Gold log return **-0.0135908895**
+- implied multiplier **0.9865010496**
+- **October 2026 average forecast = 4278.3084 USD/oz**
+- implied change from September proxy **-1.35%**
+- direction **DOWN**.
+
+Frozen DE-ABC comparator:
+- forecast **4255.7049 USD/oz**
+- implied change **-1.87%**
+- direction **DOWN**.
+
+Important level-source qualification:
+- World Bank 2026-09 monthly Gold was **not yet available** at execution;
+- therefore 4278.31 is **SEPTEMBER_COMPLETE_FEATURES / FULL_MONTH_STAK_LEVEL_PROXY**, not yet canonical World-Bank-level final.
+- once World Bank September Gold arrives, canonical ChHHO level conversion is mechanical:
+  `WB_Gold_2026_09 × 0.9865010496`.
+- no model refit is required for that level-only conversion unless the contract is explicitly reopened.
+
+No trading/action rule is authorized from this forward forecast alone.
+
 # 21. Bundan sonra manifest nasıl güncellenecek
 
 Her yeni deney bittiğinde **aynı commit zincirinde** bu ana manifest güncellenecek.
