@@ -28,19 +28,25 @@ Then, only after forecast validation, determine which horizon offers the stronge
 - Stage 1 First Multi-Horizon Model Screen: **COMPLETE / PASS**
 - Stage 2 H3 Robustness + Feature Representation Audit: **COMPLETE / PASS**
 - Stage 3 Sequence Model Challengers: **COMPLETE / NO_SEQUENCE_PROMOTION**
-- **Stage 4 TFT Multi-Horizon Probabilistic Challenger: NEXT**
+- Stage 4 TFT Multi-Horizon Probabilistic Challenger: **COMPLETE / NO_TFT_PROMOTION**
+- Deep-learning challenger program: **CLOSED**
+- **Stage 5 Forecast-Head Reconciliation & Tactical Signal Architecture: NEXT**
 
 Current strongest research horizon: **H3**.
 
-Frozen H3 classical benchmark heads remain:
+Frozen H3 forecast heads:
 - direction: **CORE3 / XGB_CLASS**
 - point return: **GOLD_ONLY / LGBM_REG**
 - quantile distribution: **GOLD_ONLY / LGBM_QUANT**
 
-Rejected sequence replacements:
+Rejected deep replacements:
 - TCN L20/L60
 - GRU L20/L60
-- BiGRU L20/L60.
+- BiGRU L20/L60
+- constrained joint H1/H3/H5 TFT.
+
+Supporting non-core evidence:
+- H5 TFT Q50 point-return improves Stage-1 H5 classical MAE by **1.47%**, but H5 direction and quantile fail.
 
 No tactical trading champion exists yet.
 
@@ -297,6 +303,48 @@ Binding decision:
 
 ---
 
+# 6D. Stage-4 TFT Challenger Result
+
+Authority:
+`GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE4_RESULT_2026-10-01.md`
+
+Scientific run:
+- **36889006614**
+- TFT-CLASS artifact **11176206620**
+- TFT-QUANT artifact **11176830553**.
+
+Authoritative aggregate V2:
+- run **36890974544**
+- artifact **11176262943**
+- digest `sha256:93de732490a5cddebe842089e89cd03056f5c09ed2ef13c473d1ff3d3090d245`.
+
+Result:
+**NO_TFT_PROMOTION**
+
+H3 comparison:
+
+| Head | TFT vs classical | Decision |
+|---|---:|---|
+| Direction | **-2.55%** Brier | RETAIN XGB |
+| Return | **+0.18%** MAE | RETAIN LightGBM |
+| Quantile | **-1.16%** pinball | RETAIN Quantile LightGBM |
+
+TFT architecture remained constrained:
+- CLASS 10,712 parameters
+- QUANT 10,739 parameters.
+
+Supporting H5 finding:
+- TFT H5 Q50 MAE improves by **1.47%** versus Stage-1 H5 classical return head;
+- H5 direction and quantile do not pass;
+- this does not replace H3 as the research core.
+
+Binding decision:
+- deep-learning challenger program CLOSED;
+- current data/target contract favors boosting;
+- proceed to forecast-head reconciliation before any trading optimization.
+
+---
+
 # 7. Stage Roadmap
 
 | Stage | Purpose | Status |
@@ -306,9 +354,9 @@ Binding decision:
 | 1 | First model + feature + horizon screen | **COMPLETE / PASS** |
 | 2 | H3 robustness + feature representation audit | **COMPLETE / PASS** |
 | 3 | TCN / GRU / BiGRU challengers | **COMPLETE / NO PROMOTION** |
-| 4 | TFT multi-horizon challenger | **NEXT** |
-| 5 | Forecast-head reconciliation | BLOCKED |
-| 6 | Tactical allocation / utility layer | BLOCKED |
+| 4 | TFT multi-horizon challenger | **COMPLETE / NO PROMOTION** |
+| 5 | Forecast-head reconciliation / tactical signal architecture | **NEXT** |
+| 6 | Tactical allocation / utility layer | BLOCKED BY STAGE 5 |
 | 7 | Frozen 2025 transport | BLOCKED |
 | 8 | Prospective daily ledger | NOT STARTED |
 
@@ -316,33 +364,39 @@ Binding decision:
 
 # 8. Exact Next Action
 
-**Stage 4 — TFT Multi-Horizon Probabilistic Challenger**
+**Stage 5 — Forecast-Head Reconciliation & Tactical Signal Architecture**
 
-Purpose:
-test whether joint H1/H3/H5 learning adds information that separate tabular and compact sequence models do not capture.
+Frozen H3 heads:
+- direction = CORE3 / XGB_CLASS
+- point return = GOLD_ONLY / LGBM_REG
+- distribution = GOLD_ONLY / LGBM_QUANT.
 
-Before execution freeze:
-- one constrained TFT architecture;
-- limited lookback set;
-- H1/H3/H5 direct outputs;
-- quantile outputs;
-- chronology and label-maturity rules;
-- parameter-count ceiling appropriate for the modest daily sample.
+Supporting horizons:
+- H1 remains secondary;
+- H5 remains secondary;
+- H5 TFT Q50 return improvement is evidence only and cannot override failed H5 direction/quantile heads.
 
-Evaluation:
-- 2022-2024 DEV only;
-- 2025 remains frozen;
-- compare H3 directly with frozen classical direction/return/quantile heads;
-- report H1/H5 against their Stage-1 classical references;
-- no trading utility optimization.
+Stage 5 must work on 2022-2024 DEV only and answer:
 
-If TFT fails:
-- close the deep-learning challenger program;
-- retain boosting as forecast engine;
-- proceed to forecast-head reconciliation and tactical allocation research.
+1. How often do frozen H3 heads agree/disagree?
+2. Define origin-level consistency states, e.g.:
+   - ALIGNED_UP
+   - ALIGNED_DOWN
+   - MIXED
+   - HIGH_DOWNSIDE
+   - LOW_CONVICTION.
+3. Test whether preregistered consistency states separate:
+   - sign accuracy
+   - return MAE
+   - realized positive/negative H3 return
+   - downside-tail outcomes
+   without fitting a new high-capacity model.
+4. Determine whether H1/H5 should be shown as supporting horizon context around H3.
+5. Freeze a single daily forecast object before any entry/exit or P&L optimization.
 
-If TFT passes:
-- promote only the specific heads/horizons clearing frozen gates.
+No 2025 tuning.
+No transaction-cost or position-sizing optimization in Stage 5.
+No reopening deep-learning models.
 ---
 
 # 9. Document Hierarchy
@@ -380,6 +434,16 @@ Stage 3:
 - `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE3_RESULT_2026-10-01.md`
 - run **36877156753**
 - aggregate artifact **11169543476**.
+
+Stage 4:
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE4_AUTHORITY_2026-10-01.md`
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE4_RESULT_2026-10-01.md`
+- scientific run **36889006614**
+- TFT-CLASS artifact **11176206620**
+- TFT-QUANT artifact **11176830553**
+- aggregate V2 run **36890974544**
+- aggregate artifact **11176262943**
+- original aggregate job superseded due artifact-copy directory error; no retraining.
 
 Sibling projects:
 - monthly forecast: `GOLD_MONTHLY_PROJECT_MANIFEST.md`
