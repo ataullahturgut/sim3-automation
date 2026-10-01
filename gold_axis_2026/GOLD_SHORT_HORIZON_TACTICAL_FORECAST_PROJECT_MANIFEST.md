@@ -27,19 +27,20 @@ Then, only after forecast validation, determine which horizon offers the stronge
 - Stage 0 Scientific Contract: COMPLETE / FROZEN
 - Stage 1 First Multi-Horizon Model Screen: **COMPLETE / PASS**
 - Stage 2 H3 Robustness + Feature Representation Audit: **COMPLETE / PASS**
-- **Stage 3 Sequence Model Challengers: NEXT**
+- Stage 3 Sequence Model Challengers: **COMPLETE / NO_SEQUENCE_PROMOTION**
+- **Stage 4 TFT Multi-Horizon Probabilistic Challenger: NEXT**
 
 Current strongest research horizon: **H3**.
 
-Frozen H3 classical benchmark heads:
+Frozen H3 classical benchmark heads remain:
 - direction: **CORE3 / XGB_CLASS**
 - point return: **GOLD_ONLY / LGBM_REG**
 - quantile distribution: **GOLD_ONLY / LGBM_QUANT**
 
-Stage-2 result:
-- Palladium / CORE4 not promoted
-- transformed Rates / FX / VIX / Nasdaq blocks not promoted
-- quantile head retained with year/high-volatility concentration caution.
+Rejected sequence replacements:
+- TCN L20/L60
+- GRU L20/L60
+- BiGRU L20/L60.
 
 No tactical trading champion exists yet.
 
@@ -261,6 +262,41 @@ The cleanest current architecture remains head-specific rather than one giant al
 
 ---
 
+# 6C. Stage-3 Sequence Challenger Result
+
+Authority:
+`GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE3_RESULT_2026-10-01.md`
+
+Run:
+- **36877156753**
+- aggregate artifact **11169543476**
+- aggregate digest `sha256:a23e21682a6dc4db14c69c33b806f151f9842a9a19cbf0958379611aacd24392`.
+
+Result:
+**NO_SEQUENCE_PROMOTION**
+
+Best sequence by head:
+
+| Head | Best sequence | Relative vs classical |
+|---|---|---:|
+| Direction | GRU-L60 | **-1.45%** |
+| Return | GRU-L60 | **-1.10%** |
+| Quantile | TCN-L20 | **-2.95%** |
+
+All six sequence configurations are worse than the frozen classical H3 benchmark.
+
+Compact model sizes:
+- TCN 1,557 parameters
+- GRU 1,621
+- BiGRU 2,141.
+
+Binding decision:
+- retain classical H3 boosting heads;
+- do not reopen TCN/GRU/BiGRU without materially new architecture/data evidence;
+- proceed only to the materially distinct TFT multi-horizon hypothesis.
+
+---
+
 # 7. Stage Roadmap
 
 | Stage | Purpose | Status |
@@ -269,8 +305,8 @@ The cleanest current architecture remains head-specific rather than one giant al
 | 0 | Scientific contract | COMPLETE / FROZEN |
 | 1 | First model + feature + horizon screen | **COMPLETE / PASS** |
 | 2 | H3 robustness + feature representation audit | **COMPLETE / PASS** |
-| 3 | TCN / GRU / BiGRU challengers | **NEXT** |
-| 4 | TFT multi-horizon challenger | BLOCKED |
+| 3 | TCN / GRU / BiGRU challengers | **COMPLETE / NO PROMOTION** |
+| 4 | TFT multi-horizon challenger | **NEXT** |
 | 5 | Forecast-head reconciliation | BLOCKED |
 | 6 | Tactical allocation / utility layer | BLOCKED |
 | 7 | Frozen 2025 transport | BLOCKED |
@@ -280,35 +316,33 @@ The cleanest current architecture remains head-specific rather than one giant al
 
 # 8. Exact Next Action
 
-**Stage 3 — Compact Sequence Model Challengers**
+**Stage 4 — TFT Multi-Horizon Probabilistic Challenger**
 
-Horizon:
-- H3 only.
+Purpose:
+test whether joint H1/H3/H5 learning adds information that separate tabular and compact sequence models do not capture.
 
-Frozen classical references:
-- direction = CORE3 / XGB_CLASS
-- return = GOLD_ONLY / LGBM_REG
-- quantile = GOLD_ONLY / LGBM_QUANT.
+Before execution freeze:
+- one constrained TFT architecture;
+- limited lookback set;
+- H1/H3/H5 direct outputs;
+- quantile outputs;
+- chronology and label-maturity rules;
+- parameter-count ceiling appropriate for the modest daily sample.
 
-Sequence challengers:
-1. TCN
-2. GRU
-3. BiGRU
+Evaluation:
+- 2022-2024 DEV only;
+- 2025 remains frozen;
+- compare H3 directly with frozen classical direction/return/quantile heads;
+- report H1/H5 against their Stage-1 classical references;
+- no trading utility optimization.
 
-Before execution:
-- preregister lookback windows
-- preregister compact architectures
-- keep parameter counts constrained for the modest daily sample
-- preserve origin-safe sequences
-- preserve H3 label maturity and chronological DEV evaluation.
+If TFT fails:
+- close the deep-learning challenger program;
+- retain boosting as forecast engine;
+- proceed to forecast-head reconciliation and tactical allocation research.
 
-Selection:
-- 2022-2024 DEV only
-- 2025 remains frozen
-- challenger must beat the corresponding classical head under the same primary/co-primary metrics
-- quantile challenger must also address the Stage-2 stability caution rather than win only through 2024.
-
-TFT remains blocked until compact sequence challengers are resolved.
+If TFT passes:
+- promote only the specific heads/horizons clearing frozen gates.
 ---
 
 # 9. Document Hierarchy
@@ -340,6 +374,12 @@ Stage 2:
 - authoritative corrected run **36874561989**
 - artifact **11167744845**
 - earlier runs 36873375235 / 36873744569 superseded due preprocessing mismatch.
+
+Stage 3:
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE3_AUTHORITY_2026-10-01.md`
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE3_RESULT_2026-10-01.md`
+- run **36877156753**
+- aggregate artifact **11169543476**.
 
 Sibling projects:
 - monthly forecast: `GOLD_MONTHLY_PROJECT_MANIFEST.md`
