@@ -30,7 +30,8 @@ Then, only after forecast validation, determine which horizon offers the stronge
 - Stage 3 Sequence Model Challengers: **COMPLETE / NO_SEQUENCE_PROMOTION**
 - Stage 4 TFT Multi-Horizon Probabilistic Challenger: **COMPLETE / NO_TFT_PROMOTION**
 - Deep-learning challenger program: **CLOSED**
-- **Stage 5 Forecast-Head Reconciliation & Tactical Signal Architecture: NEXT**
+- Stage 5 Forecast-Head Reconciliation & Tactical Signal Architecture: **COMPLETE / NO_RECONCILIATION_PASS**
+- **Stage 6 Tactical Allocation / Utility Contract: NEXT**
 
 Current strongest research horizon: **H3**.
 
@@ -39,11 +40,10 @@ Frozen H3 forecast heads:
 - point return: **GOLD_ONLY / LGBM_REG**
 - quantile distribution: **GOLD_ONLY / LGBM_QUANT**
 
-Rejected deep replacements:
-- TCN L20/L60
-- GRU L20/L60
-- BiGRU L20/L60
-- constrained joint H1/H3/H5 TFT.
+Frozen daily forecast object:
+`F_t = [P_UP3, RET_HAT3, Q10_3, Q50_3, Q90_3]`
+
+Categorical head-reconciliation states are rejected under the preregistered Stage-5 thresholds.
 
 Supporting non-core evidence:
 - H5 TFT Q50 point-return improves Stage-1 H5 classical MAE by **1.47%**, but H5 direction and quantile fail.
@@ -345,6 +345,44 @@ Binding decision:
 
 ---
 
+# 6E. Stage-5 Forecast-Head Reconciliation Result
+
+Authority:
+`GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE5_RESULT_2026-10-01.md`
+
+Run:
+- **36892132569**
+- artifact **11177455544**
+- digest `sha256:6363c1687cb6ced34b3119f58fa03261ac7c9c733728d5991fdb96d86b1229b5`.
+
+Result:
+**NO_RECONCILIATION_PASS**
+
+Preregistered categorical components:
+
+| Component | N | Lift vs unconditional | Decision |
+|---|---:|---:|---|
+| ALIGNED_UP | 9 | +12.86 pp UP-rate | FAIL — too sparse / unstable |
+| ALIGNED_DOWN | 4 | +3.94 pp DOWN-rate | FAIL |
+| HIGH_DOWNSIDE | 472 | +3.87 pp severe-downside | FAIL |
+
+Directional-state frequencies:
+- ALIGNED_UP 1.2%
+- ALIGNED_DOWN 0.5%
+- LOW_CONVICTION 93.3%
+- MIXED 4.9%.
+
+Binding interpretation:
+- hard head alignment discards too much information;
+- do not retune thresholds post hoc;
+- retain continuous H3 forecast vector;
+- Stage 6 must consume raw head outputs rather than categorical state labels.
+
+Frozen forecast object:
+`F_t = [P_UP3, RET_HAT3, Q10_3, Q50_3, Q90_3]`.
+
+---
+
 # 7. Stage Roadmap
 
 | Stage | Purpose | Status |
@@ -355,8 +393,8 @@ Binding decision:
 | 2 | H3 robustness + feature representation audit | **COMPLETE / PASS** |
 | 3 | TCN / GRU / BiGRU challengers | **COMPLETE / NO PROMOTION** |
 | 4 | TFT multi-horizon challenger | **COMPLETE / NO PROMOTION** |
-| 5 | Forecast-head reconciliation / tactical signal architecture | **NEXT** |
-| 6 | Tactical allocation / utility layer | BLOCKED BY STAGE 5 |
+| 5 | Forecast-head reconciliation / tactical signal architecture | **COMPLETE / NO PASS** |
+| 6 | Tactical allocation / utility contract | **NEXT** |
 | 7 | Frozen 2025 transport | BLOCKED |
 | 8 | Prospective daily ledger | NOT STARTED |
 
@@ -364,39 +402,41 @@ Binding decision:
 
 # 8. Exact Next Action
 
-**Stage 5 — Forecast-Head Reconciliation & Tactical Signal Architecture**
+**Stage 6 — Tactical Allocation / Utility Contract**
 
-Frozen H3 heads:
-- direction = CORE3 / XGB_CLASS
-- point return = GOLD_ONLY / LGBM_REG
-- distribution = GOLD_ONLY / LGBM_QUANT.
+Frozen forecast input:
+`F_t = [P_UP3, RET_HAT3, Q10_3, Q50_3, Q90_3]`
 
-Supporting horizons:
-- H1 remains secondary;
-- H5 remains secondary;
-- H5 TFT Q50 return improvement is evidence only and cannot override failed H5 direction/quantile heads.
+H3 remains the core horizon.
+H1/H5 are supporting context only.
 
-Stage 5 must work on 2022-2024 DEV only and answer:
+Before any backtest, freeze:
 
-1. How often do frozen H3 heads agree/disagree?
-2. Define origin-level consistency states, e.g.:
-   - ALIGNED_UP
-   - ALIGNED_DOWN
-   - MIXED
-   - HIGH_DOWNSIDE
-   - LOW_CONVICTION.
-3. Test whether preregistered consistency states separate:
-   - sign accuracy
-   - return MAE
-   - realized positive/negative H3 return
-   - downside-tail outcomes
-   without fitting a new high-capacity model.
-4. Determine whether H1/H5 should be shown as supporting horizon context around H3.
-5. Freeze a single daily forecast object before any entry/exit or P&L optimization.
+1. tradable instrument / price convention
+2. exact decision timestamp
+3. H3 holding / exit convention
+4. cash / no-position state
+5. transaction cost and spread assumptions
+6. risk penalty using the frozen distribution outputs
+7. position-size policy
+8. benchmark definitions
+9. economic metrics:
+   - net return
+   - Sharpe
+   - Sortino
+   - max drawdown
+   - turnover
+   - hit rate
+   - downside-tail loss
+10. DEV-only candidate utility rules.
 
-No 2025 tuning.
-No transaction-cost or position-sizing optimization in Stage 5.
-No reopening deep-learning models.
+Rules:
+- no 2025 threshold tuning
+- no categorical Stage-5 threshold reuse/reopening
+- no new forecast model search
+- no deep-learning reopening.
+
+Only after the complete tactical rule is frozen on 2022-2024 may 2025 transport be opened.
 ---
 
 # 9. Document Hierarchy
@@ -444,6 +484,12 @@ Stage 4:
 - aggregate V2 run **36890974544**
 - aggregate artifact **11176262943**
 - original aggregate job superseded due artifact-copy directory error; no retraining.
+
+Stage 5:
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE5_AUTHORITY_2026-10-01.md`
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE5_RESULT_2026-10-01.md`
+- run **36892132569**
+- artifact **11177455544**.
 
 Sibling projects:
 - monthly forecast: `GOLD_MONTHLY_PROJECT_MANIFEST.md`
