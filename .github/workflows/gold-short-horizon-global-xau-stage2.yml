@@ -1,0 +1,34 @@
+name: Gold Short Horizon Global XAU Stage2 Robustness
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_global_xau_stage2.py'
+      - '.github/workflows/gold-short-horizon-global-xau-stage2.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  stage2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check numpy pandas requests scikit-learn
+      - name: Run H3 direction robustness
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OUT_DIR: global_xau_stage2_out
+        run: python gold_axis_2026/tools/gold_short_horizon_global_xau_stage2.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-short-horizon-global-xau-stage2
+          path: global_xau_stage2_out/
+          retention-days: 90
