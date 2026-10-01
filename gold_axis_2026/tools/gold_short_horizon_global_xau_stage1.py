@@ -31,7 +31,8 @@ SAFE_EXT=[
     "BROAD_USD_INDEX","EURUSD_QUOTE","GBPUSD_QUOTE","JPY_PER_USD","CHF_PER_USD","CNY_PER_USD",
     "VIX","NDX"
 ]
-CORE4=CORE3+["palladium_r1","palladium_r5","palladium_r21","palladium_age_days"]\nBLOCKS={"GOLD_ONLY":GOLD_ONLY,"CORE3":CORE3,"CORE4":CORE4,"CORE3_SAFE_EXTERNAL":CORE3+SAFE_EXT}
+CORE4=CORE3+["palladium_r1","palladium_r5","palladium_r21","palladium_age_days"]
+BLOCKS={"GOLD_ONLY":GOLD_ONLY,"CORE3":CORE3,"CORE4":CORE4,"CORE3_SAFE_EXTERNAL":CORE3+SAFE_EXT}
 
 def get_zip(aid):
     tok=os.environ["GITHUB_TOKEN"]
