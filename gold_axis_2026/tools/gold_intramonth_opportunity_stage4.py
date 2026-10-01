@@ -247,11 +247,8 @@ def main():
     # Build exact Stage4 DEV using frozen Stage3 predictions and monthly target context.
     core=core.merge(df[["origin_date","label_end_date"]],on="origin_date",how="left")
     core=core.rename(columns={"prediction":"core_p"})
-    dev=core.merge(mf,on="target_month" if "target_month" in core.columns else "signal_month",how="left")
-    if "target_month" not in dev.columns:
-        dev["target_month"]=dev["signal_date"].dt.to_period("M").astype(str)
-        dev=dev.drop(columns=[c for c in ["origin_month_y"] if c in dev.columns])
-        dev=dev.merge(mf,on="target_month",how="left",suffixes=("","_mf"))
+    core["target_month"]=core["signal_date"].dt.to_period("M").astype(str)
+    dev=core.merge(mf,on="target_month",how="left")
     dev=dev[dev["target_month"].between("2022-04","2024-12")].copy()
     if len(dev)!=685: raise RuntimeError(f"Stage4 dev expected 685 got {len(dev)}")
     dev=dev.merge(rt,on="target_month",how="left")
