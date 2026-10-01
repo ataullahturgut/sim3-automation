@@ -3714,3 +3714,67 @@ Files:
 - `.github/workflows/gold-monthly-contextual-rescue-gain-predictor-v1.yml`
 
 **Next research question:** build a DEV-only harmful-switch / shared-hard safety guard that can reject cases analogous to DEV 2023-03 while preserving genuine rescue opportunities. 2025/2026 remains descriptive transport only and may not tune that guard.
+
+
+# 2026-10-01 — Harmful-Switch / Shared-Hard Safety Guard V1
+
+**Status:** COMPLETE / SCIENTIFIC_GATE=FAIL / DEV-ONLY / REJECTED / NO PRODUCTION SWITCH
+
+Authority:
+- `GOLD_MONTHLY_HARMFUL_SWITCH_SHARED_HARD_GUARD_V1_AUTHORITY_2026-10-01.md`
+- authority commit: `f866167df637606da66820fa4ebedfa00cdd4594`
+
+Official execution:
+- workflow run: **36848597787**
+- artifact: **11153893189**
+- artifact digest: `sha256:26f8d19b603adffed0f36f5e83c8bb865c3cbf0da6d338deda5b64b67397c4e9`
+- head commit: `edfa4391a2b195f4a0228f2d6a39ab275262cd00`
+- GitHub Actions conclusion: **SUCCESS**
+
+Upstream frozen base:
+- Rescue-Gain Predictor = RIDGE_CORE_A10
+- policy = DIRECT_SWITCH
+- DEV warning evaluation baseline gain vs KEEP = **+4.7044 USD**
+- 13 switches = **5 beneficial / 8 harmful**
+- worst incremental harm = **31.6639 USD**
+
+Pre-registered V1 safety gates:
+- rescue positive-breadth gates at 50%, 2/3, 80%;
+- confidence / residual-RMSE gates at 0.5x, 1.0x, 1.5x;
+- combined breadth + confidence gates.
+
+Result:
+- **no deterministic guard candidate passed acceptance conditions**;
+- BREADTH_50: **-3.78 USD**;
+- BREADTH_67: **-74.93 USD**;
+- BREADTH_80: **-56.81 USD**;
+- CONF_050: **-3.78 USD**;
+- CONF_100: **-42.05 USD**;
+- CONF_150: **-23.96 USD**.
+
+Expanding guard-selection replay:
+- first 4 switch opportunities warm-up;
+- next 9 evaluated sequentially using prior DEV only;
+- guard replay gain = **-22.5427 USD**;
+- same-window NO_GUARD = **+0.9418 USD**;
+- replay beneficial / harmful = **2 / 4**;
+- worst harm = **31.6639 USD**.
+
+Critical diagnostic:
+- **2023-03** predictor proposed CNN-LSTM LB6;
+- top predicted gain **+86.996 USD**;
+- predicted positive breadth **93.3%**;
+- confidence ratio **3.42x**;
+- realized switch gain **-23.965 USD**.
+Therefore broad predicted rescue consensus and high confidence are not safe shared-hard detectors.
+
+Binding decision:
+- Harmful-Switch / Shared-Hard Safety Guard V1 = **REJECTED**.
+- No guard frozen.
+- No 2025/2026 guard transport opened because DEV gate failed.
+- No automatic SWITCH/BLEND.
+- ChHHO + Specialist Hedge production architecture unchanged.
+- Rescue-Gain Predictor V1 remains research-only.
+
+Next authorized research question:
+- direct **harmful-switch / shared-hard probability model**, trained/evaluated chronologically on DEV only, targeting whether the frozen predictor's proposed switch is harmful.
