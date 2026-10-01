@@ -3621,3 +3621,96 @@ Files:
 - `.github/workflows/gold-monthly-relative-loss-rescue-gain-stage1-v1.yml`
 
 **Next authorized research stage:** low-capacity origin-safe **Contextual Relative-Loss / Rescue-Gain Predictor V1**, evaluated with chronological DEV validation and preserving KEEP MAIN / ABSTAIN. No production switch rule is authorized.
+
+
+# 2026-10-01 — Contextual Relative-Loss / Rescue-Gain Predictor V1
+
+**Status:** COMPLETE / DEV SCIENTIFIC_GATE=PASS / ROBUSTNESS=WEAK / OPENED TRANSPORT COMPLETE / NO PRODUCTION SWITCH
+
+Authority:
+- `GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_AUTHORITY_2026-10-01.md`
+- authority commit: `10638e7a0849449fb1bb3655ea678e63450cd601`
+
+Corrected Stage-1 matrix authority source:
+- Stage-1 run: **36847468918**
+- Stage-1 artifact: **11154006919**
+- Stage-1 commit: `cd0f24fb79deeadc0ffc34bd27b7a723a314f4a8`
+- schema correction only: `semantic_probability` added to output rows; frozen rescue checkpoints unchanged.
+
+Predictor official execution:
+- workflow: **Gold Monthly Contextual Rescue Gain Predictor V1**
+- run: **36847543031**
+- artifact: **11154625268**
+- artifact digest: `sha256:59ec1c87f6687f2eced65fa35150fcd3d980abc3f7e445cf6c22c79bd3d2bf1b`
+- head commit: `42f7c38719dc46a2c3f5d45f9a8352584a7e5e09`
+- conclusion: **SUCCESS**
+
+## DEV chronological selection
+
+Protocol:
+- first 8 DEV targets warm-up;
+- chronological evaluation **2022-12..2024-12**;
+- evaluated Specialist Hedge warnings: **14**;
+- 2025/2026 not used for selection.
+
+Frozen DEV research leader:
+- predictor: **RIDGE_CORE_A10**
+- policy: **DIRECT_SWITCH**
+- KEEP ΣAE: **782.7432 USD**
+- policy ΣAE: **778.0388 USD**
+- gain vs KEEP: **+4.7044 USD**
+- actions: **13 SWITCH / 1 KEEP**
+- beneficial non-KEEP: **5**
+- harmful non-KEEP: **8**
+- worst incremental harm: **31.6639 USD**
+- robustness assessment: **WEAK**
+
+Interpretation:
+- formal gate passes only because cumulative AE is 4.70 USD lower than KEEP;
+- harmful switches outnumber beneficial switches;
+- therefore no automatic production switching is authorized.
+
+## Frozen opened transport — 2025-01..2026-07
+
+The DEV leader was transported without retuning:
+- predictor = RIDGE_CORE_A10;
+- alpha = 10;
+- CORE feature set;
+- DIRECT_SWITCH policy;
+- challenger pool unchanged.
+
+Coverage:
+- full Exact16: **2025-01..2026-07**
+- warning months: **12**
+- 2026-08 excluded because full Exact16 coverage is unavailable.
+
+Results:
+- KEEP warning-month ΣAE: **2153.0192 USD**
+- frozen selector ΣAE: **2057.7830 USD**
+- gain vs KEEP: **+95.2362 USD**
+- actions: **11 SWITCH / 1 KEEP**
+- beneficial switches: **7**
+- harmful switches: **4**
+- worst incremental harm: **238.5690 USD**
+
+Critical transport failure:
+- **2026-03 MEDIUM**
+- selector chose DE_ABC_RBFNN;
+- predicted rescue gain ≈ **+89.88 USD**;
+- realized incremental result versus KEEP ≈ **-238.57 USD**.
+This is a shared-hard case and confirms that warning != switch.
+
+Binding production state remains:
+- **ChHHO-ANFIS** = main forecast;
+- **Specialist Hedge** = frozen reliability warning layer;
+- **Rescue-Gain Predictor V1** = research-only;
+- **no automatic SWITCH / BLEND**.
+
+Files:
+- `GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_RESULT_2026-10-01.md`
+- `GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_OPENED_TRANSPORT_RESULT_2026-10-01.md`
+- `tools/gold_monthly_contextual_relative_loss_rescue_gain_predictor_v1.py`
+- `tools/gold_monthly_contextual_relative_loss_rescue_gain_predictor_v1_opened_transport.py`
+- `.github/workflows/gold-monthly-contextual-rescue-gain-predictor-v1.yml`
+
+**Next research question:** build a DEV-only harmful-switch / shared-hard safety guard that can reject cases analogous to DEV 2023-03 while preserving genuine rescue opportunities. 2025/2026 remains descriptive transport only and may not tune that guard.
