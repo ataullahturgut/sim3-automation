@@ -1,0 +1,58 @@
+name: Gold Short Horizon Global XAU 2025 2026 Transport
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_TRANSPORT_AUTHORITY_2026-10-01.md'
+      - 'gold_axis_2026/tools/gold_short_horizon_global_xau_transport_2025_2026.py'
+      - '.github/workflows/gold-short-horizon-global-xau-transport-2025-2026.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  transport:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check numpy pandas requests scikit-learn
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_short_horizon_global_xau_transport_2025_2026.py
+      - name: Run frozen transport
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OUT_DIR: global_xau_transport_out
+        run: python gold_axis_2026/tools/gold_short_horizon_global_xau_transport_2025_2026.py
+      - name: Commit authoritative result
+        shell: bash
+        run: |
+          cp global_xau_transport_out/TRANSPORT_RESULT.md gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_TRANSPORT_2025_2026_RESULT_2026-10-01.md
+          cp global_xau_transport_out/transport_summary.json gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_TRANSPORT_2025_2026_SUMMARY_2026-10-01.json
+          cp global_xau_transport_out/global_xau_h3_transport_2025_2026_metrics.csv gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_TRANSPORT_2025_2026_METRICS.csv
+          cp global_xau_transport_out/global_xau_h3_transport_2025_2026_predictions.csv gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_TRANSPORT_2025_2026_PREDICTIONS.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_TRANSPORT_2025_2026_*
+          if git diff --cached --quiet; then
+            echo "No result change"
+          else
+            git commit -m "Record GLOBAL XAU frozen 2025 2026 transport"
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-short-horizon-global-xau-transport-2025-2026
+          path: global_xau_transport_out/
+          if-no-files-found: warn
+          retention-days: 90
