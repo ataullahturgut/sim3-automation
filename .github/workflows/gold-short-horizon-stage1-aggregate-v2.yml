@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install --disable-pip-version-check pandas
+        run: pip install --disable-pip-version-check pandas requests
       - name: Download authoritative horizon artifacts
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
