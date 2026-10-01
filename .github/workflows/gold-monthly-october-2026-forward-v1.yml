@@ -1,0 +1,156 @@
+name: Gold Monthly October 2026 Forward V1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - gold_axis_2026/tools/gold_monthly_october_2026_forward_v1.py
+      - .github/workflows/gold-monthly-october-2026-forward-v1.yml
+      - gold_axis_2026/GOLD_MONTHLY_OCTOBER_2026_FORECAST_AUTHORITY_2026-10-01.md
+
+permissions:
+  contents: read
+  actions: read
+
+env:
+  NEON_DATABASE_URL: ''
+
+jobs:
+  build-public-bundle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    outputs:
+      stak_ref: ${{ steps.refs.outputs.stak_ref }}
+      stak_api_ref: ${{ steps.refs.outputs.stak_api_ref }}
+      gpr_ref: ${{ steps.refs.outputs.gpr_ref }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'pandas>=2.2,<3' 'openpyxl>=3.1,<4' 'xlrd>=2,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Assert Neon disabled
+        run: test -z "${NEON_DATABASE_URL:-}"
+      - name: Download frozen DEV snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > dev-snapshot.zip
+          unzip -q dev-snapshot.zip -d dev_snapshot
+          test -s dev_snapshot/gold_monthly_dev_snapshot_v1.json
+      - name: Resolve public source commits
+        id: refs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          STAK_REF="$(gh api repos/lbruton/StakTrakr/commits/main --jq .sha)"
+          STAK_API_REF="$(gh api repos/lbruton/StakTrakrApi/commits/api --jq .sha)"
+          GPR_BRANCH="$(gh api repos/iacoviel/iacoviel.github.io --jq .default_branch)"
+          GPR_REF="$(gh api "repos/iacoviel/iacoviel.github.io/commits/$GPR_BRANCH" --jq .sha)"
+          echo "stak_ref=$STAK_REF" >> "$GITHUB_OUTPUT"
+          echo "stak_api_ref=$STAK_API_REF" >> "$GITHUB_OUTPUT"
+          echo "gpr_ref=$GPR_REF" >> "$GITHUB_OUTPUT"
+      - name: Download official GPR vintages
+        run: |
+          curl -fsSL "https://raw.githubusercontent.com/iacoviel/iacoviel.github.io/${{ steps.refs.outputs.gpr_ref }}/gpr_archive_files/data_gpr_export_202608.xls" -o gpr_202608.xls
+          curl -fsSL "https://raw.githubusercontent.com/iacoviel/iacoviel.github.io/${{ steps.refs.outputs.gpr_ref }}/gpr_archive_files/data_gpr_export_202609.xls" -o gpr_202609.xls
+          test -s gpr_202608.xls
+          test -s gpr_202609.xls
+      - name: Build September-complete public bundle
+        run: |
+          python gold_axis_2026/tools/gold_monthly_public_current_bundle_v1.py             --dev-snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json             --gpr-202608 gpr_202608.xls             --gpr-202609 gpr_202609.xls             --gpr-ref "${{ steps.refs.outputs.gpr_ref }}"             --stak-ref "${{ steps.refs.outputs.stak_ref }}"             --stak-api-ref "${{ steps.refs.outputs.stak_api_ref }}"             --cutoff 2026-09-30             --output gold_monthly_public_current_bundle_sep_complete_v1.json
+      - name: September completeness gate
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('gold_monthly_public_current_bundle_sep_complete_v1.json'))
+          assert d['authority']['neon_reads']==0
+          assert d['daily_extension_last'] >= '2026-09-30'
+          sep=[r for r in d['daily_extension_rows'] if r['date'].startswith('2026-09')]
+          assert len(sep)>=18, len(sep)
+          assert {'2026-08','2026-09'} <= set(d['gpr_vintages'])
+          print('SEPTEMBER_COMPLETE_DATA_GATE=PASS')
+          print(json.dumps({
+            'daily_last':d['daily_extension_last'],
+            'sep_common_rows':len(sep),
+            'wb_last':d['world_bank']['last'],
+            'wb_sep_available':'2026-09' in d['world_bank']['gold_monthly'],
+            'gpr_origins':sorted(d['gpr_vintages']),
+            'stak_ref':d['staktrakr']['repo_ref'],
+            'stak_api_ref':d['staktrakr']['api_repo_ref'],
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-public-current-bundle-sep-complete-v1-${{ github.sha }}
+          path: gold_monthly_public_current_bundle_sep_complete_v1.json
+          retention-days: 90
+
+  forecast:
+    needs: build-public-bundle
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        model: [CHHHO, DE_ABC]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy==2.3.5' 'scipy==1.17.0' 'scikit-learn>=1.5,<2' 'pandas>=2.2,<3' 'openpyxl>=3.1,<4' 'xlrd>=2,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Assert Neon disabled
+        run: test -z "${NEON_DATABASE_URL:-}"
+      - name: Download frozen DEV snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/10985453248/zip" > dev-snapshot.zip
+          unzip -q dev-snapshot.zip -d dev_snapshot
+      - name: Download current bundle
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          AID="$(gh api "/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts" --jq '.artifacts[] | select(.name | startswith("gold-monthly-public-current-bundle-sep-complete-v1-")) | .id' | head -1)"
+          test -n "$AID"
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/$AID/zip" > current.zip
+          unzip -q current.zip -d current_bundle
+      - name: Run October forecast
+        run: |
+          python gold_axis_2026/tools/gold_monthly_october_2026_forward_v1.py             --dev-snapshot dev_snapshot/gold_monthly_dev_snapshot_v1.json             --current-bundle current_bundle/gold_monthly_public_current_bundle_sep_complete_v1.json             --model "${{ matrix.model }}"             --output "october_2026_${{ matrix.model }}_forward_v1.json"
+      - name: Forecast gate
+        env:
+          MODEL: ${{ matrix.model }}
+        run: |
+          python - <<'PY'
+          import json,os,math
+          p=f"october_2026_{os.environ['MODEL']}_forward_v1.json"
+          d=json.load(open(p))
+          assert d['target']=='2026-10'
+          assert d['origin']=='2026-09'
+          assert d['september_training_y_used'] is True
+          assert d['october_target_y_used'] is False
+          assert d['daily_data_last'] >= '2026-09-30'
+          assert d['september_common_daily_rows'] >= 18
+          assert math.isfinite(d['forecast']) and d['forecast']>0
+          assert d['governance']['model_contract_changed'] is False
+          print('OCTOBER_FORECAST_GATE=PASS')
+          print(json.dumps({
+            'model':d['model'],
+            'forecast':d['forecast'],
+            'pred_log_return_gold':d['pred_log_return_gold'],
+            'origin_price':d['origin_price'],
+            'origin_price_role':d['origin_price_role'],
+            'forecast_status':d['forecast_status'],
+            'train_rows':d['diag'].get('train_rows'),
+            'wb_sep_available':d['world_bank_sep_available'],
+          },sort_keys=True))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-monthly-october-2026-${{ matrix.model }}-forward-v1-${{ github.sha }}
+          path: october_2026_*_forward_v1.json
+          retention-days: 90
