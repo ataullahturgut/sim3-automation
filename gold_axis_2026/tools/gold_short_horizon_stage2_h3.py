@@ -3,6 +3,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import requests
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from sklearn.metrics import log_loss, roc_auc_score, average_precision_score
 from lightgbm import LGBMRegressor
 from xgboost import XGBClassifier
@@ -193,6 +194,7 @@ def main():
 
     pred=[]; qp=[]
     avail=[]
+    jobs={}
     for b,feats in BLOCKS.items():
         valid_hist=df[(df["signal_date"]<pd.Timestamp("2022-01-01")) & df["target_r3"].notna()].dropna(subset=feats)
         avail.append({
@@ -200,8 +202,18 @@ def main():
             "first_complete_signal":str(valid_hist["signal_date"].min().date()),
             "dev_complete_rows":int(dev[feats].notna().all(axis=1).sum())
         })
-        print("RUN",b,"predev",len(valid_hist),flush=True)
-        p,q=run_block(df,dev,b,feats)
+    with ThreadPoolExecutor(max_workers=4) as ex:
+        for b,feats in BLOCKS.items():
+            print("SUBMIT",b,flush=True)
+            jobs[ex.submit(run_block,df,dev,b,feats)]=b
+        results={}
+        for fut in as_completed(jobs):
+            b=jobs[fut]
+            p,q=fut.result()
+            print("COMPLETE_BLOCK",b,flush=True)
+            results[b]=(p,q)
+    for b in BLOCKS:
+        p,q=results[b]
         p=p.merge(dev[["date","vol_bucket"]].rename(columns={"date":"origin_date_dt"}),left_on=pd.to_datetime(p["origin_date"]),right_on="origin_date_dt",how="left")
         q=q.merge(dev[["date","vol_bucket"]].rename(columns={"date":"origin_date_dt"}),left_on=pd.to_datetime(q["origin_date"]),right_on="origin_date_dt",how="left")
         pred.append(p); qp.append(q)
