@@ -1,0 +1,38 @@
+name: Gold Intramonth Opportunity Stage2A
+
+on:
+  push:
+    branches:
+      - gold-midas-headswap-v1-20260925
+    paths:
+      - 'gold_axis_2026/tools/gold_intramonth_opportunity_stage2.py'
+      - '.github/workflows/gold-intraday-opportunity-stage2a.yml'
+      - 'gold_axis_2026/GOLD_INTRAMONTH_OPPORTUNITY_STAGE2_AUTHORITY_2026-10-01.md'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  stage2a:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install scientific dependencies
+        run: pip install --disable-pip-version-check numpy pandas requests
+      - name: Build BIST panel, labels and baselines
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OUT_DIR: stage2_out
+        run: python gold_axis_2026/tools/gold_intramonth_opportunity_stage2.py
+      - name: Upload Stage2 governed artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-intramonth-opportunity-stage2a
+          path: stage2_out/
+          retention-days: 90
