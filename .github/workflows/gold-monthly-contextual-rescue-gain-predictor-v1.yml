@@ -57,7 +57,7 @@ jobs:
             --output-md GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_RESULT_2026-10-01.md
       - name: Frozen opened transport
         run: |
-          python gold_axis_2026/tools/gold_monthly_contextual_relative_loss_rescue_gain_predictOR_v1_opened_transport.py \
+          python gold_axis_2026/tools/gold_monthly_contextual_relative_loss_rescue_gain_predictor_v1_opened_transport.py \
             --stage1-json inputs/stage1/GOLD_MONTHLY_RELATIVE_LOSS_RESCUE_GAIN_MATRIX_STAGE1_V1_2026-10-01.json \
             --state-json inputs/state/GOLD_MONTHLY_MARKET_STATE_CHHHO_RELIABILITY_AUDIT_V1_2026-09-30.json \
             --exact16-json inputs/exact16/GOLD_MONTHLY_EXACT16_SAFE_VETO_TRANSPORT_V1_2026-09-30.json \
