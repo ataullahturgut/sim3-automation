@@ -32,7 +32,8 @@ Then, only after forecast validation, determine which horizon offers the stronge
 - Deep-learning challenger program: **CLOSED**
 - Stage 5 Forecast-Head Reconciliation & Tactical Signal Architecture: **COMPLETE / NO_RECONCILIATION_PASS**
 - Stage 6 Tactical Allocation / Utility Contract: **COMPLETE / NO_TACTICAL_PASS**
-- **Stage 6B Turnover / Tradable-Instrument Economic Feasibility Audit: NEXT**
+- Stage 6B Turnover / Tradable-Instrument Economic Feasibility Audit: **COMPLETE / BORDERLINE IMPLEMENTABILITY**
+- **Stage 6C Cross-Instrument Mapping Audit: NEXT**
 
 Current strongest research horizon: **H3**.
 
@@ -423,6 +424,50 @@ Binding interpretation:
 
 ---
 
+# 6G. Stage-6B Cost / Instrument Feasibility Result
+
+Authority:
+`GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE6B_RESULT_2026-10-01.md`
+
+Run:
+- **36893955169**
+- artifact **11178542233**
+- digest `sha256:3372c1546f4f077fa23f263f03f5a18a7fc525d6ee1114253802a6e84351185b`.
+
+Result:
+**BORDERLINE IMPLEMENTABILITY**
+
+Key frozen cost/hurdle findings:
+
+- U3 PROB_TILT full tactical PASS band: **0–1.25 bp**
+- U3 strong parity: up to **0.50 bp**
+- U2 PASS exists only in a non-monotonic **23–24 bp** band because cost also acts as the entry hurdle
+- U1/U4 never pass the full tactical gate.
+
+Therefore 24 bp must not be interpreted as a general break-even ceiling.
+
+Public 2026 execution evidence:
+
+| Instrument | Cost-side view | Project status |
+|---|---|---|
+| GLDM | ~1.12 bp public spread+3d fee before broker/FX | BORDERLINE |
+| IAU | ~1.30 bp before broker/FX | NOT PLAUSIBLE under U3 band |
+| GLD | ~1.48 bp before broker/FX | NOT PLAUSIBLE under U3 band |
+| MGC | CME stated cost ~0.28 bp before broker/spread uncertainty | BORDERLINE |
+| GC | very low stated exchange cost, large notional / futures basis | BORDERLINE |
+| 1OZ futures | CME stated cost ~1.98 bp | NOT PLAUSIBLE |
+| ALTIN.S1 | USDTRY + premium/discount target mismatch | NOT DIRECTLY PLAUSIBLE |
+
+No instrument is frozen because empirical BIST-USD/oz-to-instrument return mapping is not yet proven.
+
+Technical shortlist for mapping only:
+- GLDM
+- MGC.
+
+2025 remains closed.
+
+---
+
 # 7. Stage Roadmap
 
 | Stage | Purpose | Status |
@@ -435,40 +480,53 @@ Binding interpretation:
 | 4 | TFT multi-horizon challenger | **COMPLETE / NO PROMOTION** |
 | 5 | Forecast-head reconciliation / tactical signal architecture | **COMPLETE / NO PASS** |
 | 6 | Tactical allocation / utility contract | **COMPLETE / NO PASS** |
-| 6B | Turnover / tradable-instrument feasibility audit | **NEXT** |
-| 7 | Frozen 2025 transport | **BLOCKED — no tactical champion** |
+| 6B | Turnover / tradable-instrument feasibility audit | **COMPLETE / BORDERLINE** |
+| 6C | Cross-instrument mapping audit (GLDM / MGC) | **NEXT** |
+| 7 | Frozen 2025 transport | **BLOCKED — instrument not frozen** |
 | 8 | Prospective daily ledger | NOT STARTED |
 
 ---
 
 # 8. Exact Next Action
 
-**Stage 6B — Turnover / Tradable-Instrument Economic Feasibility Audit**
+**Stage 6C — Cross-Instrument Mapping Audit**
 
-Do not reopen forecast-model search.
+Candidate implementation families:
+1. GLDM
+2. MGC.
 
-Using the frozen Stage-6 candidate rules and DEV trade ledgers:
+Do not select between them using 2025.
 
-1. calculate break-even round-trip cost for each frozen utility rule;
-2. decompose gross edge lost to:
-   - number of trades
-   - turnover
-   - transaction-cost hurdle
-   - time spent in cash;
-3. compare 0 / 20 / 50 bp curves without allowing cost to select a different historical rule;
-4. determine which realistic Gold instrument implementation could plausibly operate below the break-even all-in cost;
-5. only after an actual tradable instrument is frozen, define any lower-turnover implementation **ex ante** from instrument mechanics.
+Preregister before data inspection:
 
-Constraints:
-- 2025 remains unopened;
-- no threshold/coefficient/holding-period scan;
-- no stop/take-profit optimization;
-- no deep-learning reopening;
-- no model-zoo expansion.
+- common historical date window
+- BIST Gold USD/oz H3 return alignment
+- GLDM H3 return construction
+- MGC front-contract / continuation rule
+- no look-ahead roll convention
+- treatment of U.S./BIST holiday mismatches.
 
-If no plausible tradable implementation exists below break-even cost:
-- stop tactical allocation research under the current H3 contract;
-- retain the model as a forecast/reporting engine only.
+Required diagnostics:
+
+1. H3 return correlation to BIST Gold USD/oz
+2. OLS beta/intercept
+3. tracking-error standard deviation
+4. H3 sign agreement
+5. severe divergence frequency
+6. transfer of frozen U3 action decisions into instrument realized returns
+7. economic degradation at instrument-specific frozen cost assumptions.
+
+No utility coefficient search.
+No entry-hurdle search.
+No holding-period change.
+No 2025 tactical selection.
+
+If one instrument passes mapping and cost feasibility:
+- freeze instrument/execution contract;
+- then open Stage 7 frozen 2025 transport.
+
+If neither passes:
+- close tactical allocation under the current H3 target contract and retain forecast/reporting only.
 ---
 
 # 9. Document Hierarchy
@@ -528,6 +586,12 @@ Stage 6:
 - `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE6_RESULT_2026-10-01.md`
 - run **36892963306**
 - artifact **11178115214**.
+
+Stage 6B:
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE6B_AUTHORITY_2026-10-01.md`
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE6B_RESULT_2026-10-01.md`
+- run **36893955169**
+- artifact **11178542233**.
 
 Sibling projects:
 - monthly forecast: `GOLD_MONTHLY_PROJECT_MANIFEST.md`
