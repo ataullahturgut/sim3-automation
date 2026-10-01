@@ -1,0 +1,56 @@
+name: Gold Short Horizon Global XAU Stage3 Calibration
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_STAGE3_AUTHORITY_2026-10-01.md'
+      - 'gold_axis_2026/tools/gold_short_horizon_global_xau_stage3.py'
+      - '.github/workflows/gold-short-horizon-global-xau-stage3.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  stage3:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check numpy pandas requests scikit-learn
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_short_horizon_global_xau_stage3.py
+      - name: Run frozen Stage3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OUT_DIR: global_xau_stage3_out
+        run: python gold_axis_2026/tools/gold_short_horizon_global_xau_stage3.py
+      - name: Commit Stage3 result
+        shell: bash
+        run: |
+          cp global_xau_stage3_out/STAGE3_RESULT.md gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_STAGE3_RESULT_2026-10-01.md
+          cp global_xau_stage3_out/stage3_summary.json gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_STAGE3_SUMMARY_2026-10-01.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_STAGE3_RESULT_2026-10-01.md gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_STAGE3_SUMMARY_2026-10-01.json
+          if git diff --cached --quiet; then
+            echo "No result change"
+          else
+            git commit -m "Record GLOBAL XAU Stage3 calibration result"
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-short-horizon-global-xau-stage3
+          path: global_xau_stage3_out/
+          if-no-files-found: warn
+          retention-days: 90
