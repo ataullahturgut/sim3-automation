@@ -25,9 +25,17 @@ Then, only after forecast validation, determine which horizon offers the stronge
 
 - Data Readiness Audit: COMPLETE / PASS
 - Stage 0 Scientific Contract: COMPLETE / FROZEN
-- **Stage 1 First Multi-Horizon Model Screen: NEXT**
+- Stage 1 First Multi-Horizon Model Screen: **COMPLETE / PASS**
+- **Stage 2 H3 Robustness + Feature Representation Audit: NEXT**
 
-No tactical champion exists yet.
+Current strongest research horizon: **H3**.
+
+Frozen Stage-1 H3 heads:
+- direction: **CORE3 / XGB_CLASS**
+- point return: **GOLD_ONLY / LGBM_REG** with CORE3 close challenger
+- quantile distribution: **GOLD_ONLY / LGBM_QUANT**
+
+No tactical trading champion exists yet.
 
 ## 1.3 Governance
 
@@ -142,15 +150,55 @@ Economic/trading metrics are deferred until forecast models are frozen.
 
 ---
 
+# 6A. Stage-1 First-Screen Result
+
+Authority:
+`GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE1_RESULT_2026-10-01.md`
+
+Primary run:
+- **36870914575**
+
+Authoritative aggregate:
+- run **36871668075**
+- artifact **11167138282**.
+
+Head summary:
+
+| Horizon | Direction | Return | Quantile |
+|---|---|---|---|
+| H1 | NO PASS | PASS | PASS |
+| **H3** | **PASS** | **PASS** | **PASS** |
+| H5 | NO PASS | PASS | PASS |
+
+Current strongest horizon:
+**H3**
+
+H3 details:
+- direction CORE3/XGB: Brier **0.24646**, +**1.13%** vs baseline
+- return Gold-only/LightGBM: MAE **0.013384**, +**1.07%**
+- quantile Gold-only/LightGBM: mean pinball **0.004295**, +**1.81%**.
+
+First-screen feature finding:
+- CORE3_SAFE_EXTERNAL wins **no head**.
+- Gold-only or Gold+Silver+Platinum wins every head.
+- current raw external representation is therefore not promoted.
+
+Binding caution:
+- improvements are modest;
+- no tactical investment rule is authorized;
+- 2025 remains frozen.
+
+---
+
 # 7. Stage Roadmap
 
 | Stage | Purpose | Status |
 |---|---|---|
 | Data Audit | H1/H3/H5 merged PIT-safe readiness | COMPLETE / PASS |
 | 0 | Scientific contract | COMPLETE / FROZEN |
-| 1 | First model + feature + horizon screen | **NEXT** |
-| 2 | Incremental CORE4 / optional feature challengers | BLOCKED |
-| 3 | TCN / GRU / BiGRU challengers | BLOCKED |
+| 1 | First model + feature + horizon screen | **COMPLETE / PASS** |
+| 2 | H3 robustness + feature representation audit | **NEXT** |
+| 3 | TCN / GRU / BiGRU challengers | BLOCKED BY STAGE 2 |
 | 4 | TFT multi-horizon challenger | BLOCKED |
 | 5 | Forecast-head reconciliation | BLOCKED |
 | 6 | Tactical allocation / utility layer | BLOCKED |
@@ -161,18 +209,38 @@ Economic/trading metrics are deferred until forecast models are frozen.
 
 # 8. Exact Next Action
 
-Run Stage 1 on 2022-2024 DEV only:
+**Stage 2 — H3 Robustness + Feature Representation Audit**
 
-- H1/H3/H5
-- GOLD_ONLY / CORE3 / CORE3_SAFE_EXTERNAL
-- baselines
-- Elastic Net
-- LightGBM
-- XGBoost
-- LightGBM quantiles.
+Keep 2025 frozen.
 
-Do not inspect 2025 results until the Stage-1 selection is frozen.
+Required work:
 
+1. H3 winner stability by:
+   - 2022
+   - 2023
+   - 2024
+   - Gold volatility tercile.
+
+2. Head-level feature comparison:
+   - GOLD_ONLY
+   - CORE3
+   under the exact Stage-1 models.
+
+3. CORE4 / Palladium incremental test:
+   - same H3 target
+   - same model hyperparameters
+   - explicitly account for shorter training history.
+
+4. External representation audit:
+   - Rates changes/spreads
+   - FX returns/momentum
+   - VIX change / normalized stress
+   - Nasdaq-100 returns/momentum
+   instead of raw levels.
+
+5. No new deep architecture until H3 classical signal robustness is known.
+
+6. No 2025 transport until the H3 feature contract is frozen.
 ---
 
 # 9. Document Hierarchy
@@ -188,6 +256,15 @@ Data readiness:
 - `GOLD_SHORT_HORIZON_DATA_READINESS_AUDIT_RESULT_2026-10-01.md`
 - run 36870048143
 - artifact 11166972412.
+
+Stage 1:
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE1_RESULT_2026-10-01.md`
+- primary run **36870914575**
+- H1 artifact **11166394641**
+- H3 artifact **11166279606**
+- H5 artifact **11166224706**
+- aggregate V2 run **36871668075**
+- aggregate artifact **11167138282**.
 
 Sibling projects:
 - monthly forecast: `GOLD_MONTHLY_PROJECT_MANIFEST.md`
