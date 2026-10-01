@@ -1,0 +1,37 @@
+name: Gold Short Horizon Stage2 H3 Robustness
+
+on:
+  push:
+    branches:
+      - gold-midas-headswap-v1-20260925
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_stage2_h3.py'
+      - '.github/workflows/gold-short-horizon-stage2.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  stage2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install --disable-pip-version-check numpy pandas requests scikit-learn lightgbm xgboost
+      - name: Run H3 robustness and representation audit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OUT_DIR: stage2_h3_out
+        run: python gold_axis_2026/tools/gold_short_horizon_stage2_h3.py
+      - name: Upload Stage2 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-short-horizon-stage2-h3
+          path: stage2_h3_out/
+          retention-days: 90
