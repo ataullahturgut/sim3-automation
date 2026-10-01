@@ -1,0 +1,116 @@
+{
+  "authority_date": "2026-10-01",
+  "bridge_results": [
+    {
+      "candidate": "XAU_EOD_TWELVE_NY17",
+      "common_level_dates": 442,
+      "common_return_pairs": 441,
+      "first_common_date": "2021-09-01",
+      "gate_fail_reasons": [
+        "SIGN_AGREEMENT<80.0%",
+        "RETURN_DIFF_SD>0.75%"
+      ],
+      "gate_pass": false,
+      "last_common_date": "2026-07-31",
+      "level_ratio_cv_pct": 0.7604777582820776,
+      "mean_abs_return_difference_pct": 0.8293384880557247,
+      "median_level_ratio_hist_over_candidate": 0.9999093236214358,
+      "pearson_log_return": 0.9374784585713917,
+      "return_difference_sd_pct": 1.0492398957305968,
+      "sign_agreement_pct": 65.07936507936508,
+      "spearman_log_return": 0.5442805094065599
+    },
+    {
+      "candidate": "XAU_DAILY_XAUS",
+      "common_level_dates": 99,
+      "common_return_pairs": 98,
+      "first_common_date": "2026-03-11",
+      "gate_fail_reasons": [
+        "PEARSON<0.9",
+        "SIGN_AGREEMENT<80.0%",
+        "RETURN_DIFF_SD>0.75%"
+      ],
+      "gate_pass": false,
+      "last_common_date": "2026-07-31",
+      "level_ratio_cv_pct": 0.8887086014296223,
+      "mean_abs_return_difference_pct": 0.948851986288928,
+      "median_level_ratio_hist_over_candidate": 0.9995191085501229,
+      "pearson_log_return": 0.7107045362383383,
+      "return_difference_sd_pct": 1.2507924746476144,
+      "sign_agreement_pct": 70.40816326530613,
+      "spearman_log_return": 0.6243010793820808
+    }
+  ],
+  "candidates": [
+    "XAU_EOD_TWELVE_NY17",
+    "XAU_DAILY_XAUS"
+  ],
+  "candidates_passing_reference_gate": [],
+  "database_access": "READ_ONLY",
+  "date_semantics": {
+    "XAU_DAILY_XAUS": "observation_ts calendar date as stored by daily-history pipeline",
+    "XAU_EOD_TWELVE_NY17": "true timestamp -> America/New_York trade date",
+    "XAU_STAKTRAKR_RESEARCH_DAILY_R1": "observation_ts UTC calendar date label; NO America/New_York conversion",
+    "lag_search": "FORBIDDEN"
+  },
+  "frozen_2025_selection_policy": "CLOSED",
+  "historical_anchor": "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+  "neon_inventory_query": {
+    "XAU_DAILY_XAUS": {
+      "max_observation_ts": "2026-10-01T00:00:00+00:00",
+      "min_observation_ts": "2026-03-11T00:00:00+00:00",
+      "rows": 295
+    },
+    "XAU_EOD_TWELVE_NY17": {
+      "max_observation_ts": "2026-09-30T21:00:00+00:00",
+      "min_observation_ts": "2021-09-01T21:00:00+00:00",
+      "rows": 497
+    },
+    "XAU_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "max_observation_ts": "2026-07-31T00:00:00+00:00",
+      "min_observation_ts": "2010-01-04T00:00:00+00:00",
+      "rows": 4230
+    }
+  },
+  "preferred_existing_candidate_by_frozen_rule": "XAU_EOD_TWELVE_NY17",
+  "project": "GOLD_SHORT_HORIZON_GLOBAL_XAU",
+  "prospective_live_extension_status": "UNRESOLVED_NO_CANDIDATE_PASSES_REFERENCE_GATE",
+  "reference_gate": {
+    "min_common_return_pairs": 60,
+    "pearson_min": 0.9,
+    "return_diff_sd_pct_max": 0.75,
+    "sign_agreement_pct_min": 80.0
+  },
+  "run_type": "EXISTING_SOURCE_BRIDGE_SCREEN",
+  "selection_note": "Preferred candidate is descriptive under the frozen ranking rule. Target authority may be frozen for live extension only if at least one candidate passes every reference gate.",
+  "source_date_inventory": {
+    "XAU_DAILY_XAUS": {
+      "duplicate_source_dates": 152,
+      "first_observation_ts": "2026-03-11T00:00:00+00:00",
+      "first_source_date": "2026-03-11",
+      "last_observation_ts": "2026-10-01T00:00:00+00:00",
+      "last_source_date": "2026-10-01",
+      "raw_rows": 295,
+      "source_dates": 143
+    },
+    "XAU_EOD_TWELVE_NY17": {
+      "duplicate_source_dates": 0,
+      "first_observation_ts": "2021-09-01T21:00:00+00:00",
+      "first_source_date": "2021-09-01",
+      "last_observation_ts": "2026-09-30T21:00:00+00:00",
+      "last_source_date": "2026-09-30",
+      "raw_rows": 497,
+      "source_dates": 497
+    },
+    "XAU_STAKTRAKR_RESEARCH_DAILY_R1": {
+      "duplicate_source_dates": 0,
+      "first_observation_ts": "2010-01-04T00:00:00+00:00",
+      "first_source_date": "2010-01-04",
+      "last_observation_ts": "2026-07-31T00:00:00+00:00",
+      "last_source_date": "2026-07-31",
+      "raw_rows": 4230,
+      "source_dates": 4230
+    }
+  },
+  "target_authority_freeze_allowed": false
+}
