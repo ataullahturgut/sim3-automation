@@ -277,34 +277,40 @@ Sonuç:
 - aynı model için aktif karar aranırken bu manifestteki ΣAE + direction kayıtları kullanılır;
 - MAPE yalnız destekleyici olarak kalır.
 
-## 2.6 2025 / 2026 bilgi durumu — önemli nüans
+## 2.6 2025 / 2026 bilgi durumu — binding
 
-**2025 tüm proje için artık tamamen görülmemiş bir global blind holdout değildir.** Bazı tamamlanmış eski ailelerde 2025 report-only/transport olarak daha önce hesaplanmıştır; Boosting’de family freeze sonrasında one-shot olarak açılmıştır; Challenger B’de de report-only sonuçlar vardır.
+2025 and 2026 are **opened project periods** for multiple completed transport / retrospective analyses.
 
-Bağlayıcı kural:
-- 2025 hiçbir mevcut sonucu geriye dönük tune/promote/rescue etmek için kullanılamaz.
-- Bir family kendi protocolünde 2025’i henüz açmadıysa o family için kilitli kalır.
-- **CNN/LSTM aktif family için 2025 hâlâ açılmamıştır.**
-- SVR family için 2025 family freeze öncesinde açılmayacaktır.
-- 2026 yalnız retrospective/quarantine evidence’dir; seçim otoritesi değildir.
+Binding rules:
+- neither 2025 nor 2026 may select a model family, feature, alarm threshold, regime rule, rescue selector or guard;
+- opened-period strength may support or weaken a frozen DEV decision but may not rewrite the DEV selection after inspection;
+- a specific family that has never opened a period may still call that period unopened **for that family only**;
+- this does not restore a global project-level blind holdout;
+- current post-alarm research must remain DEV-selected before any 2025/2026 transport.
 
-Bu yüzden gelecekte "2025 blind holdout" ifadesi family-specific kullanılmalıdır; global proje için koşulsuz söylenmemelidir.
+## 2.7 New-chat onboarding protocol
 
-## 2.7 Yeni sohbet onboarding protokolü
+A new conversation taking over this project should use this order:
 
-Yeni bir sohbet bu projeyi devralırken yalnız şu sırayı izlemelidir:
+1. Read **Section 1 — Executive Project State** for the frozen current state.
+2. Read **Section 9 — Current Roadmap & Authorization State** for the exact next task.
+3. Before proposing a price model, check **Section 3 — Price-Model Registry** for duplicates and reopen conditions.
+4. For variables/features, use **Section 4**; for regimes use **Section 5**; for alarms use **Section 6**; for post-alarm action use **Section 7**.
+5. Use **Section 8** for the latest live forward forecast / regime / alarm snapshot.
+6. Only when run-level verification is needed, follow **Section 10 — Provenance** and the referenced RESULT/AUTHORITY/JSON artifacts.
+7. Historical stage-local “next” statements inside imported model/feature records are non-binding if they conflict with Sections 1 or 9.
 
-1. Önce **yalnız bu manifesti** oku.
-2. Bu dosyadaki current status / closed paths / next action satırlarını bağlayıcı kabul et.
-3. Yeni model önermeden önce Section 4 ve family bölümlerinde duplicate kontrolü yap.
-4. Ayrıntılı run/job/artifact doğrulaması gerekiyorsa ancak o zaman Section 22 provenance dosyalarına git.
-5. Eski dosyalardaki "next action" satırlarını bu manifestten daha yeni otorite sayma.
-6. Current checkpoint: **BiLSTM tamamlandı ve promote edilmedi; CNN-BiLSTM henüz çalıştırılmadı.**
+Current checkpoint:
+- ChHHO remains primary.
+- Specialist Hedge is frozen.
+- Rescue-Gain Predictor V1 is research-only.
+- Harmful-Switch Guard V1 is rejected.
+- exact next research task: **Direct Harmful-Switch / Shared-Hard Probability Model V1**.
 
-Ayrı proje uyarısı:
-- `GOLD_CONTROL_PROJECT_MANIFEST.md` = Gold **Direction Engine**
-- bu dosya = Gold **Monthly Price Forecast**
-- iki proje birbirinin model registry’si değildir.
+Separate-project warning:
+- `GOLD_CONTROL_PROJECT_MANIFEST.md` = Gold Direction Engine
+- this manifest = Gold Monthly Price Forecast
+- the two projects do not share a model registry.
 
 ---
 ---
