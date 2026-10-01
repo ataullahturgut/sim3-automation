@@ -272,6 +272,7 @@ def main():
     pre["block_start_origin"]=pd.to_datetime(pre["block_start_origin"])
     context=pd.concat([pre,dev],ignore_index=True,sort=False)
     context["core_logit"]=logit(context["core_p"])
+    dev["core_logit"]=logit(dev["core_p"])
 
     context.to_csv(OUT/"stage4_context_audit_table.csv",index=False)
 
