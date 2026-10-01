@@ -38,6 +38,11 @@ def fetch_bist(metal, year, retries=4):
             return x.get("data",[])
         except Exception as e:
             last=e; time.sleep(0.8*(i+1))
+    # BIST returns {"status":"error"} for some early ranges before a metal has data.
+    # Gold is mandatory; companion early-history gaps are recorded as NO_DATA rather than synthesized.
+    if metal != "AU" and last is not None and "status=error" in str(last):
+        print(f"BIST_NO_DATA {metal} {year}", flush=True)
+        return []
     raise RuntimeError(f"BIST fetch failed {metal} {year}: {last}")
 
 def load_bist():
