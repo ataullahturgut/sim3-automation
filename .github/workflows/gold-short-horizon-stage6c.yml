@@ -1,0 +1,37 @@
+name: Gold Short Horizon Stage6C Instrument Mapping
+
+on:
+  push:
+    branches:
+      - gold-midas-headswap-v1-20260925
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_stage6c_mapping.py'
+      - '.github/workflows/gold-short-horizon-stage6c.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  stage6c:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install --disable-pip-version-check numpy pandas requests scipy yfinance
+      - name: Run cross-instrument mapping audit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OUT_DIR: stage6c_mapping_out
+        run: python gold_axis_2026/tools/gold_short_horizon_stage6c_mapping.py
+      - name: Upload Stage6C artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-short-horizon-stage6c-mapping
+          path: stage6c_mapping_out/
+          retention-days: 90
