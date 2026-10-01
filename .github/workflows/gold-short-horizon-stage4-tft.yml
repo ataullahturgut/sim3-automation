@@ -1,0 +1,78 @@
+name: Gold Short Horizon Stage4 TFT Challenger
+
+on:
+  push:
+    branches:
+      - gold-midas-headswap-v1-20260925
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_stage4_tft.py'
+      - 'gold_axis_2026/tools/gold_short_horizon_stage4_aggregate.py'
+      - '.github/workflows/gold-short-horizon-stage4-tft.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  tft:
+    strategy:
+      fail-fast: false
+      matrix:
+        task: [class, quant]
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install TFT dependencies
+        run: |
+          pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu torch
+          pip install --disable-pip-version-check numpy pandas requests scikit-learn lightning==2.6.6 pytorch-forecasting==1.8.0
+      - name: Run constrained TFT task
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TASK: ${{ matrix.task }}
+          OUT_DIR: stage4_tft_${{ matrix.task }}
+        run: python gold_axis_2026/tools/gold_short_horizon_stage4_tft.py
+      - name: Upload TFT task artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-short-horizon-stage4-tft-${{ matrix.task }}
+          path: stage4_tft_${{ matrix.task }}/
+          retention-days: 90
+
+  aggregate:
+    needs: tft
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: gold-short-horizon-stage4-tft-*
+          path: downloaded
+      - name: Arrange artifacts
+        run: |
+          n=0
+          for d in downloaded/gold-short-horizon-stage4-tft-*; do
+            mkdir -p "task$n"
+            cp "$d"/* "task$n"/
+            n=$((n+1))
+          done
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install aggregate dependencies
+        run: pip install --disable-pip-version-check numpy pandas requests
+      - name: Aggregate TFT challenger
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python gold_axis_2026/tools/gold_short_horizon_stage4_aggregate.py
+      - name: Upload aggregate result
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-short-horizon-stage4-aggregate
+          path: stage4_all/
+          retention-days: 90
