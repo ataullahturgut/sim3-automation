@@ -1,19 +1,176 @@
 # GOLD MONTHLY FORECAST — CANONICAL PROJECT MANIFEST
 
-**Manifest version:** 1.3  
-**Date:** 2026-09-28  
+**Manifest version:** 2.0  
+**Date:** 2026-10-01  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Branch:** `gold-midas-headswap-v1-20260925`  
 **Canonical path:** `gold_axis_2026/GOLD_MONTHLY_PROJECT_MANIFEST.md`  
-**Status:** **CURRENT / BINDING / SELF-CONTAINED PROJECT STATE**
+**Status:** **CURRENT / BINDING / SELF-CONTAINED PROJECT STATE**  
+**Information architecture:** V2 — topic-ordered, supersession-aware
 
-> **Single-source rule:** Bu dosya GOLD MONTHLY FORECAST projesini anlamak, daha önce neyin denendiğini görmek, hangi sonuçların elde edildiğini bilmek ve sıradaki işi belirlemek için yeterli olmalıdır. Eski ledger, result, freeze ve Challenger-B dosyaları yalnızca denetim/provenance kanıtıdır; mevcut proje durumunu anlamak için onlara gitmek gerekmez.
+> **Single-source rule:** This manifest is the canonical project-state authority. Detailed RESULT/AUTHORITY/JSON/workflow files provide provenance and audit evidence. Historical local “next” statements never override the current-state and roadmap sections in this file.
+
+> **Conceptual separation:** **price forecast != market regime != forecast-error alarm != post-alarm action**. These layers are intentionally documented separately.
 
 ---
 
-# 1. Projenin amacı ve değişmeyen kontrat
+# 1. Executive Project State
 
-## 1.1 Hedef
+## 1.1 Project identity
+
+- **Project:** GOLD MONTHLY FORECAST
+- **Target:** next calendar month's average XAU/USD price
+- **Horizon:** H=1 month
+- **Forecast origin:** prior completed calendar month
+- **Selection authority:** DEV 2022-04..2024-12, n=33
+- **2025 / 2026 role:** opened retrospective / transport evidence only; no model, threshold or rule selection
+- **Primary metrics:** cumulative absolute price error Σ|P̂−P| + Direction Accuracy
+- **Random split:** forbidden
+- **Target-month information:** forbidden
+- **Database:** READ_ONLY
+- **Canonical branch:** `gold-midas-headswap-v1-20260925`
+
+## 1.2 Current price-model anchor
+
+| Model | Family | DEV ΣAE | Direction | Current role |
+|---|---|---:|---:|---|
+| **ChHHO-ANFIS** | ANFIS | **1413.0298** | **23/33** | **PRIMARY PRICE ANCHOR** |
+| DE-ABC-RBFNN | RBFNN | 1415.8371 | **25/33** | frozen strong comparator |
+| PLS1 V1 All-4 | Challenger B | 1420.0291 | 20/33 | frozen benchmark |
+| LMC2_RBF_M32 | GPR/MOGP | 1424.1711 | 19/33 | frozen benchmark |
+| FULL7 ANN | ANN ensemble | 1428.8590 | 22/33 | frozen benchmark |
+| REDUCED4 ANN | ANN ensemble | 1431.4587 | 24/33 | frozen benchmark |
+| EPSILON_RBF_DAILY12 | SVR | 1449.1874 | 19/33 | SVR benchmark |
+| CATBOOST_PRICE | Boosting | 1460.4339 | 20/33 | tree/boost benchmark |
+
+The table is a DEV reference frontier, not a universal superiority claim.
+
+## 1.3 Current internal ChHHO feature contract
+
+Binding internal price-model representation after F0–F3:
+- **CURRENT8**
+- four metals: Gold / Silver / Platinum / Palladium
+- each metal contributes:
+  - previous-month log return **MR1**
+  - origin-safe GPR-conditioned daily-path summary **VW**
+- **L1 only**
+- no CURRENT8 feature removed
+- no F2 representation challenger promoted
+- no concatenated lag package promoted.
+
+Native-input F4 conclusion:
+- large all-family augmentation failed;
+- Rates native family closed without promotion;
+- FX native family closed without promotion;
+- raw-data re-audits passed, so those failures are not attributed to source corruption;
+- no external native-input family has replaced CURRENT8.
+
+Residual-correction research is a separate evidence track and must not be confused with native feature promotion. Earlier CPI / Rates / VIX / Brent residual studies are retained below with their exact protocol and later bias-only attribution qualifications.
+
+## 1.4 Current market-state system
+
+The regime system is **market-only** and is separate from ChHHO error alarms.
+
+Primary semantic state:
+- **R0:** drawdown / macro-pressure / stress
+- **R1:** quiet / neutral / low-volatility
+- **R2:** bullish / accumulation / elevated state
+- **BELIRSIZ:** posterior confidence below the frozen confidence rule
+
+Additional orthogonal state dimensions:
+- regime posterior probability
+- **STABLE / TRANSITION**
+- **NORMAL / EXTREME / DEFER**
+- OOD / historically unusual flag
+- spell age / persistence context.
+
+No regime label is an automatic ChHHO multiplier or switch rule.
+
+## 1.5 Current alarm system
+
+Frozen reliability router:
+- **Specialist Hedge**
+- eta = **0.25**
+- alpha = **0**
+- HIGH threshold tau = **0.50**
+- specialist signals: **A/B/C/D/E/G/H/I1/I2/T1_WGC/V2_TRANSITION**
+- always-awake no-risk comparator: **NULL**
+
+Meaning:
+- alarm estimates **forecast-error risk**
+- it does **not** predict UP/DOWN direction
+- HIGH does **not** authorize an automatic model switch.
+
+DEV:
+- 20 router warnings
+- 8/8 HIGH captured
+- 2/2 MEDIUM captured
+- 10 false warnings
+- 100% HIGH and elevated recall on DEV.
+
+## 1.6 Current post-alarm decision state
+
+Research sequence:
+1. Contextual HIGH-Alarm Rescueability V1 — PASS as analysis.
+2. 33×15 Relative-Loss / Rescue-Gain matrix — PASS as analysis.
+3. Contextual Rescue-Gain Predictor V1 — formal DEV PASS but **WEAK**.
+4. Frozen 2025..2026-07 transport — positive aggregate gain but unacceptable tail loss.
+5. Harmful-Switch / Shared-Hard Guard V1 — **FAIL / REJECTED**.
+
+Therefore:
+- ChHHO remains the price forecast.
+- Specialist Hedge remains the frozen risk-warning layer.
+- Rescue-Gain Predictor remains research-only.
+- **automatic SWITCH / BLEND remains unauthorized.**
+
+## 1.7 Current live October-2026 state
+
+Origin = September 2026 month-end; target = October 2026.
+
+- ChHHO predicted log return: **-0.0135908895**
+- September complete StakTrakr Gold level proxy: **4336.8513**
+- October average proxy forecast: **4278.3084 USD/oz**
+- implied move: approximately **-1.35%**
+- direction: **DOWN**
+- DE-ABC comparator: **4255.7049 USD/oz**, DOWN
+
+Origin market state:
+- **R1**
+- posterior **0.9823228737**
+- **STABLE**
+- **NORMAL**
+- OOD = **NO**
+
+Frozen Specialist Hedge:
+- active signals = **none**
+- p_HIGH = **0.000000**
+- p_ELEVATED = **0.000000**
+- HIGH alarm = **NO**
+
+World Bank September Gold monthly average was not available at execution. The current 4278.31 level is therefore a complete-September-feature / StakTrakr-level proxy. Once World Bank September Gold is available, canonical level conversion is mechanical:
+`WB_Gold_2026_09 × 0.9865010496`.
+
+## 1.8 Exact next research task
+
+**Direct Harmful-Switch / Shared-Hard Probability Model V1 — NOT YET RUN**
+
+Question:
+> when the frozen Rescue-Gain Predictor proposes a challenger switch, can DEV-only origin-known information predict that the proposed switch will be harmful?
+
+Required properties:
+- target = harmful proposed switch, not gold price;
+- DEV-only model/rule selection;
+- chronology-safe expanding evaluation;
+- low-capacity design because switch-event sample is small;
+- KEEP MAIN / ABSTAIN remain valid outcomes;
+- opened 2025/2026 may be used only after freeze for transport;
+- failure to pass DEV means no transport-driven retuning.
+
+---
+
+# 2. Scientific Contract, Governance & Core Definitions
+
+## 2.1 Hedef
 
 Proje, bir sonraki takvim ayının ortalama **XAU/USD** fiyatını tahmin eder.
 
@@ -22,7 +179,7 @@ Proje, bir sonraki takvim ayının ortalama **XAU/USD** fiyatını tahmin eder.
 - Ana modelleme hedefi: çoğu CURRENT8/neural/nonlinear hatta bir sonraki ay Gold log-return
 - Fiyat rekonstrüksiyonu: önceki tamamlanmış ay ortalaması × exp(tahmin edilen log-return)
 
-## 1.2 Seçim ve değerlendirme otoritesi
+## 2.2 Seçim ve değerlendirme otoritesi
 
 - DEV / model seçimi: **2022-04..2024-12, n=33**
 - 2025: kilitli transport/final-holdout rolü; family freeze sonrasında kullanılabilir, geriye dönük tuning için kullanılamaz
@@ -35,7 +192,7 @@ Proje, bir sonraki takvim ayının ortalama **XAU/USD** fiyatını tahmin eder.
 - İkinci ana kriter: **aylık yön doğruluğu**
 - Destek metrikleri: MAE, RMSE, MAPE/WAPE, RW-relative MAE, worst month, yearly stability
 
-## 1.3 Mevcut veri çalıştırma altyapısı
+## 2.3 Mevcut veri çalıştırma altyapısı
 
 Yetkilendirilmiş DEV Snapshot V1:
 - schema: `GOLD_MONTHLY_DEV_SNAPSHOT_V1_2026-09-28`
@@ -54,7 +211,7 @@ Snapshot execution identity:
 - parity result: CNN-LSTM canonical parent için aggregate/yearly SigmaAE ve direction farkı **0**
 - artifact expire olursa: aynı governed schema ile yeniden export + parity yapılmadan kullanılmaz
 
-## 1.4 Proje sözlüğü ve veri representation’ları
+## 2.4 Proje sözlüğü ve veri representation’ları
 
 ### Main path / Challenger A
 Bu manifestte "main path" veya geçmiş konuşmalardaki "Challenger A", tek bir model adı değildir. ELM→ANN→ELMFIS→ANFIS→RBFNN→GPR→DMA/Boosting/SVR/CNN-LSTM boyunca gelişen ana Gold Monthly research hattını ifade eder.
@@ -106,7 +263,7 @@ Toplam = **20**.
 ### Raw monthly 4-metal sequence
 TimesFM-3 / TimeMixer++ / TimeXer gibi modern sequence hatlarında Gold, Silver, Platinum ve Palladium’un tamamlanmış aylık seviyeleri kullanılır. Bu hatlar CURRENT8 ile aynı representation değildir.
 
-## 1.5 Metric authority ve supersession
+## 2.5 Metric authority ve supersession
 
 Projenin erken ELM/ANN aşamalarında birçok screen **MAPE-merkezli** raporlandı. Bu tarihsel tablolar silinmez; fakat aktif seçim otoritesi değildir.
 
@@ -120,7 +277,7 @@ Sonuç:
 - aynı model için aktif karar aranırken bu manifestteki ΣAE + direction kayıtları kullanılır;
 - MAPE yalnız destekleyici olarak kalır.
 
-## 1.6 2025 / 2026 bilgi durumu — önemli nüans
+## 2.6 2025 / 2026 bilgi durumu — önemli nüans
 
 **2025 tüm proje için artık tamamen görülmemiş bir global blind holdout değildir.** Bazı tamamlanmış eski ailelerde 2025 report-only/transport olarak daha önce hesaplanmıştır; Boosting’de family freeze sonrasında one-shot olarak açılmıştır; Challenger B’de de report-only sonuçlar vardır.
 
@@ -133,7 +290,7 @@ Bağlayıcı kural:
 
 Bu yüzden gelecekte "2025 blind holdout" ifadesi family-specific kullanılmalıdır; global proje için koşulsuz söylenmemelidir.
 
-## 1.7 Yeni sohbet onboarding protokolü
+## 2.7 Yeni sohbet onboarding protokolü
 
 Yeni bir sohbet bu projeyi devralırken yalnız şu sırayı izlemelidir:
 
@@ -150,72 +307,19 @@ Ayrı proje uyarısı:
 - iki proje birbirinin model registry’si değildir.
 
 ---
-
-# 2. Bugünkü durum — tek bakışta
-
-## 2.1 Güncel Pareto çekirdeği
-
-Aktif DEV ΣAE + direction kontratı altında en önemli mevcut referanslar:
-
-| Model | Aile | DEV ΣAE | Direction | Rol |
-|---|---|---:|---:|---|
-| **ChHHO-ANFIS** | ANFIS | **1413.0298** | 23/33 | fiyat anchor |
-| **DE-ABC-RBFNN** | RBFNN | **1415.8371** | **25/33** | güçlü Pareto model |
-| **PLS1 V1 All-4** | Challenger B | **1420.0291** | 20/33 | Challenger-B fiyat lideri |
-| **LMC2_RBF_M32** | GPR/MOGP | **1424.1711** | 19/33 | güçlü GPR benchmark |
-| FULL7 ANN | ANN ensemble | 1428.8590 | 22/33 | benchmark |
-| REDUCED4 ANN | ANN ensemble | 1431.4587 | 24/33 | dengeli Pareto |
-| EPSILON_RBF_DAILY12 | SVR | 1449.1874 | 19/33 | SVR family leader |
-| CATBOOST_PRICE | Boosting | 1460.4339 | 20/33 | Boosting price leader |
-
-Bu tablo istatistiksel evrensel üstünlük iddiası değildir; DEV n=33’tür.
-
-## 2.2 Aktif açık iş
-
-**Şu an sıradaki model: CNN-BiLSTM.**
-
-Mevcut CNN/LSTM family leader:
-- CNN-LSTM
-- lookback 6
-- width 32
-- dropout 0.10
-- Adam LR 0.001
-- DEV ΣAE **1528.569850656**
-- direction **20/33**
-
-BiLSTM:
-- DEV ΣAE **1638.096795007**
-- direction **19/33**
-- scientific gate PASS
-- **NOT PROMOTED**
-- rescue tuning kapalı
-
-CNN-BiLSTM henüz çalıştırılmadı.
-
-## 2.3 Açık / kapalı aile özeti
-
-| Aile | Durum | Tekrar nereden açılır? |
-|---|---|---|
-| ELM | COMPLETE_CLOSED | yalnız yeni yapısal gerekçe |
-| ANN | COMPLETE_CLOSED | broad screen tekrarlanmaz |
-| ELMFIS | COMPLETE_CLOSED | yalnız yeni yapısal gerekçe |
-| ANFIS | COMPLETE_CLOSED | explicit reopen olmadan açılmaz |
-| RBFNN | COMPLETE_CLOSED | broad/refinement tekrar yok |
-| GPR/MOGP | Stage 3 complete, final closure eksik | frozen Stage-4 pool’dan |
-| Boosting | COMPLETE_CLOSED | yeni mekanizma olmadan açılmaz |
-| SVR/DWT-SVR | PAUSED | Stage 5A.3 DE-tuned PSO-SVR |
-| DMA/DMS/IDMA | DEFERRED_REVISIT_LAST | daha geniş PIT predictor panel ile |
-| Challenger B | COMPLETE_CLOSED | yeni explicit scope ile |
-| CNN/LSTM | ACTIVE | CNN-BiLSTM |
-| Modern sequence/foundation | MIXED | TimeXer frozen-not-run; diğerleri aşağıda |
-
 ---
 
-# 3. Araştırma akışı — tarihsel sıra
+# 3. Price-Model Registry & Historical Benchmark Program
+
+This chapter preserves the full model-family research record and duplicate-prevention evidence.
+
+**Governance note:** local “next”, “active”, or “current leader” statements inside imported historical family records describe the state at the time of that experiment. They do not override Section 1 or Section 9 of this V2 manifest.
+
+## 3.1 Historical model-family research sequence
 
 Bu bölüm projenin neden bugünkü noktaya geldiğini tek akışta gösterir.
 
-## 2026-09-25 — ELM → ANN → ELMFIS
+### 2026-09-25 — ELM → ANN → ELMFIS
 
 İlk geniş optimizer araştırma hattı ELM’de kuruldu. Ardından aynı parity mantığı ANN’e ve ELMFIS’e taşındı. Bu dönemde ortak metaheuristic havuz, mandatory refinement ve kontrollü ensemble yaklaşımı şekillendi.
 
@@ -225,19 +329,19 @@ Ana sonuçlar:
 - ELMFIS fiyat lideri ABC, direction specialist’i SMA oldu.
 - optimizer’ı tekrar tekrar değiştirmek tek başına kalıcı iyileşme sağlamadığı için daha yapısal ailelere geçildi.
 
-## 2026-09-26 — ANFIS → RBFNN → GPR
+### 2026-09-26 — ANFIS → RBFNN → GPR
 
 ANFIS’te geniş metaheuristic screen sonrası ChHHO-ANFIS güçlü fiyat modeli olarak öne çıktı. RBFNN’de DE-ABC hem fiyat hem yön açısından güçlü Pareto sonuç verdi. GPR/MOGP’de LMC2_RBF_M32 Stage-3 lideri oldu.
 
 Bu aşamadan sonra proje “aynı optimizer’ı başka base learner üzerinde yüzlerce kez dönme” yaklaşımından uzaklaştırıldı ve yapısal farklılık aranmaya başlandı.
 
-## 2026-09-27 — DMA/DMS/IDMA → Boosting
+### 2026-09-27 — DMA/DMS/IDMA → Boosting
 
 DMA/DMS/IDMA canonical 256-subset Gold-only olarak düzeltildi. Sonuçlar kötü değildi fakat daha geniş macro-financial predictor setine ihtiyaç olduğu anlaşıldı; aile “revisit last” olarak park edildi.
 
 Boosting hattında CatBoost, GBRT, LightGBM, XGBoost, metaheuristics, decomposition, ensemble ve robustness tamamlandı. Family kapandı.
 
-## 2026-09-28 — SVR → Challenger B → modern sequence → CNN/LSTM
+### 2026-09-28 — SVR → Challenger B → modern sequence → CNN/LSTM
 
 SVR’de canonical/deterministic/metaheuristic hat büyük ölçüde tamamlandı fakat DWT/MODWT yapısal hattına geçmeden family bilinçli olarak pause edildi.
 
@@ -247,7 +351,7 @@ Daha sonra TimesFM-3, TimeMixer++ gibi modern sequence/foundation modelleri test
 
 ---
 
-# 4. Ortak optimizer / metaheuristic havuzu — daha önce denendi
+## 3.2 Optimizer / metaheuristic universe and coverage matrix
 
 Aşağıdaki optimizer isimleri proje boyunca ELM, ANN, ELMFIS, ANFIS, RBFNN, GPR ve büyük ölçüde SVR’de zaten denenmiştir. Başka bir base architecture üzerinde kullanılması mümkün olabilir; fakat bunlar artık “yeni keşfedilmiş yöntem” değildir.
 
@@ -298,7 +402,7 @@ Ayrıca birçok ailede şu refinement/hybrid sınıfları da denenmiştir:
 
 Bunların başka bir mimaride kullanılması ancak o mimarinin kendi scientific rationale’ı ile yeni bir deney olarak açılabilir.
 
-## 4.1 Duplicate-prevention family coverage matrix
+### 4.1 Duplicate-prevention family coverage matrix
 
 | Family | Vanilla / base | Full common optimizer screen | Adaptive/meta refinements | Structural/literature-specific | Current state |
 |---|---|---|---|---|---|
@@ -317,11 +421,11 @@ Bu tablo "bir optimizer adı daha gördük, bunu da yeni model diye deneyelim" t
 
 ---
 
-# 5. ELM ailesi
+## 3.3 ELM family
 
 **Durum: COMPLETE_CLOSED**
 
-## Denenen yapı
+### Denenen yapı
 
 - Vanilla ELM
 - 32 civarı geniş optimizer/metaheuristic ekranı
@@ -332,7 +436,7 @@ Bu tablo "bir optimizer adı daha gördük, bunu da yeni model diye deneyelim" t
 - Adaptive Crow Search-ELM
 - PSO-TLBO Hybrid ELM
 
-## Aktif-metrik sonuçları
+### Aktif-metrik sonuçları
 
 - **AOA-ELM:** 1474.1021 / 20/33 — price benchmark
 - SCA-ELM: 1508.71 / 21/33
@@ -340,7 +444,7 @@ Bu tablo "bir optimizer adı daha gördük, bunu da yeni model diye deneyelim" t
 - TLBO-ELM: 1758.75 / 23/33 — direction benchmark
 - Vanilla ELM: yaklaşık 1480.08 / 21/33
 
-## Karar
+### Karar
 
 - AOA-ELM korunur.
 - arbitrary optimizer cross-product genişletmesi kapalıdır.
@@ -348,17 +452,17 @@ Bu tablo "bir optimizer adı daha gördük, bunu da yeni model diye deneyelim" t
 
 ---
 
-# 6. ANN ailesi
+## 3.4 ANN family
 
 **Durum: COMPLETE_CLOSED / FROZEN**
 
-## Broad screen
+### Broad screen
 
 33/33 ANN kimliği tamamlandı:
 - Vanilla ANN
 - ortak optimizer parity setinin tamamı
 
-## Refinement
+### Refinement
 
 Tamamlanan önemli refinement’lar:
 - Adaptive PSO-ANN
@@ -371,9 +475,9 @@ Tamamlanan önemli refinement’lar:
 - MPA+GA Hybrid ANN
 - MPA+CPA fallback
 
-## Frozen ensemble’lar
+### Frozen ensemble’lar
 
-### FULL7 equal-weight
+#### FULL7 equal-weight
 Bileşenler:
 - Vanilla ANN
 - MPA-ANN
@@ -387,7 +491,7 @@ DEV:
 - ΣAE **1428.8590**
 - direction **22/33**
 
-### REDUCED4 equal-weight
+#### REDUCED4 equal-weight
 Bileşenler:
 - Vanilla ANN
 - MPA-ANN
@@ -401,7 +505,7 @@ DEV:
 Diğer referans:
 - MPA-ANN: yaklaşık **1471.53 / 19/33**
 
-## Karar
+### Karar
 
 - FULL7 benchmark.
 - REDUCED4 dengeli Pareto challenger.
@@ -410,11 +514,11 @@ Diğer referans:
 
 ---
 
-# 7. ELMFIS ailesi
+## 3.5 ELMFIS family
 
 **Durum: COMPLETE_CLOSED**
 
-## Denenen kapsam
+### Denenen kapsam
 
 - Vanilla ELMFIS
 - 33-entry optimizer parity screen
@@ -422,14 +526,14 @@ Diğer referans:
 - MPA temelli hybrid’ler
 - CQCSA-ELMFIS literature-specific model
 
-## Sonuçlar
+### Sonuçlar
 
 - Vanilla ELMFIS: **1996.2933 / 20/33**
 - **ABC-ELMFIS: 1524.89 / 21/33** — price benchmark
 - **SMA-ELMFIS: 1651.4482 / 25/33** — direction specialist
 - CQCSA-ELMFIS: **1731.94 / 20/33** — not promoted
 
-## Karar
+### Karar
 
 - ABC internal price benchmark.
 - SMA auxiliary direction/confirmation specialist.
@@ -439,14 +543,14 @@ Diğer referans:
 
 ---
 
-# 8. ANFIS ailesi
+## 3.6 ANFIS family
 
 **Durum: COMPLETE_CLOSED**
 
-## Vanilla anchor
+### Vanilla anchor
 - Vanilla ANFIS: **1852.0465 / 21/33**
 
-## Broad screen
+### Broad screen
 - 32/32 metaheuristic ANFIS denendi.
 - 27 scientific gate PASS.
 - ABC, WOA, FPA, HGS, AOA en az bir origin’de patolojik forecast büyüklüğü nedeniyle scientific reject.
@@ -455,7 +559,7 @@ Stage-2 valid benchmarks:
 - MFO-ANFIS: **1630.3325 / 20/33**
 - HHO-ANFIS: **1646.1336 / 23/33**
 
-## Refinement
+### Refinement
 Valid fakat frontier geliştirmeyen:
 - MPA-CPA: 1918.5637 / 18
 - PSO-TLBO Hybrid: 3156.9979 / 19
@@ -469,33 +573,33 @@ Scientific-gate fail:
 - MPA-SCA
 - MPA-GA
 
-## Literature-specific
+### Literature-specific
 
-### ChHHO-ANFIS
+#### ChHHO-ANFIS
 - DEV ΣAE **1413.029779**
 - direction **23/33**
 - rel.MAE/RW ≈ 0.80377
 - current ANFIS champion
 
-### MVO-ANFIS
+#### MVO-ANFIS
 İlk kod bug’ı düzeltildikten sonra valid rerun:
 - DEV **2057.3973 / 17/33**
 - not promoted
 
-## Ensemble denetimi
+### Ensemble denetimi
 Same-DEV optimized blend’ler diagnostik olarak iyi görünse de honest expanding-prequential weighting ChHHO’yu geçmedi.
 
-## Karar
+### Karar
 - ChHHO-ANFIS primary price anchor.
 - ANFIS optimizer/stacking genişletmesi kapalı.
 
 ---
 
-# 9. RBFNN ailesi
+## 3.7 RBFNN family
 
 **Durum: COMPLETE_CLOSED / FROZEN**
 
-## Denenen kapsam
+### Denenen kapsam
 - Vanilla RBFNN
 - Regularized RBFNN
 - 32/32 optimizer broad screen
@@ -508,25 +612,25 @@ Same-DEV optimized blend’ler diagnostik olarak iyi görünse de honest expandi
 - MOLS-RBFNN
 - controlled ensemble + shrinkage/prequential audit
 
-## Sonuçlar
+### Sonuçlar
 - **DE-ABC-RBFNN: 1415.8371 / 25/33**
 - Adaptive Crow: 1455.8616 / 21
 - PSO-TLBO: 1489.6671 / 21
 - MOLS-RBFNN: 1578.5391 / 18
 - FULL_MEDIAN ensemble: 1444.3008 / 22
 
-## Karar
+### Karar
 - DE-ABC family champion.
 - global Pareto model.
 - broad/refinement araştırması tekrar edilmeyecek.
 
 ---
 
-# 10. GPR / MOGP ailesi
+## 3.8 GPR / MOGP family
 
 **Durum: STAGE 3 COMPLETE; FAMILY FINAL CLOSURE HENÜZ TAM DEĞİL**
 
-## Tamamlananlar
+### Tamamlananlar
 - Stage 0 audited
 - Stage 1 geniş screen
 - Stage 2 parent freeze
@@ -534,7 +638,7 @@ Same-DEV optimized blend’ler diagnostik olarak iyi görünse de honest expandi
 - Stage 3B MPA-SCA
 - Stage 3C LMC2_RBF_M32
 
-## Stage-3 sonuçları
+### Stage-3 sonuçları
 
 | Model | DEV ΣAE | Direction |
 |---|---:|---:|
@@ -547,7 +651,7 @@ Same-DEV optimized blend’ler diagnostik olarak iyi görünse de honest expandi
 | TLBO-tuned PSO | 1863.6677 | 19/33 |
 | DE-tuned PSO | 1939.8588 | 16/33 |
 
-## Karar
+### Karar
 - LMC2_RBF_M32 retained benchmark.
 - Stage 0-3 yeniden başlamaz.
 - Repo’da Stage-4 pool freeze var.
@@ -555,18 +659,18 @@ Same-DEV optimized blend’ler diagnostik olarak iyi görünse de honest expandi
 
 ---
 
-# 11. DMA / DMS / IDMA
+## 3.9 DMA / DMS / IDMA
 
 **Durum: DEFERRED_REVISIT_LAST / REJECTED DEĞİL**
 
-## Canonical düzeltme
+### Canonical düzeltme
 Gold-only:
 - 2^8 = 256 subset
 - intercept dahil
 - alpha=.99
 - lambda=.99
 
-## Sonuçlar
+### Sonuçlar
 - Canonical DMA: **1486.2561 / 19/33**
 - Canonical DMS: **1489.8247 / 20/33**
 - 60m DMS: 1489.0965 / 19
@@ -579,7 +683,7 @@ Gold-only:
 
 Fed + Nasdaq + USD/CNY küçük augmentation hattı aileyi kurtarmadı.
 
-## Karar
+### Karar
 Problem yalnız örneklem uzunluğu gibi görünmüyor. Literatürdeki geniş macro-financial predictor setiyle bizim CURRENT8 bilgi seti arasında fark var.
 
 Reopen ancak:
@@ -590,11 +694,11 @@ Küçük alpha/lambda/window oynamaları yapılmayacak.
 
 ---
 
-# 12. Boosting / Trees ailesi
+## 3.10 Boosting / Trees
 
 **Durum: COMPLETE_CLOSED**
 
-## Denenen model hatları
+### Denenen model hatları
 - CatBoost PRICE
 - CatBoost BALANCED
 - GBRT
@@ -610,7 +714,7 @@ Küçük alpha/lambda/window oynamaları yapılmayacak.
 - shrinkage robustness
 - 2025 one-shot final holdout
 
-## Ana DEV sonuçları
+### Ana DEV sonuçları
 - **CATBOOST_PRICE: 1460.4339 / 20/33**
 - **FULL5_MEDIAN: 1484.7313 / 23/33**
 - frozen GBRT: 1500.4295 / 22
@@ -621,52 +725,52 @@ Küçük alpha/lambda/window oynamaları yapılmayacak.
 
 CatBoost metaheuristic finalistleri Vanilla CatBoost’u geçmedi.
 
-## 2025 one-shot
+### 2025 one-shot
 Freeze sonrasında:
 - CATBOOST_PRICE: 1020.6861 / 11/12
 - FULL5_MEDIAN: 993.9803 / 11/12
 
 2025 sonucu frozen rolleri geriye dönük değiştirmedi.
 
-## Karar
+### Karar
 - PRICE = CATBOOST_PRICE
 - BALANCE/DIRECTION = FULL5_MEDIAN
 - boosting family kapalı
 
 ---
 
-# 13. SVR / DWT-SVR
+## 3.11 SVR / DWT-SVR
 
 **Durum: PAUSED — restart yok**
 
-## Stage 1
+### Stage 1
 - RBF CURRENT8: **1524.5006 / 21**
 - Linear: 1535.1160 / 19
 
-## Kernel ablation
+### Kernel ablation
 - RBF: 1524.5006 / 21
 - Linear: 1535.1160 / 19
 - Poly2: 1793.2474 / 17
 - Poly3: 1810.3496 / 17
 - Sigmoid: 2784.3324 / 15
 
-## Representation ablation
+### Representation ablation
 - **DAILY_SUMMARY12: 1449.1874 / 19**
 - CURRENT8: 1518.8970 / 21
 - MIXED20: 1579.3083 / 17
 - RAW_LEVEL_LAGS8: 1800.4286 / 18
 - SIMPLE_RETURNS8: 1850.5436 / 17
 
-## Formulation
+### Formulation
 - epsilon-SVR: **1449.1874 / 19**
 - NuSVR: 1525.4334 / 18
 
-## Deterministic tuning
+### Deterministic tuning
 - coarse: 1580.9011 / 20
 - local: 1592.5905 / 22
 - ikisi de parent’ı geçmedi
 
-## Metaheuristic broad screen
+### Metaheuristic broad screen
 32/32 teknik execution tamamlandı.
 Best authoritative metaheuristic:
 - **ALO: 1494.8081 / 20**
@@ -675,11 +779,11 @@ FA:
 - technical PASS 1583.8106 / 19
 - fakat kullanıcı stop kararı nedeniyle authoritative ranking dışında tutuldu
 
-## Stage 5 refinements
+### Stage 5 refinements
 - Adaptive PSO-SVR: 1748.6557 / 16
 - TLBO-tuned PSO-SVR: 1871.8062 / 17
 
-## Exact resume point
+### Exact resume point
 SVR’ye dönülürse:
 1. **DE-tuned PSO-SVR**
 2. Adaptive/Improved TLBO-SVR
@@ -696,28 +800,28 @@ Stage 1-4 tekrarlanmayacak.
 
 ---
 
-# 14. Challenger B — Grup-ARGE modellerinin Gold Monthly portu
+## 3.12 Challenger B — Grup-ARGE ports
 
 **Durum: USER-AUTHORIZED SCOPE COMPLETE**
 
 Bu hat ana yolu bozmak için değil, Grup-ARGE’de daha önce kullanılan modelleri aynı Gold Monthly governance altında challenger olarak test etmek için açıldı.
 
-## Representation
+### Representation
 
-### CURRENT8 kullananlar
+#### CURRENT8 kullananlar
 - Gold_MR, Gold_VW
 - Silver_MR, Silver_VW
 - Platinum_MR, Platinum_VW
 - Palladium_MR, Palladium_VW
 
-### Raw monthly Gold kullananlar
+#### Raw monthly Gold kullananlar
 - ARIMA
 - SARIMA
 - Prophet
 
 Bu modeller CURRENT8’e zorlanmadı; family logic korundu.
 
-## Tüm Challenger-B DEV sonuçları
+### Tüm Challenger-B DEV sonuçları
 
 | Model | Input | DEV ΣAE | Direction | rel.MAE/RW | Karar |
 |---|---|---:|---:|---:|---|
@@ -734,7 +838,7 @@ Bu modeller CURRENT8’e zorlanmadı; family logic korundu.
 | HGB V1 | CURRENT8 | 1840.2678 | 20/33 | 1.0468 | NOT_PROMOTED |
 | Prophet | raw monthly Gold | 7521.1360 | 14/33 | 4.2782 | REJECTED |
 
-## PLS1 metal ablation
+### PLS1 metal ablation
 
 All-4 tekrar üretildi ve reproduction gate PASS.
 
@@ -751,7 +855,7 @@ Karar:
 - primary PLS1 representation = **4 metal**
 - No-Silver yalnız direction-heavy trade-off reference
 
-## Challenger B’de özellikle çalıştırılmayanlar
+### Challenger B’de özellikle çalıştırılmayanlar
 
 Bunlar yapılmış sayılmayacak:
 - Seasonal Naive
@@ -766,33 +870,33 @@ Status: **NOT_RUN**
 
 ---
 
-# 15. CNN / LSTM family
+## 3.13 CNN / LSTM / BiLSTM
 
 **Durum: ACTIVE**
 
-## Stage 0 canonical
+### Stage 0 canonical
 - LSTM LB12: 1738.0595 / 15
 - CNN LB12: 1906.9426 / 13
 - CNN-LSTM LB12: 1554.3082 / 18
 
-## Stage 1A — lookback
+### Stage 1A — lookback
 - LSTM LB3: **1589.9827 / 19**
 - CNN LB3: **1641.8275 / 21**
 - CNN-LSTM LB6: **1528.5699 / 20**
 
 Lookback meaningful improvement sağladı.
 
-## Stage 1B — width
+### Stage 1B — width
 - LSTM W32 retained
 - CNN W16 fiyat açısından çok küçük near-tie sağladı; W32 direction daha iyi
 - CNN-LSTM W32 retained
 
-## Stage 1C — dropout
+### Stage 1C — dropout
 - LSTM D0.10 retained
 - CNN-LSTM D0.10 retained
 - D0 ve D0.20 anlamlı üstünlük sağlamadı
 
-## Stage 1D — learning rate
+### Stage 1D — learning rate
 - LSTM LR .0003: 1648.5032 / 20
 - CNN LR .0003: 1637.1770 / 21; yalnız ~0.264% local price win
 - CNN-LSTM LR .0003: 1583.4676 / 18
@@ -802,7 +906,7 @@ Pre-frozen stop rule tetiklendi:
 - kernel sweep iptal
 - local Cartesian micro-tuning kapalı
 
-## BiLSTM
+### BiLSTM
 Frozen:
 - lookback 3
 - Bidirectional LSTM 32+32
@@ -820,7 +924,7 @@ Karar:
 - NOT_PROMOTED
 - BiLSTM micro-grid açılmayacak
 
-## Current leader
+### Current leader
 CNN-LSTM:
 - LB6
 - W32
@@ -828,14 +932,14 @@ CNN-LSTM:
 - LR .001
 - **1528.5699 / 20/33**
 
-## Next
+### Next
 **CNN-BiLSTM — NOT_RUN / sıradaki model**
 
 ---
 
-# 16. Modern sequence / foundation modeller
+## 3.14 Modern sequence / foundation models
 
-## TimesFM-3 zero-shot V1
+### TimesFM-3 zero-shot V1
 
 Representation:
 - raw monthly Gold/Silver/Platinum/Palladium
@@ -852,7 +956,7 @@ Karar:
 - frozen V1 kapalı
 - aynı V1 tekrar edilmez
 
-## TimeMixer++ V1
+### TimeMixer++ V1
 
 Representation:
 - raw 4-metal monthly levels
@@ -867,7 +971,7 @@ Karar:
 - REJECTED V1
 - post-result architecture fishing yapılmaz
 
-## TimeXer V1
+### TimeXer V1
 
 Durum:
 - **FROZEN_NOT_RUN**
@@ -881,11 +985,11 @@ TimeXer test edilmiş gibi yazılmayacak.
 
 ---
 
-# 17. Historical / external reference modeller
+## 3.15 Historical / external reference models
 
 Aşağıdaki modeller ayrı yeni challenger olarak yeniden açılmamalı.
 
-## Random Forest identity disambiguation
+### Random Forest identity disambiguation
 
 Repo’da iki farklı Random Forest referansı vardır ve **aynı model sonucu gibi birleştirilmemelidir**:
 
@@ -910,7 +1014,7 @@ Diğer duplicate-sensitive references:
 
 ---
 
-# 18. Duplicate-prevention / yeniden çalışma kuralı
+## 3.16 Duplicate-prevention and rerun rule
 
 Bir model yalnız konuşma değiştiği veya geçmiş unutulduğu için yeniden çalıştırılmayacak.
 
@@ -932,7 +1036,7 @@ yeni model kimliği değildir.
 
 ---
 
-# 19. Şu anda kapalı araştırma yolları
+## 3.17 Closed / parked research paths
 
 Explicit reopen olmadan açılmayacak:
 - ELM broad/refinement
@@ -951,31 +1055,34 @@ Explicit reopen olmadan açılmayacak:
 
 ---
 
-# 20. Açık roadmap
+# 4. Data, Variable & Feature-Architecture Program
 
-## Immediate
-1. **CNN-BiLSTM**
-2. Yalnız umut verirse predeclared structural refinement
+## 4.1 Binding interpretation before the detailed audit trail
 
-## Sonraki ayrı yapısal aileler
-- ICEEMDAN-LSTM-CNN-CBAM
-- GRU
-- Attention-GRU
-- MA-GRUS
-- Transformer
-- PatchTST
-- DPformer
-- LSTM-Transformer
-- TimeXer V1 frozen design
+The project distinguishes four different questions that must not be conflated:
 
-## Park edilmiş hatlar
-- SVR: Stage 5A.3’ten
-- GPR: frozen Stage 4’ten
-- DMA/DMS/IDMA: en son, broader PIT panel ile
+1. **Data readiness:** is the series available with origin-safe vintage / release handling?
+2. **Native feature value:** does adding the variable directly to ChHHO improve chronological DEV performance?
+3. **Residual information:** can the variable explain prior-model residuals under a separate prequential correction protocol?
+4. **Alarm / state information:** can the variable help describe market state or forecast-risk mechanisms without changing the price model?
 
----
+Current native-price-model answer:
+- CURRENT8 remains binding;
+- F1 did not justify feature deletion;
+- F2 did not justify representation expansion;
+- F3 retained L1 only;
+- F4 multi-family, Rates and FX native-input additions were not promoted.
 
-# 20A. Veri çalıştırma mimarisi — Neon otorite, snapshot execution
+Important residual-attribution qualification:
+- residual layers can appear to improve BASE simply by correcting ChHHO's historical mean residual;
+- Section 4's later BIAS_ONLY control is binding for subsequent Rates/VIX/Brent attribution;
+- VIX_R1 was only **0.56 USD** better than BIAS_ONLY on DEV;
+- Brent and PIT Rates were worse than BIAS_ONLY under that audit;
+- earlier X-track CPI results remain recorded under their own frozen protocol and are not silently rewritten as native feature evidence.
+
+**Governance note:** the detailed sections below preserve historical stage-local “next” statements. Section 9 is the only current roadmap authority.
+
+## 4.2 Data execution architecture — Neon authority / snapshot execution
 
 **Durum: ACTIVE INFRASTRUCTURE POLICY / BINDING**
 
@@ -983,7 +1090,7 @@ Neon üretim verisinin otorite kaynağı olarak kalır; fakat model deneylerinde
 
 `NEON READ_ONLY → governed canonical snapshot → hash/parity gate → GitHub Actions/model execution`
 
-## 20A.1 Ana kural
+### 20A.1 Ana kural
 
 - Neon = authoritative source.
 - Canonical snapshot = immutable execution cache; ikinci veri otoritesi değildir.
@@ -995,7 +1102,7 @@ Neon üretim verisinin otorite kaynağı olarak kalır; fakat model deneylerinde
 - Model family'leri kendi snapshot kopyalarını üretmez; mümkün olduğunca tek governed dataset contract paylaşılır.
 - DB write: YOK / READ_ONLY.
 
-## 20A.2 Execution akışı
+### 20A.2 Execution akışı
 
 1. **Source inventory:** model için gereken raw/derived alanları belirle.
 2. **One-shot Neon export:** yalnız gerekli kolon/tarih aralığını READ_ONLY çek.
@@ -1008,7 +1115,7 @@ Neon üretim verisinin otorite kaynağı olarak kalır; fakat model deneylerinde
 9. **Refresh:** yalnız yeni ay/veri gerekiyorsa incremental veya explicit snapshot refresh.
 10. **Re-audit:** refresh sonrası hash, coverage, chronology, leakage ve parity yeniden kontrol edilir.
 
-## 20A.3 Kota koruma kuralları
+### 20A.3 Kota koruma kuralları
 
 - Aynı tarihsel dataset her job'da Neon'dan yeniden indirilmez.
 - `SELECT *` tipi gereksiz geniş sorgular kullanılmaz.
@@ -1019,7 +1126,7 @@ Neon üretim verisinin otorite kaynağı olarak kalır; fakat model deneylerinde
 
 ---
 
-# 20B. Yeni araştırma konusu — External Driver / Error-Regime Augmentation
+## 4.3 External-driver research question and chronology rules
 
 **Durum: COMPLETED X0-X6 / X7 OPTIONAL-DEFERRED**
 
@@ -1027,7 +1134,7 @@ Amaç mevcut en güçlü modellerin büyük hata yaptığı ayları sonradan aç
 
 Bu konu mevcut model ailelerini yeniden açmaz. Ayrı bir **feature-information research track**'tir.
 
-## 20B.1 Ana araştırma sorusu
+### 20B.1 Ana araştırma sorusu
 
 > Frozen CURRENT8 / mevcut metal-temelli bilgi setine eklenen origin-safe dışsal veri, ChHHO-ANFIS ve DE-ABC-RBFNN gibi güçlü modellerin out-of-sample fiyat hatasını sistematik ve chronology-safe biçimde azaltıyor mu?
 
@@ -1038,7 +1145,7 @@ Bu konu mevcut model ailelerini yeniden açmaz. Ayrı bir **feature-information 
 
 Yalnız diagnostic ilişki bulmak model augmentation için yeterli değildir.
 
-## 20B.2 Körlük / hindsight yasağı
+### 20B.2 Körlük / hindsight yasağı
 
 - Büyük hata aylarına bakıp sonra uygun değişken seçmek YASAK.
 - 2025 outcome'ları feature selection/tuning için YASAK.
@@ -1046,12 +1153,12 @@ Yalnız diagnostic ilişki bulmak model augmentation için yeterli değildir.
 - Tüm tarama 2022-04..2024-12 DEV içinde chronology-safe yapılır.
 - 2025 ancak final frozen external specification sonrası transport/reporting olarak açılır.
 
-## 20B.3 Stage akışı
+### 20B.3 Stage akışı
 
-### X0 — External-driver authority + hypothesis freeze
+#### X0 — External-driver authority + hypothesis freeze
 Literatüre ve ekonomik mekanizmaya göre candidate family'leri önceden belirle; exact variable/transform/lag rules yaz.
 
-### X1 — Availability / vintage audit
+#### X1 — Availability / vintage audit
 Her seri için:
 - source,
 - frequency,
@@ -1062,7 +1169,7 @@ Her seri için:
 - missingness/coverage
 kaydedilir.
 
-### X2 — Residual predictability screen
+#### X2 — Residual predictability screen
 ChHHO-ANFIS ve DE-ABC-RBFNN için tüm DEV originlerinde:
 - signed error,
 - absolute error,
@@ -1070,7 +1177,7 @@ ChHHO-ANFIS ve DE-ABC-RBFNN için tüm DEV originlerinde:
 üzerinde yalnız origin-safe external predictors test edilir.
 Tek tek en kötü aylara göre feature seçilmez.
 
-### X3 — Block-by-block augmentation
+#### X3 — Block-by-block augmentation
 Aynı frozen model/protokol altında:
 - BASE
 - BASE + FX
@@ -1081,19 +1188,19 @@ Aynı frozen model/protokol altında:
 - diğer pre-frozen bloklar
 ayrı ayrı çalıştırılır.
 
-### X4 — Ablation
+#### X4 — Ablation
 Kazanan blok içindeki değişkenlerin marjinal katkısı leave-one-block/leave-one-feature veya compact predeclared ablation ile test edilir.
 
-### X5 — Compact combined panel
+#### X5 — Compact combined panel
 Yalnız DEV'de tutarlı marjinal bilgi taşıyan küçük panel kurulur. Small-n nedeniyle geniş feature soup yasaktır.
 
-### X6 — Frozen 2025 transport
+#### X6 — Frozen 2025 transport
 Model + external panel tamamen freeze edildikten sonra 2025 bir kez reporting/transport için kullanılır. Geriye dönük feature/lag rescue yoktur.
 
-### X7 — Error-warning model (opsiyonel ayrı çıktı)
+#### X7 — Error-warning model (opsiyonel ayrı çıktı)
 Fiyatı değiştirmeyen, yalnız `P(large forecast error)` veya beklenen `|error|` üreten ayrı reliability layer denenebilir. Bu katman da yalnız origin-safe girdilerle eğitilir.
 
-## 20B.4 İlk external family havuzu
+### 20B.4 İlk external family havuzu
 
 Pre-outcome authority araştırmasında değerlendirilecek ana bloklar:
 - USD / global FX
@@ -1111,7 +1218,7 @@ Bu liste nihai feature list değildir; X0 authority scan ile exact değişkenler
 
 ---
 
-# 20C. Ayrı hipotez — Global FX / International Capital-Flow Proxy
+## 4.4 Global FX / international-capital-flow hypothesis
 
 **Durum: VALIDATED SECONDARY CHANNEL FOR ChHHO / NOT PRIMARY FOR DE-ABC**
 
@@ -1119,7 +1226,7 @@ Kullanıcı hipotezi: yalnız DXY değil, majör döviz paritelerinin ortak davr
 
 Bu nedenle FX bloğu tek bir DXY kolonu olarak değil, ayrı bir bilgi ailesi olarak test edilecektir.
 
-## 20C.1 Başlangıç candidate seti
+### 20C.1 Başlangıç candidate seti
 
 Exact source/availability doğrulamasından sonra değerlendirilecekler:
 - DXY veya broad USD index
@@ -1133,13 +1240,13 @@ Exact source/availability doğrulamasından sonra değerlendirilecekler:
 - USD breadth: doların kaç majör para birimine karşı aynı anda güçlendiği/zayıfladığı
 - safe-haven rotation proxy: Gold / USD / JPY / CHF göreli yön veya standardized relative-strength yapısı
 
-## 20C.2 Bilimsel hipotezler
+### 20C.2 Bilimsel hipotezler
 
 - H0: FX/global-capital-flow bilgisi CURRENT8 üzerine ilave out-of-sample bilgi sağlamaz.
 - H1: origin-safe FX bilgisi sonraki ay Gold price move veya base-model forecast error üzerinde ilave bilgi sağlar.
 - H2: breadth/dispersion/rotation gibi türetilmiş FX-state göstergeleri tek DXY seviyesinden daha fazla incremental bilgi taşıyabilir.
 
-## 20C.3 Test sırası
+### 20C.3 Test sırası
 
 1. DXY-only benchmark.
 2. Majör-parite raw-return block.
@@ -1150,7 +1257,7 @@ Exact source/availability doğrulamasından sonra değerlendirilecekler:
 7. Base vs augmented rolling-origin comparison.
 8. Frozen 2025 transport only after DEV freeze.
 
-## 20C.4 Promotion kuralı
+### 20C.4 Promotion kuralı
 
 FX bloğu ancak:
 - availability/vintage PASS,
@@ -1169,20 +1276,20 @@ Ayrıntılı çalışma dosyası:
 
 ---
 
-# 20D. External Driver research — final result
+## 4.5 External-driver X-track final result
 
 **Status: COMPLETED / GOVERNED RESULT**
 
 Research file:
 `gold_axis_2026/GOLD_MONTHLY_EXTERNAL_DRIVER_FINAL_RESULT_2026-09-28.md`
 
-## 20D.1 Main conclusion
+### 20D.1 Main conclusion
 
 The external-information hypothesis is **SUPPORTED**.
 
 Frozen base-model residuals contain incremental information that can be reduced using origin-safe external data. The winning external channel is model-specific.
 
-### ChHHO-ANFIS
+#### ChHHO-ANFIS
 Base:
 - DEV ΣAE **1413.0299 / 23/33**
 - 2025 ΣAE **1252.0542 / 9/12**
@@ -1200,7 +1307,7 @@ FX is a validated secondary channel for ChHHO:
 
 These FX alternatives are not allowed to replace the CPI DEV winner merely because their 2025 error is lower.
 
-### DE-ABC-RBFNN
+#### DE-ABC-RBFNN
 Base:
 - DEV ΣAE **1415.8371 / 25/33**
 - 2025 ΣAE **1145.3733 / 9/12**
@@ -1215,7 +1322,7 @@ DEV-authorized winner:
 
 FX is not promoted as DE-ABC's primary external channel.
 
-## 20D.2 Compact-panel result
+### 20D.2 Compact-panel result
 
 Feature stacking did not beat the best simple external block on DEV.
 
@@ -1232,7 +1339,7 @@ DE-ABC:
 Small-n rule:
 **more external variables are not automatically better; prefer the smallest DEV-authorized block.**
 
-## 20D.3 Risk / commodity status
+### 20D.3 Risk / commodity status
 
 Risk/equity-history block:
 - encouraging diagnostic signal;
@@ -1243,7 +1350,7 @@ Commodity/oil:
 - no governed usable WTI/Brent/commodity series found in current inventory;
 - status: **DATA_NOT_READY / NOT_TESTED**.
 
-## 20D.4 Architecture status
+### 20D.4 Architecture status
 
 Quota-safe execution path validated:
 
@@ -1251,7 +1358,7 @@ Quota-safe execution path validated:
 
 Normal external-driver jobs must not full-read Neon historical data repeatedly.
 
-## 20D.5 Interpretation boundary
+### 20D.5 Interpretation boundary
 
 These results prove **incremental external information value** through a chronology-safe residual-correction layer.
 
@@ -1262,7 +1369,7 @@ Therefore:
 - DE-ABC+Rates residual layer: **PROMOTE_TO_NATIVE-INTEGRATION_CHALLENGE**
 - neither replaces the current frozen base champion yet.
 
-## 20D.6 Stage closure
+### 20D.6 Stage closure
 
 - X0 hypothesis freeze: DONE
 - X1 availability/vintage audit: DONE
@@ -1281,7 +1388,7 @@ Evidence:
 
 ---
 
-# 20E. Cross-family external information screen — zero Neon
+## 4.6 Cross-family external-information screen
 
 **Status: COMPLETE / ARTIFACT-ONLY / ZERO NEON READS**
 
@@ -1299,7 +1406,7 @@ Run / provenance:
 - Neon reads: **0**
 - eight base-model parity gates: **PASS**
 
-## 20E.1 Models screened
+### 20E.1 Models screened
 
 1. ChHHO-ANFIS
 2. DE-ABC-RBFNN
@@ -1319,7 +1426,7 @@ Predeclared external blocks:
 
 Selection authority remains DEV 2022-04..2024-12 only.
 
-## 20E.2 Cross-family result
+### 20E.2 Cross-family result
 
 | Model | Base DEV ΣAE | Direction | Best robust external block | Corrected DEV ΣAE | Direction | ΔΣAE |
 |---|---:|---:|---|---:|---:|---:|
@@ -1337,9 +1444,9 @@ Main result:
 - LMC2_RBF_M32 and EPSILON_RBF_DAILY12 have **no robust winning external block** under this screen.
 - The useful missing information channel is model-specific rather than universal.
 
-## 20E.3 Model-specific interpretation
+### 20E.3 Model-specific interpretation
 
-### ChHHO-ANFIS
+#### ChHHO-ANFIS
 Robust PASS:
 - CPI: ΔΣAE **+69.3945 / +4.91%**
 - PIT USD/CNY: +57.2741 / +4.05%
@@ -1349,17 +1456,17 @@ Robust PASS:
 
 Governed winner: **headline CPI surprise**.
 
-### DE-ABC-RBFNN
+#### DE-ABC-RBFNN
 Governed winner: **PIT rates**, ΔΣAE **+42.2560 / +2.98%**.
 Headline CPI and PIT USD/CNY also pass, but are weaker.
 H.10 broad/major FX do not pass.
 
-### PLS1 V1 All-4
+#### PLS1 V1 All-4
 Only robust winner among tested blocks: **PIT rates**.
 - ΔΣAE **+40.6456 / +2.86%**
 - direction trade-off: **20/33 → 19/33**
 
-### ANN ensembles
+#### ANN ensembles
 FULL7:
 - winner **PIT USD/CNY**
 - ΔΣAE **+37.7231 / +2.64%**
@@ -1370,17 +1477,17 @@ REDUCED4:
 - ΔΣAE **+32.6812 / +2.28%**
 - direction remains **24/33**
 
-### CATBOOST_PRICE
+#### CATBOOST_PRICE
 Winner **PIT USD/CNY**:
 - ΔΣAE **+32.0153 / +2.19%**
 - direction remains 20/33.
 Rates and CPI also pass.
 
-### LMC2_RBF_M32 / EPSILON_RBF_DAILY12
+#### LMC2_RBF_M32 / EPSILON_RBF_DAILY12
 No tested external block passes the robustness gate.
 These stay as **BASE controls** for the current external-information family.
 
-## 20E.4 Interpretation boundary
+### 20E.4 Interpretation boundary
 
 This section proves **incremental external-information value on frozen model forecast residuals**.
 
@@ -1392,7 +1499,7 @@ Reason native integration is not yet authorized:
 
 Native integration requires a new long-history origin-safe external snapshot before retraining.
 
-## 20E.5 Native-integration priority after long-history backfill
+### 20E.5 Native-integration priority after long-history backfill
 
 1. **ChHHO + headline CPI surprise**
 2. **DE-ABC + PIT rates**
@@ -1404,73 +1511,9 @@ Native integration requires a new long-history origin-safe external snapshot bef
 
 ---
 
-# 20F. Public current-data refresh and Sep/Oct 2026 forward
+## 4.7 Data readiness for scientific feature architecture
 
-**Status: CURRENT-DATE REFRESH COMPLETE / ZERO NEON / OCTOBER PROVISIONAL**
-
-Detailed evidence:
-`gold_axis_2026/GOLD_MONTHLY_PUBLIC_DATA_FORWARD_RESULT_2026-09-29.md`
-
-Authoritative successful workflow:
-- run **36531420723**
-- runner commit **225e4f1e24534efce67399efd81668339cb92159**
-- report commit **00cfcdd6172dc4506887e9fe686fb9e933b30551**
-
-Current public bundle:
-- artifact **11015874673**
-- Neon reads **0**
-- four-metal data through last fully completed common day **2026-09-28**
-- World Bank Gold monthly through **2026-08**
-- August 2026 World Bank Gold monthly average **4411.0**
-- exact GPR vintages loaded: **202608** and **202609**
-- StakTrakr annual history extended with StakTrakrApi 12:00 observations.
-
-### September 2026 — completed August origin
-
-| Model | Predicted log return | Monthly-average forecast | Direction |
-|---|---:|---:|---|
-| ChHHO-ANFIS | +0.0402280 | **4592.06** | UP |
-| DE-ABC-RBFNN | +0.0353930 | **4569.91** | UP |
-
-September role:
-**FROZEN FORWARD FORECAST FROM FINAL 2026-08 ORIGIN**.
-
-### October 2026 — provisional partial-September nowcast
-
-September partial Gold average proxy through 2026-09-28:
-**4348.9496**.
-
-| Model | Predicted log return | Provisional monthly-average nowcast | Direction |
-|---|---:|---:|---|
-| ChHHO-ANFIS | -0.0212929 | **4257.33** | DOWN |
-| DE-ABC-RBFNN | -0.0231670 | **4249.36** | DOWN |
-
-October role:
-**PROVISIONAL_NOWCAST_ONLY**.
-
-Reason:
-- September month-end is not complete on 2026-09-29;
-- World Bank September monthly Gold target is not yet available;
-- partial September target is not used as training Y;
-- final October forecast must be regenerated after complete September origin inputs without retuning.
-
-Artifacts:
-- ChHHO Sep **11015679869**
-- DE-ABC Sep **11016920015**
-- ChHHO Oct provisional **11016204637**
-- DE-ABC Oct provisional **11017025301**
-
-Earlier runs 36530729337..36531229734:
-**SUPERSEDED_TECHNICAL_RUNS / NOT MODEL RESULTS**.
-
-Final runner fixed an import-state collision by isolating ANFIS and RBFNN family imports. Do not reuse the failed mixed-import results.
-
----
-
-
-# 20G. Data readiness for scientific feature architecture — direct authority store
-
-## 20G.0 F4 reset supersession note
+### 20G.0 F4 reset supersession note
 
 **The original V1 readiness remains valid as source evidence but is no longer sufficient as the binding F4 modeling contract.**
 
@@ -1499,7 +1542,7 @@ Successful external-store authority:
 - Neon reads: **0**
 - scientific/data gate: **PASS**
 
-## 20G.1 Ready data families
+### 20G.1 Ready data families
 
 | Family | Coverage / authority | Status |
 |---|---|---|
@@ -1521,7 +1564,7 @@ Important update:
 - prior `native integration blocked pending long-history external data` statements are **SUPERSEDED FOR THE CORE F0–F4 PROGRAM**;
 - old FRED-heavy long-history workflow failures are **SUPERSEDED_TECHNICAL_PROVIDER_FAILURE / NOT MODEL RESULTS**.
 
-## 20G.2 Scientific use boundary
+### 20G.2 Scientific use boundary
 
 Ready now:
 - F0 CURRENT8 parity;
@@ -1538,7 +1581,7 @@ Inflation:
 - BLS headline/core realized CPI transformations are authorized;
 - survey-consensus surprise remains a separate optional lane and may not be synthetically backfilled.
 
-## 20G.3 Active next stage
+### 20G.3 Active next stage
 
 The current active model-development task is no longer a new structural family.
 
@@ -1548,8 +1591,7 @@ CNN-BiLSTM remains structurally eligible/deferred and does not override the user
 
 ---
 
-
-# 20H. ChHHO F0/F1 feature necessity audit
+## 4.8 F0/F1 feature-necessity audit
 
 **Status: COMPLETE / DEV-ONLY / ZERO NEON**
 
@@ -1609,8 +1651,7 @@ Earlier mean-masking run **36534304610**:
 
 ---
 
-
-# 20I. ChHHO F2 representation audit
+## 4.9 F2 representation audit
 
 **Status: COMPLETE / DEV-ONLY / ZERO NEON**
 
@@ -1664,8 +1705,7 @@ Binding decision:
 
 ---
 
-
-# 20J. ChHHO F3 lag architecture audit
+## 4.10 F3 lag-architecture audit
 
 **Status: COMPLETE / DEV-ONLY / ZERO NEON**
 
@@ -1707,8 +1747,7 @@ L1+L2 early JSON failures:
 
 ---
 
-
-# 20K. ChHHO F4 Rates native family — legacy endpoint representation
+## 4.11 F4 Rates legacy endpoint representation
 
 **Status: COMPLETE / VALID FOR TESTED LEGACY IMPLEMENTATION / SUPERSEDED FOR FAMILY-WIDE DECISION**
 
@@ -1747,14 +1786,14 @@ Binding interpretation after F4 reset:
 
 ---
 
-# 20L. F4 processing / frequency / optimizer reset
+## 4.12 F4 processing / frequency / optimizer reset and family audits
 
 **Status: ACTIVE / BINDING / MODEL RUNS PAUSED UNTIL DATA+TRANSFORM GATES PASS**
 
 Detailed authority:
 `gold_axis_2026/GOLD_MONTHLY_F4_RESET_PROCESSING_PARITY_AUDIT_2026-09-29.md`
 
-## 20L.1 Why F4 was reset
+### 20L.1 Why F4 was reset
 
 The first F4 native Rates/FX lane was computationally valid for its exact implementation, but later audit identified three design mismatches:
 
@@ -1764,15 +1803,15 @@ The first F4 native Rates/FX lane was computationally valid for its exact implem
 
 Standardization itself was present and is **not** the main defect.
 
-## 20L.2 Legacy evidence status
+### 20L.2 Legacy evidence status
 
-### Rates legacy native
+#### Rates legacy native
 - run **36550570628**
 - BASE parity **1413.029779 / 23/33 PASS**
 - routed result **1657.1153 / 21/33**
 - status: **VALID_FOR_LEGACY_ENDPOINT_REPRESENTATION_ONLY / SUPERSEDED_FOR_FAMILY_DECISION**
 
-### FX legacy native
+#### FX legacy native
 - run **36552598677**
 - artifact **11026195076**
 - digest `sha256:db389252b953b252a3a0b33fefbbc00c8e2df757ef53f25c64fcf254442d1a56`
@@ -1785,7 +1824,7 @@ Detailed FX record:
 
 Earlier residual-correction screens remain valid for the separate residual-correction architecture and are not native-input evidence.
 
-## 20L.3 New apple-to-apple external feature contract
+### 20L.3 New apple-to-apple external feature contract
 
 For daily positive price/index series:
 - monthly representation = `log(mean_level[p]/mean_level[p-1])`;
@@ -1801,7 +1840,7 @@ For native monthly statistics:
 
 FX quote sign is normalized so **positive = USD strengthening** before aggregation.
 
-## 20L.4 Optimizer parity
+### 20L.4 Optimizer parity
 
 Frozen base:
 - 8 inputs
@@ -1824,7 +1863,7 @@ Examples:
 
 Generations/repeats stay 45/3 unless a dedicated optimizer audit changes them.
 
-## 20L.5 External Authority V2
+### 20L.5 External Authority V2
 
 V2 must preserve the existing official H.10/H.15/VIX/CPI/World-Bank evidence and close these gaps:
 
@@ -1836,7 +1875,7 @@ V2 must preserve the existing official H.10/H.15/VIX/CPI/World-Bank evidence and
 
 Technical provider failures during V2 construction are **NOT MODEL RESULTS**.
 
-## 20L.5A External Authority V2 — COMPLETE
+### 20L.5A External Authority V2 — COMPLETE
 
 - run **36560331164**
 - head commit **9f4f53c1a2ddbac5752c24227b94e6ce2d092fca**
@@ -1860,7 +1899,7 @@ Audit discovery:
 - WTI uses signed monthly-mean difference + GPR-weighted daily first difference;
 - no clipping/deletion/synthetic correction.
 
-## 20L.5B B1 transform parity — COMPLETE
+### 20L.5B B1 transform parity — COMPLETE
 
 - run **36560992052**
 - head commit **7edea63450ce993be1c8686ea20d1c0c2c502931**
@@ -1885,7 +1924,7 @@ Audit discovery:
 
 Conclusion: external daily transforms are now processing-parity compatible with the retained CURRENT8 MR/VW architecture.
 
-## 20L.5C B2 processing + optimizer parity — COMPLETE
+### 20L.5C B2 processing + optimizer parity — COMPLETE
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_F4_B2_PROCESSING_OPTIMIZER_PARITY_2026-09-29.md`
@@ -1912,7 +1951,7 @@ Earlier run **36564354047** failed before the scientific audit because of a work
 
 Conclusion: the new external inputs are proven to pass through the same downstream chronological scaling / ANFIS / local-refit pipeline as CURRENT8, and optimizer search density is not below BASE.
 
-## 20L.6 ALL6-COMPACT diagnostic — COMPLETE / NOT PROMOTED
+### 20L.6 ALL6-COMPACT diagnostic — COMPLETE / NOT PROMOTED
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_F4_ALL6_COMPACT_RESULT_2026-09-29.md`
@@ -1970,7 +2009,7 @@ Decision:
 
 The system-level degradation may reflect harmful families, redundant/correlated blocks, interaction effects, weak-signal dilution, high-dimensional premise search difficulty, or isolated pathological origins. Therefore the six families must be decomposed before any family-wide conclusion.
 
-## 20L.6A Rates parity family decomposition — COMPLETE / COMBINED BLOCK NOT PROMOTED
+### 20L.6A Rates parity family decomposition — COMPLETE / COMBINED BLOCK NOT PROMOTED
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_F4_RATES_PARITY_RESULT_2026-09-29.md`
@@ -2033,7 +2072,7 @@ Decision:
   each with dimension-adjusted optimizer parity.
 - **FX is not started yet**, consistent with one-family-at-a-time execution.
 
-## 20L.6B Rates R1 compact real-yield redesign — COMPLETE / NOT PROMOTED
+### 20L.6B Rates R1 compact real-yield redesign — COMPLETE / NOT PROMOTED
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_F4_RATES_R1_REAL_YIELD_RESULT_2026-09-29.md`
@@ -2094,7 +2133,7 @@ Decision:
 - R2 **NOT RUN YET**.
 - FX remains **NOT STARTED**.
 
-## 20L.6C Rates R2 orthogonal pair — COMPLETE / FAMILY CLOSED
+### 20L.6C Rates R2 orthogonal pair — COMPLETE / FAMILY CLOSED
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_F4_RATES_R2_FAMILY_CLOSURE_2026-09-29.md`
@@ -2152,7 +2191,7 @@ Decision:
 - next external family: **FX**
 - FX execution status: **NOT STARTED**
 
-## 20L.6D FX1 Broad USD compact monthly representation — COMPLETE / NOT PROMOTED
+### 20L.6D FX1 Broad USD compact monthly representation — COMPLETE / NOT PROMOTED
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_F4_FX1_BROADUSD_RESULT_2026-09-29.md`
@@ -2205,7 +2244,7 @@ Decision:
 - next FX-only test should use **BROADUSD_MR1 + one daily-path scalar**, with total inputs **10 / D100 / POP30**, before any family closure.
 - VIX/Nasdaq/Energy remain not started.
 
-## 20L.6E FX2 Broad USD daily-path volatility — COMPLETE / NOT PROMOTED
+### 20L.6E FX2 Broad USD daily-path volatility — COMPLETE / NOT PROMOTED
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_F4_FX2_BROADUSD_DAILY_PATH_RESULT_2026-09-29.md`
@@ -2262,7 +2301,7 @@ Decision:
 - 2025/2026 remain closed
 - VIX/Nasdaq/Energy remain not started.
 
-## 20L.6F FX3 directional Almon-MIDAS — COMPLETE / FX FAMILY CLOSED
+### 20L.6F FX3 directional Almon-MIDAS — COMPLETE / FX FAMILY CLOSED
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_F4_FX3_FAMILY_CLOSURE_2026-09-29.md`
@@ -2330,7 +2369,7 @@ Decision:
 - VIX execution status: **NOT STARTED**
 - Nasdaq/Energy remain not started.
 
-## 20L.6G Hard raw-data re-audit — COMPLETE / PASS
+### 20L.6G Hard raw-data re-audit — COMPLETE / PASS
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_F4_FX_RATES_HARD_DATA_REAUDIT_2026-09-29.md`
@@ -2372,7 +2411,7 @@ Conclusion:
 - earlier FRED-distribution reaudit run 36578797117 failed only on download timeout before comparison; later FRED network attempts are non-authority because the stronger direct Board DDP audit supersedes them.
 - next unopened family remains **VIX**.
 
-## 20L.6H ChHHO PIT Rates residual exact replication — COMPLETE / PASS
+### 20L.6H ChHHO PIT Rates residual exact replication — COMPLETE / PASS
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_CHHHO_PIT_RATES_RESIDUAL_REPLICATION_2026-09-29.md`
@@ -2428,7 +2467,7 @@ Interpretation:
 - next clean enhancement test, if pursued, is the **same frozen PIT Rates price-residual protocol applied to the current canonical ChHHO BASE rows**, with no hyperparameter redesign
 - VIX native family remains unopened.
 
-## 20L.6I ChHHO VIX residual screen — COMPLETE / VIX_R1 PASS
+### 20L.6I ChHHO VIX residual screen — COMPLETE / VIX_R1 PASS
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_CHHHO_VIX_RESIDUAL_SCREEN_2026-09-29.md`
@@ -2495,7 +2534,7 @@ Decision:
 - transport interpretation: strong 2025 out-of-sample value, effectively zero aggregate 2026 price-error gain, but one additional correct direction in 2026
 - next clean action is **native-input VIX challenge** if authorized; do not retune VIX_R1 on 2025/2026.
 
-## 20L.6J VIX_R1 frozen transport — COMPLETE / 2025 STRONG, 2026 FLAT
+### 20L.6J VIX_R1 frozen transport — COMPLETE / 2025 STRONG, 2026 FLAT
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_CHHHO_VIX_R1_FROZEN_TRANSPORT_2025_2026_2026-09-29.md`
@@ -2537,7 +2576,7 @@ Decision:
 - do not retune on 2025/2026
 - native-input VIX remains not yet tested.
 
-## 20L.6K Brent residual + Rates combination — COMPLETE
+### 20L.6K Brent residual + Rates combination — COMPLETE
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_CHHHO_BRENT_RESIDUAL_AND_RATES_COMBINATION_2026-09-29.md`
@@ -2580,7 +2619,7 @@ Decision — superseded by mandatory bias-only attribution control in §20L.6L:
 - Rates + Brent stacking is **NOT PROMOTED**
 - frozen Brent transport was completed for diagnosis only; holdout results do not rescue DEV attribution failure.
 
-## 20L.6L Residual attribution bias-only control — COMPLETE / BINDING
+### 20L.6L Residual attribution bias-only control — COMPLETE / BINDING
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_CHHHO_RESIDUAL_ATTRIBUTION_BIAS_CONTROL_2026-09-29.md`
@@ -2635,7 +2674,7 @@ Binding methodological correction:
 - VIX_R1: only **marginal DEV incremental value** beyond bias-only.
 - PIT Rates: not a DEV-supported external winner after bias control, despite positive 2026 retrospective behavior.
 
-## 20L.6M Brent expanded residual screen — COMPLETE / NO ROBUST PROMOTION
+### 20L.6M Brent expanded residual screen — COMPLETE / NO ROBUST PROMOTION
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_CHHHO_BRENT_EXPANDED_RESIDUAL_SCREEN_2026-09-29.md`
@@ -2679,7 +2718,7 @@ Authoritative execution:
 - artifact **11045435477**
 - digest `sha256:c3af6e6e550f849bcc2c6e63db4e7d943ae829999c80176d26347891e5fcbfff`
 
-## 20L.6N Cross-model error overlap / router viability — COMPLETE
+### 20L.6N Cross-model error overlap / router viability — COMPLETE
 
 Detailed record:
 `gold_axis_2026/GOLD_MONTHLY_CROSS_MODEL_ERROR_OVERLAP_ROUTER_VIABILITY_2026-09-29.md`
@@ -2735,7 +2774,7 @@ Authority:
 - artifact **11049132605**
 - digest `sha256:baa25ab1ee06130bdf188cde96be00ee9a8344b5e7a6c609ada996dfd8bec414`
 
-## 20L.7 Workflow hold
+### 20L.7 Workflow hold
 
 Legacy workflows:
 - `.github/workflows/gold-monthly-chhho-f4-rates-v1.yml`
@@ -2748,424 +2787,920 @@ Current exact active stage:
 
 ---
 
+# 5. Market-Regime & State System
 
-# 20M. Alarm / rejim / rescue decision checkpoint — 2026-09-30
+## 5.1 Why this track exists
 
-This section supersedes older “next action” lines that proposed continuing generic residual screens or hard alarm-veto development as the immediate research priority.
+The regime track was opened to determine whether ChHHO reliability changes across objectively different market environments. The regime engine is intentionally **market-only**: ChHHO errors, alarm flags, severity labels, model forecasts and router outputs are forbidden from regime fitting.
 
-## 20M.1 Frozen alarm layer — Specialist Hedge
+This prevents circular statements such as “a regime is risky because it was defined by forecast errors.”
 
-Current strongest alarm/reliability candidate:
-- architecture: **Specialist Router**
-- selected learning rule: **Hedge**, not Fixed-Share
+## 5.2 Market Regime Discovery V1 — structural evidence
+
+Authority:
+- `GOLD_MONTHLY_MARKET_REGIME_DISCOVERY_V1_RESULT_2026-09-30.md`
+- run **36716979693**
+- artifact **11097041821**
+- scientific gate **PASS**
+
+Panel:
+- requested 2010-01..2026-08
+- effective complete panel 2010-07..2026-08
+- development 2010-07..2024-12, 174 months
+- frozen transport 2025-01..2026-08.
+
+Frozen 13D market-state variables:
+- Gold 1m return
+- Gold 3m return
+- Gold level gap vs prior-12m mean
+- Gold realized-volatility ratio
+- cross-metal return dispersion
+- GVZ ratio
+- CFTC Managed Money net/OI
+- CFTC OI ratio
+- broad USD monthly change
+- nominal 10Y change
+- real 10Y change
+- GLD/IAU combined flow proxy
+- ETF outflow breadth.
+
+Gaussian HMM BIC:
+- K=1: 3405.30
+- K=2: 3342.75
+- **K=3: 3334.20**
+- K=4: 3353.59
+- K=5: 3380.92.
+
+Primary HMM therefore uses **3 persistent states**. Weighted self-transition probability is about **89.2%**.
+
+Independent GMM supports **2 coarse clusters**, so the binding interpretation is:
+- at least two distinct regimes are strongly supported;
+- persistence-aware HMM favors three operational semantic states.
+
+## 5.3 Semantic regime definitions
+
+### R0 — drawdown / macro-pressure / stress
+Typical profile:
+- negative Gold trend;
+- Gold below prior-12m reference;
+- lower speculative positioning;
+- higher volatility / GVZ;
+- stronger USD / higher real-rate pressure.
+
+### R1 — quiet / neutral / low-volatility
+Typical profile:
+- near-neutral Gold trend;
+- lower realized volatility and GVZ;
+- lower cross-metal dispersion;
+- relatively balanced positioning / flow state.
+
+### R2 — bullish / accumulation / elevated-state
+Typical profile:
+- positive Gold 1m / 3m trend;
+- Gold materially above prior-12m mean;
+- stronger Managed-Money positioning;
+- positive ETF accumulation tendency;
+- nominal / real yields often declining.
+
+These names are descriptive semantics, not trading instructions.
+
+## 5.4 Walk-forward regime detection
+
+Authority:
+- `GOLD_MONTHLY_MARKET_REGIME_WALKFORWARD_V1_RESULT_2026-09-30.md`
+- run **36723724702**
+- artifact **11101827380**
+- scientific gate **PASS**
+
+At month t:
+- scaler/PCA/HMM fit ends at t-1;
+- month t is filtered only after fit;
+- K=3 is frozen;
+- posterior <60% => **BELIRSIZ**;
+- OOD is separate.
+
+2025-01..2026-08:
+- strict confident-state accuracy **88.9%**
+- decided-only accuracy **100%**
+- R2 recall **93.75%**
+- R1 recall **50%**
+- BELIRSIZ rate **10%**
+- OOD rate **10%**.
+
+Core weakness:
+- R2 persistence is recognized strongly;
+- R0/R1 separation and transition timing are materially weaker.
+
+## 5.5 Prototype semantic alignment
+
+Authority:
+- `GOLD_MONTHLY_MARKET_REGIME_PROTOTYPE_ALIGNMENT_V1_RESULT_2026-09-30.md`
+- run **36733309569**
+- artifact **11106235879**
+- PASS.
+
+A frozen 13D prototype/Hungarian mapping improves expanding-refit semantic consistency:
+- core 2022-01..2026-08 strict accuracy roughly **68.6% → 76.5%**
+- balanced accuracy **61.2% → 70.8%**.
+
+It changes state names only; HMM likelihood/posteriors are unchanged.
+
+Critical result:
+- prototype alignment changed **0/20** months in 2025-01..2026-08;
+- therefore label-switching is not the cause of the recent transition problem.
+
+## 5.6 Expanding vs annual anchoring
+
+Authority:
+- `GOLD_MONTHLY_MARKET_REGIME_ANCHORED_COMPARISON_V1_RESULT_2026-09-30.md`
+- run **36731019903**
+- artifact **11104223104**
+- PASS.
+
+No operational winner was established:
+- annual anchoring slightly improves some recent-state metrics;
+- expanding-refit has better long-replay predictive density;
+- annual anchoring collapses R0 recall in part of the core replay.
+
+Primary current reporting therefore continues to use **EXPANDING_REFIT**, with anchored variants as sensitivity evidence.
+
+## 5.7 Transition research
+
+### Transition V1
+- PASS as experiment / **NOT PROMOTED**
+- useful event sensitivity but false-transition rate about **26%** in 2022-2024 expanding validation.
+- generic surprise/anomaly signals confused within-regime extremes with true change.
+
+### Transition V2
+- PASS as experiment / **PROMOTION FAIL**
+- removes generic anomaly/surprise votes and uses directional/persistent posterior deterioration.
+- 2022-2024 event hits **3/3**, but false-transition rate **24.2%**, above the frozen 15% ceiling.
+- opened 2025-2026 behavior is encouraging and catches 2026 deterioration from May, but this cannot override the failed prior validation gate.
+- V2 is retained as **context/research evidence** and as a Specialist Hedge expert; it is not an independent hard transition switch.
+
+### Transition V3 duration-aware
+- PASS as experiment / **PROMOTION FAIL**
+- became more conservative;
+- 2022-2024 event hits **0/3**;
+- duration-aware threshold refinement is closed.
+
+Binding:
+- no standalone transition detector is authorized to switch/downweight ChHHO.
+
+## 5.8 Within-regime Extreme V1
+
+Authority:
+- `GOLD_MONTHLY_MARKET_REGIME_EXTREME_V1_RESULT_2026-09-30.md`
+- run **36752189037**
+- artifact **11115570221**
+- descriptive candidate PASS.
+
+Rule:
+- requires same-state continuity and posterior >=0.60;
+- uses emission tail, predictive surprise, 13D within-state distance and 13D month-to-month jump;
+- >=2 signals => EXTREME;
+- otherwise NORMAL;
+- ineligible state continuity => DEFER.
+
+2026 expanding chronology:
+- Jan: R2 EXTREME
+- Feb: R2 EXTREME
+- Mar: R2 EXTREME
+- Apr: R2 NORMAL
+- May: R2 NORMAL + V2 TRANSITION
+- Jun: R2 EXTREME
+- Jul: BELIRSIZ/R1 DEFER + V2 TRANSITION
+- Aug: R1 DEFER.
+
+EXTREME and TRANSITION are intentionally distinct concepts.
+
+## 5.9 Market-state × ChHHO reliability audit
+
+Authority:
+- `GOLD_MONTHLY_MARKET_STATE_CHHHO_RELIABILITY_AUDIT_V1_RESULT_2026-09-30.md`
+- run **36754939746**
+- artifact **11116487006**
+- PASS / **NO ALARM-WEIGHTING PROMOTION**.
+
+Chronology:
+- state is joined at the **forecast origin**, never target month.
+
+Key finding:
+- DEV and opened periods do not show a stable monotonic regime-risk relationship.
+- DEV EXTREME and TRANSITION can have lower ChHHO error than NORMAL.
+- opened 2025-2026 TRANSITION is associated with very large errors, but this relationship reverses the DEV pattern.
+- therefore EXTREME is not a ChHHO risk multiplier and TRANSITION is not a universal switch rule.
+
+## 5.10 Next-regime prediction decision
+
+An explicit next-month R0/R1/R2 prediction model is **not currently required**.
+
+Reason:
+- live origin state already supplies semantic identity, posterior confidence, transition deterioration, extreme/defer, OOD and persistence;
+- the unresolved operational problem is **forecast reliability/action**, not the next semantic label itself.
+
+Reopen a dedicated next-regime forecast only if the post-alarm decision research demonstrates that current origin-state information is the binding bottleneck.
+
+## 5.11 Current September-2026 origin state
+
+Official result:
+- `GOLD_MONTHLY_SEPTEMBER_2026_REGIME_STATE_RESULT_2026-10-01.md`
+- run **36832356597**
+- artifact **11147761924**
+- SUCCESS.
+
+For the October-2026 forecast:
+- semantic regime = **R1**
+- posterior = **0.9823228737**
+- OOD = **NO**
+- V2 = **STABLE**
+- current transition votes = **0**
+- Extreme V1 = **NORMAL**
+- anomaly signals = **0/4**
+- combined context = **R1 / STABLE / NORMAL**.
+
+Market data are through 2026-09-30. Regime parameters are fit only through 2026-08. World Bank September Gold was unavailable, so level-sensitive September inputs use the complete StakTrakr full-month proxy.
+
+---
+
+# 6. Alarm, Reliability & Error-Risk System
+
+## 6.1 Alarm target and severity
+
+The alarm system predicts **ChHHO forecast-error risk**, not gold direction.
+
+Binding APE severity:
+- **NORMAL:** APE < 2.5%
+- **MEDIUM:** 2.5% <= APE < 3.0%
+- **HIGH:** APE >= 3.0%.
+
+HIGH does not mean DOWN or UP. HIGH does not mean SWITCH.
+
+## 6.2 Signal catalog
+
+| Signal | Mechanism | Timing / role | Current interpretation |
+|---|---|---|---|
+| **A** | predicted move has same sign as a mild Gold origin move (<2%) while >=2 companion metals move opposite Gold | T0 | selective alarm candidate |
+| **B** | Gold >3%, >=2 companion metals positive, USD and nominal/real yields falling, but forecast <=1% | T0 | warning-only; regime dependent |
+| **C** | Gold origin return negative, nominal/real yields falling, forecast near-flat (<1%) | T0 | medium-error / low-event warning |
+| **D** | Gold >3% while USD and nominal/real yields rise and model remains positive | T0 | rare HIGH mechanism |
+| **E** | Gold >20% above prior-12m mean and forecast-vs-origin move mismatch >5pp | T0 | discovery-period / unvalidated error warning |
+| **G** | Gold 3m return <= -10% | T0 | high-movement / regime warning, not a pure error alarm |
+| **H** | large CFTC positioning/open-interest repricing: abs monthly Δ Managed-Money net/OI >=0.1499821 OR abs OI change >=14.9766% | T0 | positioning warning; promising, not standalone hard alarm |
+| **I1** | ETF combined-flow deterioration versus prior month reaches historical lower-tail threshold | T0 | ETF transition warning candidate |
+| **I2** | persistent simultaneous GLD+IAU outflow breadth / streak | T0 | historically supported ETF-regime warning with noise |
+| **T1_WGC** | two consecutive official WGC monthly global gold-ETF OUTFLOW reports | early target month | T1 confirmation; noisy standalone |
+| **V2_TRANSITION** | market-only Transition V2 deterioration flag | T0 context | specialist/context expert, not standalone hard transition rule |
+| **NULL** | always predicts no risk | router comparator | always-awake no-risk expert |
+
+A/B/C/D definitions are frozen from the canonical ChHHO alarm audit. E/G are later pattern/regime mechanisms. H is the validated CFTC position-shift mechanism. I1/I2 come from the ETF dynamic/persistence track. T1_WGC is a target-month early-report channel and is not available at T0 before publication.
+
+## 6.3 Unified alarm evidence before routing
+
+Unified Alarm Matrix V1:
+- run **36710435526**
+- artifact **11094306282**
+- PASS.
+
+Across the usable 58-target map:
+- 17 HIGH APE targets;
+- all-visible A..I2/T1 signals are present on **16/17** HIGH targets;
+- the fully blind HIGH target was **2026-06** before V2_TRANSITION was added as a specialist context signal.
+
+Signal evidence is heterogeneous:
+- some are selective;
+- some are noisy regime warnings;
+- T1 is confirmation rather than pure T0 information;
+- therefore raw signal union is not an operational router.
+
+DEV raw ANY_VISIBLE:
+- 25 events
+- 8 HIGH
+- 2 MEDIUM
+- 15 false
+- useful-call rate 40%
+- false-call rate 60%.
+
+## 6.4 Alarm research evolution and rejected simplifications
+
+### DEV fine-tuned RED
+DEV-selected sparse RED rule achieved 8/8 HIGH on DEV with fewer calls, but untouched 2025 HIGH recall collapsed to **20%**.
+
+Decision:
+**REJECTED ON TRANSPORT.**
+
+### Cross-model SAFE veto
+A direction-consensus / low-dispersion veto looked clean on DEV.
+
+Exact16 transport later showed:
+- opened false warnings removed: **0**
+- true HIGH removed: **1** (2025-02).
+
+Decision:
+**EXACT16_TRANSPORT_HARMFUL / REJECT HARD VETO.**
+Consensus and dispersion remain context features only.
+
+### Adaptive reliability memory
+ROLL / half-life / expanding signal reliability was tested chronology-safely.
+
+Selected memory was simply **EXPANDING**; stronger recency forgetting did not help.
+A fixed 0.50 reliability gate suppressed too many true alarms.
+
+Decision:
+**ADAPTIVE CANDIDATE FAIL.**
+
+### Regime / V2 shrinkage reliability
+Signal-only vs signal+regime vs signal+regime+V2 partial-pooling models were tested.
+
+Adding regime/V2 worsened DEV Brier calibration, and the fixed gate lost too many genuine HIGH/MEDIUM events.
+
+Decision:
+**NO ALARM WEIGHTING PROMOTION.**
+
+These negative results are binding duplicate-prevention evidence: do not revive them by retuning on 2025/2026.
+
+## 6.5 Frozen Specialist Hedge router
+
+Authority:
+- `GOLD_MONTHLY_SPECIALIST_FIXED_SHARE_ALARM_ROUTER_V1_RESULT_2026-09-30.md`
+- run **36775933119**
+- artifact **11124892942**
+- PASS / promotion candidate.
+
+Search:
+- 100 preregistered Hedge / Fixed-Share / threshold candidates;
+- selection uses DEV only.
+
+Selected:
+- **HEDGE_eta0.25_tau0.50**
 - eta = **0.25**
 - alpha = **0**
-- HIGH threshold tau = **0.50**
-- experts: A/B/C/D/E/G/H/I1/I2/T1_WGC + V2_TRANSITION + NULL.
+- tau = **0.50**.
 
-DEV 2022-04..2024-12:
-- router events **20**
-- HIGH hits **8/8**
-- MEDIUM hits **2/2**
-- false calls **10**
-- raw ANY false calls **15**
-- false reduction **33.3%**
-- no HIGH/MEDIUM loss.
+Fixed-Share itself is not selected; the winning architecture is specialist **Hedge without sharing**.
+
+DEV:
+- raw ANY_VISIBLE: 25 calls = 8 HIGH +2 MEDIUM +15 false
+- Specialist Hedge: **20 calls = 8 HIGH +2 MEDIUM +10 false**
+- HIGH recall **100%**
+- elevated recall **100%**
+- false calls removed **5/15 = 33.3%**
+- useful-call rate **40% → 50%**.
 
 Opened 2025:
 - 7 warnings
 - 5 HIGH +1 MEDIUM +1 false
-- HIGH recall **100%**.
+- HIGH recall 100%.
 
 Opened 2026 Jan-Aug:
 - 6 warnings
 - 3 HIGH +1 MEDIUM +2 false
-- HIGH recall **100%**
-- includes the origin 2026-05 V2-only warning for target 2026-06 HIGH.
+- HIGH recall 100%.
 
 Binding:
-- freeze the Specialist Hedge router;
-- do not retune eta/tau on opened 2025/2026;
-- HIGH means **forecast-error risk**, not UP/DOWN direction and not an automatic model switch.
+- Specialist Hedge is the frozen alarm/reliability layer.
+- eta/tau are not retuned on opened outcomes.
+
+## 6.6 Regime-conditioned alarm behavior
+
+R0/R1/R2 alarm audits demonstrate that the same raw signal has different false-call ecology across regimes:
+- R0 T0_STANDARD was clean in the observed small sample;
+- R1 was the noisiest regime;
+- R2 ANY_VISIBLE useful-call rate was higher than R1.
+
+However:
+- these differences are descriptive;
+- live regime relationships are not stable enough to justify hard per-regime alarm multipliers;
+- regime enters later decision research as context, not as a direct threshold override.
+
+## 6.7 Current October-2026 frozen alarm snapshot
 
 Detailed result:
-`gold_axis_2026/GOLD_MONTHLY_SPECIALIST_FIXED_SHARE_ALARM_ROUTER_V1_RESULT_2026-09-30.md`
+- `GOLD_MONTHLY_OCTOBER_2026_SPECIALIST_HEDGE_ALARM_SNAPSHOT_V1_RESULT_2026-10-01.md`
+- snapshot JSON: `GOLD_MONTHLY_OCTOBER_2026_SPECIALIST_HEDGE_ALARM_SNAPSHOT_V1_2026-10-01.json`.
 
-## 20M.2 Frozen market-state context
+Origin 2026-09 / target 2026-10:
+- A/B/C/D/E/G/H/I1/I2 = **OFF**
+- V2_TRANSITION = **OFF / STABLE**
+- T1_WGC = **UNAVAILABLE/OFF at T0**
+- active signals = none
+- active experts = none
+- p_HIGH = **0.000000**
+- p_ELEVATED = **0.000000**
+- HIGH alarm = **NO**.
 
-Regime must not be reduced to one hard R-label.
+Context:
+- R1 / STABLE / NORMAL
+- p(R1)=0.9823228737
+- OOD=NO.
 
-Use the origin-known state as a multi-dimensional context:
-- semantic regime: **R0 / R1 / R2 / BELIRSIZ**
-- soft regime posterior probabilities
-- transition status: **STABLE / TRANSITION** from V2 as research/context information
-- within-regime status: **NORMAL / EXTREME / DEFER**
-- OOD / historically unusual flag
-- regime spell age / persistence context.
+Interpretation:
+this is a reliability statement only. It does not validate the price level, predict direction, or authorize a model change.
 
-Important empirical distinction:
-- 2025 is overwhelmingly/continuously R2 in the primary discovery representation;
-- 2026 contains R2 EXTREME, R2 TRANSITION and BELIRSIZ/R1 TRANSITION states that are not interchangeable.
+---
 
-Do not infer that one regime variant is universally “good” or “bad” for ChHHO:
-- DEV and opened 2025-2026 show non-stationary/reversing relationships for TRANSITION;
-- EXTREME is descriptive and is not an authorized ChHHO risk multiplier.
+# 7. Post-Alarm Rescue, Relative-Loss & Decision Research
 
-Therefore regime is retained as **context**, not a hard global switch or multiplier.
+## 7.1 Separation of problems
 
-## 20M.3 Exact16 SAFE-veto — COMPLETE / REJECTED FOR TRANSPORT
+The project now distinguishes three separate questions:
 
-Detailed record:
-`gold_axis_2026/GOLD_MONTHLY_MISSING9_EXACT16_SAFE_VETO_TRANSPORT_V1_RESULT_2026-09-30.md`
+1. **Forecast:** what is next month's XAU/USD average? -> ChHHO.
+2. **Reliability:** is ChHHO at elevated error risk? -> Specialist Hedge.
+3. **Action after warning:** if risk is high, is there a safer challenger / blend / KEEP decision? -> rescue research.
 
-Execution:
-- run **36779063580**
-- workflow conclusion **SUCCESS**
-- exact16 artifact **11128785588**
-- digest `sha256:ac7cedf50793d7fe1945f54553efb9e1336962cb8adb298f32db8bd58246a007`.
+A correct alarm does not imply that another model is better.
 
-All missing-nine reconstruction jobs passed their frozen reproduction gates, allowing the exact original 16-model pool to be evaluated.
-
-DEV:
-- frozen router: 20 events = 8 HIGH +2 MEDIUM +10 false
-- Exact16 overlay: 18 = 8 HIGH +2 MEDIUM +8 false
-- removes 2 false, loses 0 HIGH/MEDIUM.
-
-Opened 2025:
-- router: 7 = 5 HIGH +1 MEDIUM +1 false
-- overlay: 6 = 4 HIGH +1 MEDIUM +1 false
-- **false removed 0**
-- **HIGH removed 1**: origin 2025-01 H -> target 2025-02 HIGH.
-
-Opened 2026 Jan-Jul:
-- overlay makes no change;
-- false removed 0;
-- HIGH/MEDIUM removed 0.
-
-Opened 2025 + 2026 Jan-Jul:
-- router: 12 = 7 HIGH +2 MEDIUM +3 false
-- overlay: 11 = 6 HIGH +2 MEDIUM +3 false
-- net: **0 false removed, 1 HIGH removed**.
-
-Binding interpretation:
-- **EXACT16_TRANSPORT_HARMFUL**
-- do not deploy the Exact16 hard veto;
-- do not retune its consensus or dispersion thresholds using opened outcomes;
-- do not revive the seven-model shadow;
-- cross-model consensus/dispersion may remain as origin-safe **context features only**.
-
-## 20M.4 Current research question — HIGH sonrası aksiyon
-
-The immediate project question is no longer “find another alarm” or “predict next month's exact R0/R1/R2 label.”
-
-Current question:
-
-> **When Specialist Hedge says the main ChHHO forecast is HIGH-risk, what should be done with the point forecast?**
-
-The next analysis stage is **HIGH-alarm post-action / rescueability analysis**, not immediate switching.
-
-For every alarm origin, compare:
-- ChHHO point forecast
-- actual
-- ChHHO AE/APE
-- frozen challenger forecasts
-- challenger gain/loss relative to ChHHO
-- active alarm experts and Specialist Hedge score
-- full origin-known regime context
-- cross-model consensus/dispersion.
-
-Candidate actions to be evaluated:
-- **KEEP MAIN**
-- **SWITCH** to a challenger only where there is repeatable origin-safe evidence
-- **BLEND** where multiple challengers provide coherent rescue
-- **KEEP + LOW CONFIDENCE / ABSTAIN** where rescue evidence is weak, contradictory or OOD.
-
-Critical rule:
-**HIGH alarm does not force a forecast change.**
-
-## 20M.5 Historical evidence handling
-
-Do not train a rescue rule by pooling all 2022-2024 alarm months equally:
-- the Specialist router's DEV useful-call rate was only 50%;
-- alarm ecology changes materially in the later R2-heavy period.
-
-Do not discard historical data either.
-
-Preferred analysis:
-- use the frozen origin-known market-state vector to identify **contextually similar historical episodes**;
-- treat regime posterior, transition/extreme/OOD and model-dispersion information as soft/context variables;
-- estimate challenger rescue behavior conditionally rather than by calendar period alone.
-
-Opened 2025/2026:
-- remain diagnostic/opened evidence;
-- must not be used for post-hoc threshold selection or rescue-rule optimization.
-
-## 20M.6 Next-regime prediction decision
-
-A separate next-month R0/R1/R2 forecasting model is **not an immediate prerequisite**.
-
-Reason:
-- the current live regime stack already supplies origin-known state identity, posterior confidence, transition deterioration, EXTREME/OOD and persistence information;
-- the decision problem is forecast reliability/action, not the semantic label of the next month by itself.
-
-Reopen explicit next-regime forecasting only if the rescue analysis demonstrates a concrete bottleneck that cannot be resolved from current origin-state information.
-
-## 20M.7 Exact next stage
-
-**Stage: Contextual HIGH-Alarm Rescueability Analysis V1 — ANALYSIS ONLY / NO SWITCH YET**
-
-Goal:
-- determine whether HIGH-risk months contain repeatable, origin-identifiable rescue structure;
-- test whether challenger advantage is conditionally predictable from the frozen alarm + regime + model-state context;
-- preserve KEEP MAIN / abstention as valid outcomes.
-
-No price switch, blend weight, or rescue router is authorized until this analysis supports one.
-
-
-
-## 20M.8 Contextual HIGH-Alarm Rescueability Analysis V1 — COMPLETE
+## 7.2 Contextual HIGH-Alarm Rescueability V1
 
 Detailed result:
-`gold_axis_2026/GOLD_MONTHLY_CONTEXTUAL_HIGH_ALARM_RESCUEABILITY_V1_RESULT_2026-10-01.md`
-
-Authority:
-- commit `c9eb9f06eb683591edcc1211fec12850ebaa67e4`
-
-Execution:
-- workflow **Gold Monthly Contextual High Alarm Rescueability V1**
+- `GOLD_MONTHLY_CONTEXTUAL_HIGH_ALARM_RESCUEABILITY_V1_RESULT_2026-10-01.md`
 - run **36790524882**
-- job **110142094485**
-- conclusion **SUCCESS**
 - artifact **11132141035**
-- digest `sha256:6788f6bc1a1992570dc43ee019403e2765669cc749a6d2686613e500fa6d51e4`
-- scientific gate **PASS**.
+- PASS / analysis only.
 
-Frozen exact-16 rescue anatomy:
+DEV Specialist Hedge warnings:
+- 20 warnings
+- 10 realized HIGH/MEDIUM
+- 10 false/NORMAL.
 
-DEV router warnings:
-- **20** warnings
-- **10** realized HIGH/MEDIUM
-- **10** false/NORMAL
-- elevated rescue pattern counts:
-  - BROAD_MATERIAL_RESCUE **3**
-  - BROAD_RESCUE **2**
-  - NARROW_MATERIAL_RESCUE **1**
-  - SHARED_HARD_OR_SHALLOW **4**.
+Elevated-warning rescue anatomy:
+- BROAD_MATERIAL_RESCUE: 3
+- BROAD_RESCUE: 2
+- NARROW_MATERIAL_RESCUE: 1
+- SHARED_HARD_OR_SHALLOW: 4.
 
-Best fixed challenger on only the realized elevated DEV warning months:
+Best fixed challenger on only the 10 realized elevated warnings:
 - **LMC2_RBF_M32**
 - gain **+101.76 USD**
 - wins **8/10**.
 
-But on the actual ex-ante decision set — all 20 router warnings including false alarms:
-- best fixed fallback remains LMC2_RBF_M32;
-- ChHHO warning-month ΣAE **1127.89**
-- LMC2 warning-month ΣAE **1144.00**
-- net gain **-16.11 USD**.
+But on the actual ex-ante set of all 20 warnings:
+- ChHHO ΣAE **1127.89**
+- LMC2 ΣAE **1144.00**
+- gain **-16.11 USD**.
 
-Binding interpretation:
-**HIGH -> fixed fallback is rejected on DEV.**
-The gains on true elevated-error warnings are erased by false-warning months.
+Therefore:
+**HIGH -> fixed fallback is rejected.**
 
-DEV hindsight headroom remains large:
-- best-alternative-every-warning gain **445.76 USD**
-- KEEP-or-best-alternative gain **469.73 USD**.
+DEV warning oracle diagnostics:
+- best alternative every warning gain **+445.76 USD**
+- KEEP-or-best-alternative gain **+469.73 USD**.
 
-This shows that rescue capacity exists, but the missing component is an origin-safe selector.
+Theoretical rescue headroom exists, but selection is the hard problem.
 
-Opened exact16 transport through 2026-07:
-- **12** warnings
-- **9** realized HIGH/MEDIUM
-- **3** false
-- elevated rescue patterns:
-  - BROAD_MATERIAL_RESCUE **5**
-  - BROAD_RESCUE **2**
-  - NARROW_MATERIAL_RESCUE **1**
-  - SHARED_HARD_OR_SHALLOW **1**.
+## 7.3 Exact16 Relative-Loss / Rescue-Gain Matrix Stage 1
 
-Opened retrospective best fixed challenger:
-- **CNN-LSTM LB6**
-- elevated-warning gain **+440.84 USD**, wins **8/9**
-- all-warning gain **+302.14 USD**, wins **8/12**.
+Definition:
+`gain(j,t)=|error_ChHHO,t|-|error_model_j,t|`.
 
-This is descriptive only; 2025/2026 is opened and cannot select a production fallback.
+Coverage:
+- 33 DEV months
+- ChHHO + 15 frozen challengers.
 
-Critical structural cases:
-- **2025-02 HIGH, R2/NORMAL:** 14/15 alternatives beat ChHHO; broad material rescue despite 100% exact16 direction agreement and low dispersion.
-- **2025-09 HIGH, BELIRSIZ/TRANSITION:** 13/15 alternatives beat ChHHO; broad material rescue.
-- **2026-01 HIGH, R2/NORMAL:** 13/15 alternatives beat ChHHO; broad but shallower rescue.
-- **2026-03 MEDIUM, R2/EXTREME/OOD:** **0/15** alternatives beat ChHHO; alarm is useful but correct retrospective action is KEEP MAIN.
-- **2026-06 HIGH, R2/TRANSITION:** 9/15 alternatives beat ChHHO; broad but modest rescue.
+Key results:
+- no single challenger beats ChHHO cumulatively across all 33 DEV targets;
+- best fixed all-33 challenger DE-ABC-RBFNN: **-2.81 USD** gain vs ChHHO;
+- best fixed all-warning challenger LMC2: **-16.11 USD**;
+- warning KEEP-or-best oracle: **+469.73 USD**;
+- all-33 KEEP-or-best oracle: **+708.51 USD**.
 
-Consequences:
-1. alarm truth and rescueability are distinct problems;
-2. regime context is useful but not deterministic;
-3. direction consensus / low dispersion cannot be used as a KEEP veto;
-4. same apparent regime cell can contain broad, narrow and shallow rescue;
-5. a later action layer must predict **relative loss / rescue gain**, not merely whether ChHHO is risky.
+Simple one-variable rescue associations with p_HIGH, consensus, dispersion and ensemble position are weak. No hard rule is promoted.
 
-No SWITCH, BLEND or abstention rule is promoted by this stage.
+## 7.4 Contextual Relative-Loss / Rescue-Gain Predictor V1
 
-### Exact next research step
+Authority/result:
+- `GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_RESULT_2026-10-01.md`
+- official run **36847543031**
+- artifact **11154625268**
+- DEV gate PASS but robustness **WEAK**.
 
-**Contextual Relative-Loss / Rescue-Gain Predictor V1 — NOT YET RUN**
+Frozen DEV research leader:
+- predictor = **RIDGE_CORE_A10**
+- policy = **DIRECT_SWITCH**
+- chronological warning evaluation = 14 warnings after 8-target warm-up
+- KEEP ΣAE **782.7432**
+- selector ΣAE **778.0388**
+- gain **+4.7044 USD**
+- 13 SWITCH / 1 KEEP
+- beneficial non-KEEP **5**
+- harmful non-KEEP **8**
+- worst incremental harm **31.6639 USD**.
 
-Target:
-`gain(j,t)=|error_ChHHO,t|-|error_model_j,t|`
+This is not sufficient for production authorization.
 
-Purpose:
-- decide whether a router warning is a KEEP-main case or has credible positive-gain alternatives;
-- use only origin-known alarm + market-state + ensemble-geometry context;
-- retain KEEP MAIN and ABSTAIN as first-class actions;
-- do not fit another gold-price model.
+## 7.5 Frozen opened transport — 2025-01..2026-07
 
-2025/2026 remains descriptive/opened and may not choose predictor architecture, thresholds or fallback identity.
+No retuning:
+- same RIDGE_CORE_A10
+- alpha 10
+- CORE feature set
+- DIRECT_SWITCH.
 
+Results on 12 warning months:
+- KEEP ΣAE **2153.0192**
+- selector ΣAE **2057.7830**
+- aggregate gain **+95.2362 USD**
+- 11 SWITCH / 1 KEEP
+- beneficial switches **7**
+- harmful switches **4**
+- worst incremental harm **238.5690 USD**.
 
-## 20M.9 October 2026 forward forecast — COMPLETE
+Critical failure:
+- **2026-03 MEDIUM / R2 EXTREME OOD**
+- predictor chose DE-ABC-RBFNN
+- expected rescue about +89.88 USD
+- realized incremental result **-238.57 USD** versus KEEP.
+
+This is the core **shared-hard** failure mode.
+
+## 7.6 Harmful-Switch / Shared-Hard Safety Guard V1
 
 Detailed result:
-`gold_axis_2026/GOLD_MONTHLY_OCTOBER_2026_FORWARD_RESULT_2026-10-01.md`
+- `GOLD_MONTHLY_HARMFUL_SWITCH_SHARED_HARD_GUARD_V1_RESULT_2026-10-01.md`
+- run **36848597787**
+- artifact **11153893189**
+- scientific gate **FAIL / REJECTED**.
 
-Execution:
+Tested preregistered heuristics:
+- predicted positive-rescue breadth 50% / 67% / 80%;
+- top predicted gain / residual-RMSE confidence 0.5x / 1.0x / 1.5x;
+- combined breadth + confidence gates.
+
+No candidate passed acceptance.
+
+Examples:
+- BREADTH_50 gain **-3.78 USD**
+- BREADTH_67 **-74.93**
+- BREADTH_80 **-56.81**
+- CONF_100 **-42.05**
+- CONF_150 **-23.96**.
+
+Expanding guard-selection replay:
+- guard replay **-22.5427 USD**
+- same-window NO_GUARD **+0.9418 USD**.
+
+Critical DEV case 2023-03:
+- predictor expected positive rescue for about **93.3%** of challengers;
+- top predicted rescue about **+87.0 USD**
+- confidence ratio **3.42x**
+- realized chosen-switch gain **-23.97 USD**.
+
+Therefore broad predicted consensus and high confidence are not safe shared-hard detectors.
+
+Binding:
+- Guard V1 rejected.
+- no guard frozen.
+- no guard transport opened.
+- automatic switch remains unauthorized.
+
+## 7.7 Current production / research boundary
+
+Production-relevant hierarchy:
+- **ChHHO-ANFIS:** primary price forecast
+- **Specialist Hedge:** frozen forecast-error warning layer
+- **market-state stack:** descriptive/context layer
+- **Rescue-Gain Predictor V1:** research-only
+- **Guard V1:** rejected
+- **automatic SWITCH/BLEND:** not authorized.
+
+Exact next research problem:
+**directly predict harmful proposed switches / shared-hard probability**, rather than adding another hand-written breadth/confidence veto.
+
+---
+
+# 8. Current Forward Forecast & Live Operational State
+
+## 8.1 October-2026 forward forecast
+
+Detailed result:
+- `GOLD_MONTHLY_OCTOBER_2026_FORWARD_RESULT_2026-10-01.md`
 - run **36831538209**
-- conclusion **SUCCESS**
-- September-complete public bundle artifact **11147198912**
 - ChHHO artifact **11147595500**
-- DE-ABC artifact **11147945272**.
+- DE-ABC artifact **11147945272**
+- SUCCESS.
 
-Data state:
-- common four-metal daily coverage through **2026-09-30**
-- September common daily rows **30**
+Data gate:
+- four-metal common daily data complete through **2026-09-30**
+- September common daily rows = 30
 - official GPR 202609 vintage present
 - September training row included
-- no October target/outcome data used.
+- no October target/outcome information used.
 
-Main ChHHO forward:
-- September complete StakTrakr Gold monthly-average proxy **4336.8513**
-- predicted Gold log return **-0.0135908895**
-- implied multiplier **0.9865010496**
-- **October 2026 average forecast = 4278.3084 USD/oz**
-- implied change from September proxy **-1.35%**
+ChHHO:
+- September complete level proxy **4336.8513**
+- predicted log return **-0.0135908895**
+- multiplier **0.9865010496**
+- October average proxy forecast **4278.3084 USD/oz**
+- implied change **-1.35%**
 - direction **DOWN**.
 
-Frozen DE-ABC comparator:
-- forecast **4255.7049 USD/oz**
-- implied change **-1.87%**
-- direction **DOWN**.
+DE-ABC comparator:
+- **4255.7049 USD/oz**
+- implied change about **-1.87%**
+- direction DOWN.
 
-Important level-source qualification:
-- World Bank 2026-09 monthly Gold was **not yet available** at execution;
-- therefore 4278.31 is **SEPTEMBER_COMPLETE_FEATURES / FULL_MONTH_STAK_LEVEL_PROXY**, not yet canonical World-Bank-level final.
-- once World Bank September Gold arrives, canonical ChHHO level conversion is mechanical:
-  `WB_Gold_2026_09 × 0.9865010496`.
-- no model refit is required for that level-only conversion unless the contract is explicitly reopened.
+## 8.2 Level-source qualification
 
-No trading/action rule is authorized from this forward forecast alone.
+World Bank September-2026 Gold monthly average was not available at execution.
 
+Therefore:
+- 4278.31 is not yet a World-Bank-level final;
+- the return forecast and September-complete feature computation are frozen;
+- when WB September becomes available, canonical level conversion is:
+  `WB_Gold_2026_09 × 0.9865010496`;
+- no model refit is required for this mechanical level conversion unless the modeling contract is explicitly reopened.
 
-## 20M.10 September 2026 regime state — COMPLETE
+## 8.3 Live market-state context
 
-Detailed result:
-`gold_axis_2026/GOLD_MONTHLY_SEPTEMBER_2026_REGIME_STATE_RESULT_2026-10-01.md`
-
-Execution:
-- run **36832356597**
-- conclusion **SUCCESS**
-- artifact **11147761924**
-- digest `sha256:c6107a38fd80fb0bbaf5c46e02c8707cfd336358a52982af5b90ab3d6ff74ff3`.
-
-September 2026 origin state for the October forecast:
-- semantic regime **R1**
+September-2026 origin:
+- **R1**
 - posterior **0.9823228737**
-- OOD **NO**
-- Transition V2 **STABLE**, 0 current votes, no active transition flags
-- Extreme V1 **NORMAL**, 0/4 anomaly signals
-- combined context **R1 / STABLE / NORMAL**.
+- STABLE
+- NORMAL
+- OOD NO.
 
-Thus the October 2026 forward forecast origin is not currently flagged as BELIRSIZ, TRANSITION, EXTREME or OOD.
+No regime-based forecast correction is authorized.
 
-Data qualification:
-- market data through 2026-09-30;
-- regime parameter fit only through 2026-08;
-- no October market data;
-- World Bank September Gold not yet available, so level-sensitive September state uses complete StakTrakr full-month Gold proxy.
+## 8.4 Live alarm context
 
-No forecast switch/correction is authorized by the regime label alone.
+Frozen Specialist Hedge:
+- p_HIGH = 0
+- p_ELEVATED = 0
+- no active signals
+- HIGH alarm = NO.
 
-# 21. Bundan sonra manifest nasıl güncellenecek
+No automatic model switch is authorized.
 
-Her yeni deney bittiğinde **aynı commit zincirinde** bu ana manifest güncellenecek.
+The current live state can therefore be read in one line:
 
-Yeni model kaydı şu bilgileri burada içermeli:
-- model adı ve family
-- neden açıldı
-- exact representation
-- target
-- chronology
-- frozen parameters
-- DEV ΣAE
-- DEV direction
+> **October-2026: ChHHO proxy 4278.31 DOWN; origin state R1/STABLE/NORMAL; frozen error alarm OFF; ChHHO remains the operative point forecast.**
+
+The following subsection is retained only as provenance for the public-data refresh that preceded the complete-September forward run. Its provisional October values are superseded by Sections 8.1–8.4.
+
+## 8.5 Historical public-data refresh precursor — 2026-09-29
+
+**Status: CURRENT-DATE REFRESH COMPLETE / ZERO NEON / OCTOBER PROVISIONAL**
+
+Detailed evidence:
+`gold_axis_2026/GOLD_MONTHLY_PUBLIC_DATA_FORWARD_RESULT_2026-09-29.md`
+
+Authoritative successful workflow:
+- run **36531420723**
+- runner commit **225e4f1e24534efce67399efd81668339cb92159**
+- report commit **00cfcdd6172dc4506887e9fe686fb9e933b30551**
+
+Current public bundle:
+- artifact **11015874673**
+- Neon reads **0**
+- four-metal data through last fully completed common day **2026-09-28**
+- World Bank Gold monthly through **2026-08**
+- August 2026 World Bank Gold monthly average **4411.0**
+- exact GPR vintages loaded: **202608** and **202609**
+- StakTrakr annual history extended with StakTrakrApi 12:00 observations.
+
+#### September 2026 — completed August origin
+
+| Model | Predicted log return | Monthly-average forecast | Direction |
+|---|---:|---:|---|
+| ChHHO-ANFIS | +0.0402280 | **4592.06** | UP |
+| DE-ABC-RBFNN | +0.0353930 | **4569.91** | UP |
+
+September role:
+**FROZEN FORWARD FORECAST FROM FINAL 2026-08 ORIGIN**.
+
+#### October 2026 — provisional partial-September nowcast
+
+September partial Gold average proxy through 2026-09-28:
+**4348.9496**.
+
+| Model | Predicted log return | Provisional monthly-average nowcast | Direction |
+|---|---:|---:|---|
+| ChHHO-ANFIS | -0.0212929 | **4257.33** | DOWN |
+| DE-ABC-RBFNN | -0.0231670 | **4249.36** | DOWN |
+
+October role:
+**PROVISIONAL_NOWCAST_ONLY**.
+
+Reason:
+- September month-end is not complete on 2026-09-29;
+- World Bank September monthly Gold target is not yet available;
+- partial September target is not used as training Y;
+- final October forecast must be regenerated after complete September origin inputs without retuning.
+
+Artifacts:
+- ChHHO Sep **11015679869**
+- DE-ABC Sep **11016920015**
+- ChHHO Oct provisional **11016204637**
+- DE-ABC Oct provisional **11017025301**
+
+Earlier runs 36530729337..36531229734:
+**SUPERSEDED_TECHNICAL_RUNS / NOT MODEL RESULTS**.
+
+Final runner fixed an import-state collision by isolating ANFIS and RBFNN family imports. Do not reuse the failed mixed-import results.
+
+---
+
+---
+
+# 9. Current Roadmap & Authorization State
+
+## 9.1 Immediate research priority
+
+**Direct Harmful-Switch / Shared-Hard Probability Model V1**
+
+Purpose:
+- act only after Specialist Hedge warning + frozen Rescue-Gain Predictor switch proposal;
+- estimate whether the proposed switch is harmful relative to KEEP ChHHO.
+
+Target:
+- binary / probabilistic harmful-switch outcome, not gold price and not next regime label.
+
+Design constraints:
+- DEV-only selection;
+- chronological expanding validation;
+- low model capacity because switch-event count is small;
+- origin-known features only;
+- no target severity as input;
+- no target-month market state;
+- no 2025/2026 tuning;
+- KEEP / ABSTAIN must remain available.
+
+Promotion gate must require more than cumulative gain:
+- lower ΣAE than KEEP / upstream predictor on the comparable decision window;
+- fewer harmful switches and/or materially lower worst incremental harm;
+- no reliance on a single rescue month;
+- stable chronology.
+
+Only after a DEV pass may the frozen classifier be transported to opened 2025/2026.
+
+## 9.2 Current operational non-actions
+
+Do **not**:
+- replace ChHHO with a fixed fallback;
+- use regime R0/R1/R2 as a direct switch;
+- use EXTREME as a ChHHO risk multiplier;
+- use Transition V2 as a standalone switch;
+- revive Exact16 direction-consensus hard veto;
+- retune Specialist Hedge on 2025/2026;
+- promote Rescue-Gain Predictor V1 directly to production;
+- revive Guard V1 breadth/confidence thresholds;
+- choose CNN-LSTM LB6 because it looked strong in opened transport;
+- infer forecast direction from p_HIGH.
+
+## 9.3 Mechanical pending update
+
+When official World Bank September-2026 Gold becomes available:
+- update only the October forecast level using the frozen multiplier 0.9865010496;
+- record the source/date/artifact;
+- do not refit unless explicitly reopened.
+
+## 9.4 Model-family reopening policy
+
+Model-family broad screens are not the active priority.
+
+Closed families remain closed unless there is:
+- a genuinely new structural method;
+- a corrected scientific defect that invalidates prior evidence;
+- a newly authorized representation or data contract;
+- an explicit user-requested reopen.
+
+Historical family-local “next” lines do not reopen a family automatically.
+
+## 9.5 Regime-track reopening policy
+
+A dedicated next-regime predictor is deferred.
+
+Reopen only if:
+- harmful-switch / rescue research demonstrates that current origin-state posterior, transition/extreme/OOD and spell context are insufficient;
+- and the missing information can plausibly be supplied by forecasting the next semantic state.
+
+---
+
+# 10. Manifest Governance, Supersession & Provenance
+
+## 10.1 Canonical single-source rule
+
+This file is the canonical project-state document.
+
+It must be sufficient to answer:
+- what the project predicts;
+- what data/feature contract is active;
+- what models were tried;
+- what regime/state architecture exists;
+- what alarm signals exist;
+- what is frozen vs rejected;
+- what the current live forecast/state/alarm is;
+- what the exact next research task is.
+
+Detailed RESULT / AUTHORITY / JSON / workflow artifacts are audit evidence, not competing project-state authorities.
+
+## 10.2 V2 structural archive
+
+The complete pre-V2 manifest is preserved unchanged at:
+
+`gold_axis_2026/archive/GOLD_MONTHLY_PROJECT_MANIFEST_PRE_V2_2026-10-01.md`
+
+V2 changes organization and supersession clarity; it does not erase historical evidence.
+
+Information-architecture record:
+`gold_axis_2026/GOLD_MONTHLY_MANIFEST_V2_INFORMATION_ARCHITECTURE_2026-10-01.md`.
+
+## 10.3 Update protocol
+
+Every new governed experiment should record:
+- question / reason opened
+- authority and freeze
+- data representation
+- target and chronology
+- parameters / candidate universe
+- DEV metrics
+- opened-period role
 - scientific gate
-- 2025/2026 rolü
-- karar
-- tekrar açılma kuralı
-- sıradaki adım
+- binding decision
+- reopen condition
+- next authorized step
+- run / artifact / commit provenance.
 
-Machine-readable JSON registry yalnız bu manifestin aynasıdır; ikinci bir proje otoritesi değildir.
+New work should update the relevant topical chapter, not simply append an unstructured date block at EOF.
 
----
+## 10.4 Status vocabulary
 
-# 22. Provenance — sadece denetim için
+- **FROZEN:** selected configuration cannot be retuned on opened data.
+- **COMPLETE_CLOSED:** experiment/family complete; no rerun without reopen reason.
+- **PASS:** scientific execution/gate passed; does not automatically mean production promotion.
+- **NOT_PROMOTED:** valid experiment but insufficient to replace current authority.
+- **REJECTED:** tested method should not be deployed or casually rerun.
+- **OPENED / TRANSPORT:** outcome-inspected period; descriptive validation only.
+- **RESEARCH_ONLY:** may inform later work but is not an operational action.
+- **SUPERSEDED:** historical evidence retained, but a later authority controls the interpretation.
 
-Aşağıdaki dosyalar ayrıntılı run/job/artifact ve ham deney kanıtlarını tutar. Proje akışını anlamak için zorunlu değildir.
+## 10.5 Supersession rules
 
-## Supersession kuralı
+Current-state statements in this V2 front matter and Sections 5–9 override older stage-local “next” lines.
 
-Bu provenance dosyalarının bazılarının içinde yazıldığı tarihte doğru olan fakat artık eski kalmış "next action", "primary model", "final winner" veya "stage status" ifadeleri bulunabilir.
+Specific supersessions:
+- MAPE-centered early family freezes are historical; active cross-family evaluation is ΣAE + Direction.
+- early F4 endpoint-style Rates/FX family-wide interpretations are superseded by the processing/frequency/optimizer reset and later family audits.
+- raw alarm union / tuned RED / hard consensus veto are superseded by Specialist Hedge as the frozen reliability router.
+- “Contextual Rescue-Gain Predictor not yet run” is superseded: Predictor V1 is complete, weak, and research-only.
+- “Safety Guard next” is superseded: Guard V1 is complete and rejected.
+- current next task is **Direct Harmful-Switch / Shared-Hard Probability Model V1**.
 
-Özellikle:
-- eski ELM-vs-ANN MAPE-centered family freeze aktif metric açısından superseded;
-- CNN/LSTM authority planındaki "Stage 0 next" satırı tarihsel; Stage 0-1D ve BiLSTM artık tamamlandı;
-- SVR authority planının başlangıç "Stage 1 next" satırı tarihsel; family Stage 5A.3’e kadar ilerledi;
-- Challenger-B ayrı manifesti artık project-state authority değil;
-- eski ELM/ANN mega-ledger’daki historical next-action satırları binding değildir.
+## 10.6 Key current evidence files
 
-**Current state için daima bu master manifest kullanılır.**
+Price / live state:
+- `GOLD_MONTHLY_OCTOBER_2026_FORWARD_RESULT_2026-10-01.md`
+- `GOLD_MONTHLY_SEPTEMBER_2026_REGIME_STATE_RESULT_2026-10-01.md`
+- `GOLD_MONTHLY_OCTOBER_2026_SPECIALIST_HEDGE_ALARM_SNAPSHOT_V1_RESULT_2026-10-01.md`
 
+Regime:
+- `GOLD_MONTHLY_MARKET_REGIME_DISCOVERY_V1_RESULT_2026-09-30.md`
+- `GOLD_MONTHLY_MARKET_REGIME_WALKFORWARD_V1_RESULT_2026-09-30.md`
+- `GOLD_MONTHLY_MARKET_REGIME_PROTOTYPE_ALIGNMENT_V1_RESULT_2026-09-30.md`
+- `GOLD_MONTHLY_MARKET_REGIME_ANCHORED_COMPARISON_V1_RESULT_2026-09-30.md`
+- `GOLD_MONTHLY_MARKET_REGIME_TRANSITION_DETECTOR_V1_RESULT_2026-09-30.md`
+- `GOLD_MONTHLY_MARKET_REGIME_TRANSITION_DETECTOR_V2_RESULT_2026-09-30.md`
+- `GOLD_MONTHLY_MARKET_REGIME_TRANSITION_V3_DURATION_AWARE_RESULT_2026-09-30.md`
+- `GOLD_MONTHLY_MARKET_REGIME_EXTREME_V1_RESULT_2026-09-30.md`
+- `GOLD_MONTHLY_MARKET_STATE_CHHHO_RELIABILITY_AUDIT_V1_RESULT_2026-09-30.md`
 
-- `GOLD_MONTHLY_ELM_METAHEURISTIC_LEDGER_ANN_PLAN_2026-09-25.md`
-- `GOLD_MONTHLY_CROSS_FAMILY_REAUDIT_SIGMAAE_DIRECTION_2026-09-26.md`
-- `GOLD_MONTHLY_ANFIS_FINAL_CLOSURE_CROSS_FAMILY_2026-09-26.md`
-- `GOLD_MONTHLY_RBFNN_FINAL_FREEZE_2026-09-26.md`
-- `GOLD_MONTHLY_GPR_STAGE3_REPORT_2026-09-26.md`
-- `GOLD_MONTHLY_DMA_DMS_IDMA_DEFERRED_CHECKPOINT_2026-09-27.md`
-- `GOLD_MONTHLY_BOOSTING_FAMILY_FINAL_CLOSURE_2026-09-28.md`
-- `GOLD_MONTHLY_SVR_DWT_FAMILY_LEDGER_2026-09-28.md`
-- `GOLD_MONTHLY_CHALLENGER_B_MANIFEST_2026-09-28.md`
-- `GOLD_MONTHLY_CNN_LSTM_STAGE1D_LR_RESULT_2026-09-28.md`
-- `GOLD_MONTHLY_BILSTM_STRUCTURAL_RESULT_2026-09-28.md`
-- `GOLD_MONTHLY_TIMESFM3_ZERO_SHOT_V1_RESULT_2026-09-28.md`
-- `GOLD_MONTHLY_TIMEMIXERPP_V1_RESULT_2026-09-28.md`
-- `GOLD_MONTHLY_TIMEXER_V1_FREEZE_2026-09-28.md`
+Alarm:
+- `GOLD_MONTHLY_UNIFIED_ALARM_MATRIX_V1_RESULT_2026-09-30.md`
+- `GOLD_MONTHLY_ALARM_FINE_TUNING_V1_TRANSPORT_RESULT_2026-09-30.md`
+- `GOLD_MONTHLY_ALARM_FALSE_CALL_SUPPRESSOR_SCREEN_V1_RESULT_2026-09-30.md`
+- `GOLD_MONTHLY_ADAPTIVE_ALARM_RELIABILITY_V1_RESULT_2026-09-30.md`
+- `GOLD_MONTHLY_ALARM_REGIME_V2_SHRINKAGE_RELIABILITY_V1_RESULT_2026-09-30.md`
+- `GOLD_MONTHLY_SPECIALIST_FIXED_SHARE_ALARM_ROUTER_V1_RESULT_2026-09-30.md`
 
----
+Rescue:
+- `GOLD_MONTHLY_CONTEXTUAL_HIGH_ALARM_RESCUEABILITY_V1_RESULT_2026-10-01.md`
+- `GOLD_MONTHLY_RELATIVE_LOSS_RESCUE_GAIN_MATRIX_STAGE1_V1_RESULT_2026-10-01.md`
+- `GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_RESULT_2026-10-01.md`
+- `GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_OPENED_TRANSPORT_RESULT_2026-10-01.md`
+- `GOLD_MONTHLY_HARMFUL_SWITCH_SHARED_HARD_GUARD_V1_RESULT_2026-10-01.md`
 
-# 23. Kontrol ve Uyum Özeti
+## 10.7 Major project chronology
 
-- Tek canonical monthly manifest: **YES**
-- Projeyi anlamak için eski ledger zorunluluğu: **NO**
-- Challenger B ana akışa entegre: **YES**
-- Completed / paused / deferred / not-run ayrımı: **YES**
-- Duplicate-prevention: **BINDING**
-- DEV authority: **2022-04..2024-12**
-- Random split: **NONE**
-- 2025 retrospective tuning: **NONE**
-- 2026 selection: **NONE**
+- **2026-09-25..28:** broad model-family program consolidated; ChHHO / DE-ABC and cross-family frontier established.
+- **2026-09-28..29:** external-information research, data governance, F0–F4 variable/representation audits.
+- **2026-09-30:** regime discovery/walk-forward/transition/extreme and alarm architecture research; Specialist Hedge frozen.
+- **2026-10-01:** September-complete October forecast, current regime + alarm snapshot, rescue matrix, relative-loss predictor, opened transport and rejected safety guard.
+
+## 10.8 Compliance checkpoint
+
+- canonical monthly manifest: **YES**
+- pre-V2 archive: **YES**
+- DEV selection authority: **2022-04..2024-12**
+- random split: **NONE**
+- target-month leakage: **FORBIDDEN**
+- 2025/2026 rule selection: **NONE**
 - DB write: **NONE**
-- Snapshot V1 authorized: **YES**
-- Current exact next model/research stage: **Contextual Relative-Loss / Rescue-Gain Predictor V1 — NOT YET RUN.** The completed rescueability audit shows large ex-post rescue headroom but rejects HIGH -> fixed fallback on DEV. Specialist Hedge remains frozen; Exact16 hard veto remains rejected; regime/transition/extreme/OOD and ensemble geometry are context only. The next model, if opened, must predict challenger relative loss/gain while preserving KEEP MAIN / ABSTAIN. 2025/2026 remains opened and cannot select the rule.
-
+- ChHHO primary: **YES**
+- Specialist Hedge frozen: **YES**
+- regime used as hard switch: **NO**
+- automatic rescue switch authorized: **NO**
+- current next research task: **Direct Harmful-Switch / Shared-Hard Probability Model V1**
 
 ---
 
@@ -3531,250 +4066,3 @@ For any future model:
 
 
 ---
-
-# 2026-10-01 — October 2026 Specialist Hedge alarm snapshot
-
-Status: **COMPLETE / FROZEN CHECKPOINT**
-
-Origin / target:
-- origin: **2026-09**
-- target: **2026-10**
-
-Frozen Specialist Hedge:
-- eta = **0.25**
-- alpha = **0**
-- tau = **0.50**
-- router weights updated only through canonical target **2026-08**
-- Sep-2026 actual outcome was **not** used in the weight update
-
-Current signal state:
-- A/B/C/D/E/G/H/I1/I2 = **OFF**
-- V2_TRANSITION = **OFF / STABLE**
-- T1_WGC = **UNAVAILABLE/OFF at T0 2026-10-01**
-- active signals = **none**
-- active experts = **none**
-
-Frozen router output:
-- **p_HIGH = 0.000000**
-- **p_ELEVATED = 0.000000**
-- **HIGH alarm = NO**
-
-Regime context:
-- **R1 / STABLE / NORMAL**
-- p(R1) = **0.9823228737**
-- OOD = **NO**
-
-Interpretation:
-- frozen Specialist Hedge does **not** issue a serious-error warning for the October-2026 ChHHO forecast at the Sep-2026 origin;
-- this is a reliability statement only, not an UP/DOWN signal;
-- no automatic model switch is authorized.
-
-Evidence notes:
-- H: abs monthly Managed-Money net/OI change **0.040066 < 0.1499821** and abs OI change **1.6098% < 14.9766%**;
-- I1: ETF flow delta **-0.006710 > -0.0428162** frozen Q10 threshold;
-- I2: Sep ETF outflow breadth **0**, breadth2 streak resets to **0 < 2**.
-
-Files:
-- `gold_axis_2026/GOLD_MONTHLY_OCTOBER_2026_SPECIALIST_HEDGE_ALARM_SNAPSHOT_V1_RESULT_2026-10-01.md`
-- `gold_axis_2026/GOLD_MONTHLY_OCTOBER_2026_SPECIALIST_HEDGE_ALARM_SNAPSHOT_V1_2026-10-01.json`
-
-Binding next stage:
-- **Contextual Relative-Loss / Rescue-Gain Predictor V1 — NEXT / NOT YET RUN**
-- no 2025/2026 post-hoc tuning authority is granted by this checkpoint.
-
-
-# 2026-10-01 — Relative-Loss / Rescue-Gain Matrix Stage 1 V1
-
-**Status:** COMPLETE / SCIENTIFIC_GATE=PASS / DEV-ONLY / NO SWITCH AUTHORIZED
-
-Frozen Exact16 pool was expanded from the prior warning-only rescueability audit into the complete **33-target DEV month × 15-challenger rescue-gain matrix**.
-
-Definition:
-`gain(j,t) = |error_ChHHO,t| - |error_model_j,t|`; positive means challenger j beats ChHHO.
-
-Coverage:
-- DEV 2022-04..2024-12: 33 targets.
-- Specialist Hedge warnings: 20 = 10 realized HIGH/MEDIUM + 10 realized NORMAL false warnings.
-- Non-warning DEV: 13.
-- 2025/2026 not used for selection, fitting, thresholding, or pool reduction.
-
-Key results:
-- No single challenger beats ChHHO on cumulative AE across all 33 DEV targets.
-- Best fixed all-33 challenger: DE_ABC_RBFNN, gain **-2.81 USD** versus ChHHO.
-- Best fixed all-warning challenger: LMC2_RBF_M32, gain **-16.11 USD**; fixed HIGH->fallback remains rejected.
-- On realized elevated warning months only, LMC2 gain **+101.76 USD**, wins **8/10**.
-- Warning-month KEEP-or-best-alternative hindsight ceiling: **+469.73 USD**.
-- All-33 KEEP-or-best-alternative hindsight ceiling: **+708.51 USD**.
-- Simple p_HIGH/regime/consensus/dispersion/ensemble-position diagnostics are heterogeneous and weak; no hard context rule promoted.
-- DEV 2023-03 is an important KEEP/ABSTAIN case: warning occurred, realized severity NORMAL, and **0/15 alternatives beat ChHHO**.
-
-Regression gates reproduce Contextual Rescueability V1 exactly within tolerance:
-- all-warning LMC2 gain ≈ -16.11 USD;
-- elevated-warning LMC2 gain ≈ +101.76 USD;
-- 8/10 elevated-warning wins;
-- warning KEEP-or-best oracle ≈ +469.73 USD.
-
-Files:
-- `GOLD_MONTHLY_RELATIVE_LOSS_RESCUE_GAIN_MATRIX_STAGE1_V1_AUTHORITY_2026-10-01.md`
-- `GOLD_MONTHLY_RELATIVE_LOSS_RESCUE_GAIN_MATRIX_STAGE1_V1_RESULT_2026-10-01.md`
-- `tools/gold_monthly_relative_loss_rescue_gain_matrix_stage1_v1.py`
-- `.github/workflows/gold-monthly-relative-loss-rescue-gain-stage1-v1.yml`
-
-**Next authorized research stage:** low-capacity origin-safe **Contextual Relative-Loss / Rescue-Gain Predictor V1**, evaluated with chronological DEV validation and preserving KEEP MAIN / ABSTAIN. No production switch rule is authorized.
-
-
-# 2026-10-01 — Contextual Relative-Loss / Rescue-Gain Predictor V1
-
-**Status:** COMPLETE / DEV SCIENTIFIC_GATE=PASS / ROBUSTNESS=WEAK / OPENED TRANSPORT COMPLETE / NO PRODUCTION SWITCH
-
-Authority:
-- `GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_AUTHORITY_2026-10-01.md`
-- authority commit: `10638e7a0849449fb1bb3655ea678e63450cd601`
-
-Corrected Stage-1 matrix authority source:
-- Stage-1 run: **36847468918**
-- Stage-1 artifact: **11154006919**
-- Stage-1 commit: `cd0f24fb79deeadc0ffc34bd27b7a723a314f4a8`
-- schema correction only: `semantic_probability` added to output rows; frozen rescue checkpoints unchanged.
-
-Predictor official execution:
-- workflow: **Gold Monthly Contextual Rescue Gain Predictor V1**
-- run: **36847543031**
-- artifact: **11154625268**
-- artifact digest: `sha256:59ec1c87f6687f2eced65fa35150fcd3d980abc3f7e445cf6c22c79bd3d2bf1b`
-- head commit: `42f7c38719dc46a2c3f5d45f9a8352584a7e5e09`
-- conclusion: **SUCCESS**
-
-## DEV chronological selection
-
-Protocol:
-- first 8 DEV targets warm-up;
-- chronological evaluation **2022-12..2024-12**;
-- evaluated Specialist Hedge warnings: **14**;
-- 2025/2026 not used for selection.
-
-Frozen DEV research leader:
-- predictor: **RIDGE_CORE_A10**
-- policy: **DIRECT_SWITCH**
-- KEEP ΣAE: **782.7432 USD**
-- policy ΣAE: **778.0388 USD**
-- gain vs KEEP: **+4.7044 USD**
-- actions: **13 SWITCH / 1 KEEP**
-- beneficial non-KEEP: **5**
-- harmful non-KEEP: **8**
-- worst incremental harm: **31.6639 USD**
-- robustness assessment: **WEAK**
-
-Interpretation:
-- formal gate passes only because cumulative AE is 4.70 USD lower than KEEP;
-- harmful switches outnumber beneficial switches;
-- therefore no automatic production switching is authorized.
-
-## Frozen opened transport — 2025-01..2026-07
-
-The DEV leader was transported without retuning:
-- predictor = RIDGE_CORE_A10;
-- alpha = 10;
-- CORE feature set;
-- DIRECT_SWITCH policy;
-- challenger pool unchanged.
-
-Coverage:
-- full Exact16: **2025-01..2026-07**
-- warning months: **12**
-- 2026-08 excluded because full Exact16 coverage is unavailable.
-
-Results:
-- KEEP warning-month ΣAE: **2153.0192 USD**
-- frozen selector ΣAE: **2057.7830 USD**
-- gain vs KEEP: **+95.2362 USD**
-- actions: **11 SWITCH / 1 KEEP**
-- beneficial switches: **7**
-- harmful switches: **4**
-- worst incremental harm: **238.5690 USD**
-
-Critical transport failure:
-- **2026-03 MEDIUM**
-- selector chose DE_ABC_RBFNN;
-- predicted rescue gain ≈ **+89.88 USD**;
-- realized incremental result versus KEEP ≈ **-238.57 USD**.
-This is a shared-hard case and confirms that warning != switch.
-
-Binding production state remains:
-- **ChHHO-ANFIS** = main forecast;
-- **Specialist Hedge** = frozen reliability warning layer;
-- **Rescue-Gain Predictor V1** = research-only;
-- **no automatic SWITCH / BLEND**.
-
-Files:
-- `GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_RESULT_2026-10-01.md`
-- `GOLD_MONTHLY_CONTEXTUAL_RELATIVE_LOSS_RESCUE_GAIN_PREDICTOR_V1_OPENED_TRANSPORT_RESULT_2026-10-01.md`
-- `tools/gold_monthly_contextual_relative_loss_rescue_gain_predictor_v1.py`
-- `tools/gold_monthly_contextual_relative_loss_rescue_gain_predictor_v1_opened_transport.py`
-- `.github/workflows/gold-monthly-contextual-rescue-gain-predictor-v1.yml`
-
-**Next research question:** build a DEV-only harmful-switch / shared-hard safety guard that can reject cases analogous to DEV 2023-03 while preserving genuine rescue opportunities. 2025/2026 remains descriptive transport only and may not tune that guard.
-
-
-# 2026-10-01 — Harmful-Switch / Shared-Hard Safety Guard V1
-
-**Status:** COMPLETE / SCIENTIFIC_GATE=FAIL / DEV-ONLY / REJECTED / NO PRODUCTION SWITCH
-
-Authority:
-- `GOLD_MONTHLY_HARMFUL_SWITCH_SHARED_HARD_GUARD_V1_AUTHORITY_2026-10-01.md`
-- authority commit: `f866167df637606da66820fa4ebedfa00cdd4594`
-
-Official execution:
-- workflow run: **36848597787**
-- artifact: **11153893189**
-- artifact digest: `sha256:26f8d19b603adffed0f36f5e83c8bb865c3cbf0da6d338deda5b64b67397c4e9`
-- head commit: `edfa4391a2b195f4a0228f2d6a39ab275262cd00`
-- GitHub Actions conclusion: **SUCCESS**
-
-Upstream frozen base:
-- Rescue-Gain Predictor = RIDGE_CORE_A10
-- policy = DIRECT_SWITCH
-- DEV warning evaluation baseline gain vs KEEP = **+4.7044 USD**
-- 13 switches = **5 beneficial / 8 harmful**
-- worst incremental harm = **31.6639 USD**
-
-Pre-registered V1 safety gates:
-- rescue positive-breadth gates at 50%, 2/3, 80%;
-- confidence / residual-RMSE gates at 0.5x, 1.0x, 1.5x;
-- combined breadth + confidence gates.
-
-Result:
-- **no deterministic guard candidate passed acceptance conditions**;
-- BREADTH_50: **-3.78 USD**;
-- BREADTH_67: **-74.93 USD**;
-- BREADTH_80: **-56.81 USD**;
-- CONF_050: **-3.78 USD**;
-- CONF_100: **-42.05 USD**;
-- CONF_150: **-23.96 USD**.
-
-Expanding guard-selection replay:
-- first 4 switch opportunities warm-up;
-- next 9 evaluated sequentially using prior DEV only;
-- guard replay gain = **-22.5427 USD**;
-- same-window NO_GUARD = **+0.9418 USD**;
-- replay beneficial / harmful = **2 / 4**;
-- worst harm = **31.6639 USD**.
-
-Critical diagnostic:
-- **2023-03** predictor proposed CNN-LSTM LB6;
-- top predicted gain **+86.996 USD**;
-- predicted positive breadth **93.3%**;
-- confidence ratio **3.42x**;
-- realized switch gain **-23.965 USD**.
-Therefore broad predicted rescue consensus and high confidence are not safe shared-hard detectors.
-
-Binding decision:
-- Harmful-Switch / Shared-Hard Safety Guard V1 = **REJECTED**.
-- No guard frozen.
-- No 2025/2026 guard transport opened because DEV gate failed.
-- No automatic SWITCH/BLEND.
-- ChHHO + Specialist Hedge production architecture unchanged.
-- Rescue-Gain Predictor V1 remains research-only.
-
-Next authorized research question:
-- direct **harmful-switch / shared-hard probability model**, trained/evaluated chronologically on DEV only, targeting whether the frozen predictor's proposed switch is harmful.
