@@ -1,7 +1,7 @@
 # GOLD SHORT-HORIZON GLOBAL XAU PROJECT MANIFEST
 
 **Date:** 2026-10-01  
-**Status:** ACTIVE — STAGE 2 COMPLETE / H3 DIRECTION ROBUST PASS  
+**Status:** ACTIVE — STAGE 3 COMPLETE / H3 DIRECTION ROBUST, CONVICTION GATE FAIL  
 **Supersedes for tactical objective:** BIST-Metal-Price short-horizon mainline.
 
 ## 1. Objective
@@ -182,27 +182,50 @@ Prospective live source remains unresolved as an exact target-equivalent extensi
 
 This does not affect the retrospective Stage-1/2 DEV evidence because no source stitching occurs there.
 
-## 12. Exact next action
+## 12. Stage 3 calibration / conviction evidence
 
-**Stage 3 — Probability Calibration / Conviction Audit**
+Stage 3:
+- COMPLETE / **NO_CONVICTION_PASS**
+- workflow run **36925853403**
+- selected probability stream: **RAW**
+- 2025 remained unopened.
 
-Using only the frozen H3 / CORE3 / Logistic L2 probabilities:
+Calibration comparison:
 
-1. calibration intercept / slope;
-2. ECE / reliability bins;
-3. chronological raw vs Platt vs isotonic calibration;
-4. frozen probability bands:
-   - <=0.40
-   - 0.40–0.45
-   - 0.45–0.50
-   - 0.50–0.55
-   - 0.55–0.60
-   - >=0.60;
-5. realized H3 UP rate by band;
-6. annual support / stability by band;
-7. no P&L threshold optimization;
-8. 2025 remains unopened.
+| Method | Brier | Log loss | Prediction SD | ECE | Decision |
+|---|---:|---:|---:|---:|---|
+| **RAW** | **0.246731** | **0.686634** | 0.0442 | 0.0266 | **RETAIN** |
+| PLATT | 0.250391 | 0.694437 | 0.0550 | 0.0204 | REJECT |
+| ISOTONIC | 0.255205 | 0.781230 | 0.0992 | 0.0449 | REJECT |
 
-Only if probability confidence separates realized outcomes should a direction-only economic architecture be designed.
+Raw calibration diagnostics:
+- intercept **0.0376**
+- slope **1.2331**.
 
-Do not return to BIST as the tactical target.
+Frozen conviction bands:
+- p >=0.55: n=139, realized H3 UP **61.15%**
+- p <=0.45: n=64, realized H3 UP **43.75%**
+- realized-UP separation: **17.40 pp**.
+
+The high-UP side is supported and transports across DEV years by count, but the low-UP side misses the frozen <=42.5% realized-UP requirement. Therefore the joint conviction gate fails.
+
+Binding interpretation:
+- retain H3 / CORE3 / Logistic L2 as a modest probabilistic direction research engine;
+- retain RAW probabilities; do not Platt/isotonic recalibrate;
+- do not convert the current probability bands into a tactical trading rule;
+- do not use the complement of weak-UP evidence as a validated DOWN signal;
+- do not open 2025 to rescue the gate.
+
+## 13. Exact next action
+
+The threshold-driven tactical branch is **CLOSED under the current H3 probability engine** because the frozen conviction gate failed.
+
+Permitted next research must introduce a materially new, preregistered source of short-horizon information or mechanism while preserving H3 / CORE3 / Logistic L2 as the frozen comparator.
+
+Priority order:
+1. audit genuinely new daily origin-safe information not already rejected by Stage 2 representation tests;
+2. if a new mechanism is justified, preregister it as a challenger against frozen H3 / CORE3 / Logistic L2;
+3. do not reopen BIST target;
+4. do not tune probability thresholds or P&L rules;
+5. keep 2025 closed until a new pre-2025 challenger contract passes.
+
