@@ -65,3 +65,21 @@ print("\nLINKS_RELEVANT")
 for h in p.links:
     if re.search(r"metal|kmtp|precious|xml|fiyat",h,re.I):
         print(urllib.parse.urljoin(final,h))
+
+
+print("\n=== EXACT_BUNDLE_ID_SEARCH ===")
+needles=["xmlVeriler_KMTP_Metal","queryForm_KMTP_Metal","priceTable_KMTP_Metal","bistmetalfiyatlarisorgulama"]
+for src in p.scripts:
+    u=urllib.parse.urljoin(final,src)
+    try:
+        sst,sfinal,sh,js=get(u)
+    except Exception as e:
+        continue
+    for needle in needles:
+        pos=js.find(needle)
+        print("EXACT",needle,"IN",u,"POS",pos,"LEN",len(js))
+        if pos>=0:
+            a=max(0,pos-1500); b=min(len(js),pos+3500)
+            print(js[a:b])
+            urls=sorted(set(re.findall(r'["\']([^"\']*(?:api|metal|kmtp|price|query|xml)[^"\']*)["\']',js[a:b],re.I)))
+            print("LOCAL_URL_STRINGS",urls[:80])
