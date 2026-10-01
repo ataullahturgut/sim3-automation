@@ -1,0 +1,37 @@
+name: Gold Short Horizon Global XAU Readiness
+
+on:
+  push:
+    branches:
+      - gold-midas-headswap-v1-20260925
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_global_xau_readiness.py'
+      - '.github/workflows/gold-short-horizon-global-xau-readiness.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      OUT_DIR: global_xau_readiness_out
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check numpy pandas requests "psycopg[binary]"
+      - run: test -n "$NEON_DATABASE_URL"
+      - name: Build global XAU readiness panel
+        run: python gold_axis_2026/tools/gold_short_horizon_global_xau_readiness.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-short-horizon-global-xau-readiness
+          path: global_xau_readiness_out/
+          retention-days: 90
