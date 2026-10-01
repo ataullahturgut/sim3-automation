@@ -3528,3 +3528,56 @@ For any future model:
 - if its identity appears anywhere in Sections 4–20 or Appendices A–G, it is **already known to the project**;
 - if marked completed/rejected/not-promoted, do not rerun without a valid reopen condition;
 - if marked NOT_RUN/FROZEN_NOT_RUN, it remains eligible for first execution under a new pre-outcome freeze.
+
+
+---
+
+# 2026-10-01 — October 2026 Specialist Hedge alarm snapshot
+
+Status: **COMPLETE / FROZEN CHECKPOINT**
+
+Origin / target:
+- origin: **2026-09**
+- target: **2026-10**
+
+Frozen Specialist Hedge:
+- eta = **0.25**
+- alpha = **0**
+- tau = **0.50**
+- router weights updated only through canonical target **2026-08**
+- Sep-2026 actual outcome was **not** used in the weight update
+
+Current signal state:
+- A/B/C/D/E/G/H/I1/I2 = **OFF**
+- V2_TRANSITION = **OFF / STABLE**
+- T1_WGC = **UNAVAILABLE/OFF at T0 2026-10-01**
+- active signals = **none**
+- active experts = **none**
+
+Frozen router output:
+- **p_HIGH = 0.000000**
+- **p_ELEVATED = 0.000000**
+- **HIGH alarm = NO**
+
+Regime context:
+- **R1 / STABLE / NORMAL**
+- p(R1) = **0.9823228737**
+- OOD = **NO**
+
+Interpretation:
+- frozen Specialist Hedge does **not** issue a serious-error warning for the October-2026 ChHHO forecast at the Sep-2026 origin;
+- this is a reliability statement only, not an UP/DOWN signal;
+- no automatic model switch is authorized.
+
+Evidence notes:
+- H: abs monthly Managed-Money net/OI change **0.040066 < 0.1499821** and abs OI change **1.6098% < 14.9766%**;
+- I1: ETF flow delta **-0.006710 > -0.0428162** frozen Q10 threshold;
+- I2: Sep ETF outflow breadth **0**, breadth2 streak resets to **0 < 2**.
+
+Files:
+- `gold_axis_2026/GOLD_MONTHLY_OCTOBER_2026_SPECIALIST_HEDGE_ALARM_SNAPSHOT_V1_RESULT_2026-10-01.md`
+- `gold_axis_2026/GOLD_MONTHLY_OCTOBER_2026_SPECIALIST_HEDGE_ALARM_SNAPSHOT_V1_2026-10-01.json`
+
+Binding next stage:
+- **Contextual Relative-Loss / Rescue-Gain Predictor V1 — NEXT / NOT YET RUN**
+- no 2025/2026 post-hoc tuning authority is granted by this checkpoint.
