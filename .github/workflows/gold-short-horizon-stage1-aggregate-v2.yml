@@ -1,0 +1,50 @@
+name: Gold Short Horizon Stage1 Aggregate V2
+
+on:
+  push:
+    branches:
+      - gold-midas-headswap-v1-20260925
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_stage1_aggregate_v2.py'
+      - '.github/workflows/gold-short-horizon-stage1-aggregate-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  aggregate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install --disable-pip-version-check pandas
+      - name: Download authoritative horizon artifacts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p h1 h3 h5
+          python - <<'PY'
+          import os,requests,zipfile,io
+          repo="ataullahturgut/sim3-automation"
+          items={1:11166394641,3:11166279606,5:11166224706}
+          token=os.environ["GH_TOKEN"]
+          for h,aid in items.items():
+              u=f"https://api.github.com/repos/{repo}/actions/artifacts/{aid}/zip"
+              r=requests.get(u,headers={"Authorization":f"Bearer {token}","Accept":"application/vnd.github+json"},timeout=120)
+              r.raise_for_status()
+              z=zipfile.ZipFile(io.BytesIO(r.content))
+              z.extractall(f"h{h}")
+          PY
+      - name: Aggregate frozen H1 H3 H5 results
+        run: python gold_axis_2026/tools/gold_short_horizon_stage1_aggregate_v2.py
+      - name: Upload aggregate result
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-short-horizon-stage1-aggregate-v2
+          path: stage1_all/
+          retention-days: 90
