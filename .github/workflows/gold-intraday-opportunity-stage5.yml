@@ -1,0 +1,37 @@
+name: Gold Intramonth Opportunity Stage5
+
+on:
+  push:
+    branches:
+      - gold-midas-headswap-v1-20260925
+    paths:
+      - 'gold_axis_2026/tools/gold_intramonth_opportunity_stage5.py'
+      - '.github/workflows/gold-intraday-opportunity-stage5.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  stage5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install --disable-pip-version-check numpy pandas requests scikit-learn
+      - name: Run Stage5 calibration and threshold audit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OUT_DIR: stage5_out
+        run: python gold_axis_2026/tools/gold_intramonth_opportunity_stage5.py
+      - name: Upload Stage5 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-intramonth-opportunity-stage5
+          path: stage5_out/
+          retention-days: 90
