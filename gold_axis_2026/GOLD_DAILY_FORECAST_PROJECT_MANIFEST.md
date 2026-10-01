@@ -26,7 +26,8 @@ Gold is the primary scored target. Joint four-metal output is allowed where just
 ## 1.2 Current project stage
 
 **Stage 0 Scientific Contract: FROZEN / COMPLETE**  
-**Stage 1 Daily Data Authority & PIT Audit: NEXT**
+**Stage 1 Daily Data Authority & PIT Audit: COMPLETE / PASS**  
+**Stage 2 Baseline & Daily Feature Contract: NEXT**
 
 No daily production champion exists.
 
@@ -96,73 +97,132 @@ Supporting:
 
 ---
 
-# 3. Data Architecture — Current Status
+# 3. Data Architecture — Frozen Stage-1 State
 
-## 3.1 Four-metal core
+## 3.1 Core four-metal authority
 
-Required:
+**Borsa İstanbul Precious Metals Market — Metal Price (USD/ONS)**
+
+Covered metals:
 - Gold
 - Silver
 - Platinum
 - Palladium.
 
-Known issue:
-- prior historical daily metal series are labeled **APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT**.
+Official Metal Price history is available from **2011-01-01**.
 
-Therefore governed daily modeling is blocked until Stage 1 establishes an acceptable source/timestamp contract or explicitly accepts reconstruction-only research scope.
+Binding daily target:
+- **Gold Metal Price USD/ONS**
+- treated as this project's governed daily XAU/USD reference;
+- not described as LBMA PM or global OTC close.
 
-## 3.2 Rates
+Core status: **READY / OFFICIAL**.
 
-Existing monthly-project authority already contains official Federal Reserve H.15 daily histories through September 2026.
+## 3.2 Forecast issue time
 
-Daily-project task:
-- define daily origin timestamp/release safety;
-- determine usable nominal 10Y / real 10Y / breakeven representations.
+**00:30 Europe/Istanbul on each Borsa İstanbul target business date.**
 
-Status: **SOURCE EXISTS / DAILY CONTRACT NOT YET FROZEN**.
+At this cutoff:
+- previous Borsa metal prices are final;
+- prior U.S. session is complete;
+- latest Fed H.15 release is available with safety buffer.
 
-## 3.3 FX
+The target is the official Borsa İstanbul Gold Metal Price published later that target business day.
 
-Existing authority contains official Federal Reserve H.10 daily histories including Broad USD and major FX.
+## 3.3 Rates
 
-Status:
-**SOURCE EXISTS / DAILY CONTRACT NOT YET FROZEN**.
+Authority:
+- Federal Reserve H.15.
 
-## 3.4 VIX
-
-Existing authority contains official Cboe daily VIX history.
-
-Status:
-**SOURCE EXISTS / DAILY CONTRACT NOT YET FROZEN**.
-
-## 3.5 Nasdaq-100
-
-Prior data-readiness result:
-- monthly Nasdaq is ready;
-- credential-free long-history daily Nasdaq-100 was **NOT PROVEN**.
+Rule:
+- use only the latest observation actually published by the origin;
+- never join by observation date alone.
 
 Status:
-**DAILY SOURCE BLOCKED / MUST BE RESOLVED IN STAGE 1**.
+**READY_LAGGED**.
 
-No silent proxy substitution.
+## 3.4 FX
 
-## 3.6 WTI / Brent
+Authority:
+- Federal Reserve H.10.
 
-Prior governed store proves World Bank **monthly** WTI/Brent, not a governed daily oil series.
+Important:
+- H.10 daily observations are released in a **weekly Monday batch** for the previous business week.
+
+Rule:
+- publication-date / batch-aware join;
+- carry only the latest officially released batch;
+- record staleness.
 
 Status:
-**DAILY SOURCE NOT YET PROVEN**.
+**READY_WEEKLY_PIT**.
 
-No monthly oil series may be mislabeled as a daily input.
+## 3.5 VIX
 
-## 3.7 GPR
+Authority:
+- Cboe official daily VIX close.
 
-Daily GPR use requires an explicit origin-time vintage rule.
+Rule:
+- use prior completed U.S. session only.
 
-Prior V2 used:
-- an origin in month M may use only vintage M-1 and GPR month M-2.
+Status:
+**READY**.
 
-Stage 1 must confirm or replace this with a documented daily-origin rule before modeling.
+## 3.6 Nasdaq-100
+
+Authority:
+- Nasdaq official NDX Index History.
+
+Rule:
+- use prior completed U.S. session only.
+
+Status:
+**READY**.
+
+## 3.7 WTI / Brent
+
+Authority:
+- EIA official daily closing spot-price histories.
+
+History:
+- WTI from 1986;
+- Brent from 1987.
+
+Issue:
+- historical observation date is not automatically the historical public-availability date.
+
+Status:
+**SOURCE_READY / PIT_MAPPING_BLOCKED**.
+
+Excluded from Stage-2 baseline feature blocks until release-date mapping is implemented.
+
+## 3.8 GPR
+
+Authority:
+- Caldara-Iacoviello official GPR vintages.
+
+Available:
+- monthly vintages;
+- Recent GPR daily data updated weekly;
+- older daily/monthly vintages archived.
+
+Rule:
+- use only a vintage whose publication/update date is <= forecast origin.
+
+Status:
+**READY_PIT_VINTAGES**.
+
+## 3.9 LBMA / StakTrakr boundary
+
+LBMA:
+- official international benchmark;
+- historical tabular access requires IBA licence;
+- **BENCHMARK_ONLY / LICENCE_BLOCKED** under current open-data workflow.
+
+StakTrakr:
+- prior reconstruction source;
+- **RESEARCH_COMPARATOR_ONLY**;
+- no longer core daily authority.
 
 ---
 
@@ -265,8 +325,8 @@ Prior V2 already shows that AOA-ELM, FULL7, REDUCED4 and SMA-ELMFIS direct trans
 | Stage | Purpose | Status |
 |---|---|---|
 | 0 | Scientific contract | **COMPLETE / FROZEN** |
-| 1 | Daily Data Authority & PIT Audit | **NEXT** |
-| 2 | Baseline + feature contract | BLOCKED BY STAGE 1 |
+| 1 | Daily Data Authority & PIT Audit | **COMPLETE / PASS** |
+| 2 | Baseline + feature contract | **NEXT** |
 | 3 | Model-family screen | BLOCKED |
 | 4 | Robustness / ensemble | BLOCKED |
 | 5 | Frozen 2026 retrospective transport | BLOCKED |
@@ -276,19 +336,19 @@ Prior V2 already shows that AOA-ELM, FULL7, REDUCED4 and SMA-ELMFIS direct trans
 
 # 8. Exact Next Action
 
-**Run Stage 1 — Daily Data Authority & PIT Audit.**
+**Run Stage 2 — Baseline & Daily Feature Contract.**
 
-Audit must answer:
-1. What exactly is the daily Gold target observation?
-2. Are four-metal historical daily rows PIT-safe or only reconstruction?
-3. What is the common-market-day calendar?
-4. Which daily Rates/FX/VIX series are already governed?
-5. Can official/governed daily Nasdaq-100 be established?
-6. Can official/governed daily WTI and Brent be established?
-7. What is the daily GPR publication/vintage rule?
-8. What are the missing-day/holiday/stale-price rules?
+Stage 2 must:
+- extract and freeze the official Borsa İstanbul four-metal daily panel;
+- audit coverage/common-calendar from 2011 through 2025;
+- freeze pre-2026 train/DEV chronology;
+- compute RW / zero-return / drift baselines;
+- build initial low-dimensional daily feature blocks;
+- implement release-aware as-of joins for H.15, H.10, VIX, NDX and GPR;
+- exclude WTI/Brent until PIT release mapping passes;
+- produce the first immutable daily modeling snapshot.
 
-No governed daily model should be run before this stage passes.
+No complex model-family screen before Stage 2 passes.
 
 ---
 
@@ -299,6 +359,10 @@ Canonical daily state:
 
 Frozen Stage 0 authority:
 - `GOLD_DAILY_FORECAST_STAGE0_SCIENTIFIC_CONTRACT_2026-10-01.md`
+
+Stage 1 authority/result:
+- `GOLD_DAILY_FORECAST_STAGE1_DATA_AUTHORITY_PIT_AUDIT_2026-10-01.md`
+- `GOLD_DAILY_FORECAST_STAGE1_DATA_AUTHORITY_PIT_AUDIT_RESULT_2026-10-01.md`
 
 Prior evidence:
 - `GOLD_DAILY_H1_TOP_FAMILY_EXPLORATORY_2026-09-26.md`
