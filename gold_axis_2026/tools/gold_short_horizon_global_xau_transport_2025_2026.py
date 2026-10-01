@@ -102,6 +102,7 @@ def add_rows(rows,te,pp,mode,train_n):
             "signal_date":str(r.signal_date.date()),
             "actual_h3_return":yret,
             "actual_direction":"UP" if yup else "DOWN",
+            "y_up":int(yup),
             "p_up":float(p),
             "predicted_direction":"UP" if pred else "DOWN",
             "correct":bool(pred==yup),
