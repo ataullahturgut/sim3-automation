@@ -26,14 +26,20 @@ Then, only after forecast validation, determine which horizon offers the stronge
 - Data Readiness Audit: COMPLETE / PASS
 - Stage 0 Scientific Contract: COMPLETE / FROZEN
 - Stage 1 First Multi-Horizon Model Screen: **COMPLETE / PASS**
-- **Stage 2 H3 Robustness + Feature Representation Audit: NEXT**
+- Stage 2 H3 Robustness + Feature Representation Audit: **COMPLETE / PASS**
+- **Stage 3 Sequence Model Challengers: NEXT**
 
 Current strongest research horizon: **H3**.
 
-Frozen Stage-1 H3 heads:
+Frozen H3 classical benchmark heads:
 - direction: **CORE3 / XGB_CLASS**
-- point return: **GOLD_ONLY / LGBM_REG** with CORE3 close challenger
+- point return: **GOLD_ONLY / LGBM_REG**
 - quantile distribution: **GOLD_ONLY / LGBM_QUANT**
+
+Stage-2 result:
+- Palladium / CORE4 not promoted
+- transformed Rates / FX / VIX / Nasdaq blocks not promoted
+- quantile head retained with year/high-volatility concentration caution.
 
 No tactical trading champion exists yet.
 
@@ -190,6 +196,71 @@ Binding caution:
 
 ---
 
+# 6B. Stage-2 H3 Robustness Result
+
+Authority:
+`GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE2_RESULT_2026-10-01.md`
+
+Authoritative run:
+- **36874561989**
+- artifact **11167744845**
+- artifact digest `sha256:63e70127447ec23531f59ff6dd589933085905260adcfb3b9c558b253d9cdadb`.
+
+Frozen head decisions:
+
+| Head | Decision | Frozen contract |
+|---|---|---|
+| Direction | RETAIN | CORE3 / XGB_CLASS |
+| Return | RETAIN | GOLD_ONLY / LGBM_REG |
+| Quantile | RETAIN | GOLD_ONLY / LGBM_QUANT |
+
+No feature challenger clears the +0.5% promotion gate.
+
+### Stability
+
+Direction relative Brier gain vs baseline:
+- 2022 +1.29%
+- 2023 -0.07%
+- 2024 +2.19%.
+
+Return relative MAE gain:
+- 2022 +0.94%
+- 2023 -0.85%
+- 2024 +2.57%.
+
+Quantile relative pinball gain:
+- 2022 -0.47%
+- 2023 -0.08%
+- 2024 +4.82%.
+
+Quantile therefore carries a binding stability caution: its aggregate edge is concentrated in 2024/high-volatility conditions.
+
+### Volatility diagnostic
+
+Relative retained-head gains:
+
+| Volatility | Direction | Return | Quantile |
+|---|---:|---:|---:|
+| LOW | -0.29% | +0.64% | +1.57% |
+| MID | -0.36% | -1.12% | -1.81% |
+| HIGH | +2.06% | +1.74% | +2.81% |
+
+No post-hoc volatility gate is authorized.
+
+### Feature representation conclusion
+
+Not promoted:
+- CORE4 / Palladium
+- Rates transforms
+- FX transforms
+- VIX transforms
+- Nasdaq transforms
+- combined transformed external block.
+
+The cleanest current architecture remains head-specific rather than one giant all-feature model.
+
+---
+
 # 7. Stage Roadmap
 
 | Stage | Purpose | Status |
@@ -197,8 +268,8 @@ Binding caution:
 | Data Audit | H1/H3/H5 merged PIT-safe readiness | COMPLETE / PASS |
 | 0 | Scientific contract | COMPLETE / FROZEN |
 | 1 | First model + feature + horizon screen | **COMPLETE / PASS** |
-| 2 | H3 robustness + feature representation audit | **NEXT** |
-| 3 | TCN / GRU / BiGRU challengers | BLOCKED BY STAGE 2 |
+| 2 | H3 robustness + feature representation audit | **COMPLETE / PASS** |
+| 3 | TCN / GRU / BiGRU challengers | **NEXT** |
 | 4 | TFT multi-horizon challenger | BLOCKED |
 | 5 | Forecast-head reconciliation | BLOCKED |
 | 6 | Tactical allocation / utility layer | BLOCKED |
@@ -209,38 +280,35 @@ Binding caution:
 
 # 8. Exact Next Action
 
-**Stage 2 — H3 Robustness + Feature Representation Audit**
+**Stage 3 — Compact Sequence Model Challengers**
 
-Keep 2025 frozen.
+Horizon:
+- H3 only.
 
-Required work:
+Frozen classical references:
+- direction = CORE3 / XGB_CLASS
+- return = GOLD_ONLY / LGBM_REG
+- quantile = GOLD_ONLY / LGBM_QUANT.
 
-1. H3 winner stability by:
-   - 2022
-   - 2023
-   - 2024
-   - Gold volatility tercile.
+Sequence challengers:
+1. TCN
+2. GRU
+3. BiGRU
 
-2. Head-level feature comparison:
-   - GOLD_ONLY
-   - CORE3
-   under the exact Stage-1 models.
+Before execution:
+- preregister lookback windows
+- preregister compact architectures
+- keep parameter counts constrained for the modest daily sample
+- preserve origin-safe sequences
+- preserve H3 label maturity and chronological DEV evaluation.
 
-3. CORE4 / Palladium incremental test:
-   - same H3 target
-   - same model hyperparameters
-   - explicitly account for shorter training history.
+Selection:
+- 2022-2024 DEV only
+- 2025 remains frozen
+- challenger must beat the corresponding classical head under the same primary/co-primary metrics
+- quantile challenger must also address the Stage-2 stability caution rather than win only through 2024.
 
-4. External representation audit:
-   - Rates changes/spreads
-   - FX returns/momentum
-   - VIX change / normalized stress
-   - Nasdaq-100 returns/momentum
-   instead of raw levels.
-
-5. No new deep architecture until H3 classical signal robustness is known.
-
-6. No 2025 transport until the H3 feature contract is frozen.
+TFT remains blocked until compact sequence challengers are resolved.
 ---
 
 # 9. Document Hierarchy
@@ -265,6 +333,13 @@ Stage 1:
 - H5 artifact **11166224706**
 - aggregate V2 run **36871668075**
 - aggregate artifact **11167138282**.
+
+Stage 2:
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE2_AUTHORITY_2026-10-01.md`
+- `GOLD_SHORT_HORIZON_TACTICAL_FORECAST_STAGE2_RESULT_2026-10-01.md`
+- authoritative corrected run **36874561989**
+- artifact **11167744845**
+- earlier runs 36873375235 / 36873744569 superseded due preprocessing mismatch.
 
 Sibling projects:
 - monthly forecast: `GOLD_MONTHLY_PROJECT_MANIFEST.md`
