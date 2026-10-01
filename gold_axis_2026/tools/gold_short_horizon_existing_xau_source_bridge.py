@@ -41,10 +41,10 @@ def metrics(h,c,sid):
         cc[["date","value"]].rename(columns={"value":"cand"}),on="date",how="inner"
     ).sort_values("date").reset_index(drop=True)
     if len(b)<2: return b,{}
-    b["rh"]=np.log(b.hist).diff(); b["rc"]=np.log(b.cand).diff()
+    b["rh"]=np.log(b["hist"].astype(float)).diff(); b["rc"]=np.log(b["cand"].astype(float)).diff()
     q=b.dropna()
     d=q.rh-q.rc
-    ratio=b.hist/b.cand
+    ratio=b["hist"].astype(float)/b["cand"].astype(float)
     m={
       "series_id":sid,
       "common_level_dates":int(len(b)),
