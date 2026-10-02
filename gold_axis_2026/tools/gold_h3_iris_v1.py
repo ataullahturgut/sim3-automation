@@ -188,8 +188,8 @@ def bridge_metrics(hist, succ):
             "return_diff_sd": np.nan,
             "pass": False,
         }
-    b["rh"] = np.log(b.hist).diff()
-    b["rs"] = np.log(b.succ).diff()
+    b["rh"] = np.log(pd.to_numeric(b["hist"], errors="coerce")).diff()
+    b["rs"] = np.log(pd.to_numeric(b["succ"], errors="coerce")).diff()
     q = b.dropna(subset=["rh", "rs"]).copy()
     diff = q.rh - q.rs
     pear = float(q.rh.corr(q.rs)) if len(q) > 1 else np.nan
