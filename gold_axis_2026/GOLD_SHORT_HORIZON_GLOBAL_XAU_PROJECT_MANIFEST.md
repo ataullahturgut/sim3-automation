@@ -508,10 +508,48 @@ ChHHO challenger gate: **FAIL**.
 
 Binding ANFIS decision:
 - monthly ChHHO superiority does **not** transfer to this daily H3 direction problem;
-- Vanilla is better than the daily ChHHO hybrid but both are worse than frozen Logistic-L2;
-- neither model is eligible for 2025/2026 transport because the preregistered DEV promotion gate failed;
+- Vanilla is better than the daily ChHHO hybrid on DEV;
 - no ANFIS rescue tuning on opened years;
 - ANFIS checklist row is closed.
+
+### 15.3 User-authorized 2025/2026 opened transport report
+
+After the DEV decision was frozen, the user explicitly authorized reporting both ANFIS models on opened years.
+
+Transport authority:
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_ANFIS_TRANSPORT_AUTHORITY_2026-10-02.md`
+- mode: **STRICT_FROZEN_FIT**
+- training rows: **3,784**
+- last training target maturity: **2024-12-31**
+- no 2025/2026 label used for fitting or selection
+- scoring through forecast issue **2026-09-25**, H3 target end **2026-09-29**.
+
+Opened results:
+
+| Model | Period | N | Accuracy | Balanced acc | Brier | Log loss |
+|---|---|---:|---:|---:|---:|---:|
+| Vanilla ANFIS | 2025 | 253 | 51.38% | 50.83% | 0.257784 | 0.710436 |
+| ChHHO-ANFIS | 2025 | 253 | **53.75%** | **53.53%** | **0.249717** | **0.694378** |
+| Logistic L2 | 2025 | 253 | 50.20% | 50.06% | 0.250756 | 0.694636 |
+| Vanilla ANFIS | 2026 Jan-Sep | 191 | 45.03% | 45.87% | 0.304693 | 1.248899 |
+| ChHHO-ANFIS | 2026 Jan-Sep | 191 | **50.26%** | **51.21%** | 0.303964 | 1.235350 |
+| Logistic L2 | 2026 Jan-Sep | 191 | 43.98% | 45.21% | **0.272677** | **0.741953** |
+
+2026 August:
+- Vanilla ANFIS accuracy **57.14%**, balanced accuracy **67.86%**, Brier 0.259859.
+- ChHHO-ANFIS accuracy **38.10%**, balanced accuracy **42.86%**, Brier 0.274031.
+- Logistic L2 accuracy **47.62%**, balanced accuracy **53.57%**, Brier 0.248849.
+
+2026 September:
+- Vanilla ANFIS accuracy **47.37%**, balanced accuracy **55.36%**, Brier 0.276403.
+- ChHHO-ANFIS accuracy **52.63%**, balanced accuracy **56.55%**, Brier 0.257079.
+- Logistic L2 accuracy **47.37%**, balanced accuracy **58.33%**, Brier 0.260167.
+
+Interpretation:
+- ChHHO gives the best **opened-year direction accuracy** among the three in both 2025 and Jan-Sep 2026.
+- On 2025 Brier, ChHHO is also slightly better than Logistic.
+- In 2026, however, both ANFIS probability streams are badly overconfident/miscalibrated: Brier and especially log loss deteriorate sharply relative to Logistic.
+- Therefore opened accuracy improvement must not be confused with better probabilistic forecasting.
 
 ## 16. Exact next research action
 
