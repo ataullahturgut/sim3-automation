@@ -2226,3 +2226,76 @@ Evidence:
 - `GOLD_H3_VEGA_V1_SUMMARY_2026-10-02.json`
 - `GOLD_H3_VEGA_V1_METRICS_2026-10-02.csv`
 - `GOLD_H3_VEGA_V1_2026_CHANGED_2026-10-02.csv`.
+
+
+## 34. OPAL-H3 V1 — options-positioning asymmetry reversal layer (2026-10-03)
+
+Authority:
+- `GOLD_H3_OPAL_V1_AUTHORITY_2026-10-03.md`
+
+Workflow:
+- successful run **37070032373**
+- earlier runs failed only on CFTC schema/parser compatibility; scientific contract was unchanged.
+
+Identity:
+- `OPAL_H3_V1_RESEARCH`
+
+Information channel:
+- official CFTC COMEX Gold disaggregated reports, contract code **088691**;
+- futures-only plus futures-and-options-combined;
+- delta-adjusted options-only cohort positioning reconstructed as:
+  `combined - futures-only`;
+- cohorts:
+  - managed money
+  - producer/merchant
+  - swap dealer
+  - other reportables;
+- normalized by open interest;
+- weekly change, rolling 52-report z-scores and cross-cohort gaps;
+- conservative **7 calendar-day availability lag** from report as-of date.
+
+Routing:
+- separate reversal target:
+  `sign(H3) != sign(h_ret_12)`;
+- balanced Logistic L2;
+- AURORA remains default;
+- flip only when AURORA follows 12h momentum and `p_reversal >= 0.70`.
+
+Results:
+- 2023: AURORA **71.23%** -> OPAL **67.12%**, 9 rescues / 18 broken
+- 2024: **70.83% -> 70.00%**, 9 / 11
+- 2025: **64.52% -> 64.92%**, 12 / 11
+- 2026: **60.73% -> 63.87%**
+  - balanced accuracy **61.12% -> 64.21%**
+  - Brier **0.2477 -> 0.2452**
+  - 24 overrides
+  - **15 rescues / 9 broken**
+  - net rescue **+6**
+- 2025-2026:
+  - accuracy **62.87% -> 64.46%**
+  - BA **62.07% -> 63.24%**
+  - net rescue **+7**.
+
+Status:
+- **NOT_PROMOTED_CONFIRM_FAIL**
+- 2023-2024 aggregate:
+  - AURORA **71.02%**
+  - OPAL **68.63%**
+  - net rescue **-11**
+  - Brier deteriorated **0.2059 -> 0.2181**.
+- therefore the strong 2025-2026 improvement cannot justify promotion under the frozen confirmation rule.
+
+Binding interpretation:
+1. Options-positioning asymmetry is the strongest genuinely new reversal channel found so far for **2025-2026**, especially 2026.
+2. The signal is strongly **regime-dependent**: harmful in 2023, near-neutral in 2024, positive in 2025 and clearly positive in 2026.
+3. This points away from a universal reversal override and toward a preregistered **regime-conditioned reversal architecture**.
+4. Do not retune the OPAL threshold, lag or features on 2025-2026.
+5. A new regime-conditioned challenger must be a new identity and must not overwrite frozen AURORA prospective evidence.
+6. Frozen AURORA remains the prospective champion.
+
+Evidence:
+- `GOLD_H3_OPAL_V1_RESULT_2026-10-03.md`
+- `GOLD_H3_OPAL_V1_SUMMARY_2026-10-03.json`
+- `GOLD_H3_OPAL_V1_METRICS_2026-10-03.csv`
+- `GOLD_H3_OPAL_V1_2026_CHANGED_2026-10-03.csv`
+- `GOLD_H3_OPAL_V1_COT_STATE_2026-10-03.csv`.
