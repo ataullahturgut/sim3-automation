@@ -1,0 +1,80 @@
+name: Gold H3 NOVA V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_nova_v1.py'
+      - '.github/workflows/gold-h3-nova-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      OUT_DIR: gold_h3_nova_v1_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'lightgbm>=4,<5' 'xgboost>=3,<4' requests
+
+      - name: Resolve latest R2 readiness artifact
+        id: aid
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          AID="$(gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts?name=gold-short-horizon-global-xau-readiness-r2&per_page=20" --jq '.artifacts | map(select(.expired == false)) | sort_by(.created_at) | reverse | .[0].id')"
+          test -n "$AID"
+          echo "aid=$AID" >> "$GITHUB_OUTPUT"
+
+      - name: Run NOVA H3 V1
+        env:
+          READINESS_ARTIFACT: ${{ steps.aid.outputs.aid }}
+        run: python gold_axis_2026/tools/gold_h3_nova_v1.py
+
+      - name: Commit evidence
+        shell: bash
+        run: |
+          cp "$OUT_DIR/NOVA_V1_RESULT.md" gold_axis_2026/GOLD_H3_NOVA_V1_RESULT_2026-10-02.md
+          cp "$OUT_DIR/nova_v1_summary.json" gold_axis_2026/GOLD_H3_NOVA_V1_SUMMARY_2026-10-02.json
+          cp "$OUT_DIR/nova_v1_metrics.csv" gold_axis_2026/GOLD_H3_NOVA_V1_METRICS_2026-10-02.csv
+          cp "$OUT_DIR/nova_v1_return_metrics.csv" gold_axis_2026/GOLD_H3_NOVA_V1_RETURN_METRICS_2026-10-02.csv
+          cp "$OUT_DIR/nova_v1_conformal_metrics.csv" gold_axis_2026/GOLD_H3_NOVA_V1_CONFORMAL_METRICS_2026-10-02.csv
+          cp "$OUT_DIR/nova_v1_a2_grid.csv" gold_axis_2026/GOLD_H3_NOVA_V1_A2_GRID_2026-10-02.csv
+          cp "$OUT_DIR/nova_v1_a3_grid.csv" gold_axis_2026/GOLD_H3_NOVA_V1_A3_GRID_2026-10-02.csv
+          cp "$OUT_DIR/nova_v1_a4_reliability_grid.csv" gold_axis_2026/GOLD_H3_NOVA_V1_A4_GRID_2026-10-02.csv
+          cp "$OUT_DIR/nova_v1_aci_gamma_grid.csv" gold_axis_2026/GOLD_H3_NOVA_V1_ACI_GRID_2026-10-02.csv
+          cp "$OUT_DIR/nova_v1_a5_rho_grid.csv" gold_axis_2026/GOLD_H3_NOVA_V1_A5_GRID_2026-10-02.csv
+          cp "$OUT_DIR/nova_v1_predictions.csv" gold_axis_2026/GOLD_H3_NOVA_V1_PREDICTIONS_2026-10-02.csv
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_NOVA_V1_*_2026-10-02.*
+          if git diff --cached --quiet; then
+            echo "No NOVA evidence changes"
+          else
+            git commit -m "Record NOVA H3 v1 results"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-nova-v1
+          path: gold_h3_nova_v1_out/
+          if-no-files-found: warn
+          retention-days: 90
