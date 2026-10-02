@@ -1,0 +1,67 @@
+name: Gold H3 SENTRY V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_sentry_v1.py'
+      - '.github/workflows/gold-h3-sentry-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      OUT_DIR: gold_h3_sentry_v1_out
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4' 'requests>=2.31,<3'
+      - name: Require private data secrets
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$TWELVE_DATA_API_KEY"
+      - name: Run SENTRY H3 V1
+        run: python gold_axis_2026/tools/gold_h3_sentry_v1.py
+      - name: Commit SENTRY evidence
+        shell: bash
+        run: |
+          cp "$OUT_DIR/SENTRY_V1_RESULT.md" gold_axis_2026/GOLD_H3_SENTRY_V1_RESULT_2026-10-02.md
+          cp "$OUT_DIR/sentry_v1_summary.json" gold_axis_2026/GOLD_H3_SENTRY_V1_SUMMARY_2026-10-02.json
+          cp "$OUT_DIR/sentry_v1_metrics.csv" gold_axis_2026/GOLD_H3_SENTRY_V1_METRICS_2026-10-02.csv
+          cp "$OUT_DIR/sentry_v1_switches.csv" gold_axis_2026/GOLD_H3_SENTRY_V1_SWITCHES_2026-10-02.csv
+          cp "$OUT_DIR/sentry_v1_path_share.csv" gold_axis_2026/GOLD_H3_SENTRY_V1_PATH_SHARE_2026-10-02.csv
+          cp "$OUT_DIR/sentry_v1_2026_rescue.csv" gold_axis_2026/GOLD_H3_SENTRY_V1_2026_RESCUE_2026-10-02.csv
+          cp "$OUT_DIR/sentry_v1_2026_monthly.csv" gold_axis_2026/GOLD_H3_SENTRY_V1_2026_MONTHLY_2026-10-02.csv
+          cp "$OUT_DIR/sentry_v1_predictions.csv" gold_axis_2026/GOLD_H3_SENTRY_V1_PREDICTIONS_2026-10-02.csv
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_SENTRY_V1_*_2026-10-02.*
+          if git diff --cached --quiet; then
+            echo "No SENTRY evidence changes"
+          else
+            git commit -m "Record SENTRY H3 v1 results"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-sentry-v1
+          path: gold_h3_sentry_v1_out/
+          if-no-files-found: warn
+          retention-days: 90
