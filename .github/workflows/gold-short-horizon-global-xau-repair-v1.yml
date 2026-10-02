@@ -1,0 +1,86 @@
+name: Gold Short Horizon Global XAU Repair V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_REPAIR_AUTHORITY_2026-10-02.md'
+      - 'gold_axis_2026/tools/gold_short_horizon_global_xau_repair_v1.py'
+      - '.github/workflows/gold-short-horizon-global-xau-repair-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OUT_DIR: global_xau_repair_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+
+      - name: Require DB connection
+        run: test -n "$NEON_DATABASE_URL"
+
+      - name: Resolve established public StakTrakr source commits
+        id: refs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          STAK_REF="$(gh api repos/lbruton/StakTrakr/commits/main --jq .sha)"
+          STAK_API_REF="$(gh api repos/lbruton/StakTrakrApi/commits/api --jq .sha)"
+          echo "stak_ref=$STAK_REF" >> "$GITHUB_OUTPUT"
+          echo "stak_api_ref=$STAK_API_REF" >> "$GITHUB_OUTPUT"
+          echo "STAK_REF=$STAK_REF"
+          echo "STAK_API_REF=$STAK_API_REF"
+
+      - name: Compile repair runner
+        run: python -m py_compile gold_axis_2026/tools/gold_short_horizon_global_xau_repair_v1.py
+
+      - name: Run source continuity timeline reproduction transport and drift audit
+        run: |
+          python gold_axis_2026/tools/gold_short_horizon_global_xau_repair_v1.py             --stak-ref "${{ steps.refs.outputs.stak_ref }}"             --stak-api-ref "${{ steps.refs.outputs.stak_api_ref }}"             --cutoff 2026-09-30             --out-dir "$OUT_DIR"
+
+      - name: Commit authoritative repair results
+        shell: bash
+        run: |
+          cp "$OUT_DIR/REPAIR_RESULT.md" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_REPAIR_RESULT_2026-10-02.md
+          cp "$OUT_DIR/repair_summary.json" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_REPAIR_SUMMARY_2026-10-02.json
+          cp "$OUT_DIR/source_inventory.csv" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_INVENTORY_2026-10-02.csv
+          cp "$OUT_DIR/same_source_continuity.csv" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_SAME_SOURCE_CONTINUITY_2026-10-02.csv
+          cp "$OUT_DIR/corrected_timeline_panel.csv" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_CORRECTED_TIMELINE_PANEL_2026-10-02.csv
+          cp "$OUT_DIR/dev_reproduction_annual.csv" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_DEV_REPRODUCTION_ANNUAL_2026-10-02.csv
+          cp "$OUT_DIR/h3_transport_predictions_v2.csv" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_TRANSPORT_PREDICTIONS_V2_2026-10-02.csv
+          cp "$OUT_DIR/h3_transport_metrics_v2.csv" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_TRANSPORT_METRICS_V2_2026-10-02.csv
+          cp "$OUT_DIR/distribution_shift_diagnostics.csv" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_DISTRIBUTION_SHIFT_DIAGNOSTICS_2026-10-02.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_*_2026-10-02.*
+          if git diff --cached --quiet; then
+            echo "No result change"
+          else
+            git commit -m "Record Global XAU repaired daily evidence through Sep 2026"
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-short-horizon-global-xau-repair-v1
+          path: global_xau_repair_out/
+          if-no-files-found: warn
+          retention-days: 90
