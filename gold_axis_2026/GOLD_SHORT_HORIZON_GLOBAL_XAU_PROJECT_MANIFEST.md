@@ -2168,3 +2168,61 @@ Status:
 Binding implication:
 - pursue genuinely forward-looking information for the reversal state, especially gold-options implied volatility / skew or other pre-origin expectation measures;
 - frozen AURORA prospective ledger remains unchanged.
+
+
+## 33. VEGA-H3 V1 — options-implied volatility reversal head (2026-10-02)
+
+Authority:
+- `GOLD_H3_VEGA_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37065316324**
+- conclusion **SUCCESS**
+
+Purpose:
+- test a genuinely forward-looking information channel for the structural momentum-reversal blind spot;
+- use Cboe GVZ / FRED GVZCLS with a conservative D-1 lag;
+- combine GVZ state and implied-vs-realized volatility gaps with the 12h trend state;
+- balanced logistic reversal head; AURORA remains default;
+- flip only when AURORA follows 12h momentum and p(reversal)>=0.70.
+
+GVZ coverage:
+- 2021-01-04 through 2026-09-30
+- 1,444 daily observations.
+
+Results:
+- 2023: AURORA **71.23%** -> VEGA **69.86%**, 2 rescues / 5 broken
+- 2024: **70.83% -> 70.42%**, 6 / 7
+- 2025: **64.52% -> 64.11%**, 4 / 5
+- 2026: **60.73% -> 60.21%**, 6 / 7
+- 2023-2024: **71.02% -> 70.15%**, net rescue -4
+- 2025-2026: **62.87% -> 62.41%**, net rescue -2.
+
+Status:
+- **NOT_PROMOTED_CONFIRM_FAIL**.
+- GVZ improves probability quality slightly in some later windows but does not reliably identify reversal direction.
+- This is consistent with GVZ being an expected-magnitude / implied-volatility measure rather than a directional options-asymmetry measure.
+
+### Binding reversal-research conclusion
+
+Across RIFT, TURN and VEGA:
+
+1. The structural weakness is clearly **momentum reversal**, not ordinary continuation.
+2. Continuation performance of AURORA is extraordinarily high (~91-95% in 2023-2026), while reversal accuracy is low.
+3. Intraday realized-price asymmetry contains some reversal signal but is unstable.
+4. A literature-derived semivariance tail rule does not transport reliably to gold H3.
+5. Gold implied volatility (GVZ) is forward-looking but directionless and does not solve the reversal-routing problem by itself.
+6. The next materially different information set must be **directional forward-looking positioning**, such as:
+   - gold-options implied skew / risk reversal;
+   - put/call volume or open-interest imbalance;
+   - directional gold-options order-flow / dealer gamma exposure;
+   - another pre-origin directional derivative-market measure.
+7. Scheduled macro-event timing is useful as a risk-state diagnostic but is not sufficient as the main reversal direction engine.
+8. Do not retune RIFT/TURN/VEGA from 2022-2026 outcomes.
+9. Frozen AURORA remains the prospective champion until a separately frozen challenger proves itself on future origins.
+
+Evidence:
+- `GOLD_H3_VEGA_V1_RESULT_2026-10-02.md`
+- `GOLD_H3_VEGA_V1_SUMMARY_2026-10-02.json`
+- `GOLD_H3_VEGA_V1_METRICS_2026-10-02.csv`
+- `GOLD_H3_VEGA_V1_2026_CHANGED_2026-10-02.csv`.
