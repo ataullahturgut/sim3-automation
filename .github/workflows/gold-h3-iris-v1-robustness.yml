@@ -1,0 +1,66 @@
+name: Gold H3 IRIS V1 Robustness
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_iris_v1_robustness.py'
+      - '.github/workflows/gold-h3-iris-v1-robustness.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      OUT_DIR: gold_h3_iris_v1_robust_out
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4' 'requests>=2.31,<3'
+      - name: Require private data secrets
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$TWELVE_DATA_API_KEY"
+      - name: Run IRIS robustness audit
+        run: python gold_axis_2026/tools/gold_h3_iris_v1_robustness.py
+      - name: Commit robustness evidence
+        shell: bash
+        run: |
+          cp "$OUT_DIR/IRIS_V1_ROBUSTNESS_RESULT.md" gold_axis_2026/GOLD_H3_IRIS_V1_ROBUSTNESS_RESULT_2026-10-02.md
+          cp "$OUT_DIR/iris_v1_robustness_summary.json" gold_axis_2026/GOLD_H3_IRIS_V1_ROBUSTNESS_SUMMARY_2026-10-02.json
+          cp "$OUT_DIR/iris_v1_robustness_metrics.csv" gold_axis_2026/GOLD_H3_IRIS_V1_ROBUSTNESS_METRICS_2026-10-02.csv
+          cp "$OUT_DIR/iris_v1_parent_reproduction_check.csv" gold_axis_2026/GOLD_H3_IRIS_V1_REPRODUCTION_CHECK_2026-10-02.csv
+          cp "$OUT_DIR/iris_v1_monthly_stability_summary.csv" gold_axis_2026/GOLD_H3_IRIS_V1_MONTHLY_STABILITY_2026-10-02.csv
+          cp "$OUT_DIR/iris_v1_monthly_stability_detail.csv" gold_axis_2026/GOLD_H3_IRIS_V1_MONTHLY_DETAIL_2026-10-02.csv
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_IRIS_V1_*_2026-10-02.*
+          if git diff --cached --quiet; then
+            echo "No IRIS robustness changes"
+          else
+            git commit -m "Record IRIS H3 v1 robustness audit"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-iris-v1-robustness
+          path: gold_h3_iris_v1_robust_out/
+          if-no-files-found: warn
+          retention-days: 90
