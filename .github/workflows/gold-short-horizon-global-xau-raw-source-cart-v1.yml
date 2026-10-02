@@ -1,0 +1,66 @@
+name: Gold Short Horizon Global XAU Raw Source CART V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_global_xau_raw_source_cart_v1.py'
+      - '.github/workflows/gold-short-horizon-global-xau-raw-source-cart-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  cart:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OUT_DIR: global_xau_raw_source_cart_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4' requests
+      - name: Resolve R2 readiness artifact
+        id: aid
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          AID="$(gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts?name=gold-short-horizon-global-xau-readiness-r2&per_page=10" --jq '.artifacts | sort_by(.created_at) | reverse | .[0].id')"
+          test -n "$AID"
+          echo "aid=$AID" >> "$GITHUB_OUTPUT"
+      - name: Run raw-source CART screen
+        env:
+          READINESS_ARTIFACT: ${{ steps.aid.outputs.aid }}
+        run: python gold_axis_2026/tools/gold_short_horizon_global_xau_raw_source_cart_v1.py
+      - name: Commit evidence
+        run: |
+          cp "$OUT_DIR/RAW_SOURCE_CART_RESULT.md" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_RAW_SOURCE_CART_RESULT_2026-10-02.md
+          cp "$OUT_DIR/raw_source_cart_result.json" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_RAW_SOURCE_CART_RESULT_2026-10-02.json
+          cp "$OUT_DIR/raw_source_cart_summary.csv" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_RAW_SOURCE_CART_SUMMARY_2026-10-02.csv
+          cp "$OUT_DIR/raw_source_cart_annual.csv" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_RAW_SOURCE_CART_ANNUAL_2026-10-02.csv
+          cp "$OUT_DIR/raw_source_cart_split_usage.csv" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_RAW_SOURCE_CART_SPLIT_USAGE_2026-10-02.csv
+          cp "$OUT_DIR/raw_source_cart_final_importances.csv" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_RAW_SOURCE_CART_IMPORTANCES_2026-10-02.csv
+          cp "$OUT_DIR/raw_source_cart_rules.json" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_RAW_SOURCE_CART_RULES_2026-10-02.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_RAW_SOURCE_CART_*_2026-10-02.*
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record raw-source CART pattern screen"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git push origin HEAD:gold-midas-headswap-v1-20260925
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: global-xau-raw-source-cart-v1
+          path: global_xau_raw_source_cart_out/
+          if-no-files-found: warn
+          retention-days: 90
