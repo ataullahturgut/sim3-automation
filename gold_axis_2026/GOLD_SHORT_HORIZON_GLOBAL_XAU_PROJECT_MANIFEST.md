@@ -551,6 +551,60 @@ Interpretation:
 - In 2026, however, both ANFIS probability streams are badly overconfident/miscalibrated: Brier and especially log loss deteriorate sharply relative to Logistic.
 - Therefore opened accuracy improvement must not be confused with better probabilistic forecasting.
 
+## 15.4 Raw-source shallow CART pattern screen
+
+User authorized a simple pattern screen on the already-available raw daily source families before deeper log/rule inspection.
+
+Authority:
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_RAW_SOURCE_CART_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37000320782**
+- model: shallow CART
+- criterion: log-loss
+- max depth: 3
+- minimum leaf: 60
+- DEV only: 2022-2024
+- 2025/2026 not used.
+
+Raw daily source families represented:
+- Gold
+- Silver
+- Platinum
+- Palladium
+- NASDAQ-100
+- S&P 500
+- DJIA.
+
+Minimal lag-safe transforms:
+- 1-day, 5-day, 21-day log returns
+- Gold 20-day realized daily-return volatility.
+
+The XAU 1-hour source was intentionally left for a separate intraday add-on screen because its available history begins in 2022 and cannot support the same pre-DEV expanding-history contract at the start of 2022.
+
+DEV results:
+
+| Source block | N | Accuracy | Balanced acc | Brier | Log loss |
+|---|---:|---:|---:|---:|---:|
+| GOLD_ONLY | 755 | **51.92%** | **50.35%** | **0.252650** | **0.698884** |
+| METALS4 | 755 | 50.60% | 50.02% | 0.252962 | 0.701126 |
+| GOLD_EQUITY3 | 755 | 49.40% | 49.21% | 0.258808 | 0.712499 |
+| ALL7 | 755 | 48.48% | 48.36% | 0.263193 | 0.721218 |
+
+Immediate result:
+- the simple depth-3 tree does **not** improve as more raw source families are added;
+- `GOLD_ONLY` is the strongest of the four tree blocks on aggregate DEV;
+- METALS4 is close on Brier but not on accuracy;
+- adding the three equity indices reduces aggregate DEV performance in this first shallow-tree specification.
+
+Logs retained for later analysis:
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_RAW_SOURCE_CART_SPLIT_USAGE_2026-10-02.csv`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_RAW_SOURCE_CART_IMPORTANCES_2026-10-02.csv`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_RAW_SOURCE_CART_RULES_2026-10-02.json`
+- annual and prediction ledgers.
+
+No rule/log interpretation is promoted yet; that is a separate next diagnostic step.
+
 ## 16. Exact next research action
 
 The next checklist family is:
