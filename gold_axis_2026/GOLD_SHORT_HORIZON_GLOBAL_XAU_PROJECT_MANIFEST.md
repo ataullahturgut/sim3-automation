@@ -1856,3 +1856,110 @@ Evidence:
 - `GOLD_H3_AURORA_V1_SWITCHES_2026-10-02.csv`
 - `GOLD_H3_AURORA_V1_STATE_2026-10-02.csv`
 - `GOLD_H3_AURORA_V1_INFERENCE_2026-10-02.csv`.
+
+
+## 28. AURORA-H3 V1 — prospective freeze / live validation (2026-10-02)
+
+Freeze authority:
+- `GOLD_H3_AURORA_V1_PROSPECTIVE_FREEZE_2026-10-02.md`
+
+Prospective identity:
+- `AURORA_H3_V1_PROSPECTIVE`
+
+Frozen champion boundary:
+- champion research commit before live harness: `20a0bd35f0c74bed6890378a3f95777e4be520ac`
+- freeze timestamp: **2026-10-02T19:10:36Z**
+- last retrospective feature cutoff: **2026-09-24**
+- last retrospective forecast issue: **2026-09-25**
+- first allowed prospective feature cutoff: **2026-10-02 16:00 America/New_York anchor or later**.
+
+### Immutable prospective rules
+
+- Structural expert = frozen A1 + IRIS PATH Logistic L2.
+- PATH expert = frozen IRIS PATH Logistic L2.
+- A1 = 0.75 expanding CORE3 + 0.25 recent252 balanced CORE3.
+- prospective A1 refit cadence = one refit per **5 issued origins**, then reuse for the next four issued origins.
+- expert refit cadence = first eligible issued origin of each calendar month.
+- AURORA entry = frozen SENTRY fast-entry rule:
+  - 63 matured paired H3 outcomes
+  - minimum 42
+  - net rescue >= +3.
+- AURORA exit = frozen DART slow-exit rule:
+  - minimum 8 matured expert disagreements
+  - Pr(PATH superior) <= 0.10
+  - q_path <= 0.40.
+- DART hazard fixed at 0.05.
+- VISTA dynamic hazard is **not** active in the prospective champion.
+- no backfill after the prospective issue deadline.
+- forecast probability, direction, state, evidence and origin-time features are immutable after issuance.
+- settlement may only add actual target end / return / correctness after H3 maturity.
+
+### Source immutability
+
+Frozen public R2 history:
+- pinned StakTrakr commit `54fdf1c8d39b7b6c7b874d0f30f784296e886044`
+- common-metal history frozen through **2026-09-29**.
+
+Post-freeze public daily values:
+- stored append-only at first observation;
+- upstream revisions do not overwrite previously frozen prospective daily values.
+
+Frozen support files:
+- `GOLD_H3_AURORA_V1_FROZEN_DAILY_PRICES.csv`
+- `GOLD_H3_AURORA_V1_FROZEN_EXPERT_TRAIN_MATRIX.csv`
+
+Live evidence files:
+- `GOLD_H3_AURORA_V1_PROSPECTIVE_LEDGER.csv`
+- `GOLD_H3_AURORA_V1_PROSPECTIVE_DAILY_PRICES.csv`
+- `GOLD_H3_AURORA_V1_PROSPECTIVE_MISSES.csv`
+- `GOLD_H3_AURORA_V1_PROSPECTIVE_STATUS.md`
+- `GOLD_H3_AURORA_V1_PROSPECTIVE_STATUS.json`.
+
+### Initial dry-run
+
+Workflow:
+- `gold-h3-aurora-prospective-v1.yml`
+- run **37053636046**
+- completed **SUCCESS**.
+
+Frozen September 2026 expert reproduction:
+- rows: **19**
+- max absolute Structural probability difference: **6.11e-16**
+- max absolute PATH probability difference: **1.67e-16**
+- source bridge:
+  - 479 common hourly returns
+  - Pearson ~1.000000
+  - sign agreement 100%
+  - return-difference SD 0.
+- **PASS**.
+
+Initial live state at dry-run:
+- prospective forecast rows: **0**
+- settled rows: **0**
+- missed origins: **0**
+- post-freeze daily price rows: **0**
+- reason: the first eligible 2026-10-02 16:00 New-York anchor had not yet completed and the upstream public daily source had not advanced beyond the frozen 2026-09-29 snapshot.
+
+### Automatic scheduler
+
+A scheduler-only workflow was added to the repository default branch `main`:
+- `.github/workflows/gold-h3-aurora-prospective-scheduler.yml`
+- main commit `eb20b01c7fd1bee4731b564900c8dd42a4036563`.
+
+Schedule:
+- **01:30 UTC daily**
+- **10:30 UTC daily**.
+
+These two checks provide an evening and next-morning issuance opportunity around the New-York 16:00 anchor while remaining before the frozen 08:00 New-York next-weekday no-backfill deadline.
+
+The scheduler checks out the research branch, runs the frozen harness, and writes state changes back only to:
+- `gold-midas-headswap-v1-20260925`.
+
+### Binding prospective interpretation
+
+1. **AURORA-H3 V1 is now frozen.**
+2. No 2025/2026 retrospective outcome may change V1.
+3. New results after the freeze must be reported separately as prospective.
+4. Missing an origin is preferable to reconstructing it after outcome information becomes available.
+5. Prospective evidence cannot select a new V1 threshold or champion; any modification requires a new preregistered identity.
+6. The current research question is no longer “can we improve the backtest?” but **“does frozen AURORA transport prospectively?”**
