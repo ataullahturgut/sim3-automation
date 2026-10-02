@@ -1,0 +1,60 @@
+{
+  "api_calls": 11,
+  "schema": "SIGNET_H3_V1",
+  "selection_grid": [
+    {
+      "accuracy": 0.5454545454545454,
+      "balanced_accuracy": 0.5576923076923077,
+      "brier": 0.2651283040793383,
+      "delta_accuracy": -0.030303030303030387,
+      "delta_balanced_accuracy": -0.025000000000000022,
+      "delta_brier": 0.00847661520942422,
+      "delta_logloss": 0.01818420119001929,
+      "eligible": false,
+      "logloss": 0.742769835279065,
+      "rep": "SIG24",
+      "rescue_broken": 1,
+      "rescue_correct": 0,
+      "rescues": 1
+    },
+    {
+      "accuracy": 0.5151515151515151,
+      "balanced_accuracy": 0.5326923076923077,
+      "brier": 0.27829889135322694,
+      "delta_accuracy": -0.06060606060606066,
+      "delta_balanced_accuracy": -0.050000000000000044,
+      "delta_brier": 0.021647202483312866,
+      "delta_logloss": 0.04774635198637178,
+      "eligible": false,
+      "logloss": 0.7723319860754175,
+      "rep": "SIG48",
+      "rescue_broken": 2,
+      "rescue_correct": 0,
+      "rescues": 2
+    },
+    {
+      "accuracy": 0.5454545454545454,
+      "balanced_accuracy": 0.5576923076923077,
+      "brier": 0.26631098751524884,
+      "delta_accuracy": -0.030303030303030387,
+      "delta_balanced_accuracy": -0.025000000000000022,
+      "delta_brier": 0.009659298645334768,
+      "delta_logloss": 0.021185510462934154,
+      "eligible": false,
+      "logloss": 0.7457711445519799,
+      "rep": "SIG_MULTI",
+      "rescue_broken": 1,
+      "rescue_correct": 0,
+      "rescues": 1
+    }
+  ],
+  "source_bridge": {
+    "common_level_rows": 480,
+    "common_return_rows": 479,
+    "pass": true,
+    "pearson": 0.9999999999999999,
+    "return_diff_sd": 0.0,
+    "sign_agreement": 1.0
+  },
+  "status": "FAIL_CLOSED_NO_ELIGIBLE_SIGNATURE_REPRESENTATION"
+}
