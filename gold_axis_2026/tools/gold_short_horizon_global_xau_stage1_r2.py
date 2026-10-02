@@ -170,7 +170,7 @@ def main():
     # Precompute baselines blockwise using matured prior labels.
     for block_id in range(0,len(dev),BLOCK):
         te=dev.iloc[block_id:block_id+BLOCK].copy()
-        start=te["date"].min()
+        start=te["feature_cutoff_date"].min()
         mm=mature_mask(df,start,horizon) & df[target].notna()
         tr0=df[mm].copy()
         if len(tr0)<252: raise RuntimeError(f"insufficient train {len(tr0)}")
@@ -188,8 +188,9 @@ def main():
         for ix,yv,yu in zip(te.index,yte,upte):
             common={
                 "horizon":horizon,"row_index":int(ix),
-                "origin_date":str(df.at[ix,"date"].date()),
-                "signal_date":str(df.at[ix,"signal_date"].date()),
+                "feature_cutoff_date":str(df.at[ix,"feature_cutoff_date"].date()),
+                "forecast_issue_date":str(df.at[ix,"forecast_issue_date"].date()),
+                "target_end_date":str(df.at[ix,f"target_end_date_h{horizon}"].date()),
                 "y_return":float(yv),"y_up":int(yu),"block_id":block_id//BLOCK,
                 "train_n":int(len(tr0))
             }
@@ -214,8 +215,9 @@ def main():
                 pp=m.predict_proba(Xte)[:,1]
                 for ix,yv,yu,pv in zip(te.index,yte,upte,pp):
                     pred_rows.append({
-                        "horizon":horizon,"row_index":int(ix),"origin_date":str(df.at[ix,"date"].date()),
-                        "signal_date":str(df.at[ix,"signal_date"].date()),"y_return":float(yv),"y_up":int(yu),
+                        "horizon":horizon,"row_index":int(ix),"feature_cutoff_date":str(df.at[ix,"feature_cutoff_date"].date()),
+                        "forecast_issue_date":str(df.at[ix,"forecast_issue_date"].date()),
+                        "target_end_date":str(df.at[ix,f"target_end_date_h{horizon}"].date()),"y_return":float(yv),"y_up":int(yu),
                         "block_id":block_id//BLOCK,"train_n":int(len(tr0)),
                         "head":"direction","feature_block":bname,"model":mname,"prediction":float(pv)
                     })
@@ -225,8 +227,9 @@ def main():
                 pp=m.predict(Xte)
                 for ix,yv,yu,pv in zip(te.index,yte,upte,pp):
                     pred_rows.append({
-                        "horizon":horizon,"row_index":int(ix),"origin_date":str(df.at[ix,"date"].date()),
-                        "signal_date":str(df.at[ix,"signal_date"].date()),"y_return":float(yv),"y_up":int(yu),
+                        "horizon":horizon,"row_index":int(ix),"feature_cutoff_date":str(df.at[ix,"feature_cutoff_date"].date()),
+                        "forecast_issue_date":str(df.at[ix,"forecast_issue_date"].date()),
+                        "target_end_date":str(df.at[ix,f"target_end_date_h{horizon}"].date()),"y_return":float(yv),"y_up":int(yu),
                         "block_id":block_id//BLOCK,"train_n":int(len(tr0)),
                         "head":"return","feature_block":bname,"model":mname,"prediction":float(pv)
                     })
@@ -237,8 +240,9 @@ def main():
                 pp=m.predict(Xte)
                 for ix,yv,yu,pv in zip(te.index,yte,upte,pp):
                     quant_rows.append({
-                        "horizon":horizon,"row_index":int(ix),"origin_date":str(df.at[ix,"date"].date()),
-                        "signal_date":str(df.at[ix,"signal_date"].date()),"y_return":float(yv),"y_up":int(yu),
+                        "horizon":horizon,"row_index":int(ix),"feature_cutoff_date":str(df.at[ix,"feature_cutoff_date"].date()),
+                        "forecast_issue_date":str(df.at[ix,"forecast_issue_date"].date()),
+                        "target_end_date":str(df.at[ix,f"target_end_date_h{horizon}"].date()),"y_return":float(yv),"y_up":int(yu),
                         "block_id":block_id//BLOCK,"train_n":int(len(tr0)),
                         "feature_block":bname,"model":"LGBM_QUANT","quantile":q,"prediction":float(pv)
                     })
