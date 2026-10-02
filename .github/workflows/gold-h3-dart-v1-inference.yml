@@ -1,0 +1,43 @@
+name: Gold H3 DART V1 Inference
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_dart_v1_inference.py'
+      - '.github/workflows/gold-h3-dart-v1-inference.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      OUT_DIR: gold_h3_dart_inference_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3'
+      - name: Run DART inference audit
+        run: python gold_axis_2026/tools/gold_h3_dart_v1_inference.py
+      - name: Commit DART inference evidence
+        shell: bash
+        run: |
+          cp "$OUT_DIR/DART_V1_INFERENCE_RESULT.md" gold_axis_2026/GOLD_H3_DART_V1_INFERENCE_RESULT_2026-10-02.md
+          cp "$OUT_DIR/dart_v1_inference_summary.json" gold_axis_2026/GOLD_H3_DART_V1_INFERENCE_SUMMARY_2026-10-02.json
+          cp "$OUT_DIR/dart_v1_inference_bootstrap.csv" gold_axis_2026/GOLD_H3_DART_V1_INFERENCE_BOOTSTRAP_2026-10-02.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_DART_V1_INFERENCE_*_2026-10-02.*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record DART H3 inference audit"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
