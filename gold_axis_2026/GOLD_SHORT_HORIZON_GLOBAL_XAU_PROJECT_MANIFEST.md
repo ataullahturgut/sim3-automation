@@ -1638,7 +1638,7 @@ DART vs SENTRY in 2026:
 ### Binding interpretation
 
 1. **DART-H3 V1 is MECHANISM_PASS.**
-2. **DART-H3 V1 becomes the current adaptive H3 research champion.**
+2. DART-H3 V1 was the first disagreement-aware Bayesian regime-transfer champion and is now superseded by AURORA-H3 V1; see Section 27.
 3. DART preserves Structural IRIS exactly in the strong 2023-2024 regime.
 4. It detects a probabilistically strong PATH regime on 2025-10-14 using only already-matured expert disagreements.
 5. DART reaches **60.73% accuracy / 61.12% balanced accuracy in 2026**, the strongest governed adaptive H3 result so far.
@@ -1657,3 +1657,202 @@ Evidence:
 - `GOLD_H3_DART_V1_2026_RESCUE_2026-10-02.csv`
 - `GOLD_H3_DART_V1_INFERENCE_RESULT_2026-10-02.md`
 - `GOLD_H3_DART_V1_INFERENCE_BOOTSTRAP_2026-10-02.csv`.
+
+
+## 26. VISTA-H3 V1 — volatility-informed dynamic hazard (2026-10-02)
+
+Authority:
+- `GOLD_H3_VISTA_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37050915576**
+
+Identity:
+- `VISTA_H3_V1_RESEARCH`
+
+Purpose:
+- modify only the DART BOCPD change-point hazard using origin-safe XAU 1h realized-volatility and jump-concentration state;
+- do not alter expert probabilities or direction features.
+
+Origin-safe shock state:
+- 24h realized volatility percentile
+- 24h jump-concentration percentile
+- prior 504 anchors only
+- minimum history 60
+- shock = 0.70 * rv_pct + 0.30 * jump_pct.
+
+Dynamic hazard:
+- base **0.05**
+- `h_t = clip(0.05 * exp(k*(shock-0.5)), 0.02, 0.125)`
+- `k = ln(4)/0.8`.
+
+Annual mean shock / hazard:
+- 2023: shock 0.437 / hazard 0.0493
+- 2024: 0.528 / 0.0567
+- 2025: 0.576 / 0.0614
+- 2026: **0.678 / 0.0710**.
+
+State transition:
+- **2025-10-14 Structural -> PATH**
+- origin shock **0.915**
+- dynamic hazard **0.1026**
+- q_path **0.823**
+- Pr(PATH superior) **0.932**.
+
+Result:
+- 2023 / 2024 exactly preserved Structural IRIS;
+- 2025 and 2026 predictions are **exactly identical to fixed-hazard DART**;
+- 2026 accuracy **60.73%**, balanced **61.12%**, Brier **0.2477**.
+
+Binding interpretation:
+1. VISTA is **MECHANISM_PASS but NON-INCREMENTAL**.
+2. The shock-conditioned hazard changes posterior internals, but not the discrete routing decision under frozen DART thresholds.
+3. Therefore the extra complexity is not justified as the champion.
+4. Keep VISTA as a documented negative/neutral mechanism result; do not promote over DART/AURORA.
+
+Evidence:
+- `GOLD_H3_VISTA_V1_RESULT_2026-10-02.md`
+- `GOLD_H3_VISTA_V1_SUMMARY_2026-10-02.json`
+- `GOLD_H3_VISTA_V1_METRICS_2026-10-02.csv`
+- `GOLD_H3_VISTA_V1_STATE_2026-10-02.csv`.
+
+
+## 27. AURORA-H3 V1 — asymmetric unified regime online routing (2026-10-02)
+
+Authority:
+- `GOLD_H3_AURORA_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37051415369**
+
+Identity:
+- `AURORA_H3_V1_RESEARCH`
+
+### Mechanism
+
+AURORA combines two already-frozen causal mechanisms without introducing a new fitted threshold:
+
+**Fast entry — SENTRY**
+- latest 63 matured H3 paired outcomes
+- minimum matured history 42
+- enter PATH when net rescue >= **+3**.
+
+**Slow exit — DART**
+- matured expert-disagreement posterior
+- return to Structural only when:
+  - matured disagreements >= 8
+  - Pr(PATH superior) <= **0.10**
+  - q_path <= **0.40**.
+
+This is deliberate asymmetric hysteresis:
+- fast adaptation when the current structural expert shows recent realized weakness;
+- conservative reversal once a transferred expert regime is established.
+
+### Confirmation
+
+2023:
+- Structural IRIS **71.23% / BA 71.83 / Brier 0.2118**
+- AURORA **identical**
+- PATH share 0%.
+
+2024:
+- Structural IRIS **70.83% / BA 69.97 / Brier 0.2006**
+- AURORA **identical**
+- PATH share 0%.
+
+### Transition
+
+Single transition:
+- **2025-09-18: STRUCTURAL_IRIS -> PATH_GLOBAL**
+- net rescue63 **+3**
+- matured pair history **63**
+- matured disagreement events **90**
+- q_path **0.794**
+- Pr(PATH superior) **0.899**.
+
+No reversal through the end of the 2026 stress window.
+
+PATH share:
+- 2022: 0%
+- 2023: 0%
+- 2024: 0%
+- 2025: **29.4%**
+- 2026: **100%**.
+
+### Transport
+
+| Period | Model | Accuracy | Balanced acc | Brier | UP recall | DOWN recall |
+|---|---|---:|---:|---:|---:|---:|
+| 2025 | Structural IRIS | 63.71% | 62.27% | 0.2294 | 68.87% | 55.67% |
+| 2025 | SENTRY | **64.52%** | **62.93%** | **0.2276** | **70.20%** | 55.67% |
+| 2025 | DART | 64.11% | 62.60% | 0.2303 | 69.54% | 55.67% |
+| 2025 | **AURORA** | **64.52%** | **62.93%** | **0.2276** | **70.20%** | 55.67% |
+| 2026 | Structural IRIS | 58.64% | 59.12% | 0.2556 | 69.23% | 49.00% |
+| 2026 | SENTRY | 60.21% | 60.71% | 0.2513 | 71.43% | 50.00% |
+| 2026 | DART | **60.73%** | **61.12%** | **0.2477** | 69.23% | **53.00%** |
+| 2026 | **AURORA** | **60.73%** | **61.12%** | **0.2477** | 69.23% | **53.00%** |
+| 2025-2026 | Structural IRIS | 61.50% | 60.65% | 0.2408 | 69.01% | 52.28% |
+| 2025-2026 | SENTRY | 62.64% | 61.73% | 0.2379 | 70.66% | 52.79% |
+| 2025-2026 | DART | 62.64% | 61.87% | 0.2378 | 69.42% | 54.31% |
+| 2025-2026 | **AURORA** | **62.87%** | **62.07%** | **0.2363** | 69.83% | **54.31%** |
+
+2026 rescue vs Structural:
+- rescued **7**
+- broken **3**
+- net rescue **+4**
+- PATH active **191/191**.
+
+### Dependence-aware inference
+
+10,000-replicate circular moving-block bootstrap, block lengths 5 and 10.
+
+2025-2026 AURORA vs DART:
+- accuracy **+0.23 pp**
+- block-10 95% interval **[0.00, +0.68] pp**
+- Brier **-0.00150**
+- block-5 95% interval **[-0.00369, -0.00003]**
+- block-10 interval touches 0 at the upper endpoint.
+- log loss **-0.00359**
+- block-5 interval **[-0.00874, -0.00010]**.
+
+2025-2026 AURORA vs SENTRY:
+- accuracy **+0.23 pp**, not statistically decisive;
+- Brier **-0.00158**
+  - block-5 interval **[-0.00337, -0.00025]**
+  - block-10 **[-0.00351, -0.00021]**
+- log loss **-0.00364**
+  - block-5 **[-0.00823, -0.00045]**
+  - block-10 **[-0.00818, -0.00042]**.
+
+2025-2026 AURORA vs Structural:
+- accuracy **+1.37 pp**
+- Brier **-0.00443**
+  - block-5 **[-0.00856, -0.00033]**
+  - block-10 **[-0.00865, -0.00012]**
+- log loss **-0.01556**
+  - block-5 **[-0.02967, -0.00219]**
+  - block-10 **[-0.03184, -0.00162]**.
+
+### Binding interpretation
+
+1. **AURORA-H3 V1 is MECHANISM_PASS.**
+2. **AURORA-H3 V1 is the current adaptive H3 research champion.**
+3. It preserves the strong 2023-2024 Structural IRIS regime exactly.
+4. It inherits SENTRY's earlier 2025 PATH entry and DART's persistence through 2026.
+5. It produces the strongest governed 2025-2026 aggregate result:
+   - accuracy **62.87%**
+   - balanced accuracy **62.07%**
+   - Brier **0.2363**.
+6. 2026 standalone remains tied with DART/PATH at **60.73% accuracy / 61.12% balanced accuracy**.
+7. The main incremental evidence over SENTRY is probability quality rather than a large hit-rate jump.
+8. No new threshold was fitted; AURORA is a composition of two frozen parent mechanisms.
+9. Do not retune the SENTRY entry or DART exit thresholds using 2025/2026.
+10. Next decisive evidence is prospective/live-origin validation under the frozen AURORA state rule.
+
+Evidence:
+- `GOLD_H3_AURORA_V1_RESULT_2026-10-02.md`
+- `GOLD_H3_AURORA_V1_SUMMARY_2026-10-02.json`
+- `GOLD_H3_AURORA_V1_METRICS_2026-10-02.csv`
+- `GOLD_H3_AURORA_V1_SWITCHES_2026-10-02.csv`
+- `GOLD_H3_AURORA_V1_STATE_2026-10-02.csv`
+- `GOLD_H3_AURORA_V1_INFERENCE_2026-10-02.csv`.
