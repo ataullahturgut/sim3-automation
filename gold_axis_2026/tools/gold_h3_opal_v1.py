@@ -131,6 +131,16 @@ def fetch_socrata(dataset_id):
     return df, {"url":url, "bytes":len(raw), "rows":int(len(df))}
 
 def gold_rows(df):
+    aliases = {
+        "prod_merc_positions_long": "prod_merc_positions_long_all",
+        "prod_merc_positions_short": "prod_merc_positions_short_all",
+        "other_rept_positions_long": "other_rept_positions_long_all",
+        "other_rept_positions_short": "other_rept_positions_short_all",
+    }
+    for src,dst in aliases.items():
+        if dst not in df.columns and src in df.columns:
+            df[dst] = df[src]
+
     code_col = "cftc_contract_market_code"
     date_col = "report_date_as_yyyy_mm_dd" if "report_date_as_yyyy_mm_dd" in df.columns else "as_of_date_form_yyyy_mm_dd"
     if code_col not in df.columns or date_col not in df.columns:
