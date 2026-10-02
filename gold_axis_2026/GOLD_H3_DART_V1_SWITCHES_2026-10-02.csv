@@ -1,0 +1,2 @@
+forecast_issue_date,from,to,q_path,prob_path_superior,expected_run_length,changepoint_mass,matured_disagreements
+2025-10-14,STRUCTURAL_IRIS,PATH_GLOBAL,0.8306013441857487,0.9436215492985202,7.808502132398357,0.032097548298039597,91
