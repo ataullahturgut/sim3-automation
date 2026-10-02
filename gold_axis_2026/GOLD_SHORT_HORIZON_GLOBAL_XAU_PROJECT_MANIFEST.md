@@ -401,26 +401,135 @@ A later daily refresh must:
 
 Twelve Data/NY17, XAUS, intraday cache, ETF or futures clocks remain separate identities unless a separately frozen target contract authorizes them.
 
-## 15. Exact next research action
+## 15. Daily cross-family challenger checklist
 
-The data/timeline repair is complete. Do **not** repeat source discovery, timeline repair, or the same R2 baseline screen again.
+Frozen comparator for the checklist:
+- target: H3 UP/DOWN
+- feature comparator: CORE3
+- model comparator: Logistic-L2 / RAW
+- DEV: 2022-2024 only
+- comparator Brier: 0.2466373999
+- comparator log loss: 0.6864471944
+- 2025/2026: transport/reporting only, never selection.
 
-The next scientific task is:
+Checklist order:
 
-**preregister a new transport-robust challenger using only pre-2025 evidence.**
+| # | Family / model | Daily H3 status | Decision |
+|---:|---|---|---|
+| 1 | ANFIS | **COMPLETE** | Vanilla and ChHHO both NOT_PROMOTED |
+| 2 | RBFNN | NOT_RUN | NEXT |
+| 3 | PLS | NOT_RUN | queued |
+| 4 | GPR / MOGP | NOT_RUN | queued |
+| 5 | ANN FULL7 | NOT_RUN | queued |
+| 6 | ANN REDUCED4 | NOT_RUN | queued |
+| 7 | SVR | NOT_RUN | queued |
+| 8 | CatBoost | NOT_RUN | queued |
+| 9 | ELM | NOT_RUN | queued |
+| 10 | DMA / DMS | NOT_RUN | queued |
+| 11 | Random Forest | NOT_RUN | queued |
+| 12 | Extra Trees | NOT_RUN | queued |
+| 13 | CNN-LSTM | NOT_RUN | queued |
+| 14 | ELMFIS | NOT_RUN | queued |
+| 15 | Huber | NOT_RUN | queued |
+| 16 | Ridge | NOT_RUN | queued |
+| 17 | BiLSTM | NOT_RUN | queued |
+| 18 | GPReg-Matérn | NOT_RUN | queued |
+| 19 | GPReg-RBF | NOT_RUN | queued |
 
-The challenger may be motivated by the documented pre-2025 coefficient stability and the existence of volatility/distribution instability, but:
-- no threshold or regime boundary may be chosen from 2025/2026;
-- no feature may be selected because it happened to explain a 2025/2026 error;
-- the R2 H3 / CORE3 / Logistic-L2 engine remains the frozen comparator;
-- DEV selection remains 2022-2024;
-- 2025 and 2026 are transport/reporting only.
+Explicitly excluded from this checklist:
+- ARIMA
+- SARIMA
+- Prophet
+- TimesFM-3
+- TimeMixer++
+- TimeXer.
 
-Only after a preregistered challenger clears the pre-2025 statistical gate may it be transported once against the frozen 2025 and Jan-Sep 2026 record.
+### 15.1 ANFIS Stage A — Vanilla
 
-No tactical/P&L layer is authorized before that.
+Authority:
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_ANFIS_CHALLENGER_AUTHORITY_2026-10-02.md`
 
-## 16. Current evidence hierarchy
+Vanilla architecture:
+- 14 CORE3 inputs
+- 5 Gaussian rules
+- first-order Sugeno/TSK
+- analytic LSE consequents
+- Jang-style normalized-gradient premise learning
+- chronological checking tail
+- no metaheuristic.
+
+Result:
+- workflow run **36991069231**
+- status **NOT_PROMOTED**
+- DEV n = 755
+- Brier **0.251124**
+- log loss **0.695898**
+- accuracy **52.05%**
+- balanced accuracy **51.64%**
+- relative Brier improvement vs frozen Logistic = **-1.82%**.
+
+Annual relative Brier versus Logistic:
+- 2022: **-3.47%**
+- 2023: **+1.35%**
+- 2024: **-3.38%**.
+
+Vanilla challenger gate: **FAIL**.
+
+### 15.2 ANFIS Stage B — ChHHO hybrid
+
+Execution order respected: Vanilla completed and was recorded before hybrid execution.
+
+Hybrid architecture:
+- same 14-input / 5-rule ANFIS
+- chaotic initialization
+- Harris Hawks Optimization of premise centers/log-spreads
+- population 8
+- generations 8
+- analytic consequents per candidate
+- chronological checking selection
+- Jang local refinement after HHO.
+
+Result:
+- workflow run **36991497737**
+- status **NOT_PROMOTED**
+- DEV n = 755
+- Brier **0.255899**
+- log loss **0.706268**
+- accuracy **50.20%**
+- balanced accuracy **49.94%**
+- relative Brier improvement vs frozen Logistic = **-3.76%**.
+
+Annual relative Brier versus Logistic:
+- 2022: **-5.56%**
+- 2023: **-0.03%**
+- 2024: **-5.73%**.
+
+ChHHO challenger gate: **FAIL**.
+
+Binding ANFIS decision:
+- monthly ChHHO superiority does **not** transfer to this daily H3 direction problem;
+- Vanilla is better than the daily ChHHO hybrid but both are worse than frozen Logistic-L2;
+- neither model is eligible for 2025/2026 transport because the preregistered DEV promotion gate failed;
+- no ANFIS rescue tuning on opened years;
+- ANFIS checklist row is closed.
+
+## 16. Exact next research action
+
+The next checklist family is:
+
+**RBFNN — first plain RBFNN, then the DE-ABC hybrid/reference adaptation.**
+
+The same governance remains binding:
+- DEV selection 2022-2024 only;
+- frozen H3 CORE3 Logistic-L2 comparator;
+- no 2025/2026 selection or retuning;
+- only a DEV-gate passer receives one-shot frozen transport.
+
+No tactical/P&L layer is authorized before a challenger shows adequate statistical transport evidence.
+
+## 17. Current evidence hierarchy
+
+## 17. Current evidence hierarchy
 
 Current R2 authority files:
 - `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_READINESS_RESULT_2026-10-02.md`
@@ -439,6 +548,11 @@ Current R2 authority files:
 - `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_DRIFT_SUMMARY_2026-10-02.json`
 - `GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_CLOCK_AUDIT_RESULT_2026-10-02.md`
 - `GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_LINEAGE_AUDIT_2026-10-02.json`.
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_ANFIS_CHALLENGER_AUTHORITY_2026-10-02.md`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_ANFIS_VANILLA_RESULT_2026-10-02.md`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_ANFIS_VANILLA_SUMMARY_2026-10-02.json`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_ANFIS_CHHHO_RESULT_2026-10-02.md`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_ANFIS_CHHHO_SUMMARY_2026-10-02.json`.
 
 Repair/failure evidence:
 - `GOLD_SHORT_HORIZON_GLOBAL_XAU_REPAIR_AUTHORITY_2026-10-02.md`
