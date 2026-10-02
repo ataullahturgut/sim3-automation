@@ -1,0 +1,16 @@
+{
+  "common_level_rows": 480,
+  "common_return_rows": 479,
+  "pearson": 0.9999999999999999,
+  "sign_agreement": 1.0,
+  "return_diff_sd": 0.0,
+  "pass": true,
+  "historical_hourly_rows": 17644,
+  "historical_first": "2022-01-02 23:00:00+00:00",
+  "historical_last": "2024-12-31 21:00:00+00:00",
+  "successor_rows": 13814,
+  "successor_first": "2024-12-01 23:00:00+00:00",
+  "successor_last": "2026-10-01 04:00:00+00:00",
+  "api_calls": 11,
+  "raw_vendor_values_logged_to_repo": false
+}
