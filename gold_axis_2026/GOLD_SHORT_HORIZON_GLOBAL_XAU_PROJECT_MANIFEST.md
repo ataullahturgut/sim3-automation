@@ -652,3 +652,58 @@ Repair/failure evidence:
 - lineage audit run **36984720262**.
 
 Historical R1 files remain available for audit but do not override the R2 sections above.
+
+
+## Target research — H1/H3/H5 and volatility-normalized barriers (2026-10-02)
+
+Authority:
+- `GOLD_SHORT_HORIZON_TARGET_RESEARCH_AUTHORITY_2026-10-02.md`
+
+Successful workflow:
+- run **37010849830**
+- first implementation run **37010722781** failed only on a Pandas output-field naming bug before producing metrics; code was fixed and rerun.
+
+Design:
+- identity: `GLOBAL_XAU_PUBLIC_STAKTRAKR_R2`
+- fixed CORE3 features
+- fixed Logistic L2 for every target
+- DEV only: 2022-2024
+- chronological expanding 5-origin blocks
+- no 2025/2026 outcomes used.
+
+Ordinary direction results:
+
+| Target | N | Accuracy | Balanced acc | Brier | Log loss | UP recall | DOWN recall |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| H1 | 755 | 50.73% | 50.45% | 0.2499 | 0.6930 | 56.46% | 44.44% |
+| H3 | 755 | 54.17% | **53.67%** | **0.2469** | **0.6869** | 64.56% | **42.78%** |
+| H5 | 755 | **54.97%** | 53.43% | 0.2478 | 0.6888 | **79.25%** | 27.61% |
+
+Annual direction accuracy:
+- H1: 2022 54.80%, 2023 49.00%, 2024 48.43%
+- H3: 2022 52.40%, 2023 51.00%, 2024 59.06%
+- H5: 2022 56.00%, 2023 52.19%, 2024 56.69%.
+
+Interpretation:
+- H1 is effectively near chance and loses signal after 2022.
+- H5 has the highest raw accuracy, but that number is driven by a strong UP bias; DOWN recall collapses to 27.61% overall and 22.86% in 2024.
+- H3 has the strongest probability quality and the best overall balance between raw direction accuracy and class balance. This reinforces H3 as the primary short-horizon direction target.
+- This target-screen implementation is a research comparison and does **not** supersede the already-frozen authoritative H3 Stage-1 comparator metrics (`Brier 0.2466373999`, log loss `0.6864471944`).
+
+Volatility-normalized first-daily-close-hit targets did not improve the problem:
+
+| Target | Accuracy | Balanced acc | NO_MOVE share | NO_MOVE recall | Pred directional coverage |
+|---|---:|---:|---:|---:|---:|
+| H3 ±0.50σ | 49.54% | 34.78% | 6.23% | 0.00% | 100.00% |
+| H3 ±0.75σ | 45.43% | 36.09% | 17.48% | 0.00% | 100.00% |
+| H3 ±1.00σ | 37.48% | 34.72% | 27.42% | 9.66% | 91.79% |
+| H5 ±0.75σ | 52.19% | 36.23% | 5.83% | 0.00% | 100.00% |
+
+Binding interpretation:
+- simply adding a `NO_MOVE` class does not create useful selectivity under the current CORE3 Logistic representation;
+- the model mostly refuses to predict `NO_MOVE`, so the barrier formulation does not solve label noise;
+- the next research target remains **ordinary H3 direction**, with selectivity handled by a separate reliability/confidence layer rather than by forcing a 3-class barrier target.
+
+Evidence:
+- `GOLD_SHORT_HORIZON_TARGET_RESEARCH_RESULT_2026-10-02.md`
+- `GOLD_SHORT_HORIZON_TARGET_RESEARCH_METRICS_2026-10-02.csv`.
