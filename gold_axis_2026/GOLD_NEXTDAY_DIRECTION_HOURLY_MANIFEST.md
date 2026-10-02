@@ -151,3 +151,53 @@ V2 result files:
 - `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V2_RESULT_2026-10-02.md`
 - `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V2_METRICS_2026-10-02.csv`
 - `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V2_COEFFICIENTS_2026-10-02.csv`.
+
+
+## V3 — One-by-one hourly lag selection
+
+Authority:
+- `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V3_SELECTION_AUTHORITY_2026-10-02.md`
+
+Workflow run:
+- **37006109253**
+
+Selection design:
+- all 24 hourly return lags tested individually on 2023;
+- 2023 used as lag-selection/development year;
+- greedy forward retention with frozen criteria;
+- selected subset then frozen and reported on 2024;
+- no 2025/2026 data used.
+
+Selected hourly lag:
+- **`hr_ret_lag2` only**.
+
+One-at-a-time 2023 leading effects versus V1:
+- lag2: accuracy +0.89 pp; balanced accuracy +0.90 pp; Brier +0.0002
+- lag19: accuracy +0.45 pp; balanced accuracy +0.47 pp; Brier -0.0014
+- lag8: accuracy +0.45 pp; balanced accuracy +0.45 pp; Brier -0.0008
+- lag3: accuracy +0.00 pp; balanced accuracy +0.03 pp; Brier -0.0013
+- lag22: accuracy +0.00 pp; balanced accuracy -0.01 pp; Brier -0.0038; log loss -0.0130.
+
+Frozen selected-subset results:
+
+| Model | Period | Accuracy | Balanced acc | Brier | UP recall | DOWN recall | False calls |
+|---|---|---:|---:|---:|---:|---:|---:|
+| V1 | 2023 | 55.36% | 55.47% | 0.2591 | 67.57% | 43.36% | 44.64% |
+| V3 + lag2 | 2023 | **56.25%** | **56.37%** | 0.2593 | **69.37%** | 43.36% | **43.75%** |
+| V1 | 2024 | 53.69% | 52.76% | 0.2609 | 61.48% | 44.04% | 46.31% |
+| V3 + lag2 | 2024 | **54.51%** | **53.59%** | **0.2606** | **62.22%** | **44.95%** | **45.49%** |
+| V1 | 2023-2024 | 54.49% | 53.96% | 0.2600 | 64.23% | 43.69% | 45.51% |
+| V3 + lag2 | 2023-2024 | **55.34%** | **54.80%** | **0.2600** | **65.45%** | **44.14%** | **44.66%** |
+
+Interpretation:
+- the full 24-lag vector was harmful, but **one individual lag adds a small, persistent directional improvement**;
+- lag2 survives both the 2023 selection year and 2024 frozen-subset confirmation;
+- the gain is about +0.85 pp accuracy over 2023-2024 and lowers false calls by about 0.85 pp;
+- probability quality is essentially unchanged;
+- other lags may help calibration without improving direction and are retained in the audit table, not promoted into the V3 subset.
+
+V3 evidence:
+- `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V3_RESULT_2026-10-02.md`
+- `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V3_ONE_AT_A_TIME_2023.csv`
+- `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V3_SELECTION_STEPS_2026-10-02.csv`
+- `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V3_METRICS_2026-10-02.csv`.
