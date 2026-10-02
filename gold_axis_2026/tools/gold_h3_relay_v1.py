@@ -375,10 +375,10 @@ def main():
     if switches.empty:
         lines.append("- none")
     else:
-        for r in switches.itertuples():
+        for _,r in switches.iterrows():
             lines.append(
-                f"- {r.forecast_issue_date}: {r._1 if False else getattr(r,'from')} -> {r.to}; "
-                f"q={r.q_opal:.3f}; Pr={r.prob_opal_superior:.3f}; events={int(r.matured_override_events)}"
+                f"- {r['forecast_issue_date']}: {r['from']} -> {r['to']}; "
+                f"q={r['q_opal']:.3f}; Pr={r['prob_opal_superior']:.3f}; events={int(r['matured_override_events'])}"
             )
 
     lines += ["","## 2026 rescue","",
