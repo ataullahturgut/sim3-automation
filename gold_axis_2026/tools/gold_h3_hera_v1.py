@@ -49,10 +49,12 @@ def load():
         "year","month","y_up","target_r3","p_aurora","active_expert"
     ]
     a=a[keep].copy()
+    a=a[a.forecast_issue_date>=pd.Timestamp("2022-07-01")].copy()
     o=o[["forecast_issue_date","p_opal","override","p_reversal"]].copy()
     g=a.merge(o,on="forecast_issue_date",how="inner",validate="one_to_one")
     if len(g)!=len(a):
-        raise RuntimeError(f"HERA_MATCH_FAIL aurora={len(a)} matched={len(g)}")
+        missing=sorted(set(a.forecast_issue_date)-set(g.forecast_issue_date))
+        raise RuntimeError(f"HERA_MATCH_FAIL aurora_eval={len(a)} matched={len(g)} missing={missing[:10]}")
     g["hera_uses_opal"]=g.active_expert.eq("PATH_GLOBAL")
     g["p_hera"]=np.where(g.hera_uses_opal,g.p_opal,g.p_aurora)
     return g.sort_values("forecast_issue_date").reset_index(drop=True)
