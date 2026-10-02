@@ -103,3 +103,51 @@ Before adding external data, inspect:
 - whether a compact subset can improve 2024 stability.
 
 2025/2026 hourly scoring requires extending the same 1h raw source beyond 2024 under an explicit source/clock refresh; it is not available in the current registered 1h research backfill.
+
+
+## V2 — Ordered hourly lag experiment
+
+Authority:
+- `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V2_AUTHORITY_2026-10-02.md`
+
+Workflow run:
+- **37004250723**
+
+Representation:
+- 24 ordered recent hourly returns
+- four six-hour prior-day return blocks
+- realized volatility / up-hour fractions
+- shock magnitude and shock age
+- same-sign streak
+- current and previous session return
+- 46 total V2 features.
+
+Strict 2023-2024 OOS results:
+
+| Model | Accuracy | Balanced acc | Brier | Log loss | False calls |
+|---|---:|---:|---:|---:|---:|
+| V1 Logistic L2 | **54.49%** | **53.96%** | 0.2600 | 0.7182 | **45.51%** |
+| Lag Logistic L2 | 48.93% | 48.57% | 0.2776 | 0.7628 | 51.07% |
+| Lag Elastic-Net Logistic | 49.79% | 49.31% | 0.2633 | 0.7233 | 50.21% |
+| Lag MLP-16 | 49.15% | 48.99% | 0.4576 | 3.0826 | 50.85% |
+| Majority probability | 52.56% | 50.00% | **0.2497** | **0.6926** | 47.44% |
+
+Year split:
+- V1 Logistic: 2023 **55.36%**, 2024 **53.69%**
+- Lag Logistic L2: 2023 **50.89%**, 2024 **47.13%**
+- Lag Elastic-Net: 2023 **51.34%**, 2024 **48.36%**
+- Lag MLP-16: 2023 **54.91%**, 2024 **43.85%**.
+
+Interpretation:
+- preserving 24 individual hourly return lags did **not** improve the V1 summary-feature Logistic model;
+- the full lag representation overfits materially, especially in 2024;
+- Elastic-Net reduces but does not remove the deterioration;
+- the MLP is severely overconfident and unstable;
+- the useful signal is more likely in compact path summaries/interactions than in a raw 24-hour lag vector.
+
+The coefficient audit still identifies structured lag effects, especially lag 15, lag 16, lag 13 and the 24-29h block, but these effects are not stable enough in the full V2 representation to improve OOS performance.
+
+V2 result files:
+- `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V2_RESULT_2026-10-02.md`
+- `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V2_METRICS_2026-10-02.csv`
+- `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V2_COEFFICIENTS_2026-10-02.csv`.
