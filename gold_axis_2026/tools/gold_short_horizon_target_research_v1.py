@@ -147,7 +147,7 @@ def run_target(df,name,spec):
     else:
         yseries=df[name].to_numpy(object)
         label_ok=df[name].notna()
-    tmp=df.copy(); tmp["_y"]=yseries
+    tmp=df.copy(); tmp["label_y"]=yseries
 
     dev=tmp[
         tmp.forecast_issue_date.dt.year.between(2022,2024) &
@@ -159,7 +159,7 @@ def run_target(df,name,spec):
         te=dev.iloc[bs:bs+BLOCK].copy()
         cutoff=te.feature_cutoff_date.min()
         tr=tmp[
-            tmp["_y"].notna() &
+            tmp["label_y"].notna() &
             tmp[endcol].notna() &
             (tmp[endcol]<=cutoff) &
             (tmp.forecast_issue_date<pd.Timestamp("2025-01-01")) &
@@ -167,7 +167,7 @@ def run_target(df,name,spec):
         ].copy()
         if len(tr)<500: raise RuntimeError(f"{name} train too small {len(tr)}")
         m=model()
-        m.fit(tr[FEATURES].to_numpy(float),tr["_y"].to_numpy(object))
+        m.fit(tr[FEATURES].to_numpy(float),tr["label_y"].to_numpy(object))
         pp=m.predict_proba(te[FEATURES].to_numpy(float))
         cls=[str(x) for x in m.named_steps["model"].classes_]
         for row,probs in zip(te.itertuples(),pp):
@@ -175,7 +175,7 @@ def run_target(df,name,spec):
                 "target":name,
                 "forecast_issue_date":str(row.forecast_issue_date.date()),
                 "year":int(row.forecast_issue_date.year),
-                "actual":str(row._y),
+                "actual":str(row.label_y),
             }
             for c,p in zip(cls,probs): rec[f"p_{c}"]=float(p)
             pred_rows.append(rec)
