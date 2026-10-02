@@ -9,6 +9,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import requests
+import psycopg
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import balanced_accuracy_score, confusion_matrix, log_loss, recall_score
 from sklearn.pipeline import Pipeline
@@ -109,7 +110,67 @@ def api_request_symbol(symbol, start_local, end_local):
     raise AssertionError
 
 
+def load_neon_silver():
+    dsn = os.environ["NEON_DATABASE_URL"]
+    with psycopg.connect(dsn, autocommit=False) as conn:
+        with conn.cursor() as cur:
+            cur.execute("SET TRANSACTION READ ONLY")
+            cur.execute(
+                """
+                SELECT series_id, COUNT(*), MIN(observation_ts), MAX(observation_ts)
+                FROM observations
+                WHERE UPPER(series_id) LIKE '%XAG%'
+                   OR UPPER(series_id) LIKE '%SILVER%'
+                GROUP BY series_id
+                ORDER BY COUNT(*) DESC
+                """
+            )
+            candidates = cur.fetchall()
+            print("ORBIT_NEON_SILVER_CANDIDATES=" + json.dumps([
+                [str(a), int(b), str(c), str(d)] for a,b,c,d in candidates
+            ]), flush=True)
+
+            eligible = []
+            for sid, n, first_ts, last_ts in candidates:
+                su = str(sid).upper()
+                if "TWELVE" in su and "1H" in su and n >= 5000:
+                    first = pd.Timestamp(first_ts, tz="UTC") if pd.Timestamp(first_ts).tzinfo is None else pd.Timestamp(first_ts).tz_convert("UTC")
+                    last = pd.Timestamp(last_ts, tz="UTC") if pd.Timestamp(last_ts).tzinfo is None else pd.Timestamp(last_ts).tz_convert("UTC")
+                    if first <= pd.Timestamp("2022-01-15", tz="UTC") and last >= pd.Timestamp("2024-12-15", tz="UTC"):
+                        eligible.append((sid,n,first,last))
+            if not eligible:
+                conn.rollback()
+                return None, None
+
+            sid = sorted(eligible, key=lambda x: x[1], reverse=True)[0][0]
+            cur.execute(
+                """
+                SELECT observation_ts, value, retrieved_at
+                FROM observations
+                WHERE series_id=%s
+                ORDER BY observation_ts, retrieved_at
+                """,
+                (sid,),
+            )
+            rows = cur.fetchall()
+        conn.rollback()
+
+    x = pd.DataFrame(rows, columns=["ts","value","retrieved_at"])
+    x["ts"] = pd.to_datetime(x.ts, utc=True)
+    x["value"] = pd.to_numeric(x.value, errors="coerce")
+    x = x.dropna(subset=["value"])
+    x = x[x.value > 0].copy()
+    x = x.sort_values(["ts","retrieved_at"]).drop_duplicates("ts", keep="last")
+    x = x.rename(columns={"value":"silver"})[["ts","silver"]].sort_values("ts").reset_index(drop=True)
+    return x, str(sid)
+
+
 def fetch_silver():
+    neon, neon_sid = load_neon_silver()
+    if neon is not None:
+        print(f"ORBIT_XAG_SOURCE=NEON series_id={neon_sid} rows={len(neon)}", flush=True)
+        return neon, 0, {"kind":"NEON","series_id":neon_sid}
+
     start = pd.Timestamp("2022-01-01 00:00:00")
     final = pd.Timestamp("2026-10-01 00:00:00")
     cur = start
@@ -143,7 +204,7 @@ def fetch_silver():
         raise RuntimeError("ORBIT_NO_SILVER_ROWS")
     x = pd.DataFrame(rows, columns=["ts","silver"])
     x = x.sort_values("ts").drop_duplicates("ts", keep="last").reset_index(drop=True)
-    return x, calls
+    return x, calls, {"kind":"TWELVE_API","series_id":SILVER_SYMBOL}
 
 
 def safe_corr(a,b):
@@ -375,7 +436,7 @@ def main():
     base["base_logit"]=np.log(pp/(1-pp))
 
     gold,bridge,gold_calls=fetch_gold()
-    silver,silver_calls=fetch_silver()
+    silver,silver_calls,silver_source=fetch_silver()
     feats,aligned=build_cross_features(gold,silver,base.feature_cutoff_date.unique())
 
     panel=base.merge(feats,on="feature_cutoff_date",how="inner",validate="one_to_one")
@@ -397,6 +458,7 @@ def main():
         "gold_bridge":bridge,
         "gold_api_calls":int(gold_calls),
         "silver_api_calls":int(silver_calls),
+        "silver_source":silver_source,
         "silver_rows":int(len(silver)),
         "aligned_hourly_rows":int(len(aligned)),
         "origin_coverage":coverage,
