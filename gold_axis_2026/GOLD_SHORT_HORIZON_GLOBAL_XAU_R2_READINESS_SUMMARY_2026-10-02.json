@@ -1,0 +1,206 @@
+{
+  "coverage": [
+    {
+      "all_n": 4211,
+      "block": "GOLD_ONLY",
+      "dev_n": 755,
+      "first_issue": "2010-02-03",
+      "horizon": 1,
+      "last_issue": "2026-09-29",
+      "opened_2026_n": 193,
+      "train_history_n": 3010,
+      "transport_2025_n": 253
+    },
+    {
+      "all_n": 4211,
+      "block": "CORE3",
+      "dev_n": 755,
+      "first_issue": "2010-02-03",
+      "horizon": 1,
+      "last_issue": "2026-09-29",
+      "opened_2026_n": 193,
+      "train_history_n": 3010,
+      "transport_2025_n": 253
+    },
+    {
+      "all_n": 4211,
+      "block": "CORE4",
+      "dev_n": 755,
+      "first_issue": "2010-02-03",
+      "horizon": 1,
+      "last_issue": "2026-09-29",
+      "opened_2026_n": 193,
+      "train_history_n": 3010,
+      "transport_2025_n": 253
+    },
+    {
+      "all_n": 4211,
+      "block": "CORE3_SAFE_EXTERNAL",
+      "dev_n": 755,
+      "first_issue": "2010-02-03",
+      "horizon": 1,
+      "last_issue": "2026-09-29",
+      "opened_2026_n": 193,
+      "train_history_n": 3010,
+      "transport_2025_n": 253
+    },
+    {
+      "all_n": 4209,
+      "block": "GOLD_ONLY",
+      "dev_n": 755,
+      "first_issue": "2010-02-03",
+      "horizon": 3,
+      "last_issue": "2026-09-25",
+      "opened_2026_n": 191,
+      "train_history_n": 3010,
+      "transport_2025_n": 253
+    },
+    {
+      "all_n": 4209,
+      "block": "CORE3",
+      "dev_n": 755,
+      "first_issue": "2010-02-03",
+      "horizon": 3,
+      "last_issue": "2026-09-25",
+      "opened_2026_n": 191,
+      "train_history_n": 3010,
+      "transport_2025_n": 253
+    },
+    {
+      "all_n": 4209,
+      "block": "CORE4",
+      "dev_n": 755,
+      "first_issue": "2010-02-03",
+      "horizon": 3,
+      "last_issue": "2026-09-25",
+      "opened_2026_n": 191,
+      "train_history_n": 3010,
+      "transport_2025_n": 253
+    },
+    {
+      "all_n": 4209,
+      "block": "CORE3_SAFE_EXTERNAL",
+      "dev_n": 755,
+      "first_issue": "2010-02-03",
+      "horizon": 3,
+      "last_issue": "2026-09-25",
+      "opened_2026_n": 191,
+      "train_history_n": 3010,
+      "transport_2025_n": 253
+    },
+    {
+      "all_n": 4207,
+      "block": "GOLD_ONLY",
+      "dev_n": 755,
+      "first_issue": "2010-02-03",
+      "horizon": 5,
+      "last_issue": "2026-09-23",
+      "opened_2026_n": 189,
+      "train_history_n": 3010,
+      "transport_2025_n": 253
+    },
+    {
+      "all_n": 4207,
+      "block": "CORE3",
+      "dev_n": 755,
+      "first_issue": "2010-02-03",
+      "horizon": 5,
+      "last_issue": "2026-09-23",
+      "opened_2026_n": 189,
+      "train_history_n": 3010,
+      "transport_2025_n": 253
+    },
+    {
+      "all_n": 4207,
+      "block": "CORE4",
+      "dev_n": 755,
+      "first_issue": "2010-02-03",
+      "horizon": 5,
+      "last_issue": "2026-09-23",
+      "opened_2026_n": 189,
+      "train_history_n": 3010,
+      "transport_2025_n": 253
+    },
+    {
+      "all_n": 4207,
+      "block": "CORE3_SAFE_EXTERNAL",
+      "dev_n": 755,
+      "first_issue": "2010-02-03",
+      "horizon": 5,
+      "last_issue": "2026-09-23",
+      "opened_2026_n": 189,
+      "train_history_n": 3010,
+      "transport_2025_n": 253
+    }
+  ],
+  "cutoff": "2026-09-30",
+  "external_artifact": 11028494060,
+  "gates": {
+    "aug_sep_2026_present": true,
+    "dev_ge_700": true,
+    "train_ge_2000": true,
+    "transport_2025_ge_200": true
+  },
+  "hashes": {
+    "global_xau_r2_coverage.csv": "8e543106c06e8f9fd9174589b33a8be2873de087ce57050b9a1fc755e1a4ab2b",
+    "global_xau_r2_readiness_panel.csv": "f56155feeff7c9780d37f00cef4a25432135bff6447b2cc0b80c6ba8891adb1a"
+  },
+  "identity": "GLOBAL_XAU_PUBLIC_STAKTRAKR_R2",
+  "source_meta": {
+    "annual_payload_sha256": {
+      "2010": "da2373d9182aada0cee121c9947bfb1c5a8c8ddf9d0965b1dbc8b47205001b4f",
+      "2011": "8ac8a12df02b9f6dc2e118db0357c536df9cbaaed48d569f29f838d16c48088b",
+      "2012": "0a5c4559fb1501d56431c81cb8f69c086748381336d05b07840d5653738428a3",
+      "2013": "5953c9797d10ccbc192b6cfb3bd3e5c56ea952626f0ab86997670e104628dbab",
+      "2014": "161c5904fcd12fd48ada6ca89845c1248d85ae6d249d5a65748a97cffab6cedb",
+      "2015": "7866033d91c912ae664b975d6cfacb8d5304ae16005e9f435023409034b945ff",
+      "2016": "0f04b1c3373dfd3dc02ca9b45c4ae439f14572eaf6f923c565451ec4a1a1a64f",
+      "2017": "958add11a0473380f2ad707be8edb42f9cc0c0628fc9cc5e13d24e595b81f070",
+      "2018": "f9bb8f9ad9e238fb3f779520ff8f4363f0736f0eda1e50d889bcf961d74130a7",
+      "2019": "6cf4aa633bd90e52240a60adf95f3b13daea7cbe6d3fe652dcc6f0fdab5b540e",
+      "2020": "5d78b528f8402724c412cbea25be95a58b347dddf8eb217630633efc83026d33",
+      "2021": "5141d790cb24ee2194433c08b34a3e035444fba12419709feacebdceb76d3983",
+      "2022": "bf4134fd2f3e054361d4895b4346e6a490e7fde7f0dec0cafac5868f14bb7ddc",
+      "2023": "f236474229b510db756c992e1404453d8672db798aa0956e24e05deb54068ca3",
+      "2024": "b1cca3b04fbe20b017f6b03bcc530edb152bfb5b2d7e32ff280c2f765e99ee5d",
+      "2025": "e90447a8a14638b96b7fbefd283a5afb7123c12a24095e60f543edb76dfe986b",
+      "2026": "0480f018af4e45d23d950dbde3f9bd3fd22d99a30c37cd9985243518b80d2663"
+    },
+    "first": "2010-01-04",
+    "last": "2026-09-29",
+    "n": 4233,
+    "provider_counts": {
+      "gold": {
+        "seed|LBMA": 4069,
+        "seed|MetalPriceAPI": 8,
+        "seed|StakTrakr": 4,
+        "sqld|": 152
+      },
+      "palladium": {
+        "seed|LBMA": 4069,
+        "seed|MetalPriceAPI": 8,
+        "seed|StakTrakr": 4,
+        "sqld|": 152
+      },
+      "platinum": {
+        "seed|LBMA": 4069,
+        "seed|MetalPriceAPI": 8,
+        "seed|StakTrakr": 4,
+        "sqld|": 152
+      },
+      "silver": {
+        "seed|LBMA": 4069,
+        "seed|MetalPriceAPI": 8,
+        "seed|StakTrakr": 4,
+        "sqld|": 152
+      }
+    },
+    "stak_ref": "54fdf1c8d39b7b6c7b874d0f30f784296e886044"
+  },
+  "status": "PASS",
+  "timeline_semantics": {
+    "feature_cutoff_date": "last Gold observation used by feature transforms",
+    "forecast_issue_date": "next retained weekday Gold observation date; old signal_date replacement",
+    "target_end_date_hN": "exact retained weekday Gold date ending forward HN return"
+  }
+}
