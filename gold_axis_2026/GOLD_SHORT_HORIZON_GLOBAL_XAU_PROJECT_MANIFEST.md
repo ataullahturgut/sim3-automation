@@ -822,3 +822,77 @@ Evidence:
 - `GOLD_H3_ARAC_V1_TRANSPORT_METRICS_2026-10-02.csv`
 - `GOLD_H3_ARAC_V1_TRANSPORT_2026_MONTHLY_2026-10-02.csv`
 - `GOLD_H3_ARAC_V1_TRANSPORT_WEIGHTS_2026-10-02.csv`.
+
+
+## H3 cross-family failure anatomy + ARCR-H3-v1 (2026-10-02)
+
+### Error anatomy
+
+Authority:
+- `GOLD_H3_CROSS_FAMILY_ERROR_ANATOMY_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37021645437**
+
+Five-model panel:
+- LOGIT_L2_CORE3
+- LGBM_CORE3
+- XGB_CORE3
+- VANILLA_ANFIS
+- CHHHO_ANFIS
+
+DEV 2022-2024:
+- Logistic remains the best full-sample model: 54.97% accuracy / 54.48% balanced.
+- Best UP recall: Logistic 65.06%.
+- Best DOWN recall: ChHHO-ANFIS 44.44%, only slightly above Logistic 43.89%.
+- Majority vote: 52.32% accuracy.
+- Unanimous calls: 43.44% coverage / 55.49% accuracy.
+- Disagreement rows: 56.56% coverage / 49.88% accuracy.
+- all-five-wrong: 146/755 rows.
+- exactly-one-correct: 103/755 rows; unique rescuers: Logistic 44, Vanilla ANFIS 21, ChHHO 19, LGBM 10, XGB 9.
+
+2026 state shift:
+- sigma20 mean is **+7.88 DEV SD** over all 2026 rows.
+- on 2026 majority-wrong rows sigma20 is **+9.19 DEV SD**.
+- consensus itself fails under shift: unanimous 2026 accuracy 44.79%.
+
+Binding diagnosis:
+- near-term H3 weakness is not primarily a missing model-family router;
+- models share substantial information-set bias and fail together;
+- the main unresolved problem is weak DOWN recall plus severe distribution shift / volatility novelty;
+- a pure consensus hybrid is not sufficient.
+
+### ARCR-H3-v1
+
+Authority:
+- `GOLD_H3_ASYMMETRIC_RECALL_ROUTER_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37022215922**
+
+Design:
+- GLOBAL CORE3 Logistic L2
+- RECENT252 balanced Logistic L2
+- blend and asymmetric UP threshold selected only on 2019-2021
+- frozen selected specification: global 0.75 / recent252 0.25 / UP threshold 0.50.
+
+Confirmation 2022-2024:
+- GLOBAL L2: 54.97% accuracy, 54.49% balanced, UP recall 64.81%, DOWN recall 44.17%, Brier 0.24664.
+- **ARCR-H3-v1: 56.16% accuracy, 55.98% balanced, UP recall 59.75%, DOWN recall 52.22%, Brier 0.24626.**
+- DOWN recall improves +8.06 pp while UP recall falls -5.06 pp.
+- false-call rate improves 45.03% -> 43.84%.
+
+Annual confirmation:
+- 2022 ARCR 53.20%
+- 2023 ARCR 58.96%
+- 2024 ARCR 56.30%.
+
+Transport diagnostics:
+- 2025 ARCR accuracy 49.41%, balanced 51.96%; DOWN recall improves to 62.89% but UP recall falls to 41.03%.
+- 2026 ARCR accuracy 37.17%, balanced 38.07%; no transport success.
+
+Interpretation:
+- the asymmetric recent/global mechanism is supported on 2022-2024 as a weak-side repair concept;
+- it is not robust to the 2026 novelty regime;
+- further classifier blending is not justified;
+- next architecture should retain the asymmetric weak-side repair logic but add an explicit novelty / regime-break mechanism and, ideally, new origin-safe cross-market or realized-state information.
