@@ -1,0 +1,56 @@
+name: Gold H3 Cross Family Error Anatomy V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_cross_family_error_anatomy_v1.py'
+      - '.github/workflows/gold-h3-cross-family-error-anatomy-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      READINESS_ARTIFACT: 11217361007
+      OUT_DIR: gold_h3_error_anatomy_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'lightgbm>=4,<5' 'xgboost>=3,<4' requests
+      - name: Run H3 error anatomy
+        run: python gold_axis_2026/tools/gold_h3_cross_family_error_anatomy_v1.py
+      - name: Commit evidence
+        run: |
+          cp "$OUT_DIR/H3_CROSS_FAMILY_ERROR_ANATOMY_RESULT.md" gold_axis_2026/GOLD_H3_CROSS_FAMILY_ERROR_ANATOMY_RESULT_2026-10-02.md
+          cp "$OUT_DIR/h3_cross_family_error_anatomy_result.json" gold_axis_2026/GOLD_H3_CROSS_FAMILY_ERROR_ANATOMY_RESULT_2026-10-02.json
+          cp "$OUT_DIR/h3_cross_family_model_metrics.csv" gold_axis_2026/GOLD_H3_CROSS_FAMILY_MODEL_METRICS_2026-10-02.csv
+          cp "$OUT_DIR/h3_cross_family_consensus_metrics.csv" gold_axis_2026/GOLD_H3_CROSS_FAMILY_CONSENSUS_METRICS_2026-10-02.csv
+          cp "$OUT_DIR/h3_cross_family_rescue_matrix.csv" gold_axis_2026/GOLD_H3_CROSS_FAMILY_RESCUE_MATRIX_2026-10-02.csv
+          cp "$OUT_DIR/h3_cross_family_special_cases.csv" gold_axis_2026/GOLD_H3_CROSS_FAMILY_SPECIAL_CASES_2026-10-02.csv
+          cp "$OUT_DIR/h3_cross_family_state_shifts.csv" gold_axis_2026/GOLD_H3_CROSS_FAMILY_STATE_SHIFTS_2026-10-02.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_CROSS_FAMILY_*_2026-10-02.*
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record H3 cross-family error anatomy"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git push origin HEAD:gold-midas-headswap-v1-20260925
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-cross-family-error-anatomy-v1
+          path: gold_h3_error_anatomy_out/
+          if-no-files-found: warn
+          retention-days: 90
