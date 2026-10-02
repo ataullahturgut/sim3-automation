@@ -1,0 +1,56 @@
+name: Gold H3 HERA V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_hera_v1.py'
+      - '.github/workflows/gold-h3-hera-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      OUT_DIR: gold_h3_hera_v1_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2'
+      - name: Run HERA H3 V1
+        run: python gold_axis_2026/tools/gold_h3_hera_v1.py
+      - name: Commit HERA evidence
+        shell: bash
+        run: |
+          cp "$OUT_DIR/HERA_V1_RESULT.md" gold_axis_2026/GOLD_H3_HERA_V1_RESULT_2026-10-03.md
+          cp "$OUT_DIR/hera_v1_summary.json" gold_axis_2026/GOLD_H3_HERA_V1_SUMMARY_2026-10-03.json
+          cp "$OUT_DIR/hera_v1_metrics.csv" gold_axis_2026/GOLD_H3_HERA_V1_METRICS_2026-10-03.csv
+          cp "$OUT_DIR/hera_v1_predictions.csv" gold_axis_2026/GOLD_H3_HERA_V1_PREDICTIONS_2026-10-03.csv
+          cp "$OUT_DIR/hera_v1_2025_changed.csv" gold_axis_2026/GOLD_H3_HERA_V1_2025_CHANGED_2026-10-03.csv
+          cp "$OUT_DIR/hera_v1_2026_changed.csv" gold_axis_2026/GOLD_H3_HERA_V1_2026_CHANGED_2026-10-03.csv
+          if [ -f "$OUT_DIR/hera_v1_inference.csv" ]; then cp "$OUT_DIR/hera_v1_inference.csv" gold_axis_2026/GOLD_H3_HERA_V1_INFERENCE_2026-10-03.csv; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_HERA_V1_*_2026-10-03.*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record HERA H3 v1 results"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-hera-v1
+          path: gold_h3_hera_v1_out/
+          if-no-files-found: warn
+          retention-days: 90
