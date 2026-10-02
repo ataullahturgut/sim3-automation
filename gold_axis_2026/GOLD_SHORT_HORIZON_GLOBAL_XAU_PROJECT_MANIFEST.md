@@ -1004,3 +1004,66 @@ Evidence:
 - `GOLD_H3_NOVA_V1_RETURN_METRICS_2026-10-02.csv`
 - `GOLD_H3_NOVA_V1_CONFORMAL_METRICS_2026-10-02.csv`
 - `GOLD_H3_NOVA_V1_PREDICTIONS_2026-10-02.csv`.
+
+
+## 19. FERG-H3 V1 — forecastability / error-risk gate (2026-10-02)
+
+Authority:
+- `GOLD_H3_FERG_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37040472781**
+
+Identity:
+- `FERG_H3_V1_RESEARCH`
+
+Base direction engine:
+- NOVA ledger A1 / ARCR-style 75% global CORE3 Logistic + 25% recent252 balanced Logistic.
+
+Design:
+- FERG does not predict direction directly.
+- Meta-target is whether the frozen A1 H3 direction call will be wrong.
+- Only already-matured prior H3 outcomes are available to each meta-model refit.
+- meta features include direction confidence, global/recent disagreement, novelty, numerical-return agreement, conformal width and causal recent error-history summaries.
+- candidate meta-models: L2 Logistic and shallow HistGradientBoosting.
+- family and acceptance threshold selected only on 2019-2021.
+- 2025/2026 are report-only.
+
+Pre-2022 selection chose:
+- meta-model: **META_HGB_SHALLOW**
+- frozen P(ERROR) acceptance threshold: **0.388797**
+- selection coverage: **30.04%**
+- selection accepted accuracy: **57.89%** vs full A1 **54.81%**
+- selection accepted-vs-rejected gap: **+4.41 pp**
+- error-risk AUC: **0.515**.
+
+### Confirmation failure
+
+| Period | Coverage | Full A1 acc | FERG accepted acc | Rejected acc | Accepted-vs-rejected gap | Error AUC |
+|---|---:|---:|---:|---:|---:|---:|
+| 2022-2024 | 12.19% | 56.16% | **44.57%** | **57.77%** | **-13.20 pp** | 0.460 |
+| 2022 | 8.80% | 53.20% | 40.91% | 54.39% | -13.48 pp | 0.450 |
+| 2023 | 14.34% | 58.96% | 44.44% | 61.40% | -16.95 pp | 0.469 |
+| 2024 | 13.39% | 56.30% | 47.06% | 57.73% | -10.67 pp | 0.453 |
+| 2025 | 4.74% | 49.41% | 33.33% | 50.21% | -16.87 pp | 0.503 |
+| 2026 | 1.05% | 37.17% | **0.00%** | 37.57% | -37.57 pp | 0.402 |
+
+Error-risk probability itself reverses in confirmation:
+- 2019-2021 mean P(error): correct calls 0.436 vs wrong calls 0.439 — only tiny positive separation.
+- 2022-2024: correct calls 0.456 vs wrong calls 0.447 — wrong sign.
+- 2026: correct calls 0.534 vs wrong calls 0.509 — wrong sign.
+
+Binding conclusion:
+1. **FERG-H3 V1 is NOT_PROMOTED.**
+2. The existing CORE3/ARCR/NOVA-derived state variables do not contain a transportable pre-call error-risk signal.
+3. This is stronger evidence that the short-horizon failure is not fixable by another selector/gate layered over the same information set.
+4. Do not retune FERG thresholds using 2022-2026.
+5. The next scientifically justified H3 branch must add **genuinely new origin-safe information**, rather than another meta-selector over the same daily features.
+6. The most relevant new-information candidate is an explicitly governed intraday/realized-state branch, because the existing daily panel has now failed both direct-prediction and error-risk gating tests. Its later historical start must be handled with a separate evaluation contract; it cannot be silently treated as equivalent to the 2019-2021 selection regime.
+
+Evidence:
+- `GOLD_H3_FERG_V1_RESULT_2026-10-02.md`
+- `GOLD_H3_FERG_V1_SUMMARY_2026-10-02.json`
+- `GOLD_H3_FERG_V1_SELECTION_GRID_2026-10-02.csv`
+- `GOLD_H3_FERG_V1_METRICS_2026-10-02.csv`
+- `GOLD_H3_FERG_V1_PREDICTIONS_2026-10-02.csv`.
