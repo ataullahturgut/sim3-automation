@@ -201,3 +201,63 @@ V3 evidence:
 - `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V3_ONE_AT_A_TIME_2023.csv`
 - `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V3_SELECTION_STEPS_2026-10-02.csv`
 - `GOLD_NEXTDAY_DIRECTION_HOURLY_LAG_V3_METRICS_2026-10-02.csv`.
+
+
+## V4 — 2h/3h contiguous block screen
+
+Authority:
+- `GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4_AUTHORITY_2026-10-02.md`
+
+Workflow run:
+- **37008370714**
+
+Screen:
+- 23 contiguous 2-hour blocks
+- 22 contiguous 3-hour blocks
+- 45 total candidates
+- 2023 selection only
+- 2024 frozen confirmation.
+
+Best standalone 2023 block:
+- `blk3_19_21 = lag19 + lag20 + lag21`
+- accuracy **56.70%**
+- balanced accuracy **56.84%**
+- Brier **0.2530**
+- log loss **0.6994**
+- versus V1: +1.34 pp accuracy, +1.38 pp balanced accuracy, Brier -0.0061.
+
+However, when added on top of V3 (`V1 + lag2`), the block did not improve 2023 direction accuracy; it mainly improved probability metrics. Therefore no block was retained by the frozen V4 incremental selection rule.
+
+## V4B — frozen confirmation of the 2023 block winner
+
+Authority:
+- `GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4B_CONFIRM_AUTHORITY_2026-10-02.md`
+
+Workflow run:
+- **37008697707**
+
+Frozen specifications:
+- V1
+- V3 = V1 + lag2
+- V1 + blk3_19_21
+- V3 + blk3_19_21.
+
+2024 confirmation:
+
+| Model | Accuracy | Balanced acc | Brier | False calls |
+|---|---:|---:|---:|---:|
+| V1 | 53.69% | 52.76% | 0.2609 | 46.31% |
+| **V3 lag2** | **54.51%** | **53.59%** | **0.2606** | **45.49%** |
+| Block-only | 52.46% | 51.56% | 0.2688 | 47.54% |
+| V3 + block | 52.87% | 52.11% | 0.2686 | 47.13% |
+
+Combined 2023-2024:
+- V1 accuracy **54.49%**
+- V3 lag2 accuracy **55.34%**
+- block-only accuracy **54.49%**
+- V3 + block accuracy **54.49%**.
+
+Binding research interpretation:
+- the 19-21h three-hour block is a strong **2023-local** pattern but does not transport into 2024;
+- adding it to V3 damages 2024 and removes the V3 aggregate accuracy gain;
+- the current best compact hourly specification therefore remains **V1 + hr_ret_lag2**.
