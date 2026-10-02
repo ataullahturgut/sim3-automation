@@ -1,0 +1,43 @@
+name: Gold H3 ORBIT D1 Metals Pilot
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - '.github/workflows/gold-h3-orbit-d1-metals-pilot.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      OUT_DIR: gold_h3_orbit_d1_metals_out
+      ORBIT_BLOCKS: METALS_D1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2'
+      - name: Run metals-only ORBIT pilot
+        run: python gold_axis_2026/tools/gold_h3_orbit_d1_v1.py
+      - name: Commit metals pilot
+        run: |
+          cp "$OUT_DIR/ORBIT_D1_RESULT.md" gold_axis_2026/GOLD_H3_ORBIT_D1_METALS_PILOT_RESULT_2026-10-02.md
+          cp "$OUT_DIR/orbit_d1_summary.json" gold_axis_2026/GOLD_H3_ORBIT_D1_METALS_PILOT_SUMMARY_2026-10-02.json
+          cp "$OUT_DIR/orbit_d1_metrics.csv" gold_axis_2026/GOLD_H3_ORBIT_D1_METALS_PILOT_METRICS_2026-10-02.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_ORBIT_D1_METALS_PILOT_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record ORBIT D1 metals pilot"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
