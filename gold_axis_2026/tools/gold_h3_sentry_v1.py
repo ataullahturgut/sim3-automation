@@ -286,10 +286,10 @@ def main():
     if switches.empty:
         lines.append("- none")
     else:
-        for r in switches.itertuples():
+        for _, r in switches.iterrows():
             lines.append(
-                f"- {r.forecast_issue_date}: {r._1 if hasattr(r,'_1') else getattr(r,'from')} -> {r.to}; "
-                f"net_rescue63={int(r.net_rescue_63):+d}"
+                f"- {r['forecast_issue_date']}: {r['from']} -> {r['to']}; "
+                f"net_rescue63={int(r['net_rescue_63']):+d}"
             )
 
     lines += ["", "## 2026 rescue", "",
