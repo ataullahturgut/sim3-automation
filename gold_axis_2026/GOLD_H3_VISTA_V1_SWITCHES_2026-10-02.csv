@@ -1,0 +1,2 @@
+forecast_issue_date,from,to,origin_shock_score,origin_hazard,q_path,prob_path_superior,expected_run_length,changepoint_mass,matured_disagreements
+2025-10-14,STRUCTURAL_IRIS,PATH_GLOBAL,0.915049504950495,0.10264218322670854,0.8225136503298925,0.9323733159029756,8.60055158980849,0.026631085262491826,91
