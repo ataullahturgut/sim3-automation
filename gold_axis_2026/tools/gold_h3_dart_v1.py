@@ -10,9 +10,10 @@ from scipy.special import betainc
 
 from sklearn.metrics import balanced_accuracy_score, confusion_matrix, log_loss, recall_score
 
-import gold_h3_aim_v1 as aim
 
+ROOT = Path(__file__).resolve().parents[2]
 OUT = Path(os.environ.get("OUT_DIR", "gold_h3_dart_v1_out"))
+SENTRY_LEDGER = ROOT / "gold_axis_2026" / "GOLD_H3_SENTRY_V1_PREDICTIONS_2026-10-02.csv"
 OUT.mkdir(parents=True, exist_ok=True)
 
 HAZARD = 1.0 / 20.0
@@ -306,8 +307,15 @@ def monthly_2026(g):
 
 
 def main():
-    panel, bridge, api_calls = aim.load_panel()
-    expert = aim.expert_ledger(panel)
+    expert = pd.read_csv(SENTRY_LEDGER)
+    for col in ["feature_cutoff_date", "forecast_issue_date", "target_end_date_h3"]:
+        expert[col] = pd.to_datetime(expert[col], errors="raise")
+    required = ["feature_cutoff_date", "forecast_issue_date", "target_end_date_h3",
+                "year", "month", "y_up", "target_r3", "p_structural", "p_path_global"]
+    missing = [x for x in required if x not in expert.columns]
+    if missing:
+        raise RuntimeError(f"SENTRY_LEDGER_MISSING={missing}")
+    expert = expert[required].copy().sort_values("forecast_issue_date").reset_index(drop=True)
 
     dart, switches, disagreements = apply_dart(expert)
     dart.to_csv(OUT / "dart_v1_predictions.csv", index=False)
@@ -332,8 +340,7 @@ def main():
     summary = {
         "schema": "DART_H3_V1",
         "status": status,
-        "source_bridge": bridge,
-        "api_calls": int(api_calls),
+        "expert_ledger_source": "GOLD_H3_SENTRY_V1_PREDICTIONS_2026-10-02.csv",
         "rule": {
             "hazard": HAZARD,
             "max_run": MAX_RUN,
