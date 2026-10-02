@@ -1226,3 +1226,98 @@ Evidence:
 - `GOLD_H3_IRIS_V1_ROBUSTNESS_RESULT_2026-10-02.md`
 - `GOLD_H3_IRIS_V1_ROBUSTNESS_METRICS_2026-10-02.csv`
 - `GOLD_H3_IRIS_V1_MONTHLY_STABILITY_2026-10-02.csv`.
+
+
+## 21. IRIS-H3 RETURN V1 — numerical 3-day return head (2026-10-02)
+
+Authority:
+- `GOLD_H3_IRIS_RETURN_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37043746650**
+
+Identity:
+- `IRIS_H3_RETURN_V1_RESEARCH`
+
+Purpose:
+- add a numerical three-trading-day return estimate and causal 80% conformal interval to the frozen IRIS-H3 information set;
+- this head supplements, but does not replace, the frozen IRIS direction champion.
+
+Information set:
+- frozen A1/ARCR base logit;
+- frozen IRIS PATH features at 16:00 America/New_York on feature_cutoff_date.
+
+Selection/transport contract:
+- 2022 initial history and residual-bank formation;
+- 2023 numerical-head selection only;
+- 2024 frozen confirmation;
+- 2025/2026 frozen transport/stress.
+
+Candidate regressors:
+- Ridge alpha 1
+- Ridge alpha 10
+- ElasticNet alpha 0.0001
+- ElasticNet alpha 0.0005
+- Huber.
+
+2023 selected:
+- **ELASTIC_0005**
+
+2023:
+- MAE **0.94%**
+- RMSE **1.20%**
+- correlation **0.459**
+- sign accuracy **65.30%**
+- zero-return baseline MAE **1.06%**
+- zero-return baseline RMSE **1.34%**.
+
+Frozen 2024 confirmation:
+- MAE **1.08%**
+- RMSE **1.40%**
+- correlation **0.468**
+- sign accuracy **69.17%**
+- zero-return baseline MAE **1.26%**
+- zero-return baseline RMSE **1.60%**
+- **MECHANISM_PASS**.
+
+### 2025 / 2026 transport
+
+| Period | MAE | RMSE | Corr | Sign accuracy | Mean pred | Mean actual | 80% coverage | Mean interval width |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| 2025 | 1.37% | 1.81% | 0.371 | 65.32% | +0.20% | +0.56% | 74.6% | 3.90% |
+| 2026 | 2.57% | 4.83% | 0.218 | 60.21% | +0.21% | -0.07% | 69.1% | 5.65% |
+| 2025-2026 | 1.89% | 3.46% | 0.249 | 63.10% | +0.20% | +0.29% | 72.2% | 4.66% |
+
+Interpretation:
+- the numerical head transports better in **sign** than in exact magnitude;
+- 2026 magnitude error and interval width expand sharply;
+- therefore IRIS direction remains the stronger primary output, while the numerical head is a secondary magnitude/uncertainty estimate.
+
+### 2026 month-by-month numerical result
+
+| Month | Mean predicted | Mean actual | MAE | Sign accuracy | 80% coverage | Mean width |
+|---|---:|---:|---:|---:|---:|---:|
+| Jan | +0.47% | +1.58% | 3.68% | 66.7% | 33.3% | 4.53% |
+| Feb | +0.00% | -0.87% | 4.02% | 65.0% | 60.0% | 5.06% |
+| Mar | -0.16% | +0.15% | 4.58% | 81.8% | 50.0% | 5.48% |
+| Apr | +0.24% | -0.21% | 1.38% | 68.2% | 95.5% | 5.67% |
+| May | +0.36% | -0.26% | 1.53% | 61.9% | 71.4% | 5.46% |
+| Jun | +0.02% | -1.50% | 2.89% | 45.5% | 50.0% | 5.79% |
+| Jul | +0.37% | +0.06% | 1.43% | 43.5% | 95.7% | 6.17% |
+| Aug | +0.44% | +1.11% | 2.27% | 57.1% | 66.7% | 6.28% |
+| Sep | +0.10% | -0.70% | 1.40% | 52.6% | 100.0% | 6.42% |
+
+Binding conclusion:
+1. **IRIS-H3 direction remains the primary short-horizon output.**
+2. `IRIS_H3_RETURN_V1` is accepted as a secondary numerical head.
+3. In 2026, sign information is materially more reliable than exact return magnitude.
+4. Conformal width expansion correctly reflects higher 2026 uncertainty, but empirical coverage is below the nominal 80% overall.
+5. Do not retune interval level or regression using 2024-2026.
+6. Future live output should expose direction probability, numerical return estimate, and uncertainty interval separately rather than collapsing them into one confidence score.
+
+Evidence:
+- `GOLD_H3_IRIS_RETURN_V1_RESULT_2026-10-02.md`
+- `GOLD_H3_IRIS_RETURN_V1_SUMMARY_2026-10-02.json`
+- `GOLD_H3_IRIS_RETURN_V1_PERIOD_METRICS_2026-10-02.csv`
+- `GOLD_H3_IRIS_RETURN_V1_2026_MONTHLY_2026-10-02.csv`
+- `GOLD_H3_IRIS_RETURN_V1_2026_LATEST15_2026-10-02.csv`.
