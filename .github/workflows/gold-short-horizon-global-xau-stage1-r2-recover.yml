@@ -1,0 +1,49 @@
+name: Gold Short Horizon Global XAU Stage1 R2 Recover
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - '.github/workflows/gold-short-horizon-global-xau-stage1-r2-recover.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  recover:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'pandas>=2.2,<3'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: global-xau-r2-stage1-h*
+          path: stage1_download
+          run-id: 36985266866
+          github-token: ${{ github.token }}
+      - run: |
+          mkdir -p h1 h3 h5
+          cp stage1_download/global-xau-r2-stage1-h1/* h1/
+          cp stage1_download/global-xau-r2-stage1-h3/* h3/
+          cp stage1_download/global-xau-r2-stage1-h5/* h5/
+          python gold_axis_2026/tools/gold_short_horizon_global_xau_stage1_r2_aggregate.py
+      - name: Commit recovered R2 Stage1 evidence
+        run: |
+          cp global_xau_r2_stage1_all/STAGE1_RESULT.md gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_STAGE1_RESULT_2026-10-02.md
+          cp global_xau_r2_stage1_all/stage1_summary.json gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_STAGE1_SUMMARY_2026-10-02.json
+          cp global_xau_r2_stage1_all/stage1_decisions.csv gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_STAGE1_DECISIONS_2026-10-02.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_STAGE1_*_2026-10-02.*
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record Global XAU R2 Stage1 evidence"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git push origin HEAD:gold-midas-headswap-v1-20260925
