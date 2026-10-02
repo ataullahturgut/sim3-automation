@@ -1,0 +1,87 @@
+name: Gold H3 AURORA Prospective V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_aurora_prospective_v1.py'
+      - '.github/workflows/gold-h3-aurora-prospective-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  prospective:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      OUT_DIR: gold_h3_aurora_prospective_out
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'psycopg[binary]>=3.2,<4' 'requests>=2.31,<3'
+
+      - name: Resolve append-only public source ref
+        id: refs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          STAK_REF="$(gh api repos/lbruton/StakTrakr/commits/main --jq .sha)"
+          echo "stak_ref=$STAK_REF" >> "$GITHUB_OUTPUT"
+
+      - name: Require private source secrets
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$TWELVE_DATA_API_KEY"
+
+      - name: Run frozen prospective harness
+        env:
+          STAK_LIVE_REF: ${{ steps.refs.outputs.stak_ref }}
+        run: python gold_axis_2026/tools/gold_h3_aurora_prospective_v1.py
+
+      - name: Commit prospective evidence
+        shell: bash
+        run: |
+          cp "$OUT_DIR/AURORA_PROSPECTIVE_STATUS.md" gold_axis_2026/GOLD_H3_AURORA_V1_PROSPECTIVE_STATUS.md
+          cp "$OUT_DIR/aurora_prospective_status.json" gold_axis_2026/GOLD_H3_AURORA_V1_PROSPECTIVE_STATUS.json
+          cp "$OUT_DIR/GOLD_H3_AURORA_V1_PROSPECTIVE_LEDGER.csv" gold_axis_2026/GOLD_H3_AURORA_V1_PROSPECTIVE_LEDGER.csv
+          cp "$OUT_DIR/GOLD_H3_AURORA_V1_PROSPECTIVE_DAILY_PRICES.csv" gold_axis_2026/GOLD_H3_AURORA_V1_PROSPECTIVE_DAILY_PRICES.csv
+          cp "$OUT_DIR/GOLD_H3_AURORA_V1_PROSPECTIVE_MISSES.csv" gold_axis_2026/GOLD_H3_AURORA_V1_PROSPECTIVE_MISSES.csv
+          if [ -f "$OUT_DIR/GOLD_H3_AURORA_V1_FROZEN_DAILY_PRICES.csv" ]; then
+            cp "$OUT_DIR/GOLD_H3_AURORA_V1_FROZEN_DAILY_PRICES.csv" gold_axis_2026/GOLD_H3_AURORA_V1_FROZEN_DAILY_PRICES.csv
+          fi
+          if [ -f "$OUT_DIR/GOLD_H3_AURORA_V1_FROZEN_EXPERT_TRAIN_MATRIX.csv" ]; then
+            cp "$OUT_DIR/GOLD_H3_AURORA_V1_FROZEN_EXPERT_TRAIN_MATRIX.csv" gold_axis_2026/GOLD_H3_AURORA_V1_FROZEN_EXPERT_TRAIN_MATRIX.csv
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_AURORA_V1_*.csv
+          git add gold_axis_2026/GOLD_H3_AURORA_V1_PROSPECTIVE_STATUS.*
+          if git diff --cached --quiet; then
+            echo "No prospective state change"
+          else
+            git commit -m "Update frozen AURORA H3 prospective ledger"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-aurora-prospective-v1
+          path: gold_h3_aurora_prospective_out/
+          if-no-files-found: warn
+          retention-days: 90
