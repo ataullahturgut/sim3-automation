@@ -233,8 +233,41 @@ def fetch_fred_window(series_id, start="2022-02-01", end="2026-09-29"):
 
 
 def fetch_external():
-    # Compact credential-free FRED reconstruction, limited to the window needed
-    # for the H3 screen. Conservative origin lags remain unchanged.
+    frozen = os.environ.get("ORBIT_EXTERNAL_V2", "").strip()
+    if frozen:
+        doc = json.loads(Path(frozen).read_text())
+        required = {
+            "fx_daily": "READY_FED_H10",
+            "rates_daily": "READY_FED_H15",
+            "vix_daily": "READY_CBOE",
+            "nasdaq100_daily": "READY_NASDAQ_OFFICIAL",
+        }
+        bad = {k:(doc.get("readiness") or {}).get(k) for k,v in required.items()
+               if (doc.get("readiness") or {}).get(k) != v}
+        if bad:
+            raise RuntimeError(f"ORBIT_EXTERNAL_V2_READINESS_FAIL {bad}")
+
+        fx_keys = ["BROAD_USD_INDEX","EURUSD_QUOTE","GBPUSD_QUOTE","JPY_PER_USD","CHF_PER_USD","CNY_PER_USD"]
+        fx = {k: nested_series(doc["h10_daily"], k) for k in fx_keys}
+        rates = {k: nested_series(doc["h15_daily"], k) for k in ["DGS10","DFII10"]}
+        return {
+            "fx": fx,
+            "rates": rates,
+            "vix": dict_series(doc["vix_daily"]),
+            "ndx": dict_series(doc["nasdaq100_daily"]),
+            "meta": {
+                "mode": "FROZEN_EXTERNAL_AUTHORITY_V2",
+                "payload_sha256": doc.get("payload_sha256"),
+                "h10_meta": doc.get("h10_meta"),
+                "h15_meta": doc.get("h15_meta"),
+                "vix_meta": doc.get("vix_meta"),
+                "nasdaq_meta": (doc.get("source_meta") or {}).get("NASDAQ100"),
+            },
+        }
+
+    # Fallback compact credential-free FRED reconstruction. Conservative origin
+    # lags remain unchanged. The governed workflow supplies the frozen authority
+    # snapshot so this path is only a recovery option.
     ids = {
         "BROAD_USD_INDEX": "DTWEXBGS",
         "EURUSD_QUOTE": "DEXUSEU",
