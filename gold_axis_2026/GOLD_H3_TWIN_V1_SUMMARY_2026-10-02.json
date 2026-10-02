@@ -1,0 +1,13 @@
+{
+  "schema": "TWIN_H3_V1",
+  "status": "FAIL_CLOSED_NO_ELIGIBLE_SHAPE_REPRESENTATION",
+  "source_bridge": {
+    "common_level_rows": 480,
+    "common_return_rows": 479,
+    "pearson": 0.9999999999999999,
+    "sign_agreement": 1.0,
+    "return_diff_sd": 0.0,
+    "pass": true
+  },
+  "api_calls": 11
+}
