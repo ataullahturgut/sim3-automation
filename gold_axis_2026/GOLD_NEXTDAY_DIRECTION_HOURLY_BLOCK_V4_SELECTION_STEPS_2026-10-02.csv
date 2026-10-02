@@ -1,0 +1,2 @@
+step,candidate,accepted,before_accuracy,after_accuracy,delta_accuracy,before_balanced_accuracy,after_balanced_accuracy,delta_balanced_accuracy,before_brier,after_brier,delta_brier,after_logloss
+1,blk3_19_21,False,0.5625,0.5625,0.0,0.5636610061388823,0.5639799091126525,0.0003189029737702409,0.2592986316402853,0.2531423699836401,-0.006156261656645234,0.699730625299689
