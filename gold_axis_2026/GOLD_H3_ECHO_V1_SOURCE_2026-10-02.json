@@ -1,0 +1,35 @@
+{
+  "series": [
+    {
+      "key": "nem",
+      "series_id": "NEM_TWELVEDATA",
+      "rows": 2702,
+      "first": "2016-01-04",
+      "last": "2026-10-01"
+    },
+    {
+      "key": "barrick",
+      "series_id": "BARRICK_B_TWELVEDATA",
+      "rows": 2702,
+      "first": "2016-01-04",
+      "last": "2026-10-01"
+    },
+    {
+      "key": "gll",
+      "series_id": "GLL_TWELVEDATA",
+      "rows": 2702,
+      "first": "2016-01-04",
+      "last": "2026-10-01"
+    },
+    {
+      "key": "dzz",
+      "series_id": "DZZ_TWELVEDATA",
+      "rows": 2702,
+      "first": "2016-01-04",
+      "last": "2026-10-01"
+    }
+  ],
+  "origin_coverage": 1.0,
+  "same_day_close_used": false,
+  "timing_rule": "strictly before feature_cutoff_date"
+}

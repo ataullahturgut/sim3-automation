@@ -1,0 +1,72 @@
+{
+  "schema": "ECHO_H3_V1",
+  "selected_head": null,
+  "selection_grid": [
+    {
+      "accuracy": 0.3939393939393939,
+      "balanced_accuracy": 0.45961538461538465,
+      "brier": 0.38483350761553564,
+      "broken": 8,
+      "correct_rescue": 2,
+      "delta_accuracy": -0.18181818181818188,
+      "delta_balanced_accuracy": -0.12307692307692308,
+      "delta_brier": 0.12818181874562157,
+      "delta_logloss": 0.4382393443331358,
+      "eligible": false,
+      "head": "LINKED_ONLY",
+      "logloss": 1.1628249784221816,
+      "overrides": 10
+    },
+    {
+      "accuracy": 0.3939393939393939,
+      "balanced_accuracy": 0.4461538461538461,
+      "brier": 0.38049885869801026,
+      "broken": 7,
+      "correct_rescue": 1,
+      "delta_accuracy": -0.18181818181818188,
+      "delta_balanced_accuracy": -0.1365384615384616,
+      "delta_brier": 0.12384716982809618,
+      "delta_logloss": 0.4140958385717062,
+      "eligible": false,
+      "head": "AURORA_PLUS_LINKED",
+      "logloss": 1.138681472660752,
+      "overrides": 8
+    }
+  ],
+  "source": {
+    "origin_coverage": 1.0,
+    "same_day_close_used": false,
+    "series": [
+      {
+        "first": "2016-01-04",
+        "key": "nem",
+        "last": "2026-10-01",
+        "rows": 2702,
+        "series_id": "NEM_TWELVEDATA"
+      },
+      {
+        "first": "2016-01-04",
+        "key": "barrick",
+        "last": "2026-10-01",
+        "rows": 2702,
+        "series_id": "BARRICK_B_TWELVEDATA"
+      },
+      {
+        "first": "2016-01-04",
+        "key": "gll",
+        "last": "2026-10-01",
+        "rows": 2702,
+        "series_id": "GLL_TWELVEDATA"
+      },
+      {
+        "first": "2016-01-04",
+        "key": "dzz",
+        "last": "2026-10-01",
+        "rows": 2702,
+        "series_id": "DZZ_TWELVEDATA"
+      }
+    ],
+    "timing_rule": "strictly before feature_cutoff_date"
+  },
+  "status": "FAIL_CLOSED_NO_ELIGIBLE_LINKED_HEAD"
+}
