@@ -2026,3 +2026,73 @@ Evidence:
 - `GOLD_H3_TWIN_V1_RESULT_2026-10-02.md`
 - `GOLD_H3_TWIN_V1_SUMMARY_2026-10-02.json`
 - `GOLD_H3_TWIN_V1_SELECTION_GRID_2026-10-02.csv`.
+
+
+## 30. PRISM-H3 V1 — phase-resolved intraday spectral residual model (2026-10-02)
+
+Authority:
+- `GOLD_H3_PRISM_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37060199766**
+- conclusion **SUCCESS**
+
+Identity:
+- `PRISM_H3_V1_RESEARCH`
+
+Purpose:
+- correct a subset of AURORA errors using a fixed 48-hour stationary-wavelet latent representation;
+- keep AURORA log-odds as a fixed offset and learn only a regularized residual correction.
+
+Representation:
+- last 48 hourly XAU log returns
+- L2 normalization
+- SWT `db2`, level 3
+- 4 chronological PAA blocks for highest approximation and each detail scale
+- 16 latent wavelet coefficients
+- plus log realized 48h norm and jump concentration
+- total 18 latent features.
+
+Residual model:
+- `logit(p_PRISM) = logit(p_AURORA) + beta' z_wavelet`
+- only beta is learned;
+- ridge penalties tested: lambda 1, 10, 50.
+
+Selection authority:
+- Jul-Dec 2022 only.
+
+Selection result:
+- **no eligible lambda**
+- status: **FAIL_CLOSED_NO_ELIGIBLE_LAMBDA**.
+
+2022-H2 selection grid:
+- lambda 1:
+  - accuracy delta **-6.06 pp**
+  - balanced-accuracy delta **-7.69 pp**
+  - Brier delta **+0.03075**
+  - 6 changed calls: 2 rescued / 4 broken
+- lambda 10:
+  - accuracy delta **-3.03 pp**
+  - balanced-accuracy delta **-3.85 pp**
+  - Brier delta **+0.01922**
+  - 3 changed calls: 1 rescued / 2 broken
+- lambda 50:
+  - accuracy delta **-3.03 pp**
+  - balanced-accuracy delta **-3.85 pp**
+  - Brier delta **+0.00771**
+  - 1 changed call: 0 rescued / 1 broken.
+
+Binding interpretation:
+1. The fixed wavelet latent residual correction does not add stable directional information beyond AURORA.
+2. Stronger regularization reduces the damage but does not create positive incremental value.
+3. PRISM V1 is **NOT_PROMOTED**.
+4. Do not tune lambda, wavelet family, level or latent dimension on 2023-2026.
+5. Together with TWIN V1, this closes two direct intraday-path error-correction branches:
+   - local path-shape analogues;
+   - fixed wavelet latent residual correction.
+6. AURORA-H3 V1 remains the frozen prospective champion.
+
+Evidence:
+- `GOLD_H3_PRISM_V1_RESULT_2026-10-02.md`
+- `GOLD_H3_PRISM_V1_SUMMARY_2026-10-02.json`
+- `GOLD_H3_PRISM_V1_SELECTION_GRID_2026-10-02.csv`.
