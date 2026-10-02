@@ -1963,3 +1963,66 @@ The scheduler checks out the research branch, runs the frozen harness, and write
 4. Missing an origin is preferable to reconstructing it after outcome information becomes available.
 5. Prospective evidence cannot select a new V1 threshold or champion; any modification requires a new preregistered identity.
 6. The current research question is no longer “can we improve the backtest?” but **“does frozen AURORA transport prospectively?”**
+
+
+## 29. TWIN-H3 V1 — path-shape analogue rescue (2026-10-02)
+
+Authority:
+- `GOLD_H3_TWIN_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37055370848**
+- conclusion **SUCCESS**
+
+Identity:
+- `TWIN_H3_V1_RESEARCH`
+
+Purpose:
+- attempt to correct AURORA errors with a new information representation based on normalized 24h/48h intraday path geometry and nearest historical analogues.
+
+Representations:
+- SHAPE24
+- SHAPE48
+- SHAPE_MULTI
+
+Frozen rescue rule:
+- k = 25 matured nearest analogues
+- override AURORA DOWN only if local p(UP) >= 0.70
+- override AURORA UP only if local p(UP) <= 0.30
+- no rescue before 40 matured analogues.
+
+Selection authority:
+- Jul-Dec 2022 only.
+
+Selection result:
+- **no eligible representation**
+- status: **FAIL_CLOSED_NO_ELIGIBLE_SHAPE_REPRESENTATION**.
+
+Selection grid:
+- SHAPE24:
+  - accuracy delta **0.00 pp**
+  - balanced-accuracy delta **-0.51 pp**
+  - Brier delta **+0.00549**
+  - 8 overrides: 4 rescued / 4 broken
+- SHAPE48:
+  - accuracy delta **-1.79 pp**
+  - balanced-accuracy delta **-2.44 pp**
+  - Brier delta **+0.01456**
+  - 10 overrides: 4 rescued / 6 broken
+- SHAPE_MULTI:
+  - accuracy delta **0.00 pp**
+  - balanced-accuracy delta **-0.51 pp**
+  - Brier delta **+0.00578**
+  - 8 overrides: 4 rescued / 4 broken.
+
+Binding interpretation:
+1. simple normalized path-shape nearest-neighbour analogues do not add stable information beyond AURORA/IRIS.
+2. The local analogue rescues are approximately offset by broken correct calls in the selection authority.
+3. Do not inspect 2025/2026 to rescue TWIN V1.
+4. TWIN V1 is **NOT_PROMOTED**.
+5. If revisiting shape information later, it requires a materially different representation or learning mechanism rather than tuning k / thresholds on later years.
+
+Evidence:
+- `GOLD_H3_TWIN_V1_RESULT_2026-10-02.md`
+- `GOLD_H3_TWIN_V1_SUMMARY_2026-10-02.json`
+- `GOLD_H3_TWIN_V1_SELECTION_GRID_2026-10-02.csv`.
