@@ -1,0 +1,54 @@
+name: Gold Nextday Direction Hourly Block V4
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_nextday_direction_hourly_block_v4.py'
+      - '.github/workflows/gold-nextday-direction-hourly-block-v4.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OUT_DIR: gold_nextday_hourly_block_v4_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Run hourly small-block V4
+        run: python gold_axis_2026/tools/gold_nextday_direction_hourly_block_v4.py
+      - name: Commit evidence
+        run: |
+          cp "$OUT_DIR/HOURLY_BLOCK_V4_RESULT.md" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4_RESULT_2026-10-02.md
+          cp "$OUT_DIR/block_v4_result.json" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4_RESULT_2026-10-02.json
+          cp "$OUT_DIR/block_v4_standalone_2023.csv" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4_STANDALONE_2023.csv
+          cp "$OUT_DIR/block_v4_incremental_over_v3_2023.csv" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4_INCREMENTAL_2023.csv
+          cp "$OUT_DIR/block_v4_selection_steps.csv" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4_SELECTION_STEPS_2026-10-02.csv
+          cp "$OUT_DIR/block_v4_metrics.csv" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4_METRICS_2026-10-02.csv
+          cp "$OUT_DIR/block_v4_coefficients_through_2023.csv" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4_COEFFICIENTS_2026-10-02.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4_*_2026-10-02.* gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4_STANDALONE_2023.csv gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4_INCREMENTAL_2023.csv
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record hourly small-block V4 results"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git push origin HEAD:gold-midas-headswap-v1-20260925
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-nextday-direction-hourly-block-v4
+          path: gold_nextday_hourly_block_v4_out/
+          if-no-files-found: warn
+          retention-days: 90
