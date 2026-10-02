@@ -607,15 +607,14 @@ No rule/log interpretation is promoted yet; that is a separate next diagnostic s
 
 ## 16. Exact next research action
 
-The next checklist family is:
+**User-authorized H3 repair override, 2026-10-02:** NOVA-H3 V1 was preregistered and executed after the ANFIS/RBFNN-family checklist was written. The earlier RBFNN item is retained as an unexecuted challenger-family note, but it is no longer the immediate mechanism-repair action for the H3 lane.
 
-**RBFNN — first plain RBFNN, then the DE-ABC hybrid/reference adaptation.**
+NOVA-H3 V1 shows that raw novelty detection and adaptive uncertainty are **diagnostically useful but not sufficient directional repair**:
+- cross-market novelty improves class balance in 2022-2024 but does not beat ARCR on probability quality;
+- 2026 still fails badly;
+- adaptive conformal width expands strongly in 2026, correctly indicating higher uncertainty, but the selected return/uncertainty gate collapses to rho=0 and therefore adds no directional filtering.
 
-The same governance remains binding:
-- DEV selection 2022-2024 only;
-- frozen H3 CORE3 Logistic-L2 comparator;
-- no 2025/2026 selection or retuning;
-- only a DEV-gate passer receives one-shot frozen transport.
+The next H3 mechanism question is therefore **forecastability/error-risk**, not another generic classifier blend: can origin-safe pre-2022 state, expert disagreement, novelty and probability-distance variables predict when the frozen H3 direction call itself is likely to be wrong? Any such experiment requires a separately named authority and must select all gates using pre-2022 information only. 2025/2026 remain report-only.
 
 No tactical/P&L layer is authorized before a challenger shows adequate statistical transport evidence.
 
@@ -896,3 +895,112 @@ Interpretation:
 - it is not robust to the 2026 novelty regime;
 - further classifier blending is not justified;
 - next architecture should retain the asymmetric weak-side repair logic but add an explicit novelty / regime-break mechanism and, ideally, new origin-safe cross-market or realized-state information.
+
+
+## 18. NOVA-H3 V1 — novelty, numerical return and adaptive conformal ablation (2026-10-02)
+
+Authority:
+- `GOLD_H3_NOVA_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37039484907**
+
+Identity:
+- `NOVA_H3_V1_RESEARCH`
+
+Selection:
+- 2019-2021 only.
+
+Confirmation:
+- 2022-2024, already-opened wider project history; not a pristine blind lockbox.
+
+Transport/stress:
+- 2025 and 2026 report-only; no tuning.
+
+Frozen A0-A5 ladder:
+- A0: CORE3 Logistic L2.
+- A1: inherited ARCR 75% global / 25% recent252 balanced Logistic.
+- A2: CORE-state novelty-conditioned mixture.
+- A3: cross-market novelty-conditioned mixture; external variables affect novelty only.
+- A4: numerical H3 Elastic-Net return head + direction/return agreement + reliability gate.
+- A5: adaptive conformal H3 return interval + return/uncertainty gate.
+
+Pre-2022 selections:
+- A2 max recent weight **0.65**, shrink **0.75**.
+- A3 max recent weight **0.65**, shrink **0.75**.
+- A4 reliability threshold **0.021384**.
+- ACI gamma **0.005**.
+- A5 rho **0.00**.
+
+### Full-coverage direction
+
+| Period | Model | Accuracy | Balanced acc | UP recall | DOWN recall | Brier |
+|---|---|---:|---:|---:|---:|---:|
+| 2022-2024 | CORE3 A0 | 54.97% | 54.49% | 64.81% | 44.17% | 0.246643 |
+| 2022-2024 | ARCR A1 | **56.16%** | **55.98%** | 59.75% | 52.22% | **0.246261** |
+| 2022-2024 | CORE novelty A2 | 54.57% | 54.56% | 54.68% | 54.44% | 0.246345 |
+| 2022-2024 | Cross-market novelty A3 | 55.63% | 55.64% | 55.44% | **55.83%** | 0.246701 |
+| 2025 | A3 | 48.22% | 51.97% | 35.90% | 68.04% | 0.255517 |
+| 2026 | A3 | 39.27% | 39.77% | 50.55% | 29.00% | 0.262216 |
+
+Interpretation:
+- A3 produces the most symmetric 2022-2024 UP/DOWN recall among this ladder, but it does not beat A1 ARCR on aggregate balanced accuracy or Brier.
+- Novelty conditioning does not repair 2026 transport.
+- Therefore NOVA V1 is **NOT_PROMOTED as a robust direction model**.
+
+### Selective A4/A5
+
+2022-2024:
+- coverage **34.83%**
+- selective accuracy **58.56%**
+- selective balanced accuracy **55.09%**
+- UP capture **29.37%**
+- DOWN capture **10.56%**.
+
+2025:
+- coverage **25.69%**
+- selective accuracy **53.85%**.
+
+2026:
+- coverage **23.56%**
+- selective accuracy **33.33%**
+- DOWN capture **0%**.
+
+A5 selected rho=0.00, so the conformal return/uncertainty ratio did not add an additional selective gate beyond A4. A5 must not be represented as a directional improvement.
+
+### Numerical H3 return head
+
+| Period | MAE | RMSE | Sign accuracy |
+|---|---:|---:|---:|
+| 2019-2021 | 0.012308 | 0.017311 | 54.94% |
+| 2022-2024 | 0.011874 | 0.015117 | 50.33% |
+| 2025 | 0.015558 | 0.020203 | 55.73% |
+| 2026 | 0.027411 | 0.050180 | 40.84% |
+
+The numerical head also suffers a major 2026 breakdown and cannot be used as an independent rescue signal.
+
+### Adaptive conformal diagnostic
+
+| Period | Empirical coverage | Mean interval width |
+|---|---:|---:|
+| 2019-2021 | 80.11% | 0.04030 |
+| 2022-2024 | 78.15% | 0.03552 |
+| 2025 | 76.28% | 0.04578 |
+| 2026 | 77.49% | **0.07833** |
+
+The conformal layer behaves usefully as an uncertainty diagnostic: mean H3 interval width more than doubles relative to 2022-2024 in 2026. This confirms strong forecast uncertainty/regime stress, but uncertainty detection alone does not identify the correct direction.
+
+Binding diagnosis:
+1. NOVA V1 confirms that **novelty is not the same thing as forecastability**.
+2. Cross-market state can help balance UP/DOWN recall without creating robust transport.
+3. The main unresolved problem remains identifying which shifted states are directionally forecastable.
+4. Do not retune NOVA V1 using 2025/2026.
+5. A repair must be a separately identified model, with the next scientifically justified mechanism being a pre-2022-trained **forecastability / error-risk gate** or a separately governed new-information branch.
+
+Evidence:
+- `GOLD_H3_NOVA_V1_RESULT_2026-10-02.md`
+- `GOLD_H3_NOVA_V1_SUMMARY_2026-10-02.json`
+- `GOLD_H3_NOVA_V1_METRICS_2026-10-02.csv`
+- `GOLD_H3_NOVA_V1_RETURN_METRICS_2026-10-02.csv`
+- `GOLD_H3_NOVA_V1_CONFORMAL_METRICS_2026-10-02.csv`
+- `GOLD_H3_NOVA_V1_PREDICTIONS_2026-10-02.csv`.
