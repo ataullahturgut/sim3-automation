@@ -2299,3 +2299,232 @@ Evidence:
 - `GOLD_H3_OPAL_V1_METRICS_2026-10-03.csv`
 - `GOLD_H3_OPAL_V1_2026_CHANGED_2026-10-03.csv`
 - `GOLD_H3_OPAL_V1_COT_STATE_2026-10-03.csv`.
+
+
+## 35. HELIOS-H3 V1 — causal regime-gated reversal router (2026-10-03)
+
+Authority:
+- `GOLD_H3_HELIOS_V1_AUTHORITY_2026-10-03.md`
+
+Successful workflow:
+- run **37071952534**
+- conclusion **SUCCESS**
+- earlier attempts failed only because the frozen expert ledgers had different start dates; the scientific routing rules were unchanged.
+- exact common expert evaluation window begins **2022-11-01**.
+
+Identity:
+- `HELIOS_H3_V1_RESEARCH`
+
+### Structural motivation
+
+OPAL established that derivatives-positioning reversal information is strongly regime-dependent:
+- harmful in 2023;
+- near neutral in 2024;
+- positive in 2025;
+- strongly positive in 2026.
+
+HELIOS therefore does not use regime variables as another direct forecast input. It uses **matured expert competence only for routing**.
+
+Candidate reversal:
+- `OPAL AND (RIFT OR VEGA OR TURN)`.
+
+Candidate precision by year:
+- 2022 common window: **1/1 = 100%**
+- 2023: **1/3 = 33.3%**
+- 2024: **5/7 = 71.4%**
+- 2025: **5/6 = 83.3%**
+- 2026: **3/4 = 75.0%**.
+
+Causal competence gate:
+- latest **8 matured candidate outcomes**
+- target maturity enforced before an outcome enters the gate
+- initial state INACTIVE
+- enter ACTIVE at >= **5/8 wins**
+- exit ACTIVE at <= **3/8 wins**
+- otherwise retain state.
+
+Single regime switch:
+- **2024-07-16 -> ACTIVE**
+- matured latest-8 sequence: `10101011`
+- **5 wins / 3 losses**
+- gate remains ACTIVE through the end of the 2026 retrospective ledger.
+
+V1 probability:
+- Beta(1,1) competence mean `q=(wins+1)/10`
+- routed probability is a competence-weighted blend of AURORA and its mirrored probability.
+
+### HELIOS V1 results
+
+- 2023:
+  - AURORA **71.23%**
+  - HELIOS **71.23%**
+  - gate inactive; OPAL's 2023 damage fully suppressed.
+- 2024:
+  - **70.83% -> 71.25%**
+  - BA **69.97% -> 70.22%**
+  - Brier **0.2006 -> 0.1989**
+  - 2 rescues / 1 broken.
+- 2025:
+  - **64.52% -> 66.13%**
+  - BA **62.93% -> 64.26%**
+  - Brier **0.2276 -> 0.2253**
+  - 5 rescues / 1 broken.
+- 2026:
+  - **60.73% -> 61.78%**
+  - BA **61.12% -> 62.21%**
+  - Brier **0.2477 -> 0.2460**
+  - 3 rescues / 1 broken.
+- 2023-2024:
+  - **71.02% -> 71.24%**
+  - BA **71.24% -> 71.40%**
+  - Brier **0.2059 -> 0.2050**.
+- 2025-2026:
+  - **62.87% -> 64.24%**
+  - BA **62.07% -> 63.31%**
+  - Brier **0.2363 -> 0.2343**
+  - **8 rescues / 2 broken**
+  - net rescue **+6**.
+
+2026 changed calls:
+- 2026-03-11 UP -> DOWN: **RESCUED**, H3 -2.11%
+- 2026-08-03 DOWN -> UP: **RESCUED**, H3 +3.09%
+- 2026-08-04 DOWN -> UP: **RESCUED**, H3 +4.98%
+- 2026-08-28 DOWN -> UP: **BROKEN**, H3 -4.95%.
+
+Dependence-aware evidence vs AURORA:
+- 2025-2026 accuracy delta **+1.3667 pp**
+  - block5/10 bootstrap P(improve) about **95.7% / 95.9%**
+  - 95% interval lower edge = 0.
+- 2025-2026 Brier delta **-0.00203**
+  - block5/10 95% CIs entirely below 0
+  - P(improve) about **98.1% / 98.3%**.
+- logloss delta **-0.00431**
+  - both CIs below 0
+  - P(improve) about **98.3%**.
+- 2026-only hit-rate/Brier improvements are directionally positive but not statistically decisive.
+
+Binding interpretation:
+1. **Regime gating fixes the main raw-OPAL failure mode.**
+2. 2023 is protected because the reversal competence gate remains closed.
+3. A causal competence transition is detected in mid-2024.
+4. Once active, the high-precision consensus reversal candidate is stable through 2025-2026.
+5. HELIOS V1 is still post-hoc strengthening research, not pristine prospective proof.
+
+## 36. HELIOS-H3 V2 — posterior-calibrated strengthening + robustness (2026-10-03)
+
+Authority:
+- `GOLD_H3_HELIOS_V2_AUTHORITY_2026-10-03.md`
+
+Workflow:
+- run **37072203269**
+- conclusion **SUCCESS**
+
+Identity:
+- `HELIOS_H3_V2_RESEARCH`
+
+Routing:
+- **identical to HELIOS V1**.
+- no change to candidate definition, window, entry, exit, hysteresis or maturity rules.
+
+V2 calibration:
+- recent competence posterior with Beta(1,1):
+  `q=(wins+1)/(8+2)`.
+- if active reversal changes UP -> DOWN:
+  `p_UP = 1-q`.
+- if active reversal changes DOWN -> UP:
+  `p_UP = q`.
+- outside active candidate events:
+  `p_V2=p_AURORA`.
+
+### HELIOS V2 results
+
+Direction metrics are identical to V1:
+- 2023: **71.23%**
+- 2024: **71.25%**
+- 2025: **66.13%**
+- 2026: **61.78%**
+- 2023-2024: **71.24%**
+- 2025-2026: **64.24%**.
+
+Balanced accuracy:
+- 2026: **62.21%**
+- 2025-2026: **63.31%**.
+
+Brier:
+- 2024: **0.1988**
+- 2025: **0.2244**
+- 2026: **0.2455**
+- 2023-2024: **0.2050**
+- 2025-2026: **0.2336**.
+
+Comparison on 2025-2026:
+- AURORA: Acc **62.87%**, BA **62.07%**, Brier **0.2363**
+- raw OPAL: Acc **64.46%**, BA **63.24%**, Brier **0.2383**
+- HELIOS V1 soft: Acc **64.24%**, BA **63.31%**, Brier **0.2343**
+- HELIOS V1 hard: Acc **64.24%**, BA **63.31%**, Brier **0.2337**
+- HELIOS V2: Acc **64.24%**, BA **63.31%**, Brier **0.2336**.
+
+The calibration differences among HELIOS soft/hard/V2 are small and not statistically decisive. V2 is retained as the conceptually clean posterior-calibrated research version, not because a historical significance test proves it superior to V1 hard.
+
+### Gate-sensitivity robustness
+
+Neighboring preregistered diagnostic gates:
+
+- W6: latest 6, enter 4, exit 2
+  - switch **2024-07-16**
+- W8 binding: latest 8, enter 5, exit 3
+  - switch **2024-07-16**
+- W10: latest 10, enter 6, exit 4
+  - switch **2024-10-03**.
+
+All three:
+- remain active throughout 2025 and 2026;
+- produce the same directional accuracy:
+  - 2025 **66.13%**
+  - 2026 **61.78%**
+  - 2025-2026 **64.24%**
+- produce the same 2025-2026 BA **63.31%**.
+
+2025-2026 Brier:
+- W6: **0.2331**
+- W8 binding: **0.2336**
+- W10: **0.2337**.
+
+Thus the later-period directional benefit is **not a knife-edge artifact of one gate window**.
+
+### Rejected strengthening ablation: sentinel opens full OPAL
+
+A high-recall ablation used the consensus only to detect the regime and then allowed every raw OPAL override while the regime was active.
+
+Result:
+- 2023 remained protected;
+- 2026 reproduced raw OPAL's **63.87%** accuracy;
+- but 2024 fell to **69.58%** and 2025 BA deteriorated to **61.42%**.
+
+Therefore this high-recall design is rejected:
+- it recovers 2026 hit-rate by reintroducing OPAL's false-flip instability.
+- HELIOS keeps the high-precision consensus filter after the regime gate opens.
+
+### Binding strengthening conclusion
+
+1. The most robust architecture found is:
+   **AURORA base + causal competence regime gate + independent reversal-evidence consensus.**
+2. The regime state should affect **routing**, not be appended as another direct forecast feature.
+3. Raw OPAL contains more 2026 upside, but its regime instability is unacceptable historically.
+4. HELIOS sacrifices some raw-OPAL 2026 hit rate in exchange for substantially better cross-regime stability and probability quality.
+5. HELIOS V2 is the preferred **research challenger** to freeze prospectively.
+6. It does **not** replace the already-frozen AURORA champion from retrospective evidence.
+7. Proper next evidence is future-origin prospective HELIOS vs AURORA comparison under frozen rules.
+
+Evidence:
+- `GOLD_H3_HELIOS_V1_RESULT_2026-10-03.md`
+- `GOLD_H3_HELIOS_V1_SUMMARY_2026-10-03.json`
+- `GOLD_H3_HELIOS_V1_METRICS_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V1_SWITCHES_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V1_CANDIDATE_ANATOMY_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V1_INFERENCE_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V2_RESULT_2026-10-03.md`
+- `GOLD_H3_HELIOS_V2_SUMMARY_2026-10-03.json`
+- `GOLD_H3_HELIOS_V2_METRICS_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V2_GATE_SENSITIVITY_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V2_INFERENCE_2026-10-03.csv`.
