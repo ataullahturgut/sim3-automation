@@ -1,181 +1,218 @@
 # GOLD SHORT-HORIZON GLOBAL XAU PROJECT MANIFEST
 
-**Date:** 2026-10-01  
-**Status:** ACTIVE — 2025/2026 TRANSPORT COMPLETE / H3 DIRECTION FAILED OUT-OF-SAMPLE TRANSPORT  
-**Supersedes for tactical objective:** BIST-Metal-Price short-horizon mainline.
+**Manifest version:** 2.0  
+**Date:** 2026-10-02  
+**Status:** ACTIVE — R2 SOURCE/TIMELINE REPAIR COMPLETE / H3 DEV SIGNAL ROBUST / 2025–SEP-2026 FROZEN TRANSPORT FAILED  
+**Canonical branch:** `gold-midas-headswap-v1-20260925`  
+**Supersedes for current daily objective:** R1 stale-snapshot mainline and the archived BIST-Metal-Price tactical mainline.
 
-## 1. Objective
+## 1. Objective and frequency
 
-Build a separate short-horizon Gold forecast engine for **global XAU/USD** investment research.
+Build a separate **daily-frequency Global XAU/USD** short-horizon research engine.
 
-Primary horizons:
+Frozen horizons:
 - H1
 - H3
 - H5
 
-Primary target form:
+Frozen target forms:
 - forward log return
 - direction
 - Q10/Q50/Q90 distribution.
 
-## 2. Target authority
+Target equations:
+- H1 = `log(P[t+1]/P[t])`
+- H3 = `log(P[t+3]/P[t])`
+- H5 = `log(P[t+5]/P[t])`.
 
-### 2.1 Daily target frequency
+The project does **not** revert to monthly target frequency. Monthly-project data authorities may be reused, but their monthly aggregation is not imported into this daily target.
 
-This project is a **daily-frequency** short-horizon forecast program.
+## 2. Current target/source authority
 
-Forecast targets:
-- H1 = next retained daily XAU observation
-- H3 = next 3 retained daily XAU observations
-- H5 = next 5 retained daily XAU observations.
+### 2.1 Active research identity — R2
 
-The project does **not** revert to monthly target frequency.
+The current daily research identity is:
 
-### 2.2 Historical development target
+**`GLOBAL_XAU_PUBLIC_STAKTRAKR_R2`**
 
-Historical development target:
+R2 is a **full-history reconstruction at one pinned public StakTrakr commit**, not a silent append to the prior Neon R1 snapshot.
+
+Current frozen evidence snapshot:
+- StakTrakr commit: `54fdf1c8d39b7b6c7b874d0f30f784296e886044`
+- common weekday Gold/Silver/Platinum/Palladium coverage: **2010-01-04 .. 2026-09-29**
+- common observations: **4,233**.
+
+The StakTrakr payload is a mixed historical reconstruction. Provider/source labels in the frozen R2 payload are, per metal:
+- `seed|LBMA`: 4,069 rows
+- `seed|MetalPriceAPI`: 8 rows
+- `seed|StakTrakr`: 4 rows
+- `sqld|`: 152 rows.
+
+Therefore the earlier shorthand “StakTrakr = MetalPriceAPI daily spot-average” is **superseded**. The binding description is: **pinned StakTrakr public research reconstruction with mixed provider labels, overwhelmingly LBMA-tagged in the historical payload**.
+
+R2 is research reconstruction evidence; it is not represented as historical point-in-time market data.
+
+### 2.2 Historical R1 identity — retained but no longer active
+
+Historical DB series:
 - `XAU_STAKTRAKR_RESEARCH_DAILY_R1`
-- source lineage: lbruton/StakTrakr
-- underlying spot source: MetalPriceAPI XAU
-- daily history semantic: daily spot-average representation
-- coverage currently verified: 2010-01-04 .. 2026-07-31.
+- `XAG_STAKTRAKR_RESEARCH_DAILY_R1`
+- `XPT_STAKTRAKR_RESEARCH_DAILY_R1`
+- `XPD_STAKTRAKR_RESEARCH_DAILY_R1`.
 
-This is a **global spot research target**, not Borsa İstanbul Metal Price.
+R1 provenance:
+- pinned source: `lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01`
+- DB coverage through **2026-07-31**
+- source-registry evidence class: `HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM`
+- status: `APPROVED_RESEARCH_ONLY_NOT_PIT`.
 
-### 2.3 Existing canonical/live XAU source authority
+R1 remains historical evidence only. It must not be extended as if current public StakTrakr were byte-for-byte the same frozen series.
 
-The short-horizon project inherits the already-established Gold Control / monthly-project source registry. It must **not rediscover or silently replace providers**.
+### 2.3 Why silent R1 append was rejected
 
-Existing XAU authorities already present in the project data estate include:
-- Twelve Data `XAU/USD`
-- canonical `XAU_EOD_TWELVE_NY17`
-- XAU 1-minute research cache
-- XAU 5-minute research cache
-- `XAU_DAILY_XAUS`
-- `XAU_SPOT_XAUS`
-- historical `XAU_STAKTRAKR_RESEARCH_DAILY_R1`.
+Repair V1 attempted a fail-closed same-source continuity check before appending August/September.
 
-Clock/source semantics remain distinct:
-- `XAU_EOD_TWELVE_NY17` = Twelve Data XAU/USD, 16:59 America/New_York 1-minute bar used as the NY17 anchor;
-- StakTrakr = historical daily spot-average/date-label research target;
-- intraday caches are research/event/realized-moment sources, not automatic replacements for the daily target.
+Workflow run:
+- **36984276527**
 
-Existing bridge evidence remains binding:
-- NY17 and `XAU_DAILY_XAUS` did not pass strict equivalence to the historical StakTrakr daily-average target;
-- therefore no silent stitching is authorized.
+Result:
+- **FAIL CLOSED**
+- Gold maximum same-date relative difference versus current public StakTrakr: **1.8088%**.
 
-This bridge failure is a **target-semantics issue**, not a reason to search for unrelated new Gold providers.
+A dedicated lineage audit then confirmed that current public 2026 values differ from the old pinned DB snapshot for all four metals.
 
-## 3. Governance
+Lineage audit:
+- run **36984720262**
+- artifact **11216956630**.
 
-- DEV selection: 2022-2024 only.
-- 2025: frozen transport, no tuning.
-- 2026: retrospective/prospective only after model contract freeze.
-- no random split.
-- chronological expanding evaluation.
-- no BIST target values enter this mainline.
+For Gold in 2026 same-date comparison:
+- n = 189
+- exact-within-1e-8 share = 75.13%
+- mean relative difference = 0.1069%
+- maximum relative difference = 1.8088%.
 
-## 4. Daily data-source registry inherited from Gold Control / monthly project
+Thus the active repair became a **new full-history R2 reconstruction**, not a stitch.
 
-The daily forecast must reuse the established project data authorities before any new source search.
+## 3. Correct daily timeline contract
 
-| Data family | Existing authority / examples | Daily short-horizon use |
+The former generic `date` / `signal_date` wording is superseded for current ledgers.
+
+Binding fields:
+- `feature_cutoff_date`: last retained Gold observation used by the feature transforms;
+- `forecast_issue_date`: next retained weekday Gold observation date after the feature cutoff;
+- `target_start_date`: Gold date from which the forward return is measured;
+- `target_end_date_h1`, `target_end_date_h3`, `target_end_date_h5`: exact retained Gold dates at which each target matures.
+
+This is a **label/clock correction**, not a target-formula change.
+
+For H3, a row is usable for scoring only when `target_end_date_h3` is observed.
+
+## 4. Governance
+
+Binding evaluation roles:
+- training/background history: through 2021
+- DEV selection/tuning authority: **2022-2024 only**
+- 2025: **frozen transport; no tuning**
+- 2026: opened retrospective/prospective reporting only; **no selection authority**.
+
+Other rules:
+- no random split
+- chronological expanding evaluation
+- no target-day/future measurements in earlier-origin features
+- no 2025/2026 threshold, calibration, feature or regime-gate rescue
+- no BIST target values in the active Global-XAU lane
+- no trading/P&L optimization until statistical transport evidence is adequate.
+
+## 5. Existing project source registry and daily clock rules
+
+The daily project inherits the already-established Gold Control / monthly-project source universe. It must not rediscover unrelated providers when an existing project authority already exists.
+
+| Family | Existing project authority / examples | Daily short-horizon rule |
 |---|---|---|
-| Gold target / market data | Twelve Data XAU/USD; `XAU_EOD_TWELVE_NY17`; StakTrakr/MetalPriceAPI history; XAU 1m/5m research caches | Daily target, returns, momentum, realized moments, event/shock context. Target identity/clock must be explicit. |
-| Precious metals | Gold, Silver, Platinum, Palladium research histories; `XAG_STAKTRAKR_RESEARCH_DAILY_R1`, `XPT_STAKTRAKR_RESEARCH_DAILY_R1`, `XPD_STAKTRAKR_RESEARCH_DAILY_R1` | Daily cross-metal spillover / relative-value predictors; origin-safe previous-date/as-of joins. |
-| Equities | `NASDAQ100_FRED`, `SP500_FRED`, `DJIA_FRED` | Daily risk-on/off and cross-market spillover; strictly previous-date join at the XAU origin. |
-| Volatility / risk | VIX, GVZ | Daily market-state / volatility conditioning; no future same-day close leakage. |
-| Rates | DGS10; corrected 10Y real-yield authority DFII10 / Fed H.15 concept | Daily or release-aware PIT/as-of mapping; nominal/real-rate channel. |
-| FX / USD | corrected Broad USD authority DTWEXBGS economic concept / Fed H.10 source; major FX authorities | Daily/release-aware PIT/as-of mapping. DEXCHUS must not be mislabeled as broad USD. |
-| Geopolitical / regime | GPR; BOCPD state | Daily-derived/monthly release-aware regime context only when origin-safe coverage is proven. |
-| Macro events | NFP, unemployment, AHE first-print + PIT consensus; inflation/FOMC aligned data where available | Event-time specialist features/context; not silently forward-filled as ordinary daily signals. |
-| Oil / commodities | WTI and Brent authorities already present in the wider project data estate | Daily challenger only after the short-horizon PIT/clock mapping is explicitly frozen. |
-| Existing engine states | FAST, SLOW, Monthly Direction, Emergency, GVZ, Macro Event, BOCPD | Optional expert/context/meta-model features; not equal-vote signals by default. |
-| Later sleeves | CFTC positioning, ETF/flows, news/NLP | Only if point-in-time provenance is demonstrated. |
+| XAU market | StakTrakr reconstruction; Twelve Data XAU/USD; `XAU_EOD_TWELVE_NY17`; XAU 1m/5m research caches; XAUS series | Target identity and clock must be explicit; clocks are never silently stitched. |
+| Precious metals | Gold/Silver/Platinum/Palladium research histories | As-of feature cutoff / previous available observation. |
+| Rates | DGS10, DFII10, H.15 concepts | Release-aware/as-of; conservative availability lag. |
+| FX / USD | corrected Broad-USD authority / H.10 plus major FX | Release-aware/as-of. DEXCHUS is not Broad USD. |
+| Volatility | VIX, GVZ | Strictly previous available observation at a daily origin unless an origin-time contract proves otherwise. |
+| Equities | Nasdaq-100, S&P500, DJIA | Strictly previous available observation at the XAU origin. |
+| GPR / regime | GPR, BOCPD | Release/vintage-aware context only. |
+| Macro events | NFP, unemployment, AHE first-print + PIT consensus; inflation/FOMC aligned data where proven | Event-time specialist/context, not ordinary daily forward-fill. |
+| Oil | WTI / Brent authorities in the wider project data estate | Challenger only after exact short-horizon PIT/clock mapping is frozen. |
+| Engine states | FAST, SLOW, Monthly Direction, Emergency, GVZ, Macro Event, BOCPD | Optional context/meta-model inputs; not equal-vote signals by default. |
 
-### 4.1 Precious-metal research block
+Daily source-clock audit:
+- run **36985733236**
+- artifact **11216859190**.
 
-Historical daily research series already used:
-- Gold: `XAU_STAKTRAKR_RESEARCH_DAILY_R1`
-- Silver: `XAG_STAKTRAKR_RESEARCH_DAILY_R1`
-- Platinum: `XPT_STAKTRAKR_RESEARCH_DAILY_R1`
-- Palladium: `XPD_STAKTRAKR_RESEARCH_DAILY_R1`.
+Observed registry coverage in that audit:
+- EQUITY: latest 2026-10-01
+- FX/USD: latest 2026-09-25
+- GPR: latest 2026-09-01
+- RATES: latest 2026-09-29
+- VOL: latest 2026-10-01
+- XAU registered sources: latest 2026-10-02.
 
-Initial blocks:
-- GOLD_ONLY
-- CORE3 = Gold + Silver + Platinum
-- CORE4 = CORE3 + Palladium
-- CORE3 + safe external.
+The old R1 precious-metal DB series remain through 2026-07-31; R2 August/September evidence comes from the pinned **full public StakTrakr reconstruction**, not from silently writing new rows into R1.
 
-## 5. Daily feature-clock contract
+## 6. Feature blocks
 
-The source family is inherited; only the **daily availability clock / join rule** is adapted for H1/H3/H5.
+Gold path:
+- gold_r1
+- gold_r3
+- gold_r5
+- gold_r10
+- gold_r21
+- sigma20.
 
-Binding principles:
-- no monthly averaging merely because the same variable was used by the monthly model;
-- use daily observations when the established source provides them;
-- use strictly previous-date or release-aware as-of joins where same-day close information would not have been available at the forecast origin;
-- carry source age/staleness metadata where applicable;
-- no backfilled vintage may be treated as point-in-time unless the project source authority explicitly proves it.
+CORE3:
+- Gold path
+- Silver r1/r5/r21 + age
+- Platinum r1/r5/r21 + age.
 
-Current external families:
-- Fed H.15 nominal / real 10Y / breakeven proxy
-- Fed H.10 Broad USD + major FX
+CORE4:
+- CORE3 + Palladium r1/r5/r21 + age.
+
+External blocks:
+- H.15 rates
+- H.10/Broad-USD + FX
 - VIX
-- GVZ where supported
-- Nasdaq-100; S&P500 and DJIA as registered equity challengers
-- WTI / Brent as already-known data families, but not promoted into the current frozen H3 engine until their short-horizon PIT clock is fixed
-- GPR as optional release-aware challenger
-- macro-event and existing-engine state variables as specialist/context channels.
+- Nasdaq-100
+- related registered challengers only under frozen source-clock contracts.
 
-Important:
-- these are **not new providers discovered for the daily project**;
-- they are the existing Gold Control / monthly-project data authorities reused at daily frequency under stricter origin-safe timing.
+Current winning direction engine remains **CORE3**. External families are not silently added because they are available.
 
-## 6. Model order
+## 7. R2 data readiness — current authority
 
-First screen:
-- direction baselines
-- Logistic L2
-- LightGBM
-- XGBoost
-- return zero/mean baselines
-- Elastic Net
-- LightGBM
-- XGBoost
-- LightGBM quantile Q10/Q50/Q90.
+R2 readiness:
+- run **36985071213**
+- artifact **11217361007**
+- status **PASS**.
 
-Deep models remain blocked until classical global-XAU evidence is established.
+Pinned source:
+- StakTrakr commit `54fdf1c8d39b7b6c7b874d0f30f784296e886044`.
 
-## 7. Economic scope
+Coverage:
 
-No trading/P&L rule is authorized in the first global-XAU screen.
+| Horizon | Train history | DEV | 2025 frozen | Opened 2026 | Last forecast issue |
+|---|---:|---:|---:|---:|---|
+| H1 | 3,010 | 755 | 253 | 193 | 2026-09-29 |
+| H3 | 3,010 | 755 | 253 | 191 | 2026-09-25 |
+| H5 | 3,010 | 755 | 253 | 189 | 2026-09-23 |
 
-First determine:
-- which horizon passes;
-- which model/feature block passes;
-- whether the global target behaves materially better than the archived BIST target for short-horizon forecasting.
+August and September 2026 are therefore present in the corrected daily research panel.
 
-## 8. Prior BIST project
+## 8. R2 Stage 1 — model/horizon screen
 
-Stages 0-6C of the prior BIST-target short-horizon project remain archived evidence.
+Scientific screen:
+- run **36985266866**
+- all H1/H3/H5 screen jobs completed successfully;
+- aggregate computation also completed successfully;
+- the workflow-level failure was only a concurrent Git push rejection after calculation.
 
-They must not be merged into global-XAU performance tables.
+The aggregate evidence was recovered and committed by:
+- run **36985805975**.
 
-## 9. Current evidence
-
-Data readiness:
-- COMPLETE / PASS
-- run **36900860852**
-- artifact **11181284118**
-- pre-DEV safe history: 3,011
-- DEV: 755
-- frozen 2025: 253.
-
-Stage 1 classical / boosting screen:
-- COMPLETE / PARTIAL SIGNAL
-- run **36901409925**
-- aggregate artifact **11181622889**.
+R2 Stage-1 result:
 
 | Horizon | Direction | Return | Quantile |
 |---|---|---|---|
@@ -183,146 +220,229 @@ Stage 1 classical / boosting screen:
 | **H3** | **PASS** | FAIL | FAIL |
 | H5 | FAIL | FAIL | FAIL |
 
-Frozen first-screen H3 direction leader:
-- **CORE3 / Logistic L2**
-- Brier **0.246731**
-- baseline **0.249712**
-- relative improvement **+1.19%**
-- log loss **0.686634** vs baseline **0.692572**.
+H3 direction:
+- feature block: **CORE3**
+- model: **Logistic L2**
+- Brier: **0.246637**
+- baseline Brier: **0.249707**
+- relative Brier improvement: **+1.23%**
+- log loss: **0.686447** vs baseline **0.692562**.
 
-Binding interpretation:
-- H3 is the only horizon with pre-2025 predictive evidence;
-- the evidence is direction-only;
-- no return-magnitude, quantile, or tactical engine is yet promoted.
+The structural result from R1 survives the repair: **only H3 direction clears the pre-2025 first-screen gate**.
 
-## 10. Stage 2 robustness evidence
+## 9. R2 Stage 2 — robustness and representation
 
 Stage 2:
-- COMPLETE / **ROBUST_PASS**
-- run **36911524415**
-- artifact **11186831488**.
+- run **36985881794**
+- artifact **11217532283**
+- status **ROBUST_PASS**.
 
 Frozen H3 direction engine:
 - **CORE3 / Logistic L2**
-- Brier **0.246731**
-- baseline **0.249712**
-- relative improvement **+1.19%**
-- log loss **0.686634**
-- prediction SD **0.0442**.
+- Brier **0.246637**
+- baseline **0.249707**
+- relative improvement **+1.23%**
+- log loss **0.686447**
+- prediction SD **0.04478**
+- accuracy **54.97%**
+- balanced accuracy **54.48%**.
 
 Annual relative Brier improvement:
-- 2022: **+1.99%**
-- 2023: **+0.15%**
-- 2024: **+1.44%**.
+- 2022: **+1.93%**
+- 2023: **+0.19%**
+- 2024: **+1.56%**.
 
-All 3 DEV years remain positive versus baseline.
+All three DEV years remain positive.
 
-Representation result:
-- GOLD_ONLY: -0.15%
-- CORE3: **+1.19%**
-- CORE4: +0.70%
-- CORE3 + raw safe external: -0.34%
-- CORE3 + transformed safe external: -0.35%.
+Representation comparison:
+- GOLD_ONLY: -0.14%
+- **CORE3: +1.23%**
+- CORE4: +0.76%
+- CORE3 + raw external: -0.24%
+- CORE3 + transformed external: -0.31%.
 
-Thus:
-- retain CORE3;
-- do not add Palladium;
-- do not add the current rates / FX / VIX / Nasdaq external block to this H3 Logistic engine;
-- H5 remains secondary and fails the >=1% gate.
+Decision:
+- retain **CORE3**
+- do not promote Palladium
+- do not promote the current external block
+- H5 remains below the >=1% secondary gate.
 
-## 11. Live-source bridge status
+Pre-2025 coefficient-sign audit across 151 refits shows strong directional stability for the main nonzero CORE3 coefficients, including silver_r5 (+), platinum_r5 (-), gold_r5 (-), platinum_r1 (+), gold_r1 (-), gold_r21 (-), platinum_r21 (-), sigma20 (+), and gold_r3 (-).
 
-Existing-source screen:
-- run **36911112098**
-- artifact **11186955894**.
-
-Bridge to historical target:
-- NY17 Pearson 0.9375, sign agreement 65.3% -> FAIL
-- XAU_DAILY_XAUS Pearson 0.7320, sign agreement 74.5% -> FAIL.
-
-Prospective live source remains unresolved as an exact target-equivalent extension.
-
-This does not affect the retrospective Stage-1/2 DEV evidence because no source stitching occurs there.
-
-## 12. Stage 3 calibration / conviction evidence
+## 10. R2 Stage 3 — calibration and conviction
 
 Stage 3:
-- COMPLETE / **NO_CONVICTION_PASS**
-- workflow run **36925853403**
-- selected probability stream: **RAW**
-- 2025 remained unopened.
+- run **36985982704**
+- artifact **11217776177**
+- status **CONVICTION_PASS**
+- selected probability stream: **RAW**.
 
-Calibration comparison:
+Calibration:
 
-| Method | Brier | Log loss | Prediction SD | ECE | Decision |
+| Method | Brier | Log loss | Pred SD | ECE | Decision |
 |---|---:|---:|---:|---:|---|
-| **RAW** | **0.246731** | **0.686634** | 0.0442 | 0.0266 | **RETAIN** |
-| PLATT | 0.250391 | 0.694437 | 0.0550 | 0.0204 | REJECT |
-| ISOTONIC | 0.255205 | 0.781230 | 0.0992 | 0.0449 | REJECT |
+| **RAW** | **0.246637** | **0.686447** | 0.0448 | 0.0256 | **RETAIN** |
+| PLATT | 0.250293 | 0.694202 | 0.0544 | 0.0223 | REJECT |
+| ISOTONIC | 0.252886 | 0.746264 | 0.1017 | 0.0460 | REJECT |
 
-Raw calibration diagnostics:
-- intercept **0.0376**
-- slope **1.2331**.
+Frozen DEV conviction:
+- p >= 0.55: n=148, realized H3 UP **62.84%**
+- p <= 0.45: n=64, realized H3 UP **40.63%**
+- separation: **22.21 pp**
+- yearly support counts high side: 54 / 44 / 50
+- yearly support counts low side: 18 / 25 / 21.
 
-Frozen conviction bands:
-- p >=0.55: n=139, realized H3 UP **61.15%**
-- p <=0.45: n=64, realized H3 UP **43.75%**
-- realized-UP separation: **17.40 pp**.
+This is a DEV-level conviction pass only. It does **not** authorize a tactical rule because frozen transport below fails.
 
-The high-UP side is supported and transports across DEV years by count, but the low-UP side misses the frozen <=42.5% realized-UP requirement. Therefore the joint conviction gate fails.
+## 11. R2 frozen transport through September 2026
 
-Binding interpretation:
-- retain H3 / CORE3 / Logistic L2 as a modest probabilistic direction research engine;
-- retain RAW probabilities; do not Platt/isotonic recalibrate;
-- do not convert the current probability bands into a tactical trading rule;
-- do not use the complement of weak-UP evidence as a validated DOWN signal;
-- do not open 2025 to rescue the gate.
+Frozen transport:
+- run **36985617377**
+- artifact **11217536725**
+- engine: **H3 / CORE3 / Logistic L2 / RAW**
+- mode: **STRICT_FROZEN_FIT**
+- training rows: **3,784**
+- last training target maturity: **2024-12-31**
+- no 2025/2026 tuning.
 
-## 13. Frozen 2025 / 2026 transport evidence
+Scoring coverage:
+- last forecast issue: **2026-09-25**
+- last observed H3 target end: **2026-09-29**
+- August 2026: **21** fully matured H3 forecasts
+- September 2026: **19** fully matured H3 forecasts.
 
-Transport:
-- COMPLETE
-- authoritative run **36926432212**
-- binding model: **H3 / CORE3 / Logistic L2 / RAW**
-- primary mode: **STRICT_FROZEN_FIT**
-- no 2025/2026 result used for tuning or selection.
-
-Primary strict frozen-fit result:
-
-| Year | N | Accuracy | Balanced accuracy | Brier | Log loss | UP recall | DOWN recall |
+| Period | N | Accuracy | Balanced accuracy | Brier | Log loss | UP recall | DOWN recall |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| 2025 | 253 | 49.4% | 49.4% | 0.2509 | 0.6949 | 49.4% | 49.5% |
-| 2026 | 142 | 42.3% | 45.2% | 0.2655 | 0.7261 | 75.0% | 15.4% |
+| 2025 | 253 | 50.2% | 50.1% | 0.2508 | 0.6946 | 50.6% | 49.5% |
+| 2026 Jan-Sep | 191 | 44.0% | 45.2% | 0.2727 | 0.7420 | 71.4% | 19.0% |
+| 2026 Aug | 21 | 47.6% | 53.6% | 0.2488 | 0.6906 | 35.7% | 71.4% |
+| 2026 Sep | 19 | 47.4% | 58.3% | 0.2602 | 0.7137 | 100.0% | 16.7% |
 
-Frozen conviction-band transport:
-
-2025:
-- p>=0.55: n=53, realized UP **49.1%**
-- p<=0.45: n=47, realized UP **42.6%**
-
-2026:
-- p>=0.55: n=71, realized UP **47.9%**
-- p<=0.45: n=14, realized UP **71.4%**
-
-Secondary frozen walk-forward diagnostic:
-- 2025 accuracy 52.2%, balanced accuracy 51.3%, Brier 0.2499
-- 2026 accuracy 42.3%, balanced accuracy 45.3%, Brier 0.2685.
+Conviction transport also fails/reverses:
+- 2025 p>=0.55: n=54, realized UP **46.30%**
+- 2025 p<=0.45: n=47, realized UP **44.68%**
+- 2026 p>=0.55: n=86, realized UP **44.19%**
+- 2026 p<=0.45: n=19, realized UP **63.16%**.
 
 Binding interpretation:
-- the pre-2025 H3 direction edge does **not transport** to 2025/2026;
-- Stage-3 high-UP conviction behavior also does not transport;
-- 2026 shows severe directional asymmetry: UP recall is high only because the model over-predicts UP, while DOWN recall collapses to 15.4%;
-- do not tune thresholds on 2025/2026 to rescue this engine;
-- retain all results as frozen out-of-sample evidence.
+- the repaired R2 H3 DEV signal is real under the pre-2025 contract;
+- it **does not transport** into 2025/2026;
+- the DEV conviction bands do not transport and in 2026 reverse economically/directionally;
+- do not tune probability thresholds on 2025/2026;
+- do not proceed to tactical/P&L optimization with this engine.
 
-## 14. Exact next action
+## 12. R2 regime / distribution-shift diagnostic
 
-Do **not** proceed to tactical/P&L optimization with the current H3 / CORE3 / Logistic L2 engine.
+Diagnostic:
+- run **36986075498**
+- artifact **11216934518**
+- status **DIAGNOSTIC ONLY — NO RETUNING**.
 
-Next research question:
-- diagnose why the signal transports in DEV but breaks in 2025/2026;
-- specifically test regime / distribution shift and feature-sign stability using the already frozen prediction ledgers;
-- this diagnostic must not retune the model on 2025/2026;
-- any future challenger must be preregistered using pre-2025 evidence and evaluated against this frozen transport record.
+Probability/outcome state:
 
-Do not return to BIST as tactical target.
+| Period | Mean P(UP) | Actual UP | Accuracy |
+|---|---:|---:|---:|
+| 2025 | 0.500 | 61.7% | 50.2% |
+| 2026 Jan-Sep | 0.553 | 47.6% | 44.0% |
+| 2026 Jul | 0.546 | 34.8% | 30.4% |
+| 2026 Aug | 0.475 | 66.7% | 47.6% |
+| 2026 Sep | 0.536 | 36.8% | 47.4% |
+
+Largest documented shift:
+- 2026 `sigma20` mean shift: **+7.88 DEV SD**
+- 2026 `sigma20` standard-deviation ratio: **14.93**
+- PSI: **7.768**.
+
+Other 2026 shifts include materially wider Gold/Silver/Platinum return-feature distributions.
+
+2025 also shows meaningful shifts, particularly silver_r21, gold_r21, sigma20 and platinum_r21.
+
+These findings diagnose failure anatomy. They **must not** be converted into a post-hoc 2025/2026 regime gate.
+
+## 13. What is superseded versus retained
+
+### Superseded for the active lane
+
+The following R1 interpretations are superseded by R2:
+- active target coverage ending 2026-07-31
+- the shorthand “underlying source = MetalPriceAPI”
+- ambiguous `signal_date` presentation
+- R1 Stage-3 `NO_CONVICTION_PASS` as the current pre-2025 conclusion
+- R1 Jan-Jul-only 2026 transport as the current transport table.
+
+R1 artifacts remain historical audit evidence and are not deleted.
+
+### Retained findings
+
+The following structural findings survive R2:
+- Global XAU, not BIST Metal Price, is the active tactical-research target family
+- H3 is the only first-screen horizon with a pre-2025 direction signal
+- CORE3 / Logistic L2 is the current classical direction comparator
+- Palladium and the first external block are not promoted
+- no return-magnitude or quantile head passes
+- 2025/2026 transport is inadequate for tactical promotion
+- no P&L optimization is authorized.
+
+### Archived BIST lane
+
+`GOLD_SHORT_HORIZON_TACTICAL_FORECAST_PROJECT_MANIFEST.md` is archived historical evidence. Its BIST target results must not be merged into the Global-XAU performance tables.
+
+## 14. Prospective refresh contract
+
+The R2 evidence above is frozen to StakTrakr commit:
+`54fdf1c8d39b7b6c7b874d0f30f784296e886044`.
+
+A later daily refresh must:
+1. resolve and record a new exact source commit/ref;
+2. preserve the prior R2 evidence snapshot;
+3. rebuild the current-source panel under the same explicit timeline semantics;
+4. never mutate past reported R2 numbers silently;
+5. never use newly observed 2025/2026 outcomes to retune the frozen comparator.
+
+Twelve Data/NY17, XAUS, intraday cache, ETF or futures clocks remain separate identities unless a separately frozen target contract authorizes them.
+
+## 15. Exact next research action
+
+The data/timeline repair is complete. Do **not** repeat source discovery, timeline repair, or the same R2 baseline screen again.
+
+The next scientific task is:
+
+**preregister a new transport-robust challenger using only pre-2025 evidence.**
+
+The challenger may be motivated by the documented pre-2025 coefficient stability and the existence of volatility/distribution instability, but:
+- no threshold or regime boundary may be chosen from 2025/2026;
+- no feature may be selected because it happened to explain a 2025/2026 error;
+- the R2 H3 / CORE3 / Logistic-L2 engine remains the frozen comparator;
+- DEV selection remains 2022-2024;
+- 2025 and 2026 are transport/reporting only.
+
+Only after a preregistered challenger clears the pre-2025 statistical gate may it be transported once against the frozen 2025 and Jan-Sep 2026 record.
+
+No tactical/P&L layer is authorized before that.
+
+## 16. Current evidence hierarchy
+
+Current R2 authority files:
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_READINESS_RESULT_2026-10-02.md`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_READINESS_SUMMARY_2026-10-02.json`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_STAGE1_RESULT_2026-10-02.md`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_STAGE1_SUMMARY_2026-10-02.json`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_STAGE2_RESULT_2026-10-02.md`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_STAGE2_SUMMARY_2026-10-02.json`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_STAGE2_COEFFICIENT_STABILITY_2026-10-02.csv`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_STAGE3_RESULT_2026-10-02.md`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_STAGE3_SUMMARY_2026-10-02.json`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_TRANSPORT_RESULT_2026-10-02.md`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_TRANSPORT_SUMMARY_2026-10-02.json`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_TRANSPORT_PREDICTIONS_2026-10-02.csv`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_DRIFT_RESULT_2026-10-02.md`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_DRIFT_SUMMARY_2026-10-02.json`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_CLOCK_AUDIT_RESULT_2026-10-02.md`
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_LINEAGE_AUDIT_2026-10-02.json`.
+
+Repair/failure evidence:
+- `GOLD_SHORT_HORIZON_GLOBAL_XAU_REPAIR_AUTHORITY_2026-10-02.md`
+- failed continuity run **36984276527**
+- lineage audit run **36984720262**.
+
+Historical R1 files remain available for audit but do not override the R2 sections above.
