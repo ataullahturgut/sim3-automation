@@ -1,0 +1,81 @@
+{
+  "annual": [
+    {
+      "accuracy": 0.5,
+      "actual_up_rate": 0.496,
+      "balanced_accuracy": 0.5009600614439325,
+      "brier": 0.2542808022901151,
+      "logit_brier": 0.24574782645856344,
+      "logloss": 0.7028652005444985,
+      "mean_prediction": 0.5180950127865186,
+      "n": 250,
+      "prediction_std": 0.09900815662632492,
+      "relative_brier_improvement_vs_logit": -0.03472248749671227,
+      "year": 2022
+    },
+    {
+      "accuracy": 0.5577689243027888,
+      "actual_up_rate": 0.5179282868525896,
+      "balanced_accuracy": 0.5539097266369993,
+      "brier": 0.2460672481614757,
+      "logit_brier": 0.24943635741770812,
+      "logloss": 0.6847917982577031,
+      "mean_prediction": 0.5120923935472759,
+      "n": 251,
+      "prediction_std": 0.08543989365085207,
+      "relative_brier_improvement_vs_logit": 0.0135068892566871,
+      "year": 2023
+    },
+    {
+      "accuracy": 0.5039370078740157,
+      "actual_up_rate": 0.5551181102362205,
+      "balanced_accuracy": 0.499592041674512,
+      "brier": 0.25301463345584957,
+      "logit_brier": 0.24474706540098856,
+      "logloss": 0.7000147160674934,
+      "mean_prediction": 0.5045227401302956,
+      "n": 254,
+      "prediction_std": 0.08958183282382605,
+      "relative_brier_improvement_vs_logit": -0.03378004978860766,
+      "year": 2024
+    }
+  ],
+  "architecture": {
+    "checking": "chronological_last_20pct_min60",
+    "consequent": "first_order_Sugeno_TSK_LSE",
+    "inputs": 14,
+    "max_epochs": 100,
+    "membership": "Gaussian",
+    "metaheuristic": "NONE",
+    "premise_learning": "Jang_normalized_gradient",
+    "rules": 5
+  },
+  "dev_metrics": {
+    "accuracy": 0.5205298013245033,
+    "actual_up_rate": 0.5231788079470199,
+    "balanced_accuracy": 0.5164205344585091,
+    "brier": 0.2511242341176755,
+    "logloss": 0.6958977210330483,
+    "mean_prediction": 0.5115334039338953,
+    "n": 755,
+    "prediction_std": 0.0916702951216554
+  },
+  "frozen_logit_metrics": {
+    "accuracy": 0.5496688741721855,
+    "actual_up_rate": 0.5231788079470199,
+    "balanced_accuracy": 0.544760900140647,
+    "brier": 0.24663739991832676,
+    "logloss": 0.6864471943995316,
+    "mean_prediction": 0.5120005829455279,
+    "n": 755,
+    "prediction_std": 0.04478186833469242
+  },
+  "gate": {
+    "nonnegative_years": 1,
+    "pass": false,
+    "worst_year_relative": -0.03472248749671227
+  },
+  "model_id": "GLOBAL_XAU_DAILY_H3_VANILLA_ANFIS_V1",
+  "relative_brier_improvement_vs_logit": -0.018192026841162487,
+  "status": "NOT_PROMOTED"
+}
