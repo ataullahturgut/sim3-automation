@@ -1,0 +1,55 @@
+{
+  "schema": "GOLD_FORECASTING_CHALLENGE_V1_CHAMPION_LOCK",
+  "locked_at_utc": "2026-10-02T13:25:00Z",
+  "selection_commit": "875734b04557d42d93e4da74dcb1a9e9e8593870",
+  "selection_window": "2019-2020",
+  "sealed_test_year": 2021,
+  "target": "H3_DIRECTION",
+  "feature_block": "CORE3",
+  "features": [
+    "gold_r1",
+    "gold_r3",
+    "gold_r5",
+    "gold_r10",
+    "gold_r21",
+    "sigma20",
+    "silver_r1",
+    "silver_r5",
+    "silver_r21",
+    "silver_age_days",
+    "platinum_r1",
+    "platinum_r5",
+    "platinum_r21",
+    "platinum_age_days"
+  ],
+  "model": {
+    "name": "LOGIT_EN",
+    "scaler": "StandardScaler",
+    "classifier": "LogisticRegression",
+    "C": 0.3,
+    "penalty": "elasticnet",
+    "l1_ratio": 0.5,
+    "solver": "saga",
+    "max_iter": 5000,
+    "tol": 0.0001,
+    "random_state": 20261001
+  },
+  "validation_metrics": {
+    "n": 507,
+    "accuracy": 0.5483234714003945,
+    "balanced_accuracy": 0.5462641318764605,
+    "brier": 0.24984802485291774,
+    "logloss": 0.6929539696706801,
+    "up_recall": 0.5633802816901409,
+    "down_recall": 0.5291479820627802
+  },
+  "confidence_cutoffs": {
+    "coverage_60_conf_cutoff": 0.020218013892150388,
+    "coverage_40_conf_cutoff": 0.032631864757996225
+  },
+  "integrity": {
+    "post_2020_rows_loaded_during_selection": false,
+    "test_labels_inspected_before_lock": false,
+    "model_or_feature_changes_allowed_after_lock": false
+  }
+}
