@@ -120,13 +120,15 @@ def read_zip_table(raw, label):
     return df, names[0]
 
 
-def fetch_year(year, combined):
-    stem = "com_disagg_txt" if combined else "fut_disagg_txt"
-    url = f"https://www.cftc.gov/files/dea/history/{stem}_{year}.zip"
+def fetch_socrata(dataset_id):
+    url = (
+        f"https://publicreporting.cftc.gov/resource/{dataset_id}.csv"
+        f"?cftc_contract_market_code={CFTC_CODE}&$limit=5000"
+    )
     raw = get_bytes(url)
-    df, member = read_zip_table(raw, f"{stem}_{year}")
-    return df, {"url":url, "member":member, "bytes":len(raw), "rows":int(len(df))}
-
+    df = pd.read_csv(io.BytesIO(raw), low_memory=False)
+    df.columns = [norm_col(c) for c in df.columns]
+    return df, {"url":url, "bytes":len(raw), "rows":int(len(df))}
 
 def gold_rows(df):
     code_col = "cftc_contract_market_code"
@@ -150,17 +152,26 @@ def col(g, name):
 
 
 def build_cot():
-    fut_parts, com_parts, meta = [], [], {}
-    for year in YEARS:
-        f, fm = fetch_year(year, False)
-        c, cm = fetch_year(year, True)
-        gf, gc = gold_rows(f), gold_rows(c)
-        fut_parts.append(gf)
-        com_parts.append(gc)
-        meta[str(year)] = {"futures":fm, "combined":cm, "fut_gold_rows":len(gf), "com_gold_rows":len(gc)}
+    # Official CFTC Public Reporting Environment datasets:
+    # futures-only disaggregated = 72hh-3qpy
+    # futures+options combined disaggregated = kh3c-gbw2
+    fut_raw, fm = fetch_socrata("72hh-3qpy")
+    com_raw, cm = fetch_socrata("kh3c-gbw2")
+    fut = gold_rows(fut_raw)
+    com = gold_rows(com_raw)
 
-    fut = pd.concat(fut_parts, ignore_index=True).sort_values("report_date").drop_duplicates("report_date", keep="last")
-    com = pd.concat(com_parts, ignore_index=True).sort_values("report_date").drop_duplicates("report_date", keep="last")
+    lo = pd.Timestamp("2021-01-01")
+    hi = pd.Timestamp("2026-12-31")
+    fut = fut[(fut.report_date >= lo) & (fut.report_date <= hi)].copy()
+    com = com[(com.report_date >= lo) & (com.report_date <= hi)].copy()
+
+    meta = {
+        "transport": "CFTC_PUBLIC_REPORTING_API",
+        "futures": fm,
+        "combined": cm,
+        "fut_gold_rows": int(len(fut)),
+        "com_gold_rows": int(len(com)),
+    }
 
     keys = [
         "report_date","open_interest_all",
@@ -216,7 +227,6 @@ def build_cot():
     ]
     x = x[keep].dropna().sort_values("available_date").reset_index(drop=True)
     return x, meta
-
 
 def latest_cot(cot, feature_date):
     q = cot[cot.available_date <= pd.Timestamp(feature_date)]
