@@ -1,0 +1,59 @@
+name: Gold Short Horizon Global XAU Source Lineage Audit V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_global_xau_source_lineage_audit_v1.py'
+      - '.github/workflows/gold-short-horizon-global-xau-source-lineage-audit-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Resolve StakTrakr public ref
+        id: refs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          STAK_REF="$(gh api repos/lbruton/StakTrakr/commits/main --jq .sha)"
+          echo "stak_ref=$STAK_REF" >> "$GITHUB_OUTPUT"
+      - name: Run lineage audit
+        run: |
+          python gold_axis_2026/tools/gold_short_horizon_global_xau_source_lineage_audit_v1.py             --stak-ref "${{ steps.refs.outputs.stak_ref }}"             --output source_lineage_audit.json
+      - name: Commit audit evidence
+        shell: bash
+        run: |
+          cp source_lineage_audit.json gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_LINEAGE_AUDIT_2026-10-02.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_LINEAGE_AUDIT_2026-10-02.json
+          if git diff --cached --quiet; then
+            echo "No audit change"
+          else
+            git commit -m "Record Global XAU source lineage audit"
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-short-horizon-global-xau-source-lineage-audit-v1
+          path: source_lineage_audit.json
+          if-no-files-found: warn
+          retention-days: 90
