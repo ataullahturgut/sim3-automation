@@ -1,0 +1,2 @@
+forecast_issue_date,from,to,matured_override_events,q_opal,prob_opal_superior,expected_run_length,changepoint_mass
+2026-08-03,AURORA_ONLY,OPAL_TRUSTED,83,0.7622303003158335,0.921915370268619,13.652014347231493,0.03506397656709891
