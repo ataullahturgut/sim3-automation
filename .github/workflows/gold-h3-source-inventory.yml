@@ -1,0 +1,26 @@
+name: Gold H3 Source Inventory
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_source_inventory.py'
+      - '.github/workflows/gold-h3-source-inventory.yml'
+  workflow_dispatch:
+
+jobs:
+  inventory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4'
+      - run: test -n "$NEON_DATABASE_URL"
+      - run: python gold_axis_2026/tools/gold_h3_source_inventory.py
