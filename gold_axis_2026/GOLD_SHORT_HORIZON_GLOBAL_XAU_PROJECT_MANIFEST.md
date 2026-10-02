@@ -20,6 +20,19 @@ Primary target form:
 
 ## 2. Target authority
 
+### 2.1 Daily target frequency
+
+This project is a **daily-frequency** short-horizon forecast program.
+
+Forecast targets:
+- H1 = next retained daily XAU observation
+- H3 = next 3 retained daily XAU observations
+- H5 = next 5 retained daily XAU observations.
+
+The project does **not** revert to monthly target frequency.
+
+### 2.2 Historical development target
+
 Historical development target:
 - `XAU_STAKTRAKR_RESEARCH_DAILY_R1`
 - source lineage: lbruton/StakTrakr
@@ -29,12 +42,29 @@ Historical development target:
 
 This is a **global spot research target**, not Borsa İstanbul Metal Price.
 
-Prospective live extension:
-- existing candidates `XAU_EOD_TWELVE_NY17` and `XAU_DAILY_XAUS` were screened;
-- neither passes strict same-target bridge equivalence to the historical StakTrakr / MetalPriceAPI daily-average target;
-- `XAU_EOD_TWELVE_NY17` is the closer candidate but remains a separate live anchor.
+### 2.3 Existing canonical/live XAU source authority
 
-Therefore do not stitch any live series into the development target series.
+The short-horizon project inherits the already-established Gold Control / monthly-project source registry. It must **not rediscover or silently replace providers**.
+
+Existing XAU authorities already present in the project data estate include:
+- Twelve Data `XAU/USD`
+- canonical `XAU_EOD_TWELVE_NY17`
+- XAU 1-minute research cache
+- XAU 5-minute research cache
+- `XAU_DAILY_XAUS`
+- `XAU_SPOT_XAUS`
+- historical `XAU_STAKTRAKR_RESEARCH_DAILY_R1`.
+
+Clock/source semantics remain distinct:
+- `XAU_EOD_TWELVE_NY17` = Twelve Data XAU/USD, 16:59 America/New_York 1-minute bar used as the NY17 anchor;
+- StakTrakr = historical daily spot-average/date-label research target;
+- intraday caches are research/event/realized-moment sources, not automatic replacements for the daily target.
+
+Existing bridge evidence remains binding:
+- NY17 and `XAU_DAILY_XAUS` did not pass strict equivalence to the historical StakTrakr daily-average target;
+- therefore no silent stitching is authorized.
+
+This bridge failure is a **target-semantics issue**, not a reason to search for unrelated new Gold providers.
 
 ## 3. Governance
 
@@ -45,13 +75,31 @@ Therefore do not stitch any live series into the development target series.
 - chronological expanding evaluation.
 - no BIST target values enter this mainline.
 
-## 4. Global metal features
+## 4. Daily data-source registry inherited from Gold Control / monthly project
 
-Historical daily research series:
-- Gold: XAU_STAKTRAKR_RESEARCH_DAILY_R1
-- Silver: XAG_STAKTRAKR_RESEARCH_DAILY_R1
-- Platinum: XPT_STAKTRAKR_RESEARCH_DAILY_R1
-- Palladium: XPD_STAKTRAKR_RESEARCH_DAILY_R1.
+The daily forecast must reuse the established project data authorities before any new source search.
+
+| Data family | Existing authority / examples | Daily short-horizon use |
+|---|---|---|
+| Gold target / market data | Twelve Data XAU/USD; `XAU_EOD_TWELVE_NY17`; StakTrakr/MetalPriceAPI history; XAU 1m/5m research caches | Daily target, returns, momentum, realized moments, event/shock context. Target identity/clock must be explicit. |
+| Precious metals | Gold, Silver, Platinum, Palladium research histories; `XAG_STAKTRAKR_RESEARCH_DAILY_R1`, `XPT_STAKTRAKR_RESEARCH_DAILY_R1`, `XPD_STAKTRAKR_RESEARCH_DAILY_R1` | Daily cross-metal spillover / relative-value predictors; origin-safe previous-date/as-of joins. |
+| Equities | `NASDAQ100_FRED`, `SP500_FRED`, `DJIA_FRED` | Daily risk-on/off and cross-market spillover; strictly previous-date join at the XAU origin. |
+| Volatility / risk | VIX, GVZ | Daily market-state / volatility conditioning; no future same-day close leakage. |
+| Rates | DGS10; corrected 10Y real-yield authority DFII10 / Fed H.15 concept | Daily or release-aware PIT/as-of mapping; nominal/real-rate channel. |
+| FX / USD | corrected Broad USD authority DTWEXBGS economic concept / Fed H.10 source; major FX authorities | Daily/release-aware PIT/as-of mapping. DEXCHUS must not be mislabeled as broad USD. |
+| Geopolitical / regime | GPR; BOCPD state | Daily-derived/monthly release-aware regime context only when origin-safe coverage is proven. |
+| Macro events | NFP, unemployment, AHE first-print + PIT consensus; inflation/FOMC aligned data where available | Event-time specialist features/context; not silently forward-filled as ordinary daily signals. |
+| Oil / commodities | WTI and Brent authorities already present in the wider project data estate | Daily challenger only after the short-horizon PIT/clock mapping is explicitly frozen. |
+| Existing engine states | FAST, SLOW, Monthly Direction, Emergency, GVZ, Macro Event, BOCPD | Optional expert/context/meta-model features; not equal-vote signals by default. |
+| Later sleeves | CFTC positioning, ETF/flows, news/NLP | Only if point-in-time provenance is demonstrated. |
+
+### 4.1 Precious-metal research block
+
+Historical daily research series already used:
+- Gold: `XAU_STAKTRAKR_RESEARCH_DAILY_R1`
+- Silver: `XAG_STAKTRAKR_RESEARCH_DAILY_R1`
+- Platinum: `XPT_STAKTRAKR_RESEARCH_DAILY_R1`
+- Palladium: `XPD_STAKTRAKR_RESEARCH_DAILY_R1`.
 
 Initial blocks:
 - GOLD_ONLY
@@ -59,16 +107,30 @@ Initial blocks:
 - CORE4 = CORE3 + Palladium
 - CORE3 + safe external.
 
-## 5. Safe external families
+## 5. Daily feature-clock contract
 
-Reuse existing release-aware authorities:
-- H.15 nominal / real 10Y / breakeven proxy
-- H.10 Broad USD + major FX
+The source family is inherited; only the **daily availability clock / join rule** is adapted for H1/H3/H5.
+
+Binding principles:
+- no monthly averaging merely because the same variable was used by the monthly model;
+- use daily observations when the established source provides them;
+- use strictly previous-date or release-aware as-of joins where same-day close information would not have been available at the forecast origin;
+- carry source age/staleness metadata where applicable;
+- no backfilled vintage may be treated as point-in-time unless the project source authority explicitly proves it.
+
+Current external families:
+- Fed H.15 nominal / real 10Y / breakeven proxy
+- Fed H.10 Broad USD + major FX
 - VIX
-- Nasdaq-100.
+- GVZ where supported
+- Nasdaq-100; S&P500 and DJIA as registered equity challengers
+- WTI / Brent as already-known data families, but not promoted into the current frozen H3 engine until their short-horizon PIT clock is fixed
+- GPR as optional release-aware challenger
+- macro-event and existing-engine state variables as specialist/context channels.
 
-WTI/Brent remain excluded from first screen pending short-horizon PIT release mapping.
-Daily GPR remains optional challenger.
+Important:
+- these are **not new providers discovered for the daily project**;
+- they are the existing Gold Control / monthly-project data authorities reused at daily frequency under stricter origin-safe timing.
 
 ## 6. Model order
 
