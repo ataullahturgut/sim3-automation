@@ -9843,3 +9843,79 @@ The complete previous text remains recoverable at [v2.43 canonical baseline](htt
 - **Importance-Weighted Historical Source Adaptation V1** is a promising, sample-limited UP-2 failure-filter research mechanism: 98 ordinary source labels; ESS 46.09; forward retention 3/4; locked 2025 error removal 6/12 and true-UP retention 11/13. It is NOT_CERTIFIED / NOT_RUNTIME and is not silently inserted into the cascade.
 - **Positive DOWN resolver = NOT_PROVEN.** No ABSTAIN, withheld UP-2 call or high-risk alarm automatically becomes DOWN. **UNCERTAIN** is the binding fallback when positive direction evidence is absent.
 - Runtime promotion, automatic trading mapping, whole-system auto-selection/ensemble, 2025 retuning and 2026 model selection remain unauthorized. Future research must start from the registry, respect closed-path conditions and use a separately authorized, chronology-safe identity.
+
+
+## 2026-10-02 — Frozen UP cascade 2026 retrospective replay
+
+Authority:
+- `GOLD_CONTROL_UP_CASCADE_2026_REPLAY_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37034714037**
+- artifact **11238569056**
+- result commit **8c479b53**
+
+Scope:
+- exact frozen Primary UP Verifier V2 and One-Sided UP-2 logic;
+- no expert-membership, eligibility, Wilson ranking, feature, model, threshold algorithm or route change;
+- 2026 is retrospective stress only;
+- evaluated through target **2026-08-31**.
+
+Integrity:
+- historical Primary V2 2024 and 2025 aggregates reproduced exactly;
+- route-consistent residual counts 2022-2025 reproduced;
+- UP-2 2022-2025 call/true/false counts reproduced exactly;
+- replay status **PASS**.
+
+Primary UP Verifier V2 standalone 2026:
+- eligible timeline n = **173**
+- UP outputs = **4**
+- true / false UP = **2 / 2**
+- precision = **50.00%**
+- call-level false alarm = **50.00%**
+- false-UP FPR = **2.27%**
+- actual-UP recall = **2.35%**
+- coverage = **2.31%**
+- all 4 emitted calls selected `RM_LOGIT`.
+
+Interpretation: the primary verifier becomes extremely conservative in 2026. Its low FPR is achieved mainly by abstaining, not by preserving the 2025 selective-UP precision.
+
+Inside frozen SQRT HIGH-RISK route:
+- SQRT alarms = **148** = 74 actual UP + 74 actual DOWN;
+- Primary-UP intersection = **3** calls;
+- Primary-ABSTAIN residual = **145** = 72 UP + 73 DOWN.
+
+One-Sided UP-2 on the 2026 residual:
+- n = **145**
+- UP2 calls = **7**
+- true / false UP = **5 / 2**
+- precision = **71.43%**
+- call-level false alarm = **28.57%**
+- missed-UP recall = **6.94%**
+- false-UP FPR = **2.74%**
+- coverage = **4.83%**
+- AUC = **0.52245**
+- Brier = **0.26684**
+- frozen 2026 threshold `tau = 0.5547004995`.
+
+Combined positive-UP evidence inside SQRT route:
+- emitted UP = **10**
+- true / false UP = **7 / 3**
+- precision = **70.00%**
+- call-level false alarm = **30.00%**
+- false-UP FPR among actual-DOWN SQRT rows = **4.05%**
+- UP recall inside SQRT route = **9.46%**
+- source counts: Primary 3, UP-2 7.
+
+Binding interpretation:
+- 2026 does **not** preserve the strong 2025 standalone Primary-UP result; Primary V2 collapses mainly through abstention.
+- UP-2 remains selective and its 7 calls are 5/7 correct, but ranking quality is weak (AUC ~0.52) and coverage/recall are very low.
+- the cascade can still identify a small high-precision UP subset in 2026, but it does not solve broad UP detection.
+- no 2026 result may be used to retune the frozen identities under the same model names.
+
+Evidence:
+- `GOLD_CONTROL_UP_CASCADE_2026_REPLAY_RESULT_2026-10-02.md`
+- `GOLD_CONTROL_UP_CASCADE_2026_REPLAY_RESULT_2026-10-02.json`
+- `GOLD_CONTROL_PRIMARY_UP_V2_2026_LEDGER_2026-10-02.csv`
+- `GOLD_CONTROL_UP2_2026_LEDGER_2026-10-02.csv`
+- `GOLD_CONTROL_UP_CASCADE_2026_EMITTED_UP_LEDGER_2026-10-02.csv`.
