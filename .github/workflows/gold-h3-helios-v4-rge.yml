@@ -1,0 +1,59 @@
+name: Gold H3 HELIOS V4 RGE
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_helios_v4_rge.py'
+      - 'gold_axis_2026/GOLD_H3_HELIOS_V4_RGE_AUTHORITY_2026-10-03.md'
+      - '.github/workflows/gold-h3-helios-v4-rge.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      OUT_DIR: gold_h3_helios_v4_rge_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2'
+      - name: Run HELIOS H3 V4 RGE
+        run: python gold_axis_2026/tools/gold_h3_helios_v4_rge.py
+      - name: Commit HELIOS V4 RGE evidence
+        shell: bash
+        run: |
+          cp "$OUT_DIR/HELIOS_V4_RGE_RESULT.md" gold_axis_2026/GOLD_H3_HELIOS_V4_RGE_RESULT_2026-10-03.md
+          cp "$OUT_DIR/helios_v4_rge_summary.json" gold_axis_2026/GOLD_H3_HELIOS_V4_RGE_SUMMARY_2026-10-03.json
+          cp "$OUT_DIR/helios_v4_rge_metrics.csv" gold_axis_2026/GOLD_H3_HELIOS_V4_RGE_METRICS_2026-10-03.csv
+          cp "$OUT_DIR/helios_v4_rge_predictions.csv" gold_axis_2026/GOLD_H3_HELIOS_V4_RGE_PREDICTIONS_2026-10-03.csv
+          cp "$OUT_DIR/helios_v4_rge_switches.csv" gold_axis_2026/GOLD_H3_HELIOS_V4_RGE_SWITCHES_2026-10-03.csv
+          cp "$OUT_DIR/helios_v4_rge_event_ledger.csv" gold_axis_2026/GOLD_H3_HELIOS_V4_RGE_EVENT_LEDGER_2026-10-03.csv
+          cp "$OUT_DIR/helios_v4_rge_inference.csv" gold_axis_2026/GOLD_H3_HELIOS_V4_RGE_INFERENCE_2026-10-03.csv
+          cp "$OUT_DIR/helios_v4_rge_cluster_inference.csv" gold_axis_2026/GOLD_H3_HELIOS_V4_RGE_CLUSTER_INFERENCE_2026-10-03.csv
+          cp "$OUT_DIR/helios_v4_rge_robustness.csv" gold_axis_2026/GOLD_H3_HELIOS_V4_RGE_ROBUSTNESS_2026-10-03.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_HELIOS_V4_RGE_*_2026-10-03.*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record HELIOS H3 v4 RGE results"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-helios-v4-rge
+          path: gold_h3_helios_v4_rge_out/
+          if-no-files-found: warn
+          retention-days: 90
