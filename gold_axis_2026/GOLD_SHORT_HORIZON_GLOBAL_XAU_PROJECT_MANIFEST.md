@@ -1474,7 +1474,7 @@ PATH state share:
 
 Interpretation:
 1. **SENTRY-H3 V1 is MECHANISM_PASS.**
-2. It is the current adaptive H3 research champion because it preserves IRIS exactly in the strong 2023-2024 regime and improves 2025/2026 transport.
+2. It was the first adaptive H3 mechanism pass and is now superseded by DART-H3 V1 as the current adaptive H3 research champion; see Section 25.
 3. PATH_GLOBAL alone has slightly higher 2026 accuracy (**60.73%**) but cannot replace the champion because it is materially weaker in 2023-2024.
 4. SENTRY improves 2026 without a 2026-fitted threshold; switching uses only already-matured paired forecast correctness.
 5. This remains retrospective research. The next decisive evidence is prospective origins under the frozen SENTRY rule.
@@ -1488,3 +1488,172 @@ Evidence:
 - `GOLD_H3_SENTRY_V1_PATH_SHARE_2026-10-02.csv`
 - `GOLD_H3_SENTRY_V1_2026_RESCUE_2026-10-02.csv`
 - `GOLD_H3_SENTRY_V1_2026_MONTHLY_2026-10-02.csv`.
+
+
+## 25. DART-H3 V1 — disagreement-aware Bayesian regime transfer (2026-10-02)
+
+Authority:
+- `GOLD_H3_DART_V1_AUTHORITY_2026-10-02.md`
+
+Workflows:
+- initial full-data run **37049267033**
+- isolated frozen-ledger rerun **37049528162**
+- dependence-aware inference audit **37049733780**
+
+Identity:
+- `DART_H3_V1_RESEARCH`
+
+Motivation:
+- SENTRY improved transport using a fixed 63-origin paired-rescue window.
+- However, expert-agreement rows contain no directional information about which expert is superior.
+- DART updates only on matured expert-disagreement events.
+
+Experts:
+- STRUCTURAL_IRIS = A1 + hourly PATH
+- PATH_GLOBAL = hourly PATH only.
+
+### Bayesian change-point mechanism
+
+For each matured disagreement:
+- X=1 if PATH_GLOBAL is correct
+- X=0 if STRUCTURAL_IRIS is correct.
+
+Because expert directions differ, exactly one expert is correct at each disagreement event.
+
+DART uses a Beta-Bernoulli Bayesian online change-point detector:
+- new-regime prior Beta(1,1)
+- constant hazard **1/20 disagreement events**
+- maximum tracked run length **120 disagreement events**
+- minimum matured disagreements before switching **8**.
+
+Frozen state rule:
+- enter PATH when:
+  - Pr(theta > 0.5) >= **0.90**
+  - posterior predictive q_path >= **0.60**
+- return STRUCTURAL when:
+  - Pr(theta > 0.5) <= **0.10**
+  - q_path <= **0.40**.
+
+No 2023-2026 threshold tuning.
+
+### Confirmation
+
+2023:
+- Structural IRIS accuracy **71.23%**
+- DART **71.23%**
+- balanced accuracy **71.83%**
+- Brier **0.2118**
+- PATH share **0%**.
+
+2024:
+- Structural IRIS accuracy **70.83%**
+- DART **70.83%**
+- balanced accuracy **69.97%**
+- Brier **0.2006**
+- PATH share **0%**.
+
+Thus DART preserves the strong historical champion exactly through 2023-2024.
+
+### State transition
+
+Single detected transition:
+- **2025-10-14:** STRUCTURAL_IRIS -> PATH_GLOBAL
+- q_path **0.831**
+- Pr(PATH superior) **0.944**
+- matured disagreement events **91**
+- posterior expected run length **7.81**.
+
+Annual PATH-active share:
+- 2022: **0%**
+- 2023: **0%**
+- 2024: **0%**
+- 2025: **22.2%**
+- 2026: **100%**.
+
+The posterior remained in PATH throughout 2026.
+
+### Transport
+
+| Period | Model | Accuracy | Balanced acc | Brier | UP recall | DOWN recall |
+|---|---|---:|---:|---:|---:|---:|
+| 2025 | Structural IRIS | 63.71% | 62.27% | 0.2294 | 68.87% | 55.67% |
+| 2025 | SENTRY | 64.52% | 62.93% | 0.2276 | 70.20% | 55.67% |
+| 2025 | DART | 64.11% | 62.60% | 0.2303 | 69.54% | 55.67% |
+| 2026 | Structural IRIS | 58.64% | 59.12% | 0.2556 | 69.23% | 49.00% |
+| 2026 | SENTRY | 60.21% | 60.71% | 0.2513 | 71.43% | 50.00% |
+| 2026 | PATH_GLOBAL | **60.73%** | **61.12%** | **0.2477** | 69.23% | 53.00% |
+| 2026 | **DART** | **60.73%** | **61.12%** | **0.2477** | 69.23% | **53.00%** |
+| 2025-2026 | Structural IRIS | 61.50% | 60.65% | 0.2408 | 69.01% | 52.28% |
+| 2025-2026 | SENTRY | **62.64%** | 61.73% | 0.2379 | **70.66%** | 52.79% |
+| 2025-2026 | **DART** | **62.64%** | **61.87%** | **0.2378** | 69.42% | **54.31%** |
+
+2026 DART rescue:
+- Structural accuracy **58.64%**
+- DART **60.73%**
+- rescued calls **7**
+- broken calls **3**
+- net rescue **+4**
+- PATH active **191 / 191** origins.
+
+### Dependence-aware inference audit
+
+Authority:
+- `GOLD_H3_DART_V1_INFERENCE_AUTHORITY_2026-10-02.md`
+
+Method:
+- paired circular moving-block bootstrap
+- **10,000** replicates
+- block lengths **5** and **10** origins
+- no retuning.
+
+2026 DART vs Structural:
+- observed accuracy improvement **+2.09 pp**
+- block-5 95% interval **[-1.05, +5.76] pp**
+- block-10 **[-1.06, +5.76] pp**
+- bootstrap improvement share **87.0% / 84.9%**.
+- Interpretation: accuracy point estimate favors DART but is not statistically decisive.
+
+2026 Brier:
+- difference **-0.0079**
+- block-5 95% interval **[-0.0140, -0.0024]**
+- block-10 **[-0.0138, -0.0028]**
+- bootstrap improvement share **99.8% / 99.9%**.
+
+2026 log loss:
+- difference **-0.03275**
+- block-5 95% interval **[-0.0588, -0.0113]**
+- block-10 **[-0.0630, -0.0105]**
+- bootstrap improvement share **99.94% / 100%**.
+
+DART vs SENTRY in 2026:
+- accuracy +0.52 pp, uncertainty interval crosses zero;
+- Brier **-0.00363**, with both 5- and 10-origin 95% intervals entirely below zero;
+- log loss **-0.00837**, likewise with both intervals entirely below zero.
+
+2025-2026 aggregate:
+- DART and SENTRY have identical accuracy **62.64%**;
+- DART has slightly better balanced accuracy **61.87% vs 61.73%** and Brier **0.23784 vs 0.23792**;
+- these small aggregate differences are not statistically decisive.
+
+### Binding interpretation
+
+1. **DART-H3 V1 is MECHANISM_PASS.**
+2. **DART-H3 V1 becomes the current adaptive H3 research champion.**
+3. DART preserves Structural IRIS exactly in the strong 2023-2024 regime.
+4. It detects a probabilistically strong PATH regime on 2025-10-14 using only already-matured expert disagreements.
+5. DART reaches **60.73% accuracy / 61.12% balanced accuracy in 2026**, the strongest governed adaptive H3 result so far.
+6. The 2026 accuracy uplift is suggestive rather than statistically conclusive under dependence-aware bootstrap.
+7. The 2026 **probability-quality** improvement is much stronger: both Brier and log-loss bootstrap intervals exclude zero under block lengths 5 and 10.
+8. The scientific contribution is not simply a higher hit rate; it is an **information-efficient Bayesian regime-transfer mechanism based only on expert disagreement evidence**.
+9. No DART hazard or posterior threshold may be retuned from 2025/2026 results.
+10. The next decisive test is prospective/live H3 origins with the DART rule frozen.
+
+Evidence:
+- `GOLD_H3_DART_V1_RESULT_2026-10-02.md`
+- `GOLD_H3_DART_V1_SUMMARY_2026-10-02.json`
+- `GOLD_H3_DART_V1_METRICS_2026-10-02.csv`
+- `GOLD_H3_DART_V1_SWITCHES_2026-10-02.csv`
+- `GOLD_H3_DART_V1_STATE_2026-10-02.csv`
+- `GOLD_H3_DART_V1_2026_RESCUE_2026-10-02.csv`
+- `GOLD_H3_DART_V1_INFERENCE_RESULT_2026-10-02.md`
+- `GOLD_H3_DART_V1_INFERENCE_BOOTSTRAP_2026-10-02.csv`.
