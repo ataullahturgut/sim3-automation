@@ -76,8 +76,14 @@ def build_ledger():
     g = g.merge(v, on="forecast_issue_date", how="inner", validate="one_to_one")
     g = g.merge(o, on="forecast_issue_date", how="inner", validate="one_to_one")
 
-    if len(g) != len(a):
-        raise RuntimeError(f"HELIOS_MATCH_FAIL aurora={len(a)} merged={len(g)}")
+    eval_a = a[a.forecast_issue_date >= pd.Timestamp("2022-07-01")].copy()
+    missing = sorted(set(eval_a.forecast_issue_date) - set(g.forecast_issue_date))
+    if missing:
+        raise RuntimeError(
+            f"HELIOS_MATCH_FAIL eval_aurora={len(eval_a)} merged={len(g)} "
+            f"missing={len(missing)} first={missing[:10]}"
+        )
+    g = g[g.forecast_issue_date >= pd.Timestamp("2022-07-01")].copy()
 
     for c in ["rift_override", "turn_override", "vega_override", "opal_override"]:
         if g[c].dtype != bool:
