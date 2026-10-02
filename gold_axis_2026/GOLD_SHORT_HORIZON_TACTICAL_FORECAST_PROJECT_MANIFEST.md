@@ -2,15 +2,27 @@
 
 **Manifest version:** 1.0  
 **Date:** 2026-10-01  
-**Status:** CURRENT / BINDING / PROJECT INITIATED  
+**Status:** ARCHIVED / HISTORICAL EVIDENCE — WRONG TACTICAL TARGET FOR CURRENT GLOBAL-XAU MAINLINE  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Branch:** `gold-midas-headswap-v1-20260925`
 
-> Mission: forecast short-horizon Gold direction, return and return distribution over H1/H3/H5, then build a separate tactical allocation layer.
+> Historical mission of this archived branch: forecast short-horizon Gold direction, return and return distribution over H1/H3/H5 on the BIST Metal Price target. **Current daily/global-XAU authority is `GOLD_SHORT_HORIZON_GLOBAL_XAU_PROJECT_MANIFEST.md`. Do not resume new tactical work from this BIST manifest.**
 
 ---
 
 # 1. Executive State
+
+## 1.0 Authority correction
+
+This document preserves Stages 0-6C of the former BIST-target short-horizon program as historical evidence only.
+
+For all current daily H1/H3/H5 Global XAU work:
+- canonical manifest: `GOLD_SHORT_HORIZON_GLOBAL_XAU_PROJECT_MANIFEST.md`
+- daily data sources must inherit the established Gold Control / monthly-project source registry
+- do not rediscover unrelated providers when an existing project authority already exists
+- source identity and daily availability clock are separate questions
+- existing source families include Twelve Data XAU/USD / NY17 and XAU intraday caches, daily precious metals, NASDAQ100/SP500/DJIA, VIX/GVZ, H.15 rates, H.10/Broad-USD + FX, GPR/BOCPD, macro-event PIT data, and registered WTI/Brent authorities
+- the Global-XAU manifest contains the binding daily origin-safe clock rules and current transport evidence.
 
 ## 1.1 Goal
 
@@ -34,9 +46,9 @@ Then, only after forecast validation, determine which horizon offers the stronge
 - Stage 6 Tactical Allocation / Utility Contract: **COMPLETE / NO_TACTICAL_PASS**
 - Stage 6B Turnover / Tradable-Instrument Economic Feasibility Audit: **COMPLETE / BORDERLINE IMPLEMENTABILITY**
 - Stage 6C Cross-Instrument Mapping Audit: **COMPLETE / FAIL**
-- **Stage 6D Tactical Target Authority Redesign: NEXT**
+- **Stage 6D Tactical Target Authority Redesign: SUPERSEDED BY GLOBAL-XAU RESTORE**
 
-Current strongest horizon for the original BIST Metal Price target remains: **H3**.
+Historical strongest horizon for the original BIST Metal Price target remains: **H3**. This does not authorize use as the current Global XAU model.
 
 Important:
 the original target is no longer authorized as a universal proxy for a tradable global Gold instrument.
