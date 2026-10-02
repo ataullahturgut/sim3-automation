@@ -1,0 +1,50 @@
+name: Gold Nextday Direction Hourly Block V4B Confirm
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_nextday_direction_hourly_block_v4b_confirm.py'
+      - '.github/workflows/gold-nextday-direction-hourly-block-v4b-confirm.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OUT_DIR: gold_nextday_hourly_block_v4b_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Run V4B frozen confirmation
+        run: python gold_axis_2026/tools/gold_nextday_direction_hourly_block_v4b_confirm.py
+      - name: Commit evidence
+        run: |
+          cp "$OUT_DIR/HOURLY_BLOCK_V4B_RESULT.md" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4B_RESULT_2026-10-02.md
+          cp "$OUT_DIR/block_v4b_result.json" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4B_RESULT_2026-10-02.json
+          cp "$OUT_DIR/block_v4b_metrics.csv" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4B_METRICS_2026-10-02.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_BLOCK_V4B_*_2026-10-02.*
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record V4B block confirmation"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git push origin HEAD:gold-midas-headswap-v1-20260925
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-nextday-direction-hourly-block-v4b
+          path: gold_nextday_hourly_block_v4b_out/
+          if-no-files-found: warn
+          retention-days: 90
