@@ -707,3 +707,68 @@ Binding interpretation:
 Evidence:
 - `GOLD_SHORT_HORIZON_TARGET_RESEARCH_RESULT_2026-10-02.md`
 - `GOLD_SHORT_HORIZON_TARGET_RESEARCH_METRICS_2026-10-02.csv`.
+
+
+## ARAC-H3-v1 — custom adaptive regime/analog model (2026-10-02)
+
+Authority:
+- `GOLD_H3_ARAC_MODEL_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37014640189**
+
+Architecture:
+- GLOBAL_EN: expanding CORE3 Elastic-Net Logistic
+- RECENT504_BAL_LOGIT: recent 504-observation balanced Logistic
+- LOCAL_ANALOG: 75-nearest historical state probability with shrinkage
+- REGIME_PRIOR: sigma20 tertile × 21d Gold trend × Silver/Platinum breadth historical prior
+- expert weights adapt online from matured recent Brier performance
+- selective reliability score = expert agreement × final probability distance from 0.5.
+
+Development:
+- 2019-2021
+- frozen reliability threshold `0.033375`
+- development selected coverage ~30.04%.
+
+Confirmation:
+- 2022-2024, already-opened wider project history; not a pristine blind lockbox.
+
+Full-coverage confirmation:
+
+| Model | Accuracy | Balanced acc | False calls | Brier | Log loss | UP recall | DOWN recall |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Expanding prior | 52.32% | 50.00% | 47.68% | 0.2497 | 0.6925 | 100.00% | 0.00% |
+| CORE3 Logistic L2 | 54.97% | 54.49% | 45.03% | 0.2466 | 0.6865 | 64.81% | 44.17% |
+| CORE3 Elastic-Net | 54.97% | 54.45% | 45.03% | 0.2468 | 0.6867 | 65.57% | 43.33% |
+| **ARAC-H3-v1** | **55.63%** | **55.29%** | **44.37%** | **0.2465** | **0.6862** | 62.53% | **48.06%** |
+
+Frozen selective confirmation:
+- calls: **243 / 755**
+- coverage: **32.19%**
+- accuracy: **61.73%**
+- balanced accuracy: **59.73%**
+- false-call rate: **38.27%**
+- UP recall: **76.47%**
+- DOWN recall: **42.99%**.
+
+Selective annual:
+- 2022: coverage 25.20%, accuracy 58.73%, balanced 54.63%
+- 2023: coverage 31.47%, accuracy 68.35%, balanced 68.33%
+- 2024: coverage 39.76%, accuracy 58.42%, balanced 54.19%.
+
+Full-coverage annual ARAC:
+- 2022 accuracy 52.40%, balanced 52.51%
+- 2023 accuracy 58.57%, balanced 58.51%
+- 2024 accuracy 55.91%, balanced 55.19%.
+
+Interpretation:
+- ARAC is the first custom short-horizon architecture in this research sequence to improve simultaneously over the frozen CORE3 Logistic comparator on full-coverage accuracy, balanced accuracy, false-call rate, Brier/log loss, and DOWN recall across the 2022-2024 aggregate.
+- the selective layer produces a materially higher 61.73% directional accuracy at about 32% coverage, with positive results in each of 2022, 2023 and 2024.
+- this is promising research evidence, not a blind-proof result because 2022-2024 was already-opened project history.
+- 2025/2026 must not be used to redesign ARAC-v1; any transport run should use the frozen specification as-is.
+
+Evidence:
+- `GOLD_H3_ARAC_V1_RESULT_2026-10-02.md`
+- `GOLD_H3_ARAC_V1_METRICS_2026-10-02.csv`
+- `GOLD_H3_ARAC_V1_RELIABILITY_CANDIDATES_2026-10-02.csv`
+- `GOLD_H3_ARAC_V1_WEIGHTS_2026-10-02.csv`.
