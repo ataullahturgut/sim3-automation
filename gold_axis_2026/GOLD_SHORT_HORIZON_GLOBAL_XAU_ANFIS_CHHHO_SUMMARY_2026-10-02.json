@@ -1,0 +1,81 @@
+{
+  "annual": [
+    {
+      "accuracy": 0.504,
+      "actual_up_rate": 0.496,
+      "balanced_accuracy": 0.5043522785458269,
+      "brier": 0.2594039245866874,
+      "logit_brier": 0.24574782645855908,
+      "logloss": 0.7134194099032592,
+      "mean_prediction": 0.510130049999132,
+      "n": 250,
+      "prediction_std": 0.10557690222919554,
+      "relative_brier_improvement_vs_logit": -0.05556955813170191,
+      "year": 2022
+    },
+    {
+      "accuracy": 0.5059760956175299,
+      "actual_up_rate": 0.5179282868525896,
+      "balanced_accuracy": 0.5047679593134138,
+      "brier": 0.24950189530500613,
+      "logit_brier": 0.24943635741770884,
+      "logloss": 0.6923775595199692,
+      "mean_prediction": 0.5036975661308482,
+      "n": 251,
+      "prediction_std": 0.09204341212500183,
+      "relative_brier_improvement_vs_logit": -0.00026274392384404945,
+      "year": 2023
+    },
+    {
+      "accuracy": 0.49606299212598426,
+      "actual_up_rate": 0.5551181102362205,
+      "balanced_accuracy": 0.4863490868009791,
+      "brier": 0.258771837040498,
+      "logit_brier": 0.24474706540098856,
+      "logloss": 0.7129546649795973,
+      "mean_prediction": 0.5115422411671626,
+      "n": 254,
+      "prediction_std": 0.09249064610306239,
+      "relative_brier_improvement_vs_logit": -0.057303124826161,
+      "year": 2024
+    }
+  ],
+  "architecture": {
+    "consequent": "first_order_Sugeno_TSK_LSE",
+    "generations": 8,
+    "hybrid": "chaotic_initialization_plus_HHO_premise_optimization_plus_Jang_local_refinement",
+    "inputs": 14,
+    "local_max_epochs": 60,
+    "membership": "Gaussian",
+    "population": 8,
+    "rules": 5
+  },
+  "dev_metrics": {
+    "accuracy": 0.5019867549668874,
+    "actual_up_rate": 0.5231788079470199,
+    "balanced_accuracy": 0.4994374120956399,
+    "brier": 0.2558993423529998,
+    "logloss": 0.706267688503503,
+    "mean_prediction": 0.5084666633842189,
+    "n": 755,
+    "prediction_std": 0.09693816649989405
+  },
+  "frozen_logit_metrics": {
+    "accuracy": 0.5496688741721855,
+    "actual_up_rate": 0.5231788079470199,
+    "balanced_accuracy": 0.544760900140647,
+    "brier": 0.24663739991832553,
+    "logloss": 0.6864471943995293,
+    "mean_prediction": 0.5120005829455236,
+    "n": 755,
+    "prediction_std": 0.04478186833469018
+  },
+  "gate": {
+    "nonnegative_years": 0,
+    "pass": false,
+    "worst_year_relative": -0.057303124826161
+  },
+  "model_id": "GLOBAL_XAU_DAILY_H3_CHHHO_ANFIS_V1",
+  "relative_brier_improvement_vs_logit": -0.03755287088552427,
+  "status": "NOT_PROMOTED"
+}
