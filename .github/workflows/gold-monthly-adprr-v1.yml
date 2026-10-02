@@ -4,7 +4,7 @@ on:
   push:
     branches: [gold-midas-headswap-v1-20260925]
     paths:
-      - 'gold_axis_2026/tools/gold_monthly_adprr_v1.py'
+      - 'gold_axis_2026/tools/gold_monthly_adprr_v1_corrected.py'
       - '.github/workflows/gold-monthly-adprr-v1.yml'
   workflow_dispatch:
 
@@ -27,7 +27,7 @@ jobs:
           python-version: '3.11'
       - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
       - name: Run ADPRR v1
-        run: python gold_axis_2026/tools/gold_monthly_adprr_v1.py
+        run: python gold_axis_2026/tools/gold_monthly_adprr_v1_corrected.py
       - name: Commit evidence
         run: |
           mv GOLD_MONTHLY_ADPRR_V1_RESULT_2026-10-02.md gold_axis_2026/
