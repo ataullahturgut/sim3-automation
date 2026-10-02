@@ -1,0 +1,138 @@
+{
+  "status": "PASS",
+  "decisions": [
+    {
+      "horizon": 1,
+      "head": "direction",
+      "status": "NO_PASS",
+      "feature_block": "CORE3_SAFE_EXTERNAL",
+      "model": "LGBM_CLASS",
+      "primary": 0.2487343431675871,
+      "baseline": 0.249739655869177,
+      "rel_improve": 0.004025442807995723,
+      "support_metric": 0.6905237987535262,
+      "support_baseline": 0.692626456814868
+    },
+    {
+      "horizon": 1,
+      "head": "return",
+      "status": "NO_PASS",
+      "feature_block": "GOLD_ONLY",
+      "model": "XGB_REG",
+      "primary": 0.0065912595916778,
+      "baseline": 0.0065987875950807,
+      "rel_improve": 0.001140816141515462,
+      "support_metric": 0.0088624223468819,
+      "support_baseline": 0.0088851221449227
+    },
+    {
+      "horizon": 1,
+      "head": "quantile",
+      "status": "NO_PASS",
+      "feature_block": "GOLD_ONLY",
+      "model": "LGBM_QUANT",
+      "primary": 0.0021783524343499,
+      "baseline": 0.0021816666588427,
+      "rel_improve": 0.0015191250594434173,
+      "support_metric": NaN,
+      "support_baseline": NaN
+    },
+    {
+      "horizon": 3,
+      "head": "direction",
+      "status": "PASS",
+      "feature_block": "CORE3",
+      "model": "LOGIT_L2",
+      "primary": 0.2466373999183267,
+      "baseline": 0.2497071260448196,
+      "rel_improve": 0.01229330606264682,
+      "support_metric": 0.6864471943995316,
+      "support_baseline": 0.6925615892120066
+    },
+    {
+      "horizon": 3,
+      "head": "return",
+      "status": "NO_PASS",
+      "feature_block": "GOLD_ONLY",
+      "model": "ELASTIC_NET",
+      "primary": 0.0118569956310476,
+      "baseline": 0.0118413400095757,
+      "rel_improve": -0.0013221156946122345,
+      "support_metric": 0.0150838507492754,
+      "support_baseline": 0.0150623121777947
+    },
+    {
+      "horizon": 3,
+      "head": "quantile",
+      "status": "NO_PASS",
+      "feature_block": "CORE3",
+      "model": "LGBM_QUANT",
+      "primary": 0.0037866808700522,
+      "baseline": 0.0037744560099616,
+      "rel_improve": -0.0032388402615731084,
+      "support_metric": NaN,
+      "support_baseline": NaN
+    },
+    {
+      "horizon": 5,
+      "head": "direction",
+      "status": "NO_PASS",
+      "feature_block": "CORE3",
+      "model": "LOGIT_L2",
+      "primary": 0.2478935495323453,
+      "baseline": 0.2494457895595041,
+      "rel_improve": 0.006222754971731178,
+      "support_metric": 0.6889704771525048,
+      "support_baseline": 0.6920404137259226
+    },
+    {
+      "horizon": 5,
+      "head": "return",
+      "status": "NO_PASS",
+      "feature_block": "GOLD_ONLY",
+      "model": "ELASTIC_NET",
+      "primary": 0.0154274265688727,
+      "baseline": 0.0154194615032111,
+      "rel_improve": -0.0005165592624581021,
+      "support_metric": 0.0197280373809503,
+      "support_baseline": 0.0197043848934066
+    },
+    {
+      "horizon": 5,
+      "head": "quantile",
+      "status": "NO_PASS",
+      "feature_block": "CORE3",
+      "model": "LGBM_QUANT",
+      "primary": 0.0049514453955472,
+      "baseline": 0.0049265596295148,
+      "rel_improve": -0.0050513477769171785,
+      "support_metric": NaN,
+      "support_baseline": NaN
+    }
+  ],
+  "horizons": [
+    {
+      "horizon": 1,
+      "pass_heads": 0,
+      "mean_rel_improve": 0.0022284613363182004
+    },
+    {
+      "horizon": 3,
+      "pass_heads": 1,
+      "mean_rel_improve": 0.002577450035487159
+    },
+    {
+      "horizon": 5,
+      "pass_heads": 0,
+      "mean_rel_improve": 0.00021828264411863246
+    }
+  ],
+  "hashes": {
+    "stage1_quantile_metrics_all.csv": "70064c4fbe34ea4f873c243c0bd1f48c8c41afec3056ea00b3eedb14ea8a5ee3",
+    "STAGE1_RESULT.md": "21caea9841fcbc14027550f95375ed1bd43f81006688b79843748e7507911521",
+    "stage1_decisions.csv": "ae9b0d3122af410a7d55b73c83ab3f6093d04a81c4b48f5469a1d767f854b67c",
+    "stage1_quantile_summary_all.csv": "cc5528a626fa5ece11a90dd60f1fcaf6e641fd8b4ac004f1bf0472a7a904fd59",
+    "stage1_metrics_all.csv": "5fa0dc110ab607e7140eb03d89d9607c460d78a2a555b60e76ed29435d8808d5",
+    "stage1_horizon_summary.csv": "e2e350c9265dd837956803c14563e7fac4d5dcc9167ac7a105242af99b6998d9"
+  }
+}
