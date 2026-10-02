@@ -9919,3 +9919,106 @@ Evidence:
 - `GOLD_CONTROL_PRIMARY_UP_V2_2026_LEDGER_2026-10-02.csv`
 - `GOLD_CONTROL_UP2_2026_LEDGER_2026-10-02.csv`
 - `GOLD_CONTROL_UP_CASCADE_2026_EMITTED_UP_LEDGER_2026-10-02.csv`.
+
+
+## 2026 frozen UP cascade replay — 2026-10-02
+
+Identity:
+- `GOLD_CONTROL_UP_CASCADE_2026_REPLAY_V1`
+
+Authority:
+- `GOLD_CONTROL_UP_CASCADE_2026_REPLAY_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37036756210**
+
+Evaluation period:
+- 2026 observed stress through **2026-08-31**
+- 173 retained target rows
+- 148 SQRT HIGH RISK alarms = 74 actual UP + 74 actual DOWN
+- no 2026 tuning; frozen Primary UP V2 and frozen UP-2 rules only.
+
+Integrity:
+- Primary Router 2024 reproduced exactly: 42 UP = 26 true + 16 false
+- Primary Router 2025 reproduced exactly: 37 UP = 27 true + 10 false
+- UP-2 pooled 2022-2024 reproduced exactly: n=26, 11 calls = 8 true + 3 false
+- UP-2 2025 reproduced exactly: n=74, 25 calls = 13 true + 12 false, tau 0.5312265857773989.
+
+### Primary UP Verifier V2 — standalone 2026
+
+- timeline n=173
+- UP calls=4
+- true UP=2
+- false UP=2
+- precision=50.00%
+- call-error rate=50.00%
+- false-UP FPR=2.27%
+- actual-UP recall=2.35%
+- coverage=2.31%
+- all 4 emitted calls selected RM_LOGIT.
+
+Interpretation:
+- the frozen Primary Router became extremely conservative in 2026;
+- its low FPR is produced largely by near-total abstention, not by strong UP capture;
+- the 2025 72.97% precision / 15.61% coverage pattern does not transport.
+
+### Primary UP inside SQRT HIGH RISK — 2026
+
+- 148 alarms
+- Primary emits 3 UP calls
+- 2 true + 1 false
+- precision=66.67%
+- coverage=2.03%
+- actual-UP recall within alarm route=2.70%.
+
+### One-Sided UP-2 on 2026 Primary residual
+
+Residual route:
+- n=145
+- actual UP=72
+- actual DOWN=73.
+
+UP-2:
+- calls=7
+- true UP=5
+- false UP=2
+- precision=71.43%
+- call-error rate=28.57%
+- recall=6.94%
+- false-UP FPR=2.74%
+- coverage=4.83%
+- AUC=0.5225
+- Brier=0.2668
+- frozen-algorithm 2026 tau=0.5547005.
+
+Interpretation:
+- selective call precision is descriptively high, but discrimination is weak (AUC near 0.50) and coverage/recall collapse;
+- this is not evidence of a broadly effective 2026 UP classifier.
+
+### Combined positive-UP cascade inside SQRT HIGH RISK — 2026
+
+- total positive-UP calls=10
+- true UP=7
+- false UP=3
+- precision=70.00%
+- call-error rate=30.00%
+- false-UP FPR=4.05%
+- actual-UP recall=9.46%
+- coverage=6.76%.
+
+Remaining hard residual:
+- 138 cases
+- 67 actual UP
+- 71 actual DOWN.
+
+Binding interpretation:
+- the frozen UP architecture preserves high specificity in 2026 only by becoming extremely selective;
+- 2026 does **not** support the earlier shorthand that the UP side is solved;
+- the architecture identifies a small subset of comparatively clean UP calls, but misses about 90% of actual UPs inside the high-risk route;
+- positive DOWN authority remains NOT_PROVEN; residual ABSTAIN remains UNCERTAIN.
+
+Evidence:
+- `GOLD_CONTROL_UP_CASCADE_2026_REPLAY_V1_RESULT_2026-10-02.md`
+- `GOLD_CONTROL_UP_CASCADE_2026_REPLAY_V1_RESULT_2026-10-02.json`
+- `GOLD_CONTROL_PRIMARY_UP_V2_2026_LEDGER.csv`
+- `GOLD_CONTROL_UP2_2026_LEDGER.csv`.
