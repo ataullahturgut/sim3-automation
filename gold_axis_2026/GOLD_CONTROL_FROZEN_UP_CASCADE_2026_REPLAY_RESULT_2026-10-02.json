@@ -1,0 +1,143 @@
+{
+  "identity": "GOLD_CONTROL_FROZEN_UP_CASCADE_2026_REPLAY",
+  "status": "2026_RETROSPECTIVE_STRESS_REPLAY_COMPLETE",
+  "data_last_day": "2026-08-31",
+  "primary_router": {
+    "2024_reproduction": {
+      "n": 205,
+      "actual_up": 119,
+      "actual_down": 86,
+      "up_calls": 42,
+      "true_up": 26,
+      "false_up": 16,
+      "precision": 0.6190476190476191,
+      "call_error_rate": 0.38095238095238093,
+      "false_up_fpr": 0.18604651162790697,
+      "actual_up_recall": 0.2184873949579832,
+      "coverage": 0.2048780487804878,
+      "selected_counts": {
+        "TTSM_S2": 4,
+        "RM_LOGIT": 37,
+        "AR1_RM_LOGIT": 1
+      }
+    },
+    "2025_reproduction": {
+      "n": 237,
+      "actual_up": 140,
+      "actual_down": 97,
+      "up_calls": 37,
+      "true_up": 27,
+      "false_up": 10,
+      "precision": 0.7297297297297297,
+      "call_error_rate": 0.2702702702702703,
+      "false_up_fpr": 0.10309278350515463,
+      "actual_up_recall": 0.19285714285714287,
+      "coverage": 0.15611814345991562,
+      "selected_counts": {
+        "RM_LOGIT": 37
+      }
+    },
+    "2026": {
+      "n": 173,
+      "actual_up": 85,
+      "actual_down": 88,
+      "up_calls": 4,
+      "true_up": 2,
+      "false_up": 2,
+      "precision": 0.5,
+      "call_error_rate": 0.5,
+      "false_up_fpr": 0.022727272727272728,
+      "actual_up_recall": 0.023529411764705882,
+      "coverage": 0.023121387283236993,
+      "selected_counts": {
+        "RM_LOGIT": 4
+      }
+    }
+  },
+  "sqrt_2026": {
+    "test_rows": 173,
+    "high_risk_alarms": 148,
+    "alarm_actual_up": 74,
+    "alarm_actual_down": 74
+  },
+  "primary_residual_2026": {
+    "n": 145,
+    "actual_up": 72,
+    "actual_down": 73
+  },
+  "up2_2026": {
+    "status": "OK",
+    "year": 2026,
+    "n": 145,
+    "actual_up": 72,
+    "actual_down": 73,
+    "up2_calls": 7,
+    "true_up": 5,
+    "false_up": 2,
+    "missed_up": 67,
+    "true_down_abstain": 71,
+    "up_precision": 0.7142857142857143,
+    "missed_up_recall": 0.06944444444444445,
+    "false_up_fpr": 0.0273972602739726,
+    "coverage": 0.04827586206896552,
+    "wilson90_lcb_up_precision": 0.47246281655659694,
+    "auc": 0.5224505327245054,
+    "brier": 0.2668354839052269,
+    "tau": 0.5547004994642151,
+    "train_n": 198,
+    "train_up": 94,
+    "train_down": 104,
+    "calibration": {
+      "status": "OK",
+      "calibration_n": 158,
+      "down_calibration_n": 82,
+      "q80_down_prequential": 0.5547004994642151,
+      "tau": 0.5547004994642151
+    },
+    "standardized_coefficients": {
+      "sqrt_score": 0.16295197664818534,
+      "lag1_close_return": 0.2783934606418397,
+      "downside_share": 0.1292738906350305,
+      "intraday_end_norm": -0.3533258738248591,
+      "close_location": -0.1339108989039002,
+      "trough_recovery_norm": 0.13863774384402944,
+      "last_quarter_return_norm": -0.029561031118614824,
+      "direct_up_fraction": 0.018226891835481998,
+      "legacy_up_fraction": 0.22066048583483122
+    },
+    "intercept": -0.1063178259929242,
+    "call_error_rate": 0.2857142857142857,
+    "residual_up_base_rate": 0.496551724137931
+  },
+  "combined_up_2026": {
+    "n": 173,
+    "up_calls": 11,
+    "true_up": 7,
+    "false_up": 4,
+    "precision": 0.6363636363636364,
+    "call_error_rate": 0.36363636363636365,
+    "coverage": 0.06358381502890173,
+    "actual_up_recall": 0.08235294117647059,
+    "false_up_fpr": 0.045454545454545456,
+    "primary_calls": 4,
+    "secondary_up2_calls": 7
+  },
+  "external_reconstruction": {
+    "passed": true,
+    "raw_n": 518,
+    "spine_n": 518,
+    "common_n": 518,
+    "missing_dates": [],
+    "extra_dates": [],
+    "bad_276_bar_dates": [],
+    "max_abs_close_diff": 4.547473508864641e-13,
+    "max_abs_rv_diff": 3.548051609458813e-17,
+    "max_abs_dr_diff": 3.247185506594086e-17
+  },
+  "governance": {
+    "2026_tuning": false,
+    "parameter_changes": false,
+    "feature_changes": false,
+    "runtime_promotion": false
+  }
+}
