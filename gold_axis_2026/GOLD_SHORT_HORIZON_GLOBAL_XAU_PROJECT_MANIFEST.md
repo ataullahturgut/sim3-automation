@@ -2096,3 +2096,75 @@ Evidence:
 - `GOLD_H3_PRISM_V1_RESULT_2026-10-02.md`
 - `GOLD_H3_PRISM_V1_SUMMARY_2026-10-02.json`
 - `GOLD_H3_PRISM_V1_SELECTION_GRID_2026-10-02.csv`.
+
+
+## 31. RIFT-H3 V1 — learned momentum-reversal head (2026-10-02)
+
+Authority:
+- `GOLD_H3_RIFT_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37064085750**
+- conclusion **SUCCESS**
+
+Core error anatomy motivating RIFT:
+- AURORA is exceptionally strong when the next H3 move continues the current 12h momentum, but weak when H3 reverses it.
+- 2023 continuation / reversal accuracy: **93.10% / 28.38%**
+- 2024: **92.21% / 32.56%**
+- 2025: **91.14% / 17.78%**
+- 2026: **94.50% / 15.85%**.
+
+RIFT:
+- predicts a separate target `REVERSAL = sign(H3) != sign(h_ret_12)`;
+- fixed origin-time imbalance/deceleration/jump/path features;
+- balanced Logistic L2;
+- monthly expanding causal refit;
+- only overrides when AURORA follows 12h momentum and `p_reversal >= 0.70`.
+
+Results:
+- 2023: AURORA **71.23%** -> RIFT **70.32%**, 2 rescues / 4 broken
+- 2024: **70.83% -> 71.25%**, 4 rescues / 3 broken
+- 2025: **64.52% -> 64.92%**, 8 / 7
+- 2026: **60.73% -> 61.78%**, BA **61.12% -> 62.16%**, Brier **0.2477 -> 0.2434**, 3 / 1
+- 2025-2026: **62.87% -> 63.55%**, net rescue +3.
+
+Status:
+- **NOT_PROMOTED_CONFIRM_FAIL**
+- 2023-2024 aggregate net rescue = -1 and BA deteriorated.
+- 2026 improvement is interesting mechanism evidence but may not override the confirmation failure.
+- architecture itself was motivated after historical-error inspection, so all results are explicitly post-hoc retrospective mechanism validation.
+
+## 32. TURN-H3 V1 — literature-derived semivariance-tail reversal rule (2026-10-02)
+
+Authority:
+- `GOLD_H3_TURN_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37064599625**
+- conclusion **SUCCESS**
+
+Mechanism:
+- no fitted ML reversal head;
+- latest 120 active hourly returns;
+- positive and negative realized semivariance;
+- prior 250 valid anchors;
+- fixed 80th-percentile tails, inspired by published commodity momentum-reversal research;
+- AURORA flipped only when the opposite-direction semivariance enters its tail and same-direction semivariance does not;
+- both-tail state is recorded as risk but does not force a direction.
+
+Results:
+- 2023: **71.23% -> 72.60%**, 5 rescues / 2 broken
+- 2024: **70.83% -> 65.42%**, 5 / 18
+- 2025: **64.52% -> 62.90%**, 3 / 7
+- 2026: **60.73% -> 59.69%**, 2 / 4
+- 2023-2024 aggregate: **71.02% -> 68.85%**, net rescue -10.
+
+Status:
+- **NOT_PROMOTED_CONFIRM_FAIL**
+- simple realized-semivariance tail reversal does not transport across the gold H3 regimes.
+- Do not retune the 120h / 250-anchor / 80% tail parameters from these outcomes.
+- The evidence indicates that the structural blind spot is reversal, but realized-price asymmetry alone is insufficient to identify the reversal reliably.
+
+Binding implication:
+- pursue genuinely forward-looking information for the reversal state, especially gold-options implied volatility / skew or other pre-origin expectation measures;
+- frozen AURORA prospective ledger remains unchanged.
