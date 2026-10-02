@@ -28,7 +28,17 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'openpyxl>=3.1,<4' 'xlrd>=2,<3'
+      - name: Download frozen External Authority V2
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts/11028494060/zip" > ext.zip
+          unzip -q ext.zip -d ext
+          test -s ext/gold_monthly_external_authority_v2.json
+
       - name: Run ORBIT D1 screen
+        env:
+          ORBIT_EXTERNAL_V2: ext/gold_monthly_external_authority_v2.json
         run: python gold_axis_2026/tools/gold_h3_orbit_d1_v1.py
       - name: Commit ORBIT evidence
         shell: bash
