@@ -132,7 +132,7 @@ def fetch_socrata(dataset_id):
 
 def gold_rows(df):
     code_col = "cftc_contract_market_code"
-    date_col = "as_of_date_form_yyyy_mm_dd"
+    date_col = "report_date_as_yyyy_mm_dd" if "report_date_as_yyyy_mm_dd" in df.columns else "as_of_date_form_yyyy_mm_dd"
     if code_col not in df.columns or date_col not in df.columns:
         raise RuntimeError(f"CFTC_COLUMNS_MISSING code={code_col in df.columns} date={date_col in df.columns} cols={list(df.columns)[:20]}")
     code = df[code_col].astype(str).str.replace(r"\.0$","",regex=True).str.zfill(6)
