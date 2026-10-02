@@ -1,0 +1,62 @@
+name: Gold Short Horizon Global XAU Readiness R2
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_global_xau_readiness_r2.py'
+      - '.github/workflows/gold-short-horizon-global-xau-readiness-r2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  readiness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      OUT_DIR: global_xau_readiness_r2_out
+      CUTOFF: '2026-09-30'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' requests
+      - name: Resolve current public StakTrakr commit
+        id: refs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          STAK_REF="$(gh api repos/lbruton/StakTrakr/commits/main --jq .sha)"
+          echo "stak_ref=$STAK_REF" >> "$GITHUB_OUTPUT"
+      - name: Build R2 readiness panel
+        env:
+          STAK_REF: ${{ steps.refs.outputs.stak_ref }}
+        run: python gold_axis_2026/tools/gold_short_horizon_global_xau_readiness_r2.py
+      - name: Commit R2 readiness summary
+        shell: bash
+        run: |
+          cp "$OUT_DIR/R2_READINESS_RESULT.md" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_READINESS_RESULT_2026-10-02.md
+          cp "$OUT_DIR/global_xau_r2_readiness_summary.json" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_READINESS_SUMMARY_2026-10-02.json
+          cp "$OUT_DIR/global_xau_r2_coverage.csv" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_COVERAGE_2026-10-02.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_R2_*_2026-10-02.*
+          if git diff --cached --quiet; then
+            echo "No readiness change"
+          else
+            git commit -m "Record Global XAU R2 readiness"
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gold-short-horizon-global-xau-readiness-r2
+          path: global_xau_readiness_r2_out/
+          retention-days: 90
