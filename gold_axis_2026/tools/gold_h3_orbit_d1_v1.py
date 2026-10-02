@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import json
+import io
 import math
 import os
+import urllib.parse
 from pathlib import Path
 
 import numpy as np
@@ -210,9 +212,29 @@ def risk_features(vix, ndx, cutoff):
     return out
 
 
+def fetch_fred_window(series_id, start="2022-02-01", end="2026-09-29"):
+    url = (
+        f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={urllib.parse.quote(series_id)}"
+        f"&cosd={start}&coed={end}"
+    )
+    raw = ext2.get(url, 60)
+    df = pd.read_csv(io.BytesIO(raw))
+    if len(df.columns) < 2:
+        raise RuntimeError(f"FRED_BAD_COLUMNS {series_id} {list(df.columns)}")
+    df = df.iloc[:, :2].copy()
+    df.columns = ["date", "value"]
+    df["date"] = pd.to_datetime(df["date"], errors="coerce")
+    df["value"] = pd.to_numeric(df["value"], errors="coerce")
+    df = df.dropna().sort_values("date").drop_duplicates("date", keep="last")
+    if len(df) < 500:
+        raise RuntimeError(f"FRED_TOO_FEW {series_id} n={len(df)}")
+    vals = {r.date.strftime("%Y-%m-%d"): float(r.value) for r in df.itertuples(index=False)}
+    return vals, {"series_id": series_id, "url": url, "first": min(vals), "last": max(vals), "n": len(vals)}
+
+
 def fetch_external():
-    # Credential-free FRED historical reconstructions. These are screening-only
-    # and are always used with the conservative lags frozen in the authority.
+    # Compact credential-free FRED reconstruction, limited to the window needed
+    # for the H3 screen. Conservative origin lags remain unchanged.
     ids = {
         "BROAD_USD_INDEX": "DTWEXBGS",
         "EURUSD_QUOTE": "DEXUSEU",
@@ -225,10 +247,9 @@ def fetch_external():
         "VIX": "VIXCLS",
         "NDX": "NASDAQ100",
     }
-    raw = {}
-    meta = {}
+    raw, meta = {}, {}
     for key, sid in ids.items():
-        vals, m = ext2.fetch_fred_daily(sid)
+        vals, m = fetch_fred_window(sid)
         raw[key] = dict_series(vals)
         meta[key] = m
 
