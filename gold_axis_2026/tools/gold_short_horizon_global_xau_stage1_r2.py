@@ -250,7 +250,7 @@ def main():
     pred=pd.DataFrame(pred_rows)
     quant=pd.DataFrame(quant_rows)
     pred.to_csv(OUT/f"global_xau_r2_stage1_h{horizon}_predictions.csv",index=False)
-    quant.to_csv(OUT/f"global_xau_stage1_h{horizon}_quantile_predictions.csv",index=False)
+    quant.to_csv(OUT/f"global_xau_r2_stage1_h{horizon}_quantile_predictions.csv",index=False)
 
     metric_rows=[]
     for (head,fb,model),z in pred.groupby(["head","feature_block","model"]):
@@ -275,9 +275,9 @@ def main():
     qcov=qm.pivot_table(index=["horizon","feature_block","model"],columns="quantile",values="coverage").reset_index()
     qsum=qmean.merge(qcov,on=["horizon","feature_block","model"],how="left")
 
-    mm.to_csv(OUT/f"global_xau_stage1_h{horizon}_metrics.csv",index=False)
-    qm.to_csv(OUT/f"global_xau_stage1_h{horizon}_quantile_metrics.csv",index=False)
-    qsum.to_csv(OUT/f"global_xau_stage1_h{horizon}_quantile_summary.csv",index=False)
+    mm.to_csv(OUT/f"global_xau_r2_stage1_h{horizon}_metrics.csv",index=False)
+    qm.to_csv(OUT/f"global_xau_r2_stage1_h{horizon}_quantile_metrics.csv",index=False)
+    qsum.to_csv(OUT/f"global_xau_r2_stage1_h{horizon}_quantile_summary.csv",index=False)
 
     print(f"H{horizon}_COMPLETE metrics={len(mm)} qmetrics={len(qm)}",flush=True)
 
