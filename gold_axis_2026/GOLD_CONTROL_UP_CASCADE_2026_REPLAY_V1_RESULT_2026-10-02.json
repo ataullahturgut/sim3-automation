@@ -1,0 +1,181 @@
+{
+  "combined_positive_up_cascade_inside_sqrt_2026": {
+    "actual_down": 74,
+    "actual_up": 74,
+    "actual_up_recall": 0.0945945945945946,
+    "alarm_n": 148,
+    "call_error_rate": 0.3,
+    "coverage": 0.06756756756756757,
+    "false_up": 3,
+    "false_up_fpr": 0.04054054054054054,
+    "positive_up_calls": 10,
+    "remaining_actual_down": 71,
+    "remaining_actual_up": 67,
+    "remaining_hard_residual_n": 138,
+    "true_up": 7,
+    "up_precision": 0.7
+  },
+  "date": "2026-10-02",
+  "governance": {
+    "2026_used_for_tuning": false,
+    "frozen_rules_changed": false,
+    "production_writes": false,
+    "runtime_promotion": false
+  },
+  "identity": "GOLD_CONTROL_UP_CASCADE_2026_REPLAY_V1",
+  "integrity": {
+    "external_reconstruction": {
+      "bad_276_bar_dates": [],
+      "common_n": 518,
+      "extra_dates": [],
+      "max_abs_close_diff": 4.547473508864641e-13,
+      "max_abs_dr_diff": 3.247185506594086e-17,
+      "max_abs_rv_diff": 3.548051609458813e-17,
+      "missing_dates": [],
+      "passed": true,
+      "raw_n": 518,
+      "spine_n": 518
+    },
+    "external_route": {
+      "2020": {
+        "abstain_actual_down": 37,
+        "abstain_actual_up": 35,
+        "overlap_actual_down": 60,
+        "overlap_actual_up": 80,
+        "router_abstain": 72,
+        "router_up_overlap": 140,
+        "sqrt_alarms": 212
+      },
+      "2021": {
+        "abstain_actual_down": 15,
+        "abstain_actual_up": 11,
+        "overlap_actual_down": 1,
+        "overlap_actual_up": 1,
+        "router_abstain": 26,
+        "router_up_overlap": 2,
+        "sqrt_alarms": 28
+      }
+    },
+    "external_router": {
+      "2020": {
+        "fp": 74,
+        "n": 260,
+        "router_up": 185,
+        "tp": 111
+      },
+      "2021": {
+        "fp": 14,
+        "n": 258,
+        "router_up": 33,
+        "tp": 19
+      }
+    },
+    "external_sqrt": {
+      "2020": {
+        "alarms": 212,
+        "down": 97,
+        "up": 115
+      },
+      "2021": {
+        "alarms": 28,
+        "down": 16,
+        "up": 12
+      }
+    },
+    "passed": true,
+    "primary_2024_reproduced": true,
+    "primary_2025_reproduced": true,
+    "up2_2022_2024_reproduced": true,
+    "up2_2025_reproduced": true
+  },
+  "parent_2026": {
+    "alarm_actual_down": 74,
+    "alarm_actual_up": 74,
+    "n": 173,
+    "sqrt_high_risk_alarms": 148
+  },
+  "period": "2026 through 2026-08-31",
+  "primary_up_v2_inside_sqrt_2026": {
+    "abstain": 145,
+    "actual_down": 74,
+    "actual_up": 74,
+    "actual_up_recall": 0.02702702702702703,
+    "call_error_rate": 0.3333333333333333,
+    "coverage": 0.02027027027027027,
+    "false_up": 1,
+    "false_up_fpr": 0.013513513513513514,
+    "n": 148,
+    "output_bucket_counts": {
+      "NON_CONSENSUS_UP": 3
+    },
+    "selected_counts": {
+      "RM_LOGIT": 3
+    },
+    "true_up": 2,
+    "up_calls": 3,
+    "up_precision": 0.6666666666666666
+  },
+  "primary_up_v2_standalone_2026": {
+    "abstain": 169,
+    "actual_down": 88,
+    "actual_up": 85,
+    "actual_up_recall": 0.023529411764705882,
+    "call_error_rate": 0.5,
+    "coverage": 0.023121387283236993,
+    "false_up": 2,
+    "false_up_fpr": 0.022727272727272728,
+    "n": 173,
+    "output_bucket_counts": {
+      "NON_CONSENSUS_UP": 4
+    },
+    "selected_counts": {
+      "RM_LOGIT": 4
+    },
+    "true_up": 2,
+    "up_calls": 4,
+    "up_precision": 0.5
+  },
+  "up2_residual_2026": {
+    "actual_down": 73,
+    "actual_up": 72,
+    "auc": 0.5224505327245054,
+    "brier": 0.26683548390522843,
+    "calibration": {
+      "calibration_n": 158,
+      "down_calibration_n": 82,
+      "q80_down_prequential": 0.5547004994642143,
+      "status": "OK",
+      "tau": 0.5547004994642143
+    },
+    "call_error_rate": 0.2857142857142857,
+    "coverage": 0.04827586206896552,
+    "false_up": 2,
+    "false_up_fpr": 0.0273972602739726,
+    "intercept": -0.10631782599290188,
+    "missed_up": 67,
+    "missed_up_recall": 0.06944444444444445,
+    "n": 145,
+    "standardized_coefficients": {
+      "close_location": -0.13391089890387842,
+      "direct_up_fraction": 0.01822689183548922,
+      "downside_share": 0.12927389063505476,
+      "intraday_end_norm": -0.35332587382490216,
+      "lag1_close_return": 0.2783934606418706,
+      "last_quarter_return_norm": -0.029561031118625875,
+      "legacy_up_fraction": 0.22066048583484907,
+      "sqrt_score": 0.162951976648182,
+      "trough_recovery_norm": 0.1386377438440159
+    },
+    "status": "OK",
+    "tau": 0.5547004994642143,
+    "train_down": 104,
+    "train_n": 198,
+    "train_up": 94,
+    "true_down_abstain": 71,
+    "true_up": 5,
+    "up2_calls": 7,
+    "up_precision": 0.7142857142857143,
+    "wilson90_lcb_up_precision": 0.47246281655659694,
+    "year": 2026
+  }
+}
