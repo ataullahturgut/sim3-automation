@@ -1,0 +1,47 @@
+name: Gold Short Horizon Global XAU Source Clock Audit V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_global_xau_source_clock_audit_v1.py'
+      - '.github/workflows/gold-short-horizon-global-xau-source-clock-audit-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OUT_DIR: global_xau_source_clock_audit_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4'
+      - run: python gold_axis_2026/tools/gold_short_horizon_global_xau_source_clock_audit_v1.py
+      - name: Commit source-clock audit
+        run: |
+          cp "$OUT_DIR/SOURCE_CLOCK_AUDIT_RESULT.md" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_CLOCK_AUDIT_RESULT_2026-10-02.md
+          cp "$OUT_DIR/source_clock_audit.csv" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_CLOCK_AUDIT_2026-10-02.csv
+          cp "$OUT_DIR/source_clock_family_summary.csv" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_CLOCK_FAMILY_SUMMARY_2026-10-02.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_CLOCK_*_2026-10-02.* gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_SOURCE_CLOCK_AUDIT_RESULT_2026-10-02.md
+          if git diff --cached --quiet; then echo "No change"; else
+            git commit -m "Record Global XAU daily source clock audit"
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: global-xau-source-clock-audit-v1
+          path: global_xau_source_clock_audit_out/
+          retention-days: 90
