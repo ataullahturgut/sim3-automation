@@ -1,0 +1,52 @@
+name: Gold Nextday Direction Hourly V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_nextday_direction_hourly_v1.py'
+      - '.github/workflows/gold-nextday-direction-hourly-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OUT_DIR: gold_nextday_hourly_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Run hourly next-day direction model
+        run: python gold_axis_2026/tools/gold_nextday_direction_hourly_v1.py
+      - name: Commit evidence
+        run: |
+          cp "$OUT_DIR/NEXTDAY_HOURLY_RESULT.md" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_RESULT_2026-10-02.md
+          cp "$OUT_DIR/nextday_hourly_result.json" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_RESULT_2026-10-02.json
+          cp "$OUT_DIR/nextday_hourly_metrics.csv" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_METRICS_2026-10-02.csv
+          cp "$OUT_DIR/nextday_hourly_fitlog.csv" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_FITLOG_2026-10-02.csv
+          cp "$OUT_DIR/nextday_hourly_logit_coefficients.csv" gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_LOGIT_COEFFICIENTS_2026-10-02.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_NEXTDAY_DIRECTION_HOURLY_*_2026-10-02.*
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record hourly XAU next-day direction results"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git push origin HEAD:gold-midas-headswap-v1-20260925
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-nextday-direction-hourly-v1
+          path: gold_nextday_hourly_out/
+          if-no-files-found: warn
+          retention-days: 90
