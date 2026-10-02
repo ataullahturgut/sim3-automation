@@ -1,0 +1,63 @@
+{
+  "schema": "PRISM_H3_V1",
+  "status": "FAIL_CLOSED_NO_ELIGIBLE_LAMBDA",
+  "source_bridge": {
+    "common_level_rows": 480,
+    "common_return_rows": 479,
+    "pearson": 0.9999999999999999,
+    "sign_agreement": 1.0,
+    "return_diff_sd": 0.0,
+    "pass": true
+  },
+  "api_calls": 11,
+  "selection_grid": [
+    {
+      "lambda": 1.0,
+      "eligible": false,
+      "delta_accuracy": -0.06060606060606066,
+      "delta_balanced_accuracy": -0.07692307692307698,
+      "delta_brier": 0.03075188906692028,
+      "delta_logloss": 0.10617971161224227,
+      "changed_calls": 6,
+      "rescued": 2,
+      "broken": 4,
+      "net_rescue": -2,
+      "prism_accuracy": 0.5151515151515151,
+      "prism_balanced_accuracy": 0.5057692307692307,
+      "prism_brier": 0.28740357793683435,
+      "prism_logloss": 0.830765345701288
+    },
+    {
+      "lambda": 10.0,
+      "eligible": false,
+      "delta_accuracy": -0.030303030303030387,
+      "delta_balanced_accuracy": -0.038461538461538436,
+      "delta_brier": 0.01922353024972706,
+      "delta_logloss": 0.05214667347426227,
+      "changed_calls": 3,
+      "rescued": 1,
+      "broken": 2,
+      "net_rescue": -1,
+      "prism_accuracy": 0.5454545454545454,
+      "prism_balanced_accuracy": 0.5442307692307693,
+      "prism_brier": 0.27587521911964114,
+      "prism_logloss": 0.776732307563308
+    },
+    {
+      "lambda": 50.0,
+      "eligible": false,
+      "delta_accuracy": -0.030303030303030387,
+      "delta_balanced_accuracy": -0.038461538461538436,
+      "delta_brier": 0.00770830492492619,
+      "delta_logloss": 0.016526552435781383,
+      "changed_calls": 1,
+      "rescued": 0,
+      "broken": 1,
+      "net_rescue": -1,
+      "prism_accuracy": 0.5454545454545454,
+      "prism_balanced_accuracy": 0.5442307692307693,
+      "prism_brier": 0.26435999379484026,
+      "prism_logloss": 0.7411121865248271
+    }
+  ]
+}
