@@ -772,3 +772,53 @@ Evidence:
 - `GOLD_H3_ARAC_V1_METRICS_2026-10-02.csv`
 - `GOLD_H3_ARAC_V1_RELIABILITY_CANDIDATES_2026-10-02.csv`
 - `GOLD_H3_ARAC_V1_WEIGHTS_2026-10-02.csv`.
+
+
+## ARAC-H3-v1 — frozen 2025/2026 transport (2026-10-02)
+
+Authority:
+- `GOLD_H3_ARAC_V1_TRANSPORT_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37015469425**
+
+Frozen transport:
+- architecture unchanged
+- reliability threshold unchanged at `0.03337519281868787`
+- online adaptation allowed only from already-matured prior H3 outcomes
+- last evaluated forecast issue: **2026-09-25**.
+
+Full coverage:
+
+| Period | Model | Accuracy | Balanced acc | False calls | Brier | DOWN recall |
+|---|---|---:|---:|---:|---:|---:|
+| 2025 | CORE3 Logistic EN | 52.96% | 51.92% | 47.04% | 0.2495 | 47.42% |
+| 2025 | ARAC | 50.99% | 50.12% | 49.01% | 0.2505 | 46.39% |
+| 2026 | CORE3 Logistic EN | 42.93% | 44.07% | 57.07% | 0.2653 | 20.00% |
+| 2026 | ARAC | 45.55% | 47.16% | 54.45% | 0.2544 | 13.00% |
+| 2025-2026 | CORE3 Logistic EN | 48.65% | 47.12% | 51.35% | 0.2563 | 33.50% |
+| 2025-2026 | ARAC | 48.65% | 46.70% | 51.35% | 0.2521 | 29.44% |
+
+Frozen selective ARAC:
+- 2025: 74 calls, 29.25% coverage, 54.05% accuracy, 52.08% balanced
+- 2026: 64 calls, 33.51% coverage, 43.75% accuracy, 50.00% balanced, **0% DOWN recall**
+- combined 2025-2026: 138 calls, 31.08% coverage, 49.28% accuracy, 48.82% balanced.
+
+2026 monthly deterioration is severe:
+- May full accuracy 38.10%
+- June 27.27%
+- July 39.13%
+- September 31.58%
+- September selective calls: 6/6 wrong.
+
+Binding interpretation:
+- the promising 2022-2024 ARAC confirmation does **not transport** into 2025-2026;
+- ARAC-v1 must not be promoted as a robust forecasting solution;
+- 2026 reveals strong UP-side collapse / inability to capture DOWN states;
+- any repair must be a separately specified `ARAC-H3-v2`, not a retrospective change to v1.
+
+Evidence:
+- `GOLD_H3_ARAC_V1_TRANSPORT_RESULT_2026-10-02.md`
+- `GOLD_H3_ARAC_V1_TRANSPORT_METRICS_2026-10-02.csv`
+- `GOLD_H3_ARAC_V1_TRANSPORT_2026_MONTHLY_2026-10-02.csv`
+- `GOLD_H3_ARAC_V1_TRANSPORT_WEIGHTS_2026-10-02.csv`.
