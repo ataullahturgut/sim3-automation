@@ -117,7 +117,11 @@ def fetch_silver():
     calls = 0
     while cur < final:
         nxt = min(cur + pd.DateOffset(months=5), final)
-        vals = api_request_symbol(SILVER_SYMBOL, cur, nxt)
+        print(f"ORBIT_XAG_CHUNK start={cur} end={nxt}", flush=True)
+        try:
+            vals = api_request_symbol(SILVER_SYMBOL, cur, nxt)
+        except Exception as e:
+            raise RuntimeError(f"ORBIT_XAG_CHUNK_FAIL start={cur} end={nxt} err={e}") from e
         calls += 1
         for row in vals:
             dt = row.get("datetime")
