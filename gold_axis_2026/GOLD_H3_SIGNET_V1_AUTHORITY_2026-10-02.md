@@ -45,11 +45,9 @@ Depth-2 lead-lag signature captures path-dependent quadratic variation / roughne
 
 For any 2D piecewise linear path, retain:
 - level 1: 2 terms
-- level 2: 4 terms
+- level 2: 4 terms.
 
-Thus:
-- 8 signature terms per transform pair;
-- 12 effective terms per window after including the four explicit antisymmetric/symmetric derived second-level contrasts.
+Each transform therefore contributes 6 terms; TIME-RETURN + LEAD-LAG gives **12 signature terms per window**.
 
 Representations:
 1. `SIG24`
