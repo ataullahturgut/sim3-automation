@@ -1,0 +1,2004 @@
+{
+  "series": {
+    "gold": {
+      "first": "2010-01-04",
+      "first_retrieved": "2026-09-05 21:25:57.695659+00:00",
+      "last": "2026-07-31",
+      "last_retrieved": "2026-09-05 21:25:57.695659+00:00",
+      "metadata_samples": [
+        {
+          "date": "2010-01-04",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Gold",
+            "original_timestamp": "2010-01-04 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Gold",
+          "value": 1113.0
+        },
+        {
+          "date": "2011-07-13",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Gold",
+            "original_timestamp": "2011-07-13 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Gold",
+          "value": 1571.5
+        },
+        {
+          "date": "2013-01-18",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Gold",
+            "original_timestamp": "2013-01-18 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Gold",
+          "value": 1690.0
+        },
+        {
+          "date": "2014-07-29",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Gold",
+            "original_timestamp": "2014-07-29 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Gold",
+          "value": 1307.5
+        },
+        {
+          "date": "2016-02-03",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Gold",
+            "original_timestamp": "2016-02-03 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Gold",
+          "value": 1130.0
+        },
+        {
+          "date": "2017-08-11",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Gold",
+            "original_timestamp": "2017-08-11 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Gold",
+          "value": 1288.3
+        },
+        {
+          "date": "2019-02-18",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Gold",
+            "original_timestamp": "2019-02-18 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Gold",
+          "value": 1323.95
+        },
+        {
+          "date": "2020-08-26",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Gold",
+            "original_timestamp": "2020-08-26 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Gold",
+          "value": 1918.5
+        },
+        {
+          "date": "2022-03-03",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Gold",
+            "original_timestamp": "2022-03-03 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Gold",
+          "value": 1935.4
+        },
+        {
+          "date": "2023-09-15",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Gold",
+            "original_timestamp": "2023-09-15 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Gold",
+          "value": 1918.7
+        },
+        {
+          "date": "2025-03-21",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Gold",
+            "original_timestamp": "2025-03-21 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Gold",
+          "value": 3031.3
+        },
+        {
+          "date": "2026-07-31",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Gold",
+            "original_timestamp": "2026-07-31 12:00:00",
+            "payload_provider_label": null,
+            "payload_source_label": "sqld",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Gold",
+          "value": 4102.17
+        }
+      ],
+      "n": 4230,
+      "public_2026_same_date_comparison": {
+        "exact_1e8_share": 0.7513227513227513,
+        "max_rel_diff": 0.018087672010214332,
+        "mean_rel_diff": 0.001068747566645424,
+        "median_rel_diff": 0.0,
+        "n": 189,
+        "top_mismatches": [
+          {
+            "abs_diff": 84.15000000000055,
+            "date": "2026-05-15",
+            "db": 4652.34,
+            "public": 4568.19,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-15 12:00:00",
+            "rel_diff": 0.018087672010214332
+          },
+          {
+            "abs_diff": 63.789999999999964,
+            "date": "2026-06-23",
+            "db": 4191.84,
+            "public": 4128.05,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-23 12:00:00",
+            "rel_diff": 0.015217660979426686
+          },
+          {
+            "abs_diff": 55.04999999999973,
+            "date": "2026-06-24",
+            "db": 4093.45,
+            "public": 4038.4,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-24 12:00:00",
+            "rel_diff": 0.01344831376955862
+          },
+          {
+            "abs_diff": 56.55000000000018,
+            "date": "2026-05-12",
+            "db": 4763.05,
+            "public": 4706.5,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-12 12:00:00",
+            "rel_diff": 0.011872644628966771
+          },
+          {
+            "abs_diff": 48.840000000000146,
+            "date": "2026-06-22",
+            "db": 4142.38,
+            "public": 4191.22,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-22 12:00:00",
+            "rel_diff": 0.011790323437251084
+          },
+          {
+            "abs_diff": 42.13999999999987,
+            "date": "2026-07-31",
+            "db": 4102.17,
+            "public": 4060.03,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-31 12:00:00",
+            "rel_diff": 0.010272611812772232
+          },
+          {
+            "abs_diff": 44.289999999999964,
+            "date": "2026-06-05",
+            "db": 4448.06,
+            "public": 4403.77,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-05 12:00:00",
+            "rel_diff": 0.009957149858590027
+          },
+          {
+            "abs_diff": 37.349999999999454,
+            "date": "2026-06-11",
+            "db": 4075.88,
+            "public": 4113.23,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-11 12:00:00",
+            "rel_diff": 0.009163665269831166
+          },
+          {
+            "abs_diff": 38.42000000000007,
+            "date": "2026-06-18",
+            "db": 4300.92,
+            "public": 4262.5,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-18 12:00:00",
+            "rel_diff": 0.008932972480306556
+          },
+          {
+            "abs_diff": 36.1899999999996,
+            "date": "2026-07-02",
+            "db": 4054.03,
+            "public": 4090.22,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-02 12:00:00",
+            "rel_diff": 0.00892691963305639
+          },
+          {
+            "abs_diff": 38.350000000000364,
+            "date": "2026-05-19",
+            "db": 4562.76,
+            "public": 4524.41,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-19 12:00:00",
+            "rel_diff": 0.008405000482164384
+          },
+          {
+            "abs_diff": 37.26000000000022,
+            "date": "2026-04-30",
+            "db": 4567.08,
+            "public": 4604.34,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-04-30 12:00:00",
+            "rel_diff": 0.008158385664363273
+          },
+          {
+            "abs_diff": 24.0,
+            "date": "2026-06-08",
+            "db": 4344.5,
+            "public": 4320.5,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-08 12:00:00",
+            "rel_diff": 0.00552422603291518
+          },
+          {
+            "abs_diff": 21.559999999999945,
+            "date": "2026-06-30",
+            "db": 3990.5,
+            "public": 4012.06,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-30 12:00:00",
+            "rel_diff": 0.005402831725347687
+          },
+          {
+            "abs_diff": 21.890000000000327,
+            "date": "2026-07-30",
+            "db": 4059.89,
+            "public": 4081.78,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-30 12:00:00",
+            "rel_diff": 0.005391771698248063
+          },
+          {
+            "abs_diff": 24.200000000000728,
+            "date": "2026-05-18",
+            "db": 4522.86,
+            "public": 4547.06,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-18 12:00:00",
+            "rel_diff": 0.005350596746306702
+          },
+          {
+            "abs_diff": 21.25,
+            "date": "2026-05-26",
+            "db": 4542.23,
+            "public": 4520.98,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-26 12:00:00",
+            "rel_diff": 0.004678318799356263
+          },
+          {
+            "abs_diff": 20.829999999999927,
+            "date": "2026-06-03",
+            "db": 4476.95,
+            "public": 4456.12,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-03 12:00:00",
+            "rel_diff": 0.004652721160611561
+          },
+          {
+            "abs_diff": 17.730000000000473,
+            "date": "2026-06-04",
+            "db": 4456.95,
+            "public": 4474.68,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-04 12:00:00",
+            "rel_diff": 0.00397805674283994
+          },
+          {
+            "abs_diff": 17.25,
+            "date": "2026-06-17",
+            "db": 4336.57,
+            "public": 4319.32,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-17 12:00:00",
+            "rel_diff": 0.0039777981215568985
+          }
+        ],
+        "within_10bp_share": 0.8412698412698413,
+        "within_50bp_share": 0.9153439153439153
+      },
+      "quality_counts": [
+        {
+          "n": 4230,
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT"
+        }
+      ],
+      "series_id": "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+      "source_symbol_counts": [
+        {
+          "n": 4230,
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Gold"
+        }
+      ]
+    },
+    "palladium": {
+      "first": "2010-01-04",
+      "first_retrieved": "2026-09-05 21:25:57.695659+00:00",
+      "last": "2026-07-31",
+      "last_retrieved": "2026-09-05 21:25:57.695659+00:00",
+      "metadata_samples": [
+        {
+          "date": "2010-01-04",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Palladium",
+            "original_timestamp": "2010-01-04 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Palladium",
+          "value": 420.0
+        },
+        {
+          "date": "2011-07-13",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Palladium",
+            "original_timestamp": "2011-07-13 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Palladium",
+          "value": 772.0
+        },
+        {
+          "date": "2013-01-18",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Palladium",
+            "original_timestamp": "2013-01-18 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Palladium",
+          "value": 725.0
+        },
+        {
+          "date": "2014-07-29",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Palladium",
+            "original_timestamp": "2014-07-29 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Palladium",
+          "value": 885.0
+        },
+        {
+          "date": "2016-02-03",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Palladium",
+            "original_timestamp": "2016-02-03 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Palladium",
+          "value": 498.0
+        },
+        {
+          "date": "2017-08-10",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Palladium",
+            "original_timestamp": "2017-08-10 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Palladium",
+          "value": 894.0
+        },
+        {
+          "date": "2019-02-18",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Palladium",
+            "original_timestamp": "2019-02-18 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Palladium",
+          "value": 1458.0
+        },
+        {
+          "date": "2020-08-25",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Palladium",
+            "original_timestamp": "2020-08-25 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Palladium",
+          "value": 2166.0
+        },
+        {
+          "date": "2022-03-03",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Palladium",
+            "original_timestamp": "2022-03-03 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Palladium",
+          "value": 2750.0
+        },
+        {
+          "date": "2023-09-15",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Palladium",
+            "original_timestamp": "2023-09-15 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Palladium",
+          "value": 1261.0
+        },
+        {
+          "date": "2025-03-21",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Palladium",
+            "original_timestamp": "2025-03-21 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Palladium",
+          "value": 947.0
+        },
+        {
+          "date": "2026-07-31",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Palladium",
+            "original_timestamp": "2026-07-31 12:00:00",
+            "payload_provider_label": null,
+            "payload_source_label": "sqld",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Palladium",
+          "value": 1318.68
+        }
+      ],
+      "n": 4229,
+      "public_2026_same_date_comparison": {
+        "exact_1e8_share": 0.746031746031746,
+        "max_rel_diff": 0.023135471673511862,
+        "mean_rel_diff": 0.0017959555117329257,
+        "median_rel_diff": 0.0,
+        "n": 189,
+        "top_mismatches": [
+          {
+            "abs_diff": 28.389999999999873,
+            "date": "2026-06-24",
+            "db": 1227.12,
+            "public": 1198.73,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-24 12:00:00",
+            "rel_diff": 0.023135471673511862
+          },
+          {
+            "abs_diff": 28.590000000000146,
+            "date": "2026-07-31",
+            "db": 1318.68,
+            "public": 1290.09,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-31 12:00:00",
+            "rel_diff": 0.02168077168077179
+          },
+          {
+            "abs_diff": 27.25,
+            "date": "2026-05-19",
+            "db": 1411.54,
+            "public": 1384.29,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-19 12:00:00",
+            "rel_diff": 0.01930515607067458
+          },
+          {
+            "abs_diff": 22.5,
+            "date": "2026-07-02",
+            "db": 1226.75,
+            "public": 1249.25,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-02 12:00:00",
+            "rel_diff": 0.018341145302628897
+          },
+          {
+            "abs_diff": 23.059999999999945,
+            "date": "2026-07-30",
+            "db": 1262.22,
+            "public": 1285.28,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-30 12:00:00",
+            "rel_diff": 0.01826939836161679
+          },
+          {
+            "abs_diff": 23.440000000000055,
+            "date": "2026-06-18",
+            "db": 1325.39,
+            "public": 1301.95,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-18 12:00:00",
+            "rel_diff": 0.017685360535389622
+          },
+          {
+            "abs_diff": 24.059999999999945,
+            "date": "2026-06-03",
+            "db": 1366.45,
+            "public": 1342.39,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-03 12:00:00",
+            "rel_diff": 0.017607669508580587
+          },
+          {
+            "abs_diff": 23.769999999999982,
+            "date": "2026-05-12",
+            "db": 1512.28,
+            "public": 1488.51,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-12 12:00:00",
+            "rel_diff": 0.01571798873224534
+          },
+          {
+            "abs_diff": 21.730000000000018,
+            "date": "2026-05-22",
+            "db": 1386.8,
+            "public": 1365.07,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-22 12:00:00",
+            "rel_diff": 0.015669166426305177
+          },
+          {
+            "abs_diff": 22.079999999999927,
+            "date": "2026-05-15",
+            "db": 1444.85,
+            "public": 1422.77,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-15 12:00:00",
+            "rel_diff": 0.015281863169187063
+          },
+          {
+            "abs_diff": 18.930000000000064,
+            "date": "2026-06-08",
+            "db": 1239.51,
+            "public": 1220.58,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-08 12:00:00",
+            "rel_diff": 0.01527216400029049
+          },
+          {
+            "abs_diff": 18.49000000000001,
+            "date": "2026-06-23",
+            "db": 1256.55,
+            "public": 1238.06,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-23 12:00:00",
+            "rel_diff": 0.014714893955672286
+          },
+          {
+            "abs_diff": 21.269999999999982,
+            "date": "2026-04-30",
+            "db": 1473.06,
+            "public": 1494.33,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-04-30 12:00:00",
+            "rel_diff": 0.014439330373508195
+          },
+          {
+            "abs_diff": 18.75,
+            "date": "2026-06-05",
+            "db": 1302.33,
+            "public": 1283.58,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-05 12:00:00",
+            "rel_diff": 0.014397272580682316
+          },
+          {
+            "abs_diff": 15.269999999999982,
+            "date": "2026-06-11",
+            "db": 1236.58,
+            "public": 1251.85,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-11 12:00:00",
+            "rel_diff": 0.01234857429361625
+          },
+          {
+            "abs_diff": 15.759999999999991,
+            "date": "2026-06-17",
+            "db": 1359.61,
+            "public": 1343.85,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-17 12:00:00",
+            "rel_diff": 0.011591559344223705
+          },
+          {
+            "abs_diff": 10.329999999999927,
+            "date": "2026-07-27",
+            "db": 1272.69,
+            "public": 1283.02,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-27 12:00:00",
+            "rel_diff": 0.008116666273797962
+          },
+          {
+            "abs_diff": 10.5,
+            "date": "2026-05-18",
+            "db": 1398.27,
+            "public": 1408.77,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-18 12:00:00",
+            "rel_diff": 0.007509279323735759
+          },
+          {
+            "abs_diff": 8.860000000000127,
+            "date": "2026-05-21",
+            "db": 1364.83,
+            "public": 1373.69,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-21 12:00:00",
+            "rel_diff": 0.006491650974846778
+          },
+          {
+            "abs_diff": 8.519999999999982,
+            "date": "2026-05-25",
+            "db": 1383.17,
+            "public": 1391.69,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-25 12:00:00",
+            "rel_diff": 0.006159763441948554
+          }
+        ],
+        "within_10bp_share": 0.8042328042328042,
+        "within_50bp_share": 0.8888888888888888
+      },
+      "quality_counts": [
+        {
+          "n": 4229,
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT"
+        }
+      ],
+      "series_id": "XPD_STAKTRAKR_RESEARCH_DAILY_R1",
+      "source_symbol_counts": [
+        {
+          "n": 4229,
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Palladium"
+        }
+      ]
+    },
+    "platinum": {
+      "first": "2010-01-04",
+      "first_retrieved": "2026-09-05 21:25:57.695659+00:00",
+      "last": "2026-07-31",
+      "last_retrieved": "2026-09-05 21:25:57.695659+00:00",
+      "metadata_samples": [
+        {
+          "date": "2010-01-04",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Platinum",
+            "original_timestamp": "2010-01-04 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Platinum",
+          "value": 1496.0
+        },
+        {
+          "date": "2011-07-13",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Platinum",
+            "original_timestamp": "2011-07-13 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Platinum",
+          "value": 1744.0
+        },
+        {
+          "date": "2013-01-18",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Platinum",
+            "original_timestamp": "2013-01-18 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Platinum",
+          "value": 1693.0
+        },
+        {
+          "date": "2014-07-29",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Platinum",
+            "original_timestamp": "2014-07-29 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Platinum",
+          "value": 1488.0
+        },
+        {
+          "date": "2016-02-03",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Platinum",
+            "original_timestamp": "2016-02-03 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Platinum",
+          "value": 862.0
+        },
+        {
+          "date": "2017-08-10",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Platinum",
+            "original_timestamp": "2017-08-10 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Platinum",
+          "value": 974.0
+        },
+        {
+          "date": "2019-02-18",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Platinum",
+            "original_timestamp": "2019-02-18 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Platinum",
+          "value": 806.0
+        },
+        {
+          "date": "2020-08-25",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Platinum",
+            "original_timestamp": "2020-08-25 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Platinum",
+          "value": 922.0
+        },
+        {
+          "date": "2022-03-03",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Platinum",
+            "original_timestamp": "2022-03-03 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Platinum",
+          "value": 1089.0
+        },
+        {
+          "date": "2023-09-15",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Platinum",
+            "original_timestamp": "2023-09-15 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Platinum",
+          "value": 917.0
+        },
+        {
+          "date": "2025-03-21",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Platinum",
+            "original_timestamp": "2025-03-21 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Platinum",
+          "value": 976.0
+        },
+        {
+          "date": "2026-07-31",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Platinum",
+            "original_timestamp": "2026-07-31 12:00:00",
+            "payload_provider_label": null,
+            "payload_source_label": "sqld",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Platinum",
+          "value": 1661.74
+        }
+      ],
+      "n": 4229,
+      "public_2026_same_date_comparison": {
+        "exact_1e8_share": 0.746031746031746,
+        "max_rel_diff": 0.03208724552580837,
+        "mean_rel_diff": 0.0018172278229536068,
+        "median_rel_diff": 0.0,
+        "n": 189,
+        "top_mismatches": [
+          {
+            "abs_diff": 66.23000000000002,
+            "date": "2026-05-15",
+            "db": 2064.06,
+            "public": 1997.83,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-15 12:00:00",
+            "rel_diff": 0.03208724552580837
+          },
+          {
+            "abs_diff": 46.75999999999999,
+            "date": "2026-04-30",
+            "db": 1901.51,
+            "public": 1948.27,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-04-30 12:00:00",
+            "rel_diff": 0.02459098295565103
+          },
+          {
+            "abs_diff": 35.840000000000146,
+            "date": "2026-06-24",
+            "db": 1644.9,
+            "public": 1609.06,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-24 12:00:00",
+            "rel_diff": 0.021788558574989448
+          },
+          {
+            "abs_diff": 34.309999999999945,
+            "date": "2026-06-05",
+            "db": 1877.83,
+            "public": 1843.52,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-05 12:00:00",
+            "rel_diff": 0.018271089502244584
+          },
+          {
+            "abs_diff": 31.230000000000018,
+            "date": "2026-06-18",
+            "db": 1755.73,
+            "public": 1724.5,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-18 12:00:00",
+            "rel_diff": 0.017787473016921747
+          },
+          {
+            "abs_diff": 29.04000000000019,
+            "date": "2026-06-08",
+            "db": 1789.39,
+            "public": 1760.35,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-08 12:00:00",
+            "rel_diff": 0.01622899423826007
+          },
+          {
+            "abs_diff": 27.0,
+            "date": "2026-06-23",
+            "db": 1672.38,
+            "public": 1645.38,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-23 12:00:00",
+            "rel_diff": 0.01614465611882467
+          },
+          {
+            "abs_diff": 33.590000000000146,
+            "date": "2026-05-12",
+            "db": 2135.84,
+            "public": 2102.25,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-12 12:00:00",
+            "rel_diff": 0.015726833470672028
+          },
+          {
+            "abs_diff": 24.039999999999964,
+            "date": "2026-07-30",
+            "db": 1605.73,
+            "public": 1629.77,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-30 12:00:00",
+            "rel_diff": 0.014971383732009718
+          },
+          {
+            "abs_diff": 26.50999999999999,
+            "date": "2026-06-17",
+            "db": 1807.73,
+            "public": 1781.22,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-17 12:00:00",
+            "rel_diff": 0.014664800606285226
+          },
+          {
+            "abs_diff": 26.839999999999918,
+            "date": "2026-06-03",
+            "db": 1929.32,
+            "public": 1902.48,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-03 12:00:00",
+            "rel_diff": 0.013911637260796509
+          },
+          {
+            "abs_diff": 25.24000000000001,
+            "date": "2026-05-22",
+            "db": 1965.46,
+            "public": 1940.22,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-22 12:00:00",
+            "rel_diff": 0.012841777497379752
+          },
+          {
+            "abs_diff": 24.669999999999845,
+            "date": "2026-05-19",
+            "db": 1976.87,
+            "public": 1952.2,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-19 12:00:00",
+            "rel_diff": 0.01247932337482983
+          },
+          {
+            "abs_diff": 20.87000000000012,
+            "date": "2026-06-04",
+            "db": 1866.33,
+            "public": 1887.2,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-04 12:00:00",
+            "rel_diff": 0.011182373963875692
+          },
+          {
+            "abs_diff": 17.079999999999927,
+            "date": "2026-07-31",
+            "db": 1661.74,
+            "public": 1644.66,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-31 12:00:00",
+            "rel_diff": 0.010278382899851918
+          },
+          {
+            "abs_diff": 16.529999999999973,
+            "date": "2026-06-11",
+            "db": 1666.02,
+            "public": 1682.55,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-11 12:00:00",
+            "rel_diff": 0.009921849677674921
+          },
+          {
+            "abs_diff": 15.399999999999864,
+            "date": "2026-07-02",
+            "db": 1600.66,
+            "public": 1616.06,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-02 12:00:00",
+            "rel_diff": 0.009621031324578526
+          },
+          {
+            "abs_diff": 18.08999999999969,
+            "date": "2026-05-13",
+            "db": 2119.8,
+            "public": 2137.89,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-13 12:00:00",
+            "rel_diff": 0.008533823945655104
+          },
+          {
+            "abs_diff": 15.220000000000027,
+            "date": "2026-04-29",
+            "db": 1924.2,
+            "public": 1908.98,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-04-29 12:00:00",
+            "rel_diff": 0.007909780688078176
+          },
+          {
+            "abs_diff": 13.029999999999973,
+            "date": "2026-06-22",
+            "db": 1662.39,
+            "public": 1675.42,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-22 12:00:00",
+            "rel_diff": 0.007838112596923689
+          }
+        ],
+        "within_10bp_share": 0.8201058201058201,
+        "within_50bp_share": 0.8835978835978836
+      },
+      "quality_counts": [
+        {
+          "n": 4229,
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT"
+        }
+      ],
+      "series_id": "XPT_STAKTRAKR_RESEARCH_DAILY_R1",
+      "source_symbol_counts": [
+        {
+          "n": 4229,
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Platinum"
+        }
+      ]
+    },
+    "silver": {
+      "first": "2010-01-04",
+      "first_retrieved": "2026-09-05 21:25:57.695659+00:00",
+      "last": "2026-07-31",
+      "last_retrieved": "2026-09-05 21:25:57.695659+00:00",
+      "metadata_samples": [
+        {
+          "date": "2010-01-04",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Silver",
+            "original_timestamp": "2010-01-04 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Silver",
+          "value": 17.17
+        },
+        {
+          "date": "2011-07-13",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Silver",
+            "original_timestamp": "2011-07-13 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Silver",
+          "value": 36.75
+        },
+        {
+          "date": "2013-01-18",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Silver",
+            "original_timestamp": "2013-01-18 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Silver",
+          "value": 31.82
+        },
+        {
+          "date": "2014-07-29",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Silver",
+            "original_timestamp": "2014-07-29 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Silver",
+          "value": 20.64
+        },
+        {
+          "date": "2016-02-03",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Silver",
+            "original_timestamp": "2016-02-03 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Silver",
+          "value": 14.41
+        },
+        {
+          "date": "2017-08-11",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Silver",
+            "original_timestamp": "2017-08-11 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Silver",
+          "value": 17.09
+        },
+        {
+          "date": "2019-02-18",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Silver",
+            "original_timestamp": "2019-02-18 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Silver",
+          "value": 15.765
+        },
+        {
+          "date": "2020-08-26",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Silver",
+            "original_timestamp": "2020-08-26 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Silver",
+          "value": 26.395
+        },
+        {
+          "date": "2022-03-03",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Silver",
+            "original_timestamp": "2022-03-03 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Silver",
+          "value": 25.31
+        },
+        {
+          "date": "2023-09-15",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Silver",
+            "original_timestamp": "2023-09-15 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Silver",
+          "value": 23.06
+        },
+        {
+          "date": "2025-03-21",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Silver",
+            "original_timestamp": "2025-03-21 12:00:00",
+            "payload_provider_label": "LBMA",
+            "payload_source_label": "seed",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Silver",
+          "value": 33.18
+        },
+        {
+          "date": "2026-07-31",
+          "metadata": {
+            "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+            "historical_pit_claim": false,
+            "metal": "Silver",
+            "original_timestamp": "2026-07-31 12:00:00",
+            "payload_provider_label": null,
+            "payload_source_label": "sqld",
+            "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+            "retrieval_time_not_backdated": true,
+            "unit_not_encoded_in_source_payload": true
+          },
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT",
+          "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Silver",
+          "value": 59.06
+        }
+      ],
+      "n": 4230,
+      "public_2026_same_date_comparison": {
+        "exact_1e8_share": 0.7777777777777778,
+        "max_rel_diff": 0.062417635078471236,
+        "mean_rel_diff": 0.002270131169751166,
+        "median_rel_diff": 0.0,
+        "n": 189,
+        "top_mismatches": [
+          {
+            "abs_diff": 5.209999999999994,
+            "date": "2026-05-15",
+            "db": 83.47,
+            "public": 78.26,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-15 12:00:00",
+            "rel_diff": 0.062417635078471236
+          },
+          {
+            "abs_diff": 2.490000000000002,
+            "date": "2026-06-23",
+            "db": 64.97,
+            "public": 62.48,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-23 12:00:00",
+            "rel_diff": 0.03832538094505159
+          },
+          {
+            "abs_diff": 1.8300000000000054,
+            "date": "2026-06-24",
+            "db": 61.52,
+            "public": 59.69,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-24 12:00:00",
+            "rel_diff": 0.02974642392717824
+          },
+          {
+            "abs_diff": 1.9000000000000057,
+            "date": "2026-06-05",
+            "db": 72.78,
+            "public": 70.88,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-05 12:00:00",
+            "rel_diff": 0.02610607309700475
+          },
+          {
+            "abs_diff": 1.8499999999999943,
+            "date": "2026-05-19",
+            "db": 77.3,
+            "public": 75.45,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-19 12:00:00",
+            "rel_diff": 0.02393272962483822
+          },
+          {
+            "abs_diff": 1.3999999999999915,
+            "date": "2026-06-22",
+            "db": 64.42,
+            "public": 65.82,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-22 12:00:00",
+            "rel_diff": 0.021732381248059474
+          },
+          {
+            "abs_diff": 1.220000000000006,
+            "date": "2026-06-11",
+            "db": 63.43,
+            "public": 64.65,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-11 12:00:00",
+            "rel_diff": 0.0192338010405172
+          },
+          {
+            "abs_diff": 1.259999999999991,
+            "date": "2026-06-18",
+            "db": 68.69,
+            "public": 67.43,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-18 12:00:00",
+            "rel_diff": 0.01834328140922974
+          },
+          {
+            "abs_diff": 1.0500000000000043,
+            "date": "2026-07-31",
+            "db": 59.06,
+            "public": 58.01,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-31 12:00:00",
+            "rel_diff": 0.017778530308161265
+          },
+          {
+            "abs_diff": 1.3000000000000114,
+            "date": "2026-05-18",
+            "db": 75.07,
+            "public": 76.37,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-18 12:00:00",
+            "rel_diff": 0.017317170640735468
+          },
+          {
+            "abs_diff": 0.9200000000000017,
+            "date": "2026-06-30",
+            "db": 57.75,
+            "public": 58.67,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-30 12:00:00",
+            "rel_diff": 0.015930735930735962
+          },
+          {
+            "abs_diff": 1.3200000000000074,
+            "date": "2026-05-12",
+            "db": 86.64,
+            "public": 85.32,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-12 12:00:00",
+            "rel_diff": 0.015235457063711997
+          },
+          {
+            "abs_diff": 0.9300000000000068,
+            "date": "2026-04-30",
+            "db": 72.21,
+            "public": 73.14,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-04-30 12:00:00",
+            "rel_diff": 0.012879102617366111
+          },
+          {
+            "abs_diff": 0.6700000000000017,
+            "date": "2026-07-27",
+            "db": 59.67,
+            "public": 59.0,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-27 12:00:00",
+            "rel_diff": 0.011228422993128904
+          },
+          {
+            "abs_diff": 0.7800000000000011,
+            "date": "2026-06-03",
+            "db": 74.77,
+            "public": 73.99,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-06-03 12:00:00",
+            "rel_diff": 0.010431991440417296
+          },
+          {
+            "abs_diff": 0.5900000000000034,
+            "date": "2026-07-02",
+            "db": 59.79,
+            "public": 60.38,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-02 12:00:00",
+            "rel_diff": 0.009867870881418354
+          },
+          {
+            "abs_diff": 0.5500000000000043,
+            "date": "2026-07-30",
+            "db": 57.66,
+            "public": 58.21,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-30 12:00:00",
+            "rel_diff": 0.009538674991328551
+          },
+          {
+            "abs_diff": 0.5600000000000023,
+            "date": "2026-04-29",
+            "db": 73.04,
+            "public": 72.48,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-04-29 12:00:00",
+            "rel_diff": 0.007667031763417336
+          },
+          {
+            "abs_diff": 0.519999999999996,
+            "date": "2026-05-22",
+            "db": 76.49,
+            "public": 75.97,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-05-22 12:00:00",
+            "rel_diff": 0.0067982742842201075
+          },
+          {
+            "abs_diff": 0.37999999999999545,
+            "date": "2026-07-23",
+            "db": 58.9,
+            "public": 58.52,
+            "public_provider": null,
+            "public_source": "sqld",
+            "public_timestamp": "2026-07-23 12:00:00",
+            "rel_diff": 0.006451612903225729
+          }
+        ],
+        "within_10bp_share": 0.8306878306878307,
+        "within_50bp_share": 0.8677248677248677
+      },
+      "quality_counts": [
+        {
+          "n": 4230,
+          "quality_status": "APPROVED_HISTORICAL_RESEARCH_RECONSTRUCTION_NOT_PIT"
+        }
+      ],
+      "series_id": "XAG_STAKTRAKR_RESEARCH_DAILY_R1",
+      "source_symbol_counts": [
+        {
+          "n": 4230,
+          "source": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+          "source_symbol": "Silver"
+        }
+      ]
+    }
+  },
+  "source_registry": {
+    "columns": [
+      "series_id",
+      "semantic_id",
+      "source_name",
+      "source_symbol",
+      "source_tier",
+      "frequency",
+      "unit",
+      "model_role",
+      "status",
+      "license_note",
+      "metadata",
+      "created_at",
+      "updated_at"
+    ],
+    "matching_rows": [
+      {
+        "created_at": "2026-09-05 21:33:06.403273+00:00",
+        "frequency": "daily",
+        "license_note": "Pinned open-source research payload; unit not encoded in source payload.",
+        "metadata": {
+          "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+          "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01"
+        },
+        "model_role": "RESEARCH_INPUT_ONLY",
+        "semantic_id": "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+        "series_id": "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+        "source_name": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+        "source_symbol": "Gold",
+        "source_tier": "RESEARCH_TIER_A",
+        "status": "APPROVED_RESEARCH_ONLY_NOT_PIT",
+        "unit": null,
+        "updated_at": "2026-09-05 21:33:06.403273+00:00"
+      },
+      {
+        "created_at": "2026-09-05 21:33:06.403273+00:00",
+        "frequency": "daily",
+        "license_note": "Pinned open-source research payload; unit not encoded in source payload.",
+        "metadata": {
+          "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+          "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01"
+        },
+        "model_role": "RESEARCH_INPUT_ONLY",
+        "semantic_id": "XAG_STAKTRAKR_RESEARCH_DAILY_R1",
+        "series_id": "XAG_STAKTRAKR_RESEARCH_DAILY_R1",
+        "source_name": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+        "source_symbol": "Silver",
+        "source_tier": "RESEARCH_TIER_A",
+        "status": "APPROVED_RESEARCH_ONLY_NOT_PIT",
+        "unit": null,
+        "updated_at": "2026-09-05 21:33:06.403273+00:00"
+      },
+      {
+        "created_at": "2026-09-05 21:33:06.403273+00:00",
+        "frequency": "daily",
+        "license_note": "Pinned open-source research payload; unit not encoded in source payload.",
+        "metadata": {
+          "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+          "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01"
+        },
+        "model_role": "RESEARCH_INPUT_ONLY",
+        "semantic_id": "XPT_STAKTRAKR_RESEARCH_DAILY_R1",
+        "series_id": "XPT_STAKTRAKR_RESEARCH_DAILY_R1",
+        "source_name": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+        "source_symbol": "Platinum",
+        "source_tier": "RESEARCH_TIER_A",
+        "status": "APPROVED_RESEARCH_ONLY_NOT_PIT",
+        "unit": null,
+        "updated_at": "2026-09-05 21:33:06.403273+00:00"
+      },
+      {
+        "created_at": "2026-09-05 21:33:06.403273+00:00",
+        "frequency": "daily",
+        "license_note": "Pinned open-source research payload; unit not encoded in source payload.",
+        "metadata": {
+          "evidence_class": "HISTORICAL_RECONSTRUCTION_NO_ORIGIN_PIT_CLAIM",
+          "pinned_commit": "ed2e549f82ba0d1cd3ca32842b82d3888d301e01"
+        },
+        "model_role": "RESEARCH_INPUT_ONLY",
+        "semantic_id": "XPD_STAKTRAKR_RESEARCH_DAILY_R1",
+        "series_id": "XPD_STAKTRAKR_RESEARCH_DAILY_R1",
+        "source_name": "lbruton/StakTrakr@ed2e549f82ba0d1cd3ca32842b82d3888d301e01",
+        "source_symbol": "Palladium",
+        "source_tier": "RESEARCH_TIER_A",
+        "status": "APPROVED_RESEARCH_ONLY_NOT_PIT",
+        "unit": null,
+        "updated_at": "2026-09-05 21:33:06.403273+00:00"
+      },
+      {
+        "created_at": "2026-09-07 10:16:07.940210+00:00",
+        "frequency": "daily",
+        "license_note": null,
+        "metadata": {},
+        "model_role": "historical model continuity only",
+        "semantic_id": "GOLD_DAILY_LEGACY",
+        "series_id": "GOLD_STAKTRAKR_LEGACY",
+        "source_name": "lbruton/StakTrakr archive",
+        "source_symbol": "Gold",
+        "source_tier": "D",
+        "status": "KEEP_PINNED_DO_NOT_EXTEND_AS_AUTHORITY",
+        "unit": "USD/oz",
+        "updated_at": "2026-10-02 08:33:52.768965+00:00"
+      },
+      {
+        "created_at": "2026-09-07 10:16:07.940210+00:00",
+        "frequency": "daily",
+        "license_note": null,
+        "metadata": {},
+        "model_role": "historical model continuity only",
+        "semantic_id": "SILVER_DAILY_LEGACY",
+        "series_id": "SILVER_STAKTRAKR_LEGACY",
+        "source_name": "lbruton/StakTrakr archive",
+        "source_symbol": "Silver",
+        "source_tier": "D",
+        "status": "KEEP_PINNED_DO_NOT_EXTEND_AS_AUTHORITY",
+        "unit": "USD/oz",
+        "updated_at": "2026-10-02 08:33:52.768965+00:00"
+      },
+      {
+        "created_at": "2026-09-07 10:16:07.940210+00:00",
+        "frequency": "daily",
+        "license_note": null,
+        "metadata": {},
+        "model_role": "historical model continuity only",
+        "semantic_id": "PLATINUM_DAILY_LEGACY",
+        "series_id": "PLATINUM_STAKTRAKR_LEGACY",
+        "source_name": "lbruton/StakTrakr archive",
+        "source_symbol": "Platinum",
+        "source_tier": "D",
+        "status": "KEEP_PINNED_DO_NOT_EXTEND_AS_AUTHORITY",
+        "unit": "USD/oz",
+        "updated_at": "2026-10-02 08:33:52.768965+00:00"
+      },
+      {
+        "created_at": "2026-09-07 10:16:07.940210+00:00",
+        "frequency": "daily",
+        "license_note": null,
+        "metadata": {},
+        "model_role": "historical model continuity only",
+        "semantic_id": "PALLADIUM_DAILY_LEGACY",
+        "series_id": "PALLADIUM_STAKTRAKR_LEGACY",
+        "source_name": "lbruton/StakTrakr archive",
+        "source_symbol": "Palladium",
+        "source_tier": "D",
+        "status": "KEEP_PINNED_DO_NOT_EXTEND_AS_AUTHORITY",
+        "unit": "USD/oz",
+        "updated_at": "2026-10-02 08:33:52.768965+00:00"
+      }
+    ]
+  },
+  "stak_ref": "54fdf1c8d39b7b6c7b874d0f30f784296e886044"
+}
