@@ -1058,7 +1058,7 @@ Binding conclusion:
 2. The existing CORE3/ARCR/NOVA-derived state variables do not contain a transportable pre-call error-risk signal.
 3. This is stronger evidence that the short-horizon failure is not fixable by another selector/gate layered over the same information set.
 4. Do not retune FERG thresholds using 2022-2026.
-5. The next scientifically justified H3 branch must add **genuinely new origin-safe information**, rather than another meta-selector over the same daily features.
+5. The next scientifically justified H3 branch must add **genuinely new origin-safe information**, rather than another meta-selector over the same daily features. This branch was subsequently executed as IRIS-H3 V1; see Section 20.
 6. The most relevant new-information candidate is an explicitly governed intraday/realized-state branch, because the existing daily panel has now failed both direct-prediction and error-risk gating tests. Its later historical start must be handled with a separate evaluation contract; it cannot be silently treated as equivalent to the 2019-2021 selection regime.
 
 Evidence:
@@ -1067,3 +1067,162 @@ Evidence:
 - `GOLD_H3_FERG_V1_SELECTION_GRID_2026-10-02.csv`
 - `GOLD_H3_FERG_V1_METRICS_2026-10-02.csv`
 - `GOLD_H3_FERG_V1_PREDICTIONS_2026-10-02.csv`.
+
+
+## 20. IRIS-H3 V1 — intraday realized-state information supplement (2026-10-02)
+
+Authority:
+- `GOLD_H3_IRIS_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- successful run **37041653501**
+- first implementation run **37041400069** failed before scoring on a pandas column/method naming collision; contract and model were unchanged, code was corrected and rerun.
+
+Identity:
+- `IRIS_H3_V1_RESEARCH`
+
+Motivation:
+- FERG showed that another selector over the same daily information set does not transport.
+- IRIS therefore adds genuinely new XAU/USD intraday information from the 1-hour source.
+
+### Source extension and clock
+
+Historical registered source:
+- `XAU_USD_TWELVE_1H_RESEARCH_V1`
+- stored coverage 2022-01-02 .. 2024-12-31.
+
+Same-provider successor extension was queried for overlap plus 2025-2026. No raw successor vendor values were committed.
+
+Bridge:
+- common hourly return rows **479**
+- Pearson **1.000000**
+- sign agreement **100.00%**
+- return-difference SD **0.00000000**
+- **PASS**.
+
+Combined hourly rows: **30,978**.
+
+Timing:
+- intraday features are anchored at **16:00 America/New_York on feature_cutoff_date**;
+- no bar from forecast_issue_date or later is used.
+
+### Evaluation contract
+
+Because 1h coverage starts in 2022, IRIS uses a separate later-history contract:
+- 2022: initial training history;
+- 2023: representation selection only;
+- 2024: frozen confirmation;
+- 2025/2026: frozen transport/stress.
+
+Matched H3 origins:
+- 2022: 229
+- 2023: 219
+- 2024: 240
+- 2025: 248
+- 2026 through Sep-25: 191.
+
+### Frozen 2023 selection
+
+Candidate families were fixed before scoring:
+- hourly-only compact state
+- A1 + PATH
+- A1 + VOL
+- A1 + SHAPE
+- A1 + ALL.
+
+2023 selected:
+- **A1_PLUS_PATH**
+
+PATH:
+- 1h / 3h / 6h / 12h / 24h / 48h returns
+- lag-2 hourly return
+- local-session return.
+
+2023 selection result:
+- BASE A1 accuracy **61.64%**, balanced **61.87%**, Brier **0.2419**
+- A1+PATH accuracy **71.23%**, balanced **71.83%**, Brier **0.2118**
+- improvement: **+9.59 pp accuracy**, **+9.96 pp balanced accuracy**, Brier **-0.0301**.
+
+### Frozen 2024 confirmation
+
+| Model | Accuracy | Balanced acc | Brier | UP recall | DOWN recall |
+|---|---:|---:|---:|---:|---:|
+| matched BASE A1 | 58.33% | 57.58% | 0.2432 | 63.24% | 51.92% |
+| **IRIS A1+PATH** | **70.83%** | **69.97%** | **0.2006** | **76.47%** | **63.46%** |
+
+2024 mechanism confirmation: **PASS**.
+
+### Frozen 2025/2026 transport
+
+| Period | Model | Accuracy | Balanced acc | Brier | UP recall | DOWN recall |
+|---|---|---:|---:|---:|---:|---:|
+| 2025 | BASE A1 | 49.19% | 51.64% | 0.2528 | 40.40% | 62.89% |
+| 2025 | **IRIS A1+PATH** | **63.71%** | **62.27%** | **0.2294** | **68.87%** | 55.67% |
+| 2026 | BASE A1 | 37.17% | 38.07% | 0.2703 | 57.14% | 19.00% |
+| 2026 | **IRIS A1+PATH** | **58.64%** | **59.12%** | **0.2556** | **69.23%** | **49.00%** |
+| 2025-2026 | BASE A1 | 43.96% | 43.65% | 0.2604 | 46.69% | 40.61% |
+| 2025-2026 | **IRIS A1+PATH** | **61.50%** | **60.65%** | **0.2408** | **69.01%** | **52.28%** |
+
+This is the first model in the current Global-XAU H3 sequence to show a large frozen 2024 confirmation gain **and** remain materially above the failed daily baseline in both 2025 and 2026.
+
+### Robustness / timing audit
+
+Authority:
+- `GOLD_H3_IRIS_V1_ROBUSTNESS_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37042232511**
+
+Independent recomputation reproduced parent results exactly:
+- maximum absolute accuracy difference **0.000000000000**.
+
+Timing / placebo:
+- A1+PATH at 15:00 NY remains strong:
+  - 2024 accuracy **69.17%**
+  - 2025 **64.92%**
+  - 2026 **53.40%**.
+- shifting the 16:00 path features back to the **previous available anchor** degrades sharply:
+  - 2024 **60.00%**
+  - 2025 **57.26%**
+  - 2026 **46.60%**.
+- this supports the interpretation that recent intraday path information, rather than a static historical correlate, carries the useful signal.
+
+Intraday-only diagnostic:
+- PATH_ONLY_16:
+  - 2024 accuracy **65.00%**
+  - 2025 **64.92%**
+  - 2026 **60.73%**
+  - 2025-2026 combined **63.10%** / balanced **62.09%**.
+- This is diagnostic only and does **not** replace the frozen A1+PATH V1, because PATH-only was not the 2023-selected representation.
+
+Single-factor diagnostic:
+- A1 + only 12h return remains strong:
+  - 2024 **70.00%**
+  - 2025 **65.73%**
+  - 2026 **56.54%**.
+- Therefore 12h return is a major contributor, but the frozen full PATH representation still retains additional information.
+
+Frozen parent monthly stability:
+- 2023: 12/12 months >50% accuracy; median monthly **73.9%**
+- 2024: 12/12; median **70.7%**
+- 2025: 12/12; median **64.2%**
+- 2026 Jan-Sep: 7/9; median **55.0%**.
+
+Binding interpretation:
+1. **IRIS-H3 V1 is the strongest current H3 mechanism candidate.**
+2. The gain survives a frozen 2024 confirmation and frozen 2025/2026 transport.
+3. The signal is concentrated in recent intraday price-path information; volatility-only information is much less robust in 2026.
+4. Timing placebo evidence argues against a trivial stale-trend explanation.
+5. The result is still retrospective research, not pristine prospective proof; overlapping H3 targets also mean raw row counts must not be treated as independent Bernoulli trials.
+6. Do not retune V1 on 2024-2026.
+7. Freeze A1+PATH as the current research champion and move to prospective/live-origin validation plus a separately governed numerical-return head if desired.
+
+Evidence:
+- `GOLD_H3_IRIS_V1_RESULT_2026-10-02.md`
+- `GOLD_H3_IRIS_V1_SUMMARY_2026-10-02.json`
+- `GOLD_H3_IRIS_V1_METRICS_2026-10-02.csv`
+- `GOLD_H3_IRIS_V1_SELECTION_GRID_2026-10-02.csv`
+- `GOLD_H3_IRIS_V1_SOURCE_BRIDGE_2026-10-02.json`
+- `GOLD_H3_IRIS_V1_ROBUSTNESS_RESULT_2026-10-02.md`
+- `GOLD_H3_IRIS_V1_ROBUSTNESS_METRICS_2026-10-02.csv`
+- `GOLD_H3_IRIS_V1_MONTHLY_STABILITY_2026-10-02.csv`.
