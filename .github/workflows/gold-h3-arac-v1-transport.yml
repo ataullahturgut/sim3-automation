@@ -1,0 +1,63 @@
+name: Gold H3 ARAC V1 Transport
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_arac_v1_transport.py'
+      - '.github/workflows/gold-h3-arac-v1-transport.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      OUT_DIR: gold_h3_arac_v1_transport_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' requests
+      - name: Resolve R2 readiness artifact
+        id: aid
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          AID="$(gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts?name=gold-short-horizon-global-xau-readiness-r2&per_page=10" --jq '.artifacts | sort_by(.created_at) | reverse | .[0].id')"
+          test -n "$AID"
+          echo "aid=$AID" >> "$GITHUB_OUTPUT"
+      - name: Run frozen ARAC transport
+        env:
+          READINESS_ARTIFACT: ${{ steps.aid.outputs.aid }}
+        run: python gold_axis_2026/tools/gold_h3_arac_v1_transport.py
+      - name: Commit evidence
+        run: |
+          cp "$OUT_DIR/ARAC_V1_TRANSPORT_RESULT.md" gold_axis_2026/GOLD_H3_ARAC_V1_TRANSPORT_RESULT_2026-10-02.md
+          cp "$OUT_DIR/arac_v1_transport_result.json" gold_axis_2026/GOLD_H3_ARAC_V1_TRANSPORT_RESULT_2026-10-02.json
+          cp "$OUT_DIR/arac_v1_transport_metrics.csv" gold_axis_2026/GOLD_H3_ARAC_V1_TRANSPORT_METRICS_2026-10-02.csv
+          cp "$OUT_DIR/arac_v1_transport_2026_monthly.csv" gold_axis_2026/GOLD_H3_ARAC_V1_TRANSPORT_2026_MONTHLY_2026-10-02.csv
+          cp "$OUT_DIR/arac_v1_transport_weights.csv" gold_axis_2026/GOLD_H3_ARAC_V1_TRANSPORT_WEIGHTS_2026-10-02.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_ARAC_V1_TRANSPORT_*_2026-10-02.*
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record frozen ARAC H3 v1 transport results"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git push origin HEAD:gold-midas-headswap-v1-20260925
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-arac-v1-transport
+          path: gold_h3_arac_v1_transport_out/
+          if-no-files-found: warn
+          retention-days: 90
