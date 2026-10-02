@@ -12,7 +12,6 @@ from scipy.special import expit
 
 from sklearn.metrics import balanced_accuracy_score, confusion_matrix, log_loss, recall_score
 
-import gold_monthly_direct_external_store_v1 as ext
 import gold_monthly_external_authority_v2 as ext2
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -212,20 +211,34 @@ def risk_features(vix, ndx, cutoff):
 
 
 def fetch_external():
-    h15, h15_meta = ext.fetch_h15()
-    h10, h10_meta = ext.fetch_fx()
-    vix, vix_meta = ext.fetch_vix()
-    ndx, ndx_meta = ext2.fetch_fred_daily("NASDAQ100")
+    # Credential-free FRED historical reconstructions. These are screening-only
+    # and are always used with the conservative lags frozen in the authority.
+    ids = {
+        "BROAD_USD_INDEX": "DTWEXBGS",
+        "EURUSD_QUOTE": "DEXUSEU",
+        "GBPUSD_QUOTE": "DEXUSUK",
+        "JPY_PER_USD": "DEXJPUS",
+        "CHF_PER_USD": "DEXSZUS",
+        "CNY_PER_USD": "DEXCHUS",
+        "DGS10": "DGS10",
+        "DFII10": "DFII10",
+        "VIX": "VIXCLS",
+        "NDX": "NASDAQ100",
+    }
+    raw = {}
+    meta = {}
+    for key, sid in ids.items():
+        vals, m = ext2.fetch_fred_daily(sid)
+        raw[key] = dict_series(vals)
+        meta[key] = m
 
     fx_keys = ["BROAD_USD_INDEX","EURUSD_QUOTE","GBPUSD_QUOTE","JPY_PER_USD","CHF_PER_USD","CNY_PER_USD"]
-    fx = {k: nested_series(h10,k) for k in fx_keys}
-    rates = {k: nested_series(h15,k) for k in ["DGS10","DFII10"]}
     return {
-        "fx":fx,
-        "rates":rates,
-        "vix":dict_series(vix),
-        "ndx":dict_series(ndx),
-        "meta":{"h15":h15_meta,"h10":h10_meta,"vix":vix_meta,"ndx":ndx_meta},
+        "fx": {k: raw[k] for k in fx_keys},
+        "rates": {"DGS10": raw["DGS10"], "DFII10": raw["DFII10"]},
+        "vix": raw["VIX"],
+        "ndx": raw["NDX"],
+        "meta": meta,
     }
 
 
