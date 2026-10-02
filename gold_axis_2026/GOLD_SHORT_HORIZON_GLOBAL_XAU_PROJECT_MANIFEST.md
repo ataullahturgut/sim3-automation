@@ -2654,3 +2654,161 @@ Evidence:
 - `GOLD_H3_HELIOS_V3_GT_INFERENCE_2026-10-03.csv`
 - `GOLD_H3_HELIOS_V3_GT_VINTAGE_CLUSTER_INFERENCE_2026-10-03.csv`.
 
+## 38. HELIOS-H3 V4-RGE — regret-gated expansion (2026-10-03)
+
+Authority:
+- `GOLD_H3_HELIOS_V4_RGE_AUTHORITY_2026-10-03.md`
+
+Successful workflow:
+- run **37076437687**
+- implementation commit **1a68d028ab6172ec956961129adbd39da8afb54b**
+- evidence commit **c1383c7a**
+- conclusion **BEST REGIME-PROTECTED RETROSPECTIVE STRENGTHENING FOUND SO FAR**
+
+Identity:
+- `HELIOS_H3_V4_RGE_RESEARCH`
+
+### Motivation
+
+V2 preserved earlier regimes but under-routed the broader 2026 OPAL opportunity.
+V3-GT recovered many 2026 rescues but gave back V2's 2024-2025 directional gains.
+
+V4-RGE therefore uses:
+1. HELIOS V2 as the protected base reversal router;
+2. the V3-GT game-theoretic market only as an expansion selector;
+3. a second causal regret gate that decides whether non-consensus OPAL is competent enough to be admitted at all.
+
+### Binding regret gate
+
+Expansion ledger:
+- only OPAL overrides that do **not** satisfy the frozen HELIOS consensus candidate;
+- outcomes enter only after H3 target maturity.
+
+Recent window:
+- latest **10 matured non-consensus OPAL events**.
+
+Utility vs KEEP:
+- rescue **+1**
+- broken **-1**.
+
+Recent regret:
+- `R = rescues - broken`.
+
+Hysteresis:
+- initial INACTIVE
+- enter ACTIVE at `R >= +2` (minimum 6/10 rescues)
+- exit ACTIVE at `R <= -2` (maximum 4/10 rescues)
+- otherwise retain state.
+
+Even when active, an expansion event must also pass the frozen V3-GT policy market:
+- weighted flip share **> 0.50**.
+
+V2 consensus routes are always preserved.
+
+### Observed expansion switch
+
+Only one switch occurred:
+
+- **2026-06-29 -> ACTIVE**
+- latest 10 matured non-consensus sequence: `1000110111`
+- **6 rescue / 4 broken**
+- regret **+2**.
+
+The expansion gate stayed inactive throughout 2023, 2024 and 2025.
+
+### Binding results
+
+| Period | AURORA | HELIOS V2 | V3-GT | V4-RGE | Raw OPAL | V4 net rescue | V4 Brier |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 2023 | 71.23% | 71.23% | 71.23% | **71.23%** | 67.12% | +0 | 0.2118 |
+| 2024 | 70.83% | **71.25%** | 70.83% | **71.25%** | 70.00% | +1 | 0.1988 |
+| 2025 | 64.52% | **66.13%** | 64.92% | **66.13%** | 64.92% | +4 | 0.2244 |
+| 2026 | 60.73% | 61.78% | **65.45%** | **64.40%** | 63.87% | **+7** | **0.2387** |
+| 2025-2026 | 62.87% | 64.24% | 65.15% | **65.38%** | 64.46% | **+11** | **0.2306** |
+
+Balanced accuracy:
+- 2026: **64.76%**
+- 2025-2026: **64.54%**.
+
+2025-2026 routing:
+- V2 base routes: **10**
+- expansion routes: **11**
+- total changed calls: **21**
+- **16 rescue / 5 broken**
+- net rescue **+11**.
+
+2026:
+- V2 base routes: **4**
+- expansion routes: **11**
+- total changed calls: **15**
+- **11 rescue / 4 broken**
+- net rescue **+7**.
+
+### Dependence-aware evidence
+
+V4-RGE vs AURORA, 2025-2026:
+- accuracy delta **+2.5057 pp**
+- block5 95% CI **[+0.6834,+4.5558] pp**, P(improve) **99.5%**
+- block10 95% CI **[+0.6834,+4.5558] pp**, P(improve) **99.7%**
+- Brier delta **-0.0057**, P(improve) **97.4% / 97.5%**
+- logloss delta **-0.0120**, P(improve) **96.7% / 96.8%**.
+
+V4-RGE vs HELIOS V2, 2025-2026:
+- accuracy delta **+1.1390 pp**
+- block5 P(improve) **95.0%**
+- block10 P(improve) **96.3%**
+- Brier delta **-0.0029**
+- logloss delta **-0.0064**.
+
+V4-RGE vs HELIOS V2, 2026:
+- accuracy delta **+2.6178 pp**
+- block5 P(improve) **95.2%**
+- block10 P(improve) **96.9%**.
+
+COT-vintage cluster bootstrap:
+- 2025-2026 net rescue **+11**
+  - 14 routed vintages
+  - 95% **[+4,+18]**
+  - P(net>0) **99.8%**
+- 2026 net rescue **+7**
+  - 8 routed vintages
+  - 95% **[+1,+13]**
+  - P(net>0) **98.7%**.
+
+### Regret-window robustness
+
+2025-2026:
+- W8 regret +/-2: Acc **65.15%**, BA **64.28%**, Brier **0.2308**, net **+10**
+- W10 binding: Acc **65.38%**, BA **64.54%**, Brier **0.2306**, net **+11**
+- W12: Acc **65.38%**, BA **64.54%**, Brier **0.2306**, net **+11**.
+
+W10 and W12 both produce the same single expansion switch on **2026-06-29**.
+W8 is more reactive and later toggles, but still remains materially positive.
+
+### Binding interpretation
+
+1. V4-RGE solves the main weakness exposed by V3-GT: it does not trade away V2's earlier-regime gains merely to capture 2026.
+2. 2023 remains fully protected.
+3. 2024 and 2025 are exactly identical to HELIOS V2 in direction and probability quality because expansion never opens.
+4. A separate non-consensus reversal regime is causally detected on **2026-06-29**.
+5. After that transition, broader OPAL routing is admitted only when the game-theoretic event market also supports the event.
+6. V4-RGE therefore gives the strongest historical compromise found so far between:
+   - cross-regime protection,
+   - 2026 reversal recall,
+   - net rescue,
+   - probability quality.
+7. V3-GT remains the higher-recall 2026 diagnostic challenger (**65.45%**) but is less regime-protected historically.
+8. V4-RGE is the preferred **regime-protected retrospective strengthening challenger**.
+9. This remains second-order post-hoc evidence. It cannot replace the frozen AURORA prospective champion without a separate future-origin freeze.
+
+Evidence:
+- `GOLD_H3_HELIOS_V4_RGE_RESULT_2026-10-03.md`
+- `GOLD_H3_HELIOS_V4_RGE_SUMMARY_2026-10-03.json`
+- `GOLD_H3_HELIOS_V4_RGE_METRICS_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V4_RGE_PREDICTIONS_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V4_RGE_SWITCHES_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V4_RGE_EVENT_LEDGER_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V4_RGE_INFERENCE_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V4_RGE_CLUSTER_INFERENCE_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V4_RGE_ROBUSTNESS_2026-10-03.csv`.
+
