@@ -1,0 +1,58 @@
+name: Gold Short Horizon Global XAU ANFIS ChHHO V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_short_horizon_global_xau_anfis_chhho_v1.py'
+      - '.github/workflows/gold-short-horizon-global-xau-anfis-chhho-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  hybrid:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      OUT_DIR: global_xau_anfis_chhho_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' requests
+      - name: Resolve R2 readiness artifact
+        id: aid
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          AID="$(gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts?name=gold-short-horizon-global-xau-readiness-r2&per_page=10" --jq '.artifacts | sort_by(.created_at) | reverse | .[0].id')"
+          test -n "$AID"
+          echo "aid=$AID" >> "$GITHUB_OUTPUT"
+      - name: Run ChHHO-ANFIS
+        env:
+          READINESS_ARTIFACT: ${{ steps.aid.outputs.aid }}
+        run: python gold_axis_2026/tools/gold_short_horizon_global_xau_anfis_chhho_v1.py
+      - name: Commit ChHHO-ANFIS evidence
+        run: |
+          cp "$OUT_DIR/ANFIS_CHHHO_RESULT.md" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_ANFIS_CHHHO_RESULT_2026-10-02.md
+          cp "$OUT_DIR/anfis_chhho_summary.json" gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_ANFIS_CHHHO_SUMMARY_2026-10-02.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_SHORT_HORIZON_GLOBAL_XAU_ANFIS_CHHHO_*_2026-10-02.*
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record daily H3 ChHHO-ANFIS result"
+          git pull --rebase origin gold-midas-headswap-v1-20260925
+          git push origin HEAD:gold-midas-headswap-v1-20260925
+      - uses: actions/upload-artifact@v4
+        with:
+          name: global-xau-anfis-chhho-v1
+          path: global_xau_anfis_chhho_out/
+          retention-days: 90
