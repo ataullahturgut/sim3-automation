@@ -23,7 +23,9 @@ Experts:
 A1:
 - expanding CORE3 Logistic L2;
 - recent 252 matured CORE3 Logistic L2, class_weight=balanced;
-- `p_A1 = 0.75*p_global + 0.25*p_recent252`.
+- `p_A1 = 0.75*p_global + 0.25*p_recent252`;
+- prospective coefficients refit at the first **issued** origin of each consecutive 5-issued-origin block and are reused for the next four issued origins;
+- a missed origin is not silently inserted into an A1 block later.
 
 IRIS PATH:
 - 1h / 3h / 6h / 12h / 24h / 48h XAU hourly log returns;
