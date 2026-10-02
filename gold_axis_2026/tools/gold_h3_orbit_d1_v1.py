@@ -263,10 +263,12 @@ def fetch_external():
     }
 
 
-def build_panel():
+def build_panel(active_blocks=None):
+    active_blocks = list(active_blocks or BLOCKS.keys())
     a = load_aurora()
     metals = load_metals()
-    e = fetch_external()
+    need_external = any(b != "METALS_D1" for b in active_blocks)
+    e = fetch_external() if need_external else {"meta": {"mode": "METALS_ONLY_LOCAL_FROZEN"}}
 
     rows = []
     for r in a.itertuples():
@@ -281,10 +283,14 @@ def build_panel():
             "target_r3":float(r.target_r3),
             "p_aurora":float(r.p_aurora),
         }
-        row.update(metals_features(metals,d))
-        row.update(latest_returns_for_fx(e["fx"], d-pd.Timedelta(days=7)))
-        row.update(rates_features(e["rates"], d-pd.Timedelta(days=2)))
-        row.update(risk_features(e["vix"], e["ndx"], d-pd.Timedelta(days=1)))
+        if "METALS_D1" in active_blocks:
+            row.update(metals_features(metals,d))
+        if "USD_D1" in active_blocks:
+            row.update(latest_returns_for_fx(e["fx"], d-pd.Timedelta(days=7)))
+        if "RATES_D1" in active_blocks:
+            row.update(rates_features(e["rates"], d-pd.Timedelta(days=2)))
+        if "RISK_D1" in active_blocks:
+            row.update(risk_features(e["vix"], e["ndx"], d-pd.Timedelta(days=1)))
         rows.append(row)
 
     panel = pd.DataFrame(rows).sort_values("forecast_issue_date").reset_index(drop=True)
@@ -395,12 +401,18 @@ def gates(mdf):
 
 
 def main():
-    panel,meta=build_panel()
+    requested = os.environ.get("ORBIT_BLOCKS","").strip()
+    active_blocks = [x.strip() for x in requested.split(",") if x.strip()] if requested else list(BLOCKS)
+    unknown = [x for x in active_blocks if x not in BLOCKS]
+    if unknown:
+        raise RuntimeError(f"UNKNOWN_ORBIT_BLOCKS {unknown}")
+
+    panel,meta=build_panel(active_blocks)
     panel.to_csv(OUT/"orbit_d1_panel.csv",index=False)
 
     all_metrics=[]
     results={}
-    for block in BLOCKS:
+    for block in active_blocks:
         led=walk_forward(panel,block)
         led.to_csv(OUT/f"orbit_d1_predictions_{block.lower()}.csv",index=False)
         mdf=score(led)
