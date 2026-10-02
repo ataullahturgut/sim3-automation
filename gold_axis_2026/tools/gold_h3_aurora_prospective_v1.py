@@ -725,10 +725,11 @@ def write_status(ts, ledger, misses, price_ledger, audit, changes):
         f"**Frozen September reproduction:** **{'PASS' if audit.get('pass') else 'FAIL'}**", "",
     ]
     if m.get("n", 0):
+        bal_text = "NA" if m["balanced_accuracy"] is None else f"{100*m['balanced_accuracy']:.2f}%"
         lines += [
             "## Prospective-only settled metrics", "",
             f"- accuracy: **{100*m['accuracy']:.2f}%**",
-            f"- balanced accuracy: **{('NA' if m['balanced_accuracy'] is None else f'{100*m['balanced_accuracy']:.2f}%')}**",
+            f"- balanced accuracy: **{bal_text}**",
             f"- Brier: **{m['brier']:.4f}**",
             f"- log loss: **{m['logloss']:.4f}**",
             f"- UP recall: **{100*m['up_recall']:.2f}%**",
