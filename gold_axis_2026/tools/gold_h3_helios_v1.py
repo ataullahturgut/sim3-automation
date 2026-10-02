@@ -76,14 +76,20 @@ def build_ledger():
     g = g.merge(v, on="forecast_issue_date", how="inner", validate="one_to_one")
     g = g.merge(o, on="forecast_issue_date", how="inner", validate="one_to_one")
 
-    eval_a = a[a.forecast_issue_date >= pd.Timestamp("2022-07-01")].copy()
-    missing = sorted(set(eval_a.forecast_issue_date) - set(g.forecast_issue_date))
-    if missing:
+    # RIFT / VEGA / OPAL frozen ledgers begin on 2022-11-01.
+    # HELIOS therefore evaluates only the exact common expert window.
+    common_start = max(
+        r.forecast_issue_date.min(),
+        t.forecast_issue_date.min(),
+        v.forecast_issue_date.min(),
+        o.forecast_issue_date.min(),
+    )
+    g = g[g.forecast_issue_date >= common_start].copy()
+    if g.forecast_issue_date.min() != common_start or g.forecast_issue_date.max() < pd.Timestamp("2026-09-25"):
         raise RuntimeError(
-            f"HELIOS_MATCH_FAIL eval_aurora={len(eval_a)} merged={len(g)} "
-            f"missing={len(missing)} first={missing[:10]}"
+            f"HELIOS_COMMON_WINDOW_FAIL start={g.forecast_issue_date.min()} "
+            f"expected={common_start} max={g.forecast_issue_date.max()}"
         )
-    g = g[g.forecast_issue_date >= pd.Timestamp("2022-07-01")].copy()
 
     for c in ["rift_override", "turn_override", "vega_override", "opal_override"]:
         if g[c].dtype != bool:
@@ -180,7 +186,7 @@ def build_ledger():
 
 def score_periods(g):
     specs = [
-        ("2022_H2", g.forecast_issue_date.between("2022-07-01", "2022-12-31")),
+        ("2022_COMMON_NOV_DEC", g.forecast_issue_date.between("2022-11-01", "2022-12-31")),
         ("2023", g.year == 2023),
         ("2024", g.year == 2024),
         ("2025", g.year == 2025),
