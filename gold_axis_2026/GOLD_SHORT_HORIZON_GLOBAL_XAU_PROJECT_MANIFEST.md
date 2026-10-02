@@ -1321,3 +1321,170 @@ Evidence:
 - `GOLD_H3_IRIS_RETURN_V1_PERIOD_METRICS_2026-10-02.csv`
 - `GOLD_H3_IRIS_RETURN_V1_2026_MONTHLY_2026-10-02.csv`
 - `GOLD_H3_IRIS_RETURN_V1_2026_LATEST15_2026-10-02.csv`.
+
+
+## 22. SAGE-H3 V1 — session-aware decomposition (2026-10-02)
+
+Authority:
+- `GOLD_H3_SAGE_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37045476304**
+
+Identity:
+- `SAGE_H3_V1_RESEARCH`
+
+Hypothesis:
+- decompose the 16:00 NY intraday path into Asia / Europe / US-AM / US-PM price-discovery blocks.
+
+Selection:
+- Jul-Dec 2022 only.
+
+Result:
+- **FAIL_CLOSED_NO_ELIGIBLE_2022H2_SESSION_MODEL**.
+
+The least-bad candidate `A1_PATH_SESSION` improved 2022-H2 accuracy by +0.90 pp and balanced accuracy by +0.96 pp, but Brier worsened materially (+0.0176), so it failed the preregistered gate.
+
+Later session models can look attractive in 2025/2026, but they are not promotable because the pre-2023 authority did not support them.
+
+Binding conclusion:
+- session decomposition is diagnostically interesting and consistent with external gold-session research,
+- but SAGE V1 is **NOT_PROMOTED**,
+- do not use 2025/2026 to rescue its representation.
+
+Evidence:
+- `GOLD_H3_SAGE_V1_RESULT_2026-10-02.md`
+- `GOLD_H3_SAGE_V1_METRICS_2026-10-02.csv`
+- `GOLD_H3_SAGE_V1_SELECTION_GRID_2026-10-02.csv`.
+
+
+## 23. AIM-H3 V1 — adaptive intraday mixture (2026-10-02)
+
+Authority:
+- `GOLD_H3_AIM_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37046126528**
+
+Identity:
+- `AIM_H3_V1_RESEARCH`
+
+Experts:
+- STRUCTURAL_IRIS = A1 + PATH,
+- PATH_GLOBAL = PATH only,
+- PATH_RECENT126 = recent 126-row balanced PATH model.
+
+Mechanism:
+- causal adaptive weights from decayed matured OOS Brier losses.
+
+2022-H2 selected:
+- half-life **126**
+- eta **10**.
+
+However frozen confirmation failed:
+- 2023 AIM accuracy **68.49%** vs Structural IRIS **71.23%**
+- 2024 AIM **66.67%** vs **70.83%**.
+
+2026:
+- AIM **57.07%**, below Structural IRIS **58.64%** and PATH_GLOBAL **60.73%**.
+
+Binding conclusion:
+- continuous expert averaging dilutes the strong structural expert in stable periods,
+- recent-performance weighting did not adapt sharply enough,
+- AIM V1 is **NOT_PROMOTED**.
+
+Evidence:
+- `GOLD_H3_AIM_V1_RESULT_2026-10-02.md`
+- `GOLD_H3_AIM_V1_METRICS_2026-10-02.csv`
+- `GOLD_H3_AIM_V1_WEIGHTS_2026-10-02.csv`.
+
+
+## 24. SENTRY-H3 V1 — causal expert failover (2026-10-02)
+
+Authority:
+- `GOLD_H3_SENTRY_V1_AUTHORITY_2026-10-02.md`
+
+Workflow:
+- run **37046724814**
+
+Identity:
+- `SENTRY_H3_V1_RESEARCH`
+
+Motivation:
+- Structural IRIS dominates in 2023-2024.
+- PATH_GLOBAL becomes relatively stronger in 2025-2026.
+- Continuous AIM blending hurts stable periods.
+- SENTRY therefore keeps Structural IRIS by default and performs a hard causal failover only when recent paired directional evidence supports PATH_GLOBAL.
+
+Frozen rule:
+- latest **63 matured paired H3 forecasts**
+- paired score:
+  - +1 if PATH correct / Structural wrong
+  - -1 if Structural correct / PATH wrong
+  - 0 otherwise
+- enter PATH when net rescue >= **+3**
+- return to Structural when net rescue <= **0**
+- minimum matured paired history **42**
+- no threshold optimization on 2023-2026.
+
+### Confirmation
+
+2023:
+- Structural IRIS accuracy **71.23%**, balanced **71.83%**, Brier **0.2118**
+- SENTRY **identical**
+- PATH share **0%**.
+
+2024:
+- Structural IRIS accuracy **70.83%**, balanced **69.97%**, Brier **0.2006**
+- SENTRY **identical**
+- PATH share **0%**.
+
+Thus SENTRY preserves the strong stable-period champion exactly.
+
+### Transport
+
+| Period | Model | Accuracy | Balanced acc | Brier | UP recall | DOWN recall |
+|---|---|---:|---:|---:|---:|---:|
+| 2025 | Structural IRIS | 63.71% | 62.27% | 0.2294 | 68.87% | 55.67% |
+| 2025 | **SENTRY** | **64.52%** | **62.93%** | **0.2276** | **70.20%** | 55.67% |
+| 2026 | Structural IRIS | 58.64% | 59.12% | 0.2556 | 69.23% | 49.00% |
+| 2026 | PATH_GLOBAL | 60.73% | 61.12% | 0.2477 | 69.23% | 53.00% |
+| 2026 | **SENTRY** | **60.21%** | **60.71%** | **0.2513** | **71.43%** | **50.00%** |
+| 2025-2026 | Structural IRIS | 61.50% | 60.65% | 0.2408 | 69.01% | 52.28% |
+| 2025-2026 | **SENTRY** | **62.64%** | **61.73%** | **0.2379** | **70.66%** | **52.79%** |
+
+2026 rescue:
+- base accuracy **58.64%**
+- SENTRY accuracy **60.21%**
+- rescued calls **4**
+- broken calls **1**
+- net rescue **+3**
+- PATH active **80 / 191** origins.
+
+State switches:
+- **2025-09-18:** Structural IRIS -> PATH_GLOBAL, net rescue63 +3
+- **2026-04-24:** PATH_GLOBAL -> Structural IRIS, net rescue63 0.
+
+PATH state share:
+- 2022: 0%
+- 2023: 0%
+- 2024: 0%
+- 2025: 29.4%
+- 2026: 41.9%.
+
+Interpretation:
+1. **SENTRY-H3 V1 is MECHANISM_PASS.**
+2. It is the current adaptive H3 research champion because it preserves IRIS exactly in the strong 2023-2024 regime and improves 2025/2026 transport.
+3. PATH_GLOBAL alone has slightly higher 2026 accuracy (**60.73%**) but cannot replace the champion because it is materially weaker in 2023-2024.
+4. SENTRY improves 2026 without a 2026-fitted threshold; switching uses only already-matured paired forecast correctness.
+5. This remains retrospective research. The next decisive evidence is prospective origins under the frozen SENTRY rule.
+6. Do not retune window=63, entry=+3, exit=0 from 2025/2026 outcomes.
+
+Evidence:
+- `GOLD_H3_SENTRY_V1_RESULT_2026-10-02.md`
+- `GOLD_H3_SENTRY_V1_SUMMARY_2026-10-02.json`
+- `GOLD_H3_SENTRY_V1_METRICS_2026-10-02.csv`
+- `GOLD_H3_SENTRY_V1_SWITCHES_2026-10-02.csv`
+- `GOLD_H3_SENTRY_V1_PATH_SHARE_2026-10-02.csv`
+- `GOLD_H3_SENTRY_V1_2026_RESCUE_2026-10-02.csv`
+- `GOLD_H3_SENTRY_V1_2026_MONTHLY_2026-10-02.csv`.
