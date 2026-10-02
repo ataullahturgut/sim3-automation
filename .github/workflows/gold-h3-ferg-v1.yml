@@ -1,0 +1,63 @@
+name: Gold H3 FERG V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_ferg_v1.py'
+      - '.github/workflows/gold-h3-ferg-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      OUT_DIR: gold_h3_ferg_v1_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2'
+
+      - name: Run FERG H3 V1
+        run: python gold_axis_2026/tools/gold_h3_ferg_v1.py
+
+      - name: Commit evidence
+        shell: bash
+        run: |
+          cp "$OUT_DIR/FERG_V1_RESULT.md" gold_axis_2026/GOLD_H3_FERG_V1_RESULT_2026-10-02.md
+          cp "$OUT_DIR/ferg_v1_summary.json" gold_axis_2026/GOLD_H3_FERG_V1_SUMMARY_2026-10-02.json
+          cp "$OUT_DIR/ferg_v1_selection_grid.csv" gold_axis_2026/GOLD_H3_FERG_V1_SELECTION_GRID_2026-10-02.csv
+          if [ -f "$OUT_DIR/ferg_v1_metrics.csv" ]; then cp "$OUT_DIR/ferg_v1_metrics.csv" gold_axis_2026/GOLD_H3_FERG_V1_METRICS_2026-10-02.csv; fi
+          if [ -f "$OUT_DIR/ferg_v1_selected_predictions.csv" ]; then cp "$OUT_DIR/ferg_v1_selected_predictions.csv" gold_axis_2026/GOLD_H3_FERG_V1_PREDICTIONS_2026-10-02.csv; fi
+          if [ -f "$OUT_DIR/ferg_v1_logit_coefficients_descriptive.csv" ]; then cp "$OUT_DIR/ferg_v1_logit_coefficients_descriptive.csv" gold_axis_2026/GOLD_H3_FERG_V1_LOGIT_COEFFICIENTS_2026-10-02.csv; fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_FERG_V1_*_2026-10-02.*
+          if git diff --cached --quiet; then
+            echo "No FERG evidence changes"
+          else
+            git commit -m "Record FERG H3 v1 results"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-ferg-v1
+          path: gold_h3_ferg_v1_out/
+          if-no-files-found: warn
+          retention-days: 90
