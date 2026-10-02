@@ -1,0 +1,66 @@
+{
+  "calibration_decisions": [
+    {
+      "method": "PLATT",
+      "nonnegative_years": 0,
+      "relative_brier_improvement_vs_raw": -0.014823632368003123,
+      "replace_raw": false,
+      "worst_year_rel": -0.021856626337844753
+    },
+    {
+      "method": "ISOTONIC",
+      "nonnegative_years": 0,
+      "relative_brier_improvement_vs_raw": -0.025335735227603125,
+      "replace_raw": false,
+      "worst_year_rel": -0.0429919810379692
+    }
+  ],
+  "conviction_gate_pass": true,
+  "hashes": {
+    "STAGE3_RESULT.md": "67fd930f15a0597de786b6bd47f57a0e1c87be84895b0c5ff594a06d1ad7615f",
+    "global_xau_r2_stage3_calibration_annual.csv": "3d25d7ad002d815fe3909cb610c3f28a16b7669910128e7b24a2363a73a98ea3",
+    "global_xau_r2_stage3_calibration_decisions.csv": "2cc3dae3d56e2c585fc01b627fdbd086ec4bd59dd736fdd488d664d3683ba4c7",
+    "global_xau_r2_stage3_calibration_metrics.csv": "c2ff9aaedad5b52163d02eb4b4af39c96df66aa650a836d091b19a4220330c54",
+    "global_xau_r2_stage3_calibrator_fit_audit.csv": "9e2ee38079544491fe0e4c90041dcee22b641b407667cf6d46246aaea0438e6a",
+    "global_xau_r2_stage3_probability_bands.csv": "aec921eb53a1b9b89a35f9686d750194dc59ed5f902a778619cc9badf7ec32ca",
+    "global_xau_r2_stage3_probability_bands_by_year.csv": "d7a60ff9ac03366073e9bc44ffb554ef4c94ae509320f1f8a82941fa95f161c4",
+    "global_xau_r2_stage3_probability_ledger.csv": "5405330019fe8f509864a924f856c46084d8200247762e11cc9869be0eca09d0",
+    "global_xau_r2_stage3_reliability_bins.csv": "b779e609b2a05c70aac439f13c9db89164abe88c601869555ae78faee49ba592"
+  },
+  "high_up_side": {
+    "actual_up_rate": 0.6283783783783784,
+    "n": 148,
+    "threshold": ">=0.55",
+    "year_counts": [
+      54,
+      44,
+      50
+    ]
+  },
+  "low_up_side": {
+    "actual_up_rate": 0.40625,
+    "n": 64,
+    "threshold": "<=0.45",
+    "year_counts": [
+      18,
+      25,
+      21
+    ]
+  },
+  "raw_metrics": {
+    "actual_up_rate": 0.5231788079470199,
+    "brier": 0.24663739991832676,
+    "calibration_intercept": 0.03415239307080293,
+    "calibration_slope": 1.2342710532144197,
+    "ece": 0.025589407745608913,
+    "logloss": 0.6864471943995316,
+    "mean_prediction": 0.5120005829455279,
+    "method": "RAW",
+    "n": 755,
+    "prediction_std": 0.044781868334692436
+  },
+  "selected_calibration": "RAW",
+  "status": "CONVICTION_PASS",
+  "transport_2025": "UNOPENED",
+  "up_rate_separation": 0.2221283783783784
+}
