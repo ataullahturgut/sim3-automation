@@ -77,3 +77,5 @@ for r in sorted(rows,key=lambda x:x["damp_only_brier"]):
     )
 OUT.write_text("\n".join(lines)+"\n")
 print(OUT.read_text())
+
+# trigger: frs-damping-ready
