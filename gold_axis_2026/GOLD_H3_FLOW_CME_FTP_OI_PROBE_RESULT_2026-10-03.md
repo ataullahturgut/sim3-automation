@@ -2,7 +2,7 @@
 
 - host: ftp.cmegroup.com
 - dir: /daily_volume
-- listing count: 3215
+- listing count: 3214
 
 ## 20230103
 - exists: True
@@ -97,6 +97,193 @@
 - CME Group Vol and OI by Product!956: METALS | COMEX(STATS) | G5M | GOLD WEEKLY MONDAY OPTION WEEK5 PUT | O | 30 | 0 | 0 | 0 | 30 | 30 | 434
 - CME Group Vol and OI by Product!960: METALS | COMEX(STATS) | G4W | GOLD WEEKLY WEDNESDAY OPTION WEEK4 CALL | O | 23 | 0 | 0 | 0 | 23 | 23 | 55
 - CME Group Vol and OI by Product!963: METALS | COMEX(STATS) | OMG | MICRO GOLD OPTIONS CALL | O | 16 | 0 | 0 | 0 | 16 | 16 | 69
+
+## 20250102
+- exists: True
+- bytes: 80146
+- sheets: ['CME Group Volume and OI ', 'CME Group Vol and OI by Product']
+- OI hits: 6
+- Gold/GC hits: 60
+
+### OI rows
+- CME Group Volume and OI !3: Description | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ② | 
+- CME Group Volume and OI !14: Description | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ② | 
+- CME Group Volume and OI !24: Description | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ② | 
+- CME Group Volume and OI !35: 2) Please note that the open interest in this report is preliminary open interest which is released at the end of each trading day. CME Group releases official data in the Daily Bulletin the following morning. Preliminary open interest may be different from the open interest in the final report. |  |  |  |  |  |  |  | 
+- CME Group Vol and OI by Product!3: Description | Exchange Name | Commodity Indicator | Product Description | Future/Option Indicator | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ②
+- CME Group Vol and OI by Product!1219: 2) Please note that the open interest in this report is preliminary open interest which is released at the end of each trading day. CME Group releases official data in the Daily Bulletin the following morning. Preliminary open interest may be different from the open interest in the final report. |  |  |  |  |  |  |  |  |  |  | 
+
+### Gold/GC rows
+- CME Group Vol and OI by Product!907: METALS | COMEX(STATS) | GC | GOLD FUTURES | F | 162159 | 0 | 0 | 4263 | 166422 | 166422 | 468981
+- CME Group Vol and OI by Product!908: METALS | COMEX(STATS) | MGC | MICRO GOLD FUTURES | F | 89445 | 0 | 0 | 0 | 89445 | 89445 | 33091
+- CME Group Vol and OI by Product!911: METALS | COMEX(STATS) | OG | GOLD CALL | O | 27926 | 0 | 0 | 425 | 28351 | 28351 | 496561
+- CME Group Vol and OI by Product!913: METALS | COMEX(STATS) | OG | GOLD PUT | O | 18115 | 0 | 0 | 0 | 18115 | 18115 | 276924
+- CME Group Vol and OI by Product!917: METALS | COMEX(STATS) | OG1 | Gold Weekly Option | O | 4179 | 0 | 0 | 0 | 4179 | 4179 | 10699
+- CME Group Vol and OI by Product!918: METALS | COMEX(STATS) | OG2 | Gold Weekly Option | O | 3570 | 0 | 0 | 0 | 3570 | 3570 | 6838
+- CME Group Vol and OI by Product!925: METALS | COMEX(STATS) | G1M | GOLD WEEKLY MONDAY OPTION WEEK1 CALL | O | 1400 | 0 | 0 | 350 | 1750 | 1750 | 2188
+- CME Group Vol and OI by Product!926: METALS | COMEX(STATS) | G1M | GOLD WEEKLY MONDAY OPTION WEEK1 PUT | O | 1199 | 0 | 0 | 0 | 1199 | 1199 | 1865
+- CME Group Vol and OI by Product!927: METALS | COMEX(STATS) | G1R | GOLD WEEKLY THURSDAY OPTION Week1 PUT | O | 782 | 0 | 0 | 0 | 782 | 782 | 0
+- CME Group Vol and OI by Product!928: METALS | COMEX(STATS) | QO | COMEX MINY GOLD FUTURES | F | 764 | 0 | 0 | 0 | 764 | 764 | 1213
+- CME Group Vol and OI by Product!931: METALS | COMEX(STATS) | G1R | GOLD WEEKLY THURSDAY OPTION Week1 CALL | O | 662 | 0 | 0 | 0 | 662 | 662 | 0
+- CME Group Vol and OI by Product!933: METALS | COMEX(STATS) | G2R | GOLD WEEKLY THURSDAY OPTION Week2 CALL | O | 435 | 0 | 0 | 0 | 435 | 435 | 1366
+- CME Group Vol and OI by Product!934: METALS | COMEX(STATS) | OG3 | Gold Weekly Option | O | 397 | 0 | 0 | 0 | 397 | 397 | 1681
+- CME Group Vol and OI by Product!936: METALS | COMEX(STATS) | OG4 | Gold Weekly Option | O | 352 | 0 | 0 | 0 | 352 | 352 | 496
+- CME Group Vol and OI by Product!940: METALS | COMEX(STATS) | G2W | GOLD WEEKLY WEDNESDAY OPTION WEEK2 PUT | O | 243 | 0 | 0 | 0 | 243 | 243 | 3158
+- CME Group Vol and OI by Product!941: METALS | COMEX(STATS) | G1T | GOLD WEEKLY TUESDAY OPTION Week1 CALL | O | 242 | 0 | 0 | 0 | 242 | 242 | 445
+- CME Group Vol and OI by Product!942: METALS | COMEX(STATS) | G2W | GOLD WEEKLY WEDNESDAY OPTION WEEK2 CALL | O | 198 | 0 | 0 | 0 | 198 | 198 | 2922
+- CME Group Vol and OI by Product!944: METALS | COMEX(STATS) | G2M | GOLD WEEKLY MONDAY OPTION WEEK2 CALL | O | 156 | 0 | 0 | 0 | 156 | 156 | 747
+- CME Group Vol and OI by Product!946: METALS | COMEX(STATS) | SGC | SHANGHAI GOLD (CNH) FUTURES | F | 154 | 0 | 0 | 0 | 154 | 154 | 414
+- CME Group Vol and OI by Product!947: METALS | COMEX(STATS) | G3W | GOLD WEEKLY WEDNESDAY OPTION WEEK3 CALL | O | 153 | 0 | 0 | 0 | 153 | 153 | 1207
+- CME Group Vol and OI by Product!948: METALS | COMEX(STATS) | G4W | GOLD WEEKLY WEDNESDAY OPTION WEEK4 PUT | O | 145 | 0 | 0 | 0 | 145 | 145 | 386
+- CME Group Vol and OI by Product!951: METALS | COMEX(STATS) | ECGC | EVENT CONTRACT GOLD C | O | 135 | 0 | 0 | 0 | 135 | 135 | 0
+- CME Group Vol and OI by Product!952: METALS | COMEX(STATS) | G3W | GOLD WEEKLY WEDNESDAY OPTION WEEK3 PUT | O | 130 | 0 | 0 | 0 | 130 | 130 | 1788
+- CME Group Vol and OI by Product!954: METALS | COMEX(STATS) | SGU | SHANGHAI GOLD (USD) FUTURES | F | 127 | 0 | 0 | 0 | 127 | 127 | 513
+- CME Group Vol and OI by Product!955: METALS | COMEX(STATS) | G3R | GOLD WEEKLY THURSDAY OPTION Week3 PUT | O | 113 | 0 | 0 | 0 | 113 | 113 | 989
+- CME Group Vol and OI by Product!956: METALS | COMEX(STATS) | G2M | GOLD WEEKLY MONDAY OPTION WEEK2 PUT | O | 110 | 0 | 0 | 0 | 110 | 110 | 717
+- CME Group Vol and OI by Product!960: METALS | COMEX(STATS) | ECGC | EVENT CONTRACT GOLD P | O | 87 | 0 | 0 | 0 | 87 | 87 | 0
+- CME Group Vol and OI by Product!962: METALS | COMEX(STATS) | G4M | GOLD WEEKLY MONDAY OPTION WEEK4 PUT | O | 79 | 0 | 0 | 0 | 79 | 79 | 135
+- CME Group Vol and OI by Product!964: METALS | COMEX(STATS) | G3T | GOLD WEEKLY TUESDAY OPTION Week3 PUT | O | 67 | 0 | 0 | 0 | 67 | 67 | 78
+- CME Group Vol and OI by Product!965: METALS | COMEX(STATS) | G1T | GOLD WEEKLY TUESDAY OPTION Week1 PUT | O | 64 | 0 | 0 | 0 | 64 | 64 | 726
+
+## 20250701
+- exists: True
+- bytes: 88488
+- sheets: ['CME Group Volume and OI ', 'CME Group Vol and OI by Product']
+- OI hits: 6
+- Gold/GC hits: 62
+
+### OI rows
+- CME Group Volume and OI !3: Description | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ② | 
+- CME Group Volume and OI !14: Description | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ② | 
+- CME Group Volume and OI !24: Description | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ② | 
+- CME Group Volume and OI !35: 2) Please note that the open interest in this report is preliminary open interest which is released at the end of each trading day. CME Group releases official data in the Daily Bulletin the following morning. Preliminary open interest may be different from the open interest in the final report. |  |  |  |  |  |  |  | 
+- CME Group Vol and OI by Product!3: Description | Exchange Name | Commodity Indicator | Product Description | Future/Option Indicator | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ②
+- CME Group Vol and OI by Product!1357: 2) Please note that the open interest in this report is preliminary open interest which is released at the end of each trading day. CME Group releases official data in the Daily Bulletin the following morning. Preliminary open interest may be different from the open interest in the final report. |  |  |  |  |  |  |  |  |  |  | 
+
+### Gold/GC rows
+- CME Group Vol and OI by Product!959: METALS | COMEX(STATS) | MGC | MICRO GOLD FUTURES | F | 195156 | 0 | 0 | 0 | 195156 | 195156 | 45308
+- CME Group Vol and OI by Product!960: METALS | COMEX(STATS) | GC | GOLD FUTURES | F | 184775 | 0 | 0 | 1368 | 186143 | 186143 | 439185
+- CME Group Vol and OI by Product!964: METALS | COMEX(STATS) | OG | GOLD CALL | O | 27888 | 0 | 0 | 4286 | 32174 | 32174 | 445713
+- CME Group Vol and OI by Product!966: METALS | COMEX(STATS) | OG | GOLD PUT | O | 14535 | 0 | 0 | 1195 | 15730 | 15730 | 295447
+- CME Group Vol and OI by Product!968: METALS | COMEX(STATS) | 1OZ | 1 OUNCE GOLD FUTURES | F | 7282 | 0 | 0 | 0 | 7282 | 7282 | 2430
+- CME Group Vol and OI by Product!971: METALS | COMEX(STATS) | QO | COMEX MINY GOLD FUTURES | F | 4055 | 0 | 0 | 0 | 4055 | 4055 | 1687
+- CME Group Vol and OI by Product!972: METALS | COMEX(STATS) | G1T | GOLD WEEKLY TUESDAY OPTION Week1 PUT | O | 3103 | 0 | 0 | 0 | 3103 | 3103 | 0
+- CME Group Vol and OI by Product!973: METALS | COMEX(STATS) | OG2 | Gold Weekly Option | O | 2760 | 0 | 0 | 0 | 2760 | 2760 | 7395
+- CME Group Vol and OI by Product!975: METALS | COMEX(STATS) | G1W | GOLD WEEKLY WEDNESDAY OPTION WEEK1 PUT | O | 2589 | 0 | 0 | 0 | 2589 | 2589 | 4444
+- CME Group Vol and OI by Product!976: METALS | COMEX(STATS) | G1W | GOLD WEEKLY WEDNESDAY OPTION WEEK1 CALL | O | 2293 | 0 | 0 | 100 | 2393 | 2393 | 3583
+- CME Group Vol and OI by Product!979: METALS | COMEX(STATS) | G1T | GOLD WEEKLY TUESDAY OPTION Week1 CALL | O | 1766 | 0 | 0 | 0 | 1766 | 1766 | 0
+- CME Group Vol and OI by Product!980: METALS | COMEX(STATS) | G1R | GOLD WEEKLY THURSDAY OPTION Week1 PUT | O | 1739 | 0 | 0 | 0 | 1739 | 1739 | 5052
+- CME Group Vol and OI by Product!981: METALS | COMEX(STATS) | G1R | GOLD WEEKLY THURSDAY OPTION Week1 CALL | O | 1570 | 0 | 0 | 0 | 1570 | 1570 | 3539
+- CME Group Vol and OI by Product!984: METALS | COMEX(STATS) | G1M | GOLD WEEKLY MONDAY OPTION WEEK1 PUT | O | 972 | 0 | 0 | 0 | 972 | 972 | 2131
+- CME Group Vol and OI by Product!985: METALS | COMEX(STATS) | G1M | GOLD WEEKLY MONDAY OPTION WEEK1 CALL | O | 724 | 0 | 0 | 0 | 724 | 724 | 1972
+- CME Group Vol and OI by Product!987: METALS | COMEX(STATS) | G2R | GOLD WEEKLY THURSDAY OPTION Week2 PUT | O | 535 | 0 | 0 | 0 | 535 | 535 | 1921
+- CME Group Vol and OI by Product!988: METALS | COMEX(STATS) | OG4 | Gold Weekly Option | O | 429 | 0 | 0 | 0 | 429 | 429 | 1435
+- CME Group Vol and OI by Product!989: METALS | COMEX(STATS) | G2W | GOLD WEEKLY WEDNESDAY OPTION WEEK2 PUT | O | 411 | 0 | 0 | 0 | 411 | 411 | 1048
+- CME Group Vol and OI by Product!990: METALS | COMEX(STATS) | G2T | GOLD WEEKLY TUESDAY OPTION Week2 PUT | O | 246 | 0 | 0 | 100 | 346 | 346 | 1047
+- CME Group Vol and OI by Product!992: METALS | COMEX(STATS) | G2W | GOLD WEEKLY WEDNESDAY OPTION WEEK2 CALL | O | 285 | 0 | 0 | 0 | 285 | 285 | 780
+- CME Group Vol and OI by Product!993: METALS | COMEX(STATS) | G2T | GOLD WEEKLY TUESDAY OPTION Week2 CALL | O | 187 | 0 | 0 | 80 | 267 | 267 | 1171
+- CME Group Vol and OI by Product!996: METALS | COMEX(STATS) | G2R | GOLD WEEKLY THURSDAY OPTION Week2 CALL | O | 232 | 0 | 0 | 0 | 232 | 232 | 1858
+- CME Group Vol and OI by Product!999: METALS | COMEX(STATS) | G3W | GOLD WEEKLY WEDNESDAY OPTION WEEK3 PUT | O | 206 | 0 | 0 | 0 | 206 | 206 | 1282
+- CME Group Vol and OI by Product!1000: METALS | COMEX(STATS) | G2M | GOLD WEEKLY MONDAY OPTION WEEK2 PUT | O | 196 | 0 | 0 | 0 | 196 | 196 | 951
+- CME Group Vol and OI by Product!1001: METALS | COMEX(STATS) | OG3 | Gold Weekly Option | O | 193 | 0 | 0 | 0 | 193 | 193 | 1570
+- CME Group Vol and OI by Product!1002: METALS | COMEX(STATS) | ECGC | EVENT CONTRACT GOLD C | O | 182 | 0 | 0 | 0 | 182 | 182 | 0
+- CME Group Vol and OI by Product!1004: METALS | COMEX(STATS) | G3T | GOLD WEEKLY TUESDAY OPTION Week3 PUT | O | 174 | 0 | 0 | 0 | 174 | 174 | 553
+- CME Group Vol and OI by Product!1007: METALS | COMEX(STATS) | G2M | GOLD WEEKLY MONDAY OPTION WEEK2 CALL | O | 159 | 0 | 0 | 0 | 159 | 159 | 739
+- CME Group Vol and OI by Product!1011: METALS | COMEX(STATS) | OG1 | Gold Weekly Option | O | 127 | 0 | 0 | 0 | 127 | 127 | 240
+- CME Group Vol and OI by Product!1015: METALS | COMEX(STATS) | G3W | GOLD WEEKLY WEDNESDAY OPTION WEEK3 CALL | O | 104 | 0 | 0 | 0 | 104 | 104 | 647
+
+## 20260102
+- exists: True
+- bytes: 91870
+- sheets: ['CME Group Volume and OI ', 'CME Group Vol and OI by Product']
+- OI hits: 6
+- Gold/GC hits: 64
+
+### OI rows
+- CME Group Volume and OI !3: Description | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ② | 
+- CME Group Volume and OI !14: Description | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ② | 
+- CME Group Volume and OI !24: Description | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ② | 
+- CME Group Volume and OI !35: 2) Please note that the open interest in this report is preliminary open interest which is released at the end of each trading day. CME Group releases official data in the Daily Bulletin the following morning. Preliminary open interest may be different from the open interest in the final report. |  |  |  |  |  |  |  | 
+- CME Group Vol and OI by Product!3: Description | Exchange Name | Commodity Indicator | Product Description | Future/Option Indicator | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ②
+- CME Group Vol and OI by Product!1418: 2) Please note that the open interest in this report is preliminary open interest which is released at the end of each trading day. CME Group releases official data in the Daily Bulletin the following morning. Preliminary open interest may be different from the open interest in the final report. |  |  |  |  |  |  |  |  |  |  | 
+
+### Gold/GC rows
+- CME Group Vol and OI by Product!1042: METALS | COMEX(STATS) | MGC | MICRO GOLD FUTURES | F | 364617 | 0 | 0 | 0 | 364617 | 364617 | 69531
+- CME Group Vol and OI by Product!1044: METALS | COMEX(STATS) | GC | GOLD FUTURES | F | 170687 | 0 | 0 | 3558 | 174245 | 174245 | 482810
+- CME Group Vol and OI by Product!1046: METALS | COMEX(STATS) | 1OZ | 1 OUNCE GOLD FUTURES | F | 45435 | 0 | 0 | 0 | 45435 | 45435 | 19559
+- CME Group Vol and OI by Product!1049: METALS | COMEX(STATS) | ECGC | EVENT CONTRACT GOLD P | O | 14872 | 0 | 0 | 0 | 14872 | 14872 | 0
+- CME Group Vol and OI by Product!1051: METALS | COMEX(STATS) | OG | GOLD CALL | O | 11120 | 0 | 0 | 3112 | 14232 | 14232 | 434013
+- CME Group Vol and OI by Product!1053: METALS | COMEX(STATS) | ECGC | EVENT CONTRACT GOLD C | O | 8700 | 0 | 0 | 0 | 8700 | 8700 | 0
+- CME Group Vol and OI by Product!1054: METALS | COMEX(STATS) | OG | GOLD PUT | O | 7754 | 0 | 0 | 850 | 8604 | 8604 | 292862
+- CME Group Vol and OI by Product!1055: METALS | COMEX(STATS) | OG1 | Gold Weekly Option | O | 8330 | 0 | 0 | 0 | 8330 | 8330 | 0
+- CME Group Vol and OI by Product!1057: METALS | COMEX(STATS) | QO | COMEX MINY GOLD FUTURES | F | 5048 | 0 | 0 | 1300 | 6348 | 6348 | 7734
+- CME Group Vol and OI by Product!1059: METALS | COMEX(STATS) | OG2 | Gold Weekly Option | O | 5051 | 0 | 0 | 0 | 5051 | 5051 | 9777
+- CME Group Vol and OI by Product!1061: METALS | COMEX(STATS) | G1M | GOLD WEEKLY MONDAY OPTION WEEK1 PUT | O | 3510 | 0 | 0 | 0 | 3510 | 3510 | 5426
+- CME Group Vol and OI by Product!1063: METALS | COMEX(STATS) | G1M | GOLD WEEKLY MONDAY OPTION WEEK1 CALL | O | 2936 | 0 | 0 | 0 | 2936 | 2936 | 3763
+- CME Group Vol and OI by Product!1068: METALS | COMEX(STATS) | G1W | GOLD WEEKLY WEDNESDAY OPTION WEEK1 CALL | O | 1180 | 0 | 0 | 0 | 1180 | 1180 | 2012
+- CME Group Vol and OI by Product!1070: METALS | COMEX(STATS) | ECG10 | EC GOLD FUT 10:00 A.M ET C | O | 1021 | 0 | 0 | 0 | 1021 | 1021 | 0
+- CME Group Vol and OI by Product!1071: METALS | COMEX(STATS) | ECG16 | EC GOLD FUT 04:00 P.M ET C | O | 919 | 0 | 0 | 0 | 919 | 919 | 0
+- CME Group Vol and OI by Product!1072: METALS | COMEX(STATS) | G1T | GOLD WEEKLY TUESDAY OPTION Week1 PUT | O | 914 | 0 | 0 | 0 | 914 | 914 | 3844
+- CME Group Vol and OI by Product!1073: METALS | COMEX(STATS) | G1T | GOLD WEEKLY TUESDAY OPTION Week1 CALL | O | 861 | 0 | 0 | 0 | 861 | 861 | 2210
+- CME Group Vol and OI by Product!1074: METALS | COMEX(STATS) | OG3 | Gold Weekly Option | O | 857 | 0 | 0 | 0 | 857 | 857 | 3751
+- CME Group Vol and OI by Product!1075: METALS | COMEX(STATS) | ECG10 | EC GOLD FUT 10:00 A.M ET P | O | 850 | 0 | 0 | 0 | 850 | 850 | 0
+- CME Group Vol and OI by Product!1079: METALS | COMEX(STATS) | ECG15 | EC GOLD FUT 03:00 P.M ET C | O | 479 | 0 | 0 | 0 | 479 | 479 | 0
+- CME Group Vol and OI by Product!1080: METALS | COMEX(STATS) | G2R | GOLD WEEKLY THURSDAY OPTION Week2 PUT | O | 437 | 0 | 0 | 0 | 437 | 437 | 2230
+- CME Group Vol and OI by Product!1081: METALS | COMEX(STATS) | G2R | GOLD WEEKLY THURSDAY OPTION Week2 CALL | O | 395 | 0 | 0 | 0 | 395 | 395 | 1981
+- CME Group Vol and OI by Product!1082: METALS | COMEX(STATS) | ECG11 | EC GOLD FUT 11:00 A.M ET C | O | 394 | 0 | 0 | 0 | 394 | 394 | 0
+- CME Group Vol and OI by Product!1083: METALS | COMEX(STATS) | G1W | GOLD WEEKLY WEDNESDAY OPTION WEEK1 PUT | O | 387 | 0 | 0 | 0 | 387 | 387 | 1732
+- CME Group Vol and OI by Product!1085: METALS | COMEX(STATS) | ECG11 | EC GOLD FUT 11:00 A.M ET P | O | 382 | 0 | 0 | 0 | 382 | 382 | 0
+- CME Group Vol and OI by Product!1088: METALS | COMEX(STATS) | G2M | GOLD WEEKLY MONDAY OPTION WEEK2 PUT | O | 348 | 0 | 0 | 0 | 348 | 348 | 932
+- CME Group Vol and OI by Product!1090: METALS | COMEX(STATS) | G4M | GOLD WEEKLY MONDAY OPTION WEEK4 PUT | O | 255 | 0 | 0 | 0 | 255 | 255 | 359
+- CME Group Vol and OI by Product!1092: METALS | COMEX(STATS) | ECG15 | EC GOLD FUT 03:00 P.M ET P | O | 236 | 0 | 0 | 0 | 236 | 236 | 0
+- CME Group Vol and OI by Product!1093: METALS | COMEX(STATS) | ECG16 | EC GOLD FUT 04:00 P.M ET P | O | 227 | 0 | 0 | 0 | 227 | 227 | 0
+- CME Group Vol and OI by Product!1096: METALS | COMEX(STATS) | G2M | GOLD WEEKLY MONDAY OPTION WEEK2 CALL | O | 201 | 0 | 0 | 0 | 201 | 201 | 1126
+
+## 20260630
+- exists: True
+- bytes: 102153
+- sheets: ['CME Group Volume and OI ', 'CME Group Vol and OI by Product']
+- OI hits: 5
+- Gold/GC hits: 64
+
+### OI rows
+- CME Group Volume and OI !3: Description | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ②
+- CME Group Volume and OI !14: Description | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ②
+- CME Group Volume and OI !24: Description | CME® Globex® Volume | Pit Volume | ExPit Volume | OTC Volume | Total Volume | MTD ADV | Open Interest ②
+- CME Group Volume and OI !35: 2) Please note that the open interest in this report is preliminary open interest which is released at the end of each trading day. CME Group releases official data in the Daily Bulletin the following morning. Preliminary open interest may be different from the open interest in the final report. |  |  |  |  |  |  | 
+- CME Group Vol and OI by Product!1465: 2) Please note that the open interest in this report is preliminary open interest which is released at the end of each trading day. CME Group releases official data in the Daily Bulletin the following morning. Preliminary open interest may be different from the open interest in the final report. |  |  |  |  |  |  |  |  |  | 
+
+### Gold/GC rows
+- CME Group Vol and OI by Product!1069: METALS | COMEX(STATS) | MGC | MICRO GOLD FUTURES | F | 344152 | 0 | 0 | 0 | 344152 | 342141.095238095
+- CME Group Vol and OI by Product!1070: METALS | COMEX(STATS) | GC | GOLD FUTURES | F | 139717 | 0 | 0 | 1010 | 140727 | 157288.904761905
+- CME Group Vol and OI by Product!1074: METALS | COMEX(STATS) | 1OZ | 1 OUNCE GOLD FUTURES | F | 46665 | 0 | 0 | 0 | 46665 | 56472.2857142857
+- CME Group Vol and OI by Product!1075: METALS | COMEX(STATS) | OG | GOLD CALL | O | 23917 | 0 | 0 | 1346 | 25263 | 26416.1428571429
+- CME Group Vol and OI by Product!1079: METALS | COMEX(STATS) | OG | GOLD PUT | O | 7156 | 0 | 0 | 1341 | 8497 | 19917.3333333333
+- CME Group Vol and OI by Product!1081: METALS | COMEX(STATS) | G5T | GOLD WEEKLY TUESDAY OPTION Week5 PUT | O | 5318 | 0 | 0 | 50 | 5368 | 670
+- CME Group Vol and OI by Product!1082: METALS | COMEX(STATS) | G5T | GOLD WEEKLY TUESDAY OPTION Week5 CALL | O | 4904 | 0 | 0 | 20 | 4924 | 616.809523809524
+- CME Group Vol and OI by Product!1083: METALS | COMEX(STATS) | ECG10 | EC GOLD FUT 10:00 A.M ET P | O | 4280 | 0 | 0 | 0 | 4280 | 7285.61904761905
+- CME Group Vol and OI by Product!1085: METALS | COMEX(STATS) | QO | COMEX MINY GOLD FUTURES | F | 3947 | 0 | 0 | 0 | 3947 | 3857
+- CME Group Vol and OI by Product!1087: METALS | COMEX(STATS) | ECG13 | EC GOLD FUT 01:00 P.M ET P | O | 3420 | 0 | 0 | 0 | 3420 | 3207.14285714286
+- CME Group Vol and OI by Product!1088: METALS | COMEX(STATS) | ECG10 | EC GOLD FUT 10:00 A.M ET C | O | 2904 | 0 | 0 | 0 | 2904 | 20155.6666666667
+- CME Group Vol and OI by Product!1091: METALS | COMEX(STATS) | G1W | GOLD WEEKLY WEDNESDAY OPTION WEEK1 PUT | O | 1805 | 0 | 0 | 100 | 1905 | 464.095238095238
+- CME Group Vol and OI by Product!1092: METALS | COMEX(STATS) | OG2 | Gold Weekly Option | O | 1533 | 0 | 0 | 0 | 1533 | 2659.95238095238
+- CME Group Vol and OI by Product!1093: METALS | COMEX(STATS) | G1W | GOLD WEEKLY WEDNESDAY OPTION WEEK1 CALL | O | 1287 | 0 | 0 | 200 | 1487 | 378.190476190476
+- CME Group Vol and OI by Product!1094: METALS | COMEX(STATS) | ECG15 | EC GOLD FUT 03:00 P.M ET P | O | 1443 | 0 | 0 | 0 | 1443 | 1002.71428571429
+- CME Group Vol and OI by Product!1095: METALS | COMEX(STATS) | G1R | GOLD WEEKLY THURSDAY OPTION Week1 PUT | O | 1401 | 0 | 0 | 0 | 1401 | 655.095238095238
+- CME Group Vol and OI by Product!1097: METALS | COMEX(STATS) | ECG16 | EC GOLD FUT 04:00 P.M ET C | O | 1241 | 0 | 0 | 0 | 1241 | 1902.38095238095
+- CME Group Vol and OI by Product!1098: METALS | COMEX(STATS) | G1R | GOLD WEEKLY THURSDAY OPTION Week1 CALL | O | 1105 | 0 | 0 | 0 | 1105 | 471.095238095238
+- CME Group Vol and OI by Product!1101: METALS | COMEX(STATS) | ECG13 | EC GOLD FUT 01:00 P.M ET C | O | 644 | 0 | 0 | 0 | 644 | 1240
+- CME Group Vol and OI by Product!1104: METALS | COMEX(STATS) | G2R | GOLD WEEKLY THURSDAY OPTION Week2 PUT | O | 475 | 0 | 0 | 0 | 475 | 393.428571428571
+- CME Group Vol and OI by Product!1108: METALS | COMEX(STATS) | ECG16 | EC GOLD FUT 04:00 P.M ET P | O | 408 | 0 | 0 | 0 | 408 | 2302.28571428571
+- CME Group Vol and OI by Product!1109: METALS | COMEX(STATS) | OG3 | Gold Weekly Option | O | 397 | 0 | 0 | 0 | 397 | 399.952380952381
+- CME Group Vol and OI by Product!1110: METALS | COMEX(STATS) | G1M | GOLD WEEKLY MONDAY OPTION WEEK1 CALL | O | 371 | 0 | 0 | 0 | 371 | 252.809523809524
+- CME Group Vol and OI by Product!1117: METALS | COMEX(STATS) | ECGC | EVENT CONTRACT GOLD P | O | 241 | 0 | 0 | 0 | 241 | 3239.80952380952
+- CME Group Vol and OI by Product!1118: METALS | COMEX(STATS) | G3W | GOLD WEEKLY WEDNESDAY OPTION WEEK3 CALL | O | 230 | 0 | 0 | 0 | 230 | 396.238095238095
+- CME Group Vol and OI by Product!1120: METALS | COMEX(STATS) | G2W | GOLD WEEKLY WEDNESDAY OPTION WEEK2 PUT | O | 123 | 0 | 0 | 100 | 223 | 457.857142857143
+- CME Group Vol and OI by Product!1121: METALS | COMEX(STATS) | ECG11 | EC GOLD FUT 11:00 A.M ET P | O | 206 | 0 | 0 | 0 | 206 | 1326.71428571429
+- CME Group Vol and OI by Product!1122: METALS | COMEX(STATS) | G2R | GOLD WEEKLY THURSDAY OPTION Week2 CALL | O | 205 | 0 | 0 | 0 | 205 | 366.238095238095
+- CME Group Vol and OI by Product!1123: METALS | COMEX(STATS) | G1T | GOLD WEEKLY TUESDAY OPTION Week1 CALL | O | 180 | 0 | 0 | 0 | 180 | 161
+- CME Group Vol and OI by Product!1126: METALS | COMEX(STATS) | ECG11 | EC GOLD FUT 11:00 A.M ET C | O | 157 | 0 | 0 | 0 | 157 | 1117.71428571429
 
 ## 20260930
 - exists: True
