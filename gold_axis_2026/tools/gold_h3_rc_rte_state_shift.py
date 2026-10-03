@@ -95,3 +95,5 @@ for r in sorted(axis_rows,key=lambda x:abs(x["smd_h2_minus_h1"]),reverse=True):
     lines.append(f"| {r['axis']} | {r['smd_h2_minus_h1']:+.3f} | {r['h1_mean']:.4f} | {r['h2_mean']:.4f} |")
 OUT_MD.write_text("\n".join(lines)+"\n")
 print(OUT_MD.read_text())
+
+# trigger: rc-rte-state-shift-ready
