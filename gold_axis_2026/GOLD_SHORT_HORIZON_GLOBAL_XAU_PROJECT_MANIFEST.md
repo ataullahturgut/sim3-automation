@@ -2812,3 +2812,166 @@ Evidence:
 - `GOLD_H3_HELIOS_V4_RGE_CLUSTER_INFERENCE_2026-10-03.csv`
 - `GOLD_H3_HELIOS_V4_RGE_ROBUSTNESS_2026-10-03.csv`.
 
+## 39. HELIOS-H3 V5-DCE — dominant-expert contradiction exception (2026-10-03)
+
+Authority:
+- `GOLD_H3_HELIOS_V5_DCE_AUTHORITY_2026-10-03.md`
+
+Successful workflow:
+- run **37113852328**
+- implementation commit **213839ee1ed6ebcc93e97c49dc8104bbd096d3ee**
+- evidence commit **7b0cd95b8e6af4157690768bf8b67a868c8449b6**
+- conclusion **BEST RETROSPECTIVE H3 STRENGTHENING FOUND SO FAR / NOT PROSPECTIVE**
+
+Identity:
+- `HELIOS_H3_V5_DCE_RESEARCH`
+
+### Problem split
+
+For 2026, V4 rejected 9 OPAL reversals:
+- 4 were missed rescues
+- 5 were correct rejects.
+
+Two mechanisms were separated:
+1. V4 broad regret expansion can open too late;
+2. after expansion is active, low-GT-share rejects are mostly correct rejects.
+
+A generic shadow high-share specialist was tested first. It preserved 2023-2025 but activated no earlier than V4 and produced no extra rescue. Rejected as redundant.
+
+### Academic mechanism
+
+V5 adds a narrow specialist / sleeping-expert exception on top of V4.
+
+The exception is awake only when:
+- V4 did not route;
+- HELIOS macro gate is ACTIVE;
+- OPAL reversal exists;
+- HELIOS consensus is absent;
+- V3-GT flip share > 0.50;
+- AURORA's active expert is PATH_GLOBAL;
+- frozen DART posterior `Pr(PATH_GLOBAL superior to STRUCTURAL_IRIS) > 0.50`.
+
+This is interpreted as a **dominant-expert contradiction**:
+the current causal state machine still favors PATH, and its posterior still says PATH is more likely superior than not, yet the independent OPAL/game-theoretic reversal layer strongly contradicts the active call.
+
+The 0.50 posterior threshold is the natural Bayesian majority boundary and was not selected from historical performance.
+
+Probability:
+- retain V4 outside DCE;
+- mirror frozen AURORA probability on a DCE route.
+
+### Binding exceptions
+
+Only three historical exceptions were opened:
+
+| Issue | PATH posterior | q_path | GT share | AURORA | V5 | Actual | H3 move | Effect |
+|---|---:|---:|---:|---|---|---|---:|---|
+| 2025-10-15 | 94.4% | 83.1% | 78.2% | DOWN | UP | UP | +4.59% | RESCUED |
+| 2026-06-05 | 77.5% | 61.5% | 88.8% | UP | DOWN | DOWN | -3.85% | RESCUED |
+| 2026-06-24 | 77.5% | 61.5% | 98.4% | UP | DOWN | DOWN | -1.93% | RESCUED |
+
+All three were rescues.
+
+### Binding results
+
+| Period | AURORA | V2 | V3-GT | V4-RGE | V5-DCE | Raw OPAL | V5 Brier |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 2023 | 71.23% | 71.23% | 71.23% | 71.23% | **71.23%** | 67.12% | 0.2118 |
+| 2024 | 70.83% | 71.25% | 70.83% | 71.25% | **71.25%** | 70.00% | 0.1988 |
+| 2025 | 64.52% | 66.13% | 64.92% | 66.13% | **66.53%** | 64.92% | 0.2243 |
+| 2026 | 60.73% | 61.78% | 65.45% | 64.40% | **65.45%** | 63.87% | **0.2369** |
+| 2025-2026 | 62.87% | 64.24% | 65.15% | 65.38% | **66.06%** | 64.46% | **0.2298** |
+
+Balanced accuracy:
+- 2025: **64.59%**
+- 2026: **65.76%**
+- 2025-2026: **65.25%**.
+
+2025-2026 routing:
+- total routed: **24**
+- rescue: **19**
+- broken: **5**
+- net rescue: **+14**.
+
+2026:
+- routed: **17**
+- rescue: **13**
+- broken: **4**
+- net rescue: **+9**.
+
+V5 exactly preserves V4 for 2023 and 2024.
+It improves 2025 by one additional correct exception and recovers V3's full 2026 directional advantage without giving back V4's 2025 protection.
+
+### Dependence-aware inference
+
+V5 vs AURORA, 2025-2026:
+- accuracy delta **+3.1891 pp**
+- block5 95% CI **[+1.1390,+5.2392]**, P(improve) **99.9%**
+- block10 95% CI **[+1.1390,+5.4670]**, P(improve) **100.0%**
+- Brier delta **-0.0065**
+- logloss delta **-0.0137**.
+
+V5 vs HELIOS V2, 2025-2026:
+- accuracy delta **+1.8223 pp**
+- block5 95% CI **[+0.4556,+3.4169]**, P(improve) **99.2%**
+- block10 same CI, P(improve) **99.7%**.
+
+V5 vs V4, 2025-2026:
+- accuracy delta **+0.6834 pp**
+- block5 P(improve) **95.6%**
+- block10 P(improve) **95.5%**.
+
+V5 vs V4, 2026:
+- accuracy delta **+1.0471 pp**
+- P(improve) **87.4% / 87.8%**.
+The weaker V5-vs-V4 certainty is expected because the difference is only two 2026 events.
+
+COT-vintage cluster bootstrap:
+- 2025-2026 net rescue **+14**
+  - 17 routed COT vintages
+  - 95% **[+7,+21]**
+  - P(net>0) **99.99%**
+- 2026 net rescue **+9**
+  - 10 routed COT vintages
+  - 95% **[+3,+15]**
+  - P(net>0) **99.75%**.
+
+### Sensitivity
+
+PATH posterior threshold:
+- 0.50, 0.60, 0.70 and 0.75 all produce the exact same binding result:
+  - 2025-2026 Acc **66.06%**
+  - BA **65.25%**
+  - Brier **0.2298**
+  - 3 exceptions
+  - net rescue **+14**.
+- 0.40 admits one additional broken event and weakens the result.
+- 0.80 removes the two 2026 exceptions and loses the 2026 gain.
+
+GT-share threshold:
+- 0.50, 0.60 and 0.70 all produce the exact same result.
+- 0.80 removes the 2025 exception but retains both 2026 exceptions.
+
+Therefore the binding result is not a knife-edge artifact around either 0.50 threshold.
+
+### Binding interpretation
+
+1. The V4 miss analysis did reveal a recoverable mechanism.
+2. A generic broader exception is unsafe; the broad high-share specialist did not add value.
+3. The useful exception appears specifically when a **currently dominant PATH regime is strongly contradicted by an independent reversal layer**.
+4. V5 recovers V3's 2026 accuracy while preserving V4's 2023-2025 regime protection and additionally improves 2025.
+5. V5 is the strongest retrospective H3 architecture found so far on the recorded windows.
+6. However DCE was discovered through retrospective anatomy. The three observed exceptions are too few to call the mechanism confirmed.
+7. V5 therefore remains a research challenger; the frozen AURORA prospective champion remains unchanged.
+8. The next scientifically clean step is not more retrospective rule search. It is a separately frozen prospective V5-DCE ledger or a pre-registered forward shadow test.
+
+Evidence:
+- `GOLD_H3_HELIOS_V5_DCE_RESULT_2026-10-03.md`
+- `GOLD_H3_HELIOS_V5_DCE_SUMMARY_2026-10-03.json`
+- `GOLD_H3_HELIOS_V5_DCE_METRICS_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V5_DCE_PREDICTIONS_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V5_DCE_EXCEPTIONS_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V5_DCE_INFERENCE_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V5_DCE_CLUSTER_INFERENCE_2026-10-03.csv`
+- `GOLD_H3_HELIOS_V5_DCE_SENSITIVITY_2026-10-03.csv`.
+
