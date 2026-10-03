@@ -1,0 +1,15 @@
+{
+  "schema": "GOLD_H3_DATA_INTEGRITY_GATE_V1_REPLAY",
+  "rows": 446,
+  "admitted": 445,
+  "quarantined": 1,
+  "quarantine_dates": [
+    "2026-02-27"
+  ],
+  "key_checks": {
+    "2026-01-30": true,
+    "2026-02-02": true,
+    "2026-02-27": true,
+    "2026-03-02": true
+  }
+}
