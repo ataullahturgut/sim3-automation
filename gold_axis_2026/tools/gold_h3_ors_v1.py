@@ -45,6 +45,7 @@ def load():
 
     keep=[
         "feature_cutoff_date",
+        "y_up",
         "v5_confidence",
         "abs_h_ret_12",
         "trend_strength",
