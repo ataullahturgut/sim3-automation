@@ -5,7 +5,7 @@
   "umbrella_identity": "CLEAN_H3_PROSPECTIVE_V1",
   "freeze_timestamp_utc": "2026-10-03 11:33:49+00:00",
   "first_eligible_feature_cutoff": "2026-10-05",
-  "historical_reproduction_max_abs_diff": 5.551115123125783e-17,
+  "historical_reproduction_max_abs_diff": 0.0,
   "forecast_rows": 0,
   "settled_rows": 0,
   "pending_rows": 0,
