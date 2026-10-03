@@ -9,8 +9,8 @@
 
 ## Reproduction checks
 
-- aurora_reproduction: `{"max_abs_diff_path": 5.551115123125783e-17, "max_abs_diff_structural": 4.440892098500626e-16, "pass": true, "september_rows": 19}`
-- rift: `{"max_abs_prob_diff": 1.1102230246251565e-16, "override_equal": true, "pass": true, "rows": 931}`
+- aurora_reproduction: `{"max_abs_diff_path": 8.881784197001252e-16, "max_abs_diff_structural": 8.049116928532385e-16, "pass": true, "september_rows": 19}`
+- rift: `{"max_abs_prob_diff": 9.270362255620057e-15, "override_equal": true, "pass": true, "rows": 931}`
 - turn: `{"max_abs_prob_diff": 8.326672684688674e-17, "override_equal": true, "pass": true, "rows": 1029}`
-- vega: `{"max_abs_prob_diff": 5.551115123125783e-17, "override_equal": true, "pass": true, "rows": 931}`
-- opal: `{"max_abs_prob_diff": 8.326672684688674e-17, "override_equal": true, "pass": true, "rows": 931}`
+- vega: `{"max_abs_prob_diff": 9.43689570931383e-16, "override_equal": true, "pass": true, "rows": 931}`
+- opal: `{"max_abs_prob_diff": 7.506550936398071e-12, "override_equal": true, "pass": true, "rows": 931}`
