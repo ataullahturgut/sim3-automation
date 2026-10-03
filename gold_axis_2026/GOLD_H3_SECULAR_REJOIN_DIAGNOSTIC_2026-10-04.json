@@ -1,0 +1,307 @@
+{
+  "bridge": {
+    "common_level_rows": 480,
+    "common_return_rows": 479,
+    "pearson": 0.9999999999999999,
+    "sign_agreement": 1.0,
+    "return_diff_sd": 0.0,
+    "pass": true
+  },
+  "api_calls": 11,
+  "year_state": [
+    {
+      "year": 2024,
+      "state": "REJOIN_BOTH",
+      "n": 9,
+      "rescued": 5,
+      "broken": 4,
+      "net": 1,
+      "precision": 0.5555555555555556,
+      "median_signed20": -0.01338854986516047,
+      "median_signed60": -0.05539962809816412
+    },
+    {
+      "year": 2024,
+      "state": "MIXED",
+      "n": 3,
+      "rescued": 3,
+      "broken": 0,
+      "net": 3,
+      "precision": 1.0,
+      "median_signed20": 0.0028624438578281897,
+      "median_signed60": -0.05470210441501511
+    },
+    {
+      "year": 2024,
+      "state": "ALIGN_BOTH",
+      "n": 0,
+      "rescued": 0,
+      "broken": 0,
+      "net": 0,
+      "precision": 0.0,
+      "median_signed20": NaN,
+      "median_signed60": NaN
+    },
+    {
+      "year": 2024,
+      "state": "ALL_OAR",
+      "n": 12,
+      "rescued": 8,
+      "broken": 4,
+      "net": 4,
+      "precision": 0.6666666666666666,
+      "median_signed20": -0.007508691210122098,
+      "median_signed60": -0.0548960116745989
+    },
+    {
+      "year": 2025,
+      "state": "REJOIN_BOTH",
+      "n": 14,
+      "rescued": 7,
+      "broken": 7,
+      "net": 0,
+      "precision": 0.5,
+      "median_signed20": -0.06393850106983612,
+      "median_signed60": -0.11785092326343749
+    },
+    {
+      "year": 2025,
+      "state": "MIXED",
+      "n": 5,
+      "rescued": 4,
+      "broken": 1,
+      "net": 3,
+      "precision": 0.8,
+      "median_signed20": 0.013344032052284405,
+      "median_signed60": -0.00783940819299822
+    },
+    {
+      "year": 2025,
+      "state": "ALIGN_BOTH",
+      "n": 3,
+      "rescued": 3,
+      "broken": 0,
+      "net": 3,
+      "precision": 1.0,
+      "median_signed20": 0.08245189493290983,
+      "median_signed60": 0.15996062648954457
+    },
+    {
+      "year": 2025,
+      "state": "ALL_OAR",
+      "n": 22,
+      "rescued": 14,
+      "broken": 8,
+      "net": 6,
+      "precision": 0.6363636363636364,
+      "median_signed20": -0.03728713522270688,
+      "median_signed60": -0.09801746660964872
+    },
+    {
+      "year": 2026,
+      "state": "REJOIN_BOTH",
+      "n": 3,
+      "rescued": 0,
+      "broken": 3,
+      "net": -3,
+      "precision": 0.0,
+      "median_signed20": -0.05738588993074778,
+      "median_signed60": -0.1597646807540034
+    },
+    {
+      "year": 2026,
+      "state": "MIXED",
+      "n": 5,
+      "rescued": 1,
+      "broken": 4,
+      "net": -3,
+      "precision": 0.2,
+      "median_signed20": 0.022897329443251735,
+      "median_signed60": -0.02279957188534354
+    },
+    {
+      "year": 2026,
+      "state": "ALIGN_BOTH",
+      "n": 11,
+      "rescued": 2,
+      "broken": 9,
+      "net": -7,
+      "precision": 0.18181818181818182,
+      "median_signed20": 0.0449568402724303,
+      "median_signed60": 0.10044568875563087
+    },
+    {
+      "year": 2026,
+      "state": "ALL_OAR",
+      "n": 19,
+      "rescued": 3,
+      "broken": 16,
+      "net": -13,
+      "precision": 0.15789473684210525,
+      "median_signed20": 0.029659282683969224,
+      "median_signed60": 0.07297175413540202
+    }
+  ],
+  "rules": [
+    {
+      "rule": "REJOIN20",
+      "n": 29,
+      "rescued": 14,
+      "broken": 15,
+      "net": -1,
+      "precision": 0.4827586206896552
+    },
+    {
+      "rule": "REJOIN20_2024",
+      "n": 9,
+      "rescued": 5,
+      "broken": 4,
+      "net": 1,
+      "precision": 0.5555555555555556
+    },
+    {
+      "rule": "REJOIN20_2025",
+      "n": 16,
+      "rescued": 9,
+      "broken": 7,
+      "net": 2,
+      "precision": 0.5625
+    },
+    {
+      "rule": "REJOIN20_2026",
+      "n": 4,
+      "rescued": 0,
+      "broken": 4,
+      "net": -4,
+      "precision": 0.0
+    },
+    {
+      "rule": "REJOIN60",
+      "n": 36,
+      "rescued": 18,
+      "broken": 18,
+      "net": 0,
+      "precision": 0.5
+    },
+    {
+      "rule": "REJOIN60_2024",
+      "n": 12,
+      "rescued": 8,
+      "broken": 4,
+      "net": 4,
+      "precision": 0.6666666666666666
+    },
+    {
+      "rule": "REJOIN60_2025",
+      "n": 17,
+      "rescued": 9,
+      "broken": 8,
+      "net": 1,
+      "precision": 0.5294117647058824
+    },
+    {
+      "rule": "REJOIN60_2026",
+      "n": 7,
+      "rescued": 1,
+      "broken": 6,
+      "net": -5,
+      "precision": 0.14285714285714285
+    },
+    {
+      "rule": "REJOIN_EITHER",
+      "n": 39,
+      "rescued": 20,
+      "broken": 19,
+      "net": 1,
+      "precision": 0.5128205128205128
+    },
+    {
+      "rule": "REJOIN_EITHER_2024",
+      "n": 12,
+      "rescued": 8,
+      "broken": 4,
+      "net": 4,
+      "precision": 0.6666666666666666
+    },
+    {
+      "rule": "REJOIN_EITHER_2025",
+      "n": 19,
+      "rescued": 11,
+      "broken": 8,
+      "net": 3,
+      "precision": 0.5789473684210527
+    },
+    {
+      "rule": "REJOIN_EITHER_2026",
+      "n": 8,
+      "rescued": 1,
+      "broken": 7,
+      "net": -6,
+      "precision": 0.125
+    },
+    {
+      "rule": "REJOIN_BOTH",
+      "n": 26,
+      "rescued": 12,
+      "broken": 14,
+      "net": -2,
+      "precision": 0.46153846153846156
+    },
+    {
+      "rule": "REJOIN_BOTH_2024",
+      "n": 9,
+      "rescued": 5,
+      "broken": 4,
+      "net": 1,
+      "precision": 0.5555555555555556
+    },
+    {
+      "rule": "REJOIN_BOTH_2025",
+      "n": 14,
+      "rescued": 7,
+      "broken": 7,
+      "net": 0,
+      "precision": 0.5
+    },
+    {
+      "rule": "REJOIN_BOTH_2026",
+      "n": 3,
+      "rescued": 0,
+      "broken": 3,
+      "net": -3,
+      "precision": 0.0
+    },
+    {
+      "rule": "ALIGN_BOTH",
+      "n": 14,
+      "rescued": 5,
+      "broken": 9,
+      "net": -4,
+      "precision": 0.35714285714285715
+    },
+    {
+      "rule": "ALIGN_BOTH_2024",
+      "n": 0,
+      "rescued": 0,
+      "broken": 0,
+      "net": 0,
+      "precision": 0.0
+    },
+    {
+      "rule": "ALIGN_BOTH_2025",
+      "n": 3,
+      "rescued": 3,
+      "broken": 0,
+      "net": 3,
+      "precision": 1.0
+    },
+    {
+      "rule": "ALIGN_BOTH_2026",
+      "n": 11,
+      "rescued": 2,
+      "broken": 9,
+      "net": -7,
+      "precision": 0.18181818181818182
+    }
+  ]
+}
