@@ -113,7 +113,7 @@ def met(v,col):
 def main():
     ts=now_utc(); a=read_dates(AURORA_LEDGER); v=read_v5(); miss=read_miss(); v,settled=settle(v,a,ts)
     if a.empty:
-        g=pd.DataFrame(); md=0.0
+        g=pd.DataFrame(); md=None
     else:
         g,md=chain(a)
     existing=set(pd.to_datetime(v.feature_cutoff_date,errors="coerce").dropna().dt.normalize()) if len(v) else set(); missed=set(pd.to_datetime(miss.feature_cutoff_date,errors="coerce").dropna().dt.normalize()) if len(miss) else set(); issued=0
@@ -133,7 +133,7 @@ def main():
     ma,mv=met(v,"p_clean_aurora"),met(v,"p_clean_v5");z=v[v.settlement_status=="SETTLED"];resc=brok=0
     if len(z):
         ch=(z.p_clean_aurora>=.5)!=(z.p_clean_v5>=.5);y=z.y_up.astype(int);resc=int((ch&((z.p_clean_aurora>=.5).astype(int)!=y)&((z.p_clean_v5>=.5).astype(int)==y)).sum());brok=int((ch&((z.p_clean_aurora>=.5).astype(int)==y)&((z.p_clean_v5>=.5).astype(int)!=y)).sum())
-    s={"identity":"CLEAN_V5_DCE_H3_V1_PROSPECTIVE_SHADOW","umbrella_identity":"CLEAN_H3_PROSPECTIVE_V1","freeze_timestamp_utc":str(FREEZE_TS),"first_eligible_feature_cutoff":str(FIRST_FEATURE.date()),"historical_reproduction_max_abs_diff":md,"forecast_rows":len(v),"settled_rows":int((v.settlement_status=="SETTLED").sum()) if len(v) else 0,"pending_rows":int((v.settlement_status!="SETTLED").sum()) if len(v) else 0,"missed_origins":len(miss),"new_forecasts":issued,"new_settlements":settled,"aurora_metrics":ma,"v5_metrics":mv,"rescued":resc,"broken":brok,"net_rescue":resc-brok}
+    s={"identity":"CLEAN_V5_DCE_H3_V1_PROSPECTIVE_SHADOW","umbrella_identity":"CLEAN_H3_PROSPECTIVE_V1","freeze_timestamp_utc":str(FREEZE_TS),"first_eligible_feature_cutoff":str(FIRST_FEATURE.date()),"historical_reproduction_status":"FULL_CHAIN_PASS" if md is not None else "BOOTSTRAP_EXPERTS_PASS_FULL_CHAIN_DEFERRED_UNTIL_FIRST_ORIGIN","historical_reproduction_max_abs_diff":md,"forecast_rows":len(v),"settled_rows":int((v.settlement_status=="SETTLED").sum()) if len(v) else 0,"pending_rows":int((v.settlement_status!="SETTLED").sum()) if len(v) else 0,"missed_origins":len(miss),"new_forecasts":issued,"new_settlements":settled,"aurora_metrics":ma,"v5_metrics":mv,"rescued":resc,"broken":brok,"net_rescue":resc-brok}
     (OUT/"GOLD_H3_CLEAN_PROSPECTIVE_V1_V5_STATUS.json").write_text(json.dumps(s,indent=2,sort_keys=True,default=str)+"\n")
     (OUT/"GOLD_H3_CLEAN_PROSPECTIVE_V1_V5_STATUS.md").write_text("# CLEAN V5-DCE H3 V1 — PROSPECTIVE SHADOW STATUS\n\n"+json.dumps(s,indent=2,default=str)+"\n")
     print(json.dumps(s,default=str))
