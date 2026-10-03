@@ -96,3 +96,5 @@ for r in sorted(shift,key=lambda x:abs(x["smd_2026_minus_dev"]) if np.isfinite(x
     lines.append(f"| {r['feature']} | {r['smd_2026_minus_dev']:+.3f} |")
 MD.write_text("\n".join(lines)+"\n")
 print(MD.read_text())
+
+# trigger: concept-drift-ready
