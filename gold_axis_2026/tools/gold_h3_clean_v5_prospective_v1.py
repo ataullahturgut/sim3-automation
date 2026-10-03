@@ -111,7 +111,7 @@ def met(v,col):
     return {"n":len(z),"accuracy":float(np.mean(d==y)),"balanced_accuracy":float(balanced_accuracy_score(y,d)) if len(np.unique(y))==2 else None,"brier":float(np.mean((p-y)**2)),"logloss":float(log_loss(y,np.clip(p,1e-6,1-1e-6),labels=[0,1])),"up_recall":float(recall_score(y,d,pos_label=1,zero_division=0)),"down_recall":float(recall_score(y,d,pos_label=0,zero_division=0))}
 
 def main():
-    ts=now_utc(); a=read_dates(AURORA_LEDGER); v=read_v5(); miss=read_miss(); v,settled=settle(v,a,ts); g,md=chain(a)
+    ts=now_utc(); a=read_dates(AURORA_LEDGER); v=read_v5(); miss=read_miss(); v,settled=settle(v,a,ts)\n    if a.empty:\n        g=pd.DataFrame(); md=0.0\n    else:\n        g,md=chain(a)
     existing=set(pd.to_datetime(v.feature_cutoff_date,errors="coerce").dropna().dt.normalize()) if len(v) else set(); missed=set(pd.to_datetime(miss.feature_cutoff_date,errors="coerce").dropna().dt.normalize()) if len(miss) else set(); issued=0
     for ar in a.sort_values("feature_cutoff_date").itertuples(index=False):
         d=pd.Timestamp(ar.feature_cutoff_date).normalize()
