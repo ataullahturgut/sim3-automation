@@ -1,0 +1,102 @@
+{
+  "schema": "FLOW_H3_V1_PREREG_V1",
+  "frozen_at": "2026-10-03",
+  "branch": "gold-h3-flow-v1-20261003",
+  "baseline": "HELIOS_V5_DCE_CLEAN",
+  "role": "HIGH_RECALL_MOMENTUM_REVERSAL_CANDIDATE_SPECIALIST",
+  "source": {
+    "provider": "CME Group",
+    "exchange_code": "XCEC",
+    "product_code": "GC",
+    "dataset_code": "EOD_XCEC_GC_FUT_0",
+    "instrument": "FUT",
+    "file_class": "FINAL_ONLY",
+    "silent_substitution": false
+  },
+  "clock": {
+    "h3_origin": "17:00 America/New_York",
+    "selection_rule": "latest FINAL GC row with available_as_of <= origin_ts",
+    "same_trade_date_allowed": false,
+    "preliminary_allowed": false
+  },
+  "target": {
+    "expression": "int(y_up != int(h_ret_12 >= 0))",
+    "candidate_context": "aurora_pred == int(h_ret_12 >= 0)"
+  },
+  "periods": {
+    "dev": [
+      "2023-01-01",
+      "2024-12-31"
+    ],
+    "confirmation": [
+      "2025-01-01",
+      "2025-12-31"
+    ],
+    "holdout": [
+      "2026-01-01",
+      "2026-12-31"
+    ]
+  },
+  "features": [
+    "dlog_volume_1",
+    "dlog_oi_1",
+    "volume_z20",
+    "oi_z20",
+    "volume_oi_ratio",
+    "d_volume_oi_ratio_1",
+    "oi_accel_5",
+    "volume_accel_5",
+    "momentum_x_dlog_oi",
+    "momentum_x_volume_z20"
+  ],
+  "model": {
+    "family": "StandardScaler+LogisticRegression",
+    "C": 1,
+    "solver": "lbfgs",
+    "class_weight": "balanced",
+    "seed": 20261003,
+    "refit": "monthly_expanding_origin",
+    "min_matured_rows": 80
+  },
+  "threshold_selection": {
+    "grid": [
+      0.35,
+      0.4,
+      0.45,
+      0.5,
+      0.55
+    ],
+    "data": "2023-2024 only",
+    "objective": "maximize F2",
+    "constraints": {
+      "candidate_precision_min": 0.45,
+      "candidate_rate_max": 0.35
+    },
+    "tie_break": [
+      "reversal_recall_desc",
+      "precision_desc",
+      "candidate_rate_asc",
+      "threshold_desc"
+    ],
+    "no_eligible_status": "NO_ELIGIBLE_FLOW_THRESHOLD"
+  },
+  "confirmation_2025": {
+    "candidate_precision_min": 0.4,
+    "requires_recall_gt_opal": true,
+    "requires_true_opal_miss_found": true
+  },
+  "holdout_2026": {
+    "retuning": false,
+    "primary": "count true reversals among OPAL-no-candidate misses nominated by FLOW",
+    "known_missed_opal_no_candidate_count": 55
+  },
+  "readiness": {
+    "source_identity": "PASS",
+    "pit_clock": "PASS",
+    "neon_existing_gc_voi": "ABSENT",
+    "repo_datamine_integration": "ABSENT",
+    "historical_entitlement": "UNVERIFIED",
+    "payload_loaded": false,
+    "fitting_allowed": false
+  }
+}
