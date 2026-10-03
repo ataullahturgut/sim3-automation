@@ -46,6 +46,7 @@ def load():
     keep=[
         "feature_cutoff_date",
         "y_up",
+        "target_r3",
         "v5_confidence",
         "abs_h_ret_12",
         "trend_strength",
@@ -84,6 +85,11 @@ def load():
     z=z[z.eligible_v5_continuation].copy()
     z=z.dropna(subset=ZCOLS+["F_reversal","F_continuation","S3","rescue_target"])
     z=z.sort_values("forecast_issue_date").reset_index(drop=True)
+
+    required=["y_up","target_r3","v5_pred","momentum_up","rescue_target","F_reversal","F_continuation","S3"]+ZCOLS
+    missing=[x for x in required if x not in z.columns]
+    if missing:
+        raise RuntimeError(f"ORS schema missing columns: {missing}")
 
     # Identity check already known, but enforce again locally.
     terminal_reversal=(z.y_up.astype(int)!=z.momentum_up.astype(int)).astype(int)
