@@ -1,0 +1,34 @@
+name: Gold H3 RTE V1 DEV Diagnostic
+on:
+  push:
+    branches: [gold-h3-rte-v1-20261003]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_rte_v1_dev_diagnostic.py'
+      - '.github/workflows/gold-h3-rte-v1-dev-diagnostic.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-rte-v1-20261003
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check numpy pandas
+      - run: python gold_axis_2026/tools/gold_h3_rte_v1_dev_diagnostic.py
+      - name: Record diagnostic
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_RTE_V1_DEV_DIAGNOSTIC_2026-10-03.md gold_axis_2026/GOLD_H3_RTE_V1_DEV_DIAGNOSTIC_2026-10-03.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record RTE V1 DEV diagnostic"
+            git pull --rebase origin gold-h3-rte-v1-20261003
+            git push origin HEAD:gold-h3-rte-v1-20261003
+          fi
