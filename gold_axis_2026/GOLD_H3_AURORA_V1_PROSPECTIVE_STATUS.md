@@ -7,6 +7,8 @@
 **Pending:** **0**  
 **Missed origins:** **0**  
 **Frozen September reproduction:** **PASS**
+**Data integrity gate:** **GOLD_H3_DATA_INTEGRITY_GATE_V1**
+**Integrity quarantines:** **0**
 
 No prospective H3 target has matured yet.
 

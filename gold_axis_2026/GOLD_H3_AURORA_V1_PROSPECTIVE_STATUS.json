@@ -8,6 +8,9 @@
     "september_rows": 19
   },
   "identity": "AURORA_H3_V1_PROSPECTIVE",
+  "integrity_audit_rows": 0,
+  "integrity_gate_version": "GOLD_H3_DATA_INTEGRITY_GATE_V1",
+  "integrity_quarantine_rows": 0,
   "latest_forecast": null,
   "live_stak_ref": "54fdf1c8d39b7b6c7b874d0f30f784296e886044",
   "metrics": {
@@ -21,6 +24,7 @@
   "this_run_changes": {
     "built_frozen_expert_matrix": false,
     "built_frozen_price_snapshot": false,
+    "integrity_quarantined_now": 0,
     "new_forecasts": 0,
     "new_price_rows": 0,
     "new_settlements": 0
