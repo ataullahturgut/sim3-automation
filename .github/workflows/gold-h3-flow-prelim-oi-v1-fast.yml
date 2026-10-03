@@ -1,0 +1,34 @@
+name: Gold H3 FLOW Preliminary OI V1 Fast
+on:
+  push:
+    branches: [gold-h3-flow-oi-salvage-v1-20261003]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_flow_prelim_oi_v1_fast.py'
+      - '.github/workflows/gold-h3-flow-prelim-oi-v1-fast.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-flow-oi-salvage-v1-20261003
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check numpy pandas scikit-learn openpyxl
+      - run: python gold_axis_2026/tools/gold_h3_flow_prelim_oi_v1_fast.py
+      - name: Record fast transport evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_FLOW_PRELIM_OI_V1_FAST_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record FLOW preliminary OI H3 V1 fast evidence"
+            git pull --rebase origin gold-h3-flow-oi-salvage-v1-20261003
+            git push origin HEAD:gold-h3-flow-oi-salvage-v1-20261003
+          fi
