@@ -2,18 +2,10 @@
   "forecast_rows": 0,
   "freeze_timestamp_utc": "2026-10-02 19:10:36+00:00",
   "frozen_reproduction_audit": {
-    "max_abs_diff_path": 1.6653345369377348e-16,
-    "max_abs_diff_structural": 6.106226635438361e-16,
+    "max_abs_diff_path": 1.5787371410169726e-13,
+    "max_abs_diff_structural": 2.4424906541753444e-15,
     "pass": true,
-    "september_rows": 19,
-    "source_bridge": {
-      "common_level_rows": 480,
-      "common_return_rows": 479,
-      "pass": true,
-      "pearson": 0.9999999999999999,
-      "return_diff_sd": 0.0,
-      "sign_agreement": 1.0
-    }
+    "september_rows": 19
   },
   "identity": "AURORA_H3_V1_PROSPECTIVE",
   "latest_forecast": null,
@@ -27,8 +19,8 @@
   "settled_rows": 0,
   "status": "ACTIVE",
   "this_run_changes": {
-    "built_frozen_expert_matrix": true,
-    "built_frozen_price_snapshot": true,
+    "built_frozen_expert_matrix": false,
+    "built_frozen_price_snapshot": false,
     "new_forecasts": 0,
     "new_price_rows": 0,
     "new_settlements": 0
