@@ -27,4 +27,3 @@
 ## Governance
 
 No 2026 outcome was used for feature, lag, threshold, proxy source, or confirmation selection. 2026 was evaluated only if the preregistered 2025 confirmation gate passed. DIVERGE is not promoted to HELIOS from this result alone.
-
