@@ -1,0 +1,99 @@
+{
+  "schema": "FLOW_H3_CME_PUBLIC_PROBE_V1",
+  "xlsx": [
+    {
+      "date": "20220103",
+      "url": "https://www.cmegroup.com/ftp/pub/pub/daily_volume/daily_volume_20220103.xlsx",
+      "status": 403,
+      "bytes": 602,
+      "text_head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other "
+    },
+    {
+      "date": "20240102",
+      "url": "https://www.cmegroup.com/ftp/pub/pub/daily_volume/daily_volume_20240102.xlsx",
+      "status": 403,
+      "bytes": 602,
+      "text_head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other "
+    },
+    {
+      "date": "20250930",
+      "url": "https://www.cmegroup.com/ftp/pub/pub/daily_volume/daily_volume_20250930.xlsx",
+      "status": 403,
+      "bytes": 602,
+      "text_head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other "
+    },
+    {
+      "date": "20260930",
+      "url": "https://www.cmegroup.com/ftp/pub/pub/daily_volume/daily_volume_20260930.xlsx",
+      "status": 403,
+      "bytes": 602,
+      "text_head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other "
+    }
+  ],
+  "json_endpoint": [
+    {
+      "date": "20220103",
+      "url": "https://www.cmegroup.com/CmeWS/mvc/Volume/Details/F/437/20220103/F?tradeDate=20220103&pageSize=50",
+      "status": 403,
+      "bytes": 602,
+      "flag": "F",
+      "text_head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other scraping mechanisms is strictly prohibited by CME Group\u2019s website Data Terms of Use. If you are attempting to access data or content from the website via automated means or for commercial purposes, CME has numerous other methods to deliver the content you require. Please contact CME Group's Global Command Center (GCC) at gcc@cmegroup.com and your inquiry will be directed to the appropriate team.\"}"
+    },
+    {
+      "date": "20220103",
+      "url": "https://www.cmegroup.com/CmeWS/mvc/Volume/Details/F/437/20220103/P?tradeDate=20220103&pageSize=50",
+      "status": 403,
+      "bytes": 602,
+      "flag": "P",
+      "text_head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other scraping mechanisms is strictly prohibited by CME Group\u2019s website Data Terms of Use. If you are attempting to access data or content from the website via automated means or for commercial purposes, CME has numerous other methods to deliver the content you require. Please contact CME Group's Global Command Center (GCC) at gcc@cmegroup.com and your inquiry will be directed to the appropriate team.\"}"
+    },
+    {
+      "date": "20240102",
+      "url": "https://www.cmegroup.com/CmeWS/mvc/Volume/Details/F/437/20240102/F?tradeDate=20240102&pageSize=50",
+      "status": 403,
+      "bytes": 602,
+      "flag": "F",
+      "text_head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other scraping mechanisms is strictly prohibited by CME Group\u2019s website Data Terms of Use. If you are attempting to access data or content from the website via automated means or for commercial purposes, CME has numerous other methods to deliver the content you require. Please contact CME Group's Global Command Center (GCC) at gcc@cmegroup.com and your inquiry will be directed to the appropriate team.\"}"
+    },
+    {
+      "date": "20240102",
+      "url": "https://www.cmegroup.com/CmeWS/mvc/Volume/Details/F/437/20240102/P?tradeDate=20240102&pageSize=50",
+      "status": 403,
+      "bytes": 602,
+      "flag": "P",
+      "text_head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other scraping mechanisms is strictly prohibited by CME Group\u2019s website Data Terms of Use. If you are attempting to access data or content from the website via automated means or for commercial purposes, CME has numerous other methods to deliver the content you require. Please contact CME Group's Global Command Center (GCC) at gcc@cmegroup.com and your inquiry will be directed to the appropriate team.\"}"
+    },
+    {
+      "date": "20250930",
+      "url": "https://www.cmegroup.com/CmeWS/mvc/Volume/Details/F/437/20250930/F?tradeDate=20250930&pageSize=50",
+      "status": 403,
+      "bytes": 602,
+      "flag": "F",
+      "text_head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other scraping mechanisms is strictly prohibited by CME Group\u2019s website Data Terms of Use. If you are attempting to access data or content from the website via automated means or for commercial purposes, CME has numerous other methods to deliver the content you require. Please contact CME Group's Global Command Center (GCC) at gcc@cmegroup.com and your inquiry will be directed to the appropriate team.\"}"
+    },
+    {
+      "date": "20250930",
+      "url": "https://www.cmegroup.com/CmeWS/mvc/Volume/Details/F/437/20250930/P?tradeDate=20250930&pageSize=50",
+      "status": 403,
+      "bytes": 602,
+      "flag": "P",
+      "text_head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other scraping mechanisms is strictly prohibited by CME Group\u2019s website Data Terms of Use. If you are attempting to access data or content from the website via automated means or for commercial purposes, CME has numerous other methods to deliver the content you require. Please contact CME Group's Global Command Center (GCC) at gcc@cmegroup.com and your inquiry will be directed to the appropriate team.\"}"
+    },
+    {
+      "date": "20260930",
+      "url": "https://www.cmegroup.com/CmeWS/mvc/Volume/Details/F/437/20260930/F?tradeDate=20260930&pageSize=50",
+      "status": 403,
+      "bytes": 602,
+      "flag": "F",
+      "text_head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other scraping mechanisms is strictly prohibited by CME Group\u2019s website Data Terms of Use. If you are attempting to access data or content from the website via automated means or for commercial purposes, CME has numerous other methods to deliver the content you require. Please contact CME Group's Global Command Center (GCC) at gcc@cmegroup.com and your inquiry will be directed to the appropriate team.\"}"
+    },
+    {
+      "date": "20260930",
+      "url": "https://www.cmegroup.com/CmeWS/mvc/Volume/Details/F/437/20260930/P?tradeDate=20260930&pageSize=50",
+      "status": 403,
+      "bytes": 602,
+      "flag": "P",
+      "text_head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other scraping mechanisms is strictly prohibited by CME Group\u2019s website Data Terms of Use. If you are attempting to access data or content from the website via automated means or for commercial purposes, CME has numerous other methods to deliver the content you require. Please contact CME Group's Global Command Center (GCC) at gcc@cmegroup.com and your inquiry will be directed to the appropriate team.\"}"
+    }
+  ]
+}
