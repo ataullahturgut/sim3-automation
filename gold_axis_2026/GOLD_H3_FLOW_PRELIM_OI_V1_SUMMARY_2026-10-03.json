@@ -1,0 +1,143 @@
+{
+  "schema": "FLOW_PRELIM_OI_H3_V1",
+  "status": "NO_ELIGIBLE_FLOW_PRELIM_OI_THRESHOLD",
+  "source": {
+    "host": "ftp.cmegroup.com",
+    "dir": "/daily_volume",
+    "listing_count": 3215,
+    "date_min": "2022-01-01",
+    "date_max": "2026-09-30",
+    "rows": 1193,
+    "pass_rows": 1057
+  },
+  "coverage": [
+    {
+      "year": 2022,
+      "listed_files": 251,
+      "pass_rows": 251,
+      "coverage": 1.0,
+      "min_pass": "2022-01-03",
+      "max_pass": "2022-12-30",
+      "missing_rows": 0,
+      "missing_statuses": ""
+    },
+    {
+      "year": 2023,
+      "listed_files": 251,
+      "pass_rows": 250,
+      "coverage": 0.9960159362549801,
+      "min_pass": "2023-01-03",
+      "max_pass": "2023-12-29",
+      "missing_rows": 1,
+      "missing_statuses": "MISSING_VALUE:1"
+    },
+    {
+      "year": 2024,
+      "listed_files": 252,
+      "pass_rows": 252,
+      "coverage": 1.0,
+      "min_pass": "2024-01-02",
+      "max_pass": "2024-12-31",
+      "missing_rows": 0,
+      "missing_statuses": ""
+    },
+    {
+      "year": 2025,
+      "listed_files": 251,
+      "pass_rows": 251,
+      "coverage": 1.0,
+      "min_pass": "2025-01-02",
+      "max_pass": "2025-12-31",
+      "missing_rows": 0,
+      "missing_statuses": ""
+    },
+    {
+      "year": 2026,
+      "listed_files": 188,
+      "pass_rows": 53,
+      "coverage": 0.28191489361702127,
+      "min_pass": "2026-01-02",
+      "max_pass": "2026-03-19",
+      "missing_rows": 135,
+      "missing_statuses": "NO_HEADER:135"
+    }
+  ],
+  "aligned_rows": 899,
+  "prediction_rows": 768,
+  "selected_threshold": null,
+  "threshold_grid": [
+    {
+      "threshold": 0.35,
+      "eligible_n": 388,
+      "candidate_n": 343,
+      "true_reversal_n": 111,
+      "tp": 99,
+      "fp": 244,
+      "fn": 12,
+      "precision": 0.2886297376093295,
+      "recall": 0.8918918918918919,
+      "candidate_rate": 0.884020618556701,
+      "f2": 0.6289707750952986,
+      "eligible": false
+    },
+    {
+      "threshold": 0.4,
+      "eligible_n": 388,
+      "candidate_n": 302,
+      "true_reversal_n": 111,
+      "tp": 85,
+      "fp": 217,
+      "fn": 26,
+      "precision": 0.2814569536423841,
+      "recall": 0.7657657657657657,
+      "candidate_rate": 0.7783505154639175,
+      "f2": 0.5697050938337802,
+      "eligible": false
+    },
+    {
+      "threshold": 0.45,
+      "eligible_n": 388,
+      "candidate_n": 239,
+      "true_reversal_n": 111,
+      "tp": 63,
+      "fp": 176,
+      "fn": 48,
+      "precision": 0.26359832635983266,
+      "recall": 0.5675675675675675,
+      "candidate_rate": 0.615979381443299,
+      "f2": 0.4612005856515373,
+      "eligible": false
+    },
+    {
+      "threshold": 0.5,
+      "eligible_n": 388,
+      "candidate_n": 176,
+      "true_reversal_n": 111,
+      "tp": 46,
+      "fp": 130,
+      "fn": 65,
+      "precision": 0.26136363636363635,
+      "recall": 0.4144144144144144,
+      "candidate_rate": 0.4536082474226804,
+      "f2": 0.3709677419354839,
+      "eligible": false
+    },
+    {
+      "threshold": 0.55,
+      "eligible_n": 388,
+      "candidate_n": 109,
+      "true_reversal_n": 111,
+      "tp": 31,
+      "fp": 78,
+      "fn": 80,
+      "precision": 0.28440366972477066,
+      "recall": 0.27927927927927926,
+      "candidate_rate": 0.2809278350515464,
+      "f2": 0.2802893309222423,
+      "eligible": false
+    }
+  ],
+  "confirmation_2025": null,
+  "confirmation_pass": null,
+  "holdout_2026": null
+}
