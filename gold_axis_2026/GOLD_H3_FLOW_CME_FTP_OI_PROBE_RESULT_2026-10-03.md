@@ -2,7 +2,7 @@
 
 - host: ftp.cmegroup.com
 - dir: /daily_volume
-- listing count: 3214
+- listing count: 3215
 
 ## 20230103
 - exists: True
