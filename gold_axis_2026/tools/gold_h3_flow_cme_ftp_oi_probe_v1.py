@@ -61,3 +61,5 @@ for x in res["files"]:
     lines.append("")
 (OUT/"RESULT.md").write_text("\n".join(lines))
 print((OUT/"RESULT.md").read_text())
+
+# trigger: ftp-workflow-ready
