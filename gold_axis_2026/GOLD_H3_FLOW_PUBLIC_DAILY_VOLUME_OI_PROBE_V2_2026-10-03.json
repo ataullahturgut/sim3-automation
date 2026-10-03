@@ -1,0 +1,42 @@
+[
+  {
+    "date": "20230103",
+    "url": "https://www.cmegroup.com/ftp/pub/pub/pub/daily_volume/daily_volume_20230103.xlsx",
+    "status": 403,
+    "bytes": 602,
+    "content_type": "application/json",
+    "head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other scraping mechanisms is strictly prohibited by CME Group\u2019s website Data Terms of Use. If you are attempting to access data or content from the website via automated means or for commercial purposes, CME has numerous other methods to deliver the content you require. Please contact CME Group's Global C"
+  },
+  {
+    "date": "20231229",
+    "url": "https://www.cmegroup.com/ftp/pub/pub/pub/daily_volume/daily_volume_20231229.xlsx",
+    "status": 403,
+    "bytes": 602,
+    "content_type": "application/json",
+    "head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other scraping mechanisms is strictly prohibited by CME Group\u2019s website Data Terms of Use. If you are attempting to access data or content from the website via automated means or for commercial purposes, CME has numerous other methods to deliver the content you require. Please contact CME Group's Global C"
+  },
+  {
+    "date": "20240102",
+    "url": "https://www.cmegroup.com/ftp/pub/pub/pub/daily_volume/daily_volume_20240102.xlsx",
+    "status": 403,
+    "bytes": 602,
+    "content_type": "application/json",
+    "head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other scraping mechanisms is strictly prohibited by CME Group\u2019s website Data Terms of Use. If you are attempting to access data or content from the website via automated means or for commercial purposes, CME has numerous other methods to deliver the content you require. Please contact CME Group's Global C"
+  },
+  {
+    "date": "20240328",
+    "url": "https://www.cmegroup.com/ftp/pub/pub/pub/daily_volume/daily_volume_20240328.xlsx",
+    "status": 403,
+    "bytes": 602,
+    "content_type": "application/json",
+    "head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other scraping mechanisms is strictly prohibited by CME Group\u2019s website Data Terms of Use. If you are attempting to access data or content from the website via automated means or for commercial purposes, CME has numerous other methods to deliver the content you require. Please contact CME Group's Global C"
+  },
+  {
+    "date": "20261002",
+    "url": "https://www.cmegroup.com/ftp/pub/pub/pub/daily_volume/daily_volume_20261002.xlsx",
+    "status": 403,
+    "bytes": 602,
+    "content_type": "application/json",
+    "head": "{\"message\": \"This IP address is blocked due to suspected web scraping activity associated with it on this CMEgroup.com page. Use of scripts, software, spiders, robots, avatars, agents, tools or other scraping mechanisms is strictly prohibited by CME Group\u2019s website Data Terms of Use. If you are attempting to access data or content from the website via automated means or for commercial purposes, CME has numerous other methods to deliver the content you require. Please contact CME Group's Global C"
+  }
+]
