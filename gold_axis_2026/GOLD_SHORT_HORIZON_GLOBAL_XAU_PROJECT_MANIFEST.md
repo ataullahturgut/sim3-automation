@@ -4486,3 +4486,149 @@ HELIOS V5-DCE remains the binding direction champion.
 Authority:
 - `GOLD_H3_FRS_V1_CLOSURE_2026-10-04.md`
 - closure commit `adc95549b9bc90c0533b688f2068e5808c055781`.
+
+
+## 51. TRES — TRANSITION / REVERSAL EVENT-SURVIVAL RESEARCH V1/V2 (2026-10-04)
+
+**Objective:** replace the terminal-only H3 reversal framing with an origin-safe path-event representation, then test whether that representation can safely repair HELIOS V5 continuation errors.
+
+### 51.1 Stage 0 — event semantics
+
+Frozen path:
+- origin = feature_cutoff_date;
+- H1/H2/H3 = next 1st/2nd/3rd available Gold observations;
+- primary barrier = 1.00× origin-safe sigma20;
+- momentum-normalized cumulative return.
+
+Integrity:
+- 1,029 / 1,029 rows audited;
+- failures 0;
+- max target-r3 identity error 9.975e-17.
+
+First-passage terminal-reversal rates:
+- REVERSAL: **96.59%**
+- CONTINUATION: **10.18%**
+- CENSORED: **46.35%**.
+
+Stage 0: PASS.
+
+### 51.2 Stage 1 — discrete competing-risk survival
+
+Monthly expanding multinomial hazard model, no leakage.
+
+Replay:
+- 679 OOS predictions;
+- 2024-01-02 .. 2026-09-24;
+- cumulative-incidence identity failures 0;
+- maturity leakage failures 0.
+
+F_reversal top-vs-bottom quintile:
+- first-passage reversal: **4.41% -> 34.56%** (+30.15 pp)
+- terminal H3 reversal: **20.59% -> 52.94%** (+32.35 pp).
+
+Terminal-reversal separation stayed positive in all six half-year blocks:
++50.0 / +40.0 / +45.8 / +19.2 / +23.1 / +15.4 pp.
+
+Status:
+`TRES_EVENT_SIGNAL_PASS`.
+
+Binding positive finding:
+**event-time/path state is one of the most stable reversal-risk representations found in the project.**
+
+### 51.3 Stage 2 — V5 error-risk stacking
+
+Only prior OOS Stage-1 predictions were used.
+
+Baseline -> survival-augmented error-risk:
+- AUC 0.5595 -> **0.5552**
+- Brier 0.2332 -> **0.2355**
+- log loss 0.6673 -> **0.6730**.
+
+Status:
+`NO_INCREMENTAL_TRES_ERROR_RISK`.
+
+The extra logistic stacking layer degraded the survival signal.
+
+Direct diagnostic in V5-continuation eligible origins:
+- F_reversal AUC **0.6194**
+- cause-share AUC 0.6138
+- cause-dominance AUC 0.6030
+- F_reversal bottom/top error rate **19.47% -> 40.71%** (+21.24 pp).
+
+On the exact Stage-2 scored universe:
+- meta p_error AUC 0.5552
+- direct F_reversal AUC **0.6033**.
+
+Conclusion:
+**retain the survival representation; reject the Stage-2 meta-classifier.**
+
+### 51.4 Absorbing-risk flaw / path sequence
+
+The first-passage abstraction loses later crossovers.
+
+Fixed 1σ motifs:
+- C_ONLY 527, terminal reversal 6.45%
+- R_ONLY 199, 99.50%
+- C_THEN_R 23, **95.65%**
+- R_THEN_C 6, **0.00%**
+- NONE 274, 46.35%.
+
+Latest decisive barrier state:
+- CONTINUATION_LAST 533, terminal reversal **6.38%**
+- REVERSAL_LAST 222, **99.10%**
+- UNRESOLVED 274, **46.35%**.
+
+This provides a principled three-state uncertainty representation:
+reversal / continuation / unresolved.
+
+### 51.5 TRES V2 — last-state path governor
+
+Multinomial probabilities:
+- mu_R = P(REVERSAL_LAST)
+- mu_C = P(CONTINUATION_LAST)
+- mu_U = P(UNRESOLVED).
+
+Frozen reversal action:
+- only when V5 follows momentum;
+- FLIP only if mu_R is the largest membership.
+
+Replay:
+- eligible 561
+- flips 35 (6.24%)
+- rescue / broken / net = **15 / 20 / -5**
+- precision **42.86%**
+- V5 67.30% -> assisted **66.57%**.
+
+Block net:
++1 / -1 / +4 / **-6** / -2 / -1.
+
+Status:
+`TRES_V2_PATH_GOVERNOR_FAIL`.
+
+### 51.6 Binding conclusion
+
+Retain:
+- Stage-1 event-time / survival outputs as an auxiliary research signal;
+- last-state reversal/continuation/unresolved representation.
+
+Reject:
+- V5 error-risk restacking;
+- simple argmax path-state FLIP governor.
+
+The remaining problem is intervention selectivity:
+**which reversal-prone origin is strong enough to justify overturning an already-good V5 continuation call?**
+
+For later fuzzy / Picture / Neutrosophic work, the path-state tuple
+`(mu_R, mu_U, mu_C)`
+is the preferred uncertainty basis instead of hand-built arbitrary memberships.
+
+Until independent FLIP evidence exists, use it only for:
+- confidence damping;
+- abstention;
+- conflict / uncertainty measurement.
+
+HELIOS V5-DCE remains the binding direction champion.
+
+Authority:
+- `GOLD_H3_TRES_V1_V2_CLOSURE_2026-10-04.md`
+- closure commit `7811feb369df56a4369b68d5fd8ac579688f878b`.
