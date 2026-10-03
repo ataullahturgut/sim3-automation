@@ -4632,3 +4632,159 @@ HELIOS V5-DCE remains the binding direction champion.
 Authority:
 - `GOLD_H3_TRES_V1_V2_CLOSURE_2026-10-04.md`
 - closure commit `7811feb369df56a4369b68d5fd8ac579688f878b`.
+
+
+## 52. ORS — ORTHOGONAL REVERSAL SURPRISE V1 (2026-10-04)
+
+**Objective:** test whether TRES reversal risk becomes actionable only when it is unusually high relative to historical origins where V5 saw a similar continuation state.
+
+Method:
+- use only OOS TRES Stage-1 `F_reversal`;
+- condition on an 8-dimensional V5 continuation state;
+- monthly expanding matured library;
+- K=40 nearest historical V5-similar origins;
+- one-sided local rank surprise;
+- FLIP only if `p_surprise <=0.10` and reversal is the dominant TRES state.
+
+Integrity:
+- maturity leakage failures **0**.
+
+Replay:
+- scored origins: 2024-10-31 .. 2026-09-24
+- FLIP 15
+- rescue / broken / net = **5 / 10 / -5**
+- precision **33.33%**
+- V5 **66.08% -> 64.81%**
+- non-negative blocks 1/5
+- worst block -3.
+
+Status:
+`ORS_H3_V1_FAIL`.
+
+Important diagnostic:
+- high-surprise + reversal-dominant states: terminal reversal 33.33%
+- high-surprise but non-dominant states: terminal reversal 50.00%.
+
+Conclusion:
+local reversal surprise exists, but the dominance mapping does not create a safe direction override. Do not retune K or surprise threshold on the same replay.
+
+Authority:
+- `GOLD_H3_ORS_V1_RESULT_2026-10-04.md`.
+
+
+## 53. SAGE V1 — SELECTIVE ACTION + GUARDED EXCEPTION (2026-10-04)
+
+SAGE V1 separated:
+- TRES path-state for KEEP / ABSTAIN;
+- OCS orthogonal concurrence for rare FLIP exceptions.
+
+Common mature universe:
+- **252 rows**
+- 2025 H2 through 2026 Sep
+- source identity mismatches 0
+- leakage failures 0.
+
+### 53.1 OCS exception
+
+Frozen concurrence:
+- IFBC count60 >=4
+- IFBC score >=0.70
+- LLRS external-opposes
+- LLRS incremental >0
+- LLRS pressure >=0.10.
+
+Result:
+- FLIP 7
+- rescue / broken / net = **6 / 1 / +5**
+- precision **85.71%**.
+
+Half-year net:
+- 2025 H2 **+1**
+- 2026 H1 **+2**
+- 2026 H2 **+2**.
+
+### 53.2 TRES abstention
+
+- KEEP 208
+- ABSTAIN 37
+- selective coverage 85.32%
+- selective action accuracy 67.91%
+- counterfactual V5 accuracy inside ABSTAIN rows **72.97%**.
+
+Therefore the TRES argmax abstention rule removed rows where V5 was relatively strong rather than concentrating errors.
+
+Binding result:
+`SAGE_H3_V1_FAIL`.
+
+Retain OCS exception; reject TRES abstention mapping.
+
+### 53.3 Full-direction development effect of exception-only rule
+
+2025:
+- V5 **165/248 = 66.53%**
+- V5 + OCS **166/248 = 66.94%**
+- net +1.
+
+2026:
+- V5 **121/191 = 63.35%**
+- V5 + OCS **125/191 = 65.45%**
+- exception rescue / broken / net = **4 / 0 / +4**.
+
+These are retrospective development results, not clean holdout evidence.
+
+Authority:
+- `GOLD_H3_SAGE_V1_CLOSURE_2026-10-04.md`
+- closure commit `6ed564f17f2f4406eaeed8824d537bda493e7736`.
+
+
+## 54. SAGE V2 — EXCEPTION-ONLY PROSPECTIVE SHADOW FREEZE (2026-10-04)
+
+**Identity:** `SAGE_H3_V2_EXCEPTION_ONLY`  
+**Status:** **FROZEN SHADOW CHALLENGER**  
+**First eligible clean origin:** **2026-10-05**
+
+Binding baseline:
+**HELIOS V5-DCE**.
+
+Frozen action:
+- if V5 does not follow momentum -> KEEP V5;
+- if V5 follows momentum and the frozen OCS concurrence is true -> FLIP V5;
+- otherwise -> KEEP V5.
+
+No ABSTAIN.
+No TRES direction override.
+
+Frozen OCS concurrence:
+- IFBC count60 >=4
+- IFBC score >=0.70
+- LLRS external-opposes = True
+- LLRS incremental >0
+- LLRS pressure >=0.10.
+
+Source fail-safe:
+- both IFBC and LLRS must be available under origin-time source integrity;
+- missing / invalid source => no exception, KEEP V5;
+- no retrospective backfill may create a prospective action.
+
+TRES survives as shadow telemetry only.
+
+Promotion gate:
+- >=20 prospective exception actions;
+- >=6 calendar months;
+- cumulative net rescue >0;
+- prospective exception precision >=60%;
+- no data-integrity violation;
+- same-origin full-direction accuracy >= V5;
+- no completed calendar quarter net < -2.
+
+Fail-safe:
+- cumulative prospective exception net <= -3 => suppress direction overrides, keep logging in shadow mode.
+
+Until the promotion gate passes:
+**HELIOS V5-DCE remains binding production champion.**
+
+Authorities:
+- `GOLD_H3_SAGE_V2_EXCEPTION_ONLY_PROSPECTIVE_FREEZE_2026-10-04.md`
+- freeze commit `814ed94239cfaf9ad07736ed1f824bfa1b1945b0`
+- JSON commit `9d9c6c85b331c0f1e8715d3b7521c34babc391a8`
+- prospective ledger initialized at `GOLD_H3_SAGE_V2_PROSPECTIVE_LEDGER.csv`.
