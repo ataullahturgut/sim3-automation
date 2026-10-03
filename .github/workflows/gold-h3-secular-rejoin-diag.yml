@@ -1,0 +1,44 @@
+name: Gold H3 Secular Rejoin Diagnostic
+on:
+  push:
+    branches: [gold-h3-secular-rte-v1-20261004]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_secular_rejoin_diag.py'
+      - '.github/workflows/gold-h3-secular-rejoin-diag.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      NEON_DATABASE_URL: \${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: \${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-secular-rte-v1-20261004
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4' 'requests>=2.31,<3'
+      - name: Require source secrets
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$TWELVE_DATA_API_KEY"
+      - run: python gold_axis_2026/tools/gold_h3_secular_rejoin_diag.py
+      - name: Record secular diagnostic
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            gold_axis_2026/GOLD_H3_SECULAR_REJOIN_DIAGNOSTIC_2026-10-04.csv \
+            gold_axis_2026/GOLD_H3_SECULAR_REJOIN_DIAGNOSTIC_2026-10-04.json \
+            gold_axis_2026/GOLD_H3_SECULAR_REJOIN_DIAGNOSTIC_2026-10-04.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Record secular rejoin diagnostic"
+            git pull --rebase origin gold-h3-secular-rte-v1-20261004
+            git push origin HEAD:gold-h3-secular-rte-v1-20261004
+          fi
