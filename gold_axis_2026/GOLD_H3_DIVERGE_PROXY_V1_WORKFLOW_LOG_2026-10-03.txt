@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/runner/work/sim3-automation/sim3-automation/gold_axis_2026/tools/gold_h3_diverge_proxy_v1.py", line 527, in <module>
+    main()
+  File "/home/runner/work/sim3-automation/sim3-automation/gold_axis_2026/tools/gold_h3_diverge_proxy_v1.py", line 385, in main
+    panel=build_panel(src)
+          ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sim3-automation/sim3-automation/gold_axis_2026/tools/gold_h3_diverge_proxy_v1.py", line 199, in build_panel
+    mr=latest_before(src["metal"],cutoff,STALE_DAYS["metal"])
+                                         ^^^^^^^^^^
+NameError: name 'STALE_DAYS' is not defined

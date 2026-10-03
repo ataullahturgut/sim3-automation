@@ -1,0 +1,6 @@
+source,series_id,status,rows,min_date,max_date,source_url
+FROZEN_METALS,GOLD/SILVER,PASS,4202,2010-02-16,2026-09-29,repo:frozen_clean_daily_prices
+YAHOO_CHART,DXY_PROXY,PASS,1446,2021-01-04,2026-10-02,https://query1.finance.yahoo.com/v8/finance/chart/DX-Y.NYB?period1=1609459200&period2=1790985600&interval=1d&events=history&includeAdjustedClose=true
+YAHOO_CHART,TNX_PROXY,PASS,1444,2021-01-04,2026-10-02,https://query1.finance.yahoo.com/v8/finance/chart/%5ETNX?period1=1609459200&period2=1790985600&interval=1d&events=history&includeAdjustedClose=true
+YAHOO_CHART,NDX,PASS,1444,2021-01-04,2026-10-02,https://query1.finance.yahoo.com/v8/finance/chart/%5ENDX?period1=1609459200&period2=1790985600&interval=1d&events=history&includeAdjustedClose=true
+YAHOO_CHART,VIX,PASS,1446,2021-01-04,2026-10-02,https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX?period1=1609459200&period2=1790985600&interval=1d&events=history&includeAdjustedClose=true
