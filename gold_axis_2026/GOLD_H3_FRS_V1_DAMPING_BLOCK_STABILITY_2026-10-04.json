@@ -1,0 +1,167 @@
+[
+  {
+    "representation": "IFS",
+    "block": "2024_H2",
+    "n": 88,
+    "v5_brier": 0.2077099501871736,
+    "damp_brier": 0.2049715936305894,
+    "delta_brier": -0.0027383565565841927,
+    "v5_logloss": 0.6002391197194252,
+    "damp_logloss": 0.5929011065118684,
+    "delta_logloss": -0.007338013207556782
+  },
+  {
+    "representation": "IFS",
+    "block": "2025_H1",
+    "n": 102,
+    "v5_brier": 0.24380204961755744,
+    "damp_brier": 0.23197289795544526,
+    "delta_brier": -0.01182915166211218,
+    "v5_logloss": 0.7033227266684844,
+    "damp_logloss": 0.6754968737478562,
+    "delta_logloss": -0.027825852920628225
+  },
+  {
+    "representation": "IFS",
+    "block": "2025_H2",
+    "n": 109,
+    "v5_brier": 0.20046308359583728,
+    "damp_brier": 0.206171383951591,
+    "delta_brier": 0.005708300355753704,
+    "v5_logloss": 0.5948428548574807,
+    "damp_logloss": 0.6064619908852733,
+    "delta_logloss": 0.011619136027792631
+  },
+  {
+    "representation": "IFS",
+    "block": "2026_H1",
+    "n": 109,
+    "v5_brier": 0.25546019497315264,
+    "damp_brier": 0.24784993779723327,
+    "delta_brier": -0.0076102571759193716,
+    "v5_logloss": 0.7436572366660048,
+    "damp_logloss": 0.726602798260172,
+    "delta_logloss": -0.01705443840583276
+  },
+  {
+    "representation": "IFS",
+    "block": "2026_H2",
+    "n": 44,
+    "v5_brier": 0.2310048171608522,
+    "damp_brier": 0.22837442630203372,
+    "delta_brier": -0.002630390858818471,
+    "v5_logloss": 0.6453628834095161,
+    "damp_logloss": 0.6381428112131292,
+    "delta_logloss": -0.007220072196386873
+  },
+  {
+    "representation": "HESITANT",
+    "block": "2024_H2",
+    "n": 88,
+    "v5_brier": 0.2077099501871736,
+    "damp_brier": 0.2049715936305894,
+    "delta_brier": -0.0027383565565841927,
+    "v5_logloss": 0.6002391197194252,
+    "damp_logloss": 0.5929011065118684,
+    "delta_logloss": -0.007338013207556782
+  },
+  {
+    "representation": "HESITANT",
+    "block": "2025_H1",
+    "n": 102,
+    "v5_brier": 0.24380204961755744,
+    "damp_brier": 0.23197289795544526,
+    "delta_brier": -0.01182915166211218,
+    "v5_logloss": 0.7033227266684844,
+    "damp_logloss": 0.6754968737478562,
+    "delta_logloss": -0.027825852920628225
+  },
+  {
+    "representation": "HESITANT",
+    "block": "2025_H2",
+    "n": 109,
+    "v5_brier": 0.20046308359583728,
+    "damp_brier": 0.206171383951591,
+    "delta_brier": 0.005708300355753704,
+    "v5_logloss": 0.5948428548574807,
+    "damp_logloss": 0.6064619908852733,
+    "delta_logloss": 0.011619136027792631
+  },
+  {
+    "representation": "HESITANT",
+    "block": "2026_H1",
+    "n": 109,
+    "v5_brier": 0.25546019497315264,
+    "damp_brier": 0.24784993779723327,
+    "delta_brier": -0.0076102571759193716,
+    "v5_logloss": 0.7436572366660048,
+    "damp_logloss": 0.726602798260172,
+    "delta_logloss": -0.01705443840583276
+  },
+  {
+    "representation": "HESITANT",
+    "block": "2026_H2",
+    "n": 44,
+    "v5_brier": 0.2310048171608522,
+    "damp_brier": 0.22837442630203372,
+    "delta_brier": -0.002630390858818471,
+    "v5_logloss": 0.6453628834095161,
+    "damp_logloss": 0.6381428112131292,
+    "delta_logloss": -0.007220072196386873
+  },
+  {
+    "representation": "NEUTROSOPHIC",
+    "block": "2024_H2",
+    "n": 88,
+    "v5_brier": 0.2077099501871736,
+    "damp_brier": 0.2049715936305894,
+    "delta_brier": -0.0027383565565841927,
+    "v5_logloss": 0.6002391197194252,
+    "damp_logloss": 0.5929011065118684,
+    "delta_logloss": -0.007338013207556782
+  },
+  {
+    "representation": "NEUTROSOPHIC",
+    "block": "2025_H1",
+    "n": 102,
+    "v5_brier": 0.24380204961755744,
+    "damp_brier": 0.23197289795544526,
+    "delta_brier": -0.01182915166211218,
+    "v5_logloss": 0.7033227266684844,
+    "damp_logloss": 0.6754968737478562,
+    "delta_logloss": -0.027825852920628225
+  },
+  {
+    "representation": "NEUTROSOPHIC",
+    "block": "2025_H2",
+    "n": 109,
+    "v5_brier": 0.20046308359583728,
+    "damp_brier": 0.206171383951591,
+    "delta_brier": 0.005708300355753704,
+    "v5_logloss": 0.5948428548574807,
+    "damp_logloss": 0.6064619908852733,
+    "delta_logloss": 0.011619136027792631
+  },
+  {
+    "representation": "NEUTROSOPHIC",
+    "block": "2026_H1",
+    "n": 109,
+    "v5_brier": 0.25546019497315264,
+    "damp_brier": 0.24784993779723327,
+    "delta_brier": -0.0076102571759193716,
+    "v5_logloss": 0.7436572366660048,
+    "damp_logloss": 0.726602798260172,
+    "delta_logloss": -0.01705443840583276
+  },
+  {
+    "representation": "NEUTROSOPHIC",
+    "block": "2026_H2",
+    "n": 44,
+    "v5_brier": 0.2310048171608522,
+    "damp_brier": 0.22837442630203372,
+    "delta_brier": -0.002630390858818471,
+    "v5_logloss": 0.6453628834095161,
+    "damp_logloss": 0.6381428112131292,
+    "delta_logloss": -0.007220072196386873
+  }
+]
