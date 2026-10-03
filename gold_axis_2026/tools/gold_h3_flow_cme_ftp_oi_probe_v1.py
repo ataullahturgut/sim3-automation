@@ -6,7 +6,7 @@ from openpyxl import load_workbook
 
 HOST="ftp.cmegroup.com"
 DIR="/daily_volume"
-DATES=["20230103","20240102","20260930"]
+DATES=["20230103","20240102","20250102","20250701","20260102","20260630","20260930"]
 OUT=Path("gold_h3_flow_ftp_probe_out"); OUT.mkdir(exist_ok=True)
 
 def norm(v):
