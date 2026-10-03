@@ -2975,3 +2975,300 @@ Evidence:
 - `GOLD_H3_HELIOS_V5_DCE_CLUSTER_INFERENCE_2026-10-03.csv`
 - `GOLD_H3_HELIOS_V5_DCE_SENSITIVITY_2026-10-03.csv`.
 
+## 40. PRICE-INTEGRITY AUDIT + CLEAN H3 CHAIN (2026-10-03)
+
+### Status
+
+**Binding data-integrity correction.**
+
+The historical H3 chain contained one confirmed corrupt multi-metal daily row on **2026-02-27**. Therefore all previously recorded 2026 AURORA / OPAL / HELIOS V2 / V3-GT / V4-RGE / V5-DCE performance figures in Sections 35-39 are retained for audit history but are **PRE-CLEAN / PROVISIONAL** and must not be used as the current retrospective 2026 result.
+
+The clean-chain results in this section supersede them for retrospective integrity evaluation.
+
+Original frozen prospective artifacts were not overwritten.
+
+### 40.1 Confirmed corrupt source row
+
+Frozen source:
+- `GOLD_H3_AURORA_V1_FROZEN_DAILY_PRICES.csv`
+
+Bad 2026-02-27 values:
+- Gold **3516.02**
+- Silver **62.15**
+- Platinum **1585.39**
+- Palladium **1201.26**
+
+Neighboring values:
+- 2026-02-26 Gold **5178.70**
+- 2026-03-02 Gold **5354.59**
+
+The source row is inherited from the pinned StakTrakr daily snapshot and carries a different source provenance (`sqld`) from surrounding seeded observations.
+
+Independent clean-overlay values:
+- Gold **5183.80**
+- Silver **88.14**
+- Platinum **2369.25**
+- Palladium **1789.96**
+
+The clean overlay changes only this source row; it does not overwrite the frozen original.
+
+### 40.2 Twelve Data integrity cross-check
+
+Workflow:
+- `gold-h3-price-integrity-audit-v1.yml`
+
+Implementation commit:
+- `92517be971b1a5f050035dd52bb6a6b8012d3ef6`
+
+Evidence commit:
+- `b83a279ed89dc54d07c5e1c1364b783787a46b3a`
+
+For XAU/USD:
+- 2026-02-27 frozen = **3516.02**
+- Twelve 12:00 NY = **5234.21**
+- Twelve 16:00 NY = **5278.64**
+- discrepancy approximately **-40%**.
+
+Neighboring dates differ only by ordinary intraday-anchor amounts.
+Conclusion: 2026-02-27 is an isolated corrupt source row, not a legitimate alternate daily timestamp convention.
+
+Evidence:
+- `GOLD_H3_PRICE_INTEGRITY_AUDIT_2026-10-03.md`
+- `GOLD_H3_PRICE_INTEGRITY_AUDIT_SUMMARY_2026-10-03.json`
+- `GOLD_H3_PRICE_INTEGRITY_COMPARE_2026-10-03.csv`
+- `GOLD_H3_PRICE_INTEGRITY_FLAGGED_2026-10-03.csv`.
+
+### 40.3 Direct label contamination
+
+Correcting 2026-02-27 flips exactly two H3 labels:
+
+- issue **2026-02-25**, H3 end 2026-02-27:
+  - old target ≈ **-37.90% / DOWN**
+  - clean target ≈ **+0.93% / UP**
+- issue **2026-03-02**, H3 end 2026-03-04:
+  - old target ≈ **+38.32% / UP**
+  - clean target ≈ **-0.50% / DOWN**
+
+The corrupt row also contaminated lagged daily-metal features and `sigma20`; therefore a label-only repair is insufficient.
+
+### 40.4 Full clean-core rebuild
+
+Workflow run:
+- **37116264623**
+
+Implementation/fix commit:
+- `3738c1f200218aee066f298f3eeca9d3553f774d`
+
+Evidence commit:
+- `e83f47cd176ab12d51128dec6af045c99593ded2`
+
+Recomputed without threshold changes:
+- H1/H3/H5 targets
+- gold/silver/platinum/palladium daily-return features
+- sigma20
+- NOVA A1 sequence
+- STRUCTURAL and PATH experts
+- SENTRY
+- DART
+- AURORA state machine.
+
+Clean AURORA:
+
+| Period | Accuracy | BA | Brier |
+|---|---:|---:|---:|
+| 2023 | 71.23% | 71.83% | 0.2118 |
+| 2024 | 70.83% | 69.97% | 0.2006 |
+| 2025 | 64.52% | 62.93% | 0.2276 |
+| **2026** | **58.64%** | **59.02%** | **0.2532** |
+| 2025-2026 | 61.96% | 61.15% | 0.2388 |
+
+The AURORA state switch remains stable:
+- **2025-09-18 STRUCTURAL_IRIS -> PATH_GLOBAL**.
+
+However the full clean refit changes AURORA direction on:
+- **2026-09-15**
+- **2026-09-22**.
+
+Evidence:
+- `GOLD_H3_CLEAN_CORE_RESULT_2026-10-03.md`
+- `GOLD_H3_CLEAN_CORE_METRICS_2026-10-03.csv`
+- `GOLD_H3_CLEAN_CORE_SUMMARY_2026-10-03.json`
+- `GOLD_H3_CLEAN_AURORA_PREDICTIONS_2026-10-03.csv`.
+
+### 40.5 Full clean reversal-chain rebuild
+
+Workflow run:
+- **37116588663**
+
+Implementation commit:
+- `170255bb96e577500521cc9ec4d7ada3080d2082`
+
+Evidence commit:
+- `b5c43eede3e1f85cfdfd3b1d4282e963503ff0b0`
+
+All fixed rules were rerun on clean AURORA:
+- RIFT
+- TURN
+- VEGA
+- OPAL
+- HELIOS V1
+- HELIOS V2
+- V3-GT
+- V4-RGE
+- V5-DCE.
+
+No threshold was retuned.
+
+#### Clean model metrics
+
+| Model | 2025 Acc | 2026 Acc | 2026 BA | 2026 Brier | 2025-26 Acc |
+|---|---:|---:|---:|---:|---:|
+| AURORA | 64.52% | **58.64%** | 59.02% | 0.2532 | 61.96% |
+| Raw OPAL | 64.92% | **63.35%** | 63.71% | 0.2467 | 64.24% |
+| HELIOS V2 | 66.13% | **60.73%** | 61.16% | 0.2477 | 63.78% |
+| V3-GT | 64.92% | **63.35%** | 63.76% | 0.2455 | 64.24% |
+| V4-RGE | 66.13% | **62.30%** | 62.71% | 0.2447 | 64.46% |
+| **V5-DCE** | **66.53%** | **63.35%** | **63.76%** | **0.2425** | **65.15%** |
+
+Clean V5 2026:
+- 191 origins
+- **19 routed**
+- **14 rescue**
+- **5 broken**
+- net rescue **+9**
+- accuracy improvement over clean AURORA **+4.712 pp**.
+
+Clean 2025:
+- 7 routed
+- 6 rescue
+- 1 broken
+- net **+5**.
+
+Clean 2025-2026:
+- V5 accuracy **65.15%**
+- BA **64.24%**
+- Brier **0.2322**.
+
+#### Clean reversal experts, 2026
+
+| Expert | Accuracy | Overrides | Rescue | Broken |
+|---|---:|---:|---:|---:|
+| RIFT | 59.16% | 3 | 2 | 1 |
+| TURN | 57.59% | 6 | 2 | 4 |
+| VEGA | 59.16% | 13 | 7 | 6 |
+| **OPAL** | **63.35%** | **25** | **17** | **8** |
+
+The core 2026 reversal signal remains real after data cleaning: OPAL improves clean AURORA by **+4.71 pp**.
+
+### 40.6 Gate timing changes after cleaning
+
+HELIOS macro consensus gate remains stable:
+- **2024-07-16 -> ACTIVE**
+- W8 sequence `10101011`, 5 wins / 3 losses.
+
+V4 broad non-consensus regret gate changes materially:
+- **2026-06-10 -> ACTIVE**
+  - recent 10 sequence `1000110111`
+  - 6 rescue / 4 broken
+  - regret +2
+- **2026-09-04 -> INACTIVE**
+  - recent 10 sequence `0110011000`
+  - 4 rescue / 6 broken
+  - regret -2.
+
+This supersedes the pre-clean V4 timing of 2026-06-29 activation with no later exit.
+
+### 40.7 Clean V5-DCE exceptions
+
+Clean DCE opens five historical exceptions in 2025-2026:
+- 2025-10-15: RESCUED
+- 2026-05-11: RESCUED
+- 2026-06-05: RESCUED
+- 2026-09-07: **BROKEN**
+- 2026-09-17: RESCUED.
+
+Therefore the pre-clean statement that all DCE exceptions were successful is superseded.
+
+### 40.8 Clean dependence-aware inference
+
+Workflow:
+- **37116788243**
+
+Implementation commit:
+- `59daa374b4033cfb47ee346334d4bfaee0759447`
+
+Evidence commit:
+- `6f71efc62f74a9ebf13451e68bba7401b0fa3930`
+
+V5 vs clean AURORA:
+
+2025-2026 accuracy:
+- delta **+3.1891 pp**
+- block5 95% **[+1.1390,+5.4670]**, P(improve) **99.8%**
+- block10 95% **[+1.1390,+5.6948]**, P(improve) **99.9%**.
+
+2026 accuracy:
+- delta **+4.7120 pp**
+- block5 95% **[+0.5236,+8.9005]**, P(improve) **98.6%**
+- block10 95% **[+0.5236,+9.4241]**, P(improve) **98.6%**.
+
+COT-vintage clustered V5 net rescue:
+- 2025-2026: **+14**, 19 clusters, 95% **[+6,+21]**, P(net>0) **99.95%**
+- 2026: **+9**, 12 clusters, 95% **[+2,+16]**, P(net>0) **99.15%**.
+
+V5 vs V2:
+- 2025-2026 accuracy +**1.3667 pp**, P(improve) **95.5% / 96.0%**
+- 2026 +**2.6178 pp**, but CI crosses zero; P(improve) **92.7% / 93.6%**.
+
+V5 vs V4:
+- 2026 +**1.0471 pp**
+- evidence is weaker (P improve about **78-80%**).
+
+### 40.9 Clean sensitivity and governance
+
+Binding V5 remains:
+- PATH posterior > **0.50**
+- GT share > **0.50**.
+
+PATH posterior sensitivity:
+- 0.50 through 0.75 gives identical clean result:
+  - 2025-2026 Acc **65.15%**
+  - net rescue **+14**.
+
+GT-share diagnostic:
+- 0.60 and 0.70 would retrospectively produce:
+  - 2026 Acc **63.87%**
+  - 2025-2026 Acc **65.38%**
+  - net rescue **+15**.
+
+**Do not promote this diagnostic threshold change.**
+It became attractive only after inspecting the clean historical outcomes; changing V5 to 0.60 now would be post-hoc retuning.
+
+If studied further, GT >0.60 must be a separately named, preregistered future challenger.
+
+### 40.10 Binding interpretation
+
+1. The 2026-02-27 source row was genuinely corrupt and materially biased the H3 evaluation/training chain.
+2. The earlier V5 2026 **65.45%** result is superseded.
+3. The valid clean retrospective V5 result is **63.35% accuracy / 63.76% BA / 0.2425 Brier**.
+4. The central scientific conclusion nevertheless survives: the reversal architecture adds material value in 2026.
+5. Clean AURORA falls to **58.64%**, while clean V5 reaches **63.35%**, a +4.71 pp improvement.
+6. OPAL alone also reaches **63.35%**, confirming that the 2026 reversal regime was not an artifact of the corrupt row.
+7. V5 remains preferable as the cross-regime protected retrospective architecture because it preserves:
+   - 2023 **71.23%**
+   - 2024 **71.25%**
+   - 2025 **66.53%**
+   while matching V3/raw OPAL directional accuracy in clean 2026 and giving better probability quality.
+8. V5 remains post-hoc research; AURORA prospective governance is unchanged.
+9. Future work must use the clean overlay / integrity guard before any further H3 model comparison.
+
+Evidence:
+- `GOLD_H3_CLEAN_REVERSAL_CHAIN_RESULT_2026-10-03.md`
+- `GOLD_H3_CLEAN_REVERSAL_CHAIN_SUMMARY_2026-10-03.json`
+- `GOLD_H3_CLEAN_CHAIN_METRICS_2026-10-03.csv`
+- `GOLD_H3_CLEAN_V5_2026_CALL_BY_CALL_2026-10-03.csv`
+- `GOLD_H3_CLEAN_V5_INFERENCE_RESULT_2026-10-03.md`
+- `GOLD_H3_CLEAN_V5_INFERENCE_2026-10-03.csv`
+- `GOLD_H3_CLEAN_V5_CLUSTER_INFERENCE_2026-10-03.csv`
+- `GOLD_H3_CLEAN_V5_SENSITIVITY_2026-10-03.csv`.
+
