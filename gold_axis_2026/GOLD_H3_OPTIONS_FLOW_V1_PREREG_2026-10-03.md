@@ -177,7 +177,10 @@ Minimum matured training rows:
 - 40
 
 Training rows at a monthly refit must satisfy:
-`target_end_date_h3 <= current month first feature cutoff`.
+- `target_end_date_h3 <= current month first feature cutoff`
+- `aurora_follows_momentum == True`
+
+The training universe is therefore the same conditional decision universe in which OPTIONS-FLOW can nominate a reversal.
 
 Random split is forbidden.
 
