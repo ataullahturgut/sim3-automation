@@ -30,6 +30,7 @@ OUT_MD=AX/"GOLD_H3_DIVERGE_PROXY_V1_RESULT_2026-10-03.md"
 
 SEED=20261003
 THRESH_GRID=[0.35,0.40,0.45,0.50,0.55,0.60]
+STALE_DAYS={"metal":5,"usd":7,"yield":7,"ndx":5,"vix":5}
 
 FEATURES=[
     "silver_ret1","gold_daily_ret1","usd_ret1","tnx_chg1","ndx_ret1","vix_ret1",
