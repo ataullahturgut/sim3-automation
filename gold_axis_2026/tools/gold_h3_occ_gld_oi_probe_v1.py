@@ -61,3 +61,5 @@ for x in res:
     lines += ["","### Head",x["head"],""]
 (OUT/"RESULT.md").write_text("\n".join(lines))
 print((OUT/"RESULT.md").read_text())
+
+# trigger: oi-probe-ready
