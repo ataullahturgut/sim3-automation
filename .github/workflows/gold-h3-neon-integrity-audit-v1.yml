@@ -1,0 +1,62 @@
+name: Gold H3 Neon Integrity Audit
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_neon_integrity_audit_v1.py'
+      - '.github/workflows/gold-h3-neon-integrity-audit-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      OUT_DIR: gold_h3_neon_integrity_audit_out
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4'
+      - run: test -n "$NEON_DATABASE_URL"
+      - name: Run read-only Neon integrity audit
+        run: python gold_axis_2026/tools/gold_h3_neon_integrity_audit_v1.py
+      - name: Commit audit evidence
+        shell: bash
+        run: |
+          cp "$OUT_DIR/NEON_INTEGRITY_AUDIT.md" gold_axis_2026/GOLD_H3_NEON_INTEGRITY_AUDIT_2026-10-03.md
+          cp "$OUT_DIR/neon_integrity_summary.json" gold_axis_2026/GOLD_H3_NEON_INTEGRITY_SUMMARY_2026-10-03.json
+          cp "$OUT_DIR/series_inventory.csv" gold_axis_2026/GOLD_H3_NEON_SERIES_INVENTORY_2026-10-03.csv
+          cp "$OUT_DIR/series_top_jumps.csv" gold_axis_2026/GOLD_H3_NEON_TOP_JUMPS_2026-10-03.csv
+          cp "$OUT_DIR/series_top_gaps.csv" gold_axis_2026/GOLD_H3_NEON_TOP_GAPS_2026-10-03.csv
+          cp "$OUT_DIR/duplicate_revisions.csv" gold_axis_2026/GOLD_H3_NEON_DUPLICATE_REVISIONS_2026-10-03.csv
+          cp "$OUT_DIR/primary_xau_jump_candidates.csv" gold_axis_2026/GOLD_H3_NEON_XAU_JUMP_CANDIDATES_2026-10-03.csv
+          cp "$OUT_DIR/primary_xau_gap_candidates.csv" gold_axis_2026/GOLD_H3_NEON_XAU_GAP_CANDIDATES_2026-10-03.csv
+          cp "$OUT_DIR/primary_xau_duplicate_revisions.csv" gold_axis_2026/GOLD_H3_NEON_XAU_DUPLICATE_REVISIONS_2026-10-03.csv
+          cp "$OUT_DIR/primary_xau_robust_outliers.csv" gold_axis_2026/GOLD_H3_NEON_XAU_ROBUST_OUTLIERS_2026-10-03.csv
+          cp "$OUT_DIR/db_tables.csv" gold_axis_2026/GOLD_H3_NEON_DB_TABLES_2026-10-03.csv
+          cp "$OUT_DIR/db_columns.csv" gold_axis_2026/GOLD_H3_NEON_DB_COLUMNS_2026-10-03.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_NEON_*_2026-10-03.*
+          if ! git diff --cached --quiet; then
+            git commit -m "Audit Neon H3 source integrity"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-neon-integrity-audit
+          path: gold_h3_neon_integrity_audit_out/
+          retention-days: 90
