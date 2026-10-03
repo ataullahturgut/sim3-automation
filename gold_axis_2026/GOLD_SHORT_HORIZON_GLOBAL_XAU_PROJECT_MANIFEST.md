@@ -4231,3 +4231,136 @@ Governance:
 Authority:
 - `GOLD_H3_RTE_V1_V4_CLOSURE_2026-10-03.md`
 - closure commit `7b62df90088f1add53c344ec604975056c9a3bae`.
+
+
+## 48. RC-RTE — REGIME-CONDITIONAL REVERSAL ENGINE V1/V2 (2026-10-04)
+
+**Objective:** condition reversal-rescue specialists on origin-observable latent market state and bound damage when a historically valid reversal regime inverts.
+
+### 48.1 RC-RTE V1
+
+State axes:
+- persistence
+- fragility
+- option opposition
+- participation shock.
+
+Unsupervised state compressor:
+- KMeans K=3
+- training-only scaling
+- training-only regime utility audit.
+
+Frozen proposal union:
+- SB slow-burn
+- OPT option-confirmed
+- MAT material-reversal.
+
+Sequential pre-2026:
+- 2024 H2: net 0
+- 2025 H1: 15 rescue / 7 broken = **+8**
+- 2025 H2: 6 rescue / 14 broken = **-8**.
+
+Pooled net 0, precision 50%.
+
+Status: `NO_ROBUST_RC_RTE_RULE`.
+
+### 48.2 Online credibility insight
+
+2025 H2 chronology showed regime failure was detectable early:
+- first five static candidates were broken;
+- live regime utility turned negative quickly;
+- overlapping H3 candidates could arrive before prior outcomes matured.
+
+This motivated RC-RTE V2.
+
+### 48.3 RC-RTE V2 Fuse
+
+Added:
+- maximum one unresolved accepted event per regime;
+- accepted matured utility +1 rescue / -1 broken;
+- close a regime for the rest of the block as soon as live matured score becomes negative.
+
+Pre-2026:
+- 2024 H2: 0 / 0 / net 0
+- 2025 H1: 7 rescue / 2 broken = **+5**, precision **77.78%**
+- 2025 H2: 0 rescue / 2 broken = **-2**.
+
+Pooled:
+- 11 accepted
+- 7 rescue / 4 broken
+- net **+3**
+- precision **63.64%**
+- pooled V5 accuracy **68.24%**
+- assisted **69.18%**.
+
+The preregistered robustness gate passed, so 2026 was opened exactly once.
+
+### 48.4 2026 clean holdout
+
+- eligible origins: 153
+- raw proposals: 35
+- accepted: **1**
+- rescue / broken / net: **0 / 1 / -1**
+- OPAL-no-candidate missed reversals hit: **0 / 55**
+
+Whole clean 2026:
+- HELIOS V5-DCE: **121/191 = 63.35%**
+- RC-RTE V2 assisted: **120/191 = 62.83%**
+
+Binding result:
+**RC-RTE V2 NOT PROMOTED. HELIOS V5-DCE remains champion.**
+
+### 48.5 Post-holdout geometry diagnosis
+
+The single accepted 2026 candidate:
+- issue 2026-03-04
+- V5 was already correct
+- assigned regime 1
+- MAT-only proposal
+- target H3 return -1.81%.
+
+Specialist identity alone does not explain failure:
+- pre-2026 regime-1 MAT-only = 3 rescue / 1 broken = 75% precision.
+
+The stronger failure mode is out-of-distribution regime assignment.
+
+Pre-2026 regime-1 proposal geometry:
+- rescue median persistence **-0.357**
+- broken median persistence **-0.491**
+
+Accepted 2026 candidate:
+- persistence **+0.880**
+- fragility -0.317
+- option opposition +0.717
+- participation shock +1.077.
+
+KMeans forced a nearest-regime assignment even though the candidate was outside the historical persistence support of regime 1.
+
+### 48.6 Binding next direction
+
+Next successor:
+**Support-Constrained Regime Reversal Engine**
+
+Required additions:
+- regime-membership confidence / support envelope;
+- fail-closed OOD behavior;
+- specialist-specific regime competence;
+- overlap-aware one-outstanding-event control;
+- online credibility fuse.
+
+Possible support scores:
+- robust Mahalanobis distance;
+- conformal nearest-neighbor support;
+- rescue-prototype vs broken-prototype distance;
+- cluster assignment margin.
+
+Governance:
+- 2026 holdout is now spent;
+- no later modification may be described as a clean 2026 improvement;
+- future successor requires another untouched period or prospective evaluation;
+- HELIOS V5-DCE remains binding;
+- CLEAN_H3_PROSPECTIVE_V1 remains untouched.
+
+Authority:
+- `GOLD_H3_RC_RTE_V1_V2_CLOSURE_2026-10-04.md`
+- closure commit `114ca7b5785f6d1a5b3518b5e12c8a24c8b9edd5`.
