@@ -1,0 +1,36 @@
+name: Gold H3 OPTIONS FLOW OCC Diag V1
+on:
+  push:
+    branches: [gold-h3-options-flow-v1-20261003]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_options_flow_occ_diag_v1.py'
+      - '.github/workflows/gold-h3-options-flow-occ-diag-v1.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  diag:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-options-flow-v1-20261003
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check pandas requests
+      - run: python gold_axis_2026/tools/gold_h3_options_flow_occ_diag_v1.py
+      - name: Record diagnostic
+        run: |
+          cp gold_h3_options_flow_diag_out/RESULT.md gold_axis_2026/GOLD_H3_OPTIONS_FLOW_OCC_DIAG_V1_RESULT_2026-10-03.md
+          cp gold_h3_options_flow_diag_out/diag.json gold_axis_2026/GOLD_H3_OPTIONS_FLOW_OCC_DIAG_V1_2026-10-03.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_OPTIONS_FLOW_OCC_DIAG_V1_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record OCC OPTIONS-FLOW source diagnostic"
+            git pull --rebase origin gold-h3-options-flow-v1-20261003
+            git push origin HEAD:gold-h3-options-flow-v1-20261003
+          fi
