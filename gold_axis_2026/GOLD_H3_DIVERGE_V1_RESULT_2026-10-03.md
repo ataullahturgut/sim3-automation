@@ -2,4 +2,4 @@
 
 **Status:** **SOURCE_BLOCKED**
 
-ReadTimeout(ReadTimeoutError("HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=60)"))
+NameError("name 'SESSION' is not defined")
