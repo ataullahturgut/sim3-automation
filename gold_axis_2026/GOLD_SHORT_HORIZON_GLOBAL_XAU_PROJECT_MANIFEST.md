@@ -4027,3 +4027,76 @@ Supporting phase authorities:
 - `GOLD_H3_PHASE7_HELIOS_V6_ROUTER_GATE_2026-10-03.md`
 - `GOLD_H3_PHASE8_SEQUENTIAL_EVIDENCE_GATE_2026-10-03.md`
 - `GOLD_H3_PHASE9_SELECTIVE_ACTION_GATE_2026-10-03.md`.
+
+
+## 46. FLOW PRELIMINARY OPEN INTEREST SALVAGE (2026-10-03)
+
+**Identity:** `FLOW_PRELIM_OI_H3_V1`  
+**Status:** **NO_ELIGIBLE_FLOW_PRELIM_OI_THRESHOLD / NOT PROMOTED**
+
+The historical-OI access problem was partially resolved through CME's anonymous FTP:
+- `ftp.cmegroup.com/daily_volume`
+- daily `daily_volume_YYYYMMDD.xlsx`
+- COMEX(STATS) / GC / GOLD FUTURES / F
+- Total Volume + **preliminary** Open Interest.
+
+CME marks this OI as preliminary and states that official final OI follows in the next-morning Daily Bulletin. Therefore the original FINAL-only FLOW-H3 V1 remains unchanged; this is a separately named challenger.
+
+### 46.1 Origin-safe rule
+
+- H3 same-day preliminary VOI forbidden.
+- Use latest valid CME row with `trade_date < feature_cutoff_date`.
+- No lag search.
+- No OI imputation.
+
+### 46.2 Source coverage
+
+| Year | Valid / Listed | Coverage |
+|---:|---:|---:|
+| 2022 | 251 / 251 | 100.00% |
+| 2023 | 250 / 251 | 99.60% |
+| 2024 | 252 / 252 | 100.00% |
+| 2025 | 251 / 251 | 100.00% |
+| 2026 through Sep-30 | 53 / 188 | 28.19% |
+
+The FTP product format stops exposing the expected GC OI field after 2026-03-19. This does not affect the essentially complete 2023-2024 DEV test.
+
+### 46.3 DEV 2023-2024
+
+Eligible AURORA-follows-momentum origins: **388**  
+True reversals: **111**
+
+| Th | Precision | Recall | Candidate rate | F2 | Eligible |
+|---:|---:|---:|---:|---:|---|
+| 0.35 | 28.86% | 89.19% | 88.40% | 0.6290 | NO |
+| 0.40 | 28.15% | 76.58% | 77.84% | 0.5697 | NO |
+| 0.45 | 26.36% | 56.76% | 61.60% | 0.4612 | NO |
+| 0.50 | 26.14% | 41.44% | 45.36% | 0.3710 | NO |
+| 0.55 | 28.44% | 27.93% | 28.09% | 0.2803 | NO |
+
+Frozen eligibility required:
+- precision >=45%
+- candidate rate <=35%.
+
+No threshold passed.
+
+Therefore:
+- no threshold selected;
+- 2025 confirmation **not opened**;
+- 2026 outcome holdout **not opened**;
+- no V5/OPAL missed-reversal rescue analysis performed;
+- no HELIOS promotion.
+
+### 46.4 Interpretation
+
+The prior FLOW-VOL negative result is now reinforced with actual official CME daily aggregate preliminary GC Open Interest.
+
+Under the frozen simple aggregate Volume+OI representation, the reversal score remains insufficiently selective.
+
+This does **not** invalidate FINAL OI, contract-level OI term structure, or Gold options positioning asymmetry.
+
+The same CME FTP files expose separate daily `OG GOLD CALL` and `OG GOLD PUT` Volume/OI rows, enabling a separately preregistered options-positioning asymmetry specialist if research continues.
+
+Authority:
+- `GOLD_H3_FLOW_PRELIM_OI_V1_CLOSURE_2026-10-03.md`
+- closure commit `1314c1405b0855f51a1881fde053b74f5f8eefa5`.
