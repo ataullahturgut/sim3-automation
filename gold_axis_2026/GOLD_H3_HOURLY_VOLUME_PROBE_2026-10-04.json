@@ -1,0 +1,24 @@
+{
+  "GC": {
+    "symbol": "GC=F",
+    "rows": 10066,
+    "volume_nonnull": 10066,
+    "volume_positive": 9707,
+    "positive_rate": 0.9643353864494337,
+    "volume_median_positive": 6064.0,
+    "volume_p95_positive": 23048.499999999993,
+    "first_et": "2025-01-02 00:00:00-05:00",
+    "last_et": "2026-10-02 16:00:00-04:00"
+  },
+  "SI": {
+    "symbol": "SI=F",
+    "rows": 10065,
+    "volume_nonnull": 10065,
+    "volume_positive": 9707,
+    "positive_rate": 0.9644311972180825,
+    "volume_median_positive": 1806.0,
+    "volume_p95_positive": 9488.599999999991,
+    "first_et": "2025-01-02 00:00:00-05:00",
+    "last_et": "2026-10-02 16:00:00-04:00"
+  }
+}
