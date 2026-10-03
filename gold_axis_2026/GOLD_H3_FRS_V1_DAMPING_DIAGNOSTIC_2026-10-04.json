@@ -1,0 +1,90 @@
+{
+  "baseline": {
+    "n": 452,
+    "accuracy": 0.6592920353982301,
+    "brier": 0.22788967698353876,
+    "logloss": 0.6611779590742777
+  },
+  "rows": [
+    {
+      "representation": "HESITANT",
+      "native_flip_n": 177,
+      "native_damp_n": 72,
+      "native_abstain_n": 0,
+      "damp_only_brier": 0.2239724218116341,
+      "damp_only_logloss": 0.6514564694813209,
+      "brier_delta_vs_v5": -0.0039172551719046655,
+      "logloss_delta_vs_v5": -0.009721489592956822
+    },
+    {
+      "representation": "IFS",
+      "native_flip_n": 175,
+      "native_damp_n": 74,
+      "native_abstain_n": 0,
+      "damp_only_brier": 0.2239724218116341,
+      "damp_only_logloss": 0.6514564694813209,
+      "brier_delta_vs_v5": -0.0039172551719046655,
+      "logloss_delta_vs_v5": -0.009721489592956822
+    },
+    {
+      "representation": "IT2",
+      "native_flip_n": 116,
+      "native_damp_n": 120,
+      "native_abstain_n": 102,
+      "damp_only_brier": 0.23138027629672894,
+      "damp_only_logloss": 0.6645402690778602,
+      "brier_delta_vs_v5": 0.003490599313190179,
+      "logloss_delta_vs_v5": 0.003362310003582558
+    },
+    {
+      "representation": "NEUTROSOPHIC",
+      "native_flip_n": 115,
+      "native_damp_n": 134,
+      "native_abstain_n": 0,
+      "damp_only_brier": 0.2239724218116341,
+      "damp_only_logloss": 0.6514564694813209,
+      "brier_delta_vs_v5": -0.0039172551719046655,
+      "logloss_delta_vs_v5": -0.009721489592956822
+    },
+    {
+      "representation": "PICTURE",
+      "native_flip_n": 84,
+      "native_damp_n": 46,
+      "native_abstain_n": 194,
+      "damp_only_brier": 0.2374949122845845,
+      "damp_only_logloss": 0.6795014222880077,
+      "brier_delta_vs_v5": 0.009605235301045734,
+      "logloss_delta_vs_v5": 0.018323463213730018
+    },
+    {
+      "representation": "PYTHAGOREAN",
+      "native_flip_n": 0,
+      "native_damp_n": 65,
+      "native_abstain_n": 300,
+      "damp_only_brier": 0.23725387379123133,
+      "damp_only_logloss": 0.6754057828500917,
+      "brier_delta_vs_v5": 0.00936419680769257,
+      "logloss_delta_vs_v5": 0.014227823775813997
+    },
+    {
+      "representation": "QRUNG3",
+      "native_flip_n": 0,
+      "native_damp_n": 0,
+      "native_abstain_n": 447,
+      "damp_only_brier": 0.24928565272444458,
+      "damp_only_logloss": 0.6927805046524877,
+      "brier_delta_vs_v5": 0.02139597574090582,
+      "logloss_delta_vs_v5": 0.03160254557821007
+    },
+    {
+      "representation": "T1",
+      "native_flip_n": 22,
+      "native_damp_n": 67,
+      "native_abstain_n": 301,
+      "damp_only_brier": 0.2456115102045703,
+      "damp_only_logloss": 0.6945257910401103,
+      "brier_delta_vs_v5": 0.017721833221031547,
+      "logloss_delta_vs_v5": 0.033347831965832575
+    }
+  ]
+}
