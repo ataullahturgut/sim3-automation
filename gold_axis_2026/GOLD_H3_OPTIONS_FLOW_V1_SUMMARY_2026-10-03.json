@@ -1,0 +1,117 @@
+{
+  "schema": "OPTIONS_FLOW_H3_V1",
+  "evidence_class": "SHORT_HISTORY_OFFICIAL_OCC_AUTHORITY",
+  "features": [
+    "mom_x_log_pcr_total",
+    "mom_x_d_log_pcr_total",
+    "mom_x_log_pcr_customer",
+    "mom_x_d_log_pcr_customer",
+    "reversal_imbalance_total",
+    "reversal_imbalance_customer",
+    "mom_x_log_pcr_z20",
+    "volume_z20",
+    "flow_pressure_x_volume",
+    "customer_mm_divergence_mom"
+  ],
+  "source": {
+    "accepted_dates": 498,
+    "min_date": "2024-10-04",
+    "max_date": "2026-09-30",
+    "both_transport_dates": 498,
+    "split_transport_dates": 0,
+    "audit_status_counts": {
+      "PASS": 498,
+      "SCHEMA_MISMATCH:no record(s) found": 21
+    }
+  },
+  "selected_threshold": null,
+  "threshold_grid": [
+    {
+      "threshold": 0.35,
+      "eligible_n": 84,
+      "candidate_n": 70,
+      "true_reversal_n": 36,
+      "tp": 31,
+      "fp": 39,
+      "fn": 5,
+      "precision": 0.44285714285714284,
+      "recall": 0.8611111111111112,
+      "candidate_rate": 0.8333333333333334,
+      "f2": 0.7242990654205608,
+      "eligible": false
+    },
+    {
+      "threshold": 0.4,
+      "eligible_n": 84,
+      "candidate_n": 66,
+      "true_reversal_n": 36,
+      "tp": 29,
+      "fp": 37,
+      "fn": 7,
+      "precision": 0.4393939393939394,
+      "recall": 0.8055555555555556,
+      "candidate_rate": 0.7857142857142857,
+      "f2": 0.6904761904761905,
+      "eligible": false
+    },
+    {
+      "threshold": 0.45,
+      "eligible_n": 84,
+      "candidate_n": 56,
+      "true_reversal_n": 36,
+      "tp": 24,
+      "fp": 32,
+      "fn": 12,
+      "precision": 0.42857142857142855,
+      "recall": 0.6666666666666666,
+      "candidate_rate": 0.6666666666666666,
+      "f2": 0.6,
+      "eligible": false
+    },
+    {
+      "threshold": 0.5,
+      "eligible_n": 84,
+      "candidate_n": 42,
+      "true_reversal_n": 36,
+      "tp": 18,
+      "fp": 24,
+      "fn": 18,
+      "precision": 0.42857142857142855,
+      "recall": 0.5,
+      "candidate_rate": 0.5,
+      "f2": 0.48387096774193544,
+      "eligible": false
+    },
+    {
+      "threshold": 0.55,
+      "eligible_n": 84,
+      "candidate_n": 36,
+      "true_reversal_n": 36,
+      "tp": 15,
+      "fp": 21,
+      "fn": 21,
+      "precision": 0.4166666666666667,
+      "recall": 0.4166666666666667,
+      "candidate_rate": 0.42857142857142855,
+      "f2": 0.4166666666666667,
+      "eligible": false
+    },
+    {
+      "threshold": 0.6,
+      "eligible_n": 84,
+      "candidate_n": 22,
+      "true_reversal_n": 36,
+      "tp": 7,
+      "fp": 15,
+      "fn": 29,
+      "precision": 0.3181818181818182,
+      "recall": 0.19444444444444445,
+      "candidate_rate": 0.2619047619047619,
+      "f2": 0.2108433734939759,
+      "eligible": false
+    }
+  ],
+  "confirmation_2025_h2": null,
+  "holdout_2026": null,
+  "status": "NO_ELIGIBLE_OPTIONS_FLOW_THRESHOLD"
+}
