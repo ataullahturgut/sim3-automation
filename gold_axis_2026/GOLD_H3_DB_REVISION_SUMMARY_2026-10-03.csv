@@ -1,0 +1,4 @@
+series_id,revised_timestamps,conflicting_timestamps,median_abs_first_to_last_pct,p95_abs_first_to_last_pct,max_abs_first_to_last_pct,max_range_pct
+XAU_DAILY_XAUS,125,125,0.45289855072463764,1.3891967293528784,1.763006437817057,2.463110622307763
+VIX_CBOE,120,0,0.0,0.0,0.0,0.0
+GVZ_CBOE,120,0,0.0,0.0,0.0,0.0
