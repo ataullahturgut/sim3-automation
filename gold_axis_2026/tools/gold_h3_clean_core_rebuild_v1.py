@@ -94,7 +94,10 @@ def patched_readiness():
 
     clean=base.copy()
     for c,v in metal_cols.items():
-        clean[c]=v.to_numpy()[:len(clean)]
+        if np.isscalar(v):
+            clean[c]=float(v)
+        else:
+            clean[c]=v.to_numpy()[:len(clean)]
 
     # Recompute NOVA's external-state derived transforms exactly.
     for c in nova.RATE_EXT:
