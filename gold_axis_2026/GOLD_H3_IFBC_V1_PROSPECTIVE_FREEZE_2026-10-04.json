@@ -1,0 +1,18 @@
+{
+  "schema": "IFBC_H3_V1_PROSPECTIVE_FREEZE",
+  "freeze_date": "2026-10-04",
+  "first_clean_origin": "2026-10-05",
+  "historical_status": "development_only",
+  "selected_q": null,
+  "calibration_origins": 120,
+  "min_calibration": 60,
+  "consensus_count60_min": 4,
+  "feature_signs": {
+    "x1": "gc_opp_vol_share_12",
+    "x2": "-gc_flow_12",
+    "x3": "-si_flow_12",
+    "x4": "joint_opposition_share12",
+    "x5": "gc_si_flow_gap12",
+    "x6": "1-gc_efficiency_12"
+  }
+}
