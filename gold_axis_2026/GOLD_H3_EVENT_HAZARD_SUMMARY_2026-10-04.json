@@ -1,0 +1,241 @@
+{
+  "groups": [
+    {
+      "group": "future_any_major_event=1",
+      "n": 248,
+      "v5_missed_reversal_n": 84,
+      "v5_error_rate": 0.3387096774193548
+    },
+    {
+      "group": "future_any_major_event=0",
+      "n": 530,
+      "v5_missed_reversal_n": 164,
+      "v5_error_rate": 0.30943396226415093
+    },
+    {
+      "group": "future_emp_event=1",
+      "n": 107,
+      "v5_missed_reversal_n": 34,
+      "v5_error_rate": 0.3177570093457944
+    },
+    {
+      "group": "future_emp_event=0",
+      "n": 671,
+      "v5_missed_reversal_n": 214,
+      "v5_error_rate": 0.31892697466467956
+    },
+    {
+      "group": "future_inflation_event=1",
+      "n": 113,
+      "v5_missed_reversal_n": 37,
+      "v5_error_rate": 0.3274336283185841
+    },
+    {
+      "group": "future_inflation_event=0",
+      "n": 665,
+      "v5_missed_reversal_n": 211,
+      "v5_error_rate": 0.3172932330827068
+    },
+    {
+      "group": "future_fomc_event=1",
+      "n": 51,
+      "v5_missed_reversal_n": 17,
+      "v5_error_rate": 0.3333333333333333
+    },
+    {
+      "group": "future_fomc_event=0",
+      "n": 727,
+      "v5_missed_reversal_n": 231,
+      "v5_error_rate": 0.3177441540577717
+    },
+    {
+      "group": "recent_emp_1d=1",
+      "n": 36,
+      "v5_missed_reversal_n": 6,
+      "v5_error_rate": 0.16666666666666666
+    },
+    {
+      "group": "recent_emp_1d=0",
+      "n": 742,
+      "v5_missed_reversal_n": 242,
+      "v5_error_rate": 0.3261455525606469
+    },
+    {
+      "group": "recent_emp_3d=1",
+      "n": 68,
+      "v5_missed_reversal_n": 18,
+      "v5_error_rate": 0.2647058823529412
+    },
+    {
+      "group": "recent_emp_3d=0",
+      "n": 710,
+      "v5_missed_reversal_n": 230,
+      "v5_error_rate": 0.323943661971831
+    }
+  ],
+  "flip_diagnostics": [
+    {
+      "rule": "FLIP_ON_ANY_FUTURE_MAJOR_EVENT",
+      "candidate_n": 248,
+      "rescued": 84,
+      "broken": 164,
+      "net": -80,
+      "precision": 0.3387096774193548
+    },
+    {
+      "rule": "FLIP_ON_FUTURE_EMPLOYMENT",
+      "candidate_n": 107,
+      "rescued": 34,
+      "broken": 73,
+      "net": -39,
+      "precision": 0.3177570093457944
+    },
+    {
+      "rule": "FLIP_ON_FUTURE_INFLATION",
+      "candidate_n": 113,
+      "rescued": 37,
+      "broken": 76,
+      "net": -39,
+      "precision": 0.3274336283185841
+    },
+    {
+      "rule": "FLIP_ON_FUTURE_FOMC",
+      "candidate_n": 51,
+      "rescued": 17,
+      "broken": 34,
+      "net": -17,
+      "precision": 0.3333333333333333
+    },
+    {
+      "rule": "FLIP_RECENT_EMP_1D_AGAINST_GE_0.0",
+      "candidate_n": 14,
+      "rescued": 4,
+      "broken": 10,
+      "net": -6,
+      "precision": 0.2857142857142857
+    },
+    {
+      "rule": "FLIP_RECENT_EMP_1D_AGAINST_GE_0.5",
+      "candidate_n": 3,
+      "rescued": 1,
+      "broken": 2,
+      "net": -1,
+      "precision": 0.3333333333333333
+    },
+    {
+      "rule": "FLIP_RECENT_EMP_1D_AGAINST_GE_1.0",
+      "candidate_n": 1,
+      "rescued": 0,
+      "broken": 1,
+      "net": -1,
+      "precision": 0.0
+    },
+    {
+      "rule": "FLIP_RECENT_EMP_3D_AGAINST_GE_0.0",
+      "candidate_n": 28,
+      "rescued": 8,
+      "broken": 20,
+      "net": -12,
+      "precision": 0.2857142857142857
+    },
+    {
+      "rule": "FLIP_RECENT_EMP_3D_AGAINST_GE_0.5",
+      "candidate_n": 6,
+      "rescued": 1,
+      "broken": 5,
+      "net": -4,
+      "precision": 0.16666666666666666
+    },
+    {
+      "rule": "FLIP_RECENT_EMP_3D_AGAINST_GE_1.0",
+      "candidate_n": 2,
+      "rescued": 0,
+      "broken": 2,
+      "net": -2,
+      "precision": 0.0
+    }
+  ],
+  "missed_2026_opal_no_candidate": {
+    "n": 55,
+    "future_any": 13,
+    "future_emp": 5,
+    "future_inflation": 5,
+    "future_fomc": 3,
+    "recent_emp_3d": 4
+  },
+  "yearly": [
+    {
+      "year": 2022,
+      "future_event": false,
+      "n": 17,
+      "error_n": 7,
+      "error_rate": 0.4117647058823529
+    },
+    {
+      "year": 2022,
+      "future_event": true,
+      "n": 12,
+      "error_n": 6,
+      "error_rate": 0.5
+    },
+    {
+      "year": 2023,
+      "future_event": false,
+      "n": 125,
+      "error_n": 32,
+      "error_rate": 0.256
+    },
+    {
+      "year": 2023,
+      "future_event": true,
+      "n": 63,
+      "error_n": 21,
+      "error_rate": 0.3333333333333333
+    },
+    {
+      "year": 2024,
+      "future_event": false,
+      "n": 125,
+      "error_n": 29,
+      "error_rate": 0.232
+    },
+    {
+      "year": 2024,
+      "future_event": true,
+      "n": 72,
+      "error_n": 27,
+      "error_rate": 0.375
+    },
+    {
+      "year": 2025,
+      "future_event": false,
+      "n": 163,
+      "error_n": 53,
+      "error_rate": 0.32515337423312884
+    },
+    {
+      "year": 2025,
+      "future_event": true,
+      "n": 48,
+      "error_n": 15,
+      "error_rate": 0.3125
+    },
+    {
+      "year": 2026,
+      "future_event": false,
+      "n": 100,
+      "error_n": 43,
+      "error_rate": 0.43
+    },
+    {
+      "year": 2026,
+      "future_event": true,
+      "n": 53,
+      "error_n": 15,
+      "error_rate": 0.2830188679245283
+    }
+  ],
+  "employment_events_complete": 56,
+  "inflation_schedule_events": 55,
+  "fomc_schedule_events": 29
+}
