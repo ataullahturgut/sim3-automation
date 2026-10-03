@@ -3754,3 +3754,80 @@ Evidence:
 - `GOLD_H3_DATA_INTEGRITY_GATE_V1_REPLAY_QUARANTINES_2026-10-03.csv`
 - `GOLD_H3_AURORA_V1_PROSPECTIVE_DATA_INTEGRITY.csv`.
 
+## 43. CLEAN H3 PROSPECTIVE V1 FREEZE (2026-10-03)
+
+**Identity:** `CLEAN_H3_PROSPECTIVE_V1`  
+**Status:** **FROZEN / READY FOR FIRST FUTURE ORIGIN**  
+**First eligible feature cutoff:** **2026-10-05**
+
+This is a separate prospective experiment. It does not replace, edit, relabel or backfill the original AURORA prospective ledger.
+
+Bootstrap workflow:
+- run **37120224350**
+- result **SUCCESS**
+- evidence commit `c2286108458c47a65aade15da7ec5eadbd842498`.
+
+Freeze commit:
+- `562901ccb92cb6d7ebf50645f6b2c73c5848a831`.
+
+### 43.1 Clean frozen source
+
+The clean daily freeze changes exactly the validated corrupt 2026-02-27 row:
+- Gold 3516.02 -> 5183.80
+- Silver 62.15 -> 88.14
+- Platinum 1585.39 -> 2369.25
+- Palladium 1201.26 -> 1789.96.
+
+All other frozen daily prices remain unchanged.
+
+### 43.2 Reproduction checks
+
+Clean AURORA expert matrix:
+- 19 September rows
+- max structural probability difference 8.05e-16
+- max PATH probability difference 8.88e-16
+- **PASS**.
+
+Reversal experts:
+- RIFT: 931 rows, identical overrides, max probability diff 9.27e-15
+- TURN: 1029 rows, identical overrides, max probability diff 8.33e-17
+- VEGA: 931 rows, identical overrides, max probability diff 9.44e-16
+- OPAL: 931 rows, identical overrides, max probability diff 7.51e-12
+- all **PASS**.
+
+### 43.3 Frozen prospective architecture
+
+No retuning is allowed:
+- Clean AURORA baseline
+- RIFT V1
+- TURN V1
+- VEGA V1
+- OPAL V1 threshold 0.70
+- HELIOS V1 W8 / enter 5 / exit 3
+- HELIOS V2 posterior calibration
+- V3-GT W8 / broken cost 1.0 / GT >0.50
+- V4-RGE W10 / regret +2 / -2
+- V5-DCE PATH posterior >0.50 / GT >0.50
+- Data Integrity Gate V1.
+
+GT >0.60 / 0.70 remains diagnostic only and is not part of the prospective freeze.
+
+### 43.4 Governance
+
+- no clean prospective evidence exists before 2026-10-05;
+- missed future origin -> MISS, never backfilled;
+- forecast fields immutable after issuance;
+- settlement appends realized fields only;
+- quarantined source rows cannot issue or settle;
+- any rule, threshold, source-lag or clean-history change requires a new version.
+
+Authority:
+- `GOLD_H3_CLEAN_PROSPECTIVE_V1_FREEZE_2026-10-03.md`.
+
+Frozen files:
+- `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_DAILY_PRICES.csv`
+- `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_EXPERT_TRAIN_MATRIX.csv`
+- `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_RIFT_PANEL.csv`
+- `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_VEGA_PANEL.csv`
+- `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_OPAL_PANEL.csv`.
+
