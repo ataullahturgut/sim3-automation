@@ -3393,3 +3393,264 @@ Evidence:
 - `GOLD_H3_STAK_UPSTREAM_AUDIT_SUMMARY_2026-10-03.json`
 - `GOLD_H3_STAK_UPSTREAM_FLAGS_2026-10-03.csv`.
 
+## 41. DATABASE + SOURCE-VINTAGE INTEGRITY RE-AUDIT (2026-10-03)
+
+### 41.1 Status
+
+**COMPLETE / NO ADDITIONAL CONFIRMED H3 DATA CORRUPTION**
+
+A second, broader integrity audit was run after the confirmed 2026-02-27 frozen daily-price corruption.
+
+The audit was read-only against Neon and covered:
+- database schema / series inventory,
+- duplicate timestamps and revisions,
+- binding historical hourly XAU,
+- frozen daily metals vs Neon registered historical metals,
+- independent XAU source-clock comparison,
+- upstream StakTrakr source-vintage changes,
+- same-semantic full-UTC-day-average comparison using Twelve Data hourly XAU.
+
+No additional daily observation met the evidentiary standard for correction.
+
+Therefore the clean-chain result from Section 40 remains binding:
+- 2026 clean AURORA: **58.64%**
+- 2026 clean V5-DCE: **63.35%**
+- net V5 rescue vs AURORA: **+9**
+- accuracy delta: **+4.71 pp**.
+
+### 41.2 Neon database structural audit
+
+Read-only workflow:
+- run **37117457359**
+- implementation commit `567810f0b5eb5566ed3b891ac9989975cfe3d019`
+- evidence commit `ea4dade6c0c433850cf0711a8f8cb806c44d772a`.
+
+Database inventory:
+- user tables: **32**
+- observation series: **63**
+- series with duplicate timestamps: **14**
+- duplicate timestamp groups inspected: **1,910**
+- groups with conflicting stored values: **374**.
+
+These counts are not themselves errors because several registered series are revision/vintage feeds.
+
+Binding historical H3 hourly source:
+- series `XAU_USD_TWELVE_1H_RESEARCH_V1`
+- **17,644** deduplicated rows
+- range 2022-01-02 23:00 UTC through 2024-12-31 21:00 UTC
+- duplicate/revision timestamps: **0**
+- adjacent one-hour absolute log returns >=2.5%: **0**
+- suspicious large one-hour spike + immediate reversal patterns: **0**
+- maximum adjacent one-hour absolute log return: approximately **2.41%**.
+
+Conclusion:
+**no obvious bad-tick corruption was found in the binding historical hourly XAU database source.**
+
+### 41.3 Revision-prone database series
+
+`XAU_DAILY_XAUS` contains:
+- **125** revised timestamps
+- all 125 have conflicting values
+- median absolute first-to-last revision: **0.453%**
+- P95: **1.389%**
+- maximum first-to-last revision: **1.763%**
+- maximum within-timestamp range: **2.463%**.
+
+This series is registered as:
+- operational/display cross-check,
+- `CANDIDATE_NOT_BENCHMARK`,
+- not the current H3 target/model authority.
+
+Therefore these revisions do **not** alter the clean H3 retrospective score.
+
+`VIX_CBOE` and `GVZ_CBOE` had repeated retrieval rows but **no conflicting values** in this audit.
+
+### 41.4 Why frozen-vs-Neon Stak values differ
+
+The registered Neon Stak history and AURORA frozen daily file use different upstream StakTrakr vintages:
+
+Neon historical series:
+- upstream commit `ed2e549f82ba0d1cd3ca32842b82d3888d301e01`
+- date **2026-08-19**.
+
+AURORA frozen daily file:
+- upstream commit `54fdf1c8d39b7b6c7b874d0f30f784296e886044`
+- date **2026-09-30**
+- release explicitly includes **STRK-403 — Spot history accuracy**.
+
+Upstream STRK-403 documentation states that the old current-year mechanism:
+- appended observations before a UTC day was complete,
+- did not revisit those partial-day observations,
+- froze the public year file at 2026-02-26 after the prior writer retired,
+- left a late-February / early-March gap.
+
+The new rule rebuilds current-year history as:
+- one row per metal / UTC day,
+- SQL `AVG(spot)`,
+- complete UTC days only,
+- and fills the missing gap.
+
+Therefore the many Apr-Jul differences between Neon and the frozen file are largely:
+**older partial-day vintage vs newer full-day-average vintage**, not evidence that Neon is correct and frozen is corrupt.
+
+The 2026-02-27 row is exceptional because the new gap-fill value itself was independently proven wrong.
+
+### 41.5 Frozen-vs-Neon comparison
+
+Deep read-only audit:
+- implementation commit `ed2a3ccbfe684b836171d9ac61beccaed92d3da0`
+- evidence commit `bb8a216ef516e8d9d423e4e87d7f8f09ddd242db`.
+
+Through Neon four-metal common end 2026-07-31:
+- same-date differing metal cells: **135**
+- frozen-only dates: **6**
+- Neon-only dates: mainly weekend rows excluded by the H3 frozen parser.
+
+Frozen-only dates:
+- 2026-02-27
+- 2026-03-02
+- 2026-03-03
+- 2026-03-04
+- 2026-03-05
+- 2026-03-06.
+
+These are exactly within the STRK-403 historical gap-fill region.
+
+Among same-date old-vintage/new-vintage differences:
+- Gold max difference: about **1.81%**
+- Silver max: about **6.24%**
+- Platinum max: about **3.21%**
+- Palladium max: about **2.31%**.
+
+Do not replace the newer values with the older Neon values mechanically; the upstream semantics changed from partial-day snapshots to completed UTC-day averages.
+
+### 41.6 Source-clock comparison is not an error test
+
+Clean frozen Stak daily-average XAU was also compared with:
+`XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1`.
+
+Result:
+- H3 direction disagreement around **20%**.
+
+This does **not** establish corruption because the two target identities have different clocks / semantics:
+- Stak = daily average,
+- NY17 research = selected New York hourly endpoint.
+
+The project had already frozen the rule:
+**explicit target identity; do not stitch clocks.**
+
+The earlier source-bridge test also failed target-equivalence:
+- Stak vs canonical NY17 return Pearson ≈ **0.9375**
+- sign agreement only ≈ **65%**
+- return-difference SD ≈ **1.049%**.
+
+Thus historical Stak development and NY17 live reference must remain separate target identities.
+
+### 41.7 Binding same-semantic audit
+
+To distinguish true data problems from source-clock differences, a final same-semantic test was run.
+
+Workflow:
+- run **37118309408**
+- implementation commit `e4e73aa3165b1c2cb2f2ecea7da0e7d126950831`
+- evidence commit `f2dbd6f25dacbb4608f80510abe4778bce2ead6a`.
+
+Comparator:
+- Twelve Data XAU/USD 1-hour observations in UTC,
+- arithmetic mean of hourly closes for each UTC calendar day,
+- compared with StakTrakr STRK-403 full-UTC-day-average history.
+
+2026 Jan-Sep:
+- Twelve hourly observations: **6,527**
+- common weekday daily levels: **193**
+- median Stak / Twelve daily-mean ratio: **1.000118**
+- deviation >=1%: **1**
+- >=2%: **0**
+- >=3%: **0**
+- >=5%: **0**
+- maximum deviation: **1.05%** on 2026-02-18.
+
+The 2026-02-18 Stak value is still inside the Twelve intraday hourly range and does not meet an error threshold.
+
+The only mechanically flagged outside-hourly-close-range row was:
+- 2026-04-03
+- Stak **4676.71**
+- Twelve hourly-close mean **4676.45**
+- hourly-close max **4676.63**
+- difference from mean approximately **0.01%**.
+
+This is economically negligible and is not evidence of corruption; an hourly close range is not the same thing as the complete intrahour trade range.
+
+### 41.8 Revalidation of the February/March gap-fill
+
+Same-semantic cross-check:
+
+2026-02-27:
+- original frozen Gold: **3516.02**
+- clean patched Gold: **5183.80**
+- Twelve hourly daily mean: **5214.11**
+- clean deviation from same-semantic comparator: approximately **0.6%**.
+
+Subsequent STRK-403 gap-fill days are highly consistent:
+
+- 2026-03-02: Stak 5354.59 vs Twelve mean 5353.01
+- 2026-03-03: 5218.71 vs 5211.12
+- 2026-03-06: 5125.05 vs 5126.13.
+
+Thus:
+**2026-02-27 is the only confirmed corrupt row in the gap-fill block.**
+
+### 41.9 H3 target-direction same-semantic sensitivity
+
+Using the same retained H3 date clock:
+- comparable origins: **190**
+- direction disagreements: **8 / 190 = 4.21%**
+- disagreements where both absolute H3 moves are >=0.5%: **2**
+- disagreements where both are >=1.0%: **0**.
+
+The eight disagreements are concentrated around small/medium movements and ordinary cross-provider daily-average differences.
+
+The two largest opposing cases are:
+- 2026-02-04 -> 2026-02-09:
+  - Stak H3 **-1.18%**
+  - Twelve hourly-mean H3 **+0.52%**
+- 2026-02-13 -> 2026-02-18:
+  - Stak H3 **+0.98%**
+  - Twelve hourly-mean H3 **-0.87%**.
+
+Neither has a single-day level anomaly >~1.1%, and no daily level lies outside a plausible provider range. They remain **source-definition/provider dispersion**, not confirmed erroneous labels.
+
+### 41.10 Binding conclusion
+
+1. No additional confirmed corrupt H3 observation was found.
+2. Neon binding historical hourly XAU is structurally clean.
+3. 2026-02-27 remains the only proven corrupt daily row requiring correction.
+4. Apr-Jul frozen-vs-Neon differences are mainly explained by StakTrakr's STRK-403 full-day-average correction versus the older partial-day vintage.
+5. NY17-vs-daily-average label disagreement is a target-clock issue, not a database corruption issue.
+6. Revision-prone `XAU_DAILY_XAUS` must not be silently substituted into H3.
+7. The Section 40 clean V5 result **63.35%** remains the valid retrospective binding result.
+
+### 41.11 Mandatory integrity gate for future H3 work
+
+Before any future H3 retrospective or prospective score is accepted:
+
+- pin source identity and upstream commit/vintage;
+- preserve first-seen timestamp for prospective observations;
+- reject silent replacement by a different daily clock;
+- never mix daily-average and NY17 target identities;
+- detect duplicate/conflicting revisions before feature construction;
+- for historical gap-fill or source rewrite, run a same-semantic independent-source comparison;
+- quarantine a daily row for manual verification when a same-semantic cross-provider level discrepancy is extreme;
+- do not auto-correct statistical outliers: a true market crash must remain in the data;
+- after any confirmed correction, rebuild targets, lagged features, volatility state and downstream causal routers from the affected origin onward.
+
+Evidence:
+- `GOLD_H3_NEON_INTEGRITY_AUDIT_2026-10-03.md`
+- `GOLD_H3_NEON_CROSS_SOURCE_AUDIT_2026-10-03.md`
+- `GOLD_H3_DEEP_DATA_INTEGRITY_AUDIT_2026-10-03.md`
+- `GOLD_H3_FROZEN_INDEPENDENT_XAU_AUDIT_2026-10-03.md`
+- `GOLD_H3_DAILY_AVERAGE_SEMANTIC_AUDIT_2026-10-03.md`
+- `GOLD_H3_DAILY_AVERAGE_SEMANTIC_SUMMARY_2026-10-03.json`
+- `GOLD_H3_DB_REVISION_SUMMARY_2026-10-03.csv`
+- `GOLD_H3_FROZEN_VS_NEON_MISMATCHES_2026-10-03.csv`.
+
