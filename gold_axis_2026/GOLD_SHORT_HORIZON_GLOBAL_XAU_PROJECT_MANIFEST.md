@@ -4027,3 +4027,120 @@ Supporting phase authorities:
 - `GOLD_H3_PHASE7_HELIOS_V6_ROUTER_GATE_2026-10-03.md`
 - `GOLD_H3_PHASE8_SEQUENTIAL_EVIDENCE_GATE_2026-10-03.md`
 - `GOLD_H3_PHASE9_SELECTIVE_ACTION_GATE_2026-10-03.md`.
+
+
+## 46. REVERSAL INFORMATION EXTENSION — GC OI / CHANGEPOINT / OPTIONS FLOW (2026-10-03)
+
+**Status:** **NO NEW PROMOTED REVERSAL SPECIALIST**
+
+This extension continued the Section 45 research program without reopening failed thresholds or using 2026 for selection.
+
+### 46.1 GC Open Interest salvage
+
+The correct CME public daily-volume archive family was identified under `/ftp/pub/pub/pub/daily_volume/`, but GitHub-runner requests were blocked by CME HTTP 403 anti-scraping controls. No bypass was attempted.
+
+Full FLOW-H3 Volume+OI therefore remains **access-blocked / untested**, not failed.
+
+### 46.2 CHANGEPOINT-H3
+
+A new path-innovation specialist was preregistered and executed.
+
+It used:
+- first differences of origin-safe path state;
+- momentum-weakening sign normalization;
+- backward-looking z60 innovation shocks;
+- weakening impulse and short CUSUM persistence;
+- selected second differences.
+
+Binding DEV result:
+`NO_ELIGIBLE_CHANGEPOINT_THRESHOLD`.
+
+Examples:
+- threshold 0.40 -> precision **33.33%**, recall **73.58%**, candidate rate **62.07%**
+- threshold 0.55 -> precision **32.23%**, recall **36.79%**, candidate rate **32.10%**.
+
+2025/2026 remained unopened.
+
+### 46.3 Public directional options source discovery
+
+Cboe public GLD historical class-volume export was successfully reverse-mapped from Cboe's own page JavaScript. It supplies daily total volume by exchange but not a sufficient free call/put directional payload for the intended specialist. It was not mislabeled as skew.
+
+OCC Volume Query was then verified as an official directional source. Exact GLD option-class daily records provide:
+- call / put indicator;
+- customer / firm / market-maker account type;
+- exchange;
+- activity date;
+- volume quantity.
+
+The public source retains approximately the prior 24 months.
+
+OCC daily open-interest public download was also tested. It is aggregate OCC market OI by asset class rather than GLD-specific OI and was therefore rejected for GLD reversal modeling.
+
+### 46.4 OPTIONS-FLOW-H3 V1
+
+Identity:
+`OPTIONS_FLOW_H3_V1`
+
+Evidence class:
+`SHORT_HISTORY_OFFICIAL_OCC_AUTHORITY`
+
+Source coverage:
+- accepted dates: **498**
+- 2024-10-04 through 2026-09-30
+- all accepted dates used official OCC BOTH call/put transport.
+
+Frozen roles:
+- 2024-Q4 formation/warm-up
+- 2025-H1 DEV
+- 2025-H2 confirmation only after DEV PASS
+- 2026 holdout only after confirmation PASS.
+
+Origin rule:
+- latest OCC source date strictly before H3 feature cutoff;
+- same-date flow forbidden;
+- max staleness 5 calendar days.
+
+Model:
+- standardized balanced logistic regression;
+- expanding monthly refit;
+- conditional training universe = AURORA follows momentum.
+
+2025-H1 DEV:
+- eligible origins **84**
+- true reversals **36**.
+
+| Threshold | Precision | Recall | Candidate rate | Eligible |
+|---:|---:|---:|---:|---|
+| 0.35 | 44.29% | 86.11% | 83.33% | NO |
+| 0.40 | 43.94% | 80.56% | 78.57% | NO |
+| 0.45 | 42.86% | 66.67% | 66.67% | NO |
+| 0.50 | 42.86% | 50.00% | 50.00% | NO |
+| 0.55 | 41.67% | 41.67% | 42.86% | NO |
+| 0.60 | 31.82% | 19.44% | 26.19% | NO |
+
+Binding status:
+`NO_ELIGIBLE_OPTIONS_FLOW_THRESHOLD`.
+
+No 2025-H2 confirmation or 2026 holdout was opened.
+
+### 46.5 Interpretation
+
+The official OCC signal is more promising than prior accessible specialists in recall/precision terms, but it is still far too broad as a candidate generator. At threshold 0.35, precision is **44.29%** and recall **86.11%**, but candidate rate is **83.33%**.
+
+Do not lower the candidate-rate gate post hoc.
+
+The free OCC feed is not equivalent to the most informative options-order-flow measures in the literature: it supplies call/put and account type, but not buyer-vs-seller initiated direction or buyer-to-open flow.
+
+Therefore the next information frontier remains:
+- actual futures position change / official GC OI;
+- CME Gold CVOL implied-distribution asymmetry;
+- signed/opening options order flow if an authoritative history becomes available.
+
+Binding model remains **HELIOS V5-DCE**.
+
+Primary closure:
+- `GOLD_H3_REVERSAL_INFORMATION_EXTENSION_CLOSURE_2026-10-03.md`
+- commit `bc827a0331e822ad4ea41d13a2acebd6ac44cdfa`.
+
+OPTIONS-FLOW evidence:
+- commit `ac041db97cdf7c445617d5b429afde18c68241e2`.
