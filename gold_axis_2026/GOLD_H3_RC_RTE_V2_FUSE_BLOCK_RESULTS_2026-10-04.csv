@@ -1,0 +1,4 @@
+eligible_n,proposal_n,candidate_n,candidate_rate,suppressed_overlap_n,suppressed_fuse_n,suppressed_static_n,rescued,broken,net_rescue,rescue_precision,v5_accuracy,assisted_accuracy,missed_opal_no_candidate_n,hits_missed_opal_no_candidate,block,train_n,enabled_regimes
+107,27,0,0.0,0,0,27,0,0,0,0.0,0.6915887850467289,0.6915887850467289,27,0,2024_H2,102,
+102,23,9,0.08823529411764706,1,12,1,7,2,5,0.7777777777777778,0.6078431372549019,0.6568627450980392,36,5,2025_H1,209,1;2
+109,22,2,0.01834862385321101,1,17,2,0,2,-2,0.0,0.7431192660550459,0.7247706422018348,26,0,2025_H2,311,0;2
