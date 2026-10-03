@@ -37,42 +37,98 @@ FEATURES=[
     "mom_x_gold_silver_gap","core_confirmation","cross_dispersion"
 ]
 
-FRED_SERIES={
-    "usd":"DTWEXBGS",
-    "yield":"DGS10",
-    "ndx":"NASDAQ100",
-    "vix":"VIXCLS",
+DDP_SOURCES={
+    "usd":{
+        "rel":"H10",
+        "package":"122e3bcb627e8e53f1bf72a1a09cfb81",
+        "column":"JRXWTFB_N.B",
+    },
+    "yield":{
+        "rel":"H15",
+        "package":"0b98a66d3ff5e1ea0fbf88adc59b387f",
+        "column":"RIFLGFCY10_N.B",
+    },
 }
-STALE_DAYS={"metal":5,"usd":7,"yield":7,"ndx":5,"vix":5}
 
-SESSION=requests.Session()
-SESSION.headers.update({"User-Agent":"Mozilla/5.0 (compatible; DIVERGE-H3 academic research/1.0)"})
+def parse_fed_ddp_csv(text,target_code):
+    lines=text.splitlines()
+    header_i=None
+    for i,line in enumerate(lines):
+        if "Time Period" in line and target_code in line:
+            header_i=i
+            break
+    if header_i is None:
+        # Some DDP exports put metadata on separate rows; look for any Time Period header.
+        for i,line in enumerate(lines):
+            if "Time Period" in line:
+                header_i=i
+                break
+    if header_i is None:
+        raise RuntimeError(f"FED_DDP_HEADER_NOT_FOUND {target_code} head={text[:500]!r}")
+    df=pd.read_csv(io.StringIO("\n".join(lines[header_i:])))
+    date_col=df.columns[0]
+    candidates=[x for x in df.columns if target_code in str(x)]
+    if not candidates:
+        raise RuntimeError(f"FED_DDP_COLUMN_NOT_FOUND {target_code} cols={df.columns.tolist()}")
+    vcol=candidates[0]
+    out=df[[date_col,vcol]].rename(columns={date_col:"date",vcol:"value"})
+    out["date"]=pd.to_datetime(out["date"],errors="coerce")
+    out["value"]=pd.to_numeric(out["value"],errors="coerce")
+    return out.dropna(subset=["date","value"]).sort_values("date").drop_duplicates("date",keep="last").reset_index(drop=True)
 
-def fred_fetch(series_id):
-    urls=[
-        f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}&cosd=2021-01-01&coed=2026-10-02",
-        f"https://api.stlouisfed.org/fred/series/observations?series_id={series_id}&file_type=json",
-    ]
-    # FRED graph CSV is public and does not require an API key.
-    r=SESSION.get(urls[0],timeout=60)
+def fed_ddp_fetch(name):
+    cfg=DDP_SOURCES[name]
+    url="https://www.federalreserve.gov/datadownload/Output.aspx"
+    params={
+        "rel":cfg["rel"],"series":cfg["package"],"lastObs":"",
+        "from":"01/01/2021","to":"10/02/2026",
+        "filetype":"csv","label":"include","layout":"seriescolumn","type":"package"
+    }
+    r=SESSION.get(url,params=params,timeout=60)
     if r.status_code!=200:
-        raise RuntimeError(f"FRED_FETCH_FAIL {series_id} HTTP={r.status_code} {r.text[:300]}")
-    df=pd.read_csv(io.StringIO(r.text))
-    if len(df.columns)<2:
-        raise RuntimeError(f"FRED_BAD_COLUMNS {series_id} {df.columns.tolist()}")
-    dcol=df.columns[0]
-    vcol=df.columns[1]
-    df=df.rename(columns={dcol:"date",vcol:"value"})
-    df["date"]=pd.to_datetime(df["date"],errors="coerce")
-    df["value"]=pd.to_numeric(df["value"],errors="coerce")
-    df=df.dropna(subset=["date","value"]).sort_values("date").drop_duplicates("date",keep="last")
-    if len(df)<200:
-        raise RuntimeError(f"FRED_TOO_FEW_ROWS {series_id} n={len(df)}")
-    return df.reset_index(drop=True),{
-        "series_id":series_id,"status":"PASS","rows":int(len(df)),
+        raise RuntimeError(f"FED_DDP_FETCH_FAIL {name} HTTP={r.status_code} {r.text[:300]}")
+    df=parse_fed_ddp_csv(r.text,cfg["column"])
+    if len(df)<500:
+        raise RuntimeError(f"FED_DDP_TOO_FEW {name} n={len(df)} head={r.text[:500]!r}")
+    return df,{
+        "source":"FED_DDP","series_id":cfg["column"],"status":"PASS","rows":int(len(df)),
         "min_date":str(df.date.min().date()),"max_date":str(df.date.max().date()),
         "source_url":r.url
     }
+
+def yahoo_fetch(symbol,label):
+    start=int(pd.Timestamp("2021-01-01",tz="UTC").timestamp())
+    end=int(pd.Timestamp("2026-10-03",tz="UTC").timestamp())
+    last=None
+    for host in ["query1.finance.yahoo.com","query2.finance.yahoo.com"]:
+        url=f"https://{host}/v8/finance/chart/{requests.utils.quote(symbol,safe='')}"
+        params={"period1":start,"period2":end,"interval":"1d","events":"history","includeAdjustedClose":"true"}
+        try:
+            r=SESSION.get(url,params=params,timeout=60,headers={"Accept":"application/json","User-Agent":SESSION.headers["User-Agent"]})
+            if r.status_code!=200:
+                last=f"{host} HTTP {r.status_code}: {r.text[:200]}"
+                continue
+            j=r.json()["chart"]["result"][0]
+            q=j["indicators"]["quote"][0]
+            rows=[]
+            for i,t in enumerate(j["timestamp"]):
+                close=q["close"][i]
+                if close is None or not np.isfinite(float(close)) or float(close)<=0:
+                    continue
+                d=pd.to_datetime(t,unit="s",utc=True).tz_convert("America/New_York").normalize().tz_localize(None)
+                rows.append({"date":d,"value":float(close)})
+            df=pd.DataFrame(rows).drop_duplicates("date",keep="last").sort_values("date").reset_index(drop=True)
+            if len(df)<500:
+                last=f"{host} too few rows {len(df)}"
+                continue
+            return df,{
+                "source":"YAHOO_CHART","series_id":label,"status":"PASS","rows":int(len(df)),
+                "min_date":str(df.date.min().date()),"max_date":str(df.date.max().date()),
+                "source_url":r.url
+            }
+        except Exception as e:
+            last=f"{host} {type(e).__name__}: {e}"
+    raise RuntimeError(f"YAHOO_FETCH_FAIL {label} {last}")
 
 def z_against_prior(s,window=60,minp=30):
     mu=s.shift(1).rolling(window,min_periods=minp).mean()
@@ -96,28 +152,23 @@ def build_sources():
         "source_url":"repo:frozen_clean_daily_prices"
     }]
 
-    raw={}
-    for k,sid in FRED_SERIES.items():
-        df,meta=fred_fetch(sid)
-        raw[k]=df
-        audits.append({"source":"FRED",**meta})
+    usd,meta=fed_ddp_fetch("usd"); audits.append(meta)
+    yld,meta=fed_ddp_fetch("yield"); audits.append(meta)
+    ndx,meta=yahoo_fetch("^NDX","NDX"); audits.append(meta)
+    vix,meta=yahoo_fetch("^VIX","VIX"); audits.append(meta)
 
-    usd=raw["usd"].copy()
     usd["usd_ret1"]=np.log(usd.value.astype(float)).diff()
     usd["z_usd"]=z_against_prior(usd.usd_ret1)
     usd=usd.dropna(subset=["usd_ret1","z_usd"]).reset_index(drop=True)
 
-    yld=raw["yield"].copy()
     yld["dgs10_chg1"]=yld.value.astype(float).diff()
     yld["z_yield"]=z_against_prior(yld.dgs10_chg1)
     yld=yld.dropna(subset=["dgs10_chg1","z_yield"]).reset_index(drop=True)
 
-    ndx=raw["ndx"].copy()
     ndx["ndx_ret1"]=np.log(ndx.value.astype(float)).diff()
     ndx["z_ndx"]=z_against_prior(ndx.ndx_ret1)
     ndx=ndx.dropna(subset=["ndx_ret1","z_ndx"]).reset_index(drop=True)
 
-    vix=raw["vix"].copy()
     vix["vix_ret1"]=np.log(vix.value.astype(float)).diff()
     vix["z_vix"]=z_against_prior(vix.vix_ret1)
     vix=vix.dropna(subset=["vix_ret1","z_vix"]).reset_index(drop=True)
