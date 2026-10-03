@@ -1,0 +1,87 @@
+{
+  "GC": {
+    "symbol": "GC=F",
+    "status": "PASS",
+    "rows": 10094,
+    "min_utc": "2025-01-02 05:00:00+00:00",
+    "max_utc": "2026-10-02 20:00:00+00:00",
+    "min_et": "2025-01-02 00:00:00-05:00",
+    "max_et": "2026-10-02 16:00:00-04:00",
+    "year_rows": {
+      "2025": 5761,
+      "2026": 4333
+    },
+    "exchange_tz": "America/New_York",
+    "gmtoffset": -14400
+  },
+  "USD": {
+    "symbol": "DX=F",
+    "status": "FAIL",
+    "error": "RuntimeError('HTTP 404: {\"chart\":{\"result\":null,\"error\":{\"code\":\"Not Found\",\"description\":\"No data found, symbol may be delisted\"}}}')"
+  },
+  "UST10": {
+    "symbol": "ZN=F",
+    "status": "PASS",
+    "rows": 10023,
+    "min_utc": "2025-01-02 05:00:00+00:00",
+    "max_utc": "2026-10-02 20:00:00+00:00",
+    "min_et": "2025-01-02 00:00:00-05:00",
+    "max_et": "2026-10-02 16:00:00-04:00",
+    "year_rows": {
+      "2025": 5683,
+      "2026": 4340
+    },
+    "exchange_tz": "America/New_York",
+    "gmtoffset": -14400
+  },
+  "NASDAQ": {
+    "symbol": "NQ=F",
+    "status": "PASS",
+    "rows": 10076,
+    "min_utc": "2025-01-02 05:00:00+00:00",
+    "max_utc": "2026-10-02 20:00:00+00:00",
+    "min_et": "2025-01-02 00:00:00-05:00",
+    "max_et": "2026-10-02 16:00:00-04:00",
+    "year_rows": {
+      "2025": 5740,
+      "2026": 4336
+    },
+    "exchange_tz": "America/New_York",
+    "gmtoffset": -14400
+  },
+  "VIXF": {
+    "symbol": "VX=F",
+    "status": "FAIL",
+    "error": "RuntimeError('HTTP 404: {\"chart\":{\"result\":null,\"error\":{\"code\":\"Not Found\",\"description\":\"No data found, symbol may be delisted\"}}}')"
+  },
+  "SILVER": {
+    "symbol": "SI=F",
+    "status": "PASS",
+    "rows": 10094,
+    "min_utc": "2025-01-02 05:00:00+00:00",
+    "max_utc": "2026-10-02 20:00:00+00:00",
+    "min_et": "2025-01-02 00:00:00-05:00",
+    "max_et": "2026-10-02 16:00:00-04:00",
+    "year_rows": {
+      "2025": 5759,
+      "2026": 4335
+    },
+    "exchange_tz": "America/New_York",
+    "gmtoffset": -14400
+  },
+  "WTI": {
+    "symbol": "CL=F",
+    "status": "PASS",
+    "rows": 9958,
+    "min_utc": "2025-01-02 05:00:00+00:00",
+    "max_utc": "2026-10-02 21:00:00+00:00",
+    "min_et": "2025-01-02 00:00:00-05:00",
+    "max_et": "2026-10-02 17:00:00-04:00",
+    "year_rows": {
+      "2025": 5640,
+      "2026": 4318
+    },
+    "exchange_tz": "America/New_York",
+    "gmtoffset": -14400
+  }
+}
