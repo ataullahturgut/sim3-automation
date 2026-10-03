@@ -1,0 +1,58 @@
+{
+  "schema": "DTR_H3_V1",
+  "status": "DTR_DEVELOPMENT_NOT_VIABLE",
+  "years": {
+    "2024": {
+      "eligible_n": 197,
+      "oar_n": 12,
+      "candidate_n": 3,
+      "candidate_rate": 0.015228426395939087,
+      "rescued": 3,
+      "broken": 0,
+      "net_rescue": 3,
+      "rescue_precision": 1.0,
+      "preemptive_candidates": 0,
+      "exhaustion_candidates": 3
+    },
+    "2025": {
+      "eligible_n": 211,
+      "oar_n": 22,
+      "candidate_n": 14,
+      "candidate_rate": 0.06635071090047394,
+      "rescued": 9,
+      "broken": 5,
+      "net_rescue": 4,
+      "rescue_precision": 0.6428571428571429,
+      "preemptive_candidates": 0,
+      "exhaustion_candidates": 14
+    },
+    "2026": {
+      "eligible_n": 153,
+      "oar_n": 19,
+      "candidate_n": 11,
+      "candidate_rate": 0.0718954248366013,
+      "rescued": 1,
+      "broken": 10,
+      "net_rescue": -9,
+      "rescue_precision": 0.09090909090909091,
+      "preemptive_candidates": 0,
+      "exhaustion_candidates": 11
+    }
+  },
+  "pooled": {
+    "eligible_n": 561,
+    "oar_n": 53,
+    "candidate_n": 28,
+    "candidate_rate": 0.049910873440285206,
+    "rescued": 13,
+    "broken": 15,
+    "net_rescue": -2,
+    "rescue_precision": 0.4642857142857143,
+    "preemptive_candidates": 0,
+    "exhaustion_candidates": 28
+  },
+  "nonnegative_years": 2,
+  "worst_year_net": -9,
+  "development_viable": false,
+  "prospective_freeze": null
+}
