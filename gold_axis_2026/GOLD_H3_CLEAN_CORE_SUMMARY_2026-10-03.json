@@ -1,0 +1,47 @@
+{
+  "patch_date": "2026-02-27",
+  "old_values": {
+    "gold": 3516.02,
+    "silver": 62.15,
+    "platinum": 1585.39,
+    "palladium": 1201.26
+  },
+  "new_values": {
+    "gold": 5183.8,
+    "silver": 88.14,
+    "platinum": 2369.25,
+    "palladium": 1789.96
+  },
+  "provenance": {
+    "gold": "GoldPrice.org 2026-02-27 close",
+    "silver": "GoldPrice.org 2026-02-27 close",
+    "platinum": "StatMuse XPT 2026-02-27 close",
+    "palladium": "StatMuse XPD 2026-02-27 close"
+  },
+  "base_rows": 4232,
+  "clean_aurora_rows": 1029,
+  "comparison_rows": 1029,
+  "label_changed_n": 2,
+  "direction_changed_n": 2,
+  "max_p_abs_diff": 0.0364129438440689,
+  "changed_direction_dates": [
+    "2026-09-15",
+    "2026-09-22"
+  ],
+  "label_changed_dates": [
+    "2026-02-25",
+    "2026-03-02"
+  ],
+  "clean_switches": [
+    {
+      "forecast_issue_date": "2025-09-18",
+      "from": "STRUCTURAL_IRIS",
+      "to": "PATH_GLOBAL",
+      "matured_pair_n": 63,
+      "net_rescue_63": 3,
+      "matured_disagreements": 90,
+      "q_path": 0.7935533553385844,
+      "prob_path_superior": 0.8989288476286494
+    }
+  ]
+}
