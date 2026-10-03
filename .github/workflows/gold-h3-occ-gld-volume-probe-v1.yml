@@ -1,0 +1,38 @@
+name: Gold H3 OCC GLD Volume Probe V1
+on:
+  push:
+    branches: [gold-h3-options-flow-source-probe-v1-20261003]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_occ_gld_volume_probe_v1.py'
+      - '.github/workflows/gold-h3-occ-gld-volume-probe-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-options-flow-source-probe-v1-20261003
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check requests
+      - run: python gold_axis_2026/tools/gold_h3_occ_gld_volume_probe_v1.py
+      - name: Record OCC GLD probe
+        run: |
+          cp gold_h3_occ_gld_volume_probe_out/RESULT.md gold_axis_2026/GOLD_H3_OCC_GLD_VOLUME_PROBE_V1_RESULT_2026-10-03.md
+          cp gold_h3_occ_gld_volume_probe_out/probe.json gold_axis_2026/GOLD_H3_OCC_GLD_VOLUME_PROBE_V1_2026-10-03.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_OCC_GLD_VOLUME_PROBE_V1_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record OCC GLD call-put volume probe"
+            git pull --rebase origin gold-h3-options-flow-source-probe-v1-20261003
+            git push origin HEAD:gold-h3-options-flow-source-probe-v1-20261003
+          fi
