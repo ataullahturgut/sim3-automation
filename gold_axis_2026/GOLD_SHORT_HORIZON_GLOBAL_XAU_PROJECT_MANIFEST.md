@@ -4364,3 +4364,56 @@ Governance:
 Authority:
 - `GOLD_H3_RC_RTE_V1_V2_CLOSURE_2026-10-04.md`
 - closure commit `114ca7b5785f6d1a5b3518b5e12c8a24c8b9edd5`.
+
+
+## 49. SCR-RTE — SUPPORT-CONSTRAINED SPECIALIST REVERSAL ENGINE V1 (2026-10-04)
+
+**Status:** **RETROSPECTIVE DEVELOPMENT FAIL / NOT PROMOTED**
+
+After the RC-RTE V2 clean 2026 holdout was spent, historical 2022–2026-09 data were reclassified as development/stress-test only.
+
+SCR-RTE V1 tested:
+- specialist-specific conformal support;
+- 5th-nearest-neighbor nonconformity;
+- p_support >= 0.10;
+- 15-nearest local competence;
+- local precision >=60%;
+- one-sided Wilson-80 lower bound >50%;
+- specialist arbitration;
+- one-outstanding H3 event per specialist;
+- monthly credibility fuse.
+
+Forward retrospective replay:
+
+| Block | Accepted | Rescue | Broken | Net | Precision |
+|---|---:|---:|---:|---:|---:|
+| 2024 H2 | 3 | 0 | 3 | -3 | 0.00% |
+| 2025 H1 | 7 | 4 | 3 | +1 | 57.14% |
+| 2025 H2 | 3 | 0 | 3 | -3 | 0.00% |
+| 2026 H1 | 4 | 1 | 3 | -2 | 25.00% |
+| 2026 H2 through Sep | 0 | 0 | 0 | 0 | — |
+
+Aggregate:
+- accepted 17
+- rescue / broken / net = **5 / 12 / -7**
+- rescue precision **29.41%**
+- V5 accuracy **66.24%**
+- SCR-RTE assisted **64.76%**
+
+Therefore the support/OOD filter as implemented does **not** solve the reversal-selection problem and is not promoted.
+
+A prospective freeze artifact was generated before post-freeze use:
+- first clean origin 2026-10-05
+- training rows 573
+- max matured target end 2026-09-29
+- SB library 19
+- OPT library 85
+- MAT library 35
+
+However, because retrospective development performance is materially negative, SCR-RTE V1 should remain **shadow-only** and should not override HELIOS V5-DCE.
+
+Binding champion remains HELIOS V5-DCE.
+
+Authority:
+- `GOLD_H3_SCR_RTE_V1_RETRO_RESULT_2026-10-04.md`
+- `GOLD_H3_SCR_RTE_V1_PROSPECTIVE_FREEZE_2026-10-04.json`.
