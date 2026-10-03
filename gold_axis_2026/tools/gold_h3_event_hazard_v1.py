@@ -192,3 +192,5 @@ def main():
 
 if __name__=="__main__":
     main()
+
+# trigger: event-hazard-ready
