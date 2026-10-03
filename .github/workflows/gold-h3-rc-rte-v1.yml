@@ -1,0 +1,41 @@
+name: Gold H3 RC-RTE V1
+on:
+  push:
+    branches: [gold-h3-rc-rte-v1-20261004]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_rc_rte_v1.py'
+      - '.github/workflows/gold-h3-rc-rte-v1.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-rc-rte-v1-20261004
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check numpy pandas scikit-learn
+      - run: python gold_axis_2026/tools/gold_h3_rc_rte_v1.py
+      - name: Record RC-RTE evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            gold_axis_2026/GOLD_H3_RC_RTE_V1_BLOCK_RESULTS_2026-10-04.csv \
+            gold_axis_2026/GOLD_H3_RC_RTE_V1_REGIME_AUDIT_2026-10-04.csv \
+            gold_axis_2026/GOLD_H3_RC_RTE_V1_SUMMARY_2026-10-04.json \
+            gold_axis_2026/GOLD_H3_RC_RTE_V1_RESULT_2026-10-04.md
+          if [ -f gold_axis_2026/GOLD_H3_RC_RTE_V1_2026_HOLDOUT_2026-10-04.csv ]; then
+            git add gold_axis_2026/GOLD_H3_RC_RTE_V1_2026_HOLDOUT_2026-10-04.csv
+          fi
+          if ! git diff --cached --quiet; then
+            git commit -m "Record RC-RTE-H3 V1 evidence"
+            git pull --rebase origin gold-h3-rc-rte-v1-20261004
+            git push origin HEAD:gold-h3-rc-rte-v1-20261004
+          fi
