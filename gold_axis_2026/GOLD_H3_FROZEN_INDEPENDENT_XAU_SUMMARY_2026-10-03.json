@@ -1,0 +1,60 @@
+{
+  "schema": "GOLD_H3_FROZEN_INDEPENDENT_XAU_AUDIT_V1",
+  "level_overlap_n": 1072,
+  "clean_level_dev_ge_1pct": 193,
+  "clean_level_dev_ge_2pct": 31,
+  "clean_level_dev_ge_3pct": 3,
+  "clean_level_dev_ge_5pct": 0,
+  "clean_max_dev_pct": 4.07321293858082,
+  "clean_max_dev_date": "2026-01-30",
+  "h3_target_overlap_n": 1003,
+  "h3_direction_disagree_n": 206,
+  "h3_direction_disagree_pct": 20.538384845463607,
+  "2026_n": 169,
+  "2026_direction_disagree_n": 33,
+  "2026_direction_disagree_pct": 19.526627218934912,
+  "2026_disagree_both_moves_ge_0_5pct": 7,
+  "2026_disagree_both_moves_ge_1pct": 3,
+  "yearly": [
+    {
+      "year": 2022,
+      "n": 175,
+      "direction_disagree_n": 36,
+      "direction_disagree_pct": 20.571428571428573,
+      "disagree_both_moves_ge_0_5pct": 11,
+      "disagree_both_moves_ge_1pct": 1
+    },
+    {
+      "year": 2023,
+      "n": 188,
+      "direction_disagree_n": 44,
+      "direction_disagree_pct": 23.404255319148938,
+      "disagree_both_moves_ge_0_5pct": 12,
+      "disagree_both_moves_ge_1pct": 0
+    },
+    {
+      "year": 2024,
+      "n": 228,
+      "direction_disagree_n": 48,
+      "direction_disagree_pct": 21.05263157894737,
+      "disagree_both_moves_ge_0_5pct": 14,
+      "disagree_both_moves_ge_1pct": 3
+    },
+    {
+      "year": 2025,
+      "n": 243,
+      "direction_disagree_n": 45,
+      "direction_disagree_pct": 18.51851851851852,
+      "disagree_both_moves_ge_0_5pct": 15,
+      "disagree_both_moves_ge_1pct": 6
+    },
+    {
+      "year": 2026,
+      "n": 169,
+      "direction_disagree_n": 33,
+      "direction_disagree_pct": 19.526627218934912,
+      "disagree_both_moves_ge_0_5pct": 7,
+      "disagree_both_moves_ge_1pct": 3
+    }
+  ]
+}
