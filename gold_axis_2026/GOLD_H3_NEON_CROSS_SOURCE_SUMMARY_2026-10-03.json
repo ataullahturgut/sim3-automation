@@ -1,0 +1,295 @@
+{
+  "schema": "GOLD_H3_NEON_CROSS_SOURCE_AUDIT_V1",
+  "read_only": true,
+  "focus_rows": 21,
+  "stak_vs_ny17_overlap_n": 1089,
+  "stak_vs_ny17_median_ratio": 0.9998297068867132,
+  "stak_vs_ny17_robust_scale_logratio": 0.006319691786630119,
+  "stak_vs_ny17_severe_flags_n": 0,
+  "multi_metal_extreme_flags_n": 5,
+  "xau_daily_xaus_distinct_value_conflict_timestamps": 125,
+  "focus": [
+    {
+      "series_id": "XAG_STAKTRAKR_RESEARCH_DAILY_R1",
+      "observation_ts": "2026-02-24 00:00:00+00:00",
+      "value": 87.08,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-24"
+    },
+    {
+      "series_id": "XAG_STAKTRAKR_RESEARCH_DAILY_R1",
+      "observation_ts": "2026-02-25 00:00:00+00:00",
+      "value": 90.78,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-25"
+    },
+    {
+      "series_id": "XAG_STAKTRAKR_RESEARCH_DAILY_R1",
+      "observation_ts": "2026-02-26 00:00:00+00:00",
+      "value": 86.7,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-26"
+    },
+    {
+      "series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+      "observation_ts": "2026-02-24 21:00:00+00:00",
+      "value": 5143.59515,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-24"
+    },
+    {
+      "series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+      "observation_ts": "2026-02-25 21:00:00+00:00",
+      "value": 5164.81572,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-25"
+    },
+    {
+      "series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+      "observation_ts": "2026-02-26 21:00:00+00:00",
+      "value": 5184.81729,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-26"
+    },
+    {
+      "series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+      "observation_ts": "2026-02-27 21:00:00+00:00",
+      "value": 5278.63621,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-27"
+    },
+    {
+      "series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+      "observation_ts": "2026-02-28 21:00:00+00:00",
+      "value": 5277.92142,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-28"
+    },
+    {
+      "series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+      "observation_ts": "2026-03-01 21:00:00+00:00",
+      "value": 5277.92054,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-03-01"
+    },
+    {
+      "series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+      "observation_ts": "2026-03-02 21:00:00+00:00",
+      "value": 5322.13417,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-03-02"
+    },
+    {
+      "series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+      "observation_ts": "2026-03-03 21:00:00+00:00",
+      "value": 5088.51267,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-03-03"
+    },
+    {
+      "series_id": "XAU_NY17_HOURLY_DERIVED_DAILY_RESEARCH_V1",
+      "observation_ts": "2026-03-04 21:00:00+00:00",
+      "value": 5140.82678,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-03-04"
+    },
+    {
+      "series_id": "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+      "observation_ts": "2026-02-24 00:00:00+00:00",
+      "value": 5136.06,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-24"
+    },
+    {
+      "series_id": "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+      "observation_ts": "2026-02-25 00:00:00+00:00",
+      "value": 5212.1,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-25"
+    },
+    {
+      "series_id": "XAU_STAKTRAKR_RESEARCH_DAILY_R1",
+      "observation_ts": "2026-02-26 00:00:00+00:00",
+      "value": 5178.7,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-26"
+    },
+    {
+      "series_id": "XPD_STAKTRAKR_RESEARCH_DAILY_R1",
+      "observation_ts": "2026-02-24 00:00:00+00:00",
+      "value": 1774.73,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-24"
+    },
+    {
+      "series_id": "XPD_STAKTRAKR_RESEARCH_DAILY_R1",
+      "observation_ts": "2026-02-25 00:00:00+00:00",
+      "value": 1816.48,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-25"
+    },
+    {
+      "series_id": "XPD_STAKTRAKR_RESEARCH_DAILY_R1",
+      "observation_ts": "2026-02-26 00:00:00+00:00",
+      "value": 1761.6,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-26"
+    },
+    {
+      "series_id": "XPT_STAKTRAKR_RESEARCH_DAILY_R1",
+      "observation_ts": "2026-02-24 00:00:00+00:00",
+      "value": 2147.33,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-24"
+    },
+    {
+      "series_id": "XPT_STAKTRAKR_RESEARCH_DAILY_R1",
+      "observation_ts": "2026-02-25 00:00:00+00:00",
+      "value": 2320.54,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-25"
+    },
+    {
+      "series_id": "XPT_STAKTRAKR_RESEARCH_DAILY_R1",
+      "observation_ts": "2026-02-26 00:00:00+00:00",
+      "value": 2236.96,
+      "retrieved_at": "2026-09-05 21:25:57.695659+00:00",
+      "revision_n": 1,
+      "distinct_value_n": 1,
+      "date": "2026-02-26"
+    }
+  ],
+  "top_stak_vs_ny17_flags": [],
+  "top_multi_metal_flags": [
+    {
+      "date": "2026-01-30",
+      "gold_value": 5063.45,
+      "gold_logret": -0.0830090662399866,
+      "gold_robust_z": -10.614887859963307,
+      "silver_value": 103.19,
+      "silver_logret": -0.13791898147717158,
+      "silver_robust_z": -9.593701361083347,
+      "platinum_value": 2210.0,
+      "platinum_logret": -0.2204249270752164,
+      "platinum_robust_z": -17.299242454462565,
+      "palladium_value": 1775.0,
+      "palladium_logret": -0.15664254237626313,
+      "palladium_robust_z": -9.5348857942137,
+      "extreme8_n": 4,
+      "extreme6_n": 4,
+      "max_abs_z": 17.299242454462565
+    },
+    {
+      "date": "2020-03-16",
+      "gold_value": 1504.65,
+      "gold_logret": -0.054009503786846984,
+      "gold_robust_z": -6.91836944306094,
+      "silver_value": 12.965,
+      "silver_logret": -0.19585598198431928,
+      "silver_robust_z": -13.619531391246946,
+      "platinum_value": 713.0,
+      "platinum_logret": -0.11637952665406334,
+      "platinum_robust_z": -9.133620571130924,
+      "palladium_value": 1720.0,
+      "palladium_logret": -0.13824410752772354,
+      "palladium_robust_z": -8.41803399444427,
+      "extreme8_n": 3,
+      "extreme6_n": 4,
+      "max_abs_z": 13.619531391246946
+    },
+    {
+      "date": "2026-02-02",
+      "gold_value": 4685.45,
+      "gold_logret": -0.07758610684369247,
+      "gold_robust_z": -9.923633662079892,
+      "silver_value": 81.975,
+      "silver_logret": -0.23015762639691104,
+      "silver_robust_z": -16.003027066746558,
+      "platinum_value": 2063.0,
+      "platinum_logret": -0.06883128144054666,
+      "platinum_robust_z": -5.401970829211386,
+      "palladium_value": 1671.0,
+      "palladium_logret": -0.06037817331412251,
+      "palladium_robust_z": -3.6912890575459403,
+      "extreme8_n": 2,
+      "extreme6_n": 2,
+      "max_abs_z": 16.003027066746558
+    },
+    {
+      "date": "2013-04-15",
+      "gold_value": 1416.0,
+      "gold_logret": -0.0891277798960074,
+      "gold_robust_z": -11.394828514370806,
+      "silver_value": 23.54,
+      "silver_logret": -0.15184191156189383,
+      "silver_robust_z": -10.561154794162404,
+      "platinum_value": 1449.0,
+      "platinum_logret": -0.05046479392590923,
+      "platinum_robust_z": -3.9605443772740623,
+      "palladium_value": 673.0,
+      "palladium_logret": -0.06889380764022124,
+      "palladium_robust_z": -4.208218981290873,
+      "extreme8_n": 2,
+      "extreme6_n": 2,
+      "max_abs_z": 11.394828514370806
+    },
+    {
+      "date": "2011-09-26",
+      "gold_value": 1615.0,
+      "gold_logret": -0.06878645183506776,
+      "gold_robust_z": -8.801958572866718,
+      "silver_value": 28.16,
+      "silver_logret": -0.15557012648148452,
+      "silver_robust_z": -10.820214798146223,
+      "platinum_value": 1542.0,
+      "platinum_logret": -0.09460246569127582,
+      "platinum_robust_z": -7.424527763254792,
+      "palladium_value": 628.0,
+      "palladium_logret": -0.0572468741876555,
+      "palladium_robust_z": -3.5012078308654693,
+      "extreme8_n": 2,
+      "extreme6_n": 3,
+      "max_abs_z": 10.820214798146223
+    }
+  ]
+}
