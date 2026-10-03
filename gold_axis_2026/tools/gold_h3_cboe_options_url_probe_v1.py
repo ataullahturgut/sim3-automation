@@ -22,3 +22,5 @@ for s in res["snippets"]:
     lines += [f"## {s['pattern']} @ {s['start']}","SNIPPET_START",s["text"],"SNIPPET_END",""]
 (OUT/"RESULT.md").write_text("\n".join(lines))
 print((OUT/"RESULT.md").read_text())
+
+# trigger: url-probe-ready
