@@ -27,7 +27,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'lightgbm>=4,<5' 'xgboost>=3,<4' requests
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'lightgbm>=4,<5' 'xgboost>=3,<4' 'psycopg[binary]>=3.2,<4' requests
       - name: Resolve latest R2 readiness artifact
         id: aid
         env:
