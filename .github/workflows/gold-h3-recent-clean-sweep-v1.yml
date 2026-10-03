@@ -1,0 +1,47 @@
+name: Gold H3 Recent Clean Sweep
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_recent_clean_sweep_v1.py'
+      - '.github/workflows/gold-h3-recent-clean-sweep-v1.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  sweep:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      OUT_DIR: gold_h3_recent_clean_sweep_out
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'PyWavelets>=1.6,<2' 'psycopg[binary]>=3.2,<4' 'requests>=2.31,<3'
+      - run: python gold_axis_2026/tools/gold_h3_recent_clean_sweep_v1.py
+      - name: Commit sweep evidence
+        run: |
+          cp "$OUT_DIR/RESULT.md" gold_axis_2026/GOLD_H3_RECENT_CLEAN_SWEEP_RESULT_2026-10-03.md
+          cp "$OUT_DIR/summary.json" gold_axis_2026/GOLD_H3_RECENT_CLEAN_SWEEP_SUMMARY_2026-10-03.json
+          cp "$OUT_DIR/recent_clean_sweep_metrics.csv" gold_axis_2026/GOLD_H3_RECENT_CLEAN_SWEEP_METRICS_2026-10-03.csv
+          cp "$OUT_DIR/recent_clean_2026_ranking.csv" gold_axis_2026/GOLD_H3_RECENT_CLEAN_2026_RANKING_2026-10-03.csv
+          cp "$OUT_DIR/recent_clean_2025_2026_ranking.csv" gold_axis_2026/GOLD_H3_RECENT_CLEAN_2025_2026_RANKING_2026-10-03.csv
+          cp "$OUT_DIR/clean_twin_selection.csv" gold_axis_2026/GOLD_H3_RECENT_CLEAN_TWIN_SELECTION_2026-10-03.csv
+          cp "$OUT_DIR/clean_prism_selection.csv" gold_axis_2026/GOLD_H3_RECENT_CLEAN_PRISM_SELECTION_2026-10-03.csv
+          [ ! -f "$OUT_DIR/clean_twin_predictions.csv" ] || cp "$OUT_DIR/clean_twin_predictions.csv" gold_axis_2026/GOLD_H3_RECENT_CLEAN_TWIN_PREDICTIONS_2026-10-03.csv
+          [ ! -f "$OUT_DIR/clean_prism_predictions.csv" ] || cp "$OUT_DIR/clean_prism_predictions.csv" gold_axis_2026/GOLD_H3_RECENT_CLEAN_PRISM_PREDICTIONS_2026-10-03.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_RECENT_CLEAN_*_2026-10-03.*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record recent H3 clean model sweep"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
