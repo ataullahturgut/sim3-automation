@@ -1,0 +1,144 @@
+{
+  "schema": "RTE_H3_V1",
+  "status": "NO_ELIGIBLE_RTE_THRESHOLD",
+  "source_coverage": [
+    {
+      "year": 2022,
+      "listed_files": 251,
+      "pass_rows": 251,
+      "coverage": 1.0,
+      "first_pass": "2022-01-03",
+      "last_pass": "2022-12-30",
+      "missing_rows": 0,
+      "missing_statuses": ""
+    },
+    {
+      "year": 2023,
+      "listed_files": 251,
+      "pass_rows": 251,
+      "coverage": 1.0,
+      "first_pass": "2023-01-03",
+      "last_pass": "2023-12-29",
+      "missing_rows": 0,
+      "missing_statuses": ""
+    },
+    {
+      "year": 2024,
+      "listed_files": 252,
+      "pass_rows": 252,
+      "coverage": 1.0,
+      "first_pass": "2024-01-02",
+      "last_pass": "2024-12-31",
+      "missing_rows": 0,
+      "missing_statuses": ""
+    },
+    {
+      "year": 2025,
+      "listed_files": 251,
+      "pass_rows": 251,
+      "coverage": 1.0,
+      "first_pass": "2025-01-02",
+      "last_pass": "2025-12-31",
+      "missing_rows": 0,
+      "missing_statuses": ""
+    },
+    {
+      "year": 2026,
+      "listed_files": 188,
+      "pass_rows": 188,
+      "coverage": 1.0,
+      "first_pass": "2026-01-02",
+      "last_pass": "2026-09-30",
+      "missing_rows": 0,
+      "missing_statuses": ""
+    }
+  ],
+  "feature_rows": 931,
+  "prediction_rows": 573,
+  "selected_threshold": null,
+  "dev_grid": [
+    {
+      "threshold": 0.55,
+      "eligible_n": 209,
+      "candidate_n": 71,
+      "rescued": 27,
+      "broken": 44,
+      "net_rescue": -17,
+      "rescue_precision": 0.38028169014084506,
+      "candidate_rate": 0.3397129186602871,
+      "eligible": false
+    },
+    {
+      "threshold": 0.6,
+      "eligible_n": 209,
+      "candidate_n": 60,
+      "rescued": 26,
+      "broken": 34,
+      "net_rescue": -8,
+      "rescue_precision": 0.43333333333333335,
+      "candidate_rate": 0.28708133971291866,
+      "eligible": false
+    },
+    {
+      "threshold": 0.65,
+      "eligible_n": 209,
+      "candidate_n": 45,
+      "rescued": 20,
+      "broken": 25,
+      "net_rescue": -5,
+      "rescue_precision": 0.4444444444444444,
+      "candidate_rate": 0.215311004784689,
+      "eligible": false
+    },
+    {
+      "threshold": 0.7,
+      "eligible_n": 209,
+      "candidate_n": 32,
+      "rescued": 14,
+      "broken": 18,
+      "net_rescue": -4,
+      "rescue_precision": 0.4375,
+      "candidate_rate": 0.15311004784688995,
+      "eligible": false
+    },
+    {
+      "threshold": 0.75,
+      "eligible_n": 209,
+      "candidate_n": 26,
+      "rescued": 13,
+      "broken": 13,
+      "net_rescue": 0,
+      "rescue_precision": 0.5,
+      "candidate_rate": 0.12440191387559808,
+      "eligible": false
+    },
+    {
+      "threshold": 0.8,
+      "eligible_n": 209,
+      "candidate_n": 22,
+      "rescued": 11,
+      "broken": 11,
+      "net_rescue": 0,
+      "rescue_precision": 0.5,
+      "candidate_rate": 0.10526315789473684,
+      "eligible": false
+    }
+  ],
+  "confirmation_2025": null,
+  "confirmation_pass": null,
+  "holdout_2026": null,
+  "whole_2026": null,
+  "frozen": {
+    "k_twins": 7,
+    "rho": 0.65,
+    "min_train": 100,
+    "threshold_grid": [
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8
+    ]
+  }
+}
