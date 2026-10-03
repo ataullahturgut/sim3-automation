@@ -1,0 +1,144 @@
+{
+  "schema": "LLRS_H3_V1",
+  "status": "NO_ELIGIBLE_LLRS_V1_MECHANISM",
+  "source_counts": {
+    "GC": 10094,
+    "ZN": 10023,
+    "NQ": 10076,
+    "SI": 10094,
+    "CL": 9958
+  },
+  "origin_rows": 332,
+  "mechanism_blocks": [
+    {
+      "block": "2025_H1",
+      "n": 77,
+      "reversal_n": 32,
+      "reversal_pressure_median": 0.009520206372598108,
+      "continuation_pressure_median": -0.003547469912593915,
+      "pressure_smd": -0.10380941910902365,
+      "pressure_auc": 0.4951388888888889,
+      "incremental_smd": -0.11023173283453602
+    },
+    {
+      "block": "2025_H2",
+      "n": 108,
+      "reversal_n": 28,
+      "reversal_pressure_median": 0.011111990463332718,
+      "continuation_pressure_median": -0.0747055057549182,
+      "pressure_smd": 0.5530230528485609,
+      "pressure_auc": 0.6357142857142857,
+      "incremental_smd": 0.20160211233258588
+    },
+    {
+      "block": "2026_H1",
+      "n": 104,
+      "reversal_n": 38,
+      "reversal_pressure_median": -0.03150818502163376,
+      "continuation_pressure_median": 0.005582616495348445,
+      "pressure_smd": -0.17600437859609244,
+      "pressure_auc": 0.432615629984051,
+      "incremental_smd": -0.05067846446507282
+    },
+    {
+      "block": "2026_H2",
+      "n": 43,
+      "reversal_n": 18,
+      "reversal_pressure_median": 0.04859723001706624,
+      "continuation_pressure_median": -0.1025256136830749,
+      "pressure_smd": 0.6469527739154587,
+      "pressure_auc": 0.6866666666666666,
+      "incremental_smd": 0.6929268265486822
+    }
+  ],
+  "threshold_grid": [
+    {
+      "q": 0.25,
+      "eligible_n": 332,
+      "candidate_n": 35,
+      "rescued": 11,
+      "broken": 24,
+      "net_rescue": -13,
+      "precision": 0.3142857142857143,
+      "recall": 0.09482758620689655,
+      "candidate_rate": 0.10542168674698796,
+      "positive_blocks": 0,
+      "min_block_net": -11,
+      "eligible": false
+    },
+    {
+      "q": 0.5,
+      "eligible_n": 332,
+      "candidate_n": 2,
+      "rescued": 0,
+      "broken": 2,
+      "net_rescue": -2,
+      "precision": 0.0,
+      "recall": 0.0,
+      "candidate_rate": 0.006024096385542169,
+      "positive_blocks": 0,
+      "min_block_net": -1,
+      "eligible": false
+    },
+    {
+      "q": 0.75,
+      "eligible_n": 332,
+      "candidate_n": 2,
+      "rescued": 0,
+      "broken": 2,
+      "net_rescue": -2,
+      "precision": 0.0,
+      "recall": 0.0,
+      "candidate_rate": 0.006024096385542169,
+      "positive_blocks": 0,
+      "min_block_net": -1,
+      "eligible": false
+    },
+    {
+      "q": 1.0,
+      "eligible_n": 332,
+      "candidate_n": 1,
+      "rescued": 0,
+      "broken": 1,
+      "net_rescue": -1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "candidate_rate": 0.0030120481927710845,
+      "positive_blocks": 0,
+      "min_block_net": -1,
+      "eligible": false
+    }
+  ],
+  "selected_q": null,
+  "prospective_freeze": {
+    "schema": "LLRS_H3_V1_PROSPECTIVE_FREEZE",
+    "freeze_date": "2026-10-04",
+    "first_clean_origin": "2026-10-05",
+    "historical_status": "development_only",
+    "selected_q": null,
+    "channels": {
+      "GC": "GC=F",
+      "ZN": "ZN=F",
+      "NQ": "NQ=F",
+      "SI": "SI=F",
+      "CL": "CL=F"
+    },
+    "hourly_rows": 9853,
+    "hourly_first": "2025-01-02 05:00:00+00:00",
+    "hourly_last": "2026-10-02 20:00:00+00:00",
+    "origin_score_rows": 332,
+    "constants": {
+      "window_days": 60,
+      "min_train": 500,
+      "ridge_alpha": 10.0,
+      "target_horizon_trading_hours": 6,
+      "origin_last_allowed_bar_et": "16:00",
+      "q_grid": [
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ]
+    }
+  }
+}

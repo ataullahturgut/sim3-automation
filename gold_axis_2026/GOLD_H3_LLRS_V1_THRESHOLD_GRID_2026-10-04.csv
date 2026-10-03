@@ -1,0 +1,5 @@
+q,eligible_n,candidate_n,rescued,broken,net_rescue,precision,recall,candidate_rate,positive_blocks,min_block_net,eligible
+0.25,332,35,11,24,-13,0.3142857142857143,0.09482758620689655,0.10542168674698796,0,-11,False
+0.5,332,2,0,2,-2,0.0,0.0,0.006024096385542169,0,-1,False
+0.75,332,2,0,2,-2,0.0,0.0,0.006024096385542169,0,-1,False
+1.0,332,1,0,1,-1,0.0,0.0,0.0030120481927710845,0,-1,False

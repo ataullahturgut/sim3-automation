@@ -1,0 +1,31 @@
+{
+  "schema": "LLRS_H3_V1_PROSPECTIVE_FREEZE",
+  "freeze_date": "2026-10-04",
+  "first_clean_origin": "2026-10-05",
+  "historical_status": "development_only",
+  "selected_q": null,
+  "channels": {
+    "GC": "GC=F",
+    "ZN": "ZN=F",
+    "NQ": "NQ=F",
+    "SI": "SI=F",
+    "CL": "CL=F"
+  },
+  "hourly_rows": 9853,
+  "hourly_first": "2025-01-02 05:00:00+00:00",
+  "hourly_last": "2026-10-02 20:00:00+00:00",
+  "origin_score_rows": 332,
+  "constants": {
+    "window_days": 60,
+    "min_train": 500,
+    "ridge_alpha": 10.0,
+    "target_horizon_trading_hours": 6,
+    "origin_last_allowed_bar_et": "16:00",
+    "q_grid": [
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ]
+  }
+}
