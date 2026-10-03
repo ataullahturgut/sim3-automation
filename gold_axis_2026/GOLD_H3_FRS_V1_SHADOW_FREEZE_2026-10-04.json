@@ -1,0 +1,38 @@
+{
+  "schema": "FRS_H3_V1_SHADOW_FREEZE",
+  "freeze_date": "2026-10-04",
+  "historical_status": "development_only",
+  "first_clean_origin": "2026-10-05",
+  "status": "NO_PROMISING_FUZZY_REPRESENTATION",
+  "winner": null,
+  "representations": [
+    "T1",
+    "IFS",
+    "PYTHAGOREAN",
+    "QRUNG3",
+    "HESITANT",
+    "PICTURE",
+    "NEUTROSOPHIC",
+    "IT2"
+  ],
+  "common_evidence": [
+    "p_rte",
+    "p_material",
+    "options_percentile",
+    "fragility_percentile",
+    "v5_confidence",
+    "persistence_percentile",
+    "1-options_percentile",
+    "1-fragility_percentile"
+  ],
+  "action_thresholds": {
+    "generic_flip_score": 0.15,
+    "generic_flip_certainty": 0.55,
+    "generic_damp_score_gt": 0,
+    "generic_damp_certainty": 0.35,
+    "generic_abstain_certainty_lt": 0.35,
+    "it2_flip_lower": 0.1,
+    "it2_abstain_width": 0.5,
+    "q_rung": 3
+  }
+}
