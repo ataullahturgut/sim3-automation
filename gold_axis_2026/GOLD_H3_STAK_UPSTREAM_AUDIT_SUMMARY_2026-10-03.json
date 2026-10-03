@@ -1,0 +1,71 @@
+{
+  "schema": "GOLD_H3_STAK_UPSTREAM_AUDIT_V1",
+  "frozen_stak_ref": "54fdf1c8d39b7b6c7b874d0f30f784296e886044",
+  "overlap_n": 1072,
+  "median_stak_ny17_ratio": 0.9997989339686297,
+  "flags_3pct_n": 4,
+  "flags_5pct_n": 1,
+  "flags_z8_n": 1,
+  "flag_dates": [
+    "2026-02-27",
+    "2026-01-30",
+    "2025-10-21",
+    "2025-10-16"
+  ],
+  "source_diagnostics": [
+    {
+      "source": "sqld",
+      "n": 131,
+      "median_abs_dev": 0.004257563418835055,
+      "max_abs_dev": 0.3337811217795068,
+      "flags3": 1,
+      "flags5": 1,
+      "flagsz8": 1
+    },
+    {
+      "source": "seed",
+      "n": 941,
+      "median_abs_dev": 0.0044190294223329625,
+      "max_abs_dev": 0.0407321293858082,
+      "flags3": 3,
+      "flags5": 0,
+      "flagsz8": 0
+    }
+  ],
+  "multi_metal_2026_flags": [
+    {
+      "date": "2026-03-02 00:00:00",
+      "gold": 5354.59,
+      "palladium": 1786.32,
+      "platinum": 2345.96,
+      "silver": 92.49,
+      "gold_ret": 0.4206244689207346,
+      "gold_z": 35.613011697385815,
+      "silver_ret": 0.3975497126094485,
+      "silver_z": 14.752373326188229,
+      "platinum_ret": 0.3918642659429724,
+      "platinum_z": 18.099073314185684,
+      "palladium_ret": 0.3967866318081019,
+      "palladium_z": 17.44788188580136,
+      "extreme8_n": 4,
+      "max_abs_z": 35.613011697385815
+    },
+    {
+      "date": "2026-02-27 00:00:00",
+      "gold": 3516.02,
+      "palladium": 1201.26,
+      "platinum": 1585.39,
+      "silver": 62.15,
+      "gold_ret": -0.3872243914344867,
+      "gold_z": -32.61164004662717,
+      "silver_ret": -0.33290306582977613,
+      "silver_z": -12.325619035625367,
+      "platinum_ret": -0.3442873674128043,
+      "platinum_z": -15.927658947204314,
+      "palladium_ret": -0.3828514810567525,
+      "palladium_z": -16.577467438174036,
+      "extreme8_n": 4,
+      "max_abs_z": 32.61164004662717
+    }
+  ]
+}
