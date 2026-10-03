@@ -2,6 +2,9 @@ from __future__ import annotations
 # bootstrap rerun after pinned STAK source env fix
 import json, math, os
 from pathlib import Path
+
+# The imported prospective harness resolves this at import time.
+os.environ.setdefault("STAK_LIVE_REF", "54fdf1c8d39b7b6c7b874d0f30f784296e886044")
 import numpy as np, pandas as pd
 
 import gold_h3_aurora_prospective_v1 as base
