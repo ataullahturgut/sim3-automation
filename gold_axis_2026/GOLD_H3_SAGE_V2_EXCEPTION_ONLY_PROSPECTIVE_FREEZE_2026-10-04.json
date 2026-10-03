@@ -1,0 +1,51 @@
+{
+  "schema": "SAGE_H3_V2_EXCEPTION_ONLY_PROSPECTIVE_FREEZE",
+  "freeze_date": "2026-10-04",
+  "first_clean_origin": "2026-10-05",
+  "status": "FROZEN_SHADOW_CHALLENGER",
+  "binding_baseline": "HELIOS_V5_DCE",
+  "exception_rule": {
+    "eligible_only_when_v5_follows_momentum": true,
+    "ifbc_count60_min": 4,
+    "ifbc_score_min": 0.7,
+    "llrs_external_opposes": true,
+    "llrs_incremental_gt": 0,
+    "llrs_pressure_min": 0.1
+  },
+  "action": {
+    "exception_true": "FLIP_V5",
+    "otherwise": "KEEP_V5",
+    "abstain_enabled": false,
+    "tres_direction_override": false
+  },
+  "source_policy": {
+    "missing_or_invalid_source": "KEEP_V5",
+    "retrospective_backfill_creates_action": false
+  },
+  "historical_development": {
+    "common_mature_rows": 252,
+    "exceptions": 7,
+    "rescued": 6,
+    "broken": 1,
+    "net_rescue": 5,
+    "precision": 0.8571428571428571,
+    "whole_2025": {
+      "v5_correct": 165,
+      "n": 248,
+      "sage_correct": 166
+    },
+    "whole_2026": {
+      "v5_correct": 121,
+      "n": 191,
+      "sage_correct": 125
+    }
+  },
+  "promotion_gate": {
+    "min_prospective_exceptions": 20,
+    "min_calendar_months": 6,
+    "precision_min": 0.6,
+    "cumulative_net_rescue_gt": 0,
+    "quarter_net_floor": -2,
+    "fail_safe_cumulative_net": -3
+  }
+}
