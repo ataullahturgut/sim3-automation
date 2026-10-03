@@ -3934,3 +3934,96 @@ Evidence:
 - `GOLD_H3_RECENT_CLEAN_TWIN_SELECTION_2026-10-03.csv`
 - `GOLD_H3_RECENT_CLEAN_PRISM_SELECTION_2026-10-03.csv`.
 
+
+
+## 45. MULTI-SPECIALIST REVERSAL DISCOVERY — PHASES 1–9 CLOSURE (2026-10-03)
+
+**Batch objective:** expand reversal candidate recall without using 2026 outcomes for feature/threshold selection.
+
+Motivation remains the clean V5 error anatomy:
+- clean 2026 V5 = 121/191 = **63.35%**
+- errors = 70
+- missed reversal errors = **58**
+- V5 missed reversals with no OPAL candidate = **55/58**.
+
+### 45.1 Specialist outcomes
+
+| Phase | Specialist / layer | Binding result | Promotion |
+|---:|---|---|---|
+| 1 | FLOW-H3 Volume+OI | BLOCKED_EXTERNAL_HISTORICAL_OI_ACCESS | NO |
+| 1A | FLOW-VOL-H3 | NO_ELIGIBLE_FLOW_VOL_THRESHOLD | NO |
+| 2 | SKEW-H3 | BLOCKED_EXTERNAL_CVOL_ENTITLEMENT | NO |
+| 3 | HAZARD-H3 | NO_ELIGIBLE_HAZARD_THRESHOLD | NO |
+| 4 | DIVERGE-H3 exact | SOURCE_BLOCKED | NO |
+| 4A | DIVERGE-PROXY-H3 | NO_ELIGIBLE_DIVERGE_THRESHOLD | NO |
+| 5 | candidate union | NO_ADMISSIBLE_EXPANSION | NO |
+| 6 | vintage/overlap accounting | entry gate closed: no new multi-specialist evidence | NO NEW FIT |
+| 7 | HELIOS V6 router | NO_ADMISSIBLE_V6_ROUTER_INPUT | NOT FIT |
+| 8 | sequential evidence | DEFERRED_NO_V6_EVENT_STREAM | NOT FIT |
+| 9 | selective action | DEFERRED_NO_PROMOTED_V6_SIGNAL | NOT FIT |
+
+### 45.2 FLOW result
+
+Full FLOW source and clock were frozen for official COMEX GC FINAL daily Volume+Open Interest. Official historical daily OI was unavailable in the current environment, so the full model was not fit.
+
+A separately preregistered volume-only ablation used strict prior-trade-date GC=F volume. It failed the DEV selectivity gate at every frozen threshold. 2025 and 2026 were therefore not opened.
+
+This rejects only the volume-only fallback; it does **not** reject the untested Volume+OI mechanism.
+
+### 45.3 SKEW result
+
+Gold CVOL directional identities were frozen:
+- GCVL
+- GCUP
+- GCDN
+- GCSK
+- GCAM
+- GCCV.
+
+Historical directional CVOL entitlement was unavailable. No pseudo-skew substitution was allowed. SKEW remains externally blocked rather than model-failed.
+
+### 45.4 HAZARD result
+
+Duration-dependent path features were implemented under a frozen DEV protocol. Recall could be increased only with excessive candidate rate / insufficient precision. No threshold satisfied the preregistered gate. 2025/2026 remained unopened.
+
+### 45.5 DIVERGE result
+
+Exact-source DIVERGE remained transport-blocked. A separately named DXY/TNX/NDX/VIX proxy mechanism test executed with strict prior-date alignment and also failed the DEV selectivity gate. It was not promoted and did not open 2025/2026.
+
+### 45.6 HELIOS V6 admissibility
+
+No new specialist passed its own preregistered admission rule.
+
+Therefore the admissible candidate union is still only OPAL. Renaming an OPAL-only universe as V6 would not create new reversal information and would return to router tuning despite the diagnosed candidate-generation bottleneck.
+
+**HELIOS V6 was therefore not fit or scored.**
+
+Phases 6–9 had their entry gates evaluated separately; none was silently skipped.
+
+### 45.7 Binding state
+
+HELIOS V5-DCE remains the binding clean retrospective champion:
+- clean 2026 accuracy **63.35%**
+- balanced accuracy **63.76%**
+- Brier **0.2425**
+- clean 2025–2026 accuracy **65.15%**.
+
+No new 2026 performance claim is created by this batch.
+
+The two highest-information proposed channels — official historical GC Open Interest and directional Gold CVOL — remain **untested due access**, not disproven.
+
+Primary closure authority:
+- `GOLD_H3_MULTI_SPECIALIST_PHASE1_9_CLOSURE_2026-10-03.md`
+- closure commit `8dd6d3c780a98812437bdc9eed1e0158cc72c6cf`.
+
+Supporting phase authorities:
+- `GOLD_H3_FLOW_STAGE1A_CLOSURE_2026-10-03.md`
+- `GOLD_H3_SKEW_V1_AUTHORITY_2026-10-03.md`
+- `GOLD_H3_HAZARD_V1_RESULT_2026-10-03.md`
+- `GOLD_H3_DIVERGE_V1_RESULT_2026-10-03.md`
+- `GOLD_H3_DIVERGE_PROXY_V1_RESULT_2026-10-03.md`
+- `GOLD_H3_HELIOS_V6_ADMISSIBILITY_RESULT_2026-10-03.md`
+- `GOLD_H3_PHASE6_VINTAGE_OVERLAP_GATE_2026-10-03.md`
+- `GOLD_H3_PHASE7_HELIOS_V6_ROUTER_GATE_2026-10-03.md`
+- `GOLD_H3_PHASE8_SEQUENTIAL_EVIDENCE_GATE_2026-10-03.md`
+- `GOLD_H3_PHASE9_SELECTIVE_ACTION_GATE_2026-10-03.md`.
