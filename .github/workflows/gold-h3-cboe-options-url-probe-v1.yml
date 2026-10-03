@@ -1,0 +1,38 @@
+name: Gold H3 Cboe Options URL Probe V1
+on:
+  push:
+    branches: [gold-h3-options-flow-source-probe-v1-20261003]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_cboe_options_url_probe_v1.py'
+      - '.github/workflows/gold-h3-cboe-options-url-probe-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-options-flow-source-probe-v1-20261003
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check requests
+      - run: python gold_axis_2026/tools/gold_h3_cboe_options_url_probe_v1.py
+      - name: Record URL probe
+        run: |
+          cp gold_h3_cboe_options_url_probe_out/RESULT.md gold_axis_2026/GOLD_H3_CBOE_OPTIONS_URL_PROBE_V1_RESULT_2026-10-03.md
+          cp gold_h3_cboe_options_url_probe_out/probe.json gold_axis_2026/GOLD_H3_CBOE_OPTIONS_URL_PROBE_V1_2026-10-03.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_CBOE_OPTIONS_URL_PROBE_V1_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record Cboe options URL construction probe"
+            git pull --rebase origin gold-h3-options-flow-source-probe-v1-20261003
+            git push origin HEAD:gold-h3-options-flow-source-probe-v1-20261003
+          fi
