@@ -1,0 +1,55 @@
+name: Gold H3 Frozen Independent XAU Audit
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_frozen_independent_xau_audit_v1.py'
+      - '.github/workflows/gold-h3-frozen-independent-xau-audit-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      OUT_DIR: gold_h3_frozen_independent_xau_audit_out
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4'
+      - run: test -n "$NEON_DATABASE_URL"
+      - run: python gold_axis_2026/tools/gold_h3_frozen_independent_xau_audit_v1.py
+      - name: Commit evidence
+        shell: bash
+        run: |
+          cp "$OUT_DIR/FROZEN_INDEPENDENT_XAU_AUDIT.md" gold_axis_2026/GOLD_H3_FROZEN_INDEPENDENT_XAU_AUDIT_2026-10-03.md
+          cp "$OUT_DIR/frozen_independent_summary.json" gold_axis_2026/GOLD_H3_FROZEN_INDEPENDENT_XAU_SUMMARY_2026-10-03.json
+          cp "$OUT_DIR/frozen_vs_ny17_levels.csv" gold_axis_2026/GOLD_H3_FROZEN_VS_NY17_LEVELS_2026-10-03.csv
+          cp "$OUT_DIR/h3_target_source_comparison.csv" gold_axis_2026/GOLD_H3_TARGET_SOURCE_COMPARISON_2026-10-03.csv
+          cp "$OUT_DIR/h3_target_direction_disagreements.csv" gold_axis_2026/GOLD_H3_TARGET_SOURCE_DISAGREEMENTS_2026-10-03.csv
+          cp "$OUT_DIR/h3_target_source_yearly.csv" gold_axis_2026/GOLD_H3_TARGET_SOURCE_YEARLY_2026-10-03.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_FROZEN_*_2026-10-03.* gold_axis_2026/GOLD_H3_TARGET_SOURCE_*_2026-10-03.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "Audit H3 frozen XAU against independent source"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-frozen-independent-xau-audit
+          path: gold_h3_frozen_independent_xau_audit_out/
+          retention-days: 90
