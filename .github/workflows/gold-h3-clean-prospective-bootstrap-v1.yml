@@ -1,0 +1,48 @@
+name: Gold H3 Clean Prospective V1 Bootstrap
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_clean_prospective_bootstrap_v1.py'
+      - '.github/workflows/gold-h3-clean-prospective-bootstrap-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      OUT_DIR: gold_h3_clean_prospective_bootstrap_out
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'psycopg[binary]>=3.2,<4' 'requests>=2.31,<3'
+      - run: python gold_axis_2026/tools/gold_h3_clean_prospective_bootstrap_v1.py
+      - name: Commit clean freeze artifacts
+        run: |
+          cp "$OUT_DIR/BOOTSTRAP_RESULT.md" gold_axis_2026/GOLD_H3_CLEAN_PROSPECTIVE_V1_BOOTSTRAP_RESULT_2026-10-03.md
+          cp "$OUT_DIR/bootstrap_summary.json" gold_axis_2026/GOLD_H3_CLEAN_PROSPECTIVE_V1_BOOTSTRAP_SUMMARY_2026-10-03.json
+          cp "$OUT_DIR/GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_DAILY_PRICES.csv" gold_axis_2026/
+          cp "$OUT_DIR/GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_EXPERT_TRAIN_MATRIX.csv" gold_axis_2026/
+          cp "$OUT_DIR/GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_RIFT_PANEL.csv" gold_axis_2026/
+          cp "$OUT_DIR/GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_VEGA_PANEL.csv" gold_axis_2026/
+          cp "$OUT_DIR/GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_OPAL_PANEL.csv" gold_axis_2026/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_CLEAN_PROSPECTIVE_V1_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Freeze clean H3 prospective v1 inputs"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
