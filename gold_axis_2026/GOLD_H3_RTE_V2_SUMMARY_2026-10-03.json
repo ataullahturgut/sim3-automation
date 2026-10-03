@@ -1,0 +1,98 @@
+{
+  "schema": "RTE_SB_H3_V2",
+  "status": "NO_ELIGIBLE_RTE_V2_DESIGN",
+  "frozen": {
+    "prev_floor": 0.6,
+    "dp_max": 0.05,
+    "thresholds": [
+      0.7,
+      0.75,
+      0.8
+    ],
+    "modes": [
+      "NONE",
+      "EITHER"
+    ]
+  },
+  "design_2023": [
+    {
+      "threshold": 0.7,
+      "options_mode": "NONE",
+      "eligible_n": 12,
+      "candidate_n": 0,
+      "rescued": 0,
+      "broken": 0,
+      "net_rescue": 0,
+      "rescue_precision": 0.0,
+      "candidate_rate": 0.0,
+      "design_eligible": false
+    },
+    {
+      "threshold": 0.7,
+      "options_mode": "EITHER",
+      "eligible_n": 12,
+      "candidate_n": 0,
+      "rescued": 0,
+      "broken": 0,
+      "net_rescue": 0,
+      "rescue_precision": 0.0,
+      "candidate_rate": 0.0,
+      "design_eligible": false
+    },
+    {
+      "threshold": 0.75,
+      "options_mode": "NONE",
+      "eligible_n": 12,
+      "candidate_n": 0,
+      "rescued": 0,
+      "broken": 0,
+      "net_rescue": 0,
+      "rescue_precision": 0.0,
+      "candidate_rate": 0.0,
+      "design_eligible": false
+    },
+    {
+      "threshold": 0.75,
+      "options_mode": "EITHER",
+      "eligible_n": 12,
+      "candidate_n": 0,
+      "rescued": 0,
+      "broken": 0,
+      "net_rescue": 0,
+      "rescue_precision": 0.0,
+      "candidate_rate": 0.0,
+      "design_eligible": false
+    },
+    {
+      "threshold": 0.8,
+      "options_mode": "NONE",
+      "eligible_n": 12,
+      "candidate_n": 0,
+      "rescued": 0,
+      "broken": 0,
+      "net_rescue": 0,
+      "rescue_precision": 0.0,
+      "candidate_rate": 0.0,
+      "design_eligible": false
+    },
+    {
+      "threshold": 0.8,
+      "options_mode": "EITHER",
+      "eligible_n": 12,
+      "candidate_n": 0,
+      "rescued": 0,
+      "broken": 0,
+      "net_rescue": 0,
+      "rescue_precision": 0.0,
+      "candidate_rate": 0.0,
+      "design_eligible": false
+    }
+  ],
+  "selected_rule": null,
+  "internal_confirmation_2024": null,
+  "internal_confirmation_pass": null,
+  "confirmation_2025": null,
+  "confirmation_2025_pass": null,
+  "holdout_2026": null,
+  "whole_2026": null
+}

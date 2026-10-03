@@ -1,0 +1,7 @@
+threshold,options_mode,eligible_n,candidate_n,rescued,broken,net_rescue,rescue_precision,candidate_rate,design_eligible
+0.7,NONE,12,0,0,0,0,0.0,0.0,False
+0.7,EITHER,12,0,0,0,0,0.0,0.0,False
+0.75,NONE,12,0,0,0,0,0.0,0.0,False
+0.75,EITHER,12,0,0,0,0,0.0,0.0,False
+0.8,NONE,12,0,0,0,0,0.0,0.0,False
+0.8,EITHER,12,0,0,0,0,0.0,0.0,False
