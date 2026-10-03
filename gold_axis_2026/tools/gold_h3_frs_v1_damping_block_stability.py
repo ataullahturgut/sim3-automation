@@ -51,3 +51,5 @@ for r in rows:
     lines.append(f"| {r['representation']} | {r['block']} | {r['n']} | {r['v5_brier']:.4f} | {r['damp_brier']:.4f} | {r['delta_brier']:+.4f} | {r['v5_logloss']:.4f} | {r['damp_logloss']:.4f} | {r['delta_logloss']:+.4f} |")
 OUT.write_text("\n".join(lines)+"\n")
 print(OUT.read_text())
+
+# trigger: frs-damping-block-stability-ready
