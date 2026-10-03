@@ -81,3 +81,5 @@ if candidate:
         lines.append(f"- {c}: **{candidate[c]:+.3f}**")
 OUT.write_text("\n".join(lines)+"\n")
 print(OUT.read_text())
+
+# trigger: regime1-geometry-ready
