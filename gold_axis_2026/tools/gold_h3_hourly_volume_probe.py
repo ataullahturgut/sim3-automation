@@ -58,3 +58,5 @@ for k,x in out.items():
     lines.append(f"| {k} | {x.get('rows','')} | {x.get('volume_positive','')} | {100*x.get('positive_rate',0):.2f}% | {x.get('volume_median_positive','')} | {x.get('volume_p95_positive','')} |")
 OUTM.write_text("\n".join(lines)+"\n")
 print(OUTM.read_text())
+
+# trigger: hourly-volume-probe-ready
