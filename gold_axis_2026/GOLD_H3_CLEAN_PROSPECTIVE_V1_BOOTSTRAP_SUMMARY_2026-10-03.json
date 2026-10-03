@@ -1,0 +1,52 @@
+{
+  "schema": "CLEAN_H3_PROSPECTIVE_V1_BOOTSTRAP",
+  "status": "PASS",
+  "first_eligible_feature_cutoff": "2026-10-05",
+  "price_patch": {
+    "date": "2026-02-27",
+    "old": {
+      "gold": 3516.02,
+      "silver": 62.15,
+      "platinum": 1585.39,
+      "palladium": 1201.26
+    },
+    "clean": {
+      "gold": 5183.8,
+      "silver": 88.14,
+      "platinum": 2369.25,
+      "palladium": 1789.96
+    }
+  },
+  "checks": {
+    "aurora_reproduction": {
+      "september_rows": 19,
+      "max_abs_diff_structural": 4.440892098500626e-16,
+      "max_abs_diff_path": 5.551115123125783e-17,
+      "pass": true
+    },
+    "rift": {
+      "rows": 931,
+      "max_abs_prob_diff": 1.1102230246251565e-16,
+      "override_equal": true,
+      "pass": true
+    },
+    "turn": {
+      "rows": 1029,
+      "max_abs_prob_diff": 8.326672684688674e-17,
+      "override_equal": true,
+      "pass": true
+    },
+    "vega": {
+      "rows": 931,
+      "max_abs_prob_diff": 5.551115123125783e-17,
+      "override_equal": true,
+      "pass": true
+    },
+    "opal": {
+      "rows": 931,
+      "max_abs_prob_diff": 8.326672684688674e-17,
+      "override_equal": true,
+      "pass": true
+    }
+  }
+}
