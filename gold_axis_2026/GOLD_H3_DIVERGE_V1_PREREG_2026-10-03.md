@@ -96,13 +96,16 @@ Momentum-conditioned divergence features:
 12. `mom_x_gold_silver_gap = s * (gold_daily_ret1 - silver_ret1)`
 
 Macro confirmation composite:
-13. `core_confirmation = mean(s*silver_ret1, -s*usd_ret1, -s*dgs10_chg1)`
+13. `core_confirmation = mean(s*z_silver, -s*z_usd, -s*z_yield)`
 
 Cross-market stress:
 14. `cross_dispersion = std(z_silver, z_usd, z_yield, z_ndx, z_vix)`
-where each z-value is a 60-observation backward-looking z-score built before origin.
+where each z-value is the current completed source return/change standardized against the **preceding** 60 source observations (rolling mean/std use `shift(1)`), so unlike units are never averaged directly.
 
 No feature search or sign-rule revision is allowed after 2026 outcomes are inspected.
+
+### Pre-execution semantic amendment
+Before any model execution or outcome inspection, the confirmation composite was changed from raw unlike units to backward-looking source-specific z-scores. No threshold, label, period, source, or 2026 result was inspected in making this correction.
 
 ## 5. Model
 
