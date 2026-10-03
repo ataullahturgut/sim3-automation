@@ -3272,3 +3272,124 @@ Evidence:
 - `GOLD_H3_CLEAN_V5_CLUSTER_INFERENCE_2026-10-03.csv`
 - `GOLD_H3_CLEAN_V5_SENSITIVITY_2026-10-03.csv`.
 
+## 41. SECOND-PASS DATABASE + UPSTREAM DATA-INTEGRITY AUDIT (2026-10-03)
+
+### Status
+
+**Completed, read-only. No database rows were changed.**
+
+Purpose: test whether the 2026-02-27 corruption was an isolated bad source row or evidence of broader H3 database contamination.
+
+### 41.1 Neon database-wide screening
+
+Workflow run:
+- **37117457359**
+
+Implementation commit:
+- `567810f0b5eb5566ed3b891ac9989975cfe3d019`
+
+Evidence commit:
+- `ea4dade6c0c433850cf0711a8f8cb806c44d772a`
+
+Database inventory:
+- 32 user tables
+- 63 observation series
+- 14 series contain duplicate timestamps
+- 1,910 duplicate timestamp groups
+- 374 duplicate groups contain different stored values.
+
+These counts are **database-wide** and do not imply that every duplicate is corrupt; several series are revision/PIT-style sources.
+
+Binding historical H3 hourly XAU source:
+- `XAU_USD_TWELVE_1H_RESEARCH_V1`
+- 17,644 deduplicated rows
+- 2022-01-02 through 2024-12-31
+- **0 timestamps with stored revisions**
+- **0 adjacent 1-hour moves >= 2.5%**
+- 68 robust |z|>=8 return observations, but none breached the absolute 2.5% one-hour screening threshold
+- 158 gaps >4h, dominated by expected market/weekend/holiday spacing
+- max adjacent hourly log return ≈ **2.411%**.
+
+Conclusion: no 2026-02-27-style corruption was found in the binding historical hourly XAU series.
+
+### 41.2 Neon daily-source cross-check
+
+Evidence commit:
+- `543f547c1c12f761504cb5c5153dee01a2e897d6`
+
+StakTrakr XAU in Neon vs independent NY17 hourly-derived XAU:
+- overlap **1,089 dates**
+- median level ratio ≈ **0.99983**
+- severe flags (>=5% deviation from normal ratio OR robust |z|>=8): **0**.
+
+The multi-metal robust screen flagged:
+- 2026-01-30
+- 2026-02-02
+- 2020-03-16
+- 2013-04-15
+- 2011-09-26.
+
+These are synchronized multi-metal moves and are screening candidates, not confirmed errors.
+
+`XAU_DAILY_XAUS` contains many stored revisions/conflicting historical values, but this series is **not the binding daily price source for the current frozen H3 chain**. The current H3 daily core uses the pinned StakTrakr four-metal snapshot; the hourly structural/path layer uses Twelve Data XAU.
+
+### 41.3 Frozen upstream StakTrakr audit
+
+Workflow run:
+- **37118219172**
+
+Implementation commit:
+- `5edead472042efad6a234279e2a756c38fe0603a`
+
+Evidence commit:
+- `d9508a18757b559c9dece85aeb3a2cb19389e3ff`
+
+The exact pinned source used to build the AURORA frozen price snapshot:
+- StakTrakr ref `54fdf1c8d39b7b6c7b874d0f30f784296e886044`.
+
+Direct comparison of this upstream source to independent NY17-derived XAU:
+- overlap **1,072 dates**
+- >=3% deviation: **4 dates**
+- >=5% deviation: **1 date**
+- robust |z|>=8 deviation: **1 date**.
+
+Flags:
+
+| Date | Stak | NY17 | Source | Deviation |
+|---|---:|---:|---|---:|
+| **2026-02-27** | **3516.02** | **5278.64** | **sqld** | **33.38%** |
+| 2026-01-30 | 5063.45 | 4866.26 | seed/LBMA | 4.07% |
+| 2025-10-21 | 4275.10 | 4130.33 | seed/LBMA | 3.53% |
+| 2025-10-16 | 4225.55 | 4362.29 | seed/LBMA | 3.12% |
+
+Only **2026-02-27** crosses both the >=5% level deviation screen and the robust |z|>=8 screen.
+
+The raw pinned StakTrakr JSON itself contains:
+- 2026-02-27 Gold 3516.02, source=`sqld`
+- Palladium 1201.26, source=`sqld`
+- Platinum 1585.39, source=`sqld`
+- Silver 62.15, source=`sqld`.
+
+Therefore the corruption originated **upstream in the pinned StakTrakr/SQ﻿LD row**, not in the AURORA snapshot writer and not in the Neon historical hourly XAU series.
+
+The huge 2026-03-02 multi-metal rebound flag in the raw frozen panel is mechanically induced by the bad 2026-02-27 weekday observation; weekend observations are intentionally omitted by the frozen daily parser.
+
+### 41.4 Binding conclusion
+
+1. **One confirmed severe H3 daily source corruption exists: 2026-02-27.**
+2. No second comparable corruption was found in the binding frozen StakTrakr XAU history over the independent-source overlap.
+3. No comparable corruption was found in the binding historical hourly Twelve XAU series.
+4. The clean-chain correction in Section 40 remains the valid retrospective dataset.
+5. The three additional 3-4% Stak-vs-NY17 discrepancies are not classified as data errors because they remain below the severe threshold and can arise from source/anchor differences; they should not be corrected without independent confirmation.
+6. Database-wide duplicate/revision rows exist and require source-specific handling, but they do not presently invalidate the clean H3 result.
+7. Future H3 ingestion should fail closed on isolated multi-metal daily discontinuities and require independent-source confirmation before such a row is admitted to the model panel.
+
+Evidence:
+- `GOLD_H3_NEON_INTEGRITY_AUDIT_2026-10-03.md`
+- `GOLD_H3_NEON_INTEGRITY_SUMMARY_2026-10-03.json`
+- `GOLD_H3_NEON_CROSS_SOURCE_AUDIT_2026-10-03.md`
+- `GOLD_H3_NEON_CROSS_SOURCE_SUMMARY_2026-10-03.json`
+- `GOLD_H3_STAK_UPSTREAM_AUDIT_2026-10-03.md`
+- `GOLD_H3_STAK_UPSTREAM_AUDIT_SUMMARY_2026-10-03.json`
+- `GOLD_H3_STAK_UPSTREAM_FLAGS_2026-10-03.csv`.
+
