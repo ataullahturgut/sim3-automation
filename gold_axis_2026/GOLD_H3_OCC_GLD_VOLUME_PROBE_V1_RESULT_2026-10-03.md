@@ -1,0 +1,1471 @@
+# OCC GLD CALL/PUT VOLUME BATCH PROBE
+
+## 20230103 C symbolType=U contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=volume-query.txt
+- bytes: 41
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20230103&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=C
+
+### Rows
+- Report date cannot be prior to  2 years
+
+### Head
+Report date cannot be prior to  2 years
+
+
+## 20230103 C symbolType=O contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=volume-query.txt
+- bytes: 41
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20230103&format=csv&volumeQueryType=O&symbolType=O&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=C
+
+### Rows
+- Report date cannot be prior to  2 years
+
+### Head
+Report date cannot be prior to  2 years
+
+
+## 20230103 C symbolType=U contract=True
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=volume-query.txt
+- bytes: 41
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20230103&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=C&contractDt=20230103
+
+### Rows
+- Report date cannot be prior to  2 years
+
+### Head
+Report date cannot be prior to  2 years
+
+
+## 20230103 P symbolType=U contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=volume-query.txt
+- bytes: 41
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20230103&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=P
+
+### Rows
+- Report date cannot be prior to  2 years
+
+### Head
+Report date cannot be prior to  2 years
+
+
+## 20230103 P symbolType=O contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=volume-query.txt
+- bytes: 41
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20230103&format=csv&volumeQueryType=O&symbolType=O&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=P
+
+### Rows
+- Report date cannot be prior to  2 years
+
+### Head
+Report date cannot be prior to  2 years
+
+
+## 20230103 P symbolType=U contract=True
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=volume-query.txt
+- bytes: 41
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20230103&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=P&contractDt=20230103
+
+### Rows
+- Report date cannot be prior to  2 years
+
+### Head
+Report date cannot be prior to  2 years
+
+
+## 20241004 C symbolType=U contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 1918
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20241004&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=C
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate
+- 7322 | GLD | GLD | C | C | CBOE | 10/04/2024 | 
+- 466 | GLD | GLD | F | C | CBOE | 10/04/2024 | 
+- 8400 | GLD | GLD | M | C | CBOE | 10/04/2024 | 
+- 3476 | GLD | GLD | C | C | AMEX | 10/04/2024 | 
+- 396 | GLD | GLD | F | C | AMEX | 10/04/2024 | 
+- 4232 | GLD | GLD | M | C | AMEX | 10/04/2024 | 
+- 9574 | GLD | GLD | C | C | PHLX | 10/04/2024 | 
+- 3770 | GLD | GLD | F | C | PHLX | 10/04/2024 | 
+- 6782 | GLD | GLD | M | C | PHLX | 10/04/2024 | 
+- 9073 | GLD | GLD | C | C | ARCA | 10/04/2024 | 
+- 225 | GLD | GLD | F | C | ARCA | 10/04/2024 | 
+- 10424 | GLD | GLD | M | C | ARCA | 10/04/2024 | 
+- 2536 | GLD | GLD | C | C | SPHR | 10/04/2024 | 
+- 20 | GLD | GLD | F | C | SPHR | 10/04/2024 | 
+- 2632 | GLD | GLD | M | C | SPHR | 10/04/2024 | 
+- 28214 | GLD | GLD | C | C | ISE | 10/04/2024 | 
+- 387 | GLD | GLD | F | C | ISE | 10/04/2024 | 
+- 27137 | GLD | GLD | M | C | ISE | 10/04/2024 | 
+- 6095 | GLD | GLD | C | C | NSDQ | 10/04/2024 | 
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate
+7322,GLD,GLD,C,C,CBOE,10/04/2024,
+466,GLD,GLD,F,C,CBOE,10/04/2024,
+8400,GLD,GLD,M,C,CBOE,10/04/2024,
+3476,GLD,GLD,C,C,AMEX,10/04/2024,
+396,GLD,GLD,F,C,AMEX,10/04/2024,
+4232,GLD,GLD,M,C,AMEX,10/04/2024,
+9574,GLD,GLD,C,C,PHLX,10/04/2024,
+3770,GLD,GLD,F,C,PHLX,10/04/2024,
+6782,GLD,GLD,M,C,PHLX,10/04/2024,
+9073,GLD,GLD,C,C,ARCA,10/04/2024,
+225,GLD,GLD,F,C,ARCA,10/04/2024,
+10424,GLD,GLD,M,C,ARCA,10/04/2024,
+2536,GLD,GLD,C,C,SPHR,10/04/2024,
+20,GLD,GLD,F,C,SPHR,10/04/2024,
+2632,GLD,GLD,M,C,SPHR,10/04/2024,
+28214,GLD,GLD,C,C,ISE,10/04/2024,
+387,GLD,GLD,F,C,ISE,10/04/2024,
+27137,GLD,GLD,M,C,ISE,10/04/2024,
+6095,GLD,GLD,C,C,NSDQ,10/04/2024,
+1366,GLD,GLD,F,C,NSDQ,10/04/2024,
+9921,GLD,GLD,M,C,NSDQ,10/04/2024,
+2296,GLD,GLD,C,C,NOBO,10/04/2024,
+41,GLD,GLD,F,C,NOBO,10/04/2024,
+2683,GLD,GLD,M,C,NOBO,10/04/2024,
+3443,GLD,GLD,C,C,MPRL,10/04/2024,
+408,GLD,GLD,F,C,MPRL,10/04/2024,
+5053,GLD,GLD,M,C,MPRL,10/04/2024,
+4002,GLD,GLD,C,C,EMLD,10/04/2024,
+198,GLD,GLD,F,C,EMLD,10/04/2024,
+4430,GLD,GLD,M,C,EMLD,10/04/2024,
+23047,GLD,GLD,C,C,BOX,10/04/2024,
+18169,GLD,GLD,F,C,BOX,10/04/2024,
+6772,GLD,GLD,M,C,BOX,10/04/2024,
+7955,GLD,GLD,C,C,MIAX,10/04/2024,
+214,GLD,GLD,F,C,MIAX,10/04/2024,
+8591,GLD,GLD,M,C,MIAX,10/04/2024,
+2844,GLD,GLD,C,C,GEM,10/04/2024,
+28,GLD,GLD,F,C,GEM,10/04/2024,
+3138,GLD,GLD,M,C,GEM,10/04/2024,
+3480,GLD,GLD,C,C,MEMX,10/04/2024,
+373,GLD,GLD,F,C,MEMX,10/04/2024,
+4569,GLD,GLD,M,C,MEMX,10/04/2024,
+5953,GLD,GLD,C,C,C2,10/04/2024,
+654,GLD,GLD,F,C,C2,10/04/2024,
+7837,GLD,GLD,M,C,C2,10/04/2024,
+3463,GLD,GLD,C,C,BATS,10/04/2024,
+868,GLD,GLD,F,C,BATS,10/04/2024,
+4047,GLD,GLD,M,C,BATS,10/04/2024,
+6149,GLD,GLD,C,C,EDGX,10/04/2024,
+115,GLD,GLD,F,C,EDGX,10/04/2024,
+7728,GLD,GLD,M,C,EDGX,10/04/2024,
+4105,GLD,GLD,C,C,MCRY,10/04/2024,
+27,GLD,GLD,F,C,MCRY,10/04/2024,
+4744,GLD,GLD,M,C,MCRY,10/04/2024,
+
+
+## 20241004 C symbolType=O contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 1918
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20241004&format=csv&volumeQueryType=O&symbolType=O&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=C
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate
+- 7322 | GLD | GLD | C | C | CBOE | 10/04/2024 | 
+- 466 | GLD | GLD | F | C | CBOE | 10/04/2024 | 
+- 8400 | GLD | GLD | M | C | CBOE | 10/04/2024 | 
+- 3476 | GLD | GLD | C | C | AMEX | 10/04/2024 | 
+- 396 | GLD | GLD | F | C | AMEX | 10/04/2024 | 
+- 4232 | GLD | GLD | M | C | AMEX | 10/04/2024 | 
+- 9574 | GLD | GLD | C | C | PHLX | 10/04/2024 | 
+- 3770 | GLD | GLD | F | C | PHLX | 10/04/2024 | 
+- 6782 | GLD | GLD | M | C | PHLX | 10/04/2024 | 
+- 9073 | GLD | GLD | C | C | ARCA | 10/04/2024 | 
+- 225 | GLD | GLD | F | C | ARCA | 10/04/2024 | 
+- 10424 | GLD | GLD | M | C | ARCA | 10/04/2024 | 
+- 2536 | GLD | GLD | C | C | SPHR | 10/04/2024 | 
+- 20 | GLD | GLD | F | C | SPHR | 10/04/2024 | 
+- 2632 | GLD | GLD | M | C | SPHR | 10/04/2024 | 
+- 28214 | GLD | GLD | C | C | ISE | 10/04/2024 | 
+- 387 | GLD | GLD | F | C | ISE | 10/04/2024 | 
+- 27137 | GLD | GLD | M | C | ISE | 10/04/2024 | 
+- 6095 | GLD | GLD | C | C | NSDQ | 10/04/2024 | 
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate
+7322,GLD,GLD,C,C,CBOE,10/04/2024,
+466,GLD,GLD,F,C,CBOE,10/04/2024,
+8400,GLD,GLD,M,C,CBOE,10/04/2024,
+3476,GLD,GLD,C,C,AMEX,10/04/2024,
+396,GLD,GLD,F,C,AMEX,10/04/2024,
+4232,GLD,GLD,M,C,AMEX,10/04/2024,
+9574,GLD,GLD,C,C,PHLX,10/04/2024,
+3770,GLD,GLD,F,C,PHLX,10/04/2024,
+6782,GLD,GLD,M,C,PHLX,10/04/2024,
+9073,GLD,GLD,C,C,ARCA,10/04/2024,
+225,GLD,GLD,F,C,ARCA,10/04/2024,
+10424,GLD,GLD,M,C,ARCA,10/04/2024,
+2536,GLD,GLD,C,C,SPHR,10/04/2024,
+20,GLD,GLD,F,C,SPHR,10/04/2024,
+2632,GLD,GLD,M,C,SPHR,10/04/2024,
+28214,GLD,GLD,C,C,ISE,10/04/2024,
+387,GLD,GLD,F,C,ISE,10/04/2024,
+27137,GLD,GLD,M,C,ISE,10/04/2024,
+6095,GLD,GLD,C,C,NSDQ,10/04/2024,
+1366,GLD,GLD,F,C,NSDQ,10/04/2024,
+9921,GLD,GLD,M,C,NSDQ,10/04/2024,
+2296,GLD,GLD,C,C,NOBO,10/04/2024,
+41,GLD,GLD,F,C,NOBO,10/04/2024,
+2683,GLD,GLD,M,C,NOBO,10/04/2024,
+3443,GLD,GLD,C,C,MPRL,10/04/2024,
+408,GLD,GLD,F,C,MPRL,10/04/2024,
+5053,GLD,GLD,M,C,MPRL,10/04/2024,
+4002,GLD,GLD,C,C,EMLD,10/04/2024,
+198,GLD,GLD,F,C,EMLD,10/04/2024,
+4430,GLD,GLD,M,C,EMLD,10/04/2024,
+23047,GLD,GLD,C,C,BOX,10/04/2024,
+18169,GLD,GLD,F,C,BOX,10/04/2024,
+6772,GLD,GLD,M,C,BOX,10/04/2024,
+7955,GLD,GLD,C,C,MIAX,10/04/2024,
+214,GLD,GLD,F,C,MIAX,10/04/2024,
+8591,GLD,GLD,M,C,MIAX,10/04/2024,
+2844,GLD,GLD,C,C,GEM,10/04/2024,
+28,GLD,GLD,F,C,GEM,10/04/2024,
+3138,GLD,GLD,M,C,GEM,10/04/2024,
+3480,GLD,GLD,C,C,MEMX,10/04/2024,
+373,GLD,GLD,F,C,MEMX,10/04/2024,
+4569,GLD,GLD,M,C,MEMX,10/04/2024,
+5953,GLD,GLD,C,C,C2,10/04/2024,
+654,GLD,GLD,F,C,C2,10/04/2024,
+7837,GLD,GLD,M,C,C2,10/04/2024,
+3463,GLD,GLD,C,C,BATS,10/04/2024,
+868,GLD,GLD,F,C,BATS,10/04/2024,
+4047,GLD,GLD,M,C,BATS,10/04/2024,
+6149,GLD,GLD,C,C,EDGX,10/04/2024,
+115,GLD,GLD,F,C,EDGX,10/04/2024,
+7728,GLD,GLD,M,C,EDGX,10/04/2024,
+4105,GLD,GLD,C,C,MCRY,10/04/2024,
+27,GLD,GLD,F,C,MCRY,10/04/2024,
+4744,GLD,GLD,M,C,MCRY,10/04/2024,
+
+
+## 20241004 C symbolType=U contract=True
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 1698
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20241004&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=C&contractDt=20241004
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate | contractDate
+- 1930 | GLD | GLD | C | C | CBOE | 10/04/2024 | 10/04/2024
+- 1936 | GLD | GLD | M | C | CBOE | 10/04/2024 | 10/04/2024
+- 628 | GLD | GLD | C | C | AMEX | 10/04/2024 | 10/04/2024
+- 692 | GLD | GLD | M | C | AMEX | 10/04/2024 | 10/04/2024
+- 761 | GLD | GLD | C | C | PHLX | 10/04/2024 | 10/04/2024
+- 949 | GLD | GLD | M | C | PHLX | 10/04/2024 | 10/04/2024
+- 1541 | GLD | GLD | C | C | ARCA | 10/04/2024 | 10/04/2024
+- 1503 | GLD | GLD | M | C | ARCA | 10/04/2024 | 10/04/2024
+- 207 | GLD | GLD | C | C | SPHR | 10/04/2024 | 10/04/2024
+- 207 | GLD | GLD | M | C | SPHR | 10/04/2024 | 10/04/2024
+- 6789 | GLD | GLD | C | C | ISE | 10/04/2024 | 10/04/2024
+- 4873 | GLD | GLD | M | C | ISE | 10/04/2024 | 10/04/2024
+- 602 | GLD | GLD | C | C | NSDQ | 10/04/2024 | 10/04/2024
+- 828 | GLD | GLD | M | C | NSDQ | 10/04/2024 | 10/04/2024
+- 274 | GLD | GLD | C | C | NOBO | 10/04/2024 | 10/04/2024
+- 294 | GLD | GLD | M | C | NOBO | 10/04/2024 | 10/04/2024
+- 571 | GLD | GLD | C | C | MPRL | 10/04/2024 | 10/04/2024
+- 583 | GLD | GLD | M | C | MPRL | 10/04/2024 | 10/04/2024
+- 424 | GLD | GLD | C | C | EMLD | 10/04/2024 | 10/04/2024
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate,contractDate
+1930,GLD,GLD,C,C,CBOE,10/04/2024,10/04/2024
+1936,GLD,GLD,M,C,CBOE,10/04/2024,10/04/2024
+628,GLD,GLD,C,C,AMEX,10/04/2024,10/04/2024
+692,GLD,GLD,M,C,AMEX,10/04/2024,10/04/2024
+761,GLD,GLD,C,C,PHLX,10/04/2024,10/04/2024
+949,GLD,GLD,M,C,PHLX,10/04/2024,10/04/2024
+1541,GLD,GLD,C,C,ARCA,10/04/2024,10/04/2024
+1503,GLD,GLD,M,C,ARCA,10/04/2024,10/04/2024
+207,GLD,GLD,C,C,SPHR,10/04/2024,10/04/2024
+207,GLD,GLD,M,C,SPHR,10/04/2024,10/04/2024
+6789,GLD,GLD,C,C,ISE,10/04/2024,10/04/2024
+4873,GLD,GLD,M,C,ISE,10/04/2024,10/04/2024
+602,GLD,GLD,C,C,NSDQ,10/04/2024,10/04/2024
+828,GLD,GLD,M,C,NSDQ,10/04/2024,10/04/2024
+274,GLD,GLD,C,C,NOBO,10/04/2024,10/04/2024
+294,GLD,GLD,M,C,NOBO,10/04/2024,10/04/2024
+571,GLD,GLD,C,C,MPRL,10/04/2024,10/04/2024
+583,GLD,GLD,M,C,MPRL,10/04/2024,10/04/2024
+424,GLD,GLD,C,C,EMLD,10/04/2024,10/04/2024
+450,GLD,GLD,M,C,EMLD,10/04/2024,10/04/2024
+484,GLD,GLD,C,C,BOX,10/04/2024,10/04/2024
+558,GLD,GLD,M,C,BOX,10/04/2024,10/04/2024
+2524,GLD,GLD,C,C,MIAX,10/04/2024,10/04/2024
+2802,GLD,GLD,M,C,MIAX,10/04/2024,10/04/2024
+455,GLD,GLD,C,C,GEM,10/04/2024,10/04/2024
+407,GLD,GLD,M,C,GEM,10/04/2024,10/04/2024
+260,GLD,GLD,C,C,MEMX,10/04/2024,10/04/2024
+384,GLD,GLD,M,C,MEMX,10/04/2024,10/04/2024
+590,GLD,GLD,C,C,C2,10/04/2024,10/04/2024
+698,GLD,GLD,M,C,C2,10/04/2024,10/04/2024
+921,GLD,GLD,C,C,BATS,10/04/2024,10/04/2024
+1,GLD,GLD,F,C,BATS,10/04/2024,10/04/2024
+316,GLD,GLD,M,C,BATS,10/04/2024,10/04/2024
+1084,GLD,GLD,C,C,EDGX,10/04/2024,10/04/2024
+2236,GLD,GLD,M,C,EDGX,10/04/2024,10/04/2024
+1216,GLD,GLD,C,C,MCRY,10/04/2024,10/04/2024
+1334,GLD,GLD,M,C,MCRY,10/04/2024,10/04/2024
+
+
+## 20241004 P symbolType=U contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 1911
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20241004&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=P
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate
+- 3216 | GLD | GLD | C | P | CBOE | 10/04/2024 | 
+- 1093 | GLD | GLD | F | P | CBOE | 10/04/2024 | 
+- 4553 | GLD | GLD | M | P | CBOE | 10/04/2024 | 
+- 1099 | GLD | GLD | C | P | AMEX | 10/04/2024 | 
+- 526 | GLD | GLD | F | P | AMEX | 10/04/2024 | 
+- 1771 | GLD | GLD | M | P | AMEX | 10/04/2024 | 
+- 10546 | GLD | GLD | C | P | PHLX | 10/04/2024 | 
+- 6396 | GLD | GLD | F | P | PHLX | 10/04/2024 | 
+- 8996 | GLD | GLD | M | P | PHLX | 10/04/2024 | 
+- 8579 | GLD | GLD | C | P | ARCA | 10/04/2024 | 
+- 1564 | GLD | GLD | F | P | ARCA | 10/04/2024 | 
+- 10505 | GLD | GLD | M | P | ARCA | 10/04/2024 | 
+- 743 | GLD | GLD | C | P | SPHR | 10/04/2024 | 
+- 19 | GLD | GLD | F | P | SPHR | 10/04/2024 | 
+- 774 | GLD | GLD | M | P | SPHR | 10/04/2024 | 
+- 9509 | GLD | GLD | C | P | ISE | 10/04/2024 | 
+- 548 | GLD | GLD | F | P | ISE | 10/04/2024 | 
+- 10593 | GLD | GLD | M | P | ISE | 10/04/2024 | 
+- 2554 | GLD | GLD | C | P | NSDQ | 10/04/2024 | 
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate
+3216,GLD,GLD,C,P,CBOE,10/04/2024,
+1093,GLD,GLD,F,P,CBOE,10/04/2024,
+4553,GLD,GLD,M,P,CBOE,10/04/2024,
+1099,GLD,GLD,C,P,AMEX,10/04/2024,
+526,GLD,GLD,F,P,AMEX,10/04/2024,
+1771,GLD,GLD,M,P,AMEX,10/04/2024,
+10546,GLD,GLD,C,P,PHLX,10/04/2024,
+6396,GLD,GLD,F,P,PHLX,10/04/2024,
+8996,GLD,GLD,M,P,PHLX,10/04/2024,
+8579,GLD,GLD,C,P,ARCA,10/04/2024,
+1564,GLD,GLD,F,P,ARCA,10/04/2024,
+10505,GLD,GLD,M,P,ARCA,10/04/2024,
+743,GLD,GLD,C,P,SPHR,10/04/2024,
+19,GLD,GLD,F,P,SPHR,10/04/2024,
+774,GLD,GLD,M,P,SPHR,10/04/2024,
+9509,GLD,GLD,C,P,ISE,10/04/2024,
+548,GLD,GLD,F,P,ISE,10/04/2024,
+10593,GLD,GLD,M,P,ISE,10/04/2024,
+2554,GLD,GLD,C,P,NSDQ,10/04/2024,
+1057,GLD,GLD,F,P,NSDQ,10/04/2024,
+4487,GLD,GLD,M,P,NSDQ,10/04/2024,
+905,GLD,GLD,C,P,NOBO,10/04/2024,
+25,GLD,GLD,F,P,NOBO,10/04/2024,
+1906,GLD,GLD,M,P,NOBO,10/04/2024,
+1795,GLD,GLD,C,P,MPRL,10/04/2024,
+323,GLD,GLD,F,P,MPRL,10/04/2024,
+2372,GLD,GLD,M,P,MPRL,10/04/2024,
+1261,GLD,GLD,C,P,EMLD,10/04/2024,
+448,GLD,GLD,F,P,EMLD,10/04/2024,
+1935,GLD,GLD,M,P,EMLD,10/04/2024,
+5424,GLD,GLD,C,P,BOX,10/04/2024,
+594,GLD,GLD,F,P,BOX,10/04/2024,
+6118,GLD,GLD,M,P,BOX,10/04/2024,
+3637,GLD,GLD,C,P,MIAX,10/04/2024,
+302,GLD,GLD,F,P,MIAX,10/04/2024,
+4013,GLD,GLD,M,P,MIAX,10/04/2024,
+915,GLD,GLD,C,P,GEM,10/04/2024,
+7,GLD,GLD,F,P,GEM,10/04/2024,
+992,GLD,GLD,M,P,GEM,10/04/2024,
+1284,GLD,GLD,C,P,MEMX,10/04/2024,
+808,GLD,GLD,F,P,MEMX,10/04/2024,
+2968,GLD,GLD,M,P,MEMX,10/04/2024,
+3355,GLD,GLD,C,P,C2,10/04/2024,
+990,GLD,GLD,F,P,C2,10/04/2024,
+5447,GLD,GLD,M,P,C2,10/04/2024,
+2218,GLD,GLD,C,P,BATS,10/04/2024,
+550,GLD,GLD,F,P,BATS,10/04/2024,
+3880,GLD,GLD,M,P,BATS,10/04/2024,
+4156,GLD,GLD,C,P,EDGX,10/04/2024,
+203,GLD,GLD,F,P,EDGX,10/04/2024,
+4537,GLD,GLD,M,P,EDGX,10/04/2024,
+1750,GLD,GLD,C,P,MCRY,10/04/2024,
+95,GLD,GLD,F,P,MCRY,10/04/2024,
+2075,GLD,GLD,M,P,MCRY,10/04/2024,
+
+
+## 20241004 P symbolType=O contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 1911
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20241004&format=csv&volumeQueryType=O&symbolType=O&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=P
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate
+- 3216 | GLD | GLD | C | P | CBOE | 10/04/2024 | 
+- 1093 | GLD | GLD | F | P | CBOE | 10/04/2024 | 
+- 4553 | GLD | GLD | M | P | CBOE | 10/04/2024 | 
+- 1099 | GLD | GLD | C | P | AMEX | 10/04/2024 | 
+- 526 | GLD | GLD | F | P | AMEX | 10/04/2024 | 
+- 1771 | GLD | GLD | M | P | AMEX | 10/04/2024 | 
+- 10546 | GLD | GLD | C | P | PHLX | 10/04/2024 | 
+- 6396 | GLD | GLD | F | P | PHLX | 10/04/2024 | 
+- 8996 | GLD | GLD | M | P | PHLX | 10/04/2024 | 
+- 8579 | GLD | GLD | C | P | ARCA | 10/04/2024 | 
+- 1564 | GLD | GLD | F | P | ARCA | 10/04/2024 | 
+- 10505 | GLD | GLD | M | P | ARCA | 10/04/2024 | 
+- 743 | GLD | GLD | C | P | SPHR | 10/04/2024 | 
+- 19 | GLD | GLD | F | P | SPHR | 10/04/2024 | 
+- 774 | GLD | GLD | M | P | SPHR | 10/04/2024 | 
+- 9509 | GLD | GLD | C | P | ISE | 10/04/2024 | 
+- 548 | GLD | GLD | F | P | ISE | 10/04/2024 | 
+- 10593 | GLD | GLD | M | P | ISE | 10/04/2024 | 
+- 2554 | GLD | GLD | C | P | NSDQ | 10/04/2024 | 
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate
+3216,GLD,GLD,C,P,CBOE,10/04/2024,
+1093,GLD,GLD,F,P,CBOE,10/04/2024,
+4553,GLD,GLD,M,P,CBOE,10/04/2024,
+1099,GLD,GLD,C,P,AMEX,10/04/2024,
+526,GLD,GLD,F,P,AMEX,10/04/2024,
+1771,GLD,GLD,M,P,AMEX,10/04/2024,
+10546,GLD,GLD,C,P,PHLX,10/04/2024,
+6396,GLD,GLD,F,P,PHLX,10/04/2024,
+8996,GLD,GLD,M,P,PHLX,10/04/2024,
+8579,GLD,GLD,C,P,ARCA,10/04/2024,
+1564,GLD,GLD,F,P,ARCA,10/04/2024,
+10505,GLD,GLD,M,P,ARCA,10/04/2024,
+743,GLD,GLD,C,P,SPHR,10/04/2024,
+19,GLD,GLD,F,P,SPHR,10/04/2024,
+774,GLD,GLD,M,P,SPHR,10/04/2024,
+9509,GLD,GLD,C,P,ISE,10/04/2024,
+548,GLD,GLD,F,P,ISE,10/04/2024,
+10593,GLD,GLD,M,P,ISE,10/04/2024,
+2554,GLD,GLD,C,P,NSDQ,10/04/2024,
+1057,GLD,GLD,F,P,NSDQ,10/04/2024,
+4487,GLD,GLD,M,P,NSDQ,10/04/2024,
+905,GLD,GLD,C,P,NOBO,10/04/2024,
+25,GLD,GLD,F,P,NOBO,10/04/2024,
+1906,GLD,GLD,M,P,NOBO,10/04/2024,
+1795,GLD,GLD,C,P,MPRL,10/04/2024,
+323,GLD,GLD,F,P,MPRL,10/04/2024,
+2372,GLD,GLD,M,P,MPRL,10/04/2024,
+1261,GLD,GLD,C,P,EMLD,10/04/2024,
+448,GLD,GLD,F,P,EMLD,10/04/2024,
+1935,GLD,GLD,M,P,EMLD,10/04/2024,
+5424,GLD,GLD,C,P,BOX,10/04/2024,
+594,GLD,GLD,F,P,BOX,10/04/2024,
+6118,GLD,GLD,M,P,BOX,10/04/2024,
+3637,GLD,GLD,C,P,MIAX,10/04/2024,
+302,GLD,GLD,F,P,MIAX,10/04/2024,
+4013,GLD,GLD,M,P,MIAX,10/04/2024,
+915,GLD,GLD,C,P,GEM,10/04/2024,
+7,GLD,GLD,F,P,GEM,10/04/2024,
+992,GLD,GLD,M,P,GEM,10/04/2024,
+1284,GLD,GLD,C,P,MEMX,10/04/2024,
+808,GLD,GLD,F,P,MEMX,10/04/2024,
+2968,GLD,GLD,M,P,MEMX,10/04/2024,
+3355,GLD,GLD,C,P,C2,10/04/2024,
+990,GLD,GLD,F,P,C2,10/04/2024,
+5447,GLD,GLD,M,P,C2,10/04/2024,
+2218,GLD,GLD,C,P,BATS,10/04/2024,
+550,GLD,GLD,F,P,BATS,10/04/2024,
+3880,GLD,GLD,M,P,BATS,10/04/2024,
+4156,GLD,GLD,C,P,EDGX,10/04/2024,
+203,GLD,GLD,F,P,EDGX,10/04/2024,
+4537,GLD,GLD,M,P,EDGX,10/04/2024,
+1750,GLD,GLD,C,P,MCRY,10/04/2024,
+95,GLD,GLD,F,P,MCRY,10/04/2024,
+2075,GLD,GLD,M,P,MCRY,10/04/2024,
+
+
+## 20241004 P symbolType=U contract=True
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 1656
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20241004&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=P&contractDt=20241004
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate | contractDate
+- 766 | GLD | GLD | C | P | CBOE | 10/04/2024 | 10/04/2024
+- 780 | GLD | GLD | M | P | CBOE | 10/04/2024 | 10/04/2024
+- 191 | GLD | GLD | C | P | AMEX | 10/04/2024 | 10/04/2024
+- 247 | GLD | GLD | M | P | AMEX | 10/04/2024 | 10/04/2024
+- 345 | GLD | GLD | C | P | PHLX | 10/04/2024 | 10/04/2024
+- 345 | GLD | GLD | M | P | PHLX | 10/04/2024 | 10/04/2024
+- 2999 | GLD | GLD | C | P | ARCA | 10/04/2024 | 10/04/2024
+- 2989 | GLD | GLD | M | P | ARCA | 10/04/2024 | 10/04/2024
+- 413 | GLD | GLD | C | P | SPHR | 10/04/2024 | 10/04/2024
+- 413 | GLD | GLD | M | P | SPHR | 10/04/2024 | 10/04/2024
+- 2923 | GLD | GLD | C | P | ISE | 10/04/2024 | 10/04/2024
+- 3137 | GLD | GLD | M | P | ISE | 10/04/2024 | 10/04/2024
+- 538 | GLD | GLD | C | P | NSDQ | 10/04/2024 | 10/04/2024
+- 510 | GLD | GLD | M | P | NSDQ | 10/04/2024 | 10/04/2024
+- 380 | GLD | GLD | C | P | NOBO | 10/04/2024 | 10/04/2024
+- 402 | GLD | GLD | M | P | NOBO | 10/04/2024 | 10/04/2024
+- 418 | GLD | GLD | C | P | MPRL | 10/04/2024 | 10/04/2024
+- 526 | GLD | GLD | M | P | MPRL | 10/04/2024 | 10/04/2024
+- 474 | GLD | GLD | C | P | EMLD | 10/04/2024 | 10/04/2024
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate,contractDate
+766,GLD,GLD,C,P,CBOE,10/04/2024,10/04/2024
+780,GLD,GLD,M,P,CBOE,10/04/2024,10/04/2024
+191,GLD,GLD,C,P,AMEX,10/04/2024,10/04/2024
+247,GLD,GLD,M,P,AMEX,10/04/2024,10/04/2024
+345,GLD,GLD,C,P,PHLX,10/04/2024,10/04/2024
+345,GLD,GLD,M,P,PHLX,10/04/2024,10/04/2024
+2999,GLD,GLD,C,P,ARCA,10/04/2024,10/04/2024
+2989,GLD,GLD,M,P,ARCA,10/04/2024,10/04/2024
+413,GLD,GLD,C,P,SPHR,10/04/2024,10/04/2024
+413,GLD,GLD,M,P,SPHR,10/04/2024,10/04/2024
+2923,GLD,GLD,C,P,ISE,10/04/2024,10/04/2024
+3137,GLD,GLD,M,P,ISE,10/04/2024,10/04/2024
+538,GLD,GLD,C,P,NSDQ,10/04/2024,10/04/2024
+510,GLD,GLD,M,P,NSDQ,10/04/2024,10/04/2024
+380,GLD,GLD,C,P,NOBO,10/04/2024,10/04/2024
+402,GLD,GLD,M,P,NOBO,10/04/2024,10/04/2024
+418,GLD,GLD,C,P,MPRL,10/04/2024,10/04/2024
+526,GLD,GLD,M,P,MPRL,10/04/2024,10/04/2024
+474,GLD,GLD,C,P,EMLD,10/04/2024,10/04/2024
+464,GLD,GLD,M,P,EMLD,10/04/2024,10/04/2024
+2200,GLD,GLD,C,P,BOX,10/04/2024,10/04/2024
+2220,GLD,GLD,M,P,BOX,10/04/2024,10/04/2024
+1184,GLD,GLD,C,P,MIAX,10/04/2024,10/04/2024
+1200,GLD,GLD,M,P,MIAX,10/04/2024,10/04/2024
+319,GLD,GLD,C,P,GEM,10/04/2024,10/04/2024
+315,GLD,GLD,M,P,GEM,10/04/2024,10/04/2024
+544,GLD,GLD,C,P,MEMX,10/04/2024,10/04/2024
+888,GLD,GLD,M,P,MEMX,10/04/2024,10/04/2024
+1291,GLD,GLD,C,P,C2,10/04/2024,10/04/2024
+1261,GLD,GLD,M,P,C2,10/04/2024,10/04/2024
+521,GLD,GLD,C,P,BATS,10/04/2024,10/04/2024
+523,GLD,GLD,M,P,BATS,10/04/2024,10/04/2024
+1508,GLD,GLD,C,P,EDGX,10/04/2024,10/04/2024
+1504,GLD,GLD,M,P,EDGX,10/04/2024,10/04/2024
+379,GLD,GLD,C,P,MCRY,10/04/2024,10/04/2024
+429,GLD,GLD,M,P,MCRY,10/04/2024,10/04/2024
+
+
+## 20250102 C symbolType=U contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 1988
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20250102&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=C
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate
+- 44 | GLD | 4GLD | C | C | CBOE | 01/02/2025 | 
+- 44 | GLD | 4GLD | M | C | CBOE | 01/02/2025 | 
+- 7878 | GLD | GLD | C | C | CBOE | 01/02/2025 | 
+- 149 | GLD | GLD | F | C | CBOE | 01/02/2025 | 
+- 9623 | GLD | GLD | M | C | CBOE | 01/02/2025 | 
+- 2317 | GLD | GLD | C | C | AMEX | 01/02/2025 | 
+- 1010 | GLD | GLD | F | C | AMEX | 01/02/2025 | 
+- 3505 | GLD | GLD | M | C | AMEX | 01/02/2025 | 
+- 5187 | GLD | GLD | C | C | PHLX | 01/02/2025 | 
+- 390 | GLD | GLD | F | C | PHLX | 01/02/2025 | 
+- 5769 | GLD | GLD | M | C | PHLX | 01/02/2025 | 
+- 13917 | GLD | GLD | C | C | ARCA | 01/02/2025 | 
+- 2703 | GLD | GLD | F | C | ARCA | 01/02/2025 | 
+- 18690 | GLD | GLD | M | C | ARCA | 01/02/2025 | 
+- 2452 | GLD | GLD | C | C | SPHR | 01/02/2025 | 
+- 11 | GLD | GLD | F | C | SPHR | 01/02/2025 | 
+- 2507 | GLD | GLD | M | C | SPHR | 01/02/2025 | 
+- 7536 | GLD | GLD | C | C | ISE | 01/02/2025 | 
+- 122 | GLD | GLD | F | C | ISE | 01/02/2025 | 
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate
+44,GLD,4GLD,C,C,CBOE,01/02/2025,
+44,GLD,4GLD,M,C,CBOE,01/02/2025,
+7878,GLD,GLD,C,C,CBOE,01/02/2025,
+149,GLD,GLD,F,C,CBOE,01/02/2025,
+9623,GLD,GLD,M,C,CBOE,01/02/2025,
+2317,GLD,GLD,C,C,AMEX,01/02/2025,
+1010,GLD,GLD,F,C,AMEX,01/02/2025,
+3505,GLD,GLD,M,C,AMEX,01/02/2025,
+5187,GLD,GLD,C,C,PHLX,01/02/2025,
+390,GLD,GLD,F,C,PHLX,01/02/2025,
+5769,GLD,GLD,M,C,PHLX,01/02/2025,
+13917,GLD,GLD,C,C,ARCA,01/02/2025,
+2703,GLD,GLD,F,C,ARCA,01/02/2025,
+18690,GLD,GLD,M,C,ARCA,01/02/2025,
+2452,GLD,GLD,C,C,SPHR,01/02/2025,
+11,GLD,GLD,F,C,SPHR,01/02/2025,
+2507,GLD,GLD,M,C,SPHR,01/02/2025,
+7536,GLD,GLD,C,C,ISE,01/02/2025,
+122,GLD,GLD,F,C,ISE,01/02/2025,
+8028,GLD,GLD,M,C,ISE,01/02/2025,
+13397,GLD,GLD,C,C,NSDQ,01/02/2025,
+513,GLD,GLD,F,C,NSDQ,01/02/2025,
+16212,GLD,GLD,M,C,NSDQ,01/02/2025,
+1690,GLD,GLD,C,C,NOBO,01/02/2025,
+169,GLD,GLD,F,C,NOBO,01/02/2025,
+2481,GLD,GLD,M,C,NOBO,01/02/2025,
+6355,GLD,GLD,C,C,MPRL,01/02/2025,
+440,GLD,GLD,F,C,MPRL,01/02/2025,
+9791,GLD,GLD,M,C,MPRL,01/02/2025,
+3215,GLD,GLD,C,C,EMLD,01/02/2025,
+836,GLD,GLD,F,C,EMLD,01/02/2025,
+4675,GLD,GLD,M,C,EMLD,01/02/2025,
+3169,GLD,GLD,C,C,BOX,01/02/2025,
+389,GLD,GLD,F,C,BOX,01/02/2025,
+3770,GLD,GLD,M,C,BOX,01/02/2025,
+7090,GLD,GLD,C,C,MIAX,01/02/2025,
+72,GLD,GLD,F,C,MIAX,01/02/2025,
+6994,GLD,GLD,M,C,MIAX,01/02/2025,
+1855,GLD,GLD,C,C,GEM,01/02/2025,
+270,GLD,GLD,F,C,GEM,01/02/2025,
+2555,GLD,GLD,M,C,GEM,01/02/2025,
+5608,GLD,GLD,C,C,MEMX,01/02/2025,
+724,GLD,GLD,F,C,MEMX,01/02/2025,
+7396,GLD,GLD,M,C,MEMX,01/02/2025,
+4684,GLD,GLD,C,C,C2,01/02/2025,
+1792,GLD,GLD,F,C,C2,01/02/2025,
+10842,GLD,GLD,M,C,C2,01/02/2025,
+9147,GLD,GLD,C,C,BATS,01/02/2025,
+352,GLD,GLD,F,C,BATS,01/02/2025,
+10977,GLD,GLD,M,C,BATS,01/02/2025,
+4971,GLD,GLD,C,C,EDGX,01/02/2025,
+62,GLD,GLD,F,C,EDGX,01/02/2025,
+5141,GLD,GLD,M,C,EDGX,01/02/2025,
+2174,GLD,GLD,C,C,MCRY,01/02/2025,
+173,GLD,GLD,F,C,MCRY,01/02/2025,
+2537,GLD,GLD,M,C,MCRY,01/02/2025,
+
+
+## 20250102 C symbolType=O contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 1920
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20250102&format=csv&volumeQueryType=O&symbolType=O&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=C
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate
+- 7878 | GLD | GLD | C | C | CBOE | 01/02/2025 | 
+- 149 | GLD | GLD | F | C | CBOE | 01/02/2025 | 
+- 9623 | GLD | GLD | M | C | CBOE | 01/02/2025 | 
+- 2317 | GLD | GLD | C | C | AMEX | 01/02/2025 | 
+- 1010 | GLD | GLD | F | C | AMEX | 01/02/2025 | 
+- 3505 | GLD | GLD | M | C | AMEX | 01/02/2025 | 
+- 5187 | GLD | GLD | C | C | PHLX | 01/02/2025 | 
+- 390 | GLD | GLD | F | C | PHLX | 01/02/2025 | 
+- 5769 | GLD | GLD | M | C | PHLX | 01/02/2025 | 
+- 13917 | GLD | GLD | C | C | ARCA | 01/02/2025 | 
+- 2703 | GLD | GLD | F | C | ARCA | 01/02/2025 | 
+- 18690 | GLD | GLD | M | C | ARCA | 01/02/2025 | 
+- 2452 | GLD | GLD | C | C | SPHR | 01/02/2025 | 
+- 11 | GLD | GLD | F | C | SPHR | 01/02/2025 | 
+- 2507 | GLD | GLD | M | C | SPHR | 01/02/2025 | 
+- 7536 | GLD | GLD | C | C | ISE | 01/02/2025 | 
+- 122 | GLD | GLD | F | C | ISE | 01/02/2025 | 
+- 8028 | GLD | GLD | M | C | ISE | 01/02/2025 | 
+- 13397 | GLD | GLD | C | C | NSDQ | 01/02/2025 | 
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate
+7878,GLD,GLD,C,C,CBOE,01/02/2025,
+149,GLD,GLD,F,C,CBOE,01/02/2025,
+9623,GLD,GLD,M,C,CBOE,01/02/2025,
+2317,GLD,GLD,C,C,AMEX,01/02/2025,
+1010,GLD,GLD,F,C,AMEX,01/02/2025,
+3505,GLD,GLD,M,C,AMEX,01/02/2025,
+5187,GLD,GLD,C,C,PHLX,01/02/2025,
+390,GLD,GLD,F,C,PHLX,01/02/2025,
+5769,GLD,GLD,M,C,PHLX,01/02/2025,
+13917,GLD,GLD,C,C,ARCA,01/02/2025,
+2703,GLD,GLD,F,C,ARCA,01/02/2025,
+18690,GLD,GLD,M,C,ARCA,01/02/2025,
+2452,GLD,GLD,C,C,SPHR,01/02/2025,
+11,GLD,GLD,F,C,SPHR,01/02/2025,
+2507,GLD,GLD,M,C,SPHR,01/02/2025,
+7536,GLD,GLD,C,C,ISE,01/02/2025,
+122,GLD,GLD,F,C,ISE,01/02/2025,
+8028,GLD,GLD,M,C,ISE,01/02/2025,
+13397,GLD,GLD,C,C,NSDQ,01/02/2025,
+513,GLD,GLD,F,C,NSDQ,01/02/2025,
+16212,GLD,GLD,M,C,NSDQ,01/02/2025,
+1690,GLD,GLD,C,C,NOBO,01/02/2025,
+169,GLD,GLD,F,C,NOBO,01/02/2025,
+2481,GLD,GLD,M,C,NOBO,01/02/2025,
+6355,GLD,GLD,C,C,MPRL,01/02/2025,
+440,GLD,GLD,F,C,MPRL,01/02/2025,
+9791,GLD,GLD,M,C,MPRL,01/02/2025,
+3215,GLD,GLD,C,C,EMLD,01/02/2025,
+836,GLD,GLD,F,C,EMLD,01/02/2025,
+4675,GLD,GLD,M,C,EMLD,01/02/2025,
+3169,GLD,GLD,C,C,BOX,01/02/2025,
+389,GLD,GLD,F,C,BOX,01/02/2025,
+3770,GLD,GLD,M,C,BOX,01/02/2025,
+7090,GLD,GLD,C,C,MIAX,01/02/2025,
+72,GLD,GLD,F,C,MIAX,01/02/2025,
+6994,GLD,GLD,M,C,MIAX,01/02/2025,
+1855,GLD,GLD,C,C,GEM,01/02/2025,
+270,GLD,GLD,F,C,GEM,01/02/2025,
+2555,GLD,GLD,M,C,GEM,01/02/2025,
+5608,GLD,GLD,C,C,MEMX,01/02/2025,
+724,GLD,GLD,F,C,MEMX,01/02/2025,
+7396,GLD,GLD,M,C,MEMX,01/02/2025,
+4684,GLD,GLD,C,C,C2,01/02/2025,
+1792,GLD,GLD,F,C,C2,01/02/2025,
+10842,GLD,GLD,M,C,C2,01/02/2025,
+9147,GLD,GLD,C,C,BATS,01/02/2025,
+352,GLD,GLD,F,C,BATS,01/02/2025,
+10977,GLD,GLD,M,C,BATS,01/02/2025,
+4971,GLD,GLD,C,C,EDGX,01/02/2025,
+62,GLD,GLD,F,C,EDGX,01/02/2025,
+5141,GLD,GLD,M,C,EDGX,01/02/2025,
+2174,GLD,GLD,C,C,MCRY,01/02/2025,
+173,GLD,GLD,F,C,MCRY,01/02/2025,
+2537,GLD,GLD,M,C,MCRY,01/02/2025,
+
+
+## 20250102 C symbolType=U contract=True
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 18
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20250102&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=C&contractDt=20250102
+
+### Rows
+- No record(s) found
+
+### Head
+No record(s) found
+
+## 20250102 P symbolType=U contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 1968
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20250102&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=P
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate
+- 25 | GLD | 4GLD | C | P | CBOE | 01/02/2025 | 
+- 25 | GLD | 4GLD | M | P | CBOE | 01/02/2025 | 
+- 5246 | GLD | GLD | C | P | CBOE | 01/02/2025 | 
+- 6 | GLD | GLD | F | P | CBOE | 01/02/2025 | 
+- 5734 | GLD | GLD | M | P | CBOE | 01/02/2025 | 
+- 1436 | GLD | GLD | C | P | AMEX | 01/02/2025 | 
+- 36 | GLD | GLD | F | P | AMEX | 01/02/2025 | 
+- 1946 | GLD | GLD | M | P | AMEX | 01/02/2025 | 
+- 3559 | GLD | GLD | C | P | PHLX | 01/02/2025 | 
+- 130 | GLD | GLD | F | P | PHLX | 01/02/2025 | 
+- 4217 | GLD | GLD | M | P | PHLX | 01/02/2025 | 
+- 3484 | GLD | GLD | C | P | ARCA | 01/02/2025 | 
+- 892 | GLD | GLD | F | P | ARCA | 01/02/2025 | 
+- 5030 | GLD | GLD | M | P | ARCA | 01/02/2025 | 
+- 805 | GLD | GLD | C | P | SPHR | 01/02/2025 | 
+- 20 | GLD | GLD | F | P | SPHR | 01/02/2025 | 
+- 821 | GLD | GLD | M | P | SPHR | 01/02/2025 | 
+- 4596 | GLD | GLD | C | P | ISE | 01/02/2025 | 
+- 288 | GLD | GLD | F | P | ISE | 01/02/2025 | 
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate
+25,GLD,4GLD,C,P,CBOE,01/02/2025,
+25,GLD,4GLD,M,P,CBOE,01/02/2025,
+5246,GLD,GLD,C,P,CBOE,01/02/2025,
+6,GLD,GLD,F,P,CBOE,01/02/2025,
+5734,GLD,GLD,M,P,CBOE,01/02/2025,
+1436,GLD,GLD,C,P,AMEX,01/02/2025,
+36,GLD,GLD,F,P,AMEX,01/02/2025,
+1946,GLD,GLD,M,P,AMEX,01/02/2025,
+3559,GLD,GLD,C,P,PHLX,01/02/2025,
+130,GLD,GLD,F,P,PHLX,01/02/2025,
+4217,GLD,GLD,M,P,PHLX,01/02/2025,
+3484,GLD,GLD,C,P,ARCA,01/02/2025,
+892,GLD,GLD,F,P,ARCA,01/02/2025,
+5030,GLD,GLD,M,P,ARCA,01/02/2025,
+805,GLD,GLD,C,P,SPHR,01/02/2025,
+20,GLD,GLD,F,P,SPHR,01/02/2025,
+821,GLD,GLD,M,P,SPHR,01/02/2025,
+4596,GLD,GLD,C,P,ISE,01/02/2025,
+288,GLD,GLD,F,P,ISE,01/02/2025,
+4920,GLD,GLD,M,P,ISE,01/02/2025,
+2724,GLD,GLD,C,P,NSDQ,01/02/2025,
+2319,GLD,GLD,F,P,NSDQ,01/02/2025,
+5813,GLD,GLD,M,P,NSDQ,01/02/2025,
+1271,GLD,GLD,C,P,NOBO,01/02/2025,
+117,GLD,GLD,F,P,NOBO,01/02/2025,
+3050,GLD,GLD,M,P,NOBO,01/02/2025,
+425,GLD,GLD,C,P,MPRL,01/02/2025,
+310,GLD,GLD,F,P,MPRL,01/02/2025,
+2795,GLD,GLD,M,P,MPRL,01/02/2025,
+1507,GLD,GLD,C,P,EMLD,01/02/2025,
+111,GLD,GLD,F,P,EMLD,01/02/2025,
+1672,GLD,GLD,M,P,EMLD,01/02/2025,
+1684,GLD,GLD,C,P,BOX,01/02/2025,
+19,GLD,GLD,F,P,BOX,01/02/2025,
+1729,GLD,GLD,M,P,BOX,01/02/2025,
+5640,GLD,GLD,C,P,MIAX,01/02/2025,
+78,GLD,GLD,F,P,MIAX,01/02/2025,
+5838,GLD,GLD,M,P,MIAX,01/02/2025,
+426,GLD,GLD,C,P,GEM,01/02/2025,
+158,GLD,GLD,F,P,GEM,01/02/2025,
+618,GLD,GLD,M,P,GEM,01/02/2025,
+1187,GLD,GLD,C,P,MEMX,01/02/2025,
+84,GLD,GLD,F,P,MEMX,01/02/2025,
+2059,GLD,GLD,M,P,MEMX,01/02/2025,
+3384,GLD,GLD,C,P,C2,01/02/2025,
+587,GLD,GLD,F,P,C2,01/02/2025,
+5971,GLD,GLD,M,P,C2,01/02/2025,
+1008,GLD,GLD,C,P,BATS,01/02/2025,
+722,GLD,GLD,F,P,BATS,01/02/2025,
+2288,GLD,GLD,M,P,BATS,01/02/2025,
+6585,GLD,GLD,C,P,EDGX,01/02/2025,
+103,GLD,GLD,F,P,EDGX,01/02/2025,
+6804,GLD,GLD,M,P,EDGX,01/02/2025,
+840,GLD,GLD,C,P,MCRY,01/02/2025,
+22,GLD,GLD,F,P,MCRY,01/02/2025,
+928,GLD,GLD,M,P,MCRY,01/02/2025,
+
+
+## 20250102 P symbolType=O contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 1900
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20250102&format=csv&volumeQueryType=O&symbolType=O&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=P
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate
+- 5246 | GLD | GLD | C | P | CBOE | 01/02/2025 | 
+- 6 | GLD | GLD | F | P | CBOE | 01/02/2025 | 
+- 5734 | GLD | GLD | M | P | CBOE | 01/02/2025 | 
+- 1436 | GLD | GLD | C | P | AMEX | 01/02/2025 | 
+- 36 | GLD | GLD | F | P | AMEX | 01/02/2025 | 
+- 1946 | GLD | GLD | M | P | AMEX | 01/02/2025 | 
+- 3559 | GLD | GLD | C | P | PHLX | 01/02/2025 | 
+- 130 | GLD | GLD | F | P | PHLX | 01/02/2025 | 
+- 4217 | GLD | GLD | M | P | PHLX | 01/02/2025 | 
+- 3484 | GLD | GLD | C | P | ARCA | 01/02/2025 | 
+- 892 | GLD | GLD | F | P | ARCA | 01/02/2025 | 
+- 5030 | GLD | GLD | M | P | ARCA | 01/02/2025 | 
+- 805 | GLD | GLD | C | P | SPHR | 01/02/2025 | 
+- 20 | GLD | GLD | F | P | SPHR | 01/02/2025 | 
+- 821 | GLD | GLD | M | P | SPHR | 01/02/2025 | 
+- 4596 | GLD | GLD | C | P | ISE | 01/02/2025 | 
+- 288 | GLD | GLD | F | P | ISE | 01/02/2025 | 
+- 4920 | GLD | GLD | M | P | ISE | 01/02/2025 | 
+- 2724 | GLD | GLD | C | P | NSDQ | 01/02/2025 | 
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate
+5246,GLD,GLD,C,P,CBOE,01/02/2025,
+6,GLD,GLD,F,P,CBOE,01/02/2025,
+5734,GLD,GLD,M,P,CBOE,01/02/2025,
+1436,GLD,GLD,C,P,AMEX,01/02/2025,
+36,GLD,GLD,F,P,AMEX,01/02/2025,
+1946,GLD,GLD,M,P,AMEX,01/02/2025,
+3559,GLD,GLD,C,P,PHLX,01/02/2025,
+130,GLD,GLD,F,P,PHLX,01/02/2025,
+4217,GLD,GLD,M,P,PHLX,01/02/2025,
+3484,GLD,GLD,C,P,ARCA,01/02/2025,
+892,GLD,GLD,F,P,ARCA,01/02/2025,
+5030,GLD,GLD,M,P,ARCA,01/02/2025,
+805,GLD,GLD,C,P,SPHR,01/02/2025,
+20,GLD,GLD,F,P,SPHR,01/02/2025,
+821,GLD,GLD,M,P,SPHR,01/02/2025,
+4596,GLD,GLD,C,P,ISE,01/02/2025,
+288,GLD,GLD,F,P,ISE,01/02/2025,
+4920,GLD,GLD,M,P,ISE,01/02/2025,
+2724,GLD,GLD,C,P,NSDQ,01/02/2025,
+2319,GLD,GLD,F,P,NSDQ,01/02/2025,
+5813,GLD,GLD,M,P,NSDQ,01/02/2025,
+1271,GLD,GLD,C,P,NOBO,01/02/2025,
+117,GLD,GLD,F,P,NOBO,01/02/2025,
+3050,GLD,GLD,M,P,NOBO,01/02/2025,
+425,GLD,GLD,C,P,MPRL,01/02/2025,
+310,GLD,GLD,F,P,MPRL,01/02/2025,
+2795,GLD,GLD,M,P,MPRL,01/02/2025,
+1507,GLD,GLD,C,P,EMLD,01/02/2025,
+111,GLD,GLD,F,P,EMLD,01/02/2025,
+1672,GLD,GLD,M,P,EMLD,01/02/2025,
+1684,GLD,GLD,C,P,BOX,01/02/2025,
+19,GLD,GLD,F,P,BOX,01/02/2025,
+1729,GLD,GLD,M,P,BOX,01/02/2025,
+5640,GLD,GLD,C,P,MIAX,01/02/2025,
+78,GLD,GLD,F,P,MIAX,01/02/2025,
+5838,GLD,GLD,M,P,MIAX,01/02/2025,
+426,GLD,GLD,C,P,GEM,01/02/2025,
+158,GLD,GLD,F,P,GEM,01/02/2025,
+618,GLD,GLD,M,P,GEM,01/02/2025,
+1187,GLD,GLD,C,P,MEMX,01/02/2025,
+84,GLD,GLD,F,P,MEMX,01/02/2025,
+2059,GLD,GLD,M,P,MEMX,01/02/2025,
+3384,GLD,GLD,C,P,C2,01/02/2025,
+587,GLD,GLD,F,P,C2,01/02/2025,
+5971,GLD,GLD,M,P,C2,01/02/2025,
+1008,GLD,GLD,C,P,BATS,01/02/2025,
+722,GLD,GLD,F,P,BATS,01/02/2025,
+2288,GLD,GLD,M,P,BATS,01/02/2025,
+6585,GLD,GLD,C,P,EDGX,01/02/2025,
+103,GLD,GLD,F,P,EDGX,01/02/2025,
+6804,GLD,GLD,M,P,EDGX,01/02/2025,
+840,GLD,GLD,C,P,MCRY,01/02/2025,
+22,GLD,GLD,F,P,MCRY,01/02/2025,
+928,GLD,GLD,M,P,MCRY,01/02/2025,
+
+
+## 20250102 P symbolType=U contract=True
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 18
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20250102&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=P&contractDt=20250102
+
+### Rows
+- No record(s) found
+
+### Head
+No record(s) found
+
+## 20261002 C symbolType=U contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 2138
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20261002&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=C
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate
+- 300 | GLD | 1GLD | F | C | AMEX | 10/02/2026 | 
+- 300 | GLD | 1GLD | M | C | AMEX | 10/02/2026 | 
+- 527 | GLD | 4GLD | C | C | CBOE | 10/02/2026 | 
+- 527 | GLD | 4GLD | M | C | CBOE | 10/02/2026 | 
+- 28851 | GLD | GLD | C | C | CBOE | 10/02/2026 | 
+- 307 | GLD | GLD | F | C | CBOE | 10/02/2026 | 
+- 31084 | GLD | GLD | M | C | CBOE | 10/02/2026 | 
+- 10410 | GLD | GLD | C | C | AMEX | 10/02/2026 | 
+- 5583 | GLD | GLD | F | C | AMEX | 10/02/2026 | 
+- 22101 | GLD | GLD | M | C | AMEX | 10/02/2026 | 
+- 11212 | GLD | GLD | C | C | PHLX | 10/02/2026 | 
+- 614 | GLD | GLD | F | C | PHLX | 10/02/2026 | 
+- 12942 | GLD | GLD | M | C | PHLX | 10/02/2026 | 
+- 26264 | GLD | GLD | C | C | ARCA | 10/02/2026 | 
+- 1416 | GLD | GLD | F | C | ARCA | 10/02/2026 | 
+- 29638 | GLD | GLD | M | C | ARCA | 10/02/2026 | 
+- 3920 | GLD | GLD | C | C | SPHR | 10/02/2026 | 
+- 21 | GLD | GLD | F | C | SPHR | 10/02/2026 | 
+- 4829 | GLD | GLD | M | C | SPHR | 10/02/2026 | 
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate
+300,GLD,1GLD,F,C,AMEX,10/02/2026,
+300,GLD,1GLD,M,C,AMEX,10/02/2026,
+527,GLD,4GLD,C,C,CBOE,10/02/2026,
+527,GLD,4GLD,M,C,CBOE,10/02/2026,
+28851,GLD,GLD,C,C,CBOE,10/02/2026,
+307,GLD,GLD,F,C,CBOE,10/02/2026,
+31084,GLD,GLD,M,C,CBOE,10/02/2026,
+10410,GLD,GLD,C,C,AMEX,10/02/2026,
+5583,GLD,GLD,F,C,AMEX,10/02/2026,
+22101,GLD,GLD,M,C,AMEX,10/02/2026,
+11212,GLD,GLD,C,C,PHLX,10/02/2026,
+614,GLD,GLD,F,C,PHLX,10/02/2026,
+12942,GLD,GLD,M,C,PHLX,10/02/2026,
+26264,GLD,GLD,C,C,ARCA,10/02/2026,
+1416,GLD,GLD,F,C,ARCA,10/02/2026,
+29638,GLD,GLD,M,C,ARCA,10/02/2026,
+3920,GLD,GLD,C,C,SPHR,10/02/2026,
+21,GLD,GLD,F,C,SPHR,10/02/2026,
+4829,GLD,GLD,M,C,SPHR,10/02/2026,
+12237,GLD,GLD,C,C,ISE,10/02/2026,
+1144,GLD,GLD,F,C,ISE,10/02/2026,
+15329,GLD,GLD,M,C,ISE,10/02/2026,
+2479,GLD,GLD,C,C,NSDQ,10/02/2026,
+224,GLD,GLD,F,C,NSDQ,10/02/2026,
+14013,GLD,GLD,M,C,NSDQ,10/02/2026,
+812,GLD,GLD,C,C,NOBO,10/02/2026,
+68,GLD,GLD,F,C,NOBO,10/02/2026,
+1962,GLD,GLD,M,C,NOBO,10/02/2026,
+1394,GLD,GLD,C,C,MPRL,10/02/2026,
+88,GLD,GLD,F,C,MPRL,10/02/2026,
+2468,GLD,GLD,M,C,MPRL,10/02/2026,
+5750,GLD,GLD,C,C,EMLD,10/02/2026,
+73,GLD,GLD,F,C,EMLD,10/02/2026,
+6633,GLD,GLD,M,C,EMLD,10/02/2026,
+12362,GLD,GLD,C,C,BOX,10/02/2026,
+3182,GLD,GLD,F,C,BOX,10/02/2026,
+7336,GLD,GLD,M,C,BOX,10/02/2026,
+18196,GLD,GLD,C,C,MIAX,10/02/2026,
+3186,GLD,GLD,F,C,MIAX,10/02/2026,
+20428,GLD,GLD,M,C,MIAX,10/02/2026,
+917,GLD,GLD,C,C,GEM,10/02/2026,
+658,GLD,GLD,F,C,GEM,10/02/2026,
+2715,GLD,GLD,M,C,GEM,10/02/2026,
+6252,GLD,GLD,C,C,MEMX,10/02/2026,
+262,GLD,GLD,F,C,MEMX,10/02/2026,
+8546,GLD,GLD,M,C,MEMX,10/02/2026,
+1016,GLD,GLD,C,C,MXTO,10/02/2026,
+1188,GLD,GLD,M,C,MXTO,10/02/2026,
+6731,GLD,GLD,C,C,C2,10/02/2026,
+567,GLD,GLD,F,C,C2,10/02/2026,
+11394,GLD,GLD,M,C,C2,10/02/2026,
+6597,GLD,GLD,C,C,BATS,10/02/2026,
+679,GLD,GLD,F,C,BATS,10/02/2026,
+10022,GLD,GLD,M,C,BATS,10/02/2026,
+5622,GLD,GLD,C,C,EDGX,10/02/2026,
+871,GLD,GLD,F,C,EDGX,10/02/2026,
+9079,GLD,GLD,M,C,EDGX,10/02/2026,
+6504,GLD,GLD,C,C,MCRY,10/02/2026,
+44,GLD,GLD,F,C,MCRY,10/02/2026,
+6940,GLD,GLD,M,C,MCRY,10/02/2026,
+
+
+## 20261002 C symbolType=O contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 1998
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20261002&format=csv&volumeQueryType=O&symbolType=O&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=C
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate
+- 28851 | GLD | GLD | C | C | CBOE | 10/02/2026 | 
+- 307 | GLD | GLD | F | C | CBOE | 10/02/2026 | 
+- 31084 | GLD | GLD | M | C | CBOE | 10/02/2026 | 
+- 10410 | GLD | GLD | C | C | AMEX | 10/02/2026 | 
+- 5583 | GLD | GLD | F | C | AMEX | 10/02/2026 | 
+- 22101 | GLD | GLD | M | C | AMEX | 10/02/2026 | 
+- 11212 | GLD | GLD | C | C | PHLX | 10/02/2026 | 
+- 614 | GLD | GLD | F | C | PHLX | 10/02/2026 | 
+- 12942 | GLD | GLD | M | C | PHLX | 10/02/2026 | 
+- 26264 | GLD | GLD | C | C | ARCA | 10/02/2026 | 
+- 1416 | GLD | GLD | F | C | ARCA | 10/02/2026 | 
+- 29638 | GLD | GLD | M | C | ARCA | 10/02/2026 | 
+- 3920 | GLD | GLD | C | C | SPHR | 10/02/2026 | 
+- 21 | GLD | GLD | F | C | SPHR | 10/02/2026 | 
+- 4829 | GLD | GLD | M | C | SPHR | 10/02/2026 | 
+- 12237 | GLD | GLD | C | C | ISE | 10/02/2026 | 
+- 1144 | GLD | GLD | F | C | ISE | 10/02/2026 | 
+- 15329 | GLD | GLD | M | C | ISE | 10/02/2026 | 
+- 2479 | GLD | GLD | C | C | NSDQ | 10/02/2026 | 
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate
+28851,GLD,GLD,C,C,CBOE,10/02/2026,
+307,GLD,GLD,F,C,CBOE,10/02/2026,
+31084,GLD,GLD,M,C,CBOE,10/02/2026,
+10410,GLD,GLD,C,C,AMEX,10/02/2026,
+5583,GLD,GLD,F,C,AMEX,10/02/2026,
+22101,GLD,GLD,M,C,AMEX,10/02/2026,
+11212,GLD,GLD,C,C,PHLX,10/02/2026,
+614,GLD,GLD,F,C,PHLX,10/02/2026,
+12942,GLD,GLD,M,C,PHLX,10/02/2026,
+26264,GLD,GLD,C,C,ARCA,10/02/2026,
+1416,GLD,GLD,F,C,ARCA,10/02/2026,
+29638,GLD,GLD,M,C,ARCA,10/02/2026,
+3920,GLD,GLD,C,C,SPHR,10/02/2026,
+21,GLD,GLD,F,C,SPHR,10/02/2026,
+4829,GLD,GLD,M,C,SPHR,10/02/2026,
+12237,GLD,GLD,C,C,ISE,10/02/2026,
+1144,GLD,GLD,F,C,ISE,10/02/2026,
+15329,GLD,GLD,M,C,ISE,10/02/2026,
+2479,GLD,GLD,C,C,NSDQ,10/02/2026,
+224,GLD,GLD,F,C,NSDQ,10/02/2026,
+14013,GLD,GLD,M,C,NSDQ,10/02/2026,
+812,GLD,GLD,C,C,NOBO,10/02/2026,
+68,GLD,GLD,F,C,NOBO,10/02/2026,
+1962,GLD,GLD,M,C,NOBO,10/02/2026,
+1394,GLD,GLD,C,C,MPRL,10/02/2026,
+88,GLD,GLD,F,C,MPRL,10/02/2026,
+2468,GLD,GLD,M,C,MPRL,10/02/2026,
+5750,GLD,GLD,C,C,EMLD,10/02/2026,
+73,GLD,GLD,F,C,EMLD,10/02/2026,
+6633,GLD,GLD,M,C,EMLD,10/02/2026,
+12362,GLD,GLD,C,C,BOX,10/02/2026,
+3182,GLD,GLD,F,C,BOX,10/02/2026,
+7336,GLD,GLD,M,C,BOX,10/02/2026,
+18196,GLD,GLD,C,C,MIAX,10/02/2026,
+3186,GLD,GLD,F,C,MIAX,10/02/2026,
+20428,GLD,GLD,M,C,MIAX,10/02/2026,
+917,GLD,GLD,C,C,GEM,10/02/2026,
+658,GLD,GLD,F,C,GEM,10/02/2026,
+2715,GLD,GLD,M,C,GEM,10/02/2026,
+6252,GLD,GLD,C,C,MEMX,10/02/2026,
+262,GLD,GLD,F,C,MEMX,10/02/2026,
+8546,GLD,GLD,M,C,MEMX,10/02/2026,
+1016,GLD,GLD,C,C,MXTO,10/02/2026,
+1188,GLD,GLD,M,C,MXTO,10/02/2026,
+6731,GLD,GLD,C,C,C2,10/02/2026,
+567,GLD,GLD,F,C,C2,10/02/2026,
+11394,GLD,GLD,M,C,C2,10/02/2026,
+6597,GLD,GLD,C,C,BATS,10/02/2026,
+679,GLD,GLD,F,C,BATS,10/02/2026,
+10022,GLD,GLD,M,C,BATS,10/02/2026,
+5622,GLD,GLD,C,C,EDGX,10/02/2026,
+871,GLD,GLD,F,C,EDGX,10/02/2026,
+9079,GLD,GLD,M,C,EDGX,10/02/2026,
+6504,GLD,GLD,C,C,MCRY,10/02/2026,
+44,GLD,GLD,F,C,MCRY,10/02/2026,
+6940,GLD,GLD,M,C,MCRY,10/02/2026,
+
+
+## 20261002 C symbolType=U contract=True
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 1892
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20261002&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=C&contractDt=20261002
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate | contractDate
+- 12263 | GLD | GLD | C | C | CBOE | 10/02/2026 | 10/02/2026
+- 12179 | GLD | GLD | M | C | CBOE | 10/02/2026 | 10/02/2026
+- 4061 | GLD | GLD | C | C | AMEX | 10/02/2026 | 10/02/2026
+- 40 | GLD | GLD | F | C | AMEX | 10/02/2026 | 10/02/2026
+- 4233 | GLD | GLD | M | C | AMEX | 10/02/2026 | 10/02/2026
+- 5082 | GLD | GLD | C | C | PHLX | 10/02/2026 | 10/02/2026
+- 5164 | GLD | GLD | M | C | PHLX | 10/02/2026 | 10/02/2026
+- 13334 | GLD | GLD | C | C | ARCA | 10/02/2026 | 10/02/2026
+- 13274 | GLD | GLD | M | C | ARCA | 10/02/2026 | 10/02/2026
+- 1621 | GLD | GLD | C | C | SPHR | 10/02/2026 | 10/02/2026
+- 1993 | GLD | GLD | M | C | SPHR | 10/02/2026 | 10/02/2026
+- 4570 | GLD | GLD | C | C | ISE | 10/02/2026 | 10/02/2026
+- 4764 | GLD | GLD | M | C | ISE | 10/02/2026 | 10/02/2026
+- 899 | GLD | GLD | C | C | NSDQ | 10/02/2026 | 10/02/2026
+- 2335 | GLD | GLD | M | C | NSDQ | 10/02/2026 | 10/02/2026
+- 281 | GLD | GLD | C | C | NOBO | 10/02/2026 | 10/02/2026
+- 359 | GLD | GLD | M | C | NOBO | 10/02/2026 | 10/02/2026
+- 718 | GLD | GLD | C | C | MPRL | 10/02/2026 | 10/02/2026
+- 1128 | GLD | GLD | M | C | MPRL | 10/02/2026 | 10/02/2026
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate,contractDate
+12263,GLD,GLD,C,C,CBOE,10/02/2026,10/02/2026
+12179,GLD,GLD,M,C,CBOE,10/02/2026,10/02/2026
+4061,GLD,GLD,C,C,AMEX,10/02/2026,10/02/2026
+40,GLD,GLD,F,C,AMEX,10/02/2026,10/02/2026
+4233,GLD,GLD,M,C,AMEX,10/02/2026,10/02/2026
+5082,GLD,GLD,C,C,PHLX,10/02/2026,10/02/2026
+5164,GLD,GLD,M,C,PHLX,10/02/2026,10/02/2026
+13334,GLD,GLD,C,C,ARCA,10/02/2026,10/02/2026
+13274,GLD,GLD,M,C,ARCA,10/02/2026,10/02/2026
+1621,GLD,GLD,C,C,SPHR,10/02/2026,10/02/2026
+1993,GLD,GLD,M,C,SPHR,10/02/2026,10/02/2026
+4570,GLD,GLD,C,C,ISE,10/02/2026,10/02/2026
+4764,GLD,GLD,M,C,ISE,10/02/2026,10/02/2026
+899,GLD,GLD,C,C,NSDQ,10/02/2026,10/02/2026
+2335,GLD,GLD,M,C,NSDQ,10/02/2026,10/02/2026
+281,GLD,GLD,C,C,NOBO,10/02/2026,10/02/2026
+359,GLD,GLD,M,C,NOBO,10/02/2026,10/02/2026
+718,GLD,GLD,C,C,MPRL,10/02/2026,10/02/2026
+1128,GLD,GLD,M,C,MPRL,10/02/2026,10/02/2026
+2844,GLD,GLD,C,C,EMLD,10/02/2026,10/02/2026
+2794,GLD,GLD,M,C,EMLD,10/02/2026,10/02/2026
+1724,GLD,GLD,C,C,BOX,10/02/2026,10/02/2026
+12,GLD,GLD,F,C,BOX,10/02/2026,10/02/2026
+1814,GLD,GLD,M,C,BOX,10/02/2026,10/02/2026
+7955,GLD,GLD,C,C,MIAX,10/02/2026,10/02/2026
+7957,GLD,GLD,M,C,MIAX,10/02/2026,10/02/2026
+396,GLD,GLD,C,C,GEM,10/02/2026,10/02/2026
+570,GLD,GLD,M,C,GEM,10/02/2026,10/02/2026
+3132,GLD,GLD,C,C,MEMX,10/02/2026,10/02/2026
+3534,GLD,GLD,M,C,MEMX,10/02/2026,10/02/2026
+339,GLD,GLD,C,C,MXTO,10/02/2026,10/02/2026
+341,GLD,GLD,M,C,MXTO,10/02/2026,10/02/2026
+2623,GLD,GLD,C,C,C2,10/02/2026,10/02/2026
+25,GLD,GLD,F,C,C2,10/02/2026,10/02/2026
+3302,GLD,GLD,M,C,C2,10/02/2026,10/02/2026
+1778,GLD,GLD,C,C,BATS,10/02/2026,10/02/2026
+2264,GLD,GLD,M,C,BATS,10/02/2026,10/02/2026
+1659,GLD,GLD,C,C,EDGX,10/02/2026,10/02/2026
+1779,GLD,GLD,M,C,EDGX,10/02/2026,10/02/2026
+2394,GLD,GLD,C,C,MCRY,10/02/2026,10/02/2026
+2468,GLD,GLD,M,C,MCRY,10/02/2026,10/02/2026
+
+
+## 20261002 P symbolType=U contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 2053
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20261002&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=P
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate
+- 423 | GLD | 4GLD | C | P | CBOE | 10/02/2026 | 
+- 423 | GLD | 4GLD | M | P | CBOE | 10/02/2026 | 
+- 15543 | GLD | GLD | C | P | CBOE | 10/02/2026 | 
+- 93 | GLD | GLD | F | P | CBOE | 10/02/2026 | 
+- 20700 | GLD | GLD | M | P | CBOE | 10/02/2026 | 
+- 5265 | GLD | GLD | C | P | AMEX | 10/02/2026 | 
+- 5174 | GLD | GLD | F | P | AMEX | 10/02/2026 | 
+- 18819 | GLD | GLD | M | P | AMEX | 10/02/2026 | 
+- 6292 | GLD | GLD | C | P | PHLX | 10/02/2026 | 
+- 2109 | GLD | GLD | F | P | PHLX | 10/02/2026 | 
+- 9885 | GLD | GLD | M | P | PHLX | 10/02/2026 | 
+- 10058 | GLD | GLD | C | P | ARCA | 10/02/2026 | 
+- 162 | GLD | GLD | F | P | ARCA | 10/02/2026 | 
+- 13474 | GLD | GLD | M | P | ARCA | 10/02/2026 | 
+- 2130 | GLD | GLD | C | P | SPHR | 10/02/2026 | 
+- 77 | GLD | GLD | F | P | SPHR | 10/02/2026 | 
+- 3941 | GLD | GLD | M | P | SPHR | 10/02/2026 | 
+- 12060 | GLD | GLD | C | P | ISE | 10/02/2026 | 
+- 195 | GLD | GLD | F | P | ISE | 10/02/2026 | 
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate
+423,GLD,4GLD,C,P,CBOE,10/02/2026,
+423,GLD,4GLD,M,P,CBOE,10/02/2026,
+15543,GLD,GLD,C,P,CBOE,10/02/2026,
+93,GLD,GLD,F,P,CBOE,10/02/2026,
+20700,GLD,GLD,M,P,CBOE,10/02/2026,
+5265,GLD,GLD,C,P,AMEX,10/02/2026,
+5174,GLD,GLD,F,P,AMEX,10/02/2026,
+18819,GLD,GLD,M,P,AMEX,10/02/2026,
+6292,GLD,GLD,C,P,PHLX,10/02/2026,
+2109,GLD,GLD,F,P,PHLX,10/02/2026,
+9885,GLD,GLD,M,P,PHLX,10/02/2026,
+10058,GLD,GLD,C,P,ARCA,10/02/2026,
+162,GLD,GLD,F,P,ARCA,10/02/2026,
+13474,GLD,GLD,M,P,ARCA,10/02/2026,
+2130,GLD,GLD,C,P,SPHR,10/02/2026,
+77,GLD,GLD,F,P,SPHR,10/02/2026,
+3941,GLD,GLD,M,P,SPHR,10/02/2026,
+12060,GLD,GLD,C,P,ISE,10/02/2026,
+195,GLD,GLD,F,P,ISE,10/02/2026,
+15549,GLD,GLD,M,P,ISE,10/02/2026,
+2053,GLD,GLD,C,P,NSDQ,10/02/2026,
+176,GLD,GLD,F,P,NSDQ,10/02/2026,
+12243,GLD,GLD,M,P,NSDQ,10/02/2026,
+611,GLD,GLD,C,P,NOBO,10/02/2026,
+10,GLD,GLD,F,P,NOBO,10/02/2026,
+1839,GLD,GLD,M,P,NOBO,10/02/2026,
+802,GLD,GLD,C,P,MPRL,10/02/2026,
+16,GLD,GLD,F,P,MPRL,10/02/2026,
+2386,GLD,GLD,M,P,MPRL,10/02/2026,
+2693,GLD,GLD,C,P,EMLD,10/02/2026,
+5,GLD,GLD,F,P,EMLD,10/02/2026,
+4148,GLD,GLD,M,P,EMLD,10/02/2026,
+8161,GLD,GLD,C,P,BOX,10/02/2026,
+92,GLD,GLD,F,P,BOX,10/02/2026,
+8489,GLD,GLD,M,P,BOX,10/02/2026,
+13034,GLD,GLD,C,P,MIAX,10/02/2026,
+217,GLD,GLD,F,P,MIAX,10/02/2026,
+14705,GLD,GLD,M,P,MIAX,10/02/2026,
+692,GLD,GLD,C,P,GEM,10/02/2026,
+11,GLD,GLD,F,P,GEM,10/02/2026,
+2241,GLD,GLD,M,P,GEM,10/02/2026,
+2605,GLD,GLD,C,P,MEMX,10/02/2026,
+194,GLD,GLD,F,P,MEMX,10/02/2026,
+4771,GLD,GLD,M,P,MEMX,10/02/2026,
+500,GLD,GLD,C,P,MXTO,10/02/2026,
+690,GLD,GLD,M,P,MXTO,10/02/2026,
+4454,GLD,GLD,C,P,C2,10/02/2026,
+260,GLD,GLD,F,P,C2,10/02/2026,
+12932,GLD,GLD,M,P,C2,10/02/2026,
+3650,GLD,GLD,C,P,BATS,10/02/2026,
+310,GLD,GLD,F,P,BATS,10/02/2026,
+7794,GLD,GLD,M,P,BATS,10/02/2026,
+2414,GLD,GLD,C,P,EDGX,10/02/2026,
+240,GLD,GLD,F,P,EDGX,10/02/2026,
+7118,GLD,GLD,M,P,EDGX,10/02/2026,
+4056,GLD,GLD,C,P,MCRY,10/02/2026,
+27,GLD,GLD,F,P,MCRY,10/02/2026,
+4571,GLD,GLD,M,P,MCRY,10/02/2026,
+
+
+## 20261002 P symbolType=O contract=False
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 1983
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20261002&format=csv&volumeQueryType=O&symbolType=O&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=P
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate
+- 15543 | GLD | GLD | C | P | CBOE | 10/02/2026 | 
+- 93 | GLD | GLD | F | P | CBOE | 10/02/2026 | 
+- 20700 | GLD | GLD | M | P | CBOE | 10/02/2026 | 
+- 5265 | GLD | GLD | C | P | AMEX | 10/02/2026 | 
+- 5174 | GLD | GLD | F | P | AMEX | 10/02/2026 | 
+- 18819 | GLD | GLD | M | P | AMEX | 10/02/2026 | 
+- 6292 | GLD | GLD | C | P | PHLX | 10/02/2026 | 
+- 2109 | GLD | GLD | F | P | PHLX | 10/02/2026 | 
+- 9885 | GLD | GLD | M | P | PHLX | 10/02/2026 | 
+- 10058 | GLD | GLD | C | P | ARCA | 10/02/2026 | 
+- 162 | GLD | GLD | F | P | ARCA | 10/02/2026 | 
+- 13474 | GLD | GLD | M | P | ARCA | 10/02/2026 | 
+- 2130 | GLD | GLD | C | P | SPHR | 10/02/2026 | 
+- 77 | GLD | GLD | F | P | SPHR | 10/02/2026 | 
+- 3941 | GLD | GLD | M | P | SPHR | 10/02/2026 | 
+- 12060 | GLD | GLD | C | P | ISE | 10/02/2026 | 
+- 195 | GLD | GLD | F | P | ISE | 10/02/2026 | 
+- 15549 | GLD | GLD | M | P | ISE | 10/02/2026 | 
+- 2053 | GLD | GLD | C | P | NSDQ | 10/02/2026 | 
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate
+15543,GLD,GLD,C,P,CBOE,10/02/2026,
+93,GLD,GLD,F,P,CBOE,10/02/2026,
+20700,GLD,GLD,M,P,CBOE,10/02/2026,
+5265,GLD,GLD,C,P,AMEX,10/02/2026,
+5174,GLD,GLD,F,P,AMEX,10/02/2026,
+18819,GLD,GLD,M,P,AMEX,10/02/2026,
+6292,GLD,GLD,C,P,PHLX,10/02/2026,
+2109,GLD,GLD,F,P,PHLX,10/02/2026,
+9885,GLD,GLD,M,P,PHLX,10/02/2026,
+10058,GLD,GLD,C,P,ARCA,10/02/2026,
+162,GLD,GLD,F,P,ARCA,10/02/2026,
+13474,GLD,GLD,M,P,ARCA,10/02/2026,
+2130,GLD,GLD,C,P,SPHR,10/02/2026,
+77,GLD,GLD,F,P,SPHR,10/02/2026,
+3941,GLD,GLD,M,P,SPHR,10/02/2026,
+12060,GLD,GLD,C,P,ISE,10/02/2026,
+195,GLD,GLD,F,P,ISE,10/02/2026,
+15549,GLD,GLD,M,P,ISE,10/02/2026,
+2053,GLD,GLD,C,P,NSDQ,10/02/2026,
+176,GLD,GLD,F,P,NSDQ,10/02/2026,
+12243,GLD,GLD,M,P,NSDQ,10/02/2026,
+611,GLD,GLD,C,P,NOBO,10/02/2026,
+10,GLD,GLD,F,P,NOBO,10/02/2026,
+1839,GLD,GLD,M,P,NOBO,10/02/2026,
+802,GLD,GLD,C,P,MPRL,10/02/2026,
+16,GLD,GLD,F,P,MPRL,10/02/2026,
+2386,GLD,GLD,M,P,MPRL,10/02/2026,
+2693,GLD,GLD,C,P,EMLD,10/02/2026,
+5,GLD,GLD,F,P,EMLD,10/02/2026,
+4148,GLD,GLD,M,P,EMLD,10/02/2026,
+8161,GLD,GLD,C,P,BOX,10/02/2026,
+92,GLD,GLD,F,P,BOX,10/02/2026,
+8489,GLD,GLD,M,P,BOX,10/02/2026,
+13034,GLD,GLD,C,P,MIAX,10/02/2026,
+217,GLD,GLD,F,P,MIAX,10/02/2026,
+14705,GLD,GLD,M,P,MIAX,10/02/2026,
+692,GLD,GLD,C,P,GEM,10/02/2026,
+11,GLD,GLD,F,P,GEM,10/02/2026,
+2241,GLD,GLD,M,P,GEM,10/02/2026,
+2605,GLD,GLD,C,P,MEMX,10/02/2026,
+194,GLD,GLD,F,P,MEMX,10/02/2026,
+4771,GLD,GLD,M,P,MEMX,10/02/2026,
+500,GLD,GLD,C,P,MXTO,10/02/2026,
+690,GLD,GLD,M,P,MXTO,10/02/2026,
+4454,GLD,GLD,C,P,C2,10/02/2026,
+260,GLD,GLD,F,P,C2,10/02/2026,
+12932,GLD,GLD,M,P,C2,10/02/2026,
+3650,GLD,GLD,C,P,BATS,10/02/2026,
+310,GLD,GLD,F,P,BATS,10/02/2026,
+7794,GLD,GLD,M,P,BATS,10/02/2026,
+2414,GLD,GLD,C,P,EDGX,10/02/2026,
+240,GLD,GLD,F,P,EDGX,10/02/2026,
+7118,GLD,GLD,M,P,EDGX,10/02/2026,
+4056,GLD,GLD,C,P,MCRY,10/02/2026,
+27,GLD,GLD,F,P,MCRY,10/02/2026,
+4571,GLD,GLD,M,P,MCRY,10/02/2026,
+
+
+## 20261002 P symbolType=U contract=True
+- HTTP: 200
+- content-type: application/octet-stream
+- disposition: attachment; filename=vol-query-results.csv
+- bytes: 2354
+- URL: https://marketdata.theocc.com/volume-query?reportDate=20261002&format=csv&volumeQueryType=O&symbolType=U&symbol=GLD&reportType=D&accountType=ALL&productKind=OSTK&porc=P&contractDt=20261002
+
+### Rows
+- quantity | underlying | symbol | actype | porc | exchange | actdate | contractDate
+- 7225 | GLD | GLD | C | P | CBOE | 10/02/2026 | 10/02/2026
+- 12 | GLD | GLD | F | P | CBOE | 10/02/2026 | 10/02/2026
+- 7399 | GLD | GLD | M | P | CBOE | 10/02/2026 | 10/02/2026
+- 1842 | GLD | GLD | C | P | AMEX | 10/02/2026 | 10/02/2026
+- 75 | GLD | GLD | F | P | AMEX | 10/02/2026 | 10/02/2026
+- 3113 | GLD | GLD | M | P | AMEX | 10/02/2026 | 10/02/2026
+- 2781 | GLD | GLD | C | P | PHLX | 10/02/2026 | 10/02/2026
+- 43 | GLD | GLD | F | P | PHLX | 10/02/2026 | 10/02/2026
+- 3062 | GLD | GLD | M | P | PHLX | 10/02/2026 | 10/02/2026
+- 5277 | GLD | GLD | C | P | ARCA | 10/02/2026 | 10/02/2026
+- 5 | GLD | GLD | F | P | ARCA | 10/02/2026 | 10/02/2026
+- 6004 | GLD | GLD | M | P | ARCA | 10/02/2026 | 10/02/2026
+- 855 | GLD | GLD | C | P | SPHR | 10/02/2026 | 10/02/2026
+- 1121 | GLD | GLD | M | P | SPHR | 10/02/2026 | 10/02/2026
+- 5050 | GLD | GLD | C | P | ISE | 10/02/2026 | 10/02/2026
+- 32 | GLD | GLD | F | P | ISE | 10/02/2026 | 10/02/2026
+- 5464 | GLD | GLD | M | P | ISE | 10/02/2026 | 10/02/2026
+- 779 | GLD | GLD | C | P | NSDQ | 10/02/2026 | 10/02/2026
+- 14 | GLD | GLD | F | P | NSDQ | 10/02/2026 | 10/02/2026
+
+### Head
+quantity,underlying,symbol,actype,porc,exchange,actdate,contractDate
+7225,GLD,GLD,C,P,CBOE,10/02/2026,10/02/2026
+12,GLD,GLD,F,P,CBOE,10/02/2026,10/02/2026
+7399,GLD,GLD,M,P,CBOE,10/02/2026,10/02/2026
+1842,GLD,GLD,C,P,AMEX,10/02/2026,10/02/2026
+75,GLD,GLD,F,P,AMEX,10/02/2026,10/02/2026
+3113,GLD,GLD,M,P,AMEX,10/02/2026,10/02/2026
+2781,GLD,GLD,C,P,PHLX,10/02/2026,10/02/2026
+43,GLD,GLD,F,P,PHLX,10/02/2026,10/02/2026
+3062,GLD,GLD,M,P,PHLX,10/02/2026,10/02/2026
+5277,GLD,GLD,C,P,ARCA,10/02/2026,10/02/2026
+5,GLD,GLD,F,P,ARCA,10/02/2026,10/02/2026
+6004,GLD,GLD,M,P,ARCA,10/02/2026,10/02/2026
+855,GLD,GLD,C,P,SPHR,10/02/2026,10/02/2026
+1121,GLD,GLD,M,P,SPHR,10/02/2026,10/02/2026
+5050,GLD,GLD,C,P,ISE,10/02/2026,10/02/2026
+32,GLD,GLD,F,P,ISE,10/02/2026,10/02/2026
+5464,GLD,GLD,M,P,ISE,10/02/2026,10/02/2026
+779,GLD,GLD,C,P,NSDQ,10/02/2026,10/02/2026
+14,GLD,GLD,F,P,NSDQ,10/02/2026,10/02/2026
+2377,GLD,GLD,M,P,NSDQ,10/02/2026,10/02/2026
+297,GLD,GLD,C,P,NOBO,10/02/2026,10/02/2026
+449,GLD,GLD,M,P,NOBO,10/02/2026,10/02/2026
+368,GLD,GLD,C,P,MPRL,10/02/2026,10/02/2026
+1148,GLD,GLD,M,P,MPRL,10/02/2026,10/02/2026
+1033,GLD,GLD,C,P,EMLD,10/02/2026,10/02/2026
+1157,GLD,GLD,M,P,EMLD,10/02/2026,10/02/2026
+1155,GLD,GLD,C,P,BOX,10/02/2026,10/02/2026
+19,GLD,GLD,F,P,BOX,10/02/2026,10/02/2026
+5558,GLD,GLD,M,P,BOX,10/02/2026,10/02/2026
+7607,GLD,GLD,C,P,MIAX,10/02/2026,10/02/2026
+5,GLD,GLD,F,P,MIAX,10/02/2026,10/02/2026
+7908,GLD,GLD,M,P,MIAX,10/02/2026,10/02/2026
+439,GLD,GLD,C,P,GEM,10/02/2026,10/02/2026
+8,GLD,GLD,F,P,GEM,10/02/2026,10/02/2026
+523,GLD,GLD,M,P,GEM,10/02/2026,10/02/2026
+1375,GLD,GLD,C,P,MEMX,10/02/2026,10/02/2026
+2,GLD,GLD,F,P,MEMX,10/02/2026,10/02/2026
+1979,GLD,GLD,M,P,MEMX,10/02/2026,10/02/2026
+325,GLD,GLD,C,P,MXTO,10/02/2026,10/02/2026
+325,GLD,GLD,M,P,MXTO,10/02/2026,10/02/2026
+1839,GLD,GLD,C,P,C2,10/02/2026,10/02/2026
+120,GLD,GLD,F,P,C2,10/02/2026,10/02/2026
+3713,GLD,GLD,M,P,C2,10/02/2026,10/02/2026
+1496,GLD,GLD,C,P,BATS,10/02/2026,10/02/2026
+31,GLD,GLD,F,P,BATS,10/02/2026,10/02/2026
+2665,GLD,GLD,M,P,BATS,10/02/2026,10/02/2026
+710,GLD,GLD,C,P,EDGX,10/02/2026,10/02/2026
+56,GLD,GLD,F,P,EDGX,10/02/2026,10/02/2026
+1350,GLD,GLD,M,P,EDGX,10/02/2026,10/02/2026
+1916,GLD,GLD,C,P,MCRY,10/02/2026,10/02/2026
+17,GLD,GLD,F,P,MCRY,10/02/2026,10/02/2026
+2033,GLD,GLD,M,P,MCRY,10/02/2026,10/02/2026
+
