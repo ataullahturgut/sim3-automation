@@ -37,6 +37,9 @@ FEATURES=[
     "mom_x_gold_silver_gap","core_confirmation","cross_dispersion"
 ]
 
+SESSION=requests.Session()
+SESSION.headers.update({"User-Agent":"Mozilla/5.0 (compatible; DIVERGE-H3 academic research/1.1)","Accept":"*/*"})
+
 DDP_SOURCES={
     "usd":{
         "rel":"H10",
