@@ -1,0 +1,22 @@
+{
+  "schema": "GOLD_H3_NEON_INTEGRITY_AUDIT_V1",
+  "read_only": true,
+  "primary_series": "XAU_USD_TWELVE_1H_RESEARCH_V1",
+  "tables_n": 32,
+  "series_n": 63,
+  "series_with_duplicate_rows": 14,
+  "duplicate_timestamp_groups_n": 1910,
+  "duplicate_value_conflict_groups_n": 374,
+  "primary": {
+    "rows": 17644,
+    "first_ts": "2022-01-02 23:00:00+00:00",
+    "last_ts": "2024-12-31 21:00:00+00:00",
+    "revision_rows": 0,
+    "jump_candidates_abs_logret_ge_2_5pct": 0,
+    "robust_outliers_abs_z_ge_8": 68,
+    "gap_candidates_gt_4h": 158,
+    "median_hourly_logret": 2.161998223692393e-05,
+    "mad_scale": 0.0011812724919316154,
+    "max_abs_hourly_logret": 0.024113192768253338
+  }
+}

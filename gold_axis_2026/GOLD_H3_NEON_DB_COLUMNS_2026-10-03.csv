@@ -1,0 +1,388 @@
+table_schema,table_name,ordinal_position,column_name,data_type,is_nullable
+public,canonical_latest,1,series_id,text,YES
+public,canonical_latest,2,observation_ts,timestamp with time zone,YES
+public,canonical_latest,3,value,double precision,YES
+public,canonical_latest,4,source,text,YES
+public,canonical_latest,5,source_symbol,text,YES
+public,canonical_latest,6,provider_as_of,timestamp with time zone,YES
+public,canonical_latest,7,available_as_of,timestamp with time zone,YES
+public,canonical_latest,8,first_seen_at,timestamp with time zone,YES
+public,canonical_latest,9,retrieved_at,timestamp with time zone,YES
+public,canonical_latest,10,frequency,text,YES
+public,canonical_latest,11,unit,text,YES
+public,canonical_latest,12,transform,text,YES
+public,canonical_latest,13,quality_status,text,YES
+public,canonical_latest,14,lineage_id,text,YES
+public,canonical_latest,15,metadata,jsonb,YES
+public,current_context_feature_state_v1,1,id,bigint,YES
+public,current_context_feature_state_v1,2,feature_name,text,YES
+public,current_context_feature_state_v1,3,feature_version,text,YES
+public,current_context_feature_state_v1,4,calculation_ts,timestamp with time zone,YES
+public,current_context_feature_state_v1,5,input_cutoff,timestamp with time zone,YES
+public,current_context_feature_state_v1,6,value_num,double precision,YES
+public,current_context_feature_state_v1,7,value_text,text,YES
+public,current_context_feature_state_v1,8,git_commit,text,YES
+public,current_context_feature_state_v1,9,quality_status,text,YES
+public,current_context_feature_state_v1,10,metadata,jsonb,YES
+public,current_engine_runtime_state_v1,1,run_id,uuid,YES
+public,current_engine_runtime_state_v1,2,engine_id,text,YES
+public,current_engine_runtime_state_v1,3,engine_version,text,YES
+public,current_engine_runtime_state_v1,4,engine_role,text,YES
+public,current_engine_runtime_state_v1,5,as_of,timestamp with time zone,YES
+public,current_engine_runtime_state_v1,6,target_context,text,YES
+public,current_engine_runtime_state_v1,7,evidence_class,text,YES
+public,current_engine_runtime_state_v1,8,runtime_status,text,YES
+public,current_engine_runtime_state_v1,9,status_code,text,YES
+public,current_engine_runtime_state_v1,10,direction_vote_permitted,boolean,YES
+public,current_engine_runtime_state_v1,11,git_commit,text,YES
+public,current_engine_runtime_state_v1,12,input_fingerprint,text,YES
+public,current_engine_runtime_state_v1,13,metadata,jsonb,YES
+public,current_engine_runtime_state_v1,14,created_at,timestamp with time zone,YES
+public,current_source_registry_v1,1,series_id,text,YES
+public,current_source_registry_v1,2,semantic_id,text,YES
+public,current_source_registry_v1,3,source_name,text,YES
+public,current_source_registry_v1,4,source_symbol,text,YES
+public,current_source_registry_v1,5,source_tier,text,YES
+public,current_source_registry_v1,6,frequency,text,YES
+public,current_source_registry_v1,7,unit,text,YES
+public,current_source_registry_v1,8,model_role,text,YES
+public,current_source_registry_v1,9,status,text,YES
+public,current_source_registry_v1,10,license_note,text,YES
+public,current_source_registry_v1,11,metadata,jsonb,YES
+public,current_source_registry_v1,12,created_at,timestamp with time zone,YES
+public,current_source_registry_v1,13,updated_at,timestamp with time zone,YES
+public,data_evidence_spine_health_v1,1,input_sets,bigint,YES
+public,data_evidence_spine_health_v1,2,input_snapshots,bigint,YES
+public,data_evidence_spine_health_v1,3,input_members,bigint,YES
+public,data_evidence_spine_health_v1,4,expert_forecasts,bigint,YES
+public,data_evidence_spine_health_v1,5,engine_runs,bigint,YES
+public,data_evidence_spine_health_v1,6,derived_features,bigint,YES
+public,data_evidence_spine_health_v1,7,canonical_forecasts,bigint,YES
+public,data_evidence_spine_health_v1,8,decision_snapshots,bigint,YES
+public,data_evidence_spine_health_v1,9,orphan_input_snapshots,bigint,YES
+public,data_evidence_spine_health_v1,10,expert_rows_without_input_set,bigint,YES
+public,data_evidence_spine_health_v1,11,expert_input_fingerprint_mismatches,bigint,YES
+public,decision_events,1,event_id,uuid,NO
+public,decision_events,2,run_id,uuid,NO
+public,decision_events,3,snapshot_id,uuid,NO
+public,decision_events,4,event_ts,timestamp with time zone,NO
+public,decision_events,5,previous_classification,text,YES
+public,decision_events,6,classification,text,NO
+public,decision_events,7,classification_changed,boolean,NO
+public,decision_events,8,reason_code,text,NO
+public,decision_events,9,action_state,text,YES
+public,decision_events,10,execution_session,date,YES
+public,decision_events,11,fingerprint,text,NO
+public,decision_events,12,metadata,jsonb,NO
+public,decision_events,13,created_at,timestamp with time zone,NO
+public,decision_runs,1,run_id,uuid,NO
+public,decision_runs,2,decision_as_of,timestamp with time zone,NO
+public,decision_runs,3,generated_at,timestamp with time zone,NO
+public,decision_runs,4,engine_version,text,NO
+public,decision_runs,5,config_version,text,NO
+public,decision_runs,6,config_hash,text,YES
+public,decision_runs,7,code_sha,text,YES
+public,decision_runs,8,trigger_type,text,NO
+public,decision_runs,9,evidence_class,text,NO
+public,decision_runs,10,status,text,NO
+public,decision_runs,11,input_snapshot_ref,text,YES
+public,decision_runs,12,forecast_contract_ref,text,YES
+public,decision_runs,13,fingerprint,text,NO
+public,decision_runs,14,notes,text,YES
+public,decision_runs,15,metadata,jsonb,NO
+public,decision_runs,16,created_at,timestamp with time zone,NO
+public,decision_signal_snapshots,1,snapshot_id,uuid,NO
+public,decision_signal_snapshots,2,run_id,uuid,NO
+public,decision_signal_snapshots,3,decision_as_of,timestamp with time zone,NO
+public,decision_signal_snapshots,4,target_month,date,NO
+public,decision_signal_snapshots,5,close_value,double precision,NO
+public,decision_signal_snapshots,6,close_source_ref,text,NO
+public,decision_signal_snapshots,7,vw_forecast_frozen,double precision,NO
+public,decision_signal_snapshots,8,forecast_contract_ref,text,YES
+public,decision_signal_snapshots,9,monthly_direction_3m,text,NO
+public,decision_signal_snapshots,10,level_emergency,text,NO
+public,decision_signal_snapshots,11,reversal_emergency,text,NO
+public,decision_signal_snapshots,12,fast_state,text,NO
+public,decision_signal_snapshots,13,slow_state,text,NO
+public,decision_signal_snapshots,14,gvz_value,double precision,YES
+public,decision_signal_snapshots,15,gvz_cap,double precision,YES
+public,decision_signal_snapshots,16,gvz_panic,boolean,YES
+public,decision_signal_snapshots,17,macro_event_down,boolean,YES
+public,decision_signal_snapshots,18,bocpd_context,text,YES
+public,decision_signal_snapshots,19,classification,text,NO
+public,decision_signal_snapshots,20,default_execution_session,date,YES
+public,decision_signal_snapshots,21,quality_status,text,NO
+public,decision_signal_snapshots,22,fingerprint,text,NO
+public,decision_signal_snapshots,23,metadata,jsonb,NO
+public,decision_signal_snapshots,24,created_at,timestamp with time zone,NO
+public,derived_feature_snapshots,1,id,bigint,NO
+public,derived_feature_snapshots,2,feature_name,text,NO
+public,derived_feature_snapshots,3,feature_version,text,NO
+public,derived_feature_snapshots,4,calculation_ts,timestamp with time zone,NO
+public,derived_feature_snapshots,5,input_cutoff,timestamp with time zone,NO
+public,derived_feature_snapshots,6,value_num,double precision,YES
+public,derived_feature_snapshots,7,value_text,text,YES
+public,derived_feature_snapshots,8,git_commit,text,YES
+public,derived_feature_snapshots,9,input_lineage,jsonb,NO
+public,derived_feature_snapshots,10,quality_status,text,NO
+public,derived_feature_snapshots,11,metadata,jsonb,NO
+public,engine_execution_decision_outputs,1,run_id,uuid,NO
+public,engine_execution_decision_outputs,2,decision_snapshot_id,uuid,NO
+public,engine_execution_derived_outputs,1,run_id,uuid,NO
+public,engine_execution_derived_outputs,2,derived_feature_snapshot_id,bigint,NO
+public,engine_execution_expert_outputs,1,run_id,uuid,NO
+public,engine_execution_expert_outputs,2,monthly_expert_forecast_id,bigint,NO
+public,engine_execution_runs,1,run_id,uuid,NO
+public,engine_execution_runs,2,engine_id,text,NO
+public,engine_execution_runs,3,engine_version,text,NO
+public,engine_execution_runs,4,engine_role,text,NO
+public,engine_execution_runs,5,as_of,timestamp with time zone,NO
+public,engine_execution_runs,6,target_context,text,YES
+public,engine_execution_runs,7,evidence_class,text,NO
+public,engine_execution_runs,8,runtime_status,text,NO
+public,engine_execution_runs,9,status_code,text,NO
+public,engine_execution_runs,10,direction_vote_permitted,boolean,NO
+public,engine_execution_runs,11,git_commit,text,YES
+public,engine_execution_runs,12,input_fingerprint,text,YES
+public,engine_execution_runs,13,metadata,jsonb,NO
+public,engine_execution_runs,14,created_at,timestamp with time zone,NO
+public,forecast_input_set_members,1,input_set_id,uuid,NO
+public,forecast_input_set_members,2,snapshot_id,bigint,NO
+public,forecast_input_set_members,3,created_at,timestamp with time zone,NO
+public,forecast_input_sets,1,input_set_id,uuid,NO
+public,forecast_input_sets,2,target_month,date,NO
+public,forecast_input_sets,3,forecast_origin,timestamp with time zone,NO
+public,forecast_input_sets,4,as_of,timestamp with time zone,NO
+public,forecast_input_sets,5,forecast_track,text,NO
+public,forecast_input_sets,6,expert_id,text,NO
+public,forecast_input_sets,7,model_name,text,NO
+public,forecast_input_sets,8,model_version,text,NO
+public,forecast_input_sets,9,evidence_class,text,NO
+public,forecast_input_sets,10,input_fingerprint,text,NO
+public,forecast_input_sets,11,git_commit,text,YES
+public,forecast_input_sets,12,metadata,jsonb,NO
+public,forecast_input_sets,13,created_at,timestamp with time zone,NO
+public,forecast_input_snapshots,1,id,bigint,NO
+public,forecast_input_snapshots,2,forecast_origin,timestamp with time zone,NO
+public,forecast_input_snapshots,3,target_period,text,NO
+public,forecast_input_snapshots,4,model_name,text,NO
+public,forecast_input_snapshots,5,model_version,text,NO
+public,forecast_input_snapshots,6,git_commit,text,YES
+public,forecast_input_snapshots,7,series_id,text,NO
+public,forecast_input_snapshots,8,semantic_id,text,YES
+public,forecast_input_snapshots,9,observation_ts,timestamp with time zone,NO
+public,forecast_input_snapshots,10,value_used,double precision,NO
+public,forecast_input_snapshots,11,available_as_of,timestamp with time zone,NO
+public,forecast_input_snapshots,12,retrieved_at,timestamp with time zone,NO
+public,forecast_input_snapshots,13,transform,text,NO
+public,forecast_input_snapshots,14,lineage_id,text,NO
+public,forecast_input_snapshots,15,metadata,jsonb,NO
+public,latest_decision_snapshot_by_evidence,1,snapshot_id,uuid,YES
+public,latest_decision_snapshot_by_evidence,2,run_id,uuid,YES
+public,latest_decision_snapshot_by_evidence,3,decision_as_of,timestamp with time zone,YES
+public,latest_decision_snapshot_by_evidence,4,target_month,date,YES
+public,latest_decision_snapshot_by_evidence,5,close_value,double precision,YES
+public,latest_decision_snapshot_by_evidence,6,close_source_ref,text,YES
+public,latest_decision_snapshot_by_evidence,7,vw_forecast_frozen,double precision,YES
+public,latest_decision_snapshot_by_evidence,8,forecast_contract_ref,text,YES
+public,latest_decision_snapshot_by_evidence,9,monthly_direction_3m,text,YES
+public,latest_decision_snapshot_by_evidence,10,level_emergency,text,YES
+public,latest_decision_snapshot_by_evidence,11,reversal_emergency,text,YES
+public,latest_decision_snapshot_by_evidence,12,fast_state,text,YES
+public,latest_decision_snapshot_by_evidence,13,slow_state,text,YES
+public,latest_decision_snapshot_by_evidence,14,gvz_value,double precision,YES
+public,latest_decision_snapshot_by_evidence,15,gvz_cap,double precision,YES
+public,latest_decision_snapshot_by_evidence,16,gvz_panic,boolean,YES
+public,latest_decision_snapshot_by_evidence,17,macro_event_down,boolean,YES
+public,latest_decision_snapshot_by_evidence,18,bocpd_context,text,YES
+public,latest_decision_snapshot_by_evidence,19,classification,text,YES
+public,latest_decision_snapshot_by_evidence,20,default_execution_session,date,YES
+public,latest_decision_snapshot_by_evidence,21,quality_status,text,YES
+public,latest_decision_snapshot_by_evidence,22,fingerprint,text,YES
+public,latest_decision_snapshot_by_evidence,23,metadata,jsonb,YES
+public,latest_decision_snapshot_by_evidence,24,created_at,timestamp with time zone,YES
+public,latest_decision_snapshot_by_evidence,25,generated_at,timestamp with time zone,YES
+public,latest_decision_snapshot_by_evidence,26,engine_version,text,YES
+public,latest_decision_snapshot_by_evidence,27,config_version,text,YES
+public,latest_decision_snapshot_by_evidence,28,config_hash,text,YES
+public,latest_decision_snapshot_by_evidence,29,code_sha,text,YES
+public,latest_decision_snapshot_by_evidence,30,trigger_type,text,YES
+public,latest_decision_snapshot_by_evidence,31,evidence_class,text,YES
+public,latest_decision_snapshot_by_evidence,32,run_status,text,YES
+public,latest_decision_snapshot_by_evidence,33,input_snapshot_ref,text,YES
+public,latest_decision_snapshot_by_evidence,34,run_forecast_contract_ref,text,YES
+public,latest_engine_runtime_state,1,run_id,uuid,YES
+public,latest_engine_runtime_state,2,engine_id,text,YES
+public,latest_engine_runtime_state,3,engine_version,text,YES
+public,latest_engine_runtime_state,4,engine_role,text,YES
+public,latest_engine_runtime_state,5,as_of,timestamp with time zone,YES
+public,latest_engine_runtime_state,6,target_context,text,YES
+public,latest_engine_runtime_state,7,evidence_class,text,YES
+public,latest_engine_runtime_state,8,runtime_status,text,YES
+public,latest_engine_runtime_state,9,status_code,text,YES
+public,latest_engine_runtime_state,10,direction_vote_permitted,boolean,YES
+public,latest_engine_runtime_state,11,git_commit,text,YES
+public,latest_engine_runtime_state,12,input_fingerprint,text,YES
+public,latest_engine_runtime_state,13,metadata,jsonb,YES
+public,latest_engine_runtime_state,14,created_at,timestamp with time zone,YES
+public,latest_historical_replay_engine_state,1,run_id,uuid,YES
+public,latest_historical_replay_engine_state,2,engine_id,text,YES
+public,latest_historical_replay_engine_state,3,engine_version,text,YES
+public,latest_historical_replay_engine_state,4,engine_role,text,YES
+public,latest_historical_replay_engine_state,5,as_of,timestamp with time zone,YES
+public,latest_historical_replay_engine_state,6,target_context,text,YES
+public,latest_historical_replay_engine_state,7,evidence_class,text,YES
+public,latest_historical_replay_engine_state,8,runtime_status,text,YES
+public,latest_historical_replay_engine_state,9,status_code,text,YES
+public,latest_historical_replay_engine_state,10,direction_vote_permitted,boolean,YES
+public,latest_historical_replay_engine_state,11,git_commit,text,YES
+public,latest_historical_replay_engine_state,12,input_fingerprint,text,YES
+public,latest_historical_replay_engine_state,13,metadata,jsonb,YES
+public,latest_historical_replay_engine_state,14,created_at,timestamp with time zone,YES
+public,latest_series,1,series_id,text,YES
+public,latest_series,2,observation_ts,timestamp with time zone,YES
+public,latest_series,3,value,double precision,YES
+public,latest_series,4,source,text,YES
+public,latest_series,5,source_symbol,text,YES
+public,latest_series,6,provider_as_of,timestamp with time zone,YES
+public,latest_series,7,available_as_of,timestamp with time zone,YES
+public,latest_series,8,first_seen_at,timestamp with time zone,YES
+public,latest_series,9,retrieved_at,timestamp with time zone,YES
+public,latest_series,10,frequency,text,YES
+public,latest_series,11,unit,text,YES
+public,latest_series,12,transform,text,YES
+public,latest_series,13,quality_status,text,YES
+public,latest_series,14,lineage_id,text,YES
+public,latest_series,15,metadata,jsonb,YES
+public,monthly_expert_forecasts,1,id,bigint,NO
+public,monthly_expert_forecasts,2,target_month,date,NO
+public,monthly_expert_forecasts,3,forecast_origin,timestamp with time zone,NO
+public,monthly_expert_forecasts,4,as_of,timestamp with time zone,NO
+public,monthly_expert_forecasts,5,forecast_track,text,NO
+public,monthly_expert_forecasts,6,expert_id,text,NO
+public,monthly_expert_forecasts,7,model_name,text,NO
+public,monthly_expert_forecasts,8,model_version,text,NO
+public,monthly_expert_forecasts,9,expert_role,text,NO
+public,monthly_expert_forecasts,10,forecast_value,double precision,NO
+public,monthly_expert_forecasts,11,unit,text,NO
+public,monthly_expert_forecasts,12,evidence_class,text,NO
+public,monthly_expert_forecasts,13,git_commit,text,YES
+public,monthly_expert_forecasts,14,input_snapshot_ids,ARRAY,NO
+public,monthly_expert_forecasts,15,input_fingerprint,text,NO
+public,monthly_expert_forecasts,16,selector_status,text,NO
+public,monthly_expert_forecasts,17,auto_selector,text,NO
+public,monthly_expert_forecasts,18,auto_ensemble,text,NO
+public,monthly_expert_forecasts,19,canonical_authority,boolean,NO
+public,monthly_expert_forecasts,20,provenance,jsonb,NO
+public,monthly_expert_forecasts,21,created_at,timestamp with time zone,NO
+public,monthly_expert_forecasts,22,input_set_id,uuid,NO
+public,monthly_forecast_contracts,1,id,bigint,NO
+public,monthly_forecast_contracts,2,target_month,date,NO
+public,monthly_forecast_contracts,3,forecast_origin,timestamp with time zone,NO
+public,monthly_forecast_contracts,4,model_name,text,NO
+public,monthly_forecast_contracts,5,model_version,text,NO
+public,monthly_forecast_contracts,6,forecast_value,double precision,NO
+public,monthly_forecast_contracts,7,unit,text,NO
+public,monthly_forecast_contracts,8,model_role,text,NO
+public,monthly_forecast_contracts,9,frozen_at,timestamp with time zone,NO
+public,monthly_forecast_contracts,10,git_commit,text,YES
+public,monthly_forecast_contracts,11,provenance,jsonb,NO
+public,observations,1,id,bigint,NO
+public,observations,2,run_id,uuid,YES
+public,observations,3,series_id,text,NO
+public,observations,4,observation_ts,timestamp with time zone,NO
+public,observations,5,value,double precision,NO
+public,observations,6,source,text,NO
+public,observations,7,source_symbol,text,YES
+public,observations,8,provider_as_of,timestamp with time zone,YES
+public,observations,9,available_as_of,timestamp with time zone,YES
+public,observations,10,first_seen_at,timestamp with time zone,NO
+public,observations,11,retrieved_at,timestamp with time zone,NO
+public,observations,12,frequency,text,NO
+public,observations,13,unit,text,YES
+public,observations,14,transform,text,NO
+public,observations,15,quality_status,text,NO
+public,observations,16,lineage_id,text,NO
+public,observations,17,payload_hash,text,YES
+public,observations,18,metadata,jsonb,NO
+public,quality_events,1,id,bigint,NO
+public,quality_events,2,run_id,uuid,YES
+public,quality_events,3,series_id,text,YES
+public,quality_events,4,event_ts,timestamp with time zone,NO
+public,quality_events,5,severity,text,NO
+public,quality_events,6,code,text,NO
+public,quality_events,7,message,text,NO
+public,quality_events,8,metadata,jsonb,NO
+public,retrieval_runs,1,run_id,uuid,NO
+public,retrieval_runs,2,started_at,timestamp with time zone,NO
+public,retrieval_runs,3,finished_at,timestamp with time zone,YES
+public,retrieval_runs,4,pipeline_version,text,NO
+public,retrieval_runs,5,git_sha,text,YES
+public,retrieval_runs,6,trigger_type,text,YES
+public,retrieval_runs,7,status,text,NO
+public,retrieval_runs,8,observations_read,bigint,NO
+public,retrieval_runs,9,observations_written,bigint,NO
+public,retrieval_runs,10,notes,text,YES
+public,retrieval_runs,11,metadata,jsonb,NO
+public,source_registry,1,series_id,text,NO
+public,source_registry,2,semantic_id,text,NO
+public,source_registry,3,source_name,text,NO
+public,source_registry,4,source_symbol,text,YES
+public,source_registry,5,source_tier,text,NO
+public,source_registry,6,frequency,text,NO
+public,source_registry,7,unit,text,YES
+public,source_registry,8,model_role,text,YES
+public,source_registry,9,status,text,NO
+public,source_registry,10,license_note,text,YES
+public,source_registry,11,metadata,jsonb,NO
+public,source_registry,12,created_at,timestamp with time zone,NO
+public,source_registry,13,updated_at,timestamp with time zone,NO
+public,source_vintages,1,vintage_id,bigint,NO
+public,source_vintages,2,source_id,text,NO
+public,source_vintages,3,provider_as_of,timestamp with time zone,YES
+public,source_vintages,4,retrieved_at,timestamp with time zone,NO
+public,source_vintages,5,content_sha256,text,NO
+public,source_vintages,6,content_type,text,YES
+public,source_vintages,7,byte_count,bigint,YES
+public,source_vintages,8,metadata,jsonb,NO
+public,system_metadata,1,key,text,NO
+public,system_metadata,2,value,text,NO
+public,system_metadata,3,updated_at,timestamp with time zone,NO
+public,usable_observations,1,series_id,text,YES
+public,usable_observations,2,observation_ts,timestamp with time zone,YES
+public,usable_observations,3,value,double precision,YES
+public,usable_observations,4,source,text,YES
+public,usable_observations,5,source_symbol,text,YES
+public,usable_observations,6,provider_as_of,timestamp with time zone,YES
+public,usable_observations,7,available_as_of,timestamp with time zone,YES
+public,usable_observations,8,first_seen_at,timestamp with time zone,YES
+public,usable_observations,9,retrieved_at,timestamp with time zone,YES
+public,usable_observations,10,frequency,text,YES
+public,usable_observations,11,unit,text,YES
+public,usable_observations,12,transform,text,YES
+public,usable_observations,13,quality_status,text,YES
+public,usable_observations,14,lineage_id,text,YES
+public,usable_observations,15,metadata,jsonb,YES
+public,xau_intraday_research_cache_1m,1,observation_ts,timestamp with time zone,NO
+public,xau_intraday_research_cache_1m,2,close,double precision,NO
+public,xau_intraday_research_cache_5m,1,observation_ts,timestamp with time zone,NO
+public,xau_intraday_research_cache_5m,2,close,double precision,NO
+public,xau_intraday_research_cache_batches,1,batch_id,bigint,NO
+public,xau_intraday_research_cache_batches,2,series_id,text,NO
+public,xau_intraday_research_cache_batches,3,interval,text,NO
+public,xau_intraday_research_cache_batches,4,requested_start,timestamp with time zone,NO
+public,xau_intraday_research_cache_batches,5,requested_end,timestamp with time zone,NO
+public,xau_intraday_research_cache_batches,6,first_ts,timestamp with time zone,YES
+public,xau_intraday_research_cache_batches,7,last_ts,timestamp with time zone,YES
+public,xau_intraday_research_cache_batches,8,retrieved_at,timestamp with time zone,NO
+public,xau_intraday_research_cache_batches,9,provider,text,NO
+public,xau_intraday_research_cache_batches,10,symbol,text,NO
+public,xau_intraday_research_cache_batches,11,evidence_class,text,NO
+public,xau_intraday_research_cache_batches,12,purpose,text,NO
+public,xau_intraday_research_cache_batches,13,row_count,integer,NO
+public,xau_intraday_research_cache_batches,14,inserted_count,integer,NO
+public,xau_intraday_research_cache_batches,15,payload_sha256,text,YES
+public,xau_intraday_research_cache_batches,16,code_sha,text,YES
+public,xau_intraday_research_cache_batches,17,status,text,NO
+public,xau_intraday_research_cache_batches,18,error,text,YES
+public,xau_intraday_research_cache_batches,19,metadata,jsonb,NO
