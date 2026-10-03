@@ -19,6 +19,7 @@ jobs:
       OUT_DIR: gold_h3_clean_prospective_bootstrap_out
       NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
       TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      STAK_LIVE_REF: 54fdf1c8d39b7b6c7b874d0f30f784296e886044
     steps:
       - uses: actions/checkout@v4
         with:
