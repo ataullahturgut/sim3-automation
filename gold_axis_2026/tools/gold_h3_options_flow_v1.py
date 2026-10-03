@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import io
 import json
 import math
@@ -127,11 +128,25 @@ def request_one(session: requests.Session, date: pd.Timestamp, porc: str):
             if "no data" in low or "not a valid" in low or "invalid date" in low:
                 return None, "NO_DATA"
             try:
-                df = pd.read_csv(io.StringIO(text))
+                rd = csv.reader(io.StringIO(text))
+                raw_rows = list(rd)
+                if not raw_rows:
+                    return None, "EMPTY_CSV"
+                expected = ["quantity", "underlying", "symbol", "actype", "porc", "exchange", "actdate"]
+                header = [str(x).strip().lower() for x in raw_rows[0][:7]]
+                if header != expected:
+                    return None, "SCHEMA_MISMATCH:" + "|".join(header)
+                clean_rows = []
+                for row in raw_rows[1:]:
+                    if not row:
+                        continue
+                    vals = list(row[:7])
+                    if len(vals) < 7:
+                        vals += [""] * (7 - len(vals))
+                    clean_rows.append(vals)
+                df = pd.DataFrame(clean_rows, columns=expected)
             except Exception as e:
                 return None, "PARSE_ERROR:" + repr(e)
-            if not {"quantity", "symbol", "actype", "porc", "actdate"}.issubset(df.columns):
-                return None, "SCHEMA_MISMATCH:" + "|".join(map(str, df.columns))
             df = df[df["symbol"].astype(str).str.upper().eq("GLD")].copy()
             if df.empty:
                 return None, "NO_GLD"
