@@ -4231,3 +4231,132 @@ Governance:
 Authority:
 - `GOLD_H3_RTE_V1_V4_CLOSURE_2026-10-03.md`
 - closure commit `7b62df90088f1add53c344ec604975056c9a3bae`.
+
+
+## 48. REVERSAL SUCCESSOR RESEARCH — RC-RTE, BPR-RTE, OAR, APT (2026-10-04)
+
+### 48.1 RC-RTE V1 — regime-conditional specialist permission
+
+Origin-observable state audit showed 2025 H2 had higher persistence and weaker momentum-opposing options pressure than 2025 H1.
+
+RC-RTE V1 compressed four custom state axes into K=3 unsupervised regimes and allowed the frozen SB/OPT/MAT reversal proposal union only in historically reversal-enabled regimes.
+
+Sequential blocks:
+- 2024 H2: net 0
+- 2025 H1: **+8**, precision 68.18%
+- 2025 H2: **-8**, precision 30.00%
+
+Pooled: 21 rescue / 21 broken / net 0.
+
+Status: `NO_ROBUST_RC_RTE_RULE`.
+
+### 48.2 RC-RTE V2 — shadow credibility
+
+A last-3 matured shadow-proposal credibility controller reduced but did not remove the regime failure.
+
+Sequential blocks:
+- 2024 H2: 0
+- 2025 H1: +8
+- 2025 H2: -5
+
+Pooled:
+- 16 rescue / 13 broken
+- net +3
+- precision 55.17%
+- pooled V5 accuracy 68.24% -> assisted 69.18%
+
+Status: `NO_ROBUST_RC_RTE_V2_RULE`.
+
+### 48.3 BPR-RTE — Bayes prior-shift correction
+
+Because the RTE logistic evidence model uses class_weight=balanced, a live matured reversal prior was used to correct the evidence score.
+
+This did not solve selectivity:
+- best development net remained negative / non-robust.
+
+Status: `NO_ROBUST_BPR_RTE_RULE`.
+
+### 48.4 Common H1→H2 state finding
+
+There is no generic calendar H2 continuation regime:
+- 2024 V5 eligible accuracy: H1 74.44%, H2 69.16%
+- 2025: H1 60.78%, H2 74.31%.
+
+The repeatable H1→H2 state shift is primarily options-pressure weakening:
+- signed_d_opt_pressure H2-H1 SMD: 2024 -0.202, 2025 -0.072
+- signed_opt_pressure: 2024 -0.033, 2025 -0.069.
+
+### 48.5 OAR-RTE — options against and rising
+
+Frozen rule:
+- pRTE >= q
+- pInst >=0.50
+- signed_opt_pressure >0
+- signed_d_opt_pressure >0.
+
+At q=.60:
+- 34 candidates
+- 22 rescue
+- 12 broken
+- **net +10**
+- precision **64.71%**
+- half-year nets **+2 / +2 / +8 / -2**.
+
+This was the strongest broad pre-2026 reversal mechanism but missed the robustness gate due the 2025 H2 -2 block.
+
+### 48.6 APT-RTE — asymmetric pressure transfer
+
+OAR false-alarm anatomy showed true rescues also tended to have fading GC futures participation:
+- rescue median GC dlog volume ≈ -0.037 vs broken +0.107
+- rescue median GC volume acceleration ≈ -0.100 vs broken +0.059.
+
+Frozen APT added:
+- gc_dlog_volume_1 <0
+- gc_volume_accel_5 <0.
+
+Pre-2026 2024-2025:
+- candidates 15
+- rescue 10
+- broken 5
+- net **+5**
+- precision **66.67%**
+- half-year nets +1 / +1 / +4 / -1.
+
+APT passed its preregistered robustness gate and therefore opened 2026 exactly once.
+
+### 48.7 2026 final holdout — APT failure
+
+Frozen 2026 result:
+- eligible V5-continuation origins 153
+- APT candidates 12
+- rescue 2
+- broken 10
+- net **-8**
+- precision **16.67%**
+- OPAL-no-candidate missed reversals hit 2/55.
+
+Whole clean 2026:
+- V5: **121/191 = 63.35%**
+- hypothetical APT-assisted: **113/191 = 59.16%**.
+
+APT is **NOT PROMOTED**.
+
+### 48.8 Governance consequence
+
+2026 Jan-Sep has now been opened as an independent holdout for APT.
+
+Any successor architecture designed after this point:
+- may use 2026 only as post-holdout diagnostic/development;
+- must **not** claim 2026 as independent validation.
+
+The next genuinely independent evaluation begins with the governed `CLEAN_H3_PROSPECTIVE_V1` stream from **2026-10-05** onward.
+
+Binding next architecture direction:
+- OOD/similarity gate around historically successful reversal states;
+- prospective shadow scoring;
+- self-validating trust activation;
+- V5 fail-safe when reversal trust is unproven.
+
+Primary authority:
+- `GOLD_H3_APT_RTE_HOLDOUT_CLOSURE_2026-10-04.md`
+- closure commit `0c1d45115346d3ee27fd5e13f5faf43c31d131e4`.
