@@ -3831,3 +3831,106 @@ Frozen files:
 - `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_VEGA_PANEL.csv`
 - `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_OPAL_PANEL.csv`.
 
+## 44. RECENT H3 MODEL FAMILY — FULL CLEAN SWEEP (2026-10-03)
+
+**Scope:** only the recent post-AURORA performance-improvement lineage. Older generic challenger families were intentionally excluded.
+
+Included:
+- AURORA
+- TWIN
+- PRISM
+- RIFT
+- TURN
+- VEGA
+- OPAL
+- HELIOS V1 hard/soft
+- HELIOS V2
+- HELIOS V3-GT
+- HELIOS V4-RGE
+- HELIOS V5-DCE.
+
+Workflow:
+- run **37120950441**
+- result **SUCCESS**
+- implementation commit **00c6c8520939afa63487f0b5be434b6559d78df7**
+- evidence commit **70218342986894cdbe972d7bb1fb7d3158dc9942**.
+
+### 44.1 TWIN and PRISM clean rerun
+
+Both were rerun from clean AURORA under their original frozen selection/confirmation contracts.
+
+TWIN:
+- SHAPE24: not eligible
+- SHAPE48: not eligible
+- SHAPE_MULTI: not eligible
+- clean status: **NO_ELIGIBLE_REP**.
+
+PRISM:
+- lambda 1: not eligible
+- lambda 10: not eligible
+- lambda 50: not eligible
+- clean status: **NO_ELIGIBLE_LAMBDA**.
+
+Therefore neither TWIN nor PRISM re-enters the promoted recent-model ranking after data cleaning.
+
+### 44.2 Clean 2026 ranking
+
+| Rank | Model | Accuracy | Balanced accuracy | Brier | Logloss |
+|---:|---|---:|---:|---:|---:|
+| 1 | **HELIOS V5-DCE** | **63.35%** | **63.76%** | **0.2425** | **0.6976** |
+| 2 | HELIOS V3-GT | 63.35% | 63.76% | 0.2455 | 0.7045 |
+| 3 | OPAL | 63.35% | 63.71% | 0.2467 | 0.7100 |
+| 4 | HELIOS V4-RGE | 62.30% | 62.71% | 0.2447 | 0.7029 |
+| 5 | HELIOS V2 | 60.73% | 61.16% | 0.2477 | 0.7089 |
+| 6 | HELIOS V1 hard | 60.73% | 61.16% | 0.2508 | 0.7158 |
+| 7 | HELIOS V1 soft | 60.73% | 61.16% | 0.2513 | 0.7169 |
+| 8 | RIFT | 59.16% | 59.57% | 0.2499 | 0.7130 |
+| 9 | VEGA | 59.16% | 59.47% | 0.2497 | 0.7118 |
+| 10 | AURORA | 58.64% | 59.02% | 0.2532 | 0.7207 |
+| 11 | TURN | 57.59% | 58.12% | 0.2568 | 0.7286 |
+
+V5, V3-GT and OPAL tie on directional accuracy at **63.35%**.
+V5 is preferred within this tie because it has the best probability quality:
+- V5 Brier **0.2425**
+- V3 Brier **0.2455**
+- OPAL Brier **0.2467**
+and the best logloss.
+
+### 44.3 Clean 2025-2026 ranking
+
+| Rank | Model | Accuracy | Balanced accuracy | Brier | Logloss |
+|---:|---|---:|---:|---:|---:|
+| 1 | **HELIOS V5-DCE** | **65.15%** | **64.24%** | **0.2322** | **0.6717** |
+| 2 | HELIOS V4-RGE | 64.46% | 63.57% | 0.2332 | 0.6741 |
+| 3 | HELIOS V3-GT | 64.24% | 63.17% | 0.2357 | 0.6788 |
+| 4 | OPAL | 64.24% | 62.98% | 0.2389 | 0.6883 |
+| 5 | HELIOS V2 | 63.78% | 62.85% | 0.2346 | 0.6767 |
+| 6 | HELIOS V1 hard | 63.78% | 62.85% | 0.2360 | 0.6798 |
+| 7 | HELIOS V1 soft | 63.78% | 62.85% | 0.2366 | 0.6811 |
+| 8 | RIFT | 62.41% | 61.61% | 0.2385 | 0.6850 |
+| 9 | VEGA | 61.96% | 61.39% | 0.2381 | 0.6836 |
+| 10 | AURORA | 61.96% | 61.15% | 0.2388 | 0.6856 |
+| 11 | TURN | 60.59% | 59.49% | 0.2454 | 0.7009 |
+
+### 44.4 Binding interpretation
+
+1. Cleaning the data does **not** uncover a superior TWIN or PRISM branch.
+2. The recent-model improvement hierarchy survives the integrity correction.
+3. 2026 directional accuracy has a three-way tie at **63.35%** among V5-DCE, V3-GT and raw OPAL.
+4. V5-DCE is the strongest recent clean retrospective architecture because:
+   - it ties for best 2026 accuracy,
+   - has materially better Brier/logloss than V3 and OPAL,
+   - and leads the combined clean 2025-2026 window at **65.15%**.
+5. V4-RGE remains the second-best cross-regime protected router on 2025-2026.
+6. AURORA remains the baseline architecture, not the best final recent model.
+7. No thresholds were retuned after cleaning.
+
+Evidence:
+- `GOLD_H3_RECENT_CLEAN_SWEEP_RESULT_2026-10-03.md`
+- `GOLD_H3_RECENT_CLEAN_SWEEP_SUMMARY_2026-10-03.json`
+- `GOLD_H3_RECENT_CLEAN_SWEEP_METRICS_2026-10-03.csv`
+- `GOLD_H3_RECENT_CLEAN_2026_RANKING_2026-10-03.csv`
+- `GOLD_H3_RECENT_CLEAN_2025_2026_RANKING_2026-10-03.csv`
+- `GOLD_H3_RECENT_CLEAN_TWIN_SELECTION_2026-10-03.csv`
+- `GOLD_H3_RECENT_CLEAN_PRISM_SELECTION_2026-10-03.csv`.
+
