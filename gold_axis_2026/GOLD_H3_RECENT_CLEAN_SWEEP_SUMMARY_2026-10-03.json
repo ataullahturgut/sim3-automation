@@ -1,0 +1,245 @@
+{
+  "schema": "GOLD_H3_RECENT_CLEAN_SWEEP_V1",
+  "scope": "AURORA and post-AURORA improvement lineage",
+  "hourly_bridge": {
+    "common_level_rows": 480,
+    "common_return_rows": 479,
+    "pearson": 0.9999999999999999,
+    "sign_agreement": 1.0,
+    "return_diff_sd": 0.0,
+    "pass": true
+  },
+  "api_calls": 11,
+  "twin": {
+    "status": "NO_ELIGIBLE_REP",
+    "selected": null
+  },
+  "prism": {
+    "status": "NO_ELIGIBLE_LAMBDA",
+    "selected_lambda": null
+  },
+  "ranking_2026": [
+    {
+      "rank": 1,
+      "model": "HELIOS_V5_DCE",
+      "period": "2026",
+      "n": 191,
+      "accuracy": 0.6335078534031413,
+      "balanced_accuracy": 0.6376373626373626,
+      "brier": 0.24247194833208305,
+      "logloss": 0.697558847911054
+    },
+    {
+      "rank": 2,
+      "model": "HELIOS_V3_GT",
+      "period": "2026",
+      "n": 191,
+      "accuracy": 0.6335078534031413,
+      "balanced_accuracy": 0.6376373626373626,
+      "brier": 0.24554772859334767,
+      "logloss": 0.7045399901829716
+    },
+    {
+      "rank": 3,
+      "model": "OPAL",
+      "period": "2026",
+      "n": 191,
+      "accuracy": 0.6335078534031413,
+      "balanced_accuracy": 0.6371428571428572,
+      "brier": 0.246674264655868,
+      "logloss": 0.7099778861374335
+    },
+    {
+      "rank": 4,
+      "model": "HELIOS_V4_RGE",
+      "period": "2026",
+      "n": 191,
+      "accuracy": 0.6230366492146597,
+      "balanced_accuracy": 0.6271428571428572,
+      "brier": 0.24469118633287468,
+      "logloss": 0.7028561617044855
+    },
+    {
+      "rank": 5,
+      "model": "HELIOS_V2",
+      "period": "2026",
+      "n": 191,
+      "accuracy": 0.6073298429319371,
+      "balanced_accuracy": 0.6116483516483517,
+      "brier": 0.24774331675361466,
+      "logloss": 0.7088511648239397
+    },
+    {
+      "rank": 6,
+      "model": "HELIOS_V1_HARD",
+      "period": "2026",
+      "n": 191,
+      "accuracy": 0.6073298429319371,
+      "balanced_accuracy": 0.6116483516483517,
+      "brier": 0.2508190970148792,
+      "logloss": 0.7158323070958572
+    },
+    {
+      "rank": 7,
+      "model": "HELIOS_V1_SOFT",
+      "period": "2026",
+      "n": 191,
+      "accuracy": 0.6073298429319371,
+      "balanced_accuracy": 0.6116483516483517,
+      "brier": 0.25134243532767375,
+      "logloss": 0.7169174265752868
+    },
+    {
+      "rank": 8,
+      "model": "RIFT",
+      "period": "2026",
+      "n": 191,
+      "accuracy": 0.5916230366492147,
+      "balanced_accuracy": 0.5956593406593407,
+      "brier": 0.24993755205176574,
+      "logloss": 0.7130294886492959
+    },
+    {
+      "rank": 9,
+      "model": "VEGA",
+      "period": "2026",
+      "n": 191,
+      "accuracy": 0.5916230366492147,
+      "balanced_accuracy": 0.5946703296703297,
+      "brier": 0.2496981657458712,
+      "logloss": 0.7118140055291422
+    },
+    {
+      "rank": 10,
+      "model": "AURORA",
+      "period": "2026",
+      "n": 191,
+      "accuracy": 0.5863874345549738,
+      "balanced_accuracy": 0.5901648351648352,
+      "brier": 0.2532221875608791,
+      "logloss": 0.720745701465418
+    },
+    {
+      "rank": 11,
+      "model": "TURN",
+      "period": "2026",
+      "n": 191,
+      "accuracy": 0.5759162303664922,
+      "balanced_accuracy": 0.5811538461538461,
+      "brier": 0.25684500486798667,
+      "logloss": 0.7286180883616301
+    }
+  ],
+  "ranking_2025_2026": [
+    {
+      "rank": 1,
+      "model": "HELIOS_V5_DCE",
+      "period": "2025-2026",
+      "n": 439,
+      "accuracy": 0.6514806378132119,
+      "balanced_accuracy": 0.6423522255317364,
+      "brier": 0.23222103172034464,
+      "logloss": 0.6717226964303249
+    },
+    {
+      "rank": 2,
+      "model": "HELIOS_V4_RGE",
+      "period": "2025-2026",
+      "n": 439,
+      "accuracy": 0.6446469248291572,
+      "balanced_accuracy": 0.6356819230607879,
+      "brier": 0.23323625327937175,
+      "logloss": 0.6741268182145759
+    },
+    {
+      "rank": 3,
+      "model": "HELIOS_V3_GT",
+      "period": "2025-2026",
+      "n": 439,
+      "accuracy": 0.642369020501139,
+      "balanced_accuracy": 0.6317279859042665,
+      "brier": 0.23565153809141107,
+      "logloss": 0.6788094095752123
+    },
+    {
+      "rank": 4,
+      "model": "OPAL",
+      "period": "2025-2026",
+      "n": 439,
+      "accuracy": 0.642369020501139,
+      "balanced_accuracy": 0.6298401644502245,
+      "brier": 0.23892343788408035,
+      "logloss": 0.6883176420438375
+    },
+    {
+      "rank": 5,
+      "model": "HELIOS_V2",
+      "period": "2025-2026",
+      "n": 439,
+      "accuracy": 0.6378132118451025,
+      "balanced_accuracy": 0.6285396652263289,
+      "brier": 0.23456417334853197,
+      "logloss": 0.6767351225330627
+    },
+    {
+      "rank": 6,
+      "model": "HELIOS_V1_HARD",
+      "period": "2025-2026",
+      "n": 439,
+      "accuracy": 0.6378132118451025,
+      "balanced_accuracy": 0.6285396652263289,
+      "brier": 0.23602184599264242,
+      "logloss": 0.6797689368519603
+    },
+    {
+      "rank": 7,
+      "model": "HELIOS_V1_SOFT",
+      "period": "2025-2026",
+      "n": 439,
+      "accuracy": 0.6378132118451025,
+      "balanced_accuracy": 0.6285396652263289,
+      "brier": 0.23662870773718378,
+      "logloss": 0.6810801802771641
+    },
+    {
+      "rank": 8,
+      "model": "RIFT",
+      "period": "2025-2026",
+      "n": 439,
+      "accuracy": 0.6241457858769932,
+      "balanced_accuracy": 0.6161429710114528,
+      "brier": 0.23850377937093353,
+      "logloss": 0.6850179681960427
+    },
+    {
+      "rank": 9,
+      "model": "VEGA",
+      "period": "2025-2026",
+      "n": 439,
+      "accuracy": 0.6195899772209568,
+      "balanced_accuracy": 0.6138985610605361,
+      "brier": 0.2380673691049982,
+      "logloss": 0.6836106854075097
+    },
+    {
+      "rank": 10,
+      "model": "AURORA",
+      "period": "2025-2026",
+      "n": 439,
+      "accuracy": 0.6195899772209568,
+      "balanced_accuracy": 0.6115387842429836,
+      "brier": 0.23875931409880422,
+      "logloss": 0.6855847974711895
+    },
+    {
+      "rank": 11,
+      "model": "TURN",
+      "period": "2025-2026",
+      "n": 439,
+      "accuracy": 0.6059225512528473,
+      "balanced_accuracy": 0.594894491756513,
+      "brier": 0.24543235096099855,
+      "logloss": 0.7008992396530431
+    }
+  ]
+}
