@@ -3654,3 +3654,103 @@ Evidence:
 - `GOLD_H3_DB_REVISION_SUMMARY_2026-10-03.csv`
 - `GOLD_H3_FROZEN_VS_NEON_MISMATCHES_2026-10-03.csv`.
 
+## 42. GOLD H3 DATA INTEGRITY GATE V1 — fail-closed prospective ingestion (2026-10-03)
+
+Authority:
+- `GOLD_H3_DATA_INTEGRITY_GATE_V1_AUTHORITY_2026-10-03.md`
+
+Implementation:
+- gate commit `9a3fbfa65fa39b8b52d25d9e43ac0c109cafda4f`
+- prospective integration commit `2a7f6e2becbc47afa99eb3d7d5cf180bfba125db`
+- integrity-ledger workflow commit `a47545b08d9e964844189829ce9f3f17a8bd8527`
+
+Historical replay:
+- workflow run **37118595672**
+- evidence commit **931dd19de6a094a96fcfb7e6a5bb42e987bf9866**
+- evaluated **446** retained daily rows
+- admitted **445**
+- quarantined **1**
+- only quarantine: **2026-02-27**.
+
+Stress-date replay:
+
+| Date | Decision | Gold move | Independent XAU | Meaning |
+|---|---|---:|---:|---|
+| 2026-01-30 | PASS_NORMAL | -8.30% | 4866.26 | real severe market move not falsely removed |
+| 2026-02-02 | PASS_NORMAL | -7.76% | 4660.07 | real severe market move not falsely removed |
+| 2026-02-27 | **QUARANTINE_XAU_SOURCE_DIVERGENCE** | **-38.72%** | **5278.64** | confirmed bad upstream row caught |
+| 2026-03-02 | PASS_NORMAL | +3.34% from previous accepted row | 5322.13 | artificial rebound disappears after quarantine |
+
+### Frozen integrity policy
+
+A row requires confirmation if:
+- at least 2 of Gold/Silver/Platinum/Palladium move by >=25% absolute log-return from the previous **accepted** retained row; or
+- any one metal moves by >=35%; or
+- optional robust discontinuity |z|>=12.
+
+For a triggered row:
+- independent XAU unavailable -> **QUARANTINE**
+- independent XAU level divergence >=5% -> **QUARANTINE**
+- divergence <=3% -> **PASS_SEVERE_XAU_CONFIRMED**
+- 3%-5% -> **QUARANTINE_AMBIGUOUS**.
+
+Normal rows pass without requiring a second-source match.
+
+### Fail-closed behavior
+
+A quarantined daily row:
+- is not appended to the admitted prospective price ledger;
+- cannot generate CORE3 features;
+- cannot issue an H3 forecast;
+- cannot settle an outstanding H3 target;
+- is retained in a separate integrity audit ledger.
+
+Prospective integrity ledger:
+- `GOLD_H3_AURORA_V1_PROSPECTIVE_DATA_INTEGRITY.csv`.
+
+The audit record includes:
+- date
+- source Stak ref
+- four metal values
+- decision/status
+- severe asset count
+- max absolute log-return
+- independent XAU
+- cross-source divergence
+- check timestamp.
+
+### Live prospective integration
+
+Workflow:
+- `gold-h3-aurora-prospective-v1.yml`
+
+Validation run:
+- **37118755744**
+- result **SUCCESS**
+- evidence commit **3d08dcf9ace9d3f5232f4bd5a33bb9d4f97174fd**
+
+Current live state at validation:
+- integrity gate **ACTIVE**
+- prospective forecast rows **0**
+- post-freeze daily-price rows **0**
+- integrity audit rows **0**
+- quarantine rows **0**.
+
+No new post-freeze common-metal Stak row was available on that validation run, so the live ledger remained empty. The gate is nevertheless active and will evaluate the next candidate row before admission.
+
+### Governance
+
+1. Integrity-gate thresholds are data-quality policy, not forecast-performance hyperparameters.
+2. They are frozen before forward use; any change requires a new gate version.
+3. Historical frozen evidence is not rewritten.
+4. A quarantined source row cannot be silently backfilled into a missed prospective forecast.
+5. The original AURORA prospective model identity remains unchanged; the gate protects **new data ingestion**.
+6. The separate clean retrospective chain in Section 40 remains the authoritative retrospective performance evidence.
+7. The pre-existing frozen AURORA expert matrix still represents the original V1 prospective freeze; replacing it with a clean-history matrix would require a separately named clean prospective freeze/version rather than an in-place edit.
+
+Evidence:
+- `GOLD_H3_DATA_INTEGRITY_GATE_V1_REPLAY_RESULT_2026-10-03.md`
+- `GOLD_H3_DATA_INTEGRITY_GATE_V1_REPLAY_SUMMARY_2026-10-03.json`
+- `GOLD_H3_DATA_INTEGRITY_GATE_V1_REPLAY_QUARANTINES_2026-10-03.csv`
+- `GOLD_H3_AURORA_V1_PROSPECTIVE_DATA_INTEGRITY.csv`.
+
