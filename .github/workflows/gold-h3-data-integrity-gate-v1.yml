@@ -1,0 +1,45 @@
+name: Gold H3 Data Integrity Gate V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_data_integrity_gate_v1.py'
+      - 'gold_axis_2026/tools/gold_h3_data_integrity_gate_replay_v1.py'
+      - 'gold_axis_2026/GOLD_H3_DATA_INTEGRITY_GATE_V1_AUTHORITY_2026-10-03.md'
+      - '.github/workflows/gold-h3-data-integrity-gate-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      OUT_DIR: gold_h3_integrity_gate_test_out
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4'
+      - run: python gold_axis_2026/tools/gold_h3_data_integrity_gate_replay_v1.py
+      - name: Commit replay evidence
+        run: |
+          cp "$OUT_DIR/INTEGRITY_GATE_REPLAY_RESULT.md" gold_axis_2026/GOLD_H3_DATA_INTEGRITY_GATE_V1_REPLAY_RESULT_2026-10-03.md
+          cp "$OUT_DIR/integrity_gate_replay_summary.json" gold_axis_2026/GOLD_H3_DATA_INTEGRITY_GATE_V1_REPLAY_SUMMARY_2026-10-03.json
+          cp "$OUT_DIR/integrity_gate_quarantines.csv" gold_axis_2026/GOLD_H3_DATA_INTEGRITY_GATE_V1_REPLAY_QUARANTINES_2026-10-03.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_DATA_INTEGRITY_GATE_V1_REPLAY_*_2026-10-03.*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record H3 data integrity gate replay"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
