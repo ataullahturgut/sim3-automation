@@ -1,0 +1,18 @@
+{
+  "schema": "GOLD_H3_DAILY_AVERAGE_SEMANTIC_AUDIT_V1",
+  "hourly_rows": 6527,
+  "daily_overlap_n": 193,
+  "median_stak_to_twelve_mean_ratio": 1.0001177994639856,
+  "dev_ge_1pct_n": 1,
+  "dev_ge_2pct_n": 0,
+  "dev_ge_3pct_n": 0,
+  "dev_ge_5pct_n": 0,
+  "max_dev_pct": 1.0545633061592725,
+  "max_dev_date": "2026-02-18",
+  "outside_intraday_range_n": 1,
+  "target_overlap_n": 190,
+  "target_direction_disagree_n": 8,
+  "target_direction_disagree_pct": 4.2105263157894735,
+  "target_disagree_both_ge_0_5_n": 2,
+  "target_disagree_both_ge_1_n": 0
+}

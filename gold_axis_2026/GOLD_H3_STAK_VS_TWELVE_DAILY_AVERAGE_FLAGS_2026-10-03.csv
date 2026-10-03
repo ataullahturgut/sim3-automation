@@ -1,0 +1,2 @@
+date,gold,silver,platinum,palladium,gold_original,gold_clean,twelve_hourly_mean,hour_n,twelve_min,twelve_max,log_ratio_original,log_ratio_clean,dev_clean,dev_original,inside_twelve_intraday_range_clean
+2026-04-03,4676.71,73.01,1987.84,1505.54,4676.71,4676.71,4676.453089166666,24,4676.22859,4676.63,5.493560434032396e-05,5.493560434032396e-05,6.285494637834115e-05,6.285494637834115e-05,False
