@@ -18,6 +18,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
 import gold_h3_iris_v1 as iris
+from gold_h3_data_integrity_gate_v1 import evaluate_row, decision_dict
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = Path(os.environ.get("OUT_DIR", "gold_h3_aurora_prospective_out"))
@@ -38,6 +39,7 @@ FROZEN_MATRIX_FILE = ROOT / "gold_axis_2026" / "GOLD_H3_AURORA_V1_FROZEN_EXPERT_
 PRICE_LEDGER_FILE = ROOT / "gold_axis_2026" / "GOLD_H3_AURORA_V1_PROSPECTIVE_DAILY_PRICES.csv"
 FORECAST_LEDGER_FILE = ROOT / "gold_axis_2026" / "GOLD_H3_AURORA_V1_PROSPECTIVE_LEDGER.csv"
 MISS_LEDGER_FILE = ROOT / "gold_axis_2026" / "GOLD_H3_AURORA_V1_PROSPECTIVE_MISSES.csv"
+INTEGRITY_LEDGER_FILE = ROOT / "gold_axis_2026" / "GOLD_H3_AURORA_V1_PROSPECTIVE_DATA_INTEGRITY.csv"
 
 NOVA_FILE = ROOT / "gold_axis_2026" / "GOLD_H3_NOVA_V1_PREDICTIONS_2026-10-02.csv"
 SENTRY_FILE = ROOT / "gold_axis_2026" / "GOLD_H3_SENTRY_V1_PREDICTIONS_2026-10-02.csv"
@@ -84,6 +86,13 @@ PRICE_LEDGER_COLS = [
 MISS_COLS = [
     "feature_cutoff_date", "planned_forecast_issue_date", "deadline_utc",
     "recorded_at_utc", "reason",
+]
+INTEGRITY_COLS = [
+    "date", "checked_at_utc", "source_stak_ref",
+    "gold", "silver", "platinum", "palladium",
+    "integrity_status", "integrity_admit", "integrity_reason",
+    "severe_asset_n", "max_abs_logret", "gold_logret",
+    "independent_xau", "xau_level_divergence", "independent_available",
 ]
 
 
@@ -172,8 +181,44 @@ def read_price_ledger():
     return pd.DataFrame(columns=PRICE_LEDGER_COLS)
 
 
+def read_integrity_ledger():
+    if not INTEGRITY_LEDGER_FILE.exists():
+        return pd.DataFrame(columns=INTEGRITY_COLS)
+    x = pd.read_csv(INTEGRITY_LEDGER_FILE)
+    if len(x):
+        x["date"] = pd.to_datetime(x["date"])
+    return x
+
+
+def independent_xau_map(candidate_dates, ts):
+    if not candidate_dates:
+        return {}
+    start = min(candidate_dates) - pd.Timedelta(days=1)
+    end = max(candidate_dates) + pd.Timedelta(days=1)
+    try:
+        h = fetch_recent_hourly(
+            pd.Timestamp(start).strftime("%Y-%m-%d 00:00:00"),
+            pd.Timestamp(end).strftime("%Y-%m-%d 23:59:59"),
+        )
+    except Exception:
+        return {}
+    if h.empty:
+        return {}
+    local = h.copy()
+    local["local_ts"] = local.ts.dt.tz_convert(NY)
+    local["date"] = local.local_ts.dt.tz_localize(None).dt.normalize()
+    # Prefer the completed 16:00 NY bar; this is the independent daily anchor
+    # already used by the H3 structural layer.
+    q = local[local.local_ts.dt.hour == 16].copy()
+    if q.empty:
+        return {}
+    q = q.sort_values("local_ts").drop_duplicates("date", keep="last")
+    return dict(zip(q.date, q.value.astype(float)))
+
+
 def refresh_price_ledger(frozen, ts):
     existing = read_price_ledger()
+    integrity = read_integrity_ledger()
     current_year = int(ts.tz_convert(NY).year)
     start_year = int(FROZEN_PRICE_END.year)
     live = load_common_prices(
@@ -185,20 +230,74 @@ def refresh_price_ledger(frozen, ts):
     )
 
     have = set(pd.to_datetime(existing["date"]).dt.normalize()) if len(existing) else set()
+    candidate = live[~live.date.isin(have)].copy() if len(live) else live.copy()
+
+    base_extra = existing[["date", "gold", "silver", "platinum", "palladium"]].copy() if len(existing) else pd.DataFrame()
+    accepted = pd.concat([frozen, base_extra], ignore_index=True)
+    accepted["date"] = pd.to_datetime(accepted["date"])
+    accepted = accepted.sort_values("date").drop_duplicates("date", keep="first").reset_index(drop=True)
+
+    ind = independent_xau_map(list(pd.to_datetime(candidate.date)), ts) if len(candidate) else {}
     add = []
-    for r in live.itertuples():
+    new_audit = []
+
+    for r in candidate.sort_values("date").itertuples():
         d = pd.Timestamp(r.date).normalize()
-        if d in have:
+        prev = accepted[accepted.date < d].tail(1)
+        if prev.empty:
+            # No usable continuity anchor means fail closed rather than silently
+            # accepting an uncheckable new row.
+            rec = {
+                "date": d, "checked_at_utc": ts.isoformat(), "source_stak_ref": LIVE_STAK_REF,
+                "gold": float(r.gold), "silver": float(r.silver),
+                "platinum": float(r.platinum), "palladium": float(r.palladium),
+                "integrity_status": "QUARANTINE_NO_PREVIOUS_ACCEPTED_ROW",
+                "integrity_admit": False,
+                "integrity_reason": "no previous accepted retained row available",
+                "severe_asset_n": np.nan, "max_abs_logret": np.nan, "gold_logret": np.nan,
+                "independent_xau": ind.get(d), "xau_level_divergence": np.nan,
+                "independent_available": bool(d in ind),
+            }
+            new_audit.append(rec)
             continue
-        add.append({
-            "date": d,
-            "gold": float(r.gold),
-            "silver": float(r.silver),
-            "platinum": float(r.platinum),
-            "palladium": float(r.palladium),
-            "first_seen_stak_ref": LIVE_STAK_REF,
-            "first_seen_at_utc": ts.isoformat(),
-        })
+
+        cur = {
+            "date": d, "gold": float(r.gold), "silver": float(r.silver),
+            "platinum": float(r.platinum), "palladium": float(r.palladium),
+        }
+        prv = prev.iloc[0].to_dict()
+        dec = evaluate_row(cur, prv, independent_xau=ind.get(d))
+        rec = {
+            **cur, "checked_at_utc": ts.isoformat(), "source_stak_ref": LIVE_STAK_REF,
+            **decision_dict(dec),
+        }
+
+        # Avoid writing identical repeated quarantine checks for the same source ref.
+        append_audit = True
+        if len(integrity):
+            z = integrity[integrity.date == d].tail(1)
+            if len(z):
+                last = z.iloc[0]
+                if (
+                    str(last.get("source_stak_ref", "")) == LIVE_STAK_REF
+                    and str(last.get("integrity_status", "")) == str(rec["integrity_status"])
+                ):
+                    append_audit = False
+        if append_audit:
+            new_audit.append(rec)
+
+        if dec.admit:
+            add.append({
+                "date": d,
+                "gold": float(r.gold),
+                "silver": float(r.silver),
+                "platinum": float(r.platinum),
+                "palladium": float(r.palladium),
+                "first_seen_stak_ref": LIVE_STAK_REF,
+                "first_seen_at_utc": ts.isoformat(),
+            })
+            accepted = pd.concat([accepted, pd.DataFrame([cur])], ignore_index=True)
+            accepted = accepted.sort_values("date").drop_duplicates("date", keep="first").reset_index(drop=True)
 
     if add:
         existing = pd.concat([existing, pd.DataFrame(add)], ignore_index=True)
@@ -207,12 +306,20 @@ def refresh_price_ledger(frozen, ts):
         existing = existing.sort_values("date").drop_duplicates("date", keep="first").reset_index(drop=True)
     existing.to_csv(OUT / PRICE_LEDGER_FILE.name, index=False)
 
+    if new_audit:
+        integrity = pd.concat([integrity, pd.DataFrame(new_audit)], ignore_index=True)
+    if len(integrity):
+        integrity["date"] = pd.to_datetime(integrity["date"])
+        integrity = integrity.sort_values(["date", "checked_at_utc"]).reset_index(drop=True)
+    integrity.to_csv(OUT / INTEGRITY_LEDGER_FILE.name, index=False, columns=INTEGRITY_COLS)
+
     extra = existing[["date", "gold", "silver", "platinum", "palladium"]].copy() if len(existing) else pd.DataFrame()
     combined = pd.concat([frozen, extra], ignore_index=True)
     combined["date"] = pd.to_datetime(combined["date"])
     combined = combined.sort_values("date").drop_duplicates("date", keep="first").reset_index(drop=True)
-    return combined, existing, len(add)
 
+    quarantine_now = int(sum(not bool(x.get("integrity_admit", False)) for x in new_audit))
+    return combined, existing, len(add), integrity, quarantine_now
 
 def build_daily_panel(prices):
     df = prices.copy().sort_values("date").reset_index(drop=True)
@@ -684,7 +791,7 @@ def prospective_metrics(ledger):
     return out
 
 
-def write_status(ts, ledger, misses, price_ledger, audit, changes):
+def write_status(ts, ledger, misses, price_ledger, integrity_ledger, audit, changes):
     m = prospective_metrics(ledger)
     pending = int((ledger.settlement_status != "SETTLED").sum()) if len(ledger) else 0
     latest = None
@@ -708,6 +815,9 @@ def write_status(ts, ledger, misses, price_ledger, audit, changes):
         "pending_rows": pending,
         "missed_origins": int(len(misses)),
         "postfreeze_daily_price_rows": int(len(price_ledger)),
+        "integrity_gate_version": "GOLD_H3_DATA_INTEGRITY_GATE_V1",
+        "integrity_audit_rows": int(len(integrity_ledger)),
+        "integrity_quarantine_rows": int((integrity_ledger.integrity_admit.astype(str).str.lower() == "false").sum()) if len(integrity_ledger) else 0,
         "metrics": m,
         "latest_forecast": latest,
         "this_run_changes": changes,
@@ -722,7 +832,9 @@ def write_status(ts, ledger, misses, price_ledger, audit, changes):
         f"**Settled:** **{m.get('n',0)}**  ",
         f"**Pending:** **{pending}**  ",
         f"**Missed origins:** **{len(misses)}**  ",
-        f"**Frozen September reproduction:** **{'PASS' if audit.get('pass') else 'FAIL'}**", "",
+        f"**Frozen September reproduction:** **{'PASS' if audit.get('pass') else 'FAIL'}**",
+        f"**Data integrity gate:** **GOLD_H3_DATA_INTEGRITY_GATE_V1**",
+        f"**Integrity quarantines:** **{int((integrity_ledger.integrity_admit.astype(str).str.lower() == 'false').sum()) if len(integrity_ledger) else 0}**", "",
     ]
     if m.get("n", 0):
         bal_text = "NA" if m["balanced_accuracy"] is None else f"{100*m['balanced_accuracy']:.2f}%"
@@ -759,7 +871,7 @@ def main():
     ts = now_utc()
 
     frozen_prices, built_prices = load_or_build_frozen_prices()
-    daily_prices, price_ledger, price_added = refresh_price_ledger(frozen_prices, ts)
+    daily_prices, price_ledger, price_added, integrity_ledger, quarantined_now = refresh_price_ledger(frozen_prices, ts)
     daily = build_daily_panel(daily_prices)
 
     frozen_matrix, built_matrix, audit = load_or_build_frozen_matrix()
@@ -877,10 +989,11 @@ def main():
         "built_frozen_price_snapshot": built_prices,
         "built_frozen_expert_matrix": built_matrix,
         "new_price_rows": int(price_added),
+        "integrity_quarantined_now": int(quarantined_now),
         "new_forecasts": int(issued_now),
         "new_settlements": int(settled_now),
     }
-    summary = write_status(ts, ledger, misses, price_ledger, audit, changes)
+    summary = write_status(ts, ledger, misses, price_ledger, integrity_ledger, audit, changes)
     print("AURORA_PROSPECTIVE=" + json.dumps(summary, separators=(",", ":"), default=str))
     print((OUT / "AURORA_PROSPECTIVE_STATUS.md").read_text())
 
