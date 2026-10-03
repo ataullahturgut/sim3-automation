@@ -1,0 +1,2826 @@
+{
+  "host": "ftp.cmegroup.com",
+  "dir": "/daily_volume",
+  "listing_sample": [
+    "daily_volume.xlsx",
+    "daily_volume_.xlsx",
+    "daily_volume_20140102.xlsx",
+    "daily_volume_20140103.xlsx",
+    "daily_volume_20140106.xlsx",
+    "daily_volume_20140107.xlsx",
+    "daily_volume_20140108.xlsx",
+    "daily_volume_20140109.xlsx",
+    "daily_volume_20140110.xlsx",
+    "daily_volume_20140113.xlsx",
+    "daily_volume_20140114.xlsx",
+    "daily_volume_20140115.xlsx",
+    "daily_volume_20140116.xlsx",
+    "daily_volume_20140117.xlsx",
+    "daily_volume_20140121.xlsx",
+    "daily_volume_20140122.xlsx",
+    "daily_volume_20140123.xlsx",
+    "daily_volume_20140124.xlsx",
+    "daily_volume_20140127.xlsx",
+    "daily_volume_20140128.xlsx",
+    "daily_volume_20140129.xlsx",
+    "daily_volume_20140130.xlsx",
+    "daily_volume_20140131.xlsx",
+    "daily_volume_20140203.xlsx",
+    "daily_volume_20140204.xlsx",
+    "daily_volume_20140205.xlsx",
+    "daily_volume_20140206.xlsx",
+    "daily_volume_20140207.xlsx",
+    "daily_volume_20140210.xlsx",
+    "daily_volume_20140211.xlsx",
+    "daily_volume_20140212.xlsx",
+    "daily_volume_20140213.xlsx",
+    "daily_volume_20140214.xlsx",
+    "daily_volume_20140218.xlsx",
+    "daily_volume_20140219.xlsx",
+    "daily_volume_20140220.xlsx",
+    "daily_volume_20140221.xlsx",
+    "daily_volume_20140224.xlsx",
+    "daily_volume_20140225.xlsx",
+    "daily_volume_20140226.xlsx",
+    "daily_volume_20140227.xlsx",
+    "daily_volume_20140228.xlsx",
+    "daily_volume_20140303.xlsx",
+    "daily_volume_20140304.xlsx",
+    "daily_volume_20140305.xlsx",
+    "daily_volume_20140306.xlsx",
+    "daily_volume_20140307.xlsx",
+    "daily_volume_20140310.xlsx",
+    "daily_volume_20140311.xlsx",
+    "daily_volume_20140312.xlsx"
+  ],
+  "files": [
+    {
+      "date": "20230103",
+      "filename": "daily_volume_20230103.xlsx",
+      "exists": true,
+      "bytes": 69911,
+      "sheets": [
+        "CME Group Volume and OI ",
+        "CME Group Vol and OI by Product"
+      ],
+      "oi_hits": [
+        {
+          "sheet": "CME Group Volume and OI ",
+          "row": 3,
+          "values": [
+            "Description",
+            "CME\u00ae Globex\u00ae Volume",
+            "Pit Volume",
+            "ExPit Volume",
+            "OTC Volume",
+            "Total Volume",
+            "MTD ADV",
+            "Open Interest \u2461",
+            ""
+          ]
+        },
+        {
+          "sheet": "CME Group Volume and OI ",
+          "row": 14,
+          "values": [
+            "Description",
+            "CME\u00ae Globex\u00ae Volume",
+            "Pit Volume",
+            "ExPit Volume",
+            "OTC Volume",
+            "Total Volume",
+            "MTD ADV",
+            "Open Interest \u2461",
+            ""
+          ]
+        },
+        {
+          "sheet": "CME Group Volume and OI ",
+          "row": 24,
+          "values": [
+            "Description",
+            "CME\u00ae Globex\u00ae Volume",
+            "Pit Volume",
+            "ExPit Volume",
+            "OTC Volume",
+            "Total Volume",
+            "MTD ADV",
+            "Open Interest \u2461",
+            ""
+          ]
+        },
+        {
+          "sheet": "CME Group Volume and OI ",
+          "row": 35,
+          "values": [
+            "2) Please note that the open interest in this report is preliminary open interest which is released at the end of each trading day. CME Group releases official data in the Daily Bulletin the following morning. Preliminary open interest may be different from the open interest in the final report.",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 3,
+          "values": [
+            "Description",
+            "Exchange Name",
+            "Commodity Indicator",
+            "Product Description",
+            "Future/Option Indicator",
+            "CME\u00ae Globex\u00ae Volume",
+            "Pit Volume",
+            "ExPit Volume",
+            "OTC Volume",
+            "Total Volume",
+            "MTD ADV",
+            "Open Interest \u2461"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1043,
+          "values": [
+            "2) Please note that the open interest in this report is preliminary open interest which is released at the end of each trading day. CME Group releases official data in the Daily Bulletin the following morning. Preliminary open interest may be different from the open interest in the final report.",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "gold_hits": [
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 810,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "GC",
+            "GOLD FUTURES",
+            "F",
+            "226215",
+            "0",
+            "0",
+            "2197",
+            "228412",
+            "228412",
+            "450073"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 813,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "MGC",
+            "MICRO GOLD FUTURES",
+            "F",
+            "64117",
+            "0",
+            "0",
+            "0",
+            "64117",
+            "64117",
+            "20183"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 815,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG",
+            "GOLD CALL",
+            "O",
+            "22088",
+            "0",
+            "0",
+            "1306",
+            "23394",
+            "23394",
+            "396313"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 816,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG",
+            "GOLD PUT",
+            "O",
+            "21166",
+            "0",
+            "0",
+            "200",
+            "21366",
+            "21366",
+            "190596"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 820,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG1",
+            "Gold Weekly Option",
+            "O",
+            "5365",
+            "0",
+            "0",
+            "0",
+            "5365",
+            "5365",
+            "12481"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 821,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG2",
+            "Gold Weekly Option",
+            "O",
+            "4956",
+            "0",
+            "0",
+            "400",
+            "5356",
+            "5356",
+            "5854"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 825,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "QO",
+            "COMEX MINY GOLD FUTURES",
+            "F",
+            "2548",
+            "0",
+            "0",
+            "0",
+            "2548",
+            "2548",
+            "1200"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 827,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK1 CALL",
+            "O",
+            "1698",
+            "0",
+            "0",
+            "0",
+            "1698",
+            "1698",
+            "2140"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 829,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK1 PUT",
+            "O",
+            "986",
+            "0",
+            "0",
+            "0",
+            "986",
+            "986",
+            "3746"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 833,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG3",
+            "Gold Weekly Option",
+            "O",
+            "378",
+            "0",
+            "0",
+            "200",
+            "578",
+            "578",
+            "998"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 835,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2M",
+            "GOLD WEEKLY MONDAY OPTION WEEK2 CALL",
+            "O",
+            "479",
+            "0",
+            "0",
+            "0",
+            "479",
+            "479",
+            "1646"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 838,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2M",
+            "GOLD WEEKLY MONDAY OPTION WEEK2 PUT",
+            "O",
+            "321",
+            "0",
+            "0",
+            "0",
+            "321",
+            "321",
+            "1132"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 839,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK2 PUT",
+            "O",
+            "254",
+            "0",
+            "0",
+            "0",
+            "254",
+            "254",
+            "542"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 841,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G5M",
+            "GOLD WEEKLY MONDAY OPTION WEEK5 PUT",
+            "O",
+            "186",
+            "0",
+            "0",
+            "0",
+            "186",
+            "186",
+            "832"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 845,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG4",
+            "Gold Weekly Option",
+            "O",
+            "154",
+            "0",
+            "0",
+            "0",
+            "154",
+            "154",
+            "154"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 850,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G3W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK3 CALL",
+            "O",
+            "125",
+            "0",
+            "0",
+            "0",
+            "125",
+            "125",
+            "133"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 851,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G3W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK3 PUT",
+            "O",
+            "119",
+            "0",
+            "0",
+            "0",
+            "119",
+            "119",
+            "152"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 852,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK2 CALL",
+            "O",
+            "104",
+            "0",
+            "0",
+            "0",
+            "104",
+            "104",
+            "394"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 855,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECGC",
+            "EVENT CONTRACT GOLD P",
+            "O",
+            "66",
+            "0",
+            "0",
+            "0",
+            "66",
+            "66",
+            "0"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 858,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G4M",
+            "GOLD WEEKLY MONDAY OPTION WEEK4 PUT",
+            "O",
+            "60",
+            "0",
+            "0",
+            "0",
+            "60",
+            "60",
+            "631"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 859,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1M",
+            "GOLD WEEKLY MONDAY OPTION WEEK1 PUT",
+            "O",
+            "56",
+            "0",
+            "0",
+            "0",
+            "56",
+            "56",
+            "178"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 861,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G4M",
+            "GOLD WEEKLY MONDAY OPTION WEEK4 CALL",
+            "O",
+            "50",
+            "0",
+            "0",
+            "0",
+            "50",
+            "50",
+            "550"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 862,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G5M",
+            "GOLD WEEKLY MONDAY OPTION WEEK5 CALL",
+            "O",
+            "48",
+            "0",
+            "0",
+            "0",
+            "48",
+            "48",
+            "320"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 865,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1M",
+            "GOLD WEEKLY MONDAY OPTION WEEK1 CALL",
+            "O",
+            "30",
+            "0",
+            "0",
+            "0",
+            "30",
+            "30",
+            "183"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 868,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G4W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK4 PUT",
+            "O",
+            "21",
+            "0",
+            "0",
+            "0",
+            "21",
+            "21",
+            "26"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 878,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECGC",
+            "EVENT CONTRACT GOLD C",
+            "O",
+            "11",
+            "0",
+            "0",
+            "0",
+            "11",
+            "11",
+            "0"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 896,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G4W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK4 CALL",
+            "O",
+            "1",
+            "0",
+            "0",
+            "0",
+            "1",
+            "1",
+            "3"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 912,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG5",
+            "Gold Weekly Option",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 913,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "SGC",
+            "SHANGHAI GOLD (CNH) FUTURES",
+            "F",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "361"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 914,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "SGU",
+            "SHANGHAI GOLD (USD) FUTURES",
+            "F",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "358"
+          ]
+        }
+      ]
+    },
+    {
+      "date": "20240102",
+      "filename": "daily_volume_20240102.xlsx",
+      "exists": true,
+      "bytes": 76551,
+      "sheets": [
+        "CME Group Volume and OI ",
+        "CME Group Vol and OI by Product"
+      ],
+      "oi_hits": [
+        {
+          "sheet": "CME Group Volume and OI ",
+          "row": 3,
+          "values": [
+            "Description",
+            "CME\u00ae Globex\u00ae Volume",
+            "Pit Volume",
+            "ExPit Volume",
+            "OTC Volume",
+            "Total Volume",
+            "MTD ADV",
+            "Open Interest \u2461",
+            ""
+          ]
+        },
+        {
+          "sheet": "CME Group Volume and OI ",
+          "row": 14,
+          "values": [
+            "Description",
+            "CME\u00ae Globex\u00ae Volume",
+            "Pit Volume",
+            "ExPit Volume",
+            "OTC Volume",
+            "Total Volume",
+            "MTD ADV",
+            "Open Interest \u2461",
+            ""
+          ]
+        },
+        {
+          "sheet": "CME Group Volume and OI ",
+          "row": 24,
+          "values": [
+            "Description",
+            "CME\u00ae Globex\u00ae Volume",
+            "Pit Volume",
+            "ExPit Volume",
+            "OTC Volume",
+            "Total Volume",
+            "MTD ADV",
+            "Open Interest \u2461",
+            ""
+          ]
+        },
+        {
+          "sheet": "CME Group Volume and OI ",
+          "row": 35,
+          "values": [
+            "2) Please note that the open interest in this report is preliminary open interest which is released at the end of each trading day. CME Group releases official data in the Daily Bulletin the following morning. Preliminary open interest may be different from the open interest in the final report.",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 3,
+          "values": [
+            "Description",
+            "Exchange Name",
+            "Commodity Indicator",
+            "Product Description",
+            "Future/Option Indicator",
+            "CME\u00ae Globex\u00ae Volume",
+            "Pit Volume",
+            "ExPit Volume",
+            "OTC Volume",
+            "Total Volume",
+            "MTD ADV",
+            "Open Interest \u2461"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1158,
+          "values": [
+            "2) Please note that the open interest in this report is preliminary open interest which is released at the end of each trading day. CME Group releases official data in the Daily Bulletin the following morning. Preliminary open interest may be different from the open interest in the final report.",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "gold_hits": [
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 898,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "GC",
+            "GOLD FUTURES",
+            "F",
+            "168279",
+            "0",
+            "0",
+            "5654",
+            "173933",
+            "173933",
+            "500682"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 900,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "MGC",
+            "MICRO GOLD FUTURES",
+            "F",
+            "62318",
+            "0",
+            "0",
+            "0",
+            "62318",
+            "62318",
+            "33418"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 902,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG",
+            "GOLD CALL",
+            "O",
+            "20071",
+            "0",
+            "0",
+            "3894",
+            "23965",
+            "23965",
+            "520755"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 904,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG",
+            "GOLD PUT",
+            "O",
+            "17020",
+            "0",
+            "0",
+            "2300",
+            "19320",
+            "19320",
+            "241521"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 909,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG1",
+            "Gold Weekly Option",
+            "O",
+            "4256",
+            "0",
+            "0",
+            "0",
+            "4256",
+            "4256",
+            "11205"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 913,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG2",
+            "Gold Weekly Option",
+            "O",
+            "1686",
+            "0",
+            "0",
+            "0",
+            "1686",
+            "1686",
+            "4649"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 916,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK1 PUT",
+            "O",
+            "1111",
+            "0",
+            "0",
+            "100",
+            "1211",
+            "1211",
+            "7223"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 917,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK1 CALL",
+            "O",
+            "994",
+            "0",
+            "0",
+            "0",
+            "994",
+            "994",
+            "2954"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 918,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "SGC",
+            "SHANGHAI GOLD (CNH) FUTURES",
+            "F",
+            "871",
+            "0",
+            "0",
+            "0",
+            "871",
+            "871",
+            "280"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 919,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "QO",
+            "COMEX MINY GOLD FUTURES",
+            "F",
+            "818",
+            "0",
+            "0",
+            "0",
+            "818",
+            "818",
+            "1239"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 920,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG3",
+            "Gold Weekly Option",
+            "O",
+            "607",
+            "0",
+            "0",
+            "126",
+            "733",
+            "733",
+            "965"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 922,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G3W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK3 CALL",
+            "O",
+            "363",
+            "0",
+            "0",
+            "0",
+            "363",
+            "363",
+            "618"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 926,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK2 PUT",
+            "O",
+            "130",
+            "0",
+            "0",
+            "150",
+            "280",
+            "280",
+            "718"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 927,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G4W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK4 PUT",
+            "O",
+            "274",
+            "0",
+            "0",
+            "0",
+            "274",
+            "274",
+            "287"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 929,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "SGU",
+            "SHANGHAI GOLD (USD) FUTURES",
+            "F",
+            "249",
+            "0",
+            "0",
+            "0",
+            "249",
+            "249",
+            "447"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 932,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2M",
+            "GOLD WEEKLY MONDAY OPTION WEEK2 PUT",
+            "O",
+            "225",
+            "0",
+            "0",
+            "0",
+            "225",
+            "225",
+            "2218"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 934,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2M",
+            "GOLD WEEKLY MONDAY OPTION WEEK2 CALL",
+            "O",
+            "194",
+            "0",
+            "0",
+            "0",
+            "194",
+            "194",
+            "2565"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 936,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G3W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK3 PUT",
+            "O",
+            "182",
+            "0",
+            "0",
+            "0",
+            "182",
+            "182",
+            "574"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 938,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1M",
+            "GOLD WEEKLY MONDAY OPTION WEEK1 PUT",
+            "O",
+            "136",
+            "0",
+            "0",
+            "0",
+            "136",
+            "136",
+            "454"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 939,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECGC",
+            "EVENT CONTRACT GOLD C",
+            "O",
+            "134",
+            "0",
+            "0",
+            "0",
+            "134",
+            "134",
+            "0"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 942,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECGC",
+            "EVENT CONTRACT GOLD P",
+            "O",
+            "132",
+            "0",
+            "0",
+            "0",
+            "132",
+            "132",
+            "0"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 944,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G4M",
+            "GOLD WEEKLY MONDAY OPTION WEEK4 CALL",
+            "O",
+            "116",
+            "0",
+            "0",
+            "0",
+            "116",
+            "116",
+            "1136"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 945,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK2 CALL",
+            "O",
+            "101",
+            "0",
+            "0",
+            "0",
+            "101",
+            "101",
+            "1022"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 946,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG4",
+            "Gold Weekly Option",
+            "O",
+            "101",
+            "0",
+            "0",
+            "0",
+            "101",
+            "101",
+            "101"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 949,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1M",
+            "GOLD WEEKLY MONDAY OPTION WEEK1 CALL",
+            "O",
+            "70",
+            "0",
+            "0",
+            "0",
+            "70",
+            "70",
+            "337"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 951,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G4M",
+            "GOLD WEEKLY MONDAY OPTION WEEK4 PUT",
+            "O",
+            "51",
+            "0",
+            "0",
+            "0",
+            "51",
+            "51",
+            "913"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 954,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G5M",
+            "GOLD WEEKLY MONDAY OPTION WEEK5 CALL",
+            "O",
+            "41",
+            "0",
+            "0",
+            "0",
+            "41",
+            "41",
+            "563"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 956,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G5M",
+            "GOLD WEEKLY MONDAY OPTION WEEK5 PUT",
+            "O",
+            "30",
+            "0",
+            "0",
+            "0",
+            "30",
+            "30",
+            "434"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 960,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G4W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK4 CALL",
+            "O",
+            "23",
+            "0",
+            "0",
+            "0",
+            "23",
+            "23",
+            "55"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 963,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OMG",
+            "MICRO GOLD OPTIONS CALL",
+            "O",
+            "16",
+            "0",
+            "0",
+            "0",
+            "16",
+            "16",
+            "69"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 964,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "1FG",
+            "MICRO GOLD WEEKLY FRI OPTION WEEK1 CALL",
+            "O",
+            "14",
+            "0",
+            "0",
+            "0",
+            "14",
+            "14",
+            "17"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 974,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "1FG",
+            "MICRO GOLD WEEKLY FRI OPTION WEEK1 PUT",
+            "O",
+            "6",
+            "0",
+            "0",
+            "0",
+            "6",
+            "6",
+            "19"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 976,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OMG",
+            "MICRO GOLD OPTIONS PUT",
+            "O",
+            "5",
+            "0",
+            "0",
+            "0",
+            "5",
+            "5",
+            "68"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 978,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "2MG",
+            "MICRO GOLD WEEKLY MONDAY OPTION WEEK2 PUT",
+            "O",
+            "3",
+            "0",
+            "0",
+            "0",
+            "3",
+            "3",
+            "9"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 980,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "1WG",
+            "MICRO GOLD WEEKLY WED OPTION WEEK1 CALL",
+            "O",
+            "2",
+            "0",
+            "0",
+            "0",
+            "2",
+            "2",
+            "11"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 981,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "3FG",
+            "MICRO GOLD WEEKLY FRI OPTION WEEK3 PUT",
+            "O",
+            "2",
+            "0",
+            "0",
+            "0",
+            "2",
+            "2",
+            "1"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 982,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "3WG",
+            "MICRO GOLD WEEKLY WED OPTION WEEK3 CALL",
+            "O",
+            "2",
+            "0",
+            "0",
+            "0",
+            "2",
+            "2",
+            "0"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 984,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "1WG",
+            "MICRO GOLD WEEKLY WED OPTION WEEK1 PUT",
+            "O",
+            "1",
+            "0",
+            "0",
+            "0",
+            "1",
+            "1",
+            "11"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 985,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "5MG",
+            "MICRO GOLD WEEKLY MONDAY OPTION WEEK5 CALL",
+            "O",
+            "1",
+            "0",
+            "0",
+            "0",
+            "1",
+            "1",
+            "1"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 986,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "5MG",
+            "MICRO GOLD WEEKLY MONDAY OPTION WEEK5 PUT",
+            "O",
+            "1",
+            "0",
+            "0",
+            "0",
+            "1",
+            "1",
+            "1"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 991,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "1MG",
+            "MICRO GOLD WEEKLY MONDAY OPTION WEEK1 CALL",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 992,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "1MG",
+            "MICRO GOLD WEEKLY MONDAY OPTION WEEK1 PUT",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "2"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 993,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "2MG",
+            "MICRO GOLD WEEKLY MONDAY OPTION WEEK2 CALL",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 994,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "2WG",
+            "MICRO GOLD WEEKLY WED OPTION WEEK2 CALL",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 995,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "2WG",
+            "MICRO GOLD WEEKLY WED OPTION WEEK2 PUT",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "2"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 996,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "4MG",
+            "MICRO GOLD WEEKLY MONDAY OPTION WEEK4 CALL",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "3"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 997,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "4MG",
+            "MICRO GOLD WEEKLY MONDAY OPTION WEEK4 PUT",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "5"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 998,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "5FG",
+            "MICRO GOLD WEEKLY FRI OPTION WEEK5 CALL",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 999,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "5FG",
+            "MICRO GOLD WEEKLY FRI OPTION WEEK5 PUT",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1026,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG5",
+            "Gold Weekly Option",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        }
+      ]
+    },
+    {
+      "date": "20260930",
+      "filename": "daily_volume_20260930.xlsx",
+      "exists": true,
+      "bytes": 111591,
+      "sheets": [
+        "CME Group Volume and OI ",
+        "CME Group Vol and OI by Product"
+      ],
+      "oi_hits": [
+        {
+          "sheet": "CME Group Volume and OI ",
+          "row": 3,
+          "values": [
+            "Description",
+            "CME\u00ae Globex\u00ae Volume",
+            "Pit Volume",
+            "ExPit Volume",
+            "OTC Volume",
+            "Total Volume",
+            "MTD ADV",
+            "Open Interest \u2461"
+          ]
+        },
+        {
+          "sheet": "CME Group Volume and OI ",
+          "row": 14,
+          "values": [
+            "Description",
+            "CME\u00ae Globex\u00ae Volume",
+            "Pit Volume",
+            "ExPit Volume",
+            "OTC Volume",
+            "Total Volume",
+            "MTD ADV",
+            "Open Interest \u2461"
+          ]
+        },
+        {
+          "sheet": "CME Group Volume and OI ",
+          "row": 24,
+          "values": [
+            "Description",
+            "CME\u00ae Globex\u00ae Volume",
+            "Pit Volume",
+            "ExPit Volume",
+            "OTC Volume",
+            "Total Volume",
+            "MTD ADV",
+            "Open Interest \u2461"
+          ]
+        },
+        {
+          "sheet": "CME Group Volume and OI ",
+          "row": 35,
+          "values": [
+            "2) Please note that the open interest in this report is preliminary open interest which is released at the end of each trading day. CME Group releases official data in the Daily Bulletin the following morning. Preliminary open interest may be different from the open interest in the final report.",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1608,
+          "values": [
+            "2) Please note that the open interest in this report is preliminary open interest which is released at the end of each trading day. CME Group releases official data in the Daily Bulletin the following morning. Preliminary open interest may be different from the open interest in the final report.",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "gold_hits": [
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1212,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "MGC",
+            "MICRO GOLD FUTURES",
+            "F",
+            "306394",
+            "0",
+            "0",
+            "0",
+            "306394",
+            "377508.714285714"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1213,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "GC",
+            "GOLD FUTURES",
+            "F",
+            "169504",
+            "0",
+            "0",
+            "2501",
+            "172005",
+            "204575.904761905"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1215,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "1OZ",
+            "1 OUNCE GOLD FUTURES",
+            "F",
+            "49892",
+            "0",
+            "0",
+            "0",
+            "49892",
+            "69669.4761904762"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1218,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG",
+            "GOLD CALL",
+            "O",
+            "26690",
+            "0",
+            "0",
+            "1560",
+            "28250",
+            "36271.380952381"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1222,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG",
+            "GOLD PUT",
+            "O",
+            "9124",
+            "0",
+            "0",
+            "1425",
+            "10549",
+            "15674.9047619048"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1224,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECG10",
+            "EC GOLD FUT 10:00 A.M ET P",
+            "O",
+            "4381",
+            "0",
+            "0",
+            "0",
+            "4381",
+            "1636.66666666667"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1226,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G5W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK5 PUT",
+            "O",
+            "3487",
+            "0",
+            "0",
+            "0",
+            "3487",
+            "422.095238095238"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1227,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G5W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK5 CALL",
+            "O",
+            "3038",
+            "0",
+            "0",
+            "0",
+            "3038",
+            "437.476190476191"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1228,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "QO",
+            "COMEX MINY GOLD FUTURES",
+            "F",
+            "2644",
+            "0",
+            "0",
+            "0",
+            "2644",
+            "3193.19047619048"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1229,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG1",
+            "Gold Weekly Option",
+            "O",
+            "2544",
+            "0",
+            "0",
+            "0",
+            "2544",
+            "2389.04761904762"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1230,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECG10",
+            "EC GOLD FUT 10:00 A.M ET C",
+            "O",
+            "1793",
+            "0",
+            "0",
+            "0",
+            "1793",
+            "899.809523809524"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1234,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1M",
+            "GOLD WEEKLY MONDAY OPTION WEEK1 CALL",
+            "O",
+            "1482",
+            "0",
+            "0",
+            "0",
+            "1482",
+            "191.761904761905"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1235,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1R",
+            "GOLD WEEKLY THURSDAY OPTION Week1 CALL",
+            "O",
+            "1430",
+            "0",
+            "0",
+            "0",
+            "1430",
+            "663.142857142857"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1236,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1R",
+            "GOLD WEEKLY THURSDAY OPTION Week1 PUT",
+            "O",
+            "1317",
+            "0",
+            "0",
+            "0",
+            "1317",
+            "709.571428571429"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1238,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG2",
+            "Gold Weekly Option",
+            "O",
+            "1169",
+            "0",
+            "0",
+            "15",
+            "1184",
+            "2228.2380952381"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1243,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECG16",
+            "EC GOLD FUT 04:00 P.M ET C",
+            "O",
+            "738",
+            "0",
+            "0",
+            "0",
+            "738",
+            "434.904761904762"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1244,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG3",
+            "Gold Weekly Option",
+            "O",
+            "671",
+            "0",
+            "0",
+            "0",
+            "671",
+            "3590.85714285714"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1245,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECG15",
+            "EC GOLD FUT 03:00 P.M ET P",
+            "O",
+            "670",
+            "0",
+            "0",
+            "0",
+            "670",
+            "451.571428571429"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1248,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OG4",
+            "Gold Weekly Option",
+            "O",
+            "438",
+            "0",
+            "0",
+            "0",
+            "438",
+            "2572.42857142857"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1249,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECG16",
+            "EC GOLD FUT 04:00 P.M ET P",
+            "O",
+            "410",
+            "0",
+            "0",
+            "0",
+            "410",
+            "699.190476190476"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1251,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECG13",
+            "EC GOLD FUT 01:00 P.M ET C",
+            "O",
+            "402",
+            "0",
+            "0",
+            "0",
+            "402",
+            "427.333333333333"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1253,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2R",
+            "GOLD WEEKLY THURSDAY OPTION Week2 CALL",
+            "O",
+            "402",
+            "0",
+            "0",
+            "0",
+            "402",
+            "521.142857142857"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1255,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1T",
+            "GOLD WEEKLY TUESDAY OPTION Week1 PUT",
+            "O",
+            "351",
+            "0",
+            "0",
+            "0",
+            "351",
+            "299.238095238095"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1256,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2R",
+            "GOLD WEEKLY THURSDAY OPTION Week2 PUT",
+            "O",
+            "234",
+            "0",
+            "0",
+            "100",
+            "334",
+            "451.571428571429"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1261,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1T",
+            "GOLD WEEKLY TUESDAY OPTION Week1 CALL",
+            "O",
+            "164",
+            "0",
+            "0",
+            "125",
+            "289",
+            "242.904761904762"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1262,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1M",
+            "GOLD WEEKLY MONDAY OPTION WEEK1 PUT",
+            "O",
+            "253",
+            "0",
+            "0",
+            "0",
+            "253",
+            "135.619047619048"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1265,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECG15",
+            "EC GOLD FUT 03:00 P.M ET C",
+            "O",
+            "246",
+            "0",
+            "0",
+            "0",
+            "246",
+            "424.380952380952"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1266,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECG11",
+            "EC GOLD FUT 11:00 A.M ET C",
+            "O",
+            "225",
+            "0",
+            "0",
+            "0",
+            "225",
+            "223.904761904762"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1268,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECGC",
+            "EVENT CONTRACT GOLD P",
+            "O",
+            "220",
+            "0",
+            "0",
+            "0",
+            "220",
+            "1054.2380952381"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1272,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECG13",
+            "EC GOLD FUT 01:00 P.M ET P",
+            "O",
+            "155",
+            "0",
+            "0",
+            "0",
+            "155",
+            "1704.52380952381"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1275,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2T",
+            "GOLD WEEKLY TUESDAY OPTION Week2 CALL",
+            "O",
+            "29",
+            "0",
+            "0",
+            "100",
+            "129",
+            "508.142857142857"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1276,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECGC",
+            "EVENT CONTRACT GOLD C",
+            "O",
+            "112",
+            "0",
+            "0",
+            "0",
+            "112",
+            "436.761904761905"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1279,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK1 PUT",
+            "O",
+            "97",
+            "0",
+            "0",
+            "0",
+            "97",
+            "324.52380952381"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1282,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK2 PUT",
+            "O",
+            "83",
+            "0",
+            "0",
+            "0",
+            "83",
+            "427.952380952381"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1283,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G4R",
+            "GOLD WEEKLY THURSDAY OPTION Week4 CALL",
+            "O",
+            "82",
+            "0",
+            "0",
+            "0",
+            "82",
+            "16.9047619047619"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1284,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G3R",
+            "GOLD WEEKLY THURSDAY OPTION Week3 PUT",
+            "O",
+            "78",
+            "0",
+            "0",
+            "0",
+            "78",
+            "580.047619047619"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1286,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2M",
+            "GOLD WEEKLY MONDAY OPTION WEEK2 PUT",
+            "O",
+            "69",
+            "0",
+            "0",
+            "0",
+            "69",
+            "332.428571428571"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1288,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK2 CALL",
+            "O",
+            "62",
+            "0",
+            "0",
+            "0",
+            "62",
+            "411.238095238095"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1293,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "ECG11",
+            "EC GOLD FUT 11:00 A.M ET P",
+            "O",
+            "55",
+            "0",
+            "0",
+            "0",
+            "55",
+            "950.952380952381"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1294,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G1W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK1 CALL",
+            "O",
+            "50",
+            "0",
+            "0",
+            "0",
+            "50",
+            "504.428571428571"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1295,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G3R",
+            "GOLD WEEKLY THURSDAY OPTION Week3 CALL",
+            "O",
+            "42",
+            "0",
+            "0",
+            "0",
+            "42",
+            "636.142857142857"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1299,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2T",
+            "GOLD WEEKLY TUESDAY OPTION Week2 PUT",
+            "O",
+            "37",
+            "0",
+            "0",
+            "0",
+            "37",
+            "330.333333333333"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1302,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G4R",
+            "GOLD WEEKLY THURSDAY OPTION Week4 PUT",
+            "O",
+            "34",
+            "0",
+            "0",
+            "0",
+            "34",
+            "11.5714285714286"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1304,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G3W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK3 PUT",
+            "O",
+            "24",
+            "0",
+            "0",
+            "0",
+            "24",
+            "417.047619047619"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1306,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G3M",
+            "GOLD WEEKLY MONDAY OPTION WEEK3 PUT",
+            "O",
+            "20",
+            "0",
+            "0",
+            "0",
+            "20",
+            "278.904761904762"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1309,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G3T",
+            "GOLD WEEKLY TUESDAY OPTION Week3 PUT",
+            "O",
+            "19",
+            "0",
+            "0",
+            "0",
+            "19",
+            "252"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1312,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G2M",
+            "GOLD WEEKLY MONDAY OPTION WEEK2 CALL",
+            "O",
+            "15",
+            "0",
+            "0",
+            "0",
+            "15",
+            "566.380952380952"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1313,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G4M",
+            "GOLD WEEKLY MONDAY OPTION WEEK4 CALL",
+            "O",
+            "15",
+            "0",
+            "0",
+            "0",
+            "15",
+            "450.333333333333"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1318,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G3M",
+            "GOLD WEEKLY MONDAY OPTION WEEK3 CALL",
+            "O",
+            "10",
+            "0",
+            "0",
+            "0",
+            "10",
+            "401.571428571429"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1326,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "1FG",
+            "MICRO GOLD WEEKLY FRI OPTION WEEK1 PUT",
+            "O",
+            "4",
+            "0",
+            "0",
+            "0",
+            "4",
+            "0.285714285714286"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1330,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "1MG",
+            "MICRO GOLD WEEKLY MONDAY OPTION WEEK1 CALL",
+            "O",
+            "2",
+            "0",
+            "0",
+            "0",
+            "2",
+            "0.333333333333333"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1331,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G3T",
+            "GOLD WEEKLY TUESDAY OPTION Week3 CALL",
+            "O",
+            "2",
+            "0",
+            "0",
+            "0",
+            "2",
+            "316.809523809524"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1335,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "5WG",
+            "MICRO GOLD WEEKLY WED OPTION WEEK5 CALL",
+            "O",
+            "1",
+            "0",
+            "0",
+            "0",
+            "1",
+            "0.0952380952380952"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1336,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OMG",
+            "MICRO GOLD OPTIONS PUT",
+            "O",
+            "1",
+            "0",
+            "0",
+            "0",
+            "1",
+            "1.19047619047619"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1342,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "5WG",
+            "MICRO GOLD WEEKLY WED OPTION WEEK5 PUT",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0.19047619047619"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1352,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G3W",
+            "GOLD WEEKLY WEDNESDAY OPTION WEEK3 CALL",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "474.52380952381"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1353,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G4M",
+            "GOLD WEEKLY MONDAY OPTION WEEK4 PUT",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "472.380952380952"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1354,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G5T",
+            "GOLD WEEKLY TUESDAY OPTION Week5 CALL",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "349.285714285714"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1355,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "G5T",
+            "GOLD WEEKLY TUESDAY OPTION Week5 PUT",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "298"
+          ]
+        },
+        {
+          "sheet": "CME Group Vol and OI by Product",
+          "row": 1384,
+          "values": [
+            "METALS",
+            "COMEX(STATS)",
+            "OMG",
+            "MICRO GOLD OPTIONS CALL",
+            "O",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "2.14285714285714"
+          ]
+        }
+      ]
+    }
+  ],
+  "listing_count": 3214
+}
