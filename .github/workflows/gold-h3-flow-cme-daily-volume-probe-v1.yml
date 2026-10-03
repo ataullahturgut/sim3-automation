@@ -1,0 +1,38 @@
+name: Gold H3 FLOW CME Daily Volume Probe
+on:
+  push:
+    branches: [gold-h3-flow-v1-20261003]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_flow_cme_daily_volume_probe_v1.py'
+      - '.github/workflows/gold-h3-flow-cme-daily-volume-probe-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-flow-v1-20261003
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check requests openpyxl
+      - run: python gold_axis_2026/tools/gold_h3_flow_cme_daily_volume_probe_v1.py
+      - name: Record probe evidence
+        run: |
+          cp gold_h3_flow_probe_out/RESULT.md gold_axis_2026/GOLD_H3_FLOW_CME_DAILY_VOLUME_PROBE_RESULT_2026-10-03.md
+          cp gold_h3_flow_probe_out/probe.json gold_axis_2026/GOLD_H3_FLOW_CME_DAILY_VOLUME_PROBE_2026-10-03.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_FLOW_CME_DAILY_VOLUME_PROBE_RESULT_2026-10-03.md gold_axis_2026/GOLD_H3_FLOW_CME_DAILY_VOLUME_PROBE_2026-10-03.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record CME daily volume archive probe for FLOW-H3"
+            git pull --rebase origin gold-h3-flow-v1-20261003
+            git push origin HEAD:gold-h3-flow-v1-20261003
+          fi
