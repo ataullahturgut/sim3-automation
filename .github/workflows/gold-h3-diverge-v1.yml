@@ -20,14 +20,21 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' requests
-      - run: python gold_axis_2026/tools/gold_h3_diverge_v1.py
-      - name: Commit DIVERGE evidence
+      - name: Run DIVERGE with captured diagnostics
+        run: |
+          set +e
+          python gold_axis_2026/tools/gold_h3_diverge_v1.py > gold_axis_2026/GOLD_H3_DIVERGE_V1_WORKFLOW_LOG_2026-10-03.txt 2>&1
+          rc=$?
+          echo "$rc" > gold_axis_2026/GOLD_H3_DIVERGE_V1_WORKFLOW_RC_2026-10-03.txt
+          cat gold_axis_2026/GOLD_H3_DIVERGE_V1_WORKFLOW_LOG_2026-10-03.txt
+          exit 0
+      - name: Commit DIVERGE evidence and diagnostics
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add gold_axis_2026/GOLD_H3_DIVERGE_V1_*
+          git add gold_axis_2026/GOLD_H3_DIVERGE_V1_* || true
           if ! git diff --cached --quiet; then
-            git commit -m "Record DIVERGE-H3 V1 evidence"
+            git commit -m "Record DIVERGE-H3 V1 evidence and diagnostics"
             git pull --rebase origin gold-h3-diverge-v1-20261003
             git push origin HEAD:gold-h3-diverge-v1-20261003
           fi
