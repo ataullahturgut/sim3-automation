@@ -1,0 +1,182 @@
+{
+  "schema": "OAR_RTE_H3_V1",
+  "status": "NO_ROBUST_OAR_RTE_RULE",
+  "development_grid": [
+    {
+      "q": 0.6,
+      "eligible_n": 408,
+      "candidate_n": 34,
+      "rescued": 22,
+      "broken": 12,
+      "net_rescue": 10,
+      "rescue_precision": 0.6470588235294118,
+      "candidate_rate": 0.08333333333333333,
+      "nonnegative_blocks": 3,
+      "min_block_net": -2,
+      "robust_eligible": false
+    },
+    {
+      "q": 0.65,
+      "eligible_n": 408,
+      "candidate_n": 28,
+      "rescued": 17,
+      "broken": 11,
+      "net_rescue": 6,
+      "rescue_precision": 0.6071428571428571,
+      "candidate_rate": 0.06862745098039216,
+      "nonnegative_blocks": 3,
+      "min_block_net": -2,
+      "robust_eligible": false
+    },
+    {
+      "q": 0.7,
+      "eligible_n": 408,
+      "candidate_n": 22,
+      "rescued": 13,
+      "broken": 9,
+      "net_rescue": 4,
+      "rescue_precision": 0.5909090909090909,
+      "candidate_rate": 0.05392156862745098,
+      "nonnegative_blocks": 2,
+      "min_block_net": -1,
+      "robust_eligible": false
+    }
+  ],
+  "block_metrics": [
+    {
+      "q": 0.6,
+      "block": "2024_H1",
+      "eligible_n": 90,
+      "candidate_n": 6,
+      "rescued": 4,
+      "broken": 2,
+      "net_rescue": 2,
+      "rescue_precision": 0.6666666666666666,
+      "candidate_rate": 0.06666666666666667
+    },
+    {
+      "q": 0.6,
+      "block": "2024_H2",
+      "eligible_n": 107,
+      "candidate_n": 6,
+      "rescued": 4,
+      "broken": 2,
+      "net_rescue": 2,
+      "rescue_precision": 0.6666666666666666,
+      "candidate_rate": 0.056074766355140186
+    },
+    {
+      "q": 0.6,
+      "block": "2025_H1",
+      "eligible_n": 102,
+      "candidate_n": 16,
+      "rescued": 12,
+      "broken": 4,
+      "net_rescue": 8,
+      "rescue_precision": 0.75,
+      "candidate_rate": 0.1568627450980392
+    },
+    {
+      "q": 0.6,
+      "block": "2025_H2",
+      "eligible_n": 109,
+      "candidate_n": 6,
+      "rescued": 2,
+      "broken": 4,
+      "net_rescue": -2,
+      "rescue_precision": 0.3333333333333333,
+      "candidate_rate": 0.05504587155963303
+    },
+    {
+      "q": 0.65,
+      "block": "2024_H1",
+      "eligible_n": 90,
+      "candidate_n": 6,
+      "rescued": 4,
+      "broken": 2,
+      "net_rescue": 2,
+      "rescue_precision": 0.6666666666666666,
+      "candidate_rate": 0.06666666666666667
+    },
+    {
+      "q": 0.65,
+      "block": "2024_H2",
+      "eligible_n": 107,
+      "candidate_n": 4,
+      "rescued": 2,
+      "broken": 2,
+      "net_rescue": 0,
+      "rescue_precision": 0.5,
+      "candidate_rate": 0.037383177570093455
+    },
+    {
+      "q": 0.65,
+      "block": "2025_H1",
+      "eligible_n": 102,
+      "candidate_n": 14,
+      "rescued": 10,
+      "broken": 4,
+      "net_rescue": 6,
+      "rescue_precision": 0.7142857142857143,
+      "candidate_rate": 0.13725490196078433
+    },
+    {
+      "q": 0.65,
+      "block": "2025_H2",
+      "eligible_n": 109,
+      "candidate_n": 4,
+      "rescued": 1,
+      "broken": 3,
+      "net_rescue": -2,
+      "rescue_precision": 0.25,
+      "candidate_rate": 0.03669724770642202
+    },
+    {
+      "q": 0.7,
+      "block": "2024_H1",
+      "eligible_n": 90,
+      "candidate_n": 5,
+      "rescued": 3,
+      "broken": 2,
+      "net_rescue": 1,
+      "rescue_precision": 0.6,
+      "candidate_rate": 0.05555555555555555
+    },
+    {
+      "q": 0.7,
+      "block": "2024_H2",
+      "eligible_n": 107,
+      "candidate_n": 3,
+      "rescued": 1,
+      "broken": 2,
+      "net_rescue": -1,
+      "rescue_precision": 0.3333333333333333,
+      "candidate_rate": 0.028037383177570093
+    },
+    {
+      "q": 0.7,
+      "block": "2025_H1",
+      "eligible_n": 102,
+      "candidate_n": 11,
+      "rescued": 8,
+      "broken": 3,
+      "net_rescue": 5,
+      "rescue_precision": 0.7272727272727273,
+      "candidate_rate": 0.10784313725490197
+    },
+    {
+      "q": 0.7,
+      "block": "2025_H2",
+      "eligible_n": 109,
+      "candidate_n": 3,
+      "rescued": 1,
+      "broken": 2,
+      "net_rescue": -1,
+      "rescue_precision": 0.3333333333333333,
+      "candidate_rate": 0.027522935779816515
+    }
+  ],
+  "selected_q": null,
+  "holdout_2026": null,
+  "whole_2026": null
+}
