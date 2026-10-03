@@ -4417,3 +4417,72 @@ Binding champion remains HELIOS V5-DCE.
 Authority:
 - `GOLD_H3_SCR_RTE_V1_RETRO_RESULT_2026-10-04.md`
 - `GOLD_H3_SCR_RTE_V1_PROSPECTIVE_FREEZE_2026-10-04.json`.
+
+
+## 50. FRS — FUZZY / UNCERTAINTY REPRESENTATION TOURNAMENT V1 (2026-10-04)
+
+Eight uncertainty representations were compared on the **same** origin-safe evidence layer:
+- Type-1
+- Intuitionistic
+- Pythagorean
+- q-rung orthopair q=3
+- Hesitant
+- Picture
+- Single-valued Neutrosophic
+- Interval Type-2.
+
+Historical 2024H2–2026Sep is development/stress-test only.
+
+### 50.1 Directional FLIP result
+
+| Representation | Flip | Rescue | Broken | Net | Precision |
+|---|---:|---:|---:|---:|---:|
+| T1 | 22 | 8 | 14 | -6 | 36.36% |
+| IFS | 175 | 73 | 102 | -29 | 41.71% |
+| Pythagorean | 0 | 0 | 0 | 0 | — |
+| q-rung-3 | 0 | 0 | 0 | 0 | — |
+| Hesitant | 177 | 74 | 103 | -29 | 41.81% |
+| Picture | 84 | 37 | 47 | -10 | 44.05% |
+| Neutrosophic | 115 | 53 | 62 | -9 | 46.09% |
+| IT2 | 116 | 51 | 65 | -14 | 43.97% |
+
+No representation passed the frozen development gate.
+
+Status:
+`NO_PROMISING_FUZZY_REPRESENTATION`.
+
+Rich uncertainty geometry did not solve the regime instability:
+- Picture 2025 H1 +10 but 2025 H2 -7 and 2026 H1 -10;
+- Neutrosophic 2025 H1 +8 but 2025 H2 -6 and 2026 H1 -9;
+- IT2 2025 H1 +7 but 2025 H2 -10 and 2026 H1 -11.
+
+### 50.2 DAMP-only diagnostic
+
+Same-universe V5 baseline:
+- n 452
+- accuracy 65.93%
+- Brier 0.2279
+- log loss 0.6612.
+
+IFS / Hesitant / Neutrosophic used only as confidence-damping layers:
+- Brier **0.2240**
+- delta **-0.0039**
+- log loss **0.6515**
+- delta **-0.0097**
+- direction unchanged.
+
+Block result:
+- improvement in 2024 H2, 2025 H1, 2026 H1, 2026 H2;
+- degradation in 2025 H2.
+
+Interpretation:
+**fuzzy uncertainty is not promoted as a reversal direction engine, but it retains a weak development signal as a confidence-calibration / damping layer.**
+
+Binding next fuzzy direction:
+**Fuzzy Confidence Governor**, not another fuzzy UP/DOWN classifier.
+
+HELIOS V5-DCE remains the binding direction champion.
+
+Authority:
+- `GOLD_H3_FRS_V1_CLOSURE_2026-10-04.md`
+- closure commit `adc95549b9bc90c0533b688f2068e5808c055781`.
