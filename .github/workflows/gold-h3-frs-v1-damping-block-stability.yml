@@ -1,0 +1,34 @@
+name: Gold H3 FRS V1 Damping Block Stability
+on:
+  push:
+    branches: [gold-h3-fuzzy-reversal-tournament-v1-20261004]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_frs_v1_damping_block_stability.py'
+      - '.github/workflows/gold-h3-frs-v1-damping-block-stability.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-fuzzy-reversal-tournament-v1-20261004
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check numpy pandas
+      - run: python gold_axis_2026/tools/gold_h3_frs_v1_damping_block_stability.py
+      - name: Record damping stability
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_FRS_V1_DAMPING_BLOCK_STABILITY_2026-10-04.md gold_axis_2026/GOLD_H3_FRS_V1_DAMPING_BLOCK_STABILITY_2026-10-04.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record fuzzy damping block stability"
+            git pull --rebase origin gold-h3-fuzzy-reversal-tournament-v1-20261004
+            git push origin HEAD:gold-h3-fuzzy-reversal-tournament-v1-20261004
+          fi
