@@ -1,0 +1,72 @@
+name: Gold H3 Clean Reversal Chain
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_clean_reversal_chain_v1.py'
+      - '.github/workflows/gold-h3-clean-reversal-chain-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      OUT_DIR: gold_h3_clean_reversal_chain_out
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'psycopg[binary]>=3.2,<4' 'requests>=2.31,<3'
+      - name: Require private source secrets
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$TWELVE_DATA_API_KEY"
+      - name: Run clean reversal chain
+        run: python gold_axis_2026/tools/gold_h3_clean_reversal_chain_v1.py
+      - name: Commit clean reversal evidence
+        shell: bash
+        run: |
+          cp "$OUT_DIR/CLEAN_REVERSAL_CHAIN_RESULT.md" gold_axis_2026/GOLD_H3_CLEAN_REVERSAL_CHAIN_RESULT_2026-10-03.md
+          cp "$OUT_DIR/clean_reversal_chain_summary.json" gold_axis_2026/GOLD_H3_CLEAN_REVERSAL_CHAIN_SUMMARY_2026-10-03.json
+          cp "$OUT_DIR/clean_chain_metrics.csv" gold_axis_2026/GOLD_H3_CLEAN_CHAIN_METRICS_2026-10-03.csv
+          cp "$OUT_DIR/clean_reversal_expert_metrics.csv" gold_axis_2026/GOLD_H3_CLEAN_REVERSAL_EXPERT_METRICS_2026-10-03.csv
+          cp "$OUT_DIR/clean_v5_routes.csv" gold_axis_2026/GOLD_H3_CLEAN_V5_ROUTES_2026-10-03.csv
+          cp "$OUT_DIR/clean_vs_preclean_2026.csv" gold_axis_2026/GOLD_H3_CLEAN_VS_PRECLEAN_2026-10-03.csv
+          cp "$OUT_DIR/clean_v5_2026_call_by_call.csv" gold_axis_2026/GOLD_H3_CLEAN_V5_2026_CALL_BY_CALL_2026-10-03.csv
+          cp "$OUT_DIR/clean_rift_predictions.csv" gold_axis_2026/GOLD_H3_CLEAN_RIFT_PREDICTIONS_2026-10-03.csv
+          cp "$OUT_DIR/clean_turn_predictions.csv" gold_axis_2026/GOLD_H3_CLEAN_TURN_PREDICTIONS_2026-10-03.csv
+          cp "$OUT_DIR/clean_vega_predictions.csv" gold_axis_2026/GOLD_H3_CLEAN_VEGA_PREDICTIONS_2026-10-03.csv
+          cp "$OUT_DIR/clean_opal_predictions.csv" gold_axis_2026/GOLD_H3_CLEAN_OPAL_PREDICTIONS_2026-10-03.csv
+          cp "$OUT_DIR/clean_helios_v1_predictions.csv" gold_axis_2026/GOLD_H3_CLEAN_HELIOS_V1_PREDICTIONS_2026-10-03.csv
+          cp "$OUT_DIR/clean_helios_v2_predictions.csv" gold_axis_2026/GOLD_H3_CLEAN_HELIOS_V2_PREDICTIONS_2026-10-03.csv
+          cp "$OUT_DIR/clean_helios_v3_gt_predictions.csv" gold_axis_2026/GOLD_H3_CLEAN_HELIOS_V3_GT_PREDICTIONS_2026-10-03.csv
+          cp "$OUT_DIR/clean_helios_v4_rge_predictions.csv" gold_axis_2026/GOLD_H3_CLEAN_HELIOS_V4_RGE_PREDICTIONS_2026-10-03.csv
+          cp "$OUT_DIR/clean_helios_v5_dce_predictions.csv" gold_axis_2026/GOLD_H3_CLEAN_HELIOS_V5_DCE_PREDICTIONS_2026-10-03.csv
+          cp "$OUT_DIR/clean_helios_v1_switches.csv" gold_axis_2026/GOLD_H3_CLEAN_HELIOS_V1_SWITCHES_2026-10-03.csv
+          cp "$OUT_DIR/clean_helios_v4_rge_switches.csv" gold_axis_2026/GOLD_H3_CLEAN_HELIOS_V4_RGE_SWITCHES_2026-10-03.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_CLEAN_*_2026-10-03.*
+          if ! git diff --cached --quiet; then
+            git commit -m "Rebuild clean H3 reversal chain"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-clean-reversal-chain
+          path: gold_h3_clean_reversal_chain_out/
+          retention-days: 90
