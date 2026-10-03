@@ -5,6 +5,7 @@ from pathlib import Path
 import numpy as np, pandas as pd
 
 import gold_h3_aurora_prospective_v1 as base
+import gold_h3_iris_v1 as iris
 import gold_h3_rift_v1 as rift
 import gold_h3_turn_v1 as turn
 import gold_h3_vega_v1 as vega
@@ -73,6 +74,15 @@ def main():
     if not audit["pass"]: raise RuntimeError(f"CLEAN_AURORA_REPRO_FAIL {audit}")
 
     # 3) Freeze exact clean historical reversal training panels.
+    # Cache the same hourly extension once so every expert sees identical bytes.
+    hist=iris.load_neon_hourly()
+    succ,api_calls=iris.fetch_extension()
+    _,bridge=iris.bridge_metrics(hist,succ)
+    if not bridge["pass"]:
+        raise RuntimeError(f"CLEAN_BOOTSTRAP_HOURLY_BRIDGE_FAIL {bridge}")
+    iris.load_neon_hourly=lambda: hist.copy()
+    iris.fetch_extension=lambda: (succ.copy(), api_calls)
+
     rift.AURORA=CLEAN_AURORA
     rp,_,_=rift.load_panel(); rp.to_csv(OUT/"GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_RIFT_PANEL.csv",index=False)
     rpred=rift.run_rift(rp); rr=compare(CLEAN_RIFT,rpred,"p_rift")
