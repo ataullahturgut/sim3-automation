@@ -1,105 +1,35 @@
-# CLEAN H3 PROSPECTIVE V1 — PROSPECTIVE FREEZE
+# CLEAN H3 PROSPECTIVE V1 — FREEZE AUTHORITY
 
-**Date:** 2026-10-03  
-**Identity:** `CLEAN_H3_PROSPECTIVE_V1`  
-**Status:** **FROZEN / READY FOR FIRST FUTURE ORIGIN**  
+**Freeze date:** 2026-10-03  
+**Freeze timestamp:** 2026-10-03T11:33:49Z  
+**Umbrella identity:** `CLEAN_H3_PROSPECTIVE_V1`  
+**Baseline:** `CLEAN_AURORA_H3_V1_PROSPECTIVE`  
+**Shadow challenger:** `CLEAN_V5_DCE_H3_V1_PROSPECTIVE_SHADOW`  
 **First eligible feature cutoff:** **2026-10-05**
 
-## 1. Purpose
+## Purpose
+Forward-only H3 experiment from corrected clean history. Legacy AURORA and HERA prospective ledgers remain immutable.
 
-Create a clean prospective H3 experiment that is completely separate from the pre-existing AURORA V1 prospective ledger.
+## Clean historical freeze
+Corrected 2026-02-27 values: Gold **5183.80**, Silver **88.14**, Platinum **2369.25**, Palladium **1789.96**.
+Frozen inputs: clean daily prices, clean AURORA expert matrix, and clean RIFT/VEGA/OPAL training panels.
+Bootstrap evidence: `73d1240cdc4dcac6f3671d53640094fcc61e2083`.
+Reproduction max errors: AURORA <5e-16; RIFT 1.11e-16; TURN 8.33e-17; VEGA 5.55e-17; OPAL 8.33e-17; all override decisions exact.
 
-The new experiment uses the corrected historical daily price lineage and the clean retrospective AURORA / reversal chain as its frozen starting state.
+## Clean AURORA
+Rules unchanged: A1 0.75/0.25, recent252, five-issued-origin blocks, Logistic L2 STRUCTURAL/PATH, monthly expert refit, SENTRY 63/42/+3, DART hazard 0.05, PATH exit >=8 disagreements with Pr(PATH superior)<=0.10 and q_path<=0.40.
 
-No prior prospective forecast is rewritten or backfilled.
+## Clean V5-DCE shadow
+Frozen rules: RIFT/VEGA/OPAL thresholds 0.70; CFTC +7d; TURN frozen tail rule; HELIOS consensus latest8 enter5 exit3; V3-GT >0.50; V4-RGE W10 regret +2/-2; V5-DCE PATH posterior >0.50 and GT share >0.50. Diagnostic GT 0.60/0.70 is NOT used.
 
-## 2. Clean source freeze
+## Causal updating
+Only matured H3 outcomes may enter training/competence. Pending outcomes are unavailable. Reversal monthly models use frozen clean history plus matured prospective rows. Policy/regret states replay chronologically.
 
-The frozen daily price snapshot is the prior frozen snapshot with exactly one validated integrity correction:
+## Integrity gate
+`GOLD_H3_DATA_INTEGRITY_GATE_V1` is mandatory before feature generation, issuance or settlement.
 
-2026-02-27:
-- Gold 3516.02 -> **5183.80**
-- Silver 62.15 -> **88.14**
-- Platinum 1585.39 -> **2369.25**
-- Palladium 1201.26 -> **1789.96**
+## Issuance / no backfill
+First eligible feature cutoff **2026-10-05**. Clean AURORA and V5 shadow share the next-weekday 08:00 America/New_York deadline. Misses are never outcome-aware backfilled.
 
-All other historical daily prices remain unchanged.
-
-Frozen file:
-- `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_DAILY_PRICES.csv`
-
-## 3. Clean AURORA training freeze
-
-Frozen file:
-- `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_EXPERT_TRAIN_MATRIX.csv`
-
-The matrix is generated from the clean A1 / clean target history and reproduces the clean retrospective September AURORA expert probabilities.
-
-Reproduction:
-- September rows: **19**
-- max structural probability difference: **8.05e-16**
-- max PATH probability difference: **8.88e-16**
-- result: **PASS**
-
-## 4. Clean reversal expert freeze
-
-Historical training panels are frozen for:
-- RIFT
-- VEGA
-- OPAL
-
-TURN remains the same deterministic frozen rule driven by the hourly tail-state calculation.
-
-Bootstrap reproduction against recorded clean history:
-
-- RIFT: **931 rows**, override decisions identical, max probability diff **9.27e-15**
-- TURN: **1029 rows**, override decisions identical, max probability diff **8.33e-17**
-- VEGA: **931 rows**, override decisions identical, max probability diff **9.44e-16**
-- OPAL: **931 rows**, override decisions identical, max probability diff **7.51e-12**
-
-All checks: **PASS**.
-
-## 5. Clean router binding
-
-The clean prospective challenger will preserve the already-recorded clean-chain architecture without retuning:
-
-- AURORA clean baseline
-- RIFT V1
-- TURN V1
-- VEGA V1
-- OPAL V1 threshold 0.70
-- HELIOS V1 W8 / enter 5 / exit 3
-- HELIOS V2 posterior calibration
-- V3-GT binding W8, broken cost 1.0, GT threshold >0.50
-- V4-RGE expansion window 10, regret +2 / -2
-- V5-DCE PATH posterior >0.50 and GT share >0.50
-- Data Integrity Gate V1 on all new daily data.
-
-The diagnostic GT >0.60 / >0.70 sensitivity is **not** promoted.
-
-## 6. Prospective governance
-
-1. First eligible clean prospective feature cutoff is **2026-10-05**.
-2. No date before this cutoff may be entered as clean prospective evidence.
-3. If an eligible origin misses its issuance deadline, it is recorded as MISS and never reconstructed after outcome maturity.
-4. Forecast fields are immutable after issuance.
-5. Settlement may append only realized H3 outcome fields.
-6. A quarantined daily input cannot issue or settle a prospective origin.
-7. Any change to the clean price history, model rules, thresholds, router state logic or source lags requires a new version.
-
-## 7. Evidence
-
-Bootstrap workflow run:
-- **37120224350 — SUCCESS**
-
-Bootstrap evidence commit:
-- `c2286108458c47a65aade15da7ec5eadbd842498`
-
-Evidence files:
-- `GOLD_H3_CLEAN_PROSPECTIVE_V1_BOOTSTRAP_RESULT_2026-10-03.md`
-- `GOLD_H3_CLEAN_PROSPECTIVE_V1_BOOTSTRAP_SUMMARY_2026-10-03.json`
-- `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_DAILY_PRICES.csv`
-- `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_EXPERT_TRAIN_MATRIX.csv`
-- `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_RIFT_PANEL.csv`
-- `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_VEGA_PANEL.csv`
-- `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_OPAL_PANEL.csv`
+## Governance
+Any threshold, feature, model-class, game-policy, RGE/DCE, integrity or lag change requires a new version. Legacy prospective experiments remain untouched.

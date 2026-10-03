@@ -1,0 +1,68 @@
+name: Gold H3 Clean Prospective V1
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_clean_aurora_prospective_v1.py'
+      - 'gold_axis_2026/tools/gold_h3_clean_v5_prospective_v1.py'
+      - 'gold_axis_2026/GOLD_H3_CLEAN_PROSPECTIVE_V1_FREEZE_2026-10-03.md'
+      - '.github/workflows/gold-h3-clean-prospective-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  prospective:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      OUT_DIR: gold_h3_clean_prospective_v1_out
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'psycopg[binary]>=3.2,<4' 'requests>=2.31,<3'
+      - name: Resolve immutable public source ref
+        id: refs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          STAK_REF="$(gh api repos/lbruton/StakTrakr/commits/main --jq .sha)"
+          echo "stak_ref=$STAK_REF" >> "$GITHUB_OUTPUT"
+      - name: Require private source secrets
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$TWELVE_DATA_API_KEY"
+      - name: Run clean AURORA baseline
+        env:
+          STAK_LIVE_REF: ${{ steps.refs.outputs.stak_ref }}
+        run: python gold_axis_2026/tools/gold_h3_clean_aurora_prospective_v1.py
+      - name: Run clean V5-DCE shadow
+        env:
+          STAK_LIVE_REF: ${{ steps.refs.outputs.stak_ref }}
+        run: python gold_axis_2026/tools/gold_h3_clean_v5_prospective_v1.py
+      - name: Commit clean prospective evidence
+        shell: bash
+        run: |
+          for f in GOLD_H3_CLEAN_PROSPECTIVE_V1_DAILY_PRICES.csv GOLD_H3_CLEAN_PROSPECTIVE_V1_DATA_INTEGRITY.csv GOLD_H3_CLEAN_PROSPECTIVE_V1_AURORA_LEDGER.csv GOLD_H3_CLEAN_PROSPECTIVE_V1_AURORA_MISSES.csv GOLD_H3_CLEAN_PROSPECTIVE_V1_AURORA_STATUS.json GOLD_H3_CLEAN_PROSPECTIVE_V1_AURORA_STATUS.md GOLD_H3_CLEAN_PROSPECTIVE_V1_V5_LEDGER.csv GOLD_H3_CLEAN_PROSPECTIVE_V1_V5_MISSES.csv GOLD_H3_CLEAN_PROSPECTIVE_V1_V5_STATUS.json GOLD_H3_CLEAN_PROSPECTIVE_V1_V5_STATUS.md
+          do test -f "$OUT_DIR/$f" && cp "$OUT_DIR/$f" "gold_axis_2026/$f"; done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_CLEAN_PROSPECTIVE_V1_*
+          if ! git diff --cached --quiet; then git commit -m "Update clean H3 prospective v1 ledgers"; git pull --rebase origin gold-midas-headswap-v1-20260925; git push origin HEAD:gold-midas-headswap-v1-20260925; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-clean-prospective-v1
+          path: gold_h3_clean_prospective_v1_out/
+          if-no-files-found: warn
+          retention-days: 90
