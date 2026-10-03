@@ -191,7 +191,7 @@ def align(panel,src):
     p["feature_cutoff_date"]=pd.to_datetime(p.feature_cutoff_date)
     p["forecast_issue_date"]=pd.to_datetime(p.forecast_issue_date)
     p["target_end_date_h3"]=pd.to_datetime(p.target_end_date_h3)
-    s=src.dropna(subset=FEATURES).sort_values("trade_date").copy()
+    s=src.dropna(subset=["dlog_volume_1","dlog_oi_1","volume_z20","oi_z20","volume_oi_ratio","d_volume_oi_ratio_1","oi_accel_5","volume_accel_5"]).sort_values("trade_date").copy()
     rows=[]
     for r in p.itertuples():
         z=s[s.trade_date < r.feature_cutoff_date]  # preregistered strict prior-date
