@@ -1,0 +1,22 @@
+{
+  "schema": "OCS_H3_V1_PROSPECTIVE_FREEZE",
+  "freeze_date": "2026-10-04",
+  "first_clean_origin": "2026-10-05",
+  "historical_status": "development_only",
+  "selected": null,
+  "rules": {
+    "ifbc_count60_min": 4,
+    "ifbc_q_grid": [
+      0.7,
+      0.75,
+      0.8
+    ],
+    "llrs_external_opposes": true,
+    "llrs_incremental_min_strict": 0,
+    "llrs_q_grid": [
+      0.0,
+      0.1,
+      0.25
+    ]
+  }
+}
