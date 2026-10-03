@@ -1,0 +1,327 @@
+{
+  "n": 34,
+  "rescued": 22,
+  "broken": 12,
+  "separation": [
+    {
+      "feature": "v5_confidence",
+      "smd_rescue_minus_broken": -0.1069266424562621,
+      "rescue_median": 0.16227703341905103,
+      "broken_median": 0.201623245752692
+    },
+    {
+      "feature": "trend_strength",
+      "smd_rescue_minus_broken": -0.07760152906330818,
+      "rescue_median": 0.4563517897222277,
+      "broken_median": 0.5897281603538562
+    },
+    {
+      "feature": "opposite_semivar_share",
+      "smd_rescue_minus_broken": 0.15144352098121514,
+      "rescue_median": 0.4339892078390448,
+      "broken_median": 0.4082686964735849
+    },
+    {
+      "feature": "deceleration_6h",
+      "smd_rescue_minus_broken": -0.13378960369070433,
+      "rescue_median": 0.27298190494828706,
+      "broken_median": -0.004927501606099699
+    },
+    {
+      "feature": "path_consistency",
+      "smd_rescue_minus_broken": 0.4605327624588424,
+      "rescue_median": 0.04166666666666665,
+      "broken_median": 0.0
+    },
+    {
+      "feature": "trend_close_location",
+      "smd_rescue_minus_broken": 0.09539274462341098,
+      "rescue_median": 0.7811254504323928,
+      "broken_median": 0.6707985948794559
+    },
+    {
+      "feature": "opposite_extreme_recency",
+      "smd_rescue_minus_broken": -0.5652625096209819,
+      "rescue_median": 0.069047619047619,
+      "broken_median": 0.09722222222222221
+    },
+    {
+      "feature": "adverse_excursion",
+      "smd_rescue_minus_broken": 0.13542966610810647,
+      "rescue_median": 0.25125386907618374,
+      "broken_median": 0.3292014051205441
+    },
+    {
+      "feature": "gc_dlog_volume_1",
+      "smd_rescue_minus_broken": -0.41739655579377,
+      "rescue_median": -0.036989102178804203,
+      "broken_median": 0.1066974559853255
+    },
+    {
+      "feature": "gc_volume_z20",
+      "smd_rescue_minus_broken": 0.14539585476557315,
+      "rescue_median": 0.6614000480987773,
+      "broken_median": 0.14345563663951622
+    },
+    {
+      "feature": "gc_volume_accel_5",
+      "smd_rescue_minus_broken": -0.5134079013181961,
+      "rescue_median": -0.09964071628859139,
+      "broken_median": 0.05914734593076584
+    },
+    {
+      "feature": "signed_opt_pressure",
+      "smd_rescue_minus_broken": -0.1402774002416281,
+      "rescue_median": 0.30476095471601655,
+      "broken_median": 0.2977869920795174
+    },
+    {
+      "feature": "signed_d_opt_pressure",
+      "smd_rescue_minus_broken": 0.004061716474895307,
+      "rescue_median": 0.0884123966076242,
+      "broken_median": 0.1289799687384233
+    },
+    {
+      "feature": "opt_total_z20",
+      "smd_rescue_minus_broken": -0.07238959361198817,
+      "rescue_median": 0.2505838972602692,
+      "broken_median": 0.44819627945796503
+    },
+    {
+      "feature": "cf_deceleration_6h_gap",
+      "smd_rescue_minus_broken": -0.0868788047047988,
+      "rescue_median": 0.0614384383536535,
+      "broken_median": -0.2918705569163147
+    },
+    {
+      "feature": "cf_opposite_semivar_share_gap",
+      "smd_rescue_minus_broken": 0.14113992836052153,
+      "rescue_median": 0.048431392492897796,
+      "broken_median": -0.007441636731346901
+    },
+    {
+      "feature": "cf_adverse_excursion_gap",
+      "smd_rescue_minus_broken": -0.05468577297408134,
+      "rescue_median": 0.01571816816983345,
+      "broken_median": 0.0540549782835385
+    },
+    {
+      "feature": "cf_signed_opt_pressure_gap",
+      "smd_rescue_minus_broken": 0.14472551894738722,
+      "rescue_median": 0.043482595565291604,
+      "broken_median": 0.00033190556339305005
+    },
+    {
+      "feature": "cf_signed_d_opt_pressure_gap",
+      "smd_rescue_minus_broken": -0.23232212238639238,
+      "rescue_median": 0.05720226024026295,
+      "broken_median": 0.0789642364695785
+    },
+    {
+      "feature": "cf_gc_dlog_volume_1_gap",
+      "smd_rescue_minus_broken": -0.20136162136011362,
+      "rescue_median": -0.09676413670900436,
+      "broken_median": -0.012935300214713202
+    },
+    {
+      "feature": "cf_opt_total_z20_gap",
+      "smd_rescue_minus_broken": -0.08802448962587531,
+      "rescue_median": 0.06868997195219685,
+      "broken_median": 0.43707410303021754
+    },
+    {
+      "feature": "p_rte",
+      "smd_rescue_minus_broken": -0.019067338604499592,
+      "rescue_median": 0.7353297945441409,
+      "broken_median": 0.7532867601651717
+    },
+    {
+      "feature": "p_inst",
+      "smd_rescue_minus_broken": -0.36816030728574445,
+      "rescue_median": 0.6359402924168787,
+      "broken_median": 0.6649141081076297
+    },
+    {
+      "feature": "rte_tension",
+      "smd_rescue_minus_broken": 0.21727487864282433,
+      "rescue_median": 1.9723999881741627,
+      "broken_median": 2.0318693911273007
+    }
+  ],
+  "h2_2025": [
+    {
+      "forecast_issue_date": "2025-07-15 00:00:00",
+      "target_end_date_h3": "2025-07-17",
+      "effect": "BROKEN",
+      "v5_confidence": 0.2410329338079238,
+      "trend_strength": 1.0334898976558975,
+      "opposite_semivar_share": 0.5207514812807129,
+      "deceleration_6h": 0.9747010810367902,
+      "path_consistency": 0.0833333333333333,
+      "trend_close_location": 1.0,
+      "opposite_extreme_recency": 0.0434782608695652,
+      "adverse_excursion": 0.0,
+      "gc_dlog_volume_1": 0.2407065056348791,
+      "gc_volume_z20": 1.3349863666435051,
+      "gc_volume_accel_5": 0.1649818051185736,
+      "signed_opt_pressure": 0.4180898898087574,
+      "signed_d_opt_pressure": 0.1498851761715458,
+      "opt_total_z20": 0.4959326547369209,
+      "cf_deceleration_6h_gap": 0.1490854955796637,
+      "cf_opposite_semivar_share_gap": 0.154723215215253,
+      "cf_adverse_excursion_gap": -0.1890624603597791,
+      "cf_signed_opt_pressure_gap": 0.2845132651138786,
+      "cf_signed_d_opt_pressure_gap": 0.1778651186546819,
+      "cf_gc_dlog_volume_1_gap": 0.1506267692018763,
+      "cf_opt_total_z20_gap": 0.4507741455241905,
+      "p_rte": 0.6498115024086037,
+      "p_inst": 0.6498115024086037,
+      "rte_tension": 1.4493792289390208
+    },
+    {
+      "forecast_issue_date": "2025-09-11 00:00:00",
+      "target_end_date_h3": "2025-09-15",
+      "effect": "BROKEN",
+      "v5_confidence": 0.3127229926594616,
+      "trend_strength": 0.6149977390412759,
+      "opposite_semivar_share": 0.5477045872265012,
+      "deceleration_6h": -0.4716748715027151,
+      "path_consistency": -0.0,
+      "trend_close_location": 0.6861235308492581,
+      "opposite_extreme_recency": 0.0833333333333333,
+      "adverse_excursion": 0.3138764691507419,
+      "gc_dlog_volume_1": 0.1223719627509503,
+      "gc_volume_z20": 1.3522590095442333,
+      "gc_volume_accel_5": 0.0792176516279127,
+      "signed_opt_pressure": 0.4404893617021276,
+      "signed_d_opt_pressure": 0.1894778433054058,
+      "opt_total_z20": 1.1229196361762712,
+      "cf_deceleration_6h_gap": -0.5606843072737424,
+      "cf_opposite_semivar_share_gap": 0.2242533771597193,
+      "cf_adverse_excursion_gap": 0.1315642751966028,
+      "cf_signed_opt_pressure_gap": 0.2075629174213742,
+      "cf_signed_d_opt_pressure_gap": 0.0949538060732436,
+      "cf_gc_dlog_volume_1_gap": 0.0313490135312495,
+      "cf_opt_total_z20_gap": 1.1768443858220603,
+      "p_rte": 0.7997699716557714,
+      "p_inst": 0.6751634154536981,
+      "rte_tension": 2.1941759158504914
+    },
+    {
+      "forecast_issue_date": "2025-09-25 00:00:00",
+      "target_end_date_h3": "2025-09-29",
+      "effect": "RESCUE",
+      "v5_confidence": 0.2959957678691136,
+      "trend_strength": 1.2379653954204697,
+      "opposite_semivar_share": 0.3847141904277341,
+      "deceleration_6h": 0.2295621894248335,
+      "path_consistency": 0.25,
+      "trend_close_location": 0.7054206410459911,
+      "opposite_extreme_recency": 0.0555555555555555,
+      "adverse_excursion": 0.2945793589540088,
+      "gc_dlog_volume_1": 0.2878695518522747,
+      "gc_volume_z20": 1.5394730897104214,
+      "gc_volume_accel_5": 0.253355348031231,
+      "signed_opt_pressure": 0.4416150898909519,
+      "signed_d_opt_pressure": 0.1360864104550365,
+      "opt_total_z20": 1.430773805309289,
+      "cf_deceleration_6h_gap": -0.765839363489588,
+      "cf_opposite_semivar_share_gap": 0.0531860939864156,
+      "cf_adverse_excursion_gap": 0.2776162291817505,
+      "cf_signed_opt_pressure_gap": 0.0379750906315418,
+      "cf_signed_d_opt_pressure_gap": 0.0607877929636723,
+      "cf_gc_dlog_volume_1_gap": 0.5137172414587603,
+      "cf_opt_total_z20_gap": 1.3856152960965589,
+      "p_rte": 0.6019458086678299,
+      "p_inst": 0.6019458086678299,
+      "rte_tension": 1.222897879612987
+    },
+    {
+      "forecast_issue_date": "2025-10-24 00:00:00",
+      "target_end_date_h3": "2025-10-28",
+      "effect": "RESCUE",
+      "v5_confidence": 0.0795992173190807,
+      "trend_strength": 0.0548705891985918,
+      "opposite_semivar_share": 0.4413629393293553,
+      "deceleration_6h": 1.6413390574264255,
+      "path_consistency": 0.0,
+      "trend_close_location": 0.5627156766473813,
+      "opposite_extreme_recency": 0.0714285714285714,
+      "adverse_excursion": 0.4845072226437574,
+      "gc_dlog_volume_1": -0.1300522625166653,
+      "gc_volume_z20": 1.448964957012174,
+      "gc_volume_accel_5": -0.1893484064893097,
+      "signed_opt_pressure": 0.2681820337321973,
+      "signed_d_opt_pressure": 0.289608781184434,
+      "opt_total_z20": 0.4990891003210456,
+      "cf_deceleration_6h_gap": 2.153567587210886,
+      "cf_opposite_semivar_share_gap": -0.1051821369587716,
+      "cf_adverse_excursion_gap": -0.4185707896863725,
+      "cf_signed_opt_pressure_gap": 0.5231078566343763,
+      "cf_signed_d_opt_pressure_gap": 0.1790219839522115,
+      "cf_gc_dlog_volume_1_gap": -0.4107660489189477,
+      "cf_opt_total_z20_gap": 0.1206453681136702,
+      "p_rte": 0.8203302425503007,
+      "p_inst": 0.6213717046986977,
+      "rte_tension": 2.3443781641991377
+    },
+    {
+      "forecast_issue_date": "2025-11-03 00:00:00",
+      "target_end_date_h3": "2025-11-05",
+      "effect": "BROKEN",
+      "v5_confidence": 0.017738709684961,
+      "trend_strength": 0.3854241436722805,
+      "opposite_semivar_share": 0.325258128245688,
+      "deceleration_6h": -0.7373063918259491,
+      "path_consistency": -0.0,
+      "trend_close_location": 0.6554736589096538,
+      "opposite_extreme_recency": 0.25,
+      "adverse_excursion": 0.3445263410903462,
+      "gc_dlog_volume_1": -0.149245296435156,
+      "gc_volume_z20": -1.3346143592109387,
+      "gc_volume_accel_5": -0.0523281235389038,
+      "signed_opt_pressure": 0.4504140263577343,
+      "signed_d_opt_pressure": 0.1906388796061673,
+      "opt_total_z20": -2.501413339576874,
+      "cf_deceleration_6h_gap": -1.2550158683101031,
+      "cf_opposite_semivar_share_gap": -0.0680156678658427,
+      "cf_adverse_excursion_gap": 0.0994814302583259,
+      "cf_signed_opt_pressure_gap": 0.058111055993174,
+      "cf_signed_d_opt_pressure_gap": 0.1382668018002918,
+      "cf_gc_dlog_volume_1_gap": -0.1238886731962161,
+      "cf_opt_total_z20_gap": -2.6558868845775447,
+      "p_rte": 0.7070457576043702,
+      "p_inst": 0.7070457576043702,
+      "rte_tension": 1.7107293006509772
+    },
+    {
+      "forecast_issue_date": "2025-12-02 00:00:00",
+      "target_end_date_h3": "2025-12-04",
+      "effect": "BROKEN",
+      "v5_confidence": 0.0946367651029072,
+      "trend_strength": 0.7289688610378918,
+      "opposite_semivar_share": 0.5517203027251497,
+      "deceleration_6h": 0.7291636519447494,
+      "path_consistency": -0.0833333333333332,
+      "trend_close_location": 0.6092104547106301,
+      "opposite_extreme_recency": 0.0476190476190476,
+      "adverse_excursion": 0.3907895452893699,
+      "gc_dlog_volume_1": -0.3198657381977785,
+      "gc_volume_z20": -2.88256957668938,
+      "gc_volume_accel_5": -0.2741741852460727,
+      "signed_opt_pressure": 0.432104526364909,
+      "signed_d_opt_pressure": 0.0764634612579365,
+      "opt_total_z20": -2.647286611473588,
+      "cf_deceleration_6h_gap": -0.4178288575422705,
+      "cf_opposite_semivar_share_gap": 0.135578041330975,
+      "cf_adverse_excursion_gap": -0.0293852571293035,
+      "cf_signed_opt_pressure_gap": 0.1476693573868559,
+      "cf_signed_d_opt_pressure_gap": -0.0316113000473642,
+      "cf_gc_dlog_volume_1_gap": -0.2945091149588386,
+      "cf_opt_total_z20_gap": -2.6955988052618136,
+      "p_rte": 0.6823166583435413,
+      "p_inst": 0.6823166583435413,
+      "rte_tension": 1.598491386438047
+    }
+  ]
+}
