@@ -46,3 +46,5 @@ for x in res:
     lines.append("")
 (OUT/"RESULT.md").write_text("\n".join(lines))
 print((OUT/"RESULT.md").read_text())
+
+# trigger: workflow-ready
