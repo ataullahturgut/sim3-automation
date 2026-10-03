@@ -1,0 +1,36 @@
+{
+  "clean_freeze_timestamp_utc": "2026-10-03 11:33:49+00:00",
+  "first_eligible_feature_cutoff": "2026-10-05",
+  "forecast_rows": 0,
+  "freeze_timestamp_utc": "2026-10-03 11:33:49+00:00",
+  "frozen_reproduction_audit": {
+    "max_abs_diff_path": 5.551115123125783e-17,
+    "max_abs_diff_structural": 7.771561172376096e-16,
+    "pass": true,
+    "september_rows": 19
+  },
+  "historical_bootstrap_commit": "73d1240cdc4dcac6f3671d53640094fcc61e2083",
+  "identity": "CLEAN_AURORA_H3_V1_PROSPECTIVE",
+  "integrity_audit_rows": 0,
+  "integrity_gate_version": "GOLD_H3_DATA_INTEGRITY_GATE_V1",
+  "integrity_quarantine_rows": 0,
+  "latest_forecast": null,
+  "live_stak_ref": "54fdf1c8d39b7b6c7b874d0f30f784296e886044",
+  "metrics": {
+    "n": 0
+  },
+  "missed_origins": 0,
+  "pending_rows": 0,
+  "postfreeze_daily_price_rows": 0,
+  "settled_rows": 0,
+  "status": "ACTIVE",
+  "this_run_changes": {
+    "built_frozen_expert_matrix": false,
+    "built_frozen_price_snapshot": false,
+    "integrity_quarantined_now": 0,
+    "new_forecasts": 0,
+    "new_price_rows": 0,
+    "new_settlements": 0
+  },
+  "umbrella_identity": "CLEAN_H3_PROSPECTIVE_V1"
+}
