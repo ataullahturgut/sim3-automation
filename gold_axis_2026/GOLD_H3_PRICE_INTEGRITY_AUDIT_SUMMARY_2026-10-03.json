@@ -1,0 +1,74 @@
+{
+  "schema": "GOLD_H3_PRICE_INTEGRITY_AUDIT",
+  "status": {
+    "gold": {
+      "symbol": "XAU/USD",
+      "rows": 1391,
+      "first": "2026-01-27 00:00:00",
+      "last": "2026-03-25 23:00:00"
+    },
+    "silver": {
+      "symbol": "XAG/USD",
+      "error": "{'code': 404, 'message': 'This symbol is available starting with the Grow or Venture plan. Consider upgrading now at https://twelvedata.com/pricing', 'status': 'error'}"
+    },
+    "platinum": {
+      "symbol": "XPT/USD",
+      "error": "{'code': 404, 'message': 'This symbol is available starting with the Grow or Venture plan. Consider upgrading now at https://twelvedata.com/pricing', 'status': 'error'}"
+    },
+    "palladium": {
+      "symbol": "XPD/USD",
+      "error": "{'code': 404, 'message': 'This symbol is available starting with the Grow or Venture plan. Consider upgrading now at https://twelvedata.com/pricing', 'status': 'error'}"
+    }
+  },
+  "flagged_n": 6,
+  "flagged": [
+    {
+      "date": "2026-01-29",
+      "metal": "gold",
+      "hour": 12,
+      "frozen": 5501.7,
+      "twelve": 5331.70622,
+      "log_ratio": 0.03138583211460521
+    },
+    {
+      "date": "2026-01-30",
+      "metal": "gold",
+      "hour": 12,
+      "frozen": 5063.45,
+      "twelve": 4832.13075,
+      "log_ratio": 0.046760549693613145
+    },
+    {
+      "date": "2026-02-04",
+      "metal": "gold",
+      "hour": 12,
+      "frozen": 5051.75,
+      "twelve": 4900.55743,
+      "log_ratio": 0.030385758040715267
+    },
+    {
+      "date": "2026-02-27",
+      "metal": "gold",
+      "hour": 12,
+      "frozen": 3516.02,
+      "twelve": 5234.20513,
+      "log_ratio": -0.3978853270737813
+    },
+    {
+      "date": "2026-01-30",
+      "metal": "gold",
+      "hour": 16,
+      "frozen": 5063.45,
+      "twelve": 4866.25535,
+      "log_ratio": 0.0397233497976553
+    },
+    {
+      "date": "2026-02-27",
+      "metal": "gold",
+      "hour": 16,
+      "frozen": 3516.02,
+      "twelve": 5278.63621,
+      "log_ratio": -0.406338102705146
+    }
+  ]
+}
