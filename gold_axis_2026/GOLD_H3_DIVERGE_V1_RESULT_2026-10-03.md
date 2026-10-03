@@ -2,4 +2,4 @@
 
 **Status:** **SOURCE_BLOCKED**
 
-NameError("name 'SESSION' is not defined")
+RuntimeError("FED_DDP_HEADER_NOT_FOUND JRXWTFB_N.B head=''")

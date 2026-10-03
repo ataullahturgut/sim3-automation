@@ -1,5 +1,5 @@
 {
   "schema": "DIVERGE_H3_V1",
   "status": "SOURCE_BLOCKED",
-  "error": "NameError(\"name 'SESSION' is not defined\")"
+  "error": "RuntimeError(\"FED_DDP_HEADER_NOT_FOUND JRXWTFB_N.B head=''\")"
 }
