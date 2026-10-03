@@ -1,0 +1,158 @@
+{
+  "schema": "SCR_RTE_H3_V1_RETRO_DEVELOPMENT",
+  "status": "RETROSPECTIVE_DEVELOPMENT_ONLY",
+  "accepted_n": 17,
+  "rescued": 5,
+  "broken": 12,
+  "net_rescue": -7,
+  "precision": 0.29411764705882354,
+  "v5_accuracy": 0.6624203821656051,
+  "assisted_accuracy": 0.6475583864118896,
+  "blocks": [
+    {
+      "block": "2024_H2",
+      "eligible_n": 107,
+      "proposal_n": 27,
+      "accepted_n": 3,
+      "rescued": 0,
+      "broken": 3,
+      "net": -3,
+      "precision": 0.0,
+      "v5_accuracy": 0.6915887850467289,
+      "assisted_accuracy": 0.6635514018691588,
+      "ood_suppressed": 0,
+      "competence_suppressed": 3,
+      "library_suppressed": 21,
+      "overlap_suppressed": 0,
+      "fuse_suppressed": 0
+    },
+    {
+      "block": "2025_H1",
+      "eligible_n": 102,
+      "proposal_n": 23,
+      "accepted_n": 7,
+      "rescued": 4,
+      "broken": 3,
+      "net": 1,
+      "precision": 0.5714285714285714,
+      "v5_accuracy": 0.6078431372549019,
+      "assisted_accuracy": 0.6176470588235294,
+      "ood_suppressed": 0,
+      "competence_suppressed": 15,
+      "library_suppressed": 1,
+      "overlap_suppressed": 0,
+      "fuse_suppressed": 0
+    },
+    {
+      "block": "2025_H2",
+      "eligible_n": 109,
+      "proposal_n": 22,
+      "accepted_n": 3,
+      "rescued": 0,
+      "broken": 3,
+      "net": -3,
+      "precision": 0.0,
+      "v5_accuracy": 0.7431192660550459,
+      "assisted_accuracy": 0.7155963302752294,
+      "ood_suppressed": 0,
+      "competence_suppressed": 15,
+      "library_suppressed": 3,
+      "overlap_suppressed": 1,
+      "fuse_suppressed": 0
+    },
+    {
+      "block": "2026_H1",
+      "eligible_n": 109,
+      "proposal_n": 31,
+      "accepted_n": 4,
+      "rescued": 1,
+      "broken": 3,
+      "net": -2,
+      "precision": 0.25,
+      "v5_accuracy": 0.6330275229357798,
+      "assisted_accuracy": 0.6146788990825688,
+      "ood_suppressed": 3,
+      "competence_suppressed": 23,
+      "library_suppressed": 0,
+      "overlap_suppressed": 0,
+      "fuse_suppressed": 1
+    },
+    {
+      "block": "2026_H2",
+      "eligible_n": 44,
+      "proposal_n": 4,
+      "accepted_n": 0,
+      "rescued": 0,
+      "broken": 0,
+      "net": 0,
+      "precision": 0.0,
+      "v5_accuracy": 0.5909090909090909,
+      "assisted_accuracy": 0.5909090909090909,
+      "ood_suppressed": 3,
+      "competence_suppressed": 1,
+      "library_suppressed": 0,
+      "overlap_suppressed": 0,
+      "fuse_suppressed": 0
+    }
+  ],
+  "prospective_freeze": {
+    "schema": "SCR_RTE_H3_V1_PROSPECTIVE_FREEZE",
+    "freeze_date": "2026-10-04",
+    "first_clean_origin": "2026-10-05",
+    "historical_status": "development_only",
+    "train_rows": 573,
+    "max_matured_target_end": "2026-09-29",
+    "constants": {
+      "min_library": 15,
+      "support_k": 5,
+      "local_k": 15,
+      "support_p_min": 0.1,
+      "local_precision_min": 0.6,
+      "wilson_one_sided_level": 0.8
+    },
+    "scaler": {
+      "mean": {
+        "v5_confidence": 0.41161675786435664,
+        "trend_strength": 0.915957655942025,
+        "opposite_semivar_share": 0.33781736915740024,
+        "deceleration_6h": 0.30799197139485923,
+        "path_consistency": 0.11023851076207097,
+        "adverse_excursion": 0.3832909916966024,
+        "gc_dlog_volume_1": 0.009773965835432072,
+        "gc_volume_z20": 0.06583780231134197,
+        "gc_volume_accel_5": 0.006318571769126102,
+        "signed_opt_pressure": -0.04574298985366807,
+        "signed_d_opt_pressure": -0.0033707220046094383,
+        "opt_total_z20": -0.006048282591851123
+      },
+      "std": {
+        "v5_confidence": 0.24878860871942637,
+        "trend_strength": 0.5518140866778132,
+        "opposite_semivar_share": 0.1689816939774454,
+        "deceleration_6h": 0.952447450208357,
+        "path_consistency": 0.18273576876227368,
+        "adverse_excursion": 0.3029904870671453,
+        "gc_dlog_volume_1": 0.2792747857228029,
+        "gc_volume_z20": 1.2289281864087014,
+        "gc_volume_accel_5": 0.32766911609721366,
+        "signed_opt_pressure": 0.3136643199997025,
+        "signed_d_opt_pressure": 0.18017530032900503,
+        "opt_total_z20": 1.2083650577278593
+      }
+    },
+    "specialists": {
+      "sb": {
+        "proposal_library_n": 19,
+        "support_ready": true
+      },
+      "opt": {
+        "proposal_library_n": 85,
+        "support_ready": true
+      },
+      "mat": {
+        "proposal_library_n": 35,
+        "support_ready": true
+      }
+    }
+  }
+}
