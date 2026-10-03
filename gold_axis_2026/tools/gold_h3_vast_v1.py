@@ -345,3 +345,5 @@ def main():
 
 if __name__=="__main__":
     main()
+
+# trigger: vast-v1-workflow-ready
