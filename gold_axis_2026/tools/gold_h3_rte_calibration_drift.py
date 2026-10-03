@@ -25,3 +25,5 @@ for r in rows:
     lines.append(f"| {r['year']} | {r['n']} | {r['mean']:.3f} | {r['q75']:.3f} | {r['q90']:.3f} | {r['q95']:.3f} | {r['q99']:.3f} | {r['ge70']} | {r['ge75']} | {r['ge80']} |")
 MD.write_text("\n".join(lines)+"\n")
 print(MD.read_text())
+
+# trigger: calibration-drift-ready
