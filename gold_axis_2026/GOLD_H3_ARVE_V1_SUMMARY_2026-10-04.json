@@ -1,0 +1,153 @@
+{
+  "schema": "ARVE_H3_V1",
+  "status": "NO_ELIGIBLE_ARVE_V1_POLICY",
+  "policy_grid": [
+    {
+      "half_life": 90,
+      "mean_floor": 0.58,
+      "accepted_n": 23,
+      "rescued": 5,
+      "broken": 18,
+      "net_rescue": -13,
+      "precision": 0.21739130434782608,
+      "positive_blocks": 0,
+      "min_block_net": -7,
+      "eligible": false
+    },
+    {
+      "half_life": 90,
+      "mean_floor": 0.62,
+      "accepted_n": 20,
+      "rescued": 5,
+      "broken": 15,
+      "net_rescue": -10,
+      "precision": 0.25,
+      "positive_blocks": 0,
+      "min_block_net": -6,
+      "eligible": false
+    },
+    {
+      "half_life": 90,
+      "mean_floor": 0.66,
+      "accepted_n": 16,
+      "rescued": 4,
+      "broken": 12,
+      "net_rescue": -8,
+      "precision": 0.25,
+      "positive_blocks": 0,
+      "min_block_net": -4,
+      "eligible": false
+    },
+    {
+      "half_life": 180,
+      "mean_floor": 0.58,
+      "accepted_n": 9,
+      "rescued": 4,
+      "broken": 5,
+      "net_rescue": -1,
+      "precision": 0.4444444444444444,
+      "positive_blocks": 1,
+      "min_block_net": -2,
+      "eligible": false
+    },
+    {
+      "half_life": 180,
+      "mean_floor": 0.62,
+      "accepted_n": 5,
+      "rescued": 2,
+      "broken": 3,
+      "net_rescue": -1,
+      "precision": 0.4,
+      "positive_blocks": 0,
+      "min_block_net": -1,
+      "eligible": false
+    },
+    {
+      "half_life": 180,
+      "mean_floor": 0.66,
+      "accepted_n": 3,
+      "rescued": 1,
+      "broken": 2,
+      "net_rescue": -1,
+      "precision": 0.3333333333333333,
+      "positive_blocks": 0,
+      "min_block_net": -1,
+      "eligible": false
+    },
+    {
+      "half_life": 360,
+      "mean_floor": 0.58,
+      "accepted_n": 9,
+      "rescued": 2,
+      "broken": 7,
+      "net_rescue": -5,
+      "precision": 0.2222222222222222,
+      "positive_blocks": 0,
+      "min_block_net": -2,
+      "eligible": false
+    },
+    {
+      "half_life": 360,
+      "mean_floor": 0.62,
+      "accepted_n": 6,
+      "rescued": 2,
+      "broken": 4,
+      "net_rescue": -2,
+      "precision": 0.3333333333333333,
+      "positive_blocks": 0,
+      "min_block_net": -1,
+      "eligible": false
+    },
+    {
+      "half_life": 360,
+      "mean_floor": 0.66,
+      "accepted_n": 2,
+      "rescued": 0,
+      "broken": 2,
+      "net_rescue": -2,
+      "precision": 0.0,
+      "positive_blocks": 0,
+      "min_block_net": -2,
+      "eligible": false
+    }
+  ],
+  "chosen_policy": null,
+  "prospective_freeze": {
+    "schema": "ARVE_H3_V1_PROSPECTIVE_FREEZE",
+    "freeze_date": "2026-10-04",
+    "first_clean_origin": "2026-10-05",
+    "historical_2026_status": "development_only",
+    "chosen_policy": null,
+    "train_n": 570,
+    "train_rescue_rate": 0.32456140350877194,
+    "max_matured_target_end": "2026-09-29",
+    "features": [
+      "v5_confidence",
+      "abs_h_ret_12",
+      "trend_strength",
+      "opposite_semivar_share",
+      "deceleration_6h",
+      "path_consistency",
+      "adverse_excursion",
+      "gc_volume_z20",
+      "gc_volume_accel_5",
+      "signed_opt_pressure",
+      "signed_d_opt_pressure",
+      "opt_total_z20",
+      "p_rte",
+      "p_inst",
+      "health_error_20",
+      "health_error_60",
+      "health_same_momentum_20",
+      "health_large_error_20",
+      "health_mean_abs_move_20",
+      "health_since_last_error"
+    ],
+    "estimator": {
+      "type": "StandardScaler + LogisticRegression bootstrap ensemble",
+      "C": 0.5,
+      "bootstraps": 21,
+      "lower_quantile": 0.2
+    }
+  }
+}

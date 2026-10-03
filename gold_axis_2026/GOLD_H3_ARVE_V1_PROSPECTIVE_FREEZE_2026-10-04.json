@@ -1,0 +1,38 @@
+{
+  "schema": "ARVE_H3_V1_PROSPECTIVE_FREEZE",
+  "freeze_date": "2026-10-04",
+  "first_clean_origin": "2026-10-05",
+  "historical_2026_status": "development_only",
+  "chosen_policy": null,
+  "train_n": 570,
+  "train_rescue_rate": 0.32456140350877194,
+  "max_matured_target_end": "2026-09-29",
+  "features": [
+    "v5_confidence",
+    "abs_h_ret_12",
+    "trend_strength",
+    "opposite_semivar_share",
+    "deceleration_6h",
+    "path_consistency",
+    "adverse_excursion",
+    "gc_volume_z20",
+    "gc_volume_accel_5",
+    "signed_opt_pressure",
+    "signed_d_opt_pressure",
+    "opt_total_z20",
+    "p_rte",
+    "p_inst",
+    "health_error_20",
+    "health_error_60",
+    "health_same_momentum_20",
+    "health_large_error_20",
+    "health_mean_abs_move_20",
+    "health_since_last_error"
+  ],
+  "estimator": {
+    "type": "StandardScaler + LogisticRegression bootstrap ensemble",
+    "C": 0.5,
+    "bootstraps": 21,
+    "lower_quantile": 0.2
+  }
+}
