@@ -89,3 +89,5 @@ for r in df.itertuples():
     lines.append(f"| {r.regime} | {r.specialist} | {r.support} | {r.rescued} | {r.broken} | {r.net:+d} | {100*r.precision:.2f}% |")
 MD.write_text("\n".join(lines)+"\n")
 print(MD.read_text())
+
+# trigger: specialist-regime-audit-ready
