@@ -1,0 +1,39 @@
+name: Gold H3 FRS V1 Tournament
+on:
+  push:
+    branches: [gold-h3-fuzzy-reversal-tournament-v1-20261004]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_frs_v1.py'
+      - '.github/workflows/gold-h3-frs-v1.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-fuzzy-reversal-tournament-v1-20261004
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check numpy pandas
+      - run: python gold_axis_2026/tools/gold_h3_frs_v1.py
+      - name: Record FRS tournament evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            gold_axis_2026/GOLD_H3_FRS_V1_TOURNAMENT_PREDICTIONS_2026-10-04.csv \
+            gold_axis_2026/GOLD_H3_FRS_V1_BLOCK_METRICS_2026-10-04.csv \
+            gold_axis_2026/GOLD_H3_FRS_V1_SUMMARY_2026-10-04.json \
+            gold_axis_2026/GOLD_H3_FRS_V1_RESULT_2026-10-04.md \
+            gold_axis_2026/GOLD_H3_FRS_V1_SHADOW_FREEZE_2026-10-04.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record FRS-H3 V1 uncertainty tournament"
+            git pull --rebase origin gold-h3-fuzzy-reversal-tournament-v1-20261004
+            git push origin HEAD:gold-h3-fuzzy-reversal-tournament-v1-20261004
+          fi
