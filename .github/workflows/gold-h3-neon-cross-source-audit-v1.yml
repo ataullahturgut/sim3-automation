@@ -1,0 +1,57 @@
+name: Gold H3 Neon Cross Source Audit
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_neon_cross_source_audit_v1.py'
+      - '.github/workflows/gold-h3-neon-cross-source-audit-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      OUT_DIR: gold_h3_neon_cross_source_out
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4'
+      - run: test -n "$NEON_DATABASE_URL"
+      - run: python gold_axis_2026/tools/gold_h3_neon_cross_source_audit_v1.py
+      - name: Commit cross-source evidence
+        shell: bash
+        run: |
+          cp "$OUT_DIR/NEON_CROSS_SOURCE_AUDIT.md" gold_axis_2026/GOLD_H3_NEON_CROSS_SOURCE_AUDIT_2026-10-03.md
+          cp "$OUT_DIR/cross_source_summary.json" gold_axis_2026/GOLD_H3_NEON_CROSS_SOURCE_SUMMARY_2026-10-03.json
+          cp "$OUT_DIR/focus_2026_02_24_03_04.csv" gold_axis_2026/GOLD_H3_NEON_FOCUS_FEB27_2026-10-03.csv
+          cp "$OUT_DIR/xau_stak_vs_ny17_all.csv" gold_axis_2026/GOLD_H3_NEON_XAU_STAK_VS_NY17_2026-10-03.csv
+          cp "$OUT_DIR/xau_stak_vs_ny17_flags.csv" gold_axis_2026/GOLD_H3_NEON_XAU_STAK_VS_NY17_FLAGS_2026-10-03.csv
+          cp "$OUT_DIR/four_metal_multi_extreme_flags.csv" gold_axis_2026/GOLD_H3_NEON_FOUR_METAL_FLAGS_2026-10-03.csv
+          cp "$OUT_DIR/xau_pairwise_source_diagnostics.csv" gold_axis_2026/GOLD_H3_NEON_XAU_SOURCE_DIAGNOSTICS_2026-10-03.csv
+          cp "$OUT_DIR/xau_daily_xaus_conflict_timestamps.csv" gold_axis_2026/GOLD_H3_NEON_XAUS_CONFLICTS_2026-10-03.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_NEON_*_2026-10-03.*
+          if ! git diff --cached --quiet; then
+            git commit -m "Audit Neon H3 cross-source consistency"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-neon-cross-source-audit
+          path: gold_h3_neon_cross_source_out/
+          retention-days: 90
