@@ -33,23 +33,22 @@ The frozen metal history is the same clean lineage already used by the clean H3 
 
 ### Broad USD
 Series:
-- FRED / Federal Reserve H.10 `DTWEXBGS`
-- semantic: broad trade-weighted U.S. dollar index
+- Federal Reserve Board H.10 DDP `JRXWTFB_N.B` / semantic equivalent of broad trade-weighted U.S. dollar index (`DTWEXBGS` lineage)
 - exact ICE DXY is **not** substituted.
 
 ### U.S. 10-year yield
 Series:
-- FRED / Federal Reserve H.15 `DGS10`
+- Federal Reserve Board H.15 DDP `RIFLGFCY10_N.B` / DGS10 semantic lineage
 - daily change in percentage points.
 
 ### Nasdaq-100
 Series:
-- FRED `NASDAQ100`
+- Yahoo chart `^NDX` daily close transport, used only for retrospective research return construction
 - daily return.
 
 ### VIX
 Series:
-- FRED `VIXCLS` / Cboe lineage
+- Yahoo chart `^VIX` daily close transport, underlying Cboe VIX identity retained as a retrospective research proxy
 - daily log change.
 
 WTI/Brent are excluded from V1 because no governed daily series is presently registered in the project. They may not be introduced after seeing 2026 outcomes.
@@ -103,6 +102,9 @@ Cross-market stress:
 where each z-value is the current completed source return/change standardized against the **preceding** 60 source observations (rolling mean/std use `shift(1)`), so unlike units are never averaged directly.
 
 No feature search or sign-rule revision is allowed after 2026 outcomes are inspected.
+
+### Pre-execution source-transport amendment
+The first execution attempt produced `SOURCE_BLOCKED` because the FRED CSV request timed out before any DEV threshold/model result existed. Before any outcome-based evaluation, transport was changed to direct Federal Reserve H.15/H.10 DDP for yield/USD and Yahoo chart for NDX/VIX. Feature definitions, lags, periods, threshold grid and gates remain unchanged.
 
 ### Pre-execution semantic amendment
 Before any model execution or outcome inspection, the confirmation composite was changed from raw unlike units to backward-looking source-specific z-scores. No threshold, label, period, source, or 2026 result was inspected in making this correction.
