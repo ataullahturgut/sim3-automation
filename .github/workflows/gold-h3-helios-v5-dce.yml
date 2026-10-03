@@ -1,0 +1,58 @@
+name: Gold H3 HELIOS V5 DCE
+
+on:
+  push:
+    branches: [gold-midas-headswap-v1-20260925]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_helios_v5_dce.py'
+      - 'gold_axis_2026/GOLD_H3_HELIOS_V5_DCE_AUTHORITY_2026-10-03.md'
+      - '.github/workflows/gold-h3-helios-v5-dce.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      OUT_DIR: gold_h3_helios_v5_dce_out
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-midas-headswap-v1-20260925
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2'
+      - name: Run HELIOS H3 V5 DCE
+        run: python gold_axis_2026/tools/gold_h3_helios_v5_dce.py
+      - name: Commit HELIOS V5 DCE evidence
+        shell: bash
+        run: |
+          cp "$OUT_DIR/HELIOS_V5_DCE_RESULT.md" gold_axis_2026/GOLD_H3_HELIOS_V5_DCE_RESULT_2026-10-03.md
+          cp "$OUT_DIR/helios_v5_dce_summary.json" gold_axis_2026/GOLD_H3_HELIOS_V5_DCE_SUMMARY_2026-10-03.json
+          cp "$OUT_DIR/helios_v5_dce_metrics.csv" gold_axis_2026/GOLD_H3_HELIOS_V5_DCE_METRICS_2026-10-03.csv
+          cp "$OUT_DIR/helios_v5_dce_predictions.csv" gold_axis_2026/GOLD_H3_HELIOS_V5_DCE_PREDICTIONS_2026-10-03.csv
+          cp "$OUT_DIR/helios_v5_dce_exceptions.csv" gold_axis_2026/GOLD_H3_HELIOS_V5_DCE_EXCEPTIONS_2026-10-03.csv
+          cp "$OUT_DIR/helios_v5_dce_inference.csv" gold_axis_2026/GOLD_H3_HELIOS_V5_DCE_INFERENCE_2026-10-03.csv
+          cp "$OUT_DIR/helios_v5_dce_cluster_inference.csv" gold_axis_2026/GOLD_H3_HELIOS_V5_DCE_CLUSTER_INFERENCE_2026-10-03.csv
+          cp "$OUT_DIR/helios_v5_dce_sensitivity.csv" gold_axis_2026/GOLD_H3_HELIOS_V5_DCE_SENSITIVITY_2026-10-03.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_HELIOS_V5_DCE_*_2026-10-03.*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record HELIOS H3 v5 DCE results"
+            git pull --rebase origin gold-midas-headswap-v1-20260925
+            git push origin HEAD:gold-midas-headswap-v1-20260925
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-h3-helios-v5-dce
+          path: gold_h3_helios_v5_dce_out/
+          if-no-files-found: warn
+          retention-days: 90
