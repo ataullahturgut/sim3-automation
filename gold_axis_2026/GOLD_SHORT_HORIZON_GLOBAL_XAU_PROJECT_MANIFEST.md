@@ -4100,3 +4100,134 @@ The same CME FTP files expose separate daily `OG GOLD CALL` and `OG GOLD PUT` Vo
 Authority:
 - `GOLD_H3_FLOW_PRELIM_OI_V1_CLOSURE_2026-10-03.md`
 - closure commit `1314c1405b0855f51a1881fde053b74f5f8eefa5`.
+
+
+## 47. RTE — REVERSAL TRANSITION ENGINE V1–V4 (2026-10-03)
+
+**Objective:** solve HELIOS V5 residual reversal errors with an original transition architecture rather than another generic forecasting-model substitution.
+
+### 47.1 RTE V1
+
+Architecture:
+- V5-conditioned rescue target;
+- matched continuation twins using only matured prior origins;
+- intraday/path state;
+- official CME prior-trade-date GC volume;
+- official CME Gold CALL/PUT volume asymmetry;
+- sequential latent transition tension.
+
+CME source coverage is 100% for 2022, 2023, 2024, 2025 and 2026 through Sep-30.
+
+DEV 2023-2024 threshold result:
+- 0.55 => rescue/broken/net = 27/44/-17
+- 0.60 => 26/34/-8
+- 0.65 => 20/25/-5
+- 0.70 => 14/18/-4
+- 0.75 => 13/13/0
+- 0.80 => 11/11/0
+
+Status: `NO_ELIGIBLE_RTE_THRESHOLD`.
+
+### 47.2 Slow-burn discovery and V2B
+
+DEV false-positive anatomy showed high-tension true rescues were generally **persistent/plateau** states, while broken calls were sharp one-origin spikes.
+
+At pRTE >=0.75:
+- rescued median ΔpRTE ≈ +0.004
+- broken median ΔpRTE ≈ +0.175.
+
+Frozen slow-burn rule:
+- previous pRTE >=0.60
+- ΔpRTE <=0.05.
+
+2023-2024 development:
+- candidates 11
+- rescue 9
+- broken 2
+- net +7
+- precision 81.82%.
+
+Untouched 2025 confirmation:
+- candidates 1
+- rescue 0
+- broken 1
+- net -1.
+
+Status: `RTE_V2B_2025_CONFIRM_FAIL`.
+
+2026 remained unopened.
+
+### 47.3 2025 mechanism diagnosis
+
+2025 pRTE levels did not collapse:
+- q75 ≈0.689
+- q90 ≈0.792
+- 31 origins >=0.75.
+
+The slow-burn morphology itself failed to transport.
+
+Largest 2025 reversal-vs-continuation separation among audited RTE features:
+- signed Gold options pressure against momentum: SMD ≈ +0.39
+- pRTE: +0.35
+- pInst: +0.34.
+
+### 47.4 RTE V3 — option-confirmed transition
+
+Candidate:
+`pRTE >= q AND pInst >=0.50 AND signed Gold options pressure >0`.
+
+2024-2025 aggregate:
+- q=.60 => net 0, precision 50.0%
+- q=.65 => net +2, precision 51.72%
+- q=.70 => net +2, precision 52.38%.
+
+Half-year instability was material:
+- 2025 H1 consistently positive, up to net +5;
+- 2025 H2 consistently negative, down to net -5.
+
+Status: `NO_ROBUST_RTE_V3_RULE`.
+
+2026 remained unopened.
+
+### 47.5 RTE V4 — material reversal target
+
+Target:
+`V5 missed reversal AND abs(H3 return) >=1.0%`.
+
+Best development threshold q=.70:
+- candidates 28
+- rescue 15
+- broken 13
+- net +2
+- precision 53.57%
+- half-year nets +3 / 0 / +4 / -5.
+
+Status: `NO_ROBUST_RTE_V4_RULE`.
+
+2026 remained unopened.
+
+### 47.6 Binding scientific conclusion
+
+RTE produced one strong development mechanism — slow-burn V2B at +7 net and 81.82% precision — but it failed to transport to 2025.
+
+Across V3 and V4, 2025 H1 is favorable while 2025 H2 is systematically harmful.
+
+Therefore the remaining reversal error is now treated as **regime/state conditional** rather than a scalar candidate-threshold problem.
+
+Do not continue blind threshold searches on V1-V4.
+
+Next research direction:
+**Regime-Conditional Reversal Transition Engine**.
+
+Primary question:
+what origin-observable state changed between 2025 H1 and 2025 H2 that caused reversal-rescue logic to invert?
+
+Governance:
+- no RTE version opened 2026 holdout outcomes;
+- no 2026 tuning occurred;
+- HELIOS V5-DCE remains binding;
+- CLEAN_H3_PROSPECTIVE_V1 remains untouched.
+
+Authority:
+- `GOLD_H3_RTE_V1_V4_CLOSURE_2026-10-03.md`
+- closure commit `7b62df90088f1add53c344ec604975056c9a3bae`.
