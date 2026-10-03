@@ -1,0 +1,92 @@
+{
+  "schema": "RC_RTE_SHADOW_H3_V2",
+  "status": "NO_ROBUST_RC_RTE_V2_RULE",
+  "blocks": [
+    {
+      "eligible_n": 107,
+      "proposal_n": 27,
+      "candidate_n": 0,
+      "candidate_rate": 0.0,
+      "rescued": 0,
+      "broken": 0,
+      "net_rescue": 0,
+      "rescue_precision": 0.0,
+      "v5_accuracy": 0.6915887850467289,
+      "assisted_accuracy": 0.6915887850467289,
+      "missed_opal_no_candidate_n": 27,
+      "hits_missed_opal_no_candidate": 0,
+      "permission_transitions": 0,
+      "permission_transitions_by_regime": {
+        "0": 0,
+        "1": 0,
+        "2": 0
+      },
+      "block": "2024_H2",
+      "train_n": 102,
+      "static_enabled_regimes": ""
+    },
+    {
+      "eligible_n": 102,
+      "proposal_n": 23,
+      "candidate_n": 20,
+      "candidate_rate": 0.19607843137254902,
+      "rescued": 14,
+      "broken": 6,
+      "net_rescue": 8,
+      "rescue_precision": 0.7,
+      "v5_accuracy": 0.6078431372549019,
+      "assisted_accuracy": 0.6862745098039216,
+      "missed_opal_no_candidate_n": 36,
+      "hits_missed_opal_no_candidate": 11,
+      "permission_transitions": 1,
+      "permission_transitions_by_regime": {
+        "0": 0,
+        "1": 1,
+        "2": 0
+      },
+      "block": "2025_H1",
+      "train_n": 209,
+      "static_enabled_regimes": "1;2"
+    },
+    {
+      "eligible_n": 109,
+      "proposal_n": 22,
+      "candidate_n": 9,
+      "candidate_rate": 0.08256880733944955,
+      "rescued": 2,
+      "broken": 7,
+      "net_rescue": -5,
+      "rescue_precision": 0.2222222222222222,
+      "v5_accuracy": 0.7431192660550459,
+      "assisted_accuracy": 0.6972477064220184,
+      "missed_opal_no_candidate_n": 26,
+      "hits_missed_opal_no_candidate": 2,
+      "permission_transitions": 3,
+      "permission_transitions_by_regime": {
+        "0": 1,
+        "1": 0,
+        "2": 2
+      },
+      "block": "2025_H2",
+      "train_n": 311,
+      "static_enabled_regimes": "0;2"
+    }
+  ],
+  "pooled_pre2026": {
+    "eligible_n": 318,
+    "candidate_n": 29,
+    "rescued": 16,
+    "broken": 13,
+    "net_rescue": 3,
+    "rescue_precision": 0.5517241379310345,
+    "positive_blocks": 1,
+    "min_block_net": -5,
+    "v5_accuracy": 0.6823899371069182,
+    "assisted_accuracy": 0.6918238993710691,
+    "robust_pass": false
+  },
+  "holdout_2026": null,
+  "whole_2026": null,
+  "final_static_enabled_regimes": null,
+  "final_regime_audit": null
+}
