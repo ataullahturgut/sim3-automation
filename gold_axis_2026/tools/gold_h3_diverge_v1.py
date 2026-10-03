@@ -1,4 +1,5 @@
 from __future__ import annotations
+# workflow diagnostic rerun: preregistered logic unchanged
 import io, json, math
 from pathlib import Path
 
