@@ -33,17 +33,29 @@ def main():
         with conn.cursor() as cur:
             cur.execute("SET TRANSACTION READ ONLY")
             cur.execute("""
-              WITH x AS (
-                SELECT series_id,observation_ts,value,retrieved_at,
-                       ROW_NUMBER() OVER(PARTITION BY series_id,observation_ts ORDER BY retrieved_at DESC) rn,
-                       COUNT(*) OVER(PARTITION BY series_id,observation_ts) revision_n,
-                       COUNT(DISTINCT value) OVER(PARTITION BY series_id,observation_ts) distinct_value_n
+              WITH base AS (
+                SELECT series_id,observation_ts,value,retrieved_at
                 FROM observations
                 WHERE series_id = ANY(%s)
+              ),
+              stats AS (
+                SELECT series_id,observation_ts,
+                       COUNT(*) AS revision_n,
+                       COUNT(DISTINCT value) AS distinct_value_n
+                FROM base
+                GROUP BY series_id,observation_ts
+              ),
+              latest AS (
+                SELECT series_id,observation_ts,value,retrieved_at,
+                       ROW_NUMBER() OVER(PARTITION BY series_id,observation_ts ORDER BY retrieved_at DESC) rn
+                FROM base
               )
-              SELECT series_id,observation_ts,value,retrieved_at,revision_n,distinct_value_n
-              FROM x WHERE rn=1
-              ORDER BY series_id,observation_ts
+              SELECT l.series_id,l.observation_ts,l.value,l.retrieved_at,
+                     s.revision_n,s.distinct_value_n
+              FROM latest l
+              JOIN stats s USING(series_id,observation_ts)
+              WHERE l.rn=1
+              ORDER BY l.series_id,l.observation_ts
             """,(SERIES,))
             rows=cur.fetchall(); cols=[d.name for d in cur.description]
         conn.rollback()
