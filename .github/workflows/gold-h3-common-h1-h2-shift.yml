@@ -1,0 +1,34 @@
+name: Gold H3 Common H1-H2 Shift
+on:
+  push:
+    branches: [gold-h3-bpr-rte-v1-20261004]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_h1_h2_common_shift.py'
+      - '.github/workflows/gold-h3-common-h1-h2-shift.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-bpr-rte-v1-20261004
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check numpy pandas
+      - run: python gold_axis_2026/tools/gold_h3_h1_h2_common_shift.py
+      - name: Record common shift
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_H1_H2_COMMON_STATE_SHIFT_2024_2025_2026-10-04.json gold_axis_2026/GOLD_H3_H1_H2_COMMON_STATE_SHIFT_2024_2025_2026-10-04.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Record common H1-H2 state shift"
+            git pull --rebase origin gold-h3-bpr-rte-v1-20261004
+            git push origin HEAD:gold-h3-bpr-rte-v1-20261004
+          fi
