@@ -1,0 +1,96 @@
+{
+  "schema": "APT_RTE_H3_V1",
+  "status": "APT_RTE_ROBUST_PASS_2026_OPENED",
+  "block_metrics": [
+    {
+      "block": "2024_H1",
+      "eligible_n": 90,
+      "candidate_n": 1,
+      "candidate_rate": 0.011111111111111112,
+      "rescued": 1,
+      "broken": 0,
+      "net_rescue": 1,
+      "rescue_precision": 1.0,
+      "v5_accuracy": 0.7444444444444445,
+      "assisted_accuracy": 0.7555555555555555,
+      "missed_opal_no_candidate_n": 22,
+      "hits_missed_opal_no_candidate": 1
+    },
+    {
+      "block": "2024_H2",
+      "eligible_n": 107,
+      "candidate_n": 3,
+      "candidate_rate": 0.028037383177570093,
+      "rescued": 2,
+      "broken": 1,
+      "net_rescue": 1,
+      "rescue_precision": 0.6666666666666666,
+      "v5_accuracy": 0.6915887850467289,
+      "assisted_accuracy": 0.7009345794392523,
+      "missed_opal_no_candidate_n": 27,
+      "hits_missed_opal_no_candidate": 2
+    },
+    {
+      "block": "2025_H1",
+      "eligible_n": 102,
+      "candidate_n": 8,
+      "candidate_rate": 0.0784313725490196,
+      "rescued": 6,
+      "broken": 2,
+      "net_rescue": 4,
+      "rescue_precision": 0.75,
+      "v5_accuracy": 0.6078431372549019,
+      "assisted_accuracy": 0.6470588235294118,
+      "missed_opal_no_candidate_n": 36,
+      "hits_missed_opal_no_candidate": 4
+    },
+    {
+      "block": "2025_H2",
+      "eligible_n": 109,
+      "candidate_n": 3,
+      "candidate_rate": 0.027522935779816515,
+      "rescued": 1,
+      "broken": 2,
+      "net_rescue": -1,
+      "rescue_precision": 0.3333333333333333,
+      "v5_accuracy": 0.7431192660550459,
+      "assisted_accuracy": 0.7339449541284404,
+      "missed_opal_no_candidate_n": 26,
+      "hits_missed_opal_no_candidate": 1
+    }
+  ],
+  "pooled_pre2026": {
+    "eligible_n": 408,
+    "candidate_n": 15,
+    "candidate_rate": 0.03676470588235294,
+    "rescued": 10,
+    "broken": 5,
+    "net_rescue": 5,
+    "rescue_precision": 0.6666666666666666,
+    "nonnegative_blocks": 3,
+    "min_block_net": -1,
+    "v5_accuracy": 0.696078431372549,
+    "assisted_accuracy": 0.7083333333333334,
+    "robust_pass": true
+  },
+  "holdout_2026": {
+    "eligible_n": 153,
+    "candidate_n": 12,
+    "candidate_rate": 0.0784313725490196,
+    "rescued": 2,
+    "broken": 10,
+    "net_rescue": -8,
+    "rescue_precision": 0.16666666666666666,
+    "v5_accuracy": 0.6209150326797386,
+    "assisted_accuracy": 0.5686274509803921,
+    "missed_opal_no_candidate_n": 55,
+    "hits_missed_opal_no_candidate": 2
+  },
+  "whole_2026": {
+    "n": 191,
+    "v5_correct": 121,
+    "assisted_correct": 113,
+    "v5_accuracy": 0.6335078534031413,
+    "assisted_accuracy": 0.5916230366492147
+  }
+}
