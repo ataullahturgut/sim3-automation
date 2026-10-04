@@ -247,7 +247,7 @@ def main():
     z["mcp_score"]=mcp_scores(z)
     z["log_trend_age"]=np.log1p(z.trend_age.astype(float))
 
-    train=(z.feature_cutoff_date.dt.year.isin([2023,2024]))
+    years=pd.to_numeric(z["year"],errors="coerce")\n    train=years.isin([2023,2024])
     train_valid=train & z.mcp_score.notna()
     if train_valid.sum()<300: raise RuntimeError("Insufficient 2023-24 training rows")
 
@@ -284,7 +284,7 @@ def main():
 
     score_cols={"MCP":"mcp_score","SELLR":"sellr_score","HAZ":"haz_score","ANALOG":"analog_score"}
 
-    dev=z[z.feature_cutoff_date.dt.year==2025].copy()
+    dev=z[years==2025].copy()
     grids=[]; selected={}
     for fam,col in score_cols.items():
         ts=z.loc[train & z[col].notna(),col].to_numpy(float)
@@ -319,7 +319,7 @@ def main():
         winner=finalists[0]["family"]
 
     # Frozen 2026 stress of all 2025-eligible finalists.
-    test=z[z.feature_cutoff_date.dt.year==2026].copy().reset_index(drop=True)
+    test=z[years==2026].copy().reset_index(drop=True)
     if len(test)!=191: raise RuntimeError(f"Expected 191 2026 rows, got {len(test)}")
     if int(test.baseline_correct.sum())!=126: raise RuntimeError(f"Expected baseline 126/191, got {int(test.baseline_correct.sum())}")
     base=confusion(test.y_up,test.baseline_pred)
