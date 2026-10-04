@@ -45,7 +45,7 @@ def _bool(v):
 def build_frame():
     # Historical spine through 2025.
     old=hsm.load_frame().sort_values("feature_cutoff_date").reset_index(drop=True)
-    old=old[old.feature_cutoff_date.dt.year<=2025].copy()
+    old=old[pd.to_numeric(old["year"],errors="coerce")<=2025].copy()
 
     # Authoritative repaired 191-origin 2026 universe.
     v=pd.read_csv(V5C,parse_dates=["feature_cutoff_date","forecast_issue_date","target_end_date_h3"])
