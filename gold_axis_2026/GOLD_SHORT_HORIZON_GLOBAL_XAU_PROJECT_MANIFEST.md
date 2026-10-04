@@ -4788,3 +4788,131 @@ Authorities:
 - freeze commit `814ed94239cfaf9ad07736ed1f824bfa1b1945b0`
 - JSON commit `9d9c6c85b331c0f1e8715d3b7521c34babc391a8`
 - prospective ledger initialized at `GOLD_H3_SAGE_V2_PROSPECTIVE_LEDGER.csv`.
+
+
+## 55. EXCEPTION-CHANNEL LAB V1 (2026-10-04)
+
+Research doctrine after SAGE V2:
+
+- keep HELIOS V5-DCE as the strong baseline;
+- search only for sparse, physically distinct reversal exceptions;
+- evaluate rescue / broken / net rescue, false burden and marginal rescue over OCS;
+- a high-precision channel with zero marginal rescue is redundant;
+- historical 2025–2026 remains development/stress-test only.
+
+Authority:
+- `GOLD_H3_EXCEPTION_CHANNEL_LAB_V1_2026-10-04.md`
+- lab commit `3e51879d5dbd9699f12b0399f540d653fb8c3556`.
+
+### 55.1 TPC-H3 V1 — Temporal Propagation Concurrence
+
+TPC tested whether external LLRS stress accompanied a recent 3h-vs-12h deterioration pattern in internal Gold/Silver flow geometry.
+
+Frozen rule:
+- V5 follows momentum;
+- LLRS external-opposes;
+- LLRS incremental >0;
+- LLRS pressure >=0.10;
+- at least 3/5 propagation flags:
+  - GC opposition share 3h > 12h;
+  - GC flow 3h < 12h;
+  - Gold 3h late rejection >0;
+  - Silver 3h late rejection >0;
+  - GC efficiency 6h < 12h.
+
+Integrity:
+- common rows 252
+- identity mismatches 0
+- leakage failures 0.
+
+Result:
+- candidates 23
+- rescue / broken / net = **9 / 14 / -5**
+- precision **39.13%**
+- V5 66.67% -> TPC 64.68%.
+
+Marginal relative to OCS:
+- TPC-only 20 candidates
+- 7 rescue / 13 broken
+- net **-6**.
+
+Union:
+- 27 candidates
+- 13 rescue / 14 broken
+- net **-1**.
+
+Status:
+`TPC_H3_V1_FAIL`.
+
+Conclusion:
+the OCS concurrence should not be broadened with this temporal-propagation proxy.
+Do not tune the propagation-count threshold or component signs on the same replay.
+
+### 55.2 DCX-H3 V1 — Directional-Change Overshoot Exhaustion
+
+DCX tested a fully independent pre-origin intrinsic-time mechanism using hourly Gold price only.
+
+Origin-adaptive event threshold:
+- delta = median absolute 6h GC return over 480 prior hourly bars.
+
+Directional-change state reconstructed over last 240 hourly bars.
+
+Frozen exception:
+- V5 follows momentum;
+- current DC mode still equals momentum direction;
+- trailing overshoot rank >=0.80;
+- current retracement ratio >=0.50.
+
+Integrity:
+- hourly GC rows 10,067
+- origin feature rows 417
+- development rows 309
+- integrity/timeline failures 0.
+
+Result:
+- candidates 4
+- rescue / broken / net = **1 / 3 / -2**
+- precision **25.00%**
+- V5 66.02% -> DCX 65.37%.
+
+Marginal relative to OCS:
+- overlap **0**
+- DCX-only net **-2**.
+
+OCS+DCX union:
+- 11 candidates
+- 7 rescue / 4 broken
+- net **+3**
+- precision 63.64%,
+
+which is worse than OCS alone at net +5.
+
+Status:
+`DCX_H3_V1_FAIL`.
+
+Conclusion:
+intrinsic-time exhaustion is genuinely orthogonal to OCS but not sufficiently selective under the frozen V1 representation.
+
+### 55.3 Surviving research queue
+
+Priority successor channels:
+
+1. **PMBF-H3 — Precious-Metals Breadth Fracture**
+   - Gold vs Silver / Platinum / Palladium breadth and relative-value disagreement.
+   - Requires source coverage audit before any model.
+
+2. **OFDX-H3 — Options/Futures Disagreement Exception**
+   - rare options opposition + futures non-confirmation + activity shock.
+   - distinct from prior scalar OAR/options-flow scores.
+
+3. **OSRC-H3 — One-Sided Risk-Control Acceptance Layer**
+   - not a market signal;
+   - accepts/rejects proposals from independently generated exception channels;
+   - optimize low false-positive exception decisions rather than generic accuracy.
+
+4. **Drift Sentinel**
+   - unlabeled OOD / dependence-change veto;
+   - suppress exception channels when their state leaves historical support.
+
+Binding current exception remains:
+**SAGE-H3 V2 / OCS exception-only prospective shadow challenger.**
