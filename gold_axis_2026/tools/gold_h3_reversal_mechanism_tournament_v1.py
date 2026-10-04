@@ -247,7 +247,8 @@ def main():
     z["mcp_score"]=mcp_scores(z)
     z["log_trend_age"]=np.log1p(z.trend_age.astype(float))
 
-    years=pd.to_numeric(z["year"],errors="coerce")\n    train=years.isin([2023,2024])
+    years=pd.to_numeric(z["year"],errors="coerce")
+    train=years.isin([2023,2024])
     train_valid=train & z.mcp_score.notna()
     if train_valid.sum()<300: raise RuntimeError("Insufficient 2023-24 training rows")
 
