@@ -123,6 +123,30 @@
       "precision": 0.0
     }
   },
+  "reconstruction_qa_2025": {
+    "v2": {
+      "event_rows": 36,
+      "hotspots": 7,
+      "gated_hotspots": 6,
+      "actions": 5,
+      "rescue": 5,
+      "broken": 0,
+      "net": 5,
+      "precision": 1.0
+    },
+    "v3": {
+      "event_rows": 36,
+      "hotspots": 7,
+      "gated_hotspots": 6,
+      "actions": 5,
+      "rescue": 5,
+      "broken": 0,
+      "net": 5,
+      "precision": 1.0
+    },
+    "max_abs_dgs2_diff_vs_frozen_y2": 0.0,
+    "pass": true
+  },
   "dgs2_carried_forward_event_dates": [
     "2024-03-29"
   ]

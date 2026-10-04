@@ -26,6 +26,13 @@ No RuleFlow threshold, topology sign, p-value threshold, or action rule was chan
 - V5 + V3-TG: **171/241 = 70.95%**, BA **69.94%**
 - V3 action dates: **2024-06-12**
 
+## Reconstruction QA on known 2025 evidence
+
+- V2 actions/rescue/broken: **5 / 5 / 0**
+- V3 actions/rescue/broken: **5 / 5 / 0**
+- max absolute DGS2 difference vs frozen 2025 y2 values: **0.0000 pp**
+- reconstruction QA pass: **True**
+
 ## Combined 2023-2024 event accounting
 
 - V2 actions: **2**, rescue/broken/net = **0 / 2 / -2**
