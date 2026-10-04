@@ -21,6 +21,10 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install --disable-pip-version-check numpy pandas requests
+      - name: Materialize frozen VAST hourly panel
+        run: |
+          git fetch origin gold-h3-vast-v1-20261004
+          git show FETCH_HEAD:gold_axis_2026/GOLD_H3_VAST_V1_HOURLY_PANEL_2026-10-04.csv > gold_axis_2026/GOLD_H3_VAST_V1_HOURLY_PANEL_2026-10-04.csv
       - run: python gold_axis_2026/tools/gold_h3_macro_june_window_v1.py
       - name: Record evidence
         run: |
