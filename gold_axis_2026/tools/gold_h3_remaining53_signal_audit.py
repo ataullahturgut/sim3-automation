@@ -103,7 +103,7 @@ def build_scores():
     l=pd.read_csv(LLRS,parse_dates=["feature_cutoff_date"]).sort_values("feature_cutoff_date").reset_index(drop=True)
     l["r_llrs_pressure"]=rolling_rank(l,"llrs_pressure",1.0,120)
     l["r_llrs_incremental"]=rolling_rank(l,"llrs_incremental",1.0,120)
-    l["llrs_strict"]=[b(x) for x in l.llrs_external_opposes] & (pd.to_numeric(l.llrs_pressure,errors="coerce")>0) & (pd.to_numeric(l.llrs_incremental,errors="coerce")>0)
+    l["llrs_strict"]=pd.Series([b(x) for x in l.llrs_external_opposes],index=l.index,dtype=bool) & (pd.to_numeric(l.llrs_pressure,errors="coerce")>0) & (pd.to_numeric(l.llrs_incremental,errors="coerce")>0)
     l["leadlag_score"]=medcols(l,["r_llrs_pressure","r_llrs_incremental"])
     l.loc[~l.llrs_strict,"leadlag_score"]=0.0
 
