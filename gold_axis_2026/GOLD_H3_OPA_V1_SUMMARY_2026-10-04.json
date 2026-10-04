@@ -1,0 +1,151 @@
+{
+  "schema": "OPA_H3_V1",
+  "status": "OPA_DEV_FAIL",
+  "listing_count": 3215,
+  "source_rows": 1193,
+  "source_pass_rows": 1057,
+  "coverage": [
+    {
+      "year": 2022,
+      "listed_files": 251,
+      "pass_rows": 251,
+      "coverage": 1.0,
+      "min_pass": "2022-01-03",
+      "max_pass": "2022-12-30",
+      "missing_rows": 0,
+      "missing_statuses": ""
+    },
+    {
+      "year": 2023,
+      "listed_files": 251,
+      "pass_rows": 250,
+      "coverage": 0.9960159362549801,
+      "min_pass": "2023-01-03",
+      "max_pass": "2023-12-29",
+      "missing_rows": 1,
+      "missing_statuses": "MISSING_VALUE:1"
+    },
+    {
+      "year": 2024,
+      "listed_files": 252,
+      "pass_rows": 252,
+      "coverage": 1.0,
+      "min_pass": "2024-01-02",
+      "max_pass": "2024-12-31",
+      "missing_rows": 0,
+      "missing_statuses": ""
+    },
+    {
+      "year": 2025,
+      "listed_files": 251,
+      "pass_rows": 251,
+      "coverage": 1.0,
+      "min_pass": "2025-01-02",
+      "max_pass": "2025-12-31",
+      "missing_rows": 0,
+      "missing_statuses": ""
+    },
+    {
+      "year": 2026,
+      "listed_files": 188,
+      "pass_rows": 53,
+      "coverage": 0.28191489361702127,
+      "min_pass": "2026-01-02",
+      "max_pass": "2026-03-19",
+      "missing_rows": 135,
+      "missing_statuses": "NO_HEADER:135"
+    }
+  ],
+  "aligned_rows": 801,
+  "prediction_rows": 595,
+  "selected_threshold": null,
+  "dev_grid": [
+    {
+      "threshold": 0.35,
+      "eligible_n": 332,
+      "candidate_n": 284,
+      "true_rescue_n": 93,
+      "tp": 81,
+      "fp": 203,
+      "fn": 12,
+      "precision": 0.2852112676056338,
+      "recall": 0.8709677419354839,
+      "candidate_rate": 0.8554216867469879,
+      "f2": 0.6173780487804879,
+      "eligible": false
+    },
+    {
+      "threshold": 0.4,
+      "eligible_n": 332,
+      "candidate_n": 247,
+      "true_rescue_n": 93,
+      "tp": 71,
+      "fp": 176,
+      "fn": 22,
+      "precision": 0.2874493927125506,
+      "recall": 0.7634408602150538,
+      "candidate_rate": 0.7439759036144579,
+      "f2": 0.5735056542810985,
+      "eligible": false
+    },
+    {
+      "threshold": 0.45,
+      "eligible_n": 332,
+      "candidate_n": 197,
+      "true_rescue_n": 93,
+      "tp": 62,
+      "fp": 135,
+      "fn": 31,
+      "precision": 0.3147208121827411,
+      "recall": 0.6666666666666666,
+      "candidate_rate": 0.5933734939759037,
+      "f2": 0.5448154657293497,
+      "eligible": false
+    },
+    {
+      "threshold": 0.5,
+      "eligible_n": 332,
+      "candidate_n": 154,
+      "true_rescue_n": 93,
+      "tp": 52,
+      "fp": 102,
+      "fn": 41,
+      "precision": 0.33766233766233766,
+      "recall": 0.5591397849462365,
+      "candidate_rate": 0.463855421686747,
+      "f2": 0.49429657794676796,
+      "eligible": false
+    },
+    {
+      "threshold": 0.55,
+      "eligible_n": 332,
+      "candidate_n": 120,
+      "true_rescue_n": 93,
+      "tp": 39,
+      "fp": 81,
+      "fn": 54,
+      "precision": 0.325,
+      "recall": 0.41935483870967744,
+      "candidate_rate": 0.3614457831325301,
+      "f2": 0.39634146341463417,
+      "eligible": false
+    },
+    {
+      "threshold": 0.6,
+      "eligible_n": 332,
+      "candidate_n": 83,
+      "true_rescue_n": 93,
+      "tp": 27,
+      "fp": 56,
+      "fn": 66,
+      "precision": 0.3253012048192771,
+      "recall": 0.2903225806451613,
+      "candidate_rate": 0.25,
+      "f2": 0.2967032967032967,
+      "eligible": false
+    }
+  ],
+  "confirmation_2025": null,
+  "confirmation_pass": null,
+  "holdout_2026": null
+}
