@@ -1,0 +1,131 @@
+{
+  "schema": "GOLD_H3_DPTC_V1",
+  "status": "POSTHOC_DEVELOPMENT_CHALLENGER",
+  "variants": {
+    "Q95": {
+      "formation_2025": {
+        "actions": 2,
+        "rescue": 1,
+        "broken": 1,
+        "net": 0,
+        "sellr_entry": null
+      },
+      "stress_2026": {
+        "entry": "2026-05-21",
+        "actions": 13,
+        "rescue": 11,
+        "broken": 2,
+        "net": 9,
+        "precision": 0.8461538461538461,
+        "metrics": {
+          "tp": 68,
+          "tn": 67,
+          "fp": 33,
+          "fn": 23,
+          "correct": 135,
+          "accuracy": 0.7068062827225131,
+          "balanced_accuracy": 0.7086263736263736
+        },
+        "leave_one_month_out": [
+          {
+            "deleted_month": "2026-04",
+            "actions": 12,
+            "rescue": 10,
+            "broken": 2,
+            "net": 8
+          },
+          {
+            "deleted_month": "2026-05",
+            "actions": 10,
+            "rescue": 8,
+            "broken": 2,
+            "net": 6
+          },
+          {
+            "deleted_month": "2026-06",
+            "actions": 10,
+            "rescue": 9,
+            "broken": 1,
+            "net": 8
+          },
+          {
+            "deleted_month": "2026-07",
+            "actions": 11,
+            "rescue": 10,
+            "broken": 1,
+            "net": 9
+          },
+          {
+            "deleted_month": "2026-09",
+            "actions": 9,
+            "rescue": 7,
+            "broken": 2,
+            "net": 5
+          }
+        ],
+        "worst_leave_one_month_out_net": 5,
+        "phase_actions": 2,
+        "trust_actions": 11
+      }
+    },
+    "Q99": {
+      "formation_2025": {
+        "actions": 2,
+        "rescue": 1,
+        "broken": 1,
+        "net": 0,
+        "sellr_entry": null
+      },
+      "stress_2026": {
+        "entry": "2026-05-21",
+        "actions": 12,
+        "rescue": 10,
+        "broken": 2,
+        "net": 8,
+        "precision": 0.8333333333333334,
+        "metrics": {
+          "tp": 68,
+          "tn": 66,
+          "fp": 34,
+          "fn": 23,
+          "correct": 134,
+          "accuracy": 0.7015706806282722,
+          "balanced_accuracy": 0.7036263736263737
+        },
+        "leave_one_month_out": [
+          {
+            "deleted_month": "2026-05",
+            "actions": 9,
+            "rescue": 7,
+            "broken": 2,
+            "net": 5
+          },
+          {
+            "deleted_month": "2026-06",
+            "actions": 9,
+            "rescue": 8,
+            "broken": 1,
+            "net": 7
+          },
+          {
+            "deleted_month": "2026-07",
+            "actions": 10,
+            "rescue": 9,
+            "broken": 1,
+            "net": 8
+          },
+          {
+            "deleted_month": "2026-09",
+            "actions": 8,
+            "rescue": 6,
+            "broken": 2,
+            "net": 4
+          }
+        ],
+        "worst_leave_one_month_out_net": 4,
+        "phase_actions": 1,
+        "trust_actions": 11
+      }
+    }
+  }
+}
