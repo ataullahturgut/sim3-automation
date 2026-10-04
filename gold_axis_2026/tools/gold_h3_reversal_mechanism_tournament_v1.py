@@ -37,8 +37,9 @@ def build_frame():
     h=hsm.load_frame().sort_values("feature_cutoff_date").reset_index(drop=True)
     rf=pd.read_csv(RTEF,parse_dates=["feature_cutoff_date"])
     dv=pd.read_csv(DIV,parse_dates=["feature_cutoff_date"])
-    add_r=["feature_cutoff_date","opposite_semivar_share","path_consistency","signed_opt_pressure",
-           "signed_d_opt_pressure","opt_total_z20","gc_volume_z20","gc_volume_accel_5"]
+    add_r=["feature_cutoff_date","h_ret_12","trend_strength","adverse_excursion","path_consistency",
+           "opposite_semivar_share","session_against_trend","trend_close_location",
+           "signed_opt_pressure","signed_d_opt_pressure","opt_total_z20","gc_volume_z20","gc_volume_accel_5"]
     add_d=["feature_cutoff_date","core_confirmation","cross_dispersion"]
     z=h.merge(rf[add_r],on="feature_cutoff_date",how="left",validate="one_to_one")
     z=z.merge(dv[add_d],on="feature_cutoff_date",how="left",validate="one_to_one")
