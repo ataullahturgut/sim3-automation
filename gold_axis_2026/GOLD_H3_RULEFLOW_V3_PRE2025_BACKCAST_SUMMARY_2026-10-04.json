@@ -1,0 +1,129 @@
+{
+  "schema": "RULEFLOW_V3_TG_PRE2025_BACKCAST",
+  "status": "FIXED_RULE_HISTORICAL_BACKCAST",
+  "years": {
+    "2023": {
+      "v2": {
+        "event_rows": 47,
+        "hotspots": 8,
+        "gated_hotspots": 3,
+        "actions": 1,
+        "rescue": 0,
+        "broken": 1,
+        "net": -1,
+        "precision": 0.0
+      },
+      "v3": {
+        "event_rows": 47,
+        "hotspots": 8,
+        "gated_hotspots": 3,
+        "actions": 1,
+        "rescue": 0,
+        "broken": 1,
+        "net": -1,
+        "precision": 0.0
+      },
+      "v5_baseline": {
+        "n": 219,
+        "correct": 156,
+        "accuracy": 0.7123287671232876,
+        "tp": 69,
+        "tn": 87,
+        "fp": 17,
+        "fn": 46,
+        "up_recall": 0.6,
+        "down_recall": 0.8365384615384616,
+        "balanced_accuracy": 0.7182692307692308
+      },
+      "v5_plus_v3": {
+        "n": 219,
+        "correct": 155,
+        "accuracy": 0.7077625570776256,
+        "tp": 69,
+        "tn": 86,
+        "fp": 18,
+        "fn": 46,
+        "up_recall": 0.6,
+        "down_recall": 0.8269230769230769,
+        "balanced_accuracy": 0.7134615384615384
+      },
+      "v3_action_dates": [
+        "2023-10-03"
+      ]
+    },
+    "2024": {
+      "v2": {
+        "event_rows": 56,
+        "hotspots": 9,
+        "gated_hotspots": 2,
+        "actions": 1,
+        "rescue": 0,
+        "broken": 1,
+        "net": -1,
+        "precision": 0.0
+      },
+      "v3": {
+        "event_rows": 56,
+        "hotspots": 9,
+        "gated_hotspots": 2,
+        "actions": 1,
+        "rescue": 0,
+        "broken": 1,
+        "net": -1,
+        "precision": 0.0
+      },
+      "v5_baseline": {
+        "n": 241,
+        "correct": 172,
+        "accuracy": 0.7136929460580913,
+        "tp": 107,
+        "tn": 65,
+        "fp": 39,
+        "fn": 30,
+        "up_recall": 0.781021897810219,
+        "down_recall": 0.625,
+        "balanced_accuracy": 0.7030109489051095
+      },
+      "v5_plus_v3": {
+        "n": 241,
+        "correct": 171,
+        "accuracy": 0.7095435684647303,
+        "tp": 106,
+        "tn": 65,
+        "fp": 39,
+        "fn": 31,
+        "up_recall": 0.7737226277372263,
+        "down_recall": 0.625,
+        "balanced_accuracy": 0.6993613138686132
+      },
+      "v3_action_dates": [
+        "2024-06-12"
+      ]
+    }
+  },
+  "combined_actions": {
+    "v2": {
+      "event_rows": 103,
+      "hotspots": 17,
+      "gated_hotspots": 5,
+      "actions": 2,
+      "rescue": 0,
+      "broken": 2,
+      "net": -2,
+      "precision": 0.0
+    },
+    "v3": {
+      "event_rows": 103,
+      "hotspots": 17,
+      "gated_hotspots": 5,
+      "actions": 2,
+      "rescue": 0,
+      "broken": 2,
+      "net": -2,
+      "precision": 0.0
+    }
+  },
+  "dgs2_carried_forward_event_dates": [
+    "2024-03-29"
+  ]
+}
