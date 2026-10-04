@@ -38,6 +38,25 @@ EVENTS = {
     }
 }
 
+EVENTS[2025] = {"QA": [
+"2025-03-05","2025-03-07","2025-03-11","2025-03-12","2025-03-19","2025-03-28",
+"2025-04-01","2025-04-02","2025-04-04","2025-04-10","2025-04-29","2025-04-30",
+"2025-05-02","2025-05-07","2025-05-13","2025-05-30","2025-06-03","2025-06-04",
+"2025-06-06","2025-06-11","2025-06-18","2025-06-27","2025-07-01","2025-07-02",
+"2025-07-03","2025-07-15","2025-07-29","2025-07-30","2025-07-31","2025-08-01",
+"2025-08-12","2025-08-29","2025-09-03","2025-09-04","2025-09-05","2025-09-11",
+"2025-09-17","2025-09-26","2025-09-30"
+]}
+EXPECTED_2025_Y2 = {
+"2025-03-05":3.99,"2025-03-07":3.99,"2025-03-11":3.94,"2025-03-12":4.01,"2025-03-19":3.99,"2025-03-28":3.89,
+"2025-04-01":3.87,"2025-04-02":3.91,"2025-04-04":3.68,"2025-04-10":3.84,"2025-04-29":3.65,"2025-04-30":3.60,
+"2025-05-02":3.83,"2025-05-07":3.78,"2025-05-13":4.02,"2025-05-30":3.89,"2025-06-03":3.96,"2025-06-04":3.87,
+"2025-06-06":4.04,"2025-06-11":3.94,"2025-06-18":3.94,"2025-06-27":3.73,"2025-07-01":3.78,"2025-07-02":3.78,
+"2025-07-03":3.88,"2025-07-15":3.95,"2025-07-29":3.86,"2025-07-30":3.94,"2025-07-31":3.94,"2025-08-01":3.69,
+"2025-08-12":3.72,"2025-08-29":3.59,"2025-09-03":3.61,"2025-09-04":3.59,"2025-09-05":3.51,"2025-09-11":3.52,
+"2025-09-17":3.52,"2025-09-26":3.63,"2025-09-30":3.60
+}
+
 def corr(a,b):
     a=np.asarray(a,float); b=np.asarray(b,float)
     m=np.isfinite(a)&np.isfinite(b); a=a[m]; b=b[m]
@@ -68,7 +87,7 @@ def build_event_table():
             rows.append({"year":year,"date":pd.Timestamp(d),"event":"+".join(sorted(by_date[d]))})
     ev=pd.DataFrame(rows).sort_values("date").reset_index(drop=True)
 
-    url="https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS2&cosd=2022-12-20&coed=2024-12-31"
+    url="https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS2&cosd=2022-12-20&coed=2025-09-30"
     with urllib.request.urlopen(url, timeout=30) as resp:
         raw=resp.read()
     tmp=AX/"_tmp_dgs2_pre2025.csv"
@@ -219,6 +238,18 @@ def main():
 
     v2all=action_metrics(q,"v2"); v3all=action_metrics(q,"v3")
     summary["combined_actions"]={"v2":v2all,"v3":v3all}
+    q25=score_year(ev,z,d,2025)
+    qa25_v2=action_metrics(q25,"v2")
+    qa25_v3=action_metrics(q25,"v3")
+    e25=ev[ev.year==2025].copy()
+    diffs=[]
+    for rr in e25.itertuples():
+        ex=EXPECTED_2025_Y2.get(rr.date.strftime("%Y-%m-%d"))
+        if ex is not None and np.isfinite(rr.two_y):
+            diffs.append(abs(float(rr.two_y)-float(ex)))
+    maxdiff=float(max(diffs)) if diffs else np.nan
+    qa_pass=bool(qa25_v2["actions"]==5 and qa25_v2["rescue"]==5 and qa25_v2["broken"]==0 and maxdiff<=0.011)
+    summary["reconstruction_qa_2025"]={"v2":qa25_v2,"v3":qa25_v3,"max_abs_dgs2_diff_vs_frozen_y2":maxdiff,"pass":qa_pass}
     summary["dgs2_carried_forward_event_dates"]=ev.loc[ev.dgs2_carried_forward,"date"].dt.strftime("%Y-%m-%d").tolist()
     OUT_SUM.write_text(json.dumps(summary,indent=2)+"\n")
 
@@ -241,6 +272,11 @@ def main():
             f"- V3 action dates: **{', '.join(s['v3_action_dates']) if s['v3_action_dates'] else 'none'}**",""
         ]
     lines += [
+        "## Reconstruction QA on known 2025 evidence","",
+        f"- V2 actions/rescue/broken: **{summary['reconstruction_qa_2025']['v2']['actions']} / {summary['reconstruction_qa_2025']['v2']['rescue']} / {summary['reconstruction_qa_2025']['v2']['broken']}**",
+        f"- V3 actions/rescue/broken: **{summary['reconstruction_qa_2025']['v3']['actions']} / {summary['reconstruction_qa_2025']['v3']['rescue']} / {summary['reconstruction_qa_2025']['v3']['broken']}**",
+        f"- max absolute DGS2 difference vs frozen 2025 y2 values: **{summary['reconstruction_qa_2025']['max_abs_dgs2_diff_vs_frozen_y2']:.4f} pp**",
+        f"- reconstruction QA pass: **{summary['reconstruction_qa_2025']['pass']}**","",
         "## Combined 2023-2024 event accounting","",
         f"- V2 actions: **{v2all['actions']}**, rescue/broken/net = **{v2all['rescue']} / {v2all['broken']} / {v2all['net']:+d}**",
         f"- V3-TG actions: **{v3all['actions']}**, rescue/broken/net = **{v3all['rescue']} / {v3all['broken']} / {v3all['net']:+d}**",
