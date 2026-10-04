@@ -36,6 +36,23 @@
 | reaction_score | 0.75 | pre | 18.9% | 26.3% | 0.72x |
 | reaction_score | 0.75 | any | 30.2% | 37.9% | 0.80x |
 
+## Origin-to-origin transition diagnostics
+
+| Transition | Miss mean | Control mean | SMD |
+|---|---:|---:|---:|
+| internal_d1 | +0.085 | -0.048 | +0.395 |
+| internal_d2 | +0.063 | -0.055 | +0.365 |
+| fragility_score_d1 | +0.081 | -0.045 | +0.341 |
+| fragility_score_d2 | +0.065 | -0.041 | +0.307 |
+| handoff_gap | +0.374 | +0.243 | +0.284 |
+| flow_score_d1 | +0.056 | -0.037 | +0.281 |
+| flow_score_d2 | +0.024 | -0.060 | +0.245 |
+| leadlag_premax_minus_now | +0.190 | +0.119 | +0.125 |
+| reaction_score_d1 | +0.025 | +0.013 | +0.049 |
+| leadlag_score_d1 | -0.004 | -0.000 | -0.005 |
+| reaction_score_d2 | -0.003 | +0.010 | -0.046 |
+| leadlag_score_d2 | -0.113 | +0.005 | -0.205 |
+
 ## Exploratory temporal sequence patterns
 
 | Pattern | Miss coverage | Control prevalence | Lift | Episode starts |

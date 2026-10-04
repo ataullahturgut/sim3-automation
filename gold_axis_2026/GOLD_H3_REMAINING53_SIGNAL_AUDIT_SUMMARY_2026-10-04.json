@@ -653,5 +653,79 @@
       "episode_first_n": 1,
       "episode_first_total": 22
     }
+  ],
+  "transition_diagnostics": [
+    {
+      "feature": "internal_d1",
+      "miss_mean": 0.08471074380165289,
+      "control_mean": -0.047782563147479924,
+      "smd": 0.394976592533834
+    },
+    {
+      "feature": "internal_d2",
+      "miss_mean": 0.0632327503363444,
+      "control_mean": -0.055116674769081185,
+      "smd": 0.3646750175147082
+    },
+    {
+      "feature": "fragility_score_d1",
+      "miss_mean": 0.08126721763085401,
+      "control_mean": -0.04527994412757536,
+      "smd": 0.3407585810358119
+    },
+    {
+      "feature": "fragility_score_d2",
+      "miss_mean": 0.06544301364597348,
+      "control_mean": -0.04071463296062226,
+      "smd": 0.30686175945833105
+    },
+    {
+      "feature": "handoff_gap",
+      "miss_mean": 0.37425052665694375,
+      "control_mean": 0.24271183362092458,
+      "smd": 0.283647617302616
+    },
+    {
+      "feature": "flow_score_d1",
+      "miss_mean": 0.05588351042896498,
+      "control_mean": -0.03689908043301128,
+      "smd": 0.28099997095036194
+    },
+    {
+      "feature": "flow_score_d2",
+      "miss_mean": 0.02431289640591967,
+      "control_mean": -0.06028196402527954,
+      "smd": 0.24472213943387358
+    },
+    {
+      "feature": "leadlag_premax_minus_now",
+      "miss_mean": 0.19049586776859503,
+      "control_mean": 0.11919519874065329,
+      "smd": 0.1251675845369234
+    },
+    {
+      "feature": "reaction_score_d1",
+      "miss_mean": 0.02549508810229223,
+      "control_mean": 0.012788168769030005,
+      "smd": 0.04873693326137544
+    },
+    {
+      "feature": "leadlag_score_d1",
+      "miss_mean": -0.0035419126328217147,
+      "control_mean": -0.00047225501770957587,
+      "smd": -0.0053399432331099434
+    },
+    {
+      "feature": "reaction_score_d2",
+      "miss_mean": -0.003040698581007323,
+      "control_mean": 0.009656372335798172,
+      "smd": -0.0455295979727502
+    },
+    {
+      "feature": "leadlag_score_d2",
+      "miss_mean": -0.11320392081491448,
+      "control_mean": 0.0045022819785370686,
+      "smd": -0.20546410404859963
+    }
   ]
 }
