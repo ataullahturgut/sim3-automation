@@ -1,0 +1,248 @@
+{
+  "schema": "GOLD_H3_COMPETENCE_TRANSITION_PROGRAM_V1",
+  "status": "MULTI_VIEW_PROGRAM_COMPLETE",
+  "workstream_a": {
+    "calibration": {
+      "INTERNAL": {
+        "n": 641,
+        "q90": 1.9490461794204925,
+        "q95": 2.2223507571314185
+      },
+      "OPTIONS_LIQ": {
+        "n": 641,
+        "q90": 1.8647181827179755,
+        "q95": 2.1134214507324685
+      },
+      "CROSS_MACRO": {
+        "n": 641,
+        "q90": 2.3269673651561384,
+        "q95": 2.6842644240257956
+      }
+    },
+    "fisher_q99": 9.974373922397973,
+    "handoff_enrichment": {
+      "BROAD2": {
+        "alarm_n_inside": 1,
+        "rescue_inside": 1,
+        "precision_inside": 1.0,
+        "alarm_n_outside": 27,
+        "rescue_outside": 15,
+        "precision_outside": 0.5555555555555556
+      },
+      "STRICT2": {
+        "alarm_n_inside": 0,
+        "rescue_inside": 0,
+        "precision_inside": null,
+        "alarm_n_outside": 28,
+        "rescue_outside": 16,
+        "precision_outside": 0.5714285714285714
+      },
+      "FISHER99": {
+        "alarm_n_inside": 0,
+        "rescue_inside": 0,
+        "precision_inside": null,
+        "alarm_n_outside": 28,
+        "rescue_outside": 16,
+        "precision_outside": 0.5714285714285714
+      }
+    },
+    "dates_2026": {
+      "BROAD2": [
+        "2026-01-27",
+        "2026-01-28",
+        "2026-02-04",
+        "2026-02-05",
+        "2026-03-25"
+      ],
+      "STRICT2": [
+        "2026-02-04",
+        "2026-02-05"
+      ],
+      "FISHER99": []
+    }
+  },
+  "workstream_b_stcr": {
+    "formation_sellr_handoff_triggers": 0,
+    "entry_date": "2026-05-21",
+    "actions": 11,
+    "rescue": 9,
+    "broken": 2,
+    "net": 7,
+    "precision": 0.8181818181818182,
+    "assisted_correct": 133,
+    "assisted_accuracy": 0.6963350785340314,
+    "assisted_confusion": {
+      "tp": 68,
+      "tn": 65,
+      "fp": 35,
+      "fn": 23,
+      "balanced_accuracy": 0.6986263736263736
+    },
+    "entry_location_exact_p_ge_observed": 0.14285714285714285,
+    "entry_location_net_min": -2,
+    "entry_location_net_median": 0.5,
+    "entry_location_net_max": 9,
+    "leave_one_month_out": [
+      {
+        "deleted_month": "2026-05",
+        "actions": 9,
+        "rescue": 7,
+        "broken": 2,
+        "net": 5
+      },
+      {
+        "deleted_month": "2026-06",
+        "actions": 8,
+        "rescue": 7,
+        "broken": 1,
+        "net": 6
+      },
+      {
+        "deleted_month": "2026-07",
+        "actions": 9,
+        "rescue": 8,
+        "broken": 1,
+        "net": 7
+      },
+      {
+        "deleted_month": "2026-09",
+        "actions": 7,
+        "rescue": 5,
+        "broken": 2,
+        "net": 3
+      }
+    ],
+    "worst_leave_one_month_out_net": 3,
+    "action_dates": [
+      {
+        "date": "2026-05-21",
+        "outcome": "RESCUE",
+        "sellr_fire": true
+      },
+      {
+        "date": "2026-05-27",
+        "outcome": "RESCUE",
+        "sellr_fire": false
+      },
+      {
+        "date": "2026-06-01",
+        "outcome": "BROKEN",
+        "sellr_fire": false
+      },
+      {
+        "date": "2026-06-08",
+        "outcome": "RESCUE",
+        "sellr_fire": false
+      },
+      {
+        "date": "2026-06-29",
+        "outcome": "RESCUE",
+        "sellr_fire": false
+      },
+      {
+        "date": "2026-07-14",
+        "outcome": "RESCUE",
+        "sellr_fire": false
+      },
+      {
+        "date": "2026-07-17",
+        "outcome": "BROKEN",
+        "sellr_fire": false
+      },
+      {
+        "date": "2026-09-03",
+        "outcome": "RESCUE",
+        "sellr_fire": false
+      },
+      {
+        "date": "2026-09-09",
+        "outcome": "RESCUE",
+        "sellr_fire": false
+      },
+      {
+        "date": "2026-09-11",
+        "outcome": "RESCUE",
+        "sellr_fire": false
+      },
+      {
+        "date": "2026-09-24",
+        "outcome": "RESCUE",
+        "sellr_fire": false
+      }
+    ]
+  },
+  "workstream_c_fixed_share": [
+    {
+      "alpha": 0.02,
+      "actions": 1,
+      "rescue": 1,
+      "broken": 0,
+      "net": 1,
+      "precision": 1.0,
+      "first_action": "2026-09-24",
+      "assisted_correct": 127,
+      "assisted_accuracy": 0.6649214659685864
+    },
+    {
+      "alpha": 0.05,
+      "actions": 6,
+      "rescue": 5,
+      "broken": 1,
+      "net": 4,
+      "precision": 0.8333333333333334,
+      "first_action": "2026-07-14",
+      "assisted_correct": 130,
+      "assisted_accuracy": 0.680628272251309
+    },
+    {
+      "alpha": 0.075,
+      "actions": 7,
+      "rescue": 6,
+      "broken": 1,
+      "net": 5,
+      "precision": 0.8571428571428571,
+      "first_action": "2026-06-29",
+      "assisted_correct": 131,
+      "assisted_accuracy": 0.6858638743455497
+    },
+    {
+      "alpha": 0.1,
+      "actions": 8,
+      "rescue": 6,
+      "broken": 2,
+      "net": 4,
+      "precision": 0.75,
+      "first_action": "2026-06-01",
+      "assisted_correct": 130,
+      "assisted_accuracy": 0.680628272251309
+    }
+  ],
+  "convergence": {
+    "indicator_dates": {
+      "offline_change_point": "2026-04-30",
+      "sellr_trigger": "2026-05-21",
+      "bocpd_v4_entry": "2026-05-27",
+      "fixed_share_alpha_005_cross": "2026-07-14",
+      "drift_BROAD2": "2026-01-27",
+      "drift_STRICT2": "2026-02-04",
+      "drift_FISHER99": null
+    },
+    "apr_jun_window_hits": {
+      "offline_change_point": true,
+      "sellr_trigger": true,
+      "bocpd_v4_entry": true,
+      "fixed_share_alpha_005_cross": false,
+      "drift_BROAD2": false,
+      "drift_STRICT2": false,
+      "drift_FISHER99": false
+    },
+    "n_hits": 3,
+    "n_indicators": 7
+  },
+  "known_reference": {
+    "baseline_correct": 126,
+    "baseline_accuracy": 0.6596858638743456,
+    "bocpd_v4_correct": 132,
+    "bocpd_v4_accuracy": 0.6910994764397905
+  }
+}
