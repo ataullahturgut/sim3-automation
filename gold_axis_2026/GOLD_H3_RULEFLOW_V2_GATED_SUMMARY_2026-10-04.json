@@ -1,0 +1,128 @@
+{
+  "rule": {
+    "conflict_ratio_gt": 0.359,
+    "dominance_gt": 0.294,
+    "dominance_le": 0.502,
+    "susceptibility_ge": 0.6,
+    "macro_breadth_ge": 0.3,
+    "gate": "OR"
+  },
+  "2025": {
+    "n": 36,
+    "hotspots": 7,
+    "gated_hotspots": 6,
+    "actions": 5,
+    "rescue": 5,
+    "broken": 0,
+    "net": 5,
+    "precision": 1.0,
+    "reversals": 12,
+    "captured": 5
+  },
+  "2026Q1": {
+    "n": 12,
+    "hotspots": 3,
+    "gated_hotspots": 1,
+    "actions": 1,
+    "rescue": 1,
+    "broken": 0,
+    "net": 1,
+    "precision": 1.0,
+    "reversals": 3,
+    "captured": 1
+  },
+  "detail_2025": [
+    {
+      "date": "2025-04-10",
+      "sus": 0.23140495867768596,
+      "breadth": 0.23100703326610644,
+      "gate": false,
+      "candidate": false,
+      "rescue": false,
+      "broken": false
+    },
+    {
+      "date": "2025-04-29",
+      "sus": 0.8925619834710744,
+      "breadth": 0.1616521191235079,
+      "gate": true,
+      "candidate": false,
+      "rescue": false,
+      "broken": false
+    },
+    {
+      "date": "2025-05-02",
+      "sus": 0.9214876033057852,
+      "breadth": 0.16010141747703588,
+      "gate": true,
+      "candidate": true,
+      "rescue": true,
+      "broken": false
+    },
+    {
+      "date": "2025-05-30",
+      "sus": 0.615702479338843,
+      "breadth": 0.1473871264805565,
+      "gate": true,
+      "candidate": true,
+      "rescue": true,
+      "broken": false
+    },
+    {
+      "date": "2025-06-04",
+      "sus": 0.6942148760330579,
+      "breadth": 0.1400915906206379,
+      "gate": true,
+      "candidate": true,
+      "rescue": true,
+      "broken": false
+    },
+    {
+      "date": "2025-07-29",
+      "sus": 0.6776859504132231,
+      "breadth": 0.373193502937341,
+      "gate": true,
+      "candidate": true,
+      "rescue": true,
+      "broken": false
+    },
+    {
+      "date": "2025-07-30",
+      "sus": 0.19834710743801653,
+      "breadth": 0.37171907421833134,
+      "gate": true,
+      "candidate": true,
+      "rescue": true,
+      "broken": false
+    }
+  ],
+  "detail_2026Q1": [
+    {
+      "date": "2026-02-11",
+      "sus": 0.6859504132231404,
+      "breadth": 0.13267629685565055,
+      "gate": true,
+      "candidate": true,
+      "rescue": true,
+      "broken": false
+    },
+    {
+      "date": "2026-02-13",
+      "sus": 0.22314049586776857,
+      "breadth": 0.14292130142215076,
+      "gate": false,
+      "candidate": false,
+      "rescue": false,
+      "broken": false
+    },
+    {
+      "date": "2026-02-20",
+      "sus": 0.1115702479338843,
+      "breadth": 0.12917094080299815,
+      "gate": false,
+      "candidate": false,
+      "rescue": false,
+      "broken": false
+    }
+  ]
+}
