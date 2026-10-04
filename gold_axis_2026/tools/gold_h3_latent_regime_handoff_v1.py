@@ -20,6 +20,9 @@ OUT_REG=AX/"GOLD_H3_LATENT_REGIME_HANDOFF_V1_REGIMES_2026-10-04.csv"
 OUT_ACT=AX/"GOLD_H3_LATENT_REGIME_HANDOFF_V1_ACTIONS_2026-10-04.csv"
 OUT_MODEL=AX/"GOLD_H3_LATENT_REGIME_HANDOFF_V1_MODEL_2026-10-04.json"
 
+spec=importlib.util.spec_from_file_location("hsm",HSM)
+hsm=importlib.util.module_from_spec(spec); spec.loader.exec_module(hsm)
+
 FEATURES=[
  "abs_h_ret_12","trend_strength","adverse_excursion","path_consistency",
  "gc_volume_z20","opt_total_z20","signed_opt_pressure",
