@@ -1,0 +1,38 @@
+name: Gold H3 Handoff Delayed V1b
+
+on:
+  push:
+    branches: [gold-h3-handoff-delayed-v1b-20261004]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_handoff_delayed_v1b.py'
+      - 'gold_axis_2026/GOLD_H3_HANDOFF_DELAYED_V1B_PREREG_2026-10-04.md'
+      - '.github/workflows/gold-h3-handoff-delayed-v1b.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-handoff-delayed-v1b-20261004
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check numpy pandas scipy
+      - run: python gold_axis_2026/tools/gold_h3_handoff_delayed_v1b.py
+      - name: Record V1b evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_HANDOFF_DELAYED_V1B_*.*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record delayed Handoff V1b evidence"
+            git pull --rebase origin gold-h3-handoff-delayed-v1b-20261004
+            git push origin HEAD:gold-h3-handoff-delayed-v1b-20261004
+          fi
