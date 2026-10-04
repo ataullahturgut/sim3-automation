@@ -26,7 +26,7 @@ rather than:
 
 `one larger reversal classifier`.
 
-## 2. Channel A — TCC-H3: Temporal Causal Concurrence
+## 2. Channel A — TPC-H3: Temporal Propagation Concurrence
 
 ### Hypothesis
 OCS currently requires internal flow breakdown and external lead-lag stress to coexist at the origin.
@@ -58,7 +58,7 @@ Primary role:
 
 ### Why distinct
 OCS asks whether two channels agree.
-TCC asks whether they agree in the expected **temporal order**.
+TPC asks whether the concurrence is accompanied by the expected **temporal propagation pattern**.
 
 Priority: **1**.
 
@@ -198,7 +198,7 @@ Priority: **parallel safety layer**.
 
 ## 8. Test order
 
-1. TCC-H3
+1. TPC-H3
 2. DCX-H3
 3. PMBF-H3 coverage audit + model
 4. OFDX-H3
