@@ -1,0 +1,44 @@
+{
+  "schema": "GOLD_H3_SAGE_V2_RULEFLOW_V3_TG_COMBINED_DIAGNOSTIC",
+  "date": "2026-10-04",
+  "status": "RETROSPECTIVE_DIAGNOSTIC_ONLY",
+  "n_2026": 191,
+  "v5": {
+    "correct": 121,
+    "accuracy": 0.6335078534031413,
+    "tp": 66,
+    "tn": 55,
+    "fp": 45,
+    "fn": 25,
+    "balanced_accuracy": 0.6376373626373626
+  },
+  "sage_v2": {
+    "correct": 125,
+    "accuracy": 0.6544502617801047,
+    "tp": 67,
+    "tn": 58,
+    "fp": 42,
+    "fn": 24,
+    "balanced_accuracy": 0.6581318681318682
+  },
+  "combined": {
+    "correct": 126,
+    "accuracy": 0.6596858638743456,
+    "tp": 67,
+    "tn": 59,
+    "fp": 41,
+    "fn": 24,
+    "balanced_accuracy": 0.6631318681318681
+  },
+  "sage_exception_dates": [
+    "2026-02-03",
+    "2026-05-26",
+    "2026-07-10",
+    "2026-07-15"
+  ],
+  "ruleflow_v3_tg_exception_dates": [
+    "2026-02-11"
+  ],
+  "overlap": [],
+  "note": "Post-hoc retrospective diagnostic; not independent OOS validation."
+}
