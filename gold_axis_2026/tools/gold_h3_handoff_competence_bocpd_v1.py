@@ -9,6 +9,10 @@ from scipy.stats import beta as beta_dist
 ROOT=Path(__file__).resolve().parents[2]
 AX=ROOT/"gold_axis_2026"
 HSM=AX/"tools"/"gold_h3_handoff_state_machine_v1.py"
+V5C=AX/"GOLD_H3_CLEAN_V5_2026_CALL_BY_CALL_2026-10-03.csv"
+PANEL=AX/"GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_RIFT_PANEL.csv"
+SAGE=AX/"GOLD_H3_SAGE_SELECTIVE_V1_PREDICTIONS_2026-10-04.csv"
+RF=AX/"GOLD_H3_RULEFLOW_V3_TOPOLOGY_DIAGNOSTIC_2026-10-04.csv"
 
 OUT_MD=AX/"GOLD_H3_HANDOFF_COMPETENCE_BOCPD_V1_RESULT_2026-10-04.md"
 OUT_JSON=AX/"GOLD_H3_HANDOFF_COMPETENCE_BOCPD_V1_SUMMARY_2026-10-04.json"
@@ -80,11 +84,59 @@ class BetaBernoulliBOCPD:
             "p_run0_after":float(new[0]),
         }
 
+def _bool(v):
+    if isinstance(v,(bool,np.bool_)): return bool(v)
+    if pd.isna(v): return False
+    return str(v).strip().lower() in {"true","1","yes"}
+
 def build_frame():
-    z=hsm.load_frame().sort_values("feature_cutoff_date").reset_index(drop=True)
-    z["handoff_alarm"]=(pd.to_numeric(z.leadlag_score_premax,errors="coerce")>=.60)&(pd.to_numeric(z.internal_now,errors="coerce")>=.60)&(pd.to_numeric(z.internal_d1,errors="coerce")>=0)&(z.baseline_pred.astype(int)==z.momentum_up.astype(int))
-    z["competence_y"]=(~z.baseline_correct).astype(int)
-    return z
+    # 2025 formation can use the existing HSM frame.
+    old=hsm.load_frame().sort_values("feature_cutoff_date").reset_index(drop=True)
+    old=old[old.feature_cutoff_date.dt.year==2025].copy()
+
+    # 2026 must preserve the authoritative 191-origin call-by-call universe.
+    v=pd.read_csv(V5C,parse_dates=["feature_cutoff_date","forecast_issue_date","target_end_date_h3"])
+    p=pd.read_csv(PANEL,parse_dates=["feature_cutoff_date"])[["feature_cutoff_date","momentum_up"]]
+    z=v.merge(p,on="feature_cutoff_date",how="left",validate="one_to_one")
+    z["v5_pred"]=(z.v5_dir.astype(str).str.upper()=="UP").astype(int)
+
+    ss,_=import_audit_scores()
+    z=z.merge(ss,on="feature_cutoff_date",how="left",validate="one_to_one")
+
+    sg=pd.read_csv(SAGE,parse_dates=["feature_cutoff_date"])
+    sdates=set(sg[(sg.feature_cutoff_date.dt.year==2026)&sg.ocs_candidate.map(_bool)].feature_cutoff_date)
+    rr=pd.read_csv(RF,parse_dates=["date"])
+    rdates=set(rr[(rr.date.dt.year==2026)&rr.v3_candidate.map(_bool)].date)
+    flips=sdates|rdates
+    z["sage_flip"]=z.feature_cutoff_date.isin(sdates)
+    z["ruleflow_flip"]=z.feature_cutoff_date.isin(rdates)
+    z["baseline_pred"]=np.where(z.feature_cutoff_date.isin(flips),1-z.v5_pred,z.v5_pred).astype(int)
+    z["baseline_correct"]=z.baseline_pred.astype(int)==z.y_up.astype(int)
+    z["is_reversal"]=z.y_up.astype(int)!=z.momentum_up.astype(int)
+
+    # Keep a common subset of fields required downstream.
+    common=list(set(old.columns)&set(z.columns))
+    needed=["feature_cutoff_date","forecast_issue_date","target_end_date_h3","year","month","y_up","target_r3",
+            "momentum_up","v5_pred","baseline_pred","baseline_correct","is_reversal",
+            "leadlag_score_premax","internal_now","internal_d1"]
+    for c in needed:
+        if c not in old.columns: old[c]=np.nan
+        if c not in z.columns: z[c]=np.nan
+    out=pd.concat([old[needed],z[needed]],ignore_index=True).sort_values("feature_cutoff_date").reset_index(drop=True)
+    out["handoff_alarm"]=(pd.to_numeric(out.leadlag_score_premax,errors="coerce")>=.60)&(pd.to_numeric(out.internal_now,errors="coerce")>=.60)&(pd.to_numeric(out.internal_d1,errors="coerce")>=0)&(out.baseline_pred.astype(int)==out.momentum_up.astype(int))
+    out["competence_y"]=(~out.baseline_correct).astype(int)
+    return out
+
+def import_audit_scores():
+    audit_path=AX/"tools"/"gold_h3_remaining53_signal_audit.py"
+    sp=importlib.util.spec_from_file_location("audit_for_competence",audit_path)
+    audit=importlib.util.module_from_spec(sp); sp.loader.exec_module(audit)
+    scores,_=audit.build_scores()
+    scores=scores.sort_values("feature_cutoff_date").reset_index(drop=True)
+    scores["internal_now"]=scores[["fragility_score","flow_score"]].max(axis=1)
+    scores["internal_lag1"]=scores[["fragility_score_lag1","flow_score_lag1"]].max(axis=1)
+    scores["internal_d1"]=scores.internal_now-scores.internal_lag1
+    return scores[["feature_cutoff_date","leadlag_score_premax","internal_now","internal_d1"]],audit
 
 def formation_evidence(alarms,expected_run):
     m=BetaBernoulliBOCPD(expected_run)
