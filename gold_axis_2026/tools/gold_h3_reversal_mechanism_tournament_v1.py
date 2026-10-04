@@ -33,8 +33,45 @@ def confusion(y,p):
     return {"n":int(len(y)),"correct":int((y==p).sum()),"accuracy":float((y==p).mean()),
             "tp":tp,"tn":tn,"fp":fp,"fn":fn,"balanced_accuracy":float((up+dn)/2)}
 
+def _bool(v):
+    if isinstance(v,(bool,np.bool_)): return bool(v)
+    if pd.isna(v): return False
+    return str(v).strip().lower() in {"true","1","yes"}
+
 def build_frame():
-    h=hsm.load_frame().sort_values("feature_cutoff_date").reset_index(drop=True)
+    # Historical spine through 2025.
+    old=hsm.load_frame().sort_values("feature_cutoff_date").reset_index(drop=True)
+    old=old[old.feature_cutoff_date.dt.year<=2025].copy()
+
+    # Authoritative repaired 191-origin 2026 universe.
+    v=pd.read_csv(V5C,parse_dates=["feature_cutoff_date","forecast_issue_date","target_end_date_h3"])
+    p=pd.read_csv(PANEL,parse_dates=["feature_cutoff_date"])[["feature_cutoff_date","momentum_up"]]
+    z26=v.merge(p,on="feature_cutoff_date",how="left",validate="one_to_one")
+    z26["v5_pred"]=(z26.v5_dir.astype(str).str.upper()=="UP").astype(int)
+    sg=pd.read_csv(SAGE,parse_dates=["feature_cutoff_date"])
+    sdates=set(sg[(sg.feature_cutoff_date.dt.year==2026)&sg.ocs_candidate.map(_bool)].feature_cutoff_date)
+    rr=pd.read_csv(RF,parse_dates=["date"])
+    rdates=set(rr[(rr.date.dt.year==2026)&rr.v3_candidate.map(_bool)].date)
+    z26["sage_flip"]=z26.feature_cutoff_date.isin(sdates)
+    z26["ruleflow_flip"]=z26.feature_cutoff_date.isin(rdates)
+    z26["overlay_flip"]=z26.sage_flip|z26.ruleflow_flip
+    z26["baseline_pred"]=np.where(z26.overlay_flip,1-z26.v5_pred,z26.v5_pred).astype(int)
+    z26["baseline_correct"]=z26.baseline_pred.astype(int)==z26.y_up.astype(int)
+    z26["is_reversal"]=z26.y_up.astype(int)!=z26.momentum_up.astype(int)
+    scores=hsm.load_scores()
+    topo=hsm.topology_table()
+    z26=z26.merge(scores[["feature_cutoff_date","fragility_score","flow_score","leadlag_score",
+                          "leadlag_score_lag1","leadlag_score_lag2","leadlag_score_premax",
+                          "internal_now","internal_lag1","internal_d1"]],
+                  on="feature_cutoff_date",how="left",validate="one_to_one")
+    z26=z26.merge(topo,on="feature_cutoff_date",how="left",validate="one_to_one")
+
+    needed=list(dict.fromkeys(list(old.columns)+list(z26.columns)))
+    for c in needed:
+        if c not in old.columns: old[c]=np.nan
+        if c not in z26.columns: z26[c]=np.nan
+    h=pd.concat([old[needed],z26[needed]],ignore_index=True).sort_values("feature_cutoff_date").reset_index(drop=True)
+
     rf=pd.read_csv(RTEF,parse_dates=["feature_cutoff_date"])
     dv=pd.read_csv(DIV,parse_dates=["feature_cutoff_date"])
     add_r=["feature_cutoff_date","h_ret_12","trend_strength","adverse_excursion","path_consistency",
