@@ -5,6 +5,7 @@ on:
     branches: [gold-h3-remaining53-signal-audit-20261004]
     paths:
       - 'gold_axis_2026/tools/gold_h3_remaining53_signal_audit.py'
+      - 'gold_axis_2026/tools/gold_h3_signal_transition_2025_consistency.py'
       - 'gold_axis_2026/GOLD_H3_REMAINING53_SIGNAL_AUDIT_PREREG_2026-10-04.md'
       - '.github/workflows/gold-h3-remaining53-signal-audit.yml'
   workflow_dispatch:
@@ -26,11 +27,12 @@ jobs:
           python-version: '3.11'
       - run: pip install --disable-pip-version-check numpy pandas scipy
       - run: python gold_axis_2026/tools/gold_h3_remaining53_signal_audit.py
+      - run: python gold_axis_2026/tools/gold_h3_signal_transition_2025_consistency.py
       - name: Record audit evidence
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add gold_axis_2026/GOLD_H3_REMAINING53_SIGNAL_AUDIT_*.*
+          git add gold_axis_2026/GOLD_H3_REMAINING53_SIGNAL_AUDIT_*.* gold_axis_2026/GOLD_H3_SIGNAL_TRANSITION_2025_CONSISTENCY_2026-10-04.*
           if ! git diff --cached --quiet; then
             git commit -m "Record remaining-53 signal audit evidence"
             git pull --rebase origin gold-h3-remaining53-signal-audit-20261004
