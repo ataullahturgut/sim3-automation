@@ -1,0 +1,39 @@
+name: Gold H3 Reaction Decay Confirm V1
+on:
+  push:
+    branches: [gold-h3-reaction-decay-confirm-v1-20261004]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_reaction_decay_confirm_v1.py'
+      - 'gold_axis_2026/GOLD_H3_REACTION_DECAY_CONFIRM_V1_PREREG_2026-10-04.md'
+      - '.github/workflows/gold-h3-reaction-decay-confirm-v1.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-reaction-decay-confirm-v1-20261004
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check numpy pandas
+      - name: Materialize frozen VAST hourly panel
+        run: |
+          git fetch origin gold-h3-vast-v1-20261004
+          git show FETCH_HEAD:gold_axis_2026/GOLD_H3_VAST_V1_HOURLY_PANEL_2026-10-04.csv > gold_axis_2026/GOLD_H3_VAST_V1_HOURLY_PANEL_2026-10-04.csv
+      - run: python gold_axis_2026/tools/gold_h3_reaction_decay_confirm_v1.py
+      - name: Record confirmation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_REACTION_DECAY_CONFIRM_V1_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record reaction-decay confirmation evidence"
+            git pull --rebase origin gold-h3-reaction-decay-confirm-v1-20261004
+            git push origin HEAD:gold-h3-reaction-decay-confirm-v1-20261004
+          fi
