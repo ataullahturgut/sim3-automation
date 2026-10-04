@@ -1,0 +1,47 @@
+{
+  "schema": "GOLD_H3_LATENT_REGIME_HANDOFF_V1",
+  "status": "NO_ELIGIBLE_2025_REGIME",
+  "regime_training": {
+    "start": "2023-01-01",
+    "end": "2024-12-31",
+    "n": 460,
+    "selected_k": 2,
+    "bic": 9933.414232862677,
+    "bic_candidates": {
+      "2": 9933.414232862677,
+      "3": 9995.921165195345,
+      "4": 10205.921193978764
+    },
+    "features": [
+      "abs_h_ret_12",
+      "trend_strength",
+      "adverse_excursion",
+      "path_consistency",
+      "gc_volume_z20",
+      "opt_total_z20",
+      "signed_opt_pressure",
+      "core_confirmation",
+      "cross_dispersion",
+      "gn_r60",
+      "gv_r60"
+    ]
+  },
+  "2025_calibration": {
+    "alarms_confident": 13,
+    "eligible_regimes": [],
+    "regimes": [
+      {
+        "regime": 1,
+        "regime_label": "R1_risk+0.32_trend-0.26_topo+0.14",
+        "alarms": 13,
+        "rescue": 4,
+        "broken": 9,
+        "raw_precision": 0.3076923076923077,
+        "posterior_mean": 0.32142857142857145,
+        "p_precision_gt_0p5": 0.08158418711548032,
+        "eligible": false
+      }
+    ]
+  },
+  "2026": null
+}
