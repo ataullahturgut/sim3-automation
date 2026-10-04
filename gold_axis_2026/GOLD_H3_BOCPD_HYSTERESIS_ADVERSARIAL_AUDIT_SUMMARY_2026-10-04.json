@@ -1,0 +1,176 @@
+{
+  "schema": "GOLD_H3_BOCPD_HYSTERESIS_ADVERSARIAL_AUDIT",
+  "status": "ROBUSTNESS_AUDIT_COMPLETE",
+  "central": {
+    "actions": 10,
+    "rescue": 8,
+    "broken": 2,
+    "net": 6,
+    "precision": 0.8,
+    "entry_idx": 18,
+    "entry_date": "2026-05-27",
+    "assisted_correct": 132,
+    "assisted_accuracy": 0.6910994764397905
+  },
+  "parameter_neighborhood": {
+    "n": 162,
+    "positive_fraction": 0.9259259259259259,
+    "ge4_fraction": 0.6111111111111112,
+    "median_net": 5.0,
+    "min_net": -2,
+    "max_net": 6,
+    "central_percentile_leq": 1.0,
+    "net_counts": {
+      "-2": 3,
+      "0": 9,
+      "1": 21,
+      "2": 9,
+      "3": 21,
+      "4": 6,
+      "5": 39,
+      "6": 54
+    }
+  },
+  "entry_shift": [
+    {
+      "shift": -3,
+      "entry_idx": 15,
+      "entry_date": "2026-04-30",
+      "actions": 13,
+      "rescue": 11,
+      "broken": 2,
+      "net": 9,
+      "precision": 0.8461538461538461
+    },
+    {
+      "shift": -2,
+      "entry_idx": 16,
+      "entry_date": "2026-05-18",
+      "actions": 12,
+      "rescue": 10,
+      "broken": 2,
+      "net": 8,
+      "precision": 0.8333333333333334
+    },
+    {
+      "shift": -1,
+      "entry_idx": 17,
+      "entry_date": "2026-05-21",
+      "actions": 11,
+      "rescue": 9,
+      "broken": 2,
+      "net": 7,
+      "precision": 0.8181818181818182
+    },
+    {
+      "shift": 0,
+      "entry_idx": 18,
+      "entry_date": "2026-05-27",
+      "actions": 10,
+      "rescue": 8,
+      "broken": 2,
+      "net": 6,
+      "precision": 0.8
+    },
+    {
+      "shift": 1,
+      "entry_idx": 19,
+      "entry_date": "2026-06-01",
+      "actions": 9,
+      "rescue": 7,
+      "broken": 2,
+      "net": 5,
+      "precision": 0.7777777777777778
+    },
+    {
+      "shift": 2,
+      "entry_idx": 20,
+      "entry_date": "2026-06-08",
+      "actions": 8,
+      "rescue": 7,
+      "broken": 1,
+      "net": 6,
+      "precision": 0.875
+    },
+    {
+      "shift": 3,
+      "entry_idx": 21,
+      "entry_date": "2026-06-29",
+      "actions": 7,
+      "rescue": 6,
+      "broken": 1,
+      "net": 5,
+      "precision": 0.8571428571428571
+    }
+  ],
+  "null_tests": {
+    "stationary_p_ge_observed": 0.0004,
+    "stationary_quantiles": {
+      "0.01": -4.0,
+      "0.05": -3.0,
+      "0.25": -2.0,
+      "0.5": 0.0,
+      "0.75": 0.0,
+      "0.95": 0.0,
+      "0.99": 2.0
+    },
+    "permutation_p_ge_observed": 0.0284,
+    "permutation_quantiles": {
+      "0.01": -5.0,
+      "0.05": -4.0,
+      "0.25": -1.0,
+      "0.5": 1.0,
+      "0.75": 2.0,
+      "0.95": 5.0,
+      "0.99": 6.0
+    }
+  },
+  "offline_change_point": {
+    "split": 15,
+    "gain": 3.9925151220930104,
+    "pre_rate": 0.3333333333333333,
+    "post_rate": 0.8461538461538461,
+    "permutation_p_ge_gain": 0.0544,
+    "split_before_date": "2026-04-28",
+    "split_after_date": "2026-04-30"
+  },
+  "month_delete": [
+    {
+      "deleted_month": "2026-05",
+      "remaining_actions": 9,
+      "rescue": 7,
+      "broken": 2,
+      "net": 5
+    },
+    {
+      "deleted_month": "2026-06",
+      "remaining_actions": 7,
+      "rescue": 6,
+      "broken": 1,
+      "net": 5
+    },
+    {
+      "deleted_month": "2026-07",
+      "remaining_actions": 8,
+      "rescue": 7,
+      "broken": 1,
+      "net": 6
+    },
+    {
+      "deleted_month": "2026-09",
+      "remaining_actions": 6,
+      "rescue": 4,
+      "broken": 2,
+      "net": 2
+    }
+  ],
+  "worst_leave_one_month_out_net": 2,
+  "statistical_support": {
+    "binom_one_sided_p": 0.0546875,
+    "jeffreys_p_theta_gt_half": 0.9739633851952316,
+    "jeffreys_ci95": [
+      0.4972255035600069,
+      0.9559405864473692
+    ]
+  }
+}
