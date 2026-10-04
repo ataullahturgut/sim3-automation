@@ -93,6 +93,7 @@ def build_frame():
     # 2025 formation can use the existing HSM frame.
     old=hsm.load_frame().sort_values("feature_cutoff_date").reset_index(drop=True)
     old=old[old.feature_cutoff_date.dt.year==2025].copy()
+    old["eval_block"]="FORMATION_2025"
 
     # 2026 must preserve the authoritative 191-origin call-by-call universe.
     v=pd.read_csv(V5C,parse_dates=["feature_cutoff_date","forecast_issue_date","target_end_date_h3"])
@@ -113,12 +114,13 @@ def build_frame():
     z["baseline_pred"]=np.where(z.feature_cutoff_date.isin(flips),1-z.v5_pred,z.v5_pred).astype(int)
     z["baseline_correct"]=z.baseline_pred.astype(int)==z.y_up.astype(int)
     z["is_reversal"]=z.y_up.astype(int)!=z.momentum_up.astype(int)
+    z["eval_block"]="STRESS_2026"
 
     # Keep a common subset of fields required downstream.
     common=list(set(old.columns)&set(z.columns))
     needed=["feature_cutoff_date","forecast_issue_date","target_end_date_h3","year","month","y_up","target_r3",
             "momentum_up","v5_pred","baseline_pred","baseline_correct","is_reversal",
-            "leadlag_score_premax","internal_now","internal_d1"]
+            "leadlag_score_premax","internal_now","internal_d1","eval_block"]
     for c in needed:
         if c not in old.columns: old[c]=np.nan
         if c not in z.columns: z[c]=np.nan
@@ -158,7 +160,7 @@ def confusion(y,p):
 def main():
     z=build_frame()
 
-    form=z[(z.feature_cutoff_date.dt.year==2025)&z.handoff_alarm].copy()
+    form=z[(z.eval_block=="FORMATION_2025")&z.handoff_alarm].copy()
     if len(form)!=13:
         raise RuntimeError(f"Expected 13 2025 broad Handoff alarms, got {len(form)}")
 
@@ -182,7 +184,7 @@ def main():
         })
 
     # 2026 replay: decisions at feature cutoff; updates only when prior alarm targets have matured.
-    test=z[z.feature_cutoff_date.dt.year==2026].copy().sort_values("feature_cutoff_date").reset_index(drop=True)
+    test=z[z.eval_block=="STRESS_2026"].copy().sort_values("feature_cutoff_date").reset_index(drop=True)
     if len(test)!=191:
         raise RuntimeError(f"Expected 191 2026 origins, got {len(test)}")
     if int(test.baseline_correct.sum())!=126:
