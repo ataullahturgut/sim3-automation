@@ -4788,3 +4788,120 @@ Authorities:
 - freeze commit `814ed94239cfaf9ad07736ed1f824bfa1b1945b0`
 - JSON commit `9d9c6c85b331c0f1e8715d3b7521c34babc391a8`
 - prospective ledger initialized at `GOLD_H3_SAGE_V2_PROSPECTIVE_LEDGER.csv`.
+
+
+## 55. CDE — COUNTERFACTUAL DISLOCATION EXCEPTION V1 (2026-10-04)
+
+**Objective:** test whether a rare reversal exception can be identified when an origin deviates in several reversal-oriented dimensions from its own matched V5-correct continuation twins.
+
+Frozen rule:
+- V5 must follow momentum;
+- use six existing origin-safe RTE counterfactual gaps:
+  - deceleration
+  - opposite semivariance share
+  - adverse excursion
+  - signed option pressure
+  - signed option-pressure change
+  - option total activity;
+- CDE candidate if at least **5 of 6** gaps are positive;
+- no threshold grid.
+
+Integrity:
+- chronology/leakage failures: **0**
+- complete eligible rows: **676**
+- coverage: 2023-06-01 .. 2026-09-24.
+
+Result:
+- candidates **109 (16.12%)**
+- rescue / broken / net = **36 / 73 / -37**
+- precision **33.03%**
+- V5 **68.49% -> 63.02%**.
+
+Block stability:
+- non-negative blocks **0/8**
+- worst block **-8**.
+
+Complementarity vs OCS on common mature coverage:
+- CDE-only: 41 candidates, **12 / 29 / -17**
+- OCS-only: 6 candidates, **6 / 0 / +6**
+- overlap: 1 candidate, **0 / 1 / -1**
+- union: **18 / 30 / -12**.
+
+Status:
+`CDE_H3_V1_FAIL`.
+
+Interpretation:
+**large counterfactual dislocation is not directionally selective enough for reversal FLIP.**
+Do not retune the 5/6 concurrence or sign definitions on the same replay.
+
+Authority:
+- branch `gold-h3-cde-v1-20261004`
+- evidence head `44ffb389a2d6519d0793f8c598f60c8725b875f1`
+- `GOLD_H3_CDE_V1_RESULT_2026-10-04.md`.
+
+
+## 56. OLC — OPTIONS / LEAD-LAG CONCURRENCE V1 (2026-10-04)
+
+**Objective:** test a second rare exception channel distinct from OCS by combining:
+- options pressure against momentum and rising (frozen OAR q=0.60 mechanism),
+- external cross-asset lead-lag opposition (LLRS).
+
+Frozen OAR:
+- pRTE >=0.60
+- pInst >=0.50
+- signed option pressure >0
+- signed option-pressure change >0.
+
+Frozen LLRS:
+- external opposes
+- incremental >0
+- pressure >=0.10.
+
+OLC = OAR AND LLRS.
+
+Integrity failures: **0**.
+
+Coverage:
+- 2025-02-07 .. 2026-09-24
+- 332 eligible rows.
+
+Result:
+- candidates **5 (1.51%)**
+- rescue / broken / net = **2 / 3 / -1**
+- precision **40.00%**
+- V5 **65.06% -> 64.76%**.
+
+Block:
+- 2025 H1: 2/2/net 0
+- 2025 H2: no candidates
+- 2026 H1: 0/1/net -1
+- 2026 H2: no candidates.
+
+Complementarity vs OCS:
+- OLC-only: **0 / 1 / -1**
+- OCS-only: **6 / 1 / +5**
+- overlap: 0
+- union: **6 / 2 / +4**
+- incremental true OLC-only rescues: **0**.
+
+Status:
+`OLC_H3_V1_FAIL`.
+
+Interpretation:
+**external lead-lag opposition becomes useful only when paired with the internal hourly-flow breakdown represented by IFBC; pairing it with options-pressure OAR does not create a second exception channel.**
+
+Authority:
+- branch `gold-h3-olc-v1-20261004`
+- evidence head `132125ed7b70288cb080fb20064a04c592ad5ec4`
+- `GOLD_H3_OLC_V1_RESULT_2026-10-04.md`.
+
+### Binding implication after Sections 55–56
+
+Two additional exception hypotheses have now been rejected:
+- counterfactual twin dislocation;
+- options-pressure + external lead-lag concurrence.
+
+The surviving rare exception architecture remains **OCS / SAGE V2 exception-only**:
+internal hourly flow breakdown + external lead-lag concurrence.
+
+Next research should seek a genuinely different physical channel rather than recombining the same RTE/options/path variables.
