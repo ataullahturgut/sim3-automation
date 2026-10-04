@@ -24,24 +24,14 @@ EVENTS=[
 ]
 
 def fetch_gc():
-    start=pd.Timestamp("2025-05-25",tz="UTC"); end=pd.Timestamp("2025-07-02",tz="UTC")
-    p1=int(start.timestamp()); p2=int(end.timestamp())
-    for host in ["query1.finance.yahoo.com","query2.finance.yahoo.com"]:
-        url=f"https://{host}/v8/finance/chart/GC%3DF"
-        r=requests.get(url,params={"period1":p1,"period2":p2,"interval":"1h","events":"history","includeAdjustedClose":"true"},
-                       headers={"User-Agent":"Mozilla/5.0 academic research"},timeout=60)
-        if r.status_code!=200: continue
-        j=r.json()["chart"]
-        if j.get("error") or not j.get("result"): continue
-        z=j["result"][0]
-        q=z["indicators"]["quote"][0]
-        rows=[]
-        for t,c in zip(z.get("timestamp",[]),q.get("close",[])):
-            if c is None: continue
-            rows.append((pd.to_datetime(t,unit="s",utc=True),float(c)))
-        d=pd.DataFrame(rows,columns=["ts","gc"]).drop_duplicates("ts").sort_values("ts")
-        if len(d)>100: return d
-    raise RuntimeError("GC hourly fetch failed")
+    url="https://raw.githubusercontent.com/ataullahturgut/sim3-automation/gold-h3-vast-v1-20261004/gold_axis_2026/GOLD_H3_VAST_V1_HOURLY_PANEL_2026-10-04.csv"
+    r=requests.get(url,timeout=60,headers={"User-Agent":"Mozilla/5.0 academic research"}); r.raise_for_status()
+    d=pd.read_csv(io.StringIO(r.text),usecols=["ts","GC_close"])
+    d["ts"]=pd.to_datetime(d.ts,utc=True)
+    d=d.rename(columns={"GC_close":"gc"}).dropna().drop_duplicates("ts").sort_values("ts")
+    d=d[(d.ts>=pd.Timestamp("2025-05-25",tz="UTC"))&(d.ts<pd.Timestamp("2025-07-02",tz="UTC"))].copy()
+    if len(d)<100: raise RuntimeError(f"VAST hourly panel too short: {len(d)}")
+    return d
 
 def fetch_dgs2():
     url="https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS2&cosd=2025-05-20&coed=2025-07-02"
