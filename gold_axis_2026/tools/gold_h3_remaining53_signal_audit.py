@@ -228,6 +228,27 @@ def main():
     ep[epcols].to_csv(OUT_EP,index=False)
     featdf.to_csv(OUT_FEAT,index=False)
 
+    # Exploratory temporal sequence diagnostics; descriptive only.
+    patterns={
+      "LEADLAG_PRE_TO_INTERNAL_NOW_067": (z["leadlag_score_premax"]>=.67) & ((z["fragility_score"]>=.67)|(z["flow_score"]>=.67)),
+      "EXTERNAL_PRE_TO_INTERNAL_NOW_067": ((z["leadlag_score_premax"]>=.67)|(z["reaction_score_premax"]>=.67)) & ((z["fragility_score"]>=.67)|(z["flow_score"]>=.67)),
+      "INTERNAL_DUAL_NOW_067": (z["fragility_score"]>=.67)&(z["flow_score"]>=.67),
+      "INTERNAL_ANY_NOW_075": (z["fragility_score"]>=.75)|(z["flow_score"]>=.75),
+      "LEADLAG_PRE_TO_INTERNAL_NOW_075": (z["leadlag_score_premax"]>=.67) & ((z["fragility_score"]>=.75)|(z["flow_score"]>=.75)),
+      "FLOW_PRE_TO_FRAGILITY_NOW_067": (z["flow_score_premax"]>=.67)&(z["fragility_score"]>=.67),
+      "FRAGILITY_PRE_TO_FLOW_NOW_067": (z["fragility_score_premax"]>=.67)&(z["flow_score"]>=.67),
+    }
+    seq=[]
+    missmask=z.missed_reversal.astype(bool)
+    ctrlmask=z.correct_continuation.astype(bool)
+    epdates=set(ep.feature_cutoff_date)
+    for name,mask in patterns.items():
+        mc=float(mask[missmask].mean())
+        cc=float(mask[ctrlmask].mean())
+        epn=int(z[z.feature_cutoff_date.isin(epdates)].assign(_flag=mask[z.feature_cutoff_date.isin(epdates)].to_numpy())._flag.sum())
+        seq.append({"pattern":name,"miss_coverage":mc,"control_prevalence":cc,
+                    "lift":float(mc/cc) if cc>0 else np.nan,"episode_first_n":epn,"episode_first_total":int(len(ep))})
+
     summary={
       "schema":"GOLD_H3_REMAINING53_SIGNAL_AUDIT",
       "status":"RETROSPECTIVE_MECHANISM_DIAGNOSTIC",
@@ -253,7 +274,8 @@ def main():
           "any_ge2":int((ep.mechanism_count_any_0p75>=2).sum())
         }
       },
-      "top_feature_smd":featdf.head(15).replace({np.nan:None}).to_dict("records")
+      "top_feature_smd":featdf.head(15).replace({np.nan:None}).to_dict("records"),
+      "temporal_sequences":seq
     }
     OUT_JSON.write_text(json.dumps(summary,indent=2,default=str)+"\n")
 
@@ -271,6 +293,12 @@ def main():
     for r in prevdf[(prevdf.threshold.isin([.67,.75]))].itertuples():
         lift="NA" if not np.isfinite(r.lift) else f"{r.lift:.2f}x"
         lines.append(f"| {r.mechanism} | {r.threshold:.2f} | {r.timing} | {fmt(r.miss_coverage)} | {fmt(r.control_prevalence)} | {lift} |")
+    lines += ["","## Exploratory temporal sequence patterns","",
+              "| Pattern | Miss coverage | Control prevalence | Lift | Episode starts |",
+              "|---|---:|---:|---:|---:|"]
+    for r in seq:
+        lv="NA" if not np.isfinite(r["lift"]) else f"{r['lift']:.2f}x"
+        lines.append(f"| {r['pattern']} | {100*r['miss_coverage']:.1f}% | {100*r['control_prevalence']:.1f}% | {lv} | {r['episode_first_n']}/{r['episode_first_total']} |")
     lines += ["","## Episode-first early-warning coverage","",
               f"At 0.67, at least one mechanism was already elevated at t-1/t-2 in **{summary['episode_first']['at_067']['pre_ge1']}/{len(ep)}** episode starts.",
               f"At 0.67, at least two mechanisms were already elevated at t-1/t-2 in **{summary['episode_first']['at_067']['pre_ge2']}/{len(ep)}** episode starts.",
