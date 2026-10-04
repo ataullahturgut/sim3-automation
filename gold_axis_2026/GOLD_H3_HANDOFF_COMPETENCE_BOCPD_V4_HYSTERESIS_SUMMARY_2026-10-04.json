@@ -1,0 +1,60 @@
+{
+  "schema": "GOLD_H3_HANDOFF_COMPETENCE_BOCPD_V4_HYSTERESIS",
+  "status": "POSTHOC_DEVELOPMENT_DIAGNOSTIC",
+  "formation_2025": {
+    "alarms": 13,
+    "rescue": 4,
+    "broken": 9
+  },
+  "fixed": {
+    "expected_run": 4,
+    "entry_p_rescue": 0.6,
+    "entry_p_theta_gt_half": 0.8,
+    "exit_consecutive_broken": 2
+  },
+  "stress_2026": {
+    "handoff_alarms": 28,
+    "acted": 10,
+    "rejected": 18,
+    "rescue": 8,
+    "broken": 2,
+    "net": 6,
+    "precision": 0.8,
+    "rescued_remaining53": 8,
+    "rejected_rescue": 8,
+    "rejected_broken": 10,
+    "baseline": {
+      "n": 191,
+      "correct": 126,
+      "accuracy": 0.6596858638743456,
+      "tp": 67,
+      "tn": 59,
+      "fp": 41,
+      "fn": 24,
+      "balanced_accuracy": 0.6631318681318681
+    },
+    "assisted": {
+      "n": 191,
+      "correct": 132,
+      "accuracy": 0.6910994764397905,
+      "tp": 68,
+      "tn": 64,
+      "fp": 36,
+      "fn": 23,
+      "balanced_accuracy": 0.6936263736263737
+    },
+    "monthly_net": {
+      "2026-05": 1,
+      "2026-06": 1,
+      "2026-07": 0,
+      "2026-09": 4
+    },
+    "state_events": [
+      {
+        "date": "2026-05-27",
+        "event": "TRUST_ENTRY",
+        "trigger_origin": "2026-05-27"
+      }
+    ]
+  }
+}
