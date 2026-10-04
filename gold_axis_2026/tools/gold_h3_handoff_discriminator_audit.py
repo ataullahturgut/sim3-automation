@@ -195,6 +195,32 @@ def main():
           }
         }
 
+    # Pre-existing HSM thresholds only: descriptive stratification, no new cut-point search.
+    strat=[]
+    for year in [2025,2026]:
+        yy=q[q.year==year].copy()
+        for th in [0.60,0.67,0.75]:
+            hi=yy.leadlag_score_premax>=th
+            for name,mask in [
+                (f"leadlag_ge_{th:.2f}",hi),
+                (f"leadlag_ge_{th:.2f}_strong_pro",hi & yy.strong_pro_risk.fillna(False)),
+                (f"leadlag_ge_{th:.2f}_other_topology",hi & (~yy.strong_pro_risk.fillna(False))),
+            ]:
+                qq=yy[mask]
+                strat.append({"year":year,"stratum":name,"n":int(len(qq)),
+                              "rescue":int(qq.alarm_rescue.sum()),"broken":int((1-qq.alarm_rescue).sum()),
+                              "precision":float(qq.alarm_rescue.mean()) if len(qq) else np.nan})
+        # Natural sign split for option volume imbalance, not a fitted threshold.
+        for name,mask in [
+            ("opt_vol_imbalance_gt0", safe_num(yy.opt_vol_imbalance)>0),
+            ("opt_vol_imbalance_le0", safe_num(yy.opt_vol_imbalance)<=0),
+        ]:
+            qq=yy[mask]
+            strat.append({"year":year,"stratum":name,"n":int(len(qq)),
+                          "rescue":int(qq.alarm_rescue.sum()),"broken":int((1-qq.alarm_rescue).sum()),
+                          "precision":float(qq.alarm_rescue.mean()) if len(qq) else np.nan})
+    stratdf=pd.DataFrame(strat)
+
     rdf.to_csv(OUT_FEATURES,index=False)
     alarm_cols=["feature_cutoff_date","forecast_issue_date","target_end_date_h3","year","momentum_up","y_up","target_r3",
                 "v5_pred","baseline_pred","baseline_correct","alarm_outcome",
@@ -215,7 +241,8 @@ def main():
       "years":cats,
       "pooled":{"n":int(len(q)),"rescue":int(q.alarm_rescue.sum()),"broken":int((1-q.alarm_rescue).sum()),"precision":float(q.alarm_rescue.mean()) if len(q) else np.nan},
       "stable_descriptive_features":stable.replace({np.nan:None}).to_dict("records") if len(stable) else [],
-      "all_cross_year":sdf.replace({np.nan:None}).to_dict("records") if len(sdf) else []
+      "all_cross_year":sdf.replace({np.nan:None}).to_dict("records") if len(sdf) else [],
+      "preexisting_threshold_stratification":stratdf.replace({np.nan:None}).to_dict("records")
     }
     OUT_JSON.write_text(json.dumps(summary,indent=2,default=str)+"\n")
 
@@ -248,6 +275,12 @@ def main():
         for r in sdf.head(15).itertuples():
             lines.append(f"| {r.feature} | {r.stable_descriptive} | {r.smd_2025:+.3f} | {r.smd_2026:+.3f} | {r.auc_2025:.3f} | {r.auc_2026:.3f} | {r.min_group_n} |")
 
+    lines += ["","## Existing-threshold stratification","",
+              "| Year | Stratum | N | Rescue | Broken | Precision |",
+              "|---:|---|---:|---:|---:|---:|"]
+    for r in stratdf.itertuples():
+        pv="NA" if not np.isfinite(r.precision) else f"{100*r.precision:.1f}%"
+        lines.append(f"| {r.year} | {r.stratum} | {r.n} | {r.rescue} | {r.broken} | {pv} |")
     lines += ["","## Topology contingency","",
               "| Year | Strong pro-risk: rescue/broken | Other topology: rescue/broken |",
               "|---|---:|---:|"]
