@@ -36,6 +36,18 @@
 | reaction_score | 0.75 | pre | 18.9% | 26.3% | 0.72x |
 | reaction_score | 0.75 | any | 30.2% | 37.9% | 0.80x |
 
+## Exploratory temporal sequence patterns
+
+| Pattern | Miss coverage | Control prevalence | Lift | Episode starts |
+|---|---:|---:|---:|---:|
+| LEADLAG_PRE_TO_INTERNAL_NOW_067 | 24.5% | 12.6% | 1.94x | 3/22 |
+| EXTERNAL_PRE_TO_INTERNAL_NOW_067 | 30.2% | 21.1% | 1.43x | 5/22 |
+| INTERNAL_DUAL_NOW_067 | 13.2% | 8.4% | 1.57x | 2/22 |
+| INTERNAL_ANY_NOW_075 | 26.4% | 18.9% | 1.39x | 3/22 |
+| LEADLAG_PRE_TO_INTERNAL_NOW_075 | 13.2% | 5.3% | 2.51x | 1/22 |
+| FLOW_PRE_TO_FRAGILITY_NOW_067 | 11.3% | 4.2% | 2.69x | 2/22 |
+| FRAGILITY_PRE_TO_FLOW_NOW_067 | 9.4% | 9.5% | 1.00x | 1/22 |
+
 ## Episode-first early-warning coverage
 
 At 0.67, at least one mechanism was already elevated at t-1/t-2 in **19/22** episode starts.

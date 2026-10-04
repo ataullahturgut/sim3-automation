@@ -595,5 +595,63 @@
       "control_mean": 0.49743366681165735,
       "smd_miss_minus_control": 0.015794723103690178
     }
+  ],
+  "temporal_sequences": [
+    {
+      "pattern": "LEADLAG_PRE_TO_INTERNAL_NOW_067",
+      "miss_coverage": 0.24528301886792453,
+      "control_prevalence": 0.12631578947368421,
+      "lift": 1.941823899371069,
+      "episode_first_n": 3,
+      "episode_first_total": 22
+    },
+    {
+      "pattern": "EXTERNAL_PRE_TO_INTERNAL_NOW_067",
+      "miss_coverage": 0.3018867924528302,
+      "control_prevalence": 0.21052631578947367,
+      "lift": 1.4339622641509435,
+      "episode_first_n": 5,
+      "episode_first_total": 22
+    },
+    {
+      "pattern": "INTERNAL_DUAL_NOW_067",
+      "miss_coverage": 0.1320754716981132,
+      "control_prevalence": 0.08421052631578947,
+      "lift": 1.5683962264150944,
+      "episode_first_n": 2,
+      "episode_first_total": 22
+    },
+    {
+      "pattern": "INTERNAL_ANY_NOW_075",
+      "miss_coverage": 0.2641509433962264,
+      "control_prevalence": 0.18947368421052632,
+      "lift": 1.3941299790356394,
+      "episode_first_n": 3,
+      "episode_first_total": 22
+    },
+    {
+      "pattern": "LEADLAG_PRE_TO_INTERNAL_NOW_075",
+      "miss_coverage": 0.1320754716981132,
+      "control_prevalence": 0.05263157894736842,
+      "lift": 2.509433962264151,
+      "episode_first_n": 1,
+      "episode_first_total": 22
+    },
+    {
+      "pattern": "FLOW_PRE_TO_FRAGILITY_NOW_067",
+      "miss_coverage": 0.11320754716981132,
+      "control_prevalence": 0.042105263157894736,
+      "lift": 2.688679245283019,
+      "episode_first_n": 2,
+      "episode_first_total": 22
+    },
+    {
+      "pattern": "FRAGILITY_PRE_TO_FLOW_NOW_067",
+      "miss_coverage": 0.09433962264150944,
+      "control_prevalence": 0.09473684210526316,
+      "lift": 0.9958071278825996,
+      "episode_first_n": 1,
+      "episode_first_total": 22
+    }
   ]
 }
