@@ -1,0 +1,88 @@
+{
+  "coverage_start": "2025-05-09",
+  "n": 165,
+  "missed_reversals": 40,
+  "correct_continuations": 96,
+  "transition": [
+    {
+      "feature": "fragility_score_d1",
+      "miss_mean": 0.08733872521189051,
+      "control_mean": -0.02720008733441632,
+      "smd": 0.32442380349646666
+    },
+    {
+      "feature": "internal_d1",
+      "miss_mean": 0.06170615609046105,
+      "control_mean": -0.02039563654490041,
+      "smd": 0.2633196148821504
+    },
+    {
+      "feature": "fragility_score_d2",
+      "miss_mean": 0.08463828059051659,
+      "control_mean": -0.005239286659491402,
+      "smd": 0.24699364341323396
+    },
+    {
+      "feature": "leadlag_score_d1",
+      "miss_mean": 0.08152362079408,
+      "control_mean": -0.012844143588615697,
+      "smd": 0.20235688726199688
+    },
+    {
+      "feature": "internal_d2",
+      "miss_mean": 0.046539218140306655,
+      "control_mean": 0.01564679569924707,
+      "smd": 0.09304228703539934
+    },
+    {
+      "feature": "flow_score_d1",
+      "miss_mean": 0.023693848706294027,
+      "control_mean": 0.004026227017651863,
+      "smd": 0.06297792964913125
+    },
+    {
+      "feature": "leadlag_score_d2",
+      "miss_mean": 0.026092016871079073,
+      "control_mean": -0.003433818318327012,
+      "smd": 0.061686747299122616
+    },
+    {
+      "feature": "handoff_gap",
+      "miss_mean": 0.39531663126159433,
+      "control_mean": 0.3977865010961606,
+      "smd": -0.0056068787595783
+    },
+    {
+      "feature": "leadlag_premax_minus_now",
+      "miss_mean": 0.09659330963302792,
+      "control_mean": 0.10376409060138991,
+      "smd": -0.014895717550809758
+    },
+    {
+      "feature": "flow_score_d2",
+      "miss_mean": -0.016311770438855424,
+      "control_mean": -0.005582783706532586,
+      "smd": -0.03241384367499299
+    }
+  ],
+  "sequences": [
+    {
+      "pattern": "LEADLAG_PRE_TO_INTERNAL_NOW_067",
+      "miss_coverage": 0.175,
+      "control_prevalence": 0.10416666666666667,
+      "lift": 1.6799999999999997
+    },
+    {
+      "pattern": "EXTERNAL_PRE_TO_INTERNAL_NOW_067",
+      "miss_coverage": 0.275,
+      "control_prevalence": 0.25,
+      "lift": 1.1
+    },
+    {
+      "pattern": "FLOW_PRE_TO_FRAGILITY_NOW_067",
+      "miss_coverage": 0.1,
+      "control_prevalence": 0.10416666666666667,
+      "lift": 0.96
+    }
+  ]
+}
