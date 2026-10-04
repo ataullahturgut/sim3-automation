@@ -1,0 +1,34 @@
+name: Gold H3 RuleFlow V2 Gated
+on:
+  push:
+    branches: [gold-h3-ruleflow-v2-gated-20261004]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_ruleflow_v2_gated.py'
+      - '.github/workflows/gold-h3-ruleflow-v2-gated.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-ruleflow-v2-gated-20261004
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check numpy pandas
+      - run: python gold_axis_2026/tools/gold_h3_ruleflow_v2_gated.py
+      - name: Record gated ruleflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_RULEFLOW_V2_GATED_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record gated RuleFlow V2 evidence"
+            git pull --rebase origin gold-h3-ruleflow-v2-gated-20261004
+            git push origin HEAD:gold-h3-ruleflow-v2-gated-20261004
+          fi
