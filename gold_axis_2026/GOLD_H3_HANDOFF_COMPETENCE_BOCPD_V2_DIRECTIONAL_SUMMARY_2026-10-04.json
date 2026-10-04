@@ -1,0 +1,102 @@
+{
+  "schema": "GOLD_H3_HANDOFF_COMPETENCE_BOCPD_V2_DIRECTIONAL",
+  "status": "POSTHOC_MECHANISTIC_STRESS",
+  "formation_2025": {
+    "0": {
+      "alarms": 2,
+      "rescue": 1,
+      "broken": 1,
+      "state": {
+        "p_rescue": 0.6000000000000001,
+        "p_theta_gt_half": 0.6273239544735164,
+        "map_run": 2,
+        "run_entropy": 1.0104127537805414,
+        "n_updates": 2
+      }
+    },
+    "1": {
+      "alarms": 11,
+      "rescue": 3,
+      "broken": 8,
+      "state": {
+        "p_rescue": 0.1837716407132409,
+        "p_theta_gt_half": 0.06739475923922267,
+        "map_run": 3,
+        "run_entropy": 2.1957436784688102,
+        "n_updates": 11
+      }
+    }
+  },
+  "fixed_expected_run": 4,
+  "action_rule": {
+    "p_rescue_min": 0.6,
+    "p_theta_gt_half_min": 0.8
+  },
+  "stress_2026": {
+    "handoff_alarms": 28,
+    "acted": 7,
+    "rejected": 21,
+    "rescue": 3,
+    "broken": 4,
+    "net": -1,
+    "precision": 0.42857142857142855,
+    "rescued_remaining53": 3,
+    "rejected_rescue": 13,
+    "rejected_broken": 8,
+    "baseline": {
+      "n": 191,
+      "correct": 126,
+      "accuracy": 0.6596858638743456,
+      "tp": 67,
+      "tn": 59,
+      "fp": 41,
+      "fn": 24,
+      "balanced_accuracy": 0.6631318681318681
+    },
+    "assisted": {
+      "n": 191,
+      "correct": 125,
+      "accuracy": 0.6544502617801047,
+      "tp": 66,
+      "tn": 59,
+      "fp": 41,
+      "fn": 25,
+      "balanced_accuracy": 0.6576373626373626
+    },
+    "by_direction": {
+      "DOWN": {
+        "acted": 3,
+        "rescue": 0,
+        "broken": 3,
+        "first_trust": "2026-02-10",
+        "final_state": {
+          "p_rescue": 0.5846244377110839,
+          "p_theta_gt_half": 0.5957285133799348,
+          "map_run": 0,
+          "run_entropy": 1.9609842994815865,
+          "n_updates": 14
+        }
+      },
+      "UP": {
+        "acted": 4,
+        "rescue": 3,
+        "broken": 1,
+        "first_trust": "2026-06-08",
+        "final_state": {
+          "p_rescue": 0.8306324752295986,
+          "p_theta_gt_half": 0.9395226252420238,
+          "map_run": 3,
+          "run_entropy": 2.2425388190782947,
+          "n_updates": 27
+        }
+      }
+    },
+    "monthly_net": {
+      "2026-02": -1,
+      "2026-03": -2,
+      "2026-06": 1,
+      "2026-07": 0,
+      "2026-09": 1
+    }
+  }
+}
