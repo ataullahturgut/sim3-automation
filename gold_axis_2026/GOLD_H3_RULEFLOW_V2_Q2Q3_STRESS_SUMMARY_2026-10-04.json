@@ -1,0 +1,107 @@
+{
+  "rule": {
+    "conflict_gt": 0.359,
+    "dominance_gt": 0.294,
+    "dominance_le": 0.502,
+    "susceptibility_ge": 0.6,
+    "macro_breadth_ge": 0.3,
+    "gate": "OR"
+  },
+  "Q2": {
+    "period": "Q2",
+    "n": 18,
+    "hotspots": 3,
+    "gated_hotspots": 3,
+    "actions": 2,
+    "rescue": 0,
+    "broken": 2,
+    "net": -2,
+    "precision": 0.0,
+    "gated_reversal_rate": 0.3333333333333333,
+    "nongated_reversal_rate": 0.5333333333333333
+  },
+  "Q3": {
+    "period": "Q3",
+    "n": 15,
+    "hotspots": 4,
+    "gated_hotspots": 2,
+    "actions": 2,
+    "rescue": 0,
+    "broken": 2,
+    "net": -2,
+    "precision": 0.0,
+    "gated_reversal_rate": 0.0,
+    "nongated_reversal_rate": 0.46153846153846156
+  },
+  "Q2Q3": {
+    "period": "Q2-Q3",
+    "n": 33,
+    "hotspots": 7,
+    "gated_hotspots": 5,
+    "actions": 4,
+    "rescue": 0,
+    "broken": 4,
+    "net": -4,
+    "precision": 0.0,
+    "gated_reversal_rate": 0.2,
+    "nongated_reversal_rate": 0.5
+  },
+  "unavailable": [
+    {
+      "date": "2026-09-29",
+      "event": "JOLTS",
+      "reason": "no_h3_origin"
+    },
+    {
+      "date": "2026-09-30",
+      "event": "PCE",
+      "reason": "no_h3_origin"
+    }
+  ],
+  "actions": [
+    {
+      "date": "2026-06-17",
+      "event": "FOMC",
+      "conflict_ratio": 0.4,
+      "current_dominance": 0.3500000000000011,
+      "susceptibility": 0.5165289256198347,
+      "macro_breadth": 0.430666625087659,
+      "rescue": false,
+      "broken": true,
+      "h3_return": -0.0301061214552429
+    },
+    {
+      "date": "2026-06-25",
+      "event": "PCE",
+      "conflict_ratio": 0.6363636363636371,
+      "current_dominance": 0.5,
+      "susceptibility": 0.524793388429752,
+      "macro_breadth": 0.3672812666518218,
+      "rescue": false,
+      "broken": true,
+      "h3_return": 0.0015465360681447
+    },
+    {
+      "date": "2026-07-29",
+      "event": "FOMC",
+      "conflict_ratio": 0.5454545454545484,
+      "current_dominance": 0.3636363636363629,
+      "susceptibility": 0.7396694214876034,
+      "macro_breadth": 0.27376957984779016,
+      "rescue": false,
+      "broken": true,
+      "h3_return": 0.0033940780885721
+    },
+    {
+      "date": "2026-08-04",
+      "event": "JOLTS",
+      "conflict_ratio": 0.7499999999999972,
+      "current_dominance": 0.3749999999999986,
+      "susceptibility": 0.6198347107438016,
+      "macro_breadth": 0.25020354653072896,
+      "rescue": false,
+      "broken": true,
+      "h3_return": 0.0575613454182827
+    }
+  ]
+}
