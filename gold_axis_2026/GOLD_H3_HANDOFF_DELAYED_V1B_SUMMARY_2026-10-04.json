@@ -1,0 +1,21 @@
+{
+  "schema": "GOLD_H3_HANDOFF_DELAYED_V1B",
+  "status": "NO_2025_ELIGIBLE_RULE",
+  "dev_2025": {
+    "n": 248,
+    "baseline": {
+      "n": 248,
+      "correct": 171,
+      "accuracy": 0.6895161290322581,
+      "tp": 114,
+      "tn": 57,
+      "fp": 40,
+      "fn": 37,
+      "up_recall": 0.7549668874172185,
+      "down_recall": 0.5876288659793815,
+      "balanced_accuracy": 0.6712978766983
+    }
+  },
+  "selected_rule": null,
+  "stress_2026": null
+}
