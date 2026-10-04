@@ -24,8 +24,40 @@ SEED=20261004
 spec=importlib.util.spec_from_file_location("v1",V1)
 v1=importlib.util.module_from_spec(spec); spec.loader.exec_module(v1)
 
+_PGT_CACHE={}
+class FastBetaBernoulliBOCPD:
+    def __init__(self,expected_run):
+        self.h=1.0/float(expected_run)
+        self.r=np.array([1.0],float)
+        self.a=np.array([0.5],float)
+        self.b=np.array([0.5],float)
+    def predictive(self):
+        means=self.a/(self.a+self.b)
+        p=float(np.dot(self.r,means))
+        vals=[]
+        for aa,bb in zip(self.a,self.b):
+            key=(float(aa),float(bb))
+            if key not in _PGT_CACHE:
+                _PGT_CACHE[key]=float(1-beta_dist.cdf(.5,aa,bb))
+            vals.append(_PGT_CACHE[key])
+        return {"p_rescue":p,"p_theta_gt_half":float(np.dot(self.r,np.asarray(vals,float))),
+                "map_run":int(np.argmax(self.r))}
+    def update(self,y):
+        y=int(y)
+        means=self.a/(self.a+self.b)
+        like=means if y==1 else (1-means)
+        prior_like=.5
+        new=np.zeros(len(self.r)+1,float)
+        new[0]=self.h*prior_like*float(self.r.sum())
+        new[1:]=(1-self.h)*self.r*like
+        new/=float(new.sum())
+        na=np.empty(len(self.a)+1,float); nb=np.empty(len(self.b)+1,float)
+        na[0]=.5+y; nb[0]=.5+(1-y)
+        na[1:]=self.a+y; nb[1:]=self.b+(1-y)
+        self.r,self.a,self.b=new,na,nb
+
 def init_model(expected_run, form):
-    m=v1.BetaBernoulliBOCPD(expected_run)
+    m=FastBetaBernoulliBOCPD(expected_run)
     for r in form.itertuples():
         m.update(int(r.competence_y))
     return m
