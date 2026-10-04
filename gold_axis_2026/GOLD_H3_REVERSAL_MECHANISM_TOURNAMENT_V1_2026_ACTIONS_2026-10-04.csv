@@ -1,0 +1,2 @@
+family,feature_cutoff_date,forecast_issue_date,target_end_date_h3,momentum_up,y_up,target_r3,baseline_pred,baseline_correct,handoff_confirm,mcp_score,sellr_score,haz_score,analog_score,outcome
+SELLR,2026-05-21,2026-05-22 00:00:00,2026-05-26 00:00:00,1,0,-0.0021013169130118,1,False,True,2.423749888365902,2.4664102093492493,0.5447066524500431,0.36,RESCUE

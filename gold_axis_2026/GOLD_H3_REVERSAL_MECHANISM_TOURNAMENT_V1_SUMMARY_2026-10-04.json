@@ -1,0 +1,89 @@
+{
+  "schema": "GOLD_H3_REVERSAL_MECHANISM_TOURNAMENT_V1",
+  "status": "WINNER_FROZEN_2026_STRESSED",
+  "train_2023_2024_n": 459,
+  "dev_2025_n": 248,
+  "baseline_2026": {
+    "n": 191,
+    "correct": 126,
+    "accuracy": 0.6596858638743456,
+    "tp": 67,
+    "tn": 59,
+    "fp": 41,
+    "fn": 24,
+    "balanced_accuracy": 0.6631318681318681
+  },
+  "selected_2025": {
+    "SELLR": {
+      "family": "SELLR",
+      "quantile": 0.95,
+      "threshold": 2.3677413378977423,
+      "handoff": false,
+      "actions": 9,
+      "rescue": 6,
+      "broken": 3,
+      "net": 3,
+      "precision": 0.6666666666666666,
+      "rate": 0.036290322580645164,
+      "nonnegative_action_month_share": 0.75,
+      "worst_action_month_net": -1,
+      "monthly_net_json": "{\"2025-01\": 1, \"2025-02\": 1, \"2025-03\": 1, \"2025-04\": 0, \"2025-07\": -1, \"2025-10\": 1, \"2025-11\": -1, \"2025-12\": 1}",
+      "eligible": true,
+      "handoff_pref": 0
+    }
+  },
+  "consensus_2025": null,
+  "finalists_2025": [
+    {
+      "family": "SELLR",
+      "net": 3,
+      "precision": 0.6666666666666666,
+      "actions": 9,
+      "ba_gain": NaN
+    }
+  ],
+  "winner": "SELLR",
+  "stress_2026": {
+    "SELLR": {
+      "action_stats": {
+        "actions": 1,
+        "rescue": 1,
+        "broken": 0,
+        "net": 1,
+        "precision": 1.0,
+        "rate": 0.005235602094240838,
+        "nonnegative_action_month_share": 1.0,
+        "worst_action_month_net": 1,
+        "monthly_net": {
+          "2026-05": 1
+        }
+      },
+      "assisted": {
+        "n": 191,
+        "correct": 127,
+        "accuracy": 0.6649214659685864,
+        "tp": 67,
+        "tn": 60,
+        "fp": 40,
+        "fn": 24,
+        "balanced_accuracy": 0.6681318681318682
+      },
+      "remaining53_rescued": 1,
+      "episode_first_rescued": 0,
+      "overlap_sage": 0,
+      "overlap_ruleflow": 0
+    }
+  },
+  "hazard_coefficients": {
+    "log_trend_age": 0.22799616070887851,
+    "abs_h_ret_12": -0.6441381880669174,
+    "trend_strength": -0.2259515434887062,
+    "adverse_excursion": -0.04172618726544591,
+    "path_consistency": -0.008733453975458685,
+    "signed_opt_pressure": 0.0659064972863517,
+    "opt_total_z20": 0.08884791382723507,
+    "core_confirmation": -0.3089980741694798,
+    "cross_dispersion": 0.018769362165678937,
+    "mcp_score": 0.01002082842416501
+  }
+}
