@@ -125,6 +125,8 @@ def timeline_data():
     tl=pd.read_csv(TIMELINE,parse_dates=["feature_cutoff_date","target_end_date_h3"])
     form=tl[tl.period=="2025_FORMATION"].copy().sort_values("feature_cutoff_date").reset_index(drop=True)
     test=tl[tl.period=="2026_STRESS"].copy().sort_values("feature_cutoff_date").reset_index(drop=True)
+    form["target_end_date_h3"]=pd.to_datetime(form["target_end_date_h3"],errors="coerce")
+    test["target_end_date_h3"]=pd.to_datetime(test["target_end_date_h3"],errors="coerce")
     sc=pd.read_csv(SELLR,parse_dates=["feature_cutoff_date"])
     keep=["feature_cutoff_date","sellr_score","baseline_pred","momentum_up"]
     form=form.merge(sc[keep],on="feature_cutoff_date",how="left",suffixes=("","_sellr"))
