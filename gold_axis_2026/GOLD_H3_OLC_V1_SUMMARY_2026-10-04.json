@@ -1,0 +1,99 @@
+{
+  "schema": "OLC_H3_V1",
+  "status": "OLC_H3_V1_FAIL",
+  "integrity_failures": 0,
+  "first": "2025-02-07",
+  "last": "2026-09-24",
+  "aggregate": {
+    "n": 332,
+    "candidate_n": 5,
+    "candidate_rate": 0.015060240963855422,
+    "rescued": 2,
+    "broken": 3,
+    "net": -1,
+    "precision": 0.4,
+    "v5_accuracy": 0.6506024096385542,
+    "assisted_accuracy": 0.6475903614457831
+  },
+  "blocks": [
+    {
+      "n": 77,
+      "candidate_n": 4,
+      "candidate_rate": 0.05194805194805195,
+      "rescued": 2,
+      "broken": 2,
+      "net": 0,
+      "precision": 0.5,
+      "v5_accuracy": 0.5844155844155844,
+      "assisted_accuracy": 0.5844155844155844,
+      "block": "2025_H1"
+    },
+    {
+      "n": 108,
+      "candidate_n": 0,
+      "candidate_rate": 0.0,
+      "rescued": 0,
+      "broken": 0,
+      "net": 0,
+      "precision": 0.0,
+      "v5_accuracy": 0.7407407407407407,
+      "assisted_accuracy": 0.7407407407407407,
+      "block": "2025_H2"
+    },
+    {
+      "n": 104,
+      "candidate_n": 1,
+      "candidate_rate": 0.009615384615384616,
+      "rescued": 0,
+      "broken": 1,
+      "net": -1,
+      "precision": 0.0,
+      "v5_accuracy": 0.6346153846153846,
+      "assisted_accuracy": 0.625,
+      "block": "2026_H1"
+    },
+    {
+      "n": 43,
+      "candidate_n": 0,
+      "candidate_rate": 0.0,
+      "rescued": 0,
+      "broken": 0,
+      "net": 0,
+      "precision": 0.0,
+      "v5_accuracy": 0.5813953488372093,
+      "assisted_accuracy": 0.5813953488372093,
+      "block": "2026_H2"
+    }
+  ],
+  "complementarity": {
+    "olc_only": {
+      "n": 1,
+      "rescued": 0,
+      "broken": 1,
+      "net": -1,
+      "precision": 0.0
+    },
+    "ocs_only": {
+      "n": 7,
+      "rescued": 6,
+      "broken": 1,
+      "net": 5,
+      "precision": 0.8571428571428571
+    },
+    "overlap": {
+      "n": 0,
+      "rescued": 0,
+      "broken": 0,
+      "net": 0,
+      "precision": 0.0
+    },
+    "union": {
+      "n": 8,
+      "rescued": 6,
+      "broken": 2,
+      "net": 4,
+      "precision": 0.75
+    }
+  },
+  "incremental_true_olc_only": 0
+}
