@@ -1,0 +1,70 @@
+{
+  "schema": "GOLD_H3_HANDOFF_COMPETENCE_BOCPD_V1",
+  "status": "FROZEN_2026_STRESS_COMPLETE",
+  "formation_2025": {
+    "alarms": 13,
+    "rescue": 4,
+    "broken": 9,
+    "expected_run_log_evidence": {
+      "4": -9.493840908339644,
+      "6": -9.581059047703537,
+      "8": -9.599500802014107,
+      "12": -9.598675069235743
+    },
+    "selected_expected_run": 4
+  },
+  "action_rule": {
+    "p_rescue_min": 0.6,
+    "p_theta_gt_half_min": 0.8
+  },
+  "stress_2026": {
+    "handoff_alarms": 28,
+    "acted": 5,
+    "rejected": 23,
+    "rescue": 3,
+    "broken": 2,
+    "net": 1,
+    "precision": 0.6,
+    "rescued_remaining53": 3,
+    "rejected_rescue": 13,
+    "rejected_broken": 10,
+    "baseline": {
+      "n": 191,
+      "correct": 126,
+      "accuracy": 0.6596858638743456,
+      "tp": 67,
+      "tn": 59,
+      "fp": 41,
+      "fn": 24,
+      "up_recall": 0.7362637362637363,
+      "down_recall": 0.59,
+      "balanced_accuracy": 0.6631318681318681
+    },
+    "assisted": {
+      "n": 191,
+      "correct": 127,
+      "accuracy": 0.6649214659685864,
+      "tp": 67,
+      "tn": 60,
+      "fp": 40,
+      "fn": 24,
+      "up_recall": 0.7362637362637363,
+      "down_recall": 0.6,
+      "balanced_accuracy": 0.6681318681318682
+    },
+    "monthly_net": {
+      "2026-05": 1,
+      "2026-06": -1,
+      "2026-07": 0,
+      "2026-09": 1
+    },
+    "first_trusted_handoff_origin": "2026-05-27",
+    "final_competence_state": {
+      "p_rescue": 0.8234727315799677,
+      "p_theta_gt_half": 0.9387016955300855,
+      "map_run": 3,
+      "run_entropy": 2.327987864092289,
+      "n_updates": 41
+    }
+  }
+}
