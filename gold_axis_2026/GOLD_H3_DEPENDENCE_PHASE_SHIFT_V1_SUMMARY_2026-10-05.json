@@ -1,0 +1,41 @@
+{
+  "schema": "GOLD_H3_DEPENDENCE_PHASE_SHIFT_V1",
+  "status": "LABEL_FREE_DEPENDENCE_DIAGNOSTIC",
+  "pre2026": {
+    "q95_run": 0.0,
+    "q99_run": 4.0,
+    "max_run": 11,
+    "q95_dep_shift": 4.318255681175484
+  },
+  "first_2026": {
+    "strong_pro_risk": "2026-04-30",
+    "run_phase95": "2026-04-30",
+    "dep_shift95": "2026-06-02",
+    "dependence_phase": "2026-04-30"
+  },
+  "handoff_performance": {
+    "2025_FORMATION": {
+      "n": 13,
+      "inside_n": 2,
+      "inside_rescue": 1,
+      "inside_precision": 0.5,
+      "outside_n": 11,
+      "outside_rescue": 3,
+      "outside_precision": 0.2727272727272727
+    },
+    "2026_STRESS": {
+      "n": 28,
+      "inside_n": 11,
+      "inside_rescue": 9,
+      "inside_precision": 0.8181818181818182,
+      "outside_n": 17,
+      "outside_rescue": 7,
+      "outside_precision": 0.4117647058823529
+    }
+  },
+  "reference_dates": {
+    "sellr_trigger": "2026-05-21",
+    "bocpd_entry": "2026-05-27",
+    "offline_cp": "2026-04-30"
+  }
+}
