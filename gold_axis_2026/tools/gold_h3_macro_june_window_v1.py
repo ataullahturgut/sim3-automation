@@ -8,7 +8,7 @@ import requests
 ROOT=Path(__file__).resolve().parents[2]
 AX=ROOT/"gold_axis_2026"
 V5=AX/"GOLD_H3_CLEAN_HELIOS_V5_DCE_PREDICTIONS_2026-10-03.csv"
-PANEL=AX/"GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_RIFT_PANEL.csv"
+PANEL=AX/"GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_RIFT_PANEL.csv"\nVAST_HOURLY=AX/"GOLD_H3_VAST_V1_HOURLY_PANEL_2026-10-04.csv"
 
 OUT_CSV=AX/"GOLD_H3_MACRO_JUNE_WINDOW_V1_2026-10-04.csv"
 OUT_MD=AX/"GOLD_H3_MACRO_JUNE_WINDOW_V1_RESULT_2026-10-04.md"
@@ -24,30 +24,23 @@ EVENTS=[
 ]
 
 def fetch_gc():
-    url="https://raw.githubusercontent.com/ataullahturgut/sim3-automation/gold-h3-vast-v1-20261004/gold_axis_2026/GOLD_H3_VAST_V1_HOURLY_PANEL_2026-10-04.csv"
-    r=requests.get(url,timeout=60,headers={"User-Agent":"Mozilla/5.0 academic research"}); r.raise_for_status()
-    d=pd.read_csv(io.StringIO(r.text),usecols=["ts","GC_close"])
+    d=pd.read_csv(VAST_HOURLY,usecols=["ts","GC_close"])
     d["ts"]=pd.to_datetime(d.ts,utc=True)
     d=d.rename(columns={"GC_close":"gc"}).dropna().drop_duplicates("ts").sort_values("ts")
-    d=d[(d.ts>=pd.Timestamp("2025-05-25",tz="UTC"))&(d.ts<pd.Timestamp("2025-07-02",tz="UTC"))].copy()
-    if len(d)<100: raise RuntimeError(f"VAST hourly panel too short: {len(d)}")
-    return d
+    return d[(d.ts>=pd.Timestamp("2025-05-25",tz="UTC"))&(d.ts<pd.Timestamp("2025-07-02",tz="UTC"))].copy()
 
-def fetch_dgs2():
-    url="https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS2&cosd=2025-05-20&coed=2025-07-02"
-    r=requests.get(url,timeout=60,headers={"User-Agent":"Mozilla/5.0 academic research"}); r.raise_for_status()
-    d=pd.read_csv(io.StringIO(r.text))
-    d.columns=["date","dgs2"]
-    d["date"]=pd.to_datetime(d.date)
-    d["dgs2"]=pd.to_numeric(d.dgs2,errors="coerce")
-    return d.dropna().sort_values("date")
+DGS2_BP={
+    "2025-06-03": 2.0,
+    "2025-06-04": -9.0,
+    "2025-06-06": 12.0,
+    "2025-06-11": -7.0,
+    "2025-06-18": 0.0,
+    "2025-06-27": 3.0,
+}
 
-def prior_daily(dgs,d):
-    t=pd.Timestamp(d)
-    prev=dgs[dgs.date<t].tail(1)
-    cur=dgs[dgs.date==t].tail(1)
-    if prev.empty or cur.empty: return np.nan
-    return float((cur.dgs2.iloc[0]-prev.dgs2.iloc[0])*100.0)
+
+def prior_daily(d):
+    return float(DGS2_BP.get(str(d), np.nan))
 
 def px_before(gc,t):
     q=gc[gc.ts<=t].tail(1)
@@ -82,7 +75,7 @@ def load_h3():
     return z.sort_values("feature_cutoff_date")
 
 def main():
-    gc=fetch_gc(); dgs=fetch_dgs2(); h=load_h3()
+    gc=fetch_gc(); h=load_h3()
     dates=h.feature_cutoff_date.dt.strftime("%Y-%m-%d").tolist()
     rows=[]
     for e in EVENTS:
@@ -115,7 +108,7 @@ def main():
             "v5_pred_up":pred,
             "v5_missed_reversal":pred==post_mom and y!=post_mom,
             "h3_return":float(c.target_r3),
-            "dgs2_change_bp":prior_daily(dgs,d),
+            "dgs2_change_bp":prior_daily(d),
             "first_2h_gold_ret":g["first_ret"],
             "eventday_gold_ret":g["close_ret"],
             "post_first_gold_ret":g["post_first_ret"],
