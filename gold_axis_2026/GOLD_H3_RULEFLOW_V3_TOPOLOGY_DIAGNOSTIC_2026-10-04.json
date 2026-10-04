@@ -1,0 +1,108 @@
+{
+  "status": "POST_Q2Q3_DIAGNOSTIC_NOT_VALIDATION",
+  "binding_v3_rule": {
+    "window": 60,
+    "pro_risk_signs": {
+      "gold_ndx": ">0",
+      "gold_vix": "<0"
+    },
+    "strength_rule": "min(two-sided Pearson p-values) < 0.05",
+    "action": "veto RuleFlow V2 FLIP; KEEP V5"
+  },
+  "combined": {
+    "v2": {
+      "actions": 10,
+      "rescue": 6,
+      "broken": 4,
+      "net": 2,
+      "precision": 0.6
+    },
+    "v3_topology_veto": {
+      "actions": 6,
+      "rescue": 6,
+      "broken": 0,
+      "net": 6,
+      "precision": 1.0
+    },
+    "rescue_retention": 1.0,
+    "broken_suppression": 1.0
+  },
+  "sensitivities": {
+    "hard_20d_60d_safe_confirmation": {
+      "actions": 2,
+      "rescue": 2,
+      "broken": 0,
+      "net": 2,
+      "precision": 1.0
+    },
+    "safe60_sign_only": {
+      "actions": 4,
+      "rescue": 4,
+      "broken": 0,
+      "net": 4,
+      "precision": 1.0
+    }
+  },
+  "topology_hotspots": {
+    "strong_pro_risk_n": 8,
+    "strong_pro_risk_reversal": 2,
+    "strong_pro_risk_reversal_rate": 0.25,
+    "other_n": 9,
+    "other_reversal": 7,
+    "other_reversal_rate": 0.7777777777777778,
+    "fisher_one_sided_p": 0.04446729740847388
+  },
+  "v2_action_topology": {
+    "strong_pro_risk_actions": 4,
+    "strong_pro_risk_rescue": 0,
+    "strong_pro_risk_broken": 4,
+    "other_actions": 6,
+    "other_rescue": 6,
+    "other_broken": 0,
+    "fisher_one_sided_p": 0.004761904761904762
+  },
+  "periods": [
+    {
+      "period": "2025",
+      "hotspots": 7,
+      "v2_actions": 5,
+      "v2_rescue": 5,
+      "v2_broken": 0,
+      "v2_net": 5,
+      "v2_precision": 1.0,
+      "v3_actions": 5,
+      "v3_rescue": 5,
+      "v3_broken": 0,
+      "v3_net": 5,
+      "v3_precision": 1.0
+    },
+    {
+      "period": "2026Q1",
+      "hotspots": 3,
+      "v2_actions": 1,
+      "v2_rescue": 1,
+      "v2_broken": 0,
+      "v2_net": 1,
+      "v2_precision": 1.0,
+      "v3_actions": 1,
+      "v3_rescue": 1,
+      "v3_broken": 0,
+      "v3_net": 1,
+      "v3_precision": 1.0
+    },
+    {
+      "period": "2026Q2Q3",
+      "hotspots": 7,
+      "v2_actions": 4,
+      "v2_rescue": 0,
+      "v2_broken": 4,
+      "v2_net": -4,
+      "v2_precision": 0.0,
+      "v3_actions": 0,
+      "v3_rescue": 0,
+      "v3_broken": 0,
+      "v3_net": 0,
+      "v3_precision": NaN
+    }
+  ]
+}
