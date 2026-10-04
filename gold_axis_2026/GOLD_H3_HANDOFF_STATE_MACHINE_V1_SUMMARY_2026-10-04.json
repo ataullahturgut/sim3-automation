@@ -1,0 +1,23 @@
+{
+  "schema": "GOLD_H3_HANDOFF_STATE_MACHINE_V1",
+  "status": "NO_2025_ELIGIBLE_RULE",
+  "dev_2025": {
+    "first": "2025-06-19",
+    "last": "2025-12-30",
+    "n": 90,
+    "baseline": {
+      "n": 90,
+      "correct": 67,
+      "accuracy": 0.7444444444444445,
+      "tp": 46,
+      "tn": 21,
+      "fp": 13,
+      "fn": 10,
+      "up_recall": 0.8214285714285714,
+      "down_recall": 0.6176470588235294,
+      "balanced_accuracy": 0.7195378151260504
+    }
+  },
+  "selected_rule": null,
+  "stress_2026": null
+}
