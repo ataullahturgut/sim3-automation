@@ -1,0 +1,599 @@
+{
+  "schema": "GOLD_H3_REMAINING53_SIGNAL_AUDIT",
+  "status": "RETROSPECTIVE_MECHANISM_DIAGNOSTIC",
+  "remaining_missed_reversals": 53,
+  "correct_continuation_controls": 95,
+  "episodes": 22,
+  "multi_origin_episodes": 17,
+  "prevalence": [
+    {
+      "mechanism": "fragility_score",
+      "threshold": 0.6,
+      "timing": "current",
+      "miss_coverage": 0.4339622641509434,
+      "control_prevalence": 0.3263157894736842,
+      "lift": 1.3298843578819233,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "fragility_score",
+      "threshold": 0.6,
+      "timing": "pre",
+      "miss_coverage": 0.5283018867924528,
+      "control_prevalence": 0.5684210526315789,
+      "lift": 0.9294199860237596,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "fragility_score",
+      "threshold": 0.6,
+      "timing": "any",
+      "miss_coverage": 0.7358490566037735,
+      "control_prevalence": 0.7684210526315789,
+      "lift": 0.9576117859912122,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "fragility_score",
+      "threshold": 0.67,
+      "timing": "current",
+      "miss_coverage": 0.32075471698113206,
+      "control_prevalence": 0.22105263157894736,
+      "lift": 1.4510332434860735,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "fragility_score",
+      "threshold": 0.67,
+      "timing": "pre",
+      "miss_coverage": 0.3584905660377358,
+      "control_prevalence": 0.43157894736842106,
+      "lift": 0.830648872526461,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "fragility_score",
+      "threshold": 0.67,
+      "timing": "any",
+      "miss_coverage": 0.5660377358490566,
+      "control_prevalence": 0.6,
+      "lift": 0.9433962264150944,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "fragility_score",
+      "threshold": 0.75,
+      "timing": "current",
+      "miss_coverage": 0.18867924528301888,
+      "control_prevalence": 0.10526315789473684,
+      "lift": 1.7924528301886795,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "fragility_score",
+      "threshold": 0.75,
+      "timing": "pre",
+      "miss_coverage": 0.20754716981132076,
+      "control_prevalence": 0.23157894736842105,
+      "lift": 0.8962264150943396,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "fragility_score",
+      "threshold": 0.75,
+      "timing": "any",
+      "miss_coverage": 0.3584905660377358,
+      "control_prevalence": 0.3263157894736842,
+      "lift": 1.0986001217285453,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "fragility_score",
+      "threshold": 0.8,
+      "timing": "current",
+      "miss_coverage": 0.18867924528301888,
+      "control_prevalence": 0.08421052631578947,
+      "lift": 2.2405660377358494,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "fragility_score",
+      "threshold": 0.8,
+      "timing": "pre",
+      "miss_coverage": 0.16981132075471697,
+      "control_prevalence": 0.16842105263157894,
+      "lift": 1.008254716981132,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "fragility_score",
+      "threshold": 0.8,
+      "timing": "any",
+      "miss_coverage": 0.33962264150943394,
+      "control_prevalence": 0.24210526315789474,
+      "lift": 1.4027891714520098,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "flow_score",
+      "threshold": 0.6,
+      "timing": "current",
+      "miss_coverage": 0.39622641509433965,
+      "control_prevalence": 0.30526315789473685,
+      "lift": 1.2979830839297333,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "flow_score",
+      "threshold": 0.6,
+      "timing": "pre",
+      "miss_coverage": 0.5471698113207547,
+      "control_prevalence": 0.47368421052631576,
+      "lift": 1.1551362683438156,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "flow_score",
+      "threshold": 0.6,
+      "timing": "any",
+      "miss_coverage": 0.7169811320754716,
+      "control_prevalence": 0.6631578947368421,
+      "lift": 1.081162024558251,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "flow_score",
+      "threshold": 0.67,
+      "timing": "current",
+      "miss_coverage": 0.2641509433962264,
+      "control_prevalence": 0.18947368421052632,
+      "lift": 1.3941299790356394,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "flow_score",
+      "threshold": 0.67,
+      "timing": "pre",
+      "miss_coverage": 0.37735849056603776,
+      "control_prevalence": 0.3368421052631579,
+      "lift": 1.1202830188679247,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "flow_score",
+      "threshold": 0.67,
+      "timing": "any",
+      "miss_coverage": 0.5094339622641509,
+      "control_prevalence": 0.45263157894736844,
+      "lift": 1.1254936375603335,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "flow_score",
+      "threshold": 0.75,
+      "timing": "current",
+      "miss_coverage": 0.18867924528301888,
+      "control_prevalence": 0.09473684210526316,
+      "lift": 1.9916142557651992,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "flow_score",
+      "threshold": 0.75,
+      "timing": "pre",
+      "miss_coverage": 0.18867924528301888,
+      "control_prevalence": 0.24210526315789474,
+      "lift": 0.7793273174733388,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "flow_score",
+      "threshold": 0.75,
+      "timing": "any",
+      "miss_coverage": 0.32075471698113206,
+      "control_prevalence": 0.30526315789473685,
+      "lift": 1.0507482108002602,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "flow_score",
+      "threshold": 0.8,
+      "timing": "current",
+      "miss_coverage": 0.1320754716981132,
+      "control_prevalence": 0.05263157894736842,
+      "lift": 2.509433962264151,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "flow_score",
+      "threshold": 0.8,
+      "timing": "pre",
+      "miss_coverage": 0.11320754716981132,
+      "control_prevalence": 0.14736842105263157,
+      "lift": 0.7681940700808626,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "flow_score",
+      "threshold": 0.8,
+      "timing": "any",
+      "miss_coverage": 0.20754716981132076,
+      "control_prevalence": 0.2,
+      "lift": 1.0377358490566038,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "leadlag_score",
+      "threshold": 0.6,
+      "timing": "current",
+      "miss_coverage": 0.32075471698113206,
+      "control_prevalence": 0.35789473684210527,
+      "lift": 0.8962264150943395,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "leadlag_score",
+      "threshold": 0.6,
+      "timing": "pre",
+      "miss_coverage": 0.5660377358490566,
+      "control_prevalence": 0.4631578947368421,
+      "lift": 1.2221269296740995,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "leadlag_score",
+      "threshold": 0.6,
+      "timing": "any",
+      "miss_coverage": 0.7735849056603774,
+      "control_prevalence": 0.6210526315789474,
+      "lift": 1.2456028141989126,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "leadlag_score",
+      "threshold": 0.67,
+      "timing": "current",
+      "miss_coverage": 0.2830188679245283,
+      "control_prevalence": 0.30526315789473685,
+      "lift": 0.9271307742355237,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "leadlag_score",
+      "threshold": 0.67,
+      "timing": "pre",
+      "miss_coverage": 0.5283018867924528,
+      "control_prevalence": 0.42105263157894735,
+      "lift": 1.2547169811320755,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "leadlag_score",
+      "threshold": 0.67,
+      "timing": "any",
+      "miss_coverage": 0.7169811320754716,
+      "control_prevalence": 0.5894736842105263,
+      "lift": 1.2163072776280324,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "leadlag_score",
+      "threshold": 0.75,
+      "timing": "current",
+      "miss_coverage": 0.20754716981132076,
+      "control_prevalence": 0.22105263157894736,
+      "lift": 0.9389038634321654,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "leadlag_score",
+      "threshold": 0.75,
+      "timing": "pre",
+      "miss_coverage": 0.3584905660377358,
+      "control_prevalence": 0.3157894736842105,
+      "lift": 1.1352201257861636,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "leadlag_score",
+      "threshold": 0.75,
+      "timing": "any",
+      "miss_coverage": 0.5094339622641509,
+      "control_prevalence": 0.4421052631578947,
+      "lift": 1.1522911051212938,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "leadlag_score",
+      "threshold": 0.8,
+      "timing": "current",
+      "miss_coverage": 0.1509433962264151,
+      "control_prevalence": 0.18947368421052632,
+      "lift": 0.7966457023060796,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "leadlag_score",
+      "threshold": 0.8,
+      "timing": "pre",
+      "miss_coverage": 0.2641509433962264,
+      "control_prevalence": 0.2736842105263158,
+      "lift": 0.9651669085631349,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "leadlag_score",
+      "threshold": 0.8,
+      "timing": "any",
+      "miss_coverage": 0.37735849056603776,
+      "control_prevalence": 0.3894736842105263,
+      "lift": 0.9688934217236105,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "reaction_score",
+      "threshold": 0.6,
+      "timing": "current",
+      "miss_coverage": 0.2830188679245283,
+      "control_prevalence": 0.22105263157894736,
+      "lift": 1.280323450134771,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "reaction_score",
+      "threshold": 0.6,
+      "timing": "pre",
+      "miss_coverage": 0.3584905660377358,
+      "control_prevalence": 0.4,
+      "lift": 0.8962264150943395,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "reaction_score",
+      "threshold": 0.6,
+      "timing": "any",
+      "miss_coverage": 0.5471698113207547,
+      "control_prevalence": 0.5263157894736842,
+      "lift": 1.039622641509434,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "reaction_score",
+      "threshold": 0.67,
+      "timing": "current",
+      "miss_coverage": 0.16981132075471697,
+      "control_prevalence": 0.18947368421052632,
+      "lift": 0.8962264150943395,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "reaction_score",
+      "threshold": 0.67,
+      "timing": "pre",
+      "miss_coverage": 0.2641509433962264,
+      "control_prevalence": 0.3157894736842105,
+      "lift": 0.8364779874213837,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "reaction_score",
+      "threshold": 0.67,
+      "timing": "any",
+      "miss_coverage": 0.37735849056603776,
+      "control_prevalence": 0.4631578947368421,
+      "lift": 0.8147512864493998,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "reaction_score",
+      "threshold": 0.75,
+      "timing": "current",
+      "miss_coverage": 0.11320754716981132,
+      "control_prevalence": 0.14736842105263157,
+      "lift": 0.7681940700808626,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "reaction_score",
+      "threshold": 0.75,
+      "timing": "pre",
+      "miss_coverage": 0.18867924528301888,
+      "control_prevalence": 0.2631578947368421,
+      "lift": 0.7169811320754718,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "reaction_score",
+      "threshold": 0.75,
+      "timing": "any",
+      "miss_coverage": 0.3018867924528302,
+      "control_prevalence": 0.37894736842105264,
+      "lift": 0.7966457023060796,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "reaction_score",
+      "threshold": 0.8,
+      "timing": "current",
+      "miss_coverage": 0.07547169811320754,
+      "control_prevalence": 0.1368421052631579,
+      "lift": 0.5515239477503628,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "reaction_score",
+      "threshold": 0.8,
+      "timing": "pre",
+      "miss_coverage": 0.16981132075471697,
+      "control_prevalence": 0.24210526315789474,
+      "lift": 0.7013945857260049,
+      "miss_n": 53,
+      "control_n": 95
+    },
+    {
+      "mechanism": "reaction_score",
+      "threshold": 0.8,
+      "timing": "any",
+      "miss_coverage": 0.24528301886792453,
+      "control_prevalence": 0.35789473684210527,
+      "lift": 0.6853496115427303,
+      "miss_n": 53,
+      "control_n": 95
+    }
+  ],
+  "episode_first": {
+    "n": 22,
+    "at_067": {
+      "pre_ge1": 19,
+      "pre_ge2": 10,
+      "any_ge1": 22,
+      "any_ge2": 13,
+      "current_ge1": 14,
+      "current_ge2": 5
+    },
+    "at_075": {
+      "pre_ge1": 17,
+      "pre_ge2": 4,
+      "any_ge1": 20,
+      "any_ge2": 6
+    }
+  },
+  "top_feature_smd": [
+    {
+      "feature": "fragility_score",
+      "miss_mean": 0.5537190082644627,
+      "control_mean": 0.4566115702479338,
+      "smd_miss_minus_control": 0.3988368739859894
+    },
+    {
+      "feature": "r_frag_trend",
+      "miss_mean": 0.5692756441419543,
+      "control_mean": 0.4638878907653611,
+      "smd_miss_minus_control": 0.3902389918933864
+    },
+    {
+      "feature": "r_frag_close",
+      "miss_mean": 0.5678172095284395,
+      "control_mean": 0.46478620194035203,
+      "smd_miss_minus_control": 0.3593966322686748
+    },
+    {
+      "feature": "r_frag_session",
+      "miss_mean": 0.5443202074218116,
+      "control_mean": 0.4543657923104565,
+      "smd_miss_minus_control": 0.3286396729988283
+    },
+    {
+      "feature": "r_flow_gc_oppvol",
+      "miss_mean": 0.5971479500891266,
+      "control_mean": 0.5124865253323752,
+      "smd_miss_minus_control": 0.316996743811707
+    },
+    {
+      "feature": "r_flow_ineff",
+      "miss_mean": 0.5582563603953978,
+      "control_mean": 0.4791591807402084,
+      "smd_miss_minus_control": 0.2936820904833183
+    },
+    {
+      "feature": "r_frag_adverse",
+      "miss_mean": 0.5321665856425215,
+      "control_mean": 0.4620014372978799,
+      "smd_miss_minus_control": 0.24019412621990385
+    },
+    {
+      "feature": "flow_score",
+      "miss_mean": 0.5280343542375628,
+      "control_mean": 0.47614983830398866,
+      "smd_miss_minus_control": 0.2323097354778686
+    },
+    {
+      "feature": "r_flow_joint",
+      "miss_mean": 0.5462647869064982,
+      "control_mean": 0.5028745957599713,
+      "smd_miss_minus_control": 0.15521311411072658
+    },
+    {
+      "feature": "tres_warning",
+      "miss_mean": 0.3102005370512553,
+      "control_mean": 0.29576198535080117,
+      "smd_miss_minus_control": 0.10930999021584327
+    },
+    {
+      "feature": "r_flow_si_oppvol",
+      "miss_mean": 0.5055906660184735,
+      "control_mean": 0.4882321236076176,
+      "smd_miss_minus_control": 0.05946759143284702
+    },
+    {
+      "feature": "r_llrs_incremental",
+      "miss_mean": 0.5017015070491005,
+      "control_mean": 0.48587775860503146,
+      "smd_miss_minus_control": 0.053931926237064325
+    },
+    {
+      "feature": "reaction_score",
+      "miss_mean": 0.49399656946826753,
+      "control_mean": 0.48690735102218363,
+      "smd_miss_minus_control": 0.03586352142671189
+    },
+    {
+      "feature": "reaction_abs_rank",
+      "miss_mean": 0.48619990644004374,
+      "control_mean": 0.47638103523270975,
+      "smd_miss_minus_control": 0.03504622350745962
+    },
+    {
+      "feature": "reaction_against_rank",
+      "miss_mean": 0.5017932324964914,
+      "control_mean": 0.49743366681165735,
+      "smd_miss_minus_control": 0.015794723103690178
+    }
+  ]
+}
