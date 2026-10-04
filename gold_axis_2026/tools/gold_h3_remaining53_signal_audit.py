@@ -228,6 +228,31 @@ def main():
     ep[epcols].to_csv(OUT_EP,index=False)
     featdf.to_csv(OUT_FEAT,index=False)
 
+    # Origin-to-origin transition / handoff diagnostics; descriptive only.
+    for m in ["fragility_score","flow_score","leadlag_score","reaction_score"]:
+        z[f"{m}_d1"]=z[m]-z[f"{m}_lag1"]
+        z[f"{m}_d2"]=z[m]-z[f"{m}_lag2"]
+    z["internal_now"]=z[["fragility_score","flow_score"]].max(axis=1)
+    z["internal_lag1"]=z[["fragility_score_lag1","flow_score_lag1"]].max(axis=1)
+    z["internal_lag2"]=z[["fragility_score_lag2","flow_score_lag2"]].max(axis=1)
+    z["internal_d1"]=z.internal_now-z.internal_lag1
+    z["internal_d2"]=z.internal_now-z.internal_lag2
+    z["handoff_gap"]=z.internal_now-z.leadlag_score
+    z["leadlag_premax_minus_now"]=z.leadlag_score_premax-z.leadlag_score
+
+    transition_cols=[
+      "fragility_score_d1","flow_score_d1","leadlag_score_d1","reaction_score_d1",
+      "fragility_score_d2","flow_score_d2","leadlag_score_d2","reaction_score_d2",
+      "internal_d1","internal_d2","handoff_gap","leadlag_premax_minus_now"
+    ]
+    trans=[]
+    for c in transition_cols:
+        trans.append({"feature":c,
+          "miss_mean":float(pd.to_numeric(z.loc[z.missed_reversal,c],errors="coerce").mean()),
+          "control_mean":float(pd.to_numeric(z.loc[z.correct_continuation,c],errors="coerce").mean()),
+          "smd":smd(pd.to_numeric(z.loc[z.missed_reversal,c],errors="coerce"),pd.to_numeric(z.loc[z.correct_continuation,c],errors="coerce"))})
+    transdf=pd.DataFrame(trans).sort_values("smd",ascending=False)
+
     # Exploratory temporal sequence diagnostics; descriptive only.
     patterns={
       "LEADLAG_PRE_TO_INTERNAL_NOW_067": (z["leadlag_score_premax"]>=.67) & ((z["fragility_score"]>=.67)|(z["flow_score"]>=.67)),
@@ -275,7 +300,8 @@ def main():
         }
       },
       "top_feature_smd":featdf.head(15).replace({np.nan:None}).to_dict("records"),
-      "temporal_sequences":seq
+      "temporal_sequences":seq,
+      "transition_diagnostics":transdf.replace({np.nan:None}).to_dict("records")
     }
     OUT_JSON.write_text(json.dumps(summary,indent=2,default=str)+"\n")
 
@@ -293,6 +319,11 @@ def main():
     for r in prevdf[(prevdf.threshold.isin([.67,.75]))].itertuples():
         lift="NA" if not np.isfinite(r.lift) else f"{r.lift:.2f}x"
         lines.append(f"| {r.mechanism} | {r.threshold:.2f} | {r.timing} | {fmt(r.miss_coverage)} | {fmt(r.control_prevalence)} | {lift} |")
+    lines += ["","## Origin-to-origin transition diagnostics","",
+              "| Transition | Miss mean | Control mean | SMD |",
+              "|---|---:|---:|---:|"]
+    for r in transdf.itertuples():
+        lines.append(f"| {r.feature} | {r.miss_mean:+.3f} | {r.control_mean:+.3f} | {r.smd:+.3f} |")
     lines += ["","## Exploratory temporal sequence patterns","",
               "| Pattern | Miss coverage | Control prevalence | Lift | Episode starts |",
               "|---|---:|---:|---:|---:|"]
