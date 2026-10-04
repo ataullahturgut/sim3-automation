@@ -51,6 +51,33 @@ Requirement: same rescue-vs-broken direction in 2025 and 2026, >=3 observations 
 | signed_d_opt_pressure | False | -1.318 | +0.310 | 0.778 | 0.599 | 4 |
 | opt_total_z20 | False | -0.342 | +0.307 | 0.611 | 0.599 | 4 |
 
+## Existing-threshold stratification
+
+| Year | Stratum | N | Rescue | Broken | Precision |
+|---:|---|---:|---:|---:|---:|
+| 2025 | leadlag_ge_0.60 | 13 | 4 | 9 | 30.8% |
+| 2025 | leadlag_ge_0.60_strong_pro | 2 | 1 | 1 | 50.0% |
+| 2025 | leadlag_ge_0.60_other_topology | 11 | 3 | 8 | 27.3% |
+| 2025 | leadlag_ge_0.67 | 13 | 4 | 9 | 30.8% |
+| 2025 | leadlag_ge_0.67_strong_pro | 2 | 1 | 1 | 50.0% |
+| 2025 | leadlag_ge_0.67_other_topology | 11 | 3 | 8 | 27.3% |
+| 2025 | leadlag_ge_0.75 | 11 | 4 | 7 | 36.4% |
+| 2025 | leadlag_ge_0.75_strong_pro | 2 | 1 | 1 | 50.0% |
+| 2025 | leadlag_ge_0.75_other_topology | 9 | 3 | 6 | 33.3% |
+| 2025 | opt_vol_imbalance_gt0 | 11 | 4 | 7 | 36.4% |
+| 2025 | opt_vol_imbalance_le0 | 2 | 0 | 2 | 0.0% |
+| 2026 | leadlag_ge_0.60 | 28 | 16 | 12 | 57.1% |
+| 2026 | leadlag_ge_0.60_strong_pro | 11 | 9 | 2 | 81.8% |
+| 2026 | leadlag_ge_0.60_other_topology | 17 | 7 | 10 | 41.2% |
+| 2026 | leadlag_ge_0.67 | 25 | 16 | 9 | 64.0% |
+| 2026 | leadlag_ge_0.67_strong_pro | 11 | 9 | 2 | 81.8% |
+| 2026 | leadlag_ge_0.67_other_topology | 14 | 7 | 7 | 50.0% |
+| 2026 | leadlag_ge_0.75 | 18 | 13 | 5 | 72.2% |
+| 2026 | leadlag_ge_0.75_strong_pro | 7 | 6 | 1 | 85.7% |
+| 2026 | leadlag_ge_0.75_other_topology | 11 | 7 | 4 | 63.6% |
+| 2026 | opt_vol_imbalance_gt0 | 28 | 16 | 12 | 57.1% |
+| 2026 | opt_vol_imbalance_le0 | 0 | 0 | 0 | NA |
+
 ## Topology contingency
 
 | Year | Strong pro-risk: rescue/broken | Other topology: rescue/broken |
