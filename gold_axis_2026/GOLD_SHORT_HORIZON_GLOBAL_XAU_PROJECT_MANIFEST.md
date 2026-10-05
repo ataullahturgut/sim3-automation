@@ -5569,3 +5569,49 @@ CPG_D1_V1 is frozen for future shadow observation only. Existing CIG remains unc
 Authorities:
 - `GOLD_D1_CONSENSUS_PRECISION_GOVERNOR_V1_RESULT_2026-10-05.md`
 - `GOLD_D1_CONSENSUS_PRECISION_GOVERNOR_V1_METRICS_2026-10-05.csv`
+
+
+### 55.18 Türkiye execution vehicle diagnostic — ALTINS1 vs GLDTR vs bank gram (2026-10-05)
+
+Identity: **TR_EXECUTION_DIAGNOSTIC_V1**  
+Status: **RETROSPECTIVE OPERATIONAL DIAGNOSTIC — NO LIVE VEHICLE PROMOTION**
+
+Objective:
+translate the morning D1 forecast into a realistic Turkish-investor execution interval.
+
+Operational rule tested:
+- initial capital TRY 100,000;
+- CIG UP => buy at BIST morning open and liquidate at same-day close;
+- CIG DOWN or UNCERTAIN => cash;
+- no leverage / no short;
+- common public OHLC window for ALTINS1 and GLDTR: **2026-08-04 through 2026-09-25**.
+
+This is not the same target as the research D1 label. The research label is approximately prior XAU cutoff -> next XAU close, while the investable operation is BIST open -> BIST close.
+
+Binding CIG, 18 UP trades:
+- ALTINS1 gross: **-4.38%**; one-tick / zero-commission proxy: **-4.61%** => ~TRY 95,386.
+- GLDTR gross: **-0.34%**; one-tick / zero-commission proxy: **-1.13%** => ~TRY 98,875.
+
+CPG strict-YELLOW shadow diagnostic, 12 UP trades:
+- ALTINS1 gross: **+1.31%**; one-tick / zero-commission proxy: **+1.15%** => ~TRY 101,147.
+- GLDTR gross: **+3.05%**; one-tick / zero-commission proxy: **+2.51%** => ~TRY 102,505 before investor-level withholding.
+- simplified 17.5% withholding on the net GLDTR gain would leave approximately **TRY 102,067**, subject to actual intermediary/tax accounting.
+
+Critical interpretation:
+1. Ordinary bank gram-gold spread is economically hostile to daily turnover unless the investor's live bank quote is exceptionally tight.
+2. ALTINS1 has an exceptionally tight nominal spread but carries material **certificate premium / basis risk** versus its underlying gold content; it cannot be selected solely by spread.
+3. In this operational sample GLDTR is the cleaner local execution proxy and materially outperforms ALTINS1 for the morning-open implementation, despite its tax/tick disadvantages.
+4. The larger problem is **information-clock mismatch**. A prior-close XAU forecast cannot be assumed to retain the same edge after Asia/overnight XAU, USDTRY and local opening-auction repricing.
+5. CPG economic improvement is retrospective shadow evidence only; it is not live-approved.
+6. High-turnover results are highly commission-sensitive; near-zero brokerage cost is economically important.
+
+Recommended successor:
+**TR_GOLD_EXECUTION_D1_V1**
+- target the actual investable interval: fixed BIST morning clock/open -> BIST close;
+- frozen CIG + CPG as context, not labels;
+- add overnight XAU, 1h/3h XAU path, USDTRY overnight, ALTINS1 implied premium, GLDTR premium/discount vs NAV/iNAV, opening gap and event-clock state;
+- optimize net economic return after spread, brokerage and applicable tax, not merely XAU direction accuracy.
+
+Authorities:
+- `GOLD_TR_EXECUTION_V1_DIAGNOSTIC_2026-10-05.md`
+- `GOLD_TR_EXECUTION_V1_METRICS_2026-10-05.csv`
