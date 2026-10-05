@@ -5320,3 +5320,166 @@ Authority:
 - `GOLD_HAG_D1_V1_AUGUST_UNCERTAIN_2026-10-05.csv`
 - `GOLD_HAG_D1_V1_FAMILY_CONFIRMATION_2026-10-05.csv`
 - `GOLD_HAG_D1_V1_THRESHOLD_SENSITIVITY_2026-10-05.csv`
+
+
+### 55.14 ADAH-D1 V1 adaptive timing challenger — rejected (2026-10-05)
+
+A preregistered adaptive timing model was tested after HAG-D1 V1 failed.
+
+Identity: `ADAH_D1_V1`  
+Status: **REJECTED / DIAGNOSTIC ONLY**
+
+Purpose:
+estimate whether an OPAL H3 reversal is already aligned with next-day D1 using strictly prior matured OPAL events, allowing non-stationary updating instead of one static coefficient vector.
+
+Frozen candidates:
+- DBH93 dynamic hierarchical Beta-Bernoulli,
+- DBH97,
+- ANALOG9 recency-weighted local analog,
+- ENSEMBLE.
+
+Protocol:
+- candidate selection 2024,
+- confirmation 2025,
+- 2026 opened only after the frozen confirmation test,
+- action band fixed at p(immediate) <=0.35 / >=0.65.
+
+Selected 2024 candidate: **ANALOG9**
+- Brier **0.2053**
+- log loss **0.6002**
+- directional accuracy **70.00%**.
+
+2025 confirmation:
+- ANALOG9 Brier **0.2446** versus static baseline **0.2432**;
+- final V5 flip selective actions **1/7**;
+- correct **0/1**;
+- confirmation **FAIL**.
+
+2026 diagnostic:
+- all OPAL overrides Brier **0.2686**;
+- final V5 flip actions **2/19**, correct **1/2**.
+
+CIG integration:
+- original 2026: **112/157 = 71.34%**, coverage **82.20%**;
+- ADAH: **113/159 = 71.07%**, coverage **83.25%**.
+- August original: **8/10 = 80.00%**, coverage **47.62%**;
+- August ADAH: **8/11 = 72.73%**, coverage **52.38%**.
+
+Conclusion:
+adaptive Bayesian/local-analog timing is more conservative than HAG and mostly preserves abstention, but it fails its predeclared 2025 confirmation gate and does not safely increase August coverage. Do not promote and do not retune on 2026.
+
+Authority:
+- `GOLD_ADAH_D1_V1_PREREG_2026-10-05.md`
+- `GOLD_ADAH_D1_V1_RESULT_2026-10-05.md`
+- `GOLD_ADAH_D1_V1_RESULT_2026-10-05.json`
+
+### 55.15 D1-META V1 direct next-day selective stack — strong pre-2026, 2026 drift (2026-10-05)
+
+A separate architecture was tested in which H3 models are treated as **origin-safe sensors/features**, not equal D1 votes.
+
+Identity: `D1_META_V1`  
+Status: **2025 CONFIRMATION PASS / 2026 PROMOTION FAIL**
+
+Target:
+direct next-day D1 direction.
+
+Frozen feature families:
+- F1 expert probabilities / override state / disagreement geometry;
+- F2 = F1 + H3 path-state features;
+- F3 = F2 + daily USD/rates/risk/metals state.
+
+Candidate models:
+- Logistic L2,
+- small HistGradientBoosting.
+
+Protocol:
+- train base: 2022-11 through 2023;
+- family/model selection: 2024-H1;
+- selective threshold selection: 2024-H2;
+- frozen confirmation: 2025;
+- 2026 only after confirmation.
+
+Selected on 2024-H1:
+**F2_EXPERT_PATH / HGB_SMALL**
+- accuracy **84.48%**
+- balanced accuracy **81.53%**
+- Brier **0.1208**
+- log loss **0.4035**.
+
+Frozen selective threshold from 2024-H2:
+**0.65**
+- 109/124 actions
+- coverage **87.90%**
+- accuracy **84.40%**.
+
+2025 confirmation:
+- full accuracy **78.63%**
+- balanced accuracy **77.03%**
+- selective **167/198 = 84.34%**
+- coverage **79.84%**
+- confirmation **PASS**.
+
+2026 frozen test:
+- full accuracy **67.02%**
+- balanced accuracy **67.36%**
+- selective **117/167 = 70.06%**
+- coverage **87.43%**.
+
+CIG integration:
+- original: **112/157 = 71.34%**, coverage **82.20%**;
+- RESOLVE_ONLY: **123/182 = 67.58%**, coverage **95.29%**;
+- VETO_RESOLVE: **123/181 = 67.96%**, coverage **94.76%**.
+
+August:
+- original: **8/10 = 80.00%**, coverage **47.62%**;
+- D1-META integration: **12/17 = 70.59%**, coverage **80.95%**.
+
+Promotion:
+- RESOLVE_ONLY **FAIL**
+- VETO_RESOLVE **FAIL**.
+
+Key scientific conclusion:
+The direct D1 architecture itself is valid and strongly confirmed in 2025, but the large 2026 deterioration from >84% selective accuracy to ~70% is direct evidence of **2026 concept/conditional drift**. The August problem therefore cannot be attributed only to four-vote consensus mechanics or OPAL timing. Forcing additional decisions with a pre-2026 D1 model destroys the protective value of CIG abstention.
+
+An additional fixed-architecture monthly expanding Logistic diagnostic (same preselected F3-style information set, threshold 0.70) was run to test whether simple online refitting alone solves drift:
+- 2026 standalone selective **106/147 = 72.11%**, coverage **76.96%**;
+- August standalone **9/14 = 64.29%**, coverage **66.67%**;
+- CIG integration August **10/16 = 62.50%**.
+Thus ordinary monthly adaptation also fails to resolve the August state safely.
+
+Authority:
+- `GOLD_D1_META_V1_PREREG_2026-10-05.md`
+- `GOLD_D1_META_V1_RESULT_2026-10-05.md`
+- `GOLD_D1_META_V1_RESULT_2026-10-05.json`
+- `GOLD_D1_META_V1_MODEL_SELECTION_2024H1_2026-10-05.csv`
+- `GOLD_D1_META_V1_THRESHOLD_SELECTION_2024H2_2026-10-05.csv`
+
+### 55.16 August resolution program — interim scientific decision (2026-10-05)
+
+Independent resolver families now tested:
+1. static HAG timing classifier,
+2. existing TRES day-1 cause-specific hazard,
+3. adaptive Bayesian/local-analog ADAH timing,
+4. direct D1 meta-stack,
+5. simple monthly online refit of the direct D1 stack.
+
+None safely improves August CIG coverage while preserving its **80% selective accuracy**.
+
+This is repeated negative evidence against the hypothesis that the 11 August UNCERTAIN days can be reliably resolved using only the prior-close origin-safe state already present in the H3/D1 stack.
+
+Current scientific interpretation:
+- August contains a partially non-identifiable D1 timing state at the prior-close information set;
+- high model confidence is not sufficient, because some highest-confidence meta calls are wrong;
+- CIG abstention is therefore an active risk-control mechanism, not missing functionality.
+
+Next information-set change:
+**same-day morning microstate nowcast**, not another prior-close classifier.
+The proposed layer must be evaluated as a separate operational forecast with an explicit issuance clock, using only bars observed before that clock. Candidate evidence:
+- overnight XAU path,
+- short-horizon momentum/deceleration,
+- early rates/USD reaction,
+- event-clock status,
+- H3 expert state as context.
+It must not be merged with prior-close CIG evidence without labeling the later information advantage.
+
+A Twelve Data hourly-history depth audit has been opened to determine whether a reproducible 2024-2026 same-day morning backtest can be constructed without source substitution.
