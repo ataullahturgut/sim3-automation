@@ -1,0 +1,261 @@
+{
+  "schema": "GOLD_H3_DATABENTO_CONSENSUS_ROLL_BRIDGE_2025_V1",
+  "date": "2026-10-05",
+  "rule": "majority instrument_id among c/n/v; if all differ use product-specific priority learned from 2025 Yahoo price identity only",
+  "estimated_cost_usd": 1.56811259687,
+  "cost_by_roll_usd": {
+    "c": 0.409718677402,
+    "n": 0.579266324639,
+    "v": 0.579127594829
+  },
+  "cost_cap_usd": 1.7,
+  "tie_break_priorities": {
+    "GC": [
+      "v",
+      "n",
+      "c"
+    ],
+    "SI": [
+      "v",
+      "n",
+      "c"
+    ],
+    "NQ": [
+      "c",
+      "n",
+      "v"
+    ],
+    "ZN": [
+      "c",
+      "n",
+      "v"
+    ],
+    "CL": [
+      "c",
+      "n",
+      "v"
+    ]
+  },
+  "tie_break_learning": {
+    "GC": {
+      "tie_hours": 421,
+      "wins": {
+        "c": 1,
+        "n": 10,
+        "v": 410
+      },
+      "priority": [
+        "v",
+        "n",
+        "c"
+      ]
+    },
+    "SI": {
+      "tie_hours": 645,
+      "wins": {
+        "c": 2,
+        "n": 14,
+        "v": 629
+      },
+      "priority": [
+        "v",
+        "n",
+        "c"
+      ]
+    },
+    "NQ": {
+      "tie_hours": 0,
+      "wins": {
+        "c": 0,
+        "n": 0,
+        "v": 0
+      },
+      "priority": [
+        "c",
+        "n",
+        "v"
+      ]
+    },
+    "ZN": {
+      "tie_hours": 0,
+      "wins": {
+        "c": 0,
+        "n": 0,
+        "v": 0
+      },
+      "priority": [
+        "c",
+        "n",
+        "v"
+      ]
+    },
+    "CL": {
+      "tie_hours": 0,
+      "wins": {
+        "c": 0,
+        "n": 0,
+        "v": 0
+      },
+      "priority": [
+        "c",
+        "n",
+        "v"
+      ]
+    }
+  },
+  "price_identity": {
+    "GC": {
+      "n": 5534,
+      "median_bps": 0.00018169956593411403,
+      "p95_bps": 0.6790381178131286,
+      "share_le_0_1bps": 0.9318756776292013,
+      "share_le_1bps": 0.9580773400795085,
+      "tie_share": 0.07607517166606433
+    },
+    "SI": {
+      "n": 5534,
+      "median_bps": 0.0002383254810811598,
+      "p95_bps": 1.3192455934530152,
+      "share_le_0_1bps": 0.942898445970365,
+      "share_le_1bps": 0.9452475605348754,
+      "tie_share": 0.117455728225515
+    },
+    "NQ": {
+      "n": 5534,
+      "median_bps": 0.0,
+      "p95_bps": 0.9681863520139801,
+      "share_le_0_1bps": 0.8062883989880737,
+      "share_le_1bps": 0.9506685941452837,
+      "tie_share": 0.0
+    },
+    "ZN": {
+      "n": 5534,
+      "median_bps": 0.0,
+      "p95_bps": 0.0,
+      "share_le_0_1bps": 0.9625948680881822,
+      "share_le_1bps": 0.9625948680881822,
+      "tie_share": 0.0
+    },
+    "CL": {
+      "n": 5534,
+      "median_bps": 0.00022997421480278605,
+      "p95_bps": 108.47007651731703,
+      "share_le_0_1bps": 0.8570654138055656,
+      "share_le_1bps": 0.8570654138055656,
+      "tie_share": 0.0
+    }
+  },
+  "derived": {
+    "ifbc": {
+      "overlap_n": 337,
+      "columns": {
+        "ifbc_score": {
+          "n": 337,
+          "corr": 0.9631873482727242,
+          "mae": 0.030052304885478266,
+          "max_abs": 0.8512396694214878
+        }
+      }
+    },
+    "llrs": {
+      "overlap_n": 368,
+      "columns": {
+        "llrs_pressure": {
+          "n": 368,
+          "corr": 0.9237033713495513,
+          "mae": 0.055278996081581155,
+          "max_abs": 0.47905198952524786
+        },
+        "llrs_incremental": {
+          "n": 368,
+          "corr": 0.9194271916989352,
+          "mae": 0.05478093015162582,
+          "max_abs": 0.40204264365044734
+        }
+      }
+    },
+    "state": {
+      "overlap_n": 190,
+      "columns": {
+        "leadlag_score_premax": {
+          "n": 187,
+          "corr": 0.7517072935984076,
+          "mae": 0.1432078122223813,
+          "max_abs": 0.9666666666666667
+        },
+        "internal_now": {
+          "n": 168,
+          "corr": 0.9943312675733025,
+          "mae": 0.013399941563552684,
+          "max_abs": 0.152892561983471
+        },
+        "internal_d1": {
+          "n": 167,
+          "corr": 0.9927519249827987,
+          "mae": 0.02369593929385985,
+          "max_abs": 0.16528925619834706
+        }
+      }
+    }
+  },
+  "handoff": {
+    "new_n": 33,
+    "old_n": 30,
+    "matched": 27,
+    "jaccard": 0.75,
+    "added": [
+      "2025-04-17",
+      "2025-05-19",
+      "2025-06-05",
+      "2025-08-06",
+      "2025-09-26",
+      "2025-10-31"
+    ],
+    "missing": [
+      "2025-05-29",
+      "2025-08-11",
+      "2025-08-13"
+    ]
+  },
+  "dptc": {
+    "Q95": {
+      "actions": 10,
+      "rescue": 4,
+      "broken": 6,
+      "net": -2,
+      "entry": "2025-03-26",
+      "action_set": {
+        "new_n": 10,
+        "old_n": 9,
+        "matched": 9,
+        "jaccard": 0.9,
+        "added": [
+          "2025-04-17"
+        ],
+        "missing": []
+      }
+    },
+    "Q99": {
+      "actions": 9,
+      "rescue": 3,
+      "broken": 6,
+      "net": -3,
+      "entry": "2025-03-26",
+      "action_set": {
+        "new_n": 9,
+        "old_n": 8,
+        "matched": 8,
+        "jaccard": 0.8888888888888888,
+        "added": [
+          "2025-04-17"
+        ],
+        "missing": []
+      }
+    }
+  },
+  "decision_invariance_pass_90pct": false,
+  "status": "CONSENSUS_SOURCE_BRIDGE_REQUIRES_REVIEW",
+  "outcome_labels_used_for_rule": false,
+  "thresholds_retuned": false,
+  "raw_vendor_prices_committed": false
+}
