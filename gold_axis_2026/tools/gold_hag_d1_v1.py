@@ -93,13 +93,19 @@ def main():
     z["aurora_margin"]=(z["p_aurora_clean"].astype(float)-0.5).abs()
     z["aurora_dir"]=(z["p_aurora_clean"].astype(float)>=0.5).astype(int)
     z["v5_dir"]=(z["p_helios_v5_dce"].astype(float)>=0.5).astype(int)
+    z["opal_dir"]=(z["p_opal"].astype(float)>=0.5).astype(int)
     z["opal_override"]=b(z["override"])
-    z=z[z["opal_override"] & (z["aurora_dir"]!=z["v5_dir"])].copy()
+    z["final_v5_flip"]=z["aurora_dir"]!=z["v5_dir"]
+    # Timing model is learned on every OPAL override event. Older V5/DCE layers
+    # sometimes cancel OPAL before the final V5 direction, so restricting training
+    # to final flips would erase the historical timing sample.
+    z=z[z["opal_override"]].copy()
     z["d1_actual"]=z.apply(lambda x:int(pmap.get(x.forecast_issue_date,np.nan)>pmap.get(x.feature_cutoff_date,np.nan)) if x.feature_cutoff_date in pmap and x.forecast_issue_date in pmap else np.nan,axis=1)
     z=z.dropna(subset=["d1_actual"]).copy()
     z["d1_actual"]=z["d1_actual"].astype(int)
-    # y_immediate=1 => V5/OPAL flipped direction is already correct next day; 0 => base AURORA is correct next day.
-    z["y_immediate"]=(z["d1_actual"]==z["v5_dir"]).astype(int)
+    # y_immediate=1 => OPAL H3 reversal direction is already correct next day;
+    # 0 => base AURORA direction remains correct on D1.
+    z["y_immediate"]=(z["d1_actual"]==z["opal_dir"]).astype(int)
     z["year"]=z["forecast_issue_date"].dt.year.astype(int)
 
     for c in sorted(set(sum(FAMILIES.values(),[]))):
@@ -138,12 +144,12 @@ def main():
     scored=z.dropna(subset=features).copy()
     scored["p_immediate"]=model.predict_proba(scored[features])[:,1]
     scored["primary_action"]=scored.p_immediate.apply(lambda p:action_from_p(float(p),PRIMARY_LOW,PRIMARY_HIGH))
-    scored["primary_dir"]=scored.apply(lambda x: np.nan if pd.isna(x.primary_action) else int(x.v5_dir if int(x.primary_action)==1 else x.aurora_dir),axis=1)
+    scored["primary_dir"]=scored.apply(lambda x: np.nan if pd.isna(x.primary_action) else int(x.opal_dir if int(x.primary_action)==1 else x.aurora_dir),axis=1)
     scored["primary_correct"]=scored.apply(lambda x: np.nan if pd.isna(x.primary_dir) else int(int(x.primary_dir)==int(x.d1_actual)),axis=1)
 
     eval_rows=[]
     for yr in [2025,2026]:
-        q=scored[scored.year==yr].copy()
+        q=scored[(scored.year==yr) & scored.final_v5_flip].copy()
         act=q[q.primary_action.notna()]
         eval_rows.append({
           "period":str(yr),"flip_cases":len(q),
@@ -156,7 +162,7 @@ def main():
           "hag_accuracy":float(act.primary_correct.mean()) if len(act) else None,
           "mean_p_immediate":float(q.p_immediate.mean()) if len(q) else None,
         })
-    q=scored[scored.year>=2025].copy(); act=q[q.primary_action.notna()]
+    q=scored[(scored.year>=2025) & scored.final_v5_flip].copy(); act=q[q.primary_action.notna()]
     eval_rows.append({
       "period":"2025-2026","flip_cases":len(q),
       "always_v5_correct":int((q.v5_dir==q.d1_actual).sum()),
@@ -172,11 +178,11 @@ def main():
 
     sens=[]
     for lo,hi in SENS:
-        for period,qq in [("2025",scored[scored.year==2025]),("2026",scored[scored.year==2026]),("2025-2026",scored[scored.year>=2025])]:
+        for period,qq in [("2025",scored[(scored.year==2025)&scored.final_v5_flip]),("2026",scored[(scored.year==2026)&scored.final_v5_flip]),("2025-2026",scored[(scored.year>=2025)&scored.final_v5_flip])]:
             dirs=[]
             for x in qq.itertuples(index=False):
                 aa=action_from_p(float(x.p_immediate),lo,hi)
-                dirs.append(np.nan if aa is None else (int(x.v5_dir) if aa==1 else int(x.aurora_dir)))
+                dirs.append(np.nan if aa is None else (int(x.opal_dir) if aa==1 else int(x.aurora_dir)))
             dirs=pd.Series(dirs,index=qq.index)
             mask=dirs.notna()
             sens.append({"low":lo,"high":hi,"period":period,"flip_cases":len(qq),"actions":int(mask.sum()),"coverage":float(mask.mean()) if len(mask) else None,"accuracy":float((dirs[mask].astype(int).to_numpy()==qq.loc[mask,"d1_actual"].astype(int).to_numpy()).mean()) if mask.any() else None})
@@ -194,10 +200,23 @@ def main():
         if current=="UNCERTAIN" and x.feature_cutoff_date in score_map.index:
             h=score_map.loc[x.feature_cutoff_date]
             if isinstance(h,pd.DataFrame): h=h.iloc[0]
+            if not bool(h.final_v5_flip):
+                integ.append({
+                  "feature_cutoff_date":x.feature_cutoff_date,
+                  "forecast_issue_date":x.forecast_issue_date,
+                  "actual":x.d1_actual,
+                  "original_consensus":current,
+                  "hag_consensus":new,
+                  "p_immediate":pimm,
+                  "hag_source":source,
+                  "original_correct":np.nan if current=="UNCERTAIN" else int(current==x.d1_actual),
+                  "hag_correct":np.nan if new=="UNCERTAIN" else int(new==x.d1_actual),
+                })
+                continue
             pimm=float(h.p_immediate)
             aa=action_from_p(pimm,PRIMARY_LOW,PRIMARY_HIGH)
             if aa is not None:
-                new="UP" if (int(h.v5_dir) if aa==1 else int(h.aurora_dir))==1 else "DOWN"
+                new="UP" if (int(h.opal_dir) if aa==1 else int(h.aurora_dir))==1 else "DOWN"
                 source="HAG_RESOLVED_V5" if aa==1 else "HAG_RESOLVED_AURORA"
             else:
                 source="HAG_ABSTAIN"
@@ -235,7 +254,7 @@ def main():
     result={
       "identity":"HAG_D1_V1",
       "status":"RETROSPECTIVE_CHALLENGER_NOT_PROMOTED",
-      "target":"On genuine OPAL-driven final V5-vs-AURORA flips, predict whether the H3 reversal direction is already correct on next-day D1.",
+      "target":"On OPAL override events, predict whether the H3 reversal direction is already correct on next-day D1; apply only when that OPAL mechanism survives to a final V5-vs-AURORA flip.",
       "selection":{"development":"<=2023","confirmation":"2024","selected_family":selected,"C":0.5,"class_weight":"balanced","primary_low":PRIMARY_LOW,"primary_high":PRIMARY_HIGH,"features":features},
       "family_confirmation":fam.drop(columns=["_ba","_simp"],errors="ignore").to_dict("records"),
       "flip_evaluation":eval_df.to_dict("records"),
@@ -245,7 +264,7 @@ def main():
         "No 2025 or 2026 outcome is used to select feature family or fit model coefficients.",
         "2024 is the frozen family-selection confirmation year; selected family is refit on all <=2024 rows before 2025-2026 scoring.",
         "Primary action band 0.40/0.60 is predeclared; sensitivity bands are descriptive only.",
-        "HAG acts only on genuine OPAL-driven final V5-vs-AURORA direction flips and only attempts to resolve existing CIG UNCERTAIN states.",
+        "HAG learns timing on all OPAL override events, but acts only on genuine OPAL-driven final V5-vs-AURORA direction flips and only attempts to resolve existing CIG UNCERTAIN states.",
         "This is retrospective challenger evidence, not prospective OOS validation."
       ]
     }
@@ -255,7 +274,7 @@ def main():
     lines=[
       "# HAG-D1 V1 — Horizon Alignment Gate","",
       "**Status:** RETROSPECTIVE CHALLENGER — NOT PROMOTED","",
-      "Goal: when OPAL causes the final V5 H3 direction to flip relative to AURORA, estimate whether that reversal is already aligned with the next-day D1 move or is delayed/not immediate.","",
+      "Goal: learn timing from all OPAL override events; when an OPAL reversal survives into a final V5-vs-AURORA flip, estimate whether that reversal is already aligned with the next-day D1 move or is delayed/not immediate.","",
       "## Design","",
       "- Development: through 2023.",
       "- Family confirmation/selection: 2024 only.",
