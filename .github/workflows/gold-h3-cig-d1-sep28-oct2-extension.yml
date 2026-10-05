@@ -1,0 +1,44 @@
+name: Gold CIG-D1 Sep28-Oct2 Extension
+
+on:
+  push:
+    branches: [gold-h3-oct5-diagnostic-nowcast-20261005]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_cig_d1_sep28_oct2_extension.py'
+      - '.github/workflows/gold-h3-cig-d1-sep28-oct2-extension.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      STAK_LIVE_REF: 54fdf1c8d39b7b6c7b874d0f30f784296e886044
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-oct5-diagnostic-nowcast-20261005
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'psycopg[binary]>=3.2,<4' 'requests>=2.31,<3'
+      - run: python gold_axis_2026/tools/gold_h3_cig_d1_sep28_oct2_extension.py
+      - name: Record extension evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/CIG_D1_SEP28_OCT2_EXTENSION_OUT/CIG_D1_SEP28_OCT2_EXTENSION.csv gold_axis_2026/GOLD_D1_CIG_V1_SEP28_OCT2_EXTENSION_2026-10-05.csv
+          cp gold_axis_2026/CIG_D1_SEP28_OCT2_EXTENSION_OUT/CIG_D1_SEP28_OCT2_EXTENSION.json gold_axis_2026/GOLD_D1_CIG_V1_SEP28_OCT2_EXTENSION_2026-10-05.json
+          cp gold_axis_2026/CIG_D1_SEP28_OCT2_EXTENSION_OUT/CIG_D1_SEP28_OCT2_EXTENSION.md gold_axis_2026/GOLD_D1_CIG_V1_SEP28_OCT2_EXTENSION_2026-10-05.md
+          git add gold_axis_2026/GOLD_D1_CIG_V1_SEP28_OCT2_EXTENSION_2026-10-05.*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record CIG-D1 Sep28-Oct2 extension"
+            git pull --rebase origin gold-h3-oct5-diagnostic-nowcast-20261005
+            git push origin HEAD:gold-h3-oct5-diagnostic-nowcast-20261005
+          fi
