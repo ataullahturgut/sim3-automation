@@ -5162,3 +5162,76 @@ develop a separately named **Consensus Validity / Transition Gate**, not another
 
 Authority:
 - `GOLD_D1_CIG_AUGUST_2026_FAILURE_ANALYSIS_2026-10-05.md`
+
+
+### 55.12 August 2026 CIG-D1 coverage-collapse diagnostic (2026-10-05)
+
+August 2026 was isolated as a distinct D1 failure class.
+
+Main result:
+- 21 D1 days
+- 10 4/4 consensus actions
+- 8 correct = **80.00%**
+- coverage **47.62%**
+- 11 UNCERTAIN.
+
+Therefore August is primarily a **coverage-collapse / lineage-conflict month**, not a low-selective-accuracy month.
+
+Mechanism:
+- OPAL override active **12/21 = 57.14%**
+- final V5 direction differs from AURORA **11/21 = 52.38%**
+- those 11 V5 direction changes are exactly the 11 CIG UNCERTAIN days
+- SAGE+RuleFlow = V5 on 21/21
+- RIFT = VEGA on 20/21
+- 10/11 UNCERTAIN days are effectively 2-vs-2 lineage splits.
+
+Agreement comparison:
+
+| Month | V5=RIFT | V5=VEGA | 4/4 coverage |
+|---|---:|---:|---:|
+| 2026-07 | 95.65% | 95.65% | 86.96% |
+| 2026-08 | **47.62%** | **52.38%** | **47.62%** |
+| 2026-09 | 84.21% | 89.47% | 84.21% |
+
+OPAL state:
+- July override rate 4.35%; August **57.14%**; September 36.84%.
+- August mean / median P(reversal): **69.10% / 73.19%** against the frozen 0.70 threshold.
+- CFTC options money-manager z52 shifts from **-1.13** (2026-07-21 report) to **+2.40** (2026-08-25).
+- swap z52 shifts from **+0.08** to **-1.62**.
+- spec-vs-swap gap shifts from **-0.01201** to **+0.01348**.
+
+Interpretation:
+**a real options-positioning/crowding regime transition caused repeated H3 reversal overrides. Because the CFTC state is weekly and 7-day lagged, the elevated reversal state persisted across several consecutive D1 origins.**
+
+Critical horizon diagnosis:
+- OPAL August H3 overrides = 12
+- rescue / broken = **7 / 5**
+- net = **+2**
+- therefore OPAL itself is not simply broken on its intended H3 horizon.
+- D1 degradation comes from treating an H3 reversal override as an immediate next-day vote.
+- Example 2026-08-18: D1 consensus UP is wrong on the next day (-0.51%), while the same-origin native H3 target is UP (+2.18%). This is direct temporal phase mismatch.
+- 2026-08-19 is a genuine miss: D1 UP (+0.84%) and H3 UP (+4.41%) versus consensus DOWN; an unexpected U.S. Treasury long-bond liquidity-support/buyback expansion occurred after the prior origin and created a large post-origin gold shock.
+
+Post-hoc “disable OPAL for D1” counterfactual:
+- coverage would rise from 47.62% to 95.24%
+- accuracy would fall from 80.00% to 65.00%.
+
+Therefore **do not remove OPAL** and do not force resolution of August UNCERTAIN days.
+
+Cross-month 2025–2026 evidence:
+- OPAL override rate vs monthly UNCERTAIN rate: **r = +0.57**
+- final V5-vs-AURORA flip rate vs monthly UNCERTAIN rate: **r = +0.75**
+- August ranks #1 on both OPAL override rate and UNCERTAIN rate.
+
+DPTC/TCG:
+- no August DPTC actions;
+- this is not the same failure class as DPTC competence transition.
+
+Recommended challenger lane:
+**Temporal Concordance / Horizon Alignment Gate for D1.**
+When V5 differs from AURORA due specifically to H3 reversal logic, require independent fast D1 confirmation (H1 path, overnight move, rates/FX reaction, event timing/reaction, intraday deceleration) before using the H3 flip as a D1 vote; otherwise retain UNCERTAIN.
+
+Do not retune the frozen OPAL 0.70 threshold on August outcomes.
+
+Authority:
+- `GOLD_D1_AUGUST_2026_FAILURE_DIAGNOSTIC_2026-10-05.md`
