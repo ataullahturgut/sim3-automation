@@ -1,0 +1,43 @@
+name: Gold H3 Oct5 Diagnostic Nowcast
+
+on:
+  push:
+    branches: [gold-h3-oct5-diagnostic-nowcast-20261005]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_oct5_diagnostic_nowcast.py'
+      - '.github/workflows/gold-h3-oct5-diagnostic-nowcast.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      STAK_LIVE_REF: 54fdf1c8d39b7b6c7b874d0f30f784296e886044
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-oct5-diagnostic-nowcast-20261005
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'psycopg[binary]>=3.2,<4' 'requests>=2.31,<3'
+      - run: python gold_axis_2026/tools/gold_h3_oct5_diagnostic_nowcast.py
+      - name: Record diagnostic evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/OCT5_DIAGNOSTIC_NOWCAST_OUT/OCT5_DIAGNOSTIC_NOWCAST.json gold_axis_2026/GOLD_H3_OCT5_DIAGNOSTIC_NOWCAST_2026-10-05.json
+          cp gold_axis_2026/OCT5_DIAGNOSTIC_NOWCAST_OUT/ALT_DAILY_PRICES.csv gold_axis_2026/GOLD_H3_OCT5_DIAGNOSTIC_ALT_PRICES_2026-10-05.csv
+          git add gold_axis_2026/GOLD_H3_OCT5_DIAGNOSTIC_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record Oct 5 diagnostic H3 nowcast"
+            git pull --rebase origin gold-h3-oct5-diagnostic-nowcast-20261005
+            git push origin HEAD:gold-h3-oct5-diagnostic-nowcast-20261005
+          fi
