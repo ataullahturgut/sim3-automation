@@ -1,0 +1,115 @@
+{
+  "identity": "ADAH_D1_V1",
+  "status": "REJECTED_OR_DIAGNOSTIC",
+  "selected_candidate": "ANALOG9",
+  "selection_2024": [
+    {
+      "candidate": "DBH93",
+      "n": 20,
+      "brier": 0.23981287008898855,
+      "logloss": 0.6723572308803663,
+      "acc": 0.5
+    },
+    {
+      "candidate": "DBH97",
+      "n": 20,
+      "brier": 0.24494484330259908,
+      "logloss": 0.6831180804098158,
+      "acc": 0.6
+    },
+    {
+      "candidate": "ANALOG9",
+      "n": 20,
+      "brier": 0.20534964215427193,
+      "logloss": 0.6002489879283305,
+      "acc": 0.7
+    },
+    {
+      "candidate": "ENSEMBLE",
+      "n": 20,
+      "brier": 0.221762767872732,
+      "logloss": 0.6358397609307421,
+      "acc": 0.7
+    }
+  ],
+  "confirmation_2025": {
+    "selected": {
+      "n": 23,
+      "brier": 0.24462350669138339,
+      "logloss": 0.6817576604409981,
+      "acc": 0.4782608695652174
+    },
+    "static": {
+      "n": 23,
+      "brier": 0.24317917061542035,
+      "logloss": 0.680057456396363,
+      "acc": 0.6086956521739131
+    },
+    "final_flip_selective": {
+      "n": 7,
+      "actions": 1,
+      "coverage": 0.14285714285714285,
+      "correct": 0,
+      "accuracy": 0.0
+    },
+    "pass": false
+  },
+  "test_2026": {
+    "all_override": {
+      "n": 25,
+      "brier": 0.26857772907368843,
+      "logloss": 0.7316640437160257,
+      "acc": 0.52
+    },
+    "final_flip_selective": {
+      "n": 19,
+      "actions": 2,
+      "coverage": 0.10526315789473684,
+      "correct": 1,
+      "accuracy": 0.5
+    }
+  },
+  "cig_2026": {
+    "original": {
+      "n": 191,
+      "actions": 157,
+      "coverage": 0.8219895287958116,
+      "correct": 112,
+      "accuracy": 0.7133757961783439
+    },
+    "adah": {
+      "n": 191,
+      "actions": 159,
+      "coverage": 0.8324607329842932,
+      "correct": 113,
+      "accuracy": 0.710691823899371
+    }
+  },
+  "cig_august_2026": {
+    "original": {
+      "n": 21,
+      "actions": 10,
+      "coverage": 0.47619047619047616,
+      "correct": 8,
+      "accuracy": 0.8
+    },
+    "adah": {
+      "n": 21,
+      "actions": 11,
+      "coverage": 0.5238095238095238,
+      "correct": 8,
+      "accuracy": 0.7272727272727273
+    }
+  },
+  "promotion_pass": false,
+  "governance": {
+    "action_band": [
+      0.35,
+      0.65
+    ],
+    "selection_year": 2024,
+    "confirmation_year": 2025,
+    "holdout_year": 2026,
+    "online_update": "strictly prior matured OPAL events only"
+  }
+}
