@@ -4788,3 +4788,169 @@ Authorities:
 - freeze commit `814ed94239cfaf9ad07736ed1f824bfa1b1945b0`
 - JSON commit `9d9c6c85b331c0f1e8715d3b7521c34babc391a8`
 - prospective ledger initialized at `GOLD_H3_SAGE_V2_PROSPECTIVE_LEDGER.csv`.
+
+
+## 55. DAILY ACTION LAYER — CIG-D1 CONSENSUS INTEGRITY GATE (2026-10-05)
+
+**Identity:** `CIG_D1_V1`  
+**Status:** `RETROSPECTIVE_SELECTIVE_D1_CHALLENGER`  
+**Detailed authority:** `GOLD_D1_CIG_V1_RESULT_2026-10-05.md`
+
+### 55.1 Objective
+
+The original H3 target remains the net XAU direction over the next three business days. CIG-D1 is a separate operational layer asking:
+
+> Given only the H3 expert state available at issuance, what should be done for the current trading day?
+
+The same-day D1 target is scored from the previous available XAU close to the current daily close. The H3 models themselves are not retrained or relabeled.
+
+Binding action semantics:
+- D1 UP -> **LONG**
+- D1 DOWN -> **OUT / CASH**
+- unresolved -> **UNCERTAIN / no new D1 position**
+
+### 55.2 Direct H3-to-D1 diagnostic
+
+Common 2026-01-02 through 2026-07-31 window, N=145:
+
+| H3-derived daily signal | Correct | D1 accuracy |
+|---|---:|---:|
+| **SAGE V2 + RuleFlow V3-TG** | **103/145** | **71.03%** |
+| HELIOS V5-DCE | 102/145 | 70.34% |
+| RIFT | 102/145 | 70.34% |
+| VEGA | 102/145 | 70.34% |
+| RC-RTE V2 | 102/145 | 70.34% |
+| DPTC-Q95 | 98/145 | 67.59% |
+
+Key result:
+
+**the best H3 model is not the best same-day model.**
+
+DPTC-Q95 is stronger on the H3 terminal target, but some of its reversal interventions are early relative to the current day. It is therefore not used as the binding D1 direction engine.
+
+### 55.3 Binding CIG-D1 expert set
+
+CIG-D1 V1 uses four expert states:
+1. SAGE V2 + RuleFlow V3-TG;
+2. HELIOS V5-DCE;
+3. RIFT;
+4. VEGA.
+
+They are not claimed to be formally independent estimators. They are retained because they expose materially different continuation/reversal mechanisms within the H3 stack.
+
+RC-RTE V2 is not granted an additional equal vote because it adds insufficient independent daily variation relative to V5 on the common 2026 window. DPTC, BOCPD, SELLR, OPAL and dependence-phase states remain telemetry/challenger context rather than binding equal-vote D1 inputs.
+
+### 55.4 Binding decision rule
+
+- 4/4 UP -> **HIGH-CONFIDENCE D1 UP -> LONG**
+- 4/4 DOWN -> **HIGH-CONFIDENCE D1 DOWN -> OUT/CASH**
+- any disagreement -> **UNCERTAIN**
+
+No majority override is allowed.
+
+2026 Jan-Jul:
+
+| State | N | Correct | Accuracy |
+|---|---:|---:|---:|
+| **4/4 consensus** | **125** | **93** | **74.40%** |
+| **disagreement** | **20** | **10** | **50.00%** |
+
+Selective coverage:
+**125/145 = 86.21%**.
+
+The improvement comes from **abstaining when expert integrity breaks**, not from adding more votes.
+
+### 55.5 Historical transport evidence
+
+Because the exact current SAGE source contract cannot be reconstructed identically for all early years, older transport is separated rather than fabricating a synthetic SAGE history.
+
+Common-core proxy, V5 + RIFT + VEGA:
+- 2023: **169/206 = 82.04%**, coverage 94.1%
+- 2024: **178/220 = 80.91%**, coverage 91.7%.
+
+Current enhanced CIG-D1 architecture:
+- 2025: **176/218 = 80.73%**, coverage 87.9%
+- 2026 Jan-Jul: **93/125 = 74.40%**, coverage 86.2%.
+
+Interpretation:
+- the consensus effect predates 2026;
+- absolute accuracy weakens in 2026;
+- consensus remains materially stronger than disagreement;
+- the architecture is a **selective predictor**, not an unconditional daily classifier.
+
+### 55.6 Resolver research — rejected
+
+The UNCERTAIN subset was explicitly attacked with several alternatives.
+
+**Majority voting**
+- 2026 Jan-Jul: **102/145 = 70.34%**
+- below SAGE+RuleFlow alone and below selective consensus.
+
+**Static disagreement-pattern lookup**
+- 2025 resolved examples: **5/11 = 45.45%**
+- 2026 resolved examples: **3/8 = 37.50%**
+- failed transport.
+
+**Rolling best-expert / recent competence selector**
+- unstable across years;
+- representative 60-day selection deteriorates from useful 2024 behavior to approximately chance in 2025 and materially below chance in the 2026 disagreement sample.
+
+**Supervised KEEP/FLIP residual classifier**
+- DR-Selective: 2025 **12/16 = 75.0%**, 2026 **6/15 = 40.0%**
+- DR-Full: 2025 **27/39 = 69.2%**, 2026 **9/18 = 50.0%**
+- non-stationary mapping; rejected.
+
+**Label-free dependence / transition state as direct direction override**
+- useful as regime telemetry;
+- not stable enough to decide KEEP/FLIP on the D1 disagreement subset.
+
+**Recency-weighted Pattern Regime Memory**
+- local useful pockets exist;
+- under the binding requirement to increase coverage without reducing 2025 consensus accuracy, no acceptable parameterization survived.
+
+Scientific conclusion:
+
+> **expert disagreement is the observable uncertainty state.**
+
+The correct formulation is:
+`H3 expert state -> trustworthy D1 direction OR abstain`,
+not
+`all days -> forced UP/DOWN`.
+
+### 55.7 Next research lane
+
+CIG-D1 already covers approximately 86% of the 2026 Jan-Jul D1 universe. The remaining research problem is restricted to the UNCERTAIN subset.
+
+Any future rescue layer must add **orthogonal information**, not another recombination of the same H3 states. Preferred inputs:
+- H1 / intraday path;
+- overnight move;
+- opening-state momentum and reversal;
+- intraday volatility / deceleration;
+- event proximity and event-time reaction;
+- origin-safe cross-asset state.
+
+This component must be a separately named and frozen **D1 Rescue Head**, and ABSTAIN remains mandatory when evidence is weak.
+
+### 55.8 2026-10-05 diagnostic issuance
+
+For feature cutoff 2026-10-02 and planned issue 2026-10-05, diagnostic-nowcast evidence currently gives:
+- AURORA: DOWN, p_up 0.30075;
+- HELIOS V5-DCE: DOWN, p_up 0.30075;
+- RIFT: DOWN, reversal probability 0.55628, no override;
+- VEGA: DOWN, reversal probability 0.46319, no override.
+
+This is **diagnostic-nowcast**, not clean prospective validation. A completed CIG-D1 4/4 record requires the same-origin SAGE+RuleFlow state under its frozen source/timing contract.
+
+### 55.9 Governance
+
+Allowed:
+- retrospective D1 diagnostics;
+- frozen future shadow evaluation;
+- LONG / OUT / UNCERTAIN reporting under the exact CIG-D1 rule.
+
+Not allowed:
+- relabeling retrospective evidence as prospective;
+- tuning membership/thresholds on 2026 outcomes and calling the result OOS;
+- forcing an action on UNCERTAIN days without a separately frozen rescue identity;
+- silently mixing target clocks or price sources.
+
