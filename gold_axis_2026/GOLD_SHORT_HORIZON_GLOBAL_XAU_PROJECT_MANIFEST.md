@@ -1022,7 +1022,171 @@ If new research is opened before enough prospective evidence accumulates, it mus
 
 ---
 
-## 13. Canonical evidence index
+## 13. Daily Action Layer — CIG-D1 Consensus Integrity Gate (2026-10-05)
+
+**Identity:** `CIG_D1_V1`  
+**Status:** `RETROSPECTIVE_SELECTIVE_D1_CHALLENGER`  
+**Purpose:** convert the existing H3 expert architecture into a same-day daily action layer without changing the original H3 target or forcing every H3 expert to become a standalone D1 model.
+
+### 13.1 Problem reformulation
+
+The original H3 task remains:
+
+> next 3-business-day net XAU direction.
+
+The new operational question is different:
+
+> using only the H3 state available at issuance, what should be done for the current trading day?
+
+Therefore the daily layer is scored against the **same-day XAU direction**, while all H3 models keep their original frozen identities.
+
+Binding action convention:
+- D1 UP -> **LONG**
+- D1 DOWN -> **OUT / CASH**
+- unresolved -> **UNCERTAIN / no new D1 position**
+
+### 13.2 Direct model-by-model D1 diagnostic
+
+Common 2026-01-02 through 2026-07-31 daily window, N=145:
+
+| H3-derived daily signal | Correct | D1 accuracy |
+|---|---:|---:|
+| **SAGE V2 + RuleFlow V3-TG** | **103/145** | **71.03%** |
+| HELIOS V5-DCE | 102/145 | 70.34% |
+| RIFT | 102/145 | 70.34% |
+| VEGA | 102/145 | 70.34% |
+| RC-RTE V2 | 102/145 | 70.34% |
+| DPTC-Q95 | 98/145 | 67.59% |
+
+This established a critical distinction:
+
+**best H3 model != best same-day action model.**
+
+DPTC-Q95 can improve the 3-day terminal direction while acting too early for the current day. DPTC is therefore not used as the binding D1 direction engine.
+
+### 13.3 CIG-D1 expert set
+
+The binding CIG-D1 V1 state uses:
+1. **SAGE V2 + RuleFlow V3-TG**
+2. **HELIOS V5-DCE**
+3. **RIFT**
+4. **VEGA**
+
+These mechanisms are not claimed to be statistically independent. They are used because they expose materially different continuation/reversal states inside the H3 architecture.
+
+RC-RTE V2 is not counted as an additional equal vote in the 2026 Jan-Jul D1 consensus because it adds insufficient independent daily variation relative to V5 on the common window.
+
+DPTC / BOCPD / SELLR / OPAL / dependence-phase states remain telemetry and challenger context, not binding equal-vote CIG-D1 inputs.
+
+### 13.4 Binding consensus rule
+
+- 4/4 UP -> **HIGH-CONFIDENCE D1 UP -> LONG**
+- 4/4 DOWN -> **HIGH-CONFIDENCE D1 DOWN -> OUT/CASH**
+- any disagreement -> **UNCERTAIN**
+
+No majority override is allowed in V1.
+
+2026 Jan-Jul:
+
+| State | N | Correct | Accuracy |
+|---|---:|---:|---:|
+| **4/4 consensus** | **125** | **93** | **74.40%** |
+| **disagreement** | **20** | **10** | **50.00%** |
+
+Selective coverage:
+
+**125 / 145 = 86.21%**
+
+The gain therefore comes from abstaining when expert integrity breaks, not from adding more votes.
+
+### 13.5 Historical transport
+
+The exact current SAGE source contract cannot be reconstructed identically for all early years. Historical transport is therefore separated to avoid inventing a synthetic SAGE history.
+
+Common-core proxy, V5 + RIFT + VEGA:
+
+| Year | Consensus N | Correct | Accuracy | Coverage |
+|---|---:|---:|---:|---:|
+| 2023 | 206 | 169 | **82.04%** | 94.1% |
+| 2024 | 220 | 178 | **80.91%** | 91.7% |
+
+Current enhanced CIG-D1 architecture:
+
+| Year | Consensus N | Correct | Accuracy | Coverage |
+|---|---:|---:|---:|---:|
+| 2025 | 218 | 176 | **80.73%** | 87.9% |
+| 2026 Jan-Jul | 125 | 93 | **74.40%** | 86.2% |
+
+Interpretation:
+- the consensus effect predates 2026;
+- absolute performance weakens in 2026;
+- consensus remains materially stronger than disagreement;
+- the architecture is a **selective predictor**, not an unconditional D1 classifier.
+
+### 13.6 Resolver research — rejected
+
+The following attempts were explicitly tested and rejected as binding extensions:
+
+- **majority voting:** 102/145 = 70.34% on 2026 Jan-Jul; below SAGE+RuleFlow and below selective consensus;
+- **static vote-pattern lookup:** failed transport;
+- **rolling best-expert / recent competence selector:** unstable across years;
+- **supervised KEEP/FLIP residual classifier:** DR-Selective 12/16 = 75.0% in 2025 but 6/15 = 40.0% in 2026; DR-Full 27/39 = 69.2% in 2025 but 9/18 = 50.0% in 2026;
+- **label-free dependence / transition state as direct direction override:** useful as regime telemetry, not as a stable D1 direction rule;
+- **recency-weighted Pattern Regime Memory:** no tested configuration increased coverage without reducing the binding 2025 consensus accuracy.
+
+Scientific conclusion:
+
+**disagreement itself is the observable uncertainty state.**
+
+The correct formulation is not:
+`all days -> forced UP/DOWN`
+
+but:
+`H3 expert state -> trustworthy D1 direction OR abstain`.
+
+### 13.7 Remaining research problem
+
+CIG-D1 already covers about 86% of the 2026 Jan-Jul D1 universe. The unresolved research space is the approximately 14% UNCERTAIN subset.
+
+Any rescue layer must add **orthogonal information**, not another recombination of the same H3 states. Preferred candidates:
+- H1 / intraday path;
+- overnight move;
+- opening-state momentum/reversal;
+- intraday volatility and deceleration;
+- event proximity / event-time reaction;
+- origin-safe cross-asset state.
+
+This future component must be a separately frozen **D1 Rescue Head** with ABSTAIN preserved when evidence is weak.
+
+### 13.8 2026-10-05 diagnostic note
+
+For feature cutoff 2026-10-02 and planned issue 2026-10-05, the diagnostic-nowcast audit currently shows:
+- AURORA DOWN, p_up 0.30075;
+- V5-DCE DOWN, p_up 0.30075;
+- RIFT DOWN, reversal probability 0.55628, no override;
+- VEGA DOWN, reversal probability 0.46319, no override.
+
+This is **diagnostic-nowcast**, not clean prospective proof. A completed CIG-D1 4/4 record requires the same-origin SAGE+RuleFlow state to be available under the frozen source/timing contract.
+
+### 13.9 Evidence and governance
+
+Detailed authority:
+- `GOLD_D1_CIG_V1_RESULT_2026-10-05.md`
+
+CIG-D1 V1 may be used for:
+- retrospective D1 diagnostics;
+- future frozen shadow evaluation;
+- LONG / OUT / UNCERTAIN reporting under the exact rule above.
+
+It may not be used to:
+- relabel retrospective evidence as prospective;
+- tune membership/thresholds on 2026 outcomes and call the result OOS;
+- force an action on UNCERTAIN days without a separately named rescue identity;
+- silently mix target clocks or price sources.
+
+---
+
+## 14. Canonical evidence index
 
 ### Target, clean data and base architecture
 
@@ -1067,6 +1231,10 @@ If new research is opened before enough prospective evidence accumulates, it mus
 - GOLD_H3_2023_TWELVE_FUTURES_BRIDGE_PROBE_2026-10-05.md
 - GOLD_H3_2023_SOURCE_RECOVERY_AUDIT_2026-10-05.md
 
+### Daily action / CIG-D1
+
+- GOLD_D1_CIG_V1_RESULT_2026-10-05.md
+
 ### Latest diagnostic issuance
 
 - GOLD_H3_OCT5_DIAGNOSTIC_NOWCAST_2026-10-05.json
@@ -1075,7 +1243,7 @@ If new research is opened before enough prospective evidence accumulates, it mus
 
 ---
 
-## 14. Change-control rules
+## 15. Change-control rules
 
 1. This manifest summarizes decisions; detailed evidence remains in immutable Git history and dedicated result files.
 2. Failed and blocked hypotheses are not deleted from the repository; they are compressed in this manifest to prevent repeated work.
@@ -1093,6 +1261,6 @@ If new research is opened before enough prospective evidence accumulates, it mus
 
 ---
 
-## 15. Executive one-paragraph state
+## 16. Executive one-paragraph state
 
-The Global-XAU short-horizon project began with a weak daily H3 signal that failed 2025-2026 transport. Replacing the classifier did not solve the problem. The first major improvement came from genuinely new hourly XAU path information through IRIS, followed by adaptive expert routing through SENTRY, DART and AURORA. Reversal specialists then evolved into HELIOS V5-DCE, the current **clean retrospective champion** at **63.35% accuracy / 63.76% balanced accuracy in 2026**. Rare SAGE and RuleFlow exceptions raise the retrospective reference to **65.97% / 66.31%**, after which the dominant residual error becomes missed reversal. Handoff research showed that reversal alarms are not uniformly trustworthy; their competence changes with the market's cross-asset dependence structure. SELLR, BOCPD, online expert aggregation and the label-free Gold-Nasdaq/VIX Dependence Phase provide methodologically distinct evidence converging on a transition around late April-May 2026. DPTC integrates these mechanisms and reaches **70.68% accuracy / 70.86% balanced accuracy** in post-hoc development, but this is not prospective proof. The project is now in the **prospective validation phase** under `CLEAN_H3_PROSPECTIVE_V1`: CLEAN AURORA is the formal baseline, CLEAN V5-DCE is a shadow challenger, and DPTC Q95/Q99 are frozen future shadow challengers.
+The Global-XAU short-horizon project now also contains a separate **CIG-D1 selective daily-action layer**: SAGE+RuleFlow, V5-DCE, RIFT and VEGA must agree 4/4 for a binding D1 direction; otherwise the output is UNCERTAIN. In 2026 Jan-Jul this covers 125/145 days (86.21%) at 93/125 = 74.40% same-day accuracy, while disagreement days are 10/20 = 50.00%. The Global-XAU short-horizon project began with a weak daily H3 signal that failed 2025-2026 transport. Replacing the classifier did not solve the problem. The first major improvement came from genuinely new hourly XAU path information through IRIS, followed by adaptive expert routing through SENTRY, DART and AURORA. Reversal specialists then evolved into HELIOS V5-DCE, the current **clean retrospective champion** at **63.35% accuracy / 63.76% balanced accuracy in 2026**. Rare SAGE and RuleFlow exceptions raise the retrospective reference to **65.97% / 66.31%**, after which the dominant residual error becomes missed reversal. Handoff research showed that reversal alarms are not uniformly trustworthy; their competence changes with the market's cross-asset dependence structure. SELLR, BOCPD, online expert aggregation and the label-free Gold-Nasdaq/VIX Dependence Phase provide methodologically distinct evidence converging on a transition around late April-May 2026. DPTC integrates these mechanisms and reaches **70.68% accuracy / 70.86% balanced accuracy** in post-hoc development, but this is not prospective proof. The project is now in the **prospective validation phase** under `CLEAN_H3_PROSPECTIVE_V1`: CLEAN AURORA is the formal baseline, CLEAN V5-DCE is a shadow challenger, and DPTC Q95/Q99 are frozen future shadow challengers.
