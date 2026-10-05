@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install --disable-pip-version-check 'databento>=0.60,<1' 'numpy>=2,<3' 'pandas>=2.2,<3' 'scipy>=1.14,<2'
+      - run: pip install --disable-pip-version-check 'databento>=0.60,<1' 'numpy>=2,<3' 'pandas>=2.2,<3' 'scipy>=1.14,<2' 'scikit-learn>=1.5,<2'
       - run: python gold_axis_2026/tools/gold_h3_dptc_competence_mechanism_diagnostic_v1.py
       - name: Record mechanism diagnostic evidence
         shell: bash
