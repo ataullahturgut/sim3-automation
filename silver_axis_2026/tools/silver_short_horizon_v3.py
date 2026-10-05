@@ -252,3 +252,5 @@ def main():
 if __name__=="__main__":main()
 
 # workflow trigger 2026-10-05
+
+# rerun via established hourly workflow
