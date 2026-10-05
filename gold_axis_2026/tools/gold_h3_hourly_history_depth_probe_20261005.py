@@ -61,3 +61,5 @@ for yr,items in out.items():
         lines.append(f"| {yr} | {name} | {x.get('http','')} | {x.get('rows','')} | {x.get('first_utc','')} | {x.get('last_utc','')} | {str(err).replace('|','/')} |")
 OUTM.write_text("\n".join(lines)+"\n")
 print(OUTM.read_text())
+
+# trigger: probe-after-workflow-installed
