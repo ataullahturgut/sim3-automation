@@ -134,13 +134,12 @@ def run():
     ar=ar.iloc[0]
 
     # Run the frozen CLEAN V5-DCE chain on the same diagnostic AURORA row.
-    # Extend only the research data cutoffs that were hard-coded at Sep-30.
+    # Capture the full internal row as well, so the CIG-D1 audit can see the
+    # individual RIFT and VEGA expert states instead of inferring them.
     iris.fetch_extension=extend_hourly_successor
     vega.fetch_gvz=diag_fetch_gvz
     cv5.OUT=OUT
     cv5.AURORA_LEDGER=forecast_path
-    cv5.V5_LEDGER=OUT/"DIAG_V5_LEDGER.csv"
-    cv5.V5_MISSES=OUT/"DIAG_V5_MISSES.csv"
     cv5.FIRST_FEATURE=ORIGIN
     def mixed_to_datetime(arg,*args,**kwargs):
         if "format" not in kwargs:
@@ -148,12 +147,15 @@ def run():
         return PDT_ORIG(arg,*args,**kwargs)
     pd.to_datetime=mixed_to_datetime
     try:
-        cv5.main()
+        aa=pd.read_csv(forecast_path)
+        for cc in ["feature_cutoff_date","planned_forecast_issue_date","target_end_date_h3"]:
+            if cc in aa.columns:
+                aa[cc]=pd.to_datetime(aa[cc],errors="coerce")
+        g5,_=cv5.chain(aa)
     finally:
         pd.to_datetime=PDT_ORIG
-    v=pd.read_csv(OUT/"DIAG_V5_LEDGER.csv")
-    v["feature_cutoff_date"]=pd.to_datetime(v.feature_cutoff_date,errors="coerce")
-    vr=v[v.feature_cutoff_date==ORIGIN]
+    g5["feature_cutoff_date"]=pd.to_datetime(g5.feature_cutoff_date,errors="coerce")
+    vr=g5[g5.feature_cutoff_date==ORIGIN]
     if len(vr)!=1:
         raise RuntimeError(f"V5_ORIGIN_ROW_FAIL n={len(vr)}")
     vr=vr.iloc[0]
@@ -175,10 +177,14 @@ def run():
         "h_ret_48":float(ar.h_ret_48),
       },
       "v5":{
-        "p_up":float(vr.p_clean_v5),
-        "direction":str(vr.v5_direction),
-        "aurora_direction":str(vr.aurora_direction),
-        "changed_from_aurora":bool(vr.changed_from_aurora),
+        "p_up":float(vr.p_helios_v5_dce),
+        "direction":"UP" if float(vr.p_helios_v5_dce)>=0.5 else "DOWN",
+        "aurora_direction":"UP" if float(vr.p_aurora)>=0.5 else "DOWN",
+        "changed_from_aurora":bool((float(vr.p_helios_v5_dce)>=0.5)!=(float(vr.p_aurora)>=0.5)),
+        "rift_override":bool(vr.rift_override),
+        "rift_direction":"UP" if bool(vr.rift_override) != (float(vr.p_aurora)>=0.5) else "DOWN",
+        "vega_override":bool(vr.vega_override),
+        "vega_direction":"UP" if bool(vr.vega_override) != (float(vr.p_aurora)>=0.5) else "DOWN",
         "candidate_reversal":bool(vr.candidate_reversal),
         "opal_override":bool(vr.opal_override),
         "p_opal_reversal":float(vr.p_opal_reversal),
