@@ -1,10 +1,11 @@
 # GOLD SHORT-HORIZON GLOBAL XAU — MASTER PROJECT MANIFEST
 
-**Manifest version:** 3.1  
+**Manifest version:** 3.2  
 **Effective date:** 2026-10-05  
 **Document class:** CANONICAL MASTER RESEARCH MANIFEST / DECISION AUTHORITY  
 **Scope:** Global XAU/USD short-horizon H3 direction research  
 **Evidence cutoff:** information committed through 2026-10-05  
+**Audit status:** SOURCE-LEVEL CROSS-CHECK COMPLETE / PASS  
 **Supersedes:** Manifest v3.0 and the prior long-form v2.0 narrative for current project-state interpretation
 
 | Authority item | Current state |
@@ -171,6 +172,23 @@ A quarantined or unavailable source row cannot:
 - be retrospectively inserted after the outcome becomes known.
 
 Daily-average Gold and NY17/intraday endpoint identities are not silently mixed.
+
+### 4.5 Naming and supersession register
+
+Several historical files use related or reused labels. The following interpretation is binding:
+
+| Historical identity / artifact | Current interpretation |
+|---|---|
+| `AURORA_H3_V1_RESEARCH` / 2026-10-02 result | Historical pre-clean research result. Its original 2026 score is not the authoritative clean score after the confirmed 2026-02-27 data correction. |
+| `CLEAN_AURORA_H3_V1_PROSPECTIVE` | Clean corrected prospective baseline under `CLEAN_H3_PROSPECTIVE_V1`. Clean retrospective comparison uses the rebuilt clean chain. |
+| `GOLD_H3_HELIOS_V5_DCE_RESULT_2026-10-03.md` | Mechanism-lineage result produced before the final clean-family re-score. Its historical 2026 metric is superseded for clean performance ranking. |
+| `GOLD_H3_RECENT_CLEAN_SWEEP_RESULT_2026-10-03.md` | **Authoritative clean retrospective ranking** for AURORA/HELIOS/OPAL family metrics after the validated source correction. |
+| SAGE-H3 V1 — session-aware, 2026-10-02 | Earlier session-decomposition experiment; failed closed. It is **not** the parent of SAGE V2. |
+| SAGE-H3 V1 — selective action / guarded exception, 2026-10-04 | Later reversal-intervention experiment. Its retained OCS exception is the parent mechanism of SAGE V2. |
+| SAGE-H3 V2 exception-only | Prospective shadow successor to the **2026-10-04 selective-action SAGE lineage**, not to the earlier session-aware SAGE experiment. |
+| 2026-10-02 diagnostic nowcast | Separate diagnostic bridge; not an eligible `CLEAN_H3_PROSPECTIVE_V1` origin. |
+
+When an older result file conflicts numerically with the clean sweep, the clean sweep governs **clean retrospective performance**, while the older file remains valid as model-development lineage evidence.
 
 ---
 
@@ -486,7 +504,7 @@ This was the second major conceptual turning point of the project.
 
 ---
 
-### Phase K — Independent competence mechanisms
+### Phase K — Methodologically distinct competence diagnostics
 
 The Handoff problem was studied from multiple scientific angles rather than by fitting another threshold.
 
@@ -552,7 +570,7 @@ Best reported development variant:
 - net +5;
 - assisted accuracy **68.59%**.
 
-This supported the competence-shift hypothesis through a mechanism independent of BOCPD.
+This supported the competence-shift hypothesis through a methodologically distinct mechanism from BOCPD.
 
 ---
 
@@ -631,7 +649,7 @@ The following table is the correct way to quote the project as of 2026-10-05.
 | Clean HELIOS V5-DCE | **121/191 = 63.35%** | **63.76%** | authoritative clean retrospective champion | retrospective champion; prospective V5 shadow |
 | SAGE V2 exception-only | **125/191 = 65.45%** | 65.81% | retrospective development; frozen shadow | rare OCS exception |
 | SAGE V2 + RuleFlow V3-TG | **126/191 = 65.97%** | **66.31%** | retrospective combined reference | competence-research baseline |
-| Frozen SELLR single-action test | **127/191 = 66.49%** | **66.81%** | threshold selected on 2025 before 2026 stress; very low coverage | temporally pre-frozen incremental evidence |
+| Direct frozen SELLR trigger on canonical Handoff | **127/191 = 66.49%** | **66.81%** | threshold selected on 2025 before 2026 stress; exactly one 2026 fire (2026-05-21) | temporally pre-frozen incremental evidence |
 | BOCPD V4 | 132/191 = **69.11%** | 69.36% | post-hoc development | robust competence-state diagnostic |
 | STCR — SELLR-triggered persistent competence state | 133/191 = **69.63%** | 69.86% | post-hoc synthesis | competence-transition challenger |
 | DPTC-Q99 | 134/191 = **70.16%** | 70.36% | post-hoc development challenger | strict shadow variant |
@@ -643,8 +661,8 @@ May be claimed:
 
 - Clean HELIOS V5-DCE achieved 63.35% accuracy on the clean 2026 retrospective universe.
 - The retrospective SAGE + RuleFlow reference reached 65.97%.
-- A pre-2026-frozen SELLR trigger added one successful action in 2026.
-- Multiple independent analyses support a competence transition around late April-May 2026.
+- The pre-2026-frozen SELLR threshold fired exactly once on a canonical 2026 Handoff origin (2026-05-21); that FLIP rescued a baseline error.
+- Multiple methodologically distinct analyses converge on a competence transition around late April-May 2026.
 - DPTC reached 70.68% in post-hoc development and has been frozen for future shadow testing.
 
 Must **not** be claimed:
@@ -671,7 +689,7 @@ The following methods are retained here only so future work does not unknowingly
 | Raw-source shallow CART screens | No stable promotable pattern | Diagnostic only. |
 | NOVA novelty/regime model | Detected stress but not direction | Novelty is not forecastability. |
 | FERG error-risk gate | Confirmation reversed / negative selection | Same-information meta-gating closed. |
-| SAGE V1 session decomposition | No eligible pre-2023 representation | Session idea not promoted. |
+| SAGE-H3 V1 (session-aware, 2026-10-02) | No eligible pre-2023 representation | Closed; distinct from the later selective-action SAGE lineage. |
 | AIM adaptive mixture | Averaging diluted the stronger expert | Hard/state routing preferred. |
 | VISTA dynamic BOCPD hazard | Same decisions as DART | Mechanism-pass but non-incremental. |
 | TWIN path-shape analogues | No eligible representation | Closed unless representation changes materially. |
@@ -690,7 +708,7 @@ The following methods are retained here only so future work does not unknowingly
 | TRES survival | Strong reversal-risk representation | Retained as diagnostic; direct FLIP/abstention mappings failed. |
 | ORS local reversal surprise | Net negative | Closed. |
 | Static KMeans latent regimes | Weak separation; no reliable Handoff gate | Static regime classification rejected. |
-| Direct Handoff state machine | 3 rescue / 3 broken in selected 2025 variant | Handoff is not a deterministic FLIP signal. |
+| Direct Handoff state machine | Best zero-net 2025 grid candidate: 3 rescue / 3 broken; **no rule passed eligibility** | Handoff is not a deterministic FLIP signal. |
 | Generic label-free marginal drift | Did not locate competence transition | Problem is dependence/conditional structure, not simple marginal drift. |
 | Alternative competence mechanisms: change-point, duration/hazard and historical analogue candidates | Did not pass the pre-2026 tournament gate | SELLR was the only retained tournament signal. |
 
@@ -1013,4 +1031,4 @@ If new research is opened before enough prospective evidence accumulates, it mus
 
 ## 15. Executive one-paragraph state
 
-The Global-XAU short-horizon project began with a weak daily H3 signal that failed 2025-2026 transport. Replacing the classifier did not solve the problem. The first major improvement came from genuinely new hourly XAU path information through IRIS, followed by adaptive expert routing through SENTRY, DART and AURORA. Reversal specialists then evolved into HELIOS V5-DCE, the current **clean retrospective champion** at **63.35% accuracy / 63.76% balanced accuracy in 2026**. Rare SAGE and RuleFlow exceptions raise the retrospective reference to **65.97% / 66.31%**, after which the dominant residual error becomes missed reversal. Handoff research showed that reversal alarms are not uniformly trustworthy; their competence changes with the market's cross-asset dependence structure. SELLR, BOCPD, online expert aggregation and the label-free Gold-Nasdaq/VIX Dependence Phase independently support a transition around late April-May 2026. DPTC integrates these mechanisms and reaches **70.68% accuracy / 70.86% balanced accuracy** in post-hoc development, but this is not prospective proof. The project is now in the **prospective validation phase** under `CLEAN_H3_PROSPECTIVE_V1`: CLEAN AURORA is the formal baseline, CLEAN V5-DCE is a shadow challenger, and DPTC Q95/Q99 are frozen future shadow challengers.
+The Global-XAU short-horizon project began with a weak daily H3 signal that failed 2025-2026 transport. Replacing the classifier did not solve the problem. The first major improvement came from genuinely new hourly XAU path information through IRIS, followed by adaptive expert routing through SENTRY, DART and AURORA. Reversal specialists then evolved into HELIOS V5-DCE, the current **clean retrospective champion** at **63.35% accuracy / 63.76% balanced accuracy in 2026**. Rare SAGE and RuleFlow exceptions raise the retrospective reference to **65.97% / 66.31%**, after which the dominant residual error becomes missed reversal. Handoff research showed that reversal alarms are not uniformly trustworthy; their competence changes with the market's cross-asset dependence structure. SELLR, BOCPD, online expert aggregation and the label-free Gold-Nasdaq/VIX Dependence Phase provide methodologically distinct evidence converging on a transition around late April-May 2026. DPTC integrates these mechanisms and reaches **70.68% accuracy / 70.86% balanced accuracy** in post-hoc development, but this is not prospective proof. The project is now in the **prospective validation phase** under `CLEAN_H3_PROSPECTIVE_V1`: CLEAN AURORA is the formal baseline, CLEAN V5-DCE is a shadow challenger, and DPTC Q95/Q99 are frozen future shadow challengers.
