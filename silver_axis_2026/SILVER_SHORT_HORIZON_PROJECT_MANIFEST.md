@@ -244,3 +244,27 @@ The next authorized channels are:
 4. alternative target design such as high-move / barrier / selective-event direction.
 
 **Current production status: NO PRODUCTION-QUALITY SILVER DIRECTION MODEL.**
+
+
+## 9. V7 — barrier / high-move target redesign (2026-10-05)
+
+Authority:
+- `SILVER_SHORT_HORIZON_V7_BARRIER_PREREG_2026-10-05.md`
+- `SILVER_SHORT_HORIZON_V7_BARRIER_RESULT_2026-10-05.md`
+
+The forced binary H5 target was replaced by volatility-normalized first-hit targets:
+- H3 and H5;
+- k = 0.50 / 0.75 / 1.00 sigma20;
+- classes = UP / DOWN / NO_MOVE.
+
+No candidate produced selective directional accuracy above 50% on DEV.
+
+Best directional result:
+- H5 k=0.50: **48.87%** directional accuracy at 100% directional coverage.
+
+Higher barriers increased NO_MOVE share but did not improve direction quality.
+
+Status: **V7_FAIL_DEV; 2025/2026 NOT OPENED.**
+
+Scientific implication:
+**the current Silver daily feature representation lacks a stable direction source even after target redesign.**
