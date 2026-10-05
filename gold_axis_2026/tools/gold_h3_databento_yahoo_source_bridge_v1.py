@@ -82,7 +82,7 @@ def databento_all(client):
         raise RuntimeError(f"ESTIMATED_COST_EXCEEDS_APPROVAL:{est:.6f}>{MAX_APPROVED_COST_USD:.2f}")
     data = client.timeseries.get_range(
         dataset=DATASET, schema=SCHEMA, symbols=symbols, stype_in="continuous",
-        stype_out="continuous", start=BRIDGE_START, end=BRIDGE_END
+        start=BRIDGE_START, end=BRIDGE_END
     )
     d = data.to_df().reset_index()
     if "ts_event" not in d.columns:
