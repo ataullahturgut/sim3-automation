@@ -1,0 +1,40 @@
+name: Gold H3 DPTC ChangePoint Correction V1.1
+
+on:
+  push:
+    branches: [gold-h3-oct5-diagnostic-nowcast-20261005]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_dptc_changepoint_correction_v1_1.py'
+      - '.github/workflows/gold-h3-dptc-changepoint-correction-v1-1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3'
+      - run: python gold_axis_2026/tools/gold_h3_dptc_changepoint_correction_v1_1.py
+      - name: Record corrected changepoint evidence
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            gold_axis_2026/GOLD_H3_DPTC_CHANGEPOINT_CORRECTION_V1_1_2026-10-05.json \
+            gold_axis_2026/GOLD_H3_DPTC_CHANGEPOINT_CORRECTION_V1_1_2026-10-05.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record corrected DPTC 2026 changepoint audit'
+            git pull --rebase origin gold-h3-oct5-diagnostic-nowcast-20261005
+            git push origin HEAD:gold-h3-oct5-diagnostic-nowcast-20261005
+          fi
