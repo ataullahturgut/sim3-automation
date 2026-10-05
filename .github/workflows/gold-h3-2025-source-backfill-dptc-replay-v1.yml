@@ -1,0 +1,39 @@
+name: Gold H3 2025 Source Backfill DPTC Replay V1
+
+on:
+  push:
+    branches: [gold-h3-oct5-diagnostic-nowcast-20261005]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_2025_source_backfill_dptc_replay_v1.py'
+      - '.github/workflows/gold-h3-2025-source-backfill-dptc-replay-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-oct5-diagnostic-nowcast-20261005
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check numpy pandas scikit-learn requests
+      - run: python gold_axis_2026/tools/gold_h3_2025_source_backfill_dptc_replay_v1.py
+      - name: Record 2025 backfill evidence
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             gold_axis_2026/GOLD_H3_2025_BACKFILL_IFBC_EXTENDED_2026-10-05.csv             gold_axis_2026/GOLD_H3_2025_BACKFILL_LLRS_EXTENDED_2026-10-05.csv             gold_axis_2026/GOLD_H3_2025_BACKFILL_HANDOFF_STATE_2026-10-05.csv             gold_axis_2026/GOLD_H3_2025_BACKFILL_DPTC_ACTIONS_2026-10-05.csv             gold_axis_2026/GOLD_H3_2025_BACKFILL_DPTC_SUMMARY_2026-10-05.json             gold_axis_2026/GOLD_H3_2025_BACKFILL_DPTC_RESULT_2026-10-05.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Record 2025 H3 backfill DPTC replay"
+            git pull --rebase origin gold-h3-oct5-diagnostic-nowcast-20261005
+            git push origin HEAD:gold-h3-oct5-diagnostic-nowcast-20261005
+          fi
