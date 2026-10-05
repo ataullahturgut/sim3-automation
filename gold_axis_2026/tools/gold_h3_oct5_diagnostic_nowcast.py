@@ -18,6 +18,7 @@ import gold_h3_clean_aurora_prospective_v1 as clean
 import gold_h3_clean_v5_prospective_v1 as cv5
 import gold_h3_iris_v1 as iris
 import gold_h3_vega_v1 as vega
+IRIS_FETCH_ORIG=iris.fetch_extension
 
 START=pd.Timestamp("2026-09-30")
 END=pd.Timestamp("2026-10-02")
@@ -73,8 +74,7 @@ def build_alt_prices():
     return pd.DataFrame(rows).sort_values("date")
 
 def extend_hourly_successor():
-    orig=iris.fetch_extension
-    x,n=orig()
+    x,n=IRIS_FETCH_ORIG()
     vals=iris.api_request(pd.Timestamp("2026-09-30 00:00:00"),pd.Timestamp("2026-10-03 23:59:59"))
     rows=[]
     for row in vals:
