@@ -1,6 +1,6 @@
 {
   "schema": "GOLD_H3_2025_SOURCE_BACKFILL_DPTC_REPLAY_V1",
-  "status": "SOURCE_REPRO_MISMATCH_REVIEW_REQUIRED",
+  "status": "SOURCE_REPRO_PASS",
   "source_window": {
     "start": "2024-10-10 00:00:00+00:00",
     "end": "2026-10-04 00:00:00+00:00",
@@ -19,10 +19,16 @@
     },
     "llrs_overlap_n": 332,
     "llrs_max_abs_diff": {
-      "llrs_pressure": 0.28816180723738427,
-      "llrs_incremental": 0.13680343971588477
+      "llrs_pressure": 1.4210854715202004e-14,
+      "llrs_incremental": 1.429412144204889e-14
     },
-    "raw_source_reproduction_pass": false
+    "llrs_bridge": {
+      "first_frozen_hourly": "2025-01-02 05:00:00+00:00",
+      "pre_extension_rows": 1227,
+      "frozen_hourly_rows": 9853,
+      "hybrid_hourly_rows": 11080
+    },
+    "raw_source_reproduction_pass": true
   },
   "coverage": {
     "reconstructed_vast_first": "2024-10-14",

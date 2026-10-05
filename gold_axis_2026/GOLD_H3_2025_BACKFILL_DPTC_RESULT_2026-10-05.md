@@ -1,12 +1,12 @@
 # GOLD H3 — 2025 Source Backfill + DPTC Replay V1
 
-**Status:** SOURCE_REPRO_MISMATCH_REVIEW_REQUIRED
+**Status:** SOURCE_REPRO_PASS
 
 ## Source reconstruction QA
 
 - IFBC raw overlap rows: **280**
 - LLRS overlap rows: **332**
-- raw-source reproduction pass (<1e-8): **False**
+- raw-source reproduction pass (<1e-8): **True**
 - reconstructed VAST first origin: **2024-10-14**
 - reconstructed IFBC score first origin: **2025-01-29**
 - reconstructed LLRS first origin: **2024-12-02**
