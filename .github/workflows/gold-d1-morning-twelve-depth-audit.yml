@@ -1,0 +1,42 @@
+name: Gold D1 Morning Twelve Depth Audit
+
+on:
+  push:
+    branches: [gold-h3-competence-transition-program-v1-20261005]
+    paths:
+      - '.github/workflows/gold-d1-morning-twelve-depth-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-competence-transition-program-v1-20261005
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check requests
+      - name: Verify key
+        run: test -n "$TWELVE_DATA_API_KEY"
+      - name: Probe XAU hourly history
+        run: |
+          python gold_axis_2026/tools/audit_successor_twelve_history_depth.py | tee gold_axis_2026/GOLD_D1_MORNING_TWELVE_DEPTH_AUDIT_2026-10-05.txt
+      - name: Record derived availability audit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_D1_MORNING_TWELVE_DEPTH_AUDIT_2026-10-05.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "Record D1 morning Twelve hourly depth audit"
+            git pull --rebase origin gold-h3-competence-transition-program-v1-20261005
+            git push origin HEAD:gold-h3-competence-transition-program-v1-20261005
+          fi
