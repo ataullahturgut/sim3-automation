@@ -1,0 +1,40 @@
+name: Gold H3 Databento Consensus Roll Bridge 2025 V1
+
+on:
+  push:
+    branches: [gold-h3-oct5-diagnostic-nowcast-20261005]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_databento_consensus_roll_bridge_2025_v1.py'
+      - '.github/workflows/gold-h3-databento-consensus-roll-bridge-2025-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      DATABENTO_API_KEY: ${{ secrets.DATABENTO_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-oct5-diagnostic-nowcast-20261005
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'databento>=0.60,<1' 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2'
+      - run: python gold_axis_2026/tools/gold_h3_databento_consensus_roll_bridge_2025_v1.py
+      - name: Record consensus roll bridge evidence
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add             gold_axis_2026/GOLD_H3_DATABENTO_CONSENSUS_ROLL_BRIDGE_2025_2026-10-05.json             gold_axis_2026/GOLD_H3_DATABENTO_CONSENSUS_ROLL_BRIDGE_2025_2026-10-05.md             gold_axis_2026/GOLD_H3_DATABENTO_CONSENSUS_ROLL_ORIGIN_COMPARE_2025_2026-10-05.csv
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record Databento consensus roll bridge audit'
+            git pull --rebase origin gold-h3-oct5-diagnostic-nowcast-20261005
+            git push origin HEAD:gold-h3-oct5-diagnostic-nowcast-20261005
+          fi
