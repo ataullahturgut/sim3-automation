@@ -150,12 +150,12 @@ def lag_vec(w,maxlag=6):
     return np.asarray(out,float)
 
 def calc_features(panel,origins):
-    ts=panel.ts.to_numpy()
+    ts_ns=panel.ts.astype("int64").to_numpy()
     x=panel[ROOTS].to_numpy(float)
     rows=[]
     for d in origins:
         co=base.cutoff_ts(d)
-        idx=np.searchsorted(ts,np.datetime64(co.to_datetime64()),side="right")
+        idx=np.searchsorted(ts_ns,int(co.value),side="right")
         if idx<760: continue
         # windows by synchronized hourly observations
         rec120=x[idx-120:idx]; ref480=x[idx-600:idx-120]
