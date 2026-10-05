@@ -1,12 +1,24 @@
 # GOLD SHORT-HORIZON GLOBAL XAU — MASTER PROJECT MANIFEST
 
-**Manifest version:** 3.0  
-**Date:** 2026-10-05  
-**Status:** ACTIVE / CONSOLIDATED RESEARCH AUTHORITY  
-**Primary target:** XAU/USD H3 direction — next 3 retained business days, UP/DOWN  
-**Current binding direction architecture:** CLEAN HELIOS V5-DCE  
-**Primary prospective question:** Does the frozen H3 architecture retain its edge on genuinely unseen origins after 2026-10-05?  
-**Advanced shadow challenger:** DPTC V1 (Q95 and Q99 frozen; post-hoc development status)
+**Manifest version:** 3.1  
+**Effective date:** 2026-10-05  
+**Document class:** CANONICAL MASTER RESEARCH MANIFEST / DECISION AUTHORITY  
+**Scope:** Global XAU/USD short-horizon H3 direction research  
+**Evidence cutoff:** information committed through 2026-10-05  
+**Supersedes:** Manifest v3.0 and the prior long-form v2.0 narrative for current project-state interpretation
+
+| Authority item | Current state |
+|---|---|
+| Primary target | XAU/USD H3 direction — next three retained Gold observation dates, UP/DOWN |
+| Retrospective clean champion | **HELIOS V5-DCE** |
+| Prospective umbrella | **CLEAN_H3_PROSPECTIVE_V1** |
+| Prospective baseline | **CLEAN_AURORA_H3_V1_PROSPECTIVE** |
+| Prospective V5 status | **CLEAN_V5_DCE_H3_V1_PROSPECTIVE_SHADOW** |
+| Advanced competence challenger | **DPTC_H3_V1 Q95 + Q99 — frozen future shadow, post-hoc development** |
+| First eligible CLEAN prospective feature cutoff | **2026-10-05** |
+| Prospective performance | **NOT YET ESTABLISHED** |
+
+**Governance note:** “Champion”, “baseline”, “shadow” and “promotion” in this document refer to the research program. No live-trading or production authorization is implied.
 
 ---
 
@@ -45,6 +57,18 @@ Direction:
 - UP if H3 return > 0
 - DOWN otherwise.
 
+The target clock is defined on the **retained Gold observation calendar**, not on an assumed three-calendar-day interval.
+
+Binding timeline fields:
+
+| Field | Meaning |
+|---|---|
+| feature_cutoff_date | Last retained Gold observation date whose information may enter the feature set. |
+| forecast_issue_date | Next retained Gold observation date after the feature cutoff; the forecast is issued before using that date's closing information. |
+| target_end_date_h3 | Third retained Gold observation date after the feature cutoff, where the H3 outcome matures. |
+
+This clock distinction is mandatory for auditability around weekends, holidays and source delays.
+
 The current project is **not** a monthly forecasting project and is **not** the former BIST Metal Price tactical lane.
 
 The older BIST-target short-horizon program is historical evidence only. Its instrument-mapping failure led to the current Global-XAU target authority.
@@ -82,6 +106,12 @@ Every result in this project must be interpreted under one of the following evid
 
 The active historical daily metal reconstruction is the pinned public StakTrakr R2 research history, with Gold, Silver, Platinum and Palladium.
 
+Frozen R2 source reference:
+
+`54fdf1c8d39b7b6c7b874d0f30f784296e886044`
+
+This history is a **research reconstruction**, not a claim of original historical point-in-time market availability.
+
 A deep integrity audit identified one confirmed severe corrupt daily row:
 
 - 2026-02-27.
@@ -94,7 +124,11 @@ No other daily observation was confirmed corrupt under the same-semantic indepen
 
 The key new-information source is hourly XAU/USD from Twelve Data.
 
-IRIS and descendants use recent intraday path information under an explicit origin-time cutoff. This source was the major information breakthrough of the project.
+Registered historical identity:
+
+`XAU_USD_TWELVE_1H_RESEARCH_V1`
+
+IRIS and descendants use recent intraday path information under an explicit origin-time cutoff, anchored at **16:00 America/New_York** under the frozen IRIS contract. This source was the major information breakthrough of the project.
 
 ### 4.3 Auxiliary sources
 
@@ -271,7 +305,9 @@ Clean 2025-2026 combined:
 
 V5 is preferred over other recent HELIOS/OPAL variants because it combines the best clean directional result with stronger probability quality.
 
-**Current binding retrospective direction champion: HELIOS V5-DCE.**
+**Current retrospective clean direction champion: HELIOS V5-DCE.**
+
+Prospective governance is different: under `CLEAN_H3_PROSPECTIVE_V1`, CLEAN AURORA is the baseline and CLEAN V5-DCE is a shadow challenger.
 
 ---
 
@@ -648,7 +684,8 @@ The project should now be understood as a layered system rather than a single cl
 
 - guarded reversal specialists;
 - OPAL/HELIOS routing and contradiction exceptions;
-- current binding clean direction architecture.
+- current **retrospective clean champion**;
+- prospective status: **CLEAN V5-DCE shadow challenger**, not the umbrella baseline.
 
 ### Layer 4 — Rare orthogonal exceptions
 
@@ -671,31 +708,56 @@ This layer is currently **shadow research**, not promoted production authority.
 
 ## 9. Prospective governance from 2026-10-05
 
-### 9.1 Binding prospective baseline
+### 9.1 Umbrella prospective authority
 
-The clean H3 prospective experiment is frozen.
+The current clean forward experiment is:
+
+**CLEAN_H3_PROSPECTIVE_V1**
+
+Freeze date: **2026-10-03**  
+First eligible feature cutoff: **2026-10-05**
+
+Its formal hierarchy is:
+
+1. **Baseline:** CLEAN_AURORA_H3_V1_PROSPECTIVE
+2. **Shadow challenger:** CLEAN_V5_DCE_H3_V1_PROSPECTIVE_SHADOW
+
+This distinction is binding. HELIOS V5-DCE is the strongest clean retrospective architecture, but it has **not** been prospectively promoted over CLEAN AURORA.
+
+At the current evidence cutoff:
+
+- CLEAN AURORA prospective forecast rows: **0**
+- CLEAN AURORA settled rows: **0**
+- CLEAN V5 shadow forecast rows: **0**
+- CLEAN V5 shadow settled rows: **0**
+
+Therefore **prospective performance is not yet estimable**.
 
 No post-freeze outcome may be used to:
 
 - change a V1 threshold;
-- select Q95 over Q99;
-- alter source lags;
-- reconstruct a missed forecast;
-- rewrite an already-issued probability or direction.
+- alter source lags or feature timing;
+- reconstruct a missed eligible forecast after outcome information is available;
+- rewrite an already-issued probability or direction;
+- promote V5, SAGE, RuleFlow or DPTC on retrospective evidence alone.
 
 Any substantive modification requires a new named version.
 
 ### 9.2 SAGE V2 shadow governance
 
-SAGE V2 remains shadow-only until its prospective promotion conditions are met.
+SAGE V2 is a separately frozen exception-only shadow challenger whose internal comparison baseline is HELIOS V5-DCE.
 
-Historical development accuracy does not authorize deployment.
+Its historical 2025/2026 gains are development evidence. They do not change the umbrella CLEAN prospective baseline.
 
-### 9.3 DPTC governance
+### 9.3 RuleFlow V3-TG governance
 
-Both DPTC-Q95 and DPTC-Q99 remain frozen in parallel.
+RuleFlow V3-TG is a frozen post-hoc mechanism candidate for genuinely unseen origins. Its retrospective 2026 gain is not independent validation and does not create production or baseline authority.
 
-Future outcomes may compare them, but may not be used to retrospectively redefine either variant.
+### 9.4 DPTC governance
+
+Both DPTC-Q95 and DPTC-Q99 remain frozen in parallel from 2026-10-05 onward.
+
+Future outcomes may compare them, but may not be used to choose one retrospectively, redefine their thresholds or alter the trust-state logic.
 
 DPTC promotion requires genuinely prospective evidence.
 
@@ -703,35 +765,45 @@ DPTC promotion requires genuinely prospective evidence.
 
 ## 10. 5 October 2026 operational snapshot
 
-The forecast requested for the morning of 2026-10-05 uses:
+Two different clocks must be kept separate.
+
+### 10.1 CLEAN prospective experiment
+
+`CLEAN_H3_PROSPECTIVE_V1` was frozen on 2026-10-03 with:
+
+**first eligible feature cutoff = 2026-10-05**
+
+Therefore a 2026-10-02 feature-cutoff forecast is **not an eligible CLEAN prospective origin** and must not be entered as a CLEAN prospective MISS or forecast.
+
+As of the evidence cutoff, both CLEAN AURORA and CLEAN V5 shadow ledgers contain zero prospective forecasts.
+
+### 10.2 Legacy / pre-clean source state
+
+The earlier prospective infrastructure expected post-freeze metal observations from the pinned StakTrakr source, which had not advanced beyond 2026-09-29 during the 5 October review.
+
+This source lag explains why the earlier source-complete chain could not produce a normal 2026-10-02 origin forecast.
+
+That historical operational state must not be confused with the later CLEAN prospective eligibility contract.
+
+### 10.3 Separate diagnostic nowcast for the 5 October morning question
+
+To answer the user-requested 5 October morning question, a separate **diagnostic-only** run used:
 
 **feature cutoff = 2026-10-02**
 
-because the 5 October close is not available at the morning issuance time.
-
-### 10.1 Official prospective chain
-
-The official frozen StakTrakr metal source had not advanced beyond 2026-09-29.
-
-Therefore the official prospective harness correctly issued **no forecast**.
-
-This is a source-lag MISS, not a model failure.
-
-### 10.2 Diagnostic-nowcast
-
-A separate diagnostic-only run was completed successfully.
+because 5 October closing information was not available at the morning issuance time.
 
 Important provenance correction:
 
-- the JSON label says TwelveData daily spot;
-- the actual successful implementation extended the 2026-09-29 frozen spot levels using **Yahoo futures daily returns** for GC=F, SI=F, PL=F and PA=F;
+- the diagnostic JSON label says “TwelveData daily spot”;
+- the successful implementation actually preserved the frozen 2026-09-29 spot level and extended Gold/Silver/Platinum/Palladium using **Yahoo futures daily returns** from GC=F, SI=F, PL=F and PA=F;
 - Twelve Data was used for the hourly XAU extension.
 
-Therefore this output is explicitly:
+Therefore the 2 October nowcast is:
 
-**DIAGNOSTIC ONLY — NOT PROSPECTIVE EVIDENCE.**
+**DIAGNOSTIC BRIDGE ONLY — NOT CLEAN PROSPECTIVE EVIDENCE.**
 
-AURORA at 2026-10-02 cutoff:
+AURORA diagnostic output:
 
 - p(UP) = **0.30075169**;
 - direction = **DOWN**;
@@ -740,7 +812,7 @@ AURORA at 2026-10-02 cutoff:
 - h_ret_24 = -0.864%;
 - h_ret_48 = -0.360%.
 
-HELIOS V5-DCE:
+HELIOS V5-DCE diagnostic output:
 
 - direction = **DOWN**;
 - candidate_reversal = False;
@@ -750,14 +822,13 @@ HELIOS V5-DCE:
 - RGE active = False;
 - DCE exception = False.
 
-### Operational diagnostic call
+### 10.4 Diagnostic call
 
-**5 October 2026 morning direction: DOWN**
+**5 October 2026 morning diagnostic direction: DOWN**
 
-Model-internal p(DOWN) is approximately 69.9%.
+Model-internal p(DOWN) is approximately **69.9%**.
 
-This must not be entered into the prospective ledger as if it were an official source-complete forecast.
-
+This probability is a model output under the diagnostic bridge; it is not a calibrated prospective success probability and must not be included in prospective performance statistics.
 ---
 
 ## 11. Current scientific interpretation
@@ -811,11 +882,14 @@ This is the conceptual basis of DPTC.
 
 ### Binding today
 
-- **Core retrospective champion:** CLEAN HELIOS V5-DCE.
-- **Reference combined retrospective baseline:** SAGE V2 + RuleFlow V3-TG, 126/191.
-- **Best pre-2026-frozen incremental competence evidence:** SELLR, 1/1 rescue in 2026.
-- **Strongest development challenger:** DPTC-Q95, 135/191 = 70.68%.
-- **Prospective performance:** NOT YET ESTABLISHED.
+- **Retrospective clean champion:** HELIOS V5-DCE — 121/191 = 63.35% in clean 2026.
+- **Prospective umbrella:** CLEAN_H3_PROSPECTIVE_V1.
+- **Prospective baseline:** CLEAN_AURORA_H3_V1_PROSPECTIVE.
+- **Prospective V5 status:** CLEAN_V5_DCE_H3_V1_PROSPECTIVE_SHADOW.
+- **Reference combined retrospective system:** SAGE V2 + RuleFlow V3-TG — 126/191.
+- **Best pre-2026-frozen incremental competence evidence:** SELLR — 1/1 rescue in 2026.
+- **Strongest development challenger:** DPTC-Q95 — 135/191 = 70.68%.
+- **Prospective performance:** NOT YET ESTABLISHED; zero CLEAN prospective forecast/settlement rows at the evidence cutoff.
 
 ### Next work
 
@@ -892,4 +966,4 @@ If new research is opened before enough prospective evidence accumulates, it mus
 
 ## 15. Executive one-paragraph state
 
-The Global-XAU short-horizon project began with a weak daily H3 signal that failed 2025-2026 transport. Replacing the classifier did not solve the problem. The first major improvement came from genuinely new hourly XAU path information through IRIS, followed by adaptive expert routing through SENTRY, DART and AURORA. Reversal specialists then evolved into HELIOS V5-DCE, which is the current clean retrospective champion at **63.35% accuracy / 63.76% balanced accuracy in 2026**. Rare SAGE and RuleFlow exceptions raise the retrospective reference to **65.97% / 66.31%**, after which the dominant residual error becomes missed reversal. Handoff research showed that reversal alarms are not uniformly trustworthy; their competence changes with the market's cross-asset dependence structure. SELLR, BOCPD, online expert aggregation and the label-free Gold-Nasdaq/VIX Dependence Phase independently support a transition around late April-May 2026. DPTC integrates these mechanisms and reaches **70.68% accuracy / 70.86% balanced accuracy** in post-hoc development, but this is not yet prospective proof. The project is now in the **prospective validation phase**, with HELIOS V5-DCE binding and DPTC frozen as a shadow challenger.
+The Global-XAU short-horizon project began with a weak daily H3 signal that failed 2025-2026 transport. Replacing the classifier did not solve the problem. The first major improvement came from genuinely new hourly XAU path information through IRIS, followed by adaptive expert routing through SENTRY, DART and AURORA. Reversal specialists then evolved into HELIOS V5-DCE, the current **clean retrospective champion** at **63.35% accuracy / 63.76% balanced accuracy in 2026**. Rare SAGE and RuleFlow exceptions raise the retrospective reference to **65.97% / 66.31%**, after which the dominant residual error becomes missed reversal. Handoff research showed that reversal alarms are not uniformly trustworthy; their competence changes with the market's cross-asset dependence structure. SELLR, BOCPD, online expert aggregation and the label-free Gold-Nasdaq/VIX Dependence Phase independently support a transition around late April-May 2026. DPTC integrates these mechanisms and reaches **70.68% accuracy / 70.86% balanced accuracy** in post-hoc development, but this is not prospective proof. The project is now in the **prospective validation phase** under `CLEAN_H3_PROSPECTIVE_V1`: CLEAN AURORA is the formal baseline, CLEAN V5-DCE is a shadow challenger, and DPTC Q95/Q99 are frozen future shadow challengers.
