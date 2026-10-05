@@ -1,0 +1,88 @@
+{
+  "schema": "GOLD_H3_DATABENTO_YAHOO_SOURCE_BRIDGE_V1",
+  "date": "2026-10-05",
+  "dataset": "GLBX.MDP3",
+  "schema_data": "ohlcv-1h",
+  "bridge_window": [
+    "2025-01-02",
+    "2026-10-03"
+  ],
+  "estimated_cost_usd_before_download": 1.392569839954,
+  "approved_cost_ceiling_usd": 1.6,
+  "raw_vendor_values_committed": false,
+  "selection_uses_dptc_outcomes": false,
+  "frozen_yahoo_rows": 9853,
+  "databento_rows_in_memory": 67504,
+  "winners": {
+    "GC": {
+      "roll": "v",
+      "symbol": "GC.v.0",
+      "score": 1.0353049653399526,
+      "r1_corr": 0.9805722378153288,
+      "r1_sign": 0.9925434962717481,
+      "r1_mae_bps": 0.7197526789619428,
+      "r3_corr": 0.9898907953824874,
+      "r6_corr": 0.9931512806048383,
+      "coverage": 0.980107581447275,
+      "volume_log_corr": 0.9427740059496299
+    },
+    "SI": {
+      "roll": "v",
+      "symbol": "SI.v.0",
+      "score": 1.0334561696394815,
+      "r1_corr": 0.9715633899186128,
+      "r1_sign": 0.9904732318525422,
+      "r1_mae_bps": 1.3338791360939586,
+      "r3_corr": 0.9893543650107242,
+      "r6_corr": 0.9940912148849647,
+      "coverage": 0.9802090733786664,
+      "volume_log_corr": 0.9571316109173352
+    },
+    "NQ": {
+      "roll": "c",
+      "symbol": "NQ.c.0",
+      "score": 0.9889702851588381,
+      "r1_corr": 0.9787113222107174,
+      "r1_sign": 0.9893888378736864,
+      "r1_mae_bps": 0.674185556373244,
+      "r3_corr": 0.9905026628913286,
+      "r6_corr": 0.9928987297461315,
+      "coverage": 0.9948239114990358,
+      "volume_log_corr": null
+    },
+    "ZN": {
+      "roll": "c",
+      "symbol": "ZN.c.0",
+      "score": 0.9481916936235218,
+      "r1_corr": 0.9516672886216911,
+      "r1_sign": 0.9409504291020878,
+      "r1_mae_bps": 0.6233543865747639,
+      "r3_corr": 0.9823009766202112,
+      "r6_corr": 0.9889324826972583,
+      "coverage": 0.7924490003044758,
+      "volume_log_corr": null
+    },
+    "CL": {
+      "roll": "c",
+      "symbol": "CL.c.0",
+      "score": 0.9773907191495957,
+      "r1_corr": 0.9808291859617606,
+      "r1_sign": 0.9828627924859936,
+      "r1_mae_bps": 1.8498443350748852,
+      "r3_corr": 0.9838097793367174,
+      "r6_corr": 0.9852903065909903,
+      "coverage": 0.9239825433878006,
+      "volume_log_corr": null
+    }
+  },
+  "gates": {
+    "GC": false,
+    "SI": false,
+    "NQ": false,
+    "ZN": false,
+    "CL": false
+  },
+  "all_channels_strict_bridge_pass": false,
+  "status": "SOURCE_BRIDGE_REQUIRES_REVIEW",
+  "next_action": "Inspect channel-level mismatches; do not fetch/replay 2023-2024 as exact lineage yet."
+}
