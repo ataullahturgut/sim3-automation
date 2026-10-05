@@ -4954,3 +4954,47 @@ Not allowed:
 - forcing an action on UNCERTAIN days without a separately frozen rescue identity;
 - silently mixing target clocks or price sources.
 
+
+
+### 55.10 CIG-D1 extended 2026 Jan–Sep source-refresh replay (2026-10-05)
+
+A later audit established why the original CIG-D1 2026 Jan–Jul universe contained **145** days: the then-frozen StakTrakr 2026 source vintage had exactly 145 weekday Gold observations through 2026-07-31 and lacked six weekdays later restored by the clean source refresh:
+
+- 2026-02-27
+- 2026-03-02
+- 2026-03-03
+- 2026-03-04
+- 2026-03-05
+- 2026-03-06
+
+Therefore the original **125/145 consensus, 93 correct = 74.40%** remains the authority for its frozen source vintage and must not be mechanically concatenated with later-source Aug–Sep rows.
+
+A coherent replay was instead run from scratch on the later clean frozen daily-price snapshot, using the unchanged four-expert CIG rule:
+- SAGE V2 + RuleFlow V3-TG
+- HELIOS V5-DCE
+- RIFT
+- VEGA
+- 4/4 agreement only; otherwise UNCERTAIN.
+
+Refreshed replay:
+
+| Period | D1 days | Consensus N | Correct | Consensus accuracy | Coverage | Disagreement |
+|---|---:|---:|---:|---:|---:|---:|
+| Jan–Jul refreshed | 151 | 131 | 94 | 71.76% | 86.75% | 20 |
+| Aug–Sep | 40 | 26 | 18 | 69.23% | 65.00% | 14 |
+| **Jan–Sep refreshed** | **191** | **157** | **112** | **71.34%** | **82.20%** | **34** |
+
+Aug–Sep detail:
+- August: 21 D1 days; 10 consensus; 8 correct = **80.00%**; coverage **47.62%**.
+- September: 19 D1 days; 16 consensus; 10 correct = **62.50%**; coverage **84.21%**.
+- Across all 34 refreshed Jan–Sep disagreement days, a forced V5 call is **17/34 = 50.00%**, preserving the core interpretation that disagreement is an observable uncertainty state.
+
+Important governance:
+- this is **retrospective source-refresh diagnostic evidence**, not prospective OOS;
+- it does **not supersede** the original CIG-D1 V1 frozen-vintage result;
+- old-vintage Jan–Jul counts and refreshed Aug–Sep counts must not be silently mixed;
+- archived mature H3 expert states support D1 issue dates through 2026-09-25; Sep 28–30 require same-origin inference under frozen contracts rather than outcome-based imputation.
+
+Authority:
+- `GOLD_D1_CIG_V1_EXTENDED_JAN_SEP_REPLAY_2026-10-05.md`
+- `GOLD_D1_CIG_V1_EXTENDED_JAN_SEP_REPLAY_2026-10-05.csv`
