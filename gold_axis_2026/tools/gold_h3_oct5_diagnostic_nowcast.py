@@ -20,38 +20,54 @@ import gold_h3_clean_v5_prospective_v1 as cv5
 START=pd.Timestamp("2026-09-30")
 END=pd.Timestamp("2026-10-02")
 ORIGIN=pd.Timestamp("2026-10-02")
-SYMS={"gold":"XAU/USD","silver":"XAG/USD","platinum":"XPT/USD","palladium":"XPD/USD"}
+SYMS={"gold":"GC=F","silver":"SI=F","platinum":"PL=F","palladium":"PA=F"}
 
-def td_daily(symbol):
-    key=os.environ.get("TWELVE_DATA_API_KEY","").strip()
-    if not key: raise RuntimeError("TWELVE_DATA_API_KEY_MISSING")
-    params={"symbol":symbol,"interval":"1day","start_date":str(START.date()),"end_date":"2026-10-03",
-            "timezone":"America/New_York","apikey":key,"outputsize":20,"format":"JSON"}
-    r=requests.get("https://api.twelvedata.com/time_series",params=params,timeout=60)
+def yahoo_chart(symbol):
+    import time
+    p1=int(pd.Timestamp("2026-09-28",tz="UTC").timestamp())
+    p2=int(pd.Timestamp("2026-10-04",tz="UTC").timestamp())
+    url=f"https://query1.finance.yahoo.com/v8/finance/chart/{requests.utils.quote(symbol,safe='')}?period1={p1}&period2={p2}&interval=1d&events=history&includeAdjustedClose=true"
+    r=requests.get(url,headers={"User-Agent":"Mozilla/5.0"},timeout=60)
     r.raise_for_status()
     j=r.json()
-    if "values" not in j:
-        raise RuntimeError(f"TWELVE_{symbol}_FAIL {j}")
-    rows=[]
-    for x in j["values"]:
-        d=pd.to_datetime(x.get("datetime"),errors="coerce")
-        try: c=float(x.get("close"))
-        except Exception: continue
-        if pd.notna(d) and np.isfinite(c) and c>0:
-            rows.append((d.normalize(),c))
-    return dict(rows)
+    res=j.get("chart",{}).get("result")
+    if not res: raise RuntimeError(f"YAHOO_{symbol}_FAIL {j}")
+    x=res[0]; ts=x.get("timestamp") or []; q=(x.get("indicators",{}).get("quote") or [{}])[0]
+    close=q.get("close") or []
+    out={}
+    for t,c in zip(ts,close):
+        if c is None: continue
+        d=pd.Timestamp(t,unit="s",tz="UTC").tz_convert("America/New_York").tz_localize(None).normalize()
+        if np.isfinite(float(c)): out[d]=float(c)
+    return out
 
 def build_alt_prices():
-    maps={k:td_daily(v) for k,v in SYMS.items()}
-    common=sorted(set.intersection(*(set(m.keys()) for m in maps.values())))
-    common=[d for d in common if START<=d<=END]
-    if ORIGIN not in common:
-        raise RuntimeError(f"NO_COMMON_ORIGIN_{ORIGIN.date()} common={common}")
+    # Extend the frozen spot curve by futures *returns*, preserving the exact
+    # frozen 2026-09-29 spot level for every metal.
+    frozen=pd.read_csv(AX/"GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_DAILY_PRICES.csv")
+    frozen["date"]=pd.to_datetime(frozen.date)
+    anchor=frozen[frozen.date==pd.Timestamp("2026-09-29")]
+    if len(anchor)!=1: raise RuntimeError("FROZEN_20260929_ANCHOR_MISSING")
+    anchor=anchor.iloc[0]
+    fut={k:yahoo_chart(v) for k,v in SYMS.items()}
+    need=[pd.Timestamp("2026-09-29"),pd.Timestamp("2026-09-30"),pd.Timestamp("2026-10-01"),pd.Timestamp("2026-10-02")]
+    for k,m in fut.items():
+        miss=[str(d.date()) for d in need if d not in m]
+        if miss: raise RuntimeError(f"FUTURES_{k}_MISSING {miss}")
     rows=[]
-    for d in common:
-        rows.append({"date":d,**{k:maps[k][d] for k in SYMS},
-                     "first_seen_stak_ref":"TWELVE_DATA_DIAGNOSTIC_ONLY",
+    levels={k:float(anchor[k]) for k in SYMS}
+    prev=pd.Timestamp("2026-09-29")
+    for d in need[1:]:
+        for k in SYMS:
+            ret=fut[k][d]/fut[k][prev]-1.0
+            levels[k]*=(1.0+ret)
+        rows.append({"date":d,**levels,
+                     "first_seen_stak_ref":"FUTURES_RETURN_SPLICED_DIAGNOSTIC_ONLY",
                      "first_seen_at_utc":pd.Timestamp.now(tz="UTC").isoformat()})
+        prev=d
+    diag={"frozen_spot_anchor":{k:float(anchor[k]) for k in SYMS},
+          "futures_close":{k:{str(d.date()):fut[k][d] for d in need} for k in SYMS}}
+    (OUT/"ALT_SOURCE_DIAGNOSTIC.json").write_text(json.dumps(diag,indent=2)+"\n")
     return pd.DataFrame(rows).sort_values("date")
 
 def run():
