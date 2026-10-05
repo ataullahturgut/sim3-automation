@@ -947,6 +947,21 @@ This is the conceptual basis of DPTC.
 - **Strongest development challenger:** DPTC-Q95 — 135/191 = 70.68%.
 - **Prospective performance:** NOT YET ESTABLISHED; zero CLEAN prospective forecast/settlement rows at the evidence cutoff.
 
+### Historical contribution audit completed
+
+A source-level historical contribution audit was completed on 2026-10-05 and is authoritative for the question “does the latest layer add value or damage the baseline in earlier periods?”
+
+Key findings:
+
+- RuleFlow V3-TG is **not** an unconditional improvement: its fixed-rule backcast produced net **-1** in 2023 and net **-1** in 2024.
+- SAGE V2 exception-only adds **+1 net correct call in 2025** and **+4 in 2026** on its available exact source coverage.
+- DPTC Q95/Q99 are **neutral on the exact 2025 formation slice** (2 actions, 1 rescue / 1 broken) and strongly positive in 2026 development (Q95 +9; Q99 +8).
+- Exact DPTC/SAGE replay cannot be extended to 2023-2024 under the frozen identity because mandatory IFBC/LLRS source inputs begin in 2025. No proxy/synthetic replacement is permitted.
+- The evidence therefore supports a **regime/competence-conditioned controller interpretation**, not an always-on reversal rule.
+
+Authority:
+`GOLD_H3_LATEST_MODELS_HISTORICAL_CONTRIBUTION_AUDIT_2026-10-05.md`
+
 ### Next work
 
 The next phase is **not another unrestricted retrospective threshold search**.
@@ -955,10 +970,11 @@ Priority order:
 
 1. run the frozen clean prospective pipeline on every valid future origin;
 2. keep SAGE V2, RuleFlow V3-TG and both DPTC variants as separately identifiable shadow layers;
-3. record MISS rather than backfill when source timing fails;
-4. accumulate prospective action-level rescue/broken evidence;
-5. compare probability quality, direction accuracy and balanced accuracy on identical origins;
-6. promote only after a preregistered prospective evidence gate is met.
+3. preserve the completed historical contribution audit as negative/positive transport evidence;
+4. record MISS rather than backfill when source timing fails;
+5. accumulate prospective action-level rescue/broken evidence;
+6. compare probability quality, direction accuracy and balanced accuracy on identical origins;
+7. promote only after a preregistered prospective evidence gate is met.
 
 If new research is opened before enough prospective evidence accumulates, it must address a **new information/mechanism question**, not retune the consumed 2026 development period.
 
@@ -1002,6 +1018,7 @@ If new research is opened before enough prospective evidence accumulates, it mus
 - GOLD_H3_DEPENDENCE_PHASE_SHIFT_V1_RESULT_2026-10-05.md
 - GOLD_H3_DPTC_V1_DEVELOPMENT_FREEZE_2026-10-05.md
 - GOLD_H3_DPTC_V1_RESULT_2026-10-05.md
+- GOLD_H3_LATEST_MODELS_HISTORICAL_CONTRIBUTION_AUDIT_2026-10-05.md
 
 ### Latest diagnostic issuance
 
