@@ -3,6 +3,7 @@ import json, os
 from pathlib import Path
 import numpy as np
 import pandas as pd
+PDT_ORIG=pd.to_datetime
 
 ROOT=Path(__file__).resolve().parents[2]
 AX=ROOT/"gold_axis_2026"
@@ -73,7 +74,15 @@ def main():
     cv5.AURORA_LEDGER=forecast_path
     cv5.FIRST_FEATURE=FIRST
 
-    g5,md=cv5.chain(a)
+    def mixed_to_datetime(arg,*args,**kwargs):
+        if "format" not in kwargs:
+            kwargs["format"]="mixed"
+        return PDT_ORIG(arg,*args,**kwargs)
+    pd.to_datetime=mixed_to_datetime
+    try:
+        g5,md=cv5.chain(a)
+    finally:
+        pd.to_datetime=PDT_ORIG
     g5["feature_cutoff_date"]=pd.to_datetime(g5.feature_cutoff_date,errors="coerce")
     q=g5[g5.feature_cutoff_date.isin(CUTOFFS)].copy().sort_values("feature_cutoff_date")
     if len(q)!=len(CUTOFFS):
