@@ -1,0 +1,170 @@
+{
+  "schema": "GOLD_H3_YAHOO_ROLL_CONTRACT_DEFINITION_AUDIT_2025_V1",
+  "date": "2026-10-05",
+  "estimated_cost_usd": 0.025395177305000002,
+  "cost_cap_usd": 0.5,
+  "anchors": [
+    "2025-01-02",
+    "2025-04-01",
+    "2025-07-01",
+    "2025-10-01",
+    "2025-12-01"
+  ],
+  "mapped_instrument_ids": 35,
+  "needed_instrument_ids": 35,
+  "summary": {
+    "CL": {
+      "switches": 12,
+      "old_symbols": [
+        "CLG5",
+        "CLH5",
+        "CLJ5",
+        "CLK5",
+        "CLM5",
+        "CLN5",
+        "CLQ5",
+        "CLU5",
+        "CLV5",
+        "CLX5",
+        "CLZ5",
+        "CLF6"
+      ],
+      "new_symbols": [
+        "CLH5",
+        "CLJ5",
+        "CLK5",
+        "CLM5",
+        "CLN5",
+        "CLQ5",
+        "CLU5",
+        "CLV5",
+        "CLX5",
+        "CLZ5",
+        "CLF6",
+        "CLG6"
+      ],
+      "days_to_old_expiry": [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -2,
+        -1,
+        0,
+        -1,
+        -1,
+        3,
+        3
+      ],
+      "median_days_to_old_expiry": -1.0,
+      "min_days_to_old_expiry": -2,
+      "max_days_to_old_expiry": 3
+    },
+    "GC": {
+      "switches": 5,
+      "old_symbols": [
+        "GCG5",
+        "GCJ5",
+        "GCM5",
+        "GCQ5",
+        "GCZ5"
+      ],
+      "new_symbols": [
+        "GCJ5",
+        "GCM5",
+        "GCQ5",
+        "GCZ5",
+        "GCG6"
+      ],
+      "days_to_old_expiry": [
+        27,
+        31,
+        28,
+        28,
+        34
+      ],
+      "median_days_to_old_expiry": 28.0,
+      "min_days_to_old_expiry": 27,
+      "max_days_to_old_expiry": 34
+    },
+    "NQ": {
+      "switches": 4,
+      "old_symbols": [
+        "NQH5",
+        "NQM5",
+        "NQU5",
+        "NQZ5"
+      ],
+      "new_symbols": [
+        "NQM5",
+        "NQU5",
+        "NQZ5",
+        "NQH6"
+      ],
+      "days_to_old_expiry": [
+        -2,
+        -2,
+        2,
+        2
+      ],
+      "median_days_to_old_expiry": 0.0,
+      "min_days_to_old_expiry": -2,
+      "max_days_to_old_expiry": 2
+    },
+    "SI": {
+      "switches": 5,
+      "old_symbols": [
+        "SIH5",
+        "SIK5",
+        "SIN5",
+        "SIU5",
+        "SIZ5"
+      ],
+      "new_symbols": [
+        "SIK5",
+        "SIN5",
+        "SIU5",
+        "SIZ5",
+        "SIH6"
+      ],
+      "days_to_old_expiry": [
+        28,
+        29,
+        32,
+        29,
+        34
+      ],
+      "median_days_to_old_expiry": 29.0,
+      "min_days_to_old_expiry": 28,
+      "max_days_to_old_expiry": 34
+    },
+    "ZN": {
+      "switches": 4,
+      "old_symbols": [
+        "ZNH5",
+        "ZNM5",
+        "ZNU5",
+        "ZNZ5"
+      ],
+      "new_symbols": [
+        "ZNM5",
+        "ZNU5",
+        "ZNZ5",
+        "ZNH6"
+      ],
+      "days_to_old_expiry": [
+        21,
+        21,
+        23,
+        23
+      ],
+      "median_days_to_old_expiry": 22.0,
+      "min_days_to_old_expiry": 21,
+      "max_days_to_old_expiry": 23
+    }
+  },
+  "status": "CONTRACT_DEFINITIONS_MAPPED",
+  "raw_vendor_prices_committed": false,
+  "outcome_labels_used": false
+}
