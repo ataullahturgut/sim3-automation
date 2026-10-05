@@ -1,0 +1,41 @@
+name: Gold H3 Existing API Futures Recovery Probe V2
+
+on:
+  push:
+    branches: [gold-h3-oct5-diagnostic-nowcast-20261005]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_existing_api_futures_recovery_probe_v2.py'
+      - '.github/workflows/gold-h3-existing-api-futures-recovery-probe-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-oct5-diagnostic-nowcast-20261005
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.31,<3'
+      - run: python gold_axis_2026/tools/gold_h3_existing_api_futures_recovery_probe_v2.py
+      - name: Record probe evidence
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             gold_axis_2026/GOLD_H3_EXISTING_API_FUTURES_RECOVERY_PROBE_V2_2026-10-05.json             gold_axis_2026/GOLD_H3_EXISTING_API_FUTURES_RECOVERY_PROBE_V2_2026-10-05.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Record existing API futures recovery probe v2"
+            git pull --rebase origin gold-h3-oct5-diagnostic-nowcast-20261005
+            git push origin HEAD:gold-h3-oct5-diagnostic-nowcast-20261005
+          fi
