@@ -1,0 +1,43 @@
+name: Silver Short Horizon V3
+
+on:
+  push:
+    branches: [silver-short-horizon-v1-20261005]
+    paths:
+      - 'silver_axis_2026/tools/silver_short_horizon_v3.py'
+      - '.github/workflows/silver-short-horizon-v3.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: silver-short-horizon-v1-20261005
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'requests>=2.31,<3'
+      - run: python silver_axis_2026/tools/silver_short_horizon_v3.py
+      - name: Record result
+        run: |
+          cp silver_axis_2026/SILVER_SHORT_HORIZON_V3_OUT/SILVER_V3_RESULT.md silver_axis_2026/SILVER_SHORT_HORIZON_V3_RESULT_2026-10-05.md
+          cp silver_axis_2026/SILVER_SHORT_HORIZON_V3_OUT/SILVER_V3_SUMMARY.json silver_axis_2026/SILVER_SHORT_HORIZON_V3_SUMMARY_2026-10-05.json
+          cp silver_axis_2026/SILVER_SHORT_HORIZON_V3_OUT/SILVER_V3_DEV_METRICS.csv silver_axis_2026/SILVER_SHORT_HORIZON_V3_DEV_METRICS_2026-10-05.csv
+          cp silver_axis_2026/SILVER_SHORT_HORIZON_V3_OUT/SILVER_V3_TRANSPORT_METRICS.csv silver_axis_2026/SILVER_SHORT_HORIZON_V3_TRANSPORT_METRICS_2026-10-05.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add silver_axis_2026/SILVER_SHORT_HORIZON_V3_RESULT_2026-10-05.md silver_axis_2026/SILVER_SHORT_HORIZON_V3_SUMMARY_2026-10-05.json silver_axis_2026/SILVER_SHORT_HORIZON_V3_DEV_METRICS_2026-10-05.csv silver_axis_2026/SILVER_SHORT_HORIZON_V3_TRANSPORT_METRICS_2026-10-05.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "Record Silver macro-risk V3 result"
+            git pull --rebase origin silver-short-horizon-v1-20261005
+            git push origin HEAD:silver-short-horizon-v1-20261005
+          fi
