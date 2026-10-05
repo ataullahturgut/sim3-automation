@@ -1,0 +1,39 @@
+name: Silver Hourly Readiness V1
+on:
+  push:
+    branches: [silver-short-horizon-v1-20261005]
+    paths:
+      - 'silver_axis_2026/tools/silver_hourly_readiness_v1.py'
+      - '.github/workflows/silver-hourly-readiness-v1.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: silver-short-horizon-v1-20261005
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'requests>=2.31,<3' 'psycopg[binary]>=3.2,<4'
+      - run: python silver_axis_2026/tools/silver_hourly_readiness_v1.py
+      - name: Record
+        run: |
+          cp silver_axis_2026/SILVER_HOURLY_READINESS_OUT/SILVER_HOURLY_READINESS_V1.md silver_axis_2026/SILVER_HOURLY_READINESS_V1_2026-10-05.md
+          cp silver_axis_2026/SILVER_HOURLY_READINESS_OUT/SILVER_HOURLY_READINESS_V1.json silver_axis_2026/SILVER_HOURLY_READINESS_V1_2026-10-05.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add silver_axis_2026/SILVER_HOURLY_READINESS_V1_2026-10-05.md silver_axis_2026/SILVER_HOURLY_READINESS_V1_2026-10-05.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record Silver hourly readiness"
+            git pull --rebase origin silver-short-horizon-v1-20261005
+            git push origin HEAD:silver-short-horizon-v1-20261005
+          fi
