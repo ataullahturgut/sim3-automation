@@ -1,0 +1,36 @@
+{
+  "schema": "GOLD_H3_DPTC_CHANGEPOINT_CORRECTION_V1_1",
+  "date": "2026-10-05",
+  "correction": "Supersedes the invalid V1 2026-only changepoint that re-estimated scale on an empty pre-2026 subset.",
+  "shift_vector_2026": {
+    "date": "2026-03-17",
+    "score": 36.71338740776677,
+    "block_permutation_p": 0.04695304695304695,
+    "n": 190,
+    "columns": [
+      "spd_shift",
+      "energy_shift",
+      "tail_shift",
+      "te_shift",
+      "leadlag_shift",
+      "eig1_share"
+    ]
+  },
+  "topology_state_vector_2026": {
+    "date": "2026-03-09",
+    "score": 35.06356104946166,
+    "block_permutation_p": 0.000999000999000999,
+    "n": 190,
+    "columns": [
+      "corr_gc_nq",
+      "corr_gc_zn",
+      "corr_gc_cl",
+      "corr_gc_si",
+      "eig1_share",
+      "r_gn",
+      "r_gv"
+    ]
+  },
+  "calibration": "robust center/scale frozen on all pre-2026 origins",
+  "outcome_labels_used": false
+}
