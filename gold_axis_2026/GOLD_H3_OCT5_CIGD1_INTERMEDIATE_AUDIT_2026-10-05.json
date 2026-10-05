@@ -1,0 +1,34 @@
+{
+  "status": "DIAGNOSTIC_ONLY_INTERMEDIATE_EXPERT_AUDIT",
+  "feature_cutoff_date": "2026-10-02",
+  "planned_issue_date": "2026-10-05",
+  "aurora": {
+    "p_up": 0.3007516899977626,
+    "direction": "DOWN"
+  },
+  "v5": {
+    "p_up": 0.3007516899977626,
+    "direction": "DOWN",
+    "aurora_direction": "DOWN",
+    "changed_from_aurora": false,
+    "candidate_reversal": false,
+    "opal_override": false,
+    "p_opal_reversal": 0.6406759038527293,
+    "gt_flip_share": 0.0459619369887536,
+    "v4_route": false,
+    "rge_active": false,
+    "dce_exception": false
+  },
+  "rift": {
+    "p_reversal": 0.5562750954987551,
+    "override": false,
+    "p_up": 0.3007516899977626,
+    "direction": "DOWN"
+  },
+  "vega": {
+    "p_reversal": 0.46319440503227666,
+    "override": false,
+    "p_up": 0.3007516899977626,
+    "direction": "DOWN"
+  }
+}
