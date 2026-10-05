@@ -1,0 +1,2730 @@
+{
+  "searches": [
+    {
+      "query": "GC",
+      "label": "gold futures",
+      "http": 200,
+      "rows": 50,
+      "top": [
+        {
+          "symbol": "GC",
+          "instrument_name": "Global Connections Public Company Limited",
+          "exchange": "SET",
+          "mic_code": "XBKK",
+          "exchange_timezone": "Asia/Bangkok",
+          "instrument_type": "Common Stock",
+          "country": "Thailand",
+          "currency": "THB"
+        },
+        {
+          "symbol": "GC",
+          "instrument_name": "Goldcana Resources Inc.",
+          "exchange": "CSE",
+          "mic_code": "XCNQ",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "Common Stock",
+          "country": "Canada",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "GC",
+          "instrument_name": "Goldcana Resources Inc.",
+          "exchange": "NEO",
+          "mic_code": "NEOE",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "Common Stock",
+          "country": "Canada",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "GCT",
+          "instrument_name": "Greencoat Renewables Plc Ord Eur0.01 (Cdi)",
+          "exchange": "JSE",
+          "mic_code": "XJSE",
+          "exchange_timezone": "Africa/Johannesburg",
+          "instrument_type": "Closed-end Fund",
+          "country": "South Africa",
+          "currency": "ZAc"
+        },
+        {
+          "symbol": "GCT",
+          "instrument_name": "G City Ltd.",
+          "exchange": "TASE",
+          "mic_code": "XTAE",
+          "exchange_timezone": "Asia/Jerusalem",
+          "instrument_type": "Common Stock",
+          "country": "Israel",
+          "currency": "ILA"
+        },
+        {
+          "symbol": "GCSL",
+          "instrument_name": "Gretex Corporate Services Limited",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "GC1",
+          "instrument_name": "Glennon Small Companies Limited",
+          "exchange": "CXA",
+          "mic_code": "CXAC",
+          "exchange_timezone": "Australia/Sydney",
+          "instrument_type": "Closed-end Fund",
+          "country": "Australia",
+          "currency": "AUD"
+        },
+        {
+          "symbol": "GC1",
+          "instrument_name": "Glennon Small Companies Limited",
+          "exchange": "ASX",
+          "mic_code": "XASX",
+          "exchange_timezone": "Australia/Sydney",
+          "instrument_type": "Closed-end Fund",
+          "country": "Australia",
+          "currency": "AUD"
+        },
+        {
+          "symbol": "GC1PA",
+          "instrument_name": "Glennon Small Companies Ltd",
+          "exchange": "ASX",
+          "mic_code": "XASX",
+          "exchange_timezone": "Australia/Sydney",
+          "instrument_type": "Common Stock",
+          "country": "Australia",
+          "currency": "AUD"
+        },
+        {
+          "symbol": "GC3",
+          "instrument_name": "Novonix Ltd.",
+          "exchange": "XSTU",
+          "mic_code": "XSTU",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GC3",
+          "instrument_name": "Novonix Ltd.",
+          "exchange": "FSX",
+          "mic_code": "XFRA",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GC3",
+          "instrument_name": "Novonix Ltd.",
+          "exchange": "XDUS",
+          "mic_code": "XDUS",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GC3",
+          "instrument_name": "GC3",
+          "exchange": "XHAN",
+          "mic_code": "XHAN",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GC30",
+          "instrument_name": "Novonix Ltd. Sponsored ADR",
+          "exchange": "FSX",
+          "mic_code": "XFRA",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "American Depositary Receipt",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GC30",
+          "instrument_name": "Novonix Ltd. Sponsored ADR",
+          "exchange": "XDUS",
+          "mic_code": "XDUS",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "American Depositary Receipt",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GC30",
+          "instrument_name": "Novonix Ltd. Sponsored ADR",
+          "exchange": "XSTU",
+          "mic_code": "XSTU",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "American Depositary Receipt",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GC6",
+          "instrument_name": "Primo Water Corporation",
+          "exchange": "FSX",
+          "mic_code": "XFRA",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GC6",
+          "instrument_name": "AGI Inc Class A Common Stock",
+          "exchange": "XDUS",
+          "mic_code": "XDUS",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GCB",
+          "instrument_name": "Ptt Global Chemical PCL",
+          "exchange": "FSX",
+          "mic_code": "XFRA",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GCB",
+          "instrument_name": "Ptt Global Chemical PCL",
+          "exchange": "XSTU",
+          "mic_code": "XSTU",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GCB1",
+          "instrument_name": "PTT Global Chemical Public Company Limited",
+          "exchange": "FSX",
+          "mic_code": "XFRA",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Depositary Receipt",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GCB1",
+          "instrument_name": "PTT Global Chemical Public Company Limited",
+          "exchange": "Munich",
+          "mic_code": "XMUN",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Depositary Receipt",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GCBC",
+          "instrument_name": "Greene County Bancorp Inc.",
+          "exchange": "NASDAQ",
+          "mic_code": "XNCM",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "GCBC",
+          "instrument_name": "Greene County Bancorp Inc.",
+          "exchange": "IEX",
+          "mic_code": "IEXG",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "GCBD",
+          "instrument_name": "Guardian Canadian Bond ETF",
+          "exchange": "NEO",
+          "mic_code": "NEOE",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "ETF",
+          "country": "Canada",
+          "currency": "CAD"
+        }
+      ]
+    },
+    {
+      "query": "GOLD",
+      "label": "gold futures",
+      "http": 200,
+      "rows": 50,
+      "top": [
+        {
+          "symbol": "GOLD",
+          "instrument_name": "Gold.com Inc.",
+          "exchange": "NYSE",
+          "mic_code": "XNYS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "GOLD",
+          "instrument_name": "Global X Physical Gold Structured",
+          "exchange": "ASX",
+          "mic_code": "XASX",
+          "exchange_timezone": "Australia/Sydney",
+          "instrument_type": "ETF",
+          "country": "Australia",
+          "currency": "AUD"
+        },
+        {
+          "symbol": "GOLD",
+          "instrument_name": "Visi Telekomunikasi Infrastruktur",
+          "exchange": "IDX",
+          "mic_code": "XIDX",
+          "exchange_timezone": "Asia/Jakarta",
+          "instrument_type": "Common Stock",
+          "country": "Indonesia",
+          "currency": "IDR"
+        },
+        {
+          "symbol": "GOLD",
+          "instrument_name": "Amundi Physical Gold ETC",
+          "exchange": "Euronext",
+          "mic_code": "XPAR",
+          "exchange_timezone": "Europe/Paris",
+          "instrument_type": "ETF",
+          "country": "France",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GOLD",
+          "instrument_name": "Amundi Physical Gold ETC",
+          "exchange": "Euronext",
+          "mic_code": "XAMS",
+          "exchange_timezone": "Europe/Amsterdam",
+          "instrument_type": "ETF",
+          "country": "Netherlands",
+          "currency": "USD"
+        },
+        {
+          "symbol": "GOLD",
+          "instrument_name": "Amundi Physical Gold ETC",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "ETF",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GOLD",
+          "instrument_name": "Global X Physical Gold Structured",
+          "exchange": "CXA",
+          "mic_code": "CXAC",
+          "exchange_timezone": "Australia/Sydney",
+          "instrument_type": "ETF",
+          "country": "Australia",
+          "currency": "AUD"
+        },
+        {
+          "symbol": "GOLD",
+          "instrument_name": "Gold Bond Group Ltd.",
+          "exchange": "TASE",
+          "mic_code": "XTAE",
+          "exchange_timezone": "Asia/Jerusalem",
+          "instrument_type": "Common Stock",
+          "country": "Israel",
+          "currency": "ILA"
+        },
+        {
+          "symbol": "GOLD",
+          "instrument_name": "GoldMining Inc.",
+          "exchange": "TSX",
+          "mic_code": "XTSE",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "Common Stock",
+          "country": "Canada",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "GOLD",
+          "instrument_name": "Euwax Gold Fund",
+          "exchange": "XSTU",
+          "mic_code": "XSTU",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "ETF",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "GOLD",
+          "instrument_name": "Invesco Physical Gold II ETC",
+          "exchange": "LSE",
+          "mic_code": "XLON",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "USD"
+        },
+        {
+          "symbol": "GOLD",
+          "instrument_name": "GoldMining Inc.",
+          "exchange": "NEO",
+          "mic_code": "NEOE",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "Common Stock",
+          "country": "Canada",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "GOLD",
+          "instrument_name": "Gold.com Inc.",
+          "exchange": "IEX",
+          "mic_code": "IEXG",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "GOLDBEES",
+          "instrument_name": "Nippon India ETF Gold BeES",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "GOLDIETF",
+          "instrument_name": "ICICI Prudential Gold ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "GOLD1",
+          "instrument_name": "Kotak Gold ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "GOLDCASE",
+          "instrument_name": "Zerodha Gold ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "GOLDETF",
+          "instrument_name": "Mirae Asset Gold ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "GOLDAXIS",
+          "instrument_name": "GOLDAXIS",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "GOLDIAM",
+          "instrument_name": "Goldiam International Ltd.",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "GOLDBETA",
+          "instrument_name": "GOLDBETA",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "GOLDBEES",
+          "instrument_name": "Nippon India ETF Gold BeES",
+          "exchange": "BSE",
+          "mic_code": "XBOM",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "GOLDA",
+          "instrument_name": "Golda G\u0131da Sanayi ve Ticaret A.\u015e.",
+          "exchange": "BIST",
+          "mic_code": "XIST",
+          "exchange_timezone": "Europe/Istanbul",
+          "instrument_type": "Common Stock",
+          "country": "Turkey",
+          "currency": "TRY"
+        },
+        {
+          "symbol": "GOLD1",
+          "instrument_name": "Kotak Gold ETF",
+          "exchange": "BSE",
+          "mic_code": "XBOM",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "GOLD11",
+          "instrument_name": "Trend ETF LBMA Ouro",
+          "exchange": "Bovespa",
+          "mic_code": "BVMF",
+          "exchange_timezone": "America/Paramaribo",
+          "instrument_type": "ETF",
+          "country": "Brazil",
+          "currency": "BRL"
+        }
+      ]
+    },
+    {
+      "query": "SI",
+      "label": "silver futures",
+      "http": 200,
+      "rows": 50,
+      "top": [
+        {
+          "symbol": "SI",
+          "instrument_name": "Shoulder Innovations, Inc.",
+          "exchange": "NYSE",
+          "mic_code": "XNYS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "SI",
+          "instrument_name": "Silicon Metals Corp.",
+          "exchange": "CSE",
+          "mic_code": "XCNQ",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "Common Stock",
+          "country": "Canada",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "SI",
+          "instrument_name": "Shoulder Innovations, Inc.",
+          "exchange": "IEX",
+          "mic_code": "IEXG",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "SI",
+          "instrument_name": "Silvergate Capital Corporation",
+          "exchange": "BMV",
+          "mic_code": "XMEX",
+          "exchange_timezone": "America/Swift_Current",
+          "instrument_type": "Common Stock",
+          "country": "Mexico",
+          "currency": "MXN"
+        },
+        {
+          "symbol": "SINI",
+          "instrument_name": "Singaraja Putra Tbk.",
+          "exchange": "IDX",
+          "mic_code": "XIDX",
+          "exchange_timezone": "Asia/Jakarta",
+          "instrument_type": "Common Stock",
+          "country": "Indonesia",
+          "currency": "IDR"
+        },
+        {
+          "symbol": "SIS_P",
+          "instrument_name": "Grupo de Inversiones Suramericana SA Preferred",
+          "exchange": "BVC",
+          "mic_code": "XBOG",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "Colombia",
+          "currency": "COP"
+        },
+        {
+          "symbol": "SIDO",
+          "instrument_name": "Industri Jamu dan Farmasi Sido Muncul Tbk.",
+          "exchange": "IDX",
+          "mic_code": "XIDX",
+          "exchange_timezone": "Asia/Jakarta",
+          "instrument_type": "Common Stock",
+          "country": "Indonesia",
+          "currency": "IDR"
+        },
+        {
+          "symbol": "SIMP",
+          "instrument_name": "Salim Ivomas Pratama Tbk.",
+          "exchange": "IDX",
+          "mic_code": "XIDX",
+          "exchange_timezone": "Asia/Jakarta",
+          "instrument_type": "Common Stock",
+          "country": "Indonesia",
+          "currency": "IDR"
+        },
+        {
+          "symbol": "SILVERBEES",
+          "instrument_name": "Nippon India Silver ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SIS",
+          "instrument_name": "Grupo de Inversiones Suramericana SA",
+          "exchange": "BVC",
+          "mic_code": "XBOG",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "Colombia",
+          "currency": "COP"
+        },
+        {
+          "symbol": "SISE",
+          "instrument_name": "Turk Sise ve Cam Fabrikalari A.S.",
+          "exchange": "BIST",
+          "mic_code": "XIST",
+          "exchange_timezone": "Europe/Istanbul",
+          "instrument_type": "Common Stock",
+          "country": "Turkey",
+          "currency": "TRY"
+        },
+        {
+          "symbol": "SIEMENS",
+          "instrument_name": "Siemens Ltd.",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SIBN",
+          "instrument_name": "Gazprom Neft PJSC",
+          "exchange": "MOEX",
+          "mic_code": "MISX",
+          "exchange_timezone": "Europe/Moscow",
+          "instrument_type": "Common Stock",
+          "country": "Russia",
+          "currency": "RUB"
+        },
+        {
+          "symbol": "SIGMAADV",
+          "instrument_name": "Sigma Advanced Systems Limited",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERIETF",
+          "instrument_name": "ICICI Prudential Silver ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SIE",
+          "instrument_name": "Siemens Aktiengesellschaft",
+          "exchange": "XETR",
+          "mic_code": "XETR",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "SITM",
+          "instrument_name": "SiTime Corporation",
+          "exchange": "NASDAQ",
+          "mic_code": "XNMS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "SICO",
+          "instrument_name": "Sigma Energy Compressindo Tbk",
+          "exchange": "IDX",
+          "mic_code": "XIDX",
+          "exchange_timezone": "Asia/Jakarta",
+          "instrument_type": "Common Stock",
+          "country": "Indonesia",
+          "currency": "IDR"
+        },
+        {
+          "symbol": "SIVE",
+          "instrument_name": "Sivers Semiconductors AB (publ)",
+          "exchange": "OMX",
+          "mic_code": "XSTO",
+          "exchange_timezone": "Europe/Stockholm",
+          "instrument_type": "Common Stock",
+          "country": "Sweden",
+          "currency": "SEK"
+        },
+        {
+          "symbol": "SIVR",
+          "instrument_name": "abrdn Physical Silver Shares ETF",
+          "exchange": "NYSE",
+          "mic_code": "ARCX",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "ETF",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "SILVER1",
+          "instrument_name": "Kotak Silver ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SIGMAFA",
+          "instrument_name": "Sigma Alimentos, S.A. de C.V.",
+          "exchange": "BMV",
+          "mic_code": "XMEX",
+          "exchange_timezone": "America/Swift_Current",
+          "instrument_type": "Common Stock",
+          "country": "Mexico",
+          "currency": "MXN"
+        },
+        {
+          "symbol": "SIMO",
+          "instrument_name": "Silicon Motion Technology Corp. ADR",
+          "exchange": "NASDAQ",
+          "mic_code": "XNGS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "American Depositary Receipt",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "SIMPLEXINF",
+          "instrument_name": "Simplex Infrastructures Ltd.",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SIGNATURE",
+          "instrument_name": "Signatureglobal India Ltd.",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        }
+      ]
+    },
+    {
+      "query": "SILVER",
+      "label": "silver futures",
+      "http": 200,
+      "rows": 50,
+      "top": [
+        {
+          "symbol": "SILVER",
+          "instrument_name": "Aditya Birla Sun Life Silver ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVER",
+          "instrument_name": "Aditya Birla Sun Life Silver ETF",
+          "exchange": "BSE",
+          "mic_code": "XBOM",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERBEES",
+          "instrument_name": "Nippon India Silver ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERIETF",
+          "instrument_name": "ICICI Prudential Silver ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVER1",
+          "instrument_name": "Kotak Silver ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERBEES",
+          "instrument_name": "Nippon India Silver ETF",
+          "exchange": "BSE",
+          "mic_code": "XBOM",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERBETA",
+          "instrument_name": "SILVERBETA",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERCASE",
+          "instrument_name": "Zerodha Silver ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERO",
+          "instrument_name": "Silveroak Commercial Ltd.",
+          "exchange": "BSE",
+          "mic_code": "XBOM",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERAG",
+          "instrument_name": "Mirae Asset Silver ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERAG",
+          "instrument_name": "Mirae Asset Silver ETF",
+          "exchange": "BSE",
+          "mic_code": "XBOM",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERADD",
+          "instrument_name": "DSP Silver ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERADD",
+          "instrument_name": "DSP Silver ETF",
+          "exchange": "BSE",
+          "mic_code": "XBOM",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERAXIS",
+          "instrument_name": "SILVERAXIS",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVER001",
+          "instrument_name": "Quant Silver ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVER360",
+          "instrument_name": "360 ONE Silver ETF",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVER360",
+          "instrument_name": "360 One Silver ETF-Regular",
+          "exchange": "BSE",
+          "mic_code": "XBOM",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERBND",
+          "instrument_name": "SILVERBND",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERBND",
+          "instrument_name": "SILVERBND",
+          "exchange": "BSE",
+          "mic_code": "XBOM",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERBETA",
+          "instrument_name": "SILVERBETA",
+          "exchange": "BSE",
+          "mic_code": "XBOM",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERPRL",
+          "instrument_name": "Silver Pearl Hospitality & Lux",
+          "exchange": "BSE",
+          "mic_code": "XBOM",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERTUC",
+          "instrument_name": "Silver Touch Technologies Ltd.",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERTUC",
+          "instrument_name": "Silver Touch Technologies Ltd.",
+          "exchange": "BSE",
+          "mic_code": "XBOM",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERCASE",
+          "instrument_name": "Zerodha Silver ETF",
+          "exchange": "BSE",
+          "mic_code": "XBOM",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "SILVERIETF",
+          "instrument_name": "ICICI Prudential Silver Exchange Traded Fund",
+          "exchange": "BSE",
+          "mic_code": "XBOM",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "ETF",
+          "country": "India",
+          "currency": "INR"
+        }
+      ]
+    },
+    {
+      "query": "NQ",
+      "label": "nasdaq futures",
+      "http": 200,
+      "rows": 50,
+      "top": [
+        {
+          "symbol": "NQ0",
+          "instrument_name": "Sasquatch Resources Corp.",
+          "exchange": "FSX",
+          "mic_code": "XFRA",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQ08",
+          "instrument_name": "Erste Group Bank AG",
+          "exchange": "VSE",
+          "mic_code": "XWBO",
+          "exchange_timezone": "Europe/Vienna",
+          "instrument_type": "Common Stock",
+          "country": "Austria",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQ9",
+          "instrument_name": "Nexity SA",
+          "exchange": "XSTU",
+          "mic_code": "XSTU",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQ9",
+          "instrument_name": "Nexity SA",
+          "exchange": "Munich",
+          "mic_code": "XMUN",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQ9",
+          "instrument_name": "Nexity SA",
+          "exchange": "XDUS",
+          "mic_code": "XDUS",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQ9",
+          "instrument_name": "Nexity SA",
+          "exchange": "FSX",
+          "mic_code": "XFRA",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQ9",
+          "instrument_name": "NQ9",
+          "exchange": "XHAN",
+          "mic_code": "XHAN",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQA",
+          "instrument_name": "NOTE AB (publ)",
+          "exchange": "Munich",
+          "mic_code": "XMUN",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQA",
+          "instrument_name": "NOTE AB (publ)",
+          "exchange": "FSX",
+          "mic_code": "XFRA",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQA",
+          "instrument_name": "NOTE AB (publ)",
+          "exchange": "XDUS",
+          "mic_code": "XDUS",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQAKPXX",
+          "instrument_name": "NBC Auto Callable CBK AR5 DSC (880766A2)",
+          "exchange": "NASDAQ",
+          "mic_code": "XNMS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Mutual Fund",
+          "country": "United States",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "NQC",
+          "instrument_name": "NQC",
+          "exchange": "TSXV",
+          "mic_code": "XTSX",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "Common Stock",
+          "country": "Canada",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "NQC",
+          "instrument_name": "Nordique Critical Metals Inc.",
+          "exchange": "NEO",
+          "mic_code": "NEOE",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "Common Stock",
+          "country": "Canada",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "NQCAX",
+          "instrument_name": "Nuveen Large Cap Value Opportunities Fund Class A",
+          "exchange": "NASDAQ",
+          "mic_code": "XNMS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Mutual Fund",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "NQCCX",
+          "instrument_name": "Nuveen Large Cap Value Opportunities Fund Class C",
+          "exchange": "NASDAQ",
+          "mic_code": "XNMS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Mutual Fund",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "NQCFX",
+          "instrument_name": "NorthQuest Capital Fund Inc.",
+          "exchange": "NASDAQ",
+          "mic_code": "XNMS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Mutual Fund",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "NQCRX",
+          "instrument_name": "Nuveen Large Cap Value Opportunities Fund Class I",
+          "exchange": "NASDAQ",
+          "mic_code": "XNMS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Mutual Fund",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "NQCZIXX",
+          "instrument_name": "NBC Canadian Banks (5% AR) Flex GIC, series 84F NL (877816A2)",
+          "exchange": "NASDAQ",
+          "mic_code": "XNMS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Mutual Fund",
+          "country": "United States",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "NQG",
+          "instrument_name": "Monolithic Power Systems Inc.",
+          "exchange": "XETR",
+          "mic_code": "XETR",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQG",
+          "instrument_name": "Monolithic Power Systems Inc.",
+          "exchange": "XSTU",
+          "mic_code": "XSTU",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQG",
+          "instrument_name": "Monolithic Power Systems Inc.",
+          "exchange": "FSX",
+          "mic_code": "XFRA",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQG",
+          "instrument_name": "Monolithic Power Systems Inc.",
+          "exchange": "XDUS",
+          "mic_code": "XDUS",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQG",
+          "instrument_name": "Monolithic Power Systems Inc.",
+          "exchange": "Munich",
+          "mic_code": "XMUN",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NQGAX",
+          "instrument_name": "Nuveen Global Equity Income Fund Class A",
+          "exchange": "NASDAQ",
+          "mic_code": "XNAS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Mutual Fund",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "NQGCX",
+          "instrument_name": "Nuveen Global Equity Income Fund Class C",
+          "exchange": "NASDAQ",
+          "mic_code": "XNAS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Mutual Fund",
+          "country": "United States",
+          "currency": "USD"
+        }
+      ]
+    },
+    {
+      "query": "NASDAQ",
+      "label": "nasdaq futures",
+      "http": 200,
+      "rows": 50,
+      "top": [
+        {
+          "symbol": "N1DA34",
+          "instrument_name": "Nasdaq, Inc.",
+          "exchange": "Bovespa",
+          "mic_code": "BVMF",
+          "exchange_timezone": "America/Paramaribo",
+          "instrument_type": "Depositary Receipt",
+          "country": "Brazil",
+          "currency": "BRL"
+        },
+        {
+          "symbol": "NDQ3S",
+          "instrument_name": "SG ETN Daily Short -3x Nasdaq",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "ETF",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "NDQ3L",
+          "instrument_name": "SG ETN Daily Long +3x Nasdaq",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "ETF",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "133690",
+          "instrument_name": "Mirae Asset TIGER USA NASDAQ Mutual Fund",
+          "exchange": "KRX",
+          "mic_code": "XKRX",
+          "exchange_timezone": "Asia/Seoul",
+          "instrument_type": "ETF",
+          "country": "South Korea",
+          "currency": "KRW"
+        },
+        {
+          "symbol": "CFINASDAQ",
+          "instrument_name": "Fondo de Inversi\u00f3n ETF Singular Nasdaq 100",
+          "exchange": "BVS",
+          "mic_code": "XSGO",
+          "exchange_timezone": "America/Santiago",
+          "instrument_type": "ETF",
+          "country": "Chile",
+          "currency": "CLP"
+        },
+        {
+          "symbol": "TCH.F77",
+          "instrument_name": "Tachlit Sal Nasdaq 100",
+          "exchange": "TASE",
+          "mic_code": "XTAE",
+          "exchange_timezone": "Asia/Jerusalem",
+          "instrument_type": "ETF",
+          "country": "Israel",
+          "currency": "ILA"
+        },
+        {
+          "symbol": "009800",
+          "instrument_name": "CTBC NASDAQ 100",
+          "exchange": "TWSE",
+          "mic_code": "XTAI",
+          "exchange_timezone": "Asia/Taipei",
+          "instrument_type": "ETF",
+          "country": "Taiwan",
+          "currency": "TWD"
+        },
+        {
+          "symbol": "F94021",
+          "instrument_name": "Bank Vontobel AG Warrant on NASDAQ 100",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "Warrant",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "F94297",
+          "instrument_name": "Vontobel Put Warrant on NASDAQ 100",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "Warrant",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "P2TG44",
+          "instrument_name": "BNP Paribas Put Warrant on Nasdaq 100",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "Warrant",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "F97592",
+          "instrument_name": "Vontobel Call Warrant on Nasdaq 100",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "Warrant",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "379810",
+          "instrument_name": "SS KODEX US NASDAQ 100 Total Return ETF",
+          "exchange": "KRX",
+          "mic_code": "XKRX",
+          "exchange_timezone": "Asia/Seoul",
+          "instrument_type": "ETF",
+          "country": "South Korea",
+          "currency": "KRW"
+        },
+        {
+          "symbol": "580077",
+          "instrument_name": "KB Securities KB Inverse 2X U.S. NASDAQ 100 Total Return Exchange Traded Note",
+          "exchange": "KRX",
+          "mic_code": "XKRX",
+          "exchange_timezone": "Asia/Seoul",
+          "instrument_type": "ETF",
+          "country": "South Korea",
+          "currency": "KRW"
+        },
+        {
+          "symbol": "QTOP.EUR",
+          "instrument_name": "iSh Nasdaq 100 Top 30 UCITS ETF",
+          "exchange": "Euronext",
+          "mic_code": "XPAR",
+          "exchange_timezone": "Europe/Paris",
+          "instrument_type": "ETF",
+          "country": "France",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "HX60",
+          "instrument_name": "iShares Nasdaq 100 Top 30 UCITS ETF USD (Acc)",
+          "exchange": "XETR",
+          "mic_code": "XETR",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "ETF",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "QTOP",
+          "instrument_name": "iShares Nasdaq 100 Top 30 UCITS ETF USD (Acc)",
+          "exchange": "Euronext",
+          "mic_code": "XAMS",
+          "exchange_timezone": "Europe/Amsterdam",
+          "instrument_type": "ETF",
+          "country": "Netherlands",
+          "currency": "USD"
+        },
+        {
+          "symbol": "QTOP",
+          "instrument_name": "iShares Nasdaq 100 Top 30 UCITS ETF USD (Acc)",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "ETF",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "QTOPUN",
+          "instrument_name": "iShares Nasdaq 100 Top 30 UCITS ETF USD (Acc)",
+          "exchange": "BMV",
+          "mic_code": "XMEX",
+          "exchange_timezone": "America/Swift_Current",
+          "instrument_type": "ETF",
+          "country": "Mexico",
+          "currency": "MXN"
+        },
+        {
+          "symbol": "HX60",
+          "instrument_name": "iShares Nasdaq 100 Top 30 UCITS ETF USD (Acc)",
+          "exchange": "Munich",
+          "mic_code": "XMUN",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "ETF",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "HX60",
+          "instrument_name": "iShares Nasdaq 100 Top 30 UCITS ETF USD (Acc)",
+          "exchange": "XDUS",
+          "mic_code": "XDUS",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "ETF",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "HX60",
+          "instrument_name": "iShares Nasdaq 100 Top 30 UCITS ETF USD (Acc)",
+          "exchange": "XHAM",
+          "mic_code": "XHAM",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "ETF",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "QTOP",
+          "instrument_name": "iShares Nasdaq 100 Top 30 UCITS ETF USD (Acc)",
+          "exchange": "SIX",
+          "mic_code": "XSWX",
+          "exchange_timezone": "Europe/Zurich",
+          "instrument_type": "ETF",
+          "country": "Switzerland",
+          "currency": "CHF"
+        },
+        {
+          "symbol": "435420",
+          "instrument_name": "Ma Tiger Nasdaq 100 Tr Bal ETF",
+          "exchange": "KRX",
+          "mic_code": "XKRX",
+          "exchange_timezone": "Asia/Seoul",
+          "instrument_type": "ETF",
+          "country": "South Korea",
+          "currency": "KRW"
+        },
+        {
+          "symbol": "448300",
+          "instrument_name": "Ma Tiger Nasdaq 100 Tr Etf H",
+          "exchange": "KRX",
+          "mic_code": "XKRX",
+          "exchange_timezone": "Asia/Seoul",
+          "instrument_type": "ETF",
+          "country": "South Korea",
+          "currency": "KRW"
+        },
+        {
+          "symbol": "009818",
+          "instrument_name": "HANetf Nasdaq 100 Technology ETF",
+          "exchange": "TWSE",
+          "mic_code": "XTAI",
+          "exchange_timezone": "Asia/Taipei",
+          "instrument_type": "ETF",
+          "country": "Taiwan",
+          "currency": "TWD"
+        }
+      ]
+    },
+    {
+      "query": "ZN",
+      "label": "10y treasury futures",
+      "http": 200,
+      "rows": 50,
+      "top": [
+        {
+          "symbol": "ZNQ",
+          "instrument_name": "BMO Nasdaq 100 Equity Index ETF",
+          "exchange": "NEO",
+          "mic_code": "NEOE",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "ETF",
+          "country": "Canada",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "ZN0",
+          "instrument_name": "ZN0",
+          "exchange": "XHAN",
+          "mic_code": "XHAN",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "ZN0",
+          "instrument_name": "GuideAI Health Corp.",
+          "exchange": "FSX",
+          "mic_code": "XFRA",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "ZN0",
+          "instrument_name": "GuideAI Health Corp.",
+          "exchange": "Munich",
+          "mic_code": "XMUN",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "ZN2",
+          "instrument_name": "Wegrow AG",
+          "exchange": "FSX",
+          "mic_code": "XFRA",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "ZN2",
+          "instrument_name": "Wegrow AG",
+          "exchange": "XDUS",
+          "mic_code": "XDUS",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "ZN2",
+          "instrument_name": "Wegrow AG",
+          "exchange": "XETR",
+          "mic_code": "XETR",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "ZN6",
+          "instrument_name": "Games Box S.A.",
+          "exchange": "FSX",
+          "mic_code": "XFRA",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "ZN7",
+          "instrument_name": "YE Digital Corp.",
+          "exchange": "FSX",
+          "mic_code": "XFRA",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "Common Stock",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "ZNB",
+          "instrument_name": "Color Star Technology Co., Ltd.",
+          "exchange": "NASDAQ",
+          "mic_code": "XNMS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "ZNB",
+          "instrument_name": "Zeta Network Group Class A Ordinary Shares",
+          "exchange": "IEX",
+          "mic_code": "IEXG",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "ZNC",
+          "instrument_name": "Zenith Minerals Limited",
+          "exchange": "ASX",
+          "mic_code": "XASX",
+          "exchange_timezone": "Australia/Sydney",
+          "instrument_type": "Common Stock",
+          "country": "Australia",
+          "currency": "AUD"
+        },
+        {
+          "symbol": "ZNC",
+          "instrument_name": "Zenith Minerals Limited",
+          "exchange": "CXA",
+          "mic_code": "CXAC",
+          "exchange_timezone": "Australia/Sydney",
+          "instrument_type": "Common Stock",
+          "country": "Australia",
+          "currency": "AUD"
+        },
+        {
+          "symbol": "ZNCXF",
+          "instrument_name": "ZincX Resources Corp",
+          "exchange": "OTC",
+          "mic_code": "PINX",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "ZNG",
+          "instrument_name": "Group Eleven Resources Corp.",
+          "exchange": "TSXV",
+          "mic_code": "XTSX",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "Common Stock",
+          "country": "Canada",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "ZNG",
+          "instrument_name": "Group Eleven Resources Corp.",
+          "exchange": "NEO",
+          "mic_code": "NEOE",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "Common Stock",
+          "country": "Canada",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "ZNGMF",
+          "instrument_name": "Zengame Technology Holding Limited",
+          "exchange": "OTC",
+          "mic_code": "PINX",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "ZNGRDX",
+          "instrument_name": "Nuveen Global Cities REIT Fund Class D",
+          "exchange": "NASDAQ",
+          "mic_code": "XNAS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Mutual Fund",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "ZNGRIX",
+          "instrument_name": "Nuveen Global Cities REIT Fund Class I",
+          "exchange": "NASDAQ",
+          "mic_code": "XNAS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Mutual Fund",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "ZNGRSX",
+          "instrument_name": "Nuveen Global Cities REIT Class S",
+          "exchange": "NASDAQ",
+          "mic_code": "XNAS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Mutual Fund",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "ZNGRTX",
+          "instrument_name": "Nuveen Global Cities REIT Class T",
+          "exchange": "NASDAQ",
+          "mic_code": "XNAS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Mutual Fund",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "ZNGSGX",
+          "instrument_name": "801 Wealth U.S. Equity Private Portfolio CAD NL (877838A2)",
+          "exchange": "NASDAQ",
+          "mic_code": "XNMS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Mutual Fund",
+          "country": "United States",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "ZNO",
+          "instrument_name": "Zoono Group Limited",
+          "exchange": "CXA",
+          "mic_code": "CXAC",
+          "exchange_timezone": "Australia/Sydney",
+          "instrument_type": "Common Stock",
+          "country": "Australia",
+          "currency": "AUD"
+        },
+        {
+          "symbol": "ZNO",
+          "instrument_name": "Zoono Group Limited",
+          "exchange": "ASX",
+          "mic_code": "XASX",
+          "exchange_timezone": "Australia/Sydney",
+          "instrument_type": "Common Stock",
+          "country": "Australia",
+          "currency": "AUD"
+        },
+        {
+          "symbol": "ZNOC",
+          "instrument_name": "Northrop Grumman Corporation Canadian Depositary Receipt",
+          "exchange": "NEO",
+          "mic_code": "NEOE",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "Depositary Receipt",
+          "country": "Canada",
+          "currency": "CAD"
+        }
+      ]
+    },
+    {
+      "query": "10Y",
+      "label": "10y treasury futures",
+      "http": 200,
+      "rows": 50,
+      "top": [
+        {
+          "symbol": "0P0000825U",
+          "instrument_name": "DWS Vorsorge Rentenfonds 10Y",
+          "exchange": "TSXV",
+          "mic_code": "XTSX",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "Mutual Fund",
+          "country": "Canada",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "176950",
+          "instrument_name": "Samsung Kodex 10y F-LKTB ETF",
+          "exchange": "KRX",
+          "mic_code": "XKRX",
+          "exchange_timezone": "Asia/Seoul",
+          "instrument_type": "ETF",
+          "country": "South Korea",
+          "currency": "KRW"
+        },
+        {
+          "symbol": "MTF.F140",
+          "instrument_name": "MTF Sal Index US Gov 10Y Fixed",
+          "exchange": "TASE",
+          "mic_code": "XTAE",
+          "exchange_timezone": "Asia/Jerusalem",
+          "instrument_type": "ETF",
+          "country": "Israel",
+          "currency": "ILA"
+        },
+        {
+          "symbol": "289670",
+          "instrument_name": "HH Arirang KTB 10Y Futures ETF",
+          "exchange": "KRX",
+          "mic_code": "XKRX",
+          "exchange_timezone": "Asia/Seoul",
+          "instrument_type": "ETF",
+          "country": "South Korea",
+          "currency": "KRW"
+        },
+        {
+          "symbol": "295000",
+          "instrument_name": "KB Rise KTB 10Y Futures ETF",
+          "exchange": "KRX",
+          "mic_code": "XKRX",
+          "exchange_timezone": "Asia/Seoul",
+          "instrument_type": "ETF",
+          "country": "South Korea",
+          "currency": "KRW"
+        },
+        {
+          "symbol": "305080",
+          "instrument_name": "Mirae Tiger 10Y US Treasury ETF",
+          "exchange": "KRX",
+          "mic_code": "XKRX",
+          "exchange_timezone": "Asia/Seoul",
+          "instrument_type": "ETF",
+          "country": "South Korea",
+          "currency": "KRW"
+        },
+        {
+          "symbol": "U10C",
+          "instrument_name": "Amundi US Treasury Bond 10+Y UCITS ETF",
+          "exchange": "LSE",
+          "mic_code": "XLON",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "USD"
+        },
+        {
+          "symbol": "US10C",
+          "instrument_name": "Amundi US Treasury Bond 10+Y UCITS ETF",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "ETF",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "BUN7",
+          "instrument_name": "Amundi US Treasury Bond 10+Y UCITS ETF",
+          "exchange": "Munich",
+          "mic_code": "XMUN",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "ETF",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "U10CL",
+          "instrument_name": "Amundi US Treasury Bond 10+Y UCITS ETF",
+          "exchange": "CBOE",
+          "mic_code": "BCXE",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "USD"
+        },
+        {
+          "symbol": "0E7A",
+          "instrument_name": "Amundi Italy BTP Government Bond 10Y UCITS ETF Acc",
+          "exchange": "LSE",
+          "mic_code": "XLON",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "BTP10",
+          "instrument_name": "Amundi Italy BTP Government Bond 10Y UCITS ETF Acc",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "ETF",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "INFU",
+          "instrument_name": "Amundi US Inflation Expectations 10Y UCITS ETF Acc",
+          "exchange": "Euronext",
+          "mic_code": "XPAR",
+          "exchange_timezone": "Europe/Paris",
+          "instrument_type": "ETF",
+          "country": "France",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "UINF",
+          "instrument_name": "Amundi US Inflation Expectations 10Y UCITS ETF Acc",
+          "exchange": "XETR",
+          "mic_code": "XETR",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "ETF",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "INFU",
+          "instrument_name": "Amundi US Inflation Expectations 10Y UCITS ETF Acc",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "ETF",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "INFU",
+          "instrument_name": "Amundi US Inflation Expectations 10Y UCITS ETF Acc",
+          "exchange": "LSE",
+          "mic_code": "XLON",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "USD"
+        },
+        {
+          "symbol": "BTP10M",
+          "instrument_name": "Amundi Italy BTP Government Bond 10Y UCITS ETF Acc",
+          "exchange": "CBOE",
+          "mic_code": "BCXE",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "INFG",
+          "instrument_name": "Amundi US Inflation Expectations 10Y UCITS ETF Acc",
+          "exchange": "LSE",
+          "mic_code": "XLON",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "GBp"
+        },
+        {
+          "symbol": "INFGL",
+          "instrument_name": "Amundi US Inflation Expectations 10Y UCITS ETF Acc",
+          "exchange": "CBOE",
+          "mic_code": "BCXE",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "GBX"
+        },
+        {
+          "symbol": "INFU",
+          "instrument_name": "Amundi US Inflation Expectations 10Y UCITS ETF Acc",
+          "exchange": "SIX",
+          "mic_code": "XSWX",
+          "exchange_timezone": "Europe/Zurich",
+          "instrument_type": "ETF",
+          "country": "Switzerland",
+          "currency": "USD"
+        },
+        {
+          "symbol": "INFUL",
+          "instrument_name": "Amundi US Inflation Expectations 10Y UCITS ETF Acc",
+          "exchange": "CBOE",
+          "mic_code": "BCXE",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "USD"
+        },
+        {
+          "symbol": "INFUM",
+          "instrument_name": "Amundi US Inflation Expectations 10Y UCITS ETF Acc",
+          "exchange": "CBOE",
+          "mic_code": "BCXE",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "INFUP",
+          "instrument_name": "Amundi US Inflation Expectations 10Y UCITS ETF Acc",
+          "exchange": "CBOE",
+          "mic_code": "BCXE",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "INFUZ",
+          "instrument_name": "Amundi US Inflation Expectations 10Y UCITS ETF Acc",
+          "exchange": "CBOE",
+          "mic_code": "BCXE",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "USD"
+        },
+        {
+          "symbol": "LYT5",
+          "instrument_name": "Amundi Italy BTP Government Bond 10Y UCITS ETF Acc",
+          "exchange": "XDUS",
+          "mic_code": "XDUS",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "ETF",
+          "country": "Germany",
+          "currency": "EUR"
+        }
+      ]
+    },
+    {
+      "query": "CL",
+      "label": "crude futures",
+      "http": 200,
+      "rows": 50,
+      "top": [
+        {
+          "symbol": "CL",
+          "instrument_name": "Colgate-Palmolive Co.",
+          "exchange": "NYSE",
+          "mic_code": "XNYS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "CL",
+          "instrument_name": "Colgate-Palmolive Company Cedear",
+          "exchange": "BCBA",
+          "mic_code": "XBUE",
+          "exchange_timezone": "America/Argentina/Buenos_Aires",
+          "instrument_type": "Depositary Receipt",
+          "country": "Argentina",
+          "currency": "ARS"
+        },
+        {
+          "symbol": "CL",
+          "instrument_name": "Cresco Labs Inc.",
+          "exchange": "CSE",
+          "mic_code": "XCNQ",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "Common Stock",
+          "country": "Canada",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "CL",
+          "instrument_name": "Cresco Labs Inc.",
+          "exchange": "NEO",
+          "mic_code": "NEOE",
+          "exchange_timezone": "America/Toronto",
+          "instrument_type": "Common Stock",
+          "country": "Canada",
+          "currency": "CAD"
+        },
+        {
+          "symbol": "CL",
+          "instrument_name": "Colgate-Palmolive Co.",
+          "exchange": "IEX",
+          "mic_code": "IEXG",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "CL",
+          "instrument_name": "Colgate-Palmolive Co.",
+          "exchange": "BMV",
+          "mic_code": "XMEX",
+          "exchange_timezone": "America/Swift_Current",
+          "instrument_type": "Common Stock",
+          "country": "Mexico",
+          "currency": "MXN"
+        },
+        {
+          "symbol": "CL",
+          "instrument_name": "Colgate-Palmolive Co.",
+          "exchange": "SIX",
+          "mic_code": "XSWX",
+          "exchange_timezone": "Europe/Zurich",
+          "instrument_type": "Common Stock",
+          "country": "Switzerland",
+          "currency": "CHF"
+        },
+        {
+          "symbol": "CLS",
+          "instrument_name": "Clicks Group Ltd.",
+          "exchange": "JSE",
+          "mic_code": "XJSE",
+          "exchange_timezone": "Africa/Johannesburg",
+          "instrument_type": "Common Stock",
+          "country": "South Africa",
+          "currency": "ZAc"
+        },
+        {
+          "symbol": "CLIS",
+          "instrument_name": "Clal Insurance Enterprises Holdings Ltd.",
+          "exchange": "TASE",
+          "mic_code": "XTAE",
+          "exchange_timezone": "Asia/Jerusalem",
+          "instrument_type": "Common Stock",
+          "country": "Israel",
+          "currency": "ILA"
+        },
+        {
+          "symbol": "CLEO",
+          "instrument_name": "Sariguna Primatirta Tbk PT",
+          "exchange": "IDX",
+          "mic_code": "XIDX",
+          "exchange_timezone": "Asia/Jakarta",
+          "instrument_type": "Common Stock",
+          "country": "Indonesia",
+          "currency": "IDR"
+        },
+        {
+          "symbol": "CFIBCIRFCL0",
+          "instrument_name": "CFIBCIRFCL0",
+          "exchange": "BVS",
+          "mic_code": "XSGO",
+          "exchange_timezone": "America/Santiago",
+          "instrument_type": "Common Stock",
+          "country": "Chile",
+          "currency": "CLP"
+        },
+        {
+          "symbol": "CFIBTGDEI1",
+          "instrument_name": "CFIBTGDEI1",
+          "exchange": "BVS",
+          "mic_code": "XSGO",
+          "exchange_timezone": "America/Santiago",
+          "instrument_type": "Common Stock",
+          "country": "Chile",
+          "currency": "CLP"
+        },
+        {
+          "symbol": "CFINASDAQ",
+          "instrument_name": "Fondo de Inversi\u00f3n ETF Singular Nasdaq 100",
+          "exchange": "BVS",
+          "mic_code": "XSGO",
+          "exchange_timezone": "America/Santiago",
+          "instrument_type": "ETF",
+          "country": "Chile",
+          "currency": "CLP"
+        },
+        {
+          "symbol": "CLEA",
+          "instrument_name": "National Cleaning Co SAK",
+          "exchange": "XKUW",
+          "mic_code": "XKUW",
+          "exchange_timezone": "Asia/Kuwait",
+          "instrument_type": "Common Stock",
+          "country": "Kuwait",
+          "currency": "KWD"
+        },
+        {
+          "symbol": "CFIMRCLP",
+          "instrument_name": "Moneda Renta CLP A Mutual Fund",
+          "exchange": "BVS",
+          "mic_code": "XSGO",
+          "exchange_timezone": "America/Santiago",
+          "instrument_type": "Closed-end Fund",
+          "country": "Chile",
+          "currency": "CLP"
+        },
+        {
+          "symbol": "CFIMDCHI",
+          "instrument_name": "Moneda Deuda Chile Fondo de Inversi\u00f3n",
+          "exchange": "BVS",
+          "mic_code": "XSGO",
+          "exchange_timezone": "America/Santiago",
+          "instrument_type": "Common Stock",
+          "country": "Chile",
+          "currency": "CLP"
+        },
+        {
+          "symbol": "CLS",
+          "instrument_name": "Celestica Inc.",
+          "exchange": "NYSE",
+          "mic_code": "XNYS",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "Common Stock",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "CFMTOEEQUB1",
+          "instrument_name": "CFMTOEEQUB1",
+          "exchange": "BVS",
+          "mic_code": "XSGO",
+          "exchange_timezone": "America/Santiago",
+          "instrument_type": "Common Stock",
+          "country": "Chile",
+          "currency": "CLP"
+        },
+        {
+          "symbol": "CFMTOEEQUB0",
+          "instrument_name": "CFMTOEEQUB0",
+          "exchange": "BVS",
+          "mic_code": "XSGO",
+          "exchange_timezone": "America/Santiago",
+          "instrument_type": "Common Stock",
+          "country": "Chile",
+          "currency": "CLP"
+        },
+        {
+          "symbol": "CLEANMAX",
+          "instrument_name": "Clean Max Enviro Energy Solutions Limited",
+          "exchange": "NSE",
+          "mic_code": "XNSE",
+          "exchange_timezone": "Asia/Kolkata",
+          "instrument_type": "Common Stock",
+          "country": "India",
+          "currency": "INR"
+        },
+        {
+          "symbol": "CFIBTGDEA0",
+          "instrument_name": "CFIBTGDEA0",
+          "exchange": "BVS",
+          "mic_code": "XSGO",
+          "exchange_timezone": "America/Santiago",
+          "instrument_type": "Common Stock",
+          "country": "Chile",
+          "currency": "CLP"
+        },
+        {
+          "symbol": "CFIMDCHI0",
+          "instrument_name": "CFIMDCHI0",
+          "exchange": "BVS",
+          "mic_code": "XSGO",
+          "exchange_timezone": "America/Santiago",
+          "instrument_type": "Common Stock",
+          "country": "Chile",
+          "currency": "CLP"
+        },
+        {
+          "symbol": "CFIFYNDEPA0",
+          "instrument_name": "CFIFYNDEPA0",
+          "exchange": "BVS",
+          "mic_code": "XSGO",
+          "exchange_timezone": "America/Santiago",
+          "instrument_type": "Common Stock",
+          "country": "Chile",
+          "currency": "CLP"
+        },
+        {
+          "symbol": "CFIFYNSADB0",
+          "instrument_name": "CFIFYNSADB0",
+          "exchange": "BVS",
+          "mic_code": "XSGO",
+          "exchange_timezone": "America/Santiago",
+          "instrument_type": "Common Stock",
+          "country": "Chile",
+          "currency": "CLP"
+        },
+        {
+          "symbol": "CFIBCHDECH",
+          "instrument_name": "Banchile Administradora General - Fondo de Inversi\u00f3n Deuda Chilena Fund",
+          "exchange": "BVS",
+          "mic_code": "XSGO",
+          "exchange_timezone": "America/Santiago",
+          "instrument_type": "Common Stock",
+          "country": "Chile",
+          "currency": "CLP"
+        }
+      ]
+    },
+    {
+      "query": "CRUDE",
+      "label": "crude futures",
+      "http": 200,
+      "rows": 49,
+      "top": [
+        {
+          "symbol": "SCO",
+          "instrument_name": "ProShares UltraShort Bloomberg Crude Oil",
+          "exchange": "NYSE",
+          "mic_code": "ARCX",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "ETF",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "UCO",
+          "instrument_name": "ProShares Ultra Bloomberg Crude Oil",
+          "exchange": "NYSE",
+          "mic_code": "ARCX",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "ETF",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "CRUP",
+          "instrument_name": "WisdomTree WTI Crude Oil",
+          "exchange": "LSE",
+          "mic_code": "XLON",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "GBp"
+        },
+        {
+          "symbol": "BRNG",
+          "instrument_name": "WisdomTree Brent Crude Oil",
+          "exchange": "LSE",
+          "mic_code": "XLON",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "GBp"
+        },
+        {
+          "symbol": "BRNB",
+          "instrument_name": "WisdomTree Bloomberg Brent Crude Oil",
+          "exchange": "LSE",
+          "mic_code": "XLON",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "GBp"
+        },
+        {
+          "symbol": "WTIB",
+          "instrument_name": "WisdomTree Bloomberg WTI Crude Oil",
+          "exchange": "LSE",
+          "mic_code": "XLON",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "GBp"
+        },
+        {
+          "symbol": "CRUD",
+          "instrument_name": "WisdomTree WTI Crude Oil",
+          "exchange": "LSE",
+          "mic_code": "XLON",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "USD"
+        },
+        {
+          "symbol": "CRUD",
+          "instrument_name": "WisdomTree WTI Crude Oil",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "ETF",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "BRNT",
+          "instrument_name": "WisdomTree Brent Crude Oil",
+          "exchange": "LSE",
+          "mic_code": "XLON",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "USD"
+        },
+        {
+          "symbol": "BRNT",
+          "instrument_name": "WisdomTree Brent Crude Oil",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "ETF",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "1690",
+          "instrument_name": "WisdomTree WTI Crude Oil",
+          "exchange": "JPX",
+          "mic_code": "XJPX",
+          "exchange_timezone": "Asia/Tokyo",
+          "instrument_type": "ETF",
+          "country": "Japan",
+          "currency": "JPY"
+        },
+        {
+          "symbol": "CRUDP",
+          "instrument_name": "WisdomTree WTI Crude Oil",
+          "exchange": "Euronext",
+          "mic_code": "XPAR",
+          "exchange_timezone": "Europe/Paris",
+          "instrument_type": "ETF",
+          "country": "France",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "BRND",
+          "instrument_name": "WisdomTree Bloomberg Brent Crude Oil",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "ETF",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "BRNT",
+          "instrument_name": "WisdomTree Brent Crude Oil",
+          "exchange": "Euronext",
+          "mic_code": "XPAR",
+          "exchange_timezone": "Europe/Paris",
+          "instrument_type": "ETF",
+          "country": "France",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "WTID",
+          "instrument_name": "WisdomTree Bloomberg WTI Crude Oil",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "ETF",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "BRND",
+          "instrument_name": "WisdomTree Bloomberg Brent Crude Oil",
+          "exchange": "LSE",
+          "mic_code": "XLON",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "USD"
+        },
+        {
+          "symbol": "WTID",
+          "instrument_name": "WisdomTree Bloomberg WTI Crude Oil",
+          "exchange": "LSE",
+          "mic_code": "XLON",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "USD"
+        },
+        {
+          "symbol": "F96872",
+          "instrument_name": "Vontobel Financial Products GmbH Warrant on Brent Crude Oil",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "Warrant",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "OIL",
+          "instrument_name": "Onyx Spot Return Crude Oil",
+          "exchange": "LSE",
+          "mic_code": "XLON",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "USD"
+        },
+        {
+          "symbol": "F98941",
+          "instrument_name": "Vontobel Warrant on Brent Crude Oil",
+          "exchange": "MTA",
+          "mic_code": "XMIL",
+          "exchange_timezone": "Europe/Rome",
+          "instrument_type": "Warrant",
+          "country": "Italy",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "SCO",
+          "instrument_name": "ProShares UltraShort Bloomberg Crude Oil",
+          "exchange": "IEX",
+          "mic_code": "IEXG",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "ETF",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "UCO",
+          "instrument_name": "ProShares Ultra Bloomberg Crude Oil",
+          "exchange": "IEX",
+          "mic_code": "IEXG",
+          "exchange_timezone": "America/New_York",
+          "instrument_type": "ETF",
+          "country": "United States",
+          "currency": "USD"
+        },
+        {
+          "symbol": "B4NZ",
+          "instrument_name": "BNP Paribas Easy ETN RICI WTI Crude Oil",
+          "exchange": "XETR",
+          "mic_code": "XETR",
+          "exchange_timezone": "Europe/Berlin",
+          "instrument_type": "ETF",
+          "country": "Germany",
+          "currency": "EUR"
+        },
+        {
+          "symbol": "BRNBL",
+          "instrument_name": "WisdomTree Bloomberg Brent Crude Oil",
+          "exchange": "CBOE",
+          "mic_code": "BCXE",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "GBX"
+        },
+        {
+          "symbol": "BRNDL",
+          "instrument_name": "WisdomTree Bloomberg Brent Crude Oil",
+          "exchange": "CBOE",
+          "mic_code": "BCXE",
+          "exchange_timezone": "Europe/London",
+          "instrument_type": "ETF",
+          "country": "United Kingdom",
+          "currency": "USD"
+        }
+      ]
+    }
+  ],
+  "candidate_tests": [
+    {
+      "symbol": "289670",
+      "exchange": "KRX",
+      "http": 404,
+      "status": "error",
+      "message": "This symbol is available starting with the Pro or Venture plan. Consider upgrading now at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "295000",
+      "exchange": "KRX",
+      "http": 404,
+      "status": "error",
+      "message": "This symbol is available starting with the Pro or Venture plan. Consider upgrading now at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "42GG",
+      "exchange": "XETR",
+      "http": 404,
+      "status": "error",
+      "message": "This symbol is available starting with the Grow or Venture plan. Consider upgrading now at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "F98942",
+      "exchange": "MTA",
+      "http": 404,
+      "status": "error",
+      "message": "This symbol is available starting with the Pro or Venture plan. Consider upgrading now at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "F98521",
+      "exchange": "MTA",
+      "http": 404,
+      "status": "error",
+      "message": "This symbol is available starting with the Pro or Venture plan. Consider upgrading now at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "F98520",
+      "exchange": "MTA",
+      "http": 404,
+      "status": "error",
+      "message": "This symbol is available starting with the Pro or Venture plan. Consider upgrading now at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "F99889",
+      "exchange": "MTA",
+      "http": 404,
+      "status": "error",
+      "message": "This symbol is available starting with the Pro or Venture plan. Consider upgrading now at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "F99898",
+      "exchange": "MTA",
+      "http": 404,
+      "status": "error",
+      "message": "This symbol is available starting with the Pro or Venture plan. Consider upgrading now at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "F97334",
+      "exchange": "MTA",
+      "http": 429,
+      "status": "error",
+      "message": "You have run out of API credits for the current minute. 9 API credits were used, with the current limit being 8. Wait for the next minute or consider switching to a higher tier plan at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "F94711",
+      "exchange": "MTA",
+      "http": 429,
+      "status": "error",
+      "message": "You have run out of API credits for the current minute. 10 API credits were used, with the current limit being 8. Wait for the next minute or consider switching to a higher tier plan at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "FD0SQH",
+      "exchange": "MTA",
+      "http": 429,
+      "status": "error",
+      "message": "You have run out of API credits for the current minute. 11 API credits were used, with the current limit being 8. Wait for the next minute or consider switching to a higher tier plan at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "F96878",
+      "exchange": "MTA",
+      "http": 429,
+      "status": "error",
+      "message": "You have run out of API credits for the current minute. 12 API credits were used, with the current limit being 8. Wait for the next minute or consider switching to a higher tier plan at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "F96874",
+      "exchange": "MTA",
+      "http": 429,
+      "status": "error",
+      "message": "You have run out of API credits for the current minute. 13 API credits were used, with the current limit being 8. Wait for the next minute or consider switching to a higher tier plan at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "F90829",
+      "exchange": "MTA",
+      "http": 429,
+      "status": "error",
+      "message": "You have run out of API credits for the current minute. 14 API credits were used, with the current limit being 8. Wait for the next minute or consider switching to a higher tier plan at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "F96871",
+      "exchange": "MTA",
+      "http": 429,
+      "status": "error",
+      "message": "You have run out of API credits for the current minute. 15 API credits were used, with the current limit being 8. Wait for the next minute or consider switching to a higher tier plan at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    },
+    {
+      "symbol": "F99900",
+      "exchange": "MTA",
+      "http": 429,
+      "status": "error",
+      "message": "You have run out of API credits for the current minute. 16 API credits were used, with the current limit being 8. Wait for the next minute or consider switching to a higher tier plan at https://twelvedata.com/pricing",
+      "meta": {},
+      "n_2025": 0
+    }
+  ]
+}
