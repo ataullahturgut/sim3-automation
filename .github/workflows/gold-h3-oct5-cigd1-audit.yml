@@ -1,0 +1,39 @@
+name: Gold H3 Oct5 CIGD1 Intermediate Audit
+on:
+  push:
+    branches: [gold-h3-oct5-diagnostic-nowcast-20261005]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_oct5_cigd1_audit.py'
+      - '.github/workflows/gold-h3-oct5-cigd1-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      STAK_LIVE_REF: 54fdf1c8d39b7b6c7b874d0f30f784296e886044
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-oct5-diagnostic-nowcast-20261005
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'psycopg[binary]>=3.2,<4' 'requests>=2.31,<3'
+      - run: python gold_axis_2026/tools/gold_h3_oct5_cigd1_audit.py
+      - name: Record audit
+        run: |
+          cp gold_axis_2026/OCT5_CIGD1_AUDIT_OUT/CIGD1_AUDIT.json gold_axis_2026/GOLD_H3_OCT5_CIGD1_INTERMEDIATE_AUDIT_2026-10-05.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_OCT5_CIGD1_INTERMEDIATE_AUDIT_2026-10-05.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record Oct 5 CIG-D1 intermediate expert audit"
+            git pull --rebase origin gold-h3-oct5-diagnostic-nowcast-20261005
+            git push origin HEAD:gold-h3-oct5-diagnostic-nowcast-20261005
+          fi
