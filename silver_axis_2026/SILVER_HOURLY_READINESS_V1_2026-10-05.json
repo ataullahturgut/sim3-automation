@@ -24,9 +24,9 @@
     {
       "anchor_16_present": false,
       "api_status": "error",
-      "code": 404,
+      "code": 429,
       "date": "2020-03-16",
-      "http": 404,
+      "http": 429,
       "n_values": 0,
       "symbol": "XAG/USD"
     },
