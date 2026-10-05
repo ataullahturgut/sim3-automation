@@ -1,0 +1,356 @@
+{
+  "schema": "GOLD_H3_YAHOO_ROLL_REVERSE_ENGINEERING_2025_V1",
+  "date": "2026-10-05",
+  "window": [
+    "2025-01-02",
+    "2026-01-01"
+  ],
+  "estimated_cost_usd": 0.794723629952,
+  "cost_by_roll_usd": {
+    "c": 0.210700854659,
+    "n": 0.292036160827,
+    "v": 0.291986614466
+  },
+  "cost_cap_usd": 1.0,
+  "confidence_threshold_bps": 3.0,
+  "stats": {
+    "GC": {
+      "hours": 5534,
+      "confident_hours": 5485,
+      "confident_share": 0.9911456451029996,
+      "median_best_err_bps": 0.00017799047116936226,
+      "p95_best_err_bps": 0.2468013045610968,
+      "daily_days": 291,
+      "switches": 5,
+      "days_matching_c": 4,
+      "days_matching_n": 269,
+      "days_matching_v": 285
+    },
+    "SI": {
+      "hours": 5534,
+      "confident_hours": 5446,
+      "confident_share": 0.9840983014094687,
+      "median_best_err_bps": 0.00023475084819913778,
+      "p95_best_err_bps": 0.0005558294747916626,
+      "daily_days": 291,
+      "switches": 5,
+      "days_matching_c": 4,
+      "days_matching_n": 257,
+      "days_matching_v": 285
+    },
+    "NQ": {
+      "hours": 5534,
+      "confident_hours": 5453,
+      "confident_share": 0.9853632092518974,
+      "median_best_err_bps": 0.0,
+      "p95_best_err_bps": 0.5121091698613535,
+      "daily_days": 291,
+      "switches": 4,
+      "days_matching_c": 285,
+      "days_matching_n": 284,
+      "days_matching_v": 285
+    },
+    "ZN": {
+      "hours": 5534,
+      "confident_hours": 5527,
+      "confident_share": 0.9987350921575714,
+      "median_best_err_bps": 0.0,
+      "p95_best_err_bps": 0.0,
+      "daily_days": 291,
+      "switches": 4,
+      "days_matching_c": 217,
+      "days_matching_n": 284,
+      "days_matching_v": 285
+    },
+    "CL": {
+      "hours": 5534,
+      "confident_hours": 5484,
+      "confident_share": 0.9909649439826527,
+      "median_best_err_bps": 0.00020372214789467606,
+      "p95_best_err_bps": 0.0005226426128566396,
+      "daily_days": 291,
+      "switches": 12,
+      "days_matching_c": 282,
+      "days_matching_n": 168,
+      "days_matching_v": 253
+    }
+  },
+  "switch_count_total": 30,
+  "switches": [
+    {
+      "root": "GC",
+      "date": "2025-01-30",
+      "first_support_ts": "2025-01-30 08:00:00+00:00",
+      "old_id": 1551,
+      "new_id": 19604,
+      "matched_rolls": "n",
+      "hour_share": 0.8695652173913043
+    },
+    {
+      "root": "GC",
+      "date": "2025-03-28",
+      "first_support_ts": "2025-03-28 07:00:00+00:00",
+      "old_id": 19604,
+      "new_id": 287,
+      "matched_rolls": "n",
+      "hour_share": 0.8235294117647058
+    },
+    {
+      "root": "GC",
+      "date": "2025-05-29",
+      "first_support_ts": "2025-05-29 07:00:00+00:00",
+      "old_id": 287,
+      "new_id": 42008094,
+      "matched_rolls": "n",
+      "hour_share": 0.8695652173913043
+    },
+    {
+      "root": "GC",
+      "date": "2025-07-30",
+      "first_support_ts": "2025-07-30 07:00:00+00:00",
+      "old_id": 42008094,
+      "new_id": 39231,
+      "matched_rolls": "n",
+      "hour_share": 0.8695652173913043
+    },
+    {
+      "root": "GC",
+      "date": "2025-11-25",
+      "first_support_ts": "2025-11-25 09:00:00+00:00",
+      "old_id": 39231,
+      "new_id": 42001025,
+      "matched_rolls": "n",
+      "hour_share": 0.6363636363636364
+    },
+    {
+      "root": "SI",
+      "date": "2025-02-27",
+      "first_support_ts": "2025-02-27 08:00:00+00:00",
+      "old_id": 5556,
+      "new_id": 4119851,
+      "matched_rolls": "n",
+      "hour_share": 0.8695652173913043
+    },
+    {
+      "root": "SI",
+      "date": "2025-04-29",
+      "first_support_ts": "2025-04-29 07:00:00+00:00",
+      "old_id": 4119851,
+      "new_id": 1057,
+      "matched_rolls": "n",
+      "hour_share": 0.8636363636363636
+    },
+    {
+      "root": "SI",
+      "date": "2025-06-27",
+      "first_support_ts": "2025-06-27 07:00:00+00:00",
+      "old_id": 1057,
+      "new_id": 42011505,
+      "matched_rolls": "n",
+      "hour_share": 0.8235294117647058
+    },
+    {
+      "root": "SI",
+      "date": "2025-08-28",
+      "first_support_ts": "2025-08-28 07:00:00+00:00",
+      "old_id": 42011505,
+      "new_id": 42218,
+      "matched_rolls": "n",
+      "hour_share": 0.8695652173913043
+    },
+    {
+      "root": "SI",
+      "date": "2025-11-25",
+      "first_support_ts": "2025-11-25 08:00:00+00:00",
+      "old_id": 42218,
+      "new_id": 42044525,
+      "matched_rolls": "n",
+      "hour_share": 0.8181818181818182
+    },
+    {
+      "root": "NQ",
+      "date": "2025-03-23",
+      "first_support_ts": "2025-03-23 22:00:00+00:00",
+      "old_id": 42288528,
+      "new_id": 42005804,
+      "matched_rolls": "cnv",
+      "hour_share": 1.0
+    },
+    {
+      "root": "NQ",
+      "date": "2025-06-22",
+      "first_support_ts": "2025-06-22 22:00:00+00:00",
+      "old_id": 42005804,
+      "new_id": 42008487,
+      "matched_rolls": "cnv",
+      "hour_share": 1.0
+    },
+    {
+      "root": "NQ",
+      "date": "2025-09-17",
+      "first_support_ts": "2025-09-18 00:00:00+00:00",
+      "old_id": 42008487,
+      "new_id": 158704,
+      "matched_rolls": "",
+      "hour_share": 1.0
+    },
+    {
+      "root": "NQ",
+      "date": "2025-12-17",
+      "first_support_ts": "2025-12-17 05:00:00+00:00",
+      "old_id": 158704,
+      "new_id": 42002475,
+      "matched_rolls": "v",
+      "hour_share": 1.0
+    },
+    {
+      "root": "ZN",
+      "date": "2025-02-27",
+      "first_support_ts": "2025-02-27 05:00:00+00:00",
+      "old_id": 42002219,
+      "new_id": 42004113,
+      "matched_rolls": "n",
+      "hour_share": 0.9130434782608695
+    },
+    {
+      "root": "ZN",
+      "date": "2025-05-28",
+      "first_support_ts": "2025-05-28 08:00:00+00:00",
+      "old_id": 42004113,
+      "new_id": 42066706,
+      "matched_rolls": "n",
+      "hour_share": 0.6086956521739131
+    },
+    {
+      "root": "ZN",
+      "date": "2025-08-27",
+      "first_support_ts": "2025-08-27 08:00:00+00:00",
+      "old_id": 42066706,
+      "new_id": 42002111,
+      "matched_rolls": "n",
+      "hour_share": 0.6521739130434783
+    },
+    {
+      "root": "ZN",
+      "date": "2025-11-26",
+      "first_support_ts": "2025-11-26 08:00:00+00:00",
+      "old_id": 42002111,
+      "new_id": 42004475,
+      "matched_rolls": "n",
+      "hour_share": 0.782608695652174
+    },
+    {
+      "root": "CL",
+      "date": "2025-01-22",
+      "first_support_ts": "2025-01-22 08:00:00+00:00",
+      "old_id": 615689,
+      "new_id": 37014,
+      "matched_rolls": "cnv",
+      "hour_share": 1.0
+    },
+    {
+      "root": "CL",
+      "date": "2025-02-21",
+      "first_support_ts": "2025-02-21 08:00:00+00:00",
+      "old_id": 37014,
+      "new_id": 625061,
+      "matched_rolls": "cnv",
+      "hour_share": 1.0
+    },
+    {
+      "root": "CL",
+      "date": "2025-03-21",
+      "first_support_ts": "2025-03-21 07:00:00+00:00",
+      "old_id": 625061,
+      "new_id": 423318,
+      "matched_rolls": "cnv",
+      "hour_share": 1.0
+    },
+    {
+      "root": "CL",
+      "date": "2025-04-23",
+      "first_support_ts": "2025-04-23 07:00:00+00:00",
+      "old_id": 423318,
+      "new_id": 134373,
+      "matched_rolls": "cnv",
+      "hour_share": 1.0
+    },
+    {
+      "root": "CL",
+      "date": "2025-05-21",
+      "first_support_ts": "2025-05-21 07:00:00+00:00",
+      "old_id": 134373,
+      "new_id": 402185,
+      "matched_rolls": "cnv",
+      "hour_share": 1.0
+    },
+    {
+      "root": "CL",
+      "date": "2025-06-22",
+      "first_support_ts": "2025-06-22 22:00:00+00:00",
+      "old_id": 402185,
+      "new_id": 209884,
+      "matched_rolls": "cnv",
+      "hour_share": 1.0
+    },
+    {
+      "root": "CL",
+      "date": "2025-07-23",
+      "first_support_ts": "2025-07-23 07:00:00+00:00",
+      "old_id": 209884,
+      "new_id": 48059,
+      "matched_rolls": "cnv",
+      "hour_share": 1.0
+    },
+    {
+      "root": "CL",
+      "date": "2025-08-20",
+      "first_support_ts": "2025-08-20 04:00:00+00:00",
+      "old_id": 48059,
+      "new_id": 655565,
+      "matched_rolls": "nv",
+      "hour_share": 1.0
+    },
+    {
+      "root": "CL",
+      "date": "2025-09-23",
+      "first_support_ts": "2025-09-23 04:00:00+00:00",
+      "old_id": 655565,
+      "new_id": 432669,
+      "matched_rolls": "cnv",
+      "hour_share": 1.0
+    },
+    {
+      "root": "CL",
+      "date": "2025-10-22",
+      "first_support_ts": "2025-10-22 07:00:00+00:00",
+      "old_id": 432669,
+      "new_id": 651434,
+      "matched_rolls": "cnv",
+      "hour_share": 1.0
+    },
+    {
+      "root": "CL",
+      "date": "2025-11-17",
+      "first_support_ts": "2025-11-17 09:00:00+00:00",
+      "old_id": 651434,
+      "new_id": 240384,
+      "matched_rolls": "n",
+      "hour_share": 0.6956521739130435
+    },
+    {
+      "root": "CL",
+      "date": "2025-12-16",
+      "first_support_ts": "2025-12-16 11:00:00+00:00",
+      "old_id": 240384,
+      "new_id": 383438,
+      "matched_rolls": "n",
+      "hour_share": 0.6086956521739131
+    }
+  ],
+  "instrument_id_to_raw_symbol": {},
+  "raw_vendor_prices_committed": false,
+  "outcome_labels_used": false,
+  "thresholds_retuned": false,
+  "status": "YAHOO_ROLL_SWITCHES_INFERRED"
+}
