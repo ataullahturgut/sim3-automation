@@ -4998,3 +4998,69 @@ Important governance:
 Authority:
 - `GOLD_D1_CIG_V1_EXTENDED_JAN_SEP_REPLAY_2026-10-05.md`
 - `GOLD_D1_CIG_V1_EXTENDED_JAN_SEP_REPLAY_2026-10-05.csv`
+
+
+### 55.11 CIG-D1 extension through 2026-10-02 (2026-10-05)
+
+The post-snapshot D1 chain for issue dates **2026-09-28 through 2026-10-02** was explicitly replayed using the frozen AURORA -> V5/RIFT/VEGA model chain plus the existing diagnostic price bridge.
+
+Full-chain historical reproduction:
+- V5 max absolute reproduction difference: **5.551e-17** (PASS).
+
+Added five-day block:
+
+| Issue | Actual | SAGE+RF | V5 | RIFT | VEGA | CIG | Correct |
+|---|---|---|---|---|---|---|---:|
+| 2026-09-28 | DOWN | UP | UP | UP | UP | UP | 0 |
+| 2026-09-29 | DOWN | UP | UP | DOWN | DOWN | UNCERTAIN | — |
+| 2026-09-30 | UP | UP | UP | UP | UP | UP | 1 |
+| 2026-10-01 | UP | DOWN | DOWN | DOWN | DOWN | DOWN | 0 |
+| 2026-10-02 | DOWN | UP | UP | UP | UP | UP | 0 |
+
+Added-block result:
+- days **5**
+- 4/4 consensus **4**
+- correct **1**
+- consensus accuracy **25.00%**
+- coverage **80.00%**
+
+Combined refreshed diagnostic through 2026-10-02:
+- D1 days **196**
+- 4/4 consensus actions **161**
+- correct consensus actions **113**
+- consensus accuracy **70.19%**
+- selective coverage **82.14%**
+- UNCERTAIN **35**
+- forced SAGE+RuleFlow **131/196 = 66.84%**
+- forced V5 **130/196 = 66.33%**
+- forced RIFT **129/196 = 65.82%**
+- forced VEGA **129/196 = 65.82%**
+
+September after adding Sep 28–30:
+- 18/22 consensus
+- 11 correct
+- accuracy **61.11%**
+- coverage **81.82%**
+
+October 1–2 diagnostic bridge:
+- 2/2 consensus
+- 0/2 correct.
+
+Key scientific finding:
+**CIG disagreement still isolates one useful uncertainty case on 2026-09-29, but the late-Sep/early-Oct block demonstrates a separate failure mode: coherent expert agreement can itself be wrong during a regime/transition cluster.** Therefore future D1 work should distinguish:
+1. disagreement uncertainty; and
+2. consensus-validity / regime-integrity risk.
+
+Do not retune CIG thresholds on these five outcomes. Any consensus-validity guard must be a separately named challenger trained/selected without using these outcomes as its optimization target.
+
+Governance:
+- this is retrospective diagnostic / mixed-source extension, not prospective OOS;
+- Sep 28–29 prices are inside the clean frozen price snapshot;
+- Sep 30–Oct 2 prices use the futures-return-spliced diagnostic bridge;
+- frozen SAGE V2 IFBC/LLRS snapshots end 2026-09-24, so its documented missing-source rule yields KEEP V5;
+- RuleFlow V3-TG has no same-origin archived frozen source state for these added origins, so no undocumented retrospective FLIP is created.
+
+Authority:
+- `GOLD_D1_CIG_V1_EXTENDED_THROUGH_OCT2_2026-10-05.md`
+- `GOLD_D1_CIG_V1_EXTENDED_THROUGH_OCT2_2026-10-05.csv`
+- extension source: `GOLD_D1_CIG_V1_SEP28_OCT2_EXTENSION_2026-10-05.*`
