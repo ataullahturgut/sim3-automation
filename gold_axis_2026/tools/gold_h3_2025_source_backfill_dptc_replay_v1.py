@@ -361,8 +361,8 @@ def main():
         results[name]={"actions":len(a),"rescue":r,"broken":b,"net":r-b,
                        "entry":None if e is None else e.date().isoformat(),
                        "precision":float(r/max(len(a),1)),"metrics":m,
-                       "phase_actions":int((a.mode=="PHASE").sum()) if len(a) else 0,
-                       "trust_actions":int((a.mode=="TRUST").sum()) if len(a) else 0,
+                       "phase_actions":int((a["mode"]=="PHASE").sum()) if len(a) else 0,
+                       "trust_actions":int((a["mode"]=="TRUST").sum()) if len(a) else 0,
                        "action_dates":[{"date":d.feature_cutoff_date.date().isoformat(),"mode":d.mode,"outcome":"RESCUE" if d.competence_y==1 else "BROKEN","sellr_fire":bool(d.sellr_fire)} for d in a.itertuples()]}
         if len(a):
             aa=a.copy();aa["variant"]=name;acts.append(aa)
