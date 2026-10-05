@@ -1,0 +1,48 @@
+{
+  "schema": "GOLD_H3_DATABENTO_BRIDGE_COST_PROBE_V1",
+  "date": "2026-10-05",
+  "dataset": "GLBX.MDP3",
+  "bar_schema": "ohlcv-1h",
+  "roots": [
+    "GC",
+    "SI",
+    "NQ",
+    "ZN",
+    "CL"
+  ],
+  "roll_rules": [
+    "c",
+    "n",
+    "v"
+  ],
+  "symbols_all": [
+    "GC.c.0",
+    "GC.n.0",
+    "GC.v.0",
+    "SI.c.0",
+    "SI.n.0",
+    "SI.v.0",
+    "NQ.c.0",
+    "NQ.n.0",
+    "NQ.v.0",
+    "ZN.c.0",
+    "ZN.n.0",
+    "ZN.v.0",
+    "CL.c.0",
+    "CL.n.0",
+    "CL.v.0"
+  ],
+  "bridge_window": [
+    "2025-01-02",
+    "2026-10-03"
+  ],
+  "historical_window": [
+    "2023-01-01",
+    "2025-01-01"
+  ],
+  "data_download_performed": false,
+  "model_changed": false,
+  "dptc_thresholds_changed": false,
+  "status": "BLOCKED_DATABENTO_API_KEY_MISSING",
+  "next_action": "Add GitHub Actions repository secret DATABENTO_API_KEY and rerun."
+}
