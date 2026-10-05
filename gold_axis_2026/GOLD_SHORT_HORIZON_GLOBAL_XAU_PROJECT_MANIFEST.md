@@ -1,6 +1,6 @@
 # GOLD SHORT-HORIZON GLOBAL XAU — MASTER PROJECT MANIFEST
 
-**Manifest version:** 3.2  
+**Manifest version:** 3.3  
 **Effective date:** 2026-10-05  
 **Document class:** CANONICAL MASTER RESEARCH MANIFEST / DECISION AUTHORITY  
 **Scope:** Global XAU/USD short-horizon H3 direction research  
@@ -487,14 +487,18 @@ Raw Handoff performance:
 
 | Period | Alarms | Rescue | Broken | Precision |
 |---|---:|---:|---:|---:|
-| 2025 | 13 | 4 | 9 | 30.8% |
+| 2025 source-backfilled | 30 | 8 | 22 | 26.7% |
 | 2026 | 28 | 16 | 12 | 57.1% |
 
-A direct Handoff state-machine FLIP failed in 2025:
+The original pre-backfill direct Handoff state-machine experiment also failed its preregistered 2025 gate; its best zero-net grid candidate produced 3 rescue / 3 broken and no rule passed eligibility.
 
-- 6 actions;
-- 3 rescue / 3 broken;
-- net 0.
+The later source-backfill reconstruction materially expanded observable 2025 Handoff history:
+
+- reconstructed IFBC score begins 2025-01-29;
+- reconstructed LLRS begins 2024-12-02;
+- first complete extended Handoff state: **2025-03-03**;
+- 2025 canonical Handoff alarms: **30**;
+- rescue / broken: **8 / 22**.
 
 Therefore:
 
@@ -632,6 +636,40 @@ Two variants were frozen together. Future data may not be used to choose whichev
 | DPTC-Q99 | 12 | 10 | 2 | +8 | 83.3% | 70.16% | 70.36% | +4 |
 
 **Scientific status:** POST-HOC DEVELOPMENT CHALLENGER.
+
+### Source-backfilled 2025 transport diagnostic
+
+The earlier DPTC 2025 formation result was based on an incomplete Handoff state window. On 2026-10-05 the missing 2025 IFBC/LLRS history was reconstructed under the original source/formula contract.
+
+Source-reproduction QA:
+
+- IFBC overlap: **280 rows**, maximum raw-feature discrepancy approximately **1.1e-16**;
+- LLRS overlap: **332 rows**, maximum pressure/incremental discrepancy approximately **1.43e-14**;
+- status: **SOURCE_REPRO_PASS**;
+- first complete reconstructed Handoff state: **2025-03-03**.
+
+The full 2025 combined V5 + frozen SAGE + RuleFlow reference is:
+
+- **171/248 = 68.95%**;
+- balanced accuracy **67.13%**.
+
+DPTC on the reconstructed 2025 Handoff history:
+
+| Variant | Actions | Rescue | Broken | Net | Accuracy | BA |
+|---|---:|---:|---:|---:|---:|---:|
+| Q95 | 9 | 4 | 5 | **-1** | 170/248 = **68.55%** | **67.17%** |
+| Q99 | 8 | 3 | 5 | **-2** | 169/248 = **68.15%** | **66.65%** |
+
+This **supersedes the earlier narrow 2025 formation-only “net 0” interpretation** for historical contribution assessment.
+
+The contrast is now sharper:
+
+- 2025 reconstructed: DPTC mildly harmful;
+- 2026 development: DPTC strongly positive (+9 Q95 / +8 Q99).
+
+This strengthens the interpretation of DPTC as a **regime/competence-conditioned controller**, not an always-on reversal layer.
+
+Exact 2023 DPTC reconstruction remains source-blocked: Yahoo 1h historical access currently enforces a 730-day window; no matching 2023 five-futures hourly archive exists in the repository; the connected Twelve Data probe did not expose a usable CME-futures bridge. No proxy result is substituted.
 
 The 70.68% result is therefore **not the proven prospective accuracy of the project**.
 
@@ -949,18 +987,22 @@ This is the conceptual basis of DPTC.
 
 ### Historical contribution audit completed
 
-A source-level historical contribution audit was completed on 2026-10-05 and is authoritative for the question “does the latest layer add value or damage the baseline in earlier periods?”
+A source-level historical contribution audit was completed and then strengthened with a validated 2025 source backfill on 2026-10-05.
 
 Key findings:
 
 - RuleFlow V3-TG is **not** an unconditional improvement: its fixed-rule backcast produced net **-1** in 2023 and net **-1** in 2024.
 - SAGE V2 exception-only adds **+1 net correct call in 2025** and **+4 in 2026** on its available exact source coverage.
-- DPTC Q95/Q99 are **neutral on the exact 2025 formation slice** (2 actions, 1 rescue / 1 broken) and strongly positive in 2026 development (Q95 +9; Q99 +8).
-- Exact DPTC/SAGE replay cannot be extended to 2023-2024 under the frozen identity because mandatory IFBC/LLRS source inputs begin in 2025. No proxy/synthetic replacement is permitted.
+- The full reconstructed 2025 V5 + SAGE + RuleFlow reference is **171/248 = 68.95%**, BA **67.13%**.
+- After the missing 2025 Handoff state is reconstructed, DPTC is **not neutral**: Q95 is **-1 net** and Q99 **-2 net**.
+- In contrast, 2026 development remains strongly positive: Q95 **+9**, Q99 **+8**.
+- Exact 2023 DPTC replay remains source-blocked; no proxy/synthetic result is substituted.
 - The evidence therefore supports a **regime/competence-conditioned controller interpretation**, not an always-on reversal rule.
 
-Authority:
-`GOLD_H3_LATEST_MODELS_HISTORICAL_CONTRIBUTION_AUDIT_2026-10-05.md`
+Authorities:
+- `GOLD_H3_LATEST_MODELS_HISTORICAL_CONTRIBUTION_AUDIT_2026-10-05.md`
+- `GOLD_H3_2025_BACKFILL_DPTC_RESULT_2026-10-05.md`
+- `GOLD_H3_2025_BACKFILL_DPTC_SUMMARY_2026-10-05.json`
 
 ### Next work
 
@@ -1019,6 +1061,10 @@ If new research is opened before enough prospective evidence accumulates, it mus
 - GOLD_H3_DPTC_V1_DEVELOPMENT_FREEZE_2026-10-05.md
 - GOLD_H3_DPTC_V1_RESULT_2026-10-05.md
 - GOLD_H3_LATEST_MODELS_HISTORICAL_CONTRIBUTION_AUDIT_2026-10-05.md
+- GOLD_H3_2025_BACKFILL_DPTC_RESULT_2026-10-05.md
+- GOLD_H3_2025_BACKFILL_DPTC_SUMMARY_2026-10-05.json
+- GOLD_H3_HOURLY_HISTORY_DEPTH_PROBE_2026-10-05.md
+- GOLD_H3_2023_TWELVE_FUTURES_BRIDGE_PROBE_2026-10-05.md
 
 ### Latest diagnostic issuance
 
