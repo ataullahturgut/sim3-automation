@@ -66,6 +66,55 @@ RC-RTE V2 is **not** counted as an additional vote in the 2026 Jan-Jul D1 consen
 
 DPTC, BOCPD, SELLR, OPAL and dependence-state variables remain useful telemetry and research context, but are not binding equal-vote D1 inputs in CIG-D1 V1.
 
+### 3.1 How DPTC / TCG-V1 should be used alongside the consensus
+
+The H3 and D1 layers solve different problems and must not be mixed.
+
+**CIG-D1 answers:**  
+> What should be done for the current trading day?
+
+**DPTC + TCG-V1 answers:**  
+> When the H3 architecture wants to reverse the baseline H3 direction, is that reversal specialist currently trustworthy enough to act?
+
+Current usage rule:
+
+1. **For same-day action:** use CIG-D1 first.
+   - 4/4 UP -> LONG.
+   - 4/4 DOWN -> OUT / CASH.
+   - disagreement -> UNCERTAIN.
+
+2. **For H3 reversal intervention:** do not use ungated DPTC automatically.
+   - DPTC may propose a FLIP.
+   - TCG-V1 must first confirm the frozen strong-pro-risk topology.
+   - The topology means Gold-Nasdaq dependence is positive and Gold-VIX dependence is negative under the frozen significance rule.
+   - If TCG-V1 is FALSE, keep the H3 baseline; do not permit the DPTC FLIP.
+   - If TCG-V1 is TRUE, the DPTC FLIP is eligible as a shadow/challenger action.
+
+Historical reason for this restriction:
+
+| Year | Ungated DPTC Q95 | TCG-V1 gated |
+|---|---:|---:|
+| 2023 | +1 net | 0 |
+| 2024 | -2 net | 0 |
+| 2025 | -1 net | +1 |
+| 2026 | +9 net | +7 |
+
+Thus TCG-V1 sacrifices some 2026 gain but removes the robust 2024 loss and changes 2025 from negative to positive.
+
+Across the harmonized 2023-2026 action sample:
+
+- ungated DPTC: 39 actions, 23 rescue / 16 broken, net +7;
+- TCG-V1: 14 actions, 11 rescue / 3 broken, net +8;
+- TCG-V1 action precision: **78.6%**.
+
+**WTI / oil role:** Gold-oil negative correlation is promising as an additional confidence filter, but it is not part of the binding V1 rule. In retrospective sensitivity analysis, requiring strong-pro-risk plus negative Gold-WTI/CL correlation reduced the sample to 12 actions and produced 10 rescue / 2 broken = **83.3%** precision, while leaving 2025-2026 total accuracy unchanged at **305/439 = 69.48%**. Oil must therefore be recorded as telemetry / challenger evidence, not as a mandatory production filter.
+
+Operational summary:
+
+> **Daily decision = CIG-D1 consensus.**  
+> **H3 reversal permission = DPTC filtered by TCG-V1.**  
+> **Oil = secondary confidence telemetry only.**
+
 ---
 
 ## 4. 2026 consensus result
