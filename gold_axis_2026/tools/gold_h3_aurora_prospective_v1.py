@@ -1000,3 +1000,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# trigger: 2026-10-05 prospective issuance check
