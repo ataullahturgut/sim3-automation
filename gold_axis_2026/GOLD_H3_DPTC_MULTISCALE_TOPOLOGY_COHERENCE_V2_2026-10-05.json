@@ -1,0 +1,748 @@
+{
+  "schema": "GOLD_H3_DPTC_MULTISCALE_TOPOLOGY_COHERENCE_V2",
+  "date": "2026-10-05",
+  "status": "MULTISCALE_TOPOLOGY_DIAGNOSIS_COMPLETE",
+  "hypothesis": "DPTC competence requires persistent cross-timescale topology coherence, not contemporaneous structural-shift magnitude.",
+  "natural_sign_rules": {
+    "daily_pro": "existing strong_pro_risk: daily Gold-Nasdaq positive and Gold-VIX negative with significance condition",
+    "hourly_riskon": "hourly GC-NQ correlation > 0",
+    "oil_decoupled": "hourly GC-CL correlation < 0",
+    "bond_confirm": "hourly GC-ZN correlation > 0",
+    "triad_coherent": "daily_pro AND hourly_riskon AND oil_decoupled",
+    "quad_coherent": "triad_coherent AND bond_confirm",
+    "settled_triad": "triad_coherent AND local structural anomaly count <= 1"
+  },
+  "state_distance": {
+    "state_cols": [
+      "corr_gc_nq",
+      "corr_gc_zn",
+      "corr_gc_cl",
+      "corr_gc_si",
+      "eig1_share",
+      "te_nq_to_gc_diff",
+      "leadlag_nq_to_gc",
+      "r_gn",
+      "r_gv"
+    ],
+    "state_distance_q95_pre2026": 4.6506348307302785,
+    "pre2026_center": {
+      "corr_gc_nq": 0.1295603028998929,
+      "corr_gc_zn": 0.29138013276291463,
+      "corr_gc_cl": 0.1458994250477201,
+      "corr_gc_si": 0.7285988959399047,
+      "eig1_share": 0.41763999542382035,
+      "te_nq_to_gc_diff": -0.0021557036584514,
+      "leadlag_nq_to_gc": -0.01677756822178205,
+      "r_gn": 0.0038324696694623,
+      "r_gv": 0.0011137724081922
+    },
+    "pre2026_scale": {
+      "corr_gc_nq": 0.1986376422350394,
+      "corr_gc_zn": 0.22462480879326413,
+      "corr_gc_cl": 0.13810975983560606,
+      "corr_gc_si": 0.07426473036435112,
+      "eig1_share": 0.06474294529352222,
+      "te_nq_to_gc_diff": 0.014066669825881771,
+      "leadlag_nq_to_gc": 0.0663229034529016,
+      "r_gn": 0.16665760382305886,
+      "r_gv": 0.1522451323315236
+    }
+  },
+  "handoff_enrichment_2025_2026": {
+    "daily_pro": {
+      "inside_n": 14,
+      "inside_rescue": 11,
+      "inside_precision": 0.7857142857142857,
+      "inside_jeffreys95": [
+        0.5309763329064541,
+        0.9356649224617775
+      ],
+      "outside_n": 44,
+      "outside_rescue": 13,
+      "outside_precision": 0.29545454545454547,
+      "outside_jeffreys95": [
+        0.1768245710649103,
+        0.440006280220604
+      ],
+      "odds_ratio": 8.743589743589743,
+      "fisher_p": 0.0017680043165912076
+    },
+    "dual_scale_pro": {
+      "inside_n": 13,
+      "inside_rescue": 10,
+      "inside_precision": 0.7692307692307693,
+      "inside_jeffreys95": [
+        0.5026278780246537,
+        0.9303433313603835
+      ],
+      "outside_n": 45,
+      "outside_rescue": 14,
+      "outside_precision": 0.3111111111111111,
+      "outside_jeffreys95": [
+        0.19078971109249143,
+        0.45486092825827407
+      ],
+      "odds_ratio": 7.380952380952381,
+      "fisher_p": 0.004486942776332413
+    },
+    "triad_coherent": {
+      "inside_n": 11,
+      "inside_rescue": 9,
+      "inside_precision": 0.8181818181818182,
+      "inside_jeffreys95": [
+        0.5327562089775548,
+        0.9601730569150089
+      ],
+      "outside_n": 47,
+      "outside_rescue": 15,
+      "outside_precision": 0.3191489361702128,
+      "outside_jeffreys95": [
+        0.1997131792410207,
+        0.46009617087267174
+      ],
+      "odds_ratio": 9.6,
+      "fisher_p": 0.004781832393476991
+    },
+    "quad_coherent": {
+      "inside_n": 11,
+      "inside_rescue": 9,
+      "inside_precision": 0.8181818181818182,
+      "inside_jeffreys95": [
+        0.5327562089775548,
+        0.9601730569150089
+      ],
+      "outside_n": 47,
+      "outside_rescue": 15,
+      "outside_precision": 0.3191489361702128,
+      "outside_jeffreys95": [
+        0.1997131792410207,
+        0.46009617087267174
+      ],
+      "odds_ratio": 9.6,
+      "fisher_p": 0.004781832393476991
+    },
+    "settled_triad": {
+      "inside_n": 11,
+      "inside_rescue": 9,
+      "inside_precision": 0.8181818181818182,
+      "inside_jeffreys95": [
+        0.5327562089775548,
+        0.9601730569150089
+      ],
+      "outside_n": 47,
+      "outside_rescue": 15,
+      "outside_precision": 0.3191489361702128,
+      "outside_jeffreys95": [
+        0.1997131792410207,
+        0.46009617087267174
+      ],
+      "odds_ratio": 9.6,
+      "fisher_p": 0.004781832393476991
+    },
+    "triad_run_ge2": {
+      "inside_n": 10,
+      "inside_rescue": 8,
+      "inside_precision": 0.8,
+      "inside_jeffreys95": [
+        0.4972255035600069,
+        0.9559405864473692
+      ],
+      "outside_n": 48,
+      "outside_rescue": 16,
+      "outside_precision": 0.3333333333333333,
+      "outside_jeffreys95": [
+        0.21274832913863886,
+        0.4733456002301156
+      ],
+      "odds_ratio": 8.0,
+      "fisher_p": 0.011309881515975803
+    },
+    "triad_run_ge3": {
+      "inside_n": 9,
+      "inside_rescue": 7,
+      "inside_precision": 0.7777777777777778,
+      "inside_jeffreys95": [
+        0.45617556688065247,
+        0.9506980770234059
+      ],
+      "outside_n": 49,
+      "outside_rescue": 17,
+      "outside_precision": 0.3469387755102041,
+      "outside_jeffreys95": [
+        0.2254423591107671,
+        0.48592597522724784
+      ],
+      "odds_ratio": 6.588235294117647,
+      "fisher_p": 0.025629857136209227
+    },
+    "triad_run_ge4": {
+      "inside_n": 9,
+      "inside_rescue": 7,
+      "inside_precision": 0.7777777777777778,
+      "inside_jeffreys95": [
+        0.45617556688065247,
+        0.9506980770234059
+      ],
+      "outside_n": 49,
+      "outside_rescue": 17,
+      "outside_precision": 0.3469387755102041,
+      "outside_jeffreys95": [
+        0.2254423591107671,
+        0.48592597522724784
+      ],
+      "odds_ratio": 6.588235294117647,
+      "fisher_p": 0.025629857136209227
+    },
+    "triad_run_ge5": {
+      "inside_n": 9,
+      "inside_rescue": 7,
+      "inside_precision": 0.7777777777777778,
+      "inside_jeffreys95": [
+        0.45617556688065247,
+        0.9506980770234059
+      ],
+      "outside_n": 49,
+      "outside_rescue": 17,
+      "outside_precision": 0.3469387755102041,
+      "outside_jeffreys95": [
+        0.2254423591107671,
+        0.48592597522724784
+      ],
+      "odds_ratio": 6.588235294117647,
+      "fisher_p": 0.025629857136209227
+    },
+    "settled_triad_run_ge2": {
+      "inside_n": 10,
+      "inside_rescue": 8,
+      "inside_precision": 0.8,
+      "inside_jeffreys95": [
+        0.4972255035600069,
+        0.9559405864473692
+      ],
+      "outside_n": 48,
+      "outside_rescue": 16,
+      "outside_precision": 0.3333333333333333,
+      "outside_jeffreys95": [
+        0.21274832913863886,
+        0.4733456002301156
+      ],
+      "odds_ratio": 8.0,
+      "fisher_p": 0.011309881515975803
+    },
+    "settled_triad_run_ge3": {
+      "inside_n": 9,
+      "inside_rescue": 7,
+      "inside_precision": 0.7777777777777778,
+      "inside_jeffreys95": [
+        0.45617556688065247,
+        0.9506980770234059
+      ],
+      "outside_n": 49,
+      "outside_rescue": 17,
+      "outside_precision": 0.3469387755102041,
+      "outside_jeffreys95": [
+        0.2254423591107671,
+        0.48592597522724784
+      ],
+      "odds_ratio": 6.588235294117647,
+      "fisher_p": 0.025629857136209227
+    },
+    "settled_triad_run_ge4": {
+      "inside_n": 9,
+      "inside_rescue": 7,
+      "inside_precision": 0.7777777777777778,
+      "inside_jeffreys95": [
+        0.45617556688065247,
+        0.9506980770234059
+      ],
+      "outside_n": 49,
+      "outside_rescue": 17,
+      "outside_precision": 0.3469387755102041,
+      "outside_jeffreys95": [
+        0.2254423591107671,
+        0.48592597522724784
+      ],
+      "odds_ratio": 6.588235294117647,
+      "fisher_p": 0.025629857136209227
+    },
+    "settled_triad_run_ge5": {
+      "inside_n": 9,
+      "inside_rescue": 7,
+      "inside_precision": 0.7777777777777778,
+      "inside_jeffreys95": [
+        0.45617556688065247,
+        0.9506980770234059
+      ],
+      "outside_n": 49,
+      "outside_rescue": 17,
+      "outside_precision": 0.3469387755102041,
+      "outside_jeffreys95": [
+        0.2254423591107671,
+        0.48592597522724784
+      ],
+      "odds_ratio": 6.588235294117647,
+      "fisher_p": 0.025629857136209227
+    },
+    "state_dist_high": {
+      "inside_n": 28,
+      "inside_rescue": 15,
+      "inside_precision": 0.5357142857142857,
+      "inside_jeffreys95": [
+        0.3551375071728617,
+        0.7093189020013672
+      ],
+      "outside_n": 30,
+      "outside_rescue": 9,
+      "outside_precision": 0.3,
+      "outside_jeffreys95": [
+        0.1599931884084719,
+        0.47654420278242177
+      ],
+      "odds_ratio": 2.6923076923076925,
+      "fisher_p": 0.10900218982315099
+    },
+    "displaced_settled_triad": {
+      "inside_n": 10,
+      "inside_rescue": 8,
+      "inside_precision": 0.8,
+      "inside_jeffreys95": [
+        0.4972255035600069,
+        0.9559405864473692
+      ],
+      "outside_n": 48,
+      "outside_rescue": 16,
+      "outside_precision": 0.3333333333333333,
+      "outside_jeffreys95": [
+        0.21274832913863886,
+        0.4733456002301156
+      ],
+      "odds_ratio": 8.0,
+      "fisher_p": 0.011309881515975803
+    }
+  },
+  "dptc_action_enrichment_2023_2026": {
+    "daily_pro": {
+      "inside_n": 14,
+      "inside_rescue": 11,
+      "inside_precision": 0.7857142857142857,
+      "inside_jeffreys95": [
+        0.5309763329064541,
+        0.9356649224617775
+      ],
+      "outside_n": 25,
+      "outside_rescue": 12,
+      "outside_precision": 0.48,
+      "outside_jeffreys95": [
+        0.29537050046364927,
+        0.6689728450092756
+      ],
+      "odds_ratio": 3.9722222222222223,
+      "fisher_p": 0.09298282775348796
+    },
+    "dual_scale_pro": {
+      "inside_n": 13,
+      "inside_rescue": 10,
+      "inside_precision": 0.7692307692307693,
+      "inside_jeffreys95": [
+        0.5026278780246537,
+        0.9303433313603835
+      ],
+      "outside_n": 26,
+      "outside_rescue": 13,
+      "outside_precision": 0.5,
+      "outside_jeffreys95": [
+        0.3163611578792365,
+        0.6836388421207634
+      ],
+      "odds_ratio": 3.3333333333333335,
+      "fisher_p": 0.16933330634829036
+    },
+    "triad_coherent": {
+      "inside_n": 11,
+      "inside_rescue": 9,
+      "inside_precision": 0.8181818181818182,
+      "inside_jeffreys95": [
+        0.5327562089775548,
+        0.9601730569150089
+      ],
+      "outside_n": 28,
+      "outside_rescue": 14,
+      "outside_precision": 0.5,
+      "outside_jeffreys95": [
+        0.32247705541111604,
+        0.677522944588884
+      ],
+      "odds_ratio": 4.5,
+      "fisher_p": 0.08567468642474585
+    },
+    "quad_coherent": {
+      "inside_n": 11,
+      "inside_rescue": 9,
+      "inside_precision": 0.8181818181818182,
+      "inside_jeffreys95": [
+        0.5327562089775548,
+        0.9601730569150089
+      ],
+      "outside_n": 28,
+      "outside_rescue": 14,
+      "outside_precision": 0.5,
+      "outside_jeffreys95": [
+        0.32247705541111604,
+        0.677522944588884
+      ],
+      "odds_ratio": 4.5,
+      "fisher_p": 0.08567468642474585
+    },
+    "settled_triad": {
+      "inside_n": 11,
+      "inside_rescue": 9,
+      "inside_precision": 0.8181818181818182,
+      "inside_jeffreys95": [
+        0.5327562089775548,
+        0.9601730569150089
+      ],
+      "outside_n": 28,
+      "outside_rescue": 14,
+      "outside_precision": 0.5,
+      "outside_jeffreys95": [
+        0.32247705541111604,
+        0.677522944588884
+      ],
+      "odds_ratio": 4.5,
+      "fisher_p": 0.08567468642474585
+    },
+    "triad_run_ge2": {
+      "inside_n": 10,
+      "inside_rescue": 8,
+      "inside_precision": 0.8,
+      "inside_jeffreys95": [
+        0.4972255035600069,
+        0.9559405864473692
+      ],
+      "outside_n": 29,
+      "outside_rescue": 15,
+      "outside_precision": 0.5172413793103449,
+      "outside_jeffreys95": [
+        0.34102744370549537,
+        0.6901990445639294
+      ],
+      "odds_ratio": 3.7333333333333334,
+      "fisher_p": 0.1523318369418439
+    },
+    "triad_run_ge3": {
+      "inside_n": 9,
+      "inside_rescue": 7,
+      "inside_precision": 0.7777777777777778,
+      "inside_jeffreys95": [
+        0.45617556688065247,
+        0.9506980770234059
+      ],
+      "outside_n": 30,
+      "outside_rescue": 16,
+      "outside_precision": 0.5333333333333333,
+      "outside_jeffreys95": [
+        0.358672288592008,
+        0.7018977439287897
+      ],
+      "odds_ratio": 3.0625,
+      "fisher_p": 0.26173209754554005
+    },
+    "triad_run_ge4": {
+      "inside_n": 9,
+      "inside_rescue": 7,
+      "inside_precision": 0.7777777777777778,
+      "inside_jeffreys95": [
+        0.45617556688065247,
+        0.9506980770234059
+      ],
+      "outside_n": 30,
+      "outside_rescue": 16,
+      "outside_precision": 0.5333333333333333,
+      "outside_jeffreys95": [
+        0.358672288592008,
+        0.7018977439287897
+      ],
+      "odds_ratio": 3.0625,
+      "fisher_p": 0.26173209754554005
+    },
+    "triad_run_ge5": {
+      "inside_n": 9,
+      "inside_rescue": 7,
+      "inside_precision": 0.7777777777777778,
+      "inside_jeffreys95": [
+        0.45617556688065247,
+        0.9506980770234059
+      ],
+      "outside_n": 30,
+      "outside_rescue": 16,
+      "outside_precision": 0.5333333333333333,
+      "outside_jeffreys95": [
+        0.358672288592008,
+        0.7018977439287897
+      ],
+      "odds_ratio": 3.0625,
+      "fisher_p": 0.26173209754554005
+    },
+    "settled_triad_run_ge2": {
+      "inside_n": 10,
+      "inside_rescue": 8,
+      "inside_precision": 0.8,
+      "inside_jeffreys95": [
+        0.4972255035600069,
+        0.9559405864473692
+      ],
+      "outside_n": 29,
+      "outside_rescue": 15,
+      "outside_precision": 0.5172413793103449,
+      "outside_jeffreys95": [
+        0.34102744370549537,
+        0.6901990445639294
+      ],
+      "odds_ratio": 3.7333333333333334,
+      "fisher_p": 0.1523318369418439
+    },
+    "settled_triad_run_ge3": {
+      "inside_n": 9,
+      "inside_rescue": 7,
+      "inside_precision": 0.7777777777777778,
+      "inside_jeffreys95": [
+        0.45617556688065247,
+        0.9506980770234059
+      ],
+      "outside_n": 30,
+      "outside_rescue": 16,
+      "outside_precision": 0.5333333333333333,
+      "outside_jeffreys95": [
+        0.358672288592008,
+        0.7018977439287897
+      ],
+      "odds_ratio": 3.0625,
+      "fisher_p": 0.26173209754554005
+    },
+    "settled_triad_run_ge4": {
+      "inside_n": 9,
+      "inside_rescue": 7,
+      "inside_precision": 0.7777777777777778,
+      "inside_jeffreys95": [
+        0.45617556688065247,
+        0.9506980770234059
+      ],
+      "outside_n": 30,
+      "outside_rescue": 16,
+      "outside_precision": 0.5333333333333333,
+      "outside_jeffreys95": [
+        0.358672288592008,
+        0.7018977439287897
+      ],
+      "odds_ratio": 3.0625,
+      "fisher_p": 0.26173209754554005
+    },
+    "settled_triad_run_ge5": {
+      "inside_n": 9,
+      "inside_rescue": 7,
+      "inside_precision": 0.7777777777777778,
+      "inside_jeffreys95": [
+        0.45617556688065247,
+        0.9506980770234059
+      ],
+      "outside_n": 30,
+      "outside_rescue": 16,
+      "outside_precision": 0.5333333333333333,
+      "outside_jeffreys95": [
+        0.358672288592008,
+        0.7018977439287897
+      ],
+      "odds_ratio": 3.0625,
+      "fisher_p": 0.26173209754554005
+    },
+    "state_dist_high": {
+      "inside_n": 14,
+      "inside_rescue": 12,
+      "inside_precision": 0.8571428571428571,
+      "inside_jeffreys95": [
+        0.6151056803926378,
+        0.9690778724652457
+      ],
+      "outside_n": 25,
+      "outside_rescue": 11,
+      "outside_precision": 0.44,
+      "outside_jeffreys95": [
+        0.2608513570093648,
+        0.632177408396372
+      ],
+      "odds_ratio": 7.636363636363637,
+      "fisher_p": 0.01726882283710132
+    },
+    "displaced_settled_triad": {
+      "inside_n": 10,
+      "inside_rescue": 8,
+      "inside_precision": 0.8,
+      "inside_jeffreys95": [
+        0.4972255035600069,
+        0.9559405864473692
+      ],
+      "outside_n": 29,
+      "outside_rescue": 15,
+      "outside_precision": 0.5172413793103449,
+      "outside_jeffreys95": [
+        0.34102744370549537,
+        0.6901990445639294
+      ],
+      "odds_ratio": 3.7333333333333334,
+      "fisher_p": 0.1523318369418439
+    }
+  },
+  "handoff_daily_hourly_quadrants": {
+    "daily_pro=False|hourly_riskon=False": {
+      "n": 16,
+      "rescue": 5,
+      "precision": 0.3125,
+      "jeffreys95": [
+        0.13058165554392442,
+        0.55570446457224
+      ]
+    },
+    "daily_pro=False|hourly_riskon=True": {
+      "n": 28,
+      "rescue": 8,
+      "precision": 0.2857142857142857,
+      "jeffreys95": [
+        0.14536334399682427,
+        0.4678368783627501
+      ]
+    },
+    "daily_pro=True|hourly_riskon=False": {
+      "n": 1,
+      "rescue": 1,
+      "precision": 1.0,
+      "jeffreys95": [
+        0.14674631630957513,
+        0.9996144190192441
+      ]
+    },
+    "daily_pro=True|hourly_riskon=True": {
+      "n": 13,
+      "rescue": 10,
+      "precision": 0.7692307692307693,
+      "jeffreys95": [
+        0.5026278780246537,
+        0.9303433313603835
+      ]
+    }
+  },
+  "handoff_sign_cube": {
+    "d0_h0_o0": {
+      "n": 10,
+      "rescue": 3,
+      "precision": 0.3
+    },
+    "d0_h0_o1": {
+      "n": 6,
+      "rescue": 2,
+      "precision": 0.3333333333333333
+    },
+    "d0_h1_o0": {
+      "n": 16,
+      "rescue": 2,
+      "precision": 0.125
+    },
+    "d0_h1_o1": {
+      "n": 12,
+      "rescue": 6,
+      "precision": 0.5
+    },
+    "d1_h0_o0": {
+      "n": 0,
+      "rescue": 0,
+      "precision": null
+    },
+    "d1_h0_o1": {
+      "n": 1,
+      "rescue": 1,
+      "precision": 1.0
+    },
+    "d1_h1_o0": {
+      "n": 2,
+      "rescue": 1,
+      "precision": 0.5
+    },
+    "d1_h1_o1": {
+      "n": 11,
+      "rescue": 9,
+      "precision": 0.8181818181818182
+    }
+  },
+  "year_action_profiles": {
+    "2023": {
+      "n": 11,
+      "rescue": 6,
+      "precision": 0.5454545454545454,
+      "daily_pro": 0.0,
+      "dual_scale_pro": 0.0,
+      "triad_coherent": 0.0,
+      "quad_coherent": 0.0,
+      "settled_triad": 0.0,
+      "state_dist_high": 0.0,
+      "state_dist_mean": 2.7767463719513144
+    },
+    "2024": {
+      "n": 6,
+      "rescue": 2,
+      "precision": 0.3333333333333333,
+      "daily_pro": 0.0,
+      "dual_scale_pro": 0.0,
+      "triad_coherent": 0.0,
+      "quad_coherent": 0.0,
+      "settled_triad": 0.0,
+      "state_dist_high": 0.0,
+      "state_dist_mean": 2.9598715514195604
+    },
+    "2025": {
+      "n": 9,
+      "rescue": 4,
+      "precision": 0.4444444444444444,
+      "daily_pro": 0.3333333333333333,
+      "dual_scale_pro": 0.2222222222222222,
+      "triad_coherent": 0.0,
+      "quad_coherent": 0.0,
+      "settled_triad": 0.0,
+      "state_dist_high": 0.2222222222222222,
+      "state_dist_mean": 3.8475314198136186
+    },
+    "2026": {
+      "n": 13,
+      "rescue": 11,
+      "precision": 0.8461538461538461,
+      "daily_pro": 0.8461538461538461,
+      "dual_scale_pro": 0.8461538461538461,
+      "triad_coherent": 0.8461538461538461,
+      "quad_coherent": 0.8461538461538461,
+      "settled_triad": 0.8461538461538461,
+      "state_dist_high": 0.9230769230769231,
+      "state_dist_mean": 5.984505644124581
+    }
+  },
+  "onsets_2026": {
+    "daily_pro": "2026-04-30",
+    "dual_scale_pro": "2026-04-30",
+    "triad_coherent": "2026-04-30",
+    "quad_coherent": "2026-04-30",
+    "settled_triad": "2026-04-30",
+    "triad_run_ge2": "2026-05-01",
+    "triad_run_ge3": "2026-05-04",
+    "triad_run_ge4": "2026-05-05",
+    "triad_run_ge5": "2026-05-06",
+    "settled_triad_run_ge2": "2026-05-01",
+    "settled_triad_run_ge3": "2026-05-04",
+    "settled_triad_run_ge4": "2026-05-05",
+    "settled_triad_run_ge5": "2026-05-06",
+    "state_dist_high": "2026-03-11",
+    "displaced_settled_triad": "2026-04-30"
+  },
+  "governance": {
+    "sign_thresholds_are_natural_zero_crossings": true,
+    "persistence_sensitivity_all_2_to_5_reported": true,
+    "no_gate_selected_by_outcome_optimization": true,
+    "posthoc_only": true
+  }
+}
