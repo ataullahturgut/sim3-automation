@@ -1281,6 +1281,54 @@ It may not be used to:
 - force an action on UNCERTAIN days without a separately named rescue identity;
 - silently mix target clocks or price sources.
 
+
+### 13.10 CIG-D1 2026-09-28 through 2026-10-02 diagnostic extension
+
+A source-refresh extension was replayed for five additional D1 issue dates after the archived mature H3 files ended on 2026-09-25.
+
+Reconstructed origin/issue pairs:
+- 2026-09-25 -> 2026-09-28
+- 2026-09-28 -> 2026-09-29
+- 2026-09-29 -> 2026-09-30
+- 2026-09-30 -> 2026-10-01
+- 2026-10-01 -> 2026-10-02
+
+Frozen-model reproduction check:
+- HELIOS V5-DCE historical full-chain max absolute reproduction difference = **5.551e-17**, effectively exact.
+
+Daily extension result:
+
+| Issue | Actual D1 | SAGE+RF | V5 | RIFT | VEGA | CIG |
+|---|---|---|---|---|---|---|
+| 2026-09-28 | DOWN | UP | UP | UP | UP | UP — wrong |
+| 2026-09-29 | DOWN | UP | UP | DOWN | DOWN | UNCERTAIN |
+| 2026-09-30 | UP | UP | UP | UP | UP | UP — correct |
+| 2026-10-01 | UP | DOWN | DOWN | DOWN | DOWN | DOWN — wrong |
+| 2026-10-02 | DOWN | UP | UP | UP | UP | UP — wrong |
+
+Extension totals:
+- D1 days: **5**
+- 4/4 consensus days: **4**
+- correct consensus: **1/4 = 25.00%**
+- coverage: **4/5 = 80.00%**
+- UNCERTAIN: **1/5**
+
+Critical interpretation:
+- this late-September / early-October pocket is a **clear local failure regime** for the CIG consensus;
+- three of four unanimous calls are wrong, so unanimity by itself is not sufficient under this transition state;
+- the 2026-09-29 issue is correctly rejected as UNCERTAIN because V5/SAGE disagree with RIFT/VEGA.
+
+Governance:
+- the extension is **retrospective diagnostic evidence**, not prospective OOS;
+- SAGE V2 frozen IFBC/LLRS snapshots end on 2026-09-24. Under the frozen missing-source rule, post-snapshot SAGE exceptions fail closed to **KEEP V5**;
+- RuleFlow V3-TG has no same-origin frozen post-snapshot source record here, so no retrospective RuleFlow flip was invented;
+- therefore these five rows are suitable for diagnosing the late-September/early-October failure pocket, but they are not equivalent to a fully reconstructed prospective SAGE/RuleFlow source state.
+
+Authority:
+- `GOLD_D1_CIG_V1_SEP28_OCT2_EXTENSION_2026-10-05.md`
+- `GOLD_D1_CIG_V1_SEP28_OCT2_EXTENSION_2026-10-05.csv`
+- `GOLD_D1_CIG_V1_SEP28_OCT2_EXTENSION_2026-10-05.json`
+
 ---
 
 ## 14. Canonical evidence index
@@ -1335,6 +1383,9 @@ It may not be used to:
 ### Daily action / CIG-D1
 
 - GOLD_D1_CIG_V1_RESULT_2026-10-05.md
+- GOLD_D1_CIG_V1_SEP28_OCT2_EXTENSION_2026-10-05.md
+- GOLD_D1_CIG_V1_SEP28_OCT2_EXTENSION_2026-10-05.csv
+- GOLD_D1_CIG_V1_SEP28_OCT2_EXTENSION_2026-10-05.json
 
 ### Latest diagnostic issuance
 
