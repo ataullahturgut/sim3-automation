@@ -1,0 +1,205 @@
+{
+  "schema": "GOLD_H3_DATABENTO_DOWNSTREAM_INVARIANCE_2025_V1",
+  "date": "2026-10-05",
+  "mapping": {
+    "GC": "GC.v.0",
+    "SI": "SI.v.0",
+    "NQ": "NQ.v.0",
+    "ZN": "ZN.n.0",
+    "CL": "CL.c.0"
+  },
+  "window": [
+    "2024-10-10",
+    "2026-10-04"
+  ],
+  "estimated_cost_usd": 0.577700659633,
+  "cost_cap_usd": 1.0,
+  "raw_vendor_values_committed": false,
+  "thresholds_retuned": false,
+  "outcomes_used_for_source_selection": false,
+  "coverage": {
+    "databento_rows": 58299,
+    "synchronized_price_rows": 11507,
+    "vast_origins": 402,
+    "ifbc_origins": 342,
+    "llrs_origins": 369,
+    "state_origins": 338
+  },
+  "ifbc_compare": {
+    "overlap_n": 337,
+    "columns": {
+      "gc_flow_12": {
+        "n": 337,
+        "corr": 0.9620620338513163,
+        "mae": 0.00010690023450959421,
+        "max_abs": 0.007773274632513224
+      },
+      "gc_opp_vol_share_12": {
+        "n": 337,
+        "corr": 0.9548689976518898,
+        "mae": 0.015451310823039511,
+        "max_abs": 0.3963551577691018
+      },
+      "gc_efficiency_12": {
+        "n": 337,
+        "corr": 0.9684053339596396,
+        "mae": 0.014425905834728957,
+        "max_abs": 0.4396140088249983
+      },
+      "si_flow_12": {
+        "n": 337,
+        "corr": 0.9912630404605258,
+        "mae": 0.00019711815344626723,
+        "max_abs": 0.006689949191106321
+      },
+      "si_opp_vol_share_12": {
+        "n": 337,
+        "corr": 0.9597832311764849,
+        "mae": 0.02019154772404908,
+        "max_abs": 0.35435893524177137
+      },
+      "gc_si_flow_gap12": {
+        "n": 337,
+        "corr": 0.9913835444320919,
+        "mae": 0.00021011153000783194,
+        "max_abs": 0.002816818418458385
+      },
+      "joint_opposition_share12": {
+        "n": 337,
+        "corr": 0.965443808490264,
+        "mae": 0.015582621108020155,
+        "max_abs": 0.2971568223005606
+      },
+      "ifbc_score": {
+        "n": 337,
+        "corr": 0.9640211415769109,
+        "mae": 0.02994194855715593,
+        "max_abs": 0.8512396694214878
+      },
+      "ifbc_count60": {
+        "n": 337,
+        "corr": 0.9506240746374908,
+        "mae": 0.24629080118694363,
+        "max_abs": 4.0
+      }
+    }
+  },
+  "llrs_compare": {
+    "overlap_n": 368,
+    "columns": {
+      "llrs_pressure": {
+        "n": 368,
+        "corr": 0.9226933547345875,
+        "mae": 0.05782314663913472,
+        "max_abs": 0.5093166658088242
+      },
+      "llrs_incremental": {
+        "n": 368,
+        "corr": 0.9100248274615735,
+        "mae": 0.055828128115257745,
+        "max_abs": 0.4942512080500171
+      }
+    }
+  },
+  "state_compare": {
+    "overlap_n": 190,
+    "columns": {
+      "fragility_score": {
+        "n": 168,
+        "corr": 0.9999432634790509,
+        "mae": 0.001874882471566765,
+        "max_abs": 0.009018155757286234
+      },
+      "flow_score": {
+        "n": 168,
+        "corr": 0.9633553250541744,
+        "mae": 0.02850723071929722,
+        "max_abs": 0.6818181818181819
+      },
+      "leadlag_score": {
+        "n": 188,
+        "corr": 0.7673948000260256,
+        "mae": 0.10952245160831715,
+        "max_abs": 0.9338842975206612
+      },
+      "leadlag_score_premax": {
+        "n": 187,
+        "corr": 0.7205451671808278,
+        "mae": 0.15054072653101858,
+        "max_abs": 0.9669421487603307
+      },
+      "internal_now": {
+        "n": 168,
+        "corr": 0.9941559567999134,
+        "mae": 0.013486861749752957,
+        "max_abs": 0.15702479338842978
+      },
+      "internal_d1": {
+        "n": 167,
+        "corr": 0.9927065096937455,
+        "mae": 0.024038668669767314,
+        "max_abs": 0.1611570247933885
+      }
+    }
+  },
+  "handoff_alarm_set": {
+    "new_n": 33,
+    "old_n": 30,
+    "matched": 28,
+    "added": [
+      "2025-04-17",
+      "2025-08-05",
+      "2025-08-06",
+      "2025-09-26",
+      "2025-10-31"
+    ],
+    "missing": [
+      "2025-05-29",
+      "2025-08-11"
+    ],
+    "jaccard": 0.8
+  },
+  "dptc": {
+    "Q95": {
+      "entry": "2025-03-26",
+      "actions": 10,
+      "rescue": 4,
+      "broken": 6,
+      "net": -2,
+      "precision": 0.4,
+      "action_set": {
+        "new_n": 10,
+        "old_n": 9,
+        "matched": 9,
+        "added": [
+          "2025-04-17"
+        ],
+        "missing": [],
+        "jaccard": 0.9
+      },
+      "mode_match_on_shared": 1.0
+    },
+    "Q99": {
+      "entry": "2025-03-26",
+      "actions": 9,
+      "rescue": 3,
+      "broken": 6,
+      "net": -3,
+      "precision": 0.3333333333333333,
+      "action_set": {
+        "new_n": 9,
+        "old_n": 8,
+        "matched": 8,
+        "added": [
+          "2025-04-17"
+        ],
+        "missing": [],
+        "jaccard": 0.8888888888888888
+      },
+      "mode_match_on_shared": 1.0
+    }
+  },
+  "decision_invariance_pass_90pct": false,
+  "status": "DOWNSTREAM_DECISION_INVARIANCE_REQUIRES_REVIEW",
+  "interpretation": "Source differences materially change Handoff/DPTC decisions; do not call a 2023-2024 replay equivalent without further mechanism-level diagnosis."
+}
