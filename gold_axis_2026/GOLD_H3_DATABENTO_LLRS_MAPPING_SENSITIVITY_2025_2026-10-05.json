@@ -1,0 +1,91 @@
+{
+  "schema": "GOLD_H3_DATABENTO_LLRS_MAPPING_SENSITIVITY_2025_V1",
+  "date": "2026-10-05",
+  "selection_rule": "label-free Yahoo-vs-Databento Handoff alarm agreement; no RESCUE/BROKEN outcomes",
+  "estimated_cost_usd": 1.56811259687,
+  "cost_by_roll_usd": {
+    "c": 0.409718677402,
+    "n": 0.579266324639,
+    "v": 0.579127594829
+  },
+  "cost_cap_usd": 1.6,
+  "ifbc_mapping_fixed": {
+    "GC": "v",
+    "SI": "v"
+  },
+  "candidate_configs": [
+    "BASE",
+    "GC_n",
+    "SI_n",
+    "NQ_c",
+    "NQ_n",
+    "ZN_v",
+    "CL_v"
+  ],
+  "best_config": "SI_n",
+  "frozen_mapping_candidate": {
+    "GC": "v",
+    "SI": "n",
+    "NQ": "v",
+    "ZN": "n",
+    "CL": "c"
+  },
+  "best_handoff": {
+    "new_n": 33,
+    "old_n": 30,
+    "matched": 28,
+    "jaccard": 0.8,
+    "added": [
+      "2025-04-17",
+      "2025-08-05",
+      "2025-08-06",
+      "2025-09-26",
+      "2025-10-31"
+    ],
+    "missing": [
+      "2025-05-29",
+      "2025-08-11"
+    ]
+  },
+  "source_bridge_handoff_pass_90pct": false,
+  "postfreeze_dptc_transport": {
+    "Q95": {
+      "actions": 10,
+      "rescue": 4,
+      "broken": 6,
+      "net": -2,
+      "entry": "2025-03-26",
+      "action_set": {
+        "new_n": 10,
+        "old_n": 9,
+        "matched": 9,
+        "jaccard": 0.9,
+        "added": [
+          "2025-04-17"
+        ],
+        "missing": []
+      }
+    },
+    "Q99": {
+      "actions": 9,
+      "rescue": 3,
+      "broken": 6,
+      "net": -3,
+      "entry": "2025-03-26",
+      "action_set": {
+        "new_n": 9,
+        "old_n": 8,
+        "matched": 8,
+        "jaccard": 0.8888888888888888,
+        "added": [
+          "2025-04-17"
+        ],
+        "missing": []
+      }
+    }
+  },
+  "postfreeze_dptc_action_pass_90pct": false,
+  "status": "LABEL_FREE_SOURCE_BRIDGE_REQUIRES_REVIEW",
+  "raw_vendor_values_committed": false,
+  "thresholds_retuned": false
+}
