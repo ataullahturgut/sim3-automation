@@ -46,7 +46,7 @@ Detailed grids, scripts, run IDs, intermediate diagnostics and row-level evidenc
 
 The active problem is:
 
-> At an origin-safe daily feature cutoff, predict whether XAU/USD will be UP or DOWN over the next three retained business-day observations.
+> At an origin-safe daily feature cutoff, predict whether XAU/USD will be UP or DOWN over the next three retained Gold observation dates.
 
 Primary target:
 
@@ -955,12 +955,21 @@ If new research is opened before enough prospective evidence accumulates, it mus
 - GOLD_H3_CLEAN_PROSPECTIVE_V1_FREEZE_2026-10-03.md
 - GOLD_H3_DATA_INTEGRITY_GATE_V1_REPLAY_RESULT_2026-10-03.md
 - GOLD_H3_IRIS_V1_RESULT_2026-10-02.md
+- GOLD_H3_IRIS_RETURN_V1_RESULT_2026-10-02.md
+- GOLD_H3_SENTRY_V1_RESULT_2026-10-02.md
+- GOLD_H3_DART_V1_RESULT_2026-10-02.md
 - GOLD_H3_AURORA_V1_RESULT_2026-10-02.md
 
 ### Reversal architecture
 
 - GOLD_H3_HELIOS_V5_DCE_RESULT_2026-10-03.md
+- GOLD_H3_MULTI_SPECIALIST_PHASE1_9_CLOSURE_2026-10-03.md
+- GOLD_H3_RTE_V1_V4_CLOSURE_2026-10-03.md
+- GOLD_H3_RC_RTE_V1_V2_CLOSURE_2026-10-04.md
+- GOLD_H3_FRS_V1_CLOSURE_2026-10-04.md
+- GOLD_H3_TRES_V1_V2_CLOSURE_2026-10-04.md
 - GOLD_H3_REMAINING53_SIGNAL_AUDIT_RESULT_2026-10-04.md
+- GOLD_H3_HANDOFF_STATE_MACHINE_V1_RESULT_2026-10-04.md
 - GOLD_H3_SAGE_V1_CLOSURE_2026-10-04.md
 - GOLD_H3_SAGE_V2_EXCEPTION_ONLY_PROSPECTIVE_FREEZE_2026-10-04.md
 - GOLD_H3_RULEFLOW_V3_TOPOLOGY_DIAGNOSTIC_2026-10-04.md
