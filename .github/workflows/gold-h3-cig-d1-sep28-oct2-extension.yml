@@ -1,4 +1,4 @@
-name: Gold CIG-D1 Sep28-Oct2 Extension
+name: Gold CIG-D1 Sep28-Oct2 Extension\n# retrigger after datetime-parser fix
 
 on:
   push:
