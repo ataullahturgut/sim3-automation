@@ -1,0 +1,38 @@
+name: Gold H3 Topology Competence Gate V1
+
+on:
+  push:
+    branches: [gold-h3-oct5-diagnostic-nowcast-20261005]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_topology_competence_gate_v1.py'
+      - '.github/workflows/gold-h3-topology-competence-gate-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-oct5-diagnostic-nowcast-20261005
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scipy>=1.14,<2'
+      - run: python gold_axis_2026/tools/gold_h3_topology_competence_gate_v1.py
+      - name: Record topology gate evidence
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add             gold_axis_2026/GOLD_H3_TOPOLOGY_COMPETENCE_GATE_V1_2026-10-05.json             gold_axis_2026/GOLD_H3_TOPOLOGY_COMPETENCE_GATE_V1_2026-10-05.md             gold_axis_2026/GOLD_H3_TOPOLOGY_COMPETENCE_GATE_V1_RESULTS_2026-10-05.csv             gold_axis_2026/GOLD_H3_TOPOLOGY_COMPETENCE_GATE_V1_ACTIONS_2026-10-05.csv
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record topology competence gate v1'
+            git pull --rebase origin gold-h3-oct5-diagnostic-nowcast-20261005
+            git push origin HEAD:gold-h3-oct5-diagnostic-nowcast-20261005
+          fi
