@@ -1,0 +1,43 @@
+name: Gold MORNING-D1 V1
+
+on:
+  push:
+    branches: [gold-h3-competence-transition-program-v1-20261005]
+    paths:
+      - 'gold_axis_2026/tools/gold_morning_d1_v1.py'
+      - '.github/workflows/gold-morning-d1-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-competence-transition-program-v1-20261005
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'requests>=2.31,<3'
+      - run: python gold_axis_2026/tools/gold_morning_d1_v1.py
+      - name: Record morning nowcast evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/MORNING_D1_V1_OUT/MORNING_D1_V1_RESULT.md gold_axis_2026/GOLD_MORNING_D1_V1_RESULT_2026-10-05.md
+          cp gold_axis_2026/MORNING_D1_V1_OUT/MORNING_D1_V1_RESULT.json gold_axis_2026/GOLD_MORNING_D1_V1_RESULT_2026-10-05.json
+          cp gold_axis_2026/MORNING_D1_V1_OUT/MORNING_D1_V1_SELECTION.csv gold_axis_2026/GOLD_MORNING_D1_V1_SELECTION_2026-10-05.csv
+          cp gold_axis_2026/MORNING_D1_V1_OUT/MORNING_D1_V1_THRESHOLDS.csv gold_axis_2026/GOLD_MORNING_D1_V1_THRESHOLDS_2026-10-05.csv
+          cp gold_axis_2026/MORNING_D1_V1_OUT/MORNING_D1_V1_2026_PREDICTIONS.csv gold_axis_2026/GOLD_MORNING_D1_V1_2026_PREDICTIONS_2026-10-05.csv
+          cp gold_axis_2026/MORNING_D1_V1_OUT/MORNING_D1_V1_CIG_INTEGRATION.csv gold_axis_2026/GOLD_MORNING_D1_V1_CIG_INTEGRATION_2026-10-05.csv
+          git add gold_axis_2026/GOLD_MORNING_D1_V1_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record MORNING-D1 V1 nowcast results"
+            git pull --rebase origin gold-h3-competence-transition-program-v1-20261005
+            git push origin HEAD:gold-h3-competence-transition-program-v1-20261005
+          fi
