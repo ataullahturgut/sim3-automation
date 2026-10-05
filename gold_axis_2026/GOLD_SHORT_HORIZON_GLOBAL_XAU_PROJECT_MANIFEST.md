@@ -1065,6 +1065,7 @@ If new research is opened before enough prospective evidence accumulates, it mus
 - GOLD_H3_2025_BACKFILL_DPTC_SUMMARY_2026-10-05.json
 - GOLD_H3_HOURLY_HISTORY_DEPTH_PROBE_2026-10-05.md
 - GOLD_H3_2023_TWELVE_FUTURES_BRIDGE_PROBE_2026-10-05.md
+- GOLD_H3_2023_SOURCE_RECOVERY_AUDIT_2026-10-05.md
 
 ### Latest diagnostic issuance
 
