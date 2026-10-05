@@ -98,6 +98,21 @@ Every result in this project must be interpreted under one of the following evid
 
 **Binding rule:** A higher retrospective accuracy does not outrank a lower but genuinely prospective result merely because the number is larger.
 
+### 3.1 Methodological controls
+
+The project uses chronological, origin-safe evaluation rather than random train/test splitting.
+
+Core controls:
+
+- features may use only information available by the declared feature cutoff;
+- future H3 outcomes may enter adaptive state only after maturity;
+- early Global-XAU model selection used pre-2025 history, with 2025 frozen transport and 2026 reporting/stress;
+- once later 2025/2026 outcomes were inspected for reversal-mechanism development, those periods were explicitly reclassified as **retrospective development evidence** for the affected mechanisms;
+- no method may regain “OOS” status after its evaluation period has been consumed;
+- overlapping H3 targets are serially dependent and are not treated as independent Bernoulli trials;
+- dependence-aware moving-block bootstrap or other chronology-aware tests are preferred for inferential comparisons;
+- missing eligible prospective origins are recorded rather than outcome-aware backfilled.
+
 ---
 
 ## 4. Data and timing authority
@@ -230,6 +245,29 @@ The selected A1+PATH representation produced:
 Timing/placebo tests supported the interpretation that recent intraday path information carried real incremental information.
 
 **Scientific turning point:** the project stopped treating the problem as a purely daily-feature classification problem.
+
+#### Secondary numerical H3 return head
+
+IRIS also produced a separately governed numerical return head:
+
+**IRIS_H3_RETURN_V1**
+
+Frozen model:
+- ElasticNet alpha 0.0005;
+- same origin-safe IRIS information set;
+- causal 80% conformal interval.
+
+Key transport result:
+
+| Period | MAE | Sign accuracy | Mean 80% interval width |
+|---|---:|---:|---:|
+| 2025 | 1.37% | 65.32% | 3.90% |
+| 2026 | 2.57% | 60.21% | 5.65% |
+
+Interpretation:
+- directional sign transports better than exact return magnitude;
+- 2026 magnitude uncertainty expands materially;
+- this head is retained as a **secondary magnitude/uncertainty output** and does not override the primary direction architecture.
 
 ---
 
@@ -590,12 +628,12 @@ The following table is the correct way to quote the project as of 2026-10-05.
 | Layer / system | 2026 result | BA | Evidence status | Interpretation |
 |---|---:|---:|---|---|
 | Clean AURORA | 58.64% | 59.02% | retrospective clean baseline | adaptive base router |
-| Clean HELIOS V5-DCE | **121/191 = 63.35%** | **63.76%** | binding clean retrospective champion | current core direction engine |
+| Clean HELIOS V5-DCE | **121/191 = 63.35%** | **63.76%** | authoritative clean retrospective champion | retrospective champion; prospective V5 shadow |
 | SAGE V2 exception-only | **125/191 = 65.45%** | 65.81% | retrospective development; frozen shadow | rare OCS exception |
 | SAGE V2 + RuleFlow V3-TG | **126/191 = 65.97%** | **66.31%** | retrospective combined reference | competence-research baseline |
-| + frozen SELLR action | **127/191 = 66.49%** | **66.81%** | frozen pre-2026 threshold, very low coverage | cleanest incremental competence evidence |
+| Frozen SELLR single-action test | **127/191 = 66.49%** | **66.81%** | threshold selected on 2025 before 2026 stress; very low coverage | temporally pre-frozen incremental evidence |
 | BOCPD V4 | 132/191 = **69.11%** | 69.36% | post-hoc development | robust competence-state diagnostic |
-| SELLR-triggered persistent state | 133/191 = **69.63%** | 69.86% | post-hoc synthesis | competence transition challenger |
+| STCR — SELLR-triggered persistent competence state | 133/191 = **69.63%** | 69.86% | post-hoc synthesis | competence-transition challenger |
 | DPTC-Q99 | 134/191 = **70.16%** | 70.36% | post-hoc development challenger | strict shadow variant |
 | DPTC-Q95 | **135/191 = 70.68%** | **70.86%** | post-hoc development challenger | strongest development result |
 
@@ -654,7 +692,7 @@ The following methods are retained here only so future work does not unknowingly
 | Static KMeans latent regimes | Weak separation; no reliable Handoff gate | Static regime classification rejected. |
 | Direct Handoff state machine | 3 rescue / 3 broken in selected 2025 variant | Handoff is not a deterministic FLIP signal. |
 | Generic label-free marginal drift | Did not locate competence transition | Problem is dependence/conditional structure, not simple marginal drift. |
-| MCP / duration / historical-analogue competence mechanisms | Did not pass the pre-2026 tournament gate | SELLR was the only retained tournament signal. |
+| Alternative competence mechanisms: change-point, duration/hazard and historical analogue candidates | Did not pass the pre-2026 tournament gate | SELLR was the only retained tournament signal. |
 
 This table does **not** mean blocked methods are scientifically false. It distinguishes negative empirical evidence from missing-data/access constraints.
 
@@ -887,7 +925,7 @@ This is the conceptual basis of DPTC.
 - **Prospective baseline:** CLEAN_AURORA_H3_V1_PROSPECTIVE.
 - **Prospective V5 status:** CLEAN_V5_DCE_H3_V1_PROSPECTIVE_SHADOW.
 - **Reference combined retrospective system:** SAGE V2 + RuleFlow V3-TG — 126/191.
-- **Best pre-2026-frozen incremental competence evidence:** SELLR — 1/1 rescue in 2026.
+- **Temporally pre-frozen incremental competence evidence:** SELLR threshold selected on 2025, then 1/1 rescue in its 2026 stress.
 - **Strongest development challenger:** DPTC-Q95 — 135/191 = 70.68%.
 - **Prospective performance:** NOT YET ESTABLISHED; zero CLEAN prospective forecast/settlement rows at the evidence cutoff.
 
