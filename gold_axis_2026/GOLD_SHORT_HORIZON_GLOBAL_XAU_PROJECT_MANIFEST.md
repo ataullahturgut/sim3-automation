@@ -1,6 +1,6 @@
 # GOLD SHORT-HORIZON GLOBAL XAU — MASTER PROJECT MANIFEST
 
-**Manifest version:** 3.3  
+**Manifest version:** 3.4  
 **Effective date:** 2026-10-05  
 **Document class:** CANONICAL MASTER RESEARCH MANIFEST / DECISION AUTHORITY  
 **Scope:** Global XAU/USD short-horizon H3 direction research  
@@ -16,6 +16,7 @@
 | Prospective baseline | **CLEAN_AURORA_H3_V1_PROSPECTIVE** |
 | Prospective V5 status | **CLEAN_V5_DCE_H3_V1_PROSPECTIVE_SHADOW** |
 | Advanced competence challenger | **DPTC_H3_V1 Q95 + Q99 — frozen future shadow, post-hoc development** |
+| Topology competence challenger | **TCG_V1 — strong-pro-risk gate over DPTC, post-hoc challenger** |
 | First eligible CLEAN prospective feature cutoff | **2026-10-05** |
 | Prospective performance | **NOT YET ESTABLISHED** |
 
@@ -669,11 +670,67 @@ The contrast is now sharper:
 
 This strengthens the interpretation of DPTC as a **regime/competence-conditioned controller**, not an always-on reversal layer.
 
-Exact 2023 DPTC reconstruction remains source-blocked: Yahoo 1h historical access currently enforces a 730-day window; no matching 2023 five-futures hourly archive exists in the repository; the connected Twelve Data probe did not expose a usable CME-futures bridge. No proxy result is substituted.
+The earlier 2023 source block was subsequently resolved with Databento CME futures history. Because Databento continuous-contract stitching is not byte-identical to Yahoo =F, the pre-2025 replay is governed as a **source-bridged historical reconstruction**, not exact Yahoo lineage.
 
-The 70.68% result is therefore **not the proven prospective accuracy of the project**.
+Source-robust Databento replay used seven admissible fixed roll mappings without choosing the source by DPTC performance:
+
+- 2023 Q95/Q99 net contribution ranged **-1 to +1** across source mappings; 6/7 mappings were +1 and one was -1. Interpretation: weak / source-sensitive.
+- 2024 Q95/Q99 net contribution ranged **-3 to -2**; all 7/7 mappings were negative. Interpretation: robust historical failure.
+- Adding the already-frozen pre-2025 RuleFlow calls did not change the sign pattern.
+- SAGE was not backcast into 2023-2024 because its current frozen source contract did not exist there.
+
+A subsequent mechanism diagnostic found that generic structural-anomaly intensity did not explain DPTC competence. The more specific **strong-pro-risk topology** did:
+
+- Gold-Nasdaq dependence positive;
+- Gold-VIX dependence negative;
+- frozen significance condition satisfied.
+
+A label-free multiview structural change-point was located at **2026-03-16** (block-permutation p = **0.0175**), while the established dependence-phase onset remained **2026-04-30**. This supports a two-stage interpretation: structural transition first, then a more stable competence-bearing topology.
+
+The 70.68% DPTC-Q95 result is therefore **not the proven prospective accuracy of the project**.
 
 DPTC is frozen for future shadow evaluation.
+
+---
+
+### Phase N — Topology Competence Gate V1 (TCG-V1)
+
+The competence diagnosis was converted into a deliberately simple label-free gate over DPTC.
+
+**Primary frozen challenger rule:**
+
+> Allow a DPTC flip only when the already-defined `strong_pro_risk` topology is TRUE.
+
+This rule was not numerically optimized on RESCUE/BROKEN outcomes. It uses the previously frozen dependence-state definition.
+
+Historical action audit:
+
+| Year | Ungated DPTC Q95 | TCG-V1 gated |
+|---|---:|---:|
+| 2023 | 6 rescue / 5 broken = **+1** | 0 actions = **0** |
+| 2024 | 2 / 4 = **-2** | 0 actions = **0** |
+| 2025 | 4 / 5 = **-1** | 2 / 1 = **+1** |
+| 2026 | 11 / 2 = **+9** | 9 / 2 = **+7** |
+
+Across the harmonized 2023-2026 action sample:
+
+- ungated DPTC: 39 actions, 23 rescue / 16 broken, net **+7**, action precision 59.0%;
+- TCG-V1: 14 actions, 11 rescue / 3 broken, net **+8**, action precision **78.6%**;
+- RESCUE odds inside the primary gate versus rejected actions: **3.97x**, Fisher exact p = **0.0930**.
+
+Exact Yahoo-lineage 2025-2026 projection under the primary gate:
+
+- 2025: baseline 171/248 -> **172/248 = 69.35%**;
+- 2026: baseline 126/191 -> **133/191 = 69.63%**;
+- combined: 297/439 -> **305/439 = 69.48%**.
+
+A sensitivity-only oil-decoupling gate was also tested:
+
+> strong-pro-risk AND corr(Gold, WTI/CL) < 0.
+
+It produced 12 actions, 10 rescue / 2 broken, net **+8**, precision **83.3%**. This oil condition is **not binding** because its apparent usefulness was discovered during consumed retrospective diagnosis. It remains a challenger/sensitivity signal only.
+
+**Scientific status:** POST-HOC TOPOLOGY-GATE CHALLENGER. It must be prospectively shadow-tested before promotion.
 
 ---
 
@@ -690,6 +747,7 @@ The following table is the correct way to quote the project as of 2026-10-05.
 | Direct frozen SELLR trigger on canonical Handoff | **127/191 = 66.49%** | **66.81%** | threshold selected on 2025 before 2026 stress; exactly one 2026 fire (2026-05-21) | temporally pre-frozen incremental evidence |
 | BOCPD V4 | 132/191 = **69.11%** | 69.36% | post-hoc development | robust competence-state diagnostic |
 | STCR — SELLR-triggered persistent competence state | 133/191 = **69.63%** | 69.86% | post-hoc synthesis | competence-transition challenger |
+| TCG-V1 over DPTC-Q95 | **133/191 = 69.63%** | not separately re-scored here | post-hoc topology-gate challenger | sacrifices some 2026 gain to suppress 2024/2025 harm |
 | DPTC-Q99 | 134/191 = **70.16%** | 70.36% | post-hoc development challenger | strict shadow variant |
 | DPTC-Q95 | **135/191 = 70.68%** | **70.86%** | post-hoc development challenger | strongest development result |
 
@@ -702,6 +760,7 @@ May be claimed:
 - The pre-2026-frozen SELLR threshold fired exactly once on a canonical 2026 Handoff origin (2026-05-21); that FLIP rescued a baseline error.
 - Multiple methodologically distinct analyses converge on a competence transition around late April-May 2026.
 - DPTC reached 70.68% in post-hoc development and has been frozen for future shadow testing.
+- TCG-V1 reduced historical DPTC action count while removing the robust 2024 loss and changing 2025 from net -1 to net +1; this remains post-hoc challenger evidence.
 
 Must **not** be claimed:
 
@@ -798,6 +857,17 @@ The project should now be understood as a layered system rather than a single cl
 
 This layer is currently **shadow research**, not promoted production authority.
 
+### Layer 6 — Topology competence gate
+
+**TCG-V1**
+
+- permits DPTC intervention only inside the frozen strong-pro-risk topology;
+- primary rule uses Gold-Nasdaq positive / Gold-VIX negative dependence with the existing significance condition;
+- suppresses DPTC in 2023-2024 source-robust backcast and retains selective 2025-2026 actions;
+- oil-decoupling is sensitivity telemetry only, not part of the binding V1 rule.
+
+TCG-V1 is a **post-hoc shadow challenger**, not a promoted authority.
+
 ---
 
 ## 9. Prospective governance from 2026-10-05
@@ -854,6 +924,22 @@ Both DPTC-Q95 and DPTC-Q99 remain frozen in parallel from 2026-10-05 onward.
 Future outcomes may compare them, but may not be used to choose one retrospectively, redefine their thresholds or alter the trust-state logic.
 
 DPTC promotion requires genuinely prospective evidence.
+
+### 9.5 TCG-V1 governance
+
+TCG-V1 is frozen as a separate topology-gated DPTC shadow challenger.
+
+Binding V1 rule:
+
+- DPTC action eligible only when `strong_pro_risk == TRUE` under the existing label-free dependence definition.
+
+The following are **not** binding V1 additions:
+
+- Gold-oil negative-correlation filter;
+- persistence >= 3 origins;
+- any retrospective threshold chosen to maximize rescue precision.
+
+These remain sensitivity hypotheses. TCG-V1 must accumulate genuinely prospective action-level evidence before any promotion decision.
 
 ---
 
@@ -966,9 +1052,12 @@ external opposition / lead-lag pressure
 → Handoff condition appears  
 → whether the Handoff should be trusted depends on a changing cross-asset dependence phase  
 → SELLR / competence evidence confirms the transition  
-→ hysteresis prevents single noisy outcomes from immediately switching trust off.
+→ hysteresis prevents single noisy outcomes from immediately switching trust off  
+→ TCG-V1 asks whether the competence-bearing strong-pro-risk topology is actually present before allowing the DPTC intervention.
 
-This is the conceptual basis of DPTC.
+The mechanism diagnostic suggests that generic structural shock intensity is insufficient. The relevant state is more specific: a changed cross-asset topology, especially Gold-Nasdaq positive and Gold-VIX negative dependence. Gold-WTI decoupling is a promising but non-binding secondary diagnostic.
+
+This is the conceptual basis of DPTC + TCG-V1.
 
 ---
 
@@ -983,6 +1072,7 @@ This is the conceptual basis of DPTC.
 - **Reference combined retrospective system:** SAGE V2 + RuleFlow V3-TG — 126/191.
 - **Temporally pre-frozen incremental competence evidence:** SELLR threshold selected on 2025, then 1/1 rescue in its 2026 stress.
 - **Strongest development challenger:** DPTC-Q95 — 135/191 = 70.68%.
+- **Topology competence challenger:** TCG-V1 over DPTC-Q95 — 2026 projected 133/191 = 69.63%, while suppressing the robust 2024 historical loss and changing 2025 net contribution from -1 to +1.
 - **Prospective performance:** NOT YET ESTABLISHED; zero CLEAN prospective forecast/settlement rows at the evidence cutoff.
 
 ### Historical contribution audit completed
@@ -994,15 +1084,20 @@ Key findings:
 - RuleFlow V3-TG is **not** an unconditional improvement: its fixed-rule backcast produced net **-1** in 2023 and net **-1** in 2024.
 - SAGE V2 exception-only adds **+1 net correct call in 2025** and **+4 in 2026** on its available exact source coverage.
 - The full reconstructed 2025 V5 + SAGE + RuleFlow reference is **171/248 = 68.95%**, BA **67.13%**.
-- After the missing 2025 Handoff state is reconstructed, DPTC is **not neutral**: Q95 is **-1 net** and Q99 **-2 net**.
-- In contrast, 2026 development remains strongly positive: Q95 **+9**, Q99 **+8**.
-- Exact 2023 DPTC replay remains source-blocked; no proxy/synthetic result is substituted.
-- The evidence therefore supports a **regime/competence-conditioned controller interpretation**, not an always-on reversal rule.
+- After the missing 2025 Handoff state is reconstructed, ungated DPTC is harmful in 2025: Q95 **-1 net**, Q99 **-2 net**.
+- Databento resolved the earlier pre-2025 source block. Source-robust replay shows 2023 is weak/source-sensitive (**-1..+1**) while 2024 is robustly negative across all seven mappings (**-3..-2**).
+- In contrast, 2026 ungated development is strongly positive: Q95 **+9**, Q99 **+8**.
+- Mechanism diagnosis found a label-free multiview structural break near **2026-03-16** and dependence-phase onset **2026-04-30**.
+- TCG-V1, using the frozen strong-pro-risk topology as a gate, yields historical net contribution **0 (2023), 0 (2024), +1 (2025), +7 (2026)** in the harmonized Q95 action audit.
+- The oil-decoupling condition improves retrospective selectivity in sensitivity analysis but is not part of the binding TCG-V1 rule.
+- The evidence therefore supports a **topology/competence-conditioned controller interpretation**, not an always-on reversal rule.
 
 Authorities:
 - `GOLD_H3_LATEST_MODELS_HISTORICAL_CONTRIBUTION_AUDIT_2026-10-05.md`
 - `GOLD_H3_2025_BACKFILL_DPTC_RESULT_2026-10-05.md`
-- `GOLD_H3_2025_BACKFILL_DPTC_SUMMARY_2026-10-05.json`
+- `GOLD_H3_DPTC_2023_2024_DATABENTO_SOURCE_ROBUST_REPLAY_2026-10-05.md`
+- `GOLD_H3_DPTC_COMPETENCE_MECHANISM_DIAGNOSTIC_V1_2026-10-05.md`
+- `GOLD_H3_TOPOLOGY_COMPETENCE_GATE_V1_2026-10-05.md`
 
 ### Next work
 
@@ -1011,12 +1106,14 @@ The next phase is **not another unrestricted retrospective threshold search**.
 Priority order:
 
 1. run the frozen clean prospective pipeline on every valid future origin;
-2. keep SAGE V2, RuleFlow V3-TG and both DPTC variants as separately identifiable shadow layers;
-3. preserve the completed historical contribution audit as negative/positive transport evidence;
+2. keep SAGE V2, RuleFlow V3-TG, both ungated DPTC variants and TCG-V1 as separately identifiable shadow layers;
+3. preserve the completed 2023-2026 historical/source-robust contribution audit as negative/positive transport evidence;
 4. record MISS rather than backfill when source timing fails;
 5. accumulate prospective action-level rescue/broken evidence;
 6. compare probability quality, direction accuracy and balanced accuracy on identical origins;
-7. promote only after a preregistered prospective evidence gate is met.
+7. compare TCG-V1 against ungated DPTC on exactly the same future Handoff opportunities;
+8. keep the oil-decoupling condition as non-binding telemetry unless a separately preregistered future version is opened;
+9. promote only after a preregistered prospective evidence gate is met.
 
 If new research is opened before enough prospective evidence accumulates, it must address a **new information/mechanism question**, not retune the consumed 2026 development period.
 
@@ -1230,6 +1327,10 @@ It may not be used to:
 - GOLD_H3_HOURLY_HISTORY_DEPTH_PROBE_2026-10-05.md
 - GOLD_H3_2023_TWELVE_FUTURES_BRIDGE_PROBE_2026-10-05.md
 - GOLD_H3_2023_SOURCE_RECOVERY_AUDIT_2026-10-05.md
+- GOLD_H3_DATABENTO_YAHOO_SOURCE_BRIDGE_V2_2026-10-05.md
+- GOLD_H3_DPTC_2023_2024_DATABENTO_SOURCE_ROBUST_REPLAY_2026-10-05.md
+- GOLD_H3_DPTC_COMPETENCE_MECHANISM_DIAGNOSTIC_V1_2026-10-05.md
+- GOLD_H3_TOPOLOGY_COMPETENCE_GATE_V1_2026-10-05.md
 
 ### Daily action / CIG-D1
 
