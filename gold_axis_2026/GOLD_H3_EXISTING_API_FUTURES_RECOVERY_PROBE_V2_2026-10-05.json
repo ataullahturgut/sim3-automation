@@ -1,0 +1,633 @@
+{
+  "schema": "GOLD_H3_EXISTING_API_FUTURES_RECOVERY_PROBE_V2",
+  "date": "2026-10-05",
+  "purpose": "Test existing API stack for exact 1h historical GC/SI/NQ/ZN/CL recovery before licensed-source purchase.",
+  "raw_market_values_logged": false,
+  "database_writes": false,
+  "frozen_model_changed": false,
+  "targets": {
+    "GC": {
+      "name": "COMEX Gold futures",
+      "searches": [
+        {
+          "query": "COMEX Gold Futures",
+          "http": 200,
+          "status": "ok",
+          "code": null,
+          "message": null,
+          "matching_rows": [],
+          "total_rows": 0
+        },
+        {
+          "query": "Gold Futures CME",
+          "http": 200,
+          "status": "ok",
+          "code": null,
+          "message": null,
+          "matching_rows": [],
+          "total_rows": 0
+        }
+      ],
+      "direct_tests": [
+        {
+          "symbol": "GC",
+          "exchange_request": "COMEX",
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        },
+        {
+          "symbol": "GC",
+          "exchange_request": "CME",
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        },
+        {
+          "symbol": "GC=F",
+          "exchange_request": null,
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        },
+        {
+          "symbol": "GC1!",
+          "exchange_request": null,
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        }
+      ],
+      "commodity_proxy_candidates": [
+        {
+          "symbol": "GAU/EUR",
+          "name": "Gold Gram"
+        },
+        {
+          "symbol": "GAU/GBP",
+          "name": "Gold Gram"
+        },
+        {
+          "symbol": "GAU/IDR",
+          "name": "Gold Gram"
+        },
+        {
+          "symbol": "GAU/TRY",
+          "name": "Gold Gram"
+        },
+        {
+          "symbol": "GAU/USD",
+          "name": "Gold Gram"
+        },
+        {
+          "symbol": "XAU/AUD",
+          "name": "Gold Spot"
+        },
+        {
+          "symbol": "XAU/CAD",
+          "name": "Gold Spot"
+        },
+        {
+          "symbol": "XAU/CHF",
+          "name": "Gold Spot"
+        },
+        {
+          "symbol": "XAU/EUR",
+          "name": "Gold Spot"
+        },
+        {
+          "symbol": "XAU/GBP",
+          "name": "Gold Spot"
+        },
+        {
+          "symbol": "XAU/HKD",
+          "name": "Gold Spot"
+        },
+        {
+          "symbol": "XAU/JPY",
+          "name": "Gold Spot"
+        },
+        {
+          "symbol": "XAU/NZD",
+          "name": "Gold Spot"
+        },
+        {
+          "symbol": "XAU/SGD",
+          "name": "Gold Spot"
+        },
+        {
+          "symbol": "XAU/USD",
+          "name": "Gold Spot"
+        },
+        {
+          "symbol": "XAU/XAG",
+          "name": "Gold Spot"
+        }
+      ],
+      "commodity_proxy_test": {
+        "catalog_row": {
+          "symbol": "GAU/EUR",
+          "name": "Gold Gram"
+        },
+        "test_2023": {
+          "http": 404,
+          "status": "error",
+          "code": 404,
+          "message": "This symbol is available starting with the Grow or Venture plan. Consider upgrading now at https://twelvedata.com/pricing",
+          "meta": {},
+          "n": 0,
+          "first": null,
+          "last": null,
+          "has_volume": false
+        },
+        "status": "PROXY_ONLY_NOT_DPTC_EXACT"
+      },
+      "exact_2023_available": false
+    },
+    "SI": {
+      "name": "COMEX Silver futures",
+      "searches": [
+        {
+          "query": "COMEX Silver Futures",
+          "http": 200,
+          "status": "ok",
+          "code": null,
+          "message": null,
+          "matching_rows": [],
+          "total_rows": 0
+        },
+        {
+          "query": "Silver Futures CME",
+          "http": 200,
+          "status": "ok",
+          "code": null,
+          "message": null,
+          "matching_rows": [],
+          "total_rows": 0
+        }
+      ],
+      "direct_tests": [
+        {
+          "symbol": "SI",
+          "exchange_request": "COMEX",
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        },
+        {
+          "symbol": "SI",
+          "exchange_request": "CME",
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        },
+        {
+          "symbol": "SI=F",
+          "exchange_request": null,
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        },
+        {
+          "symbol": "SI1!",
+          "exchange_request": null,
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        }
+      ],
+      "commodity_proxy_candidates": [
+        {
+          "symbol": "XAG/AUD",
+          "name": "Silver Spot"
+        },
+        {
+          "symbol": "XAG/CAD",
+          "name": "Silver Spot"
+        },
+        {
+          "symbol": "XAG/CHF",
+          "name": "Silver Spot"
+        },
+        {
+          "symbol": "XAG/EUR",
+          "name": "Silver Spot"
+        },
+        {
+          "symbol": "XAG/GBP",
+          "name": "Silver Spot"
+        },
+        {
+          "symbol": "XAGg/EUR",
+          "name": "Gram Silver"
+        },
+        {
+          "symbol": "XAGg/TRY",
+          "name": "Gram Silver"
+        },
+        {
+          "symbol": "XAGg/USD",
+          "name": "Gram Silver"
+        },
+        {
+          "symbol": "XAG/TRY",
+          "name": "Silver Spot"
+        },
+        {
+          "symbol": "XAG/USD",
+          "name": "Silver Spot"
+        }
+      ],
+      "commodity_proxy_test": {
+        "catalog_row": {
+          "symbol": "XAG/AUD",
+          "name": "Silver Spot"
+        },
+        "test_2023": {
+          "http": 404,
+          "status": "error",
+          "code": 404,
+          "message": "This symbol is available starting with the Grow or Venture plan. Consider upgrading now at https://twelvedata.com/pricing",
+          "meta": {},
+          "n": 0,
+          "first": null,
+          "last": null,
+          "has_volume": false
+        },
+        "status": "PROXY_ONLY_NOT_DPTC_EXACT"
+      },
+      "exact_2023_available": false
+    },
+    "NQ": {
+      "name": "E-mini Nasdaq-100 futures",
+      "searches": [
+        {
+          "query": "E-mini Nasdaq 100 Futures",
+          "http": 200,
+          "status": "ok",
+          "code": null,
+          "message": null,
+          "matching_rows": [],
+          "total_rows": 0
+        },
+        {
+          "query": "Nasdaq 100 Futures CME",
+          "http": 200,
+          "status": "ok",
+          "code": null,
+          "message": null,
+          "matching_rows": [],
+          "total_rows": 0
+        }
+      ],
+      "direct_tests": [
+        {
+          "symbol": "NQ",
+          "exchange_request": "CME",
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        },
+        {
+          "symbol": "NQ=F",
+          "exchange_request": null,
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        },
+        {
+          "symbol": "NQ1!",
+          "exchange_request": null,
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        }
+      ],
+      "commodity_proxy_candidates": [],
+      "commodity_proxy_test": null,
+      "exact_2023_available": false
+    },
+    "ZN": {
+      "name": "10-Year U.S. Treasury Note futures",
+      "searches": [
+        {
+          "query": "10 Year Treasury Note Futures",
+          "http": 200,
+          "status": "ok",
+          "code": null,
+          "message": null,
+          "matching_rows": [],
+          "total_rows": 0
+        },
+        {
+          "query": "10Y Treasury Futures CBOT",
+          "http": 200,
+          "status": "ok",
+          "code": null,
+          "message": null,
+          "matching_rows": [],
+          "total_rows": 0
+        }
+      ],
+      "direct_tests": [
+        {
+          "symbol": "ZN",
+          "exchange_request": "CBOT",
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        },
+        {
+          "symbol": "ZN",
+          "exchange_request": "CME",
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        },
+        {
+          "symbol": "ZN=F",
+          "exchange_request": null,
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        },
+        {
+          "symbol": "ZN1!",
+          "exchange_request": null,
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        }
+      ],
+      "commodity_proxy_candidates": [],
+      "commodity_proxy_test": null,
+      "exact_2023_available": false
+    },
+    "CL": {
+      "name": "NYMEX WTI Crude Oil futures",
+      "searches": [
+        {
+          "query": "NYMEX WTI Crude Oil Futures",
+          "http": 200,
+          "status": "ok",
+          "code": null,
+          "message": null,
+          "matching_rows": [],
+          "total_rows": 0
+        },
+        {
+          "query": "Crude Oil Futures CME",
+          "http": 200,
+          "status": "ok",
+          "code": null,
+          "message": null,
+          "matching_rows": [],
+          "total_rows": 0
+        }
+      ],
+      "direct_tests": [
+        {
+          "symbol": "CL",
+          "exchange_request": "NYMEX",
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        },
+        {
+          "symbol": "CL",
+          "exchange_request": "CME",
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        },
+        {
+          "symbol": "CL=F",
+          "exchange_request": null,
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        },
+        {
+          "symbol": "CL1!",
+          "exchange_request": null,
+          "classification": "NOT_PROVEN_EXACT",
+          "test_2025": {
+            "http": 404,
+            "status": "error",
+            "code": 404,
+            "message": "**symbol** or **figi** parameter is missing or invalid. Please provide a valid symbol according to API documentation: https://twelvedata.com/docs#reference-data",
+            "meta": {},
+            "n": 0,
+            "first": null,
+            "last": null,
+            "has_volume": false
+          }
+        }
+      ],
+      "commodity_proxy_candidates": [
+        {
+          "symbol": "URALS/USD",
+          "name": "Urals Crude Oil Spot"
+        },
+        {
+          "symbol": "WTI/USD",
+          "name": "Crude Oil WTI Spot"
+        }
+      ],
+      "commodity_proxy_test": {
+        "catalog_row": {
+          "symbol": "URALS/USD",
+          "name": "Urals Crude Oil Spot"
+        },
+        "test_2023": {
+          "http": 404,
+          "status": "error",
+          "code": 404,
+          "message": "This symbol is available starting with the Grow or Venture plan. Consider upgrading now at https://twelvedata.com/pricing",
+          "meta": {},
+          "n": 0,
+          "first": null,
+          "last": null,
+          "has_volume": false
+        },
+        "status": "PROXY_ONLY_NOT_DPTC_EXACT"
+      },
+      "exact_2023_available": false
+    }
+  },
+  "frozen_panel_loaded": true,
+  "frozen_panel_first": "2025-01-02 05:00:00+00:00",
+  "frozen_panel_last": "2026-10-02 20:00:00+00:00",
+  "frozen_panel_rows": 9853,
+  "commodities_catalog": {
+    "http": 200,
+    "status": "ok",
+    "code": null,
+    "message": null
+  },
+  "exact_2023_channels": [],
+  "exact_2023_complete_five_channel_panel": false,
+  "conclusion": "EXACT_2023_FIVE_CHANNEL_RECOVERY_NOT_ESTABLISHED_FROM_EXISTING_TWELVE_API"
+}
