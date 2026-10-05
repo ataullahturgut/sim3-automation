@@ -1,0 +1,767 @@
+{
+  "schema": "GOLD_H3_TOPOLOGY_COMPETENCE_GATE_V1",
+  "date": "2026-10-05",
+  "status": "POSTHOC_TOPOLOGY_GATE_CHALLENGER",
+  "primary_gate_predeclared_before_evaluation": "TCG_V1_STRONG_PRO_RISK",
+  "primary": {
+    "primary_gate": "TCG_V1_STRONG_PRO_RISK",
+    "rule": "strong_pro_risk == TRUE (Gold-Nasdaq positive and Gold-VIX negative under the frozen dependence-phase definition)",
+    "year_results": {
+      "2023": {
+        "year": 2023,
+        "gate": "TCG_V1_STRONG_PRO_RISK",
+        "actions": 0,
+        "rescue": 0,
+        "broken": 0,
+        "net": 0,
+        "precision": null,
+        "jeffreys_lo": null,
+        "jeffreys_hi": null,
+        "dates": []
+      },
+      "2024": {
+        "year": 2024,
+        "gate": "TCG_V1_STRONG_PRO_RISK",
+        "actions": 0,
+        "rescue": 0,
+        "broken": 0,
+        "net": 0,
+        "precision": null,
+        "jeffreys_lo": null,
+        "jeffreys_hi": null,
+        "dates": []
+      },
+      "2025": {
+        "year": 2025,
+        "gate": "TCG_V1_STRONG_PRO_RISK",
+        "actions": 3,
+        "rescue": 2,
+        "broken": 1,
+        "net": 1,
+        "precision": 0.6666666666666666,
+        "jeffreys_lo": 0.17673609713125732,
+        "jeffreys_hi": 0.9612523822148348,
+        "dates": [
+          "2025-04-24",
+          "2025-10-24",
+          "2025-10-28"
+        ]
+      },
+      "2026": {
+        "year": 2026,
+        "gate": "TCG_V1_STRONG_PRO_RISK",
+        "actions": 11,
+        "rescue": 9,
+        "broken": 2,
+        "net": 7,
+        "precision": 0.8181818181818182,
+        "jeffreys_lo": 0.5327562089775548,
+        "jeffreys_hi": 0.9601730569150089,
+        "dates": [
+          "2026-04-30",
+          "2026-05-18",
+          "2026-05-21",
+          "2026-05-27",
+          "2026-06-01",
+          "2026-06-08",
+          "2026-06-29",
+          "2026-07-14",
+          "2026-07-17",
+          "2026-09-03",
+          "2026-09-24"
+        ]
+      }
+    },
+    "all": {
+      "year": "ALL",
+      "gate": "TCG_V1_STRONG_PRO_RISK",
+      "actions": 14,
+      "rescue": 11,
+      "broken": 3,
+      "net": 8,
+      "precision": 0.7857142857142857,
+      "jeffreys_lo": 0.5309763329064541,
+      "jeffreys_hi": 0.9356649224617775,
+      "dates": [
+        "2025-04-24",
+        "2025-10-24",
+        "2025-10-28",
+        "2026-04-30",
+        "2026-05-18",
+        "2026-05-21",
+        "2026-05-27",
+        "2026-06-01",
+        "2026-06-08",
+        "2026-06-29",
+        "2026-07-14",
+        "2026-07-17",
+        "2026-09-03",
+        "2026-09-24"
+      ]
+    },
+    "pre2026": {
+      "actions": 3,
+      "rescue": 2,
+      "broken": 1,
+      "net": 1,
+      "precision": 0.6666666666666666
+    },
+    "rejected_actions": {
+      "n": 25,
+      "rescue": 12,
+      "broken": 13,
+      "broken_share": 0.52
+    },
+    "enrichment": {
+      "odds_ratio": 3.9722222222222223,
+      "fisher_p": 0.09298282775348796
+    },
+    "leave_one_year_out": [
+      {
+        "omitted_year": 2023,
+        "actions": 14,
+        "rescue": 11,
+        "broken": 3,
+        "net": 8,
+        "precision": 0.7857142857142857
+      },
+      {
+        "omitted_year": 2024,
+        "actions": 14,
+        "rescue": 11,
+        "broken": 3,
+        "net": 8,
+        "precision": 0.7857142857142857
+      },
+      {
+        "omitted_year": 2025,
+        "actions": 11,
+        "rescue": 9,
+        "broken": 2,
+        "net": 7,
+        "precision": 0.8181818181818182
+      },
+      {
+        "omitted_year": 2026,
+        "actions": 3,
+        "rescue": 2,
+        "broken": 1,
+        "net": 1,
+        "precision": 0.6666666666666666
+      }
+    ],
+    "exact_accuracy_projection_2025_2026": {
+      "2025": {
+        "baseline_correct": 171,
+        "gated_correct": 172,
+        "n": 248,
+        "accuracy": 0.6935483870967742
+      },
+      "2026": {
+        "baseline_correct": 126,
+        "gated_correct": 133,
+        "n": 191,
+        "accuracy": 0.6963350785340314
+      },
+      "combined": {
+        "baseline_correct": 297,
+        "gated_correct": 305,
+        "n": 439,
+        "accuracy": 0.6947608200455581
+      }
+    }
+  },
+  "sensitivity_gates": {
+    "TCG_V1_PHASE": {
+      "all": {
+        "year": "ALL",
+        "gate": "TCG_V1_PHASE",
+        "actions": 14,
+        "rescue": 11,
+        "broken": 3,
+        "net": 8,
+        "precision": 0.7857142857142857,
+        "jeffreys_lo": 0.5309763329064541,
+        "jeffreys_hi": 0.9356649224617775,
+        "dates": [
+          "2025-04-24",
+          "2025-10-24",
+          "2025-10-28",
+          "2026-04-30",
+          "2026-05-18",
+          "2026-05-21",
+          "2026-05-27",
+          "2026-06-01",
+          "2026-06-08",
+          "2026-06-29",
+          "2026-07-14",
+          "2026-07-17",
+          "2026-09-03",
+          "2026-09-24"
+        ]
+      },
+      "by_year": {
+        "2023": {
+          "year": 2023,
+          "gate": "TCG_V1_PHASE",
+          "actions": 0,
+          "rescue": 0,
+          "broken": 0,
+          "net": 0,
+          "precision": null,
+          "jeffreys_lo": null,
+          "jeffreys_hi": null,
+          "dates": []
+        },
+        "2024": {
+          "year": 2024,
+          "gate": "TCG_V1_PHASE",
+          "actions": 0,
+          "rescue": 0,
+          "broken": 0,
+          "net": 0,
+          "precision": null,
+          "jeffreys_lo": null,
+          "jeffreys_hi": null,
+          "dates": []
+        },
+        "2025": {
+          "year": 2025,
+          "gate": "TCG_V1_PHASE",
+          "actions": 3,
+          "rescue": 2,
+          "broken": 1,
+          "net": 1,
+          "precision": 0.6666666666666666,
+          "jeffreys_lo": 0.17673609713125732,
+          "jeffreys_hi": 0.9612523822148348,
+          "dates": [
+            "2025-04-24",
+            "2025-10-24",
+            "2025-10-28"
+          ]
+        },
+        "2026": {
+          "year": 2026,
+          "gate": "TCG_V1_PHASE",
+          "actions": 11,
+          "rescue": 9,
+          "broken": 2,
+          "net": 7,
+          "precision": 0.8181818181818182,
+          "jeffreys_lo": 0.5327562089775548,
+          "jeffreys_hi": 0.9601730569150089,
+          "dates": [
+            "2026-04-30",
+            "2026-05-18",
+            "2026-05-21",
+            "2026-05-27",
+            "2026-06-01",
+            "2026-06-08",
+            "2026-06-29",
+            "2026-07-14",
+            "2026-07-17",
+            "2026-09-03",
+            "2026-09-24"
+          ]
+        }
+      },
+      "projection_2025_2026": {
+        "2025": {
+          "baseline_correct": 171,
+          "gated_correct": 172,
+          "n": 248,
+          "accuracy": 0.6935483870967742
+        },
+        "2026": {
+          "baseline_correct": 126,
+          "gated_correct": 133,
+          "n": 191,
+          "accuracy": 0.6963350785340314
+        },
+        "combined": {
+          "baseline_correct": 297,
+          "gated_correct": 305,
+          "n": 439,
+          "accuracy": 0.6947608200455581
+        }
+      }
+    },
+    "TCG_P3": {
+      "all": {
+        "year": "ALL",
+        "gate": "TCG_P3",
+        "actions": 11,
+        "rescue": 8,
+        "broken": 3,
+        "net": 5,
+        "precision": 0.7272727272727273,
+        "jeffreys_lo": 0.43490451949821435,
+        "jeffreys_hi": 0.9165182401698058,
+        "dates": [
+          "2025-10-24",
+          "2025-10-28",
+          "2026-05-18",
+          "2026-05-21",
+          "2026-05-27",
+          "2026-06-01",
+          "2026-06-08",
+          "2026-06-29",
+          "2026-07-14",
+          "2026-07-17",
+          "2026-09-24"
+        ]
+      },
+      "by_year": {
+        "2023": {
+          "year": 2023,
+          "gate": "TCG_P3",
+          "actions": 0,
+          "rescue": 0,
+          "broken": 0,
+          "net": 0,
+          "precision": null,
+          "jeffreys_lo": null,
+          "jeffreys_hi": null,
+          "dates": []
+        },
+        "2024": {
+          "year": 2024,
+          "gate": "TCG_P3",
+          "actions": 0,
+          "rescue": 0,
+          "broken": 0,
+          "net": 0,
+          "precision": null,
+          "jeffreys_lo": null,
+          "jeffreys_hi": null,
+          "dates": []
+        },
+        "2025": {
+          "year": 2025,
+          "gate": "TCG_P3",
+          "actions": 2,
+          "rescue": 1,
+          "broken": 1,
+          "net": 0,
+          "precision": 0.5,
+          "jeffreys_lo": 0.06083027592009732,
+          "jeffreys_hi": 0.9391697240799026,
+          "dates": [
+            "2025-10-24",
+            "2025-10-28"
+          ]
+        },
+        "2026": {
+          "year": 2026,
+          "gate": "TCG_P3",
+          "actions": 9,
+          "rescue": 7,
+          "broken": 2,
+          "net": 5,
+          "precision": 0.7777777777777778,
+          "jeffreys_lo": 0.45617556688065247,
+          "jeffreys_hi": 0.9506980770234059,
+          "dates": [
+            "2026-05-18",
+            "2026-05-21",
+            "2026-05-27",
+            "2026-06-01",
+            "2026-06-08",
+            "2026-06-29",
+            "2026-07-14",
+            "2026-07-17",
+            "2026-09-24"
+          ]
+        }
+      },
+      "projection_2025_2026": {
+        "2025": {
+          "baseline_correct": 171,
+          "gated_correct": 171,
+          "n": 248,
+          "accuracy": 0.6895161290322581
+        },
+        "2026": {
+          "baseline_correct": 126,
+          "gated_correct": 131,
+          "n": 191,
+          "accuracy": 0.6858638743455497
+        },
+        "combined": {
+          "baseline_correct": 297,
+          "gated_correct": 302,
+          "n": 439,
+          "accuracy": 0.6879271070615034
+        }
+      }
+    },
+    "TCG_OIL_NEG": {
+      "all": {
+        "year": "ALL",
+        "gate": "TCG_OIL_NEG",
+        "actions": 12,
+        "rescue": 10,
+        "broken": 2,
+        "net": 8,
+        "precision": 0.8333333333333334,
+        "jeffreys_lo": 0.5637520640636164,
+        "jeffreys_hi": 0.9636622436013281,
+        "dates": [
+          "2025-04-24",
+          "2026-04-30",
+          "2026-05-18",
+          "2026-05-21",
+          "2026-05-27",
+          "2026-06-01",
+          "2026-06-08",
+          "2026-06-29",
+          "2026-07-14",
+          "2026-07-17",
+          "2026-09-03",
+          "2026-09-24"
+        ]
+      },
+      "by_year": {
+        "2023": {
+          "year": 2023,
+          "gate": "TCG_OIL_NEG",
+          "actions": 0,
+          "rescue": 0,
+          "broken": 0,
+          "net": 0,
+          "precision": null,
+          "jeffreys_lo": null,
+          "jeffreys_hi": null,
+          "dates": []
+        },
+        "2024": {
+          "year": 2024,
+          "gate": "TCG_OIL_NEG",
+          "actions": 0,
+          "rescue": 0,
+          "broken": 0,
+          "net": 0,
+          "precision": null,
+          "jeffreys_lo": null,
+          "jeffreys_hi": null,
+          "dates": []
+        },
+        "2025": {
+          "year": 2025,
+          "gate": "TCG_OIL_NEG",
+          "actions": 1,
+          "rescue": 1,
+          "broken": 0,
+          "net": 1,
+          "precision": 1.0,
+          "jeffreys_lo": 0.14674631630957513,
+          "jeffreys_hi": 0.9996144190192441,
+          "dates": [
+            "2025-04-24"
+          ]
+        },
+        "2026": {
+          "year": 2026,
+          "gate": "TCG_OIL_NEG",
+          "actions": 11,
+          "rescue": 9,
+          "broken": 2,
+          "net": 7,
+          "precision": 0.8181818181818182,
+          "jeffreys_lo": 0.5327562089775548,
+          "jeffreys_hi": 0.9601730569150089,
+          "dates": [
+            "2026-04-30",
+            "2026-05-18",
+            "2026-05-21",
+            "2026-05-27",
+            "2026-06-01",
+            "2026-06-08",
+            "2026-06-29",
+            "2026-07-14",
+            "2026-07-17",
+            "2026-09-03",
+            "2026-09-24"
+          ]
+        }
+      },
+      "projection_2025_2026": {
+        "2025": {
+          "baseline_correct": 171,
+          "gated_correct": 172,
+          "n": 248,
+          "accuracy": 0.6935483870967742
+        },
+        "2026": {
+          "baseline_correct": 126,
+          "gated_correct": 133,
+          "n": 191,
+          "accuracy": 0.6963350785340314
+        },
+        "combined": {
+          "baseline_correct": 297,
+          "gated_correct": 305,
+          "n": 439,
+          "accuracy": 0.6947608200455581
+        }
+      }
+    },
+    "TCG_P3_OIL_NEG": {
+      "all": {
+        "year": "ALL",
+        "gate": "TCG_P3_OIL_NEG",
+        "actions": 9,
+        "rescue": 7,
+        "broken": 2,
+        "net": 5,
+        "precision": 0.7777777777777778,
+        "jeffreys_lo": 0.45617556688065247,
+        "jeffreys_hi": 0.9506980770234059,
+        "dates": [
+          "2026-05-18",
+          "2026-05-21",
+          "2026-05-27",
+          "2026-06-01",
+          "2026-06-08",
+          "2026-06-29",
+          "2026-07-14",
+          "2026-07-17",
+          "2026-09-24"
+        ]
+      },
+      "by_year": {
+        "2023": {
+          "year": 2023,
+          "gate": "TCG_P3_OIL_NEG",
+          "actions": 0,
+          "rescue": 0,
+          "broken": 0,
+          "net": 0,
+          "precision": null,
+          "jeffreys_lo": null,
+          "jeffreys_hi": null,
+          "dates": []
+        },
+        "2024": {
+          "year": 2024,
+          "gate": "TCG_P3_OIL_NEG",
+          "actions": 0,
+          "rescue": 0,
+          "broken": 0,
+          "net": 0,
+          "precision": null,
+          "jeffreys_lo": null,
+          "jeffreys_hi": null,
+          "dates": []
+        },
+        "2025": {
+          "year": 2025,
+          "gate": "TCG_P3_OIL_NEG",
+          "actions": 0,
+          "rescue": 0,
+          "broken": 0,
+          "net": 0,
+          "precision": null,
+          "jeffreys_lo": null,
+          "jeffreys_hi": null,
+          "dates": []
+        },
+        "2026": {
+          "year": 2026,
+          "gate": "TCG_P3_OIL_NEG",
+          "actions": 9,
+          "rescue": 7,
+          "broken": 2,
+          "net": 5,
+          "precision": 0.7777777777777778,
+          "jeffreys_lo": 0.45617556688065247,
+          "jeffreys_hi": 0.9506980770234059,
+          "dates": [
+            "2026-05-18",
+            "2026-05-21",
+            "2026-05-27",
+            "2026-06-01",
+            "2026-06-08",
+            "2026-06-29",
+            "2026-07-14",
+            "2026-07-17",
+            "2026-09-24"
+          ]
+        }
+      },
+      "projection_2025_2026": {
+        "2025": {
+          "baseline_correct": 171,
+          "gated_correct": 171,
+          "n": 248,
+          "accuracy": 0.6895161290322581
+        },
+        "2026": {
+          "baseline_correct": 126,
+          "gated_correct": 131,
+          "n": 191,
+          "accuracy": 0.6858638743455497
+        },
+        "combined": {
+          "baseline_correct": 297,
+          "gated_correct": 302,
+          "n": 439,
+          "accuracy": 0.6879271070615034
+        }
+      }
+    },
+    "TCG_TRIAD": {
+      "all": {
+        "year": "ALL",
+        "gate": "TCG_TRIAD",
+        "actions": 11,
+        "rescue": 9,
+        "broken": 2,
+        "net": 7,
+        "precision": 0.8181818181818182,
+        "jeffreys_lo": 0.5327562089775548,
+        "jeffreys_hi": 0.9601730569150089,
+        "dates": [
+          "2026-04-30",
+          "2026-05-18",
+          "2026-05-21",
+          "2026-05-27",
+          "2026-06-01",
+          "2026-06-08",
+          "2026-06-29",
+          "2026-07-14",
+          "2026-07-17",
+          "2026-09-03",
+          "2026-09-24"
+        ]
+      },
+      "by_year": {
+        "2023": {
+          "year": 2023,
+          "gate": "TCG_TRIAD",
+          "actions": 0,
+          "rescue": 0,
+          "broken": 0,
+          "net": 0,
+          "precision": null,
+          "jeffreys_lo": null,
+          "jeffreys_hi": null,
+          "dates": []
+        },
+        "2024": {
+          "year": 2024,
+          "gate": "TCG_TRIAD",
+          "actions": 0,
+          "rescue": 0,
+          "broken": 0,
+          "net": 0,
+          "precision": null,
+          "jeffreys_lo": null,
+          "jeffreys_hi": null,
+          "dates": []
+        },
+        "2025": {
+          "year": 2025,
+          "gate": "TCG_TRIAD",
+          "actions": 0,
+          "rescue": 0,
+          "broken": 0,
+          "net": 0,
+          "precision": null,
+          "jeffreys_lo": null,
+          "jeffreys_hi": null,
+          "dates": []
+        },
+        "2026": {
+          "year": 2026,
+          "gate": "TCG_TRIAD",
+          "actions": 11,
+          "rescue": 9,
+          "broken": 2,
+          "net": 7,
+          "precision": 0.8181818181818182,
+          "jeffreys_lo": 0.5327562089775548,
+          "jeffreys_hi": 0.9601730569150089,
+          "dates": [
+            "2026-04-30",
+            "2026-05-18",
+            "2026-05-21",
+            "2026-05-27",
+            "2026-06-01",
+            "2026-06-08",
+            "2026-06-29",
+            "2026-07-14",
+            "2026-07-17",
+            "2026-09-03",
+            "2026-09-24"
+          ]
+        }
+      },
+      "projection_2025_2026": {
+        "2025": {
+          "baseline_correct": 171,
+          "gated_correct": 171,
+          "n": 248,
+          "accuracy": 0.6895161290322581
+        },
+        "2026": {
+          "baseline_correct": 126,
+          "gated_correct": 133,
+          "n": 191,
+          "accuracy": 0.6963350785340314
+        },
+        "combined": {
+          "baseline_correct": 297,
+          "gated_correct": 304,
+          "n": 439,
+          "accuracy": 0.6924829157175398
+        }
+      }
+    }
+  },
+  "ungated_by_year": {
+    "2023": {
+      "actions": 11,
+      "rescue": 6,
+      "broken": 5,
+      "net": 1,
+      "precision": 0.5454545454545454
+    },
+    "2024": {
+      "actions": 6,
+      "rescue": 2,
+      "broken": 4,
+      "net": -2,
+      "precision": 0.3333333333333333
+    },
+    "2025": {
+      "actions": 9,
+      "rescue": 4,
+      "broken": 5,
+      "net": -1,
+      "precision": 0.4444444444444444
+    },
+    "2026": {
+      "actions": 13,
+      "rescue": 11,
+      "broken": 2,
+      "net": 9,
+      "precision": 0.8461538461538461
+    }
+  },
+  "ungated_all": {
+    "actions": 39,
+    "rescue": 23,
+    "broken": 16,
+    "net": 7,
+    "precision": 0.5897435897435898
+  },
+  "sample_note": "2023-2024 Q95 action dates require support from >=6/7 Databento source mappings; 2025-2026 use exact Yahoo-lineage Q95 actions.",
+  "governance": {
+    "outcome_used_to_define_primary_rule": false,
+    "primary_rule_source": "previously frozen strong_pro_risk topology definition",
+    "2026_consumed_development_evidence": true,
+    "promotion_status": "challenger_only_until_prospective_validation"
+  }
+}
