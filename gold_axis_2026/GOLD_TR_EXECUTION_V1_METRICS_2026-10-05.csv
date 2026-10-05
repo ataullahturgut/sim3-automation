@@ -1,0 +1,6 @@
+variant,instrument,n_trades,gross_return,one_tick_zero_commission_return,capital_100k_one_tick,notes
+CIG_BINDING,ALTINS1,18,-0.0438089671,-0.0461417422,95385.83,morning_open_to_close
+CIG_BINDING,GLDTR,18,-0.0033707811,-0.0112506180,98874.94,morning_open_to_close_pre_tax
+CPG_SHADOW,ALTINS1,12,0.0131237034,0.0114746347,101147.46,retrospective_shadow_only
+CPG_SHADOW,GLDTR,12,0.0304912763,0.0250528393,102505.28,retrospective_shadow_only_pre_tax
+CPG_SHADOW,GLDTR_AFTER_17_5PCT_SIMPLE_NET_GAIN_WITHHOLDING,12,,,102066.86,simplified_same_quarter_netting_approximation
