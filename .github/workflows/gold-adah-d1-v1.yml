@@ -1,0 +1,43 @@
+name: Gold ADAH-D1 V1
+
+on:
+  push:
+    branches: [gold-h3-competence-transition-program-v1-20261005]
+    paths:
+      - 'gold_axis_2026/tools/gold_adah_d1_v1.py'
+      - '.github/workflows/gold-adah-d1-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-h3-competence-transition-program-v1-20261005
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3'
+      - run: python gold_axis_2026/tools/gold_adah_d1_v1.py
+      - name: Record ADAH-D1 evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/ADAH_D1_V1_OUT/ADAH_D1_V1_RESULT.md gold_axis_2026/GOLD_ADAH_D1_V1_RESULT_2026-10-05.md
+          cp gold_axis_2026/ADAH_D1_V1_OUT/ADAH_D1_V1_RESULT.json gold_axis_2026/GOLD_ADAH_D1_V1_RESULT_2026-10-05.json
+          cp gold_axis_2026/ADAH_D1_V1_OUT/ADAH_D1_V1_SELECTION_2024.csv gold_axis_2026/GOLD_ADAH_D1_V1_SELECTION_2024_2026-10-05.csv
+          cp gold_axis_2026/ADAH_D1_V1_OUT/ADAH_D1_V1_PREQUENTIAL_EVENTS.csv gold_axis_2026/GOLD_ADAH_D1_V1_PREQUENTIAL_EVENTS_2026-10-05.csv
+          cp gold_axis_2026/ADAH_D1_V1_OUT/ADAH_D1_V1_CIG_INTEGRATION.csv gold_axis_2026/GOLD_ADAH_D1_V1_CIG_INTEGRATION_2026-10-05.csv
+          cp gold_axis_2026/ADAH_D1_V1_OUT/ADAH_D1_V1_AUGUST_UNCERTAIN.csv gold_axis_2026/GOLD_ADAH_D1_V1_AUGUST_UNCERTAIN_2026-10-05.csv
+          git add gold_axis_2026/GOLD_ADAH_D1_V1_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record ADAH-D1 V1 adaptive hazard challenger"
+            git pull --rebase origin gold-h3-competence-transition-program-v1-20261005
+            git push origin HEAD:gold-h3-competence-transition-program-v1-20261005
+          fi
