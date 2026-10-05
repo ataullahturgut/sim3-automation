@@ -5235,3 +5235,88 @@ Do not retune the frozen OPAL 0.70 threshold on August outcomes.
 
 Authority:
 - `GOLD_D1_AUGUST_2026_FAILURE_DIAGNOSTIC_2026-10-05.md`
+
+
+### 55.13 HAG-D1 V1 — Horizon Alignment Gate test (2026-10-05)
+
+A separate D1 timing challenger was implemented to test whether an OPAL H3 reversal should be treated as an immediate next-day D1 reversal.
+
+Identity: `HAG_D1_V1`  
+Status: **REJECTED_FOR_CIG_RESOLUTION / RETROSPECTIVE CHALLENGER**
+
+Design:
+- timing target learned on all OPAL override events;
+- development through 2023;
+- family confirmation/selection on 2024 only;
+- selected family refit using all <=2024 override events;
+- 2025 and 2026 outcomes are not used for family selection or coefficient fitting;
+- fixed primary decision band:
+  - p(immediate) >= 0.60 => use OPAL/V5 reversal direction;
+  - p(immediate) <= 0.40 => use AURORA/base direction;
+  - otherwise remain UNCERTAIN.
+- HAG is allowed to act in CIG only when the OPAL mechanism survives into a genuine final V5-vs-AURORA direction flip.
+
+Selected pre-2025 family: **CORE**
+- p_reversal
+- AURORA margin
+- trend strength
+- hourly returns 1h/3h/6h/12h/24h
+- session return.
+
+2024 confirmation:
+- train N 35, confirm N 20
+- accuracy **60.00%**
+- balanced accuracy **69.23%**
+- Brier **0.2897**
+- better than the predeclared MACRO and FUSED alternatives on the frozen 2024 family-selection criterion.
+
+Out-of-selection flip-case test:
+
+| Period | Flip cases | Always V5 | Always AURORA | HAG actions | HAG accuracy |
+|---|---:|---:|---:|---:|---:|
+| 2025 | 7 | 57.14% | 42.86% | 7 | **71.43%** |
+| 2026 | 19 | **57.89%** | 42.11% | 17 | **47.06%** |
+| 2025–2026 | 26 | **57.69%** | 42.31% | 24 | **54.17%** |
+
+Primary 2026 CIG integration:
+- original: **157 actions / 191**, **112 correct**, accuracy **71.34%**, coverage **82.20%**
+- HAG-integrated: **174 actions / 191**, **120 correct**, accuracy **68.97%**, coverage **91.10%**.
+
+Thus HAG adds 17 actions and 8 correct calls, but the 9 incorrect additions reduce selective accuracy by **2.37 percentage points**.
+
+August 2026:
+- original CIG: 10 actions, 8 correct = **80.00%**, coverage **47.62%**
+- HAG-integrated: 20 actions, 11 correct = **55.00%**, coverage **95.24%**
+- among the 11 original August UNCERTAIN days:
+  - HAG resolves 10;
+  - only **3/10** resolved calls are correct;
+  - 1 remains UNCERTAIN.
+
+Therefore the low August coverage is **protective abstention**, not a defect that this timing classifier can safely repair.
+
+Threshold sensitivity does not rescue the concept:
+- 0.45/0.55: 2026 flip accuracy **47.37%**
+- 0.40/0.60 primary: **47.06%**
+- 0.35/0.65 stricter: **50.00%**
+All remain below simply retaining final V5 on the 19 2026 flip cases (**57.89%**).
+
+Scientific conclusion:
+1. the August root-cause diagnosis remains valid: persistent OPAL H3 reversal state creates lineage conflict and D1 timing uncertainty;
+2. however the proposed CORE fast-path timing variables do **not** transport from 2024/2025 into 2026;
+3. this is evidence of conditional/concept drift in the mapping from H3 reversal state to next-day realization;
+4. CIG's UNCERTAIN state should remain binding on these conflicts;
+5. do not promote HAG-D1 V1 and do not use it to force August decisions.
+
+Next research should not merely retune HAG thresholds on 2026. Any successor must change the information set/mechanism and receive a new identity. Candidate directions:
+- explicit reversal **time-to-event / survival hazard** rather than binary immediate/not-immediate classification;
+- event-clock and scheduled-macro proximity;
+- same-day rates/USD confirmation available before issuance;
+- state-duration / age of the weekly CFTC positioning regime;
+- separate early-reversal vs late-reversal specialist rather than one static logistic gate.
+
+Authority:
+- `GOLD_HAG_D1_V1_RESULT_2026-10-05.md`
+- `GOLD_HAG_D1_V1_RESULT_2026-10-05.json`
+- `GOLD_HAG_D1_V1_AUGUST_UNCERTAIN_2026-10-05.csv`
+- `GOLD_HAG_D1_V1_FAMILY_CONFIRMATION_2026-10-05.csv`
+- `GOLD_HAG_D1_V1_THRESHOLD_SENSITIVITY_2026-10-05.csv`
