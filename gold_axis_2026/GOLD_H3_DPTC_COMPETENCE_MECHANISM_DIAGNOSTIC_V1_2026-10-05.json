@@ -1,0 +1,389 @@
+{
+  "schema": "GOLD_H3_DPTC_COMPETENCE_MECHANISM_DIAGNOSTIC_V1",
+  "date": "2026-10-05",
+  "status": "MECHANISM_DIAGNOSTIC_COMPLETE",
+  "databento_mapping": {
+    "GC": "GC.v.0",
+    "SI": "SI.v.0",
+    "NQ": "NQ.v.0",
+    "ZN": "ZN.n.0",
+    "CL": "CL.c.0"
+  },
+  "estimated_cost_usd": 1.389012411237,
+  "cost_cap_usd": 2.25,
+  "methods": {
+    "spd_geometry": "log-Euclidean distance between recent and prior 5-market correlation matrices",
+    "energy_shift": "multivariate energy distance of standardized joint returns",
+    "tail_copula_shift": "empirical upper/lower tail co-movement vector shift",
+    "information_flow_shift": "discrete transfer-entropy directionality vector shift",
+    "leadlag_shift": "cross-correlation lead/lag asymmetry vector shift"
+  },
+  "calibration": {
+    "period": "pre-2026",
+    "quantile": 0.95,
+    "thresholds": {
+      "spd_shift": 1.211874589904465,
+      "energy_shift": 0.20294313147357262,
+      "tail_shift": 0.36127097258613916,
+      "te_shift": 0.05028932819630244,
+      "leadlag_shift": 0.22029923984437974
+    },
+    "outcome_labels_used": false
+  },
+  "onsets_2026": {
+    "structural_broad": "2026-02-03",
+    "structural_strict": "2026-03-05",
+    "structural_broad_persistent3": "2026-03-05",
+    "gate_broad_plus_pro": null,
+    "gate_persistent_plus_pro": null,
+    "dependence_phase": "2026-04-30"
+  },
+  "changepoint_full": {
+    "date": "2026-03-16",
+    "score": 39.18150748290293,
+    "block_permutation_p": 0.017456359102244388,
+    "n": 679
+  },
+  "changepoint_2026": {
+    "date": "2026-02-06",
+    "score": 0.0,
+    "block_permutation_p": 1.0,
+    "n": 190
+  },
+  "year_action_profiles": {
+    "2023": {
+      "n": 11,
+      "rescue": 6,
+      "precision": 0.5454545454545454,
+      "structural_count95_mean": 0.18181818181818182,
+      "broad_share": 0.09090909090909091,
+      "pro_risk_share": 0.0,
+      "broad_plus_pro_share": 0.0,
+      "spd_shift_mean": 0.7765193106714072,
+      "tail_shift_mean": 0.2836740473329124,
+      "te_shift_mean": 0.034925491834096704,
+      "energy_shift_mean": 0.06658031686676096
+    },
+    "2024": {
+      "n": 6,
+      "rescue": 2,
+      "precision": 0.3333333333333333,
+      "structural_count95_mean": 0.3333333333333333,
+      "broad_share": 0.0,
+      "pro_risk_share": 0.0,
+      "broad_plus_pro_share": 0.0,
+      "spd_shift_mean": 0.8614867512178733,
+      "tail_shift_mean": 0.2527262847114458,
+      "te_shift_mean": 0.017988152145453802,
+      "energy_shift_mean": 0.14003103244945536
+    },
+    "2025": {
+      "n": 9,
+      "rescue": 4,
+      "precision": 0.4444444444444444,
+      "structural_count95_mean": 0.4444444444444444,
+      "broad_share": 0.1111111111111111,
+      "pro_risk_share": 0.3333333333333333,
+      "broad_plus_pro_share": 0.0,
+      "spd_shift_mean": 0.8004773616618893,
+      "tail_shift_mean": 0.28811514525120147,
+      "te_shift_mean": 0.02978281730010747,
+      "energy_shift_mean": 0.08973895340890944
+    },
+    "2026": {
+      "n": 13,
+      "rescue": 11,
+      "precision": 0.8461538461538461,
+      "structural_count95_mean": 0.0,
+      "broad_share": 0.0,
+      "pro_risk_share": 0.8461538461538461,
+      "broad_plus_pro_share": 0.0,
+      "spd_shift_mean": 0.7330232466391001,
+      "tail_shift_mean": 0.2109739492854092,
+      "te_shift_mean": 0.025983196170331038,
+      "energy_shift_mean": 0.05355232546402195
+    }
+  },
+  "action_gate_enrichment": {
+    "structural_broad": {
+      "inside_n": 2,
+      "inside_rescue": 1,
+      "inside_precision": 0.5,
+      "outside_n": 37,
+      "outside_rescue": 22,
+      "outside_precision": 0.5945945945945946,
+      "odds_ratio": 0.6818181818181818,
+      "fisher_p": 1.0
+    },
+    "structural_strict": {
+      "inside_n": 0,
+      "inside_rescue": 0,
+      "inside_precision": null,
+      "outside_n": 39,
+      "outside_rescue": 23,
+      "outside_precision": 0.5897435897435898,
+      "odds_ratio": null,
+      "fisher_p": null
+    },
+    "structural_broad_persistent3": {
+      "inside_n": 0,
+      "inside_rescue": 0,
+      "inside_precision": null,
+      "outside_n": 39,
+      "outside_rescue": 23,
+      "outside_precision": 0.5897435897435898,
+      "odds_ratio": null,
+      "fisher_p": null
+    },
+    "gate_broad_plus_pro": {
+      "inside_n": 0,
+      "inside_rescue": 0,
+      "inside_precision": null,
+      "outside_n": 39,
+      "outside_rescue": 23,
+      "outside_precision": 0.5897435897435898,
+      "odds_ratio": null,
+      "fisher_p": null
+    },
+    "gate_persistent_plus_pro": {
+      "inside_n": 0,
+      "inside_rescue": 0,
+      "inside_precision": null,
+      "outside_n": 39,
+      "outside_rescue": 23,
+      "outside_precision": 0.5897435897435898,
+      "odds_ratio": null,
+      "fisher_p": null
+    },
+    "strong_pro_risk": {
+      "inside_n": 14,
+      "inside_rescue": 11,
+      "inside_precision": 0.7857142857142857,
+      "outside_n": 25,
+      "outside_rescue": 12,
+      "outside_precision": 0.48,
+      "odds_ratio": 3.9722222222222223,
+      "fisher_p": 0.09298282775348796
+    },
+    "dependence_phase": {
+      "inside_n": 14,
+      "inside_rescue": 11,
+      "inside_precision": 0.7857142857142857,
+      "outside_n": 25,
+      "outside_rescue": 12,
+      "outside_precision": 0.48,
+      "odds_ratio": 3.9722222222222223,
+      "fisher_p": 0.09298282775348796
+    }
+  },
+  "handoff_gate_enrichment_2025_2026": {
+    "structural_broad": {
+      "inside_n": 5,
+      "inside_rescue": 2,
+      "inside_precision": 0.4,
+      "outside_n": 53,
+      "outside_rescue": 22,
+      "outside_precision": 0.41509433962264153,
+      "odds_ratio": 0.9393939393939394,
+      "fisher_p": 1.0
+    },
+    "structural_strict": {
+      "inside_n": 1,
+      "inside_rescue": 0,
+      "inside_precision": 0.0,
+      "outside_n": 57,
+      "outside_rescue": 24,
+      "outside_precision": 0.42105263157894735,
+      "odds_ratio": 0.0,
+      "fisher_p": 1.0
+    },
+    "structural_broad_persistent3": {
+      "inside_n": 2,
+      "inside_rescue": 1,
+      "inside_precision": 0.5,
+      "outside_n": 56,
+      "outside_rescue": 23,
+      "outside_precision": 0.4107142857142857,
+      "odds_ratio": 1.434782608695652,
+      "fisher_p": 1.0
+    },
+    "gate_broad_plus_pro": {
+      "inside_n": 0,
+      "inside_rescue": 0,
+      "inside_precision": null,
+      "outside_n": 58,
+      "outside_rescue": 24,
+      "outside_precision": 0.41379310344827586,
+      "odds_ratio": null,
+      "fisher_p": null
+    },
+    "gate_persistent_plus_pro": {
+      "inside_n": 0,
+      "inside_rescue": 0,
+      "inside_precision": null,
+      "outside_n": 58,
+      "outside_rescue": 24,
+      "outside_precision": 0.41379310344827586,
+      "odds_ratio": null,
+      "fisher_p": null
+    },
+    "strong_pro_risk": {
+      "inside_n": 14,
+      "inside_rescue": 11,
+      "inside_precision": 0.7857142857142857,
+      "outside_n": 44,
+      "outside_rescue": 13,
+      "outside_precision": 0.29545454545454547,
+      "odds_ratio": 8.743589743589743,
+      "fisher_p": 0.0017680043165912076
+    },
+    "dependence_phase": {
+      "inside_n": 14,
+      "inside_rescue": 11,
+      "inside_precision": 0.7857142857142857,
+      "outside_n": 44,
+      "outside_rescue": 13,
+      "outside_precision": 0.29545454545454547,
+      "odds_ratio": 8.743589743589743,
+      "fisher_p": 0.0017680043165912076
+    }
+  },
+  "feature_effects_rescue_vs_broken": {
+    "spd_shift": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": 0.8137286685546705,
+      "broken_mean": 0.7330295005750376,
+      "cliffs_delta": 0.21739130434782608,
+      "permutation_p": 0.27468132966758313
+    },
+    "energy_shift": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": 0.07051169058601055,
+      "broken_mean": 0.09091447552908316,
+      "cliffs_delta": -0.11956521739130435,
+      "permutation_p": 0.4423894026493377
+    },
+    "tail_shift": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": 0.25628841518116685,
+      "broken_mean": 0.2548647704834378,
+      "cliffs_delta": 0.021739130434782608,
+      "permutation_p": 0.9627593101724569
+    },
+    "te_shift": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": 0.02590910097251831,
+      "broken_mean": 0.03137668166219601,
+      "cliffs_delta": -0.2826086956521739,
+      "permutation_p": 0.14371407148212947
+    },
+    "leadlag_shift": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": 0.13050561804080094,
+      "broken_mean": 0.14853708488711503,
+      "cliffs_delta": -0.1793478260869565,
+      "permutation_p": 0.2871782054486378
+    },
+    "eig1_share": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": 0.5019117017189295,
+      "broken_mean": 0.45890932653621763,
+      "cliffs_delta": 0.1956521739130435,
+      "permutation_p": 0.1892026993251687
+    },
+    "te_nq_to_gc_diff": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": -1.4618143117097263e-05,
+      "broken_mean": -0.0034071568536475244,
+      "cliffs_delta": -0.02717391304347826,
+      "permutation_p": 0.5106223444138965
+    },
+    "leadlag_nq_to_gc": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": -0.0066808756939706,
+      "broken_mean": 0.0029690669573980977,
+      "cliffs_delta": -0.14673913043478262,
+      "permutation_p": 0.675581104723819
+    },
+    "corr_gc_nq": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": 0.27788020898477883,
+      "broken_mean": 0.15948539126128855,
+      "cliffs_delta": 0.22826086956521738,
+      "permutation_p": 0.14096475881029744
+    },
+    "corr_gc_zn": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": 0.4347479997656133,
+      "broken_mean": 0.3619141980211835,
+      "cliffs_delta": 0.09239130434782608,
+      "permutation_p": 0.35391152211947013
+    },
+    "corr_gc_cl": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": -0.12335514260234376,
+      "broken_mean": 0.04759297299840526,
+      "cliffs_delta": -0.3423913043478261,
+      "permutation_p": 0.0569857535616096
+    },
+    "corr_gc_si": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": 0.7422842290865184,
+      "broken_mean": 0.7210074418864152,
+      "cliffs_delta": 0.28804347826086957,
+      "permutation_p": 0.5326168457885528
+    },
+    "r_gn": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": 0.14205785481716934,
+      "broken_mean": 0.0731950809983486,
+      "cliffs_delta": 0.21739130434782608,
+      "permutation_p": 0.20644838790302425
+    },
+    "r_gv": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": -0.16332800174972145,
+      "broken_mean": -0.11168002956289357,
+      "cliffs_delta": -0.2554347826086957,
+      "permutation_p": 0.2376905773556611
+    },
+    "strong_run": {
+      "rescue_n": 23,
+      "broken_n": 16,
+      "rescue_mean": 8.478260869565217,
+      "broken_mean": 5.6875,
+      "cliffs_delta": 0.25,
+      "permutation_p": 0.5746063484128968
+    }
+  },
+  "action_sample": {
+    "n": 39,
+    "by_year": {
+      "2023": 11,
+      "2024": 6,
+      "2025": 9,
+      "2026": 13
+    },
+    "pre2025_min_source_support": 6
+  },
+  "governance": {
+    "gates_frozen_before_outcome_evaluation": true,
+    "pre2026_thresholds_label_free": true,
+    "2026_used_for_posthoc_diagnosis": true,
+    "claim": "mechanism diagnosis only; not prospective validation"
+  }
+}
