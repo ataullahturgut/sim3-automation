@@ -78,10 +78,6 @@ def yahoo_fetch(symbol):
 
 def fetch_roll_group(client, roll):
     symbols = [f"{r}.{roll}.0" for r in ROOTS]
-    est = float(client.metadata.get_cost(
-        dataset=DATASET, schema=SCHEMA, symbols=symbols, stype_in="continuous",
-        start=BRIDGE_START, end=BRIDGE_END
-    ))
     data = client.timeseries.get_range(
         dataset=DATASET, schema=SCHEMA, symbols=symbols, stype_in="continuous",
         start=BRIDGE_START, end=BRIDGE_END
@@ -99,7 +95,7 @@ def fetch_roll_group(client, roll):
     d["close"] = pd.to_numeric(d["close"], errors="coerce")
     d["volume"] = pd.to_numeric(d["volume"], errors="coerce")
     d = d[np.isfinite(d.close) & (d.close > 0)].copy()
-    return d[["ts", "symbol", "instrument_id", "close", "volume"]], est
+    return d[["ts", "symbol", "instrument_id", "close", "volume"]]
 
 def roll_exclusion_mask(d):
     q = d.sort_values("ts").copy()
@@ -221,9 +217,8 @@ def main():
 
     frozen=load_frozen()
     groups={}
-    actual_group_est={}
     for roll in ROLLS:
-        groups[roll], actual_group_est[roll]=fetch_roll_group(client,roll)
+        groups[roll]=fetch_roll_group(client,roll)
 
     yahoo_live={}
     for root in ["GC","SI"]:
