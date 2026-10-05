@@ -231,6 +231,12 @@ def main():
     train25=z[z.year==2025]
     model,p26,m26=fit(train25,y26,features,name)
     s26=sel(y26.d1_up,p26,threshold)
+    # Simple operational benchmark: predict the final D1 sign from the observed
+    # GC move between the prior 16:00 NY anchor and the 06:00 UTC checkpoint.
+    naive_p=np.where(y26.gc_anchor_to_cp.astype(float)>=0,1.0,0.0)
+    naive26=metrics(y26.d1_up,naive_p)
+    naive_aug_mask=y26.forecast_issue_date.dt.strftime("%Y-%m").eq("2026-08")
+    naive_aug=metrics(y26.loc[naive_aug_mask,"d1_up"],naive_p[naive_aug_mask.to_numpy()]) if naive_aug_mask.any() else None
     pred=y26[["feature_cutoff_date","forecast_issue_date","d1_up"]].copy()
     pred["p_up"]=p26
     pred["morning_action"]=np.where(p26>=threshold,"UP",np.where(p26<=1-threshold,"DOWN","UNCERTAIN"))
@@ -261,12 +267,15 @@ def main():
       "splits":{"2025H1":len(h1),"2025Q3":len(q3),"2025Q4":len(q4),"2026":len(y26)},
       "selected":{"family":family,"model":name,"threshold":threshold,"features":features},
       "selection_2025Q3":ss.to_dict("records"),"threshold_2025Q4":th.to_dict("records"),
-      "test_2026":{"full":m26,"selective":s26},
+      "test_2026":{"full":m26,"selective":s26,"naive_overnight_sign":naive26,"naive_august":naive_aug},
       "cig_2026":overall,"august_2026":augstat,"promotion":promote
     }
     (OUT/"MORNING_D1_V1_RESULT.json").write_text(json.dumps(result,indent=2,default=str)+"\n")
     ss.to_csv(OUT/"MORNING_D1_V1_SELECTION.csv",index=False);th.to_csv(OUT/"MORNING_D1_V1_THRESHOLDS.csv",index=False)
     pred.to_csv(OUT/"MORNING_D1_V1_2026_PREDICTIONS.csv",index=False);q.to_csv(OUT/"MORNING_D1_V1_CIG_INTEGRATION.csv",index=False)
+    if name=="LOGIT_L2":
+        coef=model.named_steps["model"].coef_[0]
+        pd.DataFrame({"feature":features,"std_coefficient":coef,"abs_std_coefficient":np.abs(coef)}).sort_values("abs_std_coefficient",ascending=False).to_csv(OUT/"MORNING_D1_V1_LOGIT_COEFFICIENTS.csv",index=False)
 
     def pc(x):return "—" if x is None else f"{100*x:.2f}%"
     lines=[
@@ -286,7 +295,8 @@ def main():
     for r in th.itertuples(index=False):lines.append(f"| {r.threshold:.2f} | {r.actions} | {pc(r.coverage)} | {r.correct} | {pc(r.accuracy)} |")
     lines += ["","## 2026 untouched test","",
       f"- full accuracy: **{pc(m26['accuracy'])}**; BA **{pc(m26['balanced_accuracy'])}**; Brier **{m26['brier']:.4f}**",
-      f"- selective: **{s26['correct']}/{s26['actions']} = {pc(s26['accuracy'])}**, coverage **{pc(s26['coverage'])}**","",
+      f"- selective: **{s26['correct']}/{s26['actions']} = {pc(s26['accuracy'])}**, coverage **{pc(s26['coverage'])}**",
+      f"- naive observed overnight GC sign: **{pc(naive26['accuracy'])}** (August **{pc(naive_aug['accuracy']) if naive_aug else '—'}**)","",
       "## CIG integration","",
       "| Policy | 2026 actions | Acc | Coverage | Aug actions | Aug acc | Aug coverage |","|---|---:|---:|---:|---:|---:|---:|"]
     for pol in ["consensus","resolve_only","veto_resolve"]:
