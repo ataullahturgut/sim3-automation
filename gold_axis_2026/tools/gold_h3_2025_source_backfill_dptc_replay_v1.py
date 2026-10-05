@@ -1,5 +1,5 @@
 from pathlib import Path
-import json, math
+import json, math, io, subprocess
 import numpy as np
 import pandas as pd
 import requests
@@ -169,29 +169,28 @@ def build_ifbc_scores(vast):
 def ridge():
     return Pipeline([("scale",StandardScaler()),("ridge",Ridge(alpha=ALPHA))])
 
-def build_llrs(h3):
-    merged=None
-    for name,sym in SYMS.items():
-        d=fetch(sym,name,False).rename(columns={name:name})
-        merged=d if merged is None else merged.merge(d,on="ts",how="inner")
-    x=merged.sort_values("ts").reset_index(drop=True)
+def llrs_prepare_hourly(raw):
+    x=raw[["ts","GC","ZN","NQ","SI","CL"]].copy().sort_values("ts").drop_duplicates("ts",keep="last").reset_index(drop=True)
     for name in SYMS:
-        lv=np.log(x[name].astype(float))
-        for h in [1,3,6]:x[f"{name}_r{h}"]=lv-lv.shift(h)
+        lv=np.log(pd.to_numeric(x[name],errors="coerce"))
+        for h in [1,3,6]:
+            x[f"{name}_r{h}"]=lv-lv.shift(h)
     x["target_ts_6h"]=x.ts.shift(-6)
     x["GC_fwd6"]=np.log(x.GC.shift(-6))-np.log(x.GC)
     wall=(x.target_ts_6h-x.ts).dt.total_seconds()/3600
     x.loc[(wall<5)|(wall>8.5),"GC_fwd6"]=np.nan
+    return x
 
+def llrs_origin_scores(hourly,h3,min_issue):
     hh=h3[h3.eligible_v5_continuation.map(B)].copy()
-    hh=hh[hh.forecast_issue_date>=pd.Timestamp("2024-12-01")].sort_values("forecast_issue_date")
-    ready=x.dropna(subset=EXT_FEATURES+GC_FEATURES+["GC_fwd6","target_ts_6h"]).copy()
+    hh=hh[hh.forecast_issue_date>=pd.Timestamp(min_issue)].sort_values("forecast_issue_date")
+    ready=hourly.dropna(subset=EXT_FEATURES+GC_FEATURES+["GC_fwd6","target_ts_6h"]).copy()
     rows=[]
     for r in hh.itertuples():
         co=cutoff_ts(r.feature_cutoff_date)
         hist=ready[(ready.ts>=co-pd.Timedelta(days=WINDOW_DAYS))&(ready.target_ts_6h<co)].copy()
         if len(hist)<MIN_TRAIN:continue
-        cur=x[x.ts<=co].tail(1).copy()
+        cur=hourly[hourly.ts<=co].tail(1).copy()
         if cur.empty or cur[EXT_FEATURES+GC_FEATURES].isna().any(axis=None):continue
         stale=(co-cur.ts.iloc[0]).total_seconds()/3600
         if stale<0 or stale>3:continue
@@ -210,7 +209,47 @@ def build_llrs(h3):
           "llrs_external_opposes":bool(s*pe<0),"hourly_source_ts":cur.ts.iloc[0],
           "hourly_train_n":int(len(hist))
         })
+    if not rows:
+        return pd.DataFrame(columns=["feature_cutoff_date","forecast_issue_date","target_end_date_h3","y_up","momentum_up","v5_pred","rescue_target","llrs_pressure","llrs_incremental","llrs_external_opposes","hourly_source_ts","hourly_train_n"])
     return pd.DataFrame(rows).sort_values("feature_cutoff_date").reset_index(drop=True)
+
+def load_frozen_llrs_hourly():
+    spec="origin/gold-h3-llrs-v1-20261004:gold_axis_2026/GOLD_H3_LLRS_V1_HOURLY_PANEL_2026-10-04.csv"
+    raw=subprocess.check_output(["git","show",spec],text=True)
+    q=pd.read_csv(io.StringIO(raw))
+    q["ts"]=pd.to_datetime(q["ts"],utc=True)
+    return q
+
+def build_llrs(h3):
+    # Reconstruct missing pre-2025 history from the same Yahoo identities, but
+    # preserve the original frozen 2025 hourly panel byte-for-source instead of
+    # trusting today's mutable continuous-futures history.
+    current=None
+    for name,sym in SYMS.items():
+        d=fetch(sym,name,False)
+        current=d if current is None else current.merge(d,on="ts",how="inner")
+    current=current.sort_values("ts").reset_index(drop=True)
+
+    frozen_raw=load_frozen_llrs_hourly()
+    first_frozen=frozen_raw.ts.min()
+
+    # QA path: reproduce the original LLRS scores from the original frozen raw panel.
+    qa_hourly=llrs_prepare_hourly(frozen_raw)
+    qa_scores=llrs_origin_scores(qa_hourly,h3,"2025-01-01")
+
+    # Extension path: only pre-frozen timestamps come from today's same-source fetch;
+    # all timestamps from the original first frozen bar onward use the archived raw panel.
+    pre=current[current.ts<first_frozen][["ts","GC","ZN","NQ","SI","CL"]].copy()
+    core=frozen_raw[["ts","GC","ZN","NQ","SI","CL"]].copy()
+    hybrid_raw=pd.concat([pre,core],ignore_index=True).sort_values("ts").drop_duplicates("ts",keep="last")
+    hybrid_hourly=llrs_prepare_hourly(hybrid_raw)
+    ext_scores=llrs_origin_scores(hybrid_hourly,h3,"2024-12-01")
+    return ext_scores,qa_scores,{
+        "first_frozen_hourly":str(first_frozen),
+        "pre_extension_rows":int(len(pre)),
+        "frozen_hourly_rows":int(len(core)),
+        "hybrid_hourly_rows":int(len(hybrid_hourly)),
+    }
 
 def rolling_rank(df,col,sign=1.0,window=120):
     x=pd.to_numeric(df[col],errors="coerce").to_numpy(float)*sign
@@ -306,7 +345,7 @@ def main():
 
     vast=build_vast_raw(h3)
     ifbc_new=build_ifbc_scores(vast)
-    llrs_new=build_llrs(h3)
+    llrs_new,llrs_qa,llrs_bridge=build_llrs(h3)
 
     oldi=pd.read_csv(IFBC_FROZEN);oldl=pd.read_csv(LLRS_FROZEN)
     for q in [oldi,oldl]:
@@ -315,7 +354,7 @@ def main():
 
     rawcols=["gc_flow_12","gc_opp_vol_share_12","gc_efficiency_12","si_flow_12","si_opp_vol_share_12","gc_si_flow_gap12","joint_opposition_share12"]
     ni,di=maxdiff(ifbc_new,oldi,rawcols)
-    nl,dl=maxdiff(llrs_new,oldl,["llrs_pressure","llrs_incremental"])
+    nl,dl=maxdiff(llrs_qa,oldl,["llrs_pressure","llrs_incremental"])
 
     first_i=oldi.feature_cutoff_date.min();first_l=oldl.feature_cutoff_date.min()
     iext=pd.concat([ifbc_new[ifbc_new.feature_cutoff_date<first_i],oldi],ignore_index=True,sort=False).sort_values("feature_cutoff_date").drop_duplicates("feature_cutoff_date",keep="last")
@@ -374,7 +413,7 @@ def main():
       "schema":"GOLD_H3_2025_SOURCE_BACKFILL_DPTC_REPLAY_V1",
       "status":"SOURCE_REPRO_PASS" if raw_pass else "SOURCE_REPRO_MISMATCH_REVIEW_REQUIRED",
       "source_window":{"start":str(START),"end":str(END),"yahoo_limit":"730_days"},
-      "qa":{"ifbc_overlap_n":ni,"ifbc_raw_max_abs_diff":di,"llrs_overlap_n":nl,"llrs_max_abs_diff":dl,"raw_source_reproduction_pass":raw_pass},
+      "qa":{"ifbc_overlap_n":ni,"ifbc_raw_max_abs_diff":di,"llrs_overlap_n":nl,"llrs_max_abs_diff":dl,"llrs_bridge":llrs_bridge,"raw_source_reproduction_pass":raw_pass},
       "coverage":{"reconstructed_vast_first":str(vast.feature_cutoff_date.min().date()),"reconstructed_ifbc_score_first":str(ifbc_new.feature_cutoff_date.min().date()),"extended_ifbc_first":str(iext.feature_cutoff_date.min().date()),"reconstructed_llrs_first":str(llrs_new.feature_cutoff_date.min().date()),"extended_llrs_first":str(lext.feature_cutoff_date.min().date()),"handoff_state_first_complete":None if state.dropna(subset=["leadlag_score_premax","internal_now","internal_d1"]).empty else str(state.dropna(subset=["leadlag_score_premax","internal_now","internal_d1"]).feature_cutoff_date.min().date())},
       "2025":{"origins":len(z),"baseline":base,"handoff_alarms":len(alarms),"handoff_rescue":int(alarms.competence_y.sum()),"handoff_broken":int(len(alarms)-alarms.competence_y.sum()),"variants":results},
       "frozen_overlay":{"sage_dates":sorted(d.date().isoformat() for d in sdates),"ruleflow_dates":sorted(d.date().isoformat() for d in rdates)}
