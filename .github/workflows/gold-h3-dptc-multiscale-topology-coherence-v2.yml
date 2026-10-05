@@ -1,0 +1,41 @@
+name: Gold H3 DPTC Multiscale Topology Coherence V2
+
+on:
+  push:
+    branches: [gold-h3-oct5-diagnostic-nowcast-20261005]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_dptc_multiscale_topology_coherence_v2.py'
+      - '.github/workflows/gold-h3-dptc-multiscale-topology-coherence-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scipy>=1.14,<2'
+      - run: python gold_axis_2026/tools/gold_h3_dptc_multiscale_topology_coherence_v2.py
+      - name: Record multiscale topology evidence
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            gold_axis_2026/GOLD_H3_DPTC_MULTISCALE_TOPOLOGY_COHERENCE_V2_2026-10-05.json \
+            gold_axis_2026/GOLD_H3_DPTC_MULTISCALE_TOPOLOGY_COHERENCE_V2_2026-10-05.md \
+            gold_axis_2026/GOLD_H3_DPTC_MULTISCALE_TOPOLOGY_HANDOFF_V2_2026-10-05.csv
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record DPTC multiscale topology coherence v2'
+            git pull --rebase origin gold-h3-oct5-diagnostic-nowcast-20261005
+            git push origin HEAD:gold-h3-oct5-diagnostic-nowcast-20261005
+          fi
