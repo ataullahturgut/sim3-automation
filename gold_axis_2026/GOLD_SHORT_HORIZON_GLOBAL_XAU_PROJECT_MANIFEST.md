@@ -5483,3 +5483,89 @@ The proposed layer must be evaluated as a separate operational forecast with an 
 It must not be merged with prior-close CIG evidence without labeling the later information advantage.
 
 A Twelve Data hourly-history depth audit has been opened to determine whether a reproducible 2024-2026 same-day morning backtest can be constructed without source substitution.
+
+
+### 55.17 CPG-D1 V1 — Consensus Precision Governor (2026-10-05)
+
+Identity: **CPG_D1_V1**  
+Status: **RETROSPECTIVE DEVELOPMENT / FROZEN SHADOW CHALLENGER — NOT PRODUCTION**
+
+Research target changed from resolving UNCERTAIN days to increasing precision on days where CIG already has a 4/4 action.
+
+Binding constraints:
+- existing CIG UNCERTAIN days remain untouched;
+- CPG may only downgrade confidence / abstain;
+- CPG V1 may not flip direction;
+- CIG_D1_V1 remains the binding baseline.
+
+The previously remembered regime-sensitive mechanism was identified as the **Handoff Competence BOCPD** line, especially V4 Hysteresis. Its native H3 result was strong:
+- 10 acted Handoff alarms;
+- 8 rescue / 2 broken;
+- H3 baseline 126/191 = 65.97%;
+- assisted H3 132/191 = 69.11%.
+
+But direct D1 transfer fails:
+- on the same 10 dates inside 4/4 D1 consensus, consensus is 6/10 = 60%;
+- forcing the opposite Handoff direction is 4/10 = 40%.
+
+Therefore BOCPD/Handoff is a **regime-risk corroborator**, not a fifth D1 direction vote.
+
+Primary CPG risk representation:
+- TRES Stage-1 `F_reversal`;
+- frozen 2024 eligible-continuation q80 threshold = **0.16448401023042702**.
+
+Shadow states:
+
+**YELLOW**
+- CIG = valid 4/4 action;
+- CIG direction = UP;
+- TRES eligible_v5_continuation = True;
+- F_reversal >= 0.16448401023042702.
+
+**RED**
+- all YELLOW conditions;
+- canonical Handoff alarm at the same origin.
+
+Action:
+- NORMAL -> retain CIG action;
+- YELLOW -> CAUTION / ABSTAIN in strict-precision shadow mode;
+- RED -> STRONG CAUTION / ABSTAIN;
+- no FLIP.
+
+Governance caveat:
+the q80 numeric threshold comes from 2024, but the UP-only formulation was identified during retrospective 2025-2026 analysis. Historical results are therefore development/stress evidence, not untouched OOS validation.
+
+Historical common-core proxy (V5 + RIFT + VEGA):
+- 2024 baseline 178/220 = 80.91%; YELLOW retained 174/215 = **80.93%**;
+- 2025 baseline 182/225 = 80.89%; YELLOW retained 169/206 = **82.04%**;
+- 2025 RED flagged 5, only 2/5 correct = 40%; retained 180/220 = **81.82%**;
+- 2026 common-core baseline 113/160 = 70.63%; YELLOW retained 107/144 = **74.31%**.
+
+Exact enhanced 2026 CIG:
+- baseline 112/157 = **71.34%**, all-day coverage 82.20%;
+- YELLOW flags 14, only 6/14 correct = **42.86%**;
+- removing YELLOW in strict-precision mode leaves 106/143 = **74.13%**;
+- accuracy delta **+2.79 pp**;
+- retained consensus-action share **91.08%**;
+- all-day coverage **74.87%**;
+- 8/45 = **17.78%** of consensus errors are captured while removing 14/157 = **8.92%** of consensus actions.
+
+Exact 2026 RED:
+- canonical Handoff corroboration: 5 flags, 2/5 correct = **40.00%**;
+- strict-precision retained 110/152 = **72.37%**;
+- all-day coverage **79.58%**.
+
+Stronger retrospective corroborators, telemetry only:
+- YELLOW + BOCPD V4 acted state: 1/3 consensus correct;
+- YELLOW + DPTC-Q95: 1/4 consensus correct.
+
+These small samples and post-hoc mechanisms are not eligible to define production behavior.
+
+Binding interpretation:
+**orthogonal reversal/regime evidence can identify a fragile-consensus subset even when all four D1 experts agree, but the safe use is confidence governance rather than forced reversal.**
+
+CPG_D1_V1 is frozen for future shadow observation only. Existing CIG remains unchanged until unseen prospective evidence demonstrates transport.
+
+Authorities:
+- `GOLD_D1_CONSENSUS_PRECISION_GOVERNOR_V1_RESULT_2026-10-05.md`
+- `GOLD_D1_CONSENSUS_PRECISION_GOVERNOR_V1_METRICS_2026-10-05.csv`
