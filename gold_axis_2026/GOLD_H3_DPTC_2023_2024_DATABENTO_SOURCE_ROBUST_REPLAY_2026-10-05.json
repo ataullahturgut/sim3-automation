@@ -1,0 +1,467 @@
+{
+  "schema": "GOLD_H3_DPTC_2023_2024_DATABENTO_SOURCE_ROBUST_REPLAY_V1",
+  "date": "2026-10-05",
+  "status": "SOURCE_ROBUST_HISTORICAL_REPLAY_COMPLETE",
+  "source_window": [
+    "2022-01-01",
+    "2025-01-01"
+  ],
+  "estimated_cost_usd": 2.358644604683,
+  "cost_by_roll_usd": {
+    "c": 0.601324364543,
+    "n": 0.878813713789,
+    "v": 0.878506526351
+  },
+  "cost_cap_usd": 3.5,
+  "source_variants": {
+    "BASE": {
+      "GC": "v",
+      "SI": "v",
+      "NQ": "v",
+      "ZN": "n",
+      "CL": "c"
+    },
+    "SI_n": {
+      "GC": "v",
+      "SI": "n",
+      "NQ": "v",
+      "ZN": "n",
+      "CL": "c"
+    },
+    "NQ_n": {
+      "GC": "v",
+      "SI": "v",
+      "NQ": "n",
+      "ZN": "n",
+      "CL": "c"
+    },
+    "ZN_v": {
+      "GC": "v",
+      "SI": "v",
+      "NQ": "v",
+      "ZN": "v",
+      "CL": "c"
+    },
+    "CL_v": {
+      "GC": "v",
+      "SI": "v",
+      "NQ": "v",
+      "ZN": "n",
+      "CL": "v"
+    },
+    "GC_n": {
+      "GC": "n",
+      "SI": "v",
+      "NQ": "v",
+      "ZN": "n",
+      "CL": "c"
+    },
+    "NQ_c": {
+      "GC": "v",
+      "SI": "v",
+      "NQ": "c",
+      "ZN": "n",
+      "CL": "c"
+    }
+  },
+  "coverage": {
+    "BASE": {
+      "sync_hourly_rows": 17480,
+      "ifbc_origins": 355,
+      "llrs_origins": 415,
+      "state_origins": 355,
+      "first_state": "2023-03-16"
+    },
+    "SI_n": {
+      "sync_hourly_rows": 17502,
+      "ifbc_origins": 355,
+      "llrs_origins": 415,
+      "state_origins": 355,
+      "first_state": "2023-03-16"
+    },
+    "NQ_n": {
+      "sync_hourly_rows": 17480,
+      "ifbc_origins": 355,
+      "llrs_origins": 415,
+      "state_origins": 355,
+      "first_state": "2023-03-16"
+    },
+    "ZN_v": {
+      "sync_hourly_rows": 17480,
+      "ifbc_origins": 355,
+      "llrs_origins": 415,
+      "state_origins": 355,
+      "first_state": "2023-03-16"
+    },
+    "CL_v": {
+      "sync_hourly_rows": 17671,
+      "ifbc_origins": 355,
+      "llrs_origins": 415,
+      "state_origins": 355,
+      "first_state": "2023-03-16"
+    },
+    "GC_n": {
+      "sync_hourly_rows": 17482,
+      "ifbc_origins": 355,
+      "llrs_origins": 415,
+      "state_origins": 355,
+      "first_state": "2023-03-16"
+    },
+    "NQ_c": {
+      "sync_hourly_rows": 17398,
+      "ifbc_origins": 355,
+      "llrs_origins": 409,
+      "state_origins": 349,
+      "first_state": "2023-03-16"
+    }
+  },
+  "ruleflow_dates": {
+    "2023": [
+      "2023-10-03"
+    ],
+    "2024": [
+      "2024-06-12"
+    ]
+  },
+  "sage_backcasted": false,
+  "dptc_thresholds_retuned": false,
+  "outcome_labels_used_for_source_choice": false,
+  "robustness": {
+    "V5_ONLY": {
+      "2023": {
+        "Q95": {
+          "net_by_variant": {
+            "BASE": 1,
+            "SI_n": 1,
+            "NQ_n": 1,
+            "ZN_v": 1,
+            "CL_v": 1,
+            "GC_n": -1,
+            "NQ_c": 1
+          },
+          "min_net": -1,
+          "max_net": 1,
+          "median_net": 1.0,
+          "positive_variants": 6,
+          "zero_variants": 0,
+          "negative_variants": 1,
+          "all_same_sign": false,
+          "actions": {
+            "union_n": 11,
+            "intersection_n": 3,
+            "dates_all": [
+              "2023-10-24",
+              "2023-11-02",
+              "2023-11-27"
+            ],
+            "date_support": {
+              "2023-08-22": 6,
+              "2023-08-24": 6,
+              "2023-08-25": 6,
+              "2023-09-06": 6,
+              "2023-09-11": 6,
+              "2023-09-21": 6,
+              "2023-10-24": 7,
+              "2023-11-02": 7,
+              "2023-11-09": 6,
+              "2023-11-21": 6,
+              "2023-11-27": 7
+            }
+          }
+        },
+        "Q99": {
+          "net_by_variant": {
+            "BASE": 1,
+            "SI_n": 1,
+            "NQ_n": 1,
+            "ZN_v": 1,
+            "CL_v": 1,
+            "GC_n": -1,
+            "NQ_c": 1
+          },
+          "min_net": -1,
+          "max_net": 1,
+          "median_net": 1.0,
+          "positive_variants": 6,
+          "zero_variants": 0,
+          "negative_variants": 1,
+          "all_same_sign": false,
+          "actions": {
+            "union_n": 11,
+            "intersection_n": 3,
+            "dates_all": [
+              "2023-10-24",
+              "2023-11-02",
+              "2023-11-27"
+            ],
+            "date_support": {
+              "2023-08-22": 6,
+              "2023-08-24": 6,
+              "2023-08-25": 6,
+              "2023-09-06": 6,
+              "2023-09-11": 6,
+              "2023-09-21": 6,
+              "2023-10-24": 7,
+              "2023-11-02": 7,
+              "2023-11-09": 6,
+              "2023-11-21": 6,
+              "2023-11-27": 7
+            }
+          }
+        }
+      },
+      "2024": {
+        "Q95": {
+          "net_by_variant": {
+            "BASE": -3,
+            "SI_n": -3,
+            "NQ_n": -3,
+            "ZN_v": -2,
+            "CL_v": -2,
+            "GC_n": -2,
+            "NQ_c": -3
+          },
+          "min_net": -3,
+          "max_net": -2,
+          "median_net": -3.0,
+          "positive_variants": 0,
+          "zero_variants": 0,
+          "negative_variants": 7,
+          "all_same_sign": true,
+          "actions": {
+            "union_n": 10,
+            "intersection_n": 5,
+            "dates_all": [
+              "2024-02-08",
+              "2024-06-28",
+              "2024-08-01",
+              "2024-08-05",
+              "2024-08-15"
+            ],
+            "date_support": {
+              "2024-02-08": 7,
+              "2024-02-16": 6,
+              "2024-02-26": 1,
+              "2024-06-28": 7,
+              "2024-07-09": 5,
+              "2024-07-12": 1,
+              "2024-07-25": 2,
+              "2024-08-01": 7,
+              "2024-08-05": 7,
+              "2024-08-15": 7
+            }
+          }
+        },
+        "Q99": {
+          "net_by_variant": {
+            "BASE": -3,
+            "SI_n": -3,
+            "NQ_n": -3,
+            "ZN_v": -2,
+            "CL_v": -2,
+            "GC_n": -2,
+            "NQ_c": -3
+          },
+          "min_net": -3,
+          "max_net": -2,
+          "median_net": -3.0,
+          "positive_variants": 0,
+          "zero_variants": 0,
+          "negative_variants": 7,
+          "all_same_sign": true,
+          "actions": {
+            "union_n": 10,
+            "intersection_n": 5,
+            "dates_all": [
+              "2024-02-08",
+              "2024-06-28",
+              "2024-08-01",
+              "2024-08-05",
+              "2024-08-15"
+            ],
+            "date_support": {
+              "2024-02-08": 7,
+              "2024-02-16": 6,
+              "2024-02-26": 1,
+              "2024-06-28": 7,
+              "2024-07-09": 5,
+              "2024-07-12": 1,
+              "2024-07-25": 2,
+              "2024-08-01": 7,
+              "2024-08-05": 7,
+              "2024-08-15": 7
+            }
+          }
+        }
+      }
+    },
+    "V5_RF": {
+      "2023": {
+        "Q95": {
+          "net_by_variant": {
+            "BASE": 1,
+            "SI_n": 1,
+            "NQ_n": 1,
+            "ZN_v": 1,
+            "CL_v": 1,
+            "GC_n": -1,
+            "NQ_c": 1
+          },
+          "min_net": -1,
+          "max_net": 1,
+          "median_net": 1.0,
+          "positive_variants": 6,
+          "zero_variants": 0,
+          "negative_variants": 1,
+          "all_same_sign": false,
+          "actions": {
+            "union_n": 11,
+            "intersection_n": 3,
+            "dates_all": [
+              "2023-10-24",
+              "2023-11-02",
+              "2023-11-27"
+            ],
+            "date_support": {
+              "2023-08-22": 6,
+              "2023-08-24": 6,
+              "2023-08-25": 6,
+              "2023-09-06": 6,
+              "2023-09-11": 6,
+              "2023-09-21": 6,
+              "2023-10-24": 7,
+              "2023-11-02": 7,
+              "2023-11-09": 6,
+              "2023-11-21": 6,
+              "2023-11-27": 7
+            }
+          }
+        },
+        "Q99": {
+          "net_by_variant": {
+            "BASE": 1,
+            "SI_n": 1,
+            "NQ_n": 1,
+            "ZN_v": 1,
+            "CL_v": 1,
+            "GC_n": -1,
+            "NQ_c": 1
+          },
+          "min_net": -1,
+          "max_net": 1,
+          "median_net": 1.0,
+          "positive_variants": 6,
+          "zero_variants": 0,
+          "negative_variants": 1,
+          "all_same_sign": false,
+          "actions": {
+            "union_n": 11,
+            "intersection_n": 3,
+            "dates_all": [
+              "2023-10-24",
+              "2023-11-02",
+              "2023-11-27"
+            ],
+            "date_support": {
+              "2023-08-22": 6,
+              "2023-08-24": 6,
+              "2023-08-25": 6,
+              "2023-09-06": 6,
+              "2023-09-11": 6,
+              "2023-09-21": 6,
+              "2023-10-24": 7,
+              "2023-11-02": 7,
+              "2023-11-09": 6,
+              "2023-11-21": 6,
+              "2023-11-27": 7
+            }
+          }
+        }
+      },
+      "2024": {
+        "Q95": {
+          "net_by_variant": {
+            "BASE": -3,
+            "SI_n": -3,
+            "NQ_n": -3,
+            "ZN_v": -2,
+            "CL_v": -2,
+            "GC_n": -2,
+            "NQ_c": -3
+          },
+          "min_net": -3,
+          "max_net": -2,
+          "median_net": -3.0,
+          "positive_variants": 0,
+          "zero_variants": 0,
+          "negative_variants": 7,
+          "all_same_sign": true,
+          "actions": {
+            "union_n": 10,
+            "intersection_n": 5,
+            "dates_all": [
+              "2024-02-08",
+              "2024-06-28",
+              "2024-08-01",
+              "2024-08-05",
+              "2024-08-15"
+            ],
+            "date_support": {
+              "2024-02-08": 7,
+              "2024-02-16": 6,
+              "2024-02-26": 1,
+              "2024-06-28": 7,
+              "2024-07-09": 5,
+              "2024-07-12": 1,
+              "2024-07-25": 2,
+              "2024-08-01": 7,
+              "2024-08-05": 7,
+              "2024-08-15": 7
+            }
+          }
+        },
+        "Q99": {
+          "net_by_variant": {
+            "BASE": -3,
+            "SI_n": -3,
+            "NQ_n": -3,
+            "ZN_v": -2,
+            "CL_v": -2,
+            "GC_n": -2,
+            "NQ_c": -3
+          },
+          "min_net": -3,
+          "max_net": -2,
+          "median_net": -3.0,
+          "positive_variants": 0,
+          "zero_variants": 0,
+          "negative_variants": 7,
+          "all_same_sign": true,
+          "actions": {
+            "union_n": 10,
+            "intersection_n": 5,
+            "dates_all": [
+              "2024-02-08",
+              "2024-06-28",
+              "2024-08-01",
+              "2024-08-05",
+              "2024-08-15"
+            ],
+            "date_support": {
+              "2024-02-08": 7,
+              "2024-02-16": 6,
+              "2024-02-26": 1,
+              "2024-06-28": 7,
+              "2024-07-09": 5,
+              "2024-07-12": 1,
+              "2024-07-25": 2,
+              "2024-08-01": 7,
+              "2024-08-05": 7,
+              "2024-08-15": 7
+            }
+          }
+        }
+      }
+    }
+  }
+}
