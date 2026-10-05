@@ -4,6 +4,7 @@ from pathlib import Path
 import requests
 import pandas as pd
 import numpy as np
+PDT_ORIG=pd.to_datetime
 
 ROOT=Path(__file__).resolve().parents[2]
 AX=ROOT/"gold_axis_2026"
@@ -141,7 +142,15 @@ def run():
     cv5.V5_LEDGER=OUT/"DIAG_V5_LEDGER.csv"
     cv5.V5_MISSES=OUT/"DIAG_V5_MISSES.csv"
     cv5.FIRST_FEATURE=ORIGIN
-    cv5.main()
+    def mixed_to_datetime(arg,*args,**kwargs):
+        if "format" not in kwargs:
+            kwargs["format"]="mixed"
+        return PDT_ORIG(arg,*args,**kwargs)
+    pd.to_datetime=mixed_to_datetime
+    try:
+        cv5.main()
+    finally:
+        pd.to_datetime=PDT_ORIG
     v=pd.read_csv(OUT/"DIAG_V5_LEDGER.csv")
     v["feature_cutoff_date"]=pd.to_datetime(v.feature_cutoff_date,errors="coerce")
     vr=v[v.feature_cutoff_date==ORIGIN]
