@@ -5064,3 +5064,101 @@ Authority:
 - `GOLD_D1_CIG_V1_EXTENDED_THROUGH_OCT2_2026-10-05.md`
 - `GOLD_D1_CIG_V1_EXTENDED_THROUGH_OCT2_2026-10-05.csv`
 - extension source: `GOLD_D1_CIG_V1_SEP28_OCT2_EXTENSION_2026-10-05.*`
+
+
+### 55.12 August 2026 CIG failure / coverage analysis (2026-10-05)
+
+August 2026 was investigated as a dedicated failure month.
+
+Main finding:
+**the month is not primarily a selective-accuracy failure; it is a coverage / expert-coherence failure.**
+
+Refreshed August D1 replay:
+- 21 D1 days
+- 10 4/4 consensus actions
+- 8 correct
+- selective accuracy **80.00%**
+- coverage **47.62%**
+- UNCERTAIN **11/21**
+- SAGE+RuleFlow **14/21 = 66.67%**
+- V5 **14/21 = 66.67%**
+- RIFT **13/21 = 61.90%**
+- VEGA **14/21 = 66.67%**
+
+Opportunity-cost view:
+- total absolute D1 movement: **21.73 pp**
+- movement on consensus days: **13.36 pp**
+- movement on UNCERTAIN days: **8.37 pp**
+- movement capture: **61.48%**
+- July movement capture: 86.14%
+- September movement capture through Sep 25: 86.53%.
+
+The two wrong 4/4 calls are consecutive:
+- 2026-08-18: CIG UP, actual DOWN
+- 2026-08-19: CIG DOWN, actual UP.
+
+#### OPAL / reversal-state concentration
+
+August 2026 is the highest OPAL-activation month in the 2023–2026 clean V5 history:
+- July 2026: 1/23 = 4.35%
+- **August 2026: 12/21 = 57.14%**
+- September 2026: 7/19 = 36.84%
+- next-highest monthly count since 2023: 8 origins (2023-09).
+
+Inside August:
+- 12 OPAL-active days
+- 11/12 become CIG UNCERTAIN
+- all 9 non-OPAL days produce 4/4 consensus
+- on 10/12 OPAL-active days RIFT and VEGA agree against V5
+- in September this same pattern occurs only 2/7 OPAL-active days.
+
+Thus the coverage collapse is a structured two-camp conflict:
+- continuation/parent camp: SAGE+RuleFlow + V5
+- reversal camp: RIFT + VEGA.
+
+Among the 11 August UNCERTAIN days:
+- V5 side correct 6
+- RIFT side correct 5
+- VEGA side correct 6.
+
+No static resolver is justified.
+
+#### Derivatives-state transition
+
+Official COT options-only managed-money state rotates rapidly:
+- 2026-07-21 report: opt_mm_net -0.00238, z52 -1.13, spec_hedger_gap -0.00596
+- 2026-08-11 report: opt_mm_net +0.00745, z52 +1.60, spec_hedger_gap +0.00358
+- 2026-08-25 report: opt_mm_net +0.01018, z52 +2.40, spec_hedger_gap +0.00654.
+
+OPAL uses a conservative 7-day COT availability lag. A weekly state therefore persists across several D1/H3 origins while the market regime is moving faster. August is diagnosed as a **slow-state / fast-market conflict**.
+
+OPAL direct changed-call chronology in August:
+- 11 actions
+- 6 rescued / 5 broken
+- realized success 54.55%
+- mean reversal probability approximately 78%.
+
+This is a regime-specific calibration failure, not proof of global OPAL invalidity.
+
+#### Negative findings
+
+The August problem is **not primarily H3-to-D1 horizon mismatch**:
+- D1/H3 realized direction agreement: **17/21 = 80.95%**
+- V5 native H3 accuracy: **16/21 = 76.19%**.
+
+It is also not a raw XAU data-integrity failure:
+- the clean August calendar is complete;
+- no August severe StakTrakr cross-source anomaly is present in the upstream integrity audit.
+
+The competence-transition drift panel shows no August FISHER99/BROAD2/STRICT2 acute-shock trigger, indicating a slow structural rotation rather than one discrete shock.
+
+A simple CROSS_MACRO resolver was screened without tuning on August: threshold chosen only from Jan–Jul disagreement days produced **50%** on August, so that shortcut is rejected.
+
+Scientific label:
+**DERIVATIVES-POSITIONING TRANSITION + EXPERT-COHERENCE FAILURE**.
+
+Next lane:
+develop a separately named **Consensus Validity / Transition Gate**, not another direct direction model. Candidate PIT inputs are OPAL activation density, COT age/velocity, positioning z-crossing, expert split topology, daily Rates/USD/VIX/Nasdaq/Brent/WTI, event proximity, and intraday transition variables. August outcomes are consumed diagnostic evidence and cannot be used as clean validation.
+
+Authority:
+- `GOLD_D1_CIG_AUGUST_2026_FAILURE_ANALYSIS_2026-10-05.md`
