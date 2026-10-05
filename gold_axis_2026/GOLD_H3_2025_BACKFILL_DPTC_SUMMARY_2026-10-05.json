@@ -1,0 +1,213 @@
+{
+  "schema": "GOLD_H3_2025_SOURCE_BACKFILL_DPTC_REPLAY_V1",
+  "status": "SOURCE_REPRO_MISMATCH_REVIEW_REQUIRED",
+  "source_window": {
+    "start": "2024-10-10 00:00:00+00:00",
+    "end": "2026-10-04 00:00:00+00:00",
+    "yahoo_limit": "730_days"
+  },
+  "qa": {
+    "ifbc_overlap_n": 280,
+    "ifbc_raw_max_abs_diff": {
+      "gc_flow_12": 9.980080997729068e-17,
+      "gc_opp_vol_share_12": 9.71445146547012e-17,
+      "gc_efficiency_12": 1.1102230246251565e-16,
+      "si_flow_12": 9.8879238130678e-17,
+      "si_opp_vol_share_12": 8.326672684688674e-17,
+      "gc_si_flow_gap12": 9.952975943416931e-17,
+      "joint_opposition_share12": 8.326672684688674e-17
+    },
+    "llrs_overlap_n": 332,
+    "llrs_max_abs_diff": {
+      "llrs_pressure": 0.28816180723738427,
+      "llrs_incremental": 0.13680343971588477
+    },
+    "raw_source_reproduction_pass": false
+  },
+  "coverage": {
+    "reconstructed_vast_first": "2024-10-14",
+    "reconstructed_ifbc_score_first": "2025-01-29",
+    "extended_ifbc_first": "2025-01-29",
+    "reconstructed_llrs_first": "2024-12-02",
+    "extended_llrs_first": "2024-12-02",
+    "handoff_state_first_complete": "2025-03-03"
+  },
+  "2025": {
+    "origins": 248,
+    "baseline": {
+      "n": 248,
+      "correct": 171,
+      "accuracy": 0.6895161290322581,
+      "tp": 114,
+      "tn": 57,
+      "fp": 40,
+      "fn": 37,
+      "balanced_accuracy": 0.6712978766983
+    },
+    "handoff_alarms": 30,
+    "handoff_rescue": 8,
+    "handoff_broken": 22,
+    "variants": {
+      "Q95": {
+        "actions": 9,
+        "rescue": 4,
+        "broken": 5,
+        "net": -1,
+        "entry": "2025-03-26",
+        "precision": 0.4444444444444444,
+        "metrics": {
+          "n": 248,
+          "correct": 170,
+          "accuracy": 0.6854838709677419,
+          "tp": 111,
+          "tn": 59,
+          "fp": 38,
+          "fn": 40,
+          "balanced_accuracy": 0.6716733802143784
+        },
+        "phase_actions": 3,
+        "trust_actions": 6,
+        "action_dates": [
+          {
+            "date": "2025-03-26",
+            "mode": "TRUST",
+            "outcome": "RESCUE",
+            "sellr_fire": true
+          },
+          {
+            "date": "2025-03-28",
+            "mode": "TRUST",
+            "outcome": "BROKEN",
+            "sellr_fire": false
+          },
+          {
+            "date": "2025-03-31",
+            "mode": "TRUST",
+            "outcome": "BROKEN",
+            "sellr_fire": false
+          },
+          {
+            "date": "2025-04-24",
+            "mode": "PHASE",
+            "outcome": "RESCUE",
+            "sellr_fire": false
+          },
+          {
+            "date": "2025-04-25",
+            "mode": "TRUST",
+            "outcome": "RESCUE",
+            "sellr_fire": true
+          },
+          {
+            "date": "2025-04-30",
+            "mode": "TRUST",
+            "outcome": "BROKEN",
+            "sellr_fire": true
+          },
+          {
+            "date": "2025-05-09",
+            "mode": "TRUST",
+            "outcome": "BROKEN",
+            "sellr_fire": false
+          },
+          {
+            "date": "2025-10-24",
+            "mode": "PHASE",
+            "outcome": "RESCUE",
+            "sellr_fire": false
+          },
+          {
+            "date": "2025-10-28",
+            "mode": "PHASE",
+            "outcome": "BROKEN",
+            "sellr_fire": false
+          }
+        ]
+      },
+      "Q99": {
+        "actions": 8,
+        "rescue": 3,
+        "broken": 5,
+        "net": -2,
+        "entry": "2025-03-26",
+        "precision": 0.375,
+        "metrics": {
+          "n": 248,
+          "correct": 169,
+          "accuracy": 0.6814516129032258,
+          "tp": 111,
+          "tn": 58,
+          "fp": 39,
+          "fn": 40,
+          "balanced_accuracy": 0.6665187410391207
+        },
+        "phase_actions": 2,
+        "trust_actions": 6,
+        "action_dates": [
+          {
+            "date": "2025-03-26",
+            "mode": "TRUST",
+            "outcome": "RESCUE",
+            "sellr_fire": true
+          },
+          {
+            "date": "2025-03-28",
+            "mode": "TRUST",
+            "outcome": "BROKEN",
+            "sellr_fire": false
+          },
+          {
+            "date": "2025-03-31",
+            "mode": "TRUST",
+            "outcome": "BROKEN",
+            "sellr_fire": false
+          },
+          {
+            "date": "2025-04-25",
+            "mode": "TRUST",
+            "outcome": "RESCUE",
+            "sellr_fire": true
+          },
+          {
+            "date": "2025-04-30",
+            "mode": "TRUST",
+            "outcome": "BROKEN",
+            "sellr_fire": true
+          },
+          {
+            "date": "2025-05-09",
+            "mode": "TRUST",
+            "outcome": "BROKEN",
+            "sellr_fire": false
+          },
+          {
+            "date": "2025-10-24",
+            "mode": "PHASE",
+            "outcome": "RESCUE",
+            "sellr_fire": false
+          },
+          {
+            "date": "2025-10-28",
+            "mode": "PHASE",
+            "outcome": "BROKEN",
+            "sellr_fire": false
+          }
+        ]
+      }
+    }
+  },
+  "frozen_overlay": {
+    "sage_dates": [
+      "2025-08-07",
+      "2025-10-07",
+      "2025-12-30"
+    ],
+    "ruleflow_dates": [
+      "2025-05-02",
+      "2025-05-30",
+      "2025-06-04",
+      "2025-07-29",
+      "2025-07-30"
+    ]
+  }
+}
