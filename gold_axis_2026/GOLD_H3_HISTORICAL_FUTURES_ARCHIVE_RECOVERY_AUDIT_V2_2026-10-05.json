@@ -1,0 +1,320 @@
+{
+  "schema": "GOLD_H3_HISTORICAL_FUTURES_ARCHIVE_RECOVERY_AUDIT_V2",
+  "date": "2026-10-05",
+  "conclusion": "NO_RAW_2023_2024_FIVE_CHANNEL_PANEL_FOUND",
+  "git": {
+    "fetch_all_branches_ok": true,
+    "data_blobs_scanned": 1369,
+    "old_five_channel_data_candidates": [],
+    "lfs_pointer_candidates": []
+  },
+  "artifacts": {
+    "repo_artifact_total": 1639,
+    "selected_nonexpired": 43,
+    "inspected": 43,
+    "old_five_channel_data_candidates": [],
+    "selected_metadata": [
+      {
+        "id": 11226972499,
+        "name": "gold-nextday-direction-hourly-block-v4b",
+        "created_at": "2026-10-02T12:46:45Z",
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "size_in_bytes": 31315
+      },
+      {
+        "id": 11226792976,
+        "name": "gold-nextday-direction-hourly-block-v4",
+        "created_at": "2026-10-02T12:44:15Z",
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "size_in_bytes": 30843
+      },
+      {
+        "id": 11225559281,
+        "name": "gold-nextday-direction-hourly-lag-v3-selection",
+        "created_at": "2026-10-02T12:21:30Z",
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "size_in_bytes": 21390
+      },
+      {
+        "id": 11225326962,
+        "name": "gold-nextday-direction-hourly-lag-v2",
+        "created_at": "2026-10-02T12:02:04Z",
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "size_in_bytes": 47736
+      },
+      {
+        "id": 11223999153,
+        "name": "gold-nextday-direction-hourly-v1",
+        "created_at": "2026-10-02T11:39:46Z",
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "size_in_bytes": 33967
+      },
+      {
+        "id": 11192077647,
+        "name": "gold-short-horizon-global-xau-source-bridge-screen-v1-c116790f99f2f08ddd43ce9e37ed4ab7725743f2",
+        "created_at": "2026-10-01T20:29:47Z",
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "size_in_bytes": 2455
+      },
+      {
+        "id": 11186955894,
+        "name": "gold-short-horizon-existing-xau-source-bridge",
+        "created_at": "2026-10-01T19:01:00Z",
+        "head_branch": "gold-midas-headswap-v1-20260925",
+        "size_in_bytes": 18511
+      },
+      {
+        "id": 10472152247,
+        "name": "bocpd-b2-baseline-r2-pre2025",
+        "created_at": "2026-09-16T22:31:32Z",
+        "head_branch": "gold-bocpd-hourly-b2-selective-20260916",
+        "size_in_bytes": 144645
+      },
+      {
+        "id": 10469570027,
+        "name": "bocpd-b2-adaptive-hazard-pre2025",
+        "created_at": "2026-09-16T21:11:38Z",
+        "head_branch": "gold-bocpd-hourly-b2-selective-20260916",
+        "size_in_bytes": 304786
+      },
+      {
+        "id": 10467909577,
+        "name": "bocpd-b2-successors-pre2025",
+        "created_at": "2026-09-16T21:01:18Z",
+        "head_branch": "gold-bocpd-hourly-b2-selective-20260916",
+        "size_in_bytes": 836664
+      },
+      {
+        "id": 10456271581,
+        "name": "bocpd-hourly-candidate-b2-2025",
+        "created_at": "2026-09-16T15:57:19Z",
+        "head_branch": "gold-bocpd-hourly-b2-selective-20260916",
+        "size_in_bytes": 155928
+      },
+      {
+        "id": 10455198702,
+        "name": "bocpd-hourly-variance-bma-v3-2025-r2",
+        "created_at": "2026-09-16T15:40:36Z",
+        "head_branch": "gold-bocpd-authority-successor-v3-20260916",
+        "size_in_bytes": 1549456
+      },
+      {
+        "id": 10455438163,
+        "name": "bocpd-hourly-variance-bma-v3-2025",
+        "created_at": "2026-09-16T15:37:47Z",
+        "head_branch": "gold-bocpd-authority-successor-v3-20260916",
+        "size_in_bytes": 1548567
+      },
+      {
+        "id": 10449173861,
+        "name": "bocpd-hourly-b2-2025-visible-reused-challenge",
+        "created_at": "2026-09-16T13:54:23Z",
+        "head_branch": "gold-bocpd-hourly-b2-authority-20260916",
+        "size_in_bytes": 233892
+      },
+      {
+        "id": 10449636487,
+        "name": "bocpd-hourly-b2-pre2025-calibration-r1",
+        "created_at": "2026-09-16T13:50:09Z",
+        "head_branch": "gold-bocpd-hourly-b2-authority-20260916",
+        "size_in_bytes": 198845
+      },
+      {
+        "id": 10448941286,
+        "name": "bocpd-hourly-candidate-b-2025-r2",
+        "created_at": "2026-09-16T13:30:44Z",
+        "head_branch": "gold-bocpd-hourly-data-backfill-20260916",
+        "size_in_bytes": 159797
+      },
+      {
+        "id": 10347269089,
+        "name": "gc-break-enginewise-export-v1",
+        "created_at": "2026-09-14T12:59:29Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 107094
+      },
+      {
+        "id": 10345920258,
+        "name": "gc-break-wp4d-closure-review-v1",
+        "created_at": "2026-09-14T11:39:24Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 2840
+      },
+      {
+        "id": 10344978572,
+        "name": "gc-break-wp4d-2025-challenge-v1",
+        "created_at": "2026-09-14T11:38:16Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 22117
+      },
+      {
+        "id": 10345441183,
+        "name": "gc-break-wp4d-challenge-model-freeze-v1",
+        "created_at": "2026-09-14T11:34:51Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 2880
+      },
+      {
+        "id": 10344978055,
+        "name": "gc-break-wp4d-challenge-model-freeze-v1",
+        "created_at": "2026-09-14T11:33:29Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 2880
+      },
+      {
+        "id": 10345156373,
+        "name": "gc-break-wp4d-integrated-role-transition-formation-v1",
+        "created_at": "2026-09-14T11:29:03Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 11015
+      },
+      {
+        "id": 10343971259,
+        "name": "gc-break-wp4c-2025-exact-ny17-challenge-input-v1",
+        "created_at": "2026-09-14T10:56:00Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 14925
+      },
+      {
+        "id": 10343631884,
+        "name": "gc-break-wp4c-structural-health-dual-lane-formation-v1",
+        "created_at": "2026-09-14T10:35:49Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 8161
+      },
+      {
+        "id": 10343421644,
+        "name": "gc-break-wp4b-closure-review-v1",
+        "created_at": "2026-09-14T10:30:16Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 2064
+      },
+      {
+        "id": 10342684136,
+        "name": "gc-break-wp4b-authority-guided-state-machine-v1",
+        "created_at": "2026-09-14T10:26:41Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 49632
+      },
+      {
+        "id": 10341539343,
+        "name": "gc-break-wp4-phase-a-closure-review-v1",
+        "created_at": "2026-09-14T10:04:50Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 1157
+      },
+      {
+        "id": 10342370478,
+        "name": "gc-break-wp4-prequential-hazard-phase-a-v1",
+        "created_at": "2026-09-14T09:54:44Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 108266
+      },
+      {
+        "id": 10340963256,
+        "name": "gc-break-wp3-closure-review-v1",
+        "created_at": "2026-09-14T09:47:18Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 2797
+      },
+      {
+        "id": 10341382134,
+        "name": "gc-break-wp3-current-formation-baselines-v1",
+        "created_at": "2026-09-14T09:44:20Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 43361
+      },
+      {
+        "id": 10340732126,
+        "name": "gc-break-wp2-ground-truth-v1",
+        "created_at": "2026-09-14T09:27:20Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 24539
+      },
+      {
+        "id": 10328900084,
+        "name": "gc-break-mini-pilot-v1",
+        "created_at": "2026-09-14T00:25:04Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 11651
+      },
+      {
+        "id": 10327581822,
+        "name": "gc-break-three-month-integrated-prototype-v2",
+        "created_at": "2026-09-13T23:06:58Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 10382
+      },
+      {
+        "id": 10327148514,
+        "name": "gc-break-three-month-integrated-prototype-v1",
+        "created_at": "2026-09-13T23:00:33Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 9188
+      },
+      {
+        "id": 10327357379,
+        "name": "gc-break-three-month-integrated-prototype-v1",
+        "created_at": "2026-09-13T22:54:08Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 8613
+      },
+      {
+        "id": 10326730745,
+        "name": "gc-break-mini-pilot-direct-v1",
+        "created_at": "2026-09-13T21:56:19Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 9290
+      },
+      {
+        "id": 10322637578,
+        "name": "gc-break-wp1-formation-ny17-v1",
+        "created_at": "2026-09-13T18:05:55Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 35986
+      },
+      {
+        "id": 10322403524,
+        "name": "gc-break-wp1-formation-ny17-prehistory-v1",
+        "created_at": "2026-09-13T18:05:55Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 3327
+      },
+      {
+        "id": 10323071176,
+        "name": "gc-break-v0-native-motor-ablation-v1",
+        "created_at": "2026-09-13T18:03:25Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 34609
+      },
+      {
+        "id": 10323175304,
+        "name": "gc-break-v0-monthly-h1-context-v1",
+        "created_at": "2026-09-13T18:00:06Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 61412
+      },
+      {
+        "id": 10323105737,
+        "name": "gc-break-v0-event-context-v1",
+        "created_at": "2026-09-13T17:59:06Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 58265
+      },
+      {
+        "id": 10322542183,
+        "name": "gc-break-v0-governed-diagnostic-v1",
+        "created_at": "2026-09-13T17:53:18Z",
+        "head_branch": "gc-break-wp1-formation-backfill",
+        "size_in_bytes": 29569
+      },
+      {
+        "id": 10069982513,
+        "name": "macro-event-v3-xau-event-backfill-r1",
+        "created_at": "2026-09-08T18:09:19Z",
+        "head_branch": "gold-control-macro-event-successor-v3",
+        "size_in_bytes": 2611
+      }
+    ]
+  }
+}
