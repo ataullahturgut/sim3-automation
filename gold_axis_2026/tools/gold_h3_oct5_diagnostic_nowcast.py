@@ -16,6 +16,8 @@ os.environ.setdefault("STAK_LIVE_REF","54fdf1c8d39b7b6c7b874d0f30f784296e886044"
 import gold_h3_aurora_prospective_v1 as base
 import gold_h3_clean_aurora_prospective_v1 as clean
 import gold_h3_clean_v5_prospective_v1 as cv5
+import gold_h3_iris_v1 as iris
+import gold_h3_vega_v1 as vega
 
 START=pd.Timestamp("2026-09-30")
 END=pd.Timestamp("2026-10-02")
@@ -70,6 +72,36 @@ def build_alt_prices():
     (OUT/"ALT_SOURCE_DIAGNOSTIC.json").write_text(json.dumps(diag,indent=2)+"\n")
     return pd.DataFrame(rows).sort_values("date")
 
+def extend_hourly_successor():
+    orig=iris.fetch_extension
+    x,n=orig()
+    vals=iris.api_request(pd.Timestamp("2026-09-30 00:00:00"),pd.Timestamp("2026-10-03 23:59:59"))
+    rows=[]
+    for row in vals:
+        dt=row.get("datetime"); close=row.get("close")
+        if dt is None or close is None: continue
+        try:
+            ts=pd.Timestamp(dt).tz_localize(iris.TZ,ambiguous="NaT",nonexistent="shift_forward").tz_convert("UTC")
+            v=float(close)
+        except Exception:
+            continue
+        if pd.notna(ts) and np.isfinite(v) and v>0: rows.append((ts,v))
+    if rows:
+        y=pd.DataFrame(rows,columns=["ts","value"])
+        x=pd.concat([x,y],ignore_index=True).sort_values("ts").drop_duplicates("ts",keep="last").reset_index(drop=True)
+    return x,n+1
+
+def diag_fetch_gvz():
+    import io
+    url="https://fred.stlouisfed.org/graph/fredgraph.csv?id=GVZCLS&cosd=2021-01-01&coed=2026-10-02"
+    r=requests.get(url,timeout=60); r.raise_for_status()
+    df=pd.read_csv(io.BytesIO(r.content)).iloc[:,:2].copy()
+    df.columns=["date","gvz"]
+    df["date"]=pd.to_datetime(df.date,errors="coerce")
+    df["gvz"]=pd.to_numeric(df.gvz,errors="coerce")
+    df=df.dropna().sort_values("date").drop_duplicates("date",keep="last").reset_index(drop=True)
+    return df,{"url":url,"n":int(len(df)),"min":str(df.date.min().date()),"max":str(df.date.max().date())}
+
 def run():
     alt=build_alt_prices()
     alt.to_csv(OUT/"ALT_DAILY_PRICES.csv",index=False)
@@ -101,6 +133,9 @@ def run():
     ar=ar.iloc[0]
 
     # Run the frozen CLEAN V5-DCE chain on the same diagnostic AURORA row.
+    # Extend only the research data cutoffs that were hard-coded at Sep-30.
+    iris.fetch_extension=extend_hourly_successor
+    vega.fetch_gvz=diag_fetch_gvz
     cv5.OUT=OUT
     cv5.AURORA_LEDGER=forecast_path
     cv5.V5_LEDGER=OUT/"DIAG_V5_LEDGER.csv"
