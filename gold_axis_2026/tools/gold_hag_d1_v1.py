@@ -235,10 +235,10 @@ def main():
 
     def cigstat(q,col):
         a=q[q[col]!="UNCERTAIN"]
-        return {"n":len(q),"actions":len(a),"coverage":float(len(a)/len(q)),"correct":int((a[col]==a.actual).sum()),"accuracy":float((a[col]==a.actual).mean()) if len(a) else None}
+        return {"n":len(q),"actions":len(a),"coverage":float(len(a)/len(q)) if len(q) else None,"correct":int((a[col]==a.actual).sum()),"accuracy":float((a[col]==a.actual).mean()) if len(a) else None}
 
     summary={}
-    for period,qq in [("2025",integ[integ.forecast_issue_date.dt.year==2025]),("2026",integ[integ.forecast_issue_date.dt.year==2026]),("2025-2026",integ[integ.forecast_issue_date.dt.year>=2025]),("2026-08",integ[integ.forecast_issue_date.dt.strftime("%Y-%m")=="2026-08"])]:
+    for period,qq in [("2026",integ[integ.forecast_issue_date.dt.year==2026]),("2026-08",integ[integ.forecast_issue_date.dt.strftime("%Y-%m")=="2026-08"])]:
         summary[period]={"original":cigstat(qq,"original_consensus"),"hag":cigstat(qq,"hag_consensus")}
 
     aug=integ[integ.forecast_issue_date.dt.strftime("%Y-%m")=="2026-08"].copy()
@@ -296,7 +296,7 @@ def main():
     lines += ["","## CIG integration","",
       "| Period | Original actions | Original acc | HAG actions | HAG acc | Original coverage | HAG coverage |",
       "|---|---:|---:|---:|---:|---:|---:|"]
-    for period in ["2025","2026","2025-2026","2026-08"]:
+    for period in ["2026","2026-08"]:
         q=summary[period]
         lines.append(f"| {period} | {q['original']['actions']} | {pct(q['original']['accuracy'])} | {q['hag']['actions']} | {pct(q['hag']['accuracy'])} | {pct(q['original']['coverage'])} | {pct(q['hag']['coverage'])} |")
     lines += ["","## August 2026 — original UNCERTAIN days","",
