@@ -38,3 +38,5 @@ jobs:
             git pull --rebase origin gold-h3-oct5-diagnostic-nowcast-20261005
             git push origin HEAD:gold-h3-oct5-diagnostic-nowcast-20261005
           fi
+
+# rerun after timezone alignment fix
