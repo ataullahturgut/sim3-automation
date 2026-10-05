@@ -1,0 +1,268 @@
+{
+  "identity": "HAG_D1_V1",
+  "status": "RETROSPECTIVE_CHALLENGER_NOT_PROMOTED",
+  "target": "On OPAL override events, predict whether the H3 reversal direction is already correct on next-day D1; apply only when that OPAL mechanism survives to a final V5-vs-AURORA flip.",
+  "selection": {
+    "development": "<=2023",
+    "confirmation": "2024",
+    "selected_family": "CORE",
+    "C": 0.5,
+    "class_weight": "balanced",
+    "primary_low": 0.4,
+    "primary_high": 0.6,
+    "features": [
+      "p_reversal",
+      "aurora_margin",
+      "trend_strength",
+      "h_ret_1",
+      "h_ret_3",
+      "h_ret_6",
+      "h_ret_12",
+      "h_ret_24",
+      "h_session_ret"
+    ]
+  },
+  "family_confirmation": [
+    {
+      "family": "CORE",
+      "train_n": 35,
+      "confirm_n": 20,
+      "n": 20,
+      "accuracy": 0.6,
+      "balanced_accuracy": 0.6923076923076923,
+      "brier": 0.289731264819611,
+      "logloss": 0.815748728676392,
+      "mean_target": 0.35,
+      "mean_p": 0.6194286914542226
+    },
+    {
+      "family": "FUSED",
+      "train_n": 35,
+      "confirm_n": 20,
+      "n": 20,
+      "accuracy": 0.55,
+      "balanced_accuracy": 0.6208791208791209,
+      "brier": 0.29908735655086227,
+      "logloss": 0.8664806856810781,
+      "mean_target": 0.35,
+      "mean_p": 0.6158971618924902
+    },
+    {
+      "family": "MACRO",
+      "train_n": 35,
+      "confirm_n": 20,
+      "n": 20,
+      "accuracy": 0.5,
+      "balanced_accuracy": 0.5824175824175823,
+      "brier": 0.2990418193057288,
+      "logloss": 0.8240569296810094,
+      "mean_target": 0.35,
+      "mean_p": 0.6156239390786942
+    }
+  ],
+  "flip_evaluation": [
+    {
+      "period": "2025",
+      "flip_cases": 7,
+      "always_v5_correct": 4,
+      "always_v5_accuracy": 0.5714285714285714,
+      "always_aurora_correct": 3,
+      "always_aurora_accuracy": 0.42857142857142855,
+      "hag_actions": 7,
+      "hag_coverage": 1.0,
+      "hag_correct": 5,
+      "hag_accuracy": 0.7142857142857143,
+      "mean_p_immediate": 0.7555286866723486
+    },
+    {
+      "period": "2026",
+      "flip_cases": 19,
+      "always_v5_correct": 11,
+      "always_v5_accuracy": 0.5789473684210527,
+      "always_aurora_correct": 8,
+      "always_aurora_accuracy": 0.42105263157894735,
+      "hag_actions": 17,
+      "hag_coverage": 0.8947368421052632,
+      "hag_correct": 8,
+      "hag_accuracy": 0.47058823529411764,
+      "mean_p_immediate": 0.6025370835583085
+    },
+    {
+      "period": "2025-2026",
+      "flip_cases": 26,
+      "always_v5_correct": 15,
+      "always_v5_accuracy": 0.5769230769230769,
+      "always_aurora_correct": 11,
+      "always_aurora_accuracy": 0.4230769230769231,
+      "hag_actions": 24,
+      "hag_coverage": 0.9230769230769231,
+      "hag_correct": 13,
+      "hag_accuracy": 0.5416666666666666,
+      "mean_p_immediate": 0.6437271305505501
+    }
+  ],
+  "cig_summary": {
+    "2026": {
+      "original": {
+        "n": 191,
+        "actions": 157,
+        "coverage": 0.8219895287958116,
+        "correct": 112,
+        "accuracy": 0.7133757961783439
+      },
+      "hag": {
+        "n": 191,
+        "actions": 174,
+        "coverage": 0.9109947643979057,
+        "correct": 120,
+        "accuracy": 0.6896551724137931
+      }
+    },
+    "2026-08": {
+      "original": {
+        "n": 21,
+        "actions": 10,
+        "coverage": 0.47619047619047616,
+        "correct": 8,
+        "accuracy": 0.8
+      },
+      "hag": {
+        "n": 21,
+        "actions": 20,
+        "coverage": 0.9523809523809523,
+        "correct": 11,
+        "accuracy": 0.55
+      }
+    }
+  },
+  "august_uncertain": [
+    {
+      "feature_cutoff_date": "2026-07-31",
+      "forecast_issue_date": "2026-08-03",
+      "actual": "DOWN",
+      "original_consensus": "UNCERTAIN",
+      "hag_consensus": "UP",
+      "p_immediate": 0.6913666343434381,
+      "hag_source": "HAG_RESOLVED_V5",
+      "original_correct": NaN,
+      "hag_correct": 0.0
+    },
+    {
+      "feature_cutoff_date": "2026-08-03",
+      "forecast_issue_date": "2026-08-04",
+      "actual": "UP",
+      "original_consensus": "UNCERTAIN",
+      "hag_consensus": "DOWN",
+      "p_immediate": 0.17495918310298142,
+      "hag_source": "HAG_RESOLVED_AURORA",
+      "original_correct": NaN,
+      "hag_correct": 0.0
+    },
+    {
+      "feature_cutoff_date": "2026-08-06",
+      "forecast_issue_date": "2026-08-07",
+      "actual": "UP",
+      "original_consensus": "UNCERTAIN",
+      "hag_consensus": "DOWN",
+      "p_immediate": 0.39587033604769206,
+      "hag_source": "HAG_RESOLVED_AURORA",
+      "original_correct": NaN,
+      "hag_correct": 0.0
+    },
+    {
+      "feature_cutoff_date": "2026-08-11",
+      "forecast_issue_date": "2026-08-12",
+      "actual": "UP",
+      "original_consensus": "UNCERTAIN",
+      "hag_consensus": "UP",
+      "p_immediate": 0.8776178766787474,
+      "hag_source": "HAG_RESOLVED_V5",
+      "original_correct": NaN,
+      "hag_correct": 1.0
+    },
+    {
+      "feature_cutoff_date": "2026-08-12",
+      "forecast_issue_date": "2026-08-13",
+      "actual": "DOWN",
+      "original_consensus": "UNCERTAIN",
+      "hag_consensus": "DOWN",
+      "p_immediate": 0.6302318338595222,
+      "hag_source": "HAG_RESOLVED_V5",
+      "original_correct": NaN,
+      "hag_correct": 1.0
+    },
+    {
+      "feature_cutoff_date": "2026-08-13",
+      "forecast_issue_date": "2026-08-14",
+      "actual": "DOWN",
+      "original_consensus": "UNCERTAIN",
+      "hag_consensus": "UNCERTAIN",
+      "p_immediate": 0.5717791506799877,
+      "hag_source": "HAG_ABSTAIN",
+      "original_correct": NaN,
+      "hag_correct": NaN
+    },
+    {
+      "feature_cutoff_date": "2026-08-20",
+      "forecast_issue_date": "2026-08-21",
+      "actual": "UP",
+      "original_consensus": "UNCERTAIN",
+      "hag_consensus": "UP",
+      "p_immediate": 0.30888549448669816,
+      "hag_source": "HAG_RESOLVED_AURORA",
+      "original_correct": NaN,
+      "hag_correct": 1.0
+    },
+    {
+      "feature_cutoff_date": "2026-08-21",
+      "forecast_issue_date": "2026-08-24",
+      "actual": "UP",
+      "original_consensus": "UNCERTAIN",
+      "hag_consensus": "DOWN",
+      "p_immediate": 0.6340895180476629,
+      "hag_source": "HAG_RESOLVED_V5",
+      "original_correct": NaN,
+      "hag_correct": 0.0
+    },
+    {
+      "feature_cutoff_date": "2026-08-24",
+      "forecast_issue_date": "2026-08-25",
+      "actual": "DOWN",
+      "original_consensus": "UNCERTAIN",
+      "hag_consensus": "UP",
+      "p_immediate": 0.29696700953161465,
+      "hag_source": "HAG_RESOLVED_AURORA",
+      "original_correct": NaN,
+      "hag_correct": 0.0
+    },
+    {
+      "feature_cutoff_date": "2026-08-25",
+      "forecast_issue_date": "2026-08-26",
+      "actual": "DOWN",
+      "original_consensus": "UNCERTAIN",
+      "hag_consensus": "UP",
+      "p_immediate": 0.11303854828123439,
+      "hag_source": "HAG_RESOLVED_AURORA",
+      "original_correct": NaN,
+      "hag_correct": 0.0
+    },
+    {
+      "feature_cutoff_date": "2026-08-27",
+      "forecast_issue_date": "2026-08-28",
+      "actual": "DOWN",
+      "original_consensus": "UNCERTAIN",
+      "hag_consensus": "UP",
+      "p_immediate": 0.7553454372984322,
+      "hag_source": "HAG_RESOLVED_V5",
+      "original_correct": NaN,
+      "hag_correct": 0.0
+    }
+  ],
+  "governance": [
+    "No 2025 or 2026 outcome is used to select feature family or fit model coefficients.",
+    "2024 is the frozen family-selection confirmation year; selected family is refit on all <=2024 rows before 2025-2026 scoring.",
+    "Primary action band 0.40/0.60 is predeclared; sensitivity bands are descriptive only.",
+    "HAG learns timing on all OPAL override events, but acts only on genuine OPAL-driven final V5-vs-AURORA direction flips and only attempts to resolve existing CIG UNCERTAIN states.",
+    "This is retrospective challenger evidence, not prospective OOS validation."
+  ]
+}
