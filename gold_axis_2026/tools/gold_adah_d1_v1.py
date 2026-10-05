@@ -35,7 +35,7 @@ def build_events():
     v=pd.read_csv(V5); v["feature_cutoff_date"]=dt(v["feature_cutoff_date"])
     px=pd.read_csv(PRICE); px["date"]=dt(px["date"]); pmap=dict(zip(px.date,px.gold.astype(float)))
 
-    z=op.merge(pn[[
+    z=op.drop(columns=["cot_report_date","cot_available_date"],errors="ignore").merge(pn[[
       "feature_cutoff_date","trend_strength","cot_report_date","cot_available_date",
       "opt_mm_z52","opt_swap_z52","spec_swap_gap"
     ]],on="feature_cutoff_date",how="inner")
