@@ -70,6 +70,18 @@ def main():
         rr=rift.run_rift(full_r)
         rr["feature_cutoff_date"]=pd.to_datetime(rr.feature_cutoff_date)
         r0=rr[rr.feature_cutoff_date==ORIGIN].iloc[0]
+        fr=full_r.copy()
+        fr["feature_cutoff_date"]=pd.to_datetime(fr.feature_cutoff_date)
+        qi=fr.index[fr.feature_cutoff_date==ORIGIN]
+        if len(qi)!=1: raise RuntimeError(f"RIFT_FEATURE_ROW_FAIL {len(qi)}")
+        jj=int(qi[0]); h=fr.iloc[max(0,jj-120):jj]
+        def erank(a,val):
+            a=pd.to_numeric(a,errors="coerce").dropna().to_numpy(float)
+            return float((1+np.sum(a<=val))/(len(a)+1))
+        specs=[("trend_strength",-1),("session_against_trend",1),("trend_close_location",-1),("adverse_excursion",1)]
+        ranks=[erank(s*pd.to_numeric(h[col],errors="coerce"),s*float(fr.iloc[jj][col])) for col,s in specs]
+        susceptibility=float(np.median(ranks))
+        rift_features={col:float(fr.iloc[jj][col]) for col,_ in specs}
 
         vega.AURORA=af; vega.fetch_gvz=fetch_gvz
         vp,_,_,_=vega.load_panel()
@@ -83,7 +95,7 @@ def main():
       "feature_cutoff_date":"2026-10-02","planned_issue_date":"2026-10-05",
       "aurora":{"p_up":float(prior["aurora"]["p_up"]),"direction":prior["aurora"]["direction"]},
       "v5":prior["v5"],
-      "rift":{"p_reversal":float(r0.p_reversal),"override":bool(r0.override),"p_up":float(r0.p_rift),"direction":"UP" if float(r0.p_rift)>=.5 else "DOWN"},
+      "rift":{"p_reversal":float(r0.p_reversal),"override":bool(r0.override),"p_up":float(r0.p_rift),"direction":"UP" if float(r0.p_rift)>=.5 else "DOWN","ruleflow_susceptibility":susceptibility,"features":rift_features},
       "vega":{"p_reversal":float(v0.p_reversal),"override":bool(v0.override),"p_up":float(v0.p_vega),"direction":"UP" if float(v0.p_vega)>=.5 else "DOWN"}
     }
     (OUT/"CIGD1_AUDIT.json").write_text(json.dumps(out,indent=2)+"\n")
