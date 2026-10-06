@@ -179,10 +179,10 @@ def attach(panel,raw,prefix):
     for r in panel.itertuples(index=False):
         f=calc_at_target(idx,r.start_utc,prefix)
         if f is None:
-            rec.append({"_key":r._key})
+            rec.append({"row_id":r.row_id})
         else:
-            f["_key"]=r._key;rec.append(f)
-    return panel.merge(pd.DataFrame(rec),on="_key",how="left",validate="one_to_one")
+            f["row_id"]=r.row_id;rec.append(f)
+    return panel.merge(pd.DataFrame(rec),on="row_id",how="left",validate="one_to_one")
 
 def timing_samples(panel):
     rows=[]
@@ -205,7 +205,7 @@ def main():
     panel,hashes=v2.load_panel()
     v2.audit_target_clocks(panel)
     panel=panel.reset_index(drop=True)
-    panel["_key"]=np.arange(len(panel),dtype=int)
+    panel["row_id"]=np.arange(len(panel),dtype=int)
 
     xau=load_xau15(); si=load_fut15("SI.n.0"); pl=load_fut15("PL.n.0")
     panel=attach(panel,xau,"g")
