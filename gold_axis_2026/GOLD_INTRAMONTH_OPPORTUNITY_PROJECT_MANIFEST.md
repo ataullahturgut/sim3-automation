@@ -982,6 +982,78 @@ In particular, the earlier late-US UP plateau must not be reported as canonical 
 
 The investment problem therefore requires a **new post-issuance target identity** if the objective is to trade after the morning signal.
 
+## 5E.11C Exact Canonical 125 Clock Reconciliation — 2026-10-06
+
+Authoritative artifacts:
+- `GOLD_CIG_EXACT_125_CLOCK_RESCORE_RESULT_2026-10-06.md`
+- `GOLD_CIG_EXACT_125_RESCORE_2026-10-06.json`
+- `GOLD_CIG_EXACT_125_ROWS_2026-10-06.csv`
+
+**Canonical sample recovered and exactly reproduced.**
+
+Recovered historical daily-realization source:
+`GOLD_DAILY_H1_V2_2026_GERCEKLESEN_TAHMIN_RECOVERED_2026-10-06.csv`
+
+The exact published 2026 Jan-Jul CIG-D1 counts were reproduced:
+- daily universe: **145**
+- SAGE+RuleFlow correct: **103/145**
+- V5 correct: **102/145**
+- RIFT correct: **102/145**
+- VEGA correct: **102/145**
+- 4/4 consensus: **125**
+- consensus correct: **93**
+- canonical label accuracy: **74.40%**
+- disagreement: **20**
+- disagreement correct: **10**
+
+The six dates missing from the old 145-row snapshot are:
+- 2026-02-27
+- 2026-03-02
+- 2026-03-03
+- 2026-03-04
+- 2026-03-05
+- 2026-03-06
+
+This is a historical snapshot coverage gap, **not** a market-session/holiday definition.
+
+### Exact same-125 post-issue result
+
+Using the identical 125 consensus rows and XAU/USD 15-minute prices, with the first strictly post-deadline bar at **08:15 New York**:
+
+- 08:15 -> 16:00 NY: **59/125 = 47.20%**
+- 08:15 -> 20:00 NY: **59/125 = 47.20%**
+- 17:00 -> 20:00 NY: **63/125 = 50.40%**
+
+UP-only on the exact 71 canonical UP rows:
+- 08:15 -> 16:00 NY: **34/71 = 47.89%**
+- 08:15 -> 20:00 NY: **34/71 = 47.89%**
+- 17:00 -> 20:00 NY: **35/71 = 49.30%**
+
+DOWN-only on the exact 54 canonical DOWN rows:
+- 08:15 -> 16:00 NY: **25/54 = 46.30%**
+- 08:15 -> 20:00 NY: **25/54 = 46.30%**
+- 17:00 -> 20:00 NY: **28/54 = 51.85%**
+
+### Binding interpretation
+
+The **74.40%** figure is genuine and exactly reproducible for the recovered historical **daily-reference label**.
+
+It is **not** an 08:00-NY-forward tradable same-day accuracy.
+
+On the same exact 125 rows, post-issue direction is approximately chance under the tested fixed endpoints.
+
+Therefore prior 151/131-row timing diagnostics are superseded for any claim about the canonical 2026 Jan-Jul CIG population.
+
+In particular, the previously reported late-US UP timing plateau is **not canonical CIG evidence**. On the exact 71 canonical UP rows, 17:00 -> 20:00 NY direction hit is only **49.30%**.
+
+**Do-not-mix rule:**
+- 74.40% = canonical historical daily-label accuracy.
+- 47.20% = exact-canonical 08:15-NY-forward direction accuracy for the tested same-day endpoints.
+- 50.40% = exact-canonical 17:00->20:00 NY direction accuracy.
+- tradable D1 accuracy from CIG-D1 V1 = **not established**.
+
+If the operational objective is a signal available around 08:00 NY, a new execution-aware target must be defined from a post-issue price to a frozen future endpoint. CIG-D1 V1 must not be silently relabelled.
+
 ## 5E.12 Fifteen-Minute CIG Execution Timing Transport — 2026-10-06
 
 **SUPERSESSION NOTICE:** the exact canonical 125-row Jan-Jul CIG ledger has now been recovered in Section 5E.11C. Therefore this subsection's 151/131 reconstructed-population timing results are **legacy diagnostics only** and are superseded for canonical 2026 Jan-Jul CIG interpretation.
