@@ -1,4 +1,5 @@
 name: Gold Execution 15m Timing Transport 20261006
+# rerun after numeric-column fix
 on:
   push:
     branches: [gold-execution-channel-audit-20261006]
