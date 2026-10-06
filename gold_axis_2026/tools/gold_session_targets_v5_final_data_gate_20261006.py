@@ -20,27 +20,27 @@ def expected_grid(s,e):
     return pd.date_range(s, e-pd.Timedelta(minutes=15), freq="15min", tz="UTC")
 
 def allowed_maintenance(row):
-    if row.partition!="SOBTI_5_ET" or row.window!="US_LATE_LIT":
+    if row["partition"]!="SOBTI_5_ET" or row["window"]!="US_LATE_LIT":
         return set()
-    s=pd.Timestamp(row.start_utc)
+    s=pd.Timestamp(row["start_utc"])
     ny_date=s.tz_convert("America/New_York").date()
     base=pd.Timestamp(f"{ny_date.isoformat()} 17:00", tz="America/New_York").tz_convert("UTC")
     return {base+pd.Timedelta(minutes=15*k) for k in range(4)}
 
 def clean(df, present):
     rows=[]; exclusions=[]
-    for r in df.itertuples(index=False):
-        z=r._asdict()
-        s=pd.Timestamp(r.start_utc); e=pd.Timestamp(r.end_utc)
+    for _, r in df.iterrows():
+        z=r.to_dict()
+        s=pd.Timestamp(r["start_utc"]); e=pd.Timestamp(r["end_utc"])
         grid=list(expected_grid(s,e))
         missing=[t for t in grid if t not in present]
         allowed=allowed_maintenance(r)
         disallowed=[t for t in missing if t not in allowed]
         path_clean=(len(disallowed)==0)
-        final_trainable=bool(r.core_trainable) and path_clean
+        final_trainable=bool(r["core_trainable"]) and path_clean
         reasons=[]
-        if not bool(r.core_trainable):
-            reasons.append(str(r.core_exclusion_reason) if getattr(r,"core_exclusion_reason","") else "V4_CORE_EXCLUDED")
+        if not bool(r["core_trainable"]):
+            reasons.append(str(r.get("core_exclusion_reason","")) if r.get("core_exclusion_reason","") else "V4_CORE_EXCLUDED")
         if disallowed:
             reasons.append("DISALLOWED_INTERNAL_15M_GAP")
         z.update({
