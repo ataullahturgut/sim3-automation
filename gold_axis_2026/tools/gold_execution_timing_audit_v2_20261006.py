@@ -105,7 +105,7 @@ def build_panel():
         consensus=(s==v==r==g)
         cpg=bool(consensus and v==1 and frev<CPG_TRES_THRESHOLD)
         # Full UTC-day daily average for feature_cutoff_date completes at next UTC midnight.
-        avail=(pd.Timestamp(cutoff,tz="UTC")+pd.Timedelta(days=1)).tz_convert(NY)
+        avail=(pd.Timestamp(cutoff,tz="UTC")+pd.Timedelta(days=1)).tz_convert(NY).tz_localize(None)
         rows.append({"issue_date":d,"feature_cutoff_date":cutoff,"available_ny":str(avail),
                      "sage":s,"v5":v,"rift":r,"vega":g,"sage_present":sage_present,
                      "sage_exception":sage_exception,"ruleflow_exception":ruleflow_exception,
