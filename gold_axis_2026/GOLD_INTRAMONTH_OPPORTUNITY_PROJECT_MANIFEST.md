@@ -838,6 +838,26 @@ Academic sources:
 - Elder, J., Miao, H., Ramchander, S. (2012), *Journal of Banking & Finance* 36, 51–65. DOI: 10.1016/j.jbankfin.2011.06.007
 
 
+## 5E.10A Binding Model Clock Identity — 2026-10-06
+
+Authority:
+- `GOLD_MODEL_CLOCK_IDENTITY_2026-10-06.md`
+
+The current short-horizon stack is a **mixed-clock architecture**:
+
+- governed daily Gold reference / H3 target = **UTC calendar-day reference**
+- hourly intraday feature clock = **America/New_York**, anchored at 16:00 NY
+- forecast issue/deadline clock = **America/New_York**, 08:00 NY
+- historical CIG-D1 label = derived from the governed UTC-day reference series
+- `Europe/Istanbul` = reporting/execution conversion only; it is not currently a model target, feature, or issue clock.
+
+Therefore:
+- the model is **not a Turkey-clock model**;
+- the historical CIG-D1 label is **not a New York-session label** either;
+- D1 execution research must explicitly compare the UTC-day-derived historical label with a separate post-08:00-NY executable label.
+
+This clock identity is binding and supersedes informal wording that called the governed daily reference a normal close.
+
 ## 5E.11A Forecast Clock / Target Window Correction — 2026-10-06
 
 Authoritative audit:
