@@ -1,0 +1,49 @@
+name: Gold Session SAGE V1 Stage1 20261007
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_session_sage_v1_stage1_20261007.py'
+      - '.github/workflows/gold-session-sage-v1-stage1-20261007.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_session_sage_v1_stage1_20261007.py
+      - name: Run preregistered SAGE Stage 1
+        run: python gold_axis_2026/tools/gold_session_sage_v1_stage1_20261007.py
+      - name: Record evidence
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/SESSION_SAGE_V1_STAGE1_OUT/summary.json gold_axis_2026/GOLD_SESSION_SAGE_V1_STAGE1_SUMMARY_2026-10-07.json
+          cp gold_axis_2026/SESSION_SAGE_V1_STAGE1_OUT/result.md gold_axis_2026/GOLD_SESSION_SAGE_V1_STAGE1_RESULT_2026-10-07.md
+          cp gold_axis_2026/SESSION_SAGE_V1_STAGE1_OUT/metrics.csv gold_axis_2026/GOLD_SESSION_SAGE_V1_STAGE1_METRICS_2026-10-07.csv
+          cp gold_axis_2026/SESSION_SAGE_V1_STAGE1_OUT/paired.csv gold_axis_2026/GOLD_SESSION_SAGE_V1_STAGE1_PAIRED_2026-10-07.csv
+          cp gold_axis_2026/SESSION_SAGE_V1_STAGE1_OUT/transport_eligibility.csv gold_axis_2026/GOLD_SESSION_SAGE_V1_STAGE1_TRANSPORT_ELIGIBILITY_2026-10-07.csv
+          cp gold_axis_2026/SESSION_SAGE_V1_STAGE1_OUT/timing_samples.csv gold_axis_2026/GOLD_SESSION_SAGE_V1_STAGE1_TIMING_SAMPLES_2026-10-07.csv
+          cp gold_axis_2026/SESSION_SAGE_V1_STAGE1_OUT/coverage.csv gold_axis_2026/GOLD_SESSION_SAGE_V1_STAGE1_COVERAGE_2026-10-07.csv
+          cp gold_axis_2026/SESSION_SAGE_V1_STAGE1_OUT/predictions.csv gold_axis_2026/GOLD_SESSION_SAGE_V1_STAGE1_PREDICTIONS_2026-10-07.csv
+          git add gold_axis_2026/GOLD_SESSION_SAGE_V1_STAGE1_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record preregistered session SAGE Stage 1 results"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
