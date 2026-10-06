@@ -1,0 +1,82 @@
+{
+  "status": "INDEPENDENT_WGC3_CLOCK_DIRECTION_CROSSCHECK",
+  "dataset": "GLBX.MDP3",
+  "schema": "ohlcv-1h",
+  "symbols": [
+    "GC.c.0",
+    "GC.n.0",
+    "GC.v.0"
+  ],
+  "estimated_cost_usd": 0.41670471429800005,
+  "costs": {
+    "c": 0.064360722899,
+    "n": 0.176186859608,
+    "v": 0.176157131791
+  },
+  "cost_cap_usd": 1.6,
+  "purpose": "Clock/date/source-regime validation only; GC futures does not replace XAU spot labels.",
+  "summary": {
+    "2023_ASIA": {
+      "spot_rows": 256,
+      "gc_comparable": 252,
+      "agreement": 0.9484126984126984,
+      "gc_roll_unanimous_share": 0.1328125
+    },
+    "2023_EUROPE": {
+      "spot_rows": 257,
+      "gc_comparable": 254,
+      "agreement": 0.9921259842519685,
+      "gc_roll_unanimous_share": 0.17120622568093385
+    },
+    "2023_US": {
+      "spot_rows": 224,
+      "gc_comparable": 222,
+      "agreement": 0.990990990990991,
+      "gc_roll_unanimous_share": 0.21875
+    },
+    "2024_ASIA": {
+      "spot_rows": 245,
+      "gc_comparable": 240,
+      "agreement": 0.9791666666666666,
+      "gc_roll_unanimous_share": 0.10612244897959183
+    },
+    "2024_EUROPE": {
+      "spot_rows": 259,
+      "gc_comparable": 255,
+      "agreement": 0.9803921568627451,
+      "gc_roll_unanimous_share": 0.1969111969111969
+    },
+    "2024_US": {
+      "spot_rows": 245,
+      "gc_comparable": 245,
+      "agreement": 0.9959183673469387,
+      "gc_roll_unanimous_share": 0.19183673469387755
+    },
+    "2025_ASIA": {
+      "spot_rows": 256,
+      "gc_comparable": 253,
+      "agreement": 0.9090909090909091,
+      "gc_roll_unanimous_share": 0.19140625
+    },
+    "2025_EUROPE": {
+      "spot_rows": 255,
+      "gc_comparable": 251,
+      "agreement": 0.9442231075697212,
+      "gc_roll_unanimous_share": 0.41568627450980394
+    },
+    "2025_US": {
+      "spot_rows": 252,
+      "gc_comparable": 244,
+      "agreement": 0.9467213114754098,
+      "gc_roll_unanimous_share": 0.28174603174603174
+    },
+    "PRE_2025_04_22": {
+      "n": 1685,
+      "agreement": 0.9727002967359051
+    },
+    "POST_2025_04_22": {
+      "n": 531,
+      "agreement": 0.9397363465160076
+    }
+  }
+}
