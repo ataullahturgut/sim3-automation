@@ -1,0 +1,81 @@
+{
+  "status": "GVZ_DGS2_RAW_BACKFILL_COMPLETE",
+  "sources": {
+    "GVZ": {
+      "rows_valid": 1257,
+      "first": "2021-01-04",
+      "last": "2025-12-31",
+      "sha256": "ae9f34014d0b3ef42c3230097b2e982139b517059e82dd688917f350acfa597f",
+      "yearly": {
+        "2021": {
+          "rows": 254,
+          "first": "2021-01-04",
+          "last": "2021-12-31"
+        },
+        "2022": {
+          "rows": 251,
+          "first": "2022-01-03",
+          "last": "2022-12-30"
+        },
+        "2023": {
+          "rows": 250,
+          "first": "2023-01-03",
+          "last": "2023-12-29"
+        },
+        "2024": {
+          "rows": 252,
+          "first": "2024-01-02",
+          "last": "2024-12-31"
+        },
+        "2025": {
+          "rows": 250,
+          "first": "2025-01-02",
+          "last": "2025-12-31"
+        }
+      },
+      "transport": {
+        "source": "CBOE_OFFICIAL_GVZ_HISTORICAL",
+        "url": "https://cdn-api.cboe.com/api/global/us_indices/daily_prices/GVZ_History.csv",
+        "bytes": 89934
+      },
+      "governed_session_use": "FULL_SESSION_D_MINUS_1_ONLY_UNTIL_INTRADAY_PUBLICATION_PROVEN"
+    },
+    "DGS2": {
+      "rows_valid": 757,
+      "first": "2022-12-20",
+      "last": "2025-12-31",
+      "sha256": "eca51920e8a2711cc6faaf93238ceedfde6dfb2349f8d3fe18ac8e8382a3871b",
+      "yearly": {
+        "2022": {
+          "rows": 8,
+          "first": "2022-12-20",
+          "last": "2022-12-30"
+        },
+        "2023": {
+          "rows": 250,
+          "first": "2023-01-03",
+          "last": "2023-12-29"
+        },
+        "2024": {
+          "rows": 250,
+          "first": "2024-01-02",
+          "last": "2024-12-31"
+        },
+        "2025": {
+          "rows": 249,
+          "first": "2025-01-02",
+          "last": "2025-12-31"
+        }
+      },
+      "transport": {
+        "source": "FEDERAL_RESERVE_H15_DDP",
+        "series": "H15/H15/RIFLGFCY02_N.B",
+        "url": "https://www.federalreserve.gov/datadownload/Output.aspx?filetype=csv&from=&label=include&lastobs=&layout=seriescolumn&rel=H15&series=bf17364827e38702b42a58cf8eaa3f78&to=&type=package",
+        "bytes": 1007895
+      },
+      "governed_session_use": "FULL_SESSION_D_MINUS_1_ONLY; SAME_DAY_AVAILABLE_FOR_LATER_HEAD_ONLY_IF_PUBLICATION_TIME_PROVEN"
+    }
+  },
+  "reason_for_source_change": "FRED graph CSV timed out repeatedly in GitHub Actions; switched to primary official sources: Cboe GVZ history and Federal Reserve H15 DDP.",
+  "guardrail": "Raw date/value coverage does not prove same-day source-ready time. Primary full-session models use D-1 completed values until an intraday publication timestamp is separately proven."
+}
