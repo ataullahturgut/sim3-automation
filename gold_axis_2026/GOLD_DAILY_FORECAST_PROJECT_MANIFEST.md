@@ -28,3 +28,22 @@ Preserved authorities:
 Prior Daily V1/V2 evidence remains historical input only.
 
 Do not continue new research from this file. Continue from the Intramonth Opportunity canonical manifest.
+
+
+## Global Session & Execution Research — 2026-10-06
+
+The canonical authority for daily/short-horizon execution timing now lives in:
+
+\`GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md\`  
+Section **5E — Global Gold Session & Execution Research Authority**
+
+That section governs:
+- Asia / Europe / New York-London overlap / late-US session definitions;
+- institutional market-structure evidence from WGC, LBMA, CME, SGE and iShares;
+- academic price-discovery evidence;
+- CIG-D1 08:00 New York issuance identity;
+- source-ready timestamp audit;
+- session-specific execution research;
+- rules for deciding whether separate session heads are required.
+
+Do not perform independent timing optimisation from this superseded manifest.
