@@ -1,0 +1,101 @@
+{
+  "status": "SI_PL_1M_15M_VALIDATION_PASS",
+  "source_identity": {
+    "vendor": "Databento",
+    "dataset": "GLBX.MDP3",
+    "stype_in": "continuous",
+    "symbols": [
+      "SI.n.0",
+      "PL.n.0"
+    ],
+    "raw_schema": "ohlcv-1m",
+    "derived_schema": "15m deterministic UTC floor from 1m",
+    "validation_schema": "native ohlcv-1h",
+    "timestamp_semantics": "ts_event retained in UTC; OHLCV interval timestamp is interval start",
+    "production_identity_rule": "A future live/replay implementation must keep the same dataset, continuous symbol identity, roll convention, timestamp semantics and completed-bar availability rule."
+  },
+  "preflight_cost": {
+    "dataset": "GLBX.MDP3",
+    "symbols": [
+      "SI.n.0",
+      "PL.n.0"
+    ],
+    "start": "2022-01-01",
+    "end": "2025-01-01",
+    "cost_1m_usd": 6.871090382338,
+    "cost_native_1h_usd": 0.351749435067,
+    "estimated_total_usd": 7.222839817405,
+    "cost_cap_usd": 8.0
+  },
+  "raw_1m_rows": 1882086,
+  "derived_15m_rows": 141682,
+  "native_1h_rows": 35497,
+  "cross_resolution": [
+    {
+      "symbol": "PL.n.0",
+      "matched_hours": 17749,
+      "non_roll_ambiguous_hours": 17749,
+      "open_match_n": 17749,
+      "open_mismatch_n": 0,
+      "open_max_abs_diff": 0.0,
+      "high_match_n": 17749,
+      "high_mismatch_n": 0,
+      "high_max_abs_diff": 0.0,
+      "low_match_n": 17749,
+      "low_mismatch_n": 0,
+      "low_max_abs_diff": 0.0,
+      "close_match_n": 17749,
+      "close_mismatch_n": 0,
+      "close_max_abs_diff": 0.0,
+      "volume_match_n": 17749,
+      "volume_mismatch_n": 0,
+      "volume_max_abs_diff": 0.0,
+      "all_ohlcv_match_n": 17749
+    },
+    {
+      "symbol": "SI.n.0",
+      "matched_hours": 17748,
+      "non_roll_ambiguous_hours": 17748,
+      "open_match_n": 17748,
+      "open_mismatch_n": 0,
+      "open_max_abs_diff": 0.0,
+      "high_match_n": 17748,
+      "high_mismatch_n": 0,
+      "high_max_abs_diff": 0.0,
+      "low_match_n": 17748,
+      "low_mismatch_n": 0,
+      "low_max_abs_diff": 0.0,
+      "close_match_n": 17748,
+      "close_mismatch_n": 0,
+      "close_max_abs_diff": 0.0,
+      "volume_match_n": 17748,
+      "volume_mismatch_n": 0,
+      "volume_max_abs_diff": 0.0,
+      "all_ohlcv_match_n": 17748
+    }
+  ],
+  "mismatches": [],
+  "files": {
+    "raw_1m": {
+      "name": "databento_si_pl_ohlcv1m_n0_2022_2024.csv.gz",
+      "sha256": "83118d903953e840f67226f1162840529b05df5bd0e984c24e3178288d7c0ee2",
+      "bytes": 15162144
+    },
+    "derived_15m": {
+      "name": "databento_si_pl_ohlcv15m_from1m_n0_2022_2024.csv.gz",
+      "sha256": "b8abcf0e203557509259096a847149cce708012fe2856b1f75cacca99131ce32",
+      "bytes": 2944591
+    },
+    "native_1h": {
+      "name": "databento_si_pl_native_ohlcv1h_n0_2022_2024.csv.gz",
+      "sha256": "322c50b95611b68a6ea40c32f159e7b476ac47e250838f51a3365d417a88ecd3",
+      "bytes": 467821
+    }
+  },
+  "interpretation": [
+    "Exact cross-vendor price equality is not required or expected when comparing spot XAG/XPT to COMEX SI/PL futures; they are different instruments.",
+    "The binding integrity test is same-instrument, same-continuous-identity, same-vendor cross-resolution agreement: 1m aggregated to 1h versus native 1h.",
+    "If this test fails, no 15m model experiment may proceed.",
+    "If it passes, 15m bars are source-consistent with the production Databento identity, subject to the same completed-bar/PIT rules."
+  ]
+}

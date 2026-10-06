@@ -1,0 +1,13 @@
+{
+  "dataset": "GLBX.MDP3",
+  "symbols": [
+    "SI.n.0",
+    "PL.n.0"
+  ],
+  "start": "2022-01-01",
+  "end": "2025-01-01",
+  "cost_1m_usd": 6.871090382338,
+  "cost_native_1h_usd": 0.351749435067,
+  "estimated_total_usd": 7.222839817405,
+  "cost_cap_usd": 8.0
+}
