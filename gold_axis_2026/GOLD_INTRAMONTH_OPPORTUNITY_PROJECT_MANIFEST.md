@@ -1221,6 +1221,40 @@ Reopening condition:
 - locate the original score-producing code with explicit feature definitions and chronology, or
 - separately preregister a new catalyst model from raw sources without using the historical SELLR scores as targets.
 
+### 5E.8G Macro-event raw ledger / source-ready gate — 2026-10-06
+
+Authorities:
+- `GOLD_MACRO_EVENT_RAW_OBSERVATIONS_2023_2025.csv`
+- `GOLD_MACRO_EVENT_LEDGER_RAW_V1_2023_2025.csv`
+- `GOLD_SESSION_MACRO_EVENT_AVAILABILITY_MAP_2023_2025.csv`
+- `GOLD_MACRO_EVENT_LEDGER_RAW_V1_SUMMARY_2026-10-06.json`
+
+Raw Neon event families verified for 2023–2025:
+- CPI actual first print + consensus PIT: **34 complete paired events**
+- NFP actual first print + consensus PIT: **35 complete paired events**
+- unemployment-rate actual first print + consensus PIT: **35**
+- average-hourly-earnings actual first print + consensus PIT: **35**
+- each paired surprise uses `surprise_ready_at = max(actual.available_as_of, consensus.available_as_of)`.
+
+Binding availability rule:
+- an event surprise is **POST-RELEASE ONLY**;
+- if its `surprise_ready_at_utc > target_start_utc`, it cannot be used as a feature for that full session;
+- therefore an 08:30 New York CPI/NFP release cannot be backdated into an 08:00 New York WGC-US or Sobti NY/London forecast;
+- it may be available to a later head such as Sobti Late-US if the release has already occurred and source-ready conditions pass.
+
+FOMC:
+- `MACRO_EVENT_V3_FOMC_SCORE` contains reconstructed score records whose `available_as_of` is the 2026 load/reconstruction time, not historical event-time PIT;
+- its score value is **not** admissible as historical PIT feature;
+- 2023–2024 event timestamps may be used only as event markers;
+- no 2025 FOMC rows exist in this Neon series, so 2025 FOMC event coverage remains incomplete.
+
+Still missing as governed raw actual/consensus event families:
+- **PCE**
+- **JOLTS**
+- **ADP**
+
+Any model requiring these three families, or a historical PIT FOMC score/surprise, remains blocked for that component. Missing families must not be synthesized from hard-coded event dates or reconstructed from future knowledge.
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
