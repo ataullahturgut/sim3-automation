@@ -1433,6 +1433,87 @@ Before fitting S1.1:
 - reconstruct V5 target from raw 15-minute XAU;
 - fit only after all checks pass.
 
+### 5E.8J Stage-1 checkpoint S1.1 — NOVA A0 / CORE3 raw session replay
+
+Authorities:
+- `GOLD_SESSION_NOVA_A0_CORE3_RAW_REPLAY_V1_SUMMARY_2026-10-06.json`
+- `GOLD_SESSION_NOVA_A0_CORE3_RAW_REPLAY_V1_RESULT_2026-10-06.md`
+- `GOLD_SESSION_NOVA_A0_CORE3_RAW_REPLAY_V1_METRICS_2023_2024.csv`
+
+Status:
+- **Stage-1 primary direction engine replay COMPLETE**
+- raw daily Gold/Silver/Platinum payloads rebuilt from pinned StakTrakr commit `54fdf1c8d39b7b6c7b874d0f30f784296e886044`;
+- no historical readiness feature panel or NOVA prediction artifact used as model input;
+- V5 session targets independently reconstructed from raw 15-minute XAU/USD before fitting: PASS;
+- 2023–2024 development only; 2025/2026 unopened.
+
+Source-ready rule:
+- Stak daily labels do not have a proven intraday publication timestamp;
+- therefore each session may use only the latest common Gold/Silver/Platinum observation from a **strictly earlier America/New_York calendar date** than the session start;
+- same-day daily metal observations are prohibited.
+
+Model:
+- CORE3 feature set reproduced from raw daily metal observations;
+- StandardScaler + LogisticRegression(L2, C=1.0);
+- per-partition/per-window expanding replay;
+- minimum 120 matured same-window session outcomes before scoring;
+- five-row scoring blocks.
+
+Pooled 2023–2024 scored results:
+- Sobti Asia Morning: accuracy **54.19%**, balanced **53.88%**
+- Sobti Asia Afternoon: accuracy **47.77%**, balanced **47.91%**
+- Sobti Europe: accuracy **51.44%**, balanced **51.12%**
+- Sobti NY/London: accuracy **50.40%**, balanced **50.34%**
+- Sobti Late-US: accuracy **56.93%**, balanced **49.94%**, UP recall **79.88%**, DOWN recall **20.00%**
+- WGC Asia: accuracy **53.72%**, balanced **51.05%**
+- WGC Europe: accuracy **51.05%**, balanced **49.59%**
+- WGC US: accuracy **47.69%**, balanced **47.55%**
+
+Binding interpretation:
+- **NOVA A0 / CORE3: NO ROBUST SESSION EDGE as a stand-alone primary head.**
+- Sobti Late-US nominal accuracy is rejected as evidence of edge because balanced accuracy is ~50% and DOWN recall collapses to 20%.
+- Sobti Asia Morning is the least weak slice but does not establish sufficiently strong/stable evidence for promotion.
+- A0 remains a required structural baseline for A1/STRUCTURAL_IRIS comparison, not a promoted session champion.
+- 2025 transport remains unopened.
+
+Next Stage-1 item:
+- **S1.2 = NOVA A1 / ARCR raw-source session replay.**
+
+### 5E.8K Databento raw cross-market archive closure — 2026-10-06
+
+Authority:
+- `GOLD_DATABENTO_RAW_ARCHIVE_2022_2024_SUMMARY_2026-10-06.json`
+- `GOLD_DATABENTO_RAW_ARCHIVE_COVERAGE_2022_2024.csv`
+- `GOLD_DATABENTO_CONTINUOUS_SYMBOLOGY_2022_2024.json`
+- raw gzip archives for roll groups `c/n/v`.
+
+Status: **RAW ARCHIVE BLOCKER CLOSED for 2022–2024.**
+
+Governed archive:
+- Databento dataset: `GLBX.MDP3`
+- schema: `ohlcv-1h`
+- window: **2022-01-01 -> 2025-01-01** (end-exclusive)
+- roots: **GC, SI, NQ, ZN, CL**
+- continuous rolls archived: **c, n, v**
+- total continuous symbols: **15**
+- estimated billed cost: **USD 2.358644604683**
+- cost cap: **USD 3.00**
+
+Validation:
+- continuous symbology retained;
+- `instrument_id` retained;
+- UTC `ts_event` retained;
+- duplicate `ts_event + symbol`: 0;
+- OHLC validity gate: PASS;
+- negative-volume gate: PASS;
+- 2022, 2023 and 2024 presence required per symbol.
+
+Guardrail:
+- the raw archive closes the historical source/provenance blocker only;
+- it does not prove that every hourly bar is source-ready at each session target start;
+- model-specific use must still enforce bar-completion and `t_ready <= target_start`;
+- no roll rule may be chosen by outcome performance.
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
