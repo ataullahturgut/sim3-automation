@@ -1979,6 +1979,82 @@ Stage-1 implication:
 
 
 
+### 5E.8R Matched 15-minute vs 1-hour full-IRIS resolution authority — 2026-10-06
+
+Authorities:
+- `GOLD_SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_SUMMARY_2026-10-06.json`
+- `GOLD_SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_RESULT_2026-10-06.md`
+- `GOLD_SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_PAIRED_2026-10-06.csv`
+- `GOLD_SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_COVERAGE_2026-10-06.csv`
+- XAU cross-resolution audit: `GOLD_XAU15_NATIVE1H_CROSS_RESOLUTION_SUMMARY_2026-10-06.json`
+
+Status:
+- **MATCHED RESOLUTION TEST COMPLETE**
+- development chronology only; **2025/2026 remain unopened**.
+- This section supersedes any earlier direct 15m-vs-native-1h resolution interpretation because the binding comparison uses a 1h XAU series deterministically aggregated from the exact same governed XAU/USD 15m archive.
+
+XAU source-integrity prerequisite:
+- 11,706 complete 2023–2024 XAU hours were matched between 15m aggregation and the independently stored native Twelve 1h series;
+- **11,699 / 11,706 = 99.9402%** were exact;
+- **7 hours differed**, with maximum absolute close difference **$4.23999**;
+- therefore native 1h is not used as the binding resolution control;
+- the binding 1h XAU control is rebuilt directly from the governed 15m XAU bars, removing cross-resolution vendor aggregation/vintage differences as a confound.
+
+Binding comparison contract:
+- same target rows;
+- same daily CORE3, including **Gold `sigma20`**;
+- same StandardScaler + LogisticRegression(C=1.0);
+- same minimum **180 matured same-window** training rows;
+- same feature families: exact-clock 1/3/6/12/24/48h returns, lag2, RV 6/12/24/48h, semivolatility, jump/range and shape;
+- `session_ret` excluded from both;
+- same deterministic 17:00–18:00 New York maintenance handling;
+- no bar completing at target start is used;
+- difference under test = intraday sampling resolution / path granularity / pre-target freshness;
+- SI/PL 1h controls retain the already validated Databento native 1h series, whose 1m-derived-vs-native 1h OHLCV audit was exact.
+
+Common feature panel after requiring both resolutions = **2,055 rows**.
+
+For the interpretable XAU-only heads (excluding WGC Asia N=2 and Sobti Late-US N=15), the matched 2024 directional comparison is:
+
+| Window | N | 15m Acc / BA | derived-1h Acc / BA | ΔBA pp (15m−1h) | Brier 15m / 1h |
+|---|---:|---:|---:|---:|---:|
+| Sobti Asia Afternoon | 93 | 52.69% / **52.43%** | 47.31% / 47.43% | **+5.00** | 0.2999 / **0.2975** |
+| Sobti Asia Morning | 88 | 54.55% / **55.13%** | 52.27% / 51.07% | **+4.06** | 0.3010 / **0.3000** |
+| Sobti Europe | 112 | 46.43% / 43.68% | **47.32% / 44.76%** | **−1.09** | 0.3131 / **0.3087** |
+| Sobti NY/London | 114 | **56.14% / 56.16%** | 52.63% / 52.56% | **+3.60** | 0.2983 / **0.2917** |
+| WGC Europe | 109 | **52.29% / 50.60%** | 51.38% / 49.54% | **+1.06** | **0.2863** / 0.2867 |
+| WGC US | 82 | **53.66% / 53.27%** | 47.56% / 47.14% | **+6.13** | 0.2798 / **0.2762** |
+
+Resolution interpretation:
+- 15m XAU wins Balanced Accuracy in **5 of 6** interpretable XAU-only heads;
+- the largest matched directional gains are WGC US (**+6.13 pp BA**), Sobti Asia Afternoon (**+5.00 pp**), Sobti Asia Morning (**+4.06 pp**) and Sobti NY/London (**+3.60 pp**);
+- Sobti Europe is the only interpretable XAU-only head where 1h is directionally better, by about **1.09 pp BA**;
+- however 15m has a lower Brier score in only **1 of 6** interpretable XAU-only heads;
+- therefore finer 15m sampling appears to improve threshold direction decisions more consistently than it improves probability calibration;
+- this is compatible with a higher-information but noisier / more weakly calibrated representation and argues for calibration / shrinkage work before any operational promotion.
+
+Cross-metal resolution interpretation:
+- Silver and Platinum remain **window-specific and unstable**, not globally additive;
+- 15m XAU+SI improves some Sobti heads but loses others;
+- 15m XAU+SI+PL likewise alternates between gains and losses versus 1h;
+- the notable 1h XAU+SI+PL WGC-US result (N=82, BA about **62.02%**) is retained only as a challenger hypothesis because scoring is still 2024-only, feature dimensionality is high, and its probability-quality advantage is not established;
+- no SI/PL block is promoted from this test.
+
+Chronology / evidence limitation:
+- because same-window training requires 180 matured observations, scored rows are still effectively **2024 only**;
+- WGC Asia (N=2) and Sobti Late-US (N=15) are non-interpretable for model selection;
+- no individual head has yet passed an independent frozen-year transport test;
+- therefore the matched test supports **15m XAU full-IRIS as the preferred development-resolution challenger**, not a final operational model.
+
+Stage-1 implication:
+- keep **15m XAU full-IRIS** as the primary intraday-resolution challenger for Sobti Asia Morning, Sobti Asia Afternoon, Sobti NY/London and WGC US;
+- retain Sobti Europe as a window where 1h remains competitive / slightly better directionally;
+- do not promote cross-metal blocks yet;
+- next methodological task is to reduce the 15m calibration penalty through preregistered regularization/calibration or lower-dimensional feature selection **within 2023–2024 only**, then freeze the representation before opening 2025;
+- canonical S1.4 A1_PLUS_PATH remains open.
+
+
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
