@@ -1364,3 +1364,29 @@ Prior daily evidence:
 
 Monthly parent:
 - `GOLD_MONTHLY_PROJECT_MANIFEST.md`
+
+
+## 5E.11E Daily Realization Source Correction — 2026-10-06
+
+Authority:
+- `GOLD_DAILY_REALIZATION_SOURCE_AUDIT_2026-10-06.md`
+
+The historical numeric `Gerçekleşen` values used in the recovered daily H1/CIG ledger have now been traced exactly.
+
+Source:
+- StakTrakr `data/spot-history-2026.json`
+- pinned commit `ed2e549f82ba0d1cd3ca32842b82d3888d301e01`
+- Gold daily-history value.
+
+Audit result:
+- **145/145** recovered `Gerçekleşen` values match the pinned StakTrakr Gold value exactly.
+
+Binding correction:
+- the Stak daily timestamp at synthetic noon is a calendar-date label, **not** a proven 12:00 market observation;
+- the Stak daily value is **not proven** to be a New York close, London close, Istanbul close, or full-UTC-day average;
+- the prior Twelve Data UTC-day-average comparison remains only a similarity/cross-check, not source-semantic proof.
+
+Therefore:
+- CIG **74.40%** = accuracy against the pinned Stak daily date-labelled reference direction;
+- no intraday clock may be inferred from that daily label;
+- all execution claims require separately timestamped intraday prices.
