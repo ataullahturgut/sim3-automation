@@ -1,0 +1,234 @@
+{
+  "status": "FROZEN_PREMODEL_VENUE_GATE_V4",
+  "databento": {
+    "dataset": "GLBX.MDP3",
+    "schema": "ohlcv-1h",
+    "rolls": [
+      "n",
+      "v"
+    ],
+    "costs": {
+      "n": 0.176186859608,
+      "v": 0.176157131791
+    },
+    "total_cost_usd": 0.352343991399
+  },
+  "calendar_authority": {
+    "SGE": "official annual public-holiday schedules 2023-2025",
+    "London": "UK England/Wales bank holidays; LBMA precious metal prices are not published weekends/UK bank holidays",
+    "GC": "actual Databento GLBX.MDP3 hourly bar presence near target boundaries"
+  },
+  "policy": {
+    "WGC_ASIA": "SGE state flag only; broad Asia target not hard-gated by one venue",
+    "WGC_EUROPE": "London business day required",
+    "WGC_US": "GC activity near 08:00 and 17:00 NY boundaries required",
+    "SOBTI_ASIA": "SGE business day required",
+    "SOBTI_EUROPE": "London business day required",
+    "SOBTI_NYLON": "London business day + GC boundary activity required",
+    "SOBTI_US_LATE": "GC boundary activity required; Friday already NOT_ELIGIBLE"
+  },
+  "coverage": {
+    "WGC_2026_NY3": {
+      "2023_ASIA": {
+        "rows": 260,
+        "price_trainable": 255,
+        "core_trainable": 255,
+        "venue_gate_excluded_from_price_valid": 0,
+        "up_core": 141,
+        "down_core": 114
+      },
+      "2023_EUROPE": {
+        "rows": 260,
+        "price_trainable": 255,
+        "core_trainable": 249,
+        "venue_gate_excluded_from_price_valid": 6,
+        "up_core": 133,
+        "down_core": 116
+      },
+      "2023_US": {
+        "rows": 260,
+        "price_trainable": 224,
+        "core_trainable": 224,
+        "venue_gate_excluded_from_price_valid": 0,
+        "up_core": 99,
+        "down_core": 125
+      },
+      "2024_ASIA": {
+        "rows": 262,
+        "price_trainable": 244,
+        "core_trainable": 244,
+        "venue_gate_excluded_from_price_valid": 0,
+        "up_core": 139,
+        "down_core": 105
+      },
+      "2024_EUROPE": {
+        "rows": 262,
+        "price_trainable": 259,
+        "core_trainable": 254,
+        "venue_gate_excluded_from_price_valid": 5,
+        "up_core": 139,
+        "down_core": 115
+      },
+      "2024_US": {
+        "rows": 262,
+        "price_trainable": 245,
+        "core_trainable": 245,
+        "venue_gate_excluded_from_price_valid": 0,
+        "up_core": 130,
+        "down_core": 115
+      },
+      "2025_ASIA": {
+        "rows": 261,
+        "price_trainable": 256,
+        "core_trainable": 256,
+        "venue_gate_excluded_from_price_valid": 0,
+        "up_core": 142,
+        "down_core": 114
+      },
+      "2025_EUROPE": {
+        "rows": 261,
+        "price_trainable": 255,
+        "core_trainable": 249,
+        "venue_gate_excluded_from_price_valid": 6,
+        "up_core": 144,
+        "down_core": 105
+      },
+      "2025_US": {
+        "rows": 261,
+        "price_trainable": 251,
+        "core_trainable": 245,
+        "venue_gate_excluded_from_price_valid": 6,
+        "up_core": 139,
+        "down_core": 106
+      }
+    },
+    "SOBTI_5_ET": {
+      "2023_ASIA_AFTERNOON_LIT": {
+        "rows": 260,
+        "price_trainable": 255,
+        "core_trainable": 238,
+        "venue_gate_excluded_from_price_valid": 17,
+        "up_core": 117,
+        "down_core": 121
+      },
+      "2023_ASIA_MORNING_LIT": {
+        "rows": 260,
+        "price_trainable": 254,
+        "core_trainable": 237,
+        "venue_gate_excluded_from_price_valid": 17,
+        "up_core": 115,
+        "down_core": 122
+      },
+      "2023_EUROPE_LIT": {
+        "rows": 260,
+        "price_trainable": 256,
+        "core_trainable": 250,
+        "venue_gate_excluded_from_price_valid": 6,
+        "up_core": 125,
+        "down_core": 125
+      },
+      "2023_NY_LONDON_LIT": {
+        "rows": 260,
+        "price_trainable": 256,
+        "core_trainable": 250,
+        "venue_gate_excluded_from_price_valid": 6,
+        "up_core": 121,
+        "down_core": 129
+      },
+      "2023_US_LATE_LIT": {
+        "rows": 260,
+        "price_trainable": 199,
+        "core_trainable": 199,
+        "venue_gate_excluded_from_price_valid": 0,
+        "up_core": 119,
+        "down_core": 80
+      },
+      "2024_ASIA_AFTERNOON_LIT": {
+        "rows": 262,
+        "price_trainable": 259,
+        "core_trainable": 241,
+        "venue_gate_excluded_from_price_valid": 18,
+        "up_core": 121,
+        "down_core": 120
+      },
+      "2024_ASIA_MORNING_LIT": {
+        "rows": 262,
+        "price_trainable": 259,
+        "core_trainable": 241,
+        "venue_gate_excluded_from_price_valid": 18,
+        "up_core": 135,
+        "down_core": 106
+      },
+      "2024_EUROPE_LIT": {
+        "rows": 262,
+        "price_trainable": 259,
+        "core_trainable": 254,
+        "venue_gate_excluded_from_price_valid": 5,
+        "up_core": 141,
+        "down_core": 113
+      },
+      "2024_NY_LONDON_LIT": {
+        "rows": 262,
+        "price_trainable": 258,
+        "core_trainable": 253,
+        "venue_gate_excluded_from_price_valid": 5,
+        "up_core": 131,
+        "down_core": 122
+      },
+      "2024_US_LATE_LIT": {
+        "rows": 262,
+        "price_trainable": 199,
+        "core_trainable": 199,
+        "venue_gate_excluded_from_price_valid": 0,
+        "up_core": 122,
+        "down_core": 77
+      },
+      "2025_ASIA_AFTERNOON_LIT": {
+        "rows": 261,
+        "price_trainable": 257,
+        "core_trainable": 240,
+        "venue_gate_excluded_from_price_valid": 17,
+        "up_core": 117,
+        "down_core": 123
+      },
+      "2025_ASIA_MORNING_LIT": {
+        "rows": 261,
+        "price_trainable": 256,
+        "core_trainable": 239,
+        "venue_gate_excluded_from_price_valid": 17,
+        "up_core": 121,
+        "down_core": 118
+      },
+      "2025_EUROPE_LIT": {
+        "rows": 261,
+        "price_trainable": 255,
+        "core_trainable": 249,
+        "venue_gate_excluded_from_price_valid": 6,
+        "up_core": 145,
+        "down_core": 104
+      },
+      "2025_NY_LONDON_LIT": {
+        "rows": 261,
+        "price_trainable": 255,
+        "core_trainable": 247,
+        "venue_gate_excluded_from_price_valid": 8,
+        "up_core": 140,
+        "down_core": 107
+      },
+      "2025_US_LATE_LIT": {
+        "rows": 261,
+        "price_trainable": 202,
+        "core_trainable": 199,
+        "venue_gate_excluded_from_price_valid": 3,
+        "up_core": 124,
+        "down_core": 75
+      }
+    }
+  },
+  "rows_excluded_core_total": 507,
+  "hashes": {
+    "wgc_core": "71e8e1e77175688c59c9c90aaf74be259295569683c5abc7e4b6424990e9da8e",
+    "sobti_core": "3745f4253f4c0635da5b047b91b639d542159d3fd124dfab60c4a8db63a4b89f"
+  },
+  "model_gate": "Primary modelling must assert core_trainable==True. price_trainable-only rows may be used only in declared sensitivity analysis."
+}
