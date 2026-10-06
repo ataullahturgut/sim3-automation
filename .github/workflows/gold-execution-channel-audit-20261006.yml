@@ -1,0 +1,46 @@
+name: Gold Execution Channel Audit 20261006
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_execution_channel_audit_20261006.py'
+      - '.github/workflows/gold-execution-channel-audit-20261006.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.31,<3'
+      - run: python gold_axis_2026/tools/gold_execution_channel_audit_20261006.py
+      - name: Record execution-audit evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/EXECUTION_CHANNEL_AUDIT_OUT/summary.json gold_axis_2026/GOLD_EXECUTION_CHANNEL_AUDIT_2026-10-06.json
+          cp gold_axis_2026/EXECUTION_CHANNEL_AUDIT_OUT/report.md gold_axis_2026/GOLD_EXECUTION_CHANNEL_AUDIT_2026-10-06.md
+          cp gold_axis_2026/EXECUTION_CHANNEL_AUDIT_OUT/signal_panel.csv gold_axis_2026/GOLD_EXECUTION_CHANNEL_AUDIT_SIGNAL_PANEL_2026-10-06.csv
+          cp gold_axis_2026/EXECUTION_CHANNEL_AUDIT_OUT/xau_same_day.csv gold_axis_2026/GOLD_EXECUTION_CHANNEL_AUDIT_XAU_SAME_DAY_2026-10-06.csv
+          cp gold_axis_2026/EXECUTION_CHANNEL_AUDIT_OUT/xau_decision_to_decision.csv gold_axis_2026/GOLD_EXECUTION_CHANNEL_AUDIT_XAU_D2D_2026-10-06.csv
+          cp gold_axis_2026/EXECUTION_CHANNEL_AUDIT_OUT/gldtr_same_day.csv gold_axis_2026/GOLD_EXECUTION_CHANNEL_AUDIT_GLDTR_SAME_DAY_2026-10-06.csv
+          cp gold_axis_2026/EXECUTION_CHANNEL_AUDIT_OUT/gldtr_decision_to_decision.csv gold_axis_2026/GOLD_EXECUTION_CHANNEL_AUDIT_GLDTR_D2D_2026-10-06.csv
+          git add gold_axis_2026/GOLD_EXECUTION_CHANNEL_AUDIT_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record execution-channel audit evidence"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
