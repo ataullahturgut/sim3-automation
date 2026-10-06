@@ -1,31 +1,45 @@
-# GOLD GLOBAL 5-WINDOW CLOCK CONTRACT — 2026-10-06
+# GOLD GLOBAL SESSION CLOCK CONTRACT — 2026-10-06
 
-**Status:** PREREGISTERED CLOCK / TIMESTAMP AUTHORITY  
-**Scope:** session-target clock construction and mapping to the governed 15-minute XAU/USD feed.  
-**Important:** this freezes timestamp semantics and research-window construction. It does **not** yet freeze the number of final operational consensus heads or claim predictive performance.
+**Status:** CORRECTED PREREGISTERED CLOCK / TIMESTAMP AUTHORITY  
+**Supersedes:** the earlier same-day version that treated two old SGE sub-sessions as canonical modern Asia targets.  
+**Scope:** timestamp provenance, externally anchored candidate session partitions, DST handling, and label construction.  
+**Important:** this document freezes clock semantics and candidate partitions. It does **not** preselect the final number of forecast heads or claim predictive performance.
 
-## 1. Why this contract exists
+## 1. Correction discovered during independent verification
 
-Three dominant gold centres (London, New York/COMEX, Shanghai) do not mechanically imply three prediction models. The project first studies five sequential price-discovery windows, then decides from pre-2026 evidence whether contiguous windows should be merged.
+The project must not equate:
+- three dominant gold centres,
+- historical exchange sub-sessions,
+- academic price-discovery zones,
+- and the eventual number of forecast models.
 
-The five-window research prior comes from Sobti, Sehgal & Ilango (2021), while venue-local clock definitions come from official SGE/LBMA/CME sources.
+A material modernization issue was found in the first draft:
+
+Sobti, Sehgal & Ilango (2021) use 2013–2018 data and divide the day into five ET zones:
+- Asia Morning 21:00–23:30 ET
+- Asia Afternoon 01:30–03:30 ET
+- Europe 03:30–08:00 ET
+- NY/London overlap 08:00–14:30 ET
+- US 14:30–21:00 ET.
+
+However, Shanghai Gold Exchange changed its matching-market schedule effective **2019-06-10**, adding the former 11:30–13:30 interval so that the day matching session became **09:00–15:30 Shanghai local time**. Therefore the old morning/afternoon split must not be presented as the official modern 2023–2026 SGE matching-session structure.
+
+The first draft's hybrid rule that anchored W1/W2 to 09:00–11:30 and 13:30–15:30 Shanghai is therefore superseded as a binding modern target definition.
 
 ## 2. Raw XAU/USD timestamp provenance — binding
 
-The project 15-minute coverage downloader requests Twelve Data with:
+The project 15-minute downloader requests Twelve Data with:
 
 `symbol=XAU/USD`  
 `interval=15min`  
 `timezone=UTC`  
 `order=ASC`
 
-The repository loader materializes each API datetime as:
+The repository loader materializes API datetimes as timezone-aware UTC.
 
-`dt_utc = pd.Timestamp(datetime, tz="UTC")`
+Twelve Data official API documentation states that the intraday `datetime` field refers to **when the bar with the specified interval was opened**. Therefore a row stamped `12:00 UTC` is the bar opened at 12:00 UTC.
 
-Twelve Data documentation defines intraday `datetime` as the timestamp at which the interval bar **opened**. Therefore a row stamped `12:00 UTC` is the 12:00–12:15 bar, not a close timestamp.
-
-This is the canonical raw clock. No session label may be assigned from an unzoned timestamp.
+This is the canonical raw clock.
 
 ## 3. Time-zone engine — binding
 
@@ -37,189 +51,211 @@ Use IANA time zones only:
 - `Asia/Shanghai`
 - `Europe/Istanbul`
 
-All conversions are date-aware. Fixed offsets such as “New York = UTC-5” or “London = UTC+0” are prohibited.
+Conversions must be date-aware using the IANA tz database (Python `zoneinfo` / pandas timezone conversion).
 
-Implementation must use an IANA tz database (Python `zoneinfo` / pandas tz conversion). DST transitions must be resolved from the date itself.
+Fixed-offset logic such as:
+- New York = UTC-5,
+- London = UTC+0,
+- Istanbul = New York+7,
 
-## 4. Five target windows — clock definition
+is prohibited.
 
-### W1 — ASIA_MORNING
+DST transition dates must be resolved from the timestamp itself.
 
-**Canonical boundary:** official Shanghai Gold Exchange local morning session.
+## 4. Two externally anchored candidate partitions
 
-- timezone: `Asia/Shanghai`
-- start: **09:00**
-- end: **11:30**
-- UTC: **01:00–03:30** year-round
-- Istanbul: **04:00–06:30** year-round
+There is no single universal gold-session partition in the literature or institutional practice. To avoid inventing boundaries after observing performance, the project preregisters **two external candidate partitions**.
 
-Reason: SGE local trading hours are venue-defined and Shanghai does not use seasonal DST. This avoids shifting the actual Shanghai morning by one hour during New York winter time.
+### Partition A — MODERN_WGC_3
 
-### W2 — ASIA_AFTERNOON
+Primary modern industry benchmark.
 
-**Canonical boundary:** official Shanghai Gold Exchange local afternoon session.
+World Gold Council 2026 intraday gold analysis uses:
+- **ASIA:** 22:00–07:00 UTC
+- **EUROPE:** 07:00–12:00 UTC
+- **US:** 12:00–21:00 UTC
 
-- timezone: `Asia/Shanghai`
-- start: **13:30**
-- end: **15:30**
-- UTC: **05:30–07:30** year-round
-- Istanbul: **08:30–10:30** year-round
+These windows are used on spot gold intraday data by WGC in 2026 market analysis.
 
-### W3 — EUROPE
+For this project they are stored **exactly in UTC** as the external WGC partition. They are not redefined from Shanghai/London/New York local exchange opens.
 
-There is no single official London OTC market open because Loco London trades continuously. Therefore the research boundary uses the externally published Sobti et al. sequential price-discovery zone rather than inventing a London open.
+Purpose:
+- current-market three-session benchmark;
+- candidate operational architecture;
+- no DST ambiguity because the research boundary itself is UTC-defined.
 
-- timezone anchor: `America/New_York`
-- start: **03:30 ET**
-- end: **08:00 ET**
+### Partition B — SOBTI_5_ET
 
-Date-aware mapping:
-- while New York is EDT (UTC-4): **07:30–12:00 UTC**, **10:30–15:00 Istanbul**
-- while New York is EST (UTC-5): **08:30–13:00 UTC**, **11:30–16:00 Istanbul**
+Academic replication / price-discovery benchmark.
 
-The corresponding London local clock is recorded per date; it must not be hard-coded because US and UK DST change on different dates.
+Using `America/New_York` date-aware local time:
+- **ASIA_MORNING_LIT:** 21:00–23:30 ET
+- **ASIA_AFTERNOON_LIT:** 01:30–03:30 ET
+- **EUROPE_LIT:** 03:30–08:00 ET
+- **NY_LONDON_LIT:** 08:00–14:30 ET
+- **US_LATE_LIT:** 14:30–21:00 ET
 
-### W4 — NY_LONDON_OVERLAP
+Purpose:
+- reproduce the externally published five-zone academic partition;
+- test whether its price-discovery segmentation transports into 2023–2025;
+- preserve NY/London overlap as an explicit candidate state.
 
-Academic sequential price-discovery zone:
+Guardrail:
+- these labels are **literature zones**, not claims that the modern SGE matching market still has the same 2013–2018 session structure.
 
-- timezone anchor: `America/New_York`
-- start: **08:00 ET**
-- end: **14:30 ET**
+## 5. Modern SGE venue-state markers — features/telemetry, not target boundaries
 
-Date-aware mapping:
-- EDT: **12:00–18:30 UTC**, **15:00–21:30 Istanbul**
-- EST: **13:00–19:30 UTC**, **16:00–22:30 Istanbul**
+Official SGE evidence:
 
-This is a research target clock. It must not be confused with the legacy CIG-D1 daily-reference target merely because legacy CIG-D1 had an 08:00 New York governed issue deadline.
+- night matching session: 20:00–02:30 Shanghai local;
+- day matching session: **09:00–15:30 Shanghai local** after the 2019 extension;
+- holiday schedules may alter availability.
 
-### W5 — LATE_US
+Store venue-state markers per bar/date:
+- `sge_night_open`
+- `sge_day_open`
+- `sge_holiday_or_closed`
 
-Academic sequential US zone:
+Do **not** split the modern SGE day at 11:30/13:30 as if a matching-market break still governed 2023–2026.
 
-- timezone anchor: `America/New_York`
-- start: **14:30 ET**
-- end: **21:00 ET**
+## 6. LBMA and COMEX markers
 
-Date-aware mapping:
-- EDT: **18:30–01:00 UTC next day**, **21:30–04:00 Istanbul next day**
-- EST: **19:30–02:00 UTC next day**, **22:30–05:00 Istanbul next day**
-
-## 5. Why Asia is not frozen directly from the paper's ET clock
-
-Sobti et al. report Asia Morning 21:00–23:30 ET and Asia Afternoon 01:30–03:30 ET. When New York is on daylight time these map exactly to the official SGE 09:00–11:30 and 13:30–15:30 Shanghai sessions. In New York standard time they shift by one hour relative to Shanghai because Shanghai does not observe DST.
-
-Therefore the project preserves the paper as the five-zone research authority but anchors the two Asia windows to **official SGE local time**. A separate `LIT_ET_ASIA` sensitivity may be retained for replication, but it is not the canonical venue-aligned Asia label.
-
-## 6. LBMA benchmark markers — event flags, not session boundaries
-
-Record separately for every date:
-
+### LBMA
+Event markers:
 - LBMA Gold Price AM: **10:30 Europe/London**
 - LBMA Gold Price PM: **15:00 Europe/London**
 
-These are event markers inside the intraday path. They do not define the Europe start/end target by themselves.
+These are benchmark-event flags, not automatic session target boundaries.
 
-## 7. Raw-bar matching rule
+### COMEX / GC
+GC is an almost round-the-clock electronic futures market with a daily maintenance break under the standard contract schedule. COMEX activity therefore cannot be reduced to a simple “US market is closed outside cash hours” assumption.
 
-For every session boundary:
+Store:
+- GC active/maintenance state where available;
+- US 08:30 ET macro-event flag separately.
 
-1. Construct the boundary in its canonical local zone.
-2. Convert that aware timestamp to UTC.
-3. Match it to `dt_utc` in the 15-minute XAU/USD table.
-4. Because `datetime` is a bar-open timestamp, boundary price = **open of the bar stamped exactly at the boundary**.
-5. The theoretical session return is:
-   `P(end boundary) / P(start boundary) - 1`.
-6. If either exact boundary bar is absent, mark the label **MISSING**. Do not silently forward-fill/back-fill.
+## 7. Why both partitions are necessary
 
-All five canonical boundaries are multiples of 15 minutes, so no rounding is required.
+The modern WGC partition is closer to current 2026 gold-market attribution practice.
 
-## 8. Forecast vs realization clocks
+The Sobti partition has stronger academic microstructure motivation and explicitly isolates the NY/London overlap, but was estimated using 2013–2018 market structure.
 
-Two labels must be stored separately.
+Therefore the project will **not choose 3 vs 5 because one happens to score better on 2026**.
+
+Chronology:
+- 2023–2024: development / partition and expert-structure study;
+- 2025: frozen transport deciding whether the structure is stable;
+- 2026: retrospective stress only, never used to move clock boundaries.
+
+Possible final outcomes:
+- 3 operational heads;
+- 4 heads if a robust NY/London overlap split is warranted;
+- 5 heads if both Asian subzones and overlap states independently transport;
+- fewer heads if session-specific forecasting adds no robust value.
+
+## 8. Raw-bar matching rule
+
+For every candidate boundary:
+
+1. Construct the boundary in its declared canonical clock (UTC for WGC_3; America/New_York for SOBTI_5_ET).
+2. Convert the aware timestamp to UTC.
+3. Match exactly to `dt_utc`.
+4. Boundary price = **open of the bar opened exactly at the boundary**.
+5. Return = `P(end boundary) / P(start boundary) - 1`.
+6. Missing exact boundary => `MISSING_BOUNDARY`.
+7. No silent nearest-bar substitution, forward fill, or backfill.
+
+All registered boundaries are multiples of 15 minutes.
+
+## 9. SESSION_DIRECTION versus EXECUTABLE_DIRECTION
+
+Two concepts remain mandatory.
 
 ### SESSION_DIRECTION
-Direction from the theoretical session start boundary to theoretical session end boundary. Used for scientific price-discovery analysis.
+Theoretical boundary-to-boundary direction for a registered session partition.
 
 ### EXECUTABLE_DIRECTION
-Direction from the first bar that is strictly tradable after the forecast is genuinely available to the frozen session exit.
+Direction from the first strictly post-ready/post-signal tradable bar to a frozen future endpoint.
 
-For example, if a head is issued at exactly 08:00 New York and computation/decision occurs after that timestamp, the 08:00 bar open is not a strictly post-signal entry. With 15-minute data, **08:15 New York** is the first conservative post-signal bar unless a finer execution feed proves an earlier executable timestamp.
+Example:
+if a forecast is finalized at 08:00 New York after the 08:00 instant, the 08:00 bar open is not a strictly post-signal entry. With 15-minute data, 08:15 New York is the conservative first post-signal boundary unless a finer governed feed proves otherwise.
 
-The project must never report SESSION_DIRECTION accuracy as executable trading accuracy.
+Never report SESSION_DIRECTION accuracy as executable trading accuracy.
 
-## 9. Source-ready rule for each future head
+## 10. Source-ready rule
 
-For a session head H:
+For every future session head H:
 
-`t_ready(H) = max(publication/availability timestamp of every required input) + compute latency`
+`t_ready(H) = max(availability timestamp of every required input) + compute latency`
 
-A head is valid for the full theoretical session only if `t_ready <= target_start`.
+If `t_ready(H) > target_start(H)`, that head cannot claim the full session as its tradable target.
 
-If `t_ready > target_start`:
-- do not backdate the prediction;
-- either define a separately frozen post-ready executable target, or
-- declare that head unavailable for that full session.
+Either:
+- create a separately frozen post-ready executable target, or
+- declare the full-session forecast unavailable.
 
-## 10. DST governance
+## 11. DST audit requirements
 
-New York and London seasonal clock changes are not synchronized; Shanghai and Istanbul are treated through their IANA rules. Therefore every row must carry at minimum:
-
+Every data row used in clock validation must carry:
 - `dt_utc`
 - `dt_ny`
 - `dt_london`
 - `dt_shanghai`
 - `dt_istanbul`
-- `ny_utc_offset`
-- `london_utc_offset`
+- UTC offsets for NY/London/Shanghai/Istanbul.
 
-No model feature or target may be generated using manually coded “summer = +7 / winter = +8” logic. Those values may be displayed after date-aware conversion but are not the conversion engine.
+Mandatory audit samples:
+- normal winter week;
+- normal summer week;
+- US DST transition week;
+- UK DST transition week;
+- weeks where US and UK are temporarily on different seasonal offsets.
 
-## 11. Holiday / venue-state rule
+The WGC_3 boundaries remain fixed in UTC by definition.
+The SOBTI_5_ET boundaries move in UTC according to `America/New_York` date-aware conversion.
 
-The XAU/USD aggregate spot feed may contain data when one venue is closed. Therefore keep separate venue-state flags:
+## 12. Historical diagnostic artifacts
 
-- `sge_open`
-- `lbma_business_day`
-- `comex_regular_status` / holiday state where available
+Older repository buckets such as:
+- `asia_to_europe`
+- `europe_pre_overlap`
+- `ny_london_overlap`
+- `late_us`
 
-Do not silently delete a global-XAU session label merely because one venue is closed. Instead retain the clock-window label and tag venue closure for conditional analysis.
+remain diagnostic and must not be silently reused as training truth for the new project unless their clock definition exactly matches one of the registered candidate partitions.
 
-## 12. Chronology
+## 13. External authorities
 
-Clock definitions are fixed without using 2026 directional accuracy.
+1. World Gold Council, 2026 intraday session analysis:
+   - Asia 22:00–07:00 UTC
+   - Europe 07:00–12:00 UTC
+   - US 12:00–21:00 UTC
 
-- 2023–2024: development of session models and expert membership
-- 2025: frozen transport / architecture decision
-- 2026: retrospective stress only; no clock retuning
+2. Sobti, Sehgal & Ilango (2021), *International Review of Financial Analysis* 78, 101893:
+   - five sequential ET price-discovery zones using 2013–2018 one-minute New York/London/Shanghai data.
 
-## 13. Superseded older session buckets
+3. Shanghai Gold Exchange, notice effective 2019-06-10:
+   - matching-market day trading extended to 09:00–15:30 by adding the former 11:30–13:30 interval.
 
-Older repository diagnostics such as:
-- prior-day 20:00 NY -> 03:30 NY “asia_to_europe”
-- 03:30 -> 08:00 NY
-- 08:00 -> 14:30 NY
-- 14:30 -> 20:00/21:00 NY
+4. LBMA:
+   - Gold Price auctions commence at 10:30 and 15:00 London time.
 
-remain useful historical attribution artifacts, but they are **not** the binding five-window label contract for the new session-model research.
+5. CME Group:
+   - standard GC futures trade electronically for approximately 23 hours per trading day with a daily maintenance period under the standard schedule.
 
-In particular, the prior “asia_to_europe” bucket mixed multiple Asia/overnight states and must not be used as W1/W2 training truth.
+6. Twelve Data:
+   - `timezone` may be explicitly set to UTC;
+   - intraday `datetime` refers to the bar-open timestamp.
 
-## 14. External authorities
+## 14. Next gate
 
-- Sobti, Sehgal & Ilango (2021), *International Review of Financial Analysis* 78, 101893. Five sequential zones: Asia Morning, Asia Afternoon, Europe, NY/London overlap, US.
-- Shanghai Gold Exchange official trading schedule: night 20:00–02:30; morning 09:00–11:30; afternoon 13:30–15:30 (venue schedule/announcements).
-- LBMA: Gold Price auctions commence 10:30 and 15:00 London time.
-- CME Group: benchmark Gold futures trade approximately 23 hours per trading day.
-- Twelve Data: intraday timezone can be explicitly requested; returned `datetime` denotes the bar-open time.
-- IANA timezone database / Python `zoneinfo`: date-aware DST transitions.
+Before model fitting:
 
-## 15. Next gate
+1. backfill governed XAU/USD 15-minute data in UTC for 2023–2025;
+2. create **both** WGC_3 and SOBTI_5_ET label panels;
+3. run exact-boundary coverage audit;
+4. run DST-transition audit;
+5. freeze data hashes / request metadata;
+6. only then test expert-by-window predictive performance.
 
-Before any session model is fit:
-
-1. backfill governed XAU/USD 15-minute UTC data for 2023–2025;
-2. create the five labels from this contract;
-3. produce boundary-bar coverage and DST-transition audits;
-4. verify a sample of winter, summer, US-only-DST, and UK-only-DST/mismatch dates;
-5. only then begin expert-by-window predictive testing.
+No 2026 result may be used to alter these candidate clock boundaries.
