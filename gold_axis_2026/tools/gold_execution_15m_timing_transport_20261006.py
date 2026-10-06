@@ -119,19 +119,19 @@ def main():
     # jitter robustness on dev: +/-30m entry and exit around each candidate
     idx={hm:i for i,hm in enumerate(grid)}
     robust=[]
-    lookup={(r.entry_ny,r.exit_ny):r for r in ws.itertuples(index=False)}
-    for r in ws.itertuples(index=False):
-        i=idx[r.entry_ny]; j=idx[r.exit_ny]
+    lookup={(str(r["entry_ny"]),str(r["exit_ny"])):r.to_dict() for _,r in ws.iterrows()}
+    for _,r in ws.iterrows():
+        i=idx[r["entry_ny"]]; j=idx[r["exit_ny"]]
         vals=[]
         for di in [-2,-1,0,1,2]:
           for dj in [-2,-1,0,1,2]:
             ii=i+di; jj=j+dj
             if ii<0 or jj>=len(grid) or jj-ii<4: continue
             rr=lookup.get((grid[ii],grid[jj]))
-            if rr is not None and rr._asdict()["2025_H2_n"]>=65:
-                vals.append(rr._asdict()["2025_H2_compound"])
+            if rr is not None and rr["2025_H2_n"]>=65:
+                vals.append(rr["2025_H2_compound"])
         robust.append({
-          "entry_ny":r.entry_ny,"exit_ny":r.exit_ny,
+          "entry_ny":r["entry_ny"],"exit_ny":r["exit_ny"],
           "dev_jitter_n":len(vals),
           "dev_jitter_median_compound":float(np.median(vals)) if vals else np.nan,
           "dev_jitter_min_compound":float(np.min(vals)) if vals else np.nan,
@@ -166,17 +166,17 @@ def main():
       drows.append(row)
     ds=pd.DataFrame(drows)
     # jitter across +/-30m
-    vals_by={r.sell_ny:r for r in ds.itertuples(index=False)}
+    vals_by={str(r["sell_ny"]):r.to_dict() for _,r in ds.iterrows()}
     jr=[]
-    for r in ds.itertuples(index=False):
-      i=idx[r.sell_ny]; vals=[]
+    for _,r in ds.iterrows():
+      i=idx[r["sell_ny"]]; vals=[]
       for di in [-2,-1,0,1,2]:
         ii=i+di
         if ii<0 or ii>=len(grid)-1: continue
         rr=vals_by.get(grid[ii])
-        if rr is not None and rr._asdict()["2025_H2_n"]>=35:
-          vals.append(rr._asdict()["2025_H2_compound"])
-      jr.append({"sell_ny":r.sell_ny,"dev_jitter_n":len(vals),
+        if rr is not None and rr["2025_H2_n"]>=35:
+          vals.append(rr["2025_H2_compound"])
+      jr.append({"sell_ny":r["sell_ny"],"dev_jitter_n":len(vals),
                  "dev_jitter_median_compound":float(np.median(vals)) if vals else np.nan,
                  "dev_jitter_min_compound":float(np.min(vals)) if vals else np.nan,
                  "dev_jitter_positive_share":float(np.mean(np.asarray(vals)>0)) if vals else np.nan})
