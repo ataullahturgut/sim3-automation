@@ -21,6 +21,7 @@
     "2026_AUG_SEP_hit": 0.6111111111111112,
     "2026_AUG_SEP_mean": 0.0009730981755719514
   },
+  "best_down_exit_selected_on_2025H2_only": null,
   "robust_positive_all_periods": {
     "entry_hour_ny": 17.0,
     "exit_hour_ny": 20.0,
