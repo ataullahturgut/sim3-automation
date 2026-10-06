@@ -1,0 +1,40 @@
+name: Gold Execution 15m Timing Transport 20261006
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_execution_15m_timing_transport_20261006.py'
+      - '.github/workflows/gold-execution-15m-timing-transport-20261006.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.31,<3'
+      - run: python gold_axis_2026/tools/gold_execution_15m_timing_transport_20261006.py
+      - name: Record
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/EXECUTION_15M_TIMING_OUT/summary.json gold_axis_2026/GOLD_EXECUTION_15M_TIMING_TRANSPORT_2026-10-06.json
+          cp gold_axis_2026/EXECUTION_15M_TIMING_OUT/forward_clock_map.csv gold_axis_2026/GOLD_EXECUTION_15M_FORWARD_CLOCK_MAP_2026-10-06.csv
+          cp gold_axis_2026/EXECUTION_15M_TIMING_OUT/up_window_dev_robust_top.csv gold_axis_2026/GOLD_EXECUTION_15M_UP_WINDOW_DEV_ROBUST_TOP_2026-10-06.csv
+          cp gold_axis_2026/EXECUTION_15M_TIMING_OUT/down_exit_dev_robust_top.csv gold_axis_2026/GOLD_EXECUTION_15M_DOWN_EXIT_DEV_ROBUST_TOP_2026-10-06.csv
+          git add gold_axis_2026/GOLD_EXECUTION_15M_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record 15m execution timing transport audit"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
