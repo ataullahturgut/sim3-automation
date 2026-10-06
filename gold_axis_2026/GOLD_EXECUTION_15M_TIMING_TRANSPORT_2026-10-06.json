@@ -1,0 +1,184 @@
+{
+  "status": "RETROSPECTIVE_15M_EXECUTION_TIMING_DEV2025_TRANSPORT2026_NOT_PROSPECTIVE",
+  "signal_time_ny": "08:00",
+  "method": "2025 H2 selects; 2026 Jan-Jul and Aug-Sep are unchanged transport. 15m windows require >=60m and jitter robustness +/-30m.",
+  "up_selected_dev2025": {
+    "entry_ny": "17:15",
+    "exit_ny": "20:00",
+    "hold_min": 165,
+    "2025_H2_n": 72,
+    "2025_H2_compound": 0.07363691763675884,
+    "2025_H2_mean": 0.0009915364188224824,
+    "2025_H2_median": 0.0007114095498291784,
+    "2025_H2_hit": 0.6111111111111112,
+    "2025_H2_max_drawdown": -0.01772904230715977,
+    "2025_H2_worst": -0.008070819932384232,
+    "2025_H2_best": 0.015249078968444518,
+    "2026_JAN_JUL_n": 73,
+    "2026_JAN_JUL_compound": 0.04695914809019608,
+    "2026_JAN_JUL_mean": 0.000637609714392232,
+    "2026_JAN_JUL_median": 5.29027152973427e-07,
+    "2026_JAN_JUL_hit": 0.5616438356164384,
+    "2026_JAN_JUL_max_drawdown": -0.019216368125257843,
+    "2026_JAN_JUL_worst": -0.011410907608752963,
+    "2026_JAN_JUL_best": 0.018319942337606587,
+    "2026_AUG_SEP_n": 18,
+    "2026_AUG_SEP_compound": 0.0169426512903601,
+    "2026_AUG_SEP_mean": 0.0009357814984263308,
+    "2026_AUG_SEP_median": 0.0006489596587082591,
+    "2026_AUG_SEP_hit": 0.6666666666666666,
+    "2026_AUG_SEP_max_drawdown": -0.004196377599542167,
+    "2026_AUG_SEP_worst": -0.0023732886128988717,
+    "2026_AUG_SEP_best": 0.006899875099471764,
+    "dev_jitter_n": 15,
+    "dev_jitter_median_compound": 0.08490116592851504,
+    "dev_jitter_min_compound": 0.07086671486588791,
+    "dev_jitter_positive_share": 1.0,
+    "entry_istanbul_clocks_2025H2": [
+      "00:15",
+      "01:15"
+    ],
+    "exit_istanbul_clocks_2025H2": [
+      "03:00",
+      "04:00"
+    ]
+  },
+  "down_exit_selected_dev2025": {
+    "sell_ny": "15:45",
+    "2025_H2_n": 38,
+    "2025_H2_compound": 0.021303817803352,
+    "2025_H2_mean": 0.0005580668694326344,
+    "2025_H2_median": 0.00028768118696798073,
+    "2025_H2_hit": 0.6052631578947368,
+    "2025_H2_max_drawdown": -0.006677096053137821,
+    "2025_H2_worst": -0.003430616767387318,
+    "2025_H2_best": 0.0117348732111473,
+    "2026_JAN_JUL_n": 58,
+    "2026_JAN_JUL_compound": -0.03219210602719458,
+    "2026_JAN_JUL_mean": -0.0005460677670388795,
+    "2026_JAN_JUL_median": 0.0004586026907003049,
+    "2026_JAN_JUL_hit": 0.5517241379310345,
+    "2026_JAN_JUL_max_drawdown": -0.071492216589217,
+    "2026_JAN_JUL_worst": -0.030652405229326773,
+    "2026_JAN_JUL_best": 0.010317311848789368,
+    "2026_AUG_SEP_n": 8,
+    "2026_AUG_SEP_compound": -0.0030469876584333644,
+    "2026_AUG_SEP_mean": -0.0003785811614208934,
+    "2026_AUG_SEP_median": -0.00020375163009361819,
+    "2026_AUG_SEP_hit": 0.5,
+    "2026_AUG_SEP_max_drawdown": -0.00670461884619733,
+    "2026_AUG_SEP_worst": -0.0048153481975130585,
+    "2026_AUG_SEP_best": 0.0031451196405674064,
+    "dev_jitter_n": 5,
+    "dev_jitter_median_compound": 0.013739055248916499,
+    "dev_jitter_min_compound": 0.008828993071551938,
+    "dev_jitter_positive_share": 1.0,
+    "sell_istanbul_clocks_2025H2": [
+      "22:45",
+      "23:45"
+    ]
+  },
+  "one_hour_acceleration_giveback": {
+    "UP": {
+      "strongest_positive_1h_dev": {
+        "start_ny": "18:30",
+        "end_ny": "19:30",
+        "dev_mean": 0.0006387674929096081,
+        "2025_H2": {
+          "mean": 0.0006387674929096081,
+          "compound": 0.046942995935060905,
+          "hit": 0.6527777777777778,
+          "n": 72
+        },
+        "2026_JAN_JUL": {
+          "mean": 0.00027460977972368843,
+          "compound": 0.020092716252802623,
+          "hit": 0.5068493150684932,
+          "n": 73
+        },
+        "2026_AUG_SEP": {
+          "mean": 0.000332334621569002,
+          "compound": 0.005986833027413763,
+          "hit": 0.5,
+          "n": 18
+        }
+      },
+      "strongest_negative_1h_dev": {
+        "start_ny": "09:30",
+        "end_ny": "10:30",
+        "dev_mean": -0.0005266431120089741,
+        "2025_H2": {
+          "mean": -0.0005266431120089741,
+          "compound": -0.037933234832028706,
+          "hit": 0.5138888888888888,
+          "n": 72
+        },
+        "2026_JAN_JUL": {
+          "mean": -0.00025247988180978985,
+          "compound": -0.02104089591878633,
+          "hit": 0.4931506849315068,
+          "n": 73
+        },
+        "2026_AUG_SEP": {
+          "mean": 0.0011002803384657584,
+          "compound": 0.019803781230939954,
+          "hit": 0.5555555555555556,
+          "n": 18
+        }
+      }
+    },
+    "DOWN": {
+      "strongest_positive_1h_dev": {
+        "start_ny": "10:45",
+        "end_ny": "11:45",
+        "dev_mean": 0.0010412888643182273,
+        "2025_H2": {
+          "mean": 0.0010412888643182273,
+          "compound": 0.04117147229544904,
+          "hit": 0.6153846153846154,
+          "n": 39
+        },
+        "2026_JAN_JUL": {
+          "mean": 0.000526972586088292,
+          "compound": 0.030339733764163546,
+          "hit": 0.5689655172413793,
+          "n": 58
+        },
+        "2026_AUG_SEP": {
+          "mean": -0.000624201462191068,
+          "compound": -0.005007994336643118,
+          "hit": 0.375,
+          "n": 8
+        }
+      },
+      "strongest_negative_1h_dev": {
+        "start_ny": "16:30",
+        "end_ny": "17:30",
+        "dev_mean": -0.0009728629673374161,
+        "2025_H2": {
+          "mean": -0.0009728629673374161,
+          "compound": -0.037126814836470734,
+          "hit": 0.5263157894736842,
+          "n": 38
+        },
+        "2026_JAN_JUL": {
+          "mean": -0.00038507478658302534,
+          "compound": -0.022147252945703633,
+          "hit": 0.43103448275862066,
+          "n": 58
+        },
+        "2026_AUG_SEP": {
+          "mean": 0.0006749134438561871,
+          "compound": 0.005407601813541163,
+          "hit": 0.75,
+          "n": 8
+        }
+      }
+    }
+  },
+  "guardrails": [
+    "No pre-08:00 NY price is used for executable CIG-D1 timing.",
+    "Selection is retrospective and architecture was itself developed with historical knowledge; 2026 is transport diagnostic, not pristine prospective OOS.",
+    "Gross XAU/USD only; no spread, commission, slippage, swap, taxes, or venue basis."
+  ]
+}
