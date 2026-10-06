@@ -1141,6 +1141,65 @@ Model status:
 - HELIOS variants consuming OPAL remain **BLOCKED DOWNSTREAM** until fresh OPAL session state exists;
 - legacy OPAL performance must not be promoted as PIT-clean evidence.
 
+### 5E.8E COT publication-time PIT remediation — 2026-10-06
+
+**Status:** publication-time defect reproduced and source-level availability authority corrected; OPAL/HELIOS session replay remains blocked until fresh upstream session baselines exist.
+
+Authorities:
+- `tools/gold_cot_publication_pit_v1.py`
+- `GOLD_COT_PIT_REAUDIT_SUMMARY_2026-10-06.json`
+- `GOLD_COT_PUBLICATION_CALENDAR_PIT_V1.csv`
+- `GOLD_COT_GOLD_PIT_STATE_RAW_REBUILT_2026-10-06.csv`
+- `GOLD_V5_SESSION_COT_AVAILABILITY_MAP_2023_2025.csv`
+- `GOLD_OPAL_OLD_PROVEN_EARLY_COT_ROWS_2026-10-06.csv`
+
+Raw source:
+- official CFTC Public Reporting API;
+- COMEX Gold contract code `088691`;
+- futures-only disaggregated dataset `72hh-3qpy`;
+- futures+options combined disaggregated dataset `kh3c-gbw2`.
+
+Availability rule:
+- default governed availability remains intentionally conservative: **report/as-of date + 7 calendar days at 15:30 America/New_York**;
+- if an official CFTC special announcement documents a later publication date, the official delayed publication date at 15:30 ET overrides the default;
+- if an official holiday publication occurs earlier than the +7d conservative buffer, the conservative buffer is retained;
+- all joins are timestamp-aware and use `cot_available_at_utc <= feature/target cutoff`.
+
+Official delay regimes explicitly encoded:
+- 2023 ION outage / backlog;
+- 2025 appropriations-lapse backlog, using the final accelerated CFTC schedule announced 2025-12-09.
+
+Independent raw CFTC reaudit result:
+- rebuilt CFTC report rows: **1,060**
+- first report date: **2006-06-13**
+- last report date at audit: **2026-09-29**
+- legacy OPAL panel rows audited: **1,029**
+- proven early-COT-use rows: **74**
+  - 2023: **21**
+  - 2025: **53**
+- legacy rows whose selected COT report changes under governed PIT: **74**
+
+This exactly reproduces the lower-bound leakage finding from the independent Work audit.
+
+Interpretation:
+- the old OPAL statement that a fixed `report_date + 7 days` lag was always conservative is **SUPERSEDED**;
+- the 2023 and 2025 exceptional release regimes violate that assumption;
+- historical OPAL/HELIOS predictions that depended on those early rows cannot be treated as clean PIT evidence without full downstream regeneration;
+- merely replacing the date column in an archived OPAL feature/prediction file is prohibited.
+
+V5 session mapping:
+- every current final-trainable WGC/Sobti session row in 2023-2025 can be mapped to a governed COT report using the corrected availability timestamp;
+- this establishes **COT data availability**, not OPAL model readiness.
+
+OPAL session status:
+- raw COT feature-state generation is now **READY**;
+- OPAL as a session reversal/controller model remains **BLOCKED_UPSTREAM_BASELINE**, because its routing logic depends on a fresh session baseline/AURORA direction and momentum state;
+- archived AURORA/OPAL predictions may not be used as substitutes under Section 5E.8C.
+
+HELIOS status:
+- HELIOS V1-V5 remains **BLOCKED_UPSTREAM_OPAL/AURORA** for session replay;
+- once fresh upstream session predictions exist, OPAL and HELIOS must be regenerated from raw COT plus the fresh upstream state.
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
