@@ -888,6 +888,49 @@ Chronology:
 
 Older coarse session buckets remain diagnostic only and are not binding training labels for the new session project.
 
+### 5E.8B Corrected 2023-2025 15m backfill / label gate — 2026-10-06
+
+Authorities:
+- `GOLD_SESSION_LABELS_V2_RESULT_2026-10-06.md`
+- `GOLD_SESSION_LABELS_V2_SUMMARY_2026-10-06.json`
+- `GOLD_XAU15M_HOUR_COVERAGE_AUDIT_2026-10-06.json`
+- `GOLD_XAU15M_MISSING_SLOT_AUDIT_2026-10-06.json`
+
+Raw governed XAU/USD 15-minute UTC backfill:
+- **74,163 rows**
+- raw range: **2022-12-30 00:00 UTC -> 2026-01-02 23:45 UTC**
+- 15-minute grid: PASS
+- OHLC internal consistency: PASS
+- frozen raw SHA256: `8f1c00b34a95b7cef6a44c3c0bef59035fa9dde9cf6d241ba0b87fd146235308`
+
+Binding candidate label files:
+- `GOLD_SESSION_LABELS_WGC2026_NY3_2023_2025.csv`
+- `GOLD_SESSION_LABELS_SOBTI5_ET_2023_2025.csv`
+
+Superseded / do not train:
+- the earlier fixed-UTC `GOLD_SESSION_LABELS_WGC3_2023_2025.csv`;
+- the earlier hybrid Asia split that treated 09:00-11:30 / 13:30-15:30 Shanghai as the modern official SGE day structure.
+
+Boundary resolution:
+- first choice = exact bar OPEN at boundary T;
+- if absent, exact prior 15-minute bar CLOSE ending at T may be used for **SESSION_DIRECTION attribution only**;
+- this fallback is never permitted as a backdated executable entry;
+- otherwise boundary = MISSING.
+
+Observed source-coverage regime:
+- 2023-2024 full XAU dates commonly contain **92 x 15-minute bars**, with a one-hour gap aligned to **17:00 New York** (22:00 UTC in EST / 21:00 UTC in EDT);
+- from **2025-04-22**, many dates contain 96 bars; 2025-04-22 onward 96-bar share in the audit is about **90.7%**;
+- this is treated as a source/feed coverage regime change, not as an economic regime and not as evidence that the underlying gold market became 24/7.
+
+Corrected WGC_2026_NY3 weekday label coverage after DST-aware mapping:
+- 2023: Asia 256/260, Europe 257/260, US 224/260;
+- 2024: Asia 245/262, Europe 259/262, US 245/262;
+- 2025: Asia 256/261, Europe 255/261, US 252/261.
+
+Sobti five-zone coverage is high for Asia/Europe/NY-London windows, but the literature US 14:30-21:00 ET window is structurally unavailable on many Fridays because standard gold weekly trading is closed before 21:00 ET. Friday late-US rows must therefore be treated as **not eligible for the full literature window**, not silently imputed.
+
+These labels are target-construction evidence only. No expert/model accuracy has yet been evaluated on them.
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
