@@ -1,0 +1,45 @@
+name: Gold Macro Event Ledger Raw V1 20261006
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_macro_event_ledger_raw_v1_20261006.py'
+      - '.github/workflows/gold-macro-event-ledger-raw-v1-20261006.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4'
+      - run: test -n "$NEON_DATABASE_URL"
+      - name: Build raw event ledger
+        run: python gold_axis_2026/tools/gold_macro_event_ledger_raw_v1_20261006.py
+      - name: Record evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/MACRO_EVENT_LEDGER_RAW_V1_OUT/raw_observations.csv gold_axis_2026/GOLD_MACRO_EVENT_RAW_OBSERVATIONS_2023_2025.csv
+          cp gold_axis_2026/MACRO_EVENT_LEDGER_RAW_V1_OUT/event_ledger.csv gold_axis_2026/GOLD_MACRO_EVENT_LEDGER_RAW_V1_2023_2025.csv
+          cp gold_axis_2026/MACRO_EVENT_LEDGER_RAW_V1_OUT/session_event_availability_map.csv gold_axis_2026/GOLD_SESSION_MACRO_EVENT_AVAILABILITY_MAP_2023_2025.csv
+          cp gold_axis_2026/MACRO_EVENT_LEDGER_RAW_V1_OUT/summary.json gold_axis_2026/GOLD_MACRO_EVENT_LEDGER_RAW_V1_SUMMARY_2026-10-06.json
+          git add gold_axis_2026/GOLD_MACRO_EVENT_RAW_OBSERVATIONS_2023_2025.csv                   gold_axis_2026/GOLD_MACRO_EVENT_LEDGER_RAW_V1_2023_2025.csv                   gold_axis_2026/GOLD_SESSION_MACRO_EVENT_AVAILABILITY_MAP_2023_2025.csv                   gold_axis_2026/GOLD_MACRO_EVENT_LEDGER_RAW_V1_SUMMARY_2026-10-06.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record raw macro event ledger and session availability"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
