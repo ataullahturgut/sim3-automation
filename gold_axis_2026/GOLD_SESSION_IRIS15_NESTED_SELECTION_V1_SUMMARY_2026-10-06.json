@@ -1,0 +1,1833 @@
+{
+  "status": "SESSION_IRIS15_NESTED_SELECTION_V1_COMPLETE",
+  "scope": "2023-2024 development chronology only; 2025/2026 unopened",
+  "selection_contract": {
+    "outer_replay": "same-window expanding causal blocks of 5; training labels must mature before cutoff",
+    "inner_validation": "up to 3 chronological expanding validation folds of 20 rows inside outer training only",
+    "selector": "StandardScaler + L1 LogisticRegression(liblinear)",
+    "C_grid": [
+      0.03,
+      0.1,
+      0.3,
+      1.0,
+      3.0
+    ],
+    "C_choice": "maximize inner balanced accuracy; among candidates within 1pp of max BA choose lowest Brier, then fewer features, then smaller C",
+    "post_selection_refit": "StandardScaler + L2 LogisticRegression C=0.3",
+    "pools": {
+      "SELECT_XAU15": "daily CORE3 + XAU15 full IRIS",
+      "SELECT_ALL15": "daily CORE3 + XAU15 + SI15 + PL15 full IRIS"
+    },
+    "fixed_reference": "FULL_XAU15_L2_C1",
+    "no_global_outcome_selection": true
+  },
+  "common_rows": 2067,
+  "metrics": [
+    {
+      "model": "FULL_XAU15_L2_C1",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "period": "2024",
+      "n": 93,
+      "accuracy": 0.5268817204301075,
+      "balanced_accuracy": 0.5243055555555556,
+      "brier": 0.2999323071208483,
+      "logloss": 0.8446184543582863,
+      "up_recall": 0.6041666666666666,
+      "down_recall": 0.4444444444444444,
+      "tn": 20,
+      "fp": 25,
+      "fn": 19,
+      "tp": 29
+    },
+    {
+      "model": "FULL_XAU15_L2_C1",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "period": "2024",
+      "n": 90,
+      "accuracy": 0.5444444444444444,
+      "balanced_accuracy": 0.5520142784293728,
+      "brier": 0.2990876214293746,
+      "logloss": 0.8362158464442966,
+      "up_recall": 0.5094339622641509,
+      "down_recall": 0.5945945945945946,
+      "tn": 22,
+      "fp": 15,
+      "fn": 26,
+      "tp": 27
+    },
+    {
+      "model": "FULL_XAU15_L2_C1",
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "period": "2024",
+      "n": 113,
+      "accuracy": 0.4778761061946903,
+      "balanced_accuracy": 0.45502901353965186,
+      "brier": 0.30931501363179215,
+      "logloss": 0.8524488420240243,
+      "up_recall": 0.5909090909090909,
+      "down_recall": 0.3191489361702128,
+      "tn": 15,
+      "fp": 32,
+      "fn": 27,
+      "tp": 39
+    },
+    {
+      "model": "FULL_XAU15_L2_C1",
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "period": "2024",
+      "n": 116,
+      "accuracy": 0.5517241379310345,
+      "balanced_accuracy": 0.5512934879571811,
+      "brier": 0.2890860609050618,
+      "logloss": 0.8130591184213055,
+      "up_recall": 0.576271186440678,
+      "down_recall": 0.5263157894736842,
+      "tn": 30,
+      "fp": 27,
+      "fn": 25,
+      "tp": 34
+    },
+    {
+      "model": "FULL_XAU15_L2_C1",
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "period": "2024",
+      "n": 15,
+      "accuracy": 0.6666666666666666,
+      "balanced_accuracy": 0.6944444444444444,
+      "brier": 0.2188262176721992,
+      "logloss": 0.6308729424137326,
+      "up_recall": 0.8333333333333334,
+      "down_recall": 0.5555555555555556,
+      "tn": 5,
+      "fp": 4,
+      "fn": 1,
+      "tp": 5
+    },
+    {
+      "model": "FULL_XAU15_L2_C1",
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "period": "2024",
+      "n": 3,
+      "accuracy": 0.6666666666666666,
+      "balanced_accuracy": 0.6666666666666666,
+      "brier": 0.13961127573435977,
+      "logloss": 0.4363259465976266,
+      "up_recall": 0.6666666666666666,
+      "down_recall": 0.0,
+      "tn": 0,
+      "fp": 0,
+      "fn": 1,
+      "tp": 2
+    },
+    {
+      "model": "FULL_XAU15_L2_C1",
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "period": "2024",
+      "n": 114,
+      "accuracy": 0.5,
+      "balanced_accuracy": 0.4861852433281005,
+      "brier": 0.28447391576173675,
+      "logloss": 0.7844957706254531,
+      "up_recall": 0.5846153846153846,
+      "down_recall": 0.3877551020408163,
+      "tn": 19,
+      "fp": 30,
+      "fn": 27,
+      "tp": 38
+    },
+    {
+      "model": "FULL_XAU15_L2_C1",
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "period": "2024",
+      "n": 83,
+      "accuracy": 0.5060240963855421,
+      "balanced_accuracy": 0.5040650406504065,
+      "brier": 0.2796128432649248,
+      "logloss": 0.7779346532631669,
+      "up_recall": 0.34146341463414637,
+      "down_recall": 0.6666666666666666,
+      "tn": 28,
+      "fp": 14,
+      "fn": 27,
+      "tp": 14
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "period": "2024",
+      "n": 93,
+      "accuracy": 0.5376344086021505,
+      "balanced_accuracy": 0.5354166666666667,
+      "brier": 0.27983047691581325,
+      "logloss": 0.8024947461895736,
+      "up_recall": 0.6041666666666666,
+      "down_recall": 0.4666666666666667,
+      "tn": 21,
+      "fp": 24,
+      "fn": 19,
+      "tp": 29
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "period": "2024",
+      "n": 90,
+      "accuracy": 0.5666666666666667,
+      "balanced_accuracy": 0.5260071392146864,
+      "brier": 0.2673941427065616,
+      "logloss": 0.7428256600511162,
+      "up_recall": 0.7547169811320755,
+      "down_recall": 0.2972972972972973,
+      "tn": 11,
+      "fp": 26,
+      "fn": 13,
+      "tp": 40
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "period": "2024",
+      "n": 113,
+      "accuracy": 0.5398230088495575,
+      "balanced_accuracy": 0.4866215344938749,
+      "brier": 0.27567813144482833,
+      "logloss": 0.777699734102761,
+      "up_recall": 0.803030303030303,
+      "down_recall": 0.1702127659574468,
+      "tn": 8,
+      "fp": 39,
+      "fn": 13,
+      "tp": 53
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "period": "2024",
+      "n": 116,
+      "accuracy": 0.5172413793103449,
+      "balanced_accuracy": 0.5182872435325603,
+      "brier": 0.2840299156562407,
+      "logloss": 0.7993765033191372,
+      "up_recall": 0.4576271186440678,
+      "down_recall": 0.5789473684210527,
+      "tn": 33,
+      "fp": 24,
+      "fn": 32,
+      "tp": 27
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "period": "2024",
+      "n": 15,
+      "accuracy": 0.6,
+      "balanced_accuracy": 0.6388888888888888,
+      "brier": 0.19697340384686107,
+      "logloss": 0.5492226224969148,
+      "up_recall": 0.8333333333333334,
+      "down_recall": 0.4444444444444444,
+      "tn": 4,
+      "fp": 5,
+      "fn": 1,
+      "tp": 5
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "period": "2024",
+      "n": 3,
+      "accuracy": 1.0,
+      "balanced_accuracy": 1.0,
+      "brier": 0.04498932065234016,
+      "logloss": 0.20877885382212968,
+      "up_recall": 1.0,
+      "down_recall": 0.0,
+      "tn": 0,
+      "fp": 0,
+      "fn": 0,
+      "tp": 3
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "period": "2024",
+      "n": 114,
+      "accuracy": 0.5263157894736842,
+      "balanced_accuracy": 0.49921507064364207,
+      "brier": 0.26212823061042667,
+      "logloss": 0.7198772373753016,
+      "up_recall": 0.6923076923076923,
+      "down_recall": 0.30612244897959184,
+      "tn": 15,
+      "fp": 34,
+      "fn": 20,
+      "tp": 45
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "period": "2024",
+      "n": 83,
+      "accuracy": 0.5421686746987951,
+      "balanced_accuracy": 0.5368757259001161,
+      "brier": 0.2466110616363633,
+      "logloss": 0.6992512371129316,
+      "up_recall": 0.0975609756097561,
+      "down_recall": 0.9761904761904762,
+      "tn": 41,
+      "fp": 1,
+      "fn": 37,
+      "tp": 4
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "period": "2024",
+      "n": 93,
+      "accuracy": 0.5161290322580645,
+      "balanced_accuracy": 0.5152777777777777,
+      "brier": 0.283783378975371,
+      "logloss": 0.7836420145459978,
+      "up_recall": 0.5416666666666666,
+      "down_recall": 0.4888888888888889,
+      "tn": 22,
+      "fp": 23,
+      "fn": 22,
+      "tp": 26
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "period": "2024",
+      "n": 90,
+      "accuracy": 0.5555555555555556,
+      "balanced_accuracy": 0.5410504844467109,
+      "brier": 0.2730464744834782,
+      "logloss": 0.7475978964239571,
+      "up_recall": 0.6226415094339622,
+      "down_recall": 0.4594594594594595,
+      "tn": 17,
+      "fp": 20,
+      "fn": 20,
+      "tp": 33
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "period": "2024",
+      "n": 113,
+      "accuracy": 0.5575221238938053,
+      "balanced_accuracy": 0.504835589941973,
+      "brier": 0.26089325799319163,
+      "logloss": 0.7183764786159668,
+      "up_recall": 0.8181818181818182,
+      "down_recall": 0.19148936170212766,
+      "tn": 9,
+      "fp": 38,
+      "fn": 12,
+      "tp": 54
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "period": "2024",
+      "n": 116,
+      "accuracy": 0.5344827586206896,
+      "balanced_accuracy": 0.5346416889681832,
+      "brier": 0.2748785883076498,
+      "logloss": 0.7569225797178164,
+      "up_recall": 0.5254237288135594,
+      "down_recall": 0.543859649122807,
+      "tn": 31,
+      "fp": 26,
+      "fn": 28,
+      "tp": 31
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "period": "2024",
+      "n": 15,
+      "accuracy": 0.4,
+      "balanced_accuracy": 0.5,
+      "brier": 0.2758449030956372,
+      "logloss": 0.7454898668622072,
+      "up_recall": 1.0,
+      "down_recall": 0.0,
+      "tn": 0,
+      "fp": 9,
+      "fn": 0,
+      "tp": 6
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "period": "2024",
+      "n": 3,
+      "accuracy": 0.6666666666666666,
+      "balanced_accuracy": 0.6666666666666666,
+      "brier": 0.18402544483072936,
+      "logloss": 0.5424396908162805,
+      "up_recall": 0.6666666666666666,
+      "down_recall": 0.0,
+      "tn": 0,
+      "fp": 0,
+      "fn": 1,
+      "tp": 2
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "period": "2024",
+      "n": 114,
+      "accuracy": 0.5350877192982456,
+      "balanced_accuracy": 0.5194662480376766,
+      "brier": 0.27273892862152904,
+      "logloss": 0.7493698842867281,
+      "up_recall": 0.6307692307692307,
+      "down_recall": 0.40816326530612246,
+      "tn": 20,
+      "fp": 29,
+      "fn": 24,
+      "tp": 41
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "period": "2024",
+      "n": 83,
+      "accuracy": 0.46987951807228917,
+      "balanced_accuracy": 0.4642857142857143,
+      "brier": 0.26799900826274686,
+      "logloss": 0.7385022916195729,
+      "up_recall": 0.0,
+      "down_recall": 0.9285714285714286,
+      "tn": 39,
+      "fp": 3,
+      "fn": 41,
+      "tp": 0
+    }
+  ],
+  "crossmetal_admission": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "blocks": 19,
+      "silver_selected_block_rate": 0.9473684210526315,
+      "platinum_selected_block_rate": 0.9473684210526315,
+      "both_selected_block_rate": 0.9473684210526315
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "blocks": 18,
+      "silver_selected_block_rate": 0.5,
+      "platinum_selected_block_rate": 0.5,
+      "both_selected_block_rate": 0.5
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "blocks": 23,
+      "silver_selected_block_rate": 0.5652173913043478,
+      "platinum_selected_block_rate": 0.391304347826087,
+      "both_selected_block_rate": 0.391304347826087
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "blocks": 24,
+      "silver_selected_block_rate": 0.875,
+      "platinum_selected_block_rate": 0.875,
+      "both_selected_block_rate": 0.875
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "blocks": 3,
+      "silver_selected_block_rate": 0.6666666666666666,
+      "platinum_selected_block_rate": 0.6666666666666666,
+      "both_selected_block_rate": 0.6666666666666666
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "blocks": 1,
+      "silver_selected_block_rate": 1.0,
+      "platinum_selected_block_rate": 1.0,
+      "both_selected_block_rate": 1.0
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "blocks": 23,
+      "silver_selected_block_rate": 0.6956521739130435,
+      "platinum_selected_block_rate": 0.43478260869565216,
+      "both_selected_block_rate": 0.43478260869565216
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "blocks": 17,
+      "silver_selected_block_rate": 0.29411764705882354,
+      "platinum_selected_block_rate": 0.29411764705882354,
+      "both_selected_block_rate": 0.29411764705882354
+    }
+  ],
+  "top_features": [
+    {
+      "model": "SELECT_ALL15",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "top_features": [
+        {
+          "feature": "si_lag2",
+          "freq": 0.9473684210526315,
+          "source": "SI15",
+          "family": "LAG2",
+          "horizon": 2
+        },
+        {
+          "feature": "platinum_r21",
+          "freq": 0.9473684210526315,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 21
+        },
+        {
+          "feature": "gold_r3",
+          "freq": 0.8947368421052632,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 3
+        },
+        {
+          "feature": "pl_age_max_pos_24",
+          "freq": 0.8947368421052632,
+          "source": "PL15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "g_ret_6h",
+          "freq": 0.8421052631578947,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 6
+        },
+        {
+          "feature": "g_ret_12h",
+          "freq": 0.8421052631578947,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 12
+        },
+        {
+          "feature": "silver_r21",
+          "freq": 0.8421052631578947,
+          "source": "SILVER_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 21
+        },
+        {
+          "feature": "g_ret_24h",
+          "freq": 0.7894736842105263,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 24
+        },
+        {
+          "feature": "g_slope_6",
+          "freq": 0.7894736842105263,
+          "source": "XAU15",
+          "family": "SLOPE",
+          "horizon": 6
+        },
+        {
+          "feature": "si_slope_24",
+          "freq": 0.7894736842105263,
+          "source": "SI15",
+          "family": "SLOPE",
+          "horizon": 24
+        },
+        {
+          "feature": "si_slope_6",
+          "freq": 0.7894736842105263,
+          "source": "SI15",
+          "family": "SLOPE",
+          "horizon": 6
+        },
+        {
+          "feature": "si_ret_6h",
+          "freq": 0.7894736842105263,
+          "source": "SI15",
+          "family": "RETURN",
+          "horizon": 6
+        }
+      ]
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "top_features": [
+        {
+          "feature": "g_ret_3h",
+          "freq": 0.5,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 3
+        },
+        {
+          "feature": "pl_rv_24",
+          "freq": 0.5,
+          "source": "PL15",
+          "family": "RV",
+          "horizon": 24
+        },
+        {
+          "feature": "gold_r5",
+          "freq": 0.5,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        },
+        {
+          "feature": "si_lag2",
+          "freq": 0.5,
+          "source": "SI15",
+          "family": "LAG2",
+          "horizon": 2
+        },
+        {
+          "feature": "g_ret_1h",
+          "freq": 0.5,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "si_jump_concentration_24",
+          "freq": 0.4444444444444444,
+          "source": "SI15",
+          "family": "JUMP",
+          "horizon": 24
+        },
+        {
+          "feature": "pl_ret_6h",
+          "freq": 0.2222222222222222,
+          "source": "PL15",
+          "family": "RETURN",
+          "horizon": 6
+        },
+        {
+          "feature": "gold_r1",
+          "freq": 0.1111111111111111,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "g_slope_24",
+          "freq": 0.1111111111111111,
+          "source": "XAU15",
+          "family": "SLOPE",
+          "horizon": 24
+        },
+        {
+          "feature": "pl_up_semivol_24",
+          "freq": 0.05555555555555555,
+          "source": "PL15",
+          "family": "SEMIVOL",
+          "horizon": 24
+        },
+        {
+          "feature": "pl_down_semivol_24",
+          "freq": 0.05555555555555555,
+          "source": "PL15",
+          "family": "SEMIVOL",
+          "horizon": 24
+        },
+        {
+          "feature": "platinum_r5",
+          "freq": 0.05555555555555555,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        }
+      ]
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "top_features": [
+        {
+          "feature": "g_ret_12h",
+          "freq": 0.5652173913043478,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 12
+        },
+        {
+          "feature": "silver_r1",
+          "freq": 0.43478260869565216,
+          "source": "SILVER_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "si_upfrac_24",
+          "freq": 0.34782608695652173,
+          "source": "SI15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "si_recovery_24",
+          "freq": 0.30434782608695654,
+          "source": "SI15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "g_close_location_24",
+          "freq": 0.30434782608695654,
+          "source": "XAU15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "pl_ret_12h",
+          "freq": 0.30434782608695654,
+          "source": "PL15",
+          "family": "RETURN",
+          "horizon": 12
+        },
+        {
+          "feature": "pl_rv_6",
+          "freq": 0.2608695652173913,
+          "source": "PL15",
+          "family": "RV",
+          "horizon": 6
+        },
+        {
+          "feature": "pl_ret_6h",
+          "freq": 0.2608695652173913,
+          "source": "PL15",
+          "family": "RETURN",
+          "horizon": 6
+        },
+        {
+          "feature": "g_rv_6",
+          "freq": 0.2608695652173913,
+          "source": "XAU15",
+          "family": "RV",
+          "horizon": 6
+        },
+        {
+          "feature": "pl_upfrac_24",
+          "freq": 0.2608695652173913,
+          "source": "PL15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "gold_r10",
+          "freq": 0.2608695652173913,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 10
+        },
+        {
+          "feature": "pl_age_max_neg_24",
+          "freq": 0.2608695652173913,
+          "source": "PL15",
+          "family": "SHAPE",
+          "horizon": 24
+        }
+      ]
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "top_features": [
+        {
+          "feature": "gold_r5",
+          "freq": 0.875,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        },
+        {
+          "feature": "pl_down_semivol_24",
+          "freq": 0.875,
+          "source": "PL15",
+          "family": "SEMIVOL",
+          "horizon": 24
+        },
+        {
+          "feature": "si_ret_1h",
+          "freq": 0.875,
+          "source": "SI15",
+          "family": "RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "pl_slope_24",
+          "freq": 0.7916666666666666,
+          "source": "PL15",
+          "family": "SLOPE",
+          "horizon": 24
+        },
+        {
+          "feature": "sigma20",
+          "freq": 0.75,
+          "source": "DAILY",
+          "family": "SIGMA",
+          "horizon": 20
+        },
+        {
+          "feature": "pl_recovery_24",
+          "freq": 0.6666666666666666,
+          "source": "PL15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "pl_age_max_neg_24",
+          "freq": 0.6666666666666666,
+          "source": "PL15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "pl_ret_12h",
+          "freq": 0.625,
+          "source": "PL15",
+          "family": "RETURN",
+          "horizon": 12
+        },
+        {
+          "feature": "si_close_location_24",
+          "freq": 0.625,
+          "source": "SI15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "platinum_r1",
+          "freq": 0.625,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "gold_r1",
+          "freq": 0.625,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "platinum_r5",
+          "freq": 0.625,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        }
+      ]
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "top_features": [
+        {
+          "feature": "si_range_24",
+          "freq": 0.6666666666666666,
+          "source": "SI15",
+          "family": "RANGE",
+          "horizon": 24
+        },
+        {
+          "feature": "si_max_drawdown_24",
+          "freq": 0.6666666666666666,
+          "source": "SI15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "si_rv_6",
+          "freq": 0.6666666666666666,
+          "source": "SI15",
+          "family": "RV",
+          "horizon": 6
+        },
+        {
+          "feature": "gold_r10",
+          "freq": 0.6666666666666666,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 10
+        },
+        {
+          "feature": "pl_ret_1h",
+          "freq": 0.6666666666666666,
+          "source": "PL15",
+          "family": "RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "g_rv_48",
+          "freq": 0.6666666666666666,
+          "source": "XAU15",
+          "family": "RV",
+          "horizon": 48
+        },
+        {
+          "feature": "si_ret_1h",
+          "freq": 0.6666666666666666,
+          "source": "SI15",
+          "family": "RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "g_ret_6h",
+          "freq": 0.6666666666666666,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 6
+        },
+        {
+          "feature": "si_down_up_semivol_ratio_24",
+          "freq": 0.6666666666666666,
+          "source": "SI15",
+          "family": "SEMIVOL",
+          "horizon": 24
+        },
+        {
+          "feature": "g_upfrac_24",
+          "freq": 0.6666666666666666,
+          "source": "XAU15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "si_ret_48h",
+          "freq": 0.6666666666666666,
+          "source": "SI15",
+          "family": "RETURN",
+          "horizon": 48
+        },
+        {
+          "feature": "si_jump_concentration_24",
+          "freq": 0.6666666666666666,
+          "source": "SI15",
+          "family": "JUMP",
+          "horizon": 24
+        }
+      ]
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "top_features": [
+        {
+          "feature": "si_ret_24h",
+          "freq": 1.0,
+          "source": "SI15",
+          "family": "RETURN",
+          "horizon": 24
+        },
+        {
+          "feature": "si_slope_24",
+          "freq": 1.0,
+          "source": "SI15",
+          "family": "SLOPE",
+          "horizon": 24
+        },
+        {
+          "feature": "si_rv_12",
+          "freq": 1.0,
+          "source": "SI15",
+          "family": "RV",
+          "horizon": 12
+        },
+        {
+          "feature": "si_rv_24",
+          "freq": 1.0,
+          "source": "SI15",
+          "family": "RV",
+          "horizon": 24
+        },
+        {
+          "feature": "pl_slope_24",
+          "freq": 1.0,
+          "source": "PL15",
+          "family": "SLOPE",
+          "horizon": 24
+        },
+        {
+          "feature": "g_rv_6",
+          "freq": 1.0,
+          "source": "XAU15",
+          "family": "RV",
+          "horizon": 6
+        },
+        {
+          "feature": "pl_slope_6",
+          "freq": 1.0,
+          "source": "PL15",
+          "family": "SLOPE",
+          "horizon": 6
+        },
+        {
+          "feature": "g_lag2",
+          "freq": 1.0,
+          "source": "XAU15",
+          "family": "LAG2",
+          "horizon": 2
+        },
+        {
+          "feature": "g_ret_12h",
+          "freq": 1.0,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 12
+        },
+        {
+          "feature": "g_rv_48",
+          "freq": 1.0,
+          "source": "XAU15",
+          "family": "RV",
+          "horizon": 48
+        },
+        {
+          "feature": "pl_close_location_24",
+          "freq": 1.0,
+          "source": "PL15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "si_lag2",
+          "freq": 1.0,
+          "source": "SI15",
+          "family": "LAG2",
+          "horizon": 2
+        }
+      ]
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "top_features": [
+        {
+          "feature": "silver_r1",
+          "freq": 0.6956521739130435,
+          "source": "SILVER_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "gold_r21",
+          "freq": 0.6956521739130435,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 21
+        },
+        {
+          "feature": "silver_r21",
+          "freq": 0.5652173913043478,
+          "source": "SILVER_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 21
+        },
+        {
+          "feature": "g_ret_3h",
+          "freq": 0.5217391304347826,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 3
+        },
+        {
+          "feature": "g_lag2",
+          "freq": 0.34782608695652173,
+          "source": "XAU15",
+          "family": "LAG2",
+          "horizon": 2
+        },
+        {
+          "feature": "si_ret_48h",
+          "freq": 0.34782608695652173,
+          "source": "SI15",
+          "family": "RETURN",
+          "horizon": 48
+        },
+        {
+          "feature": "pl_age_max_pos_24",
+          "freq": 0.34782608695652173,
+          "source": "PL15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "platinum_r21",
+          "freq": 0.34782608695652173,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 21
+        },
+        {
+          "feature": "si_ret_3h",
+          "freq": 0.30434782608695654,
+          "source": "SI15",
+          "family": "RETURN",
+          "horizon": 3
+        },
+        {
+          "feature": "g_ret_6h",
+          "freq": 0.17391304347826086,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 6
+        },
+        {
+          "feature": "si_rv_48",
+          "freq": 0.13043478260869565,
+          "source": "SI15",
+          "family": "RV",
+          "horizon": 48
+        },
+        {
+          "feature": "g_range_24",
+          "freq": 0.08695652173913043,
+          "source": "XAU15",
+          "family": "RANGE",
+          "horizon": 24
+        }
+      ]
+    },
+    {
+      "model": "SELECT_ALL15",
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "top_features": [
+        {
+          "feature": "si_ret_48h",
+          "freq": 0.29411764705882354,
+          "source": "SI15",
+          "family": "RETURN",
+          "horizon": 48
+        },
+        {
+          "feature": "pl_ret_6h",
+          "freq": 0.29411764705882354,
+          "source": "PL15",
+          "family": "RETURN",
+          "horizon": 6
+        },
+        {
+          "feature": "gold_r5",
+          "freq": 0.29411764705882354,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        },
+        {
+          "feature": "si_max_drawdown_24",
+          "freq": 0.29411764705882354,
+          "source": "SI15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "g_ret_3h",
+          "freq": 0.29411764705882354,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 3
+        },
+        {
+          "feature": "pl_rv_6",
+          "freq": 0.29411764705882354,
+          "source": "PL15",
+          "family": "RV",
+          "horizon": 6
+        },
+        {
+          "feature": "pl_slope_24",
+          "freq": 0.29411764705882354,
+          "source": "PL15",
+          "family": "SLOPE",
+          "horizon": 24
+        },
+        {
+          "feature": "platinum_r1",
+          "freq": 0.29411764705882354,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "g_slope_24",
+          "freq": 0.29411764705882354,
+          "source": "XAU15",
+          "family": "SLOPE",
+          "horizon": 24
+        },
+        {
+          "feature": "si_ret_6h",
+          "freq": 0.29411764705882354,
+          "source": "SI15",
+          "family": "RETURN",
+          "horizon": 6
+        },
+        {
+          "feature": "pl_rv_48",
+          "freq": 0.29411764705882354,
+          "source": "PL15",
+          "family": "RV",
+          "horizon": 48
+        },
+        {
+          "feature": "gold_r3",
+          "freq": 0.29411764705882354,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 3
+        }
+      ]
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "top_features": [
+        {
+          "feature": "g_lag2",
+          "freq": 1.0,
+          "source": "XAU15",
+          "family": "LAG2",
+          "horizon": 2
+        },
+        {
+          "feature": "gold_r3",
+          "freq": 1.0,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 3
+        },
+        {
+          "feature": "platinum_r21",
+          "freq": 1.0,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 21
+        },
+        {
+          "feature": "g_ret_6h",
+          "freq": 0.9473684210526315,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 6
+        },
+        {
+          "feature": "platinum_r1",
+          "freq": 0.9473684210526315,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "g_ret_24h",
+          "freq": 0.8947368421052632,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 24
+        },
+        {
+          "feature": "g_ret_12h",
+          "freq": 0.8947368421052632,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 12
+        },
+        {
+          "feature": "platinum_r5",
+          "freq": 0.8947368421052632,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        },
+        {
+          "feature": "silver_r21",
+          "freq": 0.8947368421052632,
+          "source": "SILVER_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 21
+        },
+        {
+          "feature": "g_ret_1h",
+          "freq": 0.8421052631578947,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "g_ret_48h",
+          "freq": 0.8421052631578947,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 48
+        },
+        {
+          "feature": "silver_r5",
+          "freq": 0.8421052631578947,
+          "source": "SILVER_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        }
+      ]
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "top_features": [
+        {
+          "feature": "gold_r5",
+          "freq": 0.8888888888888888,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        },
+        {
+          "feature": "g_ret_3h",
+          "freq": 0.7777777777777778,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 3
+        },
+        {
+          "feature": "gold_r1",
+          "freq": 0.6666666666666666,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "g_max_drawdown_24",
+          "freq": 0.6666666666666666,
+          "source": "XAU15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "platinum_r5",
+          "freq": 0.6111111111111112,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        },
+        {
+          "feature": "g_ret_1h",
+          "freq": 0.6111111111111112,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "g_slope_24",
+          "freq": 0.5555555555555556,
+          "source": "XAU15",
+          "family": "SLOPE",
+          "horizon": 24
+        },
+        {
+          "feature": "silver_r1",
+          "freq": 0.5555555555555556,
+          "source": "SILVER_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "g_ret_6h",
+          "freq": 0.5555555555555556,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 6
+        },
+        {
+          "feature": "g_jump_concentration_24",
+          "freq": 0.5555555555555556,
+          "source": "XAU15",
+          "family": "JUMP",
+          "horizon": 24
+        },
+        {
+          "feature": "g_ret_24h",
+          "freq": 0.5,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 24
+        },
+        {
+          "feature": "g_up_semivol_24",
+          "freq": 0.5,
+          "source": "XAU15",
+          "family": "SEMIVOL",
+          "horizon": 24
+        }
+      ]
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "top_features": [
+        {
+          "feature": "silver_r1",
+          "freq": 0.4782608695652174,
+          "source": "SILVER_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "g_ret_12h",
+          "freq": 0.43478260869565216,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 12
+        },
+        {
+          "feature": "g_close_location_24",
+          "freq": 0.17391304347826086,
+          "source": "XAU15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "platinum_r21",
+          "freq": 0.043478260869565216,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 21
+        },
+        {
+          "feature": "silver_r21",
+          "freq": 0.043478260869565216,
+          "source": "SILVER_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 21
+        },
+        {
+          "feature": "gold_r21",
+          "freq": 0.043478260869565216,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 21
+        }
+      ]
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "top_features": [
+        {
+          "feature": "gold_r5",
+          "freq": 0.9583333333333334,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        },
+        {
+          "feature": "sigma20",
+          "freq": 0.7916666666666666,
+          "source": "DAILY",
+          "family": "SIGMA",
+          "horizon": 20
+        },
+        {
+          "feature": "platinum_r5",
+          "freq": 0.75,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        },
+        {
+          "feature": "g_jump_concentration_24",
+          "freq": 0.75,
+          "source": "XAU15",
+          "family": "JUMP",
+          "horizon": 24
+        },
+        {
+          "feature": "g_rv_48",
+          "freq": 0.75,
+          "source": "XAU15",
+          "family": "RV",
+          "horizon": 48
+        },
+        {
+          "feature": "platinum_r1",
+          "freq": 0.7083333333333334,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "g_slope_6",
+          "freq": 0.625,
+          "source": "XAU15",
+          "family": "SLOPE",
+          "horizon": 6
+        },
+        {
+          "feature": "gold_r1",
+          "freq": 0.625,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "gold_r3",
+          "freq": 0.5833333333333334,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 3
+        },
+        {
+          "feature": "g_ret_3h",
+          "freq": 0.5416666666666666,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 3
+        },
+        {
+          "feature": "g_range_24",
+          "freq": 0.5416666666666666,
+          "source": "XAU15",
+          "family": "RANGE",
+          "horizon": 24
+        },
+        {
+          "feature": "g_slope_24",
+          "freq": 0.5,
+          "source": "XAU15",
+          "family": "SLOPE",
+          "horizon": 24
+        }
+      ]
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "top_features": [
+        {
+          "feature": "g_ret_12h",
+          "freq": 1.0,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 12
+        },
+        {
+          "feature": "g_ret_3h",
+          "freq": 1.0,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 3
+        },
+        {
+          "feature": "g_up_semivol_24",
+          "freq": 1.0,
+          "source": "XAU15",
+          "family": "SEMIVOL",
+          "horizon": 24
+        },
+        {
+          "feature": "silver_r5",
+          "freq": 1.0,
+          "source": "SILVER_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        },
+        {
+          "feature": "g_age_max_neg_24",
+          "freq": 1.0,
+          "source": "XAU15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "g_upfrac_24",
+          "freq": 1.0,
+          "source": "XAU15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "g_age_max_pos_24",
+          "freq": 1.0,
+          "source": "XAU15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "g_ret_1h",
+          "freq": 1.0,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "gold_r1",
+          "freq": 1.0,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "g_rv_48",
+          "freq": 1.0,
+          "source": "XAU15",
+          "family": "RV",
+          "horizon": 48
+        },
+        {
+          "feature": "g_range_24",
+          "freq": 1.0,
+          "source": "XAU15",
+          "family": "RANGE",
+          "horizon": 24
+        },
+        {
+          "feature": "platinum_r5",
+          "freq": 1.0,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        }
+      ]
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "top_features": [
+        {
+          "feature": "silver_r1",
+          "freq": 1.0,
+          "source": "SILVER_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "gold_r21",
+          "freq": 1.0,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 21
+        },
+        {
+          "feature": "silver_r21",
+          "freq": 0.9130434782608695,
+          "source": "SILVER_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 21
+        },
+        {
+          "feature": "g_ret_3h",
+          "freq": 0.9130434782608695,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 3
+        },
+        {
+          "feature": "g_lag2",
+          "freq": 0.7391304347826086,
+          "source": "XAU15",
+          "family": "LAG2",
+          "horizon": 2
+        },
+        {
+          "feature": "platinum_r21",
+          "freq": 0.6956521739130435,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 21
+        },
+        {
+          "feature": "platinum_r1",
+          "freq": 0.4782608695652174,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "platinum_r5",
+          "freq": 0.4782608695652174,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        },
+        {
+          "feature": "g_range_24",
+          "freq": 0.43478260869565216,
+          "source": "XAU15",
+          "family": "RANGE",
+          "horizon": 24
+        },
+        {
+          "feature": "g_ret_1h",
+          "freq": 0.43478260869565216,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "sigma20",
+          "freq": 0.391304347826087,
+          "source": "DAILY",
+          "family": "SIGMA",
+          "horizon": 20
+        },
+        {
+          "feature": "g_close_location_24",
+          "freq": 0.391304347826087,
+          "source": "XAU15",
+          "family": "SHAPE",
+          "horizon": 24
+        }
+      ]
+    },
+    {
+      "model": "SELECT_XAU15",
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "top_features": [
+        {
+          "feature": "g_ret_3h",
+          "freq": 0.23529411764705882,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 3
+        },
+        {
+          "feature": "platinum_r1",
+          "freq": 0.23529411764705882,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 1
+        },
+        {
+          "feature": "sigma20",
+          "freq": 0.17647058823529413,
+          "source": "DAILY",
+          "family": "SIGMA",
+          "horizon": 20
+        },
+        {
+          "feature": "g_slope_24",
+          "freq": 0.17647058823529413,
+          "source": "XAU15",
+          "family": "SLOPE",
+          "horizon": 24
+        },
+        {
+          "feature": "g_ret_12h",
+          "freq": 0.17647058823529413,
+          "source": "XAU15",
+          "family": "RETURN",
+          "horizon": 12
+        },
+        {
+          "feature": "gold_r5",
+          "freq": 0.11764705882352941,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        },
+        {
+          "feature": "g_slope_6",
+          "freq": 0.11764705882352941,
+          "source": "XAU15",
+          "family": "SLOPE",
+          "horizon": 6
+        },
+        {
+          "feature": "platinum_r5",
+          "freq": 0.11764705882352941,
+          "source": "PLATINUM_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 5
+        },
+        {
+          "feature": "g_jump_concentration_24",
+          "freq": 0.11764705882352941,
+          "source": "XAU15",
+          "family": "JUMP",
+          "horizon": 24
+        },
+        {
+          "feature": "g_recovery_24",
+          "freq": 0.11764705882352941,
+          "source": "XAU15",
+          "family": "SHAPE",
+          "horizon": 24
+        },
+        {
+          "feature": "g_rv_48",
+          "freq": 0.11764705882352941,
+          "source": "XAU15",
+          "family": "RV",
+          "horizon": 48
+        },
+        {
+          "feature": "gold_r3",
+          "freq": 0.11764705882352941,
+          "source": "GOLD_DAILY",
+          "family": "DAILY_RETURN",
+          "horizon": 3
+        }
+      ]
+    }
+  ],
+  "guardrails": [
+    "No 2024 test block is used to select its own variables or lag hyperparameter.",
+    "No 2025 or 2026 outcome is opened.",
+    "Gold sigma20 and all daily/intraday candidate variables are selectable, not forced.",
+    "Silver/Platinum can enter only through training-only sparse selection.",
+    "Selection stability is reported by outer block; one-off selections are not architecture evidence."
+  ]
+}
