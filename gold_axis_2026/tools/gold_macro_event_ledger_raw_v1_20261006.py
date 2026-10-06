@@ -68,24 +68,24 @@ def build_ledger(q):
         a=q[q.series_id==act].copy()
         c=q[q.series_id==con].copy()
         z=a.merge(c,on="event_ts_utc",how="outer",suffixes=("_actual","_cons"),indicator=True)
-        for r in z.itertuples(index=False):
-            both=r._merge=="both"
-            actual=float(r.value_actual) if both and pd.notna(r.value_actual) else None
-            consensus=float(r.value_cons) if both and pd.notna(r.value_cons) else None
+        for _, r in z.iterrows():
+            both=r["_merge"]=="both"
+            actual=float(r["value_actual"]) if both and pd.notna(r["value_actual"]) else None
+            consensus=float(r["value_cons"]) if both and pd.notna(r["value_cons"]) else None
             # The event surprise is not usable before both source records are available.
-            ready=max(r.available_as_of_actual,r.available_as_of_cons) if both else pd.NaT
+            ready=max(r["available_as_of_actual"],r["available_as_of_cons"]) if both else pd.NaT
             rows.append({
               "event_type":kind,
-              "event_ts_utc":r.event_ts_utc,
+              "event_ts_utc":r["event_ts_utc"],
               "actual":actual,
               "consensus":consensus,
               "surprise":None if actual is None or consensus is None else actual-consensus,
-              "actual_available_as_of_utc":r.available_as_of_actual if both else pd.NaT,
-              "consensus_available_as_of_utc":r.available_as_of_cons if both else pd.NaT,
+              "actual_available_as_of_utc":r["available_as_of_actual"] if both else pd.NaT,
+              "consensus_available_as_of_utc":r["available_as_of_cons"] if both else pd.NaT,
               "surprise_ready_at_utc":ready,
               "pair_complete":bool(both),
-              "actual_lineage_id":r.lineage_id_actual if both else None,
-              "consensus_lineage_id":r.lineage_id_cons if both else None,
+              "actual_lineage_id":r["lineage_id_actual"] if both else None,
+              "consensus_lineage_id":r["lineage_id_cons"] if both else None,
               "pit_use":"POST_RELEASE_ONLY"
             })
     # FOMC score is useful for event timestamp discovery only because its historical
