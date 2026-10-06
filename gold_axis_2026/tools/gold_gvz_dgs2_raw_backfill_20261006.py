@@ -43,8 +43,8 @@ def fetch_gvz():
     q=pd.read_csv(io.BytesIO(r.content))
     q.columns=[str(c).strip().upper() for c in q.columns]
     date_col="DATE" if "DATE" in q.columns else q.columns[0]
-    close_col="CLOSE" if "CLOSE" in q.columns else None
-    if close_col is None: raise RuntimeError(f"GVZ_CLOSE_NOT_FOUND cols={q.columns.tolist()}")
+    close_col="GVZ" if "GVZ" in q.columns else ("CLOSE" if "CLOSE" in q.columns else None)
+    if close_col is None: raise RuntimeError(f"GVZ_VALUE_NOT_FOUND cols={q.columns.tolist()}")
     q=q[[date_col,close_col]].copy()
     q.columns=["date","value"]
     q["date"]=pd.to_datetime(q.date,errors="coerce")
