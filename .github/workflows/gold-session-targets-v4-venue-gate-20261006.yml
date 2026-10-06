@@ -1,0 +1,40 @@
+name: Gold Session Targets V4 Venue Gate 20261006
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_session_targets_v4_venue_gate_20261006.py'
+      - '.github/workflows/gold-session-targets-v4-venue-gate-20261006.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      DATABENTO_API_KEY: ${{ secrets.DATABENTO_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'databento>=0.60,<1' 'numpy>=2,<3' 'pandas>=2.2,<3'
+      - run: python gold_axis_2026/tools/gold_session_targets_v4_venue_gate_20261006.py
+      - name: Record
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/SESSION_TARGETS_V4_VENUE_GATE_OUT/wgc2026_ny3_core.csv gold_axis_2026/GOLD_SESSION_TARGETS_WGC2026_NY3_CORE_V4_2023_2025.csv
+          cp gold_axis_2026/SESSION_TARGETS_V4_VENUE_GATE_OUT/sobti5_et_core.csv gold_axis_2026/GOLD_SESSION_TARGETS_SOBTI5_ET_CORE_V4_2023_2025.csv
+          cp gold_axis_2026/SESSION_TARGETS_V4_VENUE_GATE_OUT/excluded_rows.csv gold_axis_2026/GOLD_SESSION_TARGETS_V4_EXCLUDED_ROWS_2023_2025.csv
+          cp gold_axis_2026/SESSION_TARGETS_V4_VENUE_GATE_OUT/summary.json gold_axis_2026/GOLD_SESSION_TARGETS_V4_VENUE_GATE_SUMMARY_2026-10-06.json
+          git add gold_axis_2026/GOLD_SESSION_TARGETS_*V4* gold_axis_2026/GOLD_SESSION_TARGETS_*CORE_V4*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record venue-aware frozen session target gate V4"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
