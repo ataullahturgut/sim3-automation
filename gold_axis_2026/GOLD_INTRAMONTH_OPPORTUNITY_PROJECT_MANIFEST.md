@@ -1291,6 +1291,148 @@ Implications:
 - RuleFlow's previous 2025-Q4 DGS2 coverage blocker is closed;
 - RuleFlow same-day rate/event-response logic remains **BLOCKED_FOR_FULL_SESSION** and may only be reconsidered for later heads after source-ready timing proof.
 
+### 5E.8I Binding session-model execution hierarchy — 2026-10-06
+
+**Purpose:** prevent primary direction engines, specialist correction layers, routers, controllers and final consensus logic from being mixed into one undifferentiated model list.
+
+All new WGC/Sobti session work must follow this dependency order. A downstream layer may not be replayed until the fresh upstream predictions/states it consumes have been regenerated under Sections 5E.8B–5E.8H.
+
+#### Stage 1 — Primary / stand-alone session direction engines
+
+These models produce a direct UP/DOWN probability or direction from governed raw features and may be evaluated as independent session heads.
+
+1. **NOVA A0 / CORE3**
+   - structural daily direction baseline;
+   - Gold/Silver/Platinum CORE3 feature block;
+   - direct Logistic-L2 UP/DOWN head.
+
+2. **NOVA A1 / ARCR**
+   - structural daily direction model;
+   - global CORE3 + recent balanced CORE3 expert mixture;
+   - direct UP/DOWN output.
+
+3. **IRIS HOURLY_ONLY_ALL / PATH_GLOBAL**
+   - XAU/USD hourly PATH/VOL/SHAPE information only;
+   - direct UP/DOWN head;
+   - raw-source session checkpoint already completed;
+   - current session verdict: **NO ROBUST SESSION EDGE / diagnostic only**.
+
+4. **IRIS A1_PLUS_PATH / STRUCTURAL_IRIS**
+   - NOVA A1 structural logit + hourly PATH;
+   - direct UP/DOWN head;
+   - currently **BLOCKED_UPSTREAM** until A1 is regenerated under the new session target chronology.
+
+5. **SAGE SESSION_ONLY**
+   - hourly session/phase decomposition only;
+   - direct UP/DOWN head.
+
+6. **SAGE PATH_SESSION**
+   - IRIS PATH + hourly session/phase features;
+   - direct UP/DOWN head.
+
+7. **SAGE A1_SESSION**
+   - NOVA A1 structural logit + session features;
+   - direct UP/DOWN head;
+   - blocked until fresh A1 exists.
+
+8. **SAGE A1_PATH_SESSION**
+   - NOVA A1 + IRIS PATH + session features;
+   - direct UP/DOWN head;
+   - blocked until fresh A1 exists.
+
+**Stage-1 evaluation rule**
+- rebuild every feature from governed raw sources;
+- reconstruct V5 target from raw 15-minute XAU and verify equality before fitting;
+- evaluate 2023–2024 development only until the representation/head is frozen;
+- do not open 2025 transport merely because one 2023–2024 slice looks attractive;
+- do not use any archived H3 prediction, feature, state, score or inference file as a model input.
+
+#### Stage 2 — Specialist reversal / correction layers
+
+These are **not stand-alone primary direction engines** for the new session hierarchy. They act on a fresh primary baseline or model a correction state.
+
+- **RIFT** — predicts reversal relative to recent momentum; historically routed as an AURORA correction.
+- **VEGA** — GVZ/options-implied-volatility reversal specialist.
+- **OPAL** — CFTC/COT options-positioning reversal specialist.
+- **TURN** — semivariance/tail reversal rule.
+- **PRISM** — spectral residual correction to a primary probability.
+- **TWIN** — local path-analogue rescue layer.
+
+They may only be rebuilt after the required fresh Stage-1 baseline exists. Their old AURORA/H3 correction outputs are QA/history evidence only.
+
+#### Stage 3 — Expert combiners / routers
+
+These combine or select among already-generated primary experts.
+
+- **SENTRY** — causal expert failover.
+- **DART** — disagreement-aware regime transfer / expert selector.
+- **AIM** — adaptive expert mixture.
+- **AURORA** — asymmetric router between STRUCTURAL_IRIS and PATH_GLOBAL.
+- **HELIOS V1–V5** — higher-order routing/exception architecture consuming AURORA/OPAL and related state.
+
+They may not be treated as independent raw-feature direction engines.
+
+#### Stage 4 — Meta-controller / rescue / transition layers
+
+These operate on fresh baseline predictions, matured error history, disagreement history or transition state.
+
+- **BOCPD Handoff Competence**
+- **DPTC Q95/Q99**
+- **RTE V1–V4**
+- **RC-RTE V1/V2**
+- **SCR-RTE V1**
+- **STCR**
+- **SELLR catalyst input** only where its producer lineage is proven.
+
+Binding role rule:
+- DPTC / BOCPD / RTE-family / STCR are not benchmarked as if they were independent session direction engines;
+- they are evaluated by rescue, broken-call, abstention/coverage and net contribution relative to the fresh Stage-1/Stage-3 baseline they govern.
+
+#### Stage 5 — Final consensus / governor
+
+Only after Stages 1–4 are frozen may a final session consensus/governor be constructed.
+
+The final governor may decide:
+- which expert is eligible per session;
+- whether a specialist/controller may override;
+- confidence/abstain state;
+- final session UP/DOWN/UNCERTAIN output.
+
+No consensus weight, membership rule or override rule may be selected using 2025 or 2026 outcomes.
+
+#### Binding execution order
+
+`NOVA A0 -> NOVA A1 -> PATH_GLOBAL -> STRUCTURAL_IRIS -> SAGE primary heads`
+
+then
+
+`RIFT / VEGA / OPAL / TURN / PRISM / TWIN`
+
+then
+
+`SENTRY / DART / AIM / AURORA / HELIOS`
+
+then
+
+`BOCPD / DPTC / RTE / RC-RTE / SCR-RTE / STCR`
+
+then
+
+`FINAL SESSION CONSENSUS / GOVERNOR`.
+
+A model may be skipped or marked BLOCKED, but the dependency direction may not be reversed merely to obtain a result sooner.
+
+#### Current first executable item
+
+**Checkpoint S1.1 = NOVA A0 / CORE3 raw-source session rebuild.**
+
+Before fitting S1.1:
+- identify the authoritative raw Gold/Silver/Platinum daily series;
+- reproduce CORE3 transforms from raw observations;
+- prove feature availability before each session target start;
+- reconstruct V5 target from raw 15-minute XAU;
+- fit only after all checks pass.
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
