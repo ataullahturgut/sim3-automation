@@ -834,6 +834,41 @@ The existing 15-minute access probe has passed for 2023-2026, but full governed 
 
 Separate full models for every window are **not yet binding**. The five windows are first a target-discovery framework; the final operational architecture is determined only after the frozen chronological comparison.
 
+### 5E.8A Five-window clock / DST authority — 2026-10-06
+
+Authority:
+- `GOLD_GLOBAL_5WINDOW_CLOCK_CONTRACT_2026-10-06.md`
+
+Binding clock-provenance decisions:
+- governed 15-minute XAU/USD research data are requested/stored in **UTC**;
+- Twelve Data intraday `datetime` is treated as the **bar-open timestamp**;
+- all session boundaries are constructed as timezone-aware timestamps and converted to UTC; fixed manual offsets are forbidden;
+- **Asia Morning = 09:00–11:30 Asia/Shanghai**;
+- **Asia Afternoon = 13:30–15:30 Asia/Shanghai**;
+- **Europe = 03:30–08:00 America/New_York** (Sobti sequential zone; London OTC has no single official open);
+- **NY/London overlap = 08:00–14:30 America/New_York**;
+- **Late US = 14:30–21:00 America/New_York**;
+- LBMA 10:30 and 15:00 London are event markers, not automatic session boundaries;
+- New York/London/Shanghai/Istanbul conversions must use IANA date-aware timezone rules.
+
+Important DST correction:
+- the paper's reported Asia ET windows align with official SGE local morning/afternoon hours during New York daylight time but can shift by one hour relative to Shanghai during New York standard time;
+- therefore canonical Asia targets are anchored to **official Shanghai local time**, with literature-ET Asia retained only as a replication/sensitivity clock;
+- no “summer/winter” offset may be hard-coded into model logic.
+
+Raw bar matching:
+- convert canonical boundary -> UTC;
+- match exact `dt_utc`;
+- boundary price = open of the exact boundary bar;
+- missing exact boundary => MISSING; no silent imputation.
+
+Forecast and realization remain separate:
+- `SESSION_DIRECTION` = theoretical session boundary-to-boundary move;
+- `EXECUTABLE_DIRECTION` = strictly post-ready/post-signal entry to frozen exit;
+- the two must never be reported as the same accuracy.
+
+Older coarse `asia_to_europe` / fixed NY attribution buckets remain diagnostic only and are not binding training labels for the new five-window session project.
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
