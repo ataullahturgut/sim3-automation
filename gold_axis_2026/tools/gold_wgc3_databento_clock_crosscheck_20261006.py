@@ -74,11 +74,11 @@ def main():
 
     rows=[]
     for z in labs.itertuples(index=False):
-        dirs=[]; row={"label_date":z.label_date,"year":int(z.year),"window":z.window,"spot_direction":z["direction"],"spot_return":float(z.spot_return)}
+        dirs=[]; row={"label_date":z.label_date,"year":int(z.year),"window":z.window,"spot_direction":z.direction,"spot_return":float(z.spot_return)}
         for roll in ROLLS:
             mo,mc=mm[roll]
-            ps,ms=price_at(mo,mc,z["start_utc"],"START")
-            pe,me=price_at(mo,mc,z["end_utc"],"END")
+            ps,ms=price_at(mo,mc,z.start_utc,"START")
+            pe,me=price_at(mo,mc,z.end_utc,"END")
             ret=None if ps is None or pe is None else pe/ps-1
             d=sign(ret);dirs.append(d)
             row[f"gc_{roll}_start_method"]=ms;row[f"gc_{roll}_end_method"]=me
