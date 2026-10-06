@@ -1,0 +1,146 @@
+{
+  "status": "HOURLY_ANCHOR_CLOCK_SEARCH",
+  "pinned": "fcbf50080afdf164dae460e8e855faf3f72bb1b0",
+  "universe_n": 145,
+  "excluded_us_holidays": [
+    "2026-01-19",
+    "2026-02-16",
+    "2026-04-03",
+    "2026-05-25",
+    "2026-06-19",
+    "2026-07-03"
+  ],
+  "expected": {
+    "sage": 103,
+    "v5": 102,
+    "rift": 102,
+    "vega": 102,
+    "cons_n": 125,
+    "cons_correct": 93,
+    "dis_n": 20,
+    "dis_correct": 10
+  },
+  "top10": [
+    {
+      "hour_ny": 6,
+      "sage": 103,
+      "v5": 104,
+      "rift": 104,
+      "vega": 102,
+      "cons_n": 125,
+      "cons_correct": 93,
+      "dis_n": 20,
+      "dis_correct": 11,
+      "distance": 5
+    },
+    {
+      "hour_ny": 0,
+      "sage": 100,
+      "v5": 103,
+      "rift": 103,
+      "vega": 103,
+      "cons_n": 125,
+      "cons_correct": 93,
+      "dis_n": 20,
+      "dis_correct": 10,
+      "distance": 6
+    },
+    {
+      "hour_ny": 2,
+      "sage": 100,
+      "v5": 101,
+      "rift": 101,
+      "vega": 99,
+      "cons_n": 125,
+      "cons_correct": 91,
+      "dis_n": 20,
+      "dis_correct": 10,
+      "distance": 10
+    },
+    {
+      "hour_ny": 3,
+      "sage": 100,
+      "v5": 103,
+      "rift": 105,
+      "vega": 101,
+      "cons_n": 125,
+      "cons_correct": 92,
+      "dis_n": 20,
+      "dis_correct": 11,
+      "distance": 10
+    },
+    {
+      "hour_ny": 4,
+      "sage": 99,
+      "v5": 102,
+      "rift": 102,
+      "vega": 98,
+      "cons_n": 125,
+      "cons_correct": 90,
+      "dis_n": 20,
+      "dis_correct": 12,
+      "distance": 13
+    },
+    {
+      "hour_ny": 1,
+      "sage": 99,
+      "v5": 98,
+      "rift": 98,
+      "vega": 100,
+      "cons_n": 125,
+      "cons_correct": 90,
+      "dis_n": 20,
+      "dis_correct": 8,
+      "distance": 19
+    },
+    {
+      "hour_ny": 5,
+      "sage": 99,
+      "v5": 100,
+      "rift": 98,
+      "vega": 98,
+      "cons_n": 125,
+      "cons_correct": 89,
+      "dis_n": 20,
+      "dis_correct": 11,
+      "distance": 19
+    },
+    {
+      "hour_ny": 7,
+      "sage": 97,
+      "v5": 96,
+      "rift": 94,
+      "vega": 92,
+      "cons_n": 125,
+      "cons_correct": 85,
+      "dis_n": 20,
+      "dis_correct": 11,
+      "distance": 39
+    },
+    {
+      "hour_ny": 9,
+      "sage": 88,
+      "v5": 87,
+      "rift": 87,
+      "vega": 89,
+      "cons_n": 125,
+      "cons_correct": 78,
+      "dis_n": 20,
+      "dis_correct": 9,
+      "distance": 74
+    },
+    {
+      "hour_ny": 8,
+      "sage": 86,
+      "v5": 87,
+      "rift": 85,
+      "vega": 87,
+      "cons_n": 125,
+      "cons_correct": 77,
+      "dis_n": 20,
+      "dis_correct": 10,
+      "distance": 80
+    }
+  ],
+  "exact_matches": []
+}
