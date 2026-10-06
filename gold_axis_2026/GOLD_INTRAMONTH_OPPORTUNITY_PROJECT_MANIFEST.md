@@ -843,10 +843,14 @@ Independent verification found a material modernization issue in the first same-
 
 Binding candidate partitions are now:
 
-**A — MODERN_WGC_3 (current industry benchmark, UTC-fixed)**
-- Asia: **22:00–07:00 UTC**
-- Europe: **07:00–12:00 UTC**
-- US: **12:00–21:00 UTC**
+**A — WGC_2026_NY3 (current industry benchmark candidate, New-York-local / DST-aware)**
+- Asia: **18:00–03:00 America/New_York**
+- Europe: **03:00–08:00 America/New_York**
+- US: **08:00–17:00 America/New_York**
+- spring/summer EDT UTC equivalents: 22:00–07:00 / 07:00–12:00 / 12:00–21:00
+- winter EST UTC equivalents: 23:00–08:00 / 08:00–13:00 / 13:00–22:00
+
+The UTC equivalents published in WGC spring-2026 charts must not be hard-coded across winter dates. WGC has also used different analytical partitions in other research (for example 2024: 22:00–11:00 / 11:00–14:00 / 14:00–22:00 UTC), so this is an external benchmark candidate, not a universal exchange-hours definition.
 
 **B — SOBTI_5_ET (academic replication, America/New_York date-aware)**
 - Asia Morning: **21:00–23:30 ET**
@@ -856,7 +860,7 @@ Binding candidate partitions are now:
 - US: **14:30–21:00 ET**
 
 These two schemes must remain distinct:
-- WGC_3 is the modern operational/session-attribution candidate;
+- WGC_2026_NY3 is the current operational/session-attribution candidate;
 - SOBTI_5_ET is the historical academic price-discovery replication candidate;
 - neither may be silently rewritten to match the other.
 
@@ -864,7 +868,8 @@ Raw clock provenance:
 - governed 15-minute XAU/USD research data are requested/stored in **UTC**;
 - Twelve Data intraday `datetime` denotes the **bar-open timestamp**;
 - local clocks are derived from UTC using IANA timezone rules;
-- fixed manual DST offsets are forbidden.
+- fixed manual DST offsets are forbidden;
+- an observed historical source-coverage regime change exists: 2023–early-2025 commonly show a one-hour 17:00 New York gap (92 x 15m bars on full trading dates), while later 2025 often contains 96 bars; this is a source/data-contract issue that must be audited and must not be mistaken for economic session structure.
 
 Modern SGE venue marker:
 - day matching session = **09:00–15:30 Asia/Shanghai** after the 2019 extension;
