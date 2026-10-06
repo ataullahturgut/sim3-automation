@@ -240,10 +240,11 @@ def main():
                 continue
             dr=dz.iloc[-1]
             target=pd.Timestamp(f"{d} 15:00",tz=IST)
-            hh=hz.copy()
+            hh=hz[hz["ts"] >= target].copy()
             if len(hh):
-                hh["delta"]=(hh["ts"]-target).abs()
-                ent=hh.sort_values(["delta","ts"]).iloc[0]
+                # Strict no-lookahead: first bar starting at or after the
+                # 15:00 Istanbul decision time (normally 15:30 in Yahoo 1h).
+                ent=hh.sort_values("ts").iloc[0]
                 closecand=hz[hz["ts"].dt.hour <= 18]
                 ex=closecand.iloc[-1] if len(closecand) else hz.iloc[-1]
                 epx=float(ent["open"]); xpx=float(ex["close"])
@@ -264,9 +265,10 @@ def main():
             hz=gh[gh.date==d].sort_values("ts")
             if hz.empty: return np.nan,None
             target=pd.Timestamp(f"{d} 15:00",tz=IST)
-            zz=hz.copy(); zz["delta"]=(zz["ts"]-target).abs()
-            r=zz.sort_values(["delta","ts"]).iloc[0]
-            if r["delta"]>pd.Timedelta(minutes=70): return np.nan,None
+            zz=hz[hz["ts"] >= target].copy()
+            if zz.empty: return np.nan,None
+            r=zz.iloc[0]
+            if (r["ts"]-target)>pd.Timedelta(minutes=70): return np.nan,None
             return float(r["open"]),str(r["ts"])
         for i,d in enumerate(all_dates[:-1]):
             if not bool(panel.iloc[i]["cpg_up"]):
@@ -303,8 +305,8 @@ def main():
             "xau_executable_0800NY_to_1100NY_bist_window_proxy_compound":compound(xdf["ret_0800_1100"]),
             "xau_decision_to_decision_0800NY_compound":compound(d2d_df["ret"]),
             "gldtr_daily_open_to_close_prior_style_compound":compound(gldf["ret_daily_open_close"]),
-            "gldtr_1500IST_to_session_close_compound":compound(gldf["ret_15_close"]),
-            "gldtr_decision_to_decision_1500IST_compound":compound(gd2d_df["ret"]),
+            "gldtr_first_bar_after_1500IST_to_session_close_compound":compound(gldf["ret_15_close"]),
+            "gldtr_decision_to_decision_first_bar_after_1500IST_compound":compound(gd2d_df["ret"]),
         },
         "source_meta":{
             "xau":xmeta,
