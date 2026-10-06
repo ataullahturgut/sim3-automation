@@ -1,0 +1,328 @@
+{
+  "status": "RETROSPECTIVE_FORECAST_CLOCK_RECONCILIATION_NOT_PROSPECTIVE",
+  "scope": "raw CIG-D1 4/4 consensus, 2025-07-01..2026-09-25",
+  "clock_contract": {
+    "feature_hourly_anchor": "16:00 America/New_York on feature_cutoff_date",
+    "theoretical_daily_reference_ready": "next UTC midnight after feature_cutoff_date; only a lower-bound clock proxy, not proof all sources were ready",
+    "governed_issue_deadline": "08:00 America/New_York on issue_date",
+    "historical_actual_issued_at": "not available for retrospective rows"
+  },
+  "clock_ranges": {
+    "theoretical_ready_istanbul": [
+      "03:00"
+    ],
+    "governed_08_istanbul": [
+      "15:00",
+      "16:00"
+    ],
+    "ny20_istanbul": [
+      "03:00",
+      "04:00"
+    ]
+  },
+  "summary": {
+    "2025_H2": {
+      "n": 111,
+      "theoretical_ready_to_governed_08": {
+        "n": 111,
+        "compound": 0.08811640297012224,
+        "mean": 0.0007921031397297687,
+        "median": 0.0011776334895519103,
+        "positive_share": 0.5675675675675675,
+        "signal_direction_accuracy": 0.5405405405405406,
+        "up_signal_n": 72,
+        "down_signal_n": 39
+      },
+      "governed_08_to_20": {
+        "n": 111,
+        "compound": 0.1289209136403553,
+        "mean": 0.0011392520191030049,
+        "median": 0.0008346242092589495,
+        "positive_share": 0.5675675675675675,
+        "signal_direction_accuracy": 0.5045045045045045,
+        "up_signal_n": 72,
+        "down_signal_n": 39
+      },
+      "theoretical_ready_to_20": {
+        "n": 111,
+        "compound": 0.22839736378808873,
+        "mean": 0.0019435726044884562,
+        "median": 0.0019895783988632676,
+        "positive_share": 0.5855855855855856,
+        "signal_direction_accuracy": 0.6126126126126126,
+        "up_signal_n": 72,
+        "down_signal_n": 39
+      },
+      "UP": {
+        "n": 72,
+        "ready_to_08": {
+          "n": 72,
+          "compound": 0.11798628937869293,
+          "mean": 0.0015862082303951437,
+          "median": 0.0015398390938010653,
+          "positive_share": 0.5833333333333334,
+          "signal_direction_accuracy": 0.5833333333333334,
+          "up_signal_n": 72,
+          "down_signal_n": 0
+        },
+        "08_to_20": {
+          "n": 72,
+          "compound": 0.07097497726545376,
+          "mean": 0.0010015230220006078,
+          "median": 0.0009006803227926685,
+          "positive_share": 0.5555555555555556,
+          "signal_direction_accuracy": 0.5555555555555556,
+          "up_signal_n": 72,
+          "down_signal_n": 0
+        },
+        "ready_to_20": {
+          "n": 72,
+          "compound": 0.19733534085043325,
+          "mean": 0.0026093446888061813,
+          "median": 0.0038401104037157907,
+          "positive_share": 0.6527777777777778,
+          "signal_direction_accuracy": 0.6527777777777778,
+          "up_signal_n": 72,
+          "down_signal_n": 0
+        }
+      },
+      "DOWN": {
+        "n": 39,
+        "ready_to_08": {
+          "n": 39,
+          "compound": -0.02671757846437406,
+          "mean": -0.000673937027652462,
+          "median": 0.0011589225023118654,
+          "positive_share": 0.5384615384615384,
+          "signal_direction_accuracy": 0.46153846153846156,
+          "up_signal_n": 0,
+          "down_signal_n": 39
+        },
+        "08_to_20": {
+          "n": 39,
+          "compound": 0.054105779878122595,
+          "mean": 0.0013935209368305078,
+          "median": 0.0008197971053882647,
+          "positive_share": 0.5897435897435898,
+          "signal_direction_accuracy": 0.41025641025641024,
+          "up_signal_n": 0,
+          "down_signal_n": 39
+        },
+        "ready_to_20": {
+          "n": 39,
+          "compound": 0.02594262599447772,
+          "mean": 0.0007144549103634254,
+          "median": -0.0004234489517641604,
+          "positive_share": 0.46153846153846156,
+          "signal_direction_accuracy": 0.5384615384615384,
+          "up_signal_n": 0,
+          "down_signal_n": 39
+        }
+      }
+    },
+    "2026_JAN_JUL": {
+      "n": 131,
+      "theoretical_ready_to_governed_08": {
+        "n": 131,
+        "compound": 0.029675008512024537,
+        "mean": 0.00031542351806195976,
+        "median": 0.0010098553267239296,
+        "positive_share": 0.5343511450381679,
+        "signal_direction_accuracy": 0.48854961832061067,
+        "up_signal_n": 73,
+        "down_signal_n": 58
+      },
+      "governed_08_to_20": {
+        "n": 131,
+        "compound": 0.037761897674845946,
+        "mean": 0.0003630288935204241,
+        "median": -7.175669237691196e-07,
+        "positive_share": 0.4961832061068702,
+        "signal_direction_accuracy": 0.5114503816793893,
+        "up_signal_n": 73,
+        "down_signal_n": 58
+      },
+      "theoretical_ready_to_20": {
+        "n": 131,
+        "compound": 0.06855749082180207,
+        "mean": 0.0007200204029394767,
+        "median": 0.0010334474965507656,
+        "positive_share": 0.5267175572519084,
+        "signal_direction_accuracy": 0.5267175572519084,
+        "up_signal_n": 73,
+        "down_signal_n": 58
+      },
+      "UP": {
+        "n": 73,
+        "ready_to_08": {
+          "n": 73,
+          "compound": 0.18526432343330868,
+          "mean": 0.002384769624860576,
+          "median": 0.0010098553267239296,
+          "positive_share": 0.5205479452054794,
+          "signal_direction_accuracy": 0.5205479452054794,
+          "up_signal_n": 73,
+          "down_signal_n": 0
+        },
+        "08_to_20": {
+          "n": 73,
+          "compound": 0.02669560696583506,
+          "mean": 0.00042383573647438556,
+          "median": 2.9658113419150922e-05,
+          "positive_share": 0.5068493150684932,
+          "signal_direction_accuracy": 0.5068493150684932,
+          "up_signal_n": 73,
+          "down_signal_n": 0
+        },
+        "ready_to_20": {
+          "n": 73,
+          "compound": 0.21690567396230986,
+          "mean": 0.0028127569957730296,
+          "median": 0.001468109649928051,
+          "positive_share": 0.547945205479452,
+          "signal_direction_accuracy": 0.547945205479452,
+          "up_signal_n": 73,
+          "down_signal_n": 0
+        }
+      },
+      "DOWN": {
+        "n": 58,
+        "ready_to_08": {
+          "n": 58,
+          "compound": -0.13126971920541197,
+          "mean": -0.0022890983060121608,
+          "median": 0.0007116958690891462,
+          "positive_share": 0.5517241379310345,
+          "signal_direction_accuracy": 0.4482758620689655,
+          "up_signal_n": 0,
+          "down_signal_n": 58
+        },
+        "08_to_20": {
+          "n": 58,
+          "compound": 0.010778550754409588,
+          "mean": 0.0002864961429059553,
+          "median": -6.683675462038074e-05,
+          "positive_share": 0.4827586206896552,
+          "signal_direction_accuracy": 0.5172413793103449,
+          "up_signal_n": 0,
+          "down_signal_n": 58
+        },
+        "ready_to_20": {
+          "n": 58,
+          "compound": -0.12190606578197516,
+          "mean": -0.0019139411707993052,
+          "median": -0.00030012662048040095,
+          "positive_share": 0.5,
+          "signal_direction_accuracy": 0.5,
+          "up_signal_n": 0,
+          "down_signal_n": 58
+        }
+      }
+    },
+    "2026_AUG_SEP": {
+      "n": 26,
+      "theoretical_ready_to_governed_08": {
+        "n": 26,
+        "compound": -0.0038566863234433812,
+        "mean": -9.694685361961463e-05,
+        "median": -0.00256585506851037,
+        "positive_share": 0.38461538461538464,
+        "signal_direction_accuracy": 0.38461538461538464,
+        "up_signal_n": 18,
+        "down_signal_n": 8
+      },
+      "governed_08_to_20": {
+        "n": 26,
+        "compound": 0.028486822896751418,
+        "mean": 0.0011451935117542645,
+        "median": -0.0001700088569832614,
+        "positive_share": 0.5,
+        "signal_direction_accuracy": 0.4230769230769231,
+        "up_signal_n": 18,
+        "down_signal_n": 8
+      },
+      "theoretical_ready_to_20": {
+        "n": 26,
+        "compound": 0.024520271833045282,
+        "mean": 0.0010826666934207025,
+        "median": -0.0019202597330564286,
+        "positive_share": 0.4230769230769231,
+        "signal_direction_accuracy": 0.4230769230769231,
+        "up_signal_n": 18,
+        "down_signal_n": 8
+      },
+      "UP": {
+        "n": 18,
+        "ready_to_08": {
+          "n": 18,
+          "compound": -0.013398655294817874,
+          "mean": -0.0006838614184055526,
+          "median": -0.003185360971833584,
+          "positive_share": 0.3333333333333333,
+          "signal_direction_accuracy": 0.3333333333333333,
+          "up_signal_n": 18,
+          "down_signal_n": 0
+        },
+        "08_to_20": {
+          "n": 18,
+          "compound": -0.017544243382941693,
+          "mean": -0.0009255277764528095,
+          "median": -0.003057619899079156,
+          "positive_share": 0.4444444444444444,
+          "signal_direction_accuracy": 0.4444444444444444,
+          "up_signal_n": 18,
+          "down_signal_n": 0
+        },
+        "ready_to_20": {
+          "n": 18,
+          "compound": -0.030707829408262555,
+          "mean": -0.00157239131128382,
+          "median": -0.0038458578832739065,
+          "positive_share": 0.3888888888888889,
+          "signal_direction_accuracy": 0.3888888888888889,
+          "up_signal_n": 18,
+          "down_signal_n": 0
+        }
+      },
+      "DOWN": {
+        "n": 8,
+        "ready_to_08": {
+          "n": 8,
+          "compound": 0.00967155480030879,
+          "mean": 0.0012236109171487458,
+          "median": -0.00013228824074656975,
+          "positive_share": 0.5,
+          "signal_direction_accuracy": 0.5,
+          "up_signal_n": 0,
+          "down_signal_n": 8
+        },
+        "08_to_20": {
+          "n": 8,
+          "compound": 0.04685306790627819,
+          "mean": 0.005804316410220181,
+          "median": 0.0007137852962499913,
+          "positive_share": 0.625,
+          "signal_direction_accuracy": 0.375,
+          "up_signal_n": 0,
+          "down_signal_n": 8
+        },
+        "ready_to_20": {
+          "n": 8,
+          "compound": 0.05697776472040528,
+          "mean": 0.007056547204005878,
+          "median": 0.0030773997591273528,
+          "positive_share": 0.5,
+          "signal_direction_accuracy": 0.5,
+          "up_signal_n": 0,
+          "down_signal_n": 8
+        }
+      }
+    }
+  },
+  "guardrails": [
+    "Do not call theoretical_ready the actual historical issuance time.",
+    "Do not count ready_to_08 movement as post-signal P&L under the governed 08:00 issue contract.",
+    "08_to_20 is the clean same-day post-governed-issue clock comparison used here.",
+    "These are gross XAU/USD spot moves, not instrument-specific net returns."
+  ]
+}
