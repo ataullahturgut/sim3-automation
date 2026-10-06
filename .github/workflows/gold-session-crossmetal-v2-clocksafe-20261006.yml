@@ -1,0 +1,54 @@
+name: Gold Session Crossmetal V2 Clocksafe 20261006
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_session_structural_iris_crossmetal_v2_clocksafe_20261006.py'
+      - '.github/workflows/gold-session-crossmetal-v2-clocksafe-20261006.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      DATABENTO_API_KEY: ${{ secrets.DATABENTO_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4' 'databento>=0.60,<1'
+      - name: Require source keys
+        run: |
+          test -n "$NEON_DATABASE_URL"
+          test -n "$DATABENTO_API_KEY"
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_session_structural_iris_crossmetal_v2_clocksafe_20261006.py
+      - name: Run clock-safe one-stage diagnostic
+        run: python gold_axis_2026/tools/gold_session_structural_iris_crossmetal_v2_clocksafe_20261006.py
+      - name: Record evidence
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/SESSION_STRUCTURAL_IRIS_CROSSMETAL_V2_CLOCKSAFE_OUT/summary.json gold_axis_2026/GOLD_SESSION_CROSSMETAL_V2_CLOCKSAFE_SUMMARY_2026-10-06.json
+          cp gold_axis_2026/SESSION_STRUCTURAL_IRIS_CROSSMETAL_V2_CLOCKSAFE_OUT/result.md gold_axis_2026/GOLD_SESSION_CROSSMETAL_V2_CLOCKSAFE_RESULT_2026-10-06.md
+          cp gold_axis_2026/SESSION_STRUCTURAL_IRIS_CROSSMETAL_V2_CLOCKSAFE_OUT/metrics_2023_2024.csv gold_axis_2026/GOLD_SESSION_CROSSMETAL_V2_CLOCKSAFE_METRICS_2023_2024.csv
+          cp gold_axis_2026/SESSION_STRUCTURAL_IRIS_CROSSMETAL_V2_CLOCKSAFE_OUT/predictions_2023_2024.csv gold_axis_2026/GOLD_SESSION_CROSSMETAL_V2_CLOCKSAFE_PREDICTIONS_2023_2024.csv
+          cp gold_axis_2026/SESSION_STRUCTURAL_IRIS_CROSSMETAL_V2_CLOCKSAFE_OUT/coverage_2023_2024.csv gold_axis_2026/GOLD_SESSION_CROSSMETAL_V2_CLOCKSAFE_COVERAGE_2023_2024.csv
+          cp gold_axis_2026/SESSION_STRUCTURAL_IRIS_CROSSMETAL_V2_CLOCKSAFE_OUT/timing_audit_2023_2024.csv gold_axis_2026/GOLD_SESSION_CROSSMETAL_V2_CLOCKSAFE_TIMING_AUDIT_2023_2024.csv
+          git add gold_axis_2026/GOLD_SESSION_CROSSMETAL_V2_CLOCKSAFE_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record clock-safe cross-metal session diagnostic"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
