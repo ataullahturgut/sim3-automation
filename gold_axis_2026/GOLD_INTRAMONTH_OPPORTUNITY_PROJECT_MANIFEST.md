@@ -1255,6 +1255,42 @@ Still missing as governed raw actual/consensus event families:
 
 Any model requiring these three families, or a historical PIT FOMC score/surprise, remains blocked for that component. Missing families must not be synthesized from hard-coded event dates or reconstructed from future knowledge.
 
+### 5E.8H GVZ / DGS2 raw-source closure — 2026-10-06
+
+Authorities:
+- `GOLD_GVZCLS_RAW_2021_2025.csv`
+- `GOLD_DGS2_RAW_2022_2025.csv`
+- `GOLD_GVZ_DGS2_RAW_BACKFILL_SUMMARY_2026-10-06.json`
+
+GVZ:
+- primary source: **Cboe official GVZ historical data**
+- valid rows: **1,257**
+- span: **2021-01-04 -> 2025-12-31**
+- 2023 rows: 250
+- 2024 rows: 252
+- 2025 rows: 250
+- SHA256: `ae9f34014d0b3ef42c3230097b2e982139b517059e82dd688917f350acfa597f`
+- full-session governance: **D-1 completed GVZ only** until historical same-day publication/readiness timing is separately proven.
+
+DGS2:
+- primary source: **Federal Reserve H.15 Data Download Program**
+- official series: `H15/H15/RIFLGFCY02_N.B`
+- valid rows: **757**
+- span: **2022-12-20 -> 2025-12-31**
+- 2023 rows: 250
+- 2024 rows: 250
+- 2025 rows: 249
+- SHA256: `eca51920e8a2711cc6faaf93238ceedfde6dfb2349f8d3fe18ac8e8382a3871b`
+- full-session governance: **D-1 completed DGS2 only**;
+- same-day DGS2 is admissible only to a later head after a historical publication timestamp/readiness contract is separately proven.
+
+The original FRED graph-download route repeatedly timed out in Actions and is not the authority. Raw coverage was recovered from the primary publishers instead.
+
+Implications:
+- VEGA's raw GVZ coverage blocker for 2023–2025 is closed, subject to session-specific feature rebuilding and D-1 source-ready use;
+- RuleFlow's previous 2025-Q4 DGS2 coverage blocker is closed;
+- RuleFlow same-day rate/event-response logic remains **BLOCKED_FOR_FULL_SESSION** and may only be reconsidered for later heads after source-ready timing proof.
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
