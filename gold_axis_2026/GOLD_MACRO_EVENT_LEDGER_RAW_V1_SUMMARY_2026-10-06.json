@@ -1,0 +1,72 @@
+{
+  "status": "MACRO_EVENT_LEDGER_RAW_V1_COMPLETE_PARTIAL_FAMILY_COVERAGE",
+  "period": "2023-2025",
+  "families": {
+    "CPI": {
+      "rows": 34,
+      "first": "2023-01-12 13:30:00+00:00",
+      "last": "2025-10-24 12:30:00+00:00",
+      "pair_complete": 34,
+      "pit_surprise_ready": 34,
+      "pit_use": [
+        "POST_RELEASE_ONLY"
+      ]
+    },
+    "NFP": {
+      "rows": 35,
+      "first": "2023-01-06 13:30:00+00:00",
+      "last": "2025-12-16 13:30:00+00:00",
+      "pair_complete": 35,
+      "pit_surprise_ready": 35,
+      "pit_use": [
+        "POST_RELEASE_ONLY"
+      ]
+    },
+    "UNEMP": {
+      "rows": 35,
+      "first": "2023-01-06 13:30:00+00:00",
+      "last": "2025-12-16 13:30:00+00:00",
+      "pair_complete": 35,
+      "pit_surprise_ready": 35,
+      "pit_use": [
+        "POST_RELEASE_ONLY"
+      ]
+    },
+    "AHE": {
+      "rows": 35,
+      "first": "2023-01-06 13:30:00+00:00",
+      "last": "2025-12-16 13:30:00+00:00",
+      "pair_complete": 35,
+      "pit_surprise_ready": 35,
+      "pit_use": [
+        "POST_RELEASE_ONLY"
+      ]
+    },
+    "FOMC": {
+      "rows": 16,
+      "first": "2023-02-01 19:00:00+00:00",
+      "last": "2024-12-18 19:00:00+00:00",
+      "pair_complete": 0,
+      "pit_surprise_ready": 0,
+      "pit_use": [
+        "EVENT_TIMESTAMP_ONLY_SCORE_VALUE_NOT_HISTORICAL_PIT"
+      ]
+    }
+  },
+  "absent_required_families": [
+    "PCE",
+    "JOLTS",
+    "ADP"
+  ],
+  "rules": {
+    "actual_consensus": "use source available_as_of; surprise ready=max(actual,consensus available_as_of)",
+    "full_session": "same-session release cannot be used if surprise_ready_at > target_start",
+    "fomc": "event timestamp usable; reconstructed FOMC score value not historical PIT because available_as_of is 2026 load time"
+  },
+  "hashes": {
+    "raw_observations": "7c01926524b422f9b69325a69ca2a9caf1ed3bc8ddaca4d3e7a0582d281b365b",
+    "event_ledger": "211b40b812fb08afab1190bdc68bc0f4b71321f67be824f346568eeffc82488d",
+    "session_event_availability_map": "3b89be925535e3a0651a92fa8129963cd590787f8865180ffbc8ef07e848a55b"
+  },
+  "guardrail": "PCE/JOLTS/ADP are not silently synthesized. Any model requiring them remains blocked until raw timestamped actual/consensus history is governed."
+}
