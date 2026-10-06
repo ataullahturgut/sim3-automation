@@ -90,7 +90,7 @@ def main():
         down_rows.append(o)
     ds=pd.DataFrame(down_rows)
     ds.to_csv(OUT/"down_exit_scan_1h.csv",index=False)
-    ddev=ds[ds["2025_H2_n"]>=40].sort_values(["2025_H2_compound_avoided","2025_H2_hit"],ascending=False)
+    ddev=ds[ds["2025_H2_n"]>=30].sort_values(["2025_H2_compound_avoided","2025_H2_hit"],ascending=False)
     ddev.head(20).to_csv(OUT/"down_exit_dev_top.csv",index=False)
 
     # Decision-to-next-issue: enter after issue on an UP day, hold to next issue;
