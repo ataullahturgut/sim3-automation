@@ -922,6 +922,8 @@ Raw governed XAU/USD 15-minute UTC backfill:
 - OHLC internal consistency: PASS
 - frozen raw SHA256: `8f1c00b34a95b7cef6a44c3c0bef59035fa9dde9cf6d241ba0b87fd146235308`
 
+**Schema correction — 2026-10-06:** V4/V5 generation originally propagated the `return` field as `_20` because pandas `itertuples()` renamed the reserved/non-identifier column during row serialization. The V4 gate was corrected to preserve dataframe column names via `iterrows()/to_dict()`, V4 and V5 were regenerated, and the semantic counts remained unchanged. Any V5 artifact carrying `_20` instead of `return` is superseded and must not be used.
+
 **Final target-price semantics**
 - session start = **OPEN of the exact 15-minute bar beginning at target start T**;
 - session end = **CLOSE of the exact final 15-minute bar beginning at T−15 and ending at target end T**;
@@ -964,8 +966,8 @@ Final V5 integrity:
 - final trainable rows with missing direction: **0**
 
 Final file hashes:
-- WGC final: `fb41ab5bb7f30b15ce21dd01d870eb9f737050ac78810d146b6c2948a1e1d5da`
-- Sobti final: `d605e3a48028b47216ad63164ac3e0836b338f84f4223ede5ece4937bc342cd3`
+- WGC final: `178f45e708b9faf415fb9e6d20bd15dda01983f0b3e0d269f3fa243a671e1e26`
+- Sobti final: `cef50b30f895bb420196e1efd4ac01493c3939474199d098ca57428375a4cf06`
 
 **Independent futures clock sanity check**
 A Databento GLBX.MDP3 GC continuous-futures comparison was used only as a clock/date sanity check, not as a replacement target source. On comparable WGC-window rows, spot-vs-GC direction agreement was generally high (roughly 91%–99.6% by year/window in the completed audit). This supports the date/clock alignment while preserving XAU/USD spot as the target source.
