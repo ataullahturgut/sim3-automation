@@ -1200,6 +1200,27 @@ HELIOS status:
 - HELIOS V1-V5 remains **BLOCKED_UPSTREAM_OPAL/AURORA** for session replay;
 - once fresh upstream session predictions exist, OPAL and HELIOS must be regenerated from raw COT plus the fresh upstream state.
 
+### 5E.8F SELLR / STCR provenance gate — 2026-10-06
+
+Repository lineage audit result:
+
+- `GOLD_H3_COMPETENCE_TRANSITION_V1_SELLR_SCORES_SOURCE_2026-10-05.csv` exists and contains frozen `sellr_score` values;
+- `gold_h3_competence_transition_program_v1.py` **consumes** those scores but does not generate them;
+- the score file entered the inspected branch in commit `3b7135390fd3531ea701d188520ebd5e0724513b` with message **"Import frozen SELLR scores for competence transition program"**;
+- the import commit added the score CSV, not a producer implementation;
+- current branch, competence-transition branch, catalyst-diagnostic branch, exception-channel branch, hazard branch and repository code search did not recover an authoritative raw-source SELLR producer formula;
+- STCR itself is resolved as `simulate_stcr` in `gold_h3_competence_transition_program_v1.py`, but its entry catalyst depends on the unresolved SELLR score.
+
+Binding status:
+- **SELLR = PRODUCER_LINEAGE_UNRESOLVED / BLOCKED_FOR_RAW_SOURCE_REPLAY**
+- **STCR = BLOCKED_DOWNSTREAM** until SELLR can be regenerated from governed raw inputs;
+- the existing frozen SELLR score CSV is QA/history evidence only and is prohibited as a new session-model input under Section 5E.8C;
+- no attempt may reverse-engineer a new SELLR formula from its historical scores or 2026 outcomes.
+
+Reopening condition:
+- locate the original score-producing code with explicit feature definitions and chronology, or
+- separately preregister a new catalyst model from raw sources without using the historical SELLR scores as targets.
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
