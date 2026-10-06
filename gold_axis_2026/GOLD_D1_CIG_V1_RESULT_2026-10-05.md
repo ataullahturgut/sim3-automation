@@ -351,3 +351,33 @@ Not allowed:
 - mixing source clocks silently.
 
 Promotion requires a separate prospective freeze and sufficient unseen daily observations.
+
+
+---
+
+## 12. Clock-semantics correction — 2026-10-06
+
+**Authority:** `GOLD_D1_FORECAST_CLOCK_RECONCILIATION_2026-10-06.md`
+
+The 2026 Jan-Jul figure **93/125 = 74.40%** remains the historical accuracy of the frozen **daily label** used in this document.
+
+It must no longer be described as:
+- accuracy from 08:00 New York onward;
+- executable same-day return accuracy;
+- evidence that the entire realized daily move occurred after signal issuance.
+
+The governed issue deadline is **08:00 America/New_York**. Historical retrospective CIG rows do not contain actual `issued_at_utc` timestamps.
+
+A 15-minute clock diagnostic on a reconstructed raw execution population produced 08:00->20:00 direction accuracy of:
+- 2025 H2: 50.45% (N=111)
+- 2026 Jan-Jul: 51.15% (N=131)
+- 2026 Aug-Sep: 42.31% (N=26).
+
+However, the reconstructed Jan-Jul timing population has **131** consensus rows, while this canonical CIG result has **125**. Therefore the 51.15% figure is **not** an apples-to-apples replacement for 74.40%.
+
+Binding terminology from this point:
+- **74.40% = historical daily-label accuracy**
+- post-08:00 statistics = **execution-clock diagnostics**
+- final executable CIG accuracy remains **UNRESOLVED** until the exact 125-row canonical population is rejoined to intraday prices.
+
+This correction supersedes any prior wording that implied otherwise.
