@@ -837,6 +837,118 @@ Academic sources:
 - Iwatsubo, K., Watkins, C., Xu, T. (2018), *Journal of Commodity Markets* 11, 59–71. DOI: 10.1016/j.jcomm.2018.05.001
 - Elder, J., Miao, H., Ramchander, S. (2012), *Journal of Banking & Finance* 36, 51–65. DOI: 10.1016/j.jbankfin.2011.06.007
 
+
+## 5E.12 Fifteen-Minute CIG Execution Timing Transport — 2026-10-06
+
+**Status:** RETROSPECTIVE DEVELOPMENT/TRANSPORT DIAGNOSTIC — NOT PROSPECTIVE  
+**Signal:** raw CIG-D1 4/4 consensus only  
+**Execution clock:** no price before 08:00 America/New_York is permitted in executable timing tests.
+
+Authoritative artifacts:
+- \`GOLD_EXECUTION_15M_TIMING_TRANSPORT_2026-10-06.json\`
+- \`GOLD_EXECUTION_15M_UP_WINDOW_DEV_ROBUST_TOP_2026-10-06.csv\`
+- \`GOLD_EXECUTION_15M_DOWN_EXIT_DEV_ROBUST_TOP_2026-10-06.csv\`
+- \`GOLD_EXECUTION_15M_FORWARD_CLOCK_MAP_2026-10-06.csv\`
+
+Protocol:
+- 2025 H2 = timing-development period;
+- 2026 Jan-Jul and 2026 Aug-Sep = unchanged transport diagnostics;
+- candidate UP windows require >=60 minutes holding time;
+- selection must survive ±30-minute entry/exit perturbations;
+- exact-bar winners are not accepted.
+
+### UP timing result
+
+The highest robustness score on 2025 H2 selected:
+- entry **17:15 New York**
+- exit **20:00 New York**
+- holding time **165 minutes**.
+
+Performance:
+- 2025 H2: n=72, compound **+7.36%**, hit **61.1%**
+- 2026 Jan-Jul: n=73, compound **+4.70%**, hit **56.2%**
+- 2026 Aug-Sep: n=18, compound **+1.69%**, hit **66.7%**
+
+Robustness:
+- 15 neighboring ±30-minute variants evaluated
+- all 15 positive on 2025 H2
+- worst neighboring 2025 H2 compound result: **+7.09%**
+- median neighboring result: **+8.49%**.
+
+Important interpretation:
+the evidence supports a **late-US execution plateau**, not one magic 17:15 bar. Neighboring entries from roughly **16:00–17:30 New York**, with exits around **19:45–20:00**, remain broadly positive across 2025 development and both 2026 transport windows.
+
+Representative fixed windows:
+- 16:00→20:00 NY: 2025 +7.60%, 2026 Jan-Jul +4.77%, Aug-Sep +0.59%
+- 16:15→20:00 NY: 2025 +7.62%, 2026 Jan-Jul +5.08%, Aug-Sep +0.99%
+- 16:45→20:00 NY: 2025 +7.22%, 2026 Jan-Jul +4.81%, Aug-Sep +1.97%
+- 17:00→20:00 NY: 2025 +8.34%, 2026 Jan-Jul +3.84%, Aug-Sep +1.76%
+- 17:15→20:00 NY: 2025 +7.36%, 2026 Jan-Jul +4.70%, Aug-Sep +1.69%
+- 17:30→20:00 NY: 2025 +7.44%, 2026 Jan-Jul +4.59%, Aug-Sep +1.69%.
+
+Thus the canonical research object is a **time plateau**, not an exact timestamp.
+
+### UP path structure after issuance
+
+On 2025 H2, the strongest positive one-hour block after the 08:00 issue time is:
+- **18:30→19:30 New York**
+- compound +4.69%
+- hit 65.3%.
+
+Unchanged transport:
+- 2026 Jan-Jul: +2.01%
+- 2026 Aug-Sep: +0.60%.
+
+The strongest 2025 negative/giveback one-hour block is:
+- **09:30→10:30 New York**
+- 2025 H2: -3.79%
+- 2026 Jan-Jul: -2.10%
+- 2026 Aug-Sep: **+1.98%**.
+
+Interpretation:
+- early-overlap giveback is not regime-stable through Aug-Sep 2026;
+- late-US positive acceleration is more stable across the three reported periods;
+- the robust UP execution hypothesis is therefore **late-US continuation**, not “buy immediately at 08:00” and not “always wait for an early-overlap pullback”.
+
+### DOWN timing result
+
+A 2025-only robust search selected 15:45 New York as the best delayed exit relative to holding to 20:00:
+- 2025 H2 avoided-return compound: **+2.13%**
+- 2026 Jan-Jul transport: **-3.22%**
+- 2026 Aug-Sep transport: **-0.30%**.
+
+Therefore the delayed DOWN exit **fails transport**.
+
+The strongest 2025 DOWN one-hour decline was:
+- 16:30→17:30 New York
+- 2025 H2: -3.71%
+- 2026 Jan-Jul: -2.21%
+- 2026 Aug-Sep: +0.54%.
+
+This also fails the Aug-Sep regime.
+
+**Binding interpretation:** no fixed delayed sell hour is supported for DOWN. Do not promote 15:45, 16:00 or 16:30 New York as a production exit rule.
+
+### Istanbul clock interpretation
+
+Because Türkiye does not change daylight-saving time while New York does, the late-US plateau maps to two Istanbul clocks depending on date.
+
+Approximate mapping:
+- entry plateau 16:00–17:30 NY -> roughly **23:00–01:30 Istanbul** depending on US DST
+- exit plateau 19:45–20:00 NY -> roughly **02:45–04:00 Istanbul** depending on US DST.
+
+All production reporting must use date-aware timezone conversion, never a fixed +7/+8 assumption.
+
+### Current execution research conclusion
+
+For the current 08:00-NY CIG-D1 identity:
+- **UP:** a late-US continuation plateau is the strongest transport-stable executable timing hypothesis found so far.
+- **DOWN:** fixed delayed exit timing is unstable; no binding clock rule.
+- **Europe/Türkiye daytime movement:** remains valuable for attribution, but occurs before the current CIG-D1 issue timestamp and therefore cannot be counted as executable return from CIG-D1 V1.
+
+No result in this subsection is prospective evidence or net investment return. Costs, spread, slippage, swap and instrument basis remain excluded.
+
+
 **Next authorized action from this section:** complete the remaining Tier-A data acquisition/normalization matrix first; then perform the source-ready timestamp audit and build the session-attribution panel. No further entry-hour optimisation before those gates pass.
 
 
