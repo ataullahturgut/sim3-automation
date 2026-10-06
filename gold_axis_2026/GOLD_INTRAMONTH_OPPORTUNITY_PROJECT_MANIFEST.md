@@ -838,6 +838,18 @@ Academic sources:
 - Elder, J., Miao, H., Ramchander, S. (2012), *Journal of Banking & Finance* 36, 51–65. DOI: 10.1016/j.jbankfin.2011.06.007
 
 
+## 5E.11A Forecast Clock / Target Window Correction — 2026-10-06
+
+Authoritative audit:
+- `GOLD_FORECAST_CLOCK_TARGET_AUDIT_2026-10-06.md`
+
+Binding correction:
+- H3 `target_r3` begins from the governed daily reference on the **feature_cutoff_date**, not from the 08:00 New York forecast issue timestamp.
+- CIG-D1 historical "same-day" label also begins from a previous daily reference and therefore includes movement that can occur before the 08:00 issue time.
+- Existing H3/CIG model scores remain label-space research scores.
+- They must not be described as post-signal executable direction/return until separately re-scored from the actual issue timestamp.
+- Original CIG accuracy is henceforth called **historical label accuracy** until post-08:00 reconciliation is complete.
+
 ## 5E.12 Fifteen-Minute CIG Execution Timing Transport — 2026-10-06
 
 **Status:** RETROSPECTIVE DEVELOPMENT/TRANSPORT DIAGNOSTIC — NOT PROSPECTIVE  
