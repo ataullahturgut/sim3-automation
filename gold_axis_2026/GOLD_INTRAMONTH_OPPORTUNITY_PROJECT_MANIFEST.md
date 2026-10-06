@@ -1758,6 +1758,82 @@ Stage-1 implication:
 - no consensus/router membership is changed yet.
 
 
+### 5E.8O Exact-clock cross-metal timing authority V3 — 2026-10-06
+
+Authorities:
+- `GOLD_SESSION_CROSSMETAL_V3_EXACTCLOCK_SUMMARY_2026-10-06.json`
+- `GOLD_SESSION_CROSSMETAL_V3_EXACTCLOCK_RESULT_2026-10-06.md`
+- `GOLD_SESSION_CROSSMETAL_V3_EXACTCLOCK_METRICS_2023_2024.csv`
+- `GOLD_SESSION_CROSSMETAL_V3_EXACTCLOCK_COVERAGE_2023_2024.csv`
+- `GOLD_SESSION_CROSSMETAL_V3_EXACTCLOCK_CLOCK_QUALITY_2026-10-06.csv`
+- `GOLD_SESSION_CROSSMETAL_V3_EXACTCLOCK_CLOCK_SAMPLES_2026-10-06.csv`
+
+Status:
+- **TIMING AUTHORITY PASS / EXACT-CLOCK DIAGNOSTIC COMPLETE**
+- 2023–2024 only; 2025/2026 unopened.
+- This section is stricter than V2 and supersedes any V2 cross-metal promotion interpretation that depends on last-N-bar rather than exact target-clock horizon semantics.
+
+Binding target/source clock rules:
+- all **3,816** governed target rows pass the frozen Sobti-5/WGC-3 clock audit in `America/New_York`;
+- XAU/SI/PL hourly timestamps are treated as bar-open timestamps; close information is considered available only after the one-hour bar completes;
+- target anchor = latest completed hourly close with `available_at < target_start`;
+- exact-boundary bars are prohibited;
+- for each horizon h in **1/3/6/12/24/48 hours**, reference cutoff = `target_start - h`;
+- reference bar = latest completed hourly close with `available_at < reference_cutoff`;
+- a row is retained only when the actual anchor-to-reference availability span equals **exactly h × 60 minutes** for every retained horizon and every source;
+- maximum anchor/reference staleness = **120 minutes**;
+- NY-calendar `session_ret` is not used.
+
+External timestamp semantics are consistent with this contract:
+- Databento OHLCV `ts_event` marks the **start** of the aggregation interval;
+- Twelve Data intraday `datetime` denotes when the interval bar was **opened**.
+The project still uses the stricter `available_at < target_start` rule to avoid ambiguity at the exact issue boundary.
+
+Clock-quality evidence before the all-horizon gate:
+- XAU exact-span pass rate: 1h **96.91%**, 3h **94.31%**, 6h **94.23%**, 12h **86.56%**, 24h **76.91%**, 48h **55.42%**;
+- SI: **97.25%, 94.37%, 94.68%, 87.26%, 76.97%, 55.53%**;
+- PL: **97.27%, 94.37%, 94.73%, 87.29%, 77.02%, 55.53%**.
+- Requiring all three sources and all six exact horizons reduces the common panel from **3,816 to 2,103 rows**. This is deliberate timing purification, not a missing-data claim.
+
+Representative audited timing examples:
+- Sobti Asia Afternoon target start 06:30 UTC: XAU/SI/PL anchor available 06:00 UTC; 1h reference 05:00; 3h 03:00; 6h 00:00; 12h prior 18:00; 24h prior-day 06:00; 48h two-days-prior 06:00.
+- Sobti Asia Morning target start 02:00 UTC: anchor available 01:00 UTC; exact 1/3/6/12/24/48h references preserve 60/180/360/720/1440/2880-minute spans.
+- Sobti Europe target start 08:30 UTC: anchor available 08:00 UTC; the same exact-span contract is enforced for Gold, Silver and Platinum.
+- Sobti NY/London target start 13:00 UTC in winter: anchor available 12:00 UTC; the 13:00-completing boundary bar is not used.
+
+Combined exact-clock 2023–2024 scored results:
+
+| Window | XAU-only Acc / BA | +SI Acc / BA | +SI+PL Acc / BA |
+|---|---:|---:|---:|
+| Sobti Asia Afternoon | 50.94% / **51.22%** | 51.57% / 51.44% | 49.06% / 49.02% |
+| Sobti Asia Morning | 45.75% / 45.03% | 50.33% / 48.74% | **51.63% / 50.97%** |
+| Sobti Europe | 48.09% / 46.97% | 48.09% / 47.17% | 44.81% / 44.48% |
+| Sobti NY/London | 53.89% / 53.97% | 52.78% / 52.82% | **55.56% / 55.51%** |
+| Sobti Late-US | **53.95% / 53.95%** | 50.00% / 50.00% | 46.05% / 46.05% |
+| WGC Asia | **61.90% / 53.21%** | 60.32% / 51.92% | 60.32% / 54.33% |
+| WGC Europe | **52.46% / 51.20%** | 51.91% / 50.47% | 50.82% / 49.37% |
+| WGC US | 51.37% / 51.69% | 47.95% / 48.17% | **52.74% / 52.91%** |
+
+Critical interpretation:
+- the larger-sample V2 finding that Silver looked selectively useful in Sobti NY/London and WGC Asia **does not survive cleanly under the stricter exact-clock horizon contract**;
+- Sobti NY/London +SI alone is worse than XAU-only under V3; +SI+PL is higher in the combined slice, but 2023 and 2024 behavior is not stable enough for promotion;
+- WGC Asia +SI is worse than XAU-only in the exact-clock 2024 scored slice; no scored 2023 evidence survives the all-horizon warm-up/gate;
+- Platinum still has no stable cross-year promotion case;
+- therefore **no intraday Silver or Platinum path is promoted yet**;
+- earlier V1/V2 cross-metal directional lifts are retained only as diagnostics/hypotheses and must not be quoted as robust model gains.
+
+Methodological implication:
+- the user's concern that loose hour alignment can materially change session-model conclusions is confirmed;
+- future session-model feature engineering must use explicit target-clock horizon semantics, not ambiguous "last N bars" wording when N-hour interpretation is intended;
+- because the exact 48h gate is the main coverage bottleneck, any next feature-screen should be preregistered and may compare shorter exact-clock horizon sets (for example 1/3/6/12h) to recover sample size **without relaxing the no-leakage clock contract**;
+- 2025 remains unopened until this representation choice is frozen.
+
+Stage-1 status:
+- S1.4 canonical A1_PLUS_PATH remains open;
+- V3 is the current cross-metal timing authority;
+- no Silver/Platinum feature is admitted to consensus/router membership at this point.
+
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
