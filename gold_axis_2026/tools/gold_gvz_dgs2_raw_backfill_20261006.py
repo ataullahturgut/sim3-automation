@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import io
 import json
+import time
 from pathlib import Path
 
 import pandas as pd
@@ -32,8 +33,24 @@ def sha(p):
     return h.hexdigest()
 
 def fetch(name,spec):
-    r=requests.get(spec["url"],timeout=90,headers={"User-Agent":"gold-raw-backfill/1.0"})
-    r.raise_for_status()
+    last=None
+    r=None
+    for attempt in range(1,6):
+        try:
+            r=requests.get(
+                spec["url"],
+                timeout=(15,45),
+                headers={"User-Agent":"gold-raw-backfill/1.0","Accept":"text/csv"},
+            )
+            r.raise_for_status()
+            if len(r.content)<100:
+                raise RuntimeError(f"FRED_SHORT_RESPONSE bytes={len(r.content)}")
+            break
+        except Exception as e:
+            last=e
+            if attempt==5:
+                raise RuntimeError(f"{name}_FRED_FETCH_FAIL after {attempt} attempts: {e}")
+            time.sleep(5*attempt)
     q=pd.read_csv(io.BytesIO(r.content))
     q=q.iloc[:,:2].copy()
     q.columns=["date","value"]
