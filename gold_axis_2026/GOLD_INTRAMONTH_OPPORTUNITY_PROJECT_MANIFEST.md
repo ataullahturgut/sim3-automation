@@ -882,6 +882,8 @@ It is prohibited to say that CIG-D1 is "74.4% accurate after 08:00 New York" or 
 
 ## 5E.12 Fifteen-Minute CIG Execution Timing Transport — 2026-10-06
 
+**Population warning:** this subsection uses the reconstructed raw execution panel, not the unrecovered exact canonical 125-row Jan-Jul CIG ledger. Its timing results are therefore execution diagnostics, not an exact re-score of the 74.40% canonical CIG sample.
+
 **Status:** RETROSPECTIVE DEVELOPMENT/TRANSPORT DIAGNOSTIC — NOT PROSPECTIVE  
 **Signal:** raw CIG-D1 4/4 consensus only  
 **Execution clock:** no price before 08:00 America/New_York is permitted in executable timing tests.
