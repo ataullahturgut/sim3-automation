@@ -1,0 +1,254 @@
+{
+  "status": "FROZEN_PREMODEL_TARGET_PANEL_V3",
+  "raw_file": "GOLD_XAUUSD_15M_UTC_2023_2025_WITH_BUFFER.csv",
+  "raw_sha256": "8f1c00b34a95b7cef6a44c3c0bef59035fa9dde9cf6d241ba0b87fd146235308",
+  "rules": {
+    "start": "exact OPEN at target start; no fallback",
+    "end": "exact CLOSE of bar opened T-15; no fallback",
+    "friday_sobti_us_late": "NOT_ELIGIBLE irrespective vendor 24x7 quotes",
+    "zero_return": "excluded from binary UP/DOWN training"
+  },
+  "rows_total": 6264,
+  "duplicates": 0,
+  "bad_clock_rows": 0,
+  "coverage": {
+    "WGC_2026_NY3": {
+      "2023_ASIA": {
+        "eligible_weekdays": 260,
+        "trainable": 255,
+        "excluded": 5,
+        "trainable_rate": 0.9807692307692307,
+        "up": 141,
+        "down": 114,
+        "flat_excluded": 0
+      },
+      "2023_EUROPE": {
+        "eligible_weekdays": 260,
+        "trainable": 255,
+        "excluded": 5,
+        "trainable_rate": 0.9807692307692307,
+        "up": 136,
+        "down": 119,
+        "flat_excluded": 1
+      },
+      "2023_US": {
+        "eligible_weekdays": 260,
+        "trainable": 224,
+        "excluded": 36,
+        "trainable_rate": 0.8615384615384616,
+        "up": 99,
+        "down": 125,
+        "flat_excluded": 0
+      },
+      "2024_ASIA": {
+        "eligible_weekdays": 262,
+        "trainable": 244,
+        "excluded": 18,
+        "trainable_rate": 0.9312977099236641,
+        "up": 139,
+        "down": 105,
+        "flat_excluded": 1
+      },
+      "2024_EUROPE": {
+        "eligible_weekdays": 262,
+        "trainable": 259,
+        "excluded": 3,
+        "trainable_rate": 0.9885496183206107,
+        "up": 143,
+        "down": 116,
+        "flat_excluded": 0
+      },
+      "2024_US": {
+        "eligible_weekdays": 262,
+        "trainable": 245,
+        "excluded": 17,
+        "trainable_rate": 0.9351145038167938,
+        "up": 130,
+        "down": 115,
+        "flat_excluded": 0
+      },
+      "2025_ASIA": {
+        "eligible_weekdays": 261,
+        "trainable": 256,
+        "excluded": 5,
+        "trainable_rate": 0.9808429118773946,
+        "up": 142,
+        "down": 114,
+        "flat_excluded": 0
+      },
+      "2025_EUROPE": {
+        "eligible_weekdays": 261,
+        "trainable": 255,
+        "excluded": 6,
+        "trainable_rate": 0.9770114942528736,
+        "up": 147,
+        "down": 108,
+        "flat_excluded": 0
+      },
+      "2025_US": {
+        "eligible_weekdays": 261,
+        "trainable": 251,
+        "excluded": 10,
+        "trainable_rate": 0.9616858237547893,
+        "up": 144,
+        "down": 107,
+        "flat_excluded": 0
+      }
+    },
+    "SOBTI_5_ET": {
+      "2023_ASIA_AFTERNOON_LIT": {
+        "eligible_weekdays": 260,
+        "trainable": 255,
+        "excluded": 5,
+        "trainable_rate": 0.9807692307692307,
+        "up": 123,
+        "down": 132,
+        "flat_excluded": 0
+      },
+      "2023_ASIA_MORNING_LIT": {
+        "eligible_weekdays": 260,
+        "trainable": 254,
+        "excluded": 6,
+        "trainable_rate": 0.9769230769230769,
+        "up": 121,
+        "down": 133,
+        "flat_excluded": 0
+      },
+      "2023_EUROPE_LIT": {
+        "eligible_weekdays": 260,
+        "trainable": 256,
+        "excluded": 4,
+        "trainable_rate": 0.9846153846153847,
+        "up": 128,
+        "down": 128,
+        "flat_excluded": 0
+      },
+      "2023_NY_LONDON_LIT": {
+        "eligible_weekdays": 260,
+        "trainable": 256,
+        "excluded": 4,
+        "trainable_rate": 0.9846153846153847,
+        "up": 123,
+        "down": 133,
+        "flat_excluded": 0
+      },
+      "2023_US_LATE_LIT": {
+        "eligible_weekdays": 260,
+        "trainable": 199,
+        "excluded": 61,
+        "trainable_rate": 0.7653846153846153,
+        "up": 119,
+        "down": 80,
+        "flat_excluded": 0
+      },
+      "2024_ASIA_AFTERNOON_LIT": {
+        "eligible_weekdays": 262,
+        "trainable": 259,
+        "excluded": 3,
+        "trainable_rate": 0.9885496183206107,
+        "up": 130,
+        "down": 129,
+        "flat_excluded": 0
+      },
+      "2024_ASIA_MORNING_LIT": {
+        "eligible_weekdays": 262,
+        "trainable": 259,
+        "excluded": 3,
+        "trainable_rate": 0.9885496183206107,
+        "up": 140,
+        "down": 119,
+        "flat_excluded": 0
+      },
+      "2024_EUROPE_LIT": {
+        "eligible_weekdays": 262,
+        "trainable": 259,
+        "excluded": 3,
+        "trainable_rate": 0.9885496183206107,
+        "up": 144,
+        "down": 115,
+        "flat_excluded": 0
+      },
+      "2024_NY_LONDON_LIT": {
+        "eligible_weekdays": 262,
+        "trainable": 258,
+        "excluded": 4,
+        "trainable_rate": 0.9847328244274809,
+        "up": 134,
+        "down": 124,
+        "flat_excluded": 0
+      },
+      "2024_US_LATE_LIT": {
+        "eligible_weekdays": 262,
+        "trainable": 199,
+        "excluded": 63,
+        "trainable_rate": 0.7595419847328244,
+        "up": 122,
+        "down": 77,
+        "flat_excluded": 0
+      },
+      "2025_ASIA_AFTERNOON_LIT": {
+        "eligible_weekdays": 261,
+        "trainable": 257,
+        "excluded": 4,
+        "trainable_rate": 0.9846743295019157,
+        "up": 127,
+        "down": 130,
+        "flat_excluded": 0
+      },
+      "2025_ASIA_MORNING_LIT": {
+        "eligible_weekdays": 261,
+        "trainable": 256,
+        "excluded": 5,
+        "trainable_rate": 0.9808429118773946,
+        "up": 129,
+        "down": 127,
+        "flat_excluded": 0
+      },
+      "2025_EUROPE_LIT": {
+        "eligible_weekdays": 261,
+        "trainable": 255,
+        "excluded": 6,
+        "trainable_rate": 0.9770114942528736,
+        "up": 148,
+        "down": 107,
+        "flat_excluded": 0
+      },
+      "2025_NY_LONDON_LIT": {
+        "eligible_weekdays": 261,
+        "trainable": 255,
+        "excluded": 6,
+        "trainable_rate": 0.9770114942528736,
+        "up": 147,
+        "down": 108,
+        "flat_excluded": 0
+      },
+      "2025_US_LATE_LIT": {
+        "eligible_weekdays": 261,
+        "trainable": 202,
+        "excluded": 59,
+        "trainable_rate": 0.7739463601532567,
+        "up": 126,
+        "down": 76,
+        "flat_excluded": 0
+      }
+    }
+  },
+  "v2_to_v3": {
+    "WGC": {
+      "comparable_trainable": 2244,
+      "direction_changes": 16,
+      "max_abs_return_delta": 0.010194964788414584
+    },
+    "SOBTI": {
+      "comparable_trainable": 3679,
+      "direction_changes": 14,
+      "max_abs_return_delta": 0.003433881376141564
+    }
+  },
+  "hashes": {
+    "wgc": "c7f61c13c89894fa45607e55cc6e3d1dce19ac88473e356d1b5b7ed61d270d0b",
+    "sobti": "2417eede1e47737946e861611bc3aba12da7c7cc406ad491cd812dafeb7d82b3"
+  },
+  "model_gate": "Only trainable==True rows may be used. eligibility_status must be joined and asserted by model code.",
+  "source_regime_flag": "Audit-only metadata; must not be used as predictive feature."
+}
