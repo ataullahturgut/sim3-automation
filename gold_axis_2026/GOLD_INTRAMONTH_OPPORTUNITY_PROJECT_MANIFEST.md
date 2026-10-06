@@ -1099,6 +1099,48 @@ Next checklist item after IRIS:
 - proceed to the next model only if its full required upstream lineage can be rebuilt from raw governed sources;
 - do not use archived H3 expert predictions as substitutes.
 
+### 5E.8E COT publication-time repair gate — 2026-10-06
+
+Authority:
+- `GOLD_COT_PIT_AVAILABILITY_AUTHORITY_2026-10-06.md`
+- `GOLD_COT_PIT_REAUDIT_SUMMARY_2026-10-06.json`
+- `GOLD_COT_PUBLICATION_CALENDAR_PIT_V1.csv`
+- `GOLD_COT_GOLD_PIT_STATE_RAW_REBUILT_2026-10-06.csv`
+- `GOLD_OPAL_OLD_PROVEN_EARLY_COT_ROWS_2026-10-06.csv`
+- `GOLD_V5_SESSION_COT_AVAILABILITY_MAP_2023_2025.csv`
+
+Independent raw CFTC reaudit reproduces the Work audit leakage finding exactly:
+- 2023 proven early-use legacy OPAL rows: **21**
+- 2025 proven early-use legacy OPAL rows: **53**
+- total: **74**
+
+Root cause:
+- legacy OPAL used date-only `report_date + 7 calendar days`;
+- extraordinary CFTC publication interruptions in the 2023 ION incident and 2025 appropriations lapse exceeded that buffer.
+
+Binding replacement:
+- source clock is timezone-aware;
+- normal governed default remains intentionally conservative: `report_date + 7 calendar days at 15:30 America/New_York`;
+- if an official documented delayed publication is later, the official delayed date at 15:30 ET overrides;
+- new joins must enforce `cot_available_at_utc <= feature_cutoff_or_target_start_utc`.
+
+Raw source:
+- CFTC Public Reporting Environment, Gold contract code `088691`;
+- Futures Only dataset `72hh-3qpy`;
+- Futures-and-Options Combined dataset `kh3c-gbw2`;
+- options-only exposure continues to be reconstructed as combined minus futures-only.
+
+Availability result:
+- every V5 `final_trainable` session row in 2023–2025 maps to a governed latest-available COT report;
+- therefore the COT series itself is **available**;
+- the failure was historical availability timing, not absence of COT observations.
+
+Model status:
+- archived OPAL panels/predictions remain **QA-only / contaminated for 74 feature rows**;
+- OPAL session replay remains **BLOCKED** until a fresh session feature panel is rebuilt from raw CFTC + raw XAU with the new availability authority;
+- HELIOS variants consuming OPAL remain **BLOCKED DOWNSTREAM** until fresh OPAL session state exists;
+- legacy OPAL performance must not be promoted as PIT-clean evidence.
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
