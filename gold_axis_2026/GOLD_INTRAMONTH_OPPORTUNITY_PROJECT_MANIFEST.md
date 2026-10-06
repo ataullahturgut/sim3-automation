@@ -1834,6 +1834,64 @@ Stage-1 status:
 - no Silver/Platinum feature is admitted to consensus/router membership at this point.
 
 
+### 5E.8P SI / Platinum 1-minute source validation and 15-minute archive authority — 2026-10-06
+
+Authorities:
+- `GOLD_SI_PL_1M_15M_VALIDATION_SUMMARY_2026-10-06.json`
+- `GOLD_SI_PL_1M_15M_PREFLIGHT_COST_2026-10-06.json`
+- `GOLD_SI_PL_1M_15M_CROSS_RESOLUTION_AUDIT_2026-10-06.csv`
+- `GOLD_SI_PL_15M_COVERAGE_2022_2024.csv`
+- `GOLD_SI_PL_1M_15M_MANUAL_SAMPLES_2026-10-06.csv`
+- raw archive: `GOLD_DATABENTO_SI_PL_OHLCV1M_N0_RAW_2022_2024.csv.gz`
+- derived 15m archive: `GOLD_DATABENTO_SI_PL_OHLCV15M_N0_DERIVED_2022_2024.csv.gz`
+- native 1h validation archive: `GOLD_DATABENTO_SI_PL_NATIVE_OHLCV1H_N0_2022_2024.csv.gz`
+
+Status:
+- **SOURCE VALUE / CLOCK INTEGRITY: PASS**
+- 2022–2024 only for the archived training/development source; no 2025/2026 model outcome was opened.
+- Databento preflight estimated total retrieval cost: **USD 7.222839817405**, below the preregistered USD 8 cap.
+
+Frozen source identity:
+- vendor = **Databento**
+- dataset = **GLBX.MDP3**
+- input symbology = **continuous**
+- Silver = **SI.n.0**
+- Platinum = **PL.n.0**
+- raw schema = **ohlcv-1m**
+- timestamp = **UTC `ts_event` interval-start semantics**
+- 15-minute archive = deterministic UTC 15-minute aggregation from the governed 1-minute source.
+
+Downloaded / derived volume:
+- raw SI+PL 1-minute rows: **1,882,086**
+- derived 15-minute rows: **141,682**
+- native Databento 1-hour validation rows: **35,497**
+
+Binding value-integrity test:
+- the governed 1-minute series was independently aggregated to 1-hour OHLCV;
+- that aggregation was then matched timestamp-by-timestamp against Databento's **native ohlcv-1h** for the same continuous identities;
+- **PL.n.0: 17,749 / 17,749 matched hours have exact O/H/L/C/volume agreement; 0 mismatches; max absolute difference = 0**
+- **SI.n.0: 17,748 / 17,748 matched hours have exact O/H/L/C/volume agreement; 0 mismatches; max absolute difference = 0**
+- no roll-ambiguous validation hour was present in either series.
+
+15-minute coverage:
+- PL.n.0: 23,548 bars in 2022; 23,513 in 2023; 23,732 in 2024.
+- SI.n.0: 23,626 bars in 2022; 23,535 in 2023; 23,728 in 2024.
+- no 15-minute bucket spans more than one underlying instrument identity under the frozen `n.0` mapping.
+
+Important interpretation:
+- **training/live source consistency is now a model contract, not an assumption.**
+- any live/prospective Silver or Platinum feature must use the same Databento dataset, continuous identity, roll convention, timestamp semantics and completed-bar availability rule, unless a separately audited bridge is approved;
+- exact cross-vendor level equality with spot XAG/USD or XPT/USD is **not** a valid integrity requirement because COMEX SI/PL futures and OTC/spot metals are different instruments and may legitimately differ in level/basis;
+- therefore a future implementation must not silently substitute XAG/XPT spot, another continuous-roll convention, Yahoo front-month, or another vendor for SI.n.0 / PL.n.0 and still call it the same model input;
+- if another vendor must be used in production, a separate matched-clock bridge/transport audit is mandatory before deployment.
+
+Data decision:
+- **SI 15m: READY for clock-safe model experimentation**
+- **PL 15m: READY for clock-safe model experimentation**
+- model promotion remains separate; source PASS does not imply predictive value.
+
+
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
