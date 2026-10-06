@@ -141,3 +141,21 @@ The new label must not silently replace the original target. It is a separate ex
 Recover/reproduce the exact canonical 145-row 2026 Jan-Jul D1 universe and the exact 125 4/4 consensus rows, then join those **same rows** to 15-minute XAU/USD and calculate outcomes beginning strictly after 08:00 New York.
 
 No Turkey-session relabelling and no model retuning are authorized during that reconciliation.
+
+
+## 11. Canonical CIG population recovery update
+
+The exact 2026 Jan-Jul daily realization artifact has now been recovered:
+`GOLD_DAILY_H1_V2_2026_GERCEKLESEN_TAHMIN_RECOVERED_2026-10-06.csv`.
+
+This confirms:
+- the CIG historical realization layer is a **date-labelled daily reference series**;
+- it is not a Turkey-session price series;
+- it is not a New York 08:00-to-close price series;
+- it must not be assigned an executable intraday timestamp.
+
+The old snapshot contains 145 rows because 2026-02-27 and 2026-03-02 through 2026-03-06 are absent from that frozen snapshot. This is a data-coverage gap, not a timezone/session filter.
+
+The exact 125 canonical consensus rows reproduce 93/125 = 74.40% daily-label accuracy. Re-scoring those identical rows after 08:00 New York gives 47.20% for 08:15->16:00 and 08:15->20:00, and 50.40% for 17:00->20:00.
+
+Hence the mixed-clock warning in this authority is no longer provisional; it is empirically demonstrated on the exact canonical population.
