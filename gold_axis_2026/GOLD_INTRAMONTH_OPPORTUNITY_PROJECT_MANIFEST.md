@@ -1390,3 +1390,24 @@ Therefore:
 - CIG **74.40%** = accuracy against the pinned Stak daily date-labelled reference direction;
 - no intraday clock may be inferred from that daily label;
 - all execution claims require separately timestamped intraday prices.
+
+
+### 5E.11F CIG source-vintage mismatch — 2026-10-06
+
+Binding source audit:
+- `GOLD_DAILY_REALIZATION_SOURCE_AUDIT_2026-10-06.md`
+
+The recovered 145-row daily `Gerçekleşen` ledger is exactly tied to StakTrakr ref `ed2e549f82ba0d1cd3ca32842b82d3888d301e01`, while the later clean H3/AURORA daily snapshot is frozen from ref `54fdf1c8d39b7b6c7b874d0f30f784296e886044`.
+
+Comparison:
+- 34/145 daily Gold levels differ;
+- 10/145 daily directions differ;
+- on the exact 125 CIG consensus rows, 9 labels differ.
+
+Result impact on the same exact 125 signals:
+- old recovered label: **93/125 = 74.40%**
+- later H3 frozen-source daily direction: **88/125 = 70.40%**.
+
+Therefore **74.40% is no longer allowed to be described as a clean source-consistent H3/CIG validation statistic**. It is a historical mixed-vintage daily-label diagnostic.
+
+A source-consistent re-score requires one frozen Stak ref/data contract to be used consistently for both model/expert replay and realized labels.
