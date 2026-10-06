@@ -394,3 +394,49 @@ CIG-D1 inherits a mixed clock stack:
 - Istanbul time is only a user-facing conversion.
 
 Therefore CIG-D1 is not currently a Turkey-session model and its historical same-day label is not an 08:00-NY-to-close label.
+
+
+---
+
+## 14. Exact canonical post-issue rescore — 2026-10-06
+
+**Authority:** `GOLD_CIG_EXACT_125_CLOCK_RESCORE_RESULT_2026-10-06.md`
+
+The original 145-row Jan-Jul daily realization ledger has now been recovered exactly from the prior project artifact:
+`GOLD_DAILY_H1_V2_2026_GERCEKLESEN_TAHMIN_RECOVERED_2026-10-06.csv`.
+
+Pinned historical expert states reproduce this document's published counts exactly:
+- daily universe: 145
+- SAGE+RuleFlow: 103/145
+- V5: 102/145
+- RIFT: 102/145
+- VEGA: 102/145
+- 4/4 consensus: 125
+- consensus correct: 93
+- consensus accuracy: **74.40%**
+- disagreement: 20
+- SAGE forced correct on disagreement: 10.
+
+The six dates missing from the old frozen realization snapshot are:
+2026-02-27 and 2026-03-02 through 2026-03-06.
+This is a snapshot coverage gap, not a market-hours rule.
+
+The exact same 125 consensus signals were then re-scored strictly after the governed 08:00 New York issue deadline using XAU/USD 15-minute prices and a first executable timestamp of 08:15 New York:
+
+- 08:15->16:00 NY: **59/125 = 47.20%**
+- 08:15->20:00 NY: **59/125 = 47.20%**
+- 17:00->20:00 NY: **63/125 = 50.40%**
+
+UP-only:
+- 08:15->16:00: 34/71 = 47.89%
+- 08:15->20:00: 34/71 = 47.89%
+- 17:00->20:00: 35/71 = 49.30%.
+
+DOWN-only:
+- 08:15->16:00: 25/54 = 46.30%
+- 08:15->20:00: 25/54 = 46.30%
+- 17:00->20:00: 28/54 = 51.85%.
+
+**Binding consequence:** the historical 74.40% remains valid only as daily-label accuracy. CIG-D1 V1 is not established as an 08:00-NY-forward tradable same-day direction model.
+
+Earlier reconstructed 151/131 timing results are superseded for the canonical Jan-Jul CIG interpretation.
