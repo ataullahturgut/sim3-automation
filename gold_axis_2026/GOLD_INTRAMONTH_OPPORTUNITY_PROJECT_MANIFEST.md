@@ -486,6 +486,69 @@ Binding caution:
 
 # 5E. Global Gold Session & Execution Research Authority — 2026-10-06
 
+
+## 5E.0 Data Availability Gate — MUST PRECEDE SESSION MODEL DESIGN
+
+**Binding order correction (2026-10-06):** before timestamp auditing, session modelling, or execution-hour optimisation, the project must first prove that the required historical data actually exist at sufficient frequency and coverage.
+
+### Current probe result
+
+Authoritative artifact:
+\`GOLD_SESSION_DATA_AVAILABILITY_GATE_2026-10-06.json\`
+
+Confirmed with the connected Twelve Data source:
+- XAU/USD **15-minute** historical samples: PASS for **2023, 2024, 2025, 2026**
+- XAU/USD **1-hour** historical samples: PASS for **2023, 2024, 2025, 2026**
+- representative 2025 **EUR/USD, GBP/USD, USD/JPY 15-minute** samples: PASS
+- registered XAU/USD 1-hour research backfill already contains **17,644 rows for 2022-2024**
+- 2025-2026 XAU/USD hourly retrieval has already passed in execution audits
+- 2026 Aug-Sep XAU/USD 15-minute retrieval has already passed in the intraday scan.
+
+Confirmed through project probe + vendor authority:
+- Databento \`GLBX.MDP3\` access/symbology: PASS
+- CME historical futures coverage: available from 2010+, including GC and OHLCV-1m / OHLCV-1h schemas.
+- Existing project cost probe shows historical CME bridge data are economically accessible at small test cost.
+
+Not yet available/governed in the repository:
+- continuous London OTC intraday trade/volume history (LBMA Trade Data is a subscription product; public pages are not a minute-level historical OTC feed)
+- Shanghai Gold Exchange intraday historical series
+- full historical actual-vs-consensus macro surprise database
+- governed Europe/UK/China event-surprise history
+- long-horizon Borsa İstanbul execution-instrument intraday history at 15-minute or finer resolution.
+
+### Gate interpretation
+
+**PASS for a first session-price study:**  
+We already have enough data to test where XAU/USD moves across Asia/Europe/New York clock windows and to add CME/COMEX futures price/volume as a second price-discovery channel.
+
+**PARTIAL for a full institutional microstructure study:**  
+We do not yet have direct continuous London OTC and Shanghai intraday histories, so those venues cannot initially be modelled as fully observed order-flow markets.
+
+**PARTIAL for event-conditioned session models:**  
+US event calendars exist in the project and some actual-consensus observations exist, but complete governed surprise histories are not yet present; Europe/China event-surprise histories are missing.
+
+### Binding rule
+
+No missing series may be silently replaced by a proxy.
+
+The research must proceed in two tiers:
+
+**Tier A — immediately feasible**
+- XAU/USD 15m/1h global path
+- COMEX GC futures price/volume via Databento
+- EUR/USD, GBP/USD, USD/JPY intraday context
+- session and overlap decomposition
+- DST-aware time mapping.
+
+**Tier B — blocked until sourced**
+- direct London OTC flow/liquidity
+- Shanghai venue-specific intraday flow
+- full event-surprise conditioning
+- exact Borsa İstanbul execution reconstruction over long history.
+
+Only after this gate is documented may the source-ready timestamp audit and session-head modelling proceed.
+
+
 **Status:** ACTIVE RESEARCH AUTHORITY / EXECUTION CLOCK NOT YET FROZEN  
 **Purpose:** determine **when** a valid short-horizon UP/DOWN signal becomes actionable, which global gold session carries the relevant price discovery, and whether one global forecast is sufficient or session-specific heads are required.
 
@@ -752,7 +815,7 @@ Academic sources:
 - Iwatsubo, K., Watkins, C., Xu, T. (2018), *Journal of Commodity Markets* 11, 59–71. DOI: 10.1016/j.jcomm.2018.05.001
 - Elder, J., Miao, H., Ramchander, S. (2012), *Journal of Banking & Finance* 36, 51–65. DOI: 10.1016/j.jbankfin.2011.06.007
 
-**Next authorized action from this section:** complete the source-ready timestamp audit and build a session-attribution panel before any further entry-hour optimisation.
+**Next authorized action from this section:** complete the remaining Tier-A data acquisition/normalization matrix first; then perform the source-ready timestamp audit and build the session-attribution panel. No further entry-hour optimisation before those gates pass.
 
 
 # 6. Evaluation Contract
