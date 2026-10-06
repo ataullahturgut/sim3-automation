@@ -1,0 +1,51 @@
+name: Gold Session IRIS15 Crossmetal V1 20261006
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_session_iris15_crossmetal_v1_20261006.py'
+      - '.github/workflows/gold-session-iris15-crossmetal-v1-20261006.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Require Neon key
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_session_iris15_crossmetal_v1_20261006.py
+      - name: Run 15m IRIS cross-metal replay
+        run: python gold_axis_2026/tools/gold_session_iris15_crossmetal_v1_20261006.py
+      - name: Record evidence
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/SESSION_IRIS15_CROSSMETAL_V1_OUT/summary.json gold_axis_2026/GOLD_SESSION_IRIS15_CROSSMETAL_V1_SUMMARY_2026-10-06.json
+          cp gold_axis_2026/SESSION_IRIS15_CROSSMETAL_V1_OUT/result.md gold_axis_2026/GOLD_SESSION_IRIS15_CROSSMETAL_V1_RESULT_2026-10-06.md
+          cp gold_axis_2026/SESSION_IRIS15_CROSSMETAL_V1_OUT/metrics_2023_2024.csv gold_axis_2026/GOLD_SESSION_IRIS15_CROSSMETAL_V1_METRICS_2023_2024.csv
+          cp gold_axis_2026/SESSION_IRIS15_CROSSMETAL_V1_OUT/predictions_2023_2024.csv gold_axis_2026/GOLD_SESSION_IRIS15_CROSSMETAL_V1_PREDICTIONS_2023_2024.csv
+          cp gold_axis_2026/SESSION_IRIS15_CROSSMETAL_V1_OUT/coverage.csv gold_axis_2026/GOLD_SESSION_IRIS15_CROSSMETAL_V1_COVERAGE_2023_2024.csv
+          cp gold_axis_2026/SESSION_IRIS15_CROSSMETAL_V1_OUT/timing_samples.csv gold_axis_2026/GOLD_SESSION_IRIS15_CROSSMETAL_V1_TIMING_SAMPLES_2026-10-06.csv
+          git add gold_axis_2026/GOLD_SESSION_IRIS15_CROSSMETAL_V1_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record 15m IRIS cross-metal replay"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
