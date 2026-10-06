@@ -62,3 +62,16 @@ Binding distinctions:
 - retrospective historical rows do not contain actual issue timestamps.
 
 Do not quote CIG-D1 74.40% as an 08:00-NY-forward trading accuracy. Exact executable accuracy is unresolved until the identical canonical 125-row consensus population is joined to intraday prices.
+
+
+## Binding model clock identity — 2026-10-06
+
+Authority: `GOLD_MODEL_CLOCK_IDENTITY_2026-10-06.md`
+
+Current clock stack:
+- daily Gold target/reference = **UTC calendar-day semantic**;
+- hourly intraday features = **America/New_York**, 16:00 anchor;
+- issue/deadline = **America/New_York**, 08:00;
+- Istanbul time = display/execution conversion only.
+
+The current model is therefore not a Turkey-session model. Do not describe its historical daily target as a New York-session or Istanbul-session return.
