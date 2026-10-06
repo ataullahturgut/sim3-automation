@@ -130,17 +130,17 @@ def verify_targets():
   frames.append(z)
  q=pd.concat(frames,ignore_index=True)
  errs=[]
- for r in q.itertuples(index=False):
-  s=pd.Timestamp(r.start_utc); e=pd.Timestamp(r.end_utc); ep=e-pd.Timedelta(minutes=15)
+ for _, r in q.iterrows():
+  s=pd.Timestamp(r["start_utc"]); e=pd.Timestamp(r["end_utc"]); ep=e-pd.Timedelta(minutes=15)
   ps=op.get(s); pe=cl.get(ep)
   if ps is None or pe is None:
-   errs.append((r.label_date,r.partition,r.window,"RAW_BOUNDARY_MISSING")); continue
+   errs.append((r["label_date"],r["partition"],r["window"],"RAW_BOUNDARY_MISSING")); continue
   ret=pe/ps-1.0
   d="UP" if ret>0 else ("DOWN" if ret<0 else "FLAT")
-  if abs(float(r.start_price)-ps)>1e-9:errs.append((r.label_date,r.partition,r.window,"START_PRICE"))
-  if abs(float(r.end_price)-pe)>1e-9:errs.append((r.label_date,r.partition,r.window,"END_PRICE"))
-  if abs(float(r.return)-ret)>1e-12:errs.append((r.label_date,r.partition,r.window,"RETURN"))
-  if str(r.direction)!=d:errs.append((r.label_date,r.partition,r.window,"DIRECTION"))
+  if abs(float(r["start_price"])-ps)>1e-9:errs.append((r["label_date"],r["partition"],r["window"],"START_PRICE"))
+  if abs(float(r["end_price"])-pe)>1e-9:errs.append((r["label_date"],r["partition"],r["window"],"END_PRICE"))
+  if abs(float(r["return"])-ret)>1e-12:errs.append((r["label_date"],r["partition"],r["window"],"RETURN"))
+  if str(r["direction"])!=d:errs.append((r["label_date"],r["partition"],r["window"],"DIRECTION"))
  if errs: raise RuntimeError(f"V5_TARGET_REPRO_FAIL n={len(errs)} sample={errs[:10]}")
  return q
 
