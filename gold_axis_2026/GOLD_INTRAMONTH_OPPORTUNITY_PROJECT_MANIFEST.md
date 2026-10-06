@@ -1039,6 +1039,66 @@ Historical derived files are allowed only for:
 
 They must never be used merely because rebuilding from raw data is inconvenient.
 
+### 5E.8D Session replay checklist — IRIS checkpoint 1
+
+**Status:** IRIS raw-source checkpoint completed for the correctly runnable hourly-only branch.
+
+Authorities:
+- `GOLD_SESSION_IRIS_HOURLY_RAW_REPLAY_V1_RESULT_2026-10-06.md`
+- `GOLD_SESSION_IRIS_HOURLY_RAW_REPLAY_V1_SUMMARY_2026-10-06.json`
+- `GOLD_SESSION_IRIS_HOURLY_RAW_REPLAY_V1_METRICS_2023_2024.csv`
+
+Raw inputs:
+- Neon hourly series: `XAU_USD_TWELVE_1H_RESEARCH_V1`
+- observed hourly span used: **2022-01-02 23:00 UTC -> 2024-12-31 21:00 UTC**
+- rows: **17,644**
+- target reconstruction source: frozen raw XAU/USD 15-minute file
+- historical IRIS feature/prediction/state artifacts used as model inputs: **NO**
+
+Clock/leakage rule:
+- Twelve hourly timestamp is the bar-open timestamp while the stored observation used by legacy IRIS is the bar close;
+- therefore an hourly row opened at T becomes feature-available only at **T+1h**;
+- replay uses the latest completed hourly close with availability <= session start;
+- V5 targets were independently reproduced from raw 15-minute XAU before fitting: PASS.
+
+Scope:
+- only the original IRIS **HOURLY_ONLY_ALL Logistic-L2 candidate** was runnable without violating the new raw-source rule;
+- 2023-2024 only;
+- 2025 remained unopened;
+- minimum 180 matured same-window observations were required before scoring, therefore 2023 scored samples begin late in the year.
+
+Pooled 2023-2024 scored results:
+- WGC Asia: accuracy **47.78%**, balanced **43.85%**
+- WGC Europe: accuracy **47.20%**, balanced **45.08%**
+- WGC US: accuracy **49.30%**, balanced **49.61%**
+- Sobti Asia Morning: accuracy **47.65%**, balanced **47.88%**
+- Sobti Asia Afternoon: accuracy **45.64%**, balanced **45.86%**
+- Sobti Europe: accuracy **50.77%**, balanced **50.36%**
+- Sobti NY/London: accuracy **52.66%**, balanced **52.61%**
+- Sobti Late-US: accuracy **57.01%**, but balanced **48.04%**, UP recall **84.96%**, DOWN recall **11.11%**; this is class-direction bias rather than robust balanced skill.
+
+Binding interpretation:
+- **IRIS hourly-only branch: NO ROBUST SESSION EDGE / diagnostic only.**
+- The apparently higher Late-US raw accuracy is not promoted because balanced accuracy and DOWN recall fail.
+- **Full original IRIS A1+PATH branch: BLOCKED**, not failed. Its structural `base_logit` came from the NOVA/A1 lineage. Reusing archived H3 NOVA/IRIS predictions is prohibited by Section 5E.8C.
+- To rebuild full IRIS against session targets, a separately governed structural training/warm-up history prior to the 2023 V5 target interval is required, or a preregistered alternative structural-training design must be created without looking at 2025/2026 outcomes.
+- No 2025 transport decision is made for IRIS hourly-only because the development branch did not establish robust balanced skill.
+
+Checklist:
+- [x] raw hourly source used
+- [x] raw 15m target independently reconstructed
+- [x] hourly bar-close availability/leakage corrected
+- [x] 2023-2024 only
+- [x] WGC-3 and Sobti-5 scored
+- [x] accuracy / balanced accuracy / UP recall / DOWN recall / Brier reported
+- [x] no archived derived IRIS artifact used as input
+- [ ] full A1+PATH IRIS session rebuild — BLOCKED pending valid structural training history
+- [ ] 2025 transport — NOT OPENED for this non-passing hourly-only branch
+
+Next checklist item after IRIS:
+- proceed to the next model only if its full required upstream lineage can be rebuilt from raw governed sources;
+- do not use archived H3 expert predictions as substitutes.
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
