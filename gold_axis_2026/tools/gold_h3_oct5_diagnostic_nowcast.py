@@ -8,7 +8,7 @@ PDT_ORIG=pd.to_datetime
 
 ROOT=Path(__file__).resolve().parents[2]
 AX=ROOT/"gold_axis_2026"
-OUT=AX/"OCT5_DIAGNOSTIC_NOWCAST_OUT"
+OUT=AX/"OCT6_DIAGNOSTIC_NOWCAST_OUT"
 OUT.mkdir(exist_ok=True)
 
 # Required before importing the frozen prospective harness.
@@ -22,14 +22,14 @@ import gold_h3_vega_v1 as vega
 IRIS_FETCH_ORIG=iris.fetch_extension
 
 START=pd.Timestamp("2026-09-30")
-END=pd.Timestamp("2026-10-02")
-ORIGIN=pd.Timestamp("2026-10-02")
+END=pd.Timestamp("2026-10-05")
+ORIGIN=pd.Timestamp("2026-10-05")
 SYMS={"gold":"GC=F","silver":"SI=F","platinum":"PL=F","palladium":"PA=F"}
 
 def yahoo_chart(symbol):
     import time
     p1=int(pd.Timestamp("2026-09-28",tz="UTC").timestamp())
-    p2=int(pd.Timestamp("2026-10-04",tz="UTC").timestamp())
+    p2=int(pd.Timestamp("2026-10-07",tz="UTC").timestamp())
     url=f"https://query1.finance.yahoo.com/v8/finance/chart/{requests.utils.quote(symbol,safe='')}?period1={p1}&period2={p2}&interval=1d&events=history&includeAdjustedClose=true"
     r=requests.get(url,headers={"User-Agent":"Mozilla/5.0"},timeout=60)
     r.raise_for_status()
@@ -54,7 +54,7 @@ def build_alt_prices():
     if len(anchor)!=1: raise RuntimeError("FROZEN_20260929_ANCHOR_MISSING")
     anchor=anchor.iloc[0]
     fut={k:yahoo_chart(v) for k,v in SYMS.items()}
-    need=[pd.Timestamp("2026-09-29"),pd.Timestamp("2026-09-30"),pd.Timestamp("2026-10-01"),pd.Timestamp("2026-10-02")]
+    need=[pd.Timestamp("2026-09-29"),pd.Timestamp("2026-09-30"),pd.Timestamp("2026-10-01"),pd.Timestamp("2026-10-06"),pd.Timestamp("2026-10-05")]
     for k,m in fut.items():
         miss=[str(d.date()) for d in need if d not in m]
         if miss: raise RuntimeError(f"FUTURES_{k}_MISSING {miss}")
@@ -76,7 +76,7 @@ def build_alt_prices():
 
 def extend_hourly_successor():
     x,n=IRIS_FETCH_ORIG()
-    vals=iris.api_request(pd.Timestamp("2026-09-30 00:00:00"),pd.Timestamp("2026-10-03 23:59:59"))
+    vals=iris.api_request(pd.Timestamp("2026-09-30 00:00:00"),pd.Timestamp("2026-10-05 23:59:59"))
     rows=[]
     for row in vals:
         dt=row.get("datetime"); close=row.get("close")
@@ -94,7 +94,7 @@ def extend_hourly_successor():
 
 def diag_fetch_gvz():
     import io
-    url="https://fred.stlouisfed.org/graph/fredgraph.csv?id=GVZCLS&cosd=2021-01-01&coed=2026-10-02"
+    url="https://fred.stlouisfed.org/graph/fredgraph.csv?id=GVZCLS&cosd=2021-01-01&coed=2026-10-05"
     r=requests.get(url,timeout=60); r.raise_for_status()
     df=pd.read_csv(io.BytesIO(r.content)).iloc[:,:2].copy()
     df.columns=["date","gvz"]
@@ -107,7 +107,7 @@ def run():
     alt=build_alt_prices()
     alt.to_csv(OUT/"ALT_DAILY_PRICES.csv",index=False)
 
-    # Configure the CLEAN frozen model, but permit 2026-10-02 solely for this
+    # Configure the CLEAN frozen model, but permit 2026-10-06 solely for this
     # diagnostic nowcast. This is explicitly NOT prospective evidence.
     clean.OUT=OUT
     clean.configure()
@@ -162,9 +162,9 @@ def run():
 
     out={
       "status":"DIAGNOSTIC_ONLY_NOT_PROSPECTIVE_EVIDENCE",
-      "feature_cutoff_date":"2026-10-02",
-      "planned_issue_date":"2026-10-05",
-      "alt_source":"TwelveData daily spot for 2026-09-30..2026-10-02",
+      "feature_cutoff_date":"2026-10-05",
+      "planned_issue_date":"2026-10-06",
+      "alt_source":"Yahoo futures-return splice from frozen spot anchor through 2026-10-05; TwelveData hourly path",
       "alt_prices":alt.assign(date=alt.date.dt.strftime("%Y-%m-%d")).to_dict("records"),
       "aurora":{
         "p_up":float(ar.p_aurora),
@@ -194,7 +194,7 @@ def run():
         "dce_exception":bool(vr.dce_exception),
       }
     }
-    (OUT/"OCT5_DIAGNOSTIC_NOWCAST.json").write_text(json.dumps(out,indent=2,default=str)+"\n")
+    (OUT/"OCT6_DIAGNOSTIC_NOWCAST.json").write_text(json.dumps(out,indent=2,default=str)+"\n")
     print(json.dumps(out,indent=2,default=str))
 
 if __name__=="__main__":
