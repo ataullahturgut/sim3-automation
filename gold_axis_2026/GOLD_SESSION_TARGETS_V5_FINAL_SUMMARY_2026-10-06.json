@@ -2,8 +2,8 @@
   "status": "FINAL_PREMODEL_SESSION_TARGET_GATE_V5",
   "raw_sha256": "8f1c00b34a95b7cef6a44c3c0bef59035fa9dde9cf6d241ba0b87fd146235308",
   "input_hashes": {
-    "wgc_v4": "71e8e1e77175688c59c9c90aaf74be259295569683c5abc7e4b6424990e9da8e",
-    "sobti_v4": "3745f4253f4c0635da5b047b91b639d542159d3fd124dfab60c4a8db63a4b89f"
+    "wgc_v4": "fd1f48d2cf191c8ea9979e7bce7499edb19ee7828036b5d24635c6176903b5de",
+    "sobti_v4": "4ff1948694d0bc16e4264310484a2ee50b8d956888b7c5e2a905fb04c66b0b0b"
   },
   "rules": {
     "price_semantics": "start exact 15m OPEN; end CLOSE of exact final 15m bar",
@@ -219,9 +219,9 @@
     }
   },
   "hashes": {
-    "wgc_final": "fb41ab5bb7f30b15ce21dd01d870eb9f737050ac78810d146b6c2948a1e1d5da",
-    "sobti_final": "d605e3a48028b47216ad63164ac3e0836b338f84f4223ede5ece4937bc342cd3",
-    "excluded": "3117baa0f396357480b32005433212a725a8a089bf67cb00eda53229259b60e3"
+    "wgc_final": "178f45e708b9faf415fb9e6d20bd15dda01983f0b3e0d269f3fa243a671e1e26",
+    "sobti_final": "cef50b30f895bb420196e1efd4ac01493c3939474199d098ca57428375a4cf06",
+    "excluded": "dffcb10dd5f039fc3e9dc219fff6367f97f511b9eef07a3abe9ddc3b378b51bc"
   },
   "model_gate": "MODEL CODE MUST ASSERT final_trainable==True. No V2/V3/V4 price_trainable-only row may enter primary modelling.",
   "source_regime_guardrail": "source_regime and vendor-coverage regime fields are audit metadata only and are forbidden as predictive features."
