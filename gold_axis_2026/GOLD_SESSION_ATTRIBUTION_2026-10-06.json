@@ -1,0 +1,335 @@
+{
+  "status": "RETROSPECTIVE_SESSION_ATTRIBUTION_NOT_PROSPECTIVE",
+  "issue_deadline_ny": "08:00",
+  "session_definition": "fixed New York clock buckets; approximate economic sessions",
+  "summary": {
+    "2025_H2_UP": {
+      "n": 72,
+      "OVERNIGHT_TO_EUROPE": {
+        "compound": 0.048697763277891326,
+        "mean": 0.0006703414986293525,
+        "median": -6.664880317036603e-05,
+        "positive_share": 0.5
+      },
+      "EUROPE_MORNING_PRE_ISSUE": {
+        "compound": 0.04233623563241884,
+        "mean": 0.0005929722385870439,
+        "median": 0.00068916893214932,
+        "positive_share": 0.5972222222222222
+      },
+      "US_MORNING_POST_ISSUE": {
+        "compound": 0.018813796596613752,
+        "mean": 0.0002836766004275623,
+        "median": 0.0015768169765489892,
+        "positive_share": 0.5416666666666666
+      },
+      "US_AFTERNOON": {
+        "compound": -0.029725651323758262,
+        "mean": -0.00041061366979344244,
+        "median": -0.0001506025342825068,
+        "positive_share": 0.4722222222222222
+      },
+      "LATE_US": {
+        "compound": 0.08340280687919277,
+        "mean": 0.0011174902080696976,
+        "median": 0.0005659640594199988,
+        "positive_share": 0.6527777777777778
+      },
+      "PRE_ISSUE_TOTAL": {
+        "compound": 0.09309567889121628,
+        "mean": 0.0012634992682198087,
+        "median": 0.0010316498433392551,
+        "positive_share": 0.5833333333333334
+      },
+      "POST_ISSUE_TOTAL": {
+        "compound": 0.07097497726545376,
+        "mean": 0.0010015230220006078,
+        "median": 0.0009006803227926685,
+        "positive_share": 0.5555555555555556
+      },
+      "FULL_20_TO_20": {
+        "compound": 0.17067811984948267,
+        "mean": 0.0022818215087868753,
+        "median": 0.0033380085664839187,
+        "positive_share": 0.625
+      }
+    },
+    "2025_H2_DOWN": {
+      "n": 39,
+      "OVERNIGHT_TO_EUROPE": {
+        "compound": -0.005595956220758702,
+        "mean": -0.00013321246000848794,
+        "median": 0.0006123255711809605,
+        "positive_share": 0.5384615384615384
+      },
+      "EUROPE_MORNING_PRE_ISSUE": {
+        "compound": -0.019881673896736674,
+        "mean": -0.0004991735994465176,
+        "median": -0.0008723343740203449,
+        "positive_share": 0.48717948717948717
+      },
+      "US_MORNING_POST_ISSUE": {
+        "compound": 0.02345700907040582,
+        "mean": 0.0006241033244157846,
+        "median": 0.0007070646287157256,
+        "positive_share": 0.5641025641025641
+      },
+      "US_AFTERNOON": {
+        "compound": 0.03432014139463968,
+        "mean": 0.0008736343401156926,
+        "median": -1.0005052551553817e-05,
+        "positive_share": 0.48717948717948717
+      },
+      "LATE_US": {
+        "compound": -0.004228692360369268,
+        "mean": -0.0001064773508059051,
+        "median": 0.0002249685044093397,
+        "positive_share": 0.6153846153846154
+      },
+      "PRE_ISSUE_TOTAL": {
+        "compound": -0.025366373140772946,
+        "mean": -0.0006371768115062582,
+        "median": 0.0009818271622785701,
+        "positive_share": 0.5384615384615384
+      },
+      "POST_ISSUE_TOTAL": {
+        "compound": 0.054105779878122595,
+        "mean": 0.0013935209368305078,
+        "median": 0.0008197971053882647,
+        "positive_share": 0.5897435897435898
+      },
+      "FULL_20_TO_20": {
+        "compound": 0.027366939335887963,
+        "mean": 0.0007529092987897034,
+        "median": 0.0009225830974239901,
+        "positive_share": 0.5384615384615384
+      }
+    },
+    "2026_JAN_JUL_UP": {
+      "n": 73,
+      "OVERNIGHT_TO_EUROPE": {
+        "compound": 0.035522537730590775,
+        "mean": 0.0005069764936494858,
+        "median": 2.052027537291501e-05,
+        "positive_share": 0.5068493150684932
+      },
+      "EUROPE_MORNING_PRE_ISSUE": {
+        "compound": 0.08102505982384178,
+        "mean": 0.001079918327025594,
+        "median": 0.000497063948183607,
+        "positive_share": 0.5616438356164384
+      },
+      "US_MORNING_POST_ISSUE": {
+        "compound": 0.02358836739993575,
+        "mean": 0.0003631383343348995,
+        "median": 0.00011648027304422826,
+        "positive_share": 0.5068493150684932
+      },
+      "US_AFTERNOON": {
+        "compound": -0.03402746913534549,
+        "mean": -0.00044854676016138764,
+        "median": -8.531242640730241e-05,
+        "positive_share": 0.4931506849315068
+      },
+      "LATE_US": {
+        "compound": 0.038368692554772155,
+        "mean": 0.0005246384440257207,
+        "median": -8.508762713299589e-07,
+        "positive_share": 0.4931506849315068
+      },
+      "PRE_ISSUE_TOTAL": {
+        "compound": 0.11942581329914859,
+        "mean": 0.001583508834002993,
+        "median": 0.0010098553267239296,
+        "positive_share": 0.547945205479452
+      },
+      "POST_ISSUE_TOTAL": {
+        "compound": 0.02669560696583506,
+        "mean": 0.00042383573647438556,
+        "median": 2.9658113419150922e-05,
+        "positive_share": 0.5068493150684932
+      },
+      "FULL_20_TO_20": {
+        "compound": 0.1493095648383902,
+        "mean": 0.002015437755869293,
+        "median": 1.7158679615603134e-05,
+        "positive_share": 0.5068493150684932
+      }
+    },
+    "2026_JAN_JUL_DOWN": {
+      "n": 58,
+      "OVERNIGHT_TO_EUROPE": {
+        "compound": -0.12391740414638552,
+        "mean": -0.0021910145036711727,
+        "median": -0.00033975524430485127,
+        "positive_share": 0.46551724137931033
+      },
+      "EUROPE_MORNING_PRE_ISSUE": {
+        "compound": -0.01848544662521623,
+        "mean": -0.00024627166641562673,
+        "median": 6.232183448640072e-06,
+        "positive_share": 0.5
+      },
+      "US_MORNING_POST_ISSUE": {
+        "compound": -0.024977211772984065,
+        "mean": -0.0003843390017864788,
+        "median": -0.0005815735572099467,
+        "positive_share": 0.4827586206896552
+      },
+      "US_AFTERNOON": {
+        "compound": -0.04267589186276233,
+        "mean": -0.0007143601041688671,
+        "median": -0.0007528766166150502,
+        "positive_share": 0.43103448275862066
+      },
+      "LATE_US": {
+        "compound": 0.08288479421778328,
+        "mean": 0.00138962526554789,
+        "median": -7.396064621245646e-06,
+        "positive_share": 0.5
+      },
+      "PRE_ISSUE_TOTAL": {
+        "compound": -0.1401121822113186,
+        "mean": -0.0024916336920689755,
+        "median": 0.0005682530237383077,
+        "positive_share": 0.5344827586206896
+      },
+      "POST_ISSUE_TOTAL": {
+        "compound": 0.010778550754409588,
+        "mean": 0.0002864961429059553,
+        "median": -6.683675462038074e-05,
+        "positive_share": 0.4827586206896552
+      },
+      "FULL_20_TO_20": {
+        "compound": -0.1308438377241843,
+        "mean": -0.002124675539007694,
+        "median": -0.0007194306074292389,
+        "positive_share": 0.5
+      }
+    },
+    "2026_AUG_SEP_UP": {
+      "n": 18,
+      "OVERNIGHT_TO_EUROPE": {
+        "compound": 0.024139161659857855,
+        "mean": 0.00135796849661927,
+        "median": -0.0001643335490711384,
+        "positive_share": 0.5
+      },
+      "EUROPE_MORNING_PRE_ISSUE": {
+        "compound": -0.03086480108566847,
+        "mean": -0.0017219395033850615,
+        "median": -0.0005336623456066447,
+        "positive_share": 0.3333333333333333
+      },
+      "US_MORNING_POST_ISSUE": {
+        "compound": 0.0076304164250675655,
+        "mean": 0.000441141858077322,
+        "median": -0.0011323746218013242,
+        "positive_share": 0.4444444444444444
+      },
+      "US_AFTERNOON": {
+        "compound": -0.0418724630964451,
+        "mean": -0.0023503597631546807,
+        "median": -0.0011296115001639961,
+        "positive_share": 0.4444444444444444
+      },
+      "LATE_US": {
+        "compound": 0.017626507040670925,
+        "mean": 0.0009730981755719514,
+        "median": 0.0006933681196710229,
+        "positive_share": 0.6111111111111112
+      },
+      "PRE_ISSUE_TOTAL": {
+        "compound": -0.007470689848818046,
+        "mean": -0.0003531716880989275,
+        "median": -0.003185360971833584,
+        "positive_share": 0.3888888888888889
+      },
+      "POST_ISSUE_TOTAL": {
+        "compound": -0.017544243382941693,
+        "mean": -0.0009255277764528095,
+        "median": -0.003057619899079156,
+        "positive_share": 0.4444444444444444
+      },
+      "FULL_20_TO_20": {
+        "compound": -0.024883865630812796,
+        "mean": -0.0012397656874521175,
+        "median": -0.0038458578832739065,
+        "positive_share": 0.3888888888888889
+      }
+    },
+    "2026_AUG_SEP_DOWN": {
+      "n": 8,
+      "OVERNIGHT_TO_EUROPE": {
+        "compound": 0.004472736536107247,
+        "mean": 0.0005731381007357678,
+        "median": -0.002085331716035921,
+        "positive_share": 0.375
+      },
+      "EUROPE_MORNING_PRE_ISSUE": {
+        "compound": 0.007152109322908773,
+        "mean": 0.0008969379398442168,
+        "median": 0.0019708426026854298,
+        "positive_share": 0.625
+      },
+      "US_MORNING_POST_ISSUE": {
+        "compound": 0.034905594368456416,
+        "mean": 0.004354979198893313,
+        "median": 0.0007577356970973614,
+        "positive_share": 0.5
+      },
+      "US_AFTERNOON": {
+        "compound": 0.013366652771855447,
+        "mean": 0.001667711978431352,
+        "median": 0.001970019177979787,
+        "positive_share": 0.625
+      },
+      "LATE_US": {
+        "compound": -0.00179811232425664,
+        "mean": -0.00022174589647286358,
+        "median": -0.001049905985706867,
+        "positive_share": 0.25
+      },
+      "PRE_ISSUE_TOTAL": {
+        "compound": 0.01165683535969464,
+        "mean": 0.00146872062312213,
+        "median": -5.8269841291369584e-05,
+        "positive_share": 0.5
+      },
+      "POST_ISSUE_TOTAL": {
+        "compound": 0.04685306790627819,
+        "mean": 0.005804316410220181,
+        "median": 0.0007137852962499913,
+        "positive_share": 0.625
+      },
+      "FULL_20_TO_20": {
+        "compound": 0.059056061764652945,
+        "mean": 0.00730173112513792,
+        "median": 0.0036690989594949097,
+        "positive_share": 0.5
+      }
+    },
+    "2025_H2_UP_log_attribution": {
+      "pre_issue_log_return_sum": 0.08901374323255026,
+      "post_issue_log_return_sum": 0.06856942729486887,
+      "full_log_return_sum": 0.15758317052741783,
+      "pre_share_of_full": 0.5648683354613862,
+      "post_share_of_full": 0.4351316645386222
+    },
+    "2026_JAN_JUL_UP_log_attribution": {
+      "pre_issue_log_return_sum": 0.11281588715131086,
+      "post_issue_log_return_sum": 0.02634549652316867,
+      "full_log_return_sum": 0.13916138367447847,
+      "pre_share_of_full": 0.8106838561996904,
+      "post_share_of_full": 0.18931614380031714
+    },
+    "2026_AUG_SEP_UP_log_attribution": {
+      "pre_issue_log_return_sum": -0.007498735218371239,
+      "post_issue_log_return_sum": -0.01769996768568568,
+      "full_log_return_sum": -0.025198702904056396,
+      "pre_share_of_full": 0.29758417514276575,
+      "post_share_of_full": 0.702415824857255
+    }
+  },
+  "interpretation_guardrail": "Pre-08:00 NY return is not executable using a signal first available at 08:00 NY; it is attribution only."
+}
