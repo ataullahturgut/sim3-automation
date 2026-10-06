@@ -1,0 +1,39 @@
+name: Gold Raw CIG Timing Scan 20261006
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_raw_cig_timing_scan_20261006.py'
+      - '.github/workflows/gold-raw-cig-timing-scan-20261006.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.31,<3'
+      - run: python gold_axis_2026/tools/gold_raw_cig_timing_scan_20261006.py
+      - name: Record
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/RAW_CIG_TIMING_SCAN_OUT/summary.json gold_axis_2026/GOLD_RAW_CIG_TIMING_SCAN_2026-10-06.json
+          cp gold_axis_2026/RAW_CIG_TIMING_SCAN_OUT/scan.csv gold_axis_2026/GOLD_RAW_CIG_TIMING_SCAN_ALL_2026-10-06.csv
+          cp gold_axis_2026/RAW_CIG_TIMING_SCAN_OUT/dev_top.csv gold_axis_2026/GOLD_RAW_CIG_TIMING_SCAN_TOP_2026-10-06.csv
+          git add gold_axis_2026/GOLD_RAW_CIG_TIMING_SCAN_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record raw CIG causal timing scan"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
