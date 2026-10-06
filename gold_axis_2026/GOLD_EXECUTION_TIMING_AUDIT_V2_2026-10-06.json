@@ -1,0 +1,90 @@
+{
+  "status": "RETROSPECTIVE_EXECUTION_TIMING_AUDIT_V2_NOT_PROSPECTIVE_EVIDENCE",
+  "critical_corrections": [
+    "CPG F_reversal is joined from complete TRES Stage1 predictions for every issue date; missing SAGE no longer bypasses CPG.",
+    "Earliest complete signal availability is based on full UTC-day daily-average semantics: next UTC midnight after feature_cutoff_date, converted to New York time.",
+    "Feature-cutoff date, not previous 24h spot-calendar date, anchors pre-issue execution."
+  ],
+  "cpg_threshold": 0.164484,
+  "period_signal_counts": {
+    "2025_H2": 50,
+    "2026_AUG_SEP": 10,
+    "2026_JAN_JUL": 48
+  },
+  "augsep_corrected_signal_dates": [
+    "2026-08-05",
+    "2026-08-06",
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-17",
+    "2026-08-18",
+    "2026-08-20",
+    "2026-09-03",
+    "2026-09-04",
+    "2026-09-18"
+  ],
+  "earliest_availability_d2d_1h_by_period": {
+    "2025_H2": {
+      "n": 50,
+      "compound": 0.14750055302689313,
+      "hit": 0.62
+    },
+    "2026_AUG_SEP": {
+      "n": 10,
+      "compound": 0.06292280994149779,
+      "hit": 0.6
+    },
+    "2026_JAN_JUL": {
+      "n": 48,
+      "compound": 0.1070126311395847,
+      "hit": 0.5
+    }
+  },
+  "dev_selected_on_2025H2_only": {
+    "entry_delay_h": 2.0,
+    "exit_hour_ny": 20.0,
+    "n": 108.0,
+    "all_compound": 0.3452959675345575,
+    "2025_H2_n": 50.0,
+    "2025_H2_compound": 0.17165234216234082,
+    "2025_H2_hit": 0.62,
+    "2026_JAN_JUL_n": 48.0,
+    "2026_JAN_JUL_compound": 0.09495015602084567,
+    "2026_JAN_JUL_hit": 0.5,
+    "2026_AUG_SEP_n": 10.0,
+    "2026_AUG_SEP_compound": 0.048635909413838,
+    "2026_AUG_SEP_hit": 0.6
+  },
+  "robust_positive_all_periods": {
+    "entry_delay_h": 0.0,
+    "exit_hour_ny": 20.0,
+    "n": 108.0,
+    "all_compound": 0.32682676606401584,
+    "2025_H2_n": 50.0,
+    "2025_H2_compound": 0.14896936112615844,
+    "2025_H2_hit": 0.64,
+    "2026_JAN_JUL_n": 48.0,
+    "2026_JAN_JUL_compound": 0.08643575315386953,
+    "2026_JAN_JUL_hit": 0.5208333333333334,
+    "2026_AUG_SEP_n": 10.0,
+    "2026_AUG_SEP_compound": 0.06292280994149779,
+    "2026_AUG_SEP_hit": 0.6,
+    "worst_period": 0.06292280994149779
+  },
+  "augsep_15m_natural_d2d": {
+    "n": 10,
+    "compound": 0.06292280994149779,
+    "hit": 0.6
+  },
+  "augsep_15m_raw_best_fixed_exit": {
+    "delay_min": 0,
+    "exit_ny": "20:30",
+    "n": 10,
+    "compound": 0.06609534118758909,
+    "hit": 0.6,
+    "mean": 0.006595875207832369,
+    "min_trade": -0.018701836664979266,
+    "max_trade": 0.05018174308237522
+  },
+  "warning": "Timing scans are retrospective. The 2025H2-selected window is the cleaner transport test; the Aug-Sep raw best is discovery-only."
+}
