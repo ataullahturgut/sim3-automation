@@ -117,7 +117,7 @@ def main():
         elif r.coverage=="PASS":
             classif="TRAINABLE_SESSION_DIRECTION"
         else:
-            elif n==0:
+            if n==0:
                 classif="NOT_ELIGIBLE_OR_FULL_WINDOW_CLOSED"
             else:
                 # Determine whether data started late / ended early / internal gap.
