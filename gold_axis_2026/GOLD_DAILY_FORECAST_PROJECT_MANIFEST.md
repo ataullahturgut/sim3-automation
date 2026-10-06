@@ -75,3 +75,21 @@ Current clock stack:
 - Istanbul time = display/execution conversion only.
 
 The current model is therefore not a Turkey-session model. Do not describe its historical daily target as a New York-session or Istanbul-session return.
+
+
+## Exact canonical CIG clock rescore — 2026-10-06
+
+Authority:
+`GOLD_CIG_EXACT_125_CLOCK_RESCORE_RESULT_2026-10-06.md`
+
+The exact old 145-row Jan-Jul daily realization snapshot has been recovered and reproduces the original CIG result exactly:
+- 125 consensus rows
+- 93 correct
+- **74.40% historical daily-label accuracy**.
+
+Using those **same 125 rows** after the governed 08:00 New York issue deadline:
+- 08:15->16:00 NY: **59/125 = 47.20%**
+- 08:15->20:00 NY: **59/125 = 47.20%**
+- 17:00->20:00 NY: **63/125 = 50.40%**.
+
+Therefore 74.40% must never be quoted as post-signal trading accuracy. Earlier 151/131 timing reconstructions are superseded for the canonical Jan-Jul CIG interpretation.
