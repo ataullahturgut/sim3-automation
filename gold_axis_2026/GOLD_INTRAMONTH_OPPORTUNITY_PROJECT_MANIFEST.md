@@ -1554,20 +1554,20 @@ Binding interpretation:
 - WGC US improves vs A0 but remains well below a useful stand-alone direction threshold.
 - A1 is retained only as a structural input candidate for STRUCTURAL_IRIS / SAGE A1-based heads, not as a promoted session champion.
 
-Stage-1 status after S1.2:
+Stage-1 status:
 - [x] S1.1 NOVA A0 / CORE3
 - [x] S1.2 NOVA A1 / ARCR
-- [x] S1.3 IRIS HOURLY_ONLY_ALL / PATH_GLOBAL — completed earlier; no robust stand-alone session edge
-- [ ] S1.4 IRIS A1_PLUS_PATH / STRUCTURAL_IRIS — **NEXT**
-- [ ] S1.5 SAGE SESSION_ONLY
+- [x] S1.3 IRIS HOURLY_ONLY_ALL / PATH_GLOBAL — no robust stand-alone session edge
+- [x] S1.4 IRIS A1_PLUS_PATH / STRUCTURAL_IRIS — fresh replay complete with governed 2022 warm-up; no global promotion
+- [ ] S1.5 SAGE SESSION_ONLY — **NEXT**
 - [ ] S1.6 SAGE PATH_SESSION
 - [ ] S1.7 SAGE A1_SESSION
 - [ ] S1.8 SAGE A1_PATH_SESSION
 
-S1.4 must regenerate both inputs in one chronology:
+S1.4 binding inputs were regenerated in one chronology:
 - fresh A1 probability from raw daily metals;
-- fresh hourly PATH features from raw XAU 1h;
-- no archived IRIS/A1 prediction file may be consumed.
+- fresh hourly PATH features from raw XAU;
+- no archived IRIS/A1 prediction file consumed.
 
 ### 5E.8M Cross-metal intraday PATH diagnostic — 2026-10-06
 
@@ -2130,8 +2130,122 @@ Stage-1 implication:
 - variable and lag selection is now integrated into the development architecture where evidence supports it;
 - no global single feature set is imposed across all sessions;
 - the above blueprint is a **development freeze**, not a final operational promotion;
-- canonical S1.4 A1_PLUS_PATH remains open and must still be completed;
+- canonical S1.4 A1_PLUS_PATH has subsequently been completed under §5E.8T;
 - 2025 remains reserved for frozen transport after the full Stage-1 representation contract is complete.
+
+
+
+### 5E.8T S1.4 STRUCTURAL_IRIS closure with governed 2022 warm-up — 2026-10-07
+
+Authorities:
+- `GOLD_SESSION_2022_WARMUP_V5_SUMMARY_2026-10-07.json`
+- `GOLD_SESSION_2022_WARMUP_V5_RESULT_2026-10-07.md`
+- `GOLD_SESSION_STRUCTURAL_IRIS_S14_V2_WARMUP2022_SUMMARY_2026-10-07.json`
+- `GOLD_SESSION_STRUCTURAL_IRIS_S14_V2_WARMUP2022_RESULT_2026-10-07.md`
+- `GOLD_SESSION_STRUCTURAL_IRIS_S14_V2_WARMUP2022_PAIRED_2026-10-07.csv`
+- `GOLD_SESSION_STRUCTURAL_IRIS_S14_V2_WARMUP2022_COVERAGE_2026-10-07.csv`
+
+Status:
+- **S1.4 COMPLETE**
+- **NO GLOBAL STRUCTURAL_IRIS PROMOTION**
+- 2025/2026 remain unopened.
+- S1.5 SAGE SESSION_ONLY is the next Stage-1 dependency.
+
+#### 2022 warm-up authority
+
+The original 2023–2024-only S1.4 replay suffered a second-stage sample collapse because A1 itself requires 252 matured same-window observations before a structural probability exists. A governed 2022 warm-up layer was therefore added **only to mature/train the models**, never as an evaluation period.
+
+Source/value gate:
+- Twelve XAU/USD 15m was fetched from 2021-12-30 through 2023-01-03 using the same symbol, interval, UTC timezone and bar-open semantics as the governed later archive;
+- the overlap with the existing governed archive contains **176 matched 15m bars**;
+- Open / High / Low / Close mismatches on that overlap = **0 / 0 / 0 / 0**, maximum absolute difference = **0**;
+- 2022 target construction uses the same exact start-OPEN / final-15m-CLOSE rule, date-aware New York clocks, venue/calendar gate and internal-path gate as the later V5 authority;
+- Databento GC actual bar presence is reused for the US venue-state gate;
+- 2022 final-trainable warm-up rows = **1,912**;
+- 2022 is **WARMUP_ONLY_NOT_EVALUATION**.
+
+2022 final-trainable rows by candidate head:
+- Sobti Asia Afternoon **239**
+- Sobti Asia Morning **238**
+- Sobti Europe **249**
+- Sobti NY/London **248**
+- Sobti Late-US **197**
+- WGC Asia **255**
+- WGC Europe **249**
+- WGC US **237**
+
+#### Fresh S1.4 identity
+
+Every S1.4 input is regenerated inside the replay:
+- A1 = fresh raw daily Gold/Silver/Platinum CORE3 global + recent-252 mixture;
+- A1 structural input = clipped A1 logit and is **mandatory** in every STRUCTURAL_IRIS fit;
+- canonical PATH = same-source-derived **1h XAU** full IRIS PATH;
+- resolution challenger = governed **15m XAU** full IRIS PATH;
+- blueprint challenger = A1 + 15m XAU using the previously frozen per-window selection mode, with any variable selection recomputed only from current training history;
+- no archived A1 / IRIS prediction artifact is read as a model feature.
+
+Chronology:
+- 2022 = warm-up / training only;
+- 2023–2024 = scored development;
+- downstream structural minimum history = **80 matured A1-feature rows**;
+- block size = 5;
+- 2025 / 2026 = unopened.
+
+Scored coverage after warm-up:
+- Sobti Asia Afternoon: **N=190** (2023 50; 2024 140)
+- Sobti Asia Morning: **N=183** (47; 136)
+- Sobti Europe: **N=213** (65; 148)
+- Sobti NY/London: **N=215** (65; 150)
+- Sobti Late-US: **N=89** (0; 89)
+- WGC Asia: **N=102** (11; 91)
+- WGC Europe: **N=210** (62; 148)
+- WGC US: **N=177** (35; 142)
+
+#### Combined 2023–2024 matched results
+
+| Window | A1 BA / Brier | A1+1h BA / Brier | A1+15m BA / Brier | A1+15m blueprint BA / Brier | Binding reading |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 46.25% / 0.2595 | **51.02%** / 0.2908 | 48.54% / 0.2951 | 50.09% / 0.2719 | path lift is not year-stable |
+| Sobti Asia Morning | 45.36% / **0.2578** | 49.91% / 0.2861 | **53.57%** / 0.2853 | **53.57%** / 0.2853 | strongest repeated directional 15m hypothesis |
+| Sobti Europe | **50.07% / 0.2604** | 48.17% / 0.2842 | 41.42% / 0.3051 | 41.42% / 0.3051 | PATH rejected |
+| Sobti NY/London | 48.54% / **0.2550** | **53.26%** / 0.2796 | 45.84% / 0.2896 | 45.84% / 0.2896 | 1h lift driven by 2024; not stable |
+| Sobti Late-US | **54.22% / 0.2497** | 50.05% / 0.3042 | 48.50% / 0.3008 | 48.50% / 0.3008 | PATH hurts; no 2023 scored rows |
+| WGC Asia | 38.93% / **0.2625** | 47.36% / 0.2622 | **53.49%** / 0.2747 | **53.49%** / 0.2747 | apparent lift fails DOWN-recall floor |
+| WGC Europe | 52.22% / **0.2451** | 52.28% / 0.2681 | 47.81% / 0.2752 | **54.62%** / 0.2504 | blueprint is one-sided; fails recall floor |
+| WGC US | 43.82% / **0.2566** | **50.28%** / 0.2811 | 49.15% / 0.2917 | 49.15% / 0.2917 | 1h direction lift, calibration worse |
+
+Year-stability interpretation:
+- **Sobti Asia Morning** is the only clear directional mechanism where the 15m Structural-IRIS improvement has the same sign in both scored years: 2023 BA **59.63% vs A1 50.83%** and 2024 BA **51.49% vs 43.49%**; however 2023 has only N=47 and combined Brier is worse, so this remains a challenger rather than a promotion.
+- **Sobti Asia Afternoon:** combined PATH gain is largely 2024; 2023 PATH is worse than A1.
+- **Sobti NY/London:** canonical 1h is strong in 2024 (**57.37% BA**) but materially worse than A1 in 2023; no stable promotion.
+- **Sobti Europe:** STRUCTURAL_IRIS degrades direction and produces weak DOWN recall; reject for this window.
+- **Sobti Late-US:** PATH degrades A1 and only 2024 is scored; reject.
+- **WGC Asia:** 15m directional gain exists but combined DOWN recall is only **27.27%**, below the 30% safety floor; reject promotion.
+- **WGC Europe:** canonical 1h is essentially neutral versus A1; the 15m blueprint raises BA but DOWN recall is only **22.47%**; reject promotion.
+- **WGC US:** 1h raises BA by about **+6.47 pp** combined and passes the combined 30% recall floor narrowly, but Brier deteriorates and the 2023 scored slice is only N=35; retain as a challenger, not a promotion.
+
+Binding S1.4 verdict:
+- S1.4 is **methodologically complete**.
+- There is **no single STRUCTURAL_IRIS representation that earns global session promotion** across the candidate heads.
+- A1+PATH usefulness is **window-dependent**.
+- The two principal hypotheses retained for later frozen transport are:
+  1. Sobti Asia Morning → A1 + 15m XAU full PATH;
+  2. WGC US → A1 + 1h XAU full PATH.
+- These are not operational champions and do not authorize opening 2025 by themselves.
+- No SI15 / PL15 block is promoted by S1.4.
+
+Updated Stage-1 status:
+- [x] S1.1 NOVA A0 / CORE3
+- [x] S1.2 NOVA A1 / ARCR
+- [x] S1.3 IRIS HOURLY_ONLY_ALL / PATH_GLOBAL
+- [x] S1.4 IRIS A1_PLUS_PATH / STRUCTURAL_IRIS
+- [ ] S1.5 SAGE SESSION_ONLY — **NEXT**
+- [ ] S1.6 SAGE PATH_SESSION
+- [ ] S1.7 SAGE A1_SESSION
+- [ ] S1.8 SAGE A1_PATH_SESSION
+
+Transport gate:
+- **2025 remains CLOSED** until S1.5–S1.8 are completed and the full Stage-1 representation contract is frozen.
 
 
 
