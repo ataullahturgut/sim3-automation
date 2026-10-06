@@ -68,12 +68,13 @@ def main():
     labs=labs[labs.coverage=="PASS"].copy()
     labs["start_utc"]=pd.to_datetime(labs.start_utc,utc=True)
     labs["end_utc"]=pd.to_datetime(labs.end_utc,utc=True)
+    labs=labs.rename(columns={"return":"spot_return"})
     groups,costs,total=fetch()
     mm={r:maps(q) for r,q in groups.items()}
 
     rows=[]
     for z in labs.itertuples(index=False):
-        dirs=[]; row={"label_date":z.label_date,"year":int(z.year),"window":z.window,"spot_direction":z.direction,"spot_return":float(z.return)}
+        dirs=[]; row={"label_date":z.label_date,"year":int(z.year),"window":z.window,"spot_direction":z.direction,"spot_return":float(z.spot_return)}
         for roll in ROLLS:
             mo,mc=mm[roll]
             ps,ms=price_at(mo,mc,z.start_utc,"START")
