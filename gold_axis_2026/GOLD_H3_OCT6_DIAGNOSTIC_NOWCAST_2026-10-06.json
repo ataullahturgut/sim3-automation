@@ -1,0 +1,71 @@
+{
+  "status": "DIAGNOSTIC_ONLY_NOT_PROSPECTIVE_EVIDENCE",
+  "feature_cutoff_date": "2026-10-05",
+  "planned_issue_date": "2026-10-06",
+  "alt_source": "Yahoo futures-return splice from frozen spot anchor through 2026-10-05; TwelveData hourly path",
+  "alt_prices": [
+    {
+      "date": "2026-09-30",
+      "gold": 4158.352603929006,
+      "silver": 60.367444751402054,
+      "platinum": 1720.9533348910902,
+      "palladium": 1218.4272149621067,
+      "first_seen_stak_ref": "FUTURES_RETURN_SPLICED_DIAGNOSTIC_ONLY",
+      "first_seen_at_utc": "2026-10-06T05:51:35.931916+00:00"
+    },
+    {
+      "date": "2026-10-01",
+      "gold": 4173.846590419234,
+      "silver": 60.99725475849975,
+      "platinum": 1724.1883501544205,
+      "palladium": 1185.365206760152,
+      "first_seen_stak_ref": "FUTURES_RETURN_SPLICED_DIAGNOSTIC_ONLY",
+      "first_seen_at_utc": "2026-10-06T05:51:35.931952+00:00"
+    },
+    {
+      "date": "2026-10-02",
+      "gold": 4134.117425110625,
+      "silver": 60.245903881046424,
+      "platinum": 1701.6439441753364,
+      "palladium": 1177.556001995021,
+      "first_seen_stak_ref": "FUTURES_RETURN_SPLICED_DIAGNOSTIC_ONLY",
+      "first_seen_at_utc": "2026-10-06T05:51:35.931961+00:00"
+    },
+    {
+      "date": "2026-10-05",
+      "gold": 4128.654664880691,
+      "silver": 61.141901384025594,
+      "platinum": 1725.6037156100979,
+      "palladium": 1183.7424312554463,
+      "first_seen_stak_ref": "FUTURES_RETURN_SPLICED_DIAGNOSTIC_ONLY",
+      "first_seen_at_utc": "2026-10-06T05:51:35.931968+00:00"
+    }
+  ],
+  "aurora": {
+    "p_up": 0.4397207833909975,
+    "direction": "DOWN",
+    "active_expert": "PATH_GLOBAL",
+    "p_structural": 0.4466420662561101,
+    "p_path_global": 0.4397207833909975,
+    "h_ret_12": -0.0062715189647466,
+    "h_ret_24": 0.0006960350123161,
+    "h_ret_48": 0.0007012650692388
+  },
+  "v5": {
+    "p_up": 0.4397207833909975,
+    "direction": "DOWN",
+    "aurora_direction": "DOWN",
+    "changed_from_aurora": false,
+    "rift_override": false,
+    "rift_direction": "DOWN",
+    "vega_override": false,
+    "vega_direction": "DOWN",
+    "candidate_reversal": false,
+    "opal_override": false,
+    "p_opal_reversal": 0.597100738382477,
+    "gt_flip_share": 0.04596193698875369,
+    "v4_route": false,
+    "rge_active": false,
+    "dce_exception": false
+  }
+}
