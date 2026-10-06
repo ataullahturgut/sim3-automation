@@ -1,0 +1,51 @@
+name: Gold Session IRIS Resolution Matched V2 DerivedXAU 20261006
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_session_iris_resolution_matched_v2_derivedxau_20261006.py'
+      - '.github/workflows/gold-session-iris-resolution-matched-v2-derivedxau-20261006.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Require Neon key
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_session_iris_resolution_matched_v2_derivedxau_20261006.py
+      - name: Run same-source matched 15m vs 1h test
+        run: python gold_axis_2026/tools/gold_session_iris_resolution_matched_v2_derivedxau_20261006.py
+      - name: Record evidence
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_OUT/summary.json gold_axis_2026/GOLD_SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_SUMMARY_2026-10-06.json
+          cp gold_axis_2026/SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_OUT/result.md gold_axis_2026/GOLD_SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_RESULT_2026-10-06.md
+          cp gold_axis_2026/SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_OUT/metrics.csv gold_axis_2026/GOLD_SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_METRICS_2026-10-06.csv
+          cp gold_axis_2026/SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_OUT/paired_resolution_comparison.csv gold_axis_2026/GOLD_SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_PAIRED_2026-10-06.csv
+          cp gold_axis_2026/SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_OUT/coverage.csv gold_axis_2026/GOLD_SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_COVERAGE_2026-10-06.csv
+          cp gold_axis_2026/SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_OUT/predictions.csv gold_axis_2026/GOLD_SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_PREDICTIONS_2026-10-06.csv
+          git add gold_axis_2026/GOLD_SESSION_IRIS_RESOLUTION_MATCHED_V2_DERIVEDXAU_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record same-source matched 15m versus 1h IRIS test"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
