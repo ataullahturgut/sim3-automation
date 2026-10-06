@@ -1,0 +1,228 @@
+{
+  "status": "FINAL_PREMODEL_SESSION_TARGET_GATE_V5",
+  "raw_sha256": "8f1c00b34a95b7cef6a44c3c0bef59035fa9dde9cf6d241ba0b87fd146235308",
+  "input_hashes": {
+    "wgc_v4": "71e8e1e77175688c59c9c90aaf74be259295569683c5abc7e4b6424990e9da8e",
+    "sobti_v4": "3745f4253f4c0635da5b047b91b639d542159d3fd124dfab60c4a8db63a4b89f"
+  },
+  "rules": {
+    "price_semantics": "start exact 15m OPEN; end CLOSE of exact final 15m bar",
+    "venue_gate": "V4 core_trainable must be true",
+    "internal_path": "all 15m slots required",
+    "sobti_us_late_exception": "only the four 17:00,17:15,17:30,17:45 America/New_York maintenance slots may be absent",
+    "friday_us_late": "remains NOT_ELIGIBLE from V3/V4",
+    "imputation": "NONE"
+  },
+  "rows_total": 6264,
+  "duplicates": 0,
+  "final_trainable_rows": 5721,
+  "final_excluded_rows": 543,
+  "new_path_gap_exclusions_from_v4_core": 36,
+  "invalid_final_rows": 0,
+  "final_rows_missing_direction": 0,
+  "coverage": {
+    "WGC_2026_NY3": {
+      "2023_ASIA": {
+        "rows": 260,
+        "v4_core_trainable": 255,
+        "v5_final_trainable": 252,
+        "path_gap_excluded_from_v4_core": 3,
+        "up_final": 138,
+        "down_final": 114
+      },
+      "2023_EUROPE": {
+        "rows": 260,
+        "v4_core_trainable": 249,
+        "v5_final_trainable": 248,
+        "path_gap_excluded_from_v4_core": 1,
+        "up_final": 132,
+        "down_final": 116
+      },
+      "2023_US": {
+        "rows": 260,
+        "v4_core_trainable": 224,
+        "v5_final_trainable": 221,
+        "path_gap_excluded_from_v4_core": 3,
+        "up_final": 97,
+        "down_final": 124
+      },
+      "2024_ASIA": {
+        "rows": 262,
+        "v4_core_trainable": 244,
+        "v5_final_trainable": 244,
+        "path_gap_excluded_from_v4_core": 0,
+        "up_final": 139,
+        "down_final": 105
+      },
+      "2024_EUROPE": {
+        "rows": 262,
+        "v4_core_trainable": 254,
+        "v5_final_trainable": 254,
+        "path_gap_excluded_from_v4_core": 0,
+        "up_final": 139,
+        "down_final": 115
+      },
+      "2024_US": {
+        "rows": 262,
+        "v4_core_trainable": 245,
+        "v5_final_trainable": 245,
+        "path_gap_excluded_from_v4_core": 0,
+        "up_final": 130,
+        "down_final": 115
+      },
+      "2025_ASIA": {
+        "rows": 261,
+        "v4_core_trainable": 256,
+        "v5_final_trainable": 253,
+        "path_gap_excluded_from_v4_core": 3,
+        "up_final": 142,
+        "down_final": 111
+      },
+      "2025_EUROPE": {
+        "rows": 261,
+        "v4_core_trainable": 249,
+        "v5_final_trainable": 247,
+        "path_gap_excluded_from_v4_core": 2,
+        "up_final": 142,
+        "down_final": 105
+      },
+      "2025_US": {
+        "rows": 261,
+        "v4_core_trainable": 245,
+        "v5_final_trainable": 239,
+        "path_gap_excluded_from_v4_core": 6,
+        "up_final": 135,
+        "down_final": 104
+      }
+    },
+    "SOBTI_5_ET": {
+      "2023_ASIA_AFTERNOON_LIT": {
+        "rows": 260,
+        "v4_core_trainable": 238,
+        "v5_final_trainable": 237,
+        "path_gap_excluded_from_v4_core": 1,
+        "up_final": 116,
+        "down_final": 121
+      },
+      "2023_ASIA_MORNING_LIT": {
+        "rows": 260,
+        "v4_core_trainable": 237,
+        "v5_final_trainable": 237,
+        "path_gap_excluded_from_v4_core": 0,
+        "up_final": 115,
+        "down_final": 122
+      },
+      "2023_EUROPE_LIT": {
+        "rows": 260,
+        "v4_core_trainable": 250,
+        "v5_final_trainable": 249,
+        "path_gap_excluded_from_v4_core": 1,
+        "up_final": 124,
+        "down_final": 125
+      },
+      "2023_NY_LONDON_LIT": {
+        "rows": 260,
+        "v4_core_trainable": 250,
+        "v5_final_trainable": 247,
+        "path_gap_excluded_from_v4_core": 3,
+        "up_final": 119,
+        "down_final": 128
+      },
+      "2023_US_LATE_LIT": {
+        "rows": 260,
+        "v4_core_trainable": 199,
+        "v5_final_trainable": 196,
+        "path_gap_excluded_from_v4_core": 3,
+        "up_final": 117,
+        "down_final": 79
+      },
+      "2024_ASIA_AFTERNOON_LIT": {
+        "rows": 262,
+        "v4_core_trainable": 241,
+        "v5_final_trainable": 241,
+        "path_gap_excluded_from_v4_core": 0,
+        "up_final": 121,
+        "down_final": 120
+      },
+      "2024_ASIA_MORNING_LIT": {
+        "rows": 262,
+        "v4_core_trainable": 241,
+        "v5_final_trainable": 241,
+        "path_gap_excluded_from_v4_core": 0,
+        "up_final": 135,
+        "down_final": 106
+      },
+      "2024_EUROPE_LIT": {
+        "rows": 262,
+        "v4_core_trainable": 254,
+        "v5_final_trainable": 254,
+        "path_gap_excluded_from_v4_core": 0,
+        "up_final": 141,
+        "down_final": 113
+      },
+      "2024_NY_LONDON_LIT": {
+        "rows": 262,
+        "v4_core_trainable": 253,
+        "v5_final_trainable": 252,
+        "path_gap_excluded_from_v4_core": 1,
+        "up_final": 130,
+        "down_final": 122
+      },
+      "2024_US_LATE_LIT": {
+        "rows": 262,
+        "v4_core_trainable": 199,
+        "v5_final_trainable": 198,
+        "path_gap_excluded_from_v4_core": 1,
+        "up_final": 122,
+        "down_final": 76
+      },
+      "2025_ASIA_AFTERNOON_LIT": {
+        "rows": 261,
+        "v4_core_trainable": 240,
+        "v5_final_trainable": 240,
+        "path_gap_excluded_from_v4_core": 0,
+        "up_final": 117,
+        "down_final": 123
+      },
+      "2025_ASIA_MORNING_LIT": {
+        "rows": 261,
+        "v4_core_trainable": 239,
+        "v5_final_trainable": 239,
+        "path_gap_excluded_from_v4_core": 0,
+        "up_final": 121,
+        "down_final": 118
+      },
+      "2025_EUROPE_LIT": {
+        "rows": 261,
+        "v4_core_trainable": 249,
+        "v5_final_trainable": 247,
+        "path_gap_excluded_from_v4_core": 2,
+        "up_final": 143,
+        "down_final": 104
+      },
+      "2025_NY_LONDON_LIT": {
+        "rows": 261,
+        "v4_core_trainable": 247,
+        "v5_final_trainable": 245,
+        "path_gap_excluded_from_v4_core": 2,
+        "up_final": 138,
+        "down_final": 107
+      },
+      "2025_US_LATE_LIT": {
+        "rows": 261,
+        "v4_core_trainable": 199,
+        "v5_final_trainable": 195,
+        "path_gap_excluded_from_v4_core": 4,
+        "up_final": 124,
+        "down_final": 71
+      }
+    }
+  },
+  "hashes": {
+    "wgc_final": "fb41ab5bb7f30b15ce21dd01d870eb9f737050ac78810d146b6c2948a1e1d5da",
+    "sobti_final": "d605e3a48028b47216ad63164ac3e0836b338f84f4223ede5ece4937bc342cd3",
+    "excluded": "3117baa0f396357480b32005433212a725a8a089bf67cb00eda53229259b60e3"
+  },
+  "model_gate": "MODEL CODE MUST ASSERT final_trainable==True. No V2/V3/V4 price_trainable-only row may enter primary modelling.",
+  "source_regime_guardrail": "source_regime and vendor-coverage regime fields are audit metadata only and are forbidden as predictive features."
+}
