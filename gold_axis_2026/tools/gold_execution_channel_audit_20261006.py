@@ -207,61 +207,72 @@ def main():
                     "ret":(p1/p0-1) if np.isfinite(p0) and np.isfinite(p1) else np.nan})
     d2d_df=pd.DataFrame(d2d)
 
-    # GLDTR Yahoo daily + hourly.
-    gd,gdm=yahoo_chart("GLDTR.IS","1d","2026-08-01","2026-09-28")
-    gh,ghm=yahoo_chart("GLDTR.IS","1h","2026-08-01","2026-09-28")
-    gd["date"]=gd["ts"].dt.strftime("%Y-%m-%d")
-    gh["date"]=gh["ts"].dt.strftime("%Y-%m-%d")
-    gh["hm"]=gh["ts"].dt.strftime("%H:%M")
+    # GLDTR Yahoo daily + hourly. Yahoo does not always expose BIST ETF
+    # history. Treat that source as optional so the XAU execution audit is
+    # still recorded rather than losing the whole experiment.
+    gldtr_error = None
+    try:
+        gd,gdm=yahoo_chart("GLDTR.IS","1d","2026-08-01","2026-09-28")
+        gh,ghm=yahoo_chart("GLDTR.IS","1h","2026-08-01","2026-09-28")
+        if gd.empty or gh.empty or "ts" not in gd.columns or "ts" not in gh.columns:
+            raise RuntimeError(f"YAHOO_GLDTR_EMPTY daily_n={len(gd)} hourly_n={len(gh)}")
+        gd["date"]=gd["ts"].dt.strftime("%Y-%m-%d")
+        gh["date"]=gh["ts"].dt.strftime("%Y-%m-%d")
+        gh["hm"]=gh["ts"].dt.strftime("%H:%M")
 
-    gl_rows=[]
-    for d in panel.loc[panel.cpg_up,"date"]:
-        dz=gd[gd.date==d]
-        hz=gh[gh.date==d].sort_values("ts")
-        if dz.empty:
-            gl_rows.append({"date":d})
-            continue
-        dr=dz.iloc[-1]
-        # Entry at 15:00 Istanbul: use the OPEN of the hourly bar beginning closest to 15:00.
-        target=pd.Timestamp(f"{d} 15:00",tz=IST)
-        hh=hz.copy()
-        if len(hh):
-            hh["delta"]=(hh["ts"]-target).abs()
-            ent=hh.sort_values(["delta","ts"]).iloc[0]
-            # Last regular-session bar in Yahoo feed. Keep <=18:30 local.
-            closecand=hz[hz["ts"].dt.hour <= 18]
-            ex=closecand.iloc[-1] if len(closecand) else hz.iloc[-1]
-            epx=float(ent["open"]); xpx=float(ex["close"])
-            ets=str(ent["ts"]); xts=str(ex["ts"])
-        else:
-            epx=xpx=np.nan; ets=xts=None
-        gl_rows.append({
-            "date":d,
-            "daily_open":float(dr["open"]),"daily_close":float(dr["close"]),
-            "ret_daily_open_close":float(dr["close"])/float(dr["open"])-1,
-            "entry_15":epx,"exit_last":xpx,"entry_ts":ets,"exit_ts":xts,
-            "ret_15_close":xpx/epx-1 if np.isfinite(epx) and np.isfinite(xpx) else np.nan
-        })
-    gldf=pd.DataFrame(gl_rows)
+        gl_rows=[]
+        for d in panel.loc[panel.cpg_up,"date"]:
+            dz=gd[gd.date==d]
+            hz=gh[gh.date==d].sort_values("ts")
+            if dz.empty:
+                gl_rows.append({"date":d})
+                continue
+            dr=dz.iloc[-1]
+            target=pd.Timestamp(f"{d} 15:00",tz=IST)
+            hh=hz.copy()
+            if len(hh):
+                hh["delta"]=(hh["ts"]-target).abs()
+                ent=hh.sort_values(["delta","ts"]).iloc[0]
+                closecand=hz[hz["ts"].dt.hour <= 18]
+                ex=closecand.iloc[-1] if len(closecand) else hz.iloc[-1]
+                epx=float(ent["open"]); xpx=float(ex["close"])
+                ets=str(ent["ts"]); xts=str(ex["ts"])
+            else:
+                epx=xpx=np.nan; ets=xts=None
+            gl_rows.append({
+                "date":d,
+                "daily_open":float(dr["open"]),"daily_close":float(dr["close"]),
+                "ret_daily_open_close":float(dr["close"])/float(dr["open"])-1,
+                "entry_15":epx,"exit_last":xpx,"entry_ts":ets,"exit_ts":xts,
+                "ret_15_close":xpx/epx-1 if np.isfinite(epx) and np.isfinite(xpx) else np.nan
+            })
+        gldf=pd.DataFrame(gl_rows)
 
-    # GLDTR decision-to-decision at 15:00 Istanbul.
-    gd2d=[]
-    def gl_15_open(d):
-        hz=gh[gh.date==d].sort_values("ts")
-        if hz.empty: return np.nan,None
-        target=pd.Timestamp(f"{d} 15:00",tz=IST)
-        zz=hz.copy(); zz["delta"]=(zz["ts"]-target).abs()
-        r=zz.sort_values(["delta","ts"]).iloc[0]
-        if r["delta"]>pd.Timedelta(minutes=70): return np.nan,None
-        return float(r["open"]),str(r["ts"])
-    for i,d in enumerate(all_dates[:-1]):
-        if not bool(panel.iloc[i]["cpg_up"]):
-            continue
-        nd=all_dates[i+1]
-        p0,t0=gl_15_open(d); p1,t1=gl_15_open(nd)
-        gd2d.append({"date":d,"next_date":nd,"p0":p0,"p1":p1,"ts0":t0,"ts1":t1,
-                     "ret":(p1/p0-1) if np.isfinite(p0) and np.isfinite(p1) else np.nan})
-    gd2d_df=pd.DataFrame(gd2d)
+        gd2d=[]
+        def gl_15_open(d):
+            hz=gh[gh.date==d].sort_values("ts")
+            if hz.empty: return np.nan,None
+            target=pd.Timestamp(f"{d} 15:00",tz=IST)
+            zz=hz.copy(); zz["delta"]=(zz["ts"]-target).abs()
+            r=zz.sort_values(["delta","ts"]).iloc[0]
+            if r["delta"]>pd.Timedelta(minutes=70): return np.nan,None
+            return float(r["open"]),str(r["ts"])
+        for i,d in enumerate(all_dates[:-1]):
+            if not bool(panel.iloc[i]["cpg_up"]):
+                continue
+            nd=all_dates[i+1]
+            p0,t0=gl_15_open(d); p1,t1=gl_15_open(nd)
+            gd2d.append({"date":d,"next_date":nd,"p0":p0,"p1":p1,"ts0":t0,"ts1":t1,
+                         "ret":(p1/p0-1) if np.isfinite(p0) and np.isfinite(p1) else np.nan})
+        gd2d_df=pd.DataFrame(gd2d)
+    except Exception as e:
+        gldtr_error = str(e)
+        gd=pd.DataFrame(columns=["ts","date","open","close"])
+        gh=pd.DataFrame(columns=["ts","date","hm","open","close"])
+        gdm={"timezone":None}
+        ghm={"timezone":None}
+        gldf=pd.DataFrame(columns=["date","ret_daily_open_close","ret_15_close"])
+        gd2d_df=pd.DataFrame(columns=["date","next_date","ret"])
 
     summary={
         "status":"RETROSPECTIVE_EXECUTION_AUDIT_NOT_PROSPECTIVE_EVIDENCE",
@@ -287,8 +298,9 @@ def main():
         "source_meta":{
             "xau":xmeta,
             "gldtr_daily":{"timezone":gdm["timezone"],"n":int(len(gd))},
-            "gldtr_hourly":{"timezone":ghm["timezone"],"n":int(len(gh)),
+            "gldtr_hourly":{"timezone":ghm.get("timezone"),"n":int(len(gh)),
                             "sample_times":gh[["date","hm"]].drop_duplicates().head(40).to_dict("records")},
+            "gldtr_error":gldtr_error,
         },
         "interpretation_notes":[
             "The 12.3% benchmark uses previous close -> current close on days selected by a signal issued the current day; it is not executable if issuance occurs at 08:00 New York.",
