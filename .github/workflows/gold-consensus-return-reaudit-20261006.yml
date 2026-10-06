@@ -1,0 +1,41 @@
+name: Gold Consensus Return Reaudit 20261006
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_consensus_return_reaudit_20261006.py'
+      - '.github/workflows/gold-consensus-return-reaudit-20261006.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.31,<3'
+      - run: python gold_axis_2026/tools/gold_consensus_return_reaudit_20261006.py
+      - name: Record evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/CONSENSUS_RETURN_REAUDIT_OUT/summary.json gold_axis_2026/GOLD_CONSENSUS_RETURN_REAUDIT_2026-10-06.json
+          cp gold_axis_2026/CONSENSUS_RETURN_REAUDIT_OUT/all_d2d.csv gold_axis_2026/GOLD_CONSENSUS_RETURN_REAUDIT_D2D_2026-10-06.csv
+          git add gold_axis_2026/GOLD_CONSENSUS_RETURN_REAUDIT_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record raw CIG versus CPG return re-audit"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
