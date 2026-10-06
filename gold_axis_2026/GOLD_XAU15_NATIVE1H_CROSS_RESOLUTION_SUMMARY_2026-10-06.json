@@ -1,0 +1,27 @@
+{
+  "status": "XAU15_NATIVE1H_CROSS_RESOLUTION_AUDIT_COMPLETE",
+  "source": "Twelve Data XAU/USD research series at two resolutions",
+  "scope": "2023-2024 only",
+  "matched_complete_hours": 11706,
+  "exact_matches": 11699,
+  "exact_match_rate": 0.9994020160601401,
+  "mismatch_n": 7,
+  "max_abs_diff": 4.239990000000034,
+  "median_abs_diff": 0.0,
+  "p95_abs_diff": 0.0,
+  "p99_abs_diff": 0.0,
+  "mean_abs_diff": 0.0008431565009396818,
+  "tolerance_counts": {
+    "within_1e-08": 11699,
+    "within_1e-06": 11699,
+    "within_0.0001": 11699,
+    "within_0.001": 11699,
+    "within_0.01": 11699,
+    "within_0.1": 11699
+  },
+  "interpretation_rule": {
+    "exact_equality": "preferred but not assumed across independently requested vendor resolutions",
+    "model_resolution_claim": "if material close discrepancies exist, 15m-vs-1h performance cannot be attributed purely to sampling resolution without a same-source-derived 1h control",
+    "next_if_mismatch": "derive 1h XAU deterministically from the governed 15m XAU archive and rerun the matched resolution test"
+  }
+}
