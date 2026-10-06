@@ -1,0 +1,20 @@
+{
+  "status": "RETROSPECTIVE_RAW_CIG_TIMING_SCAN_NOT_PROSPECTIVE",
+  "selection": "2025_H2_ONLY",
+  "best_2025H2": {
+    "delay_h": 3.0,
+    "exit_hour": 20.0,
+    "n": 163.0,
+    "all_compound": 0.4560510301261811,
+    "2025_H2_n": 72.0,
+    "2025_H2_compound": 0.2144962053189643,
+    "2025_H2_hit": 0.6388888888888888,
+    "2026_JAN_JUL_n": 73.0,
+    "2026_JAN_JUL_compound": 0.2601887483125249,
+    "2026_JAN_JUL_hit": 0.5342465753424658,
+    "2026_AUG_SEP_n": 18.0,
+    "2026_AUG_SEP_compound": -0.048640112708868366,
+    "2026_AUG_SEP_hit": 0.4444444444444444
+  },
+  "warning": "Chosen on 2025H2; 2026 columns are transport diagnostics, not selection."
+}
