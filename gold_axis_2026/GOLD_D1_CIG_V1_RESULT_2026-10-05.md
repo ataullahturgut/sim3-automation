@@ -466,3 +466,19 @@ Using those identical 125 consensus rows and XAU/USD 15-minute prices beginning 
 Therefore 74.40% is confirmed as **historical daily-reference label accuracy**, not post-08:00 executable direction accuracy.
 
 Any prior canonical-CIG interpretation that treated 74.40% as tradable same-day accuracy after issuance is superseded.
+
+
+## 15. Daily realized-value source correction — 2026-10-06
+
+Authority:
+- `GOLD_DAILY_REALIZATION_SOURCE_AUDIT_2026-10-06.md`
+
+The numeric historical daily values underlying the canonical 2026 Jan-Jul D1 label were recovered from the old H1 ledger and matched **145/145** to pinned StakTrakr Gold daily history at commit `ed2e549f82ba0d1cd3ca32842b82d3888d301e01`.
+
+Thus the canonical daily label is:
+
+`Stak daily reference(today) > Stak daily reference(previous retained date)` -> UP, else DOWN.
+
+The stored noon timestamp is synthetic/date-labelled and must not be treated as an executable 12:00 price. The exact intraday fixing clock of the historical daily reference is not established here.
+
+This supersedes any wording that implied the canonical CIG label was a conventional market close or a proven UTC full-day average.
