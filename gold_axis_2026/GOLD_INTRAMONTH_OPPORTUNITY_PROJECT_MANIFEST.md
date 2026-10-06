@@ -984,9 +984,11 @@ The investment problem therefore requires a **new post-issuance target identity*
 
 ## 5E.12 Fifteen-Minute CIG Execution Timing Transport — 2026-10-06
 
-**Population warning:** this subsection uses the reconstructed raw execution panel, not the unrecovered exact canonical 125-row Jan-Jul CIG ledger. Its timing results are therefore execution diagnostics, not an exact re-score of the 74.40% canonical CIG sample.
+**SUPERSESSION NOTICE:** the exact canonical 125-row Jan-Jul CIG ledger has now been recovered in Section 5E.11C. Therefore this subsection's 151/131 reconstructed-population timing results are **legacy diagnostics only** and are superseded for canonical 2026 Jan-Jul CIG interpretation.
 
-**Status:** RETROSPECTIVE DEVELOPMENT/TRANSPORT DIAGNOSTIC — NOT PROSPECTIVE  
+**Population warning:** this subsection uses the reconstructed raw execution panel rather than the exact canonical 125-row Jan-Jul CIG ledger. Do not cite its 2026 Jan-Jul timing statistics as canonical CIG evidence.
+
+**Status:** SUPERSEDED RECONSTRUCTED-POPULATION DIAGNOSTIC — NOT PROSPECTIVE  
 **Signal:** raw CIG-D1 4/4 consensus only  
 **Execution clock:** no price before 08:00 America/New_York is permitted in executable timing tests.
 
@@ -1085,12 +1087,13 @@ Approximate mapping:
 
 All production reporting must use date-aware timezone conversion, never a fixed +7/+8 assumption.
 
-### Current execution research conclusion
+### Historical interpretation of this superseded scan
 
-For the current 08:00-NY CIG-D1 identity:
-- **UP:** a late-US continuation plateau is the strongest transport-stable executable timing hypothesis found so far.
-- **DOWN:** fixed delayed exit timing is unstable; no binding clock rule.
-- **Europe/Türkiye daytime movement:** remains valuable for attribution, but occurs before the current CIG-D1 issue timestamp and therefore cannot be counted as executable return from CIG-D1 V1.
+Within this reconstructed 151/131 panel, a late-US continuation plateau appeared in the UP subset and DOWN timing remained unstable.
+
+**This is no longer the canonical 2026 Jan-Jul conclusion.** The exact-125 audit in Section 5E.11C gives only **35/71 = 49.30%** UP direction hit for 17:00->20:00 New York. Therefore no late-US UP plateau is currently accepted as canonical CIG execution evidence.
+
+Europe/Türkiye daytime movement remains attribution only for the current 08:00-NY issue identity.
 
 No result in this subsection is prospective evidence or net investment return. Costs, spread, slippage, swap and instrument basis remain excluded.
 
