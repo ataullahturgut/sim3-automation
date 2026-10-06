@@ -1,0 +1,150 @@
+{
+  "status": "DATA_AVAILABILITY_GATE_PROBE",
+  "twelve_data_tests": [
+    {
+      "symbol": "XAU/USD",
+      "interval": "15min",
+      "start": "2023-06-12 00:00:00",
+      "end": "2023-06-14 23:59:59",
+      "http": 200,
+      "rows": 275,
+      "first": "2023-06-12 00:00:00",
+      "last": "2023-06-14 23:45:00",
+      "message": null,
+      "year": "2023"
+    },
+    {
+      "symbol": "XAU/USD",
+      "interval": "1h",
+      "start": "2023-06-12 00:00:00",
+      "end": "2023-06-14 23:59:59",
+      "http": 200,
+      "rows": 69,
+      "first": "2023-06-12 00:00:00",
+      "last": "2023-06-14 23:00:00",
+      "message": null,
+      "year": "2023"
+    },
+    {
+      "symbol": "XAU/USD",
+      "interval": "15min",
+      "start": "2024-06-10 00:00:00",
+      "end": "2024-06-12 23:59:59",
+      "http": 200,
+      "rows": 276,
+      "first": "2024-06-10 00:00:00",
+      "last": "2024-06-12 23:45:00",
+      "message": null,
+      "year": "2024"
+    },
+    {
+      "symbol": "XAU/USD",
+      "interval": "1h",
+      "start": "2024-06-10 00:00:00",
+      "end": "2024-06-12 23:59:59",
+      "http": 200,
+      "rows": 69,
+      "first": "2024-06-10 00:00:00",
+      "last": "2024-06-12 23:00:00",
+      "message": null,
+      "year": "2024"
+    },
+    {
+      "symbol": "XAU/USD",
+      "interval": "15min",
+      "start": "2025-06-09 00:00:00",
+      "end": "2025-06-11 23:59:59",
+      "http": 200,
+      "rows": 288,
+      "first": "2025-06-09 00:00:00",
+      "last": "2025-06-11 23:45:00",
+      "message": null,
+      "year": "2025"
+    },
+    {
+      "symbol": "XAU/USD",
+      "interval": "1h",
+      "start": "2025-06-09 00:00:00",
+      "end": "2025-06-11 23:59:59",
+      "http": 200,
+      "rows": 72,
+      "first": "2025-06-09 00:00:00",
+      "last": "2025-06-11 23:00:00",
+      "message": null,
+      "year": "2025"
+    },
+    {
+      "symbol": "XAU/USD",
+      "interval": "15min",
+      "start": "2026-06-08 00:00:00",
+      "end": "2026-06-10 23:59:59",
+      "http": 200,
+      "rows": 288,
+      "first": "2026-06-08 00:00:00",
+      "last": "2026-06-10 23:45:00",
+      "message": null,
+      "year": "2026"
+    },
+    {
+      "symbol": "XAU/USD",
+      "interval": "1h",
+      "start": "2026-06-08 00:00:00",
+      "end": "2026-06-10 23:59:59",
+      "http": 200,
+      "rows": 72,
+      "first": "2026-06-08 00:00:00",
+      "last": "2026-06-10 23:00:00",
+      "message": null,
+      "year": "2026"
+    },
+    {
+      "symbol": "EUR/USD",
+      "interval": "15min",
+      "start": "2025-06-09 00:00:00",
+      "end": "2025-06-10 23:59:59",
+      "http": 200,
+      "rows": 192,
+      "first": "2025-06-09 00:00:00",
+      "last": "2025-06-10 23:45:00",
+      "message": null,
+      "year": "2025"
+    },
+    {
+      "symbol": "USD/JPY",
+      "interval": "15min",
+      "start": "2025-06-09 00:00:00",
+      "end": "2025-06-10 23:59:59",
+      "http": 200,
+      "rows": 192,
+      "first": "2025-06-09 00:00:00",
+      "last": "2025-06-10 23:45:00",
+      "message": null,
+      "year": "2025"
+    },
+    {
+      "symbol": "GBP/USD",
+      "interval": "15min",
+      "start": "2025-06-09 00:00:00",
+      "end": "2025-06-10 23:59:59",
+      "http": 200,
+      "rows": 192,
+      "first": "2025-06-09 00:00:00",
+      "last": "2025-06-10 23:45:00",
+      "message": null,
+      "year": "2025"
+    }
+  ],
+  "internal_authority": {
+    "xau_1h_registered_2022_2024_rows": 17644,
+    "xau_1h_2025_2026_recent_chunk_fetch": "PASS_IN_EXECUTION_AUDITS",
+    "xau_15m_2026_aug_sep": "PASS_IN_INTRADAY_WINDOW_SCAN",
+    "databento_glbx_mdp3_access": "PASS_COST_AND_SYMBOLOGY_PROBE",
+    "databento_historical_coverage": "2010_PLUS_DOC_CONFIRMED",
+    "lbma_continuous_otc_intraday": "NOT_IN_REPO",
+    "sge_intraday_history": "NOT_IN_REPO",
+    "macro_us_event_calendar": "PARTIAL_RESEARCH_LEDGER_EXISTS",
+    "historical_consensus_surprises": "PARTIAL_NOT_GOVERNED_FULL_HISTORY",
+    "europe_china_event_consensus": "NOT_GOVERNED"
+  },
+  "gate_rule": "Do not design session-specific models until the required price/event series pass historical coverage and timestamp provenance."
+}
