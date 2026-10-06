@@ -1,0 +1,163 @@
+{
+  "status": "CANONICAL_RECONSTRUCTION_FAILED",
+  "source": {
+    "daily_realization_file": "GOLD_DAILY_H1_V2_2026_GERCEKLESEN_TAHMIN_RECOVERED_2026-10-06.csv",
+    "daily_realization_origin": "recovered from prior ChatGPT Library artifact",
+    "model_source_commit": "fcbf50080afdf164dae460e8e855faf3f72bb1b0"
+  },
+  "daily_label_clock_semantics": {
+    "known": "StakTrakr historical daily observation date is a UTC calendar-date label; it must not be timezone-converted as an instant.",
+    "not_known": "The recovered daily realization value is not an executable intraday timestamp/print.",
+    "governed_issue_deadline": "08:00 America/New_York = about 15:00 Istanbul in US DST, 16:00 Istanbul in US standard time"
+  },
+  "canonical_expected": {
+    "universe_n": 145,
+    "sage_correct": 103,
+    "v5_correct": 102,
+    "rift_correct": 102,
+    "vega_correct": 102,
+    "consensus_n": 125,
+    "consensus_correct": 93,
+    "disagreement_n": 20,
+    "disagreement_correct": 10
+  },
+  "canonical_reconstructed": {
+    "universe_n": 145,
+    "sage": {
+      "n": 145,
+      "correct": 103,
+      "accuracy": 0.7103448275862069
+    },
+    "v5": {
+      "n": 145,
+      "correct": 102,
+      "accuracy": 0.7034482758620689
+    },
+    "rift": {
+      "n": 145,
+      "correct": 102,
+      "accuracy": 0.7034482758620689
+    },
+    "vega": {
+      "n": 145,
+      "correct": 102,
+      "accuracy": 0.7034482758620689
+    },
+    "consensus_n": 125,
+    "consensus_correct": 93,
+    "consensus_accuracy": 0.744,
+    "disagreement_n": 20,
+    "disagreement_v5_correct": 9,
+    "mapped_sage_ruleflow_events": [
+      {
+        "feature_cutoff_date": "2026-02-03",
+        "forecast_issue_date": "2026-02-04",
+        "source": "SAGE_V2",
+        "v5_pred": 1,
+        "combined_pred": 0
+      },
+      {
+        "feature_cutoff_date": "2026-02-11",
+        "forecast_issue_date": "2026-02-12",
+        "source": "RULEFLOW_V3_TG",
+        "v5_pred": 1,
+        "combined_pred": 0
+      },
+      {
+        "feature_cutoff_date": "2026-05-26",
+        "forecast_issue_date": "2026-05-27",
+        "source": "SAGE_V2",
+        "v5_pred": 0,
+        "combined_pred": 1
+      },
+      {
+        "feature_cutoff_date": "2026-07-10",
+        "forecast_issue_date": "2026-07-13",
+        "source": "SAGE_V2",
+        "v5_pred": 1,
+        "combined_pred": 0
+      },
+      {
+        "feature_cutoff_date": "2026-07-15",
+        "forecast_issue_date": "2026-07-16",
+        "source": "SAGE_V2",
+        "v5_pred": 1,
+        "combined_pred": 0
+      }
+    ]
+  },
+  "checks": {
+    "universe_n": true,
+    "sage_correct": true,
+    "v5_correct": true,
+    "rift_correct": true,
+    "vega_correct": true,
+    "consensus_n": true,
+    "consensus_correct": true,
+    "disagreement_n": true,
+    "disagreement_correct": false
+  },
+  "exact_match": false,
+  "post_issue_exact_same_125": {},
+  "missing_dates_in_old_snapshot": [
+    "2026-02-27",
+    "2026-03-02",
+    "2026-03-03",
+    "2026-03-04",
+    "2026-03-05",
+    "2026-03-06"
+  ],
+  "guardrails": [
+    "The six missing dates are a frozen-snapshot coverage gap, not a session-clock definition.",
+    "74.40% is the recovered daily-label accuracy on the exact canonical 125 rows.",
+    "Post-issue metrics use the same exact 125 signal rows and begin strictly after 08:00 NY.",
+    "15m results are retrospective gross XAU/USD spot diagnostics, not prospective evidence or net instrument P&L."
+  ],
+  "api_meta": [
+    {
+      "start": "2025-12-31 00:00:00",
+      "end": "2025-12-31 23:59:59",
+      "rows": 96
+    },
+    {
+      "start": "2026-01-01 00:00:00",
+      "end": "2026-01-31 23:59:59",
+      "rows": 2880
+    },
+    {
+      "start": "2026-02-01 00:00:00",
+      "end": "2026-02-28 23:59:59",
+      "rows": 2688
+    },
+    {
+      "start": "2026-03-01 00:00:00",
+      "end": "2026-03-31 23:59:59",
+      "rows": 2972
+    },
+    {
+      "start": "2026-04-01 00:00:00",
+      "end": "2026-04-30 23:59:59",
+      "rows": 2876
+    },
+    {
+      "start": "2026-05-01 00:00:00",
+      "end": "2026-05-31 23:59:59",
+      "rows": 2976
+    },
+    {
+      "start": "2026-06-01 00:00:00",
+      "end": "2026-06-30 23:59:59",
+      "rows": 2880
+    },
+    {
+      "start": "2026-07-01 00:00:00",
+      "end": "2026-07-31 23:59:59",
+      "rows": 2976
+    },
+    {
+      "start": "2026-08-01 00:00:00",
+      "end": "2026-08-02 23:59:59",
+      "rows": 192
+    }
+  ]
+}
