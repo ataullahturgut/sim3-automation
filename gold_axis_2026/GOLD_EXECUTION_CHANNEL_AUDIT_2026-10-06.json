@@ -31,9 +31,9 @@
     "xau_executable_0800NY_to_1600NY_same_day_compound": 0.026335749480612458,
     "xau_executable_0800NY_to_1100NY_bist_window_proxy_compound": 0.020730562129887664,
     "xau_decision_to_decision_0800NY_compound": 0.05481287953316283,
-    "gldtr_daily_open_to_close_prior_style_compound": NaN,
-    "gldtr_1500IST_to_session_close_compound": NaN,
-    "gldtr_decision_to_decision_1500IST_compound": NaN
+    "gldtr_daily_open_to_close_prior_style_compound": 0.01928017488940359,
+    "gldtr_1500IST_to_session_close_compound": 0.01936682292280345,
+    "gldtr_decision_to_decision_1500IST_compound": 0.07201791250004042
   },
   "source_meta": {
     "xau": {
@@ -48,15 +48,176 @@
       }
     },
     "gldtr_daily": {
-      "timezone": null,
-      "n": 0
+      "timezone": "Europe/Istanbul",
+      "n": 41
     },
     "gldtr_hourly": {
-      "timezone": null,
-      "n": 0,
-      "sample_times": []
+      "timezone": "Europe/Istanbul",
+      "n": 361,
+      "sample_times": [
+        {
+          "date": "2026-08-03",
+          "hm": "09:30"
+        },
+        {
+          "date": "2026-08-03",
+          "hm": "10:30"
+        },
+        {
+          "date": "2026-08-03",
+          "hm": "11:30"
+        },
+        {
+          "date": "2026-08-03",
+          "hm": "12:30"
+        },
+        {
+          "date": "2026-08-03",
+          "hm": "13:30"
+        },
+        {
+          "date": "2026-08-03",
+          "hm": "14:30"
+        },
+        {
+          "date": "2026-08-03",
+          "hm": "15:30"
+        },
+        {
+          "date": "2026-08-03",
+          "hm": "16:30"
+        },
+        {
+          "date": "2026-08-03",
+          "hm": "17:30"
+        },
+        {
+          "date": "2026-08-04",
+          "hm": "09:30"
+        },
+        {
+          "date": "2026-08-04",
+          "hm": "10:30"
+        },
+        {
+          "date": "2026-08-04",
+          "hm": "11:30"
+        },
+        {
+          "date": "2026-08-04",
+          "hm": "12:30"
+        },
+        {
+          "date": "2026-08-04",
+          "hm": "13:30"
+        },
+        {
+          "date": "2026-08-04",
+          "hm": "14:30"
+        },
+        {
+          "date": "2026-08-04",
+          "hm": "15:30"
+        },
+        {
+          "date": "2026-08-04",
+          "hm": "16:30"
+        },
+        {
+          "date": "2026-08-04",
+          "hm": "17:30"
+        },
+        {
+          "date": "2026-08-05",
+          "hm": "09:30"
+        },
+        {
+          "date": "2026-08-05",
+          "hm": "10:30"
+        },
+        {
+          "date": "2026-08-05",
+          "hm": "11:30"
+        },
+        {
+          "date": "2026-08-05",
+          "hm": "12:30"
+        },
+        {
+          "date": "2026-08-05",
+          "hm": "13:30"
+        },
+        {
+          "date": "2026-08-05",
+          "hm": "14:30"
+        },
+        {
+          "date": "2026-08-05",
+          "hm": "15:30"
+        },
+        {
+          "date": "2026-08-05",
+          "hm": "16:30"
+        },
+        {
+          "date": "2026-08-05",
+          "hm": "17:30"
+        },
+        {
+          "date": "2026-08-06",
+          "hm": "09:30"
+        },
+        {
+          "date": "2026-08-06",
+          "hm": "10:30"
+        },
+        {
+          "date": "2026-08-06",
+          "hm": "11:30"
+        },
+        {
+          "date": "2026-08-06",
+          "hm": "12:30"
+        },
+        {
+          "date": "2026-08-06",
+          "hm": "13:30"
+        },
+        {
+          "date": "2026-08-06",
+          "hm": "14:30"
+        },
+        {
+          "date": "2026-08-06",
+          "hm": "15:30"
+        },
+        {
+          "date": "2026-08-06",
+          "hm": "16:30"
+        },
+        {
+          "date": "2026-08-06",
+          "hm": "17:30"
+        },
+        {
+          "date": "2026-08-07",
+          "hm": "09:30"
+        },
+        {
+          "date": "2026-08-07",
+          "hm": "10:30"
+        },
+        {
+          "date": "2026-08-07",
+          "hm": "11:30"
+        },
+        {
+          "date": "2026-08-07",
+          "hm": "12:30"
+        }
+      ]
     },
-    "gldtr_error": "YAHOO_GLDTR_EMPTY daily_n=0 hourly_n=361"
+    "gldtr_error": null
   },
   "interpretation_notes": [
     "The 12.3% benchmark uses previous close -> current close on days selected by a signal issued the current day; it is not executable if issuance occurs at 08:00 New York.",
