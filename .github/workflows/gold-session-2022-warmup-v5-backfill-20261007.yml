@@ -1,0 +1,52 @@
+name: Gold Session 2022 Warmup V5 Backfill 20261007
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_session_2022_warmup_v5_backfill_20261007.py'
+      - '.github/workflows/gold-session-2022-warmup-v5-backfill-20261007.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      DATABENTO_API_KEY: ${{ secrets.DATABENTO_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.31,<3' 'databento>=0.60,<1'
+      - name: Require keys
+        run: |
+          test -n "$TWELVE_DATA_API_KEY"
+          test -n "$DATABENTO_API_KEY"
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_session_2022_warmup_v5_backfill_20261007.py
+      - name: Fetch and build 2022 warmup
+        run: python gold_axis_2026/tools/gold_session_2022_warmup_v5_backfill_20261007.py
+      - name: Record evidence
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/SESSION_2022_WARMUP_V5_BACKFILL_OUT/summary.json gold_axis_2026/GOLD_SESSION_2022_WARMUP_V5_SUMMARY_2026-10-07.json
+          cp gold_axis_2026/SESSION_2022_WARMUP_V5_BACKFILL_OUT/result.md gold_axis_2026/GOLD_SESSION_2022_WARMUP_V5_RESULT_2026-10-07.md
+          cp gold_axis_2026/SESSION_2022_WARMUP_V5_BACKFILL_OUT/xauusd_15m_utc_2022_with_buffer.csv gold_axis_2026/GOLD_XAUUSD_15M_UTC_2022_WITH_BUFFER.csv
+          cp gold_axis_2026/SESSION_2022_WARMUP_V5_BACKFILL_OUT/session_targets_v5_equivalent_warmup_2022.csv gold_axis_2026/GOLD_SESSION_TARGETS_V5_EQUIVALENT_WARMUP_2022.csv
+          git add gold_axis_2026/GOLD_SESSION_2022_WARMUP_V5_* gold_axis_2026/GOLD_XAUUSD_15M_UTC_2022_WITH_BUFFER.csv gold_axis_2026/GOLD_SESSION_TARGETS_V5_EQUIVALENT_WARMUP_2022.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "Record 2022 V5-equivalent session warmup"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
