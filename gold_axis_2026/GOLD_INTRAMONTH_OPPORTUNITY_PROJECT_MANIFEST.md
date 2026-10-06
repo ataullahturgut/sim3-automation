@@ -989,6 +989,54 @@ Primary session modelling must:
 4. keep all excluded/review rows out of fitting and headline evaluation;
 5. keep 2026 unopened for clock/architecture tuning.
 
+### 5E.8C Raw-source rebuild rule for all session replays — BINDING
+
+For every session-model replay, **stored derived artifacts are QA evidence only and are not authoritative model inputs**.
+
+Do not feed any historical:
+- `*_FEATURE_PANEL*.csv`
+- `*_PREDICTIONS*.csv`
+- `*_STATE*.csv`
+- `*_SCORES*.csv`
+- `*_INFERENCE*.csv`
+- precomputed expert-state / controller-state files
+
+directly into a new WGC/Sobti session model.
+
+Each model must be rebuilt from its **rawest governed source available** for the required chronology.
+
+Binding source order:
+
+1. raw market / macro / positioning observations from the governed database or frozen raw vendor extract;
+2. date-aware timestamp normalization and publication-lag/source-ready handling;
+3. feature engineering reproduced from code;
+4. V5 target reconstructed from raw XAU/USD 15-minute bars under the binding target-price semantics;
+5. fit/predict;
+6. only then compare the newly generated features/predictions against historical derived artifacts as QA.
+
+Examples:
+- XAU intraday target: rebuild from `GOLD_XAUUSD_15M_UTC_2023_2025_WITH_BUFFER.csv`;
+- XAU hourly features: rebuild from raw Neon/Twelve hourly observations, not IRIS historical feature/prediction CSVs;
+- GC/SI/NQ/ZN/CL features: rebuild from raw Databento/CME observations;
+- DGS2/rates: rebuild from raw FRED observations with the governed publication/carry rule;
+- GVZ/VIX/FX/oil/Nasdaq inputs: rebuild from their raw source series;
+- CFTC/COT: rebuild from raw report observations using the report/publication date available at the forecast cutoff.
+
+Model lineage must also be recomputed:
+- AURORA must consume **freshly regenerated** IRIS/base-expert outputs, not archived AURORA/IRIS predictions;
+- HELIOS must consume freshly regenerated upstream AURORA/OPAL/controller inputs;
+- BOCPD/DPTC/RTE/RC-RTE/SCR-RTE must be rebuilt only after the corresponding fresh session baseline/error history exists.
+
+V5 CSV target files remain **frozen audit authorities**, but model code must independently reconstruct target prices/directions from raw 15-minute XAU/USD and verify equality against V5 before fitting. A mismatch is a hard FAIL.
+
+Historical derived files are allowed only for:
+- reproduction checks;
+- hash/count comparisons;
+- regression tests;
+- diagnosing divergence from the prior implementation.
+
+They must never be used merely because rebuilding from raw data is inconvenient.
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
