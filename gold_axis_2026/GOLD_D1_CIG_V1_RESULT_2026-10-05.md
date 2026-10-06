@@ -381,3 +381,16 @@ Binding terminology from this point:
 - final executable CIG accuracy remains **UNRESOLVED** until the exact 125-row canonical population is rejoined to intraday prices.
 
 This correction supersedes any prior wording that implied otherwise.
+
+
+## 13. Binding clock identity — 2026-10-06
+
+Authority: `GOLD_MODEL_CLOCK_IDENTITY_2026-10-06.md`
+
+CIG-D1 inherits a mixed clock stack:
+- underlying governed daily label = **UTC-day daily-reference semantic**;
+- intraday H3 expert features = **New York clock**, 16:00 anchor;
+- operational issue deadline = **08:00 New York**;
+- Istanbul time is only a user-facing conversion.
+
+Therefore CIG-D1 is not currently a Turkey-session model and its historical same-day label is not an 08:00-NY-to-close label.
