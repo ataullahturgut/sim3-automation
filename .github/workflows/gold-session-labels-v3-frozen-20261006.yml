@@ -1,0 +1,40 @@
+name: Gold Session Labels V3 Frozen 20261006
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_session_labels_v3_frozen_20261006.py'
+      - '.github/workflows/gold-session-labels-v3-frozen-20261006.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3'
+      - run: python gold_axis_2026/tools/gold_session_labels_v3_frozen_20261006.py
+      - name: Record
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/SESSION_LABELS_V3_FROZEN_OUT/labels_wgc2026_ny3_frozen.csv gold_axis_2026/GOLD_SESSION_TARGETS_WGC2026_NY3_FROZEN_2023_2025.csv
+          cp gold_axis_2026/SESSION_LABELS_V3_FROZEN_OUT/labels_sobti5_et_frozen.csv gold_axis_2026/GOLD_SESSION_TARGETS_SOBTI5_ET_FROZEN_2023_2025.csv
+          cp gold_axis_2026/SESSION_LABELS_V3_FROZEN_OUT/v2_v3_compare_wgc.csv gold_axis_2026/GOLD_SESSION_TARGETS_V2_V3_COMPARE_WGC_2026-10-06.csv
+          cp gold_axis_2026/SESSION_LABELS_V3_FROZEN_OUT/v2_v3_compare_sobti.csv gold_axis_2026/GOLD_SESSION_TARGETS_V2_V3_COMPARE_SOBTI_2026-10-06.csv
+          cp gold_axis_2026/SESSION_LABELS_V3_FROZEN_OUT/summary.json gold_axis_2026/GOLD_SESSION_TARGETS_V3_FROZEN_SUMMARY_2026-10-06.json
+          cp gold_axis_2026/SESSION_LABELS_V3_FROZEN_OUT/result.md gold_axis_2026/GOLD_SESSION_TARGETS_V3_FROZEN_RESULT_2026-10-06.md
+          git add gold_axis_2026/GOLD_SESSION_TARGETS_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record frozen premodel session target panels V3"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
