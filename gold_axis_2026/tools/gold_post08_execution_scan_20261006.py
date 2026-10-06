@@ -97,6 +97,7 @@ def main():
       "earliest_hourly_execution_ny":"09:00",
       "rule":"Only raw CIG-D1 4/4 UP days are eligible; no CPG/TRES filtering.",
       "best_selected_on_2025H2_only":best,
+      "best_down_exit_selected_on_2025H2_only":ddev.iloc[0].to_dict() if len(ddev) else None,
       "robust_positive_all_periods":robust,
       "next_issue_0900":ndsum,
       "warning":"Same-day timing is selected on 2025H2 only. 2026 is transport evidence. Hourly bars are proxies; 15-minute refinement must use first bar strictly after 08:00."
