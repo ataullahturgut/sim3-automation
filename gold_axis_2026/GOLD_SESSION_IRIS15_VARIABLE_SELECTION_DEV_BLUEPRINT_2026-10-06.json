@@ -1,0 +1,88 @@
+{
+  "status": "DEV_BLUEPRINT_FROZEN_FOR_FURTHER_STAGE1_ONLY",
+  "date": "2026-10-06",
+  "scope": "2023-2024 development only; 2025/2026 unopened",
+  "selection_rule": {
+    "eligible_min_scored_n": 80,
+    "minimum_class_recall": 0.3,
+    "primary_metric": "balanced_accuracy",
+    "secondary_metric": "brier",
+    "note": "A candidate that collapses one class below 30% recall is not selected even if accuracy/Brier improves."
+  },
+  "heads": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "choice": "SELECT_XAU15_BAL",
+      "rationale": "BA 55.83%, Brier 0.2699; both better than FULL_XAU15 BA 52.43%, Brier 0.2999; class recalls 58.33/53.33.",
+      "stable_features": [
+        "g_lag2",
+        "gold_r3",
+        "platinum_r21",
+        "g_ret_6h",
+        "g_ret_12h",
+        "g_ret_24h",
+        "platinum_r1",
+        "platinum_r5",
+        "silver_r21",
+        "silver_r5",
+        "sigma20"
+      ]
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "choice": "FULL_XAU15_L2_C1",
+      "rationale": "FULL BA 55.20% remains above selected balanced 53.03% and selected unbalanced 54.11%; retain full representation."
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "choice": "FULL_XAU15_L2_C1",
+      "rationale": "Sparse candidates raise BA modestly but collapse DOWN recall below 30%; fail recall floor."
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "choice": "FULL_XAU15_L2_C1",
+      "rationale": "FULL BA 55.13% remains above selected balanced 54.28% and unbalanced 53.46%; selected variants improve Brier but not primary direction metric."
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "choice": "INSUFFICIENT_DEV_SCORE",
+      "rationale": "Only N=15 scored rows after causal warm-up; not eligible for model selection."
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "choice": "INSUFFICIENT_DEV_SCORE",
+      "rationale": "Only N=3 scored rows after causal warm-up; not eligible for model selection."
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "choice": "SELECT_XAU15",
+      "rationale": "Unbalanced nested selector BA 51.95%, Brier 0.2727, recalls ~63.08/40.82; improves both BA and Brier versus FULL BA 48.62%, Brier 0.2845 and passes recall floor.",
+      "stable_features": [
+        "silver_r1",
+        "gold_r21",
+        "silver_r21",
+        "g_ret_3h",
+        "g_lag2",
+        "platinum_r21"
+      ]
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "choice": "FULL_XAU15_L2_C1",
+      "rationale": "All sparse/cross-metal candidates either underperform BA or produce one-sided recall collapse; retain full representation pending stronger selector."
+    }
+  ],
+  "crossmetal_intraday": {
+    "promoted": false,
+    "reason": "SI15/PL15 selection is frequent in some windows but does not produce a stable, class-balanced improvement over the chosen per-window XAU/core representation."
+  },
+  "next_step": "Continue Stage 1 with the frozen development blueprint while keeping canonical S1.4 A1_PLUS_PATH open; do not open 2025 until the representation/selector contract is formally frozen for transport."
+}
