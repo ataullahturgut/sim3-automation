@@ -47,3 +47,18 @@ That section governs:
 - rules for deciding whether separate session heads are required.
 
 Do not perform independent timing optimisation from this superseded manifest.
+
+
+## Forecast-clock correction — 2026-10-06
+
+Canonical authority:
+- `GOLD_D1_FORECAST_CLOCK_RECONCILIATION_2026-10-06.md`
+
+Binding distinctions:
+- H3/D1 historical label accuracy is not automatically executable post-signal accuracy.
+- H3 hourly feature anchor is 16:00 New York on feature-cutoff date.
+- full-UTC-day daily reference completes at 03:00 Istanbul, but this is only a theoretical lower-bound readiness time;
+- governed issue deadline is 08:00 New York, approximately 15:00/16:00 Istanbul depending on New York DST;
+- retrospective historical rows do not contain actual issue timestamps.
+
+Do not quote CIG-D1 74.40% as an 08:00-NY-forward trading accuracy. Exact executable accuracy is unresolved until the identical canonical 125-row consensus population is joined to intraday prices.
