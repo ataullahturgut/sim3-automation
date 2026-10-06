@@ -9,8 +9,8 @@ CPG-UP signals: **12**
 - xau_executable_0800NY_to_1100NY_bist_window_proxy_compound: **2.0731%**
 - xau_decision_to_decision_0800NY_compound: **5.4813%**
 - gldtr_daily_open_to_close_prior_style_compound: **1.9280%**
-- gldtr_1500IST_to_session_close_compound: **1.9367%**
-- gldtr_decision_to_decision_1500IST_compound: **7.2018%**
+- gldtr_first_bar_after_1500IST_to_session_close_compound: **2.0445%**
+- gldtr_decision_to_decision_first_bar_after_1500IST_compound: **6.5057%**
 
 Signal dates: 2026-08-05, 2026-08-06, 2026-08-10, 2026-08-11, 2026-08-17, 2026-08-18, 2026-08-20, 2026-09-03, 2026-09-04, 2026-09-08, 2026-09-18, 2026-09-22
 
