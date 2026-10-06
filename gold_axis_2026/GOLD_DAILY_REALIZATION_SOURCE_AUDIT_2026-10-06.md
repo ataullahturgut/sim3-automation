@@ -130,3 +130,31 @@ From now on:
 3. "full UTC daily average" is no longer a binding semantic description of Stak daily values.
 4. CIG 74.40% remains a daily-reference-label score only.
 5. Any tradable-time evaluation must use an independently timestamped intraday source and an explicitly frozen start/end clock.
+
+
+## 8. Source-vintage mismatch found
+
+A second, more important issue was found after tracing the `Gerçekleşen` values.
+
+The recovered daily realization ledger is tied to the older pinned StakTrakr history:
+- ref `ed2e549f82ba0d1cd3ca32842b82d3888d301e01`.
+
+The clean H3/AURORA prospective architecture later froze its own daily price snapshot from:
+- `FROZEN_STAK_REF = 54fdf1c8d39b7b6c7b874d0f30f784296e886044`.
+
+Across the 145 recovered Jan-Jul daily rows:
+- **34 / 145** Gold level values differ between the old realization ledger and the later H3 frozen Stak snapshot;
+- **10 / 145** daily UP/DOWN labels differ.
+
+On the exact 125 canonical CIG consensus rows:
+- old recovered label: **93/125 = 74.40%**
+- later H3 frozen-source daily direction: **88/125 = 70.40%**
+- **9 / 125** daily labels differ.
+
+Therefore the published 74.40% CIG figure was produced by evaluating the H3-derived consensus against a **different Stak data vintage/source snapshot** than the later clean H3 frozen daily price snapshot.
+
+This does not make the old score arithmetically false, but it creates a material **source-vintage mismatch**. The 74.40% figure must no longer be treated as a source-consistent clean H3/CIG performance statistic.
+
+Until a single frozen daily source/vintage is selected and the expert signals and labels are replayed consistently from that same source contract, the canonical CIG score is:
+
+**historical mixed-vintage diagnostic, not a clean source-consistent validation result.**
