@@ -1054,6 +1054,42 @@ In particular, the previously reported late-US UP timing plateau is **not canoni
 
 If the operational objective is a signal available around 08:00 NY, a new execution-aware target must be defined from a post-issue price to a frozen future endpoint. CIG-D1 V1 must not be silently relabelled.
 
+## 5E.11D Exact-125 Reference-Clock Audit — 2026-10-06
+
+Authority:
+- `GOLD_CIG_EXACT125_REFERENCE_CLOCK_AUDIT_2026-10-06.json`
+- `GOLD_CIG_EXACT125_REFERENCE_CLOCK_ROWS_2026-10-06.csv`
+
+This audit tests whether the canonical 74.40% CIG-D1 result can be interpreted as skill over any simple point-to-point clock interval.
+
+Exact same 125 consensus rows:
+
+| Window | Direction accuracy |
+|---|---:|
+| feature-cutoff 16:00 NY -> current UTC 00:00 | **49.60%** |
+| current UTC 00:00 -> issue 08:00 NY | **45.60%** |
+| current UTC 00:00 -> first post 08:15 NY | **46.40%** |
+| feature-cutoff 16:00 NY -> issue 08:00 NY | **47.20%** |
+| feature-cutoff 16:00 NY -> first post 08:15 NY | **50.40%** |
+| post-issue 08:15 -> 20:00 NY | **47.20%** |
+
+Daily-reference semantic cross-check:
+- old Stak-derived daily label versus Twelve Data UTC-calendar-day hourly-mean direction: **88.0% agreement**
+- CIG signal versus the Twelve UTC-day-mean direction: **67.2% accuracy**.
+
+**Binding interpretation**
+
+The canonical **74.40%** cannot be assigned to a simple clock return such as 16:00 NY->08:00 NY, 00:00 UTC->08:00 NY, or 08:15 NY->20:00 NY.
+
+It belongs to the provider-specific **daily-average/reference label**.
+
+Therefore the previously suggested explanation that CIG's directional edge is concentrated specifically in the 03:00 Istanbul -> 15:00/16:00 Istanbul pre-issue interval is **not supported and is superseded**.
+
+The correct conclusion is narrower:
+- the old daily label has a UTC-calendar-day average/reference semantic;
+- it is not an executable point-price interval;
+- none of the tested simple pre-issue or post-issue point-to-point windows reproduces the 74.40% signal accuracy.
+
 ## 5E.12 Fifteen-Minute CIG Execution Timing Transport — 2026-10-06
 
 **SUPERSESSION NOTICE:** the exact canonical 125-row Jan-Jul CIG ledger has now been recovered in Section 5E.11C. Therefore this subsection's 151/131 reconstructed-population timing results are **legacy diagnostics only** and are superseded for canonical 2026 Jan-Jul CIG interpretation.
