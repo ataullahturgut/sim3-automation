@@ -37,7 +37,7 @@ def main():
     ).reset_index()
     minute_sets=grp.minute.apply(lambda s: tuple(sorted(set(map(int,s))))).rename("minute_set").reset_index()
     agg=agg.merge(minute_sets,on="hour",validate="one_to_one")
-    agg=agg[(agg.n15==4)&(agg.unique_minute==4)&agg.minute_set.eq((0,15,30,45))].copy()
+    agg=agg[(agg.n15==4)&(agg.unique_minute==4)&agg.minute_set.map(lambda x: x==(0,15,30,45))].copy()
 
     native=h1.load_hourly_raw().rename(columns={"ts":"hour","value":"close_native"})
     native=native[(native.hour>="2023-01-01")&(native.hour<"2025-01-01")][["hour","close_native"]].copy()
