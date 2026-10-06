@@ -116,13 +116,13 @@ def first_at_or_after(x,target,tol_minutes=90):
     target=pd.Timestamp(target)
     z=x[(x.dt>=target)&(x.dt<=target+pd.Timedelta(minutes=tol_minutes))]
     if z.empty: return np.nan,None
-    q=z.iloc[0]; return float(q.open),q.dt
+    q=z.iloc[0]; return float(q["open"]),q["dt"]
 
 def exact_hour(x,d,h):
     target=pd.Timestamp(f"{d} {h:02d}:00:00")
     z=x[x.dt==target]
     if z.empty: return np.nan,None
-    q=z.iloc[0]; return float(q.open),q.dt
+    q=z.iloc[0]; return float(q["open"]),q["dt"]
 
 def comp(rs):
     a=np.array([float(v) for v in rs if np.isfinite(v)])
