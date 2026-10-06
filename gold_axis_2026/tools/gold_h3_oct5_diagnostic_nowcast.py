@@ -54,7 +54,7 @@ def build_alt_prices():
     if len(anchor)!=1: raise RuntimeError("FROZEN_20260929_ANCHOR_MISSING")
     anchor=anchor.iloc[0]
     fut={k:yahoo_chart(v) for k,v in SYMS.items()}
-    need=[pd.Timestamp("2026-09-29"),pd.Timestamp("2026-09-30"),pd.Timestamp("2026-10-01"),pd.Timestamp("2026-10-06"),pd.Timestamp("2026-10-05")]
+    need=[pd.Timestamp("2026-09-29"),pd.Timestamp("2026-09-30"),pd.Timestamp("2026-10-01"),pd.Timestamp("2026-10-02"),pd.Timestamp("2026-10-05")]
     for k,m in fut.items():
         miss=[str(d.date()) for d in need if d not in m]
         if miss: raise RuntimeError(f"FUTURES_{k}_MISSING {miss}")
@@ -107,7 +107,7 @@ def run():
     alt=build_alt_prices()
     alt.to_csv(OUT/"ALT_DAILY_PRICES.csv",index=False)
 
-    # Configure the CLEAN frozen model, but permit 2026-10-06 solely for this
+    # Configure the CLEAN frozen model, but permit 2026-10-05 solely for this
     # diagnostic nowcast. This is explicitly NOT prospective evidence.
     clean.OUT=OUT
     clean.configure()
