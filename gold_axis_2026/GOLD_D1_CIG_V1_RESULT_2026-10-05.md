@@ -482,3 +482,24 @@ Thus the canonical daily label is:
 The stored noon timestamp is synthetic/date-labelled and must not be treated as an executable 12:00 price. The exact intraday fixing clock of the historical daily reference is not established here.
 
 This supersedes any wording that implied the canonical CIG label was a conventional market close or a proven UTC full-day average.
+
+
+## 16. Source-vintage consistency correction — 2026-10-06
+
+The exact `Gerçekleşen` source audit found a material vintage mismatch.
+
+- historical D1 realization ledger: StakTrakr ref `ed2e549f82ba0d1cd3ca32842b82d3888d301e01`
+- later clean H3/AURORA frozen daily snapshot: StakTrakr ref `54fdf1c8d39b7b6c7b874d0f30f784296e886044`.
+
+Across the 145 Jan-Jul recovered rows, 34 daily Gold levels and 10 daily directions differ between these source snapshots.
+
+On the exact 125 CIG consensus rows:
+- score against the old recovered labels = **93/125 = 74.40%**
+- score against the later H3 frozen-source daily direction = **88/125 = 70.40%**.
+
+Thus 74.40% remains reproducible for the old historical label file, but it is **not source-consistent with the later clean H3 frozen price snapshot**.
+
+Binding status from this point:
+**CIG-D1 74.40% = mixed-vintage retrospective diagnostic.**
+
+Do not promote it as clean validation until the entire 145-row evaluation is rebuilt under one frozen source/vintage contract.
