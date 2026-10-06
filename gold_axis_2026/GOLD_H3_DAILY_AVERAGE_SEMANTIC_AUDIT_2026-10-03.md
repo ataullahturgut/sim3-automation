@@ -1,3 +1,5 @@
+> **SOURCE-SEMANTIC CORRECTION — 2026-10-06:** The similarity to a Twelve Data UTC-calendar-day hourly mean is a cross-provider comparator only. It does **not** prove that the StakTrakr daily value is itself a full-UTC-day average. The recovered daily realization series has been traced 145/145 to pinned StakTrakr daily history, whose stored noon timestamp is a synthetic calendar-date label rather than an executable observation time. Binding authority: `GOLD_DAILY_REALIZATION_SOURCE_AUDIT_2026-10-06.md`. Any "full-UTC-day-average semantic" wording below is superseded as a source-semantic claim.
+
 # GOLD H3 DAILY-AVERAGE SEMANTIC AUDIT — 2026-10-03
 
 Comparator: Twelve Data XAU/USD 1h, requested in UTC, aggregated to arithmetic mean of hourly closes per UTC calendar day. This is a cross-provider approximation to the StakTrakr STRK-403 full-UTC-day-average semantic.
