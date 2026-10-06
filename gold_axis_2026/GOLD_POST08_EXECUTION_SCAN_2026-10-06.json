@@ -1,0 +1,61 @@
+{
+  "status": "RETROSPECTIVE_POST08_EXECUTION_SCAN_NOT_PROSPECTIVE",
+  "issue_deadline_ny": "08:00",
+  "earliest_hourly_execution_ny": "09:00",
+  "rule": "Only raw CIG-D1 4/4 UP days are eligible; no CPG/TRES filtering.",
+  "best_selected_on_2025H2_only": {
+    "entry_hour_ny": 17.0,
+    "exit_hour_ny": 20.0,
+    "n": 163.0,
+    "all_compound": 0.144800875143279,
+    "2025_H2_n": 72.0,
+    "2025_H2_compound": 0.08340280687919277,
+    "2025_H2_hit": 0.6527777777777778,
+    "2025_H2_mean": 0.0011174902080696976,
+    "2026_JAN_JUL_n": 73.0,
+    "2026_JAN_JUL_compound": 0.038368692554772155,
+    "2026_JAN_JUL_hit": 0.4931506849315068,
+    "2026_JAN_JUL_mean": 0.0005246384440257207,
+    "2026_AUG_SEP_n": 18.0,
+    "2026_AUG_SEP_compound": 0.017626507040670925,
+    "2026_AUG_SEP_hit": 0.6111111111111112,
+    "2026_AUG_SEP_mean": 0.0009730981755719514
+  },
+  "robust_positive_all_periods": {
+    "entry_hour_ny": 17.0,
+    "exit_hour_ny": 20.0,
+    "n": 163.0,
+    "all_compound": 0.144800875143279,
+    "2025_H2_n": 72.0,
+    "2025_H2_compound": 0.08340280687919277,
+    "2025_H2_hit": 0.6527777777777778,
+    "2025_H2_mean": 0.0011174902080696976,
+    "2026_JAN_JUL_n": 73.0,
+    "2026_JAN_JUL_compound": 0.038368692554772155,
+    "2026_JAN_JUL_hit": 0.4931506849315068,
+    "2026_JAN_JUL_mean": 0.0005246384440257207,
+    "2026_AUG_SEP_n": 18.0,
+    "2026_AUG_SEP_compound": 0.017626507040670925,
+    "2026_AUG_SEP_hit": 0.6111111111111112,
+    "2026_AUG_SEP_mean": 0.0009730981755719514,
+    "worst": 0.017626507040670925
+  },
+  "next_issue_0900": {
+    "2025_H2": {
+      "n": 72,
+      "compound": 0.0564483034127794,
+      "hit": 0.4861111111111111
+    },
+    "2026_AUG_SEP": {
+      "n": 17,
+      "compound": 0.07567526637975286,
+      "hit": 0.5882352941176471
+    },
+    "2026_JAN_JUL": {
+      "n": 73,
+      "compound": -0.09749002730748779,
+      "hit": 0.4520547945205479
+    }
+  },
+  "warning": "Same-day timing is selected on 2025H2 only. 2026 is transport evidence. Hourly bars are proxies; 15-minute refinement must use first bar strictly after 08:00."
+}
