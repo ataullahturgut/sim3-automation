@@ -66,23 +66,28 @@ DST transition dates must be resolved from the timestamp itself.
 
 There is no single universal gold-session partition in the literature or institutional practice. To avoid inventing boundaries after observing performance, the project preregisters **two external candidate partitions**.
 
-### Partition A — MODERN_WGC_3
+### Partition A — WGC_2026_NY3
 
-Primary modern industry benchmark.
+Primary current-industry benchmark candidate.
 
-World Gold Council 2026 intraday gold analysis uses:
-- **ASIA:** 22:00–07:00 UTC
-- **EUROPE:** 07:00–12:00 UTC
-- **US:** 12:00–21:00 UTC
+World Gold Council 2026 weekly intraday analyses explicitly show the session windows in **New York local time**:
+- **ASIA:** 18:00–03:00 America/New_York
+- **EUROPE:** 03:00–08:00 America/New_York
+- **US:** 08:00–17:00 America/New_York
 
-These windows are used on spot gold intraday data by WGC in 2026 market analysis.
+For spring 2026 EDT weeks, WGC gives the UTC equivalents as 22:00–07:00, 07:00–12:00 and 12:00–21:00. Those UTC equivalents must **not** be hard-coded across winter dates.
 
-For this project they are stored **exactly in UTC** as the external WGC partition. They are not redefined from Shanghai/London/New York local exchange opens.
+Date-aware UTC mapping:
+- during EDT (UTC-4): Asia 22:00–07:00 UTC, Europe 07:00–12:00 UTC, US 12:00–21:00 UTC;
+- during EST (UTC-5): Asia 23:00–08:00 UTC, Europe 08:00–13:00 UTC, US 13:00–22:00 UTC.
 
 Purpose:
-- current-market three-session benchmark;
-- candidate operational architecture;
-- no DST ambiguity because the research boundary itself is UTC-defined.
+- current-market three-session benchmark candidate;
+- operationally coherent with the New York 17:00 daily break / 18:00 reopen convention;
+- DST-aware by construction.
+
+Important limitation:
+WGC has used different session partitions in other analyses (for example a 2024 study used Asia 22:00–11:00 UTC, Europe 11:00–14:00 UTC, US 14:00–22:00 UTC). Therefore WGC_2026_NY3 is an externally anchored **candidate analytical partition**, not a universal definition of global gold market hours.
 
 ### Partition B — SOBTI_5_ET
 
@@ -211,8 +216,7 @@ Mandatory audit samples:
 - UK DST transition week;
 - weeks where US and UK are temporarily on different seasonal offsets.
 
-The WGC_3 boundaries remain fixed in UTC by definition.
-The SOBTI_5_ET boundaries move in UTC according to `America/New_York` date-aware conversion.
+Both WGC_2026_NY3 and SOBTI_5_ET are anchored to `America/New_York` local time and therefore move in UTC according to date-aware DST conversion.
 
 ## 12. Historical diagnostic artifacts
 
@@ -227,9 +231,12 @@ remain diagnostic and must not be silently reused as training truth for the new 
 ## 13. External authorities
 
 1. World Gold Council, 2026 intraday session analysis:
-   - Asia 22:00–07:00 UTC
-   - Europe 07:00–12:00 UTC
-   - US 12:00–21:00 UTC
+   - session table shown in New York time: Asia 18:00–03:00, Europe 03:00–08:00, US 08:00–17:00;
+   - spring-2026 UTC equivalents: Asia 22:00–07:00, Europe 07:00–12:00, US 12:00–21:00;
+   - UTC conversion is date-aware in this project, not fixed.
+
+1A. World Gold Council, 2024 intraday analysis:
+   - used a different analytical partition (Asia 22:00–11:00 UTC, Europe 11:00–14:00 UTC, US 14:00–22:00 UTC), demonstrating that WGC session windows are analysis constructs rather than universal exchange-open definitions.
 
 2. Sobti, Sehgal & Ilango (2021), *International Review of Financial Analysis* 78, 101893:
    - five sequential ET price-discovery zones using 2013–2018 one-minute New York/London/Shanghai data.
@@ -251,8 +258,8 @@ remain diagnostic and must not be silently reused as training truth for the new 
 
 Before model fitting:
 
-1. backfill governed XAU/USD 15-minute data in UTC for 2023–2025;
-2. create **both** WGC_3 and SOBTI_5_ET label panels;
+1. use the governed XAU/USD 15-minute UTC backfill for 2023–2025;
+2. create **both** WGC_2026_NY3 and SOBTI_5_ET label panels with date-aware New York DST conversion;
 3. run exact-boundary coverage audit;
 4. run DST-transition audit;
 5. freeze data hashes / request metadata;
