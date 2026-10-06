@@ -1,0 +1,211 @@
+{
+  "status": "COT_PIT_REAUDIT_COMPLETE",
+  "source": "CFTC_PUBLIC_REPORTING_API",
+  "cftc_code": "088691",
+  "transport_meta": {
+    "futures_only": {
+      "url": "https://publicreporting.cftc.gov/resource/72hh-3qpy.csv?cftc_contract_market_code=088691&$limit=5000",
+      "bytes": 1441804,
+      "rows": 1060
+    },
+    "futures_options_combined": {
+      "url": "https://publicreporting.cftc.gov/resource/kh3c-gbw2.csv?cftc_contract_market_code=088691&$limit=5000",
+      "bytes": 1450126,
+      "rows": 1060
+    }
+  },
+  "governance": {
+    "default": "report_date + 7 calendar days at 15:30 America/New_York",
+    "override": "if official documented delayed publication is later, use official delayed date at 15:30 ET",
+    "normal_release_reference": "CFTC states COT reports are usually released Friday at 15:30 ET",
+    "special_authorities": [
+      "CFTC Historical Special Announcements \u2014 2023 ION backlog",
+      "CFTC Dec. 9 2025 accelerated COT backlog schedule"
+    ]
+  },
+  "rebuilt_report_rows": 1060,
+  "rebuilt_report_first": "2006-06-13",
+  "rebuilt_report_last": "2026-09-29",
+  "old_opal_rows": 1029,
+  "proven_early_use_rows": 74,
+  "proven_early_use_by_feature_year": {
+    "2023": 21,
+    "2025": 53
+  },
+  "old_rows_whose_selected_report_changes_under_governed_pit": 74,
+  "changed_report_by_feature_year": {
+    "2023": 21,
+    "2025": 53
+  },
+  "v5_session_cot_mapping": [
+    {
+      "year": 2023,
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "rows": 237,
+      "cot_mapped": 237
+    },
+    {
+      "year": 2023,
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "rows": 237,
+      "cot_mapped": 237
+    },
+    {
+      "year": 2023,
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "rows": 249,
+      "cot_mapped": 249
+    },
+    {
+      "year": 2023,
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "rows": 247,
+      "cot_mapped": 247
+    },
+    {
+      "year": 2023,
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "rows": 196,
+      "cot_mapped": 196
+    },
+    {
+      "year": 2023,
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "rows": 252,
+      "cot_mapped": 252
+    },
+    {
+      "year": 2023,
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "rows": 248,
+      "cot_mapped": 248
+    },
+    {
+      "year": 2023,
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "rows": 221,
+      "cot_mapped": 221
+    },
+    {
+      "year": 2024,
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "rows": 241,
+      "cot_mapped": 241
+    },
+    {
+      "year": 2024,
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "rows": 241,
+      "cot_mapped": 241
+    },
+    {
+      "year": 2024,
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "rows": 254,
+      "cot_mapped": 254
+    },
+    {
+      "year": 2024,
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "rows": 252,
+      "cot_mapped": 252
+    },
+    {
+      "year": 2024,
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "rows": 198,
+      "cot_mapped": 198
+    },
+    {
+      "year": 2024,
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "rows": 244,
+      "cot_mapped": 244
+    },
+    {
+      "year": 2024,
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "rows": 254,
+      "cot_mapped": 254
+    },
+    {
+      "year": 2024,
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "rows": 245,
+      "cot_mapped": 245
+    },
+    {
+      "year": 2025,
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "rows": 240,
+      "cot_mapped": 240
+    },
+    {
+      "year": 2025,
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "rows": 239,
+      "cot_mapped": 239
+    },
+    {
+      "year": 2025,
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "rows": 247,
+      "cot_mapped": 247
+    },
+    {
+      "year": 2025,
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "rows": 245,
+      "cot_mapped": 245
+    },
+    {
+      "year": 2025,
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "rows": 195,
+      "cot_mapped": 195
+    },
+    {
+      "year": 2025,
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "rows": 253,
+      "cot_mapped": 253
+    },
+    {
+      "year": 2025,
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "rows": 247,
+      "cot_mapped": 247
+    },
+    {
+      "year": 2025,
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "rows": 239,
+      "cot_mapped": 239
+    }
+  ],
+  "pass_condition": "proven_early_use_rows must reproduce the audited lower-bound issue; clean OPAL/session models must use cot_available_at_utc as-of target/feature cutoff"
+}
