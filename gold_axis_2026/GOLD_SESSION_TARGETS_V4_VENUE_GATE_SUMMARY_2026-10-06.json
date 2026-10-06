@@ -227,8 +227,8 @@
   },
   "rows_excluded_core_total": 507,
   "hashes": {
-    "wgc_core": "71e8e1e77175688c59c9c90aaf74be259295569683c5abc7e4b6424990e9da8e",
-    "sobti_core": "3745f4253f4c0635da5b047b91b639d542159d3fd124dfab60c4a8db63a4b89f"
+    "wgc_core": "fd1f48d2cf191c8ea9979e7bce7499edb19ee7828036b5d24635c6176903b5de",
+    "sobti_core": "4ff1948694d0bc16e4264310484a2ee50b8d956888b7c5e2a905fb04c66b0b0b"
   },
   "model_gate": "Primary modelling must assert core_trainable==True. price_trainable-only rows may be used only in declared sensitivity analysis."
 }
