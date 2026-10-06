@@ -483,6 +483,278 @@ Binding caution:
 
 ---
 
+
+# 5E. Global Gold Session & Execution Research Authority — 2026-10-06
+
+**Status:** ACTIVE RESEARCH AUTHORITY / EXECUTION CLOCK NOT YET FROZEN  
+**Purpose:** determine **when** a valid short-horizon UP/DOWN signal becomes actionable, which global gold session carries the relevant price discovery, and whether one global forecast is sufficient or session-specific heads are required.
+
+This section supersedes ad-hoc “best hour” searches. No execution hour may be promoted from a retrospective timing scan alone.
+
+## 5E.1 Core business question
+
+The project must answer four different questions separately:
+
+1. **Forecast clock:** at what timestamp can the complete signal actually be computed using only information already available?
+2. **Price-discovery clock:** in which global session is the relevant gold information incorporated into price?
+3. **Execution clock:** after the signal is genuinely available, what entry/exit window is economically executable?
+4. **Venue clock:** can the intended instrument (spot/OTC, COMEX/Globex, Borsa İstanbul ETF/certificate, etc.) actually be traded in that window?
+
+A model can be directionally correct and still be a poor trading system if most of the move occurs before its actionable timestamp.
+
+## 5E.2 Global gold is not a three-box market
+
+The gold market is continuous and overlapping rather than three isolated “Asia / Europe / America” blocks.
+
+World Gold Council identifies the three dominant global centres as:
+- **London OTC**
+- **US futures / COMEX**
+- **Shanghai (SGE/SHFE)**
+
+These three centres account for **more than 90% of global gold trading volume** in the cited WGC market-structure framework. London OTC is the key wholesale hub; COMEX is the leading listed-derivatives venue; Shanghai is the principal Chinese physical/futures centre.
+
+Binding interpretation:
+- use **Asia, Europe, New York/London overlap, and late-US** as distinct research states;
+- do not assume a move belongs exclusively to one geography;
+- overlapping hours must be tested explicitly because price discovery can migrate between venues.
+
+## 5E.3 Authoritative market clocks
+
+### London / LBMA
+
+- Loco London precious-metals trading operates on a **24-hour basis** through the OTC market.
+- LBMA Gold Price auctions begin at:
+  - **10:30 London time — AM**
+  - **15:00 London time — PM**
+- These benchmarks are used for valuation/pricing across institutional gold products.
+- The benchmark has direct participants including major banks and market makers such as Goldman Sachs, JPMorgan, Morgan Stanley, HSBC, Citibank, Jane Street, Virtu, Standard Chartered, StoneX and others.
+
+These auction windows are therefore mandatory event-time markers in the execution study; they are **not** assumed automatically to be profitable entry points.
+
+### New York / COMEX
+
+- Standard COMEX Gold futures (GC) trade electronically for approximately **23 hours per trading day** on Globex, with a daily maintenance break.
+- The current project’s CIG-D1 issuance contract is **08:00 America/New_York**.
+- That timestamp is important because it lies at the beginning of the academically defined **New York/London overlap** window, not at the beginning of the European gold day.
+
+US macroeconomic-announcement time must be treated separately from ordinary clock time. High-frequency academic evidence finds that scheduled **08:30 New York** releases — especially employment-related and other major macro surprises — can have unusually large effects on gold futures returns, volatility and volume.
+
+### Shanghai / China
+
+Shanghai Gold Exchange has both night and day trading:
+- night session: **20:00–02:30 China time**
+- day session: **09:00–15:30 China time**
+with session breaks under the official SGE schedule.
+
+Therefore “Asia” itself must not be represented as one undifferentiated bucket.
+
+### Time-zone governance
+
+All canonical clocks must be stored in the **local market timezone**:
+- America/New_York
+- Europe/London
+- Asia/Shanghai
+- Europe/Istanbul
+
+Istanbul equivalents are derived per date using timezone-aware conversion. Fixed UTC offsets are forbidden because US/UK daylight-saving transitions do not match Türkiye.
+
+## 5E.4 Academic price-discovery map
+
+The primary academic authority for 24-hour session decomposition is:
+
+**Sobti, Sehgal & Ilango (2021), International Review of Financial Analysis, “How do macroeconomic news surprises affect round-the-clock price discovery of gold?”**
+
+Using one-minute data across New York, London and Shanghai, the paper partitions the day into five sequential zones (ET):
+- Asia Morning: **21:00–23:30**
+- Asia Afternoon: **01:30–03:30**
+- European: **03:30–08:00**
+- New York/London overlap (“Nylon”): **08:00–14:30**
+- US: **14:30–21:00**
+
+Key findings relevant to this project:
+- New York futures lead global price discovery overall, with about **56% information share** in the study.
+- The **New York/London overlap** is the most informative sequential trading zone, with about **51%** of price discovery in the study’s measure.
+- US macro surprises materially alter price-discovery leadership.
+- Eurozone and China news effects differ; the influence is state-dependent and asymmetric.
+
+Additional academic authority:
+- **Hauptfleisch, Putniņš & Lucey (2016), Journal of Futures Markets:** both London spot and New York futures contribute to gold price discovery, but New York futures play the larger role on average; the share varies intraday, across years, with daylight hours and macro announcements.
+- **Iwatsubo, Watkins & Xu (2018), Journal of Commodity Markets:** intraday efficiency/liquidity/volatility differ by session; the New York day session shows more informed trading than Tokyo for gold.
+- **Elder, Miao & Ramchander (2012), Journal of Banking & Finance:** US macro news effects on metals are swift and significant; the 08:30 US announcement cluster is particularly important.
+
+Binding interpretation:
+**the research unit is not merely “day”; it is signal × session × event state.**
+
+## 5E.5 What institutional practice implies — and what it does not
+
+Public institutional evidence supports the following structure:
+
+- Large wholesale gold trading is heavily OTC/London because OTC allows flexible deal size, pricing and bilateral execution.
+- COMEX futures provide deep, transparent, centrally cleared derivative liquidity and are widely used for price discovery and risk transfer.
+- Gold ETFs provide exchange-traded exposure, while authorised participants create/redeem large baskets; major products such as iShares Gold Trust reference the **LBMA Gold Price**, and IAU values bullion using the LBMA Gold Price PM for NAV.
+- Major institutions participate directly in the LBMA benchmark process.
+
+What public sources **do not** provide:
+- a universal proprietary “fund buys gold at X o’clock” rule;
+- a single institutional entry algorithm applicable to all funds;
+- evidence that VWAP/TWAP/benchmark execution automatically maximises directional alpha.
+
+Therefore the project may learn from institutional **venue, benchmark, liquidity and event-time structure**, but it must not fabricate proprietary fund timing rules.
+
+## 5E.6 Current short-term model clock — binding interpretation
+
+The present CIG-D1 action contract is issued at **08:00 New York**.
+
+Therefore:
+- it is **not an Asia-session forecast**;
+- it is **not a Europe-open forecast**;
+- it is best described as a **New York/London-overlap anchored daily action signal** whose features may contain global prior information;
+- any European-session price move occurring before 08:00 New York cannot be counted as executable P&L from this signal.
+
+This distinction is mandatory.
+
+If the complete CIG-D1 state can in fact be reconstructed earlier than 08:00 New York using only already-published inputs, that would constitute a **new, separately frozen issuance identity**, not a silent change to CIG-D1 V1.
+
+## 5E.7 Required execution audit before any “best hour” claim
+
+The following audit is mandatory and must be completed in order.
+
+### A. Source-ready timestamp audit
+
+For every binding expert/input:
+- source observation timestamp
+- publication timestamp
+- historical availability lag
+- API/file arrival timestamp where observable
+- computation completion time.
+
+Define:
+
+t_ready = max(all required source availability timestamps) + compute latency
+
+No execution price earlier than t_ready is allowed.
+
+### B. Session-path attribution
+
+For each frozen signal state:
+- 4/4 UP
+- 4/4 DOWN
+- UNCERTAIN
+
+measure the price path separately across:
+- Asia night / Asia day
+- Europe pre-overlap
+- New York/London overlap
+- late US
+- benchmark/event windows.
+
+This is attribution first, not optimisation.
+
+### C. Event-time controls
+
+Tag at minimum:
+- LBMA Gold Price AM
+- LBMA Gold Price PM
+- scheduled US 08:30 macro releases
+- major US central-bank/event times where applicable
+- major Eurozone/UK/China releases when an authoritative event calendar is available.
+
+Clock-time alpha must be separated from event-time alpha.
+
+### D. Development/transport rule
+
+- select execution logic only on **pre-2026 development chronology**
+- freeze it
+- transport unchanged into opened 2026
+- report 2026 by Jan–Jul and Aug–Sep separately
+- no re-optimisation on 2026.
+
+### E. Metrics
+
+For each candidate session rule report:
+- number of eligible signals
+- compound gross return
+- arithmetic mean and median trade return
+- hit rate
+- max drawdown
+- worst trade
+- return by month/quarter
+- turnover
+- sensitivity to ±15/30/60 minute entry shifts
+- cost/slippage break-even threshold.
+
+No candidate may be called robust if its edge exists only at one exact bar.
+
+## 5E.8 Architecture candidates to test
+
+The default research hierarchy is:
+
+**Layer 1 — Global Direction Core**  
+A common 24-hour state / CIG-style directional core.
+
+**Layer 2 — Session Heads**  
+Separate conditional heads for:
+- Asia
+- Europe
+- New York/London overlap
+- late US.
+
+Each head estimates whether the global direction remains actionable in that session.
+
+**Layer 3 — Execution Head**  
+Chooses entry/exit only after the relevant session head confirms that the move has not already been exhausted.
+
+Separate full models for every session are **not yet binding**. They are promoted only if session-specific heads materially outperform a common global model under frozen transport.
+
+## 5E.9 Research hypotheses — not conclusions
+
+H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
+
+H2. The New York/London overlap may be the highest-information zone, but a meaningful part of the daily move can occur before it; therefore a late issuance can be directionally correct while economically late.
+
+H3. Asia may contribute more through inventory/demand and overnight repricing than through the same information channel that dominates New York.
+
+H4. Benchmark and macro-announcement windows may explain apparent clock-time effects.
+
+H5. The optimal design may be **one global direction model + multiple session execution heads**, rather than fully independent Asia/Europe/US prediction models.
+
+All five hypotheses require project-specific validation.
+
+## 5E.10 Governance of prior timing experiments
+
+All execution-window results produced before this authority section — including retrospective “best hour” scans — are classified:
+
+**DIAGNOSTIC / NON-BINDING**
+
+They may be used to generate hypotheses only.
+
+No prior +return number may be reported as an expected investment return until:
+- source-ready timing is proven,
+- the same clock rule is frozen,
+- 2026 transport is reported,
+- costs/slippage/instrument availability are added.
+
+## 5E.11 External authority register
+
+Primary sources:
+- World Gold Council — Global Gold Market / Market Structure: https://www.gold.org/gold-market-structure/global-gold-market
+- World Gold Council — Wholesale OTC vs Exchange: https://www.gold.org/about-us/what-we-do/market-infrastructure/gold-trading-wholesale-market
+- LBMA — Loco London: https://www.lbma.org.uk/market-standards/about-loco-london
+- LBMA — Daily Auction Prices: https://www.lbma.org.uk/prices-and-data/about-lbma-daily-auction-prices
+- LBMA — Gold Price / direct participants: https://www.lbma.org.uk/prices-and-data/lbma-gold-price
+- CME Group — Gold futures: https://www.cmegroup.com/markets/metals/precious/gold-futures.html
+- Shanghai Gold Exchange — Trading Hours: https://en.sge.com.cn/h5_trading_ProductsIntroduce
+- iShares Gold Trust — institutional product / LBMA benchmark reference: https://www.ishares.com/us/products/239561/ishares-gold-trust
+
+Academic sources:
+- Sobti, N., Sehgal, S., Ilango, B. (2021), *International Review of Financial Analysis* 78, 101893. DOI: 10.1016/j.irfa.2021.101893
+- Hauptfleisch, M., Putniņš, T. J., Lucey, B. (2016), *Journal of Futures Markets* 36, 564–586. DOI: 10.1002/fut.21775
+- Iwatsubo, K., Watkins, C., Xu, T. (2018), *Journal of Commodity Markets* 11, 59–71. DOI: 10.1016/j.jcomm.2018.05.001
+- Elder, J., Miao, H., Ramchander, S. (2012), *Journal of Banking & Finance* 36, 51–65. DOI: 10.1016/j.jbankfin.2011.06.007
+
+**Next authorized action from this section:** complete the source-ready timestamp audit and build a session-attribution panel before any further entry-hour optimisation.
+
+
 # 6. Evaluation Contract
 
 ## 6.1 Event prediction
