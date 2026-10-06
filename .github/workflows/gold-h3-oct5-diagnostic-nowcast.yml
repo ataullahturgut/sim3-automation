@@ -33,7 +33,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          cp gold_axis_2026/OCT6_DIAGNOSTIC_NOWCAST_OUT/OCT5_DIAGNOSTIC_NOWCAST.json gold_axis_2026/GOLD_H3_OCT6_DIAGNOSTIC_NOWCAST_2026-10-06.json
+          cp gold_axis_2026/OCT6_DIAGNOSTIC_NOWCAST_OUT/OCT6_DIAGNOSTIC_NOWCAST.json gold_axis_2026/GOLD_H3_OCT6_DIAGNOSTIC_NOWCAST_2026-10-06.json
           cp gold_axis_2026/OCT6_DIAGNOSTIC_NOWCAST_OUT/ALT_DAILY_PRICES.csv gold_axis_2026/GOLD_H3_OCT6_DIAGNOSTIC_ALT_PRICES_2026-10-06.csv
           git add gold_axis_2026/GOLD_H3_OCT6_DIAGNOSTIC_*
           if ! git diff --cached --quiet; then
