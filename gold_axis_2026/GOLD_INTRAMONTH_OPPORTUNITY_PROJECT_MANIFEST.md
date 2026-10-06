@@ -1631,6 +1631,63 @@ Stage-1 status after cross-metal diagnostic:
 - [ ] S1.7 SAGE A1_SESSION
 - [ ] S1.8 SAGE A1_PATH_SESSION
 
+### 5E.8M Cross-metal intraday PATH ablation checkpoint — 2026-10-06
+
+Authorities:
+- `GOLD_SESSION_STRUCTURAL_IRIS_CROSSMETAL_V1_RESULT_2026-10-06.md`
+- `GOLD_SESSION_STRUCTURAL_IRIS_CROSSMETAL_V1_SUMMARY_2026-10-06.json`
+- `GOLD_SESSION_STRUCTURAL_IRIS_CROSSMETAL_V1_METRICS_2023_2024.csv`
+- `GOLD_SESSION_STRUCTURAL_IRIS_CROSSMETAL_V1_PREDICTIONS_2023_2024.csv`
+- `GOLD_SESSION_STRUCTURAL_IRIS_CROSSMETAL_V1_COVERAGE_2023_2024.csv`
+
+Status:
+- **matched-sample development diagnostic COMPLETE**;
+- 2025/2026 remain unopened;
+- no archived NOVA/A1 prediction file was consumed;
+- fresh A1 was regenerated from the governed raw daily Gold/Silver/Platinum lineage before the hourly experiment.
+
+Intraday source gate:
+- XAU/USD Twelve/Neon 1h: **17,644 rows**, 2022-01-02 -> 2024-12-31;
+- Silver Databento `SI.n.0` 1h: **17,748 rows**, 2022-01-02 -> 2024-12-31;
+- Platinum Databento `PL.n.0` 1h: **17,749 rows**, 2022-01-02 -> 2024-12-31;
+- Platinum source gate: **PASS**;
+- Databento estimated PL retrieval cost: **USD 0.17587967217**;
+- every hourly close is usable only after its bar completes;
+- maximum admitted source staleness at target start: **120 minutes**, fixed before scoring.
+
+Matched representations:
+1. `A1_XAU_PATH` = fresh A1 base logit + XAU hourly PATH;
+2. `A1_XAU_SI_PATH` = baseline + Silver hourly PATH;
+3. `A1_XAU_SI_PL_PATH` = baseline + Silver + Platinum hourly PATH.
+
+All three variants were fitted on the same common rows. SI/PL are GLBX.MDP3 futures-derived exogenous PATH features and are **not** treated as spot-metal replacements. The `n.0` continuous identity was fixed ex ante for this source experiment; no roll rule was chosen from outcomes.
+
+Because fresh session A1 itself requires **252 matured same-window observations**, and the Structural-IRIS layer then requires **180 matured rows**, the causally scored comparison begins only in 2024. This is a warm-up limitation, not missing-market-data evidence. Sobti Late-US had only 139 common post-A1 rows and therefore produced no Structural-IRIS score; WGC Asia produced only 15 scored rows and is too small for promotion inference.
+
+Key matched 2024 results:
+
+| Window | A1+XAU Acc / BA / Brier | +SI Acc / BA / Brier | +SI+PL Acc / BA / Brier |
+|---|---:|---:|---:|
+| Sobti Asia Afternoon | 44.19% / 44.59% / 0.2661 | **53.49% / 53.46% / 0.2508** | 53.49% / 53.68% / 0.2551 |
+| Sobti Asia Morning | **58.14% / 55.37% / 0.2476** | 48.84% / 47.04% / 0.2645 | 53.49% / 51.75% / 0.2832 |
+| Sobti Europe | 44.12% / 41.06% / 0.2750 | 42.65% / 39.71% / 0.2920 | 41.18% / 38.36% / 0.3049 |
+| Sobti NY/London | 51.56% / 53.77% / **0.2639** | **54.69% / 56.55%** / 0.2674 | 53.12% / 55.56% / 0.2683 |
+| WGC Europe | 44.78% / 41.49% / 0.2734 | 43.28% / 40.14% / 0.2931 | 47.76% / 44.19% / 0.3083 |
+| WGC US | 48.39% / 48.75% / 0.2769 | 48.39% / 48.75% / 0.2736 | 41.94% / 42.50% / 0.3081 |
+
+Binding interpretation:
+- hourly **Silver is not universally additive**;
+- the only development slices with a meaningful directional lift from SI are **Sobti Asia Afternoon** and **Sobti NY/London**;
+- on NY/London the directional lift comes with a slightly worse Brier score, so this is not yet a full probability-quality pass;
+- hourly **Platinum does not show robust incremental value** over XAU+SI and often worsens probability quality;
+- therefore SI/PL must **not** be added wholesale to every session head;
+- Platinum is **NOT PROMOTED** at this checkpoint;
+- Silver remains a **selective per-window challenger** only, principally Asia Afternoon and NY/London;
+- 2025 transport remains closed. No 2025 result may be used to choose whether SI is retained.
+
+This cross-metal diagnostic does **not** replace the full-coverage S1.4 `IRIS A1_PLUS_PATH / STRUCTURAL_IRIS` replay. The canonical S1.4 baseline still needs its maximal admissible A1+XAU panel; the SI challenger, if carried forward, must be compared against that frozen baseline without using 2025 outcomes.
+
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
