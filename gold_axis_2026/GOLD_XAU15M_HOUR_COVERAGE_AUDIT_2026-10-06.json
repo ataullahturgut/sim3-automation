@@ -1,0 +1,375 @@
+{
+  "status": "XAU15M_UTC_HOUR_COVERAGE_AUDIT",
+  "yearly": {
+    "2023": {
+      "rows": 23307,
+      "active_dates": 308,
+      "median_bars_active_date": 92.0,
+      "p10_bars_active_date": 8.0,
+      "p90_bars_active_date": 92.0,
+      "first_hm_modes": {
+        "00:00": 256,
+        "22:00": 33,
+        "23:00": 18,
+        "05:45": 1
+      },
+      "last_hm_modes": {
+        "23:45": 256,
+        "19:45": 25,
+        "20:45": 25,
+        "22:15": 1,
+        "18:30": 1
+      },
+      "exact_21_00_dates": 67,
+      "exact_22_00_dates": 168,
+      "exact_12_00_dates": 257,
+      "exact_07_00_dates": 256
+    },
+    "2024": {
+      "rows": 23618,
+      "active_dates": 312,
+      "median_bars_active_date": 92.0,
+      "p10_bars_active_date": 4.400000000000006,
+      "p90_bars_active_date": 92.0,
+      "first_hm_modes": {
+        "00:00": 258,
+        "23:00": 32,
+        "22:00": 21,
+        "01:45": 1
+      },
+      "last_hm_modes": {
+        "23:45": 258,
+        "20:45": 34,
+        "21:45": 13,
+        "19:45": 5,
+        "19:30": 1,
+        "18:30": 1
+      },
+      "exact_21_00_dates": 80,
+      "exact_22_00_dates": 156,
+      "exact_12_00_dates": 259,
+      "exact_07_00_dates": 259
+    },
+    "2025": {
+      "rows": 26966,
+      "active_dates": 347,
+      "median_bars_active_date": 94.0,
+      "p10_bars_active_date": 13.000000000000007,
+      "p90_bars_active_date": 96.0,
+      "first_hm_modes": {
+        "00:00": 292,
+        "21:45": 14,
+        "23:00": 10,
+        "14:00": 10,
+        "22:00": 8,
+        "13:00": 7,
+        "22:45": 2,
+        "14:15": 2
+      },
+      "last_hm_modes": {
+        "23:45": 293,
+        "13:45": 23,
+        "12:45": 12,
+        "21:45": 10,
+        "20:45": 5,
+        "22:45": 1,
+        "10:00": 1,
+        "23:30": 1
+      },
+      "exact_21_00_dates": 232,
+      "exact_22_00_dates": 244,
+      "exact_12_00_dates": 291,
+      "exact_07_00_dates": 293
+    }
+  },
+  "monthly": [
+    {
+      "month": "2023-01",
+      "rows": 1895,
+      "active_dates": 26,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2023-02",
+      "rows": 1793,
+      "active_dates": 24,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2023-03",
+      "rows": 2074,
+      "active_dates": 27,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2023-04",
+      "rows": 1723,
+      "active_dates": 24,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 8,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2023-05",
+      "rows": 2075,
+      "active_dates": 26,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 8,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2023-06",
+      "rows": 2005,
+      "active_dates": 26,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 8,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2023-07",
+      "rows": 1923,
+      "active_dates": 26,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 8,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2023-08",
+      "rows": 2116,
+      "active_dates": 27,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 8,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2023-09",
+      "rows": 1914,
+      "active_dates": 25,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 8,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2023-10",
+      "rows": 2016,
+      "active_dates": 27,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 8,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2023-11",
+      "rows": 1977,
+      "active_dates": 26,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2023-12",
+      "rows": 1796,
+      "active_dates": 24,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2024-01",
+      "rows": 1971,
+      "active_dates": 27,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2024-02",
+      "rows": 1903,
+      "active_dates": 24,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2024-03",
+      "rows": 1844,
+      "active_dates": 25,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2024-04",
+      "rows": 2008,
+      "active_dates": 26,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2024-05",
+      "rows": 2082,
+      "active_dates": 27,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2024-06",
+      "rows": 1818,
+      "active_dates": 25,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2024-07",
+      "rows": 2106,
+      "active_dates": 27,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 8,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2024-08",
+      "rows": 2016,
+      "active_dates": 26,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 8,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2024-09",
+      "rows": 1930,
+      "active_dates": 26,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 8,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2024-10",
+      "rows": 2116,
+      "active_dates": 27,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 8,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2024-11",
+      "rows": 1905,
+      "active_dates": 25,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2024-12",
+      "rows": 1919,
+      "active_dates": 27,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2025-01",
+      "rows": 2012,
+      "active_dates": 27,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2025-02",
+      "rows": 1830,
+      "active_dates": 24,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2025-03",
+      "rows": 1940,
+      "active_dates": 26,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 4,
+      "max_bars_active_date": 92
+    },
+    {
+      "month": "2025-04",
+      "rows": 1818,
+      "active_dates": 25,
+      "median_bars_active_date": 92.0,
+      "min_bars_active_date": 8,
+      "max_bars_active_date": 96
+    },
+    {
+      "month": "2025-05",
+      "rows": 2462,
+      "active_dates": 31,
+      "median_bars_active_date": 95.0,
+      "min_bars_active_date": 8,
+      "max_bars_active_date": 96
+    },
+    {
+      "month": "2025-06",
+      "rows": 2314,
+      "active_dates": 30,
+      "median_bars_active_date": 96.0,
+      "min_bars_active_date": 10,
+      "max_bars_active_date": 96
+    },
+    {
+      "month": "2025-07",
+      "rows": 2507,
+      "active_dates": 31,
+      "median_bars_active_date": 96.0,
+      "min_bars_active_date": 9,
+      "max_bars_active_date": 96
+    },
+    {
+      "month": "2025-08",
+      "rows": 2341,
+      "active_dates": 31,
+      "median_bars_active_date": 96.0,
+      "min_bars_active_date": 9,
+      "max_bars_active_date": 96
+    },
+    {
+      "month": "2025-09",
+      "rows": 2372,
+      "active_dates": 30,
+      "median_bars_active_date": 96.0,
+      "min_bars_active_date": 9,
+      "max_bars_active_date": 96
+    },
+    {
+      "month": "2025-10",
+      "rows": 2456,
+      "active_dates": 31,
+      "median_bars_active_date": 96.0,
+      "min_bars_active_date": 9,
+      "max_bars_active_date": 96
+    },
+    {
+      "month": "2025-11",
+      "rows": 2322,
+      "active_dates": 30,
+      "median_bars_active_date": 96.0,
+      "min_bars_active_date": 5,
+      "max_bars_active_date": 96
+    },
+    {
+      "month": "2025-12",
+      "rows": 2592,
+      "active_dates": 31,
+      "median_bars_active_date": 96.0,
+      "min_bars_active_date": 44,
+      "max_bars_active_date": 96
+    }
+  ]
+}
