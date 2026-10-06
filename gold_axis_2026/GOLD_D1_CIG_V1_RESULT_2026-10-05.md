@@ -440,3 +440,29 @@ DOWN-only:
 **Binding consequence:** the historical 74.40% remains valid only as daily-label accuracy. CIG-D1 V1 is not established as an 08:00-NY-forward tradable same-day direction model.
 
 Earlier reconstructed 151/131 timing results are superseded for the canonical Jan-Jul CIG interpretation.
+
+
+## 14. Exact canonical 125 post-issue reconciliation — 2026-10-06
+
+Authority:
+- `GOLD_CIG_EXACT_125_CLOCK_RESCORE_RESULT_2026-10-06.md`
+
+The original 2026 Jan-Jul CIG population was recovered exactly from the prior daily-realization artifact.
+
+Exact reproduction:
+- universe: **145**
+- consensus: **125**
+- consensus correct: **93**
+- historical daily-label accuracy: **74.40%**
+- disagreement: **20**
+- disagreement correct: **10**.
+
+Using those identical 125 consensus rows and XAU/USD 15-minute prices beginning strictly after the governed 08:00 New York deadline:
+
+- 08:15 -> 16:00 NY: **59/125 = 47.20%**
+- 08:15 -> 20:00 NY: **59/125 = 47.20%**
+- 17:00 -> 20:00 NY: **63/125 = 50.40%**
+
+Therefore 74.40% is confirmed as **historical daily-reference label accuracy**, not post-08:00 executable direction accuracy.
+
+Any prior canonical-CIG interpretation that treated 74.40% as tradable same-day accuracy after issuance is superseded.
