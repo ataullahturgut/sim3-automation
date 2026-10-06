@@ -1569,6 +1569,68 @@ S1.4 must regenerate both inputs in one chronology:
 - fresh hourly PATH features from raw XAU 1h;
 - no archived IRIS/A1 prediction file may be consumed.
 
+### 5E.8M Cross-metal intraday PATH diagnostic — 2026-10-06
+
+Authorities:
+- `GOLD_SESSION_STRUCTURAL_IRIS_CROSSMETAL_V1_SUMMARY_2026-10-06.json`
+- `GOLD_SESSION_STRUCTURAL_IRIS_CROSSMETAL_V1_RESULT_2026-10-06.md`
+- `GOLD_SESSION_STRUCTURAL_IRIS_CROSSMETAL_V1_METRICS_2023_2024.csv`
+- `GOLD_SESSION_STRUCTURAL_IRIS_CROSSMETAL_V1_COVERAGE_2023_2024.csv`
+
+Status:
+- **DIAGNOSTIC COMPLETE; NOT A PROMOTED S1.4 RESULT**
+- purpose: isolate whether intraday Silver/Platinum PATH adds information beyond fresh A1 + XAU PATH;
+- 2025/2026 remain unopened;
+- all variants are evaluated on the same common feature rows;
+- no archived NOVA/A1/IRIS prediction artifact is consumed.
+
+Raw intraday sources:
+- XAU/USD: Twelve/Neon hourly research series, **17,644** rows over 2022–2024;
+- Silver: Databento GLBX.MDP3 **SI.n.0**, **17,748** hourly rows over 2022–2024;
+- Platinum: Databento GLBX.MDP3 **PL.n.0**, source gate **PASS**, **17,749** hourly rows over 2022–2024;
+- PL fetch estimated billed cost: **USD 0.17588**;
+- all hourly close features become available only after the corresponding hourly bar completes;
+- maximum accepted feature staleness = **120 minutes**, fixed as a source-quality rule rather than tuned by outcome.
+
+Matched variants:
+- `A1_XAU_PATH` = fresh session A1 structural logit + XAU PATH;
+- `A1_XAU_SI_PATH` = baseline + Silver PATH;
+- `A1_XAU_SI_PL_PATH` = baseline + Silver + Platinum PATH.
+
+Important chronology limitation:
+- fresh A1 itself requires **252 matured same-window outcomes**;
+- the downstream Structural-IRIS diagnostic then requires **180 matured A1 rows** before scoring;
+- therefore scored rows occur only in **late 2024** and are small (**N=15–68** by window);
+- Sobti Late-US has only **139** common feature rows and therefore produces **no scored downstream row** under the 180-row rule;
+- this experiment must not be interpreted as a full 2023–2024 S1.4 validation or used to open 2025.
+
+Diagnostic findings on matched scored rows:
+- **Sobti Asia Afternoon:** XAU-only **44.59% BA** -> +SI **53.46%** -> +SI+PL **53.68%**; Silver is materially helpful in this small late-2024 slice and also improves Brier from **0.2661 to 0.2508**;
+- **Sobti NY/London:** **53.77% BA** -> +SI **56.55%** -> +SI+PL **55.56%**; Silver improves classification balance, while Platinum does not add further value;
+- **Sobti Asia Morning:** XAU-only **55.37% BA** -> +SI **47.04%** -> +SI+PL **51.75%**; cross-metal PATH degrades the stronger XAU-only result;
+- **Sobti Europe:** **41.06% BA** -> +SI **39.71%** -> +SI+PL **38.36%**; cross-metal PATH is harmful;
+- **WGC Europe:** XAU-only **41.49% BA** -> +SI **40.14%** -> +SI+PL **44.19%**; Platinum lifts direction metrics modestly but sharply worsens Brier, so this is not promotion evidence;
+- **WGC US:** **48.75% BA** -> +SI **48.75%** -> +SI+PL **42.50%**; no Silver gain and Platinum is harmful;
+- **WGC Asia:** N=15 only; the apparent BA lift to **50.00%** is too small to interpret.
+
+Binding interpretation:
+- intraday Silver/Platinum omission is **not proven to be a universal model defect**;
+- **Silver shows a targeted signal in Sobti Asia Afternoon and NY/London**, but degrades other windows;
+- Platinum provides **no broad incremental edge** over Silver and often worsens probability quality;
+- cross-metal intraday information, if retained, must therefore be **window-specific rather than globally appended**;
+- because the downstream sample is too small, **S1.4 remains open** and 2025 must remain unopened;
+- the next scientifically valid step is to solve the structural warm-up/history problem or use a preregistered one-stage representation that yields materially larger 2023–2024 scored samples without using 2025/2026.
+
+Stage-1 status after cross-metal diagnostic:
+- [x] S1.1 NOVA A0 / CORE3
+- [x] S1.2 NOVA A1 / ARCR
+- [x] S1.3 IRIS HOURLY_ONLY_ALL / PATH_GLOBAL
+- [ ] S1.4 IRIS A1_PLUS_PATH / STRUCTURAL_IRIS — **OPEN; cross-metal diagnostic completed but insufficient downstream history**
+- [ ] S1.5 SAGE SESSION_ONLY
+- [ ] S1.6 SAGE PATH_SESSION
+- [ ] S1.7 SAGE A1_SESSION
+- [ ] S1.8 SAGE A1_PATH_SESSION
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
