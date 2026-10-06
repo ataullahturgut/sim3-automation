@@ -2055,6 +2055,86 @@ Stage-1 implication:
 
 
 
+### 5E.8S Nested variable / lag selection authority and development blueprint — 2026-10-06
+
+Authorities:
+- `GOLD_SESSION_IRIS15_NESTED_SELECTION_V1_SUMMARY_2026-10-06.json`
+- `GOLD_SESSION_IRIS15_NESTED_SELECTION_V1_FEATURE_STABILITY_2026-10-06.csv`
+- `GOLD_SESSION_IRIS15_NESTED_SELECTION_V2_BALANCED_SUMMARY_2026-10-06.json`
+- `GOLD_SESSION_IRIS15_NESTED_SELECTION_V2_BALANCED_FEATURE_STABILITY_2026-10-06.csv`
+- frozen development blueprint: `GOLD_SESSION_IRIS15_VARIABLE_SELECTION_DEV_BLUEPRINT_2026-10-06.json`
+
+Status:
+- **TRAINING-ONLY VARIABLE/LAG SELECTION COMPLETE**
+- 2023–2024 development chronology only; **2025/2026 remain unopened**.
+- Variable selection is now part of the challenger architecture, but only where it improves the window under explicit class-balance safeguards.
+
+Leakage control:
+- every outer 5-row test block is predicted from a model built only on matured same-window history before that block;
+- inside each outer training set, C/feature selection uses up to three chronological expanding validation folds of 20 rows;
+- no outer test label is used to select its own variables, lag, regularization strength, or coefficient;
+- the selector is standardized L1 logistic with C in `[0.03, 0.10, 0.30, 1.00, 3.00]`;
+- among candidates within 1 percentage point of best inner Balanced Accuracy, lower Brier is preferred, then fewer features / smaller C;
+- selected variables are refit with L2 C=0.30;
+- a second run repeated the same nested procedure with `class_weight=balanced` in both selector and refit.
+
+Candidate pools:
+1. `SELECT_XAU15`: daily CORE3 + XAU15 full IRIS.
+2. `SELECT_ALL15`: daily CORE3 + XAU15 + SI15 + PL15 full IRIS.
+3. Balanced versions of both.
+4. Fixed reference = `FULL_XAU15_L2_C1`.
+
+Important result:
+- sparse selection materially improves probability quality in several windows, but **selection must not be forced everywhere**;
+- some selected models improve Brier while degrading Balanced Accuracy or collapsing one class;
+- therefore window-specific selection is required.
+
+Examples of stable lag/variable structure:
+- **Sobti Asia Afternoon:** XAU `lag2`, 6h, 12h and 24h returns repeatedly survive selection; daily `gold_r3`, `platinum_r21`, daily Silver/Platinum returns and `sigma20` also recur;
+- **Sobti Asia Morning:** `gold_r5`, XAU 3h/1h/6h returns, 24h max drawdown and 24h slope are recurrent;
+- **Sobti NY/London:** `gold_r5`, `sigma20`, XAU 48h RV, 6h slope, 24h jump/range/shape and 3h return recur;
+- **WGC Europe:** daily `silver_r1`, `gold_r21`, `silver_r21`, XAU 3h return and XAU `lag2` are the clearest recurrent features;
+- **WGC US:** no comparably stable high-frequency subset emerges; the sparse model is materially less stable.
+
+Balanced-selection findings:
+- Sobti Asia Afternoon `SELECT_XAU15_BAL`: **Acc 55.91%, BA 55.83%, Brier 0.2699**, versus FULL XAU15 **52.69%, 52.43%, 0.2999**;
+- Sobti Asia Morning: FULL XAU15 remains directionally stronger (**BA 55.20%**) than selected balanced (**53.03%**);
+- Sobti Europe: sparse variants improve Brier but produce one-sided class recall and therefore do not pass the selection safety rule;
+- Sobti NY/London: FULL XAU15 remains directionally stronger (**BA 55.13%**) than selected balanced (**54.28%**);
+- WGC Europe: unbalanced nested `SELECT_XAU15` is the strongest admissible sparse challenger (**BA 51.95%, Brier 0.2727**) and retains both class recalls above the preregistered floor;
+- WGC US: sparse/cross-metal candidates either underperform or produce one-sided recall collapse; FULL XAU15 is retained;
+- Sobti Late-US and WGC Asia remain non-interpretable because scored N is too small.
+
+Development model-selection safety rule:
+- minimum scored N for choosing a head = **80**;
+- candidate must satisfy **min(UP recall, DOWN recall) >= 30%**;
+- among admissible candidates, primary metric = Balanced Accuracy; Brier is secondary;
+- a model cannot be chosen merely because overall accuracy or Brier improves while one class collapses.
+
+Frozen 2023–2024 development blueprint:
+- Sobti Asia Afternoon → **SELECT_XAU15_BAL**
+- Sobti Asia Morning → **FULL_XAU15_L2_C1**
+- Sobti Europe → **FULL_XAU15_L2_C1**
+- Sobti NY/London → **FULL_XAU15_L2_C1**
+- Sobti Late-US → **INSUFFICIENT_DEV_SCORE**
+- WGC Asia → **INSUFFICIENT_DEV_SCORE**
+- WGC Europe → **SELECT_XAU15**
+- WGC US → **FULL_XAU15_L2_C1**
+
+Cross-metal interpretation:
+- SI15/PL15 are often selected in some training blocks, especially Asia Afternoon and NY/London;
+- nevertheless, **intraday SI15/PL15 are still NOT PROMOTED** because the all-metal models do not yield a stable class-balanced improvement over the chosen per-window representation;
+- daily Silver/Platinum variables remain part of CORE3 and may survive the selector.
+
+Stage-1 implication:
+- variable and lag selection is now integrated into the development architecture where evidence supports it;
+- no global single feature set is imposed across all sessions;
+- the above blueprint is a **development freeze**, not a final operational promotion;
+- canonical S1.4 A1_PLUS_PATH remains open and must still be completed;
+- 2025 remains reserved for frozen transport after the full Stage-1 representation contract is complete.
+
+
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
