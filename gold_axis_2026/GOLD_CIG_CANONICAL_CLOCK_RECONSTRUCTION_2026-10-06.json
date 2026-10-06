@@ -1,0 +1,218 @@
+{
+  "status": "CANONICAL_CIG_CLOCK_RECONSTRUCTION_MISMATCH",
+  "pinned_source_commit": "fcbf50080afdf164dae460e8e855faf3f72bb1b0",
+  "candidate_label_clock": "XAU/USD exact 16:00 America/New_York hourly anchor close, previous available 16:00 anchor -> current 16:00 anchor",
+  "canonical_expected": {
+    "universe_n": 145,
+    "sage_correct": 103,
+    "v5_correct": 102,
+    "rift_correct": 102,
+    "vega_correct": 102,
+    "consensus_n": 125,
+    "consensus_correct": 93,
+    "disagreement_n": 20,
+    "disagreement_correct": 10
+  },
+  "canonical_reconstructed": {
+    "universe_n": 151,
+    "sage": {
+      "n": 151,
+      "correct": 76,
+      "accuracy": 0.5033112582781457
+    },
+    "v5": {
+      "n": 151,
+      "correct": 75,
+      "accuracy": 0.4966887417218543
+    },
+    "rift": {
+      "n": 151,
+      "correct": 75,
+      "accuracy": 0.4966887417218543
+    },
+    "vega": {
+      "n": 151,
+      "correct": 77,
+      "accuracy": 0.5099337748344371
+    },
+    "consensus_n": 131,
+    "consensus_correct": 67,
+    "consensus_accuracy": 0.5114503816793893,
+    "disagreement_n": 20,
+    "disagreement_v5_correct": 8,
+    "mapped_sage_ruleflow_events": [
+      {
+        "feature_cutoff_date": "2026-02-03",
+        "forecast_issue_date": "2026-02-04",
+        "source": "SAGE_V2",
+        "v5_pred": 1,
+        "combined_pred": 0
+      },
+      {
+        "feature_cutoff_date": "2026-02-11",
+        "forecast_issue_date": "2026-02-12",
+        "source": "RULEFLOW_V3_TG",
+        "v5_pred": 1,
+        "combined_pred": 0
+      },
+      {
+        "feature_cutoff_date": "2026-05-26",
+        "forecast_issue_date": "2026-05-27",
+        "source": "SAGE_V2",
+        "v5_pred": 0,
+        "combined_pred": 1
+      },
+      {
+        "feature_cutoff_date": "2026-07-10",
+        "forecast_issue_date": "2026-07-13",
+        "source": "SAGE_V2",
+        "v5_pred": 1,
+        "combined_pred": 0
+      },
+      {
+        "feature_cutoff_date": "2026-07-15",
+        "forecast_issue_date": "2026-07-16",
+        "source": "SAGE_V2",
+        "v5_pred": 1,
+        "combined_pred": 0
+      }
+    ]
+  },
+  "checks": {
+    "universe_n": false,
+    "sage_correct": false,
+    "v5_correct": false,
+    "rift_correct": false,
+    "vega_correct": false,
+    "consensus_n": false,
+    "consensus_correct": false,
+    "disagreement_n": true,
+    "disagreement_correct": false
+  },
+  "exact_match": false,
+  "post_issue_same_rows": {},
+  "clock_translation": {
+    "16:00_NY": "23:00 Istanbul during US DST; 00:00 next day during US standard time",
+    "08:00_NY": "15:00 Istanbul during US DST; 16:00 during US standard time",
+    "08:15_NY": "15:15 Istanbul during US DST; 16:15 during US standard time"
+  },
+  "guardrails": [
+    "Canonical reconstruction must match all published 145/125/93 and expert counts before post-issue results are promoted.",
+    "08:15 is the first strictly post-08:00 15-minute bar used here; 08:00 bar open is not used as post-signal execution.",
+    "15-minute execution outcomes are gross XAU/USD spot diagnostics, not instrument-specific net P&L."
+  ],
+  "api_meta": {
+    "h1": [
+      {
+        "interval": "1h",
+        "start": "2025-12-15 00:00:00",
+        "end": "2025-12-31 23:59:59",
+        "rows": 360
+      },
+      {
+        "interval": "1h",
+        "start": "2026-01-01 00:00:00",
+        "end": "2026-01-31 23:59:59",
+        "rows": 720
+      },
+      {
+        "interval": "1h",
+        "start": "2026-02-01 00:00:00",
+        "end": "2026-02-28 23:59:59",
+        "rows": 672
+      },
+      {
+        "interval": "1h",
+        "start": "2026-03-01 00:00:00",
+        "end": "2026-03-31 23:59:59",
+        "rows": 743
+      },
+      {
+        "interval": "1h",
+        "start": "2026-04-01 00:00:00",
+        "end": "2026-04-30 23:59:59",
+        "rows": 719
+      },
+      {
+        "interval": "1h",
+        "start": "2026-05-01 00:00:00",
+        "end": "2026-05-31 23:59:59",
+        "rows": 744
+      },
+      {
+        "interval": "1h",
+        "start": "2026-06-01 00:00:00",
+        "end": "2026-06-30 23:59:59",
+        "rows": 720
+      },
+      {
+        "interval": "1h",
+        "start": "2026-07-01 00:00:00",
+        "end": "2026-07-31 23:59:59",
+        "rows": 744
+      },
+      {
+        "interval": "1h",
+        "start": "2026-08-01 00:00:00",
+        "end": "2026-08-02 23:59:59",
+        "rows": 48
+      }
+    ],
+    "m15": [
+      {
+        "interval": "15min",
+        "start": "2025-12-15 00:00:00",
+        "end": "2025-12-31 23:59:59",
+        "rows": 1440
+      },
+      {
+        "interval": "15min",
+        "start": "2026-01-01 00:00:00",
+        "end": "2026-01-31 23:59:59",
+        "rows": 2880
+      },
+      {
+        "interval": "15min",
+        "start": "2026-02-01 00:00:00",
+        "end": "2026-02-28 23:59:59",
+        "rows": 2688
+      },
+      {
+        "interval": "15min",
+        "start": "2026-03-01 00:00:00",
+        "end": "2026-03-31 23:59:59",
+        "rows": 2972
+      },
+      {
+        "interval": "15min",
+        "start": "2026-04-01 00:00:00",
+        "end": "2026-04-30 23:59:59",
+        "rows": 2876
+      },
+      {
+        "interval": "15min",
+        "start": "2026-05-01 00:00:00",
+        "end": "2026-05-31 23:59:59",
+        "rows": 2976
+      },
+      {
+        "interval": "15min",
+        "start": "2026-06-01 00:00:00",
+        "end": "2026-06-30 23:59:59",
+        "rows": 2880
+      },
+      {
+        "interval": "15min",
+        "start": "2026-07-01 00:00:00",
+        "end": "2026-07-31 23:59:59",
+        "rows": 2976
+      },
+      {
+        "interval": "15min",
+        "start": "2026-08-01 00:00:00",
+        "end": "2026-08-02 23:59:59",
+        "rows": 192
+      }
+    ]
+  }
+}
