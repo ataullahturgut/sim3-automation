@@ -1892,6 +1892,93 @@ Data decision:
 
 
 
+### 5E.8Q IRIS15 full lag / volatility / shape cross-metal replay — 2026-10-06
+
+Authorities:
+- `GOLD_SESSION_IRIS15_CROSSMETAL_V2_MAINTAWARE_SUMMARY_2026-10-06.json`
+- `GOLD_SESSION_IRIS15_CROSSMETAL_V2_MAINTAWARE_RESULT_2026-10-06.md`
+- `GOLD_SESSION_IRIS15_CROSSMETAL_V2_MAINTAWARE_METRICS_2023_2024.csv`
+- `GOLD_SESSION_IRIS15_CROSSMETAL_V2_MAINTAWARE_COVERAGE_2023_2024.csv`
+- `GOLD_SESSION_IRIS15_CROSSMETAL_V2_MAINTAWARE_ASIA_SAMPLES_2026-10-06.csv`
+
+Status:
+- **15-MINUTE FULL-IRIS DIAGNOSTIC COMPLETE**
+- 2023–2024 development chronology only; **2025/2026 remain unopened**.
+- This is a one-stage CORE3 + intraday-IRIS representation diagnostic, not the canonical S1.4 A1_PLUS_PATH promotion result.
+
+Features retained:
+- daily CORE3 is unchanged and still contains **Gold `sigma20`**;
+- exact-clock intraday returns: **1h, 3h, 6h, 12h, 24h, 48h**;
+- original IRIS **lag2** semantics retained as an exact 1-hour return ending two hours before the anchor;
+- realized volatility: **RV 6h / 12h / 24h / 48h**;
+- 24h upside semivolatility, downside semivolatility, downside/upside semivol ratio;
+- jump concentration and 24h range;
+- shape family: up-fraction, 6h/24h slope, max drawdown, recovery, close location, age of maximum positive/negative move;
+- former NY-calendar `session_ret` is **excluded** because it is not identical to the frozen target-session clock.
+
+15-minute source/clock rules:
+- XAU = governed XAU/USD 15m backfill;
+- Silver = validated Databento `SI.n.0` 1m→15m archive;
+- Platinum = validated Databento `PL.n.0` 1m→15m archive;
+- normal target heads use the latest completed 15m bar strictly before target start, with median lag **15 minutes**;
+- no bar completing at target start is used;
+- exact-clock reference cutoffs are used rather than last-N-bar approximations.
+
+Maintenance-aware correction:
+- known New York **17:00–18:00** maintenance is treated as a deterministic as-of state only;
+- no OHLC bar is fabricated;
+- if an exact historical reference cutoff falls inside maintenance, the last real observed price may be carried as the known state, capped at **60 minutes** staleness;
+- outside the registered maintenance interval, stale reference substitution is rejected;
+- Sobti Asia Morning has up to **45 minutes** reference staleness only because its exact feature clock intersects the registered maintenance interval;
+- WGC Asia starts at 18:00 New York, immediately after maintenance, so its last pre-target real state is structurally **60 minutes** old.
+
+Common eligible feature rows after this gate:
+- Sobti Asia Afternoon: **273**
+- Sobti Asia Morning: **270**
+- Sobti Europe: **293**
+- Sobti NY/London: **296**
+- Sobti Late-US: **195**
+- WGC Asia: **183**
+- WGC Europe: **294**
+- WGC US: **263**
+
+Chronology caveat:
+- same-window minimum matured training history = **180**;
+- therefore scored predictions in this replay occur **only in 2024**;
+- the displayed `2023-2024_SCORED` rows equal the 2024 scored rows and must not be described as an independent two-year performance result;
+- WGC Asia has only **3** scored rows after the 180-row warm-up and is non-interpretable;
+- Sobti Late-US has only **15** scored rows and is also too small for promotion inference.
+
+2024 matched results:
+
+| Window | XAU15 full IRIS Acc / BA / Brier | +SI15 Acc / BA / Brier | +SI15+PL15 Acc / BA / Brier |
+|---|---:|---:|---:|
+| Sobti Asia Afternoon | 52.69% / 52.43% / **0.2999** | 50.54% / 50.21% / 0.3093 | **53.76% / 53.47%** / 0.3129 |
+| Sobti Asia Morning | **54.44% / 55.20% / 0.2991** | 51.11% / 50.33% / 0.3277 | 47.78% / 46.69% / 0.3432 |
+| Sobti Europe | 47.79% / 45.50% / **0.3093** | 49.56% / 46.71% / 0.3282 | **52.21% / 50.82%** / 0.3427 |
+| Sobti NY/London | **55.17% / 55.13% / 0.2891** | 50.86% / 50.89% / 0.3106 | 51.72% / 51.74% / 0.3332 |
+| Sobti Late-US | 66.67% / 69.44% / 0.2188 | 66.67% / 66.67% / 0.2184 | **73.33% / 75.00% / 0.1818** |
+| WGC Asia | 66.67% / 66.67% / 0.1396 | 100% / 100% / 0.1096 | 100% / 100% / 0.0317 |
+| WGC Europe | 50.00% / 48.62% / **0.2845** | 50.88% / 48.89% / 0.3008 | 50.00% / 48.12% / 0.3148 |
+| WGC US | 50.60% / 50.41% / **0.2796** | 53.01% / 52.87% / 0.2988 | **56.63% / 56.42%** / 0.2845 |
+
+Binding interpretation:
+- preserving the original IRIS lag / realized-vol / semivol / shape families materially changes the 15m test relative to return-only diagnostics;
+- **XAU15-only is the strongest credible representation for Sobti Asia Morning and NY/London** in this first 15m replay;
+- wholesale Silver addition is not supported and often worsens Brier / balanced accuracy;
+- adding Silver+Platinum raises direction metrics in some windows, especially WGC US, but probability quality is generally worse and there is no independent cross-year scored evidence;
+- the apparent Late-US and WGC-Asia gains are **not promotable** because N=15 and N=3 respectively;
+- therefore **no SI15 or PL15 block is promoted** at this checkpoint;
+- XAU15 full-IRIS itself remains a serious challenger, principally for Sobti Asia Morning and NY/London, but requires a matched 1h full-IRIS control and/or larger causal scored history before architecture selection;
+- 2025 remains frozen.
+
+Stage-1 implication:
+- canonical S1.4 A1_PLUS_PATH remains open;
+- the 15m representation has passed source/clock construction but not promotion;
+- the next fair test is **15m full IRIS versus 1h full IRIS on the same rows and same feature semantics**, rather than comparing against the earlier return-only hourly V3.
+
+
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
