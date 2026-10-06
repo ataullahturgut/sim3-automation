@@ -1514,6 +1514,61 @@ Guardrail:
 - model-specific use must still enforce bar-completion and `t_ready <= target_start`;
 - no roll rule may be chosen by outcome performance.
 
+### 5E.8L Stage-1 checkpoint S1.2 — NOVA A1 / ARCR raw session replay
+
+Authorities:
+- `GOLD_SESSION_NOVA_A1_ARCR_RAW_REPLAY_V1_SUMMARY_2026-10-06.json`
+- `GOLD_SESSION_NOVA_A1_ARCR_RAW_REPLAY_V1_RESULT_2026-10-06.md`
+- `GOLD_SESSION_NOVA_A1_ARCR_RAW_REPLAY_V1_METRICS_2023_2024.csv`
+
+Status:
+- **Stage-1 primary direction engine replay COMPLETE**
+- A1 was rebuilt from the same pinned raw Gold/Silver/Platinum payloads as A0;
+- archived A0/NOVA prediction files were not used;
+- A0 comparator was regenerated inside the same raw replay on identical A1-scored rows;
+- V5 target reproduction: PASS;
+- 2025/2026 unopened.
+
+Model:
+- global CORE3 Logistic-L2;
+- recent expert = latest **252 matured same-window** rows, balanced Logistic-L2;
+- A1 probability = **0.75 × global + 0.25 × recent252**;
+- same conservative daily source-ready rule as S1.1.
+
+Because 252 matured same-window outcomes are required, the scored sample begins in 2024.
+
+Matched 2024 results:
+- Sobti Asia Afternoon: A0 **49.78% / 49.81% bal** -> A1 **47.53% / 47.55% bal**
+- Sobti Asia Morning: **54.26% / 53.78%** -> **53.81% / 53.39%**
+- Sobti Europe: **50.81% / 49.97%** -> **47.98% / 47.37%**
+- Sobti NY/London: **48.77% / 48.46%** -> **47.95% / 47.80%**
+- Sobti Late-US: **56.12% / 52.09%** -> **54.68% / 51.28%**
+- WGC Asia: **53.11% / 50.21%** -> **52.70% / 50.60%**
+- WGC Europe: **51.82% / 50.30%** -> **51.82% / 50.75%**
+- WGC US: **44.55% / 44.69%** -> **46.45% / 46.44%**
+
+Binding interpretation:
+- **NOVA A1 / ARCR: NO ROBUST SESSION EDGE as a stand-alone primary head.**
+- the recent-252 repair degrades most Sobti slices;
+- small balanced-accuracy improvements in WGC Asia/Europe are not material;
+- WGC US improves vs A0 but remains well below a useful stand-alone direction threshold.
+- A1 is retained only as a structural input candidate for STRUCTURAL_IRIS / SAGE A1-based heads, not as a promoted session champion.
+
+Stage-1 status after S1.2:
+- [x] S1.1 NOVA A0 / CORE3
+- [x] S1.2 NOVA A1 / ARCR
+- [x] S1.3 IRIS HOURLY_ONLY_ALL / PATH_GLOBAL — completed earlier; no robust stand-alone session edge
+- [ ] S1.4 IRIS A1_PLUS_PATH / STRUCTURAL_IRIS — **NEXT**
+- [ ] S1.5 SAGE SESSION_ONLY
+- [ ] S1.6 SAGE PATH_SESSION
+- [ ] S1.7 SAGE A1_SESSION
+- [ ] S1.8 SAGE A1_PATH_SESSION
+
+S1.4 must regenerate both inputs in one chronology:
+- fresh A1 probability from raw daily metals;
+- fresh hourly PATH features from raw XAU 1h;
+- no archived IRIS/A1 prediction file may be consumed.
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
