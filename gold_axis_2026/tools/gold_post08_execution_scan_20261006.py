@@ -69,6 +69,30 @@ def main():
     dev=s[s["2025_H2_n"]>=60].sort_values(["2025_H2_compound","2025_H2_hit"],ascending=False)
     dev.head(30).to_csv(OUT/"same_day_dev_top.csv",index=False)
 
+    # DOWN days: choose a sell/exit hour after the 08:00 signal.
+    # Compare that sale to 20:00 NY. Positive avoided return means the earlier sale
+    # avoided a subsequent decline into 20:00.
+    down_rows=[]
+    for sell_h in range(9,20):
+        rec=[]
+        for _,r in p[p.state=="DOWN"].iterrows():
+            a=M.get((r.issue_date,sell_h)); b=M.get((r.issue_date,20))
+            if a is None or b is None: continue
+            rec.append((r.issue_date,period(r.issue_date),a/b-1))
+        if not rec: continue
+        z=pd.DataFrame(rec,columns=["date","period","avoided"])
+        o={"sell_hour_ny":sell_h,"n":len(z),"all_compound_avoided":comp(z.avoided)}
+        for pp in ["2025_H2","2026_JAN_JUL","2026_AUG_SEP"]:
+            g=z[z.period==pp]
+            o[pp+"_n"]=len(g); o[pp+"_compound_avoided"]=comp(g.avoided)
+            o[pp+"_hit"]=float((g.avoided>0).mean()) if len(g) else np.nan
+            o[pp+"_mean_avoided"]=float(g.avoided.mean()) if len(g) else np.nan
+        down_rows.append(o)
+    ds=pd.DataFrame(down_rows)
+    ds.to_csv(OUT/"down_exit_scan_1h.csv",index=False)
+    ddev=ds[ds["2025_H2_n"]>=40].sort_values(["2025_H2_compound_avoided","2025_H2_hit"],ascending=False)
+    ddev.head(20).to_csv(OUT/"down_exit_dev_top.csv",index=False)
+
     # Decision-to-next-issue: enter after issue on an UP day, hold to next issue;
     # use 09:00 on both ends as causal hourly approximation.
     nxt=[]
