@@ -1,0 +1,58 @@
+name: Gold Databento Raw Archive 2022 2024 20261006
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_databento_raw_archive_2022_2024_20261006.py'
+      - '.github/workflows/gold-databento-raw-archive-2022-2024-20261006.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      DATABENTO_API_KEY: ${{ secrets.DATABENTO_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install --disable-pip-version-check 'databento>=0.60,<1' 'numpy>=2,<3' 'pandas>=2.2,<3'
+
+      - name: Require Databento key
+        run: test -n "$DATABENTO_API_KEY"
+
+      - name: Build governed raw archive
+        run: python gold_axis_2026/tools/gold_databento_raw_archive_2022_2024_20261006.py
+
+      - name: Record raw archive and evidence
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          cp gold_axis_2026/DATABENTO_RAW_ARCHIVE_2022_2024_OUT/summary.json              gold_axis_2026/GOLD_DATABENTO_RAW_ARCHIVE_2022_2024_SUMMARY_2026-10-06.json
+          cp gold_axis_2026/DATABENTO_RAW_ARCHIVE_2022_2024_OUT/databento_raw_archive_coverage_2022_2024.csv              gold_axis_2026/GOLD_DATABENTO_RAW_ARCHIVE_COVERAGE_2022_2024.csv
+          cp gold_axis_2026/DATABENTO_RAW_ARCHIVE_2022_2024_OUT/databento_continuous_symbology_2022_2024.json              gold_axis_2026/GOLD_DATABENTO_CONTINUOUS_SYMBOLOGY_2022_2024.json
+          cp gold_axis_2026/DATABENTO_RAW_ARCHIVE_2022_2024_OUT/databento_glbx_ohlcv1h_c_2022_2024.csv.gz              gold_axis_2026/GOLD_DATABENTO_GLBX_OHLCV1H_C_RAW_2022_2024.csv.gz
+          cp gold_axis_2026/DATABENTO_RAW_ARCHIVE_2022_2024_OUT/databento_glbx_ohlcv1h_n_2022_2024.csv.gz              gold_axis_2026/GOLD_DATABENTO_GLBX_OHLCV1H_N_RAW_2022_2024.csv.gz
+          cp gold_axis_2026/DATABENTO_RAW_ARCHIVE_2022_2024_OUT/databento_glbx_ohlcv1h_v_2022_2024.csv.gz              gold_axis_2026/GOLD_DATABENTO_GLBX_OHLCV1H_V_RAW_2022_2024.csv.gz
+
+          git add             gold_axis_2026/GOLD_DATABENTO_RAW_ARCHIVE_2022_2024_SUMMARY_2026-10-06.json             gold_axis_2026/GOLD_DATABENTO_RAW_ARCHIVE_COVERAGE_2022_2024.csv             gold_axis_2026/GOLD_DATABENTO_CONTINUOUS_SYMBOLOGY_2022_2024.json             gold_axis_2026/GOLD_DATABENTO_GLBX_OHLCV1H_C_RAW_2022_2024.csv.gz             gold_axis_2026/GOLD_DATABENTO_GLBX_OHLCV1H_N_RAW_2022_2024.csv.gz             gold_axis_2026/GOLD_DATABENTO_GLBX_OHLCV1H_V_RAW_2022_2024.csv.gz
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Record governed raw Databento hourly archive 2022-2024"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
