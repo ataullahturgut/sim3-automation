@@ -603,9 +603,9 @@ These three centres account for **more than 90% of global gold trading volume** 
 Binding interpretation:
 - **three dominant market centres do not imply three forecast models**;
 - the number of operational forecast heads must not be chosen from geography alone;
-- the initial research decomposition is **five sequential price-discovery windows**: Asia Morning, Asia Afternoon, Europe, New York/London overlap, and late US;
-- only after pre-2026 chronological testing may statistically similar contiguous windows be merged into a smaller operational set (for example, the two Asia windows may become one Asia head if the evidence supports it);
-- therefore the final operational architecture may contain **3, 4, or 5 heads**; that count is an empirical result, not a prior assumption;
+- the project will carry **two externally anchored candidate partitions** before model testing: (A) the modern World Gold Council 2026 three-session UTC partition and (B) the Sobti et al. five-zone ET academic replication partition;
+- the 2013–2018 Sobti Asia Morning/Asia Afternoon split must not be misdescribed as the official modern 2023–2026 SGE matching-session structure because SGE extended its day matching session to 09:00–15:30 effective 2019-06-10;
+- only after 2023–2024 development and frozen 2025 transport may the final operational architecture be reduced/expanded to **3, 4, or 5 heads**; that count is an empirical result, not a geographic prior;
 - do not assume a move belongs exclusively to one geography;
 - overlapping hours must be tested explicitly because price discovery can migrate between venues.
 
@@ -834,40 +834,54 @@ The existing 15-minute access probe has passed for 2023-2026, but full governed 
 
 Separate full models for every window are **not yet binding**. The five windows are first a target-discovery framework; the final operational architecture is determined only after the frozen chronological comparison.
 
-### 5E.8A Five-window clock / DST authority — 2026-10-06
+### 5E.8A Session clock / DST authority — corrected 2026-10-06
 
 Authority:
 - `GOLD_GLOBAL_5WINDOW_CLOCK_CONTRACT_2026-10-06.md`
 
-Binding clock-provenance decisions:
+Independent verification found a material modernization issue in the first same-day draft: Shanghai Gold Exchange extended its matching-market daytime session effective **2019-06-10** by adding the former 11:30–13:30 interval. Therefore the old 09:00–11:30 / 13:30–15:30 split from pre-2019 market structure is **not** binding as the modern 2023–2026 SGE target definition.
+
+Binding candidate partitions are now:
+
+**A — MODERN_WGC_3 (current industry benchmark, UTC-fixed)**
+- Asia: **22:00–07:00 UTC**
+- Europe: **07:00–12:00 UTC**
+- US: **12:00–21:00 UTC**
+
+**B — SOBTI_5_ET (academic replication, America/New_York date-aware)**
+- Asia Morning: **21:00–23:30 ET**
+- Asia Afternoon: **01:30–03:30 ET**
+- Europe: **03:30–08:00 ET**
+- NY/London overlap: **08:00–14:30 ET**
+- US: **14:30–21:00 ET**
+
+These two schemes must remain distinct:
+- WGC_3 is the modern operational/session-attribution candidate;
+- SOBTI_5_ET is the historical academic price-discovery replication candidate;
+- neither may be silently rewritten to match the other.
+
+Raw clock provenance:
 - governed 15-minute XAU/USD research data are requested/stored in **UTC**;
-- Twelve Data intraday `datetime` is treated as the **bar-open timestamp**;
-- all session boundaries are constructed as timezone-aware timestamps and converted to UTC; fixed manual offsets are forbidden;
-- **Asia Morning = 09:00–11:30 Asia/Shanghai**;
-- **Asia Afternoon = 13:30–15:30 Asia/Shanghai**;
-- **Europe = 03:30–08:00 America/New_York** (Sobti sequential zone; London OTC has no single official open);
-- **NY/London overlap = 08:00–14:30 America/New_York**;
-- **Late US = 14:30–21:00 America/New_York**;
-- LBMA 10:30 and 15:00 London are event markers, not automatic session boundaries;
-- New York/London/Shanghai/Istanbul conversions must use IANA date-aware timezone rules.
+- Twelve Data intraday `datetime` denotes the **bar-open timestamp**;
+- local clocks are derived from UTC using IANA timezone rules;
+- fixed manual DST offsets are forbidden.
 
-Important DST correction:
-- the paper's reported Asia ET windows align with official SGE local morning/afternoon hours during New York daylight time but can shift by one hour relative to Shanghai during New York standard time;
-- therefore canonical Asia targets are anchored to **official Shanghai local time**, with literature-ET Asia retained only as a replication/sensitivity clock;
-- no “summer/winter” offset may be hard-coded into model logic.
-
-Raw bar matching:
-- convert canonical boundary -> UTC;
-- match exact `dt_utc`;
-- boundary price = open of the exact boundary bar;
-- missing exact boundary => MISSING; no silent imputation.
+Modern SGE venue marker:
+- day matching session = **09:00–15:30 Asia/Shanghai** after the 2019 extension;
+- night matching session = **20:00–02:30 Asia/Shanghai**;
+- these are venue-state features/telemetry, not automatic target boundaries.
 
 Forecast and realization remain separate:
-- `SESSION_DIRECTION` = theoretical session boundary-to-boundary move;
+- `SESSION_DIRECTION` = theoretical partition boundary-to-boundary move;
 - `EXECUTABLE_DIRECTION` = strictly post-ready/post-signal entry to frozen exit;
 - the two must never be reported as the same accuracy.
 
-Older coarse `asia_to_europe` / fixed NY attribution buckets remain diagnostic only and are not binding training labels for the new five-window session project.
+Chronology:
+- 2023–2024 = development / partition and expert-structure study;
+- 2025 = frozen transport / architecture decision;
+- 2026 = retrospective stress only; no clock retuning.
+
+Older coarse session buckets remain diagnostic only and are not binding training labels for the new session project.
 
 ## 5E.9 Research hypotheses — not conclusions
 
