@@ -73,7 +73,7 @@ def gc_window_flags(gc,row):
 
 def enrich(df,gc):
  out=[]
- for r in df.itertuples(index=False):
+ for _, r in df.iterrows():
   d=pd.Timestamp(r.label_date).date()
   lond=pd.Timestamp(r.start_london).date()
   sh=pd.Timestamp(r.start_shanghai).date()
@@ -103,7 +103,7 @@ def enrich(df,gc):
    elif r.window=="US_LATE_LIT" and gfull is not True:
     core=False;reasons.append("GC_USLATE_WINDOW_NOT_FULL")
   if not price_trainable: reasons.insert(0,str(r.eligibility_status))
-  z=r._asdict()
+  z=r.to_dict()
   z.update({"london_business_day":london_open,"sge_business_day":sge_open,
             "gc_boundary_start_active":gs,"gc_boundary_end_active":ge,"gc_window_full":gfull,
             "price_trainable":price_trainable,"core_trainable":bool(core),
