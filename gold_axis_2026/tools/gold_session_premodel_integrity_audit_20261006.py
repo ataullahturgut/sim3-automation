@@ -14,14 +14,14 @@ SOB=AX/"GOLD_SESSION_LABELS_SOBTI5_ET_2023_2025.csv"
 OUT=AX/"SESSION_PREMODEL_INTEGRITY_AUDIT_OUT"; OUT.mkdir(exist_ok=True)
 
 EXPECTED={
- ("WGC_2026_NY3","ASIA"):{"start":"18:00","end":"03:00","duration_h":9.0,"start_prev_date":True},
- ("WGC_2026_NY3","EUROPE"):{"start":"03:00","end":"08:00","duration_h":5.0,"start_prev_date":False},
- ("WGC_2026_NY3","US"):{"start":"08:00","end":"17:00","duration_h":9.0,"start_prev_date":False},
- ("SOBTI_5_ET","ASIA_MORNING_LIT"):{"start":"21:00","end":"23:30","duration_h":2.5,"start_prev_date":True},
- ("SOBTI_5_ET","ASIA_AFTERNOON_LIT"):{"start":"01:30","end":"03:30","duration_h":2.0,"start_prev_date":False},
- ("SOBTI_5_ET","EUROPE_LIT"):{"start":"03:30","end":"08:00","duration_h":4.5,"start_prev_date":False},
- ("SOBTI_5_ET","NY_LONDON_LIT"):{"start":"08:00","end":"14:30","duration_h":6.5,"start_prev_date":False},
- ("SOBTI_5_ET","US_LATE_LIT"):{"start":"14:30","end":"21:00","duration_h":6.5,"start_prev_date":False},
+ ("WGC_2026_NY3","ASIA"):{"start":"18:00","end":"03:00","duration_h":9.0,"start_prev_date":True,"end_prev_date":False},
+ ("WGC_2026_NY3","EUROPE"):{"start":"03:00","end":"08:00","duration_h":5.0,"start_prev_date":False,"end_prev_date":False},
+ ("WGC_2026_NY3","US"):{"start":"08:00","end":"17:00","duration_h":9.0,"start_prev_date":False,"end_prev_date":False},
+ ("SOBTI_5_ET","ASIA_MORNING_LIT"):{"start":"21:00","end":"23:30","duration_h":2.5,"start_prev_date":True,"end_prev_date":True},
+ ("SOBTI_5_ET","ASIA_AFTERNOON_LIT"):{"start":"01:30","end":"03:30","duration_h":2.0,"start_prev_date":False,"end_prev_date":False},
+ ("SOBTI_5_ET","EUROPE_LIT"):{"start":"03:30","end":"08:00","duration_h":4.5,"start_prev_date":False,"end_prev_date":False},
+ ("SOBTI_5_ET","NY_LONDON_LIT"):{"start":"08:00","end":"14:30","duration_h":6.5,"start_prev_date":False,"end_prev_date":False},
+ ("SOBTI_5_ET","US_LATE_LIT"):{"start":"14:30","end":"21:00","duration_h":6.5,"start_prev_date":False,"end_prev_date":False},
 }
 
 def sha256_file(p:Path):
@@ -65,7 +65,7 @@ def main():
         eny=eu.tz_convert("America/New_York")
         duration=(eu-su).total_seconds()/3600.0
         start_date_expected=(label_date-pd.Timedelta(days=1)).date() if exp["start_prev_date"] else label_date.date()
-        end_date_expected=label_date.date()
+        end_date_expected=(label_date-pd.Timedelta(days=1)).date() if exp.get("end_prev_date",False) else label_date.date()
 
         rowerrs=[]
         if label_date.weekday()>=5: rowerrs.append("LABEL_DATE_NOT_WEEKDAY")
@@ -108,13 +108,15 @@ def main():
         missing_slots=expected_slots-n
 
         # Classification for unresolved rows.
-        if r.coverage=="PASS":
+        # Literature late-US cannot exist as a full 14:30->21:00 Friday
+        # trading window under the historical standard GC weekly schedule.
+        # This rule overrides a synthetic/24x7 vendor quote appearing after the
+        # economic weekly close.
+        if r.partition=="SOBTI_5_ET" and r.window=="US_LATE_LIT" and label_date.weekday()==4:
+            classif="NOT_ELIGIBLE_WEEKLY_CLOSE_FRIDAY"
+        elif r.coverage=="PASS":
             classif="TRAINABLE_SESSION_DIRECTION"
         else:
-            # Literature late-US cannot exist as full 14:30->21:00 Friday window
-            # under historical standard GC weekly schedule; global XAU may also go dark.
-            if r.partition=="SOBTI_5_ET" and r.window=="US_LATE_LIT" and label_date.weekday()==4:
-                classif="NOT_ELIGIBLE_WEEKLY_CLOSE_FRIDAY"
             elif n==0:
                 classif="NOT_ELIGIBLE_OR_FULL_WINDOW_CLOSED"
             else:
