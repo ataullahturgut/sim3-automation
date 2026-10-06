@@ -175,3 +175,23 @@ On the exact canonical 125 consensus rows, CIG direction accuracy is approximate
 The recovered historical daily label agrees **88.0%** in direction with an independent Twelve Data reconstruction using the arithmetic mean of hourly closes over the UTC calendar day. This supports the daily-average/reference interpretation, while confirming that it is not equivalent to a simple clock-to-clock return.
 
 Therefore any prior inference that the 74.40% CIG skill resides specifically in the 03:00 Istanbul -> 15:00/16:00 Istanbul interval is superseded. That interval is a data-availability/decision-clock gap, not the demonstrated source of the 74.40% label skill.
+
+
+## 12. Source-semantic correction — numeric daily realization
+
+Authority:
+- `GOLD_DAILY_REALIZATION_SOURCE_AUDIT_2026-10-06.md`
+
+The recovered numeric daily `Gerçekleşen` series was traced directly to pinned StakTrakr `data/spot-history-2026.json` at commit `ed2e549f82ba0d1cd3ca32842b82d3888d301e01`.
+
+All **145/145** recovered daily `Gerçekleşen` values match the pinned StakTrakr Gold daily-history value exactly.
+
+Important correction:
+- StakTrakr daily-history timestamps such as `12:00:00` are synthetic calendar-day labels, not executable observation times.
+- Similarity to a Twelve Data UTC-day hourly average is only a comparator result; it does not prove that the Stak daily value is itself a full-UTC-day average.
+
+Therefore the binding daily-target description is now:
+
+**pinned StakTrakr calendar-date Gold reference value; exact intraday fixing/observation clock not established by the stored timestamp.**
+
+Any earlier wording in this file that calls the Stak value a proven full-UTC-day average is superseded by this section.
