@@ -49,7 +49,7 @@ Primary path targets:
 - Stage 4 Monthly Context Incremental Test: **COMPLETE / NO_CONTEXT_PASS**
 - Stage 5 K100 Robustness, Calibration & Decision-Threshold Audit: **COMPLETE / PASS**
 - **Stage 6 Frozen 2025 Transport: NEXT**
-- **Global Session / Execution redesign: ACTIVE — five-window discovery protocol is binding; operational head count is not preselected**
+- **Global Session / Execution redesign: ACTIVE — dual externally anchored partition protocol is binding; operational head count is not preselected; V5 premodel data gate PASS**
 
 Current frozen opportunity rule:
 - target: **K100**
@@ -603,7 +603,7 @@ These three centres account for **more than 90% of global gold trading volume** 
 Binding interpretation:
 - **three dominant market centres do not imply three forecast models**;
 - the number of operational forecast heads must not be chosen from geography alone;
-- the project will carry **two externally anchored candidate partitions** before model testing: (A) the modern World Gold Council 2026 three-session UTC partition and (B) the Sobti et al. five-zone ET academic replication partition;
+- the project will carry **two externally anchored candidate partitions** before model testing: (A) the World Gold Council 2026 three-session **New-York-local / DST-aware** partition and (B) the Sobti et al. five-zone ET academic replication partition;
 - the 2013–2018 Sobti Asia Morning/Asia Afternoon split must not be misdescribed as the official modern 2023–2026 SGE matching-session structure because SGE extended its day matching session to 09:00–15:30 effective 2019-06-10;
 - only after 2023–2024 development and frozen 2025 transport may the final operational architecture be reduced/expanded to **3, 4, or 5 heads**; that count is an empirical result, not a geographic prior;
 - do not assume a move belongs exclusively to one geography;
@@ -786,53 +786,65 @@ The research hierarchy is:
 **Layer 1 — Global State/Core**  
 A common origin-safe global state may be retained as shared context. Existing H3/CIG expert families are candidate information channels, not automatically valid session predictors.
 
-**Layer 2A — Five research target windows**  
-Construct separate timestamped UP/DOWN (and return) labels for the five sequential windows defined in Section 5E.4:
-1. **Asia Morning**
-2. **Asia Afternoon**
-3. **Europe**
-4. **New York/London overlap**
-5. **Late US**
+**Layer 2A — Two externally anchored candidate target partitions**  
+The project carries both structures into pre-2026 model testing:
 
-Each window must have its own:
+**A. WGC_2026_NY3**
+1. Asia — 18:00–03:00 America/New_York
+2. Europe — 03:00–08:00 America/New_York
+3. US — 08:00–17:00 America/New_York
+
+**B. SOBTI_5_ET**
+1. Asia Morning — 21:00–23:30 ET
+2. Asia Afternoon — 01:30–03:30 ET
+3. Europe — 03:30–08:00 ET
+4. New York/London overlap — 08:00–14:30 ET
+5. Late US — 14:30–21:00 ET
+
+The two partitions are **alternative externally anchored research decompositions**. They must not be blended into a synthetic clock after seeing accuracy.
+
+Each target window must have:
 - target start/end timestamps;
 - latest permissible feature timestamp;
 - source-ready / issue timestamp;
 - realized return and direction label;
 - DST-aware mapping;
-- no-leakage rule.
+- no-leakage rule;
+- explicit market/venue eligibility;
+- explicit data-quality eligibility.
 
-A session prediction is valid only if its full information set is available **before that session target begins**. For later windows, already-completed earlier-session price action may be used as an origin-known feature.
+A session prediction is valid only if its full information set is available **before that target begins**. For later windows, already-completed earlier-session price action may be used only when it is origin-known at that head's issue time.
 
-**Layer 2B — Expert revalidation by window**  
-SAGE, V5-DCE, RIFT, VEGA, RuleFlow and other existing H3 experts are **not copied blindly into every session consensus**. Each expert/family must earn inclusion separately for each target window under pre-2026 chronological testing. An expert may be useful in one window and harmful or redundant in another.
+**Layer 2B — Expert revalidation by target**  
+SAGE, V5-DCE, RIFT, VEGA, RuleFlow and other existing H3 experts are **not copied blindly into every session consensus**. Each expert/family must earn inclusion separately for each retained target under pre-2026 chronological testing. An expert may be useful in one target and harmful or redundant in another.
 
-**Layer 2C — Data-driven consolidation**  
-After the five-window test, contiguous windows may be merged only if their predictive behaviour, error structure, and transport performance support aggregation. In particular:
-- Asia Morning + Asia Afternoon may become a single Asia head if supported;
-- Europe must not be merged with New York/London overlap merely because both involve London trading;
-- New York/London overlap must not be merged automatically into late US;
-- the final operational head count may be **3, 4, or 5**.
+**Layer 2C — Data-driven architecture decision**  
+Use 2023–2024 for development and **2025 frozen transport** to decide whether:
+- the current-industry three-window WGC structure transports best;
+- explicit NY/London overlap adds stable incremental value;
+- the two Sobti Asia subzones carry distinct predictive information;
+- contiguous targets should be merged or retained separately.
 
-The default hypothesis to test is **not** “three centres = three models.”  
-The binding question is: **how many distinct forecast targets are empirically justified?**
+The final operational head count may therefore be **3, 4, or 5**. It is an empirical transport result, not a geographic prior.
+
+The default hypothesis remains **not** “three centres = three models.”  
+The binding question is: **how many distinct forecast targets are reproducibly justified out of sample?**
 
 **Layer 3 — Session Consensus**  
-For each retained operational window, construct a separate selective consensus (UP / DOWN / UNCERTAIN) only from experts that passed that window's development/transport gate.
+For each retained operational target, construct a separate selective consensus (UP / DOWN / UNCERTAIN) only from experts that passed that target's development/transport gate.
 
 **Layer 4 — Execution Head**  
 Entry/exit logic is evaluated only after the corresponding session forecast is genuinely available. Execution-window optimisation cannot redefine the forecasting target after results are seen.
 
 ### Chronology for session-model discovery
 
-Preferred clean chronology:
-- **2023-2024:** development / expert and window-structure selection;
+- **2023–2024:** development / expert and partition-structure study;
 - **2025:** frozen transport / architecture decision;
-- **2026:** opened retrospective stress only; no retuning.
+- **2026:** retrospective stress only; no clock or architecture retuning.
 
-The existing 15-minute access probe has passed for 2023-2026, but full governed 15-minute backfill/coverage must be completed before the five-window model comparison is promoted.
+The governed 2023–2025 15-minute UTC backfill and final premodel quality/venue gate are now **complete** under Section 5E.8B. Model work may begin only from rows carrying `final_trainable == True`.
 
-Separate full models for every window are **not yet binding**. The five windows are first a target-discovery framework; the final operational architecture is determined only after the frozen chronological comparison.
+Separate full models for every target are **not yet binding**. The number of production heads is decided only after the frozen chronological comparison.
 
 ### 5E.8A Session clock / DST authority — corrected 2026-10-06
 
@@ -888,48 +900,94 @@ Chronology:
 
 Older coarse session buckets remain diagnostic only and are not binding training labels for the new session project.
 
-### 5E.8B Corrected 2023-2025 15m backfill / label gate — 2026-10-06
+### 5E.8B Final 2023–2025 premodel target/data gate — V5, 2026-10-06
+
+**Binding status:** PASS — this section supersedes the earlier V2/V3/V4 target-panel wording for primary modelling.
 
 Authorities:
-- `GOLD_SESSION_LABELS_V2_RESULT_2026-10-06.md`
-- `GOLD_SESSION_LABELS_V2_SUMMARY_2026-10-06.json`
+- `GOLD_SESSION_TARGETS_V5_FINAL_RESULT_2026-10-06.md`
+- `GOLD_SESSION_TARGETS_V5_FINAL_SUMMARY_2026-10-06.json`
+- `GOLD_SESSION_TARGETS_WGC2026_NY3_FINAL_V5_2023_2025.csv`
+- `GOLD_SESSION_TARGETS_SOBTI5_ET_FINAL_V5_2023_2025.csv`
+- `GOLD_SESSION_TARGETS_V4_VENUE_GATE_SUMMARY_2026-10-06.json`
+- `GOLD_SESSION_V3_INTEGRITY_GATE_2026-10-06.json`
 - `GOLD_XAU15M_HOUR_COVERAGE_AUDIT_2026-10-06.json`
 - `GOLD_XAU15M_MISSING_SLOT_AUDIT_2026-10-06.json`
 
 Raw governed XAU/USD 15-minute UTC backfill:
 - **74,163 rows**
 - raw range: **2022-12-30 00:00 UTC -> 2026-01-02 23:45 UTC**
-- 15-minute grid: PASS
+- duplicate UTC timestamps: **0**
+- 15-minute timestamp grid: PASS
 - OHLC internal consistency: PASS
 - frozen raw SHA256: `8f1c00b34a95b7cef6a44c3c0bef59035fa9dde9cf6d241ba0b87fd146235308`
 
-Binding candidate label files:
-- `GOLD_SESSION_LABELS_WGC2026_NY3_2023_2025.csv`
-- `GOLD_SESSION_LABELS_SOBTI5_ET_2023_2025.csv`
+**Final target-price semantics**
+- session start = **OPEN of the exact 15-minute bar beginning at target start T**;
+- session end = **CLOSE of the exact final 15-minute bar beginning at T−15 and ending at target end T**;
+- no nearest-bar substitution;
+- no forward-fill/back-fill;
+- no cross-source price imputation;
+- zero-return rows are excluded from binary UP/DOWN training.
 
-Superseded / do not train:
-- the earlier fixed-UTC `GOLD_SESSION_LABELS_WGC3_2023_2025.csv`;
-- the earlier hybrid Asia split that treated 09:00-11:30 / 13:30-15:30 Shanghai as the modern official SGE day structure.
+This corrects the earlier V2 endpoint treatment. Recomputing V2 -> V3 changed **30 direction labels** across comparable trainable rows:
+- WGC candidate: **16** direction changes;
+- Sobti candidate: **14** direction changes.
 
-Boundary resolution:
-- first choice = exact bar OPEN at boundary T;
-- if absent, exact prior 15-minute bar CLOSE ending at T may be used for **SESSION_DIRECTION attribution only**;
-- this fallback is never permitted as a backdated executable entry;
-- otherwise boundary = MISSING.
+Therefore V2 target files are **SUPERSEDED / DO NOT TRAIN**.
 
-Observed source-coverage regime:
-- 2023-2024 full XAU dates commonly contain **92 x 15-minute bars**, with a one-hour gap aligned to **17:00 New York** (22:00 UTC in EST / 21:00 UTC in EDT);
-- from **2025-04-22**, many dates contain 96 bars; 2025-04-22 onward 96-bar share in the audit is about **90.7%**;
-- this is treated as a source/feed coverage regime change, not as an economic regime and not as evidence that the underlying gold market became 24/7.
+**Venue/calendar gate — V4**
+Primary clean targets additionally require the appropriate venue state:
+- WGC Europe: London business day;
+- WGC US: GC activity around target boundaries;
+- Sobti Asia zones: SGE business day;
+- Sobti Europe: London business day;
+- Sobti NY/London: London business day + GC boundary activity;
+- Sobti Late-US: GC boundary activity;
+- Friday Sobti Late-US: **NOT_ELIGIBLE** irrespective of vendor 24x7 quotes.
 
-Corrected WGC_2026_NY3 weekday label coverage after DST-aware mapping:
-- 2023: Asia 256/260, Europe 257/260, US 224/260;
-- 2024: Asia 245/262, Europe 259/262, US 245/262;
-- 2025: Asia 256/261, Europe 255/261, US 252/261.
+WGC Asia remains a broad regional target; SGE state is retained as telemetry rather than a hard gate.
 
-Sobti five-zone coverage is high for Asia/Europe/NY-London windows, but the literature US 14:30-21:00 ET window is structurally unavailable on many Fridays because standard gold weekly trading is closed before 21:00 ET. Friday late-US rows must therefore be treated as **not eligible for the full literature window**, not silently imputed.
+**Internal 15-minute path gate — V5**
+For primary modelling:
+- every expected 15-minute slot inside the target window must exist;
+- sole structural exception: inside Sobti Late-US, the four New York maintenance slots **17:00, 17:15, 17:30, 17:45** may be absent;
+- any other internal gap excludes the row;
+- this rule added **36 further exclusions** beyond the V4 venue-clean core.
 
-These labels are target-construction evidence only. No expert/model accuracy has yet been evaluated on them.
+Final V5 integrity:
+- candidate rows across both partitions: **6,264**
+- duplicates: **0**
+- final trainable rows: **5,721**
+- final excluded rows: **543**
+- invalid final rows: **0**
+- final trainable rows with missing direction: **0**
+
+Final file hashes:
+- WGC final: `fb41ab5bb7f30b15ce21dd01d870eb9f737050ac78810d146b6c2948a1e1d5da`
+- Sobti final: `d605e3a48028b47216ad63164ac3e0836b338f84f4223ede5ece4937bc342cd3`
+
+**Independent futures clock sanity check**
+A Databento GLBX.MDP3 GC continuous-futures comparison was used only as a clock/date sanity check, not as a replacement target source. On comparable WGC-window rows, spot-vs-GC direction agreement was generally high (roughly 91%–99.6% by year/window in the completed audit). This supports the date/clock alignment while preserving XAU/USD spot as the target source.
+
+The successful audit artifact remains:
+- `GOLD_WGC3_DATABENTO_CLOCK_CROSSCHECK_2026-10-06.json`
+
+A later redundant rerun encountered code/runtime issues and is non-authoritative; it does not replace the successful stored audit.
+
+**Source-regime guardrail**
+The Twelve Data feed changes coverage character during 2025. This is treated as source metadata only:
+- it is **not** an economic regime;
+- it must **not** be used as a predictive feature;
+- model code may use it only for diagnostics/sensitivity.
+
+**Hard model gate**
+Primary session modelling must:
+1. read only the V5 final target files;
+2. assert `final_trainable == True`;
+3. reject V2/V3/V4-only price-valid rows from the primary sample;
+4. keep all excluded/review rows out of fitting and headline evaluation;
+5. keep 2026 unopened for clock/architecture tuning.
 
 ## 5E.9 Research hypotheses — not conclusions
 
