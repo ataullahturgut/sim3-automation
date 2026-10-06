@@ -850,6 +850,36 @@ Binding correction:
 - They must not be described as post-signal executable direction/return until separately re-scored from the actual issue timestamp.
 - Original CIG accuracy is henceforth called **historical label accuracy** until post-08:00 reconciliation is complete.
 
+## 5E.11B Clock Reconciliation Result — 2026-10-06
+
+Authoritative correction:
+- `GOLD_D1_FORECAST_CLOCK_RECONCILIATION_2026-10-06.md`
+- `GOLD_FORECAST_CLOCK_RECONCILIATION_2026-10-06.json`
+
+**Binding timing facts**
+- H3 hourly feature anchor: 16:00 New York on feature-cutoff date.
+- Full-UTC-day daily reference completes at 03:00 Istanbul; this is only a theoretical lower-bound readiness clock.
+- Governed issue deadline: 08:00 New York = approximately 15:00 Istanbul in New York daylight time / 16:00 Istanbul in New York standard time.
+- Historical retrospective rows have no actual `issued_at_utc`; therefore exact historical production time is unknown.
+- Execution claims must use 08:00 New York unless an earlier all-source-ready timestamp is separately proven.
+
+**New diagnostic**
+On the reconstructed raw 4/4 execution panel, signal direction versus the clean 08:00->20:00 New York interval is:
+- 2025 H2: **50.45%** (N=111)
+- 2026 Jan-Jul: **51.15%** (N=131)
+- 2026 Aug-Sep: **42.31%** (N=26).
+
+This does **not** directly replace the canonical 2026 Jan-Jul CIG figure of 93/125 = 74.40%, because the timing reconstruction contains 131 consensus rows while the canonical CIG evaluation contains 125. The populations are not identical.
+
+**Do-not-mix rule**
+- 74.40% = historical **daily-label accuracy** on the canonical 125 CIG rows.
+- 08:00->20:00 figures = **post-governed-issue clock diagnostics** on the reconstructed execution population.
+- Neither may be relabeled as the other.
+- Exact apples-to-apples publication is blocked until the canonical 145/125 row-level CIG universe is reproduced and joined to the 15-minute clock.
+
+**Superseded wording**
+It is prohibited to say that CIG-D1 is "74.4% accurate after 08:00 New York" or that the historical daily realized move is fully tradable after the signal.
+
 ## 5E.12 Fifteen-Minute CIG Execution Timing Transport — 2026-10-06
 
 **Status:** RETROSPECTIVE DEVELOPMENT/TRANSPORT DIAGNOSTIC — NOT PROSPECTIVE  
