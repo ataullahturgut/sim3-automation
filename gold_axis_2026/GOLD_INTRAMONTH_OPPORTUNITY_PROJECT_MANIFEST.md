@@ -1688,6 +1688,76 @@ Binding interpretation:
 This cross-metal diagnostic does **not** replace the full-coverage S1.4 `IRIS A1_PLUS_PATH / STRUCTURAL_IRIS` replay. The canonical S1.4 baseline still needs its maximal admissible A1+XAU panel; the SI challenger, if carried forward, must be compared against that frozen baseline without using 2025 outcomes.
 
 
+### 5E.8N Clock-safe one-stage cross-metal diagnostic V2 — 2026-10-06
+
+Authorities:
+- `GOLD_SESSION_CROSSMETAL_V2_CLOCKSAFE_SUMMARY_2026-10-06.json`
+- `GOLD_SESSION_CROSSMETAL_V2_CLOCKSAFE_RESULT_2026-10-06.md`
+- `GOLD_SESSION_CROSSMETAL_V2_CLOCKSAFE_METRICS_2023_2024.csv`
+- `GOLD_SESSION_CROSSMETAL_V2_CLOCKSAFE_COVERAGE_2023_2024.csv`
+- `GOLD_SESSION_CROSSMETAL_V2_CLOCKSAFE_TIMING_AUDIT_2023_2024.csv`
+
+Status:
+- **CLOCK AUDIT PASS / ONE-STAGE WARM-UP DIAGNOSTIC COMPLETE**
+- 2023–2024 only; 2025/2026 unopened;
+- purpose: remove the A1→Structural-IRIS double warm-up and re-test XAU/Silver/Platinum intraday PATH with stricter timestamp governance.
+
+Binding clock controls:
+- all **3,816** frozen target rows were re-audited in `America/New_York` against the exact Sobti-5 and WGC-3 start/end clocks;
+- hourly timestamps are treated as **bar-open timestamps** and the close becomes usable at bar-open + 1h;
+- feature selection uses the latest completed bar with `available_at_utc < target_start` — **strict inequality**;
+- a bar completing exactly at the target start is deliberately excluded from the primary V2 run;
+- maximum admitted source lag at target start = **120 minutes**, fixed before scoring;
+- the prior NY-calendar `session_ret` feature is excluded because its boundary is not the same thing as the frozen target-session boundary;
+- V2 PATH returns are explicitly defined over the last N completed hourly observations (`1/3/6/12/24/48` completed bars);
+- only matured same-window outcomes with `end_utc <= training cutoff` enter training.
+
+Clock consequence:
+- half-hour target starts generally use a latest completed feature bar **30 minutes** old;
+- exact-hour target starts generally use a latest completed feature bar **60 minutes** old because exact-boundary completion is rejected;
+- this is intentional conservatism, not a data gap.
+
+One-stage representations:
+1. `CORE3_XAU_PATH_CLOCKSAFE`
+2. `CORE3_XAU_SI_PATH_CLOCKSAFE`
+3. `CORE3_XAU_SI_PL_PATH_CLOCKSAFE`
+
+The one-stage form consumes raw daily CORE3 state directly rather than a separately matured A1 probability, reducing warm-up while preserving causal same-window training. Common eligible feature panel = **3,711 rows** across the alternative Sobti-5 and WGC-3 partitions.
+
+Combined 2023–2024 matched results:
+
+| Window | XAU-only Acc / BA | +SI Acc / BA | +SI+PL Acc / BA | Binding V2 reading |
+|---|---:|---:|---:|---|
+| Sobti Asia Afternoon | 46.65% / 46.79% | 46.09% / 46.13% | 45.25% / 45.26% | cross-metal does not help |
+| Sobti Asia Morning | **54.06% / 53.84%** | 52.66% / 52.34% | 53.50% / 53.33% | XAU-only remains better |
+| Sobti Europe | 48.04% / 47.54% | 48.83% / 48.26% | 48.56% / 48.11% | tiny SI lift, still below useful edge |
+| Sobti NY/London | 51.19% / 51.14% | **53.83% / 53.79%** | 51.98% / 51.95% | Silver selective challenger survives |
+| Sobti Late-US | **59.85% / 54.29%** | 59.49% / 54.36% | 57.66% / 53.06% | SI neutral on BA; PL harmful |
+| WGC Asia | 57.35% / 51.94% | **59.56% / 55.11%** | 57.72% / 53.42% | Silver selective challenger survives |
+| WGC Europe | 51.05% / 50.23% | 51.31% / 50.53% | 50.52% / 49.44% | no material edge |
+| WGC US | 51.16% / 51.08% | 50.58% / 50.51% | **53.18% / 53.11%** | PL lift is not cross-year stable |
+
+Cross-year stability checks:
+- **Sobti NY/London +SI:** BA **54.29% in 2023** and **52.16% in 2024**, versus XAU-only **51.99% / 49.41%**; directional improvement appears in both years, although Brier is slightly worse;
+- **WGC Asia +SI:** BA **57.94% in 2023** and **54.20% in 2024**, versus XAU-only **47.23% / 53.67%**; improvement is present in both years, but the 2023 jump is much larger than 2024 and therefore requires frozen transport before promotion;
+- **Sobti Asia Afternoon +SI:** 2023 improves but 2024 degrades; the small-sample V1 suggestion is therefore **NOT CONFIRMED** and is superseded as a promotion hypothesis;
+- **WGC US +SI+PL:** 2023 degrades while 2024 improves; not stable and not promotable.
+
+Binding interpretation after V2:
+- the user's clock concern is valid and is now explicitly governed; no V2 hourly feature is allowed to use a bar completing at or after target start;
+- **Silver is not globally additive**;
+- the only cross-metal candidates that retain a meaningful directional case under the larger clock-safe sample are **Sobti NY/London +SI** and **WGC Asia +SI**;
+- Platinum still has **no broad robust case** and remains **NOT PROMOTED**;
+- V1's late-2024 Asia-Afternoon Silver lift was sample/warm-up-sensitive and must not be cited as a robust finding;
+- the V2 one-stage experiment is a **representation diagnostic**, not a replacement for canonical S1.4 A1_PLUS_PATH;
+- 2025 remains unopened and is reserved for frozen transport after representation/feature membership is fixed.
+
+Stage-1 implication:
+- S1.4 canonical A1_PLUS_PATH remains open;
+- V2 establishes a clock-safe, larger-sample challenger representation and narrows cross-metal follow-up to NY/London Silver and WGC-Asia Silver;
+- no consensus/router membership is changed yet.
+
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
