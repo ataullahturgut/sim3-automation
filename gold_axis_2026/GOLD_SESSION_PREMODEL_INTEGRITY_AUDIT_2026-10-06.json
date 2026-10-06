@@ -1,0 +1,724 @@
+{
+  "status": "PREMODEL_SESSION_LABEL_INTEGRITY_AUDIT",
+  "raw_sha256": "8f1c00b34a95b7cef6a44c3c0bef59035fa9dde9cf6d241ba0b87fd146235308",
+  "label_sha256": {
+    "GOLD_SESSION_LABELS_WGC2026_NY3_2023_2025.csv": "92ade115ff0ad012f4035c8dfe9372052a8244a2fe74be9dd1e60ed2746cbdcb",
+    "GOLD_SESSION_LABELS_SOBTI5_ET_2023_2025.csv": "aed9448db196464c50c50db9ae8d287e985dc3121b9758111ef253b87896881b"
+  },
+  "rows_total": 6264,
+  "duplicate_label_partition_window_keys": 0,
+  "integrity_error_rows": 783,
+  "integrity_errors_sample": [
+    {
+      "row": 2349,
+      "label_date": "2023-01-02",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2354,
+      "label_date": "2023-01-03",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2359,
+      "label_date": "2023-01-04",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2364,
+      "label_date": "2023-01-05",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2369,
+      "label_date": "2023-01-06",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2374,
+      "label_date": "2023-01-09",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2379,
+      "label_date": "2023-01-10",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2384,
+      "label_date": "2023-01-11",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2389,
+      "label_date": "2023-01-12",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2394,
+      "label_date": "2023-01-13",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2399,
+      "label_date": "2023-01-16",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2404,
+      "label_date": "2023-01-17",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2409,
+      "label_date": "2023-01-18",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2414,
+      "label_date": "2023-01-19",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2419,
+      "label_date": "2023-01-20",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2424,
+      "label_date": "2023-01-23",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2429,
+      "label_date": "2023-01-24",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2434,
+      "label_date": "2023-01-25",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2439,
+      "label_date": "2023-01-26",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2444,
+      "label_date": "2023-01-27",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2449,
+      "label_date": "2023-01-30",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2454,
+      "label_date": "2023-01-31",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2459,
+      "label_date": "2023-02-01",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2464,
+      "label_date": "2023-02-02",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2469,
+      "label_date": "2023-02-03",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2474,
+      "label_date": "2023-02-06",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2479,
+      "label_date": "2023-02-07",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2484,
+      "label_date": "2023-02-08",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2489,
+      "label_date": "2023-02-09",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2494,
+      "label_date": "2023-02-10",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2499,
+      "label_date": "2023-02-13",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2504,
+      "label_date": "2023-02-14",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2509,
+      "label_date": "2023-02-15",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2514,
+      "label_date": "2023-02-16",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2519,
+      "label_date": "2023-02-17",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2524,
+      "label_date": "2023-02-20",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2529,
+      "label_date": "2023-02-21",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2534,
+      "label_date": "2023-02-22",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2539,
+      "label_date": "2023-02-23",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2544,
+      "label_date": "2023-02-24",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2549,
+      "label_date": "2023-02-27",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2554,
+      "label_date": "2023-02-28",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2559,
+      "label_date": "2023-03-01",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2564,
+      "label_date": "2023-03-02",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2569,
+      "label_date": "2023-03-03",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2574,
+      "label_date": "2023-03-06",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2579,
+      "label_date": "2023-03-07",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2584,
+      "label_date": "2023-03-08",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2589,
+      "label_date": "2023-03-09",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    },
+    {
+      "row": 2594,
+      "label_date": "2023-03-10",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "errors": [
+        "END_NY_DATE_MISMATCH"
+      ]
+    }
+  ],
+  "expected_counts": {
+    "SOBTI_5_ET:ASIA_AFTERNOON_LIT": {
+      "rows": 783,
+      "unique_dates": 783
+    },
+    "SOBTI_5_ET:ASIA_MORNING_LIT": {
+      "rows": 783,
+      "unique_dates": 783
+    },
+    "SOBTI_5_ET:EUROPE_LIT": {
+      "rows": 783,
+      "unique_dates": 783
+    },
+    "SOBTI_5_ET:NY_LONDON_LIT": {
+      "rows": 783,
+      "unique_dates": 783
+    },
+    "SOBTI_5_ET:US_LATE_LIT": {
+      "rows": 783,
+      "unique_dates": 783
+    },
+    "WGC_2026_NY3:ASIA": {
+      "rows": 783,
+      "unique_dates": 783
+    },
+    "WGC_2026_NY3:EUROPE": {
+      "rows": 783,
+      "unique_dates": 783
+    },
+    "WGC_2026_NY3:US": {
+      "rows": 783,
+      "unique_dates": 783
+    }
+  },
+  "classification_counts": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "classification": "BOUNDARY_OR_INTERNAL_SOURCE_GAP_REVIEW",
+      "n": 1
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "classification": "EARLY_CLOSE_OR_SOURCE_GAP_REVIEW",
+      "n": 1
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "classification": "NOT_ELIGIBLE_OR_FULL_WINDOW_CLOSED",
+      "n": 9
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "classification": "TRAINABLE_SESSION_DIRECTION",
+      "n": 772
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "classification": "BOUNDARY_OR_INTERNAL_SOURCE_GAP_REVIEW",
+      "n": 1
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "classification": "EARLY_CLOSE_OR_SOURCE_GAP_REVIEW",
+      "n": 1
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "classification": "NOT_ELIGIBLE_OR_FULL_WINDOW_CLOSED",
+      "n": 11
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "classification": "TRAINABLE_SESSION_DIRECTION",
+      "n": 770
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "classification": "BOUNDARY_OR_INTERNAL_SOURCE_GAP_REVIEW",
+      "n": 1
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "classification": "EARLY_CLOSE_OR_SOURCE_GAP_REVIEW",
+      "n": 1
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "classification": "NOT_ELIGIBLE_OR_FULL_WINDOW_CLOSED",
+      "n": 9
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "classification": "TRAINABLE_SESSION_DIRECTION",
+      "n": 771
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "classification": "TRUNCATED_BOTH_ENDS_REVIEW",
+      "n": 1
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "classification": "BOUNDARY_OR_INTERNAL_SOURCE_GAP_REVIEW",
+      "n": 1
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "classification": "EARLY_CLOSE_OR_SOURCE_GAP_REVIEW",
+      "n": 2
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "classification": "NOT_ELIGIBLE_OR_FULL_WINDOW_CLOSED",
+      "n": 10
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "classification": "TRAINABLE_SESSION_DIRECTION",
+      "n": 769
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "classification": "TRUNCATED_BOTH_ENDS_REVIEW",
+      "n": 1
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "classification": "DELAYED_OPEN_OR_SOURCE_GAP_REVIEW",
+      "n": 5
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "classification": "EARLY_CLOSE_OR_SOURCE_GAP_REVIEW",
+      "n": 4
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "classification": "NOT_ELIGIBLE_OR_FULL_WINDOW_CLOSED",
+      "n": 4
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "classification": "NOT_ELIGIBLE_WEEKLY_CLOSE_FRIDAY",
+      "n": 120
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "classification": "TRAINABLE_SESSION_DIRECTION",
+      "n": 650
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "classification": "DELAYED_OPEN_OR_SOURCE_GAP_REVIEW",
+      "n": 17
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "classification": "EARLY_CLOSE_OR_SOURCE_GAP_REVIEW",
+      "n": 1
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "classification": "NOT_ELIGIBLE_OR_FULL_WINDOW_CLOSED",
+      "n": 8
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "classification": "TRAINABLE_SESSION_DIRECTION",
+      "n": 757
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "classification": "BOUNDARY_OR_INTERNAL_SOURCE_GAP_REVIEW",
+      "n": 1
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "classification": "EARLY_CLOSE_OR_SOURCE_GAP_REVIEW",
+      "n": 1
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "classification": "NOT_ELIGIBLE_OR_FULL_WINDOW_CLOSED",
+      "n": 9
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "classification": "TRAINABLE_SESSION_DIRECTION",
+      "n": 771
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "classification": "TRUNCATED_BOTH_ENDS_REVIEW",
+      "n": 1
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "classification": "BOUNDARY_OR_INTERNAL_SOURCE_GAP_REVIEW",
+      "n": 2
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "classification": "EARLY_CLOSE_OR_SOURCE_GAP_REVIEW",
+      "n": 49
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "classification": "NOT_ELIGIBLE_OR_FULL_WINDOW_CLOSED",
+      "n": 10
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "classification": "TRAINABLE_SESSION_DIRECTION",
+      "n": 721
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "classification": "TRUNCATED_BOTH_ENDS_REVIEW",
+      "n": 1
+    }
+  ],
+  "nontrainable_or_review_rows": 283,
+  "fallback_rows": 580,
+  "guardrail": "Only TRAINABLE_SESSION_DIRECTION rows may enter the first model target panel. REVIEW/NOT_ELIGIBLE rows are excluded until separately resolved."
+}
