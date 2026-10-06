@@ -1,0 +1,67 @@
+{
+  "status": "RETROSPECTIVE_EXECUTION_AUDIT_NOT_PROSPECTIVE_EVIDENCE",
+  "window": {
+    "start": "2026-08-04",
+    "end": "2026-09-25"
+  },
+  "rule": {
+    "identity": "CPG_FILTERED_CIG_D1_RECONSTRUCTION",
+    "cpg": "Consensus Precision Governor",
+    "consensus": "SAGE+RuleFlow / V5-DCE / RIFT / VEGA all UP",
+    "tres_block": "F_reversal >= 0.164484 blocks long",
+    "sage_missing_semantics": "exception-only fail-closed KEEP V5"
+  },
+  "signal_count": 12,
+  "signal_dates": [
+    "2026-08-05",
+    "2026-08-06",
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-17",
+    "2026-08-18",
+    "2026-08-20",
+    "2026-09-03",
+    "2026-09-04",
+    "2026-09-08",
+    "2026-09-18",
+    "2026-09-22"
+  ],
+  "returns": {
+    "theoretical_prev_close_to_current_close_compound": 0.12307379609471014,
+    "xau_executable_0800NY_to_1600NY_same_day_compound": 0.026335749480612458,
+    "xau_executable_0800NY_to_1100NY_bist_window_proxy_compound": 0.020730562129887664,
+    "xau_decision_to_decision_0800NY_compound": 0.05481287953316283,
+    "gldtr_daily_open_to_close_prior_style_compound": NaN,
+    "gldtr_1500IST_to_session_close_compound": NaN,
+    "gldtr_decision_to_decision_1500IST_compound": NaN
+  },
+  "source_meta": {
+    "xau": {
+      "interval": "15min",
+      "n": 5000,
+      "meta": {
+        "symbol": "XAU/USD",
+        "interval": "15min",
+        "currency_base": "Gold Spot",
+        "currency_quote": "US Dollar",
+        "type": "Precious Metal"
+      }
+    },
+    "gldtr_daily": {
+      "timezone": null,
+      "n": 0
+    },
+    "gldtr_hourly": {
+      "timezone": null,
+      "n": 0,
+      "sample_times": []
+    },
+    "gldtr_error": "YAHOO_GLDTR_EMPTY daily_n=0 hourly_n=361"
+  },
+  "interpretation_notes": [
+    "The 12.3% benchmark uses previous close -> current close on days selected by a signal issued the current day; it is not executable if issuance occurs at 08:00 New York.",
+    "The GLDTR daily-open -> close comparison is also pre-issuance for an 08:00 New York / 15:00 Istanbul decision clock.",
+    "Decision-to-decision returns are the cleanest implementable comparison: enter at issuance and stay long until the next issue time while CPG-UP remains active.",
+    "The XAU 08:00->11:00 New York series is a VIOP-underlying session proxy, not actual F_XAUUSD contract P&L; actual VIOP basis/spread/fees require licensed contract history."
+  ]
+}
