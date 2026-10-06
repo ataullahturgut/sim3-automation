@@ -134,3 +134,33 @@ Before any final execution claim:
 5. report label accuracy and executable-clock accuracy side by side.
 
 No new model tuning is permitted during this reconciliation.
+
+
+---
+
+## 8. Resolution update — exact canonical 125 recovered
+
+The exact canonical Jan-Jul population has now been recovered and the unresolved comparison in Section 4 is closed.
+
+Authority:
+`GOLD_CIG_EXACT_125_CLOCK_RESCORE_RESULT_2026-10-06.md`
+
+Recovered source:
+`GOLD_DAILY_H1_V2_2026_GERCEKLESEN_TAHMIN_RECOVERED_2026-10-06.csv`
+
+Exact reproduction:
+- universe 145
+- consensus 125
+- consensus correct 93
+- historical daily-label accuracy 74.40%.
+
+Exact same-125 post-issue diagnostic:
+- 08:15->16:00 NY: 59/125 = **47.20%**
+- 08:15->20:00 NY: 59/125 = **47.20%**
+- 17:00->20:00 NY: 63/125 = **50.40%**.
+
+Therefore the earlier 131-row post-08:00 diagnostic is superseded for the canonical Jan-Jul comparison.
+
+The six rows absent from the old realization snapshot are 2026-02-27 and 2026-03-02 through 2026-03-06. Their absence was a frozen-data coverage gap, not a trading-clock definition.
+
+**Final clock conclusion:** CIG-D1's historical 74.40% describes its date-labelled daily-reference target. It does not describe price direction after the 08:00 New York issuance deadline.
