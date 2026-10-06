@@ -73,6 +73,13 @@ def summary(df):
     return out
 
 def main():
+    # Hard schema gate: a historical V4 bug renamed the reserved column "return" to "_20".
+    # Never allow that corrupted schema to propagate into a frozen modelling target.
+    for src in [WGC,SOB]:
+        hdr=pd.read_csv(src,nrows=0).columns.tolist()
+        if "return" not in hdr or "_20" in hdr:
+            raise RuntimeError(f"V4_TARGET_SCHEMA_FAIL {src.name}: return={'return' in hdr} _20={'_20' in hdr}")
+
     raw=pd.read_csv(RAW)
     raw["dt_utc"]=pd.to_datetime(raw.dt_utc,utc=True)
     present=set(raw.dt_utc)
