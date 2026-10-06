@@ -1,0 +1,778 @@
+{
+  "status": "SESSION_CLOCK_BACKFILL_AND_LABEL_GATE",
+  "clock_contract": "CORRECTED_DUAL_EXTERNAL_PARTITION",
+  "fetch_window_utc": [
+    "2022-12-30",
+    "2026-01-02"
+  ],
+  "label_window": [
+    "2023-01-01",
+    "2025-12-31"
+  ],
+  "raw_integrity": {
+    "raw_rows": 74163,
+    "duplicate_dt_utc_before_dedup": 0,
+    "first_utc": "2022-12-30 00:00:00+00:00",
+    "last_utc": "2026-01-02 23:45:00+00:00",
+    "all_timestamps_on_15min_grid": true,
+    "ohlc_internal_consistency": true,
+    "request_chunks": [
+      {
+        "start": "2022-12-30",
+        "end": "2022-12-31",
+        "http": 200,
+        "rows": 80,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2023-01-01",
+        "end": "2023-01-31",
+        "http": 200,
+        "rows": 1895,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2023-02-01",
+        "end": "2023-02-28",
+        "http": 200,
+        "rows": 1793,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2023-03-01",
+        "end": "2023-03-31",
+        "http": 200,
+        "rows": 2074,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2023-04-01",
+        "end": "2023-04-30",
+        "http": 200,
+        "rows": 1723,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2023-05-01",
+        "end": "2023-05-31",
+        "http": 200,
+        "rows": 2075,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2023-06-01",
+        "end": "2023-06-30",
+        "http": 200,
+        "rows": 2005,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2023-07-01",
+        "end": "2023-07-31",
+        "http": 200,
+        "rows": 1923,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2023-08-01",
+        "end": "2023-08-31",
+        "http": 200,
+        "rows": 2116,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2023-09-01",
+        "end": "2023-09-30",
+        "http": 200,
+        "rows": 1914,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2023-10-01",
+        "end": "2023-10-31",
+        "http": 200,
+        "rows": 2016,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2023-11-01",
+        "end": "2023-11-30",
+        "http": 200,
+        "rows": 1977,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2023-12-01",
+        "end": "2023-12-31",
+        "http": 200,
+        "rows": 1796,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2024-01-01",
+        "end": "2024-01-31",
+        "http": 200,
+        "rows": 1971,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2024-02-01",
+        "end": "2024-02-29",
+        "http": 200,
+        "rows": 1903,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2024-03-01",
+        "end": "2024-03-31",
+        "http": 200,
+        "rows": 1844,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2024-04-01",
+        "end": "2024-04-30",
+        "http": 200,
+        "rows": 2008,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2024-05-01",
+        "end": "2024-05-31",
+        "http": 200,
+        "rows": 2082,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2024-06-01",
+        "end": "2024-06-30",
+        "http": 200,
+        "rows": 1818,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2024-07-01",
+        "end": "2024-07-31",
+        "http": 200,
+        "rows": 2106,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2024-08-01",
+        "end": "2024-08-31",
+        "http": 200,
+        "rows": 2016,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2024-09-01",
+        "end": "2024-09-30",
+        "http": 200,
+        "rows": 1930,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2024-10-01",
+        "end": "2024-10-31",
+        "http": 200,
+        "rows": 2116,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2024-11-01",
+        "end": "2024-11-30",
+        "http": 200,
+        "rows": 1905,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2024-12-01",
+        "end": "2024-12-31",
+        "http": 200,
+        "rows": 1919,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2025-01-01",
+        "end": "2025-01-31",
+        "http": 200,
+        "rows": 2012,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2025-02-01",
+        "end": "2025-02-28",
+        "http": 200,
+        "rows": 1830,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2025-03-01",
+        "end": "2025-03-31",
+        "http": 200,
+        "rows": 1940,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2025-04-01",
+        "end": "2025-04-30",
+        "http": 200,
+        "rows": 1818,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2025-05-01",
+        "end": "2025-05-31",
+        "http": 200,
+        "rows": 2462,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2025-06-01",
+        "end": "2025-06-30",
+        "http": 200,
+        "rows": 2314,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2025-07-01",
+        "end": "2025-07-31",
+        "http": 200,
+        "rows": 2507,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2025-08-01",
+        "end": "2025-08-31",
+        "http": 200,
+        "rows": 2341,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2025-09-01",
+        "end": "2025-09-30",
+        "http": 200,
+        "rows": 2372,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2025-10-01",
+        "end": "2025-10-31",
+        "http": 200,
+        "rows": 2456,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2025-11-01",
+        "end": "2025-11-30",
+        "http": 200,
+        "rows": 2322,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2025-12-01",
+        "end": "2025-12-31",
+        "http": 200,
+        "rows": 2592,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2026-01-01",
+        "end": "2026-01-02",
+        "http": 200,
+        "rows": 192,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      }
+    ]
+  },
+  "coverage": {
+    "MODERN_WGC_3": {
+      "2023_ASIA": {
+        "calendar_rows": 365,
+        "pass": 167,
+        "missing": 198,
+        "up": 85,
+        "down": 82,
+        "flat": 0
+      },
+      "2023_EUROPE": {
+        "calendar_rows": 365,
+        "pass": 256,
+        "missing": 109,
+        "up": 139,
+        "down": 117,
+        "flat": 0
+      },
+      "2023_US": {
+        "calendar_rows": 365,
+        "pass": 67,
+        "missing": 298,
+        "up": 34,
+        "down": 33,
+        "flat": 0
+      },
+      "2024_ASIA": {
+        "calendar_rows": 366,
+        "pass": 156,
+        "missing": 210,
+        "up": 83,
+        "down": 73,
+        "flat": 0
+      },
+      "2024_EUROPE": {
+        "calendar_rows": 366,
+        "pass": 259,
+        "missing": 107,
+        "up": 143,
+        "down": 116,
+        "flat": 0
+      },
+      "2024_US": {
+        "calendar_rows": 366,
+        "pass": 80,
+        "missing": 286,
+        "up": 39,
+        "down": 41,
+        "flat": 0
+      },
+      "2025_ASIA": {
+        "calendar_rows": 365,
+        "pass": 243,
+        "missing": 122,
+        "up": 131,
+        "down": 112,
+        "flat": 0
+      },
+      "2025_EUROPE": {
+        "calendar_rows": 365,
+        "pass": 291,
+        "missing": 74,
+        "up": 167,
+        "down": 124,
+        "flat": 0
+      },
+      "2025_US": {
+        "calendar_rows": 365,
+        "pass": 222,
+        "missing": 143,
+        "up": 127,
+        "down": 95,
+        "flat": 0
+      }
+    },
+    "SOBTI_5_ET": {
+      "2023_ASIA_AFTERNOON_LIT": {
+        "calendar_rows": 365,
+        "pass": 256,
+        "missing": 109,
+        "up": 124,
+        "down": 132,
+        "flat": 0
+      },
+      "2023_ASIA_MORNING_LIT": {
+        "calendar_rows": 365,
+        "pass": 255,
+        "missing": 110,
+        "up": 122,
+        "down": 133,
+        "flat": 0
+      },
+      "2023_EUROPE_LIT": {
+        "calendar_rows": 365,
+        "pass": 257,
+        "missing": 108,
+        "up": 129,
+        "down": 128,
+        "flat": 0
+      },
+      "2023_NY_LONDON_LIT": {
+        "calendar_rows": 365,
+        "pass": 250,
+        "missing": 115,
+        "up": 121,
+        "down": 129,
+        "flat": 0
+      },
+      "2023_US_LATE_LIT": {
+        "calendar_rows": 365,
+        "pass": 199,
+        "missing": 166,
+        "up": 118,
+        "down": 81,
+        "flat": 0
+      },
+      "2024_ASIA_AFTERNOON_LIT": {
+        "calendar_rows": 366,
+        "pass": 259,
+        "missing": 107,
+        "up": 130,
+        "down": 129,
+        "flat": 0
+      },
+      "2024_ASIA_MORNING_LIT": {
+        "calendar_rows": 366,
+        "pass": 259,
+        "missing": 107,
+        "up": 140,
+        "down": 119,
+        "flat": 0
+      },
+      "2024_EUROPE_LIT": {
+        "calendar_rows": 366,
+        "pass": 259,
+        "missing": 107,
+        "up": 143,
+        "down": 115,
+        "flat": 1
+      },
+      "2024_NY_LONDON_LIT": {
+        "calendar_rows": 366,
+        "pass": 252,
+        "missing": 114,
+        "up": 133,
+        "down": 119,
+        "flat": 0
+      },
+      "2024_US_LATE_LIT": {
+        "calendar_rows": 366,
+        "pass": 199,
+        "missing": 167,
+        "up": 122,
+        "down": 77,
+        "flat": 0
+      },
+      "2025_ASIA_AFTERNOON_LIT": {
+        "calendar_rows": 365,
+        "pass": 291,
+        "missing": 74,
+        "up": 144,
+        "down": 147,
+        "flat": 0
+      },
+      "2025_ASIA_MORNING_LIT": {
+        "calendar_rows": 365,
+        "pass": 289,
+        "missing": 76,
+        "up": 149,
+        "down": 139,
+        "flat": 1
+      },
+      "2025_EUROPE_LIT": {
+        "calendar_rows": 365,
+        "pass": 281,
+        "missing": 84,
+        "up": 164,
+        "down": 116,
+        "flat": 1
+      },
+      "2025_NY_LONDON_LIT": {
+        "calendar_rows": 365,
+        "pass": 260,
+        "missing": 105,
+        "up": 146,
+        "down": 114,
+        "flat": 0
+      },
+      "2025_US_LATE_LIT": {
+        "calendar_rows": 365,
+        "pass": 248,
+        "missing": 117,
+        "up": 149,
+        "down": 99,
+        "flat": 0
+      }
+    }
+  },
+  "hashes_sha256": {
+    "xauusd_15m_utc_2023_2025_with_buffer.csv": "8f1c00b34a95b7cef6a44c3c0bef59035fa9dde9cf6d241ba0b87fd146235308",
+    "labels_wgc3_2023_2025.csv": "c080475de5a0b69c828a20a293d87448c29108766a21c58ed475671366773c1e",
+    "labels_sobti5_2023_2025.csv": "3e24602bf3106ea728dc87dea2fb2d04e27e372b1a85ef35db141bf38b1ae89d",
+    "dst_audit_2023_2025.csv": "d7e35607b072b8836a220fcbd305f85691caee43b752719d2e1560ecfa2b5c52",
+    "sge_clock_markers_2023_2025.csv": "f9dfd70b6529c1678325ef36d01eb51804b22b4ed3d2a4d69276d0ca9d4eb474"
+  },
+  "rules": {
+    "raw_timezone": "UTC",
+    "bar_timestamp_semantics": "BAR_OPEN",
+    "boundary_matching": "EXACT_ONLY_NO_FILL",
+    "wgc3": {
+      "ASIA": "22:00 previous UTC date -> 07:00 label UTC date",
+      "EUROPE": "07:00 -> 12:00 UTC",
+      "US": "12:00 -> 21:00 UTC"
+    },
+    "sobti5": {
+      "ASIA_MORNING_LIT": "21:00 -> 23:30 America/New_York on prior calendar date",
+      "ASIA_AFTERNOON_LIT": "01:30 -> 03:30 America/New_York",
+      "EUROPE_LIT": "03:30 -> 08:00 America/New_York",
+      "NY_LONDON_LIT": "08:00 -> 14:30 America/New_York",
+      "US_LATE_LIT": "14:30 -> 21:00 America/New_York"
+    },
+    "modern_sge_day": "09:00-15:30 Asia/Shanghai; venue-state telemetry, not target partition"
+  },
+  "guardrail": "No 2026 direction result was used to choose or move any clock boundary."
+}
