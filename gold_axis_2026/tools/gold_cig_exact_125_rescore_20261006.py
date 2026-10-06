@@ -107,7 +107,7 @@ def main():
       "consensus_correct":sum(int(r["consensus_pred"]==r["actual_daily_label"]) for r in cons),
       "consensus_accuracy":sum(int(r["consensus_pred"]==r["actual_daily_label"]) for r in cons)/len(cons),
       "disagreement_n":len(disag),
-      "disagreement_v5_correct":sum(int(r["v5"]==r["actual_daily_label"]) for r in disag),
+      "disagreement_sage_correct":sum(int(r["sage"]==r["actual_daily_label"]) for r in disag),
       "mapped_sage_ruleflow_events":mapped
     }
     exp={"universe_n":145,"sage_correct":103,"v5_correct":102,"rift_correct":102,"vega_correct":102,
@@ -121,7 +121,7 @@ def main():
       "consensus_n":canon["consensus_n"]==exp["consensus_n"],
       "consensus_correct":canon["consensus_correct"]==exp["consensus_correct"],
       "disagreement_n":canon["disagreement_n"]==exp["disagreement_n"],
-      "disagreement_correct":canon["disagreement_v5_correct"]==exp["disagreement_correct"]
+      "disagreement_correct":canon["disagreement_sage_correct"]==exp["disagreement_correct"]
     }
     gate=all(checks.values())
 
