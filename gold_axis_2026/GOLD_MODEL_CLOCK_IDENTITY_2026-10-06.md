@@ -159,3 +159,19 @@ The old snapshot contains 145 rows because 2026-02-27 and 2026-03-02 through 202
 The exact 125 canonical consensus rows reproduce 93/125 = 74.40% daily-label accuracy. Re-scoring those identical rows after 08:00 New York gives 47.20% for 08:15->16:00 and 08:15->20:00, and 50.40% for 17:00->20:00.
 
 Hence the mixed-clock warning in this authority is no longer provisional; it is empirically demonstrated on the exact canonical population.
+
+
+## 11. Exact-125 reference-window audit update
+
+Authority:
+- `GOLD_CIG_EXACT125_REFERENCE_CLOCK_AUDIT_2026-10-06.json`
+
+On the exact canonical 125 consensus rows, CIG direction accuracy is approximately chance for every tested simple point-to-point clock window:
+- feature-cutoff 16:00 NY -> current UTC00: **49.60%**
+- current UTC00 -> issue 08:00 NY: **45.60%**
+- feature-cutoff 16:00 NY -> issue 08:00 NY: **47.20%**
+- post-issue 08:15 -> 20:00 NY: **47.20%**.
+
+The recovered historical daily label agrees **88.0%** in direction with an independent Twelve Data reconstruction using the arithmetic mean of hourly closes over the UTC calendar day. This supports the daily-average/reference interpretation, while confirming that it is not equivalent to a simple clock-to-clock return.
+
+Therefore any prior inference that the 74.40% CIG skill resides specifically in the 03:00 Istanbul -> 15:00/16:00 Istanbul interval is superseded. That interval is a data-availability/decision-clock gap, not the demonstrated source of the 74.40% label skill.
