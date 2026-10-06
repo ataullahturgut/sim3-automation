@@ -1,0 +1,55 @@
+name: Gold Global Session Backfill Labels 20261006
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_global_session_backfill_labels_20261006.py'
+      - '.github/workflows/gold-global-session-backfill-labels-20261006.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.31,<3'
+
+      - name: Backfill and label
+        run: python gold_axis_2026/tools/gold_global_session_backfill_labels_20261006.py
+
+      - name: Record outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          cp gold_axis_2026/GLOBAL_SESSION_BACKFILL_OUT/xauusd_15m_utc_2023_2025_with_buffer.csv gold_axis_2026/GOLD_XAUUSD_15M_UTC_2023_2025_WITH_BUFFER.csv
+          cp gold_axis_2026/GLOBAL_SESSION_BACKFILL_OUT/labels_wgc3_2023_2025.csv gold_axis_2026/GOLD_SESSION_LABELS_WGC3_2023_2025.csv
+          cp gold_axis_2026/GLOBAL_SESSION_BACKFILL_OUT/labels_sobti5_2023_2025.csv gold_axis_2026/GOLD_SESSION_LABELS_SOBTI5_2023_2025.csv
+          cp gold_axis_2026/GLOBAL_SESSION_BACKFILL_OUT/dst_audit_2023_2025.csv gold_axis_2026/GOLD_SESSION_DST_AUDIT_2023_2025.csv
+          cp gold_axis_2026/GLOBAL_SESSION_BACKFILL_OUT/sge_clock_markers_2023_2025.csv gold_axis_2026/GOLD_SGE_CLOCK_MARKERS_2023_2025.csv
+          cp gold_axis_2026/GLOBAL_SESSION_BACKFILL_OUT/summary.json gold_axis_2026/GOLD_GLOBAL_SESSION_BACKFILL_SUMMARY_2026-10-06.json
+          cp gold_axis_2026/GLOBAL_SESSION_BACKFILL_OUT/result.md gold_axis_2026/GOLD_GLOBAL_SESSION_BACKFILL_RESULT_2026-10-06.md
+
+          git add             gold_axis_2026/GOLD_XAUUSD_15M_UTC_2023_2025_WITH_BUFFER.csv             gold_axis_2026/GOLD_SESSION_LABELS_WGC3_2023_2025.csv             gold_axis_2026/GOLD_SESSION_LABELS_SOBTI5_2023_2025.csv             gold_axis_2026/GOLD_SESSION_DST_AUDIT_2023_2025.csv             gold_axis_2026/GOLD_SGE_CLOCK_MARKERS_2023_2025.csv             gold_axis_2026/GOLD_GLOBAL_SESSION_BACKFILL_SUMMARY_2026-10-06.json             gold_axis_2026/GOLD_GLOBAL_SESSION_BACKFILL_RESULT_2026-10-06.md
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Record 2023-2025 UTC 15m session backfill and labels"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
