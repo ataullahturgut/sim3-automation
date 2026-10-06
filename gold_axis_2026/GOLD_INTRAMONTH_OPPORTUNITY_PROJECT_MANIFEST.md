@@ -491,6 +491,28 @@ Binding caution:
 
 **Binding order correction (2026-10-06):** before timestamp auditing, session modelling, or execution-hour optimisation, the project must first prove that the required historical data actually exist at sufficient frequency and coverage.
 
+### Full 15-minute coverage audit result — 2026-10-06
+
+Authoritative artifacts:
+- `GOLD_EXECUTION_15M_COVERAGE_PROFILE_2026-10-06.json`
+- `GOLD_EXECUTION_15M_SIGNAL_DATE_COVERAGE_2026-10-06.csv`
+- `GOLD_EXECUTION_15M_PROFILE_AGGREGATE_2026-10-06.csv`
+- `GOLD_EXECUTION_15M_SESSION_ROWS_2026-10-06.csv`
+
+Window audited:
+- **2025-07-01 .. 2026-09-25**
+- XAU/USD 15-minute rows downloaded: **40,504**
+- all **320** signal-panel dates have XAU/USD 15-minute data
+- missing signal dates: **0**
+- 2025 H2: 129/129 dates covered; median 96 bars/day
+- 2026 Jan-Jul: 151/151 dates covered; median 96 bars/day
+- 2026 Aug-Sep: 40/40 dates covered; median 96 bars/day
+- only thin date: **2025-07-04**, 87 bars; retain as a flagged holiday/short-session observation, not as a data-gap failure.
+
+**Coverage gate decision: PASS for the signal-day XAU/USD 15-minute hour-of-day/session study.**
+
+This PASS authorizes session-path attribution for the existing CIG-D1 signals. It does **not** authorize treating pre-08:00 New York price movement as executable P&L from CIG-D1 V1.
+
 ### Current probe result
 
 Authoritative artifact:
