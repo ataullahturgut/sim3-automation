@@ -1,0 +1,68 @@
+{
+  "status": "EXACT_125_REFERENCE_CLOCK_AUDIT",
+  "n": 125,
+  "old_daily_label_accuracy": 0.744,
+  "daily_reference_semantic_check": {
+    "comparator": "Twelve Data 1h arithmetic mean of hourly closes per UTC calendar day",
+    "n": 125,
+    "old_label_vs_twelve_utc_mean_direction_agreement": 0.88,
+    "signal_accuracy_vs_twelve_utc_mean_direction": 0.672
+  },
+  "signal_direction_by_clock_window": {
+    "feature_cutoff_16NY_to_current_UTC00": {
+      "n": 125,
+      "correct": 62,
+      "accuracy": 0.496,
+      "positive_share": 0.496,
+      "mean_return": 0.0010787094627875372,
+      "median_return": -0.00016718521487490978
+    },
+    "current_UTC00_to_issue_08NY": {
+      "n": 125,
+      "correct": 57,
+      "accuracy": 0.456,
+      "positive_share": 0.52,
+      "mean_return": -6.157597962855377e-05,
+      "median_return": 0.0007331096008826865
+    },
+    "current_UTC00_to_first_post_0815NY": {
+      "n": 125,
+      "correct": 58,
+      "accuracy": 0.464,
+      "positive_share": 0.528,
+      "mean_return": -7.041654282946653e-05,
+      "median_return": 0.0011050322751844366
+    },
+    "feature_cutoff_16NY_to_issue_08NY": {
+      "n": 125,
+      "correct": 59,
+      "accuracy": 0.472,
+      "positive_share": 0.568,
+      "mean_return": 0.0010034411856091393,
+      "median_return": 0.0019783693040198447
+    },
+    "feature_cutoff_16NY_to_first_post_0815NY": {
+      "n": 125,
+      "correct": 63,
+      "accuracy": 0.504,
+      "positive_share": 0.568,
+      "mean_return": 0.0009933416071512139,
+      "median_return": 0.0017018208646315536
+    },
+    "post_issue_0815_to_20NY": {
+      "n": 125,
+      "correct": 59,
+      "accuracy": 0.472,
+      "positive_share": 0.504,
+      "mean_return": 0.00043352286289393847,
+      "median_return": 1.8401124319167295e-05
+    }
+  },
+  "interpretation_guardrails": [
+    "UTC00 is 03:00 Europe/Istanbul year-round.",
+    "16:00 New York equals 23:00 Istanbul in US DST and 00:00 next day in US standard time.",
+    "08:00 New York equals 15:00 Istanbul in US DST and 16:00 in US standard time.",
+    "The old daily label is a daily-average/reference semantic, not a point-to-point clock return.",
+    "Clock-window returns are diagnostics on the exact same 125 consensus rows."
+  ]
+}
