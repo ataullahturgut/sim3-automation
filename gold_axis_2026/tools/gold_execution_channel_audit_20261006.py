@@ -214,11 +214,22 @@ def main():
     try:
         gd,gdm=yahoo_chart("GLDTR.IS","1d","2026-08-01","2026-09-28")
         gh,ghm=yahoo_chart("GLDTR.IS","1h","2026-08-01","2026-09-28")
-        if gd.empty or gh.empty or "ts" not in gd.columns or "ts" not in gh.columns:
-            raise RuntimeError(f"YAHOO_GLDTR_EMPTY daily_n={len(gd)} hourly_n={len(gh)}")
-        gd["date"]=gd["ts"].dt.strftime("%Y-%m-%d")
+        if gh.empty or "ts" not in gh.columns:
+            raise RuntimeError(f"YAHOO_GLDTR_HOURLY_EMPTY hourly_n={len(gh)}")
         gh["date"]=gh["ts"].dt.strftime("%Y-%m-%d")
         gh["hm"]=gh["ts"].dt.strftime("%H:%M")
+        if gd.empty or "ts" not in gd.columns:
+            # Yahoo currently exposes GLDTR hourly history but may return an
+            # empty 1d payload. Reconstruct daily OHLC from the same hourly
+            # exchange feed rather than mixing vendors.
+            gd=(gh.sort_values("ts").groupby("date",as_index=False)
+                  .agg(open=("open","first"),high=("high","max"),
+                       low=("low","min"),close=("close","last"),
+                       volume=("volume","sum")))
+            gd["ts"]=pd.to_datetime(gd["date"]).dt.tz_localize(IST)
+            gdm={"timezone":IST,"derived_from":"Yahoo 1h GLDTR.IS"}
+        else:
+            gd["date"]=gd["ts"].dt.strftime("%Y-%m-%d")
 
         gl_rows=[]
         for d in panel.loc[panel.cpg_up,"date"]:
