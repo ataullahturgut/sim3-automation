@@ -1,7 +1,8 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
-**Manifest version:** 1.0  
+**Manifest version:** 1.1  
 **Date:** 2026-10-01  
+**Last governance update:** 2026-10-06  
 **Status:** **CURRENT / BINDING / PROJECT INITIATED**  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Branch:** `gold-midas-headswap-v1-20260925`  
@@ -48,6 +49,7 @@ Primary path targets:
 - Stage 4 Monthly Context Incremental Test: **COMPLETE / NO_CONTEXT_PASS**
 - Stage 5 K100 Robustness, Calibration & Decision-Threshold Audit: **COMPLETE / PASS**
 - **Stage 6 Frozen 2025 Transport: NEXT**
+- **Global Session / Execution redesign: ACTIVE — five-window discovery protocol is binding; operational head count is not preselected**
 
 Current frozen opportunity rule:
 - target: **K100**
@@ -599,7 +601,11 @@ World Gold Council identifies the three dominant global centres as:
 These three centres account for **more than 90% of global gold trading volume** in the cited WGC market-structure framework. London OTC is the key wholesale hub; COMEX is the leading listed-derivatives venue; Shanghai is the principal Chinese physical/futures centre.
 
 Binding interpretation:
-- use **Asia, Europe, New York/London overlap, and late-US** as distinct research states;
+- **three dominant market centres do not imply three forecast models**;
+- the number of operational forecast heads must not be chosen from geography alone;
+- the initial research decomposition is **five sequential price-discovery windows**: Asia Morning, Asia Afternoon, Europe, New York/London overlap, and late US;
+- only after pre-2026 chronological testing may statistically similar contiguous windows be merged into a smaller operational set (for example, the two Asia windows may become one Asia head if the evidence supports it);
+- therefore the final operational architecture may contain **3, 4, or 5 heads**; that count is an empirical result, not a prior assumption;
 - do not assume a move belongs exclusively to one geography;
 - overlapping hours must be tested explicitly because price discovery can migrate between venues.
 
@@ -693,7 +699,8 @@ The present CIG-D1 action contract is issued at **08:00 New York**.
 Therefore:
 - it is **not an Asia-session forecast**;
 - it is **not a Europe-open forecast**;
-- it is best described as a **New York/London-overlap anchored daily action signal** whose features may contain global prior information;
+- **08:00 New York is only the governed issue deadline of legacy CIG-D1 V1**; it must not be silently reused as the issue clock for future Asia/Europe/session-specific heads;
+- CIG-D1 V1 is issued at the start of the academically defined New York/London-overlap window, but its recovered historical target is a **date-labelled daily reference**, not an overlap return;
 - any European-session price move occurring before 08:00 New York cannot be counted as executable P&L from this signal.
 
 This distinction is mandatory.
@@ -770,26 +777,62 @@ For each candidate session rule report:
 
 No candidate may be called robust if its edge exists only at one exact bar.
 
-## 5E.8 Architecture candidates to test
+## 5E.8 Binding session-model discovery protocol
 
-The default research hierarchy is:
+The project must **not** jump directly from the three dominant physical/financial gold centres to three forecast models.
 
-**Layer 1 — Global Direction Core**  
-A common 24-hour state / CIG-style directional core.
+The research hierarchy is:
 
-**Layer 2 — Session Heads**  
-Separate conditional heads for:
-- Asia
-- Europe
-- New York/London overlap
-- late US.
+**Layer 1 — Global State/Core**  
+A common origin-safe global state may be retained as shared context. Existing H3/CIG expert families are candidate information channels, not automatically valid session predictors.
 
-Each head estimates whether the global direction remains actionable in that session.
+**Layer 2A — Five research target windows**  
+Construct separate timestamped UP/DOWN (and return) labels for the five sequential windows defined in Section 5E.4:
+1. **Asia Morning**
+2. **Asia Afternoon**
+3. **Europe**
+4. **New York/London overlap**
+5. **Late US**
 
-**Layer 3 — Execution Head**  
-Chooses entry/exit only after the relevant session head confirms that the move has not already been exhausted.
+Each window must have its own:
+- target start/end timestamps;
+- latest permissible feature timestamp;
+- source-ready / issue timestamp;
+- realized return and direction label;
+- DST-aware mapping;
+- no-leakage rule.
 
-Separate full models for every session are **not yet binding**. They are promoted only if session-specific heads materially outperform a common global model under frozen transport.
+A session prediction is valid only if its full information set is available **before that session target begins**. For later windows, already-completed earlier-session price action may be used as an origin-known feature.
+
+**Layer 2B — Expert revalidation by window**  
+SAGE, V5-DCE, RIFT, VEGA, RuleFlow and other existing H3 experts are **not copied blindly into every session consensus**. Each expert/family must earn inclusion separately for each target window under pre-2026 chronological testing. An expert may be useful in one window and harmful or redundant in another.
+
+**Layer 2C — Data-driven consolidation**  
+After the five-window test, contiguous windows may be merged only if their predictive behaviour, error structure, and transport performance support aggregation. In particular:
+- Asia Morning + Asia Afternoon may become a single Asia head if supported;
+- Europe must not be merged with New York/London overlap merely because both involve London trading;
+- New York/London overlap must not be merged automatically into late US;
+- the final operational head count may be **3, 4, or 5**.
+
+The default hypothesis to test is **not** “three centres = three models.”  
+The binding question is: **how many distinct forecast targets are empirically justified?**
+
+**Layer 3 — Session Consensus**  
+For each retained operational window, construct a separate selective consensus (UP / DOWN / UNCERTAIN) only from experts that passed that window's development/transport gate.
+
+**Layer 4 — Execution Head**  
+Entry/exit logic is evaluated only after the corresponding session forecast is genuinely available. Execution-window optimisation cannot redefine the forecasting target after results are seen.
+
+### Chronology for session-model discovery
+
+Preferred clean chronology:
+- **2023-2024:** development / expert and window-structure selection;
+- **2025:** frozen transport / architecture decision;
+- **2026:** opened retrospective stress only; no retuning.
+
+The existing 15-minute access probe has passed for 2023-2026, but full governed 15-minute backfill/coverage must be completed before the five-window model comparison is promoted.
+
+Separate full models for every window are **not yet binding**. The five windows are first a target-discovery framework; the final operational architecture is determined only after the frozen chronological comparison.
 
 ## 5E.9 Research hypotheses — not conclusions
 
@@ -801,9 +844,13 @@ H3. Asia may contribute more through inventory/demand and overnight repricing th
 
 H4. Benchmark and macro-announcement windows may explain apparent clock-time effects.
 
-H5. The optimal design may be **one global direction model + multiple session execution heads**, rather than fully independent Asia/Europe/US prediction models.
+H5. The optimal design may be **one shared global state/core + a data-selected set of session forecast heads + session-specific execution logic**. The number of retained heads is not fixed ex ante.
 
-All five hypotheses require project-specific validation.
+H6. The two Asia windows may be mergeable, but this must be demonstrated rather than assumed.
+
+H7. An expert that is useful for one session target may be neutral or harmful for another; session consensus membership must therefore be selected per window rather than copied wholesale.
+
+All seven hypotheses require project-specific validation.
 
 ## 5E.10 Governance of prior timing experiments
 
@@ -843,20 +890,21 @@ Academic sources:
 Authority:
 - `GOLD_MODEL_CLOCK_IDENTITY_2026-10-06.md`
 
-The current short-horizon stack is a **mixed-clock architecture**:
+The current legacy H3/CIG-D1 stack is a **mixed-clock architecture**:
 
-- governed daily Gold reference / H3 target = **UTC calendar-day reference**
-- hourly intraday feature clock = **America/New_York**, anchored at 16:00 NY
-- forecast issue/deadline clock = **America/New_York**, 08:00 NY
-- historical CIG-D1 label = derived from the governed UTC-day reference series
-- `Europe/Istanbul` = reporting/execution conversion only; it is not currently a model target, feature, or issue clock.
+- governed historical daily Gold realization/target source = **pinned StakTrakr calendar-date Gold reference**; its exact intraday fixing/observation clock is not established by the stored timestamp;
+- hourly intraday feature clock = **America/New_York**, anchored at 16:00 NY;
+- legacy CIG-D1 forecast issue/deadline clock = **America/New_York**, 08:00 NY;
+- historical CIG-D1 label = direction derived from the pinned Stak daily date-labelled reference values;
+- `Europe/Istanbul` = reporting/execution conversion only; it is not currently a legacy model target, feature, or issue clock.
 
 Therefore:
-- the model is **not a Turkey-clock model**;
-- the historical CIG-D1 label is **not a New York-session label** either;
-- D1 execution research must explicitly compare the UTC-day-derived historical label with a separate post-08:00-NY executable label.
+- the legacy model is **not a Turkey-clock model**;
+- the historical CIG-D1 label is **not a New York-session label, UTC close-to-close label, or proven full-UTC-day-average label**;
+- no intraday target window may be inferred from the Stak date label;
+- session-model research must construct new timestamped target labels directly from governed intraday data.
 
-This clock identity is binding and supersedes informal wording that called the governed daily reference a normal close.
+This source/clock identity is binding and supersedes earlier wording that called the Stak daily reference a normal close or a proven UTC-calendar-day/full-UTC-day average.
 
 ## 5E.11A Forecast Clock / Target Window Correction — 2026-10-06
 
@@ -878,10 +926,12 @@ Authoritative correction:
 
 **Binding timing facts**
 - H3 hourly feature anchor: 16:00 New York on feature-cutoff date.
-- Full-UTC-day daily reference completes at 03:00 Istanbul; this is only a theoretical lower-bound readiness clock.
-- Governed issue deadline: 08:00 New York = approximately 15:00 Istanbul in New York daylight time / 16:00 Istanbul in New York standard time.
+- The pinned Stak daily realization has **no proven intraday fixing/completion clock**; the synthetic noon timestamp is only a calendar-date label.
+- Any earlier statement that a “full-UTC-day daily reference completes at 03:00 Istanbul” is **superseded** and must not be used as a readiness fact.
+- Legacy CIG-D1 governed issue deadline: 08:00 New York = approximately 15:00 Istanbul in New York daylight time / 16:00 Istanbul in New York standard time.
 - Historical retrospective rows have no actual `issued_at_utc`; therefore exact historical production time is unknown.
-- Execution claims must use 08:00 New York unless an earlier all-source-ready timestamp is separately proven.
+- Legacy CIG-D1 execution claims must use 08:00 New York unless an earlier all-source-ready timestamp is separately proven.
+- Future session heads require their **own** source-ready/issue clocks, fixed before their target windows begin.
 
 **New diagnostic**
 On the reconstructed raw 4/4 execution panel, signal direction versus the clean 08:00->20:00 New York interval is:
@@ -1381,7 +1431,7 @@ Source:
 Audit result:
 - **145/145** recovered `Gerçekleşen` values match the pinned StakTrakr Gold value exactly.
 
-Binding correction:
+Binding correction — **this section supersedes every earlier conflicting clock-semantic statement in this manifest**:
 - the Stak daily timestamp at synthetic noon is a calendar-date label, **not** a proven 12:00 market observation;
 - the Stak daily value is **not proven** to be a New York close, London close, Istanbul close, or full-UTC-day average;
 - the prior Twelve Data UTC-day-average comparison remains only a similarity/cross-check, not source-semantic proof.
