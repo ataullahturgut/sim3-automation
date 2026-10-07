@@ -35,6 +35,8 @@ MIN_YEAR_N=12
 def read_pred(path, family, yearset, model=None):
     q=pd.read_csv(path,low_memory=False)
     q["label_date"]=pd.to_datetime(q["label_date"]).dt.normalize()
+    if "year" not in q.columns:
+        q["year"]=q["label_date"].dt.year
     q["start_utc"]=pd.to_datetime(q["start_utc"],utc=True,errors="coerce")
     if model is not None:
         q=q[q["model"].eq(model)].copy()
