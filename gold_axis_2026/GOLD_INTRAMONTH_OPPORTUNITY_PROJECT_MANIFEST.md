@@ -2648,6 +2648,28 @@ No 2025 or 2026 target outcome was read. Only the two eligible Sobti heads may e
 
 Next: **BOCPD Stage-3 frozen 2025 transport for the two eligible heads only**.
 
+### 5E.8ZL SESSION horizon / clock / maturity audit — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_HORIZON_CLOCK_MATURITY_AUDIT_2026-10-07.md`
+
+Status: **COMPLETE / NO LEGACY-HORIZON CONTAMINATION FOUND**.
+
+All completed SESSION families from Model-01 CORE3 through BOCPD were audited for:
+- corrected V5 `start_utc -> end_utc` target identity;
+- predictor availability at the relevant session start;
+- prior-target maturity before training/state updates;
+- partition/window-specific adaptive state;
+- accidental use of historical DAILY/H3 prediction/state outputs as SESSION outcomes.
+
+No completed SESSION result requires invalidation or rerun due to a legacy DAILY/H3 horizon mismatch.
+
+The only clock nuance is PATH_GLOBAL's completed-hour boundary: the hourly source timestamp is bar-open and the stored value is bar-close, so a bar available exactly at session start covers only the immediately preceding hour. This is accepted as pre-target completed-bar information and must not be generalized to bars beginning at target start.
+
+HELIOS and BOCPD failures remain architecture/transport failures, not horizon implementation failures.
+
+Next: **DPTC Stage-1 horizon/clock identity audit**.
+
 ### 5E.8ZK SESSION BOCPD V1 final closure — 2026-10-07
 
 Authority:
