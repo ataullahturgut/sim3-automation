@@ -1,0 +1,438 @@
+{
+  "status": "SESSION_MODEL09B_SAGE_A1_PATH_SESSION_FEATURE_SELECTION_COMPLETE",
+  "baseline": "S18_A1_PATH_SESSION",
+  "challenger": "SELECTED_A1_PATH_SESSION",
+  "matched_comparator": "SELECTED_A1_PATH_MATCHED using mandatory a1_logit + exactly same selected PATH subset",
+  "mandatory_feature": "a1_logit",
+  "candidate_families": {
+    "path": [
+      "g1h_ret_1h",
+      "g1h_ret_3h",
+      "g1h_ret_6h",
+      "g1h_ret_12h",
+      "g1h_ret_24h",
+      "g1h_ret_48h",
+      "g1h_lag2",
+      "g1h_rv_6",
+      "g1h_rv_12",
+      "g1h_rv_24",
+      "g1h_rv_48",
+      "g1h_up_semivol_24",
+      "g1h_down_semivol_24",
+      "g1h_down_up_semivol_ratio_24",
+      "g1h_jump_concentration_24",
+      "g1h_range_24",
+      "g1h_upfrac_24",
+      "g1h_slope_6",
+      "g1h_slope_24",
+      "g1h_max_drawdown_24",
+      "g1h_recovery_24",
+      "g1h_close_location_24",
+      "g1h_age_max_pos_24",
+      "g1h_age_max_neg_24"
+    ],
+    "sage": [
+      "sess_asia",
+      "sess_europe",
+      "sess_us_am",
+      "sess_us_pm",
+      "sess_us_total",
+      "sess_west_total",
+      "sess_east_west",
+      "sess_us_reversal",
+      "sess_dispersion",
+      "sess_sign_changes",
+      "sess_dominance",
+      "sess_asia_us_interaction",
+      "sess_east_west_conflict",
+      "sess_us_conflict"
+    ]
+  },
+  "identity_constraint": "mandatory A1 + at least one PATH + at least one SAGE variable",
+  "clock_policy": "fresh causal A1 + completed pre-target hourly PATH + strict sage_ready_utc < target_start",
+  "chronology": "2022 warm-up; 2023-2024 selection/gate; 2025 only pre-eligible heads; 2026 unopened",
+  "frozen_features": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "frozen_features": [
+        "g1h_age_max_pos_24",
+        "g1h_rv_6",
+        "sess_asia",
+        "g1h_ret_1h",
+        "sess_east_west_conflict",
+        "g1h_lag2",
+        "sess_sign_changes",
+        "sess_asia_us_interaction"
+      ],
+      "frozen_path_features": [
+        "g1h_age_max_pos_24",
+        "g1h_rv_6",
+        "g1h_ret_1h",
+        "g1h_lag2"
+      ],
+      "frozen_sage_features": [
+        "sess_asia",
+        "sess_east_west_conflict",
+        "sess_sign_changes",
+        "sess_asia_us_interaction"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 39
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "frozen_features": [
+        "g1h_ret_3h",
+        "g1h_jump_concentration_24",
+        "sess_asia_us_interaction",
+        "sess_sign_changes",
+        "sess_asia",
+        "g1h_ret_1h",
+        "g1h_rv_6",
+        "sess_europe"
+      ],
+      "frozen_path_features": [
+        "g1h_ret_3h",
+        "g1h_jump_concentration_24",
+        "g1h_ret_1h",
+        "g1h_rv_6"
+      ],
+      "frozen_sage_features": [
+        "sess_asia_us_interaction",
+        "sess_sign_changes",
+        "sess_asia",
+        "sess_europe"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 37
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "frozen_features": [
+        "g1h_ret_1h",
+        "g1h_ret_6h",
+        "sess_asia",
+        "g1h_ret_3h",
+        "g1h_ret_12h",
+        "sess_europe",
+        "g1h_jump_concentration_24",
+        "g1h_ret_48h"
+      ],
+      "frozen_path_features": [
+        "g1h_ret_1h",
+        "g1h_ret_6h",
+        "g1h_ret_3h",
+        "g1h_ret_12h",
+        "g1h_jump_concentration_24",
+        "g1h_ret_48h"
+      ],
+      "frozen_sage_features": [
+        "sess_asia",
+        "sess_europe"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 43
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "frozen_features": [
+        "g1h_ret_3h",
+        "sess_us_conflict",
+        "g1h_ret_1h",
+        "sess_asia",
+        "g1h_ret_6h",
+        "sess_asia_us_interaction",
+        "g1h_jump_concentration_24",
+        "g1h_down_semivol_24"
+      ],
+      "frozen_path_features": [
+        "g1h_ret_3h",
+        "g1h_ret_1h",
+        "g1h_ret_6h",
+        "g1h_jump_concentration_24",
+        "g1h_down_semivol_24"
+      ],
+      "frozen_sage_features": [
+        "sess_us_conflict",
+        "sess_asia",
+        "sess_asia_us_interaction"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 43
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "frozen_features": [
+        "sess_asia",
+        "g1h_ret_3h",
+        "g1h_ret_1h",
+        "g1h_rv_48"
+      ],
+      "frozen_path_features": [
+        "g1h_ret_3h",
+        "g1h_ret_1h",
+        "g1h_rv_48"
+      ],
+      "frozen_sage_features": [
+        "sess_asia"
+      ],
+      "n_features": 4,
+      "eligible_outer_blocks": 18
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "frozen_features": [
+        "sess_us_conflict",
+        "g1h_ret_1h",
+        "g1h_ret_3h",
+        "g1h_upfrac_24",
+        "g1h_ret_48h",
+        "sess_dominance",
+        "g1h_rv_6",
+        "g1h_slope_24"
+      ],
+      "frozen_path_features": [
+        "g1h_ret_1h",
+        "g1h_ret_3h",
+        "g1h_upfrac_24",
+        "g1h_ret_48h",
+        "g1h_rv_6",
+        "g1h_slope_24"
+      ],
+      "frozen_sage_features": [
+        "sess_us_conflict",
+        "sess_dominance"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 21
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "frozen_features": [
+        "g1h_ret_1h",
+        "g1h_ret_3h",
+        "g1h_jump_concentration_24",
+        "g1h_ret_6h",
+        "sess_sign_changes",
+        "sess_asia",
+        "g1h_upfrac_24",
+        "sess_us_pm"
+      ],
+      "frozen_path_features": [
+        "g1h_ret_1h",
+        "g1h_ret_3h",
+        "g1h_jump_concentration_24",
+        "g1h_ret_6h",
+        "g1h_upfrac_24"
+      ],
+      "frozen_sage_features": [
+        "sess_sign_changes",
+        "sess_asia",
+        "sess_us_pm"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 43
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "frozen_features": [
+        "g1h_ret_3h",
+        "g1h_ret_1h",
+        "sess_asia",
+        "g1h_ret_6h",
+        "sess_asia_us_interaction",
+        "sess_us_conflict",
+        "g1h_jump_concentration_24",
+        "sess_sign_changes"
+      ],
+      "frozen_path_features": [
+        "g1h_ret_3h",
+        "g1h_ret_1h",
+        "g1h_ret_6h",
+        "g1h_jump_concentration_24"
+      ],
+      "frozen_sage_features": [
+        "sess_asia",
+        "sess_asia_us_interaction",
+        "sess_us_conflict",
+        "sess_sign_changes"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 36
+    }
+  ],
+  "eligibility": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "n": 191,
+      "candidate_ba": 0.561394783377542,
+      "candidate_up_recall": 0.5480769230769231,
+      "candidate_down_recall": 0.5747126436781609,
+      "comparator_ba": 0.5450928381962865,
+      "candidate_brier": 0.2674518089527953,
+      "comparator_brier": 0.26458081696041674,
+      "eligible": false,
+      "reason": "YEAR_SIGN_FAIL"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "n": 184,
+      "candidate_ba": 0.49189646831156264,
+      "candidate_up_recall": 0.5094339622641509,
+      "candidate_down_recall": 0.47435897435897434,
+      "comparator_ba": 0.49963715529753266,
+      "candidate_brier": 0.27312507929822943,
+      "comparator_brier": 0.2651503368904246,
+      "eligible": false,
+      "reason": "BA_BELOW_COMPARATOR|YEAR_SIGN_FAIL"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "n": 213,
+      "candidate_ba": 0.45092079384945466,
+      "candidate_up_recall": 0.6890756302521008,
+      "candidate_down_recall": 0.2127659574468085,
+      "comparator_ba": 0.45512247452172355,
+      "candidate_brier": 0.26971329033459984,
+      "comparator_brier": 0.26830244496122024,
+      "eligible": false,
+      "reason": "RECALL_FLOOR|BA_BELOW_COMPARATOR|YEAR_SIGN_FAIL"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "n": 215,
+      "candidate_ba": 0.5641025641025641,
+      "candidate_up_recall": 0.46153846153846156,
+      "candidate_down_recall": 0.6666666666666666,
+      "comparator_ba": 0.5349532224532224,
+      "candidate_brier": 0.25805667474456945,
+      "comparator_brier": 0.25296500746932826,
+      "eligible": true,
+      "reason": "PASS"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "n": 89,
+      "candidate_ba": 0.5439532520325203,
+      "candidate_up_recall": 0.7708333333333334,
+      "candidate_down_recall": 0.3170731707317073,
+      "comparator_ba": 0.5038109756097561,
+      "candidate_brier": 0.2525878445829061,
+      "comparator_brier": 0.25899482907961496,
+      "eligible": true,
+      "reason": "PASS"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "n": 102,
+      "candidate_ba": 0.5191040843214756,
+      "candidate_up_recall": 0.8260869565217391,
+      "candidate_down_recall": 0.21212121212121213,
+      "comparator_ba": 0.49538866930171277,
+      "candidate_brier": 0.2438994941905563,
+      "comparator_brier": 0.23402570870229178,
+      "eligible": false,
+      "reason": "RECALL_FLOOR"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "n": 215,
+      "candidate_ba": 0.5178571428571428,
+      "candidate_up_recall": 0.75,
+      "candidate_down_recall": 0.2857142857142857,
+      "comparator_ba": 0.5314161644806806,
+      "candidate_brier": 0.2571081593904376,
+      "comparator_brier": 0.25445613509072224,
+      "eligible": false,
+      "reason": "RECALL_FLOOR|BA_BELOW_COMPARATOR|YEAR_SIGN_FAIL"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "n": 177,
+      "candidate_ba": 0.5994122156912854,
+      "candidate_up_recall": 0.4186046511627907,
+      "candidate_down_recall": 0.7802197802197802,
+      "comparator_ba": 0.5513033478149757,
+      "candidate_brier": 0.2492683462976991,
+      "comparator_brier": 0.25029348242188304,
+      "eligible": true,
+      "reason": "PASS"
+    }
+  ],
+  "transport_2025_paired": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "period": "2025",
+      "candidate": "SELECTED_A1_PATH_SESSION",
+      "comparator": "SELECTED_A1_PATH_MATCHED",
+      "n": 144,
+      "candidate_accuracy": 0.5138888888888888,
+      "candidate_ba": 0.527336860670194,
+      "candidate_brier": 0.26807616777602644,
+      "candidate_up_recall": 0.41975308641975306,
+      "candidate_down_recall": 0.6349206349206349,
+      "comparator_ba": 0.4585537918871252,
+      "comparator_brier": 0.26546629217364076,
+      "delta_ba_pp": 6.8783068783068835,
+      "delta_brier": 0.0026098756023856806
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "period": "2025",
+      "candidate": "SELECTED_A1_PATH_SESSION",
+      "comparator": "SELECTED_A1_PATH_MATCHED",
+      "n": 107,
+      "candidate_accuracy": 0.5420560747663551,
+      "candidate_ba": 0.44794776119402985,
+      "candidate_brier": 0.26133487592956417,
+      "candidate_up_recall": 0.8208955223880597,
+      "candidate_down_recall": 0.075,
+      "comparator_ba": 0.44794776119402985,
+      "comparator_brier": 0.2618690758359919,
+      "delta_ba_pp": 0.0,
+      "delta_brier": -0.0005341999064277236
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "period": "2025",
+      "candidate": "SELECTED_A1_PATH_SESSION",
+      "comparator": "SELECTED_A1_PATH_MATCHED",
+      "n": 140,
+      "candidate_accuracy": 0.4142857142857143,
+      "candidate_ba": 0.4538152610441767,
+      "candidate_brier": 0.29276221748642733,
+      "candidate_up_recall": 0.24096385542168675,
+      "candidate_down_recall": 0.6666666666666666,
+      "comparator_ba": 0.4088987529063623,
+      "comparator_brier": 0.2861391679792389,
+      "delta_ba_pp": 4.4916508137814395,
+      "delta_brier": 0.00662304950718845
+    }
+  ],
+  "guardrails": [
+    "a1_logit is mandatory.",
+    "Selected model cannot collapse to A1+PATH or A1+SESSION.",
+    "Comparator uses the exact same selected PATH subset plus A1 and no SAGE.",
+    "No 2025 feature reselection, threshold tuning, C tuning or eligibility rescue.",
+    "No 2026 outcome opened."
+  ]
+}
