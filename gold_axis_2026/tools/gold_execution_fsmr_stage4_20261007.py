@@ -68,7 +68,7 @@ def build(q):
 
 def score_states(d):
     out=[]
-    for _,r in d[d.year.isin([2023,2024,2025])].iterrows():
+    for _,r in d[d.year.isin([2023,2024,2025]) & d.y.notna()].iterrows():
         h=d[(d.date<r.date)&(d.next_date<=r.date)&d.y.notna()].copy()
         if len(h)<80:continue
         pg=float(h.y.mean())
