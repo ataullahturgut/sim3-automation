@@ -114,3 +114,54 @@ These are alternative representations of the same CART family. They must **not**
 - Sobti Asia Afternoon and several Europe/NY variants contain DOWN-skew signals.
 - Because these are one model family, the later incremental test must select or weight **at most one CART representation per session**, rather than allowing correlated duplicate voting.
 - Consensus status for all CART rows remains `PENDING_INCREMENTAL_TEST`.
+
+
+---
+
+## Model-03 — NOVA A1 / ARCR family
+
+Sources:
+- `GOLD_SESSION_NOVA_A1_ARCR_RAW_REPLAY_V1_METRICS_2023_2024.csv`
+- `GOLD_SESSION_MODEL03B_A1_FEATURE_SELECTION_DEV_METRICS_2026-10-07.csv`
+
+Duplicate-control cluster:
+- canonical `A1_ARCR`
+- `SELECTED_A1_ARCR`
+
+These are alternative representations of the same A1 family and may not receive independent full consensus votes.
+
+### Canonical A1/ARCR scored development profile
+
+The raw replay's scored A1 sample is warm-up limited and is effectively concentrated in 2024, so it is lower-confidence for cross-year specialist-role assignment.
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 223 | 47.55% | 43.75% | 51.35% | DOWN_SKEW / weak |
+| Sobti Asia Morning | 223 | 53.39% | 56.25% | 50.53% | BALANCED |
+| Sobti Europe | 248 | 47.37% | 52.14% | 42.59% | UP_SKEW / weak |
+| Sobti NY/London | 244 | 47.80% | 50.78% | 44.83% | UP_SKEW / weak |
+| Sobti Late-US | 139 | 51.28% | 73.75% | 28.81% | UP_SKEW |
+| WGC Asia | 241 | 50.60% | 66.91% | 34.29% | UP_SKEW |
+| WGC Europe | 247 | 50.75% | 60.58% | 40.91% | UP_SKEW |
+| WGC US | 211 | 46.44% | 46.49% | 46.39% | BALANCED / weak |
+
+### Selected A1/ARCR development profile on exact common rows
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 168 | 52.39% | 52.22% | 52.56% | BALANCED |
+| Sobti Asia Morning | 158 | 53.28% | 48.35% | 58.21% | DOWN_LEAN / balanced |
+| Sobti Europe | 191 | 46.98% | **72.12%** | **21.84%** | **UP_SKEW** |
+| Sobti NY/London | 194 | 50.10% | 45.45% | 54.74% | DOWN_LEAN / near-neutral |
+| Sobti Late-US | 40 | 50.00% | 65.00% | 35.00% | UP_SKEW / low N |
+| WGC Asia | 23 | 52.08% | 66.67% | 37.50% | UP_SKEW / very low N |
+| WGC Europe | 192 | 49.61% | 67.89% | 31.33% | UP_SKEW |
+| WGC US | 150 | 47.49% | **35.53%** | **59.46%** | **DOWN_SKEW** |
+
+### Model-03 interpretation
+
+- Canonical A1 has useful balanced evidence in Sobti Asia Morning but its scored development history is warm-up constrained.
+- The selected representation reveals strong one-sided signatures, especially Sobti Europe UP-skew and WGC US DOWN-skew.
+- Those signatures remain specialist evidence even though selected-A1 did not transport broadly as a primary model.
+- Because canonical and selected A1 share the same structural lineage, later consensus logic must treat them as one dependency cluster.
+- Consensus status remains `PENDING_INCREMENTAL_TEST`.
