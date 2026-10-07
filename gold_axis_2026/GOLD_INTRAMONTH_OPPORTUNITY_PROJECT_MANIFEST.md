@@ -187,7 +187,9 @@ Current state:
 - **SESSION HELIOS V1-V5:** **COMPLETE / SESSION-INERT UNDER FROZEN IDENTITY / NOT PROMOTED / 2026 STRESS DATA-BLOCKED** via `GOLD_SESSION_HELIOS_V1_V5_FINAL_AUTHORITY_2026-10-07.md`; the fresh SESSION replay generated no HELIOS routes because the historical 8-matured-candidate competence gate never fills at session granularity (through 2025 the maximum candidate count in any window is only 2). No threshold/gate relaxation was allowed. 2026 stress remains data-blocked because no V5-equivalent 2026 SESSION target population exists;
 - **SESSION BOCPD V1 Stage-1:** **PASS** via `GOLD_SESSION_BOCPD_V1_STAGE1_READINESS_AUTHORITY_2026-10-07.md`; canonical identity is V1 meta-trust only, V4 hysteresis remains post-hoc diagnostic;
 - **SESSION BOCPD V1:** **COMPLETE / 2025 TRANSPORT FAILED / NOT PROMOTED / 2026 DATA-BLOCKED** via `GOLD_SESSION_BOCPD_V1_FINAL_AUTHORITY_2026-10-07.md`; Stage-2 retained only Sobti Asia Afternoon and Sobti NY/London, but frozen 2025 transport produced zero ACTs in both heads, so BOCPD added no 2025 correction value;
-- **current immediate task:** **FULL SESSION HORIZON/CLOCK SEMANTIC AUDIT** across all previously completed SESSION models before any DPTC replay. Check for residual H3/3-day target assumptions, wrong session start/end clocks, immature target-state updates, target-window leakage, legacy H3 prediction/state reuse, and daily-label substitution. DPTC remains next only after this audit closes;
+- **SESSION horizon/clock/maturity audit:** **COMPLETE / NO LEGACY-HORIZON CONTAMINATION FOUND** via `GOLD_SESSION_HORIZON_CLOCK_MATURITY_AUDIT_2026-10-07.md`;
+- **SESSION DPTC:** **COMPLETE / DEVELOPMENT-BLOCKED BY INSUFFICIENT 2023 SESSION-SELLR HISTORY / NOT PROMOTED / 2025 NOT OPENED / 2026 DATA-BLOCKED** via `GOLD_SESSION_DPTC_FINAL_AUTHORITY_2026-10-07.md`; original SELLR producer was recovered, historical H3 SELLR was correctly rejected as horizon-dependent, and a preregistered SESSION-SELLR successor was attempted with 2023-only fitting. No partition/window reached the frozen minimum 80 same-window 2023 rows (maximum 77), therefore no SELLR spec/threshold or DPTC head was authorized and 2025 remained closed;
+- **current immediate task:** **RTE Stage-1 horizon/clock identity audit** before any SESSION RTE replay;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -2685,6 +2687,33 @@ The only clock nuance is PATH_GLOBAL's completed-hour boundary: the hourly sourc
 HELIOS and BOCPD failures remain architecture/transport failures, not horizon implementation failures.
 
 Next: **DPTC Stage-1 horizon/clock identity audit**.
+
+### 5E.8ZO SESSION DPTC final closure — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_DPTC_FINAL_AUTHORITY_2026-10-07.md`
+- `GOLD_SESSION_DPTC_STAGE1C_STAGE2_PREREG_2026-10-07.md`
+- `GOLD_SESSION_DPTC_STAGE2_RESULT_2026-10-07.md`
+
+Status: **COMPLETE / DEVELOPMENT-BLOCKED BY INSUFFICIENT 2023 SESSION-SELLR HISTORY / NOT PROMOTED / 2025 NOT OPENED / 2026 DATA-BLOCKED**.
+
+The recovered SELLR algorithm was rebuilt as a new SESSION-native identity rather than reusing H3 scores. Chronology was frozen before results: 2023 fit/calibration only, 2024 untouched development, 2025 closed.
+
+The eleven-feature SESSION-safe exact-common panel exists, but no partition/window reaches the preregistered minimum of 80 2023 fitting rows:
+- Sobti Asia Afternoon: 51
+- Sobti Asia Morning: 69
+- Sobti Europe: **77** (maximum)
+- Sobti NY/London: 65
+- Sobti Late-US: 0
+- WGC Asia: 61
+- WGC Europe: 62
+- WGC US: 35
+
+Therefore no SESSION-SELLR specification or threshold was fitted, no DPTC-Q95/Q99 head was authorized, and **2025 was not opened**. The minimum-history rule is not relaxed after observing this shortage. DPTC closes as NOT PROMOTED under the current identity.
+
+The failure is **sample-support**, not a target/clock leakage failure.
+
+Next: **RTE Stage-1 horizon/clock identity audit**.
 
 ### 5E.8ZN SESSION DPTC Stage-1B SELLR lineage reconstruction — 2026-10-07
 
