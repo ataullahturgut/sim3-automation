@@ -1,0 +1,99 @@
+{
+  "status": "STAGE1_2025_MATCHED_DECISION_COMPLETE",
+  "identity_audit": {
+    "A1_max_abs_diff": 0.097921107299963,
+    "PATH_max_abs_diff": 2.9580156657438295e-09
+  },
+  "recall_floor": 0.3,
+  "decisions": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "target_n": 240,
+      "common_n": 137,
+      "common_coverage": 0.5708333333333333,
+      "winner": "A1_ARCR",
+      "winner_ba": 0.6345907928388747,
+      "winner_brier": 0.2460531891847344,
+      "status": "BEST_FROZEN_ON_COMMON_ROWS"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "target_n": 239,
+      "common_n": 140,
+      "common_coverage": 0.5857740585774058,
+      "winner": "S14_A1_PLUS_1H_FULL",
+      "winner_ba": 0.608566755264772,
+      "winner_brier": 0.2557108171906171,
+      "status": "BEST_FROZEN_ON_COMMON_ROWS"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "target_n": 247,
+      "common_n": 144,
+      "common_coverage": 0.582995951417004,
+      "winner": "PATH_GLOBAL_1H",
+      "winner_ba": 0.5111593916650208,
+      "winner_brier": 0.2626522103606351,
+      "status": "BEST_FROZEN_ON_COMMON_ROWS"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "target_n": 245,
+      "common_n": 144,
+      "common_coverage": 0.5877551020408164,
+      "winner": "A1_ARCR",
+      "winner_ba": 0.5264550264550264,
+      "winner_brier": 0.2505662633987926,
+      "status": "BEST_FROZEN_ON_COMMON_ROWS"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "target_n": 195,
+      "common_n": 107,
+      "common_coverage": 0.5487179487179488,
+      "winner": null,
+      "winner_ba": null,
+      "winner_brier": null,
+      "status": "NO_ADMISSIBLE_MODEL"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "target_n": 253,
+      "common_n": 104,
+      "common_coverage": 0.41106719367588934,
+      "winner": "PATH_GLOBAL_1H",
+      "winner_ba": 0.5640929535232384,
+      "winner_brier": 0.2594358852915859,
+      "status": "BEST_FROZEN_ON_COMMON_ROWS"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "target_n": 247,
+      "common_n": 145,
+      "common_coverage": 0.5870445344129555,
+      "winner": "PATH_GLOBAL_1H",
+      "winner_ba": 0.5298076923076923,
+      "winner_brier": 0.26833958090703847,
+      "status": "BEST_FROZEN_ON_COMMON_ROWS"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "target_n": 239,
+      "common_n": 140,
+      "common_coverage": 0.5857740585774058,
+      "winner": "PATH_GLOBAL_1H",
+      "winner_ba": 0.50856055802156,
+      "winner_brier": 0.2806524396109621,
+      "status": "BEST_FROZEN_ON_COMMON_ROWS"
+    }
+  ],
+  "interpretation": "Winners are transport winners only on the exact common frozen-candidate rows; they do not create a new fallback/router for non-common rows."
+}
