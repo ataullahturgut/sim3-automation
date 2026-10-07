@@ -267,3 +267,143 @@ def replay_2025(hist_plus_2025,state):
     z["p_assisted"]=z.p_up.astype(float)
     z.loc[z.act,"p_assisted"]=1.0-z.loc[z.act,"p_up"].astype(float)
     return z,pd.DataFrame(timeline)
+
+
+def metrics_and_gate(z):
+    rows=[]
+    gates=[]
+    s2=pd.read_csv(STAGE2_GATE)
+    for (part,win),g in z.groupby(["partition","window"],sort=True):
+        d=g[g.start_utc.dt.year.isin([2023,2024])].copy()
+        old=s2[(s2.partition.eq(part))&(s2.window.eq(win))].iloc[0]
+        if len(d)!=int(old.base_eligible_n):
+            raise RuntimeError(f"STAGE2_N_MISMATCH:{part}:{win}:{len(d)}:{int(old.base_eligible_n)}")
+        if int(d.handoff_alarm.sum())!=int(old.base_handoff_alarms):
+            raise RuntimeError(f"STAGE2_ALARM_MISMATCH:{part}:{win}")
+        if int(d.act.sum())!=int(old.base_acts):
+            raise RuntimeError(f"STAGE2_ACT_MISMATCH:{part}:{win}")
+
+        q=g[g.start_utc.dt.year.eq(2025)].copy()
+        if q.empty:
+            raise RuntimeError(f"NO_2025_ROWS:{part}:{win}")
+        mb=b2.metric(q.y_up,q.p_up)
+        ma=b2.metric(q.y_up,q.p_assisted)
+        acted=q[q.act].copy()
+        rescue=int((~acted.baseline_correct).sum())
+        broken=int(acted.baseline_correct.sum())
+        net=rescue-broken
+        passed=bool(
+            int(q.act.sum())>=1 and
+            net>0 and
+            ma["balanced_accuracy"]+1e-12>=mb["balanced_accuracy"] and
+            ma["accuracy"]+0.01+1e-12>=mb["accuracy"]
+        )
+        rows.append({
+            "partition":part,"window":win,"base_model":q.base_model.iloc[0],
+            "n":int(len(q)),"handoff_alarms":int(q.handoff_alarm.sum()),
+            "acts":int(q.act.sum()),"rescue":rescue,"broken":broken,
+            "net_rescue":net,"action_precision":float(rescue/max(len(acted),1)),
+            **{f"base_{k}":v for k,v in mb.items()},
+            **{f"assisted_{k}":v for k,v in ma.items()}
+        })
+        gates.append({
+            "partition":part,"window":win,"base_model":q.base_model.iloc[0],
+            "retained":passed,"reason":"PASS" if passed else "TRANSPORT_FAIL",
+            "n":int(len(q)),"acts":int(q.act.sum()),"rescue":rescue,
+            "broken":broken,"net_rescue":net,
+            "base_ba":mb["balanced_accuracy"],"assisted_ba":ma["balanced_accuracy"],
+            "base_accuracy":mb["accuracy"],"assisted_accuracy":ma["accuracy"]
+        })
+    return pd.DataFrame(rows),pd.DataFrame(gates)
+
+def main():
+    if "FROZEN BEFORE 2025 BOCPD RESULT" not in PREREG.read_text():
+        raise RuntimeError("STAGE3_PREREG_MISSING")
+
+    raw25,cost=fetch_2025_databento()
+    archives=combined_archives(raw25)
+    path=build_path_panel_extended()
+
+    mapping=b2.VARIANTS["BASE"]
+    raw_ifbc=b2.build_ifbc_raw(path,archives,mapping)
+    ifbc=b2.apply_ifbc_calibration(raw_ifbc)
+    hourly=b2.sync_hourly(archives,mapping)
+    llrs=b2.build_llrs(path,hourly)
+    state=b2.build_handoff_state(ifbc,llrs)
+
+    hist=historical_eligible_bases()
+    y25=pd.concat([s17_asia_afternoon_2025(),structural_2025()],ignore_index=True)
+    allbase=pd.concat([hist,y25],ignore_index=True,sort=False)
+    allbase["start_utc"]=pd.to_datetime(allbase.start_utc,utc=True)
+    allbase["end_utc"]=pd.to_datetime(allbase.end_utc,utc=True)
+    allbase["year"]=allbase.start_utc.dt.year
+    allbase=allbase.sort_values(["partition","window","start_utc"]).drop_duplicates(
+        ["partition","window","start_utc"],keep="last"
+    ).reset_index(drop=True)
+
+    z,timeline=replay_2025(allbase,state)
+    metrics,gate=metrics_and_gate(z)
+
+    timeline.to_csv(OUT/"actions_2025.csv",index=False)
+    metrics.to_csv(OUT/"metrics_2025.csv",index=False)
+    gate.to_csv(OUT/"gate_2025.csv",index=False)
+
+    retained=gate[gate.retained].to_dict("records")
+    summary={
+        "status":"SESSION_BOCPD_V1_STAGE3_2025_COMPLETE",
+        "databento_2025":{
+            "dataset":DATASET,"schema":SCHEMA,"symbols":BASE_SYMBOLS,
+            "start":START,"end":END,"estimated_cost_usd":cost,"rows":int(len(raw25))
+        },
+        "eligible_heads_opened":[
+            "SOBTI_5_ET/ASIA_AFTERNOON_LIT/S17_A1_SESSION",
+            "SOBTI_5_ET/NY_LONDON_LIT/STRUCTURAL_IRIS_1H"
+        ],
+        "metrics":metrics.to_dict("records"),
+        "gate":gate.to_dict("records"),
+        "retained":retained,
+        "stage4_2026":{
+            "status":"DATA_BLOCKED",
+            "reason":"No governed V5-equivalent 2026 SESSION target population; 2026 is not used for BOCPD tuning or transport selection."
+        },
+        "guardrails":[
+            "Only Stage-2 eligible heads were opened in 2025.",
+            "BOCPD thresholds, hazard and Handoff rules are unchanged.",
+            "BASE continuous mapping only; no source selection on 2025 outcomes.",
+            "Stage-2 chronology is reproduced exactly before accepting the 2025 replay.",
+            "2026 remains closed and data-blocked."
+        ]
+    }
+    (OUT/"summary.json").write_text(json.dumps(summary,indent=2,default=str)+"\n")
+
+    lines=[
+        "# GOLD SESSION — BOCPD V1 FROZEN 2025 TRANSPORT RESULT","",
+        "**Status:** SESSION_BOCPD_V1_STAGE3_2025_COMPLETE","",
+        f"- Databento 2025 BASE raw cost estimate: **USD {cost:.4f}**.",
+        "- Only the two Stage-2 eligible heads were opened.",
+        "- No BOCPD/Handoff/source parameter was retuned.","",
+        "## 2025 frozen transport","",
+        "| Partition | Window | Base | N | Handoff | ACT | Rescue | Break | Net | Precision | Base BA | Assisted BA | Base Acc | Assisted Acc | Decision |",
+        "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|"
+    ]
+    gmap={(r.partition,r.window):r for r in gate.itertuples(index=False)}
+    for r in metrics.itertuples(index=False):
+        gg=gmap[(r.partition,r.window)]
+        lines.append(
+            f"| {r.partition} | {r.window} | {r.base_model} | {r.n} | {r.handoff_alarms} | {r.acts} | "
+            f"{r.rescue} | {r.broken} | {r.net_rescue:+d} | {100*r.action_precision:.1f}% | "
+            f"{100*r.base_balanced_accuracy:.2f}% | {100*r.assisted_balanced_accuracy:.2f}% | "
+            f"{100*r.base_accuracy:.2f}% | {100*r.assisted_accuracy:.2f}% | "
+            f"{'RETAIN' if gg.retained else 'REJECT'} |"
+        )
+    lines += [
+        "",
+        "## 2026",
+        "",
+        "**DATA_BLOCKED** — no governed V5-equivalent 2026 SESSION target population is available. No daily/H3 label is substituted."
+    ]
+    (OUT/"result.md").write_text("\n".join(lines)+"\n")
+    print(json.dumps({"status":summary["status"],"retained":retained,"metrics":summary["metrics"]},indent=2,default=str))
+
+if __name__=="__main__":
+    main()
