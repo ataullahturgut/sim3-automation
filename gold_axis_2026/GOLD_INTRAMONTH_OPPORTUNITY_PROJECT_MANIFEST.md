@@ -187,7 +187,7 @@ Current state:
 - **SESSION HELIOS V1-V5:** **COMPLETE / SESSION-INERT UNDER FROZEN IDENTITY / NOT PROMOTED / 2026 STRESS DATA-BLOCKED** via `GOLD_SESSION_HELIOS_V1_V5_FINAL_AUTHORITY_2026-10-07.md`; the fresh SESSION replay generated no HELIOS routes because the historical 8-matured-candidate competence gate never fills at session granularity (through 2025 the maximum candidate count in any window is only 2). No threshold/gate relaxation was allowed. 2026 stress remains data-blocked because no V5-equivalent 2026 SESSION target population exists;
 - **SESSION BOCPD V1 Stage-1:** **PASS** via `GOLD_SESSION_BOCPD_V1_STAGE1_READINESS_AUTHORITY_2026-10-07.md`; canonical identity is V1 meta-trust only, V4 hysteresis remains post-hoc diagnostic;
 - **SESSION BOCPD V1:** **COMPLETE / 2025 TRANSPORT FAILED / NOT PROMOTED / 2026 DATA-BLOCKED** via `GOLD_SESSION_BOCPD_V1_FINAL_AUTHORITY_2026-10-07.md`; Stage-2 retained only Sobti Asia Afternoon and Sobti NY/London, but frozen 2025 transport produced zero ACTs in both heads, so BOCPD added no 2025 correction value;
-- **current immediate task:** **DPTC Stage-1 horizon/clock identity audit** before any SESSION DPTC replay. After the remaining meta-controller families are completed, run the requested full historical SESSION horizon/clock audit across earlier models;
+- **current immediate task:** **FULL SESSION HORIZON/CLOCK SEMANTIC AUDIT** across all previously completed SESSION models before any DPTC replay. Check for residual H3/3-day target assumptions, wrong session start/end clocks, immature target-state updates, target-window leakage, legacy H3 prediction/state reuse, and daily-label substitution. DPTC remains next only after this audit closes;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -2665,7 +2665,7 @@ Frozen 2025 transport opened only those two heads. Both produced **zero BOCPD AC
 
 No threshold, hazard, source mapping, clock, feature family or base model was retuned. BOCPD therefore closes as **NOT PROMOTED**. 2026 remains DATA_BLOCKED pending a governed V5-equivalent SESSION target extension.
 
-Next meta-controller: **DPTC**. Before running DPTC, its historical horizon-dependent assumptions must be audited against the SESSION target-clock contract.
+Next: **FULL SESSION HORIZON/CLOCK SEMANTIC AUDIT across all completed models, by user instruction.** DPTC is paused until that audit closes.
 
 ### 5E.8ZH SESSION HELIOS V1-V5 final closure — 2026-10-07
 
