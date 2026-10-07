@@ -1343,6 +1343,22 @@ HELIOS status:
 - HELIOS V1-V5 remains **BLOCKED_UPSTREAM_OPAL/AURORA** for session replay;
 - once fresh upstream session predictions exist, OPAL and HELIOS must be regenerated from raw COT plus the fresh upstream state.
 
+### 5E.8FN SELLR producer-lineage supersession — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_DPTC_STAGE1B_SELLR_LINEAGE_RECONSTRUCTION_AUTHORITY_2026-10-07.md`
+
+The 2026-10-06 repository-only status `SELLR = PRODUCER_LINEAGE_UNRESOLVED` is **superseded**.
+
+Recovered original producer:
+- branch: `gold-h3-reversal-mechanism-tournament-v1-20261004`
+- script: `gold_axis_2026/tools/gold_h3_reversal_mechanism_tournament_v1.py`
+- producer commit: `bbcc2affa9942fd7e6ae4a18f2e60de66cf4a5a6`
+
+SELLR is Sequential Evidence Log-Likelihood Ratio. It fits per-feature quintile evidence tables on **2023–2024 H3 reversal labels** and sums Laplace-smoothed log likelihood ratios. Its 2025-selected Q95 threshold is `2.3677413378977423`.
+
+Therefore producer provenance is now resolved, but historical SELLR remains **H3-horizon-dependent**. Historical SELLR bins, LLR tables, scores and numeric threshold remain prohibited SESSION inputs. DPTC requires a new preregistered **SESSION-SELLR V1** successor before full SESSION replay.
+
 ### 5E.8F SELLR / STCR provenance gate — 2026-10-06
 
 Repository lineage audit result:
@@ -2669,6 +2685,21 @@ The only clock nuance is PATH_GLOBAL's completed-hour boundary: the hourly sourc
 HELIOS and BOCPD failures remain architecture/transport failures, not horizon implementation failures.
 
 Next: **DPTC Stage-1 horizon/clock identity audit**.
+
+### 5E.8ZN SESSION DPTC Stage-1B SELLR lineage reconstruction — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_DPTC_STAGE1B_SELLR_LINEAGE_RECONSTRUCTION_AUTHORITY_2026-10-07.md`
+
+Status: **COMPLETE / PRODUCER RECOVERED / HISTORICAL SELLR HORIZON-DEPENDENT**.
+
+Exact historical SELLR identity was recovered from the reversal-mechanism tournament branch. The score is supervised: eleven signed origin-safe mechanism features are binned into 2023–2024 training quintiles, Laplace-smoothed `log P(bin|reversal) / P(bin|continuation)` contributions are learned from H3 reversal labels, and those contributions are summed.
+
+Because the evidence tables themselves are learned from H3 target labels, historical SELLR is not horizon-independent. The 2025-selected Q95 threshold `2.3677413378977423` is likewise an H3-score quantile and cannot be reused for SESSION.
+
+A new **SESSION-SELLR V1** may preserve the algorithmic idea but must refit from corrected SESSION reversal outcomes using 2023–2024 only, with same-window state/maturity and independently audited feature clocks.
+
+Next: **DPTC Stage-1C SESSION-SELLR V1 preregistration/readiness**.
 
 ### 5E.8ZM SESSION DPTC V1 Stage-1 horizon / clock identity — 2026-10-07
 
