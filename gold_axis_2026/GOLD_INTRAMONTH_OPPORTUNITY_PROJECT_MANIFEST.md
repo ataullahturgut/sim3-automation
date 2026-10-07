@@ -186,8 +186,8 @@ Current state:
 - **SESSION HELIOS Stage-1 readiness:** **COMPLETE / PASS_WITH_SESSION_REBUILD_REQUIRED** via `GOLD_SESSION_HELIOS_STAGE1_READINESS_AUTHORITY_2026-10-07.md`; binding lineage is HELIOS V1 -> V2 -> V3-GT -> V4-RGE -> V5-DCE, fresh SESSION AURORA/OPAL plus RIFT/TURN/VEGA dependencies are available, the prior OPAL/AURORA blocker is resolved, and H3 maturity fields are prohibited for SESSION replay. Session state must be independent by partition/window and may update only from same-window rows with `end_utc <= current start_utc`;
 - **SESSION HELIOS V1-V5:** **COMPLETE / SESSION-INERT UNDER FROZEN IDENTITY / NOT PROMOTED / 2026 STRESS DATA-BLOCKED** via `GOLD_SESSION_HELIOS_V1_V5_FINAL_AUTHORITY_2026-10-07.md`; the fresh SESSION replay generated no HELIOS routes because the historical 8-matured-candidate competence gate never fills at session granularity (through 2025 the maximum candidate count in any window is only 2). No threshold/gate relaxation was allowed. 2026 stress remains data-blocked because no V5-equivalent 2026 SESSION target population exists;
 - **SESSION BOCPD V1 Stage-1:** **PASS** via `GOLD_SESSION_BOCPD_V1_STAGE1_READINESS_AUTHORITY_2026-10-07.md`; canonical identity is V1 meta-trust only, V4 hysteresis remains post-hoc diagnostic;
-- **SESSION BOCPD V1 Stage-2:** **COMPLETE / TWO DEVELOPMENT-ELIGIBLE HEADS / 2025 STILL CLOSED** via `GOLD_SESSION_BOCPD_V1_STAGE2_FINAL_AUTHORITY_2026-10-07.md`; Sobti Asia Afternoon (S17_A1_SESSION) and Sobti NY/London (STRUCTURAL_IRIS_1H) each produced 5 ACTs, 3 rescue / 2 broken / net +1 and passed the preregistered source-sensitivity gate only as `PASS_SOURCE_WEAK`; all other windows fail closed;
-- **current immediate task:** BOCPD V1 Stage-3 frozen 2025 transport may be run only for those two eligible Sobti heads; no 2025 BOCPD result has been opened yet. DPTC remains next only after BOCPD closure;
+- **SESSION BOCPD V1:** **COMPLETE / 2025 TRANSPORT FAILED / NOT PROMOTED / 2026 DATA-BLOCKED** via `GOLD_SESSION_BOCPD_V1_FINAL_AUTHORITY_2026-10-07.md`; Stage-2 retained only Sobti Asia Afternoon and Sobti NY/London, but frozen 2025 transport produced zero ACTs in both heads, so BOCPD added no 2025 correction value;
+- **current immediate task:** **DPTC Stage-1 horizon/clock identity audit** before any SESSION DPTC replay. After the remaining meta-controller families are completed, run the requested full historical SESSION horizon/clock audit across earlier models;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -2647,6 +2647,25 @@ Fail-closed heads:
 No 2025 or 2026 target outcome was read. Only the two eligible Sobti heads may enter a later BOCPD Stage-3 frozen 2025 transport.
 
 Next: **BOCPD Stage-3 frozen 2025 transport for the two eligible heads only**.
+
+### 5E.8ZK SESSION BOCPD V1 final closure — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_BOCPD_V1_FINAL_AUTHORITY_2026-10-07.md`
+
+Status: **COMPLETE / 2025 TRANSPORT FAILED / NOT PROMOTED / 2026 DATA-BLOCKED**.
+
+Development retained only two weak-positive correction heads:
+- Sobti Asia Afternoon / S17_A1_SESSION: ACT 5, rescue/broken/net 3/2/+1; BA 52.18% -> 52.77%.
+- Sobti NY/London / STRUCTURAL_IRIS_1H: ACT 5, rescue/broken/net 3/2/+1; BA 53.26% -> 53.74%.
+
+Frozen 2025 transport opened only those two heads. Both produced **zero BOCPD ACTs** despite continued Handoff alarms:
+- Asia Afternoon: N=134, Handoff=17, ACT=0, BA unchanged 45.52%.
+- NY/London: N=143, Handoff=12, ACT=0, BA unchanged 50.78%.
+
+No threshold, hazard, source mapping, clock, feature family or base model was retuned. BOCPD therefore closes as **NOT PROMOTED**. 2026 remains DATA_BLOCKED pending a governed V5-equivalent SESSION target extension.
+
+Next meta-controller: **DPTC**. Before running DPTC, its historical horizon-dependent assumptions must be audited against the SESSION target-clock contract.
 
 ### 5E.8ZH SESSION HELIOS V1-V5 final closure — 2026-10-07
 
