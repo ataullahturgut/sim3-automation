@@ -1,0 +1,83 @@
+{
+  "status": "COMPLETE",
+  "target": "17:00 -> next eligible 09:00 Europe/Istanbul",
+  "common_row_n_by_year": {
+    "2023": 11,
+    "2024": 56,
+    "2025": 56
+  },
+  "causality": "All PATH/STRUCTURAL heads have start_utc <= 14:00 UTC (=17:00 Europe/Istanbul).",
+  "path_family": "mean p_up of canonical PATH_GLOBAL WGC-US and Sobti NY/London heads",
+  "struct_family": "mean p_up of canonical S14_A1_PLUS_1H_FULL WGC-US and Sobti NY/London heads",
+  "selection_uses_2025": false,
+  "selection_rule": "Both 2023 and 2024 require N>=12, RFR accuracy>50%, net rescue>0; rank by minimum yearly BA, then DEV BA, then DEV N.",
+  "ranking": [
+    {
+      "gate": "G0_PAIR_RFR_DISAGREE",
+      "eligible": false,
+      "min_year_ba": -1.0,
+      "dev_ba": 0.5,
+      "dev_n": 7,
+      "n_2023": 0,
+      "n_2024": 7,
+      "net_2023": 0,
+      "net_2024": 3
+    },
+    {
+      "gate": "G5_BOTH_FAMILIES_OPPOSE_RFR",
+      "eligible": false,
+      "min_year_ba": -1.0,
+      "dev_ba": 0.5,
+      "dev_n": 5,
+      "n_2023": 0,
+      "n_2024": 5,
+      "net_2023": 0,
+      "net_2024": 1
+    },
+    {
+      "gate": "G1_ANY_FAMILY_CONFIRMS_RFR",
+      "eligible": false,
+      "min_year_ba": -1.0,
+      "dev_ba": null,
+      "dev_n": 2,
+      "n_2023": 0,
+      "n_2024": 2,
+      "net_2023": 0,
+      "net_2024": 2
+    },
+    {
+      "gate": "G2_BOTH_FAMILIES_CONFIRM_RFR",
+      "eligible": false,
+      "min_year_ba": -1.0,
+      "dev_ba": null,
+      "dev_n": 2,
+      "n_2023": 0,
+      "n_2024": 2,
+      "net_2023": 0,
+      "net_2024": 2
+    },
+    {
+      "gate": "G3_FAMILIES_SPLIT",
+      "eligible": false,
+      "min_year_ba": -1.0,
+      "dev_ba": null,
+      "dev_n": 0,
+      "n_2023": 0,
+      "n_2024": 0,
+      "net_2023": 0,
+      "net_2024": 0
+    },
+    {
+      "gate": "G4_SPLIT_ONE_CONFIRMS_RFR",
+      "eligible": false,
+      "min_year_ba": -1.0,
+      "dev_ba": null,
+      "dev_n": 0,
+      "n_2023": 0,
+      "n_2024": 0,
+      "net_2023": 0,
+      "net_2024": 0
+    }
+  ],
+  "selected_gate": null
+}

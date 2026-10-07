@@ -1,0 +1,1 @@
+date,year,state,y,pair_pred,pair_y,macro_released,upcoming_fomc,rule_pred,rule_correct,pair_correct,eligible_nomacro,label_date,path_p,path_dir,path_wgc_p,path_nyl_p,struct_p,struct_dir,struct_wgc_p,struct_nyl_p,path_confirms_rfr,struct_confirms_rfr,families_split
