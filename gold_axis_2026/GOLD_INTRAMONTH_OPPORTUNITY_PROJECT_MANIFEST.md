@@ -185,7 +185,8 @@ Current state:
 - **SESSION AIM V1:** **COMPLETE / TRANSPORT FAILED / ROUTER DIAGNOSTIC ONLY** via `GOLD_SESSION_AIM_V1_FINAL_AUTHORITY_2026-10-07.md`; only Sobti Asia Morning passed year-stability, then deteriorated in frozen 2025 (BA 60.86% -> 59.43%, net rescue -2);
 - **SESSION HELIOS Stage-1 readiness:** **COMPLETE / PASS_WITH_SESSION_REBUILD_REQUIRED** via `GOLD_SESSION_HELIOS_STAGE1_READINESS_AUTHORITY_2026-10-07.md`; binding lineage is HELIOS V1 -> V2 -> V3-GT -> V4-RGE -> V5-DCE, fresh SESSION AURORA/OPAL plus RIFT/TURN/VEGA dependencies are available, the prior OPAL/AURORA blocker is resolved, and H3 maturity fields are prohibited for SESSION replay. Session state must be independent by partition/window and may update only from same-window rows with `end_utc <= current start_utc`;
 - **SESSION HELIOS V1-V5:** **COMPLETE / SESSION-INERT UNDER FROZEN IDENTITY / NOT PROMOTED / 2026 STRESS DATA-BLOCKED** via `GOLD_SESSION_HELIOS_V1_V5_FINAL_AUTHORITY_2026-10-07.md`; the fresh SESSION replay generated no HELIOS routes because the historical 8-matured-candidate competence gate never fills at session granularity (through 2025 the maximum candidate count in any window is only 2). No threshold/gate relaxation was allowed. 2026 stress remains data-blocked because no V5-equivalent 2026 SESSION target population exists;
-- **current immediate task:** Stage-4 meta-controller replay — **BOCPD next**, then DPTC -> RTE -> RC-RTE -> SCR-RTE -> STCR;
+- **SESSION BOCPD V1 Stage-1:** **PASS / READY FOR PREREGISTERED 2023–2024 SESSION REPLAY** via `GOLD_SESSION_BOCPD_V1_STAGE1_READINESS_AUTHORITY_2026-10-07.md`; canonical identity is V1 meta-trust only, V4 hysteresis remains post-hoc diagnostic; state is isolated by partition/window, uses exact target `start_utc` and only matured same-window alarm outcomes; 2025 remains closed;
+- **current immediate task:** BOCPD V1 Stage-2 — preregister the 2023–2024 retention gate and run development only; after BOCPD closure continue DPTC -> RTE -> RC-RTE -> SCR-RTE -> STCR;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -2607,6 +2608,21 @@ Sobti Late-US shows an interesting aggregate rescue signal against A0 (BA 51.59%
 
 All other window/baseline pairs fail closed. RIFT V1 may proceed to 2025 transport **only for Sobti Asia Afternoon**, with the representation and threshold frozen exactly as preregistered.
 
+
+### 5E.8ZI SESSION BOCPD V1 Stage-1 readiness — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_BOCPD_V1_STAGE1_READINESS_AUTHORITY_2026-10-07.md`
+
+Status: **PASS / READY FOR PREREGISTERED 2023–2024 SESSION REPLAY**.
+
+Canonical identity is the original Handoff Competence **BOCPD V1**: Beta-Bernoulli with Jeffreys Beta(0.5,0.5), inherited expected run 4 Handoff alarms, ACT only when predictive rescue probability >=0.60 and mixture P(theta>0.50) >=0.80. The later V4 hysteresis architecture remains post-hoc diagnostic and is not silently substituted for V1.
+
+SESSION port rules are frozen: decision cutoff equals exact target `start_utc`; all hourly/cross-market inputs must be fully available strictly before the target start; state is independent per partition/window; only prior same-window alarm outcomes with `end_utc <= current start_utc` may update BOCPD. The Handoff producer is rebuilt from raw sources. Current IFBC/LLRS source reproduction authority is PASS, and 2023–2024 Databento source-bridged cross-market coverage exists.
+
+BOCPD is tested against the already-frozen balanced base for each session rather than against a premature final consensus. 2025 remains closed until the 2023–2024 Stage-2 gate is preregistered and scored.
+
+Next: **BOCPD Stage-2 (2023–2024 development only)**.
 
 ### 5E.8ZH SESSION HELIOS V1-V5 final closure — 2026-10-07
 
