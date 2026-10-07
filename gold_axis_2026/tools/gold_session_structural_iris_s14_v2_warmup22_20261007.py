@@ -132,7 +132,7 @@ def fresh_a1(panel):
 def predict_l2(tr,te,features,C=1.0,balanced=False):
     X=tr[features].astype(float).to_numpy();Xt=te[features].astype(float).to_numpy()
     sc=StandardScaler().fit(X)
-    m=global_model(bal,C).fit(sc.transform(X),tr.y_up.to_numpy(int))
+    m=global_model(balanced,C).fit(sc.transform(X),tr.y_up.to_numpy(int))
     return m.predict_proba(sc.transform(Xt))[:,1]
 
 def l1_select(tr,features,C,balanced):
