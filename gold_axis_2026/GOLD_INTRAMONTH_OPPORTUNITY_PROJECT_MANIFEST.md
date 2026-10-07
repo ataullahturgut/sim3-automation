@@ -115,7 +115,8 @@ Current state:
 - **OPAL session specialist:** **DATA READY / BLOCKED_UPSTREAM_AURORA** via `GOLD_SESSION_OPAL_READINESS_AUTHORITY_2026-10-07.md`; corrected COT publication-time authority and V5 session mapping are ready, but no fresh session SENTRY/DART/AURORA lineage exists. Archived H3 AURORA/OPAL predictions are prohibited as session inputs;
 - **SESSION SENTRY V1:** **COMPLETE / NOT PROMOTED** via `GOLD_SESSION_SENTRY_V1_FINAL_AUTHORITY_2026-10-07.md`; only Sobti Europe passed the frozen pre-2025 gate. Frozen 2025 SENTRY BA was 49.43% with UP recall 75.90% and DOWN recall 22.95%, so it fails the 30% class-recall floor and remains below PATH_GLOBAL BA 51.12%;
 - **SESSION DART V1:** **COMPLETE / NOT PROMOTED / 2025 CLOSED** via `GOLD_SESSION_DART_V1_FINAL_AUTHORITY_2026-10-07.md`; no session passed the frozen pre-2025 gate. Only Sobti NY/London switched state during development, but its routed BA remained below Structural-IRIS;
-- **current immediate task:** rebuild **SESSION AURORA** from fresh SENTRY/DART state evidence plus the same canonical Structural-IRIS / PATH_GLOBAL experts; then return to OPAL;
+- **SESSION AURORA V1:** **COMPLETE / NOT PROMOTED / FRESH UPSTREAM AVAILABLE** via `GOLD_SESSION_AURORA_V1_FINAL_AUTHORITY_2026-10-07.md`; Sobti Asia Morning transports below Structural-IRIS (BA 56.50% vs 60.86%), while Sobti Europe equals PATH_GLOBAL exactly (BA 51.12%). AURORA adds no primary routing edge, but its fresh causal session probability/state ledger now exists;
+- **current immediate task:** rebuild **SESSION OPAL** using corrected COT publication-time authority + fresh session AURORA + pre-target session momentum;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -2537,6 +2538,23 @@ Sobti Late-US shows an interesting aggregate rescue signal against A0 (BA 51.59%
 
 All other window/baseline pairs fail closed. RIFT V1 may proceed to 2025 transport **only for Sobti Asia Afternoon**, with the representation and threshold frozen exactly as preregistered.
 
+
+### 5E.8ZE SESSION AURORA V1 closure — 2026-10-07
+
+Authorities:
+- `GOLD_SESSION_AURORA_V1_PREREG_2026-10-07.md`
+- `GOLD_SESSION_AURORA_V1_RESULT_2026-10-07.md`
+- `GOLD_SESSION_AURORA_V1_FINAL_AUTHORITY_2026-10-07.md`
+
+Status: **COMPLETE / NOT PROMOTED / FRESH SESSION UPSTREAM AVAILABLE**.
+
+AURORA preserves the historical asymmetric rule exactly: SENTRY fast entry into PATH at mature-pair net rescue >= +3, followed by DART-only slow exit when the disagreement posterior strongly favors return to Structural. All evidence is recomputed from corrected session expert rows.
+
+Two heads passed the frozen pre-2025 gate:
+- Sobti Asia Morning: 2025 AURORA BA 56.50%, below Structural-IRIS BA 60.86%;
+- Sobti Europe: 2025 AURORA BA 51.12%, exactly equal to PATH_GLOBAL BA 51.12%.
+
+Therefore AURORA is not promoted as a primary router. However, the required fresh causal session AURORA state/probability lineage now exists, so OPAL is no longer blocked by missing upstream AURORA.
 
 ### 5E.8ZD SESSION DART V1 closure — 2026-10-07
 
