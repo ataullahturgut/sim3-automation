@@ -36,13 +36,13 @@
       "base_balanced_accuracy": 0.4552238805970149,
       "base_up_recall": 0.5074626865671642,
       "base_down_recall": 0.40298507462686567,
-      "base_brier": 0.26885681417533064,
+      "base_brier": 0.26885681417533225,
       "assisted_n": 134,
       "assisted_accuracy": 0.4552238805970149,
       "assisted_balanced_accuracy": 0.4552238805970149,
       "assisted_up_recall": 0.5074626865671642,
       "assisted_down_recall": 0.40298507462686567,
-      "assisted_brier": 0.26885681417533064
+      "assisted_brier": 0.26885681417533225
     },
     {
       "partition": "SOBTI_5_ET",
@@ -60,13 +60,13 @@
       "base_balanced_accuracy": 0.5078373015873016,
       "base_up_recall": 0.4125,
       "base_down_recall": 0.6031746031746031,
-      "base_brier": 0.2736722593768771,
+      "base_brier": 0.27367225937688916,
       "assisted_n": 143,
       "assisted_accuracy": 0.4965034965034965,
       "assisted_balanced_accuracy": 0.5078373015873016,
       "assisted_up_recall": 0.4125,
       "assisted_down_recall": 0.6031746031746031,
-      "assisted_brier": 0.2736722593768771
+      "assisted_brier": 0.27367225937688916
     }
   ],
   "gate": [
