@@ -1,0 +1,118 @@
+{
+  "status": "SAGE_FROZEN_2025_TRANSPORT_V2_CONTINUOUS_COMPLETE",
+  "scope": "2025 only; frozen preregistered candidates; original 2023-2025 block phase continuous",
+  "metrics": [
+    {
+      "model": "S15_SESSION_ONLY",
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "n": 257,
+      "accuracy": 0.556420233463035,
+      "balanced_accuracy": 0.5260236169939674,
+      "brier": 0.2546801259018114,
+      "logloss": 0.7063683030326818,
+      "up_recall": 0.6540880503144654,
+      "down_recall": 0.3979591836734694,
+      "tn": 39,
+      "fp": 59,
+      "fn": 55,
+      "tp": 104,
+      "prediction_std": 0.17280006726451946
+    },
+    {
+      "model": "S16_PATH_GLOBAL_MATCHED",
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "n": 441,
+      "accuracy": 0.4603174603174603,
+      "balanced_accuracy": 0.4603210537147561,
+      "brier": 0.2697466565930037,
+      "logloss": 0.7415124062676768,
+      "up_recall": 0.46017699115044247,
+      "down_recall": 0.4604651162790698,
+      "tn": 99,
+      "fp": 116,
+      "fn": 122,
+      "tp": 104,
+      "prediction_std": 0.11852552792220297
+    },
+    {
+      "model": "S16_PATH_GLOBAL_MATCHED",
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "n": 404,
+      "accuracy": 0.47029702970297027,
+      "balanced_accuracy": 0.4692156862745098,
+      "brier": 0.2748755195875683,
+      "logloss": 0.7525222764888072,
+      "up_recall": 0.36,
+      "down_recall": 0.5784313725490197,
+      "tn": 118,
+      "fp": 86,
+      "fn": 128,
+      "tp": 72,
+      "prediction_std": 0.12874710891408564
+    },
+    {
+      "model": "S16_PATH_SESSION",
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "n": 441,
+      "accuracy": 0.4988662131519274,
+      "balanced_accuracy": 0.499289977361597,
+      "brier": 0.28050022878382824,
+      "logloss": 0.7704897049114566,
+      "up_recall": 0.4823008849557522,
+      "down_recall": 0.5162790697674419,
+      "tn": 111,
+      "fp": 104,
+      "fn": 117,
+      "tp": 109,
+      "prediction_std": 0.15458916854073002
+    },
+    {
+      "model": "S16_PATH_SESSION",
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "n": 404,
+      "accuracy": 0.47029702970297027,
+      "balanced_accuracy": 0.4692647058823529,
+      "brier": 0.2827394039252829,
+      "logloss": 0.7722388281227515,
+      "up_recall": 0.365,
+      "down_recall": 0.5735294117647058,
+      "tn": 117,
+      "fp": 87,
+      "fn": 127,
+      "tp": 73,
+      "prediction_std": 0.1549496012722529
+    }
+  ],
+  "paired": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "n": 441,
+      "candidate_ba": 0.499289977361597,
+      "comparator_ba": 0.4603210537147561,
+      "delta_ba_pp": 3.8968923646840903,
+      "candidate_brier": 0.28050022878382824,
+      "comparator_brier": 0.2697466565930037
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "n": 404,
+      "candidate_ba": 0.4692647058823529,
+      "comparator_ba": 0.4692156862745098,
+      "delta_ba_pp": 0.004901960784309267,
+      "candidate_brier": 0.2827394039252829,
+      "comparator_brier": 0.2748755195875683
+    }
+  ],
+  "guardrails": [
+    "Only WGC Asia S1.5 and Sobti NY/London + WGC US S1.6 were opened.",
+    "Original 5-row replay block phase is preserved continuously across 2023-2025; no feature/clock/C/threshold retuning.",
+    "2026 unopened."
+  ]
+}
