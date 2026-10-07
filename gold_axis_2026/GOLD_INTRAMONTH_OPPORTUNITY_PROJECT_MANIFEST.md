@@ -182,7 +182,8 @@ Current state:
 - **SESSION PRISM V1:** **COMPLETE / TRANSPORT FAILED / NEGATIVE CORRECTION EVIDENCE** via `GOLD_SESSION_PRISM_V1_FINAL_AUTHORITY_2026-10-07.md`; two development-eligible heads failed frozen 2025 transport (Asia Afternoon net -8; NY/London net -1);
 - **SESSION TWIN V1:** **COMPLETE / TRANSPORT FAILED / NEGATIVE CORRECTION EVIDENCE** via `GOLD_SESSION_TWIN_V1_FINAL_AUTHORITY_2026-10-07.md`; all three development-eligible heads deteriorated in frozen 2025;
 - **Stage-2 specialist replay:** **COMPLETE** for RIFT, VEGA, TURN, PRISM, TWIN and OPAL;
-- **current immediate task:** complete **SESSION AIM** next;
+- **SESSION AIM V1:** **COMPLETE / TRANSPORT FAILED / ROUTER DIAGNOSTIC ONLY** via `GOLD_SESSION_AIM_V1_FINAL_AUTHORITY_2026-10-07.md`; only Sobti Asia Morning passed year-stability, then deteriorated in frozen 2025 (BA 60.86% -> 59.43%, net rescue -2);
+- **current immediate task:** complete **SESSION HELIOS** next;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
