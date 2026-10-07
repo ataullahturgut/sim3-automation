@@ -1,0 +1,428 @@
+{
+  "status": "SESSION_MODEL07B_SAGE_PATH_SESSION_FEATURE_SELECTION_COMPLETE",
+  "baseline": "S16_PATH_SESSION",
+  "challenger": "SELECTED_PATH_SESSION",
+  "matched_comparator": "SELECTED_PATH_MATCHED using exactly the same frozen PATH subset",
+  "candidate_families": {
+    "path": [
+      "g1h_ret_1h",
+      "g1h_ret_3h",
+      "g1h_ret_6h",
+      "g1h_ret_12h",
+      "g1h_ret_24h",
+      "g1h_ret_48h",
+      "g1h_lag2",
+      "g1h_rv_6",
+      "g1h_rv_12",
+      "g1h_rv_24",
+      "g1h_rv_48",
+      "g1h_up_semivol_24",
+      "g1h_down_semivol_24",
+      "g1h_down_up_semivol_ratio_24",
+      "g1h_jump_concentration_24",
+      "g1h_range_24",
+      "g1h_upfrac_24",
+      "g1h_slope_6",
+      "g1h_slope_24",
+      "g1h_max_drawdown_24",
+      "g1h_recovery_24",
+      "g1h_close_location_24",
+      "g1h_age_max_pos_24",
+      "g1h_age_max_neg_24"
+    ],
+    "sage": [
+      "sess_asia",
+      "sess_europe",
+      "sess_us_am",
+      "sess_us_pm",
+      "sess_us_total",
+      "sess_west_total",
+      "sess_east_west",
+      "sess_us_reversal",
+      "sess_dispersion",
+      "sess_sign_changes",
+      "sess_dominance",
+      "sess_asia_us_interaction",
+      "sess_east_west_conflict",
+      "sess_us_conflict"
+    ]
+  },
+  "identity_constraint": "at least one PATH + at least one SAGE variable",
+  "clock_policy": "canonical SAGE strict sage_ready_utc < target_start plus canonical pre-target hourly PATH",
+  "chronology": "2022 warm-up; 2023-2024 selection/gate; 2025 only pre-eligible heads; 2026 unopened",
+  "frozen_features": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "frozen_features": [
+        "g1h_slope_6",
+        "sess_us_conflict",
+        "g1h_rv_48",
+        "g1h_down_semivol_24",
+        "sess_east_west_conflict",
+        "sess_dispersion",
+        "sess_sign_changes",
+        "g1h_ret_48h"
+      ],
+      "frozen_path_features": [
+        "g1h_slope_6",
+        "g1h_rv_48",
+        "g1h_down_semivol_24",
+        "g1h_ret_48h"
+      ],
+      "frozen_sage_features": [
+        "sess_us_conflict",
+        "sess_east_west_conflict",
+        "sess_dispersion",
+        "sess_sign_changes"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 56
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "frozen_features": [
+        "g1h_ret_3h",
+        "g1h_jump_concentration_24",
+        "sess_asia",
+        "g1h_age_max_pos_24",
+        "g1h_ret_1h",
+        "sess_europe",
+        "sess_east_west",
+        "g1h_max_drawdown_24"
+      ],
+      "frozen_path_features": [
+        "g1h_ret_3h",
+        "g1h_jump_concentration_24",
+        "g1h_age_max_pos_24",
+        "g1h_ret_1h",
+        "g1h_max_drawdown_24"
+      ],
+      "frozen_sage_features": [
+        "sess_asia",
+        "sess_europe",
+        "sess_east_west"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 55
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "frozen_features": [
+        "g1h_lag2",
+        "g1h_age_max_pos_24",
+        "g1h_jump_concentration_24",
+        "sess_sign_changes",
+        "g1h_max_drawdown_24",
+        "sess_east_west_conflict",
+        "g1h_ret_1h",
+        "sess_europe"
+      ],
+      "frozen_path_features": [
+        "g1h_lag2",
+        "g1h_age_max_pos_24",
+        "g1h_jump_concentration_24",
+        "g1h_max_drawdown_24",
+        "g1h_ret_1h"
+      ],
+      "frozen_sage_features": [
+        "sess_sign_changes",
+        "sess_east_west_conflict",
+        "sess_europe"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 59
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "frozen_features": [
+        "g1h_ret_1h",
+        "sess_us_conflict",
+        "sess_asia",
+        "g1h_rv_24",
+        "sess_east_west_conflict",
+        "sess_europe",
+        "g1h_upfrac_24",
+        "g1h_lag2"
+      ],
+      "frozen_path_features": [
+        "g1h_ret_1h",
+        "g1h_rv_24",
+        "g1h_upfrac_24",
+        "g1h_lag2"
+      ],
+      "frozen_sage_features": [
+        "sess_us_conflict",
+        "sess_asia",
+        "sess_east_west_conflict",
+        "sess_europe"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 60
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "frozen_features": [
+        "sess_asia",
+        "g1h_ret_1h",
+        "g1h_slope_6",
+        "sess_asia_us_interaction",
+        "g1h_age_max_neg_24",
+        "g1h_lag2",
+        "g1h_age_max_pos_24",
+        "sess_dominance"
+      ],
+      "frozen_path_features": [
+        "g1h_ret_1h",
+        "g1h_slope_6",
+        "g1h_age_max_neg_24",
+        "g1h_lag2",
+        "g1h_age_max_pos_24"
+      ],
+      "frozen_sage_features": [
+        "sess_asia",
+        "sess_asia_us_interaction",
+        "sess_dominance"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 34
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "frozen_features": [
+        "sess_us_conflict",
+        "sess_us_pm",
+        "sess_dominance",
+        "g1h_rv_48",
+        "g1h_ret_1h",
+        "sess_us_reversal",
+        "sess_europe",
+        "sess_east_west_conflict"
+      ],
+      "frozen_path_features": [
+        "g1h_rv_48",
+        "g1h_ret_1h"
+      ],
+      "frozen_sage_features": [
+        "sess_us_conflict",
+        "sess_us_pm",
+        "sess_dominance",
+        "sess_us_reversal",
+        "sess_europe",
+        "sess_east_west_conflict"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 31
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "frozen_features": [
+        "g1h_jump_concentration_24",
+        "sess_sign_changes",
+        "g1h_age_max_pos_24",
+        "sess_asia",
+        "sess_europe",
+        "g1h_ret_1h",
+        "g1h_ret_3h",
+        "g1h_upfrac_24"
+      ],
+      "frozen_path_features": [
+        "g1h_jump_concentration_24",
+        "g1h_age_max_pos_24",
+        "g1h_ret_1h",
+        "g1h_ret_3h",
+        "g1h_upfrac_24"
+      ],
+      "frozen_sage_features": [
+        "sess_sign_changes",
+        "sess_asia",
+        "sess_europe"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 60
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "frozen_features": [
+        "g1h_ret_1h",
+        "sess_asia",
+        "g1h_lag2",
+        "sess_asia_us_interaction",
+        "sess_europe",
+        "g1h_range_24",
+        "g1h_ret_48h",
+        "g1h_upfrac_24"
+      ],
+      "frozen_path_features": [
+        "g1h_ret_1h",
+        "g1h_lag2",
+        "g1h_range_24",
+        "g1h_ret_48h",
+        "g1h_upfrac_24"
+      ],
+      "frozen_sage_features": [
+        "sess_asia",
+        "sess_asia_us_interaction",
+        "sess_europe"
+      ],
+      "n_features": 8,
+      "eligible_outer_blocks": 53
+    }
+  ],
+  "eligibility": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "n": 279,
+      "candidate_ba": 0.548816263510036,
+      "candidate_up_recall": 0.5379310344827586,
+      "candidate_down_recall": 0.5597014925373134,
+      "comparator_ba": 0.5433865156973752,
+      "candidate_brier": 0.2610077927397914,
+      "comparator_brier": 0.25307850245701796,
+      "eligible": false,
+      "reason": "YEAR_SIGN_FAIL"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "n": 272,
+      "candidate_ba": 0.5154493619332066,
+      "candidate_up_recall": 0.3931034482758621,
+      "candidate_down_recall": 0.6377952755905512,
+      "comparator_ba": 0.5375780613630192,
+      "candidate_brier": 0.2589989030055604,
+      "comparator_brier": 0.25358920502036175,
+      "eligible": false,
+      "reason": "BA_BELOW_COMPARATOR|YEAR_SIGN_FAIL"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "n": 295,
+      "candidate_ba": 0.49490318376466214,
+      "candidate_up_recall": 0.676829268292683,
+      "candidate_down_recall": 0.31297709923664124,
+      "comparator_ba": 0.5048175386334015,
+      "candidate_brier": 0.25965253066714067,
+      "comparator_brier": 0.25800133645428086,
+      "eligible": false,
+      "reason": "BA_BELOW_COMPARATOR|YEAR_SIGN_FAIL"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "n": 297,
+      "candidate_ba": 0.5357304900181488,
+      "candidate_up_recall": 0.5517241379310345,
+      "candidate_down_recall": 0.5197368421052632,
+      "comparator_ba": 0.504106170598911,
+      "candidate_brier": 0.25552732220906943,
+      "comparator_brier": 0.2539432914969804,
+      "eligible": true,
+      "reason": "PASS"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "n": 170,
+      "candidate_ba": 0.48,
+      "candidate_up_recall": 0.66,
+      "candidate_down_recall": 0.3,
+      "comparator_ba": 0.5,
+      "candidate_brier": 0.25144311359308064,
+      "comparator_brier": 0.24977813284852793,
+      "eligible": false,
+      "reason": "BA_BELOW_COMPARATOR|YEAR_SIGN_FAIL"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "n": 152,
+      "candidate_ba": 0.5571733643952631,
+      "candidate_up_recall": 0.6633663366336634,
+      "candidate_down_recall": 0.45098039215686275,
+      "comparator_ba": 0.5136866627839255,
+      "candidate_brier": 0.2409709790632638,
+      "comparator_brier": 0.24316199673674213,
+      "eligible": true,
+      "reason": "PASS"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "n": 297,
+      "candidate_ba": 0.5411129568106312,
+      "candidate_up_recall": 0.7023809523809523,
+      "candidate_down_recall": 0.3798449612403101,
+      "comparator_ba": 0.5342607973421927,
+      "candidate_brier": 0.2507063289794409,
+      "comparator_brier": 0.25141128249201006,
+      "eligible": false,
+      "reason": "YEAR_SIGN_FAIL"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "n": 264,
+      "candidate_ba": 0.5054072911215768,
+      "candidate_up_recall": 0.452991452991453,
+      "candidate_down_recall": 0.5578231292517006,
+      "comparator_ba": 0.5011337868480725,
+      "candidate_brier": 0.25591646027259407,
+      "comparator_brier": 0.2560319331737313,
+      "eligible": false,
+      "reason": "YEAR_SIGN_FAIL"
+    }
+  ],
+  "transport_2025_paired": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "period": "2025",
+      "candidate": "SELECTED_PATH_SESSION",
+      "comparator": "SELECTED_PATH_MATCHED",
+      "n": 144,
+      "candidate_accuracy": 0.4722222222222222,
+      "candidate_ba": 0.47619047619047616,
+      "candidate_brier": 0.2731109133548594,
+      "candidate_up_recall": 0.4444444444444444,
+      "candidate_down_recall": 0.5079365079365079,
+      "comparator_ba": 0.4514991181657848,
+      "comparator_brier": 0.26809590555812934,
+      "delta_ba_pp": 2.4691358024691357,
+      "delta_brier": 0.005015007796730031
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "period": "2025",
+      "candidate": "SELECTED_PATH_SESSION",
+      "comparator": "SELECTED_PATH_MATCHED",
+      "n": 105,
+      "candidate_accuracy": 0.5333333333333333,
+      "candidate_ba": 0.5210931768158474,
+      "candidate_brier": 0.25721843163792596,
+      "candidate_up_recall": 0.6379310344827587,
+      "candidate_down_recall": 0.40425531914893614,
+      "comparator_ba": 0.5009170946441672,
+      "comparator_brier": 0.25298826685202164,
+      "delta_ba_pp": 2.017608217168021,
+      "delta_brier": 0.004230164785904322
+    }
+  ],
+  "guardrails": [
+    "No A1, 15m, cross-metal, macro, GVZ, COT or model-output features added.",
+    "Selected PATH_SESSION cannot collapse to PATH-only or SESSION-only.",
+    "2025 is opened only for heads passing the frozen paired development gate.",
+    "No 2025 feature reselection, threshold tuning, C tuning or eligibility rescue.",
+    "No 2026 outcome opened."
+  ]
+}
