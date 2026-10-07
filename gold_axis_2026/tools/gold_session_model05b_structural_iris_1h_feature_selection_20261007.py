@@ -146,14 +146,20 @@ def build_common():
     dev=dev.reset_index(drop=True);dev["row_id"]=np.arange(len(dev))
 
     x15=load_xau15_extended()
+    dev=s14.ma15.attach(dev,x15,"g15")
+    f15=list(s14.v15.feature_names("g15"))
     x1=load_xau1h(x15)
     dev=s14.res1h.attach(dev,x1,"g1h","1h")
     f1h=list(s14.res1h.feature_names("g1h"))
-    common=dev.dropna(subset=["a1_logit"]+f1h+["direction"]).copy()
-    if not (common["g1h_anchor_available"]<common.start_utc).all():
-        raise RuntimeError("G1H_LEAK")
-    if common["g1h_max_reference_stale_min"].gt(60).any():
-        raise RuntimeError("G1H_STALE")
+    # Canonical S1.4 common-row identity requires BOTH 15m-ready and 1h-ready
+    # rows before comparing any S1.4 branch. This preserves the original
+    # replay population and five-row block phase exactly.
+    common=dev.dropna(subset=["a1_logit"]+f15+f1h+["direction"]).copy()
+    for p in ["g15","g1h"]:
+        if not (common[f"{p}_anchor_available"]<common.start_utc).all():
+            raise RuntimeError(f"{p.upper()}_LEAK")
+        if common[f"{p}_max_reference_stale_min"].gt(60).any():
+            raise RuntimeError(f"{p.upper()}_STALE")
     return common.sort_values(["partition","window","start_utc"]).reset_index(drop=True),f1h,hashes
 
 def fit_l2(tr,te,path_features):
