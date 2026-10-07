@@ -1,0 +1,120 @@
+{
+  "status": "CANONICAL_INCREMENTAL_DISAGREEMENT_AUDIT_COMPLETE",
+  "years": [
+    2023,
+    2024
+  ],
+  "sage_models": [
+    "S15_SESSION_ONLY",
+    "S16_PATH_SESSION",
+    "S17_A1_SESSION",
+    "S18_A1_PATH_SESSION"
+  ],
+  "base_rule": "Within each session, best native development BA among canonical heads with N>=80 and both class recalls>=30%; exact-common rows are then used for every pairwise comparison.",
+  "membership_rule": "No consensus membership is assigned by this audit.",
+  "base_selection": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "base_model": "S17_A1_SESSION",
+      "base_cluster": "SAGE_A1",
+      "base_native_n": 191,
+      "base_native_ba": 0.5221043324491601,
+      "base_native_up": 0.5384615384615384,
+      "base_native_down": 0.5057471264367817,
+      "base_native_brier": 0.2688054108460187,
+      "fallback_no_balanced_base": false
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "base_model": "CORE3_A0",
+      "base_cluster": "CORE3",
+      "base_native_n": 358,
+      "base_native_ba": 0.5388007054673721,
+      "base_native_up": 0.5714285714285714,
+      "base_native_down": 0.5061728395061729,
+      "base_native_brier": 0.2602571855807835,
+      "fallback_no_balanced_base": false
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "base_model": "CORE3_A0",
+      "base_cluster": "CORE3",
+      "base_native_n": 383,
+      "base_native_ba": 0.5111813186813188,
+      "base_native_up": 0.5480769230769231,
+      "base_native_down": 0.4742857142857143,
+      "base_native_brier": 0.2654792676754268,
+      "fallback_no_balanced_base": false
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "base_model": "STRUCTURAL_IRIS_1H",
+      "base_cluster": "STRUCTURAL",
+      "base_native_n": 215,
+      "base_native_ba": 0.5325710325710327,
+      "base_native_up": 0.46153846153846156,
+      "base_native_down": 0.6036036036036037,
+      "base_native_brier": 0.2795725185781211,
+      "fallback_no_balanced_base": false
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "base_model": "S17_A1_SESSION",
+      "base_cluster": "SAGE_A1",
+      "base_native_n": 89,
+      "base_native_ba": 0.5022865853658537,
+      "base_native_up": 0.6875,
+      "base_native_down": 0.3170731707317073,
+      "base_native_brier": 0.2666937614514746,
+      "fallback_no_balanced_base": false
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "base_model": "S15_SESSION_ONLY",
+      "base_cluster": "SAGE_SESSION",
+      "base_native_n": 152,
+      "base_native_ba": 0.5621238594447681,
+      "base_native_up": 0.6732673267326733,
+      "base_native_down": 0.45098039215686275,
+      "base_native_brier": 0.24971385259641446,
+      "fallback_no_balanced_base": false
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "base_model": "STRUCTURAL_IRIS_1H",
+      "base_cluster": "STRUCTURAL",
+      "base_native_n": 210,
+      "base_native_ba": 0.5227504875104467,
+      "base_native_up": 0.6859504132231405,
+      "base_native_down": 0.3595505617977528,
+      "base_native_brier": 0.2680710608085414,
+      "fallback_no_balanced_base": false
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "base_model": "S18_A1_PATH_SESSION",
+      "base_cluster": "SAGE_A1_PATH",
+      "base_native_n": 177,
+      "base_native_ba": 0.5089445438282647,
+      "base_native_up": 0.32558139534883723,
+      "base_native_down": 0.6923076923076923,
+      "base_native_brier": 0.30410840987458243,
+      "fallback_no_balanced_base": false
+    }
+  ],
+  "guardrails": [
+    "2025 and 2026 are not read.",
+    "All rescue/break calculations use exact-common session rows.",
+    "Probability threshold remains 0.50.",
+    "Same-cluster/nested models are flagged, not double-counted.",
+    "Selected-feature variants are not part of this first canonical audit and require a second replay/audit."
+  ]
+}
