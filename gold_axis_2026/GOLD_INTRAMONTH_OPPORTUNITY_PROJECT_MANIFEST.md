@@ -2249,6 +2249,98 @@ Transport gate:
 
 
 
+### 5E.8T Stage-1 checkpoint S1.4 — STRUCTURAL_IRIS with governed 2022 warm-up — 2026-10-07
+
+Authorities:
+- `GOLD_SESSION_2022_WARMUP_AUTHORITY_SUMMARY_2026-10-07.json`
+- `GOLD_SESSION_STRUCTURAL_IRIS_S14_V2_WARMUP22_SUMMARY_2026-10-07.json`
+- `GOLD_SESSION_STRUCTURAL_IRIS_S14_V2_WARMUP22_RESULT_2026-10-07.md`
+- `GOLD_SESSION_STRUCTURAL_IRIS_S14_V2_WARMUP22_PAIRED_2026-10-07.csv`
+- `GOLD_SESSION_STRUCTURAL_IRIS_S14_V2_WARMUP22_COVERAGE_2026-10-07.csv`
+
+Status:
+- **S1.4 IRIS A1_PLUS_PATH / STRUCTURAL_IRIS: COMPLETE**
+- 2022 is training/warm-up only.
+- 2023–2024 are scored development.
+- **2025/2026 remain unopened.**
+
+2022 warm-up authority:
+- Twelve Data XAU/USD 15m rows: **23,727** from 2021-12-30 through 2023-01-02 overlap buffer;
+- exact overlap with the existing governed archive: **84 / 84 OHLC rows exact, 0 mismatches**;
+- V3 exact target, V4 venue/calendar and V5 internal-path rules were replicated for 2022;
+- 2022 final warm-up rows per head range from **197 to 255**;
+- official SGE 2022 holiday schedule and GOV.UK England/Wales 2022 bank holidays are the calendar authorities;
+- Databento GC n/v hourly activity remains the US venue-state authority.
+
+Fresh S1.4 construction:
+- fresh A1 regenerated in-process from pinned raw daily Gold/Silver/Platinum CORE3;
+- A1 recent expert = **252 matured same-window rows**;
+- no archived A1/IRIS prediction file is consumed;
+- canonical STRUCTURAL_IRIS = **A1 structural logit + same-source-derived 1h XAU full IRIS PATH**;
+- 15m full-PATH and 15m nested-selection variants are development challengers;
+- XAU 1h is deterministically aggregated from the same governed XAU15 archive;
+- downstream Structural-IRIS requires **80 matured A1-feature rows**;
+- all variable selection in nested variants is training-only inside the outer causal replay.
+
+Coverage after warm-up:
+- Sobti Asia Afternoon: **N=190** scored;
+- Sobti Asia Morning: **N=183**;
+- Sobti Europe: **N=213**;
+- Sobti NY/London: **N=215**;
+- Sobti Late-US: **N=89**;
+- WGC Asia: **N=102**;
+- WGC Europe: **N=210**;
+- WGC US: **N=177**.
+
+Combined 2023–2024 matched Balanced Accuracy:
+
+| Window | A1 direct | A1+1h full | A1+15m full | A1+15m select | A1+15m select-balanced |
+|---|---:|---:|---:|---:|---:|
+| Sobti Asia Afternoon | 46.25% | **51.02%** | 48.54% | 46.77% | 50.09% |
+| Sobti Asia Morning | 45.36% | 49.91% | 53.57% | **54.98%** | 53.22% |
+| Sobti Europe | **50.07%** | 48.17% | 41.42% | 46.92% | 42.31% |
+| Sobti NY/London | 48.54% | **53.26%** | 45.84% | 51.51% | 48.09% |
+| Sobti Late-US | **54.22%** | 50.05% | 48.50% | 44.46% | 49.06% |
+| WGC Asia | 38.93% | 47.36% | 53.49% | 47.30% | **54.22%** |
+| WGC Europe | 52.22% | 52.28% | 47.81% | **54.62%*** | 50.01% |
+| WGC US | 43.82% | 50.28% | 49.15% | 46.93% | **50.73%** |
+
+* WGC Europe unbalanced selector fails the 30% minimum-class-recall floor because DOWN recall is only about 22.47%; it is therefore **not admissible** under the frozen selection safety rule.
+
+Year-stability interpretation:
+- **Sobti Asia Morning** is the clearest 15m Structural-IRIS opportunity: 15m nested selection is strong in 2023 and remains directionally positive in 2024, though magnitude drops;
+- **Sobti NY/London** favors canonical 1h Structural-IRIS in 2024 but 2023 is weak, so transport confidence is still limited;
+- **Sobti Asia Afternoon** favors canonical 1h on combined data, but the gain is concentrated in 2024 and reverses in 2023;
+- **Sobti Europe** and **Sobti Late-US** show no case for adding PATH to A1; A1 direct is retained as the safer development reference;
+- **WGC Asia** has adequate combined N only because 2024 dominates; 2023 N=11 is too small for year-stability inference;
+- **WGC Europe** does not support the unbalanced selector after class-recall governance; A1 direct / canonical 1h remain effectively tied on combined BA, with A1 materially better calibrated;
+- **WGC US** gains directionally from PATH, but the balanced 15m selector is only about 50.73% BA combined and does not yet establish a robust edge.
+
+Binding S1.4 verdict:
+- STRUCTURAL_IRIS is **not** promoted as one universal all-session replacement for A1;
+- its value is **window-specific**;
+- canonical 1h A1+PATH remains a viable primary challenger for Sobti NY/London and selected US/Asia heads;
+- 15m nested PATH remains a viable challenger principally for Sobti Asia Morning and WGC Asia, subject to independent transport;
+- Sobti Europe and Late-US should retain structural-only A1 as the development reference unless a later SAGE head proves otherwise;
+- cross-metal intraday SI/PL remain **not promoted**.
+
+Stage-1 status after S1.4:
+- [x] S1.1 NOVA A0 / CORE3
+- [x] S1.2 NOVA A1 / ARCR
+- [x] S1.3 IRIS HOURLY_ONLY_ALL / PATH_GLOBAL
+- [x] S1.4 IRIS A1_PLUS_PATH / STRUCTURAL_IRIS
+- [ ] S1.5 SAGE SESSION_ONLY — **NEXT**
+- [ ] S1.6 SAGE PATH_SESSION
+- [ ] S1.7 SAGE A1_SESSION
+- [ ] S1.8 SAGE A1_PATH_SESSION
+
+Transport gate:
+- **do not open 2025 yet**;
+- complete S1.5–S1.8 under the same 2022-warm-up / 2023–2024-development chronology;
+- only after Stage-1 representation/head choice is frozen may 2025 be opened once for transport.
+
+
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
