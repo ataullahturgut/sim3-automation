@@ -48,7 +48,7 @@ Do not relax the BOCPD thresholds or hazard after seeing 2025. Any relaxed versi
 ## 2026
 DATA_BLOCKED. No governed V5-equivalent 2026 SESSION target population is available, so no daily/H3 label is substituted.
 
-Next meta-controller: DPTC.
+Next task by user instruction: perform a horizon/clock semantic audit across all previously completed SESSION models before starting DPTC. The audit must detect any residual H3/3-day target assumptions, wrong session start/end clocks, non-matured target-state updates, legacy H3 prediction/state reuse, or daily-label substitution. DPTC remains next only after this audit closes.
 
 Authorities:
 - GOLD_SESSION_BOCPD_V1_STAGE1_READINESS_AUTHORITY_2026-10-07.md
