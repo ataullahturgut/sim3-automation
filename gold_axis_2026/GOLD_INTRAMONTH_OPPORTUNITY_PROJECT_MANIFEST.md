@@ -3893,3 +3893,54 @@ Interpretation:
 - no consensus, ECCG or DAY/OVERNIGHT upper router is authorized merely by this result.
 
 The next scientifically justified step is to test whether this stable overnight specialist adds incremental value to the existing structural/path expert pool on strictly common, origin-safe rows, while preserving abstention and macro-release veto behavior.
+
+
+---
+
+## Overnight RFR rescue-gate audit — 2026-10-07
+
+Authority / result:
+- `GOLD_OVERNIGHT_RFR_RESCUE_GATE_PREREG_2026-10-07.md`
+- `GOLD_OVERNIGHT_RFR_RESCUE_GATE_RESULT_2026-10-07.md`
+- `GOLD_OVERNIGHT_RFR_RESCUE_GATE_SUMMARY_2026-10-07.json`
+- `GOLD_OVERNIGHT_RFR_RESCUE_GATE_METRICS_2026-10-07.csv`
+
+Question:
+> When RFR-NOMACRO and PAIR disagree, can origin-safe PATH_GLOBAL / STRUCTURAL_IRIS context identify cases where RFR should override PAIR?
+
+Context families:
+- PATH_GLOBAL: WGC-US + Sobti NY/London heads, averaged within family;
+- canonical STRUCTURAL_IRIS: WGC-US + Sobti NY/London heads, averaged within family;
+- all context predictions required `start_utc <= 14:00 UTC` (= 17:00 Europe/Istanbul).
+
+Selection governance:
+- candidate gates preregistered before transport;
+- 2023-2024 only for gate selection;
+- 2025 excluded from selection;
+- both development years required N >= 12, RFR accuracy > 50%, and positive net rescue.
+
+Result:
+- common RFR-active / no-macro / origin-safe PATH+STRUCTURAL rows:
+  - 2023: 11
+  - 2024: 56
+  - 2025: 56
+- on the 2023 common rows, **PAIR and RFR never disagreed**;
+- therefore every actual rescue candidate has N=0 in 2023 and fails the cross-year development gate;
+- no candidate rescue gate is authorized.
+
+2024-only descriptive evidence is not sufficient for promotion:
+- PAIR/RFR disagreement rows: N=7, RFR accuracy 71.43%, net rescue +3;
+- both PATH and STRUCTURAL confirm RFR: N=2, both rescued;
+- these counts are too sparse and have no 2023 replication.
+
+A separate STRUCTURAL-only coverage check does not solve the problem:
+- 2023 common RFR-active rows rise only to 17;
+- PAIR/RFR disagreement remains N=0 on those rows.
+
+Binding interpretation:
+- this is **coverage-blocked / insufficient overlap**, not evidence that PATH/STRUCTURAL context is useless;
+- no PATH/STRUCTURAL-assisted RFR override may be promoted from this experiment;
+- do not relax historical model minimum-training rules or lower the preregistered N floor merely to create a gate;
+- RFR-NOMACRO remains a standalone selective overnight specialist;
+- PAIR remains the broader overnight baseline;
+- any later rescue architecture must obtain earlier-origin contextual coverage or use a separately governed context family with sufficient 2023-2024 overlap.
