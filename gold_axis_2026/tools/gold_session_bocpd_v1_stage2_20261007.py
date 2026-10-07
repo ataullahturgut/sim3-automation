@@ -1,3 +1,4 @@
+# runtime dependency refresh trigger 2026-10-07
 from __future__ import annotations
 
 import importlib.util
