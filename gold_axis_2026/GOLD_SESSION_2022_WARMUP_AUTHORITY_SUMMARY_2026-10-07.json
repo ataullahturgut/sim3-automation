@@ -1,0 +1,312 @@
+{
+  "status": "SESSION_2022_WARMUP_AUTHORITY_PASS",
+  "scope": "2022 warm-up only; no 2025 model outcome used",
+  "raw": {
+    "rows": 23727,
+    "first": "2021-12-30T00:00:00+00:00",
+    "last": "2023-01-02T23:45:00+00:00",
+    "sha256": "14170444a285f370cfa1fe386e9653f2037325aa18942ce82a1dd37511c303fa",
+    "requests": [
+      {
+        "start": "2021-12-30",
+        "end": "2021-12-31",
+        "http": 200,
+        "rows": 172,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2022-01-01",
+        "end": "2022-01-31",
+        "http": 200,
+        "rows": 1926,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2022-02-01",
+        "end": "2022-02-28",
+        "http": 200,
+        "rows": 1829,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2022-03-01",
+        "end": "2022-03-31",
+        "http": 200,
+        "rows": 2118,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2022-04-01",
+        "end": "2022-04-30",
+        "http": 200,
+        "rows": 1832,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2022-05-01",
+        "end": "2022-05-31",
+        "http": 200,
+        "rows": 2022,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2022-06-01",
+        "end": "2022-06-30",
+        "http": 200,
+        "rows": 2014,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2022-07-01",
+        "end": "2022-07-31",
+        "http": 200,
+        "rows": 1923,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2022-08-01",
+        "end": "2022-08-31",
+        "http": 200,
+        "rows": 2116,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2022-09-01",
+        "end": "2022-09-30",
+        "http": 200,
+        "rows": 2006,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2022-10-01",
+        "end": "2022-10-31",
+        "http": 200,
+        "rows": 1924,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2022-11-01",
+        "end": "2022-11-30",
+        "http": 200,
+        "rows": 1953,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      },
+      {
+        "start": "2022-12-01",
+        "end": "2022-12-31",
+        "http": 200,
+        "rows": 1888,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 2
+      },
+      {
+        "start": "2023-01-01",
+        "end": "2023-01-02",
+        "http": 200,
+        "rows": 4,
+        "response_meta": {
+          "symbol": "XAU/USD",
+          "interval": "15min",
+          "currency_base": "Gold Spot",
+          "currency_quote": "US Dollar",
+          "type": "Precious Metal"
+        },
+        "attempt": 1
+      }
+    ]
+  },
+  "overlap_with_existing_authority": {
+    "matched_rows": 84,
+    "exact_ohlc_rows": 84,
+    "mismatch_rows": 0,
+    "max_abs_diff": {
+      "open": 0.0,
+      "high": 0.0,
+      "low": 0.0,
+      "close": 0.0
+    }
+  },
+  "calendar_authority": {
+    "SGE_2022": "official SGE holiday schedule announced 2021-12-21",
+    "London_2022": "GOV.UK England/Wales bank holidays"
+  },
+  "databento_gc": {
+    "dataset": "GLBX.MDP3",
+    "schema": "ohlcv-1h",
+    "rolls": [
+      "n",
+      "v"
+    ],
+    "costs": {
+      "n": 0.059088990092,
+      "v": 0.05907908082
+    },
+    "total_usd": 0.11816807091199999
+  },
+  "target_rules": {
+    "v3": "exact start OPEN + exact final 15m CLOSE; no fallback; Friday Sobti late-US excluded",
+    "v4": "same venue/calendar gates as 2023-2025",
+    "v5": "full internal 15m path; only registered 17:00-18:00 NY maintenance exception in Sobti late-US"
+  },
+  "coverage": {
+    "SOBTI_5_ET|ASIA_AFTERNOON_LIT": {
+      "rows": 260,
+      "v3_trainable": 257,
+      "v4_core": 239,
+      "v5_final": 239,
+      "up_final": 121,
+      "down_final": 118
+    },
+    "SOBTI_5_ET|ASIA_MORNING_LIT": {
+      "rows": 260,
+      "v3_trainable": 256,
+      "v4_core": 238,
+      "v5_final": 238,
+      "up_final": 121,
+      "down_final": 117
+    },
+    "SOBTI_5_ET|EUROPE_LIT": {
+      "rows": 260,
+      "v3_trainable": 258,
+      "v4_core": 250,
+      "v5_final": 249,
+      "up_final": 125,
+      "down_final": 124
+    },
+    "SOBTI_5_ET|NY_LONDON_LIT": {
+      "rows": 260,
+      "v3_trainable": 257,
+      "v4_core": 249,
+      "v5_final": 248,
+      "up_final": 114,
+      "down_final": 134
+    },
+    "SOBTI_5_ET|US_LATE_LIT": {
+      "rows": 260,
+      "v3_trainable": 199,
+      "v4_core": 199,
+      "v5_final": 197,
+      "up_final": 95,
+      "down_final": 102
+    },
+    "WGC_2026_NY3|ASIA": {
+      "rows": 260,
+      "v3_trainable": 256,
+      "v4_core": 256,
+      "v5_final": 255,
+      "up_final": 112,
+      "down_final": 143
+    },
+    "WGC_2026_NY3|EUROPE": {
+      "rows": 260,
+      "v3_trainable": 258,
+      "v4_core": 250,
+      "v5_final": 249,
+      "up_final": 128,
+      "down_final": 121
+    },
+    "WGC_2026_NY3|US": {
+      "rows": 260,
+      "v3_trainable": 238,
+      "v4_core": 238,
+      "v5_final": 237,
+      "up_final": 111,
+      "down_final": 126
+    }
+  },
+  "hashes": {
+    "wgc_final": "0ffe834dfae4bf8b98c1fa91023a59a8c5bddc971f661c50efaf47632b1353a4",
+    "sobti_final": "2f3cf55d9120304579173907c2b3a609e29d6c283000d8f0ce6127d5f7fd0532"
+  },
+  "model_use": "TRAINING/WARM-UP ONLY. 2022 is not a reported development score period."
+}
