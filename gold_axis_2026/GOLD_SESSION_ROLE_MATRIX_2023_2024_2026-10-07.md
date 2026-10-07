@@ -215,3 +215,53 @@ These are alternative PATH representations and must not receive independent full
 - Sobti Europe selected PATH is an extreme UP-skew representation and must not be discarded merely because its DOWN recall fails the balanced-primary floor.
 - The selected/canonical pair remains one PATH dependency cluster; later consensus can use at most one independent PATH vote per session unless an explicit decorrelation rule is proven.
 - Consensus status remains `PENDING_INCREMENTAL_TEST`.
+
+
+---
+
+## Model-05 — STRUCTURAL_IRIS / A1_PLUS_PATH family
+
+Sources:
+- `GOLD_SESSION_STRUCTURAL_IRIS_S14_V2_WARMUP22_SUMMARY_2026-10-07.json`
+- `GOLD_SESSION_MODEL05B_STRUCTURAL_IRIS_1H_FEATURE_SELECTION_DEV_METRICS_2026-10-07.csv`
+
+Dependency cluster:
+- canonical `S14_A1_PLUS_1H_FULL`
+- selected 1h Structural-IRIS
+- historical S1.4 15m/full/selected siblings
+
+These are related A1+PATH representations and must be decorrelated before any consensus vote.
+
+### Canonical 1h Structural-IRIS development profile
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 190 | 51.02% | 51.46% | 50.57% | BALANCED |
+| Sobti Asia Morning | 183 | 49.91% | 55.66% | 44.16% | UP_LEAN / near-neutral |
+| Sobti Europe | 213 | 48.17% | **69.75%** | **26.60%** | **UP_SKEW** |
+| Sobti NY/London | 215 | 53.26% | 46.15% | 60.36% | DOWN_LEAN / balanced |
+| Sobti Late-US | 89 | 50.05% | 70.83% | 29.27% | UP_SKEW / one-year scored |
+| WGC Asia | 102 | 47.36% | **82.61%** | **12.12%** | **UP_SKEW** |
+| WGC Europe | 210 | 52.28% | 68.60% | 35.96% | UP_SKEW / two-class viable |
+| WGC US | 177 | 50.28% | **30.23%** | **70.33%** | **DOWN_SKEW** |
+
+### Selected 1h Structural-IRIS development profile
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 190 | 52.47% | 54.37% | 50.57% | BALANCED |
+| Sobti Asia Morning | 183 | 44.54% | 56.60% | 32.47% | UP_SKEW / weak |
+| Sobti Europe | 213 | 48.65% | **78.15%** | **19.15%** | **UP_SKEW** |
+| Sobti NY/London | 215 | 52.75% | 44.23% | 61.26% | DOWN_SKEW / balanced viable |
+| Sobti Late-US | 89 | 47.61% | 70.83% | 24.39% | UP_SKEW |
+| WGC Asia | 102 | 45.78% | **85.51%** | **6.06%** | **UP_SKEW** |
+| WGC Europe | 210 | 52.36% | 74.38% | 30.34% | UP_SKEW / two-class edge borderline |
+| WGC US | 177 | 52.42% | **27.91%** | **76.92%** | **DOWN_SKEW** |
+
+### Model-05 interpretation
+
+- Structural-IRIS contains some of the strongest one-sided development profiles in the project.
+- WGC Asia and Sobti Europe are strong UP-skew examples; WGC US is a strong DOWN-skew example.
+- The 30% floor continues to reject the extreme rows as stand-alone balanced engines, but it no longer removes them from specialist evidence.
+- The 15m S1.4 siblings show similar one-sided behavior and belong to the same dependency cluster; they cannot be counted as independent votes without an incremental/disagreement test.
+- Consensus status remains `PENDING_INCREMENTAL_TEST`.
