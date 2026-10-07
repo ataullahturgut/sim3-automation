@@ -3944,3 +3944,30 @@ Binding interpretation:
 - RFR-NOMACRO remains a standalone selective overnight specialist;
 - PAIR remains the broader overnight baseline;
 - any later rescue architecture must obtain earlier-origin contextual coverage or use a separately governed context family with sufficient 2023-2024 overlap.
+
+
+---
+
+## RFR + session expert rescue-gate audit — 2026-10-07
+
+Authorities:
+- `GOLD_OVERNIGHT_RFR_RESCUE_GATE_PREREG_2026-10-07.md`
+- `GOLD_OVERNIGHT_RFR_RESCUE_GATE_RESULT_2026-10-07.md`
+- `GOLD_EXECUTION_RFR_SESSION_RESCUE_RESULT_2026-10-07.md`
+
+Question:
+Can origin-safe WGC US / Sobti NY-London PATH_GLOBAL and STRUCTURAL_IRIS state identify when RFR-NOMACRO should override PAIR on the overnight target?
+
+Result:
+- RFR_ALWAYS on RFR-NOMACRO eligible rows improved DEV BA from 53.43% (PAIR) to 57.07%, with 19 rescues / 13 breaks = net +6.
+- 2025 retrospective transport: RFR_ALWAYS BA 58.14% versus PAIR 58.68%, with 2 rescues / 3 breaks = net -1.
+- WGC PATH+STRUCT confirmation produced only 2 development overrides (both rescues) and zero 2025 overrides.
+- Sobti PATH+STRUCT confirmation produced 4 development overrides with net 0 and zero 2025 overrides.
+- Three-of-four PATH/STRUCT confirmation likewise produced only 2 development overrides and zero 2025 overrides.
+- A stricter preregistered common-row audit found only 11 common rows in 2023 and 56 in 2024 and therefore authorized no PATH/STRUCTURAL-assisted rescue gate.
+
+Binding interpretation:
+1. The session expert states do not currently provide enough common-row evidence to authorize a PATH/STRUCTURAL-assisted overnight override.
+2. RFR-NOMACRO remains a valid selective specialist hypothesis, but its simple override of PAIR is not transport-proven because 2025 net rescue is -1.
+3. Do not promote a session-assisted upper router from these results.
+4. The next useful research direction is to improve the overnight specialist itself or obtain richer origin-safe context with materially better common coverage, rather than tuning a sparse rescue gate.
