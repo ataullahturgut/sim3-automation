@@ -642,3 +642,27 @@ Before HELIOS or final consensus:
 6. only then continue HELIOS and later final consensus.
 
 2025 is not used to choose those memberships.
+
+
+---
+
+## TURN — tail-unbalanced reversal specialist
+
+Authority:
+- `GOLD_SESSION_TURN_V1_FINAL_AUTHORITY_2026-10-07.md`
+
+Role profile:
+- `CORRECTION_REVERSAL_SPECIALIST`
+
+Development-only role evidence:
+- Sobti Asia Afternoon: 9 overrides, 6 rescues, 3 breaks, net +3; BA 52.76% -> 54.74%.
+- Sobti Asia Morning: 7 overrides, 4 rescues, 3 breaks, net +1; BA 50.00% -> 50.88%.
+- WGC Asia: 8 overrides, 5 rescues, 3 breaks, net +2; BA 47.36% -> 52.77%.
+
+All other windows have non-positive development net rescue and are not correction candidates.
+
+TURN has no unconditional direction vote; it contributes only when the frozen tail condition fires.
+Frozen 2025 later confirms Asia Afternoon and WGC Asia but rejects Asia Morning; transport does not redefine the development role freeze.
+
+Consensus status:
+- `CONDITIONAL_CORRECTION_CANDIDATE`
