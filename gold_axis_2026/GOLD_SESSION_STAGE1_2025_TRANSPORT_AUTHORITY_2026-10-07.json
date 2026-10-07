@@ -21,6 +21,10 @@
     {
       "file": "GOLD_SESSION_STAGE1_2025_MATCHED_DECISION_SUMMARY_2026-10-07.json",
       "reason": "used noncanonical restarted-block controls"
+    },
+    {
+      "file": "GOLD_SESSION_STAGE1_2025_TRANSPORT_DECISION_2026-10-07.json",
+      "reason": "pre-correction aggregate decision referenced restarted-block intermediate controls"
     }
   ],
   "identity_audit": {
