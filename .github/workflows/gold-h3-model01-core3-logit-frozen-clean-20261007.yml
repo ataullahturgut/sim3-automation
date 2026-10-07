@@ -1,0 +1,59 @@
+name: Gold H3 Model01 CORE3 Logistic Frozen Clean 20261007
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_h3_model01_core3_logit_frozen_clean_20261007.py'
+      - '.github/workflows/gold-h3-model01-core3-logit-frozen-clean-20261007.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      OUT_DIR: gold_h3_model01_core3_logit_frozen_clean_out
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'lightgbm>=4,<5' 'xgboost>=3,<4' 'psycopg[binary]>=3.2,<4' requests
+      - name: Resolve latest R2 readiness artifact
+        id: aid
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          AID="$(gh api "/repos/${GITHUB_REPOSITORY}/actions/artifacts?name=gold-short-horizon-global-xau-readiness-r2&per_page=20" --jq '.artifacts | map(select(.expired == false)) | sort_by(.created_at) | reverse | .[0].id')"
+          test -n "$AID"
+          echo "aid=$AID" >> "$GITHUB_OUTPUT"
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_h3_model01_core3_logit_frozen_clean_20261007.py
+      - name: Run corrected model01
+        env:
+          READINESS_ARTIFACT: ${{ steps.aid.outputs.aid }}
+        run: python gold_axis_2026/tools/gold_h3_model01_core3_logit_frozen_clean_20261007.py
+      - name: Commit corrected model01 evidence
+        run: |
+          set -euo pipefail
+          cp gold_axis_2026/H3_MODEL01_CORE3_LOGIT_FROZEN_CLEAN_OUT/result.md gold_axis_2026/GOLD_H3_MODEL01_CORE3_LOGIT_FROZEN_RESULT_2026-10-07.md
+          cp gold_axis_2026/H3_MODEL01_CORE3_LOGIT_FROZEN_CLEAN_OUT/summary.json gold_axis_2026/GOLD_H3_MODEL01_CORE3_LOGIT_FROZEN_SUMMARY_2026-10-07.json
+          cp gold_axis_2026/H3_MODEL01_CORE3_LOGIT_FROZEN_CLEAN_OUT/metrics.csv gold_axis_2026/GOLD_H3_MODEL01_CORE3_LOGIT_FROZEN_METRICS_2026-10-07.csv
+          cp gold_axis_2026/H3_MODEL01_CORE3_LOGIT_FROZEN_CLEAN_OUT/predictions.csv gold_axis_2026/GOLD_H3_MODEL01_CORE3_LOGIT_FROZEN_PREDICTIONS_2026-10-07.csv
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_H3_MODEL01_CORE3_LOGIT_FROZEN_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record corrected frozen H3 CORE3 Logistic model01 result"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
