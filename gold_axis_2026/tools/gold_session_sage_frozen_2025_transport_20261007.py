@@ -90,7 +90,7 @@ def replay(p):
  return pd.DataFrame(rows)
 
 def main():
- r=raw();p=targets()
+ r=raw();p=targets();p=p.reset_index(drop=True);p["row_id"]=np.arange(len(p))
  c=cycles(r);p=pd.merge_asof(p.sort_values("start_utc"),c,left_on="start_utc",right_on="sage_ready_utc",direction="backward",allow_exact_matches=False)
  if not (p.loc[p.sage_ready_utc.notna(),"sage_ready_utc"]<p.loc[p.sage_ready_utc.notna(),"start_utc"]).all():raise RuntimeError("SAGE_LEAK")
  p=res1h.attach(p,x1h(r),"g1h","1h")
