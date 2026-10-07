@@ -165,3 +165,53 @@ The raw replay's scored A1 sample is warm-up limited and is effectively concentr
 - Those signatures remain specialist evidence even though selected-A1 did not transport broadly as a primary model.
 - Because canonical and selected A1 share the same structural lineage, later consensus logic must treat them as one dependency cluster.
 - Consensus status remains `PENDING_INCREMENTAL_TEST`.
+
+
+---
+
+## Model-04 — IRIS HOURLY_ONLY / PATH_GLOBAL family
+
+Sources:
+- `GOLD_SESSION_IRIS_HOURLY_RAW_REPLAY_V1_METRICS_2023_2024.csv`
+- `GOLD_SESSION_MODEL04B_PATH_GLOBAL_FEATURE_SELECTION_DEV_METRICS_2026-10-07.csv`
+
+Duplicate-control cluster:
+- canonical `PATH_GLOBAL_1H`
+- `SELECTED_PATH_GLOBAL`
+
+These are alternative PATH representations and must not receive independent full votes.
+
+### Canonical PATH_GLOBAL development profile
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 298 | 45.86% | 34.87% | 56.85% | DOWN_SKEW / weak |
+| Sobti Asia Morning | 298 | 47.88% | 45.40% | 50.37% | BALANCED / weak |
+| Sobti Europe | 323 | 50.36% | 55.75% | 44.97% | UP_LEAN / near-neutral |
+| Sobti NY/London | 319 | 52.61% | 55.21% | 50.00% | BALANCED |
+| Sobti Late-US | 214 | 48.04% | **84.96%** | **11.11%** | **UP_SKEW** |
+| WGC Asia | 316 | 43.85% | **69.78%** | **17.91%** | **UP_SKEW** |
+| WGC Europe | 322 | 45.08% | **65.17%** | **25.00%** | **UP_SKEW** |
+| WGC US | 286 | 49.61% | 44.74% | 54.48% | DOWN_SKEW / near-neutral |
+
+### Selected PATH_GLOBAL development profile on exact common rows
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 239 | 50.83% | 54.33% | 47.32% | BALANCED / UP_LEAN |
+| Sobti Asia Morning | 232 | 49.24% | 35.11% | 63.37% | DOWN_SKEW |
+| Sobti Europe | 260 | 46.56% | **78.47%** | **14.66%** | **UP_SKEW** |
+| Sobti NY/London | 262 | 49.58% | 48.80% | 50.36% | BALANCED / near-neutral |
+| Sobti Late-US | 110 | 52.49% | **75.81%** | **29.17%** | **UP_SKEW** |
+| WGC Asia | 92 | 52.81% | 65.00% | 40.63% | UP_SKEW / two-class viable |
+| WGC Europe | 262 | 48.49% | **67.79%** | **29.20%** | **UP_SKEW** |
+| WGC US | 219 | 51.53% | 35.00% | **68.07%** | **DOWN_SKEW** |
+
+### Model-04 interpretation
+
+- PATH_GLOBAL is one of the clearest sources of one-sided specialist structure in development.
+- Late-US, WGC Asia and WGC Europe show persistent UP-skew in canonical PATH.
+- WGC US shows a repeated DOWN-skew profile, especially after feature selection.
+- Sobti Europe selected PATH is an extreme UP-skew representation and must not be discarded merely because its DOWN recall fails the balanced-primary floor.
+- The selected/canonical pair remains one PATH dependency cluster; later consensus can use at most one independent PATH vote per session unless an explicit decorrelation rule is proven.
+- Consensus status remains `PENDING_INCREMENTAL_TEST`.
