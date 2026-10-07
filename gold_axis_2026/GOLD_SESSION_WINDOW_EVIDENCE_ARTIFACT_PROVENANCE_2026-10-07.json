@@ -1,0 +1,254 @@
+[
+  {
+    "family": "01B",
+    "artifact_id": 11470124785,
+    "filename": "dev_predictions.csv",
+    "sha256": "9dae03f5d46858a7e693e87a99805c8912c192bab4f1daab8739c4ef10640c24"
+  },
+  {
+    "family": "03B",
+    "artifact_id": 11472199349,
+    "filename": "dev_predictions.csv",
+    "sha256": "36058bb711372e264b1f0fe07a959d22a2430a4f93b82213be027af192c00e9d"
+  },
+  {
+    "family": "04B",
+    "artifact_id": 11473356018,
+    "filename": "dev_predictions.csv",
+    "sha256": "2eb423cd6f4a4ddc60d125fceec18c2bbc20ad3f78948ef715ef08ba2645279b"
+  },
+  {
+    "family": "05B",
+    "artifact_id": 11473407627,
+    "filename": "dev_predictions.csv",
+    "sha256": "c44c6330bc1b9cc9a16e2144e3de6d3bc666c76f21580d6f6cd29014737106b3"
+  },
+  {
+    "family": "06B",
+    "artifact_id": 11473827316,
+    "filename": "dev_predictions.csv",
+    "sha256": "3ee7b201ad1a9e1bc746d8996d700b05598667c1c3a73e9f56512d1740f8cda2"
+  },
+  {
+    "family": "07B",
+    "artifact_id": 11473569980,
+    "filename": "dev_predictions.csv",
+    "sha256": "df23e20a9c04475c8c7cf6a927f40defc83b96addacdddfa0eb993ee923aeb68"
+  },
+  {
+    "family": "08B",
+    "artifact_id": 11473894951,
+    "filename": "dev_predictions.csv",
+    "sha256": "13bbb0ea979039752452675bd5f1ef1489e8ca43aea14ec5e9e4a51efe56c247"
+  },
+  {
+    "family": "02",
+    "artifact_id": 11470612138,
+    "filename": "dev_predictions.csv",
+    "sha256": "28e05788bc89ec4d3b33fda27fe8e55da7229102da8c989412746508ea42cdb0"
+  },
+  {
+    "family": "01B",
+    "artifact_id": 11470124785,
+    "filename": "transport_2025_predictions.csv",
+    "sha256": "a5981290a27e5e0d1bdb42a9ba0c26708398bdaf50348595bc08cb210b5468c0"
+  },
+  {
+    "family": "03B",
+    "artifact_id": 11472199349,
+    "filename": "transport_2025_predictions.csv",
+    "sha256": "e29a20a364dcafbc7faf9cea08db2a9a38ff840d66b77752e3d7b09323a66a8f"
+  },
+  {
+    "family": "04B",
+    "artifact_id": 11473356018,
+    "filename": "transport_2025_predictions.csv",
+    "sha256": "e3f9048b9e42b895211bc23b1af3a204f895ba7a98b8709a77ea6e211f694e1f"
+  },
+  {
+    "family": "05B",
+    "artifact_id": 11473407627,
+    "filename": "transport_2025_predictions.csv",
+    "sha256": "e58bebb8a77df44573efaa5e7acc3eb4edd04aab75b36bcfdd46838451410a05"
+  },
+  {
+    "family": "06B",
+    "artifact_id": 11473827316,
+    "filename": "transport_2025_predictions.csv",
+    "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  {
+    "family": "07B",
+    "artifact_id": 11473569980,
+    "filename": "transport_2025_predictions.csv",
+    "sha256": "fbeaad9f6f1fac529815178e117b0352e47685f2ac4609477c3319f209391132"
+  },
+  {
+    "family": "08B",
+    "artifact_id": 11473894951,
+    "filename": "transport_2025_predictions.csv",
+    "sha256": "e67ebabe0b3094d0eef7c52f470e721b7f362db125d3970bd06ff4792817775f"
+  },
+  {
+    "family": "08B",
+    "artifact_id": 11473894951,
+    "filename": "transport_2025_predictions.csv",
+    "sha256": "e67ebabe0b3094d0eef7c52f470e721b7f362db125d3970bd06ff4792817775f"
+  },
+  {
+    "family": "09B",
+    "artifact_id": 11474937494,
+    "filename": "transport_2025_predictions.csv",
+    "sha256": "dbe70b6324fe43c9182f99f7693e7e65ec3c52236f29bfbdc472934724a8a500"
+  },
+  {
+    "family": "02",
+    "artifact_id": 11470612138,
+    "filename": "transport_2025_predictions.csv",
+    "sha256": "81216b628f93e4a743da3d0fcfd8aa566eb4c26177911860fbc34c5d44e38265"
+  },
+  {
+    "family": "OPAL",
+    "artifact_id": 11477723785,
+    "filename": "dev_predictions.csv",
+    "sha256": "5c3805c61faefbde598c20b3709062a5b723fd26b7b813129af06001607b655e"
+  },
+  {
+    "family": "OPAL",
+    "artifact_id": 11477723785,
+    "filename": "transport_2025_predictions.csv",
+    "sha256": "e91872c17a9070917cc9329c3036d629b42119f32a370be1bf321c2bf4395d0c"
+  },
+  {
+    "family": "TURN",
+    "artifact_id": 11482156300,
+    "filename": "dev_predictions.csv",
+    "sha256": "3f4927b14d8e7cdac1ac27895ad60ab66a086c4c3f125abedad746e0fbef996b"
+  },
+  {
+    "family": "TURN",
+    "artifact_id": 11482156300,
+    "filename": "transport_2025_predictions.csv",
+    "sha256": "79504822afff3234c45ce50434ba7ff54c859ce21c6cef6318a553492f03cbce"
+  },
+  {
+    "family": "PRISM",
+    "artifact_id": 11481753368,
+    "filename": "dev_predictions.csv",
+    "sha256": "2843c883eea5c1ab24882cb3f31d8d194d565e5265d359afd6c14cac81f8d830"
+  },
+  {
+    "family": "PRISM",
+    "artifact_id": 11481753368,
+    "filename": "transport_2025_predictions.csv",
+    "sha256": "0f2299d49f16c7032d5b0f3fdbd203f788e4817d520574536e4e78e6776022cc"
+  },
+  {
+    "family": "TWIN",
+    "artifact_id": 11481709820,
+    "filename": "dev_predictions.csv",
+    "sha256": "8f002dccd58c9a4bb380f508a486165e4be421616bf90ae325c512b3c69b4ade"
+  },
+  {
+    "family": "TWIN",
+    "artifact_id": 11481709820,
+    "filename": "transport_2025_predictions.csv",
+    "sha256": "75e1b5c997a84627ab729db01d1a9858b02c60c67294d31cb06e076355d72e15"
+  },
+  {
+    "family": "RIFT",
+    "artifact_id": 11474619596,
+    "filename": "matched_predictions.csv",
+    "sha256": "5bb382fe1ea7ed30ccb3f87b1d38f37afc33de876a9e1925de77356dfc74fc91"
+  },
+  {
+    "family": "VEGA",
+    "artifact_id": 11476795551,
+    "filename": "matched_predictions.csv",
+    "sha256": "391626da231c4040ac17d24fb0a47ca82b05c55f0385c084785cefe10b8ca0d1"
+  },
+  {
+    "source": "repository",
+    "filename": "GOLD_SESSION_IRIS_HOURLY_RAW_REPLAY_V1_PREDICTIONS_2023_2024.csv",
+    "sha256": "f2a9bad67d19daac4140cbd65acf76672655e9025c8489478252f6a8cc82e75e",
+    "initial_branch_head": "d24a6a7576e2c62a9fb17e5a59009e1287a67943"
+  },
+  {
+    "source": "repository",
+    "filename": "GOLD_SESSION_NESTED_ROLE_REPAIR_PREDICTIONS_2026-10-07.csv",
+    "sha256": "91a6bf33f8b9cc8746db0ac50295780bf697a67bf2fe21cc1faf9b04ce73daf0",
+    "initial_branch_head": "new_successor_output"
+  },
+  {
+    "source": "repository",
+    "filename": "GOLD_SESSION_NOVA_A0_CORE3_RAW_REPLAY_V1_PREDICTIONS_2023_2024.csv",
+    "sha256": "3a6180c7e16a6db1ac6ad0fc4d0c1c3b6777bf244a02bd71a9934d2aa0b20d0a",
+    "initial_branch_head": "d24a6a7576e2c62a9fb17e5a59009e1287a67943"
+  },
+  {
+    "source": "repository",
+    "filename": "GOLD_SESSION_NOVA_A1_ARCR_RAW_REPLAY_V1_PREDICTIONS_2023_2024.csv",
+    "sha256": "946c1e5fcb6396c0fc68935981f59b60760ca09d5285dd0f94b5ae571e6b109c",
+    "initial_branch_head": "d24a6a7576e2c62a9fb17e5a59009e1287a67943"
+  },
+  {
+    "source": "repository",
+    "filename": "GOLD_SESSION_RIFT_V1_PREDICTIONS_2026-10-07.csv",
+    "sha256": "ac63da916a3a649708954f0e68fe0bbd6ae43309550738dee2b21dc810393a83",
+    "initial_branch_head": "d24a6a7576e2c62a9fb17e5a59009e1287a67943"
+  },
+  {
+    "source": "repository",
+    "filename": "GOLD_SESSION_S14_FROZEN_2025_TRANSPORT_PREDICTIONS_2026-10-07.csv",
+    "sha256": "ee9855916cd3dda3e961468f428b1db4427aee0af9356845cf6bba24dfa336a7",
+    "initial_branch_head": "d24a6a7576e2c62a9fb17e5a59009e1287a67943"
+  },
+  {
+    "source": "repository",
+    "filename": "GOLD_SESSION_SAGE_FROZEN_2025_TRANSPORT_V2_CONTINUOUS_PREDICTIONS_2026-10-07.csv",
+    "sha256": "5a296007e380dec47aa97f8f0e88c0cecdc1b6de8671c3ded3ec927d06a860f2",
+    "initial_branch_head": "d24a6a7576e2c62a9fb17e5a59009e1287a67943"
+  },
+  {
+    "source": "repository",
+    "filename": "GOLD_SESSION_SAGE_V2_STAGE1_CORRECTED_PREDICTIONS_2026-10-07.csv",
+    "sha256": "b36803c591d5064d2dcac0aedf7717a4ad0f3f000ec3b6421ed67be8643d5075",
+    "initial_branch_head": "d24a6a7576e2c62a9fb17e5a59009e1287a67943"
+  },
+  {
+    "source": "repository",
+    "filename": "GOLD_SESSION_STAGE1_GLOBAL_CONTROLS_2025_V2_CONTINUOUS_PREDICTIONS_2026-10-07.csv",
+    "sha256": "4a99e0424f6a2217b7ee51a55504302a99645ddbef6b79bd0042960ec1d09a9e",
+    "initial_branch_head": "d24a6a7576e2c62a9fb17e5a59009e1287a67943"
+  },
+  {
+    "source": "repository",
+    "filename": "GOLD_SESSION_STRUCTURAL_IRIS_S14_V2_WARMUP22_PREDICTIONS_2026-10-07.csv",
+    "sha256": "c27a5f4cbca05c17ab8fb0beb89ab0516ef11ae99b240bde184da57eab299796",
+    "initial_branch_head": "d24a6a7576e2c62a9fb17e5a59009e1287a67943"
+  },
+  {
+    "source": "repository",
+    "filename": "GOLD_SESSION_TARGETS_SOBTI5_ET_FINAL_V5_2023_2025.csv",
+    "sha256": "cef50b30f895bb420196e1efd4ac01493c3939474199d098ca57428375a4cf06",
+    "initial_branch_head": "d24a6a7576e2c62a9fb17e5a59009e1287a67943"
+  },
+  {
+    "source": "repository",
+    "filename": "GOLD_SESSION_TARGETS_WGC2026_NY3_FINAL_V5_2023_2025.csv",
+    "sha256": "178f45e708b9faf415fb9e6d20bd15dda01983f0b3e0d269f3fa243a671e1e26",
+    "initial_branch_head": "d24a6a7576e2c62a9fb17e5a59009e1287a67943"
+  },
+  {
+    "source": "repository",
+    "filename": "GOLD_SESSION_VEGA_V1_PREDICTIONS_2026-10-07.csv",
+    "sha256": "f30c27174d2aa2cc3e38581da24fca13643321d0c4171465e606980fe727cdb4",
+    "initial_branch_head": "d24a6a7576e2c62a9fb17e5a59009e1287a67943"
+  },
+  {
+    "source": "repository",
+    "filename": "GOLD_XAUUSD_15M_UTC_2023_2025_WITH_BUFFER.csv",
+    "sha256": "8f1c00b34a95b7cef6a44c3c0bef59035fa9dde9cf6d241ba0b87fd146235308",
+    "initial_branch_head": "d24a6a7576e2c62a9fb17e5a59009e1287a67943"
+  }
+]

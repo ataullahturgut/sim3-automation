@@ -1,6 +1,6 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
-**Manifest version:** 1.2  
+**Manifest version:** 1.3
 **Date:** 2026-10-07  
 **Last governance update:** 2026-10-07  
 **Status:** **CURRENT / BINDING / PROJECT INITIATED**  
@@ -8,9 +8,38 @@
 **Branch:** `gold-execution-channel-audit-20261006`  
 **Parent monthly project:** `GOLD_MONTHLY_PROJECT_MANIFEST.md`
 
-> **Mission:** identify short-horizon upside opportunities inside a month, including months for which the frozen monthly Gold model forecasts DOWN.
+> **Current mission:** determine which natural Gold session windows have credible standalone direction or specialist edge. The eventual investment decisions are Istanbul DAY and OVERNIGHT-HOLD; their consensus/router is deferred. The intramonth opportunity and daily/H3 work remain historical/parallel lineage.
 
 > **Separation:** monthly average forecast ≠ intramonth path opportunity. A monthly DOWN forecast does not imply that every daily/weekly move inside that month is DOWN.
+
+## 0.0 Current binding single-model evidence map — 2026-10-07
+
+**This section governs the immediate task and overrides older “next action”, hybrid/router and replay-queue instructions below.** Those entries are chronological history, not authorization to begin a consensus.
+
+The standalone inventory is reconciled: Models 01–09 (including four SAGE identities), shallow CART, RIFT/VEGA/TURN/OPAL/PRISM/TWIN and canonical/selected disagreement audits had already run. Completed identities were not indiscriminately replayed. This work recovered archived row evidence and completed a window-specific metrics/role/error/calibration map.
+
+A selector chronology defect was found in **selected 07B/08B/09B development replay**: their final 2023–2024 frozen feature subset had been replayed backwards. These selected development role/gate claims and related selected-disagreement inference are superseded by [the narrow repair authority](GOLD_SESSION_NESTED_ROLE_REPAIR_AUTHORITY_2026-10-07.md). Three raw-producer nested successors were tested only in 2023–2024. Historical 2025 fixed-subset forecasts remain `FROZEN_*` transport evidence, with contaminated prior eligibility claims explicitly disclaimed; they are not same-identity transport for `NESTED_*`. Canonical fixed-feature full models and V5 target/data authority remain intact.
+
+**Current result:** [window evidence result and full role matrix](GOLD_SESSION_WINDOW_EVIDENCE_RESULT_2026-10-07.md). Sobti Asia Morning CORE3 is the most consistent two-year candidate, but its archived 2025 BA is 50.56%. Other native-development leaders are candidates with year/sample/class-bias limitations. No natural window currently has strong replicated and transported standalone edge established by this inventory. This is negative/insufficient evidence, not a proof that the market window is inherently unpredictable.
+
+| Window | Native-development balanced candidate | DEV BA% | Interpretation |
+|---|---|---|---|
+| WGC Asia | SAGE SESSION_ONLY | 56.21 | 2025 fails to transport |
+| WGC Europe | NESTED A1_PATH_SESSION | 56.04 | small 2023; no same-policy transport |
+| WGC US | NESTED A1_SESSION | 52.64 | 2023 UP recall collapse; no same-policy transport |
+| Sobti Asia Morning | CORE3 Logistic | 53.88 | primary candidate; 2025 near chance |
+| Sobti Asia Afternoon | selected STRUCTURAL_IRIS 1H | 52.47 | inconsistent; 2025 negative |
+| Sobti Europe | full SAGE A1_SESSION | 55.13 | 2023 near chance; 2025 near chance |
+| Sobti NY/London | STRUCTURAL_IRIS 1H | 53.26 | 2023 failure; 2025 near chance |
+| Sobti Late US | selected CORE3 | 58.74 | only 13 rows in 2023; 2025 negative |
+
+Native coverage differs, so this is a descriptive map, not a matched-population winner claim. Exact common-row BA/Brier and error diversity are in [pairwise evidence](GOLD_SESSION_WINDOW_EVIDENCE_PAIRWISE_ERRORS_2026-10-07.csv). UP/DOWN recall profiles, class precision, confusion matrices, yearly breakdown and archived 2025 transport are in the [metrics](GOLD_SESSION_WINDOW_EVIDENCE_METRICS_2026-10-07.csv) and result. No recall-skewed model was promoted merely for high Accuracy.
+
+TURN, OPAL and RIFT retain conditional `SPECIALIST ONLY` rescue hypotheses; PRISM/TWIN retain development-only disagreement hypotheses with adverse transport evidence; VEGA remains sparse/negative. Original-base and chosen-primary rescue/break evidence is kept separate in the [intervention audit](GOLD_SESSION_WINDOW_EVIDENCE_SPECIALIST_INTERVENTIONS_2026-10-07.csv). Full/selected nested variants are not independent future votes.
+
+**Exact next scientific stage:** preregistered development-only failure-mechanism research, or an untouched future-period confirmation of a locked candidate. The repaired nested policy has no new untouched 2025 test; already-observed 2025 may not tune features, thresholds, roles or membership. The descriptive window map is complete; deployment edge is not established.
+
+**Deferred:** consensus, majority vote, ECCG, AURORA/HELIOS upper routing, final 09→17 / 17→09 combination, SENTRY/DART/AIM/BOCPD/DPTC/RTE-family integration and P&L-based selection. Legacy H3 model identities are preserved as possible future context experts, not session-label transfers.
 
 ## 0.1 Binding project evolution and current target identity — 2026-10-07
 

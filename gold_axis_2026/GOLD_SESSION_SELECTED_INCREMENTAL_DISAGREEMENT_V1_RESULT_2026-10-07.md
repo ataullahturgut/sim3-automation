@@ -1,5 +1,7 @@
 # GOLD SESSION — SELECTED-VARIANT INCREMENTAL / DISAGREEMENT AUDIT
 
+> **2026-10-07 governance amendment:** selected 07B/08B/09B development replay used a final full-development feature subset backwards. Development role/gate inference involving those selected rows is superseded by [GOLD_SESSION_NESTED_ROLE_REPAIR_AUTHORITY_2026-10-07.md](GOLD_SESSION_NESTED_ROLE_REPAIR_AUTHORITY_2026-10-07.md). Other identities are unaffected. Original frozen 2025 numerical forecasts remain archived transport evidence, but prior eligibility and repaired-policy identity equivalence are not endorsed. Historical text below is preserved.
+
 **Scope:** selected 2023–2024 development predictions only; balanced bases are frozen from canonical development audit.
 
 | Partition | Window | Base | Selected candidate | Common N | Disagree N | Rescue | Break | Net | Win/disagree | ΔUP | ΔDOWN | Agreement | Corr | Same cluster |

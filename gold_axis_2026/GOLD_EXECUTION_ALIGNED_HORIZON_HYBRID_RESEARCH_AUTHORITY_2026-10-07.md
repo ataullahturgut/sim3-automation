@@ -5,6 +5,14 @@
 **Branch:** `gold-execution-channel-audit-20261006`  
 **Parent manifest:** `gold_axis_2026/GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md`
 
+## 0. Binding immediate-phase amendment — standalone windows first
+
+The current user instruction defers this document’s hybrid design and execution-combination roadmap. First determine window-specific standalone evidence on unchanged WGC/Sobti V5 targets; do not infer a router mandate from later sections. DAY and OVERNIGHT-HOLD remain eventual separate Istanbul execution targets, not current session labels.
+
+The [completed window evidence map](GOLD_SESSION_WINDOW_EVIDENCE_RESULT_2026-10-07.md) is now authoritative for current role interpretation. Section 4’s attractive 2025 examples are archived transport observations and do not promote a development winner. The [07B/08B/09B chronology amendment](GOLD_SESSION_NESTED_ROLE_REPAIR_AUTHORITY_2026-10-07.md) supersedes backwards selected-development inference, preserving original frozen 2025 scores under separate identities.
+
+No strong replicated-and-transported standalone edge is established in the present inventory. The exact next stage is a preregistered development-only mechanism challenge or untouched confirmation of a locked policy, not consensus/ECCG/AURORA/HELIOS or a final execution router. Development remains 2023–2024, 2025 archived transport only and 2026 excluded from feature/model/role selection. No P&L criterion selects the current role map.
+
 ## 1. Why this authority exists
 
 The prior DAILY/H3 and corrected SESSION work established that a statistically valid label can still be economically misaligned with the user's actual execution clock. The exact historical CIG population produced strong daily-reference diagnostics but failed when rescored strictly after the governed issue time. The current task is therefore to define forecast targets around the actual executable decision horizon without discarding the information contained in market-session specialists.

@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "ledger_rows": 75133,
+  "label_identity_matches": 75133,
+  "reproduced_archived_dev_models": [
+    {
+      "artifact_id": 11470124785,
+      "model": "SELECTED_CLASSICAL",
+      "windows": 8,
+      "metric_fields": 11
+    },
+    {
+      "artifact_id": 11472199349,
+      "model": "SELECTED_A1_ARCR",
+      "windows": 8,
+      "metric_fields": 11
+    },
+    {
+      "artifact_id": 11473356018,
+      "model": "SELECTED_PATH_GLOBAL",
+      "windows": 8,
+      "metric_fields": 11
+    },
+    {
+      "artifact_id": 11473407627,
+      "model": "SELECTED_STRUCTURAL_IRIS_1H",
+      "windows": 8,
+      "metric_fields": 11
+    },
+    {
+      "artifact_id": 11473827316,
+      "model": "SELECTED_SESSION_ONLY",
+      "windows": 8,
+      "metric_fields": 11
+    },
+    {
+      "artifact_id": 11473569980,
+      "model": "S16_PATH_SESSION",
+      "windows": 8,
+      "metric_fields": 11
+    },
+    {
+      "artifact_id": 11473894951,
+      "model": "S17_A1_SESSION",
+      "windows": 8,
+      "metric_fields": 11
+    }
+  ],
+  "chrono_blocks": 1304,
+  "repair_scored_years": [
+    2023,
+    2024
+  ],
+  "future_counterfactual_regression": "2 tests PASS",
+  "no_target_changes": true,
+  "no_consensus": true,
+  "no_2026_selection": true
+}

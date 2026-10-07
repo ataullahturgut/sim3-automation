@@ -1,0 +1,18 @@
+{
+  "status": "NESTED_DEVELOPMENT_REPAIR_COMPLETE",
+  "model_families": [
+    "07B",
+    "08B",
+    "09B"
+  ],
+  "no_2025_scoring": true,
+  "no_2026": true,
+  "no_consensus": true,
+  "scored_years": [
+    2023,
+    2024
+  ],
+  "selection_policy": "Every outer block selects from matured training history only; no full-development frozen list is replayed backwards.",
+  "rows": 12946,
+  "blocks": 1304
+}
