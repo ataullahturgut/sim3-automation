@@ -179,7 +179,8 @@ Current state:
 - **2023–2024 role matrix:** **PHASE-1 COMPLETE** via `GOLD_SESSION_ROLE_MATRIX_2023_2024_2026-10-07.md`; Models 01–09 plus RIFT/VEGA/OPAL and SENTRY/DART/AURORA are now classified by balanced, UP-skew, DOWN-skew, correction and router-state roles. Nested/duplicate families are explicitly clustered so they cannot silently receive multiple full votes;
 - **SESSION TURN V1:** **COMPLETE / CONDITIONAL CORRECTION CANDIDATE** via `GOLD_SESSION_TURN_V1_FINAL_AUTHORITY_2026-10-07.md`; development retained Sobti Asia Afternoon, Sobti Asia Morning and WGC Asia. Frozen 2025 confirmed small positive correction in Asia Afternoon (net +1) and WGC Asia (net +1), but rejected Asia Morning (net -2);
 - **remaining SESSION-native model families:** Stage-2 `PRISM -> TWIN`; Stage-3 `AIM -> HELIOS`; Stage-4 `BOCPD -> DPTC -> RTE -> RC-RTE -> SCR-RTE -> STCR`. Historical H3 artifacts do not count as SESSION completion;
-- **current immediate task:** complete **SESSION PRISM** next. The development-only incremental/disagreement audit remains mandatory before final consensus, but it no longer blocks completion of still-missing model families;
+- **SESSION PRISM V1:** **COMPLETE / TRANSPORT FAILED / NEGATIVE CORRECTION EVIDENCE** via `GOLD_SESSION_PRISM_V1_FINAL_AUTHORITY_2026-10-07.md`; two development-eligible heads failed frozen 2025 transport (Asia Afternoon net -8; NY/London net -1);
+- **current immediate task:** complete **SESSION TWIN** next;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
