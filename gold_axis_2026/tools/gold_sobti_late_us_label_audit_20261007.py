@@ -33,6 +33,7 @@ def main():
     t["start_utc"]=pd.to_datetime(t.start_utc,utc=True,errors="raise")
     t["end_utc"]=pd.to_datetime(t.end_utc,utc=True,errors="raise")
     t["label_date"]=pd.to_datetime(t.label_date).dt.date
+    t=t.rename(columns={"return":"return_value"})
     t["final_trainable_bool"]=asbool(t.final_trainable)
     t["core_trainable_bool"]=asbool(t.core_trainable)
     t["path_clean_bool"]=asbool(t.path_clean)
@@ -51,7 +52,7 @@ def main():
         maint=set(x.tz_convert("UTC") for x in maint_local)
         missing=[x for x in grid if x not in present]
         disallowed=[x for x in missing if x not in maint]
-        stored_ret=float(r.return) if pd.notna(r.return) else None
+        stored_ret=float(r.return_value) if pd.notna(r.return_value) else None
         stored_sp=float(r.start_price) if pd.notna(r.start_price) else None
         stored_ep=float(r.end_price) if pd.notna(r.end_price) else None
         friday=(pd.Timestamp(d).weekday()==4)
