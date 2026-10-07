@@ -686,3 +686,24 @@ Frozen 2025 transport failed in both eligible heads: net rescue -8 and -1 respec
 
 Consensus status:
 - `NEGATIVE_CONTROL / NO_CORRECTION_SLOT`
+
+
+---
+
+## TWIN — local path-analogue rescue specialist
+
+Authority:
+- `GOLD_SESSION_TWIN_V1_FINAL_AUTHORITY_2026-10-07.md`
+
+Role profile:
+- `CORRECTION_REVERSAL_SPECIALIST`
+
+Development-eligible heads:
+- Sobti Asia Morning SHAPE48: net +2.
+- Sobti Europe SHAPE48: net +1.
+- WGC Europe SHAPE_MULTI: net +3.
+
+Frozen 2025 transport failed for all three heads: net -3, -5 and -1 respectively.
+
+Consensus status:
+- `NEGATIVE_CONTROL / NO_CORRECTION_SLOT`
