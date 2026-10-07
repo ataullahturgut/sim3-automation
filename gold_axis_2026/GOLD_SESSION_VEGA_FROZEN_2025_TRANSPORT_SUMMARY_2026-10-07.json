@@ -1,0 +1,49 @@
+{
+  "status": "SESSION_VEGA_FROZEN_2025_TRANSPORT_COMPLETE",
+  "scope": "WGC US + PATH_GLOBAL_1H only; canonical VEGA V1; no selected VEGA transport",
+  "threshold": 0.7,
+  "features": [
+    "gvz_z252",
+    "gvz_r1",
+    "gvz_r3",
+    "gvz_r5",
+    "gvz_vs_med20",
+    "iv_rv24_gap",
+    "iv_rv48_gap",
+    "trend_strength",
+    "gvz_shock_x_trend"
+  ],
+  "baseline_metrics": {
+    "n": 140,
+    "accuracy": 0.4714285714285714,
+    "balanced_accuracy": 0.49376453181145635,
+    "brier": 0.2825058787353239,
+    "logloss": 0.7726029432855164,
+    "up_recall": 0.37349397590361444,
+    "down_recall": 0.6140350877192983
+  },
+  "corrected_metrics": {
+    "n": 140,
+    "accuracy": 0.4714285714285714,
+    "balanced_accuracy": 0.49376453181145635,
+    "brier": 0.2825058787353239,
+    "logloss": 0.7726029432855164,
+    "up_recall": 0.37349397590361444,
+    "down_recall": 0.6140350877192983
+  },
+  "correction": {
+    "override_n": 0,
+    "changed_n": 0,
+    "rescued": 0,
+    "broken": 0,
+    "net_rescue": 0
+  },
+  "guardrails": [
+    "2025 opened only for the sole pre-2025 eligible canonical VEGA pair.",
+    "Canonical nine VEGA features and threshold 0.70 are unchanged.",
+    "GVZ is D-1 calendar day or earlier relative to actual NY origin date.",
+    "Monthly expanding causal refit uses only matured outcomes before each 2025 month.",
+    "Feature-selected VEGA V1B remains closed because it had no pre-2025 eligible pair.",
+    "No 2026 outcome opened."
+  ]
+}
