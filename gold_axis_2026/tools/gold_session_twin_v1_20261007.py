@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+# workflow trigger: TWIN V1 contract unchanged
+
 import importlib.util
 import json
 from pathlib import Path
