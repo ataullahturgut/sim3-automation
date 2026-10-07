@@ -202,8 +202,8 @@ def main():
         gate=selected["gate"]; z5=m[(m.gate==gate)&(m.period=="2025")].iloc[0]
         zd=m[(m.gate==gate)&(m.period=="DEV")].iloc[0]
         lines += [f"Development-selected gate: **{gate}**.",
-                  f"DEV: N={int(zd.n)}, RFR accuracy={pct(zd.accuracy)}, BA={pct(zd.ba)}, rescue/break/net={int(zd.rescue)}/{int(zd.break)}/{int(zd.net_rescue):+d}.",
-                  f"2025 retrospective transport: N={int(z5.n)}, RFR accuracy={pct(z5.accuracy)}, BA={pct(z5.ba)}, rescue/break/net={int(z5.rescue)}/{int(z5.break)}/{int(z5.net_rescue):+d}.",
+                  f"DEV: N={int(zd.n)}, RFR accuracy={pct(zd.accuracy)}, BA={pct(zd.ba)}, rescue/break/net={int(zd.rescue)}/{int(zd['break'])}/{int(zd.net_rescue):+d}.",
+                  f"2025 retrospective transport: N={int(z5.n)}, RFR accuracy={pct(z5.accuracy)}, BA={pct(z5.ba)}, rescue/break/net={int(z5.rescue)}/{int(z5['break'])}/{int(z5.net_rescue):+d}.",
                   "This remains a specialist override candidate, not a majority-vote consensus."]
     OUTR.write_text("\n".join(lines)+"\n")
     print(OUTR.read_text())
