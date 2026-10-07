@@ -1,0 +1,313 @@
+{
+  "status": "COMPLETE",
+  "identity": "PRAMV_V1",
+  "target": "17:00 -> next eligible 09:00 Europe/Istanbul",
+  "rule": [
+    "same-day paired macro surprise released by 17:00 => ABSTAIN",
+    "16:00-16:30 and 16:30-17:00 must have opposite signs (RFR active), otherwise ABSTAIN",
+    "M4_SIG_FPCA_MACRO direction must equal RFR first-impulse direction, otherwise ABSTAIN",
+    "if all conditions hold, issue the common direction"
+  ],
+  "scientific_roles": {
+    "M4": "direct path-shape predictor using scalar + lead-lag signature + FPCA + origin-known macro state",
+    "RFR": "mechanistic reversal-first-impulse specialist",
+    "macro_veto": "known information-arrival regime filter"
+  },
+  "posthoc_warning": "The exact PRAMV synthesis was identified after the 2025 retrospective archive was already accessible. 2025 is corroborative retrospective transport, not untouched prospective validation. A future/2026+ locked test is required for production proof.",
+  "results": {
+    "2023": {
+      "gate": {
+        "n": 89,
+        "accuracy": 0.6067415730337079,
+        "ba": 0.6059150657229525,
+        "up_recall": 0.6304347826086957,
+        "down_recall": 0.5813953488372093,
+        "tn": 25,
+        "fp": 18,
+        "fn": 17,
+        "tp": 29
+      },
+      "pair_same_rows": {
+        "n": 89,
+        "accuracy": 0.550561797752809,
+        "ba": 0.54474216380182,
+        "up_recall": 0.717391304347826,
+        "down_recall": 0.37209302325581395,
+        "tn": 16,
+        "fp": 27,
+        "fn": 13,
+        "tp": 33
+      },
+      "rescue": 9,
+      "break": 4,
+      "net_rescue": 5,
+      "binom_p_vs_50_one_sided": 0.02788916382686716,
+      "mcnemar_exact_p_vs_pair": 0.266845703125,
+      "coverage": 0.34765625
+    },
+    "2023_H1": {
+      "gate": {
+        "n": 41,
+        "accuracy": 0.6829268292682927,
+        "ba": 0.6833333333333333,
+        "up_recall": 0.6666666666666666,
+        "down_recall": 0.7,
+        "tn": 14,
+        "fp": 6,
+        "fn": 7,
+        "tp": 14
+      },
+      "pair_same_rows": {
+        "n": 41,
+        "accuracy": 0.5853658536585366,
+        "ba": 0.5821428571428572,
+        "up_recall": 0.7142857142857143,
+        "down_recall": 0.45,
+        "tn": 9,
+        "fp": 11,
+        "fn": 6,
+        "tp": 15
+      },
+      "rescue": 5,
+      "break": 1,
+      "net_rescue": 4,
+      "binom_p_vs_50_one_sided": 0.013766577914793743,
+      "mcnemar_exact_p_vs_pair": 0.21875
+    },
+    "2023_H2": {
+      "gate": {
+        "n": 48,
+        "accuracy": 0.5416666666666666,
+        "ba": 0.5391304347826087,
+        "up_recall": 0.6,
+        "down_recall": 0.4782608695652174,
+        "tn": 11,
+        "fp": 12,
+        "fn": 10,
+        "tp": 15
+      },
+      "pair_same_rows": {
+        "n": 48,
+        "accuracy": 0.5208333333333334,
+        "ba": 0.5121739130434783,
+        "up_recall": 0.72,
+        "down_recall": 0.30434782608695654,
+        "tn": 7,
+        "fp": 16,
+        "fn": 7,
+        "tp": 18
+      },
+      "rescue": 4,
+      "break": 3,
+      "net_rescue": 1,
+      "binom_p_vs_50_one_sided": 0.3327329060383094,
+      "mcnemar_exact_p_vs_pair": 1.0
+    },
+    "2024": {
+      "gate": {
+        "n": 86,
+        "accuracy": 0.6046511627906976,
+        "ba": 0.6005420054200542,
+        "up_recall": 0.6888888888888889,
+        "down_recall": 0.5121951219512195,
+        "tn": 21,
+        "fp": 20,
+        "fn": 14,
+        "tp": 31
+      },
+      "pair_same_rows": {
+        "n": 86,
+        "accuracy": 0.5581395348837209,
+        "ba": 0.5495934959349593,
+        "up_recall": 0.7333333333333333,
+        "down_recall": 0.36585365853658536,
+        "tn": 15,
+        "fp": 26,
+        "fn": 12,
+        "tp": 33
+      },
+      "rescue": 6,
+      "break": 2,
+      "net_rescue": 4,
+      "binom_p_vs_50_one_sided": 0.033076298730694634,
+      "mcnemar_exact_p_vs_pair": 0.2890625,
+      "coverage": 0.33204633204633205
+    },
+    "2024_H1": {
+      "gate": {
+        "n": 41,
+        "accuracy": 0.6097560975609756,
+        "ba": 0.5980392156862745,
+        "up_recall": 0.6666666666666666,
+        "down_recall": 0.5294117647058824,
+        "tn": 9,
+        "fp": 8,
+        "fn": 8,
+        "tp": 16
+      },
+      "pair_same_rows": {
+        "n": 41,
+        "accuracy": 0.5609756097560976,
+        "ba": 0.5220588235294118,
+        "up_recall": 0.75,
+        "down_recall": 0.29411764705882354,
+        "tn": 5,
+        "fp": 12,
+        "fn": 6,
+        "tp": 18
+      },
+      "rescue": 4,
+      "break": 2,
+      "net_rescue": 2,
+      "binom_p_vs_50_one_sided": 0.10551179880440031,
+      "mcnemar_exact_p_vs_pair": 0.6875
+    },
+    "2024_H2": {
+      "gate": {
+        "n": 45,
+        "accuracy": 0.6,
+        "ba": 0.6071428571428572,
+        "up_recall": 0.7142857142857143,
+        "down_recall": 0.5,
+        "tn": 12,
+        "fp": 12,
+        "fn": 6,
+        "tp": 15
+      },
+      "pair_same_rows": {
+        "n": 45,
+        "accuracy": 0.5555555555555556,
+        "ba": 0.5654761904761905,
+        "up_recall": 0.7142857142857143,
+        "down_recall": 0.4166666666666667,
+        "tn": 10,
+        "fp": 14,
+        "fn": 6,
+        "tp": 15
+      },
+      "rescue": 2,
+      "break": 0,
+      "net_rescue": 2,
+      "binom_p_vs_50_one_sided": 0.11634659595415542,
+      "mcnemar_exact_p_vs_pair": 0.5
+    },
+    "2025": {
+      "gate": {
+        "n": 82,
+        "accuracy": 0.6341463414634146,
+        "ba": 0.6341463414634146,
+        "up_recall": 0.7317073170731707,
+        "down_recall": 0.5365853658536586,
+        "tn": 22,
+        "fp": 19,
+        "fn": 11,
+        "tp": 30
+      },
+      "pair_same_rows": {
+        "n": 82,
+        "accuracy": 0.6341463414634146,
+        "ba": 0.6341463414634146,
+        "up_recall": 0.7804878048780488,
+        "down_recall": 0.4878048780487805,
+        "tn": 20,
+        "fp": 21,
+        "fn": 9,
+        "tp": 32
+      },
+      "rescue": 2,
+      "break": 2,
+      "net_rescue": 0,
+      "binom_p_vs_50_one_sided": 0.0099134579229208,
+      "mcnemar_exact_p_vs_pair": 1.0,
+      "coverage": 0.3228346456692913
+    },
+    "2025_H1": {
+      "gate": {
+        "n": 46,
+        "accuracy": 0.6304347826086957,
+        "ba": 0.621904761904762,
+        "up_recall": 0.72,
+        "down_recall": 0.5238095238095238,
+        "tn": 11,
+        "fp": 10,
+        "fn": 7,
+        "tp": 18
+      },
+      "pair_same_rows": {
+        "n": 46,
+        "accuracy": 0.6521739130434783,
+        "ba": 0.638095238095238,
+        "up_recall": 0.8,
+        "down_recall": 0.47619047619047616,
+        "tn": 10,
+        "fp": 11,
+        "fn": 5,
+        "tp": 20
+      },
+      "rescue": 1,
+      "break": 2,
+      "net_rescue": -1,
+      "binom_p_vs_50_one_sided": 0.051902677752053705,
+      "mcnemar_exact_p_vs_pair": 1.0
+    },
+    "2025_H2": {
+      "gate": {
+        "n": 36,
+        "accuracy": 0.6388888888888888,
+        "ba": 0.65,
+        "up_recall": 0.75,
+        "down_recall": 0.55,
+        "tn": 11,
+        "fp": 9,
+        "fn": 4,
+        "tp": 12
+      },
+      "pair_same_rows": {
+        "n": 36,
+        "accuracy": 0.6111111111111112,
+        "ba": 0.625,
+        "up_recall": 0.75,
+        "down_recall": 0.5,
+        "tn": 10,
+        "fp": 10,
+        "fn": 4,
+        "tp": 12
+      },
+      "rescue": 1,
+      "break": 0,
+      "net_rescue": 1,
+      "binom_p_vs_50_one_sided": 0.06624908198136838,
+      "mcnemar_exact_p_vs_pair": 1.0
+    },
+    "DEV_2023_2024": {
+      "gate": {
+        "n": 175,
+        "accuracy": 0.6057142857142858,
+        "ba": 0.6034798534798536,
+        "up_recall": 0.6593406593406593,
+        "down_recall": 0.5476190476190477,
+        "tn": 46,
+        "fp": 38,
+        "fn": 31,
+        "tp": 60
+      },
+      "pair_same_rows": {
+        "n": 175,
+        "accuracy": 0.5542857142857143,
+        "ba": 0.5471611721611722,
+        "up_recall": 0.7252747252747253,
+        "down_recall": 0.36904761904761907,
+        "tn": 31,
+        "fp": 53,
+        "fn": 25,
+        "tp": 66
+      },
+      "rescue": 15,
+      "break": 6,
+      "net_rescue": 9,
+      "binom_p_vs_50_one_sided": 0.003168927165390554,
+      "mcnemar_exact_p_vs_pair": 0.0783538818359375,
+      "coverage": 0.33980582524271846
+    }
+  }
+}
