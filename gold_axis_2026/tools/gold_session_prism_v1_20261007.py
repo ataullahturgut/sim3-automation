@@ -191,7 +191,7 @@ def select_lambda(g):
         ["prism_ba","prism_accuracy","prism_brier","lambda"],
         ascending=[False,False,True,True]
     )
-    return tab,float(elig.iloc[0].lambda),preds
+    return tab,float(elig.iloc[0]["lambda"]),preds
 
 def summarize(g,period):
     rows=[]
