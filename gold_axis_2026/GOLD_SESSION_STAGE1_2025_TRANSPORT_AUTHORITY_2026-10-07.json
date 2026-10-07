@@ -1,0 +1,97 @@
+{
+  "status": "STAGE1_2025_TRANSPORT_AUTHORITY_FINAL",
+  "date": "2026-10-07",
+  "chronology": "2022 warm-up; 2023-2024 development; 2025 one-time frozen causal transport; 2026 unopened",
+  "authoritative_files": [
+    "GOLD_SESSION_2025_MODEL_IDENTITY_AUDIT_2026-10-07.json",
+    "GOLD_SESSION_STAGE1_GLOBAL_CONTROLS_2025_V2_CONTINUOUS_SUMMARY_2026-10-07.json",
+    "GOLD_SESSION_S14_FROZEN_2025_TRANSPORT_SUMMARY_2026-10-07.json",
+    "GOLD_SESSION_SAGE_FROZEN_2025_TRANSPORT_V2_CONTINUOUS_SUMMARY_2026-10-07.json",
+    "GOLD_SESSION_STAGE1_2025_MATCHED_V2_SUMMARY_2026-10-07.json"
+  ],
+  "superseded_non_authoritative": [
+    {
+      "file": "GOLD_SESSION_STAGE1_GLOBAL_CONTROLS_2025_SUMMARY_2026-10-07.json",
+      "reason": "2025 block phase restarted"
+    },
+    {
+      "file": "GOLD_SESSION_SAGE_FROZEN_2025_TRANSPORT_SUMMARY_2026-10-07.json",
+      "reason": "2025 block phase restarted"
+    },
+    {
+      "file": "GOLD_SESSION_STAGE1_2025_MATCHED_DECISION_SUMMARY_2026-10-07.json",
+      "reason": "used noncanonical restarted-block controls"
+    }
+  ],
+  "identity_audit": {
+    "A1_matched_rows": 1061,
+    "A1_max_abs_diff": 2.6911806116913795e-13,
+    "PATH_matched_rows": 284,
+    "PATH_max_abs_diff": 0
+  },
+  "frozen_common_row_transport_decisions": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "winner": "A0_CORE3",
+      "ba": 0.6419437340153453,
+      "status": "PROMOTABLE_TRANSPORT_WINNER"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "winner": "S14_A1_PLUS_1H_FULL",
+      "ba": 0.608566755264772,
+      "status": "PROMOTABLE_TRANSPORT_WINNER"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "winner": "PATH_GLOBAL_1H",
+      "ba": 0.5111593916650208,
+      "status": "PROMOTABLE_TRANSPORT_WINNER"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "winner": "A0_CORE3",
+      "ba": 0.5388007054673721,
+      "status": "PROMOTABLE_TRANSPORT_WINNER"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "winner": null,
+      "ba": null,
+      "status": "NO_ADMISSIBLE_MODEL"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "winner": "PATH_GLOBAL_1H",
+      "ba": 0.585832083958021,
+      "status": "PROMOTABLE_TRANSPORT_WINNER"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "winner": "PATH_GLOBAL_1H",
+      "ba": 0.5158653846153847,
+      "status": "PROMOTABLE_TRANSPORT_WINNER"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "winner": "PATH_GLOBAL_1H",
+      "ba": 0.49376453181145635,
+      "status": "BEST_BUT_BELOW_50_BA"
+    }
+  ],
+  "governance_notes": [
+    "The 30% minimum class-recall floor is enforced.",
+    "Matched winners are defined only on exact common frozen-candidate rows; common-row coverage ranges about 41%-59%.",
+    "No new fallback/router is created for rows outside common coverage.",
+    "SAGE provides no 2025 transport promotion: WGC Asia S15 BA 48.06%; Sobti NY/London S16 BA 45.94%; WGC US S16 BA 46.69%.",
+    "2025 outcomes do not alter clocks, features, lags, regularization or threshold."
+  ]
+}
