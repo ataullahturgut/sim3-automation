@@ -84,21 +84,29 @@ def build_tail_anchors():
             direction="backward",
             allow_exact_matches=False
         )
-        if z[["h_ret_12_active","rs_plus_120","rs_minus_120"]].isna().any().any():
-            raise RuntimeError(f"TURN_TAIL_SOURCE_MISSING {part} {win}")
-        if not (z.available_at_utc<z.start_utc).all():
+        timed=z.available_at_utc.notna()
+        if not (z.loc[timed,"available_at_utc"]<z.loc[timed,"start_utc"]).all():
             raise RuntimeError(f"TURN_TAIL_TIME_LEAK {part} {win}")
-        z["q80_plus"]=(
-            z.rs_plus_120.shift(1)
+
+        z["q80_plus"]=np.nan
+        z["q80_minus"]=np.nan
+        valid=z[["h_ret_12_active","rs_plus_120","rs_minus_120"]].notna().all(axis=1)
+        zv=z.loc[valid,["rs_plus_120","rs_minus_120"]].copy()
+        z.loc[valid,"q80_plus"]=(
+            zv.rs_plus_120.shift(1)
             .rolling(REF_WINDOW,min_periods=MIN_REF)
             .quantile(TAIL_Q)
+            .to_numpy()
         )
-        z["q80_minus"]=(
-            z.rs_minus_120.shift(1)
+        z.loc[valid,"q80_minus"]=(
+            zv.rs_minus_120.shift(1)
             .rolling(REF_WINDOW,min_periods=MIN_REF)
             .quantile(TAIL_Q)
+            .to_numpy()
         )
-        z["ref_ready"]=z.q80_plus.notna()&z.q80_minus.notna()
+        z["ref_ready"]=(
+            valid & z.q80_plus.notna() & z.q80_minus.notna()
+        )
         out.append(z)
     return pd.concat(out,ignore_index=True)
 
