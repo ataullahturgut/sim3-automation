@@ -1,0 +1,178 @@
+{
+  "status": "SESSION_SENTRY_V1_COMPLETE",
+  "rule": {
+    "window": 63,
+    "min_matured": 42,
+    "enter_path": 3,
+    "exit_path": 0
+  },
+  "experts": {
+    "structural": "S14_A1_PLUS_1H_FULL",
+    "path": "PATH_GLOBAL_1H"
+  },
+  "development_gate": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "eligible": false,
+      "reason": "NO_SWITCH_BY_2024",
+      "dev_n": 175,
+      "sentry_ba": 0.5276315789473685,
+      "struct_ba": 0.5276315789473685,
+      "sentry_up_recall": 0.5052631578947369,
+      "sentry_down_recall": 0.55,
+      "switches_by_2024": 0
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "eligible": false,
+      "reason": "2024_ACC|DEV_BA",
+      "dev_n": 170,
+      "sentry_ba": 0.45833333333333337,
+      "struct_ba": 0.49773242630385484,
+      "sentry_up_recall": 0.5,
+      "sentry_down_recall": 0.4166666666666667,
+      "switches_by_2024": 4
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "eligible": true,
+      "reason": "PASS",
+      "dev_n": 189,
+      "sentry_ba": 0.49096861594039287,
+      "struct_ba": 0.48713027771505985,
+      "sentry_up_recall": 0.6796116504854369,
+      "sentry_down_recall": 0.3023255813953488,
+      "switches_by_2024": 4
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "eligible": false,
+      "reason": "2024_ACC|DEV_BA",
+      "dev_n": 190,
+      "sentry_ba": 0.5164615896242102,
+      "struct_ba": 0.5325906218822747,
+      "sentry_up_recall": 0.4845360824742268,
+      "sentry_down_recall": 0.5483870967741935,
+      "switches_by_2024": 2
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "eligible": false,
+      "reason": "RECALL_FLOOR|NO_SWITCH_BY_2024",
+      "dev_n": 89,
+      "sentry_ba": 0.5005081300813008,
+      "struct_ba": 0.5005081300813008,
+      "sentry_up_recall": 0.7083333333333334,
+      "sentry_down_recall": 0.2926829268292683,
+      "switches_by_2024": 0
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "eligible": false,
+      "reason": "RECALL_FLOOR|NO_SWITCH_BY_2024",
+      "dev_n": 102,
+      "sentry_ba": 0.4736495388669302,
+      "struct_ba": 0.4736495388669302,
+      "sentry_up_recall": 0.8260869565217391,
+      "sentry_down_recall": 0.12121212121212122,
+      "switches_by_2024": 0
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "eligible": false,
+      "reason": "2024_ACC|2024_BRIER|DEV_BA",
+      "dev_n": 189,
+      "sentry_ba": 0.5104285388648279,
+      "struct_ba": 0.5211989970366994,
+      "sentry_up_recall": 0.6915887850467289,
+      "sentry_down_recall": 0.32926829268292684,
+      "switches_by_2024": 2
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "eligible": false,
+      "reason": "2024_BRIER",
+      "dev_n": 162,
+      "sentry_ba": 0.4772761933811194,
+      "struct_ba": 0.4797163336891871,
+      "sentry_up_recall": 0.39759036144578314,
+      "sentry_down_recall": 0.5569620253164557,
+      "switches_by_2024": 2
+    }
+  ],
+  "eligible_heads": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT"
+    }
+  ],
+  "transport_2025_metrics": [
+    {
+      "period": "FROZEN_2025",
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "model": "STRUCTURAL_IRIS",
+      "n": 144,
+      "accuracy": 0.5069444444444444,
+      "balanced_accuracy": 0.45714003555204424,
+      "brier": 0.2631408565199831,
+      "logloss": 0.7239865679299569,
+      "up_recall": 0.7831325301204819,
+      "down_recall": 0.13114754098360656,
+      "up_actual": 83,
+      "up_correct": 65,
+      "down_actual": 61,
+      "down_correct": 8
+    },
+    {
+      "period": "FROZEN_2025",
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "model": "PATH_GLOBAL",
+      "n": 144,
+      "accuracy": 0.5416666666666666,
+      "balanced_accuracy": 0.5111593916650208,
+      "brier": 0.2626522103606351,
+      "logloss": 0.7203483424979783,
+      "up_recall": 0.7108433734939759,
+      "down_recall": 0.3114754098360656,
+      "up_actual": 83,
+      "up_correct": 59,
+      "down_actual": 61,
+      "down_correct": 19
+    },
+    {
+      "period": "FROZEN_2025",
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "model": "SENTRY",
+      "n": 144,
+      "accuracy": 0.5347222222222222,
+      "balanced_accuracy": 0.4942721706498124,
+      "brier": 0.25899311801065383,
+      "logloss": 0.7140136254877988,
+      "up_recall": 0.7590361445783133,
+      "down_recall": 0.22950819672131148,
+      "up_actual": 83,
+      "up_correct": 63,
+      "down_actual": 61,
+      "down_correct": 14
+    }
+  ],
+  "guardrails": [
+    "State is independent by partition/window.",
+    "Only exact common expert rows are used.",
+    "Paired correctness uses only rows with end_utc <= current start_utc.",
+    "SENTRY thresholds are copied unchanged from H3 authority; no session threshold search.",
+    "2025 is opened only for heads passing the frozen 2023-2024 gate.",
+    "No 2026 outcome opened."
+  ]
+}
