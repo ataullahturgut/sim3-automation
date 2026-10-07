@@ -707,3 +707,23 @@ Frozen 2025 transport failed for all three heads: net -3, -5 and -1 respectively
 
 Consensus status:
 - `NEGATIVE_CONTROL / NO_CORRECTION_SLOT`
+
+
+---
+
+## AIM — adaptive expert mixture
+
+Authority:
+- `GOLD_SESSION_AIM_V1_FINAL_AUTHORITY_2026-10-07.md`
+
+Role profile:
+- `ROUTER_COMBINER_EVIDENCE`
+
+Development evidence:
+- Sobti Asia Morning H=63 / eta=40 passed both 2023 and 2024 year-stability checks.
+- WGC Europe failed 2023 stability; WGC US lacked sufficient 2023 confirmation.
+
+Frozen 2025 Sobti Asia Morning transport: Structural BA 60.86% -> AIM BA 59.43%, net rescue -2.
+
+Consensus status:
+- `NO_INDEPENDENT_DIRECTION_VOTE / ROUTER_DIAGNOSTIC_ONLY`
