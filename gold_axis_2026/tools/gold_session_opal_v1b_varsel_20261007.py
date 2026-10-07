@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+# workflow trigger: OPAL V1B contract unchanged
+
 import importlib.util
 import json
 from collections import Counter, defaultdict
