@@ -2374,23 +2374,43 @@ All eight Stage-1 model families are complete and the pre-2025 candidate set is 
 From this point, the one-time 2025 transport test may evaluate only the frozen candidates. Clocks, features, lag horizons, model forms, regularization and the 0.5 decision threshold may not be changed using 2025 outcomes.
 
 
-### 5E.8W Frozen 2025 Stage-1 transport — COMPLETE — 2026-10-07
+### 5E.8W Frozen 2025 Stage-1 transport — FINAL CORRECTED AUTHORITY — 2026-10-07
 
-Authority: `GOLD_SESSION_STAGE1_2025_TRANSPORT_DECISION_2026-10-07.json`.
+Authority: `GOLD_SESSION_STAGE1_2025_TRANSPORT_AUTHORITY_2026-10-07.json`.
 
-2025 was opened only after the Stage-1 development freeze and pre-transport amendment. Replay remained causal and expanding; no clock, feature, lag, C, model form or 0.5 threshold was changed from 2025 outcomes. 2026 remains unopened.
+The earlier `GOLD_SESSION_STAGE1_2025_TRANSPORT_DECISION_2026-10-07.json` and restarted-block intermediate control summaries are **superseded / non-authoritative**. The corrected transport preserves the original 5-row replay block phase continuously through 2023→2024→2025, reports only 2025 rows, and does not retune clocks, features, lags, regularization or the 0.5 threshold.
 
-Transport is heterogeneous rather than universal:
-- Sobti Asia Afternoon: structural-only A1 transports strongly; adding PATH hurts.
-- Sobti Asia Morning: canonical A1+1h PATH is the strongest frozen representation (BA about **60.86%**); 15m falls to about **51.34%**.
-- Sobti NY/London: A1 structural remains stronger than Structural-IRIS; SAGE improves its PATH comparator but remains below 50% BA.
-- WGC Asia: preregistered SAGE SESSION_ONLY does not transport (BA about **48.72%**).
-- WGC US: preregistered SAGE PATH_SESSION does not transport and is worse than PATH_GLOBAL.
-- Europe/Late-US heads remain mixed or weak; no 2025 rescue/tuning is allowed.
+Identity audit:
+- A1: **1,061 matched rows**, max probability difference **2.7e-13**;
+- PATH_GLOBAL: **284 matched rows**, max probability difference **0**.
+Thus the corrected independent transport implementations are identity-consistent.
 
-The transport result therefore does not justify one universal Stage-1 model. The frozen single-model outputs are retained as heterogeneous experts for downstream testing.
+Matched 2025 frozen-candidate decisions on exact common rows, with the frozen **30% minimum class-recall floor**:
+- Sobti Asia Afternoon: **A0 CORE3**, BA **64.19%**;
+- Sobti Asia Morning: **A1 + 1h Structural-IRIS**, BA **60.86%**;
+- Sobti Europe: **PATH_GLOBAL 1h**, BA **51.12%**;
+- Sobti NY/London: **A0 CORE3**, BA **53.88%**;
+- Sobti Late-US: **no admissible model**;
+- WGC Asia: **PATH_GLOBAL 1h**, BA **58.58%**;
+- WGC Europe: **PATH_GLOBAL 1h**, BA **51.59%**;
+- WGC US: best frozen candidate is PATH_GLOBAL 1h at **49.38% BA**, therefore **not promoted**.
 
-**Next dependency:** Stage 2 specialist correction/reversal layers (RIFT, VEGA, OPAL, TURN, PRISM, TWIN) must be rebuilt against fresh frozen Stage-1 baselines before any Stage-3 router/combiner or final consensus is evaluated.
+SAGE does not earn a 2025 transport promotion:
+- WGC Asia S1.5 SESSION_ONLY: BA about **48.06%**;
+- Sobti NY/London S1.6 PATH_SESSION: BA about **45.94%**;
+- WGC US S1.6 PATH_SESSION: BA about **46.69%**.
+
+Critical coverage guardrail:
+- matched-candidate common-row coverage is only about **41%–59%** depending on the head;
+- therefore these winners are transport winners only on the exact common frozen-candidate rows;
+- **no new fallback/router is created for non-common rows at Stage 1**.
+
+Binding conclusion:
+- Stage 1 does **not** support one universal session model;
+- heterogeneous single-model experts are retained;
+- 2025 may select among the already frozen candidates but may not alter their specification;
+- 2026 remains unopened for this session project;
+- the next dependency is **Stage 2 specialist correction/reversal layers**, after which Stage 3 router/combiner and final consensus may be evaluated.
 
 
 ## 5E.9 Research hypotheses — not conclusions
