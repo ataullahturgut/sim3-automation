@@ -1,0 +1,9 @@
+partition,window,base_model,base_eligible_n,base_handoff_alarms,base_acts,base_rescue,base_broken,base_net,base_ba,assisted_ba,year_accuracy_gate,source_nets_json,transport_eligible,status
+SOBTI_5_ET,ASIA_AFTERNOON_LIT,S17_A1_SESSION,189,16,5,3,2,1,0.5218446601941747,0.5276586136825469,True,"{""BASE"": 1, ""CL_v"": 2, ""GC_n"": 2, ""NQ_c"": 0, ""NQ_n"": 1, ""SI_n"": 1, ""ZN_v"": 0}",True,PASS_SOURCE_WEAK
+SOBTI_5_ET,ASIA_MORNING_LIT,CORE3_A0,197,18,7,4,3,1,0.5357066836951894,0.5418795232013622,False,"{""BASE"": 1, ""CL_v"": -3, ""GC_n"": 1, ""NQ_c"": 0, ""NQ_n"": -1, ""SI_n"": -1, ""ZN_v"": -1}",False,SOURCE_SENSITIVE_FAIL
+SOBTI_5_ET,EUROPE_LIT,CORE3_A0,225,19,1,0,1,-1,0.5140692640692641,0.5101010101010102,False,"{""BASE"": -1, ""CL_v"": -1, ""GC_n"": -1, ""NQ_c"": -1, ""NQ_n"": -1, ""SI_n"": -1, ""ZN_v"": -1}",False,SOURCE_SENSITIVE_FAIL
+SOBTI_5_ET,NY_LONDON_LIT,STRUCTURAL_IRIS_1H,215,17,5,3,2,1,0.5325710325710327,0.537378724878725,True,"{""BASE"": 1, ""CL_v"": 1, ""GC_n"": 1, ""NQ_c"": 1, ""NQ_n"": 1, ""SI_n"": 0, ""ZN_v"": 1}",True,PASS_SOURCE_WEAK
+SOBTI_5_ET,US_LATE_LIT,S17_A1_SESSION,89,12,0,0,0,0,0.5022865853658537,0.5022865853658537,True,"{""BASE"": 0, ""CL_v"": 0, ""GC_n"": 0, ""NQ_c"": 0, ""NQ_n"": 0, ""SI_n"": 0, ""ZN_v"": 0}",False,DEVELOPMENT_GATE_FAIL
+WGC_2026_NY3,ASIA,S15_SESSION_ONLY,151,16,1,0,1,-1,0.5566336633663367,0.5516831683168317,False,"{""BASE"": -1, ""CL_v"": 1, ""GC_n"": 0, ""NQ_c"": 0, ""NQ_n"": -1, ""SI_n"": -1, ""ZN_v"": -1}",False,SOURCE_SENSITIVE_FAIL
+WGC_2026_NY3,EUROPE,STRUCTURAL_IRIS_1H,209,18,1,0,1,-1,0.5247933884297521,0.5206611570247934,True,"{""BASE"": -1, ""CL_v"": -1, ""GC_n"": 0, ""NQ_c"": -1, ""NQ_n"": -1, ""SI_n"": 0, ""ZN_v"": -1}",False,SOURCE_SENSITIVE_FAIL
+WGC_2026_NY3,US,S18_A1_PATH_SESSION,177,15,5,2,3,-1,0.5089445438282647,0.5037694863276259,True,"{""BASE"": -1, ""CL_v"": -1, ""GC_n"": -1, ""NQ_c"": -1, ""NQ_n"": -1, ""SI_n"": -1, ""ZN_v"": -1}",False,SOURCE_SENSITIVE_FAIL
