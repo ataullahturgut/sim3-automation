@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+# workflow trigger: canonical VEGA contract unchanged
+
 import importlib.util
 import json
 import math
