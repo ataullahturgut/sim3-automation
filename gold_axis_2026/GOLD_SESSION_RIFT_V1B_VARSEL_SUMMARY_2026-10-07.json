@@ -1,0 +1,169 @@
+{
+  "status": "SESSION_RIFT_V1B_VARSEL_DEVELOPMENT_COMPLETE",
+  "scope": "2022 warm-up; 2023-2024 nested variable selection and outer-month correction evaluation; 2025 unopened",
+  "canonical_threshold": 0.7,
+  "candidate_features": [
+    "trend_strength",
+    "opposite_semivar_share",
+    "deceleration_6h",
+    "path_consistency",
+    "trend_close_location",
+    "opposite_extreme_recency",
+    "jump_concentration_24",
+    "trend_to_range",
+    "adverse_excursion"
+  ],
+  "frozen_features": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "frozen_features": [
+        "deceleration_6h",
+        "trend_close_location",
+        "trend_to_range",
+        "adverse_excursion",
+        "trend_strength",
+        "jump_concentration_24"
+      ],
+      "n_features": 6,
+      "outer_months": 24
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "frozen_features": [
+        "opposite_semivar_share",
+        "trend_close_location",
+        "jump_concentration_24",
+        "deceleration_6h",
+        "trend_strength",
+        "path_consistency"
+      ],
+      "n_features": 6,
+      "outer_months": 24
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "frozen_features": [
+        "trend_strength",
+        "opposite_semivar_share",
+        "path_consistency",
+        "adverse_excursion",
+        "opposite_extreme_recency",
+        "deceleration_6h"
+      ],
+      "n_features": 6,
+      "outer_months": 24
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "frozen_features": [
+        "opposite_extreme_recency",
+        "deceleration_6h",
+        "opposite_semivar_share",
+        "path_consistency",
+        "trend_to_range",
+        "trend_strength"
+      ],
+      "n_features": 6,
+      "outer_months": 24
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "frozen_features": [
+        "adverse_excursion",
+        "opposite_extreme_recency",
+        "path_consistency",
+        "deceleration_6h",
+        "jump_concentration_24",
+        "trend_strength"
+      ],
+      "n_features": 6,
+      "outer_months": 24
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "frozen_features": [
+        "deceleration_6h",
+        "trend_strength",
+        "adverse_excursion",
+        "path_consistency",
+        "jump_concentration_24",
+        "opposite_semivar_share"
+      ],
+      "n_features": 6,
+      "outer_months": 24
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "frozen_features": [
+        "opposite_semivar_share",
+        "trend_strength",
+        "adverse_excursion",
+        "opposite_extreme_recency",
+        "deceleration_6h",
+        "jump_concentration_24"
+      ],
+      "n_features": 6,
+      "outer_months": 24
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "frozen_features": [
+        "trend_strength",
+        "opposite_semivar_share",
+        "deceleration_6h",
+        "path_consistency",
+        "jump_concentration_24",
+        "opposite_extreme_recency"
+      ],
+      "n_features": 6,
+      "outer_months": 24
+    }
+  ],
+  "transport_eligible": [
+    {
+      "baseline": "A0_CORE3",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "transport_eligible": true,
+      "reason": "PASS"
+    },
+    {
+      "baseline": "A1_ARCR",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "transport_eligible": true,
+      "reason": "PASS"
+    },
+    {
+      "baseline": "PATH_GLOBAL_1H",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "transport_eligible": true,
+      "reason": "PASS"
+    },
+    {
+      "baseline": "STRUCTURAL_IRIS_A1_PLUS_1H",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "transport_eligible": true,
+      "reason": "PASS"
+    }
+  ],
+  "guardrails": [
+    "No new feature family added.",
+    "Reversal target identity unchanged.",
+    "Final RIFT estimator remains balanced Logistic C=1.0.",
+    "Correction threshold remains 0.70.",
+    "Correction rule unchanged.",
+    "Outer month never selects its own variables.",
+    "No 2025 or 2026 outcome opened."
+  ]
+}
