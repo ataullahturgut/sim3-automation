@@ -1,0 +1,118 @@
+{
+  "status": "SESSION_BOCPD_V1_STAGE3_2025_COMPLETE",
+  "databento_2025": {
+    "dataset": "GLBX.MDP3",
+    "schema": "ohlcv-1h",
+    "symbols": [
+      "GC.v.0",
+      "SI.v.0",
+      "NQ.v.0",
+      "ZN.n.0",
+      "CL.c.0"
+    ],
+    "start": "2025-01-01",
+    "end": "2026-01-01",
+    "estimated_cost_usd": 0.291292965412,
+    "rows": 29396
+  },
+  "eligible_heads_opened": [
+    "SOBTI_5_ET/ASIA_AFTERNOON_LIT/S17_A1_SESSION",
+    "SOBTI_5_ET/NY_LONDON_LIT/STRUCTURAL_IRIS_1H"
+  ],
+  "metrics": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "base_model": "S17_A1_SESSION",
+      "n": 134,
+      "handoff_alarms": 17,
+      "acts": 0,
+      "rescue": 0,
+      "broken": 0,
+      "net_rescue": 0,
+      "action_precision": 0.0,
+      "base_n": 134,
+      "base_accuracy": 0.4552238805970149,
+      "base_balanced_accuracy": 0.4552238805970149,
+      "base_up_recall": 0.5074626865671642,
+      "base_down_recall": 0.40298507462686567,
+      "base_brier": 0.26885681417533064,
+      "assisted_n": 134,
+      "assisted_accuracy": 0.4552238805970149,
+      "assisted_balanced_accuracy": 0.4552238805970149,
+      "assisted_up_recall": 0.5074626865671642,
+      "assisted_down_recall": 0.40298507462686567,
+      "assisted_brier": 0.26885681417533064
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "base_model": "STRUCTURAL_IRIS_1H",
+      "n": 143,
+      "handoff_alarms": 12,
+      "acts": 0,
+      "rescue": 0,
+      "broken": 0,
+      "net_rescue": 0,
+      "action_precision": 0.0,
+      "base_n": 143,
+      "base_accuracy": 0.4965034965034965,
+      "base_balanced_accuracy": 0.5078373015873016,
+      "base_up_recall": 0.4125,
+      "base_down_recall": 0.6031746031746031,
+      "base_brier": 0.2736722593768771,
+      "assisted_n": 143,
+      "assisted_accuracy": 0.4965034965034965,
+      "assisted_balanced_accuracy": 0.5078373015873016,
+      "assisted_up_recall": 0.4125,
+      "assisted_down_recall": 0.6031746031746031,
+      "assisted_brier": 0.2736722593768771
+    }
+  ],
+  "gate": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "base_model": "S17_A1_SESSION",
+      "retained": false,
+      "reason": "TRANSPORT_FAIL",
+      "n": 134,
+      "acts": 0,
+      "rescue": 0,
+      "broken": 0,
+      "net_rescue": 0,
+      "base_ba": 0.4552238805970149,
+      "assisted_ba": 0.4552238805970149,
+      "base_accuracy": 0.4552238805970149,
+      "assisted_accuracy": 0.4552238805970149
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "base_model": "STRUCTURAL_IRIS_1H",
+      "retained": false,
+      "reason": "TRANSPORT_FAIL",
+      "n": 143,
+      "acts": 0,
+      "rescue": 0,
+      "broken": 0,
+      "net_rescue": 0,
+      "base_ba": 0.5078373015873016,
+      "assisted_ba": 0.5078373015873016,
+      "base_accuracy": 0.4965034965034965,
+      "assisted_accuracy": 0.4965034965034965
+    }
+  ],
+  "retained": [],
+  "stage4_2026": {
+    "status": "DATA_BLOCKED",
+    "reason": "No governed V5-equivalent 2026 SESSION target population; 2026 is not used for BOCPD tuning or transport selection."
+  },
+  "guardrails": [
+    "Only Stage-2 eligible heads were opened in 2025.",
+    "BOCPD thresholds, hazard and Handoff rules are unchanged.",
+    "BASE continuous mapping only; no source selection on 2025 outcomes.",
+    "Stage-2 chronology is reproduced exactly before accepting the 2025 replay.",
+    "2026 remains closed and data-blocked."
+  ]
+}
