@@ -13,6 +13,22 @@ The [completed window evidence map](GOLD_SESSION_WINDOW_EVIDENCE_RESULT_2026-10-
 
 No strong replicated-and-transported standalone edge is established in the present inventory. The exact next stage is a preregistered development-only mechanism challenge or untouched confirmation of a locked policy, not consensus/ECCG/AURORA/HELIOS or a final execution router. Development remains 2023–2024, 2025 archived transport only and 2026 excluded from feature/model/role selection. No P&L criterion selects the current role map.
 
+
+### 0.1 Literature-backed mechanism challenge now defined
+
+The dedicated authority [GOLD_EXECUTION_WINDOW_INTRADAY_PREDICTABILITY_LITERATURE_AUTHORITY_2026-10-07.md](GOLD_EXECUTION_WINDOW_INTRADAY_PREDICTABILITY_LITERATURE_AUTHORITY_2026-10-07.md) translates the closest Gold intraday-predictability literature into the current execution clocks.
+
+Binding order before any hybrid:
+1. **OVERNIGHT LIT-OVN-0:** preregistered single half-hour predictors completed before 17:00, especially 16:00-16:30 and 16:30-17:00 Türkiye;
+2. **OVERNIGHT LIT-OVN-1:** continuation/reversal pair using those completed returns;
+3. only if development evidence exists, add origin-known volatility/jump/session/event state;
+4. then test **DAY LIT-DAY-0** using only information known by 09:00;
+5. a 09:30 delayed-decision opening-half-hour model is a separate challenger and must never be back-labelled as a 09:00 forecast.
+
+This order is motivated by Xu et al. (2020) intraday GLD predictability and Ma et al. (2025) Gold/Silver night-session evidence. The latter's 21:00 China night open maps approximately to 16:00 Türkiye, making its first 30-minute mechanism unusually close to the user's 17:00 overnight-hold decision.
+
+No 2025/2026 result may choose intervals, signs, thresholds or state cuts. These mechanism tests are low-capacity, chronological and origin-safe.
+
 ## 1. Why this authority exists
 
 The prior DAILY/H3 and corrected SESSION work established that a statistically valid label can still be economically misaligned with the user's actual execution clock. The exact historical CIG population produced strong daily-reference diagnostics but failed when rescored strictly after the governed issue time. The current task is therefore to define forecast targets around the actual executable decision horizon without discarding the information contained in market-session specialists.
