@@ -1,0 +1,27 @@
+{
+  "status": "SESSION_MODEL01_CORE3_IDENTITY_RECONCILED_COMPLETE",
+  "date": "2026-10-07",
+  "model01": "CLASSICAL_CORE3_LOGISTIC",
+  "accepted_existing_identity": "NOVA_A0_CORE3_RAW_SESSION_REPLAY_V1",
+  "rerun_required": false,
+  "algorithm": {
+    "scaler": "StandardScaler",
+    "estimator": "LogisticRegression",
+    "penalty": "L2",
+    "C": 1.0,
+    "threshold": 0.5
+  },
+  "target_identity": "V5 session start-to-end UP/DOWN",
+  "not_target": "DAILY/H3 sign(log(P[t+3]/P[t]))",
+  "development": "2023-2024 causal same-window replay",
+  "transport_2025": "frozen-specification causal replay; no retuning; continuous 5-row block phase",
+  "static_pre2025_coefficients": false,
+  "2026": "UNOPENED",
+  "authoritative_inputs": [
+    "GOLD_SESSION_NOVA_A0_CORE3_RAW_REPLAY_V1_SUMMARY_2026-10-06.json",
+    "GOLD_SESSION_NOVA_A0_CORE3_RAW_REPLAY_V1_RESULT_2026-10-06.md",
+    "GOLD_SESSION_NOVA_A0_CORE3_RAW_REPLAY_V1_METRICS_2023_2024.csv",
+    "GOLD_SESSION_STAGE1_GLOBAL_CONTROLS_2025_V2_CONTINUOUS_SUMMARY_2026-10-07.json"
+  ],
+  "next_model": "SESSION_MODEL02_SHALLOW_CART"
+}
