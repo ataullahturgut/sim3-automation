@@ -103,7 +103,8 @@ Current state:
 - **SESSION Model-01 Classical CORE3 Logistic:** **COMPLETE / IDENTITY_RECONCILED** via `GOLD_SESSION_MODEL01_CLASSICAL_CORE3_IDENTITY_AUTHORITY_2026-10-07.md`; existing NOVA A0/CORE3 raw session replay accepted without duplicate rerun;
 - **SESSION Model-02 Shallow CART:** **COMPLETE / VARIABLE-SELECTION REPLAY COMPLETE** via `GOLD_SESSION_MODEL02_SHALLOW_CART_VARSEL_RESULT_2026-10-07.md`; session-specific leakage-safe feature selection was performed only in 2022 warm-up + 2023–2024 development, then frozen for 2025 transport. Result: no robust 2025 session edge; several heads collapse below 50% BA and/or violate the 30% minimum-class-recall floor;
 - **SESSION Model-01B Feature-Selected Classical Logistic:** **COMPLETE / DIAGNOSTIC CHALLENGER / DOES NOT REPLACE MODEL-01** via `GOLD_SESSION_MODEL01B_FEATURE_SELECTED_LOGISTIC_AUTHORITY_2026-10-07.md`; exact common-row 2025 comparison shows no general improvement across sessions. WGC Asia is the only clean joint BA+Brier improvement and the gain is modest;
-- **current immediate task:** SESSION Model-03 NOVA / A1-ARCR identity reconciliation on the corrected V5 session contract;
+- **SESSION Model-03 NOVA / A1-ARCR:** **COMPLETE / BASELINE ACCEPTED** via `GOLD_SESSION_MODEL03_NOVA_A1_ARCR_AUTHORITY_2026-10-07.md`; existing raw session A1 identity is accepted without duplicate baseline rerun. A model-specific feature-selected challenger was also tested; it does not improve A1 broadly. Only WGC Asia is retained as a limited-coverage challenger;
+- **current immediate task:** SESSION Model-04 IRIS HOURLY_ONLY / PATH_GLOBAL identity reconciliation on the corrected V5 session contract;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -3072,11 +3073,26 @@ The next action is **not** another DAILY/H3 run and is **not** immediate consens
    - other Sobti heads retained the full legacy candidate block because nested selection did not win on development under the preregistered comparator rule.
 7. **Model-02 transport verdict:** 2025 frozen-specification BA is 43.35% / 49.55% / 43.27% / 48.07% / 49.57% for Sobti Asia Afternoon / Asia Morning / Europe / NY-London / Late-US and 48.59% / 48.50% / 49.88% for WGC Asia / Europe / US. Several heads also fail the >=30% minimum-class-recall floor. **Shallow CART is therefore NOT promoted as a session direction engine.**
 8. **SESSION Model-01B = Feature-Selected Classical Logistic — COMPLETE / DIAGNOSTIC ONLY.** Model-01 CORE3 remains the primary fixed baseline. The selected-feature challenger did not deliver broad 2025 transport gains on exact common rows.
-9. **SESSION Model-03 = NOVA / A1-ARCR — NEXT.** First reconcile the already-existing session A1/ARCR artifact against the current corrected V5 identity. If exact model/data/clock equivalence holds, bind it without duplicate rerun; otherwise rerun under the corrected contract. Feature analysis for Model-03 must be model-specific and session-clock-safe; Model-01B selections are evidence, not inherited mandatory inputs.
+9. **SESSION Model-03 = NOVA / A1-ARCR — COMPLETE / BASELINE ACCEPTED.** Authority: `GOLD_SESSION_MODEL03_NOVA_A1_ARCR_AUTHORITY_2026-10-07.md`. Existing A1 raw session replay passed identity reconciliation; the 2025 identity audit matched 1,061 rows with maximum probability difference 2.7e-13.
+10. **Model-03B feature-selected A1 — DIAGNOSTIC COMPLETE.** The selected representation is rejected for Sobti Asia Afternoon, Asia Morning, Europe, NY/London, Late-US, WGC Europe and WGC US. **WGC Asia only** shows a clean exact-common-row improvement (BA 50.97% -> 54.03%; Brier 0.2654 -> 0.2572; DOWN recall 34.69% -> 40.82%), but coverage is only 107 rows versus 253 rows for the full daily A1 transport. It is retained only as a limited-coverage challenger, not as the canonical A1.
+11. **SESSION Model-04 = IRIS HOURLY_ONLY / PATH_GLOBAL — NEXT.** Reconcile the existing raw-source session PATH_GLOBAL checkpoint and its corrected 2025 transport identity before any new rerun.
 6. For every session-capable model report, at minimum: N, Accuracy, Balanced Accuracy, **UP recall, DOWN recall**, Brier/log loss where probabilistic, coverage, and the exact target window. A gain obtained by collapsing one class is not a promotion.
 7. Session chronology is frozen: governed 2022 warm-up only where required; 2023–2024 development; 2025 one-time frozen transport; 2026 is not a selection set.
 8. Existing Stage-1 session artifacts and RIFT/VEGA specialist artifacts are evidence to reconcile, not permission to skip identity checks. If the regenerated model is identical, record identity and reuse; if not, explain the contract difference and supersession explicitly.
 9. Only after all eligible legacy models are replayed/reconciled may the project build a **window-specific** consensus/router. Do not copy the old daily 4/4 membership wholesale into every session.
+
+### Model-03 NOVA A1 / ARCR closure — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_MODEL03_NOVA_A1_ARCR_AUTHORITY_2026-10-07.md`
+
+Baseline:
+- 0.75 global CORE3 + 0.25 recent252 balanced CORE3;
+- V5 session target reproduction PASS;
+- same-day daily metal labels prohibited;
+- 2025 independent identity audit: 1,061 matched rows, max probability difference 2.7e-13.
+
+A1-specific feature selection was performed using daily CORE3 plus exact pre-session XAU15 state, with the actual A1 mixture used inside nested development selection. The selected representation failed to improve A1 broadly. WGC Asia is the only retained narrow challenger: 2025 exact-common-row BA 50.97% -> 54.03% and Brier 0.2654 -> 0.2572, on 107 rows. Because the full daily A1 WGC Asia transport covers 253 rows, this result does not replace the canonical A1 baseline or create a fallback/router.
 
 ### Model-01B feature-selection diagnostic — 2026-10-07
 
