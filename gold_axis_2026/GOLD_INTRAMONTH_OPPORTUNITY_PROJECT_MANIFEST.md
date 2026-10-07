@@ -41,6 +41,8 @@ TURN, OPAL and RIFT retain conditional `SPECIALIST ONLY` rescue hypotheses; PRIS
 
 **Deferred:** consensus, majority vote, ECCG, AURORA/HELIOS upper routing, final 09→17 / 17→09 combination, SENTRY/DART/AIM/BOCPD/DPTC/RTE-family integration and P&L-based selection. Legacy H3 model identities are preserved as possible future context experts, not session-label transfers.
 
+**Independent reconciliation verification:** after fetching and fast-forwarding to `cba14856a021adffc77124602fb5141edba25118`, the evaluation-only audit reproduced every tracked output without a diff. Both future-counterfactual regression tests passed. All 1,304 selector blocks have matured training labels by cutoff; all 12,946 repair prediction rows are confined to 2023–2024. The 75,133-row evaluation ledger keeps `NESTED_*` development and `FROZEN_*` historical transport identities separate. Ledger SHA-256: `17c4c3caaa6be8fd135a95353db07715f8e9fc7547c25c2e3387ce08b52040d1`. No further fitting, target changes or consensus construction was needed during this verification.
+
 ## 0.1 Binding project evolution and current target identity — 2026-10-07
 
 This project is one continuous short-horizon Gold research program whose **target identity evolved after empirical failure analysis**. The daily/H3, consensus and session work must therefore be read chronologically, not as unrelated projects and not as interchangeable horizons.
