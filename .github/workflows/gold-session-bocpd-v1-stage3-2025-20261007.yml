@@ -1,0 +1,67 @@
+name: Gold Session BOCPD V1 Stage3 2025 20261007
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_session_bocpd_v1_stage3_2025_20261007.py'
+      - '.github/workflows/gold-session-bocpd-v1-stage3-2025-20261007.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  transport:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      DATABENTO_API_KEY: ${{ secrets.DATABENTO_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install runtime
+        run: pip install --disable-pip-version-check 'databento>=0.60,<1' 'numpy>=2,<3' 'pandas>=2.2,<3' 'scipy>=1.13,<2' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3,<4' 'openpyxl>=3.1,<4'
+
+      - name: Require Databento key
+        run: test -n "$DATABENTO_API_KEY"
+
+      - name: Run frozen 2025 BOCPD transport
+        run: python gold_axis_2026/tools/gold_session_bocpd_v1_stage3_2025_20261007.py
+
+      - name: Record evidence
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          O=gold_axis_2026/SESSION_BOCPD_V1_STAGE3_OUT
+          cp "$O/result.md" gold_axis_2026/GOLD_SESSION_BOCPD_V1_STAGE3_2025_RESULT_2026-10-07.md
+          cp "$O/summary.json" gold_axis_2026/GOLD_SESSION_BOCPD_V1_STAGE3_2025_SUMMARY_2026-10-07.json
+          cp "$O/metrics_2025.csv" gold_axis_2026/GOLD_SESSION_BOCPD_V1_STAGE3_2025_METRICS_2026-10-07.csv
+          cp "$O/actions_2025.csv" gold_axis_2026/GOLD_SESSION_BOCPD_V1_STAGE3_2025_ACTIONS_2026-10-07.csv
+          cp "$O/gate_2025.csv" gold_axis_2026/GOLD_SESSION_BOCPD_V1_STAGE3_2025_GATE_2026-10-07.csv
+          cp "$O/databento_base_2025.csv.gz" gold_axis_2026/GOLD_SESSION_BOCPD_DATABENTO_BASE_1H_2025.csv.gz
+
+          git add gold_axis_2026/GOLD_SESSION_BOCPD_V1_STAGE3_2025_* gold_axis_2026/GOLD_SESSION_BOCPD_DATABENTO_BASE_1H_2025.csv.gz
+          if ! git diff --cached --quiet; then
+            git commit -m "Record session BOCPD frozen 2025 transport"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-session-bocpd-v1-stage3-2025
+          path: gold_axis_2026/SESSION_BOCPD_V1_STAGE3_OUT/
+          if-no-files-found: warn
+          retention-days: 90
