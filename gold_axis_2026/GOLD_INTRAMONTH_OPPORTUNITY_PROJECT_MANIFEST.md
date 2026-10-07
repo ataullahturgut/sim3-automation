@@ -110,7 +110,8 @@ Current state:
 - **SESSION Model-07 SAGE PATH_SESSION / S1.6:** **COMPLETE / BASELINE NOT PROMOTED / SELECTED WGC ASIA RETAINED AS SECONDARY CHALLENGER** via `GOLD_SESSION_MODEL07_SAGE_PATH_SESSION_FINAL_AUTHORITY_2026-10-07.md`; canonical Sobti NY/London and WGC US S1.6 heads fail strong 2025 transport. Model-07B feature selection yields a clean but modest WGC Asia result (BA 52.11%, UP 63.79%, DOWN 40.43%, Brier 0.2572), still weaker than the existing selected PATH_GLOBAL WGC Asia head (BA 59.21%, Brier 0.2461);
 - **SESSION Model-08 SAGE A1_SESSION / S1.7:** **COMPLETE / CANONICAL FAIL-CLOSED / FEATURE-SELECTED CHALLENGER NOT PROMOTED** via `GOLD_SESSION_MODEL08_SAGE_A1_SESSION_FINAL_AUTHORITY_2026-10-07.md`; no canonical S17 head passed the corrected pre-2025 gate. Model-08B produced four development-eligible selected heads, but none transported with adequate 2025 directional skill;
 - **SESSION Model-09 SAGE A1_PATH_SESSION / S1.8:** **COMPLETE / CANONICAL FAIL-CLOSED / SELECTED SOBTI NY-LONDON CHALLENGER RETAINED** via `GOLD_SESSION_MODEL09_SAGE_A1_PATH_SESSION_FINAL_AUTHORITY_2026-10-07.md`; canonical S18 had no pre-2025 eligible head. Model-09B preserves A1+PATH+SESSION identity and yields one useful frozen-2025 Sobti NY/London challenger (BA 52.73%, UP 41.98%, DOWN 63.49%, +6.88pp vs exact matched selected A1+PATH comparator);
-- **current immediate task:** post-Stage-1 **RIFT** session identity/readiness reconciliation under the binding execution order;
+- **RIFT session specialist:** **COMPLETE / NOT PROMOTED** via `GOLD_SESSION_RIFT_FINAL_AUTHORITY_2026-10-07.md`; only Sobti Asia Afternoon passed development, but frozen 2025 correction either degraded A0/A1, did nothing to PATH_GLOBAL, or failed to improve Structural-IRIS. Feature-selected RIFT V1B made essentially the same 2025 correction calls and did not repair transport;
+- **current immediate task:** post-Stage-1 **VEGA** session identity/readiness reconciliation under the binding execution order;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -3092,11 +3093,19 @@ The next action is **not** another DAILY/H3 run and is **not** immediate consens
 19. **SESSION Model-08 = SAGE A1_SESSION / S1.7 — COMPLETE / NOT PROMOTED.** Authority: `GOLD_SESSION_MODEL08_SAGE_A1_SESSION_FINAL_AUTHORITY_2026-10-07.md`. The corrected comparator is direct fresh A1 probability, not a downstream refit. Canonical S17 has no pre-2025 eligible head.
 20. **Model-08B selected A1_SESSION — COMPLETE / NO PROMOTION.** Sobti Europe, WGC Asia, WGC Europe and WGC US pass the selected development gate, but 2025 BA is 48.99%, 46.95%, 47.72% and 45.60% respectively. No selected head is promoted.
 21. **SESSION Model-09 = SAGE A1_PATH_SESSION / S1.8 — COMPLETE.** Authority: `GOLD_SESSION_MODEL09_SAGE_A1_PATH_SESSION_FINAL_AUTHORITY_2026-10-07.md`. Canonical S18 is fail-closed. Model-09B selected Sobti NY/London is retained as a window-specific challenger after frozen 2025 BA 52.73%, UP recall 41.98%, DOWN recall 63.49%, and +6.88pp BA versus its exact selected A1+PATH comparator; Late-US and WGC US selected variants are rejected.
-22. **NEXT = RIFT session specialist.** Follow the binding post-Stage-1 execution order `RIFT / VEGA / OPAL / TURN / PRISM / TWIN`. First reconcile existing RIFT session artifacts, source-ready dependencies, target identity and 2025 status before any new run or feature analysis.
+22. **RIFT session specialist — COMPLETE / NOT PROMOTED.** Authority: `GOLD_SESSION_RIFT_FINAL_AUTHORITY_2026-10-07.md`. Full and feature-selected RIFT both fail frozen 2025 transport in their sole development-eligible window, Sobti Asia Afternoon. RIFT is excluded from the current final-session candidate set.
+23. **NEXT = VEGA session specialist.** Preserve the binding order `RIFT -> VEGA -> OPAL -> TURN -> PRISM -> TWIN`. First reconcile existing VEGA session artifacts, target identity, source-ready dependencies, comparator identity, and whether a frozen-2025 transport already exists.
 6. For every session-capable model report, at minimum: N, Accuracy, Balanced Accuracy, **UP recall, DOWN recall**, Brier/log loss where probabilistic, coverage, and the exact target window. A gain obtained by collapsing one class is not a promotion.
 7. Session chronology is frozen: governed 2022 warm-up only where required; 2023–2024 development; 2025 one-time frozen transport; 2026 is not a selection set.
 8. Existing Stage-1 session artifacts and RIFT/VEGA specialist artifacts are evidence to reconcile, not permission to skip identity checks. If the regenerated model is identical, record identity and reuse; if not, explain the contract difference and supersession explicitly.
 9. Only after all eligible legacy models are replayed/reconciled may the project build a **window-specific** consensus/router. Do not copy the old daily 4/4 membership wholesale into every session.
+
+### RIFT specialist closure — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_RIFT_FINAL_AUTHORITY_2026-10-07.md`
+
+RIFT is a reversal/correction specialist using pre-target XAU15 reversal state and a frozen 0.70 override threshold. Both the canonical nine-feature RIFT V1 and a development-only six-feature selected RIFT V1B passed pre-2025 gating only in Sobti Asia Afternoon. In frozen 2025 transport, RIFT degraded A0 and A1, made no changes to PATH_GLOBAL, and did not materially improve Structural-IRIS. Feature selection did not alter the failure pattern. RIFT is therefore not promoted to the final session candidate set.
 
 ### Model-09 SAGE A1_PATH_SESSION closure — 2026-10-07
 
