@@ -132,3 +132,138 @@ def build_path_panel_extended():
     p["session_against_trend"]=vals
     p=p.dropna(subset=["trend_strength","session_against_trend","trend_close_location","adverse_excursion","momentum_up"])
     return p.sort_values(["partition","window","start_utc"]).reset_index(drop=True)
+
+
+def structural_2025():
+    common,path_features,_=m05.build_common()
+    frozen=json.loads(FROZEN_STRUCT.read_text())
+    pred=m05.transport_2025(common,path_features,frozen)
+    q=pred[
+        pred.model.eq("S14_A1_PLUS_1H_FULL")&
+        pred.partition.eq("SOBTI_5_ET")&
+        pred.window.eq("NY_LONDON_LIT")
+    ].copy()
+    if q.empty:
+        raise RuntimeError("NO_STRUCTURAL_2025")
+    q["base_model"]="STRUCTURAL_IRIS_1H"
+    return q[["partition","window","start_utc","end_utc","year","y_up","p_up","base_model"]]
+
+def s17_asia_afternoon_2025():
+    panel,_=m05.load_panel_extended()
+    fa1=m05.fresh_a1_extended(panel)
+    panel=panel.merge(fa1,on=["partition","window","start_utc"],how="inner",validate="one_to_one")
+    rr=sage25.raw()
+    cyc=sage25.cycles(rr)
+    panel=pd.merge_asof(
+        panel.sort_values("start_utc"),
+        cyc.sort_values("sage_ready_utc"),
+        left_on="start_utc",right_on="sage_ready_utc",
+        direction="backward",allow_exact_matches=False
+    )
+    valid=panel.sage_ready_utc.notna()
+    if not (panel.loc[valid,"sage_ready_utc"]<panel.loc[valid,"start_utc"]).all():
+        raise RuntimeError("S17_SAGE_LEAK")
+    x1=sage25.x1h(rr)
+    panel=panel.reset_index(drop=True)
+    panel["row_id"]=np.arange(len(panel))
+    panel=sage25.res1h.attach(panel,x1,"g1h","1h")
+    f1=sage25.res1h.feature_names("g1h")
+    feats=["a1_logit"]+sage25.v1.SESSION_ALL
+    panel=panel.dropna(subset=feats+f1+["direction"]).copy()
+    g=panel[
+        panel.partition.eq("SOBTI_5_ET")&
+        panel.window.eq("ASIA_AFTERNOON_LIT")
+    ].sort_values("start_utc").reset_index(drop=True)
+    teall=g[g.year.eq(2025)].reset_index(drop=True)
+    rows=[]
+    for bs in range(0,len(teall),sage25.BLOCK):
+        te=teall.iloc[bs:bs+sage25.BLOCK].copy()
+        if te.empty:
+            continue
+        cutoff=te.start_utc.min()
+        tr=g[(g.end_utc<=cutoff)&(g.start_utc<cutoff)].copy()
+        if len(tr)<sage25.v1.MIN_A1 or tr.y_up.nunique()<2:
+            continue
+        pp=sage25.v1.fit_predict(tr,te,feats)
+        for r,pv in zip(te.itertuples(index=False),pp):
+            rows.append({
+                "partition":r.partition,"window":r.window,
+                "start_utc":r.start_utc,"end_utc":r.end_utc,
+                "year":2025,"y_up":int(r.y_up),"p_up":float(pv),
+                "base_model":"S17_A1_SESSION"
+            })
+    q=pd.DataFrame(rows)
+    if q.empty:
+        raise RuntimeError("NO_S17_ASIA_AFTERNOON_2025")
+    return q
+
+def historical_eligible_bases():
+    long,_=inc.load_models()
+    q=long[
+        (
+            long.partition.eq("SOBTI_5_ET")&
+            long.window.eq("ASIA_AFTERNOON_LIT")&
+            long.model.eq("S17_A1_SESSION")
+        )|
+        (
+            long.partition.eq("SOBTI_5_ET")&
+            long.window.eq("NY_LONDON_LIT")&
+            long.model.eq("STRUCTURAL_IRIS_1H")
+        )
+    ].copy()
+    q=q.rename(columns={"model":"base_model"})
+    return q[["partition","window","start_utc","end_utc","year","y_up","p_up","base_model"]]
+
+def replay_2025(hist_plus_2025,state):
+    z=hist_plus_2025.merge(
+        state[["partition","window","start_utc","momentum_up","leadlag_score_premax","internal_now","internal_d1"]],
+        on=["partition","window","start_utc"],how="inner",validate="one_to_one"
+    )
+    z=z[z.start_utc.dt.year.isin([2023,2024,2025])].copy()
+    z["baseline_pred"]=(z.p_up>=0.5).astype(int)
+    z["baseline_correct"]=z.baseline_pred.eq(z.y_up.astype(int))
+    z["handoff_alarm"]=(
+        (pd.to_numeric(z.leadlag_score_premax,errors="coerce")>=0.60)&
+        (pd.to_numeric(z.internal_now,errors="coerce")>=0.60)&
+        (pd.to_numeric(z.internal_d1,errors="coerce")>=0.0)&
+        z.baseline_pred.eq(z.momentum_up.astype(int))
+    )
+    z["competence_y"]=(~z.baseline_correct).astype(int)
+    z["act"]=False
+    z["p_rescue_pre"]=np.nan
+    z["p_theta_gt_half_pre"]=np.nan
+    z["n_updates_pre"]=np.nan
+    timeline=[]
+    for (part,win),idx in z.groupby(["partition","window"],sort=True).groups.items():
+        ids=sorted(list(idx),key=lambda j:z.loc[j,"start_utc"])
+        model=b2.BetaBernoulliBOCPD()
+        pending=[]
+        for j in ids:
+            row=z.loc[j]
+            T=pd.Timestamp(row.start_utc)
+            matured=[x for x in pending if x["maturity"]<=T]
+            pending=[x for x in pending if x["maturity"]>T]
+            matured.sort(key=lambda x:(x["maturity"],x["origin"]))
+            for x in matured:
+                model.update(x["y"])
+            if not bool(row.handoff_alarm):
+                continue
+            pre=model.predictive()
+            act=bool(pre["p_rescue"]>=b2.PRED_THRESHOLD and pre["p_theta_gt_half"]>=b2.P_GT_HALF_THRESHOLD)
+            z.at[j,"act"]=act
+            z.at[j,"p_rescue_pre"]=pre["p_rescue"]
+            z.at[j,"p_theta_gt_half_pre"]=pre["p_theta_gt_half"]
+            z.at[j,"n_updates_pre"]=pre["n_updates"]
+            pending.append({"maturity":pd.Timestamp(row.end_utc),"origin":T,"y":int(row.competence_y)})
+            if T.year==2025:
+                timeline.append({
+                    "partition":part,"window":win,"base_model":row.base_model,
+                    "start_utc":T,"end_utc":pd.Timestamp(row.end_utc),
+                    "y_up":int(row.y_up),"baseline_pred":int(row.baseline_pred),
+                    "momentum_up":int(row.momentum_up),"act":act,
+                    "outcome":"RESCUE" if int(row.competence_y)==1 else "BROKEN",
+                    **pre
+                })
+    z["p_assisted"]=z.p_up.astype(float)
+    z.loc[z.act,"p_assisted"]=1.0-z.loc[z.act,"p_up"].astype(float)
+    return z,pd.DataFrame(timeline)
