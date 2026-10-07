@@ -3788,3 +3788,39 @@ Binding interpretation:
 - the old 80.73% 2025 CIG daily-label result must not be transferred to the new execution objectives;
 - old H3/daily-consensus signals may remain research/context inputs, but they do **not** establish executable DAY or OVERNIGHT edge;
 - the current window-specific model/state research remains necessary before any new execution consensus/router is authorized.
+
+
+---
+
+## Execution-window literature mechanism test result — 2026-10-07
+
+Authority/result:
+- `GOLD_EXECUTION_WINDOW_INTRADAY_PREDICTABILITY_LITERATURE_AUTHORITY_2026-10-07.md`
+- `GOLD_EXECUTION_LIT_STAGE1_RESULT_2026-10-07.md`
+- `GOLD_EXECUTION_LIT_STAGE2_RESULT_2026-10-07.md`
+
+The preregistered literature translation was executed without using 2025 for interval/sign/threshold/model selection.
+
+**OVERNIGHT 17:00 -> next 09:00**
+- The strongest continuous mechanism is the completed **16:00-16:30 Europe/Istanbul** XAU return: DEV beta ≈ **+0.358**, HAC p ≈ **0.019**, chronological DEV `R2_OS` ≈ **+0.78%**.
+- Frozen 2025: OLS-sign **BA 55.11%, accuracy 59.06%**; logistic **BA 53.48%, accuracy 57.87%**.
+- The simple **16:00-17:00 two-half-hour pair** is more balanced in development: Logit BA **53.04%**, 2023 **53.05%**, 2024 **52.76%**, frozen 2025 **53.44%**.
+- This is retained only as a **modest mechanism/directional challenger**, not a proven primary execution model.
+
+**State-conditioned LIT-OVN2**
+- XAU-only pre-17 RV/jump/absolute-return state and interactions do not repair the edge.
+- DEV Logit BA **50.53%**, 2024 BA **46.68%**.
+- DEV BA change vs single 16:00-16:30 base **-0.81 pp**; `R2_OS` change **-1.14 pp**.
+- Frozen development retention rule = **FAIL**. Reject this state extension.
+
+**DAY**
+- Executable `09:00 -> 17:00` LIT-DAY0 is negative: DEV OLS-sign BA **47.32%**, frozen 2025 BA **44.11%**.
+- `09:30 -> 17:00` delayed-opening challenger is weak and does not justify relabelling as a 09:00 model.
+
+Binding interpretation:
+1. Do not transfer the old H3/daily consensus to the execution targets.
+2. Do not mine additional half-hours or tune a state threshold on 2025.
+3. Preserve `16:00-16:30` / `16:00-17:00` as a small OVERNIGHT mechanism candidate only.
+4. Reject the tested XAU-only RV/jump expansion.
+5. The next legitimate literature extension, if continued, should test **origin-safe external price-discovery / information-arrival context** (governed GC/COMEX if available, or governed macro-event/GVZ context) against the fixed simple overnight base on identical rows.
+6. Consensus/router, ECCG and P&L-based selection remain deferred.
