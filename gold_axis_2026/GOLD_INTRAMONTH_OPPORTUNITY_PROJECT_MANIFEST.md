@@ -2365,6 +2365,15 @@ Key combined metrics: WGC Asia SESSION_ONLY N=152, BA 56.21%, Brier 0.2497. Sobt
 All eight Stage-1 model families are now complete. **2025 remains closed until an explicit Stage-1 development-freeze artifact defines the allowed transport candidates.**
 
 
+### 5E.8V Stage-1 development freeze — 2026-10-07
+
+Authority: `GOLD_SESSION_STAGE1_DEVELOPMENT_FREEZE_2026-10-07.json`.
+
+All eight Stage-1 model families are complete and the pre-2025 candidate set is frozen. Global controls are A0 CORE3, A1 ARCR, 1h PATH_GLOBAL and canonical A1+1h STRUCTURAL_IRIS. Window-specific frozen additions are Sobti Asia Morning 15m Structural-IRIS, WGC Asia 15m Structural-IRIS challenger, WGC Asia S1.5 SESSION_ONLY, Sobti NY/London S1.6 PATH_SESSION and WGC US S1.6 PATH_SESSION. S1.7 and S1.8 are rejected before transport; intraday SI/PL remain unpromoted.
+
+From this point, the one-time 2025 transport test may evaluate only the frozen candidates. Clocks, features, lag horizons, model forms, regularization and the 0.5 decision threshold may not be changed using 2025 outcomes.
+
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
