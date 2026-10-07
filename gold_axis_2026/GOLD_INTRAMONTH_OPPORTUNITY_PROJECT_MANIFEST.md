@@ -112,7 +112,8 @@ Current state:
 - **SESSION Model-09 SAGE A1_PATH_SESSION / S1.8:** **COMPLETE / CANONICAL FAIL-CLOSED / SELECTED SOBTI NY-LONDON CHALLENGER RETAINED** via `GOLD_SESSION_MODEL09_SAGE_A1_PATH_SESSION_FINAL_AUTHORITY_2026-10-07.md`; canonical S18 had no pre-2025 eligible head. Model-09B preserves A1+PATH+SESSION identity and yields one useful frozen-2025 Sobti NY/London challenger (BA 52.73%, UP 41.98%, DOWN 63.49%, +6.88pp vs exact matched selected A1+PATH comparator);
 - **RIFT session specialist:** **COMPLETE / NOT PROMOTED** via `GOLD_SESSION_RIFT_FINAL_AUTHORITY_2026-10-07.md`; only Sobti Asia Afternoon passed development, but frozen 2025 correction either degraded A0/A1, did nothing to PATH_GLOBAL, or failed to improve Structural-IRIS. Feature-selected RIFT V1B made essentially the same 2025 correction calls and did not repair transport;
 - **VEGA session specialist:** **COMPLETE / NOT PROMOTED** via `GOLD_SESSION_VEGA_FINAL_AUTHORITY_2026-10-07.md`; canonical VEGA had exactly one pre-2025 eligible pair (WGC US + PATH_GLOBAL_1H), but frozen 2025 produced 0 overrides, 0 rescues and no metric change (BA 49.38% -> 49.38%, Brier 0.2825 -> 0.2825). VEGA V1B feature selection produced no pre-2025 eligible pair, so selected VEGA 2025 remained closed;
-- **current immediate task:** post-Stage-1 **OPAL** session identity/readiness reconstruction using the corrected COT publication-time authority and fresh session upstream state;
+- **OPAL session specialist:** **DATA READY / BLOCKED_UPSTREAM_AURORA** via `GOLD_SESSION_OPAL_READINESS_AUTHORITY_2026-10-07.md`; corrected COT publication-time authority and V5 session mapping are ready, but no fresh session SENTRY/DART/AURORA lineage exists. Archived H3 AURORA/OPAL predictions are prohibited as session inputs;
+- **current immediate task:** rebuild **SESSION SENTRY** from fresh session STRUCTURAL_IRIS and PATH_GLOBAL outputs; then DART -> AURORA -> return to OPAL;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -1474,7 +1475,7 @@ No consensus weight, membership rule or override rule may be selected using 2025
 
 then
 
-`RIFT / VEGA / OPAL / TURN / PRISM / TWIN`
+`RIFT / VEGA / TURN / PRISM / TWIN`\n\nwith **OPAL deferred until fresh SENTRY -> DART -> AURORA is available**, because OPAL's historical correction identity consumes AURORA state; then OPAL is rebuilt before HELIOS.
 
 then
 
@@ -2534,6 +2535,20 @@ Sobti Late-US shows an interesting aggregate rescue signal against A0 (BA 51.59%
 
 All other window/baseline pairs fail closed. RIFT V1 may proceed to 2025 transport **only for Sobti Asia Afternoon**, with the representation and threshold frozen exactly as preregistered.
 
+
+### 5E.8ZB OPAL session readiness closure — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_OPAL_READINESS_AUTHORITY_2026-10-07.md`
+
+Status: **COT DATA READY / OPAL MODEL BLOCKED_UPSTREAM_AURORA**.
+
+The corrected CFTC publication-time authority is complete and maps every final-trainable 2023-2025 V5 session row to an eligible COT report. The old date-only +7-day assumption is superseded; 74 legacy OPAL rows used COT too early (2023: 21, 2025: 53).
+
+However, historical OPAL is an AURORA correction specialist. No fresh session SENTRY, DART or AURORA artifact exists on the current branch, and archived H3 AURORA/OPAL predictions may not be used as substitutes.
+
+Therefore OPAL is not run yet. Dependency-correct sequence is:
+**SESSION SENTRY -> SESSION DART -> SESSION AURORA -> SESSION OPAL**.
 
 ### 5E.8ZA Stage-2 VEGA final closure — 2026-10-07
 
