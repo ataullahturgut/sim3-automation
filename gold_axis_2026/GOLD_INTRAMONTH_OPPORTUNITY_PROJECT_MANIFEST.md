@@ -2467,6 +2467,31 @@ Sobti Late-US shows an interesting aggregate rescue signal against A0 (BA 51.59%
 All other window/baseline pairs fail closed. RIFT V1 may proceed to 2025 transport **only for Sobti Asia Afternoon**, with the representation and threshold frozen exactly as preregistered.
 
 
+### 5E.8Z Stage-2 VEGA V1 development checkpoint — 2026-10-07
+
+Authorities:
+- `GOLD_SESSION_VEGA_V1_PREREG_2026-10-07.md`
+- `GOLD_SESSION_VEGA_V1_SUMMARY_2026-10-07.json`
+- `GOLD_SESSION_VEGA_V1_RESULT_2026-10-07.md`
+- `GOLD_SESSION_VEGA_V1_TRANSPORT_ELIGIBILITY_2026-10-07.csv`
+
+Status: **VEGA V1 DEVELOPMENT COMPLETE**.
+
+VEGA is a GVZ/options-implied-volatility reversal specialist. It uses only governed official Cboe GVZ observations dated **D-1 calendar day or earlier** relative to the actual New York session-origin date, plus maintenance-aware exact-clock XAU15 volatility/momentum state. Threshold `p_reversal >= 0.70` is frozen; no feature or threshold search was performed. 2022 is warm-up; 2023-2024 are development; no 2025 outcome was used for VEGA fitting or gate selection.
+
+Only one window/baseline pair survives the full preregistered development gate:
+- **WGC US / PATH_GLOBAL 1h — PASS**.
+
+Combined 2023-2024 on that pair:
+- PATH_GLOBAL BA **46.28% -> 46.88%**;
+- Brier **0.2816 -> 0.2798**;
+- 1 override, 1 rescue, 0 breaks, net +1.
+
+All other VEGA window/baseline pairs fail closed. In particular, VEGA produces no stable broad session advantage and is not promoted as a universal correction layer.
+
+VEGA V1 may proceed to 2025 transport **only for WGC US correcting PATH_GLOBAL 1h**, with the D-1 GVZ rule, feature set, model and 0.70 threshold frozen exactly as preregistered.
+
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
