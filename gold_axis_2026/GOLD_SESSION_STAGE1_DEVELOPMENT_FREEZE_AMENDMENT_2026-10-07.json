@@ -1,0 +1,14 @@
+{
+  "status": "PRETRANSPORT_FREEZE_AMENDMENT",
+  "date": "2026-10-07",
+  "before_2025_open": true,
+  "supersedes_only": {
+    "partition": "WGC_2026_NY3",
+    "window": "ASIA",
+    "candidate": "STRUCTURAL_IRIS_A1_PLUS_15M_BALANCED_SELECTION"
+  },
+  "decision": "REMOVE_FROM_2025_TRANSPORT_SLATE",
+  "reason": "Extended S1.4 balanced-selector inner-fold implementation was not identical to the earlier frozen nested-selection contract. This identity mismatch was detected before any 2025 outcome was opened.",
+  "replacement": "WGC Asia S15_SESSION_ONLY remains in the transport slate because it passed the preregistered SAGE development gate.",
+  "unchanged": "All other entries in GOLD_SESSION_STAGE1_DEVELOPMENT_FREEZE_2026-10-07.json remain frozen."
+}
