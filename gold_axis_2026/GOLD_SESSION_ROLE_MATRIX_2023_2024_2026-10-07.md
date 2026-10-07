@@ -51,3 +51,66 @@ Source authority:
 - Sobti Asia Afternoon and WGC US contain DOWN-skew evidence but weak overall BA; they are not deleted from the evidence pool.
 - No Model-01 session receives an independent consensus vote yet.
 
+
+
+---
+
+## Model-02 — Shallow CART family
+
+Source authority:
+- `GOLD_SESSION_MODEL02_SHALLOW_CART_VARSEL_DEV_METRICS_2026-10-07.csv`
+
+Duplicate-control cluster:
+- `FULL_LEGACY_CART`
+- `GOLD_ONLY_CART`
+- `SELECTED_CART`
+
+These are alternative representations of the same CART family. They must **not** receive three independent consensus votes.
+
+### FULL_LEGACY_CART development profile
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 473 | 49.04% | 46.61% | 51.48% | BALANCED / near-neutral |
+| Sobti Asia Morning | 473 | 49.69% | 54.88% | 44.49% | UP_SKEW / near-neutral |
+| Sobti Europe | 503 | 51.93% | 43.77% | 60.08% | DOWN_SKEW |
+| Sobti NY/London | 499 | 51.91% | 54.22% | 49.60% | BALANCED |
+| Sobti Late-US | 349 | 52.77% | 63.21% | 42.34% | UP_SKEW |
+| WGC Asia | 496 | 51.34% | 58.84% | 43.84% | UP_SKEW |
+| WGC Europe | 502 | 49.20% | 54.24% | 44.16% | UP_SKEW / weak |
+| WGC US | 461 | 50.63% | 45.98% | 55.27% | DOWN_SKEW |
+
+### GOLD_ONLY_CART development profile
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 473 | 48.61% | 40.68% | 56.54% | DOWN_SKEW |
+| Sobti Asia Morning | 473 | 49.53% | 53.25% | 45.81% | UP_SKEW / weak |
+| Sobti Europe | 503 | 49.47% | 46.42% | 52.52% | DOWN_SKEW / weak |
+| Sobti NY/London | 499 | 48.68% | 39.36% | 58.00% | DOWN_SKEW |
+| Sobti Late-US | 349 | 47.31% | **69.81%** | **24.82%** | **UP_SKEW** |
+| WGC Asia | 496 | 49.21% | 49.10% | 49.32% | BALANCED / near-neutral |
+| WGC Europe | 502 | 54.53% | 60.15% | 48.92% | BALANCED / UP_LEAN |
+| WGC US | 461 | 51.12% | **33.04%** | **69.20%** | **DOWN_SKEW** |
+
+### SELECTED_CART development profile
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 473 | 49.66% | **37.71%** | **61.60%** | **DOWN_SKEW** |
+| Sobti Asia Morning | 473 | 47.08% | 54.07% | 40.09% | UP_SKEW / weak |
+| Sobti Europe | 503 | 48.05% | 38.11% | 57.98% | DOWN_SKEW |
+| Sobti NY/London | 499 | 53.29% | 45.78% | 60.80% | DOWN_SKEW / balanced viable |
+| Sobti Late-US | 349 | 47.64% | 64.62% | 30.66% | UP_SKEW |
+| WGC Asia | 496 | 51.12% | 50.18% | 52.05% | BALANCED |
+| WGC Europe | 502 | 53.13% | 51.29% | 54.98% | BALANCED |
+| WGC US | 461 | 48.90% | 44.64% | 53.16% | DOWN_SKEW / weak |
+
+### Model-02 interpretation
+
+- CART contains useful **directional asymmetry evidence** even though no representation is a universal primary model.
+- Late-US contains repeated UP-skew behavior, especially GOLD_ONLY_CART.
+- WGC US contains strong DOWN-skew behavior in GOLD_ONLY_CART.
+- Sobti Asia Afternoon and several Europe/NY variants contain DOWN-skew signals.
+- Because these are one model family, the later incremental test must select or weight **at most one CART representation per session**, rather than allowing correlated duplicate voting.
+- Consensus status for all CART rows remains `PENDING_INCREMENTAL_TEST`.
