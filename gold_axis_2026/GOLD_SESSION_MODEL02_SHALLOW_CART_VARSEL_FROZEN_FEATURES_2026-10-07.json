@@ -1,0 +1,159 @@
+[
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "ASIA_AFTERNOON_LIT",
+    "development_winner": "SELECTED_CART",
+    "freeze_status": "ADMISSIBLE",
+    "frozen_features": [
+      "palladium_r21",
+      "silver_r21",
+      "djia_r5"
+    ],
+    "n_features": 3
+  },
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "ASIA_MORNING_LIT",
+    "development_winner": "FULL_LEGACY_CART",
+    "freeze_status": "ADMISSIBLE",
+    "frozen_features": [
+      "gold_r1",
+      "gold_r5",
+      "gold_r21",
+      "sigma20",
+      "silver_r1",
+      "silver_r5",
+      "silver_r21",
+      "platinum_r1",
+      "platinum_r5",
+      "platinum_r21",
+      "palladium_r1",
+      "palladium_r5",
+      "palladium_r21",
+      "nasdaq_r1",
+      "nasdaq_r5",
+      "nasdaq_r21",
+      "sp500_r1",
+      "sp500_r5",
+      "sp500_r21",
+      "djia_r1",
+      "djia_r5",
+      "djia_r21"
+    ],
+    "n_features": 22
+  },
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "EUROPE_LIT",
+    "development_winner": "FULL_LEGACY_CART",
+    "freeze_status": "ADMISSIBLE",
+    "frozen_features": [
+      "gold_r1",
+      "gold_r5",
+      "gold_r21",
+      "sigma20",
+      "silver_r1",
+      "silver_r5",
+      "silver_r21",
+      "platinum_r1",
+      "platinum_r5",
+      "platinum_r21",
+      "palladium_r1",
+      "palladium_r5",
+      "palladium_r21",
+      "nasdaq_r1",
+      "nasdaq_r5",
+      "nasdaq_r21",
+      "sp500_r1",
+      "sp500_r5",
+      "sp500_r21",
+      "djia_r1",
+      "djia_r5",
+      "djia_r21"
+    ],
+    "n_features": 22
+  },
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "NY_LONDON_LIT",
+    "development_winner": "SELECTED_CART",
+    "freeze_status": "ADMISSIBLE",
+    "frozen_features": [
+      "palladium_r21",
+      "sigma20",
+      "sp500_r21",
+      "gold_r1"
+    ],
+    "n_features": 4
+  },
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "US_LATE_LIT",
+    "development_winner": "FULL_LEGACY_CART",
+    "freeze_status": "ADMISSIBLE",
+    "frozen_features": [
+      "gold_r1",
+      "gold_r5",
+      "gold_r21",
+      "sigma20",
+      "silver_r1",
+      "silver_r5",
+      "silver_r21",
+      "platinum_r1",
+      "platinum_r5",
+      "platinum_r21",
+      "palladium_r1",
+      "palladium_r5",
+      "palladium_r21",
+      "nasdaq_r1",
+      "nasdaq_r5",
+      "nasdaq_r21",
+      "sp500_r1",
+      "sp500_r5",
+      "sp500_r21",
+      "djia_r1",
+      "djia_r5",
+      "djia_r21"
+    ],
+    "n_features": 22
+  },
+  {
+    "partition": "WGC_2026_NY3",
+    "window": "ASIA",
+    "development_winner": "SELECTED_CART",
+    "freeze_status": "ADMISSIBLE",
+    "frozen_features": [
+      "nasdaq_r5",
+      "gold_r5",
+      "platinum_r5",
+      "sp500_r5"
+    ],
+    "n_features": 4
+  },
+  {
+    "partition": "WGC_2026_NY3",
+    "window": "EUROPE",
+    "development_winner": "GOLD_ONLY_CART",
+    "freeze_status": "ADMISSIBLE",
+    "frozen_features": [
+      "gold_r1",
+      "gold_r5",
+      "gold_r21",
+      "sigma20"
+    ],
+    "n_features": 4
+  },
+  {
+    "partition": "WGC_2026_NY3",
+    "window": "US",
+    "development_winner": "GOLD_ONLY_CART",
+    "freeze_status": "ADMISSIBLE",
+    "frozen_features": [
+      "gold_r1",
+      "gold_r5",
+      "gold_r21",
+      "sigma20"
+    ],
+    "n_features": 4
+  }
+]
