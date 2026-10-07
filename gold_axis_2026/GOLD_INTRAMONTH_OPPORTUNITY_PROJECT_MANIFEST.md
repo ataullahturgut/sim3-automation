@@ -3744,3 +3744,33 @@ Binding interpretation:
 10. Large end-to-end deep MoE/Transformer/LSTM systems and frequency-decomposition deep hybrids are research challengers, not the first implementation. The immediate scientific problem is target alignment and state-dependent expert competence, not insufficient raw model capacity.
 
 This amendment preserves the current session replay ledger as evidence while redirecting the final end-use objective toward the user's actual executable decision clock.
+
+
+---
+
+## Old CIG-D1 2025 rescore on execution-aligned targets — 2026-10-07
+
+Authority:
+- `GOLD_OLD_CIG_2025_EXECUTION_TARGET_RESCORE_RESULT_2026-10-07.md`
+- `GOLD_OLD_CIG_2025_EXECUTION_TARGET_RESCORE_2026-10-07.json`
+
+The historical CIG-D1 V1 identity was reconstructed exactly before rescoring:
+- 248/248 H3 rows;
+- V5 = 165/248 correct;
+- SAGE V2 + RuleFlow V3-TG = 171/248 correct;
+- old 4/4 consensus = 218 rows;
+- identity QA = PASS.
+
+No retraining, membership change or 2025-driven threshold change was made. The unchanged old consensus was rescored against the two execution-aligned Turkey-time targets from the governed 15-minute XAU/USD archive:
+
+- **DAY 09:00 -> 17:00 Europe/Istanbul:** 114/217 = **52.53%** direction accuracy. This is a retrospective alignment diagnostic only because old CIG was governed for 08:00 America/New_York (~15:00/16:00 Türkiye in 2025), so it was not available at the 09:00 DAY origin.
+- **OVERNIGHT 17:00 -> next eligible 09:00 Europe/Istanbul:** 106/216 = **49.07%** direction accuracy. This target is clock-compatible with the old CIG issue deadline.
+- DAY signal-side: UP 74/131 = 56.49%; DOWN 40/86 = 46.51%.
+- OVERNIGHT signal-side: UP 70/130 = 53.85%; DOWN 36/86 = 41.86%.
+- On 216 rows with both targets observed, both DAY and OVERNIGHT directions were correct together only 53 times = 24.54%.
+- DAY and OVERNIGHT realized direction was the same on only 47.22% of those rows.
+
+Binding interpretation:
+- the old 80.73% 2025 CIG daily-label result must not be transferred to the new execution objectives;
+- old H3/daily-consensus signals may remain research/context inputs, but they do **not** establish executable DAY or OVERNIGHT edge;
+- the current window-specific model/state research remains necessary before any new execution consensus/router is authorized.
