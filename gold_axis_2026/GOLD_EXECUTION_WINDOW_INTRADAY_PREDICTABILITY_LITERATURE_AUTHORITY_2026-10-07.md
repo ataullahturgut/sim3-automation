@@ -496,3 +496,60 @@ The strongest first target is OVERNIGHT because the 2025 Gold/Silver night-effec
 If this simple literature-faithful mechanism fails under 2023-2024 chronological development, that is strong negative evidence and a reason not to build a larger router around it.
 
 If it succeeds and transports without retuning, it becomes a scientifically grounded expert candidate for the later execution router.
+
+
+---
+
+## 11. Executed Stage-1 / Stage-2 evidence — 2026-10-07
+
+Artifacts:
+- `GOLD_EXECUTION_LIT_STAGE1_RESULT_2026-10-07.md`
+- `GOLD_EXECUTION_LIT_STAGE1_METRICS_2026-10-07.csv`
+- `GOLD_EXECUTION_LIT_STAGE1_PREDICTIONS_2026-10-07.csv`
+- `GOLD_EXECUTION_LIT_STAGE2_RESULT_2026-10-07.md`
+- `GOLD_EXECUTION_LIT_STAGE2_METRICS_2026-10-07.csv`
+- `GOLD_EXECUTION_LIT_STAGE2_PREDICTIONS_2026-10-07.csv`
+
+### Stage-1
+
+The preregistered half-hour screen and low-capacity chronological challenge were executed with 2022 warm-up, 2023-2024 development and frozen 2025 transport.
+
+Key OVERNIGHT findings:
+- `16:00-16:30` has the clearest continuous-return relation to `17:00 -> next 09:00`: development beta about **+0.358**, HAC t about **2.345**, p about **0.019**, pooled chronological OLS `R2_OS` about **+0.78%**.
+- Its 2025 OLS-sign result is **BA 55.11%, accuracy 59.06%**; logistic transport is **BA 53.48%, accuracy 57.87%**.
+- The two-half-hour `16:00-17:00` pair logistic is more balanced in development: **BA 53.04%**, with **2023 BA 53.05%** and **2024 BA 52.76%**. Frozen 2025 BA is **53.44%**.
+- This is a modest mechanism/challenger signal, not a deployment-grade edge.
+
+DAY findings:
+- executable `09:00 -> 17:00` LIT-DAY0 fails: development OLS-sign BA **47.32%**, frozen 2025 BA **44.11%**.
+- delayed `09:30 -> 17:00` shows only weak evidence: development OLS-sign BA **52.01%** with negative development `R2_OS`; it is not a 09:00 model.
+
+### Stage-2
+
+A single fixed origin-known state-conditioned OVERNIGHT challenger was tested using:
+- `16:00-16:30`;
+- `16:30-17:00`;
+- same-sign state;
+- pre-17:00 3-hour realized volatility;
+- maximum absolute 15-minute jump proxy;
+- 3-hour absolute return;
+- return × RV and return × jump interactions.
+
+It **failed the frozen development retention rule**:
+- development Logit BA **50.53%**;
+- 2023 BA **53.80%**;
+- 2024 BA **46.68%**;
+- development BA change versus the single `16:00-16:30` base: **-0.81 pp**;
+- development continuous `R2_OS` change versus base: **-1.14 pp**;
+- retention = **False**.
+
+2025 does not alter this decision.
+
+### Binding interpretation after execution
+
+1. The literature-backed hypothesis is not generally rejected: the **16:00-16:30 Türkiye interval contains a small, statistically visible continuous relation** to the overnight target.
+2. A simple `16:00-17:00` pair remains a **modest directional challenger**, not a proven primary model.
+3. Adding XAU-only RV/jump state in the tested low-capacity form does **not** improve robustness and is rejected.
+4. The executable 09:00 DAY literature translation is currently negative.
+5. Do not mine additional half-hours or tune thresholds on 2025.
+6. Any next extension must be mechanism-specific and origin-safe, preferably external price-discovery / information-arrival variables already motivated by the literature (for example governed GC/COMEX state if later available, or governed event/GVZ context), rather than more generic model capacity.
