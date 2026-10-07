@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+# workflow trigger: canonical disagreement audit contract unchanged
+
 import json
 from pathlib import Path
 import numpy as np
