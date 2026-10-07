@@ -1,0 +1,329 @@
+{
+  "status": "AUDIT_COMPLETE",
+  "raw": {
+    "rows": 74163,
+    "first": "2022-12-30T00:00:00+00:00",
+    "last": "2026-01-02T23:45:00+00:00"
+  },
+  "target_2025": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "n": 240,
+      "first": "2025-01-02T06:30:00+00:00",
+      "last": "2025-12-31T06:30:00+00:00"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "n": 239,
+      "first": "2025-01-02T02:00:00+00:00",
+      "last": "2025-12-31T02:00:00+00:00"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "n": 247,
+      "first": "2025-01-02T08:30:00+00:00",
+      "last": "2025-12-31T08:30:00+00:00"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "n": 245,
+      "first": "2025-01-02T13:00:00+00:00",
+      "last": "2025-12-31T13:00:00+00:00"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "n": 195,
+      "first": "2025-01-02T19:30:00+00:00",
+      "last": "2025-12-30T19:30:00+00:00"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "n": 253,
+      "first": "2025-01-01T23:00:00+00:00",
+      "last": "2025-12-30T23:00:00+00:00"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "n": 247,
+      "first": "2025-01-02T08:00:00+00:00",
+      "last": "2025-12-31T08:00:00+00:00"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "n": 239,
+      "first": "2025-01-02T13:00:00+00:00",
+      "last": "2025-12-31T13:00:00+00:00"
+    }
+  ],
+  "prediction_2025": [
+    {
+      "source": "S14",
+      "model": "A1_DIRECT_MATCHED",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "n": 137,
+      "first": "2025-01-08T06:30:00+00:00",
+      "last": "2025-12-31T06:30:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "A1_DIRECT_MATCHED",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "n": 140,
+      "first": "2025-01-08T02:00:00+00:00",
+      "last": "2025-12-31T02:00:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "A1_DIRECT_MATCHED",
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "n": 144,
+      "first": "2025-01-08T08:30:00+00:00",
+      "last": "2025-12-31T08:30:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "A1_DIRECT_MATCHED",
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "n": 144,
+      "first": "2025-01-08T13:00:00+00:00",
+      "last": "2025-12-31T13:00:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "A1_DIRECT_MATCHED",
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "n": 107,
+      "first": "2025-01-08T19:30:00+00:00",
+      "last": "2025-12-30T19:30:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "A1_DIRECT_MATCHED",
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "n": 104,
+      "first": "2025-01-08T23:00:00+00:00",
+      "last": "2025-12-30T23:00:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "A1_DIRECT_MATCHED",
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "n": 145,
+      "first": "2025-01-08T08:00:00+00:00",
+      "last": "2025-12-31T08:00:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "A1_DIRECT_MATCHED",
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "n": 140,
+      "first": "2025-01-08T13:00:00+00:00",
+      "last": "2025-12-31T13:00:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_15M_FULL",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "n": 137,
+      "first": "2025-01-08T06:30:00+00:00",
+      "last": "2025-12-31T06:30:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_15M_FULL",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "n": 140,
+      "first": "2025-01-08T02:00:00+00:00",
+      "last": "2025-12-31T02:00:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_15M_FULL",
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "n": 144,
+      "first": "2025-01-08T08:30:00+00:00",
+      "last": "2025-12-31T08:30:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_15M_FULL",
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "n": 144,
+      "first": "2025-01-08T13:00:00+00:00",
+      "last": "2025-12-31T13:00:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_15M_FULL",
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "n": 107,
+      "first": "2025-01-08T19:30:00+00:00",
+      "last": "2025-12-30T19:30:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_15M_FULL",
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "n": 104,
+      "first": "2025-01-08T23:00:00+00:00",
+      "last": "2025-12-30T23:00:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_15M_FULL",
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "n": 145,
+      "first": "2025-01-08T08:00:00+00:00",
+      "last": "2025-12-31T08:00:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_15M_FULL",
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "n": 140,
+      "first": "2025-01-08T13:00:00+00:00",
+      "last": "2025-12-31T13:00:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_1H_FULL",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "n": 137,
+      "first": "2025-01-08T06:30:00+00:00",
+      "last": "2025-12-31T06:30:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_1H_FULL",
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "n": 140,
+      "first": "2025-01-08T02:00:00+00:00",
+      "last": "2025-12-31T02:00:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_1H_FULL",
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "n": 144,
+      "first": "2025-01-08T08:30:00+00:00",
+      "last": "2025-12-31T08:30:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_1H_FULL",
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "n": 144,
+      "first": "2025-01-08T13:00:00+00:00",
+      "last": "2025-12-31T13:00:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_1H_FULL",
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "n": 107,
+      "first": "2025-01-08T19:30:00+00:00",
+      "last": "2025-12-30T19:30:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_1H_FULL",
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "n": 104,
+      "first": "2025-01-08T23:00:00+00:00",
+      "last": "2025-12-30T23:00:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_1H_FULL",
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "n": 145,
+      "first": "2025-01-08T08:00:00+00:00",
+      "last": "2025-12-31T08:00:00+00:00"
+    },
+    {
+      "source": "S14",
+      "model": "S14_A1_PLUS_1H_FULL",
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "n": 140,
+      "first": "2025-01-08T13:00:00+00:00",
+      "last": "2025-12-31T13:00:00+00:00"
+    },
+    {
+      "source": "SAGE",
+      "model": "S15_SESSION_ONLY",
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "n": 105,
+      "first": "2025-01-08T23:00:00+00:00",
+      "last": "2025-12-30T23:00:00+00:00"
+    },
+    {
+      "source": "SAGE",
+      "model": "S16_PATH_GLOBAL_MATCHED",
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "n": 144,
+      "first": "2025-01-08T13:00:00+00:00",
+      "last": "2025-12-31T13:00:00+00:00"
+    },
+    {
+      "source": "SAGE",
+      "model": "S16_PATH_GLOBAL_MATCHED",
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "n": 140,
+      "first": "2025-01-08T13:00:00+00:00",
+      "last": "2025-12-31T13:00:00+00:00"
+    },
+    {
+      "source": "SAGE",
+      "model": "S16_PATH_SESSION",
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "n": 144,
+      "first": "2025-01-08T13:00:00+00:00",
+      "last": "2025-12-31T13:00:00+00:00"
+    },
+    {
+      "source": "SAGE",
+      "model": "S16_PATH_SESSION",
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "n": 140,
+      "first": "2025-01-08T13:00:00+00:00",
+      "last": "2025-12-31T13:00:00+00:00"
+    }
+  ]
+}
