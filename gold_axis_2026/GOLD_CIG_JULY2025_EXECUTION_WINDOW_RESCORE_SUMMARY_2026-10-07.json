@@ -1,0 +1,39 @@
+{
+  "schema": "CIG_D1_JULY2025_EXECUTION_WINDOW_RESCORE_V1",
+  "status": "RETROSPECTIVE_DIAGNOSTIC_ONLY",
+  "month": "2025-07",
+  "signal_source": "GOLD_EXECUTION_TIMING_AUDIT_V2_SIGNAL_PANEL_2026-10-06.csv",
+  "price_source": "GOLD_XAUUSD_15M_UTC_2023_2025_WITH_BUFFER.csv",
+  "old_consensus_rule": "consensus==True; direction = V5 state (all four agree by construction)",
+  "target_semantics": {
+    "DAY": "Europe/Istanbul 09:00 exact 15m OPEN -> 16:45 exact 15m CLOSE (17:00 boundary)",
+    "OVERNIGHT": "Europe/Istanbul 17:00 exact 15m OPEN -> next available trading date 08:45 exact 15m CLOSE (09:00 boundary)"
+  },
+  "calendar_signal_rows": 23,
+  "consensus_rows": 18,
+  "uncertain_rows": 5,
+  "consensus_coverage": 0.782608695652174,
+  "available_by_09_all_consensus": true,
+  "day": {
+    "n": 18,
+    "correct": 11,
+    "accuracy": 0.6111111111111112,
+    "balanced_accuracy": 0.6298701298701299,
+    "up_signal_n": 10,
+    "down_signal_n": 8
+  },
+  "overnight": {
+    "n": 18,
+    "correct": 7,
+    "accuracy": 0.3888888888888889,
+    "balanced_accuracy": 0.3701298701298701,
+    "up_signal_n": 10,
+    "down_signal_n": 8
+  },
+  "joint_same_signal": {
+    "n": 18,
+    "both_correct": 4,
+    "both_correct_rate": 0.2222222222222222
+  },
+  "guardrail": "This does not retrain or retune CIG. July 2025 is already historical/seen evidence and is not untouched OOS for new policy selection."
+}
