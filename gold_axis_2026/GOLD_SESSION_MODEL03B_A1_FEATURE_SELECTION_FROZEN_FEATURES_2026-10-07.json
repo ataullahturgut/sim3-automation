@@ -1,0 +1,120 @@
+[
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "ASIA_AFTERNOON_LIT",
+    "frozen_features": [
+      "gold_r3",
+      "g_rv_48",
+      "g_lag2",
+      "g_down_semivol_24",
+      "g_ret_6h",
+      "g_jump_concentration_24",
+      "platinum_r1",
+      "gold_r5"
+    ],
+    "n_features": 8,
+    "eligible_outer_blocks": 34
+  },
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "ASIA_MORNING_LIT",
+    "frozen_features": [
+      "gold_r1",
+      "gold_r5",
+      "g_ret_3h",
+      "g_age_max_neg_24",
+      "g_down_up_semivol_ratio_24",
+      "g_jump_concentration_24",
+      "g_up_semivol_24",
+      "silver_r1"
+    ],
+    "n_features": 8,
+    "eligible_outer_blocks": 32
+  },
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "EUROPE_LIT",
+    "frozen_features": [
+      "gold_r3",
+      "g_slope_6",
+      "g_age_max_pos_24",
+      "platinum_r21",
+      "g_max_drawdown_24",
+      "silver_r1",
+      "g_close_location_24",
+      "g_age_max_neg_24"
+    ],
+    "n_features": 8,
+    "eligible_outer_blocks": 39
+  },
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "NY_LONDON_LIT",
+    "frozen_features": [
+      "gold_r5",
+      "gold_r3",
+      "gold_r1",
+      "g_ret_1h",
+      "g_slope_6",
+      "sigma20",
+      "g_range_24",
+      "g_lag2"
+    ],
+    "n_features": 8,
+    "eligible_outer_blocks": 39
+  },
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "US_LATE_LIT",
+    "frozen_features": [
+      "g_lag2",
+      "g_ret_3h",
+      "g_slope_6"
+    ],
+    "n_features": 3,
+    "eligible_outer_blocks": 8
+  },
+  {
+    "partition": "WGC_2026_NY3",
+    "window": "ASIA",
+    "frozen_features": [
+      "g_rv_48",
+      "g_ret_3h",
+      "g_max_drawdown_24"
+    ],
+    "n_features": 3,
+    "eligible_outer_blocks": 5
+  },
+  {
+    "partition": "WGC_2026_NY3",
+    "window": "EUROPE",
+    "frozen_features": [
+      "platinum_r21",
+      "g_lag2",
+      "silver_r1",
+      "g_age_max_neg_24",
+      "gold_r3",
+      "gold_r5",
+      "g_max_drawdown_24",
+      "g_ret_48h"
+    ],
+    "n_features": 8,
+    "eligible_outer_blocks": 39
+  },
+  {
+    "partition": "WGC_2026_NY3",
+    "window": "US",
+    "frozen_features": [
+      "gold_r5",
+      "gold_r1",
+      "g_slope_6",
+      "sigma20",
+      "g_range_24",
+      "g_upfrac_24",
+      "g_lag2",
+      "platinum_r5"
+    ],
+    "n_features": 8,
+    "eligible_outer_blocks": 30
+  }
+]
