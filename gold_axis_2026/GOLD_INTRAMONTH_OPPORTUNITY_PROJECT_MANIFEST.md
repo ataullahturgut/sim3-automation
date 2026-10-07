@@ -100,10 +100,11 @@ Current state:
 - premodel data and source-readiness audit: COMPLETED with model-specific leakage/readiness constraints;
 - existing session Stage-1 evidence and 2025 frozen transport artifacts: PRESERVED and must be reconciled model-by-model against the current replay inventory rather than ignored or silently overwritten;
 - RIFT and VEGA session specialist development checkpoints: PRESERVED evidence;
-- **current immediate task:** authoritative sequential replay/revalidation of the legacy near-term model families on corrected V5 session targets, beginning with SESSION Model-01 Classical CORE3 Logistic;
+- **SESSION Model-01 Classical CORE3 Logistic:** **COMPLETE / IDENTITY_RECONCILED** via `GOLD_SESSION_MODEL01_CLASSICAL_CORE3_IDENTITY_AUTHORITY_2026-10-07.md`; existing NOVA A0/CORE3 raw session replay accepted without duplicate rerun;
+- **current immediate task:** SESSION Model-02 Shallow CART on the same corrected V5 session contract;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
-**Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the current SESSION Model-01 result. It remains a separate daily/H3 benchmark.
+**Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
 
 ### Parallel legacy opportunity rule
 
@@ -3058,9 +3059,9 @@ The next action is **not** another DAILY/H3 run and is **not** immediate consens
 
 1. Reconfirm the binding V5 target files and clock semantics before every model run.
 2. Reconcile the legacy model inventory used in the earlier near-term prediction/consensus work with the session-readiness matrix. Preserve model role: primary direction engine, structural/path model, specialist correction layer, controller/meta layer, or not applicable.
-3. **SESSION Model-01 = Classical CORE3 Logistic.** Use corrected V5 session labels and only features available by each session start. If an existing session CORE3 artifact is reused, prove exact model/data/clock identity first.
-4. The DAILY/H3 CORE3 artifact at commit `10849d00273d2dac1b539fba22891b45779466bf` remains benchmark-only and does not count as completion of SESSION Model-01.
-5. **SESSION Model-02 = Shallow CART only after SESSION Model-01 is closed.** Do not inherit the daily/H3 target `sign(log(P[t+3]/P[t]))` into the session run.
+3. **SESSION Model-01 = Classical CORE3 Logistic — COMPLETE / IDENTITY_RECONCILED.** Authority: `GOLD_SESSION_MODEL01_CLASSICAL_CORE3_IDENTITY_AUTHORITY_2026-10-07.md`. The existing NOVA A0/CORE3 raw session replay is the accepted Model-01 identity; no duplicate rerun is required.
+4. The DAILY/H3 CORE3 artifact at commit `10849d00273d2dac1b539fba22891b45779466bf` remains benchmark-only and is not session evidence.
+5. **SESSION Model-02 = Shallow CART — NEXT.** It must use corrected V5 session labels and only source-ready features available by each session start. Do not inherit the daily/H3 target `sign(log(P[t+3]/P[t]))` into the session run.
 6. For every session-capable model report, at minimum: N, Accuracy, Balanced Accuracy, **UP recall, DOWN recall**, Brier/log loss where probabilistic, coverage, and the exact target window. A gain obtained by collapsing one class is not a promotion.
 7. Session chronology is frozen: governed 2022 warm-up only where required; 2023–2024 development; 2025 one-time frozen transport; 2026 is not a selection set.
 8. Existing Stage-1 session artifacts and RIFT/VEGA specialist artifacts are evidence to reconcile, not permission to skip identity checks. If the regenerated model is identical, record identity and reuse; if not, explain the contract difference and supersession explicitly.
