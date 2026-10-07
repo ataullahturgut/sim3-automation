@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import importlib.util
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -11,9 +12,8 @@ AX = ROOT / "gold_axis_2026"
 V5 = AX / "GOLD_H3_CLEAN_HELIOS_V5_DCE_PREDICTIONS_2026-10-03.csv"
 RIFT = AX / "GOLD_H3_CLEAN_RIFT_PREDICTIONS_2026-10-03.csv"
 VEGA = AX / "GOLD_H3_CLEAN_VEGA_PREDICTIONS_2026-10-03.csv"
-IFBC = AX / "GOLD_H3_2025_BACKFILL_IFBC_EXTENDED_2026-10-05.csv"
-LLRS = AX / "GOLD_H3_2025_BACKFILL_LLRS_EXTENDED_2026-10-05.csv"
-RULEFLOW = AX / "GOLD_H3_RULEFLOW_V3_PRE2025_BACKCAST_EVENTS_2026-10-04.csv"
+SAGE_PRED = AX / "GOLD_H3_SAGE_SELECTIVE_V1_PREDICTIONS_2026-10-04.csv"
+RULEFLOW_TOOL = AX / "tools" / "gold_h3_ruleflow_v3_pre2025_backcast.py"
 XAU15 = AX / "GOLD_XAUUSD_15M_UTC_2023_2025_WITH_BUFFER.csv"
 
 OUT_JSON = AX / "GOLD_OLD_CIG_2025_EXECUTION_TARGET_RESCORE_2026-10-07.json"
@@ -62,33 +62,37 @@ def main():
     base = base.merge(vv[["feature_cutoff_date","forecast_issue_date","vega_pred"]],
                       on=["feature_cutoff_date","forecast_issue_date"], how="left", validate="one_to_one")
 
-    ifbc = pd.read_csv(IFBC, low_memory=False)
-    llrs = pd.read_csv(LLRS, low_memory=False)
-    for df in (ifbc, llrs):
-        df["forecast_issue_date"] = pd.to_datetime(df["forecast_issue_date"], errors="coerce").dt.normalize()
-        df["feature_cutoff_date"] = pd.to_datetime(df["feature_cutoff_date"], errors="coerce").dt.normalize()
+    # Reuse the frozen historical SAGE action identity rather than recreating
+    # actions from later retrospective IFBC/LLRS backfills.  The V2 freeze
+    # explicitly prohibits a later backfill from creating a historical action.
+    sage = pd.read_csv(SAGE_PRED, low_memory=False)
+    sage["forecast_issue_date"] = pd.to_datetime(sage["forecast_issue_date"], errors="coerce").dt.normalize()
+    sage["feature_cutoff_date"] = pd.to_datetime(sage["feature_cutoff_date"], errors="coerce").dt.normalize()
+    sage25 = sage[
+        sage["forecast_issue_date"].dt.year.eq(2025)
+        & bseries(sage["ocs_candidate"])
+    ][["feature_cutoff_date","forecast_issue_date"]].drop_duplicates()
+    sage_keys = set(map(tuple, sage25[["feature_cutoff_date","forecast_issue_date"]].to_numpy()))
+    base["sage_exception"] = [
+        (a,b) in sage_keys for a,b in zip(base["feature_cutoff_date"], base["forecast_issue_date"])
+    ]
 
-    i = ifbc[["feature_cutoff_date","forecast_issue_date","ifbc_score","ifbc_count60",
-              "eligible_v5_continuation"]].copy()
-    l = llrs[["feature_cutoff_date","forecast_issue_date","llrs_pressure","llrs_incremental",
-              "llrs_external_opposes"]].copy()
-    sl = i.merge(l, on=["feature_cutoff_date","forecast_issue_date"], how="outer", validate="one_to_one")
-    base = base.merge(sl, on=["feature_cutoff_date","forecast_issue_date"], how="left", validate="one_to_one")
+    # Reconstruct the frozen RuleFlow V3-TG 2025 QA identity with the original
+    # producer functions.  RuleFlow's event/action date is the H3 feature
+    # cutoff date, not the following forecast-issue date.
+    spec = importlib.util.spec_from_file_location("ruleflow_pre2025", RULEFLOW_TOOL)
+    rfmod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(rfmod)
+    ev = rfmod.build_event_table()
+    z, dpanel = rfmod.load()
+    rf25 = rfmod.score_year(ev, z, dpanel, 2025)
+    rf25 = rf25[bseries(rf25["v3_candidate"])].copy()
+    rf_dates = set(pd.to_datetime(rf25["date"], errors="coerce").dt.normalize().dropna().tolist())
+    base["ruleflow_exception"] = base["feature_cutoff_date"].isin(rf_dates)
 
-    base["sage_exception"] = (
-        bseries(base["eligible_v5_continuation"].fillna(False))
-        & (pd.to_numeric(base["ifbc_count60"], errors="coerce") >= 4)
-        & (pd.to_numeric(base["ifbc_score"], errors="coerce") >= 0.70)
-        & bseries(base["llrs_external_opposes"].fillna(False))
-        & (pd.to_numeric(base["llrs_incremental"], errors="coerce") > 0)
-        & (pd.to_numeric(base["llrs_pressure"], errors="coerce") >= 0.10)
-    )
-
-    rf = pd.read_csv(RULEFLOW)
-    rf["date"] = pd.to_datetime(rf["date"], errors="coerce").dt.normalize()
-    rf25 = rf[(rf["date"].dt.year.eq(2025)) & bseries(rf["v3_candidate"])].copy()
-    rf_dates = set(rf25["date"].dropna().tolist())
-    base["ruleflow_exception"] = base["forecast_issue_date"].isin(rf_dates)
+    # The old combined expert flips V5 on the union.  Identity checks below
+    # must reproduce the published 171/248 and the old CIG 218 consensus rows.
     base["combined_exception"] = base["sage_exception"] | base["ruleflow_exception"]
     base["sage_ruleflow_pred"] = np.where(base["combined_exception"], 1-base["v5_pred"], base["v5_pred"]).astype(int)
 
@@ -197,6 +201,10 @@ def main():
             "published_expected_consensus_n": 218,
             "sage_exception_n": int(base["sage_exception"].sum()),
             "ruleflow_exception_n": int(base["ruleflow_exception"].sum()),
+            "sage_action_keys_2025": [
+                {"feature_cutoff_date": a.date().isoformat(), "forecast_issue_date": b.date().isoformat()}
+                for a,b in sorted(sage_keys)
+            ],
             "ruleflow_action_dates_2025": [d.date().isoformat() for d in sorted(rf_dates)],
             "pass": bool(
                 len(base) == 248
