@@ -3681,3 +3681,35 @@ Result impact on the same exact 125 signals:
 Therefore **74.40% is no longer allowed to be described as a clean source-consistent H3/CIG validation statistic**. It is a historical mixed-vintage daily-label diagnostic.
 
 A source-consistent re-score requires one frozen Stak ref/data contract to be used consistently for both model/expert replay and realized labels.
+
+
+---
+
+## 0F. Execution-aligned horizon and hybrid research amendment — 2026-10-07
+
+Authority:
+- `GOLD_EXECUTION_ALIGNED_HORIZON_HYBRID_RESEARCH_AUTHORITY_2026-10-07.md`
+
+Binding interpretation:
+
+1. Corrected WGC/Sobti SESSION targets remain valid market-structure evidence and expert/state inputs, but are no longer assumed to be the final investment labels.
+2. The first execution-aligned target baseline is **two-window**:
+   - **DAY:** approximately 09:00 -> 16:45/17:00 Europe/Istanbul;
+   - **OVERNIGHT-HOLD:** approximately 16:45/17:00 -> next eligible 09:00 Europe/Istanbul.
+3. A daytime third split around the US information transition remains a **challenger hypothesis**, not a frozen target. It may be promoted only after development-only incremental-value testing against the two-window baseline.
+4. Turkey execution hours remain fixed. Date-aware DST mapping for foreign market/session state is mandatory before final production freeze, but it is a later alignment refinement and does not block the first clean execution-target comparison.
+5. Existing single-model/session results show substantial window heterogeneity and no universal standalone winner. This supports a hybrid phase, but **naive majority voting is prohibited**.
+6. Prior short-horizon innovations are preserved by role:
+   - SENTRY / DART / AIM / AURORA / HELIOS = failover, disagreement-aware routing and adaptive expert-mixture lineage;
+   - BOCPD / DPTC / RTE / RC-RTE / SCR-RTE / STCR = meta-controller, transition and rescue lineage.
+   Historical H3/session outputs from these families may not be reused as execution-target predictions; any successor must be rebuilt on the new DAY/OVERNIGHT clock.
+7. Hybrid research order is:
+   - **Hybrid-0:** diversity-trimmed static combination benchmark;
+   - **Hybrid-1:** Execution-Clock Competence Gate (ECCG), using low-capacity soft gating over frozen experts;
+   - **Hybrid-2:** conditional residual/rescue router;
+   - **Hybrid-3:** change-point/regime handoff only after enough target-specific matured history exists.
+8. Highly correlated/nested models may not receive separate full votes without independent incremental-error evidence.
+9. Hybrid promotion requires identical-row comparison and, at minimum, N, coverage, Accuracy, Balanced Accuracy, UP recall, DOWN recall, Brier/log loss, calibration, disagreement-only performance, rescue/broken-call accounting, turnover/action rate and zero-cost then spread-adjusted P&L.
+10. Large end-to-end deep MoE/Transformer/LSTM systems and frequency-decomposition deep hybrids are research challengers, not the first implementation. The immediate scientific problem is target alignment and state-dependent expert competence, not insufficient raw model capacity.
+
+This amendment preserves the current session replay ledger as evidence while redirecting the final end-use objective toward the user's actual executable decision clock.
