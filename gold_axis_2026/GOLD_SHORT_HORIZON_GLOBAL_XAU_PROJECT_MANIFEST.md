@@ -73,6 +73,17 @@ This clock distinction is mandatory for auditability around weekends, holidays a
 
 The current project is **not** a monthly forecasting project and is **not** the former BIST Metal Price tactical lane.
 
+### 2.0A Binding separation from the Global Session / Execution project — 2026-10-07
+
+The H3 project remains a distinct canonical forecasting lane.
+
+- **H3 target:** XAU/USD direction over the next **three retained Gold observation dates**.
+- **Session target:** direction inside a specified intraday Asia / Europe / NY-London / US clock window.
+- Session work recorded in `GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md` is an **execution / timing subproject**, not a replacement for H3.
+- A session result must never be interpreted as H3 accuracy, and an H3 result must never be interpreted as session accuracy.
+- Same-family specialist names are namespace-specific. For example, `H3_RIFT` / `H3_VEGA` belong here; `SESSION_RIFT` / `SESSION_VEGA` belong to the session project.
+- A future combined H3→execution router would require its own preregistered contract; no current Session result silently changes the H3 champion, baseline, shadow hierarchy or target horizon.
+
 The older BIST-target short-horizon program is historical evidence only. Its instrument-mapping failure led to the current Global-XAU target authority.
 
 ### 2.1 Why H3 became the main horizon
