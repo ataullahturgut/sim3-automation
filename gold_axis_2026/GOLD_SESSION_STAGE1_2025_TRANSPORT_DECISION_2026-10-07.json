@@ -1,0 +1,102 @@
+{
+  "status": "SESSION_STAGE1_2025_TRANSPORT_COMPLETE",
+  "date": "2026-10-07",
+  "scope": "Frozen 2025 transport; causal expanding same-window replay; no retuning; 2026 unopened",
+  "authorities": [
+    "GOLD_SESSION_STAGE1_DEVELOPMENT_FREEZE_2026-10-07.json",
+    "GOLD_SESSION_STAGE1_DEVELOPMENT_FREEZE_AMENDMENT_2026-10-07.json",
+    "GOLD_SESSION_S14_FROZEN_2025_TRANSPORT_SUMMARY_2026-10-07.json",
+    "GOLD_SESSION_SAGE_FROZEN_2025_TRANSPORT_SUMMARY_2026-10-07.json",
+    "GOLD_SESSION_STAGE1_CONTROLS_2025_SUMMARY_2026-10-07.json"
+  ],
+  "per_window": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "A0_BA": 0.6028,
+      "A1_BA": 0.6273,
+      "PATH1H_BA": 0.4889,
+      "A1_PATH1H_BA": 0.4892,
+      "verdict": "STRUCTURAL_ONLY_TRANSPORTS; PATH_HURTS"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "A0_BA": 0.4888,
+      "A1_BA": 0.5352,
+      "PATH1H_BA": 0.5283,
+      "A1_PATH1H_BA": 0.6086,
+      "A1_PATH15_BA": 0.5134,
+      "verdict": "CANONICAL_A1_PLUS_1H_STRONGEST_FROZEN_REPRESENTATION"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "A0_BA": 0.4899,
+      "A1_BA": 0.4601,
+      "PATH1H_BA": 0.5112,
+      "A1_PATH1H_BA": 0.4571,
+      "verdict": "NO_STRUCTURAL_IRIS_TRANSPORT_EDGE; PATH_CONTROL_ABOVE_50_ONLY"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "A0_BA": 0.4851,
+      "A1_BA": 0.5344,
+      "PATH1H_BA": 0.4347,
+      "A1_PATH1H_BA": 0.5115,
+      "S16_PATH_SESSION_BA": 0.4594,
+      "verdict": "A1_STRUCTURAL_BEST; SAGE_IMPROVES_PATH_COMPARATOR_BUT_NOT_ABSOLUTE_HEAD"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "A0_BA": 0.5199,
+      "A1_BA": 0.4856,
+      "PATH1H_BA": 0.533,
+      "A1_PATH1H_BA": 0.533,
+      "verdict": "NO_RECALL_SAFE_PROMOTION; DOWN_RECALL_BELOW_30_FOR_LEADING_PATH_HEADS"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "A0_BA": 0.5407,
+      "A1_BA": 0.5082,
+      "PATH1H_BA": 0.5602,
+      "A1_PATH1H_BA": 0.518,
+      "S15_SESSION_ONLY_BA": 0.4872,
+      "verdict": "SAGE_SESSION_ONLY_FAILS_TRANSPORT; PATH_CONTROL_STRONGEST_DIAGNOSTIC"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "A0_BA": 0.4906,
+      "A1_BA": 0.5144,
+      "PATH1H_BA": 0.5298,
+      "A1_PATH1H_BA": 0.499,
+      "verdict": "A1_PLUS_PATH_DOES_NOT_TRANSPORT; PATH_CONTROL_SLIGHTLY_STRONGER"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "A0_BA": 0.4682,
+      "A1_BA": 0.4652,
+      "PATH1H_BA": 0.5086,
+      "A1_PATH1H_BA": 0.4483,
+      "S16_PATH_SESSION_BA": 0.4642,
+      "verdict": "SAGE_FAILS; STRUCTURAL_IRIS_FAILS; PATH_CONTROL_ONLY_ABOVE_50"
+    }
+  ],
+  "sage_transport": {
+    "WGC_ASIA_SESSION_ONLY": "BA 48.72%; development PASS did not transport",
+    "SOBTI_NYLONDON_PATH_SESSION": "BA 45.94% vs matched PATH_GLOBAL 43.47%; relative lift +2.47pp but Brier worse and absolute BA below 50",
+    "WGC_US_PATH_SESSION": "BA 46.42% vs matched PATH_GLOBAL 50.86%; transport failure"
+  },
+  "governance_conclusion": [
+    "Do not retune any Stage-1 model on 2025.",
+    "Do not promote intraday SI/PL.",
+    "Do not promote S1.7 or S1.8.",
+    "Preserve heterogeneous Stage-1 expert behavior for downstream specialist/router testing.",
+    "Next dependency is Stage 2 specialist correction layers built against fresh frozen Stage-1 baselines."
+  ]
+}
