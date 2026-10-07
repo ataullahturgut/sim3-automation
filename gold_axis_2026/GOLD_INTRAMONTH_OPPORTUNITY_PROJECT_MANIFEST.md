@@ -2670,6 +2670,27 @@ HELIOS and BOCPD failures remain architecture/transport failures, not horizon im
 
 Next: **DPTC Stage-1 horizon/clock identity audit**.
 
+### 5E.8ZM SESSION DPTC V1 Stage-1 horizon / clock identity — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_DPTC_V1_STAGE1_HORIZON_CLOCK_IDENTITY_AUTHORITY_2026-10-07.md`
+
+Status: **PARTIAL PASS / FULL DPTC BLOCKED BY SESSION-NATIVE SELLR IDENTITY**.
+
+Portable components:
+- canonical Handoff concept rebuilt at exact session origin;
+- label-free daily dependence topology, attached as a once-per-day state rather than counted once per session;
+- delayed TRUST hysteresis using only acted outcomes matured by `end_utc <= current start_utc`;
+- partition/window-isolated state.
+
+Blocked components:
+- historical H3 combined baseline is not a SESSION authority;
+- imported H3 SELLR score file contains H3 outcome/baseline/momentum lineage and may not be consumed directly;
+- H3 SELLR threshold 2.3677413378977423 was selected on H3 2025 and cannot be applied to an unverified SESSION score;
+- no canonical raw-source SESSION-capable SELLR producer/formula is currently present in the audited repository lineage.
+
+Therefore full DPTC Stage-2 must remain closed. Next: **Stage-1B SELLR lineage/reconstruction** with 2025 unopened.
+
 ### 5E.8ZK SESSION BOCPD V1 final closure — 2026-10-07
 
 Authority:
