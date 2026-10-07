@@ -1,0 +1,95 @@
+{
+  "status": "GOLD_SESSION_STAGE1_DEVELOPMENT_FREEZE",
+  "freeze_date": "2026-10-07",
+  "chronology": {
+    "warmup": "2022 training only",
+    "development": "2023-2024",
+    "transport": "2025 one-time frozen test",
+    "stress": "2026 retrospective only"
+  },
+  "governance": {
+    "no_2025_used_for_freeze": true,
+    "no_2026_used_for_freeze": true,
+    "target_clock_frozen": true,
+    "features_frozen": true,
+    "lag_horizons_frozen": true,
+    "model_hyperparameters_frozen": true,
+    "threshold_frozen": 0.5,
+    "post_2025_tuning_forbidden": true
+  },
+  "global_controls": [
+    {
+      "id": "A0_CORE3",
+      "role": "audit structural baseline"
+    },
+    {
+      "id": "A1_ARCR",
+      "role": "primary structural control"
+    },
+    {
+      "id": "PATH_GLOBAL_1H",
+      "role": "path-only control"
+    },
+    {
+      "id": "STRUCTURAL_IRIS_A1_PLUS_1H",
+      "role": "canonical S1.4 control"
+    }
+  ],
+  "window_specific_challengers": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "id": "STRUCTURAL_IRIS_A1_PLUS_15M",
+      "reason": "pre-2025 S1.4 development retained 15m path as a viable window-specific challenger"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "id": "STRUCTURAL_IRIS_A1_PLUS_15M_BALANCED_SELECTION",
+      "reason": "pre-2025 S1.4 development retained 15m path as the only balanced directional challenger; year-2023 evidence is thin and must be judged by 2025 transport"
+    }
+  ],
+  "sage_transport_candidates": [
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "id": "S15_SESSION_ONLY",
+      "preregistered_gate": "PASS"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "id": "S16_PATH_SESSION",
+      "preregistered_gate": "PASS"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "id": "S16_PATH_SESSION",
+      "preregistered_gate": "PASS"
+    }
+  ],
+  "rejected_before_transport": {
+    "S17_A1_SESSION": "all heads fail preregistered development gate",
+    "S18_A1_PATH_SESSION": "all heads fail preregistered development gate",
+    "intraday_SI_PL": "not promoted; unstable/window-specific development contribution"
+  },
+  "transport_decision_rule": {
+    "primary_metric": "balanced_accuracy",
+    "supporting": [
+      "accuracy",
+      "UP recall",
+      "DOWN recall",
+      "Brier"
+    ],
+    "recall_floor": 0.3,
+    "note": "2025 is evaluated once. Transport outcomes may select among frozen candidates but may not change clocks, features, lags, model form, regularization, or threshold."
+  },
+  "authorities": [
+    "GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md",
+    "GOLD_SESSION_STRUCTURAL_IRIS_S14_V2_WARMUP22_SUMMARY_2026-10-07.json",
+    "GOLD_SESSION_SAGE_V1_PREREG_2026-10-07.md",
+    "GOLD_SESSION_SAGE_V2_STAGE1_CORRECTED_SUMMARY_2026-10-07.json",
+    "GOLD_SESSION_2022_WARMUP_EQUIVALENCE_SUMMARY_2026-10-07.json"
+  ]
+}
