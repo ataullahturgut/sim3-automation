@@ -101,7 +101,8 @@ Current state:
 - existing session Stage-1 evidence and 2025 frozen transport artifacts: PRESERVED and must be reconciled model-by-model against the current replay inventory rather than ignored or silently overwritten;
 - RIFT and VEGA session specialist development checkpoints: PRESERVED evidence;
 - **SESSION Model-01 Classical CORE3 Logistic:** **COMPLETE / IDENTITY_RECONCILED** via `GOLD_SESSION_MODEL01_CLASSICAL_CORE3_IDENTITY_AUTHORITY_2026-10-07.md`; existing NOVA A0/CORE3 raw session replay accepted without duplicate rerun;
-- **current immediate task:** SESSION Model-02 Shallow CART on the same corrected V5 session contract;
+- **SESSION Model-02 Shallow CART:** **COMPLETE / VARIABLE-SELECTION REPLAY COMPLETE** via `GOLD_SESSION_MODEL02_SHALLOW_CART_VARSEL_RESULT_2026-10-07.md`; session-specific leakage-safe feature selection was performed only in 2022 warm-up + 2023–2024 development, then frozen for 2025 transport. Result: no robust 2025 session edge; several heads collapse below 50% BA and/or violate the 30% minimum-class-recall floor;
+- **current immediate task:** SESSION Model-03 NOVA / A1-ARCR identity reconciliation on the corrected V5 session contract;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -3061,11 +3062,36 @@ The next action is **not** another DAILY/H3 run and is **not** immediate consens
 2. Reconcile the legacy model inventory used in the earlier near-term prediction/consensus work with the session-readiness matrix. Preserve model role: primary direction engine, structural/path model, specialist correction layer, controller/meta layer, or not applicable.
 3. **SESSION Model-01 = Classical CORE3 Logistic — COMPLETE / IDENTITY_RECONCILED.** Authority: `GOLD_SESSION_MODEL01_CLASSICAL_CORE3_IDENTITY_AUTHORITY_2026-10-07.md`. The existing NOVA A0/CORE3 raw session replay is the accepted Model-01 identity; no duplicate rerun is required.
 4. The DAILY/H3 CORE3 artifact at commit `10849d00273d2dac1b539fba22891b45779466bf` remains benchmark-only and is not session evidence.
-5. **SESSION Model-02 = Shallow CART — NEXT.** It must use corrected V5 session labels and only source-ready features available by each session start. Do not inherit the daily/H3 target `sign(log(P[t+3]/P[t]))` into the session run.
+5. **SESSION Model-02 = Shallow CART — COMPLETE.** Authority: `GOLD_SESSION_MODEL02_SHALLOW_CART_VARSEL_RESULT_2026-10-07.md`. The model kept its legacy shallow-tree identity (criterion=log_loss, max_depth=3, min_samples_leaf=60, threshold=0.5), but feature selection was performed per session using only leakage-safe development history.
+6. Model-02 variable-selection authority:
+   - Sobti Asia Afternoon → selected 3-feature CART: `palladium_r21, silver_r21, djia_r5`;
+   - Sobti NY/London → selected 4-feature CART: `palladium_r21, sigma20, sp500_r21, gold_r1`;
+   - WGC Asia → selected 4-feature CART: `nasdaq_r5, gold_r5, platinum_r5, sp500_r5`;
+   - WGC Europe and WGC US → Gold-only CART retained;
+   - other Sobti heads retained the full legacy candidate block because nested selection did not win on development under the preregistered comparator rule.
+7. **Model-02 transport verdict:** 2025 frozen-specification BA is 43.35% / 49.55% / 43.27% / 48.07% / 49.57% for Sobti Asia Afternoon / Asia Morning / Europe / NY-London / Late-US and 48.59% / 48.50% / 49.88% for WGC Asia / Europe / US. Several heads also fail the >=30% minimum-class-recall floor. **Shallow CART is therefore NOT promoted as a session direction engine.**
+8. **SESSION Model-03 = NOVA / A1-ARCR — NEXT.** First reconcile the already-existing session A1/ARCR artifact against the current corrected V5 identity. If exact model/data/clock equivalence holds, bind it without duplicate rerun; otherwise rerun under the corrected contract.
 6. For every session-capable model report, at minimum: N, Accuracy, Balanced Accuracy, **UP recall, DOWN recall**, Brier/log loss where probabilistic, coverage, and the exact target window. A gain obtained by collapsing one class is not a promotion.
 7. Session chronology is frozen: governed 2022 warm-up only where required; 2023–2024 development; 2025 one-time frozen transport; 2026 is not a selection set.
 8. Existing Stage-1 session artifacts and RIFT/VEGA specialist artifacts are evidence to reconcile, not permission to skip identity checks. If the regenerated model is identical, record identity and reuse; if not, explain the contract difference and supersession explicitly.
 9. Only after all eligible legacy models are replayed/reconciled may the project build a **window-specific** consensus/router. Do not copy the old daily 4/4 membership wholesale into every session.
+
+### Model-02 variable-analysis record — 2026-10-07
+
+Authorities:
+- `GOLD_SESSION_MODEL02_SHALLOW_CART_VARIABLE_SELECTION_PREREG_2026-10-07.md`
+- `GOLD_SESSION_MODEL02_SHALLOW_CART_VARSEL_RESULT_2026-10-07.md`
+- `GOLD_SESSION_MODEL02_SHALLOW_CART_VARSEL_SUMMARY_2026-10-07.json`
+- `GOLD_SESSION_MODEL02_SHALLOW_CART_VARSEL_FROZEN_FEATURES_2026-10-07.json`
+
+Method:
+- candidate universe = Gold + Silver + Platinum + Palladium + Nasdaq + S&P 500 + DJIA lag blocks inherited from the legacy raw-source CART lineage;
+- every candidate uses a strictly earlier New York calendar date than session start and max source age <=7 days;
+- fold-local chronological permutation contribution + split-use stability inside development only;
+- selected subset size 3–6 where SELECTED_CART wins; otherwise fixed GOLD_ONLY or FULL_LEGACY representation is retained;
+- 2025 is never used for feature selection.
+
+2025 frozen-specification transport confirms that this model family does not carry a robust session edge. Its highest 2025 BA is only about 49.88% (WGC US), while several heads are materially worse and/or one-sided. Model-02 is therefore retained as a negative but informative benchmark, not a consensus candidate.
 
 This section is the single current next-action authority for the near-term/session direction work.
 
