@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "A1": {
+    "matched_rows": 1061,
+    "max_abs_diff": 2.6911806116913795e-13
+  },
+  "PATH": {
+    "matched_rows": 284,
+    "max_abs_diff": 0.0
+  }
+}
