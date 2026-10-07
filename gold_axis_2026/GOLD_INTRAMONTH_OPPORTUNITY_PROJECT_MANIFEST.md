@@ -3824,3 +3824,72 @@ Binding interpretation:
 4. Reject the tested XAU-only RV/jump expansion.
 5. The next legitimate literature extension, if continued, should test **origin-safe external price-discovery / information-arrival context** (governed GC/COMEX if available, or governed macro-event/GVZ context) against the fixed simple overnight base on identical rows.
 6. Consensus/router, ECCG and P&L-based selection remain deferred.
+
+
+---
+
+## Execution literature mechanism result — RFR-NOMACRO V1 — 2026-10-07
+
+Authority / result artifacts:
+- `GOLD_EXECUTION_WINDOW_INTRADAY_PREDICTABILITY_LITERATURE_AUTHORITY_2026-10-07.md`
+- `GOLD_EXECUTION_LIT_STAGE1_RESULT_2026-10-07.md`
+- `GOLD_EXECUTION_LIT_STAGE2_RESULT_2026-10-07.md`
+- `GOLD_EXECUTION_LIT_STAGE3_SELECTIVE_RESULT_2026-10-07.md`
+- `GOLD_EXECUTION_FSMR_STAGE4_RESULT_2026-10-07.md`
+- `GOLD_EXECUTION_FSMR_STABILITY_RECONCILIATION_RESULT_2026-10-07.md`
+- `GOLD_EXECUTION_RFR_NOMACRO_RESULT_2026-10-07.md`
+
+The literature-backed execution mechanism program tested the published intraday momentum/reversal hypothesis on the user's actual Türkiye execution clock without changing the old H3/session labels.
+
+### Stage-1 finding
+For OVERNIGHT-HOLD `17:00 -> next eligible 09:00 Europe/Istanbul`, the only materially informative preregistered half-hour was `16:00-16:30`:
+- development continuous-return coefficient `beta ~= +0.358`;
+- HAC p ~= 0.019;
+- chronological OLS `R2_OS ~= +0.78%`;
+- 2025 direction transport about 59.06% accuracy / 55.11% BA for the single-interval OLS-sign specification.
+
+The executable DAY `09:00->17:00` literature analogue remained weak (2025 BA about 44.11%).
+
+### State extension
+Adding broad RV/jump/state interactions did not improve the base and was rejected:
+- LIT_OVN2_STATE development BA 50.53%;
+- development R2_OS -0.36%;
+- retention rule FAIL.
+
+### Finite-state momentum/reversal finding
+A four-state sign model using the two completed pre-17:00 half-hours showed a stable reversal structure. The most interpretable mechanism is:
+
+- if `16:00-16:30` and `16:30-17:00` have opposite directions,
+- the overnight move tends to reassert the **first** `16:00-16:30` direction.
+
+### RFR-NOMACRO V1
+The development-supported selective rule is:
+
+> When the two pre-17:00 half-hours have opposite signs and no same-day paired macro surprise has been released by 17:00, predict the overnight direction as the `16:00-16:30` direction. Otherwise abstain.
+
+Results:
+
+| Year | N | Coverage | Accuracy | Balanced Accuracy |
+|---|---:|---:|---:|---:|
+| 2023 | 118 | 46.27% | 57.63% | 57.75% |
+| 2024 | 113 | 43.63% | 56.64% | 56.42% |
+| 2025 retrospective transport | 111 | 43.87% | 58.56% | 58.14% |
+
+Development pooled:
+- accuracy 57.14%;
+- BA 57.07%;
+- rescue/break/net versus pair baseline on identical rows = 19 / 13 / +6;
+- one-sided binomial p versus 50% = 0.0175.
+
+On macro-release reversal days the rule does **not** hold:
+- DEV macro-release subset BA 44.44%;
+- 2025 macro-release subset BA 46.92%.
+
+Interpretation:
+- RFR-NOMACRO V1 is a **selective OVERNIGHT specialist**, not a full-coverage daily predictor;
+- approximately 44-46% of days receive a decision;
+- the rule is academically consistent with intraday momentum/reversal and macro-news state-dependence evidence;
+- 2025 is retrospective transport and not untouched prospective proof;
+- no consensus, ECCG or DAY/OVERNIGHT upper router is authorized merely by this result.
+
+The next scientifically justified step is to test whether this stable overnight specialist adds incremental value to the existing structural/path expert pool on strictly common, origin-safe rows, while preserving abstention and macro-release veto behavior.
