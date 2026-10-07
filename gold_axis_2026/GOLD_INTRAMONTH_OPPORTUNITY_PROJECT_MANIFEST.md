@@ -2413,6 +2413,33 @@ Binding conclusion:
 - the next dependency is **Stage 2 specialist correction/reversal layers**, after which Stage 3 router/combiner and final consensus may be evaluated.
 
 
+### 5E.8X Sobti Late-US label-integrity authority — 2026-10-07
+
+Authority: `GOLD_SOBTI_LATE_US_LABEL_AUDIT_SUMMARY_2026-10-07.json`.
+
+Status: **PASS**.
+
+The Sobti Late-US target chain was independently rebuilt from the governed raw XAU/USD 15m archive and compared row-by-row against the frozen V5 target table. The binding label is **14:30 America/New_York exact OPEN → CLOSE of the exact 20:45 New York 15m bar ending at 21:00**. Friday rows are ineligible; the only registered internal-gap exception is the known **17:00–18:00 New York maintenance** interval.
+
+Audit results across 2023–2025:
+- target rows checked: **783**; 2025 target rows: **261**;
+- final-trainable rows: **589**; 2025 final-trainable rows: **195**;
+- start/end clock mismatches: **0**;
+- start-price mismatches versus raw exact OPEN: **0**;
+- end-price mismatches versus raw exact final-bar CLOSE: **0**;
+- return mismatches: **0**;
+- UP/DOWN direction mismatches: **0**;
+- Friday-exclusion mismatches: **0**;
+- internal-path / maintenance-gate mismatches: **0**;
+- final-trainable mismatches: **0**.
+
+DST was verified explicitly: winter 14:30 NY maps to 19:30 UTC and 21:00 NY maps to 02:00 UTC next day; summer 14:30 NY maps to 18:30 UTC and 21:00 NY maps to 01:00 UTC next day.
+
+Prediction-label binding also passes: global-control predictions **497/497** and S1.4 predictions **321/321** match the audited target key and `y_up` label exactly, with **0 bad rows**.
+
+Therefore Sobti Late-US Stage-1 failure is **not attributed to target-label corruption, DST conversion, boundary pricing, Friday handling, or the maintenance-gap rule**. The remaining issue is model/representation adequacy for this window.
+
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
