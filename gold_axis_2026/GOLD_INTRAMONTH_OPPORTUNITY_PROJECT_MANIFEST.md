@@ -2341,6 +2341,30 @@ Transport gate:
 
 
 
+### 5E.8U SAGE Stage-1 closure — 2026-10-07
+
+Authorities: `GOLD_SESSION_SAGE_V1_PREREG_2026-10-07.md`, `GOLD_SESSION_SAGE_V2_STAGE1_CORRECTED_SUMMARY_2026-10-07.json`, and `GOLD_SESSION_2022_WARMUP_EQUIVALENCE_SUMMARY_2026-10-07.json`.
+
+Status:
+- [x] S1.5 SAGE SESSION_ONLY
+- [x] S1.6 SAGE PATH_SESSION
+- [x] S1.7 SAGE A1_SESSION
+- [x] S1.8 SAGE A1_PATH_SESSION
+- 2022 warm-up only; 2023–2024 scored; **2025/2026 unopened**.
+
+Warm-up equivalence audit: 2,080/2,080 target keys matched; 0 mismatches in start/end timestamps, start/end prices, return, direction or `final_trainable`; 1,912/1,912 final-trainable keys identical. On 23,727 common XAU15 timestamps, open/high/low/close mismatches were all zero. Existing SAGE V2 corrected results therefore use a warm-up authority equivalent to the independently rebuilt V3/V4/V5 authority.
+
+Preregistered transport eligibility:
+- S1.5: **WGC Asia SESSION_ONLY PASS**; all other heads fail.
+- S1.6: **Sobti NY/London PATH_SESSION PASS** and **WGC US PATH_SESSION PASS**; all other heads fail.
+- S1.7: no head passes.
+- S1.8: no head passes.
+
+Key combined metrics: WGC Asia SESSION_ONLY N=152, BA 56.21%, Brier 0.2497. Sobti NY/London PATH_SESSION N=297, BA 52.21% versus matched PATH_GLOBAL 48.25%. WGC US PATH_SESSION N=264, BA 47.46% versus matched PATH_GLOBAL 45.75%.
+
+All eight Stage-1 model families are now complete. **2025 remains closed until an explicit Stage-1 development-freeze artifact defines the allowed transport candidates.**
+
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
