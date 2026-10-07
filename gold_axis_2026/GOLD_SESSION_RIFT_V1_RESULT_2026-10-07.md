@@ -1,0 +1,52 @@
+# SESSION RIFT V1 — DEVELOPMENT RESULT
+
+**Status:** SESSION_RIFT_V1_DEVELOPMENT_COMPLETE
+
+- 2022 warm-up only.
+- 2023-2024 development only.
+- Fixed reversal threshold: 0.70.
+- No 2025 outcome used for RIFT fit or gate selection.
+
+## Transport-eligible window/baseline pairs
+
+- SOBTI_5_ET / ASIA_AFTERNOON_LIT / A0_CORE3
+- SOBTI_5_ET / ASIA_AFTERNOON_LIT / A1_ARCR
+- SOBTI_5_ET / ASIA_AFTERNOON_LIT / PATH_GLOBAL_1H
+- SOBTI_5_ET / ASIA_AFTERNOON_LIT / STRUCTURAL_IRIS_A1_PLUS_1H
+
+## Combined 2023-2024 metrics
+
+| Baseline | Partition | Window | N | Base BA | RIFT BA | Base Brier | RIFT Brier | Overrides | Rescue | Break | Net |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| A0_CORE3 | SOBTI_5_ET | ASIA_AFTERNOON_LIT | 210 | 46.03% | 47.51% | 0.2677 | 0.2650 | 5 | 4 | 1 | 3 |
+| A0_CORE3 | SOBTI_5_ET | ASIA_MORNING_LIT | 205 | 52.41% | 49.99% | 0.2624 | 0.2721 | 9 | 2 | 7 | -5 |
+| A0_CORE3 | SOBTI_5_ET | EUROPE_LIT | 225 | 51.41% | 51.41% | 0.2698 | 0.2698 | 0 | 0 | 0 | 0 |
+| A0_CORE3 | SOBTI_5_ET | NY_LONDON_LIT | 227 | 48.43% | 48.43% | 0.2692 | 0.2692 | 0 | 0 | 0 | 0 |
+| A0_CORE3 | SOBTI_5_ET | US_LATE_LIT | 135 | 51.59% | 53.38% | 0.2494 | 0.2473 | 6 | 4 | 2 | 2 |
+| A0_CORE3 | WGC_2026_NY3 | ASIA | 140 | 43.27% | 42.11% | 0.2510 | 0.2526 | 4 | 2 | 2 | 0 |
+| A0_CORE3 | WGC_2026_NY3 | EUROPE | 225 | 51.59% | 51.59% | 0.2512 | 0.2512 | 0 | 0 | 0 | 0 |
+| A0_CORE3 | WGC_2026_NY3 | US | 198 | 46.20% | 46.20% | 0.2636 | 0.2636 | 0 | 0 | 0 | 0 |
+| PATH_GLOBAL_1H | SOBTI_5_ET | ASIA_AFTERNOON_LIT | 175 | 45.79% | 47.99% | 0.2820 | 0.2754 | 4 | 4 | 0 | 4 |
+| PATH_GLOBAL_1H | SOBTI_5_ET | ASIA_MORNING_LIT | 170 | 52.45% | 51.76% | 0.2610 | 0.2683 | 7 | 3 | 4 | -1 |
+| PATH_GLOBAL_1H | SOBTI_5_ET | EUROPE_LIT | 189 | 50.73% | 50.73% | 0.2729 | 0.2729 | 0 | 0 | 0 | 0 |
+| PATH_GLOBAL_1H | SOBTI_5_ET | NY_LONDON_LIT | 190 | 51.49% | 51.49% | 0.2706 | 0.2706 | 0 | 0 | 0 | 0 |
+| PATH_GLOBAL_1H | SOBTI_5_ET | US_LATE_LIT | 105 | 42.78% | 42.78% | 0.2775 | 0.2775 | 0 | 0 | 0 | 0 |
+| PATH_GLOBAL_1H | WGC_2026_NY3 | ASIA | 119 | 43.08% | 43.08% | 0.2556 | 0.2556 | 0 | 0 | 0 | 0 |
+| PATH_GLOBAL_1H | WGC_2026_NY3 | EUROPE | 189 | 45.05% | 45.05% | 0.2830 | 0.2830 | 0 | 0 | 0 | 0 |
+| PATH_GLOBAL_1H | WGC_2026_NY3 | US | 162 | 46.28% | 46.28% | 0.2816 | 0.2816 | 0 | 0 | 0 | 0 |
+| A1_ARCR | SOBTI_5_ET | ASIA_AFTERNOON_LIT | 190 | 46.25% | 47.89% | 0.2595 | 0.2564 | 5 | 4 | 1 | 3 |
+| A1_ARCR | SOBTI_5_ET | ASIA_MORNING_LIT | 183 | 45.36% | 43.95% | 0.2578 | 0.2658 | 9 | 3 | 6 | -3 |
+| A1_ARCR | SOBTI_5_ET | EUROPE_LIT | 213 | 50.07% | 50.07% | 0.2604 | 0.2604 | 0 | 0 | 0 | 0 |
+| A1_ARCR | SOBTI_5_ET | NY_LONDON_LIT | 215 | 48.54% | 48.54% | 0.2550 | 0.2550 | 0 | 0 | 0 | 0 |
+| A1_ARCR | SOBTI_5_ET | US_LATE_LIT | 89 | 54.22% | 52.13% | 0.2497 | 0.2602 | 2 | 0 | 2 | -2 |
+| A1_ARCR | WGC_2026_NY3 | ASIA | 102 | 38.93% | 38.87% | 0.2625 | 0.2617 | 3 | 2 | 1 | 1 |
+| A1_ARCR | WGC_2026_NY3 | EUROPE | 210 | 52.22% | 52.22% | 0.2451 | 0.2451 | 0 | 0 | 0 | 0 |
+| A1_ARCR | WGC_2026_NY3 | US | 177 | 43.82% | 43.82% | 0.2566 | 0.2566 | 0 | 0 | 0 | 0 |
+| STRUCTURAL_IRIS_A1_PLUS_1H | SOBTI_5_ET | ASIA_AFTERNOON_LIT | 190 | 51.02% | 51.59% | 0.2908 | 0.2891 | 3 | 2 | 1 | 1 |
+| STRUCTURAL_IRIS_A1_PLUS_1H | SOBTI_5_ET | ASIA_MORNING_LIT | 183 | 49.91% | 48.02% | 0.2861 | 0.2947 | 8 | 2 | 6 | -4 |
+| STRUCTURAL_IRIS_A1_PLUS_1H | SOBTI_5_ET | EUROPE_LIT | 213 | 48.17% | 48.17% | 0.2842 | 0.2842 | 0 | 0 | 0 | 0 |
+| STRUCTURAL_IRIS_A1_PLUS_1H | SOBTI_5_ET | NY_LONDON_LIT | 215 | 53.26% | 53.26% | 0.2796 | 0.2796 | 0 | 0 | 0 | 0 |
+| STRUCTURAL_IRIS_A1_PLUS_1H | SOBTI_5_ET | US_LATE_LIT | 89 | 50.05% | 47.97% | 0.3042 | 0.3139 | 2 | 0 | 2 | -2 |
+| STRUCTURAL_IRIS_A1_PLUS_1H | WGC_2026_NY3 | ASIA | 102 | 47.36% | 47.36% | 0.2622 | 0.2622 | 0 | 0 | 0 | 0 |
+| STRUCTURAL_IRIS_A1_PLUS_1H | WGC_2026_NY3 | EUROPE | 210 | 52.28% | 52.28% | 0.2681 | 0.2681 | 0 | 0 | 0 | 0 |
+| STRUCTURAL_IRIS_A1_PLUS_1H | WGC_2026_NY3 | US | 177 | 50.28% | 50.28% | 0.2811 | 0.2811 | 0 | 0 | 0 | 0 |
