@@ -86,7 +86,7 @@ def path(p):
  return pd.DataFrame(rows)
 
 def main():
- p,h=panel();pred=pd.concat([structural(p),path(p)],ignore_index=True);rows=[]
+ p,h=panel();pred=pd.concat([structural(p),path(p)],ignore_index=True);pred["start_utc"]=pd.to_datetime(pred.start_utc,utc=True);pred=pred[pred.start_utc.dt.year.eq(2025)].copy();rows=[]
  for (m,part,win),g in pred.groupby(["model","partition","window"],sort=True):
   rows.append({"model":m,"partition":part,"window":win,**base.metrics(g.y_up,g.p_up)})
  pred.to_csv(OUT/"predictions.csv",index=False);pd.DataFrame(rows).to_csv(OUT/"metrics.csv",index=False)
