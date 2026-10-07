@@ -1,0 +1,71 @@
+{
+  "status": "COMPLETE",
+  "chosen_policy_development_only": "PAIR_ALL",
+  "policy_ranking": [
+    [
+      0.5184817886765236,
+      0.5241857073407876,
+      1.0,
+      "PAIR_ALL",
+      true
+    ],
+    [
+      0.48914728682170544,
+      0.5062888918310605,
+      0.33852140077821014,
+      "SNR_Q67",
+      true
+    ],
+    [
+      0.4545454545454546,
+      0.49327731092436977,
+      0.16731517509727625,
+      "SNR_Q67_PAIR_SAME",
+      true
+    ],
+    [
+      0.4445454545454546,
+      0.4938775510204082,
+      0.16342412451361868,
+      "SNR_Q67_PAIR_SAME_NOFOMC",
+      true
+    ],
+    [
+      -1.0,
+      0.48333333333333334,
+      0.021400778210116732,
+      "PAIR_CONF60_NOFOMC",
+      false
+    ],
+    [
+      -1.0,
+      0.48333333333333334,
+      0.021400778210116732,
+      "PAIR_CONF60",
+      false
+    ]
+  ],
+  "selection_rule": "maximize minimum of 2023/2024 BA; require >=30 active rows/year and predicted-UP rate 10%-90% each year; tie-break pooled BA then coverage",
+  "confidence_threshold": 0.6,
+  "snr_quantile": 0.67,
+  "no_2025_selection": true,
+  "dev": {
+    "n": 514,
+    "coverage": 1.0,
+    "accuracy": 0.5330739299610895,
+    "ba": 0.5241857073407876,
+    "2023_ba": 0.5266867766559961,
+    "2024_ba": 0.5184817886765236
+  },
+  "transport_2025": {
+    "n": 253,
+    "coverage": 1.0,
+    "accuracy": 0.5691699604743083,
+    "ba": 0.5296296296296297,
+    "up_recall": 0.8,
+    "down_recall": 0.25925925925925924
+  },
+  "same_covered_pair_baseline_accuracy_all_periods": 0.5449804432855281,
+  "same_covered_majority_accuracy_all_periods": 0.5436766623207301,
+  "interpretation": "selective specialist only; not a full-coverage overnight model"
+}
