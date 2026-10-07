@@ -112,11 +112,11 @@ Current state:
 - **SESSION Model-09 SAGE A1_PATH_SESSION / S1.8:** **COMPLETE / CANONICAL FAIL-CLOSED / SELECTED SOBTI NY-LONDON CHALLENGER RETAINED** via `GOLD_SESSION_MODEL09_SAGE_A1_PATH_SESSION_FINAL_AUTHORITY_2026-10-07.md`; canonical S18 had no pre-2025 eligible head. Model-09B preserves A1+PATH+SESSION identity and yields one useful frozen-2025 Sobti NY/London challenger (BA 52.73%, UP 41.98%, DOWN 63.49%, +6.88pp vs exact matched selected A1+PATH comparator);
 - **RIFT session specialist:** **COMPLETE / NOT PROMOTED** via `GOLD_SESSION_RIFT_FINAL_AUTHORITY_2026-10-07.md`; only Sobti Asia Afternoon passed development, but frozen 2025 correction either degraded A0/A1, did nothing to PATH_GLOBAL, or failed to improve Structural-IRIS. Feature-selected RIFT V1B made essentially the same 2025 correction calls and did not repair transport;
 - **VEGA session specialist:** **COMPLETE / NOT PROMOTED** via `GOLD_SESSION_VEGA_FINAL_AUTHORITY_2026-10-07.md`; canonical VEGA had exactly one pre-2025 eligible pair (WGC US + PATH_GLOBAL_1H), but frozen 2025 produced 0 overrides, 0 rescues and no metric change (BA 49.38% -> 49.38%, Brier 0.2825 -> 0.2825). VEGA V1B feature selection produced no pre-2025 eligible pair, so selected VEGA 2025 remained closed;
-- **OPAL session specialist:** **DATA READY / BLOCKED_UPSTREAM_AURORA** via `GOLD_SESSION_OPAL_READINESS_AUTHORITY_2026-10-07.md`; corrected COT publication-time authority and V5 session mapping are ready, but no fresh session SENTRY/DART/AURORA lineage exists. Archived H3 AURORA/OPAL predictions are prohibited as session inputs;
+- **OPAL session specialist:** **COMPLETE / WGC EUROPE SPECIALIST RETAINED** via `GOLD_SESSION_OPAL_V1_FINAL_AUTHORITY_2026-10-07.md`; corrected-PIT canonical OPAL improves WGC Europe 2025 BA from 51.59% to 52.64% and DOWN recall from 36.92% to 41.54% on the same 145 rows, with net rescue +1. Sobti Asia Morning deteriorates and is rejected. OPAL V1B variable selection is rejected because the canonical 18-feature representation transports better;
 - **SESSION SENTRY V1:** **COMPLETE / NOT PROMOTED** via `GOLD_SESSION_SENTRY_V1_FINAL_AUTHORITY_2026-10-07.md`; only Sobti Europe passed the frozen pre-2025 gate. Frozen 2025 SENTRY BA was 49.43% with UP recall 75.90% and DOWN recall 22.95%, so it fails the 30% class-recall floor and remains below PATH_GLOBAL BA 51.12%;
 - **SESSION DART V1:** **COMPLETE / NOT PROMOTED / 2025 CLOSED** via `GOLD_SESSION_DART_V1_FINAL_AUTHORITY_2026-10-07.md`; no session passed the frozen pre-2025 gate. Only Sobti NY/London switched state during development, but its routed BA remained below Structural-IRIS;
 - **SESSION AURORA V1:** **COMPLETE / NOT PROMOTED / FRESH UPSTREAM AVAILABLE** via `GOLD_SESSION_AURORA_V1_FINAL_AUTHORITY_2026-10-07.md`; Sobti Asia Morning transports below Structural-IRIS (BA 56.50% vs 60.86%), while Sobti Europe equals PATH_GLOBAL exactly (BA 51.12%). AURORA adds no primary routing edge, but its fresh causal session probability/state ledger now exists;
-- **current immediate task:** rebuild **SESSION OPAL** using corrected COT publication-time authority + fresh session AURORA + pre-target session momentum;
+- **current immediate task:** rebuild **SESSION HELIOS** from fresh session-native AURORA/OPAL and any other explicitly authorized upstream controller state; historical H3 HELIOS outputs remain QA-only;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -2538,6 +2538,27 @@ Sobti Late-US shows an interesting aggregate rescue signal against A0 (BA 51.59%
 
 All other window/baseline pairs fail closed. RIFT V1 may proceed to 2025 transport **only for Sobti Asia Afternoon**, with the representation and threshold frozen exactly as preregistered.
 
+
+### 5E.8ZF SESSION OPAL V1 final closure — 2026-10-07
+
+Authorities:
+- `GOLD_SESSION_OPAL_READINESS_AUTHORITY_2026-10-07.md`
+- `GOLD_SESSION_OPAL_V1_PREREG_2026-10-07.md`
+- `GOLD_SESSION_OPAL_V1_RESULT_2026-10-07.md`
+- `GOLD_SESSION_OPAL_V1B_VARSEL_RESULT_2026-10-07.md`
+- `GOLD_SESSION_OPAL_V1_FINAL_AUTHORITY_2026-10-07.md`
+
+Status: **COMPLETE / WGC EUROPE SPECIALIST RETAINED / VARSEL REJECTED**.
+
+OPAL was rebuilt from corrected publication-time COT state, fresh session AURORA, and pre-target 12h XAU hourly momentum. The old contaminated H3 OPAL panel was not used as model input.
+
+Two canonical heads passed the frozen pre-2025 gate. In 2025:
+- Sobti Asia Morning deteriorated from AURORA BA 56.50% to OPAL BA 55.76%, with net rescue -1; reject.
+- WGC Europe improved from AURORA BA 51.59% to OPAL BA 52.64%; DOWN recall improved 36.92% -> 41.54%; Brier was marginally better; 13 overrides produced 7 rescues and 6 breaks, net +1. Retain as a window-specific specialist challenger.
+
+A development-only OPAL V1B feature-selection challenger was also tested. Its WGC Europe frozen subset (`d_opt_mm_net, d_opt_prod_net, trend_x_opt_mm`) transported worse than canonical OPAL: BA 50.96%, Brier 0.2713, net rescue -1. Therefore canonical 18-feature OPAL remains the accepted WGC Europe specialist.
+
+The previous OPAL `BLOCKED_UPSTREAM_AURORA` status is **SUPERSEDED** by this fresh session-native replay. HELIOS is now the next downstream dependency.
 
 ### 5E.8ZE SESSION AURORA V1 closure — 2026-10-07
 
