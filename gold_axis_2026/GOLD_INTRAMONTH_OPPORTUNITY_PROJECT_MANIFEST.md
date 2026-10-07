@@ -2440,6 +2440,33 @@ Prediction-label binding also passes: global-control predictions **497/497** and
 Therefore Sobti Late-US Stage-1 failure is **not attributed to target-label corruption, DST conversion, boundary pricing, Friday handling, or the maintenance-gap rule**. The remaining issue is model/representation adequacy for this window.
 
 
+### 5E.8Y Stage-2 RIFT V1 development checkpoint — 2026-10-07
+
+Authorities:
+- `GOLD_SESSION_RIFT_V1_PREREG_2026-10-07.md`
+- `GOLD_SESSION_RIFT_V1_SUMMARY_2026-10-07.json`
+- `GOLD_SESSION_RIFT_V1_RESULT_2026-10-07.md`
+- `GOLD_SESSION_RIFT_V1_TRANSPORT_ELIGIBILITY_2026-10-07.csv`
+
+Status: **RIFT V1 DEVELOPMENT COMPLETE**.
+
+RIFT is a specialist reversal layer, not a new primary session engine. It predicts reversal relative to pre-target 12h XAU momentum using the fixed nine-feature exact-clock XAU15 representation and the preregistered `p_reversal >= 0.70` override threshold. 2022 is warm-up; 2023-2024 are development; no 2025 outcome was used to fit or select RIFT.
+
+Only one session survives the full preregistered development gate:
+
+- **Sobti Asia Afternoon** — PASS against all four audited upstream baselines: A0 CORE3, A1 ARCR, PATH_GLOBAL 1h and canonical A1+1h STRUCTURAL_IRIS.
+
+Combined 2023-2024 examples:
+- A0: BA **46.03% -> 47.51%**, Brier **0.2677 -> 0.2650**, 4 rescues / 1 break, net +3.
+- A1: BA **46.25% -> 47.89%**, Brier **0.2595 -> 0.2564**, 4 rescues / 1 break, net +3.
+- PATH_GLOBAL: BA **45.79% -> 47.99%**, Brier **0.2820 -> 0.2754**, 4 rescues / 0 breaks, net +4.
+- STRUCTURAL_IRIS: BA **51.02% -> 51.59%**, Brier **0.2908 -> 0.2891**, 2 rescues / 1 break, net +1.
+
+Sobti Late-US shows an interesting aggregate rescue signal against A0 (BA 51.59% -> 53.38%, net +2), but **fails the binding gate** because 2024 is harmful and corrected DOWN recall remains below the 30% floor. It is therefore not transport-eligible.
+
+All other window/baseline pairs fail closed. RIFT V1 may proceed to 2025 transport **only for Sobti Asia Afternoon**, with the representation and threshold frozen exactly as preregistered.
+
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
