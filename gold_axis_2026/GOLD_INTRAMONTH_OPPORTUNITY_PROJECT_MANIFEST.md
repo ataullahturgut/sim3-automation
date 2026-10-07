@@ -102,6 +102,7 @@ Current state:
 - RIFT and VEGA session specialist development checkpoints: PRESERVED evidence;
 - **SESSION Model-01 Classical CORE3 Logistic:** **COMPLETE / IDENTITY_RECONCILED** via `GOLD_SESSION_MODEL01_CLASSICAL_CORE3_IDENTITY_AUTHORITY_2026-10-07.md`; existing NOVA A0/CORE3 raw session replay accepted without duplicate rerun;
 - **SESSION Model-02 Shallow CART:** **COMPLETE / VARIABLE-SELECTION REPLAY COMPLETE** via `GOLD_SESSION_MODEL02_SHALLOW_CART_VARSEL_RESULT_2026-10-07.md`; session-specific leakage-safe feature selection was performed only in 2022 warm-up + 2023–2024 development, then frozen for 2025 transport. Result: no robust 2025 session edge; several heads collapse below 50% BA and/or violate the 30% minimum-class-recall floor;
+- **SESSION Model-01B Feature-Selected Classical Logistic:** **COMPLETE / DIAGNOSTIC CHALLENGER / DOES NOT REPLACE MODEL-01** via `GOLD_SESSION_MODEL01B_FEATURE_SELECTED_LOGISTIC_AUTHORITY_2026-10-07.md`; exact common-row 2025 comparison shows no general improvement across sessions. WGC Asia is the only clean joint BA+Brier improvement and the gain is modest;
 - **current immediate task:** SESSION Model-03 NOVA / A1-ARCR identity reconciliation on the corrected V5 session contract;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
@@ -3070,11 +3071,34 @@ The next action is **not** another DAILY/H3 run and is **not** immediate consens
    - WGC Europe and WGC US → Gold-only CART retained;
    - other Sobti heads retained the full legacy candidate block because nested selection did not win on development under the preregistered comparator rule.
 7. **Model-02 transport verdict:** 2025 frozen-specification BA is 43.35% / 49.55% / 43.27% / 48.07% / 49.57% for Sobti Asia Afternoon / Asia Morning / Europe / NY-London / Late-US and 48.59% / 48.50% / 49.88% for WGC Asia / Europe / US. Several heads also fail the >=30% minimum-class-recall floor. **Shallow CART is therefore NOT promoted as a session direction engine.**
-8. **SESSION Model-03 = NOVA / A1-ARCR — NEXT.** First reconcile the already-existing session A1/ARCR artifact against the current corrected V5 identity. If exact model/data/clock equivalence holds, bind it without duplicate rerun; otherwise rerun under the corrected contract.
+8. **SESSION Model-01B = Feature-Selected Classical Logistic — COMPLETE / DIAGNOSTIC ONLY.** Model-01 CORE3 remains the primary fixed baseline. The selected-feature challenger did not deliver broad 2025 transport gains on exact common rows.
+9. **SESSION Model-03 = NOVA / A1-ARCR — NEXT.** First reconcile the already-existing session A1/ARCR artifact against the current corrected V5 identity. If exact model/data/clock equivalence holds, bind it without duplicate rerun; otherwise rerun under the corrected contract. Feature analysis for Model-03 must be model-specific and session-clock-safe; Model-01B selections are evidence, not inherited mandatory inputs.
 6. For every session-capable model report, at minimum: N, Accuracy, Balanced Accuracy, **UP recall, DOWN recall**, Brier/log loss where probabilistic, coverage, and the exact target window. A gain obtained by collapsing one class is not a promotion.
 7. Session chronology is frozen: governed 2022 warm-up only where required; 2023–2024 development; 2025 one-time frozen transport; 2026 is not a selection set.
 8. Existing Stage-1 session artifacts and RIFT/VEGA specialist artifacts are evidence to reconcile, not permission to skip identity checks. If the regenerated model is identical, record identity and reuse; if not, explain the contract difference and supersession explicitly.
 9. Only after all eligible legacy models are replayed/reconciled may the project build a **window-specific** consensus/router. Do not copy the old daily 4/4 membership wholesale into every session.
+
+### Model-01B feature-selection diagnostic — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_MODEL01B_FEATURE_SELECTED_LOGISTIC_AUTHORITY_2026-10-07.md`
+
+Purpose:
+- retain Model-01 CORE3 as the fixed baseline;
+- test whether a session-specific, pre-target feature representation improves the same Classical Logistic estimator;
+- add only clock-safe XAU15 state features available strictly before each session start.
+
+2025 was compared on the exact same common rows for CORE3 and Model-01B. BA changes were:
+- Sobti Asia Afternoon +3.11 pp;
+- Sobti Asia Morning -2.10 pp;
+- Sobti Europe -0.40 pp;
+- Sobti NY/London -5.50 pp;
+- Sobti Late-US -2.72 pp;
+- WGC Asia +0.86 pp;
+- WGC Europe +1.25 pp;
+- WGC US -0.19 pp.
+
+Only WGC Asia improved both BA and Brier; the improvement was modest. Therefore Model-01B does not replace Model-01 globally. Its selected feature sets are retained as diagnostic evidence only and must not be forced onto later architectures.
 
 ### Model-02 variable-analysis record — 2026-10-07
 
