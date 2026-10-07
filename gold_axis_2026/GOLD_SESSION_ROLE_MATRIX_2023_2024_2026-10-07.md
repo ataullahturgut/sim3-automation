@@ -666,3 +666,23 @@ Frozen 2025 later confirms Asia Afternoon and WGC Asia but rejects Asia Morning;
 
 Consensus status:
 - `CONDITIONAL_CORRECTION_CANDIDATE`
+
+
+---
+
+## PRISM — spectral residual correction specialist
+
+Authority:
+- `GOLD_SESSION_PRISM_V1_FINAL_AUTHORITY_2026-10-07.md`
+
+Role profile:
+- `CORRECTION_RESIDUAL_SPECIALIST`
+
+Development evidence:
+- Sobti Asia Afternoon selected lambda 50: net rescue +1; BA 49.04% -> 50.03%.
+- Sobti NY/London selected lambda 50: net rescue +3; BA 57.97% -> 60.95%.
+
+Frozen 2025 transport failed in both eligible heads: net rescue -8 and -1 respectively.
+
+Consensus status:
+- `NEGATIVE_CONTROL / NO_CORRECTION_SLOT`
