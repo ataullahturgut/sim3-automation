@@ -1,0 +1,56 @@
+name: Gold Session Model01B Feature Selected Logistic 20261007
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_session_model01b_feature_selected_logistic_20261007.py'
+      - '.github/workflows/gold-session-model01b-feature-selected-logistic-20261007.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2'
+      - name: Compile
+        run: python -m py_compile gold_axis_2026/tools/gold_session_model01b_feature_selected_logistic_20261007.py
+      - name: Run Model-01B
+        run: python gold_axis_2026/tools/gold_session_model01b_feature_selected_logistic_20261007.py
+      - name: Record evidence
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          O=gold_axis_2026/SESSION_MODEL01B_FEATURE_SELECTED_LOGISTIC_OUT
+          cp "$O/summary.json" gold_axis_2026/GOLD_SESSION_MODEL01B_FEATURE_SELECTED_LOGISTIC_SUMMARY_2026-10-07.json
+          cp "$O/result.md" gold_axis_2026/GOLD_SESSION_MODEL01B_FEATURE_SELECTED_LOGISTIC_RESULT_2026-10-07.md
+          cp "$O/dev_metrics.csv" gold_axis_2026/GOLD_SESSION_MODEL01B_FEATURE_SELECTED_LOGISTIC_DEV_METRICS_2026-10-07.csv
+          cp "$O/selection_events.csv" gold_axis_2026/GOLD_SESSION_MODEL01B_FEATURE_SELECTED_LOGISTIC_SELECTION_EVENTS_2026-10-07.csv
+          cp "$O/frozen_features.json" gold_axis_2026/GOLD_SESSION_MODEL01B_FEATURE_SELECTED_LOGISTIC_FROZEN_FEATURES_2026-10-07.json
+          cp "$O/transport_2025_metrics.csv" gold_axis_2026/GOLD_SESSION_MODEL01B_FEATURE_SELECTED_LOGISTIC_2025_METRICS_2026-10-07.csv
+          git add gold_axis_2026/GOLD_SESSION_MODEL01B_FEATURE_SELECTED_LOGISTIC_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record session Model-01B feature-selected logistic"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-session-model01b-feature-selected-logistic-20261007
+          path: gold_axis_2026/SESSION_MODEL01B_FEATURE_SELECTED_LOGISTIC_OUT/
+          if-no-files-found: warn
+          retention-days: 90
