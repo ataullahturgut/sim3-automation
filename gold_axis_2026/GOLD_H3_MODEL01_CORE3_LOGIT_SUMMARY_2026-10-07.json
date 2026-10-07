@@ -1,0 +1,147 @@
+{
+  "status": "H3_MODEL01_CORE3_LOGIT_COMPLETE",
+  "model": "CORE3_LOGISTIC_L2",
+  "target": "H3 direction = sign(log(P[t+3]/P[t]))",
+  "horizon_semantics": "t+3 means third retained Gold observation, not 3 calendar days",
+  "features": [
+    "gold_r1",
+    "gold_r3",
+    "gold_r5",
+    "gold_r10",
+    "gold_r21",
+    "sigma20",
+    "silver_r1",
+    "silver_r5",
+    "silver_r21",
+    "silver_age_days",
+    "platinum_r1",
+    "platinum_r5",
+    "platinum_r21",
+    "platinum_age_days"
+  ],
+  "data_chain": "clean H3 chain using pinned StakTrakr R2 readiness plus confirmed 2026-02-27 integrity correction",
+  "integrity_patch": {
+    "patch_date": "2026-02-27",
+    "old_values": {
+      "gold": 3516.02,
+      "silver": 62.15,
+      "platinum": 1585.39,
+      "palladium": 1201.26
+    },
+    "new_values": {
+      "gold": 5183.8,
+      "silver": 88.14,
+      "platinum": 2369.25,
+      "palladium": 1789.96
+    },
+    "provenance": {
+      "gold": "GoldPrice.org 2026-02-27 close",
+      "silver": "GoldPrice.org 2026-02-27 close",
+      "platinum": "StatMuse XPT 2026-02-27 close",
+      "palladium": "StatMuse XPD 2026-02-27 close"
+    },
+    "base_rows": 4232
+  },
+  "chronology": "expanding causal fit; only rows with target_end_date_h3 <= current feature cutoff can train",
+  "threshold": 0.5,
+  "metrics": [
+    {
+      "period": "DEV_2022_2024",
+      "n": 755,
+      "accuracy": 0.5496688741721855,
+      "balanced_accuracy": 0.5448839662447258,
+      "brier": 0.24664322497427135,
+      "logloss": 0.6864564836186042,
+      "up_recall": 0.6481012658227848,
+      "down_recall": 0.44166666666666665,
+      "tn": 159,
+      "fp": 201,
+      "fn": 139,
+      "tp": 256
+    },
+    {
+      "period": "2022",
+      "n": 250,
+      "accuracy": 0.536,
+      "balanced_accuracy": 0.5369943676395289,
+      "brier": 0.24583079616869652,
+      "logloss": 0.684789704722122,
+      "up_recall": 0.6612903225806451,
+      "down_recall": 0.4126984126984127,
+      "tn": 52,
+      "fp": 74,
+      "fn": 42,
+      "tp": 82
+    },
+    {
+      "period": "2023",
+      "n": 251,
+      "accuracy": 0.5258964143426295,
+      "balanced_accuracy": 0.5219961856325492,
+      "brier": 0.24941688127664566,
+      "logloss": 0.6920327638410454,
+      "up_recall": 0.6307692307692307,
+      "down_recall": 0.4132231404958678,
+      "tn": 50,
+      "fp": 71,
+      "fn": 48,
+      "tp": 82
+    },
+    {
+      "period": "2024",
+      "n": 254,
+      "accuracy": 0.5866141732283464,
+      "balanced_accuracy": 0.5784535241323041,
+      "brier": 0.24470196304316014,
+      "logloss": 0.682586595383517,
+      "up_recall": 0.6524822695035462,
+      "down_recall": 0.504424778761062,
+      "tn": 57,
+      "fp": 56,
+      "fn": 49,
+      "tp": 92
+    },
+    {
+      "period": "FROZEN_2025",
+      "n": 253,
+      "accuracy": 0.5177865612648221,
+      "balanced_accuracy": 0.5095492994977531,
+      "brier": 0.24988138602668647,
+      "logloss": 0.6928938581584075,
+      "up_recall": 0.5448717948717948,
+      "down_recall": 0.4742268041237113,
+      "tn": 46,
+      "fp": 51,
+      "fn": 71,
+      "tp": 85
+    },
+    {
+      "period": "2026",
+      "n": 191,
+      "accuracy": 0.44502617801047123,
+      "balanced_accuracy": 0.45763736263736265,
+      "brier": 0.2604821141291795,
+      "logloss": 0.7152241210786744,
+      "up_recall": 0.7252747252747253,
+      "down_recall": 0.19,
+      "tn": 19,
+      "fp": 81,
+      "fn": 25,
+      "tp": 66
+    },
+    {
+      "period": "2025_2026",
+      "n": 444,
+      "accuracy": 0.4864864864864865,
+      "balanced_accuracy": 0.4706426354836721,
+      "brier": 0.254441609151858,
+      "logloss": 0.7024998946849188,
+      "up_recall": 0.611336032388664,
+      "down_recall": 0.3299492385786802,
+      "tn": 65,
+      "fp": 132,
+      "fn": 96,
+      "tp": 151
+    }
+  ]
+}
