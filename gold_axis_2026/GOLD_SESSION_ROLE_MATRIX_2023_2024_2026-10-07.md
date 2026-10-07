@@ -434,3 +434,211 @@ Dependency cluster:
 - Sobti NY/London is a balanced/down-leaning candidate rather than merely a generic weak model.
 - Model-09 is nested on A1 + PATH + SAGE and must be tested for incremental value against its exact matched A1+PATH comparator before receiving consensus weight.
 - Consensus status remains `PENDING_INCREMENTAL_TEST`.
+
+
+---
+
+# Specialist / Router Families
+
+## RIFT — reversal/correction specialist
+
+Authority:
+- `GOLD_SESSION_RIFT_FINAL_AUTHORITY_2026-10-07.md`
+
+Role profile:
+- `CORRECTION_REVERSAL_SPECIALIST`
+
+Development evidence:
+- the only pre-2025 eligible correction window was Sobti Asia Afternoon;
+- eligibility existed against multiple upstream baselines;
+- therefore RIFT had a genuine development-period correction hypothesis.
+
+Role-aware interpretation:
+- RIFT is **not** evaluated as a stand-alone balanced direction model;
+- its relevant measures are override count, rescue, break, net rescue and before/after class performance;
+- frozen 2025 transport failed to preserve the correction benefit, so RIFT is currently `TRANSPORT_FAILED_CORRECTION`;
+- it remains negative correction evidence, not an independent consensus direction vote.
+
+Consensus status:
+- `NO_DIRECTION_VOTE`
+- `CORRECTION_EVIDENCE_ONLY`
+
+---
+
+## VEGA — GVZ / IV-gap reversal specialist
+
+Authority:
+- `GOLD_SESSION_VEGA_FINAL_AUTHORITY_2026-10-07.md`
+
+Role profile:
+- `CORRECTION_REVERSAL_SPECIALIST`
+
+Development evidence:
+- WGC US + PATH_GLOBAL was the sole canonical pre-2025 eligible pair;
+- combined development BA improved 46.28% -> 46.88%;
+- one override produced one rescue and no break.
+
+Role-aware interpretation:
+- VEGA is not a primary direction engine;
+- its development hypothesis was a sparse correction mechanism;
+- frozen 2025 produced zero overrides, so it contributed no operational correction information in transport.
+
+Consensus status:
+- `NO_DIRECTION_VOTE`
+- `NON_INCREMENTAL_CORRECTION_EVIDENCE`
+
+---
+
+## SENTRY — fast-entry router evidence
+
+Authority:
+- `GOLD_SESSION_SENTRY_V1_FINAL_AUTHORITY_2026-10-07.md`
+
+Role profile:
+- `ROUTER_STATE_EVIDENCE`
+
+Development profiles of interest:
+- Sobti Europe was the only head passing the original router gate;
+- SENTRY changed state based on the frozen 63-pair net-rescue rule.
+
+Role-aware interpretation:
+- SENTRY should not be treated as another independent Structural/PATH direction vote;
+- when it selects PATH, its directional output is mechanically inherited from PATH;
+- its useful information is the **state transition / net-rescue context**.
+
+Consensus status:
+- `NO_INDEPENDENT_DIRECTION_VOTE`
+- `ROUTER_STATE_CANDIDATE`
+
+---
+
+## DART — disagreement posterior / slow-exit evidence
+
+Authority:
+- `GOLD_SESSION_DART_V1_FINAL_AUTHORITY_2026-10-07.md`
+
+Role profile:
+- `ROUTER_STATE_EVIDENCE`
+
+Development evidence:
+- only Sobti NY/London produced actual state transitions;
+- the detector entered PATH in 2023 and returned Structural in 2024 using the frozen disagreement posterior.
+
+Role-aware interpretation:
+- DART is not a third direction expert;
+- its information is the posterior state:
+  - q_path
+  - Pr(PATH superior)
+  - disagreement count
+  - regime transition timing.
+
+Consensus status:
+- `NO_INDEPENDENT_DIRECTION_VOTE`
+- `ROUTER_STATE_CANDIDATE`
+
+---
+
+## AURORA — hysteresis router
+
+Authority:
+- `GOLD_SESSION_AURORA_V1_FINAL_AUTHORITY_2026-10-07.md`
+
+Role profile:
+- `ROUTER_STATE_EVIDENCE`
+
+Development evidence:
+- Sobti Asia Morning and Sobti Europe passed the original AURORA pre-2025 gate.
+
+Role-aware interpretation:
+- AURORA combines SENTRY fast-entry with DART slow-exit;
+- when AURORA simply remains in PATH or Structural, its direction is mechanically identical to that selected expert;
+- therefore AURORA must not receive a second full direction vote in addition to the expert it selected;
+- its useful incremental signal is the **router state / switch decision**, not duplicate direction.
+
+Consensus status:
+- `NO_DUPLICATE_DIRECTION_VOTE`
+- `ROUTER_STATE_CANDIDATE`
+
+---
+
+## OPAL — corrected-PIT COT reversal specialist
+
+Authority:
+- `GOLD_SESSION_OPAL_V1_FINAL_AUTHORITY_2026-10-07.md`
+
+Role profile:
+- `CORRECTION_REVERSAL_SPECIALIST`
+
+Development evidence:
+- Sobti Asia Morning:
+  - AURORA BA 56.08% -> OPAL BA 58.73%
+  - UP recall 60.78%
+  - DOWN recall 56.67%
+  - overrides 2
+  - net rescue +2
+
+- WGC Europe:
+  - AURORA BA 45.24% -> OPAL BA 47.93%
+  - UP recall 64.91%
+  - DOWN recall 30.95%
+  - overrides 6
+  - net rescue +2
+
+Role-aware interpretation:
+- OPAL earns no generic always-on direction vote;
+- it contributes only when its frozen reversal intervention condition is active;
+- its correct consensus treatment is a conditional correction layer.
+
+Consensus status:
+- `CONDITIONAL_CORRECTION_CANDIDATE`
+
+---
+
+# Phase-1 role-freeze conclusion
+
+The descriptive 2023–2024 role matrix is now complete for the currently completed session model families.
+
+The matrix deliberately preserves asymmetric signals that the old binary primary gate hid.
+
+Important examples:
+- strong UP-skew: PATH, Structural-IRIS, SAGE, A1_SESSION, A1_PATH_SESSION in several Europe/Asia/Late-US heads;
+- strong DOWN-skew: CART/WGC-US, Structural/WGC-US, SAGE/WGC-US, Model-09/WGC-US;
+- balanced/window-specific candidates: CORE3 Sobti Asia Morning, selected PATH_SESSION and Model-09 heads, among others;
+- correction specialists: RIFT, VEGA, OPAL;
+- router evidence: SENTRY, DART, AURORA.
+
+## What is frozen now
+
+Frozen:
+- model identity;
+- session clock;
+- 2023–2024 role profile;
+- dependency/duplicate clusters;
+- distinction between direction expert, correction specialist and router state.
+
+Not yet frozen:
+- final consensus membership;
+- consensus weights;
+- specialist override hierarchy.
+
+Those require a **development-only incremental/disagreement audit**.
+
+## Next binding step
+
+Before HELIOS or final consensus:
+
+1. for each session separately, compare candidates only on common 2023–2024 rows;
+2. measure when each UP/DOWN specialist disagrees with the best balanced base;
+3. compute:
+   - disagreement N;
+   - specialist precision on disagreement;
+   - rescue count;
+   - break count;
+   - net rescue;
+   - class-specific incremental recall;
+   - correlation / duplicate exposure;
+4. choose at most one representative from strongly nested clusters unless incremental value is proven;
+5. freeze the role-aware candidate set;
+6. only then continue HELIOS and later final consensus.
+
+2025 is not used to choose those memberships.
