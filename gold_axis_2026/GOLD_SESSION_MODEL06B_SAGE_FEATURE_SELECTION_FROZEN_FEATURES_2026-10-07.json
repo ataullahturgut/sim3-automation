@@ -1,0 +1,130 @@
+[
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "ASIA_AFTERNOON_LIT",
+    "frozen_features": [
+      "sess_us_conflict",
+      "sess_us_total",
+      "sess_us_pm",
+      "sess_east_west_conflict",
+      "sess_asia",
+      "sess_europe",
+      "sess_sign_changes",
+      "sess_dispersion"
+    ],
+    "n_features": 8,
+    "eligible_outer_blocks": 56
+  },
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "ASIA_MORNING_LIT",
+    "frozen_features": [
+      "sess_europe",
+      "sess_asia",
+      "sess_dominance",
+      "sess_asia_us_interaction",
+      "sess_east_west",
+      "sess_east_west_conflict",
+      "sess_us_am",
+      "sess_us_conflict"
+    ],
+    "n_features": 8,
+    "eligible_outer_blocks": 55
+  },
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "EUROPE_LIT",
+    "frozen_features": [
+      "sess_sign_changes",
+      "sess_europe",
+      "sess_dispersion",
+      "sess_east_west_conflict",
+      "sess_us_reversal",
+      "sess_asia",
+      "sess_us_pm",
+      "sess_us_conflict"
+    ],
+    "n_features": 8,
+    "eligible_outer_blocks": 59
+  },
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "NY_LONDON_LIT",
+    "frozen_features": [
+      "sess_us_conflict",
+      "sess_europe",
+      "sess_asia",
+      "sess_dispersion",
+      "sess_east_west_conflict",
+      "sess_us_am",
+      "sess_us_pm",
+      "sess_dominance"
+    ],
+    "n_features": 8,
+    "eligible_outer_blocks": 60
+  },
+  {
+    "partition": "SOBTI_5_ET",
+    "window": "US_LATE_LIT",
+    "frozen_features": [
+      "sess_asia",
+      "sess_europe",
+      "sess_us_am",
+      "sess_asia_us_interaction",
+      "sess_us_pm",
+      "sess_dispersion",
+      "sess_us_total",
+      "sess_dominance"
+    ],
+    "n_features": 8,
+    "eligible_outer_blocks": 34
+  },
+  {
+    "partition": "WGC_2026_NY3",
+    "window": "ASIA",
+    "frozen_features": [
+      "sess_us_conflict",
+      "sess_us_pm",
+      "sess_dominance",
+      "sess_us_reversal",
+      "sess_europe",
+      "sess_east_west_conflict",
+      "sess_asia_us_interaction",
+      "sess_asia"
+    ],
+    "n_features": 8,
+    "eligible_outer_blocks": 31
+  },
+  {
+    "partition": "WGC_2026_NY3",
+    "window": "EUROPE",
+    "frozen_features": [
+      "sess_europe",
+      "sess_sign_changes",
+      "sess_dispersion",
+      "sess_east_west_conflict",
+      "sess_asia",
+      "sess_us_conflict",
+      "sess_us_am",
+      "sess_asia_us_interaction"
+    ],
+    "n_features": 8,
+    "eligible_outer_blocks": 60
+  },
+  {
+    "partition": "WGC_2026_NY3",
+    "window": "US",
+    "frozen_features": [
+      "sess_asia",
+      "sess_europe",
+      "sess_us_am",
+      "sess_asia_us_interaction",
+      "sess_east_west_conflict",
+      "sess_dominance",
+      "sess_dispersion",
+      "sess_us_conflict"
+    ],
+    "n_features": 8,
+    "eligible_outer_blocks": 53
+  }
+]
