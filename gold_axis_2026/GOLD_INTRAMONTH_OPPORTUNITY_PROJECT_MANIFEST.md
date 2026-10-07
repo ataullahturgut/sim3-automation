@@ -109,7 +109,8 @@ Current state:
 - **SESSION Model-06 SAGE SESSION_ONLY:** **COMPLETE / NOT PROMOTED** via `GOLD_SESSION_MODEL06_SAGE_SESSION_ONLY_FINAL_AUTHORITY_2026-10-07.md`; canonical WGC Asia was the only pre-2025 eligible S1.5 head but fell to 48.06% BA in frozen 2025. Model-06B feature selection produced no pre-2025 eligible selected head, so selected-SAGE 2025 remained closed;
 - **SESSION Model-07 SAGE PATH_SESSION / S1.6:** **COMPLETE / BASELINE NOT PROMOTED / SELECTED WGC ASIA RETAINED AS SECONDARY CHALLENGER** via `GOLD_SESSION_MODEL07_SAGE_PATH_SESSION_FINAL_AUTHORITY_2026-10-07.md`; canonical Sobti NY/London and WGC US S1.6 heads fail strong 2025 transport. Model-07B feature selection yields a clean but modest WGC Asia result (BA 52.11%, UP 63.79%, DOWN 40.43%, Brier 0.2572), still weaker than the existing selected PATH_GLOBAL WGC Asia head (BA 59.21%, Brier 0.2461);
 - **SESSION Model-08 SAGE A1_SESSION / S1.7:** **COMPLETE / CANONICAL FAIL-CLOSED / FEATURE-SELECTED CHALLENGER NOT PROMOTED** via `GOLD_SESSION_MODEL08_SAGE_A1_SESSION_FINAL_AUTHORITY_2026-10-07.md`; no canonical S17 head passed the corrected pre-2025 gate. Model-08B produced four development-eligible selected heads, but none transported with adequate 2025 directional skill;
-- **current immediate task:** SESSION Model-09 SAGE A1_PATH_SESSION / S1.8 identity reconciliation on the corrected V5 session contract;
+- **SESSION Model-09 SAGE A1_PATH_SESSION / S1.8:** **COMPLETE / CANONICAL FAIL-CLOSED / SELECTED SOBTI NY-LONDON CHALLENGER RETAINED** via `GOLD_SESSION_MODEL09_SAGE_A1_PATH_SESSION_FINAL_AUTHORITY_2026-10-07.md`; canonical S18 had no pre-2025 eligible head. Model-09B preserves A1+PATH+SESSION identity and yields one useful frozen-2025 Sobti NY/London challenger (BA 52.73%, UP 41.98%, DOWN 63.49%, +6.88pp vs exact matched selected A1+PATH comparator);
+- **current immediate task:** post-Stage-1 **RIFT** session identity/readiness reconciliation under the binding execution order;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -3090,11 +3091,21 @@ The next action is **not** another DAILY/H3 run and is **not** immediate consens
 18. **Model-07B selected PATH_SESSION — LIMITED CHALLENGER ONLY.** Sobti NY/London 2025 BA is 47.62% despite +2.47pp versus its matched selected-PATH comparator. WGC Asia reaches BA 52.11%, UP recall 63.79%, DOWN recall 40.43%, Brier 0.2572 and +2.02pp versus its matched sparse PATH comparator, but remains materially weaker than Model-04B selected PATH_GLOBAL WGC Asia (BA 59.21%, Brier 0.2461). Retain only for later error-diversity/router analysis.
 19. **SESSION Model-08 = SAGE A1_SESSION / S1.7 — COMPLETE / NOT PROMOTED.** Authority: `GOLD_SESSION_MODEL08_SAGE_A1_SESSION_FINAL_AUTHORITY_2026-10-07.md`. The corrected comparator is direct fresh A1 probability, not a downstream refit. Canonical S17 has no pre-2025 eligible head.
 20. **Model-08B selected A1_SESSION — COMPLETE / NO PROMOTION.** Sobti Europe, WGC Asia, WGC Europe and WGC US pass the selected development gate, but 2025 BA is 48.99%, 46.95%, 47.72% and 45.60% respectively. No selected head is promoted.
-21. **SESSION Model-09 = SAGE A1_PATH_SESSION / S1.8 — NEXT.** Reconcile the corrected A1+PATH+SAGE identity, its matched A1+PATH comparator and the pre-2025 fail-closed evidence before any feature analysis.
+21. **SESSION Model-09 = SAGE A1_PATH_SESSION / S1.8 — COMPLETE.** Authority: `GOLD_SESSION_MODEL09_SAGE_A1_PATH_SESSION_FINAL_AUTHORITY_2026-10-07.md`. Canonical S18 is fail-closed. Model-09B selected Sobti NY/London is retained as a window-specific challenger after frozen 2025 BA 52.73%, UP recall 41.98%, DOWN recall 63.49%, and +6.88pp BA versus its exact selected A1+PATH comparator; Late-US and WGC US selected variants are rejected.
+22. **NEXT = RIFT session specialist.** Follow the binding post-Stage-1 execution order `RIFT / VEGA / OPAL / TURN / PRISM / TWIN`. First reconcile existing RIFT session artifacts, source-ready dependencies, target identity and 2025 status before any new run or feature analysis.
 6. For every session-capable model report, at minimum: N, Accuracy, Balanced Accuracy, **UP recall, DOWN recall**, Brier/log loss where probabilistic, coverage, and the exact target window. A gain obtained by collapsing one class is not a promotion.
 7. Session chronology is frozen: governed 2022 warm-up only where required; 2023–2024 development; 2025 one-time frozen transport; 2026 is not a selection set.
 8. Existing Stage-1 session artifacts and RIFT/VEGA specialist artifacts are evidence to reconcile, not permission to skip identity checks. If the regenerated model is identical, record identity and reuse; if not, explain the contract difference and supersession explicitly.
 9. Only after all eligible legacy models are replayed/reconciled may the project build a **window-specific** consensus/router. Do not copy the old daily 4/4 membership wholesale into every session.
+
+### Model-09 SAGE A1_PATH_SESSION closure — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_MODEL09_SAGE_A1_PATH_SESSION_FINAL_AUTHORITY_2026-10-07.md`
+
+Canonical S18 combines fresh A1 + hourly PATH + SAGE and compares against matched A1+PATH without SAGE. No canonical head passed the pre-2025 gate.
+
+Model-09B preserves mandatory A1 and at least one PATH + one SAGE variable. Three selected heads passed development; in frozen 2025 only Sobti NY/London retained usable two-class behaviour: N=144, BA 52.73%, UP recall 41.98%, DOWN recall 63.49%, Brier 0.2681, with +6.88pp BA against its exact selected A1+PATH comparator. It is retained as a window-specific challenger, not a universal head.
 
 ### Model-08 SAGE A1_SESSION closure — 2026-10-07
 
