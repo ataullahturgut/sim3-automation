@@ -4,16 +4,16 @@
     "window": "ASIA_AFTERNOON_LIT",
     "frozen_path_features": [
       "g1h_age_max_pos_24",
-      "g1h_ret_6h",
       "g1h_rv_6",
+      "g1h_ret_6h",
       "g1h_lag2",
       "g1h_ret_1h",
       "g1h_ret_12h",
       "g1h_jump_concentration_24",
-      "g1h_ret_3h"
+      "g1h_down_semivol_24"
     ],
     "n_path_features": 8,
-    "eligible_outer_blocks": 39
+    "eligible_outer_blocks": 38
   },
   {
     "partition": "SOBTI_5_ET",
@@ -21,12 +21,12 @@
     "frozen_path_features": [
       "g1h_ret_3h",
       "g1h_ret_1h",
-      "g1h_slope_24",
       "g1h_jump_concentration_24",
       "g1h_rv_48",
+      "g1h_slope_24",
+      "g1h_ret_6h",
       "g1h_rv_6",
-      "g1h_up_semivol_24",
-      "g1h_close_location_24"
+      "g1h_age_max_pos_24"
     ],
     "n_path_features": 8,
     "eligible_outer_blocks": 37
@@ -94,17 +94,17 @@
     "partition": "WGC_2026_NY3",
     "window": "EUROPE",
     "frozen_path_features": [
-      "g1h_jump_concentration_24",
       "g1h_ret_3h",
       "g1h_ret_6h",
-      "g1h_close_location_24",
+      "g1h_ret_1h",
+      "g1h_jump_concentration_24",
       "g1h_upfrac_24",
       "g1h_ret_48h",
-      "g1h_lag2",
-      "g1h_ret_1h"
+      "g1h_close_location_24",
+      "g1h_lag2"
     ],
     "n_path_features": 8,
-    "eligible_outer_blocks": 43
+    "eligible_outer_blocks": 42
   },
   {
     "partition": "WGC_2026_NY3",
