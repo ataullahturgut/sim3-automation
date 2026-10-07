@@ -183,7 +183,8 @@ Current state:
 - **SESSION TWIN V1:** **COMPLETE / TRANSPORT FAILED / NEGATIVE CORRECTION EVIDENCE** via `GOLD_SESSION_TWIN_V1_FINAL_AUTHORITY_2026-10-07.md`; all three development-eligible heads deteriorated in frozen 2025;
 - **Stage-2 specialist replay:** **COMPLETE** for RIFT, VEGA, TURN, PRISM, TWIN and OPAL;
 - **SESSION AIM V1:** **COMPLETE / TRANSPORT FAILED / ROUTER DIAGNOSTIC ONLY** via `GOLD_SESSION_AIM_V1_FINAL_AUTHORITY_2026-10-07.md`; only Sobti Asia Morning passed year-stability, then deteriorated in frozen 2025 (BA 60.86% -> 59.43%, net rescue -2);
-- **current immediate task:** complete **SESSION HELIOS** next;
+- **SESSION HELIOS Stage-1 readiness:** **COMPLETE / PASS_WITH_SESSION_REBUILD_REQUIRED** via `GOLD_SESSION_HELIOS_STAGE1_READINESS_AUTHORITY_2026-10-07.md`; binding lineage is HELIOS V1 -> V2 -> V3-GT -> V4-RGE -> V5-DCE, fresh SESSION AURORA/OPAL plus RIFT/TURN/VEGA dependencies are available, the prior OPAL/AURORA blocker is resolved, and H3 maturity fields are prohibited for SESSION replay. Session state must be independent by partition/window and may update only from same-window rows with `end_utc <= current start_utc`;
+- **current immediate task:** HELIOS Stage-2 — preregister/implement the session-native V1->V5 replay and run **2023-2024 development only**; do not open 2025 until the rule is frozen;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -2605,6 +2606,19 @@ Sobti Late-US shows an interesting aggregate rescue signal against A0 (BA 51.59%
 
 All other window/baseline pairs fail closed. RIFT V1 may proceed to 2025 transport **only for Sobti Asia Afternoon**, with the representation and threshold frozen exactly as preregistered.
 
+
+### 5E.8ZG SESSION HELIOS Stage-1 readiness — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_HELIOS_STAGE1_READINESS_AUTHORITY_2026-10-07.md`
+
+Status: **STAGE-1 COMPLETE / PASS_WITH_SESSION_REBUILD_REQUIRED / RUN NOT YET EXECUTED**.
+
+The historical HELIOS family is preserved as the sequential router/exception lineage V1 -> V2 -> V3-GT -> V4-RGE -> V5-DCE. Fresh SESSION AURORA and corrected-PIT OPAL outputs now exist, and RIFT / TURN / VEGA session-native corroborator state is available, so the former `BLOCKED_UPSTREAM_OPAL/AURORA` condition is resolved.
+
+The historical H3 maturity clock is not reusable. SESSION HELIOS must maintain independent state per partition/window and may update competence, GT-policy and regret histories only from same-window targets whose `end_utc <= current start_utc`. H3 `feature_cutoff_date / target_end_date_h3` state logic and archived H3 prediction files are prohibited as SESSION model inputs.
+
+Next: preregister/implement the session-native HELIOS V1->V5 replay, then score 2023-2024 development before any 2025 transport is opened.
 
 ### 5E.8ZF SESSION OPAL V1 final closure — 2026-10-07
 
