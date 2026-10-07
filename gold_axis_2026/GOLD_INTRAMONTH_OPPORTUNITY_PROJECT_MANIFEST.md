@@ -2374,6 +2374,25 @@ All eight Stage-1 model families are complete and the pre-2025 candidate set is 
 From this point, the one-time 2025 transport test may evaluate only the frozen candidates. Clocks, features, lag horizons, model forms, regularization and the 0.5 decision threshold may not be changed using 2025 outcomes.
 
 
+### 5E.8W Frozen 2025 Stage-1 transport — COMPLETE — 2026-10-07
+
+Authority: `GOLD_SESSION_STAGE1_2025_TRANSPORT_DECISION_2026-10-07.json`.
+
+2025 was opened only after the Stage-1 development freeze and pre-transport amendment. Replay remained causal and expanding; no clock, feature, lag, C, model form or 0.5 threshold was changed from 2025 outcomes. 2026 remains unopened.
+
+Transport is heterogeneous rather than universal:
+- Sobti Asia Afternoon: structural-only A1 transports strongly; adding PATH hurts.
+- Sobti Asia Morning: canonical A1+1h PATH is the strongest frozen representation (BA about **60.86%**); 15m falls to about **51.34%**.
+- Sobti NY/London: A1 structural remains stronger than Structural-IRIS; SAGE improves its PATH comparator but remains below 50% BA.
+- WGC Asia: preregistered SAGE SESSION_ONLY does not transport (BA about **48.72%**).
+- WGC US: preregistered SAGE PATH_SESSION does not transport and is worse than PATH_GLOBAL.
+- Europe/Late-US heads remain mixed or weak; no 2025 rescue/tuning is allowed.
+
+The transport result therefore does not justify one universal Stage-1 model. The frozen single-model outputs are retained as heterogeneous experts for downstream testing.
+
+**Next dependency:** Stage 2 specialist correction/reversal layers (RIFT, VEGA, OPAL, TURN, PRISM, TWIN) must be rebuilt against fresh frozen Stage-1 baselines before any Stage-3 router/combiner or final consensus is evaluated.
+
+
 ## 5E.9 Research hypotheses — not conclusions
 
 H1. Europe and New York/London overlap contain different information sets and should not share one unconditional execution rule.
