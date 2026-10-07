@@ -1,0 +1,20 @@
+{
+  "status": "COMPLETE",
+  "spec": "fixed before 2025 transport",
+  "features": [
+    "r1600_1630",
+    "r1630_1700",
+    "pair_same",
+    "rv3h",
+    "jump3h",
+    "abs3h",
+    "r16_x_rv",
+    "r16_x_jump"
+  ],
+  "development_ba_gain_vs_base": -0.0081465993899148,
+  "development_r2_gain_vs_base": -0.011370287473705387,
+  "development_nonworse_each_year": false,
+  "retain_on_development_rule": false,
+  "no_2025_selection": true,
+  "rule": "Retain only if DEV BA and R2_OS both improve BASE_1600_1630 and BA is non-worse in both 2023 and 2024."
+}
