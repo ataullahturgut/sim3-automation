@@ -179,7 +179,7 @@ def choose(m):
         eligible=(a3.n>=MIN_YEAR_ACTIVE and a4.n>=MIN_YEAR_ACTIVE and
                   .10<=a3.pred_up_rate<=.90 and .10<=a4.pred_up_rate<=.90)
         score=min(a3.ba,a4.ba) if eligible else -1
-        x.append((score,a.ba,a.coverage,pol,eligible))
+        x.append((float(score),float(a.ba),float(a.coverage),pol,bool(eligible)))
     x=sorted(x,reverse=True)
     return x[0][3],x
 
