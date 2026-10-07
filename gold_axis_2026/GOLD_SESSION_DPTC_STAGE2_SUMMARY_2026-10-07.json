@@ -1,0 +1,23 @@
+{
+  "status": "SESSION_DPTC_STAGE2_COMPLETE",
+  "chronology": {
+    "fit": 2023,
+    "development": 2024,
+    "2025": "CLOSED",
+    "2026": "UNREAD"
+  },
+  "topology_calibration": {
+    "q95_run": 0.0,
+    "q99_run": 0.0,
+    "q95_shift": 3.371151513672886
+  },
+  "sellr_selected": [],
+  "transport_eligible": [],
+  "guardrails": [
+    "No historical H3 SELLR score/bin/threshold used.",
+    "2025 and 2026 outcomes not read.",
+    "SELLR fitted independently per partition/window on 2023 only.",
+    "DPTC state isolated per partition/window.",
+    "Only matured acted outcomes update TRUST hysteresis."
+  ]
+}
