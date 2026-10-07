@@ -114,7 +114,8 @@ Current state:
 - **VEGA session specialist:** **COMPLETE / NOT PROMOTED** via `GOLD_SESSION_VEGA_FINAL_AUTHORITY_2026-10-07.md`; canonical VEGA had exactly one pre-2025 eligible pair (WGC US + PATH_GLOBAL_1H), but frozen 2025 produced 0 overrides, 0 rescues and no metric change (BA 49.38% -> 49.38%, Brier 0.2825 -> 0.2825). VEGA V1B feature selection produced no pre-2025 eligible pair, so selected VEGA 2025 remained closed;
 - **OPAL session specialist:** **DATA READY / BLOCKED_UPSTREAM_AURORA** via `GOLD_SESSION_OPAL_READINESS_AUTHORITY_2026-10-07.md`; corrected COT publication-time authority and V5 session mapping are ready, but no fresh session SENTRY/DART/AURORA lineage exists. Archived H3 AURORA/OPAL predictions are prohibited as session inputs;
 - **SESSION SENTRY V1:** **COMPLETE / NOT PROMOTED** via `GOLD_SESSION_SENTRY_V1_FINAL_AUTHORITY_2026-10-07.md`; only Sobti Europe passed the frozen pre-2025 gate. Frozen 2025 SENTRY BA was 49.43% with UP recall 75.90% and DOWN recall 22.95%, so it fails the 30% class-recall floor and remains below PATH_GLOBAL BA 51.12%;
-- **current immediate task:** rebuild **SESSION DART** from the same fresh Structural-IRIS / PATH_GLOBAL expert ledger; then AURORA -> OPAL;
+- **SESSION DART V1:** **COMPLETE / NOT PROMOTED / 2025 CLOSED** via `GOLD_SESSION_DART_V1_FINAL_AUTHORITY_2026-10-07.md`; no session passed the frozen pre-2025 gate. Only Sobti NY/London switched state during development, but its routed BA remained below Structural-IRIS;
+- **current immediate task:** rebuild **SESSION AURORA** from fresh SENTRY/DART state evidence plus the same canonical Structural-IRIS / PATH_GLOBAL experts; then return to OPAL;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -2536,6 +2537,21 @@ Sobti Late-US shows an interesting aggregate rescue signal against A0 (BA 51.59%
 
 All other window/baseline pairs fail closed. RIFT V1 may proceed to 2025 transport **only for Sobti Asia Afternoon**, with the representation and threshold frozen exactly as preregistered.
 
+
+### 5E.8ZD SESSION DART V1 closure — 2026-10-07
+
+Authorities:
+- `GOLD_SESSION_DART_V1_PREREG_2026-10-07.md`
+- `GOLD_SESSION_DART_V1_RESULT_2026-10-07.md`
+- `GOLD_SESSION_DART_V1_FINAL_AUTHORITY_2026-10-07.md`
+
+Status: **COMPLETE / NOT PROMOTED / 2025 CLOSED**.
+
+DART uses only matured exact-common expert disagreement events between canonical Structural-IRIS and PATH_GLOBAL. The frozen H3 rule was preserved unchanged: BOCPD hazard 1/20, minimum 8 disagreements, enter PATH at Pr(PATH superior)>=0.90 and q_path>=0.60, return Structural at Pr(PATH superior)<=0.10 and q_path<=0.40.
+
+No session passed the frozen pre-2025 confirmation gate. Only Sobti NY/London produced state switches, but DART BA 51.62% remained below Structural-IRIS BA 53.26%. All other heads either never switched or failed the class-recall/development guardrails. Therefore 2025 remained closed and DART is not promoted.
+
+Its causal posterior/state evidence remains available for the next dependency model, **SESSION AURORA**.
 
 ### 5E.8ZC SESSION SENTRY V1 closure — 2026-10-07
 
