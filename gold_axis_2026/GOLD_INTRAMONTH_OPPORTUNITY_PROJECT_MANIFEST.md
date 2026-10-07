@@ -111,7 +111,8 @@ Current state:
 - **SESSION Model-08 SAGE A1_SESSION / S1.7:** **COMPLETE / CANONICAL FAIL-CLOSED / FEATURE-SELECTED CHALLENGER NOT PROMOTED** via `GOLD_SESSION_MODEL08_SAGE_A1_SESSION_FINAL_AUTHORITY_2026-10-07.md`; no canonical S17 head passed the corrected pre-2025 gate. Model-08B produced four development-eligible selected heads, but none transported with adequate 2025 directional skill;
 - **SESSION Model-09 SAGE A1_PATH_SESSION / S1.8:** **COMPLETE / CANONICAL FAIL-CLOSED / SELECTED SOBTI NY-LONDON CHALLENGER RETAINED** via `GOLD_SESSION_MODEL09_SAGE_A1_PATH_SESSION_FINAL_AUTHORITY_2026-10-07.md`; canonical S18 had no pre-2025 eligible head. Model-09B preserves A1+PATH+SESSION identity and yields one useful frozen-2025 Sobti NY/London challenger (BA 52.73%, UP 41.98%, DOWN 63.49%, +6.88pp vs exact matched selected A1+PATH comparator);
 - **RIFT session specialist:** **COMPLETE / NOT PROMOTED** via `GOLD_SESSION_RIFT_FINAL_AUTHORITY_2026-10-07.md`; only Sobti Asia Afternoon passed development, but frozen 2025 correction either degraded A0/A1, did nothing to PATH_GLOBAL, or failed to improve Structural-IRIS. Feature-selected RIFT V1B made essentially the same 2025 correction calls and did not repair transport;
-- **current immediate task:** post-Stage-1 **VEGA** session identity/readiness reconciliation under the binding execution order;
+- **VEGA session specialist:** **COMPLETE / NOT PROMOTED** via `GOLD_SESSION_VEGA_FINAL_AUTHORITY_2026-10-07.md`; canonical VEGA had exactly one pre-2025 eligible pair (WGC US + PATH_GLOBAL_1H), but frozen 2025 produced 0 overrides, 0 rescues and no metric change (BA 49.38% -> 49.38%, Brier 0.2825 -> 0.2825). VEGA V1B feature selection produced no pre-2025 eligible pair, so selected VEGA 2025 remained closed;
+- **current immediate task:** post-Stage-1 **OPAL** session identity/readiness reconstruction using the corrected COT publication-time authority and fresh session upstream state;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -2533,6 +2534,20 @@ Sobti Late-US shows an interesting aggregate rescue signal against A0 (BA 51.59%
 
 All other window/baseline pairs fail closed. RIFT V1 may proceed to 2025 transport **only for Sobti Asia Afternoon**, with the representation and threshold frozen exactly as preregistered.
 
+
+### 5E.8ZA Stage-2 VEGA final closure — 2026-10-07
+
+Authorities:
+- `GOLD_SESSION_VEGA_IDENTITY_AUTHORITY_2026-10-07.md`
+- `GOLD_SESSION_VEGA_V1B_VARSEL_RESULT_2026-10-07.md`
+- `GOLD_SESSION_VEGA_FROZEN_2025_TRANSPORT_RESULT_2026-10-07.md`
+- `GOLD_SESSION_VEGA_FINAL_AUTHORITY_2026-10-07.md`
+
+Status: **VEGA COMPLETE / NOT PROMOTED**.
+
+Canonical VEGA V1 retained the fixed nine-feature GVZ/IV-gap representation, D-1 New York calendar availability, reversal threshold 0.70 and monthly expanding causal refit. Only WGC US / PATH_GLOBAL_1H passed the pre-2025 gate. In frozen 2025 transport, N=140 and VEGA made **zero overrides**; therefore base and corrected metrics are identical: BA 49.38%, Brier 0.2825, UP recall 37.35%, DOWN recall 61.40%.
+
+VEGA V1B development-only variable selection produced **no pre-2025 transport-eligible pair**, so selected VEGA 2025 remained closed. VEGA is retained only as negative/diagnostic specialist evidence. The next specialist in the binding order is **OPAL**.
 
 ### 5E.8Z Stage-2 VEGA V1 development checkpoint — 2026-10-07
 
