@@ -106,7 +106,8 @@ Current state:
 - **SESSION Model-03 NOVA / A1-ARCR:** **COMPLETE / BASELINE ACCEPTED** via `GOLD_SESSION_MODEL03_NOVA_A1_ARCR_AUTHORITY_2026-10-07.md`; existing raw session A1 identity is accepted without duplicate baseline rerun. A model-specific feature-selected challenger was also tested; it does not improve A1 broadly. Only WGC Asia is retained as a limited-coverage challenger;
 - **SESSION Model-04 IRIS HOURLY_ONLY / PATH_GLOBAL:** **COMPLETE / BASELINE ACCEPTED** via `GOLD_SESSION_MODEL04_PATH_GLOBAL_AUTHORITY_2026-10-07.md`; feature-selected PATH_GLOBAL does not improve broadly, but WGC Asia is retained as a same-coverage window-specific challenger (2025 BA 58.14% -> 59.21%; Brier 0.2608 -> 0.2461; DOWN recall 40.43% -> 42.55%);
 - **SESSION Model-05 STRUCTURAL_IRIS / A1_PLUS_PATH:** **COMPLETE / CANONICAL BASELINE RETAINED** via `GOLD_SESSION_MODEL05_STRUCTURAL_IRIS_FINAL_AUTHORITY_2026-10-07.md`; canonical `S14_A1_PLUS_1H_FULL` remains binding. The 1h PATH feature-selection challenger produced no promotable session variant;
-- **current immediate task:** SESSION Model-06 SAGE SESSION_ONLY identity reconciliation on the corrected V5 session contract;
+- **SESSION Model-06 SAGE SESSION_ONLY:** **COMPLETE / NOT PROMOTED** via `GOLD_SESSION_MODEL06_SAGE_SESSION_ONLY_FINAL_AUTHORITY_2026-10-07.md`; canonical WGC Asia was the only pre-2025 eligible S1.5 head but fell to 48.06% BA in frozen 2025. Model-06B feature selection produced no pre-2025 eligible selected head, so selected-SAGE 2025 remained closed;
+- **current immediate task:** SESSION Model-07 SAGE PATH_SESSION / S1.6 identity reconciliation on the corrected V5 session contract;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -3081,11 +3082,22 @@ The next action is **not** another DAILY/H3 run and is **not** immediate consens
 12. **Model-04B feature-selected PATH_GLOBAL — DIAGNOSTIC COMPLETE.** Selection was restricted to the original 25 hourly PATH/VOL/SHAPE variables. WGC Asia is retained as a promotable window-specific challenger on identical 105-row coverage (BA 58.14% -> 59.21%; Brier 0.2608 -> 0.2461; DOWN recall 40.43% -> 42.55%). Sobti Asia Morning is calibration-only; all other selected variants are rejected, including WGC Europe because DOWN recall falls below the 30% floor.
 13. **SESSION Model-05 = STRUCTURAL_IRIS / A1_PLUS_PATH — COMPLETE / CANONICAL BASELINE RETAINED.** Authority: `GOLD_SESSION_MODEL05_STRUCTURAL_IRIS_FINAL_AUTHORITY_2026-10-07.md`. Canonical identity is `S14_A1_PLUS_1H_FULL` = mandatory fresh A1 structural logit + full 1h PATH block.
 14. **Model-05B 1h PATH feature selection — COMPLETE / NO PROMOTION.** The first Model-05B run is superseded because it used a 1h-only ready-row population and therefore did not preserve the canonical S1.4 common-row identity. The corrected run requires both 15m-ready and 1h-ready rows, reproduces the frozen S1.4 baseline, and is authoritative. No selected session variant passes promotion. WGC Europe improves BA 49.90% -> 51.06% and Brier 0.2686 -> 0.2578, but DOWN recall falls to 24.62%, below the frozen 30% class-recall floor. Sobti Asia Morning canonical 1h remains the strongest clean Model-05 head at 2025 BA 60.86%, UP recall 64.18%, DOWN recall 57.53%.
-15. **SESSION Model-06 = SAGE SESSION_ONLY — NEXT.** Historical S1.5 evidence already exists; first reconcile its exact data/clock/model identity and corrected 2025 transport evidence. Do not rerun or alter SAGE before that identity check.
+15. **SESSION Model-06 = SAGE SESSION_ONLY — COMPLETE / NOT PROMOTED.** Authority: `GOLD_SESSION_MODEL06_SAGE_SESSION_ONLY_FINAL_AUTHORITY_2026-10-07.md`. Canonical S15_SESSION_ONLY had one development-eligible head, WGC Asia (BA 56.21%, UP 67.33%, DOWN 45.10%), but frozen 2025 transport fell to BA 48.06%.
+16. **Model-06B SAGE feature selection — COMPLETE / FAIL-CLOSED.** Selection was restricted to the 14 canonical SAGE variables. No session passed the frozen pre-2025 selected-SAGE gate. Therefore **no selected-SAGE 2025 outcome was opened**.
+17. **SESSION Model-07 = SAGE PATH_SESSION / S1.6 — NEXT.** Historical corrected S1.6 evidence already exists. Reconcile its exact PATH+SAGE identity, matched PATH_GLOBAL comparator, and corrected frozen-2025 transport before any new feature analysis or rerun.
 6. For every session-capable model report, at minimum: N, Accuracy, Balanced Accuracy, **UP recall, DOWN recall**, Brier/log loss where probabilistic, coverage, and the exact target window. A gain obtained by collapsing one class is not a promotion.
 7. Session chronology is frozen: governed 2022 warm-up only where required; 2023–2024 development; 2025 one-time frozen transport; 2026 is not a selection set.
 8. Existing Stage-1 session artifacts and RIFT/VEGA specialist artifacts are evidence to reconcile, not permission to skip identity checks. If the regenerated model is identical, record identity and reuse; if not, explain the contract difference and supersession explicitly.
 9. Only after all eligible legacy models are replayed/reconciled may the project build a **window-specific** consensus/router. Do not copy the old daily 4/4 membership wholesale into every session.
+
+### Model-06 SAGE SESSION_ONLY closure — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_MODEL06_SAGE_SESSION_ONLY_FINAL_AUTHORITY_2026-10-07.md`
+
+Canonical SAGE S1.5 uses the fixed 14-variable phase decomposition and a strict 16:15 New-York source-ready timestamp. Only WGC Asia passed the original 2023–2024 SESSION_ONLY gate (BA 56.21%, UP recall 67.33%, DOWN recall 45.10%), but its legitimate frozen 2025 transport fell to BA 48.06%.
+
+Model-06B then tested session-specific selection within the same 14 SAGE variables. No selected-SAGE session passed the preregistered development gate. Consequently selected-SAGE 2025 remained fully closed; no post-hoc rescue or 2025-driven feature choice was allowed. Model-06 is therefore complete and not promoted.
 
 ### Model-05 STRUCTURAL_IRIS closure — 2026-10-07
 
