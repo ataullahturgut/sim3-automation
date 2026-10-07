@@ -223,13 +223,18 @@ def replay_2025(g,part,win,features):
         if te.empty:continue
         cut=te.start_utc.min();tr=g[(g.end_utc<=cut)&(g.start_utc<cut)].copy()
         if len(tr)<MIN_TRAIN or tr.y_up.nunique()<2:continue
-        pp=fit_l2(tr,te,features)
-        for r,p in zip(te.itertuples(index=False),pp):
-            if int(r.year)!=2025:continue
-            rows.append({"model":"MODEL01B_FROZEN_FEATURES","partition":part,"window":win,
-                         "label_date":r.label_date,"start_utc":r.start_utc,"end_utc":r.end_utc,
-                         "year":2025,"y_up":int(r.y_up),"p_up":float(p),"train_n":int(len(tr)),
-                         "continuous_block":int(bs//BLOCK),"features":"|".join(features)})
+        variants=[
+            ("CORE3_CLASSICAL_COMMON_2025",CORE3),
+            ("MODEL01B_FROZEN_FEATURES",features),
+        ]
+        for model_name,feats in variants:
+            pp=fit_l2(tr,te,feats)
+            for r,p in zip(te.itertuples(index=False),pp):
+                if int(r.year)!=2025:continue
+                rows.append({"model":model_name,"partition":part,"window":win,
+                             "label_date":r.label_date,"start_utc":r.start_utc,"end_utc":r.end_utc,
+                             "year":2025,"y_up":int(r.y_up),"p_up":float(p),"train_n":int(len(tr)),
+                             "continuous_block":int(bs//BLOCK),"features":"|".join(feats)})
     return pd.DataFrame(rows)
 
 def summarize(pred,period):
@@ -289,6 +294,7 @@ def main():
       "coverage":cov,
       "stak_annual_hashes":hashes,
       "guardrails":[
+        "2025 comparison uses CORE3 and Model-01B on the exact same common rows and identical causal block chronology.",
         "Model-01 baseline is not overwritten.",
         "Final estimator remains Classical Logistic L2 C=1.0.",
         "No target-start bar or target-window XAU15 observation is used.",
