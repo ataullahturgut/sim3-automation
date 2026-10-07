@@ -1,0 +1,150 @@
+{
+  "status": "H3_MODEL01_CORE3_LOGIT_FROZEN_CLEAN_COMPLETE",
+  "model": "CLASSICAL_CORE3_LOGISTIC_L2",
+  "target": "H3 direction = sign(log(P[t+3]/P[t]))",
+  "horizon_semantics": "third retained Gold observation; not 3 calendar days",
+  "features": [
+    "gold_r1",
+    "gold_r3",
+    "gold_r5",
+    "gold_r10",
+    "gold_r21",
+    "sigma20",
+    "silver_r1",
+    "silver_r5",
+    "silver_r21",
+    "silver_age_days",
+    "platinum_r1",
+    "platinum_r5",
+    "platinum_r21",
+    "platinum_age_days"
+  ],
+  "dev_contract": "2022-2024 chronological block-5; train only on H3 outcomes matured by block start",
+  "transport_contract": "single model fit on all H3 rows matured by 2024-12-31; unchanged through 2025 and 2026",
+  "frozen_train_n": 3784,
+  "frozen_train_last_target_end": "2024-12-31",
+  "threshold": 0.5,
+  "integrity_patch": {
+    "patch_date": "2026-02-27",
+    "old_values": {
+      "gold": 3516.02,
+      "silver": 62.15,
+      "platinum": 1585.39,
+      "palladium": 1201.26
+    },
+    "new_values": {
+      "gold": 5183.8,
+      "silver": 88.14,
+      "platinum": 2369.25,
+      "palladium": 1789.96
+    },
+    "provenance": {
+      "gold": "GoldPrice.org 2026-02-27 close",
+      "silver": "GoldPrice.org 2026-02-27 close",
+      "platinum": "StatMuse XPT 2026-02-27 close",
+      "palladium": "StatMuse XPD 2026-02-27 close"
+    },
+    "base_rows": 4232
+  },
+  "metrics": [
+    {
+      "period": "DEV_2022_2024",
+      "n": 755,
+      "accuracy": 0.5496688741721855,
+      "balanced_accuracy": 0.544760900140647,
+      "brier": 0.24663739991832845,
+      "logloss": 0.686447194399535,
+      "up_recall": 0.6506329113924051,
+      "down_recall": 0.4388888888888889,
+      "tn": 158,
+      "fp": 202,
+      "fn": 138,
+      "tp": 257
+    },
+    {
+      "period": "2022",
+      "n": 250,
+      "accuracy": 0.532,
+      "balanced_accuracy": 0.533026113671275,
+      "brier": 0.24574782645856197,
+      "logloss": 0.6846247727377411,
+      "up_recall": 0.6612903225806451,
+      "down_recall": 0.40476190476190477,
+      "tn": 51,
+      "fp": 75,
+      "fn": 42,
+      "tp": 82
+    },
+    {
+      "period": "2023",
+      "n": 251,
+      "accuracy": 0.5258964143426295,
+      "balanced_accuracy": 0.5219961856325492,
+      "brier": 0.24943635741771472,
+      "logloss": 0.6920726140342203,
+      "up_recall": 0.6307692307692307,
+      "down_recall": 0.4132231404958678,
+      "tn": 50,
+      "fp": 71,
+      "fn": 48,
+      "tp": 82
+    },
+    {
+      "period": "2024",
+      "n": 254,
+      "accuracy": 0.5905511811023622,
+      "balanced_accuracy": 0.5819996234230842,
+      "brier": 0.24474706540098856,
+      "logloss": 0.6826819388371039,
+      "up_recall": 0.6595744680851063,
+      "down_recall": 0.504424778761062,
+      "tn": 57,
+      "fp": 56,
+      "fn": 48,
+      "tp": 93
+    },
+    {
+      "period": "FROZEN_2025",
+      "n": 253,
+      "accuracy": 0.5019762845849802,
+      "balanced_accuracy": 0.5006278086174993,
+      "brier": 0.25075580796348274,
+      "logloss": 0.6946361318584924,
+      "up_recall": 0.5064102564102564,
+      "down_recall": 0.4948453608247423,
+      "tn": 48,
+      "fp": 49,
+      "fn": 77,
+      "tp": 79
+    },
+    {
+      "period": "FROZEN_2026",
+      "n": 191,
+      "accuracy": 0.46596858638743455,
+      "balanced_accuracy": 0.4776373626373626,
+      "brier": 0.25728529231779723,
+      "logloss": 0.708715455608285,
+      "up_recall": 0.7252747252747253,
+      "down_recall": 0.23,
+      "tn": 23,
+      "fp": 77,
+      "fn": 25,
+      "tp": 66
+    },
+    {
+      "period": "FROZEN_2025_2026",
+      "n": 444,
+      "accuracy": 0.4864864864864865,
+      "balanced_accuracy": 0.4737253128917569,
+      "brier": 0.2535646627195054,
+      "logloss": 0.7006927778859932,
+      "up_recall": 0.5870445344129555,
+      "down_recall": 0.3604060913705584,
+      "tn": 71,
+      "fp": 126,
+      "fn": 102,
+      "tp": 145
+    }
+  ],
+  "supersedes_for_model01": "GOLD_H3_MODEL01_CORE3_LOGIT_* first 2026-10-07 run used NOVA A0 expanding refit and is not the classical frozen transport contract"
+}
