@@ -1,0 +1,97 @@
+{
+  "status": "COMPLETE",
+  "identity": "OLD_CIG_D1_V1_2025_RESCORED_ON_EXECUTION_TARGETS",
+  "signal_contract": {
+    "experts": [
+      "SAGE V2 + RuleFlow V3-TG",
+      "HELIOS V5-DCE",
+      "RIFT",
+      "VEGA"
+    ],
+    "rule": "4/4 same direction -> consensus; otherwise UNCERTAIN",
+    "no_retraining": true
+  },
+  "reconstruction_qa": {
+    "2025_h3_rows": 248,
+    "published_expected_h3_rows": 248,
+    "v5_h3_correct_reconstructed": 165,
+    "published_expected_v5_h3_correct": 165,
+    "sage_ruleflow_h3_correct_reconstructed": 171,
+    "published_expected_sage_ruleflow_h3_correct": 171,
+    "consensus_n_reconstructed": 218,
+    "published_expected_consensus_n": 218,
+    "sage_exception_n": 3,
+    "ruleflow_exception_n": 5,
+    "sage_action_keys_2025": [
+      {
+        "feature_cutoff_date": "2025-08-07",
+        "forecast_issue_date": "2025-08-08"
+      },
+      {
+        "feature_cutoff_date": "2025-10-07",
+        "forecast_issue_date": "2025-10-08"
+      },
+      {
+        "feature_cutoff_date": "2025-12-30",
+        "forecast_issue_date": "2025-12-31"
+      }
+    ],
+    "ruleflow_action_dates_2025": [
+      "2025-05-02",
+      "2025-05-30",
+      "2025-06-04",
+      "2025-07-29",
+      "2025-07-30"
+    ],
+    "pass": true
+  },
+  "targets": {
+    "DAY_09_17_TRT": {
+      "n": 217,
+      "correct": 114,
+      "accuracy": 0.5253456221198156,
+      "up_signals": {
+        "n": 131,
+        "correct": 74,
+        "accuracy": 0.5648854961832062
+      },
+      "down_signals": {
+        "n": 86,
+        "correct": 40,
+        "accuracy": 0.46511627906976744
+      },
+      "causal_use": "NOT_EXECUTABLE_AT_09_TRT",
+      "reason": "Old CIG governed issue deadline is 08:00 America/New_York, approximately 15:00/16:00 Europe/Istanbul in 2025; this is after the 09:00 target origin."
+    },
+    "OVERNIGHT_17_NEXT09_TRT": {
+      "n": 216,
+      "correct": 106,
+      "accuracy": 0.49074074074074076,
+      "up_signals": {
+        "n": 130,
+        "correct": 70,
+        "accuracy": 0.5384615384615384
+      },
+      "down_signals": {
+        "n": 86,
+        "correct": 36,
+        "accuracy": 0.4186046511627907
+      },
+      "causal_use": "CLOCK_COMPATIBLE",
+      "reason": "Old CIG governed 08:00 New York deadline occurs before 17:00 Europe/Istanbul in 2025."
+    }
+  },
+  "joint": {
+    "both_targets_observed_n": 216,
+    "both_correct_n": 53,
+    "both_correct_rate": 0.24537037037037038,
+    "day_and_overnight_same_actual_direction_rate": 0.4722222222222222
+  },
+  "price_semantics": {
+    "day_start": "09:00 Europe/Istanbul = 06:00 UTC 15m bar OPEN",
+    "day_end": "17:00 Europe/Istanbul = 13:45 UTC 15m bar CLOSE",
+    "overnight_start": "17:00 Europe/Istanbul = 14:00 UTC 15m bar OPEN",
+    "overnight_end": "next eligible 09:00 Europe/Istanbul = 05:45 UTC 15m bar CLOSE",
+    "turkey_offset": "UTC+3 fixed"
+  }
+}
