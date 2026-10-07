@@ -64,7 +64,7 @@ def main():
     dev=q[q.year.isin([2023,2024])]
     rows["DEV"]={"fsmr":metric(dev.y,dev.pred),"pair_same_rows":metric(dev.y,dev.pair_pred),
                  "majority_accuracy":max(float(dev.y.mean()),1-float(dev.y.mean())),
-                 "rescue":int(dev.rescue.sum()),"break":int(dev.break.sum()),"net_rescue":int(dev.rescue.sum()-dev.break.sum())}
+                 "rescue":int(dev.rescue.sum()),"break":int(dev['break'].sum()),"net_rescue":int(dev.rescue.sum()-dev['break'].sum())}
     summary={"status":"COMPLETE","selector":"maximize minimum BA across 2023 and 2024 among preregistered FSMR candidates; require N>=100/year, 35%-80% coverage/year and noncollapsed predictions",
              "selection_uses_2025":False,"chosen":chosen,"ranking":ranking,"common_row_comparison":rows,
              "interpretation":"development-stable selective overnight specialist; 2025 is retrospective transport, not untouched prospective evidence"}
