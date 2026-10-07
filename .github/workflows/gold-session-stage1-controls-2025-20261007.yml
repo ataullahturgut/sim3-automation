@@ -1,0 +1,82 @@
+name: Gold Session Stage1 Controls 2025 20261007
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - '.github/workflows/gold-session-stage1-controls-2025-20261007.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Run frozen A0 and PATH controls
+        run: |
+          python - <<'PY'
+          import importlib.util,json
+          from pathlib import Path
+          import numpy as np,pandas as pd
+          AX=Path("gold_axis_2026")
+          def lm(n,p):
+              s=importlib.util.spec_from_file_location(n,p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
+          a0=lm("a0",AX/"tools/gold_session_nova_a0_core3_raw_replay_v1_20261006.py")
+          sg=lm("sg",AX/"tools/gold_session_sage_frozen_2025_transport_20261007.py")
+          res=sg.res1h;base=sg.base;BLOCK=5
+          def replay(p,name,fs,minn):
+              out=[]
+              for (part,w),g0 in p.groupby(["partition","window"],sort=True):
+                  g=g0.sort_values("start_utc").reset_index(drop=True);tt=g[g.year.eq(2025)].reset_index(drop=True)
+                  for k in range(0,len(tt),BLOCK):
+                      te=tt.iloc[k:k+BLOCK]
+                      if te.empty: continue
+                      cut=te.start_utc.min();tr=g[(g.end_utc<=cut)&(g.start_utc<cut)]
+                      if len(tr)<minn or tr.y_up.nunique()<2: continue
+                      pp=sg.fit(tr,te,fs)
+                      for r,x in zip(te.itertuples(index=False),pp):
+                          out.append({"model":name,"partition":part,"window":w,"label_date":r.label_date,
+                                      "start_utc":r.start_utc,"y_up":int(r.y_up),"p_up":float(x)})
+              return pd.DataFrame(out)
+          t=sg.targets()
+          old=a0.YEARS;a0.YEARS=range(2010,2026)
+          try:m,_=a0.load_raw_metals()
+          finally:a0.YEARS=old
+          d=a0.align_daily_features(t,m).dropna(subset=a0.CORE3+["direction"]).copy()
+          d["year"]=d.start_utc.dt.year;d["y_up"]=(d.direction=="UP").astype(int)
+          p0=replay(d,"A0_CORE3",a0.CORE3,120)
+          r=sg.raw();h=sg.x1h(r);q=t.copy().reset_index(drop=True);q["row_id"]=np.arange(len(q))
+          q=res.attach(q,h,"g1h","1h");f=res.feature_names("g1h")
+          q=q.dropna(subset=f+["direction"]).copy();q["year"]=q.start_utc.dt.year
+          pp=replay(q,"PATH_GLOBAL_1H",f,180)
+          x=pd.concat([p0,pp],ignore_index=True);rows=[]
+          for (mo,part,w),g in x.groupby(["model","partition","window"],sort=True):
+              rows.append({"model":mo,"partition":part,"window":w,**base.metrics(g.y_up,g.p_up)})
+          md=pd.DataFrame(rows)
+          x.to_csv(AX/"GOLD_SESSION_STAGE1_CONTROLS_2025_PREDICTIONS_2026-10-07.csv",index=False)
+          md.to_csv(AX/"GOLD_SESSION_STAGE1_CONTROLS_2025_METRICS_2026-10-07.csv",index=False)
+          s={"status":"STAGE1_CONTROLS_2025_COMPLETE","metrics":rows,
+             "guardrails":["causal expanding replay","frozen feature/model identity","2026 unopened"]}
+          (AX/"GOLD_SESSION_STAGE1_CONTROLS_2025_SUMMARY_2026-10-07.json").write_text(json.dumps(s,indent=2)+"\n")
+          print(json.dumps(s,indent=2))
+          PY
+      - name: Record controls
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_SESSION_STAGE1_CONTROLS_2025_*
+          git commit -m "Record A0 and PATH_GLOBAL 2025 controls"
+          git pull --rebase origin gold-execution-channel-audit-20261006
+          git push origin HEAD:gold-execution-channel-audit-20261006
