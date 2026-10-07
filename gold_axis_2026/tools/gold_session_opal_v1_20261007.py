@@ -75,7 +75,9 @@ def fresh_aurora_ledger():
 def attach_hourly_momentum(panel):
     x15=m05.load_xau15_extended()
     x1=m05.load_xau1h(x15)
-    q=m05.s14.res1h.attach(panel.copy(),x1,"g1h","1h")
+    q0=panel.copy().reset_index(drop=True)
+    q0["row_id"]=np.arange(len(q0))
+    q=m05.s14.res1h.attach(q0,x1,"g1h","1h")
     need=["g1h_ret_12h","g1h_rv_12","g1h_anchor_available","g1h_max_reference_stale_min"]
     q=q.dropna(subset=need).copy()
     if not (q.g1h_anchor_available<q.start_utc).all():
