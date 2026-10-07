@@ -312,3 +312,125 @@ Duplicate-control cluster:
 - The selected SAGE representation amplifies these one-sided signatures rather than producing a robust balanced engine.
 - Canonical and selected SAGE-only variants are one dependency cluster and may not be counted as independent votes.
 - Consensus status remains `PENDING_INCREMENTAL_TEST`.
+
+
+---
+
+## Model-07 — SAGE PATH_SESSION family
+
+Source:
+- `GOLD_SESSION_MODEL07B_SAGE_PATH_SESSION_FEATURE_SELECTION_DEV_METRICS_2026-10-07.csv`
+
+Dependency cluster:
+- canonical PATH_SESSION
+- selected PATH_SESSION
+- matched PATH comparators
+
+### Canonical PATH_SESSION
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 279 | 49.11% | 48.97% | 49.25% | BALANCED / near-neutral |
+| Sobti Asia Morning | 272 | 49.88% | 46.21% | 53.54% | DOWN_LEAN / near-neutral |
+| Sobti Europe | 295 | 44.08% | 53.05% | 35.11% | UP_SKEW / weak |
+| Sobti NY/London | 297 | 52.21% | 53.10% | 51.32% | BALANCED |
+| Sobti Late-US | 170 | 48.36% | 61.00% | 35.71% | UP_SKEW |
+| WGC Asia | 152 | 54.72% | 62.38% | 47.06% | BALANCED / UP_LEAN |
+| WGC Europe | 297 | 47.38% | 58.33% | 36.43% | UP_SKEW |
+| WGC US | 264 | 47.46% | 38.46% | 56.46% | DOWN_SKEW |
+
+### Selected PATH_SESSION
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 279 | 54.88% | 53.79% | 55.97% | BALANCED |
+| Sobti Asia Morning | 272 | 51.54% | 39.31% | 63.78% | DOWN_SKEW |
+| Sobti Europe | 295 | 49.49% | 67.68% | 31.30% | UP_SKEW |
+| Sobti NY/London | 297 | 53.57% | 55.17% | 51.97% | BALANCED |
+| Sobti Late-US | 170 | 48.00% | 66.00% | 30.00% | UP_SKEW |
+| WGC Asia | 152 | 55.72% | 66.34% | 45.10% | BALANCED / UP_LEAN |
+| WGC Europe | 297 | 54.11% | 70.24% | 37.98% | UP_SKEW / two-class viable |
+| WGC US | 264 | 50.54% | 45.30% | 55.78% | DOWN_LEAN / balanced |
+
+Interpretation:
+- Selected PATH_SESSION contains balanced candidates in Asia Afternoon, NY/London and WGC Asia.
+- Europe/Late-US contain UP-specialist structure; WGC US contains DOWN-oriented structure.
+- PATH_SESSION remains nested on PATH/SAGE inputs, so incremental-value testing is mandatory before voting.
+
+---
+
+## Model-08 — SAGE A1_SESSION family
+
+Source:
+- `GOLD_SESSION_MODEL08B_SAGE_A1_SESSION_FEATURE_SELECTION_DEV_METRICS_2026-10-07.csv`
+
+Dependency cluster:
+- canonical A1_SESSION
+- selected A1_SESSION
+- direct A1 comparator
+
+### Canonical A1_SESSION
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 383 | 50.00% | 43.08% | 56.91% | DOWN_SKEW |
+| Sobti Asia Morning | 383 | 46.11% | 47.34% | 44.89% | BALANCED / weak |
+| Sobti Europe | 418 | 55.13% | 63.11% | 47.15% | BALANCED / UP_LEAN |
+| Sobti NY/London | 414 | 46.64% | 47.26% | 46.01% | BALANCED / weak |
+| Sobti Late-US | 259 | 50.27% | **84.38%** | **16.16%** | **UP_SKEW** |
+| WGC Asia | 416 | 48.99% | 67.38% | 30.60% | UP_SKEW |
+| WGC Europe | 417 | 52.33% | 64.66% | 40.00% | BALANCED / UP_LEAN |
+| WGC US | 371 | 52.48% | 40.56% | 64.40% | DOWN_SKEW / two-class viable |
+
+### Selected A1_SESSION
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 383 | 52.09% | 45.13% | 59.04% | DOWN_SKEW / balanced |
+| Sobti Asia Morning | 383 | 49.17% | 44.93% | 53.41% | DOWN_LEAN |
+| Sobti Europe | 418 | 55.95% | 65.78% | 46.11% | BALANCED / UP_LEAN |
+| Sobti NY/London | 414 | 46.43% | 48.26% | 44.60% | BALANCED / weak |
+| Sobti Late-US | 259 | 51.06% | **90.00%** | **12.12%** | **EXTREME_UP_SKEW** |
+| WGC Asia | 416 | 51.22% | 69.10% | 33.33% | UP_SKEW |
+| WGC Europe | 417 | 54.86% | **70.26%** | 39.46% | UP_SKEW / two-class viable |
+| WGC US | 371 | 52.18% | 39.44% | **64.92%** | DOWN_SKEW / two-class viable |
+
+Interpretation:
+- Late-US is a very strong UP-skew signal family.
+- WGC US is a persistent DOWN-oriented candidate.
+- Europe has a relatively balanced but UP-leaning profile.
+- A1_SESSION is nested on A1 and SAGE; duplicate control is mandatory.
+
+---
+
+## Model-09 — SAGE A1_PATH_SESSION family
+
+Source:
+- `GOLD_SESSION_MODEL09B_SAGE_A1_PATH_SESSION_FEATURE_SELECTION_DEV_METRICS_2026-10-07.csv`
+
+Dependency cluster:
+- selected A1_PATH_SESSION
+- exact matched A1+PATH comparator
+
+### Selected A1_PATH_SESSION development profile
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 191 | 56.14% | 54.81% | 57.47% | BALANCED |
+| Sobti Asia Morning | 184 | 49.19% | 50.94% | 47.44% | BALANCED / near-neutral |
+| Sobti Europe | 213 | 45.09% | 68.91% | 21.28% | UP_SKEW |
+| Sobti NY/London | 215 | **56.41%** | 46.15% | **66.67%** | BALANCED / DOWN_LEAN |
+| Sobti Late-US | 89 | 54.40% | **77.08%** | 31.71% | UP_SKEW / two-class viable |
+| WGC Asia | 102 | 51.91% | **82.61%** | 21.21% | UP_SKEW |
+| WGC Europe | 215 | 51.79% | **75.00%** | 28.57% | UP_SKEW |
+| WGC US | 177 | **59.94%** | 41.86% | **78.02%** | **DOWN_SKEW / strong two-class candidate** |
+
+### Model-09 interpretation
+
+- Model-09 contains some of the strongest development-only specialist evidence:
+  - Late-US, WGC Asia and WGC Europe on the UP side;
+  - WGC US on the DOWN side.
+- WGC US is especially important because DOWN recall is high while UP recall remains above 40%, producing BA 59.94%.
+- Sobti NY/London is a balanced/down-leaning candidate rather than merely a generic weak model.
+- Model-09 is nested on A1 + PATH + SAGE and must be tested for incremental value against its exact matched A1+PATH comparator before receiving consensus weight.
+- Consensus status remains `PENDING_INCREMENTAL_TEST`.
