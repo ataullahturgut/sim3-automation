@@ -1,0 +1,333 @@
+{
+  "status": "SESSION_OPAL_V1B_VARSEL_COMPLETE",
+  "candidate_features": [
+    "opt_mm_net",
+    "opt_prod_net",
+    "opt_swap_net",
+    "opt_other_net",
+    "d_opt_mm_net",
+    "d_opt_prod_net",
+    "opt_mm_z52",
+    "opt_prod_z52",
+    "opt_swap_z52",
+    "opt_other_z52",
+    "spec_hedger_gap",
+    "spec_swap_gap",
+    "fut_mm_net",
+    "fut_prod_net",
+    "trend_x_opt_mm",
+    "trend_x_opt_prod",
+    "trend_x_spec_hedger_gap",
+    "trend_strength"
+  ],
+  "frozen_features": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "frozen_features": [
+        "trend_x_opt_mm",
+        "opt_mm_net",
+        "opt_prod_net"
+      ],
+      "n_features": 3,
+      "selection_events": 7
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "frozen_features": [
+        "trend_x_opt_mm",
+        "d_opt_prod_net",
+        "opt_other_z52"
+      ],
+      "n_features": 3,
+      "selection_events": 7
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "frozen_features": [
+        "opt_mm_net",
+        "opt_prod_z52",
+        "d_opt_mm_net",
+        "trend_strength"
+      ],
+      "n_features": 4,
+      "selection_events": 8
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "frozen_features": [
+        "opt_swap_net",
+        "d_opt_prod_net",
+        "opt_prod_z52",
+        "trend_strength"
+      ],
+      "n_features": 4,
+      "selection_events": 8
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "frozen_features": [
+        "spec_swap_gap",
+        "trend_x_opt_prod",
+        "opt_swap_net"
+      ],
+      "n_features": 3,
+      "selection_events": 1
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "frozen_features": [
+        "opt_mm_net",
+        "trend_x_opt_mm",
+        "opt_prod_net"
+      ],
+      "n_features": 3,
+      "selection_events": 2
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "frozen_features": [
+        "d_opt_mm_net",
+        "d_opt_prod_net",
+        "trend_x_opt_mm"
+      ],
+      "n_features": 3,
+      "selection_events": 8
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "frozen_features": [
+        "opt_prod_net",
+        "opt_mm_net",
+        "trend_x_opt_prod"
+      ],
+      "n_features": 3,
+      "selection_events": 6
+    }
+  ],
+  "development_gate": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "eligible": false,
+      "reason": "NET_RESCUE_NOT_POSITIVE|NO_OVERRIDE",
+      "dev_n": 84,
+      "aurora_ba": 0.4903573454339194,
+      "opal_ba": 0.4903573454339194,
+      "opal_up_recall": 0.3953488372093023,
+      "opal_down_recall": 0.5853658536585366,
+      "aurora_brier": 0.299776965497967,
+      "opal_brier": 0.299776965497967,
+      "override_n": 0,
+      "rescued": 0,
+      "broken": 0,
+      "net_rescue": 0
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "eligible": false,
+      "reason": "2024_BRIER|DEV_BA|NET_RESCUE_NOT_POSITIVE",
+      "dev_n": 81,
+      "aurora_ba": 0.5607843137254902,
+      "opal_ba": 0.553921568627451,
+      "opal_up_recall": 0.6078431372549019,
+      "opal_down_recall": 0.5,
+      "aurora_brier": 0.2456593082558164,
+      "opal_brier": 0.24979998512857207,
+      "override_n": 4,
+      "rescued": 2,
+      "broken": 2,
+      "net_rescue": 0
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "eligible": false,
+      "reason": "2024_ACC|2024_BRIER|DEV_BA|NET_RESCUE_NOT_POSITIVE",
+      "dev_n": 99,
+      "aurora_ba": 0.4949874686716792,
+      "opal_ba": 0.4830827067669173,
+      "opal_up_recall": 0.5614035087719298,
+      "opal_down_recall": 0.40476190476190477,
+      "aurora_brier": 0.276555695327711,
+      "opal_brier": 0.27967395043392446,
+      "override_n": 1,
+      "rescued": 0,
+      "broken": 1,
+      "net_rescue": -1
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "eligible": false,
+      "reason": "NET_RESCUE_NOT_POSITIVE|NO_OVERRIDE",
+      "dev_n": 102,
+      "aurora_ba": 0.5797073546399691,
+      "opal_ba": 0.5797073546399691,
+      "opal_up_recall": 0.6122448979591837,
+      "opal_down_recall": 0.5471698113207547,
+      "aurora_brier": 0.26328017259370484,
+      "opal_brier": 0.26328017259370484,
+      "override_n": 0,
+      "rescued": 0,
+      "broken": 0,
+      "net_rescue": 0
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "eligible": false,
+      "reason": "RECALL_FLOOR",
+      "dev_n": 6,
+      "aurora_ba": 0.25,
+      "opal_ba": 0.5,
+      "opal_up_recall": 1.0,
+      "opal_down_recall": 0.0,
+      "aurora_brier": 0.43400253330917876,
+      "opal_brier": 0.3173981332579487,
+      "override_n": 1,
+      "rescued": 1,
+      "broken": 0,
+      "net_rescue": 1
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "eligible": false,
+      "reason": "RECALL_FLOOR|NET_RESCUE_NOT_POSITIVE|NO_OVERRIDE",
+      "dev_n": 13,
+      "aurora_ba": 0.4375,
+      "opal_ba": 0.4375,
+      "opal_up_recall": 0.875,
+      "opal_down_recall": 0.0,
+      "aurora_brier": 0.2521197981941077,
+      "opal_brier": 0.2521197981941077,
+      "override_n": 0,
+      "rescued": 0,
+      "broken": 0,
+      "net_rescue": 0
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "eligible": true,
+      "reason": "PASS",
+      "dev_n": 99,
+      "aurora_ba": 0.45238095238095233,
+      "opal_ba": 0.4793233082706767,
+      "opal_up_recall": 0.6491228070175439,
+      "opal_down_recall": 0.30952380952380953,
+      "aurora_brier": 0.27441688720152374,
+      "opal_brier": 0.26885345280052514,
+      "override_n": 4,
+      "rescued": 3,
+      "broken": 1,
+      "net_rescue": 2
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "eligible": false,
+      "reason": "RECALL_FLOOR|NET_RESCUE_NOT_POSITIVE|NO_OVERRIDE",
+      "dev_n": 72,
+      "aurora_ba": 0.42007722007722004,
+      "opal_ba": 0.42007722007722004,
+      "opal_up_recall": 0.5428571428571428,
+      "opal_down_recall": 0.2972972972972973,
+      "aurora_brier": 0.2829442778385577,
+      "opal_brier": 0.2829442778385577,
+      "override_n": 0,
+      "rescued": 0,
+      "broken": 0,
+      "net_rescue": 0
+    }
+  ],
+  "eligible_heads": [
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE"
+    }
+  ],
+  "transport_2025_metrics": [
+    {
+      "period": "FROZEN_2025",
+      "model": "CANONICAL_OPAL",
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "override_n": 13,
+      "rescued": 7,
+      "broken": 6,
+      "net_rescue": 1,
+      "aurora_n": 145,
+      "aurora_accuracy": 0.5310344827586206,
+      "aurora_balanced_accuracy": 0.5158653846153847,
+      "aurora_brier": 0.26764112478359464,
+      "aurora_logloss": 0.748863958101623,
+      "aurora_up_recall": 0.6625,
+      "aurora_down_recall": 0.36923076923076925,
+      "aurora_up_actual": 80,
+      "aurora_up_correct": 53,
+      "aurora_down_actual": 65,
+      "aurora_down_correct": 24,
+      "opal_n": 145,
+      "opal_accuracy": 0.5379310344827586,
+      "opal_balanced_accuracy": 0.5264423076923077,
+      "opal_brier": 0.26761965663158416,
+      "opal_logloss": 0.7502621460863063,
+      "opal_up_recall": 0.6375,
+      "opal_down_recall": 0.4153846153846154,
+      "opal_up_actual": 80,
+      "opal_up_correct": 51,
+      "opal_down_actual": 65,
+      "opal_down_correct": 27
+    },
+    {
+      "period": "FROZEN_2025",
+      "model": "SELECTED_OPAL",
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "override_n": 1,
+      "rescued": 0,
+      "broken": 1,
+      "net_rescue": -1,
+      "aurora_n": 145,
+      "aurora_accuracy": 0.5310344827586206,
+      "aurora_balanced_accuracy": 0.5158653846153847,
+      "aurora_brier": 0.26764112478359464,
+      "aurora_logloss": 0.748863958101623,
+      "aurora_up_recall": 0.6625,
+      "aurora_down_recall": 0.36923076923076925,
+      "aurora_up_actual": 80,
+      "aurora_up_correct": 53,
+      "aurora_down_actual": 65,
+      "aurora_down_correct": 24,
+      "opal_n": 145,
+      "opal_accuracy": 0.5241379310344828,
+      "opal_balanced_accuracy": 0.5096153846153846,
+      "opal_brier": 0.2713092780420756,
+      "opal_logloss": 0.7570803819163568,
+      "opal_up_recall": 0.65,
+      "opal_down_recall": 0.36923076923076925,
+      "opal_up_actual": 80,
+      "opal_up_correct": 52,
+      "opal_down_actual": 65,
+      "opal_down_correct": 24
+    }
+  ],
+  "guardrails": [
+    "Variable selection uses 2023-2024 only.",
+    "No new feature entered the OPAL family.",
+    "Final estimator and reversal threshold 0.70 are unchanged.",
+    "Every frozen subset contains direct COT positioning plus trend/context information.",
+    "2025 is transport only.",
+    "No 2026 outcome opened."
+  ]
+}
