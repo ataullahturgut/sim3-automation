@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+# workflow trigger: SENTRY contract unchanged
+
 import json
 from pathlib import Path
 
