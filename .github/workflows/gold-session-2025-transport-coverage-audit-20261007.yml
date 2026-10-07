@@ -1,0 +1,39 @@
+name: Gold Session 2025 Transport Coverage Audit 20261007
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_session_2025_transport_coverage_audit_20261007.py'
+      - '.github/workflows/gold-session-2025-transport-coverage-audit-20261007.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'pandas>=2.2,<3'
+      - run: python gold_axis_2026/tools/gold_session_2025_transport_coverage_audit_20261007.py
+      - name: Record audit
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/SESSION_2025_TRANSPORT_COVERAGE_AUDIT_OUT/summary.json gold_axis_2026/GOLD_SESSION_2025_TRANSPORT_COVERAGE_AUDIT_SUMMARY_2026-10-07.json
+          git add gold_axis_2026/GOLD_SESSION_2025_TRANSPORT_COVERAGE_AUDIT_SUMMARY_2026-10-07.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record 2025 transport coverage audit"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
