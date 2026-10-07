@@ -1,0 +1,37 @@
+name: Gold CIG July 2025 Execution Window Rescore
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_cig_july2025_execution_window_rescore_20261007.py'
+      - '.github/workflows/gold-cig-july2025-execution-window-rescore-20261007.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3'
+      - run: python gold_axis_2026/tools/gold_cig_july2025_execution_window_rescore_20261007.py
+      - name: Record
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/CIG_JULY2025_EXECUTION_WINDOW_RESCORE_OUT/result.md gold_axis_2026/GOLD_CIG_JULY2025_EXECUTION_WINDOW_RESCORE_RESULT_2026-10-07.md
+          cp gold_axis_2026/CIG_JULY2025_EXECUTION_WINDOW_RESCORE_OUT/rows.csv gold_axis_2026/GOLD_CIG_JULY2025_EXECUTION_WINDOW_RESCORE_ROWS_2026-10-07.csv
+          cp gold_axis_2026/CIG_JULY2025_EXECUTION_WINDOW_RESCORE_OUT/summary.json gold_axis_2026/GOLD_CIG_JULY2025_EXECUTION_WINDOW_RESCORE_SUMMARY_2026-10-07.json
+          git add gold_axis_2026/GOLD_CIG_JULY2025_EXECUTION_WINDOW_RESCORE_*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record July 2025 CIG execution-window rescore"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
