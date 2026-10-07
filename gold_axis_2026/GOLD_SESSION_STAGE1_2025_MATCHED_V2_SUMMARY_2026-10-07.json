@@ -1,0 +1,94 @@
+{
+  "status": "STAGE1_2025_MATCHED_V2_COMPLETE",
+  "recall_floor": 0.3,
+  "decision_rule": "highest balanced accuracy among frozen candidates on exact common rows; Brier only breaks exact BA tie; winner below 50% BA is not promoted",
+  "decisions": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "target_n": 240,
+      "common_n": 137,
+      "coverage": 0.5708333333333333,
+      "winner": "A0_CORE3",
+      "winner_ba": 0.6419437340153453,
+      "winner_brier": 0.24539292837221469,
+      "status": "PROMOTABLE_TRANSPORT_WINNER"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "target_n": 239,
+      "common_n": 140,
+      "coverage": 0.5857740585774058,
+      "winner": "S14_A1_PLUS_1H_FULL",
+      "winner_ba": 0.608566755264772,
+      "winner_brier": 0.2557108171906171,
+      "status": "PROMOTABLE_TRANSPORT_WINNER"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "target_n": 247,
+      "common_n": 144,
+      "coverage": 0.582995951417004,
+      "winner": "PATH_GLOBAL_1H",
+      "winner_ba": 0.5111593916650208,
+      "winner_brier": 0.2626522103606351,
+      "status": "PROMOTABLE_TRANSPORT_WINNER"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "target_n": 245,
+      "common_n": 144,
+      "coverage": 0.5877551020408164,
+      "winner": "A0_CORE3",
+      "winner_ba": 0.5388007054673721,
+      "winner_brier": 0.24869182518681024,
+      "status": "PROMOTABLE_TRANSPORT_WINNER"
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "target_n": 195,
+      "common_n": 107,
+      "coverage": 0.5487179487179488,
+      "winner": null,
+      "winner_ba": null,
+      "status": "NO_ADMISSIBLE_MODEL"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "target_n": 253,
+      "common_n": 104,
+      "coverage": 0.41106719367588934,
+      "winner": "PATH_GLOBAL_1H",
+      "winner_ba": 0.585832083958021,
+      "winner_brier": 0.2588574379559519,
+      "status": "PROMOTABLE_TRANSPORT_WINNER"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "target_n": 247,
+      "common_n": 145,
+      "coverage": 0.5870445344129555,
+      "winner": "PATH_GLOBAL_1H",
+      "winner_ba": 0.5158653846153847,
+      "winner_brier": 0.26764112478359464,
+      "status": "PROMOTABLE_TRANSPORT_WINNER"
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "target_n": 239,
+      "common_n": 140,
+      "coverage": 0.5857740585774058,
+      "winner": "PATH_GLOBAL_1H",
+      "winner_ba": 0.49376453181145635,
+      "winner_brier": 0.28250587873532385,
+      "status": "BEST_BUT_BELOW_50_BA"
+    }
+  ]
+}
