@@ -60,7 +60,7 @@ def main():
         a=metric(g.y,g.pred);b=metric(g.y,g.pair_pred)
         majority=max(float(g.y.mean()),1-float(g.y.mean()))
         rows[str(year)]={"fsmr":a,"pair_same_rows":b,"majority_accuracy":majority,
-                         "rescue":int(g.rescue.sum()),"break":int(g.break.sum()),"net_rescue":int(g.rescue.sum()-g.break.sum())}
+                         "rescue":int(g.rescue.sum()),"break":int(g['break'].sum()),"net_rescue":int(g.rescue.sum()-g['break'].sum())}
     dev=q[q.year.isin([2023,2024])]
     rows["DEV"]={"fsmr":metric(dev.y,dev.pred),"pair_same_rows":metric(dev.y,dev.pair_pred),
                  "majority_accuracy":max(float(dev.y.mean()),1-float(dev.y.mean())),
