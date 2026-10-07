@@ -95,7 +95,7 @@ def main():
  if not (p.loc[p.sage_ready_utc.notna(),"sage_ready_utc"]<p.loc[p.sage_ready_utc.notna(),"start_utc"]).all():raise RuntimeError("SAGE_LEAK")
  p=res1h.attach(p,x1h(r),"g1h","1h")
  f1=res1h.feature_names("g1h");p=p.dropna(subset=v1.SESSION_ALL+f1+["direction"])
- pred=replay(p);rows=[]
+ pred=replay(p);pred["start_utc"]=pd.to_datetime(pred.start_utc,utc=True);pred=pred[pred.start_utc.dt.year.eq(2025)].copy();rows=[]
  for (m,part,win),g in pred.groupby(["model","partition","window"]):
   rows.append({"model":m,"partition":part,"window":win,**base.metrics(g.y_up,g.p_up)})
  met=pd.DataFrame(rows);pairs=[]
