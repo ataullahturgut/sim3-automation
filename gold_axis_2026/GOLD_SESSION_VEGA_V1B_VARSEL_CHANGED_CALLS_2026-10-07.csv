@@ -1,0 +1,2 @@
+partition,window,label_date,start_utc,y_up,p_up,momentum_up,p_reversal,override,p_corrected,baseline,baseline_name
+SOBTI_5_ET,ASIA_MORNING_LIT,2023-09-28,2023-09-28 01:00:00+00:00,0,0.1290044317191495,0,0.7324289010349138,True,0.7324289010349138,STRUCTURAL_IRIS_A1_PLUS_1H,STRUCTURAL_IRIS_A1_PLUS_1H
