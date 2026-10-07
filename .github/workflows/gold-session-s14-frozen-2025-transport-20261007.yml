@@ -34,10 +34,10 @@ jobs:
           s=s.replace('start_utc.dt.year.isin([2023,2024])', 'start_utc.dt.year.isin([2023,2024,2025])')
           s=s.replace('pd.Timestamp("2025-01-01",tz="UTC")', 'pd.Timestamp("2026-01-01",tz="UTC")')
           s=s.replace('if __name__=="__main__":main()', 'base.base.YEARS=range(2010,2026)\nif __name__=="__main__":main()')
-          Path("/tmp/s14_transport.py").write_text(s)
+          Path("gold_axis_2026/tools/_tmp_s14_transport.py").write_text(s)
           PY
       - name: Run frozen S1.4 chronology through 2025
-        run: python /tmp/s14_transport.py
+        run: python gold_axis_2026/tools/_tmp_s14_transport.py
       - name: Extract 2025 transport authority
         run: |
           python - <<'PY'
