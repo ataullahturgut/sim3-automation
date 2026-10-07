@@ -184,7 +184,8 @@ Current state:
 - **Stage-2 specialist replay:** **COMPLETE** for RIFT, VEGA, TURN, PRISM, TWIN and OPAL;
 - **SESSION AIM V1:** **COMPLETE / TRANSPORT FAILED / ROUTER DIAGNOSTIC ONLY** via `GOLD_SESSION_AIM_V1_FINAL_AUTHORITY_2026-10-07.md`; only Sobti Asia Morning passed year-stability, then deteriorated in frozen 2025 (BA 60.86% -> 59.43%, net rescue -2);
 - **SESSION HELIOS Stage-1 readiness:** **COMPLETE / PASS_WITH_SESSION_REBUILD_REQUIRED** via `GOLD_SESSION_HELIOS_STAGE1_READINESS_AUTHORITY_2026-10-07.md`; binding lineage is HELIOS V1 -> V2 -> V3-GT -> V4-RGE -> V5-DCE, fresh SESSION AURORA/OPAL plus RIFT/TURN/VEGA dependencies are available, the prior OPAL/AURORA blocker is resolved, and H3 maturity fields are prohibited for SESSION replay. Session state must be independent by partition/window and may update only from same-window rows with `end_utc <= current start_utc`;
-- **current immediate task:** HELIOS Stage-2 — preregister/implement the session-native V1->V5 replay and run **2023-2024 development only**; do not open 2025 until the rule is frozen;
+- **SESSION HELIOS V1-V5:** **COMPLETE / SESSION-INERT UNDER FROZEN IDENTITY / NOT PROMOTED / 2026 STRESS DATA-BLOCKED** via `GOLD_SESSION_HELIOS_V1_V5_FINAL_AUTHORITY_2026-10-07.md`; the fresh SESSION replay generated no HELIOS routes because the historical 8-matured-candidate competence gate never fills at session granularity (through 2025 the maximum candidate count in any window is only 2). No threshold/gate relaxation was allowed. 2026 stress remains data-blocked because no V5-equivalent 2026 SESSION target population exists;
+- **current immediate task:** Stage-4 meta-controller replay — **BOCPD next**, then DPTC -> RTE -> RC-RTE -> SCR-RTE -> STCR;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
@@ -2606,6 +2607,23 @@ Sobti Late-US shows an interesting aggregate rescue signal against A0 (BA 51.59%
 
 All other window/baseline pairs fail closed. RIFT V1 may proceed to 2025 transport **only for Sobti Asia Afternoon**, with the representation and threshold frozen exactly as preregistered.
 
+
+### 5E.8ZH SESSION HELIOS V1-V5 final closure — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_HELIOS_V1_V5_FINAL_AUTHORITY_2026-10-07.md`
+
+Status: **COMPLETE / SESSION-INERT UNDER FROZEN IDENTITY / NOT PROMOTED / 2026 STRESS DATA-BLOCKED**.
+
+The full fresh SESSION lineage `V1 -> V2 -> V3-GT -> V4-RGE -> V5-DCE` was replayed causally from SESSION AURORA, corrected-PIT OPAL, RIFT, TURN and VEGA state. No historical H3 predictions were used as model inputs.
+
+The frozen HELIOS architecture produced **zero routes in every SESSION window**. This is a structural sparsity result: V1 requires eight matured OPAL+corroborator candidate reversals before its competence gate can operate, while the fresh session ledger produces at most one candidate per window in 2024 and at most two cumulatively through 2025 (WGC US). Thus V1 never activates and downstream V2/V3/V4/V5 remain inert. No gate reduction or candidate broadening was performed.
+
+The fresh common HELIOS ledger begins in 2024 under the required matured-history/source constraints, so the preregistered 2023+2024 stability requirement also fails closed. Consequently no head was eligible for frozen 2025 HELIOS transport.
+
+Stage-4 2026 stress is **DATA_BLOCKED**: the current governed 15-minute SESSION archive ends at 2026-01-02 23:45 UTC, the frozen V5 target authority ends with a 2025-12-31 session start, and there are zero frozen V5 final-trainable 2026 SESSION rows. Daily/H3 labels are not substituted.
+
+Next model: **BOCPD**.
 
 ### 5E.8ZG SESSION HELIOS Stage-1 readiness — 2026-10-07
 
