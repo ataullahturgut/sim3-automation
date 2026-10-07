@@ -1,0 +1,132 @@
+{
+  "status": "SESSION_DART_V1_COMPLETE",
+  "rule": {
+    "hazard": 0.05,
+    "max_run": 120,
+    "min_disagreements": 8,
+    "enter_prob": 0.9,
+    "enter_q": 0.6,
+    "exit_prob": 0.1,
+    "exit_q": 0.4
+  },
+  "experts": {
+    "structural": "S14_A1_PLUS_1H_FULL",
+    "path": "PATH_GLOBAL_1H"
+  },
+  "development_gate": [
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_AFTERNOON_LIT",
+      "eligible": false,
+      "reason": "NO_SWITCH_BY_2024",
+      "dev_n": 175,
+      "dart_ba": 0.5276315789473685,
+      "struct_ba": 0.5276315789473685,
+      "dart_up_recall": 0.5052631578947369,
+      "dart_down_recall": 0.55,
+      "switches_by_2024": 0,
+      "matured_disagreements_end_2024": 57
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "ASIA_MORNING_LIT",
+      "eligible": false,
+      "reason": "NO_SWITCH_BY_2024",
+      "dev_n": 170,
+      "dart_ba": 0.49773242630385484,
+      "struct_ba": 0.49773242630385484,
+      "dart_up_recall": 0.5510204081632653,
+      "dart_down_recall": 0.4444444444444444,
+      "switches_by_2024": 0,
+      "matured_disagreements_end_2024": 61
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "EUROPE_LIT",
+      "eligible": false,
+      "reason": "RECALL_FLOOR|NO_SWITCH_BY_2024",
+      "dev_n": 189,
+      "dart_ba": 0.48713027771505985,
+      "struct_ba": 0.48713027771505985,
+      "dart_up_recall": 0.7184466019417476,
+      "dart_down_recall": 0.2558139534883721,
+      "switches_by_2024": 0,
+      "matured_disagreements_end_2024": 62
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "NY_LONDON_LIT",
+      "eligible": false,
+      "reason": "2024_ACC|DEV_BA",
+      "dev_n": 190,
+      "dart_ba": 0.5162398847134464,
+      "struct_ba": 0.5325906218822747,
+      "dart_up_recall": 0.4948453608247423,
+      "dart_down_recall": 0.5376344086021505,
+      "switches_by_2024": 2,
+      "matured_disagreements_end_2024": 58
+    },
+    {
+      "partition": "SOBTI_5_ET",
+      "window": "US_LATE_LIT",
+      "eligible": false,
+      "reason": "RECALL_FLOOR|NO_SWITCH_BY_2024",
+      "dev_n": 89,
+      "dart_ba": 0.5005081300813008,
+      "struct_ba": 0.5005081300813008,
+      "dart_up_recall": 0.7083333333333334,
+      "dart_down_recall": 0.2926829268292683,
+      "switches_by_2024": 0,
+      "matured_disagreements_end_2024": 21
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "ASIA",
+      "eligible": false,
+      "reason": "RECALL_FLOOR|NO_SWITCH_BY_2024",
+      "dev_n": 102,
+      "dart_ba": 0.4736495388669302,
+      "struct_ba": 0.4736495388669302,
+      "dart_up_recall": 0.8260869565217391,
+      "dart_down_recall": 0.12121212121212122,
+      "switches_by_2024": 0,
+      "matured_disagreements_end_2024": 21
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "EUROPE",
+      "eligible": false,
+      "reason": "NO_SWITCH_BY_2024",
+      "dev_n": 189,
+      "dart_ba": 0.5211989970366994,
+      "struct_ba": 0.5211989970366994,
+      "dart_up_recall": 0.7009345794392523,
+      "dart_down_recall": 0.34146341463414637,
+      "switches_by_2024": 0,
+      "matured_disagreements_end_2024": 67
+    },
+    {
+      "partition": "WGC_2026_NY3",
+      "window": "US",
+      "eligible": false,
+      "reason": "NO_SWITCH_BY_2024",
+      "dev_n": 162,
+      "dart_ba": 0.4797163336891871,
+      "struct_ba": 0.4797163336891871,
+      "dart_up_recall": 0.30120481927710846,
+      "dart_down_recall": 0.6582278481012658,
+      "switches_by_2024": 0,
+      "matured_disagreements_end_2024": 49
+    }
+  ],
+  "eligible_heads": [],
+  "transport_2025_metrics": [],
+  "guardrails": [
+    "State independent by partition/window.",
+    "Detector updates only on matured exact-common expert disagreement rows.",
+    "Only disagreement rows with end_utc <= current start_utc update BOCPD.",
+    "Hazard and thresholds copied unchanged from H3 DART authority.",
+    "2025 opened only for heads passing frozen pre-2025 gate.",
+    "No 2026 outcome opened."
+  ]
+}
