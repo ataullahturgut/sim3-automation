@@ -62,6 +62,36 @@ If any older subsection below describes the session work merely as an execution 
 
 ---
 
+## 0F. Development-only role matrix freeze — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_ROLE_MATRIX_2023_2024_2026-10-07.md`
+
+Status: **PHASE-1 COMPLETE**.
+
+Completed families:
+- Model-01 CORE3;
+- Model-02 CART;
+- Model-03 NOVA A1/ARCR;
+- Model-04 PATH_GLOBAL;
+- Model-05 STRUCTURAL_IRIS;
+- Model-06 SAGE SESSION_ONLY;
+- Model-07 SAGE PATH_SESSION;
+- Model-08 SAGE A1_SESSION;
+- Model-09 SAGE A1_PATH_SESSION;
+- RIFT;
+- VEGA;
+- SENTRY;
+- DART;
+- AURORA;
+- OPAL.
+
+The matrix uses 2023–2024 only for role profiling and explicitly preserves one-sided UP/DOWN specialist evidence. It also marks dependency clusters so canonical/selected/nested variants cannot be treated as independent consensus votes by default.
+
+The next binding task is the **incremental/disagreement audit**. No specialist receives final consensus membership merely because its one-sided recall is high; it must prove development-only incremental value when it disagrees with the relevant balanced base.
+
+---
+
 ## 0E. Binding role-aware evaluation correction — 2026-10-07
 
 Authority:
@@ -146,7 +176,8 @@ Current state:
 - **SESSION DART V1:** **COMPLETE / NOT PROMOTED / 2025 CLOSED** via `GOLD_SESSION_DART_V1_FINAL_AUTHORITY_2026-10-07.md`; no session passed the frozen pre-2025 gate. Only Sobti NY/London switched state during development, but its routed BA remained below Structural-IRIS;
 - **SESSION AURORA V1:** **COMPLETE / NOT PROMOTED / FRESH UPSTREAM AVAILABLE** via `GOLD_SESSION_AURORA_V1_FINAL_AUTHORITY_2026-10-07.md`; Sobti Asia Morning transports below Structural-IRIS (BA 56.50% vs 60.86%), while Sobti Europe equals PATH_GLOBAL exactly (BA 51.12%). AURORA adds no primary routing edge, but its fresh causal session probability/state ledger now exists;
 - **role-aware evaluation correction:** **BINDING** via `GOLD_SESSION_ROLE_AWARE_MODEL_EVALUATION_AUTHORITY_2026-10-07.md`. The 30% minimum-class-recall floor now governs only stand-alone PRIMARY/BALANCED promotion. Failure of that floor no longer deletes a head from UP/DOWN specialist, correction, calibration or router-evidence research. Earlier `reject/not promoted` wording must be read narrowly unless the model has explicit negative/non-incremental evidence;
-- **current immediate task:** build and freeze the **2023–2024 session role matrix** for all completed models before continuing to HELIOS. Role freeze must use development evidence only; 2025 remains transport/descriptive and may not define new specialist membership;
+- **2023–2024 role matrix:** **PHASE-1 COMPLETE** via `GOLD_SESSION_ROLE_MATRIX_2023_2024_2026-10-07.md`; Models 01–09 plus RIFT/VEGA/OPAL and SENTRY/DART/AURORA are now classified by balanced, UP-skew, DOWN-skew, correction and router-state roles. Nested/duplicate families are explicitly clustered so they cannot silently receive multiple full votes;
+- **current immediate task:** run the **development-only incremental/disagreement audit** session by session. For each balanced base versus UP/DOWN specialist candidate, measure disagreement N, specialist rescue, break, net rescue, class-specific incremental recall and duplicate/correlation exposure. Freeze consensus-eligible roles from 2023–2024 only; 2025 must not choose membership;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
