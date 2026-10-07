@@ -1,0 +1,45 @@
+name: Gold Sobti Late-US Label Audit 20261007
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_sobti_late_us_label_audit_20261007.py'
+      - '.github/workflows/gold-sobti-late-us-label-audit-20261007.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3'
+      - run: python -m py_compile gold_axis_2026/tools/gold_sobti_late_us_label_audit_20261007.py
+      - run: python gold_axis_2026/tools/gold_sobti_late_us_label_audit_20261007.py
+      - name: Record audit
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp gold_axis_2026/SOBTI_LATE_US_LABEL_AUDIT_OUT/summary.json gold_axis_2026/GOLD_SOBTI_LATE_US_LABEL_AUDIT_SUMMARY_2026-10-07.json
+          cp gold_axis_2026/SOBTI_LATE_US_LABEL_AUDIT_OUT/target_row_audit.csv gold_axis_2026/GOLD_SOBTI_LATE_US_LABEL_AUDIT_ROWS_2026-10-07.csv
+          cp gold_axis_2026/SOBTI_LATE_US_LABEL_AUDIT_OUT/prediction_label_audit.csv gold_axis_2026/GOLD_SOBTI_LATE_US_PREDICTION_LABEL_AUDIT_2026-10-07.csv
+          if [ -f gold_axis_2026/SOBTI_LATE_US_LABEL_AUDIT_OUT/prediction_label_mismatches.csv ]; then
+            cp gold_axis_2026/SOBTI_LATE_US_LABEL_AUDIT_OUT/prediction_label_mismatches.csv gold_axis_2026/GOLD_SOBTI_LATE_US_PREDICTION_LABEL_MISMATCHES_2026-10-07.csv
+          fi
+          git add gold_axis_2026/GOLD_SOBTI_LATE_US_*_2026-10-07.*
+          if ! git diff --cached --quiet; then
+            git commit -m "Record Sobti Late-US label integrity audit"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
