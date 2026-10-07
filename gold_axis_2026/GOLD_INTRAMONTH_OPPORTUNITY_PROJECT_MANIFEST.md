@@ -2,7 +2,7 @@
 
 **Manifest version:** 1.1  
 **Date:** 2026-10-01  
-**Last governance update:** 2026-10-06  
+**Last governance update:** 2026-10-07  
 **Status:** **CURRENT / BINDING / PROJECT INITIATED**  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Branch:** `gold-midas-headswap-v1-20260925`  
@@ -11,6 +11,32 @@
 > **Mission:** identify short-horizon upside opportunities inside a month, including months for which the frozen monthly Gold model forecasts DOWN.
 
 > **Separation:** monthly average forecast ≠ intramonth path opportunity. A monthly DOWN forecast does not imply that every daily/weekly move inside that month is DOWN.
+
+## 0.1 Binding horizon / project separation — 2026-10-07
+
+This manifest contains the **Intramonth Opportunity** research lane and its **Global Session / Execution** subproject. It does **not** redefine the canonical Global-XAU H3 forecast horizon.
+
+Binding separation:
+
+| Project | Binding target | Horizon / clock | Role |
+|---|---|---|---|
+| **Global-XAU H3** | UP/DOWN of XAU/USD over the next **three retained Gold observation dates** | ~3 retained trading observations; not necessarily 3 calendar days | Primary short-horizon directional forecast |
+| **Intramonth Opportunity** | MFE/MAE / opportunity labels over future retained observations | daily-origin multi-day opportunity research | Find investable moves inside the month |
+| **Global Session / Execution** | UP/DOWN inside externally anchored Asia / Europe / NY-London / US session windows | **intraday, several hours** | Execution / timing layer; not an H3 replacement |
+
+Mandatory interpretation rules:
+
+1. **H3 remains the canonical ~3-observation short-horizon direction project** under `GOLD_SHORT_HORIZON_GLOBAL_XAU_PROJECT_MANIFEST.md`.
+2. Session models do **not** change the H3 target into a one-day or intraday target. They answer a different question: what happens inside a specified session window.
+3. H3 accuracy / BA and Session accuracy / BA are **not directly comparable** and must never be reported as the same model horizon.
+4. Session outputs may later be used as an **execution / opportunity layer beneath an H3 view**, but only through an explicitly preregistered router. No such router is implied merely because both projects exist.
+5. Reused specialist names are namespace-specific:
+   - `H3_RIFT`, `H3_VEGA`, etc. belong to the H3 project.
+   - `SESSION_RIFT`, `SESSION_VEGA`, etc. belong to the Session project.
+   - A Session specialist does **not** replace, update or validate the H3 specialist with the same family name.
+6. Any future report must state the target horizon beside every result: **H3**, **daily opportunity**, or **session**.
+
+The Global Session / Execution work recorded below is therefore a **separate intraday execution subproject**, not a conversion of the H3 model from three days to one day.
 
 ---
 
@@ -49,7 +75,7 @@ Primary path targets:
 - Stage 4 Monthly Context Incremental Test: **COMPLETE / NO_CONTEXT_PASS**
 - Stage 5 K100 Robustness, Calibration & Decision-Threshold Audit: **COMPLETE / PASS**
 - **Stage 6 Frozen 2025 Transport: NEXT**
-- **Global Session / Execution redesign: ACTIVE — dual externally anchored partition protocol is binding; operational head count is not preselected; V5 premodel data gate PASS**
+- **Global Session / Execution redesign: ACTIVE — intraday execution subproject only; NOT an H3 replacement; dual externally anchored partition protocol is binding; operational head count is not preselected; V5 premodel data gate PASS**
 
 Current frozen opportunity rule:
 - target: **K100**
