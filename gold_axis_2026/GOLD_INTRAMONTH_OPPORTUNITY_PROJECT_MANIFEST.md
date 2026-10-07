@@ -3971,3 +3971,98 @@ Binding interpretation:
 2. RFR-NOMACRO remains a valid selective specialist hypothesis, but its simple override of PAIR is not transport-proven because 2025 net rescue is -1.
 3. Do not promote a session-assisted upper router from these results.
 4. The next useful research direction is to improve the overnight specialist itself or obtain richer origin-safe context with materially better common coverage, rather than tuning a sparse rescue gate.
+
+
+---
+
+## PRAMV V1 — Path-Reversal Agreement + Macro Veto — 2026-10-07
+
+Authorities / results:
+- `GOLD_EXECUTION_PSF_OVN_RESEARCH_AUTHORITY_2026-10-07.md`
+- `GOLD_EXECUTION_PSF_OVN_RESULT_2026-10-07.md`
+- `GOLD_EXECUTION_MS_PSF_OVN_AUTHORITY_2026-10-07.md`
+- `GOLD_EXECUTION_MS_PSF_OVN_RESULT_2026-10-07.md`
+- `GOLD_EXECUTION_PRAMV_GATE_RESULT_2026-10-07.md`
+- `GOLD_EXECUTION_PRAMV_V1_PROSPECTIVE_FREEZE_2026-10-07.md`
+
+### Research synthesis
+
+The next overnight improvement was pursued by changing the representation rather than repeatedly tuning the existing SESSION/H3 model families.
+
+A preregistered PSF-OVN challenger encoded the completed 14:00-17:00 Europe/Istanbul XAU/USD path using:
+- scalar path statistics;
+- depth-2 lead-lag signature geometry;
+- time-price signature geometry;
+- rolling FPCA path-shape scores;
+- origin-known macro state.
+
+The family selected on 2023 was M3_SIG_FPCA:
+- 2023 BA 57.75%;
+- 2024 BA 50.81%;
+- 2025 retrospective BA 54.88%.
+
+The confidence reject layer did not confirm in 2024 and is rejected.
+
+A macro-augmented M4_SIG_FPCA_MACRO representation was not the 2023 winner but showed better cross-year stability:
+- 2023 BA 56.59%;
+- 2024 BA 53.22%;
+- 2025 retrospective BA 56.51%.
+
+On no-macro days the M4 BA was:
+- 2023 56.85%;
+- 2024 54.08%;
+- 2025 57.35%.
+
+On macro-release days the simple path relationships were materially weaker/unstable, consistent with the independent RFR macro-state diagnostic.
+
+A fixed two-state Markov-switching PSF successor was also tested. It did not transport:
+- MS_MIX 2023 BA 54.48%;
+- 2024 BA 54.42%;
+- 2025 BA 50.53%.
+The Markov successor is rejected.
+
+### PRAMV V1 mechanism
+
+PRAMV = Path-Reversal Agreement + Macro Veto.
+
+At 17:00 Europe/Istanbul:
+1. same-day paired macro surprise released by 17:00 => ABSTAIN;
+2. require opposite signs for 16:00-16:30 and 16:30-17:00, otherwise ABSTAIN;
+3. RFR direction = 16:00-16:30 first-impulse direction;
+4. require frozen M4_SIG_FPCA_MACRO direction to agree with RFR;
+5. if they agree, issue that direction; otherwise ABSTAIN.
+
+Results:
+
+| Period | N | Coverage | Accuracy | BA | PAIR BA same rows | Net rescue vs PAIR |
+|---|---:|---:|---:|---:|---:|---:|
+| 2023 | 89 | 34.77% | 60.67% | 60.59% | 54.47% | +5 |
+| 2024 | 86 | 33.20% | 60.47% | 60.05% | 54.96% | +4 |
+| 2025 retrospective | 82 | 32.28% | 63.41% | 63.41% | 63.41% | 0 |
+
+Development 2023-2024 pooled:
+- N 175;
+- coverage 33.98%;
+- accuracy 60.57%;
+- BA 60.35%;
+- one-sided binomial p vs 50% = 0.0032;
+- PAIR rescue / break / net on exact-common rows = 15 / 6 / +9;
+- exact rescue-vs-break p = 0.0784.
+
+Half-year BA:
+- 2023 H1 68.33%; H2 53.91%;
+- 2024 H1 59.80%; H2 60.71%;
+- 2025 H1 62.19%; H2 65.00%.
+
+### Binding interpretation
+
+1. PRAMV is the strongest current **selective overnight research candidate**, not a full-coverage predictor.
+2. Its approximate coverage is one-third of eligible days.
+3. Its value comes from three independent mechanisms agreeing:
+   - path-shape representation;
+   - reversal/first-impulse structure;
+   - macro-information regime veto.
+4. The exact PRAMV synthesis was identified after the 2025 archive was already accessible; therefore 2025 is corroborative retrospective transport, not untouched prospective validation.
+5. PRAMV V1 is now frozen. The next valid proof is an unchanged 2026+ / newly unseen test.
+6. Do not add SESSION/PATH/STRUCTURAL votes, probability thresholds, new windows or post-hoc feature filters before the next unseen score.
+7. DAY 09:00->17:00 remains unsolved; these overnight findings must not be transferred to DAY.
