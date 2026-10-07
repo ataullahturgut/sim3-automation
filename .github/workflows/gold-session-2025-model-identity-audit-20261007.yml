@@ -1,0 +1,65 @@
+name: Gold Session 2025 Model Identity Audit 20261007
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - '.github/workflows/gold-session-2025-model-identity-audit-20261007.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'pandas>=2.2,<3'
+      - name: Audit model identity
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import pandas as pd
+          AX=Path("gold_axis_2026")
+          KEY=["partition","window","label_date","start_utc","y_up"]
+          g=pd.read_csv(AX/"GOLD_SESSION_STAGE1_GLOBAL_CONTROLS_2025_V2_CONTINUOUS_PREDICTIONS_2026-10-07.csv")
+          s=pd.read_csv(AX/"GOLD_SESSION_S14_FROZEN_2025_TRANSPORT_PREDICTIONS_2026-10-07.csv")
+          sg=pd.read_csv(AX/"GOLD_SESSION_SAGE_FROZEN_2025_TRANSPORT_V2_CONTINUOUS_PREDICTIONS_2026-10-07.csv")
+          for q in (g,s,sg): q["start_utc"]=pd.to_datetime(q.start_utc,utc=True).astype(str)
+          a=g[g.model.eq("A1_ARCR")][KEY+["p_up"]].merge(
+              s[s.model.eq("A1_DIRECT_MATCHED")][KEY+["p_up"]],
+              on=KEY,suffixes=("_global","_s14"),validate="one_to_one")
+          p=g[g.model.eq("PATH_GLOBAL_1H")][KEY+["p_up"]].merge(
+              sg[sg.model.eq("S16_PATH_GLOBAL_MATCHED")][KEY+["p_up"]],
+              on=KEY,suffixes=("_global","_sage"),validate="one_to_one")
+          out={
+            "status":"PASS",
+            "A1":{"matched_rows":len(a),"max_abs_diff":float((a.p_up_global-a.p_up_s14).abs().max())},
+            "PATH":{"matched_rows":len(p),"max_abs_diff":float((p.p_up_global-p.p_up_sage).abs().max())}
+          }
+          if out["A1"]["matched_rows"]==0 or out["PATH"]["matched_rows"]==0: out["status"]="FAIL_NO_MATCH"
+          if out["A1"]["max_abs_diff"]>1e-12 or out["PATH"]["max_abs_diff"]>1e-8: out["status"]="FAIL_IDENTITY"
+          (AX/"GOLD_SESSION_2025_MODEL_IDENTITY_AUDIT_2026-10-07.json").write_text(json.dumps(out,indent=2)+"\n")
+          print(json.dumps(out,indent=2))
+          if out["status"]!="PASS": raise SystemExit(1)
+          PY
+      - name: Record audit
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_SESSION_2025_MODEL_IDENTITY_AUDIT_2026-10-07.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record 2025 model identity audit"
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            git push origin HEAD:gold-execution-channel-audit-20261006
+          fi
