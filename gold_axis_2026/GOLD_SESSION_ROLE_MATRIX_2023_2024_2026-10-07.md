@@ -265,3 +265,50 @@ These are related A1+PATH representations and must be decorrelated before any co
 - The 30% floor continues to reject the extreme rows as stand-alone balanced engines, but it no longer removes them from specialist evidence.
 - The 15m S1.4 siblings show similar one-sided behavior and belong to the same dependency cluster; they cannot be counted as independent votes without an incremental/disagreement test.
 - Consensus status remains `PENDING_INCREMENTAL_TEST`.
+
+
+---
+
+## Model-06 — SAGE SESSION_ONLY family
+
+Sources:
+- `GOLD_SESSION_SAGE_V2_STAGE1_CORRECTED_METRICS_2026-10-07.csv`
+- `GOLD_SESSION_MODEL06B_SAGE_FEATURE_SELECTION_DEV_METRICS_2026-10-07.csv`
+
+Duplicate-control cluster:
+- canonical `S15_SESSION_ONLY`
+- selected SAGE-only representation
+
+### Canonical SAGE SESSION_ONLY development profile
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 279 | 50.03% | 44.83% | 55.22% | BALANCED / DOWN_LEAN |
+| Sobti Asia Morning | 272 | 44.95% | 37.93% | 51.97% | DOWN_SKEW / weak |
+| Sobti Europe | 295 | 48.11% | **78.66%** | **17.56%** | **UP_SKEW** |
+| Sobti NY/London | 297 | 51.67% | 44.14% | 59.21% | DOWN_SKEW |
+| Sobti Late-US | 170 | 44.29% | **70.00%** | **18.57%** | **UP_SKEW** |
+| WGC Asia | 152 | 56.21% | 67.33% | 45.10% | BALANCED / UP_LEAN |
+| WGC Europe | 297 | 46.23% | **76.19%** | **16.28%** | **UP_SKEW** |
+| WGC US | 264 | 45.65% | **27.35%** | **63.95%** | **DOWN_SKEW** |
+
+### Selected SAGE-only development profile
+
+| Session | N | BA | UP recall | DOWN recall | Development profile |
+|---|---:|---:|---:|---:|---|
+| Sobti Asia Afternoon | 279 | 49.88% | 48.28% | 51.49% | BALANCED / near-neutral |
+| Sobti Asia Morning | 272 | 44.01% | 34.48% | 53.54% | DOWN_SKEW / weak |
+| Sobti Europe | 295 | 47.88% | **80.49%** | **15.27%** | **UP_SKEW** |
+| Sobti NY/London | 297 | 49.21% | 37.24% | 61.18% | DOWN_SKEW |
+| Sobti Late-US | 170 | 50.50% | **91.00%** | **10.00%** | **EXTREME_UP_SKEW** |
+| WGC Asia | 152 | 49.83% | 66.34% | 33.33% | UP_SKEW |
+| WGC Europe | 297 | 46.08% | **79.76%** | **12.40%** | **EXTREME_UP_SKEW** |
+| WGC US | 264 | 45.28% | **17.09%** | **73.47%** | **EXTREME_DOWN_SKEW** |
+
+### Model-06 interpretation
+
+- SAGE SESSION_ONLY is not a strong balanced model family, but it contains pronounced session-direction asymmetry.
+- Europe and Late-US provide strong UP-skew evidence; WGC US provides strong DOWN-skew evidence.
+- The selected SAGE representation amplifies these one-sided signatures rather than producing a robust balanced engine.
+- Canonical and selected SAGE-only variants are one dependency cluster and may not be counted as independent votes.
+- Consensus status remains `PENDING_INCREMENTAL_TEST`.
