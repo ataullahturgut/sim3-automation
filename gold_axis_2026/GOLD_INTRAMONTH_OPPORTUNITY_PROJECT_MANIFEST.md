@@ -39,6 +39,20 @@ TURN, OPAL and RIFT retain conditional `SPECIALIST ONLY` rescue hypotheses; PRIS
 
 **Exact next scientific stage:** preregistered development-only failure-mechanism research, or an untouched future-period confirmation of a locked candidate. The repaired nested policy has no new untouched 2025 test; already-observed 2025 may not tune features, thresholds, roles or membership. The descriptive window map is complete; deployment edge is not established.
 
+
+**Literature-defined mechanism authority added:** `GOLD_EXECUTION_WINDOW_INTRADAY_PREDICTABILITY_LITERATURE_AUTHORITY_2026-10-07.md`.
+
+The mechanism challenge is now concrete rather than generic:
+- first test **OVERNIGHT 17:00 -> next 09:00** using only completed pre-17:00 half-hour returns (`15:30-16:00`, `16:00-16:30`, `16:30-17:00`);
+- then test whether `16:00-16:30` and `16:30-17:00` form a continuation/reversal pattern;
+- only after development evidence, add origin-known RV/jump/session/macro state;
+- then test **DAY 09:00 -> 17:00** with pre-09:00 returns, overnight state and already-known session information;
+- keep a `09:30 -> 17:00` opening-half-hour design only as a delayed-decision challenger, never as a 09:00 backtest.
+
+This priority is literature-backed: Xu et al. (2020) demonstrate interval-specific GLD intraday predictability, while Ma et al. (2025) show that the first Gold/Silver night-session half-hour becomes the dominant predictor after night trading begins. The SHFE 21:00 night open maps approximately to **16:00 Türkiye**, directly motivating the `16:00-16:30` test before the user's 17:00 overnight decision.
+
+This does not authorize consensus or a larger model family. It authorizes a **small, preregistered, chronological mechanism test**.
+
 **Deferred:** consensus, majority vote, ECCG, AURORA/HELIOS upper routing, final 09→17 / 17→09 combination, SENTRY/DART/AIM/BOCPD/DPTC/RTE-family integration and P&L-based selection. Legacy H3 model identities are preserved as possible future context experts, not session-label transfers.
 
 **Independent reconciliation verification:** after fetching and fast-forwarding to `cba14856a021adffc77124602fb5141edba25118`, the evaluation-only audit reproduced every tracked output without a diff. Both future-counterfactual regression tests passed. All 1,304 selector blocks have matured training labels by cutoff; all 12,946 repair prediction rows are confined to 2023–2024. The 75,133-row evaluation ledger keeps `NESTED_*` development and `FROZEN_*` historical transport identities separate. Ledger SHA-256: `17c4c3caaa6be8fd135a95353db07715f8e9fc7547c25c2e3387ce08b52040d1`. No further fitting, target changes or consensus construction was needed during this verification.
