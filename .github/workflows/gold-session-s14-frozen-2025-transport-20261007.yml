@@ -1,0 +1,78 @@
+name: Gold Session S14 Frozen 2025 Transport 20261007
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - '.github/workflows/gold-session-s14-frozen-2025-transport-20261007.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install --disable-pip-version-check 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Build temporary frozen-transport runner
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          src=Path("gold_axis_2026/tools/gold_session_structural_iris_s14_v2_warmup2022_20261007.py")
+          s=src.read_text()
+          s=s.replace('OUT=AX/"SESSION_STRUCTURAL_IRIS_S14_V2_WARMUP2022_OUT"', 'OUT=AX/"SESSION_STRUCTURAL_IRIS_S14_TRANSPORT_2025_OUT"')
+          s=s.replace('dt.year.isin([2023,2024])', 'dt.year.isin([2023,2024,2025])')
+          s=s.replace('start_utc.dt.year.isin([2023,2024])', 'start_utc.dt.year.isin([2023,2024,2025])')
+          s=s.replace('pd.Timestamp("2025-01-01",tz="UTC")', 'pd.Timestamp("2026-01-01",tz="UTC")')
+          s=s.replace('if __name__=="__main__":main()', 'base.base.YEARS=range(2010,2026)\nif __name__=="__main__":main()')
+          Path("/tmp/s14_transport.py").write_text(s)
+          PY
+      - name: Run frozen S1.4 chronology through 2025
+        run: python /tmp/s14_transport.py
+      - name: Extract 2025 transport authority
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import pandas as pd
+          from sklearn.metrics import balanced_accuracy_score,recall_score
+          p=Path("gold_axis_2026/SESSION_STRUCTURAL_IRIS_S14_TRANSPORT_2025_OUT")
+          x=pd.read_csv(p/"predictions.csv")
+          x=x[x.year.eq(2025)].copy()
+          keep=["A1_DIRECT_MATCHED","S14_A1_PLUS_1H_FULL","S14_A1_PLUS_15M_FULL"]
+          x=x[x.model.isin(keep)]
+          rows=[]
+          for (m,part,w),g in x.groupby(["model","partition","window"],sort=True):
+              if m=="S14_A1_PLUS_15M_FULL" and not (part=="SOBTI_5_ET" and w=="ASIA_MORNING_LIT"):
+                  continue
+              y=g.y_up.astype(int).to_numpy();pr=g.p_up.astype(float).to_numpy();pred=(pr>=.5).astype(int)
+              rows.append({"model":m,"partition":part,"window":w,"n":len(g),
+                "accuracy":float((pred==y).mean()),"balanced_accuracy":float(balanced_accuracy_score(y,pred)),
+                "up_recall":float(recall_score(y,pred,pos_label=1,zero_division=0)),
+                "down_recall":float(recall_score(y,pred,pos_label=0,zero_division=0)),
+                "brier":float(((pr-y)**2).mean())})
+          out={"status":"S14_FROZEN_2025_TRANSPORT_COMPLETE","scope":"2025 only; frozen model identity; causal expanding replay",
+               "metrics":rows,"guardrails":["temporary runner changed chronology only","no feature/lag/C/threshold retuning","2026 unopened"]}
+          Path("gold_axis_2026/GOLD_SESSION_S14_FROZEN_2025_TRANSPORT_SUMMARY_2026-10-07.json").write_text(json.dumps(out,indent=2)+"\n")
+          pd.DataFrame(rows).to_csv("gold_axis_2026/GOLD_SESSION_S14_FROZEN_2025_TRANSPORT_METRICS_2026-10-07.csv",index=False)
+          x.to_csv("gold_axis_2026/GOLD_SESSION_S14_FROZEN_2025_TRANSPORT_PREDICTIONS_2026-10-07.csv",index=False)
+          print(json.dumps(out,indent=2))
+          PY
+      - name: Record transport evidence
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_SESSION_S14_FROZEN_2025_TRANSPORT_*
+          git commit -m "Record frozen S1.4 2025 transport"
+          git pull --rebase origin gold-execution-channel-audit-20261006
+          git push origin HEAD:gold-execution-channel-audit-20261006
