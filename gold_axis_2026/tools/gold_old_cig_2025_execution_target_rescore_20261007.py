@@ -202,7 +202,7 @@ def main():
             "sage_exception_n": int(base["sage_exception"].sum()),
             "ruleflow_exception_n": int(base["ruleflow_exception"].sum()),
             "sage_action_keys_2025": [
-                {"feature_cutoff_date": a.date().isoformat(), "forecast_issue_date": b.date().isoformat()}
+                {"feature_cutoff_date": pd.Timestamp(a).date().isoformat(), "forecast_issue_date": pd.Timestamp(b).date().isoformat()}
                 for a,b in sorted(sage_keys)
             ],
             "ruleflow_action_dates_2025": [d.date().isoformat() for d in sorted(rf_dates)],
