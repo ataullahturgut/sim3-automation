@@ -1,0 +1,78 @@
+{
+  "status": "PASS",
+  "target_rows": 783,
+  "target_2025_rows": 261,
+  "final_trainable_rows": 589,
+  "final_trainable_2025_rows": 195,
+  "clock_mismatches": 0,
+  "start_price_mismatches": 0,
+  "end_price_mismatches": 0,
+  "return_mismatches": 0,
+  "direction_mismatches": 0,
+  "friday_exclusion_mismatches": 0,
+  "path_clean_mismatches": 0,
+  "final_trainable_mismatches": 0,
+  "winter_examples": [
+    {
+      "label_date": "2023-01-02",
+      "start_ny": "2023-01-02T14:30:00-05:00",
+      "expected_start_utc": "2023-01-02T19:30:00+00:00",
+      "expected_end_utc": "2023-01-03T02:00:00+00:00",
+      "end_price_bar_open_utc": "2023-01-03T01:45:00+00:00"
+    },
+    {
+      "label_date": "2023-01-03",
+      "start_ny": "2023-01-03T14:30:00-05:00",
+      "expected_start_utc": "2023-01-03T19:30:00+00:00",
+      "expected_end_utc": "2023-01-04T02:00:00+00:00",
+      "end_price_bar_open_utc": "2023-01-04T01:45:00+00:00"
+    },
+    {
+      "label_date": "2023-01-04",
+      "start_ny": "2023-01-04T14:30:00-05:00",
+      "expected_start_utc": "2023-01-04T19:30:00+00:00",
+      "expected_end_utc": "2023-01-05T02:00:00+00:00",
+      "end_price_bar_open_utc": "2023-01-05T01:45:00+00:00"
+    }
+  ],
+  "summer_examples": [
+    {
+      "label_date": "2023-03-13",
+      "start_ny": "2023-03-13T14:30:00-04:00",
+      "expected_start_utc": "2023-03-13T18:30:00+00:00",
+      "expected_end_utc": "2023-03-14T01:00:00+00:00",
+      "end_price_bar_open_utc": "2023-03-14T00:45:00+00:00"
+    },
+    {
+      "label_date": "2023-03-14",
+      "start_ny": "2023-03-14T14:30:00-04:00",
+      "expected_start_utc": "2023-03-14T18:30:00+00:00",
+      "expected_end_utc": "2023-03-15T01:00:00+00:00",
+      "end_price_bar_open_utc": "2023-03-15T00:45:00+00:00"
+    },
+    {
+      "label_date": "2023-03-15",
+      "start_ny": "2023-03-15T14:30:00-04:00",
+      "expected_start_utc": "2023-03-15T18:30:00+00:00",
+      "expected_end_utc": "2023-03-16T01:00:00+00:00",
+      "end_price_bar_open_utc": "2023-03-16T00:45:00+00:00"
+    }
+  ],
+  "prediction_files": [
+    {
+      "file": "GOLD_SESSION_STAGE1_GLOBAL_CONTROLS_2025_V2_CONTINUOUS_PREDICTIONS_2026-10-07.csv",
+      "rows": 497,
+      "matched_target_rows": 497,
+      "y_up_exact_matches": 497,
+      "bad_rows": 0
+    },
+    {
+      "file": "GOLD_SESSION_S14_FROZEN_2025_TRANSPORT_PREDICTIONS_2026-10-07.csv",
+      "rows": 321,
+      "matched_target_rows": 321,
+      "y_up_exact_matches": 321,
+      "bad_rows": 0
+    }
+  ],
+  "label_definition": "Sobti Late-US = 14:30 America/New_York exact OPEN to CLOSE of the exact 20:45 America/New_York 15m bar ending at 21:00; Friday ineligible; 17:00-18:00 NY missing slots are the only registered maintenance exception."
+}
