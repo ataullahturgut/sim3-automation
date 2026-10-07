@@ -1,42 +1,64 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
-**Manifest version:** 1.1  
-**Date:** 2026-10-01  
+**Manifest version:** 1.2  
+**Date:** 2026-10-07  
 **Last governance update:** 2026-10-07  
 **Status:** **CURRENT / BINDING / PROJECT INITIATED**  
 **Repository:** `ataullahturgut/sim3-automation`  
-**Branch:** `gold-midas-headswap-v1-20260925`  
+**Branch:** `gold-execution-channel-audit-20261006`  
 **Parent monthly project:** `GOLD_MONTHLY_PROJECT_MANIFEST.md`
 
 > **Mission:** identify short-horizon upside opportunities inside a month, including months for which the frozen monthly Gold model forecasts DOWN.
 
 > **Separation:** monthly average forecast ≠ intramonth path opportunity. A monthly DOWN forecast does not imply that every daily/weekly move inside that month is DOWN.
 
-## 0.1 Binding horizon / project separation — 2026-10-07
+## 0.1 Binding project evolution and current target identity — 2026-10-07
 
-This manifest contains the **Intramonth Opportunity** research lane and its **Global Session / Execution** subproject. It does **not** redefine the canonical Global-XAU H3 forecast horizon.
+This project is one continuous short-horizon Gold research program whose **target identity evolved after empirical failure analysis**. The daily/H3, consensus and session work must therefore be read chronologically, not as unrelated projects and not as interchangeable horizons.
 
-Binding separation:
+### Canonical chronology
 
-| Project | Binding target | Horizon / clock | Role |
-|---|---|---|---|
-| **Global-XAU H3** | UP/DOWN of XAU/USD over the next **three retained Gold observation dates** | ~3 retained trading observations; not necessarily 3 calendar days | Primary short-horizon directional forecast |
-| **Intramonth Opportunity** | MFE/MAE / opportunity labels over future retained observations | daily-origin multi-day opportunity research | Find investable moves inside the month |
-| **Global Session / Execution** | UP/DOWN inside externally anchored Asia / Europe / NY-London / US session windows | **intraday, several hours** | Execution / timing layer; not an H3 replacement |
+1. **Legacy short-horizon direction development.**  
+   Daily/global Gold direction models and specialists were developed first. H1/H3 and related short-horizon labels were used during this phase, and the model families later used by the selective daily consensus were created here.
 
-Mandatory interpretation rules:
+2. **Selective daily consensus.**  
+   The historical CIG-D1 4/4 consensus combined the established near-term experts. On the recovered 2026 Jan-Jul daily-reference population it produced **93/125 = 74.40%** against the old pinned daily label. The later source-vintage audit showed **88/125 = 70.40%** on the later frozen daily source for the same 125 signals. Therefore **74.40% is a mixed-vintage historical daily-label diagnostic, not a clean executable trading accuracy**.
 
-1. **H3 remains the canonical ~3-observation short-horizon direction project** under `GOLD_SHORT_HORIZON_GLOBAL_XAU_PROJECT_MANIFEST.md`.
-2. Session models do **not** change the H3 target into a one-day or intraday target. They answer a different question: what happens inside a specified session window.
-3. H3 accuracy / BA and Session accuracy / BA are **not directly comparable** and must never be reported as the same model horizon.
-4. Session outputs may later be used as an **execution / opportunity layer beneath an H3 view**, but only through an explicitly preregistered router. No such router is implied merely because both projects exist.
-5. Reused specialist names are namespace-specific:
-   - `H3_RIFT`, `H3_VEGA`, etc. belong to the H3 project.
-   - `SESSION_RIFT`, `SESSION_VEGA`, etc. belong to the Session project.
-   - A Session specialist does **not** replace, update or validate the H3 specialist with the same family name.
-6. Any future report must state the target horizon beside every result: **H3**, **daily opportunity**, or **session**.
+3. **Next-day / post-issue tradability challenge.**  
+   The same exact 125 consensus rows were rescored from the first strictly post-08:00 New York 15-minute bar. Results were **59/125 = 47.20%** for 08:15->16:00 NY, **59/125 = 47.20%** for 08:15->20:00 NY, and **63/125 = 50.40%** for 17:00->20:00 NY. This showed that the old daily-reference consensus edge did **not** transfer to a simple executable next-day/same-day post-issue clock window.
 
-The Global Session / Execution work recorded below is therefore a **separate intraday execution subproject**, not a conversion of the H3 model from three days to one day.
+4. **Time-window / market-session research.**  
+   Because the failure was partly a target-clock identity problem, the project then moved to explicit market windows rather than silently relabelling the old daily target. Two externally anchored partitions were frozen:
+   - **WGC_2026_NY3:** Asia 18:00->03:00, Europe 03:00->08:00, US 08:00->17:00, all in `America/New_York`.
+   - **SOBTI_5_ET:** Asia Morning 21:00->23:30, Asia Afternoon 01:30->03:30, Europe 03:30->08:00, NY/London 08:00->14:30, Late US 14:30->21:00, all in `America/New_York`.
+
+5. **Clock, label and data repair.**  
+   The session targets were rebuilt from governed intraday XAU/USD with date-aware DST, venue/calendar eligibility, internal-gap rules, exact start-`OPEN` and final-15m-`CLOSE` semantics, and source-ready / PIT checks. The V5 session target files are the modelling authority. Old daily/H3 prediction CSVs may not be treated as session outcomes.
+
+6. **Current phase: model-family revalidation on corrected session targets.**  
+   The models used in the earlier near-term research are now being replayed or rebuilt **model by model against the corrected V5 session targets**, preserving each model's legitimate algorithmic identity while enforcing the new target/clock and leakage contract. Only after this replay ledger is clean may a new session-specific router/consensus be built.
+
+### Binding status by lane
+
+| Lane | Current status | Authority meaning |
+|---|---|---|
+| Legacy daily/H3 direction | HISTORICAL / BENCHMARK ONLY for the present task | Useful lineage; not the active session target |
+| Old daily consensus / CIG-D1 | HISTORICAL DIAGNOSTIC | Demonstrated daily-label selectivity, but not post-issue tradability |
+| Intramonth MFE/MAE opportunity lane | PRESERVED PARALLEL RESEARCH | Not the current immediate model-replay task |
+| Corrected global session forecast | **ACTIVE / CURRENT REVALIDATION TARGET** | Current model-by-model replay and later consensus must use V5 session targets |
+
+### Mandatory interpretation rules
+
+1. Every reported result must state its target identity explicitly: **DAILY/H3**, **daily-reference consensus**, **MFE/MAE opportunity**, or **SESSION**.
+2. A daily/H3 model run is never allowed to stand in for a session-model result merely because the model family name is the same.
+3. Reused model names are namespace-specific. A historical `H3_RIFT`, `H3_VEGA`, CORE3, CART or other legacy model result does not validate the corresponding session replay.
+4. For the current session project, features must be available by the relevant session start. Information produced inside the target window is leakage for that full-session head.
+5. 2023–2024 remain the scored development period for session architecture; 2022 may be used only as governed warm-up where required. 2025 is frozen transport. 2026 must not be used to choose clocks, features, thresholds, model family or consensus membership.
+6. Session consensus, if rebuilt, must be **window-specific**; membership may differ across Asia, Europe, NY/London and US heads.
+7. The 2026-10-07 commit `10849d00273d2dac1b539fba22891b45779466bf` is a valid **DAILY/H3 CORE3 Logistic benchmark artifact only**. It is **NOT the current SESSION Model-01 authority** and must not trigger Model-02 session progression.
+8. Current Model-01 must therefore be the Classical CORE3 Logistic identity evaluated on the corrected session target contract, or an already-existing session CORE3 artifact may be accepted only after exact identity/clock/data equivalence is proven. **Shallow CART is Model-02 only after that Model-01 session identity is closed.**
+
+If any older subsection below describes the session work merely as an execution layer beneath canonical H3, or names the K100 Stage-6 transport as the single current next action, this section and the updated roadmap/next-action sections below **supersede that stale project-state wording**. Historical results themselves are retained.
 
 ---
 
@@ -67,17 +89,25 @@ Primary path targets:
 
 ## 1.3 Current stage
 
-- Stage 0 scientific contract: COMPLETE
-- Stage 0A intramonth-opportunity objective amendment: COMPLETE / FROZEN
-- Stage 1 Daily Data Authority & PIT Audit: COMPLETE / PASS
-- Stage 2A Opportunity Label, Baseline & Core Feature Contract: **COMPLETE / PASS**
-- Stage 3 Origin-Safe Opportunity Predictability Screen: **COMPLETE / PASS**
-- Stage 4 Monthly Context Incremental Test: **COMPLETE / NO_CONTEXT_PASS**
-- Stage 5 K100 Robustness, Calibration & Decision-Threshold Audit: **COMPLETE / PASS**
-- **Stage 6 Frozen 2025 Transport: NEXT**
-- **Global Session / Execution redesign: ACTIVE — intraday execution subproject only; NOT an H3 replacement; dual externally anchored partition protocol is binding; operational head count is not preselected; V5 premodel data gate PASS**
+The project has several preserved historical lanes, but **the active near-term direction task is now the corrected global-session model-family revalidation**.
 
-Current frozen opportunity rule:
+Current state:
+- legacy intramonth K100 opportunity research: Stage 0–5 COMPLETE; its frozen-2025 transport remains a separate preserved branch, not the immediate task;
+- old daily direction / consensus lineage: reconstructed and audited;
+- exact post-issue rescore of the historical 125-row consensus: COMPLETE; simple forward windows are approximately chance and do not validate next-day tradability;
+- global market-window research: COMPLETE enough to freeze the WGC and Sobti clock partitions;
+- V5 target/clock/data correction: COMPLETE / BINDING;
+- premodel data and source-readiness audit: COMPLETED with model-specific leakage/readiness constraints;
+- existing session Stage-1 evidence and 2025 frozen transport artifacts: PRESERVED and must be reconciled model-by-model against the current replay inventory rather than ignored or silently overwritten;
+- RIFT and VEGA session specialist development checkpoints: PRESERVED evidence;
+- **current immediate task:** authoritative sequential replay/revalidation of the legacy near-term model families on corrected V5 session targets, beginning with SESSION Model-01 Classical CORE3 Logistic;
+- final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
+
+**Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the current SESSION Model-01 result. It remains a separate daily/H3 benchmark.
+
+### Parallel legacy opportunity rule
+
+
 - target: **K100**
 - feature block: **G_ONLY**
 - model: **HGB_CLASS**
@@ -3003,55 +3033,41 @@ Interpretation:
 
 ---
 
-# 8. Stage Roadmap
+# 8. Integrated Project Roadmap — Binding 2026-10-07
 
-| Stage | Purpose | Status |
+| Phase | Purpose | Status |
 |---|---|---|
-| 0 | Daily scientific contract | COMPLETE |
-| 0A | Intramonth opportunity objective | **COMPLETE / FROZEN** |
-| 1 | Daily Data Authority & PIT Audit | **COMPLETE / PASS** |
-| 2 | Opportunity labels + baselines + core feature contract | **COMPLETE / PASS** |
-| 3 | Origin-safe opportunity predictability screen | **COMPLETE / PASS** |
-| 4 | Monthly-context incremental test | **COMPLETE / NO_CONTEXT_PASS** |
-| 5 | K100 robustness / calibration / decision threshold | **COMPLETE / PASS** |
-| 6 | Frozen 2025 transport | **NEXT** |
-| 7 | Prospective opportunity ledger | BLOCKED BY TRANSPORT |
-| 7 | Prospective opportunity ledger | NOT STARTED |
+| A | Legacy short-horizon daily/H3 model development | COMPLETE / HISTORICAL LINEAGE |
+| B | Selective daily consensus / CIG-D1 | COMPLETE / HISTORICAL DIAGNOSTIC |
+| C | Exact next-day/post-issue clock challenge | **COMPLETE / TRADABILITY NOT ESTABLISHED** |
+| D | Market-window / session discovery | COMPLETE |
+| E | V5 clock, label, venue, gap and data-integrity repair | **COMPLETE / BINDING** |
+| F | Premodel source-ready / leakage audit | COMPLETE; model-specific restrictions remain binding |
+| G | Legacy model-family replay on corrected session targets | **ACTIVE — MODEL-BY-MODEL REVALIDATION** |
+| H | Session specialist correction/reversal layers | PARTLY COMPLETE; preserve existing RIFT/VEGA evidence and continue only under frozen eligibility |
+| I | Window-specific router / consensus | BLOCKED UNTIL PHASE G/H LEDGER IS CLEAN |
+| J | 2026 retrospective stress / prospective ledger | CLOSED FOR SELECTION; only after prior freezes |
+
+The former K100/MFE-MAE opportunity roadmap remains preserved as a parallel research branch and must not overwrite the active session-direction roadmap.
 
 ---
 
-# 9. Exact Next Action
+# 9. Exact Next Action — Corrected Session Model Replay
 
-**Stage 6 — Frozen 2025 Transport**
+The next action is **not** another DAILY/H3 run and is **not** immediate consensus construction.
 
-Frozen without modification:
-- K100 target
-- G_ONLY features
-- HGB_CLASS architecture/hyperparameters
-- RAW probability
-- alert threshold **p >= 0.30**
-- 5-origin prequential refit
-- label-maturity purge
-- no monthly context in probability.
+1. Reconfirm the binding V5 target files and clock semantics before every model run.
+2. Reconcile the legacy model inventory used in the earlier near-term prediction/consensus work with the session-readiness matrix. Preserve model role: primary direction engine, structural/path model, specialist correction layer, controller/meta layer, or not applicable.
+3. **SESSION Model-01 = Classical CORE3 Logistic.** Use corrected V5 session labels and only features available by each session start. If an existing session CORE3 artifact is reused, prove exact model/data/clock identity first.
+4. The DAILY/H3 CORE3 artifact at commit `10849d00273d2dac1b539fba22891b45779466bf` remains benchmark-only and does not count as completion of SESSION Model-01.
+5. **SESSION Model-02 = Shallow CART only after SESSION Model-01 is closed.** Do not inherit the daily/H3 target `sign(log(P[t+3]/P[t]))` into the session run.
+6. For every session-capable model report, at minimum: N, Accuracy, Balanced Accuracy, **UP recall, DOWN recall**, Brier/log loss where probabilistic, coverage, and the exact target window. A gain obtained by collapsing one class is not a promotion.
+7. Session chronology is frozen: governed 2022 warm-up only where required; 2023–2024 development; 2025 one-time frozen transport; 2026 is not a selection set.
+8. Existing Stage-1 session artifacts and RIFT/VEGA specialist artifacts are evidence to reconcile, not permission to skip identity checks. If the regenerated model is identical, record identity and reuse; if not, explain the contract difference and supersession explicitly.
+9. Only after all eligible legacy models are replayed/reconciled may the project build a **window-specific** consensus/router. Do not copy the old daily 4/4 membership wholesale into every session.
 
-Stage 6 must:
-1. continue chronology into 2025 using only matured prior labels;
-2. make 2025 predictions without retuning;
-3. report Brier/log loss vs matured prior-history baselines;
-4. report T30:
-   - alerts
-   - precision
-   - recall
-   - false-opportunity rate
-   - alert frequency
-   - MFE5 / MAE5 after alerts;
-5. report monthly-DOWN 2025 subset separately;
-6. report quarter stability and episode-deduplicated performance;
-7. compare transport qualitatively with DEV without changing the rule.
+This section is the single current next-action authority for the near-term/session direction work.
 
-If 2025 transport fails, do not rescue the threshold or calibration with 2025 hindsight.
-
-Only after frozen transport may the project decide whether to start the prospective daily opportunity ledger.
 ---
 
 # 10. Document Hierarchy
