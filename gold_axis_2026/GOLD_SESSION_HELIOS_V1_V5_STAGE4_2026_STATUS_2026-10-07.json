@@ -1,0 +1,9 @@
+{
+  "status": "DATA_BLOCKED",
+  "evidence_class": "2026_RETROSPECTIVE_STRESS_NOT_RUN",
+  "reason": "No corrected V5-equivalent SESSION target authority exists for a meaningful 2026 stress sample; the governed raw 15-minute archive used by the current session replay ends at the beginning of 2026. H3/daily labels are prohibited substitutes.",
+  "governed_raw15_max_utc": "2026-01-02 23:45:00+00:00",
+  "frozen_v5_target_max_start_utc": "2025-12-31 13:00:00+00:00",
+  "frozen_v5_trainable_start_year_2026_rows": 0,
+  "selection_or_tuning_on_2026": false
+}
