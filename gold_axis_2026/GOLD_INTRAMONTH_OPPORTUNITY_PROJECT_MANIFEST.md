@@ -62,6 +62,35 @@ If any older subsection below describes the session work merely as an execution 
 
 ---
 
+## 0E. Binding role-aware evaluation correction — 2026-10-07
+
+Authority:
+- `GOLD_SESSION_ROLE_AWARE_MODEL_EVALUATION_AUTHORITY_2026-10-07.md`
+
+This section supersedes the prior **binary promote-or-reject interpretation**, but does not change any already-reported metric, model identity, source clock, target, feature set or frozen transport result.
+
+Binding interpretation:
+
+1. `p(UP) >= 0.50` remains the ordinary direction threshold.
+2. The 30% minimum-class-recall floor applies only to **stand-alone PRIMARY/BALANCED promotion**.
+3. A head that fails the balanced floor may still remain visible as:
+   - UP specialist candidate;
+   - DOWN specialist candidate;
+   - correction/reversal specialist;
+   - calibration-only candidate;
+   - router-state evidence.
+4. There is **no new hard 70% UP threshold**. One-sided recall is a continuous metric and must be paired with incremental/disagreement evidence.
+5. 2023–2024 defines/fixes model roles and eventual consensus membership. 2025 may validate or fail transport but may not be used to invent a new role and still be called untouched holdout evidence.
+6. Highly correlated, nested or mechanically identical models may not receive independent full votes in a later consensus.
+7. A correction specialist votes only when its frozen intervention condition is active.
+8. Earlier phrases such as `reject`, `not promoted` or `class floor fail` are now interpreted as **not promoted for the stated role**, not automatic deletion from every downstream specialist analysis, unless explicit negative/non-incremental evidence exists.
+
+Examples that must remain visible in the evidence inventory despite primary imbalance include selected PATH/Structural heads with 70–90% UP recall, while balanced heads such as Sobti Asia-Afternoon CORE3, Sobti Asia-Morning Structural-IRIS and WGC-Asia selected PATH_GLOBAL remain primary/window-specific candidates.
+
+The next task is therefore **not HELIOS yet**. First freeze a development-only session role matrix; then continue HELIOS under the same governance.
+
+---
+
 # 1. Executive State
 
 ## 1.1 Primary business question
@@ -116,7 +145,8 @@ Current state:
 - **SESSION SENTRY V1:** **COMPLETE / NOT PROMOTED** via `GOLD_SESSION_SENTRY_V1_FINAL_AUTHORITY_2026-10-07.md`; only Sobti Europe passed the frozen pre-2025 gate. Frozen 2025 SENTRY BA was 49.43% with UP recall 75.90% and DOWN recall 22.95%, so it fails the 30% class-recall floor and remains below PATH_GLOBAL BA 51.12%;
 - **SESSION DART V1:** **COMPLETE / NOT PROMOTED / 2025 CLOSED** via `GOLD_SESSION_DART_V1_FINAL_AUTHORITY_2026-10-07.md`; no session passed the frozen pre-2025 gate. Only Sobti NY/London switched state during development, but its routed BA remained below Structural-IRIS;
 - **SESSION AURORA V1:** **COMPLETE / NOT PROMOTED / FRESH UPSTREAM AVAILABLE** via `GOLD_SESSION_AURORA_V1_FINAL_AUTHORITY_2026-10-07.md`; Sobti Asia Morning transports below Structural-IRIS (BA 56.50% vs 60.86%), while Sobti Europe equals PATH_GLOBAL exactly (BA 51.12%). AURORA adds no primary routing edge, but its fresh causal session probability/state ledger now exists;
-- **current immediate task:** rebuild **SESSION HELIOS** from fresh session-native AURORA/OPAL and any other explicitly authorized upstream controller state; historical H3 HELIOS outputs remain QA-only;
+- **role-aware evaluation correction:** **BINDING** via `GOLD_SESSION_ROLE_AWARE_MODEL_EVALUATION_AUTHORITY_2026-10-07.md`. The 30% minimum-class-recall floor now governs only stand-alone PRIMARY/BALANCED promotion. Failure of that floor no longer deletes a head from UP/DOWN specialist, correction, calibration or router-evidence research. Earlier `reject/not promoted` wording must be read narrowly unless the model has explicit negative/non-incremental evidence;
+- **current immediate task:** build and freeze the **2023–2024 session role matrix** for all completed models before continuing to HELIOS. Role freeze must use development evidence only; 2025 remains transport/descriptive and may not define new specialist membership;
 - final session router / consensus: **NOT YET AUTHORIZED** until the replay ledger and specialist eligibility are clean.
 
 **Important correction:** the 2026-10-07 DAILY/H3 CORE3 run at commit `10849d00273d2dac1b539fba22891b45779466bf` is not the SESSION Model-01 result. It remains a separate daily/H3 benchmark. SESSION Model-01 is the identity-reconciled NOVA A0/CORE3 raw session replay authority.
