@@ -1,0 +1,36 @@
+{
+  "status": "ACTUAL_CLASS_DRIFT_AUDIT_COMPLETE",
+  "preregistered_comparators": [
+    "LONG_PLAIN",
+    "LONG_CLASS_BALANCED",
+    "LONG_HALFLIFE_365"
+  ],
+  "decay_half_life_days": 365,
+  "train_source_2020_21": "Twelve Data native M15 private Neon",
+  "train_source_2022_25": "frozen project XAU M15 archive",
+  "label_exact_match": [
+    {
+      "target": "OVN",
+      "matched": 767,
+      "direction_mismatch": 0,
+      "max_abs_return_delta": 9.985502008591496e-17
+    },
+    {
+      "target": "DAY",
+      "matched": 750,
+      "direction_mismatch": 0,
+      "max_abs_return_delta": 9.985502008591496e-17
+    }
+  ],
+  "dev_years": [
+    2023,
+    2024
+  ],
+  "retrospective_transport": [
+    2025
+  ],
+  "target": "Istanbul fixed 09 DAY and 17 OVERNIGHT",
+  "scientific_limit": "inspected research 2023-25; cannot promote from 2025; source-transition vintage not yet accepted",
+  "elapsed_seconds": 29.83,
+  "models_promoted": false
+}
