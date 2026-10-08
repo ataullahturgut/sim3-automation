@@ -55,3 +55,36 @@ def fit_month(tr,month):
       "EW_VIX":(weighted_logit(tr[VIX].to_numpy(float),y,age),VIX),
       "ROLL504_GVZ":(weighted_logit(rolled[GVZ].to_numpy(float),
             rolled.y.to_numpy(int),np.zeros(len(rolled))),GVZ)}
+
+def evaluate(z):
+    rows=[]
+    for target in ("DAY","OVN"):
+      k=z[z.target==target].sort_values("date")
+      old_cache={}
+      for period,now in k[k.year>=2023].groupby(k.date.dt.to_period("M")):
+        dt=period.to_timestamp()
+        tr=k[k.date<dt]
+        if target=="OVN":tr=tr[tr.next_date<=dt]
+        if len(tr)<260:continue
+        specialized=fit_month(tr,dt)
+        frozen_at=pd.Timestamp("2025-01-01" if period.year==2025 else "2026-01-01")
+        if period.year<=2024:baseline=tr[tr.year>=2021]
+        else:
+            baseline=k[(k.year>=2021)&(k.date<frozen_at)]
+            if target=="OVN":baseline=baseline[baseline.next_date<=frozen_at]
+        key=(target,period.year, str(dt) if period.year<=2024 else "frozen")
+        if key not in old_cache:old_cache[key]=hgb(baseline)
+        p={}
+        for name,(model,cols) in specialized.items():
+            p[name]=model.predict_proba(now[cols].to_numpy(float))[:,1]
+        p["EQUAL_GVZ_VIX"]=(p["EW_GVZ"]+p["EW_VIX"])/2
+        p["FROZEN_HGB"]=old_cache[key].predict_proba(now[GVZ].to_numpy(float))[:,1]
+        for name,prob in p.items():
+            for i,r in enumerate(now.itertuples(index=False)):
+                rows.append({"target":target,"date":r.date.strftime("%Y-%m-%d"),
+                "year":int(r.year),"month":str(period),"method":name,"y":int(r.y),
+                "p":float(prob[i]),"pred":int(prob[i]>=.5)})
+    out=pd.DataFrame(rows)
+    if out.empty or out.duplicated(["target","date","method"]).any():
+        raise ValueError("DUPLICATE_OR_EMPTY")
+    return out
