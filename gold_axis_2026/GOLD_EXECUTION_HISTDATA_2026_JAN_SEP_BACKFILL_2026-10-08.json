@@ -1,0 +1,143 @@
+{
+  "asof": "2026-10-08",
+  "source": "HISTDATA_XAUUSD_M1_FIXED_EST_TO_M15_CANDIDATE_2025_2026",
+  "paid_download": false,
+  "year_2026_label_status": "HISTORICAL_INDEPENDENT_CANDIDATE_ONLY",
+  "weekend_market_closed_QC_required": true,
+  "status": "JAN_SEP_2026_PRIVATE_CANDIDATE_COMPLETE",
+  "jan_aug": {
+    "native_m1_rows": 235244,
+    "m15_rows": 15686,
+    "full_15_native_minutes": 15660,
+    "thin_15m_bars": 26,
+    "first_utc": "2026-01-01T23:00:00+00:00",
+    "last_utc": "2026-09-01T04:45:00+00:00",
+    "source_hash": "c3ca7f3301b8e24d095feca1b79172cc83d65f292374d5249817dc8f202e3f55"
+  },
+  "private_storage": {
+    "status": "PRIVATE_CANDIDATE_SAVED",
+    "new_rows": 15686,
+    "total_rows": 41222,
+    "first_utc": "2025-01-01T23:00:00+00:00",
+    "last_utc": "2026-10-01T04:45:00+00:00"
+  },
+  "concordance": {
+    "overlap_2026_sep28_sep30": 276,
+    "median_abs_bps": 13.664822382588593,
+    "p95_abs_bps": 52.839208179047404,
+    "matched_saturday_bar_count": 0,
+    "independent_source_months": [
+      {
+        "year": 2025,
+        "month": 1,
+        "rows": 2014
+      },
+      {
+        "year": 2025,
+        "month": 2,
+        "rows": 1830
+      },
+      {
+        "year": 2025,
+        "month": 3,
+        "rows": 1932
+      },
+      {
+        "year": 2025,
+        "month": 4,
+        "rows": 1932
+      },
+      {
+        "year": 2025,
+        "month": 5,
+        "rows": 2010
+      },
+      {
+        "year": 2025,
+        "month": 6,
+        "rows": 1926
+      },
+      {
+        "year": 2025,
+        "month": 7,
+        "rows": 2100
+      },
+      {
+        "year": 2025,
+        "month": 8,
+        "rows": 1932
+      },
+      {
+        "year": 2025,
+        "month": 9,
+        "rows": 2014
+      },
+      {
+        "year": 2025,
+        "month": 10,
+        "rows": 2108
+      },
+      {
+        "year": 2025,
+        "month": 11,
+        "rows": 1825
+      },
+      {
+        "year": 2025,
+        "month": 12,
+        "rows": 1983
+      },
+      {
+        "year": 2026,
+        "month": 1,
+        "rows": 1922
+      },
+      {
+        "year": 2026,
+        "month": 2,
+        "rows": 1830
+      },
+      {
+        "year": 2026,
+        "month": 3,
+        "rows": 2020
+      },
+      {
+        "year": 2026,
+        "month": 4,
+        "rows": 1932
+      },
+      {
+        "year": 2026,
+        "month": 5,
+        "rows": 1922
+      },
+      {
+        "year": 2026,
+        "month": 6,
+        "rows": 2008
+      },
+      {
+        "year": 2026,
+        "month": 7,
+        "rows": 2096
+      },
+      {
+        "year": 2026,
+        "month": 8,
+        "rows": 1936
+      },
+      {
+        "year": 2026,
+        "month": 9,
+        "rows": 1930
+      },
+      {
+        "year": 2026,
+        "month": 10,
+        "rows": 20
+      }
+    ]
+  },
+  "retrieved_at_utc": "2026-10-08T13:58:48.248112+00:00"
+}
