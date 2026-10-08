@@ -118,4 +118,16 @@ def main():
     (AX/(base+"_SUMMARY.json")).write_text(json.dumps(state,indent=2)+"\n")
     print("RISK_TEST_ACTUAL_RESULTS",results.to_string(index=False),flush=True)
     print("RISK_TEST_STATE",json.dumps(state),flush=True)
-if __name__=="__main__":main()
+if __name__=="__main__":
+    try:
+        main()
+    except Exception as error:
+        import traceback
+        frame=traceback.extract_tb(error.__traceback__)[-1]
+        qc={"status":"RISK_EXPERIMENT_BLOCKED_NOT_SCORED",
+            "error_type":type(error).__name__,
+            "failed_function":frame.name,"failed_line":frame.lineno,
+            "no_claim_of_improvement":True}
+        (AX/"GOLD_EXECUTION_2026_ABSOLUTE_SESSION_RISK_TEST_20261008_FAILURE_QC.json").write_text(
+             json.dumps(qc,indent=2)+"\n")
+        print("SAFE_RISK_RUN_FAILURE",json.dumps(qc),flush=True)
