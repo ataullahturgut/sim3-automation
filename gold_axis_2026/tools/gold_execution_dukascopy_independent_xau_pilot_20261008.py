@@ -191,4 +191,7 @@ def main():
     print("FINAL_STATUS",report["status"],report.get("successful_days"),flush=True)
     return 0 if chunks else 1
 
-if __name__=="__main__":raise SystemExit(main())
+if __name__=="__main__":
+    # Action re-run dispatch: historical pilot already persisted; execute fully governed annual source job.
+    from gold_execution_evdukascopy_uniform_2020_2025_20261008 import main as run_annual
+    raise SystemExit(run_annual())
