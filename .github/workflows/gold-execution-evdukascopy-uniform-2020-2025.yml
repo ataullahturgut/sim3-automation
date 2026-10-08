@@ -14,7 +14,7 @@ concurrency:
 jobs:
   uniform-archive:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
       OPENBLAS_NUM_THREADS: 1
