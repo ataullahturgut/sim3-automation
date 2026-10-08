@@ -21,6 +21,7 @@ BASE = "GOLD_EXECUTION_ORIGIN_SAFE_SHAPE_GVZ_ML_CHALLENGE_20261008"
 SFILE = AX / (BASE + "_SUMMARY.json")
 MFILE = AX / (BASE + "_METRICS.csv")
 PFILE = AX / (BASE + "_PREDICTIONS_PRIVATE.csv")
+PAIRFILE = AX / (BASE + "_PAIRED_AUDIT.csv")
 GVZ_CSV = AX / "GOLD_GVZCLS_RAW_2021_2025.csv"
 ORIGIN = {"DAY": 9, "OVN": 17}
 PRICE = ["impulse_early", "impulse_late", "prior_overnight", "prior_day",
@@ -186,12 +187,60 @@ def metrics(p):
             "tn":tn,"fp":fp,"fn":fn,"tp":tp})
     return pd.DataFrame(out)
 
+def paired_audit(p):
+    from scipy.stats import binomtest
+    rows=[]
+    rng=np.random.default_rng(20261008)
+    def ba(y,pred):
+        down=(y==0);up=(y==1)
+        if not down.any() or not up.any():return np.nan
+        return .5*(np.mean(pred[down]==0)+np.mean(pred[up]==1))
+    for (target,year),frame in p.groupby(["target","year"]):
+        base=frame[frame.model=="BASE_LOGIT"].sort_values("date")
+        ref=base.set_index("date")
+        for challenger in (m for m in MODELS if m!="BASE_LOGIT"):
+            candidate=frame[frame.model==challenger].sort_values("date").set_index("date")
+            a=ref.join(candidate[["y","pred","p_up"]],how="inner",
+                       lsuffix="_b",rsuffix="_c",validate="one_to_one")
+            if len(a)!=len(base) or (a.y_b!=a.y_c).any():
+                raise RuntimeError("PAIR_SOURCE_POPULATION_MISMATCH")
+            y=a.y_b.to_numpy(int)
+            old=a.pred_b.to_numpy(int);new=a.pred_c.to_numpy(int)
+            oldp=a.p_up_b.to_numpy(float);newp=a.p_up_c.to_numpy(float)
+            saved=int(((new==y)&(old!=y)).sum())
+            broken=int(((new!=y)&(old==y)).sum())
+            bdiff=float(ba(y,new)-ba(y,old))
+            bsdelta=float(np.mean((newp-y)**2-(oldp-y)**2))
+            # Moving blocks of five consecutive eligible issue dates. Account for
+            # serially dependent financial observations. Dev uncertainty diagnostic,
+            # not a confidence guarantee for 2025/2026.
+            n=len(a);rep=[]
+            k=int(np.ceil(n/5))
+            for _ in range(800):
+                picks=rng.integers(0,max(1,n-4),size=k)
+                ix=np.concatenate([np.arange(i,min(i+5,n)) for i in picks])[:n]
+                d=ba(y[ix],new[ix])-ba(y[ix],old[ix])
+                if np.isfinite(d):rep.append(d)
+            ci=(np.quantile(rep,[.025,.975]).tolist() if len(rep)>=600
+                else [None,None])
+            exact=float(binomtest(saved,saved+broken,.5).pvalue) if saved+broken else 1.
+            rows.append({"target":target,"year":int(year),"model":challenger,"base":"BASE_LOGIT",
+                "n":n,"rescues":saved,"broken":broken,"net_rescues":saved-broken,
+                "ba_delta":bdiff,"brier_delta":bsdelta,
+                "ba_delta_block_boot_ci_025":ci[0],
+                "ba_delta_block_boot_ci_975":ci[1],
+                "mcnemar_exact_p":exact,
+                "dev_bonferroni_p_12_tests":min(1.0,12*exact) if year<2025 else np.nan,
+                "2025_scope":"EXAMINED_RETROSPECTIVE" if year==2025 else "HISTORICAL_DEV"})
+    return pd.DataFrame(rows)
+
 def main():
     start=time.time()
     q,t=source.source_load()
     z=features(q,t)
     p=predictions(z)
     m=metrics(p)
+    pairs=paired_audit(p)
     # Paired only: every model must score exactly the same dates for each target/year.
     for (target,year),g in p.groupby(["target","year"]):
         dates={name:set(h.date) for name,h in g.groupby("model")}
@@ -217,7 +266,9 @@ def main():
       "no_model_automatically_promoted":True,"research_elapsed_seconds":int(time.time()-start)}
     SFILE.write_text(json.dumps(summary,indent=2,default=str)+"\n")
     MFILE.write_text(m.to_csv(index=False))
+    PAIRFILE.write_text(pairs.to_csv(index=False))
     PFILE.write_text(p.to_csv(index=False))
     print("SUCCESS_SHAPE_GVZ",json.dumps(summary,default=str),flush=True)
     print(m.to_string(index=False),flush=True)
+    print("PAIRED_AUDIT",pairs.to_string(index=False),flush=True)
 if __name__=="__main__":main()
