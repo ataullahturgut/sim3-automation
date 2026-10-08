@@ -1,0 +1,39 @@
+name: Gold Execution Independent Clean 2026 LIT Stress
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_execution_clean_2026_lit_stress_20261008.py'
+      - '.github/workflows/gold-execution-clean-2026-lit-stress.yml'
+permissions:
+  contents: write
+concurrency:
+  group: gold-execution-clean-2026-lit-stress
+  cancel-in-progress: false
+jobs:
+  stress:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OMP_NUM_THREADS: 1
+      OPENBLAS_NUM_THREADS: 1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'scipy>=1.12,<2' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - run: python gold_axis_2026/tools/gold_execution_clean_2026_lit_stress_20261008.py
+      - name: Commit unchanged-model 2026 source-repaired diagnostic
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_EXECUTION_CLEAN_2026_LIT_STRESS_*
+          git diff --cached --quiet || git commit -m 'Record 2026 corrected-source LIT stress without model selection'
+          git pull --rebase origin gold-execution-channel-audit-20261006
+          git push origin HEAD:gold-execution-channel-audit-20261006
