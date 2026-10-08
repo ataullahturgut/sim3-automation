@@ -32,3 +32,18 @@ These gains are descriptive comparisons on already-inspected periods, not causal
 Two separate heads, with explicit data and authority gates: (1) conditional expected *absolute move* and predicted tail exposure by the existing risk scale, (2) event-specific **signed direction / severe-downside** specialist using exact release-time US macro surprise, intraday US real yields/DXY and Fed preannounced calendar, all point-in-time and available before 17:00 Turkey decision. Avoid pretending same-day published after-17 macro actual was known at 17. Treat macro releases after 17 as **uncertainty/event hazard**, never use the surprise before its publication. Third head is action policy with **ABSTAIN** by expected executable gain after real Turkish bank BID/ASK spread, not raw 50/50 direction. A directional model can be approved only with earlier pre-registered later prospective cohorts; 2026 outcomes have already been studied. Evaluate each forecast class's conditional payoff (UP opportunity / DOWN hedge / abstain), error size, coverage, false alarms, worst-tail misses, and bank cost.
 
 **Scientific decision today:** direction improvement experiments were falsified; a **measurable but unpromoted absolute-size risk forecasting channel** has emerged. Distinguish this technical progress from a proven profitable trade or a reliably caught severe decline.
+
+
+## V. Dependent calendar-month block bootstrap — 1,500 paired resamples, completed
+Separate before-execution registration `GOLD_EXECUTION_2026_VOLATILITY_RISK_BLOCK_BOOTSTRAP_AUDIT_NOTE_20261008.md`, reproducible evidence `GOLD_EXECUTION_2026_CAUSAL_RELATIVE_VOL_RISK_20261008_MONTH_BLOCK_UNCERTAINTY.csv`. Month-block resampling preserves all dated paired losses in every chosen source/calendar month. Research uncertainty around ratio `1 - MAE_dynamic / MAE_historical_naive`, 95% percentile range, descriptive (NOT independent future proof):
+| Evaluation cohort | N | Calendar blocks | Observed gain | 95% month-block interval | Zero included? |
+|---|---:|---:|---:|---:|---|
+| 2023 DEV | 187 | 12 | -0.96% | **[-4.46%, +2.73%]** | YES |
+| 2024 DEV | 190 | 12 | +0.63% | **[-3.11%, +4.85%]** | YES |
+| 2025 retrospective | 192 | 12 | +5.49% | **[+0.98%, +8.98%]** (cross-publisher calculation; direct population reported +0.83%, +8.77%) | NO |
+| 2026 price-gated mirror Jan–Aug20 | 97 | 8 | +12.46% | **[+5.30%, +17.91%]** | NO |
+| 2026 native direct Jan–Oct07 | 72 | 10 | +14.20% | **[+5.56%, +24.17%]** | NO |
+
+Interpretation: consistent within-year **absolute magnitude prediction error reductions** in inspected 2025/2026 high-volatility conditions, under limited block resampling. **2023–24 no consistent gain.** Bootstrap intervals cannot correct after-result model hypotheses, 2026 already inspected, market regime reoccurrence, 8-month blocks, or correlated source samples; do not combine mirror and direct as two independent confirmations. Severe signed-DOWN warning still FAILED as explained in III. No claim of profitable or deployed XAU direction edge.
+
+Scientific rationale: heterogeneous autoregressive intraday volatility persistence (Ye et al., 2023, `doi:10.1016/j.frl.2023.104022`), regime-sensitive realized-volatility models (Federal Reserve FEDS September 2026), and caution on financial forecast block bootstrap under serial dependence (Journal of Econometrics 2025 `doi:10.1016/j.jeconom.2024.105916`). Literature motivates testing; the actual numerical results are specific source-gated experiments documented here.
