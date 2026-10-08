@@ -1,0 +1,30 @@
+{
+  "status": "ORIGINAL_TAIL_RISK_MODELS_RERUN_ON_AUDITED_BID_SOURCE",
+  "original_method_families": [
+    "HAR_LOGISTIC_RV5_20_60",
+    "GVZ_D1",
+    "HAR_GVZ",
+    "SIGNED_SCORE",
+    "SIGNED_GVZ",
+    "SIGNED_SCORE_GVZ"
+  ],
+  "scope": "MAGNITUDE_PROBABILITY_ONLY_NOT_UP_DOWN_DIRECTION_FORECAST",
+  "source_id": "EVTRADINGLABS_DUKASCOPY_DERIVED_XAUUSD_M15_BIDASK_2020_2025_V1",
+  "gvz_pit": "D-1 observation dates strictly older than trade origin; historical release-lag metadata not independently audited",
+  "origin": "17:00 Europe/Istanbul",
+  "source_2020_2025_bars": 141890,
+  "risk_data_history": "2022 source-complete warmup; 2023-24 prequential; 2025 frozen past history",
+  "2025_warning": "RETROSPECTIVE archive already inspected, not future OOS",
+  "2019_2021_note": "Years 2020-21 were source-verified but are not reused for this earlier published model's GVZ warmup contract",
+  "macro_calendar": "Not used, incomplete event ledger never turned into no-event records",
+  "run_date": "2026-10-08",
+  "risk_predictions": 745,
+  "target_quality_gate": "Only source-mature overnight returns; prior realized targets lagged once before each decision, including different Friday weekend hold type",
+  "2025_not_for_feature_selection": true,
+  "no_direction_promoted": true,
+  "data_value_touched": false,
+  "existing_forecast_unchanged": true,
+  "metrics_file": "GOLD_EXECUTION_2020_2025_TAIL_HAR_GVZ_CLEAN_SOURCE_RETEST_20261008_METRICS.csv",
+  "forecast_artifact": "GOLD_EXECUTION_2020_2025_TAIL_HAR_GVZ_CLEAN_SOURCE_RETEST_20261008_PREDICTIONS.csv",
+  "elapsed_seconds": 7
+}
