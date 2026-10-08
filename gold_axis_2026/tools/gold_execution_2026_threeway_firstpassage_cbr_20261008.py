@@ -117,4 +117,15 @@ def main():
     allp.to_csv(str(root)+"_PRIVATE_DATED.csv",index=False)
     print("THREEWAY_FIRSTPASSAGE_METRICS",m.to_string(index=False),flush=True)
     print("THREEWAY_FIRSTPASSAGE_STATUS",json.dumps(report),flush=True)
-if __name__=="__main__":main()
+if __name__=="__main__":
+    try:
+        main()
+    except Exception as e:
+        import traceback
+        fr=traceback.extract_tb(e.__traceback__)[-1]
+        failure={"status":"THREE_WAY_EVENT_MODEL_BLOCKED_NOT_SCORED",
+            "error_type":type(e).__name__,"line":fr.lineno,"function":fr.name,
+            "reason":str(e)[:100],"no_claim_of_event_forecasting_success":True}
+        (AX/(NAME+"_FAILURE_QC.json")).write_text(json.dumps(failure,indent=2)+"\n")
+        print("THREEWAY_EVENT_RUN_FAILURE",json.dumps(failure),flush=True)
+
