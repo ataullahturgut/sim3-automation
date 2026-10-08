@@ -1,0 +1,47 @@
+name: Gold 2026 Dukascopy-Node Public M1 Mirror Independent Source Audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - gold_axis_2026/tools/gold_execution_2026_dukascopy_node_mirror_forensic_20261008.py
+      - .github/workflows/gold-execution-2026-dukascopy-node-mirror-forensic.yml
+permissions:
+  contents: write
+concurrency:
+  group: gold-2026-dukascopy-node-mirror-provenance-audit
+  cancel-in-progress: false
+jobs:
+  mirror-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.32,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Actually download public 2025 and 2026 M1 BID ASK and compare independently verified prices
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_2026_dukascopy_node_mirror_forensic_20261008.py
+          python gold_axis_2026/tools/gold_execution_2026_dukascopy_node_mirror_forensic_20261008.py
+      - name: Persist only aggregate mirror source-gate receipt
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          file=gold_axis_2026/GOLD_EXECUTION_2026_DUKASCOPY_NODE_MIRROR_SOURCE_FORENSIC_20261008.json
+          if test -f "$file"; then git add "$file"; fi
+          git diff --cached --quiet || git commit -m 'Record source-safe 2026 public Dukascopy mirror 2025 and 2026 provenance gates'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 3
+          done
+          exit 1
