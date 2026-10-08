@@ -16,7 +16,7 @@
   },
   "frozen_pramv_v1_status": "NOT REFIT; macro PIT missing; legacy forecast transfer separately scored; frozen V1 not silently changed",
   "trained_model_architecture_count": 9,
-  "trained_binary_forecaster_count": 18,
+  "trained_binary_forecaster_count": 20,
   "all_refit_prediction_records": 6755,
   "transport_metric_rows": 69,
   "session_models_retraining_status": "BLOCKED_DIFFERENT_TARGET until explicit original architecture feature-port with audited current origin",
@@ -73,6 +73,6 @@
       "origin": "17:00"
     }
   },
-  "elapsed_seconds": 20,
+  "elapsed_seconds": 34,
   "version": "V1_AUDITED"
 }
