@@ -7,6 +7,8 @@
 **Code:** `tools/gold_execution_dual_hazard_tail_audit_20261008.py`  
 **Per-origin scores / labels / audit ledger:** `GOLD_EXECUTION_DUAL_HAZARD_ROWS_2026-10-08.csv`.
 
+> **SOURCE AUTHORITY CORRECTION — 2026-10-08:** The 2025 macro ledger has **zero FOMC calendar records** despite the Federal Reserve's eight regular 2025 meetings. Its NFP/CPI counts also differ from 2023–2024 and require schedule reconciliation due to BLS release disruptions. Accordingly, earlier combined calendar/volatility figures (2025 "6/7" and pooled "10/14") are retained below **as historical diagnostics from an incomplete input**, NOT PIT-approved composite results. The entire 2025 calendar composite series has been quarantined to UNKNOWN in the updated daily evidence CSV and replay code. The **volatility-only** result (2025 6/7 with 95/254 warnings) remains valid as a retrospectively observed, not untouched OOS, risk-head diagnostic. See `GOLD_EXECUTION_TAIL1_PROBABILITY_RESEARCH_RESULT_2026-10-08.md` for the corrected source gate and new probability forecasts.
+
 ## 1. Why a new target is necessary
 
 The apparent ~60–63% sign accuracy of PRAMV V1 does not guarantee a positive bank-executable return. On frozen 2025 retrospective signals (N=82):
