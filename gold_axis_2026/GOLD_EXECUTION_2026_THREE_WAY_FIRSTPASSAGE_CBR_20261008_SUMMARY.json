@@ -1,0 +1,21 @@
+{
+  "status": "THREE_EVENT_NONPARAMETRIC_COMPETING_FIRST_PASSAGE_ACTUALLY_EXECUTED",
+  "events": [
+    "NO_HIT",
+    "UP_FIRST",
+    "DOWN_FIRST"
+  ],
+  "methods": [
+    "PATH_FIRSTPASSAGE",
+    "REGIME_PATH_FIRSTPASSAGE",
+    "HISTORICAL_THREE_EVENT_PRIOR"
+  ],
+  "probability_estimator": "pre-origin 16-M15 path kernel memory, with/without preorigin GVZ and RV regime",
+  "first_event_observed_15m_close_not_intrabar_touch": true,
+  "historical_training_source": "2020-2025 EV Dukascopy BID source gated",
+  "2026_models_frozen_before_2026": true,
+  "2026_future_event_label_not_used_in_fit": true,
+  "two_2026_sources_overlap_not_independent": true,
+  "retrospective_not_prospective": true,
+  "bank_execution_profit_not_tested": true
+}
