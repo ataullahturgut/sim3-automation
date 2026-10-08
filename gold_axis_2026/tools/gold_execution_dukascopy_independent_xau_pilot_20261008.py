@@ -194,4 +194,10 @@ def main():
 if __name__=="__main__":
     # Action re-run dispatch: historical pilot already persisted; execute fully governed annual source job.
     from gold_execution_evdukascopy_uniform_2020_2025_20261008 import main as run_annual
-    raise SystemExit(run_annual())
+    rc = run_annual()
+    from gold_execution_evdukascopy_uniform_2020_2025_20261008 import OUT as annual_report
+    if annual_report.exists():
+        print("FULL_YEAR_UNIFORM_2020_2025_RECEIPT_BEGIN",flush=True)
+        print(annual_report.read_text(),flush=True)
+        print("FULL_YEAR_UNIFORM_2020_2025_RECEIPT_END",flush=True)
+    raise SystemExit(rc)
