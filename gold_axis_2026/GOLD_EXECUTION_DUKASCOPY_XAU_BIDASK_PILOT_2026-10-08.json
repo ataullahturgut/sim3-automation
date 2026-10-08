@@ -1,0 +1,233 @@
+{
+  "status": "INDEPENDENT_PILOT_SAVED_PRIVATE",
+  "asof": "2026-10-08",
+  "purpose": "Independent BID/ASK XAU/USD quote source feasibility; 2023 HistData gaps and October 2026",
+  "source": "Dukascopy Bank M1 candle BID/ASK UTC direct archive, 0-based calendar month",
+  "historical_price_scale": "XAUUSD native integer points /1000",
+  "raw_vendor_quotes_not_public": true,
+  "paid_api_charge_usd": 0,
+  "source_candidate_only": true,
+  "same_source_stitching_into_histdata": false,
+  "days": [
+    {
+      "date": "2023-04-03",
+      "bid": {
+        "result": "SOURCE_DAY_RECEIVED",
+        "origin_host": "datafeed.dukascopy.com/datafeed",
+        "m1_rows": 1440,
+        "payload_byte_size": 15581,
+        "sha256_bi5": "0e7b0551803b78971994ac585570e9633de19d0098faecf6af7a4099432e7c9e"
+      },
+      "ask": {
+        "result": "SOURCE_DAY_RECEIVED",
+        "origin_host": "datafeed.dukascopy.com/datafeed",
+        "m1_rows": 1440,
+        "payload_byte_size": 15686,
+        "sha256_bi5": "82c34ebbf1e7ef3efb96ff75ae9ae200806651067470670b86667e5dbf8471df"
+      },
+      "aggregate": {
+        "status": "MATCHED_BID_ASK",
+        "same_minute_rows": 1440,
+        "crossed_quote_minutes_removed": 0,
+        "m15_bars": 96,
+        "complete_15m_bars": 96,
+        "partial_m15_bars": 0,
+        "m15_sha256": "d406087ed847fc267281409b6ab4e36f567ae1b89b059a263f5ca5d5e6b6e62e",
+        "median_spread_bps": 1.6954541704576365
+      },
+      "reference_compare": {
+        "histdata_m15_bars": 68,
+        "independent_bid_m15_bars": 96,
+        "new_intervals_not_in_histdata": 28,
+        "matched_close_bars": 68,
+        "median_cross_vendor_bid_diff_bps": 11.211200680982802,
+        "p95_cross_vendor_bid_diff_bps": 35.64704562724718
+      },
+      "result": "DATA_QC_COMPLETE"
+    },
+    {
+      "date": "2023-04-11",
+      "bid": {
+        "result": "SOURCE_DAY_RECEIVED",
+        "origin_host": "datafeed.dukascopy.com/datafeed",
+        "m1_rows": 1440,
+        "payload_byte_size": 14767,
+        "sha256_bi5": "c25746c9f69287b9bcfa571e169a555d3b3e2a7fe7004757c8b9075487e27b0f"
+      },
+      "ask": {
+        "result": "SOURCE_DAY_RECEIVED",
+        "origin_host": "datafeed.dukascopy.com/datafeed",
+        "m1_rows": 1440,
+        "payload_byte_size": 14786,
+        "sha256_bi5": "f729b82b61e359bd41690646692929c08ac3600d7b8171c789791741c9a4cd72"
+      },
+      "aggregate": {
+        "status": "MATCHED_BID_ASK",
+        "same_minute_rows": 1440,
+        "crossed_quote_minutes_removed": 0,
+        "m15_bars": 96,
+        "complete_15m_bars": 96,
+        "partial_m15_bars": 0,
+        "m15_sha256": "0f566f1389308384214eeb0d06c552a080574d5b0da376aaf9d236b618c98f9b",
+        "median_spread_bps": 1.681156039075332
+      },
+      "reference_compare": {
+        "histdata_m15_bars": 72,
+        "independent_bid_m15_bars": 96,
+        "new_intervals_not_in_histdata": 24,
+        "matched_close_bars": 72,
+        "median_cross_vendor_bid_diff_bps": 7.612781186990825,
+        "p95_cross_vendor_bid_diff_bps": 20.900169841913456
+      },
+      "result": "DATA_QC_COMPLETE"
+    },
+    {
+      "date": "2023-04-18",
+      "bid": {
+        "result": "SOURCE_DAY_RECEIVED",
+        "origin_host": "datafeed.dukascopy.com/datafeed",
+        "m1_rows": 1440,
+        "payload_byte_size": 14877,
+        "sha256_bi5": "3c69865d945c0df2343824de0723b9ccb6bf4626494e66eb40d675c5516dd3e3"
+      },
+      "ask": {
+        "result": "SOURCE_DAY_RECEIVED",
+        "origin_host": "www.dukascopy.com/datafeed",
+        "m1_rows": 1440,
+        "payload_byte_size": 15082,
+        "sha256_bi5": "dcc401195d8bb524903af832947cbe8d18f689ee0c8d4ea58dfb63a77e09b502"
+      },
+      "aggregate": {
+        "status": "MATCHED_BID_ASK",
+        "same_minute_rows": 1440,
+        "crossed_quote_minutes_removed": 0,
+        "m15_bars": 96,
+        "complete_15m_bars": 96,
+        "partial_m15_bars": 0,
+        "m15_sha256": "3d70c47fe422f7c5328e71c5ff56b8543294263dcd0f85c364eb345592e6820c",
+        "median_spread_bps": 1.651348250886425
+      },
+      "reference_compare": {
+        "histdata_m15_bars": 64,
+        "independent_bid_m15_bars": 96,
+        "new_intervals_not_in_histdata": 32,
+        "matched_close_bars": 64,
+        "median_cross_vendor_bid_diff_bps": 8.16275823724788,
+        "p95_cross_vendor_bid_diff_bps": 45.51950414916057
+      },
+      "result": "DATA_QC_COMPLETE"
+    },
+    {
+      "date": "2023-04-25",
+      "bid": {
+        "result": "SOURCE_DAY_RECEIVED",
+        "origin_host": "datafeed.dukascopy.com/datafeed",
+        "m1_rows": 1440,
+        "payload_byte_size": 15592,
+        "sha256_bi5": "c9ac172cfb2813d5cde9f91a028630b1466aa80d8e1668ad2b622ac9c88f19cd"
+      },
+      "ask": {
+        "result": "SOURCE_UNAVAILABLE_OR_INVALID",
+        "causes": [
+          "ReadTimeout:HTTPSConnectionPool(host='datafeed.",
+          "HTTP_503"
+        ]
+      },
+      "result": "BLOCKED",
+      "error_type": "RuntimeError",
+      "reason": "MISSING_OR_INVALID_SOURCE_CANDLE"
+    },
+    {
+      "date": "2026-10-01",
+      "bid": {
+        "result": "SOURCE_UNAVAILABLE_OR_INVALID",
+        "causes": [
+          "HTTP_503",
+          "HTTP_503"
+        ]
+      },
+      "ask": {
+        "result": "SOURCE_UNAVAILABLE_OR_INVALID",
+        "causes": [
+          "HTTP_503",
+          "HTTP_503"
+        ]
+      },
+      "result": "BLOCKED",
+      "error_type": "RuntimeError",
+      "reason": "MISSING_OR_INVALID_SOURCE_CANDLE"
+    },
+    {
+      "date": "2026-10-05",
+      "bid": {
+        "result": "SOURCE_DAY_RECEIVED",
+        "origin_host": "www.dukascopy.com/datafeed",
+        "m1_rows": 1440,
+        "payload_byte_size": 16123,
+        "sha256_bi5": "37103e4de2dd2b6afd29e323215597cc706b7f8e27c6137b4049422017b0c725"
+      },
+      "ask": {
+        "result": "SOURCE_DAY_RECEIVED",
+        "origin_host": "datafeed.dukascopy.com/datafeed",
+        "m1_rows": 1440,
+        "payload_byte_size": 16338,
+        "sha256_bi5": "e39b1057d5f8bc38771055dd80049ad02eeb703c8481645eec0181706eda1b64"
+      },
+      "aggregate": {
+        "status": "MATCHED_BID_ASK",
+        "same_minute_rows": 1440,
+        "crossed_quote_minutes_removed": 0,
+        "m15_bars": 96,
+        "complete_15m_bars": 96,
+        "partial_m15_bars": 0,
+        "m15_sha256": "a6163519576a517fcd7909313820fb4af14aea98126810cf675994acb53e20f0",
+        "median_spread_bps": 1.3927208868282195
+      },
+      "reference_compare": null,
+      "result": "DATA_QC_COMPLETE"
+    },
+    {
+      "date": "2026-10-06",
+      "bid": {
+        "result": "SOURCE_UNAVAILABLE_OR_INVALID",
+        "causes": [
+          "HTTP_503",
+          "HTTP_503"
+        ]
+      },
+      "ask": {
+        "result": "SOURCE_UNAVAILABLE_OR_INVALID",
+        "causes": [
+          "HTTP_503",
+          "ConnectionError:('Connection aborted.', ConnectionR"
+        ]
+      },
+      "result": "BLOCKED",
+      "error_type": "RuntimeError",
+      "reason": "MISSING_OR_INVALID_SOURCE_CANDLE"
+    },
+    {
+      "date": "2026-10-07",
+      "bid": {
+        "result": "SOURCE_UNAVAILABLE_OR_INVALID",
+        "causes": [
+          "HTTP_503",
+          "HTTP_503"
+        ]
+      },
+      "ask": {
+        "result": "SOURCE_UNAVAILABLE_OR_INVALID",
+        "causes": [
+          "HTTP_503",
+          "HTTP_503"
+        ]
+      },
+      "result": "BLOCKED",
+      "error_type": "RuntimeError",
+      "reason": "MISSING_OR_INVALID_SOURCE_CANDLE"
+    }
+  ],
+  "private_new_m15_rows": 384,
+  "successful_days": 4,
+  "generated_at_utc": "2026-10-08T14:36:15.805266+00:00"
+}
