@@ -8,7 +8,7 @@ TABLE="gold_research_dukascopy_2026_direct_m1_m15_bidask_v2"
 SOURCE="DUKASCOPY_DIRECT_M1_BIDASK_2026_M15_NATIVE_FULL_V2"
 OUT=AX/"GOLD_EXECUTION_2026_DIRECT_DUKASCOPY_MONTHLY_COVERAGE_STATUS_20261008.json"
 def main():
-    r={"asof":"2026-10-08","provider":"direct Dukascopy XAUUSD M1 BID ASK",
+    r={"asof":"2026-10-08","provider":"direct Dukascopy XAUUSD M1 BID ASK","audit_purpose":"2026 latest monthly primary M15 source coverage after independent mirrored price gate",
        "source_id":SOURCE,"raw_prices_published":False}
     try:
       with psycopg.connect(os.environ["NEON_DATABASE_URL"],connect_timeout=15) as c:
