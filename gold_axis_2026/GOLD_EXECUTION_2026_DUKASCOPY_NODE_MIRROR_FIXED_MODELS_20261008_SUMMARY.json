@@ -1,0 +1,98 @@
+{
+  "status": "2026_SAME_DUKASCOPY_UPSTREAM_CROSS_PUBLISHER_M15_RESEARCH_SCORE_COMPLETE",
+  "asof": "2026-10-08",
+  "actual_2026_last_data_utc": "2026-08-20T23:30:00+00:00",
+  "upstream_price_provider": "Dukascopy XAUUSD spot BID ASK",
+  "historical_2020_2025_publisher": "EVTradingLabs derived Dukascopy",
+  "2026_publisher": "Third party github dukascopy-node monthly M1",
+  "2026_not_direct_primary_feed": true,
+  "source_proof": {
+    "ev2025": {
+      "matched_m15_bars": 2007,
+      "matched_price_cells": 8028,
+      "median_abs_bps": 0.01157779933846571,
+      "p95_abs_bps": 0.011922134157651481,
+      "price_gate_pass": true
+    },
+    "primary2026": {
+      "status": "PRIMARY_OVERLAP_EVALUATED",
+      "matched_m15_bars": 7758,
+      "matched_price_cells": 31032,
+      "matched_utc_days": 86,
+      "median_abs_bps": 0.0,
+      "p95_abs_bps": 0.0,
+      "max_abs_bps": 0.0,
+      "price_gate_pass": true
+    }
+  },
+  "closed_market_and_zero_range_m15_removed": true,
+  "2026_M15_bar_count": 15027,
+  "target_gates": {
+    "raw_2026_issue_candidates": 164,
+    "raw_2026_day_approved": 164,
+    "raw_2026_regular_overnight_approved": 130,
+    "first_eligible": "2026-01-02",
+    "last_eligible": "2026-08-20",
+    "qc_day_overnight_by_month": {
+      "2026-01": {
+        "issue_dates": 21,
+        "complete_day": 21,
+        "complete_overnight": 16
+      },
+      "2026-02": {
+        "issue_dates": 20,
+        "complete_day": 20,
+        "complete_overnight": 16
+      },
+      "2026-03": {
+        "issue_dates": 22,
+        "complete_day": 22,
+        "complete_overnight": 18
+      },
+      "2026-04": {
+        "issue_dates": 21,
+        "complete_day": 21,
+        "complete_overnight": 17
+      },
+      "2026-05": {
+        "issue_dates": 21,
+        "complete_day": 21,
+        "complete_overnight": 16
+      },
+      "2026-06": {
+        "issue_dates": 22,
+        "complete_day": 22,
+        "complete_overnight": 18
+      },
+      "2026-07": {
+        "issue_dates": 23,
+        "complete_day": 23,
+        "complete_overnight": 18
+      },
+      "2026-08": {
+        "issue_dates": 14,
+        "complete_day": 14,
+        "complete_overnight": 11
+      }
+    }
+  },
+  "models": [
+    "BASE_LOGIT",
+    "SHAPE_LOGIT",
+    "SHAPE_GVZ_LOGIT",
+    "SHAPE_GVZ_HGB",
+    "VIX_GVZ_LOGIT",
+    "VIX_GVZ_HGB"
+  ],
+  "training_start": [
+    2020,
+    2021,
+    2022
+  ],
+  "no_2026_training_targets": true,
+  "2026_already_inspected_for_earlier_histdata_research": true,
+  "bank_execution_PnL": false,
+  "is_strict_direct_primary_2026_validation": false,
+  "no_2026_sep_oct_data_from_this_mirror": true,
+  "elapsed_seconds": 12
+}

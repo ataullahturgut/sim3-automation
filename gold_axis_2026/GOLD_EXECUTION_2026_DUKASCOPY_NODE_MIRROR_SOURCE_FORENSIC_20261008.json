@@ -225,7 +225,7 @@
     "price_gate_pass": true
   },
   "2026_m15_nonclosed_nonflat_candidates": 15027,
-  "new_private_m15_saved": 15027,
+  "new_private_m15_saved": 0,
   "same_upstream_provider_not_same_publisher": true,
   "2026_full_year_claim": false,
   "runtime_seconds": 7
