@@ -115,3 +115,16 @@ The independent 728-cell 2025 BID source overlap evidence is frozen separately. 
 - Strict source QC & replay: `tools/gold_execution_2026_dukascopy_node_mirror_forensic_20261008.py`, `tools/gold_execution_2026_dukascopy_node_mirror_locked_models_20261008.py`.
 
 **Scientific verdict:** Main near-session-direction research is **not solved**. 2026 direct issuer/date-locked source coverage is partial. 2026 same-upstream mirror retrospective falsifies the earlier apparently higher HistData 2026 nominal advantage; no stable model champion for live decisions. Preserve all unsuccessful variants; do not select a winner on already seen 2026 outcomes.
+
+
+## K. Additional primary DIRECT 2026 Dukascopy M1 BID/ASK external diagnostic, through 2026-10-07
+
+Separate direct-first-party research result actually executed `GOLD_EXECUTION_2026_PRIMARY_DUKASCOPY_RESTRICTED_NATIVE_SUBSET_20261008_SUMMARY.json` with fixed model families `GOLD_EXECUTION_2026_PRIMARY_DUKASCOPY_RESTRICTED_NATIVE_SUBSET_20261008_YEAR_METRICS.csv` and paired same-day audit `GOLD_EXECUTION_2026_PRIMARY_DUKASCOPY_RESTRICTED_NATIVE_SUBSET_20261008_PAIRED_HISTORY.csv`.
+
+Primary source: 13,248 native BID+ASK Dukascopy M15 (each exactly 15 native source minutes), maturity through 2026-10-08 17:00 TR. This is **not** the calendar-padded github mirror. Of 138 mature DAY/95 mature regular-OVN raw source labels, the full price shape and pre-origin lagged GVZ/VIX common-model population has **94 DAY/68 OVN** scored dates across January–October 7. Strict historical >90 genuine model-observation rule **FAILS** for OVN: 95 mature raw labels are NOT 95 fully feature-qualified scored decisions. Source summary initially overstated its source-only count gate and was corrected so `pre_registered_2026_overnight_promotable=false`; the retraining script is likewise fixed. **No promotion**.
+
+Within 68 normal OVN test origins, SHAPE_GVZ_HGB starts 2020/2021/2022 produce BA **47.66 / 55.88 / 48.54%**, 2021-start DOWN recall **35.90%**; 2021 vs 2022 same-date rescued10/broke6, exact McNemar **p≈0.454**. Nominal BASE_LOGIT start2022 BA **56.81%**, but catches just **20.51% DOWN** (largely UP-biased). On 94 DAY origins, BASE_LOGIT start2022 BA **55.87%**, DOWN **26.83%**. The model still has no deployable credible DOWN-capture edge.
+
+The Jan–Aug cross-publisher Dukascopy mirror N97 and direct broker Jan–Oct N68 are **DIFFERENT date populations** and cannot be compared as a matched accuracy delta. Both confirm no strong robust edge. 2026 outcomes were already used for retrospective research; any subsequent modeling must not call 2026 an untouched independent holdout. Bank spread, slippage, fees and actual execution venue not tested.
+
+Reproducible program: `tools/gold_execution_2026_primary_native_restricted_diagnostic_20261008.py`. No historical archive mutated and no nonnative 2026 bars silently added to direct publisher candidate.
