@@ -1,0 +1,39 @@
+name: Gold Execution 2025 Repaired Source LIT Replay
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_execution_2025_repaired_lit_replay_20261008.py'
+      - '.github/workflows/gold-execution-2025-repaired-lit-replay-20261008.yml'
+permissions:
+  contents: write
+concurrency:
+  group: gold-execution-2025-repaired-lit-replay-20261008
+  cancel-in-progress: false
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OMP_NUM_THREADS: 1
+      OPENBLAS_NUM_THREADS: 1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'scipy>=1.12,<2' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - run: python gold_axis_2026/tools/gold_execution_2025_repaired_lit_replay_20261008.py
+      - name: Commit model audit only after correct comparison
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_EXECUTION_2025_SOURCE_REPAIRED_LIT_*
+          git diff --cached --quiet || git commit -m 'Record actual 2025 same-date clean-source LIT evaluation'
+          git pull --rebase origin gold-execution-channel-audit-20261006
+          git push origin HEAD:gold-execution-channel-audit-20261006
