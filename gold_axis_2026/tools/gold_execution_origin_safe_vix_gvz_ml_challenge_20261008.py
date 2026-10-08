@@ -30,7 +30,7 @@ VIX_URLS=[
     "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv",
 ]
 
-def joined(z):
+def joined(z,require_full_2023_2025=True):
     global VIX_SHA
     blob=None;errors=[]
     for url in VIX_URLS:
@@ -68,7 +68,7 @@ def joined(z):
     if (z.date-z.vix_known_date).dt.days.gt(7).any():raise RuntimeError("VIX_TOO_STALE")
     z["vix_vs_gvz_log_spread"]=z.vix_log-z.gvz_log
     z=z.dropna(subset=COLS).sort_values(["target","date"]).reset_index(drop=True)
-    if len(z[z.year==2023])<380 or len(z[z.year==2024])<390 or len(z[z.year==2025])<380:
+    if require_full_2023_2025 and (len(z[z.year==2023])<380 or len(z[z.year==2024])<390 or len(z[z.year==2025])<380):
         raise RuntimeError("MATCHED_SAMPLE_TOO_THIN")
     if z.duplicated(["target","date"]).any():raise RuntimeError("DUPLICATE_TARGET_DATE")
     return z
