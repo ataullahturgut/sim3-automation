@@ -137,6 +137,9 @@ def main():
              panel.groupby("year").size().to_dict(),flush=True)
     allp=pd.concat(preds,ignore_index=True)
     m=score(allp)
+    uncertainty=adversarial_uncertainty(allp)
+    uncertainty.to_csv(str(AX/NAME)+"_LASTYEAR_MONTHBLOCK.csv",index=False)
+    print("THREEWAY_STRONG_BASELINE_MONTHBLOCK",uncertainty.to_string(index=False),flush=True)
     report={"status":"THREE_EVENT_NONPARAMETRIC_COMPETING_FIRST_PASSAGE_ACTUALLY_EXECUTED",
       "events":list(CLASSES),"methods":list(MODELS),
       "probability_estimator":"pre-origin 16-M15 path kernel memory, with/without preorigin GVZ and RV regime",
