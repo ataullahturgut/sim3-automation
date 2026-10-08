@@ -68,7 +68,7 @@ For completeness, the earlier, truly restricted 2023-only-start check had N39/67
 
 ## 5. Repair ablation and source validation
 
-- Eight 2025 advance-scheduled Fed occurrences were restored and correctly visible only in their legitimate `upcoming_fomc` windows. Against the same original fitting and price source with FOMC calendar missing, repair changed **8** 2025 upcoming-FOMC flags and **3** M4 binary direction outputs. It did **not** redefine PRAMV's macro veto.
+- Eight 2025 advance-scheduled Fed occurrences were restored and correctly visible only in their legitimate `upcoming_fomc` windows. Against the same original fitting and price source with FOMC calendar missing, repair changed **8** 2025 upcoming-FOMC flags and **4** M4 binary direction outputs in the **primary 2022-warmup** replay (**3** M4 direction outputs in the longer 2021-warmup sensitivity replay). It did **not** redefine PRAMV's macro veto.
 - 2025 Dec18 CPI macro pair is non-comparable and is strictly excluded; old FOMC postdecision score is never passed as a fictional known-at-17:00 value.
 - BID and ASK quote returns are not Turkish bank executable bid/ask. Performance does not include spreads, order execution, funding, bank hours or capital curve.
 - Date-level origin decisions, probabilities, gate reasons and repaired/missing FOMC ablations were preserved as GitHub Actions artifacts; only aggregate metric/manifest receipts were committed. Original results stay intact.
