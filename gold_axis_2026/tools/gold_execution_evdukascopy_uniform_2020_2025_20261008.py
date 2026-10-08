@@ -180,6 +180,12 @@ def main():
     print("STATUS",report["status"],report.get("error_summary",""),flush=True)
     return 0 if report["status"].startswith("SINGLE_") else 1
 
-if __name__=="__main__":raise SystemExit(main())
+if __name__=="__main__":
+    code=main()
+    if code==0:
+        # Forensic is an independent read-only audit of persisted prices and target labels.
+        from gold_execution_2020_2025_price_label_forensic_20261008 import main as forensic
+        code=forensic()
+    raise SystemExit(code)
 
 # Research receipt policy: no vendor raw quotes committed to the public repository.
