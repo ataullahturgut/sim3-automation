@@ -1,0 +1,47 @@
+name: Gold Execution Long History Class Drift
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_execution_long_history_class_drift_20261008.py'
+      - '.github/workflows/gold-execution-long-history-class-drift-20261008.yml'
+permissions:
+  contents: write
+concurrency:
+  group: gold-execution-long-history-class-drift-20261008
+  cancel-in-progress: false
+jobs:
+  class-drift:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OPENBLAS_NUM_THREADS: 1
+      OMP_NUM_THREADS: 1
+      MKL_NUM_THREADS: 1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'scipy>=1.12,<2' 'scikit-learn>=1.5,<2' 'psycopg[binary]>=3.2,<4'
+      - name: Run preregistered class drift correction
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_long_history_class_drift_20261008.py
+          python gold_axis_2026/tools/gold_execution_long_history_class_drift_20261008.py
+      - name: Save only completed evaluation output
+        if: success()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_EXECUTION_LONG_HISTORY_CLASS_DRIFT_*
+          git diff --cached --quiet && exit 0
+          git commit -m 'Evaluate class balance and decay against long-history LIT baseline'
+          git fetch origin gold-execution-channel-audit-20261006
+          git rebase origin/gold-execution-channel-audit-20261006
+          git push origin HEAD:gold-execution-channel-audit-20261006
