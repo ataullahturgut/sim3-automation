@@ -1,5 +1,5 @@
 {
-  "retrieved_at_utc": "2026-10-08T12:03:00.903398+00:00",
+  "retrieved_at_utc": "2026-10-08T12:05:33.107847+00:00",
   "source_id": "TWELVE_XAUUSD_15M_2020_2021_OCT2026_CANDIDATE_V1",
   "price_raw_public_export": false,
   "paid_addon_purchase": false,
@@ -10,14 +10,213 @@
     {
       "start": "2020-01-01",
       "end_exclusive": "2020-02-01",
-      "vendor_returned_rows": 545,
-      "filtered_complete_rows": 545,
+      "rows": 545,
       "first_utc": "2020-01-24T02:00:00+00:00",
-      "last_utc": "2020-01-31T21:45:00+00:00",
-      "diagnosis": "MONTH_RESPONSE_INSUFFICIENT_DO_NOT_PROMOTE"
+      "last_utc": "2020-01-31T21:45:00+00:00"
+    },
+    {
+      "start": "2020-02-01",
+      "end_exclusive": "2020-03-01",
+      "rows": 1847,
+      "first_utc": "2020-02-02T22:15:00+00:00",
+      "last_utc": "2020-02-28T21:45:00+00:00"
+    },
+    {
+      "start": "2020-03-01",
+      "end_exclusive": "2020-04-01",
+      "rows": 1986,
+      "first_utc": "2020-03-01T23:00:00+00:00",
+      "last_utc": "2020-03-31T23:45:00+00:00"
+    },
+    {
+      "start": "2020-04-01",
+      "end_exclusive": "2020-05-01",
+      "rows": 1870,
+      "first_utc": "2020-04-01T00:00:00+00:00",
+      "last_utc": "2020-04-30T23:45:00+00:00"
+    },
+    {
+      "start": "2020-05-01",
+      "end_exclusive": "2020-06-01",
+      "rows": 1916,
+      "first_utc": "2020-05-01T00:00:00+00:00",
+      "last_utc": "2020-05-31T23:45:00+00:00"
+    },
+    {
+      "start": "2020-06-01",
+      "end_exclusive": "2020-07-01",
+      "rows": 2024,
+      "first_utc": "2020-06-01T00:00:00+00:00",
+      "last_utc": "2020-06-30T23:45:00+00:00"
+    },
+    {
+      "start": "2020-07-01",
+      "end_exclusive": "2020-08-01",
+      "rows": 2093,
+      "first_utc": "2020-07-01T00:00:00+00:00",
+      "last_utc": "2020-07-31T20:45:00+00:00"
+    },
+    {
+      "start": "2020-08-01",
+      "end_exclusive": "2020-09-01",
+      "rows": 1940,
+      "first_utc": "2020-08-02T22:00:00+00:00",
+      "last_utc": "2020-08-31T23:45:00+00:00"
+    },
+    {
+      "start": "2020-09-01",
+      "end_exclusive": "2020-10-01",
+      "rows": 2006,
+      "first_utc": "2020-09-01T00:00:00+00:00",
+      "last_utc": "2020-09-30T23:45:00+00:00"
+    },
+    {
+      "start": "2020-10-01",
+      "end_exclusive": "2020-11-01",
+      "rows": 2016,
+      "first_utc": "2020-10-01T00:00:00+00:00",
+      "last_utc": "2020-10-30T20:45:00+00:00"
+    },
+    {
+      "start": "2020-11-01",
+      "end_exclusive": "2020-12-01",
+      "rows": 1906,
+      "first_utc": "2020-11-01T23:00:00+00:00",
+      "last_utc": "2020-11-30T23:45:00+00:00"
+    },
+    {
+      "start": "2020-12-01",
+      "end_exclusive": "2021-01-01",
+      "rows": 1996,
+      "first_utc": "2020-12-01T00:00:00+00:00",
+      "last_utc": "2020-12-31T19:00:00+00:00"
+    },
+    {
+      "start": "2021-01-01",
+      "end_exclusive": "2021-02-01",
+      "rows": 1826,
+      "first_utc": "2021-01-03T23:00:00+00:00",
+      "last_utc": "2021-01-31T23:45:00+00:00"
+    },
+    {
+      "start": "2021-02-01",
+      "end_exclusive": "2021-03-01",
+      "rows": 1824,
+      "first_utc": "2021-02-01T00:00:00+00:00",
+      "last_utc": "2021-02-28T23:45:00+00:00"
+    },
+    {
+      "start": "2021-03-01",
+      "end_exclusive": "2021-04-01",
+      "rows": 2120,
+      "first_utc": "2021-03-01T00:00:00+00:00",
+      "last_utc": "2021-03-31T23:45:00+00:00"
+    },
+    {
+      "start": "2021-04-01",
+      "end_exclusive": "2021-05-01",
+      "rows": 1906,
+      "first_utc": "2021-04-01T00:00:00+00:00",
+      "last_utc": "2021-04-30T20:45:00+00:00"
+    },
+    {
+      "start": "2021-05-01",
+      "end_exclusive": "2021-06-01",
+      "rows": 1913,
+      "first_utc": "2021-05-02T22:00:00+00:00",
+      "last_utc": "2021-05-31T23:45:00+00:00"
+    },
+    {
+      "start": "2021-06-01",
+      "end_exclusive": "2021-07-01",
+      "rows": 2024,
+      "first_utc": "2021-06-01T00:00:00+00:00",
+      "last_utc": "2021-06-30T23:45:00+00:00"
+    },
+    {
+      "start": "2021-07-01",
+      "end_exclusive": "2021-08-01",
+      "rows": 1844,
+      "first_utc": "2021-07-01T00:00:00+00:00",
+      "last_utc": "2021-07-30T13:45:00+00:00"
+    },
+    {
+      "start": "2021-08-01",
+      "end_exclusive": "2021-09-01",
+      "rows": 1920,
+      "first_utc": "2021-08-01T22:00:00+00:00",
+      "last_utc": "2021-08-31T23:45:00+00:00"
+    },
+    {
+      "start": "2021-09-01",
+      "end_exclusive": "2021-10-01",
+      "rows": 1877,
+      "first_utc": "2021-09-01T00:00:00+00:00",
+      "last_utc": "2021-09-30T23:45:00+00:00"
+    },
+    {
+      "start": "2021-10-01",
+      "end_exclusive": "2021-11-01",
+      "rows": 1901,
+      "first_utc": "2021-10-01T00:00:00+00:00",
+      "last_utc": "2021-10-31T23:45:00+00:00"
+    },
+    {
+      "start": "2021-11-01",
+      "end_exclusive": "2021-12-01",
+      "rows": 1991,
+      "first_utc": "2021-11-01T00:00:00+00:00",
+      "last_utc": "2021-11-30T23:45:00+00:00"
+    },
+    {
+      "start": "2021-12-01",
+      "end_exclusive": "2022-01-01",
+      "rows": 2004,
+      "first_utc": "2021-12-01T00:00:00+00:00",
+      "last_utc": "2021-12-31T20:45:00+00:00"
+    },
+    {
+      "start": "2026-10-01",
+      "end_exclusive": "2026-10-09",
+      "rows": 720,
+      "first_utc": "2026-10-01T00:00:00+00:00",
+      "last_utc": "2026-10-08T11:45:00+00:00"
     }
   ],
-  "status": "BLOCKED_NO_SOURCE_PROMOTION",
-  "error_type": "RuntimeError",
-  "error_summary": "HISTORICAL_MONTH_INSUFFICIENT_15M_2020-01-01"
+  "earliest_timestamp_metadata": {
+    "datetime": "2020-01-24 02:00:00"
+  },
+  "earliest_endpoint_http_status": 200,
+  "source_limited_periods": [
+    {
+      "month": "2020-01",
+      "status": "TWELVE_PARTIAL_2020_JAN_ONLY",
+      "earliest_observed": "2020-01-24T02:00:00+00:00",
+      "fill_strategy": "SEPARATE_HISTDATA_CANDIDATE_NOT_SILENT_SPLICE"
+    }
+  ],
+  "candidate_rows": 46015,
+  "annual_candidate": {
+    "2020": 22145,
+    "2021": 23150,
+    "2026": 720
+  },
+  "first_utc": "2020-01-24T02:00:00+00:00",
+  "last_utc": "2026-10-08T11:45:00+00:00",
+  "canonical_vendor_source_hash": "479501393890f3aeebef268ee085d86e47a57ce202f6767622ae8e067216f76c",
+  "neon": {
+    "status": "SAVED_PRIVATE_ONLY",
+    "new_rows": 45295,
+    "annual_persisted": {
+      "2020": 22145,
+      "2021": 23150,
+      "2026": 1008
+    },
+    "histdata_same_utc_overlap_rows": 43918,
+    "histdata_close_abs_median_bps": 2.8158056375998664,
+    "histdata_close_abs_p95_bps": 32.84899090648217,
+    "twelve_price_above_histdata_share": "0.72373514276606402842",
+    "candidate_promotion": "BLOCKED_UNTIL_SOURCE_IDENTITY_AND_ANCHOR_VALIDATION"
+  },
+  "status": "PRIVATE_HISTORY_BACKFILL_COMPLETE"
 }
