@@ -1,0 +1,712 @@
+{
+  "asof": "2026-10-08",
+  "status": "QC_COMPLETED",
+  "method": "source-independent fixed TR origin, paired realized log returns; bps magnitude sensitivity; no prediction model retuned",
+  "matched_source_yields_not_identical": "true",
+  "fully_qualified_canonical_spot_quote": false,
+  "years": {
+    "2020": {
+      "year": 2020,
+      "histdata_m15": 23626,
+      "comparator_m15": 22145,
+      "windows": {
+        "DAY": {
+          "matched_n": 236,
+          "label_disagreements": 30,
+          "label_disagreement_rate": 0.1271186440677966,
+          "independent_move_abs_median_bps": 32.61917845371816,
+          "comparator_move_abs_median_bps": 37.20768499659373,
+          "source_ret_diff_abs_median_bps": 8.874619551387303,
+          "source_ret_diff_abs_p95_bps": 73.4229162991481,
+          "sign_disagreement_by_min_abs_move_cutoff_bps": {
+            "0": {
+              "n": 236,
+              "flips": 30,
+              "pct": 12.711864406779661
+            },
+            "5": {
+              "n": 206,
+              "flips": 16,
+              "pct": 7.766990291262135
+            },
+            "10": {
+              "n": 179,
+              "flips": 12,
+              "pct": 6.70391061452514
+            },
+            "20": {
+              "n": 133,
+              "flips": 5,
+              "pct": 3.7593984962406015
+            },
+            "50": {
+              "n": 58,
+              "flips": 1,
+              "pct": 1.7241379310344827
+            },
+            "100": {
+              "n": 24,
+              "flips": 0,
+              "pct": 0.0
+            }
+          },
+          "discordant_abs_independent_move_bps": {
+            "median": 16.458914908263075,
+            "p90": 48.840992308840974,
+            "independent_absmove_le10_share": 0.3333333333333333,
+            "both_vendor_absmove_gt50_count": 1
+          }
+        },
+        "OVN": {
+          "matched_n": 233,
+          "label_disagreements": 20,
+          "label_disagreement_rate": 0.08583690987124463,
+          "independent_move_abs_median_bps": 44.625016236782784,
+          "comparator_move_abs_median_bps": 40.75789536203814,
+          "source_ret_diff_abs_median_bps": 11.34130850360998,
+          "source_ret_diff_abs_p95_bps": 63.659314819299446,
+          "sign_disagreement_by_min_abs_move_cutoff_bps": {
+            "0": {
+              "n": 233,
+              "flips": 20,
+              "pct": 8.583690987124463
+            },
+            "5": {
+              "n": 208,
+              "flips": 14,
+              "pct": 6.730769230769231
+            },
+            "10": {
+              "n": 197,
+              "flips": 12,
+              "pct": 6.091370558375635
+            },
+            "20": {
+              "n": 155,
+              "flips": 2,
+              "pct": 1.2903225806451613
+            },
+            "50": {
+              "n": 87,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "100": {
+              "n": 35,
+              "flips": 0,
+              "pct": 0.0
+            }
+          },
+          "discordant_abs_independent_move_bps": {
+            "median": 14.212237975740813,
+            "p90": 50.75896180101294,
+            "independent_absmove_le10_share": 0.35,
+            "both_vendor_absmove_gt50_count": 0
+          }
+        }
+      }
+    },
+    "2021": {
+      "year": 2021,
+      "histdata_m15": 23562,
+      "comparator_m15": 23150,
+      "windows": {
+        "DAY": {
+          "matched_n": 255,
+          "label_disagreements": 33,
+          "label_disagreement_rate": 0.12941176470588237,
+          "independent_move_abs_median_bps": 30.401479108680785,
+          "comparator_move_abs_median_bps": 35.46306049423355,
+          "source_ret_diff_abs_median_bps": 6.601120237429079,
+          "source_ret_diff_abs_p95_bps": 62.38762488282954,
+          "sign_disagreement_by_min_abs_move_cutoff_bps": {
+            "0": {
+              "n": 254,
+              "flips": 32,
+              "pct": 12.598425196850393
+            },
+            "5": {
+              "n": 220,
+              "flips": 19,
+              "pct": 8.636363636363637
+            },
+            "10": {
+              "n": 190,
+              "flips": 12,
+              "pct": 6.315789473684211
+            },
+            "20": {
+              "n": 147,
+              "flips": 1,
+              "pct": 0.6802721088435374
+            },
+            "50": {
+              "n": 60,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "100": {
+              "n": 21,
+              "flips": 0,
+              "pct": 0.0
+            }
+          },
+          "discordant_abs_independent_move_bps": {
+            "median": 11.149427357728019,
+            "p90": 36.620411956052145,
+            "independent_absmove_le10_share": 0.45454545454545453,
+            "both_vendor_absmove_gt50_count": 0
+          }
+        },
+        "OVN": {
+          "matched_n": 239,
+          "label_disagreements": 42,
+          "label_disagreement_rate": 0.17573221757322174,
+          "independent_move_abs_median_bps": 34.46945051138369,
+          "comparator_move_abs_median_bps": 33.05979556816807,
+          "source_ret_diff_abs_median_bps": 6.71984402075234,
+          "source_ret_diff_abs_p95_bps": 60.908757996457595,
+          "sign_disagreement_by_min_abs_move_cutoff_bps": {
+            "0": {
+              "n": 239,
+              "flips": 42,
+              "pct": 17.573221757322173
+            },
+            "5": {
+              "n": 203,
+              "flips": 24,
+              "pct": 11.822660098522167
+            },
+            "10": {
+              "n": 184,
+              "flips": 18,
+              "pct": 9.782608695652174
+            },
+            "20": {
+              "n": 151,
+              "flips": 7,
+              "pct": 4.635761589403973
+            },
+            "50": {
+              "n": 70,
+              "flips": 1,
+              "pct": 1.4285714285714286
+            },
+            "100": {
+              "n": 15,
+              "flips": 0,
+              "pct": 0.0
+            }
+          },
+          "discordant_abs_independent_move_bps": {
+            "median": 16.795374927640328,
+            "p90": 46.794193145197085,
+            "independent_absmove_le10_share": 0.2857142857142857,
+            "both_vendor_absmove_gt50_count": 1
+          }
+        }
+      }
+    },
+    "2022": {
+      "year": 2022,
+      "histdata_m15": 23643,
+      "comparator_m15": 23551,
+      "windows": {
+        "DAY": {
+          "matched_n": 256,
+          "label_disagreements": 26,
+          "label_disagreement_rate": 0.1015625,
+          "independent_move_abs_median_bps": 29.683688280983564,
+          "comparator_move_abs_median_bps": 35.3233395459057,
+          "source_ret_diff_abs_median_bps": 6.216625960881369,
+          "source_ret_diff_abs_p95_bps": 62.032087985003145,
+          "sign_disagreement_by_min_abs_move_cutoff_bps": {
+            "0": {
+              "n": 256,
+              "flips": 26,
+              "pct": 10.15625
+            },
+            "5": {
+              "n": 230,
+              "flips": 19,
+              "pct": 8.26086956521739
+            },
+            "10": {
+              "n": 205,
+              "flips": 12,
+              "pct": 5.853658536585367
+            },
+            "20": {
+              "n": 151,
+              "flips": 4,
+              "pct": 2.6490066225165565
+            },
+            "50": {
+              "n": 72,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "100": {
+              "n": 17,
+              "flips": 0,
+              "pct": 0.0
+            }
+          },
+          "discordant_abs_independent_move_bps": {
+            "median": 17.469823481514872,
+            "p90": 39.18574997699133,
+            "independent_absmove_le10_share": 0.3076923076923077,
+            "both_vendor_absmove_gt50_count": 0
+          }
+        },
+        "OVN": {
+          "matched_n": 254,
+          "label_disagreements": 32,
+          "label_disagreement_rate": 0.12598425196850394,
+          "independent_move_abs_median_bps": 40.21007066249362,
+          "comparator_move_abs_median_bps": 38.318755462857986,
+          "source_ret_diff_abs_median_bps": 7.093970884353469,
+          "source_ret_diff_abs_p95_bps": 63.45056224522137,
+          "sign_disagreement_by_min_abs_move_cutoff_bps": {
+            "0": {
+              "n": 253,
+              "flips": 31,
+              "pct": 12.25296442687747
+            },
+            "5": {
+              "n": 234,
+              "flips": 24,
+              "pct": 10.256410256410255
+            },
+            "10": {
+              "n": 213,
+              "flips": 16,
+              "pct": 7.511737089201878
+            },
+            "20": {
+              "n": 168,
+              "flips": 3,
+              "pct": 1.7857142857142856
+            },
+            "50": {
+              "n": 89,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "100": {
+              "n": 30,
+              "flips": 0,
+              "pct": 0.0
+            }
+          },
+          "discordant_abs_independent_move_bps": {
+            "median": 14.355212639253011,
+            "p90": 61.098080921987524,
+            "independent_absmove_le10_share": 0.28125,
+            "both_vendor_absmove_gt50_count": 0
+          }
+        }
+      }
+    },
+    "2023": {
+      "year": 2023,
+      "histdata_m15": 20600,
+      "comparator_m15": 23307,
+      "windows": {
+        "DAY": {
+          "matched_n": 141,
+          "label_disagreements": 8,
+          "label_disagreement_rate": 0.05673758865248227,
+          "independent_move_abs_median_bps": 24.483040687312034,
+          "comparator_move_abs_median_bps": 26.150032650191566,
+          "source_ret_diff_abs_median_bps": 0.7651993131094539,
+          "source_ret_diff_abs_p95_bps": 37.44973687790489,
+          "sign_disagreement_by_min_abs_move_cutoff_bps": {
+            "0": {
+              "n": 141,
+              "flips": 8,
+              "pct": 5.673758865248227
+            },
+            "5": {
+              "n": 119,
+              "flips": 5,
+              "pct": 4.201680672268908
+            },
+            "10": {
+              "n": 103,
+              "flips": 2,
+              "pct": 1.9417475728155338
+            },
+            "20": {
+              "n": 71,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "50": {
+              "n": 27,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "100": {
+              "n": 4,
+              "flips": 0,
+              "pct": 0.0
+            }
+          },
+          "discordant_abs_independent_move_bps": {
+            "median": 14.255626032033362,
+            "p90": 21.02883917408496,
+            "independent_absmove_le10_share": 0.375,
+            "both_vendor_absmove_gt50_count": 0
+          }
+        },
+        "OVN": {
+          "matched_n": 191,
+          "label_disagreements": 19,
+          "label_disagreement_rate": 0.09947643979057591,
+          "independent_move_abs_median_bps": 34.598303064139294,
+          "comparator_move_abs_median_bps": 33.31110863707305,
+          "source_ret_diff_abs_median_bps": 2.31396162163135,
+          "source_ret_diff_abs_p95_bps": 45.62048757130758,
+          "sign_disagreement_by_min_abs_move_cutoff_bps": {
+            "0": {
+              "n": 191,
+              "flips": 19,
+              "pct": 9.947643979057592
+            },
+            "5": {
+              "n": 168,
+              "flips": 10,
+              "pct": 5.952380952380952
+            },
+            "10": {
+              "n": 147,
+              "flips": 6,
+              "pct": 4.081632653061225
+            },
+            "20": {
+              "n": 114,
+              "flips": 1,
+              "pct": 0.8771929824561403
+            },
+            "50": {
+              "n": 54,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "100": {
+              "n": 18,
+              "flips": 0,
+              "pct": 0.0
+            }
+          },
+          "discordant_abs_independent_move_bps": {
+            "median": 16.987561490731416,
+            "p90": 43.35394608623067,
+            "independent_absmove_le10_share": 0.3684210526315789,
+            "both_vendor_absmove_gt50_count": 0
+          }
+        }
+      }
+    },
+    "2024": {
+      "year": 2024,
+      "histdata_m15": 23713,
+      "comparator_m15": 23618,
+      "windows": {
+        "DAY": {
+          "matched_n": 259,
+          "label_disagreements": 33,
+          "label_disagreement_rate": 0.1274131274131274,
+          "independent_move_abs_median_bps": 32.054922865097005,
+          "comparator_move_abs_median_bps": 33.96151794803102,
+          "source_ret_diff_abs_median_bps": 5.904446421439669,
+          "source_ret_diff_abs_p95_bps": 56.29138444799483,
+          "sign_disagreement_by_min_abs_move_cutoff_bps": {
+            "0": {
+              "n": 259,
+              "flips": 33,
+              "pct": 12.741312741312742
+            },
+            "5": {
+              "n": 224,
+              "flips": 14,
+              "pct": 6.25
+            },
+            "10": {
+              "n": 202,
+              "flips": 9,
+              "pct": 4.455445544554455
+            },
+            "20": {
+              "n": 146,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "50": {
+              "n": 59,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "100": {
+              "n": 13,
+              "flips": 0,
+              "pct": 0.0
+            }
+          },
+          "discordant_abs_independent_move_bps": {
+            "median": 11.118286713340947,
+            "p90": 48.284046858305075,
+            "independent_absmove_le10_share": 0.42424242424242425,
+            "both_vendor_absmove_gt50_count": 0
+          }
+        },
+        "OVN": {
+          "matched_n": 256,
+          "label_disagreements": 31,
+          "label_disagreement_rate": 0.12109375,
+          "independent_move_abs_median_bps": 34.12812309092118,
+          "comparator_move_abs_median_bps": 34.00158791784455,
+          "source_ret_diff_abs_median_bps": 7.882542578796164,
+          "source_ret_diff_abs_p95_bps": 57.67764053691315,
+          "sign_disagreement_by_min_abs_move_cutoff_bps": {
+            "0": {
+              "n": 256,
+              "flips": 31,
+              "pct": 12.109375
+            },
+            "5": {
+              "n": 224,
+              "flips": 20,
+              "pct": 8.928571428571429
+            },
+            "10": {
+              "n": 202,
+              "flips": 12,
+              "pct": 5.9405940594059405
+            },
+            "20": {
+              "n": 151,
+              "flips": 3,
+              "pct": 1.9867549668874174
+            },
+            "50": {
+              "n": 79,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "100": {
+              "n": 21,
+              "flips": 0,
+              "pct": 0.0
+            }
+          },
+          "discordant_abs_independent_move_bps": {
+            "median": 16.219926986069403,
+            "p90": 42.09173592813395,
+            "independent_absmove_le10_share": 0.3548387096774194,
+            "both_vendor_absmove_gt50_count": 0
+          }
+        }
+      }
+    },
+    "2025": {
+      "year": 2025,
+      "histdata_m15": 23606,
+      "comparator_m15": 26966,
+      "windows": {
+        "DAY": {
+          "matched_n": 252,
+          "label_disagreements": 29,
+          "label_disagreement_rate": 0.11507936507936507,
+          "independent_move_abs_median_bps": 32.95233494681889,
+          "comparator_move_abs_median_bps": 36.74646333813524,
+          "source_ret_diff_abs_median_bps": 8.337916430997563,
+          "source_ret_diff_abs_p95_bps": 70.89016155143992,
+          "sign_disagreement_by_min_abs_move_cutoff_bps": {
+            "0": {
+              "n": 252,
+              "flips": 29,
+              "pct": 11.507936507936508
+            },
+            "5": {
+              "n": 215,
+              "flips": 15,
+              "pct": 6.976744186046512
+            },
+            "10": {
+              "n": 186,
+              "flips": 11,
+              "pct": 5.913978494623656
+            },
+            "20": {
+              "n": 151,
+              "flips": 4,
+              "pct": 2.6490066225165565
+            },
+            "50": {
+              "n": 77,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "100": {
+              "n": 29,
+              "flips": 0,
+              "pct": 0.0
+            }
+          },
+          "discordant_abs_independent_move_bps": {
+            "median": 19.510325937718065,
+            "p90": 36.14134096015847,
+            "independent_absmove_le10_share": 0.27586206896551724,
+            "both_vendor_absmove_gt50_count": 0
+          }
+        },
+        "OVN": {
+          "matched_n": 252,
+          "label_disagreements": 22,
+          "label_disagreement_rate": 0.0873015873015873,
+          "independent_move_abs_median_bps": 47.11251315346949,
+          "comparator_move_abs_median_bps": 52.73969374249038,
+          "source_ret_diff_abs_median_bps": 8.863726430638124,
+          "source_ret_diff_abs_p95_bps": 70.94732281534826,
+          "sign_disagreement_by_min_abs_move_cutoff_bps": {
+            "0": {
+              "n": 252,
+              "flips": 22,
+              "pct": 8.73015873015873
+            },
+            "5": {
+              "n": 239,
+              "flips": 16,
+              "pct": 6.694560669456067
+            },
+            "10": {
+              "n": 220,
+              "flips": 12,
+              "pct": 5.454545454545454
+            },
+            "20": {
+              "n": 184,
+              "flips": 5,
+              "pct": 2.717391304347826
+            },
+            "50": {
+              "n": 113,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "100": {
+              "n": 45,
+              "flips": 0,
+              "pct": 0.0
+            }
+          },
+          "discordant_abs_independent_move_bps": {
+            "median": 13.892208320056618,
+            "p90": 40.99712245524311,
+            "independent_absmove_le10_share": 0.3181818181818182,
+            "both_vendor_absmove_gt50_count": 0
+          }
+        }
+      }
+    },
+    "2026": {
+      "year": 2026,
+      "histdata_m15": 17616,
+      "comparator_m15": 1008,
+      "windows": {
+        "DAY": {
+          "matched_n": 3,
+          "label_disagreements": 0,
+          "label_disagreement_rate": 0.0,
+          "independent_move_abs_median_bps": 70.25128241473745,
+          "comparator_move_abs_median_bps": 49.6992977763444,
+          "source_ret_diff_abs_median_bps": 41.55865405274814,
+          "source_ret_diff_abs_p95_bps": 63.822641347146394,
+          "sign_disagreement_by_min_abs_move_cutoff_bps": {
+            "0": {
+              "n": 3,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "5": {
+              "n": 2,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "10": {
+              "n": 2,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "20": {
+              "n": 2,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "50": {
+              "n": 1,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "100": {
+              "n": 0,
+              "flips": 0,
+              "pct": null
+            }
+          },
+          "discordant_abs_independent_move_bps": {
+            "median": null
+          }
+        },
+        "OVN": {
+          "matched_n": 2,
+          "label_disagreements": 0,
+          "label_disagreement_rate": 0.0,
+          "independent_move_abs_median_bps": 66.53836262659064,
+          "comparator_move_abs_median_bps": 48.48968280295183,
+          "source_ret_diff_abs_median_bps": 18.048679823638803,
+          "source_ret_diff_abs_p95_bps": 20.522000525245087,
+          "sign_disagreement_by_min_abs_move_cutoff_bps": {
+            "0": {
+              "n": 2,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "5": {
+              "n": 2,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "10": {
+              "n": 2,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "20": {
+              "n": 2,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "50": {
+              "n": 1,
+              "flips": 0,
+              "pct": 0.0
+            },
+            "100": {
+              "n": 0,
+              "flips": 0,
+              "pct": null
+            }
+          },
+          "discordant_abs_independent_move_bps": {
+            "median": null
+          }
+        }
+      }
+    }
+  },
+  "models_retrained": false,
+  "created_utc": "2026-10-08T14:19:41.971572+00:00"
+}
