@@ -1,0 +1,112 @@
+{
+  "asof": "2026-10-08",
+  "status": "COMPLETE_CLOSED_WEEKDAY_OCT_SOURCE_CANDIDATE",
+  "source": "Direct Dukascopy XAU/USD native M1 BID and ASK, no current-day price",
+  "private_source_id": "DUKASCOPY_XAUUSD_M1_BIDASK_UTC_PILOT_V1",
+  "new_source_quotes_not_histdata_bid": true,
+  "not_bank_executable_bid_ask": true,
+  "paid_purchase_usd": 0,
+  "original_archives_unchanged": true,
+  "closed_date_window": "2026-10-01 to 2026-10-07 incl, weekends excluded",
+  "dates": [
+    {
+      "date_utc": "2026-10-01",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid": "SOURCE_DAY_RECEIVED",
+          "ask": "SOURCE_DAY_RECEIVED",
+          "bid_http_failure": [],
+          "ask_http_failure": []
+        }
+      ],
+      "data_mature": true,
+      "m15_bars": 96,
+      "full_native_M1_15min_bars": 96,
+      "partial_native_M1_15min_bars": 0,
+      "median_spread_bps": 1.5083732848256923,
+      "persisted_new_private_bars": 96,
+      "result": "SOURCE_DAY_SAVED_PRIVATE"
+    },
+    {
+      "date_utc": "2026-10-02",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid": "SOURCE_DAY_RECEIVED",
+          "ask": "SOURCE_DAY_RECEIVED",
+          "bid_http_failure": [],
+          "ask_http_failure": []
+        }
+      ],
+      "data_mature": true,
+      "m15_bars": 96,
+      "full_native_M1_15min_bars": 96,
+      "partial_native_M1_15min_bars": 0,
+      "median_spread_bps": 1.5464671081177723,
+      "persisted_new_private_bars": 96,
+      "result": "SOURCE_DAY_SAVED_PRIVATE"
+    },
+    {
+      "date_utc": "2026-10-05",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid": "SOURCE_DAY_RECEIVED",
+          "ask": "SOURCE_DAY_RECEIVED",
+          "bid_http_failure": [],
+          "ask_http_failure": []
+        }
+      ],
+      "data_mature": true,
+      "m15_bars": 96,
+      "full_native_M1_15min_bars": 96,
+      "partial_native_M1_15min_bars": 0,
+      "median_spread_bps": 1.3927208868282195,
+      "persisted_new_private_bars": 0,
+      "result": "SOURCE_DAY_SAVED_PRIVATE"
+    },
+    {
+      "date_utc": "2026-10-06",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid": "SOURCE_DAY_RECEIVED",
+          "ask": "SOURCE_DAY_RECEIVED",
+          "bid_http_failure": [],
+          "ask_http_failure": []
+        }
+      ],
+      "data_mature": true,
+      "m15_bars": 96,
+      "full_native_M1_15min_bars": 96,
+      "partial_native_M1_15min_bars": 0,
+      "median_spread_bps": 1.372366321261064,
+      "persisted_new_private_bars": 96,
+      "result": "SOURCE_DAY_SAVED_PRIVATE"
+    },
+    {
+      "date_utc": "2026-10-07",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid": "SOURCE_DAY_RECEIVED",
+          "ask": "SOURCE_DAY_RECEIVED",
+          "bid_http_failure": [],
+          "ask_http_failure": []
+        }
+      ],
+      "data_mature": true,
+      "m15_bars": 96,
+      "full_native_M1_15min_bars": 96,
+      "partial_native_M1_15min_bars": 0,
+      "median_spread_bps": 1.3861008138246076,
+      "persisted_new_private_bars": 96,
+      "result": "SOURCE_DAY_SAVED_PRIVATE"
+    }
+  ],
+  "completed_source_days": 5,
+  "quarantined_source_days": 0,
+  "total_completed_m15_bars": 480,
+  "timestamp_utc": "2026-10-08T15:23:10.187227+00:00"
+}
