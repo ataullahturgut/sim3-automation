@@ -4153,3 +4153,38 @@ After excluding unknown macro-calendar flags rather than assuming false, the exp
 **Critical execution insight:** the volatility-only score uses *only previous* already-matured 17:00→next09:00 returns. It can therefore be evaluated after today's 09:00 data become source-ready, potentially around **09:15 Türkiye** subject to verified vendor lag, *before* the bank's late-day spread expansion. This morning tail-risk warning is neither a 09:00→17:00 direction forecast nor an overnight UP/DOWN prediction. Adding same-day realized macro surprises would require waiting until their publication; do not leak 17:00 state into a 09:15 warning. Keep the original 17:00 PRAMV V1 frozen and separate.
 
 The exploratory historical PRAMV risk-veto raised 2025 82-call directional accuracy 63.41% to 39/54=72.22% (BA ~71.88%) by abstaining on 28 high-risk dates; **rejected as a universal alteration** because performance deteriorates in 2023 after warm-up and 2024. The positive tail warning result does not authorize claiming a new 72%-accurate deployed forecast.
+
+
+---
+
+## Source correction & point-in-time magnitude-probability test — 2026-10-08
+
+**Authority:** `GOLD_EXECUTION_TAIL1_PROBABILITY_RESEARCH_RESULT_2026-10-08.md`  
+**Daily probabilities:** `GOLD_EXECUTION_TAIL1_PROBABILITY_PREDICTIONS_2026-10-08.csv`  
+**Probability metrics:** `GOLD_EXECUTION_TAIL1_PROBABILITY_METRICS_2026-10-08.csv`  
+**Reproduction code:** `tools/gold_execution_tail_probability_calibration_20261008.py`  
+**Status:** RESEARCH COMPLETED; POOLED CALENDAR RESULT RETRACTED AS PIT-INCOMPLETE; POSITIVE BRIER CHALLENGER NOT PROMOTED.
+
+### Binding macro data correction — no 2025 calendar rollup promotion
+
+Re-examination of `GOLD_MACRO_EVENT_LEDGER_RAW_V1_2023_2025.csv` found **FOMC counts 8 / 8 / 0** (2023 / 2024 / 2025). The Federal Reserve published eight regularly scheduled 2025 FOMC decisions. Thus 2025 `upcoming_fomc=0` can represent a missing upstream event calendar and **must NOT be interpreted as verified no FOMC**. The 2025 11 NFP / 10 CPI raw entries require source-timestamp reconciliation; publication disruptions in 2025 make a mechanical 12/monthly assumption unsuitable as a conclusive missingness test. The entire 2025 `risk_vol OR macro` combined series has been quarantined (calendar readiness false and combined/calendar alerts UNKNOWN) in `GOLD_EXECUTION_DUAL_HAZARD_ROWS_2026-10-08.csv` and the read-only replay script. The earlier summary stating **10/14 ≥2% tails captured across 2023–2025 by a source-ready combined calendar rule is RETRACTED AS A PIT-COMPLETENESS CLAIM**. Retain only the raw historical count as a NON-AUTHORITATIVE diagnostic of an incomplete ledger. The **volatility-only** independent risk result remains 2025 6/7 ≥2% events in 95/254 alerts (retrospective, not truly unseen).
+
+### New chronological probabilistic benchmark
+
+Model is a 1D ridge/logistic calibration of a *pre-origin*, preceding 5/20/60 overnight-volatility score: probability of `|r_{17->next09}|>=1%`. Train expanding on prior matured outcomes for 2023–2024 after an additional 120 eligible-risk-row warm-up; 2025 parameters frozen at 2023–2024. It makes 589 dated predictions (2023=76, 2024=259, 2025=254), compared to a same-history Laplace-smoothed rate baseline:
+
+| Period | N / ≥1% moves | Brier prob model | Brier rate baseline | Model minus baseline interpretation |
+|---|---|---:|---:|---|
+| 2023 chronological late-year | 76 / 9 | 0.109287 | **0.107361** | model worse |
+| 2024 chronological | 259 / 24 | **0.083590** | 0.084407 | small model advantage |
+| 2025 reviewed retrospective locked training | 254 / 43 | **0.139291** | 0.147317 | **5.45% relative loss reduction** |
+
+This is an **ex ante feature-clock, not untouched study-design OOS** improvement. A 5-date block bootstrap of the 2025 paired Brier delta gives indicative interval [+0.00253,+0.01479] but has not accounted for model discovery/snooping. The 2023 low-level probability ranking is poor; model cannot be promoted universally.
+
+The raw multi-horizon score's *≥1% tail ROC AUC* is 0.632 / 0.625 / 0.658 in 2023 / 2024 / 2025, but 2023–2024 yearwise uncertainty includes AUC=0.5. A simple RV20-alone comparator is competitive (0.649 / 0.607 / 0.663). An exploratory online last-30-day incidence blend improves 2024/2025 Brier marginally but still loses in 2023 and was one of multiple inspected specifications: NO PROMOTION.
+
+### Night tail direction still lacks transport proof
+
+On actually occurring ≥1% overnight moves, preexisting M4 correctly predicts 6/15, 11/24 and 20/43 across the three years; PAIR predicts 11/15, 10/24, 20/43. These are ex-post tail-only diagnostics; no model knows the next overnight tail status in advance. DAY-to-overnight continuation also fails replication (same sign 82/194, 131/259, 102/217 on exact-available price rows). Do **NOT** describe the risk-probability signal as an UP/DOWN improvement.
+
+**Research decision:** Maintain frozen PRAMV V1 direction. Retain magnitude risk calibration only as an unpromoted candidate, separate from bank transaction logic. Next required: reconstruct official 2025 PIT FOMC/macro event ledger, verify quote/vintage availability, then launch a genuinely prospective, timestamped prediction record for both magnitude and sign. Do not assume 17:00 open execution after consuming the completed 16:45–17:00 candle.
