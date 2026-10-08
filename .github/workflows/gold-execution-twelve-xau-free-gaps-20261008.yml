@@ -1,0 +1,51 @@
+name: Gold Execution Twelve XAU 2020 2021 Free History
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_execution_twelve_xau15m_free_gaps_20261008.py'
+      - '.github/workflows/gold-execution-twelve-xau-free-gaps-20261008.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-execution-twelve-xau-free-gaps-20261008
+  cancel-in-progress: false
+
+jobs:
+  xau-private-gap-backfill:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'pandas>=2.2,<3' 'requests>=2.31,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Require preconfigured private secrets
+        run: |
+          test -n "$TWELVE_DATA_API_KEY"
+          test -n "$NEON_DATABASE_URL"
+      - name: Fetch verified 2020 2021 15m months and Oct completed bars
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_twelve_xau15m_free_gaps_20261008.py
+          python gold_axis_2026/tools/gold_execution_twelve_xau15m_free_gaps_20261008.py
+      - name: Publish only receipt no licensed vendor prices
+        if: always()
+        run: |
+          test -f gold_axis_2026/GOLD_EXECUTION_TWELVE_XAU15M_GAP_FETCH_20261008.json || exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_EXECUTION_TWELVE_XAU15M_GAP_FETCH_20261008.json
+          git diff --cached --quiet || git commit -m 'Record private vendor 15m historical source QC only'
+          git pull --rebase origin gold-execution-channel-audit-20261006
+          git push origin HEAD:gold-execution-channel-audit-20261006
