@@ -65,15 +65,17 @@ These comparisons are exploratory; an apparent gain of 1 detected rare event is 
 
 An exploratory OR rule adds independent calendar warnings when `upcoming_fomc==1` or already available `macro_released==1`. The source-ready event flags must be present; missing event rows are UNKNOWN, not silent negatives. Early source-state completeness remains conditional on the project's PIT source authority.
 
-Prior to excluding source-unknown event rows, indicative historical counts were:
+The directly persisted origin rows also permit a source-unknown-fail-closed calendar audit:
 
-| Year | Volatility-only alerts / ≥2% caught | Volatility OR event alerts / ≥2% caught |
-|---|---|---|
-| 2023 (N=196) | 24 / 0 of 2 | approx. 44 / 1 of 2 |
-| 2024 (N=259) | 68 / 1 of 5 | approx. 93 / 3 of 5 |
-| 2025 (N=254) | 95 / 6 of 7 | approx. 110 / 6 of 7 |
+| Year | Volatility-only alarms / ≥2% caught | Volatility OR event scored rows | Volatility OR event alarms / ≥2% caught |
+|---|---|---:|---|
+| 2023 | 24 / 0 of 2 | 195 | 44 / 1 of 2 |
+| 2024 | 68 / 1 of 5 | 259 | 93 / 3 of 5 |
+| 2025 | 95 / 6 of 7 | 253 | 110 / 6 of 7 |
 
-Final exact calendar-combination denominator must exclude source-unknown flags. Treat this as a **secondary mechanism challenge**, not as a promoted result. Its motivation is two different types of extreme movement: volatility-clustered moves and announcement-related jumps.
+Two dates whose calendar flags are unavailable cannot silently be imputed as no-event; they are excluded from the OR policy denominator unless the volatility alarm independently determines the OR outcome. Across 707 calendar-evaluable origin rows, **247** receive a combined alert (34.94%) and **10 of 14** ≥2% tail movements fall on alert dates (71.43%). Tail-event precision is **10/247 = 4.05%**, against base frequency **14/707 = 1.98%** (≈2.04× lift). A *nominal*, independent-uniform-day hypergeometric tail chance is ≈0.0055, but **must not be used as a confirmatory p-value**: the result was discovered after examining archives, alert choices were inspected retrospectively, and market dates are serially dependent. Despite positive descriptive lift in all three years, the extreme-event samples (2/5/7) are too small to promote this as a reliably transferable alarm.
+
+Treat this as a **secondary mechanism challenge**, not as a promoted result. Its economic motivation is to distinguish two different kinds of extreme movement: volatility-clustered repricing and announcement-related jumps.
 
 2025 seven ≥2% night moves and initial multi-scale warning:
 - 2025-04-10 **+2.53%**: warned, no PRAMV;
