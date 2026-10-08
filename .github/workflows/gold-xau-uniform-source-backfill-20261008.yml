@@ -1,0 +1,44 @@
+name: Gold XAU Uniform Source Backfill Audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - '.github/workflows/gold-xau-uniform-source-backfill-20261008.yml'
+permissions:
+  contents: write
+concurrency:
+  group: gold-execution-evdukascopy-uniform-2020-2025
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OMP_NUM_THREADS: 1
+      OPENBLAS_NUM_THREADS: 1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests pandas numpy psycopg[binary]
+      - run: python gold_axis_2026/tools/gold_execution_evdukascopy_uniform_2020_2025_20261008.py
+      - name: Record aggregate quality report
+        if: always()
+        run: |
+          test -f gold_axis_2026/GOLD_EXECUTION_EV_DUKASCOPY_XAU_2020_2025_UNIFORM_CANDIDATE_20261008.json || exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_EXECUTION_EV_DUKASCOPY_XAU_2020_2025_UNIFORM_CANDIDATE_20261008.json
+          git diff --cached --quiet || git commit -m 'Record multi-year uniform XAU BID ASK candidate'
+          for i in 1 2 3 4; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 2
+          done
+          exit 1
