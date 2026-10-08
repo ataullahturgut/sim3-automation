@@ -143,6 +143,13 @@ def persist(con, d):
             for item in d.itertuples(index=False):
                 vals=list(item)
                 if pd.isna(vals[2]):vals[2]=None
+                for k in (8,9):
+                    vals[k]=None if pd.isna(vals[k]) else float(vals[k])
+                for k in (10,11):
+                    vals[k]=None if pd.isna(vals[k]) else int(vals[k])
+                for k in (12,13):
+                    vals[k]=None if pd.isna(vals[k]) else bool(vals[k])
+                vals[1]=int(vals[1])
                 cp.write_row(tuple(vals))
         c.execute(f"""INSERT INTO {LAYER} ({','.join(fields)})
               SELECT {','.join(fields)} FROM stage ON CONFLICT(issue_date) DO NOTHING""")
