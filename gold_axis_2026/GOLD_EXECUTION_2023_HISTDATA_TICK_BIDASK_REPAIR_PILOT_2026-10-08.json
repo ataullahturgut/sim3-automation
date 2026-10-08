@@ -1,0 +1,31 @@
+{
+  "status": "TICK_AND_M1_SAME_VENDOR_COVERAGE_COMPARE_COMPLETE",
+  "asof": "2026-10-08",
+  "test": "April 2023 independent same-provider tick BID/ASK vs historic M1 BID, separate source identity",
+  "original_vendor": "HistData.com",
+  "source_tick": "HISTDATA_XAUUSD_TICK_BIDASK_M15_2023_APR_PILOT_V1",
+  "tick_timestamp": "EST_FIXED_UTC_MINUS5_UNCHANGED_US_DST",
+  "original_timestamps_deduplicated": false,
+  "paid_download_usd": 0,
+  "licensed_raw_ticks_public": false,
+  "price_source_promoted": false,
+  "downloaded_tick_rows": 2067972,
+  "fetched_period_labels": [
+    "2023-04"
+  ],
+  "bad_nonpositive_or_crossed_quotes": 0,
+  "duplicate_exact_utc_tick_timestamps_preserved": 0,
+  "valid_sample_ticks": 2051522,
+  "median_raw_bid_ask_spread_bps": 1.7077231780724234,
+  "p95_raw_bid_ask_spread_bps": 2.0781162227799626,
+  "candidate_m15_tick_derived_bars": 1268,
+  "pivotal_m15_from_ticks": 152,
+  "existing_m1_m15_april_bars": 1268,
+  "new_tick_m15_intervals_absent_from_m1": 0,
+  "same_timestamp_bid_close_overlap": 1268,
+  "same_vendor_m1_vs_tick_bid_close_median_abs_bps": 0.0,
+  "same_vendor_m1_vs_tick_bid_close_p95_abs_bps": 0.0,
+  "hard_closed_market_bars": 0,
+  "private_m15_bars_inserted": 1268,
+  "completed_at_utc": "2026-10-08T14:25:16.152071+00:00"
+}
