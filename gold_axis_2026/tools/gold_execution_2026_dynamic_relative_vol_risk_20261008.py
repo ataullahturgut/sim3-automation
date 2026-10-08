@@ -59,3 +59,34 @@ def evaluate(p):
           "down_tail_rate":float(np.mean(down)) if len(x) else None,
           "down_tail_capture":capture(down),"down_tail_precision_lift":enrichment(down)})
     return pd.DataFrame(out)
+
+def main():
+    q,t=risk.src.source_load()
+    m,source_proof=risk.mirror.load_approved()
+    qm=m.set_index("bar_start_utc")[["bid_open","bid_close"]]
+    qm=qm.rename(columns={"bid_open":"open","bid_close":"close"})
+    tm,_=risk.direct.candidate_targets(t,qm)
+    qold,told,qn,tn,qc=risk.primary.load()
+    if len(qold)!=len(q):raise RuntimeError("HISTORICAL_IDENTITY_CHANGED")
+    records=[]
+    for label,px,targets in (("MIRROR_SAME_UPSTREAM_JAN_AUG20",qm,tm),
+                             ("DIRECT_PRIMARY_NATIVE_THROUGH_OCT07",qn,tn)):
+        features=risk.panel(q,t,px,targets)
+        original=risk.produce_predictions(features,label)
+        records.append(asof_calibration(original))
+    p=pd.concat(records,ignore_index=True)
+    if p.duplicated(["source_test","date"]).any():raise RuntimeError("DUPLICATE_ORIGIN")
+    metrics=evaluate(p)
+    state={"status":"CAUSAL_RELATIVE_RISK_RECALIBRATION_ACTUALLY_EXECUTED",
+      "source_years":"2025 historical EV BIDASK, 2026 mirror versus direct primary separately",
+      "regression":"previous prereg fixed 2025 or 2026 absolute-move ridge",
+      "calibration":"63 earlier-matured absolute-return ratios with n/(n+32) shrink; cap [0.5,2]",
+      "alert":"past 63 corrected forecasts 75th quantile, minimum 20 matured forecasts",
+      "2026_past_matured_labels_allowed":True,"2026_future_label_leakage":False,
+      "no_2026_unseen_claim":True,"bank_PnL_not_evaluated":True}
+    (AX/(BASE+"_SUMMARY.json")).write_text(json.dumps(state,indent=2)+"\n")
+    metrics.to_csv(AX/(BASE+"_METRICS.csv"),index=False)
+    p.to_csv(AX/(BASE+"_PRIVATE_DATED.csv"),index=False)
+    print("REAL_RELATIVE_RISK_EVIDENCE",metrics.to_string(index=False),flush=True)
+    print("RELATIVE_RISK_QC",json.dumps(state),flush=True)
+if __name__=="__main__":main()
