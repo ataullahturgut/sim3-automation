@@ -146,6 +146,7 @@ def quality(x,l,year,hashes):
         specs=(("day_bid_logret",day_bid,r.day_bid_logret),("day_ask_logret",day_ask,r.day_ask_logret),
                ("overnight_bid_logret",ov_bid,r.overnight_bid_logret),("overnight_ask_logret",ov_ask,r.overnight_ask_logret))
         for k,expected,actual in specs:
+            actual=None if pd.isna(actual) else float(actual)
             if expected is None:
                 if actual is not None:diffs["wrong_persisted_target_return"][k]+=1
             elif actual is None or abs(float(actual)-expected)>1e-10:
@@ -153,16 +154,19 @@ def quality(x,l,year,hashes):
                 if len(issues)<20:issues.append({"date":str(d),"code":k+"_return_mismatch"})
         for k,expected,actual in (("day_y",day_bid,r.day_y),("overnight_y",ov_bid,r.overnight_y)):
             correct=None if expected is None else int(expected>0)
+            actual=None if pd.isna(actual) else int(actual)
             if correct!=actual:
                 diffs["wrong_persisted_direction"][k]+=1
                 if len(issues)<35:issues.append({"date":str(d),"code":k+"_SIGN", "stored":actual,"recomputed":correct, "next_expected":str(want)})
         for k,expected,actual in (("day_low_margin",day_bid,r.low_margin_day_10bps),
                                   ("overnight_low_margin",ov_bid,r.low_margin_ovn_10bps)):
             correct=None if expected is None else (abs(expected)<=.001)
+            actual=None if pd.isna(actual) else bool(actual)
             if correct!=actual:diffs["wrong_persisted_ambiguous_flags"][k]+=1
         for k,expected_b,expected_a,actual in (("DAY",day_bid,day_ask,r.day_bidask_sign_disagreement),
             ("OVN",ov_bid,ov_ask,r.ovn_bidask_sign_disagreement)):
             exp=None if expected_b is None or expected_a is None else ((expected_b>0)!=(expected_a>0))
+            actual=None if pd.isna(actual) else bool(actual)
             if exp!=actual:diffs["wrong_persisted_bidask_sign"][k]+=1
             if expected_b is not None and expected_b==0:diffs["flat_zero_bid_returns"][k]+=1
         for k,rrt,gate in (("DAY",day_bid,r.day_gate),("OVN",ov_bid,r.overnight_gate)):
@@ -171,6 +175,7 @@ def quality(x,l,year,hashes):
             bb=price(d,hm,"bid_open"); aa=price(d,hm,"ask_open")
             exp=(aa/bb-1)*10000 if bb is not None else None
             actual=getattr(r,field)
+            actual=None if pd.isna(actual) else float(actual)
             if (exp is None)!=(actual is None) or (exp is not None and abs(exp-actual)>1e-8):
                 diffs["spread_at_"+("9" if hm=="06:00" else "17")+"_bps_mismatch"]+=1
         # Count existing apparent OVN labels involving maint break candle bars
