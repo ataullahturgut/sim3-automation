@@ -14,6 +14,7 @@ from sklearn.metrics import roc_auc_score
 AX = Path(__file__).resolve().parents[1]
 PSF = AX / "GOLD_EXECUTION_PSF_OVN_PREDICTIONS_2026-10-07.csv"
 PAIR = AX / "GOLD_EXECUTION_LIT_STAGE3_SELECTIVE_PREDICTIONS_2026-10-07.csv"
+MACRO_LEDGER = AX / "GOLD_MACRO_EVENT_LEDGER_RAW_V1_2023_2025.csv"
 ROWS = AX / "GOLD_EXECUTION_DUAL_HAZARD_ROWS_2026-10-08.csv"
 METRICS = AX / "GOLD_EXECUTION_DUAL_HAZARD_METRICS_2026-10-08.csv"
 SUMMARY = AX / "GOLD_EXECUTION_DUAL_HAZARD_SUMMARY_2026-10-08.json"
@@ -49,10 +50,26 @@ def main():
     c = c.loc[c.policy.eq("PAIR_ALL"),
               ["date","macro_released","upcoming_fomc"]].drop_duplicates("date")
     p = p.merge(c, on="date", how="left", validate="one_to_one")
-    p["calendar_source_ready"] = p.macro_released.notna() & p.upcoming_fomc.notna()
+    # CRITICAL COVERAGE AUDIT: the raw 2025 macro ledger has ZERO FOMC
+    # entries plus missing NFP/CPI months. Filled zero flags are not
+    # evidence that no macro event was scheduled. Quarantine composite
+    # scores for entire incomplete calendar years.
+    ledger = pd.read_csv(MACRO_LEDGER)
+    ledger["year"] = pd.to_datetime(ledger.event_ts_utc, utc=True).dt.year
+    counts = ledger.groupby(["year","event_type"]).size()
+    required = {"FOMC":8, "NFP":12, "AHE":12, "UNEMP":12, "CPI":12}
+    covered_year = {year: all(int(counts.get((year, name), 0)) == n
+                              for name,n in required.items())
+                    for year in (2023,2024,2025)}
+    assert covered_year == {2023:True,2024:True,2025:False}, covered_year
+    p["calendar_source_ready"] = (
+        p.year.map(covered_year).fillna(False).astype(bool) &
+        p.macro_released.notna() & p.upcoming_fomc.notna()
+    )
     raw_calendar = (p.macro_released.eq(1) | p.upcoming_fomc.eq(1))
     p["risk_calendar"] = raw_calendar.where(p.calendar_source_ready, pd.NA).astype("boolean")
-    p["risk_combined"] = p.risk_vol.astype("boolean") | p.risk_calendar
+    p["risk_combined"] = (p.risk_vol.astype("boolean") | p.risk_calendar).where(
+        p.calendar_source_ready, pd.NA)
     p.to_csv(ROWS, index=False)
 
     rows = []
@@ -62,7 +79,7 @@ def main():
             valid = g.loc[g[name].notna()].copy()
             selected = valid.loc[valid[name].astype(bool)]
             d = dict(year=year,policy=name,n=len(valid),alerts=len(selected),
-                     alert_rate=len(selected)/len(valid))
+                     alert_rate=len(selected)/len(valid) if len(valid) else np.nan)
             for label in ("tail1","tail2"):
                 total = int(valid[label].sum())
                 hit = int(selected[label].sum())
@@ -70,8 +87,8 @@ def main():
                 d[f"{label}_caught"] = hit
                 d[f"{label}_recall"] = hit/total if total else np.nan
                 d[f"{label}_precision"] = hit/len(selected) if len(selected) else np.nan
-            d["auc1"] = float(roc_auc_score(valid.tail1,valid.score))
-            d["auc2"] = float(roc_auc_score(valid.tail2,valid.score))
+            d["auc1"] = float(roc_auc_score(valid.tail1,valid.score)) if valid.tail1.nunique()==2 else np.nan
+            d["auc2"] = float(roc_auc_score(valid.tail2,valid.score)) if valid.tail2.nunique()==2 else np.nan
             rows.append(d)
     out = pd.DataFrame(rows)
     out.to_csv(METRICS,index=False)
@@ -92,9 +109,10 @@ def main():
         "rv_definition":"sqrt(mean(previous w completed overnight log returns squared))",
         "dev_2023_2024_score_count":len(hist),
         "score_cutoff_80pct_dev_only":threshold,
-        "event_warning":"Calendar extension is secondary exploratory; missing source pairs do not prove absence of events.",
+        "event_warning":"2025 macro event ledger incomplete: FOMC=0, NFP=11, CPI=10; the combined event head is UNAVAILABLE for entire 2025 and NOT deployable.",
         "2025_nominal_random_selection_hypergeom_p_6_of_7":nominal_p,
         "p_caution":"NOT confirmatory: exploratory protocol, archive already opened, serial correlation, multiple candidate variants.",
+        "calendar_coverage_by_year":covered_year,
         "metrics":out.to_dict("records"),
         "extreme_2025":details,
         "next":"Freeze before newly unseen origins, assess source readiness and first executable bank quotes."
