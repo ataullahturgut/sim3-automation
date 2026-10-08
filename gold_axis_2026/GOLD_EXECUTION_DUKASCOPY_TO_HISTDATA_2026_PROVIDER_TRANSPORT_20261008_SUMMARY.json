@@ -1,0 +1,32 @@
+{
+  "status": "2026_CROSS_PROVIDER_FROZEN_MODEL_TRANSPORT_EXECUTED",
+  "source_train_1": "EV TRADING LABS DUKASCOPY M15 BID 2020-25",
+  "source_train_2": "HISTDATA M1-derived BID 2020-25, 2023 GAP PRESERVED",
+  "source_test": "HISTDATA ONLY Jan-Sep 2026 audited origin gates",
+  "never_spliced_quote_source_during_features": true,
+  "2026_labels_used_in_training": false,
+  "matched_days_score_year": 2026,
+  "year2026_score_cases": {
+    "DAY": 184,
+    "OVN": 141
+  },
+  "histdata_2023_source_gap_present": true,
+  "models": [
+    "BASE_LOGIT",
+    "SHAPE_LOGIT",
+    "SHAPE_GVZ_LOGIT",
+    "SHAPE_GVZ_HGB",
+    "VIX_GVZ_LOGIT",
+    "VIX_GVZ_HGB"
+  ],
+  "training_starts": [
+    2020,
+    2021,
+    2022
+  ],
+  "methodology": "Source-separated frozen 2020-25 model domain transport to identical HistData 2026 test",
+  "same_vendor_2026_dukascopy_backtest_completed": false,
+  "2026_already_inspected": "YES: this is retrospective robustness evidence NOT unseen 2026",
+  "bank_tradable": false,
+  "elapsed_seconds": 28
+}
