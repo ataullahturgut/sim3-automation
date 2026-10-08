@@ -47,6 +47,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add gold_axis_2026/GOLD_EXECUTION_ORIGIN_SAFE_SHAPE_GVZ_ML_CHALLENGE_20261008_SUMMARY.json
           git add gold_axis_2026/GOLD_EXECUTION_ORIGIN_SAFE_SHAPE_GVZ_ML_CHALLENGE_20261008_METRICS.csv
+          git add gold_axis_2026/GOLD_EXECUTION_ORIGIN_SAFE_SHAPE_GVZ_ML_CHALLENGE_20261008_PAIRED_AUDIT.csv
           git diff --cached --quiet || git commit -m 'Record origin-safe price-shape and lagged GVZ ML directional challenge metrics'
           for i in 1 2 3 4 5; do
             git pull --rebase origin gold-execution-channel-audit-20261006
