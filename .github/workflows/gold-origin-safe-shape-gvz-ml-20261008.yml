@@ -1,0 +1,56 @@
+name: Gold Execution Origin Safe Shape GVZ Direction ML 2020-2025
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-origin-safe-ml-20261008]
+    paths:
+      - 'gold_axis_2026/tools/gold_execution_origin_safe_shape_gvz_ml_challenge_20261008.py'
+      - '.github/workflows/gold-origin-safe-shape-gvz-ml-20261008.yml'
+permissions:
+  contents: write
+concurrency:
+  group: origin-safe-shape-gvz-20261008
+  cancel-in-progress: false
+jobs:
+  challenge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OPENBLAS_NUM_THREADS: 1
+      OMP_NUM_THREADS: 1
+      PYTHONUNBUFFERED: 1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-origin-safe-ml-20261008
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'statsmodels>=0.14,<1' 'psycopg[binary]>=3.2,<4'
+      - name: Check runner and execute new feature ablation without private data export
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_origin_safe_shape_gvz_ml_challenge_20261008.py
+          python gold_axis_2026/tools/gold_execution_origin_safe_shape_gvz_ml_challenge_20261008.py
+      - name: Protect dated predictions as action artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-origin-safe-shape-gvz-private-dated-predictions
+          path: gold_axis_2026/GOLD_EXECUTION_ORIGIN_SAFE_SHAPE_GVZ_ML_CHALLENGE_20261008_PREDICTIONS_PRIVATE.csv
+          if-no-files-found: warn
+      - name: Record aggregate metrics and scientific contract only
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_EXECUTION_ORIGIN_SAFE_SHAPE_GVZ_ML_CHALLENGE_20261008_SUMMARY.json
+          git add gold_axis_2026/GOLD_EXECUTION_ORIGIN_SAFE_SHAPE_GVZ_ML_CHALLENGE_20261008_METRICS.csv
+          git diff --cached --quiet || git commit -m 'Record origin-safe price-shape and lagged GVZ ML directional challenge metrics'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin gold-execution-origin-safe-ml-20261008
+            if git push origin HEAD:gold-execution-origin-safe-ml-20261008; then exit 0; fi
+            sleep 3
+          done
+          exit 1
