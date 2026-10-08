@@ -1,0 +1,916 @@
+{
+  "asof": "2026-10-08",
+  "status": "FULL_2020_2025_DATA_VENUE_AND_LABEL_FORENSIC_COMPLETE",
+  "period": "2020-2025",
+  "sources": "EV Trading Labs Dukascopy M15 BID ASK, original public gzip, exact private PostgreSQL stored price series and independently recomputed labels",
+  "official_market_hours": "https://www.dukascopy.com/swiss/english/forex/forex-trading-accounts/link/?mob=1",
+  "source_bar_docs": "https://evtradelabs.com/data",
+  "independent_price_truth": "Same public source vs its private storage; not a third-party quote check except separate 2023 direct Dukascopy pilot",
+  "model_retrained": false,
+  "original_quote_rows_modified": false,
+  "original_target_rows_modified": false,
+  "raw_prices_exported": false,
+  "years": {
+    "2020": {
+      "year": 2020,
+      "bars": 23702,
+      "raw_year_sha256": "51b57a51a072507e3f5c66900eeb18159fae299d3b442ce8cc703031eb72ee3c",
+      "database_vs_public_price_identity": {
+        "unmatched_timestamp_rows": 0,
+        "changed_private_price_cells": {
+          "bid_open": 0,
+          "bid_high": 0,
+          "bid_low": 0,
+          "bid_close": 0,
+          "ask_open": 0,
+          "ask_high": 0,
+          "ask_low": 0,
+          "ask_close": 0
+        }
+      },
+      "venue_price_quality": {
+        "utc_minute_alignment_error": 0,
+        "duplicate_interval_count": 0,
+        "nonpositive_quote_cells": 0,
+        "ohlc_bid_invalid_count": 0,
+        "ohlc_ask_invalid_count": 0,
+        "bid_ask_crossed_open_or_close_count": 0,
+        "definitely_offmarket_by_venue_count": 0,
+        "inside_documented_xau_daily_break_count": 0,
+        "daily_break_bar_count_with_positive_provider_volume": 0,
+        "daily_break_bar_count_with_flat_bid_ask_prices": 0,
+        "daily_break_bar_count_with_nonflat_prices": 0,
+        "daily_break_volume_median": null,
+        "provider_volume_missing_n": 0,
+        "provider_volume_zero_n": 0,
+        "source_bar_flat_price_count": 0,
+        "source_repeated_adjacent_bid_close_count": 96,
+        "positive_volume_share": 1.0,
+        "spread_close_bps_median": 2.1635999213931445,
+        "spread_close_bps_p99": 14.296581631471827,
+        "spread_close_bps_max": 78.83386330006515,
+        "spread_close_bps_over_30_count": 38,
+        "spread_close_bps_over_100_count": 0,
+        "adjacent_15m_bid_close_move_above_0_5pct_n": 191,
+        "adjacent_15m_bid_close_move_above_1_5pct_n": 4,
+        "adjacent_15m_bid_close_max_absolute_return_pct": 2.0466568895802784,
+        "extreme_bar_dates_sample": [
+          "2020-03-06",
+          "2020-03-13",
+          "2020-03-16",
+          "2020-03-23"
+        ],
+        "daily_break_positive_volume_date_samples": []
+      },
+      "target_recompute": {
+        "origin_rows": 259,
+        "bad_next_expected_date": 0,
+        "wrong_persisted_target_return": {
+          "day_bid_logret": 1,
+          "day_ask_logret": 1,
+          "overnight_bid_logret": 8,
+          "overnight_ask_logret": 8
+        },
+        "wrong_persisted_direction": {
+          "day_y": 1,
+          "overnight_y": 8
+        },
+        "wrong_persisted_ambiguous_flags": {
+          "day_low_margin": 0,
+          "overnight_low_margin": 0
+        },
+        "wrong_persisted_bidask_sign": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "gated_complete_missing_anchor": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "flat_zero_bid_returns": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "calendar_break_inside_nights": 0,
+        "spread_at_9_bps_mismatch": 0,
+        "spread_at_17_bps_mismatch": 0
+      },
+      "sample_label_issues": [
+        {
+          "date": "2020-01-20",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2020-01-21"
+        },
+        {
+          "date": "2020-02-17",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2020-02-18"
+        },
+        {
+          "date": "2020-04-09",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2020-04-10"
+        },
+        {
+          "date": "2020-05-25",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2020-05-26"
+        },
+        {
+          "date": "2020-08-12",
+          "code": "day_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2020-08-13"
+        },
+        {
+          "date": "2020-09-07",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2020-09-08"
+        },
+        {
+          "date": "2020-11-26",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2020-11-27"
+        },
+        {
+          "date": "2020-12-24",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2020-12-25"
+        },
+        {
+          "date": "2020-12-31",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2021-01-01"
+        }
+      ]
+    },
+    "2021": {
+      "year": 2021,
+      "bars": 23626,
+      "raw_year_sha256": "ac6175a28d63cd6827c7dab02f3fe43a41c1c9e0fee188690db8d81b1a9048b2",
+      "database_vs_public_price_identity": {
+        "unmatched_timestamp_rows": 0,
+        "changed_private_price_cells": {
+          "bid_open": 0,
+          "bid_high": 0,
+          "bid_low": 0,
+          "bid_close": 0,
+          "ask_open": 0,
+          "ask_high": 0,
+          "ask_low": 0,
+          "ask_close": 0
+        }
+      },
+      "venue_price_quality": {
+        "utc_minute_alignment_error": 0,
+        "duplicate_interval_count": 0,
+        "nonpositive_quote_cells": 0,
+        "ohlc_bid_invalid_count": 0,
+        "ohlc_ask_invalid_count": 0,
+        "bid_ask_crossed_open_or_close_count": 0,
+        "definitely_offmarket_by_venue_count": 0,
+        "inside_documented_xau_daily_break_count": 0,
+        "daily_break_bar_count_with_positive_provider_volume": 0,
+        "daily_break_bar_count_with_flat_bid_ask_prices": 0,
+        "daily_break_bar_count_with_nonflat_prices": 0,
+        "daily_break_volume_median": null,
+        "provider_volume_missing_n": 0,
+        "provider_volume_zero_n": 0,
+        "source_bar_flat_price_count": 0,
+        "source_repeated_adjacent_bid_close_count": 108,
+        "positive_volume_share": 1.0,
+        "spread_close_bps_median": 1.9739222934966882,
+        "spread_close_bps_p99": 3.7001881561299355,
+        "spread_close_bps_max": 26.164000713562174,
+        "spread_close_bps_over_30_count": 0,
+        "spread_close_bps_over_100_count": 0,
+        "adjacent_15m_bid_close_move_above_0_5pct_n": 64,
+        "adjacent_15m_bid_close_move_above_1_5pct_n": 1,
+        "adjacent_15m_bid_close_max_absolute_return_pct": 4.1023243082958905,
+        "extreme_bar_dates_sample": [
+          "2021-08-08"
+        ],
+        "daily_break_positive_volume_date_samples": []
+      },
+      "target_recompute": {
+        "origin_rows": 258,
+        "bad_next_expected_date": 0,
+        "wrong_persisted_target_return": {
+          "day_bid_logret": 0,
+          "day_ask_logret": 0,
+          "overnight_bid_logret": 8,
+          "overnight_ask_logret": 8
+        },
+        "wrong_persisted_direction": {
+          "day_y": 0,
+          "overnight_y": 8
+        },
+        "wrong_persisted_ambiguous_flags": {
+          "day_low_margin": 0,
+          "overnight_low_margin": 0
+        },
+        "wrong_persisted_bidask_sign": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "gated_complete_missing_anchor": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "flat_zero_bid_returns": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "calendar_break_inside_nights": 0,
+        "spread_at_9_bps_mismatch": 0,
+        "spread_at_17_bps_mismatch": 0
+      },
+      "sample_label_issues": [
+        {
+          "date": "2021-01-18",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2021-01-19"
+        },
+        {
+          "date": "2021-02-15",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2021-02-16"
+        },
+        {
+          "date": "2021-04-01",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2021-04-02"
+        },
+        {
+          "date": "2021-05-31",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2021-06-01"
+        },
+        {
+          "date": "2021-07-05",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2021-07-06"
+        },
+        {
+          "date": "2021-09-06",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2021-09-07"
+        },
+        {
+          "date": "2021-11-25",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2021-11-26"
+        },
+        {
+          "date": "2021-12-23",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2021-12-24"
+        }
+      ]
+    },
+    "2022": {
+      "year": 2022,
+      "bars": 23647,
+      "raw_year_sha256": "0c64b4f83c07dd0e3829b7a67b6a56d7f4416d53e21fdf8e843cfeb6347c5627",
+      "database_vs_public_price_identity": {
+        "unmatched_timestamp_rows": 0,
+        "changed_private_price_cells": {
+          "bid_open": 0,
+          "bid_high": 0,
+          "bid_low": 0,
+          "bid_close": 0,
+          "ask_open": 0,
+          "ask_high": 0,
+          "ask_low": 0,
+          "ask_close": 0
+        }
+      },
+      "venue_price_quality": {
+        "utc_minute_alignment_error": 0,
+        "duplicate_interval_count": 0,
+        "nonpositive_quote_cells": 0,
+        "ohlc_bid_invalid_count": 0,
+        "ohlc_ask_invalid_count": 0,
+        "bid_ask_crossed_open_or_close_count": 0,
+        "definitely_offmarket_by_venue_count": 0,
+        "inside_documented_xau_daily_break_count": 0,
+        "daily_break_bar_count_with_positive_provider_volume": 0,
+        "daily_break_bar_count_with_flat_bid_ask_prices": 0,
+        "daily_break_bar_count_with_nonflat_prices": 0,
+        "daily_break_volume_median": null,
+        "provider_volume_missing_n": 0,
+        "provider_volume_zero_n": 0,
+        "source_bar_flat_price_count": 0,
+        "source_repeated_adjacent_bid_close_count": 94,
+        "positive_volume_share": 1.0,
+        "spread_close_bps_median": 2.0411122987762376,
+        "spread_close_bps_p99": 3.342580096201475,
+        "spread_close_bps_max": 23.560209424082768,
+        "spread_close_bps_over_30_count": 0,
+        "spread_close_bps_over_100_count": 0,
+        "adjacent_15m_bid_close_move_above_0_5pct_n": 64,
+        "adjacent_15m_bid_close_move_above_1_5pct_n": 0,
+        "adjacent_15m_bid_close_max_absolute_return_pct": 1.3322737471952228,
+        "extreme_bar_dates_sample": [],
+        "daily_break_positive_volume_date_samples": []
+      },
+      "target_recompute": {
+        "origin_rows": 258,
+        "bad_next_expected_date": 0,
+        "wrong_persisted_target_return": {
+          "day_bid_logret": 0,
+          "day_ask_logret": 0,
+          "overnight_bid_logret": 10,
+          "overnight_ask_logret": 10
+        },
+        "wrong_persisted_direction": {
+          "day_y": 0,
+          "overnight_y": 10
+        },
+        "wrong_persisted_ambiguous_flags": {
+          "day_low_margin": 0,
+          "overnight_low_margin": 0
+        },
+        "wrong_persisted_bidask_sign": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "gated_complete_missing_anchor": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "flat_zero_bid_returns": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "calendar_break_inside_nights": 0,
+        "spread_at_9_bps_mismatch": 0,
+        "spread_at_17_bps_mismatch": 0
+      },
+      "sample_label_issues": [
+        {
+          "date": "2022-01-17",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2022-01-18"
+        },
+        {
+          "date": "2022-02-21",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2022-02-22"
+        },
+        {
+          "date": "2022-04-14",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2022-04-15"
+        },
+        {
+          "date": "2022-05-30",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2022-05-31"
+        },
+        {
+          "date": "2022-06-20",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2022-06-21"
+        },
+        {
+          "date": "2022-07-04",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2022-07-05"
+        },
+        {
+          "date": "2022-09-05",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2022-09-06"
+        },
+        {
+          "date": "2022-11-24",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2022-11-25"
+        },
+        {
+          "date": "2022-12-23",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2022-12-26"
+        },
+        {
+          "date": "2022-12-30",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2023-01-02"
+        }
+      ]
+    },
+    "2023": {
+      "year": 2023,
+      "bars": 23544,
+      "raw_year_sha256": "4dc07363f1b178af4f7a5e9b9a5bc8dc58e78906a9ac99730b0086c4a86f5972",
+      "database_vs_public_price_identity": {
+        "unmatched_timestamp_rows": 0,
+        "changed_private_price_cells": {
+          "bid_open": 0,
+          "bid_high": 0,
+          "bid_low": 0,
+          "bid_close": 0,
+          "ask_open": 0,
+          "ask_high": 0,
+          "ask_low": 0,
+          "ask_close": 0
+        }
+      },
+      "venue_price_quality": {
+        "utc_minute_alignment_error": 0,
+        "duplicate_interval_count": 0,
+        "nonpositive_quote_cells": 0,
+        "ohlc_bid_invalid_count": 0,
+        "ohlc_ask_invalid_count": 0,
+        "bid_ask_crossed_open_or_close_count": 0,
+        "definitely_offmarket_by_venue_count": 0,
+        "inside_documented_xau_daily_break_count": 0,
+        "daily_break_bar_count_with_positive_provider_volume": 0,
+        "daily_break_bar_count_with_flat_bid_ask_prices": 0,
+        "daily_break_bar_count_with_nonflat_prices": 0,
+        "daily_break_volume_median": null,
+        "provider_volume_missing_n": 0,
+        "provider_volume_zero_n": 0,
+        "source_bar_flat_price_count": 0,
+        "source_repeated_adjacent_bid_close_count": 121,
+        "positive_volume_share": 1.0,
+        "spread_close_bps_median": 1.6853902995717096,
+        "spread_close_bps_p99": 3.2967365009946237,
+        "spread_close_bps_max": 14.433183772080138,
+        "spread_close_bps_over_30_count": 0,
+        "spread_close_bps_over_100_count": 0,
+        "adjacent_15m_bid_close_move_above_0_5pct_n": 44,
+        "adjacent_15m_bid_close_move_above_1_5pct_n": 1,
+        "adjacent_15m_bid_close_max_absolute_return_pct": 2.632086200582151,
+        "extreme_bar_dates_sample": [
+          "2023-12-03"
+        ],
+        "daily_break_positive_volume_date_samples": []
+      },
+      "target_recompute": {
+        "origin_rows": 257,
+        "bad_next_expected_date": 0,
+        "wrong_persisted_target_return": {
+          "day_bid_logret": 1,
+          "day_ask_logret": 1,
+          "overnight_bid_logret": 10,
+          "overnight_ask_logret": 10
+        },
+        "wrong_persisted_direction": {
+          "day_y": 1,
+          "overnight_y": 10
+        },
+        "wrong_persisted_ambiguous_flags": {
+          "day_low_margin": 0,
+          "overnight_low_margin": 0
+        },
+        "wrong_persisted_bidask_sign": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "gated_complete_missing_anchor": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "flat_zero_bid_returns": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "calendar_break_inside_nights": 0,
+        "spread_at_9_bps_mismatch": 0,
+        "spread_at_17_bps_mismatch": 0
+      },
+      "sample_label_issues": [
+        {
+          "date": "2023-01-16",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2023-01-17"
+        },
+        {
+          "date": "2023-02-20",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2023-02-21"
+        },
+        {
+          "date": "2023-04-06",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2023-04-07"
+        },
+        {
+          "date": "2023-05-29",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2023-05-30"
+        },
+        {
+          "date": "2023-06-19",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2023-06-20"
+        },
+        {
+          "date": "2023-07-04",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2023-07-05"
+        },
+        {
+          "date": "2023-09-04",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2023-09-05"
+        },
+        {
+          "date": "2023-09-25",
+          "code": "day_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2023-09-26"
+        },
+        {
+          "date": "2023-11-23",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2023-11-24"
+        },
+        {
+          "date": "2023-12-22",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2023-12-25"
+        },
+        {
+          "date": "2023-12-29",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2024-01-01"
+        }
+      ]
+    },
+    "2024": {
+      "year": 2024,
+      "bars": 23733,
+      "raw_year_sha256": "3ba26e2edc365f2199bdb7d649d85c2ef43e248a37ebd792a3af0b7471529886",
+      "database_vs_public_price_identity": {
+        "unmatched_timestamp_rows": 0,
+        "changed_private_price_cells": {
+          "bid_open": 0,
+          "bid_high": 0,
+          "bid_low": 0,
+          "bid_close": 0,
+          "ask_open": 0,
+          "ask_high": 0,
+          "ask_low": 0,
+          "ask_close": 0
+        }
+      },
+      "venue_price_quality": {
+        "utc_minute_alignment_error": 0,
+        "duplicate_interval_count": 0,
+        "nonpositive_quote_cells": 0,
+        "ohlc_bid_invalid_count": 0,
+        "ohlc_ask_invalid_count": 0,
+        "bid_ask_crossed_open_or_close_count": 0,
+        "definitely_offmarket_by_venue_count": 0,
+        "inside_documented_xau_daily_break_count": 0,
+        "daily_break_bar_count_with_positive_provider_volume": 0,
+        "daily_break_bar_count_with_flat_bid_ask_prices": 0,
+        "daily_break_bar_count_with_nonflat_prices": 0,
+        "daily_break_volume_median": null,
+        "provider_volume_missing_n": 0,
+        "provider_volume_zero_n": 0,
+        "source_bar_flat_price_count": 0,
+        "source_repeated_adjacent_bid_close_count": 104,
+        "positive_volume_share": 1.0,
+        "spread_close_bps_median": 1.5792501569844575,
+        "spread_close_bps_p99": 3.382516028802308,
+        "spread_close_bps_max": 29.719897421625063,
+        "spread_close_bps_over_30_count": 0,
+        "spread_close_bps_over_100_count": 0,
+        "adjacent_15m_bid_close_move_above_0_5pct_n": 64,
+        "adjacent_15m_bid_close_move_above_1_5pct_n": 0,
+        "adjacent_15m_bid_close_max_absolute_return_pct": 1.2328496402786993,
+        "extreme_bar_dates_sample": [],
+        "daily_break_positive_volume_date_samples": []
+      },
+      "target_recompute": {
+        "origin_rows": 259,
+        "bad_next_expected_date": 0,
+        "wrong_persisted_target_return": {
+          "day_bid_logret": 0,
+          "day_ask_logret": 0,
+          "overnight_bid_logret": 10,
+          "overnight_ask_logret": 10
+        },
+        "wrong_persisted_direction": {
+          "day_y": 0,
+          "overnight_y": 10
+        },
+        "wrong_persisted_ambiguous_flags": {
+          "day_low_margin": 0,
+          "overnight_low_margin": 0
+        },
+        "wrong_persisted_bidask_sign": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "gated_complete_missing_anchor": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "flat_zero_bid_returns": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "calendar_break_inside_nights": 0,
+        "spread_at_9_bps_mismatch": 0,
+        "spread_at_17_bps_mismatch": 0
+      },
+      "sample_label_issues": [
+        {
+          "date": "2024-01-15",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2024-01-16"
+        },
+        {
+          "date": "2024-02-19",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2024-02-20"
+        },
+        {
+          "date": "2024-03-28",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2024-03-29"
+        },
+        {
+          "date": "2024-05-27",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2024-05-28"
+        },
+        {
+          "date": "2024-06-19",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2024-06-20"
+        },
+        {
+          "date": "2024-07-04",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2024-07-05"
+        },
+        {
+          "date": "2024-09-02",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2024-09-03"
+        },
+        {
+          "date": "2024-11-28",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2024-11-29"
+        },
+        {
+          "date": "2024-12-24",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2024-12-25"
+        },
+        {
+          "date": "2024-12-31",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2025-01-01"
+        }
+      ]
+    },
+    "2025": {
+      "year": 2025,
+      "bars": 23638,
+      "raw_year_sha256": "46445e5a9eb2d59a5a11a06f70b272e69df76bfd1f1e227f34d459f8d464a865",
+      "database_vs_public_price_identity": {
+        "unmatched_timestamp_rows": 0,
+        "changed_private_price_cells": {
+          "bid_open": 0,
+          "bid_high": 0,
+          "bid_low": 0,
+          "bid_close": 0,
+          "ask_open": 0,
+          "ask_high": 0,
+          "ask_low": 0,
+          "ask_close": 0
+        }
+      },
+      "venue_price_quality": {
+        "utc_minute_alignment_error": 0,
+        "duplicate_interval_count": 0,
+        "nonpositive_quote_cells": 0,
+        "ohlc_bid_invalid_count": 0,
+        "ohlc_ask_invalid_count": 0,
+        "bid_ask_crossed_open_or_close_count": 0,
+        "definitely_offmarket_by_venue_count": 0,
+        "inside_documented_xau_daily_break_count": 0,
+        "daily_break_bar_count_with_positive_provider_volume": 0,
+        "daily_break_bar_count_with_flat_bid_ask_prices": 0,
+        "daily_break_bar_count_with_nonflat_prices": 0,
+        "daily_break_volume_median": null,
+        "provider_volume_missing_n": 0,
+        "provider_volume_zero_n": 0,
+        "source_bar_flat_price_count": 0,
+        "source_repeated_adjacent_bid_close_count": 61,
+        "positive_volume_share": 1.0,
+        "spread_close_bps_median": 1.7258918083906671,
+        "spread_close_bps_p99": 4.749649283543446,
+        "spread_close_bps_max": 22.667778822094142,
+        "spread_close_bps_over_30_count": 0,
+        "spread_close_bps_over_100_count": 0,
+        "adjacent_15m_bid_close_move_above_0_5pct_n": 135,
+        "adjacent_15m_bid_close_move_above_1_5pct_n": 0,
+        "adjacent_15m_bid_close_max_absolute_return_pct": 1.4335622502452905,
+        "extreme_bar_dates_sample": [],
+        "daily_break_positive_volume_date_samples": []
+      },
+      "target_recompute": {
+        "origin_rows": 258,
+        "bad_next_expected_date": 0,
+        "wrong_persisted_target_return": {
+          "day_bid_logret": 0,
+          "day_ask_logret": 0,
+          "overnight_bid_logret": 9,
+          "overnight_ask_logret": 9
+        },
+        "wrong_persisted_direction": {
+          "day_y": 0,
+          "overnight_y": 9
+        },
+        "wrong_persisted_ambiguous_flags": {
+          "day_low_margin": 0,
+          "overnight_low_margin": 0
+        },
+        "wrong_persisted_bidask_sign": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "gated_complete_missing_anchor": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "flat_zero_bid_returns": {
+          "DAY": 0,
+          "OVN": 0
+        },
+        "calendar_break_inside_nights": 0,
+        "spread_at_9_bps_mismatch": 0,
+        "spread_at_17_bps_mismatch": 0
+      },
+      "sample_label_issues": [
+        {
+          "date": "2025-01-20",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2025-01-21"
+        },
+        {
+          "date": "2025-02-17",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2025-02-18"
+        },
+        {
+          "date": "2025-04-17",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2025-04-18"
+        },
+        {
+          "date": "2025-05-26",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2025-05-27"
+        },
+        {
+          "date": "2025-06-19",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2025-06-20"
+        },
+        {
+          "date": "2025-09-01",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2025-09-02"
+        },
+        {
+          "date": "2025-11-27",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2025-11-28"
+        },
+        {
+          "date": "2025-12-24",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2025-12-25"
+        },
+        {
+          "date": "2025-12-31",
+          "code": "overnight_y_SIGN",
+          "stored": NaN,
+          "recomputed": null,
+          "next_expected": "2026-01-01"
+        }
+      ]
+    }
+  },
+  "completed_at_utc": "2026-10-08T15:13:42.953392+00:00"
+}
