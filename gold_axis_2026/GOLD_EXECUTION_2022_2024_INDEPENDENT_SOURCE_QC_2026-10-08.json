@@ -1,0 +1,60 @@
+{
+  "asof": "2026-10-08",
+  "status": "INCOMPLETE_OR_QC_FAILED",
+  "independent_source": "HISTDATA_XAUUSD_M1_FIXED_EST_M15_2022_2024_QC_CANDIDATE_V1",
+  "existing_frozen_files_unchanged": true,
+  "raw_licensed_prices_exported": false,
+  "paid_historical_price_download_usd": 0,
+  "est_conversion": "UTC=EST_FIXED+5, NOT America/New_York DST",
+  "target_labels": "DAY 09:00 open->16:45 close TR; OVN 17:00 open->next eligible 08:45 close TR",
+  "market_closure_definition": "Saturday UTC + Sunday UTC before 21:00",
+  "years": {
+    "2022": {
+      "year": 2022,
+      "histdata_1min_to_15min_rows": 23643,
+      "archive_original_rows": 23551,
+      "histdata_complete_native_minutes": 23580,
+      "histdata_incomplete_native_minutes": 63,
+      "histdata_hard_closed_bars": 0,
+      "frozen_hard_closed_bars": 0,
+      "matched_m15_bars": 22925,
+      "median_abs_close_bps": 2.7041691139984003,
+      "p95_abs_close_bps": 30.133563037159302,
+      "p99_abs_close_bps": 58.370617558067835,
+      "over_50bps_share": 0.01465648854961832,
+      "independent_above_frozen_share": 0.29435114503816795,
+      "label_concordance": {
+        "day": {
+          "matched_origins": 256,
+          "direction_disagreements": 26,
+          "disagreement_share": 0.1015625
+        },
+        "ovn": {
+          "matched_origins": 256,
+          "direction_disagreements": 32,
+          "disagreement_share": 0.125
+        }
+      },
+      "independent_month_counts": {
+        "1": 1920,
+        "2": 1830,
+        "3": 2112,
+        "4": 1836,
+        "5": 2018,
+        "6": 2014,
+        "7": 1922,
+        "8": 2116,
+        "9": 2010,
+        "10": 1940,
+        "11": 1997,
+        "12": 1928
+      },
+      "independent_sha256": "cf46e7532a4e955e2b70075ffd15dc25e3dac6e5f317f30177dfd8c167950bc8",
+      "native_source_m1_rows": 354568
+    }
+  },
+  "private_storage": null,
+  "error_type": "RuntimeError",
+  "error_summary": "INDEPENDENT_YEAR_THIN_2023",
+  "completed_at": "2026-10-08T14:06:46.611112+00:00"
+}
