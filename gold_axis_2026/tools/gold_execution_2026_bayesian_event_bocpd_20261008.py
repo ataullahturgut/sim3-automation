@@ -56,3 +56,53 @@ def online_predictions(panel,tag):
       matured_with_dates.append((issue,y))
       lastdate=issue
     return pd.DataFrame(out)
+
+def panel_predictions(q,t,px,tx,label):
+    z=first.event_panel(q,t,px,tx)
+    bo=online_predictions(z,label)
+    cmp=first.forecast_events(z,label)
+    cmp=cmp[cmp.method.isin(("REGIME_PATH_FIRSTPASSAGE",
+                            "LAST_YEAR_CLIMATOLOGY"))]
+    reference=cmp[cmp.method=="LAST_YEAR_CLIMATOLOGY"].set_index("date").sort_index()
+    o=bo[bo.method=="LAST_YEAR_CLIMATOLOGY"].set_index("date").sort_index()
+    if not o.index.equals(reference.index):
+        raise RuntimeError("BOCPD_COMPARATOR_POPULATION_DIFFERENCE")
+    for c in ("p_nohit","p_upfirst","p_downfirst"):
+        if not np.allclose(o[c],reference[c],atol=1e-12):
+            raise RuntimeError("CAUSAL_PRIOR_BASELINE_DISAGREEMENT")
+    allp=pd.concat([bo,cmp[cmp.method=="REGIME_PATH_FIRSTPASSAGE"]],ignore_index=True)
+    if allp.duplicated(["date","method"]).any():
+        raise RuntimeError("MODEL_ORIGIN_DUPLICATE")
+    if set(allp.method)!=set(METHODS):raise RuntimeError("METHOD_MISSING")
+    return allp
+def compare_brier(p):
+    rng=np.random.default_rng(20261008)
+    rows=[]
+    for (source,year),z in p.groupby(["source_test","year"]):
+      control=z[z.method=="LAST_YEAR_CLIMATOLOGY"].set_index("date").sort_index()
+      def loss(d):
+        pr=d[["p_nohit","p_upfirst","p_downfirst"]].to_numpy(float)
+        truth=np.eye(3)[d.actual.to_numpy(int)]
+        return np.square(pr-truth).sum(axis=1)
+      b=loss(control)
+      for method in ("BAYES_ONLINE_CHANGEPOINT","TRAILING63_DIRICHLET",
+                     "REGIME_PATH_FIRSTPASSAGE"):
+        candidate=z[z.method==method].set_index("date").sort_index()
+        if not candidate.index.equals(control.index) or not (candidate.actual==control.actual).all():
+            raise RuntimeError("UNMATCHED_BAYESIAN_COMPARISON")
+        a=loss(candidate)
+        months=control.index.str.slice(0,7).to_numpy()
+        unique=np.unique(months)
+        bs=np.array([b[months==u].sum() for u in unique])
+        ms=np.array([a[months==u].sum() for u in unique])
+        ids=rng.integers(0,len(unique),size=(1500,len(unique)))
+        delta=1-ms[ids].sum(axis=1)/bs[ids].sum(axis=1)
+        rows.append({"source_test":source,"year":int(year),"method":method,
+           "n":len(a),"month_blocks":len(unique),
+           "Brier_lastyear":float(b.mean()),"Brier_candidate":float(a.mean()),
+           "relative_gain_vs_lastyear":float(1-a.mean()/b.mean()),
+           "month_bootstrap_lower95":float(np.quantile(delta,.025)),
+           "month_bootstrap_upper95":float(np.quantile(delta,.975)),
+           "positive_bootstrap_fraction":float(np.mean(delta>0)),
+           "inspected_retrospective_not_confirmatory":True})
+    return pd.DataFrame(rows)
