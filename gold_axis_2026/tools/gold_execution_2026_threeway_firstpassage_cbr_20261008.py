@@ -48,3 +48,42 @@ def kernel_event(tr,te,regime):
         vote=np.bincount(labels[idx],weights=w,minlength=3)
         out.append((vote+5*freq)/(w.sum()+5))
     return np.array(out)
+
+def forecast_events(z,name):
+    out=[]
+    for period,test in z[z.year>=2023].groupby(z.date.dt.to_period("M")):
+        d=period.to_timestamp()
+        freeze=d if period.year<=2024 else pd.Timestamp(str(period.year)+"-01-01")
+        tr=z[(z.date<freeze)&(z.next_date<=freeze)]
+        if len(tr)<280 or tr.event.nunique()<3:continue
+        if not(tr.date<test.date.min()).all():raise ValueError("FUTURE_FIRST_PASSAGE_LABEL")
+        freq=np.bincount(tr.event.to_numpy(int),minlength=3)/len(tr)
+        probs={
+          "PATH_FIRSTPASSAGE":kernel_event(tr,test,False),
+          "REGIME_PATH_FIRSTPASSAGE":kernel_event(tr,test,True),
+          "HISTORICAL_THREE_EVENT_PRIOR":np.tile(freq,(len(test),1))}
+        for method,pr in probs.items():
+            for i,r in enumerate(test.itertuples(index=False)):
+                out.append({"source_test":name,"date":r.date.strftime("%Y-%m-%d"),
+                     "year":int(r.year),"month":str(period),"method":method,
+                     "actual":int(r.event),"pred":int(np.argmax(pr[i])),
+                     "p_nohit":float(pr[i,0]),"p_upfirst":float(pr[i,1]),
+                     "p_downfirst":float(pr[i,2]),"fit_before":str(freeze)})
+    return pd.DataFrame(out)
+def score(p):
+    rows=[]
+    for (source,year,method),z in p.groupby(["source_test","year","method"]):
+        actual=z.actual.to_numpy(int);pred=z.pred.to_numpy(int)
+        pr=z[["p_nohit","p_upfirst","p_downfirst"]].to_numpy(float)
+        y=np.eye(3)[actual]
+        rec=[float(np.mean(pred[actual==cls]==cls)) if (actual==cls).any() else None for cls in range(3)]
+        rows.append({"source_test":source,"year":int(year),"method":method,
+            "n":len(z),"accuracy":float(np.mean(pred==actual)),
+            "macro_recall":float(np.mean([x for x in rec if x is not None])),
+            "recall_nohit":rec[0],"recall_upfirst":rec[1],"recall_downfirst":rec[2],
+            "brier_multiclass":float(np.mean(np.sum((pr-y)**2,axis=1))),
+            "logloss_multiclass":float(np.mean(-np.log(np.maximum(pr[np.arange(len(z)),actual],1e-8)))),
+            "base_nohit_fraction":float(np.mean(actual==0)),
+            "base_upfirst_fraction":float(np.mean(actual==1)),
+            "base_downfirst_fraction":float(np.mean(actual==2))})
+    return pd.DataFrame(rows)
