@@ -146,3 +146,96 @@ def forecast_model(df):
     te["PRAMV_active"]=te.rfr_cond & te.m4_agree & ~te.macro_veto
     te["M3_priceonly_active"]=te.rfr_cond & te.m3_agree
     return te,len(tr)
+
+def report(qq,source_id,nt):
+    d=qq.copy()
+    def met(frame,pcol):
+        if frame.empty:return {"n":0,"accuracy":None,"BA":None,"DOWN_recall":None,"UP_recall":None}
+        y=frame.y.to_numpy(int);p=frame[pcol].to_numpy(int)
+        down=y==0;up=y==1
+        dn=float(np.mean(p[down]==0)) if down.any() else None
+        ur=float(np.mean(p[up]==1)) if up.any() else None
+        return {"n":len(frame),"accuracy":float(np.mean(p==y)),
+            "BA":.5*(dn+ur) if dn is not None and ur is not None else None,
+            "DOWN_recall":dn,"UP_recall":ur}
+    r=d[d.rfr_cond]
+    v1=d[d.PRAMV_active]
+    m3=d[d.M3_priceonly_active]
+    reject=r[~r.m4_agree | r.macro_veto]
+    both=r[(r.m4_agree)&(~r.macro_veto)]
+    correct=float(np.mean(reject.rfr_dir==reject.y)) if len(reject) else None
+    return {"source_test":source_id,
+      "period":"2026_JAN_TO_AUG20_RESTRICTED",
+      "eligible_source_feature_n":len(d),"training_matured_pre_2026_n":nt,
+      "same_day_macro_released_before_17_n":int(d.macro_veto.sum()),
+      "rfr_reverse_n":len(r),"rfr_reverse_accuracy":met(r,"rfr_dir")["accuracy"],
+      "m4_full_BA":met(d,"m4_dir")["BA"],
+      "m4_full_Brier":float(np.mean((d.m4_prob-d.y)**2)),
+      "m3_full_BA":met(d,"m3_dir")["BA"],
+      "M3_confirm_n":len(m3),"M3_price_confirm_accuracy":met(m3,"rfr_dir")["accuracy"],
+      "M3_price_confirm_BA":met(m3,"rfr_dir")["BA"],
+      "full_rebuilt_PRAMV_active_n":len(v1),
+      "full_rebuilt_PRAMV_coverage":len(v1)/len(d),
+      "full_rebuilt_PRAMV_accuracy":met(v1,"rfr_dir")["accuracy"],
+      "full_rebuilt_PRAMV_BA":met(v1,"rfr_dir")["BA"],
+      "full_rebuilt_PRAMV_DOWN_recall":met(v1,"rfr_dir")["DOWN_recall"],
+      "full_rebuilt_PRAMV_UP_recall":met(v1,"rfr_dir")["UP_recall"],
+      "M4_rejected_RFR_n":len(reject),
+      "M4_rejected_RFR_accuracy":correct,
+      "M4_accepted_RFR_accuracy":met(both,"rfr_dir")["accuracy"],
+      "PRAMV_signals_wrong_ge_1pct":int(np.sum(
+          (v1.rfr_dir!=v1.y)&(v1.ret_OVN.abs()>=.01))),
+      "PRAMV_idealized_two_sided_signed_log_sum_no_spread":float(np.sum(
+        np.where(v1.rfr_dir==1,1,-1)*v1.ret_OVN.to_numpy(float))),
+      "2026_pair_release_consensus_vintage_certified":False,
+      "bank_trading_verified":False}
+
+def main():
+    tic=time.monotonic()
+    calendar,meta=macro_and_history()
+    q,t,sets=source.source_sets()
+    reports=[];private=[]
+    for label,px,tx in sets:
+        qfull=pd.concat([q,px]).sort_index()
+        if qfull.index.duplicated().any():raise RuntimeError("PROVIDER_DUPLICATED_QUOTES")
+        targets=pd.concat([t,tx],ignore_index=True)
+        if targets.date.duplicated().any():raise RuntimeError("DATE_MIXING")
+        dataset=features(qfull,targets,calendar)
+        scored,n_train=forecast_model(dataset)
+        reports.append(report(scored,label,n_train))
+        private.append(scored[["date","y","m3_prob","m4_prob","rfr_cond","rfr_dir",
+                        "m4_agree","macro_veto","PRAMV_active","M3_priceonly_active",
+                        "ret_OVN"]].assign(source_test=label))
+        print("ORIGINAL_PRAMV_2026_PARTIAL",label,reports[-1],flush=True)
+    out=pd.DataFrame(reports)
+    stem=str(AX/NAME)
+    out.to_csv(stem+"_METRICS.csv",index=False)
+    pd.concat(private,ignore_index=True).to_csv(stem+"_DATED_PRIVATE.csv",index=False)
+    state={"status":"ORIGINAL_ARCHITECTURE_M4_RFR_MACRO_RESTRICTED_2026_JAN_AUG_EXECUTED",
+       "old_frozen_2026_10_07_PRAMV_V1_unchanged":True,
+       "2026_status":"Retrospective quote-source restricted, macro release-era consensus vintage not independently certified",
+       "training_2021_2025_macro":"private NEON/official 2025 complete; 2020 excluded",
+       "2026_source_macro":"2026 Jan-Aug 8 CPI and 8 employment paired first prints; Fed 5 scheduled dates",
+       "source_rows_mixed":False,
+       "note":"2026 September/October macro M4 BLOCKED due Sept16 FOMC and Sept11 CPI missing",
+       "training_no_2026_targets":True,
+       "original_M4_original_PSFPCA_signature_code":True,
+       "no_bank_executable_PnL":True,
+       "no_untouched_2026_heldout_claim":True,
+       "macro_event_source_quality":meta,
+       "runtime_s":int(time.monotonic()-tic)}
+    Path(stem+"_SUMMARY.json").write_text(json.dumps(state,indent=2,default=str)+"\n")
+    print("FULL_SOURCE_RECONSTRUCTED_PRAMV_2026",out.to_string(index=False),flush=True)
+    print("SOURCE_BOUNDED_PRAMV_STATE",json.dumps(state,default=str),flush=True)
+
+if __name__=="__main__":
+    try:main()
+    except Exception as e:
+        import traceback
+        tb=traceback.extract_tb(e.__traceback__)[-1]
+        state={"status":"2026_RESTRICTED_PRAMV_M4_MACRO_HARD_GATE_BLOCKED",
+          "type":type(e).__name__,"reason":str(e)[:120],
+          "function":tb.name,"line":tb.lineno,
+          "no_2026_PRAMV_success_claim":True}
+        (AX/(NAME+"_FAILURE_QC.json")).write_text(json.dumps(state,indent=2)+"\n")
+        print("STRICT_MACRO_PRAMV_NO_SCORE",json.dumps(state),flush=True)
