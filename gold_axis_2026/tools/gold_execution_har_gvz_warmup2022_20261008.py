@@ -30,7 +30,7 @@ def build():
     q["ts"] = pd.to_datetime(q.dt_utc, utc=True, errors="raise")
     q["open"] = pd.to_numeric(q.open,errors="coerce")
     q["close"] = pd.to_numeric(q.close,errors="coerce")
-    q = q.sort_values("ts").drop_duplicates("ts", keep="last")
+    q = q.sort_values("ts", kind="stable").drop_duplicates("ts", keep="last")
     q["date"] = q.ts.dt.strftime("%Y-%m-%d")
     q["hm"] = q.ts.dt.strftime("%H:%M")
     # Only dates with a UTC 06:00 price; do not bridge to unqualified holidays.
@@ -49,13 +49,15 @@ def build():
     for w in (5,20,60):
         z[f"rv{w}"] = np.sqrt(z.r.pow(2).shift(1).rolling(w,min_periods=w).mean())
     z["score"] = np.sqrt(.5*z.rv5.pow(2)+.3*z.rv20.pow(2)+.2*z.rv60.pow(2))
-    g = pd.read_csv(GVZ).sort_values("date")
+    g = pd.read_csv(GVZ).sort_values("date").reset_index(drop=True)
     g["value"] = pd.to_numeric(g.value,errors="coerce")
-    g["gvzAsOf"] = g.date.copy()
-    z = pd.merge_asof(z.sort_values("date"),g.rename(columns={"date":"publishedDate","value":"gvz"}),
-                      left_on="date",right_on="publishedDate",
-                      left_by=None,right_by=None,direction="backward",allow_exact_matches=False)
-    z["gvzAsOf"] = z.publishedDate
+    # ISO YYYY-MM-DD lexicographic ordering exactly matches calendar order.
+    # Strict '<' D-1 readiness; no same-date options close is consumed.
+    source_dates = g.date.to_numpy(dtype=str)
+    asof_idx = np.searchsorted(source_dates,z.date.to_numpy(dtype=str),side="left") - 1
+    assert (asof_idx >= 0).all()
+    z["gvz"] = g.value.to_numpy(dtype=float)[asof_idx]
+    z["gvzAsOf"] = source_dates[asof_idx]
     ref = pd.read_csv(PSF)
     ref = ref[ref.family.eq("M4_SIG_FPCA_MACRO")][["date","ret_target"]]
     rr = ref.merge(z[["date","r"]],on="date",validate="one_to_one")
