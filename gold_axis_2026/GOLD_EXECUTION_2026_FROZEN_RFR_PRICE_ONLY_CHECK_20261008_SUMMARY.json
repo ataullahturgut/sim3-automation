@@ -1,0 +1,11 @@
+{
+  "status": "FROZEN_PRAMV_RFR_PRICE_COMPONENT_ACTUALLY_TESTED",
+  "macro_gate": "NOT_AVAILABLE_2026_CERTIFIED; DO_NOT INFER NO MACRO",
+  "M4_signature_FPCA": "NOT_IN_THIS_TEST",
+  "original_2023_25_PRAMV_accuracy_cannot_be_replaced": true,
+  "first_halfhour_Turkey": "16:00-16:30",
+  "second_halfhour_Turkey": "16:30-17:00",
+  "label": "17:00->nexteligible09:00 only, weekday16h",
+  "2026_unseen_holdout": false,
+  "bank_real_spreads_PnL": false
+}
