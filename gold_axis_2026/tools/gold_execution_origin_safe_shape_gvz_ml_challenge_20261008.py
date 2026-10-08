@@ -206,7 +206,7 @@ def main():
           "down_recall_ge_0p30_both":bool(len(g)==2 and (g.down_recall>=.30).all())}
     summary={"status":"COMPLETED_ORIGIN_SAFE_SHAPE_GVZ_CHALLENGE",
       "source_id":source.SOURCE,"source_bars":len(q),"target_dates":len(t),
-      "matched_rows_by_target_year":z.groupby(["target","year"]).size().to_dict(),
+      "matched_rows_by_target_year":{str(k[0])+"_"+str(k[1]):int(v) for k,v in z.groupby(["target","year"]).size().items()},
       "scope":"DAY09to17 and weekday16h OVN17toNext09, no pooled 64h weekend",
       "governance":"2022 warmup, 2023/24 strictly prior matured-label monthly issue refits, 2025 frozen 2024 retrospective; no selection by 2025",
       "feature_gvz":"Observation date strictly previous local origin date, never same day; source-received publication vintage not independently verified",
