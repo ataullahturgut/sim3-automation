@@ -75,3 +75,74 @@ def macro_2026():
             "pit_use":"SCHEDULE_ONLY_NO_FUTURE_SURPRISE"})
     gates["FOMC"]={"five_meetings":FED_JAN_AUG,"original_source_vintage_gap":"September missing; NOT in scope"}
     return pd.DataFrame(results),gates
+
+def macro_and_history():
+    raw=legacy_macro.conn_load()
+    prev,history_qc=legacy_macro.raw_calendar(raw)
+    official=pd.read_csv(V2_2025,low_memory=False)
+    newer,new_qc=macro_2026()
+    whole=pd.concat([prev,official,newer],ignore_index=True)
+    for col in ("event_ts_utc","surprise_ready_at_utc",
+                "actual_available_as_of_utc","consensus_available_as_of_utc"):
+        whole[col]=pd.to_datetime(whole[col],utc=True,errors="coerce")
+    if whole.duplicated(["event_type","event_ts_utc"]).any():
+        raise RuntimeError("MACRO_MULTISOURCE_DUPLICATE_EVENT")
+    whole=whole.sort_values("event_ts_utc")
+    root=AX/"_PRIVATE_REPLAY_PRAMV_2026_MACRO"
+    root.mkdir(exist_ok=True)
+    macro_path=root/"composite_2021_2026_janaug.csv"
+    whole.to_csv(macro_path,index=False)
+    old=psf.MACRO
+    try:
+        psf.MACRO=macro_path
+        full=psf.macro_table()
+    finally:psf.MACRO=old
+    return full,{"source_2021_2022":history_qc,"source_2026_Jan_Aug":new_qc}
+
+def features(q,t,macro):
+    orig=psf.build(q,macro)
+    df=orig.drop(columns=[k for k in ("y","ret","ret_target","next_date","year","day_gate",
+        "overnight_gate","y_OVN","ret_OVN") if k in orig.columns])
+    labels=t[["date","year","next_date","ret_OVN","overnight_gate"]]
+    df=df.merge(labels,on="date",validate="one_to_one")
+    df=df[df.ret_OVN.notna() & df.overnight_gate.eq("COMPLETE_SINGLE_SOURCE")]
+    df=df[df.date.dt.dayofweek<=3].copy()
+    df["y"]=df.ret_OVN.gt(0).astype(int)
+    # Do not treat the noncomparable December 18 2025 CPI statistic as a
+    # source-ready comparable MoM surprise. It was pre-identified and excluded.
+    exclude=set(replay.EXCLUDE)
+    df=df[~df.date.dt.strftime("%Y-%m-%d").isin(exclude)]
+    df=df[df.year>=2021].copy()
+    cols=[x for x in psf.FAMILIES["M4_SIG_FPCA_MACRO"]
+        if x not in ("pc1","pc2")]+psf.PATHCOLS
+    df=df.dropna(subset=cols).sort_values("date")
+    if df.duplicated("date").any():raise RuntimeError("DUPLICATE_PRAMV_EVENT_ISSUE")
+    return df
+
+def forecast_model(df):
+    tr=df[(df.date<SCOPE_START)&(df.next_date<=SCOPE_START)]
+    te=df[(df.date>=SCOPE_START)&(df.date<SCOPE_END)]
+    if len(tr)<600 or len(te)<50:raise RuntimeError("M4_TRAIN_OR_2026_TEST_SOURCE_INCOMPLETE")
+    if not (tr.year<=2025).all() or not (te.year==2026).all():
+        raise RuntimeError("2026_MACRO_FIT_DATE_FORBIDDEN")
+    if te.macro_released.isna().any() or te.upcoming_fomc.isna().any():
+        raise RuntimeError("UNRESOLVED_2026_RELEASE_STATE")
+    original=psf.FAMILIES
+    try:
+        psf.FAMILIES={n:original[n] for n in ("M3_SIG_FPCA","M4_SIG_FPCA_MACRO")}
+        scores=psf.frozen_models(tr,te)
+    finally:psf.FAMILIES=original
+    te=te.copy()
+    te["m3_prob"]=scores["M3_SIG_FPCA"]
+    te["m4_prob"]=scores["M4_SIG_FPCA_MACRO"]
+    te["rfr_cond"]=(np.sign(te.r1600_1630)!=np.sign(te.r1630_1700))&(
+        te.r1600_1630.ne(0)&te.r1630_1700.ne(0))
+    te["rfr_dir"]=te.r1600_1630.gt(0).astype(int)
+    te["m3_dir"]=te.m3_prob.ge(.5).astype(int)
+    te["m4_dir"]=te.m4_prob.ge(.5).astype(int)
+    te["macro_veto"]=te.macro_released.eq(1)
+    te["m4_agree"]=te.rfr_dir.eq(te.m4_dir)
+    te["m3_agree"]=te.rfr_dir.eq(te.m3_dir)
+    te["PRAMV_active"]=te.rfr_cond & te.m4_agree & ~te.macro_veto
+    te["M3_priceonly_active"]=te.rfr_cond & te.m3_agree
+    return te,len(tr)
