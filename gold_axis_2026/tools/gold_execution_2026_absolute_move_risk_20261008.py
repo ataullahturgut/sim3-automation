@@ -54,3 +54,15 @@ def produce_predictions(z,tag):
                      float(np.quantile(tr.abs_move,.75)),
                      float(np.quantile(tr.realized_return,.10)),
                      float(tr.abs_move.median()))
+
+            m,cut,tail,down,naive=cache[freeze]
+            pred=np.maximum(0,np.exp(m.predict(now[FEATURES].to_numpy(float)))-1e-5)
+            for j,r in enumerate(now.itertuples(index=False)):
+                out.append({"source_test":tag,"year":year,"date":r.date.strftime("%Y-%m-%d"),
+                    "actual_abs":float(r.abs_move),"ret":float(r.realized_return),
+                    "risk_pred":float(pred[j]),"naive":naive,
+                    "alarm":bool(pred[j]>=cut),
+                    "large_event":bool(r.abs_move>=tail),
+                    "down_tail":bool(r.realized_return<=down),
+                    "train_freeze":str(freeze)})
+    return pd.DataFrame(out)
