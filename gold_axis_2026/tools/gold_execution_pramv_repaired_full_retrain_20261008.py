@@ -38,8 +38,20 @@ def mkt_q():
     # Avoid silent 2020-22 missing macro histories being treated as 'no event'.
     q=q[q.index>=pd.Timestamp("2023-01-01",tz="UTC")]
     return q,t
+def attach_truth(raw,t):
+    # Old 6-year helper requires >=1400 dates; this exact macro-source
+    # implementation necessarily restricts fitting to 2023–25, because
+    # 2020–22 event-vintage evidence was not source-certified.
+    drop=[k for k in ('y','ret','ret_target','next_date','year',
+                     'day_gate','overnight_gate','y_OVN','ret_OVN') if k in raw]
+    z=raw.drop(columns=drop).merge(
+        t[['date','year','next_date','y_OVN','ret_OVN','overnight_gate']],
+        on='date',how='inner',validate='one_to_one')
+    if len(z)<650:raise RuntimeError('PRAMV_2023_2025_PRICE_TARGET_COVERAGE_THIN')
+    return z
+
 def merged_feature(q,t,m):
-    d=c.merge_truth(psf.build(q,m),t)
+    d=attach_truth(psf.build(q,m),t)
     d["y"]=d.y_OVN
     d["ret_target"]=d.ret_OVN
     d=d[(d.y.notna())&(~d.date.dt.strftime('%Y-%m-%d').isin(EXCLUDE))].copy()
@@ -81,7 +93,7 @@ def probabilities(d):
     return pd.DataFrame(out).sort_values("date").reset_index(drop=True)
 
 def pair_model(q,t,macro):
-    x=c.merge_truth(l3.build(q,macro),t)
+    x=attach_truth(l3.build(q,macro),t)
     x["y"]=x.y_OVN
     x["ret"]=x.ret_OVN
     x=x[x.y.notna() & ~x.date.dt.strftime('%Y-%m-%d').isin(EXCLUDE)].copy()
