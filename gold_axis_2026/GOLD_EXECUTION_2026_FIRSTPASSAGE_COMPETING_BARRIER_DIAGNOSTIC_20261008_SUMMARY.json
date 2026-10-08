@@ -1,0 +1,14 @@
+{
+  "status": "OBSERVED_M15_CLOSE_COMPETING_FIRST_PASSAGE_AUDIT_ACTUALLY_EXECUTED",
+  "barriers": {
+    "up_pct": 0.5,
+    "down_pct": -0.5
+  },
+  "market_hours": "Turkey 17:00 to next09:00, exclude Fri weekend gap",
+  "one_hour_or_missing_trading_bars": "censored or filtered, never imputed",
+  "first_passage_not_binary_endpoint": true,
+  "2026_is_retrospective_not_blind": true,
+  "no_model_predictions_from_this_audit": true,
+  "no_intrabar_touch_claim": true,
+  "raw_quotes_not_published": true
+}
