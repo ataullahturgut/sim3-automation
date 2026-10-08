@@ -96,3 +96,34 @@ def forecast(z,source_name):
               "pred":int(p[i]>=.5),"n_historical_paths":len(training),
               "training_cutoff":str(cutoff)})
     return pd.DataFrame(results)
+
+def measures(p):
+    rows=[]
+    for (src,target,year,method),g in p.groupby(["source_test","target","year","method"]):
+        y=g.y.to_numpy(int);q=g.pred.to_numpy(int);probs=g.p_up.to_numpy(float)
+        tn=int(np.sum((y==0)&(q==0)));fp=int(np.sum((y==0)&(q==1)))
+        fn=int(np.sum((y==1)&(q==0)));tp=int(np.sum((y==1)&(q==1)))
+        dn=tn/(tn+fp) if tn+fp else None
+        up=tp/(tp+fn) if tp+fn else None
+        rows.append({"source_test":src,"target":target,"year":int(year),
+            "method":method,"n":len(g),"BA":(dn+up)*.5 if dn is not None and up is not None else None,
+            "DOWN_recall":dn,"UP_recall":up,"accuracy":float(np.mean(q==y)),
+            "Brier":float(np.mean((probs-y)**2)),
+            "tn":tn,"fp":fp,"fn":fn,"tp":tp})
+    return pd.DataFrame(rows)
+def paired(p):
+    rows=[]
+    for (src,target,year),g in p.groupby(["source_test","target","year"]):
+        ref=g[g.method=="HGB_FROZEN_2021"].set_index("date").sort_index()
+        for name in ("CBR_PATH","CBR_REGIME_PATH"):
+            alt=g[g.method==name].set_index("date").sort_index()
+            if not ref.index.equals(alt.index) or not (ref.y==alt.y).all():
+                raise ValueError("UNPAIRED_ANALOG_CASES")
+            y=ref.y.to_numpy(int);q=alt.pred.to_numpy(int);r=ref.pred.to_numpy(int)
+            saved=int(np.sum((q==y)&(r!=y)))
+            broken=int(np.sum((q!=y)&(r==y)))
+            rows.append({"source_test":src,"target":target,"year":int(year),
+               "model":name,"n":len(y),"rescues":saved,"breaks":broken,
+               "net":saved-broken,
+               "mcnemar_p":float(binomtest(saved,saved+broken,.5).pvalue) if saved+broken else 1.})
+    return pd.DataFrame(rows)
