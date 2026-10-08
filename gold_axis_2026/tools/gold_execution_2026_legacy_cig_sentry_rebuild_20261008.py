@@ -104,3 +104,106 @@ def choose(raw):
         old_results.append({"maturity":maturity,"path_correct":int(dirs[3]==r.y),
                "base_correct":int(dirs[1]==r.y),"disagree":bool(dirs[1]!=dirs[3])})
     return pd.DataFrame(outputs)
+
+def evaluate(results):
+    summaries=[];matched=[]
+    for (source,target,year),g in results.groupby(["source_test","target","year"]):
+      base=g[g.policy=="HGB_REFERENCE"].set_index("date").sort_index()
+      if len(base)<30:raise RuntimeError("YEAR_SOURCE_TOO_SPARSE")
+      for name in POLICIES:
+        allp=g[g.policy==name].set_index("date").sort_index()
+        if not allp.index.equals(base.index) or not (allp.y==base.y).all():
+          raise RuntimeError("POLICY_SCORED_ON_DIFFERENT_DATES")
+        z=allp[allp.acted].copy()
+        q=z.pred.to_numpy(int);y=z.y.to_numpy(int)
+        p=z.p_up.to_numpy(float)
+        ndown=int((y==0).sum());nup=int((y==1).sum())
+        dn=float(np.mean(q[y==0]==0)) if ndown else None
+        up=float(np.mean(q[y==1]==1)) if nup else None
+        old=base.loc[z.index].pred.to_numpy(int)
+        saves=int(np.sum((q==y)&(old!=y)))
+        breaks=int(np.sum((q!=y)&(old==y)))
+        bpred=base.loc[z.index].p_up.to_numpy(float)
+        summaries.append({
+          "source_test":source,"target":target,"year":int(year),"policy":name,
+          "eligible_n":len(base),"acted_n":len(z),"coverage":len(z)/len(base),
+          "acted_accuracy":float(np.mean(q==y)) if len(z) else None,
+          "acted_BA":float(.5*(dn+up)) if dn is not None and up is not None else None,
+          "acted_down_recall":dn,"acted_up_recall":up,
+          "acted_Brier":float(np.mean((p-y)**2)) if len(z) else None,
+          "same_act_dates_base_accuracy":float(np.mean(old==y)) if len(z) else None,
+          "same_act_dates_base_Brier":float(np.mean((bpred-y)**2)) if len(z) else None,
+          "population_DOWN_caught_fraction":float(
+             np.sum((q==0)&(y==0))/max(1,np.sum(base.y.to_numpy(int)==0))),
+          "rescues_vs_base":saves,"breaks_vs_base":breaks,"net_rescues":saves-breaks,
+          "mcnemar_p":float(binomtest(saves,saves+breaks,.5).pvalue) if saves+breaks else 1.,
+          "all_DOWN_n":int(np.sum(base.y.to_numpy(int)==0)),
+          "acted_true_DOWN_n":ndown,"acted_true_UP_n":nup,
+          "predicted_UP_frac":float(np.mean(q)) if len(z) else None,
+          "selective_not_full_coverage":bool(len(z)<len(base))})
+    return pd.DataFrame(summaries)
+
+def correlation(raw):
+    result=[]
+    for (src,target,year),g in raw.groupby(["source_test","target","year"]):
+      ex=g[list(EXPERTS)].to_numpy(float)
+      co=np.corrcoef(ex,rowvar=False)
+      result.append({"source_test":src,"target":target,"year":int(year),
+          "n":len(g),
+          "HGB_shape_vs_HGB_vix_corr":float(co[1,2]),
+          "HGB_shape_vs_CBR_path_corr":float(co[1,3]),
+          "BASE_vs_CBR_path_corr":float(co[0,3]),
+          "all4_direction_agreement":float(np.mean((ex>=.5).min(axis=1)==(ex>=.5).max(axis=1))),
+          "diversity3_direction_agreement":float(np.mean(
+             (ex[:,[0,2,3]]>=.5).min(axis=1)==(ex[:,[0,2,3]]>=.5).max(axis=1)))})
+    return pd.DataFrame(result)
+
+def main():
+    tic=time.time()
+    q,t,sets=geo.source_sets()
+    outputs=[];expert=[]
+    for name,quotes,labels in sets:
+      features=geo.panel(q,t,quotes,labels)
+      a=forecast_raw(features,name)
+      out=choose(a)
+      outputs.append(out);expert.append(a)
+      print("LEGACY_EXPERTS_SAME_CLOCK",name,
+          a.groupby(["target","year"]).size().to_dict(),flush=True)
+    p=pd.concat(outputs,ignore_index=True)
+    e=pd.concat(expert,ignore_index=True)
+    metrics=evaluate(p);corr=correlation(e)
+    if set(p.policy)!=set(POLICIES):raise RuntimeError("MISSING_POLICY")
+    report={"status":"REBUILT_LEGACY_H3_ROUTING_ON_NEW_DAY_OVN_ACTUALLY_EXECUTED",
+      "research":"Historical H3/CIG/SENTRY/DART design REBUILT on target 09TR-17TR and 17TR-next09TR",
+      "not_original_CIG_model_predictions":True,
+      "source_and_training":"EV Dukascopy-derived 2020-25 and two 2026 independently price-gated source populations",
+      "2023_2024":"past-month training, fully matured labels",
+      "2025_2026":"old experts trained only prior calendar years, not issue year",
+      "2025_2026_inspected_not_blind":True,
+      "expert_names":list(EXPERTS),"policies":list(POLICIES),
+      "SENTRY_window":63,"SENTRY_min_mature":42,"SENTRY_net_rescue_entry":3,
+      "DART_last8_disagreements_failure_exit":True,
+      "anti_clone_correlation_report":True,
+      "same_act_date_comparison":True,
+      "no_champion_promoted":True,
+      "no_real_Turkish_bank_bidask_spread_PnL":True,
+      "elapsed_seconds":int(time.time()-tic)}
+    stem=str(AX/NAME)
+    Path(stem+"_SUMMARY.json").write_text(json.dumps(report,indent=2)+"\n")
+    metrics.to_csv(stem+"_YEAR_METRICS.csv",index=False)
+    corr.to_csv(stem+"_DIVERSITY.csv",index=False)
+    p.to_csv(stem+"_PRIVATE_DATED_POLICIES.csv",index=False)
+    e.to_csv(stem+"_PRIVATE_DATED_EXPERTS.csv",index=False)
+    print("LEGACY_TRANSFER_METRICS",metrics.to_string(index=False),flush=True)
+    print("EXPERT_DEPENDENCE",corr.to_string(index=False),flush=True)
+    print("LEGACY_TRANSFER_REPORT",json.dumps(report),flush=True)
+if __name__=="__main__":
+    try:main()
+    except Exception as e:
+      import traceback
+      z=traceback.extract_tb(e.__traceback__)[-1]
+      a={"status":"LEGACY_CIG_SENTRY_REBUILD_BLOCKED","error_type":type(e).__name__,
+         "function":z.name,"line":z.lineno,"reason":str(e)[:120],
+         "no_claim_of_strategy_success":True}
+      (AX/(NAME+"_FAILURE_QC.json")).write_text(json.dumps(a,indent=2)+"\n")
+      print("LEGACY_REBUILD_FAILURE",json.dumps(a),flush=True)
