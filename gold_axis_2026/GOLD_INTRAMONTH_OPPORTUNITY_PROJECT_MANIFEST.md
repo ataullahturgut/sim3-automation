@@ -4087,3 +4087,32 @@ Full reconstruction of source RFR no-macro reversal candidates, not only the acc
 The agreed-vs-rejected discrimination is encouraging but has **not** achieved clean independent confirmation (DEV two-sided Fisher p≈0.0874; 2025 p≈0.1239). Post-hoc multi-model exploration further prevents interpreting nominal selection-conditioned p-values as untouched OOS evidence. The M3 no-macro ablation delivers 106 correct on 177 accepted DEV days versus M4's 106 on 175: added macro features have not yet shown material incremental selectivity on this cohort. **M4 and RFR are not feature-independent** because the two late half-hour returns appear in both.
 
 New **V2A O-RG** challenger investigates reliability of RFR using only pre-16:00 XAU path information with disjoint feature windows. Optional **V2B** explores pre-origin GC/COMEX/spot residuals only after source-ready verification. Both are unpromoted research protocols. Do not retune the frozen V1, use opened 2025/2026 outcomes for retrospective 'blind' claims, or assume execution at the 17:00 open after observing the completed last bar. Next work: first executable-quote audit, source-clock gate, chronological probabilistic reliability and genuinely unseen validation.
+
+
+---
+
+## Continuation expansion audit / CAVS challenger — 2026-10-08
+
+Authority:
+- `GOLD_EXECUTION_CONTINUATION_EXPANSION_RESEARCH_RESULT_2026-10-08.md`
+- `GOLD_EXECUTION_CONTINUATION_EXPANSION_METRICS_2026-10-08.csv`
+- `tools/gold_execution_continuation_expansion_audit_20261008.py`
+
+**Status: COMPLETE NEGATIVE EVIDENCE / ALL TESTED EXPANSIONS NOT PROMOTED / FROZEN PRAMV V1 PRESERVED.**
+
+The common-date historic panel (2023=255, 2024=259, 2025=253) shows 126/130/124 same-sign pre-17:00 half-hour days in addition to 129 annual reversal candidates. A naive same-sign continuation rule produces **51.59% / 47.69% / 53.23%** accuracy and **51.54% / 46.42% / 52.24%** BA on continuation-only dates (2023 / 2024 / 2025). This does not transport.
+
+Adding continuation on no-macro days to unchanged PRAMV makes N rise from 89/86/82 to roughly 203/208/204, but materially reduces combined BA. More selective cross-expert agreement also reduces BA:
+
+| Policy | 2023 decisions / BA | 2024 decisions / BA | 2025 retrospective decisions / BA |
+|---|---|---|---|
+| **Frozen PRAMV V1** | **89 / 60.59%** | **86 / 60.05%** | **82 / 63.41%** |
+| PRAMV + same-sign M4 | 203 / 57.55% | 208 / 54.07% | 204 / 57.84% |
+| PRAMV + same-sign M4/PAIR agreement | 157 / 59.54% | 154 / 54.74% | 162 / 57.96% |
+| PRAMV + same-sign M4/BASE agreement | 148 / 57.13% | 145 / 56.51% | 161 / 59.82% |
+
+The 2025 PAIR-only continuation sample has DOWN recall **1.9%**, showing that accuracy inflation by near-always-UP selection is not a valid forecast improvement. A continuation-only chronological low-capacity logistic meta-learner also collapses toward UP and does not pass development-year BA gates. No researched continuation extension currently preserves the V1 quality/coverage trade-off.
+
+**New challenger, untrained and data-gated:** CAVS (Causal Absorption vs Venue Synchronization), conditional on same-sign paths, tests whether origin-ready **COMEX GC-versus-spot confirmation/divergence** (and verified GC volume/liquidity and lagged GVZ where available) adds information beyond the XAU-only base. This is a **separate** continuation research family, not a silent V1 modification. GC source-ready coverage, exact clock consistency, and original target-price origin must be audited BEFORE training; no synthetic/invented venue-flow proxy. Use 2023–2024 for development, 2025 only as archive-retrospective corroboration, and a genuinely untouched prospective stream for promotion. Do not claim good economics from percentage-correct alone; PRAMV V1's idealized 2025 signed log-return sum on its 82 signal dates is only ~0.006710 before cost and cannot be treated as an executable bank strategy.
+
+The **DAY 09:00->17:00** investment target remains separate and unresolved. No router/ECCG promotion based on the current expanded policies.
