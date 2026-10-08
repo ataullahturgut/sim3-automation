@@ -1,0 +1,48 @@
+{
+  "status": "2021_22_RESEARCH_EVENTS_MATCHED_NEON_AND_OFFICIAL_FED_CALENDAR",
+  "m4_macro_pre2023_complete_sources": {
+    "2021": {
+      "CPI": {
+        "complete": 12
+      },
+      "NFP": {
+        "complete": 12
+      },
+      "AHE": {
+        "complete": 12
+      },
+      "UNEMP": {
+        "complete": 12
+      },
+      "FOMC": {
+        "scheduled_statement_events": 8
+      }
+    },
+    "2022": {
+      "CPI": {
+        "complete": 12
+      },
+      "NFP": {
+        "complete": 12
+      },
+      "AHE": {
+        "complete": 12
+      },
+      "UNEMP": {
+        "complete": 12
+      },
+      "FOMC": {
+        "scheduled_statement_events": 8
+      }
+    }
+  },
+  "use_2020_macro_training": false,
+  "2020_NFP_pair_missing": true,
+  "fomc_schedule_event_verification_2021_22": true,
+  "retrospective_consensus_warning": "Actual+consensus source ingested retrospectively 2026; claimed released_at=event_ts, pre-release archived consensus vintage not independently verified.",
+  "private_NEON_values_not_published": true,
+  "macro_release_ready_join": true,
+  "future_2025_target_used_in_training": false,
+  "new_summary": "GOLD_EXECUTION_PRAMV_ORIGINAL_FULLER_HISTORY_2021_2025_SOURCE_MACRO_RETEST_20261008_SUMMARY.json",
+  "generated_at": "2026-10-08T16:58:23.094270+00:00"
+}

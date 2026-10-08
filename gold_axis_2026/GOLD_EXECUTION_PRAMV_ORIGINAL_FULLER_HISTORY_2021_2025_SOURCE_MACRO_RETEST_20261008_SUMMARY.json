@@ -1,0 +1,83 @@
+{
+  "status": "PRAMV_ARCHITECTURE_ACTUALLY_REFIT_ON_2021_2025_FULLER_OLD_MACRO_SOURCE_RESTRICTED_PIT",
+  "asof": "2026-10-08",
+  "price_source": "EVTRADINGLABS_DUKASCOPY_DERIVED_XAUUSD_M15_BIDASK_2020_2025_V1",
+  "macro_event_calendar": "fixed_2021_2025_source.csv",
+  "macro_event_calendar_sha256": "391450f3f3f36eed5a6757d91bc0e56cb59026efc0f8c00485cdaff43a02d9c3",
+  "source_window": "Same accepted 2020-2025 BID15m quote universe; macro-complete 2021-2024 training, 2023-24 expanding validation and frozen 2025",
+  "original_method_identity": "Frozen M4 Signature+FPCA+PIT-claimed macro; 16-16:30 impulse vs 16:30-17 reversal; released paired surprise veto; agreement; 0.5 logistic threshold; C=1.",
+  "changed_original_thresholds": false,
+  "method_created_from_scratch": false,
+  "original_frozen_PRAMV_V1_overwritten": false,
+  "claim_original_frozen_model_identical": false,
+  "reason_retraining_not_identical": "Original training sample/market vendor changed and 2020\u201322 macro proof unavailable; this is PRAMV-V1-architecture new-source research replay, not an untouched frozen V1 prospective test.",
+  "training_2023": "Original expanding PIT-matured history, >=120 old labeled rows before decision",
+  "training_2024": "Original expanding PIT-matured history",
+  "training_2025": "2023/2024 trained freeze; no future 2025 targets in 2025 fit",
+  "macro_vintage_warning": "Legacy 2023-25 CPI/NFP/AHE/UNEMP consensus reconstructed/loaded 2026 with reported available_as_of at release; not independently verifiable at pre-release origin; restricted retrospective model only.",
+  "2025_cpi_dec18": "not comparable MoM, excluded rather than falsely treating no macro release or inventing a surprise",
+  "2025_fomc_eight_from_2024_prior_calendar": true,
+  "2025_previous_missing_calendar_issue_dates_changed": 8,
+  "2025_m4_directions_changed_by_fomc_repair": 3,
+  "overlap_model_dates": 742,
+  "gate_total_active": 187,
+  "m4_train_history_from_2020_22": true,
+  "not_bank_executable": true,
+  "not_untouched_2025_oos": true,
+  "Friday_64h_metrics_separate": true,
+  "model_metrics_file": "GOLD_EXECUTION_PRAMV_ORIGINAL_FULLER_HISTORY_2021_2025_SOURCE_MACRO_RETEST_20261008_YEARLY_METRICS.csv",
+  "dated_model_predictions_file": "GOLD_EXECUTION_PRAMV_ORIGINAL_FULLER_HISTORY_2021_2025_SOURCE_MACRO_RETEST_20261008_DATED_PREDICTIONS.csv",
+  "fomc_ablation_file": "GOLD_EXECUTION_PRAMV_ORIGINAL_FULLER_HISTORY_2021_2025_SOURCE_MACRO_RETEST_20261008_FOMC_ABLATION.csv",
+  "full_pramv_workflow_valid_for_restricted_retrospective": true,
+  "elapsed_sec": 22,
+  "macro_train_since_2021": true,
+  "2020_prices_available": true,
+  "2020_model_training_excluded": "2020 observations have only 11 of 12 NFP/AHE/UNEMP release pairs and emergency unscheduled FOMC; do not silently set missing no-event",
+  "historical_2021_2022_events": {
+    "2021": {
+      "CPI": {
+        "complete": 12
+      },
+      "NFP": {
+        "complete": 12
+      },
+      "AHE": {
+        "complete": 12
+      },
+      "UNEMP": {
+        "complete": 12
+      },
+      "FOMC": {
+        "scheduled_statement_events": 8
+      }
+    },
+    "2022": {
+      "CPI": {
+        "complete": 12
+      },
+      "NFP": {
+        "complete": 12
+      },
+      "AHE": {
+        "complete": 12
+      },
+      "UNEMP": {
+        "complete": 12
+      },
+      "FOMC": {
+        "scheduled_statement_events": 8
+      }
+    }
+  },
+  "model_versions": "New full-history research rerun, not frozen 2026-10-07 champion. No 2025 model tuning.",
+  "m4_train_history_exact_years": [
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "original_PIT_consensus_limit": "Actual+consensus source ingested retrospectively 2026; claimed released_at=event_ts, pre-release archived consensus vintage not independently verified.",
+  "privacy": "2021-22 legacy historical consensus numeric observations are only ephemeral job files and private Neon source; do not commit to public repo",
+  "fed_regular_calendar_validation": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+  "2020_2022_source_inventory": "GOLD_EXECUTION_PRAMV_PRE2023_MACRO_SOURCE_AVAILABILITY_AUDIT_20261008.json"
+}
