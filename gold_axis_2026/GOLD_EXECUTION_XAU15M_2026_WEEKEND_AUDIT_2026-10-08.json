@@ -1,0 +1,113 @@
+{
+  "source": "TWELVE_XAUUSD_15M_2020_2021_OCT2026_CANDIDATE_V1",
+  "asof": "2026-10-08",
+  "daily_counts": [
+    {
+      "date_utc": "2026-09-28",
+      "bars": 96,
+      "distinct_closes": 96,
+      "all_closes_constant": false
+    },
+    {
+      "date_utc": "2026-09-29",
+      "bars": 96,
+      "distinct_closes": 96,
+      "all_closes_constant": false
+    },
+    {
+      "date_utc": "2026-09-30",
+      "bars": 96,
+      "distinct_closes": 96,
+      "all_closes_constant": false
+    },
+    {
+      "date_utc": "2026-10-01",
+      "bars": 96,
+      "distinct_closes": 96,
+      "all_closes_constant": false
+    },
+    {
+      "date_utc": "2026-10-02",
+      "bars": 96,
+      "distinct_closes": 96,
+      "all_closes_constant": false
+    },
+    {
+      "date_utc": "2026-10-03",
+      "bars": 96,
+      "distinct_closes": 95,
+      "all_closes_constant": false
+    },
+    {
+      "date_utc": "2026-10-04",
+      "bars": 96,
+      "distinct_closes": 96,
+      "all_closes_constant": false
+    },
+    {
+      "date_utc": "2026-10-05",
+      "bars": 96,
+      "distinct_closes": 96,
+      "all_closes_constant": false
+    },
+    {
+      "date_utc": "2026-10-06",
+      "bars": 96,
+      "distinct_closes": 96,
+      "all_closes_constant": false
+    },
+    {
+      "date_utc": "2026-10-07",
+      "bars": 96,
+      "distinct_closes": 96,
+      "all_closes_constant": false
+    },
+    {
+      "date_utc": "2026-10-08",
+      "bars": 48,
+      "distinct_closes": 48,
+      "all_closes_constant": false
+    }
+  ],
+  "weekday_counts": [
+    {
+      "iso_dow": 1,
+      "bars": 192,
+      "unchanged_open_close": 0
+    },
+    {
+      "iso_dow": 2,
+      "bars": 192,
+      "unchanged_open_close": 0
+    },
+    {
+      "iso_dow": 3,
+      "bars": 192,
+      "unchanged_open_close": 0
+    },
+    {
+      "iso_dow": 4,
+      "bars": 144,
+      "unchanged_open_close": 0
+    },
+    {
+      "iso_dow": 5,
+      "bars": 96,
+      "unchanged_open_close": 0
+    },
+    {
+      "iso_dow": 6,
+      "bars": 96,
+      "unchanged_open_close": 0
+    },
+    {
+      "iso_dow": 7,
+      "bars": 96,
+      "unchanged_open_close": 0
+    }
+  ],
+  "weekend_utc_bars": 192,
+  "interpretation": "DO_NOT_TREAT_SATURDAY_SUNDAY_BARS_AS_EXECUTABLE_SPOT_HISTORY",
+  "model_run_authorized": false,
+  "retrieved_at_utc": "2026-10-08T12:26:03.892346+00:00"
+}
