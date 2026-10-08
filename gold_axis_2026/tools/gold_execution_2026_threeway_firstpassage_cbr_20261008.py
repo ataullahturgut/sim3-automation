@@ -11,7 +11,7 @@ import gold_execution_2026_full_trajectory_cbr_20261008 as cbr
 import gold_execution_2026_firstpassage_barrier_diagnostic_20261008 as passage
 NAME="GOLD_EXECUTION_2026_THREE_WAY_FIRSTPASSAGE_CBR_20261008"
 CLASSES=("NO_HIT","UP_FIRST","DOWN_FIRST")
-MODELS=("PATH_FIRSTPASSAGE","REGIME_PATH_FIRSTPASSAGE","HISTORICAL_THREE_EVENT_PRIOR")
+MODELS=("PATH_FIRSTPASSAGE","REGIME_PATH_FIRSTPASSAGE","HISTORICAL_THREE_EVENT_PRIOR","LAST_YEAR_CLIMATOLOGY")
 def event_panel(q,t,qs,ts):
     qall=pd.concat([q,qs]).sort_index()
     if qall.index.duplicated().any():raise ValueError("MIXED_BAR_ID")
@@ -58,10 +58,15 @@ def forecast_events(z,name):
         if len(tr)<280 or tr.event.nunique()<3:continue
         if not(tr.date<test.date.min()).all():raise ValueError("FUTURE_FIRST_PASSAGE_LABEL")
         freq=np.bincount(tr.event.to_numpy(int),minlength=3)/len(tr)
+        lastyear=z[(z.year==int(period.year)-1)&(z.next_date<=freeze)]
+        if len(lastyear)<90 or lastyear.event.nunique()<3:
+            raise RuntimeError("STRONG_CLIMATOLOGY_BASELINE_MISSING")
+        annual=np.bincount(lastyear.event.to_numpy(int),minlength=3)/len(lastyear)
         probs={
           "PATH_FIRSTPASSAGE":kernel_event(tr,test,False),
           "REGIME_PATH_FIRSTPASSAGE":kernel_event(tr,test,True),
-          "HISTORICAL_THREE_EVENT_PRIOR":np.tile(freq,(len(test),1))}
+          "HISTORICAL_THREE_EVENT_PRIOR":np.tile(freq,(len(test),1)),
+          "LAST_YEAR_CLIMATOLOGY":np.tile(annual,(len(test),1))}
         for method,pr in probs.items():
             for i,r in enumerate(test.itertuples(index=False)):
                 out.append({"source_test":name,"date":r.date.strftime("%Y-%m-%d"),
