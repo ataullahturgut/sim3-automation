@@ -1,0 +1,499 @@
+{
+  "status": "AGGREGATE_SOURCE_INVENTORY_READ_ONLY_COMPLETE",
+  "year_bounds": "2020-2025",
+  "read_only": true,
+  "historical_retrieval_not_pit_by_itself": true,
+  "values_exported": false,
+  "tested_series": [
+    "MACRO_CPI_ACTUAL_FIRST_PRINT",
+    "MACRO_CPI_CONSENSUS_PIT",
+    "MACRO_NFP_ACTUAL_FIRST_PRINT",
+    "MACRO_NFP_CONSENSUS_PIT",
+    "MACRO_UNEMP_ACTUAL_FIRST_PRINT",
+    "MACRO_UNEMP_CONSENSUS_PIT",
+    "MACRO_AHE_ACTUAL_FIRST_PRINT",
+    "MACRO_AHE_CONSENSUS_PIT",
+    "MACRO_EVENT_V3_FOMC_SCORE"
+  ],
+  "counts": [
+    {
+      "year": 2020,
+      "series_id": "MACRO_AHE_ACTUAL_FIRST_PRINT",
+      "n": 11,
+      "ready_notnull": 11,
+      "near_release_assertion": 11,
+      "first": "2020-01-10",
+      "last": "2020-12-04"
+    },
+    {
+      "year": 2020,
+      "series_id": "MACRO_AHE_CONSENSUS_PIT",
+      "n": 11,
+      "ready_notnull": 11,
+      "near_release_assertion": 11,
+      "first": "2020-01-10",
+      "last": "2020-12-04"
+    },
+    {
+      "year": 2020,
+      "series_id": "MACRO_CPI_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2020-01-14",
+      "last": "2020-12-10"
+    },
+    {
+      "year": 2020,
+      "series_id": "MACRO_CPI_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2020-01-14",
+      "last": "2020-12-10"
+    },
+    {
+      "year": 2020,
+      "series_id": "MACRO_EVENT_V3_FOMC_SCORE",
+      "n": 13,
+      "ready_notnull": 13,
+      "near_release_assertion": 0,
+      "first": "2020-01-29",
+      "last": "2020-12-16"
+    },
+    {
+      "year": 2020,
+      "series_id": "MACRO_NFP_ACTUAL_FIRST_PRINT",
+      "n": 11,
+      "ready_notnull": 11,
+      "near_release_assertion": 11,
+      "first": "2020-01-10",
+      "last": "2020-12-04"
+    },
+    {
+      "year": 2020,
+      "series_id": "MACRO_NFP_CONSENSUS_PIT",
+      "n": 11,
+      "ready_notnull": 11,
+      "near_release_assertion": 11,
+      "first": "2020-01-10",
+      "last": "2020-12-04"
+    },
+    {
+      "year": 2020,
+      "series_id": "MACRO_UNEMP_ACTUAL_FIRST_PRINT",
+      "n": 11,
+      "ready_notnull": 11,
+      "near_release_assertion": 11,
+      "first": "2020-01-10",
+      "last": "2020-12-04"
+    },
+    {
+      "year": 2020,
+      "series_id": "MACRO_UNEMP_CONSENSUS_PIT",
+      "n": 11,
+      "ready_notnull": 11,
+      "near_release_assertion": 11,
+      "first": "2020-01-10",
+      "last": "2020-12-04"
+    },
+    {
+      "year": 2021,
+      "series_id": "MACRO_AHE_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2021-01-08",
+      "last": "2021-12-03"
+    },
+    {
+      "year": 2021,
+      "series_id": "MACRO_AHE_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2021-01-08",
+      "last": "2021-12-03"
+    },
+    {
+      "year": 2021,
+      "series_id": "MACRO_CPI_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2021-01-13",
+      "last": "2021-12-10"
+    },
+    {
+      "year": 2021,
+      "series_id": "MACRO_CPI_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2021-01-13",
+      "last": "2021-12-10"
+    },
+    {
+      "year": 2021,
+      "series_id": "MACRO_EVENT_V3_FOMC_SCORE",
+      "n": 8,
+      "ready_notnull": 8,
+      "near_release_assertion": 0,
+      "first": "2021-01-27",
+      "last": "2021-12-15"
+    },
+    {
+      "year": 2021,
+      "series_id": "MACRO_NFP_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2021-01-08",
+      "last": "2021-12-03"
+    },
+    {
+      "year": 2021,
+      "series_id": "MACRO_NFP_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2021-01-08",
+      "last": "2021-12-03"
+    },
+    {
+      "year": 2021,
+      "series_id": "MACRO_UNEMP_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2021-01-08",
+      "last": "2021-12-03"
+    },
+    {
+      "year": 2021,
+      "series_id": "MACRO_UNEMP_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2021-01-08",
+      "last": "2021-12-03"
+    },
+    {
+      "year": 2022,
+      "series_id": "MACRO_AHE_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2022-01-07",
+      "last": "2022-12-02"
+    },
+    {
+      "year": 2022,
+      "series_id": "MACRO_AHE_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2022-01-07",
+      "last": "2022-12-02"
+    },
+    {
+      "year": 2022,
+      "series_id": "MACRO_CPI_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2022-01-12",
+      "last": "2022-12-13"
+    },
+    {
+      "year": 2022,
+      "series_id": "MACRO_CPI_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2022-01-12",
+      "last": "2022-12-13"
+    },
+    {
+      "year": 2022,
+      "series_id": "MACRO_EVENT_V3_FOMC_SCORE",
+      "n": 8,
+      "ready_notnull": 8,
+      "near_release_assertion": 0,
+      "first": "2022-01-26",
+      "last": "2022-12-14"
+    },
+    {
+      "year": 2022,
+      "series_id": "MACRO_NFP_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2022-01-07",
+      "last": "2022-12-02"
+    },
+    {
+      "year": 2022,
+      "series_id": "MACRO_NFP_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2022-01-07",
+      "last": "2022-12-02"
+    },
+    {
+      "year": 2022,
+      "series_id": "MACRO_UNEMP_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2022-01-07",
+      "last": "2022-12-02"
+    },
+    {
+      "year": 2022,
+      "series_id": "MACRO_UNEMP_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2022-01-07",
+      "last": "2022-12-02"
+    },
+    {
+      "year": 2023,
+      "series_id": "MACRO_AHE_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2023-01-06",
+      "last": "2023-12-08"
+    },
+    {
+      "year": 2023,
+      "series_id": "MACRO_AHE_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2023-01-06",
+      "last": "2023-12-08"
+    },
+    {
+      "year": 2023,
+      "series_id": "MACRO_CPI_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2023-01-12",
+      "last": "2023-12-12"
+    },
+    {
+      "year": 2023,
+      "series_id": "MACRO_CPI_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2023-01-12",
+      "last": "2023-12-12"
+    },
+    {
+      "year": 2023,
+      "series_id": "MACRO_EVENT_V3_FOMC_SCORE",
+      "n": 8,
+      "ready_notnull": 8,
+      "near_release_assertion": 0,
+      "first": "2023-02-01",
+      "last": "2023-12-13"
+    },
+    {
+      "year": 2023,
+      "series_id": "MACRO_NFP_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2023-01-06",
+      "last": "2023-12-08"
+    },
+    {
+      "year": 2023,
+      "series_id": "MACRO_NFP_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2023-01-06",
+      "last": "2023-12-08"
+    },
+    {
+      "year": 2023,
+      "series_id": "MACRO_UNEMP_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2023-01-06",
+      "last": "2023-12-08"
+    },
+    {
+      "year": 2023,
+      "series_id": "MACRO_UNEMP_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2023-01-06",
+      "last": "2023-12-08"
+    },
+    {
+      "year": 2024,
+      "series_id": "MACRO_AHE_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2024-01-05",
+      "last": "2024-12-06"
+    },
+    {
+      "year": 2024,
+      "series_id": "MACRO_AHE_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2024-01-05",
+      "last": "2024-12-06"
+    },
+    {
+      "year": 2024,
+      "series_id": "MACRO_CPI_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2024-01-11",
+      "last": "2024-12-11"
+    },
+    {
+      "year": 2024,
+      "series_id": "MACRO_CPI_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2024-01-11",
+      "last": "2024-12-11"
+    },
+    {
+      "year": 2024,
+      "series_id": "MACRO_EVENT_V3_FOMC_SCORE",
+      "n": 8,
+      "ready_notnull": 8,
+      "near_release_assertion": 0,
+      "first": "2024-01-31",
+      "last": "2024-12-18"
+    },
+    {
+      "year": 2024,
+      "series_id": "MACRO_NFP_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2024-01-05",
+      "last": "2024-12-06"
+    },
+    {
+      "year": 2024,
+      "series_id": "MACRO_NFP_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2024-01-05",
+      "last": "2024-12-06"
+    },
+    {
+      "year": 2024,
+      "series_id": "MACRO_UNEMP_ACTUAL_FIRST_PRINT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2024-01-05",
+      "last": "2024-12-06"
+    },
+    {
+      "year": 2024,
+      "series_id": "MACRO_UNEMP_CONSENSUS_PIT",
+      "n": 12,
+      "ready_notnull": 12,
+      "near_release_assertion": 12,
+      "first": "2024-01-05",
+      "last": "2024-12-06"
+    },
+    {
+      "year": 2025,
+      "series_id": "MACRO_AHE_ACTUAL_FIRST_PRINT",
+      "n": 11,
+      "ready_notnull": 11,
+      "near_release_assertion": 11,
+      "first": "2025-01-10",
+      "last": "2025-12-16"
+    },
+    {
+      "year": 2025,
+      "series_id": "MACRO_AHE_CONSENSUS_PIT",
+      "n": 11,
+      "ready_notnull": 11,
+      "near_release_assertion": 11,
+      "first": "2025-01-10",
+      "last": "2025-12-16"
+    },
+    {
+      "year": 2025,
+      "series_id": "MACRO_CPI_ACTUAL_FIRST_PRINT",
+      "n": 10,
+      "ready_notnull": 10,
+      "near_release_assertion": 10,
+      "first": "2025-01-15",
+      "last": "2025-10-24"
+    },
+    {
+      "year": 2025,
+      "series_id": "MACRO_CPI_CONSENSUS_PIT",
+      "n": 10,
+      "ready_notnull": 10,
+      "near_release_assertion": 10,
+      "first": "2025-01-15",
+      "last": "2025-10-24"
+    },
+    {
+      "year": 2025,
+      "series_id": "MACRO_NFP_ACTUAL_FIRST_PRINT",
+      "n": 11,
+      "ready_notnull": 11,
+      "near_release_assertion": 11,
+      "first": "2025-01-10",
+      "last": "2025-12-16"
+    },
+    {
+      "year": 2025,
+      "series_id": "MACRO_NFP_CONSENSUS_PIT",
+      "n": 11,
+      "ready_notnull": 11,
+      "near_release_assertion": 11,
+      "first": "2025-01-10",
+      "last": "2025-12-16"
+    },
+    {
+      "year": 2025,
+      "series_id": "MACRO_UNEMP_ACTUAL_FIRST_PRINT",
+      "n": 11,
+      "ready_notnull": 11,
+      "near_release_assertion": 11,
+      "first": "2025-01-10",
+      "last": "2025-12-16"
+    },
+    {
+      "year": 2025,
+      "series_id": "MACRO_UNEMP_CONSENSUS_PIT",
+      "n": 11,
+      "ready_notnull": 11,
+      "near_release_assertion": 11,
+      "first": "2025-01-10",
+      "last": "2025-12-16"
+    }
+  ],
+  "pre2023_complete_cpi_nfp_ahe_unemp_pairs": true,
+  "timestamp_utc": "2026-10-08T16:54:34.085153+00:00"
+}
