@@ -128,3 +128,21 @@ Within 68 normal OVN test origins, SHAPE_GVZ_HGB starts 2020/2021/2022 produce B
 The Jan–Aug cross-publisher Dukascopy mirror N97 and direct broker Jan–Oct N68 are **DIFFERENT date populations** and cannot be compared as a matched accuracy delta. Both confirm no strong robust edge. 2026 outcomes were already used for retrospective research; any subsequent modeling must not call 2026 an untouched independent holdout. Bank spread, slippage, fees and actual execution venue not tested.
 
 Reproducible program: `tools/gold_execution_2026_primary_native_restricted_diagnostic_20261008.py`. No historical archive mutated and no nonnative 2026 bars silently added to direct publisher candidate.
+
+
+## L. 2026 scientific drift falsification and interpretable risk-scale successor
+
+Binding detailed academic report: `GOLD_EXECUTION_2026_CAUSAL_REGIME_AND_VOLATILITY_RISK_RESEARCH_AUTHORITY_2026-10-08.md`. **Actual source-locked outcome**, not a methodological wish-list:
+1. Four preregistered 252d decay / balanced / 504d rolling UP-DOWN direction models were genuinely evaluated with point-in-time month-start fitting on 2023–26. **2026 overnight N97 new BA 44.04–49.29% vs original 2021 frozen GVZ-HGB 54.79%; FAILED.** This prevents hyping retraining or calibration as directional alpha.
+2. Ridge predicted subsequent overnight **ABSOLUTE move**, using prior 4h realized moments, previous day magnitude and lagged GVZ. Static pre2026 forecast beat historical median magnitude in 2026 but 2025 risk thresholds saturated; no signed DOWN prediction.
+3. A fixed **63-matured-night causal residual scaler** (past-only, 32-count shrinkage, multiplier clipped [0.5, 2]), with relative last63 top-quartile risk threshold, achieved research magnitude MAE: **2025 N192 39.75bps vs median 42.06**, **2026 source-matched mirror N97 79.33 vs 90.62**, **2026 native primary N72 77.45 vs 90.26**. Research result **5.49%**, **12.46%** and **14.20%** respective magnitude MAE improvement. Signed severe-DOWN risk alarm enrichment 2026 **0.73×** mirror and **1.15×** native relative to event base prevalence, **NOT valid**. 2023 N187 gains -0.96%; 2024 N190 +0.63%; so not invariant across regimes. 2026 source samples overlap; do not count twice.
+4. Executed 1,500 replicates **calendar-month block bootstrap** on paired magnitude errors: 2025 95% gain [~+0.8,+9.0]%, 2026 mirror [+5.3,+17.9]%, first-party direct [+5.6,+24.2]%; 2023 and 2024 intervals cross zero. Small source-year block counts and already inspected retrospective 2026 prevent a forward-validated strength-of-evidence assertion.
+
+Raw date-level quotes/forecasts remain private. Public aggregated evidence:
+- `GOLD_EXECUTION_2026_PREREG_CAUSAL_EW_CLASSBALANCED_20261008_YEAR_METRICS.csv` and `_PAIRED.csv`
+- `GOLD_EXECUTION_2026_ABSOLUTE_SESSION_RISK_TEST_20261008_METRICS.csv`
+- `GOLD_EXECUTION_2026_CAUSAL_RELATIVE_VOL_RISK_20261008_METRICS.csv`
+- `GOLD_EXECUTION_2026_CAUSAL_RELATIVE_VOL_RISK_20261008_MONTH_BLOCK_UNCERTAINTY.csv`
+- preregistrations for all three hypotheses and separate uncertainty method.
+
+**Scientific finding:** The current signed 16h decision target is not solved; repeated unconditional ML models and recency reweighting do not yield UP/DOWN discriminative power, particularly in 2026. A narrower, measurable **conditional absolute movement / uncertainty scaling head** exists for research risk budgeting; no reliably selective signed DOWN alarm or measured bank expected return exists. Next direction hypothesis needs new *strict as-of event-linked* explanatory information (economic macro actual-consensus surprises known *before* origin, US yield/DXY changes before origin; known upcoming releases become hazard warnings only), AND real bank execution spreads for cost-aware decision. Do not optimize further against already-examined 2026 or claim a trading champion.
