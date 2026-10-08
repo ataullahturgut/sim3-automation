@@ -66,8 +66,9 @@ def score_df(d,model,year,pred,prob,target,origin,kind):
     y=d.actual_y.to_numpy(int) if "actual_y" in d else d.y.to_numpy(int)
     p=d[pred].to_numpy(int)
     tn,fp,fn,tp=map(int,confusion_matrix(y,p,labels=[0,1]).ravel())
+    source_scope=(str(d.venue_scope.iloc[0]) if "venue_scope" in d else "ALL_MATCHED_OLD_SOURCE_FORECASTS")
     out={"model":model,"year":int(year),"kind":kind,"target":target,"origin":origin,
-      "n":len(d),"accuracy":float((p==y).mean()),
+      "venue_scope":source_scope,"n":len(d),"accuracy":float((p==y).mean()),
       "balanced_accuracy":float(((tn/(tn+fp)) if tn+fp else np.nan)+
                                 ((tp/(tp+fn)) if tp+fn else np.nan))/2,
       "up_recall":float(tp/(tp+fn)) if tp+fn else None,
@@ -225,10 +226,23 @@ def inventory_session(invent):
         reason="2025 PIT FOMC/NFP/CPI ledger incomplete, macro at decision-hour not validated" if "MACRO" in name or name in ("PRAMV_V1","PSF_M4_SIG_FPCA_MACRO") else "Historical WGC/Sobti session target and/or 2020-25 input feature provenance not transportable to DAY/OVN without refitting exact architecture"
         invent.append({"filename":name,"model":name,"status":"ORIGINAL_SPEC_NOT_REFIT_YET",
           "reason":reason})
+def baseline_rows(t):
+    out=[]
+    for target,col,origin in [("DAY","y_DAY","09:00"),("OVN","y_OVN","17:00")]:
+        a=t[t.year.isin([2023,2024,2025]) & t[col].notna()].copy()
+        a["venue_scope"]=derive_weekend(a) if target=="OVN" else "DAY_ALL"
+        a["actual_y"]=a[col].astype(int)
+        for (year,win),part in a.groupby(["year","venue_scope"]):
+            for v,name in [(1,"ALWAYS_UP"),(0,"ALWAYS_DOWN")]:
+                zz=part.copy(); zz["constant_pred"]=v
+                out.append(score_df(zz,"BASELINE_"+name,year,"constant_pred",None,target,origin,"NO_TRAINING_CLASS_PRIOR_CONTROL"))
+    return out
+
 def main():
     start=time.time()
     q,t=source_load()
     r,models,predn=all_specs_retrain(q,t)
+    r.extend(baseline_rows(t))
     old,inv=transport(t)
     inventory_session(inv)
     m=pd.DataFrame([x for x in r if x])
