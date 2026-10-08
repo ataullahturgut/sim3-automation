@@ -1,4 +1,4 @@
-name: Gold Execution Dukascopy Independent BID ASK Pilot 20261008
+name: Gold Execution Dukascopy Full 2020-2025 Uniform BID ASK
 on:
   workflow_dispatch:
   push:
@@ -14,7 +14,7 @@ concurrency:
 jobs:
   independent-quote:
     runs-on: ubuntu-24.04
-    timeout-minutes: 16
+    timeout-minutes: 20
     env:
       NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
       OPENBLAS_NUM_THREADS: 1
@@ -32,21 +32,21 @@ jobs:
       - name: Verify old missing date and current October with independent BID ASK
         run: |
           python -m py_compile gold_axis_2026/tools/gold_execution_dukascopy_independent_xau_pilot_20261008.py
-          python gold_axis_2026/tools/gold_execution_dukascopy_independent_xau_pilot_20261008.py
+          python gold_axis_2026/tools/gold_execution_evdukascopy_uniform_2020_2025_20261008.py
       - name: Retain diagnostic receipt even if quality blocked
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: dukascopy-xau-20261008-private-source-pilot-evidence
-          path: gold_axis_2026/GOLD_EXECUTION_DUKASCOPY_XAU_BIDASK_PILOT_2026-10-08.json
+          path: gold_axis_2026/GOLD_EXECUTION_EV_DUKASCOPY_XAU_2020_2025_UNIFORM_CANDIDATE_20261008.json
           if-no-files-found: warn
       - name: Commit aggregate evidence with concurrent commit safety
         if: always()
         run: |
-          test -f gold_axis_2026/GOLD_EXECUTION_DUKASCOPY_XAU_BIDASK_PILOT_2026-10-08.json || exit 0
+          test -f gold_axis_2026/GOLD_EXECUTION_EV_DUKASCOPY_XAU_2020_2025_UNIFORM_CANDIDATE_20261008.json || exit 0
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add gold_axis_2026/GOLD_EXECUTION_DUKASCOPY_XAU_BIDASK_PILOT_2026-10-08.json
+          git add gold_axis_2026/GOLD_EXECUTION_EV_DUKASCOPY_XAU_2020_2025_UNIFORM_CANDIDATE_20261008.json
           git diff --cached --quiet || git commit -m 'Record independent Dukascopy BID ASK gold source feasibility'
           for i in 1 2 3 4; do
             git pull --rebase origin gold-execution-channel-audit-20261006
