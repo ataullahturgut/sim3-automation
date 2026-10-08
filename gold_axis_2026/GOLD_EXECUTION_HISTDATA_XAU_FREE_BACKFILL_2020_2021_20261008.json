@@ -1,0 +1,47 @@
+{
+  "source": "HISTDATA_XAUUSD_M1_FIXED_EST_TO_M15_CANDIDATE_V1",
+  "asof": "2026-10-08",
+  "timeframe_origin": "1min",
+  "normalization": "EST UTC-05 fixed, no daylight time -> UTC, then M15 left-closed",
+  "source_precedence": "CANDIDATE_ONLY; NEVER overwrites Twelve Data frozen raw",
+  "license": "PRIVATE_INTERNAL_RESEARCH_NO_PUBLIC_RAW_EXPORT",
+  "periods": {
+    "2020": {
+      "status": "FETCH_AND_M15_QC_PASS",
+      "rows_1m": 354291,
+      "rows_15m": 23626,
+      "full_15m_native_minutes": 23559,
+      "less_than_15_native_minutes": 67,
+      "utc_first": "2020-01-01 23:00:00+00:00",
+      "utc_last": "2020-12-31 21:45:00+00:00",
+      "canonical_15m_sha256": "75b12c1d2e71ef821381739f234f406973e91a058df341c34e4c7b15ccfc2955",
+      "period_labels": [
+        "2020"
+      ]
+    },
+    "2021": {
+      "status": "FETCH_AND_M15_QC_PASS",
+      "rows_1m": 353386,
+      "rows_15m": 23562,
+      "full_15m_native_minutes": 23530,
+      "less_than_15_native_minutes": 32,
+      "utc_first": "2021-01-03 23:00:00+00:00",
+      "utc_last": "2021-12-31 21:45:00+00:00",
+      "canonical_15m_sha256": "3a445ab26296b73fc380bdab3ae7d512aad82031b14c9bb07c2c831c06617ddc",
+      "period_labels": [
+        "2021"
+      ]
+    }
+  },
+  "cost_usd_download": 0,
+  "model_retrained": false,
+  "private_storage": {
+    "status": "PERSISTED_PRIVATE_SOURCE_CANDIDATE",
+    "inserted": 47188,
+    "total_for_source": 47188,
+    "first_utc": "2020-01-01T23:00:00+00:00",
+    "last_utc": "2021-12-31T21:45:00+00:00"
+  },
+  "status": "PRIVATE_CANDIDATE_SAVED",
+  "retrieved_at_utc": "2026-10-08T11:56:59.718529+00:00"
+}
