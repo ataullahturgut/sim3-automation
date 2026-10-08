@@ -1,0 +1,6 @@
+# Post-result falsification: is 2026 path analog improvement just a stale-frequency baseline?
+Observed 3-event 2026 probabilities already inspected, 2026 mirror baseline historical p produced multiclass Brier 0.685 vs regime-path analogy 0.563. This is **retrospective**; no new untouched holdout.
+
+Before new robust baseline rerun, define **last-calendar-year event climatology**, fixed at Jan 1 of each outcome year: for 2026, probabilities from 2025 accepted matched overnight FIRST-PASSAGE labels only; for 2025 from 2024; 2024 from 2023; 2023 from 2022. No forecast issue-year event outcomes allowed. Compare on exactly the same feature-and-barrier-complete test dates as CBR. This is a demanding model-free adaptation baseline, not fixed 2020–25 event rates.
+
+Proper 3-class Brier and logloss primary; macro recall and each individual class recall supporting. Resample paired within-calendar-month forecast losses **1500 times** (seed 20261008) to quantify delta-Brier to last-year climatology. Report all 2023–2026 years and mirror/native 2026 separately (overlapping not independent); note after-result reference-benchmark selection, descriptive inference only. If CBR fails to beat last-year climatology in 2025 or 2026, attribute most earlier apparent benefit to base-rate shift, not path geometry. No bank execution inference.\n
