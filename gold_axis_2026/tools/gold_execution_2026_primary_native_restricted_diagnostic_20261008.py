@@ -90,11 +90,12 @@ def main():
       q,t,q2026,tl,qc=load()
       rep["native_direct_2026_m15"]=len(q2026)
       rep["native_source_label_quality"]=qc
-      rep["pre_registered_2026_overnight_promotable"]=bool(
-          qc["raw_2026_regular_overnight_approved"]>=90)
-      if rep["pre_registered_2026_overnight_promotable"]:
-          rep["sample_status"]="PROMOTION_COUNT_GATE_PASSED_BUT_OTHER_2026_GATES_STILL_OPEN"
-      else:rep["sample_status"]="OVN_LT90_NOT_ELIGIBLE_FOR_CHAMPION_CLAIM"
+      # Raw label maturity alone cannot pass the historical scoring gate.
+      # It is the SAME origin-safe feature+label matched model population
+      # (not only all source-complete 17->09 labels) that needs >=90 nights.
+      rep["raw_overnight_source_maturity_n"]=int(qc["raw_2026_regular_overnight_approved"])
+      rep["pre_registered_2026_overnight_promotable"]=False
+      rep["sample_status"]="MODEL_N_NOT_YET_EVALUATED_NO_PROMOTION"
       full=pd.concat([q,q2026]).sort_index()
       targets=pd.concat([t,tl],ignore_index=True).sort_values("date")
       z=price.features(full,targets,min_year=2020,max_year=2026,
@@ -102,6 +103,14 @@ def main():
       z=vix.joined(z)
       p,cnt=score(z)
       rep["model_eligible_counts"]=cnt
+      n_ovn=int(cnt.get("OVN",{}).get("eligible_matched_origin_features_and_labels",0))
+      rep["same_origin_overnight_scored_n"]=n_ovn
+      rep["pre_registered_2026_overnight_promotable"]=bool(
+        qc["raw_2026_regular_overnight_approved"]>=90 and n_ovn>=90)
+      rep["sample_status"]=(
+        "BOTH_RAW_AND_MODEL_COUNT_GATES_PASSED_BUT_NO_UNSEEN_HOLDOUT"
+        if rep["pre_registered_2026_overnight_promotable"]
+        else "OVERNIGHT_SCORED_MODEL_N_LT90_NO_PROMOTION")
       if p.empty:raise RuntimeError("NO_2026_MATURED_MODEL_SCORE_CASES")
       if p.groupby(["target","model"]).train_start.nunique().min()!=3:
           raise RuntimeError("HISTORIES_NOT_PAIRED")
