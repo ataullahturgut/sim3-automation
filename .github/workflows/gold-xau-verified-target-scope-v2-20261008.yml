@@ -1,0 +1,40 @@
+name: Gold Verified XAU 2020-2025 Target Scope V2
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_execution_2020_2025_target_scope_v2_20261008.py'
+      - '.github/workflows/gold-xau-verified-target-scope-v2-20261008.yml'
+permissions:
+  contents: write
+jobs:
+  quote-scope:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4'
+      - run: python gold_axis_2026/tools/gold_execution_2020_2025_target_scope_v2_20261008.py
+      - name: Publish versioned quality gate aggregate
+        if: always()
+        run: |
+          test -f gold_axis_2026/GOLD_EXECUTION_2020_2025_SESSION_TARGET_V2_PROVENANCE_QC_20261008.json || exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_EXECUTION_2020_2025_SESSION_TARGET_V2_PROVENANCE_QC_20261008.json
+          git diff --cached --quiet || git commit -m 'Record source-validated yearwise XAU DAY versus weekday/night weekend source quality classes'
+          for i in 1 2 3 4; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 2
+          done
+          exit 1
