@@ -4116,3 +4116,31 @@ The 2025 PAIR-only continuation sample has DOWN recall **1.9%**, showing that ac
 **New challenger, untrained and data-gated:** CAVS (Causal Absorption vs Venue Synchronization), conditional on same-sign paths, tests whether origin-ready **COMEX GC-versus-spot confirmation/divergence** (and verified GC volume/liquidity and lagged GVZ where available) adds information beyond the XAU-only base. This is a **separate** continuation research family, not a silent V1 modification. GC source-ready coverage, exact clock consistency, and original target-price origin must be audited BEFORE training; no synthetic/invented venue-flow proxy. Use 2023–2024 for development, 2025 only as archive-retrospective corroboration, and a genuinely untouched prospective stream for promotion. Do not claim good economics from percentage-correct alone; PRAMV V1's idealized 2025 signed log-return sum on its 82 signal dates is only ~0.006710 before cost and cannot be treated as an executable bank strategy.
 
 The **DAY 09:00->17:00** investment target remains separate and unresolved. No router/ECCG promotion based on the current expanded policies.
+
+
+---
+
+## Dual-hazard overnight warning research — 2026-10-08
+
+New authority / reproducibility:
+- `GOLD_EXECUTION_DUAL_HAZARD_RESEARCH_RESULT_2026-10-08.md`
+- `GOLD_EXECUTION_DUAL_HAZARD_ROWS_2026-10-08.csv` (709 scored complete targets, causal preceding-return windows);
+- `tools/gold_execution_dual_hazard_tail_audit_20261008.py`.
+
+**Status: SIGNIFICANT RESEARCH DIRECTION / 2025 RETROSPECTIVE TAIL-DETECTION SIGNAL / NO PRODUCTION OR V1 DIRECTION PROMOTION.**
+
+A critical failure mode surfaced: the 2025 frozen PRAMV V1 makes 52/82 correct overnight direction calls (63.41%), but mean successful signed target log return is ≈ +0.401% and mean failed signed target log return ≈ -0.674%, producing a near-zero idealized two-sided signed-return sum (≈ +0.00671) *before* bank spreads, timing and position constraints. Accuracy is therefore not a sufficient economic criterion.
+
+The frozen V1 also abstains on **all 7** 2025 XAU overnight ≥2% absolute log-return dates. The separate experimental **HAR-inspired multi-horizon tail risk** score uses only **preceding already-matured** 5/20/60 target returns: `sqrt(.5*RV5^2 + .3*RV20^2 + .2*RV60^2)`. It has a 60-origin warm-up, and its fixed score cutoff `0.007644177328023349` was computed as the 80th percentile of 455 2023–2024 pre-origin risk scores (no 2025 outcomes to choose the numeric threshold).
+
+| Period | Risk-scored origins | Risk alarms | Overnight ≥1% log-move hits | ≥2% log-move hits | ≥2% ROC AUC |
+|---|---:|---:|---:|---:|---:|
+| 2023 post-warm-up | 196 | 24 | 1/15 | 0/2 | 0.639 |
+| 2024 | 259 | 68 | 7/24 | 1/5 | 0.554 |
+| 2025 retrospective | 254 | 95 | **25/43** | **6/7** | **0.770** |
+
+In 2025, 82 frozen PRAMV directional days and 95 high-risk warning days overlap on 28 dates, producing **149 distinct dates (~58.7%) with one or both kinds of information**, **NOT** 149 direction forecasts. Historical 2025 tail ROC AUC 5-day-block-bootstrap percentile interval is ~0.609–0.885, with only seven extreme events; unadjusted random-selection hypergeometric p≈0.012 does NOT establish confirmatory superiority because 2025 was already examined and the research question was chosen post hoc.
+
+An exploratory `risk_vol OR known FOMC upcoming OR released paired macro` event-hazard extension potentially improves 2023–2024 shock recall but requires a stronger PIT calendar/missingness audit; its results are not yet promoted. A high-risk veto applied to PRAMV's own direction calls makes the retrospective 2025 subset 39/54 = 72.22% accuracy (BA ~71.88%) but degrades comparable post-warm-up 2023 and full 2024 direction performance, so **the veto is REJECTED AS A UNIVERSAL V1 MODIFICATION**. Do not change the 2026-10-07 PRAMV freeze.
+
+**Proposed architecture, not final strategy:** frozen PRAMV V1 handles selective UP/DOWN; a separate risk head forecasts absolute-move/tail hazard on more days; the event-calendar head is a secondary independent hazard channel. Large-risk warnings may inform position risk, but cannot be mislabelled as correct directional calls or tradable returns. Verify post-17:00 executable bank price, spread and long-only inventory constraints. Test the fully fixed new warning head on genuinely unseen origins; 2025 is exploratory/reviewed retrospective and cannot serve as untouched OOS. The original DAY 09:00→17:00 problem remains separate.
