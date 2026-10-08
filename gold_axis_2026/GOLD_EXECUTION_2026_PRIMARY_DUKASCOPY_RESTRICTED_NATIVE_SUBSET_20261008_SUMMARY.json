@@ -66,8 +66,8 @@
       }
     }
   },
-  "pre_registered_2026_overnight_promotable": true,
-  "sample_status": "PROMOTION_COUNT_GATE_PASSED_BUT_OTHER_2026_GATES_STILL_OPEN",
+  "pre_registered_2026_overnight_promotable": false,
+  "sample_status": "OVERNIGHT_SCORED_MODEL_N_LT90_NO_PROMOTION",
   "model_eligible_counts": {
     "DAY": {
       "eligible_matched_origin_features_and_labels": 94
@@ -98,5 +98,8 @@
   "source_authority": "Direct Dukascopy M1 BID ASK, 15 observed native minute bars per 15m, specific maturities only",
   "2026_no_training_or_feature_selection": true,
   "promoted_to_trading": "NO",
-  "elapsed_seconds": 13
+  "elapsed_seconds": 13,
+  "same_origin_overnight_scored_n": 68,
+  "raw_overnight_source_maturity_n": 95,
+  "count_gate_interpretation": "Raw eligible OVN=95, but only 68 fully feature-ready paired model cases; >=90 scoring threshold FAIL"
 }
