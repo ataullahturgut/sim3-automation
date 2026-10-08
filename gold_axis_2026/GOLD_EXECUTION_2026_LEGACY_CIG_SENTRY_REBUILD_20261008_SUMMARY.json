@@ -1,0 +1,33 @@
+{
+  "status": "REBUILT_LEGACY_H3_ROUTING_ON_NEW_DAY_OVN_ACTUALLY_EXECUTED",
+  "research": "Historical H3/CIG/SENTRY/DART design REBUILT on target 09TR-17TR and 17TR-next09TR",
+  "not_original_CIG_model_predictions": true,
+  "source_and_training": "EV Dukascopy-derived 2020-25 and two 2026 independently price-gated source populations",
+  "2023_2024": "past-month training, fully matured labels",
+  "2025_2026": "old experts trained only prior calendar years, not issue year",
+  "2025_2026_inspected_not_blind": true,
+  "expert_names": [
+    "BASE_LOGIT",
+    "SHAPE_GVZ_HGB",
+    "VIX_GVZ_HGB",
+    "CBR_REGIME_PATH"
+  ],
+  "policies": [
+    "HGB_REFERENCE",
+    "EQUAL4",
+    "MEDIAN4",
+    "CIG4_UNANIMOUS",
+    "CIG3_DIVERSITY",
+    "SENTRY63_PATH_FAILOVER",
+    "RESCUE_CONFIRMED_DOWN"
+  ],
+  "SENTRY_window": 63,
+  "SENTRY_min_mature": 42,
+  "SENTRY_net_rescue_entry": 3,
+  "DART_last8_disagreements_failure_exit": true,
+  "anti_clone_correlation_report": true,
+  "same_act_date_comparison": true,
+  "no_champion_promoted": true,
+  "no_real_Turkish_bank_bidask_spread_PnL": true,
+  "elapsed_seconds": 47
+}
