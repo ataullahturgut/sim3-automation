@@ -1,0 +1,56 @@
+name: Gold Execution Calibrated Confidence Selection OVN
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_execution_confidence_selective_ovn_20261008.py'
+      - '.github/workflows/gold-execution-confidence-selective-ovn-20261008.yml'
+permissions:
+  contents: write
+concurrency:
+  group: gold-execution-origin-confidence-research-20261008
+  cancel-in-progress: false
+jobs:
+  selective-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OPENBLAS_NUM_THREADS: 1
+      OMP_NUM_THREADS: 1
+      PYTHONUNBUFFERED: 1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'statsmodels>=0.14,<1' 'psycopg[binary]>=3.2,<4'
+      - name: Score matched DAY-free overnight experts with fixed rolling confidence thresholds
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_confidence_selective_ovn_20261008.py
+          python gold_axis_2026/tools/gold_execution_confidence_selective_ovn_20261008.py
+      - name: Keep date-level predictions private
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-execution-confidence-selected-date-signals-private
+          path: gold_axis_2026/GOLD_EXECUTION_CONFIDENCE_SELECTIVE_OVN_TEST_20261008_PREDICTIONS_PRIVATE.csv
+          if-no-files-found: warn
+      - name: Commit only aggregated private-source research metrics
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_EXECUTION_CONFIDENCE_SELECTIVE_OVN_TEST_20261008_SUMMARY.json
+          git add gold_axis_2026/GOLD_EXECUTION_CONFIDENCE_SELECTIVE_OVN_TEST_20261008_METRICS.csv
+          git diff --cached --quiet || git commit -m 'Record strictly historical model-confidence selectivity experiment'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 3
+          done
+          exit 1
