@@ -121,7 +121,7 @@ def eval_model(results):
          "k25_RFR_rescues":saved,"k25_RFR_breaks":broken,
          "net_rescues":saved-broken,"exact_McNemar_p":mcnemar,
          "prior_class_accuracy":float(np.mean(g.naive_conditional_pred.to_numpy(int)==y)),
-         "wrong_large_move_ge_1pct":int(np.sum((estimate!=y)&(g.return_OVN.abs().to_numpy(float)>=.01))),
+         "wrong_large_move_ge_1pct":int(np.sum((estimate!=y)&(g.signed_OVN.abs().to_numpy(float)>=.01))),
          "bank_spread_backtest":False,"2026_untouched":False})
     return pd.DataFrame(rows)
 
