@@ -1,0 +1,110 @@
+{
+  "asof": "2026-10-08",
+  "status": "COMPLETED_MONTHLY_RECOVERY_AUDIT",
+  "source": "HISTDATA_XAUUSD_M1_FIXED_EST_M15_2022_2024_QC_CANDIDATE_V1",
+  "model_run": false,
+  "paid_download_usd": 0,
+  "raw_prices_public": false,
+  "months": [
+    {
+      "month": "2023-01-01",
+      "end_inclusive": "2023-01-31",
+      "existing_rows_before": 1908,
+      "new_month_fetch_count": 1908,
+      "minute_input_count": 28914,
+      "overlap_bars": 1908,
+      "overlap_changed_close_gt_1e8": 0,
+      "new_missing_bar_candidates": 0,
+      "inserted_new_bars": 0,
+      "status": "MONTH_FETCH_CHECKED"
+    },
+    {
+      "month": "2023-02-01",
+      "end_inclusive": "2023-02-28",
+      "existing_rows_before": 1650,
+      "new_month_fetch_count": 1630,
+      "minute_input_count": 24746,
+      "overlap_bars": 1630,
+      "overlap_changed_close_gt_1e8": 0,
+      "new_missing_bar_candidates": 0,
+      "inserted_new_bars": 0,
+      "status": "MONTH_FETCH_CHECKED"
+    },
+    {
+      "month": "2023-03-01",
+      "end_inclusive": "2023-03-31",
+      "existing_rows_before": 1528,
+      "new_month_fetch_count": 1508,
+      "minute_input_count": 22608,
+      "overlap_bars": 1508,
+      "overlap_changed_close_gt_1e8": 0,
+      "new_missing_bar_candidates": 0,
+      "inserted_new_bars": 0,
+      "status": "MONTH_FETCH_CHECKED"
+    },
+    {
+      "month": "2023-04-01",
+      "end_inclusive": "2023-04-30",
+      "existing_rows_before": 1268,
+      "new_month_fetch_count": 1268,
+      "minute_input_count": 19311,
+      "overlap_bars": 1268,
+      "overlap_changed_close_gt_1e8": 0,
+      "new_missing_bar_candidates": 0,
+      "inserted_new_bars": 0,
+      "status": "MONTH_FETCH_CHECKED"
+    },
+    {
+      "month": "2023-05-01",
+      "end_inclusive": "2023-05-31",
+      "existing_rows_before": 1510,
+      "new_month_fetch_count": 1490,
+      "minute_input_count": 22586,
+      "overlap_bars": 1490,
+      "overlap_changed_close_gt_1e8": 0,
+      "new_missing_bar_candidates": 0,
+      "inserted_new_bars": 0,
+      "status": "MONTH_FETCH_CHECKED"
+    },
+    {
+      "month": "2023-06-01",
+      "end_inclusive": "2023-06-30",
+      "existing_rows_before": 1444,
+      "new_month_fetch_count": 1428,
+      "minute_input_count": 21412,
+      "overlap_bars": 1428,
+      "overlap_changed_close_gt_1e8": 0,
+      "new_missing_bar_candidates": 0,
+      "inserted_new_bars": 0,
+      "status": "MONTH_FETCH_CHECKED"
+    },
+    {
+      "month": "2023-07-01",
+      "end_inclusive": "2023-07-31",
+      "existing_rows_before": 1404,
+      "new_month_fetch_count": 1404,
+      "minute_input_count": 21350,
+      "overlap_bars": 1404,
+      "overlap_changed_close_gt_1e8": 0,
+      "new_missing_bar_candidates": 0,
+      "inserted_new_bars": 0,
+      "status": "MONTH_FETCH_CHECKED"
+    }
+  ],
+  "after_monthly_bar_counts": {
+    "2023-01-01": 1908,
+    "2023-02-01": 1650,
+    "2023-03-01": 1528,
+    "2023-04-01": 1268,
+    "2023-05-01": 1510,
+    "2023-06-01": 1444,
+    "2023-07-01": 1404,
+    "2023-08-01": 2116,
+    "2023-09-01": 1915,
+    "2023-10-01": 2032,
+    "2023-11-01": 1989,
+    "2023-12-01": 1836
+  },
+  "source_2023_coverage_pass": false,
+  "completed_utc": "2026-10-08T14:16:41.417308+00:00"
+}
