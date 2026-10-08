@@ -44,7 +44,9 @@ def main():
             day_complete+=int(isfull and anchors_native_complete)
             if not anchor_ok:missing_day_anchors.append(str(day.date()))
             elif not isfull:missing_day_interior.append(str(day.date()))
-            if anchor_ok and not anchors_native_complete:\n                thin+=1\n                thin_pivot_dates.append(str(day.date()))
+            if anchor_ok and not anchors_native_complete:
+                thin+=1
+                thin_pivot_dates.append(str(day.date()))
             next_weekday=day+pd.offsets.BDay(1)
             night_end=next_weekday+pd.Timedelta(hours=8,minutes=45)
             overnight_ready+=int(origin_17 in stamps and night_end in stamps
