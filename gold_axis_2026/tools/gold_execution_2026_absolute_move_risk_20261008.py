@@ -35,3 +35,22 @@ def panel(q,t,q26,t26):
     if not (z.abs_move>=0).all():raise RuntimeError("INVALID_ABS_MOVE")
     return z
 FEATURES=["x_rv","x_prevday","x_gvz","x_jump","x_semidown"]
+
+def produce_predictions(z,tag):
+    out=[]
+    for year in (2023,2024,2025,2026):
+        sub=z[z.year==year].sort_values("date")
+        cache={}
+        for period,now in sub.groupby(sub.date.dt.to_period("M")):
+            month=period.to_timestamp()
+            freeze=month if year<=2024 else pd.Timestamp(f"{year}-01-01")
+            if freeze not in cache:
+                tr=z[(z.date<freeze)&(z.next_date<=freeze)].copy()
+                if len(tr)<175:raise RuntimeError("RISK_HISTORY_TOO_SHORT")
+                m=Pipeline([("scale",StandardScaler()),("ridge",Ridge(alpha=20.))])
+                m.fit(tr[FEATURES].to_numpy(float),np.log(tr.abs_move.to_numpy(float)+1e-5))
+                risks=np.maximum(0,np.exp(m.predict(tr[FEATURES].to_numpy(float)))-1e-5)
+                cache[freeze]=(m,float(np.quantile(risks,.75)),
+                     float(np.quantile(tr.abs_move,.75)),
+                     float(np.quantile(tr.realized_return,.10)),
+                     float(tr.abs_move.median()))
