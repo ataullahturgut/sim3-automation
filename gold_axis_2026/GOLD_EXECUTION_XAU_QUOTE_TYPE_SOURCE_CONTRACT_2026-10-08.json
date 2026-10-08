@@ -1,0 +1,20 @@
+{
+  "status": "QUOTE_SEMANTICS_BOUND_TO_PRIVATE_RESEARCH_PANEL",
+  "asof": "2026-10-08",
+  "provider": "HistData.com Generic ASCII M1 Bid OHLC",
+  "timezone": "EST_fixed_UTCminus5_no_US_DST",
+  "original_raw_M1_quote": "BID_OHLC",
+  "derived_M15_price": "BID_OHLC_AGGREGATED",
+  "not_midpoint": true,
+  "not_bank_executable_bid_ask": true,
+  "Twelve_Data": "COMPOSITE_SOURCE_DIFFERENT_REFERENCE_NOT_INTERCHANGEABLE_WITH_HISTDATA_BID",
+  "private_table": "gold_research_xau_execution_origin_quality_candidate_v1",
+  "private_target_rows": 1739,
+  "updated_source_semantics_rows": 1739,
+  "all_rows_correct_quote_identity": true,
+  "model_label_returns_modified": false,
+  "raw_price_modified": false,
+  "histdata_official_spec_url": "https://www.histdata.com/f-a-q/data-files-detailed-specification/",
+  "twelve_data_vendor_discrepancy_url": "https://support.twelvedata.com/en/articles/11850499-understanding-price-deviations-in-commodities-and-forex-data",
+  "frozen_utc": "2026-10-08T14:22:09.183253+00:00"
+}
