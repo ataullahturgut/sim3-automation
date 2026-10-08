@@ -178,4 +178,21 @@ def main():
     print("DONE_VIX_GVZ_TEST",json.dumps(summary),flush=True)
     print(m.to_string(index=False),flush=True)
     print("MATCHED_IMPROVEMENTS",pa.to_string(index=False),flush=True)
-if __name__=="__main__":main()
+if __name__=="__main__":
+    try:
+        main()
+    except Exception as exc:
+        # Record only sanitized failure category; never write protected price rows,
+        # environment variables, full URI, source samples or stack frames to Git.
+        safe_codes=["CBOE_VIX_SOURCE_UNAVAILABLE","CBOE_VIX_SCHEMA_NOT_DATE_CLOSE",
+            "CBOE_UNEXPECTED_SMALL_PAYLOAD","VIX_HISTORY_INSUFFICIENT",
+            "VIX_FUTURE_OBSERVED","VIX_TOO_STALE","MATCHED_SAMPLE_TOO_THIN",
+            "RATES_FROZEN_HISTORY_SHORT","FROZEN_HEAD_IDENTITY_MISSING",
+            "NOT_IDENTICAL_SAMPLE","NO_FEATURE_ROWS","FROZEN_SOURCE_ID_MISMATCH"]
+        message=str(exc)
+        code=next((k for k in safe_codes if k in message),"OTHER_CHECK_FAILED")
+        err={"status":"EXPERIMENT_EXECUTION_FAILED","class":type(exc).__name__,
+             "safe_code":code,"raw_source_or_date_levels_exported":False}
+        (AX/(NAME+"_FAIL_STATUS.json")).write_text(json.dumps(err,indent=2)+"\n")
+        print("VIX_GVZ_RUN_FAILED",json.dumps(err),flush=True)
+        raise
