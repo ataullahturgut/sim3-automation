@@ -111,7 +111,9 @@ def audit_legacy_labels(d):
     for target,spec in (("OVN","LIT_OVN1_PAIR"),("DAY","LIT_DAY0_EXEC_0900")):
         t=h[h.spec==spec][["date","actual_y","actual_ret"]].drop_duplicates("date")
         z=d[["date","y_"+target,"ret_"+target]].merge(t,on="date",how="inner",validate="one_to_one")
-        wrong=int((z["y_"+target].to_numpy()!=z.actual_y.to_numpy()).sum())
+        mismatch=z[z["y_"+target].to_numpy()!=z.actual_y.to_numpy()]
+        wrong=len(mismatch)
+        if wrong: print("LABEL_MISMATCH_DATES",target,mismatch.date.dt.strftime("%Y-%m-%d").tolist(),flush=True)
         mag=float(np.nanmax(np.abs(z["ret_"+target]-z.actual_ret))) if len(z) else None
         issues.append({"target":target,"matched":len(z),"direction_mismatch":wrong,
                        "max_abs_return_delta":mag})
