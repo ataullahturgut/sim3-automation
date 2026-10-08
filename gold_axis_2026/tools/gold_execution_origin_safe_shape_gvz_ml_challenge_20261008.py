@@ -33,7 +33,7 @@ BASE_OVN = ["impulse_early", "impulse_late"]
 MODELS = ["BASE_LOGIT", "SHAPE_LOGIT", "SHAPE_GVZ_LOGIT", "SHAPE_GVZ_HGB"]
 MIN_TRAIN = 150
 
-def features(q, t, min_year=2022, max_year=2025, gvz_csv=None):
+def features(q, t, min_year=2022, max_year=2025, gvz_csv=None, require_full_2023_2025=True):
     gvz = pd.read_csv(gvz_csv or GVZ_CSV, usecols=["date","value"]).copy()
     gvz["date"] = pd.to_datetime(gvz["date"], errors="raise")
     gvz["value"] = pd.to_numeric(gvz["value"], errors="coerce")
@@ -111,8 +111,8 @@ def features(q, t, min_year=2022, max_year=2025, gvz_csv=None):
     if z.empty: raise RuntimeError("NO_FEATURE_ROWS")
     if not (z.gvz_asof < z.date).all():raise RuntimeError("GVZ_PIT_VIOLATION")
     if z.duplicated(["target","date"]).any():raise RuntimeError("DUPLICATE_DAY")
-    if (z.year==2025).sum()<350:raise RuntimeError("2025_MATCHED_DATA_INSUFFICIENT")
-    if (z.year==2023).sum()<350:raise RuntimeError("2023_MATCHED_DATA_INSUFFICIENT")
+    if require_full_2023_2025 and (z.year==2025).sum()<350:raise RuntimeError("2025_MATCHED_DATA_INSUFFICIENT")
+    if require_full_2023_2025 and (z.year==2023).sum()<350:raise RuntimeError("2023_MATCHED_DATA_INSUFFICIENT")
     return z
 
 def fit_method(model, hist, test, target, cache, refit_key):
