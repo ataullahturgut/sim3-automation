@@ -139,18 +139,38 @@ def main():
        'free_existing_api_credits_only':True,'model_retrained':False,
        'asof':'2026-10-08','monthly_receipts':reports}
     try:
+        try:
+            er=requests.get('https://api.twelvedata.com/earliest_timestamp',
+                params={'symbol':SYMBOL,'interval':'15min','timezone':'UTC','apikey':api_key},
+                timeout=(10,30))
+            ep=er.json()
+            report['earliest_timestamp_metadata']={k:str(ep[k])[:100] for k in
+                ('datetime','timestamp','status','code') if isinstance(ep,dict) and k in ep}
+            report['earliest_endpoint_http_status']=er.status_code
+        except Exception as meta_exc:
+            report['earliest_endpoint_error_type']=type(meta_exc).__name__
         for start,end in month_windows():
             vals=request_month(session,start,end,api_key)
             q=parse(vals,start,end,cutoff)
             if len(vals)>=5000:raise ValueError('VENDOR_RESPONSE_TRUNCATION_RISK')
             # Each complete calendar month should contain >1800 bars in normal FX weekly trading.
-            if start[:4] in ('2020','2021') and len(q)<1700:
+            # Vendor 2020-01 partial history is explicitly accepted only as partial,
+            # not disguised as a complete month. HistData covers earlier January separately.
+            january_2020_partial=(start=='2020-01-01' and len(q)>=500
+                and q.bar_start_utc.min()>=pd.Timestamp('2020-01-20',tz='UTC')
+                and q.bar_start_utc.max()>=pd.Timestamp('2020-01-30',tz='UTC'))
+            if start[:4] in ('2020','2021') and len(q)<1700 and not january_2020_partial:
                 reports.append({'start':start,'end_exclusive':end,
                   'vendor_returned_rows':len(vals),'filtered_complete_rows':len(q),
                   'first_utc':q.bar_start_utc.min().isoformat(),
                   'last_utc':q.bar_start_utc.max().isoformat(),
                   'diagnosis':'MONTH_RESPONSE_INSUFFICIENT_DO_NOT_PROMOTE'})
                 raise RuntimeError('HISTORICAL_MONTH_INSUFFICIENT_15M_'+start)
+            if january_2020_partial:
+                report.setdefault('source_limited_periods',[]).append(
+                 {'month':'2020-01','status':'TWELVE_PARTIAL_2020_JAN_ONLY',
+                  'earliest_observed':q.bar_start_utc.min().isoformat(),
+                  'fill_strategy':'SEPARATE_HISTDATA_CANDIDATE_NOT_SILENT_SPLICE'})
             reports.append({'start':start,'end_exclusive':end,'rows':len(q),
                 'first_utc':q.bar_start_utc.min().isoformat(),
                 'last_utc':q.bar_start_utc.max().isoformat()})
