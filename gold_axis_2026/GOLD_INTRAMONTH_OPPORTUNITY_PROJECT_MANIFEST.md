@@ -1,13 +1,10 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
- 
 **2026-10-08 FREE ACQUISITION — CURRENT EVIDENCE:** Actual free official GVZ/DGS2/real-10Y daily history and HistData/Twelve Data 2020–2021 + 2026 late XAU/USD 15-minute data have been collected (licensed XAU kept in separate private Neon candidate tables). 43,918 source-matched UTC 15-minute closes show non-zero quotation differences; do NOT silently splice vendors, promote source status, or issue DAY/OVN labels until source/calendar/PIT checks pass. Historical Databento prices were **not purchased**. Detailed immutable status, counts, coverage and scientific acceptance gates: `gold_axis_2026/GOLD_EXECUTION_2020_2026_FREE_ACQUISITION_RESULT_2026-10-08.md`. This supersedes any older wording implying that 2020–2026 Phase 1 acquisition has not begun.
 
-
-
 **Manifest version:** 1.3
-**Date:** 2026-10-07  
-**Last governance update:** 2026-10-07  
+**Date:** 2026-10-08  
+**Last governance update:** 2026-10-08  
 **Status:** **CURRENT / BINDING / PROJECT INITIATED**  
 **Repository:** `ataullahturgut/sim3-automation`  
 **Branch:** `gold-execution-channel-audit-20261006`  
