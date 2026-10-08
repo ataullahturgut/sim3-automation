@@ -1,0 +1,38 @@
+{
+  "status": "NOVEL_MULTISCALE_PATH_ANALOG_ACTUALLY_SCORED",
+  "methods": [
+    "CBR_PATH",
+    "CBR_REGIME_PATH",
+    "HGB_FROZEN_2021",
+    "EMPIRICAL_PRIOR"
+  ],
+  "history": "2020-25 EV Dukascopy BID, trained from 2021",
+  "forecast": "past16 M15 whole path + preorigin RV/GVZ; no 2026 labels in model fit",
+  "year2023_24": "monthly fit with mature past only",
+  "year2025": "fixed before 2025; retrospective",
+  "year2026": "fixed before 2026; already-inspected retrospective",
+  "test_sources": [
+    "2026 same-upstream mirror price gated",
+    "2026 native direct"
+  ],
+  "samples": {
+    "('DIRECT_DUKASCOPY_NATIVE_THROUGH_OCT07', 'DAY', 2023)": 245,
+    "('DIRECT_DUKASCOPY_NATIVE_THROUGH_OCT07', 'DAY', 2024)": 249,
+    "('DIRECT_DUKASCOPY_NATIVE_THROUGH_OCT07', 'DAY', 2025)": 249,
+    "('DIRECT_DUKASCOPY_NATIVE_THROUGH_OCT07', 'DAY', 2026)": 102,
+    "('DIRECT_DUKASCOPY_NATIVE_THROUGH_OCT07', 'OVN', 2023)": 187,
+    "('DIRECT_DUKASCOPY_NATIVE_THROUGH_OCT07', 'OVN', 2024)": 190,
+    "('DIRECT_DUKASCOPY_NATIVE_THROUGH_OCT07', 'OVN', 2025)": 192,
+    "('DIRECT_DUKASCOPY_NATIVE_THROUGH_OCT07', 'OVN', 2026)": 72,
+    "('SAME_UPSTREAM_MIRROR_JAN_AUG20', 'DAY', 2023)": 245,
+    "('SAME_UPSTREAM_MIRROR_JAN_AUG20', 'DAY', 2024)": 249,
+    "('SAME_UPSTREAM_MIRROR_JAN_AUG20', 'DAY', 2025)": 249,
+    "('SAME_UPSTREAM_MIRROR_JAN_AUG20', 'DAY', 2026)": 130,
+    "('SAME_UPSTREAM_MIRROR_JAN_AUG20', 'OVN', 2023)": 187,
+    "('SAME_UPSTREAM_MIRROR_JAN_AUG20', 'OVN', 2024)": 190,
+    "('SAME_UPSTREAM_MIRROR_JAN_AUG20', 'OVN', 2025)": 192,
+    "('SAME_UPSTREAM_MIRROR_JAN_AUG20', 'OVN', 2026)": 97
+  },
+  "no_banking_PnL": true,
+  "no_untouched_holdout": true
+}
