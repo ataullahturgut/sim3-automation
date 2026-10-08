@@ -1,0 +1,51 @@
+name: Gold Execution Free XAU 2020 2021 Candidate Backfill
+
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_execution_histdata_xau_free_2020_2021.py'
+      - '.github/workflows/gold-execution-free-xau-2020-2021-20261008.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-execution-free-xau-2020-2021-20261008
+  cancel-in-progress: false
+
+jobs:
+  free-candidate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install free-source parser and private storage driver
+        run: pip install --disable-pip-version-check 'histdata-fetcher>=0.1' 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Require PRIVATE database before downloading licensed historical feed
+        run: test -n "$NEON_DATABASE_URL"
+      - name: Run 2020 and 2021 separate-source candidate acquisition
+        run: |
+          set -euo pipefail
+          python -m py_compile gold_axis_2026/tools/gold_execution_histdata_xau_free_2020_2021.py
+          python gold_axis_2026/tools/gold_execution_histdata_xau_free_2020_2021.py
+      - name: Preserve QC receipts only, NEVER publish licensed source prices
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gold_axis_2026/GOLD_EXECUTION_HISTDATA_XAU_FREE_BACKFILL_2020_2021_20261008.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record HistData XAU 2020-21 candidate QC and private DB receipt"
+          git fetch origin gold-execution-channel-audit-20261006
+          git rebase origin/gold-execution-channel-audit-20261006
+          git push origin HEAD:gold-execution-channel-audit-20261006
