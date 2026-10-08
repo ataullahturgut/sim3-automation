@@ -69,6 +69,25 @@ The 2023 PAIR apparent success is NOT transported. The tested class-balanced ove
 
 Additional independent information challenge: use existing matured 09:00–17:00 **daytime realized return** `LIT_DAY0_EXEC_0900.actual_ret` at its next ready timestamp as a sign proposal for 17:00→09:00. On the *overlapping DAY/overnight* records, same-sign probabilities were **82/194=42.3%** in 2023, **131/259=50.6%** in 2024, **102/217=47.0%** in 2025. Simple daytime continuation is falsified; day-to-night reversal also fails multi-year replication. DAY source completeness is lower than overnight source completeness, requiring exact-common row comparisons and a verified last completed 16:45–17:00 bar timestamp. Any 17:00 update must be calculated only after bar close and cannot assume an executable quote at the just-observed 17:00 open.
 
+
+
+### 5A. Adaptive direction-expert challenger: independently falsified
+
+Instead of hard voting, also tested financial online-learning/decision-theory challenger: **exp-weighting** existing M4 and PAIR direction probabilities according to *previous matured* Brier losses; last 60 dates, one global stream and a separate volatility-risk-conditioned 60-date stream. Neither uses the target overnight return at its own origin. See:
+
+- `tools/gold_execution_tail_direction_expert_audit_20261008.py`
+- `GOLD_EXECUTION_TAIL_DIRECTION_EXPERT_METRICS_2026-10-08.csv`
+
+| Direction method | 2023 high-vol BA / N | 2024 high-vol BA / N | 2025 high-vol BA / N |
+|---|---|---|---|
+| Standalone M4 | 52.22% / 24 | 50.70% / 68 | **55.33% / 95** |
+| Standalone PAIR | 42.22% / 24 | 50.48% / 68 | 46.89% / 95 |
+| Equal M4+PAIR probabilities | 46.67% / 24 | 51.26% / 68 | 53.56% / 95 |
+| Last-60 Brier Hedge | 56.67% / 24 | 49.39% / 68 | 47.11% / 95 |
+| Risk-state-specific Brier Hedge | 46.67% / 24 | 47.78% / 68 | 52.56% / 95 |
+
+The simple equal mixture changes the results but does not improve all years. The 60-day online hedge actively worsens 2024 and 2025 risk-conditioned direction. No method passes cross-year superiority; **none is promoted**. This is another demonstration that magnitude predictability and tail-direction predictability are separate targets, and adding models does not automatically add independent directional evidence.
+
 ## 6. Critical governance correction: macro calendar is NOT covered for 2025
 
 An independent scan of `GOLD_MACRO_EVENT_LEDGER_RAW_V1_2023_2025.csv` reveals:
