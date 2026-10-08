@@ -1,0 +1,22 @@
+{
+  "status": "CAUSAL_CATEGORICAL_BAYESIAN_ONLINE_CHANGEPOINT_ACTUALLY_EXECUTED",
+  "model": "genuine online Dirichlet-multinomial change-point run-length posterior",
+  "hazard": 0.015873015873015872,
+  "prior_alpha": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "max_run": 252,
+  "sources": [
+    "SAME_UPSTREAM_MIRROR_JAN_AUG20",
+    "DIRECT_DUKASCOPY_NATIVE_THROUGH_OCT07"
+  ],
+  "targets": "NO_HIT UP_FIRST DOWN_FIRST observed M15 BID close",
+  "only_matured_prior_events_used": true,
+  "same_origin_vs_lastyear_and_kernel_regime": true,
+  "2026_retrospective_already_inspected": true,
+  "no_price_execution_or_bank_PnL": true,
+  "2026_labels_for_past_only_causal_online_updates": true,
+  "uncertainty": "paired 1500 calendar-month bootstraps, descriptive retrospective"
+}
