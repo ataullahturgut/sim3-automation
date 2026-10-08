@@ -8,7 +8,8 @@
   "methods": [
     "PATH_FIRSTPASSAGE",
     "REGIME_PATH_FIRSTPASSAGE",
-    "HISTORICAL_THREE_EVENT_PRIOR"
+    "HISTORICAL_THREE_EVENT_PRIOR",
+    "LAST_YEAR_CLIMATOLOGY"
   ],
   "probability_estimator": "pre-origin 16-M15 path kernel memory, with/without preorigin GVZ and RV regime",
   "first_event_observed_15m_close_not_intrabar_touch": true,
