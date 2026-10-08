@@ -1,0 +1,16 @@
+{
+  "status": "COMPLETED_INDEPENDENT_SOURCE_2026_STRESS_NON_PROSPECTIVE",
+  "training_cutoff": "2025-12-31",
+  "training_actuals_2026_used": false,
+  "source_2025_2026": "HistData EST-fixed 1min->15min private candidate",
+  "source_2020_2021": "Twelve Data native M15 private",
+  "source_2022_2024": "previous frozen archive",
+  "source_2026_weeks": "No Saturday/early Sunday bars",
+  "target": "Istanbul 09:00 DAY; Istanbul 17:00 OVN",
+  "feature_model_identity": "Existing LIT only, original three feature sets, C=1 sklearn",
+  "method_selection": "No parameters selected using 2026 outcomes; plain/class-balanced both fully reported",
+  "status_warning": "Retrospective 2026 period already viewed; not genuine out-of-sample confirmation. 2025 source is independent candidate; source stitching at boundaries remains provisional.",
+  "no_PRAMV_model_retrained": true,
+  "no_investment_strategy_promoted": true,
+  "generated_at_utc": "2026-10-08T14:02:06.607553+00:00"
+}

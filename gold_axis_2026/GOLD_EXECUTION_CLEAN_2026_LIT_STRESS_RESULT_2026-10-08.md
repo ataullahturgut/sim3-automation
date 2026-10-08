@@ -1,0 +1,73 @@
+# Independently recovered 2026 Jan-Sep LIT direction stress
+
+**Status:** retrospective sensitivity study on private corrected historical spot data. No bank P&L, no PRAMV V1 score, no prospective proof.
+
+| LIT model | Training | Weight | N | Accuracy | Balanced accuracy | UP recall | DOWN recall | Predicted UP rate |
+|---|---|---|---:|---:|---:|---:|---:|---:|
+| LIT_DAY0_EXEC_0900 | LONG_2020 | BALANCED | 192 | 45.83% | 45.81% | 48.45% | 43.16% | 52.60% |
+| LIT_DAY0_EXEC_0900 | LONG_2020 | PLAIN | 192 | 50.00% | 49.64% | 84.54% | 14.74% | 84.90% |
+| LIT_DAY0_EXEC_0900 | SHORT_2022 | BALANCED | 192 | 52.60% | 52.63% | 50.52% | 54.74% | 47.92% |
+| LIT_DAY0_EXEC_0900 | SHORT_2022 | PLAIN | 192 | 51.04% | 50.58% | 94.85% | 6.32% | 94.27% |
+| LIT_OVN0_1600_1630 | LONG_2020 | BALANCED | 191 | 48.17% | 48.04% | 43.01% | 53.06% | 45.03% |
+| LIT_OVN0_1600_1630 | LONG_2020 | PLAIN | 191 | 49.21% | 50.51% | 100.00% | 1.02% | 99.48% |
+| LIT_OVN0_1600_1630 | SHORT_2022 | BALANCED | 191 | 48.17% | 48.04% | 43.01% | 53.06% | 45.03% |
+| LIT_OVN0_1600_1630 | SHORT_2022 | PLAIN | 191 | 48.69% | 49.59% | 83.87% | 15.31% | 84.29% |
+| LIT_OVN1_PAIR | LONG_2020 | BALANCED | 191 | 51.31% | 51.26% | 49.46% | 53.06% | 48.17% |
+| LIT_OVN1_PAIR | LONG_2020 | PLAIN | 191 | 47.64% | 48.87% | 95.70% | 2.04% | 96.86% |
+| LIT_OVN1_PAIR | SHORT_2022 | BALANCED | 191 | 51.83% | 51.63% | 44.09% | 59.18% | 42.41% |
+| LIT_OVN1_PAIR | SHORT_2022 | PLAIN | 191 | 51.31% | 52.19% | 86.02% | 18.37% | 83.77% |
+
+**Regime / quarter check** (same fixed policies, never selected on 2026 labels):
+
+| Model | Training | Weight | Period | N | BA | DOWN recall | UP forecast share |
+|---|---|---|---|---:|---:|---:|---:|
+| LIT_DAY0_EXEC_0900 | LONG_2020 | BALANCED | Q1 | 63 | 47.73% | 45.45% | 52.38% |
+| LIT_DAY0_EXEC_0900 | LONG_2020 | BALANCED | Q2 | 64 | 47.06% | 50.00% | 46.88% |
+| LIT_DAY0_EXEC_0900 | LONG_2020 | BALANCED | Q3 | 65 | 42.95% | 34.38% | 58.46% |
+| LIT_DAY0_EXEC_0900 | LONG_2020 | BALANCED | AUG_SEP_DIAGNOSTIC | 42 | 46.68% | 36.84% | 59.52% |
+| LIT_DAY0_EXEC_0900 | LONG_2020 | PLAIN | Q1 | 63 | 48.94% | 21.21% | 77.78% |
+| LIT_DAY0_EXEC_0900 | LONG_2020 | PLAIN | Q2 | 64 | 55.78% | 23.33% | 82.81% |
+| LIT_DAY0_EXEC_0900 | LONG_2020 | PLAIN | Q3 | 65 | 43.94% | 0.00% | 93.85% |
+| LIT_DAY0_EXEC_0900 | LONG_2020 | PLAIN | AUG_SEP_DIAGNOSTIC | 42 | 43.48% | 0.00% | 92.86% |
+| LIT_DAY0_EXEC_0900 | SHORT_2022 | BALANCED | Q1 | 63 | 54.24% | 48.48% | 55.56% |
+| LIT_DAY0_EXEC_0900 | SHORT_2022 | BALANCED | Q2 | 64 | 53.73% | 63.33% | 40.62% |
+| LIT_DAY0_EXEC_0900 | SHORT_2022 | BALANCED | Q3 | 65 | 50.80% | 53.12% | 47.69% |
+| LIT_DAY0_EXEC_0900 | SHORT_2022 | BALANCED | AUG_SEP_DIAGNOSTIC | 42 | 47.60% | 47.37% | 50.00% |
+| LIT_DAY0_EXEC_0900 | SHORT_2022 | PLAIN | Q1 | 63 | 51.06% | 12.12% | 88.89% |
+| LIT_DAY0_EXEC_0900 | SHORT_2022 | PLAIN | Q2 | 64 | 51.86% | 6.67% | 95.31% |
+| LIT_DAY0_EXEC_0900 | SHORT_2022 | PLAIN | Q3 | 65 | 48.48% | 0.00% | 98.46% |
+| LIT_DAY0_EXEC_0900 | SHORT_2022 | PLAIN | AUG_SEP_DIAGNOSTIC | 42 | 47.83% | 0.00% | 97.62% |
+| LIT_OVN0_1600_1630 | LONG_2020 | BALANCED | Q1 | 63 | 45.51% | 50.00% | 44.44% |
+| LIT_OVN0_1600_1630 | LONG_2020 | BALANCED | Q2 | 64 | 51.96% | 56.10% | 45.31% |
+| LIT_OVN0_1600_1630 | LONG_2020 | BALANCED | Q3 | 64 | 46.73% | 51.52% | 45.31% |
+| LIT_OVN0_1600_1630 | LONG_2020 | BALANCED | AUG_SEP_DIAGNOSTIC | 41 | 51.19% | 52.38% | 48.78% |
+| LIT_OVN0_1600_1630 | LONG_2020 | PLAIN | Q1 | 63 | 52.08% | 4.17% | 98.41% |
+| LIT_OVN0_1600_1630 | LONG_2020 | PLAIN | Q2 | 64 | 50.00% | 0.00% | 100.00% |
+| LIT_OVN0_1600_1630 | LONG_2020 | PLAIN | Q3 | 64 | 50.00% | 0.00% | 100.00% |
+| LIT_OVN0_1600_1630 | LONG_2020 | PLAIN | AUG_SEP_DIAGNOSTIC | 41 | 50.00% | 0.00% | 100.00% |
+| LIT_OVN0_1600_1630 | SHORT_2022 | BALANCED | Q1 | 63 | 45.51% | 50.00% | 44.44% |
+| LIT_OVN0_1600_1630 | SHORT_2022 | BALANCED | Q2 | 64 | 51.96% | 56.10% | 45.31% |
+| LIT_OVN0_1600_1630 | SHORT_2022 | BALANCED | Q3 | 64 | 46.73% | 51.52% | 45.31% |
+| LIT_OVN0_1600_1630 | SHORT_2022 | BALANCED | AUG_SEP_DIAGNOSTIC | 41 | 51.19% | 52.38% | 48.78% |
+| LIT_OVN0_1600_1630 | SHORT_2022 | PLAIN | Q1 | 63 | 51.44% | 20.83% | 80.95% |
+| LIT_OVN0_1600_1630 | SHORT_2022 | PLAIN | Q2 | 64 | 48.62% | 14.63% | 84.38% |
+| LIT_OVN0_1600_1630 | SHORT_2022 | PLAIN | Q3 | 64 | 49.61% | 12.12% | 87.50% |
+| LIT_OVN0_1600_1630 | SHORT_2022 | PLAIN | AUG_SEP_DIAGNOSTIC | 41 | 52.14% | 14.29% | 87.80% |
+| LIT_OVN1_PAIR | LONG_2020 | BALANCED | Q1 | 63 | 45.19% | 41.67% | 52.38% |
+| LIT_OVN1_PAIR | LONG_2020 | BALANCED | Q2 | 64 | 60.23% | 68.29% | 39.06% |
+| LIT_OVN1_PAIR | LONG_2020 | BALANCED | Q3 | 64 | 45.41% | 42.42% | 53.12% |
+| LIT_OVN1_PAIR | LONG_2020 | BALANCED | AUG_SEP_DIAGNOSTIC | 41 | 41.55% | 38.10% | 53.66% |
+| LIT_OVN1_PAIR | LONG_2020 | PLAIN | Q1 | 63 | 48.24% | 4.17% | 93.65% |
+| LIT_OVN1_PAIR | LONG_2020 | PLAIN | Q2 | 64 | 47.83% | 0.00% | 98.44% |
+| LIT_OVN1_PAIR | LONG_2020 | PLAIN | Q3 | 64 | 51.52% | 3.03% | 98.44% |
+| LIT_OVN1_PAIR | LONG_2020 | PLAIN | AUG_SEP_DIAGNOSTIC | 41 | 50.00% | 0.00% | 100.00% |
+| LIT_OVN1_PAIR | SHORT_2022 | BALANCED | Q1 | 63 | 42.15% | 45.83% | 44.44% |
+| LIT_OVN1_PAIR | SHORT_2022 | BALANCED | Q2 | 64 | 59.28% | 70.73% | 35.94% |
+| LIT_OVN1_PAIR | SHORT_2022 | BALANCED | Q3 | 64 | 51.47% | 54.55% | 46.88% |
+| LIT_OVN1_PAIR | SHORT_2022 | BALANCED | AUG_SEP_DIAGNOSTIC | 41 | 53.69% | 52.38% | 51.22% |
+| LIT_OVN1_PAIR | SHORT_2022 | PLAIN | Q1 | 63 | 52.72% | 20.83% | 82.54% |
+| LIT_OVN1_PAIR | SHORT_2022 | PLAIN | Q2 | 64 | 52.97% | 14.63% | 87.50% |
+| LIT_OVN1_PAIR | SHORT_2022 | PLAIN | Q3 | 64 | 52.54% | 21.21% | 81.25% |
+| LIT_OVN1_PAIR | SHORT_2022 | PLAIN | AUG_SEP_DIAGNOSTIC | 41 | 52.02% | 19.05% | 82.93% |
+
+This is diagnostic only: the 2026 market data source was corrected using a candidate independent vendor, 2026 outcomes were observed in the project, and no confidence claim or permanent retraining decision is justified.
