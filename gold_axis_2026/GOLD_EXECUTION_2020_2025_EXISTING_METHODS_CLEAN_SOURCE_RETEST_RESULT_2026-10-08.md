@@ -127,3 +127,16 @@ The `...INVENTORY.csv` checks the archived original output filenames and records
 Evidence `GOLD_EXECUTION_2020_2025_TAIL_HAR_GVZ_CLEAN_SOURCE_RETEST_20261008_SUMMARY.json` and `GOLD_EXECUTION_2020_2025_TAIL_HAR_GVZ_CLEAN_SOURCE_RETEST_20261008_METRICS.csv`; exact dated forecast probabilities retained as GitHub Actions artifact (not raw BID/ASK price files). Script `tools/gold_execution_2020_2025_tail_har_gvz_clean_retest_20261008.py`; workflow `gold-existing-har-gvz-tail-newsource-2020-2025.yml`.
 
 **Updated status:** direction-family replay + independent archived PRAMV source-retarget audit + original absolute/signed tail risk model re-tests are now complete for families supported by audited XAU/GVZ features. Remaining macro-dependent PRAMV exact reconstruction and old different-target ASIA/EU/US SESSION architectures are still blocked until their complete PIT inputs and correct DAY/OVN execution re-targeting can be demonstrated. **No new champion or bank-executable return is promoted.**
+
+
+## PRAMV OFFICIAL MACRO COMPLETION ADDENDUM — supersedes earlier M4/PRAMV data-blocked research state (2026-10-08)
+
+The preceding Section 5 source-block description was correct **before** restoring the historical 2025 Fed FOMC regular schedule and acquiring 2021–2022 macro first-print/consensus pairs from Neon. It is now **historical context, NOT the last executed status**.
+
+**Actual original-architecture M4/RFR/veto complete research backtests were successfully run** on the same accepted 2020–25 BID quote source with original 2022 price warmup, 2023/24 prequential chronology and 2025 frozen parameter fit:
+- 2023 BA**62.28%**, N83, source coverage33.60%.
+- 2024 BA**54.17%**, N79, source coverage31.73%.
+- 2025 retrospective BA**56.16%**, N81, source coverage32.66%, DOWN recall39.39%. Matched PAIR 51 correct vs PRAMV 48 correct, net −3 rescues (6 saved, 9 broken), no robust paired edge.
+- Longer 2021 macro-history variant is supplemental, NOT a 2025-selected replacement: 2023/24/25 BA62.31% / 59.19% / 57.72% on N65/61/61.
+
+Full authority [GOLD_EXECUTION_PRAMV_OFFICIAL_MACRO_REPAIRED_FULL_ORIGINAL_RETEST_AUTHORITY_2026-10-08.md](GOLD_EXECUTION_PRAMV_OFFICIAL_MACRO_REPAIRED_FULL_ORIGINAL_RETEST_AUTHORITY_2026-10-08.md) specifies the now-confirmed 2025 actual FOMC official schedule, BLS source release cancellation, incomparable 2025-12-18 CPI, full original rule, per-scope 16h/64h results, and the remaining **retrospectively assembled consensus-vintage not independently proven PIT** limitation. Original prospectively frozen 2026-10-07 PRAMV remains untouched. Do not use this result to promote a 2025-optimized champion or invent 2020 missing Fed/employment information.
