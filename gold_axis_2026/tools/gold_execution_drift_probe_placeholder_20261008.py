@@ -88,3 +88,48 @@ def evaluate(z):
     if out.empty or out.duplicated(["target","date","method"]).any():
         raise ValueError("DUPLICATE_OR_EMPTY")
     return out
+
+def summary_metrics(p):
+    results=[]
+    for (target,year,method),g in p.groupby(["target","year","method"]):
+        y=g.y.to_numpy(int);q=g.pred.to_numpy(int)
+        d=float(np.mean(q[y==0]==0));u=float(np.mean(q[y==1]==1))
+        results.append({"target":target,"year":int(year),"method":method,
+            "n":len(g),"BA":.5*(d+u),"DOWN_recall":d,"UP_recall":u,
+            "accuracy":float(np.mean(q==y)),"Brier":float(np.mean((g.p-y)**2))})
+    return pd.DataFrame(results)
+def matched(p):
+    out=[]
+    for (target,year),g in p.groupby(["target","year"]):
+        ref=g[g.method=="FROZEN_HGB"].set_index("date")
+        for name in METHODS[:4]:
+            a=g[g.method==name].set_index("date")
+            if set(a.index)!=set(ref.index):raise ValueError("MATCHED_DATES_NOT_EQUAL")
+            a=a.loc[ref.index]
+            yy=ref.y.to_numpy(int);q=a.pred.to_numpy(int);r=ref.pred.to_numpy(int)
+            save=int(np.sum((q==yy)&(r!=yy)))
+            brk=int(np.sum((q!=yy)&(r==yy)))
+            out.append({"target":target,"year":int(year),"method":name,
+                "n":len(a),"rescues":save,"breaks":brk,"net":save-brk,
+                "mcnemar_p":float(binomtest(save,save+brk,.5).pvalue) if save+brk else 1.})
+    return pd.DataFrame(out)
+def run():
+    panel=build_features()
+    predictions=evaluate(panel)
+    m=summary_metrics(predictions);pairs=matched(predictions)
+    name="GOLD_EXECUTION_2026_PREREG_CAUSAL_EW_CLASSBALANCED_20261008"
+    m.to_csv(AX/(name+"_YEAR_METRICS.csv"),index=False)
+    pairs.to_csv(AX/(name+"_PAIRED.csv"),index=False)
+    predictions.to_csv(AX/(name+"_PRIVATE_DATED.csv"),index=False)
+    result={"status":"ACTUAL_CAUSAL_MONTHLY_TEST","candidate_models":list(METHODS[:4]),
+        "2025_2026":"retrospective, already examined",
+        "asof_refit":"beginning of each month, only preceding matured labels",
+        "sources":"EVTradingLabs Dukascopy historical 2020-25; gated 2026 Dukascopy-node mirror Jan-Aug20",
+        "2026_prior_month_labels_may_legitimately_enter_2026_later_refit":True,
+        "not_2026_untouched_holdout":True,
+        "not_bank_executable":True}
+    (AX/(name+"_SUMMARY.json")).write_text(json.dumps(result,indent=2)+"\n")
+    print("ADAPT_RESULTS",m.to_string(index=False),flush=True)
+    print("ADAPT_PAIRED",pairs.to_string(index=False),flush=True)
+    print("ADAPT_STATUS",json.dumps(result),flush=True)
+if __name__=="__main__":run()
