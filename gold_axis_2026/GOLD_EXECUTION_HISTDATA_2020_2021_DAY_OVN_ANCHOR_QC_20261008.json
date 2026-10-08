@@ -12,6 +12,9 @@
       "day_full_32_bars_and_3_anchors_complete": 256,
       "overnight_17_to_next_BDay_0845_anchors_ready": 253,
       "days_with_thin_pivot_native_minutes": 1,
+      "thin_pivot_dates": [
+        "2020-06-10"
+      ],
       "missing_day_anchors_first30": [
         "2020-01-01",
         "2020-04-10",
@@ -28,6 +31,7 @@
       "day_full_32_bars_and_3_anchors_complete": 257,
       "overnight_17_to_next_BDay_0845_anchors_ready": 253,
       "days_with_thin_pivot_native_minutes": 0,
+      "thin_pivot_dates": [],
       "missing_day_anchors_first30": [
         "2021-01-01",
         "2021-04-02",
@@ -39,5 +43,5 @@
   ],
   "model_labels_issued": false,
   "source_promotion": false,
-  "retrieved_at_utc": "2026-10-08T12:06:51.898638+00:00"
+  "retrieved_at_utc": "2026-10-08T12:09:35.860260+00:00"
 }
