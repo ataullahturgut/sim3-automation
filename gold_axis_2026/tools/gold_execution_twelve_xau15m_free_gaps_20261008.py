@@ -145,6 +145,11 @@ def main():
             if len(vals)>=5000:raise ValueError('VENDOR_RESPONSE_TRUNCATION_RISK')
             # Each complete calendar month should contain >1800 bars in normal FX weekly trading.
             if start[:4] in ('2020','2021') and len(q)<1700:
+                reports.append({'start':start,'end_exclusive':end,
+                  'vendor_returned_rows':len(vals),'filtered_complete_rows':len(q),
+                  'first_utc':q.bar_start_utc.min().isoformat(),
+                  'last_utc':q.bar_start_utc.max().isoformat(),
+                  'diagnosis':'MONTH_RESPONSE_INSUFFICIENT_DO_NOT_PROMOTE'})
                 raise RuntimeError('HISTORICAL_MONTH_INSUFFICIENT_15M_'+start)
             reports.append({'start':start,'end_exclusive':end,'rows':len(q),
                 'first_utc':q.bar_start_utc.min().isoformat(),
