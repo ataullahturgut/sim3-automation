@@ -78,3 +78,98 @@ def conditional_kernel(train,current):
       p=float((np.dot(weights,cls[ix])+5*prior)/(weights.sum()+5))
       fit.append((p,prior,len(tr)))
     return fit
+
+def prediction_panel(cand):
+    rows=[]
+    for period,te in cand[cand.year>=2023].groupby(cand.date.dt.to_period("M")):
+      cutoff=period.to_timestamp() if period.year<=2024 else pd.Timestamp(f"{period.year}-01-01")
+      history=cand[(cand.date<cutoff)&(cand.matured<=cutoff)]
+      if len(history)<75:continue
+      estimate=conditional_kernel(history,te)
+      for row,(p,prior,n) in zip(te.itertuples(index=False),estimate):
+        if not np.isfinite(p):continue
+        rows.append({"source_test":row.source_test,"date":row.date.strftime("%Y-%m-%d"),
+           "year":int(row.year),"month":str(period),"y":int(row.label),
+           "rfr_dir":int(row.first_sign),"p_up_CME5":float(p),
+           "p_up_signconditional_prior":float(prior),
+           "cme5_pred":int(p>=.5),"naive_conditional_pred":int(prior>=.5),
+           "train_n_same_rfr_sign":n,
+           "fitted_before":str(cutoff),
+           "source_H1_max_available_at_origin_minus_15min":True})
+    return pd.DataFrame(rows)
+
+def eval_model(results):
+    rows=[]
+    for (src,yr),g in results.groupby(["source_test","year"]):
+       y=g.y.to_numpy(int);p=g.p_up_CME5.to_numpy(float)
+       ref=g.p_up_signconditional_prior.to_numpy(float)
+       estimate=g.cme5_pred.to_numpy(int);baseline=g.rfr_dir.to_numpy(int)
+       d=y==0;u=y==1
+       saved=int(np.sum((estimate==y)&(baseline!=y)))
+       broken=int(np.sum((estimate!=y)&(baseline==y)))
+       mcnemar=float(binomtest(saved,saved+broken,.5).pvalue) if saved+broken else 1.0
+       rows.append({"source_test":src,"year":int(yr),"n":len(y),
+         "k25_BA":float(.5*(np.mean(estimate[d]==0)+np.mean(estimate[u]==1))) if d.any() and u.any() else None,
+         "k25_DOWN_recall":float(np.mean(estimate[d]==0)) if d.any() else None,
+         "k25_UP_recall":float(np.mean(estimate[u]==1)) if u.any() else None,
+         "k25_accuracy":float(np.mean(estimate==y)),
+         "k25_Brier":float(np.mean((p-y)**2)),
+         "past_signconditional_frequency_Brier":float(np.mean((ref-y)**2)),
+         "k25_Brier_gain_vs_simple_history":float(1-np.mean((p-y)**2)/np.mean((ref-y)**2)),
+         "original_RFR_accuracy_same_dates":float(np.mean(baseline==y)),
+         "original_RFR_BA_same_dates":float(.5*(np.mean(baseline[d]==0)+np.mean(baseline[u]==1))) if d.any() and u.any() else None,
+         "k25_RFR_rescues":saved,"k25_RFR_breaks":broken,
+         "net_rescues":saved-broken,"exact_McNemar_p":mcnemar,
+         "prior_class_accuracy":float(np.mean(g.naive_conditional_pred.to_numpy(int)==y)),
+         "wrong_large_move_ge_1pct":int(np.sum((estimate!=y)&(g.return_OVN.abs().to_numpy(float)>=.01))),
+         "bank_spread_backtest":False,"2026_untouched":False})
+    return pd.DataFrame(rows)
+
+def main():
+    start=time.time()
+    raw=cme_source()
+    q,t,sets=rfr.sources.source_sets()
+    reports=[];forecasts=[]
+    for tag,px,tx in sets:
+        prices=pd.concat([q,px]).sort_index()
+        labels=pd.concat([t,tx],ignore_index=True)
+        source_q=rfr.extract(prices,labels)
+        source_q=source_q[source_q.reversal].copy()
+        source_q["source_test"]=tag
+        exogenous=asof_crossvenue(raw,source_q)
+        pred=prediction_panel(exogenous)
+        if pred.empty:raise RuntimeError("CME5_K25_NO_FORECAST_SAMPLES_"+tag)
+        reports.append({"source":tag,
+          "candidate_counts":source_q.groupby("year").size().to_dict(),
+          "CME5_H1_all_10_features_counts":exogenous.groupby("year").size().to_dict(),
+          "scored_counts":pred.groupby("year").size().to_dict()})
+        forecasts.append(pred)
+        print("ACTUAL_INDEPENDENT_ASSET_PIT_COHORT",reports[-1],flush=True)
+    result=pd.concat(forecasts,ignore_index=True)
+    outcome=eval_model(result)
+    stem=str(AX/NAME)
+    outcome.to_csv(stem+"_METRICS.csv",index=False)
+    result.to_csv(stem+"_PRIVATE_DATED.csv",index=False)
+    summary={"status":"NEW_INDEPENDENT_NATIVE_CME_FIVE_FUTURES_RFR_K25_SCORED",
+      "source":"Databento GLBX.MDP3 ohlcv-1h continuous c.0 private Neon 2023-Oct7",
+      "five_venue_roots":list(SYM),"features":FEATURES,
+      "causality":"last complete 1h bar ends plus 15min before 17TR issue; no same-venue futures roll transition in lookback",
+      "2023_2024":"asof monthly prior-matured historical case kernel",
+      "2025_2026":"frozen pre-year and already-inspected retrospective",
+      "forecast_object":"on RFR opposite halfhour candidates only, 17TR-next09TR normal OVN",
+      "full_source_coverage":reports,
+      "no_banking_bidask_PnL":True,"no_strategy_promotion":True,
+      "runtime_seconds":int(time.time()-start)}
+    Path(stem+"_SUMMARY.json").write_text(json.dumps(summary,indent=2,default=str)+"\n")
+    print("CME5_ORTHOGONAL_RFR_NOVEL_SOURCE_REAL_TEST",outcome.to_string(index=False),flush=True)
+    print("CME5_K25_STATUS",json.dumps(summary,default=str),flush=True)
+if __name__=="__main__":
+    try:main()
+    except Exception as e:
+        import traceback
+        fr=traceback.extract_tb(e.__traceback__)[-1]
+        qc={"status":"CME5_K25_MODEL_BLOCKED_NO_APPROVED_SCORE",
+           "error_type":type(e).__name__,"reason":str(e)[:100],
+           "function":fr.name,"line":fr.lineno,"no_results_claimed":True}
+        (AX/(NAME+"_FAILURE_QC.json")).write_text(json.dumps(qc,indent=2)+"\n")
+        print("CME5_K25_BLOCK",json.dumps(qc),flush=True)
