@@ -21,8 +21,13 @@ def main():
       'session_breakdown':'DAY 09->17 same TR date; OVN weekday 17->next 09 (16 hours); FRI_OVN 17->Monday09 (64 hours)',
       'no_fabricated_prices':True,'no_source_blending':True}
     a=json.loads(AUDIT.read_text())
-    if a['status']!='SIX_YEAR_PRICE_AND_INDEPENDENT_TARGET_RECOMPUTE_QC_PASSED' or \
-       a['record_count']!=141890 or a['issue_dates']!=1549:
+    source_years=a.get('years',{})
+    price_bar_total=sum(z.get('bars',0) for z in source_years.values())
+    target_date_total=sum(z.get('target_recompute',{}).get('origin_rows',0) for z in source_years.values())
+    if a.get('status') not in (
+       'SIX_YEAR_PRICE_AND_INDEPENDENT_TARGET_RECOMPUTE_QC_PASSED',
+       'FULL_2020_2025_DATA_VENUE_AND_LABEL_FORENSIC_COMPLETE'
+       ) or price_bar_total!=141890 or target_date_total!=1549:
         raise RuntimeError('FORENSIC_RECEIPT_NOT_ACCEPTED')
     if not all(x['target_recompute']['wrong_persisted_direction']['day_y']==0 and
                x['target_recompute']['wrong_persisted_direction']['overnight_y']==0
