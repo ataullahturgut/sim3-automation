@@ -1,0 +1,12 @@
+{
+  "asof": "2026-10-08",
+  "provider": "direct Dukascopy XAUUSD M1 BID ASK",
+  "source_id": "DUKASCOPY_DIRECT_M1_BIDASK_2026_M15_NATIVE_FULL_V2",
+  "raw_prices_published": false,
+  "status": "READ_ONLY_PRIVATE_SOURCE_COVERAGE_REPORT",
+  "month_coverage": [],
+  "total_verified_m15": 0,
+  "total_month_utc_days": 0,
+  "full_calendar_coverage_verified": false,
+  "model_score_from_this_audit": false
+}
