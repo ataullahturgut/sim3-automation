@@ -1,0 +1,14 @@
+{
+  "status": "ORIGINAL_PSF_M3_SIG_FPCA_PLUS_RFR_PRICE_ONLY_ACTUALLY_REBUILT",
+  "original_psf_code": "gold_execution_psf_ovn_20261007.py::build,frozen_models,leadlag_area,timeprice_area",
+  "training_start": 2021,
+  "monthly_matured_2023_24": true,
+  "2025_2026_frozen_before_calendar_year": true,
+  "gate": "opposite 16:00 and 16:30 halfhour signs AND M3 predicted same first sign",
+  "2026_external_macro": "UNKNOWN - M4/V1 cannot be scored from this study",
+  "no_new_2026_feature_threshold_selection": true,
+  "vintage_2026_sources": "separate same-Dukascopy upstream price-gated mirror and original broker native M1",
+  "2026_retrospective_already_inspected": true,
+  "not_bank_executable": true,
+  "runtime_s": 13
+}
