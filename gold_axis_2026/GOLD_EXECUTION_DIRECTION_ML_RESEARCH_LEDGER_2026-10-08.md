@@ -72,3 +72,20 @@ The 2020–25 benchmark's direct upstream Dukascopy BID/ASK 2026 extension was a
 Source gate: GOLD_EXECUTION_2026_FROZEN_HISTORY_SAME_VENDOR_CHALLENGE_20261008_SUMMARY.json. The direct primary-source 2026 holdout remains unverified; rerun only once vendor returns complete dated BID/ASK data and source/maturity gate passes. No 2026 post-hoc architecture/hyperparameter/abstention tuning permitted. Under no circumstances convert restricted HistData 2026 values into validated Dukascopy 2026 predictions.
 
 **Overall 8 October 2026 conclusion:** historical 2020–21 training was genuinely activated; 2026 Jan–Sep was actually measured on a labeled source-qualified but incomplete-origin provider universe; promising nominal ~59% NIGHT BA is not deployment-grade and does not defeat the multiple-comparison/coverage and true bank execution constraints.
+
+
+## H. 2026 external-provider transport (completed and paired, NOT same-vendor source proof)
+
+Source-separated 2020–2025 fixed models were actually refit using two independent BID series and compared on the same governed 2026-Jan–Sep **HistData** BID test origins (DAY N184, regular weekday OVN N141). Neither model trained on 2026 outcomes; no feature construction joins price bars across quote providers. All 6 model identities × 3 history lengths × 2 training providers × 2 windows were actually scored, and the 36 source-training pairs compared on identical dates. Results:
+- `GOLD_EXECUTION_DUKASCOPY_TO_HISTDATA_2026_PROVIDER_TRANSPORT_20261008_SUMMARY.json`
+- `GOLD_EXECUTION_DUKASCOPY_TO_HISTDATA_2026_PROVIDER_TRANSPORT_20261008_METRICS.csv`
+- `GOLD_EXECUTION_DUKASCOPY_TO_HISTDATA_2026_PROVIDER_TRANSPORT_20261008_PAIRED_PROVIDER.csv`
+- Script: `tools/gold_execution_2026_cross_provider_frozen_transport_20261008.py`.
+
+With DUKASCOPY 2020–25 training and 2026 HISTDATA test, OVN BA for SHAPE_GVZ_HGB starts 2020 / 2021 / 2022 = 55.71% / 58.98% / 53.89%; 2021 DOWN recall 56.76%, 83/141 correct. DAY all weak. VIX_GVZ_HGB 2022 OVN BA57.41% and DOWN recall58.11%, N141. These are **domain-shift retrospectively inspected research results only**, NOT native Dukascopy 2026 benchmark.
+
+**Critical paired identity warning:** Despite both provider-training versions of 2021-start SHAPE_GVZ_HGB attaining BA58.98%, correct count 83/141 and identical class-wise total confusion cells, they are NOT identical day-by-day predictors. Paired audit finds **30 rescues and 30 breaks** when switching HISTDATA-training to DUKASCOPY-training, McNemar p=1.0. Thus identical aggregate accuracy does NOT establish stable daily action or source-invariant forecast. This invalidates any simplistic 'signal unchanged' interpretation. At start-2020, DUKASCOPY-trained OVN SHAPE_GVZ_HGB gains BA9.04pp vs HISTDATA-trained, but 38 rescues/24 breaks, exact p≈0.098. No promoted champion after multiple comparisons, bank spreads absent, 2026 already inspected.
+
+## I. Genuine same-Dukascopy direct 2026 still source-gated
+
+The independent 728-cell 2025 BID source overlap evidence is frozen separately. A month-sharded live-retrieved 2026 native M1 BID/ASK candidate, strict M15 15-of-15 complete interval, stores each verified date in private Neon. The first recorded source-only DB snapshot had 1,728 fully-native M15 on 18 UTC dates, 18 approved DAY paths and only 4 regular-OVN source paths. These are insufficient for fixed-model same-upstream 2026 scoring. The authoritative source-attempt audit is `GOLD_EXECUTION_2026_DIRECT_PRIMARY_SOURCE_RESCUE_INTERIM_EVIDENCE_2026-10-08.md`. Never promote the cross-provider HistData outcomes into an imaginary direct-Dukascopy 2026 source result.
