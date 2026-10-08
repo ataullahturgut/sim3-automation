@@ -1,0 +1,53 @@
+{
+  "status": "COMPLETED_OFFICIAL_H15_PRIORDAY_RATES_ABLATION",
+  "source_id": "EVTRADINGLABS_DUKASCOPY_DERIVED_XAUUSD_M15_BIDASK_2020_2025_V1",
+  "source_bars": 141890,
+  "source_targets": 1549,
+  "source_gvz": "strict previous day",
+  "rate_source": "Fed H15 DGS2 + DFII10 official daily candidate",
+  "rate_date_rule": "strict observation date < origin date; use previous two available observations; max 7 calendar day staleness",
+  "models_added": [
+    "RATES_LOGIT",
+    "RATES_HGB"
+  ],
+  "benchmark_models": [
+    "BASE_LOGIT",
+    "SHAPE_LOGIT",
+    "SHAPE_GVZ_LOGIT",
+    "SHAPE_GVZ_HGB"
+  ],
+  "all_comparisons_exact_paired": true,
+  "scope": "regular weekday16h OVN and DAY separately",
+  "result_2025": "ALREADY_EXAMINED_RETROSPECTIVE_NOT_FRESH_HOLDOUT",
+  "no_2025_model_selection": true,
+  "no_production_promotion": true,
+  "development_gates": {
+    "DAY_RATES_LOGIT": {
+      "dev_BA_gt_50_both": true,
+      "dev_DOWN_recall_ge_30_both": true
+    },
+    "OVN_RATES_LOGIT": {
+      "dev_BA_gt_50_both": false,
+      "dev_DOWN_recall_ge_30_both": false
+    },
+    "DAY_RATES_HGB": {
+      "dev_BA_gt_50_both": false,
+      "dev_DOWN_recall_ge_30_both": false
+    },
+    "OVN_RATES_HGB": {
+      "dev_BA_gt_50_both": true,
+      "dev_DOWN_recall_ge_30_both": true
+    }
+  },
+  "date_counts": {
+    "DAY_2022": 249,
+    "DAY_2023": 245,
+    "DAY_2024": 249,
+    "DAY_2025": 249,
+    "OVN_2022": 191,
+    "OVN_2023": 187,
+    "OVN_2024": 190,
+    "OVN_2025": 192
+  },
+  "elapsed_sec": 23
+}
