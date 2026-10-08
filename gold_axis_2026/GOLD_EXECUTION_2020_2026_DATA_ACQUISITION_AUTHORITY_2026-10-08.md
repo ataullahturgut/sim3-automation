@@ -1,6 +1,6 @@
 # GOLD EXECUTION — 2020–2026 LONG-HORIZON DATA ACQUISITION AUTHORITY
 
-**Date:** 2026-10-08. **Status:** SOURCE/MODEL REQUIREMENT INVENTORY COMPLETE; ACQUISITION NOT YET EXECUTED.  
+**Date:** 2026-10-08. **Status:** SOURCE/MODEL REQUIREMENT INVENTORY COMPLETE; FREE SOURCE ACQUISITION STAGE 1 EXECUTED; SOURCE-ALIGNMENT / PIT MODEL-READINESS PENDING.  
 **Repo/branch:** `ataullahturgut/sim3-automation` / `gold-execution-channel-audit-20261006`  
 **Machine-readable line-by-line inventory:** `GOLD_EXECUTION_2020_2026_SOURCE_MATRIX_2026-10-08.csv` (26 requirements).  
 **Parent authority:** `GOLD_INTRAMONTH_OPPORTUNITY_PROJECT_MANIFEST.md` and `GOLD_EXECUTION_ALIGNED_HORIZON_HYBRID_RESEARCH_AUTHORITY_2026-10-07.md`.
@@ -184,3 +184,16 @@ For major source API batches, use monthly **inclusive start / exclusive end** UT
 - Cboe official historical GVZ source frozen in project's raw-source backfill summary.
 
 **Scope of this deliverable:** COMPLETE audited model-driven requirements, source/reuse map, acquisition gates and ordering; **no paid historical vendor request or prospective future data download was executed as part of this planning task**. No model was retrained and no 2026 future event was labelled as realized.
+
+
+---
+
+## Binding post-plan acquisition update — 2026-10-08
+
+The previous inventory-first paragraphs above describe the **state at the time of initial planning**, before the later 2026-10-08 executions. **For current actual acquisition status, the controlling evidence is**:
+
+`gold_axis_2026/GOLD_EXECUTION_2020_2026_FREE_ACQUISITION_RESULT_2026-10-08.md`
+
+Actual completed free acquisitions: Cboe GVZ 1,701 daily records; Federal Reserve DGS2 1,692, DFII10 1,692; HistData 2020–2021 47,188 derived 15-minute bars in private Neon; Twelve Data native 2020 22,145 and 2021 23,150 15-minute bars in private Neon, and the 2026-09-28 to 2026-10-08 recent 1,008-bar private addition (overlaps de-duplicated). Twelve earliest origin is 2020-01-24 02:00 UTC; early January 2020 remains a separate HistData source candidate. The 43,918 exact-UTC matched cross-vendor quotes have median abs price discrepancy 2.82 bps and p95 32.85 bps; these are **not interchangeable** without scientific source acceptance. Native Istanbul DAY/OVERNIGHT anchor and holiday audits remain a prerequisite to publishing canonical model labels.
+
+**Charge:** USD 0 historical download; Databento was cost-quoted only. **Data write:** only separate candidate tables and official free source CSVs; no existing frozen source overwritten. **Model retraining / source promotion:** not executed. The 2020–2026 remaining futures and event PIT collection phases are still open.
