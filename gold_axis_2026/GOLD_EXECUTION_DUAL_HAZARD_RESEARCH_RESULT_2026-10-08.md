@@ -102,6 +102,19 @@ Retrospective *unpromoted* stress experiment: suppress original PRAMV direction 
 
 More sophisticated naive continuation-side use of volatility regimes still fails the cross-year direction test. The risk detector's gain is **tail-awareness**, not yet a validated broader directional alpha.
 
+## 5B. Crucial execution-clock opportunity: earlier warning than PRAMV
+
+**Volatility-only risk head needs no same-day 16:00–17:00 bars.** Each of RV5/RV20/RV60 uses completed prior overnight targets ending no later than *today's 09:00 Europe/Istanbul*. The mathematical risk score can therefore be evaluated **after today's 09:00 price/source readiness**, long before the bank's late-day spread expansion. For the user this is a separate **morning overnight-tail warning** (tentatively 09:15 Istanbul only after vendor-lag confirmation), even though its outcome is the *following* 17:00→next09:00 movement. This earlier issuance is NOT a 09:00→17:00 direction predictor and must NOT use today's current overnight target, which has not occurred.
+
+The event-calendar extension must be separated by knowledge time: at a morning decision, only the schedule of upcoming releases is legal; the day's realized macro surprises released during 09:00–17:00 are **future information** and must not be imported. The combined exploratory OR alarm as currently measured uses the 17:00 event flag and therefore cannot be marketed as a 09:15 issued policy without rebuilding it with a 09:15 point-in-time event state.
+
+Potential operational sequence:
+- morning after source-ready historical prices: HIGH-RISK informational signal or normal-risk state;
+- bank-action window before ~17:00: adjust exposure only after instrument/spread, sign versus absolute-risk utility and stress tests;
+- late 17:00: independent unchanged PRAMV V1 direction forecast (not presumed bank-executable at zero latency).
+
+**This is a clock-alignment research opportunity, not an already simulated executable strategy.**
+
 ## 6. Scientific assessment and next experiment
 
 **Positive:** a different target and temporal-memory mechanism exposes serious tail risk on days the directional specialist ignores; 2025 showed a measurable 6/7 extreme-event warning in a wide-but-not-universal alert population. Robustness check and calendar jump-mechanism decomposition are worth pursuing.
