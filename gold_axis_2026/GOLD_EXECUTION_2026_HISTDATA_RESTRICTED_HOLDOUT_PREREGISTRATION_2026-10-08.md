@@ -1,0 +1,11 @@
+# Gold 2026 restricted single-provider HistData BID holdout preregistration — 2026-10-08
+
+**Role:** independent 2026 research sensitivity only, **not** a replacement for the Dukascopy-based official 2020–2025 model source. This is an already-governed but partially incomplete HistData source, preserving its exact quote semantics; no HistData+Dukascopy+Twelve composite splice is allowed.
+
+2026 Jan–Sep source and day/overnight labels were already assembled from native 1m HistData BID (fixed EST converted UTC). Existing authority: GOLD_EXECUTION_2020_2026_SOURCE_VALIDATION_AND_QUARANTINE_RESULT_2026-10-08.md. The original 2023 HistData upstream has gaps: only 136 DAY / 145 OVN eligible. Do not interpolate. 2026 Jan–Sep eligible ~191 DAY /185 OVN incl weekends. Exclude Friday→Monday OVN in regular 16h comparison and require whole origin feature window.
+
+Run fixed predeclared BASE_LOGIT, SHAPE_LOGIT, SHAPE_GVZ_LOGIT, SHAPE_GVZ_HGB, VIX_GVZ_LOGIT, VIX_GVZ_HGB using exactly prior-price 4h path, previous local calendar day Cboe GVZ/VIX (strict dates earlier) and source-gated HISTDATA BID path and labels. Compare three 2020, 2021 and 2022 train-start histories. 2022–24 training strictly monthly chronological mature labels for development diagnostics; **all 2026 predictions are from one fit frozen through 2025-12-31, with NO 2026 outcome included anywhere in training or choice.** Explicitly report 2023 gaps, accepted training N, BA UP/DOWN recall, confusion, Brier, per-month 2026, matched-date history comparisons.
+
+**Crucial source condition:** 2020-25 training in HistData cannot be compared numerically to the previously executed Dukascopy 2020-25 results as if source, coverage and label identity were the same. This is a restricted 2026 candidate, not independent bank executable validation and not a source-certified replacement. Full direct Dukascopy 2026 project is a separate stronger test, promoted only if its same-source overlap and source maturity checks pass. October 2026 not tested from HistData.
+
+The user’s key point is to actually use 2026 outcomes. This pre-registered alternate-source diagnostic is an early window-specific indicator, while keeping provenance and inference limitations explicit.
