@@ -29,7 +29,11 @@ def read_h(con,dates):
     end=max(dates)+pd.Timedelta(minutes=20)
     years=sorted(set(x.year for x in dates))
     frames=[]
+    seen_source_ids=set()
     for year in years:
+        if H(year) in seen_source_ids:
+            continue
+        seen_source_ids.add(H(year))
         with con.cursor() as c:
             c.execute("""SELECT bar_start_utc,close_price FROM gold_research_histdata_xau15m_candidate
                         WHERE source_id=%s AND bar_start_utc>=%s AND bar_start_utc<=%s
