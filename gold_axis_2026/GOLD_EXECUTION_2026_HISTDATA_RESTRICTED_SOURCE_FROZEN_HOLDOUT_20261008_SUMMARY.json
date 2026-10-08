@@ -1,0 +1,69 @@
+{
+  "status": "2026_HISTDATA_SINGLE_PROVIDER_RESTRICTED_FROZEN_HOLDOUT_COMPLETE",
+  "source_provider": "HistData M1 BID only 2020\u2013Sep2026, fixed EST normalized UTC",
+  "2023_upstream_gap": "PRESERVED_NO_IMPUTATION; 136 full DAY and 145 full OVN source labels before feature gates",
+  "validated_source_target_counts": {
+    "2020": {
+      "total": 258,
+      "day": 252,
+      "ovn": 248
+    },
+    "2021": {
+      "total": 257,
+      "day": 255,
+      "ovn": 249
+    },
+    "2022": {
+      "total": 258,
+      "day": 255,
+      "ovn": 248
+    },
+    "2023": {
+      "total": 257,
+      "day": 136,
+      "ovn": 145
+    },
+    "2024": {
+      "total": 259,
+      "day": 258,
+      "ovn": 248
+    },
+    "2025": {
+      "total": 258,
+      "day": 256,
+      "ovn": 249
+    },
+    "2026": {
+      "total": 192,
+      "day": 191,
+      "ovn": 185
+    }
+  },
+  "model_origin_eligibility_2026": {
+    "DAY": 184,
+    "OVN": 141
+  },
+  "training_histories": [
+    2020,
+    2021,
+    2022
+  ],
+  "models": [
+    "BASE_LOGIT",
+    "SHAPE_LOGIT",
+    "SHAPE_GVZ_LOGIT",
+    "SHAPE_GVZ_HGB",
+    "VIX_GVZ_LOGIT",
+    "VIX_GVZ_HGB"
+  ],
+  "fit_frozen_as_of": "2026-01-01",
+  "last_2026_source_month": "2026-09",
+  "2026_training_labels_in_fit": false,
+  "2026_not_used_in_feature_selection": true,
+  "2025_2026_vendor_mix": false,
+  "2026_same_as_2020_2025_Dukascopy_quotes": false,
+  "bank_executable": false,
+  "source_status": "RESTRICTED_RESEARCH_NOT_CANONICAL",
+  "vix_archive_sha": "5c2f2ed585842efb26eb040cd18a1f7f092e92f6db94fc68756d48078b15bb32",
+  "elapsed_seconds": 14
+}
