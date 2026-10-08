@@ -1,0 +1,46 @@
+name: Gold 2026 Dukascopy Same Vendor Bid Ask Source Pilot
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_execution_2026_dukascopy_same_source_pilot_20261008.py'
+      - '.github/workflows/gold-execution-2026-dukascopy-same-source-pilot.yml'
+permissions:
+  contents: write
+concurrency:
+  group: gold-2026-dukascopy-source-pilot-20261008
+  cancel-in-progress: false
+jobs:
+  source-pilot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 17
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONUNBUFFERED: 1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'psycopg[binary]>=3.2,<4' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'statsmodels>=0.14,<1'
+      - name: Read BID ASK same-provider samples with exact UTC overlap
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_2026_dukascopy_same_source_pilot_20261008.py
+          python gold_axis_2026/tools/gold_execution_2026_dukascopy_same_source_pilot_20261008.py
+      - name: Commit scientific price-origin comparison summary without raw quotes
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_EXECUTION_DUKASCOPY_2026_SAME_PROVIDER_PILOT_20261008.json
+          git diff --cached --quiet || git commit -m 'Record direct-source 2026 XAU gold BID ASK acquisition feasibility audit'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 3
+          done
+          exit 1
