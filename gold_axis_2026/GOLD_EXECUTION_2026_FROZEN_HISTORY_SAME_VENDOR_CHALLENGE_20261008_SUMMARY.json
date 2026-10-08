@@ -1,0 +1,62 @@
+{
+  "status": "BLOCKED_NO_AUTHORIZED_2026_DIRECTION_SCORE",
+  "reason": "2025_PUBLIC_PRIMARY_BID_CLOSE_OVERLAP_GATE_FAIL",
+  "source_2026": "DUKASCOPY_DIRECT_XAUUSD_M1_BIDASK_2026_ASOF_20261008_RESEARCH",
+  "asof": "2026-10-08",
+  "source_label_training_identity": "EV Trading Labs Dukascopy 2020-25 + direct Dukascopy M1 2026",
+  "source_cross_vendor_mixing": false,
+  "not_a_2026_model_success_claim": true,
+  "source_2025_overlap": {
+    "matched_2025_bid_price_cells": 360,
+    "median_abs_bid_diff_bps": 0.011709876148843102,
+    "p95_abs_bid_diff_bps": 0.011920555219668994,
+    "same_upstream_source_threshold_pass": false,
+    "source_quote_comparator": "2020-2025 stored EVTradingLabs Dukascopy BID M15 versus newly downloaded direct Dukascopy M1 resampled M15"
+  },
+  "source_samples": {
+    "2025-12-16": {
+      "status": "MISSING_OR_INVALID_BID_OR_ASK",
+      "bid": "SOURCE_UNAVAILABLE_OR_INVALID",
+      "ask": "SOURCE_UNAVAILABLE_OR_INVALID"
+    },
+    "2025-12-15": {
+      "status": "MISSING_OR_INVALID_BID_OR_ASK",
+      "bid": "SOURCE_UNAVAILABLE_OR_INVALID",
+      "ask": "SOURCE_DAY_RECEIVED"
+    },
+    "2025-12-10": {
+      "status": "QC_ACCEPTED",
+      "m15_all": 96,
+      "m15_native_15": 96,
+      "m15_native_ge14": 96,
+      "median_spread_bps": 1.3810362295804324
+    },
+    "2025-12-12": {
+      "status": "QC_ACCEPTED",
+      "m15_all": 96,
+      "m15_native_15": 96,
+      "m15_native_ge14": 96,
+      "median_spread_bps": 1.433013101371773
+    },
+    "2025-12-17": {
+      "status": "MISSING_OR_INVALID_BID_OR_ASK",
+      "bid": "SOURCE_DAY_RECEIVED",
+      "ask": "SOURCE_UNAVAILABLE_OR_INVALID"
+    },
+    "2025-12-18": {
+      "status": "MISSING_OR_INVALID_BID_OR_ASK",
+      "bid": "SOURCE_DAY_RECEIVED",
+      "ask": "SOURCE_UNAVAILABLE_OR_INVALID"
+    },
+    "2025-12-09": {
+      "status": "MISSING_OR_INVALID_BID_OR_ASK",
+      "bid": "SOURCE_UNAVAILABLE_OR_INVALID",
+      "ask": "SOURCE_UNAVAILABLE_OR_INVALID"
+    },
+    "2025-12-11": {
+      "status": "MISSING_OR_INVALID_BID_OR_ASK",
+      "bid": "SOURCE_DAY_RECEIVED",
+      "ask": "SOURCE_UNAVAILABLE_OR_INVALID"
+    }
+  }
+}
