@@ -1,0 +1,13 @@
+{
+  "source_1": "HISTDATA_XAUUSD_M1_FIXED_EST_TO_M15_CANDIDATE_V1",
+  "source_2": "TWELVE_XAUUSD_15M_2020_2021_OCT2026_CANDIDATE_V1",
+  "sample_design": "First full calendar week of Jan/Apr/Jul/Oct for each year, fixed prior to reading returns",
+  "windows": [],
+  "asof": "2026-10-08",
+  "paid_download": false,
+  "raw_prices_public": false,
+  "status": "BLOCKED",
+  "error_type": "ValueError",
+  "error_summary": "VENDOR_ACCESS_OR_PLAN_ERROR_CODE_400",
+  "retrieved_at_utc": "2026-10-08T12:04:10.994433+00:00"
+}
