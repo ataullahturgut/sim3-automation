@@ -1,0 +1,61 @@
+name: Gold 2026 Public Dukascopy Mirror Price Gates and Fixed Six Models
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - gold_axis_2026/tools/gold_execution_2026_dukascopy_node_mirror_locked_models_20261008.py
+      - .github/workflows/gold-execution-2026-dukascopy-node-mirror-locked-models.yml
+permissions:
+  contents: write
+concurrency:
+  group: gold-2026-dukascopy-mirror-provenance-then-locked-models
+  cancel-in-progress: false
+jobs:
+  source-and-frozen-models:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.32,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'statsmodels>=0.14,<1' 'psycopg[binary]>=3.2,<4'
+      - name: Source-gated mirror forensic including third-party padded-minute quarantine
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_2026_dukascopy_node_mirror_forensic_20261008.py
+          python gold_axis_2026/tools/gold_execution_2026_dukascopy_node_mirror_forensic_20261008.py
+      - name: Frozen 2020/2021/2022 model scores on verified Dukascopy upstream only
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_2026_dukascopy_node_mirror_locked_models_20261008.py
+          python gold_axis_2026/tools/gold_execution_2026_dukascopy_node_mirror_locked_models_20261008.py
+      - name: Preserve dated 2026 private predictions outside git
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-2026-dukascopy-mirror-verified-private-dated-predictions
+          path: gold_axis_2026/GOLD_EXECUTION_2026_DUKASCOPY_NODE_MIRROR_FIXED_MODELS_20261008_DATED_PREDICTIONS_PRIVATE.csv
+          if-no-files-found: warn
+      - name: Commit source receipt plus model metrics or explicit block, no public raw quotes
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for file in gold_axis_2026/GOLD_EXECUTION_2026_DUKASCOPY_NODE_MIRROR_SOURCE_FORENSIC_20261008.json gold_axis_2026/GOLD_EXECUTION_2026_DUKASCOPY_NODE_MIRROR_FIXED_MODELS_20261008_{SUMMARY.json,YEAR_METRICS.csv,MONTH_METRICS.csv,PAIRED_HISTORY.csv}; do
+            if test -f "$file"; then git add "$file"; fi
+          done
+          git diff --cached --quiet || git commit -m 'Record filtered Dukascopy-node mirror 2026 quote gates and pre-2026 frozen model result or block'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 3
+          done
+          exit 1
