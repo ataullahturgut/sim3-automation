@@ -1,0 +1,58 @@
+{
+  "status": "PRAMV_ORIGINAL_2022_PRICE_WARMUP_ACTUAL_MACRO_REFIT_RESTRICTED_HISTORICAL",
+  "asof": "2026-10-08",
+  "price_source": "EVTRADINGLABS_DUKASCOPY_DERIVED_XAUUSD_M15_BIDASK_2020_2025_V1",
+  "macro_event_calendar": "fixed_2021_2025_source.csv",
+  "macro_event_calendar_sha256": "2ee51d0a229456e8f18b2f83d7b42ca7f2abacb44d6f22d8cd1d6e546dc678c6",
+  "source_window": "Accepted 2020\u201325 quote universe; original 2022 price warmup plus 2022 actual+consensus source macro, 2023-24 expanding, 2025 frozen",
+  "original_method_identity": "Frozen M4 Signature+FPCA+PIT-claimed macro; 16-16:30 impulse vs 16:30-17 reversal; released paired surprise veto; agreement; 0.5 logistic threshold; C=1.",
+  "changed_original_thresholds": false,
+  "method_created_from_scratch": false,
+  "original_frozen_PRAMV_V1_overwritten": false,
+  "claim_original_frozen_model_identical": false,
+  "reason_retraining_not_identical": "New independent price source and macro calendar repair; historical 2022 macro 2026-retrieved consensus source has no independent pre-release archived first consensus vintage.",
+  "training_2023": "Original price warmup year 2022 plus strictly matured source-qualified prior 2023 outcomes",
+  "training_2024": "Original 2022 price warmup and strictly matured 2023\u20132024 expanding training",
+  "training_2025": "Original 2022\u20132024 eligible quote history, frozen at 2025-01-01; no 2025 actual labels in fitting",
+  "macro_vintage_warning": "Legacy 2023-25 CPI/NFP/AHE/UNEMP consensus reconstructed/loaded 2026 with reported available_as_of at release; not independently verifiable at pre-release origin; restricted retrospective model only.",
+  "2025_cpi_dec18": "not comparable MoM, excluded rather than falsely treating no macro release or inventing a surprise",
+  "2025_fomc_eight_from_2024_prior_calendar": true,
+  "2025_previous_missing_calendar_issue_dates_changed": 8,
+  "2025_m4_directions_changed_by_fomc_repair": 4,
+  "overlap_model_dates": 742,
+  "gate_total_active": 243,
+  "m4_train_history_from_2020_22": true,
+  "not_bank_executable": true,
+  "not_untouched_2025_oos": true,
+  "Friday_64h_metrics_separate": true,
+  "model_metrics_file": "GOLD_EXECUTION_PRAMV_ORIGINAL_2022_WARMUP_SOURCE_MACRO_RETEST_20261008_YEARLY_METRICS.csv",
+  "dated_model_predictions_file": "GOLD_EXECUTION_PRAMV_ORIGINAL_2022_WARMUP_SOURCE_MACRO_RETEST_20261008_DATED_PREDICTIONS.csv",
+  "fomc_ablation_file": "GOLD_EXECUTION_PRAMV_ORIGINAL_2022_WARMUP_SOURCE_MACRO_RETEST_20261008_FOMC_ABLATION.csv",
+  "full_pramv_workflow_valid_for_restricted_retrospective": true,
+  "elapsed_sec": 17,
+  "m4_train_history_exact_years": [
+    2022,
+    2023,
+    2024
+  ],
+  "macro_event_calendar_2025_official_sha256": "391450f3f3f36eed5a6757d91bc0e56cb59026efc0f8c00485cdaff43a02d9c3",
+  "2020_macro_not_used": "2020 11/12 NFP/AHE/UNEMP pairs + unscheduled FOMC; no fabricated no-announcement input",
+  "source_macro_2022_complete": {
+    "CPI": {
+      "complete": 12
+    },
+    "NFP": {
+      "complete": 12
+    },
+    "AHE": {
+      "complete": 12
+    },
+    "UNEMP": {
+      "complete": 12
+    },
+    "FOMC": {
+      "scheduled_statement_events": 8
+    }
+  },
+  "older_2021_expanded_comparison": "GOLD_EXECUTION_PRAMV_ORIGINAL_FULLER_HISTORY_2021_2025_SOURCE_MACRO_RETEST_20261008_YEARLY_METRICS.csv"
+}

@@ -29,7 +29,7 @@
   "dated_model_predictions_file": "GOLD_EXECUTION_PRAMV_ORIGINAL_FULLER_HISTORY_2021_2025_SOURCE_MACRO_RETEST_20261008_DATED_PREDICTIONS.csv",
   "fomc_ablation_file": "GOLD_EXECUTION_PRAMV_ORIGINAL_FULLER_HISTORY_2021_2025_SOURCE_MACRO_RETEST_20261008_FOMC_ABLATION.csv",
   "full_pramv_workflow_valid_for_restricted_retrospective": true,
-  "elapsed_sec": 12,
+  "elapsed_sec": 20,
   "macro_event_calendar_2025_official_sha256": "391450f3f3f36eed5a6757d91bc0e56cb59026efc0f8c00485cdaff43a02d9c3",
   "macro_train_since_2021": true,
   "2020_prices_available": true,
