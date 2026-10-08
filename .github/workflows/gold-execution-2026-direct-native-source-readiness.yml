@@ -1,0 +1,38 @@
+name: Gold 2026 Direct Dukascopy Source Readiness Snapshot
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - gold_axis_2026/tools/gold_execution_2026_direct_native_source_progress_20261008.py
+      - .github/workflows/gold-execution-2026-direct-native-source-readiness.yml
+permissions:
+  contents: write
+jobs:
+  source-readiness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'psycopg[binary]>=3.2,<4'
+      - run: python gold_axis_2026/tools/gold_execution_2026_direct_native_source_progress_20261008.py
+      - name: Save only private source coverage counts
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_EXECUTION_2026_DIRECT_DUKASCOPY_MONTHLY_COVERAGE_STATUS_20261008.json
+          git diff --cached --quiet || git commit -m 'Record 2026 native Dukascopy private source-readiness counts'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 3
+          done
+          exit 1
