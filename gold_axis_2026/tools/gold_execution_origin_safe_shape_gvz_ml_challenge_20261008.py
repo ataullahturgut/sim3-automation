@@ -112,53 +112,60 @@ def features(q, t):
     if (z.year==2023).sum()<350:raise RuntimeError("2023_MATCHED_DATA_INSUFFICIENT")
     return z
 
-def fit_method(model, hist, test, target):
+def fit_method(model, hist, test, target, cache, refit_key):
     baseline = BASE_DAY if target=="DAY" else BASE_OVN
     cols = (baseline if model=="BASE_LOGIT" else PRICE if model=="SHAPE_LOGIT"
             else PRICE+["gvz_log","gvz_x_early","gvz_x_late"])
     if hist[cols].isna().any().any() or test[cols].isna().any().any():
         raise RuntimeError("HIDDEN_FEATURE_IMPUTATION")
-    x=hist[cols].to_numpy(float); xx=test[cols].to_numpy(float)
-    y=hist.y.to_numpy(int)
-    if model=="SHAPE_GVZ_HGB":
-        f=HistGradientBoostingClassifier(max_iter=90,learning_rate=.04,max_leaf_nodes=7,
-            min_samples_leaf=35,l2_regularization=10.,max_depth=3,random_state=1808)
-    else:
-        f=make_pipeline(StandardScaler(),LogisticRegression(C=.3,max_iter=1000))
-    f.fit(x,y)
-    return float(np.clip(f.predict_proba(xx)[0,1],1e-6,1-1e-6))
+    key=(target,model,refit_key)
+    if key not in cache:
+        x=hist[cols].to_numpy(float)
+        y=hist.y.to_numpy(int)
+        if model=="SHAPE_GVZ_HGB":
+            f=HistGradientBoostingClassifier(max_iter=90,learning_rate=.04,max_leaf_nodes=7,
+                min_samples_leaf=35,l2_regularization=10.,max_depth=3,random_state=1808)
+        else:
+            f=make_pipeline(StandardScaler(),LogisticRegression(C=.3,max_iter=1000))
+        cache[key]=f.fit(x,y)
+    return float(np.clip(cache[key].predict_proba(test[cols].to_numpy(float))[0,1],1e-6,1-1e-6))
 
 def predictions(z):
     all_rows = []
     for target in ("DAY","OVN"):
         k=z[z.target==target].sort_values("date").reset_index(drop=True)
         if (k.year==2022).sum()<120: raise RuntimeError(target+":SHORT_WARMUP")
-        frozen = k[(k.date<pd.Timestamp("2025-01-01"))].copy()
+        frozen = k[(k.date<pd.Timestamp("2025-01-01")) &
+                   ((k.next_date<=pd.Timestamp("2025-01-01")) if target=="OVN" else True)].copy()
         if len(frozen)<540:raise RuntimeError(target+":INSUFFICIENT_FROZEN_TRAINING")
-        current_period=None
         cache={}
         for r in k[k.year.isin([2023,2024,2025])].itertuples(index=False):
             dd=pd.Timestamp(r.date)
             row=k.loc[k.date==dd]
-            # Each training label must be fully known by the prediction origin.
-            train=k[(k.date<dd) & (k.next_date<=dd)].copy() if target=="OVN" else k[k.date<dd].copy()
+            # One fixed fit per development calendar month: only labels fully matured
+            # at the START of that month, and never an outcome from the month itself.
+            month_start=pd.Timestamp(year=dd.year,month=dd.month,day=1)
             if r.year==2025:
                 train=frozen.copy()
-            elif len(train)<MIN_TRAIN:continue
+                refit_key="FROZEN_2024"
+            else:
+                train=(k[(k.date<month_start) & (k.next_date<=month_start)].copy()
+                       if target=="OVN" else k[k.date<month_start].copy())
+                refit_key=month_start.strftime("%Y-%m")
             if len(train)<MIN_TRAIN or train.y.nunique()!=2:continue
             if not (train.date<dd).all():raise RuntimeError("FUTURE_TRAINING_ROW")
-            if target=="OVN" and not (train.next_date<=dd).all():
+            if target=="OVN" and not (train.next_date<=month_start if r.year<2025
+                                      else train.next_date<=pd.Timestamp("2025-01-01")).all():
                 raise RuntimeError("OVERNIGHT_UNMATURED_LABEL")
             if r.year==2025 and train.year.max()>2024:
                 raise RuntimeError("FROZEN_2025_FIT_LEAKAGE")
-            # Monthly prequential fit is executed for all 2023-24 dates.
             for model in MODELS:
-                p=fit_method(model,train,row,target)
+                p=fit_method(model,train,row,target,cache,refit_key)
                 all_rows.append({"date":dd.strftime("%Y-%m-%d"),"year":int(r.year),
                     "target":target,"model":model,"n_train":len(train),
                     "y":int(r.y),"p_up":p,"pred":int(p>=.5),
                     "research_scope":"RETROSPECTIVE_2025_FROZEN_2024" if r.year==2025
-                        else "EXPANDING_DEV_2023_2024"})
+                        else "MONTHLY_PREQUENTIAL_DEV_2023_2024"})
     return pd.DataFrame(all_rows)
 
 def metrics(p):
