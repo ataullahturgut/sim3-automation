@@ -100,6 +100,9 @@ def main():
     p=pd.concat(records,ignore_index=True)
     if p.duplicated(["source_test","date"]).any():raise RuntimeError("DUPLICATE_ORIGIN")
     metrics=evaluate(p)
+    intervals=month_block_intervals(p)
+    intervals.to_csv(AX/(BASE+"_MONTH_BLOCK_UNCERTAINTY.csv"),index=False)
+    print("MONTH_BLOCK_DESCRIPTIVE_INTERVALS",intervals.to_string(index=False),flush=True)
     state={"status":"CAUSAL_RELATIVE_RISK_RECALIBRATION_ACTUALLY_EXECUTED",
       "source_years":"2025 historical EV BIDASK, 2026 mirror versus direct primary separately",
       "regression":"previous prereg fixed 2025 or 2026 absolute-move ridge",
