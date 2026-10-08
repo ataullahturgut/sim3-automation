@@ -4191,3 +4191,41 @@ On actually occurring ≥1% overnight moves, preexisting M4 correctly predicts 6
 
 
 **Additional 2026-10-08 direction falsification:** `tools/gold_execution_tail_direction_expert_audit_20261008.py` and `GOLD_EXECUTION_TAIL_DIRECTION_EXPERT_METRICS_2026-10-08.csv` evaluate chronological exp-loss-weighted M4/PAIR blends on risk-scored common dates (2023=195 / 2024=259 / 2025=253). On volatility-ALERT days, balanced accuracies for standalone M4 are **52.22% / 50.70% / 55.33%**, equal-probability M4+PAIR are **46.67% / 51.26% / 53.56%**, last-60 Brier Hedge are **56.67% / 49.39% / 47.11%**, and risk-conditioned Hedge are **46.67% / 47.78% / 52.56%**. The gains DO NOT transfer; **NO risk-conditioned direction router is promoted**. These are genuinely known-by-origin expert forecasts but retrospective archive-comparison outcomes, not sealed OOS.
+
+
+---
+
+## 2022 warm-up repair + independent implied-volatility risk — 2026-10-08
+
+**Primary new authority (supersedes the truncated-2023 risk calibration as the leading magnitude-probability challenger):**
+- `GOLD_OVN_2022_WARMUP_HAR_GVZ_RESEARCH_RESULT_2026-10-08.md`
+- `GOLD_OVN_2022_WARMUP_GVZ_TAIL1_PREDICTIONS_2026-10-08.csv` — 769 dated predictions / reference outcomes / pre-origin features / three model ablations;
+- `GOLD_OVN_2022_WARMUP_GVZ_TAIL1_METRICS_2026-10-08.csv`;
+- `tools/gold_execution_har_gvz_warmup2022_20261008.py` — independent raw XAU source reconstruction, target QA and D-1 GVZ causal refit;
+- `tools/gold_execution_har_gvz_stress_audit_20261008.py` — paired block, half-year and operating-point stress tests.
+
+**Status:** PROMISING MULTI-YEAR PROBABILISTIC MAGNITUDE ADVANCEMENT / NO CONFIRMATORY PROSPECTIVE OR BANK-EXECUTION CLAIM / NO UP-DOWN PROMOTION.
+
+The previous 2023 magnitude-probability calibration evaluated only 76 days, because the 60-night risk feature warm-up and additional 120 eligible-model-training nights were both charged against 2023. Reusing the existing **2022 15-minute raw source** corrected this deficiency without changing the 2023–2025 frozen overnight target: reconstructed raw price returns match the archived target **769/769** exactly (tolerance 1e-9). The 2022 risk history provides 199 fully mature training rows. The repaired chronological tests now cover **2023 256 / 2024 259 / 2025 254** nights.
+
+**Research hypothesis:** a single low-capacity `logit P(|OVN log return|>=1%)` combines prior 5/20/60-night realized-volatility memory and official D-1 **Cboe GVZ** (GLD options-implied 30-day volatility) as independent sources of past movement and options-market expectation. This is *not* an UP/DOWN forecast. Cross-year train discipline: 2023/24 strictly expanding prior-matured labels; 2025 parameters fixed to 2022–2024; every 2025 target also belongs to the original archived target universe.
+
+| Year | Days / ≥1% nights | Historical-rate Brier | HAR-only Brier | GVZ-only Brier | HAR+GVZ Brier | Relative Brier gain vs rate |
+|---|---:|---:|---:|---:|---:|---:|
+| 2023 | 256 / 25 | 0.089595 | 0.088378 | **0.087299** | **0.087457** | **2.39%** |
+| 2024 | 259 / 24 | 0.084713 | **0.083772** | 0.084560 | **0.083812** | **1.06%** |
+| 2025 retrospective | 254 / 43 | 0.144108 | 0.136964 | 0.132209 | **0.131277** | **8.90%** |
+
+2025 HAR+GVZ vs HAR-only relative Brier gain ~4.15%. 2025 AUC for ≥1% risk ranking: 0.6969 (HAR+GVZ), 0.6585 (HAR), 0.7065 (GVZ alone). Thus **GVZ alone is a serious alternative**, and the combined method's extra value is *not* uniformly superior to every simple component across years. 2025 historical errors improve in H1 and H2, and remain lower after omitting the largest seven target nights.
+
+Exploratory five-date block-bootstrap interval for Brier improvement vs historical-rate benchmark: 2023 [-0.000224,+0.004409], 2024 [-0.001601,+0.003648], 2025 [+0.003816,+0.024097]. The first two include zero; 2025 was inspected during research design so the last **is not adjusted for model discovery** and is not pristine future proof.
+
+A fixed 2023–2024 80th-percentile predicted-risk threshold flags **113/254** dates in 2025 and contains all seven ≥2% absolute overnight moves. This is a wide **44.5%-of-days** warning set, *NOT* a 7/7 UP/DOWN sign result, and must not be compared without equal alarm budgets to the preceding volatility-only 95-day / 6-of-7 rule.
+
+**Binding decision:**
+1. **Preserve** 2026-10-07 frozen PRAMV V1 direction and current DAY/OVERNIGHT target distinction.
+2. **Continue** HAR+GVZ only as a distinct probabilistic overnight large-move *risk-head* candidate; no automatic buy/sell or claimed bank P&L.
+3. **Retain** strong simple ablations (GVZ alone, HAR alone, same-history frequency) in any future evaluation.
+4. **Require** independent execution of source script in CI, true prospective timestamped forecasts, stable calibration and venue/source-readiness verification before research promotion.
+5. **Do not use** 2025 incomplete macro event-calendar flags; the macro-volatility OR head remains quarantined for 2025.
+6. **Direction remains unsolved:** path-shape, jump, afternoon-price pressure, D-1 rates/GVZ sign models, and dynamic M4/PAIR voting have not produced transferable full-coverage balanced UP/DOWN skill. Explore a genuinely independent GC/COMEX price discovery source only after audited same-instrument, origin-safe matching, not another ungoverned model stack.
