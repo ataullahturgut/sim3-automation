@@ -1,0 +1,95 @@
+{
+  "status": "UNIFORM_2020_2025_BIDASK_SOURCE_QUALITY_GATED_PRIVATE_RESEARCH_TARGET_CREATED",
+  "asof": "2026-10-08",
+  "independent_uniform_source": "EVTRADINGLABS_DUKASCOPY_DERIVED_XAUUSD_M15_BIDASK_2020_2025_V1",
+  "quote_identity": "DUKASCOPY_DERIVED_BID_ASK_ON_SAME_UTC_GRID",
+  "target_clock": "Europe/Istanbul fixed UTC+03, 09-17 DAY and 17-next09 OVN",
+  "original_archive_overwritten": false,
+  "composite_blended_into_bid": false,
+  "native_1min_completeness_proven": false,
+  "PIT_historical_vendor_vintage": false,
+  "bank_tradable_quote": false,
+  "model_retrained": false,
+  "years": {
+    "2020": {
+      "source_m15_rows": 23702,
+      "issue_dates": 259,
+      "day_mature": 258,
+      "day_quarantine": 1,
+      "overnight_mature": 251,
+      "overnight_quarantine": 8,
+      "day_bidask_sign_disagreement": 1,
+      "overnight_bidask_sign_disagreement": 2,
+      "day_small_bid_move_10bps": 49,
+      "overnight_small_bid_move_10bps": 30
+    },
+    "2021": {
+      "source_m15_rows": 23626,
+      "issue_dates": 258,
+      "day_mature": 258,
+      "day_quarantine": 0,
+      "overnight_mature": 250,
+      "overnight_quarantine": 8,
+      "day_bidask_sign_disagreement": 0,
+      "overnight_bidask_sign_disagreement": 1,
+      "day_small_bid_move_10bps": 37,
+      "overnight_small_bid_move_10bps": 45
+    },
+    "2022": {
+      "source_m15_rows": 23647,
+      "issue_dates": 258,
+      "day_mature": 258,
+      "day_quarantine": 0,
+      "overnight_mature": 248,
+      "overnight_quarantine": 10,
+      "day_bidask_sign_disagreement": 0,
+      "overnight_bidask_sign_disagreement": 1,
+      "day_small_bid_move_10bps": 38,
+      "overnight_small_bid_move_10bps": 28
+    },
+    "2023": {
+      "source_m15_rows": 23544,
+      "issue_dates": 257,
+      "day_mature": 256,
+      "day_quarantine": 1,
+      "overnight_mature": 247,
+      "overnight_quarantine": 10,
+      "day_bidask_sign_disagreement": 0,
+      "overnight_bidask_sign_disagreement": 1,
+      "day_small_bid_move_10bps": 53,
+      "overnight_small_bid_move_10bps": 40
+    },
+    "2024": {
+      "source_m15_rows": 23733,
+      "issue_dates": 259,
+      "day_mature": 259,
+      "day_quarantine": 0,
+      "overnight_mature": 249,
+      "overnight_quarantine": 10,
+      "day_bidask_sign_disagreement": 0,
+      "overnight_bidask_sign_disagreement": 0,
+      "day_small_bid_move_10bps": 38,
+      "overnight_small_bid_move_10bps": 39
+    },
+    "2025": {
+      "source_m15_rows": 23638,
+      "issue_dates": 258,
+      "day_mature": 258,
+      "day_quarantine": 0,
+      "overnight_mature": 249,
+      "overnight_quarantine": 9,
+      "day_bidask_sign_disagreement": 1,
+      "overnight_bidask_sign_disagreement": 0,
+      "day_small_bid_move_10bps": 49,
+      "overnight_small_bid_move_10bps": 23
+    }
+  },
+  "sha256_private_origin_target_vintage": "4f0c05ccc66105c42b3784b951caf5ef6a6efa38f1d857a74109abb0e377ae14",
+  "private_storage": {
+    "new_origin_rows": 1549,
+    "private_total": 1549,
+    "valid_day": 1547,
+    "valid_overnight": 1494
+  },
+  "completed_at_utc": "2026-10-08T14:51:03.026227+00:00"
+}
