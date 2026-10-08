@@ -43,3 +43,56 @@ def panel(q,t,qs,ts):
     z["log_pre_rv"]=np.log(z.pre4h_rv)
     if z.duplicated(["date","target"]).any():raise ValueError("DUPLICATE_MATURITY")
     return z
+
+PATH_COLS=["path_"+str(i) for i in range(8)]
+METHODS=("CBR_PATH","CBR_REGIME_PATH","HGB_FROZEN_2021","EMPIRICAL_PRIOR")
+def analogue(tr,te,regime):
+    a=tr[PATH_COLS].to_numpy(float)
+    x=te[PATH_COLS].to_numpy(float)
+    y=tr.y.to_numpy(int)
+    base=float(np.mean(y))
+    if len(y)<100 or len(np.unique(y))<2:raise ValueError("TRAIN_ANALOGUE_HISTORY_FAIL")
+    d2=((x[:,None,:]-a[None,:,:])**2).sum(axis=2)/8
+    if regime:
+        keys=["log_pre_rv","gvz_log"]
+        z=tr[keys].to_numpy(float)
+        zx=te[keys].to_numpy(float)
+        scale=np.maximum(z.std(axis=0),1e-6)
+        diff=(zx[:,None,:]-z[None,:,:])/scale[None,None,:]
+        d2+=.30*(diff**2).sum(axis=2)
+    d=np.sqrt(np.maximum(0,d2))
+    p=[]
+    for row in d:
+        idx=np.argpartition(row,41)[:41]
+        distances=row[idx]
+        temperature=max(1e-5,float(np.median(distances)))
+        w=np.exp(-distances/temperature)
+        p.append(float((np.dot(w,y[idx])+5*base)/(np.sum(w)+5)))
+    return np.clip(np.array(p),1e-6,1-1e-6)
+def forecast(z,source_name):
+    results=[]
+    for target in ("DAY","OVN"):
+      k=z[z.target==target].sort_values("date").copy()
+      for period,test in k[k.year>=2023].groupby(k.date.dt.to_period("M")):
+        dt=period.to_timestamp()
+        cutoff=dt if period.year<=2024 else pd.Timestamp(str(period.year)+"-01-01")
+        training=k[(k.date<cutoff)&(k.year>=2021)]
+        if target=="OVN":training=training[training.next_date<=cutoff]
+        if len(training)<280:continue
+        if not (training.date<test.date.min()).all():raise ValueError("TARGET_ORIGIN_LEAK")
+        cols=frozen.COLUMNS["SHAPE_GVZ_HGB"]
+        benchmark=frozen.method_fit(training[cols].to_numpy(float),
+                              training.y.to_numpy(int),"SHAPE_GVZ_HGB")
+        probs={
+          "CBR_PATH":analogue(training,test,False),
+          "CBR_REGIME_PATH":analogue(training,test,True),
+          "HGB_FROZEN_2021":benchmark.predict_proba(test[cols].to_numpy(float))[:,1],
+          "EMPIRICAL_PRIOR":np.full(len(test),float(training.y.mean()))}
+        for name,p in probs.items():
+          for i,r in enumerate(test.itertuples(index=False)):
+            results.append({"source_test":source_name,"target":target,
+              "date":r.date.strftime("%Y-%m-%d"),"year":int(r.year),
+              "month":str(period),"method":name,"y":int(r.y),"p_up":float(p[i]),
+              "pred":int(p[i]>=.5),"n_historical_paths":len(training),
+              "training_cutoff":str(cutoff)})
+    return pd.DataFrame(results)
