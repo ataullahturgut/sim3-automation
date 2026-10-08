@@ -35,7 +35,7 @@ def native_2022_25():
     for frame in (a,b):
         frame["ts"]=pd.to_datetime(frame.dt_utc,utc=True,errors="raise")
     a=a[(a.ts>="2022-01-01")&(a.ts<"2023-01-01")]
-    b=b[(b.ts>="2023-01-01")&(b.ts<"2026-01-01")]
+    b=b[(b.ts>="2023-01-01")&(b.ts<"2026-01-10")]
     return pd.concat([a,b])[["ts","open","close"]].copy()
 
 def private_2020_21():
@@ -87,6 +87,9 @@ def build(q):
         day=segment(d,"06:00","13:45")
         ovn=lret(p(d,"14:00","open"),p(nex,"05:45","close")) if nex else np.nan
         prev_ovn=lret(p(prev,"14:00","open"),p(d,"05:45","close")) if prev else np.nan
+        # Do not calculate a mixed-vintage return across the 2021/2022 archive join.
+        if nex and d.year==2021 and nex.year==2022: ovn=np.nan
+        if prev and prev.year==2021 and d.year==2022: prev_ovn=np.nan
         row.append({"date":pd.Timestamp(d),"year":d.year,
             "next_date":pd.Timestamp(nex) if nex else pd.NaT,
             "r0800_0830":segment(d,"05:00","05:15"),
