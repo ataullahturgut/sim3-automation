@@ -1,0 +1,232 @@
+{
+  "asof": "2026-10-08",
+  "source": "THIRD_PARTY_GITHUB_DUKASCOPY_NODE_M1_2026_M15_BIDASK_CANDIDATE_V1",
+  "third_party_repository": "3650326613-png/dukascopy_xauusd_1m_data",
+  "status": "THIRD_PARTY_DUKASCOPY_MIRROR_SAMPLED_PRICE_GATES_PASS_RESEARCH_CANDIDATE",
+  "month_receipts": [
+    {
+      "month": "2025-12",
+      "bid": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "92936e9e939434985ba0928cafbd8c2a248fd1c0f60371b36d3260d6481773fd",
+        "rows": 44640,
+        "size_bytes": 2231857
+      },
+      "ask": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "0993e6f3ef6e5aeb70c965e5c23f4ee285721c9d7b4a1f70a206d09505465790",
+        "rows": 44640,
+        "size_bytes": 2231993
+      },
+      "market_closed_minute_rows_quarantined": 10800,
+      "minute_aligned_paired_rows": 33840,
+      "full_calendar_minute_m15_before_flat_filter": 2256,
+      "zero_range_m15_quarantined": 249,
+      "accepted_nonclosed_m15_after_flat_filter": 2007,
+      "label": "THIRD_PARTY_M1_CALENDAR_FILLED_NOT_PROOF_OF_TICK_NATIVE",
+      "status": "QC_FILTERED_NONCLOSED"
+    },
+    {
+      "month": "2026-01",
+      "bid": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "906ee499bcc0236a6b6cb74ecd6c382ccf435d989a779833952a5c2fbe4ea3fe",
+        "rows": 44640,
+        "size_bytes": 2231894
+      },
+      "ask": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "b3dc4193328b2c61d44a5de8fd47f437d7e98349a978b64d72d7d57f8dfec89c",
+        "rows": 44640,
+        "size_bytes": 2231944
+      },
+      "market_closed_minute_rows_quarantined": 12240,
+      "minute_aligned_paired_rows": 32400,
+      "full_calendar_minute_m15_before_flat_filter": 2160,
+      "zero_range_m15_quarantined": 238,
+      "accepted_nonclosed_m15_after_flat_filter": 1922,
+      "label": "THIRD_PARTY_M1_CALENDAR_FILLED_NOT_PROOF_OF_TICK_NATIVE",
+      "status": "QC_FILTERED_NONCLOSED"
+    },
+    {
+      "month": "2026-02",
+      "bid": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "c58121aa702a061a62ca9ef976f682a613231c5b422e820491d121d347a6d7c9",
+        "rows": 40320,
+        "size_bytes": 2015873
+      },
+      "ask": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "a3985eb8a8236bcdecf25ec2541c3cdac1e2ff8e2266fc30e78ddd58253f28a6",
+        "rows": 40320,
+        "size_bytes": 2015990
+      },
+      "market_closed_minute_rows_quarantined": 10800,
+      "minute_aligned_paired_rows": 29520,
+      "full_calendar_minute_m15_before_flat_filter": 1968,
+      "zero_range_m15_quarantined": 138,
+      "accepted_nonclosed_m15_after_flat_filter": 1830,
+      "label": "THIRD_PARTY_M1_CALENDAR_FILLED_NOT_PROOF_OF_TICK_NATIVE",
+      "status": "QC_FILTERED_NONCLOSED"
+    },
+    {
+      "month": "2026-03",
+      "bid": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "6f1fa7f0497d74ec053755624e9455d7ab50b0a03d1b712504b48f8690af8dab",
+        "rows": 44640,
+        "size_bytes": 2231933
+      },
+      "ask": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "670a2dfc1f010661b9a435c78c9c093f7e48d8a777892619d3b84bc3a2a5e173",
+        "rows": 44640,
+        "size_bytes": 2231956
+      },
+      "market_closed_minute_rows_quarantined": 12060,
+      "minute_aligned_paired_rows": 32580,
+      "full_calendar_minute_m15_before_flat_filter": 2172,
+      "zero_range_m15_quarantined": 140,
+      "accepted_nonclosed_m15_after_flat_filter": 2032,
+      "label": "THIRD_PARTY_M1_CALENDAR_FILLED_NOT_PROOF_OF_TICK_NATIVE",
+      "status": "QC_FILTERED_NONCLOSED"
+    },
+    {
+      "month": "2026-04",
+      "bid": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "a976ab5b2511e79a87b6aaffb75d8b04b5295d7085240668faecae0f577aa721",
+        "rows": 43200,
+        "size_bytes": 2159984
+      },
+      "ask": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "95e5a5fd9dd9ad37bbc162bc67e4e92c44a87ef1f298ecedbf5ef37cc6c36091",
+        "rows": 43200,
+        "size_bytes": 2159982
+      },
+      "market_closed_minute_rows_quarantined": 10800,
+      "minute_aligned_paired_rows": 32400,
+      "full_calendar_minute_m15_before_flat_filter": 2160,
+      "zero_range_m15_quarantined": 228,
+      "accepted_nonclosed_m15_after_flat_filter": 1932,
+      "label": "THIRD_PARTY_M1_CALENDAR_FILLED_NOT_PROOF_OF_TICK_NATIVE",
+      "status": "QC_FILTERED_NONCLOSED"
+    },
+    {
+      "month": "2026-05",
+      "bid": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "25398f20bce21bef289fe8321808488ef6165996064f38fab3f44f488dfd5bbd",
+        "rows": 44640,
+        "size_bytes": 2231990
+      },
+      "ask": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "af9b1efcce3ede8f01c0b27806f0886419c784fa2d0feb5446e680beb53cca33",
+        "rows": 44640,
+        "size_bytes": 2232014
+      },
+      "market_closed_minute_rows_quarantined": 13500,
+      "minute_aligned_paired_rows": 31140,
+      "full_calendar_minute_m15_before_flat_filter": 2076,
+      "zero_range_m15_quarantined": 154,
+      "accepted_nonclosed_m15_after_flat_filter": 1922,
+      "label": "THIRD_PARTY_M1_CALENDAR_FILLED_NOT_PROOF_OF_TICK_NATIVE",
+      "status": "QC_FILTERED_NONCLOSED"
+    },
+    {
+      "month": "2026-06",
+      "bid": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "32498557a57cffbc80134be81755f89bb55d95aed6037e95fad259c10a52b284",
+        "rows": 36479,
+        "size_bytes": 1823951
+      },
+      "ask": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "e87bc45b471716a16c9849d07f32d7ca4c2267d5340e06575ddeb157ea34429f",
+        "rows": 36479,
+        "size_bytes": 1823944
+      },
+      "market_closed_minute_rows_quarantined": 5040,
+      "minute_aligned_paired_rows": 31439,
+      "full_calendar_minute_m15_before_flat_filter": 2095,
+      "zero_range_m15_quarantined": 88,
+      "accepted_nonclosed_m15_after_flat_filter": 2007,
+      "label": "THIRD_PARTY_M1_CALENDAR_FILLED_NOT_PROOF_OF_TICK_NATIVE",
+      "status": "QC_FILTERED_NONCLOSED"
+    },
+    {
+      "month": "2026-07",
+      "bid": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "1861d23f4edbaa9cc5c5ca2bd419c9a7d54ef60299a75c5d4e8e8681bd308286",
+        "rows": 37739,
+        "size_bytes": 1886898
+      },
+      "ask": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "8dfba3b5b078cd3e5fbc0d6b946c3e6be34372a170bbbd50251ebd2299314f81",
+        "rows": 37739,
+        "size_bytes": 1886953
+      },
+      "market_closed_minute_rows_quarantined": 5040,
+      "minute_aligned_paired_rows": 32699,
+      "full_calendar_minute_m15_before_flat_filter": 2179,
+      "zero_range_m15_quarantined": 88,
+      "accepted_nonclosed_m15_after_flat_filter": 2091,
+      "label": "THIRD_PARTY_M1_CALENDAR_FILLED_NOT_PROOF_OF_TICK_NATIVE",
+      "status": "QC_FILTERED_NONCLOSED"
+    },
+    {
+      "month": "2026-08",
+      "bid": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "4f61d531018a8e8c37b1f410945e1d23d59fee96cde13bef223dcc9e63d0f852",
+        "rows": 24115,
+        "size_bytes": 1205675
+      },
+      "ask": {
+        "status": "CSV_RECEIVED",
+        "raw_sha256": "674b6c378ec244add68b153a493f3491e9b82d1cdb2de460f16a3d033bd49662",
+        "rows": 24116,
+        "size_bytes": 1205804
+      },
+      "market_closed_minute_rows_quarantined": 3780,
+      "minute_aligned_paired_rows": 20335,
+      "full_calendar_minute_m15_before_flat_filter": 1351,
+      "zero_range_m15_quarantined": 60,
+      "accepted_nonclosed_m15_after_flat_filter": 1291,
+      "label": "THIRD_PARTY_M1_CALENDAR_FILLED_NOT_PROOF_OF_TICK_NATIVE",
+      "status": "QC_FILTERED_NONCLOSED"
+    }
+  ],
+  "calendar_filled_weekends_and_flat_m15_not_native": true,
+  "raw_price_files_committed_to_git": false,
+  "source_identity": "Dukascopy-node republished public M1, distinct from direct Dukascopy native M1",
+  "2026_latest_possible": "2026-08-20; Sep and Oct NOT present in source",
+  "2025_original_ev_quote_gate": {
+    "matched_m15_bars": 2007,
+    "matched_price_cells": 8028,
+    "median_abs_bps": 0.01157779933846571,
+    "p95_abs_bps": 0.011922134157651481,
+    "price_gate_pass": true
+  },
+  "2026_direct_primary_overlap_gate": {
+    "status": "PRIMARY_OVERLAP_EVALUATED",
+    "matched_m15_bars": 7758,
+    "matched_price_cells": 31032,
+    "matched_utc_days": 86,
+    "median_abs_bps": 0.0,
+    "p95_abs_bps": 0.0,
+    "max_abs_bps": 0.0,
+    "price_gate_pass": true
+  },
+  "2026_m15_nonclosed_nonflat_candidates": 15027,
+  "new_private_m15_saved": 15027,
+  "same_upstream_provider_not_same_publisher": true,
+  "2026_full_year_claim": false,
+  "runtime_seconds": 7
+}
