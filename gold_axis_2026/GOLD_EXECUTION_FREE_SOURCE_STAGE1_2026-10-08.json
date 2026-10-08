@@ -1,0 +1,132 @@
+{
+  "authority": "GOLD_EXECUTION_2020_2026_DATA_ACQUISITION_AUTHORITY_2026-10-08.md",
+  "retrieved_at_utc": "2026-10-08T11:52:32.396164+00:00",
+  "asof": "2026-10-08",
+  "last_matured_daily_date_limit": "2026-10-07",
+  "priced_historical_download_executed": false,
+  "model_retrained": false,
+  "daily_sources": {
+    "GVZ": {
+      "rows": 1701,
+      "first": "2020-01-02",
+      "last": "2026-10-07",
+      "annual": {
+        "2020": 252,
+        "2021": 254,
+        "2022": 251,
+        "2023": 250,
+        "2024": 252,
+        "2025": 250,
+        "2026": 192
+      },
+      "thin_years": {},
+      "overlap_rows": 1257,
+      "overlap_conflicts": 0,
+      "overlap_max_abs_delta": 0.0,
+      "frozen_rows": 1257,
+      "overlap_insufficient": false,
+      "acceptance": "CANDIDATE_READY",
+      "status": "DOWNLOADED_FREE_CANDIDATE",
+      "source_url": "https://cdn-api.cboe.com/api/global/us_indices/daily_prices/GVZ_History.csv",
+      "filename": "GOLD_EXECUTION_GVZ_FREE_CANDIDATE_2020_20261007.csv",
+      "raw_sha256": "a24d96e22d5d1b422b6fbcdde8a67125275ff763e544395a7ea251390ecb105a",
+      "csv_sha256": "c4da766312e58388add89e7a980a7cf8cf96d66b727d306e2915d74f9b9cd231",
+      "origin_use": "D_MINUS_1_UNTIL_PUBLICATION_CLOCK_PROVEN"
+    },
+    "DGS2": {
+      "rows": 1692,
+      "first": "2020-01-02",
+      "last": "2026-10-06",
+      "annual": {
+        "2020": 251,
+        "2021": 251,
+        "2022": 249,
+        "2023": 250,
+        "2024": 250,
+        "2025": 249,
+        "2026": 192
+      },
+      "thin_years": {},
+      "overlap_rows": 757,
+      "overlap_conflicts": 0,
+      "overlap_max_abs_delta": 0.0,
+      "frozen_rows": 757,
+      "overlap_insufficient": false,
+      "acceptance": "CANDIDATE_READY",
+      "status": "DOWNLOADED_FREE_CANDIDATE",
+      "source_url": "https://www.federalreserve.gov/datadownload/Output.aspx?filetype=csv&from=&label=include&lastobs=&layout=seriescolumn&rel=H15&series=bf17364827e38702b42a58cf8eaa3f78&to=&type=package",
+      "filename": "GOLD_EXECUTION_DGS2_FREE_CANDIDATE_2020_20261007.csv",
+      "raw_sha256": "233311307ac2f3acf08ae34d5ca3677bba695ce69e7e78d513390a85ffc7d5a9",
+      "csv_sha256": "ddd093fb6b6bb328251e514125a20ee3db9970cc94806eb6ab594270077ac9fd",
+      "origin_use": "D_MINUS_1_UNTIL_PUBLICATION_CLOCK_PROVEN"
+    },
+    "DFII10": {
+      "status": "SOURCE_FETCH_OR_SCHEMA_FAILED",
+      "error_type": "RuntimeError"
+    }
+  },
+  "xau15m_twelve_probe": {
+    "status": "READ_ONLY_SAMPLE_PROBE",
+    "interval": "15min",
+    "symbol": "XAU/USD",
+    "probes": [
+      {
+        "date": "2020-06-01",
+        "http_status": 200,
+        "api_code": "",
+        "rows": 93,
+        "first_utc": "2020-06-01 00:00:00",
+        "last_utc": "2020-06-02 00:00:00",
+        "status": "SAMPLE_AVAILABLE"
+      },
+      {
+        "date": "2021-06-01",
+        "http_status": 200,
+        "api_code": "",
+        "rows": 93,
+        "first_utc": "2021-06-01 00:00:00",
+        "last_utc": "2021-06-02 00:00:00",
+        "status": "SAMPLE_AVAILABLE"
+      },
+      {
+        "date": "2026-10-06",
+        "http_status": 200,
+        "api_code": "",
+        "rows": 97,
+        "first_utc": "2026-10-06 00:00:00",
+        "last_utc": "2026-10-07 00:00:00",
+        "status": "SAMPLE_AVAILABLE"
+      }
+    ],
+    "bulk_2020_2021_access": "NOT_PROVEN_BY_SAMPLE_ALONE",
+    "vendor_raw_prices_saved": false,
+    "charged_download": false
+  },
+  "gc_databento_cost_probe": {
+    "status": "QUOTES_ONLY_NO_DOWNLOAD",
+    "estimates": {
+      "GC_1m_2020_week": {
+        "status": "QUOTE_ONLY",
+        "estimated_usd": 0.025164857507
+      },
+      "GC_1m_2024_week": {
+        "status": "QUOTE_ONLY",
+        "estimated_usd": 0.025139302015
+      },
+      "GC_1m_2026_week": {
+        "status": "QUOTE_ONLY",
+        "estimated_usd": 0.024595335126
+      },
+      "GC_1h_gap_2020_2021": {
+        "status": "QUOTE_ONLY",
+        "estimated_usd": 0.117008686066
+      },
+      "GC_1h_gap_2025_2026": {
+        "status": "QUOTE_ONLY",
+        "estimated_usd": 0.103482529521
+      }
+    },
+    "charged_download": false
+  },
+  "status": "PARTIAL_OR_QUARANTINED"
+}
