@@ -66,3 +66,26 @@ def produce_predictions(z,tag):
                     "down_tail":bool(r.realized_return<=down),
                     "train_freeze":str(freeze)})
     return pd.DataFrame(out)
+
+def score(p):
+    rows=[]
+    for (source,year),g in p.groupby(["source_test","year"]):
+        pred=g.risk_pred.to_numpy(float);actual=g.actual_abs.to_numpy(float)
+        baseline=g.naive.to_numpy(float)
+        alarm=g.alarm.to_numpy(bool)
+        big=g.large_event.to_numpy(bool);down=g.down_tail.to_numpy(bool)
+        def capture(ev):
+            return float((alarm&ev).sum()/ev.sum()) if ev.sum() else None
+        def lift(ev):
+            return float((alarm&ev).sum()/alarm.sum()/ev.mean()) if alarm.sum() and ev.mean() else None
+        rho,pv=spearmanr(pred,actual)
+        mae=float(np.mean(abs(pred-actual)));base=float(np.mean(abs(baseline-actual)))
+        rows.append({"source_test":source,"year":int(year),"n":len(g),
+            "MAE_ridge_bps":mae*10000,"MAE_naive_bps":base*10000,
+            "MAE_improvement":(base-mae)/base,
+            "rank_spearman":float(rho),"rank_p_unadjusted":float(pv),
+            "risk_alarm_rate":float(alarm.mean()),
+            "large_event_rate":float(big.mean()),"large_event_capture":capture(big),
+            "large_event_precision_lift":lift(big),"down_tail_rate":float(down.mean()),
+            "down_tail_capture":capture(down),"down_tail_precision_lift":lift(down)})
+    return pd.DataFrame(rows)
