@@ -1,0 +1,190 @@
+{
+  "asof": "2026-10-08",
+  "status": "DATABENTO_NATIVE_H1_SOURCE_ACQUIRED_PRIVATE_QC_PASS",
+  "purpose": "Source-only 5 independent CME H1 2023 to Oct7 2026, no model scores",
+  "dataset": "GLBX.MDP3",
+  "schema": "ohlcv-1h",
+  "symbols": [
+    "GC.c.0",
+    "SI.c.0",
+    "NQ.c.0",
+    "ZN.c.0",
+    "CL.c.0"
+  ],
+  "source_start": "2023-01-01",
+  "source_end_exclusive": "2026-10-08",
+  "cost_budget_USD": 2.0,
+  "billing_only_if_quoted_under_budget": true,
+  "raw_licensed_market_data_public": false,
+  "spot_execution_model_fit": false,
+  "private_table": "gold_research_cme_glbx_futures_2023_2026_h1_5roots_continuous_c_v1",
+  "before_decision_feature_clock": "H1 bar starts ts_event; bar must finish plus 15 min before issue",
+  "new_pre_request_cost_estimate_USD": 0.76452,
+  "rows_received": 77152,
+  "new_private_rows_inserted": 77152,
+  "symbol_year_coverage": [
+    {
+      "symbol": "CL.c.0",
+      "year": 2023,
+      "rows": 5838,
+      "first_UTC": "2023-01-02T23:00:00+00:00",
+      "last_UTC": "2023-12-29T21:00:00+00:00",
+      "instrument_roll_ids": 13
+    },
+    {
+      "symbol": "CL.c.0",
+      "year": 2024,
+      "rows": 5863,
+      "first_UTC": "2024-01-01T23:00:00+00:00",
+      "last_UTC": "2024-12-31T21:00:00+00:00",
+      "instrument_roll_ids": 13
+    },
+    {
+      "symbol": "CL.c.0",
+      "year": 2025,
+      "rows": 5828,
+      "first_UTC": "2025-01-01T23:00:00+00:00",
+      "last_UTC": "2025-12-31T21:00:00+00:00",
+      "instrument_roll_ids": 13
+    },
+    {
+      "symbol": "CL.c.0",
+      "year": 2026,
+      "rows": 4493,
+      "first_UTC": "2026-01-01T23:00:00+00:00",
+      "last_UTC": "2026-10-07T23:00:00+00:00",
+      "instrument_roll_ids": 10
+    },
+    {
+      "symbol": "GC.c.0",
+      "year": 2023,
+      "rows": 1829,
+      "first_UTC": "2023-01-03T09:00:00+00:00",
+      "last_UTC": "2023-12-29T20:00:00+00:00",
+      "instrument_roll_ids": 13
+    },
+    {
+      "symbol": "GC.c.0",
+      "year": 2024,
+      "rows": 1879,
+      "first_UTC": "2024-01-01T23:00:00+00:00",
+      "last_UTC": "2024-12-31T21:00:00+00:00",
+      "instrument_roll_ids": 13
+    },
+    {
+      "symbol": "GC.c.0",
+      "year": 2025,
+      "rows": 2782,
+      "first_UTC": "2025-01-02T06:00:00+00:00",
+      "last_UTC": "2025-12-31T18:00:00+00:00",
+      "instrument_roll_ids": 13
+    },
+    {
+      "symbol": "GC.c.0",
+      "year": 2026,
+      "rows": 1445,
+      "first_UTC": "2026-01-02T14:00:00+00:00",
+      "last_UTC": "2026-10-07T17:00:00+00:00",
+      "instrument_roll_ids": 10
+    },
+    {
+      "symbol": "NQ.c.0",
+      "year": 2023,
+      "rows": 5865,
+      "first_UTC": "2023-01-02T23:00:00+00:00",
+      "last_UTC": "2023-12-29T21:00:00+00:00",
+      "instrument_roll_ids": 5
+    },
+    {
+      "symbol": "NQ.c.0",
+      "year": 2024,
+      "rows": 5892,
+      "first_UTC": "2024-01-01T23:00:00+00:00",
+      "last_UTC": "2024-12-31T21:00:00+00:00",
+      "instrument_roll_ids": 5
+    },
+    {
+      "symbol": "NQ.c.0",
+      "year": 2025,
+      "rows": 5852,
+      "first_UTC": "2025-01-01T23:00:00+00:00",
+      "last_UTC": "2025-12-31T21:00:00+00:00",
+      "instrument_roll_ids": 5
+    },
+    {
+      "symbol": "NQ.c.0",
+      "year": 2026,
+      "rows": 4525,
+      "first_UTC": "2026-01-01T23:00:00+00:00",
+      "last_UTC": "2026-10-07T23:00:00+00:00",
+      "instrument_roll_ids": 4
+    },
+    {
+      "symbol": "SI.c.0",
+      "year": 2023,
+      "rows": 1039,
+      "first_UTC": "2023-01-03T06:00:00+00:00",
+      "last_UTC": "2023-12-29T13:00:00+00:00",
+      "instrument_roll_ids": 13
+    },
+    {
+      "symbol": "SI.c.0",
+      "year": 2024,
+      "rows": 1159,
+      "first_UTC": "2024-01-01T23:00:00+00:00",
+      "last_UTC": "2024-12-31T19:00:00+00:00",
+      "instrument_roll_ids": 13
+    },
+    {
+      "symbol": "SI.c.0",
+      "year": 2025,
+      "rows": 1482,
+      "first_UTC": "2025-01-02T01:00:00+00:00",
+      "last_UTC": "2025-12-31T18:00:00+00:00",
+      "instrument_roll_ids": 13
+    },
+    {
+      "symbol": "SI.c.0",
+      "year": 2026,
+      "rows": 1264,
+      "first_UTC": "2026-01-02T01:00:00+00:00",
+      "last_UTC": "2026-10-07T19:00:00+00:00",
+      "instrument_roll_ids": 10
+    },
+    {
+      "symbol": "ZN.c.0",
+      "year": 2023,
+      "rows": 5309,
+      "first_UTC": "2023-01-02T23:00:00+00:00",
+      "last_UTC": "2023-12-29T21:00:00+00:00",
+      "instrument_roll_ids": 5
+    },
+    {
+      "symbol": "ZN.c.0",
+      "year": 2024,
+      "rows": 5363,
+      "first_UTC": "2024-01-01T23:00:00+00:00",
+      "last_UTC": "2024-12-31T21:00:00+00:00",
+      "instrument_roll_ids": 5
+    },
+    {
+      "symbol": "ZN.c.0",
+      "year": 2025,
+      "rows": 5322,
+      "first_UTC": "2025-01-01T23:00:00+00:00",
+      "last_UTC": "2025-12-31T21:00:00+00:00",
+      "instrument_roll_ids": 5
+    },
+    {
+      "symbol": "ZN.c.0",
+      "year": 2026,
+      "rows": 4123,
+      "first_UTC": "2026-01-01T23:00:00+00:00",
+      "last_UTC": "2026-10-07T23:00:00+00:00",
+      "instrument_roll_ids": 4
+    }
+  ],
+  "model_2026_accuracy_measured": false,
+  "license_raw_quotes_not_committed": true,
+  "duration_seconds": 570
+}
