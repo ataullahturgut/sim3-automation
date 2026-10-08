@@ -1,0 +1,28 @@
+{
+  "asof": "2026-10-08T12:02:09.117200+00:00",
+  "source": "TWELVE_XAUUSD_15M_2020_2021_OCT2026_CANDIDATE_V1",
+  "requested_range": [
+    "2026-09-28",
+    "2026-10-09"
+  ],
+  "previous_15m_archive_last": "2026-09-27T23:45:00+00:00",
+  "vendor_raw_public": false,
+  "paid_download": false,
+  "status": "RECENT_GAP_CANDIDATE_SAVED",
+  "vendor_returned_rows": 1009,
+  "valid_completed_bars": 1008,
+  "first_utc": "2026-09-28T00:00:00+00:00",
+  "last_utc": "2026-10-08T11:45:00+00:00",
+  "private_storage": {
+    "status": "SAVED_PRIVATE_ONLY",
+    "new_rows": 1008,
+    "annual_persisted": {
+      "2026": 1008
+    },
+    "histdata_same_utc_overlap_rows": 0,
+    "histdata_close_abs_median_bps": null,
+    "histdata_close_abs_p95_bps": null,
+    "twelve_price_above_histdata_share": null,
+    "candidate_promotion": "BLOCKED_UNTIL_SOURCE_IDENTITY_AND_ANCHOR_VALIDATION"
+  }
+}
