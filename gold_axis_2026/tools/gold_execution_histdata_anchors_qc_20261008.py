@@ -29,7 +29,7 @@ def main():
         days=pd.date_range(f'{year}-01-01',f'{year}-12-31',freq='B',
                            tz='Europe/Istanbul')
         expected=0;day_complete=0;day_anchor=0;overnight_ready=0;thin=0
-        missing_day_anchors=[];missing_day_interior=[]
+        missing_day_anchors=[];missing_day_interior=[];thin_pivot_dates=[]
         for day in days:
             expected+=1
             start=day+pd.Timedelta(hours=9)
@@ -44,7 +44,7 @@ def main():
             day_complete+=int(isfull and anchors_native_complete)
             if not anchor_ok:missing_day_anchors.append(str(day.date()))
             elif not isfull:missing_day_interior.append(str(day.date()))
-            if anchor_ok and not anchors_native_complete:thin+=1
+            if anchor_ok and not anchors_native_complete:\n                thin+=1\n                thin_pivot_dates.append(str(day.date()))
             next_weekday=day+pd.offsets.BDay(1)
             night_end=next_weekday+pd.Timedelta(hours=8,minutes=45)
             overnight_ready+=int(origin_17 in stamps and night_end in stamps
@@ -54,7 +54,7 @@ def main():
                   'day_09_1645_and_17_anchors_present':day_anchor,
                   'day_full_32_bars_and_3_anchors_complete':day_complete,
                   'overnight_17_to_next_BDay_0845_anchors_ready':overnight_ready,
-                  'days_with_thin_pivot_native_minutes':thin,
+                  'days_with_thin_pivot_native_minutes':thin,\n                  'thin_pivot_dates':thin_pivot_dates,
                   'missing_day_anchors_first30':missing_day_anchors[:30],
                   'missing_interior_first30':missing_day_interior[:30]})
     result={'source_id':SOURCE,'records_15m':len(rows),
