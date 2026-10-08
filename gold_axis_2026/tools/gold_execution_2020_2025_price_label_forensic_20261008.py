@@ -24,7 +24,7 @@ def db(con,year):
         c.execute(f"""SELECT bar_start_utc,{','.join(PRICES)}
         FROM {P} WHERE source_id=%s AND bar_start_utc>=%s
         AND bar_start_utc<%s ORDER BY bar_start_utc""",
-           (SOURCE,f"{year}-01-01",f"{year+1}-01-01"))
+           (SOURCE,f"{year}-01-01",f"{year+1}-01-09" if year<2025 else '2026-01-01'))
         rows=c.fetchall()
         c.execute(f"""SELECT issue_date,year,next_expected_date,
           day_gate,overnight_gate,
@@ -75,7 +75,7 @@ def venue_schedule(q):
 
 def quality(x,l,year,hashes):
     q,h=fresh(year)
-    a=q.merge(x,on="ts",validate="one_to_one",suffixes=("_fresh","_private"),how="outer",indicator=True)
+    a=q.merge(x[x.ts.dt.year==year],on="ts",validate="one_to_one",suffixes=("_fresh","_private"),how="outer",indicator=True)
     missing=int((a["_merge"]!="both").sum())
     dif={}
     shared=a[a["_merge"]=="both"]
@@ -103,7 +103,7 @@ def quality(x,l,year,hashes):
     large5=(regular & (np.abs(logret)>np.log(1.005)))
     spread=(q.ask_close/q.bid_close-1)*10000
     # recompute labels independently, anchored entirely on source price columns
-    m=q.set_index("ts")
+    m=x.set_index("ts")
     def price(day,hm,key):
         if day is None:return None
         hh,mm=map(int,hm.split(":"))
@@ -153,7 +153,9 @@ def quality(x,l,year,hashes):
                 if len(issues)<20:issues.append({"date":str(d),"code":k+"_return_mismatch"})
         for k,expected,actual in (("day_y",day_bid,r.day_y),("overnight_y",ov_bid,r.overnight_y)):
             correct=None if expected is None else int(expected>0)
-            if correct!=actual:diffs["wrong_persisted_direction"][k]+=1
+            if correct!=actual:
+                diffs["wrong_persisted_direction"][k]+=1
+                if len(issues)<35:issues.append({"date":str(d),"code":k+"_SIGN", "stored":actual,"recomputed":correct, "next_expected":str(want)})
         for k,expected,actual in (("day_low_margin",day_bid,r.low_margin_day_10bps),
                                   ("overnight_low_margin",ov_bid,r.low_margin_ovn_10bps)):
             correct=None if expected is None else (abs(expected)<=.001)
@@ -223,6 +225,7 @@ def main():
                 p,l=db(con,year)
                 out["years"][str(year)]=quality(p,l,year,None)
                 stat=out["years"][str(year)]
+                print("FORENSIC_FULL_YEAR",year,json.dumps(stat,default=str)[:28000],flush=True)
                 print("PRICE_LABEL_FORENSIC",year,json.dumps({
                     "n":stat["bars"],"daily_break":stat["venue_price_quality"]["inside_documented_xau_daily_break_count"],
                     "daily_break_nonflat":stat["venue_price_quality"]["daily_break_bar_count_with_nonflat_prices"],
