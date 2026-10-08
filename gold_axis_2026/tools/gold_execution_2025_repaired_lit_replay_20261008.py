@@ -14,7 +14,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 import gold_execution_long_history_lit_same_date_20261008 as base
-from gold_execution_histdata_independent_2025_2026_20261008 import SOURCE
+SOURCE='HISTDATA_XAUUSD_M1_FIXED_EST_TO_M15_CANDIDATE_2025_2026'
 
 AX=Path(__file__).resolve().parents[1]
 OUT=AX/'GOLD_EXECUTION_2025_SOURCE_REPAIRED_LIT_RESULT_2026-10-08.md'
