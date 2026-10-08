@@ -1,0 +1,227 @@
+{
+  "asof": "2026-10-08",
+  "status": "DIRECT_DUKASCOPY_H1_SOURCE_PILOT_COMPLETE",
+  "source": "Dukascopy direct XAUUSD hour_1 M1-independent monthly BID ASK",
+  "source_h1_table_private": "gold_research_dukascopy_xau_h1_monthly_source_candidate_v1",
+  "months": [
+    {
+      "month": "2025-03",
+      "bid": {
+        "status": "OK",
+        "rows": 744,
+        "raw_gzip_sha256": "2366652d81ac9ea6adf807153819ddbff67602c2d0b84a03c07d62579d5485c5"
+      },
+      "ask": {
+        "status": "OK",
+        "rows": 744,
+        "raw_gzip_sha256": "47fa37214d07d4d7ced0da432dbdef7cd1b2c8939327a9870a1dacd6416cfd68"
+      },
+      "joined_bars": 744,
+      "status": "BOTH_SIDES_ACCEPTED"
+    },
+    {
+      "month": "2025-06",
+      "bid": {
+        "status": "OK",
+        "rows": 720,
+        "raw_gzip_sha256": "adb3c2f5966afb8acf6074f2c92593f48b08f4773ef59c40a7bddb702ec4cdbd"
+      },
+      "ask": {
+        "status": "OK",
+        "rows": 720,
+        "raw_gzip_sha256": "ddeebfe88efeb33825565bcf6c49d65933a57e224a134d62888d207d434191f2"
+      },
+      "joined_bars": 720,
+      "status": "BOTH_SIDES_ACCEPTED"
+    },
+    {
+      "month": "2025-09",
+      "bid": {
+        "status": "OK",
+        "rows": 720,
+        "raw_gzip_sha256": "0b121a285cf40ef4ab901e6d999370211318fc8d7f1c449354cd45d7ae866c70"
+      },
+      "ask": {
+        "status": "OK",
+        "rows": 720,
+        "raw_gzip_sha256": "dbd699189e010616991f4403016163bfce5f202eb16b482ff4f65ae22f77ae94"
+      },
+      "joined_bars": 720,
+      "status": "BOTH_SIDES_ACCEPTED"
+    },
+    {
+      "month": "2025-12",
+      "bid": {
+        "status": "OK",
+        "rows": 744,
+        "raw_gzip_sha256": "dbf8dc1f7c9a7db320dae1d547e568fb00443c44929569298fc11be750dddcee"
+      },
+      "ask": {
+        "status": "OK",
+        "rows": 744,
+        "raw_gzip_sha256": "8368912e73b13632a8aa584655d42abe44d59ca810f9023417ca2de74775812d"
+      },
+      "joined_bars": 744,
+      "status": "BOTH_SIDES_ACCEPTED"
+    },
+    {
+      "month": "2026-01",
+      "bid": {
+        "status": "OK",
+        "rows": 744,
+        "raw_gzip_sha256": "66a967a0c98fc72ab7dabd4fef2ef79324752fed1e6332e5b6914e352775ae68"
+      },
+      "ask": {
+        "status": "OK",
+        "rows": 744,
+        "raw_gzip_sha256": "3d827104284f6559281e9936f75282d009957f31cb5276c965f2a1de69c2cc53"
+      },
+      "joined_bars": 744,
+      "status": "BOTH_SIDES_ACCEPTED"
+    },
+    {
+      "month": "2026-02",
+      "bid": {
+        "status": "OK",
+        "rows": 672,
+        "raw_gzip_sha256": "4e35b96392f4e8856d784834d55cc7f5de3dc4fe0add8492fb6df3e6d1ceb0fe"
+      },
+      "ask": {
+        "status": "OK",
+        "rows": 672,
+        "raw_gzip_sha256": "4849dc838b7f4f18c3e33f78052d670de159e54eb9c3803749e6bb0587db962c"
+      },
+      "joined_bars": 672,
+      "status": "BOTH_SIDES_ACCEPTED"
+    },
+    {
+      "month": "2026-03",
+      "bid": {
+        "status": "OK",
+        "rows": 744,
+        "raw_gzip_sha256": "f37b0087edf5ba7cda602c1e2e630c93abe477d3a2063512e56e296cfd60abce"
+      },
+      "ask": {
+        "status": "OK",
+        "rows": 744,
+        "raw_gzip_sha256": "648bd796fed37d5c65645087d7c348a6f9e885197ebe8fbbff37c20785b31431"
+      },
+      "joined_bars": 744,
+      "status": "BOTH_SIDES_ACCEPTED"
+    },
+    {
+      "month": "2026-04",
+      "bid": {
+        "status": "OK",
+        "rows": 720,
+        "raw_gzip_sha256": "95beeb07b7dd2dcafa7e74416d642db955202fc8dba805829447a873bb565655"
+      },
+      "ask": {
+        "status": "OK",
+        "rows": 720,
+        "raw_gzip_sha256": "7935000e8d5fed609656e8fd4824c3ebb1f1edfcdb29a42f11a58044fa6d9863"
+      },
+      "joined_bars": 720,
+      "status": "BOTH_SIDES_ACCEPTED"
+    },
+    {
+      "month": "2026-05",
+      "bid": {
+        "status": "OK",
+        "rows": 744,
+        "raw_gzip_sha256": "0004fd64da259f9416eeebf177c87c7d02a371837f04f086df21baa9eaf59c05"
+      },
+      "ask": {
+        "status": "OK",
+        "rows": 744,
+        "raw_gzip_sha256": "8e4def91c7c889694f49db44f48b7b6ffc70947e37a16fada8968aafe627adc0"
+      },
+      "joined_bars": 744,
+      "status": "BOTH_SIDES_ACCEPTED"
+    },
+    {
+      "month": "2026-06",
+      "bid": {
+        "status": "OK",
+        "rows": 720,
+        "raw_gzip_sha256": "1d706b3d2182fdf49c56e98d0289a0e72f0e382440da82fb7d1ca87a68f02b62"
+      },
+      "ask": {
+        "status": "OK",
+        "rows": 720,
+        "raw_gzip_sha256": "a5ba12bf53dd804a89cb0906a8b52497c7d9018ff54c6fac185b9033eaf50fd6"
+      },
+      "joined_bars": 720,
+      "status": "BOTH_SIDES_ACCEPTED"
+    },
+    {
+      "month": "2026-07",
+      "bid": {
+        "status": "OK",
+        "rows": 744,
+        "raw_gzip_sha256": "d703c2adbefc429620d0376228b19dadf5b557fcc543cd06eec62918e675ab4c"
+      },
+      "ask": {
+        "status": "OK",
+        "rows": 744,
+        "raw_gzip_sha256": "c16d0d554232c21124a8e36f5f9205c17088ebc36b250ebeda3b3da621c89c1e"
+      },
+      "joined_bars": 744,
+      "status": "BOTH_SIDES_ACCEPTED"
+    },
+    {
+      "month": "2026-08",
+      "bid": {
+        "status": "OK",
+        "rows": 744,
+        "raw_gzip_sha256": "3142c1880347df8c3f28b8475dd970ad737bf299ec5d5e2f4cdb04b040662f99"
+      },
+      "ask": {
+        "status": "OK",
+        "rows": 744,
+        "raw_gzip_sha256": "0262edb679cfb4b3e8b7d01e9d9b45e56c81f2cdbe701c245cce852fc9a8f63e"
+      },
+      "joined_bars": 744,
+      "status": "BOTH_SIDES_ACCEPTED"
+    },
+    {
+      "month": "2026-09",
+      "bid": {
+        "status": "OK",
+        "rows": 720,
+        "raw_gzip_sha256": "89991525a3e22dc416a89fe7b157d0748563a9b6498a93e43694c483c82392d2"
+      },
+      "ask": {
+        "status": "OK",
+        "rows": 720,
+        "raw_gzip_sha256": "10b58ce5be82bae5bcfc2b39b5b50fbcf93614cb7c1dcd7f21a094002a6b8870"
+      },
+      "joined_bars": 720,
+      "status": "BOTH_SIDES_ACCEPTED"
+    },
+    {
+      "month": "2026-10",
+      "bid": {
+        "status": "SOURCE_UNAVAILABLE_OR_QUARANTINED",
+        "errors": [
+          "ReadTimeout:HTTPSConnectionPool(host='datafeed.dukascopy.com', port=443): Read timed out. (r",
+          "HTTP_404"
+        ]
+      },
+      "ask": {
+        "status": "SOURCE_UNAVAILABLE_OR_QUARANTINED",
+        "errors": [
+          "ReadTimeout:HTTPSConnectionPool(host='datafeed.dukascopy.com', port=443): Read timed out. (r",
+          "HTTP_404"
+        ]
+      },
+      "status": "INCOMPLETE_OR_UNAVAILABLE_MONTH"
+    }
+  ],
+  "successful_months": 13,
+  "rows_inserted_private": 9480,
+  "h1_not_m15": true,
+  "no_M15_shape_models_scored_in_this_step": true,
+  "raw_quotes_not_in_git": true,
+  "elapsed_sec": 178
+}
