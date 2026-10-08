@@ -1,0 +1,43 @@
+{
+  "source_id": "HISTDATA_XAUUSD_M1_FIXED_EST_TO_M15_CANDIDATE_V1",
+  "records_15m": 47188,
+  "source_timezone": "EST_FIXED_UTC_MINUS_05_NORMALIZED_TO_UTC",
+  "target_clocks": "Europe/Istanbul 09 open; 16:45 close; 17 open; next weekday 08:45 close",
+  "calendar_note": "Naive Monday-Friday counts are NOT exchange-calendar-filtered, holidays may be legitimate; no labels issued.",
+  "years": [
+    {
+      "year": 2020,
+      "weekdays_not_trading_calendar_adjusted": 262,
+      "day_09_1645_and_17_anchors_present": 257,
+      "day_full_32_bars_and_3_anchors_complete": 256,
+      "overnight_17_to_next_BDay_0845_anchors_ready": 253,
+      "days_with_thin_pivot_native_minutes": 1,
+      "missing_day_anchors_first30": [
+        "2020-01-01",
+        "2020-04-10",
+        "2020-08-12",
+        "2020-11-30",
+        "2020-12-25"
+      ],
+      "missing_interior_first30": []
+    },
+    {
+      "year": 2021,
+      "weekdays_not_trading_calendar_adjusted": 261,
+      "day_09_1645_and_17_anchors_present": 257,
+      "day_full_32_bars_and_3_anchors_complete": 257,
+      "overnight_17_to_next_BDay_0845_anchors_ready": 253,
+      "days_with_thin_pivot_native_minutes": 0,
+      "missing_day_anchors_first30": [
+        "2021-01-01",
+        "2021-04-02",
+        "2021-05-31",
+        "2021-12-24"
+      ],
+      "missing_interior_first30": []
+    }
+  ],
+  "model_labels_issued": false,
+  "source_promotion": false,
+  "retrieved_at_utc": "2026-10-08T12:06:51.898638+00:00"
+}
