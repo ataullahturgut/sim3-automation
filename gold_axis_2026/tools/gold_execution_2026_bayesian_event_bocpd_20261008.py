@@ -106,3 +106,45 @@ def compare_brier(p):
            "positive_bootstrap_fraction":float(np.mean(delta>0)),
            "inspected_retrospective_not_confirmatory":True})
     return pd.DataFrame(rows)
+
+def main():
+    q,t,source_sets=first.cbr.source_sets()
+    out=[]
+    for tag,px,tx in source_sets:
+        result=panel_predictions(q,t,px,tx,tag)
+        out.append(result)
+        print("BOCPD_EVENT_COUNTS",tag,
+           result.groupby(["year","method"]).size().to_dict(),flush=True)
+    p=pd.concat(out,ignore_index=True)
+    scores=first.score(p)
+    matched=compare_brier(p)
+    root=str(AX/NAME)
+    scores.to_csv(root+"_METRICS.csv",index=False)
+    matched.to_csv(root+"_MONTHBLOCK.csv",index=False)
+    p.to_csv(root+"_PRIVATE_DATED.csv",index=False)
+    result={"status":"CAUSAL_CATEGORICAL_BAYESIAN_ONLINE_CHANGEPOINT_ACTUALLY_EXECUTED",
+      "model":"genuine online Dirichlet-multinomial change-point run-length posterior",
+      "hazard":H,"prior_alpha":ALPHA.tolist(),"max_run":MAX_RUN,
+      "sources":["SAME_UPSTREAM_MIRROR_JAN_AUG20","DIRECT_DUKASCOPY_NATIVE_THROUGH_OCT07"],
+      "targets":"NO_HIT UP_FIRST DOWN_FIRST observed M15 BID close",
+      "only_matured_prior_events_used":True,
+      "same_origin_vs_lastyear_and_kernel_regime":True,
+      "2026_retrospective_already_inspected":True,
+      "no_price_execution_or_bank_PnL":True,
+      "2026_labels_for_past_only_causal_online_updates":True,
+      "uncertainty":"paired 1500 calendar-month bootstraps, descriptive retrospective"}
+    Path(root+"_SUMMARY.json").write_text(json.dumps(result,indent=2)+"\n")
+    print("ACTUAL_BOCPD_MULTIEVENT_RESULTS",scores.to_string(index=False),flush=True)
+    print("ACTUAL_BOCPD_STRONG_BASELINE",matched.to_string(index=False),flush=True)
+    print("BOCPD_STATUS",json.dumps(result),flush=True)
+if __name__=="__main__":
+    try:main()
+    except Exception as e:
+        import traceback
+        frame=traceback.extract_tb(e.__traceback__)[-1]
+        failure={"status":"BOCPD_RUN_BLOCKED_NO_MODEL_SCORE",
+           "reason_type":type(e).__name__,"reason":str(e)[:100],
+           "line":frame.lineno,"function":frame.name,
+           "no_claim_of_innovation_success":True}
+        Path(str(AX/NAME)+"_FAILURE_QC.json").write_text(json.dumps(failure,indent=2)+"\n")
+        print("BOCPD_BLOCK",json.dumps(failure),flush=True)
