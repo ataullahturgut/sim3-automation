@@ -105,7 +105,7 @@ def main():
     have=existing(days)
     # Keep previously collected correct days; never repeat successful complete days.
     todo=[z for z in days if have.get(z.isoformat(),0)<70]
-    log={};frames=[]
+    log={};frames=[];stored=0
     tic=time.monotonic()
     # Small concurrency respects public vendor rate limits and avoids 503 storms.
     with ThreadPoolExecutor(max_workers=2) as pool:
@@ -113,8 +113,13 @@ def main():
         for future in as_completed(jobs):
             day,data,info=future.result()
             log[day.isoformat()]=info
-            if data is not None:frames.append(data)
-    stored=store(frames)
+            if data is not None:
+                # Persist each independently valid day immediately, not at the
+                # end of a potentially slow vendor month. Runner timeout must
+                # never discard earlier successfully audited private quotes.
+                stored+=store([data])
+                frames.append(data)
+    # Idempotent per-day copies are already committed to private Neon.
     with get_db() as conn:
       with conn.cursor() as cur:
         cur.execute(f"""SELECT COUNT(*),COUNT(DISTINCT (bar_start_utc AT TIME ZONE 'UTC')::date)
