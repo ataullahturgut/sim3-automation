@@ -84,12 +84,12 @@
       "overnight_small_bid_move_10bps": 23
     }
   },
-  "sha256_private_origin_target_vintage": "4f0c05ccc66105c42b3784b951caf5ef6a6efa38f1d857a74109abb0e377ae14",
+  "sha256_private_origin_target_vintage": "e5f70f1bed2e0a061070ac9ffb37dc3a56998c0283da20c8f2354cf1e7200b58",
   "private_storage": {
-    "new_origin_rows": 1549,
+    "new_origin_rows": 0,
     "private_total": 1549,
     "valid_day": 1547,
     "valid_overnight": 1494
   },
-  "completed_at_utc": "2026-10-08T14:51:03.026227+00:00"
+  "completed_at_utc": "2026-10-08T15:09:07.712919+00:00"
 }
