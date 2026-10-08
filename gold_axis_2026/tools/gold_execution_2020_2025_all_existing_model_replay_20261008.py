@@ -106,16 +106,16 @@ def all_specs_retrain(q,t):
         if a.empty:continue
         a["model_id"]=spec
         a["family"]="LIT_STAGE1"
-        a["venue_scope"]=derive_weekend(a)
+        a["venue_scope"]=derive_weekend(a) if target=="OVN" else "DAY_ALL"
         a["target_new"]=target
         a["prediction_origin_TR"]="09:30" if target=="DAYD" else "09:00" if target=="DAY" else "17:00"
         a["old_source_imported_predictions"]=False
         rows.append(a)
         for (year,win),sub in a.groupby(["year","venue_scope"]):
-            if target=="OVN" or win=="NEXT_WEEKDAY_16H":
+            if target=="OVN" or win=="DAY_ALL":
                 for model,pred,prob in [("LOGIT","pred_logit","p_logit"),("OLS_SIGN","pred_ols",None)]:
                     m=score_df(sub,spec+"/"+model,year,pred,prob,target,
-                               a.prediction_origin_TR.iloc[0],"TRAINED_ON_NEW_SOURCE",None)
+                               a.prediction_origin_TR.iloc[0],"TRAINED_ON_NEW_SOURCE")
                     outcomes.append(m)
         specs[spec]={"kind":"ACTUAL_REFIT","architecture":"Original LIT Stage1 fixed specifications", "origin":"09:30 separate" if target=="DAYD" else "09:00" if target=="DAY" else "17:00"}
         print("TRAINED_LIT1",spec,len(a),flush=True)
