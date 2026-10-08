@@ -89,3 +89,29 @@ With DUKASCOPY 2020–25 training and 2026 HISTDATA test, OVN BA for SHAPE_GVZ_H
 ## I. Genuine same-Dukascopy direct 2026 still source-gated
 
 The independent 728-cell 2025 BID source overlap evidence is frozen separately. A month-sharded live-retrieved 2026 native M1 BID/ASK candidate, strict M15 15-of-15 complete interval, stores each verified date in private Neon. The first recorded source-only DB snapshot had 1,728 fully-native M15 on 18 UTC dates, 18 approved DAY paths and only 4 regular-OVN source paths. These are insufficient for fixed-model same-upstream 2026 scoring. The authoritative source-attempt audit is `GOLD_EXECUTION_2026_DIRECT_PRIMARY_SOURCE_RESCUE_INTERIM_EVIDENCE_2026-10-08.md`. Never promote the cross-provider HistData outcomes into an imaginary direct-Dukascopy 2026 source result.
+
+
+## J. User-requested 2026 same-upstream Dukascopy M15 frozen-model test — EXECUTED, NOT PROMOTED
+
+**Execution authority:** A third-party published 2026 Dukascopy-node M1 BID/ASK archive, January–20 August 2026, was retrieved and saved in distinct private Neon research source (not public raw prices). Its publisher's older files are **calendar-padded through definitively closed spot-market hours**, so those intervals and zero-range/fill 15-minute intervals were explicitly quarantined. The accepted candidate is not tick-native and cannot be used as a banking execution-price series.
+
+**Independent price proof:** against 2025 EV Dukascopy source: 2,007 matched M15, 8,028 matched price cells, p95 abs deviation 0.011922 bps; against original direct Dukascopy native 2026 primary source: **7,758 M15 on 86 UTC dates**, 31,032 matched BID/ASK price cells, median/p95/max absolute price discrepancy **0.0 bps**. Source gates PASS after exclusion; mirrored vendor claim applies only to sampled overlapped periods, not uninspected days. 15,027 2026 Jan-Aug20 nonclosed nonflat M15 accepted as candidate. Exactly 164 DAY and 130 normal 16h OVN price-path labels pass price gates; after common pre-decision GVZ/VIX and 4h M15 features, 130 DAY and 97 OVN matched model-scoring cases remain.
+
+**Actual pre-2026 fixed model training and 2026 evaluation:** Original six ML identities and hyperparameters, identical training origin through 2025-12-31, histories beginning 2020, 2021, 2022. **No 2026 outcomes in fit.** Same calendar 2026 outcomes for each of three history-start versions, paired comparisons, monthly/year metrics.
+- OVERNIGHT SHAPE_GVZ_HGB, H=16h 17:00→next09:00, **start 2020** BA48.33%, DOWN recall50.00%, N97; **start 2021** BA54.79%, DOWN recall38.46%, 52/97 correct; **start 2022** BA52.26%, DOWN recall42.31%. Extended 2021 vs 2022 saves 12, breaks 10, exact McNemar p≈0.832; **NOT a significant gain**.
+- The best nominal BA among 2026 97 OVN cases is **56.28% BASE_LOGIT** start2022, BUT extremely UP-skewed, DOWN recall **19.23%** and Brier 0.2539. It does NOT meet the user's balanced UP/DOWN and DOWN-catching objectives. Model search across families/starts further increases selection bias.
+- DAY (09:00→17:00, N130) highest nominal BA54.29% (start2021 VIX_GVZ_LOGIT), DOWN recall20%, not sufficient.
+- Particularly unstable overnight 2021-start SHAPE_GVZ_HGB: May BA68.57%, Jun BA70.00%, **Jul BA25.56%** on just 14 July issue dates, with July DOWN recall **11.11%**, Brier **0.30785**. Illustrates acute 2026 regime weakness and false reassurance from pooled annual scores.
+- The older 2026 HISTDATA overnight BA58.98%, N141 is **not reproduced** on same-Dukascopy-upstream 2026 N97; samples not identical and different source definitions, hence NOT a straight matched 4.19pp drop/paired significance test.
+
+**Data boundary:** Third-party mirror is same Dukascopy upstream but DIFFERENT publisher from EV 2020–25. This is **not full first-party/direct raw-source certification, not bank executable, and not an untouched 2026 holdout**, whose outcomes have been inspected. 2026 September/October are **not** included. A separate direct monthly H1 source acquisition retrieved Jan–Sep primary vendor files, but H1 does not supply M15 pre-origin shape features and is NOT substituted.
+
+**Reproducible evidence:**
+- Source: `GOLD_EXECUTION_2026_DUKASCOPY_NODE_MIRROR_SOURCE_FORENSIC_20261008.json`
+- Frozen scoring and population: `GOLD_EXECUTION_2026_DUKASCOPY_NODE_MIRROR_FIXED_MODELS_20261008_SUMMARY.json`
+- Annual same-population scores: `GOLD_EXECUTION_2026_DUKASCOPY_NODE_MIRROR_FIXED_MODELS_20261008_YEAR_METRICS.csv`
+- Paired origin-change comparison: `GOLD_EXECUTION_2026_DUKASCOPY_NODE_MIRROR_FIXED_MODELS_20261008_PAIRED_HISTORY.csv`
+- Monthly decay evidence: `GOLD_EXECUTION_2026_DUKASCOPY_NODE_MIRROR_FIXED_MODELS_20261008_MONTH_METRICS.csv`
+- Strict source QC & replay: `tools/gold_execution_2026_dukascopy_node_mirror_forensic_20261008.py`, `tools/gold_execution_2026_dukascopy_node_mirror_locked_models_20261008.py`.
+
+**Scientific verdict:** Main near-session-direction research is **not solved**. 2026 direct issuer/date-locked source coverage is partial. 2026 same-upstream mirror retrospective falsifies the earlier apparently higher HistData 2026 nominal advantage; no stable model champion for live decisions. Preserve all unsuccessful variants; do not select a winner on already seen 2026 outcomes.
