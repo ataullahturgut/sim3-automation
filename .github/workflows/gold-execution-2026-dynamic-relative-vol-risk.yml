@@ -45,7 +45,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add gold_axis_2026/GOLD_EXECUTION_2026_CAUSAL_RELATIVE_VOL_RISK_20261008_{METRICS.csv,SUMMARY.json}
+          git add gold_axis_2026/GOLD_EXECUTION_2026_CAUSAL_RELATIVE_VOL_RISK_20261008_{METRICS.csv,SUMMARY.json,MONTH_BLOCK_UNCERTAINTY.csv}
           git diff --cached --quiet || git commit -m 'Report 2026 causal relative-volatility risk correction and genuine downside alarm lift'
           for i in 1 2 3 4 5; do
             git pull --rebase origin gold-execution-channel-audit-20261006
