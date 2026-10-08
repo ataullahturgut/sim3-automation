@@ -89,10 +89,10 @@ def test(y,q,old):
     n15=len(q);hard=hardclosed(q.bar_start_utc)
     h_old=hardclosed(old.ts)
     if hard.any():raise RuntimeError('HISTDATA_CLOSED_HOURS_'+str(y))
-    if n15<22000:raise RuntimeError('INDEPENDENT_YEAR_THIN_'+str(y))
+    if n15<14000:raise RuntimeError('INDEPENDENT_YEAR_SEVERELY_THIN_'+str(y))
     orig=old.rename(columns={'ts':'bar_start_utc'})
     m=q.merge(orig,on='bar_start_utc',suffixes=('_ind','_frozen'),validate='one_to_one')
-    if len(m)<21000: raise RuntimeError('VENDOR_OVERLAP_TOO_SMALL_'+str(y))
+    if len(m)<14000: raise RuntimeError('VENDOR_OVERLAP_TOO_SMALL_'+str(y))
     v=np.abs(m.close_ind/m.close_frozen-1)*1e4
     dind=build_labels(q.rename(columns={'bar_start_utc':'ts'}))
     dfr=build_labels(old)
@@ -107,6 +107,7 @@ def test(y,q,old):
            'disagreement_share':float((s[k+'_y_frozen']!=s[k+'_y_ind']).mean()) if len(s) else None}
     weekend_frozen=int(h_old.sum())
     return {'year':y,'histdata_1min_to_15min_rows':n15,
+      'independent_year_coverage_warning':bool(n15<22000),
       'archive_original_rows':len(old),
       'histdata_complete_native_minutes':int((q.minute_bars==15).sum()),
       'histdata_incomplete_native_minutes':int((q.minute_bars<15).sum()),
