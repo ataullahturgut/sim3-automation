@@ -198,14 +198,14 @@
     }
   },
   "2023_ref_coverage_warning": true,
-  "candidate_target_series_sha256": "44fa1238584633db33a0309919c0fe8f0ed35fa01552ef5713d4c0e213c03588",
+  "candidate_target_series_sha256": "9c5c5b25484a013a329d285c5113a436dbc6cdf6f89db7a2603a2964eb6e2733",
   "private_storage": {
-    "inserted_new_candidate_target_origins": 1739,
+    "inserted_new_candidate_target_origins": 0,
     "private_total_rows": 1739,
     "private_day_mature": 1603,
     "private_ovn_mature": 1572
   },
   "calendars_not_proven": "Holiday/exchange venue hours and actual bank spread not supplied",
   "models_retrained": false,
-  "completed_at_utc": "2026-10-08T14:20:03.182237+00:00"
+  "completed_at_utc": "2026-10-08T14:20:35.807112+00:00"
 }
