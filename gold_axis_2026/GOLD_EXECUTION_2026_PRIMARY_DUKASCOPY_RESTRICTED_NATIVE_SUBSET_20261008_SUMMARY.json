@@ -1,0 +1,102 @@
+{
+  "status": "2026_DIRECT_DUKASCOPY_PRIMARY_RESTRICTED_DIAGNOSTIC_EXECUTED",
+  "asof": "2026-10-08",
+  "primary_2026_source": "DUKASCOPY_DIRECT_M1_BIDASK_2026_M15_NATIVE_FULL_V2",
+  "pre_registered_90_night_promotion_gate_still_enforced": true,
+  "research_scope": "SECONDARY_LOW_N_EXTERNAL_FIRST_PARTY_SENSITIVITY",
+  "bank_price_execution_ready": false,
+  "2026_is_not_unseen": true,
+  "native_direct_2026_m15": 13248,
+  "native_source_label_quality": {
+    "raw_2026_issue_candidates": 138,
+    "raw_2026_day_approved": 138,
+    "raw_2026_regular_overnight_approved": 95,
+    "first_eligible": "2026-01-02",
+    "last_eligible": "2026-10-07",
+    "qc_day_overnight_by_month": {
+      "2026-01": {
+        "issue_dates": 11,
+        "complete_day": 11,
+        "complete_overnight": 4
+      },
+      "2026-02": {
+        "issue_dates": 6,
+        "complete_day": 6,
+        "complete_overnight": 3
+      },
+      "2026-03": {
+        "issue_dates": 7,
+        "complete_day": 7,
+        "complete_overnight": 3
+      },
+      "2026-04": {
+        "issue_dates": 22,
+        "complete_day": 22,
+        "complete_overnight": 18
+      },
+      "2026-05": {
+        "issue_dates": 21,
+        "complete_day": 21,
+        "complete_overnight": 16
+      },
+      "2026-06": {
+        "issue_dates": 22,
+        "complete_day": 22,
+        "complete_overnight": 18
+      },
+      "2026-07": {
+        "issue_dates": 13,
+        "complete_day": 13,
+        "complete_overnight": 9
+      },
+      "2026-08": {
+        "issue_dates": 17,
+        "complete_day": 17,
+        "complete_overnight": 12
+      },
+      "2026-09": {
+        "issue_dates": 14,
+        "complete_day": 14,
+        "complete_overnight": 9
+      },
+      "2026-10": {
+        "issue_dates": 5,
+        "complete_day": 5,
+        "complete_overnight": 3
+      }
+    }
+  },
+  "pre_registered_2026_overnight_promotable": true,
+  "sample_status": "PROMOTION_COUNT_GATE_PASSED_BUT_OTHER_2026_GATES_STILL_OPEN",
+  "model_eligible_counts": {
+    "DAY": {
+      "eligible_matched_origin_features_and_labels": 94
+    },
+    "OVN": {
+      "eligible_matched_origin_features_and_labels": 68
+    }
+  },
+  "actual_yearly_score_windows": [
+    "DAY",
+    "OVN"
+  ],
+  "models": [
+    "BASE_LOGIT",
+    "SHAPE_LOGIT",
+    "SHAPE_GVZ_LOGIT",
+    "SHAPE_GVZ_HGB",
+    "VIX_GVZ_LOGIT",
+    "VIX_GVZ_HGB"
+  ],
+  "starts": [
+    2020,
+    2021,
+    2022
+  ],
+  "primary_source_vs_third_party_publisher": "DIRECT_BROKER_PRIMARY_ONLY",
+  "score_total_research_predicted_rows": 2916,
+  "source_authority": "Direct Dukascopy M1 BID ASK, 15 observed native minute bars per 15m, specific maturities only",
+  "2026_no_training_or_feature_selection": true,
+  "promoted_to_trading": "NO",
+  "elapsed_seconds": 13
+}
