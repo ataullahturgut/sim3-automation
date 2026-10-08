@@ -89,3 +89,33 @@ def score(p):
             "large_event_precision_lift":lift(big),"down_tail_rate":float(down.mean()),
             "down_tail_capture":capture(down),"down_tail_precision_lift":lift(down)})
     return pd.DataFrame(rows)
+
+def main():
+    q,t=src.source_load()
+    mirror_bars,proof=mirror.load_approved()
+    qm=mirror_bars.set_index("bar_start_utc")[["bid_open","bid_close"]]
+    qm=qm.rename(columns={"bid_open":"open","bid_close":"close"})
+    tm,_=direct.candidate_targets(t,qm)
+    qhist,thist,qn,tn,qc=primary.load()
+    if len(qhist)!=len(q):raise RuntimeError("SOURCE_TRAINING_NOT_SAME")
+    sets=(("MIRROR_SAME_UPSTREAM_JAN_AUG20",qm,tm),
+          ("DIRECT_PRIMARY_NATIVE_THROUGH_OCT07",qn,tn))
+    allpred=[]
+    for name,bar,labels in sets:
+        z=panel(q,t,bar,labels)
+        allpred.append(produce_predictions(z,name))
+    p=pd.concat(allpred,ignore_index=True)
+    results=score(p)
+    base="GOLD_EXECUTION_2026_ABSOLUTE_SESSION_RISK_TEST_20261008"
+    results.to_csv(AX/(base+"_METRICS.csv"),index=False)
+    p.to_csv(AX/(base+"_PRIVATE_DATED.csv"),index=False)
+    state={"status":"ORIGIN_SAFE_ABSOLUTE_MOVE_RISK_ACTUALLY_TESTED",
+           "historical_source":"EV Dukascopy BID 2020-25",
+           "two_2026_sources":[z[0] for z in sets],
+           "ridge_alpha":20,"features":FEATURES,"freeze":"Jan 1 for 2025 and 2026",
+           "no_2026_labels_in_model_fit":True,"bank_PnL":False,
+           "2026_is_retrospective_not_unseen":True}
+    (AX/(base+"_SUMMARY.json")).write_text(json.dumps(state,indent=2)+"\n")
+    print("RISK_TEST_ACTUAL_RESULTS",results.to_string(index=False),flush=True)
+    print("RISK_TEST_STATE",json.dumps(state),flush=True)
+if __name__=="__main__":main()
