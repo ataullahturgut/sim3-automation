@@ -4229,3 +4229,30 @@ A fixed 2023–2024 80th-percentile predicted-risk threshold flags **113/254** d
 4. **Require** independent execution of source script in CI, true prospective timestamped forecasts, stable calibration and venue/source-readiness verification before research promotion.
 5. **Do not use** 2025 incomplete macro event-calendar flags; the macro-volatility OR head remains quarantined for 2025.
 6. **Direction remains unsolved:** path-shape, jump, afternoon-price pressure, D-1 rates/GVZ sign models, and dynamic M4/PAIR voting have not produced transferable full-coverage balanced UP/DOWN skill. Explore a genuinely independent GC/COMEX price discovery source only after audited same-instrument, origin-safe matching, not another ungoverned model stack.
+
+
+---
+
+## 2020–2026 seven-year raw-data acquisition inventory — 2026-10-08
+
+**Binding acquisition authority:** `GOLD_EXECUTION_2020_2026_DATA_ACQUISITION_AUTHORITY_2026-10-08.md`  
+**26-entry machine-readable source/model/gap/pricing matrix:** `GOLD_EXECUTION_2020_2026_SOURCE_MATRIX_2026-10-08.csv`
+
+**State: DATA REQUIREMENTS / STAGED SOURCE ACQUISITION PLAN COMPLETE; NO NEW HISTORICAL PURCHASE OR MODEL PROMOTION IN THIS STEP.**
+
+The user's revised research corpus is 2020-01-01 through 2026-12-31, **with a hard as-of 2026-10-08 realized-history cutoff**. The balance of October–December 2026 is future, appended only after origin/bar maturity. Optional 2019 may be used as labeled `WARMUP_ONLY` to supply historical 60/252 day lags for early-2020 origins. All existing frozen 2023–2025 targets/model evidence remain immutable. `DAY_09_TO_17_TR`, `OVN_17_TO_NEXT09_TR`, and WGC/Sobti SESSION labels must be distinct.
+
+**Verified duplicate-avoidance:**
+- XAU 15m historical 2022–2025 + later 2026 extension partly exists; primary shortage is **2020–2021** and the source-ready period after September 2026.
+- XAU hourly 2022–2024 already registered 17,644 rows; derive from 15m where possible rather than buy twice.
+- **GC/SI/NQ/ZN/CL COMEX hourly raw 2022–2024 already exists** with c/n/v continuous-roll groups, `ts_event`/instrument ID and coverage validation. In particular **GC.n.0 5,917 / 5,894 / 5,938 hourly rows** in 2022/23/24 are available; the previous CAVS 'GC data-gated' reference concerns missing paired pre-origin **minute/15-minute price-discovery data**, not complete absence of hourly GC.
+- SI/PL raw 1m 2022–2024 already exists, 15m derived with native 1h exact-check; extend only year gaps after assessing requirements.
+- Official daily GVZ 2021–2025 and DGS2 2022-12–2025 are present; fill only missing years and source-readiness.
+- Official CFTC COT existing raw panel extends 2006–September 2026; **do not re-buy/redownload the entire COT 2020–25 history**.
+- Incomplete 2025 FOMC macro calendar means the combined calendar risk policy remains quarantined until a full official point-in-time event ledger exists. No missing event may be silently taken as zero.
+
+**Acquisition order:** (1) XAU missing 15m and 2026 through completed current timestamp; (2) GVZ/rates/DFII10 + PIT FOMC calendar; (3) **existing GC 1h as pilot baseline, vendor `get_cost` for GC 1m before purchase**, then independent GC-vs-spot confirmation test; (4) extend hourly GC/SI/NQ/ZN/CL to missing years and 1m SI/PL only as needed; (5) FX/VIX/cross-market/event-consensus with source-readiness and incremental hypothesis; (6) actual bank/BIST bid/ask series before *any* executable performance claim. The entire plan is model-driven, not an uncontrolled collection of every available series.
+
+**Scientific period roles:** optional 2019 indicator warm-up; 2020–2022 historical training; 2023–2024 prequential development; 2025 already-viewed retrospective transport; 2026 to 2026-10-08 additional previously observable stress; post-freeze remaining 2026 prospectively scored only if prediction/feature source timestamps are recorded **before** the outcome. No guarantee that longer histories alone improve accuracy; compare unchanged short-history baseline with regime-aware histories under identical labels/dates and source-aware PIT gates.
+
+The separate authority and CSV are controlling on detailed source identity, exact clock, availability status, 2025 event source correction, invoice-preflight and future-data status.
