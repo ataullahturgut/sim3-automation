@@ -1,0 +1,156 @@
+{
+  "status": "PILOT_NEEDS_SOURCE_RECONCILIATION_NO_2026_MODEL",
+  "asof": "2026-10-08",
+  "source_name": "Dukascopy public XAUUSD minute BID/ASK",
+  "downloaded_price_levels_published": false,
+  "pilot_years": [
+    2025,
+    2026
+  ],
+  "source_past_frozen": "EVTRADINGLABS_DUKASCOPY_DERIVED_XAUUSD_M15_BIDASK_2020_2025_V1",
+  "overlap_2025": {
+    "n_price_cells": 728,
+    "median_abs_diff_bps": 0.011685137107412575,
+    "p95_abs_diff_bps": 0.011912929352796172,
+    "max_abs_diff_bps": 0.01194055514055022
+  },
+  "days": [
+    {
+      "date": "2025-12-09",
+      "year": 2025,
+      "bid_status": "FAILED_HTTP_503",
+      "ask_status": "FAILED_URLError",
+      "bid_m1": 0,
+      "ask_m1": 0,
+      "bid_m15_14of15": 0,
+      "ask_m15_14of15": 0,
+      "crossed_bidask_15m_count": null
+    },
+    {
+      "date": "2025-12-10",
+      "year": 2025,
+      "bid_status": "OK",
+      "ask_status": "OK",
+      "bid_m1": 1440,
+      "ask_m1": 1440,
+      "bid_m15_14of15": 96,
+      "ask_m15_14of15": 96,
+      "crossed_bidask_15m_count": 0
+    },
+    {
+      "date": "2025-12-11",
+      "year": 2025,
+      "bid_status": "OK",
+      "ask_status": "OK",
+      "bid_m1": 1440,
+      "ask_m1": 1440,
+      "bid_m15_14of15": 96,
+      "ask_m15_14of15": 96,
+      "crossed_bidask_15m_count": 0
+    },
+    {
+      "date": "2025-12-12",
+      "year": 2025,
+      "bid_status": "OK",
+      "ask_status": "OK",
+      "bid_m1": 1440,
+      "ask_m1": 1440,
+      "bid_m15_14of15": 96,
+      "ask_m15_14of15": 96,
+      "crossed_bidask_15m_count": 0
+    },
+    {
+      "date": "2025-12-15",
+      "year": 2025,
+      "bid_status": "OK",
+      "ask_status": "OK",
+      "bid_m1": 1440,
+      "ask_m1": 1440,
+      "bid_m15_14of15": 96,
+      "ask_m15_14of15": 96,
+      "crossed_bidask_15m_count": 0
+    },
+    {
+      "date": "2025-12-16",
+      "year": 2025,
+      "bid_status": "FAILED_HTTP_503",
+      "ask_status": "FAILED_HTTP_503",
+      "bid_m1": 0,
+      "ask_m1": 0,
+      "bid_m15_14of15": 0,
+      "ask_m15_14of15": 0,
+      "crossed_bidask_15m_count": null
+    },
+    {
+      "date": "2025-12-17",
+      "year": 2025,
+      "bid_status": "FAILED_HTTP_503",
+      "ask_status": "FAILED_TimeoutError",
+      "bid_m1": 0,
+      "ask_m1": 0,
+      "bid_m15_14of15": 0,
+      "ask_m15_14of15": 0,
+      "crossed_bidask_15m_count": null
+    },
+    {
+      "date": "2025-12-18",
+      "year": 2025,
+      "bid_status": "FAILED_HTTP_503",
+      "ask_status": "FAILED_HTTP_503",
+      "bid_m1": 0,
+      "ask_m1": 0,
+      "bid_m15_14of15": 0,
+      "ask_m15_14of15": 0,
+      "crossed_bidask_15m_count": null
+    },
+    {
+      "date": "2026-01-06",
+      "year": 2026,
+      "bid_status": "FAILED_HTTP_503",
+      "ask_status": "FAILED_TimeoutError",
+      "bid_m1": 0,
+      "ask_m1": 0,
+      "bid_m15_14of15": 0,
+      "ask_m15_14of15": 0,
+      "crossed_bidask_15m_count": null
+    },
+    {
+      "date": "2026-04-08",
+      "year": 2026,
+      "bid_status": "OK",
+      "ask_status": "FAILED_URLError",
+      "bid_m1": 1440,
+      "ask_m1": 0,
+      "bid_m15_14of15": 96,
+      "ask_m15_14of15": 0,
+      "crossed_bidask_15m_count": null
+    },
+    {
+      "date": "2026-07-09",
+      "year": 2026,
+      "bid_status": "OK",
+      "ask_status": "OK",
+      "bid_m1": 1440,
+      "ask_m1": 1440,
+      "bid_m15_14of15": 96,
+      "ask_m15_14of15": 96,
+      "crossed_bidask_15m_count": 0
+    },
+    {
+      "date": "2026-10-07",
+      "year": 2026,
+      "bid_status": "OK",
+      "ask_status": "OK",
+      "bid_m1": 1440,
+      "ask_m1": 1440,
+      "bid_m15_14of15": 96,
+      "ask_m15_14of15": 96,
+      "crossed_bidask_15m_count": 0
+    }
+  ],
+  "price_divisor": 1000,
+  "raw_lzma_record_bytes": 24,
+  "current_2026_year_partial": true,
+  "same_source_target_model_retest_executed": false,
+  "elapsed_sec": 773
+}
