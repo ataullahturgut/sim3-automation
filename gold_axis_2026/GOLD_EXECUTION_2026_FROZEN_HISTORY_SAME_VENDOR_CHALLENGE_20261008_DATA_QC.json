@@ -1,0 +1,83 @@
+{
+  "status": "2026_DIRECT_PRIMARY_SOURCE_2025_OVERLAP_PASSED",
+  "2025_overlap": {
+    "matched_2025_bid_price_cells": 728,
+    "median_abs_bid_diff_bps": 0.011685137107412575,
+    "p95_abs_bid_diff_bps": 0.011912929352796172,
+    "same_upstream_source_threshold_pass": true,
+    "source_receipt_commit": "2ac07b0a77cebcf761b03398b7f918c879d8f115",
+    "independent_2025_days": 4,
+    "source_quote_comparator": "Direct Dukascopy M1 BID M15 from 2025 vs archived 2020-25 EV Dukascopy quote"
+  },
+  "source_2026": "DUKASCOPY_DIRECT_XAUUSD_M1_BIDASK_2026_ASOF_20261008_RESEARCH",
+  "asof": "2026-10-08",
+  "last_bar_start_matured_cut_utc": "2026-10-08 13:45:00+00:00",
+  "requested_weekdays": 201,
+  "successful_direct_vendor_days": 148,
+  "2026_m15_raw": 14208,
+  "2026_m15_approved_native_ge14": 14208,
+  "provider_download_day_receipts": {
+    "used_monthly_source_staging": true,
+    "private_2026_quote_m15": 14208
+  },
+  "2026_label_quality": {
+    "raw_2026_issue_candidates": 148,
+    "raw_2026_day_approved": 148,
+    "raw_2026_regular_overnight_approved": 103,
+    "first_eligible": "2026-01-02",
+    "last_eligible": "2026-10-07",
+    "qc_day_overnight_by_month": {
+      "2026-01": {
+        "issue_dates": 11,
+        "complete_day": 11,
+        "complete_overnight": 4
+      },
+      "2026-02": {
+        "issue_dates": 6,
+        "complete_day": 6,
+        "complete_overnight": 3
+      },
+      "2026-03": {
+        "issue_dates": 7,
+        "complete_day": 7,
+        "complete_overnight": 3
+      },
+      "2026-04": {
+        "issue_dates": 22,
+        "complete_day": 22,
+        "complete_overnight": 18
+      },
+      "2026-05": {
+        "issue_dates": 21,
+        "complete_day": 21,
+        "complete_overnight": 16
+      },
+      "2026-06": {
+        "issue_dates": 22,
+        "complete_day": 22,
+        "complete_overnight": 18
+      },
+      "2026-07": {
+        "issue_dates": 18,
+        "complete_day": 18,
+        "complete_overnight": 12
+      },
+      "2026-08": {
+        "issue_dates": 21,
+        "complete_day": 21,
+        "complete_overnight": 17
+      },
+      "2026-09": {
+        "issue_dates": 15,
+        "complete_day": 15,
+        "complete_overnight": 9
+      },
+      "2026-10": {
+        "issue_dates": 5,
+        "complete_day": 5,
+        "complete_overnight": 3
+      }
+    }
+  },
+  "no_price_quote_data_ever_committed_public": true
+}
