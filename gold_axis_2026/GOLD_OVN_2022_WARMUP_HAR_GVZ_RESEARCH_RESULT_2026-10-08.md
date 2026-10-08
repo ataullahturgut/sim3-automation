@@ -101,6 +101,19 @@ Separate mechanism screen using 2023–2025 origin-safe completed 09:00–17:00 
 
 This negative result matters: the new probability gain is in the magnitude/risk task, not directional market timing. A genuinely independent *price discovery* signal such as properly aligned COMEX GC basis/volume or signed macro surprise requires new source audit on exact-comparable rows before direction enhancement can be claimed.
 
+### 6A. Additional 2022-warmed direction falsification
+
+An independently reconstructed 2022-warmed *overnight direction* study repeated sparse, monthly-updated L2 logistic models on completed before-17:00 half-hours, 09:00–17:00 daytime return, previous matured overnight return, and source-dated D-1 GVZ. The provisional raw-feature dataset had **2022=254, 2023=256, 2024=259 and 2025=216** complete common-day feature rows (the 2025 reduction is **source coverage**, not an authorized post-hoc exclusion).
+
+| Sparse origin-safe direction head | 2023 BA | 2024 BA | 2025 retrospective BA |
+|---|---:|---:|---:|
+| Before-17:00 last two half-hours | 51.9% | 51.8% | 49.0% |
+| DAY + final half-hours + D-1 GVZ | 54.3% | 49.7% | 53.0% |
+| Previous overnight + D-1 GVZ | 49.1% | 51.5% | 52.6% |
+| Afternoon return + two half-hours | 55.1% | 51.9% | 50.1% |
+
+Training strictly used earlier matured rows; 2025 coefficients fixed to 2022–2024. This is a **negative exploratory audit** computed directly from the raw bars; no separate per-origin prediction file was saved for this direction screen. It rules out calling the 2022 history repair a general UP/DOWN solution, even though it materially improves the magnitude-risk study. Results are not comparable to PRAMV's selected one-third dates without a matched-coverage rerun.
+
 ## 7. Reproducibility artifacts & promotion gate
 
 - Forecast rows: `GOLD_OVN_2022_WARMUP_GVZ_TAIL1_PREDICTIONS_2026-10-08.csv` (769 rows)
