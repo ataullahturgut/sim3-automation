@@ -26,6 +26,6 @@
   "same_vendor_m1_vs_tick_bid_close_median_abs_bps": 0.0,
   "same_vendor_m1_vs_tick_bid_close_p95_abs_bps": 0.0,
   "hard_closed_market_bars": 0,
-  "private_m15_bars_inserted": 1268,
-  "completed_at_utc": "2026-10-08T14:25:16.152071+00:00"
+  "private_m15_bars_inserted": 0,
+  "completed_at_utc": "2026-10-08T14:45:58.158620+00:00"
 }
