@@ -1,0 +1,11 @@
+{
+  "status": "CAUSAL_RELATIVE_RISK_RECALIBRATION_ACTUALLY_EXECUTED",
+  "source_years": "2025 historical EV BIDASK, 2026 mirror versus direct primary separately",
+  "regression": "previous prereg fixed 2025 or 2026 absolute-move ridge",
+  "calibration": "63 earlier-matured absolute-return ratios with n/(n+32) shrink; cap [0.5,2]",
+  "alert": "past 63 corrected forecasts 75th quantile, minimum 20 matured forecasts",
+  "2026_past_matured_labels_allowed": true,
+  "2026_future_label_leakage": false,
+  "no_2026_unseen_claim": true,
+  "bank_PnL_not_evaluated": true
+}
