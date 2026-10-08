@@ -1,0 +1,20 @@
+{
+  "status": "ORIGIN_SAFE_ABSOLUTE_MOVE_RISK_ACTUALLY_TESTED",
+  "historical_source": "EV Dukascopy BID 2020-25",
+  "two_2026_sources": [
+    "MIRROR_SAME_UPSTREAM_JAN_AUG20",
+    "DIRECT_PRIMARY_NATIVE_THROUGH_OCT07"
+  ],
+  "ridge_alpha": 20,
+  "features": [
+    "x_rv",
+    "x_prevday",
+    "x_gvz",
+    "x_jump",
+    "x_semidown"
+  ],
+  "freeze": "Jan 1 for 2025 and 2026",
+  "no_2026_labels_in_model_fit": true,
+  "bank_PnL": false,
+  "2026_is_retrospective_not_unseen": true
+}
