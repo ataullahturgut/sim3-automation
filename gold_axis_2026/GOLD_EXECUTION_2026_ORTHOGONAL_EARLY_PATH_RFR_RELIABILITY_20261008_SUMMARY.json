@@ -1,0 +1,16 @@
+{
+  "status": "ORIGINAL_PRAMV_V2A_ORTHOGONAL_RELIABILITY_ACTUALLY_EXECUTED",
+  "retargeted_original": true,
+  "forecast_object": "RFR_correct, not directly full UP-DOWN next-night",
+  "early_origin": "14:00-16:00 TRT, disjoint from late reversal 16:00-17:00",
+  "training_method": "exact previously proposed StandardScaler L2 Logistic C1",
+  "year2023_2024": "monthly expanding prior-matured reversal successes",
+  "year2025_2026": "frozen at prior Jan1, previously inspected retrospective not blind",
+  "macro_PIT": "NOT certified for 2026; full PRAMV not run",
+  "sources": "source-checked mirror and native direct separately",
+  "q055_policy": "new preregistered challenger, not frozen PRAMV original",
+  "no_2026_future_label_in_train": true,
+  "bank_spread_PnL": false,
+  "no_deployment": true,
+  "elapsed_seconds": 17
+}
