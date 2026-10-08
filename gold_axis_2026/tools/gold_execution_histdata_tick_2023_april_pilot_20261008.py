@@ -74,7 +74,7 @@ def main():
         r['same_vendor_m1_vs_tick_bid_close_median_abs_bps']=float(diff.median())
         r['same_vendor_m1_vs_tick_bid_close_p95_abs_bps']=float(diff.quantile(.95))
         sat=((agg.bar_start_utc.dt.dayofweek==5)|
-             ((agg.bar_start_utc.dt.dayofweek==6)&(agg.bar_start_utc.dt.hour<21))
+             ((agg.bar_start_utc.dt.dayofweek==6)&(agg.bar_start_utc.dt.hour<21)))
         r['hard_closed_market_bars']=int(sat.sum())
         if sat.any():raise RuntimeError('TICK_MARKET_CLOSED_BARS')
         with psycopg.connect(os.environ['NEON_DATABASE_URL'],connect_timeout=20) as con:
