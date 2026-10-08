@@ -49,27 +49,29 @@ def main():
     c = c.loc[c.policy.eq("PAIR_ALL"),
               ["date","macro_released","upcoming_fomc"]].drop_duplicates("date")
     p = p.merge(c, on="date", how="left", validate="one_to_one")
-    p["risk_calendar"] = (p.macro_released.fillna(0).astype(int).eq(1) |
-                          p.upcoming_fomc.fillna(0).astype(int).eq(1))
-    p["risk_combined"] = p.risk_vol | p.risk_calendar
+    p["calendar_source_ready"] = p.macro_released.notna() & p.upcoming_fomc.notna()
+    raw_calendar = (p.macro_released.eq(1) | p.upcoming_fomc.eq(1))
+    p["risk_calendar"] = raw_calendar.where(p.calendar_source_ready, pd.NA).astype("boolean")
+    p["risk_combined"] = p.risk_vol.astype("boolean") | p.risk_calendar
     p.to_csv(ROWS, index=False)
 
     rows = []
     for year in (2023,2024,2025):
         g = p.loc[p.year.eq(year)].copy()
         for name in ("risk_vol","risk_combined","risk_calendar"):
-            selected = g.loc[g[name]]
-            d = dict(year=year,policy=name,n=len(g),alerts=len(selected),
-                     alert_rate=len(selected)/len(g))
+            valid = g.loc[g[name].notna()].copy()
+            selected = valid.loc[valid[name].astype(bool)]
+            d = dict(year=year,policy=name,n=len(valid),alerts=len(selected),
+                     alert_rate=len(selected)/len(valid))
             for label in ("tail1","tail2"):
-                total = int(g[label].sum())
+                total = int(valid[label].sum())
                 hit = int(selected[label].sum())
                 d[f"{label}_events"] = total
                 d[f"{label}_caught"] = hit
                 d[f"{label}_recall"] = hit/total if total else np.nan
                 d[f"{label}_precision"] = hit/len(selected) if len(selected) else np.nan
-            d["auc1"] = float(roc_auc_score(g.tail1,g.score))
-            d["auc2"] = float(roc_auc_score(g.tail2,g.score))
+            d["auc1"] = float(roc_auc_score(valid.tail1,valid.score))
+            d["auc2"] = float(roc_auc_score(valid.tail2,valid.score))
             rows.append(d)
     out = pd.DataFrame(rows)
     out.to_csv(METRICS,index=False)
