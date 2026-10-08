@@ -1,12 +1,22 @@
 {
-  "retrieved_at_utc": "2026-10-08T12:00:15.203315+00:00",
+  "retrieved_at_utc": "2026-10-08T12:01:21.385706+00:00",
   "source_id": "TWELVE_XAUUSD_15M_2020_2021_OCT2026_CANDIDATE_V1",
   "price_raw_public_export": false,
   "paid_addon_purchase": false,
   "free_existing_api_credits_only": true,
   "model_retrained": false,
   "asof": "2026-10-08",
-  "monthly_receipts": [],
+  "monthly_receipts": [
+    {
+      "start": "2020-01-01",
+      "end_exclusive": "2020-02-01",
+      "vendor_returned_rows": 545,
+      "filtered_complete_rows": 545,
+      "first_utc": "2020-01-24T02:00:00+00:00",
+      "last_utc": "2020-01-31T21:45:00+00:00",
+      "diagnosis": "MONTH_RESPONSE_INSUFFICIENT_DO_NOT_PROMOTE"
+    }
+  ],
   "status": "BLOCKED_NO_SOURCE_PROMOTION",
   "error_type": "RuntimeError",
   "error_summary": "HISTORICAL_MONTH_INSUFFICIENT_15M_2020-01-01"
