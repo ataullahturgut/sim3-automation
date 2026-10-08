@@ -1,0 +1,116 @@
+{
+  "status": "ORIGINAL_ARCHITECTURE_M4_RFR_MACRO_RESTRICTED_2026_JAN_AUG_EXECUTED",
+  "old_frozen_2026_10_07_PRAMV_V1_unchanged": true,
+  "2026_status": "Retrospective quote-source restricted, macro release-era consensus vintage not independently certified",
+  "training_2021_2025_macro": "private NEON/official 2025 complete; 2020 excluded",
+  "2026_source_macro": "2026 Jan-Aug 8 CPI and 8 employment paired first prints; Fed 5 scheduled dates",
+  "source_rows_mixed": false,
+  "note": "2026 September/October macro M4 BLOCKED due Sept16 FOMC and Sept11 CPI missing",
+  "training_no_2026_targets": true,
+  "original_M4_original_PSFPCA_signature_code": true,
+  "no_bank_executable_PnL": true,
+  "no_untouched_2026_heldout_claim": true,
+  "macro_event_source_quality": {
+    "source_2021_2022": {
+      "2021": {
+        "CPI": {
+          "complete": 12
+        },
+        "NFP": {
+          "complete": 12
+        },
+        "AHE": {
+          "complete": 12
+        },
+        "UNEMP": {
+          "complete": 12
+        },
+        "FOMC": {
+          "scheduled_statement_events": 8
+        }
+      },
+      "2022": {
+        "CPI": {
+          "complete": 12
+        },
+        "NFP": {
+          "complete": 12
+        },
+        "AHE": {
+          "complete": 12
+        },
+        "UNEMP": {
+          "complete": 12
+        },
+        "FOMC": {
+          "scheduled_statement_events": 8
+        }
+      }
+    },
+    "source_2026_Jan_Aug": {
+      "CPI": {
+        "accepted_release_pairs": 8,
+        "macro_release_dates": [
+          "2026-01-13",
+          "2026-02-13",
+          "2026-03-11",
+          "2026-04-10",
+          "2026-05-12",
+          "2026-06-10",
+          "2026-07-14",
+          "2026-08-12"
+        ]
+      },
+      "NFP": {
+        "accepted_release_pairs": 8,
+        "macro_release_dates": [
+          "2026-01-09",
+          "2026-02-11",
+          "2026-03-06",
+          "2026-04-03",
+          "2026-05-08",
+          "2026-06-05",
+          "2026-07-02",
+          "2026-08-07"
+        ]
+      },
+      "AHE": {
+        "accepted_release_pairs": 8,
+        "macro_release_dates": [
+          "2026-01-09",
+          "2026-02-11",
+          "2026-03-06",
+          "2026-04-03",
+          "2026-05-08",
+          "2026-06-05",
+          "2026-07-02",
+          "2026-08-07"
+        ]
+      },
+      "UNEMP": {
+        "accepted_release_pairs": 8,
+        "macro_release_dates": [
+          "2026-01-09",
+          "2026-02-11",
+          "2026-03-06",
+          "2026-04-03",
+          "2026-05-08",
+          "2026-06-05",
+          "2026-07-02",
+          "2026-08-07"
+        ]
+      },
+      "FOMC": {
+        "five_meetings": [
+          "2026-01-28",
+          "2026-03-18",
+          "2026-04-29",
+          "2026-06-17",
+          "2026-07-29"
+        ],
+        "original_source_vintage_gap": "September missing; NOT in scope"
+      }
+    }
+  },
+  "runtime_s": 28
+}
