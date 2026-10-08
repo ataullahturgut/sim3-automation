@@ -1,0 +1,8 @@
+{
+  "status": "CME5_K25_MODEL_BLOCKED_NO_APPROVED_SCORE",
+  "error_type": "FileNotFoundError",
+  "reason": "[Errno 2] No such file or directory: '/home/runner/work/sim3-automation/sim3-automation/gold_axis_20",
+  "function": "open",
+  "line": 1044,
+  "no_results_claimed": true
+}
