@@ -93,6 +93,37 @@ def score(p):
             "base_downfirst_fraction":float(np.mean(actual==2))})
     return pd.DataFrame(rows)
 
+
+def adversarial_uncertainty(p):
+    rng=np.random.default_rng(20261008)
+    rows=[]
+    for (source,year),g in p.groupby(["source_test","year"]):
+      base=g[g.method=="LAST_YEAR_CLIMATOLOGY"].set_index("date").sort_index()
+      for method in ("PATH_FIRSTPASSAGE","REGIME_PATH_FIRSTPASSAGE"):
+        alt=g[g.method==method].set_index("date").sort_index()
+        if not alt.index.equals(base.index) or not (alt.actual==base.actual).all():
+            raise RuntimeError("STRONG_BASELINE_NOT_SAME_DATE")
+        def scores(x):
+            probs=x[["p_nohit","p_upfirst","p_downfirst"]].to_numpy(float)
+            target=np.eye(3)[x.actual.to_numpy(int)]
+            return np.sum((probs-target)**2,axis=1)
+        b=scores(base);a=scores(alt)
+        dates=base.index.str.slice(0,7).to_numpy()
+        blocks=np.unique(dates)
+        base_block=np.array([b[dates==m].sum() for m in blocks])
+        cand_block=np.array([a[dates==m].sum() for m in blocks])
+        draws=rng.integers(0,len(blocks),size=(1500,len(blocks)))
+        stats=1-cand_block[draws].sum(axis=1)/base_block[draws].sum(axis=1)
+        rows.append({"source_test":source,"year":int(year),"model":method,
+             "n":len(base),"months_as_blocks":len(blocks),
+             "brier_lastyear":float(b.mean()),"brier_model":float(a.mean()),
+             "relative_brier_gain_vs_lastyear":float(1-a.mean()/b.mean()),
+             "month_block_gain_lower95":float(np.quantile(stats,.025)),
+             "month_block_gain_upper95":float(np.quantile(stats,.975)),
+             "bootstrap_gain_positive_fraction":float(np.mean(stats>0)),
+             "post_result_selected_comparison_not_confirmatory":True})
+    return pd.DataFrame(rows)
+
 def main():
     q,t,sets=cbr.source_sets()
     preds=[]
