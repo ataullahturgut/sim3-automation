@@ -40,12 +40,12 @@ jobs:
           name: gold-2026-threeway-firstpassage-private-dated
           path: gold_axis_2026/GOLD_EXECUTION_2026_THREE_WAY_FIRSTPASSAGE_CBR_20261008_PRIVATE_DATED.csv
           if-no-files-found: warn
-      - name: Commit completed probability and class-recall metrics
-        if: success()
+      - name: Commit model score or explicit source failure
+        if: always()
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add gold_axis_2026/GOLD_EXECUTION_2026_THREE_WAY_FIRSTPASSAGE_CBR_20261008_{SUMMARY.json,METRICS.csv}
+          for f in gold_axis_2026/GOLD_EXECUTION_2026_THREE_WAY_FIRSTPASSAGE_CBR_20261008_{SUMMARY.json,METRICS.csv,FAILURE_QC.json}; do if test -f "$f"; then git add "$f"; fi; done
           git diff --cached --quiet || git commit -m 'Record genuine nonparametric XAU first-passage competing three-event forecasting calibration on 2023-26'
           for i in 1 2 3 4 5; do
             git pull --rebase origin gold-execution-channel-audit-20261006
