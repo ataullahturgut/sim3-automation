@@ -40,12 +40,12 @@ jobs:
           name: gold-2026-absolute-move-risk-private-per-date
           path: gold_axis_2026/GOLD_EXECUTION_2026_ABSOLUTE_SESSION_RISK_TEST_20261008_PRIVATE_DATED.csv
           if-no-files-found: warn
-      - name: Publish aggregate experiment only
-        if: success()
+      - name: Publish aggregate experiment or safe explicit source block
+        if: always()
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add gold_axis_2026/GOLD_EXECUTION_2026_ABSOLUTE_SESSION_RISK_TEST_20261008_{METRICS.csv,SUMMARY.json}
+          for f in gold_axis_2026/GOLD_EXECUTION_2026_ABSOLUTE_SESSION_RISK_TEST_20261008_{METRICS.csv,SUMMARY.json,FAILURE_QC.json}; do if test -f "$f"; then git add "$f"; fi; done
           git diff --cached --quiet || git commit -m 'Record actual gold 2026 absolute session risk, conditional severe downside and naive-MAE comparison'
           for i in 1 2 3 4 5; do
             git pull --rebase origin gold-execution-channel-audit-20261006
