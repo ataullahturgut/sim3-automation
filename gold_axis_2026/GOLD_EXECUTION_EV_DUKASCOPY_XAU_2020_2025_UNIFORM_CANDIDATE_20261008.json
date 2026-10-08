@@ -45,7 +45,7 @@
         "source_bid_median_abs_price_bps": 2.082317547300594,
         "source_bid_p95_abs_price_bps": 36.749923466340434
       },
-      "new_rows_saved_private": 23702
+      "new_rows_saved_private": 0
     },
     "2021": {
       "year": 2021,
@@ -80,7 +80,7 @@
         "source_bid_median_abs_price_bps": 2.0076129960761024,
         "source_bid_p95_abs_price_bps": 26.589887380023544
       },
-      "new_rows_saved_private": 23626
+      "new_rows_saved_private": 0
     },
     "2022": {
       "year": 2022,
@@ -115,7 +115,7 @@
         "source_bid_median_abs_price_bps": 2.531137770305225,
         "source_bid_p95_abs_price_bps": 30.149666490290073
       },
-      "new_rows_saved_private": 23647
+      "new_rows_saved_private": 0
     },
     "2023": {
       "year": 2023,
@@ -158,7 +158,7 @@
         "ask_p95_abs_bps": 0.025551758384978474,
         "bid_direction_sign_consistency": 1.0
       },
-      "new_rows_saved_private": 23544
+      "new_rows_saved_private": 0
     },
     "2024": {
       "year": 2024,
@@ -193,7 +193,7 @@
         "source_bid_median_abs_price_bps": 1.900626988478038,
         "source_bid_p95_abs_price_bps": 31.011464304500524
       },
-      "new_rows_saved_private": 23733
+      "new_rows_saved_private": 0
     },
     "2025": {
       "year": 2025,
@@ -228,8 +228,8 @@
         "source_bid_median_abs_price_bps": 2.322050525718211,
         "source_bid_p95_abs_price_bps": 39.35154588966539
       },
-      "new_rows_saved_private": 23638
+      "new_rows_saved_private": 0
     }
   },
-  "completed_utc": "2026-10-08T14:44:37.947756+00:00"
+  "completed_utc": "2026-10-08T14:46:29.792758+00:00"
 }
