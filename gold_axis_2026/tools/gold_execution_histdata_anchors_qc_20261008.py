@@ -56,7 +56,8 @@ def main():
                   'day_09_1645_and_17_anchors_present':day_anchor,
                   'day_full_32_bars_and_3_anchors_complete':day_complete,
                   'overnight_17_to_next_BDay_0845_anchors_ready':overnight_ready,
-                  'days_with_thin_pivot_native_minutes':thin,\n                  'thin_pivot_dates':thin_pivot_dates,
+                  'days_with_thin_pivot_native_minutes':thin,
+                  'thin_pivot_dates':thin_pivot_dates,
                   'missing_day_anchors_first30':missing_day_anchors[:30],
                   'missing_interior_first30':missing_day_interior[:30]})
     result={'source_id':SOURCE,'records_15m':len(rows),
