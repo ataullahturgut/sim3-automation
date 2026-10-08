@@ -127,3 +127,37 @@ def paired(p):
                "net":saved-broken,
                "mcnemar_p":float(binomtest(saved,saved+broken,.5).pvalue) if saved+broken else 1.})
     return pd.DataFrame(rows)
+
+def main():
+    q,t,sources=source_sets()
+    preds=[]
+    for source_name,px,ts in sources:
+        z=panel(q,t,px,ts)
+        pp=forecast(z,source_name)
+        if pp.empty:raise ValueError("EMPTY_TRAJECTORY_FORECAST")
+        if pp.duplicated(["target","date","method"]).any():raise ValueError("DUPLICATE_CASES")
+        preds.append(pp)
+        print("CBR_POPULATION",source_name,
+              z.groupby(["target","year"]).size().to_dict(),flush=True)
+    p=pd.concat(preds,ignore_index=True)
+    m=measures(p);pairs=paired(p)
+    counts={str(k):int(v) for k,v in
+       p.groupby(["source_test","target","year","method"]).size().groupby(level=[0,1,2]).first().items()}
+    report={"status":"NOVEL_MULTISCALE_PATH_ANALOG_ACTUALLY_SCORED",
+      "methods":["CBR_PATH","CBR_REGIME_PATH","HGB_FROZEN_2021","EMPIRICAL_PRIOR"],
+      "history":"2020-25 EV Dukascopy BID, trained from 2021",
+      "forecast":"past16 M15 whole path + preorigin RV/GVZ; no 2026 labels in model fit",
+      "year2023_24":"monthly fit with mature past only",
+      "year2025":"fixed before 2025; retrospective",
+      "year2026":"fixed before 2026; already-inspected retrospective",
+      "test_sources":["2026 same-upstream mirror price gated","2026 native direct"],
+      "samples":counts,"no_banking_PnL":True,"no_untouched_holdout":True}
+    stem=AX/NAME
+    Path(str(stem)+"_SUMMARY.json").write_text(json.dumps(report,indent=2)+"\n")
+    m.to_csv(str(stem)+"_YEAR_METRICS.csv",index=False)
+    pairs.to_csv(str(stem)+"_PAIRED.csv",index=False)
+    p.to_csv(str(stem)+"_DATED_PRIVATE.csv",index=False)
+    print("MULTISCALE_TRAJECTORY_RESULTS",m.to_string(index=False),flush=True)
+    print("MULTISCALE_TRAJECTORY_PAIRED",pairs.to_string(index=False),flush=True)
+    print("CBR_RUN_STATUS",json.dumps(report),flush=True)
+if __name__=="__main__":main()
