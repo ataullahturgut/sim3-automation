@@ -1,0 +1,113 @@
+{
+  "status": "COMPLETED_ORIGIN_SAFE_SHAPE_GVZ_CHALLENGE",
+  "source_id": "EVTRADINGLABS_DUKASCOPY_DERIVED_XAUUSD_M15_BIDASK_2020_2025_V1",
+  "source_bars": 141890,
+  "target_dates": 1549,
+  "matched_rows_by_target_year": {
+    "DAY_2022": 249,
+    "DAY_2023": 245,
+    "DAY_2024": 249,
+    "DAY_2025": 249,
+    "OVN_2022": 191,
+    "OVN_2023": 187,
+    "OVN_2024": 190,
+    "OVN_2025": 192
+  },
+  "scope": "DAY09to17 and weekday16h OVN17toNext09, no pooled 64h weekend",
+  "governance": "2022 warmup, 2023/24 strictly prior matured-label monthly issue refits, 2025 frozen 2024 retrospective; no selection by 2025",
+  "feature_gvz": "Observation date strictly previous local origin date, never same day; source-received publication vintage not independently verified",
+  "comparison": "all fixed challengers scored on identical source/date populations",
+  "candidate_features": [
+    "impulse_early",
+    "impulse_late",
+    "prior_overnight",
+    "prior_day",
+    "pre4h_ret",
+    "pre2h_ret",
+    "pre4h_rv",
+    "pre4h_down_semivol",
+    "pre4h_up_semivol",
+    "pre4h_efficiency",
+    "pre4h_sign_memory",
+    "pre4h_jump_share",
+    "gvz_log",
+    "gvz_x_early",
+    "gvz_x_late"
+  ],
+  "model_names": [
+    "BASE_LOGIT",
+    "SHAPE_LOGIT",
+    "SHAPE_GVZ_LOGIT",
+    "SHAPE_GVZ_HGB"
+  ],
+  "2025_is_untouched": false,
+  "not_yet_live_tradeable": true,
+  "dev_gates": {
+    "DAY_BASE_LOGIT": {
+      "development_years": [
+        2023,
+        2024
+      ],
+      "ba_above_chance_both": false,
+      "down_recall_ge_0p30_both": true
+    },
+    "DAY_SHAPE_GVZ_HGB": {
+      "development_years": [
+        2023,
+        2024
+      ],
+      "ba_above_chance_both": false,
+      "down_recall_ge_0p30_both": true
+    },
+    "DAY_SHAPE_GVZ_LOGIT": {
+      "development_years": [
+        2023,
+        2024
+      ],
+      "ba_above_chance_both": false,
+      "down_recall_ge_0p30_both": true
+    },
+    "DAY_SHAPE_LOGIT": {
+      "development_years": [
+        2023,
+        2024
+      ],
+      "ba_above_chance_both": false,
+      "down_recall_ge_0p30_both": true
+    },
+    "OVN_BASE_LOGIT": {
+      "development_years": [
+        2023,
+        2024
+      ],
+      "ba_above_chance_both": false,
+      "down_recall_ge_0p30_both": false
+    },
+    "OVN_SHAPE_GVZ_HGB": {
+      "development_years": [
+        2023,
+        2024
+      ],
+      "ba_above_chance_both": true,
+      "down_recall_ge_0p30_both": true
+    },
+    "OVN_SHAPE_GVZ_LOGIT": {
+      "development_years": [
+        2023,
+        2024
+      ],
+      "ba_above_chance_both": false,
+      "down_recall_ge_0p30_both": true
+    },
+    "OVN_SHAPE_LOGIT": {
+      "development_years": [
+        2023,
+        2024
+      ],
+      "ba_above_chance_both": false,
+      "down_recall_ge_0p30_both": false
+    }
+  },
+  "no_model_automatically_promoted": true,
+  "research_elapsed_seconds": 10
+}
