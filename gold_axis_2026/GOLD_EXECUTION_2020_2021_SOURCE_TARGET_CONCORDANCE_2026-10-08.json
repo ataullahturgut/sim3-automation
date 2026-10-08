@@ -1,0 +1,58 @@
+{
+  "status": "COMPLETED_SOURCE_LEVEL_CONCORDANCE_NOT_CANONICAL",
+  "asof": "2026-10-08",
+  "histdata_source": "HISTDATA_XAUUSD_M1_FIXED_EST_TO_M15_CANDIDATE_V1",
+  "twelve_source": "TWELVE_XAUUSD_15M_2020_2021_OCT2026_CANDIDATE_V1",
+  "price_level_vendors_must_not_be_spliced": true,
+  "year_results": {
+    "2020": {
+      "year": 2020,
+      "histdata_rows": 23626,
+      "twelve_rows": 22145,
+      "histdata_hard_closed_market_bars": 0,
+      "twelve_hard_closed_market_bars": 0,
+      "matched_15m_prices": 21432,
+      "close_abs_median_bps": 3.7827434873372034,
+      "close_abs_p95_bps": 38.308726993424074,
+      "target_agreement": {
+        "day": {
+          "same_date_matched_n": 236,
+          "direction_disagreement_n": 30,
+          "direction_disagreement_pct": 12.711864406779661
+        },
+        "ovn": {
+          "same_date_matched_n": 235,
+          "direction_disagreement_n": 20,
+          "direction_disagreement_pct": 8.51063829787234
+        }
+      },
+      "twelve_january_early_unavailable": true
+    },
+    "2021": {
+      "year": 2021,
+      "histdata_rows": 23562,
+      "twelve_rows": 23150,
+      "histdata_hard_closed_market_bars": 0,
+      "twelve_hard_closed_market_bars": 0,
+      "matched_15m_prices": 22486,
+      "close_abs_median_bps": 2.035308640384037,
+      "close_abs_p95_bps": 26.61283882332888,
+      "target_agreement": {
+        "day": {
+          "same_date_matched_n": 255,
+          "direction_disagreement_n": 33,
+          "direction_disagreement_pct": 12.941176470588237
+        },
+        "ovn": {
+          "same_date_matched_n": 241,
+          "direction_disagreement_n": 43,
+          "direction_disagreement_pct": 17.842323651452283
+        }
+      },
+      "twelve_january_early_unavailable": false
+    }
+  },
+  "price_raw_exported": false,
+  "model_retrained": false,
+  "completed_at": "2026-10-08T14:08:21.085465+00:00"
+}
