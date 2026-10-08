@@ -128,6 +128,12 @@ def main():
     base.main()
     z=json.loads(base.OUT.read_text())
     z.update({
+      'training_2023':'All source-qualified matured overnight rows since 2021; strictly past next_date at every 2023 decision',
+      'training_2024':'All source-qualified matured overnight rows since 2021; chronological expanding history',
+      'training_2025':'Model parameter freeze trained on eligible 2021–2024 source-qualified origins only, no 2025 targets',
+      'reason_retraining_not_identical':'Provider/source and pre-2025 training history differ; original 2020 data fails a 12-of-12 macro event check; also 2026 retrospective historical consensus readiness lacks pre-release independent archived vintage proof.',
+      'macro_event_calendar_sha256':hashlib.sha256(paths['fixed'].read_bytes()).hexdigest(),
+      'macro_event_calendar_2025_official_sha256':z['macro_event_calendar_sha256'],
       'status':'PRAMV_ARCHITECTURE_ACTUALLY_REFIT_ON_2021_2025_FULLER_OLD_MACRO_SOURCE_RESTRICTED_PIT',
       'macro_train_since_2021':True,
       '2020_prices_available':True,
@@ -153,4 +159,35 @@ def main():
       'new_summary':base.OUT.name,'generated_at':datetime.now(timezone.utc).isoformat()}
     AGG.write_text(json.dumps(info,indent=2)+'\n')
     print('EXPANDED_2021_2025_PRAMV_FINISHED',json.dumps(info,indent=2),flush=True)
+
+    # Canonical source-clean comparison to ORIGINAL 2022-only price warmup.
+    # Both variants preserve M4/RFR/veto architecture and pre-origin fitting.
+    name22='GOLD_EXECUTION_PRAMV_ORIGINAL_2022_WARMUP_SOURCE_MACRO_RETEST_20261008'
+    base.OUT=AX/(name22+'_SUMMARY.json')
+    base.MET=AX/(name22+'_YEARLY_METRICS.csv')
+    base.PRED=AX/(name22+'_DATED_PREDICTIONS.csv')
+    base.CHECK=AX/(name22+'_FOMC_ABLATION.csv')
+    def original_warmup():
+        p,t=common.source_load()
+        p=p[p.index>=pd.Timestamp('2022-01-01',tz='UTC')]
+        return p,t
+    base.mkt_q=original_warmup
+    base.main()
+    v=json.loads(base.OUT.read_text())
+    v.update({
+      'status':'PRAMV_ORIGINAL_2022_PRICE_WARMUP_ACTUAL_MACRO_REFIT_RESTRICTED_HISTORICAL',
+      'training_2023':'Original price warmup year 2022 plus strictly matured source-qualified prior 2023 outcomes',
+      'training_2024':'Original 2022 price warmup and strictly matured 2023–2024 expanding training',
+      'training_2025':'Original 2022–2024 eligible quote history, frozen at 2025-01-01; no 2025 actual labels in fitting',
+      'm4_train_history_from_2020_22':True,
+      'm4_train_history_exact_years':[2022,2023,2024],
+      'source_window':'Accepted 2020–25 quote universe; original 2022 price warmup plus 2022 actual+consensus source macro, 2023-24 expanding, 2025 frozen',
+      'reason_retraining_not_identical':'New independent price source and macro calendar repair; historical 2022 macro 2026-retrieved consensus source has no independent pre-release archived first consensus vintage.',
+      'macro_event_calendar_sha256':hashlib.sha256(paths['fixed'].read_bytes()).hexdigest(),
+      'macro_event_calendar_2025_official_sha256':v['macro_event_calendar_sha256'],
+      '2020_macro_not_used':'2020 11/12 NFP/AHE/UNEMP pairs + unscheduled FOMC; no fabricated no-announcement input',
+      'source_macro_2022_complete':qc['2022'],
+      'older_2021_expanded_comparison':NAME+'_YEARLY_METRICS.csv'})
+    base.OUT.write_text(json.dumps(v,indent=2)+'\n')
+    print('CANONICAL_2022_WARMUP_PRAMV_COMPLETED',base.OUT.name,flush=True)
 if __name__=='__main__':main()
