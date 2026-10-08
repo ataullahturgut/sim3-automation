@@ -181,3 +181,5 @@ def main():
     return 0 if report["status"].startswith("SINGLE_") else 1
 
 if __name__=="__main__":raise SystemExit(main())
+
+# Research receipt policy: no vendor raw quotes committed to the public repository.
