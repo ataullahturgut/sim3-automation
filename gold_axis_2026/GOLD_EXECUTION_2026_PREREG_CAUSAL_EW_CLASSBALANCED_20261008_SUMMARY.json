@@ -1,0 +1,15 @@
+{
+  "status": "ACTUAL_CAUSAL_MONTHLY_TEST",
+  "candidate_models": [
+    "EW_GVZ",
+    "EW_VIX",
+    "ROLL504_GVZ",
+    "EQUAL_GVZ_VIX"
+  ],
+  "2025_2026": "retrospective, already examined",
+  "asof_refit": "beginning of each month, only preceding matured labels",
+  "sources": "EVTradingLabs Dukascopy historical 2020-25; gated 2026 Dukascopy-node mirror Jan-Aug20",
+  "2026_prior_month_labels_may_legitimately_enter_2026_later_refit": true,
+  "not_2026_untouched_holdout": true,
+  "not_bank_executable": true
+}
