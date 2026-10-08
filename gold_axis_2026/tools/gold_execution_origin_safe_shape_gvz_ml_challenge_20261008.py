@@ -33,8 +33,8 @@ BASE_OVN = ["impulse_early", "impulse_late"]
 MODELS = ["BASE_LOGIT", "SHAPE_LOGIT", "SHAPE_GVZ_LOGIT", "SHAPE_GVZ_HGB"]
 MIN_TRAIN = 150
 
-def features(q, t):
-    gvz = pd.read_csv(GVZ_CSV, usecols=["date","value"]).copy()
+def features(q, t, min_year=2022, max_year=2025, gvz_csv=None):
+    gvz = pd.read_csv(gvz_csv or GVZ_CSV, usecols=["date","value"]).copy()
     gvz["date"] = pd.to_datetime(gvz["date"], errors="raise")
     gvz["value"] = pd.to_numeric(gvz["value"], errors="coerce")
     gvz = gvz.dropna().sort_values("date").drop_duplicates("date",keep="last")
@@ -42,7 +42,7 @@ def features(q, t):
     out = []
     t = t.sort_values("date").reset_index(drop=True)
     for i, r in t.iterrows():
-        if not 2022 <= int(r.year) <= 2025: continue
+        if not min_year <= int(r.year) <= max_year: continue
         d = pd.Timestamp(r.date).normalize()
         if i == 0: continue
         prev = t.iloc[i-1]
