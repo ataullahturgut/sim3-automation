@@ -1,0 +1,213 @@
+{
+  "asof": "2026-10-08",
+  "status": "NOT_CLEARED_FOR_2026_MACRO_M4",
+  "audit": "read_only_counts_release_dates_without_publishing_numeric_consensus",
+  "expected_fed_regular_scheduled_statement_dates": [
+    "2026-01-28",
+    "2026-03-18",
+    "2026-04-29",
+    "2026-06-17",
+    "2026-07-29",
+    "2026-09-16"
+  ],
+  "expected_BLS_CPI_scheduled_release_dates_through_2026_09": [
+    "2026-01-13",
+    "2026-02-13",
+    "2026-03-11",
+    "2026-04-10",
+    "2026-05-12",
+    "2026-06-10",
+    "2026-07-14",
+    "2026-08-12",
+    "2026-09-11"
+  ],
+  "official_FOMC": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+  "official_BLS": "https://www.bls.gov/schedule/2026/",
+  "total_2026_observation_rows": 76,
+  "original_M4_original_PRAMV_can_be_scored": false,
+  "source_series_receipts": {
+    "MACRO_EVENT_V3_FOMC_SCORE": {
+      "rows": 5,
+      "unique_release_UTC_dates": 5,
+      "release_dates_UTC": [
+        "2026-01-28",
+        "2026-03-18",
+        "2026-04-29",
+        "2026-06-17",
+        "2026-07-29"
+      ],
+      "missing_available_asof": 0,
+      "release_available_asof_later_than_24h": 5,
+      "retrospectively_retrieved_after_release": 5
+    },
+    "MACRO_CPI_ACTUAL_FIRST_PRINT": {
+      "rows": 8,
+      "unique_release_UTC_dates": 8,
+      "release_dates_UTC": [
+        "2026-01-13",
+        "2026-02-13",
+        "2026-03-11",
+        "2026-04-10",
+        "2026-05-12",
+        "2026-06-10",
+        "2026-07-14",
+        "2026-08-12"
+      ],
+      "missing_available_asof": 0,
+      "release_available_asof_later_than_24h": 0,
+      "retrospectively_retrieved_after_release": 8
+    },
+    "MACRO_CPI_CONSENSUS_PIT": {
+      "rows": 9,
+      "unique_release_UTC_dates": 9,
+      "release_dates_UTC": [
+        "2026-01-13",
+        "2026-02-13",
+        "2026-03-11",
+        "2026-04-10",
+        "2026-05-12",
+        "2026-06-10",
+        "2026-07-14",
+        "2026-08-12",
+        "2026-09-11"
+      ],
+      "missing_available_asof": 0,
+      "release_available_asof_later_than_24h": 0,
+      "retrospectively_retrieved_after_release": 8
+    },
+    "MACRO_NFP_ACTUAL_FIRST_PRINT": {
+      "rows": 9,
+      "unique_release_UTC_dates": 9,
+      "release_dates_UTC": [
+        "2026-01-09",
+        "2026-02-11",
+        "2026-03-06",
+        "2026-04-03",
+        "2026-05-08",
+        "2026-06-05",
+        "2026-07-02",
+        "2026-08-07",
+        "2026-09-04"
+      ],
+      "missing_available_asof": 0,
+      "release_available_asof_later_than_24h": 0,
+      "retrospectively_retrieved_after_release": 9
+    },
+    "MACRO_NFP_CONSENSUS_PIT": {
+      "rows": 9,
+      "unique_release_UTC_dates": 9,
+      "release_dates_UTC": [
+        "2026-01-09",
+        "2026-02-11",
+        "2026-03-06",
+        "2026-04-03",
+        "2026-05-08",
+        "2026-06-05",
+        "2026-07-02",
+        "2026-08-07",
+        "2026-09-04"
+      ],
+      "missing_available_asof": 0,
+      "release_available_asof_later_than_24h": 0,
+      "retrospectively_retrieved_after_release": 9
+    },
+    "MACRO_AHE_ACTUAL_FIRST_PRINT": {
+      "rows": 9,
+      "unique_release_UTC_dates": 9,
+      "release_dates_UTC": [
+        "2026-01-09",
+        "2026-02-11",
+        "2026-03-06",
+        "2026-04-03",
+        "2026-05-08",
+        "2026-06-05",
+        "2026-07-02",
+        "2026-08-07",
+        "2026-09-04"
+      ],
+      "missing_available_asof": 0,
+      "release_available_asof_later_than_24h": 0,
+      "retrospectively_retrieved_after_release": 9
+    },
+    "MACRO_AHE_CONSENSUS_PIT": {
+      "rows": 9,
+      "unique_release_UTC_dates": 9,
+      "release_dates_UTC": [
+        "2026-01-09",
+        "2026-02-11",
+        "2026-03-06",
+        "2026-04-03",
+        "2026-05-08",
+        "2026-06-05",
+        "2026-07-02",
+        "2026-08-07",
+        "2026-09-04"
+      ],
+      "missing_available_asof": 0,
+      "release_available_asof_later_than_24h": 0,
+      "retrospectively_retrieved_after_release": 9
+    },
+    "MACRO_UNEMP_ACTUAL_FIRST_PRINT": {
+      "rows": 9,
+      "unique_release_UTC_dates": 9,
+      "release_dates_UTC": [
+        "2026-01-09",
+        "2026-02-11",
+        "2026-03-06",
+        "2026-04-03",
+        "2026-05-08",
+        "2026-06-05",
+        "2026-07-02",
+        "2026-08-07",
+        "2026-09-04"
+      ],
+      "missing_available_asof": 0,
+      "release_available_asof_later_than_24h": 0,
+      "retrospectively_retrieved_after_release": 9
+    },
+    "MACRO_UNEMP_CONSENSUS_PIT": {
+      "rows": 9,
+      "unique_release_UTC_dates": 9,
+      "release_dates_UTC": [
+        "2026-01-09",
+        "2026-02-11",
+        "2026-03-06",
+        "2026-04-03",
+        "2026-05-08",
+        "2026-06-05",
+        "2026-07-02",
+        "2026-08-07",
+        "2026-09-04"
+      ],
+      "missing_available_asof": 0,
+      "release_available_asof_later_than_24h": 0,
+      "retrospectively_retrieved_after_release": 9
+    }
+  },
+  "paired_actual_consensus_qc": {
+    "CPI": {
+      "matching_release_pairs": 8,
+      "unmatched": 1,
+      "both_asof_present": 8
+    },
+    "NFP": {
+      "matching_release_pairs": 9,
+      "unmatched": 0,
+      "both_asof_present": 9
+    },
+    "AHE": {
+      "matching_release_pairs": 9,
+      "unmatched": 0,
+      "both_asof_present": 9
+    },
+    "UNEMP": {
+      "matching_release_pairs": 9,
+      "unmatched": 0,
+      "both_asof_present": 9
+    }
+  },
+  "source_has_all_FED2026_regular": false,
+  "source_has_CPI2026_9": false,
+  "retrospective_macro_source_coverage_provisionally_ready": false,
+  "reason": "SOURCE_2026_FOMC_CPI_OR_ACTUAL_CONSENSUS_MISSING"
+}
