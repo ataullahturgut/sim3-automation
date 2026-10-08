@@ -40,14 +40,14 @@ jobs:
           name: gold-origin-safe-vix-gvz-private-predictions
           path: gold_axis_2026/GOLD_EXECUTION_ORIGIN_SAFE_VIX_GVZ_ML_CHALLENGE_20261008_DATED_PREDICTIONS_PRIVATE.csv
           if-no-files-found: warn
-      - name: Save only aggregate rates research evidence
-        if: success()
+      - name: Save only aggregated results or sanitized failure diagnostic
+        if: always()
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add gold_axis_2026/GOLD_EXECUTION_ORIGIN_SAFE_VIX_GVZ_ML_CHALLENGE_20261008_SUMMARY.json
-          git add gold_axis_2026/GOLD_EXECUTION_ORIGIN_SAFE_VIX_GVZ_ML_CHALLENGE_20261008_METRICS.csv
-          git add gold_axis_2026/GOLD_EXECUTION_ORIGIN_SAFE_VIX_GVZ_ML_CHALLENGE_20261008_PAIRED_AUDIT.csv
+          for f in gold_axis_2026/GOLD_EXECUTION_ORIGIN_SAFE_VIX_GVZ_ML_CHALLENGE_20261008_{SUMMARY.json,METRICS.csv,PAIRED_AUDIT.csv,FAIL_STATUS.json}; do
+            if test -f "$f"; then git add "$f"; fi
+          done
           git diff --cached --quiet || git commit -m 'Record causal-time aligned VIX GVZ risk divergence model comparison'
           for i in 1 2 3 4 5; do
             git pull --rebase origin gold-execution-channel-audit-20261006
