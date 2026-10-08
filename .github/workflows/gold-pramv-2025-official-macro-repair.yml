@@ -1,0 +1,41 @@
+name: PRAMV Official Macro Event Calendar Repair 2025
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - 'gold_axis_2026/tools/gold_execution_pramv_official_macro_repair_20261008.py'
+      - '.github/workflows/gold-pramv-2025-official-macro-repair.yml'
+permissions:
+  contents: write
+jobs:
+  repair-and-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'pandas>=2.2,<3' 'numpy>=2,<3'
+      - run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_pramv_official_macro_repair_20261008.py
+          python gold_axis_2026/tools/gold_execution_pramv_official_macro_repair_20261008.py
+      - name: Save independent historical event calendar and scientific QC
+        if: always()
+        run: |
+          test -f gold_axis_2026/GOLD_EXECUTION_PRAMV_OFFICIAL_2025_MACRO_SOURCE_QC_20261008.json || exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_EXECUTION_PRAMV_OFFICIAL_2025_MACRO_SOURCE_QC_20261008.json
+          git add gold_axis_2026/GOLD_EXECUTION_PRAMV_OFFICIAL_2025_MACRO_SOURCE_GOVERNED_V2_20261008.csv
+          git diff --cached --quiet || git commit -m 'Record source-preserving 2025 FOMC and BLS macro calendar repair for frozen PRAMV'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 2
+          done
+          exit 1
