@@ -60,6 +60,29 @@ def evaluate(p):
           "down_tail_capture":capture(down),"down_tail_precision_lift":enrichment(down)})
     return pd.DataFrame(out)
 
+def month_block_intervals(p):
+    rng=np.random.default_rng(20261008)
+    rows=[]
+    for (source,year),g in p.groupby(["source_test","year"]):
+        groups=[q for _,q in g.groupby(g.date.str.slice(0,7))]
+        block_count=len(groups)
+        if block_count<4:continue
+        samples=[]
+        for _ in range(1500):
+            idx=rng.integers(0,block_count,size=block_count)
+            chosen=pd.concat([groups[int(j)] for j in idx],ignore_index=True)
+            a=chosen.actual_abs.to_numpy(float)
+            calibrated=chosen.corrected.to_numpy(float)
+            naive=chosen.naive.to_numpy(float)
+            samples.append(1-np.mean(abs(calibrated-a))/np.mean(abs(naive-a)))
+        rows.append({"source_test":source,"year":int(year),
+          "n":len(g),"months_as_blocks":block_count,"iterations":1500,
+          "lower_95":float(np.quantile(samples,.025)),
+          "upper_95":float(np.quantile(samples,.975)),
+          "bootstrap_positive_fraction":float(np.mean(np.array(samples)>0)),
+          "retrospective_descriptive_not_out_of_sample":True})
+    return pd.DataFrame(rows)
+
 def main():
     q,t=risk.src.source_load()
     m,source_proof=risk.mirror.load_approved()
