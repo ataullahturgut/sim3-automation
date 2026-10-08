@@ -37,3 +37,38 @@ DAY direction remains weak and unstable across all three families; reject generi
 4. Do not promote consensus or train more complex networks just to optimize already-inspected 2025. Explicitly retain negative results.
 
 **Current verdict:** controlled scientific exploration active; no verified high-success execution direction system yet.
+
+
+## E. Requested 2020 / 2021 / 2022 history-length experiment — ACTUALLY RUN
+
+Frozen source: 141,890 BID+ASK M15 quotes and 1,549 audited DAY/OVN issue labels from Dukascopy-derived EV 2020–25; *same-date* official full Cboe GVZ and VIX prior-date states. Six pre-existing algorithm/fixed feature identities retrained separately using beginning 2020, 2021 or 2022; 2023/24 scored chronologically by calendar-month matured refit; 2025 previously observed and retrospectively frozen. **2020 and 2021 are now genuinely used in training.** Full outputs and paired rescue counts:
+- GOLD_EXECUTION_2020_2025_TRAIN_START_COMPARISON_20261008_SUMMARY.json
+- GOLD_EXECUTION_2020_2025_TRAIN_START_COMPARISON_20261008_METRICS.csv
+- GOLD_EXECUTION_2020_2025_TRAIN_START_COMPARISON_20261008_PAIRED_HISTORY.csv
+
+Example: weekday 16h OVERNIGHT SHAPE_GVZ_HGB BA with starts 2020/2021/2022:
+- 2023: 52.09% / 49.45% / 53.18%, N187
+- 2024: 52.79% / 54.13% / 56.67%, N190
+- 2025 retrospect: 55.91% / 53.02% / 52.47%, N192.
+
+2020 vs 2022 in 2025: 34 rescued, 26 broken, +8 net, exact McNemar p=0.366. This is a **positive historical hint, not proof** and not a permissible 2025-optimized history-choice.
+
+## F. 2026 outcome validation — independently executed restricted HistData research panel
+
+Separate single-source private HistData M1 fixed-EST=>UTC BID 2020–Sep2026, price and label contract independently rebuilt to match the previously stored 1,739 target rows. 2023 data deficiency preserved, not patched or spliced: 136/257 DAY and 145/257 OVN source-qualified in 2023. 2026 Jan–Sep source-qualified 191 DAY and 185 OVN; with exact pre-origin feature and strict external-date joins **184 DAY and 141 weekday regular-16h OVN cases** survive. 2026 Oct **not** in this source. Six locked heads with 2020/2021/2022 histories were truly fitted on prior 2020–25 labels and scored on the held 2026 prices with **zero 2026 targets in fit**. Metric artifact GOLD_EXECUTION_2026_HISTDATA_RESTRICTED_SOURCE_FROZEN_HOLDOUT_20261008_YEAR_METRICS.csv; month breakdown, paired comparisons and source receipt are separately committed.
+
+Nominal 2026 141-night results:
+- SHAPE_GVZ_HGB beginning 2020 BA46.67% / DOWN35.14%; beginning **2021 BA58.98% / DOWN56.76%**; beginning 2022 BA52.86% / DOWN59.46%.
+- SHAPE_GVZ_LOGIT beginning 2020 BA58.51% / DOWN51.35%; beginning 2022 BA57.13% / DOWN63.51%.
+- All 2026 DAY target results are weak, despite apparently higher raw-UP accuracies.
+- 2021-start HGB vs 2022-start HGB rescues 24, breaks 16 (net +8), BA +6.11 percentage points, exact McNemar p=0.2682. It is **not statistically established after multiple comparisons**. The 2021-start HGB performs very unevenly by month (February BA16.67% on N14).
+
+**Critical identity:** These 2026 scores are exclusively HISTDATA BID, with its source-gated 2020–Sep2026 research panel, NOT the previous Dukascopy 2020–25 source. They MUST NOT be directly compared or pooled with the Dukascopy-scored 2023–25 BA as if the inputs and labels match. They are **restricted, not canonical, not bank-executable**, and have never justified a production-promoted champion.
+
+## G. Stronger direct 2026 same-upstream Dukascopy source audit — EXPLICIT BLOCK
+
+The 2020–25 benchmark's direct upstream Dukascopy BID/ASK 2026 extension was attempted with primary M1 source and independent 2025 overlap. 2025 measured overlap 360 BID price cells; median absolute difference ≈0.0117 bps and p95 ≈0.0119 bps (good source concordance), but multiple BID/ASK download-day failures meant it did **not** reach the preregistered >=500-cell scientific source gate. The pipeline correctly recorded **BLOCKED_NO_AUTHORIZED_2026_DIRECTION_SCORE** rather than fabricating Dukascopy 2026 scores or relaxing the gate post hoc.
+
+Source gate: GOLD_EXECUTION_2026_FROZEN_HISTORY_SAME_VENDOR_CHALLENGE_20261008_SUMMARY.json. The direct primary-source 2026 holdout remains unverified; rerun only once vendor returns complete dated BID/ASK data and source/maturity gate passes. No 2026 post-hoc architecture/hyperparameter/abstention tuning permitted. Under no circumstances convert restricted HistData 2026 values into validated Dukascopy 2026 predictions.
+
+**Overall 8 October 2026 conclusion:** historical 2020–21 training was genuinely activated; 2026 Jan–Sep was actually measured on a labeled source-qualified but incomplete-origin provider universe; promising nominal ~59% NIGHT BA is not deployment-grade and does not defeat the multiple-comparison/coverage and true bank execution constraints.
