@@ -41,6 +41,7 @@ def data():
     z=z[(z.score>0)&(z.gvz>0)].copy().reset_index(drop=True)
     assert (z.gvz_date<z.date).all()
     assert z[z.year==2022].shape[0]>160 and z[z.year==2023].shape[0]>200
+    z["y"]=z.event_abs1.astype(int)  # original HAR helper expects the binary absolute-tail label in y
     z["logscore"]=np.log(z.score)
     z["loggvz"]=np.log(z.gvz)
     z['tail1']=z.event_abs1
