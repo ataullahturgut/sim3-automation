@@ -1,0 +1,93 @@
+name: Gold 2026 Direct Dukascopy Monthly Source and Frozen Replay
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - gold_axis_2026/tools/gold_execution_2026_dukascopy_private_monthly_acquisition_20261008.py
+      - gold_axis_2026/tools/gold_execution_2026_reconciled_direct_source_locked_replay_20261008.py
+      - .github/workflows/gold-execution-2026-primary-monthly-and-fixed-replay.yml
+permissions:
+  contents: write
+concurrency:
+  group: gold-execution-2026-primary-monthly-acquisition-and-replay
+  cancel-in-progress: false
+jobs:
+  monthly-primary:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 27
+    strategy:
+      max-parallel: 3
+      fail-fast: false
+      matrix:
+        month: ['01','02','03','04','05','06','07','08','09','10']
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.32,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Download direct primary BID ASK with native-minute QC
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_2026_dukascopy_private_monthly_acquisition_20261008.py
+          python gold_axis_2026/tools/gold_execution_2026_dukascopy_private_monthly_acquisition_20261008.py --month ${{ matrix.month }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-2026-direct-native-month-${{ matrix.month }}-receipt
+          path: gold_axis_2026/GOLD_EXECUTION_2026_DUKASCOPY_PRIMARY_MONTH_${{ matrix.month }}_QC_20261008.json
+          if-no-files-found: warn
+  frozen-2026:
+    needs: [monthly-primary]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.32,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'statsmodels>=0.14,<1' 'psycopg[binary]>=3.2,<4'
+      - name: Same-upstream native quote gate and frozen 2026 model refit
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_2026_reconciled_direct_source_locked_replay_20261008.py
+          python gold_axis_2026/tools/gold_execution_2026_reconciled_direct_source_locked_replay_20261008.py
+      - name: Preserve private dated 2026 quote and model files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-2026-direct-primary-private-predictions
+          path: |
+            gold_axis_2026/GOLD_EXECUTION_2026_FROZEN_HISTORY_SAME_VENDOR_CHALLENGE_20261008_DATED_PREDICTIONS_PRIVATE.csv
+            gold_axis_2026/GOLD_EXECUTION_2026_FROZEN_HISTORY_SAME_VENDOR_CHALLENGE_20261008_PRIVATE_2026_DIRECT_BIDASK_M15.csv
+          if-no-files-found: warn
+      - name: Publish safe aggregate and explicit model/source verdict
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for f in gold_axis_2026/GOLD_EXECUTION_2026_FROZEN_HISTORY_SAME_VENDOR_CHALLENGE_20261008_{SUMMARY.json,YEARLY_METRICS.csv,MONTHLY_METRICS.csv,PAIRED_HISTORY.csv,DATA_QC.json}; do
+            if test -f "$f"; then git add "$f"; fi
+          done
+          git diff --cached --quiet || git commit -m 'Record 2026 native BID ASK source-gated locked model results or explicit block'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 3
+          done
+          exit 1
