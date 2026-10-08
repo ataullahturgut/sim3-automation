@@ -5,6 +5,7 @@ No 2026 model/target is issued by this pilot.
 """
 from __future__ import annotations
 import os,sys,io,json,struct,lzma,time,urllib.request,urllib.error
+from concurrent.futures import ThreadPoolExecutor,as_completed
 from pathlib import Path
 from datetime import date,timedelta,datetime,timezone
 import numpy as np,pandas as pd
@@ -20,10 +21,10 @@ URL="https://datafeed.dukascopy.com/datafeed/XAUUSD/{year}/{month0:02d}/{day:02d
 def getday(d,side):
     path=URL.format(year=d.year,month0=d.month-1,day=d.day,side=side)
     error=None
-    for k in range(3):
+    for k in range(2):
         try:
             req=urllib.request.Request(path,headers={"User-Agent":"Mozilla/5.0"})
-            with urllib.request.urlopen(req,timeout=24) as response:
+            with urllib.request.urlopen(req,timeout=9) as response:
                 raw=response.read(2000000)
             if len(raw)==0:return pd.DataFrame(columns=["ts","open","close"]),"EMPTY"
             unpacked=lzma.decompress(raw)
@@ -61,9 +62,15 @@ def main():
     started=time.time()
     q,_=old.source_load()
     results=[];overlap=[]
-    for d in DAYS_2025+DAYS_2026:
-        bid,st_bid=getday(d,"BID")
-        ask,st_ask=getday(d,"ASK")
+    all_dates=DAYS_2025+DAYS_2026
+    downloaded={}
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        tasks={pool.submit(getday,d,side):(d,side) for d in all_dates for side in ("BID","ASK")}
+        for job in as_completed(tasks):
+            downloaded[tasks[job]]=job.result()
+    for d in all_dates:
+        bid,st_bid=downloaded[(d,"BID")]
+        ask,st_ask=downloaded[(d,"ASK")]
         qb=m15(bid);qa=m15(ask)
         if len(qb) and len(qa):
             joined=qb[["close"]].join(qa[["close"]],lsuffix="_bid",rsuffix="_ask",how="inner")
