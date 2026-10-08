@@ -60,6 +60,8 @@ def features(q, t):
             gate = getattr(r, "day_gate" if name == "DAY" else "overnight_gate")
             if not (np.isfinite(y) and np.isfinite(target_ret) and gate=="COMPLETE_SINGLE_SOURCE"):
                 continue
+            if int(target_ret>0) != int(y):
+                raise RuntimeError("FROZEN_PRICE_TARGET_SIGN_MISMATCH")
             if name=="OVN" and d.dayofweek==4:
                 # Friday->Monday 64h is a different target, excluded from regular 16h challenge.
                 continue
