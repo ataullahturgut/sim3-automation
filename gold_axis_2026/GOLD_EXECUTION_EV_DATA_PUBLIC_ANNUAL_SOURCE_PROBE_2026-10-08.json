@@ -1,0 +1,95 @@
+{
+  "asof": "2026-10-08",
+  "source_site": "https://evtradelabs.com/data",
+  "user_signup_attempted": false,
+  "secret_required": false,
+  "raw_prices_downloaded": false,
+  "page_status": 200,
+  "page_len": 1284051,
+  "scripts": [
+    "/_next/static/chunks/0g0nk4gu79vz0.js",
+    "/_next/static/chunks/17ar1kzng-4gt.js",
+    "/_next/static/chunks/10864vlsj_sch.js",
+    "/_next/static/chunks/turbopack-0jk0p7xd6ftt_.js",
+    "/_next/static/chunks/0nprg_.s4luox.js",
+    "/_next/static/chunks/0hbqpidpwoynt.js",
+    "/_next/static/chunks/05hlvz4wg39h4.js",
+    "/_next/static/chunks/0400aqg90~-e~.js",
+    "/_next/static/chunks/08-a2_buk.rmx.js",
+    "/_next/static/chunks/0xm06loc7z9-_.js",
+    "/_next/static/chunks/0micet8v2zqu4.js",
+    "/_next/static/chunks/02khuuew44eo4.js",
+    "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5550872810633047",
+    "/_next/static/chunks/03~yq9q893hmn.js",
+    "/_next/static/chunks/0fj-y1b2ao6il.js"
+  ],
+  "text_asset_candidates": [
+    "Download M1, M5, M15, H1, H4 and D1 candles for XAUUSD, EURUSD, GBPUSD and more. Compressed OHLCV .json.gz, ready for backtesting. No login, no cost.",
+    "OHLCV,historical data,M1 candles,XAUUSD,EURUSD,GBPUSD,backtesting,download,free,tick data",
+    "Download M1, M5, M15, H1, H4 and D1 candles for XAUUSD, EURUSD, GBPUSD and more. Compressed OHLCV .json.gz, ready for backtesting. No login, no cost.",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M5/2013.json.gz",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M5/2014.json.gz",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M5/2015.json.gz",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M5/2016.json.gz",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M5/2017.json.gz",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M5/2018.json.gz",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M5/2019.json.gz",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M5/2020.json.gz",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M5/2021.json.gz",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M5/2022.json.gz",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M5/2023.json.gz",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M5/2024.json.gz",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M5/2025.json.gz",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M15/2013.json.gz",
+    "https://evtradelabs.com/api/simulator/data/BRENT/M15/2014.json.gz"
+  ],
+  "server_contains_XAUUSD_2023": true,
+  "script_inspection": [
+    {
+      "src": "/_next/static/chunks/0g0nk4gu79vz0.js",
+      "http": 200,
+      "length": 45254,
+      "candidate_routes": [],
+      "snippets": []
+    },
+    {
+      "src": "/_next/static/chunks/17ar1kzng-4gt.js",
+      "http": 200,
+      "length": 232058,
+      "candidate_routes": [],
+      "snippets": [
+        " r?e.setAttribute(n,\"\"):e.removeAttribute(n);break;case\"capture\":case\"download\":!0===r?e.setAttribute(n,\"\"):!1!==r&&null!=r&&\"function\"!=typeof r&&\"symbol\"!=typ"
+      ]
+    },
+    {
+      "src": "/_next/static/chunks/10864vlsj_sch.js",
+      "http": 200,
+      "length": 141400,
+      "candidate_routes": [],
+      "snippets": []
+    },
+    {
+      "src": "/_next/static/chunks/turbopack-0jk0p7xd6ftt_.js",
+      "http": 200,
+      "length": 10844,
+      "candidate_routes": [],
+      "snippets": []
+    },
+    {
+      "src": "/_next/static/chunks/0nprg_.s4luox.js",
+      "http": 200,
+      "length": 3715,
+      "candidate_routes": [],
+      "snippets": []
+    },
+    {
+      "src": "/_next/static/chunks/0hbqpidpwoynt.js",
+      "http": 200,
+      "length": 55098,
+      "candidate_routes": [],
+      "snippets": []
+    }
+  ],
+  "status": "PUBLIC_SOURCE_DISCOVERY_COMPLETE",
+  "finished_at": "2026-10-08T14:38:03.265171+00:00"
+}
