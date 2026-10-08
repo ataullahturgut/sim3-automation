@@ -4066,3 +4066,24 @@ Half-year BA:
 5. PRAMV V1 is now frozen. The next valid proof is an unchanged 2026+ / newly unseen test.
 6. Do not add SESSION/PATH/STRUCTURAL votes, probability thresholds, new windows or post-hoc feature filters before the next unseen score.
 7. DAY 09:00->17:00 remains unsolved; these overnight findings must not be transferred to DAY.
+
+
+---
+
+## PRAMV V1 reject-cohort audit / orthogonal reliability challenger — 2026-10-08
+
+Authority / diagnostic:
+- `GOLD_EXECUTION_PRAMV_DIAGNOSTIC_AND_ORTHOGONAL_GATE_RESEARCH_2026-10-08.md`
+
+**Status: DIAGNOSTIC COMPLETE / V2 PROPOSAL ONLY / PRAMV V1 UNCHANGED.**
+
+Full reconstruction of source RFR no-macro reversal candidates, not only the accepted PRAMV output, finds:
+- 2023–2024 no-macro RFR: 132/231 = 57.14% correct;
+- PRAMV M4-agreed: 106/175 = 60.57%;
+- M4-disagreed/rejected: 26/56 = 46.43%;
+- 2025 retrospective agreed: 52/82 = 63.41%;
+- 2025 retrospective rejected: 13/29 = 44.83%.
+
+The agreed-vs-rejected discrimination is encouraging but has **not** achieved clean independent confirmation (DEV two-sided Fisher p≈0.0874; 2025 p≈0.1239). Post-hoc multi-model exploration further prevents interpreting nominal selection-conditioned p-values as untouched OOS evidence. The M3 no-macro ablation delivers 106 correct on 177 accepted DEV days versus M4's 106 on 175: added macro features have not yet shown material incremental selectivity on this cohort. **M4 and RFR are not feature-independent** because the two late half-hour returns appear in both.
+
+New **V2A O-RG** challenger investigates reliability of RFR using only pre-16:00 XAU path information with disjoint feature windows. Optional **V2B** explores pre-origin GC/COMEX/spot residuals only after source-ready verification. Both are unpromoted research protocols. Do not retune the frozen V1, use opened 2025/2026 outcomes for retrospective 'blind' claims, or assume execution at the 17:00 open after observing the completed last bar. Next work: first executable-quote audit, source-clock gate, chronological probabilistic reliability and genuinely unseen validation.
