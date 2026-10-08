@@ -1,0 +1,54 @@
+name: Gold 2026 Geometric Trajectory Memory Nonparametric Trial
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - gold_axis_2026/tools/gold_execution_2026_full_trajectory_cbr_20261008.py
+      - .github/workflows/gold-execution-2026-nonparametric-full-path-cbr.yml
+permissions:
+  contents: write
+concurrency:
+  group: gold-2026-nonparametric-fullpath-analogue
+  cancel-in-progress: false
+jobs:
+  retrospective:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 17
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.32,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'statsmodels>=0.14,<1' 'psycopg[binary]>=3.2,<4'
+      - name: Run frozen-prereg nonlinear full 16-bar path analogy, conditioned and unconditioned
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_2026_full_trajectory_cbr_20261008.py
+          python gold_axis_2026/tools/gold_execution_2026_full_trajectory_cbr_20261008.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-2026-fullpath-cbr-private-dated
+          path: gold_axis_2026/GOLD_EXECUTION_2026_FULL_TRAJECTORY_CBR_20261008_DATED_PRIVATE.csv
+          if-no-files-found: warn
+      - name: Save actual aggregate nonparametric metrics and matched decisions
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add gold_axis_2026/GOLD_EXECUTION_2026_FULL_TRAJECTORY_CBR_20261008_{SUMMARY.json,YEAR_METRICS.csv,PAIRED.csv}
+          git diff --cached --quiet || git commit -m 'Record 2023-26 true nonparametric full trajectory nearest analog and regime gate outcomes'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 3
+          done
+          exit 1
