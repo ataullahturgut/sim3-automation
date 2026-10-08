@@ -1,0 +1,50 @@
+{
+  "status": "2025_INDEPENDENT_CANDIDATE_SAVED",
+  "asof": "2026-10-08",
+  "source": "HISTDATA_XAUUSD_M1_FIXED_EST_TO_M15_CANDIDATE_2025_2026",
+  "price_exported": false,
+  "paid_download": false,
+  "weekend_contract": "No Saturday or early Sunday spot gold bars",
+  "windows": {
+    "2025": {
+      "status": "INDEPENDENT_FULL_YEAR_RECEIVED",
+      "native_m1_rows": 353951,
+      "m15_rows": 23606,
+      "first_utc": "2025-01-01T23:00:00+00:00",
+      "last_utc": "2025-12-31T21:45:00+00:00",
+      "full_native_minute_15m_bars": 23560,
+      "bar_subset_lt15": 46,
+      "source_comparison": {
+        "overlap_rows": 23282,
+        "median_abs_close_bps": 5.90791031170268,
+        "p95_abs_close_bps": 51.7033151706723,
+        "2025_PRE_ANOMALY": {
+          "n": 7128,
+          "median_bps": 1.0325835226526747,
+          "p95_bps": 39.4414792847224
+        },
+        "2025_ANOMALOUS_ARCHIVE_PERIOD": {
+          "n": 16154,
+          "median_bps": 11.138609666637711,
+          "p95_bps": 54.60231125928216
+        }
+      },
+      "source_hash": "617843b22483cfd9165710f5f94db54ddbb66c6fed7851c880f9d5120024a815"
+    },
+    "2026_SEP": {
+      "status": "INDEPENDENT_MONTH_RECEIVED",
+      "native_m1_rows": 28947,
+      "m15_rows": 1930,
+      "first_utc": "2026-09-01T05:00:00+00:00",
+      "last_utc": "2026-10-01T04:45:00+00:00"
+    }
+  },
+  "private_storage": {
+    "status": "PRIVATE_CANDIDATE_SAVED",
+    "new_rows": 25536,
+    "total_rows": 25536,
+    "first_utc": "2025-01-01T23:00:00+00:00",
+    "last_utc": "2026-10-01T04:45:00+00:00"
+  },
+  "retrieved_at_utc": "2026-10-08T13:57:01.759948+00:00"
+}
