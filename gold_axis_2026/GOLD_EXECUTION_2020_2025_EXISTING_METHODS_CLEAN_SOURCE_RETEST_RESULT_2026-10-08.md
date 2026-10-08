@@ -108,3 +108,22 @@ The `...INVENTORY.csv` checks the archived original output filenames and records
 **No source-clean original full-coverage standalone model has yet demonstrated strong replicated two-sided direction edge across 2023, 2024 and 2025.** New-source training does not rescue near-always-UP models or eliminate their low DOWN recall. FSMR4 merits **scientific examination** as a relatively class-balanced modest baseline, but is not a final system. The legacy PRAMV selective archive remains **promising but not newly trained**, source-dependent and not fully verified.
 
 **Next required if all original model families are to be fully evaluated:** (A) obtain event-by-event PIT-complete macro ledger and identical current source inputs to faithfully retrain M4/PRAMV V1; (B) port only historically defined WGC/Sobti SESSION architectures to execution labels with their actual source-safe features, rather than claim SESSION scores represent DAY/OVN; (C) use genuinely future as-of-2026-10-08+ prospective origins for model promotion. No new confidence threshold or 2025-selected champion authorized.
+
+
+## 9. Separate original tail / hazard family re-test (completed after direction models)
+
+**Actually rerun on exact audited BID source, original risk architecture retained:** original prior-matured overnight 5/20/60 rolling-volatility score (HAR-style), calendar D-1 **GVZ** individual head, `HAR+GVZ`, and pre-existing separate **signed >=1% DOWN / >=1% UP** ridge heads `SCORE`, `GVZ`, `SCORE_GVZ`. The 2025 target and probability calibration use frozen historical parameters up to 2024; 2023–2024 are strictly prequential. 2022 labels form the risk warmup. Macro events are not used, given the incomplete 2025 FOMC ledger.
+
+**Important scientific separation:** these are *probabilities of large movement events*, not forecasts of which side gold will move on **all** nights. Individual `DOWN>=1%` AUC does **not** measure daily DOWN classification accuracy or a reliable buy/sell signal.
+
+| Year | Qualified nights | Absolute >=1% events | ABS baseline Brier | Original HAR+GVZ Brier | HAR+GVZ AUC | >=1% DOWN events | DOWN SCORE+GVZ AUC |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 2023 | 247 | 24 | 0.08914 | 0.08742 | 0.5678 | 8 | **0.4723** |
+| 2024 | 249 | 24 | 0.08758 | 0.08668 | 0.5972 | 14 | 0.6283 |
+| **2025 retrospective** | **249** | **53** | **0.17796** | **0.16061** | **0.6924** | **18** | **0.8004** |
+
+2025 signed downside SCORE+GVZ Brier **0.06332** versus same-history historical event-rate baseline **0.06740**; this is a **minor probabilistic improvement on only 18 tail-down cases**, not independent confirmation. Its **2023 AUC <0.5** and the already-open 2025 research archive prevent classifying it as a robust production alarm. 2025 53/249 `|r|>=1%` events should not be mechanically compared to legacy source 43/254 as if sampling identical dates and quote definitions; source/value/eligibility were corrected. No risk veto was retrospectively overlaid on PRAMV to inflate direction accuracy.
+
+Evidence `GOLD_EXECUTION_2020_2025_TAIL_HAR_GVZ_CLEAN_SOURCE_RETEST_20261008_SUMMARY.json` and `GOLD_EXECUTION_2020_2025_TAIL_HAR_GVZ_CLEAN_SOURCE_RETEST_20261008_METRICS.csv`; exact dated forecast probabilities retained as GitHub Actions artifact (not raw BID/ASK price files). Script `tools/gold_execution_2020_2025_tail_har_gvz_clean_retest_20261008.py`; workflow `gold-existing-har-gvz-tail-newsource-2020-2025.yml`.
+
+**Updated status:** direction-family replay + independent archived PRAMV source-retarget audit + original absolute/signed tail risk model re-tests are now complete for families supported by audited XAU/GVZ features. Remaining macro-dependent PRAMV exact reconstruction and old different-target ASIA/EU/US SESSION architectures are still blocked until their complete PIT inputs and correct DAY/OVN execution re-targeting can be demonstrated. **No new champion or bank-executable return is promoted.**
