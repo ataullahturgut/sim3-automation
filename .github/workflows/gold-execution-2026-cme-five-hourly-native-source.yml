@@ -1,0 +1,49 @@
+name: Gold 2026 Independent Five CME Futures H1 Native Source Under 2USD Cap
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - gold_axis_2026/tools/gold_execution_2026_cme_five_hourly_private_acquisition_20261008.py
+      - .github/workflows/gold-execution-2026-cme-five-hourly-native-source.yml
+permissions:
+  contents: write
+concurrency:
+  group: gold-2026-new-independent-CME-H1-source-budget-locked
+  cancel-in-progress: false
+jobs:
+  source-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 19
+    env:
+      DATABENTO_API_KEY: ${{ secrets.DATABENTO_API_KEY }}
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'databento>=0.62' 'psycopg[binary]>=3.2,<4'
+      - name: Strict current vendor-cost estimate gate, acquire pre-authorized credits and private source data without public raw redistribution
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_2026_cme_five_hourly_private_acquisition_20261008.py
+          python gold_axis_2026/tools/gold_execution_2026_cme_five_hourly_private_acquisition_20261008.py
+      - name: Commit source-only coverage receipts or explicit no-paid-request block
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          f=gold_axis_2026/GOLD_EXECUTION_2026_CME_FIVE_H1_SOURCE_QC_20261008.json
+          if test -f "$f"; then git add "$f"; fi
+          git diff --cached --quiet || git commit -m 'Report independent native CME 2023-26 futures price source acquired within 2USD credit hard cap or blocked'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 3
+          done
+          exit 1
