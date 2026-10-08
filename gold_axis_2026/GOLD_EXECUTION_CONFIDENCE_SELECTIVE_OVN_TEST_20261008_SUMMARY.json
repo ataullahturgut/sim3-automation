@@ -1,0 +1,20 @@
+{
+  "status": "COMPLETED_BLIND_TO_CURRENT_LABEL_ROLLING_MARGIN_SELECTIVITY",
+  "source_id": "EVTRADINGLABS_DUKASCOPY_DERIVED_XAUUSD_M15_BIDASK_2020_2025_V1",
+  "total_bars": 141890,
+  "policies": [
+    "SHAPE_GVZ_HGB",
+    "VIX_GVZ_HGB"
+  ],
+  "rule": "current abs(p_up-.5) >= 60th percentile of up to last 90 PREVIOUS forecast margins; min60 earlier signals",
+  "learned_threshold_uses_realized_outcomes": false,
+  "same_date_baseline": "BASE_LOGIT",
+  "roll_rule_quartile": 0.6,
+  "lookback": 90,
+  "2023_2024": "historical_monthly_forward_dev",
+  "2025": "already_seen_frozen_2024_retro",
+  "possible_bank_executable_profit_claim": false,
+  "not_promoted": true,
+  "all_statistics_reported_at_same_selected_dates": true,
+  "elapsed_seconds": 23
+}
