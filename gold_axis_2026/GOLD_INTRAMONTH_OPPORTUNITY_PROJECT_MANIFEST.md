@@ -4258,3 +4258,15 @@ The user's revised research corpus is 2020-01-01 through 2026-12-31, **with a ha
 **Scientific period roles:** optional 2019 indicator warm-up; 2020–2022 historical training; 2023–2024 prequential development; 2025 already-viewed retrospective transport; 2026 to 2026-10-08 additional previously observable stress; post-freeze remaining 2026 prospectively scored only if prediction/feature source timestamps are recorded **before** the outcome. No guarantee that longer histories alone improve accuracy; compare unchanged short-history baseline with regime-aware histories under identical labels/dates and source-aware PIT gates.
 
 The separate authority and CSV are controlling on detailed source identity, exact clock, availability status, 2025 event source correction, invoice-preflight and future-data status.
+
+
+## 2026-10-08 — Binding 2020–2026 XAU source-truth annual audit (after acquisition / LIT reruns)
+
+**Controlling year-by-year data-quality audit:** [GOLD_EXECUTION_2020_2026_ANNUAL_SOURCE_TRUTH_AUDIT_2026-10-08.md](GOLD_EXECUTION_2020_2026_ANNUAL_SOURCE_TRUTH_AUDIT_2026-10-08.md).
+
+- **2020–2024:** zero indisputably closed-weekend bars in assessed 15-minute candidate/frozen sources, **but this does not equal verified price/target truth**. Independent vendors disagree on **8.51–17.84%** of matched DAY/OVERNIGHT direction labels across individual 2020–24 tests (2023 is an incomplete matched subset).
+- **2023 independent HistData:** **20,600 vs 23,307** frozen source bars; January–July coverage is deficient, so only 141 matched DAY and 193 matched OVN target origins are comparable. Not acceptable as a full-year replacement.
+- **2025 frozen 15-minute price archive:** **2,354 impossible closed-market bars**, quarantine as a price-truth authority. Separate HistData M1-derived M15 2025 replacement candidate exists, but do not silently overwrite the frozen archive.
+- **2026 late Twelve Data candidate:** **180 impossible closed-market bars** over the inspected Sep 28–Oct 8 series. Independent HistData Jan–Sep spot archive is stored privately with correct gross weekend timing and requires source-reference/anchor/PIT acceptance before promotion.
+- **No model/source promotion:** mixed-vendor quote levels, differing direction labels, completeness and origin/target chronology remain important risk factors. LIT replays on alternative sources do not certify PRAMV, a final forecast advantage, or executable strategy.
+- **Binding next decision:** reconcile complete active-market prices and official calendar per year, especially 2023 holes and source-level label disagreements; rebuild a single-source, source-ready DAY/OVN target and do same-origin frozen model comparison. Never impute a price across closed sessions or choose a vendor by retrospectively better 2025/2026 model scores.
