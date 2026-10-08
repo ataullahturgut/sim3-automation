@@ -1,0 +1,25 @@
+{
+  "source": "FEDERAL_RESERVE_H15_REAL_10Y_DAILY",
+  "series": "RIFLGFCY10_XII_N.B",
+  "request_url": "https://www.federalreserve.gov/datadownload/Output.aspx?filetype=csv&from=&label=include&lastobs=&layout=seriescolumn&rel=H15&series=0b98a66d3ff5e1ea0fbf88adc59b387f&to=&type=package",
+  "asof": "2026-10-08",
+  "origin_use": "D_MINUS_1",
+  "paid_download": false,
+  "status": "OFFICIAL_FREE_COMPLETE",
+  "rows": 1692,
+  "annual": {
+    "2020": 251,
+    "2021": 251,
+    "2022": 249,
+    "2023": 250,
+    "2024": 250,
+    "2025": 249,
+    "2026": 192
+  },
+  "first": "2020-01-02",
+  "last": "2026-10-06",
+  "raw_sha256": "3c70177a0a06fb0f131cf92e8fa7b78b95fa174f1ece8cceb6129f8a761f6e03",
+  "csv_sha256": "dedf5343b8b09b9e69c55813bda265f9415b4821077ef3041d89883a48c42da8",
+  "filename": "GOLD_EXECUTION_DFII10_FREE_CANDIDATE_2020_20261007.csv",
+  "retrieved_at_utc": "2026-10-08T11:59:24.283715+00:00"
+}
