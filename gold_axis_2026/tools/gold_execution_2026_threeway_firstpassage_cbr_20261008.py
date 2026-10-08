@@ -87,3 +87,34 @@ def score(p):
             "base_upfirst_fraction":float(np.mean(actual==1)),
             "base_downfirst_fraction":float(np.mean(actual==2))})
     return pd.DataFrame(rows)
+
+def main():
+    q,t,sets=cbr.source_sets()
+    preds=[]
+    for label,px,tx in sets:
+        panel=event_panel(q,t,px,tx)
+        part=forecast_events(panel,label)
+        if part.empty:raise RuntimeError("NO_COMPETING_EVENT_FORECASTS")
+        if part.duplicated(["date","method"]).any():raise RuntimeError("OVERLAPPED_FORECAST")
+        preds.append(part)
+        print("FIRSTPASSAGE_THREEWAY_COHORT",label,
+             panel.groupby("year").size().to_dict(),flush=True)
+    allp=pd.concat(preds,ignore_index=True)
+    m=score(allp)
+    report={"status":"THREE_EVENT_NONPARAMETRIC_COMPETING_FIRST_PASSAGE_ACTUALLY_EXECUTED",
+      "events":list(CLASSES),"methods":list(MODELS),
+      "probability_estimator":"pre-origin 16-M15 path kernel memory, with/without preorigin GVZ and RV regime",
+      "first_event_observed_15m_close_not_intrabar_touch":True,
+      "historical_training_source":"2020-2025 EV Dukascopy BID source gated",
+      "2026_models_frozen_before_2026":True,
+      "2026_future_event_label_not_used_in_fit":True,
+      "two_2026_sources_overlap_not_independent":True,
+      "retrospective_not_prospective":True,
+      "bank_execution_profit_not_tested":True}
+    root=AX/NAME
+    Path(str(root)+"_SUMMARY.json").write_text(json.dumps(report,indent=2)+"\n")
+    m.to_csv(str(root)+"_METRICS.csv",index=False)
+    allp.to_csv(str(root)+"_PRIVATE_DATED.csv",index=False)
+    print("THREEWAY_FIRSTPASSAGE_METRICS",m.to_string(index=False),flush=True)
+    print("THREEWAY_FIRSTPASSAGE_STATUS",json.dumps(report),flush=True)
+if __name__=="__main__":main()
