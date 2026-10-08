@@ -1,0 +1,87 @@
+{
+  "status": "READ_ONLY_CROSS_VENDOR_QC_COMPLETE",
+  "asof": "2026-10-08",
+  "test": "absolute concurrent quarter-hour BID close-to-close jump >1.5%",
+  "primary_reference": "Dukascopy-derived independent EV 15m BID ASK",
+  "separate_vendor": "HistData fixed EST timestamp-normalized BID M1->15m",
+  "comparison_policy": "Same UTC 15m timestamp at both t and t-15 only; do not fill missing anchor with another time",
+  "price_rows_modified": false,
+  "labels_modified": false,
+  "models_retrained": false,
+  "rows": [
+    {
+      "ts_utc": "2020-03-06T15:15:00+00:00",
+      "year": 2020,
+      "absolute_15m_bid_return_pct": 2.0466568895802784,
+      "direction": "DOWN",
+      "source_bid_ask_close_spread_bps": 2.4246244862835553,
+      "histdata_same_utc_both_bars": true,
+      "cross_vendor_direction_match": true,
+      "histdata_absolute_same_utc_15m_move_pct": 2.047066437479772,
+      "absolute_bps_difference_of_15m_return": 0.04095478994936563
+    },
+    {
+      "ts_utc": "2020-03-13T16:30:00+00:00",
+      "year": 2020,
+      "absolute_15m_bid_return_pct": 1.5564075266640054,
+      "direction": "DOWN",
+      "source_bid_ask_close_spread_bps": 1.8576755171628712,
+      "histdata_same_utc_both_bars": true,
+      "cross_vendor_direction_match": true,
+      "histdata_absolute_same_utc_15m_move_pct": 1.556412609358715,
+      "absolute_bps_difference_of_15m_return": 0.0005082694709557245
+    },
+    {
+      "ts_utc": "2020-03-16T10:45:00+00:00",
+      "year": 2020,
+      "absolute_15m_bid_return_pct": 1.6596571550255623,
+      "direction": "DOWN",
+      "source_bid_ask_close_spread_bps": 3.1127772740191517,
+      "histdata_same_utc_both_bars": true,
+      "cross_vendor_direction_match": true,
+      "histdata_absolute_same_utc_15m_move_pct": 1.6598590021547621,
+      "absolute_bps_difference_of_15m_return": 0.020184712919979475
+    },
+    {
+      "ts_utc": "2020-03-23T12:00:00+00:00",
+      "year": 2020,
+      "absolute_15m_bid_return_pct": 1.6074631260540206,
+      "direction": "UP",
+      "source_bid_ask_close_spread_bps": 2.6345254561022102,
+      "histdata_same_utc_both_bars": true,
+      "cross_vendor_direction_match": true,
+      "histdata_absolute_same_utc_15m_move_pct": 1.6074652775454057,
+      "absolute_bps_difference_of_15m_return": 0.00021514913850495532
+    },
+    {
+      "ts_utc": "2021-08-08T22:45:00+00:00",
+      "year": 2021,
+      "absolute_15m_bid_return_pct": 4.1023243082958905,
+      "direction": "DOWN",
+      "source_bid_ask_close_spread_bps": 26.164000713562174,
+      "histdata_same_utc_both_bars": false,
+      "cross_vendor_direction_match": null,
+      "histdata_absolute_same_utc_15m_move_pct": null,
+      "absolute_bps_difference_of_15m_return": null
+    },
+    {
+      "ts_utc": "2023-12-03T23:15:00+00:00",
+      "year": 2023,
+      "absolute_15m_bid_return_pct": 2.632086200582151,
+      "direction": "UP",
+      "source_bid_ask_close_spread_bps": 3.4745372761491033,
+      "histdata_same_utc_both_bars": true,
+      "cross_vendor_direction_match": true,
+      "histdata_absolute_same_utc_15m_move_pct": 2.6320925424847763,
+      "absolute_bps_difference_of_15m_return": 0.0006341902625273121
+    }
+  ],
+  "flagged_15m_events": 6,
+  "independent_double_anchored_cross_source_events": 5,
+  "independent_direction_consistent_events": 5,
+  "missing_independent_anchor_events": [
+    "2021-08-08T22:45:00+00:00"
+  ],
+  "source_limit": "World Gold Council validates Aug 9 2021 gold flash crash; Reuters documents Dec 4 2023 opening spike. Macro event support does NOT prove exact tick price.",
+  "completed_utc": "2026-10-08T15:22:49.847773+00:00"
+}
