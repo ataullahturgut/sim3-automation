@@ -1,0 +1,61 @@
+{
+  "status": "OFFICIAL_2025_EVENT_CALENDAR_REPAIRED_WITH_RESTRICTED_SURPRISE_VINTAGE",
+  "source_urls": {
+    "FOMC_schedule_published_2024": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20240809a.htm",
+    "BLS_original_2025_release_list": "https://www.bls.gov/schedule/2025/",
+    "BLS_shutdown_and_cancellations": "https://www.bls.gov/bls/2025-lapse-revised-release-dates.htm",
+    "BLS_2025_12_18_two_month_CPI": "https://www.bls.gov/news.release/archives/cpi_12182025.htm"
+  },
+  "year_event_counts": {
+    "2023": {
+      "FOMC": 8,
+      "NFP": 12,
+      "AHE": 12,
+      "UNEMP": 12,
+      "CPI": 12
+    },
+    "2024": {
+      "FOMC": 8,
+      "NFP": 12,
+      "AHE": 12,
+      "UNEMP": 12,
+      "CPI": 12
+    },
+    "2025": {
+      "FOMC": 8,
+      "NFP": 11,
+      "AHE": 11,
+      "UNEMP": 11,
+      "CPI": 11
+    }
+  },
+  "2025_fomc_inserted": 8,
+  "2025_cpi_calendar_new_unpaired_not_mom": 1,
+  "2025_fomc_dates": [
+    "2025-01-29",
+    "2025-03-19",
+    "2025-05-07",
+    "2025-06-18",
+    "2025-07-30",
+    "2025-09-17",
+    "2025-10-29",
+    "2025-12-10"
+  ],
+  "cpi_missing_pair_date": [
+    "2025-12-18"
+  ],
+  "nfp_canceled_no_event": [
+    "2025-11-07"
+  ],
+  "cpi_canceled_no_event": [
+    "2025-11-13"
+  ],
+  "fomc_research_pit": "Published in Fed 2024 Aug schedule; decision 14 ET is after 17 TRT so upcoming flag known at 17",
+  "consensus_pit_caution": "Legacy 2023-25 CPI/NFP/AHE/UNEMP consensus reconstructed/loaded 2026 with reported available_as_of at release; not independently verifiable at pre-release origin; restricted retrospective model only.",
+  "unpaired_release_pit": "EXCLUDE 2025-12-18 from exact M4/PRAMV retest; no synthetic MoM or no-event",
+  "canceled_releases_never_fabricated": true,
+  "source_file": "GOLD_EXECUTION_PRAMV_OFFICIAL_2025_MACRO_SOURCE_GOVERNED_V2_20261008.csv",
+  "calendar_sha256": "391450f3f3f36eed5a6757d91bc0e56cb59026efc0f8c00485cdaff43a02d9c3",
+  "legacy_file_unchanged": true,
+  "timestamp_utc": "2026-10-08T16:48:47.007443+00:00"
+}
