@@ -42,6 +42,8 @@ jobs:
           path: |
             gold_axis_2026/GOLD_EXECUTION_PRAMV_ORIGINAL_FULLER_HISTORY_2021_2025_SOURCE_MACRO_RETEST_20261008_DATED_PREDICTIONS.csv
             gold_axis_2026/GOLD_EXECUTION_PRAMV_ORIGINAL_FULLER_HISTORY_2021_2025_SOURCE_MACRO_RETEST_20261008_FOMC_ABLATION.csv
+            gold_axis_2026/GOLD_EXECUTION_PRAMV_ORIGINAL_2022_WARMUP_SOURCE_MACRO_RETEST_20261008_DATED_PREDICTIONS.csv
+            gold_axis_2026/GOLD_EXECUTION_PRAMV_ORIGINAL_2022_WARMUP_SOURCE_MACRO_RETEST_20261008_FOMC_ABLATION.csv
           if-no-files-found: warn
       - name: Commit only public reproducible counts and performance aggregates, no macro provider prices
         if: always()
@@ -52,6 +54,8 @@ jobs:
           git add gold_axis_2026/GOLD_EXECUTION_PRAMV_ORIGINAL_FULLER_HISTORY_2021_2025_SOURCE_MACRO_RETEST_20261008_SUMMARY.json
           git add gold_axis_2026/GOLD_EXECUTION_PRAMV_ORIGINAL_FULLER_HISTORY_2021_2025_SOURCE_MACRO_RETEST_20261008_YEARLY_METRICS.csv
           git add gold_axis_2026/GOLD_EXECUTION_PRAMV_ORIGINAL_FULLER_HISTORY_2021_2025_SOURCE_MACRO_RETEST_20261008_MACRO_PRE2023_QC.json
+          git add gold_axis_2026/GOLD_EXECUTION_PRAMV_ORIGINAL_2022_WARMUP_SOURCE_MACRO_RETEST_20261008_SUMMARY.json
+          git add gold_axis_2026/GOLD_EXECUTION_PRAMV_ORIGINAL_2022_WARMUP_SOURCE_MACRO_RETEST_20261008_YEARLY_METRICS.csv
           git diff --cached --quiet || git commit -m 'Record strict 2021-24 historical macro-extended original PRAMV full retest with 2023-25 targets'
           for i in 1 2 3 4 5; do
             git pull --rebase origin gold-execution-channel-audit-20261006
