@@ -27,11 +27,11 @@ DAY direction remains weak and unstable across all three families; reject generi
 - Fed nominal 2y / real 10y prior-date: GOLD_EXECUTION_ORIGIN_SAFE_LAGGED_RATES_ML_CHALLENGE_20261008_METRICS.csv and _PAIRED_AUDIT.csv.
 - Cboe VIX vs GVZ: GOLD_EXECUTION_ORIGIN_SAFE_VIX_GVZ_ML_CHALLENGE_20261008_METRICS.csv and _PAIRED_AUDIT.csv.
 - Every trial had preregistration document before source-aligned training; its own Python runner; protected GitHub Actions artifact holds dated predictions, not Git-committed private prices.
-- Separate selectivity experiment preregistration: GOLD_EXECUTION_CONFIDENCE_SELECTIVE_DIRECTION_PREREGISTRATION_2026-10-08.md; await executed aggregate evidence before any result attribution.
+- Separate selective challenge: GOLD_EXECUTION_CONFIDENCE_SELECTIVE_DIRECTION_PREREGISTRATION_2026-10-08.md and GOLD_EXECUTION_CONFIDENCE_SELECTIVE_OVN_TEST_20261008_METRICS.csv — executed and source-governed. Fixed historical 90-prior-margin rolling 60th percentile used no realized current/future outcome. SHAPE_GVZ_HGB selective 2023 BA57.07% / 55 decisions, 2024 BA62.06% /79 decisions, 2025 BA55.94% /76 decisions, retrospective. 2025 matched baseline rescues15/breaks16 (net -1), hence selectivity not independently established as an edge. VIX_GVZ_HGB selective 2025 BA51.91% /71, not better. No production confidence gate.
 
 ## D. Next scientific gate (NOT a guaranteed result)
 
-1. Complete/selectivity test; reject model-confident subset if it doesn't improve conditional BA on same days after correctly counting abstentions.
+1. Confidence-only selection was tested and **did not carry stable paired advantage into 2025**; do not re-optimize the abstention percentile on 2025. Assess any new rule only from earlier development and prospective samples.
 2. Test **incremental same-origin external price discovery** (GC/SI and USD/FX). Existing Databento 2022–2024 GC/SI/NQ/ZN/CL 1h is already available; do not duplicate-purchase. For 2025 and 2026 necessary missing coverage first price-quote/credit and source safety check. Continuous futures rolls are not back-adjusted; bar interval timestamps represent start, so current origin must use previous fully closed bar only. Compare only identical accepted dates, no 2025-chosen features. Separately govern macro event calendar and surprise pre-release vintage.
 3. Strong direction claim demands persistent BA + adequate DOWN recall + coverage, paired uncertainty and newly arriving truly prospective data **after 2026-10-08**, all without selecting on retrospective 2025. Bank spread, source maturity and actual bid/ask enforce additional execution gate.
 4. Do not promote consensus or train more complex networks just to optimize already-inspected 2025. Explicitly retain negative results.
