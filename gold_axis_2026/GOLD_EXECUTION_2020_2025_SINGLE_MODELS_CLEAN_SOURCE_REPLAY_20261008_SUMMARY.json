@@ -1,0 +1,78 @@
+{
+  "status": "REPRODUCIBLE_SINGLE_MODELS_REPLAY_COMPLETE_WITH_EXPLICIT_BLOCKERS",
+  "asof": "2026-10-08",
+  "price_source": "EVTRADINGLABS_DUKASCOPY_DERIVED_XAUUSD_M15_BIDASK_2020_2025_V1",
+  "quote_type": "BID_M15 for model features and target, ASK retained as uncertainty reference",
+  "execution_origin": "Europe/Istanbul fixed 09:00, 17:00 (09:30 delayed challenger separately)",
+  "historical_source_bars": 141890,
+  "target_issue_dates": 1549,
+  "training_role": "2020-2022 original 15m price features -> expanding prequential 2023/2024; train to 2024-12 and fix coefficients in 2025",
+  "2025_caution": "Not untouched OOS: old forecast models and some variants were selected after inspecting 2025 elsewhere in project",
+  "purged_matured_overnight_targets": true,
+  "model_parameters": {
+    "C": 1.0,
+    "solver": "original StandardScaler+L2 logistic",
+    "MIN_TRAIN": 80
+  },
+  "frozen_pramv_v1_status": "NOT REFIT; macro PIT missing; legacy forecast transfer separately scored; frozen V1 not silently changed",
+  "trained_model_architecture_count": 9,
+  "trained_binary_forecaster_count": 18,
+  "all_refit_prediction_records": 6755,
+  "transport_metric_rows": 69,
+  "session_models_retraining_status": "BLOCKED_DIFFERENT_TARGET until explicit original architecture feature-port with audited current origin",
+  "files": {
+    "actual_newsource_refit_metrics": "GOLD_EXECUTION_2020_2025_SINGLE_MODELS_CLEAN_SOURCE_REPLAY_20261008_METRICS.csv",
+    "legacy_forecast_source_transport_metrics": "GOLD_EXECUTION_2020_2025_SINGLE_MODELS_CLEAN_SOURCE_REPLAY_20261008_SOURCE_TRANSPORT_METRICS.csv",
+    "inventory": "GOLD_EXECUTION_2020_2025_SINGLE_MODELS_CLEAN_SOURCE_REPLAY_20261008_INVENTORY.csv",
+    "exact_new_source_preds": "GOLD_EXECUTION_2020_2025_SINGLE_MODELS_CLEAN_SOURCE_REPLAY_20261008_EXACT_PREDICTIONS.csv"
+  },
+  "models": {
+    "LIT_OVN0_1530_1600": {
+      "kind": "ACTUAL_REFIT",
+      "architecture": "Original LIT Stage1 fixed specifications",
+      "origin": "17:00"
+    },
+    "LIT_OVN0_1600_1630": {
+      "kind": "ACTUAL_REFIT",
+      "architecture": "Original LIT Stage1 fixed specifications",
+      "origin": "17:00"
+    },
+    "LIT_OVN0_1630_1700": {
+      "kind": "ACTUAL_REFIT",
+      "architecture": "Original LIT Stage1 fixed specifications",
+      "origin": "17:00"
+    },
+    "LIT_OVN1_PAIR": {
+      "kind": "ACTUAL_REFIT",
+      "architecture": "Original LIT Stage1 fixed specifications",
+      "origin": "17:00"
+    },
+    "LIT_DAY0_EXEC_0900": {
+      "kind": "ACTUAL_REFIT",
+      "architecture": "Original LIT Stage1 fixed specifications",
+      "origin": "09:00"
+    },
+    "LIT_DAY1_DELAY_0930": {
+      "kind": "ACTUAL_REFIT",
+      "architecture": "Original LIT Stage1 fixed specifications",
+      "origin": "09:30 separate"
+    },
+    "BASE_1600_1630": {
+      "kind": "ACTUAL_REFIT",
+      "architecture": "Original LIT Stage2 fixed state specification",
+      "origin": "17:00"
+    },
+    "PAIR_1600_1700": {
+      "kind": "ACTUAL_REFIT",
+      "architecture": "Original LIT Stage2 fixed state specification",
+      "origin": "17:00"
+    },
+    "LIT_OVN2_STATE": {
+      "kind": "ACTUAL_REFIT",
+      "architecture": "Original LIT Stage2 fixed state specification",
+      "origin": "17:00"
+    }
+  },
+  "elapsed_seconds": 20,
+  "version": "V1_AUDITED"
+}
