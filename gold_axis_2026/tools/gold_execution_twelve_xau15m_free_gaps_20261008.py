@@ -26,7 +26,7 @@ def month_windows():
 def request_month(session,start,end,api_key):
     params={'symbol':SYMBOL,'interval':'15min','timezone':'UTC','order':'ASC',
             'start_date':start+' 00:00:00','end_date':end+' 00:00:00',
-            'outputsize':5000,'apikey':api_key}
+            'apikey':api_key}
     for attempt in range(1,6):
         try:
             response=session.get(URL,params=params,timeout=(10,45))
