@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "model_requested": "deepseek-flash",
+  "model_returned": "deepseek-flash",
+  "calls": 1,
+  "finish_reason": "stop",
+  "answer_chars": 3919,
+  "prompt_digest_sha256": "28c729a7d46bbe5e7edbff2c76b1b510e6c552dcea51dc14225ad07c001da1d9",
+  "token_usage": {
+    "prompt_tokens": 1520,
+    "completion_tokens": 1029,
+    "total_tokens": 2549
+  },
+  "date_utc": "2026-10-09T13:06:51.177567+00:00",
+  "hypothesis_review_only": true,
+  "no_market_backtest_by_provider": true,
+  "never_sent_private_quote_rows_or_secrets": true
+}
