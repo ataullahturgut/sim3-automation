@@ -1,0 +1,53 @@
+name: Gold R4 Independent Forex H1 Source Readiness
+on:
+  push:
+    branches:
+      - gold-execution-channel-audit-20261006
+    paths:
+      - .github/workflows/gold-r4-twelve-independent-fx-source-probe-20261009.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gold-r4-fx-h1-source-probe-once
+  cancel-in-progress: false
+jobs:
+  read-only-fx-hourly-source-probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Four low-volume read-only FX source entitlement checks
+        run: |
+          set -euo pipefail
+          python -m py_compile gold_axis_2026/tools/gold_r4_twelve_independent_fx_hourly_source_readiness_20261009.py
+          python gold_axis_2026/tools/gold_r4_twelve_independent_fx_hourly_source_readiness_20261009.py
+      - name: Commit only sanitized metadata receipt and no quotes
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          f=gold_axis_2026/GOLD_R4_TWELVE_INDEPENDENT_FX_H1_SOURCE_PROBE_20261009.json
+          if test -f "$f"; then
+            git add "$f"
+            if ! git diff --cached --quiet; then
+              git commit -m 'Record four-call quote-free EURUSD USDJPY source-readiness receipt'
+              for i in 1 2 3; do
+                git pull --rebase origin gold-execution-channel-audit-20261006
+                if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+                sleep 2
+              done
+              exit 1
+            fi
+          fi
