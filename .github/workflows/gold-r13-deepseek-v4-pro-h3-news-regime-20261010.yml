@@ -1,0 +1,50 @@
+name: Gold R13 DeepSeek V4 Pro H3 News Regime Review
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - .github/workflows/gold-r13-deepseek-v4-pro-h3-news-regime-20261010.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gold-r13-deepseek-pro-referee
+  cancel-in-progress: false
+jobs:
+  independent-technical-referee:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    env:
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify syntax then submit one blinded scientific research request
+        run: |
+          set -euo pipefail
+          python -m py_compile gold_axis_2026/tools/gold_r13_deepseek_v4_pro_h3_news_regime_referee_20261010.py
+          python gold_axis_2026/tools/gold_r13_deepseek_v4_pro_h3_news_regime_referee_20261010.py
+      - name: Commit one receipt and safe expert review
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for f in gold_axis_2026/GOLD_R13_DEEPSEEK_V4_PRO_H3_NEWS_REGIME_20261010_{REVIEW.md,RESULT.json,FAILURE_QC.json}; do
+            if test -f "$f"; then git add "$f"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record single authenticated DeepSeek V4 Pro R13 H3 news regime science critique'
+            for i in 1 2 3 4; do
+              git pull --rebase origin gold-execution-channel-audit-20261006
+              if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+              sleep 3
+            done
+            exit 1
+          fi
