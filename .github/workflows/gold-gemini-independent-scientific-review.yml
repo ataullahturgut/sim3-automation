@@ -1,0 +1,61 @@
+name: Gold Gemini Independent Scientific Two-Round Peer Review
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'smoke checks key/model only; research makes at most TWO content calls'
+        required: true
+        default: research
+        type: choice
+        options:
+          - smoke
+          - research
+  push:
+    branches:
+      - gold-execution-channel-audit-20261006
+    paths:
+      - .github/workflows/gold-gemini-independent-scientific-review.yml
+permissions:
+  contents: write
+concurrency:
+  group: gold-gemini-external-safe-peer-review
+  cancel-in-progress: false
+jobs:
+  gemini-second-researcher:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_RESEARCH_MODE: ${{ inputs.mode || 'research' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Bounded Gemini API model authorization and independently challenged research
+        run: |
+          set -euo pipefail
+          python -m py_compile gold_axis_2026/tools/gold_gemini_independent_science_peer_review_20261009.py
+          python gold_axis_2026/tools/gold_gemini_independent_science_peer_review_20261009.py --mode "$GEMINI_RESEARCH_MODE"
+      - name: Commit only Gemini science summaries and safe connection/error receipts
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for f in gold_axis_2026/GOLD_GEMINI_INDEPENDENT_RESEARCH_20261009_{REVIEW.md,RESULT.json,CONNECTION.json,FAILURE_QC.json}; do
+            if test -f "$f"; then git add "$f"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record bounded external Gemini academic peer exchange or explicit fail-closed connection diagnostics'
+            for attempt in 1 2 3 4 5; do
+              git pull --rebase origin gold-execution-channel-audit-20261006
+              if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+              sleep 3
+            done
+            exit 1
+          fi
