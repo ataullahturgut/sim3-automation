@@ -1,0 +1,6 @@
+{
+  "status": "DEEPSEEK_CONNECTOR_FAIL_CLOSED",
+  "safe_reason": "DEEPSEEK_OUTPUT_INCOMPLETE_OR_TRUNCATED",
+  "never_log_secret": true,
+  "research_completed": false
+}
