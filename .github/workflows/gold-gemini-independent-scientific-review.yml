@@ -15,6 +15,7 @@ on:
       - gold-execution-channel-audit-20261006
     paths:
       - .github/workflows/gold-gemini-independent-scientific-review.yml
+      - gold_axis_2026/tools/gold_gemini_independent_science_peer_review_20261009.py
 permissions:
   contents: write
 concurrency:
