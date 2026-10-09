@@ -1,0 +1,27 @@
+{
+  "status": "DEEPSEEK_COMPLETE_TWO_ROUND_INDEPENDENT_RESEARCH_TEXT",
+  "model": "deepseek-flash",
+  "thinking_mode": "disabled_low_cost_first_trial",
+  "utc": "2026-10-09T11:43:05.775386+00:00",
+  "safe_brief_path": "GOLD_DEEPSEEK_STAGE2_EXTERNAL_SAFE_RESEARCH_BRIEF_20261009.md",
+  "safe_brief_sha256": "3cf68e393e7715eb94342b6461560ed56c0d3b5ebaf75487bf97cc6ece204888",
+  "content_calls": 2,
+  "round1_output_chars": 5430,
+  "round2_output_chars": 6221,
+  "round1_usage": {
+    "prompt_tokens": 1697,
+    "completion_tokens": 1345,
+    "total_tokens": 3042
+  },
+  "round2_usage": {
+    "prompt_tokens": 3172,
+    "completion_tokens": 1369,
+    "total_tokens": 4541
+  },
+  "never_transmitted": "raw quote rows, proprietary private code, secrets, credentials, private repository files",
+  "no_generated_model_execution": true,
+  "no_bank_trades": true,
+  "no_claim_of_forecasting_improvement": true,
+  "external_research_needs_independent_validation": true,
+  "pricing_not_certified_free": true
+}
