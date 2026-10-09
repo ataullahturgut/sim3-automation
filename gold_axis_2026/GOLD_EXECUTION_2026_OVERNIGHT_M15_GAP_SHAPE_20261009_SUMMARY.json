@@ -1,0 +1,6 @@
+{
+  "status": "REAL_NATIVE_M15_QUOTE_COVERAGE_TIMES_AUDITED",
+  "source": "bid paired open close presence only, no model targets fitted",
+  "cannot_impute_off_market_gap": true,
+  "original_exact64_rv_HAR_is_blocked": true
+}
