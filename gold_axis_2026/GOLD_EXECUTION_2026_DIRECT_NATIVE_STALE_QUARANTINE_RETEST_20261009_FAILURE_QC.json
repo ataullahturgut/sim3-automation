@@ -1,0 +1,7 @@
+{
+  "status": "RETEST_BLOCKED_NO_CLAIM_OF_CLEANED_DIRECTION",
+  "reason": "'Series' object has no attribute 'date'",
+  "type": "AttributeError",
+  "line": 6321,
+  "function": "__getattr__"
+}
