@@ -1,0 +1,11 @@
+# October 9 prereg: true adaptive conformal selection on existing CBR and HGB
+
+Motivation: Gibbs and Candès, Adaptive Conformal Inference Under Distribution Shift, NeurIPS 2021, https://papers.neurips.cc/paper/2021/hash/0d441de75945e5acbc865406fc9a2559-Abstract.html ; Gibbs & Candès 2022 arXiv:2208.08401. Financial target purging: López de Prado 2018 Chapter 7.
+
+Use the EXACT existing gold_execution_2026_full_trajectory_cbr_20261008.py source_sets/panel/forecast without changing base model fitting. Select fixed existing CBR_REGIME_PATH and HGB_FROZEN_2021 2021-start, both correct DAY 09TR→17TR and regular Mon-Thu OVN 17TR→next09TR, 2026 SAME_UPSTREAM_MIRROR and DIRECT_DUKASCOPY separate.
+
+In per-source/per-target/per-model issue-date order, a completed forecast true-label nonconformity score s=1-p_true can enter history only AFTER the correct session matured. For DAY maturity at that date17TR; for OVN next date09TR. 63 most recent matured scores, minimum42 scores, no imputation of missing session. From past n scores, finite-sample conservative quantile at ceil((n+1)*(1-alpha))/n, indexed by the 'higher' empirical convention. At each issue, conformal set includes c if 1-p(c) <= q. Singleton_UP and singleton_DOWN are the ONLY actionable signals; empty or both abstain.
+
+Two FIXED protocols: STATIC_CONF80 alpha=.20; ACI_CONF80 with alpha_t initialized .20 and updated AFTER label maturity by alpha_new=clip(alpha+0.01*(.20 - miss),.02,.45). The 2026 outcome is NEVER used on its own issue before maturity; base 2026 models remain fitted only before 2026. 2023–24 monthly prior models, 2025 preyear freeze and 2026 preyear freeze; 2025+2026 already inspected, not blind.
+
+Measure all-year nominal true-label set inclusion, singleton coverage, singleton accuracy, balanced accuracy, UP and DOWN recall among acted days, proportion of all available DOWN cases caught, same-day base expert accuracy and BA on EXACT selected days, monthly decision stability, multiclass set size counts, rescue/break and bank executable PnL NOT validated. Failure if too few decisions or one-class bias or no advantage vs same-day base forecasts in BOTH 2025 and 2026. This tests calibrated abstention, NOT improved intrinsic signed directional price feature signal.
