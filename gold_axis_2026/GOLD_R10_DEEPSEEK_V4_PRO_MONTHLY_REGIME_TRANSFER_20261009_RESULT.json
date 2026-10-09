@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "requested": "deepseek-v4-pro",
+  "returned": "deepseek-v4-pro",
+  "finish": "stop",
+  "output_chars": 8531,
+  "usage": {
+    "prompt_tokens": 2006,
+    "completion_tokens": 2086,
+    "total_tokens": 4092,
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 2006
+  },
+  "prompt_bytes": 8299,
+  "token_cap": 3000,
+  "peak_cost_estimated_upper_usd": 0.022835,
+  "safe_input_sha256": "e89cb5d5978b34bd61827fc33c7cb0155d798485212fe9f838cf599d5d49515a",
+  "utc": "2026-10-09T18:49:18.652352+00:00",
+  "provider_did_not_run_market_experiment": true,
+  "no_private_market_rows_or_secrets_sent": true
+}
