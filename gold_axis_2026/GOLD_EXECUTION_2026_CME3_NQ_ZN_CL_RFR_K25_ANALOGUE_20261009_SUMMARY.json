@@ -1,0 +1,84 @@
+{
+  "status": "CME_THREE_ROOT_NQ_ZN_CL_SOURCE_COMPLETENESS_SCORED",
+  "source": "Databento GLBX.MDP3 ohlcv-1h continuous c.0 private Neon 2023-Oct7",
+  "features": [
+    "NQ_r1",
+    "NQ_r3",
+    "ZN_r1",
+    "ZN_r3",
+    "CL_r1",
+    "CL_r3"
+  ],
+  "causality": "last complete 1h bar ends plus 15min before 17TR issue; no same-venue futures roll transition in lookback",
+  "2023_2024": "asof monthly prior-matured historical case kernel",
+  "2025_2026": "frozen pre-year and already-inspected retrospective",
+  "forecast_object": "on RFR opposite halfhour candidates only, 17TR-next09TR normal OVN",
+  "full_source_coverage": [
+    {
+      "source": "SAME_UPSTREAM_MIRROR_JAN_AUG20",
+      "candidate_counts": {
+        "2020": 96,
+        "2021": 100,
+        "2022": 97,
+        "2023": 98,
+        "2024": 96,
+        "2025": 103,
+        "2026": 60
+      },
+      "CME5_H1_all_10_features_counts": {
+        "2023": 82,
+        "2024": 80,
+        "2025": 87,
+        "2026": 53
+      },
+      "scored_counts": {
+        "2023": 6,
+        "2024": 80,
+        "2025": 87,
+        "2026": 53
+      }
+    },
+    {
+      "source": "DIRECT_DUKASCOPY_NATIVE_THROUGH_OCT07",
+      "candidate_counts": {
+        "2020": 96,
+        "2021": 100,
+        "2022": 97,
+        "2023": 98,
+        "2024": 96,
+        "2025": 103,
+        "2026": 50
+      },
+      "CME5_H1_all_10_features_counts": {
+        "2023": 82,
+        "2024": 80,
+        "2025": 87,
+        "2026": 40
+      },
+      "scored_counts": {
+        "2023": 6,
+        "2024": 80,
+        "2025": 87,
+        "2026": 40
+      }
+    }
+  ],
+  "no_banking_bidask_PnL": true,
+  "no_strategy_promotion": true,
+  "runtime_seconds": 15,
+  "model_actual_independent_market_roots": [
+    "NQ",
+    "ZN",
+    "CL"
+  ],
+  "archive_entire_five_roots_only": [
+    "GC.c.0",
+    "SI.c.0",
+    "NQ.c.0",
+    "ZN.c.0",
+    "CL.c.0"
+  ],
+  "reason_5_root_source_ablation": "Ingested GC and SI sparse H1 source; source-synchronous 10-feature population failed threshold before any score",
+  "trial_separate_from_pre_registered_CME5": true,
+  "no_2026_label_based_root_selection": true
+}
