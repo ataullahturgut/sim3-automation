@@ -1,0 +1,25 @@
+{
+  "status": "INCOMPLETE",
+  "provider_model_requested": "deepseek-v4-pro",
+  "provider_model_returned": "deepseek-v4-pro",
+  "reasoning_effort_requested": "high",
+  "thinking_enabled": true,
+  "chat_calls_attempted": 1,
+  "prompt_utf8_bytes": 7528,
+  "output_token_cap": 8500,
+  "conservative_peak_cost_upper_bound_usd": 0.04686,
+  "finish_reason": "length",
+  "final_output_characters": 0,
+  "usage": {
+    "prompt_tokens": 1872,
+    "completion_tokens": 8500,
+    "total_tokens": 10372,
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 1872
+  },
+  "original_safe_brief_sha256": "3cf68e393e7715eb94342b6461560ed56c0d3b5ebaf75487bf97cc6ece204888",
+  "date_utc": "2026-10-09T11:52:16.932596+00:00",
+  "external_text_only_not_market_backtest": true,
+  "no_raw_market_rows_or_secrets_sent": true,
+  "no_production_model_promotion": true
+}
