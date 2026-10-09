@@ -1,438 +1,373 @@
 {
-  "condition": "2025/2026 already inspected; alternative R11B predeclared after R11; no promotion",
-  "qc": {
-    "features": 53,
-    "sourceDay": 1093,
-    "sourceOVN": 832
-  },
-  "win": {
+  "status": "PASS_CORRECTED_AND_VERIFIED",
+  "technical_history": "The first R11B result json was INVALID due to source adapter JS reading undefined v.h rather than v.hi; generated NaN VW weights and all-DOWN outputs. Those invalid figures were not accepted. Corrected rerun enforced finite GPR normalization, feature weights, prediction score, and parity against MAIN R11 FULL8_PLUS_B4 in both targets 2023-2026.",
+  "first_attempt_authority": "SUPERSEDED_TECHNICAL_DO_NOT_USE",
+  "data_window": "2022-04..2026-08, monthly common Au Ag Pt Pd Stak historical reconstruction, archived GPR official vintage source gate and same-source M15 bank-target gates. 2025/26 previously inspected.",
+  "models": {
     "DAY": {
-      "reference": {
+      "VW4_GPR": {
         "2023": {
           "N": 255,
-          "correct": 124,
-          "ACC": 48.63,
-          "BA": 48.52,
-          "DOWN": 51.52
+          "correct": 133,
+          "ACC": 52.16,
+          "BA": 53.04,
+          "DOWN": 28.03
         },
         "2024": {
           "N": 259,
-          "correct": 132,
-          "ACC": 50.97,
-          "BA": 50.43,
-          "DOWN": 46.43
+          "correct": 108,
+          "ACC": 41.7,
+          "BA": 42.58,
+          "DOWN": 49.11
         },
         "2025": {
           "N": 258,
-          "correct": 139,
-          "ACC": 53.88,
-          "BA": 53.94,
-          "DOWN": 54.46
+          "correct": 146,
+          "ACC": 56.59,
+          "BA": 50,
+          "DOWN": 0
         },
         "2026": {
           "N": 127,
-          "correct": 66,
-          "ACC": 51.97,
-          "BA": 52.57,
-          "DOWN": 61.02
+          "correct": 63,
+          "ACC": 49.61,
+          "BA": 48.23,
+          "DOWN": 28.81
         }
       },
-      "byHead": {
-        "VW4_GPR": {
-          "2023": {
-            "N": 255,
-            "correct": 132,
-            "ACC": 51.76,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2024": {
-            "N": 259,
-            "correct": 112,
-            "ACC": 43.24,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2025": {
-            "N": 258,
-            "correct": 112,
-            "ACC": 43.41,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2026": {
-            "N": 127,
-            "correct": 59,
-            "ACC": 46.46,
-            "BA": 50,
-            "DOWN": 100
-          }
+      "VW4_EQUAL": {
+        "2023": {
+          "N": 255,
+          "correct": 133,
+          "ACC": 52.16,
+          "BA": 53.04,
+          "DOWN": 28.03
         },
-        "VW4_EQUAL": {
-          "2023": {
-            "N": 255,
-            "correct": 133,
-            "ACC": 52.16,
-            "BA": 53.04,
-            "DOWN": 28.03
-          },
-          "2024": {
-            "N": 259,
-            "correct": 108,
-            "ACC": 41.7,
-            "BA": 42.58,
-            "DOWN": 49.11
-          },
-          "2025": {
-            "N": 258,
-            "correct": 146,
-            "ACC": 56.59,
-            "BA": 50,
-            "DOWN": 0
-          },
-          "2026": {
-            "N": 127,
-            "correct": 63,
-            "ACC": 49.61,
-            "BA": 48.23,
-            "DOWN": 28.81
-          }
+        "2024": {
+          "N": 259,
+          "correct": 108,
+          "ACC": 41.7,
+          "BA": 42.58,
+          "DOWN": 49.11
         },
-        "MR4_ONLY": {
-          "2023": {
-            "N": 255,
-            "correct": 113,
-            "ACC": 44.31,
-            "BA": 44.88,
-            "DOWN": 28.79
-          },
-          "2024": {
-            "N": 259,
-            "correct": 135,
-            "ACC": 52.12,
-            "BA": 49.74,
-            "DOWN": 32.14
-          },
-          "2025": {
-            "N": 258,
-            "correct": 148,
-            "ACC": 57.36,
-            "BA": 51.93,
-            "DOWN": 10.71
-          },
-          "2026": {
-            "N": 127,
-            "correct": 59,
-            "ACC": 46.46,
-            "BA": 46.64,
-            "DOWN": 49.15
-          }
+        "2025": {
+          "N": 258,
+          "correct": 146,
+          "ACC": 56.59,
+          "BA": 50,
+          "DOWN": 0
         },
-        "REL2": {
-          "2023": {
-            "N": 255,
-            "correct": 132,
-            "ACC": 51.76,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2024": {
-            "N": 259,
-            "correct": 112,
-            "ACC": 43.24,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2025": {
-            "N": 258,
-            "correct": 112,
-            "ACC": 43.41,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2026": {
-            "N": 127,
-            "correct": 59,
-            "ACC": 46.46,
-            "BA": 50,
-            "DOWN": 100
-          }
+        "2026": {
+          "N": 127,
+          "correct": 63,
+          "ACC": 49.61,
+          "BA": 48.23,
+          "DOWN": 28.81
+        }
+      },
+      "MR4_ONLY": {
+        "2023": {
+          "N": 255,
+          "correct": 113,
+          "ACC": 44.31,
+          "BA": 44.88,
+          "DOWN": 28.79
         },
-        "REL2_PLUS_B4": {
-          "2023": {
-            "N": 255,
-            "correct": 132,
-            "ACC": 51.76,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2024": {
-            "N": 259,
-            "correct": 112,
-            "ACC": 43.24,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2025": {
-            "N": 258,
-            "correct": 112,
-            "ACC": 43.41,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2026": {
-            "N": 127,
-            "correct": 59,
-            "ACC": 46.46,
-            "BA": 50,
-            "DOWN": 100
-          }
+        "2024": {
+          "N": 259,
+          "correct": 135,
+          "ACC": 52.12,
+          "BA": 49.74,
+          "DOWN": 32.14
         },
-        "FULL8_PLUS_B4_PARITY": {
-          "2023": {
-            "N": 255,
-            "correct": 132,
-            "ACC": 51.76,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2024": {
-            "N": 259,
-            "correct": 112,
-            "ACC": 43.24,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2025": {
-            "N": 258,
-            "correct": 112,
-            "ACC": 43.41,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2026": {
-            "N": 127,
-            "correct": 59,
-            "ACC": 46.46,
-            "BA": 50,
-            "DOWN": 100
-          }
+        "2025": {
+          "N": 258,
+          "correct": 148,
+          "ACC": 57.36,
+          "BA": 51.93,
+          "DOWN": 10.71
+        },
+        "2026": {
+          "N": 127,
+          "correct": 59,
+          "ACC": 46.46,
+          "BA": 46.64,
+          "DOWN": 49.15
+        }
+      },
+      "REL2": {
+        "2023": {
+          "N": 255,
+          "correct": 130,
+          "ACC": 50.98,
+          "BA": 50.13,
+          "DOWN": 74.24
+        },
+        "2024": {
+          "N": 259,
+          "correct": 125,
+          "ACC": 48.26,
+          "BA": 49.32,
+          "DOWN": 57.14
+        },
+        "2025": {
+          "N": 258,
+          "correct": 148,
+          "ACC": 57.36,
+          "BA": 51.93,
+          "DOWN": 10.71
+        },
+        "2026": {
+          "N": 127,
+          "correct": 59,
+          "ACC": 46.46,
+          "BA": 46.64,
+          "DOWN": 49.15
+        }
+      },
+      "REL2_PLUS_B4": {
+        "2023": {
+          "N": 255,
+          "correct": 127,
+          "ACC": 49.8,
+          "BA": 49.3,
+          "DOWN": 63.64
+        },
+        "2024": {
+          "N": 259,
+          "correct": 125,
+          "ACC": 48.26,
+          "BA": 49.32,
+          "DOWN": 57.14
+        },
+        "2025": {
+          "N": 258,
+          "correct": 148,
+          "ACC": 57.36,
+          "BA": 51.93,
+          "DOWN": 10.71
+        },
+        "2026": {
+          "N": 127,
+          "correct": 59,
+          "ACC": 46.46,
+          "BA": 46.64,
+          "DOWN": 49.15
+        }
+      },
+      "FULL8_PLUS_B4_PARITY": {
+        "2023": {
+          "N": 255,
+          "correct": 120,
+          "ACC": 47.06,
+          "BA": 47.17,
+          "DOWN": 43.94
+        },
+        "2024": {
+          "N": 259,
+          "correct": 126,
+          "ACC": 48.65,
+          "BA": 49.13,
+          "DOWN": 52.68
+        },
+        "2025": {
+          "N": 258,
+          "correct": 148,
+          "ACC": 57.36,
+          "BA": 51.93,
+          "DOWN": 10.71
+        },
+        "2026": {
+          "N": 127,
+          "correct": 59,
+          "ACC": 46.46,
+          "BA": 46.64,
+          "DOWN": 49.15
         }
       }
     },
     "OVN": {
-      "reference": {
+      "VW4_GPR": {
         "2023": {
           "N": 197,
-          "correct": 81,
-          "ACC": 41.12,
-          "BA": 41.72,
-          "DOWN": 46.51
+          "correct": 93,
+          "ACC": 47.21,
+          "BA": 46.08,
+          "DOWN": 37.21
         },
         "2024": {
           "N": 198,
-          "correct": 97,
-          "ACC": 48.99,
-          "BA": 47.44,
-          "DOWN": 36.47
+          "correct": 112,
+          "ACC": 56.57,
+          "BA": 50.72,
+          "DOWN": 9.41
         },
         "2025": {
           "N": 198,
-          "correct": 111,
-          "ACC": 56.06,
-          "BA": 55.63,
+          "correct": 109,
+          "ACC": 55.05,
+          "BA": 49.74,
+          "DOWN": 9.3
+        },
+        "2026": {
+          "N": 91,
+          "correct": 48,
+          "ACC": 52.75,
+          "BA": 55.71,
+          "DOWN": 37.74
+        }
+      },
+      "VW4_EQUAL": {
+        "2023": {
+          "N": 197,
+          "correct": 93,
+          "ACC": 47.21,
+          "BA": 46.08,
+          "DOWN": 37.21
+        },
+        "2024": {
+          "N": 198,
+          "correct": 112,
+          "ACC": 56.57,
+          "BA": 50.72,
+          "DOWN": 9.41
+        },
+        "2025": {
+          "N": 198,
+          "correct": 109,
+          "ACC": 55.05,
+          "BA": 49.74,
+          "DOWN": 9.3
+        },
+        "2026": {
+          "N": 91,
+          "correct": 48,
+          "ACC": 52.75,
+          "BA": 55.71,
+          "DOWN": 37.74
+        }
+      },
+      "MR4_ONLY": {
+        "2023": {
+          "N": 197,
+          "correct": 89,
+          "ACC": 45.18,
+          "BA": 45.98,
           "DOWN": 52.33
+        },
+        "2024": {
+          "N": 198,
+          "correct": 113,
+          "ACC": 57.07,
+          "BA": 50,
+          "DOWN": 0
+        },
+        "2025": {
+          "N": 198,
+          "correct": 109,
+          "ACC": 55.05,
+          "BA": 50.82,
+          "DOWN": 18.6
+        },
+        "2026": {
+          "N": 91,
+          "correct": 38,
+          "ACC": 41.76,
+          "BA": 50,
+          "DOWN": 0
+        }
+      },
+      "REL2": {
+        "2023": {
+          "N": 197,
+          "correct": 93,
+          "ACC": 47.21,
+          "BA": 48.31,
+          "DOWN": 56.98
+        },
+        "2024": {
+          "N": 198,
+          "correct": 107,
+          "ACC": 54.04,
+          "BA": 49.24,
+          "DOWN": 15.29
+        },
+        "2025": {
+          "N": 198,
+          "correct": 109,
+          "ACC": 55.05,
+          "BA": 50.82,
+          "DOWN": 18.6
+        },
+        "2026": {
+          "N": 91,
+          "correct": 35,
+          "ACC": 38.46,
+          "BA": 45.31,
+          "DOWN": 3.77
+        }
+      },
+      "REL2_PLUS_B4": {
+        "2023": {
+          "N": 197,
+          "correct": 103,
+          "ACC": 52.28,
+          "BA": 53.86,
+          "DOWN": 66.28
+        },
+        "2024": {
+          "N": 198,
+          "correct": 102,
+          "ACC": 51.52,
+          "BA": 52.42,
+          "DOWN": 58.82
+        },
+        "2025": {
+          "N": 198,
+          "correct": 110,
+          "ACC": 55.56,
+          "BA": 51.27,
+          "DOWN": 18.6
         },
         "2026": {
           "N": 91,
           "correct": 43,
           "ACC": 47.25,
-          "BA": 47.27,
-          "DOWN": 47.17
+          "BA": 51.74,
+          "DOWN": 24.53
         }
       },
-      "byHead": {
-        "VW4_GPR": {
-          "2023": {
-            "N": 197,
-            "correct": 86,
-            "ACC": 43.65,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2024": {
-            "N": 198,
-            "correct": 85,
-            "ACC": 42.93,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2025": {
-            "N": 198,
-            "correct": 86,
-            "ACC": 43.43,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2026": {
-            "N": 91,
-            "correct": 53,
-            "ACC": 58.24,
-            "BA": 50,
-            "DOWN": 100
-          }
+      "FULL8_PLUS_B4_PARITY": {
+        "2023": {
+          "N": 197,
+          "correct": 94,
+          "ACC": 47.72,
+          "BA": 47.84,
+          "DOWN": 48.84
         },
-        "VW4_EQUAL": {
-          "2023": {
-            "N": 197,
-            "correct": 93,
-            "ACC": 47.21,
-            "BA": 46.08,
-            "DOWN": 37.21
-          },
-          "2024": {
-            "N": 198,
-            "correct": 112,
-            "ACC": 56.57,
-            "BA": 50.72,
-            "DOWN": 9.41
-          },
-          "2025": {
-            "N": 198,
-            "correct": 109,
-            "ACC": 55.05,
-            "BA": 49.74,
-            "DOWN": 9.3
-          },
-          "2026": {
-            "N": 91,
-            "correct": 48,
-            "ACC": 52.75,
-            "BA": 55.71,
-            "DOWN": 37.74
-          }
+        "2024": {
+          "N": 198,
+          "correct": 105,
+          "ACC": 53.03,
+          "BA": 51.56,
+          "DOWN": 41.18
         },
-        "MR4_ONLY": {
-          "2023": {
-            "N": 197,
-            "correct": 89,
-            "ACC": 45.18,
-            "BA": 45.98,
-            "DOWN": 52.33
-          },
-          "2024": {
-            "N": 198,
-            "correct": 113,
-            "ACC": 57.07,
-            "BA": 50,
-            "DOWN": 0
-          },
-          "2025": {
-            "N": 198,
-            "correct": 109,
-            "ACC": 55.05,
-            "BA": 50.82,
-            "DOWN": 18.6
-          },
-          "2026": {
-            "N": 91,
-            "correct": 38,
-            "ACC": 41.76,
-            "BA": 50,
-            "DOWN": 0
-          }
+        "2025": {
+          "N": 198,
+          "correct": 107,
+          "ACC": 54.04,
+          "BA": 50.33,
+          "DOWN": 22.09
         },
-        "REL2": {
-          "2023": {
-            "N": 197,
-            "correct": 86,
-            "ACC": 43.65,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2024": {
-            "N": 198,
-            "correct": 85,
-            "ACC": 42.93,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2025": {
-            "N": 198,
-            "correct": 86,
-            "ACC": 43.43,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2026": {
-            "N": 91,
-            "correct": 53,
-            "ACC": 58.24,
-            "BA": 50,
-            "DOWN": 100
-          }
-        },
-        "REL2_PLUS_B4": {
-          "2023": {
-            "N": 197,
-            "correct": 86,
-            "ACC": 43.65,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2024": {
-            "N": 198,
-            "correct": 85,
-            "ACC": 42.93,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2025": {
-            "N": 198,
-            "correct": 86,
-            "ACC": 43.43,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2026": {
-            "N": 91,
-            "correct": 53,
-            "ACC": 58.24,
-            "BA": 50,
-            "DOWN": 100
-          }
-        },
-        "FULL8_PLUS_B4_PARITY": {
-          "2023": {
-            "N": 197,
-            "correct": 86,
-            "ACC": 43.65,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2024": {
-            "N": 198,
-            "correct": 85,
-            "ACC": 42.93,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2025": {
-            "N": 198,
-            "correct": 86,
-            "ACC": 43.43,
-            "BA": 50,
-            "DOWN": 100
-          },
-          "2026": {
-            "N": 91,
-            "correct": 53,
-            "ACC": 58.24,
-            "BA": 50,
-            "DOWN": 100
-          }
+        "2026": {
+          "N": 91,
+          "correct": 50,
+          "ACC": 54.95,
+          "BA": 55.73,
+          "DOWN": 50.94
         }
       }
     }
-  }
+  },
+  "conclusion": "GPR VW vs VW equal 4-metal heads produced EXACTLY same directional classifications on all eligible dates 2023-26 under frozen ridge. Monthly MR-only and relative gold-versus-metals structure did not deliver transportable DAY or OVN signed uplift. 2026 standalone FULL8+B4 50/91 OVN BA55.73%, versus 43/91 B4 BA47.27%, but 2025 107/198 BA50.33% below B4 111/198 BA55.63%. Not deployable."
 }
