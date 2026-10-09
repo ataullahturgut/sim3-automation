@@ -1,0 +1,17 @@
+{
+  "status": "INCOMPLETE",
+  "requested": "deepseek-v4-pro",
+  "returned": "deepseek-v4-pro",
+  "finish_reason": "length",
+  "chars": 7598,
+  "request_sha256": "1b2c1721a1d67f5cce0bf92b1bc9695a2202ecfa234f0303df1d919f26a88312",
+  "token_cap": 3400,
+  "usage": {
+    "prompt_tokens": 1414,
+    "completion_tokens": 3400,
+    "total_tokens": 4814
+  },
+  "utc": "2026-10-09T21:58:01.168468+00:00",
+  "no_secret_or_raw_quote_rows_transmitted": true,
+  "provider_did_not_execute_backtest": true
+}
