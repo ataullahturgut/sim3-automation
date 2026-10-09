@@ -1,0 +1,27 @@
+# DeepSeek V4-Pro short experiment — independent source/PIT scientific audit (2026-10-09)
+
+## Engineering result
+Two **bounded** content calls at model `deepseek-v4-pro`, with no private price records, Neon tables, user investment data or keys sent to provider.
+1. HIGH reasoning, 1872 input tokens and 8500 output tokens, finished `length`, **ZERO final visible answer characters**: scientific content call failed to yield a review. Never claim a research result from this call. Failure: `GOLD_DEEPSEEK_V4_PRO_HIGH_EFFORT_RESEARCH_20261009_RESULT.json`.
+2. A second, strictly budgeted **non-thinking** V4-Pro repair requested `max_tokens=2400`, returned `stop`, 690 input and 524 output tokens, 2264 final characters, saved `GOLD_DEEPSEEK_V4_PRO_REPAIRED_RESEARCH_20261009_{REVIEW.md,RESULT.json}`. NOTE this is **not** a successful high-reasoning Pro answer; it is a short Pro text-only peer opinion.
+The combined real provider usage is **2562 input / 9024 output = 11586 total tokens**. At official V4-Pro as-of Oct09 2026 peak per-million prices (input uncached $1.32, output $3.96) the conservative **peak price from actual tokens is USD 0.039117**. October09 11:52–11:54 UTC is off-peak by stated schedule (Monday–Friday 01–04 and 06–10 UTC peak); under official off-peak ($0.66/$1.98), price estimated USD **0.019558** before billing adjustment; not a bank charge or confirmed billing statement. Secret and private data preserved. No further paid calls authorized or made.
+
+## Scientific peer review from Pro
+Pro said "NO-NEW-ALPHA" on the present data and proposed an **unavailable** short-horizon source: allocations versus unallocated liability of gold bullion banking plus central-bank physical custody changes before decision; mathematical form `sign(change in allocated gold stock - beta * change in unallocated liabilities)`. The model explicitly did not claim any observed BA/accuracy improvement and declared this signal NOT executable on existing data.
+
+## Independent FACT CHECK (official primary sources)
+- LBMA **clearing statistics are collected and published monthly**, on average daily *monthly* volumes; the output is **NOT** an origin-ready daily 09:00/17:00 stock of allocated assets and unallocated obligations. https://www.lbma.org.uk/prices-and-data/clearing-data and https://www.lbma.org.uk/market-standards/clearing/faqs
+- BoE publicly reports custody **holdings on the last business day of each month, published with five-business-day lag**: https://www.bankofengland.co.uk/statistics/gold
+- LBMA historical London vault inventory holdings are reported **monthly** with publication lag, not intraday movements: https://www.lbma.org.uk/articles/demystifying-londons-gold-and-silver-vault-holdings
+- CBRT reserve/liquidity reporting is weekly and/or monthly, NOT an identified live allocated-unallocated bullion-bank source: https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB%2BEN/Main%2BMenu/Statistics/Balance%2Bof%2BPayments%2Band%2BRelated%2BStatistics/International%2BReserves%2Band%2BForeign%2BCurrency%2BLiquidity/
+
+## Hard identification issues
+1. **No source for A/L quantities:** the proposed equation's two positions are not represented by the public LBMA monthly clearing volumes. Interpreting cleared gold as net allocated stock or bank liabilities is a variable/category error.
+2. **PIT violation if monthly future value interpolated or retroactively inserted:** publication lag means the gold stock for month end is unavailable to pre-issue 17:00 on most daily origins; any use must satisfy actually released vintage. A lagged monthly stock may be an origin-safe **slow macro feature** but is NOT the posited daily flow pressure mechanism.
+3. **Unestimable beta:** Pro says estimate beta on pre-2020 data "if available"; neither the inputs nor a public matched bank allocated/unallocated PIT panel is certified available. This cannot be silently estimated or set to 1.
+4. **Methodological false specificity:** failure on NQ/SI negative controls does not prove unique gold causal influence; other instruments may respond to shared macro variables; likewise lack of SI transfer is not a necessary condition for validity of physical-gold demand. Fixed 2pp BA and 0.35 DOWN recall proposed without power analysis are arbitrary, not a statistically demonstrated acceptance test.
+5. **Endpoint ambiguity:** Pro wrote "next-day 09 XAU mid return" without stating return anchor. Our approved night label is strictly **17:00→next eligible 09:00**, not the day's open-to-next morning or the price level.
+6. **Burned cohorts:** 2025/2026 inspected, no untouched promotion. Never create 2026-selected thresholds/policies.
+
+## Decision
+**The short Pro trial did NOT outperform Flash in actionable source-safe signed signal discovery.** The material novel-sounding physical inventory signal is (i) not measured by cited public data, (ii) low-frequency/delayed, (iii) insufficient for the user's 09/17 execution-clock target. Put in **long-horizon macro-context watchlist only** if PIT publication/vintage proven; REJECT for current DAY/OVN signed alpha and do not charge for further speculation. Existing 2020–25 market-model negative results unchanged. No scientific direction-model improvement or new backtest was produced here. Preferred next empirical channel = actually timestamped, source-qualified before-issue market innovations and independently pre-registered reproducible test; no source no experiment.
