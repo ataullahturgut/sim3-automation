@@ -1,0 +1,22 @@
+{
+  "status": "REAL_CAUSAL_ONLINE_ADAPTIVE_CONFORMAL_SINGLETON_AUDIT",
+  "provenance": "Gibbs and Candes NeurIPS 2021 alpha0 .2 eta .01",
+  "base_models": [
+    "CBR_REGIME_PATH",
+    "HGB_FROZEN_2021"
+  ],
+  "policies": [
+    "STATIC_CONF80",
+    "ACI_CONF80"
+  ],
+  "strict_lookback": 63,
+  "min_matured": 42,
+  "2026_original_models_frozen_before_2026": true,
+  "2026_outcomes_update_future_issues_only": true,
+  "no_future_outcomes_in_prediction_sets": true,
+  "not_real_bank_PnL": true,
+  "not_broker_actionable_at_09_if_late_issuance": false,
+  "2026_already_inspected": true,
+  "outputs": "year metrics source by source, DATE predictions private",
+  "elapsed_sec": 27
+}
