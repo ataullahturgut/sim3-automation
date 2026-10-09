@@ -1,0 +1,52 @@
+name: Gold R10 DeepSeek Pro Monthly To Session Critical Review
+on:
+  push:
+    branches:
+      - gold-execution-channel-audit-20261006
+    paths:
+      - .github/workflows/gold-r10-deepseek-pro-monthly-regime-transfer-20261009.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gold-r10-deepseek-pro-single-request
+  cancel-in-progress: false
+jobs:
+  r10-monthly-to-session-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Single V4 Pro scientific review of monthly regime
+        run: |
+          set -euo pipefail
+          python -m py_compile gold_axis_2026/tools/gold_r10_deepseek_v4_pro_monthly_regime_transfer_20261009.py
+          python gold_axis_2026/tools/gold_r10_deepseek_v4_pro_monthly_regime_transfer_20261009.py
+      - name: Preserve receipt and third-party text safely
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for f in gold_axis_2026/GOLD_R10_DEEPSEEK_V4_PRO_MONTHLY_REGIME_TRANSFER_20261009_{RESULT.json,REVIEW.md,FAILURE_QC.json}; do
+            if test -f "$f"; then git add "$f"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git commit -m "Record external Pro monthly-to-session scientific opinion, no model success claim"
+            for i in 1 2 3; do
+              git pull --rebase origin gold-execution-channel-audit-20261006
+              if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+              sleep 3
+            done
+            exit 1
+          fi
