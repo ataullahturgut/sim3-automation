@@ -1,5 +1,5 @@
 {
-  "status": "GEMINI_TWO_ROUND_INDEPENDENT_RESEARCH_COMPLETED",
+  "status": "GEMINI_API_EXCHANGE_TWO_CALLS_BUT_VISIBLE_OUTPUT_TRUNCATED_REJECTED",
   "model": "gemini-2.5-flash",
   "run_date_utc": "2026-10-09T11:13:45.304546+00:00",
   "external_safe_brief_path": "GOLD_GEMINI_EXTERNAL_SAFE_RESEARCH_BRIEF_20261009.md",
@@ -19,5 +19,8 @@
   "no_model_code_executed": true,
   "no_forecasting_accuracy_claimed": true,
   "no_automated_trade_or_promotion": true,
-  "review_is_unverified_generated_ideas": true
+  "review_is_unverified_generated_ideas": true,
+  "review_validity": "REJECTED_BOTH_123_TOKEN_OUTPUTS_END_MID_SENTENCE",
+  "scientific_output_complete": false,
+  "retroactively_corrected_auth_note": "Initial status called API exchange successful, not independent research complete"
 }
