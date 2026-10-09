@@ -31,3 +31,24 @@ Empirical mechanism: 2026 high-volatility regime changed within-night first-pass
 New **independent before-17 market price discovery** from bid/ask time-aligned COMEX GC futures, Treasury 2Y/10Y changes and real yield data (not assumed available), USD broad/DXY, market-depth or volume if source licensed, plus true point-in-time announced US macro first prints and advance expectations. Existing GC/SI/NQ/ZN/CL H1 historical access was incomplete; not allowed to substitute missing data. Frame direction-specific severe downside first-event/hold risk and overnight expected magnitude separately, with volatility-scaled barrier, calibrated abstain based on real bank spread, not a binary static final direction model. Test on correct source same dates, 2023/24 discovery, 2025 retrospective and 2026 stress, later unseen forward data for genuine confirmation. The previous magnitude-risk research improved historical 2025/26 MAE but not signed direction. No validated bank-profit champion today.
 
 **Decision:** These completed historical-methodology-transfer tests are meaningful negative experimental results with a precise causal failure: conditional reliability inversion under 2026, exacerbated by macro vintage data. Never present the old 74% or the old PRAMV ~63% as new-horizon 2026 measured accuracy.
+
+
+## October 9 follow-through — actual acquired independent futures + model finished
+
+No-data assertion is now obsolete: 2026-10-08 Databento `GLBX.MDP3` native calendar c.0 continuous hour OHLCV acquisition passed for GC, SI, NQ, ZN, CL, **77,152** received and stored under private Neon table `gold_research_cme_glbx_futures_2023_2026_h1_5roots_continuous_c_v1`, 2023-Jan to 2026-Oct07 inclusive, **refresh quote USD 0.76452 below USD2 cap**. QC receipt `GOLD_EXECUTION_2026_CME_FIVE_H1_SOURCE_QC_20261008.json`. Not proof of actual bank spreads, original ask/bar publication delay, or independently licensed orderflow.
+
+FIRST 5-market simultaneous pre-17 full-10-feature RFR K25 analogue source gate **BLOCKED** on `FIVE_CME_PREORIGIN_FEATURE_POPULATION_SHORT`: 2023/24/25/26 yearly GC H1 1829/1879/2782/1445, SI H1 1039/1159/1482/1264, while NQ, ZN, CL have 4000–5800 per year (2026 Jan-Oct07 counts 4525/4123/4493). This is sparse cross-market observation timing, NOT negative prediction evidence. Explicit fail QC `GOLD_EXECUTION_2026_CME5_CROSSVENUE_RFR_K25_ANALOGUE_20261008_FAILURE_QC.json`.
+
+SECOND coverage-predetermined **independent 3-market** NQ/ZN/CL source-ready native H1 RFR K25 trial executed, freeze in `GOLD_EXECUTION_2026_CME3_COMPLETENESS_NQ_ZN_CL_RFR_K25_PREREG_20261009.md`; same pre17 rule, six originally fixed 1h/3h features, calendar c.0 futures, H1 close +15min asof before 17TR, training monthly matured 2023/24 and fixed prior years 2025/26. SAME-ORIGIN control RFR on same source-qualified dates.
+
+| Year | Eligible scored normal OVN reverse candidates (mirror) | 3-root K25 BA | Same-day RFR BA | K25 DOWN recall | K25 RFR saves/breaks |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 2023 | 6 | 33.33% | 33.33% | 33.33% | 0/0 — wholly insufficient |
+| 2024 | 80 | 56.07% | 53.26% | 38.24% | 9/5 (exact p≈0.424) |
+| 2025 | 87 | 57.80% | 60.43% | 38.24% | 5/5 (p=1.0) |
+| 2026 Jan–Aug20 mirror | 53 | 58.76% | 60.33% | 44.44% | 4/5 (p=1.0) |
+| 2026 direct source | 40 | 58.27% | 59.90% | 42.86% | 3/4 (p=1.0) |
+
+2025 K25 **Brier .23931** worse than simple history same-RFR-sign prior **.23108** (3.56% relative deterioration). 2026 mirror K25 .24610 vs prior .24641 (0.13% tiny relative improvement), direct .24915 vs .24936 (0.08% tiny). No consistent gain, no predictive promotion. Mirror/direct are overlapped quote-sourced populations and not independent replications. K25 2023 N6 means no serious early-period stability proof; 2026 already inspected. Actual GitHub saved metrics `GOLD_EXECUTION_2026_CME3_NQ_ZN_CL_RFR_K25_ANALOGUE_20261009_METRICS.csv` and `_SUMMARY.json`; private dated forecasts remain Actions artifact, not public data. The 3-root source-only information shows some directional distinction but **no reproducible incremental outcome advantage vs first-impulse RFR**, especially DOWN.
+
+**As of 2026-10-09: historical knowledge properly read and tested; the independently purchased non-XAU hour input is real, but a tested stronger 2026 same-target directional or bank-executable strategy DOES NOT yet exist.** Proper next research should focus on causally measured first-passage/severe DOWN risk, better independent market microstructure at lower-than-hour frequencies for GC/SI, verified native 2026 source coverage & true bank-spread execution. Avoid posthoc tuning to 2026, and never call source acquisition a model-performance breakthrough.
