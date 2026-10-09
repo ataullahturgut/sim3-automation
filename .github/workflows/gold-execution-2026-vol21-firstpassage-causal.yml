@@ -1,0 +1,54 @@
+name: Gold 2026 Volatility-Scaled 21 Prior Overnight First Passage Research
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - gold_axis_2026/tools/gold_execution_2026_vol21_firstpassage_causal_20261009.py
+      - .github/workflows/gold-execution-2026-vol21-firstpassage-causal.yml
+permissions:
+  contents: write
+concurrency:
+  group: gold-first-passage-fixed-vs-vol21-exante-two-sources
+  cancel-in-progress: false
+jobs:
+  original-firstpassage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 17
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.32,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'statsmodels>=0.14,<1' 'psycopg[binary]>=3.2,<4'
+      - name: Score original fixed versus genuinely pre-origin volatility normalized barriers and simple Bayesian base rates for 2023-26
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_2026_vol21_firstpassage_causal_20261009.py
+          python gold_axis_2026/tools/gold_execution_2026_vol21_firstpassage_causal_20261009.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-exante-vol21-firstpassage-observed-close-private-dated
+          path: gold_axis_2026/GOLD_EXECUTION_2026_VOL21_FIRSTPASSAGE_CAUSAL_20261009_PRIVATE_DATED.csv
+          if-no-files-found: warn
+      - name: Record actual normalized event frequency/rate outcomes or explicit no-score QC
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for f in gold_axis_2026/GOLD_EXECUTION_2026_VOL21_FIRSTPASSAGE_CAUSAL_20261009_{SUMMARY.json,YEAR_METRICS.csv,BAYESIAN_BASELINE.csv,FAILURE_QC.json}; do if test -f "$f"; then git add "$f"; fi; done
+          git diff --cached --quiet || git commit -m 'Record 2023-26 price first-passage ex ante vol21 RMS regime stability and forecastability, source-scoped'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 3
+          done
+          exit 1
