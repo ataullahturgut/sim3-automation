@@ -90,6 +90,7 @@ def prediction_panel(cand):
         if not np.isfinite(p):continue
         rows.append({"source_test":row.source_test,"date":row.date.strftime("%Y-%m-%d"),
            "year":int(row.year),"month":str(period),"y":int(row.label),
+           "signed_OVN":float(row.signed_OVN),
            "rfr_dir":int(row.first_sign),"p_up_CME5":float(p),
            "p_up_signconditional_prior":float(prior),
            "cme5_pred":int(p>=.5),"naive_conditional_pred":int(prior>=.5),
