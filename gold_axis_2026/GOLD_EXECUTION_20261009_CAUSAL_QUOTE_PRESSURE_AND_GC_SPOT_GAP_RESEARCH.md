@@ -38,6 +38,8 @@
 | 2024 | 45 | 60.92% | 64.71% | 38.45% | 17 / 7 |
 | 2025 (inspected) | 80 | 52.08% | 56.25% | 54.17% | 22 / 25 |
 
+**Same-date paired exact McNemar (two-sided, using rescues/breaks):** 2023 p=0.838820 (13/11), 2024 p=0.063915 (17/7), 2025 p=0.770867 (22/25); NONE establishes paired alpha at 0.05, even before family multiplicity. These are naive unadjusted exploratory p-values, not forward evidence.
+
 **Decision:** 2024 improvement not sustained in 2025 even against matched simple spot. Coverage insufficient; **no paired significance claim** and no Brier/probability because threshold model is hard-label only. Do not select 2024 alone, tune 2025 threshold, splice GC continuous contracts, or score unavailable GC sessions as zero. Existing 2026 CME3 K25 negative test is distinct.
 
 ## Research conclusion / next falsification
