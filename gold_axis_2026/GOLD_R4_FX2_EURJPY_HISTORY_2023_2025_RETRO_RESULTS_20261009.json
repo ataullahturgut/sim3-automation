@@ -1,0 +1,470 @@
+{
+  "asof_utc": "2026-10-09T13:05:50.600485+00:00",
+  "status": "COMPLETED_RETROSPECTIVE_NOT_CANONICAL",
+  "calls_attempted": 12,
+  "calls_max": 12,
+  "provider": "Twelve Data",
+  "pair_symbols": [
+    "EUR/USD",
+    "USD/JPY"
+  ],
+  "source_interval": "1h",
+  "timezone": "UTC",
+  "labels": "legacy_LIT_STAGE1_not_latest_private_DUKA_canonical",
+  "known_label_mismatch_legacy_vs_new_canonical": "5 of 589 matched regular overnight 2023-25 nights",
+  "2025_retrospective_inspected": true,
+  "historical_PIT_first_seen_from_2026_only": true,
+  "FX_quotes_stored": false,
+  "FX_quotes_redistributed": false,
+  "provider_secret_logged": false,
+  "no_paid_plan_upgrade_or_background_runs": true,
+  "no_bank_trades": true,
+  "source_windows": [
+    {
+      "pair": "EUR/USD",
+      "start": "2023-01-01T00:00:00",
+      "end": "2023-07-01T00:00:00",
+      "hourly_observations": 3098,
+      "overlap_rows": 0,
+      "first_observed_UTC": "2023-01-01T22:00:00+00:00",
+      "last_observed_UTC": "2023-06-30T20:00:00+00:00"
+    },
+    {
+      "pair": "USD/JPY",
+      "start": "2023-01-01T00:00:00",
+      "end": "2023-07-01T00:00:00",
+      "hourly_observations": 3101,
+      "overlap_rows": 0,
+      "first_observed_UTC": "2023-01-01T20:00:00+00:00",
+      "last_observed_UTC": "2023-06-30T20:00:00+00:00"
+    },
+    {
+      "pair": "EUR/USD",
+      "start": "2023-07-01T00:00:00",
+      "end": "2024-01-01T00:00:00",
+      "hourly_observations": 3089,
+      "overlap_rows": 0,
+      "first_observed_UTC": "2023-07-02T21:00:00+00:00",
+      "last_observed_UTC": "2023-12-29T19:00:00+00:00"
+    },
+    {
+      "pair": "USD/JPY",
+      "start": "2023-07-01T00:00:00",
+      "end": "2024-01-01T00:00:00",
+      "hourly_observations": 3091,
+      "overlap_rows": 0,
+      "first_observed_UTC": "2023-07-02T21:00:00+00:00",
+      "last_observed_UTC": "2023-12-29T19:00:00+00:00"
+    },
+    {
+      "pair": "EUR/USD",
+      "start": "2024-01-01T00:00:00",
+      "end": "2024-07-01T00:00:00",
+      "hourly_observations": 3069,
+      "overlap_rows": 0,
+      "first_observed_UTC": "2024-01-01T17:00:00+00:00",
+      "last_observed_UTC": "2024-07-01T00:00:00+00:00"
+    },
+    {
+      "pair": "USD/JPY",
+      "start": "2024-01-01T00:00:00",
+      "end": "2024-07-01T00:00:00",
+      "hourly_observations": 3068,
+      "overlap_rows": 0,
+      "first_observed_UTC": "2024-01-01T21:00:00+00:00",
+      "last_observed_UTC": "2024-07-01T00:00:00+00:00"
+    },
+    {
+      "pair": "EUR/USD",
+      "start": "2024-07-01T00:00:00",
+      "end": "2025-01-01T00:00:00",
+      "hourly_observations": 3092,
+      "overlap_rows": 1,
+      "first_observed_UTC": "2024-07-01T00:00:00+00:00",
+      "last_observed_UTC": "2024-12-31T12:00:00+00:00"
+    },
+    {
+      "pair": "USD/JPY",
+      "start": "2024-07-01T00:00:00",
+      "end": "2025-01-01T00:00:00",
+      "hourly_observations": 3094,
+      "overlap_rows": 1,
+      "first_observed_UTC": "2024-07-01T00:00:00+00:00",
+      "last_observed_UTC": "2024-12-31T12:00:00+00:00"
+    },
+    {
+      "pair": "EUR/USD",
+      "start": "2025-01-01T00:00:00",
+      "end": "2025-07-01T00:00:00",
+      "hourly_observations": 3039,
+      "overlap_rows": 0,
+      "first_observed_UTC": "2025-01-01T22:00:00+00:00",
+      "last_observed_UTC": "2025-07-01T00:00:00+00:00"
+    },
+    {
+      "pair": "USD/JPY",
+      "start": "2025-01-01T00:00:00",
+      "end": "2025-07-01T00:00:00",
+      "hourly_observations": 3053,
+      "overlap_rows": 0,
+      "first_observed_UTC": "2025-01-01T17:00:00+00:00",
+      "last_observed_UTC": "2025-07-01T00:00:00+00:00"
+    },
+    {
+      "pair": "EUR/USD",
+      "start": "2025-07-01T00:00:00",
+      "end": "2026-01-01T00:00:00",
+      "hourly_observations": 3132,
+      "overlap_rows": 1,
+      "first_observed_UTC": "2025-07-01T00:00:00+00:00",
+      "last_observed_UTC": "2025-12-31T12:00:00+00:00"
+    },
+    {
+      "pair": "USD/JPY",
+      "start": "2025-07-01T00:00:00",
+      "end": "2026-01-01T00:00:00",
+      "hourly_observations": 3091,
+      "overlap_rows": 1,
+      "first_observed_UTC": "2025-07-01T00:00:00+00:00",
+      "last_observed_UTC": "2025-12-31T12:00:00+00:00"
+    }
+  ],
+  "metrics": [
+    {
+      "target": "DAY",
+      "year": 2023,
+      "eligible_LIT_dates": 253,
+      "FX_H1_source_ready": 252,
+      "pair_agreement_calls": 152,
+      "agreement_coverage_pct": 60.08,
+      "baseline_same_all": {
+        "N": 252,
+        "accuracy_pct": 51.19,
+        "BA_pct": 51.36,
+        "DOWN_recall_pct": 29.92,
+        "DOWN_precision_pct": 52.78,
+        "tp": 38,
+        "fp": 34,
+        "fn": 89,
+        "tn": 91
+      },
+      "FX_overlay_full": {
+        "N": 252,
+        "accuracy_pct": 48.41,
+        "BA_pct": 48.46,
+        "DOWN_recall_pct": 42.52,
+        "DOWN_precision_pct": 48.65,
+        "tp": 54,
+        "fp": 57,
+        "fn": 73,
+        "tn": 68
+      },
+      "baseline_on_FX_agree_only": {
+        "N": 152,
+        "accuracy_pct": 55.92,
+        "BA_pct": 56.43,
+        "DOWN_recall_pct": 37.18,
+        "DOWN_precision_pct": 61.7,
+        "tp": 29,
+        "fp": 18,
+        "fn": 49,
+        "tn": 56
+      },
+      "FX_pair_on_same_agree_dates": {
+        "N": 152,
+        "accuracy_pct": 51.32,
+        "BA_pct": 51.14,
+        "DOWN_recall_pct": 57.69,
+        "DOWN_precision_pct": 52.33,
+        "tp": 45,
+        "fp": 41,
+        "fn": 33,
+        "tn": 33
+      },
+      "rescues": 35,
+      "breaks": 42,
+      "paired_mcnemar_exact_p": 0.494382,
+      "source_missing": 1
+    },
+    {
+      "target": "DAY",
+      "year": 2024,
+      "eligible_LIT_dates": 259,
+      "FX_H1_source_ready": 259,
+      "pair_agreement_calls": 144,
+      "agreement_coverage_pct": 55.6,
+      "baseline_same_all": {
+        "N": 259,
+        "accuracy_pct": 50.97,
+        "BA_pct": 47.75,
+        "DOWN_recall_pct": 26.36,
+        "DOWN_precision_pct": 38.67,
+        "tp": 29,
+        "fp": 46,
+        "fn": 81,
+        "tn": 103
+      },
+      "FX_overlay_full": {
+        "N": 259,
+        "accuracy_pct": 47.49,
+        "BA_pct": 46.87,
+        "DOWN_recall_pct": 42.73,
+        "DOWN_precision_pct": 39.17,
+        "tp": 47,
+        "fp": 73,
+        "fn": 63,
+        "tn": 76
+      },
+      "baseline_on_FX_agree_only": {
+        "N": 144,
+        "accuracy_pct": 53.47,
+        "BA_pct": 48.92,
+        "DOWN_recall_pct": 23.73,
+        "DOWN_precision_pct": 38.89,
+        "tp": 14,
+        "fp": 22,
+        "fn": 45,
+        "tn": 63
+      },
+      "FX_pair_on_same_agree_dates": {
+        "N": 144,
+        "accuracy_pct": 47.22,
+        "BA_pct": 48.3,
+        "DOWN_recall_pct": 54.24,
+        "DOWN_precision_pct": 39.51,
+        "tp": 32,
+        "fp": 49,
+        "fn": 27,
+        "tn": 36
+      },
+      "rescues": 35,
+      "breaks": 44,
+      "paired_mcnemar_exact_p": 0.368188,
+      "source_missing": 0
+    },
+    {
+      "target": "DAY",
+      "year": 2025,
+      "eligible_LIT_dates": 219,
+      "FX_H1_source_ready": 217,
+      "pair_agreement_calls": 139,
+      "agreement_coverage_pct": 63.47,
+      "baseline_same_all": {
+        "N": 217,
+        "accuracy_pct": 54.84,
+        "BA_pct": 50.03,
+        "DOWN_recall_pct": 8.33,
+        "DOWN_precision_pct": 44.44,
+        "tp": 8,
+        "fp": 10,
+        "fn": 88,
+        "tn": 111
+      },
+      "FX_overlay_full": {
+        "N": 217,
+        "accuracy_pct": 50.23,
+        "BA_pct": 48.27,
+        "DOWN_recall_pct": 31.25,
+        "DOWN_precision_pct": 41.67,
+        "tp": 30,
+        "fp": 42,
+        "fn": 66,
+        "tn": 79
+      },
+      "baseline_on_FX_agree_only": {
+        "N": 139,
+        "accuracy_pct": 53.96,
+        "BA_pct": 49.15,
+        "DOWN_recall_pct": 9.84,
+        "DOWN_precision_pct": 40.0,
+        "tp": 6,
+        "fp": 9,
+        "fn": 55,
+        "tn": 69
+      },
+      "FX_pair_on_same_agree_dates": {
+        "N": 139,
+        "accuracy_pct": 46.76,
+        "BA_pct": 46.67,
+        "DOWN_recall_pct": 45.9,
+        "DOWN_precision_pct": 40.58,
+        "tp": 28,
+        "fp": 41,
+        "fn": 33,
+        "tn": 37
+      },
+      "rescues": 30,
+      "breaks": 40,
+      "paired_mcnemar_exact_p": 0.281979,
+      "source_missing": 2
+    },
+    {
+      "target": "OVN",
+      "year": 2023,
+      "eligible_LIT_dates": 205,
+      "FX_H1_source_ready": 205,
+      "pair_agreement_calls": 142,
+      "agreement_coverage_pct": 69.27,
+      "baseline_same_all": {
+        "N": 205,
+        "accuracy_pct": 52.68,
+        "BA_pct": 50.81,
+        "DOWN_recall_pct": 25.26,
+        "DOWN_precision_pct": 48.0,
+        "tp": 24,
+        "fp": 26,
+        "fn": 71,
+        "tn": 84
+      },
+      "FX_overlay_full": {
+        "N": 205,
+        "accuracy_pct": 45.37,
+        "BA_pct": 45.0,
+        "DOWN_recall_pct": 40.0,
+        "DOWN_precision_pct": 40.86,
+        "tp": 38,
+        "fp": 55,
+        "fn": 57,
+        "tn": 55
+      },
+      "baseline_on_FX_agree_only": {
+        "N": 142,
+        "accuracy_pct": 54.93,
+        "BA_pct": 53.11,
+        "DOWN_recall_pct": 27.27,
+        "DOWN_precision_pct": 52.94,
+        "tp": 18,
+        "fp": 16,
+        "fn": 48,
+        "tn": 60
+      },
+      "FX_pair_on_same_agree_dates": {
+        "N": 142,
+        "accuracy_pct": 44.37,
+        "BA_pct": 44.64,
+        "DOWN_recall_pct": 48.48,
+        "DOWN_precision_pct": 41.56,
+        "tp": 32,
+        "fp": 45,
+        "fn": 34,
+        "tn": 31
+      },
+      "rescues": 40,
+      "breaks": 55,
+      "paired_mcnemar_exact_p": 0.150518,
+      "source_missing": 0
+    },
+    {
+      "target": "OVN",
+      "year": 2024,
+      "eligible_LIT_dates": 208,
+      "FX_H1_source_ready": 208,
+      "pair_agreement_calls": 139,
+      "agreement_coverage_pct": 66.83,
+      "baseline_same_all": {
+        "N": 208,
+        "accuracy_pct": 50.0,
+        "BA_pct": 46.97,
+        "DOWN_recall_pct": 24.44,
+        "DOWN_precision_pct": 37.93,
+        "tp": 22,
+        "fp": 36,
+        "fn": 68,
+        "tn": 82
+      },
+      "FX_overlay_full": {
+        "N": 208,
+        "accuracy_pct": 48.56,
+        "BA_pct": 48.2,
+        "DOWN_recall_pct": 45.56,
+        "DOWN_precision_pct": 41.41,
+        "tp": 41,
+        "fp": 58,
+        "fn": 49,
+        "tn": 60
+      },
+      "baseline_on_FX_agree_only": {
+        "N": 139,
+        "accuracy_pct": 51.08,
+        "BA_pct": 47.3,
+        "DOWN_recall_pct": 26.32,
+        "DOWN_precision_pct": 36.59,
+        "tp": 15,
+        "fp": 26,
+        "fn": 42,
+        "tn": 56
+      },
+      "FX_pair_on_same_agree_dates": {
+        "N": 139,
+        "accuracy_pct": 48.92,
+        "BA_pct": 50.56,
+        "DOWN_recall_pct": 59.65,
+        "DOWN_precision_pct": 41.46,
+        "tp": 34,
+        "fp": 48,
+        "fn": 23,
+        "tn": 34
+      },
+      "rescues": 47,
+      "breaks": 50,
+      "paired_mcnemar_exact_p": 0.839214,
+      "source_missing": 0
+    },
+    {
+      "target": "OVN",
+      "year": 2025,
+      "eligible_LIT_dates": 204,
+      "FX_H1_source_ready": 202,
+      "pair_agreement_calls": 142,
+      "agreement_coverage_pct": 69.61,
+      "baseline_same_all": {
+        "N": 202,
+        "accuracy_pct": 54.95,
+        "BA_pct": 50.55,
+        "DOWN_recall_pct": 13.48,
+        "DOWN_precision_pct": 46.15,
+        "tp": 12,
+        "fp": 14,
+        "fn": 77,
+        "tn": 99
+      },
+      "FX_overlay_full": {
+        "N": 202,
+        "accuracy_pct": 56.93,
+        "BA_pct": 55.78,
+        "DOWN_recall_pct": 46.07,
+        "DOWN_precision_pct": 51.25,
+        "tp": 41,
+        "fp": 39,
+        "fn": 48,
+        "tn": 74
+      },
+      "baseline_on_FX_agree_only": {
+        "N": 142,
+        "accuracy_pct": 56.34,
+        "BA_pct": 50.57,
+        "DOWN_recall_pct": 13.33,
+        "DOWN_precision_pct": 44.44,
+        "tp": 8,
+        "fp": 10,
+        "fn": 52,
+        "tn": 72
+      },
+      "FX_pair_on_same_agree_dates": {
+        "N": 142,
+        "accuracy_pct": 59.15,
+        "BA_pct": 59.49,
+        "DOWN_recall_pct": 61.67,
+        "DOWN_precision_pct": 51.39,
+        "tp": 37,
+        "fp": 35,
+        "fn": 23,
+        "tn": 47
+      },
+      "rescues": 41,
+      "breaks": 37,
+      "paired_mcnemar_exact_p": 0.734342,
+      "source_missing": 2
+    }
+  ]
+}
