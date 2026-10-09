@@ -84,8 +84,8 @@ def _choose_model(key: str) -> str:
             return model
     raise RuntimeError("NO_APPROVED_LOW_COST_FLASH_MODEL_AVAILABLE")
 
-def _generate(key: str, model: str, messages: list[dict], max_out: int = 3100) -> tuple[str, dict]:
-    if max_out > 3100 or max_out < 1:
+def _generate(key: str, model: str, messages: list[dict], max_out: int = 4400) -> tuple[str, dict]:
+    if max_out > 4400 or max_out < 1:
         raise RuntimeError("OUTPUT_TOKEN_CAP_INVALID")
     obj = _request(
         "/models/" + model + ":generateContent",
@@ -97,17 +97,24 @@ def _generate(key: str, model: str, messages: list[dict], max_out: int = 3100) -
                 "temperature": 0.35,
                 "maxOutputTokens": max_out,
                 "candidateCount": 1,
+                # Gemini 2.5 Flash default dynamic thoughts exhausted almost the
+                # entire earlier 3100-token cap (123 visible output tokens).
+                # Official Gemini docs support finite fixed thinking budgets.
+                **({"thinkingConfig": {"thinkingBudget": 512}}
+                   if model == "gemini-2.5-flash" else {}),
             },
         },
     )
     fragments = []
+    ends = []
     for cand in obj.get("candidates", [])[:1]:
+        ends.append(cand.get("finishReason", "UNKNOWN"))
         for part in cand.get("content", {}).get("parts", []):
             if isinstance(part.get("text"), str):
                 fragments.append(part["text"])
     text = "\n".join(fragments).strip()
-    if len(text) < 150:
-        raise RuntimeError("GEMINI_OUTPUT_EMPTY_OR_INCOMPLETE")
+    if len(text) < 950 or ends != ["STOP"]:
+        raise RuntimeError("GEMINI_OUTPUT_TRUNCATED_OR_NOT_FINISHED")
     if len(text) > 18000:
         text = text[:18000] + "\n\n[TEXT_TRUNCATED_BY_SOURCE_SAFE_BRIDGE]\n"
     usage = obj.get("usageMetadata", {})
@@ -160,7 +167,7 @@ def main():
     first, usage1 = _generate(
         key, model,
         [{"role": "user", "parts": [{"text": initial}]}],
-        3100,
+        4400,
     )
     # Second distinct dialogue turn forces re-examination, no outside datasets.
     challenge = (
@@ -220,6 +227,9 @@ def main():
     Path(str(STEM) + "_RESULT.json").write_text(
         json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
+    fail = Path(str(STEM) + "_FAILURE_QC.json")
+    if fail.exists():
+        fail.unlink()  # Superseded diagnosis, no longer the final outcome.
     print("GEMINI_TWO_ROUND_RESEARCH: PASS")
     print("GEMINI_ROUND1_CHARACTERS:", len(first))
     print("GEMINI_ROUND2_CHARACTERS:", len(second))
