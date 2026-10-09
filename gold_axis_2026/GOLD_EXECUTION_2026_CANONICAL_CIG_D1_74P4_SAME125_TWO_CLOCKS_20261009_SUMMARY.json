@@ -1,0 +1,22 @@
+{
+  "status": "ACTUALLY_RESCORED_ORIGINAL_74P4_CIG125_BOTH_TURKEY_EXECUTION_WINDOWS",
+  "identity": "CIG_D1_V1 frozen original 4 of 4 SAGE V2 RuleFlow V3-TG / HELIOS V5 DCE / RIFT / VEGA",
+  "consensus_2026_Jan_to_July": 125,
+  "original_daily_reference_correct": 93,
+  "original_daily_reference_accuracy": 0.744,
+  "frozen_cig_exact_newyork_0815_1600_correct": 59,
+  "original_model_historical_inputs_retrained": false,
+  "model_predictions_recreated_or_changed": false,
+  "old_source_quote_2026_preservation": "2026 Dukascopy upstream third-party M1 BID/ASK reverse reference plus direct native source; HistData independently restricted",
+  "two_target_intervals_TRT": [
+    "09:00-17:00",
+    "17:00-next09:00 Monday-Thursday 16h"
+  ],
+  "DAY_noncausal_to_09_entry": true,
+  "CIG_issued_08NY": "15:00 Turkey during US DST, 16:00 during US standard; DAY opens earlier",
+  "OVN_timing_after_governed_issue": true,
+  "all_2026_125_days_retained_with_missing_explicit": true,
+  "no_bank_PnL": true,
+  "2026_already_inspected_not_new_holdout": true,
+  "elapsed_seconds": 22
+}
