@@ -1,0 +1,216 @@
+{
+  "title": "R11C genuine monthly level controls on STAK prev-month price and CORE5/WorldBank target; no model promotion",
+  "groups": {
+    "DEV": {
+      "RW_STAK": {
+        "N": 33,
+        "ΣAE": 1767.05,
+        "MAE": 53.55,
+        "MAPE": 2.6,
+        "dir": "0/33",
+        "dirPct": 0,
+        "winsVsRW": 0,
+        "worst": {
+          "m": "2024-04",
+          "err": 172.54250000000002
+        }
+      },
+      "MOM_GOLD_25": {
+        "N": 33,
+        "ΣAE": 1763.3,
+        "MAE": 53.43,
+        "MAPE": 2.61,
+        "dir": "18/33",
+        "dirPct": 54.55,
+        "winsVsRW": 16,
+        "worst": {
+          "m": "2024-04",
+          "err": 138.00437774142438
+        }
+      },
+      "MOM_GOLD_50": {
+        "N": 33,
+        "ΣAE": 1880.94,
+        "MAE": 57,
+        "MAPE": 2.8,
+        "dir": "18/33",
+        "dirPct": 54.55,
+        "winsVsRW": 13,
+        "worst": {
+          "m": "2024-03",
+          "err": 137.10521368508716
+        }
+      },
+      "MOM_METALS_25": {
+        "N": 33,
+        "ΣAE": 1909.13,
+        "MAE": 57.85,
+        "MAPE": 2.81,
+        "dir": "19/33",
+        "dirPct": 57.58,
+        "winsVsRW": 15,
+        "worst": {
+          "m": "2024-03",
+          "err": 144.9902585008515
+        }
+      },
+      "GPR_GOLD_VW_25": {
+        "N": 33,
+        "ΣAE": 1599.71,
+        "MAE": 48.48,
+        "MAPE": 2.36,
+        "dir": "21/33",
+        "dirPct": 63.64,
+        "winsVsRW": 19,
+        "worst": {
+          "m": "2024-04",
+          "err": 134.3215892821463
+        }
+      }
+    },
+    "EX2025": {
+      "RW_STAK": {
+        "N": 12,
+        "ΣAE": 1745.69,
+        "MAE": 145.47,
+        "MAPE": 4.13,
+        "dir": "0/12",
+        "dirPct": 0,
+        "winsVsRW": 0,
+        "worst": {
+          "m": "2025-10",
+          "err": 400.2436363636357
+        }
+      },
+      "MOM_GOLD_25": {
+        "N": 12,
+        "ΣAE": 1563.96,
+        "MAE": 130.33,
+        "MAPE": 3.67,
+        "dir": "9/12",
+        "dirPct": 75,
+        "winsVsRW": 8,
+        "worst": {
+          "m": "2025-10",
+          "err": 321.17138158377156
+        }
+      },
+      "MOM_GOLD_50": {
+        "N": 12,
+        "ΣAE": 1514.57,
+        "MAE": 126.21,
+        "MAPE": 3.52,
+        "dir": "9/12",
+        "dirPct": 75,
+        "winsVsRW": 8,
+        "worst": {
+          "m": "2025-09",
+          "err": 301.5880326516599
+        }
+      },
+      "MOM_METALS_25": {
+        "N": 12,
+        "ΣAE": 1816.36,
+        "MAE": 151.36,
+        "MAPE": 4.29,
+        "dir": "9/12",
+        "dirPct": 75,
+        "winsVsRW": 7,
+        "worst": {
+          "m": "2025-10",
+          "err": 329.62610661986946
+        }
+      },
+      "GPR_GOLD_VW_25": {
+        "N": 12,
+        "ΣAE": 1418.79,
+        "MAE": 118.23,
+        "MAPE": 3.37,
+        "dir": "10/12",
+        "dirPct": 83.33,
+        "winsVsRW": 10,
+        "worst": {
+          "m": "2025-10",
+          "err": 315.9002269664311
+        }
+      }
+    },
+    "EX2026": {
+      "RW_STAK": {
+        "N": 7,
+        "ΣAE": 1589.71,
+        "MAE": 227.1,
+        "MAPE": 4.96,
+        "dir": "0/7",
+        "dirPct": 0,
+        "winsVsRW": 0,
+        "worst": {
+          "m": "2026-01",
+          "err": 453.03095238095193
+        }
+      },
+      "MOM_GOLD_25": {
+        "N": 7,
+        "ΣAE": 1355.61,
+        "MAE": 193.66,
+        "MAPE": 4.21,
+        "dir": "6/7",
+        "dirPct": 85.71,
+        "winsVsRW": 6,
+        "worst": {
+          "m": "2026-01",
+          "err": 397.44121287993767
+        }
+      },
+      "MOM_GOLD_50": {
+        "N": 7,
+        "ΣAE": 1204.83,
+        "MAE": 172.12,
+        "MAPE": 3.73,
+        "dir": "6/7",
+        "dirPct": 85.71,
+        "winsVsRW": 5,
+        "worst": {
+          "m": "2026-01",
+          "err": 341.1328125923983
+        }
+      },
+      "MOM_METALS_25": {
+        "N": 7,
+        "ΣAE": 972.19,
+        "MAE": 138.88,
+        "MAPE": 3.08,
+        "dir": "6/7",
+        "dirPct": 85.71,
+        "winsVsRW": 5,
+        "worst": {
+          "m": "2026-06",
+          "err": 343.79307278052875
+        }
+      },
+      "GPR_GOLD_VW_25": {
+        "N": 7,
+        "ΣAE": 1394.45,
+        "MAE": 199.21,
+        "MAPE": 4.32,
+        "dir": "6/7",
+        "dirPct": 85.71,
+        "winsVsRW": 5,
+        "worst": {
+          "m": "2026-01",
+          "err": 443.62295313507457
+        }
+      }
+    }
+  },
+  "governance": {
+    "monthSourceN": 52,
+    "first": "2022-04",
+    "last": "2026-07",
+    "stakDailyAvailableThrough": "2026-07",
+    "coreGoldWBAvailableThrough": "2026-07",
+    "worldBankOriginMonthAsOfNotProven": true,
+    "stakFirstPrintOriginAsOfNotProven": true,
+    "ChHHOOriginalDEVLevelBenchmark": "DEV ΣAE 1413.03 over33, different source/reference level contract; no parity established"
+  }
+}
