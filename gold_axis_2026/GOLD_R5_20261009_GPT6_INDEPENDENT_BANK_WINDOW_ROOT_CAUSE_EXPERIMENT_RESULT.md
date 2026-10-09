@@ -73,3 +73,14 @@ When old causal macro event calendar was tested for PRAMV overnight 17→next09,
 - Count inequalities and bin bounds frozen at <10bp,10–25bp,25–50bp,>=50bp before seeing outcomes. Any flip includes changed sign for start-only or end-only or both. BA is `(TPR_DOWN+TPR_UP)/2`, raw accuracy is correct / N.
 - Existing original frozen B4 and DIR4 formula from `GOLD_MULTIDISCIPLINARY_THREE_MECHANISM_PREREG_20261009.md`, with no model recalibration or 2026 fitting.
 - No user bank execution or transaction profits were run. All y labels after preissue origin are *evaluation only*. Neither RD-Agent nor DeepSeek scored this dataset. Treat rates and covered dates as descriptive, no false significance.
+
+## 4. Additional no-hindsight **outcome-magnitude conditional falsification** (diagnostic only)
+The frozen original DIR4 DAY classifier was ALSO evaluated on the original-source matched dates whose **realised future 09→17 magnitude is >=50bp**. This is an **oracle stratification not available at 08:45**, never a real signal gate.
+| Year | Large actual DAY move >=50bp N | Correct DIR4 signs | DIR4 accuracy on retrospectively large outcomes |
+|---|---:|---:|---:|
+|2023|66|31|46.97%|
+|2024|81|45|55.56%|
+|2025 inspected|102|62|60.78%|
+|2026 inspected native|83|49|**59.04%**|
+
+Crucial inference: even if all near-zero, clock-sensitive future moves could miraculously be excluded **with clairvoyance**, the 2026 frozen DIR4 rule would still classify large real moves only **49/83=59.04%** correctly. Therefore **label/clock instability alone cannot plausibly explain why no robust >70% all-date direction head emerged**; substantive independent pre-origin directional information and conditional reliability are missing. No independent significance claim.
