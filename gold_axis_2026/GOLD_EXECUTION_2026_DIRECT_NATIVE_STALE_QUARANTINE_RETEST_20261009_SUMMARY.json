@@ -1,0 +1,81 @@
+{
+  "status": "PRE_REGISTERED_REAL_2026_NATIVE_STALE_4BAR_QUARANTINE_PAIRED_RETEST_COMPLETE",
+  "stale_fourbar_groups": 104,
+  "stale_native_2026_M15_removed": 416,
+  "native_2026_M15_old_n": 14208,
+  "native_2026_M15_clean_n": 13792,
+  "stale_slot_groups_by_local_hour": {
+    "0": 96,
+    "1": 8
+  },
+  "source_clean_target_gate": {
+    "raw_2026_issue_candidates": 148,
+    "raw_2026_day_approved": 148,
+    "raw_2026_regular_overnight_approved": 103,
+    "first_eligible": "2026-01-02",
+    "last_eligible": "2026-10-07",
+    "qc_day_overnight_by_month": {
+      "2026-01": {
+        "issue_dates": 11,
+        "complete_day": 11,
+        "complete_overnight": 4
+      },
+      "2026-02": {
+        "issue_dates": 6,
+        "complete_day": 6,
+        "complete_overnight": 3
+      },
+      "2026-03": {
+        "issue_dates": 7,
+        "complete_day": 7,
+        "complete_overnight": 3
+      },
+      "2026-04": {
+        "issue_dates": 22,
+        "complete_day": 22,
+        "complete_overnight": 18
+      },
+      "2026-05": {
+        "issue_dates": 21,
+        "complete_day": 21,
+        "complete_overnight": 16
+      },
+      "2026-06": {
+        "issue_dates": 22,
+        "complete_day": 22,
+        "complete_overnight": 18
+      },
+      "2026-07": {
+        "issue_dates": 18,
+        "complete_day": 18,
+        "complete_overnight": 12
+      },
+      "2026-08": {
+        "issue_dates": 21,
+        "complete_day": 21,
+        "complete_overnight": 17
+      },
+      "2026-09": {
+        "issue_dates": 15,
+        "complete_day": 15,
+        "complete_overnight": 9
+      },
+      "2026-10": {
+        "issue_dates": 5,
+        "complete_day": 5,
+        "complete_overnight": 3
+      }
+    }
+  },
+  "barrier": {
+    "paired_firstpassage_n": 102,
+    "fixed_barrier_first_event_changed_n": 0,
+    "old_median_quote_bar_n": 64.0,
+    "clean_median_quote_bar_n": 60.0
+  },
+  "date_population_held_exact_when_matched": true,
+  "no_retraining_on_2026_outcomes": true,
+  "historical_2020_25_price_unchanged": true,
+  "bar_00_01_zero_quote_stale_suspect_not_proven_native_tick_source": true,
+  "elapsed_s": 39
+}
