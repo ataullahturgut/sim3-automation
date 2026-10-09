@@ -1,0 +1,47 @@
+name: Gold R13B DeepSeek V4 Pro Causal Repair
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - .github/workflows/gold-r13b-deepseek-v4-pro-causal-repair-20261010.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gold-r13b-deepseek-pro-once
+  cancel-in-progress: false
+jobs:
+  causal-repair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    env:
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m py_compile gold_axis_2026/tools/gold_r13b_deepseek_v4_pro_causal_reevaluation_20261010.py
+          python gold_axis_2026/tools/gold_r13b_deepseek_v4_pro_causal_reevaluation_20261010.py
+      - name: Commit actual expert reviewer receipt and critical correction
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for f in gold_axis_2026/GOLD_R13B_DEEPSEEK_V4_PRO_CAUSAL_REPAIR_20261010_{RESULT.json,REVIEW.md,FAILURE_QC.json}; do
+            if test -f "$f"; then git add "$f"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record genuine DeepSeek V4 Pro review with future-leak correction'
+            for i in 1 2 3 4; do
+              git pull --rebase origin gold-execution-channel-audit-20261006
+              if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+              sleep 3
+            done
+            exit 1
+          fi
