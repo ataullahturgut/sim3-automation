@@ -1,0 +1,13 @@
+{
+  "status": "ACTUAL_EXANTE_21NIGHT_RMS_VOL_SCALED_COMPETING_PASSAGE_AUDIT",
+  "first_barrier_definition": "observed bid close crossing log+/- 1x previous21 regular overnight RMS",
+  "fixed_comparator": "exact same dates BID 15m-close +/-0.5% original barrier",
+  "only_previous_matured_overnights": true,
+  "prior_history_min": 21,
+  "max_lag21_span_days": 65,
+  "2026_stress_inspected": true,
+  "no_intrabar_touch_or_bank_execution": true,
+  "not_signed_direction_model_accuracy": true,
+  "training_2026_futures_NOT_USED": true,
+  "elapsed_sec": 17
+}
