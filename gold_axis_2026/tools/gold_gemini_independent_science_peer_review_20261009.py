@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import urllib.error
 import urllib.request
+import time
 
 ROOT = Path(__file__).resolve().parents[1]
 BRIEF = ROOT / "GOLD_GEMINI_EXTERNAL_SAFE_RESEARCH_BRIEF_20261009.md"
@@ -49,19 +50,27 @@ def _request(path: str, key: str, payload: dict | None = None) -> dict:
         },
         method="GET" if data is None else "POST",
     )
-    try:
-        with urllib.request.urlopen(req, timeout=80) as resp:
-            if resp.status != 200:
-                raise RuntimeError("GEMINI_HTTP_NON200")
-            obj = json.loads(resp.read(600_000).decode("utf-8"))
-    except urllib.error.HTTPError as exc:
-        # The server response body may contain request information. Never print it.
-        raise RuntimeError(f"GEMINI_HTTP_STATUS_{exc.code}") from None
-    except urllib.error.URLError:
-        raise RuntimeError("GEMINI_NETWORK_OR_DNS_UNAVAILABLE") from None
-    if not isinstance(obj, dict):
-        raise RuntimeError("GEMINI_RESPONSE_NOT_JSON_OBJECT")
-    return obj
+    # Bounded retry ONLY on Google transient availability errors. Never retry
+    # quota, billing, permissions, invalid input, or safety rejections.
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=80) as resp:
+                if resp.status != 200:
+                    raise RuntimeError("GEMINI_HTTP_NON200")
+                obj = json.loads(resp.read(600_000).decode("utf-8"))
+            if not isinstance(obj, dict):
+                raise RuntimeError("GEMINI_RESPONSE_NOT_JSON_OBJECT")
+            return obj
+        except urllib.error.HTTPError as exc:
+            # The server response body may contain request information. Never print it.
+            if exc.code in (502, 503, 504) and attempt < 2:
+                print("GEMINI_TRANSIENT_PROVIDER_ERROR_RETRY:", exc.code, attempt + 1)
+                time.sleep(2 if attempt == 0 else 5)
+                continue
+            raise RuntimeError(f"GEMINI_HTTP_STATUS_{exc.code}") from None
+        except urllib.error.URLError:
+            raise RuntimeError("GEMINI_NETWORK_OR_DNS_UNAVAILABLE") from None
+    raise RuntimeError("GEMINI_RETRY_LIMIT_EXCEEDED")
 
 def _choose_model(key: str) -> str:
     result = _request("/models?pageSize=500", key)
