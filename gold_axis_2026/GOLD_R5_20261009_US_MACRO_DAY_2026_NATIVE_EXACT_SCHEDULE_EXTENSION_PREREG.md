@@ -1,0 +1,8 @@
+# R5B 2026 native source-extension: official BLS announcement days frozen before outcome stratification
+October 9 2026; user previously saw old 2023–25 event effects, so this is NOT a pristine independent hypothesis. Extends identical source-gated event-day diagnostic to `gold_research_dukascopy_2026_direct_m1_m15_bidask_v2`, all 17 complete pre08:45 15min intervals, and original 09→17 canonical BID+ASK midpoint. Required exact 09 and17 target anchors, issue origin <=08:45. No tune or model fitting.
+
+The CPI or NFP **official BLS published 2026 schedule** is confirmed from https://www.bls.gov/schedule/2026/home.htm (consulted 2026-10-09); local release 08:30 ET=15:30TR summer /16:30TR winter, inside DAY. Historical dates so far (Jan-Oct09):
+NFP: 2026-01-09;2026-02-11;2026-03-06;2026-04-03;2026-05-08;2026-06-05;2026-07-02;2026-08-07;2026-09-04;2026-10-02.
+CPI: 2026-01-13;2026-02-13;2026-03-11;2026-04-10;2026-05-12;2026-06-10;2026-07-14;2026-08-12;2026-09-11. Exclude future Oct14 CPI; no resulting dates until this issue.
+The schedule webpage has subsequent edits, so this is observational release-day classification, NOT proof every release time was preannounced as-of 08:45 for a then-live trade. Source native starts 2026-03-09 so 2026 Jan-Feb and Mar06 not expected to be in complete panel: MUST report all absent events, not create zero-release marker.
+Report 2026 source-complete DAY N, events and no events, exact-date unchanged B4 and DIR4 accuracy and BA/DOWN recall, and correct vs incorrect directional count. Do not claim high-N 2026 event result due small event subset. No 2026 event-based signed model promotion or hard filter; past looked-up 2023–25 post-selection and original DIR4 2026 already inspected.
