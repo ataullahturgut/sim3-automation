@@ -1,0 +1,23 @@
+{
+  "status": "GEMINI_TWO_ROUND_INDEPENDENT_RESEARCH_COMPLETED",
+  "model": "gemini-2.5-flash",
+  "run_date_utc": "2026-10-09T11:13:45.304546+00:00",
+  "external_safe_brief_path": "GOLD_GEMINI_EXTERNAL_SAFE_RESEARCH_BRIEF_20261009.md",
+  "external_safe_brief_sha256": "bd889cfa8f7cbd1494bd22dd55ad784ec939f223a885fc7464a0761c53dad98b",
+  "two_total_generate_calls": 2,
+  "round1_tokens": {
+    "promptTokenCount": 2118,
+    "candidatesTokenCount": 123,
+    "totalTokenCount": 5214
+  },
+  "round2_tokens": {
+    "promptTokenCount": 2418,
+    "candidatesTokenCount": 123,
+    "totalTokenCount": 5514
+  },
+  "no_private_quotes_source_code_or_credentials_transmitted": true,
+  "no_model_code_executed": true,
+  "no_forecasting_accuracy_claimed": true,
+  "no_automated_trade_or_promotion": true,
+  "review_is_unverified_generated_ideas": true
+}
