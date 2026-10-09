@@ -76,8 +76,11 @@ def compare_barrier(q0,q1,t0,t1):
     n=t1[t1.year==2026].set_index("date")
     data=[]
     for date in o.index.intersection(n.index):
-        a=passage.per_night(q0full,o.loc[date])
-        b=passage.per_night(q1full,n.loc[date])
+        from types import SimpleNamespace
+        orig=SimpleNamespace(**dict(o.loc[date].to_dict(),date=date))
+        clean=SimpleNamespace(**dict(n.loc[date].to_dict(),date=date))
+        a=passage.per_night(q0full,orig)
+        b=passage.per_night(q1full,clean)
         if a is None or b is None:continue
         if not a.get("accepted") or not b.get("accepted"):continue
         data.append({"date":date.strftime("%Y-%m-%d"),
