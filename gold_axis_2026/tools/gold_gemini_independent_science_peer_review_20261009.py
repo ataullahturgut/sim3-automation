@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BRIEF = ROOT / "GOLD_GEMINI_EXTERNAL_SAFE_RESEARCH_BRIEF_20261009.md"
 STEM = ROOT / "GOLD_GEMINI_INDEPENDENT_RESEARCH_20261009"
 ENDPOINT = "https://generativelanguage.googleapis.com/v1beta"
-APPROVED_MODELS = ("gemini-2.5-flash", "gemini-3-flash-preview", "gemini-3-flash")
+APPROVED_MODELS = ("gemini-3.8-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-3-flash-preview", "gemini-3-flash", "gemini-2.5-flash")
 MAX_REQUESTS = 2
 MAX_BRIEF_BYTES = 18000
 SOURCE_AUTHORITY = "GOLD_EXECUTION_2026_ACADEMIC_ROOT_CAUSE_AND_INNOVATION_AUTHORITY_20261009.md"
@@ -101,7 +101,9 @@ def _generate(key: str, model: str, messages: list[dict], max_out: int = 4400) -
                 # entire earlier 3100-token cap (123 visible output tokens).
                 # Official Gemini docs support finite fixed thinking budgets.
                 **({"thinkingConfig": {"thinkingBudget": 512}}
-                   if model == "gemini-2.5-flash" else {}),
+                   if model == "gemini-2.5-flash" else
+                   {"thinkingConfig": {"thinkingLevel": "low"}}
+                   if model.startswith("gemini-3") else {}),
             },
         },
     )
