@@ -1,0 +1,7 @@
+{
+  "status": "HAR_RISK_NOT_SCORED",
+  "error_type": "RuntimeError",
+  "message": "HAR_SOURCE_COHORT_EMPTY_OR_DUPLICATE",
+  "function": "one_source",
+  "line": 47
+}
