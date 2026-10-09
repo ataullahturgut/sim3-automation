@@ -1,0 +1,52 @@
+name: Gold DeepSeek Stage2 Independent Signed Mechanism Peer Review
+on:
+  push:
+    branches:
+      - gold-execution-channel-audit-20261006
+    paths:
+      - .github/workflows/gold-deepseek-stage2-signed-mechanism-20261009.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gold-deepseek-stage2-safe-science
+  cancel-in-progress: false
+jobs:
+  independent-signed-information-referee:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Two bounded Flash critiques on vetted aggregate-only hypothesis
+        run: |
+          set -euo pipefail
+          python -m py_compile gold_axis_2026/tools/gold_deepseek_stage2_signed_mechanism_review_20261009.py
+          python gold_axis_2026/tools/gold_deepseek_stage2_signed_mechanism_review_20261009.py --mode research
+      - name: Record only limited provider receipt and safe external opinion
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for f in gold_axis_2026/GOLD_DEEPSEEK_STAGE2_SIGNED_MECHANISM_RESEARCH_20261009_{REVIEW.md,RESULT.json,FAILURE_QC.json}; do
+            if test -f "$f"; then git add "$f"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record stage 2 independently hostile signed-information review, without claiming model scores'
+            for i in 1 2 3; do
+              git pull --rebase origin gold-execution-channel-audit-20261006
+              if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+              sleep 3
+            done
+            exit 1
+          fi
