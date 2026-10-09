@@ -83,3 +83,14 @@ Sobti et al., International Review of Financial Analysis (2021), https://www.sci
 Awartani et al., International Review of Financial Analysis (2024), https://www.sciencedirect.com/science/article/pii/S1057521924004186 : intraday policy-news responses.
 Smales & Yang (2015), https://research-repository.uwa.edu.au/en/publications/the-importance-of-belief-dispersion-in-the-response-of-gold-futur/ : most reaction can be rapid; cannot leak post-release signs into issue.
 Original project primary manifest and `GOLD_H3_H5_EXECUTION_CLOCK_HORIZON_TRANSFER_EXPLORATORY_RESULT_20261010.md` remain historical provenance; this R13 test has stricter asof features and different outcomes.
+
+## 9. R13C additional: SAME rigorous 08:45TR-issued D1 DAY09→17 own-label control ACTUALLY scored
+Additional read-only Neon SQL reassembled exact 16 preissue 04:45–08:30 M15 features, quote BID/ASK DAY label sign agreement and same previous-day GVZ. This section measures D1 against ITS OWN DAY label (not proxy D1 forecast judged against H3). Original same k41 CBR PATH and .30 GVZ/RV REGIME formulas with mature frozen pre-year training 2020–22/23/24/24. Source qualified DAY 2023 n257,2024 n259,2025 n257,2026 n147 (native through Oct07).
+
+| Actual DAY 09→17 as of08:45 | 2023 | 2024 | 2025 | 2026 |
+| --- | ---: | ---: | ---: | ---: |
+| DAY CBR PATH BA | 46.46 | 47.45 | 46.35 | 53.62 |
+| DAY CBR RV/GVZ REGIME BA | 47.32 | 54.21 | 50.57 | 53.52 |
+| DAY always UP BA | 50.00 | 50.00 | 50.00 | 50.00 |
+
+Raw DAY CBR PATH 2026 81/147=55.10% ACC, BA53.62, DOWN recall33.82; same-year REGIME also81/147 ACC but BA53.52, DOWN32.35. 2025 CBR PATH only124/257 ACC48.25 BA46.35, REGIME136/257 ACC52.92 BA50.57, despite 2025 always-UP raw146/257=56.81 BA50. **D1 standalone is NOT reliable and cannot anchor H3 combination**. The 09 D1 forecasts previously reported against H3 target (Section3 `D1`) are conditional horizon-transfer diagnostics; their own-label score here corrects ambiguity. No 2025/26 posthoc data used in fit.
