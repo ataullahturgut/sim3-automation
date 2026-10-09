@@ -1,0 +1,6 @@
+{
+  "status": "2026_NATIVE_SPOT_MIDNIGHT_BID_BAR_SYNTHETIC_SOURCE_HYPOTHESIS_AUDIT_EXECUTED",
+  "measure": "bar open=close and successive repeated prices, compare vendor/year around local 00 and 01",
+  "not_market_close_proof": "CME GC futures are distinct venue from Dukascopy XAU spot; price staleness requires vendor quote provenance",
+  "no_labels_and_no_2026_models_fitted": true
+}
