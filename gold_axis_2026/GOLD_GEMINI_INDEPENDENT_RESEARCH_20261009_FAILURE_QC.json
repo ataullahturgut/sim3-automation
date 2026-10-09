@@ -1,0 +1,6 @@
+{
+  "status": "GEMINI_CONNECTOR_FAIL_CLOSED",
+  "safe_reason": "GEMINI_HTTP_STATUS_503",
+  "no_claim_of_success": true,
+  "no_secret_values_written": true
+}
