@@ -1,0 +1,55 @@
+name: Gold Exact Historical 74.40pct CIG-D1 Original 125 Signals Rescore Turkey 09-17 and 17-09
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - gold_axis_2026/tools/gold_execution_2026_original_744_cig_exact125_two_clocks_20261009.py
+      - .github/workflows/gold-execution-2026-old74-cig125-two-true-clock-rescore.yml
+permissions:
+  contents: write
+concurrency:
+  group: gold-execution-original-74p4-cig125-exact-two-clocks
+  cancel-in-progress: false
+jobs:
+  exact-old-CIG:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.32,<3' 'databento>=0.62' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'statsmodels>=0.14,<1' 'psycopg[binary]>=3.2,<4'
+      - name: Match exact 125 legacy original unmodified votes to three 2026 quote sources on two actual Turkey clocks
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_2026_original_744_cig_exact125_two_clocks_20261009.py
+          python gold_axis_2026/tools/gold_execution_2026_original_744_cig_exact125_two_clocks_20261009.py
+      - name: Keep original model per-date clock outcomes access controlled
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: exact-canonical-old74-cig125-2026-both-window-private-dated
+          path: gold_axis_2026/GOLD_EXECUTION_2026_CANONICAL_CIG_D1_74P4_SAME125_TWO_CLOCKS_20261009_PRIVATE_SAME125_DATED.csv
+          if-no-files-found: warn
+      - name: Publish accurate aggregates or exact run failure only
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for f in gold_axis_2026/GOLD_EXECUTION_2026_CANONICAL_CIG_D1_74P4_SAME125_TWO_CLOCKS_20261009_{SUMMARY.json,YEAR_METRICS.csv,MONTH_METRICS.csv,FAILURE_QC.json}; do if test -f "$f"; then git add "$f"; fi; done
+          git diff --cached --quiet || git commit -m 'Rescore precise original 74.40pct CIG125 immutable SAGE V5 RIFT VEGA signal on both Istanbul horizons and sources'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 3
+          done
+          exit 1
