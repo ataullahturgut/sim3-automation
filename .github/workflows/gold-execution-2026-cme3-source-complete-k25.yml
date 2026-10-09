@@ -1,0 +1,55 @@
+name: Gold 2026 CME NQ ZN CL Causally Lagged RFR K25 Source-Complete Trial
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - gold_axis_2026/tools/gold_execution_2026_cme3_source_complete_k25_20261009.py
+      - .github/workflows/gold-execution-2026-cme3-source-complete-k25.yml
+permissions:
+  contents: write
+concurrency:
+  group: gold-2026-independent-3-root-NQ-ZN-CL-model-source-gate
+  cancel-in-progress: false
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.32,<3' 'databento>=0.62' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'statsmodels>=0.14,<1' 'psycopg[binary]>=3.2,<4'
+      - name: Rerun causal fixed K25 only with complete-source independent futures NQ ZN CL six 1h and 3h regressors
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_2026_cme3_source_complete_k25_20261009.py
+          python gold_axis_2026/tools/gold_execution_2026_cme3_source_complete_k25_20261009.py
+      - name: Keep individually dated forecast proof private
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cme3-independent-NQ-ZN-CL-RFR-K25-dated-private
+          path: gold_axis_2026/GOLD_EXECUTION_2026_CME3_NQ_ZN_CL_RFR_K25_ANALOGUE_20261009_PRIVATE_DATED.csv
+          if-no-files-found: warn
+      - name: Save real source-qualified aggregate or controlled negative QC
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for f in gold_axis_2026/GOLD_EXECUTION_2026_CME3_NQ_ZN_CL_RFR_K25_ANALOGUE_20261009_{SUMMARY.json,METRICS.csv,FAILURE_QC.json}; do if test -f "$f"; then git add "$f"; fi; done
+          git diff --cached --quiet || git commit -m 'Record actual new independent CME NQ ZN CL source-complete RFR case analogue performance or fail-closed model QC'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 3
+          done
+          exit 1
