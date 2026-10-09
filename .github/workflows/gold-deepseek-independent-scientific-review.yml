@@ -1,0 +1,62 @@
+name: Gold DeepSeek Independent Two-Round Scientific Peer Review
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "smoke = model authorization only; research = 2 bounded text calls"
+        required: true
+        default: research
+        type: choice
+        options:
+          - smoke
+          - research
+  push:
+    branches:
+      - gold-execution-channel-audit-20261006
+    paths:
+      - .github/workflows/gold-deepseek-independent-scientific-review.yml
+permissions:
+  contents: write
+concurrency:
+  group: gold-deepseek-manual-safe-peer-research
+  cancel-in-progress: false
+jobs:
+  independent-scientist:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      RESEARCH_MODE: ${{ inputs.mode || 'research' }}
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run limited source-safe DeepSeek API scientific debate
+        run: |
+          set -euo pipefail
+          python -m py_compile gold_axis_2026/tools/gold_deepseek_independent_scientific_peer_review_20261009.py
+          python gold_axis_2026/tools/gold_deepseek_independent_scientific_peer_review_20261009.py --mode "$RESEARCH_MODE"
+      - name: Commit only approved external peer research and source-safe model/token receipts
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for f in gold_axis_2026/GOLD_DEEPSEEK_INDEPENDENT_RESEARCH_20261009_{REVIEW.md,RESULT.json,CONNECTION.json,FAILURE_QC.json}; do
+            if test -f "$f"; then git add "$f"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record source-safe DeepSeek two-round independent scientific review or fail-closed API diagnostic'
+            for i in 1 2 3 4 5; do
+              git pull --rebase origin gold-execution-channel-audit-20261006
+              if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+              sleep 3
+            done
+            exit 1
+          fi
