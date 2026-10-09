@@ -1,0 +1,54 @@
+name: Gold 2026 HAR-X Actual Nightly Volatility Risk vs Long and Short Baselines
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - gold_axis_2026/tools/gold_execution_2026_harx_overnight_RV_20261009.py
+      - .github/workflows/gold-execution-2026-harx-original-overnight-rv.yml
+permissions:
+  contents: write
+concurrency:
+  group: gold-actual-original-har-x-overnight-rv-2026
+  cancel-in-progress: false
+jobs:
+  causal-HAR-X:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONUNBUFFERED: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.32,<3' 'scikit-learn>=1.5,<2' 'scipy>=1.13,<2' 'statsmodels>=0.14,<1' 'psycopg[binary]>=3.2,<4'
+      - name: Research overnight M15 source-complete HAR-X conditional risk prediction, not direction labels
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_execution_2026_harx_overnight_RV_20261009.py
+          python gold_axis_2026/tools/gold_execution_2026_harx_overnight_RV_20261009.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: harx-2026-private-dated-overnight-risk-forecasts
+          path: gold_axis_2026/GOLD_EXECUTION_2026_HARX_17TR_OVERNIGHT_RISK_20261009_PRIVATE_DATED.csv
+          if-no-files-found: warn
+      - name: Commit rigorous year metrics and month-block paired uncertainty or scientific block
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for f in gold_axis_2026/GOLD_EXECUTION_2026_HARX_17TR_OVERNIGHT_RISK_20261009_{SUMMARY.json,YEAR_METRICS.csv,MONTHBLOCK.csv,FAILURE_QC.json}; do if test -f "$f"; then git add "$f"; fi; done
+          git diff --cached --quiet || git commit -m 'Validate actual original HAR-X nightly 17TR volatility magnitude risk and prior 1/5/21 baselines on 2023-26'
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin gold-execution-channel-audit-20261006
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 3
+          done
+          exit 1
