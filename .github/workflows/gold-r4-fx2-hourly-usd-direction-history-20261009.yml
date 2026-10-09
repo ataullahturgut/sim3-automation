@@ -1,0 +1,53 @@
+name: Gold R4 FX Two Pair H1 Historical Sign Study
+on:
+  push:
+    branches:
+      - gold-execution-channel-audit-20261006
+    paths:
+      - .github/workflows/gold-r4-fx2-hourly-usd-direction-history-20261009.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gold-r4-twelvedata-fx12-one-study
+  cancel-in-progress: false
+jobs:
+  bounded-forex-historical-ablation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    env:
+      TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Evaluate two preissue FX impulse signs against exact-date frozen XAU forecasts
+        run: |
+          set -euo pipefail
+          python -m py_compile gold_axis_2026/tools/gold_r4_twelve_fx2_history_retro_inspection_20261009.py
+          python gold_axis_2026/tools/gold_r4_twelve_fx2_history_retro_inspection_20261009.py
+      - name: Save only metadata and aggregated comparison
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          f=gold_axis_2026/GOLD_R4_FX2_EURJPY_HISTORY_2023_2025_RETRO_RESULTS_20261009.json
+          if test -f "$f"; then
+            git add "$f"
+            if ! git diff --cached --quiet; then
+              git commit -m 'Record no-raw-quote FX direction independent source pilot and paired metrics'
+              for i in 1 2 3; do
+                git pull --rebase origin gold-execution-channel-audit-20261006
+                if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+                sleep 2
+              done
+              exit 1
+            fi
+          fi
