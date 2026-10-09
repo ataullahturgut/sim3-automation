@@ -1,6 +1,6 @@
-# Gemini independent peer review — external-safe 09TR/17TR XAU research
+# REJECTED / INCOMPLETE Gemini API output — NOT a scientific peer review
 
-This is **unverified Gemini generated research** and must not be treated as confirmed empirical results, literature, trading advice, or executable model designs. Human/assistant review is required.
+BOTH Gemini responses STOP MID-SENTENCE at exactly 123 visible output tokens; this is an **INVALID, REJECTED PRELIMINARY API EXCHANGE**, not a completed independent research assessment. Nothing in this file may be scored or promoted. See GOLD_GEMINI_RESEARCH_CONNECTOR_CURRENT_STATE_20261009.md.\n\nThis is **unverified Gemini generated research** and must not be treated as confirmed empirical results, literature, trading advice, or executable model designs. Human/assistant review is required.
 
 Model: gemini-2.5-flash
 
