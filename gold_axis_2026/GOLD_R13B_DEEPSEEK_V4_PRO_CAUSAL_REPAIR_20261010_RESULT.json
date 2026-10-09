@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "requested": "deepseek-v4-pro",
+  "returned": "deepseek-v4-pro",
+  "finish": "stop",
+  "chars": 3381,
+  "tokens": {
+    "prompt_tokens": 474,
+    "completion_tokens": 1152,
+    "total_tokens": 1626,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 474
+  },
+  "utc": "2026-10-09T21:59:16.988978+00:00",
+  "external_only_review_no_market_backtest": true
+}
