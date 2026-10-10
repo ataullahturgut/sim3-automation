@@ -1,0 +1,60 @@
+# R14 | DEEPSEEK V4 PRO × AU/AG/PT/PD DAILY × REAL PIT GPR × XAU H3 — ACTUALLY EXECUTED TEST
+**2026-10-10, Europe/Istanbul. Research authority: no successful H3 cross-year signed promotion; no fake model win.**
+
+## What was genuinely discussed and where are the records?
+DeepSeek API was **actually called twice**, both calls returned the requested `deepseek-v4-pro`, `finish=stop`, authentic `PASS` receipts:
+- `GOLD_R14_PRO_CROSSMETAL_GPR_REGIME_REVIEW_20261010_{RESULT.json,REVIEW.md}` — R14 first independent theory, 1291 prompt and1781 completion tokens. Crossmetal residual, GPR-dependent sign inversion, ridge and ablations.
+- `GOLD_R14B_DEEPSEEK_PRO_SOURCE_CORRECTION_20261010_{RESULT.json,REVIEW.md}` — R14B adversarial source correction, 378 prompt and1066 completion tokens. **We directly challenged unusable Ag/Pt/Pd 15min data**, source backfill vs historical firstprint and impossible initial2023 training length. The follow-up reviewer STILL contradicts itself (it bans 2023–26 historical metal rows yet requests contemporaneous Au5 in 2025–26, uses wrong GPR timestamp claim and bad H3 price-clock definition) and is NOT adopted as algorithm authority. DeepSeek generated hypotheses, did NOT run market calculations, did NOT see raw private quote rows.
+- R14 experimental version `GOLD_R14C_FOURMETAL_GPR_VINTAGE_H3_CAUSAL_MIXED_FREQ_PREREG_20261010.md` was written and COMMITTED **before Neon outcome query**. Our implemented low-parameter source-feasible adaptation is the mathematical test under that prereg, not the impossible quoted DeepSeek algorithm.
+- Literature that motivated versus warned of state-dependent spillovers: Dinh et al., Journal of Commodity Markets (2022), https://doi.org/10.1016/j.jcomm.2021.100242 ; Uddin et al., Resources Policy (2019), https://doi.org/10.1016/j.resourpol.2019.101509 ; Yilanci & Kilci, Resources Policy (2021), https://doi.org/10.1016/j.resourpol.2021.102039 , which documents instability/no unconditional GPR causality; Adeosun et al., Journal of Economic Studies (2023), https://doi.org/10.1108/JES-11-2021-0558 . Research papers motivate TESTING, never claim H3 success.
+
+## Actual primary-source SQL, time validity and data restrictions
+Actual read-only SELECT executed against private Neon Gold Control project: `observations` four daily research metal IDs (`XAU/XAG/XPT/XPD_STAKTRAKR_RESEARCH_DAILY_R1`), `GPR_OFFICIAL_GIT_PIT`, source-qualified Dukascopy-derived historical `gold_research_evduka_xau15m_bidask_candidate` through2025 and 2026 direct `gold_research_dukascopy_2026_direct_m1_m15_bidask_v2` requiring `m1_matched=15`. No DB rows modified. True 08:45TR decision uses M15 BID bar inputs with bar starts04:45 to08:30 inclusive, **16 completed bars ending08:45**. H3 entry **09:00TR BID/ASK quote open**, target three following MON–FRI days at09:00TR quote open. BOTH BID/ASK return sign agreement required, missing exact weekday target discarded. Official holiday-specific target date not shifted. Not bank executable cost/PnL. 2026 direct through Oct07 but daily four metals end JUL31, so original native R14 H3 score ends AUG06: **no 2026 August/September four-metal observations made up**.
+- Complete asof H3 issue XAU original rows1696; exact future+3 weekdays BIDASK-sign valid1654; four-metal common trading days1703 (2020–Jul2026), historic GPR vintage snapshots54 from Mar2022 through Aug2026. After joins and fully guarded lag, H3 sample `1069` valid origin rows, first2022-03-02 to last2026-08-06. Drop categories from1654: stale metal31, unavailable metal lookback7, anomalous metal recent last5days2, no GPR older than earliest genuine available vintage545. Separate exclude no future target41, BIDASK-sign conflict1.
+- **Crucial truth about asof**: 2010–2026-Jul historical StakTrakr daily metal observations were FIRST INGESTED AND BACKFILLED 2026-09-05, meaning a truly live 2023–25 daily fourmetal snapshot cannot be certified. Only RECONSTRUCTED historical lagging can be analyzed; **no ex-ante execution evidence**. Daily quotes at least TWO whole calendar days before origin and latest matching row max six days stale; cases with >20% single-day return in recent 5 returns are excluded as possible source multi-metal anomalies. This **cannot convert the 2026-09 firstprint into historical proof**. 2026 Aug/Sep precious metal live data absent.
+- Monthly GPR official **authentic PIT**: for each 05:45 UTC (08:45TR) issue choose latest `origin_month` publication `available_as_of <= issue`, use its last MONTHLY observation (NOT GPR final future-revised values), z=(last value−mean of prior36 in THAT exact frozen vintage)/sd36; clip[-3,3]. No interpolated daily GPR. Underlying raw GPR series repeated25,515 vintage rows (official history), 54 available 2022–26 monthly published snapshots. Source calendar GPR firstprints before Mar2022 unavailable hence excluded.
+- Source exact 09TR XAU H3 benchmark modeled on all pre-cutoff historic source-qualified XAU 3weekday target rows, not only fourmetal matched points; R14C metal candidates trained only on equally eligible daily metal+GPR dates. The price-only benchmark and candidates were then **scored on exactly the same annual future XAU labels**, avoiding mismatched denominator comparisons.
+
+## Fixed hypothesis/architecture, trained/selected legally
+The original monthly H1 successful eight feature Au/Ag/Pt/Pd × MR+GPR-VW concerns **monthly average price levels**, not H3 signed prices. New mechanism instead measures 5 common-day return of last available, conservative-lag daily Au/Ag/Pt/Pd; `Au5`, `Industrial5=mean(Ag5,Pt5,Pd5)`, latest GPR `z`, `interaction=(Au5−Industrial5)*GPRz`. 
+- `PATH` 41 nearest preissue 8 halfhour cumulative normalized 4h price-path CBR,5 UP-shrink historical prior, same original R12/R13 mathematical core. Never trained on score-year target labels.
+- `AU_ONLY`: ridge sign±1 y~Au5 with fixed L2 alpha30 standardized only on matured training years; `CROSS_BASE`~Au5+Industrial5+GPRz; `CROSS_GPR` adds exactly one fixed interaction term Au-minus-industrials × GPRz. Fixed ridge intercept unpenalized. `HYBRID`=0.5× PATH probability+0.5×CROSS_GPR regression probability; regression signed margin converted `clip(0.5+0.5×score, 0.01,0.99)`. `REGIME_FIXED_SIGN` theoretical safehaven control: high GPRz>1 follows Au−industrial return sign, otherwise the opposite (no tuning, not recommended). `ALWAYS_UP` baseline.
+- Historical test2023 train 2022Apr–Dec H3 matured189, price historical train2020–22 matured764. Test2023 eligible254.
+- Test2024 train 2022Apr–2023Dec matured443, price2020–23 matured1018. Test2024 eligible256.
+- OPENED retrospective2025+2026 trained identically frozen through2024Dec, monthly metal GPR train699, price model1274; test2025 eligible255 and 2026 eligible91. No 2025/26 data in coefficients, yet model design/hypotheses arose after many prior peeks. Overlapping H3 labels N are NOT independent.
+
+## EVIDENCE: annual 09TR H3 BALANCED DIRECTION ACCURACY (%)
+| Model | 2023 N254 | 2024 N256 | 2025 N255 | 2026 N91 (Jan–Aug) |
+|---|---:|---:|---:|---:|
+| PATH original price-only CBR | 50.96 | **50.45** | **53.89** | 48.76 |
+| Au daily prior-five-day ONLY | **54.44** | 44.13 | 48.36 | 52.32 |
+| Au + AgPtPd common + GPR (no interaction) | 52.80 | 40.41 | 48.36 | 52.61 |
+| **Au+AgPtPd+GPR divergence×regime** | 53.19 | **40.90** | 51.01 | 49.66 |
+| **50:50 original PATH + CROSS_GPR HYBRID** | 50.94 | 44.93 | 52.66 | 49.07 |
+| Fixed high/low-GPR divergence sign counterhypothesis | 45.57 | 54.42 | 52.68 | 43.09 |
+| ALWAYS UP control | 50.00 | 50.00 | 50.00 | 50.00 |
+
+**Detailed matched future counts (crossmetal new highest complexity vs original price PATH):**
+- 2023 `CROSS_GPR` 135/254 raw53.15%, BA53.19, DOWN recall47.66 / UP58.73 vs PATH129/254 BA50.96 DOWN28.91. Paired **65 rescued,59 broken, net+6**, exploratory.
+- 2024 `CROSS_GPR` **101/256=39.45% raw**, BA**40.90**, DOWN48.04/UP33.77 vs PATH136/256 BA50.45. **50 rescued,85 broken, NET−35**. This year-alone reversal **FALSIFIES direct promotion**.
+- 2025 `CROSS_GPR` 155/255 raw60.78%, BA51.01 with DOWN13.83 (vs PATH 53.89, DOWN27.66); paired34rescued/34broken net0. **Hybrid raw 161/255=63.14% exactly matches always-UP raw161/255; hybrid BA52.66 but DOWN only12.77**. High raw accuracy cannot imply skill.
+- 2026 `CROSS_GPR` 37/91 raw40.66% BA49.66, DOWN14.04, UP85.29; PATH38/91 raw41.76% BA48.76, DOWN21.05; paired14rescued/15broken net−1; AU_ONLY BA52.32 but DOWN10.53. Note 2026 imbalanced UP34/DOWN57, always-UP raw37.36% BA50. No strong two-sided 2026 success.
+- Across 2023–26, the 4metal/GPR expert revised original PATH decisions `+6 -35 +0 -1 = -30` net on source-specific annual cohorts. **CROSS_GPR and naive hybrid fail decisively**, including positive 2025 Brier improvement incapable of rescuing signed DOWN recall. Do not select 2023 alone.
+
+## Actual GPR regime breakdown, falsification
+Fixed high GPR `GPRz>1` (not selected from 2025/26 outcomes):
+| Cohort | HIGH GPR source N | PATH BA | CROSS_GPR BA |
+|---|---:|---:|---:|
+| 2023 | 39 | 47.28 | 37.09 |
+| 2024 | **3** | **NOT interpretable** | **NOT interpretable** |
+| 2025 | 64 | 57.65 | 46.18 |
+| 2026 | 42 | 52.16 | 45.19 |
+Thus explicit GPR × divergence interaction did NOT rescue the most relevant high-GPR shock cohort; it worsens 2023,2025,2026. Low GPR subgroup CROSS_GPR BA2023 56.63,2024 41.63,2025 48.99,2026 53.67. Not a transportable phenomenon; any retrospectively selected regime flip would be p-hacking. Note latest GPR is lagged monthly publication, so exogenous short shock may not be encoded even on true high-stress days.
+**Brier** crossmeta 2025 CROSS_BASE0.24362 vs interaction0.24219 (small 0.00143 improvement), but price baseline0.24617, all moving on imbalanced labels; 2024 interaction0.26426 vs PATH0.25351 (worse); 2026 interaction0.25850 vs PATH0.27047 (calibration improvement while hard DOWN recall weak). Do not confuse probabilistic Brier improvement with reliable signed trade advantage; this could motivate PROBABILITY CALIBRATION research, not categorical promotion.
+
+## Robustness and scientific status
+Pre-reg test included AU ablation, 4metal common, GPR main effect vs ×interaction, fixed hybrid, theoretical fixed sign countermechanism. **Requested additional month-shuffle/permutation and nonoverlap block confidence bounds NOT EXECUTED**; no valid p-value, do not invent. The upfront hypothesis was inspired by many previous opened results, not independently registered prospectively. Some source anomalous metal days omitted by fixed >20% QC threshold, bank spread costs unknown, gold 09 issues executed bidask provider only, no early historical source availability proof. The 13-variable monthly HMM source-asof FILTERED states were not obtained and no fabricated within-month regime classifications appear here. Original ChHHO optimizer and actual monthly CURRENT8 GPR weighted 8-values were NOT re-estimated on H3 in this R14 new mixed-frequency learner. Earlier R11 really did test original preprocessing for DAY/OVN and failed crossyear transfer.
+
+### Peer-reviewed conclusion
+**A real scientific NEGATIVE result:** fourmetal lagged daily returns plus genuinely PIT monthly GPR can produce materially different signs and a little 2023 / probability calibration gain, but adding them to current bank-time H3 model did NOT generate portable 2023–2026 balanced signed forecasts; in fact 2024 imploded BA40.90 and 2025/26 DOWN recall impaired. The literature allows state dependence but does NOT promise cross-horizon signed alpha. No promotion, no trade recommendation.
+**Most promising *remaining* causal scientific question** (NOT PROVEN): fourmetal factor extraction may only govern **market-stress state, forecast conditional variance and abstain policy**, not direction. If pursued, include source-verified lagged real interest rates/USD/futures as separating confounders, genuine origin-time filtered (NOT retrospective smoothed) 13D HMM state and ex-ante H3 magnitude risk, registered prospective 2027 before trading. Do not invent available Aug/Sep fourmetal data.
