@@ -1,0 +1,46 @@
+name: Gold R14B DeepSeek Pro Crossmetal Source Correction
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths: [.github/workflows/gold-r14b-deepseek-pro-source-correction-20261010.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gold-r14b-source-correction
+  cancel-in-progress: false
+jobs:
+  peer-cross-exam:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    env:
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: Authenticated one-call independent technical correction
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_r14b_deepseek_pro_source_correction_20261010.py
+          python gold_axis_2026/tools/gold_r14b_deepseek_pro_source_correction_20261010.py
+      - name: Commit actual review evidence
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for f in gold_axis_2026/GOLD_R14B_DEEPSEEK_PRO_SOURCE_CORRECTION_20261010_{RESULT.json,REVIEW.md,FAILURE_QC.json}; do
+            if test -f "$f"; then git add "$f"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git commit -m 'Capture authentic DeepSeek Pro response to unavailable 15m silver platinum palladium sources'
+            for i in 1 2 3 4; do
+              git pull --rebase origin gold-execution-channel-audit-20261006
+              if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+              sleep 3
+            done
+            exit 1
+          fi
