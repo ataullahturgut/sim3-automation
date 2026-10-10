@@ -1,0 +1,47 @@
+name: Gold R14 DeepSeek V4 Pro Cross Metal GPR Research
+on:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths: [.github/workflows/gold-r14-deepseek-v4-pro-fourmetal-gpr-20261010.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gold-r14-fourmetal-gpr-peer
+  cancel-in-progress: false
+jobs:
+  external-skeptic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    env:
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: One bounded real DeepSeek Pro V4 scientific review
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_r14_deepseek_v4_pro_fourmetal_gpr_regime_20261010.py
+          python gold_axis_2026/tools/gold_r14_deepseek_v4_pro_fourmetal_gpr_regime_20261010.py
+      - name: Preserve authentic opinion, usage receipt, fail-closed result
+        if: always()
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for f in gold_axis_2026/GOLD_R14_PRO_CROSSMETAL_GPR_REGIME_REVIEW_20261010_{RESULT.json,REVIEW.md,FAILURE_QC.json}; do
+            if test -f "$f"; then git add "$f"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record authentic DeepSeek Pro gold metal GPR regime review and provenance'
+            for i in 1 2 3 4; do
+              git pull --rebase origin gold-execution-channel-audit-20261006
+              if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+              sleep 3
+            done
+            exit 1
+          fi
