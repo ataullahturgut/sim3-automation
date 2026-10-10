@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "requested": "deepseek-v4-pro",
+  "returned": "deepseek-v4-pro",
+  "finish": "stop",
+  "chars": 4148,
+  "usage": {
+    "prompt_tokens": 1291,
+    "completion_tokens": 1781,
+    "total_tokens": 3072
+  },
+  "brief_sha256": "2b8606f5c14598edd382cb48fa065467ce20615ef22b8184a564eca7dcfda4c6",
+  "utc": "2026-10-10T11:04:04.626725+00:00",
+  "no_private_market_rows_or_secrets_shared": true,
+  "deepseek_has_not_executed_market_test": true
+}
