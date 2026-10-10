@@ -1,0 +1,23 @@
+# R23 — Executed strictly preissue relative-volatility regime experiment 2026-10-11, H3 downside ≥1.5%
+The prereg `GOLD_R23_CAUSAL_RELATIVE_VOL_SHIFT_AND_DOWNSIDE_RANKING_PRE_REG_20261011.md` was committed BEFORE any R23 Neon outcome SELECT. Genuine read-only EV2020–25 Dukascopy XAU BID/ASK M15 + 2026 direct M1matched15, last16 fully complete 04:45–08:30 M15, issue08:45 Europe/Istanbul, exact 09TR→three following Mon–Fri weekdays09TR sign-parity quoted BIDASK, prior 5 completed09→09 gold moves <=7calendar day gap, GVZ previous NY trading daily close (GVZ at least1 prior date, <=7days stale). 63 most recent PRE issue GVZ dated closes and 63 completed prior4h RV daily as rolling reference, with no future issue input. 1582 quality eligible 2020Apr2..2026Oct2, tests N2023 254 /2024 256 /2025 255 /2026 116; DOWN event >=1.5% 21/35/29/36. 2023 train699 until Jan2023,2024 train953 until Jan2024, both2025 and2026 coefficients frozen through 2024 (n1209). All fitted classifiers logistic L2alpha30 train-only scaled, coefficients fixed until opened2025/26. 2025/26 repeatedly inspected, not untouched holdout.
+**Important asof features**: prior log GVZ, current preissue log RV, `GVZ_Z63` as log previous NY GVZ relative to past63 prior NY dated closes, `RV_Z63` current preissue relative previous63 preissue RV bars, preceding five 09→09 directional log returns `Trend5` and largest decline `MinDown5`. Last interaction `GVZ_Z63 * max(0,-MinDown5)` specified before R23 outcome analysis.
+### Brier score actual annual (smaller better)
+| model | 2023 |2024|2025|2026|
+|---|---:|---:|---:|---:|
+| Existing RV+GVZ |**.077354**|.116241|.095959|.215909|
+| + prior gold trend/min |.079425|.116088|**.093860**|.215147|
+| + GVZ/RV online z63 |.077420|.116238|.096386|.214762|
+| + z63 +trend/min |.079543|.116090|.094364|.213641|
+| + z63×recent gold downside shock |.079546|**.115976**|.094593|**.208347**|
+The 2026 fifth model Brier gain .007562 over source-matched baseline was exploratory but both 2023 and2025 deteriorated relative to the best simple controls. Do not promote or select retrospectively 2026.
+### Distinct measurable market distribution shift — explain 2023 versus 2026 failure
+Observed origination-side **median prior GVZ CLOSE levels (derived exp(log median))**: 2023 log2.6783 ~GVZ14.56; 2024 log2.7881 ~16.25; 2025 log2.9102 ~18.36; 2026 log3.2820 ~26.63 (1.83x 2023). Median same preissue 4h realized RV in BID logreturn units: 2023 ln−6.3279→0.001785, 2024 -6.114→0.002211, 2025 -5.8146→0.002984, 2026 -5.3923→0.004552 (2.55× 2023). 3weekday deep-down <=−1.5% risk baseline changes 21/254=8.27% in2023 vs36/116=31.03% in2026 (3.75× prevalence); 2024 35/256=13.67%,2025 29/255=11.37%. The random-variable's unconditional prevalence AND preissue volatility feature distribution both shifted. Comparing a 2023 absolute risk score without calibrated state is intrinsically wrong.
+**Post-outcome attribution, never trading feature:** event-minus-none feature conditional difference (following H3 big DOWN minus no-big-DOWN) for `Trend5` preceding move:
+2023 **−0.00819** log (DOWN events follow more negative 5d trajectory);
+2024 +0.00114;
+2025 +0.00986;
+2026 **+0.01968** log (DOWN events follow more POSITIVE 5d trajectory).
+This is a ***numerically observed sign reversal in conditional prior-price trend vs future large downside***. 2023 consistent with downside continuation (negative short trend precedes losses), 2026 consistent with reversal from prior upswing (positive short trend precedes 3d downside). This is a candidate explanation, **NOT PROVEN WHY nor forward predicted** and cannot be used to infer signed H3 UP/DOWN hit rate.
+Likewise `MinDown5` event-minus-none 2023 -0.00156 versus 2026 +0.00358; and RV adverse event minus no-event difference 2023 -0.07627 log-RV versus2024 +.22263,2025 +.35474,2026 +.03432, all show regime-dependent relation. 2026 relative vol score z63 median GVZ -0.5931 despite ABSOLUTE GVZ extremely high (long persistent risk means locally ordinary), proving that high static GVZ and recent upward delta are DIFFERENT indicators.
+### Binding conclusion
+R23 did find a concrete explanation of why naive models can break between2023 and2026: base risk and both predictors' distribution change, and preceding5day movement relationship with future large downside **switches sign** between observed cohorts. But simple z63 logistic and 7-feature interaction are NOT portable Brier improvements on all4 years; no signed investment model or bank execution. Next test must prereg a source-safe regime-by-momentum-interaction, fit only past years, **never label a year with its FUTURE predominant class**. Only independent prospective performance can establish it as actionable.
