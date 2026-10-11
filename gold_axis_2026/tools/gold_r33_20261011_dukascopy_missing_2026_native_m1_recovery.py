@@ -55,6 +55,13 @@ def acquire(day):
             found=set(m.bar_start_utc)
             if pd.Timestamp(issue) not in found or any(x not in found for x in needed):
                 raise ValueError("MISSING_06_OR_PREISSUE_16")
+            # A vendor can publish 15 calendar-padded M1 candles despite a CLOSED market.
+            # E.g. 2026-01-01 has 92/96 completely flat M15 bars, only trading after 23Z.
+            pre=m[m.bar_start_utc.isin(needed)]
+            active=((pre.bid_high>pre.bid_low)|(pre.ask_high>pre.ask_low))
+            if len(pre)!=16 or int(active.sum())<4:
+                raise ValueError("INACTIVE_OR_PADDED_09TR_PREISSUE_SESSION")
+            record["active_preissue_m15"]=int(active.sum())
             record["native_bars"]=len(m)
             record["bid_sha256"]=bi.get("sha256_bi5")
             record["ask_sha256"]=ai.get("sha256_bi5")
