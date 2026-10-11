@@ -1,5 +1,7 @@
 # R34B — CIG-D1 74.40% origin-clock source forensics: MIXED source and target-window discovery
 
+**BINDING MONTH-BY-MONTH / WEEK-BY-WEEK FOLLOW-UP:** `GOLD_R35_20261011_CIG_D1_SOURCE_CLOCK_MONTH_AND_WEEK_FORENSIC_RESULT.md` directly verifies LBMA AM 10:30 GMT ≈ 13:30TR against first-party Dukascopy M1-derived M15 (26 matched dates, MAE USD3.43 versus PM USD21.35), source-provider transitions, UTC-date sqld averaging, 21 weekly Türkiye boundary scans, and MetalpriceAPI end-of-day release timing. R35 is the preferred clock detail; this R34B remains the earlier summary.
+
 **Date:** 2026-10-11. **AUTHORITY / NEW MATERIAL SOURCE FINDING** supplementing R34 24h-source comparison. **No model refit, no invented first-print, no net bank profit.** The user correctly demanded a historical **cross-source, Turkey-clock price match**, rather than arbitrarily re-score the originally daily forecast with unrelated market hours.
 
 ## Executive finding — there cannot be ONE historical Turkey clock for the frozen original 125
