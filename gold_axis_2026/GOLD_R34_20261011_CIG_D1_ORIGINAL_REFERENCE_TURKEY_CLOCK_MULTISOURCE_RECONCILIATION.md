@@ -1,5 +1,8 @@
 # R34 — CIG-D1 %74.40 old daily reference: Turkey clock & cross-vendor 24-hour-price reconciliation
 
+> **CRITICAL FOLLOW-UP SOURCE DISCOVERY (R34B, binding):** The original StakTrakr daily reference is NOT one uniform UTC-day mean or one fixed Turkey clock. Its 2026 rows are mixed: 29 LBMA-labeled Gold prices (strong AM 10:30 London price fit), 8 MetalPriceAPI seed values, 4 StakTrakr seed values, and 104 `sqld` daily averages in the original 145. See `GOLD_R34B_20261011_CIG_D1_MIXED_LBMA_AM_METALPRICEAPI_SQLD_TARGET_CLOCK_PROVENANCE_RESULT.md`. Below UTC/TR 24h reconstructions are **alternative uniform cross-source proxies**, not the original mixed target's verified timing. Do not infer a single tradable entry or exit from their accuracy.
+
+
 **As of:** 2026-10-11. **Scope:** historical source-clock forensic on the exact frozen 2026 Jan–Jul CIG 125 predictions. **NO model refit/retuning, no retroactive H3 promotion, no executable bank P&L.**
 
 ## 1. Why this exists
