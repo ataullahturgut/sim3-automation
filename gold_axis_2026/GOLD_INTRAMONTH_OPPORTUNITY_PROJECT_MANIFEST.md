@@ -1,5 +1,12 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
+
+<!-- BEGIN R41_MAY_H3_CAUSAL_RETEST_20261011 -->
+## Binding 2026 May H3 DPTC issue-time and intraday validation — R41 (2026-10-11)
+
+**See** `gold_axis_2026/GOLD_R41_MAY_2026_H3_FUTURE_CLOCK_RETEST_20261011.md` and 21-row immutable dual-15m-vendor `gold_axis_2026/GOLD_R41_MAY_2026_H3_FUTURE_CLOCK_RETEST_ROWS_20261011.csv`. Original **May 2026 DPTC-Q95 17/21=80.95% H3 accuracy** (price origin `feature_cutoff_date` day vs historical H3 terminal). It is **NOT validated as issue-time forward 3-trading-day prediction**. Under governed forecast issue **08:00 New York = 15:00 Turkey in May**, independent retrospective same-provider 15m bid/ask midpoint **Dukascopy** model direction **12/21=57.14%** from issue15TR to original target-date17TR, **HistData 13/21=61.90%**, versus V5 9/21 and 10/21 respectively. At exactly **three future eligible daily source date endpoints from the issue at 17TR**, DPTC **13/21=61.90%** Dukascopy, **11/21=52.38%** HistData. Earlier hypothetical issue **09TR→old target17TR** yields 13/21 or 15/21 but **NOT PIT-issued signal at 09TR**. At issue15TR→original target London AM (12:30TR): 11/21 or 12/21. May 21 DPTC original 4 flip rescues do NOT all hold identically after the issue; May01 feed-sensitive marginal reversal demonstrates dependence on clock/vendor. Historical `issued_at` unproved; 2026 DPTC fit after seeing year 2026 and is posthoc. **Never promote original 80.95% as bank-tradable future H3 precision or choose hour/provider on May retrospective score.** This clock-specific audit complements R40's correctly recovered H3 hybrid and does not change original frozen model outputs.
+<!-- END R41_MAY_H3_CAUSAL_RETEST_20261011 -->
+
 <!-- BEGIN R40_2026_H3_HYBRID_FULL_AUDIT_20261011 -->
 ## 2026 3-business-day H3 model/hybrid correction — binding R40 2026-10-11
 
