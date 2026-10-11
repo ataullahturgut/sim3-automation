@@ -1,5 +1,8 @@
 # R39 — September 2026: ORIGINAL H3 models INDIVIDUALLY, no D1 / no consensus
 
+> **CORRECTED / SUPERSEDED FOR ALL-H3-HYBRID CONCLUSIONS:** The original R39 selection omitted DPTC-Q95/Q99 H3 hybrids. R40 independently reconstructed 2026 Jan–Sep **DPTC-Q95 135/191 = 70.68%**, and **Sep 14/19 = 73.68%**, 4 Sep H3 rescues, versus V5 10/19. Therefore any global claim below that September's existing H3 models were only 47–53% is false. The three narrow base-expert raw figures remain valid, but R40 is the complete authoritative H3-hybrid result. Read `GOLD_R40_20261011_FULL_2026_H3_HYBRID_SOURCE_ACCURACY_AND_MONTHLY_CORRECTION.md` first. All DPTC results are retrospective posthoc, not independently OOS.
+
+
 **Audit date:** 2026-10-11. **User's precise requested test:** Score the four experts behind CIG **one-by-one on their ORIGINAL H3 direction outcome for September 2026**; only after this, consider adapting to a shorter interval. **NO D1 labels and NO consensus accuracy calculated or treated as model results.** Every score below was recomputed from the immutable original H3 CSV `forecast_issue_date`, `target_end_date_h3`, `y_up`, and frozen expert probability with threshold p >= 0.5.
 
 ## Source files / endpoint contract
