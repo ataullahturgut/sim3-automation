@@ -1,5 +1,8 @@
 # R37 — FINAL old CIG-D1 source-clock and real-forward evaluation: original platform confirmed, 2023–25 LBMA AM, 2025 80.73% vs 54.13% causal clock
 
+> **BINDING H3-to-D1 ORIGIN-FEATURE-CUTOFF CORRECTION (R38):** The historical CIG vote is the H3 expert state applied to the FIRST segment of the H3 3-observation target (cutoff C→issue D), not a separately-trained D1 clock model. R38's **2025 same-211 market rows** show **181/211=85.78%** agreement with the segment already realized **between previous LBMA AM and prior-day 16NY H3 input cutoff**, but only **105/211=49.76%** agreement with the **prior-day 16NY→issue-day London AM future segment**, below always-UP 122/211. The exact original 80.73% old label therefore overlaps known pre-cutoff movement. See `GOLD_R38_20261011_H3_TO_D1_CONSENSUS_TRUE_ORIGIN_TIME_DECOMPOSITION.md`. R38 supersedes any R37 suggestion that only the later 08NY publication deadline explains the apparent D1 success.
+
+
 **Audit date 2026-10-11. FINAL for legacy original-model meaning.** No model refit, vote modification, clock search to maximize accuracy, false retrospective issued-at guarantee, bank P&L, or new champion promotion. Sources: (i) original 2025 frozen CIG exact 218 signal rows, (ii) **original 2023/24/25 StakTrakr price provider**, (iii) independent native HistData 2023–25 M15 source, (iv) source-authoritative IRIS and H3 issuance code. Supersedes prior overconfident descriptions of 74.40% as "one future tradable day" or "09TR–17TR" and clarifies R34–R36.
 
 ## 1. This is the OLD ORIGINAL platform, not a new quote source chosen to redefine it
