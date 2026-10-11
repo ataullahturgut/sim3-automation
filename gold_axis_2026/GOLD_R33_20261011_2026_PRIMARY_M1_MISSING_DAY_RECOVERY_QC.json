@@ -1,0 +1,1499 @@
+{
+  "source": "DUKASCOPY_DIRECT_M1_BIDASK_2026_M15_NATIVE_FULL_V2",
+  "source_vintage": "2026-10-11_RETRIEVED_HISTORICAL_NOT_PIT",
+  "retrieval_asof_utc": "2026-10-11T19:39:34.920517+00:00",
+  "end_utc_date": "2026-10-09",
+  "initial_missing_09_origin_weekdays": 54,
+  "processed": 53,
+  "new_native_m15": 2976,
+  "accepted_days": 31,
+  "results": [
+    {
+      "utc_date": "2026-01-01",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "bf403a791ae67d5a38bacb93fc44adae84fdfdc524a5aeea1aace7976c4b7bad",
+          "ask_sha256": "c0052c57dc80d57b50745f7a489b48ac4574b0c5092b68c3ea71ee118cfb5c4b",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "bf403a791ae67d5a38bacb93fc44adae84fdfdc524a5aeea1aace7976c4b7bad",
+      "ask_sha256": "c0052c57dc80d57b50745f7a489b48ac4574b0c5092b68c3ea71ee118cfb5c4b",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-01-06",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "1dc71d6f62c13a6d0ccff32ec147e06f9371d85cd4ae082f5fdfe163dfcd9603",
+          "ask_sha256": "abee8d21642c569bcb91a52930683ffed450ab650662412c67ceffc527e0f431",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "1dc71d6f62c13a6d0ccff32ec147e06f9371d85cd4ae082f5fdfe163dfcd9603",
+      "ask_sha256": "abee8d21642c569bcb91a52930683ffed450ab650662412c67ceffc527e0f431",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-01-08",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "c57689b3eff335890f387b78182cd9f5e98ce9f6ff039819578b6e60c8b9da91",
+          "ask_sha256": "c051899b199f2a3e7e3036a62b1b9430977eb68ff537669ec6436ff89eb5136a",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "c57689b3eff335890f387b78182cd9f5e98ce9f6ff039819578b6e60c8b9da91",
+      "ask_sha256": "c051899b199f2a3e7e3036a62b1b9430977eb68ff537669ec6436ff89eb5136a",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-01-09",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "ad76471632e7e54ada3645cfeb1bf4e240b36da18d19e85fcb6030a3574878ac",
+          "ask_sha256": "6d118e29ae6ffe86eff0955eb14b0d862771a2bde6abdf8f970ba1fd531e07bb",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "ad76471632e7e54ada3645cfeb1bf4e240b36da18d19e85fcb6030a3574878ac",
+      "ask_sha256": "6d118e29ae6ffe86eff0955eb14b0d862771a2bde6abdf8f970ba1fd531e07bb",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-01-12",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "ReadTimeout:HTTPSConnectionPool(host='datafeed.",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-01-14",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "f10a520ba8f73996d27191ba947a2a6f6d02ae0e8aa840f27cfa80ffae59b958",
+          "ask_sha256": "356a5a3ad43ac5d21371145d2f653b7e6ab7697fad970ee6e20d06dc44efa036",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT",
+      "native_bars": 96,
+      "bid_sha256": "f10a520ba8f73996d27191ba947a2a6f6d02ae0e8aa840f27cfa80ffae59b958",
+      "ask_sha256": "356a5a3ad43ac5d21371145d2f653b7e6ab7697fad970ee6e20d06dc44efa036",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96
+    },
+    {
+      "utc_date": "2026-01-16",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": "1220175cc6d1cdc646546671ff7febde8b8b78490ee61c40414ed543b57966e6",
+          "ask_sha256": null,
+          "bid_causes": [],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": "1220175cc6d1cdc646546671ff7febde8b8b78490ee61c40414ed543b57966e6",
+          "ask_sha256": null,
+          "bid_causes": [],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-01-19",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-01-21",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "19a5430fb9252cd407124aab877656a0142b066551b7d4864d38015fed1c015c",
+          "ask_sha256": "31a47237b82f6e183ba66887100a82ec63efc85830b9b3a107b425b3e38f5c47",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT",
+      "native_bars": 96,
+      "bid_sha256": "19a5430fb9252cd407124aab877656a0142b066551b7d4864d38015fed1c015c",
+      "ask_sha256": "31a47237b82f6e183ba66887100a82ec63efc85830b9b3a107b425b3e38f5c47",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96
+    },
+    {
+      "utc_date": "2026-01-22",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "d6c3d7e6cfeabfd0ff8d4235084e7f95e03a289e731a5a73fb275065e6ce9269",
+          "ask_sha256": "09550359f65639af8f5bf93030e8990225cddb6dd3abed87439874071144f70b",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "d6c3d7e6cfeabfd0ff8d4235084e7f95e03a289e731a5a73fb275065e6ce9269",
+      "ask_sha256": "09550359f65639af8f5bf93030e8990225cddb6dd3abed87439874071144f70b",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-01-23",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "b0a09dea75a8d1c5d40c5c99e83a7e197a5bdbc45a1bea08fa533ac3453effb1",
+          "ask_sha256": "526e183811efb24a70b04850f28879bc8e625c6b68854f4a1db0a9dc56f9a543",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "b0a09dea75a8d1c5d40c5c99e83a7e197a5bdbc45a1bea08fa533ac3453effb1",
+      "ask_sha256": "526e183811efb24a70b04850f28879bc8e625c6b68854f4a1db0a9dc56f9a543",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-02-06",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "8e4ab9661de7cfe084168b62746e2c974dd90b5b9afda553691e1473e6da7e46",
+          "ask_sha256": "3bdbddf637e31aa73b8abd1c15a6f3e8658cfa40d09541147899dd4aa6cb8d9c",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "8e4ab9661de7cfe084168b62746e2c974dd90b5b9afda553691e1473e6da7e46",
+      "ask_sha256": "3bdbddf637e31aa73b8abd1c15a6f3e8658cfa40d09541147899dd4aa6cb8d9c",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-02-10",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "37b7922c84bf0a0eb789591d38bd51677e5a107bea319dc9b1eff2a5bd8575e0",
+          "ask_sha256": "8951e7f5de82d458e60999d135b17e48308e241b02833a05837950e3724e92fc",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "37b7922c84bf0a0eb789591d38bd51677e5a107bea319dc9b1eff2a5bd8575e0",
+      "ask_sha256": "8951e7f5de82d458e60999d135b17e48308e241b02833a05837950e3724e92fc",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-02-11",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "ae8b6bee63e22eadebc1bcde5068a48822a29c1a2117802e1dc9b2798a33c7a6",
+          "ask_sha256": "9f1eb41bf92b119390ffbfb4f14954237bc1e4dbb49643039161a3910c20604d",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "ae8b6bee63e22eadebc1bcde5068a48822a29c1a2117802e1dc9b2798a33c7a6",
+      "ask_sha256": "9f1eb41bf92b119390ffbfb4f14954237bc1e4dbb49643039161a3910c20604d",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-02-12",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": null,
+          "ask_sha256": "0b5413139d135e1ad95130011ed56d1c83b2054a089e7ba79ee931f9ab955480",
+          "bid_causes": [
+            "ReadTimeout:HTTPSConnectionPool(host='datafeed.",
+            "HTTP_503"
+          ],
+          "ask_causes": []
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": "ab59cd347e6e0f4ee6ca0de37a6937eac54aba3b45288259dd1db588b3f6b608",
+          "ask_sha256": null,
+          "bid_causes": [],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-02-13",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": null,
+          "ask_sha256": "8ca41e550dffcdb22eae01ed01be2c1cb0c53b2f519a7e61c786db9a90ac68f0",
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": []
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-02-16",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-02-17",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "ReadTimeout:HTTPSConnectionPool(host='datafeed."
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "5dddbfc80697f0f800efe237066a2e9b3d32d227207dfe6cc397d333d896b473",
+          "ask_sha256": "a0d39286934a0d16a57c83bad759b7c1be797fdfa4bd8e7831cd286b3b26b64c",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT",
+      "native_bars": 96,
+      "bid_sha256": "5dddbfc80697f0f800efe237066a2e9b3d32d227207dfe6cc397d333d896b473",
+      "ask_sha256": "a0d39286934a0d16a57c83bad759b7c1be797fdfa4bd8e7831cd286b3b26b64c",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96
+    },
+    {
+      "utc_date": "2026-02-18",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "b7296d33a97078331e9e83e17b83e17015c4323af400cbae50696928083a4551",
+          "ask_sha256": "5cb447266a4535319a5bf98f0cdbdce5ba844ba53705cc6824df15de7d57810f",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "b7296d33a97078331e9e83e17b83e17015c4323af400cbae50696928083a4551",
+      "ask_sha256": "5cb447266a4535319a5bf98f0cdbdce5ba844ba53705cc6824df15de7d57810f",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-02-19",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": "3d9cba21e2810a2d75ec38ece05565f65000a8207b80e223370f9d596e257c80",
+          "ask_sha256": null,
+          "bid_causes": [],
+          "ask_causes": [
+            "ReadTimeout:HTTPSConnectionPool(host='datafeed.",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "3d9cba21e2810a2d75ec38ece05565f65000a8207b80e223370f9d596e257c80",
+          "ask_sha256": "983bafa1de69c6eb3e8498ab03f8fa4dcdcc09ed9f84cd6973da017f37366fc7",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT",
+      "native_bars": 96,
+      "bid_sha256": "3d9cba21e2810a2d75ec38ece05565f65000a8207b80e223370f9d596e257c80",
+      "ask_sha256": "983bafa1de69c6eb3e8498ab03f8fa4dcdcc09ed9f84cd6973da017f37366fc7",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96
+    },
+    {
+      "utc_date": "2026-02-20",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "fa558710f9992fa24864db5845265d0ac2298b47ae826fbd6481b45c7947400f",
+          "ask_sha256": "8b29daca63e34251e8536e56ce1779ff6e2fd8b33e0c00fba87f5f6fcd94ed68",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "fa558710f9992fa24864db5845265d0ac2298b47ae826fbd6481b45c7947400f",
+      "ask_sha256": "8b29daca63e34251e8536e56ce1779ff6e2fd8b33e0c00fba87f5f6fcd94ed68",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-02-23",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "922672ac675fcc5bef972184e8b223ab960e9837e9909b1fcec1cd6acd04c48e",
+          "ask_sha256": "a41e50e2a03a0988174df1c3826c1b4e9fb95bb437a2263840e7ad7e6e684740",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "922672ac675fcc5bef972184e8b223ab960e9837e9909b1fcec1cd6acd04c48e",
+      "ask_sha256": "a41e50e2a03a0988174df1c3826c1b4e9fb95bb437a2263840e7ad7e6e684740",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-02-24",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "ebb7b09d1e5b6587b15c89a36fe1ea1e649740a97333d789328cb46eb6f6dd5b",
+          "ask_sha256": "2a89c76eee4066af329dea1c252415b3c443f7f7298d451c61c0aa4146168cee",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "ebb7b09d1e5b6587b15c89a36fe1ea1e649740a97333d789328cb46eb6f6dd5b",
+      "ask_sha256": "2a89c76eee4066af329dea1c252415b3c443f7f7298d451c61c0aa4146168cee",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-02-26",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": "a6161e10bc13ab2e25654cb3978795d2e8fc47877ecb073a13b9bf85ee2d314b",
+          "ask_sha256": null,
+          "bid_causes": [],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-02-27",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": null,
+          "ask_sha256": "65533323b5eca8db42c50aa539bca219217964da10aad4391b21f41854eea032",
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": []
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-03-02",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-03-03",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "ReadTimeout:HTTPSConnectionPool(host='datafeed."
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": null,
+          "ask_sha256": "792a24b024dc72c25573f0447825a71a8fb3f2ee716f1e9a7bed20c6e0d449db",
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": []
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-03-04",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "042894484db45a524e39cd02028615731cd47b6575c78d94a94779c7cd3ab236",
+          "ask_sha256": "261c08f22b58117eb8c31d822e942c7c27abc5f292efd59d26bec4598090fbe7",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "042894484db45a524e39cd02028615731cd47b6575c78d94a94779c7cd3ab236",
+      "ask_sha256": "261c08f22b58117eb8c31d822e942c7c27abc5f292efd59d26bec4598090fbe7",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-03-05",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "b978b2e21fcbb370486d547e45e27c61238fa89fa508126a0aeaae972b327a61",
+          "ask_sha256": "6322b5032eaa811fa2d97ea3388be5aa443e51cfdcfd15c84335af06c3f85a42",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "b978b2e21fcbb370486d547e45e27c61238fa89fa508126a0aeaae972b327a61",
+      "ask_sha256": "6322b5032eaa811fa2d97ea3388be5aa443e51cfdcfd15c84335af06c3f85a42",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-03-06",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "3d4f8335d9b7e26db6a1d3ec4b40fc662d4e33c70768c734556d4f7630d1137c",
+          "ask_sha256": "83cc4607db634b34386cfa0216e784688e4b12ccd87d77f860ef9861fd6e6fe5",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "3d4f8335d9b7e26db6a1d3ec4b40fc662d4e33c70768c734556d4f7630d1137c",
+      "ask_sha256": "83cc4607db634b34386cfa0216e784688e4b12ccd87d77f860ef9861fd6e6fe5",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-03-10",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "febf7f870131642e99a825dafe72296e29f7974dbfda9e7fe9cdcde0c3d12a5e",
+          "ask_sha256": "a5095b626bb96d35dba23fdd304f98ba944bab52670d1c3bb79551021505ad07",
+          "bid_causes": [],
+          "ask_causes": []
+        },
+        {
+          "attempt": 1,
+          "validation_error": "ValueError:DIRECT_H1_PARITY_FAIL_OR_INSUFFICIENT"
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "febf7f870131642e99a825dafe72296e29f7974dbfda9e7fe9cdcde0c3d12a5e",
+          "ask_sha256": "a5095b626bb96d35dba23fdd304f98ba944bab52670d1c3bb79551021505ad07",
+          "bid_causes": [],
+          "ask_causes": []
+        },
+        {
+          "attempt": 2,
+          "validation_error": "ValueError:DIRECT_H1_PARITY_FAIL_OR_INSUFFICIENT"
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "febf7f870131642e99a825dafe72296e29f7974dbfda9e7fe9cdcde0c3d12a5e",
+      "ask_sha256": "a5095b626bb96d35dba23fdd304f98ba944bab52670d1c3bb79551021505ad07",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 1,
+      "status": "QUARANTINED"
+    },
+    {
+      "utc_date": "2026-03-13",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": "6d098c5135d244f1470b25ae6f7f21a10e4432efeb971d4b6ee6d017aa096ae9",
+          "ask_sha256": null,
+          "bid_causes": [],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-03-17",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-03-19",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "ReadTimeout:HTTPSConnectionPool(host='datafeed."
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-03-20",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": null,
+          "ask_sha256": "c563835a22aed994326496978967b6ce40ed72c4bb2be924301d5d2d72c1e674",
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": []
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-03-23",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": null,
+          "ask_sha256": "c6925d38333b79ce7be896e9c7ac471f1c8c1b27d77bd9d84351e2f2306f1bdf",
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": []
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-03-24",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "c3acc32e55cc6bdb8b4a0cd36b55d661d359eb9b52c691028e5e7dfef01919a6",
+          "ask_sha256": "dca4f87da7a1366d2f0788846779498a8d530ae1f86c517ba507fc0d543ce316",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "c3acc32e55cc6bdb8b4a0cd36b55d661d359eb9b52c691028e5e7dfef01919a6",
+      "ask_sha256": "dca4f87da7a1366d2f0788846779498a8d530ae1f86c517ba507fc0d543ce316",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-03-25",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "99f7411812146f4f4e899ed028eef15f3e99357c3c1275f35ccd117abddf579a",
+          "ask_sha256": "f5de14c84b23d753d2694242c50aa8a73b97050406005906b1b0a71f82aa0900",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "99f7411812146f4f4e899ed028eef15f3e99357c3c1275f35ccd117abddf579a",
+      "ask_sha256": "f5de14c84b23d753d2694242c50aa8a73b97050406005906b1b0a71f82aa0900",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-03-26",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "79255de426bd95fa2cc94b338f0d02560c2bc2757ae52055845e70ef0d8870a3",
+          "ask_sha256": "a66fb61dadd2b2aead9d94116c72ede439ad0c4027fe9ed1408480141757c932",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "79255de426bd95fa2cc94b338f0d02560c2bc2757ae52055845e70ef0d8870a3",
+      "ask_sha256": "a66fb61dadd2b2aead9d94116c72ede439ad0c4027fe9ed1408480141757c932",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-03-27",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "7838f3fb57d6f8fcc86c5557490a55035de3f9253b23e329d83aaf569e0cbbb6",
+          "ask_sha256": "933dfbfc5ec487ff0b337e78f5aa03c119c13a40214a39d49cd837aa523641a5",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "7838f3fb57d6f8fcc86c5557490a55035de3f9253b23e329d83aaf569e0cbbb6",
+      "ask_sha256": "933dfbfc5ec487ff0b337e78f5aa03c119c13a40214a39d49cd837aa523641a5",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-07-22",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "528bdc1c2087587c8a79a1775701bfa5ded1011a7271f86841253de833cd0eb5",
+          "ask_sha256": "fee90f0e8d55b47b17f2f61757af4a20822481e2222fc64d38da4b128ff65f3f",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "528bdc1c2087587c8a79a1775701bfa5ded1011a7271f86841253de833cd0eb5",
+      "ask_sha256": "fee90f0e8d55b47b17f2f61757af4a20822481e2222fc64d38da4b128ff65f3f",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-07-28",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": null,
+          "ask_sha256": "c742c63d3c2d179ee4ed858129352a6a42a21dd33d53f8101704bc0180dda342",
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": []
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "ec4e9f1b4c71598a7a7d10a3716e860f1fd6ae1e675f829c8aa3bf24e0d113e1",
+          "ask_sha256": "c742c63d3c2d179ee4ed858129352a6a42a21dd33d53f8101704bc0180dda342",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT",
+      "native_bars": 96,
+      "bid_sha256": "ec4e9f1b4c71598a7a7d10a3716e860f1fd6ae1e675f829c8aa3bf24e0d113e1",
+      "ask_sha256": "c742c63d3c2d179ee4ed858129352a6a42a21dd33d53f8101704bc0180dda342",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96
+    },
+    {
+      "utc_date": "2026-07-29",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": "6ab4057e27593963781c9ef44694e023ca7d0a77de93aa654c7281f5591a4100",
+          "ask_sha256": null,
+          "bid_causes": [],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-07-30",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": "64ceacff547da18141fd75730351a58eb094bc02946fa62dc7f377187eeb8fe9",
+          "ask_sha256": null,
+          "bid_causes": [],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-07-31",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "16f1395fb698c55e72eafbb6e22519fd769bfa70e90edf4c6e3003be4c167415",
+          "ask_sha256": "1924f295536396151b99f0f4102496209a0ea2ecf161f1f74dfdabde35e36a49",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "16f1395fb698c55e72eafbb6e22519fd769bfa70e90edf4c6e3003be4c167415",
+      "ask_sha256": "1924f295536396151b99f0f4102496209a0ea2ecf161f1f74dfdabde35e36a49",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-09-02",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": null,
+          "ask_sha256": "d21e02a0dbe5cb6d6a4246901565907dc5b2ca0470e92eb653233c90f58bb4f9",
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": []
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "92d0299bc21f5eeaea13cfa6e6b1be00d098b16bcca0e107e9ed0e04a451e964",
+          "ask_sha256": "d21e02a0dbe5cb6d6a4246901565907dc5b2ca0470e92eb653233c90f58bb4f9",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT",
+      "native_bars": 96,
+      "bid_sha256": "92d0299bc21f5eeaea13cfa6e6b1be00d098b16bcca0e107e9ed0e04a451e964",
+      "ask_sha256": "d21e02a0dbe5cb6d6a4246901565907dc5b2ca0470e92eb653233c90f58bb4f9",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96
+    },
+    {
+      "utc_date": "2026-09-21",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "2e5a9e1f0c088b9fe29cbeaf34b64a8c29ee0c7f928525f824a90da386995a0a",
+          "ask_sha256": "7d6e3dc31aa55c936d30f2edf6d19fdf406b689792013a27d9188b7f7d66e540",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "2e5a9e1f0c088b9fe29cbeaf34b64a8c29ee0c7f928525f824a90da386995a0a",
+      "ask_sha256": "7d6e3dc31aa55c936d30f2edf6d19fdf406b689792013a27d9188b7f7d66e540",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-09-22",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "3de3c536dba56955a94b98be879e71fd4411443eaf5940967736553d89c2383a",
+          "ask_sha256": "3f63796213657dac0e3c78a32659c0cb6de7bde35e2b680e78101bd9de506efe",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "3de3c536dba56955a94b98be879e71fd4411443eaf5940967736553d89c2383a",
+      "ask_sha256": "3f63796213657dac0e3c78a32659c0cb6de7bde35e2b680e78101bd9de506efe",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-09-23",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_DAY_RECEIVED",
+          "bid_sha256": "d49c9f6ba0916db65e305fd0f4de724e7559f40ba19cba97f4af32ca6f0cc48b",
+          "ask_sha256": "cd80537ae2f53dbe0f07ee317b718135acdbd545bbad884b4805e4622a851779",
+          "bid_causes": [],
+          "ask_causes": []
+        }
+      ],
+      "native_bars": 96,
+      "bid_sha256": "d49c9f6ba0916db65e305fd0f4de724e7559f40ba19cba97f4af32ca6f0cc48b",
+      "ask_sha256": "cd80537ae2f53dbe0f07ee317b718135acdbd545bbad884b4805e4622a851779",
+      "direct_monthly_H1_hours_checked": 24,
+      "direct_monthly_H1_mismatches": 0,
+      "inserted_new_native_M15": 96,
+      "status": "INSERTED_DIRECT_NATIVE_M1_H1_EXACT"
+    },
+    {
+      "utc_date": "2026-09-24",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-09-29",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_DAY_RECEIVED",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": "55adebc1f83f5fb2e1cb8e79116c3af5496725705a82bcf60b5d26059b4ece92",
+          "ask_sha256": null,
+          "bid_causes": [],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-09-30",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    },
+    {
+      "utc_date": "2026-10-08",
+      "attempts": [
+        {
+          "attempt": 1,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        },
+        {
+          "attempt": 2,
+          "bid_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "ask_result": "SOURCE_UNAVAILABLE_OR_INVALID",
+          "bid_sha256": null,
+          "ask_sha256": null,
+          "bid_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ],
+          "ask_causes": [
+            "HTTP_503",
+            "HTTP_503"
+          ]
+        }
+      ],
+      "status": "SOURCE_UNAVAILABLE_OR_CLOSED"
+    }
+  ],
+  "seconds_elapsed": 2955,
+  "PIT_certified": false,
+  "models_scored": false,
+  "quotes_in_git": false
+}
