@@ -1,0 +1,59 @@
+name: R33 Direct Dukascopy 2026 H3 09TR Missing M1 Source Recovery
+on:
+  workflow_dispatch:
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - '.github/workflows/gold-r33-2026-native-m1-gap-recovery-20261011.yml'
+permissions:
+  contents: write
+concurrency:
+  group: r33-2026-duka-native-only-recovery
+  cancel-in-progress: false
+jobs:
+  retrieve-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    env:
+      NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      PYTHONUNBUFFERED: '1'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gold-execution-channel-audit-20261006
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned compatible source tools
+        run: python -m pip install 'numpy>=2,<3' 'pandas>=2.2,<3' 'requests>=2.32,<3' 'psycopg[binary]>=3.2,<4'
+      - name: Validate code and retrieve only missing mature 2026 native Dukascopy days
+        run: |
+          python -m py_compile gold_axis_2026/tools/gold_r33_20261011_dukascopy_missing_2026_native_m1_recovery.py
+          python gold_axis_2026/tools/gold_r33_20261011_dukascopy_missing_2026_native_m1_recovery.py
+      - name: Preserve receipt for partial execution without publishing quotes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-r33-native-source-qc
+          path: gold_axis_2026/GOLD_R33_20261011_2026_PRIMARY_M1_MISSING_DAY_RECOVERY_QC.json
+          if-no-files-found: ignore
+          retention-days: 30
+      - name: Commit aggregate source QC only, preserving remote new commits
+        if: always()
+        run: |
+          file=gold_axis_2026/GOLD_R33_20261011_2026_PRIMARY_M1_MISSING_DAY_RECOVERY_QC.json
+          test -f "$file" || exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$file"
+          git diff --cached --quiet || git commit -m 'Record native Dukascopy 2026 missing 09TR source recovered and verified or quarantined'
+          for i in 1 2 3 4 5; do
+            git fetch origin gold-execution-channel-audit-20261006
+            git rebase origin/gold-execution-channel-audit-20261006 || exit 1
+            if git push origin HEAD:gold-execution-channel-audit-20261006; then exit 0; fi
+            sleep 4
+          done
+          exit 1
