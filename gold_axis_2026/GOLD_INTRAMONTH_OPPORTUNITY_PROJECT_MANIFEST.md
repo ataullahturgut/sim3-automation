@@ -1,5 +1,17 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
+<!-- R70_H3_ROLLING_POSITION_MAY_STRATEGY_20261012 -->
+## R70 2026-10-12 — ART ARDA GELEN DOĞRU H3 TAHMİNLERİNİ TEK POZİSYON STRATEJİSİNE DÖNÜŞTÜRME (ÇALIŞTIRILDI, BANKA ONAYI YOK)
+
+**AUTHORITATIVE VERDICT:** GOLD_R70_20261012_H3_ROLLING_SIGNAL_STRATEGY_AND_MAY_EXAMPLE_VERDICT.md. Kaydedilen altı varyantın 2023–26 işlemleri: GOLD_R70_20261012_H3_ROLLING_STATE_BANK_1645_STRATEGY_COMPARISON.csv, GOLD_R70_20261012_H3_ROLLING_STATE_BANK_1645_STRATEGY_ACTIONS.csv ve aynı isimli SUMMARY.json.
+
+**WHY:** 7 Mayıs 2026 D0=6May mean4675.01→D3=11May mean4701.32 tahmin UP doğru, ama 7May 15TR spot4735.895→D3mean -0.73%; 8May D0=7May4717.64→D3=12May4706.50 DOWN doğru, 8May15 spot4719.905→D3mean -0.284%; 11May D0=8May4718.13→D3=13May4696.97 DOWN doğru, 11May15 spot4664.225→D3mean +0.702%. Üçü birlikte örnek overlap: tekil üç alış/satış değil, sürekli güncellenen H3 uzun pozisyon yönetimi. Model gelecekteki D3 ortalamasını tahmin günü bilemez; o fiyatlar sadece retrospective açıklamadır.
+
+**TESTED 16:45TR LONG/CASH candidate:** yalnız iki ardışık UP'da yeni long, ilk DOWN'da pozisyondan çık; ayrıca girişte spot <= son D0 gold günlük ortalaması versiyonu (fiyatı kovalamama). Örnek May8 Cuma16:45→11May Paz09 gözlenen spot −1.098%, önceden bilinmiyor. Eski H3 altyapı donduruldu, R63 2026 Q95 kullanıldı. 25bp varsayımsal tur maliyetli tek pozisyon sürekli yönetimi, yıllar ayrı: 2023 N178 ana 2UP/1DOWN **−7.37%**, D0-fiyat-filtresi **−1.92%**; 2024 N240 **+9.58%** / **−0.93%**; 2025 N248 **+6.67%** / **+6.90%** (pasif +64.19% brüt); 2026 N189 **+2.03%** / **+18.62%** (pasif −2.30% brüt). 2026 +18.62% eski yıllarda kötü sonuç verdiğinden **ASLA kanıtlanmış alpha denmemeli**. Tam kayıtlar ve 10/50bp gider duyarlılığı yukarıdaki eserlerde. Banka BID/ASK, gerçek issue-time, provider PIT ve 2026 prospective test kanıtı eksik. İşlem saatlerinde sınanan kuralı canlı emir olarak sunma.
+
+**NEXT:** H3 native D0→D3 daily-mean hedefini bozmadan ana modeli rolling-position bağlam sinyali tut; as-of verilen gerçek saat kaydı, bankanın iki yönlü kote fiyatı ve daha önce hiç kullanılmamış ileri hedeflerde maliyet+drawdown kanıtı olmadan emir verme. Sürekli tekrar zaman doğrulaması değil, ortak pozisyon durumunun ekonomik değerini ölç.
+<!-- END R70_H3_ROLLING_POSITION_MAY_STRATEGY_20261012 -->
+
 <!-- R69_H3_EXECUTION_CLOCK_UTILIZATION_VERDICT_20261012 -->
 ## R66–R69 (2026-10-12) — EXECUTION-CLOCK H3 MODEL RETRAIN / ACTUAL BANK-UTILITY RESEARCH — COMPLETED, NO PROMOTION
 
