@@ -1,5 +1,15 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
+<!-- R65_ISTANBUL_EXECUTION_CLOCK_RESEARCH_20261012 -->
+## R65 (2026-10-12) — H3 clock to bank execution: 09, 15, 16:45 reference targets
+
+**CURRENT BANK-CLOCK AUTHORITY:** GOLD_R65_20261012_H3_TURKIYE_BANK_REFERENCE_HOURS_SELECTION_AND_REBASE_FINDINGS.md. Companion evidence GOLD_R65_20261012_H3_BANK_ANCHOR_REBASE_MAY_SEP_102_MATCHED.csv and ...SUMMARY.json. The bank origin/target hour is **not** the old H3 D0→D3 daily-average label, and the old Q95 135/191 or R63 130/191 must **never** be advertised as bank-anchored H3 accuracy. Fixed operational decision origins 09:00 (morning/day/H3 prior) and 16:45 (overnight H3 carry decision), plus contingent 15:00 midday reassessment; 16:30 early fallback, 12:00/17:00 diagnostics. All local hours use Europe/Istanbul, US ET macro releases date-aware. Night cannot be discarded: 2025 same-source mean abs Day 09→16:45 0.4842% (N258) vs OVN 16:45→next calendar day09 0.6541% (N205); 2026 0.6625% (N179) vs1.0598% (N133), no Friday weekend inferred.
+
+**ACTUAL H3 rescore 2026 May–Sep on SAME 102 HistData source-complete dates**, old/new DPTC bit evaluated from bank ENTRY to original D3 UTC daily-average target: 09 60/102 vs58/102; 15 58/102 vs56/102; 16:45 54/102 vs56/102. Rebase-to-D3 same-clock new R63 votes 09 54/102, 15 55/102, 16:45 58/102. Old H3 outcomes differ from these newly defined targets. This is NOT a trained bank-origin H3 successor. A real numeric conditional-mean H3 bridge trained 2023–24 (N356, 2023 sparse116) does not transport; 2026 09 89/186 vs unchanged105, 15 99 vs105, 16:45 97 vs104: **DO NOT PROMOTE** naive magnitude flip. Source firstprints/actual 09 issue readiness and bank BID/ASK unverified.
+
+**Next actual model work:** freeze three target-specific D0/entry/expiry clocks: DAY09→16:45, OVN16:45→next eligible09, H3_09/H3_15/H3_1645→third governed eligible source day **at same exact hour**. Keep existing H3 as expert signal only; fit conditional return-level distribution/quantiles on DEV 2023–24; subtract known origin gap; measure same-row score, coverage and bank spread, not old daily-average direction. No reopening of unchanged clock audits absent new evidence. R61–R63 separately recorded in GOLD_R63_20261012_ALL_WEEKDAY_COT_RETRAIN_HELIOS_DPTC_COMPLETED_RESULT.md and its three CSV ledgers; Python R64 exact sklearn rerun authored but not executed.
+<!-- END R65_ISTANBUL_EXECUTION_CLOCK_RESEARCH_20261012 -->
+
 <!-- R60_ALL_WEEKDAYS_CLOCK_RECONCILIATION_20261012 -->
 ## R60 — ALL WEEKDAYS clock reconciliation: 1,029 H3 origins, 5 holiday-release COT repairs (2026-10-12)
 
