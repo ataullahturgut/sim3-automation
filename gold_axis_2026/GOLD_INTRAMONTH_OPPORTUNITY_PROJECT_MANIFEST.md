@@ -1,6 +1,16 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
 
+<!-- R44_REAL_TIME_CLOCK_H3_MAY_2026_START -->
+## R44 — H3 source-accurate issue-clock diagnostics and research normalization (2026-10-12)
+
+**Evidence**: `gold_axis_2026/GOLD_R44_20261012_H3_REAL_TIME_CLOCK_NORMALIZATION_MAY_DIAGNOSTIC.md` and exact 21-row immutable price-direction CSV `gold_axis_2026/GOLD_R44_20261012_H3_CLOCK_ALIGNMENT_MAY_2026_ROWS.csv`.
+
+Do not conflate original R40/R42 H3 label with a real issue→third-future-day order: 2026 May source D0 Stak `sqld` complete UTC-day average, D3 is third *source* date after prior-day D0; issue occurs on intervening D1. R44 retains all 21 frozen original May H3 votes (Q95 **17/21**, Q99 **16/21**, SAGE+RuleFlow **13/21**). On independent HISTDATA same-vendor 15m **issue 15TR→original D3 15TR**, Q95 **13/21**, Q99 **12/21**, SAGE **11/21**, always-DOWN **11/21**; at **issue15TR→third subsequent weekday15TR** (a NEW target), Q95 **12/21**, Q99 **13/21**, SAGE **10/21**, always-DOWN **12/21**. Same-hour 09TR checks are diagnostic only. These are retrospective, NOT certified issued_at/PIT, NOT a trained transformation or new H3 model, and cannot justify picking an execution hour after looking at the outcome.
+
+**Mathematically correct clock bridge**: `log(P_D3,h/P_issue,h) = log(A_D3/A_D0) - log(P_issue,h/A_D0) + log(P_D3,h/A_D3)`. The old H3 signal contains only the **SIGN** of the first term; the terminal-hour offset is a second **future unknown** that must be estimated, not taken from future realized data. A *third day after issue* also requires horizon-extension modeling. Candidate scientific path is MIDAS/state-space/Kalman conditional quantile forecast with all feature publication times, source-regime bridge, calendar maturity and purged forward validation. No valid new-horizon accuracy improvement yet; previous naive R43 trailing-median magnitude flip was worse and remains rejected.
+<!-- R44_REAL_TIME_CLOCK_H3_MAY_2026_END -->
+
 <!-- BEGIN R43_2026_SOURCE_ZERO_POINT_BRIDGE_20261012 -->
 ## R43 binding research checkpoint — three-day H3 to Istanbul executable entry zero-point (2026-10-12)
 
