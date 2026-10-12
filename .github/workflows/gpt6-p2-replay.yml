@@ -1,0 +1,19 @@
+name: GPT6 P2 FOMC replay
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "gold_axis_2026/GOLD_GPT6_P2_*"
+      - "gold_axis_2026/tools/gold_gpt6_p2_replay.py"
+      - ".github/workflows/gpt6-p2-replay.yml"
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python gold_axis_2026/tools/gold_gpt6_p2_replay.py
