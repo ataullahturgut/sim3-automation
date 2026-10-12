@@ -1,6 +1,17 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
 
+<!-- R42_SOURCE_CLOCK_BINDING_START -->
+## Binding May2026 H3 original data source-clock reconstruction (R42; 2026-10-12)
+
+**Read first**: `gold_axis_2026/GOLD_R42_20261012_ORIGINAL_H3_DATA_SOURCE_TIME_CONTRACT_AND_MAY_VERDICT.md` and exact 21-row proof `gold_axis_2026/GOLD_R42_20261012_ORIGINAL_H3_SOURCE_TIME_MAY_UTC_AVERAGE_RECONSTRUCTION.csv`.
+
+The original May 2026 Gold daily reference source at `StakTrakr` frozen `54fdf1c8d39b7b6c7b874d0f30f784296e886044` is **`sqld` SQL `AVG(spot)` across COMPLETE 00–24 UTC days**, NOT a single 12UTC/15TR quote. Original stored `12:00:00` is synthetic date tag. Corresponding Turkish date-D reference samples cover **D 03:00TR → D+1 03:00TR**. Different historical periods differ: older `seed/LBMA` Gold AM reference does NOT mean this avg. Original H3 model `target_r3=log(gold[t+3]/gold[t])` from `feature_cutoff_date` to third next available Gold DATE, NOT average of next three trading days. For issue May1 2026, original `feature_cutoff_date=Apr30` daily UTC mean **$4604.34** and `target_end_date_h3=May05` daily UTC mean **$4553.59**, DPTC prediction DOWN correct. Frozen 21 May H3 DPTC-Q95 calls **17/21=80.95%**. Two independent 15-minute spot feeds averaged by **EXACT same UTC calendar-day semantics** each reproduce **all 21 H3 target signs** and **17/21 model correctness** (Dukascopy-derived MID, HistData spot OPEN). This is a VALID vendor-robust original target accuracy claim, but remains retrospective DPTC design, not unseen prospective proof.
+
+Only as a **separate, distinct** future-entry question, issue-date **15TR instantaneous spot → original H3 terminal UTC-day average**: DPTC correct **12/21=57.14% Dukascopy**, **11/21=52.38% HistData**. Issue **09TR spot → target UTC average**: **12/21 Dukascopy**, **14/21 HistData**, not demonstrated historically issued at 09TR. Different clock comparisons **DO NOT invalidate** the original 17/21, because they measure a different target. The prior R41 report's 15TR→17TR arbitrary-price end is supplemental only; R42 is the authoritative FIRST step for native provider-time semantics. Exact daily source availability can be **after** 03TR depending on publication pipeline; prior-hourly cutoff **16NY previous day=23TR in May**, model governance **08NY=15TR May issue date**; no actual historical issue timestamp is proved. Do not claim any original H3 target uniquely corresponds to 15:00TR.
+<!-- R42_SOURCE_CLOCK_BINDING_END -->
+
+
 <!-- BEGIN R41_MAY_H3_CAUSAL_RETEST_20261011 -->
 ## Binding 2026 May H3 DPTC issue-time and intraday validation — R41 (2026-10-11)
 
