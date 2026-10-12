@@ -1,6 +1,20 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
 
+<!-- R45_DPTC_H3_ASOF_VINTAGE_20261012 -->
+## R45 — DPTC-Q95 H3 real-time input clock, archive-vintage and maturity forensic (2026-10-12)
+
+Binding audit: GOLD_R45_20261012_H3_DPTC_Q95_SOURCE_ASOF_CLOCK_AND_ARCHIVE_VINTAGE_FORENSIC.md. Original H3 targets/predictions/results unchanged.
+
+**NEW HARD FAILURE:** May07 2026 issue relies on May06 UTC-day average for four metals. In true StakTrakr repo snapshots dated May06, May08 and May09 05:41 Turkey time, the original spot-history-2026.json latest record was April30; May06 metal prices were ABSENT. A later repo snapshot dated May10 02:11 Turkey has all May06 prices, identical to the Sep29 retrospective frozen ref. Therefore May07 H3 was NOT reproducibly issuable with the archived historic vendor file at May07. This does not mean quotes did not exist in MetalpriceAPI/sqld as another possible source; it means their exact provider-vintage availability at May07 is unverified. Frozen DPTC-Q95 was first developed on Oct05, so the May output is posthoc, not an actually issued May signal.
+
+**CORRECT input clocks:** Twelve Data 16NY 1h timestamp refers to bar OPEN at May06 23TR, so closes at May07 00TR. The May06 full UTC-day metal averages complete at May07 03TR (publication may lag). CME May05 last-trade GC/options final is published next business day May06 around 18TR. Cross-market Yahoo/FRED proxy source date May05. CFTC Apr28 report was published May01 22:30TR, ledger conservatively marks May05 as available. Thus 03TR is only theoretical latest source observation-close lower bound, NOT a verified forecast generation timestamp. Original H3 target May11 UTC-day mean completes May12 03TR.
+
+**DPTC bug:** Mixed 2025 date-only and 2026 timestamped H3 maturities parse to NaT for 2026 in original gold_h3_dptc_v1.py, leaving actions.csv target-date empty. Replaying all 41 archived 2025/2026 HANDOFF timeline rows with proper date parsing changes no 2026 Q95 actions (13 actions, 11 rescues, 2 breaks, +9; 135/191 remains unchanged) but requires an explicit versioned parsing repair.
+
+Scientific verdict: observation-time alignment intended by H3 is largely correct; true as-of publication and time-of-issue eligibility is NOT established and the original vendor file provides a direct negative counterexample. Do not silently make 09/15TR new targets or represent 17/21 May and 135/191 2026 as live-issued accuracy.
+<!-- END R45_DPTC_H3_ASOF_VINTAGE_20261012 -->
+
 <!-- R44_REAL_TIME_CLOCK_H3_MAY_2026_START -->
 ## R44 — H3 source-accurate issue-clock diagnostics and research normalization (2026-10-12)
 
