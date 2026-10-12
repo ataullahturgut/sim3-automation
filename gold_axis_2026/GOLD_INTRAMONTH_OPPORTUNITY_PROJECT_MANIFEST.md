@@ -1,5 +1,19 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
+<!-- R60_ALL_WEEKDAYS_CLOCK_RECONCILIATION_20261012 -->
+## R60 — ALL WEEKDAYS clock reconciliation: 1,029 H3 origins, 5 holiday-release COT repairs (2026-10-12)
+
+**Read first:** GOLD_R60_20261012_H3_ALL_WEEKDAYS_SOURCE_COT_RELEASE_CLOCK_VERDICT.md. Evidence: GOLD_R60_20261012_H3_ALL_WEEKDAYS_SOURCE_COT_RELEASE_CLOCK_1029.csv (all issues, every weekday); GOLD_R60_20261012_H3_ALL_WEEKDAYS_SOURCE_COT_RELEASE_CLOCK_SUMMARY.json; reproducibility: tools/gold_r60_h3_all_weekday_asof_source_clock_audit.py. Date contract: frozen D0 source UTC daily mean → third retained source-day D3 mean, issue assumed 15:00 Türkiye. Do not confuse issue with D0 close or +72-hour return.
+
+**Actually computed ALL-ISSUE clock facts:** **1029/1029** original D0/D1/D3 matches frozen 4-metal daily price observation calendar; **1029/1029 × 5** cross-market metal/USD/yield/NDX/VIX source-date fields present and <=D0; **280/280 IFBC** and **332/332 LLRS** one-hour bar *completion times* <= assumed issue; 280 CME trade dates <=D0. Issue days Monday 165, Tuesday 208, Wednesday 220, Thursday 220, Friday 216. All 1029 corrected COT inferred/official release times <= assumed issue. This is **date metadata parity, NOT independent source-provider firstprint/vintage proof**.
+
+**COT real release-calendar correction beyond naive Friday:** CFTC 2026 calendar has delayed **2026-01-05, 2026-06-22, 2026-07-06** Monday COT publications (at 15:30 New York), and dated historical July reports establish July07 2023 and July07 2025 publication days. Original R56 assumed `report_date+3 calendar days` for non-special weeks; that prematurely admits COT positions in **five forecast issues**: **2023-07-07; 2025-07-07; 2026-01-05, 06-22, 07-06**. Only 3 directly affected 2026 issue rows but rolling OPAL training may propagate. Candidate COT source selection differences versus intentionally lagged legacy revised **415→410 of 1029**. Existing 21 officially delayed CFTC overrides retained.
+
+**Binding scientific interpretation:** R56 931/931 parity was exact replication of its *original date rule*, not proof of a full official holiday release calendar. R59 129/191 is now **superseded as a FULLY CLOCK-CORRECT score** by identified 2026 release exceptions. It remains preserved only as a controlled pre-R60 counterfactual, **NOT** newly holiday-adjusted performance. No corrected final model accuracy is asserted; R60 is not an OPAL→HELIOS→DPTC complete retrain. The legacy +7d rule is purposeful, not an erroneous Friday conversion. 2022–2025 historical release firstprint and true issue-time provider vintages remain explicitly **UNPROVEN**, governed fail-closed instead of endless reruns of unchanged archives.
+
+**Workflow state:** close historical source-date/weekday structural audit as far as existing metadata allow; version and use corrected release calendar for model work. Do not initiate another duplicate source audit without materially new source evidence. Do not overwrite existing model, old R58/R59 score tables, or D0→D3 target.
+<!-- END R60_ALL_WEEKDAYS_CLOCK_RECONCILIATION_20261012 -->
+
 <!-- R59_FRIDAY_COT_DYNAMIC_Q95_20261012 -->
 ## R59 — Friday COT clock research: full new Handoff alarm eligibility and chronological DPTC-Q95 replay
 
