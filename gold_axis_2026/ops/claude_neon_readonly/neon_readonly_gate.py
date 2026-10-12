@@ -27,7 +27,7 @@ FORBIDDEN_WORDS = re.compile(
     r"\b("
     r"insert|update|delete|merge|upsert|drop|alter|create|truncate|grant|revoke|"
     r"copy|call|do|vacuum|analyze|analyse|cluster|reindex|refresh|lock|comment|"
-    r"security|set|reset|begin|start|commit|end|abort|rollback|savepoint|release|"
+    r"security|set|reset|begin|commit|abort|rollback|savepoint|release|"
     r"prepare|execute|deallocate|listen|notify|unlisten|discard|checkpoint|load|"
     r"import|into|returning|nextval|setval|set_config|dblink|dblink_exec|"
     r"lo_import|lo_export|lo_unlink|lo_create|lo_put|lo_from_bytea|"

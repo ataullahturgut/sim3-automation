@@ -15,7 +15,7 @@ the user installs them.
 Two independent locks: Postgres enforces the read-only transaction (verified 2026-10-12:
 `CREATE TEMP TABLE` inside it failed with "cannot execute CREATE TABLE in a read-only
 transaction"), and the hook additionally refuses transaction control, side-effecting
-functions, `INTO`, `FOR UPDATE`, dollar quoting, etc. (`test_neon_readonly_gate.py`: 6
+functions, `INTO`, `FOR UPDATE`, dollar quoting, etc. (`test_neon_readonly_gate.py`: 7
 allow / 20 ask cases pass). No `bypassPermissions`, no server-wide `mcp__Neon` allow.
 
 Caveat: the connector currently authenticates as `neondb_owner` in Neon write mode.

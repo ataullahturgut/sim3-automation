@@ -17,6 +17,7 @@ ALLOW = [
     p([RO, "SELECT created_at, update_count FROM t"]),  # identifiers containing keywords
     p([RO, "SELECT 'drop table x' AS s"]),               # keyword only inside a literal
     p([RO, "SHOW transaction_read_only"]),
+    p([RO, "SELECT CASE WHEN x > 0 THEN 1 ELSE 0 END AS s FROM t"]),
 ]
 ASK = [
     p(["SELECT 1"]),                                      # no read-only header
