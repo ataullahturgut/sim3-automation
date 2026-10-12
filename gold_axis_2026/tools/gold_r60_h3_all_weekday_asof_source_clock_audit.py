@@ -115,7 +115,7 @@ def main() -> None:
         assert r60.R56_inferred_Friday_COT_report == prev_old.report_date.strftime("%Y-%m-%d")
         assert r60.corrected_release_COT_report == prev_new.report_date.strftime("%Y-%m-%d")
         assert r60.COT_report_release_clock_basis == prev_new.r60_basis
-        assert r60.COT_report_release_utc == prev_new.r60_release.isoformat().replace("+00:00", "Z")
+        assert r60.COT_report_release_utc == prev_new.r60_release.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
         if issue in by_h.index:
             hc = by_h.loc[issue]
             assert hc.friday_COT_report == prev_old.report_date.strftime("%Y-%m-%d")
