@@ -1,6 +1,18 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
 
+<!-- R58_FRIDAY_COT_DYNAMIC_HELIOS_AND_CONDITIONAL_Q95_20261012 -->
+## R58 — Friday COT complete HELIOS V1–V5 replay (2023–2026), SAGE/RuleFlow & DPTC-Q95 controlled 2026 tests
+
+**Binding negative promotion result**: GOLD_R58_20261012_FRIDAY_COT_FULL_CHAIN_VALIDATION_VERDICT_2023_2026.md. Row proofs: GOLD_R56_20261012_H3_FRIDAY_COT_DYNAMIC_HELIOS_V1_V5_931ROW_REPLAY.csv (931 HELIOS), GOLD_R57_20261012_FRIDAY_COT_V5_FROZEN_SAGE_RF_ALARM_COHORT_Q95_191_SENSITIVITY.csv (191 controlled DPTC). Keep old Q95 production authority and native D0→D3 daily-mean target; no auto promotion.
+
+**Actual complete dynamic downstream HELIOS re-simulation:** Original clean HELIOS stored probabilities and GT shares reproduced **931/931 exactly (1e-10)** with old COT across matured candidate gating, GT experts, V4 regret/expansion, V5 DCE. Friday-published COT historical OPAL refit uses same 18 features and .70 trigger, retains special delayed CFTC releases; its logistic is independent JS approximation to sklearn (max original probability discrepancy **0.003095**), so new probabilities are provisional. HELIOS V5 old→Friday: 2023 **156/219→156/219**, 2024 **171/240→171/240**, 2025 **165/248→161/248**, 2026 Jan–Sept **121/191→119/191**. May subset **12/21→14/21** (new May19/22 accepted). 2025–2026 aggregate deteriorates; no robust benefit.
+
+**Controlled rather than complete downstream Q95:** 2026 recombine new V5 with existing external SAGE IFBC/LLRS and RuleFlow macro/topology inputs, update eligibility with changed V5 direction; original baseline reproduces **126/191** exactly, new controlled baseline **124/191**. Original DPTC-Q95 13 actions/11 rescue => **135/191** and May17/21 exactly reproduced; frozen original action dates applied to new baseline => **129/191**, May15/21; updated Q95 trust in original **28 alarm dates**, frozen Phase/SELLR score => **127/191**, May15/21. **These 129/191 and 127/191 are conditional sensitivity results, NOT certified new fully refit DPTC**: model-specific new alarm eligibility, SELLR score and BOCPD training/formation history must be recomputed. May19/22 can DOUBLE-FLIP and break original correct Q95 calls.
+
+**Decision:** Do not select Friday-COT merely because OPAL May improved 12→16; old comprehensive Q95 remains historical posthoc benchmark, no prospective PIT validation. Friday-first source timing is valid weekly observation metadata but the conservative +7d COT is intentional feature policy. 2025 and 2026 aggregate output does not justify replacing it. R58 report includes exact decomposition and what remains unverified.
+<!-- END R58_FRIDAY_COT_DYNAMIC_HELIOS_AND_CONDITIONAL_Q95_20261012 -->
+
 <!-- R55_FRIDAY_COT_OPAL_HOLDOUT_DPTC_GATE_20261012 -->
 ## R55 — Friday-published COT, OPAL historical rolling refit, May H3 and DPTC downstream gate (2026-10-12)
 
