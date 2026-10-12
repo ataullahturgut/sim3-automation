@@ -1,6 +1,20 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
 
+<!-- R49_MAY_FRIDAY_COT_AND_CME_DAY_CLOCK_20261012 -->
+## R49 — 2026 May H3 Friday-based source date, official COT weekly release and CME FTP metadata reconciliation
+
+**Binding authority:** GOLD_R49_20261012_MAY_H3_FRIDAY_COT_RELEASE_AND_CME_WEEKDAY_ASOF_AUDIT.md; per-issue row labels GOLD_R49_20261012_MAY_H3_FRIDAY_FIRST_COT_CME_SOURCE_WEEKDAY_CLOCK_LABELS.csv. No old forecast, historic score or native D0→D3 target touched.
+
+**Weekday 21/21 check PASS:** 2026 May 5 Friday issue dates (May01,08,15,22,29) use previous Thursday D0, targets respective Tuesdays (May05,12,19,26,June02). Monday issue dates (May04,11,18,25) use Friday D0; Friday source UTC daily mean only completes Saturday 03:00TR; Friday NY16 hourly bar is 23:00TR–Saturday 00:00TR. US Memorial Day May25 is a source H3 issue/UTC observation date but not a standard CME business day. Original source dates and native H3 bar counts NOT rewritten as +3 calendar days or +3 US CME sessions.
+
+**CFTC release 22:30TR Friday:** official dates May01,08,15,22,29, Tuesday source report dates Apr28,May05,May12,May19,May26. Friday 15TR H3 issue CANNOT include same-Friday 22:30 release. Official-Friday as-of report vs old selected COT report differs in **8 May issue dates May04/05,11/12,18/19,25/26**. IMPORTANT: existing GOLD_COT_PIT_AVAILABILITY_AUTHORITY_2026-10-06.md deliberately uses conservative Tuesday (+7 calendar days) availability and remains binding; do NOT overwrite or call that an incorrect calendar conversion. A new Friday-first COT model would need separate version, actual issued_at and full retrain; no new H3 score is claimed.
+
+**Correction of R45/previous answer's unsupported CME May26 warning:** CME official FTP daily volume directory lists daily_volume_20260522.xlsx (Friday trade date) last-modified **May25 Monday 00:01 server display clock**. It appears BEFORE Tuesday May26 forecast date, though directory time zone, exact firstprint and revisions remain unverified. Do not mark May26 at 15TR as automatically using unpublished Friday volume. CME FTP date metadata of all 21 selected source trade dates PRECEDES their H3 issue DATE. Friday CME traded date, its Monday-file appearance, CFTC Friday release and H3 daily OTC weekday source are **different calendars**.
+
+**Proof:** https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm; https://www.cmegroup.com/ftp/pub/pub/daily_volume/; https://www.cmegroup.com/trading-hours.html. R49 supersedes specifically the incorrect May26 CME lag premise of R45, without pretending a source-time firstprint proof or changing frozen 17/21 retrospective result.
+<!-- END R49_MAY_FRIDAY_COT_AND_CME_DAY_CLOCK_20261012 -->
+
 <!-- R48_MAY_H3_COMPLETE_VS_PRE_REPAIR_SOURCE_20261012 -->
 ## R48 — May 2026 native H3 dual price-vintage & independent target-source retest (2026-10-12)
 
