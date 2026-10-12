@@ -1,5 +1,19 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
+<!-- R69_H3_EXECUTION_CLOCK_UTILIZATION_VERDICT_20261012 -->
+## R66–R69 (2026-10-12) — EXECUTION-CLOCK H3 MODEL RETRAIN / ACTUAL BANK-UTILITY RESEARCH — COMPLETED, NO PROMOTION
+
+**Authority:** GOLD_R69_20261012_H3_FORECAST_PRACTICAL_EXECUTION_USE_VERDICT.md; all origin-level ledgers and summaries from R66 (2464 matched exact-clock D3 samples), R67 (DAY09→16:45 and next-calendar-day OVN16:45→09 targets), R68 (one-position-at-a-time bank-cost long/flat scenarios).
+
+**What was REALLY done:** use the reproduced original three-source-date H3 (same frozen D0→D3 daily means) as an **expert prior only**, relabel same-vendor M15 exact-clock 09,15,16:45 origin→original D3 same-clock target, train separate 2023–24 regularized direct logistic and ridge-origin-gap bridge, evaluate unchanged 2025/2026. At 09 use the **previous eligible H3 issue**; not a same-day 15/16TR model secretly backdated to morning. At15 &16:45 same-day H3 source availability is a research assumption because original `issued_at` not archived. Open quote at origin/target is not a Turkish bank bid/ask fill.
+
+**2025/2026 exact-clock N and H3/new logistic CORRECT:** 09 2025 N247 H3 127 logistic125, 2026 N185 H3 95 logistic96; 15 2025 N247 H3 120 logistic128, 2026 N186 H3 101 logistic95; **16:45** 2025 N247 H3 123 logistic124, 2026 N186 H3 105 logistic106. R67 DAY classifier with H3 as prior: 2025 110/248 and 2026 100/190; OVN: 2025 92/196 and 2026 74/150; neither establishes replicable direct edge. Do not call prior original H3 135/191 or R63 130/191 a bank-clock success rate.
+
+**Nonoverlapping long/flat hypothetical 25bp total roundtrip execution-cost proxy (R68):** at **16:45** H3 buy-UP sells-on-own-D3 2025 **+7.39%** across 71 positions, 2026 **−5.15%** across44; new direct logistic 2025 **+9.84%** across70, 2026 **−8.09%** across45. At09 original H3 2025 **−7.56%**, 2026 **−10.34%**. Fixed buy-every-eligible-entry without prediction 16:45 2025 **−17.09%**, 2026 **+0.43%**; passive 2025 first-last quote ~+64.19% (not identical invested-span benchmark). Model output invalid for any P&L claim without actual bank ASK/BID, gap/fees/latency. 2026 retrospective repeatedly inspected and not untouched holdout; none are live results.
+
+**Final operations:** leave original native H3 authority frozen. Until independently executable bank-clock after-spread skill is established, use it as market/regime **context / research-watchlist, NOT auto-enter/reverse/exit signal**. 09 previous eligible signal; 15 conditional update only if legally accessible source issues; 16:45 primary night-hold check, 16:30 fallback when bank spread already widened. Model use is conditional on origin-safe data-ready and real bank quote; H3 DOWN can request risk review, not automatic sell. New work should be predeclared bank-clock-specific conditional **quantile/return** model and cost-adjusted risk gating, not the same temporal audit again.
+<!-- END R69_H3_EXECUTION_CLOCK_UTILIZATION_VERDICT_20261012 -->
+
 <!-- R65_ISTANBUL_EXECUTION_CLOCK_RESEARCH_20261012 -->
 ## R65 (2026-10-12) — H3 clock to bank execution: 09, 15, 16:45 reference targets
 
