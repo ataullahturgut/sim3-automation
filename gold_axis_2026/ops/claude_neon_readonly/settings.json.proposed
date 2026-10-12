@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Neon__get_database_tables",
+      "mcp__Neon__describe_table_schema"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__Neon__run_sql_transaction",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/neon_readonly_gate.py\""
+          }
+        ]
+      }
+    ]
+  }
+}
