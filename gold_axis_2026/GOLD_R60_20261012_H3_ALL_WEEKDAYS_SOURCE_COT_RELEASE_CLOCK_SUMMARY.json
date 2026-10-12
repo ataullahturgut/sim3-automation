@@ -1,0 +1,112 @@
+{
+  "version": "R60_ALL_WEEKDAY_ASOF_CLOCK_AUDIT_20261012",
+  "head_input": "bd6283fa35078465f6a66e333d6a6347e6c0cccd",
+  "status": "RECONCILED_CALENDAR_ONLY_NOT_PROSPECTIVE_VINTAGE_CERTIFIED",
+  "universe": 1029,
+  "source_calendar_pass": 1029,
+  "macro_date_metadata_all_five_preD0": 1029,
+  "all_release_asof_pass": 1029,
+  "R56_inferred_rule_parity": 931,
+  "uncorrected_R56_issue_count": 5,
+  "corrected_date_difference_vs_legacy": 410,
+  "IFBC_hourly_n": 280,
+  "IFBC_issues_with_future_bars": 0,
+  "IFBC_CME_issues_with_future_tradedate": 0,
+  "LLRS_hourly_n": 332,
+  "LLRS_issues_with_future_bars": 0,
+  "failed_calendar_contract": 0,
+  "issue_days": {
+    "Mon": {
+      "forecast_n": 165,
+      "legacy_vs_scheduled_release_changed": 157,
+      "R56_release_calendar_correction_n": 4
+    },
+    "Tue": {
+      "forecast_n": 208,
+      "legacy_vs_scheduled_release_changed": 203,
+      "R56_release_calendar_correction_n": 0
+    },
+    "Wed": {
+      "forecast_n": 220,
+      "legacy_vs_scheduled_release_changed": 17,
+      "R56_release_calendar_correction_n": 0
+    },
+    "Thu": {
+      "forecast_n": 220,
+      "legacy_vs_scheduled_release_changed": 17,
+      "R56_release_calendar_correction_n": 0
+    },
+    "Fri": {
+      "forecast_n": 216,
+      "legacy_vs_scheduled_release_changed": 16,
+      "R56_release_calendar_correction_n": 1
+    }
+  },
+  "R56_release_assumption_corrections": [
+    {
+      "issue": "2023-07-07",
+      "weekday": "Fri",
+      "original_R56_report": "2023-07-03",
+      "release_calendar_report": "2023-06-27",
+      "release_basis": "FRIDAY_RULE_INFERRED"
+    },
+    {
+      "issue": "2025-07-07",
+      "weekday": "Mon",
+      "original_R56_report": "2025-07-01",
+      "release_calendar_report": "2025-06-24",
+      "release_basis": "FRIDAY_RULE_INFERRED"
+    },
+    {
+      "issue": "2026-01-05",
+      "weekday": "Mon",
+      "original_R56_report": "2025-12-30",
+      "release_calendar_report": "2025-12-23",
+      "release_basis": "CFTC_SPECIAL_OFFICIAL"
+    },
+    {
+      "issue": "2026-06-22",
+      "weekday": "Mon",
+      "original_R56_report": "2026-06-16",
+      "release_calendar_report": "2026-06-09",
+      "release_basis": "FRIDAY_RULE_INFERRED"
+    },
+    {
+      "issue": "2026-07-06",
+      "weekday": "Mon",
+      "original_R56_report": "2026-06-30",
+      "release_calendar_report": "2026-06-23",
+      "release_basis": "FRIDAY_RULE_INFERRED"
+    }
+  ],
+  "known_COT_overrides_not_embedded_in_R56": {
+    "2023-07-03": {
+      "release": "2023-07-07",
+      "tag": "DOCUMENTED_2023_07_07_THIRD_PARTY"
+    },
+    "2025-07-01": {
+      "release": "2025-07-07",
+      "tag": "DOCUMENTED_2025_07_07_THIRD_PARTY"
+    },
+    "2025-12-30": {
+      "release": "2026-01-05",
+      "tag": "CFTC_2026_SCHEDULE"
+    },
+    "2026-06-16": {
+      "release": "2026-06-22",
+      "tag": "CFTC_2026_SCHEDULE"
+    },
+    "2026-06-30": {
+      "release": "2026-07-06",
+      "tag": "CFTC_2026_SCHEDULE"
+    }
+  },
+  "scientific_limitations": [
+    "issued_at 15TR is an assumption; no historical original actual issued_at for all rows",
+    "regular Friday event-times for 2022-25 holidays not fully proven by contemporaneous source firstprint",
+    "2023/2025 historical holiday-supported release days based on dated contemporary articles, not an archived CFTC 15:30 timestamp",
+    "macroeconomic source values and price vintage are retrospective and their original first-print availability remains unproven",
+    "R56/R59 performance not fully restated after R60 corrections; monthly OPAL rolling retrain can propagate even from few corrected issue rows",
+    "COT special overrides 21 source records; 2026 official CFTC schedule adds 3 by Sep; Tuesday/Friday formula for off-Tuesday holiday report must use report-week Friday"
+  ]
+}
