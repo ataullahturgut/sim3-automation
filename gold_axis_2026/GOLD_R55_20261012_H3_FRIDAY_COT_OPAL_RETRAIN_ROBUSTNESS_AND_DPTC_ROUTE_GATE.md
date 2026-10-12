@@ -1,0 +1,45 @@
+# R55 — Original H3 May 2026: Friday-release COT OPAL model refit, multi-period robustness, downstream DPTC gate
+
+**Executed**: 2026-10-12. **Authority status**: `OPAL_FRIDAY_RELEASE_CHALLENGER_RESEARCH_ONLY`; **do not promote to DPTC-Q95**. Preserve native D0→D3 UTC-daily-average target, R42/R48 corrected source truth and prior OPAL/HELIOS/DPTC freezes. **Numerical caveat**: independent JS Newton/IRLS reimplementation of sklearn StandardScaler+balanced L2 logistic reproduced CLEAN OPAL May baseline within **max absolute 0.003095** reversal probability; result not exact sklearn bit-level. A runnable Python sklearn original-parity-guarded source is `tools/gold_h3_opal_friday_cot_asof_v2.py` (written but not executed in the connected remote runtime).
+
+## 1. User request and strict clock model
+Original H3 feature_cutoff_date D0, issue D1, target third retained source date D3; preserve unchanged, no 09/15TR entry/exit relabeling. Use assumed **issue D1 15:00 Türkiye** only as as-of permission cutoff, not an archived true issue time. For COT Tuesday positions: ordinary official release Friday at **15:30 New York = 22:30 Turkey (May)**. Never use same Friday night release for a Friday daytime issue; use new report for Monday. For documented CFTC delayed releases, `cot_official_special_release_at_utc` metadata on raw project COT state overrides ordinary Friday. Historical release records can still be incomplete for special holidays; this is a **simulated PIT COT release schedule**, not a certified all-source exact firstprint.
+
+**Training and test**: `GOLD_H3_CLEAN_PROSPECTIVE_V1_FROZEN_OPAL_PANEL.csv` provides 1,029 original H3 rows with label, original non-COT features and old COT reports; `GOLD_COT_GOLD_PIT_STATE_RAW_REBUILT_2026-10-06.csv` provides weekly historical raw options positioning, z52 etc and 21 publication delay overrides; original clean OPAL published scores in `GOLD_H3_CLEAN_OPAL_PREDICTIONS_2026-10-03.csv`. Retain **original 18 features, StandardScaler, class_weight=balanced, L2 C=1, threshold P(reversal)>=0.70** and monthly rolling training maturity cutoff: prior rows with `target_end_date_h3 <= first current month feature_cutoff_date` and forecast issued before the month. For May 2026 training rows **921**. Recompute all fourteen weekly COT features and three momentum×position cross-products. Underlying non-COT predictors and fully corrected target labels remain unchanged.
+
+**Two separate experimental interventions**:
+1. **Frozen May-trained weights, only May input COT vintage switched to official Friday**. 8/21 May reports changed; computed all 21 corrected new reversal scores using original trained weighted logistic approximation and anchoring to exact stored original May probabilities (source `R50`). Original OPAL May `override` count 1 (May11), new count still 1 (May11), no OPAL direction changes and no new accuracy. This isolates timing substitution, with approximate model probability delta and original stored intercept.
+2. **Full OPAL-only historical retrain with Friday-as-of COT features for training history**, no tuning of weights/hyperparameters from May outcomes. 415 of 1029 historical rows selected a different COT report; all model training features are rebuilt with official Friday release plus recorded exceptional-delays; monthly 2025, 2026 heldout roll-forward fitted. OPAL score changes as below. **This does NOT retrain path experts/AURORA/HELIOS V1–V5/SAGE/RuleFlow/DPTC**.
+
+## 2. Results — OPAL-only, months evaluated chronologically
+| Test | Frozen clean OPAL (old conservative Tuesday lag) | Friday-retrained OPAL | Difference |
+|---|---|---|---|
+| 2025 12 months | **161/248 = 64.92%** | **160/248 = 64.52%** | **-1** |
+| 2026 Jan–Apr | **60/85 = 70.59%** | **57/85 = 67.06%** | **-3** |
+| **2026 May** | **12/21 = 57.14%** | **16/21 = 76.19%** | **+4** |
+| 2026 June–September | **49/85 = 57.65%** | **48/85 = 56.47%** | **-1** |
+| **2025 + 2026 Jan–September** | **282/439 = 64.24%** | **281/439 = 64.01%** | **-1** |
+
+This is an **OPAL-only model score**, NOT HELIOS/SAGE/DPTC-Q95. Four May changes relative to published clean OPAL all happen to be rescues: **May01, May13, May19, May22**; one existing May11 override persists. May 2026 paired exact McNemar 4 improvements, 0 degradations gives two-sided **p=0.125**; May local improvement does not prove robust superiority. May early exposed-model final score 16/21 differs from original DPTC-Q95 **17/21** scored on full corrected gold target.
+
+R50 standalone May fixed-weight control is `GOLD_R50_20261012_FRIDAY_COT_MAY_2026_OPAL_FIXED_WEIGHTS_RECALCULATED_21.csv` (stored model-based probability deltas). R52 May Friday-history retrain per-issue `GOLD_R52_20261012_FRIDAY_COT_HISTORICALLY_REFIT_OPAL_MAY_RESULTS.csv`. R53 2025+2026 Jan–Apr monthly chronology: `GOLD_R53_20261012_OPAL_FRIDAY_COT_2025_AND_2026_PREMAY_MONTHLY_HOLDOUT.csv`. R54 2026 May–Sep monthly chronology: `GOLD_R54_20261012_OPAL_FRIDAY_COT_2026_MAY_SEPTEMBER_ROLLING_TEST.csv`.
+
+**A numerical failure was caught and quarantined**: original `GOLD_R51_20261012_FRIDAY_COT_TRAIN_AND_MAY_OPAL_REFIT_SENSITIVITY_21.csv` was overwritten to **INVALID_DO_NOT_USE** due to solver NaNs. All reported results above come from finite corrected R52–R54. The independent JS Newton refit reproduces original baseline probabilities within at most 0.003095, *not* exact sklearn bit parity. May Friday new-override P(reversal): May01 0.7490, May11 0.7769, May13 0.7263, May19 0.7361, May22 0.7541, all >0.70 by at least 0.0263; this margin exceeds old-baseline maximum reproduction difference but a frozen sklearn exact rerun remains recommended.
+
+## 3. HELIOS, SAGE and DPTC routing safety
+Original May 2026 **DPTC-Q95 = 17/21** on frozen corrected inputs (R48), not 12/21 OPAL. The Friday OPAL-only 16/21 CANNOT be appended to or substituted for DPTC. The HELIOS V5 code `tools/gold_h3_helios_v5_dce.py` requires all of: `~v4_route`, `gate_active`, `opal_override`, `~candidate_reversal`, `gt_flip_share>0.50`, `active_expert=PATH_GLOBAL`, `prob_path_superior>0.50`. **Static old HELIOS state** screening of the five newly rerun OPAL reversal candidates:
+- May01: new OPAL override yes; `gt_flip_share=0.3893<.5`; V5-DCE original state would **NOT route**; original DPTC already flips and gets this day correct.
+- May11: remains OPAL override, original DCE already routes, correct.
+- May13: new OPAL override yes; `gt_flip_share=0.3893<.5`; V5-DCE original state would **NOT route**; original DPTC wrongly forecasts UP.
+- May19: new OPAL override yes, `gt_flip_share=0.7230`, posterior 0.9182, active PATH_GLOBAL; original HELIOS static V5-DCE gate **would route** reversal if all frozen other state held fixed, but **original DPTC already flips** the same old baseline UP→DOWN correctly, so downstream double-flip is a material risk.
+- May22: same as May19; original DPTC already flips baseline UP→DOWN correctly; double-flip risk.
+
+**This is a static gate diagnostic, not a valid new DPTC forecast.** HELIOS game-theoretic weights, prior OPAL event queue, SAGE+RuleFlow baseline, SELLR/DPTC competence counters and matured outcomes are all endogenous to earlier OPAL decisions. Replacing OPAL probability rows only and then evaluating with old later layers would be invalid. A full sequential replay from at least the first affected training-origin/2025 date is necessary for a defensible new Q95 score. No such complete downstream replay has been certified here.
+
+## 4. Scientific decision
+- **Keep legacy COT +7d lag model as original H3 DPTC authority**; Friday-release COT is a nonbinding challenger.
+- **Do not assert a new Q95 percentage or 21/21 PIT success**; exact historically available metal/1h/exogenous firstprints and full HELIOS pipeline still fail R45–R48 source-vintage gate.
+- The **May-local +4 OPAL** enhancement vanishes on broader 2025–Sep2026 examination (overall **-1 OPAL success** in 439). Therefore Friday timestamps are essential metadata and may improve freshness, but blindly promoting newest COT into the chosen model **is not a stable proven prediction improvement**.
+- Next scientific work: original frozen COT conservative vs Friday-as-of challenger implemented as complete chronologically rerun nested expert pipeline with full earlier data-as-of and 2023–25 independent holdouts; no May threshold retuning or cherry-picking.
+
+**Reproducible exact sklearn code authored (NOT EXECUTED HERE):** `tools/gold_h3_opal_friday_cot_asof_v2.py` preserves the native 18-feature logistic model, performs month-specific fitting with firstprint-aware Friday COT, and guards baseline parity, exporting new per-row and summary files. In this conversation the *computed* R52/R53/R54 evidence comes from JS numerical logistic reimplementation; because solver reproduces stored clean probabilities with max 0.003095 difference, report its scores as a **numerically approximate fixed-specification refit**, pending exact sklearn executor run. Never conflate source code created with code run.
