@@ -57,7 +57,7 @@ Platformun kendi güvenlik onayı veya izin istemi çıkarsa atlatılmaya çalı
 - Rastgele bölme yapılmaz. Eğitim ve ön işleme yalnızca karar anında mevcut bilgiyle sınırlıdır. Karar saatinden sonra tamamlanan hiçbir çubuk kullanılmaz.
   - CME saatlik `ts_event` çubuk **başlangıcıdır**.
   - `Europe/Istanbul` = UTC+3.
-- Geliştirme dönemi 2023–2024'tür. 2025 ve 2026 sonuçları daha önce görülmüştür; **dokunulmamış test başarısı olarak sunulmaz**.
+- **Kısa vadeli Türkiye işlem saatleri araştırmasında** (09:00→16:45, 16:45→ertesi 09:00, ilgili H3 denemeleri) 2023–2024 geliştirme dönemi; 2025–2026 daha önce incelenmiş retrospektif dönemlerdir ve **dokunulmamış test başarısı olarak sunulmaz**. Aylık fiyat ve ayrı yön motoru gibi diğer araştırmalarda geliştirme/test tarihleri ilgili **kendi manifestine** göre belirlenir; buradaki dönemler onlara taşınmaz.
 - Veri kaynakları (EV/Dukascopy 2020–2025, doğrudan Dukascopy 2026, HistData vb.) farkları kaydedilmeden birleştirilmez. Yıl ve kaynak bazında ayrı raporlanır.
 - Her yıl için şunlar raporlanır:
   - N, kapsama, accuracy, balanced accuracy, UP/DOWN recall;
