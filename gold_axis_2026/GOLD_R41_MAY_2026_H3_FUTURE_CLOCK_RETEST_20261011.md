@@ -1,5 +1,8 @@
 # R41 — MAY 2026: DPTC-H3 directional success AFTER signal time, independently verified on two 15m providers
 
+> **BINDING CORRECTION (R42, 2026-10-12):** The original May2026 H3 GOLD provider was **StakTrakr `source:sqld`**, proven from the original pinned upstream SQL source to be **`AVG(spot)` over a complete UTC calendar day** (**03:00TR day D → 03:00TR day D+1**), NOT a single instant quote at 15TR, 17TR or synthetic `12:00:00` tag. R41's independent 15TR spot→17TR spot comparison is a DISTINCT discretionary investor-clock target, not the appropriate first test of the original H3 research claim. **Correct apples-to-apples, May 21 unchanged H3 forecasts:** original Stak UTC-day AVG→UTC-day AVG **17/21=80.95%**, and two independent 15m vendors reconstructed under the **same UTC-day-average contract** also **17/21=80.95%**, with **21/21 exact H3 direction-label matches to original**. Separately, 15TR instantaneous issue quote→ORIGINAL H3 target-date full UTC daily AVG: **12/21 Dukascopy, 11/21 HistData**. Distinguish the historical daily-average-label success from an investor-issued instant-entry claim; do not erase or relabel original H3 accuracy. See `GOLD_R42_20261012_ORIGINAL_H3_DATA_SOURCE_TIME_CONTRACT_AND_MAY_VERDICT.md` and R42 21-row source-level CSV.
+
+
 **Date:** 2026-10-11. **Scope:** all **21** May 2026 `forecast_issue_date` rows, original H3 DPTC-Q95 votes unchanged. We compare **historical original H3 label** to **strictly future end prices measured from time of theoretically issuing the forecast**, with no D1 consensus and no model optimization. This supersedes any implication from R40 that May's 17/21 is verified executable three-business-day foresight.
 
 ## Governing timing / H3 contract
