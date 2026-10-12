@@ -24,7 +24,7 @@ WITH bars AS (
  sum(CASE WHEN pcm>0 AND close_mid>0 AND pts IS NOT NULL AND bar_start_utc-pts=interval '15 minutes' THEN power(ln(close_mid/pcm),2) ELSE 0 END) rv
  FROM lagged WHERE (sn='DAY' AND extract(isodow FROM d)<=5) OR (sn='OVN' AND extract(isodow FROM d)<=4) GROUP BY 1,2
 )
-SELECT to_char(d,'YYYY-MM-DD') day,sn,
+SELECT to_char(d,'YYYY-MM-DD') AS trade_date,sn,
  CASE WHEN sn='DAY' THEN ((d::timestamp+time '08:45') AT TIME ZONE 'Europe/Istanbul') ELSE ((d::timestamp+time '16:30') AT TIME ZONE 'Europe/Istanbul') END issue_utc,
  entry,exit,ln(exit/entry) realized_r,rv,n,n15,n75
 FROM agg WHERE d>='YYYY-01-01' AND d<'YYNEXT-01-01'
