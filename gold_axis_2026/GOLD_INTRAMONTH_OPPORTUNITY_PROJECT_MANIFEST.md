@@ -1,6 +1,18 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
 
+<!-- R47_MAY_ASOF_REFIT_GATE_SIGN_SENSITIVITY_20261012 -->
+## R47 — Strict true-as-of May 2026 full original H3 refit assessment and vintage sensitivity (2026-10-12)
+
+Evidence: GOLD_R47_20261012_MAY_H3_SOURCE_VINTAGE_REFIT_GATE_AND_TARGET_SENSITIVITY.md and row-level GOLD_R47_20261012_H3_MAY_ISSUE_VINTAGE_ORIGIN_REVISION_DIRECTION_SENSITIVITY.csv. R46 (full frozen DPTC controller and 21 votes rerun) preserved; source original H3 labels unchanged.
+
+**Outcome:** Historical frozen DPTC Q95 17/21 reconstructed (October model and later-frozen data; NOT contemporaneous). Full PIT expert refit under old May snapshots is **BLOCKED**, NOT a new model test: 7/21 issue-day public Git vintage origin four-metals missing, 12/21 are source-price revised, 2/21 match; early prices were possibly partial-day averages. No complete contemporaneous provider firstprint or training-era revision histories, and no H3 Q95 May historical model-issued weights/execution time. Do not silently transplant October model posterior to May input panels and call it a May true PIT rerun.
+
+**Actual extra calculation:** Holding fixed original third-source-day terminal price but replacing origin gold price with *sampled issue-time Git snapshot* on 14 available origins changes the original H3 realized UP/DOWN sign in **2 May issues (May19 DOWN→UP, May27 UP→DOWN)**. In this selected 14-row subset, fixed frozen Q95 votes agree with original frozen labels on 11 and with source-origin substituted labels on 9; **neither is valid historical model accuracy** because model votes never refit and target source comes from later vintage. Revisions in source metal prices on available 14 origins: Gold median abs 0.3457% max 1.8421%; Silver 0.61665%/6.6573%; Platinum 0.66405%/3.3151%; Palladium 0.69515%/2.0774%. All 21 dates and exact metal revisions in CSV.
+
+**Binding gate:** Original true-as-of H3 May Q95 accuracy = **UNKNOWN / NOT ESTIMABLE WITH VERIFIED INPUTS**. Build a credible May shadow only once completed as-of native Au/Ag/Pt/Pd, Twelve 1H, CME, cross-market, COT, macro and historical trained state are source timestamp certified; all nested experts must then be re-fit chronologically with target maturation. DPTC developed after May (Oct05) remains retrospective even in an as-of-input reconstruction; prospective results require postfreeze unseen data.
+<!-- END R47_MAY_ASOF_REFIT_GATE_SIGN_SENSITIVITY_20261012 -->
+
 <!-- R46_MAY_H3_Q95_CLOCK_VINTAGE_REPLAY_20261012 -->
 ## R46 — 2026 May original H3 DPTC-Q95 complete 21-row clock-annotated rerun and historical input-vintage check (2026-10-12)
 
