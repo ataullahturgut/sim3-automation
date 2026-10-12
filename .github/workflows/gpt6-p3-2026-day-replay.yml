@@ -1,0 +1,21 @@
+name: GPT6 P3 2026 DAY source-correct replay
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "gold_axis_2026/GOLD_GPT6_P3_2026_*"
+      - "gold_axis_2026/GOLD_GPT6_P3_2020_2025_DAY_RV_TRAINING_SOURCE.csv"
+      - "gold_axis_2026/tools/gold_gpt6_p3_2026_day_replay.py"
+      - ".github/workflows/gpt6-p3-2026-day-replay.yml"
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python3 -m pip install "numpy>=1.24,<3"
+      - run: python3 gold_axis_2026/tools/gold_gpt6_p3_2026_day_replay.py
