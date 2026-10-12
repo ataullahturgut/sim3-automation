@@ -1,0 +1,47 @@
+{
+  "scope": "2026 DAY 09:00-16:45 TRT ONLY, direct Dukascopy M1matched 15 of 15, EV 2020-25 historical warmup (different vendor)",
+  "prereg_commit": "01aa6b86fd852c6daedc6117a26914dc6ac3a2ce",
+  "status": "EXPLORATORY_NOT_PIT_VALIDATED",
+  "num_history_days": 1547,
+  "num_2026_complete_days": 177,
+  "metrics": {
+    "n": 177,
+    "events": 15,
+    "period": [
+      "2026-01-02",
+      "2026-10-07"
+    ],
+    "qlike": {
+      "PERSIST5": 0.36693572183977097,
+      "CLIM60": 0.6770970078987892,
+      "ROLL500": 0.3767167728946464,
+      "ROLL500_EVENT": 0.3714273732032124
+    },
+    "logmse": {
+      "PERSIST5": 0.5143592116037103,
+      "CLIM60": 0.6343525623616761,
+      "ROLL500": 0.4775805266179619,
+      "ROLL500_EVENT": 0.4745562453563902
+    }
+  },
+  "macro_2026_events": [
+    "2026-01-09",
+    "2026-01-13",
+    "2026-02-11",
+    "2026-02-13",
+    "2026-03-06",
+    "2026-03-11",
+    "2026-04-03",
+    "2026-04-10",
+    "2026-05-08",
+    "2026-05-12",
+    "2026-06-05",
+    "2026-06-10",
+    "2026-07-02",
+    "2026-07-14",
+    "2026-08-07",
+    "2026-08-12",
+    "2026-09-04"
+  ],
+  "notes": "2026 M15 source historical as-of October 2026; 2026 OVN incompatible with historic 75-min closure RV target and not tested."
+}
