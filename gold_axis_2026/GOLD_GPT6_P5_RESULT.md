@@ -19,3 +19,6 @@ Adding currently stored GC OHLCV to a spot-prior model makes future-return and p
 This result does **not** prove there is no microstructure informational edge at 15min/different hour or true GC trades/MBP: those data do not exist currently in Neon; do not pay Databento for trades without user's explicit authorization. Overlap selection bias, different futures/spot vendors and GC contract roll limit inference.
 
 Source: `sql/gold_gpt6_p5_gc_completed_hour_spot_15m.sql`, `GOLD_GPT6_P5_SOURCE_ROWS.csv`, `GOLD_GPT6_P5_MATCHED_FULL_SOURCE.csv`; results `GOLD_GPT6_P5_DECISION_SCORES.csv`, `GOLD_GPT6_P5_RESULT.json`; deterministic verification `tools/gold_gpt6_p5_replay.py`. Database untouched.
+
+### Post-audit interpretation correction (P6 known-price target)
+The reported spot-only and GC+spot `price_mae` reconstitute an exit price **using observed 16:45 future OVN origin entry**; the issue decision is 16:30, so those two price-MAE numbers are retrospective **conditional level errors, not executable/issue-as-of numerical price forecasts**. Core GC-vs-spot **forward-return** RMSE and directional signals remain valid label comparisons. The independent P6 true 16:15 known-price anchor vs future OVN exit supplies the correct fixed issue-time spot price forecast test.
