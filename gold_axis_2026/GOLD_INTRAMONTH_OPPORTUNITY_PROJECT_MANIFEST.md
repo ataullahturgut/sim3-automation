@@ -1,6 +1,17 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
 
+<!-- BEGIN R43_2026_SOURCE_ZERO_POINT_BRIDGE_20261012 -->
+## R43 binding research checkpoint — three-day H3 to Istanbul executable entry zero-point (2026-10-12)
+
+Original 2026 Mar–Sep homogeneous `sqld` source uses complete **UTC daily average = D 03TR→D+1 03TR**, and original H3 target `sign(log(P_target_day_AVG/P_prior_cutoff_day_AVG))`. This is NOT a 15TR single quote or averaging of the next three days. Original DPTC-Q95 May score **17/21**, verified by two independent same-semantic M15 vendor daily average return signs. To map H3 to a Turkish 09/15TR bank decision use exact identity `log(P_targetAVG/P_entryClock) = log(P_targetAVG/P_originAVG) - log(P_entryClock/P_originAVG)`; H3 **direction-only** lacks numerical first term so cannot be reanchored by assuming that UP remains UP. Independent 2026 source-homogeneous H3 **143** issue cohorts, HistData candidate 15TR available **140**, frozen DPTC vote matches future issue-15TR→original H3 terminal UTC daily AVG in **80/140=57.14%**, below always-DOWN **82/140**. Signed prior→entry price gap **≥1% in signal direction**: **23/49 correct=46.94%**; gap **<1%**: **57/91=62.64%**, marginal over same-row always-DOWN **55/91**. Exploratory gate, NOT independent robust alpha. Naive rolling-median H3 amplitude projected price then rebased flip **FAILED**: May–Sep HistData 15TR **59/105→58/105**; Duka sample **43/78→38/78**. Do NOT promote.
+
+**Authority / complete evidence**: `gold_axis_2026/GOLD_R43_20261012_H3_SIFIR_NOKTASI_INTRADAY_REBASE_AUDIT.md`; native-source time/21-day May replication `gold_axis_2026/GOLD_R42_20261012_ORIGINAL_H3_DATA_SOURCE_TIME_CONTRACT_AND_MAY_VERDICT.md` and `gold_axis_2026/GOLD_R42_20261012_ORIGINAL_H3_SOURCE_TIME_MAY_UTC_AVERAGE_RECONSTRUCTION.csv`.
+
+**Research next gate**: produce PIT-honest H3 numerical return quantiles (not just direction), subtract observed origin→entry movement, fixed 09 or 15TR future target with source-consistent label, require `issued_at` and supporting feature availability timestamps; any choice tuned on 2026 is retrospective, requires independent holdout. 2023–25 LBMA seed source uses different AM benchmark and must not be conflated with 2026 sqld UTC average.
+<!-- END R43_2026_SOURCE_ZERO_POINT_BRIDGE_20261012 -->
+
+
 <!-- R42_SOURCE_CLOCK_BINDING_START -->
 ## Binding May2026 H3 original data source-clock reconstruction (R42; 2026-10-12)
 
