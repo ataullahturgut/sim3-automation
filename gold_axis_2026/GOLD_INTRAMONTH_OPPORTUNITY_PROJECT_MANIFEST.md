@@ -1,5 +1,11 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
+<!-- R73_OVN1645_XMKT_RESIDUAL_REVERSAL_20261012 -->
+## R73 (2026-10-12) — OVN 16:45→next calendar day 09 TR: ZN/NQ/CL cross-market residual reversal — EXECUTED, PRE-REGISTERED, **REJECT**
+
+**AUTHORITY:** GOLD_R73_20261012_OVN1645_CROSSMARKET_RESIDUAL_REVERSAL_RESULT.md (prereg ..._PREREG.md committed before outcomes; code tools/gold_r73_ovn1645_xmkt_residual_reversal.py; SQL sql/gold_r73_ovn1645_xmkt_panel.sql; new Neon table gold_research_r73_ovn1645_xmkt_residual_panel_v1 + view gold_research_r73_ovn1645_panel_compact_v1). CME ts_event verified = bar START; features end 13:00UTC=16:00TR; target EV/Dukascopy 2023–25 and direct Dukascopy 2026 mid 16:45→next-calendar-day 09 (Mon–Thu), sources never pooled. Rolling-250 ridge(alpha10) gold 09–16TR return on same-interval ZN/NQ/CL, rule sign(−residual). DEV2023–24 N316/410 acc55.06% BA55.38% (binom p.0405, Holm .081 → H1 FAIL); vs raw 09–16 reversal 24 rescues/27 breaks (H2 FAIL); OLS resid coef t−0.54 (H3 FAIL). 2025 BA46.37%, 2026 BA51.23% (both retrospective). Factor fit explains only 30/12.5/4.6/7.7% of gold 09–16 variance 2023/24/25/26 (ZN-dominated), so residual sign = raw sign on 77–91% of nights. Raw reversal DEV 177/316 (p.019) flips to momentum in 2025: not transportable, not new. EV/Dukascopy vs R67 HistData OVN sign disagree on 14.8% of DEV nights. **Do not retune windows/alpha/factors.** No bank BID/ASK → no P&L claim.
+<!-- END R73_OVN1645_XMKT_RESIDUAL_REVERSAL_20261012 -->
+
 <!-- R70_H3_ROLLING_POSITION_MAY_STRATEGY_20261012 -->
 ## R70 2026-10-12 — ART ARDA GELEN DOĞRU H3 TAHMİNLERİNİ TEK POZİSYON STRATEJİSİNE DÖNÜŞTÜRME (ÇALIŞTIRILDI, BANKA ONAYI YOK)
 
