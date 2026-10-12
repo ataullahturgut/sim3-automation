@@ -1,6 +1,20 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
 
+<!-- R48_MAY_H3_COMPLETE_VS_PRE_REPAIR_SOURCE_20261012 -->
+## R48 — May 2026 native H3 dual price-vintage & independent target-source retest (2026-10-12)
+
+Binding source: GOLD_R48_20261012_MAY_H3_DUAL_VINTAGE_INDEPENDENT_TRUTH_AND_FEATURE_RECOMPUTE_REPORT.md. Exact 21 issue rows: GOLD_R48_20261012_MAY_H3_COMPLETED_VS_PREREPAIR_21ROW_SOURCE_VINTAGE_RESCORE.csv. Recalculated Au/Ag/Pt/Pd lag 1/5/21 predictor changes in GOLD_R48_20261012_MAY_H3_FOUR_METAL_PREDICTOR_VINTAGE_LOGRETURN_RECOMPUTATION.csv. Original frozen H3 model predictions and D0→D3 target remain unchanged.
+
+**NEW FINISHED EXPERIMENT 1**: Completed full UTC-day H3 target labels reconstructed from 2026 Stak pinned corrected sqld average agree with independent Dukascopy M15 UTC daily average signs 21/21 and independent HistData M15 signs 21/21. Q95 17/21=80.95%, Q99 16/21, SAGE+RuleFlow 13/21, HELIOS V5 12/21, always-DOWN 13/21. These are OCTOBER FROZEN RETROSPECTIVE model votes, NOT May-issued OOS. Q95 vs constant DOWN has exact paired McNemar two-sided p=0.34375 for May (7 model-only correct vs 3 down-only correct).
+
+**NEW FINISHED EXPERIMENT 2**: Matched both H3 source dates to exact unrepaired StakTrakr archive Git SHA 67f83f4ab6ae5baaf4a35c7ce9175fbdd1dbb295 committed Jun03 2026 03:00:01Z, before Sep27 STRK-403 fix. All 21 May pair prices exist. This historical supplier vintage is AFTER May issues, NOT PIT and may embed incomplete earlier daily averages. Against those older incomplete-source label signs with **unchanged October model votes**, Q95 13/21, Q99 12/21, SAGE 13/21, V5 14/21, always-DOWN 11/21. Four old-vs-corrected target-sign disagreements: **issue May08, May19, May22, May27**; all four turned originally-correct Q95 fixed votes wrong. Thus 17→13 is a **measurement-vintage sensitivity**, NOT real model degradation or valid live accuracy.
+
+**NEW FINISHED PREDICTOR RECOMPUTATION**: Recalculated 21 May four-metal price log-return vectors at lags 1/5/21, from June03 historical vs September corrected origin prices. 1-day return sign differs in **Gold 3/21, Silver 2/21, Platinum 5/21, Palladium 7/21**. Median absolute 1d feature revision: Gold 36.57bp, Silver 57.30bp, Platinum 84.98bp, Palladium 73.04bp. Full H3 model MUST NOT be represented as re-fitted; all experts/COT/macro PIT firstprints and complete earlier training vintage missing.
+
+**Unresolved binding gate:** True May 2026 point-in-time retraining of the complete original DPTC-Q95 H3 expert cascade is not possible with presently certified data; Q95 itself constructed October. R46 historical May issue Git snapshots: 7/21 origins missing, 12/21 vintage changed, 2/21 exactly matched. Do not use June03 vintage as May origin availability nor attribute June03 13/21 to actual issued H3 returns. No replacement of native H3 horizon, no 09/15TR target conversion.
+<!-- END R48_MAY_H3_COMPLETE_VS_PRE_REPAIR_SOURCE_20261012 -->
+
 <!-- R47_MAY_ASOF_REFIT_GATE_SIGN_SENSITIVITY_20261012 -->
 ## R47 — Strict true-as-of May 2026 full original H3 refit assessment and vintage sensitivity (2026-10-12)
 
