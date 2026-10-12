@@ -1,0 +1,165 @@
+{
+  "parity": {
+    "original_old_baseline_count": 126,
+    "old_accurate": 135,
+    "old_alarms": 28,
+    "old_actions": 13,
+    "old_full_pred_mismatches": [],
+    "original_act_date_diff": [],
+    "missing_orig_act": [],
+    "orig_base_mismatches": []
+  },
+  "challenger": {
+    "baseline": 125,
+    "final": 130,
+    "alarms": 22,
+    "actions": 9,
+    "action_dates": [
+      [
+        "2026-04-30",
+        "2026-05-01",
+        "PHASE",
+        "RESCUE"
+      ],
+      [
+        "2026-05-27",
+        "2026-05-28",
+        "PHASE",
+        "RESCUE"
+      ],
+      [
+        "2026-06-01",
+        "2026-06-02",
+        "PHASE",
+        "BROKEN"
+      ],
+      [
+        "2026-06-08",
+        "2026-06-09",
+        "PHASE",
+        "RESCUE"
+      ],
+      [
+        "2026-06-29",
+        "2026-06-30",
+        "PHASE",
+        "RESCUE"
+      ],
+      [
+        "2026-07-14",
+        "2026-07-15",
+        "PHASE",
+        "RESCUE"
+      ],
+      [
+        "2026-07-17",
+        "2026-07-20",
+        "PHASE",
+        "BROKEN"
+      ],
+      [
+        "2026-09-03",
+        "2026-09-04",
+        "PHASE",
+        "RESCUE"
+      ],
+      [
+        "2026-09-24",
+        "2026-09-25",
+        "PHASE",
+        "RESCUE"
+      ]
+    ],
+    "new_alarms_not_old": [],
+    "removed_alarms": [
+      "2026-03-16",
+      "2026-03-23",
+      "2026-04-07",
+      "2026-04-10",
+      "2026-05-18",
+      "2026-05-21"
+    ]
+  },
+  "per_month": [
+    {
+      "month": "2026-01",
+      "n": 21,
+      "old": 16,
+      "new": 16,
+      "actions_old": 0,
+      "actions_new": 0
+    },
+    {
+      "month": "2026-02",
+      "n": 20,
+      "old": 13,
+      "new": 13,
+      "actions_old": 0,
+      "actions_new": 0
+    },
+    {
+      "month": "2026-03",
+      "n": 22,
+      "old": 17,
+      "new": 16,
+      "actions_old": 0,
+      "actions_new": 0
+    },
+    {
+      "month": "2026-04",
+      "n": 22,
+      "old": 15,
+      "new": 13,
+      "actions_old": 0,
+      "actions_new": 0
+    },
+    {
+      "month": "2026-05",
+      "n": 21,
+      "old": 17,
+      "new": 17,
+      "actions_old": 4,
+      "actions_new": 2
+    },
+    {
+      "month": "2026-06",
+      "n": 22,
+      "old": 14,
+      "new": 15,
+      "actions_old": 3,
+      "actions_new": 3
+    },
+    {
+      "month": "2026-07",
+      "n": 23,
+      "old": 13,
+      "new": 13,
+      "actions_old": 2,
+      "actions_new": 2
+    },
+    {
+      "month": "2026-08",
+      "n": 21,
+      "old": 16,
+      "new": 15,
+      "actions_old": 0,
+      "actions_new": 0
+    },
+    {
+      "month": "2026-09",
+      "n": 19,
+      "old": 14,
+      "new": 12,
+      "actions_old": 4,
+      "actions_new": 2
+    }
+  ],
+  "universe": 191,
+  "status": "CONTROLLED_RETRAINED_OPAL_AND_FULL_ENDOGENOUS_HELIOS_PLUS_DYNAMIC_H3_DPTC_WITH_FROZEN_EXTERNAL_SOURCES",
+  "numerical_caveats": [
+    "OPAL computed independent JavaScript L2 weighted Newton approximating scikit-learn; max original probability replication 0.003551",
+    "Frozen external SAGE IFBC LLRS, RuleFlow market-state metrics, dependence phase and SELLR numeric score; not all external experts have been retrained",
+    "2026 historical posthoc price/source vintages not certified true issue-time available; result is not prospective OOS accuracy"
+  ],
+  "original_base_and_final_parity": "191/191 old FROZEN baseline and DPTC final restored"
+}
