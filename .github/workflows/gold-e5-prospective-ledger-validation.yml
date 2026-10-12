@@ -1,0 +1,26 @@
+name: Gold E5 prospective ledger integrity
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "gold_axis_2026/prospective/**"
+      - "gold_axis_2026/tools/gold_e5_prospective_ledger.py"
+      - ".github/workflows/gold-e5-prospective-ledger-validation.yml"
+  push:
+    branches: [gold-execution-channel-audit-20261006]
+    paths:
+      - "gold_axis_2026/prospective/**"
+      - "gold_axis_2026/tools/gold_e5_prospective_ledger.py"
+      - ".github/workflows/gold-e5-prospective-ledger-validation.yml"
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python3 gold_axis_2026/tools/gold_e5_prospective_ledger.py --self-test
+      - run: python3 gold_axis_2026/tools/gold_e5_prospective_ledger.py --validate
