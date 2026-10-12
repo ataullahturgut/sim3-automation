@@ -1,0 +1,558 @@
+{
+  "schema": "GOLD_R61_ALL_WEEKDAY_RELEASE_ADJUSTED_OPAL_ORIGIN_MATURED_ROLLING_RETRAIN",
+  "status": "COMPUTED_JAVASCRIPT_L2_WEIGHTED_NEWTON_APPROX_SKLEARN_NOT_BITEXACT",
+  "all_rows": 931,
+  "months_trained": 47,
+  "original_probability_max_abs_deviation": 0.0035510232806051922,
+  "original_OPAL_direction_mismatch": [],
+  "original_OPAL_override_mismatch": [],
+  "deviation_vs_R56_gt_0p008": [
+    {
+      "date": "2023-07-07",
+      "diff": 0.04079682858242395,
+      "newReport": "2023-06-27",
+      "oldReport": "2023-06-27"
+    },
+    {
+      "date": "2023-10-10",
+      "diff": -0.009216632159201044,
+      "newReport": "2023-10-03",
+      "oldReport": "2023-09-26"
+    },
+    {
+      "date": "2023-10-11",
+      "diff": -0.009488725239438889,
+      "newReport": "2023-10-03",
+      "oldReport": "2023-10-03"
+    },
+    {
+      "date": "2023-10-12",
+      "diff": -0.009607902117981904,
+      "newReport": "2023-10-03",
+      "oldReport": "2023-10-03"
+    },
+    {
+      "date": "2023-10-13",
+      "diff": -0.008235993237900363,
+      "newReport": "2023-10-03",
+      "oldReport": "2023-10-03"
+    },
+    {
+      "date": "2023-10-24",
+      "diff": 0.012365980453291292,
+      "newReport": "2023-10-17",
+      "oldReport": "2023-10-10"
+    },
+    {
+      "date": "2023-10-26",
+      "diff": 0.010093310736951855,
+      "newReport": "2023-10-17",
+      "oldReport": "2023-10-17"
+    },
+    {
+      "date": "2023-10-27",
+      "diff": 0.01016331327846065,
+      "newReport": "2023-10-17",
+      "oldReport": "2023-10-17"
+    },
+    {
+      "date": "2023-10-31",
+      "diff": 0.008641529852657981,
+      "newReport": "2023-10-24",
+      "oldReport": "2023-10-17"
+    },
+    {
+      "date": "2023-12-19",
+      "diff": -0.009159933088234484,
+      "newReport": "2023-12-12",
+      "oldReport": "2023-12-05"
+    },
+    {
+      "date": "2023-12-21",
+      "diff": -0.00912678466432959,
+      "newReport": "2023-12-12",
+      "oldReport": "2023-12-12"
+    },
+    {
+      "date": "2024-03-11",
+      "diff": -0.009983770901656697,
+      "newReport": "2024-03-05",
+      "oldReport": "2024-02-27"
+    },
+    {
+      "date": "2024-03-12",
+      "diff": -0.009937160125524258,
+      "newReport": "2024-03-05",
+      "oldReport": "2024-02-27"
+    },
+    {
+      "date": "2024-03-13",
+      "diff": -0.010020890076942679,
+      "newReport": "2024-03-05",
+      "oldReport": "2024-03-05"
+    },
+    {
+      "date": "2024-03-15",
+      "diff": -0.00970016646845373,
+      "newReport": "2024-03-05",
+      "oldReport": "2024-03-05"
+    },
+    {
+      "date": "2024-03-18",
+      "diff": -0.010695458383139567,
+      "newReport": "2024-03-12",
+      "oldReport": "2024-03-05"
+    },
+    {
+      "date": "2024-03-19",
+      "diff": -0.011479681528358043,
+      "newReport": "2024-03-12",
+      "oldReport": "2024-03-05"
+    },
+    {
+      "date": "2024-03-20",
+      "diff": -0.011085410955262165,
+      "newReport": "2024-03-12",
+      "oldReport": "2024-03-12"
+    },
+    {
+      "date": "2024-03-21",
+      "diff": -0.011406357131430456,
+      "newReport": "2024-03-12",
+      "oldReport": "2024-03-12"
+    },
+    {
+      "date": "2024-03-22",
+      "diff": -0.011252522434405277,
+      "newReport": "2024-03-12",
+      "oldReport": "2024-03-12"
+    },
+    {
+      "date": "2025-07-07",
+      "diff": -0.02158315177217307,
+      "newReport": "2025-06-24",
+      "oldReport": "2025-06-24"
+    },
+    {
+      "date": "2026-01-05",
+      "diff": -0.0514594517795684,
+      "newReport": "2025-12-23",
+      "oldReport": "2025-12-23"
+    },
+    {
+      "date": "2026-06-22",
+      "diff": -0.08811264000670738,
+      "newReport": "2026-06-09",
+      "oldReport": "2026-06-09"
+    },
+    {
+      "date": "2026-07-06",
+      "diff": -0.15846298222834698,
+      "newReport": "2026-06-23",
+      "oldReport": "2026-06-23"
+    },
+    {
+      "date": "2026-08-05",
+      "diff": 0.008369106345273769,
+      "newReport": "2026-07-28",
+      "oldReport": "2026-07-28"
+    },
+    {
+      "date": "2026-08-06",
+      "diff": 0.008767465724431933,
+      "newReport": "2026-07-28",
+      "oldReport": "2026-07-28"
+    },
+    {
+      "date": "2026-08-07",
+      "diff": 0.008813312274023821,
+      "newReport": "2026-07-28",
+      "oldReport": "2026-07-28"
+    },
+    {
+      "date": "2026-08-10",
+      "diff": 0.008965982532312178,
+      "newReport": "2026-08-04",
+      "oldReport": "2026-07-28"
+    },
+    {
+      "date": "2026-08-11",
+      "diff": 0.009216982475825808,
+      "newReport": "2026-08-04",
+      "oldReport": "2026-07-28"
+    },
+    {
+      "date": "2026-08-19",
+      "diff": 0.00971553651511603,
+      "newReport": "2026-08-11",
+      "oldReport": "2026-08-11"
+    },
+    {
+      "date": "2026-08-20",
+      "diff": 0.008069625501607891,
+      "newReport": "2026-08-11",
+      "oldReport": "2026-08-11"
+    },
+    {
+      "date": "2026-08-31",
+      "diff": 0.008965973975901598,
+      "newReport": "2026-08-25",
+      "oldReport": "2026-08-18"
+    }
+  ],
+  "threshold_close_dates": [
+    {
+      "date": "2022-11-03",
+      "p": 0.6961544113276258
+    },
+    {
+      "date": "2022-12-14",
+      "p": 0.6902138291532125
+    },
+    {
+      "date": "2023-05-11",
+      "p": 0.7050149353522338
+    },
+    {
+      "date": "2023-05-12",
+      "p": 0.694763366480039
+    },
+    {
+      "date": "2023-08-21",
+      "p": 0.7079116942984928
+    },
+    {
+      "date": "2023-11-21",
+      "p": 0.7038106840342594
+    },
+    {
+      "date": "2024-01-12",
+      "p": 0.7013729157943772
+    },
+    {
+      "date": "2024-04-05",
+      "p": 0.699400584293342
+    },
+    {
+      "date": "2024-07-01",
+      "p": 0.7095911684316821
+    },
+    {
+      "date": "2024-07-23",
+      "p": 0.6969015786948785
+    },
+    {
+      "date": "2024-08-06",
+      "p": 0.69367010593027
+    },
+    {
+      "date": "2024-08-20",
+      "p": 0.7067712958832816
+    },
+    {
+      "date": "2024-08-21",
+      "p": 0.7095673845386368
+    },
+    {
+      "date": "2024-11-11",
+      "p": 0.6984069179796089
+    },
+    {
+      "date": "2025-01-20",
+      "p": 0.7054386551236443
+    },
+    {
+      "date": "2025-02-06",
+      "p": 0.6987879216675934
+    },
+    {
+      "date": "2025-02-07",
+      "p": 0.6964231780181711
+    },
+    {
+      "date": "2025-03-03",
+      "p": 0.6976089092333324
+    },
+    {
+      "date": "2025-04-22",
+      "p": 0.6963036862620232
+    },
+    {
+      "date": "2025-05-06",
+      "p": 0.7009201849594272
+    },
+    {
+      "date": "2025-06-19",
+      "p": 0.7019081969817279
+    },
+    {
+      "date": "2025-11-28",
+      "p": 0.7049079753165998
+    },
+    {
+      "date": "2026-01-14",
+      "p": 0.6968375160490731
+    },
+    {
+      "date": "2026-02-27",
+      "p": 0.6942013917389448
+    },
+    {
+      "date": "2026-03-31",
+      "p": 0.703168708463101
+    },
+    {
+      "date": "2026-04-24",
+      "p": 0.7080926478572965
+    },
+    {
+      "date": "2026-06-01",
+      "p": 0.7079649642860594
+    },
+    {
+      "date": "2026-07-30",
+      "p": 0.6979951122187545
+    }
+  ],
+  "rollforward": {
+    "year2023": {
+      "n": 219,
+      "old": 147,
+      "new": 152
+    },
+    "year2024": {
+      "n": 240,
+      "old": 168,
+      "new": 171
+    },
+    "year2025": {
+      "n": 248,
+      "old": 161,
+      "new": 161
+    },
+    "year2026": {
+      "n": 191,
+      "old": 121,
+      "new": 122
+    },
+    "may2026": {
+      "n": 21,
+      "old": 12,
+      "new": 16
+    }
+  },
+  "permonth": [
+    {
+      "month": "2025-01",
+      "n": 21,
+      "old": 14,
+      "corrected": 15,
+      "changed": 1,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2025-02",
+      "n": 19,
+      "old": 10,
+      "corrected": 10,
+      "changed": 0,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2025-03",
+      "n": 21,
+      "old": 14,
+      "corrected": 13,
+      "changed": 3,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2025-04",
+      "n": 17,
+      "old": 11,
+      "corrected": 10,
+      "changed": 1,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2025-05",
+      "n": 20,
+      "old": 12,
+      "corrected": 13,
+      "changed": 1,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2025-06",
+      "n": 21,
+      "old": 13,
+      "corrected": 13,
+      "changed": 0,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2025-07",
+      "n": 23,
+      "old": 12,
+      "corrected": 13,
+      "changed": 1,
+      "correction_issue_rows": 1
+    },
+    {
+      "month": "2025-08",
+      "n": 20,
+      "old": 12,
+      "corrected": 12,
+      "changed": 0,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2025-09",
+      "n": 22,
+      "old": 15,
+      "corrected": 14,
+      "changed": 1,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2025-10",
+      "n": 23,
+      "old": 17,
+      "corrected": 16,
+      "changed": 1,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2025-11",
+      "n": 20,
+      "old": 14,
+      "corrected": 15,
+      "changed": 1,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2025-12",
+      "n": 21,
+      "old": 17,
+      "corrected": 17,
+      "changed": 2,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2026-01",
+      "n": 21,
+      "old": 16,
+      "corrected": 16,
+      "changed": 0,
+      "correction_issue_rows": 1
+    },
+    {
+      "month": "2026-02",
+      "n": 20,
+      "old": 11,
+      "corrected": 11,
+      "changed": 0,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2026-03",
+      "n": 22,
+      "old": 18,
+      "corrected": 16,
+      "changed": 4,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2026-04",
+      "n": 22,
+      "old": 15,
+      "corrected": 14,
+      "changed": 7,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2026-05",
+      "n": 21,
+      "old": 12,
+      "corrected": 16,
+      "changed": 4,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2026-06",
+      "n": 22,
+      "old": 13,
+      "corrected": 14,
+      "changed": 1,
+      "correction_issue_rows": 1
+    },
+    {
+      "month": "2026-07",
+      "n": 23,
+      "old": 11,
+      "corrected": 11,
+      "changed": 0,
+      "correction_issue_rows": 1
+    },
+    {
+      "month": "2026-08",
+      "n": 21,
+      "old": 15,
+      "corrected": 14,
+      "changed": 1,
+      "correction_issue_rows": 0
+    },
+    {
+      "month": "2026-09",
+      "n": 19,
+      "old": 10,
+      "corrected": 10,
+      "changed": 0,
+      "correction_issue_rows": 0
+    }
+  ],
+  "changed_issue_rows": [
+    {
+      "issue": "2023-07-07",
+      "R56": 0.5431326418001257,
+      "R61": 0.5839294703825496,
+      "oldReport": "2023-06-27",
+      "newReport": "2023-06-27"
+    },
+    {
+      "issue": "2025-07-07",
+      "R56": 0.771927065484124,
+      "R61": 0.750343913711951,
+      "oldReport": "2025-06-24",
+      "newReport": "2025-06-24"
+    },
+    {
+      "issue": "2026-01-05",
+      "R56": 0.37892539307502926,
+      "R61": 0.32746594129546086,
+      "oldReport": "2025-12-23",
+      "newReport": "2025-12-23"
+    },
+    {
+      "issue": "2026-06-22",
+      "R56": 0.7185234756418656,
+      "R61": 0.6304108356351582,
+      "oldReport": "2026-06-09",
+      "newReport": "2026-06-09"
+    },
+    {
+      "issue": "2026-07-06",
+      "R56": 0.706563414081776,
+      "R61": 0.548100431853429,
+      "oldReport": "2026-06-23",
+      "newReport": "2026-06-23"
+    }
+  ],
+  "source_contract": {
+    "training": "Monthly frozen 18 features, 14+3 momentum interactions+trend strength, StandardScaler, balanced class, L2 C=1; train only labels with target_end<=first month D0",
+    "clock": "R60 corrected daily COT as-of @15TR, Jan/Jun/Jul 2026 and 2023/2025 July holidays",
+    "target": "unmodified H3 third retained source day D3",
+    "scoring": "OPAL only, original frozen AURORA",
+    "caveat": "Numerically approximates sklearn LBFGS; all source values from retrospectively frozen panel; downstream HELIOS/DPTC not rebuilt"
+  }
+}
