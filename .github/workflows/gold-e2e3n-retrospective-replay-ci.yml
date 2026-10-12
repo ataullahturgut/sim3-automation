@@ -1,0 +1,43 @@
+name: Gold E2E3N overnight retrospective evidence replay
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "gold_axis_2026/GOLD_E2E3N_20261012_OVN_SIGMA_MECHANISM_MONTHLY_LEDGER.csv"
+      - "gold_axis_2026/GOLD_E2E3N_20261012_OVN_SIGMA_MECHANISM_SUMMARY.json"
+      - ".github/workflows/gold-e2e3n-retrospective-replay-ci.yml"
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: |
+          python3 - <<'PY'
+          import csv,json
+          from pathlib import Path
+          base=Path("gold_axis_2026")
+          with (base/"GOLD_E2E3N_20261012_OVN_SIGMA_MECHANISM_MONTHLY_LEDGER.csv").open() as f:
+              rows=list(csv.DictReader(f))
+          j=json.loads((base/"GOLD_E2E3N_20261012_OVN_SIGMA_MECHANISM_SUMMARY.json").read_text())
+          assert len(rows)==39
+          assert sum(int(r["n"]) for r in rows)==627
+          for yr in (2023,2024,2025,2026):
+              block=[r for r in rows if int(r["yr"])==yr]
+              expected=j["per_year"][str(yr)]
+              n=sum(int(r["n"]) for r in block)
+              assert n==expected["n"]
+              for k in ("e2dyn_loss","e2const_loss","e2freq_loss","e3dyn02_loss","e3const02_loss","e3freq02_loss"):
+                  score=sum(float(r[k]) for r in block)/n
+                  assert abs(score-expected["metrics"][k])<1e-12, (yr,k,score)
+          d=j["DEV_2023_2024"]["metrics"]
+          assert d["e2dyn_loss"]>d["e2const_loss"]  # E2 fails
+          y=j["per_year"]
+          assert y["2023"]["metrics"]["e3dyn02_loss"]>y["2023"]["metrics"]["e3const02_loss"] # E3 unstable
+          assert y["2024"]["metrics"]["e3dyn02_loss"]<y["2024"]["metrics"]["e3const02_loss"]
+          print("E2/E3 precommitted overnight cohort evidence consistency PASS; no model promotion")
+          PY
