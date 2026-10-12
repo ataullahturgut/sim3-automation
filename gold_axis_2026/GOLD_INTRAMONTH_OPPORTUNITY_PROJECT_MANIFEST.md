@@ -1,6 +1,20 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
 
+<!-- R46_MAY_H3_Q95_CLOCK_VINTAGE_REPLAY_20261012 -->
+## R46 — 2026 May original H3 DPTC-Q95 complete 21-row clock-annotated rerun and historical input-vintage check (2026-10-12)
+
+**Evidence:** GOLD_R46_20261012_MAY_H3_Q95_RERUN_AND_FULL_INPUT_ASOF_LABEL_REPORT.md (explanation, 21-row May summary); GOLD_R46_20261012_MAY_H3_Q95_SOURCE_CLOCK_VINTAGE_AND_FROZEN_REPLAY_21.csv (every feature's source-date/clock, upstream commit/time and old-pinned data price differences). Keep R42/R45 original labels unchanged. No bank-hour target substitution.
+
+**ACTUALLY REPLAYED** Q95 historical 2026 controller logic on frozen 41-row HANDOFF competence event timeline: 2025-selected SELLR threshold 2.3677413378977423, Gold/NDX/VIX dependence phase, trust hysteresis, and matured H3 feedback with corrected mixed-format target dates. Reconstructed all 13 historic 2026 Q95 DPTC actions exactly (11 rescues, 2 broken); 4 May issue flips May01, May19, May22, May28. Reapplied frozen SAGE V2+RuleFlow V3-TG and V5 probabilities to 21 May forecasts. Score: V5 12/21, SAGE/RuleFlow 13/21, Q95 **17/21=80.95%**, exactly R42; **this is a frozen-hindsight REPLAY, NOT a refit or 2026 live-issued signal**.
+
+**Per-row input clocks**: all four metal UTC averages on prior cutoff D cover D 03TR→D+1 03TR and only complete issue-day 03TR; Twelve Data previous D 16NY (D23TR) 1h bar closes issue-day 00TR; CME previous strict trade dates, cross NDX/VIX/dollar/yield distinct raw dates, COT report and conservative available date are attached per issue row. H3 target source day T covers T03TR→T+1 03TR, not fixed 72h after issue. Provider releases may lag observation close.
+
+**HARD VINTAGE DISCREPANCY**: For each of the 21 May dates, sampled last suitable upstream StakTrakr 'v3' Git commit before **issue-date 15TR** (audit snapshot, NOT model issued_at). Compare its four-cutoff-day metals with the Sept29 frozen retrospective H3 source: **7/21 missing**, **12/21 present but at least one vintage price changed**, **2/21 all four exactly identical (May11 and May12)**. Gold sample discrepancies: May01 issue (Apr30 cutoff) historic 4567.08 vs hindsight 4604.34 (-$37.26); May13 issue (May12 cutoff) historic 4763.05 vs hindsight 4706.50 (+$56.55); May18 issue (May15 cutoff) historic 4652.34 vs hindsight 4568.19 (+$84.15). These past-vintage differences may reflect originally frozen incomplete daily averages (STRK-403); sampled Git commits do not prove first live API publication times.
+
+**Binding verdict**: Native 17/21 source H3 accuracy reproducible only on preserved final frozen source; full **true as-of May 2026 accuracy is NOT ESTIMABLE** without recreating all historical origin/training values with contemporaneously available complete provider vintages, as-of releases of other features, and frozen model actually existing at issue. Do NOT report 17/21 as PIT/live accuracy or compute 2-row selected PIT accuracy. The model was synthesized/frozen Oct05; historical May direction votes are posterior research artifacts.
+<!-- END R46_MAY_H3_Q95_CLOCK_VINTAGE_REPLAY_20261012 -->
+
 <!-- R45_DPTC_H3_ASOF_VINTAGE_20261012 -->
 ## R45 — DPTC-Q95 H3 real-time input clock, archive-vintage and maturity forensic (2026-10-12)
 
