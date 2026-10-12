@@ -1,5 +1,16 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
+<!-- R59_FRIDAY_COT_DYNAMIC_Q95_20261012 -->
+## R59 — Friday COT clock research: full new Handoff alarm eligibility and chronological DPTC-Q95 replay
+
+**Proof:** GOLD_R59_20261012_FRIDAY_COT_DYNAMIC_28_TO_22_HANDOFF_Q95_VERDICT.md; 191-row original/new action and prediction proof: GOLD_R59_20261012_FRIDAY_COT_DYNAMIC_ALARM_DPTC_Q95_191_REPLAY.csv; machine summary: GOLD_R59_20261012_FRIDAY_COT_DYNAMIC_ALARM_DPTC_Q95_SUMMARY.json; rerun script: tools/gold_r59_friday_cot_dynamic_alarm_dptc_q95_replay.py. Original COT authority, D0→third-source-day D3 H3 target, and production Q95 unchanged. This is **source-clock correction research**, not an attempt to increase historical scores.
+
+**Audit fix and exact parity:** Earlier independent JavaScript replay falsely treated missing prior internal observation as -Infinity, producing four spurious alarm candidates (cutoffs Feb17, Mar11, Apr24, Jul06 2026). Proper pandas-compatible NaN max returns **28/28** identical old Handoff candidates, **13/13** original Q95 intervention dates and **191/191** original frozen Q95 final votes, old baseline **126/191**, old Q95 **135/191**. This was a verifier bug, not a COT time mismatch. Rebuilt new alarm gate over all 191 issues with Friday HELIOS+frozen SAGE/RuleFlow: **22 alarms**, six old alarms eliminated (Mar16, Mar23, Apr07, Apr10, May18, May21 cutoff); **no newly created additional alarms**. Replayed Q95 phase/SELLR eligibility/trust and delayed maturity on **new 22-alarm cohort**, yielding **9 actions (7 rescue/2 broken)** and **129/191 (67.54%)**; May **17/21**, unchanged from original frozen **17/21**. New score by issue month Jan–Sep: **16,13,16,13,17,15,12,15,12** (denominators 21,20,22,22,21,22,23,21,19). R58's **127/191** (old alarm cohort) and **129/191 with old 13 fixed actions** are distinct counterfactuals, NOT the new-dynamic computation, despite accidental equality of one aggregate.
+
+**Strict qualifications:** Full source as-of COT Tuesday report issued Friday **15:30 New York** (May **22:30 TRT**); CFTC special delays honored; Friday 15:00 TRT issue cannot use same-Friday publication. Legacy +7 calendar-day conservative lag remains intentionally frozen. R56 Friday OPAL probabilities used an approximate JS IRLS (original max prob deviation 0.003095); exact sklearn Python script not executed. Frozen external IFBC/LLRS/RuleFlow, precomputed SELLR numeric scorer, and label-free dependence phase were used; new candidate selection, trigger eligibility, phase and hysteresis were genuinely re-simulated. No full expert refit, BOCPD independent competence retrain, complete metal source firstprint PIT or prospective model performance has been established. **R59 is an independently computed controlled dynamic replay, not a fully retrained operational successor.** Keep old Q95 as frozen research authority and its 2026 score explicitly retrospective.
+
+<!-- END R59_FRIDAY_COT_DYNAMIC_Q95_20261012 -->
+
 
 <!-- R58_FRIDAY_COT_DYNAMIC_HELIOS_AND_CONDITIONAL_Q95_20261012 -->
 ## R58 — Friday COT complete HELIOS V1–V5 replay (2023–2026), SAGE/RuleFlow & DPTC-Q95 controlled 2026 tests
