@@ -1,0 +1,72 @@
+{
+  "schema": "R65_FIXED_BANK_REFERENCE_CLOCK_H3_REBASE_2026_MAY_SEP",
+  "status": "EXECUTED_RESEARCH_DIAGNOSTIC_DO_NOT_PROMOTE_H3_TO_EXECUTION_WITHOUT_RETRAIN",
+  "source": "Neon read-only HistData reconstructed M15 XAU spot open, same vendor source/target, not Turkish bank executed spreads",
+  "target": "R63 original D3 source observed date (third retained source observation), compare target D3 full UTC calendar-day average or exact same-clock D3 price",
+  "cohort": "2026-05-01..2026-09-25, common 102 complete issue/target dates for all six anchors; same 102 date cohort",
+  "n": 102,
+  "summary": [
+    {
+      "local_tr": "09:00",
+      "n": 102,
+      "old_correct_to_D3avg": 60,
+      "new_correct_to_D3avg": 58,
+      "old_correct_to_D3sameclock": 56,
+      "new_correct_to_D3sameclock": 54,
+      "native_H3_label_disagrees_with_D3avg_rebased": 14
+    },
+    {
+      "local_tr": "12:00",
+      "n": 102,
+      "old_correct_to_D3avg": 60,
+      "new_correct_to_D3avg": 60,
+      "old_correct_to_D3sameclock": 62,
+      "new_correct_to_D3sameclock": 60,
+      "native_H3_label_disagrees_with_D3avg_rebased": 14
+    },
+    {
+      "local_tr": "15:00",
+      "n": 102,
+      "old_correct_to_D3avg": 58,
+      "new_correct_to_D3avg": 56,
+      "old_correct_to_D3sameclock": 57,
+      "new_correct_to_D3sameclock": 55,
+      "native_H3_label_disagrees_with_D3avg_rebased": 20
+    },
+    {
+      "local_tr": "16:30",
+      "n": 102,
+      "old_correct_to_D3avg": 56,
+      "new_correct_to_D3avg": 58,
+      "old_correct_to_D3sameclock": 59,
+      "new_correct_to_D3sameclock": 61,
+      "native_H3_label_disagrees_with_D3avg_rebased": 22
+    },
+    {
+      "local_tr": "16:45",
+      "n": 102,
+      "old_correct_to_D3avg": 54,
+      "new_correct_to_D3avg": 56,
+      "old_correct_to_D3sameclock": 58,
+      "new_correct_to_D3sameclock": 58,
+      "native_H3_label_disagrees_with_D3avg_rebased": 24
+    },
+    {
+      "local_tr": "17:00",
+      "n": 102,
+      "old_correct_to_D3avg": 56,
+      "new_correct_to_D3avg": 58,
+      "old_correct_to_D3sameclock": 58,
+      "new_correct_to_D3sameclock": 58,
+      "native_H3_label_disagrees_with_D3avg_rebased": 22
+    }
+  ],
+  "limitations": [
+    "No retraining of DPTC to new bank-origin target in this step: old/new frozen H3 sign merely rescored with exact intraday spot entry",
+    "Full-day UTC average target not a bank-close executable exit",
+    "Reference hour 09:00 issue signal readiness not proven historically",
+    "Original H3 retrospective posthoc 2026; no untouched test",
+    "Open_price at the anchored M15 open is an available market quote candidate, not actual bank BUY/SELL execution",
+    "Did not optimize times by hindsight, enumerated 6 prespecified anchors"
+  ]
+}
