@@ -92,6 +92,16 @@ For each bank-eligible day 09, 15 and 16:45TR, record `decision_at_utc`, `entry_
 
 **D. Origin time is an availability contract**, not just a timezone label. At 09 require prior candle complete and source publish time <=09; at 15 no use of future 15:30/16:30 macro results; at16:45 use only last completed16:30–16:45 bar, already-published CPI/NFP surprise, with price feed time <=16:45. Today's banking executable buy/sell quotes remain the ultimate gate.
 
+## 5A. No-zero-latency origin / executable order guard
+
+The six anchor prices in the 102-day study are **instant-at-anchor research quotes**, not provably executable trades based on a bar that closes at the same instant. This refinement is mandatory for the first bank-aligned *forecast* implementation:
+
+- 09:00 order: signal evaluation at **08:50TR**, last M15 candle **08:30–08:45**; take a separately timestamped **09:00** executable quote. Do **not** use the 08:45–09:00 return at 08:50.
+- 15:00 order: signal evaluation at **14:50TR**, last candle **14:30–14:45**; do not use future US 15:30 EDT or 16:30 EST release information.
+- 16:45 order: signal evaluation at **16:40TR**, last candle **16:15–16:30**; after-16:30 US release information can be used only if the actual publishing and pipeline ingestion times are BOTH <=16:40. 16:30–16:45 candle is NOT complete before the order time.
+- This **10–15 minute advance signal-generation schedule** is a preregistered conservative research *assumption* pending actual provider latency and bank quote timestamps, not a claim about past frozen HELIOS issues. If bank preclose spreads widen early, compare an independently versioned **16:30 order** using signals computed no later than16:25; do not secretly backdate a 16:45 signal.
+- Future strict source gate: `feature_bar_end_utc + provider_latency <= signal_generated_at_utc <= order_quote_at_utc` and `release_ingested_at_utc <= signal_generated_at_utc`; refuse missing provenance rather than treating later bars as causal.
+
 ## Final decision
 
 **Clock-selection phase is READY/CLOSED: 09 and 16:45 are distinct primary decision clocks; 15 a clearly versioned interim update.** Preserve 16:30 as spread-latency fallback, 12:00 and 17:00 as controls. All H3 clock-normalization experiments and the negative magnitude bridge are documented without promotion of an accuracy number to real execution. The actual new work is now **target-specific executable-price forecasting at these locked reference clocks**, not a return to R41–R60 chronology validation.
