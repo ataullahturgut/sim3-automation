@@ -1,6 +1,20 @@
 # GOLD INTRAMONTH OPPORTUNITY — CANONICAL PROJECT MANIFEST
 
 
+<!-- R55_FRIDAY_COT_OPAL_HOLDOUT_DPTC_GATE_20261012 -->
+## R55 — Friday-published COT, OPAL historical rolling refit, May H3 and DPTC downstream gate (2026-10-12)
+
+**Evidence and status:** GOLD_R55_20261012_H3_FRIDAY_COT_OPAL_RETRAIN_ROBUSTNESS_AND_DPTC_ROUTE_GATE.md; monthly rolling R53 + R54 CSV; 21-row May R52 CSV. Executable-but-not-run exact sklearn reproduction script: tools/gold_h3_opal_friday_cot_asof_v2.py. R51 invalidated: numerical NaN intermediate DO NOT USE. Maintain legacy governed COT +7-day delay as frozen H3 authority; Friday COT is experimental challenger only.
+
+**Two controlled tests completed:** (i) frozen May OPAL learned weights, update solely Friday COT issue-asof rows -> 8/21 COT report changes, unchanged OPAL threshold decisions (one May11 override), no new May direction accuracy; (ii) numerically approximate May and all-year rolling OPAL retrain on new COT releases (18 unchanged features, C=1, threshold .70; 415/1029 historic COT selections changed, 21 known official delay overrides). Original clean OPAL baseline prob replication max abs 0.003095 (NOT exact scikit-learn bit-parity). Original H3 source average label unchanged and no May outcome used to choose parameters.
+
+**Completed OPAL-only results (NOT HELIOS or Q95)**: 2025 old 161/248 vs Friday 160/248; 2026 Jan–Apr old 60/85 vs Friday 57/85; **May old 12/21 vs Friday 16/21 (+4)**; June–Sept old 49/85 vs Friday 48/85. Aggregate **old 282/439 = 64.24%, Friday 281/439 = 64.01%**. May four OPAL new rescues all happen to be May01, May13, May19, May22; two-sided exact McNemar p=.125; May improvement not broadly robust. May new Friday OPAL overrides total five including unchanged May11. Given 2026 optimization/posthoc origin frozen source, no independent live accuracy asserted.
+
+**Downstream HELIOS hazard:** Static V5 DCE route disallows May01 and May13 new OPAL overrides (old GT share .389<.5), maintains existing May11 route, and would admit new May19 and May22 OPAL events if keeping earlier game-state frozen (share .723, posterior .918). But original DPTC-Q95 **already** correctly flipped May19/22; without complete HELIOS/SAGE/RuleFlow/SELLR sequential rerun these can DOUBLE-FLIP. Therefore a new final DPTC-Q95 score has NOT been calculated; old frozen corrected H3 17/21 remains original. DO NOT represent Friday OPAL 16/21 as new Q95 or 17/21 as unchanged fully-retrained Q95.
+
+**Required next gate:** exact Python sklearn parity execution, official special Friday/holiday firstprint audits, full downstream temporal replay and PIT source-vintage training. Do not promote Friday-COT solely for the local May gain; robustness and total score not superior.
+<!-- END R55_FRIDAY_COT_OPAL_HOLDOUT_DPTC_GATE_20261012 -->
+
 <!-- R49_MAY_FRIDAY_COT_AND_CME_DAY_CLOCK_20261012 -->
 ## R49 — 2026 May H3 Friday-based source date, official COT weekly release and CME FTP metadata reconciliation
 
